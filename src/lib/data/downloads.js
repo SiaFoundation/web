@@ -1,7 +1,5 @@
 // NOTE: File must be .js so that `downloadsCounterMiddleware` can be imported
 // into server.js.
-// NOTE: Using a custom server because NextJS _middleware pattern was complaining
-// about calls to node.js APIs even though its a server-side feature.
 
 const { storage, initStorage } = require('../storage')
 

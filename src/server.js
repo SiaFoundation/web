@@ -37,10 +37,11 @@ async function init() {
   console.log(`\tHistoric: ${docsVersions}`)
 
   // Serve binaries
+  const releasesPath = 'public/releases'
   server.use(
     '/releases',
     downloadCountersMiddleware,
-    express.static('public/releases')
+    express.static(releasesPath)
   )
 
   // Defer to NextJS to serve APIs and website
