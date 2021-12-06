@@ -7,6 +7,7 @@ const {
   initDownloadCounters,
 } = require('./lib/data/downloads')
 const { version } = require('./config/sia')
+const { redirects } = require('./config/redirect')
 
 const dev = process.env.NODE_ENV !== 'production'
 const port = process.env.PORT || 3000
@@ -43,6 +44,13 @@ async function init() {
     downloadCountersMiddleware,
     express.static(releasesPath)
   )
+
+  // Redirects
+  redirects.forEach(({ from, to }) => {
+    server.get(from, (req, res) => {
+      res.redirect(to)
+    })
+  })
 
   // Defer to NextJS to serve APIs and website
   server.all('*', (req, res) => {
