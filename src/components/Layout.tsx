@@ -47,7 +47,7 @@ export function Layout({ children }: Props) {
         as="main"
         css={{
           flexDirection: 'column',
-          gap: '$10',
+          gap: '$2',
           padding: '$5',
           margin: '0 auto',
         }}
