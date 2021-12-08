@@ -1,8 +1,8 @@
-name: Test
+name: Validation
 on:
   pull_request:
 jobs:
-  preview:
+  lint-build:
     runs-on: ubuntu-latest
 
     strategy:
