@@ -6,6 +6,7 @@ import { getSiaStatsHostsCoordinates } from '../lib/data/siaStats/hostsCoordinat
 import { getSiaStatsHostsStats } from '../lib/data/siaStats/hostsStats'
 import { getSiaStatsStorage } from '../lib/data/siaStats/storage'
 import { getDaysInSeconds } from '../lib/time'
+import { Code } from '../system/Code'
 import { Text } from '../system/Text'
 
 export default function Home({
@@ -17,11 +18,26 @@ export default function Home({
 }) {
   return (
     <Layout>
-      <Text>hosts stats: {JSON.stringify(hostsStats)}</Text>
-      <Text>storage: {JSON.stringify(storage)}</Text>
-      <Text>map data: {mapDataFeatureCount} features</Text>
-      <Text>github: {JSON.stringify(github)}</Text>
-      <Text>downloads: {JSON.stringify(downloadCounts)}</Text>
+      <Text>hosts stats:</Text>
+      <pre>
+        <Code>{JSON.stringify(hostsStats, null, 1)}</Code>
+      </pre>
+      <Text>storage:</Text>
+      <pre>
+        <Code>{JSON.stringify(storage, null, 1)}</Code>
+      </pre>
+      <Text>map data:</Text>
+      <pre>
+        <Code>{mapDataFeatureCount} features</Code>
+      </pre>
+      <Text>github:</Text>
+      <pre>
+        <Code>{JSON.stringify(github, null, 1)}</Code>
+      </pre>
+      <Text>downloads:</Text>
+      <pre>
+        <Code>{JSON.stringify(downloadCounts, null, 1)}</Code>
+      </pre>
     </Layout>
   )
 }

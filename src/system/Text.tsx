@@ -8,6 +8,7 @@ export const Text = styled('span', {
   fontWeight: '500',
   lineHeight: '$2',
   fontSize: '$2',
+  textDecoration: 'none',
 
   variants: {
     size: {

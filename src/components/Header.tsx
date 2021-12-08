@@ -9,10 +9,11 @@ export function Header() {
       css={{
         position: 'relative',
         flexDirection: 'column',
+        marginBottom: '$5',
       }}
     >
-      <Link href="/">
-        <Text as="h1" size="3" interactive>
+      <Link href="/" passHref>
+        <Text as="a" size="3" interactive>
           {appName}
         </Text>
       </Link>
