@@ -32,3 +32,4 @@ yarn-error.log*
 # docs and releases
 /public/docs
 /public/releases
+/public/transparency
