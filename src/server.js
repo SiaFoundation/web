@@ -45,6 +45,10 @@ async function init() {
     express.static(releasesPath)
   )
 
+  // Serve transparency reports
+  const transparencyPath = 'public/transparency'
+  server.use('/transparency', express.static(transparencyPath))
+
   // Redirects
   redirects.forEach(({ from, to }) => {
     server.get(from, (req, res) => {

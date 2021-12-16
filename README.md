@@ -8,9 +8,10 @@
 # Install dependencies
 yarn
 
-# Create asset directories
+# Create asset directories, add any test assets
 mkdir public/docs
 mkdir public/releases
+mkdir public/transparency
 ```
 
 ### Run
