@@ -31,14 +31,14 @@ jobs:
 
       # `--prefer-offline` gives cache priority
       - name: Install dependencies
-        run: yarn install --prefer-offline --frozen-lockfile
+        run: cd site && yarn install --prefer-offline --frozen-lockfile
 
       - name: Lint application
-        run: yarn lint
+        run: cd site && yarn lint
         env:
           REACT_APP_GIT_SHA: ${{ github.sha }}
 
       - name: Build production application
-        run: yarn build
+        run: cd site && yarn build
         env:
           REACT_APP_GIT_SHA: ${{ github.sha }}
