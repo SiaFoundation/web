@@ -14,7 +14,7 @@ function setupStatic(server) {
   docsApp.use('/rc', express.static(`${docsPath}/${version.rc}`))
   docsVersions.forEach((version) => {
     docsApp.use(
-      `/v${version.replaceAll('.', '')}`,
+      `/v${version.split('.').join('')}`,
       express.static(`${docsPath}/${version}`)
     )
   })
