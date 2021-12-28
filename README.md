@@ -8,6 +8,9 @@
 # Install dependencies
 yarn
 
+# Create a local .env and add the domains to /etc/hosts
+cp .env.example .env
+
 # Create asset directories, add any test assets
 mkdir public/docs
 mkdir public/releases
