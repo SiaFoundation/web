@@ -1,14 +1,14 @@
 // NOTE: File must be .js so that `downloadsCounterMiddleware` can be imported
 // into server.js.
 
-const { storage, initStorage } = require('../storage')
+import { storage, initStorage } from '../storage.js'
 
-const keys = {
+export const keys = {
   siaui: 'siaui',
   siad: 'siad',
 }
 
-async function downloadCountersMiddleware(req, res, next) {
+export async function downloadCountersMiddleware(req, res, next) {
   await initStorage()
 
   if (req.url.includes('UI')) {
@@ -24,7 +24,7 @@ async function downloadCountersMiddleware(req, res, next) {
   next()
 }
 
-async function initDownloadCounters() {
+export async function initDownloadCounters() {
   await initStorage()
 
   let siauiCount = await storage.getItem(keys.siaui)
@@ -45,7 +45,7 @@ async function initDownloadCounters() {
   })
 }
 
-async function getDownloadCounts() {
+export async function getDownloadCounts() {
   await initStorage()
 
   const siadCount = await storage.getItem(keys.siad)
@@ -61,11 +61,4 @@ async function getDownloadCounts() {
     status: 200,
     data: result,
   }
-}
-
-module.exports = {
-  keys,
-  downloadCountersMiddleware,
-  getDownloadCounts,
-  initDownloadCounters,
 }

@@ -1,10 +1,10 @@
-const express = require('express')
-const vhost = require('vhost')
-const { parse } = require('url')
-const next = require('next')
-const { appDomain, dev } = require('../config/site')
+import express from 'express'
+import vhost from 'vhost'
+import { parse } from 'url'
+import next from 'next'
+import { appDomain, dev } from '../config/site.js'
 
-async function setupApp(server) {
+export async function setupApp(server) {
   // Setup
   const app = express()
   const nextApp = next({ dev })
@@ -17,8 +17,4 @@ async function setupApp(server) {
     return handle(req, res, url)
   })
   server.use(vhost(appDomain, app))
-}
-
-module.exports = {
-  setupApp,
 }

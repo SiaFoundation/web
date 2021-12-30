@@ -1,11 +1,11 @@
-const { readdirSync } = require('fs')
-const express = require('express')
-const vhost = require('vhost')
-const { downloadCountersMiddleware } = require('../lib/data/downloads')
-const { docDomain, appDomain } = require('../config/site')
-const { version } = require('../config/sia')
+import { readdirSync } from 'fs'
+import express from 'express'
+import vhost from 'vhost'
+import { downloadCountersMiddleware } from '../lib/data/downloads.js'
+import { docDomain, appDomain } from '../config/site.js'
+import { version } from '../config/sia.js'
 
-function setupStatic(server) {
+export function setupStatic(server) {
   // Serve documentation on api domain
   const docsApp = express()
   const docsPath = 'public/docs'
@@ -47,7 +47,3 @@ const getDirectories = (source) =>
   readdirSync(source, { withFileTypes: true })
     .filter((node) => node.isDirectory())
     .map((node) => node.name)
-
-module.exports = {
-  setupStatic,
-}

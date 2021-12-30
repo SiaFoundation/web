@@ -1,10 +1,11 @@
-require('dotenv').config()
-const express = require('express')
-const { initDownloadCounters } = require('../lib/data/downloads')
-const { setupStatic } = require('./static')
-const { setupRedirects } = require('./redirect')
-const { setupApp } = require('./app')
-const { port, appDomain, docDomain } = require('../config/site')
+import dotenv from 'dotenv'
+dotenv.config()
+import express from 'express'
+import { initDownloadCounters } from '../lib/data/downloads.js'
+import { setupStatic } from './static.js'
+import { setupRedirects } from './redirect.js'
+import { setupApp } from './app.js'
+import { port, appDomain, docDomain } from '../config/site.js'
 
 async function init() {
   console.log('Site')

@@ -1,8 +1,8 @@
-const storage = require('node-persist')
+import storage from 'node-persist'
 
 let initialized = false
 
-async function initStorage() {
+export async function initStorage() {
   if (initialized) {
     return
   }
@@ -10,4 +10,4 @@ async function initStorage() {
   initialized = true
 }
 
-module.exports = { storage, initStorage }
+export { storage }

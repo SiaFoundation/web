@@ -1,13 +1,9 @@
-const { redirects } = require('../config/redirect')
+import { redirects } from '../config/redirect.js'
 
-function setupRedirects(server) {
+export function setupRedirects(server) {
   redirects.forEach(({ from, to }) => {
     server.get(from, (req, res) => {
       res.redirect(to)
     })
   })
-}
-
-module.exports = {
-  setupRedirects,
 }
