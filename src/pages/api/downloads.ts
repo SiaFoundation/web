@@ -1,6 +1,6 @@
-import { getDownloadCounts } from '../../lib/data/downloads'
+import { getCounts } from '../../lib/data/counts'
 
 export default async function handler(req, res) {
-  const { status, data } = await getDownloadCounts()
+  const { status, data } = await getCounts()
   res.status(status).json(data)
 }

@@ -1,7 +1,4 @@
-import dotenv from 'dotenv'
-dotenv.config()
 import express from 'express'
-import { initDownloadCounters } from '../lib/data/downloads.js'
 import { setupStatic } from './static.js'
 import { setupRedirects } from './redirect.js'
 import { setupApp } from './app.js'
@@ -16,9 +13,6 @@ async function init() {
 
   // Setup root server
   const server = express()
-
-  // Initialization
-  initDownloadCounters()
 
   // Docs and other static assets
   setupStatic(server)
