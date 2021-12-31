@@ -46,14 +46,15 @@ async function counterMiddleware(req, res, next) {
   try {
     db = await getDb()
     await db.read()
-    db.data = db.data || defaultCounts
   } catch (e) {
     next()
     return
   }
 
+  db.data = db.data || defaultCounts
+
   // Current value
-  const val = data[key] || 0
+  const val = db.data[key] || 0
 
   // Increment key
   db.data[key] = val + 1
