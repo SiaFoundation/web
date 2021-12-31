@@ -1,3 +1,4 @@
+import { Block } from '../components/Block'
 import { Layout } from '../components/Layout'
 import { getCounts } from '../lib/data/counts'
 import { getGithub } from '../lib/data/github'
@@ -18,26 +19,33 @@ export default function Home({
 }) {
   return (
     <Layout>
-      <Text>hosts stats:</Text>
-      <pre>
-        <Code>{JSON.stringify(hostsStats, null, 1)}</Code>
-      </pre>
-      <Text>storage:</Text>
-      <pre>
-        <Code>{JSON.stringify(storage, null, 1)}</Code>
-      </pre>
-      <Text>map data:</Text>
-      <pre>
-        <Code>{mapDataFeatureCount} features</Code>
-      </pre>
-      <Text>github:</Text>
-      <pre>
-        <Code>{JSON.stringify(github, null, 1)}</Code>
-      </pre>
-      <Text>downloads:</Text>
-      <pre>
-        <Code>{JSON.stringify(downloadCounts, null, 1)}</Code>
-      </pre>
+      <Block title="Hero + headline"></Block>
+      <Block title="Stats / validation">
+        <Text>hosts stats:</Text>
+        <pre>
+          <Code>{JSON.stringify(hostsStats, null, 1)}</Code>
+        </pre>
+        <Text>storage:</Text>
+        <pre>
+          <Code>{JSON.stringify(storage, null, 1)}</Code>
+        </pre>
+        <Text>map data:</Text>
+        <pre>
+          <Code>{mapDataFeatureCount} features</Code>
+        </pre>
+        <Text>github:</Text>
+        <pre>
+          <Code>{JSON.stringify(github, null, 1)}</Code>
+        </pre>
+        <Text>downloads:</Text>
+        <pre>
+          <Code>{JSON.stringify(downloadCounts, null, 1)}</Code>
+        </pre>
+      </Block>
+      <Block title="Ecosystem / in use"></Block>
+      <Block title="Get Started / beginner tutorials"></Block>
+      <Block title="Blog posts or tweets"></Block>
+      <Block title="Developers / resources"></Block>
     </Layout>
   )
 }

@@ -10,8 +10,9 @@ function getPx(units: number) {
 const stitches = createStitches({
   theme: {
     colors: {
-      hiContrast: 'hsla(0, 0%, 100%, 1)',
-      loContrast: 'hsla(0, 2%, 11%, 1)',
+      loContrast: 'hsla(0, 0%, 100%, 1)',
+      hiContrast: 'hsla(0, 2%, 11%, 1)',
+      gray: 'rgba(0,0,0,0.1)',
     },
     fonts: {
       sans: 'Helvetica Neue, Untitled Sans, -apple-system, system-ui, sans-serif',

@@ -2,29 +2,29 @@ const { readdirSync } = require('fs')
 const express = require('express')
 const vhost = require('vhost')
 const { counterMiddleware } = require('../lib/data/counts')
-const { docDomain, appDomain } = require('../config/site')
-const { version } = require('../config/sia')
+const { apiDomain, appDomain } = require('../config/site')
+const { siaVersion } = require('../config/env')
 
 function setupStatic(server) {
-  // Serve documentation on api domain
-  const docsApp = express()
-  const docsPath = getAssetPath('docs')
-  const docsVersions = getDirectories(docsPath)
-  docsApp.use('/', express.static(`${docsPath}/${version.current}`))
-  docsApp.use('/rc', express.static(`${docsPath}/${version.rc}`))
-  docsVersions.forEach((version) => {
-    docsApp.use(
+  // Serve api docs on the api domain
+  const apiApp = express()
+  const apiPath = getAssetPath('docs')
+  const apiVersions = getDirectories(apiPath)
+  apiApp.use('/', express.static(`${apiPath}/${siaVersion.current}`))
+  apiApp.use('/rc', express.static(`${apiPath}/${siaVersion.rc}`))
+  apiVersions.forEach((version) => {
+    apiApp.use(
       `/v${version.split('.').join('')}`,
-      express.static(`${docsPath}/${version}`)
+      express.static(`${apiPath}/${version}`)
     )
   })
-  console.log('Documentation versions')
-  console.log(`\tCurrent: ${version.current}`)
-  console.log(`\tRC: ${version.rc}`)
-  console.log(`\tHistoric: ${docsVersions}`)
+  console.log('API versions')
+  console.log(`\tCurrent: ${siaVersion.current}`)
+  console.log(`\tRC: ${siaVersion.rc}`)
+  console.log(`\tHistoric: ${apiVersions}`)
   console.log('')
 
-  server.use(vhost(docDomain, docsApp))
+  server.use(vhost(apiDomain, apiApp))
 
   // Rest of static assets on root domain
   const staticApp = express()

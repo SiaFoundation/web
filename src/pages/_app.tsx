@@ -1,7 +1,9 @@
 import { resetStyles } from '../config/reset'
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   resetStyles()
 
   return <Component {...pageProps} />
 }
+
+export default App

@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { appName } from '../config/app'
 import { Box } from '../system/Box'
 import { Flex } from '../system/Flex'
+import { Footer } from './Footer'
 import { Header } from './Header'
 
 type Props = {
@@ -45,15 +46,23 @@ export function Layout({ children }: Props) {
       </Head>
       <Flex
         as="main"
+        column
         css={{
-          flexDirection: 'column',
-          gap: '$2',
+          gap: '$8',
           padding: '$5',
           margin: '0 auto',
         }}
       >
         <Header />
-        {children}
+        <Flex
+          column
+          css={{
+            gap: '$3',
+          }}
+        >
+          {children}
+        </Flex>
+        <Footer />
       </Flex>
     </Box>
   )
