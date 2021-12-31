@@ -5,8 +5,7 @@ import { setupApp } from './app.js'
 import { port, appDomain, docDomain } from '../config/site.js'
 
 async function init() {
-  console.log('Site')
-  console.log('')
+  console.log('\nSite\n')
   console.log(`Application: ${appDomain}`)
   console.log(`Documentation: ${docDomain}`)
   console.log('')

@@ -1,5 +1,5 @@
 import { Layout } from '../components/Layout'
-import { getCounts } from '../lib/data/counters'
+import { getCounts } from '../lib/data/counts'
 import { getGithub } from '../lib/data/github'
 // import { getSiaStatsHostsActive } from '../lib/data/siaStats/hostsActive'
 import { getSiaStatsHostsCoordinates } from '../lib/data/siaStats/hostsCoordinates'
