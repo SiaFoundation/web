@@ -1,14 +1,24 @@
+require('dotenv').config()
+
 const express = require('express')
 const { setupStatic } = require('./static')
 const { setupRedirects } = require('./redirect')
 const { setupApp } = require('./app')
-const { port, appDomain, docDomain } = require('../config/site')
+const {
+  port,
+  appDomain,
+  apiDomain,
+  docsDomain,
+  blogDomain,
+} = require('../config/site')
 
 async function init() {
-  console.log('\nSite\n')
-  console.log(`Application: ${appDomain}`)
-  console.log(`Documentation: ${docDomain}`)
-  console.log('')
+  console.log('\nSite')
+  console.log(`App: ${appDomain}`)
+  console.log(`API: ${apiDomain}`)
+  console.log('\nExternal')
+  console.log(`Docs: ${docsDomain}`)
+  console.log(`Blog: ${blogDomain}\n`)
 
   // Setup root server
   const server = express()
