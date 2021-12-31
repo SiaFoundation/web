@@ -1,7 +1,5 @@
-import { join, dirname } from 'path'
-import { Low, JSONFile } from 'lowdb'
-import { fileURLToPath } from 'url'
-import { errorResponse500 } from '../error.js'
+const { join } = require('path')
+const { errorResponse500 } = require('../error.js')
 
 const siaui = 925283
 const siad = 134294
@@ -14,22 +12,23 @@ const defaultCounts = {
 
 let _db = null
 
-function initDb() {
+async function initDb() {
+  const { Low, JSONFile } = await import('lowdb')
   // const __dirname = dirname((import.meta.url))
   const file = join('persist', 'counters.json')
   const adapter = new JSONFile(file)
   return new Low(adapter)
 }
 
-function getDb() {
+async function getDb() {
   if (!_db) {
-    _db = initDb()
+    _db = await initDb()
   }
   return _db
 }
 
-export async function getCounts() {
-  const db = getDb()
+async function getCounts() {
+  const db = await getDb()
 
   try {
     await db.read()
@@ -42,10 +41,10 @@ export async function getCounts() {
   }
 }
 
-export async function counterMiddleware(req, res, next) {
+async function counterMiddleware(req, res, next) {
   const key = req.url
 
-  const db = getDb()
+  const db = await getDb()
 
   await db.read()
 
@@ -67,4 +66,9 @@ export async function counterMiddleware(req, res, next) {
   await db.write()
 
   next()
+}
+
+module.exports = {
+  getCounts,
+  counterMiddleware,
 }

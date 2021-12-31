@@ -1,11 +1,11 @@
-import { readdirSync } from 'fs'
-import express from 'express'
-import vhost from 'vhost'
-import { counterMiddleware } from '../lib/data/counts.js'
-import { docDomain, appDomain } from '../config/site.js'
-import { version } from '../config/sia.js'
+const { readdirSync } = require('fs')
+const express = require('express')
+const vhost = require('vhost')
+const { counterMiddleware } = require('../lib/data/counts.js')
+const { docDomain, appDomain } = require('../config/site.js')
+const { version } = require('../config/sia.js')
 
-export function setupStatic(server) {
+function setupStatic(server) {
   // Serve documentation on api domain
   const docsApp = express()
   const docsPath = getAssetPath('docs')
@@ -51,4 +51,8 @@ function getDirectories(source) {
 
 function getAssetPath(resource) {
   return `public/${resource}`
+}
+
+module.exports = {
+  setupStatic,
 }

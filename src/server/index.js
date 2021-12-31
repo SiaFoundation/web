@@ -1,8 +1,8 @@
-import express from 'express'
-import { setupStatic } from './static.js'
-import { setupRedirects } from './redirect.js'
-import { setupApp } from './app.js'
-import { port, appDomain, docDomain } from '../config/site.js'
+const express = require('express')
+const { setupStatic } = require('./static.js')
+const { setupRedirects } = require('./redirect.js')
+const { setupApp } = require('./app.js')
+const { port, appDomain, docDomain } = require('../config/site.js')
 
 async function init() {
   console.log('\nSite\n')
