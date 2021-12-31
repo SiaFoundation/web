@@ -5,7 +5,7 @@ import { Heading } from '../../system/Heading'
 function CommunityEcosystemGetSiacoin() {
   return (
     <Layout>
-      <Heading>Community / Get Siacoin</Heading>
+      <Heading>Community & ecosystem / Get Siacoin</Heading>
       <Block title="Page content"></Block>
     </Layout>
   )
