@@ -1,5 +1,7 @@
+import Link from 'next/link'
 import { Block } from '../components/Block'
 import { Layout } from '../components/Layout'
+import { sitemap } from '../config/site'
 import { getCounts } from '../lib/data/counts'
 import { getGithub } from '../lib/data/github'
 // import { getSiaStatsHostsActive } from '../lib/data/siaStats/hostsActive'
@@ -19,7 +21,9 @@ export default function Home({
 }) {
   return (
     <Layout>
-      <Block title="Hero + headline"></Block>
+      <Block title="Hero + headline">
+        <Link href={sitemap.developers.index}>Download</Link>
+      </Block>
       <Block title="Stats / validation">
         <Text>hosts stats:</Text>
         <pre>
