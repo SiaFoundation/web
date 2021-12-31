@@ -1,8 +1,8 @@
 const express = require('express')
-const { setupStatic } = require('./static.js')
-const { setupRedirects } = require('./redirect.js')
-const { setupApp } = require('./app.js')
-const { port, appDomain, docDomain } = require('../config/site.js')
+const { setupStatic } = require('./static')
+const { setupRedirects } = require('./redirect')
+const { setupApp } = require('./app')
+const { port, appDomain, docDomain } = require('../config/site')
 
 async function init() {
   console.log('\nSite\n')

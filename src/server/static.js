@@ -1,9 +1,9 @@
 const { readdirSync } = require('fs')
 const express = require('express')
 const vhost = require('vhost')
-const { counterMiddleware } = require('../lib/data/counts.js')
-const { docDomain, appDomain } = require('../config/site.js')
-const { version } = require('../config/sia.js')
+const { counterMiddleware } = require('../lib/data/counts')
+const { docDomain, appDomain } = require('../config/site')
+const { version } = require('../config/sia')
 
 function setupStatic(server) {
   // Serve documentation on api domain

@@ -2,7 +2,7 @@ const express = require('express')
 const vhost = require('vhost')
 const { parse } = require('url')
 const next = require('next')
-const { appDomain, dev } = require('../config/site.js')
+const { appDomain, dev } = require('../config/site')
 
 async function setupApp(server) {
   // Setup
