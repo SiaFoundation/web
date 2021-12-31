@@ -2,7 +2,7 @@ const { readdirSync } = require('fs')
 const express = require('express')
 const vhost = require('vhost')
 const { counterMiddleware } = require('../lib/data/counts')
-const { apiDomain, appDomain } = require('../config/site')
+const { apiDomain, appDomain } = require('../config/env')
 const { siaVersion } = require('../config/env')
 
 function setupStatic(server) {

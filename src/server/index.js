@@ -4,21 +4,12 @@ const express = require('express')
 const { setupStatic } = require('./static')
 const { setupRedirects } = require('./redirect')
 const { setupApp } = require('./app')
-const {
-  port,
-  appDomain,
-  apiDomain,
-  docsDomain,
-  blogDomain,
-} = require('../config/site')
+const { port, appDomain, apiDomain } = require('../config/env')
 
 async function init() {
   console.log('\nSite')
   console.log(`App: ${appDomain}`)
   console.log(`API: ${apiDomain}`)
-  console.log('\nExternal')
-  console.log(`Docs: ${docsDomain}`)
-  console.log(`Blog: ${blogDomain}\n`)
 
   // Setup root server
   const server = express()
