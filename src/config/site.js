@@ -1,3 +1,7 @@
+const dotenv = require('dotenv')
+
+dotenv.config()
+
 const appDomain = process.env.APP_DOMAIN || 'sia.tech'
 const docDomain = process.env.DOC_DOMAIN || 'api.sia.tech'
 const port = process.env.PORT || 3000

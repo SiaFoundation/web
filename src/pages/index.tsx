@@ -1,5 +1,5 @@
 import { Layout } from '../components/Layout'
-import { getDownloadCounts } from '../lib/data/downloads'
+import { getCounts } from '../lib/data/counts'
 import { getGithub } from '../lib/data/github'
 // import { getSiaStatsHostsActive } from '../lib/data/siaStats/hostsActive'
 import { getSiaStatsHostsCoordinates } from '../lib/data/siaStats/hostsCoordinates'
@@ -58,7 +58,7 @@ export async function getStaticProps() {
     getSiaStatsHostsCoordinates(),
     getSiaStatsHostsStats(),
     getSiaStatsStorage(),
-    getDownloadCounts(),
+    getCounts(),
     getGithub(),
   ])
 
