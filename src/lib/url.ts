@@ -1,6 +1,6 @@
 import { dev } from '../config/env'
 
-export function getUrl(url: string) {
+export function getHref(url: string) {
   if (dev) {
     return `http://${url}`
   }

@@ -2,14 +2,18 @@ import { PlaceholderBlock } from '../../components/PlaceholderBlock'
 import { Layout } from '../../components/Layout'
 import { Heading } from '../../system/Heading'
 import { appDomain } from '../../config/env'
-import { getUrl } from '../../lib/url'
+import { getHref } from '../../lib/url'
 
 function LearnWhitepaper() {
   return (
     <Layout>
       <Heading>Learn / Whitepaper</Heading>
       <PlaceholderBlock>
-        <iframe height="1000px" src={getUrl(`${appDomain}/sia.pdf`)} />
+        <iframe
+          height="1000px"
+          width="100%"
+          src={getHref(`${appDomain}/sia.pdf`)}
+        />
       </PlaceholderBlock>
     </Layout>
   )

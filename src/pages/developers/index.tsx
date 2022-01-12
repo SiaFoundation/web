@@ -8,7 +8,7 @@ import { Flex } from '../../system/Flex'
 import { Heading } from '../../system/Heading'
 import { Text } from '../../system/Text'
 import { Link } from '../../system/Link'
-import { getUrl } from '../../lib/url'
+import { getHref } from '../../lib/url'
 
 function Developers({ counts }) {
   return (
@@ -16,12 +16,12 @@ function Developers({ counts }) {
       <Heading>Developers</Heading>
       <PlaceholderBlock title="Intro + quick links">
         <Flex direction="column" gap="3">
-          <Link href={getUrl(apiDomain)}>API Reference</Link>
+          <Link href={getHref(apiDomain)}>API Reference</Link>
           <Link href={external.docs}>Documentation</Link>
           <Text>Core software downloads</Text>
           <Flex gap="3" justify="center">
             <Link
-              href={getUrl(
+              href={getHref(
                 `${appDomain}/releases/Sia-UI-v${siaVersion.current}.AppImage`
               )}
             >
@@ -30,7 +30,7 @@ function Developers({ counts }) {
                 : 'UI'}
             </Link>
             <Link
-              href={getUrl(
+              href={getHref(
                 `${appDomain}/releases/Sia-v${siaVersion.current}-linux-amd64.zip`
               )}
             >
