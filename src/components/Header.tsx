@@ -11,9 +11,7 @@ export function Header() {
     <Flex align="center" justify="between">
       <Flex direction="column">
         <Link href={sitemap.home.index}>
-          <Heading as="a" size="3">
-            {appName}
-          </Heading>
+          <Heading size="3">{appName}</Heading>
         </Link>
         <Text size="1">Decentralized storage for the post-cloud world.</Text>
       </Flex>
@@ -36,7 +34,7 @@ export function Header() {
             margin: '$1 0',
           }}
         >
-          <Link href={`https://${apiDomain}`} target="_blank">
+          <Link href={`http://${apiDomain}`} target="_blank">
             API Reference
           </Link>
           <Link href={external.docs} target="_blank">

@@ -8,8 +8,12 @@
 # Install dependencies
 yarn
 
-# Create a local .env and add the domains to /etc/hosts
+# Create a local .env
 cp .env.example .env
+
+# Add the domains to /etc/hosts
+127.0.0.1 sia.local
+127.0.0.1 api.sia.local
 
 # Create asset directories, add any test assets
 mkdir public/docs

@@ -10,6 +10,15 @@ import { Layout } from '../../components/Layout'
 import { sitemap } from '../../config/site'
 import { Link } from '../../system/Link'
 
+type Post = {
+  title: string
+  location: string
+  date: number
+  description: string
+  slug: string
+  mdxSource: {}
+}
+
 function NewsroomPost({ title, description, location, date, mdxSource }) {
   return (
     <Layout>
