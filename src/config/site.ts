@@ -25,7 +25,7 @@ export const sitemap = {
   },
 }
 
-export const social = {
+export const external = {
   blog: 'https://blog.sia.tech',
   // docs: 'https://docs.sia.tech',
   docs: 'https://support.sia.tech',

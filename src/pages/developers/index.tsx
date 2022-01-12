@@ -1,24 +1,24 @@
-import Link from 'next/link'
-import { Block } from '../../components/Block'
+import { PlaceholderBlock } from '../../components/PlaceholderBlock'
 import { Layout } from '../../components/Layout'
 import { apiDomain, appDomain, siaVersion } from '../../config/env'
-import { sitemap, social } from '../../config/site'
+import { sitemap, external } from '../../config/site'
 import { getCounts } from '../../lib/data/counts'
 import { getDaysInSeconds } from '../../lib/time'
 import { Flex } from '../../system/Flex'
 import { Heading } from '../../system/Heading'
 import { Text } from '../../system/Text'
+import { Link } from '../../system/Link'
 
 function Developers({ counts }) {
   return (
     <Layout>
       <Heading>Developers</Heading>
-      <Block title="Intro + quick links">
-        <Flex column css={{ gap: '$3' }}>
+      <PlaceholderBlock title="Intro + quick links">
+        <Flex direction="column" gap="3">
           <Link href={`https://${apiDomain}`}>API Reference</Link>
-          <Link href={social.docs}>Documentation</Link>
+          <Link href={external.docs}>Documentation</Link>
           <Text>Core software downloads</Text>
-          <Flex css={{ gap: '$3', justifyContent: 'center' }}>
+          <Flex gap="3" justify="center">
             <Link
               href={`https://${appDomain}/releases/Sia-UI-v${siaVersion.current}.AppImage`}
             >
@@ -35,24 +35,24 @@ function Developers({ counts }) {
             </Link>
           </Flex>
         </Flex>
-      </Block>
-      <Block title="Blog posts">
-        <Link href={social.blog}>Blog</Link>
-      </Block>
-      <Block title="Featured ecosystem projects">
+      </PlaceholderBlock>
+      <PlaceholderBlock title="Blog posts">
+        <Link href={external.blog}>Blog</Link>
+      </PlaceholderBlock>
+      <PlaceholderBlock title="Featured ecosystem projects">
         <Link href={sitemap.community.index}>Community & ecosystem</Link>
-      </Block>
-      <Block title="Learn">
-        <Flex column css={{ gap: '$3', margin: '$3' }}>
-          <Block title="How Sia works">
+      </PlaceholderBlock>
+      <PlaceholderBlock title="Learn">
+        <Flex direction="column" gap="3" css={{ margin: '$3' }}>
+          <PlaceholderBlock title="How Sia works">
             <Link href={sitemap.learn.howSiaWorks}>How Sia works</Link>
-          </Block>
-          <Block title="Get started">
+          </PlaceholderBlock>
+          <PlaceholderBlock title="Get started">
             <Link href={sitemap.learn.getStarted}>How Sia works</Link>
-          </Block>
-          <Block title="Highlighted tutorials"></Block>
+          </PlaceholderBlock>
+          <PlaceholderBlock title="Highlighted tutorials"></PlaceholderBlock>
         </Flex>
-      </Block>
+      </PlaceholderBlock>
     </Layout>
   )
 }

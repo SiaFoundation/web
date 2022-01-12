@@ -2,47 +2,45 @@ import { styled } from '../config/theme'
 
 export const Text = styled('span', {
   boxSizing: 'border-box',
-  color: '$hiContrast',
+  color: '$text',
   display: 'inline-block',
   fontFamily: '$sans',
-  fontWeight: '500',
-  lineHeight: '$2',
-  fontSize: '$2',
-  textDecoration: 'none',
+  fontWeight: 400,
+  lineHeight: '1',
 
   variants: {
     size: {
-      1: {
-        lineHeight: '$1',
+      '1': {
         fontSize: '$1',
       },
-      2: {
-        lineHeight: '$2',
+      '2': {
         fontSize: '$2',
       },
-      3: {
-        lineHeight: '$3',
+      '3': {
         fontSize: '$3',
       },
-    },
-    clip: {
-      true: {
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
+      '4': {
+        fontSize: '$4',
       },
-    },
-    interactive: {
-      true: {
-        cursor: 'pointer',
-        '&:hover': {
-          textDecoration: 'underline',
-        },
+      '5': {
+        fontSize: '$5',
+      },
+      '6': {
+        fontSize: '$6',
+      },
+      '7': {
+        fontSize: '$7',
+      },
+      '8': {
+        fontSize: '$8',
+      },
+      '9': {
+        fontSize: '$9',
       },
     },
   },
 
   defaultVariants: {
-    size: 2,
+    size: 3,
   },
 })

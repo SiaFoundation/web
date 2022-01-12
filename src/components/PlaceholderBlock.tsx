@@ -1,26 +1,23 @@
 import { Text } from '../system/Text'
-import { Flex } from '../system/Flex'
+import { Panel } from '../system/Panel'
 
 type Props = {
   title?: string
   children?: React.ReactNode
 }
 
-export function Block({ title, children }: Props) {
+export function PlaceholderBlock({ title, children }: Props) {
   return (
-    <Flex
-      column
+    <Panel
       css={{
-        position: 'relative',
         padding: '$5 0',
-        border: '1px solid $gray',
-        borderRadius: '$1',
         textAlign: 'center',
       }}
     >
       {title && (
         <Text
           css={{
+            display: 'block',
             padding: '$3 0',
           }}
         >
@@ -28,6 +25,6 @@ export function Block({ title, children }: Props) {
         </Text>
       )}
       {children}
-    </Flex>
+    </Panel>
   )
 }
