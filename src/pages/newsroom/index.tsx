@@ -10,7 +10,7 @@ import { PlaceholderBlock } from '../../components/PlaceholderBlock'
 import { Layout } from '../../components/Layout'
 import { Heading } from '../../system/Heading'
 import { Text } from '../../system/Text'
-import { sitemap } from '../../config/site'
+import { external, sitemap } from '../../config/site'
 import { Link } from '../../system/Link'
 import { Flex } from '../../system/Flex'
 import { components } from '../../config/mdx'
@@ -103,8 +103,8 @@ function generateRssFeed(posts: ServerPost[]) {
   const date = new Date()
   const author = {
     name: 'Sia Foundation',
-    email: 'hello@sia.tech',
-    link: 'https://twitter.com/sia__foundation',
+    email: external.email,
+    link: external.twitter,
   }
 
   const feed = new Feed({

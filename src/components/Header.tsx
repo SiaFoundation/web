@@ -5,6 +5,7 @@ import { Flex } from '../system/Flex'
 import { apiDomain } from '../config/env'
 import { sitemap, external } from '../config/site'
 import { Heading } from '../system/Heading'
+import { getUrl } from '../lib/url'
 
 export function Header() {
   return (
@@ -34,7 +35,7 @@ export function Header() {
             margin: '$1 0',
           }}
         >
-          <Link href={`http://${apiDomain}`} target="_blank">
+          <Link href={getUrl(apiDomain)} target="_blank">
             API Reference
           </Link>
           <Link href={external.docs} target="_blank">
