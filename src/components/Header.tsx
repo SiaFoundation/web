@@ -5,15 +5,14 @@ import { Flex } from '../system/Flex'
 import { apiDomain } from '../config/env'
 import { sitemap, external } from '../config/site'
 import { Heading } from '../system/Heading'
+import { getHref } from '../lib/url'
 
 export function Header() {
   return (
     <Flex align="center" justify="between">
       <Flex direction="column">
         <Link href={sitemap.home.index}>
-          <Heading as="a" size="3">
-            {appName}
-          </Heading>
+          <Heading size="3">{appName}</Heading>
         </Link>
         <Text size="1">Decentralized storage for the post-cloud world.</Text>
       </Flex>
@@ -36,7 +35,7 @@ export function Header() {
             margin: '$1 0',
           }}
         >
-          <Link href={`https://${apiDomain}`} target="_blank">
+          <Link href={getHref(apiDomain)} target="_blank">
             API Reference
           </Link>
           <Link href={external.docs} target="_blank">

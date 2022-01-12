@@ -34,4 +34,5 @@ export const external = {
   twitter: 'https://twitter.com/sia__foundation',
   reddit: 'https://reddit.com/r/siacoin',
   merch: 'https://siagear.tech/',
+  email: 'hello@sia.tech',
 }
