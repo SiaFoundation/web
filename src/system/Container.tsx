@@ -3,9 +3,11 @@ import { styled } from '../config/theme'
 export const Container = styled('div', {
   boxSizing: 'border-box',
   flexShrink: 0,
-  ml: 'auto',
-  mr: 'auto',
-  px: '$5',
+  margin: '0 auto',
+  padding: '0 $3',
+  '@bp2': {
+    padding: '0 $5',
+  },
 
   variants: {
     size: {

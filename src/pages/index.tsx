@@ -14,6 +14,7 @@ import { Link } from '../system/Link'
 
 export default function Home({
   storage,
+  hostsActive,
   hostsStats,
   mapDataFeatureCount,
   github,
@@ -25,6 +26,10 @@ export default function Home({
         <Link href={sitemap.developers.index}>Download</Link>
       </PlaceholderBlock>
       <PlaceholderBlock title="Stats / validation">
+        <Text>hosts active:</Text>
+        <pre>
+          <Code>{JSON.stringify(hostsActive, null, 2)}</Code>
+        </pre>
         <Text>hosts stats:</Text>
         <pre>
           <Code>{JSON.stringify(hostsStats, null, 2)}</Code>
@@ -79,6 +84,7 @@ export async function getStaticProps() {
   const mapData = geoJsonFormatter(hostsCoordinates.data)
 
   const props = {
+    hostsActive,
     hostsStats,
     storage,
     downloadCounts,

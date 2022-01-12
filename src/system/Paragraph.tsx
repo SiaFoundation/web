@@ -31,7 +31,6 @@ export const Paragraph = React.forwardRef<
   const textCss: Record<ParagraphSizeVariants, CSS> = {
     1: { lineHeight: '25px', '@bp2': { lineHeight: '27px' } },
     2: {
-      color: '$slate11',
       lineHeight: '27px',
       '@bp2': { lineHeight: '30px' },
     },

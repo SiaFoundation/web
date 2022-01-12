@@ -15,14 +15,14 @@ export const Button = styled('button', {
   variants: {
     variant: {
       primary: {
-        backgroundColor: 'blue',
+        backgroundColor: '$blue5',
       },
       secondary: {
-        backgroundColor: 'gray',
+        backgroundColor: '$gray5',
       },
       link: {
         backgroundColor: 'none',
-        border: '1px solid #444444',
+        border: '1px solid $canvas',
       },
     },
   },

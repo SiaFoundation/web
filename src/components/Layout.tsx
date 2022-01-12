@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { appName } from '../config/app'
 import { Box } from '../system/Box'
+import { Container } from '../system/Container'
 import { Flex } from '../system/Flex'
 import { Footer } from './Footer'
 import { Header } from './Header'
@@ -44,21 +45,15 @@ export function Layout({ children }: Props) {
         <meta name="msapplication-TileColor" content="#2b5797" />
         <meta name="theme-color" content="#ffffff" />
       </Head>
-      <Flex
-        as="main"
-        direction="column"
-        gap="8"
-        css={{
-          padding: '$5',
-          margin: '0 auto',
-        }}
-      >
-        <Header />
-        <Flex direction="column" gap="3">
-          {children}
+      <Container size="3">
+        <Flex as="main" direction="column" gap="8" css={{ margin: '$5 0' }}>
+          <Header />
+          <Flex direction="column" gap="3">
+            {children}
+          </Flex>
+          <Footer />
         </Flex>
-        <Footer />
-      </Flex>
+      </Container>
     </Box>
   )
 }

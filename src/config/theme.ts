@@ -15,6 +15,7 @@ const stitches = createStitches({
       // Add theme colors here eg:
       green5: 'green',
       blue5: 'blue',
+      gray5: '#555',
 
       // Semantic colors
       loContrast: 'hsla(0, 0%, 100%, 1)',
