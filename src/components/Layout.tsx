@@ -46,20 +46,15 @@ export function Layout({ children }: Props) {
       </Head>
       <Flex
         as="main"
-        column
+        direction="column"
+        gap="8"
         css={{
-          gap: '$8',
           padding: '$5',
           margin: '0 auto',
         }}
       >
         <Header />
-        <Flex
-          column
-          css={{
-            gap: '$3',
-          }}
-        >
+        <Flex direction="column" gap="3">
           {children}
         </Flex>
         <Footer />

@@ -1,50 +1,52 @@
-import { styled } from '../config/theme'
+import React from 'react'
+import { Text } from './Text'
+import { VariantProps, CSS } from '../config/theme'
+import merge from 'lodash/merge'
 
-export const Heading = styled('h1', {
-  boxSizing: 'border-box',
-  color: '$hiContrast',
-  display: 'inline-block',
-  fontFamily: '$sans',
-  fontWeight: '500',
-  lineHeight: '$2',
-  fontSize: '$3',
-  textDecoration: 'none',
+const DEFAULT_TAG = 'h1'
 
-  margin: '$4 0',
+type TextSizeVariants = Pick<VariantProps<typeof Text>, 'size'>
+type HeadingSizeVariants = '1' | '2' | '3' | '4'
+type HeadingVariants = { size?: HeadingSizeVariants } & Omit<
+  VariantProps<typeof Text>,
+  'size'
+>
+type HeadingProps = React.ComponentProps<typeof DEFAULT_TAG> &
+  HeadingVariants & { css?: CSS; as?: any }
 
-  variants: {
-    size: {
-      1: {
-        lineHeight: '$1',
-        fontSize: '$1',
-      },
-      2: {
-        lineHeight: '$2',
-        fontSize: '$2',
-      },
-      3: {
-        lineHeight: '$3',
-        fontSize: '$3',
-      },
-    },
-    clip: {
-      true: {
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-      },
-    },
-    interactive: {
-      true: {
-        cursor: 'pointer',
-        '&:hover': {
-          textDecoration: 'underline',
-        },
-      },
-    },
-  },
+export const Heading = React.forwardRef<
+  React.ElementRef<typeof DEFAULT_TAG>,
+  HeadingProps
+>((props, forwardedRef) => {
+  // '2' here is the default heading size variant
+  const { size = '1', ...textProps } = props
+  // This is the mapping of Heading Variants to Text variants
+  const textSize: Record<HeadingSizeVariants, TextSizeVariants['size']> = {
+    1: { '@initial': '4', '@bp2': '5' },
+    2: { '@initial': '6', '@bp2': '7' },
+    3: { '@initial': '7', '@bp2': '8' },
+    4: { '@initial': '8', '@bp2': '9' },
+  }
 
-  defaultVariants: {
-    size: 3,
-  },
+  // This is the mapping of Heading Variants to Text css
+  const textCss: Record<HeadingSizeVariants, CSS> = {
+    1: { fontWeight: 500, lineHeight: '20px', '@bp2': { lineHeight: '23px' } },
+    2: { fontWeight: 500, lineHeight: '25px', '@bp2': { lineHeight: '30px' } },
+    3: { fontWeight: 500, lineHeight: '33px', '@bp2': { lineHeight: '41px' } },
+    4: { fontWeight: 500, lineHeight: '35px', '@bp2': { lineHeight: '55px' } },
+  }
+
+  return (
+    <Text
+      as={DEFAULT_TAG}
+      {...textProps}
+      ref={forwardedRef}
+      size={textSize[size]}
+      css={{
+        fontVariantNumeric: 'proportional-nums',
+        color: '$hiContrast',
+        ...merge(textCss[size], props.css),
+      }}
+    />
+  )
 })

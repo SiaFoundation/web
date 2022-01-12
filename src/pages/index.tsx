@@ -1,16 +1,16 @@
-import Link from 'next/link'
-import { Block } from '../components/Block'
+import { PlaceholderBlock } from '../components/PlaceholderBlock'
 import { Layout } from '../components/Layout'
 import { sitemap } from '../config/site'
 import { getCounts } from '../lib/data/counts'
 import { getGithub } from '../lib/data/github'
-// import { getSiaStatsHostsActive } from '../lib/data/siaStats/hostsActive'
+import { getSiaStatsHostsActive } from '../lib/data/siaStats/hostsActive'
 import { getSiaStatsHostsCoordinates } from '../lib/data/siaStats/hostsCoordinates'
 import { getSiaStatsHostsStats } from '../lib/data/siaStats/hostsStats'
 import { getSiaStatsStorage } from '../lib/data/siaStats/storage'
 import { getDaysInSeconds } from '../lib/time'
 import { Code } from '../system/Code'
 import { Text } from '../system/Text'
+import { Link } from '../system/Link'
 
 export default function Home({
   storage,
@@ -21,17 +21,17 @@ export default function Home({
 }) {
   return (
     <Layout>
-      <Block title="Hero + headline">
+      <PlaceholderBlock title="Hero + headline">
         <Link href={sitemap.developers.index}>Download</Link>
-      </Block>
-      <Block title="Stats / validation">
+      </PlaceholderBlock>
+      <PlaceholderBlock title="Stats / validation">
         <Text>hosts stats:</Text>
         <pre>
-          <Code>{JSON.stringify(hostsStats, null, 1)}</Code>
+          <Code>{JSON.stringify(hostsStats, null, 2)}</Code>
         </pre>
         <Text>storage:</Text>
         <pre>
-          <Code>{JSON.stringify(storage, null, 1)}</Code>
+          <Code>{JSON.stringify(storage, null, 2)}</Code>
         </pre>
         <Text>map data:</Text>
         <pre>
@@ -39,17 +39,17 @@ export default function Home({
         </pre>
         <Text>github:</Text>
         <pre>
-          <Code>{JSON.stringify(github, null, 1)}</Code>
+          <Code>{JSON.stringify(github, null, 2)}</Code>
         </pre>
         <Text>downloads:</Text>
         <pre>
-          <Code>{JSON.stringify(downloadCounts, null, 1)}</Code>
+          <Code>{JSON.stringify(downloadCounts, null, 2)}</Code>
         </pre>
-      </Block>
-      <Block title="Ecosystem / in use"></Block>
-      <Block title="Get Started / beginner tutorials"></Block>
-      <Block title="Blog posts or tweets"></Block>
-      <Block title="Developers / resources"></Block>
+      </PlaceholderBlock>
+      <PlaceholderBlock title="Ecosystem / in use"></PlaceholderBlock>
+      <PlaceholderBlock title="Get Started / beginner tutorials"></PlaceholderBlock>
+      <PlaceholderBlock title="Blog posts or tweets"></PlaceholderBlock>
+      <PlaceholderBlock title="Developers / resources"></PlaceholderBlock>
     </Layout>
   )
 }
@@ -59,14 +59,14 @@ export default function Home({
 // interval, without blocking any request.
 export async function getStaticProps() {
   const [
-    // hostsActive,
+    hostsActive,
     hostsCoordinates,
     hostsStats,
     storage,
     downloadCounts,
     github,
   ] = await Promise.all([
-    // getSiaStatsHostsActive(),
+    getSiaStatsHostsActive(),
     getSiaStatsHostsCoordinates(),
     getSiaStatsHostsStats(),
     getSiaStatsStorage(),
@@ -74,14 +74,7 @@ export async function getStaticProps() {
     getGithub(),
   ])
 
-  console.log([
-    // hostsActive,
-    // hostsCoordinates,
-    hostsStats,
-    storage,
-    downloadCounts,
-    github,
-  ])
+  console.log([hostsActive, hostsStats, storage, downloadCounts, github])
 
   const mapData = geoJsonFormatter(hostsCoordinates.data)
 

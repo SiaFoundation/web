@@ -1,86 +1,51 @@
-import Link from 'next/link'
 import { appName } from '../config/app'
 import { Text } from '../system/Text'
+import { Link } from '../system/Link'
 import { Flex } from '../system/Flex'
 import { apiDomain } from '../config/env'
-import { sitemap, social } from '../config/site'
-import { Li } from '../system/Li'
-import { Box } from '../system/Box'
+import { sitemap, external } from '../config/site'
+import { Heading } from '../system/Heading'
 
 export function Header() {
   return (
-    <Flex
-      css={{
-        position: 'relative',
-        alignItems: 'center',
-      }}
-    >
-      <Flex
-        column
-        css={{
-          position: 'relative',
-        }}
-      >
-        <Link href={sitemap.home.index} passHref>
-          <Text as="a" size="3" interactive>
+    <Flex align="center" justify="between">
+      <Flex direction="column">
+        <Link href={sitemap.home.index}>
+          <Heading as="a" size="3">
             {appName}
-          </Text>
+          </Heading>
         </Link>
-        <Text as="span" size="1">
-          Decentralized storage for the post-cloud world.
-        </Text>
+        <Text size="1">Decentralized storage for the post-cloud world.</Text>
       </Flex>
-      <Box css={{ flex: 1 }} />
-      <Flex
-        column
-        css={{
-          gap: '$1',
-        }}
-      >
+      <Flex direction="column" gap="1">
         <Flex
-          as="ul"
+          gap="3"
+          justify="end"
           css={{
-            gap: '$3',
             margin: '$1 0',
-            justifyContent: 'end',
           }}
         >
-          <Li>
-            <Link href={sitemap.developers.index}>Developers</Link>
-          </Li>
-          <Li>
-            <Link href={sitemap.learn.index}>Learn</Link>
-          </Li>
-          <Li>
-            <Link href={sitemap.community.index}>Community & Ecosystem</Link>
-          </Li>
+          <Link href={sitemap.developers.index}>Developers</Link>
+          <Link href={sitemap.learn.index}>Learn</Link>
+          <Link href={sitemap.community.index}>Community & Ecosystem</Link>
         </Flex>
         <Flex
-          as="ul"
+          gap="3"
+          justify="end"
           css={{
-            gap: '$3',
             margin: '$1 0',
-            justifyContent: 'end',
           }}
         >
-          <Li>
-            <Link href={`https://${apiDomain}`} passHref>
-              <a target="_blank">API Reference</a>
-            </Link>
-          </Li>
-          <Li>
-            <Link href={social.docs} passHref>
-              <a target="_blank">Documentation</a>
-            </Link>
-          </Li>
-          <Li>
-            <Link href={social.blog} passHref>
-              <a target="_blank">Blog</a>
-            </Link>
-          </Li>
-          <Li>
-            <Link href={sitemap.foundation.index}>About Sia Foundation</Link>
-          </Li>
+          <Link href={`https://${apiDomain}`} target="_blank">
+            API Reference
+          </Link>
+          <Link href={external.docs} target="_blank">
+            Documentation
+          </Link>
+          <Link href={external.blog} target="_blank">
+            Blog
+          </Link>
+          <Link href={sitemap.foundation.index}>About Sia Foundation</Link>
         </Flex>
       </Flex>
     </Flex>

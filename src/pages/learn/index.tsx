@@ -1,26 +1,26 @@
-import Link from 'next/link'
-import { Block } from '../../components/Block'
+import { PlaceholderBlock } from '../../components/PlaceholderBlock'
 import { Layout } from '../../components/Layout'
 import { sitemap } from '../../config/site'
 import { Heading } from '../../system/Heading'
+import { Link } from '../../system/Link'
 
 function Learn() {
   return (
     <Layout>
       <Heading>Learn</Heading>
-      <Block title="Intro + quick links"></Block>
-      <Block title="How Sia works overview (graphic)">
+      <PlaceholderBlock title="Intro + quick links"></PlaceholderBlock>
+      <PlaceholderBlock title="How Sia works overview (graphic)">
         <Link href={sitemap.learn.howSiaWorks}>How Sia Works</Link>
-      </Block>
-      <Block title="Get started">
+      </PlaceholderBlock>
+      <PlaceholderBlock title="Get started">
         <Link href={sitemap.learn.getStarted}>Get started</Link>
-      </Block>
-      <Block title="Popular tutorials">
+      </PlaceholderBlock>
+      <PlaceholderBlock title="Popular tutorials">
         <Link href={sitemap.learn.getStarted}>Get started</Link>
-      </Block>
-      <Block title="Whitepaper">
+      </PlaceholderBlock>
+      <PlaceholderBlock title="Whitepaper">
         <Link href={sitemap.learn.whitepaper}>Whitepaper</Link>
-      </Block>
+      </PlaceholderBlock>
     </Layout>
   )
 }

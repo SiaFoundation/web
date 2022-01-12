@@ -1,71 +1,49 @@
-import Link from 'next/link'
-import { appName } from '../config/app'
-import { Text } from '../system/Text'
 import { Flex } from '../system/Flex'
-import { sitemap, social } from '../config/site'
-import { Li } from '../system/Li'
+import { sitemap, external } from '../config/site'
+import { Link } from '../system/Link'
 
 export function Footer() {
   return (
     <Flex
-      column
+      direction="column"
+      gap="3"
       css={{
-        position: 'relative',
-        gap: '$3',
         marginBottom: '$5',
       }}
     >
       <Flex
-        as="ul"
+        gap="3"
+        justify="center"
         css={{
-          gap: '$3',
           margin: '$1 0',
-          justifyContent: 'center',
         }}
       >
-        <Li>
-          <Link href={sitemap.newsroom.index}>Newsroom</Link>
-        </Li>
-        <Li>
-          <Link href={sitemap.community.getSiacoin}>Get Siacoin</Link>
-        </Li>
-        <Li>
-          <Link href={sitemap.learn.whitepaper}>Whitepaper</Link>
-        </Li>
+        <Link href={sitemap.newsroom.index}>Newsroom</Link>
+        <Link href={sitemap.community.getSiacoin}>Get Siacoin</Link>
+        <Link href={sitemap.learn.whitepaper}>Whitepaper</Link>
       </Flex>
       <Flex
-        as="ul"
+        gap="3"
+        justify="center"
         css={{
-          gap: '$3',
           margin: '$1 0',
-          justifyContent: 'center',
         }}
       >
-        <Li>
-          <Link href={social.blog} passHref>
-            <a target="_blank">Blog</a>
-          </Link>
-        </Li>
-        <Li>
-          <Link href={social.discord} passHref>
-            <a target="_blank">Discord</a>
-          </Link>
-        </Li>
-        <Li>
-          <Link href={social.github} passHref>
-            <a target="_blank">Github</a>
-          </Link>
-        </Li>
-        <Li>
-          <Link href={social.twitter} passHref>
-            <a target="_blank">Twitter</a>
-          </Link>
-        </Li>
-        <Li>
-          <Link href={social.reddit} passHref>
-            <a target="_blank">Reddit</a>
-          </Link>
-        </Li>
+        <Link href={external.blog} target="_blank">
+          Blog
+        </Link>
+        <Link href={external.discord} target="_blank">
+          Discord
+        </Link>
+        <Link href={external.github} target="_blank">
+          Github
+        </Link>
+        <Link href={external.twitter} target="_blank">
+          Twitter
+        </Link>
+        <Link href={external.reddit} target="_blank">
+          Reddit
+        </Link>
       </Flex>
     </Flex>
   )

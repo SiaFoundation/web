@@ -1,24 +1,35 @@
 import { createStitches } from '@stitches/react'
 import type * as Stitches from '@stitches/react'
 
-const unitSize = 4
+const unitSize = 5
 
 function getPx(units: number) {
   return `${units * unitSize}px`
 }
 
+// Reference: https://github.com/radix-ui/design-system/blob/master/stitches.config.ts
 const stitches = createStitches({
   theme: {
     colors: {
+      // Theme colors
+      // Add theme colors here eg:
+      green5: 'green',
+      blue5: 'blue',
+
+      // Semantic colors
       loContrast: 'hsla(0, 0%, 100%, 1)',
+      text: 'hsla(0, 2%, 40%, 1)',
       hiContrast: 'hsla(0, 2%, 11%, 1)',
-      gray: 'rgba(0,0,0,0.1)',
+      canvas: 'hsl(0 0% 93%)',
+      panel: 'white',
+      shadowLight: 'hsl(206 22% 7% / 35%)',
+      shadowDark: 'hsl(206 22% 7% / 20%)',
     },
     fonts: {
-      sans: 'Helvetica Neue, Untitled Sans, -apple-system, system-ui, sans-serif',
+      sans: 'Untitled Sans, -apple-system, system-ui, sans-serif',
+      mono: 'menlo, monospace',
     },
     space: {
-      0: getPx(0.5),
       1: getPx(1),
       2: getPx(2),
       3: getPx(3),
@@ -28,28 +39,54 @@ const stitches = createStitches({
       7: getPx(9),
       8: getPx(13),
       9: getPx(16),
-      10: getPx(21),
+    },
+    sizes: {
+      1: getPx(1),
+      2: getPx(2),
+      3: getPx(3),
+      4: getPx(4),
+      5: getPx(5),
+      6: getPx(7),
+      7: getPx(9),
+      8: getPx(13),
+      9: getPx(16),
     },
     fontSizes: {
       1: '12px',
-      2: '18px',
-      3: '32px',
-    },
-    lineHeights: {
-      1: '15px',
-      2: '24px',
-      3: '40px',
-    },
-    zIndices: {
-      0: 0,
-      1: 100,
-      2: 200,
+      2: '13px',
+      3: '15px',
+      4: '17px',
+      5: '19px',
+      6: '21px',
+      7: '27px',
+      8: '35px',
+      9: '59px',
     },
     radii: {
-      1: '6px',
-      2: '8px',
+      1: '4px',
+      2: '6px',
+      3: '8px',
+      4: '12px',
       round: '50%',
+      pill: '9999px',
     },
+    zIndices: {
+      1: '100',
+      2: '200',
+      3: '300',
+      4: '400',
+      max: '999',
+    },
+  },
+  media: {
+    bp1: '(min-width: 520px)',
+    bp2: '(min-width: 900px)',
+    bp3: '(min-width: 1200px)',
+    bp4: '(min-width: 1800px)',
+    motion: '(prefers-reduced-motion)',
+    hover: '(any-hover: hover)',
+    dark: '(prefers-color-scheme: dark)',
+    light: '(prefers-color-scheme: light)',
   },
 })
 
@@ -64,3 +101,4 @@ export const {
   config,
 } = stitches
 export type CSS = Stitches.CSS<typeof config>
+export type { VariantProps } from '@stitches/react'

@@ -1,4 +1,4 @@
-import { Block } from '../../components/Block'
+import { PlaceholderBlock } from '../../components/PlaceholderBlock'
 import { Layout } from '../../components/Layout'
 import { Heading } from '../../system/Heading'
 
@@ -6,7 +6,7 @@ function CommunityEcosystemGetSiacoin() {
   return (
     <Layout>
       <Heading>Community & ecosystem / Get Siacoin</Heading>
-      <Block title="Page content"></Block>
+      <PlaceholderBlock title="Page content"></PlaceholderBlock>
     </Layout>
   )
 }

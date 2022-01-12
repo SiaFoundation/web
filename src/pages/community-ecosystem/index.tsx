@@ -1,24 +1,24 @@
-import Link from 'next/link'
-import { Block } from '../../components/Block'
+import { PlaceholderBlock } from '../../components/PlaceholderBlock'
 import { Layout } from '../../components/Layout'
-import { sitemap, social } from '../../config/site'
+import { sitemap, external } from '../../config/site'
 import { Heading } from '../../system/Heading'
+import { Link } from '../../system/Link'
 
 function CommunityEcosystem() {
   return (
     <Layout>
       <Heading>Community & ecosystem</Heading>
-      <Block title="Intro + quick links">
+      <PlaceholderBlock title="Intro + quick links">
         <Link href={sitemap.community.getSiacoin}>Get Siacoin</Link>
-      </Block>
-      <Block title="Blog">
-        <Link href={social.blog}>Blog</Link>
-      </Block>
-      <Block title="News">
+      </PlaceholderBlock>
+      <PlaceholderBlock title="Blog">
+        <Link href={external.blog}>Blog</Link>
+      </PlaceholderBlock>
+      <PlaceholderBlock title="News">
         <Link href={sitemap.newsroom.index}>News</Link>
-      </Block>
-      <Block title="Project list"></Block>
-      <Block title="Grants"></Block>
+      </PlaceholderBlock>
+      <PlaceholderBlock title="Project list"></PlaceholderBlock>
+      <PlaceholderBlock title="Grants"></PlaceholderBlock>
     </Layout>
   )
 }

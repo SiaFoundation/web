@@ -21,8 +21,7 @@ function setupStatic(server) {
   console.log('API versions')
   console.log(`\tCurrent: ${siaVersion.current}`)
   console.log(`\tRC: ${siaVersion.rc}`)
-  console.log(`\tHistoric: ${apiVersions}`)
-  console.log('')
+  console.log(`\tHistoric: ${apiVersions}\n`)
 
   server.use(vhost(apiDomain, apiApp))
 
