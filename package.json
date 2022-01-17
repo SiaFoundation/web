@@ -5,6 +5,7 @@
   "engines": {
     "node": ">=16.13.2"
   },
+  "engineStrict": true,
   "scripts": {
     "dev": "node src/server/index.js",
     "build": "next build",
