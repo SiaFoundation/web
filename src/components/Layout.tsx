@@ -46,6 +46,7 @@ export function Layout({ children }: Props) {
         <meta name="msapplication-TileColor" content="#2b5797" />
         <meta name="theme-color" content="#ffffff" />
         <noscript>
+          {/* eslint-disable-next-line */}
           <img
             referrerPolicy="no-referrer-when-downgrade"
             src="https://surveillance.sia.tech/matomo.php?idsite=1&amp;rec=1"
@@ -55,6 +56,7 @@ export function Layout({ children }: Props) {
         </noscript>
       </Head>
       <Script
+        id="matomo"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
