@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOMServer from 'react-dom/server'
 import NextDocument, { Head, Html, Main, NextScript } from 'next/document'
 import { getCssText } from '../config/theme'
 
