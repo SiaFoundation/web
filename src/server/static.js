@@ -29,10 +29,16 @@ function setupStatic(server) {
   const staticApp = express()
   // Serve binaries
   const releasesPath = getAssetPath('releases')
+  staticApp.get('/releases', (req, res) => {
+    res.redirect('/')
+  })
   staticApp.use('/releases', counterMiddleware, express.static(releasesPath))
 
   // Serve transparency reports
   const transparencyPath = getAssetPath('transparency')
+  staticApp.get('/transparency', (req, res) => {
+    res.redirect('/')
+  })
   staticApp.use(
     '/transparency',
     counterMiddleware,
