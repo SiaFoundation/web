@@ -1,44 +1,45 @@
-name: Validation
-on:
-  pull_request:
-jobs:
-  lint-build:
-    runs-on: ubuntu-latest
+# Migrate to NX
+# name: Validation
+# on:
+#   pull_request:
+# jobs:
+#   lint-build:
+#     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.x]
+#     strategy:
+#       matrix:
+#         node-version: [16.x]
 
-    steps:
-      - uses: actions/checkout@v2
+#     steps:
+#       - uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
+#       - name: Use Node.js ${{ matrix.node-version }}
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: ${{ matrix.node-version }}
 
-      # See: https://github.com/actions/cache/blob/main/examples.md#node---yarn
-      - name: Get Yarn cache directory
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+#       # See: https://github.com/actions/cache/blob/main/examples.md#node---yarn
+#       - name: Get Yarn cache directory
+#         id: yarn-cache-dir-path
+#         run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      - name: Use Yarn cache
-        uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}
+#       - name: Use Yarn cache
+#         uses: actions/cache@v2
+#         id: yarn-cache
+#         with:
+#           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+#           key: ${{ runner.os }}-yarn-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}
 
-      # `--prefer-offline` gives cache priority
-      - name: Install dependencies
-        run: yarn install --prefer-offline --frozen-lockfile
+#       # `--prefer-offline` gives cache priority
+#       - name: Install dependencies
+#         run: yarn install --prefer-offline --frozen-lockfile
 
-      - name: Lint application
-        run: yarn lint
-        env:
-          REACT_APP_GIT_SHA: ${{ github.sha }}
+#       - name: Lint application
+#         run: yarn lint
+#         env:
+#           REACT_APP_GIT_SHA: ${{ github.sha }}
 
-      - name: Build production application
-        run: yarn build
-        env:
-          REACT_APP_GIT_SHA: ${{ github.sha }}
+#       - name: Build production application
+#         run: yarn build
+#         env:
+#           REACT_APP_GIT_SHA: ${{ github.sha }}

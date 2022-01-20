@@ -1,6 +1,5 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.tabSize": 2,
   "editor.formatOnSave": true,
   "[nginx]": {
     "editor.defaultFormatter": "ahmadalli.vscode-nginx-conf"
