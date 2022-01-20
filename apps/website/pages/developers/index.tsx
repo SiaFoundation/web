@@ -1,4 +1,4 @@
-import { getCounts } from '@web/counter'
+import { getCounts } from '@siafoundation/data-sources'
 import { Flex, Heading, Link, Text } from '@siafoundation/design-system'
 import { PlaceholderBlock } from '../../components/PlaceholderBlock'
 import { Layout } from '../../components/Layout'

@@ -17,7 +17,7 @@
     "paths": {
       "@siafoundation/design-system": ["libs/design-system/src/index.ts"],
       "@siafoundation/types": ["libs/types/src/index.ts"],
-      "@web/counter": ["libs/counter/src/index.ts"]
+      "@siafoundation/data-sources": ["libs/data-sources/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

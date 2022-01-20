@@ -1,20 +1,20 @@
 {
-  "root": "libs/counter",
-  "sourceRoot": "libs/counter/src",
+  "root": "libs/data-sources",
+  "sourceRoot": "libs/data-sources/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/counter/**/*.ts"]
+        "lintFilePatterns": ["libs/data-sources/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/counter"],
+      "outputs": ["coverage/libs/data-sources"],
       "options": {
-        "jestConfig": "libs/counter/jest.config.js",
+        "jestConfig": "libs/data-sources/jest.config.js",
         "passWithNoTests": true
       }
     }

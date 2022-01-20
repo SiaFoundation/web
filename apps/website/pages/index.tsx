@@ -1,13 +1,15 @@
 import { Code, Link, Text } from '@siafoundation/design-system'
-import { getCounts } from '@web/counter'
+import {
+  getCounts,
+  getGithub,
+  getSiaStatsHostsActive,
+  getSiaStatsHostsCoordinates,
+  getSiaStatsHostsStats,
+  getSiaStatsStorage,
+} from '@siafoundation/data-sources'
 import { PlaceholderBlock } from '../components/PlaceholderBlock'
 import { Layout } from '../components/Layout'
 import { sitemap } from '../config/site'
-import { getGithub } from '../lib/data/github'
-import { getSiaStatsHostsActive } from '../lib/data/siaStats/hostsActive'
-import { getSiaStatsHostsCoordinates } from '../lib/data/siaStats/hostsCoordinates'
-import { getSiaStatsHostsStats } from '../lib/data/siaStats/hostsStats'
-import { getSiaStatsStorage } from '../lib/data/siaStats/storage'
 import { getDaysInSeconds } from '../lib/time'
 
 export default function Home({

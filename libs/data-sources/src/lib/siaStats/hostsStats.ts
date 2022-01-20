@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { errorResponse500 } from '../../error'
+import { errorResponse500 } from '../error'
 
 export async function getSiaStatsHostsStats() {
   try {

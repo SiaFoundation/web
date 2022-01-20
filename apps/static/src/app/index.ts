@@ -1,9 +1,8 @@
 import { readdirSync } from 'fs'
 import * as express from 'express'
 import * as vhost from 'vhost'
-import { apiDomain, appDomain } from './env'
-import { siaVersion } from './env'
-import { counterMiddleware } from '@web/counter'
+import { counterMiddleware } from '@siafoundation/data-sources'
+import { apiDomain, appDomain, siaVersion } from './env'
 
 export function setupStatic(server) {
   console.log(apiDomain, appDomain)

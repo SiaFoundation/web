@@ -1,9 +1,11 @@
 import axios from 'axios'
-import { errorResponse500 } from '../../error'
+import { errorResponse500 } from '../error'
 
-export async function getSiaStatsStorage() {
+export async function getSiaStatsHostsActive() {
   try {
-    const { data } = await axios.get('https://siastats.info/dbs/storage.json')
+    const { data } = await axios.get(
+      'https://siastats.info/dbs/activehosts.json'
+    )
     const result = data[data.length - 1]
     return {
       status: 200,

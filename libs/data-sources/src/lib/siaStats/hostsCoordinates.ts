@@ -1,12 +1,12 @@
 import axios from 'axios'
-import { errorResponse500 } from '../../error'
+import { errorResponse500 } from '../error'
 
-export async function getSiaStatsHostsActive() {
+export async function getSiaStatsHostsCoordinates() {
   try {
     const { data } = await axios.get(
-      'https://siastats.info/dbs/activehosts.json'
+      'https://siastats.info/dbs/hostscoordinates.json'
     )
-    const result = data[data.length - 1]
+    const result = data
     return {
       status: 200,
       data: result,
