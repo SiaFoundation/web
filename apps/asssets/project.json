@@ -1,16 +1,16 @@
 {
-  "root": "apps/static",
-  "sourceRoot": "apps/static/src",
+  "root": "apps/asssets",
+  "sourceRoot": "apps/asssets/src",
   "projectType": "application",
   "targets": {
     "build": {
       "executor": "@nrwl/node:build",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/static",
-        "main": "apps/static/src/main.ts",
-        "tsConfig": "apps/static/tsconfig.app.json",
-        "assets": ["apps/static/src/assets"]
+        "outputPath": "dist/apps/asssets",
+        "main": "apps/asssets/src/main.ts",
+        "tsConfig": "apps/asssets/tsconfig.app.json",
+        "assets": ["apps/asssets/src/assets"]
       },
       "configurations": {
         "production": {
@@ -19,8 +19,8 @@
           "inspect": false,
           "fileReplacements": [
             {
-              "replace": "apps/static/src/environments/environment.ts",
-              "with": "apps/static/src/environments/environment.prod.ts"
+              "replace": "apps/asssets/src/environments/environment.ts",
+              "with": "apps/asssets/src/environments/environment.prod.ts"
             }
           ]
         }
@@ -29,21 +29,21 @@
     "serve": {
       "executor": "@nrwl/node:execute",
       "options": {
-        "buildTarget": "static:build"
+        "buildTarget": "asssets:build"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/static/**/*.ts"]
+        "lintFilePatterns": ["apps/asssets/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/static"],
+      "outputs": ["coverage/apps/asssets"],
       "options": {
-        "jestConfig": "apps/static/jest.config.js",
+        "jestConfig": "apps/asssets/jest.config.js",
         "passWithNoTests": true
       }
     }

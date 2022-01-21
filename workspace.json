@@ -1,9 +1,9 @@
 {
   "version": 2,
   "projects": {
+    "asssets": "apps/asssets",
     "data-sources": "libs/data-sources",
     "design-system": "libs/design-system",
-    "static": "apps/static",
     "types": "libs/types",
     "website": "apps/website",
     "website-e2e": "apps/website-e2e"

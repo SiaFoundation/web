@@ -55,5 +55,5 @@ function getDirectories(source) {
 }
 
 function getAssetPath(resource) {
-  return `apps/website/public/${resource}`
+  return `public/${resource}`
 }
