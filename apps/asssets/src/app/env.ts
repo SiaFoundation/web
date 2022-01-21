@@ -1,4 +1,3 @@
-const port = process.env.PORT || 3000
 const dev = process.env.NODE_ENV !== 'production'
 
 const appDomain = process.env.APP_DOMAIN || 'sia.tech'
@@ -12,4 +11,4 @@ const siaVersion = {
   rc,
 }
 
-export { appDomain, apiDomain, siaVersion, port, dev }
+export { appDomain, apiDomain, siaVersion, dev }

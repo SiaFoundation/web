@@ -34,7 +34,7 @@ function NewsroomPost({ title, description, location, date, mdxSource }) {
 }
 
 async function getStaticPaths() {
-  const files = fs.readdirSync(path.join('posts'))
+  const files = fs.readdirSync(path.join('content', 'news'))
 
   const paths = files.map((filename) => ({
     params: {

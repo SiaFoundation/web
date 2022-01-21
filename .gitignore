@@ -45,7 +45,9 @@ Thumbs.db
 /persist
 
 # docs and releases
-apps/website/public/docs
-apps/website/public/releases
-apps/website/public/transparency
+public/docs
+public/releases
+public/transparency
+
+# Generated RSS feeds
 apps/website/public/rss

@@ -51,26 +51,28 @@ function Newsroom({ posts }: Props) {
 }
 
 async function getPosts(): Promise<ServerPost[]> {
-  const promises = fs.readdirSync(path.join('posts')).map(async (filename) => {
-    const markdownWithMeta = fs.readFileSync(
-      path.join('posts', filename),
-      'utf-8'
-    )
-    const { data, content } = matter(markdownWithMeta)
+  const promises = fs
+    .readdirSync(path.join('content', 'news'))
+    .map(async (filename) => {
+      const markdownWithMeta = fs.readFileSync(
+        path.join('posts', filename),
+        'utf-8'
+      )
+      const { data, content } = matter(markdownWithMeta)
 
-    const mdxSource = await serialize(content)
+      const mdxSource = await serialize(content)
 
-    const html = ReactDOMServer.renderToStaticMarkup(
-      <MDXRemote {...mdxSource} components={components} />
-    )
+      const html = ReactDOMServer.renderToStaticMarkup(
+        <MDXRemote {...mdxSource} components={components} />
+      )
 
-    return {
-      ...data,
-      html,
-      date: new Date(data.date).getTime(),
-      slug: filename.split('.')[0],
-    } as ServerPost
-  })
+      return {
+        ...data,
+        html,
+        date: new Date(data.date).getTime(),
+        slug: filename.split('.')[0],
+      } as ServerPost
+    })
 
   const posts = await Promise.all(promises)
 
@@ -139,10 +141,10 @@ function generateRssFeed(posts: ServerPost[]) {
     })
   })
 
-  fs.mkdirSync('public/rss', { recursive: true })
-  fs.writeFileSync('public/rss/feed.xml', feed.rss2())
-  fs.writeFileSync('public/rss/atom.xml', feed.atom1())
-  fs.writeFileSync('public/rss/feed.json', feed.json1())
+  fs.mkdirSync('apps/website/public/rss', { recursive: true })
+  fs.writeFileSync('apps/website/public/rss/feed.xml', feed.rss2())
+  fs.writeFileSync('apps/website/public/rss/atom.xml', feed.atom1())
+  fs.writeFileSync('apps/website/public/rss/feed.json', feed.json1())
 }
 
 export default Newsroom
