@@ -9,7 +9,7 @@ Web packages for the Sia project and ecosystem.
 
 ## Libraries
 
-- [@siafoundation/types](libs/types/README.md) - Common Typescript types for Sia libraries.
+- [@siafoundation/types](libs/types/README.md) - Common types for Sia libraries.
 - [@siafoundation/design-system](libs/design-system/README.md) - React-based Design System for use across Foundation apps and websites.
 - [@siafoundation/data-sources](libs/data-sources/README.md) - Data sources used for stats on the website.
 
@@ -19,9 +19,8 @@ The following examples outline how to use common `nx` workflows.
 
 ## Setup
 
-The Sia Web codebase is managed with the [Nx](https://nx.dev) build system.
-
-Either install `nx` globally via `yarn global add nx` or use `npx` to invoke commands.
+1. The Sia Web codebase is managed with the [Nx](https://nx.dev) build system. Either install `nx` globally via `yarn global add nx` or use `npx` to invoke commands.
+2. Install dependencies with `yarn`.
 
 ## Development server
 

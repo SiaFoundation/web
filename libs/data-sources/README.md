@@ -1,6 +1,6 @@
 # data-sources
 
-This library was generated with [Nx](https://nx.dev).
+Data sources provide APIs for pulling data from SiaStats, Github, and also provide a request counter system used for tracking download counts for new Sia releases.
 
 ## Running unit tests
 

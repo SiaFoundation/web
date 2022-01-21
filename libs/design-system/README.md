@@ -1,6 +1,6 @@
 # design-system
 
-This library was generated with [Nx](https://nx.dev).
+Welcome to the Sia Design System. The Design System is build with React, Stitches, and Radix.
 
 ## Running unit tests
 

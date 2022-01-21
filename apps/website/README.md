@@ -1,4 +1,6 @@
-# sia.tech website
+# website
+
+The `sia.tech` Sia Foundation website.
 
 ## Development
 
@@ -15,26 +17,10 @@ cp .env.example .env
 127.0.0.1 sia.local
 127.0.0.1 api.sia.local
 
-# Create asset directories, add any test assets
+# Create asset directories in the projects root public folder and add any test assets
 mkdir public/docs
 mkdir public/releases
 mkdir public/transparency
-```
-
-### Run
-
-Run the application in development mode.
-
-```sh
-yarn dev
-```
-
-### Build
-
-Build the production application.
-
-```sh
-yarn build
 ```
 
 ## Workflows

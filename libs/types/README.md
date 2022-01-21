@@ -1,6 +1,6 @@
 # types
 
-This library was generated with [Nx](https://nx.dev).
+Common types for Sia libraries.
 
 ## Running unit tests
 
