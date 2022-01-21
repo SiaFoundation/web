@@ -56,7 +56,7 @@ async function getPosts(): Promise<ServerPost[]> {
     .readdirSync(path.join('content', 'news'))
     .map(async (filename) => {
       const markdownWithMeta = fs.readFileSync(
-        path.join('posts', filename),
+        path.join('content', 'news', filename),
         'utf-8'
       )
       const { data, content } = matter(markdownWithMeta)
