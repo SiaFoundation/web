@@ -12,8 +12,6 @@ import { Layout } from '../components/Layout'
 import { sitemap } from '../config/site'
 import { getDaysInSeconds } from '../lib/time'
 
-console.log(process.env)
-
 export default function Home({
   storage,
   hostsActive,

@@ -1,7 +1,7 @@
 import { Heading } from '@siafoundation/design-system'
+import { appDomain } from '@siafoundation/env'
 import { PlaceholderBlock } from '../../components/PlaceholderBlock'
 import { Layout } from '../../components/Layout'
-import { appDomain } from '../../config/env'
 import { getHref } from '../../lib/url'
 
 function LearnWhitepaper() {

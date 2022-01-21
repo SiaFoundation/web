@@ -1,4 +1,5 @@
 import { Flex, Heading, Link, Text } from '@siafoundation/design-system'
+import { appDomain } from '@siafoundation/env'
 import ReactDOMServer from 'react-dom/server'
 import fs from 'fs'
 import path from 'path'
@@ -98,7 +99,7 @@ export async function getStaticProps() {
 }
 
 function generateRssFeed(posts: ServerPost[]) {
-  const siteUrl = process.env.APP_DOMAIN
+  const siteUrl = appDomain
   const date = new Date()
   const author = {
     name: 'Sia Foundation',

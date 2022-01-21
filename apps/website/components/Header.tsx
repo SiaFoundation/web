@@ -1,6 +1,6 @@
 import { Flex, Heading, Link, Text } from '@siafoundation/design-system'
+import { apiDomain } from '@siafoundation/env'
 import { appName } from '../config/app'
-import { apiDomain } from '../config/env'
 import { sitemap, external } from '../config/site'
 import { getHref } from '../lib/url'
 

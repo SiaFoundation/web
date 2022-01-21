@@ -4,6 +4,7 @@
     "asssets": "apps/asssets",
     "data-sources": "libs/data-sources",
     "design-system": "libs/design-system",
+    "env": "libs/env",
     "types": "libs/types",
     "website": "apps/website",
     "website-e2e": "apps/website-e2e"

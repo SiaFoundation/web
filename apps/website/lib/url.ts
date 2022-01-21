@@ -1,4 +1,4 @@
-import { dev } from '../config/env'
+import { dev } from '@siafoundation/env'
 
 export function getHref(url: string) {
   if (dev) {
