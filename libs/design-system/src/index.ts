@@ -19,8 +19,7 @@ export {
   globalCss,
   keyframes,
   config,
-  CSS,
-  VariantProps,
 } from './config/theme'
+export type { CSS, VariantProps } from './config/theme'
 
 export { resetStyles } from './config/reset'
