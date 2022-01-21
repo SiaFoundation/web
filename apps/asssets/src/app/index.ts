@@ -2,7 +2,7 @@ import { readdirSync } from 'fs'
 import * as express from 'express'
 import * as vhost from 'vhost'
 import { counterMiddleware } from '@siafoundation/data-sources'
-import { apiDomain, appDomain, siaVersion } from './env'
+import { apiDomain, appDomain, siaVersion } from '@siafoundation/env'
 
 export function setupStatic(server) {
   console.log(apiDomain, appDomain)
