@@ -9,7 +9,7 @@
   },
   "private": true,
   "dependencies": {
-    "@mdx-js/loader": "^1.6.22",
+    "@mdx-js/loader": "^0.15.4",
     "@mdx-js/react": "^1.6.22",
     "@next/mdx": "^12.0.7",
     "@nrwl/next": "13.4.6",

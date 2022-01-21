@@ -7,9 +7,6 @@ The `sia.tech` Sia Foundation website.
 ### Setup
 
 ```sh
-# Install dependencies
-yarn
-
 # Create a local .env
 cp .env.example .env
 

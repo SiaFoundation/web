@@ -19,8 +19,8 @@ The following examples outline how to use common `nx` workflows.
 
 ## Setup
 
-1. The Sia Web codebase is managed with the [Nx](https://nx.dev) build system. Either install `nx` globally via `yarn global add nx` or use `npx` to invoke commands.
-2. Install dependencies with `yarn`.
+1. The Sia Web codebase is managed with the [Nx](https://nx.dev) build system. Either install `nx` globally via `npm install -g nx` or use `npx` to invoke commands.
+2. Install dependencies with `npm install`.
 
 ## Development server
 
