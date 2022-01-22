@@ -1,4 +1,4 @@
-# design-system
+# Design System
 
 Welcome to the Sia Design System. The Design System is build with React, Stitches, and Radix.
 

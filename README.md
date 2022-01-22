@@ -4,8 +4,8 @@ Web packages for the Sia project and ecosystem.
 
 ## Apps
 
-- [Website](apps/website/README.md) - The sia.tech website.
-- [Assets](apps/assets/README.md) - The sia.tech asset server.
+- [Website](apps/website/README.md) - The `sia.tech` website.
+- [Assets](apps/assets/README.md) - The `sia.tech` asset server.
 
 ## Libraries
 

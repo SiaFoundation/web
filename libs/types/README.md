@@ -1,4 +1,4 @@
-# types
+# Types
 
 Common types for Sia libraries.
 
