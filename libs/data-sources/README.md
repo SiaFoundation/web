@@ -1,4 +1,4 @@
-# data-sources
+# Data Sources
 
 Data sources provide APIs for pulling data from SiaStats, Github, and also provide a request counter system used for tracking download counts for new Sia releases.
 

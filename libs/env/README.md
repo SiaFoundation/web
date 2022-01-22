@@ -1,4 +1,4 @@
-# env
+# Env
 
 Environment variables for the website server configuration.
 
