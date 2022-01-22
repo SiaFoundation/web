@@ -5,7 +5,7 @@ Web packages for the Sia project and ecosystem.
 ## Apps
 
 - [Website](apps/website/README.md) - The sia.tech website.
-- [Assets](apps/assets/README.md) - Sia Foundation asset server for content such as releases, reports, and API docs.
+- [Assets](apps/assets/README.md) - The sia.tech asset server.
 
 ## Libraries
 
@@ -15,8 +15,6 @@ Web packages for the Sia project and ecosystem.
 - [@siafoundation/env](libs/env/README.md) - Environment variables for the website server configuration.
 
 # Development
-
-The following examples outline how to use common `nx` workflows.
 
 ## Setup
 
@@ -46,9 +44,9 @@ Run `nx serve website` for a dev server.
 - [Sia release process →](https://www.notion.so/siafoundation/Web-6de3b72ac13e44a989bdffb72fce8996#bd5cb0ab038d4b35a49d4433dd6af614)
 - [News release process →](https://www.notion.so/siafoundation/Web-6de3b72ac13e44a989bdffb72fce8996#4fc04d6e7c0749cfa6a99c6a83fc41bd)
 
-# Development
+## Tooling
 
-General development workflows.
+The following examples outline how to use common `nx` commands.
 
 ## Development server
 
