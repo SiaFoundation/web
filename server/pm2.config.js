@@ -2,7 +2,8 @@ module.exports = {
   apps: [
     {
       name: 'sia-website',
-      script: 'dist/website/index.js',
+      script: 'npm',
+      args: 'start',
       env: {
         NODE_ENV: 'production',
         PORT: '3001',
@@ -10,7 +11,7 @@ module.exports = {
     },
     {
       name: 'sia-assets',
-      script: 'dist/assets/index.js',
+      script: 'dist/assets/main.js',
       env: {
         NODE_ENV: 'production',
         PORT: '3002',

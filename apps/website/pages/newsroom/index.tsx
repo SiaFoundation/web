@@ -1,5 +1,4 @@
 import { Flex, Heading, Link, Text } from '@siafoundation/design-system'
-import { appDomain } from '@siafoundation/env'
 import ReactDOMServer from 'react-dom/server'
 import fs from 'fs'
 import path from 'path'
@@ -13,6 +12,7 @@ import { Layout } from '../../components/Layout'
 import { external, sitemap } from '../../config/site'
 import { components } from '../../config/mdx'
 import { MDXRemote } from 'next-mdx-remote'
+import { hosts } from '@siafoundation/env'
 
 type Post = {
   title: string
@@ -99,7 +99,7 @@ export async function getStaticProps() {
 }
 
 function generateRssFeed(posts: ServerPost[]) {
-  const siteUrl = appDomain
+  const siteUrl = hosts.app
   const date = new Date()
   const author = {
     name: 'Sia Foundation',

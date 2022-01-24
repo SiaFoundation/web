@@ -1,5 +1,5 @@
 import { Heading } from '@siafoundation/design-system'
-import { appDomain } from '@siafoundation/env'
+import { hosts } from '@siafoundation/env'
 import { PlaceholderBlock } from '../../components/PlaceholderBlock'
 import { Layout } from '../../components/Layout'
 import { getHref } from '../../lib/url'
@@ -12,7 +12,7 @@ function LearnWhitepaper() {
         <iframe
           height="1000px"
           width="100%"
-          src={getHref(`${appDomain}/sia.pdf`)}
+          src={getHref(`${hosts.app}/sia.pdf`)}
         />
       </PlaceholderBlock>
     </Layout>
