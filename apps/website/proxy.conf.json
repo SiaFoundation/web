@@ -1,10 +1,10 @@
 {
   "/releases": {
-    "target": "http://localhost:3333",
+    "target": "http://localhost:3002",
     "secure": false
   },
   "/transparency": {
-    "target": "http://localhost:3333",
+    "target": "http://localhost:3002",
     "secure": false
   }
 }

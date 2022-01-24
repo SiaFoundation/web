@@ -1,5 +1,5 @@
 import { getCounts } from '@siafoundation/data-sources'
-import { apiDomain, appDomain, siaVersion } from '@siafoundation/env'
+import { hosts, siaVersion } from '@siafoundation/env'
 import { Flex, Heading, Link, Text } from '@siafoundation/design-system'
 import { PlaceholderBlock } from '../../components/PlaceholderBlock'
 import { Layout } from '../../components/Layout'
@@ -13,13 +13,13 @@ function Developers({ counts }) {
       <Heading>Developers</Heading>
       <PlaceholderBlock title="Intro + quick links">
         <Flex direction="column" gap="3">
-          <Link href={getHref(apiDomain)}>API Reference</Link>
+          <Link href={getHref(hosts.api)}>API Reference</Link>
           <Link href={external.docs}>Documentation</Link>
           <Text>Core software downloads</Text>
           <Flex gap="3" justify="center">
             <Link
               href={getHref(
-                `${appDomain}/releases/Sia-UI-v${siaVersion.current}.AppImage`
+                `${hosts.app}/releases/Sia-UI-v${siaVersion.current}.AppImage`
               )}
             >
               {counts.status === 200
@@ -28,7 +28,7 @@ function Developers({ counts }) {
             </Link>
             <Link
               href={getHref(
-                `${appDomain}/releases/Sia-v${siaVersion.current}-linux-amd64.zip`
+                `${hosts.app}/releases/Sia-v${siaVersion.current}-linux-amd64.zip`
               )}
             >
               {counts.status === 200

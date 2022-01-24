@@ -27,10 +27,6 @@ Web packages for the Sia project and ecosystem.
 # Create a local .env
 cp .env.example .env
 
-# Optionally add custom domains to /etc/hosts
-127.0.0.1 sia.local
-127.0.0.1 api.sia.local
-
 # Create asset directories in the projects root assets folder and add any test assets
 mkdir assets/docs
 mkdir assets/releases

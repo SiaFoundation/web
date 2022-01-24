@@ -2,10 +2,9 @@ import { readdirSync } from 'fs'
 import * as express from 'express'
 import * as vhost from 'vhost'
 import { counterMiddleware } from '@siafoundation/data-sources'
-import { apiDomain, appDomain, siaVersion } from '@siafoundation/env'
+import { hostnames, siaVersion } from '@siafoundation/env'
 
 export function setupStatic(server) {
-  console.log(apiDomain, appDomain)
   // Serve api docs on the api domain
   const apiApp = express()
   const apiPath = getAssetPath('docs')
@@ -23,7 +22,7 @@ export function setupStatic(server) {
   console.log(`\tRC: ${siaVersion.rc}`)
   console.log(`\tHistoric: ${apiVersions}\n`)
 
-  server.use(vhost(apiDomain, apiApp))
+  server.use(vhost(hostnames.api, apiApp))
 
   // Rest of static assets on root domain
   const rootApp = express()
@@ -45,7 +44,7 @@ export function setupStatic(server) {
     express.static(transparencyPath)
   )
 
-  server.use(vhost(appDomain, rootApp))
+  server.use(vhost(hostnames.app, rootApp))
 }
 
 function getDirectories(source) {
@@ -55,5 +54,5 @@ function getDirectories(source) {
 }
 
 function getAssetPath(resource) {
-  return `public/${resource}`
+  return `assets/${resource}`
 }

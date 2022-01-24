@@ -1,7 +1,7 @@
 {
   "version": 2,
   "projects": {
-    "asssets": "apps/asssets",
+    "assets": "apps/assets",
     "data-sources": "libs/data-sources",
     "design-system": "libs/design-system",
     "env": "libs/env",
