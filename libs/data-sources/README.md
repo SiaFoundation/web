@@ -1,6 +1,6 @@
 # Data Sources
 
-Data sources provide APIs for pulling data from SiaStats, Github, and also provide a request counter system used for tracking download counts for new Sia releases.
+Data sources provide APIs for pulling data from SiaStats, Github, and internal benchmarks. The library also provides a request counter system used for tracking download counts for new Sia releases.
 
 ## Running unit tests
 

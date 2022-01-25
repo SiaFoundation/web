@@ -4,6 +4,8 @@ import { appName } from '../config/app'
 import { sitemap, external } from '../config/site'
 import { getHref } from '../lib/url'
 
+const hosts = getHosts()
+
 export function Header() {
   return (
     <Flex align="center" justify="between">
@@ -32,7 +34,7 @@ export function Header() {
             margin: '$1 0',
           }}
         >
-          <Link href={getHref(getHosts().api)} target="_blank">
+          <Link href={getHref(hosts.api)} target="_blank">
             API Reference
           </Link>
           <Link href={external.docs} target="_blank">

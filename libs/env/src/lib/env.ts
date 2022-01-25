@@ -17,8 +17,8 @@ export function getHostnames() {
 // NOTE: values are currently hardcoded in other places too.
 export function getPorts() {
   return {
-    app: '3001',
-    api: '3002',
+    website: '3001',
+    assets: '3002',
   }
 }
 
@@ -28,8 +28,8 @@ export function getHosts() {
   const ports = getPorts()
 
   return {
-    app: isDev() ? `${hostnames.app}:${ports.app}` : hostnames.app,
-    api: isDev() ? `${hostnames.api}:${ports.api}` : hostnames.api,
+    app: isDev() ? `${hostnames.app}:${ports.website}` : hostnames.app,
+    api: isDev() ? `${hostnames.api}:${ports.assets}` : hostnames.api,
   }
 }
 
