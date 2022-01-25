@@ -2,13 +2,16 @@ module.exports = {
   apps: [
     {
       name: 'sia-website',
-      script: 'nx',
-      args: 'serve website --prod',
+      cwd: 'dist/apps/website/',
+      script: 'npm',
+      args: 'start',
+      env: {
+        PORT: 3001,
+      },
     },
     {
       name: 'sia-assets',
-      script: 'nx',
-      args: 'serve assets --prod',
+      script: 'dist/apps/assets/main.js',
     },
   ],
 }
