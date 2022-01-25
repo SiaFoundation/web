@@ -1,5 +1,6 @@
 import { Code, Link, Text } from '@siafoundation/design-system'
 import {
+  getBenchmarks,
   getCounts,
   getGithub,
   getSiaStatsHostsActive,
@@ -18,6 +19,7 @@ export default function Home({
   hostsStats,
   mapDataFeatureCount,
   github,
+  benchmarks,
   downloadCounts,
 }) {
   return (
@@ -38,7 +40,7 @@ export default function Home({
         <pre>
           <Code>{JSON.stringify(storage, null, 2)}</Code>
         </pre>
-        <Text>map data:</Text>
+        <Text>geo data:</Text>
         <pre>
           <Code>{mapDataFeatureCount} features</Code>
         </pre>
@@ -49,6 +51,10 @@ export default function Home({
         <Text>downloads:</Text>
         <pre>
           <Code>{JSON.stringify(downloadCounts, null, 2)}</Code>
+        </pre>
+        <Text>benchmarks:</Text>
+        <pre>
+          <Code>{JSON.stringify(benchmarks, null, 2)}</Code>
         </pre>
       </PlaceholderBlock>
       <PlaceholderBlock title="Ecosystem / in use"></PlaceholderBlock>
@@ -70,6 +76,7 @@ export async function getStaticProps() {
     storage,
     downloadCounts,
     github,
+    benchmarks,
   ] = await Promise.all([
     getSiaStatsHostsActive(),
     getSiaStatsHostsCoordinates(),
@@ -77,18 +84,34 @@ export async function getStaticProps() {
     getSiaStatsStorage(),
     getCounts(),
     getGithub(),
+    getBenchmarks(),
   ])
 
-  console.log([hostsActive, hostsStats, storage, downloadCounts, github])
+  console.log([
+    hostsActive,
+    hostsStats,
+    storage,
+    downloadCounts,
+    github,
+    benchmarks,
+  ])
 
   const mapData = geoJsonFormatter(hostsCoordinates.data)
 
+  // Important to only pass minimum data required for rendering down to the client.
   const props = {
     hostsActive,
     hostsStats,
     storage,
     downloadCounts,
     github,
+    benchmarks:
+      benchmarks.status === 200
+        ? {
+            status: 200,
+            data: benchmarks.data.slice(0, 4),
+          }
+        : benchmarks,
     mapDataFeatureCount: mapData.features.length,
   }
 

@@ -1,11 +1,14 @@
 import { getCounts } from '@siafoundation/data-sources'
-import { hosts, siaVersion } from '@siafoundation/env'
+import { getHosts, getSiaVersion } from '@siafoundation/env'
 import { Flex, Heading, Link, Text } from '@siafoundation/design-system'
 import { PlaceholderBlock } from '../../components/PlaceholderBlock'
 import { Layout } from '../../components/Layout'
 import { sitemap, external } from '../../config/site'
 import { getDaysInSeconds } from '../../lib/time'
 import { getHref } from '../../lib/url'
+
+const siaVersion = getSiaVersion()
+const hosts = getHosts()
 
 function Developers({ counts }) {
   return (

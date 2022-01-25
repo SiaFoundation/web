@@ -2,9 +2,12 @@ import { readdirSync } from 'fs'
 import * as express from 'express'
 import * as vhost from 'vhost'
 import { counterMiddleware } from '@siafoundation/data-sources'
-import { hostnames, siaVersion } from '@siafoundation/env'
+import { getHostnames, getSiaVersion } from '@siafoundation/env'
 
 export function setupStatic(server) {
+  const hostnames = getHostnames()
+  const siaVersion = getSiaVersion()
+
   // Serve api docs on the api domain
   const apiApp = express()
   const apiPath = getAssetPath('docs')

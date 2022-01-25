@@ -1,8 +1,10 @@
 import { Heading } from '@siafoundation/design-system'
-import { hosts } from '@siafoundation/env'
+import { getHosts } from '@siafoundation/env'
 import { PlaceholderBlock } from '../../components/PlaceholderBlock'
 import { Layout } from '../../components/Layout'
 import { getHref } from '../../lib/url'
+
+const hosts = getHosts()
 
 function LearnWhitepaper() {
   return (

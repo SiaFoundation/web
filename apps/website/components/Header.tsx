@@ -1,8 +1,10 @@
 import { Flex, Heading, Link, Text } from '@siafoundation/design-system'
-import { hosts } from '@siafoundation/env'
+import { getHosts } from '@siafoundation/env'
 import { appName } from '../config/app'
 import { sitemap, external } from '../config/site'
 import { getHref } from '../lib/url'
+
+const hosts = getHosts()
 
 export function Header() {
   return (

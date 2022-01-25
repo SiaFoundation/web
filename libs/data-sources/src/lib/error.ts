@@ -3,4 +3,4 @@ export const errorResponse500 = {
   data: {
     error: 'Request to data source failed',
   },
-}
+} as const

@@ -1,7 +1,7 @@
-import { dev } from '@siafoundation/env'
+import { isDev } from '@siafoundation/env'
 
 export function getHref(url: string) {
-  if (dev) {
+  if (isDev()) {
     return `http://${url}`
   }
   return `https://${url}`

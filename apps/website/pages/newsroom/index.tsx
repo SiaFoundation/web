@@ -12,7 +12,9 @@ import { Layout } from '../../components/Layout'
 import { external, sitemap } from '../../config/site'
 import { components } from '../../config/mdx'
 import { MDXRemote } from 'next-mdx-remote'
-import { hosts } from '@siafoundation/env'
+import { getHosts } from '@siafoundation/env'
+
+const hosts = getHosts()
 
 type Post = {
   title: string

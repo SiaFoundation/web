@@ -17,6 +17,17 @@
         "jestConfig": "libs/env/jest.config.js",
         "passWithNoTests": true
       }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/env",
+        "tsConfig": "libs/env/tsconfig.lib.json",
+        "packageJson": "libs/env/package.json",
+        "main": "libs/env/src/index.ts",
+        "assets": ["libs/env/*.md"]
+      }
     }
   },
   "tags": []

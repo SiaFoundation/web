@@ -2,20 +2,13 @@ module.exports = {
   apps: [
     {
       name: 'sia-website',
-      script: 'npm',
-      args: 'start',
-      env: {
-        NODE_ENV: 'production',
-        PORT: '3001',
-      },
+      script: 'nx',
+      args: 'serve website --prod',
     },
     {
       name: 'sia-assets',
-      script: 'dist/assets/main.js',
-      env: {
-        NODE_ENV: 'production',
-        PORT: '3002',
-      },
+      script: 'nx',
+      args: 'serve assets --prod',
     },
   ],
 }
