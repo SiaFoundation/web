@@ -1,5 +1,5 @@
 import { Flex, Heading, Link, Text } from '@siafoundation/design-system'
-import { hosts } from '@siafoundation/env'
+import { getHosts } from '@siafoundation/env'
 import { appName } from '../config/app'
 import { sitemap, external } from '../config/site'
 import { getHref } from '../lib/url'
@@ -32,7 +32,7 @@ export function Header() {
             margin: '$1 0',
           }}
         >
-          <Link href={getHref(hosts.api)} target="_blank">
+          <Link href={getHref(getHosts().api)} target="_blank">
             API Reference
           </Link>
           <Link href={external.docs} target="_blank">
