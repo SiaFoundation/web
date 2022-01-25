@@ -8,8 +8,8 @@ const rc = process.env.SIA_RC || '1.5.5'
 // Used to bind vhosts and route requests on the assets server.
 export function getHostnames() {
   return {
-    app: isDev() ? 'localhost' : 'sia.tech',
-    api: isDev() ? 'api.localhost' : 'api.sia.tech',
+    app: process.env.HOST_APP || isDev() ? 'localhost' : 'sia.tech',
+    api: process.env.HOST_API || isDev() ? 'api.localhost' : 'api.sia.tech',
   }
 }
 
