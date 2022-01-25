@@ -51,3 +51,6 @@ assets/transparency
 
 # Generated RSS feeds
 apps/website/public/rss
+
+# Env
+.env
