@@ -20,16 +20,8 @@
       "options": {
         "buildTarget": "website:build",
         "dev": true,
-        "port": 3001
-      },
-      "configurations": {
-        "development": {
-          "proxyConfig": "apps/website/proxy.conf.json"
-        },
-        "production": {
-          "buildTarget": "website:build:production",
-          "dev": false
-        }
+        "port": 3001,
+        "proxyConfig": "apps/website/proxy.conf.json"
       }
     },
     "export": {
