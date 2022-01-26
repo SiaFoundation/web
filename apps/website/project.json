@@ -9,7 +9,14 @@
       "defaultConfiguration": "production",
       "options": {
         "root": "apps/website",
-        "outputPath": "dist/apps/website"
+        "outputPath": "dist/apps/website",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "libs/design-system/src/assets/",
+            "output": "/assets/"
+          }
+        ]
       },
       "configurations": {
         "production": {}

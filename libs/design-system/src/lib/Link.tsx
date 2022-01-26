@@ -2,9 +2,10 @@ import NLink from 'next/link'
 import { styled } from '../config/theme'
 
 export const SLink = styled('a', {
+  fontFamily: '$sans',
   textDecoration: 'none',
   '&:hover': {
-    color: '$blue5',
+    color: '$siaGreen',
   },
 })
 

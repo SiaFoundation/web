@@ -12,10 +12,16 @@ const stitches = createStitches({
   theme: {
     colors: {
       // Theme colors
-      // Add theme colors here eg:
-      green5: 'green',
-      blue5: 'blue',
-      gray5: '#555',
+      // Add new theme colors here.
+      // Existing colors from: https://support.sia.tech/sia-integrations/sia-brand-guidelines
+      siaGreen: '#1ED660',
+      siaGray: '#7F8C8D',
+      gray1: '#F7F9F8', // very light gray
+      gray2: '#ECF1F1', // light gray
+      gray3: '#BFC9C9', // medium gray
+      gray4: '#93A5A5', // dark gray
+      gray5: '#404647', // darker gray
+      gray6: '#202323', // darkest gray
 
       // Semantic colors
       loContrast: 'hsla(0, 0%, 100%, 1)',
@@ -27,7 +33,7 @@ const stitches = createStitches({
       shadowDark: 'hsl(206 22% 7% / 20%)',
     },
     fonts: {
-      sans: 'Untitled Sans, -apple-system, system-ui, sans-serif',
+      sans: 'Metropolis, Untitled Sans, -apple-system, system-ui, sans-serif',
       mono: 'menlo, monospace',
     },
     space: {
