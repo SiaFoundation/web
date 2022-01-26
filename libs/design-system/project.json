@@ -21,6 +21,11 @@
             "glob": "libs/design-system/README.md",
             "input": ".",
             "output": "."
+          },
+          {
+            "glob": "libs/design-system/src/assets",
+            "input": ".",
+            "output": "."
           }
         ]
       }

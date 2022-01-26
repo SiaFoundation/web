@@ -15,10 +15,10 @@ export const Button = styled('button', {
   variants: {
     variant: {
       primary: {
-        backgroundColor: '$blue5',
+        backgroundColor: '$siaGreen',
       },
       secondary: {
-        backgroundColor: '$gray5',
+        backgroundColor: '$siaGray',
       },
       link: {
         backgroundColor: 'none',
