@@ -4,6 +4,8 @@
     "assets": "apps/assets",
     "data-sources": "libs/data-sources",
     "design-system": "libs/design-system",
+    "embarcadero": "apps/embarcadero",
+    "embarcadero-e2e": "apps/embarcadero-e2e",
     "env": "libs/env",
     "types": "libs/types",
     "website": "apps/website",

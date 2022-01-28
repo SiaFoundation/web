@@ -1,4 +1,5 @@
 import NLink from 'next/link'
+import { Link as RRLink } from 'react-router-dom'
 import { styled } from '../config/theme'
 
 export const SLink = styled('a', {
@@ -22,3 +23,5 @@ export function Link({ href, target, children }: Props) {
     </NLink>
   )
 }
+
+export const RLink = (props: any) => <SLink as={RRLink} {...props} />

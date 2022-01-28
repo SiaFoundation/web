@@ -1,5 +1,7 @@
 import { createStitches } from '@stitches/react'
 import type * as Stitches from '@stitches/react'
+import { colors } from './colors'
+import { utils } from './utils'
 
 const unitSize = 5
 
@@ -12,16 +14,18 @@ const stitches = createStitches({
   theme: {
     colors: {
       // Theme colors
-      // Add new theme colors here.
+      // TODO: Add new theme colors here
+      ...colors,
       // Existing colors from: https://support.sia.tech/sia-integrations/sia-brand-guidelines
-      siaGreen: '#1ED660',
+      siaGreen: 'rgba(30, 214, 96, 1)',
+      siaGreenLight: 'rgba(30, 214, 96, 0.15)',
       siaGray: '#7F8C8D',
-      gray1: '#F7F9F8', // very light gray
-      gray2: '#ECF1F1', // light gray
-      gray3: '#BFC9C9', // medium gray
-      gray4: '#93A5A5', // dark gray
-      gray5: '#404647', // darker gray
-      gray6: '#202323', // darkest gray
+      // gray1: '#F7F9F8', // very light gray
+      // gray2: '#ECF1F1', // light gray
+      // gray3: '#BFC9C9', // medium gray
+      // gray4: '#93A5A5', // dark gray
+      // gray5: '#404647', // darker gray
+      // gray6: '#202323', // darkest gray
 
       // Semantic colors
       loContrast: 'hsla(0, 0%, 100%, 1)',
@@ -95,6 +99,7 @@ const stitches = createStitches({
     dark: '(prefers-color-scheme: dark)',
     light: '(prefers-color-scheme: light)',
   },
+  utils,
 })
 
 export const {
