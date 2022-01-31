@@ -1,19 +1,37 @@
 import React, { ReactText } from 'react'
 import { CheckIcon } from '@radix-ui/react-icons'
-import { styled, CSS } from '../config/theme'
+import { styled, CSS, keyframes } from '../config/theme'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { menuCss, separatorCss, itemCss, labelCss } from './Menu'
 import { Box } from './Box'
 import { Flex } from './Flex'
 import { panelStyles } from './Panel'
 
+const scaleIn = keyframes({
+  '0%': { opacity: 0, transform: 'scale(0.7)' },
+  '100%': { opacity: 1, transform: 'scale(1)' },
+})
+
 export const DropdownMenu = DropdownMenuPrimitive.Root
 export const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
 export const DropdownMenuContent = styled(
   DropdownMenuPrimitive.Content,
   menuCss,
-  panelStyles
+  panelStyles,
+  {
+    minWidth: 180,
+    // backgroundColor: 'white',
+    // borderRadius: 6,
+    padding: 5,
+    boxShadow:
+      '0px 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2)',
+    '@media (prefers-reduced-motion: no-preference)': {
+      transformOrigin: 'var(--radix-dropdown-menu-content-transform-origin)',
+      animation: `${scaleIn} 0.1s ease-out`,
+    },
+  }
 )
+
 export const DropdownMenuSeparator = styled(
   DropdownMenuPrimitive.Separator,
   separatorCss
@@ -94,3 +112,11 @@ export const DropdownMenuRadioGroup = styled(
   {}
 )
 export const DropdownMenuGroup = styled(DropdownMenuPrimitive.Group, {})
+
+export const DropdownMenuRightSlot = styled('div', {
+  marginLeft: 'auto',
+  paddingLeft: 20,
+  color: '$slate8',
+  ':focus > &': { color: '$slate10' },
+  '[data-disabled] &': { color: '$slate6' },
+})

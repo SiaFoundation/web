@@ -17,19 +17,20 @@ export const baseItemCss = css({
   cursor: 'default',
   userSelect: 'none',
   whiteSpace: 'nowrap',
-  height: '$5',
-  px: '$5',
+  height: '$6',
+  padding: '0 $3',
 })
 
 export const itemCss = css(baseItemCss, {
   position: 'relative',
-  color: '$hiContrast',
+  color: '$slate9',
   fontFamily: '$sans',
+  fontWeight: 'bold',
+  borderRadius: '$1',
 
   '&:focus': {
     outline: 'none',
-    backgroundColor: '$blue9',
-    color: 'white',
+    color: '$slate11',
   },
 
   '&[data-disabled]': {

@@ -17,6 +17,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
+  DropdownMenuRightSlot,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@siafoundation/design-system'
@@ -33,19 +34,27 @@ export function UserContextMenu() {
         <DropdownMenuGroup>
           <DropdownMenuItem>
             About
-            <InfoCircledIcon />
+            <DropdownMenuRightSlot>
+              <InfoCircledIcon />
+            </DropdownMenuRightSlot>
           </DropdownMenuItem>
           <DropdownMenuItem>
             Discord
-            <ChatBubbleIcon />
+            <DropdownMenuRightSlot>
+              <ChatBubbleIcon />
+            </DropdownMenuRightSlot>
           </DropdownMenuItem>
           <DropdownMenuItem>
             Docs
-            <CubeIcon />
+            <DropdownMenuRightSlot>
+              <CubeIcon />
+            </DropdownMenuRightSlot>
           </DropdownMenuItem>
           <DropdownMenuItem>
             Privacy
-            <FileTextIcon />
+            <DropdownMenuRightSlot>
+              <FileTextIcon />
+            </DropdownMenuRightSlot>
           </DropdownMenuItem>
           {/* <DropdownMenuSeparator />
           <DropdownMenuCheckboxItem>Item</DropdownMenuCheckboxItem>

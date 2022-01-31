@@ -37,7 +37,7 @@ export function Footer() {
 
   return (
     <Flex
-      gap="2"
+      gap="1"
       align="center"
       css={{
         position: 'fixed',
@@ -48,13 +48,15 @@ export function Footer() {
       }}
     >
       <Box css={{ flex: 1 }} />
-      <Text>
+      <Text size="1">
         {((Number(wallet?.dustthreshold) / Math.pow(10, 24)) * 1024) / 0.001} mS
         / KB
       </Text>
-      <Text>{'•'}</Text>
-      <Text>{consensus?.height}</Text>
-      <Box css={{ position: 'relative' }}>
+      <Text size="1" css={{ fontWeight: 'bold' }}>
+        {'•'}
+      </Text>
+      <Text size="1">{consensus?.height}</Text>
+      <Box css={{ position: 'relative', top: '-0.5px', marginLeft: '$1' }}>
         <Status variant={color} />
         <Status
           variant={color}
