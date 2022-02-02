@@ -1,3 +1,3 @@
 # Website
 
-The `sia.tech` Sia Foundation website.
+The [sia.tech](https://sia.tech) website.

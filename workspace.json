@@ -1,7 +1,7 @@
 {
   "version": 2,
   "projects": {
-    "assets": "apps/assets",
+    "asset-server": "apps/asset-server",
     "data-sources": "libs/data-sources",
     "design-site": "apps/design-site",
     "design-site-e2e": "apps/design-site-e2e",

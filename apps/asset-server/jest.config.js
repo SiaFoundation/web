@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'assets',
+  displayName: 'asset-server',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +11,5 @@ module.exports = {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/apps/assets',
+  coverageDirectory: '../../coverage/apps/asset-server',
 }
