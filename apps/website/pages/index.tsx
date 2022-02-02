@@ -1,4 +1,4 @@
-import { Code, Link, Text } from '@siafoundation/design-system'
+import { Codeblock, NLink, Text } from '@siafoundation/design-system'
 import {
   getBenchmarks,
   getCounts,
@@ -25,36 +25,36 @@ export default function Home({
   return (
     <Layout>
       <PlaceholderBlock title="Hero + headline">
-        <Link href={sitemap.developers.index}>Download</Link>
+        <NLink href={sitemap.developers.index}>Download</NLink>
       </PlaceholderBlock>
       <PlaceholderBlock title="Stats / validation">
         <Text>hosts active:</Text>
         <pre>
-          <Code>{JSON.stringify(hostsActive, null, 2)}</Code>
+          <Codeblock>{JSON.stringify(hostsActive, null, 2)}</Codeblock>
         </pre>
         <Text>hosts stats:</Text>
         <pre>
-          <Code>{JSON.stringify(hostsStats, null, 2)}</Code>
+          <Codeblock>{JSON.stringify(hostsStats, null, 2)}</Codeblock>
         </pre>
         <Text>storage:</Text>
         <pre>
-          <Code>{JSON.stringify(storage, null, 2)}</Code>
+          <Codeblock>{JSON.stringify(storage, null, 2)}</Codeblock>
         </pre>
         <Text>geo data:</Text>
         <pre>
-          <Code>{mapDataFeatureCount} features</Code>
+          <Codeblock>{mapDataFeatureCount} features</Codeblock>
         </pre>
         <Text>github:</Text>
         <pre>
-          <Code>{JSON.stringify(github, null, 2)}</Code>
+          <Codeblock>{JSON.stringify(github, null, 2)}</Codeblock>
         </pre>
         <Text>downloads:</Text>
         <pre>
-          <Code>{JSON.stringify(downloadCounts, null, 2)}</Code>
+          <Codeblock>{JSON.stringify(downloadCounts, null, 2)}</Codeblock>
         </pre>
         <Text>benchmarks:</Text>
         <pre>
-          <Code>{JSON.stringify(benchmarks, null, 2)}</Code>
+          <Codeblock>{JSON.stringify(benchmarks, null, 2)}</Codeblock>
         </pre>
       </PlaceholderBlock>
       <PlaceholderBlock title="Ecosystem / in use"></PlaceholderBlock>

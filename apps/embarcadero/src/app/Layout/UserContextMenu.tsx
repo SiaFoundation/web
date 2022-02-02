@@ -30,7 +30,7 @@ export function UserContextMenu() {
           <DotsHorizontalIcon />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" css={{ marginTop: '$1' }}>
+      <DropdownMenuContent align="end">
         <DropdownMenuGroup>
           <DropdownMenuItem>
             About

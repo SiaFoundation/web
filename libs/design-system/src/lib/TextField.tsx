@@ -1,7 +1,6 @@
 import { styled } from '../config/theme'
 
 export const TextField = styled('input', {
-  // Reset
   appearance: 'none',
   borderWidth: '0',
   boxSizing: 'border-box',
@@ -28,7 +27,8 @@ export const TextField = styled('input', {
   fontVariantNumeric: 'tabular-nums',
 
   '&:-webkit-autofill': {
-    boxShadow: 'inset 0 0 0 1px $colors$blue6, inset 0 0 0 100px $colors$blue3',
+    boxShadow:
+      'inset 0 0 0 1px $colors$blue6, inset 0 0 0 100px $colors$siaGreenA4',
   },
 
   '&:-webkit-autofill::first-line': {
@@ -38,10 +38,10 @@ export const TextField = styled('input', {
 
   '&:focus': {
     boxShadow:
-      'inset 0px 0px 0px 1px $colors$blue8, 0px 0px 0px 1px $colors$blue8',
+      'inset 0px 0px 0px 1px $colors$inputShadow, 0px 0px 0px 1px $colors$inputShadow',
     '&:-webkit-autofill': {
       boxShadow:
-        'inset 0px 0px 0px 1px $colors$blue8, 0px 0px 0px 1px $colors$blue8, inset 0 0 0 100px $colors$blue3',
+        'inset 0px 0px 0px 1px $colors$inputShadow, 0px 0px 0px 1px $colors$inputShadow, inset 0 0 0 100px $colors$siaGreenA4',
     },
   },
   '&::placeholder': {
@@ -74,9 +74,13 @@ export const TextField = styled('input', {
         '&:-webkit-autofill::first-line': {
           fontSize: '$1',
         },
+        '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+          position: 'relative',
+          right: '-4px',
+        },
       },
       '2': {
-        borderRadius: '$2',
+        borderRadius: '$1',
         height: '$6',
         fontSize: '$3',
         padding: '0 $2',
@@ -84,15 +88,23 @@ export const TextField = styled('input', {
         '&:-webkit-autofill::first-line': {
           fontSize: '$3',
         },
+        '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+          position: 'relative',
+          right: '-8px',
+        },
       },
       '3': {
-        borderRadius: '$2',
+        borderRadius: '$1',
         height: '$7',
         fontSize: '$7',
         padding: '0 $2',
         lineHeight: '$sizes$7',
         '&:-webkit-autofill::first-line': {
           fontSize: '$7',
+        },
+        '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+          position: 'relative',
+          right: '-8px',
         },
       },
     },
@@ -139,7 +151,7 @@ export const TextField = styled('input', {
         '&:focus': {
           backgroundColor: '$loContrast',
           boxShadow:
-            'inset 0px 0px 0px 1px $colors$blue8, 0px 0px 0px 1px $colors$blue8',
+            'inset 0px 0px 0px 1px $colors$inputShadow, 0px 0px 0px 1px $colors$inputShadow',
         },
         '&:disabled': {
           backgroundColor: 'transparent',
@@ -158,10 +170,10 @@ export const TextField = styled('input', {
         },
       },
       valid: {
-        boxShadow: 'inset 0 0 0 1px $colors$green7',
+        boxShadow: 'inset 0 0 0 1px $colors$siaGreenA8',
         '&:focus': {
           boxShadow:
-            'inset 0px 0px 0px 1px $colors$green8, 0px 0px 0px 1px $colors$green8',
+            'inset 0px 0px 0px 1px $colors$inputShadow, 0px 0px 0px 1px $colors$inputShadow',
         },
       },
     },

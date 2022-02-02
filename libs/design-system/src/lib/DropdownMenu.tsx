@@ -6,11 +6,7 @@ import { menuCss, separatorCss, itemCss, labelCss } from './Menu'
 import { Box } from './Box'
 import { Flex } from './Flex'
 import { panelStyles } from './Panel'
-
-const scaleIn = keyframes({
-  '0%': { opacity: 0, transform: 'scale(0.7)' },
-  '100%': { opacity: 1, transform: 'scale(1)' },
-})
+import { scaleIn } from '../config/animations'
 
 export const DropdownMenu = DropdownMenuPrimitive.Root
 export const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
@@ -23,12 +19,18 @@ export const DropdownMenuContent = styled(
     // backgroundColor: 'white',
     // borderRadius: 6,
     padding: 5,
+    willChange: 'transform, opacity',
     boxShadow:
       '0px 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2)',
     '@media (prefers-reduced-motion: no-preference)': {
       transformOrigin: 'var(--radix-dropdown-menu-content-transform-origin)',
-      animation: `${scaleIn} 0.1s ease-out`,
+      animation: `${scaleIn} 0.05s ease-out`,
     },
+    position: 'relative',
+    '&[data-side="top"]': { bottom: '$2' },
+    '&[data-side="bottom"]': { top: '$2' },
+    '&[data-side="left"]': { right: '$2' },
+    '&[data-side="right"]': { left: '$2' },
   }
 )
 
@@ -37,6 +39,10 @@ export const DropdownMenuSeparator = styled(
   separatorCss
 )
 export const DropdownMenuItem = styled(DropdownMenuPrimitive.Item, itemCss)
+export const DropdownMenuTriggerItem = styled(
+  DropdownMenuPrimitive.TriggerItem,
+  itemCss
+)
 
 const StyledDropdownMenuRadioItem = styled(
   DropdownMenuPrimitive.RadioItem,
@@ -55,7 +61,8 @@ export const DropdownMenuRadioItem = React.forwardRef<
   DialogMenuRadioItemProps
 >(({ children, ...props }, forwardedRef) => (
   <StyledDropdownMenuRadioItem {...props} ref={forwardedRef}>
-    <Box as="span" css={{ position: 'absolute', left: '$1' }}>
+    {children}
+    <DropdownMenuRightSlot variant="ghost">
       <DropdownMenuPrimitive.ItemIndicator>
         <Flex
           css={{
@@ -75,8 +82,7 @@ export const DropdownMenuRadioItem = React.forwardRef<
           />
         </Flex>
       </DropdownMenuPrimitive.ItemIndicator>
-    </Box>
-    {children}
+    </DropdownMenuRightSlot>
   </StyledDropdownMenuRadioItem>
 ))
 
@@ -97,12 +103,12 @@ export const DropdownMenuCheckboxItem = React.forwardRef<
   DialogMenuCheckboxItemProps
 >(({ children, ...props }, forwardedRef) => (
   <StyledDropdownMenuCheckboxItem {...props} ref={forwardedRef}>
-    <Box as="span" css={{ position: 'absolute', left: '$1' }}>
+    {children}
+    <DropdownMenuRightSlot variant="ghost">
       <DropdownMenuPrimitive.ItemIndicator>
         <CheckIcon />
       </DropdownMenuPrimitive.ItemIndicator>
-    </Box>
-    {children}
+    </DropdownMenuRightSlot>
   </StyledDropdownMenuCheckboxItem>
 ))
 
@@ -116,7 +122,18 @@ export const DropdownMenuGroup = styled(DropdownMenuPrimitive.Group, {})
 export const DropdownMenuRightSlot = styled('div', {
   marginLeft: 'auto',
   paddingLeft: 20,
-  color: '$slate8',
-  ':focus > &': { color: '$slate10' },
-  '[data-disabled] &': { color: '$slate6' },
+
+  variants: {
+    variant: {
+      default: {
+        color: '$slate8',
+        ':focus > &': { color: '$slate10' },
+        '[data-disabled] &': { color: '$slate6' },
+      },
+      ghost: {},
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
 })

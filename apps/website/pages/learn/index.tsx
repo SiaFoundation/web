@@ -1,4 +1,4 @@
-import { Heading, Link } from '@siafoundation/design-system'
+import { Heading, NLink } from '@siafoundation/design-system'
 import { PlaceholderBlock } from '../../components/PlaceholderBlock'
 import { Layout } from '../../components/Layout'
 import { sitemap } from '../../config/site'
@@ -9,16 +9,16 @@ function Learn() {
       <Heading>Learn</Heading>
       <PlaceholderBlock title="Intro + quick links"></PlaceholderBlock>
       <PlaceholderBlock title="How Sia works overview (graphic)">
-        <Link href={sitemap.learn.howSiaWorks}>How Sia Works</Link>
+        <NLink href={sitemap.learn.howSiaWorks}>How Sia Works</NLink>
       </PlaceholderBlock>
       <PlaceholderBlock title="Get started">
-        <Link href={sitemap.learn.getStarted}>Get started</Link>
+        <NLink href={sitemap.learn.getStarted}>Get started</NLink>
       </PlaceholderBlock>
       <PlaceholderBlock title="Popular tutorials">
-        <Link href={sitemap.learn.getStarted}>Get started</Link>
+        <NLink href={sitemap.learn.getStarted}>Get started</NLink>
       </PlaceholderBlock>
       <PlaceholderBlock title="Whitepaper">
-        <Link href={sitemap.learn.whitepaper}>Whitepaper</Link>
+        <NLink href={sitemap.learn.whitepaper}>Whitepaper</NLink>
       </PlaceholderBlock>
     </Layout>
   )

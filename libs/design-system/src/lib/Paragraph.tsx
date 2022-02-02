@@ -1,7 +1,6 @@
 import React from 'react'
 import { Text } from './Text'
 import { VariantProps, CSS } from '../config/theme'
-import merge from 'lodash/merge'
 
 const DEFAULT_TAG = 'p'
 
@@ -18,7 +17,7 @@ export const Paragraph = React.forwardRef<
   React.ElementRef<typeof DEFAULT_TAG>,
   ParagraphProps
 >((props, forwardedRef) => {
-  // '2' here is the default Paragraph size variant
+  // '1' here is the default Paragraph size variant
   const { size = '1', ...textProps } = props
 
   // This is the mapping of Paragraph Variants to Text variants
@@ -42,7 +41,8 @@ export const Paragraph = React.forwardRef<
       ref={forwardedRef}
       size={textSize[size]}
       css={{
-        ...merge(textCss[size], props.css),
+        ...textCss[size],
+        ...props.css,
       }}
     />
   )

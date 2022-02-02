@@ -10,7 +10,8 @@ export const baseItemCss = css({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  fontFamily: '$untitled',
+  color: '$slate9',
+  fontFamily: '$sans',
   fontSize: '$1',
   fontVariantNumeric: 'tabular-nums',
   lineHeight: '1',
@@ -23,8 +24,6 @@ export const baseItemCss = css({
 
 export const itemCss = css(baseItemCss, {
   position: 'relative',
-  color: '$slate9',
-  fontFamily: '$sans',
   fontWeight: 'bold',
   borderRadius: '$1',
 

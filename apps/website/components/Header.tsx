@@ -1,4 +1,4 @@
-import { Flex, Heading, Link, Text } from '@siafoundation/design-system'
+import { Flex, Heading, NLink, Text } from '@siafoundation/design-system'
 import { getHosts } from '@siafoundation/env'
 import { appName } from '../config/app'
 import { sitemap, external } from '../config/site'
@@ -10,9 +10,9 @@ export function Header() {
   return (
     <Flex align="center" justify="between">
       <Flex direction="column">
-        <Link href={sitemap.home.index}>
+        <NLink href={sitemap.home.index}>
           <Heading size="3">{appName}</Heading>
-        </Link>
+        </NLink>
         <Text size="1">Decentralized storage for the post-cloud world.</Text>
       </Flex>
       <Flex direction="column" gap="1">
@@ -23,9 +23,9 @@ export function Header() {
             margin: '$1 0',
           }}
         >
-          <Link href={sitemap.developers.index}>Developers</Link>
-          <Link href={sitemap.learn.index}>Learn</Link>
-          <Link href={sitemap.community.index}>Community & Ecosystem</Link>
+          <NLink href={sitemap.developers.index}>Developers</NLink>
+          <NLink href={sitemap.learn.index}>Learn</NLink>
+          <NLink href={sitemap.community.index}>Community & Ecosystem</NLink>
         </Flex>
         <Flex
           gap="3"
@@ -34,16 +34,16 @@ export function Header() {
             margin: '$1 0',
           }}
         >
-          <Link href={getHref(hosts.api)} target="_blank">
+          <NLink href={getHref(hosts.api)} target="_blank">
             API Reference
-          </Link>
-          <Link href={external.docs} target="_blank">
+          </NLink>
+          <NLink href={external.docs} target="_blank">
             Documentation
-          </Link>
-          <Link href={external.blog} target="_blank">
+          </NLink>
+          <NLink href={external.blog} target="_blank">
             Blog
-          </Link>
-          <Link href={sitemap.foundation.index}>About Sia Foundation</Link>
+          </NLink>
+          <NLink href={sitemap.foundation.index}>About Sia Foundation</NLink>
         </Flex>
       </Flex>
     </Flex>

@@ -1,7 +1,6 @@
 import { styled } from '../config/theme'
 
 export const IconButton = styled('button', {
-  // Reset
   alignItems: 'center',
   appearance: 'none',
   borderWidth: '0',
