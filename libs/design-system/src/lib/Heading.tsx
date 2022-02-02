@@ -27,7 +27,7 @@ type HeadingVariants = { size?: HeadingSizeVariants } & Omit<
   'size'
 >
 type HeadingProps = React.ComponentProps<typeof DEFAULT_TAG> &
-  HeadingVariants & { css?: CSS; as?: React.ReactNode }
+  HeadingVariants & { css?: CSS; as?: string }
 
 export const Heading = React.forwardRef<
   React.ElementRef<typeof DEFAULT_TAG>,
