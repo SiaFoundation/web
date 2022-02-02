@@ -40,8 +40,8 @@ export function NImage({
     <Image
       as={NextImage}
       src={src}
-      height={height}
-      width={width}
+      width={layout === 'fill' ? undefined : width}
+      height={layout === 'fill' ? undefined : height}
       fit={layout === 'fill' ? 'fill' : undefined}
       layout={layout}
       blurDataURL={blurDataURL}

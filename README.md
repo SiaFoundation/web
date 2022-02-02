@@ -6,11 +6,11 @@ Web packages for the Sia project and ecosystem.
 
 - [Website](apps/website/README.md) - The main [sia.tech](https://sia.tech) website with information on the Sia project and the Sia Foundation.
 - [Asset Server](apps/asset-server/README.md) - Powers [api.sia.tech](https://api.sia.tech) as well as the releases and transparency reports available on [sia.tech](https://sia.tech).
-- [Design](apps/design-site/README.md) - The [design.sia.tech](https://design.sia.tech) website for exploring the design system used across Sia websites and apps.
+- [Design](apps/design-site/README.md) - The [design.sia.tech](https://design.sia.tech) website for exploring the design system used across Sia apps and websites.
 
 ## Libraries
 
-- [@siafoundation/design-system](libs/design-system/README.md) - React-based Design System for use across Foundation apps and websites.
+- [@siafoundation/design-system](libs/design-system/README.md) - React-based design system used across Sia apps and websites.
 - [@siafoundation/data-sources](libs/data-sources/README.md) - Data sources used for stats on the website.
 - [@siafoundation/types](libs/types/README.md) - Common types for Sia libraries.
 - [@siafoundation/env](libs/env/README.md) - Environment variables for the website server configuration.
