@@ -70,7 +70,6 @@ export function Images() {
             <Button
               variant="transparentWhite"
               css={{
-                zIndex: 2,
                 position: 'absolute',
                 bottom: '$1',
                 right: '$1',

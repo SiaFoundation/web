@@ -27,7 +27,7 @@
       "options": {
         "buildTarget": "design-site:build",
         "dev": true,
-        "port": 4201
+        "port": 3004
       },
       "configurations": {
         "production": {
