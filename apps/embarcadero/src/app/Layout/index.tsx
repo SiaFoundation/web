@@ -9,7 +9,8 @@ import {
 import { capitalize } from 'lodash'
 import React, { Fragment } from 'react'
 import { useLocation } from 'react-router-dom'
-import logo from '../../public/logo.png'
+// TODO: move logo to design-system component
+import logo from '../../../../../libs/design-system/src/assets/logo.png'
 import { Footer } from './Footer'
 import { AccountStatus } from './AccountStatus'
 

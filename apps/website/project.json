@@ -14,7 +14,7 @@
           {
             "glob": "**/*",
             "input": "libs/design-system/src/assets/",
-            "output": "/assets/"
+            "output": "/"
           }
         ]
       },
