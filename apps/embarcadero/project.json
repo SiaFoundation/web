@@ -1,0 +1,77 @@
+{
+  "root": "apps/embarcadero",
+  "sourceRoot": "apps/embarcadero/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/embarcadero",
+        "index": "apps/embarcadero/src/index.html",
+        "baseHref": "/",
+        "main": "apps/embarcadero/src/main.tsx",
+        "polyfills": "apps/embarcadero/src/polyfills.ts",
+        "tsConfig": "apps/embarcadero/tsconfig.app.json",
+        "assets": [
+          "apps/embarcadero/src/public",
+          {
+            "glob": "**/*",
+            "input": "libs/design-system/src/assets/",
+            "output": "/assets/"
+          }
+        ],
+        "styles": [],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/embarcadero/src/environments/environment.ts",
+              "with": "apps/embarcadero/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "embarcadero:build",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "embarcadero:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/embarcadero/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/embarcadero"],
+      "options": {
+        "jestConfig": "apps/embarcadero/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,5 +1,4 @@
 import { globalCss } from './theme'
-// import MetropolisSemiBold from '../assets/fonts/Metropolis/metropolis-semibold-webfont.woff2'
 
 // Reset and normalize css
 export const resetStyles = globalCss({
@@ -31,19 +30,19 @@ export const resetStyles = globalCss({
   '@font-face': [
     {
       fontFamily: 'Metropolis',
-      src: `url('assets/fonts/Metropolis/metropolis-regular-webfont.woff2') format('woff2'), url('assets/fonts/Metropolis/metropolis-regular-webfont.woff') format('woff')`,
+      src: `url('fonts/Metropolis/metropolis-regular-webfont.woff2') format('woff2'), url('fonts/Metropolis/metropolis-regular-webfont.woff') format('woff')`,
       fontWeight: '400',
       fontStyle: 'normal',
     },
     {
       fontFamily: 'Metropolis',
-      src: `url('assets/fonts/Metropolis/metropolis-medium-webfont.woff2') format('woff2'), url('assets/fonts/Metropolis/metropolis-medium-webfont.woff') format('woff')`,
+      src: `url('fonts/Metropolis/metropolis-medium-webfont.woff2') format('woff2'), url('fonts/Metropolis/metropolis-medium-webfont.woff') format('woff')`,
       fontWeight: '500',
       fontStyle: 'normal',
     },
     {
       fontFamily: 'Metropolis',
-      src: `url('assets/fonts/Metropolis/metropolis-semi-bold-webfont.woff2') format('woff2'), url('assets/fonts/Metropolis/metropolis-semi-bold-webfont.woff') format('woff')`,
+      src: `url('fonts/Metropolis/metropolis-semibold-webfont.woff2') format('woff2'), url('fonts/Metropolis/metropolis-semibold-webfont.woff') format('woff')`,
       fontWeight: '600',
       fontStyle: 'normal',
     },

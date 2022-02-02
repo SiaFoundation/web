@@ -1,4 +1,4 @@
-import { Heading, Link } from '@siafoundation/design-system'
+import { Heading, NLink } from '@siafoundation/design-system'
 import { PlaceholderBlock } from '../../components/PlaceholderBlock'
 import { Layout } from '../../components/Layout'
 import { sitemap } from '../../config/site'
@@ -11,7 +11,7 @@ function Foundation() {
       <PlaceholderBlock title="Team grid"></PlaceholderBlock>
       <PlaceholderBlock title="Quarterly reports"></PlaceholderBlock>
       <PlaceholderBlock title="Recent news">
-        <Link href={sitemap.newsroom.index}>News</Link>
+        <NLink href={sitemap.newsroom.index}>News</NLink>
       </PlaceholderBlock>
       <PlaceholderBlock title="Contact form"></PlaceholderBlock>
     </Layout>

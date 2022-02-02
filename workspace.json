@@ -1,9 +1,13 @@
 {
   "version": 2,
   "projects": {
-    "assets": "apps/assets",
+    "asset-server": "apps/asset-server",
     "data-sources": "libs/data-sources",
+    "design-site": "apps/design-site",
+    "design-site-e2e": "apps/design-site-e2e",
     "design-system": "libs/design-system",
+    "embarcadero": "apps/embarcadero",
+    "embarcadero-e2e": "apps/embarcadero-e2e",
     "env": "libs/env",
     "types": "libs/types",
     "website": "apps/website",

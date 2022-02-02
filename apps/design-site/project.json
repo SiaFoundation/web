@@ -1,0 +1,62 @@
+{
+  "root": "apps/design-site",
+  "sourceRoot": "apps/design-site",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "root": "apps/design-site",
+        "outputPath": "dist/apps/design-site",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "libs/design-system/src/assets/",
+            "output": "/"
+          }
+        ]
+      },
+      "configurations": {
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/next:server",
+      "options": {
+        "buildTarget": "design-site:build",
+        "dev": true,
+        "port": 4201
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "design-site:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nrwl/next:export",
+      "options": {
+        "buildTarget": "design-site:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/design-site"],
+      "options": {
+        "jestConfig": "apps/design-site/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/design-site/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": []
+}

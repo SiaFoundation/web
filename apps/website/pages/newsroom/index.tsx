@@ -1,4 +1,4 @@
-import { Flex, Heading, Link, Text } from '@siafoundation/design-system'
+import { Flex, Heading, NLink, Text } from '@siafoundation/design-system'
 import ReactDOMServer from 'react-dom/server'
 import fs from 'fs'
 import path from 'path'
@@ -39,9 +39,11 @@ function Newsroom({ posts }: Props) {
       {posts.map((post) => (
         <PlaceholderBlock key={post.slug}>
           <Flex direction="column" gap="3">
-            <Link href={sitemap.newsroom.newsPost.replace('[slug]', post.slug)}>
+            <NLink
+              href={sitemap.newsroom.newsPost.replace('[slug]', post.slug)}
+            >
               <Heading>{post.title}</Heading>
-            </Link>
+            </NLink>
             <Text>{post.description}</Text>
             <Text>
               {post.location} - {format(post.date, 'PPPP')}

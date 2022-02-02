@@ -11,7 +11,16 @@ module.exports = {
     },
     {
       name: 'sia-assets',
-      script: 'dist/apps/assets/main.js',
+      script: 'dist/apps/asset-server/main.js',
+    },
+    {
+      name: 'sia-design',
+      cwd: 'dist/apps/design-site/',
+      script: 'npm',
+      args: 'start',
+      env: {
+        PORT: 3003,
+      },
     },
   ],
 }

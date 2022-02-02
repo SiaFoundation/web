@@ -1,4 +1,4 @@
-import { Heading, Link } from '@siafoundation/design-system'
+import { Heading, NLink } from '@siafoundation/design-system'
 import { PlaceholderBlock } from '../../components/PlaceholderBlock'
 import { Layout } from '../../components/Layout'
 import { sitemap, external } from '../../config/site'
@@ -8,13 +8,13 @@ function CommunityEcosystem() {
     <Layout>
       <Heading>Community & ecosystem</Heading>
       <PlaceholderBlock title="Intro + quick links">
-        <Link href={sitemap.community.getSiacoin}>Get Siacoin</Link>
+        <NLink href={sitemap.community.getSiacoin}>Get Siacoin</NLink>
       </PlaceholderBlock>
       <PlaceholderBlock title="Blog">
-        <Link href={external.blog}>Blog</Link>
+        <NLink href={external.blog}>Blog</NLink>
       </PlaceholderBlock>
       <PlaceholderBlock title="News">
-        <Link href={sitemap.newsroom.index}>News</Link>
+        <NLink href={sitemap.newsroom.index}>News</NLink>
       </PlaceholderBlock>
       <PlaceholderBlock title="Project list"></PlaceholderBlock>
       <PlaceholderBlock title="Grants"></PlaceholderBlock>

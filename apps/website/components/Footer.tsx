@@ -1,4 +1,4 @@
-import { Flex, Link } from '@siafoundation/design-system'
+import { Flex, NLink } from '@siafoundation/design-system'
 import { sitemap, external } from '../config/site'
 
 export function Footer() {
@@ -17,9 +17,9 @@ export function Footer() {
           margin: '$1 0',
         }}
       >
-        <Link href={sitemap.newsroom.index}>Newsroom</Link>
-        <Link href={sitemap.community.getSiacoin}>Get Siacoin</Link>
-        <Link href={sitemap.learn.whitepaper}>Whitepaper</Link>
+        <NLink href={sitemap.newsroom.index}>Newsroom</NLink>
+        <NLink href={sitemap.community.getSiacoin}>Get Siacoin</NLink>
+        <NLink href={sitemap.learn.whitepaper}>Whitepaper</NLink>
       </Flex>
       <Flex
         gap="3"
@@ -28,21 +28,21 @@ export function Footer() {
           margin: '$1 0',
         }}
       >
-        <Link href={external.blog} target="_blank">
+        <NLink href={external.blog} target="_blank">
           Blog
-        </Link>
-        <Link href={external.discord} target="_blank">
+        </NLink>
+        <NLink href={external.discord} target="_blank">
           Discord
-        </Link>
-        <Link href={external.github} target="_blank">
+        </NLink>
+        <NLink href={external.github} target="_blank">
           Github
-        </Link>
-        <Link href={external.twitter} target="_blank">
+        </NLink>
+        <NLink href={external.twitter} target="_blank">
           Twitter
-        </Link>
-        <Link href={external.reddit} target="_blank">
+        </NLink>
+        <NLink href={external.reddit} target="_blank">
           Reddit
-        </Link>
+        </NLink>
       </Flex>
     </Flex>
   )

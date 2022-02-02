@@ -2,7 +2,7 @@ import { styled } from '../config/theme'
 
 export const Text = styled('span', {
   boxSizing: 'border-box',
-  color: '$text',
+  color: '$hiContrast',
   display: 'inline-block',
   fontFamily: '$sans',
   fontWeight: 400,
@@ -36,6 +36,14 @@ export const Text = styled('span', {
       },
       '9': {
         fontSize: '$9',
+      },
+    },
+    ellipsis: {
+      true: {
+        width: '100%',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
       },
     },
   },

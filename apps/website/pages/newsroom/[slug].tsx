@@ -1,4 +1,4 @@
-import { Heading, Link, Text } from '@siafoundation/design-system'
+import { Heading, NLink, Text } from '@siafoundation/design-system'
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
@@ -21,7 +21,7 @@ function NewsroomPost({ title, description, location, date, mdxSource }) {
   return (
     <Layout>
       <Heading>
-        <Link href={sitemap.newsroom.index}>Newsroom</Link>
+        <NLink href={sitemap.newsroom.index}>Newsroom</NLink>
         {` / ${title}`}
       </Heading>
       <Text>{description}</Text>

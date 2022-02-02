@@ -90,6 +90,12 @@ export const Flex = styled('div', {
         gap: '$9',
       },
     },
+    debug: {
+      true: {
+        border: '1px solid $siaGreenA12',
+        borderRadius: '$1',
+      },
+    },
   },
   defaultVariants: {
     direction: 'row',

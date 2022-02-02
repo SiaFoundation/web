@@ -1,0 +1,28 @@
+{
+  "root": "apps/embarcadero-e2e",
+  "sourceRoot": "apps/embarcadero-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/embarcadero-e2e/cypress.json",
+        "devServerTarget": "embarcadero:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "embarcadero:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/embarcadero-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["embarcadero"]
+}
