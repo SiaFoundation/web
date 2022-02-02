@@ -82,8 +82,8 @@ export function Create() {
       </Flex>
       <Box css={{ width: '100%' }}>
         <Button
-          size="2"
-          variant="primary"
+          size="3"
+          variant="green"
           css={{ width: '100%', textAlign: 'center' }}
           onClick={() => create(Number(sc), Number(sf), direction)}
         >

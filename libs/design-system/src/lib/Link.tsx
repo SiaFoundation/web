@@ -8,6 +8,7 @@ export const StyledLink = styled('a', {
   gap: '$1',
   flexShrink: 0,
   outline: 'none',
+  fontFamily: '$sans',
   textDecorationLine: 'none',
   textUnderlineOffset: '3px',
   textDecorationColor: '$slate4',
