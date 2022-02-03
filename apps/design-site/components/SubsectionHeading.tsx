@@ -1,16 +1,22 @@
-import { Heading } from '@siafoundation/design-system'
+import { Box, Heading, NLink } from '@siafoundation/design-system'
 
 type Props = {
-  children: React.ReactNode
+  children: string
 }
 
 export function SubsectionHeading({ children }: Props) {
+  const id = encodeURI(children.toLowerCase())
   return (
-    <Heading
-      size={'2'}
-      css={{ display: 'block', paddingBottom: '$3', color: '$slate11' }}
+    <Box
+      css={{
+        pb: '$3',
+      }}
     >
-      {children}
-    </Heading>
+      <NLink href={`#${id}`} id={id}>
+        <Heading size={'2'} css={{ color: '$slate11' }}>
+          {children}
+        </Heading>
+      </NLink>
+    </Box>
   )
 }

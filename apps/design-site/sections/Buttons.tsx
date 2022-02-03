@@ -1,5 +1,11 @@
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
-import { Button, Flex, IconButton, Section } from '@siafoundation/design-system'
+import {
+  Button,
+  Flex,
+  Grid,
+  IconButton,
+  Section,
+} from '@siafoundation/design-system'
 import { SectionHeading } from '../components/SectionHeading'
 import { SmallSection } from '../components/SmallSection'
 import { SubsectionHeading } from '../components/SubsectionHeading'
@@ -113,7 +119,7 @@ export function Buttons() {
       </Section>
       <Section>
         <SubsectionHeading>IconButton</SubsectionHeading>
-        <Flex direction="column" gap="2">
+        <Grid columns={{ '@initial': 1, '@bp1': 2 }} gap="2">
           <Flex direction="row" gap="1">
             <IconButton size="1" variant="ghost">
               <MagnifyingGlassIcon />
@@ -127,6 +133,8 @@ export function Buttons() {
             <IconButton size="4" disabled variant="ghost">
               <MagnifyingGlassIcon />
             </IconButton>
+          </Flex>
+          <Flex direction="row" gap="1">
             <IconButton size="1" variant="raised">
               <MagnifyingGlassIcon />
             </IconButton>
@@ -140,7 +148,7 @@ export function Buttons() {
               <MagnifyingGlassIcon />
             </IconButton>
           </Flex>
-        </Flex>
+        </Grid>
       </Section>
     </Section>
   )

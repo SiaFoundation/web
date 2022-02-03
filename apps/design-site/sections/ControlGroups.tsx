@@ -52,6 +52,26 @@ export function ControlGroups() {
         <Flex direction="column" gap="2">
           <Flex direction="row" gap="1">
             <ControlGroup>
+              <Button size="1">
+                <MagnifyingGlassIcon />
+              </Button>
+              <TextField size="1" />
+              <Select size="1">
+                <option>Option A</option>
+                <option>Option B</option>
+                <option>Option C</option>
+                <option>Option D</option>
+                <option>Option Elephant</option>
+              </Select>
+              <Menu>
+                <Button size="1">
+                  <DotsHorizontalIcon />
+                </Button>
+              </Menu>
+            </ControlGroup>
+          </Flex>
+          <Flex direction="row" gap="1">
+            <ControlGroup>
               <Button size="2">
                 <MagnifyingGlassIcon />
               </Button>
@@ -65,6 +85,26 @@ export function ControlGroups() {
               </Select>
               <Menu>
                 <Button size="2">
+                  <DotsHorizontalIcon />
+                </Button>
+              </Menu>
+            </ControlGroup>
+          </Flex>
+          <Flex direction="row" gap="1">
+            <ControlGroup>
+              <Button size="3">
+                <MagnifyingGlassIcon />
+              </Button>
+              <TextField size="3" />
+              <Select size="3">
+                <option>Option A</option>
+                <option>Option B</option>
+                <option>Option C</option>
+                <option>Option D</option>
+                <option>Option Elephant</option>
+              </Select>
+              <Menu>
+                <Button size="3">
                   <DotsHorizontalIcon />
                 </Button>
               </Menu>
