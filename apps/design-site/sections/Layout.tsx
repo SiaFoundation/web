@@ -20,7 +20,7 @@ export function Layout() {
     <Section>
       <SectionHeading hideSeparator>Layout</SectionHeading>
       <Section>
-        <SubsectionHeading>Flex - row</SubsectionHeading>
+        <SubsectionHeading>Flex</SubsectionHeading>
         <Grid columns={1} gap="2">
           <Flex debug gap="1" css={{ p: '$1' }}>
             <Box fill css={{ flex: 1, height: '50px' }} />
