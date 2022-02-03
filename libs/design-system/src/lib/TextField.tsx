@@ -96,7 +96,7 @@ export const TextField = styled('input', {
       '3': {
         borderRadius: '$1',
         height: '$7',
-        fontSize: '$7',
+        fontSize: '$6',
         padding: '0 $2',
         lineHeight: '$sizes$7',
         '&:-webkit-autofill::first-line': {

@@ -27,8 +27,9 @@ export const Kbd = styled('kbd', {
     size: {
       '1': {
         borderRadius: '$1',
-        px: '0.3em',
-        height: '$3',
+        px: '0.4em',
+        // height $3 looks a pixel too small
+        height: '16px',
         minWidth: '1.6em',
         fontSize: '$1',
         lineHeight: '$spaces$3',

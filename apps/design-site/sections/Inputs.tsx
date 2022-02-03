@@ -1,6 +1,7 @@
 import {
   Checkbox,
   Flex,
+  Grid,
   Radio,
   RadioGroup,
   Section,
@@ -19,7 +20,7 @@ export function Inputs() {
       <Section>
         <SubsectionHeading>TextField</SubsectionHeading>
         <Flex direction="column" gap="2">
-          <Flex direction="row" gap="2">
+          <Grid columns={{ '@initial': 1, '@bp1': 4 }} gap="2">
             <TextField size="2" placeholder="Dennis Ritchie"></TextField>
             <TextField size="2" placeholder="Dennis Ritchie"></TextField>
             <TextField
@@ -51,8 +52,8 @@ export function Inputs() {
               defaultValue="Dennis Ritchie"
               variant="totalGhost"
             />
-          </Flex>
-          <Flex direction="row" gap="2">
+          </Grid>
+          <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
             <TextField
               size="1"
               type="email"
@@ -60,10 +61,8 @@ export function Inputs() {
             />
             <TextField size="1" type="password" placeholder="password" />
             <TextField size="1" type="number" placeholder="5" />
-            <TextField size="1" type="date" />
-            <TextField size="1" type="file" />
-          </Flex>
-          <Flex direction="row" gap="2">
+          </Grid>
+          <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
             <TextField
               size="2"
               type="email"
@@ -76,10 +75,8 @@ export function Inputs() {
               defaultValue="foobar"
             />
             <TextField size="2" type="number" placeholder="5" />
-            <TextField size="2" type="date" />
-            <TextField size="2" type="file" />
-          </Flex>
-          <Flex direction="row" gap="2">
+          </Grid>
+          <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
             <TextField
               size="3"
               type="email"
@@ -87,10 +84,20 @@ export function Inputs() {
             />
             <TextField size="3" type="password" placeholder="password" />
             <TextField size="3" type="number" placeholder="5" />
+          </Grid>
+          <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
+            <TextField size="1" type="date" />
+            <TextField size="1" type="file" />
+          </Grid>
+          <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
+            <TextField size="2" type="date" />
+            <TextField size="2" type="file" />
+          </Grid>
+          <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
             <TextField size="3" type="date" />
             <TextField size="3" type="file" />
-          </Flex>
-          <Flex direction="row" gap="2">
+          </Grid>
+          <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
             <TextField
               size="2"
               type="email"
@@ -109,7 +116,7 @@ export function Inputs() {
               state="valid"
               placeholder="thompson@bell-labs.com"
             />
-          </Flex>
+          </Grid>
         </Flex>
       </Section>
       <Section>
@@ -158,20 +165,50 @@ export function Inputs() {
       </Section>
       <Section>
         <SubsectionHeading>Select</SubsectionHeading>
-        <Flex direction="row" gap="1">
-          <Select>
-            <option>Option A</option>
-            <option>Option B</option>
-            <option>Option C</option>
-            <option>Option D</option>
-          </Select>
-          <Select disabled>
-            <option>Option A</option>
-            <option>Option B</option>
-            <option>Option C</option>
-            <option>Option D</option>
-          </Select>
-        </Flex>
+        <Grid columns={{ '@initial': 1, '@bp2': 3 }} gap="2">
+          <Flex direction="row" gap="1">
+            <Select>
+              <option>Option A</option>
+              <option>Option B</option>
+              <option>Option C</option>
+              <option>Option D</option>
+            </Select>
+            <Select disabled>
+              <option>Option A</option>
+              <option>Option B</option>
+              <option>Option C</option>
+              <option>Option D</option>
+            </Select>
+          </Flex>
+          <Flex direction="row" gap="1">
+            <Select size="2">
+              <option>Option A</option>
+              <option>Option B</option>
+              <option>Option C</option>
+              <option>Option D</option>
+            </Select>
+            <Select disabled size="2">
+              <option>Option A</option>
+              <option>Option B</option>
+              <option>Option C</option>
+              <option>Option D</option>
+            </Select>
+          </Flex>
+          <Flex direction="row" gap="1">
+            <Select size="3">
+              <option>Option A</option>
+              <option>Option B</option>
+              <option>Option C</option>
+              <option>Option D</option>
+            </Select>
+            <Select disabled size="3">
+              <option>Option A</option>
+              <option>Option B</option>
+              <option>Option C</option>
+              <option>Option D</option>
+            </Select>
+          </Flex>
+        </Grid>
       </Section>
     </Section>
   )

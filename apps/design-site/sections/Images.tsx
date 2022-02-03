@@ -82,65 +82,86 @@ export function Images() {
       </Section>
       <Section>
         <SubsectionHeading>Avatar</SubsectionHeading>
-        <Flex gap="2" justify="start">
-          <Avatar size="1" src={avatar1.src} />
-          <Avatar size="2" src={avatar2.src} />
-          <Avatar size="3" src={avatar3.src} />
-          <Avatar size="4" src={avatar1.src} />
-          <Avatar size="5" src={avatar2.src} />
-          <Avatar size="6" src={avatar3.src} />
-          <Avatar shape="square" size="1" src={avatar1.src} />
-          <Avatar shape="square" size="2" src={avatar2.src} />
-          <Avatar shape="square" size="3" src={avatar3.src} />
-          <Avatar shape="square" size="4" src={avatar1.src} />
-          <Avatar shape="square" size="5" src={avatar2.src} />
-          <Avatar shape="square" size="6" src={avatar3.src} />
-          <AvatarGroup>
-            <Avatar size="2" status="green" src={avatar1.src} interactive />
-            <Avatar size="2" status="green" src={avatar2.src} interactive />
-            <Avatar size="2" status="green" src={avatar3.src} interactive />
-            <Avatar size="2" status="yellow" src={avatar3.src} inactive />
-            <Avatar size="2" status="yellow" alt="A" fallback="A" inactive />
-          </AvatarGroup>
-          <AvatarGroup>
-            <Avatar
-              shape="square"
-              size="2"
-              status="green"
-              src={avatar1.src}
-              interactive
-            />
-            <Avatar
-              shape="square"
-              size="2"
-              status="green"
-              src={avatar2.src}
-              interactive
-            />
-            <Avatar
-              shape="square"
-              size="2"
-              status="green"
-              src={avatar3.src}
-              interactive
-            />
-            <Avatar
-              shape="square"
-              size="2"
-              status="yellow"
-              src={avatar3.src}
-              inactive
-            />
-            <Avatar
-              shape="square"
-              size="2"
-              status="yellow"
-              alt="A"
-              fallback="A"
-              inactive
-            />
-          </AvatarGroup>
-        </Flex>
+        <Grid columns={{ '@initial': 1, '@bp2': 2 }} justify="start" gap="3">
+          <Flex gap="2" align="center" justify="start">
+            <Avatar size="1" src={avatar1.src} interactive />
+            <Avatar size="2" src={avatar2.src} interactive />
+            <Avatar size="3" src={avatar3.src} interactive />
+            <Avatar size="4" src={avatar1.src} interactive />
+            <Avatar size="5" src={avatar2.src} interactive />
+            <Avatar size="6" src={avatar3.src} interactive />
+          </Flex>
+          <Flex gap="2" align="center" justify="start">
+            <Avatar size="1" fallback="RH" interactive />
+            <Avatar size="2" fallback="RH" interactive />
+            <Avatar size="3" fallback="RH" interactive />
+            <Avatar size="4" fallback="RH" interactive />
+            <Avatar size="5" fallback="RH" interactive />
+            <Avatar size="6" fallback="RH" interactive />
+          </Flex>
+          <Flex gap="2" align="center" justify="start">
+            <Avatar shape="square" size="1" src={avatar1.src} />
+            <Avatar shape="square" size="2" src={avatar2.src} />
+            <Avatar shape="square" size="3" src={avatar3.src} />
+            <Avatar shape="square" size="4" src={avatar1.src} />
+            <Avatar shape="square" size="5" src={avatar2.src} />
+            <Avatar shape="square" size="6" src={avatar3.src} />
+          </Flex>
+        </Grid>
+      </Section>
+      <Section>
+        <SubsectionHeading>AvatarGroup</SubsectionHeading>
+        <Grid columns={{ '@initial': 1, '@bp2': 2 }} justify="start" gap="3">
+          <Flex gap="2" align="center" justify="start">
+            <AvatarGroup>
+              <Avatar size="2" status="green" src={avatar1.src} interactive />
+              <Avatar size="2" status="green" src={avatar2.src} interactive />
+              <Avatar size="2" status="green" src={avatar3.src} interactive />
+              <Avatar size="2" status="yellow" src={avatar3.src} inactive />
+              <Avatar size="2" status="yellow" alt="A" fallback="A" inactive />
+            </AvatarGroup>
+          </Flex>
+          <Flex gap="2" align="center" justify="start">
+            <AvatarGroup>
+              <Avatar
+                shape="square"
+                size="2"
+                status="green"
+                src={avatar1.src}
+                interactive
+              />
+              <Avatar
+                shape="square"
+                size="2"
+                status="green"
+                src={avatar2.src}
+                interactive
+              />
+              <Avatar
+                shape="square"
+                size="2"
+                status="green"
+                src={avatar3.src}
+                interactive
+              />
+              <Avatar
+                shape="square"
+                size="2"
+                status="yellow"
+                src={avatar3.src}
+                inactive
+              />
+              <Avatar
+                shape="square"
+                size="2"
+                status="yellow"
+                alt="A"
+                fallback="A"
+                inactive
+              />
+            </AvatarGroup>
+          </Flex>
+        </Grid>
       </Section>
     </Section>
   )

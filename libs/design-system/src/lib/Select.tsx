@@ -13,16 +13,47 @@ const SelectWrapper = styled('div', {
   fontWeight: 400,
   height: '$5',
   flexShrink: 0,
+  display: 'flex',
+  alignItems: 'center',
 
   '&:focus-within': {
     zIndex: 1,
     boxShadow:
       'inset 0px 0px 0px 1px $colors$inputShadow, 0px 0px 0px 1px $colors$inputShadow',
   },
+  variants: {
+    size: {
+      '1': {
+        borderRadius: '$1',
+        height: '$5',
+        px: '$2',
+        fontSize: '$1',
+        lineHeight: '$sizes$5',
+      },
+      '2': {
+        borderRadius: '$2',
+        height: '$6',
+        px: '$3',
+        fontSize: '$3',
+        lineHeight: '$sizes$6',
+      },
+      '3': {
+        borderRadius: '$2',
+        height: '$7',
+        px: '$4',
+        fontSize: '$4',
+        lineHeight: '$sizes$7',
+      },
+    },
+  },
+  defaultVariants: {
+    size: '1',
+  },
 })
 
 const StyledSelect = styled('select', {
   appearance: 'none',
+  flex: 1,
   backgroundColor: 'transparent',
   border: 'none',
   borderRadius: 'inherit',
@@ -37,23 +68,17 @@ const StyledSelect = styled('select', {
 })
 
 const StyledCaretSortIcon = styled(CaretSortIcon, {
-  position: 'absolute',
   pointerEvents: 'none',
-  display: 'inline',
-
-  // Use margins instead of top/left to avoid setting "position: relative" on parent,
-  // which would make stacking context tricky with Select used in a control group.
-  marginTop: 5,
-  marginLeft: -16,
 })
 
-type SelectProps = React.ComponentProps<typeof StyledSelect> & { css?: CSS }
+type SelectProps = Omit<React.ComponentProps<typeof StyledSelect>, 'size'> &
+  React.ComponentProps<typeof SelectWrapper> & { css?: CSS }
 
 export const Select = React.forwardRef<
   React.ElementRef<typeof StyledSelect>,
   SelectProps
->(({ css, ...props }, forwardedRef) => (
-  <SelectWrapper css={css}>
+>(({ css, size, ...props }, forwardedRef) => (
+  <SelectWrapper size={size} css={css}>
     <StyledSelect ref={forwardedRef} {...props} />
     <StyledCaretSortIcon />
   </SelectWrapper>

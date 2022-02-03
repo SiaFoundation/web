@@ -140,8 +140,8 @@ func Fibonacci(n int) int {
       </Section>
       <Section>
         <SubsectionHeading>Keyboard</SubsectionHeading>
-        <Flex direction="column" gap="2">
-          <Flex direction="row" gap="1">
+        <Flex direction="column" gap="3">
+          <Flex direction="row" gap="1" wrap="wrap">
             <Kbd size="1">Q</Kbd>
             <Kbd size="1">W</Kbd>
             <Kbd size="1">E</Kbd>
@@ -158,7 +158,7 @@ func Fibonacci(n int) int {
             <Kbd size="1">⌘</Kbd>
             <Kbd size="1">A</Kbd>
           </Flex>
-          <Flex direction="row" gap="1">
+          <Flex direction="row" gap="1" wrap="wrap">
             <Kbd size="2">Q</Kbd>
             <Kbd size="2">W</Kbd>
             <Kbd size="2">E</Kbd>
