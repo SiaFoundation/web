@@ -21,19 +21,18 @@ export function Layout() {
       <SectionHeading hideSeparator>Layout</SectionHeading>
       <Section>
         <SubsectionHeading>Flex - row</SubsectionHeading>
-        <Flex debug gap="1" css={{ p: '$1' }}>
-          <Box fill css={{ flex: 1, height: '50px' }} />
-          <Box fill css={{ flex: 1, height: '50px' }} />
-          <Box fill css={{ flex: 2, height: '50px' }} />
-        </Flex>
-      </Section>
-      <Section>
-        <SubsectionHeading>Flex - column</SubsectionHeading>
-        <Flex debug direction="column" gap="1" css={{ p: '$1' }}>
-          <Box fill css={{ height: '50px' }} />
-          <Box fill css={{ height: '50px' }} />
-          <Box fill css={{ height: '50px' }} />
-        </Flex>
+        <Grid columns={1} gap="2">
+          <Flex debug gap="1" css={{ p: '$1' }}>
+            <Box fill css={{ flex: 1, height: '50px' }} />
+            <Box fill css={{ flex: 1, height: '50px' }} />
+            <Box fill css={{ flex: 2, height: '50px' }} />
+          </Flex>
+          <Flex debug direction="column" gap="1" css={{ p: '$1' }}>
+            <Box fill css={{ height: '50px' }} />
+            <Box fill css={{ height: '50px' }} />
+            <Box fill css={{ height: '50px' }} />
+          </Flex>
+        </Grid>
       </Section>
       <Section>
         <SubsectionHeading>Grid</SubsectionHeading>
@@ -86,22 +85,7 @@ export function Layout() {
       </Section>
       <Section>
         <SubsectionHeading>Separator</SubsectionHeading>
-        <Flex gap="5">
-          <Flex direction="column" gap="3" css={{ width: '100px' }}>
-            <Box fill css={{ height: '50px', width: '100px' }} />
-            <Flex justify="center">
-              <Separator orientation="horizontal" size="1" />
-            </Flex>
-            <Box fill css={{ height: '50px', width: '100px' }} />
-            <Flex justify="center">
-              <Separator orientation="horizontal" size="2" />
-            </Flex>
-            <Box fill css={{ height: '50px', width: '100px' }} />
-            <Flex justify="center">
-              <Separator orientation="horizontal" size="3" />
-            </Flex>
-            <Box fill css={{ height: '50px', width: '100px' }} />
-          </Flex>
+        <Grid columns={1} gap="4">
           <Flex direction="row" gap="3" css={{ height: '50px' }}>
             <Box fill css={{ height: '50px', width: '50px' }} />
             <Flex align="center">
@@ -117,7 +101,21 @@ export function Layout() {
             </Flex>
             <Box fill css={{ height: '50px', width: '50px' }} />
           </Flex>
-        </Flex>
+          <Flex direction="column" gap="3" css={{ width: '50px' }}>
+            <Flex justify="center">
+              <Separator orientation="horizontal" size="1" />
+            </Flex>
+            <Box fill css={{ height: '50px', width: '50px' }} />
+            <Flex justify="center">
+              <Separator orientation="horizontal" size="2" />
+            </Flex>
+            <Box fill css={{ height: '50px', width: '50px' }} />
+            <Flex justify="center">
+              <Separator orientation="horizontal" size="3" />
+            </Flex>
+            <Box fill css={{ height: '50px', width: '50px' }} />
+          </Flex>
+        </Grid>
       </Section>
       <Section>
         <SubsectionHeading>AppBar</SubsectionHeading>

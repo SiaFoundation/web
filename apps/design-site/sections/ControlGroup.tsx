@@ -21,18 +21,26 @@ export function ControlGroups() {
         <Flex direction="column" gap="2">
           <Flex direction="row" gap="1">
             <ControlGroup>
-              <Button variant="green">Green</Button>
-              <Button variant="gray">Gray</Button>
-              <Button disabled variant="red">
-                Red
-              </Button>
-              <Button ghost variant="green">
+              <Button size="1" variant="green">
                 Green
               </Button>
-              <Button ghost variant="gray">
+              <Button size="1" variant="gray">
                 Gray
               </Button>
-              <Button ghost variant="red">
+              <Button size="1" disabled variant="red">
+                Red
+              </Button>
+            </ControlGroup>
+          </Flex>
+          <Flex direction="row" gap="1">
+            <ControlGroup>
+              <Button size="2" variant="green">
+                Green
+              </Button>
+              <Button size="2" variant="gray">
+                Gray
+              </Button>
+              <Button size="2" disabled variant="red">
                 Red
               </Button>
             </ControlGroup>
@@ -44,11 +52,11 @@ export function ControlGroups() {
         <Flex direction="column" gap="2">
           <Flex direction="row" gap="1">
             <ControlGroup>
-              <Button>
+              <Button size="2">
                 <MagnifyingGlassIcon />
               </Button>
-              <TextField />
-              <Select>
+              <TextField size="2" />
+              <Select size="2">
                 <option>Option A</option>
                 <option>Option B</option>
                 <option>Option C</option>
@@ -56,7 +64,7 @@ export function ControlGroups() {
                 <option>Option Elephant</option>
               </Select>
               <Menu>
-                <Button>
+                <Button size="2">
                   <DotsHorizontalIcon />
                 </Button>
               </Menu>

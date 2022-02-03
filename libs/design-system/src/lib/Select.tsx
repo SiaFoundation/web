@@ -19,6 +19,34 @@ const SelectWrapper = styled('div', {
     boxShadow:
       'inset 0px 0px 0px 1px $colors$inputShadow, 0px 0px 0px 1px $colors$inputShadow',
   },
+  variants: {
+    size: {
+      '1': {
+        borderRadius: '$1',
+        height: '$5',
+        px: '$2',
+        fontSize: '$1',
+        lineHeight: '$sizes$5',
+      },
+      '2': {
+        borderRadius: '$2',
+        height: '$6',
+        px: '$3',
+        fontSize: '$3',
+        lineHeight: '$sizes$6',
+      },
+      '3': {
+        borderRadius: '$2',
+        height: '$7',
+        px: '$4',
+        fontSize: '$4',
+        lineHeight: '$sizes$7',
+      },
+    },
+  },
+  defaultVariants: {
+    size: '1',
+  },
 })
 
 const StyledSelect = styled('select', {
