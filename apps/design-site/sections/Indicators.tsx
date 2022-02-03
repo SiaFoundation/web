@@ -77,7 +77,7 @@ export function Indicators() {
       </Section>
       <Section>
         <SubsectionHeading>Badge</SubsectionHeading>
-        <Flex direction="row" gap="1">
+        <Flex direction="row" gap="1" wrap="wrap">
           <Badge variant="green">Green</Badge>
           <Badge variant="gold">Gold</Badge>
           <Badge variant="gray">Gray</Badge>
@@ -94,7 +94,7 @@ export function Indicators() {
       </Section>
       <Section>
         <SubsectionHeading>Badge - interactive</SubsectionHeading>
-        <Flex direction="row" gap="1">
+        <Flex direction="row" gap="1" wrap="wrap">
           <Badge interactive variant="gold">
             Gold
           </Badge>
