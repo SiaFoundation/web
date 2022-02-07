@@ -1,27 +1,16 @@
-import {
-  Box,
-  Container,
-  Flex,
-  Heading,
-  RLink,
-  Text,
-} from '@siafoundation/design-system'
-import { capitalize } from 'lodash'
-import React, { Fragment } from 'react'
-import { useLocation } from 'react-router-dom'
-// TODO: move logo to design-system component
-import logo from '../../../../../libs/design-system/src/assets/logo.png'
+import { Box } from '@siafoundation/design-system'
+import React from 'react'
 import { Footer } from './Footer'
-import { AccountStatus } from './AccountStatus'
+import { Navbar } from './Navbar'
+import { SwapLayout } from './SwapLayout'
 
 type Props = {
   children: React.ReactNode
 }
 
 export function Layout({ children }: Props) {
-  const location = useLocation()
   return (
-    <Container size="4" css={{ position: 'relative' }}>
+    <Box>
       <Box
         css={{
           position: 'fixed',
@@ -37,73 +26,9 @@ export function Layout({ children }: Props) {
           zIndex: -1,
         }}
       />
-      <Flex
-        align="center"
-        gap="1"
-        css={{
-          top: '$3',
-          left: '$3',
-          padding: '$3 0',
-        }}
-      >
-        <Box
-          as="img"
-          src={logo}
-          alt="Logo"
-          css={{
-            height: '30px',
-          }}
-        />
-        <Flex
-          direction="column"
-          gap="1"
-          css={{ position: 'relative', flex: 1 }}
-        >
-          <Heading css={{ color: '#111', fontWeight: 'bolder' }}>
-            Embarcadero
-          </Heading>
-          <Text
-            size="1"
-            css={{ position: 'absolute', top: '$5', color: '$gray9' }}
-          >
-            Escrowless SC/SF swaps
-          </Text>
-        </Flex>
-        <AccountStatus />
-      </Flex>
-      <Container
-        size="1"
-        css={{
-          padding: '$9 0',
-        }}
-      >
-        <Flex
-          direction="column"
-          gap="4"
-          justify="center"
-          css={{
-            boxShadow:
-              'rgb(0 0 0 / 1%) 0px 0px 1px, rgb(0 0 0 / 4%) 0px 4px 8px, rgb(0 0 0 / 4%) 0px 16px 24px, rgb(0 0 0 / 1%) 0px 24px 32px',
-            backgroundColor: '#fff',
-            borderRadius: '$4',
-            padding: '$3 $3',
-          }}
-        >
-          <Flex gap="1">
-            <RLink to="/" css={{ fontSize: '$6' }}>
-              Swap
-            </RLink>
-            {location?.pathname.length > 1 && (
-              <Fragment>
-                <Text size="6">/</Text>
-                <Text size="6">{capitalize(location.pathname.slice(1))}</Text>
-              </Fragment>
-            )}
-          </Flex>
-          <Box>{children}</Box>
-        </Flex>
-      </Container>
+      <Navbar />
+      <SwapLayout>{children}</SwapLayout>
       <Footer />
-    </Container>
+    </Box>
   )
 }

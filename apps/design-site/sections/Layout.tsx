@@ -124,15 +124,19 @@ export function Layout() {
             position: 'relative',
             backgroundColor: '$slate5',
             overflow: 'hidden',
+            borderRadius: '$2',
           }}
         >
           <Box
             css={{
               position: 'absolute',
-              top: '-40px',
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
             }}
           >
-            <NImage {...bellLabs} alt="bell labs" />
+            <NImage {...bellLabs} layout="fill" alt="bell labs" />
           </Box>
           <Grid
             columns={1}
@@ -141,7 +145,7 @@ export function Layout() {
               padding: '$3',
             }}
           >
-            <AppBar size="1" color="plain" border glass>
+            <AppBar size="3" border>
               <Flex css={{ px: '$3' }} justify="between">
                 <Heading>Xerox</Heading>
                 <IconButton css={{ color: '$gray10' }}>
@@ -157,7 +161,23 @@ export function Layout() {
                 </IconButton>
               </Flex>
             </AppBar>
-            <AppBar size="3" border>
+            <AppBar size="1" color="plain" border glass>
+              <Flex css={{ px: '$3' }} justify="between">
+                <Heading>Xerox</Heading>
+                <IconButton css={{ color: '$gray10' }}>
+                  <DotsHorizontalIcon />
+                </IconButton>
+              </Flex>
+            </AppBar>
+            <AppBar size="1" color="none" border glass>
+              <Flex css={{ px: '$3' }} justify="between">
+                <Heading>Xerox</Heading>
+                <IconButton css={{ color: '$gray10' }}>
+                  <DotsHorizontalIcon />
+                </IconButton>
+              </Flex>
+            </AppBar>
+            <AppBar size="1" color="none" border>
               <Flex css={{ px: '$3' }} justify="between">
                 <Heading>Xerox</Heading>
                 <IconButton css={{ color: '$gray10' }}>

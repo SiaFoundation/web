@@ -36,14 +36,14 @@ export const AppBar = styled('div', {
       },
     },
     color: {
+      none: {
+        backgroundColor: 'transparent',
+      },
       loContrast: {
         backgroundColor: '$loContrast',
       },
       plain: {
         backgroundColor: '$gray2',
-      },
-      accent: {
-        backgroundColor: '$siaGreenA8',
       },
     },
   },
@@ -57,13 +57,6 @@ export const AppBar = styled('div', {
     },
     {
       glass: 'true',
-      color: 'accent',
-      css: {
-        opacity: '.9',
-      },
-    },
-    {
-      glass: 'true',
       color: 'loContrast',
       css: {
         opacity: '.9',
@@ -71,16 +64,16 @@ export const AppBar = styled('div', {
     },
     {
       border: 'true',
-      color: 'plain',
+      color: 'none',
       css: {
-        borderColor: '$slate6',
+        borderColor: 'transparent',
       },
     },
     {
       border: 'true',
-      color: 'accent',
+      color: 'plain',
       css: {
-        borderColor: '$siaGreenA10',
+        borderColor: '$slate6',
       },
     },
     {

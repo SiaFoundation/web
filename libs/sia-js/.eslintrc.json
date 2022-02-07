@@ -14,5 +14,8 @@
       "files": ["*.js", "*.jsx"],
       "rules": {}
     }
-  ]
+  ],
+  "rules": {
+    "@typescript-eslint/no-empty-interface": "off"
+  }
 }
