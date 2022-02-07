@@ -1,5 +1,4 @@
 import { globalCss } from './theme'
-import { injectStyle } from 'react-toastify/dist/inject-style'
 
 // Reset, normalize, fonts css
 const globalStyles = globalCss({
@@ -50,10 +49,10 @@ const globalStyles = globalCss({
   ],
 })
 
-const globalToastStyles = injectStyle
-
 // !important is necessary to override the packages default styles (above)
-const globalToastCustomStyles = globalCss({
+const globalToastStyles = globalCss({
+  '@import': 'react-toastify/dist/ReactToastify.minimal.css',
+
   '.Toastify__toast-container--bottom-right': {
     bottom: '20px !important',
     right: '36px !important',
@@ -99,5 +98,4 @@ const globalToastCustomStyles = globalCss({
 export function initGlobalStyles() {
   globalStyles()
   globalToastStyles()
-  globalToastCustomStyles()
 }
