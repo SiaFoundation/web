@@ -4,6 +4,7 @@ import {
   keyframes,
   Status,
   Text,
+  Tooltip,
 } from '@siafoundation/design-system'
 import { useConsensus } from '../useConsensus'
 import { useSiaStats } from '../useSiaStats'
@@ -29,9 +30,11 @@ export function Footer() {
   const { data: consensus, error: errorC } = useConsensus()
   const { data: wallet, error: errorW } = useWallet()
 
+  const haveData = consensus && siaStats && wallet
+
   const isIndexing = wallet?.height !== consensus?.height
 
-  const isSynced = !errorC && consensus?.height === siaStats?.block_height
+  const isSynced = haveData && consensus.height >= siaStats.block_height
 
   const color = errorC ? 'red' : isSynced ? 'green' : 'yellow'
 
@@ -48,25 +51,37 @@ export function Footer() {
       }}
     >
       <Box css={{ flex: 1 }} />
-      <Text size="1">
-        {((Number(wallet?.dustthreshold) / Math.pow(10, 24)) * 1024) / 0.001} mS
-        / KB
-      </Text>
+      <Tooltip content="Current transaction fee">
+        <Text size="1">
+          {((Number(wallet?.dustthreshold) / Math.pow(10, 24)) * 1024) / 0.001}{' '}
+          mS / KB
+        </Text>
+      </Tooltip>
       <Text size="1" css={{ fontWeight: 'bold' }}>
         {'•'}
       </Text>
-      <Text size="1">{consensus?.height}</Text>
-      <Box css={{ position: 'relative', top: '-0.5px', marginLeft: '$1' }}>
-        <Status variant={color} />
-        <Status
-          variant={color}
-          css={{
-            animation: `${pulse} 5s infinite`,
-            position: 'absolute',
-            top: 0,
-          }}
-        />
-      </Box>
+      <Tooltip
+        content={
+          isSynced
+            ? 'Block height'
+            : `Block height: ${consensus?.height} / ${siaStats?.block_height}`
+        }
+      >
+        <Text size="1">{consensus?.height}</Text>
+      </Tooltip>
+      <Tooltip content={isSynced ? 'Synced' : 'Syncing'}>
+        <Box css={{ position: 'relative', top: '-0.5px', marginLeft: '$1' }}>
+          <Status variant={color} />
+          <Status
+            variant={color}
+            css={{
+              animation: `${pulse} 5s infinite`,
+              position: 'absolute',
+              top: 0,
+            }}
+          />
+        </Box>
+      </Tooltip>
     </Flex>
   )
 }

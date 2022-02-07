@@ -1,10 +1,10 @@
-import { resetStyles, ThemeProvider } from '@siafoundation/design-system'
+import { initGlobalStyles, ThemeProvider } from '@siafoundation/design-system'
 import { AppProps } from 'next/app'
 import { Layout } from '../components/Layout'
 import Head from 'next/head'
 
 function CustomApp({ Component, pageProps }: AppProps) {
-  resetStyles()
+  initGlobalStyles()
 
   return (
     <>

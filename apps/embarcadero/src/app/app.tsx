@@ -1,4 +1,4 @@
-import { resetStyles } from '@siafoundation/design-system'
+import { initGlobalStyles } from '@siafoundation/design-system'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import { Accept } from './Accept'
 import { Layout } from './Layout'
@@ -7,7 +7,7 @@ import { Finish } from './Finish'
 import { Home } from './Home'
 
 export function App() {
-  resetStyles()
+  initGlobalStyles()
 
   return (
     <BrowserRouter>

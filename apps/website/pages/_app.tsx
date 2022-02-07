@@ -1,9 +1,9 @@
 import { MDXProvider } from '@mdx-js/react'
-import { resetStyles } from '@siafoundation/design-system'
+import { initGlobalStyles } from '@siafoundation/design-system'
 import { components } from '../config/mdx'
 
 function App({ Component, pageProps }) {
-  resetStyles()
+  initGlobalStyles()
 
   return (
     <MDXProvider components={components}>

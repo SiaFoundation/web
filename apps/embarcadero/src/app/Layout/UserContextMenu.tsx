@@ -1,32 +1,27 @@
 import {
   ChatBubbleIcon,
   CubeIcon,
-  DiscIcon,
   DotsHorizontalIcon,
   FileTextIcon,
   InfoCircledIcon,
-  PaperPlaneIcon,
 } from '@radix-ui/react-icons'
 import {
   Button,
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuRightSlot,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@siafoundation/design-system'
 
-export function UserContextMenu() {
+type Props = React.ComponentProps<typeof Button>
+
+export function UserContextMenu(props: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button>
+        <Button {...props}>
           <DotsHorizontalIcon />
         </Button>
       </DropdownMenuTrigger>

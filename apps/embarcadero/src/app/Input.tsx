@@ -1,24 +1,47 @@
 import { Box, Flex, Text, TextField } from '@siafoundation/design-system'
-import { useState } from 'react'
-import useSWR from 'swr'
+import { useMemo } from 'react'
 import { useSiaStats } from './useSiaStats'
+import { useWallet } from './useWallet'
 
 type Props = {
+  disabled?: boolean
+  isOffer?: boolean
   currency: 'SF' | 'SC'
   type: 'integer' | 'decimal'
   value: string | undefined
   onChange: (value: string | undefined) => void
 }
 
-export function Input({ currency, type, value, onChange }: Props) {
+export function Input({
+  currency,
+  isOffer,
+  type,
+  disabled = false,
+  value,
+  onChange,
+}: Props) {
   const { data } = useSiaStats()
+  const { data: wallet } = useWallet()
   const scPrice = data?.coin_price_USD
+
+  const hasAvailableBalance = useMemo(() => {
+    if (!isOffer || !value) {
+      return true
+    }
+    if (currency === 'SC') {
+      return Number(wallet?.confirmedsiacoinbalance) >= Number(value)
+    }
+    return Number(wallet?.siafundbalance) >= Number(value)
+  }, [isOffer, currency, value, wallet])
+
   return (
     <Flex
       direction="column"
       gap="2"
       css={{
         backgroundColor: '$gray3',
+        border: '2px solid',
+        borderColor: !hasAvailableBalance ? '$red8' : 'transparent',
         borderRadius: '$2',
         padding: '$2',
       }}
@@ -29,6 +52,7 @@ export function Input({ currency, type, value, onChange }: Props) {
         }}
       >
         <TextField
+          disabled={disabled}
           size="3"
           variant="totalGhost"
           noSpin
@@ -53,6 +77,7 @@ export function Input({ currency, type, value, onChange }: Props) {
           <Text css={{ fontWeight: 'bolder' }}>{currency}</Text>
         </Flex>
       </Box>
+      {!hasAvailableBalance && <Text>Insufficient funds</Text>}
       {currency === 'SC' && value && scPrice && (
         <Text>${(scPrice * Number(value)).toLocaleString()} USD</Text>
       )}
