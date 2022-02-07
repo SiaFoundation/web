@@ -23,7 +23,9 @@ export function toHastings(siacoins: BigNumber | number | string) {
  * This is copy of the HumanString function from Sia repo.
  * @param hastings amount of hastings to convert
  */
-export function toHumanReadable(hastings: BigNumber | number | string): string {
+export function toHumanReadable(
+  hastings: BigNumber | number | string
+): string | null {
   const pico = new BigNumber(1e12)
   const exp = new BigNumber(1e3)
   const amount = new BigNumber(hastings)

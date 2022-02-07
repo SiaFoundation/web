@@ -15,7 +15,7 @@ export function parseFlags(config: ClientConfig): string[] {
     'rpc-addr': ':9981',
   }
   // Build flag arguements from constructor details
-  const flags = assignDefined(defaultFlags, {
+  const flags = assignDefined(defaultFlags as Record<string, unknown>, {
     agent: config.agent,
     'api-addr':
       config.apiHost && config.apiPort
@@ -41,7 +41,7 @@ export function parseFlags(config: ClientConfig): string[] {
  * @param modules
  */
 export function parseModules(modules: ModuleConfig): string {
-  const moduleMap = {
+  const moduleMap: Record<string, string> = {
     consensus: 'c',
     explorer: 'e',
     feeManager: 'f',

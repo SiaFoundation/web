@@ -1,5 +1,5 @@
 // ClientConfig is the object that is passed to configure the instantiation of the Sia Daemon.
-export interface ClientConfig {
+export interface ClientConfig extends Record<string, unknown> {
   apiHost?: string
   apiPort?: number
   hostPort?: number
@@ -12,7 +12,7 @@ export interface ClientConfig {
 }
 
 // ModuleConfig defines modules available in Sia.
-export interface ModuleConfig {
+export interface ModuleConfig extends Record<string, unknown> {
   consensus: boolean
   explorer: boolean
   feeManager: boolean

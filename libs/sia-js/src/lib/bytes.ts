@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js'
 // a JS clone of the parseFilesize method implemented in parse.go of Sia. Made
 // for consistency.
 export function parseFilesize(strSize: string): string {
-  const units = {
+  const units: Record<string, BigNumber.Value> = {
     kb: 1e3,
     mb: 1e6,
     gb: 1e9,

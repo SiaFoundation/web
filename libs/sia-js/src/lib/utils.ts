@@ -8,7 +8,10 @@ import * as path from 'path'
  * @param target
  * @param sources
  */
-export function assignDefined(target: object, ...sources: object[]) {
+export function assignDefined(
+  target: Record<string, unknown>,
+  ...sources: Record<string, unknown>[]
+) {
   for (const source of sources) {
     for (const key of Object.keys(source)) {
       const val = source[key]
@@ -29,7 +32,7 @@ export function getSiaPassword() {
     let configPath
     switch (process.platform) {
       case 'win32':
-        configPath = path.join(process.env.LOCALAPPDATA as string, 'Sia')
+        configPath = path.join(process.env['LOCALAPPDATA'] as string, 'Sia')
         break
       case 'darwin':
         configPath = path.join(
@@ -42,8 +45,8 @@ export function getSiaPassword() {
       default:
         configPath = path.join(os.homedir(), '.sia')
     }
-    const password = process.env.SIA_API_PASSWORD
-      ? process.env.SIA_API_PASSWORD
+    const password = process.env['SIA_API_PASSWORD']
+      ? process.env['SIA_API_PASSWORD']
       : fs.readFileSync(path.join(configPath, 'apipassword')).toString()
     return password.trim() || ''
   } catch (err) {

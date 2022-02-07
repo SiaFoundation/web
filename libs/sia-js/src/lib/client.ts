@@ -37,11 +37,8 @@ interface WalletOptionalParams {
 }
 
 export class Client {
-  // Set spawn to public because of the need for sinon stubbing, not sure if
-  // there's a better way.
-  // public spawn = spawn;
   protected config: ClientConfig
-  protected process: ChildProcess
+  protected process?: ChildProcess
   protected agent: http.Agent
 
   constructor(config: ClientConfig = {}) {
@@ -66,7 +63,11 @@ export class Client {
         maxSockets: 30,
       })
     } catch (e) {
-      throw new Error(e)
+      if (e instanceof Error) {
+        throw new Error(e.message)
+      } else {
+        throw new Error()
+      }
     }
   }
 
@@ -91,7 +92,11 @@ export class Client {
         throw new Error('could not find binary file in filesystem')
       }
     } catch (e) {
-      throw new Error(e)
+      if (e instanceof Error) {
+        throw new Error(e.message)
+      } else {
+        throw new Error()
+      }
     }
   }
 
