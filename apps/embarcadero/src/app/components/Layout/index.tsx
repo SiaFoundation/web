@@ -1,4 +1,4 @@
-import { Box } from '@siafoundation/design-system'
+import { Box, ScrollArea } from '@siafoundation/design-system'
 import React from 'react'
 import { Footer } from './Footer'
 import { Navbar } from './Navbar'
@@ -10,7 +10,7 @@ type Props = {
 
 export function Layout({ children }: Props) {
   return (
-    <Box>
+    <ScrollArea>
       <Box
         css={{
           position: 'fixed',
@@ -20,8 +20,14 @@ export function Layout({ children }: Props) {
           pointerEvents: 'none',
           width: '200vw',
           height: '200vh',
-          background:
-            'radial-gradient(50% 50% at 50% 50%,$siaGreenA4 0,rgba(255,255,255,0) 100%)',
+          '@light': {
+            background:
+              'radial-gradient(50% 50% at 50% 50%,$siaGreenA4 0,rgba(255,255,255,0) 100%)',
+          },
+          '@dark': {
+            background:
+              'radial-gradient(50% 50% at 50% 50%,black 0,rgba(255,255,255,0) 100%)',
+          },
           transform: 'translate(-50vw,-100vh)',
           zIndex: -1,
         }}
@@ -29,6 +35,6 @@ export function Layout({ children }: Props) {
       <Navbar />
       <SwapLayout>{children}</SwapLayout>
       <Footer />
-    </Box>
+    </ScrollArea>
   )
 }

@@ -1,26 +1,27 @@
-import { initGlobalStyles } from '@siafoundation/design-system'
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
-import { Accept } from './Accept'
-import { Layout } from './Layout'
-import { Create } from './Create'
-import { Finish } from './Finish'
-import { Home } from './Home'
+import { initGlobalStyles, ThemeProvider } from '@siafoundation/design-system'
+import { Redirect, Route, Switch } from 'react-router-dom'
+import { Layout } from './components/Layout'
+import { Home } from './pages/Home'
+import { CreateSwap } from './pages/CreateSwap'
+import { InputSwap } from './pages/InputSwap'
+import { StepSwap } from './pages/StepSwap'
+import { routes } from './routes'
 
 export function App() {
   initGlobalStyles()
 
   return (
-    <BrowserRouter>
+    <ThemeProvider>
       <Layout>
         <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/create" component={Create} />
-          <Route path="/accept" component={Accept} />
-          <Route path="/finish" component={Finish} />
+          <Route path={routes.home} exact component={Home} />
+          <Route path={routes.create} component={CreateSwap} />
+          <Route path={routes.input} component={InputSwap} />
+          <Route path={routes.step} component={StepSwap} />
           <Redirect from="*" to="/" />
         </Switch>
       </Layout>
-    </BrowserRouter>
+    </ThemeProvider>
   )
 }
 

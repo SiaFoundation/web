@@ -6,9 +6,9 @@ import {
   Text,
   Tooltip,
 } from '@siafoundation/design-system'
-import { useConsensus } from '../useConsensus'
-import { useSiaStats } from '../useSiaStats'
-import { useWallet } from '../useWallet'
+import { useConsensus } from '../../hooks/useConsensus'
+import { useSiaStats } from '../../hooks/useSiaStats'
+import { useWallet } from '../../hooks/useWallet'
 
 const pulse = keyframes({
   '0%': {
@@ -45,8 +45,7 @@ export function Footer() {
       css={{
         position: 'fixed',
         bottom: 0,
-        left: 0,
-        width: '100%',
+        right: 0,
         padding: '$5',
       }}
     >

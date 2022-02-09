@@ -1,0 +1,34 @@
+{
+  "root": "libs/sia-core",
+  "sourceRoot": "libs/sia-core/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/sia-core/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/sia-core"],
+      "options": {
+        "jestConfig": "libs/sia-core/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/sia-core",
+        "tsConfig": "libs/sia-core/tsconfig.lib.json",
+        "packageJson": "libs/sia-core/package.json",
+        "main": "libs/sia-core/src/index.ts",
+        "assets": ["libs/sia-core/*.md"]
+      }
+    }
+  },
+  "tags": []
+}

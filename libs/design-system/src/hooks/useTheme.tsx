@@ -3,8 +3,11 @@ import { useCallback, useEffect } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 import { darkTheme } from '../config/theme'
 
+type ThemeMode = 'dark' | 'light'
+
 type State = {
   toggleTheme: () => void
+  theme: ThemeMode
 }
 
 const ThemeContext = createContext({} as State)
@@ -35,7 +38,8 @@ export function ThemeProvider({ children }: Props) {
 
   const value = {
     toggleTheme,
-  }
+    theme: themeConfig.theme === 'dark-theme' ? 'dark' : 'light',
+  } as State
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 }

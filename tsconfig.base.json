@@ -18,6 +18,7 @@
       "@siafoundation/data-sources": ["libs/data-sources/src/index.ts"],
       "@siafoundation/design-system": ["libs/design-system/src/index.ts"],
       "@siafoundation/env": ["libs/env/src/index.ts"],
+      "@siafoundation/sia-core": ["libs/sia-core/src/index.ts"],
       "@siafoundation/sia-js": ["libs/sia-js/src/index.ts"]
     }
   },

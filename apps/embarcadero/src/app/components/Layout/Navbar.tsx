@@ -1,18 +1,22 @@
+import { MoonIcon, SunIcon } from '@radix-ui/react-icons'
 import {
   AppBar,
   Box,
   Container,
   Flex,
   Heading,
+  IconButton,
+  useTheme,
 } from '@siafoundation/design-system'
 import React from 'react'
 // TODO: move logo to design-system component
-import logo from '../../../../../libs/design-system/src/assets/logo.png'
+import logo from '../../../../../../libs/design-system/src/assets/logo.png'
 import { Wallet } from './Wallet'
 
 export function Navbar() {
+  const { toggleTheme, theme } = useTheme()
   return (
-    <AppBar size="3" color="none">
+    <AppBar size="3" color="none" sticky>
       <Container size="4" css={{ position: 'relative' }}>
         <Flex align="center" gap="1" css={{}}>
           <Box
@@ -33,6 +37,9 @@ export function Navbar() {
             </Heading>
           </Flex>
           <Wallet />
+          {/* <IconButton onClick={toggleTheme}>
+            {theme === 'dark' ? <MoonIcon /> : <SunIcon />}
+          </IconButton> */}
         </Flex>
       </Container>
     </AppBar>

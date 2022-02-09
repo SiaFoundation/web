@@ -1,47 +1,28 @@
 import { ArrowDownIcon } from '@radix-ui/react-icons'
-import {
-  Box,
-  Button,
-  copyToClipboard,
-  Flex,
-  Text,
-  TextArea,
-} from '@siafoundation/design-system'
-import {
-  SiacoinInput,
-  SiacoinOutput,
-  SiafundInput,
-  SiafundOutput,
-  TransactionSignature,
-} from '@siafoundation/sia-js'
+import { Box, Button, Flex } from '@siafoundation/design-system'
 import axios from 'axios'
-import { useCallback, useState } from 'react'
-import { Input } from '../Input'
+import { useCallback, useMemo, useState } from 'react'
+import { useHistory, useParams } from 'react-router-dom'
+import { Input } from '../../components/Input'
+import { Message } from '../../components/Message'
+import { routes } from '../../routes'
 
 type Direction = 'SCtoSF' | 'SFtoSC'
 
-type SwapTransaction = {
-  siacoinInputs: SiacoinInput
-  siafundInputs: SiafundInput
-  siacoinOutputs: SiacoinOutput
-  siafundOutputs: SiafundOutput
-  signatures: TransactionSignature
-}
-
-type Swap = {
-  transaction: SwapTransaction
-  hash: string
-}
-
-export function Create() {
+export function CreateSwap() {
+  const history = useHistory()
+  const { hash: encodedHash } = useParams<{ hash?: string }>()
+  const hash = useMemo(
+    () => (encodedHash ? decodeURIComponent(encodedHash) : undefined),
+    [encodedHash]
+  )
   const [direction, setDirection] = useState<Direction>('SCtoSF')
   const [sc, setSc] = useState<string>()
   const [sf, setSf] = useState<string>()
-  const [swap, setSwap] = useState<Swap>()
   const offerSc = direction === 'SCtoSF'
 
   const handleCreate = useCallback(
-    (sc: number, sf: number, direction: Direction) => {
+    (sc: number, sf: number) => {
       const func = async () => {
         const offer = offerSc ? `${sc}SC` : `${sf}SF`
         const receive = offerSc ? `${sf}SF` : `${sc}SC`
@@ -58,10 +39,14 @@ export function Create() {
               receive,
             },
           })
-          console.log(response)
-          setSwap(response.data)
-        } catch (e: any) {
-          console.log(e.response)
+
+          history.push(
+            routes.step.replace(':hash', encodeURIComponent(response.data.hash))
+          )
+        } catch (e) {
+          if (e instanceof Error) {
+            console.log(e.message)
+          }
         }
       }
       func()
@@ -76,6 +61,7 @@ export function Create() {
           <Input
             currency="SC"
             type="decimal"
+            disabled={!!hash}
             value={sc}
             onChange={setSc}
             isOffer={offerSc}
@@ -85,6 +71,7 @@ export function Create() {
           <Input
             currency="SF"
             type="integer"
+            disabled={!!hash}
             value={sf}
             onChange={setSf}
             isOffer={!offerSc}
@@ -93,7 +80,7 @@ export function Create() {
         <Box css={{ height: '$2', zIndex: '$1', order: 2 }}>
           <Box
             onClick={() => {
-              if (swap) {
+              if (hash) {
                 return
               }
               setDirection(direction === 'SCtoSF' ? 'SFtoSC' : 'SCtoSF')
@@ -120,7 +107,7 @@ export function Create() {
                 height: '30px',
                 width: '30px',
                 transition: 'all 0.1s linear',
-                '&:hover': !swap && {
+                '&:hover': !hash && {
                   backgroundColor: '$gray8',
                 },
               }}
@@ -130,39 +117,21 @@ export function Create() {
           </Box>
         </Box>
       </Flex>
-      <Box css={{ width: '100%' }}>
-        <Button
-          size="3"
-          disabled={!(sc && sf)}
-          variant="green"
-          css={{ width: '100%', textAlign: 'center' }}
-          onClick={() => handleCreate(Number(sc), Number(sf), direction)}
-        >
-          Generate swap
-        </Button>
-      </Box>
-      {swap && (
-        <Flex direction="column" gap="2">
-          <Text>
-            To proceed share the following hash with your counterparty.
-          </Text>
-          <TextArea
-            size="3"
-            rows={11}
-            onSelect={() => null}
-            onClick={() => copyToClipboard(swap.hash, 'swap hash')}
-            onFocus={(e) => e.target.select()}
-            // readOnly
-            css={{
-              width: '100%',
-              textAlign: 'center',
-              userSelect: 'none',
-              color: '$gray10',
-            }}
-            value={swap.hash}
-          />
-        </Flex>
-      )}
+      <Message
+        message={`
+          The party that contributes SC is responsible for paying the miner
+          fee.
+      `}
+      />
+      <Button
+        size="3"
+        disabled={!(sc && sf)}
+        variant="green"
+        css={{ width: '100%', textAlign: 'center' }}
+        onClick={() => handleCreate(Number(sc), Number(sf))}
+      >
+        Generate swap
+      </Button>
     </Flex>
   )
 }

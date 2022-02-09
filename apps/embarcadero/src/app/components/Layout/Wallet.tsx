@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Text } from '@siafoundation/design-system'
-import { useConsensus } from '../useConsensus'
-import { useSiaStats } from '../useSiaStats'
-import { useWallet } from '../useWallet'
+import { useConsensus } from '../../hooks/useConsensus'
+import { useSiaStats } from '../../hooks/useSiaStats'
+import { useWallet } from '../../hooks/useWallet'
 import { UserContextMenu } from './UserContextMenu'
 
 export function Wallet() {

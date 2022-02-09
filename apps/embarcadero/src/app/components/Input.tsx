@@ -1,7 +1,8 @@
-import { Box, Flex, Text, TextField } from '@siafoundation/design-system'
+import { Box, Flex, Label, Text, TextField } from '@siafoundation/design-system'
+import { toSiacoins } from '@siafoundation/sia-core'
 import { useMemo } from 'react'
-import { useSiaStats } from './useSiaStats'
-import { useWallet } from './useWallet'
+import { useSiaStats } from '../hooks/useSiaStats'
+import { useWallet } from '../hooks/useWallet'
 
 type Props = {
   disabled?: boolean
@@ -9,7 +10,7 @@ type Props = {
   currency: 'SF' | 'SC'
   type: 'integer' | 'decimal'
   value: string | undefined
-  onChange: (value: string | undefined) => void
+  onChange?: (value: string | undefined) => void
 }
 
 export function Input({
@@ -29,10 +30,15 @@ export function Input({
       return true
     }
     if (currency === 'SC') {
-      return Number(wallet?.confirmedsiacoinbalance) >= Number(value)
+      return toSiacoins(wallet?.confirmedsiacoinbalance || 0).gte(Number(value))
     }
     return Number(wallet?.siafundbalance) >= Number(value)
   }, [isOffer, currency, value, wallet])
+
+  const usdValue =
+    currency === 'SC' && Number(value) && scPrice
+      ? scPrice * Number(value)
+      : null
 
   return (
     <Flex
@@ -44,8 +50,15 @@ export function Input({
         borderColor: !hasAvailableBalance ? '$red8' : 'transparent',
         borderRadius: '$2',
         padding: '$2',
+        transition: 'all 50ms linear',
+        '&:hover': !disabled && {
+          borderColor: !hasAvailableBalance ? '$red9' : '$siaGreenA6',
+        },
       }}
     >
+      <Label css={{ color: '$gray10' }}>
+        {isOffer ? 'You are offering' : 'You are receiving'}
+      </Label>
       <Box
         css={{
           position: 'relative',
@@ -57,9 +70,14 @@ export function Input({
           variant="totalGhost"
           noSpin
           type="number"
-          value={value || ''}
-          onChange={(e) => onChange(e.target.value)}
+          value={value !== undefined ? value : ''}
+          onChange={(e) => onChange && onChange(e.target.value)}
           placeholder={type === 'integer' ? '0' : '0.0'}
+          css={{
+            '&:disabled': {
+              color: '$hiContrast',
+            },
+          }}
         />
         <Flex
           align="center"
@@ -77,10 +95,13 @@ export function Input({
           <Text css={{ fontWeight: 'bolder' }}>{currency}</Text>
         </Flex>
       </Box>
-      {!hasAvailableBalance && <Text>Insufficient funds</Text>}
-      {currency === 'SC' && value && scPrice && (
-        <Text>${(scPrice * Number(value)).toLocaleString()} USD</Text>
-      )}
+      <Flex justify="between" css={{ pr: '$1' }}>
+        {!hasAvailableBalance && <Text>Insufficient funds</Text>}
+        {hasAvailableBalance && usdValue && (
+          <Text>${usdValue.toLocaleString()} USD</Text>
+        )}
+        {usdValue && <Text css={{ color: '$gray10' }}>+ 5 SC fee</Text>}
+      </Flex>
     </Flex>
   )
 }

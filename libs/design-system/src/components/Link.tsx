@@ -1,6 +1,8 @@
 import NextLink from 'next/link'
 import { Link as RRLink } from 'react-router-dom'
 import { CSS, styled } from '../config/theme'
+import { Box } from './Box'
+import { Button } from './Button'
 import { Text } from './Text'
 
 export const StyledLink = styled('a', {
@@ -120,5 +122,24 @@ export function RLink({
     >
       {children}
     </StyledLink>
+  )
+}
+
+type RLinkButtonProps = {
+  to: string
+  target?: string
+} & React.ComponentProps<typeof Button>
+
+// React Router link
+export function RLinkButton({ to, target, css, ...props }: RLinkButtonProps) {
+  return (
+    <Box
+      as={RRLink}
+      target={target}
+      to={to}
+      css={{ textDecoration: 'none', width: css?.width }}
+    >
+      <Button {...props} css={css} />
+    </Box>
   )
 }
