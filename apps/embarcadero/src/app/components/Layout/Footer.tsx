@@ -1,7 +1,10 @@
 import {
   Box,
+  Button,
   Flex,
   keyframes,
+  Panel,
+  Separator,
   Status,
   Text,
   Tooltip,
@@ -39,48 +42,47 @@ export function Footer() {
   const color = errorC ? 'red' : isSynced ? 'green' : 'yellow'
 
   return (
-    <Flex
-      gap="1"
-      align="center"
+    <Panel
       css={{
         position: 'fixed',
-        bottom: 0,
-        right: 0,
-        padding: '$5',
+        bottom: '$3',
+        right: '$5',
+        padding: '$2 $3',
       }}
     >
-      <Box css={{ flex: 1 }} />
-      <Tooltip content="Current transaction fee">
-        <Text size="1">
-          {((Number(wallet?.dustthreshold) / Math.pow(10, 24)) * 1024) / 0.001}{' '}
-          mS / KB
-        </Text>
-      </Tooltip>
-      <Text size="1" css={{ fontWeight: 'bold' }}>
-        {'•'}
-      </Text>
-      <Tooltip
-        content={
-          isSynced
-            ? 'Block height'
-            : `Block height: ${consensus?.height} / ${siaStats?.block_height}`
-        }
-      >
-        <Text size="1">{consensus?.height}</Text>
-      </Tooltip>
-      <Tooltip content={isSynced ? 'Synced' : 'Syncing'}>
-        <Box css={{ position: 'relative', top: '-0.5px', marginLeft: '$1' }}>
-          <Status variant={color} />
-          <Status
-            variant={color}
-            css={{
-              animation: `${pulse} 5s infinite`,
-              position: 'absolute',
-              top: 0,
-            }}
-          />
-        </Box>
-      </Tooltip>
-    </Flex>
+      <Flex gap="2" align="center">
+        <Tooltip content="Current transaction fee">
+          <Text size="1">
+            {((Number(wallet?.dustthreshold) / Math.pow(10, 24)) * 1024) /
+              0.001}{' '}
+            mS / KB
+          </Text>
+        </Tooltip>
+        <Separator orientation="vertical" />
+        <Tooltip
+          content={
+            isSynced
+              ? 'Block height'
+              : `Block height: ${consensus?.height} / ${siaStats?.block_height}`
+          }
+        >
+          <Text size="1">{consensus?.height}</Text>
+        </Tooltip>
+        <Separator orientation="vertical" />
+        <Tooltip content={isSynced ? 'Synced' : 'Syncing'}>
+          <Box css={{ position: 'relative', top: '-0.5px', marginLeft: '$1' }}>
+            <Status variant={color} />
+            <Status
+              variant={color}
+              css={{
+                animation: `${pulse} 5s infinite`,
+                position: 'absolute',
+                top: 0,
+              }}
+            />
+          </Box>
+        </Tooltip>
+      </Flex>
+    </Panel>
   )
 }

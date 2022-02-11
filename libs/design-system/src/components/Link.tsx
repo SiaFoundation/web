@@ -5,7 +5,7 @@ import { Box } from './Box'
 import { Button } from './Button'
 import { Text } from './Text'
 
-export const StyledLink = styled('a', {
+export const Link = styled('a', {
   alignItems: 'center',
   gap: '$1',
   flexShrink: 0,
@@ -86,9 +86,9 @@ export function NLink({
 }: NLinkProps) {
   return (
     <NextLink href={href} passHref>
-      <StyledLink id={id} target={target} variant={variant} css={css}>
+      <Link id={id} target={target} variant={variant} css={css}>
         {children}
-      </StyledLink>
+      </Link>
     </NextLink>
   )
 }
@@ -112,7 +112,7 @@ export function RLink({
   css,
 }: RLinkProps) {
   return (
-    <StyledLink
+    <Link
       as={RRLink}
       id={id}
       target={target}
@@ -121,7 +121,7 @@ export function RLink({
       to={to}
     >
       {children}
-    </StyledLink>
+    </Link>
   )
 }
 

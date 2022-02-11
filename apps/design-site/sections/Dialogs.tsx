@@ -1,6 +1,5 @@
 import { DialogPortal } from '@radix-ui/react-dialog'
 import {
-  Alert,
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -10,9 +9,6 @@ import {
   AlertDialogPortal,
   AlertDialogTitle,
   AlertDialogTrigger,
-  Badge,
-  Banner,
-  Box,
   Button,
   Dialog,
   DialogClose,
@@ -22,11 +18,7 @@ import {
   DialogTitle,
   DialogTrigger,
   Flex,
-  Grid,
-  Heading,
-  ProgressBar,
   Section,
-  Text,
 } from '@siafoundation/design-system'
 import { SectionHeading } from '../components/SectionHeading'
 import { SubsectionHeading } from '../components/SubsectionHeading'

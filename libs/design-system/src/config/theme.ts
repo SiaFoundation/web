@@ -126,7 +126,7 @@ export const {
 export type CSS = Stitches.CSS<typeof config>
 export type { VariantProps } from '@stitches/react'
 
-export const darkTheme = createTheme('dark-theme', {
+export const darkTheme = createTheme('theme-dark', {
   // Radix DS dark theme colors
   colors: colorsDark,
 })

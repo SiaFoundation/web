@@ -37,7 +37,7 @@ export function SwapOverview({ hash }: Props) {
             top: '-15px',
             height: '40px',
             width: '40px',
-            backgroundColor: '#fff',
+            backgroundColor: '$loContrast',
             borderRadius: '15px',
           }}
         >
@@ -53,7 +53,6 @@ export function SwapOverview({ hash }: Props) {
               top: '50%',
               height: '30px',
               width: '30px',
-              transition: 'all 0.1s linear',
             }}
           >
             <ArrowDownIcon />

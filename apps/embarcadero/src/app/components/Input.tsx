@@ -50,7 +50,7 @@ export function Input({
         borderColor: !hasAvailableBalance ? '$red8' : 'transparent',
         borderRadius: '$2',
         padding: '$2',
-        transition: 'all 50ms linear',
+        transition: 'border 50ms linear',
         '&:hover': !disabled && {
           borderColor: !hasAvailableBalance ? '$red9' : '$siaGreenA6',
         },

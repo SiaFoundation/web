@@ -58,7 +58,9 @@ export function Share({ hash }: Props) {
         variant="green"
         size="3"
         to={routes.input}
-        css={{ width: '100%' }}
+        css={{
+          width: '100%',
+        }}
       >
         Proceed to enter hash from counterparty
         <Box as="span" css={{ pl: '$1', lh: '1' }}>

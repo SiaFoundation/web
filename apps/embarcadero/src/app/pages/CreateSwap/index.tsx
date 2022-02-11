@@ -90,7 +90,7 @@ export function CreateSwap() {
               top: '-15px',
               height: '40px',
               width: '40px',
-              backgroundColor: '#fff',
+              backgroundColor: '$panel',
               borderRadius: '15px',
             }}
           >
@@ -98,17 +98,18 @@ export function CreateSwap() {
               align="center"
               justify="center"
               css={{
-                backgroundColor: '$gray4',
+                backgroundColor: '$gray7',
                 borderRadius: '$4',
                 position: 'absolute',
                 transform: 'translate(-50%, -50%)',
                 left: '50%',
+                color: '$hiContrast',
                 top: '50%',
                 height: '30px',
                 width: '30px',
-                transition: 'all 0.1s linear',
+                transition: 'background 0.1s linear',
                 '&:hover': !hash && {
-                  backgroundColor: '$gray8',
+                  backgroundColor: '$siaGreenA10',
                 },
               }}
             >

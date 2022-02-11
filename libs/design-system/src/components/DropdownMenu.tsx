@@ -1,6 +1,6 @@
-import React, { ReactText } from 'react'
+import React from 'react'
 import { CheckIcon } from '@radix-ui/react-icons'
-import { styled, CSS, keyframes } from '../config/theme'
+import { styled, CSS } from '../config/theme'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { menuCss, separatorCss, itemCss, labelCss } from './Menu'
 import { Box } from './Box'
@@ -16,8 +16,6 @@ export const DropdownMenuContent = styled(
   panelStyles,
   {
     minWidth: 180,
-    // backgroundColor: 'white',
-    // borderRadius: 6,
     padding: 5,
     willChange: 'transform, opacity',
     boxShadow:

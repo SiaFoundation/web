@@ -1,4 +1,11 @@
-import { Flex, ProgressBar, Status, Text } from '@siafoundation/design-system'
+import {
+  Box,
+  Flex,
+  Heading,
+  ProgressBar,
+  Text,
+} from '@siafoundation/design-system'
+import { capitalize, kebabCase } from 'lodash'
 import { usePathParams } from '../../hooks/useHashParam'
 import { SwapStatus, useSwap } from '../../hooks/useSwap'
 
@@ -16,13 +23,12 @@ export function SwapProgress() {
   const step = status ? stepMap[status] : 0
 
   return (
-    <Flex gap="1" css={{ width: '100%' }}>
-      <Text>{status}</Text>
-      <Flex>
-        {step}
-        <Status variant="green" />
-      </Flex>
-      <ProgressBar value={step * 25} />
+    <Flex direction="column" gap="3" css={{ width: '100%' }}>
+      <Heading>{capitalize(kebabCase(status).split('-').join(' '))}</Heading>
+      <Box>
+        <ProgressBar value={step * 25} variant="gradient" />
+      </Box>
+      <ProgressBar variant="gradient" />
     </Flex>
   )
 }

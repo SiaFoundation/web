@@ -14,7 +14,7 @@ import { Dialogs } from '../sections/Dialogs'
 
 export function Index() {
   return (
-    <Container size="3" css={{ py: '$5' }}>
+    <Container size="3" css={{ py: '$5', bc: '$loContrast' }}>
       <Layout />
       <Typography />
       <Images />

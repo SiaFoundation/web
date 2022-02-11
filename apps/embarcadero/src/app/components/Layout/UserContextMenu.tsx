@@ -11,9 +11,14 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuRightSlot,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
+  Link,
 } from '@siafoundation/design-system'
+import { GeneralMenu } from './GeneralMenu'
+import { ThemeMenu } from './ThemeMenu'
 
 type Props = React.ComponentProps<typeof Button>
 
@@ -26,43 +31,9 @@ export function UserContextMenu(props: Props) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            About
-            <DropdownMenuRightSlot>
-              <InfoCircledIcon />
-            </DropdownMenuRightSlot>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Discord
-            <DropdownMenuRightSlot>
-              <ChatBubbleIcon />
-            </DropdownMenuRightSlot>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Docs
-            <DropdownMenuRightSlot>
-              <CubeIcon />
-            </DropdownMenuRightSlot>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Privacy
-            <DropdownMenuRightSlot>
-              <FileTextIcon />
-            </DropdownMenuRightSlot>
-          </DropdownMenuItem>
-          {/* <DropdownMenuSeparator />
-          <DropdownMenuCheckboxItem>Item</DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem checked>Item</DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem>Item</DropdownMenuCheckboxItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuLabel>Choose one</DropdownMenuLabel>
-          <DropdownMenuRadioGroup value="one">
-            <DropdownMenuRadioItem value="one">Item</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="two">Item</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="three">Item</DropdownMenuRadioItem>
-          </DropdownMenuRadioGroup> */}
-        </DropdownMenuGroup>
+        <GeneralMenu />
+        <DropdownMenuSeparator />
+        <ThemeMenu />
       </DropdownMenuContent>
     </DropdownMenu>
   )
