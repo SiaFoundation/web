@@ -1,7 +1,6 @@
 import React from 'react'
 import pattern from '../assets/background-pattern.jpg'
 import image from '../assets/background-image.gif'
-import { darkTheme } from '../config/theme'
 import { Box } from './Box'
 import { Image } from './Image'
 
@@ -24,14 +23,8 @@ export function Background({ children }: Props) {
       css={{
         position: 'relative',
         zIndex: -1,
-        opacity: 0.3,
+        opacity: 1,
         pointerEvents: 'none',
-        [`.${darkTheme} &`]: {
-          opacity: 1,
-        },
-        '@motion': {
-          display: 'none',
-        },
       }}
     >
       <Box
@@ -42,10 +35,7 @@ export function Background({ children }: Props) {
           right: 0,
           bottom: 0,
           zIndex: 1,
-          backgroundColor: 'white',
-          [`.${darkTheme} &`]: {
-            backgroundColor: '$loContrast',
-          },
+          backgroundColor: '$loContrast',
         }}
       />
       <Image
@@ -58,6 +48,9 @@ export function Background({ children }: Props) {
           width: '100%',
           height: '100%',
           opacity: 0.15,
+          '@motion': {
+            display: 'none',
+          },
         }}
       />
       <Box
@@ -83,13 +76,9 @@ export function Background({ children }: Props) {
           left: 0,
           right: 0,
           bottom: 0,
-          opacity: 0.8,
+          opacity: 0.95,
           zIndex: 4,
-          backgroundColor: 'white',
-          [`.${darkTheme} &`]: {
-            opacity: 0.95,
-            backgroundColor: '$loContrast',
-          },
+          backgroundColor: '$loContrast',
         }}
       />
       {children}
