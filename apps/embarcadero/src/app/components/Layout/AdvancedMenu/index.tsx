@@ -6,13 +6,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@siafoundation/design-system'
-import { usePathParams } from '../../../hooks/useHashParam'
 import { GearIcon } from '@radix-ui/react-icons'
 import { Details } from './Details'
 
 export function AdvancedMenu() {
-  const { route } = usePathParams()
-
   return (
     <Popover>
       <PopoverTrigger asChild>

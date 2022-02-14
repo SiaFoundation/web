@@ -4,9 +4,8 @@ import {
   Container,
   Flex,
   Heading,
+  Logo,
 } from '@siafoundation/design-system'
-// TODO: move logo to design-system component
-import logo from '../../../../../../libs/design-system/src/assets/logo.png'
 import { Wallet } from './Wallet'
 
 export function Navbar() {
@@ -14,20 +13,13 @@ export function Navbar() {
     <AppBar size="3" color="none" sticky>
       <Container size="4" css={{ position: 'relative' }}>
         <Flex align="center" gap="1" css={{}}>
-          <Box
-            as="img"
-            src={logo}
-            alt="Logo"
-            css={{
-              height: '30px',
-            }}
-          />
+          <Logo />
           <Heading
             css={{
               color: '$siaGreenA12',
               display: 'inline',
-              fontStyle: 'oblique',
-              fontWeight: '800',
+              // fontStyle: 'oblique',
+              fontWeight: '600',
             }}
           >
             Embarcadero

@@ -5,7 +5,7 @@ import toast, {
   ToastOptions,
 } from 'react-hot-toast'
 
-export { ToastOptions }
+export type { ToastOptions }
 
 export const triggerToast = (text: string, options: ToastOptions = {}) => {
   toast(text, options)
