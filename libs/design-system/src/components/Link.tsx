@@ -1,9 +1,11 @@
 import NextLink from 'next/link'
 import { Link as RRLink } from 'react-router-dom'
 import { CSS, styled } from '../config/theme'
+import { Box } from './Box'
+import { Button } from './Button'
 import { Text } from './Text'
 
-export const StyledLink = styled('a', {
+export const Link = styled('a', {
   alignItems: 'center',
   gap: '$1',
   flexShrink: 0,
@@ -84,9 +86,9 @@ export function NLink({
 }: NLinkProps) {
   return (
     <NextLink href={href} passHref>
-      <StyledLink id={id} target={target} variant={variant} css={css}>
+      <Link id={id} target={target} variant={variant} css={css}>
         {children}
-      </StyledLink>
+      </Link>
     </NextLink>
   )
 }
@@ -110,7 +112,7 @@ export function RLink({
   css,
 }: RLinkProps) {
   return (
-    <StyledLink
+    <Link
       as={RRLink}
       id={id}
       target={target}
@@ -119,6 +121,25 @@ export function RLink({
       to={to}
     >
       {children}
-    </StyledLink>
+    </Link>
+  )
+}
+
+type RLinkButtonProps = {
+  to: string
+  target?: string
+} & React.ComponentProps<typeof Button>
+
+// React Router link
+export function RLinkButton({ to, target, css, ...props }: RLinkButtonProps) {
+  return (
+    <Box
+      as={RRLink}
+      target={target}
+      to={to}
+      css={{ textDecoration: 'none', width: css?.width }}
+    >
+      <Button {...props} css={css} />
+    </Box>
   )
 }

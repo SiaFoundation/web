@@ -23,7 +23,7 @@ export const TextArea = styled('textarea', {
     zIndex: '1',
   },
   '&::placeholder': {
-    color: '$slate9',
+    color: '$slate7',
   },
   '&:disabled': {
     pointerEvents: 'none',

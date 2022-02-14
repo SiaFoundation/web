@@ -13,7 +13,7 @@ import {
 } from '@siafoundation/design-system'
 import { SectionHeading } from '../components/SectionHeading'
 import { SubsectionHeading } from '../components/SubsectionHeading'
-import bellLabs from '../public/bell-labs.jpeg'
+import bellLabs from '../assets/bell-labs.jpeg'
 
 export function Layout() {
   return (

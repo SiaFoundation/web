@@ -52,8 +52,10 @@ const StyledProgressBar = styled(ProgressPrimitive.Root, {
         backgroundColor: '$siaGreenA10',
       },
       gradient: {
+        // backgroundImage:
+        //   'linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%)',
         backgroundImage:
-          'linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%)',
+          'linear-gradient(90deg, rgba(131,58,180,1) 0%, $siaGreenA12 50%, rgba(252,176,69,1) 100%)',
       },
     },
   },

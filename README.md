@@ -10,9 +10,10 @@ Web packages for the Sia project and ecosystem.
 
 ## Libraries
 
+- [@siafoundation/sia-js](libs/sia-js/README.md) - Sia client for interacting with `siad`.
+- [@siafoundation/sia-core](libs/sia-core/README.md) - Core Sia types and library methods.
 - [@siafoundation/design-system](libs/design-system/README.md) - React-based design system used across Sia apps and websites.
 - [@siafoundation/data-sources](libs/data-sources/README.md) - Data sources used for stats on the website.
-- [@siafoundation/sia-js](libs/sia-js/README.md) - Core Sia types and library methods for interacting with `siad`.
 - [@siafoundation/env](libs/env/README.md) - Environment variables for the website server configuration.
 
 # Development

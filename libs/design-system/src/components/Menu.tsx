@@ -5,6 +5,7 @@ import { styled, css, CSS } from '../config/theme'
 import { Box } from './Box'
 import { Flex } from './Flex'
 import { panelStyles } from './Panel'
+import { Link } from './Link'
 
 export const baseItemCss = css({
   display: 'flex',
@@ -35,10 +36,18 @@ export const itemCss = css(baseItemCss, {
   '&[data-disabled]': {
     color: '$slate9',
   },
+
+  // Make nested links and icons within links match
+  [`& ${Link}, & ${Link} > *`]: {
+    color: 'inherit',
+    '&:hover': {
+      color: 'inherit',
+    },
+  },
 })
 
 export const labelCss = css(baseItemCss, {
-  color: '$slate11',
+  color: '$slate8',
 })
 
 export const menuCss = css({

@@ -5,9 +5,6 @@ import * as http from 'http'
 import request from 'request'
 import rp from 'request-promise-native'
 import { Url } from 'url'
-import { parseFlags } from './flags'
-import { ClientConfig } from './proto'
-import { getSiaPassword } from './utils'
 import {
   ConsensusGET,
   GatewayGET,
@@ -23,7 +20,10 @@ import {
   RenterFile,
   RenterFuseInfo,
   RenterBackupsGET,
-} from '../types'
+} from '@siafoundation/sia-core'
+import { ClientConfig } from './proto'
+import { parseFlags } from './flags'
+import { getSiaPassword } from './utils'
 
 interface WalletAddressGET {
   address: string

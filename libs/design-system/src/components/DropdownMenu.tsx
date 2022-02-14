@@ -1,6 +1,6 @@
-import React, { ReactText } from 'react'
+import React from 'react'
 import { CheckIcon } from '@radix-ui/react-icons'
-import { styled, CSS, keyframes } from '../config/theme'
+import { styled, CSS } from '../config/theme'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { menuCss, separatorCss, itemCss, labelCss } from './Menu'
 import { Box } from './Box'
@@ -16,12 +16,8 @@ export const DropdownMenuContent = styled(
   panelStyles,
   {
     minWidth: 180,
-    // backgroundColor: 'white',
-    // borderRadius: 6,
     padding: 5,
     willChange: 'transform, opacity',
-    boxShadow:
-      '0px 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2)',
     '@media (prefers-reduced-motion: no-preference)': {
       transformOrigin: 'var(--radix-dropdown-menu-content-transform-origin)',
       animation: `${scaleIn} 0.05s ease-out`,

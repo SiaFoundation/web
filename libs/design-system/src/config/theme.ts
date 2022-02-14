@@ -89,6 +89,7 @@ const stitches = createStitches({
       2: '6px',
       3: '8px',
       4: '12px',
+      5: '20px',
       round: '50%',
       pill: '9999px',
     },
@@ -126,7 +127,7 @@ export const {
 export type CSS = Stitches.CSS<typeof config>
 export type { VariantProps } from '@stitches/react'
 
-export const darkTheme = createTheme('dark-theme', {
+export const darkTheme = createTheme('theme-dark', {
   // Radix DS dark theme colors
   colors: colorsDark,
 })

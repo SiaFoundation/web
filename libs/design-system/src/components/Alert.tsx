@@ -28,7 +28,7 @@ export const Alert = styled('div', {
         borderColor: '$slate6',
       },
       green: {
-        backgroundColor: '$siaGreenA4',
+        backgroundColor: '$siaGreenA2',
         borderColor: '$siaGreenA8',
       },
       red: {

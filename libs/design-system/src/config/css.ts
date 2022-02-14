@@ -1,4 +1,5 @@
 import { globalCss } from './theme'
+import { useEffect } from 'react'
 
 // Reset, normalize, fonts css
 const globalStyles = globalCss({
@@ -49,53 +50,8 @@ const globalStyles = globalCss({
   ],
 })
 
-// !important is necessary to override the packages default styles (above)
-const globalToastStyles = globalCss({
-  '@import': 'react-toastify/dist/ReactToastify.minimal.css',
-
-  '.Toastify__toast-container--bottom-right': {
-    bottom: '20px !important',
-    right: '36px !important',
-  },
-
-  '.Toastify__toast--default': {
-    backgroundColor: '$panel !important',
-    border: '1px solid $panel !important',
-    minHeight: 'inherit !important',
-    /* box-shadow: 0 1px 10px 0 var(--colors-panel), 0 2px 15px 0 var(--colors-panel); */
-  },
-
-  '.Toastify__toast--warning': {
-    backgroundColor: '$yellow4 !important',
-    border: '1px solid $yellow8 !important',
-    minHeight: 'inherit !important',
-    /* box-shadow: 0 1px 10px 0 var(--colors-panel), 0 2px 15px 0 var(--colors-panel); */
-  },
-
-  '.Toastify__toast--error': {
-    backgroundColor: '$red10 !important',
-    border: '1px solid $panel !important',
-    minHeight: 'inherit !important',
-    /* box-shadow: 0 1px 10px 0 var(--colors-panel), 0 2px 15px 0 var(--colors-panel); */
-  },
-
-  '.Toastify__toast:last-of-type': {
-    marginBottom: '0 !important',
-  },
-
-  '.Toastify__toast-body': {
-    // some reason $ color does not work
-    color: 'var(--colors-hiContrast) !important',
-    opacity: '0.7 !important',
-  },
-
-  '.Toastify__close-button--default': {
-    // some reason $ color does not work
-    color: 'var(--colors-gray-5) !important',
-  },
-})
-
-export function initGlobalStyles() {
-  globalStyles()
-  globalToastStyles()
+export function useGlobalStyles() {
+  useEffect(() => {
+    globalStyles()
+  }, [])
 }

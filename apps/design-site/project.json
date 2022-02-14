@@ -13,7 +13,7 @@
         "assets": [
           {
             "glob": "**/*",
-            "input": "libs/design-system/src/assets/",
+            "input": "libs/design-system/src/public/",
             "output": "/"
           }
         ]
