@@ -28,6 +28,12 @@
         "main": "libs/sia-core/src/index.ts",
         "assets": ["libs/sia-core/*.md"]
       }
+    },
+    "deploy": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
     }
   },
   "tags": []
