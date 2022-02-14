@@ -1,5 +1,5 @@
 import { ArrowDownIcon } from '@radix-ui/react-icons'
-import { Box, Button, Flex } from '@siafoundation/design-system'
+import { Box, Button, Flex, triggerToast } from '@siafoundation/design-system'
 import axios from 'axios'
 import { useCallback, useMemo, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'

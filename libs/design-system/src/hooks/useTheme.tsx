@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from 'react'
 import { useCallback, useEffect } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
+import { useGlobalStyles } from '../config/css'
 import { darkTheme } from '../config/theme'
 
 const lightTheme = 'theme-default'
@@ -34,6 +35,8 @@ const defaultConfig: ThemeConfig = {
 }
 
 export function ThemeProvider({ children }: Props) {
+  useGlobalStyles()
+
   const [themeConfig, setThemeConfig] = useLocalStorageState<ThemeConfig>(
     'v0/themeConfig',
     defaultConfig

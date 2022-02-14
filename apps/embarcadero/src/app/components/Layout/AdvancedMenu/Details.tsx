@@ -27,7 +27,7 @@ export function Details() {
             Transaction
           </Text>
         </AccordionTrigger>
-        <AccordionContent css={{ pl: '$3' }}>
+        <AccordionContent>
           <TransactionDetails />
         </AccordionContent>
       </AccordionItem>

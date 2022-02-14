@@ -15,14 +15,12 @@ export function SwapLayout({ children }: Props) {
         padding: '$9 0',
       }}
     >
-      <Panel>
+      <Panel size="3">
         <Flex
           direction="column"
           gap="4"
           justify="center"
           css={{
-            // boxShadow:
-            //   'rgb(0 0 0 / 1%) 0px 0px 1px, rgb(0 0 0 / 4%) 0px 4px 8px, rgb(0 0 0 / 4%) 0px 16px 24px, rgb(0 0 0 / 1%) 0px 24px 32px',
             padding: '$3',
           }}
         >

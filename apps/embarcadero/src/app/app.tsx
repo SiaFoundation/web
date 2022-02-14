@@ -1,4 +1,4 @@
-import { initGlobalStyles, ThemeProvider } from '@siafoundation/design-system'
+import { ThemeProvider } from '@siafoundation/design-system'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import { Layout } from './components/Layout'
 import { Home } from './pages/Home'
@@ -8,8 +8,6 @@ import { StepSwap } from './pages/StepSwap'
 import { routes } from './routes'
 
 export function App() {
-  initGlobalStyles()
-
   return (
     <ThemeProvider>
       <Layout>

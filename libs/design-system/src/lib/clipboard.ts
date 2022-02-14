@@ -1,19 +1,14 @@
 import * as clipboard from 'clipboard-polyfill/text'
-import { ToastContent, ToastOptions, TypeOptions } from 'react-toastify'
-import { triggerToast } from './toast'
+import { ToastOptions, triggerToast } from './toast'
 
-export const copyToClipboard = (
-  text: string,
-  entity: string,
-  type: TypeOptions = 'default'
-) => {
-  triggerToast(`Copied ${entity} to clipboard`, { type })
+export const copyToClipboard = (text: string, entity: string) => {
+  triggerToast(`Copied ${entity} to clipboard`)
   clipboard.writeText(text)
 }
 
 export const copyToClipboardCustom = (
   text: string,
-  message: ToastContent,
+  message: string,
   options: ToastOptions
 ) => {
   triggerToast(message, options)

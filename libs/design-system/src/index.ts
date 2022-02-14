@@ -57,5 +57,3 @@ export {
   config,
 } from './config/theme'
 export type { CSS, VariantProps } from './config/theme'
-
-export { initGlobalStyles } from './config/css'

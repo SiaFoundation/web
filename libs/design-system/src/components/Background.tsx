@@ -1,8 +1,9 @@
-import { Box, Image, NImage } from '@siafoundation/design-system'
-import React, { Fragment } from 'react'
+import React from 'react'
 import pattern from '../assets/background-pattern.jpg'
 import image from '../assets/background-image.gif'
 import { darkTheme } from '../config/theme'
+import { Box } from './Box'
+import { Image } from './Image'
 
 type Props = {
   children?: React.ReactNode

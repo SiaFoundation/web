@@ -62,7 +62,7 @@ export function Share({ hash }: Props) {
           width: '100%',
         }}
       >
-        Proceed to enter hash from counterparty
+        Enter swap from counterparty
         <Box as="span" css={{ pl: '$1', lh: '1' }}>
           <ArrowRightIcon />
         </Box>

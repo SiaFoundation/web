@@ -16,11 +16,15 @@
         "polyfills": "apps/embarcadero/src/polyfills.ts",
         "tsConfig": "apps/embarcadero/tsconfig.app.json",
         "assets": [
-          "apps/embarcadero/src/public",
+          {
+            "glob": "**/*",
+            "input": "apps/embarcadero/src/public/",
+            "output": "/"
+          },
           {
             "glob": "**/*",
             "input": "libs/design-system/src/assets/",
-            "output": "/assets/"
+            "output": "/"
           }
         ],
         "styles": [],

@@ -9,7 +9,7 @@ export function Message({ message }: Props) {
   return (
     <Alert>
       <Flex gap="2">
-        <Box css={{ position: 'relative', top: '4px' }}>
+        <Box css={{ color: '$hiContrast', position: 'relative', top: '4px' }}>
           <InfoCircledIcon />
         </Box>
         <Text css={{ lineHeight: '20px' }}>{message}</Text>

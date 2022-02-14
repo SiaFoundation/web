@@ -7,9 +7,5 @@
     "types": ["node"]
   },
   "exclude": ["**/*.spec.ts", "**/*.test.ts"],
-  "include": [
-    "**/*.ts",
-    "../sia-js/src/lib/utils.spec.ts",
-    "../sia-js/src/lib/flags.spec.ts"
-  ]
+  "include": ["**/*.ts"]
 }

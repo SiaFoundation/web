@@ -12,7 +12,7 @@ class Document extends NextDocument {
             dangerouslySetInnerHTML={{ __html: getCssText() }}
           />
         </Head>
-        <body>
+        <body style={{ overflow: 'hidden' }}>
           <Main />
           <NextScript />
         </body>

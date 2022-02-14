@@ -8,6 +8,7 @@ import {
 } from '@siafoundation/design-system'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { Message } from '../../components/Message'
 import { routes } from '../../routes'
 
 export function InputSwap() {
@@ -16,7 +17,11 @@ export function InputSwap() {
 
   return (
     <Flex direction="column" align="center" gap="3">
-      <Label>Enter swap hash to get started.</Label>
+      <Message
+        message={`
+          Retrieve a swap from your counterparty and enter it below to load details.
+      `}
+      />
       <TextArea
         size="3"
         rows={4}
@@ -33,6 +38,7 @@ export function InputSwap() {
         disabled={!hash}
         variant="green"
         size="3"
+        css={{ width: '100%' }}
         onClick={() =>
           hash &&
           history.push(routes.step.replace(':hash', encodeURIComponent(hash)))
