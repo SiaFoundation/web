@@ -12,7 +12,6 @@ type Props = {
 
 // The image imports have different behaviour when the consuming is app is CRA vs Next
 // CRA returns a URL string whereas Next returns an object with multiple image attributes.
-// TODO: Test this with full builds.
 const imageProps = typeof image === 'string' ? { src: image } : image
 // eslint-disable-next-line
 const patternSrc = typeof pattern === 'string' ? pattern : (pattern as any).src

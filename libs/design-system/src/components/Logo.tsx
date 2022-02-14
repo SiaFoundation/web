@@ -1,11 +1,12 @@
-import { Box } from '@siafoundation/design-system'
 import logo from '../assets/logo.png'
+import { Image } from './Image'
+
+const props = typeof logo === 'string' ? { src: logo } : logo
 
 export function Logo() {
   return (
-    <Box
-      as="img"
-      src={logo}
+    <Image
+      {...props}
       alt="Logo"
       css={{
         height: '30px',
