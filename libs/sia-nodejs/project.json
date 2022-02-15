@@ -1,20 +1,20 @@
 {
-  "root": "libs/sia-js",
-  "sourceRoot": "libs/sia-js/src",
+  "root": "libs/sia-nodejs",
+  "sourceRoot": "libs/sia-nodejs/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/sia-js/**/*.ts"]
+        "lintFilePatterns": ["libs/sia-nodejs/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/sia-js"],
+      "outputs": ["coverage/libs/sia-nodejs"],
       "options": {
-        "jestConfig": "libs/sia-js/jest.config.js",
+        "jestConfig": "libs/sia-nodejs/jest.config.js",
         "passWithNoTests": true
       }
     },
@@ -22,11 +22,11 @@
       "executor": "@nrwl/node:package",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/sia-js",
-        "tsConfig": "libs/sia-js/tsconfig.lib.json",
-        "packageJson": "libs/sia-js/package.json",
-        "main": "libs/sia-js/src/index.ts",
-        "assets": ["libs/sia-js/*.md"]
+        "outputPath": "dist/libs/sia-nodejs",
+        "tsConfig": "libs/sia-nodejs/tsconfig.lib.json",
+        "packageJson": "libs/sia-nodejs/package.json",
+        "main": "libs/sia-nodejs/src/index.ts",
+        "assets": ["libs/sia-nodejs/*.md"]
       }
     },
     "deploy": {
