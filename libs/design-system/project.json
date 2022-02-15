@@ -50,6 +50,12 @@
       "options": {
         "access": "public"
       }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "commitMessageFormat": "chore(${projectName}): release version ${version}"
+      }
     }
   }
 }
