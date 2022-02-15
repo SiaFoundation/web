@@ -27,10 +27,14 @@ jobs:
         run: |
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-      - name: Version and publish
-        run: npx nx affected --target version --push
+      - name: Version
+        run: npx nx affected --target=version --push --parallel --max-parallel=1
+      - name: Publish NPM
+        run: npx nx affected --target=deploy
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish Github
+        run: npx nx affected --target=github
   pr:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
