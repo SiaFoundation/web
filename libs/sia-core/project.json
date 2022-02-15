@@ -38,8 +38,7 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "commitMessageFormat": "chore(${projectName}): release version ${version}",
-        "postTargets": ["sia-core:deploy", "sia-core:github"]
+        "commitMessageFormat": "chore(${projectName}): release version ${version}"
       }
     },
     "github": {
