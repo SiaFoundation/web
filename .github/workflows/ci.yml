@@ -23,8 +23,10 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm install
-      - run: npx nx affected --target=build --parallel --max-parallel=3
-      - run: npx nx affected --target=test --parallel --max-parallel=2
+      - name: Build
+        run: npx nx affected --target=build --parallel --max-parallel=3
+      - name: Test
+        run: npx nx affected --target=test --parallel --max-parallel=2
       - name: git config
         shell: bash
         run: |
@@ -32,11 +34,12 @@ jobs:
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
       - name: Version
         run: npx nx affected --target=version --push --parallel --max-parallel=1
+      - name: Build
+        run: npx nx affected --target=build --parallel --max-parallel=3
       - name: Publish NPM
         run: npx nx affected --target=deploy
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        # env:
+        #   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish Github
         run: npx nx affected --target=github
   pr:
