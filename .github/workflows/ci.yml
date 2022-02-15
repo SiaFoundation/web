@@ -29,10 +29,12 @@ jobs:
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
       - name: Version
         run: npx nx affected --target=version --push --parallel --max-parallel=1
+      # --no-build because build already occurred above
       - name: Publish NPM
-        run: npx nx affected --target=deploy
+        run: npx nx affected --target=deploy --no-build
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish Github
         run: npx nx affected --target=github
   pr:
