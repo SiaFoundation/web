@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '16'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm install
       - run: npx nx affected --target=build --parallel --max-parallel=3
       - run: npx nx affected --target=test --parallel --max-parallel=2
