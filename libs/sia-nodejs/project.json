@@ -1,20 +1,20 @@
 {
-  "root": "libs/sia-core",
-  "sourceRoot": "libs/sia-core/src",
+  "root": "libs/sia-nodejs",
+  "sourceRoot": "libs/sia-nodejs/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/sia-core/**/*.ts"]
+        "lintFilePatterns": ["libs/sia-nodejs/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/sia-core"],
+      "outputs": ["coverage/libs/sia-nodejs"],
       "options": {
-        "jestConfig": "libs/sia-core/jest.config.js",
+        "jestConfig": "libs/sia-nodejs/jest.config.js",
         "passWithNoTests": true
       }
     },
@@ -22,11 +22,11 @@
       "executor": "@nrwl/node:package",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/sia-core",
-        "tsConfig": "libs/sia-core/tsconfig.lib.json",
-        "packageJson": "libs/sia-core/package.json",
-        "main": "libs/sia-core/src/index.ts",
-        "assets": ["libs/sia-core/*.md"]
+        "outputPath": "dist/libs/sia-nodejs",
+        "tsConfig": "libs/sia-nodejs/tsconfig.lib.json",
+        "packageJson": "libs/sia-nodejs/package.json",
+        "main": "libs/sia-nodejs/src/index.ts",
+        "assets": ["libs/sia-nodejs/*.md"]
       }
     },
     "deploy": {
@@ -39,14 +39,14 @@
       "executor": "@jscutlery/semver:version",
       "options": {
         "commitMessageFormat": "chore(${projectName}): release version ${version}",
-        "postTargets": ["sia-core:github"]
+        "postTargets": ["sia-nodejs:deploy", "sia-nodejs:github"]
       }
     },
     "github": {
       "executor": "@jscutlery/semver:github",
       "options": {
         "tag": "${tag}",
-        "notesFile": "./libs/sia-core/CHANGELOG.md"
+        "notesFile": "./libs/sia-nodejs/CHANGELOG.md"
       }
     }
   },
