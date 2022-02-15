@@ -4,7 +4,3 @@ export * from './lib/bytes'
 export * from './lib/constants'
 
 export * from './types'
-
-const foo = 'foo'
-
-export { foo }
