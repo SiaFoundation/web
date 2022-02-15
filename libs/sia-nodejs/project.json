@@ -39,7 +39,7 @@
       "executor": "@jscutlery/semver:version",
       "options": {
         "commitMessageFormat": "chore(${projectName}): release version ${version}",
-        "postTargets": ["sia-nodejs:github"]
+        "postTargets": ["sia-nodejs:deploy", "sia-nodejs:github"]
       }
     },
     "github": {
