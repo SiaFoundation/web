@@ -29,20 +29,21 @@
         "assets": ["libs/sia-core/*.md"]
       }
     },
-    "deploy": {
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "commitMessageFormat": "chore(${projectName}): release version ${version}",
+        "postTargets": ["sia-core:publish-npm", "sia-core:publish-github"]
+      }
+    },
+    "publish-npm": {
       "executor": "ngx-deploy-npm:deploy",
       "options": {
         "access": "public",
         "noBuild": true
       }
     },
-    "version": {
-      "executor": "@jscutlery/semver:version",
-      "options": {
-        "commitMessageFormat": "chore(${projectName}): release version ${version}"
-      }
-    },
-    "github": {
+    "publish-github": {
       "executor": "@jscutlery/semver:github",
       "options": {
         "tag": "${tag}",

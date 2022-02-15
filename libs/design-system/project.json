@@ -45,20 +45,24 @@
         "passWithNoTests": true
       }
     },
-    "deploy": {
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "commitMessageFormat": "chore(${projectName}): release version ${version}",
+        "postTargets": [
+          "design-system:publish-npm",
+          "design-system:publish-github"
+        ]
+      }
+    },
+    "publish-npm": {
       "executor": "ngx-deploy-npm:deploy",
       "options": {
         "access": "public",
         "noBuild": true
       }
     },
-    "version": {
-      "executor": "@jscutlery/semver:version",
-      "options": {
-        "commitMessageFormat": "chore(${projectName}): release version ${version}"
-      }
-    },
-    "github": {
+    "publish-github": {
       "executor": "@jscutlery/semver:github",
       "options": {
         "tag": "${tag}",

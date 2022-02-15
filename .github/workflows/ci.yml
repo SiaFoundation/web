@@ -31,17 +31,10 @@ jobs:
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
       # One at a time so that git operations do not corrupt each other
-      - name: Version
+      - name: Version and publish
         run: npx nx affected --target=version --push --parallel --max-parallel=1
-      # - name: Build
-      #   run: npx nx affected --target=build --parallel --max-parallel=3
-      - name: Publish NPM
-        run: npx nx affected --target=deploy --parallel --max-parallel=3
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Publish Github
-        run: npx nx affected --target=github --parallel --max-parallel=3
-        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   pr:
     runs-on: ubuntu-latest
