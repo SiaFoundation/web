@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.1.3](https://github.com/SiaFoundation/web/compare/sia-core-0.1.2...sia-core-0.1.3) (2022-02-15)
+
+
+### Bug Fixes
+
+* remove unused code ([c578bf4](https://github.com/SiaFoundation/web/commit/c578bf4cf8e71c41d6ecf71716ecf2734a184ef3))
+
+
+
 ## [0.1.2](https://github.com/SiaFoundation/web/compare/sia-core-0.1.1...sia-core-0.1.2) (2022-02-15)
 
 
