@@ -34,10 +34,10 @@ jobs:
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
       - name: Version
         run: npx nx affected --target=version --push --parallel --max-parallel=1
-      - name: Build
-        run: npx nx affected --target=build --parallel --max-parallel=3
+      # - name: Build
+      #   run: npx nx affected --target=build --parallel --max-parallel=3
       - name: Publish NPM
-        run: npx nx affected --target=deploy
+        run: npx nx affected --target=deploy --parallel --max-parallel=1
         # env:
         #   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish Github
