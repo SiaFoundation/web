@@ -43,13 +43,11 @@ jobs:
         run: |
           git config user.name "Github Actions"
           git config user.email "-"
-      - name: Check npm credentials
-        run: npm whoami
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # - name: Check npm credentials
+      #   run: npm whoami
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Version and publish
         run: npx nx version
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
