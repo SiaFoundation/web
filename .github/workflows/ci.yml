@@ -28,7 +28,7 @@ jobs:
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
       - name: Version and publish
-        run: npx nx version --push
+        run: npx nx affected --target version --push
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
   pr:
