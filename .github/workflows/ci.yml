@@ -41,6 +41,8 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish Github
         run: npx nx affected --target=github --parallel --max-parallel=3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   pr:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
