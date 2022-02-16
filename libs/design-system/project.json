@@ -23,7 +23,7 @@
             "output": "."
           },
           {
-            "glob": "libs/design-system/src/assets",
+            "glob": "libs/design-system/src/public",
             "input": ".",
             "output": "."
           }
