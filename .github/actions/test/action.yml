@@ -1,0 +1,20 @@
+name: Test
+
+description: Test
+
+runs:
+  using: composite
+
+  steps:
+    - name: Commitlint
+      shell: bash
+      run: npx commitlint --from=last-release
+    - name: Lint
+      shell: bash
+      run: npx nx affected --target=lint --base=last-release --parallel --max-parallel=3
+    - name: Build
+      shell: bash
+      run: npx nx affected --target=build --base=last-release --parallel --max-parallel=3
+    - name: Test
+      shell: bash
+      run: npx nx affected --target=test --base=last-release --parallel --max-parallel=2
