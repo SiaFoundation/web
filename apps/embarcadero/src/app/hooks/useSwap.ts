@@ -74,7 +74,7 @@ export function useSwap(hash?: string) {
     const { amountSC } = response.data.summary
 
     return toSiacoins(new BigNumber(amountSC))
-  }, [response, offerSc])
+  }, [response])
 
   const sf = useMemo(() => {
     if (!response.data?.summary) {
@@ -84,7 +84,7 @@ export function useSwap(hash?: string) {
     const { amountSF } = response.data.summary
 
     return new BigNumber(amountSF)
-  }, [response, offerSc])
+  }, [response])
 
   let localStatus: SwapSatusLocal | undefined = undefined
   if (route === routes.create.slice(1)) {
