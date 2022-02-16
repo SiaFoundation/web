@@ -1,0 +1,19 @@
+name: PR
+on:
+  pull_request:
+
+jobs:
+  pr:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_version: [16]
+    if: ${{ github.event_name == 'pull_request' }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          node_version: ${{ matrix.node_version }}
+      - name: Test
+        uses: ./.github/actions/test
