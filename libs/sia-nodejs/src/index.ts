@@ -1,2 +1,2 @@
 export * from './lib/client'
-export * from '@siafoundation/sia-core'
+export * from '@siafoundation/sia-js'

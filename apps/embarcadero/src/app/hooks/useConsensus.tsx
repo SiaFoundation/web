@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 import { getApi } from '../../config'
-import { ConsensusGET } from '@siafoundation/sia-core'
+import { ConsensusGET } from '@siafoundation/sia-js'
 
 export function useConsensus() {
   return useSWR<ConsensusGET>(

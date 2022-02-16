@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 import { getApi } from '../../config'
-import { WalletGET } from '@siafoundation/sia-core'
+import { WalletGET } from '@siafoundation/sia-js'
 
 export function useWallet() {
   return useSWR<WalletGET>(

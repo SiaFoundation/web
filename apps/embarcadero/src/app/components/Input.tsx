@@ -1,5 +1,5 @@
 import { Box, Flex, Label, Text, TextField } from '@siafoundation/design-system'
-import { toSiacoins } from '@siafoundation/sia-core'
+import { toSiacoins } from '@siafoundation/sia-js'
 import { useMemo } from 'react'
 import { useSiaStats } from '../hooks/useSiaStats'
 import { useWallet } from '../hooks/useWallet'
