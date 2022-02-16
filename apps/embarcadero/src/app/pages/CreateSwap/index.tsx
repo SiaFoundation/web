@@ -51,7 +51,7 @@ export function CreateSwap() {
       }
       func()
     },
-    [offerSc]
+    [offerSc, history]
   )
 
   return (

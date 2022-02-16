@@ -40,7 +40,7 @@ export function StepSwap() {
       }
       func()
     },
-    [hash]
+    [hash, history]
   )
 
   if (!hash) {

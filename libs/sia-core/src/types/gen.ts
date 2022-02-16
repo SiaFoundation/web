@@ -1,7 +1,7 @@
+/* eslint-disable */
 import { Currency } from './currency'
 import { SiaPublicKey } from './signitures'
 import { SiacoinOutput, Transaction } from './transactions'
-import { ProcessedInput, ProcessedOutput } from './wallet'
 
 // helpers
 const maxUnixTSInSeconds = 9999999999
