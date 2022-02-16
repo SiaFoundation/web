@@ -5,7 +5,7 @@ import {
   SiafundOutput,
   toSiacoins,
   TransactionSignature,
-} from '@siafoundation/sia-core'
+} from '@siafoundation/sia-js'
 import axios from 'axios'
 import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'

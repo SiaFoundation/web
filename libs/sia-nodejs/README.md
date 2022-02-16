@@ -1,6 +1,6 @@
 # sia-nodejs
 
-Core Sia types and library methods for interacting with `siad`.
+Sia NodeJS client for interacting with `siad`.
 
 ## Running unit tests
 

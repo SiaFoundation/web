@@ -36,7 +36,7 @@ func main() {
 	converter.Add(api.RenterFile{})
 	converter.Add(api.RenterDirectory{})
 
-	f, err := os.Create("libs/sia-core/src/types/gen.ts")
+	f, err := os.Create("libs/sia-js/src/types/gen.ts")
 	check(err)
 	defer f.Close()
 

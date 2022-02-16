@@ -9,7 +9,7 @@
     "embarcadero": "apps/embarcadero",
     "embarcadero-e2e": "apps/embarcadero-e2e",
     "env": "libs/env",
-    "sia-core": "libs/sia-core",
+    "sia-js": "libs/sia-js",
     "sia-nodejs": "libs/sia-nodejs",
     "website": "apps/website",
     "website-e2e": "apps/website-e2e"

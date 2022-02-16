@@ -20,7 +20,7 @@ import {
   RenterFile,
   RenterFuseInfo,
   RenterBackupsGET,
-} from '@siafoundation/sia-core'
+} from '@siafoundation/sia-js'
 import { ClientConfig } from './proto'
 import { parseFlags } from './flags'
 import { getSiaPassword } from './utils'
