@@ -107,7 +107,7 @@ export function ThemeProvider({ children }: Props) {
         .matchMedia('(prefers-color-scheme: dark)')
         .removeEventListener('change', changeTheme)
     }
-  }, [themeConfig])
+  }, [themeConfig, setTheme])
 
   const value = {
     toggleTheme,
