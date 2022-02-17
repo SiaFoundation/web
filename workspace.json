@@ -11,6 +11,7 @@
     "env": "libs/env",
     "sia-js": "libs/sia-js",
     "sia-nodejs": "libs/sia-nodejs",
+    "sia-react": "libs/sia-react",
     "website": "apps/website",
     "website-e2e": "apps/website-e2e"
   }
