@@ -4,18 +4,18 @@ Web packages for the Sia project and ecosystem.
 
 ## Apps
 
-- [Website](apps/website/README.md) - The main [sia.tech](https://sia.tech) website with information on the Sia project and the Sia Foundation.
-- [Asset Server](apps/asset-server/README.md) - Powers [api.sia.tech](https://api.sia.tech) and all assets on [sia.tech](https://sia.tech).
-- [Design](apps/design-site/README.md) - The [design.sia.tech](https://design.sia.tech) website for exploring the design system used across Sia apps and websites.
+- [Website](apps/website) - The main [sia.tech](https://sia.tech) website with information on the Sia project and the Sia Foundation.
+- [Asset Server](apps/asset-server) - Powers [api.sia.tech](https://api.sia.tech) and all downloadable assets on [sia.tech](https://sia.tech) such as the Sia software releases.
+- [Design](apps/design-site) - The [design.sia.tech](https://design.sia.tech) website for exploring the design system used across Sia apps and websites.
 
 ## Libraries
 
-- [@siafoundation/sia-js](libs/sia-js/README.md) - Core Sia types and library methods.
-- [@siafoundation/sia-react](libs/sia-react/README.md) - React hooks for interacting with `siad`.
-- [@siafoundation/sia-nodejs](libs/sia-nodejs/README.md) - Sia NodeJS client for controlling `siad`.
-- [@siafoundation/design-system](libs/design-system/README.md) - React-based design system used across Sia apps and websites.
-- [@siafoundation/data-sources](libs/data-sources/README.md) - Data sources used for stats on the website.
-- [@siafoundation/env](libs/env/README.md) - Environment variables for the website server configuration.
+- [@siafoundation/sia-js](libs/sia-js) - Core Sia types and library methods.
+- [@siafoundation/sia-react](libs/sia-react) - React hooks for interacting with `siad`.
+- [@siafoundation/sia-nodejs](libs/sia-nodejs) - Sia NodeJS client for controlling `siad`.
+- [@siafoundation/design-system](libs/design-system) - React-based design system used across Sia apps and websites.
+- [@siafoundation/data-sources](libs/data-sources) - Data sources used for stats on the website.
+- [@siafoundation/env](libs/env) - Environment variables for the website server configuration.
 
 # Development
 
