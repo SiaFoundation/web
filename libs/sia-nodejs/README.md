@@ -1,6 +1,6 @@
 # sia-nodejs
 
-Sia NodeJS client for interacting with `siad`.
+Sia NodeJS client for controlling `siad`.
 
 ## Running unit tests
 
