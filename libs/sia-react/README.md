@@ -1,6 +1,6 @@
 # sia-react
 
-This library was generated with [Nx](https://nx.dev).
+React hooks for interacting with `siad`.
 
 ## Running unit tests
 
