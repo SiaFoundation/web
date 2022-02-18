@@ -41,6 +41,7 @@ export * from './components/Skeleton'
 export * from './components/Slider'
 export * from './components/Status'
 export * from './components/Switch'
+export * from './components/UserContextMenu'
 
 export * from './hooks/useTheme'
 

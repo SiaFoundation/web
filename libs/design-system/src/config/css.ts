@@ -1,5 +1,6 @@
 import { globalCss } from './theme'
 import { useEffect } from 'react'
+import { fontStyles } from './fonts'
 
 // Reset, normalize, fonts css
 const globalStyles = globalCss({
@@ -27,31 +28,11 @@ const globalStyles = globalCss({
     padding: 0,
     margin: 0,
   },
-
-  '@font-face': [
-    {
-      fontFamily: 'Metropolis',
-      src: `url('fonts/Metropolis/metropolis-regular-webfont.woff2') format('woff2'), url('fonts/Metropolis/metropolis-regular-webfont.woff') format('woff')`,
-      fontWeight: '400',
-      fontStyle: 'normal',
-    },
-    {
-      fontFamily: 'Metropolis',
-      src: `url('fonts/Metropolis/metropolis-medium-webfont.woff2') format('woff2'), url('fonts/Metropolis/metropolis-medium-webfont.woff') format('woff')`,
-      fontWeight: '500',
-      fontStyle: 'normal',
-    },
-    {
-      fontFamily: 'Metropolis',
-      src: `url('fonts/Metropolis/metropolis-semibold-webfont.woff2') format('woff2'), url('fonts/Metropolis/metropolis-semibold-webfont.woff') format('woff')`,
-      fontWeight: '600',
-      fontStyle: 'normal',
-    },
-  ],
 })
 
 export function useGlobalStyles() {
   useEffect(() => {
     globalStyles()
+    fontStyles()
   }, [])
 }

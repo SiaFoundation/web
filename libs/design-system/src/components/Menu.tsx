@@ -11,7 +11,7 @@ export const baseItemCss = css({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  color: '$slate9',
+  color: '$slate11',
   fontFamily: '$sans',
   fontSize: '$1',
   fontVariantNumeric: 'tabular-nums',
@@ -25,12 +25,12 @@ export const baseItemCss = css({
 
 export const itemCss = css(baseItemCss, {
   position: 'relative',
-  fontWeight: 'bold',
+  fontWeight: '500',
   borderRadius: '$1',
 
   '&:focus': {
     outline: 'none',
-    color: '$slate11',
+    color: '$slate12',
   },
 
   '&[data-disabled]': {
@@ -47,7 +47,7 @@ export const itemCss = css(baseItemCss, {
 })
 
 export const labelCss = css(baseItemCss, {
-  color: '$slate8',
+  color: '$slate11',
 })
 
 export const menuCss = css({

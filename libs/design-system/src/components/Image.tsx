@@ -4,9 +4,14 @@ import { CSS, styled } from '../config/theme'
 export const Image = styled('img', {
   verticalAlign: 'middle',
   maxWidth: '100%',
-  borderRadius: '$2',
 
   variants: {
+    radius: {
+      '0': {},
+      '1': {
+        borderRadius: '$2',
+      },
+    },
     fit: {
       fill: {
         width: '100%',
@@ -15,12 +20,16 @@ export const Image = styled('img', {
       },
     },
   },
+  defaultVariants: {
+    radius: '1',
+  },
 })
 
 type NImageProps = {
   src: string
   height?: string | number
   width?: string | number
+  radius?: React.ComponentProps<typeof Image>['radius']
   blurDataURL?: string
   layout?: 'fill' | 'fixed' | 'intrinsic' | 'responsive'
   alt: string
@@ -33,6 +42,7 @@ export function NImage({
   width,
   blurDataURL,
   layout,
+  radius,
   alt,
   css,
 }: NImageProps) {
@@ -44,6 +54,7 @@ export function NImage({
       height={layout === 'fill' ? undefined : height}
       fit={layout === 'fill' ? 'fill' : undefined}
       layout={layout}
+      radius={radius}
       blurDataURL={blurDataURL}
       alt={alt}
       css={css}

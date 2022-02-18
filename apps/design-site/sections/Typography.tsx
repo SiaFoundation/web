@@ -24,7 +24,9 @@ export function Typography() {
         <Flex direction="column" gap="1">
           <Heading size="1">Heading 1</Heading>
           <Heading size="2">Heading 2</Heading>
-          <Heading size="3">Heading 3</Heading>
+          <Heading size="3" css={{ fontStyle: 'italic' }}>
+            Heading 3
+          </Heading>
           <Heading size="4">Heading 4</Heading>
         </Flex>
       </Section>
@@ -36,7 +38,9 @@ export function Typography() {
           <Text size="3">Text 3</Text>
           <Text size="4">Text 4</Text>
           <Text size="5">Text 5</Text>
-          <Text size="6">Text 6</Text>
+          <Text size="6" css={{ fontStyle: 'italic' }}>
+            Text 6
+          </Text>
           <Text size="7">Text 7</Text>
           <Text size="8">Text 8</Text>
           <Text size="9">Text 9</Text>
