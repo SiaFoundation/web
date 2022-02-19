@@ -1,10 +1,14 @@
 import { LeftNavbar } from './LeftNavbar'
-import jungle from '../../assets/light.png'
+import image from '../../assets/light.png'
 import { Box } from '../../primitives/Box'
 import { ScrollArea } from '../../primitives/ScrollArea'
 import { NImage } from '../../primitives/Image'
 
 const frameThickness = 4
+
+// The image imports have different behaviour when the consuming is app is CRA vs Next
+// CRA returns a URL string whereas Next returns an object with multiple image attributes.
+const imageProps = typeof image === 'string' ? { src: image } : image
 
 type Props = {
   title?: string
@@ -80,7 +84,7 @@ export function SiteLayout({ title, header, children }: Props) {
           },
         }}
       >
-        <NImage {...jungle} layout="fill" radius="0" alt="Jungle" />
+        <NImage {...imageProps} layout="fill" radius="0" alt="Jungle" />
       </Box>
     </Box>
   )
