@@ -1,4 +1,4 @@
-import { Box, Container, Flex } from '@siafoundation/design-system'
+import { Box, Container, Flex, SiteLayout } from '@siafoundation/design-system'
 import Head from 'next/head'
 import Script from 'next/script'
 import { appName } from '../config/app'
@@ -72,15 +72,17 @@ export function Layout({ children }: Props) {
               `,
         }}
       />
-      <Container size="3">
-        <Flex as="main" direction="column" gap="8" css={{ margin: '$5 0' }}>
-          <Header />
-          <Flex direction="column" gap="3">
-            {children}
+      <SiteLayout>
+        <Container size="3">
+          <Flex as="main" direction="column" gap="8" css={{ margin: '$5 0' }}>
+            <Header />
+            <Flex direction="column" gap="3">
+              {children}
+            </Flex>
+            <Footer />
           </Flex>
-          <Footer />
-        </Flex>
-      </Container>
+        </Container>
+      </SiteLayout>
     </Box>
   )
 }

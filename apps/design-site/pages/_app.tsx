@@ -1,6 +1,5 @@
-import { ThemeProvider } from '@siafoundation/design-system'
+import { SiteLayout, ThemeProvider } from '@siafoundation/design-system'
 import { AppProps } from 'next/app'
-import { Layout } from '../components/Layout'
 import Head from 'next/head'
 
 function CustomApp({ Component, pageProps }: AppProps) {
@@ -10,9 +9,9 @@ function CustomApp({ Component, pageProps }: AppProps) {
         <title>Design system</title>
       </Head>
       <ThemeProvider>
-        <Layout>
+        <SiteLayout title="@siafoundation/design-system" header>
           <Component {...pageProps} />
-        </Layout>
+        </SiteLayout>
       </ThemeProvider>
     </>
   )
