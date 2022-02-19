@@ -42,6 +42,7 @@ export * from './primitives/Status'
 export * from './primitives/Switch'
 
 export * from './components/Background'
+export * from './components/SiteLayout'
 export * from './components/UserDropdownMenu'
 
 export * from './hooks/useTheme'

@@ -1,9 +1,7 @@
-import {
-  AppBar,
-  Container,
-  Flex,
-  UserDropdownMenu,
-} from '@siafoundation/design-system'
+import { AppBar } from '../../primitives/AppBar'
+import { Container } from '../../primitives/Container'
+import { Flex } from '../../primitives/Flex'
+import { UserDropdownMenu } from '../UserDropdownMenu'
 
 export function RightNavbar() {
   return (

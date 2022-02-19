@@ -1,10 +1,18 @@
-import { Box, NImage, ScrollArea } from '@siafoundation/design-system'
 import { LeftNavbar } from './LeftNavbar'
-import jungle from '../../../libs/design-system/src/assets/light.png'
+import jungle from '../../assets/light.png'
+import { Box } from '../../primitives/Box'
+import { ScrollArea } from '../../primitives/ScrollArea'
+import { NImage } from '../../primitives/Image'
 
 const frameThickness = 4
 
-export function Layout({ children }) {
+type Props = {
+  title?: string
+  header?: boolean
+  children: React.ReactNode
+}
+
+export function SiteLayout({ title, header, children }: Props) {
   return (
     <Box
       as="main"
@@ -32,7 +40,7 @@ export function Layout({ children }) {
             },
           }}
         >
-          <LeftNavbar />
+          {header && <LeftNavbar title={title} />}
           <Box
             css={{
               position: 'relative',
@@ -60,12 +68,12 @@ export function Layout({ children }) {
           top: 0,
           zIndex: 0,
           height: '100%',
-          borderLeft: `${frameThickness}px solid $frame`,
           '@inital': {
             width: '0%',
           },
           '@bp1': {
             width: '10%',
+            borderLeft: `${frameThickness}px solid $frame`,
           },
           '@bp2': {
             width: '30%',
