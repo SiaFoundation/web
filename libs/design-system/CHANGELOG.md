@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.1.0](https://github.com/SiaFoundation/web/compare/design-system-0.0.6...design-system-0.1.0) (2022-02-19)
+
+
+### Bug Fixes
+
+* fix image import ([6be5d3e](https://github.com/SiaFoundation/web/commit/6be5d3edb19a3d3f496504386d56dc534dcee08a))
+
+
+### Features
+
+* extract SiteLayout, add layout to website ([0bc51a9](https://github.com/SiaFoundation/web/commit/0bc51a9eca74b96bba57792e75a415ad1f3de7dd))
+* spike on design direction ([3e58c30](https://github.com/SiaFoundation/web/commit/3e58c308a2ea84482048160cb35d1052586bc2be))
+
+
+
 ## [0.0.6](https://github.com/SiaFoundation/web/compare/design-system-0.0.5...design-system-0.0.6) (2022-02-16)
 
 
