@@ -6,8 +6,6 @@
     "design-site": "apps/design-site",
     "design-site-e2e": "apps/design-site-e2e",
     "design-system": "libs/design-system",
-    "embarcadero": "apps/embarcadero",
-    "embarcadero-e2e": "apps/embarcadero-e2e",
     "env": "libs/env",
     "sia-js": "libs/sia-js",
     "sia-nodejs": "libs/sia-nodejs",
