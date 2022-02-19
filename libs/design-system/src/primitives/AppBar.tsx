@@ -18,7 +18,7 @@ export const AppBar = styled('div', {
     },
     sticky: {
       true: {
-        // Sticky was a tiny bit janky on scroll so going with fixed for now
+        // TODO: for some reason sticky is a tiny bit janky on scroll
         position: 'sticky',
         width: '100%',
         top: 0,

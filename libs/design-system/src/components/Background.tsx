@@ -1,8 +1,8 @@
 import React from 'react'
 import pattern from '../assets/background-pattern.jpg'
 import image from '../assets/background-image.gif'
-import { Box } from './Box'
-import { Image } from './Image'
+import { Box } from '../primitives/Box'
+import { Image } from '../primitives/Image'
 
 type Props = {
   children?: React.ReactNode

@@ -22,7 +22,7 @@ import { ThemeMenu } from './ThemeMenu'
 
 type Props = React.ComponentProps<typeof Button>
 
-export function UserContextMenu(props: Props) {
+export function UserDropdownMenu(props: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

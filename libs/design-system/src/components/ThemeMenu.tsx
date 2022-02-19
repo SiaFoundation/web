@@ -4,8 +4,9 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuRightSlot,
-  useTheme,
-} from '@siafoundation/design-system'
+} from '../primitives/DropdownMenu'
+
+import { useTheme } from '../hooks/useTheme'
 import { useCallback } from 'react'
 
 function getCss(on: boolean) {

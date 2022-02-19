@@ -9,7 +9,7 @@ import {
 import { useConsensus } from '../../hooks/useConsensus'
 import { useSiaStats } from '../../hooks/useSiaStats'
 import { useWallet } from '../../hooks/useWallet'
-import { UserContextMenu } from './UserContextMenu'
+import { UserDropdownMenu } from './UserDropdownMenu'
 
 export function Wallet() {
   const { data: siaStats, error: errorS } = useSiaStats()
@@ -42,7 +42,7 @@ export function Wallet() {
         </Flex>
       </Panel>
       {/* <Text>${siaStats?.coin_price_USD?.toLocaleString()} / SC</Text> */}
-      <UserContextMenu size="2" />
+      <UserDropdownMenu size="2" />
     </Flex>
   )
 }
