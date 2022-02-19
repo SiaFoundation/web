@@ -3,7 +3,7 @@ import {
   Container,
   Flex,
   Heading,
-  UserContextMenu,
+  UserDropdownMenu,
 } from '@siafoundation/design-system'
 
 export function LeftNavbar() {
@@ -18,7 +18,7 @@ export function LeftNavbar() {
       <Container size="4">
         <Flex align="center" justify="between" css={{ height: '50px' }}>
           <Heading size="2">@siafoundation/design-system</Heading>
-          <UserContextMenu />
+          <UserDropdownMenu />
         </Flex>
       </Container>
     </AppBar>

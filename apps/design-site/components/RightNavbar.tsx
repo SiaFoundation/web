@@ -2,7 +2,7 @@ import {
   AppBar,
   Container,
   Flex,
-  UserContextMenu,
+  UserDropdownMenu,
 } from '@siafoundation/design-system'
 
 export function RightNavbar() {
@@ -10,7 +10,7 @@ export function RightNavbar() {
     <AppBar color="none" css={{ width: '100%' }}>
       <Container size="4">
         <Flex align="center" justify="between" css={{ height: '50px' }}>
-          <UserContextMenu />
+          <UserDropdownMenu />
         </Flex>
       </Container>
     </AppBar>
