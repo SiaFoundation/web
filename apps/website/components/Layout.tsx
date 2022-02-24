@@ -1,9 +1,16 @@
-import { Box, Container, Flex, SiteLayout } from '@siafoundation/design-system'
+import {
+  Box,
+  Container,
+  Flex,
+  Separator,
+  SiteLayout,
+} from '@siafoundation/design-system'
 import Head from 'next/head'
 import Script from 'next/script'
-import { appName } from '../config/app'
+import { appName, newsFeedName } from '../config/app'
+import { sitemap } from '../config/site'
 import { Footer } from './Footer'
-import { Header } from './Header'
+import { Navbar } from './Navbar'
 
 type Props = {
   children: React.ReactNode
@@ -52,6 +59,24 @@ export function Layout({ children }: Props) {
             alt=""
           />
         </noscript>
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          href={sitemap.newsroom.feed.rss}
+          title={newsFeedName}
+        />
+        <link
+          rel="alternate"
+          type="application/atom+xml"
+          href={sitemap.newsroom.feed.atom}
+          title={newsFeedName}
+        />
+        <link
+          rel="alternate"
+          type="application/json"
+          href={sitemap.newsroom.feed.json}
+          title={newsFeedName}
+        />
       </Head>
       <Script
         id="matomo"
@@ -75,10 +100,11 @@ export function Layout({ children }: Props) {
       <SiteLayout>
         <Container size="3">
           <Flex as="main" direction="column" gap="8" css={{ margin: '$5 0' }}>
-            <Header />
+            <Navbar />
             <Flex direction="column" gap="3">
               {children}
             </Flex>
+            <Separator size="4" />
             <Footer />
           </Flex>
         </Container>

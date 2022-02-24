@@ -6,14 +6,15 @@ import { getHref } from '../lib/url'
 
 const hosts = getHosts()
 
-export function Header() {
+export function Navbar() {
   return (
     <Flex align="center" justify="between">
       <Flex direction="column">
         <NLink href={sitemap.home.index}>
-          <Heading size="3">{appName}</Heading>
+          <Heading size="3" css={{ textTransform: 'lowercase' }}>
+            {appName}
+          </Heading>
         </NLink>
-        <Text size="1">Decentralized storage for the post-cloud world.</Text>
       </Flex>
       <Flex direction="column" gap="1">
         <Flex
@@ -37,7 +38,7 @@ export function Header() {
           <NLink href={getHref(hosts.api)} target="_blank">
             API Reference
           </NLink>
-          <NLink href={external.docs} target="_blank">
+          <NLink href={external.docs.index} target="_blank">
             Documentation
           </NLink>
           <NLink href={external.blog} target="_blank">
