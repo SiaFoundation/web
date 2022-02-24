@@ -71,7 +71,7 @@ type NLinkProps = {
   href: string
   target?: string
   children: React.ReactNode
-  variant?: 'green' | 'subtle' | 'contrast'
+  variant?: React.ComponentProps<typeof Link>['variant']
   css?: CSS
 }
 
@@ -89,6 +89,33 @@ export function NLink({
       <Link id={id} target={target} variant={variant} css={css}>
         {children}
       </Link>
+    </NextLink>
+  )
+}
+
+type NLinkButtonProps = {
+  id?: string
+  href: string
+  target?: string
+  children: React.ReactNode
+  variant?: React.ComponentProps<typeof Button>['variant']
+  css?: CSS
+}
+
+// Next link
+export function NLinkButton({
+  id,
+  href,
+  target,
+  children,
+  variant,
+  css,
+}: NLinkButtonProps) {
+  return (
+    <NextLink href={href} passHref>
+      <Button as="a" id={id} css={css} variant={variant} target={target}>
+        {children}
+      </Button>
     </NextLink>
   )
 }

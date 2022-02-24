@@ -43,7 +43,6 @@ export const Heading = React.forwardRef<
       size={textSize[size]}
       css={{
         fontVariantNumeric: 'proportional-nums',
-        color: '$hiContrast',
         display: 'inline-block',
         ...textCss[size],
         ...props.css,
