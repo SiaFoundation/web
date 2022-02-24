@@ -21,9 +21,11 @@ export function Typography() {
       <SectionHeading>Typography</SectionHeading>
       <Section>
         <SubsectionHeading>Headings</SubsectionHeading>
-        <Flex direction="column" gap="1">
+        <Flex direction="column" gap="2">
           <Heading size="1">Heading 1</Heading>
-          <Heading size="2">Heading 2</Heading>
+          <Heading size="2" color="subtle">
+            Heading 2 - subtle
+          </Heading>
           <Heading size="3" css={{ fontStyle: 'italic' }}>
             Heading 3
           </Heading>
@@ -32,11 +34,13 @@ export function Typography() {
       </Section>
       <Section>
         <SubsectionHeading>Text</SubsectionHeading>
-        <Flex direction="column" gap="1">
+        <Flex direction="column" gap="2">
           <Text size="1">Text 1</Text>
           <Text size="2">Text 2</Text>
-          <Text size="3">Text 3</Text>
-          <Text size="4">Text 4</Text>
+          <Text size="3">Text 3 - contrast</Text>
+          <Text size="4" color="subtle">
+            Text 4 - subtle
+          </Text>
           <Text size="5">Text 5</Text>
           <Text size="6" css={{ fontStyle: 'italic' }}>
             Text 6
@@ -122,6 +126,24 @@ func Fibonacci(n int) int {
               deserunt mollit anim id est laborum.
             </Paragraph>
             <Paragraph size="2">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt <Code>{'fmt.Println("pizza")'}</Code> ut
+              labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+              nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+              consequat. Duis aute irure{' '}
+              <NLink variant="green" href={randomLink} target="_blank">
+                example of an inline link
+              </NLink>{' '}
+              dolor in reprehenderit in voluptate velit esse cillum dolore eu
+              fugiat nulla pariatur.{' '}
+              <NLink variant="contrast" href={randomLink} target="_blank">
+                Example of an inline link
+              </NLink>{' '}
+              <Code variant="gray">{'fmt.Println("pasta")'}</Code>. Excepteur
+              sint occaecat cupidatat non proident, sunt in culpa qui officia
+              deserunt mollit anim id est laborum.
+            </Paragraph>
+            <Paragraph size="3">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt <Code>{'fmt.Println("pizza")'}</Code> ut
               labore et dolore magna aliqua. Ut enim ad minim veniam, quis
