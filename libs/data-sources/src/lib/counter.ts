@@ -40,7 +40,7 @@ export async function getCounts() {
 }
 
 export async function counterMiddleware(req, res, next) {
-  const key = req.url
+  const key = req.url.replace('/', '')
   let db = null
 
   try {
