@@ -9,6 +9,14 @@ export const Text = styled('span', {
   lineHeight: '1',
 
   variants: {
+    color: {
+      subtle: {
+        color: '$slate11',
+      },
+      contrast: {
+        color: '$hiContrast',
+      },
+    },
     size: {
       '1': {
         fontSize: '$1',
@@ -49,6 +57,7 @@ export const Text = styled('span', {
   },
 
   defaultVariants: {
+    color: 'contrast',
     size: 3,
   },
 })
