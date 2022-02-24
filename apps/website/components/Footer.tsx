@@ -1,4 +1,4 @@
-import { Flex, NLink } from '@siafoundation/design-system'
+import { Flex, NLink, RssIcon } from '@siafoundation/design-system'
 import { sitemap, external } from '../config/site'
 
 export function Footer() {
@@ -17,9 +17,13 @@ export function Footer() {
           margin: '$1 0',
         }}
       >
-        <NLink href={sitemap.newsroom.index}>Newsroom</NLink>
-        <NLink href={sitemap.community.getSiacoin}>Get Siacoin</NLink>
-        <NLink href={sitemap.learn.whitepaper}>Whitepaper</NLink>
+        <Flex gap="1">
+          <NLink href={sitemap.newsroom.index}>Newsroom</NLink>
+          <NLink href={sitemap.newsroom.feed.rss}>
+            <RssIcon />
+          </NLink>
+        </Flex>
+        <NLink href={sitemap.whitepaper.index}>Whitepaper</NLink>
       </Flex>
       <Flex
         gap="3"
@@ -34,14 +38,17 @@ export function Footer() {
         <NLink href={external.discord} target="_blank">
           Discord
         </NLink>
-        <NLink href={external.github} target="_blank">
-          Github
+        <NLink href={external.reddit} target="_blank">
+          Reddit
         </NLink>
         <NLink href={external.twitter} target="_blank">
           Twitter
         </NLink>
-        <NLink href={external.reddit} target="_blank">
-          Reddit
+        <NLink href={external.github} target="_blank">
+          Github
+        </NLink>
+        <NLink href={external.forum} target="_blank">
+          Forum
         </NLink>
       </Flex>
     </Flex>
