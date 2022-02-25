@@ -1,5 +1,6 @@
 import { join } from 'path'
 import { errorResponse500 } from './error'
+import { AsyncDataSourceResponse } from './types'
 
 const ui = 939_111
 const daemon = 135_612
@@ -26,7 +27,9 @@ async function getDb() {
   return _db
 }
 
-export async function getCounts() {
+export async function getCounts(): AsyncDataSourceResponse<
+  Record<string, number>
+> {
   try {
     const db = await getDb()
     await db.read()

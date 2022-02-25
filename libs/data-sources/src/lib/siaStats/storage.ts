@@ -1,7 +1,10 @@
 import axios from 'axios'
 import { errorResponse500 } from '../error'
+import { AsyncDataSourceResponse } from '../types'
 
-export async function getSiaStatsStorage() {
+export async function getSiaStatsStorage(): AsyncDataSourceResponse<
+  Record<string, unknown>
+> {
   try {
     const { data } = await axios.get('https://siastats.info/dbs/storage.json')
     const result = data[data.length - 1]

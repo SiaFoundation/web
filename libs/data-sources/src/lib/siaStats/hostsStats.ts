@@ -1,7 +1,19 @@
 import axios from 'axios'
 import { errorResponse500 } from '../error'
+import { AsyncDataSourceResponse } from '../types'
 
-export async function getSiaStatsHostsStats() {
+type SiaStatsHostsStats = {
+  timestamp: number
+  activehosts: number
+  onlinehosts: number
+  totalstorage: number
+  usedstorage: number
+  usage: number
+  skynetFiles: number
+  skynetSize: number
+}
+
+export async function getSiaStatsHostsStats(): AsyncDataSourceResponse<SiaStatsHostsStats> {
   try {
     const response = await axios.get('https://siastats.info/dbs/hostsRTdb.json')
     const result = response.data[0]

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { errorResponse500 } from './error'
+import { AsyncDataSourceResponse } from './types'
 
 type BenchmarkResult = {
   version: string
@@ -28,7 +29,9 @@ async function getBenchmarkResults() {
   return benchmarks.data.results
 }
 
-export async function getBenchmarks() {
+export async function getBenchmarks(): AsyncDataSourceResponse<
+  BenchmarkResult[]
+> {
   try {
     const results = await getBenchmarkResults()
 

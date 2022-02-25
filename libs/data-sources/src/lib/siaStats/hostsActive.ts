@@ -1,7 +1,10 @@
 import axios from 'axios'
 import { errorResponse500 } from '../error'
+import { AsyncDataSourceResponse } from '../types'
 
-export async function getSiaStatsHostsActive() {
+export async function getSiaStatsHostsActive(): AsyncDataSourceResponse<
+  Record<string, unknown>
+> {
   try {
     const { data } = await axios.get(
       'https://siastats.info/dbs/activehosts.json'
