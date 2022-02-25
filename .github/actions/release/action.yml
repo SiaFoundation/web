@@ -20,9 +20,11 @@ runs:
         NODE_AUTH_TOKEN: ${{ inputs.npm_token }}
         GITHUB_TOKEN: ${{ inputs.github_token }}
     - name: Tag last-release
+      if: always()
       shell: bash
       run: git tag -f last-release
     - name: Push changes
+      if: always()
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ inputs.github_token }}
