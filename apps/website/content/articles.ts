@@ -1,15 +1,10 @@
-type Article = {
-  title: string
-  tags: string[]
-  link: string
-  description?: string
-}
+import { ContentItem } from '../lib/types'
 
 export function getArticles(tag: string, limit?: number) {
   return articles.filter((a) => a.tags.includes(tag)).slice(0, limit)
 }
 
-const articles: Article[] = [
+const articles: ContentItem[] = [
   {
     title: 'Launching the Sia Foundation',
     tags: ['general'],
@@ -30,13 +25,13 @@ const articles: Article[] = [
     title: 'Sia 101: A Visual Introduction',
     tags: ['learning'],
     link: 'https://siastats.info/sia101',
-    description: 'The Sia decentralized storage network in a nutshell',
+    description: 'The Sia decentralized storage network in a nutshell.',
   },
   {
     title: 'Seed-Based File Recovery',
     tags: ['learning'],
     link: 'https://blog.sia.tech/guide-seed-based-file-recovery-on-sia-e11dcdf283ea',
-    description: 'Learn how to backup and restore your files on Sia',
+    description: 'Learn how to backup and restore your files on Sia.',
   },
   {
     title: 'How to mine on Sia',
@@ -89,7 +84,7 @@ const articles: Article[] = [
     title: 'SC and SF',
     tags: ['technical'],
     link: 'https://blog.sia.tech/sc-and-sf-the-economics-that-power-the-sia-network-f0b8d1899348',
-    description: 'The economics that power the Sia network',
+    description: 'The economics that power the Sia network.',
   },
   {
     title: 'The Sia Alerts System: Be more informed about your cloud storage',

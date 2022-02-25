@@ -9,14 +9,17 @@ import Head from 'next/head'
 import Script from 'next/script'
 import { appName, newsFeedName } from '../config/app'
 import { sitemap } from '../config/site'
+import { Stats } from '../content/stats'
 import { Footer } from './Footer'
 import { Navbar } from './Navbar'
+import { Statsbar } from './Statsbar'
 
 type Props = {
   children: React.ReactNode
+  stats: Stats
 }
 
-export function Layout({ children }: Props) {
+export function Layout({ children, stats }: Props) {
   return (
     <Box
       css={{
@@ -105,6 +108,7 @@ export function Layout({ children }: Props) {
               {children}
             </Flex>
             <Separator size="4" />
+            <Statsbar {...stats} />
             <Footer />
           </Flex>
         </Container>

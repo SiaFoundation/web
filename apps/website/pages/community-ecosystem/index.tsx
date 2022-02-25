@@ -6,12 +6,14 @@ import { getArticles } from '../../content/articles'
 import { AsyncReturnType } from '../../lib/types'
 import { ContentGallery } from '../../components/ContentGallery'
 import { CtaLarge } from '../../components/CtaLarge'
+import { getSoftware } from '../../content/software'
+import { getStats } from '../../content/stats'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-function CommunityEcosystem({ blogs }: Props) {
+function CommunityEcosystem({ stats, blogs, software }: Props) {
   return (
-    <Layout>
+    <Layout stats={stats}>
       <ContentBlock
         title="Community & ecosystem"
         description={`
@@ -48,10 +50,11 @@ function CommunityEcosystem({ blogs }: Props) {
       <Separator size="4" />
       <ContentGallery
         title="Built on Sia"
+        filterable="software"
         description={`
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, officiis!
         `}
-        items={blogs}
+        items={software.map((i) => ({ ...i, newTab: true }))}
       />
       <Separator size="4" />
       <CtaLarge
@@ -68,11 +71,15 @@ function CommunityEcosystem({ blogs }: Props) {
 }
 
 export async function getStaticProps() {
+  const stats = await getStats()
   const blogs = getArticles('ecosystem', 3)
+  const software = getSoftware(null)
 
   return {
     props: {
+      stats,
       blogs,
+      software,
     },
   }
 }

@@ -1,18 +1,16 @@
-import { Flex, Heading, NLink, Text } from '@siafoundation/design-system'
 import omit from 'lodash/omit'
-import { format } from 'date-fns'
-import { SimpleBlock } from '../../components/SimpleBlock'
 import { Layout } from '../../components/Layout'
 import { sitemap } from '../../config/site'
 import { generateRssNewsFeed, getNewsPosts } from '../../content/news'
 import { AsyncReturnType } from '../../lib/types'
 import { ContentGallery } from '../../components/ContentGallery'
+import { getStats } from '../../content/stats'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-function Newsroom({ posts }: Props) {
+function Newsroom({ posts, stats }: Props) {
   return (
-    <Layout>
+    <Layout stats={stats}>
       <ContentGallery
         size="3"
         title="Newsroom"
@@ -26,18 +24,14 @@ function Newsroom({ posts }: Props) {
             newTab: true,
           },
         ]}
-        items={posts.map((post) => ({
-          title: post.title,
-          subtitle: `${post.location} - ${format(post.date, 'PPPP')}`,
-          description: post.description,
-          link: sitemap.newsroom.newsPost.replace('[slug]', post.slug),
-        }))}
+        items={posts}
       />
     </Layout>
   )
 }
 
 export async function getStaticProps() {
+  const stats = await getStats()
   const posts = await getNewsPosts({
     includeHtml: true,
   })
@@ -48,6 +42,7 @@ export async function getStaticProps() {
   // Remove `html` before rendering page
   return {
     props: {
+      stats,
       posts: posts.map((post) => omit(post, 'html')),
     },
   }

@@ -4,30 +4,18 @@ import path from 'path'
 import matter from 'gray-matter'
 import { Feed } from 'feed'
 import { serialize } from 'next-mdx-remote/serialize'
-import { MDXRemote } from 'next-mdx-remote'
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { external, sitemap } from '../config/site'
 import { components } from '../config/mdx'
 import { getHosts } from '@siafoundation/env'
-import { omit } from 'lodash'
 import { baseContentPath, newsFeedName } from '../config/app'
-import { AsyncReturnType } from '../lib/types'
+import { ContentItem } from '../lib/types'
+import { format } from 'date-fns'
 
-export type NewsPost = {
-  title: string
-  location: string
-  date: number
-  description: string
+export type NewsPost = ContentItem & {
   slug: string
+  source: MDXRemoteSerializeResult<Record<string, unknown>>
   html?: string
-}
-
-type Metadata = {
-  title: string
-  description: string
-  slug: string
-  link: string
-  date: number
-  location: string
 }
 
 const hosts = getHosts()
@@ -52,37 +40,29 @@ export async function getNewsPosts(options: Options = {}): Promise<NewsPost[]> {
     .readdirSync(path.join(baseContentPath, 'news'))
     .slice(0, limit)
     .map(async (filename) => {
-      const markdownWithMeta = fs.readFileSync(
-        path.join(baseContentPath, 'news', filename),
-        'utf-8'
-      )
-      const { data, content } = matter(markdownWithMeta)
+      const post = await buildPost(filename.replace('.mdx', ''))
 
-      const mdxSource = await serialize(content)
+      let html = null
 
-      const html = ReactDOMServer.renderToStaticMarkup(
-        <MDXRemote {...mdxSource} components={components} />
-      )
+      if (includeHtml) {
+        html = ReactDOMServer.renderToStaticMarkup(
+          <MDXRemote {...post.source} components={components} />
+        )
+      }
 
       return {
-        ...data,
+        ...post,
         html,
-        date: new Date(data.date).getTime(),
-        slug: filename.split('.')[0],
       } as NewsPost
     })
 
   const posts = await Promise.all(promises)
   posts.sort((a, b) => (a.date < b.date ? 1 : -1))
 
-  if (!includeHtml) {
-    return posts.map((post) => omit(post, 'html'))
-  }
-
   return posts
 }
 
-function getContent(slug?: string) {
+async function buildPost(slug?: string): Promise<NewsPost> {
   if (!slug) {
     return undefined
   }
@@ -93,39 +73,43 @@ function getContent(slug?: string) {
   )
 
   const { data, content } = matter(markdownWithMeta)
+
+  const source = await serialize(content)
+
+  const date = new Date(data.date).getTime()
+  const subtitle = `${data.location} - ${format(date, 'PPPP')}`
+
   return {
-    data: {
-      ...data,
-      date: new Date(data.date).getTime(),
-      link: sitemap.newsroom.newsPost.replace('[slug]', slug),
-      slug,
-    } as Metadata,
-    content,
+    title: data.title,
+    subtitle,
+    date,
+    link: sitemap.newsroom.newsPost.replace('[slug]', slug),
+    slug,
+    tags: [],
+    source,
   }
 }
 
-export async function getNewsPost(slug: string) {
-  // TODO add sorting
-  const files = fs.readdirSync(path.join(baseContentPath, 'news'))
-
-  const next = files.find((_, i) => files[i - 1] === `${slug}.mdx`)
-  const prev = files.find((_, i) => files[i + 1] === `${slug}.mdx`)
-
-  const { data, content } = getContent(slug)
-  const prevContent = getContent(prev.replace('.mdx', ''))
-  const nextContent = getContent(next.replace('.mdx', ''))
-
-  const mdxSource = await serialize(content)
-
-  return {
-    ...data,
-    content: mdxSource,
-    prev: prevContent?.data || null,
-    next: nextContent?.data || null,
-  }
+export type GetNewsPost = {
+  post: NewsPost
+  prev?: NewsPost
+  next?: NewsPost
 }
 
-export type GetNewsPost = AsyncReturnType<typeof getNewsPost>
+export async function getNewsPost(slug: string): Promise<GetNewsPost> {
+  const posts = await getNewsPosts()
+
+  const post = posts.find((post) => post.slug === slug)
+  const next = posts.find((_, i) => posts[i + 1]?.slug === slug)
+  const prev = posts.find((_, i) => posts[i - 1]?.slug === slug)
+
+  // Must be nulls for JSON serialization
+  return {
+    post,
+    prev: prev || null,
+    next: next || null,
+  }
+}
 
 export function generateRssNewsFeed(posts: NewsPost[]) {
   const siteUrl = hosts.app
