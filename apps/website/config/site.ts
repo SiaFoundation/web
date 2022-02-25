@@ -1,3 +1,8 @@
+import { getHosts } from '@siafoundation/env'
+import { getHref } from '../lib/url'
+
+const hosts = getHosts()
+
 export const sitemap = {
   home: {
     index: '/',
@@ -10,6 +15,7 @@ export const sitemap = {
   },
   whitepaper: {
     index: '/whitepaper',
+    pdf: getHref(`${hosts.app}/sia.pdf`),
   },
   community: {
     index: '/community-ecosystem',
@@ -30,8 +36,8 @@ export const sitemap = {
 
 export const external = {
   blog: 'https://blog.sia.tech',
-  // docs: 'https://docs.sia.tech',
   docs: {
+    // TODO: update all doc URLs to docs.sia.tech
     index: 'https://support.sia.tech',
     sia101: 'https://support.sia.tech/get-started-with-sia/sia101',
     renting: 'https://support.sia.tech/renting/about-renting',
@@ -46,4 +52,6 @@ export const external = {
   reddit: 'https://reddit.com/r/siacoin',
   merch: 'https://siagear.tech/',
   email: 'hello@sia.tech',
+  benchmarks: 'https://benchmarks.sia.tech',
+  stats: 'https://siastats.info',
 }

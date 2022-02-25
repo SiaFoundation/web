@@ -2,22 +2,31 @@ import { getCounts } from '@siafoundation/data-sources'
 import { getHosts, getSiaVersion } from '@siafoundation/env'
 import { Flex, Grid, Panel, Separator } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
-import { external } from '../../config/site'
+import { external, sitemap } from '../../config/site'
 import { getDaysInSeconds } from '../../lib/time'
 import { getHref } from '../../lib/url'
 import { ContentBlock } from '../../components/ContentBlock'
 import { ContentGallery } from '../../components/ContentGallery'
 import { getArticles } from '../../content/articles'
 import { AsyncReturnType } from '../../lib/types'
+import { getSoftware } from '../../content/software'
+import { CtaLarge } from '../../components/CtaLarge'
+import { getStats } from '../../content/stats'
 
 const siaVersion = getSiaVersion()
 const hosts = getHosts()
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-function Developers({ counts, tutorials }: Props) {
+function Developers({
+  stats,
+  counts,
+  learningPosts,
+  technicalPosts,
+  services,
+}: Props) {
   return (
-    <Layout>
+    <Layout stats={stats}>
       <ContentBlock
         title="Developer Resources"
         description={`
@@ -154,37 +163,52 @@ function Developers({ counts, tutorials }: Props) {
       <ContentGallery
         title="Developer Tutorials"
         description={`
-          Tutorials and technical posts from the Sia Foundation team and ecosystem building technology on top of Sia.
+          Technical tutorials for new developers looking to build on Sia.
         `}
-        items={tutorials}
+        items={learningPosts}
       />
       <Separator size="4" />
       <ContentGallery
-        title="Helpful Posts"
+        title="Technical Walkthroughs"
         description={`
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet, quam.
+          Technical posts from the Sia Foundation team and ecosystem building technology on top of Sia.
         `}
-        items={[]}
+        items={technicalPosts}
       />
       <Separator size="4" />
       <ContentGallery
-        title="Helpful Posts"
+        title="Built on Sia"
         description={`
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet, quam.
         `}
-        items={[]}
+        items={services.map((item) => ({ ...item, newTab: true }))}
+      />
+      <Separator size="4" />
+      <CtaLarge
+        title="Learn"
+        description={`
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae, necessitatibus.
+        `}
+        actionTitle="Read more"
+        actionLink={sitemap.learn.index}
       />
     </Layout>
   )
 }
 
 export async function getStaticProps() {
+  const stats = await getStats()
   const counts = await getCounts()
-  const tutorials = getArticles('technical')
+  const technicalPosts = getArticles('technical')
+  const learningPosts = getArticles('learning')
+  const services = getSoftware('service')
 
   const props = {
+    stats,
     counts: counts.data,
-    tutorials,
+    technicalPosts,
+    learningPosts,
+    services,
   }
 
   return {

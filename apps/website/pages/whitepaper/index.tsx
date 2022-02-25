@@ -1,24 +1,43 @@
-import { Heading } from '@siafoundation/design-system'
-import { getHosts } from '@siafoundation/env'
-import { SimpleBlock } from '../../components/SimpleBlock'
 import { Layout } from '../../components/Layout'
-import { getHref } from '../../lib/url'
+import { ContentBlock } from '../../components/ContentBlock'
+import { sitemap } from '../../config/site'
+import { getStats, Stats } from '../../content/stats'
+import { getDaysInSeconds } from '../../lib/time'
 
-const hosts = getHosts()
+type Props = {
+  stats: Stats
+}
 
-function Whitepaper() {
+function Whitepaper({ stats }: Props) {
   return (
-    <Layout>
-      <Heading>Whitepaper</Heading>
-      <SimpleBlock>
-        <iframe
-          height="1000px"
-          width="100%"
-          src={getHref(`${hosts.app}/sia.pdf`)}
-        />
-      </SimpleBlock>
+    <Layout stats={stats}>
+      <ContentBlock
+        title="Whitepaper"
+        description={`
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, nesciunt?
+        `}
+        links={[
+          {
+            title: 'Download PDF',
+            link: sitemap.whitepaper.pdf,
+            newTab: true,
+          },
+        ]}
+      />
+      <iframe height="1000px" width="100%" src={sitemap.whitepaper.pdf} />
     </Layout>
   )
+}
+
+export async function getStaticProps() {
+  const stats = await getStats()
+
+  return {
+    props: {
+      stats,
+    },
+    revalidate: getDaysInSeconds(1),
+  }
 }
 
 export default Whitepaper

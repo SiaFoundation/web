@@ -1,13 +1,19 @@
-import { Flex, Grid, NLink, Separator } from '@siafoundation/design-system'
+import { Flex, Grid, Separator } from '@siafoundation/design-system'
 import { ContentBlock } from '../../components/ContentBlock'
 import { Layout } from '../../components/Layout'
 import { external, sitemap } from '../../config/site'
 import { ContentGallery } from '../../components/ContentGallery'
 import { CtaLarge } from '../../components/CtaLarge'
+import { getStats, Stats } from '../../content/stats'
+import { getDaysInSeconds } from '../../lib/time'
 
-function Learn() {
+type Props = {
+  stats: Stats
+}
+
+function Learn({ stats }: Props) {
   return (
-    <Layout>
+    <Layout stats={stats}>
       <ContentBlock
         title="Learn"
         description={`
@@ -143,6 +149,17 @@ function Learn() {
       />
     </Layout>
   )
+}
+
+export async function getStaticProps() {
+  const stats = await getStats()
+
+  return {
+    props: {
+      stats,
+    },
+    revalidate: getDaysInSeconds(1),
+  }
 }
 
 export default Learn

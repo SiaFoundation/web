@@ -21,12 +21,13 @@ import { GitHubLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons'
 import { getNewsPosts } from '../../content/news'
 import { ContentBlock } from '../../components/ContentBlock'
 import { ContentGallery } from '../../components/ContentGallery'
+import { getStats } from '../../content/stats'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-function Foundation({ foundation, team, newsPosts }: Props) {
+function Foundation({ stats, foundation, team, newsPosts }: Props) {
   return (
-    <Layout>
+    <Layout stats={stats}>
       <ContentBlock
         title="The Sia Foundation"
         description={`
@@ -128,16 +129,14 @@ function Foundation({ foundation, team, newsPosts }: Props) {
             link: sitemap.newsroom.index,
           },
         ]}
-        items={newsPosts.map((post) => ({
-          title: post.title,
-          link: sitemap.newsroom.newsPost.replace('[slug]', post.slug),
-        }))}
+        items={newsPosts}
       />
     </Layout>
   )
 }
 
 export async function getStaticProps() {
+  const stats = await getStats()
   const foundation = await getMdxFile('content/sections/foundation.mdx')
   const newsPosts = await getNewsPosts({
     limit: 3,
@@ -146,6 +145,7 @@ export async function getStaticProps() {
 
   return {
     props: {
+      stats,
       foundation,
       team,
       newsPosts,

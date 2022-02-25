@@ -1,35 +1,38 @@
-import { Flex, Separator, Text } from '@siafoundation/design-system'
+import { Grid, Separator, Text } from '@siafoundation/design-system'
 import fs from 'fs'
 import path from 'path'
-import { format } from 'date-fns'
 import { MDXRemote } from 'next-mdx-remote'
 import { Layout } from '../../components/Layout'
 import { baseContentPath } from '../../config/app'
 import { GetNewsPost, getNewsPost } from '../../content/news'
 import { SimpleBlock } from '../../components/SimpleBlock'
 import { ContentCard } from '../../components/ContentCard'
+import { getStats, Stats } from '../../content/stats'
+
+type Props = GetNewsPost & { stats: Stats }
 
 function NewsroomPost({
-  title,
-  description,
-  location,
-  date,
-  content,
+  post: { title, subtitle, description, source },
   prev,
   next,
-}: GetNewsPost) {
+  stats,
+}: Props) {
   return (
-    <Layout>
+    <Layout stats={stats}>
       <SimpleBlock title={title} subtitle={description} align="start" />
-      <Text>
-        {location} - {format(date, 'PPPP')}
-      </Text>
-      <MDXRemote {...content} />
+      <Text>{subtitle}</Text>
+      <MDXRemote {...source} />
       <Separator size="3" />
-      <Flex gap="3">
-        <ContentCard {...prev} css={{ flex: 1 }} />
-        <ContentCard {...next} css={{ flex: 1 }} />
-      </Flex>
+      <Grid
+        gap="3"
+        columns={{
+          '@initial': '1',
+          '@bp1': '2',
+        }}
+      >
+        {prev && <ContentCard {...prev} />}
+        {next && <ContentCard {...next} />}
+      </Grid>
     </Layout>
   )
 }
@@ -50,10 +53,14 @@ async function getStaticPaths() {
 }
 
 async function getStaticProps({ params: { slug } }) {
+  const stats = await getStats()
   const props = await getNewsPost(slug)
 
   return {
-    props,
+    props: {
+      ...props,
+      stats,
+    },
   }
 }
 

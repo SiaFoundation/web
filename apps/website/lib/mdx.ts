@@ -10,10 +10,10 @@ export async function getMdxFile(filePath) {
   )
 
   const { data, content } = matter(markdownWithMeta)
-  const mdxSource = await serialize(content)
+  const source = await serialize(content)
 
   return {
     ...data,
-    content: mdxSource,
+    source,
   }
 }
