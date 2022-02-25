@@ -1,6 +1,15 @@
-import axios from 'axios'
+import { getEnv } from '@siafoundation/env'
+import Axios from 'axios'
 import { errorResponse500 } from './error'
 import { AsyncDataSourceResponse } from './types'
+
+const githubToken = getEnv('GITHUB_TOKEN')
+
+const axios = Axios.create({
+  headers: {
+    authorization: githubToken ? `Bearer ${githubToken}` : undefined,
+  },
+})
 
 async function getCommitCount() {
   const contributors = await axios.get(
