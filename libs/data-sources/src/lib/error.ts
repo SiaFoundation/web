@@ -1,6 +1,7 @@
-export const errorResponse500 = {
+import { DataSourceResponse } from './types'
+
+export const errorResponse500: DataSourceResponse<undefined> = {
   status: 500,
-  data: {
-    error: 'Request to data source failed',
-  },
-} as const
+  error: 'Request to data source failed',
+  data: undefined,
+}

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { errorResponse500 } from './error'
+import { AsyncDataSourceResponse } from './types'
 
 async function getCommitCount() {
   const contributors = await axios.get(
@@ -54,7 +55,14 @@ async function getReleaseCount() {
 //   // TODO: Add next gen UI repo
 // }
 
-export async function getGithub() {
+type Github = {
+  commits: number
+  contributors: number
+  forks: number
+  releases: number
+}
+
+export async function getGithub(): AsyncDataSourceResponse<Github> {
   try {
     let result = {
       commits: 20_905,

@@ -1,7 +1,10 @@
 import axios from 'axios'
 import { errorResponse500 } from '../error'
+import { AsyncDataSourceResponse } from '../types'
 
-export async function getSiaStatsHostsCoordinates() {
+export async function getSiaStatsHostsCoordinates(): AsyncDataSourceResponse<
+  Record<string, unknown>
+> {
   try {
     const { data } = await axios.get(
       'https://siastats.info/dbs/hostscoordinates.json'
