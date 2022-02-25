@@ -45,7 +45,7 @@ function Foundation({ stats, foundation, team, newsPosts }: Props) {
       >
         <Box css={{ '@bp3': { flex: 2 } }}>
           <SimpleBlock title="Vision">
-            <MDXRemote {...foundation.content} />
+            <MDXRemote {...foundation.source} />
           </SimpleBlock>
         </Box>
         <Box css={{ '@bp3': { flex: 1 } }}>
