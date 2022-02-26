@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.2.0](https://github.com/SiaFoundation/web/compare/sia-js-0.1.0...sia-js-0.2.0) (2022-02-26)
+
+
+### Features
+
+* add human-readable unit utilities ([19578d8](https://github.com/SiaFoundation/web/commit/19578d8fccefd548ea7b63b0ac76477bc3a9c585))
+
+
+
 ## [0.1.9](https://github.com/SiaFoundation/web/compare/sia-core-0.1.8...sia-core-0.1.9) (2022-02-16)
 
 
