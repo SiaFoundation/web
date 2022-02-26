@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.2.0](https://github.com/SiaFoundation/web/compare/design-system-0.1.0...design-system-0.2.0) (2022-02-26)
+
+
+### Features
+
+* component changes based on website usage ([b9d9876](https://github.com/SiaFoundation/web/commit/b9d98769a3d4e6b92053e3fd7c2042ff58eab6fd))
+
+
+
 # [0.1.0](https://github.com/SiaFoundation/web/compare/design-system-0.0.6...design-system-0.1.0) (2022-02-19)
 
 
