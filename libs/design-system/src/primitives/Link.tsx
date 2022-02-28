@@ -33,7 +33,7 @@ export const Link = styled('a', {
   variants: {
     variant: {
       green: {
-        color: '$siaGreenA12',
+        color: '$primary12',
         textDecorationColor: '$blue4',
         '&:focus': {
           outlineColor: '$blue8',

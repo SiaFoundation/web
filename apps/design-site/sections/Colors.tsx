@@ -100,28 +100,28 @@ export function Colors() {
             <Box>
               <Text size="2">Green</Text>
             </Box>
-            <Box css={{ height: 35, backgroundColor: '$siaGreenA1' }} />
-            <Box css={{ height: 35, backgroundColor: '$siaGreenA2' }} />
-            <Box css={{ height: 35, backgroundColor: '$siaGreenA3' }} />
-            <Box css={{ height: 35, backgroundColor: '$siaGreenA4' }} />
-            <Box css={{ height: 35, backgroundColor: '$siaGreenA5' }} />
-            <Box css={{ height: 35, backgroundColor: '$siaGreenA6' }} />
-            <Box css={{ height: 35, backgroundColor: '$siaGreenA7' }} />
-            <Box css={{ height: 35, backgroundColor: '$siaGreenA8' }} />
-            <Box css={{ height: 35, backgroundColor: '$siaGreenA9' }} />
-            <Box css={{ height: 35, backgroundColor: '$siaGreenA10' }} />
-            <Box css={{ height: 35, backgroundColor: '$siaGreenA11' }} />
-            <Box css={{ height: 35, backgroundColor: '$siaGreenA12' }} />
+            <Box css={{ height: 35, backgroundColor: '$primary1' }} />
+            <Box css={{ height: 35, backgroundColor: '$primary2' }} />
+            <Box css={{ height: 35, backgroundColor: '$primary3' }} />
+            <Box css={{ height: 35, backgroundColor: '$primary4' }} />
+            <Box css={{ height: 35, backgroundColor: '$primary5' }} />
+            <Box css={{ height: 35, backgroundColor: '$primary6' }} />
+            <Box css={{ height: 35, backgroundColor: '$primary7' }} />
+            <Box css={{ height: 35, backgroundColor: '$primary8' }} />
+            <Box css={{ height: 35, backgroundColor: '$primary9' }} />
+            <Box css={{ height: 35, backgroundColor: '$primary10' }} />
+            <Box css={{ height: 35, backgroundColor: '$primary11' }} />
+            <Box css={{ height: 35, backgroundColor: '$primary12' }} />
             <Box>
               <Text css={{ fontSize: '$2' }}>Gray</Text>
             </Box>
-            <Box css={{ height: 35, backgroundColor: '$siaGray1' }} />
-            <Box css={{ height: 35, backgroundColor: '$siaGray2' }} />
-            <Box css={{ height: 35, backgroundColor: '$siaGray3' }} />
-            <Box css={{ height: 35, backgroundColor: '$siaGray4' }} />
-            <Box css={{ height: 35, backgroundColor: '$siaGray5' }} />
-            <Box css={{ height: 35, backgroundColor: '$siaGray6' }} />
-            <Box css={{ height: 35, backgroundColor: '$siaGray7' }} />
+            <Box css={{ height: 35, backgroundColor: '$secondary1' }} />
+            <Box css={{ height: 35, backgroundColor: '$secondary2' }} />
+            <Box css={{ height: 35, backgroundColor: '$secondary3' }} />
+            <Box css={{ height: 35, backgroundColor: '$secondary4' }} />
+            <Box css={{ height: 35, backgroundColor: '$secondary5' }} />
+            <Box css={{ height: 35, backgroundColor: '$secondary6' }} />
+            <Box css={{ height: 35, backgroundColor: '$secondary7' }} />
           </Grid>
         </Flex>
       </Section>

@@ -127,11 +127,11 @@ export const Badge = styled('span', {
         },
       },
       green: {
-        backgroundColor: '$siaGreenA3',
+        backgroundColor: '$primary3',
         color: '$green11',
         '&:focus': {
           boxShadow:
-            'inset 0 0 0 1px $colors$siaGreenA10, 0 0 0 1px $colors$siaGreenA10',
+            'inset 0 0 0 1px $colors$primary10, 0 0 0 1px $colors$primary10',
         },
       },
       lime: {

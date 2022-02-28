@@ -14,8 +14,8 @@ export const Code = styled('code', {
         color: '$slate11',
       },
       green: {
-        backgroundColor: '$siaGreenA2',
-        color: '$siaGreenA12',
+        backgroundColor: '$primary2',
+        color: '$primary12',
       },
     },
   },

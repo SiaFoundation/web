@@ -34,7 +34,7 @@ const defaultStyles = {
 
 const successStyles = {
   boxShadow:
-    'inset 0 0 0 1px var(--colors-siaGreenA10), 0 0 0 1px var(--colors-siaGreenA10)',
+    'inset 0 0 0 1px var(--colors-primary10), 0 0 0 1px var(--colors-primary10)',
 }
 
 const errorStyles = {

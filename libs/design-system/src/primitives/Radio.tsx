@@ -19,7 +19,7 @@ const StyledIndicator = styled(RadioGroupPrimitive.Indicator, {
     width: '7px',
     height: '7px',
     borderRadius: '50%',
-    backgroundColor: '$siaGreenA12',
+    backgroundColor: '$primary12',
   },
 })
 
@@ -56,8 +56,7 @@ const StyledRadio = styled(RadioGroupPrimitive.Item, {
   '&:focus': {
     outline: 'none',
     borderColor: '$red7',
-    boxShadow:
-      'inset 0 0 0 1px $colors$siaGreenA12, 0 0 0 1px $colors$siaGreenA12',
+    boxShadow: 'inset 0 0 0 1px $colors$primary12, 0 0 0 1px $colors$primary12',
   },
 
   variants: {
