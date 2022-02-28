@@ -201,7 +201,7 @@ export async function getStaticProps() {
   const counts = await getCounts()
   const technicalPosts = getArticles('technical')
   const learningPosts = getArticles('learning')
-  const services = getSoftware('service')
+  const services = getSoftware('storage_services')
 
   const props = {
     stats,
