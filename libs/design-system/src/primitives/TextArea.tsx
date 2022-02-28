@@ -72,7 +72,7 @@ export const TextArea = styled('textarea', {
         },
       },
       valid: {
-        boxShadow: 'inset 0 0 0 1px $colors$siaGreenA8',
+        boxShadow: 'inset 0 0 0 1px $colors$primary8',
         '&:focus': {
           boxShadow:
             'inset 0px 0px 0px 1px $colors$inputShadow, 0px 0px 0px 1px $colors$inputShadow',

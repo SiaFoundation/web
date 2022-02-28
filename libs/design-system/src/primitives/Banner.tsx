@@ -29,7 +29,7 @@ export const Banner = styled('div', {
         backgroundColor: '$slate7',
       },
       green: {
-        backgroundColor: '$siaGreenA8',
+        backgroundColor: '$primary8',
       },
       red: {
         backgroundColor: '$red7',

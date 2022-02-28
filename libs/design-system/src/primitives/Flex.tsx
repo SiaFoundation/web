@@ -92,7 +92,7 @@ export const Flex = styled('div', {
     },
     debug: {
       true: {
-        border: '1px solid $siaGreenA12',
+        border: '1px solid $primary12',
         borderRadius: '$1',
       },
     },

@@ -6,13 +6,13 @@ export const Box = styled('div', {
   variants: {
     debug: {
       true: {
-        border: '1px solid $siaGreenA12',
+        border: '1px solid $primary12',
         borderRadius: '$1',
       },
     },
     fill: {
       true: {
-        backgroundColor: '$siaGreenA12',
+        backgroundColor: '$primary12',
         borderRadius: '$1',
       },
     },

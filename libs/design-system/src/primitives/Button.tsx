@@ -84,35 +84,35 @@ export const Button = styled('button', {
       },
       green: {
         // backgroundColor: '$loContrast',
-        backgroundColor: '$siaGreenA12',
-        boxShadow: 'inset 0 0 0 1px $colors$siaGreenA7',
-        // color: '$siaGreenA12',
+        backgroundColor: '$primary12',
+        boxShadow: 'inset 0 0 0 1px $colors$primary7',
+        // color: '$primary12',
         color: '$whiteA12',
         '@hover': {
           '&:hover': {
-            boxShadow: 'inset 0 0 0 1px $colors$siaGreenA8',
+            boxShadow: 'inset 0 0 0 1px $colors$primary8',
           },
         },
         '&:active': {
-          backgroundColor: '$siaGreenA7',
-          boxShadow: 'inset 0 0 0 1px $colors$siaGreenA8',
+          backgroundColor: '$primary7',
+          boxShadow: 'inset 0 0 0 1px $colors$primary8',
         },
         '&:focus': {
           boxShadow:
-            'inset 0 0 0 1px $colors$siaGreenA8, 0 0 0 1px $colors$siaGreenA8',
+            'inset 0 0 0 1px $colors$primary8, 0 0 0 1px $colors$primary8',
         },
         '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
-            backgroundColor: '$siaGreenA8',
-            boxShadow: 'inset 0 0 0 1px $colors$siaGreenA9',
+            backgroundColor: '$primary8',
+            boxShadow: 'inset 0 0 0 1px $colors$primary9',
           },
         '&:disabled': {
-          backgroundColor: '$siaGreenA6',
-          boxShadow: 'inset 0 0 0 1px $colors$siaGreenA4',
+          backgroundColor: '$primary6',
+          boxShadow: 'inset 0 0 0 1px $colors$primary4',
         },
         [`${ControlGroupBase} > &`]: {
           // same as green+ghost compound variant
-          color: '$siaGreenA12',
+          color: '$primary12',
           borderColor: 'transparent',
           backgroundColor: 'transparent',
           '@hover': {
@@ -130,7 +130,7 @@ export const Button = styled('button', {
           },
           '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
             {
-              backgroundColor: '$siaGreenA8',
+              backgroundColor: '$primary8',
               boxShadow: 'none',
             },
         },
@@ -242,31 +242,31 @@ export const Button = styled('button', {
       variant: 'green',
       ghost: 'true',
       css: {
-        color: '$siaGreenA12',
+        color: '$primary12',
         borderColor: 'transparent',
         boxShadow: 'none',
         backgroundColor: 'transparent',
         '@hover': {
           '&:hover': {
-            backgroundColor: '$siaGreenA3',
+            backgroundColor: '$primary3',
             boxShadow: 'none',
           },
         },
         '&:active': {
-          backgroundColor: '$siaGreenA4',
+          backgroundColor: '$primary4',
         },
         '&:focus': {
           boxShadow:
-            'inset 0 0 0 1px $colors$siaGreenA8, 0 0 0 1px $colors$siaGreenA8',
+            'inset 0 0 0 1px $colors$primary8, 0 0 0 1px $colors$primary8',
         },
         '&:disabled': {
-          color: '$siaGreenA6',
+          color: '$primary6',
           backgroundColor: 'transparent',
           boxShadow: 'none',
         },
         '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
-            backgroundColor: '$siaGreenA4',
+            backgroundColor: '$primary4',
             boxShadow: 'none',
           },
       },
