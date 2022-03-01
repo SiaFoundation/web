@@ -1,7 +1,4 @@
-interface SWRError extends Error {
-  info?: string
-  status?: number
-}
+import { SWRError } from './types'
 
 export async function handleResponse(response: Response | undefined) {
   // If the status code is not in the range 200-299,
