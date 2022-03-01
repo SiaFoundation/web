@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.3.0](https://github.com/SiaFoundation/web/compare/design-site-0.2.0...design-site-0.3.0) (2022-03-01)
+
+
+### Features
+
+* generic name for primary and secondary colors ([b73922e](https://github.com/SiaFoundation/web/commit/b73922edd3499c1754cf143675b68297c84a779e))
+
+
+
 # [0.2.0](https://github.com/SiaFoundation/web/compare/design-site-0.1.0...design-site-0.2.0) (2022-02-26)
 
 
