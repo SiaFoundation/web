@@ -3,6 +3,7 @@ import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../primitives/DropdownMenu'
 import { ThemeMenu } from './ThemeMenu'
@@ -25,6 +26,7 @@ export function UserDropdownMenu({ trigger, children, ...props }: Props) {
       <DropdownMenuTrigger asChild>{triggerEl}</DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         {children}
+        <DropdownMenuSeparator />
         <ThemeMenu />
       </DropdownMenuContent>
     </DropdownMenu>
