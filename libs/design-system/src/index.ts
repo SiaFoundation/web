@@ -50,7 +50,7 @@ export * from './hooks/useTheme'
 export * from './lib/toast'
 export * from './lib/clipboard'
 
-export * from './icons/RssIcon'
+export * from './icons'
 
 export {
   styled,
