@@ -2,6 +2,22 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.4.0](https://github.com/SiaFoundation/web/compare/design-system-0.3.0...design-system-0.4.0) (2022-03-01)
+
+
+### Bug Fixes
+
+* adjust panel colors ([2a28a4e](https://github.com/SiaFoundation/web/commit/2a28a4e1af90ea7a4e35991889f1f9968688c621))
+* panel colors ([42d64e3](https://github.com/SiaFoundation/web/commit/42d64e39ddc901380d1ec86498a5d5be6a12c7f0))
+
+
+### Features
+
+* add file dropzone component, add separator to user menu theme group ([94583ab](https://github.com/SiaFoundation/web/commit/94583ab5a7086a8cb3457069c058a9e21fd4ff2a))
+* export carbon icons with types, deps ([a2b3d0f](https://github.com/SiaFoundation/web/commit/a2b3d0fc11b5564b40af02b29b2116d70d409062))
+
+
+
 # [0.3.0](https://github.com/SiaFoundation/web/compare/design-system-0.2.0...design-system-0.3.0) (2022-03-01)
 
 
