@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.1](https://github.com/SiaFoundation/web/compare/sia-react-0.2.0...sia-react-0.2.1) (2022-03-01)
+
+
+### Bug Fixes
+
+* use custom swr error type ([3ee8c51](https://github.com/SiaFoundation/web/commit/3ee8c5154b2783c2ace68344065b7fca610d0c68))
+
+
+
 # [0.2.0](https://github.com/SiaFoundation/web/compare/sia-react-0.1.1...sia-react-0.2.0) (2022-03-01)
 
 
