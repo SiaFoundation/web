@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.3.0](https://github.com/SiaFoundation/web/compare/website-0.2.0...website-0.3.0) (2022-03-01)
+
+
+### Bug Fixes
+
+* update software content key ([fdee539](https://github.com/SiaFoundation/web/commit/fdee539cd647e403251f165504230fcf0099f73b))
+
+
+### Features
+
+* use carbon rss icon ([c162038](https://github.com/SiaFoundation/web/commit/c16203825fe45782273fc6f20453d5a98ba6438b))
+
+
+
 # [0.2.0](https://github.com/SiaFoundation/web/compare/website-0.1.0...website-0.2.0) (2022-02-26)
 
 
