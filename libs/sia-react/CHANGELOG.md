@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.2.0](https://github.com/SiaFoundation/web/compare/sia-react-0.1.1...sia-react-0.2.0) (2022-03-01)
+
+
+### Features
+
+* add response handler ([ae1a66c](https://github.com/SiaFoundation/web/commit/ae1a66c138cd0e9cb65c6f82f5a2cdda4adf5a8d))
+
+
+
 ## [0.1.1](https://github.com/SiaFoundation/web/compare/sia-react-0.1.0...sia-react-0.1.1) (2022-02-26)
 
 
