@@ -17,10 +17,9 @@ const stitches = createStitches({
     colors,
     // Fonts configured globally in fonts.ts
     fonts: {
-      sans: 'Inter, Untitled Sans, -apple-system, system-ui, sans-serif',
-      display:
-        'InterDisplay, Untitled Sans, -apple-system, system-ui, sans-serif',
-      mono: 'menlo, monospace',
+      sans: 'PlexSans, Untitled Sans, -apple-system, system-ui, sans-serif',
+      display: 'PlexSans, Untitled Sans, -apple-system, system-ui, sans-serif',
+      mono: 'PlexMono, menlo, monospace',
     },
     space: {
       1: getPx(1),
