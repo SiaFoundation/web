@@ -7,3 +7,7 @@ export type SWROptions<Data> = SWRConfiguration<
 > & {
   api?: string
 }
+
+export interface SWRError extends Error {
+  status?: number
+}
