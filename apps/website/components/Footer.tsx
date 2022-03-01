@@ -1,4 +1,4 @@
-import { Flex, NLink, RssIcon } from '@siafoundation/design-system'
+import { Flex, NLink, Rss16 } from '@siafoundation/design-system'
 import { sitemap, external } from '../config/site'
 
 export function Footer() {
@@ -20,7 +20,7 @@ export function Footer() {
         <Flex gap="1">
           <NLink href={sitemap.newsroom.index}>Newsroom</NLink>
           <NLink href={sitemap.newsroom.feed.rss}>
-            <RssIcon />
+            <Rss16 />
           </NLink>
         </Flex>
         <NLink href={sitemap.whitepaper.index}>Whitepaper</NLink>
