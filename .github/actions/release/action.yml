@@ -15,7 +15,7 @@ runs:
   steps:
     - name: Version
       shell: bash
-      run: npx nx affected --target=version --base=last-release
+      run: npx nx affected --target=version --base=last-release  --parallel --max-parallel=1
     - name: Tag last-release
       if: always()
       shell: bash
