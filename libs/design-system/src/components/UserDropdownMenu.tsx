@@ -26,7 +26,7 @@ export function UserDropdownMenu({ trigger, children, ...props }: Props) {
       <DropdownMenuTrigger asChild>{triggerEl}</DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         {children}
-        <DropdownMenuSeparator />
+        {children && <DropdownMenuSeparator />}
         <ThemeMenu />
       </DropdownMenuContent>
     </DropdownMenu>
