@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.1](https://github.com/SiaFoundation/web/compare/design-site-0.3.0...design-site-0.3.1) (2022-03-02)
+
+
+### Bug Fixes
+
+* export Dropzone ([80d0278](https://github.com/SiaFoundation/web/commit/80d0278e04bc352647b7580563506fc1c47ca3ec))
+
+
+
 # [0.3.0](https://github.com/SiaFoundation/web/compare/design-site-0.2.0...design-site-0.3.0) (2022-03-01)
 
 
