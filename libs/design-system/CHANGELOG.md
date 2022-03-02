@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.3](https://github.com/SiaFoundation/web/compare/design-system-0.4.2...design-system-0.4.3) (2022-03-02)
+
+
+### Bug Fixes
+
+* title type ReactNode ([d4262da](https://github.com/SiaFoundation/web/commit/d4262dab6e01f15171c3b185ba9f354c0d7d06e9))
+
+
+
 ## [0.4.2](https://github.com/SiaFoundation/web/compare/design-system-0.4.1...design-system-0.4.2) (2022-03-02)
 
 
