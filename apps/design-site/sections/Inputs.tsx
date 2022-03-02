@@ -1,5 +1,6 @@
 import {
   Checkbox,
+  Dropzone,
   Flex,
   Grid,
   Radio,
@@ -87,15 +88,8 @@ export function Inputs() {
           </Grid>
           <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
             <TextField size="1" type="date" />
-            <TextField size="1" type="file" />
-          </Grid>
-          <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
             <TextField size="2" type="date" />
-            <TextField size="2" type="file" />
-          </Grid>
-          <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
             <TextField size="3" type="date" />
-            <TextField size="3" type="file" />
           </Grid>
           <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
             <TextField
@@ -118,6 +112,10 @@ export function Inputs() {
             />
           </Grid>
         </Flex>
+      </Section>
+      <Section>
+        <SubsectionHeading>Dropzone</SubsectionHeading>
+        <Dropzone onFiles={() => null} />
       </Section>
       <Section>
         <SubsectionHeading>TextArea</SubsectionHeading>
