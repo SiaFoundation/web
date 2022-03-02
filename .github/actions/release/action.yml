@@ -13,12 +13,9 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Version and publish
+    - name: Version
       shell: bash
       run: npx nx affected --target=version --base=last-release
-      env:
-        NODE_AUTH_TOKEN: ${{ inputs.npm_token }}
-        GITHUB_TOKEN: ${{ inputs.github_token }}
     - name: Tag last-release
       if: always()
       shell: bash
@@ -31,3 +28,15 @@ runs:
         branch: ${{ github.ref }}
         force: true
         tags: true
+    - name: Publish NPM
+      if: always()
+      shell: bash
+      run: npx nx affected --target=publish-npm --base=last-release
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.npm_token }}
+    - name: Publish Github
+      if: always()
+      shell: bash
+      run: npx nx affected --target=publish-github --base=last-release
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}

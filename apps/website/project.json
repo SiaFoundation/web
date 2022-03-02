@@ -55,8 +55,7 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "commitMessageFormat": "chore(${projectName}): release version ${version}",
-        "postTargets": ["website:publish-github"]
+        "commitMessageFormat": "chore(${projectName}): release version ${version}"
       }
     },
     "publish-github": {
