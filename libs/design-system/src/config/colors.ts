@@ -37,11 +37,9 @@ export const colors = {
   canvas: 'hsl(0 0% 93%)',
   panel: 'white',
   transparentPanel: 'hsl(0 0% 0% / 97%)',
-  shadowLight: 'hsl(206 22% 7% / 35%)',
-  shadowDark: 'hsl(206 22% 7% / 20%)',
-  raisedShadow: '$slate3',
-  raisedShadowHover: '$slate4',
-  inputShadow: '$primary10',
+  accentInactive: '$slate7',
+  accentActive: '$slate8',
+  accentInput: '$primary10',
   frame: 'black',
 }
 
@@ -53,11 +51,7 @@ export const colorsDark = {
   loContrast: '$slate1',
   canvas: 'hsl(0 0% 15%)',
   panel: '$mauve3',
-  raisedShadow: '$mauve3',
-  raisedShadowHover: '$mauve4',
   transparentPanel: 'hsl(0 100% 100% / 97%)',
-  shadowLight: 'hsl(206 22% 7% / 35%)',
-  shadowDark: 'hsl(206 22% 7% / 20%)',
-  inputShadow: '$primary10',
+  accentInput: '$primary10',
   frame: '$blackA6',
 }

@@ -10,7 +10,7 @@ export const TextArea = styled('textarea', {
   width: '100%',
   WebkitTapHighlightColor: 'rgba(0,0,0,0)',
   backgroundColor: '$loContrast',
-  boxShadow: 'inset 0 0 0 1px $colors$slate7',
+  boxShadow: 'inset 0 0 0 1px $colors$accentInactive',
   color: '$hiContrast',
   fontVariantNumeric: 'tabular-nums',
   position: 'relative',
@@ -19,7 +19,7 @@ export const TextArea = styled('textarea', {
 
   '&:focus': {
     boxShadow:
-      'inset 0px 0px 0px 1px $colors$inputShadow, 0px 0px 0px 1px $colors$inputShadow',
+      'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput',
     zIndex: '1',
   },
   '&::placeholder': {
@@ -28,7 +28,7 @@ export const TextArea = styled('textarea', {
   '&:disabled': {
     pointerEvents: 'none',
     backgroundColor: '$slate2',
-    color: '$slate8',
+    color: '$accentActive',
     cursor: 'not-allowed',
     resize: 'none',
     '&::placeholder': {
@@ -38,7 +38,7 @@ export const TextArea = styled('textarea', {
   '&:read-only': {
     backgroundColor: '$slate2',
     '&:focus': {
-      boxShadow: 'inset 0px 0px 0px 1px $colors$slate7',
+      boxShadow: 'inset 0px 0px 0px 1px $colors$accentInactive',
     },
   },
 
@@ -75,7 +75,7 @@ export const TextArea = styled('textarea', {
         boxShadow: 'inset 0 0 0 1px $colors$primary8',
         '&:focus': {
           boxShadow:
-            'inset 0px 0px 0px 1px $colors$inputShadow, 0px 0px 0px 1px $colors$inputShadow',
+            'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput',
         },
       },
     },

@@ -56,7 +56,8 @@ export const Badge = styled('span', {
         backgroundColor: '$slate3',
         color: '$slate11',
         '&:focus': {
-          boxShadow: 'inset 0 0 0 1px $colors$slate8, 0 0 0 1px $colors$slate8',
+          boxShadow:
+            'inset 0 0 0 1px $colors$accentActive, 0 0 0 1px $colors$accentActive',
         },
       },
       red: {

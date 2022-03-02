@@ -35,49 +35,50 @@ export const Button = styled('button', {
         height: '$5',
         px: '$2',
         fontSize: '$1',
-        lineHeight: '$sizes$5',
+        lineHeight: '1',
       },
       '2': {
         borderRadius: '$2',
         height: '$6',
         px: '$3',
         fontSize: '$3',
-        lineHeight: '$sizes$6',
+        lineHeight: '1',
       },
       '3': {
         borderRadius: '$2',
         height: '$7',
         px: '$4',
         fontSize: '$4',
-        lineHeight: '$sizes$7',
+        lineHeight: '1',
       },
     },
     variant: {
       gray: {
         backgroundColor: '$loContrast',
-        boxShadow: 'inset 0 0 0 1px $colors$slate7',
+        boxShadow: 'inset 0 0 0 1px $colors$accentInactive',
         color: '$hiContrast',
         '@hover': {
           '&:hover': {
-            boxShadow: 'inset 0 0 0 1px $colors$slate8',
+            boxShadow: 'inset 0 0 0 1px $colors$accentActive',
           },
         },
         '&:active': {
           backgroundColor: '$slate2',
-          boxShadow: 'inset 0 0 0 1px $colors$slate8',
+          boxShadow: 'inset 0 0 0 1px $colors$accentActive',
         },
         '&:focus': {
-          boxShadow: 'inset 0 0 0 1px $colors$slate8, 0 0 0 1px $colors$slate8',
+          boxShadow:
+            'inset 0 0 0 1px $colors$accentActive, 0 0 0 1px $colors$accentActive',
         },
         '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
             backgroundColor: '$slate4',
-            boxShadow: 'inset 0 0 0 1px $colors$slate8',
+            boxShadow: 'inset 0 0 0 1px $colors$accentActive',
           },
 
         '&:disabled': {
           backgroundColor: '$slate2',
-          boxShadow: 'inset 0 0 0 1px $colors$slate7',
+          boxShadow: 'inset 0 0 0 1px $colors$accentInactive',
           color: '$slate8',
           pointerEvents: 'none',
         },
@@ -137,11 +138,11 @@ export const Button = styled('button', {
       },
       red: {
         backgroundColor: '$loContrast',
-        boxShadow: 'inset 0 0 0 1px $colors$slate7',
+        boxShadow: 'inset 0 0 0 1px $colors$accentInactive',
         color: '$red11',
         '@hover': {
           '&:hover': {
-            boxShadow: 'inset 0 0 0 1px $colors$slate8',
+            boxShadow: 'inset 0 0 0 1px $colors$accentActive',
           },
         },
         '&:active': {

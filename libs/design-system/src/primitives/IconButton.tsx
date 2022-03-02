@@ -24,18 +24,18 @@ export const IconButton = styled('button', {
     boxSizing: 'border-box',
   },
   backgroundColor: '$loContrast',
-  border: '1px solid $slate7',
+  border: '1px solid $accentInactive',
   '@hover': {
     '&:hover': {
-      borderColor: '$slate8',
+      borderColor: '$accentActive',
     },
   },
   '&:active': {
     backgroundColor: '$slate2',
   },
   '&:focus': {
-    borderColor: '$slate8',
-    boxShadow: '0 0 0 1px $colors$slate8',
+    borderColor: '$accentActive',
+    boxShadow: '0 0 0 1px $colors$accentActive',
   },
   '&:disabled': {
     pointerEvents: 'none',
@@ -96,9 +96,9 @@ export const IconButton = styled('button', {
           },
         },
         '&:focus': {
-          borderColor: '$slate8',
+          borderColor: '$accentActive',
           boxShadow:
-            '0 0 0 1px $colors$slate8, 0 16px 32px hsl(206deg 12% 5% / 25%), 0 3px 5px hsl(0deg 0% 0% / 10%)',
+            '0 0 0 1px $colors$accentActive, 0 16px 32px hsl(206deg 12% 5% / 25%), 0 3px 5px hsl(0deg 0% 0% / 10%)',
         },
         '&:active': {
           backgroundColor: '$slate4',
