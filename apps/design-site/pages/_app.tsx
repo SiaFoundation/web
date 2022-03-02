@@ -8,7 +8,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>Design system</title>
       </Head>
-      <ThemeProvider>
+      <ThemeProvider ssr>
         <SiteLayout title="@siafoundation/design-system" header>
           <Component {...pageProps} />
         </SiteLayout>

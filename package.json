@@ -60,7 +60,7 @@
     "request-promise-native": "^1.0.9",
     "swr": "^1.2.0",
     "tslib": "^2.0.0",
-    "use-local-storage-state": "^13.0.0",
+    "use-local-storage-state": "^15.0.0",
     "vhost": "^3.0.2"
   },
   "devDependencies": {
