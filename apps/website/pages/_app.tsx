@@ -5,7 +5,7 @@ import { components } from '../config/mdx'
 function App({ Component, pageProps }) {
   return (
     <MDXProvider components={components}>
-      <ThemeProvider>
+      <ThemeProvider ssr>
         <Component {...pageProps} />
       </ThemeProvider>
     </MDXProvider>
