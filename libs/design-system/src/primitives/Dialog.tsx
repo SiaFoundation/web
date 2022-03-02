@@ -1,7 +1,7 @@
 import React from 'react'
 import { styled, CSS, keyframes, css } from '../config/theme'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { Cross1Icon } from '@radix-ui/react-icons'
+import { Close16 } from '../icons'
 import { overlayStyles } from './Overlay'
 import { panelStyles } from './Panel'
 import { IconButton } from './IconButton'
@@ -85,7 +85,7 @@ export const DialogContent = React.forwardRef<
     {children}
     <StyledCloseButton asChild>
       <IconButton variant="ghost">
-        <Cross1Icon />
+        <Close16 />
       </IconButton>
     </StyledCloseButton>
   </StyledContent>
