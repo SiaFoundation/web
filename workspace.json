@@ -4,13 +4,11 @@
     "asset-server": "apps/asset-server",
     "data-sources": "libs/data-sources",
     "design-site": "apps/design-site",
-    "design-site-e2e": "apps/design-site-e2e",
     "design-system": "libs/design-system",
     "env": "libs/env",
     "sia-js": "libs/sia-js",
     "sia-nodejs": "libs/sia-nodejs",
     "sia-react": "libs/sia-react",
-    "website": "apps/website",
-    "website-e2e": "apps/website-e2e"
+    "website": "apps/website"
   }
 }
