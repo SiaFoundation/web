@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.5.1](https://github.com/SiaFoundation/web/compare/design-system-0.5.0...design-system-0.5.1) (2022-03-02)
+
+
+### Bug Fixes
+
+* update codeblock color ([a489b68](https://github.com/SiaFoundation/web/commit/a489b6865939225d463517047ac88b3c14d3c8e7))
+
+
+
 # [0.5.0](https://github.com/SiaFoundation/web/compare/design-system-0.4.4...design-system-0.5.0) (2022-03-02)
 
 
