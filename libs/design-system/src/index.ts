@@ -44,6 +44,7 @@ export * from './primitives/Switch'
 export * from './components/Background'
 export * from './components/SiteLayout'
 export * from './components/UserDropdownMenu'
+export * from './components/Dropzone'
 
 export * from './hooks/useTheme'
 
