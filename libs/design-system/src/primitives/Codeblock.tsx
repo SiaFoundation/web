@@ -5,7 +5,7 @@ export const Codeblock = styled('code', {
   fontSize: 'max(12px, 85%)',
   display: 'block',
   padding: '$2',
-  backgroundColor: '$canvas',
+  backgroundColor: '$slate3',
   color: '$hiContrast',
   textAlign: 'left',
   borderRadius: '$2',
