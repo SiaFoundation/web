@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.5.0](https://github.com/SiaFoundation/web/compare/design-system-0.4.4...design-system-0.5.0) (2022-03-02)
+
+
+### Features
+
+* extract accent shadow colors ([4c3e28b](https://github.com/SiaFoundation/web/commit/4c3e28bc381233dd9569a43ec6c2aceae2592b01))
+
+
+
 ## [0.4.4](https://github.com/SiaFoundation/web/compare/design-system-0.4.3...design-system-0.4.4) (2022-03-02)
 
 
