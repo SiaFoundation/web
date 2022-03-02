@@ -49,7 +49,10 @@
       "executor": "@jscutlery/semver:version",
       "options": {
         "commitMessageFormat": "chore(${projectName}): release version ${version}",
-        "postTargets": ["design-system:publish-npm"]
+        "postTargets": [
+          "design-system:publish-npm",
+          "design-system:publish-github"
+        ]
       }
     },
     "publish-npm": {

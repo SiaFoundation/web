@@ -60,7 +60,15 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "commitMessageFormat": "chore(${projectName}): release version ${version}"
+        "commitMessageFormat": "chore(${projectName}): release version ${version}",
+        "postTargets": ["design-site:publish-github"]
+      }
+    },
+    "publish-github": {
+      "executor": "@jscutlery/semver:github",
+      "options": {
+        "tag": "${tag}",
+        "notesFile": "./apps/design-site/CHANGELOG.md"
       }
     }
   },

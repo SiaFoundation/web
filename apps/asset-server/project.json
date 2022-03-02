@@ -50,7 +50,15 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "commitMessageFormat": "chore(${projectName}): release version ${version}"
+        "commitMessageFormat": "chore(${projectName}): release version ${version}",
+        "postTargets": ["asset-server:publish-github"]
+      }
+    },
+    "publish-github": {
+      "executor": "@jscutlery/semver:github",
+      "options": {
+        "tag": "${tag}",
+        "notesFile": "./apps/asset-server/CHANGELOG.md"
       }
     }
   },
