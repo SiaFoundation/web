@@ -1,13 +1,12 @@
-import { DrawingPinFilledIcon, MoonIcon, SunIcon } from '@radix-ui/react-icons'
 import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuRightSlot,
 } from '../primitives/DropdownMenu'
-
 import { useTheme } from '../hooks/useTheme'
 import { useCallback } from 'react'
+import { Asleep16, Awake16, Screen16 } from '../icons'
 
 function getCss(on: boolean) {
   return {
@@ -43,7 +42,7 @@ export function ThemeMenu() {
       >
         Light
         <DropdownMenuRightSlot>
-          <SunIcon />
+          <Awake16 />
         </DropdownMenuRightSlot>
       </DropdownMenuItem>
       <DropdownMenuItem
@@ -52,7 +51,7 @@ export function ThemeMenu() {
       >
         Dark
         <DropdownMenuRightSlot>
-          <MoonIcon />
+          <Asleep16 />
         </DropdownMenuRightSlot>
       </DropdownMenuItem>
       <DropdownMenuItem
@@ -61,7 +60,7 @@ export function ThemeMenu() {
       >
         System
         <DropdownMenuRightSlot>
-          <DrawingPinFilledIcon />
+          <Screen16 />
         </DropdownMenuRightSlot>
       </DropdownMenuItem>
     </DropdownMenuGroup>
