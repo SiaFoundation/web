@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.3.0](https://github.com/SiaFoundation/web/compare/sia-react-0.2.1...sia-react-0.3.0) (2022-03-02)
+
+
+### Features
+
+* add disable option to hooks ([0ace3d1](https://github.com/SiaFoundation/web/commit/0ace3d1c503982aefc72f986f8c1c777096b6358))
+
+
+
 ## [0.2.1](https://github.com/SiaFoundation/web/compare/sia-react-0.2.0...sia-react-0.2.1) (2022-03-01)
 
 
