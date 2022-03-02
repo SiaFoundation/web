@@ -6,6 +6,7 @@ export type SWROptions<Data> = SWRConfiguration<
   Fetcher<Data, Key>
 > & {
   api?: string
+  disabled?: boolean
 }
 
 export interface SWRError extends Error {

@@ -9,7 +9,7 @@ const route = 'wallet'
 export function useWallet(options?: SWROptions<WalletGET>) {
   const basePath = options?.api || defaultApi
   return useSWR<WalletGET, SWRError>(
-    getKey(route),
+    getKey(route, options),
     async () => {
       const r = await fetch(`${basePath}/api/${route}`)
       return handleResponse(r)
