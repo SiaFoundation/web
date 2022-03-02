@@ -43,7 +43,7 @@ export const Link = styled('a', {
         color: '$slate11',
         textDecorationColor: '$slate4',
         '&:focus': {
-          outlineColor: '$slate8',
+          outlineColor: '$accentActive',
         },
       },
       contrast: {
@@ -52,11 +52,11 @@ export const Link = styled('a', {
         textDecorationColor: '$slate4',
         '@hover': {
           '&:hover': {
-            textDecorationColor: '$slate7',
+            textDecorationColor: '$accentInactive',
           },
         },
         '&:focus': {
-          outlineColor: '$slate8',
+          outlineColor: '$accentActive',
         },
       },
     },

@@ -5,7 +5,7 @@ import { CaretSortIcon } from '@radix-ui/react-icons'
 const SelectWrapper = styled('div', {
   backgroundColor: '$loContrast',
   borderRadius: '$2',
-  boxShadow: 'inset 0 0 0 1px $colors$slate7',
+  boxShadow: 'inset 0 0 0 1px $colors$accentInactive',
   color: '$hiContrast',
   fontFamily: '$sans',
   fontSize: '$1',
@@ -19,7 +19,7 @@ const SelectWrapper = styled('div', {
   '&:focus-within': {
     zIndex: 1,
     boxShadow:
-      'inset 0px 0px 0px 1px $colors$inputShadow, 0px 0px 0px 1px $colors$inputShadow',
+      'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput',
   },
   variants: {
     size: {

@@ -68,7 +68,7 @@ const StyledTrigger = styled(AccordionPrimitive.Trigger, {
 
   '&:focus': {
     outline: 'none',
-    // boxShadow: 'inset 0 0 0 1px $colors$slate8, 0 0 0 1px $colors$slate8',
+    // boxShadow: 'inset 0 0 0 1px $colors$accentActive, 0 0 0 1px $colors$accentActive',
   },
 
   svg: {

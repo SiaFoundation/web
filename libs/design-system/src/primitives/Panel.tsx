@@ -5,11 +5,11 @@ export const panelStyles = css({
 
   transition: 'border 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
 
-  boxShadow: 'inset 0 0 0 1px $colors$raisedShadow',
+  boxShadow: 'inset 0 0 0 1px $colors$accentInactive',
   color: '$hiContrast',
   '@hover': {
     '&:hover': {
-      boxShadow: 'inset 0 0 0 1px $colors$raisedShadowHover',
+      boxShadow: 'inset 0 0 0 1px $colors$accentActive',
     },
   },
 

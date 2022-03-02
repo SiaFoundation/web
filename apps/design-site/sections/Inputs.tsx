@@ -163,7 +163,7 @@ export function Inputs() {
       </Section>
       <Section>
         <SubsectionHeading>Select</SubsectionHeading>
-        <Grid columns={{ '@initial': 1, '@bp2': 3 }} gap="2">
+        <Grid columns={{ '@initial': 1, '@bp2': 2, '@bp4': 3 }} gap="2">
           <Flex direction="row" gap="1">
             <Select>
               <option>Option A</option>

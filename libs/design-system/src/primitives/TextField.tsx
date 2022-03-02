@@ -22,7 +22,7 @@ export const TextField = styled('input', {
 
   // Custom
   backgroundColor: '$loContrast',
-  boxShadow: 'inset 0 0 0 1px $colors$slate7',
+  boxShadow: 'inset 0 0 0 1px $colors$accentInactive',
   color: '$hiContrast',
   fontVariantNumeric: 'tabular-nums',
 
@@ -38,10 +38,10 @@ export const TextField = styled('input', {
 
   '&:focus': {
     boxShadow:
-      'inset 0px 0px 0px 1px $colors$inputShadow, 0px 0px 0px 1px $colors$inputShadow',
+      'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput',
     '&:-webkit-autofill': {
       boxShadow:
-        'inset 0px 0px 0px 1px $colors$inputShadow, 0px 0px 0px 1px $colors$inputShadow, inset 0 0 0 100px $colors$primary4',
+        'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput, inset 0 0 0 100px $colors$primary4',
     },
   },
   '&::placeholder': {
@@ -151,7 +151,7 @@ export const TextField = styled('input', {
         '&:focus': {
           backgroundColor: '$loContrast',
           boxShadow:
-            'inset 0px 0px 0px 1px $colors$inputShadow, 0px 0px 0px 1px $colors$inputShadow',
+            'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput',
         },
         '&:disabled': {
           backgroundColor: 'transparent',
@@ -173,7 +173,7 @@ export const TextField = styled('input', {
         boxShadow: 'inset 0 0 0 1px $colors$primary8',
         '&:focus': {
           boxShadow:
-            'inset 0px 0px 0px 1px $colors$inputShadow, 0px 0px 0px 1px $colors$inputShadow',
+            'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput',
         },
       },
     },
