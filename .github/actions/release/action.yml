@@ -16,10 +16,6 @@ runs:
     - name: Version
       shell: bash
       run: npx nx affected --target=version --base=last-release  --parallel --max-parallel=1
-    - name: Tag last-release
-      if: always()
-      shell: bash
-      run: git tag -f last-release
     - name: Push changes
       if: always()
       uses: ad-m/github-push-action@master
@@ -40,3 +36,15 @@ runs:
       run: npx nx affected --target=publish-github --base=last-release
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
+    - name: Tag last-release
+      if: always()
+      shell: bash
+      run: git tag -f last-release
+    - name: Push last-release tag
+      if: always()
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ inputs.github_token }}
+        branch: ${{ github.ref }}
+        force: true
+        tags: true
