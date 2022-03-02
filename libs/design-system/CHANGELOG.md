@@ -2,6 +2,19 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.1](https://github.com/SiaFoundation/web/compare/design-system-0.4.0...design-system-0.4.1) (2022-03-02)
+
+
+### Bug Fixes
+
+* export Dropzone ([80d0278](https://github.com/SiaFoundation/web/commit/80d0278e04bc352647b7580563506fc1c47ca3ec))
+* inline carbon icon types ([6b0d737](https://github.com/SiaFoundation/web/commit/6b0d737f82993d2b5bbb9ef3e8fd7b54e66b826a))
+* move theme menu to carbon icons ([84cb240](https://github.com/SiaFoundation/web/commit/84cb240e6e3ca94d687353a5148e8d0323830b4e))
+* move to carbon icon, adjust shadow ([261cec3](https://github.com/SiaFoundation/web/commit/261cec37fa12f39cb20aca7a4d745f9915e7cc65))
+* user dropdown only shows theme separator if other content is present ([a62fc70](https://github.com/SiaFoundation/web/commit/a62fc7074e3f9c6b4a8813adf2cd9bf609d7d636))
+
+
+
 # [0.4.0](https://github.com/SiaFoundation/web/compare/design-system-0.3.0...design-system-0.4.0) (2022-03-01)
 
 
