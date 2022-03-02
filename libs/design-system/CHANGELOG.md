@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.2](https://github.com/SiaFoundation/web/compare/design-system-0.4.1...design-system-0.4.2) (2022-03-02)
+
+
+### Bug Fixes
+
+* upgrade local storage hook and add ssr option ([b46775c](https://github.com/SiaFoundation/web/commit/b46775c1e94b390273d911627fd8da3a1cec3e5f))
+
+
+
 ## [0.4.1](https://github.com/SiaFoundation/web/compare/design-system-0.4.0...design-system-0.4.1) (2022-03-02)
 
 
