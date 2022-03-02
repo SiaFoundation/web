@@ -4,7 +4,7 @@ import { Box } from '../primitives/Box'
 import { Paragraph } from '../primitives/Paragraph'
 
 type Props = {
-  title?: string
+  title?: React.ReactNode
   onFiles: (files: File[]) => void
 }
 
