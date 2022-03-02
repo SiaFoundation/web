@@ -9,7 +9,7 @@ const route = 'consensus'
 export function useConsensus(options?: SWROptions<ConsensusGET>) {
   const basePath = options?.api || defaultApi
   return useSWR<ConsensusGET, SWRError>(
-    getKey(route),
+    getKey(route, options),
     async () => {
       const r = await fetch(`${basePath}/api/${route}`)
       return handleResponse(r)

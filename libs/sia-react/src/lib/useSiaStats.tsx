@@ -33,7 +33,7 @@ export function useSiaStatsNetworkStatus(
   options?: SWROptions<SiaStatsNetworkStatusGET>
 ) {
   return useSWR<SiaStatsNetworkStatusGET>(
-    getKey(path),
+    getKey(path, options),
     async () => {
       const r = await fetch(path)
       return r.json()
