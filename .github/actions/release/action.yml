@@ -13,34 +13,17 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Version
+    - name: Version and publish
       shell: bash
       run: npx nx affected --target=version --base=last-release  --parallel --max-parallel=1
-    - name: Push changes
-      if: always()
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ inputs.github_token }}
-        branch: ${{ github.ref }}
-        force: true
-        tags: true
-    - name: Publish NPM
-      if: always()
-      shell: bash
-      run: npx nx affected --target=publish-npm --base=last-release
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npm_token }}
-    - name: Publish Github
-      if: always()
-      shell: bash
-      run: npx nx affected --target=publish-github --base=last-release
-      env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
     - name: Tag last-release
       if: always()
       shell: bash
       run: git tag -f last-release
-    - name: Push last-release tag
+    - name: Push tag
       if: always()
       uses: ad-m/github-push-action@master
       with:

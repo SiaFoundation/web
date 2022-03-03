@@ -52,6 +52,8 @@ export const colorsDark = {
   canvas: 'hsl(0 0% 15%)',
   panel: '$mauve3',
   transparentPanel: 'hsl(0 100% 100% / 97%)',
+  accentInactive: '$slate7',
+  accentActive: '$slate8',
   accentInput: '$primary10',
   frame: '$blackA6',
 }
