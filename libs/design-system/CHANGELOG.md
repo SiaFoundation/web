@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.5.3](https://github.com/SiaFoundation/web/compare/design-system-0.5.2...design-system-0.5.3) (2022-03-03)
+
+
+### Bug Fixes
+
+* dropdown link items ([f10f3e0](https://github.com/SiaFoundation/web/commit/f10f3e011fa57b8a9f3c937f81029f6a5a156ea1))
+
+
+
 ## [0.5.2](https://github.com/SiaFoundation/web/compare/design-system-0.5.1...design-system-0.5.2) (2022-03-03)
 
 
