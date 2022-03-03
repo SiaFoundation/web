@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.2](https://github.com/SiaFoundation/web/compare/design-site-0.4.1...design-site-0.4.2) (2022-03-03)
+
+
+### Bug Fixes
+
+* dropdown link items ([f10f3e0](https://github.com/SiaFoundation/web/commit/f10f3e011fa57b8a9f3c937f81029f6a5a156ea1))
+
+
+
 ## [0.4.1](https://github.com/SiaFoundation/web/compare/design-site-0.4.0...design-site-0.4.1) (2022-03-03)
 
 
