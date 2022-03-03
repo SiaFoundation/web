@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.5.4](https://github.com/SiaFoundation/web/compare/design-system-0.5.3...design-system-0.5.4) (2022-03-03)
+
+
+### Bug Fixes
+
+* set button line heights ([8e4224c](https://github.com/SiaFoundation/web/commit/8e4224cf44d29f06d7321075bd7605a576a4daca))
+
+
+
 ## [0.5.3](https://github.com/SiaFoundation/web/compare/design-system-0.5.2...design-system-0.5.3) (2022-03-03)
 
 
