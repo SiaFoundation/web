@@ -1,11 +1,4 @@
 import {
-  ArrowRightIcon,
-  ChatBubbleIcon,
-  CubeIcon,
-  FileTextIcon,
-  InfoCircledIcon,
-} from '@radix-ui/react-icons'
-import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
@@ -18,6 +11,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuTriggerItem,
+  NLink,
+  LogoDiscord16,
+  Notebook16,
+  LicenseGlobal16,
+  ArrowRight16,
+  Information16,
 } from '@siafoundation/design-system'
 
 type Props = {
@@ -33,25 +32,35 @@ export function Menu({ align, children }: Props) {
         <DropdownMenuItem>
           About
           <DropdownMenuRightSlot>
-            <InfoCircledIcon />
+            <Information16 />
           </DropdownMenuRightSlot>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          Discord
-          <DropdownMenuRightSlot>
-            <ChatBubbleIcon />
-          </DropdownMenuRightSlot>
+          <NLink
+            href="https://discord.gg/sia"
+            target="_blank"
+            css={{
+              display: 'flex',
+              width: '100%',
+              alignItems: 'center',
+            }}
+          >
+            Discord
+            <DropdownMenuRightSlot>
+              <LogoDiscord16 />
+            </DropdownMenuRightSlot>
+          </NLink>
         </DropdownMenuItem>
         <DropdownMenuItem>
           Docs
           <DropdownMenuRightSlot>
-            <CubeIcon />
+            <Notebook16 />
           </DropdownMenuRightSlot>
         </DropdownMenuItem>
         <DropdownMenuItem>
           Privacy
           <DropdownMenuRightSlot>
-            <FileTextIcon />
+            <LicenseGlobal16 />
           </DropdownMenuRightSlot>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
@@ -90,7 +99,7 @@ const SubMenu = ({ name, children }: SubMenuProps) => (
     <DropdownMenuTriggerItem>
       {name}
       <DropdownMenuRightSlot>
-        <ArrowRightIcon />
+        <ArrowRight16 />
       </DropdownMenuRightSlot>
     </DropdownMenuTriggerItem>
     <DropdownMenuContent>
@@ -98,25 +107,35 @@ const SubMenu = ({ name, children }: SubMenuProps) => (
       <DropdownMenuItem>
         About
         <DropdownMenuRightSlot>
-          <InfoCircledIcon />
+          <Information16 />
         </DropdownMenuRightSlot>
       </DropdownMenuItem>
       <DropdownMenuItem>
-        Discord
-        <DropdownMenuRightSlot>
-          <ChatBubbleIcon />
-        </DropdownMenuRightSlot>
+        <NLink
+          href="https://discord.gg/sia"
+          target="_blank"
+          css={{
+            display: 'flex',
+            width: '100%',
+            alignItems: 'center',
+          }}
+        >
+          Discord
+          <DropdownMenuRightSlot>
+            <LogoDiscord16 />
+          </DropdownMenuRightSlot>
+        </NLink>
       </DropdownMenuItem>
       <DropdownMenuItem>
         Docs
         <DropdownMenuRightSlot>
-          <CubeIcon />
+          <Notebook16 />
         </DropdownMenuRightSlot>
       </DropdownMenuItem>
       <DropdownMenuItem>
         Privacy
         <DropdownMenuRightSlot>
-          <FileTextIcon />
+          <LicenseGlobal16 />
         </DropdownMenuRightSlot>
       </DropdownMenuItem>
     </DropdownMenuContent>

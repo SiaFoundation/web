@@ -58,7 +58,7 @@ export const DropdownMenuRadioItem = React.forwardRef<
 >(({ children, ...props }, forwardedRef) => (
   <StyledDropdownMenuRadioItem {...props} ref={forwardedRef}>
     {children}
-    <DropdownMenuRightSlot variant="ghost">
+    <DropdownMenuRightSlot>
       <DropdownMenuPrimitive.ItemIndicator>
         <Flex
           css={{
@@ -100,7 +100,7 @@ export const DropdownMenuCheckboxItem = React.forwardRef<
 >(({ children, ...props }, forwardedRef) => (
   <StyledDropdownMenuCheckboxItem {...props} ref={forwardedRef}>
     {children}
-    <DropdownMenuRightSlot variant="ghost">
+    <DropdownMenuRightSlot>
       <DropdownMenuPrimitive.ItemIndicator>
         <CheckIcon />
       </DropdownMenuPrimitive.ItemIndicator>
@@ -118,18 +118,4 @@ export const DropdownMenuGroup = styled(DropdownMenuPrimitive.Group, {})
 export const DropdownMenuRightSlot = styled('div', {
   marginLeft: 'auto',
   paddingLeft: 20,
-
-  variants: {
-    variant: {
-      default: {
-        color: '$slate8',
-        ':focus > &': { color: '$slate10' },
-        '[data-disabled] &': { color: '$slate6' },
-      },
-      ghost: {},
-    },
-  },
-  defaultVariants: {
-    variant: 'default',
-  },
 })
