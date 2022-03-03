@@ -4,6 +4,8 @@ on:
     branches:
       - main
 
+concurrency: main_release
+
 jobs:
   main:
     runs-on: ubuntu-latest
