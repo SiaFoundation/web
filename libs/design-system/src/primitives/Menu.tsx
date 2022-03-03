@@ -38,10 +38,13 @@ export const itemCss = css(baseItemCss, {
   },
 
   // Make nested links and icons within links match
-  [`& ${Link}, & ${Link} > *`]: {
-    color: 'inherit',
+  [`& ${Link}`]: {
+    color: '$slate11',
     '&:hover': {
-      color: 'inherit',
+      color: '$slate12',
+    },
+    '&:hover > *': {
+      color: '$slate12',
     },
   },
 })
