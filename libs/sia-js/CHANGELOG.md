@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.4](https://github.com/SiaFoundation/web/compare/sia-js-0.2.3...sia-js-0.2.4) (2022-03-07)
+
+
+### Bug Fixes
+
+* fix spelling of file name ([2fd68b4](https://github.com/SiaFoundation/web/commit/2fd68b4ec266d3af5c38131b391390d12312b083))
+
+
+
 ## [0.2.3](https://github.com/SiaFoundation/web/compare/sia-js-0.2.2...sia-js-0.2.3) (2022-03-03)
 
 
