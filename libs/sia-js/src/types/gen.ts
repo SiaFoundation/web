@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Currency } from './currency'
-import { SiaPublicKey } from './signitures'
+import { SiaPublicKey } from './signatures'
 import { SiacoinOutput, Transaction } from './transactions'
 
 // helpers
