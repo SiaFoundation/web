@@ -4,7 +4,7 @@ import {
   FileContractRevision,
   StorageProof,
 } from './fileContracts'
-import { TransactionSignature, UnlockConditions } from './signitures'
+import { TransactionSignature, UnlockConditions } from './signatures'
 import { CryptoHash, SiaByteArray } from './types'
 
 // IDs are used to refer to a type without revealing its contents. They

@@ -1,6 +1,6 @@
 import { BlockHeight } from './block'
 import { Currency } from './currency'
-import { UnlockConditions } from './signitures'
+import { UnlockConditions } from './signatures'
 import { FileContractID, SiacoinOutput, UnlockHash } from './transactions'
 import { CryptoHash, SiaByteArray, SiaUint64 } from './types'
 
