@@ -2,12 +2,17 @@ import {
   Box,
   Flex,
   Grid,
-  Heading,
   NLink,
   Separator,
+  IbmSecurity24,
+  Share24,
+  Money24,
+  Api24,
   Text,
+  ContentBlock,
+  ContentGallery,
+  CtaBox,
 } from '@siafoundation/design-system'
-import { SimpleBlock } from '../components/SimpleBlock'
 import { Layout } from '../components/Layout'
 import { external, sitemap } from '../config/site'
 import { getDaysInSeconds } from '../lib/time'
@@ -15,17 +20,13 @@ import { getStats } from '../content/stats'
 import { MDXRemote } from 'next-mdx-remote'
 import { getMdxFile } from '../lib/mdx'
 import { AsyncReturnType } from '../lib/types'
-import { CtaLarge } from '../components/CtaLarge'
-import { ContentGallery } from '../components/ContentGallery'
 import { getArticles } from '../content/articles'
-import { ContentBlock } from '../components/ContentBlock'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
 export default function Home({ stats, landing, getStarted, latest }: Props) {
   return (
     <Layout stats={stats}>
-      <Heading></Heading>
       <Box
         css={{
           maxWidth: '800px',
@@ -42,43 +43,44 @@ export default function Home({ stats, landing, getStarted, latest }: Props) {
         `}
       />
       <Grid
+        gap="4"
         columns={{
           '@initial': 1,
           '@bp2': 2,
-          '@bp3': 4,
+          // '@bp3': 4,
         }}
       >
         <ContentBlock
+          icon={<IbmSecurity24 />}
           title="Completely Private"
           size="1"
-          align="center"
           description={`
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
-            `}
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
+          `}
         />
         <ContentBlock
+          icon={<Api24 />}
           title="Highly Redundant"
           size="1"
-          align="center"
           description={`
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
-            `}
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
+          `}
         />
         <ContentBlock
+          icon={<Share24 />}
           title="Open Source"
           size="1"
-          align="center"
           description={`
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
-            `}
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
+          `}
         />
         <ContentBlock
+          icon={<Money24 />}
           title="Far More Affordable"
           size="1"
-          align="center"
           description={`
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
-            `}
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
+          `}
         />
       </Grid>
       <Separator size="4" />
@@ -89,7 +91,7 @@ export default function Home({ stats, landing, getStarted, latest }: Props) {
           '@bp2': '2',
         }}
       >
-        <CtaLarge
+        <CtaBox
           title="Developer Resources"
           description={`
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis, expedita!
@@ -97,7 +99,7 @@ export default function Home({ stats, landing, getStarted, latest }: Props) {
           actionTitle="Explore"
           actionLink={sitemap.developers.index}
         />
-        <CtaLarge
+        <CtaBox
           title="Learn"
           description={`
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis, expedita!
@@ -115,7 +117,8 @@ export default function Home({ stats, landing, getStarted, latest }: Props) {
       </Flex>
       <Separator size="4" />
       <ContentGallery
-        title="Get Started"
+        title="Start building"
+        size="2"
         description={`
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, obcaecati!
         `}
@@ -124,6 +127,7 @@ export default function Home({ stats, landing, getStarted, latest }: Props) {
       <Separator size="4" />
       <ContentGallery
         title="The latest"
+        size="2"
         links={[
           {
             title: 'Browse the blog',

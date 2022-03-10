@@ -1,10 +1,10 @@
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import {
   Button,
   Flex,
   Grid,
   IconButton,
   Section,
+  Search16,
 } from '@siafoundation/design-system'
 import { SectionHeading } from '../components/SectionHeading'
 import { SmallSection } from '../components/SmallSection'
@@ -18,10 +18,10 @@ export function Buttons() {
         <SubsectionHeading>Button - sizes</SubsectionHeading>
         <Flex direction="column" gap="2">
           <Flex direction="row" gap="1">
-            <Button variant="green">Green</Button>
+            <Button variant="accent">Green</Button>
             <Button variant="gray">Gray</Button>
             <Button variant="red">Red</Button>
-            <Button ghost variant="green">
+            <Button ghost variant="accent">
               Green
             </Button>
             <Button ghost variant="gray">
@@ -32,7 +32,7 @@ export function Buttons() {
             </Button>
           </Flex>
           <Flex direction="row" gap="1">
-            <Button size="2" variant="green">
+            <Button size="2" variant="accent">
               Green
             </Button>
             <Button size="2" variant="gray">
@@ -43,7 +43,7 @@ export function Buttons() {
             </Button>
           </Flex>
           <Flex direction="row" gap="1">
-            <Button size="3" variant="green">
+            <Button size="3" variant="accent">
               Green
             </Button>
             <Button size="3" variant="gray">
@@ -60,10 +60,10 @@ export function Buttons() {
         <Flex direction="column" gap="3">
           <SmallSection>default</SmallSection>
           <Flex direction="row" gap="1">
-            <Button variant="green">Green</Button>
+            <Button variant="accent">Green</Button>
             <Button variant="gray">Gray</Button>
             <Button variant="red">Red</Button>
-            <Button ghost variant="green">
+            <Button ghost variant="accent">
               Green
             </Button>
             <Button ghost variant="gray">
@@ -75,7 +75,7 @@ export function Buttons() {
           </Flex>
           <SmallSection>waiting</SmallSection>
           <Flex direction="row" gap="1">
-            <Button state="waiting" variant="green">
+            <Button state="waiting" variant="accent">
               Green
             </Button>
             <Button state="waiting" variant="gray">
@@ -84,7 +84,7 @@ export function Buttons() {
             <Button state="waiting" variant="red">
               Red
             </Button>
-            <Button state="waiting" ghost variant="green">
+            <Button state="waiting" ghost variant="accent">
               Green
             </Button>
             <Button state="waiting" ghost variant="gray">
@@ -96,7 +96,7 @@ export function Buttons() {
           </Flex>
           <SmallSection>disabled</SmallSection>
           <Flex direction="row" gap="1">
-            <Button disabled state="waiting" variant="green">
+            <Button disabled state="waiting" variant="accent">
               Green
             </Button>
             <Button disabled state="waiting" variant="gray">
@@ -105,7 +105,7 @@ export function Buttons() {
             <Button disabled state="waiting" variant="red">
               Red
             </Button>
-            <Button disabled state="waiting" ghost variant="green">
+            <Button disabled state="waiting" ghost variant="accent">
               Green
             </Button>
             <Button disabled state="waiting" ghost variant="gray">
@@ -121,31 +121,31 @@ export function Buttons() {
         <SubsectionHeading>IconButton</SubsectionHeading>
         <Grid columns={{ '@initial': 1, '@bp1': 2 }} gap="2">
           <Flex direction="row" gap="1">
-            <IconButton size="1" variant="ghost">
-              <MagnifyingGlassIcon />
+            <IconButton size="1">
+              <Search16 />
             </IconButton>
-            <IconButton size="2" state="active" variant="ghost">
-              <MagnifyingGlassIcon />
+            <IconButton size="2">
+              <Search16 />
             </IconButton>
             <IconButton size="3" state="waiting" variant="ghost">
-              <MagnifyingGlassIcon />
+              <Search16 />
             </IconButton>
-            <IconButton size="4" disabled variant="ghost">
-              <MagnifyingGlassIcon />
+            <IconButton size="3" variant="ghost">
+              <Search16 />
+            </IconButton>
+            <IconButton size="3" disabled variant="ghost">
+              <Search16 />
             </IconButton>
           </Flex>
           <Flex direction="row" gap="1">
             <IconButton size="1" variant="raised">
-              <MagnifyingGlassIcon />
+              <Search16 />
             </IconButton>
             <IconButton size="2" state="active" variant="raised">
-              <MagnifyingGlassIcon />
+              <Search16 />
             </IconButton>
             <IconButton size="3" state="waiting" variant="raised">
-              <MagnifyingGlassIcon />
-            </IconButton>
-            <IconButton size="4" disabled variant="raised">
-              <MagnifyingGlassIcon />
+              <Search16 />
             </IconButton>
           </Flex>
         </Grid>

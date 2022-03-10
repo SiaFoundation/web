@@ -26,21 +26,18 @@ export const Kbd = styled('kbd', {
   variants: {
     size: {
       '1': {
-        borderRadius: '$1',
-        px: '0.4em',
-        // height $3 looks a pixel too small
-        height: '16px',
-        minWidth: '1.6em',
-        fontSize: '$1',
-        lineHeight: '$spaces$3',
+        borderRadius: '$sizes$0',
+        px: '$1',
+        minWidth: '2em',
+        fontSize: '$0',
+        lineHeight: '200%',
       },
       '2': {
-        borderRadius: '$2',
-        px: '0.5em',
-        height: '$5',
-        minWidth: '2em',
+        borderRadius: '$sizes$0',
+        px: '$2',
+        minWidth: '3em',
         fontSize: '$2',
-        lineHeight: '$spaces$5',
+        lineHeight: '180%',
       },
     },
     width: {

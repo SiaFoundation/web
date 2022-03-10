@@ -22,20 +22,30 @@ export const Paragraph = React.forwardRef<
 
   // This is the mapping of Paragraph Variants to Text variants
   const textSize: Record<ParagraphSizeVariants, TextSizeVariants['size']> = {
-    1: { '@initial': '2', '@bp2': '3' },
-    2: { '@initial': '3', '@bp2': '4' },
-    3: { '@initial': '5', '@bp2': '6' },
+    1: { '@initial': '1', '@bp2': '1' },
+    2: { '@initial': '2', '@bp2': '2' },
+    3: { '@initial': '4', '@bp2': '4' },
   }
 
   // This is the mapping of Paragraph Variants to Text css
   const textCss: Record<ParagraphSizeVariants, CSS> = {
-    1: { lineHeight: '23px', '@bp2': { lineHeight: '23px' } },
-    2: { lineHeight: '25px', '@bp2': { lineHeight: '27px' } },
+    1: {
+      color: '$textSubtle',
+      lineHeight: '150%',
+      '@bp2': { lineHeight: '150%' },
+    },
+    2: {
+      color: '$textSubtle',
+      lineHeight: '150%',
+      '@bp2': { lineHeight: '150%' },
+    },
     3: {
-      lineHeight: '27px',
-      '@bp2': { lineHeight: '30px' },
+      color: '$textContrast',
+      lineHeight: '150%',
+      '@bp2': { lineHeight: '150%' },
     },
   }
+
   return (
     <Text
       as={DEFAULT_TAG}

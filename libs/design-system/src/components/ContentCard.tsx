@@ -1,4 +1,6 @@
 import {
+  LocalBackdrop,
+  Box,
   CSS,
   Flex,
   Heading,
@@ -6,9 +8,9 @@ import {
   Panel,
   Paragraph,
   Text,
-} from '@siafoundation/design-system'
+} from '../'
 
-export type ContentCardProps = {
+export type ContentItemProps = {
   title: string
   subtitle?: string
   description?: string
@@ -19,7 +21,7 @@ export type ContentCardProps = {
   css?: CSS
 }
 
-type Props = ContentCardProps
+type Props = ContentItemProps
 
 export function ContentCard({
   title,
@@ -30,8 +32,22 @@ export function ContentCard({
   css,
 }: Props) {
   return (
-    <Panel key={link} css={{ padding: '$4', ...css }}>
-      <Flex direction="column" gap="2">
+    <Panel key={link} css={{ position: 'relative', padding: '$4', ...css }}>
+      <Box
+        css={{
+          zIndex: 0,
+          overflow: 'hidden',
+          position: 'absolute',
+          borderRadius: '$2',
+          width: '100%',
+          height: '100%',
+          top: 0,
+          left: 0,
+        }}
+      >
+        <LocalBackdrop />
+      </Box>
+      <Flex direction="column" gap="2" css={{ position: 'relative' }}>
         <Heading size="1">
           {link ? (
             <NLink href={link} target={newTab ? '_blank' : undefined}>
@@ -42,11 +58,13 @@ export function ContentCard({
           )}
         </Heading>
         {link && link.startsWith('http') && (
-          <Text size="1" color="subtle">
-            <NLink href={link} target={newTab ? '_blank' : undefined}>
-              {new URL(link).host}
-            </NLink>
-          </Text>
+          <NLink
+            href={link}
+            target={newTab ? '_blank' : undefined}
+            variant="subtle"
+          >
+            {new URL(link).host}
+          </NLink>
         )}
         {subtitle && <Text size="2">{subtitle}</Text>}
         {description && <Paragraph size="1">{description}</Paragraph>}

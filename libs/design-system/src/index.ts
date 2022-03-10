@@ -41,10 +41,17 @@ export * from './primitives/Slider'
 export * from './primitives/Status'
 export * from './primitives/Switch'
 
-export * from './components/Background'
-export * from './components/SiteLayout'
+export * from './components/AppBackdrop'
+export * from './components/LocalBackdrop'
 export * from './components/UserDropdownMenu'
 export * from './components/Dropzone'
+
+export * from './components/SiteLayout'
+export * from './components/ContentBlock'
+export * from './components/ContentCard'
+export * from './components/ContentGallery'
+export * from './components/ContentLi'
+export * from './components/CtaBox'
 
 export * from './hooks/useTheme'
 

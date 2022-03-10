@@ -1,16 +1,21 @@
 import { getCounts } from '@siafoundation/data-sources'
 import { getHosts, getSiaVersion } from '@siafoundation/env'
-import { Flex, Grid, Panel, Separator } from '@siafoundation/design-system'
+import {
+  Flex,
+  Grid,
+  Panel,
+  Separator,
+  ContentBlock,
+  ContentGallery,
+  CtaBox,
+} from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { external, sitemap } from '../../config/site'
 import { getDaysInSeconds } from '../../lib/time'
 import { getHref } from '../../lib/url'
-import { ContentBlock } from '../../components/ContentBlock'
-import { ContentGallery } from '../../components/ContentGallery'
 import { getArticles } from '../../content/articles'
 import { AsyncReturnType } from '../../lib/types'
 import { getSoftware } from '../../content/software'
-import { CtaLarge } from '../../components/CtaLarge'
 import { getStats } from '../../content/stats'
 
 const siaVersion = getSiaVersion()
@@ -184,7 +189,7 @@ function Developers({
         items={services.map((item) => ({ ...item, newTab: true }))}
       />
       <Separator size="4" />
-      <CtaLarge
+      <CtaBox
         title="Learn"
         description={`
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae, necessitatibus.

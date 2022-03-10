@@ -2,7 +2,7 @@ import { styled } from '../config/theme'
 
 export const Text = styled('span', {
   boxSizing: 'border-box',
-  color: '$hiContrast',
+  color: '$textContrast',
   display: 'inline-block',
   fontFamily: '$sans',
   fontWeight: 400,
@@ -11,13 +11,19 @@ export const Text = styled('span', {
   variants: {
     color: {
       subtle: {
-        color: '$slate11',
+        color: '$textSubtle',
       },
       contrast: {
-        color: '$hiContrast',
+        color: '$textContrast',
+      },
+      lo: {
+        color: '$loContrast',
       },
     },
     size: {
+      '0': {
+        fontSize: '$0',
+      },
       '1': {
         fontSize: '$1',
       },
@@ -36,15 +42,6 @@ export const Text = styled('span', {
       '6': {
         fontSize: '$6',
       },
-      '7': {
-        fontSize: '$7',
-      },
-      '8': {
-        fontSize: '$8',
-      },
-      '9': {
-        fontSize: '$9',
-      },
     },
     ellipsis: {
       true: {
@@ -58,6 +55,6 @@ export const Text = styled('span', {
 
   defaultVariants: {
     color: 'contrast',
-    size: 3,
+    size: 2,
   },
 })

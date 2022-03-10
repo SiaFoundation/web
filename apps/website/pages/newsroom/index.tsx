@@ -1,9 +1,9 @@
 import omit from 'lodash/omit'
+import { ContentGallery } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { sitemap } from '../../config/site'
 import { generateRssNewsFeed, getNewsPosts } from '../../content/news'
 import { AsyncReturnType } from '../../lib/types'
-import { ContentGallery } from '../../components/ContentGallery'
 import { getStats } from '../../content/stats'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']

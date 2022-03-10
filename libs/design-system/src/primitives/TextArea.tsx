@@ -46,20 +46,20 @@ export const TextArea = styled('textarea', {
     size: {
       '1': {
         borderRadius: '$1',
-        fontSize: '$1',
-        lineHeight: '16px',
         px: '$1',
+        fontSize: '$0',
+        lineHeight: '150%',
       },
       '2': {
         borderRadius: '$1',
         fontSize: '$2',
-        lineHeight: '20px',
+        lineHeight: '150%',
         px: '$1',
       },
       '3': {
         borderRadius: '$1',
-        fontSize: '$3',
-        lineHeight: '23px',
+        fontSize: '$4',
+        lineHeight: '150%',
         px: '$2',
       },
     },
@@ -72,7 +72,7 @@ export const TextArea = styled('textarea', {
         },
       },
       valid: {
-        boxShadow: 'inset 0 0 0 1px $colors$primary8',
+        boxShadow: 'inset 0 0 0 1px $colors$brandAccent8',
         '&:focus': {
           boxShadow:
             'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput',

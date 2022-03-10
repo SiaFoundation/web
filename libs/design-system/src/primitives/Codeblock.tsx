@@ -1,12 +1,27 @@
+import React from 'react'
 import { styled } from '../config/theme'
 
-export const Codeblock = styled('code', {
+export const SCodeblock = styled('code', {
   fontFamily: '$mono',
-  fontSize: 'max(12px, 85%)',
+  fontSize: '$1',
+  lineHeight: '150%',
   display: 'block',
   padding: '$2',
   backgroundColor: '$slate3',
   color: '$hiContrast',
   textAlign: 'left',
-  borderRadius: '$2',
+  borderRadius: '$1',
+})
+
+type Props = React.ComponentProps<typeof SCodeblock>
+
+export const Codeblock = React.forwardRef<
+  React.ElementRef<typeof SCodeblock>,
+  Props
+>((props, forwardedRef) => {
+  return (
+    <pre>
+      <SCodeblock {...props} ref={forwardedRef} />
+    </pre>
+  )
 })

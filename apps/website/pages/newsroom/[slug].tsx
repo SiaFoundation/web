@@ -1,12 +1,16 @@
-import { Grid, Separator, Text } from '@siafoundation/design-system'
+import {
+  Grid,
+  Separator,
+  Text,
+  ContentCard,
+  ContentBlock,
+} from '@siafoundation/design-system'
 import fs from 'fs'
 import path from 'path'
 import { MDXRemote } from 'next-mdx-remote'
 import { Layout } from '../../components/Layout'
 import { baseContentPath } from '../../config/app'
 import { GetNewsPost, getNewsPost } from '../../content/news'
-import { SimpleBlock } from '../../components/SimpleBlock'
-import { ContentCard } from '../../components/ContentCard'
 import { getStats, Stats } from '../../content/stats'
 
 type Props = GetNewsPost & { stats: Stats }
@@ -19,7 +23,7 @@ function NewsroomPost({
 }: Props) {
   return (
     <Layout stats={stats}>
-      <SimpleBlock title={title} subtitle={description} align="start" />
+      <ContentBlock title={title} subtitle={description} />
       <Text>{subtitle}</Text>
       <MDXRemote {...source} />
       <Separator size="3" />

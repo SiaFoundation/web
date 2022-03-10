@@ -2,8 +2,10 @@ import {
   Box,
   Container,
   Flex,
+  Heading,
   Separator,
   SiteLayout,
+  UserDropdownMenu,
 } from '@siafoundation/design-system'
 import Head from 'next/head'
 import Script from 'next/script'
@@ -13,6 +15,15 @@ import { Stats } from '../content/stats'
 import { Footer } from './Footer'
 import { Navbar } from './Navbar'
 import { Statsbar } from './Statsbar'
+
+function HeaderLeft() {
+  return (
+    <Flex align="center" justify="between" css={{ height: '50px' }}>
+      <Heading size="2">sia</Heading>
+      <UserDropdownMenu />
+    </Flex>
+  )
+}
 
 type Props = {
   children: React.ReactNode
@@ -100,7 +111,7 @@ export function Layout({ children, stats }: Props) {
               `,
         }}
       />
-      <SiteLayout>
+      <SiteLayout headerLeft={<HeaderLeft />}>
         <Container size="3">
           <Flex as="main" direction="column" gap="8" css={{ margin: '$5 0' }}>
             <Navbar />

@@ -3,57 +3,91 @@ import * as colorsExt from './colorsExt'
 export const colors = {
   ...colorsExt.colors,
 
-  // TODO: Below is a temporary translation of the Sia brand colors,
-  // these are not properly selected palettes and do not work for dark mode.
-  // Existing colors from: https://support.sia.tech/sia-integrations/sia-brand-guidelines
+  // brandAccent - light mode
 
-  // Primary
-  primary1: 'rgba(30, 214, 96, 0.05)',
-  primary2: 'rgba(30, 214, 96, 0.1)',
-  primary3: 'rgba(30, 214, 96, 0.2)',
-  primary4: 'rgba(30, 214, 96, 0.3)',
-  primary5: 'rgba(30, 214, 96, 0.4)',
-  primary6: 'rgba(30, 214, 96, 0.5)',
-  primary7: 'rgba(30, 214, 96, 0.6)',
-  primary8: 'rgba(30, 214, 96, 0.7)',
-  primary9: 'rgba(30, 214, 96, 0.8)',
-  primary10: 'rgba(30, 214, 96, 0.9)',
-  primary11: 'rgba(30, 214, 96, 0.95)',
-  primary12: 'rgba(30, 214, 96, 1)',
+  brandAccent1: '#F6FFF9',
+  brandAccent2: '#E9FBEF',
+  brandAccent3: '#D5F2DE',
+  brandAccent4: '#C9EED4',
+  brandAccent5: '#BBE8C9',
+  brandAccent6: '#9BDAAE',
+  brandAccent7: '#71C48A',
+  brandAccent8: '#3EAA5F',
+  brandAccent9: '#05872D',
+  brandAccent10: '#056B24',
+  brandAccent11: '#04511B',
+  brandAccent12: '#011F0A',
 
-  // Secondary
-  secondary1: '#F7F9F8', // very light gray
-  secondary2: '#ECF1F1', // light gray
-  secondary3: '#BFC9C9', // medium gray
-  secondary4: '#93A5A5', // dark gray
-  secondary5: '#7F8C8D', // Sia gray
-  secondary6: '#404647', // darker gray
-  secondary7: '#202323', // darkest gray
+  // brandGray - light mode
+  brandGray1: '#FAFAFA',
+  brandGray2: '#F3F2F2',
+  brandGray3: '#EAEAEA',
+  brandGray4: '#DFDFDF',
+  brandGray5: '#D1D1D1',
+  brandGray6: '#C2C2C2',
+  brandGray7: '#B4B4B4',
+  brandGray8: '#A2A2A2',
+  brandGray9: '#8F8F8F',
+  brandGray10: '#787878',
+  brandGray11: '#555555',
+  brandGray12: '#333333',
 
   // Semantic
   hiContrast: '$slate12',
-  // loContrast: '$slate1',
+  textContrast: '$brandGray12',
+  textSubtle: '$brandGray11',
+  // loContrast: '$brandGray1',
   loContrast: 'white',
   canvas: 'hsl(0 0% 93%)',
   panel: 'white',
   transparentPanel: 'hsl(0 0% 0% / 97%)',
-  accentInactive: '$slate7',
-  accentActive: '$slate8',
-  accentInput: '$primary10',
+  accentInactive: '$brandGray7',
+  accentActive: '$brandGray8',
+  accentInput: '$brandAccent8',
   frame: 'black',
 }
 
 export const colorsDark = {
   ...colorsExt.colorsDark,
 
+  // brandAccent - dark mode
+  brandAccent1: '#05150A',
+  brandAccent2: '#051C0C',
+  brandAccent3: '#062811',
+  brandAccent4: '#073515',
+  brandAccent5: '#064018',
+  brandAccent6: '#075820',
+  brandAccent7: '#056824',
+  brandAccent8: '#077A2A',
+  brandAccent9: '#05872D',
+  brandAccent10: '#069F35',
+  brandAccent11: '#2FA052',
+  brandAccent12: '#D9F4E1',
+
+  // brandGray - dark mode
+  brandGray1: '#1B1B1B',
+  brandGray2: '#232323',
+  brandGray3: '#2D2D2D',
+  brandGray4: '#3C3C3C',
+  brandGray5: '#4D4D4D',
+  brandGray6: '#636363',
+  brandGray7: '#737373',
+  brandGray8: '#8B8B8B',
+  brandGray9: '#9E9E9E',
+  brandGray10: '#B6B6B6',
+  brandGray11: '#C8C8C8',
+  brandGray12: '#FDFDFD',
+
   // Semantic
-  hiContrast: '$slate12',
-  loContrast: '$slate1',
+  hiContrast: '$brandGray12',
+  loContrast: '$brandGray1',
+  textContrast: '$brandGray12',
+  textSubtle: '$brandGray11',
   canvas: 'hsl(0 0% 15%)',
   panel: '$mauve3',
   transparentPanel: 'hsl(0 100% 100% / 97%)',
-  accentInactive: '$slate7',
-  accentActive: '$slate8',
-  accentInput: '$primary10',
+  accentInactive: '$brandGray7',
+  accentActive: '$brandGray8',
+  accentInput: '$brandAccent8',
   frame: '$blackA6',
 }

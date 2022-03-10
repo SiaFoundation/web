@@ -7,20 +7,20 @@ import {
   Paragraph,
   Separator,
   Text,
+  ContentGallery,
+  ContentBlock,
+  LogoGithub16,
+  LogoTwitter16,
 } from '@siafoundation/design-system'
-import { SimpleBlock } from '../../components/SimpleBlock'
+import { MDXRemote } from 'next-mdx-remote'
 import { Layout } from '../../components/Layout'
 import { sitemap } from '../../config/site'
 import { getMdxFile } from '../../lib/mdx'
 import { getDaysInSeconds } from '../../lib/time'
-import { MDXRemote } from 'next-mdx-remote'
 import { AsyncReturnType } from '../../lib/types'
 import team from '../../content/team'
 import transparency from '../../content/transparency'
-import { GitHubLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons'
 import { getNewsPosts } from '../../content/news'
-import { ContentBlock } from '../../components/ContentBlock'
-import { ContentGallery } from '../../components/ContentGallery'
 import { getStats } from '../../content/stats'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
@@ -44,28 +44,30 @@ function Foundation({ stats, foundation, team, newsPosts }: Props) {
         }}
       >
         <Box css={{ '@bp3': { flex: 2 } }}>
-          <SimpleBlock title="Vision">
+          <ContentBlock title="Vision">
             <MDXRemote {...foundation.source} />
-          </SimpleBlock>
+          </ContentBlock>
         </Box>
         <Box css={{ '@bp3': { flex: 1 } }}>
-          <SimpleBlock title="Ethos">
-            <Paragraph size="1">
+          <ContentBlock
+            title="Ethos"
+            description={`
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi,
               necessitatibus. Cumque fugiat, itaque repellendus corrupti quos
               aperiam dolorum quibusdam.
-            </Paragraph>
-          </SimpleBlock>
+          `}
+          />
         </Box>
       </Flex>
-      <SimpleBlock title="Contact">
-        <Text>
+      <ContentBlock
+        title="Contact"
+        description={`
           For developer support please see our support docs. For general
           inquiries email info@sia.tech.
-        </Text>
-      </SimpleBlock>
+      `}
+      />
       <Separator size="4" />
-      <SimpleBlock title="Team">
+      <ContentBlock title="Team">
         <Grid
           columns={{
             '@initial': '1',
@@ -87,7 +89,7 @@ function Foundation({ stats, foundation, team, newsPosts }: Props) {
                     target="_blank"
                     css={{ color: '$gray9' }}
                   >
-                    <TwitterLogoIcon />
+                    <LogoTwitter16 />
                   </NLink>
                 )}
                 {member.github && (
@@ -96,7 +98,7 @@ function Foundation({ stats, foundation, team, newsPosts }: Props) {
                     target="_blank"
                     css={{ color: '$gray9' }}
                   >
-                    <GitHubLogoIcon />
+                    <LogoGithub16 />
                   </NLink>
                 )}
               </Flex>
@@ -104,9 +106,9 @@ function Foundation({ stats, foundation, team, newsPosts }: Props) {
             </Flex>
           ))}
         </Grid>
-      </SimpleBlock>
+      </ContentBlock>
       <Separator size="4" />
-      <SimpleBlock title="Quarterly reports">
+      <ContentBlock title="Quarterly reports">
         {transparency.map((report) => (
           <Box key={report.link}>
             <Text size="4">
@@ -116,7 +118,7 @@ function Foundation({ stats, foundation, team, newsPosts }: Props) {
             </Text>
           </Box>
         ))}
-      </SimpleBlock>
+      </ContentBlock>
       <Separator size="4" />
       <ContentGallery
         title="Recent News"

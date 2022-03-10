@@ -4,24 +4,47 @@ import { VariantProps, CSS } from '../config/theme'
 
 const DEFAULT_TAG = 'h1'
 
-// This is the mapping of Heading Variants to Text variants
+// This is the mapping of Heading to Text size variants
 const textSize: Record<HeadingSizeVariants, TextSizeVariants['size']> = {
-  1: { '@initial': '4', '@bp2': '5' },
-  2: { '@initial': '6', '@bp2': '7' },
-  3: { '@initial': '7', '@bp2': '8' },
-  4: { '@initial': '8', '@bp2': '9' },
+  1: { '@initial': '3', '@bp2': '3' },
+  2: { '@initial': '5', '@bp2': '5' },
+  3: { '@initial': '6', '@bp2': '6' },
+}
+
+// This is the mapping of Heading to Text size variants
+const textTag: Record<HeadingSizeVariants, string> = {
+  1: 'h3',
+  2: 'h2',
+  3: 'h1',
 }
 
 // This is the mapping of Heading Variants to Text css
 const textCss: Record<HeadingSizeVariants, CSS> = {
-  1: { fontWeight: 500, lineHeight: '20px', '@bp2': { lineHeight: '23px' } },
-  2: { fontWeight: 500, lineHeight: '25px', '@bp2': { lineHeight: '30px' } },
-  3: { fontWeight: 500, lineHeight: '33px', '@bp2': { lineHeight: '41px' } },
-  4: { fontWeight: 500, lineHeight: '35px', '@bp2': { lineHeight: '55px' } },
+  1: {
+    color: '$textContrast',
+    fontWeight: 500,
+    lineHeight: '$sizes$5',
+    letterSpacing: '-1%',
+    '@bp2': { lineHeight: '$sizes$5' },
+  },
+  2: {
+    color: '$textContrast',
+    fontWeight: 500,
+    lineHeight: '110%',
+    letterSpacing: '-1%',
+    '@bp2': { lineHeight: '110%' },
+  },
+  3: {
+    color: '$textContrast',
+    fontWeight: 600,
+    lineHeight: '110%',
+    letterSpacing: '-1%',
+    '@bp2': { lineHeight: '110%' },
+  },
 }
 
 type TextSizeVariants = Pick<VariantProps<typeof Text>, 'size'>
-type HeadingSizeVariants = '1' | '2' | '3' | '4'
+type HeadingSizeVariants = '1' | '2' | '3'
 type HeadingVariants = { size?: HeadingSizeVariants } & Omit<
   VariantProps<typeof Text>,
   'size'
@@ -35,9 +58,11 @@ export const Heading = React.forwardRef<
 >((props, forwardedRef) => {
   const { size = '1', ...textProps } = props
 
+  const tag = textTag[size]
+
   return (
     <Text
-      as={DEFAULT_TAG}
+      as={tag}
       {...textProps}
       ref={forwardedRef}
       size={textSize[size]}

@@ -11,16 +11,16 @@ export const baseItemCss = css({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  color: '$slate11',
+  color: '$textSubtle',
   fontFamily: '$sans',
-  fontSize: '$1',
+  fontSize: '$0',
   fontVariantNumeric: 'tabular-nums',
   lineHeight: '1',
   cursor: 'default',
   userSelect: 'none',
   whiteSpace: 'nowrap',
   height: '$6',
-  padding: '0 $3',
+  padding: '0 $2',
 })
 
 export const itemCss = css(baseItemCss, {
@@ -30,27 +30,29 @@ export const itemCss = css(baseItemCss, {
 
   '&:focus': {
     outline: 'none',
-    color: '$slate12',
+    color: '$brandGray12',
   },
 
   '&[data-disabled]': {
-    color: '$slate9',
+    color: '$brandGray9',
   },
 
   // Make nested links and icons within links match
   [`& ${Link}`]: {
-    color: '$slate11',
+    fontFamily: '$sans',
+    textDecoration: 'none',
+    color: '$brandGray11',
     '&:hover': {
-      color: '$slate12',
+      color: '$brandGray12',
     },
     '&:hover > *': {
-      color: '$slate12',
+      color: '$brandGray12',
     },
   },
 })
 
 export const labelCss = css(baseItemCss, {
-  color: '$slate11',
+  color: '$brandGray11',
 })
 
 export const menuCss = css({
@@ -62,7 +64,7 @@ export const menuCss = css({
 export const separatorCss = css({
   height: 1,
   my: '$1',
-  backgroundColor: '$slate6',
+  backgroundColor: '$brandGray6',
 })
 
 export const Menu = styled(MenuPrimitive.Root, menuCss)

@@ -14,6 +14,13 @@ import { SectionHeading } from '../components/SectionHeading'
 import { SubsectionHeading } from '../components/SubsectionHeading'
 
 const randomLink = 'https://urbit.org/'
+const exampleCode = `func Fibonacci(n int) int {
+    if n <= 1 {
+        return n
+    }
+    return Fibonacci(n-1) + Fibonacci(n-2)
+}
+`
 
 export function Typography() {
   return (
@@ -23,53 +30,37 @@ export function Typography() {
         <SubsectionHeading>Headings</SubsectionHeading>
         <Flex direction="column" gap="2">
           <Heading size="1">Heading 1</Heading>
-          <Heading size="2" color="subtle">
-            Heading 2 - subtle
-          </Heading>
-          <Heading size="3" css={{ fontStyle: 'italic' }}>
-            Heading 3
-          </Heading>
-          <Heading size="4">Heading 4</Heading>
+          <Heading size="2">Heading 2</Heading>
+          <Heading size="3">Heading 3</Heading>
         </Flex>
       </Section>
       <Section>
         <SubsectionHeading>Text</SubsectionHeading>
         <Flex direction="column" gap="2">
-          <Text size="1">Text 1</Text>
-          <Text size="2">Text 2</Text>
-          <Text size="3">Text 3 - contrast</Text>
+          <Text size="1">Tiny processors 1</Text>
+          <Text size="2">Tools for thought 2</Text>
+          <Text size="3">A web of information and ideas - 3 contrast</Text>
           <Text size="4" color="subtle">
-            Text 4 - subtle
+            A computer that fits in your pocket - 4 subtle
           </Text>
-          <Text size="5">Text 5</Text>
-          <Text size="6" css={{ fontStyle: 'italic' }}>
-            Text 6
+          <Text size="5" css={{ fontStyle: 'italic' }}>
+            Brain-computer interface - 5 italic
           </Text>
-          <Text size="7">Text 7</Text>
-          <Text size="8">Text 8</Text>
-          <Text size="9">Text 9</Text>
+          <Text size="6">Human test subjects - 6</Text>
         </Flex>
       </Section>
       <Section>
         <SubsectionHeading>Link</SubsectionHeading>
         <Flex direction="column" gap="2" align="start">
-          <NLink href={randomLink} target="_blank" variant="green">
-            Green link
-          </NLink>
           <NLink href={randomLink} target="_blank" variant="subtle">
             Subtle link
           </NLink>
           <NLink href={randomLink} target="_blank" variant="contrast">
             Contrast link
           </NLink>
-          <Text size="6">
-            <NLink href={randomLink} target="_blank" variant="green">
-              Green link inside Text size 6
-            </NLink>
-          </Text>
-          <Text size="9">
-            <NLink href={randomLink} target="_blank" variant="subtle">
-              Subtle link inside Text size 9
+          <Text size="5">
+            <NLink href={randomLink} target="_blank">
+              Link inside Text size 5
             </NLink>
           </Text>
         </Flex>
@@ -78,23 +69,12 @@ export function Typography() {
         <SubsectionHeading>Code</SubsectionHeading>
         <Grid gap="2" justify="start">
           <Code variant="gray">{'fmt.Println("fibonacci")'}</Code>
-          <Code variant="green">{'fmt.Println("fibonacci")'}</Code>
+          <Code variant="accent">{'fmt.Println("fibonacci")'}</Code>
         </Grid>
       </Section>
       <Section>
         <SubsectionHeading>Codeblock</SubsectionHeading>
-        <pre>
-          <Codeblock>
-            {`
-func Fibonacci(n int) int {
-    if n <= 1 {
-        return n
-    }
-    return Fibonacci(n-1) + Fibonacci(n-2)
-}
-              `}
-          </Codeblock>
-        </pre>
+        <Codeblock>{exampleCode}</Codeblock>
         <Flex direction="column" gap="2" align="start"></Flex>
       </Section>
       <Section>
@@ -113,7 +93,7 @@ func Fibonacci(n int) int {
               labore et dolore magna aliqua. Ut enim ad minim veniam, quis
               nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
               consequat. Duis aute irure{' '}
-              <NLink variant="green" href={randomLink} target="_blank">
+              <NLink variant="subtle" href={randomLink} target="_blank">
                 example of an inline link
               </NLink>{' '}
               dolor in reprehenderit in voluptate velit esse cillum dolore eu
@@ -131,7 +111,7 @@ func Fibonacci(n int) int {
               labore et dolore magna aliqua. Ut enim ad minim veniam, quis
               nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
               consequat. Duis aute irure{' '}
-              <NLink variant="green" href={randomLink} target="_blank">
+              <NLink variant="subtle" href={randomLink} target="_blank">
                 example of an inline link
               </NLink>{' '}
               dolor in reprehenderit in voluptate velit esse cillum dolore eu
@@ -149,7 +129,7 @@ func Fibonacci(n int) int {
               labore et dolore magna aliqua. Ut enim ad minim veniam, quis
               nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
               consequat. Duis aute irure{' '}
-              <NLink variant="green" href={randomLink} target="_blank">
+              <NLink variant="subtle" href={randomLink} target="_blank">
                 example of an inline link
               </NLink>{' '}
               dolor in reprehenderit in voluptate velit esse cillum dolore eu

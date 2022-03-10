@@ -10,16 +10,16 @@ export const Code = styled('code', {
   variants: {
     variant: {
       gray: {
-        backgroundColor: '$slate3',
-        color: '$slate11',
+        backgroundColor: '$brandGray2',
+        color: '$brandGray11',
       },
-      green: {
-        backgroundColor: '$primary2',
-        color: '$primary12',
+      accent: {
+        backgroundColor: '$brandAccent2',
+        color: '$brandAccent12',
       },
     },
   },
   defaultVariants: {
-    variant: 'green',
+    variant: 'accent',
   },
 })

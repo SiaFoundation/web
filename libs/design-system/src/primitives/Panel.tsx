@@ -12,24 +12,6 @@ export const panelStyles = css({
       boxShadow: 'inset 0 0 0 1px $colors$accentActive',
     },
   },
-
-  variants: {
-    size: {
-      '1': {
-        borderRadius: '$2',
-      },
-      '2': {
-        borderRadius: '$3',
-      },
-      '3': {
-        borderRadius: '$5',
-      },
-    },
-  },
-
-  defaultVariants: {
-    size: '1',
-  },
 })
 
 export const Panel = styled('div', panelStyles)

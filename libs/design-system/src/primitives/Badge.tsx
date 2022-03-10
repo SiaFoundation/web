@@ -8,7 +8,8 @@ export const Badge = styled('span', {
   boxSizing: 'border-box',
   display: 'inline-flex',
   flexShrink: 0,
-  fontFamily: '$sans',
+  fontFamily: '$mono',
+  fontWeight: 500,
   justifyContent: 'center',
   lineHeight: '1',
   verticalAlign: 'middle',
@@ -33,17 +34,18 @@ export const Badge = styled('span', {
 
   // Custom
   backgroundColor: '$slate3',
-  borderRadius: '$1',
+  // borderRadius: '$1',
   color: '$slate11',
   whiteSpace: 'nowrap',
   fontVariantNumeric: 'tabular-nums',
+  textTransform: 'uppercase',
 
   variants: {
     size: {
       '1': {
-        height: '$4',
-        px: '$1',
-        fontSize: '$1',
+        height: '$5',
+        px: '$2',
+        fontSize: '$0',
       },
       '2': {
         height: '$5',
@@ -52,12 +54,36 @@ export const Badge = styled('span', {
       },
     },
     variant: {
+      simple: {
+        backgroundColor: '$loContrast',
+        border: '1px solid $brandAccent9',
+        color: '$brandAccent9',
+        '&:focus': {
+          boxShadow:
+            'inset 0 0 0 1px $colors$brandAccent10, 0 0 0 1px $colors$brandAccent10',
+        },
+      },
+      accent: {
+        backgroundColor: '$brandAccent9',
+        color: 'white',
+        '&:focus': {
+          boxShadow:
+            'inset 0 0 0 1px $colors$brandAccent10, 0 0 0 1px $colors$brandAccent10',
+        },
+      },
       gray: {
         backgroundColor: '$slate3',
         color: '$slate11',
         '&:focus': {
           boxShadow:
             'inset 0 0 0 1px $colors$accentActive, 0 0 0 1px $colors$accentActive',
+        },
+      },
+      green: {
+        backgroundColor: '$green3',
+        color: '$green11',
+        '&:focus': {
+          boxShadow: 'inset 0 0 0 1px $colors$green8, 0 0 0 1px $colors$green8',
         },
       },
       red: {
@@ -127,14 +153,6 @@ export const Badge = styled('span', {
           boxShadow: 'inset 0 0 0 1px $colors$teal8, 0 0 0 1px $colors$teal8',
         },
       },
-      green: {
-        backgroundColor: '$primary3',
-        color: '$green11',
-        '&:focus': {
-          boxShadow:
-            'inset 0 0 0 1px $colors$primary10, 0 0 0 1px $colors$primary10',
-        },
-      },
       lime: {
         backgroundColor: '$lime3',
         color: '$lime11',
@@ -182,6 +200,45 @@ export const Badge = styled('span', {
   compoundVariants: [
     {
       interactive: true,
+      variant: 'simple',
+      css: {
+        '@hover': {
+          '&:hover': {
+            borderColor: '$brandAccent10',
+            color: '$brandAccent10',
+          },
+        },
+        '&:active': {
+          borderColor: '$brandAccent11',
+          color: '$brandAccent11',
+        },
+        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
+          {
+            borderColor: '$brandAccent10',
+            color: '$brandAccent10',
+          },
+      },
+    },
+    {
+      interactive: true,
+      variant: 'accent',
+      css: {
+        '@hover': {
+          '&:hover': {
+            backgroundColor: '$brandAccent10',
+          },
+        },
+        '&:active': {
+          backgroundColor: '$brandAccent11',
+        },
+        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
+          {
+            backgroundColor: '$brandAccent10',
+          },
+      },
+    },
+    {
+      interactive: true,
       variant: 'red',
       css: {
         '@hover': {
@@ -195,6 +252,24 @@ export const Badge = styled('span', {
         '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
             backgroundColor: '$red5',
+          },
+      },
+    },
+    {
+      interactive: true,
+      variant: 'green',
+      css: {
+        '@hover': {
+          '&:hover': {
+            backgroundColor: '$green4',
+          },
+        },
+        '&:active': {
+          backgroundColor: '$green5',
+        },
+        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
+          {
+            backgroundColor: '$green5',
           },
       },
     },
@@ -357,24 +432,6 @@ export const Badge = styled('span', {
         '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
             backgroundColor: '$teal5',
-          },
-      },
-    },
-    {
-      interactive: true,
-      variant: 'green',
-      css: {
-        '@hover': {
-          '&:hover': {
-            backgroundColor: '$green4',
-          },
-        },
-        '&:active': {
-          backgroundColor: '$green5',
-        },
-        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
-          {
-            backgroundColor: '$green5',
           },
       },
     },
