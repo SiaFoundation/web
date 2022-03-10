@@ -22,35 +22,35 @@ export function Inputs() {
         <SubsectionHeading>TextField</SubsectionHeading>
         <Flex direction="column" gap="2">
           <Grid columns={{ '@initial': 1, '@bp1': 4 }} gap="2">
-            <TextField size="2" placeholder="Dennis Ritchie"></TextField>
-            <TextField size="2" placeholder="Dennis Ritchie"></TextField>
+            <TextField size="2" placeholder="Ada Lovelace"></TextField>
+            <TextField size="2" placeholder="Ada Lovelace"></TextField>
             <TextField
               size="2"
               placeholder="placeholder"
-              defaultValue="Dennis Ritchie"
+              defaultValue="Ada Lovelace"
             />
             <TextField
               size="2"
               placeholder="placeholder"
-              defaultValue="Dennis Ritchie"
+              defaultValue="Ada Lovelace"
               readOnly
             />
             <TextField
               size="2"
               placeholder="placeholder"
-              defaultValue="Dennis Ritchie"
+              defaultValue="Ada Lovelace"
               disabled
             />
             <TextField
               size="2"
               placeholder="placeholder"
-              defaultValue="Dennis Ritchie"
+              defaultValue="Ada Lovelace"
               variant="ghost"
             />
             <TextField
               size="2"
               placeholder="placeholder"
-              defaultValue="Dennis Ritchie"
+              defaultValue="Ada Lovelace"
               variant="totalGhost"
             />
           </Grid>
@@ -78,18 +78,8 @@ export function Inputs() {
             <TextField size="2" type="number" placeholder="5" />
           </Grid>
           <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
-            <TextField
-              size="3"
-              type="email"
-              placeholder="thompson@bell-labs.com"
-            />
-            <TextField size="3" type="password" placeholder="password" />
-            <TextField size="3" type="number" placeholder="5" />
-          </Grid>
-          <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
             <TextField size="1" type="date" />
             <TextField size="2" type="date" />
-            <TextField size="3" type="date" />
           </Grid>
           <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
             <TextField
@@ -186,20 +176,6 @@ export function Inputs() {
               <option>Option D</option>
             </Select>
             <Select disabled size="2">
-              <option>Option A</option>
-              <option>Option B</option>
-              <option>Option C</option>
-              <option>Option D</option>
-            </Select>
-          </Flex>
-          <Flex direction="row" gap="1">
-            <Select size="3">
-              <option>Option A</option>
-              <option>Option B</option>
-              <option>Option C</option>
-              <option>Option D</option>
-            </Select>
-            <Select disabled size="3">
               <option>Option A</option>
               <option>Option B</option>
               <option>Option C</option>

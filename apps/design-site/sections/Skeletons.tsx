@@ -21,9 +21,6 @@ export function Skeletons() {
             <Skeleton variant="avatar1" />
             <Skeleton variant="avatar2" />
             <Skeleton variant="avatar3" />
-            <Skeleton variant="avatar4" />
-            <Skeleton variant="avatar5" />
-            <Skeleton variant="avatar6" />
           </Flex>
           <SmallSection>Text</SmallSection>
           <Flex

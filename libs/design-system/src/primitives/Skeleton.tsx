@@ -26,30 +26,15 @@ export const Skeleton = styled('div', {
     variant: {
       avatar1: {
         borderRadius: '$round',
-        height: '$3',
-        width: '$3',
-      },
-      avatar2: {
-        borderRadius: '$round',
-        height: '$5',
-        width: '$5',
-      },
-      avatar3: {
-        borderRadius: '$round',
         height: '$6',
         width: '$6',
       },
-      avatar4: {
+      avatar2: {
         borderRadius: '$round',
         height: '$7',
         width: '$7',
       },
-      avatar5: {
-        borderRadius: '$round',
-        height: '$8',
-        width: '$8',
-      },
-      avatar6: {
+      avatar3: {
         borderRadius: '$round',
         height: '$9',
         width: '$9',

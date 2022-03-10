@@ -1,11 +1,13 @@
 import {
+  LocalBackdrop,
+  Box,
   Flex,
   Heading,
   NLinkButton,
   Panel,
   Paragraph,
   Text,
-} from '@siafoundation/design-system'
+} from '../'
 
 type Props = {
   slogan?: string
@@ -14,24 +16,46 @@ type Props = {
   actionTitle: string
   actionLink: string
   actionNewTab?: boolean
+  size?: '1' | '2'
 }
 
-export function CtaLarge({
+export function CtaBox({
   slogan,
   title,
   description,
   actionTitle,
   actionLink,
   actionNewTab,
+  size = '1',
 }: Props) {
   return (
-    <Panel>
+    <Panel
+      css={{
+        position: 'relative',
+        background: 'none',
+        border: '2px solid $frame',
+        maxWidth: size === '1' ? '300px' : 'inherit',
+      }}
+    >
+      <Box
+        css={{
+          zIndex: 0,
+          overflow: 'hidden',
+          position: 'absolute',
+          // borderRadius: '$2',
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        <LocalBackdrop />
+      </Box>
       <Flex
         direction="column"
         align="start"
         gap="3"
         css={{
-          padding: '$8 $3',
+          position: 'relative',
+          padding: size === '2' ? '$8 $8' : '$8 $5',
         }}
       >
         {slogan && (
@@ -42,6 +66,8 @@ export function CtaLarge({
         <Heading size="3">{title}</Heading>
         <Paragraph>{description}</Paragraph>
         <NLinkButton
+          size="2"
+          variant="green"
           href={actionLink}
           css={{ display: 'inline' }}
           target={actionNewTab ? '_blank' : undefined}

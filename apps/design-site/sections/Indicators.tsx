@@ -27,7 +27,9 @@ export function Indicators() {
             <Text>Announcement, personal quantum computers now available.</Text>
           </Banner>
           <Banner variant="red">
-            <Text>Announcement, personal quantum computers now available.</Text>
+            <Text>
+              Announcement, personal quantum computers are being recalled.
+            </Text>
           </Banner>
           <Banner variant="loContrast">
             <Text>Announcement, personal quantum computers now available.</Text>
@@ -49,7 +51,7 @@ export function Indicators() {
             <Text>Announcement, neural implants now available.</Text>
           </Alert>
           <Alert variant="red">
-            <Text>Announcement, neural implants now available.</Text>
+            <Text>Announcement, all jetpacks are being recalled.</Text>
           </Alert>
           <Alert variant="loContrast">
             <Text>Announcement, neural implants now available.</Text>
@@ -68,17 +70,18 @@ export function Indicators() {
             <ProgressBar value={50} variant="gray" />
           </Box>
           <Box>
-            <ProgressBar value={75} variant="green" />
+            <ProgressBar value={25} variant="green" />
           </Box>
           <Box>
-            <ProgressBar value={25} variant="gradient" />
+            <ProgressBar value={75} variant="gradient" />
           </Box>
         </Grid>
       </Section>
       <Section>
         <SubsectionHeading>Badge</SubsectionHeading>
         <Flex direction="row" gap="1" wrap="wrap">
-          <Badge variant="green">Green</Badge>
+          <Badge variant="accent">Accent</Badge>
+          <Badge variant="simple">Simple</Badge>
           <Badge variant="gold">Gold</Badge>
           <Badge variant="gray">Gray</Badge>
           <Badge variant="indigo">Indigo</Badge>
@@ -86,6 +89,7 @@ export function Indicators() {
           <Badge variant="orange">Orange</Badge>
           <Badge variant="pink">Pink</Badge>
           <Badge variant="purple">Purple</Badge>
+          <Badge variant="green">Green</Badge>
           <Badge variant="red">Red</Badge>
           <Badge variant="teal">Teal</Badge>
           <Badge variant="violet">Violet</Badge>
@@ -95,20 +99,26 @@ export function Indicators() {
       <Section>
         <SubsectionHeading>Badge - interactive</SubsectionHeading>
         <Flex direction="row" gap="1" wrap="wrap">
+          <Badge interactive variant="accent">
+            Accent
+          </Badge>
+          <Badge interactive variant="simple">
+            Outline
+          </Badge>
           <Badge interactive variant="gold">
             Gold
           </Badge>
           <Badge interactive variant="gray">
             Gray
           </Badge>
-          <Badge interactive variant="green">
-            Green
-          </Badge>
           <Badge interactive variant="indigo">
             Indigo
           </Badge>
           <Badge interactive variant="lime">
             Lime
+          </Badge>
+          <Badge interactive variant="green">
+            Green
           </Badge>
           <Badge interactive variant="orange">
             Orange

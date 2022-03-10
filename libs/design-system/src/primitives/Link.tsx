@@ -10,17 +10,11 @@ export const Link = styled('a', {
   gap: '$1',
   flexShrink: 0,
   outline: 'none',
-  fontFamily: '$sans',
-  textDecorationLine: 'none',
+  fontFamily: '$mono',
+  textDecorationLine: 'underline',
   textUnderlineOffset: '3px',
-  textDecorationColor: '$slate4',
-  WebkitTapHighlightColor: 'rgba(0,0,0,0)',
   lineHeight: 'inherit',
-  '@hover': {
-    '&:hover': {
-      textDecorationLine: 'underline',
-    },
-  },
+  WebkitTapHighlightColor: 'rgba(0,0,0,0)',
   '&:focus': {
     outlineWidth: '2px',
     outlineStyle: 'solid',
@@ -30,29 +24,22 @@ export const Link = styled('a', {
   [`& ${Text}`]: {
     color: 'inherit',
   },
+
   variants: {
     variant: {
-      green: {
-        color: '$primary12',
-        textDecorationColor: '$blue4',
-        '&:focus': {
-          outlineColor: '$blue8',
-        },
-      },
       subtle: {
-        color: '$slate11',
-        textDecorationColor: '$slate4',
+        color: '$textSubtle',
+        textDecorationColor: '$brandGray5',
         '&:focus': {
           outlineColor: '$accentActive',
         },
       },
       contrast: {
-        color: '$hiContrast',
-        textDecoration: 'underline',
-        textDecorationColor: '$slate4',
+        color: '$textContrast',
+        textDecorationColor: '$textContrast',
         '@hover': {
           '&:hover': {
-            textDecorationColor: '$accentInactive',
+            textDecorationColor: '$textSubtle',
           },
         },
         '&:focus': {
@@ -99,6 +86,7 @@ type NLinkButtonProps = {
   target?: string
   children: React.ReactNode
   variant?: React.ComponentProps<typeof Button>['variant']
+  size?: React.ComponentProps<typeof Button>['size']
   css?: CSS
 }
 
@@ -109,11 +97,19 @@ export function NLinkButton({
   target,
   children,
   variant,
+  size,
   css,
 }: NLinkButtonProps) {
   return (
     <NextLink href={href} passHref>
-      <Button as="a" id={id} css={css} variant={variant} target={target}>
+      <Button
+        as="a"
+        id={id}
+        css={css}
+        variant={variant}
+        size={size}
+        target={target}
+      >
         {children}
       </Button>
     </NextLink>
@@ -125,7 +121,7 @@ type RLinkProps = {
   to: string
   target?: string
   children: React.ReactNode
-  variant?: 'green' | 'subtle' | 'contrast'
+  variant?: React.ComponentProps<typeof Link>['variant']
   css?: CSS
 }
 

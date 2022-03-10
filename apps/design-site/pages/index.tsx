@@ -15,8 +15,9 @@ import { Dialogs } from '../sections/Dialogs'
 export function Index() {
   return (
     <Container size="3" css={{ py: '$5', bc: '$loContrast' }}>
-      <Layout />
+      <Colors />
       <Typography />
+      <Layout />
       <Images />
       <Buttons />
       <Inputs />
@@ -26,7 +27,6 @@ export function Index() {
       <Dialogs />
       <Popups />
       <Skeletons />
-      <Colors />
     </Container>
   )
 }

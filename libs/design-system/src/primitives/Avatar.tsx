@@ -37,26 +37,14 @@ const StyledAvatar = styled(AvatarPrimitive.Root, {
   variants: {
     size: {
       '1': {
-        width: '$3',
-        height: '$3',
-      },
-      '2': {
-        width: '$5',
-        height: '$5',
-      },
-      '3': {
         width: '$6',
         height: '$6',
       },
-      '4': {
+      '2': {
         width: '$7',
         height: '$7',
       },
-      '5': {
-        width: '$8',
-        height: '$8',
-      },
-      '6': {
+      '3': {
         width: '$9',
         height: '$9',
       },
@@ -67,7 +55,7 @@ const StyledAvatar = styled(AvatarPrimitive.Root, {
         color: '$loContrast',
       },
       gray: {
-        backgroundColor: '$slate5',
+        backgroundColor: '$brandGray5',
       },
       tomato: {
         backgroundColor: '$tomato5',
@@ -138,7 +126,7 @@ const StyledAvatar = styled(AvatarPrimitive.Root, {
     },
     shape: {
       square: {
-        borderRadius: '$2',
+        borderRadius: '$sizes$1',
       },
       circle: {
         borderRadius: '50%',
@@ -201,23 +189,13 @@ const StyledAvatarFallback = styled(AvatarPrimitive.Fallback, {
   variants: {
     size: {
       '1': {
-        fontSize: '8px',
-        lineHeight: '15px',
+        fontSize: '$1',
       },
       '2': {
         fontSize: '$2',
       },
       '3': {
         fontSize: '$4',
-      },
-      '4': {
-        fontSize: '$6',
-      },
-      '5': {
-        fontSize: '$7',
-      },
-      '6': {
-        fontSize: '$8',
       },
     },
   },

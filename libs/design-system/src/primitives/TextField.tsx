@@ -28,7 +28,7 @@ export const TextField = styled('input', {
 
   '&:-webkit-autofill': {
     boxShadow:
-      'inset 0 0 0 1px $colors$blue6, inset 0 0 0 100px $colors$primary4',
+      'inset 0 0 0 1px $colors$blue6, inset 0 0 0 100px $colors$brandAccent4',
   },
 
   '&:-webkit-autofill::first-line': {
@@ -41,25 +41,25 @@ export const TextField = styled('input', {
       'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput',
     '&:-webkit-autofill': {
       boxShadow:
-        'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput, inset 0 0 0 100px $colors$primary4',
+        'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput, inset 0 0 0 100px $colors$brandAccent4',
     },
   },
   '&::placeholder': {
-    color: '$slate9',
+    color: '$brandGray9',
   },
   '&:disabled': {
     pointerEvents: 'none',
-    backgroundColor: '$slate2',
-    color: '$slate8',
+    backgroundColor: '$brandGray2',
+    color: '$brandGray8',
     cursor: 'not-allowed',
     '&::placeholder': {
-      color: '$slate7',
+      color: '$brandGray7',
     },
   },
   '&:read-only': {
-    backgroundColor: '$slate2',
+    backgroundColor: '$brandGray2',
     '&:focus': {
-      boxShadow: 'inset 0px 0px 0px 1px $colors$slate7',
+      boxShadow: 'inset 0px 0px 0px 1px $colors$brandGray7',
     },
   },
 
@@ -68,43 +68,29 @@ export const TextField = styled('input', {
       '1': {
         borderRadius: '$1',
         height: '$5',
-        fontSize: '$1',
+        fontSize: '$0',
         padding: '0 $1',
         lineHeight: '$sizes$5',
         '&:-webkit-autofill::first-line': {
-          fontSize: '$1',
+          fontSize: '$0',
         },
         '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
           position: 'relative',
-          right: '-4px',
+          right: '-7px',
         },
       },
       '2': {
         borderRadius: '$1',
-        height: '$6',
-        fontSize: '$3',
-        padding: '0 $2',
-        lineHeight: '$sizes$6',
-        '&:-webkit-autofill::first-line': {
-          fontSize: '$3',
-        },
-        '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-          position: 'relative',
-          right: '-8px',
-        },
-      },
-      '3': {
-        borderRadius: '$1',
         height: '$7',
-        fontSize: '$6',
+        fontSize: '$2',
         padding: '0 $2',
         lineHeight: '$sizes$7',
         '&:-webkit-autofill::first-line': {
-          fontSize: '$7',
+          fontSize: '$2',
         },
         '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
           position: 'relative',
-          right: '-8px',
+          right: '-13px',
         },
       },
     },
@@ -145,7 +131,7 @@ export const TextField = styled('input', {
         backgroundColor: 'transparent',
         '@hover': {
           '&:hover': {
-            boxShadow: 'inset 0 0 0 1px $colors$slateA7',
+            boxShadow: 'inset 0 0 0 1px $colors$brandGray7',
           },
         },
         '&:focus': {
@@ -170,7 +156,7 @@ export const TextField = styled('input', {
         },
       },
       valid: {
-        boxShadow: 'inset 0 0 0 1px $colors$primary8',
+        boxShadow: 'inset 0 0 0 1px $colors$brandAccent8',
         '&:focus': {
           boxShadow:
             'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput',

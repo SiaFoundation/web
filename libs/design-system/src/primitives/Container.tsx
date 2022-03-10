@@ -4,9 +4,9 @@ export const Container = styled('div', {
   boxSizing: 'border-box',
   flexShrink: 0,
   margin: '0 auto',
-  padding: '0 $3',
+  padding: '0 $4',
   '@bp2': {
-    padding: '0 $5',
+    padding: '0 $6',
   },
 
   variants: {

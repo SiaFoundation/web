@@ -61,7 +61,7 @@ export function Dialogs() {
         <SubsectionHeading>AlertDialog</SubsectionHeading>
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button>AlertDialog</Button>
+            <Button>Alert Dialog</Button>
           </AlertDialogTrigger>
           <AlertDialogPortal>
             <AlertDialogOverlay />
@@ -85,7 +85,7 @@ export function Dialogs() {
                   <Button>nvm, cancel</Button>
                 </AlertDialogCancel>
                 <AlertDialogAction asChild>
-                  <Button variant="green">Action</Button>
+                  <Button variant="accent">Action</Button>
                 </AlertDialogAction>
               </Flex>
             </AlertDialogContent>

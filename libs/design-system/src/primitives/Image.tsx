@@ -7,9 +7,14 @@ export const Image = styled('img', {
 
   variants: {
     radius: {
-      '0': {},
       '1': {
+        borderRadius: '$1',
+      },
+      '2': {
         borderRadius: '$2',
+      },
+      '3': {
+        borderRadius: '$3',
       },
     },
     fit: {

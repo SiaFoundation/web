@@ -1,22 +1,22 @@
-import { LeftNavbar } from './LeftNavbar'
+import { HeaderLeft } from './HeaderLeft'
+import { HeaderRight } from './HeaderRight'
 import image from '../../assets/light.png'
 import { Box } from '../../primitives/Box'
 import { ScrollArea } from '../../primitives/ScrollArea'
 import { NImage } from '../../primitives/Image'
+import { getImageProps } from '../../lib/image'
 
 const frameThickness = 4
 
-// The image imports have different behaviour when the consuming is app is CRA vs Next
-// CRA returns a URL string whereas Next returns an object with multiple image attributes.
-const imageProps = typeof image === 'string' ? { src: image } : image
+const imageProps = getImageProps(image)
 
 type Props = {
-  title?: string
-  header?: boolean
+  headerLeft?: React.ReactNode
+  headerRight?: React.ReactNode
   children: React.ReactNode
 }
 
-export function SiteLayout({ title, header, children }: Props) {
+export function SiteLayout({ headerLeft, headerRight, children }: Props) {
   return (
     <Box
       as="main"
@@ -44,7 +44,7 @@ export function SiteLayout({ title, header, children }: Props) {
             },
           }}
         >
-          {header && <LeftNavbar title={title} />}
+          {headerLeft && <HeaderLeft>{headerLeft}</HeaderLeft>}
           <Box
             css={{
               position: 'relative',
@@ -55,16 +55,18 @@ export function SiteLayout({ title, header, children }: Props) {
           </Box>
         </Box>
       </ScrollArea>
-      {/* <Box
-        css={{
-          position: 'absolute',
-          right: 0,
-          top: 0,
-          zIndex: 1,
-        }}
-      >
-        <RightNavbar />
-      </Box> */}
+      {headerRight && (
+        <Box
+          css={{
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            zIndex: 1,
+          }}
+        >
+          <HeaderRight>{headerRight}</HeaderRight>
+        </Box>
+      )}
       <Box
         css={{
           position: 'absolute',

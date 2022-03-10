@@ -58,26 +58,9 @@ export function Tooltip({
         {...props}
         multiline={multiline}
       >
-        <Text
-          size="1"
-          as="p"
-          css={{
-            color: '$loContrast',
-            lineHeight: multiline ? '20px' : undefined,
-          }}
-        >
+        <Text size="0" as="p" color="lo">
           {content}
         </Text>
-        {/* <Box css={{ color: '$transparentExtreme' }}>
-          <TooltipPrimitive.Arrow
-            offset={5}
-            width={11}
-            height={5}
-            style={{
-              fill: 'currentColor',
-            }}
-          />
-        </Box> */}
       </Content>
     </TooltipPrimitive.Root>
   )

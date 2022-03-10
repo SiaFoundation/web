@@ -1,16 +1,14 @@
 import {
-  Alert,
   Badge,
-  Banner,
   Button,
   Flex,
   Heading,
+  Paragraph,
   Popover,
   PopoverContent,
   PopoverTrigger,
   Section,
   Text,
-  TextField,
   Tooltip,
 } from '@siafoundation/design-system'
 import { SectionHeading } from '../components/SectionHeading'
@@ -20,10 +18,10 @@ function Content() {
   return (
     <Flex direction="column" gap="1" css={{ p: '$3' }}>
       <Heading>Hey there</Heading>
-      <Text>
+      <Paragraph size="1">
         Be sure to read the user manual before operating machinery like this
         button.
-      </Text>
+      </Paragraph>
     </Flex>
   )
 }
@@ -38,7 +36,7 @@ export function Popups() {
         <Flex direction="row" gap="2" align="center">
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="green">Start aligned</Button>
+              <Button variant="accent">Start aligned</Button>
             </PopoverTrigger>
             <PopoverContent align="start">
               <Content />
@@ -46,7 +44,7 @@ export function Popups() {
           </Popover>
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="green">Center aligned</Button>
+              <Button variant="accent">Center aligned</Button>
             </PopoverTrigger>
             <PopoverContent align="center">
               <Content />
@@ -54,7 +52,7 @@ export function Popups() {
           </Popover>
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="green">End aligned</Button>
+              <Button variant="accent">End aligned</Button>
             </PopoverTrigger>
             <PopoverContent align="end">
               <Content />
@@ -67,13 +65,13 @@ export function Popups() {
         <Text css={{ pb: '$3' }}>Hover to see Tooltip</Text>
         <Flex direction="row" gap="2">
           <Tooltip align="start" content="Start aligned">
-            <Badge variant="green">Start aligned</Badge>
+            <Badge variant="accent">Start aligned</Badge>
           </Tooltip>
           <Tooltip align="center" content="Center aligned">
-            <Badge variant="green">Center aligned</Badge>
+            <Badge variant="accent">Center aligned</Badge>
           </Tooltip>
           <Tooltip align="end" content="End aligned">
-            <Badge variant="green">End aligned</Badge>
+            <Badge variant="accent">End aligned</Badge>
           </Tooltip>
         </Flex>
       </Section>

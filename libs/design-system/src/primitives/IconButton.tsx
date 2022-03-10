@@ -31,7 +31,7 @@ export const IconButton = styled('button', {
     },
   },
   '&:active': {
-    backgroundColor: '$slate2',
+    backgroundColor: '$brandGray2',
   },
   '&:focus': {
     borderColor: '$accentActive',
@@ -48,21 +48,22 @@ export const IconButton = styled('button', {
         borderRadius: '$1',
         height: '$5',
         width: '$5',
+        fontSize: '$0',
+        lineHeight: '$sizes$5',
       },
       '2': {
         borderRadius: '$2',
-        height: '$6',
-        width: '$6',
+        height: '$7',
+        width: '$7',
+        fontSize: '$2',
+        lineHeight: '$sizes$7',
       },
       '3': {
         borderRadius: '$2',
-        height: '$7',
-        width: '$7',
-      },
-      '4': {
-        borderRadius: '$3',
         height: '$8',
         width: '$8',
+        fontSize: '$4',
+        lineHeight: '$sizes$8',
       },
     },
     variant: {
@@ -71,19 +72,19 @@ export const IconButton = styled('button', {
         borderWidth: '0',
         '@hover': {
           '&:hover': {
-            backgroundColor: '$slateA3',
+            backgroundColor: '$brandGray3',
           },
         },
         '&:focus': {
           boxShadow:
-            'inset 0 0 0 1px $colors$slateA8, 0 0 0 1px $colors$slateA8',
+            'inset 0 0 0 1px $colors$brandGray8, 0 0 0 1px $colors$brandGray8',
         },
         '&:active': {
-          backgroundColor: '$slateA4',
+          backgroundColor: '$brandGray4',
         },
         '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
-            backgroundColor: '$slateA4',
+            backgroundColor: '$brandGray4',
           },
       },
       raised: {

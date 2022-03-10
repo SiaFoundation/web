@@ -1,6 +1,7 @@
 import { SiteLayout, ThemeProvider } from '@siafoundation/design-system'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
+import { Header } from '../components/Header'
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -8,7 +9,7 @@ function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>Design system</title>
       </Head>
-      <SiteLayout title="@siafoundation/design-system" header>
+      <SiteLayout headerLeft={<Header />}>
         <Component {...pageProps} />
       </SiteLayout>
     </ThemeProvider>

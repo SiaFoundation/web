@@ -49,6 +49,7 @@ export function Images() {
           >
             <NImage {...bellLabs} alt="bell labs" layout="fill" />
             <Button
+              size="1"
               variant="transparentWhite"
               css={{
                 position: 'absolute',
@@ -87,25 +88,16 @@ export function Images() {
             <Avatar size="1" src={avatar1.src} interactive />
             <Avatar size="2" src={avatar2.src} interactive />
             <Avatar size="3" src={avatar3.src} interactive />
-            <Avatar size="4" src={avatar1.src} interactive />
-            <Avatar size="5" src={avatar2.src} interactive />
-            <Avatar size="6" src={avatar3.src} interactive />
           </Flex>
           <Flex gap="2" align="center" justify="start">
             <Avatar size="1" fallback="RH" interactive />
             <Avatar size="2" fallback="RH" interactive />
             <Avatar size="3" fallback="RH" interactive />
-            <Avatar size="4" fallback="RH" interactive />
-            <Avatar size="5" fallback="RH" interactive />
-            <Avatar size="6" fallback="RH" interactive />
           </Flex>
           <Flex gap="2" align="center" justify="start">
             <Avatar shape="square" size="1" src={avatar1.src} />
             <Avatar shape="square" size="2" src={avatar2.src} />
             <Avatar shape="square" size="3" src={avatar3.src} />
-            <Avatar shape="square" size="4" src={avatar1.src} />
-            <Avatar shape="square" size="5" src={avatar2.src} />
-            <Avatar shape="square" size="6" src={avatar3.src} />
           </Flex>
         </Grid>
       </Section>
@@ -116,9 +108,15 @@ export function Images() {
             <AvatarGroup>
               <Avatar size="2" status="green" src={avatar1.src} interactive />
               <Avatar size="2" status="green" src={avatar2.src} interactive />
-              <Avatar size="2" status="green" src={avatar3.src} interactive />
-              <Avatar size="2" status="yellow" src={avatar3.src} inactive />
-              <Avatar size="2" status="yellow" alt="A" fallback="A" inactive />
+              <Avatar size="2" status="green" src={avatar3.src} inactive />
+              <Avatar size="2" status="yellow" src={avatar3.src} interactive />
+              <Avatar
+                size="2"
+                status="yellow"
+                alt="A"
+                fallback="A"
+                interactive
+              />
             </AvatarGroup>
           </Flex>
           <Flex gap="2" align="center" justify="start">
@@ -142,14 +140,14 @@ export function Images() {
                 size="2"
                 status="green"
                 src={avatar3.src}
-                interactive
+                inactive
               />
               <Avatar
                 shape="square"
                 size="2"
                 status="yellow"
                 src={avatar3.src}
-                inactive
+                interactive
               />
               <Avatar
                 shape="square"
@@ -157,7 +155,6 @@ export function Images() {
                 status="yellow"
                 alt="A"
                 fallback="A"
-                inactive
               />
             </AvatarGroup>
           </Flex>

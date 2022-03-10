@@ -3,12 +3,6 @@ import type * as Stitches from '@stitches/react'
 import { colors, colorsDark } from './colors'
 import { utils } from './utils'
 
-const unitSize = 5
-
-function getPx(units: number) {
-  return `${units * unitSize}px`
-}
-
 // Reference:
 // - https://stitches.dev/docs/styling
 // - https://www.radix-ui.com/docs/primitives/overview/introduction
@@ -22,44 +16,43 @@ const stitches = createStitches({
       mono: 'PlexMono, menlo, monospace',
     },
     space: {
-      1: getPx(1),
-      2: getPx(2),
-      3: getPx(3),
-      4: getPx(4),
-      5: getPx(5),
-      6: getPx(7),
-      7: getPx(9),
-      8: getPx(13),
-      9: getPx(16),
+      0: '4px',
+      1: '8px',
+      2: '12px',
+      3: '16px',
+      4: '20px',
+      5: '24px',
+      6: '32px',
+      7: '40px',
+      8: '48px',
+      9: '56px',
     },
     sizes: {
-      1: getPx(1),
-      2: getPx(2),
-      3: getPx(3),
-      4: getPx(4),
-      5: getPx(5),
-      6: getPx(7),
-      7: getPx(9),
-      8: getPx(13),
-      9: getPx(16),
+      0: '4px',
+      1: '8px',
+      2: '12px',
+      3: '16px',
+      4: '20px',
+      5: '24px',
+      6: '32px',
+      7: '40px',
+      8: '48px',
+      9: '56px',
     },
     fontSizes: {
-      1: '12px',
-      2: '13px',
-      3: '15px',
-      4: '17px',
-      5: '19px',
-      6: '21px',
-      7: '27px',
-      8: '35px',
-      9: '59px',
+      0: '12px',
+      1: '14px',
+      2: '18px',
+      3: '22px',
+      4: '24px',
+      5: '32px',
+      6: '64px',
     },
     radii: {
-      1: '4px',
-      2: '6px',
-      3: '8px',
-      4: '12px',
-      5: '20px',
+      1: '0px',
+      2: '0px',
+      3: '4px',
+      4: '8px',
       round: '50%',
       pill: '9999px',
     },

@@ -1,12 +1,12 @@
-import { DotsHorizontalIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import {
   Button,
   ControlGroup,
   Flex,
-  IconButton,
   Section,
   Select,
   TextField,
+  Search16,
+  OverflowMenuHorizontal16,
 } from '@siafoundation/design-system'
 import { Menu } from '../components/Menu'
 import { SectionHeading } from '../components/SectionHeading'
@@ -21,7 +21,7 @@ export function ControlGroups() {
         <Flex direction="column" gap="2">
           <Flex direction="row" gap="1">
             <ControlGroup>
-              <Button size="1" variant="green">
+              <Button size="1" variant="accent">
                 Green
               </Button>
               <Button size="1" variant="gray">
@@ -34,7 +34,7 @@ export function ControlGroups() {
           </Flex>
           <Flex direction="row" gap="1">
             <ControlGroup>
-              <Button size="2" variant="green">
+              <Button size="2" variant="accent">
                 Green
               </Button>
               <Button size="2" variant="gray">
@@ -53,7 +53,7 @@ export function ControlGroups() {
           <Flex direction="row" gap="1">
             <ControlGroup>
               <Button size="1">
-                <MagnifyingGlassIcon />
+                <Search16 />
               </Button>
               <TextField size="1" />
               <Select size="1">
@@ -65,7 +65,7 @@ export function ControlGroups() {
               </Select>
               <Menu>
                 <Button size="1">
-                  <DotsHorizontalIcon />
+                  <OverflowMenuHorizontal16 />
                 </Button>
               </Menu>
             </ControlGroup>
@@ -73,7 +73,7 @@ export function ControlGroups() {
           <Flex direction="row" gap="1">
             <ControlGroup>
               <Button size="2">
-                <MagnifyingGlassIcon />
+                <Search16 />
               </Button>
               <TextField size="2" />
               <Select size="2">
@@ -85,27 +85,7 @@ export function ControlGroups() {
               </Select>
               <Menu>
                 <Button size="2">
-                  <DotsHorizontalIcon />
-                </Button>
-              </Menu>
-            </ControlGroup>
-          </Flex>
-          <Flex direction="row" gap="1">
-            <ControlGroup>
-              <Button size="3">
-                <MagnifyingGlassIcon />
-              </Button>
-              <TextField size="3" />
-              <Select size="3">
-                <option>Option A</option>
-                <option>Option B</option>
-                <option>Option C</option>
-                <option>Option D</option>
-                <option>Option Elephant</option>
-              </Select>
-              <Menu>
-                <Button size="3">
-                  <DotsHorizontalIcon />
+                  <OverflowMenuHorizontal16 />
                 </Button>
               </Menu>
             </ControlGroup>

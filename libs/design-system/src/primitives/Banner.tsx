@@ -26,10 +26,10 @@ export const Banner = styled('div', {
         backgroundColor: '$loContrast',
       },
       gray: {
-        backgroundColor: '$slate7',
+        backgroundColor: '$brandGray4',
       },
       green: {
-        backgroundColor: '$primary8',
+        backgroundColor: '$brandAccent7',
       },
       red: {
         backgroundColor: '$red7',

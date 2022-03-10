@@ -1,7 +1,7 @@
 import React from 'react'
 import { styled, CSS, VariantProps } from '../config/theme'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
-import { CheckIcon } from '@radix-ui/react-icons'
+import { Checkmark16 } from '../'
 
 const StyledCheckbox = styled(CheckboxPrimitive.Root, {
   all: 'unset',
@@ -39,7 +39,7 @@ const StyledCheckbox = styled(CheckboxPrimitive.Root, {
       'inset 0 0 0 1px $colors$accentInput, 0 0 0 1px $colors$accentInput',
   },
   '&:disabled': {
-    color: '$slate8',
+    color: '$brandGray8',
     boxShadow: 'inset 0 0 0 1px $colors$accentInactive',
   },
 
@@ -82,7 +82,7 @@ export const Checkbox = React.forwardRef<
 >((props, forwardedRef) => (
   <StyledCheckbox {...props} ref={forwardedRef}>
     <StyledIndicator>
-      <CheckIcon />
+      <Checkmark16 />
     </StyledIndicator>
   </StyledCheckbox>
 ))

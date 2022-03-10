@@ -39,28 +39,35 @@ const StyledSwitch = styled(SwitchPrimitive.Root, {
   outline: 'none',
   WebkitTapHighlightColor: 'rgba(0,0,0,0)',
 
-  backgroundColor: '$slate5',
+  backgroundColor: '$brandGray5',
   borderRadius: '$pill',
   position: 'relative',
   '&:focus': {
-    boxShadow: '0 0 0 2px $colors$slate8',
+    boxShadow: '0 0 0 2px $colors$brandGray8',
+  },
+
+  '&:disabled': {
+    backgroundColor: '$brandGray3',
   },
 
   '&[data-state="checked"]': {
-    backgroundColor: '$primary10',
+    backgroundColor: '$brandAccent9',
     '&:focus': {
-      boxShadow: '0 0 0 2px $colors$primary8',
+      boxShadow: '0 0 0 2px $colors$brandAccent8',
+    },
+    '&:disabled': {
+      backgroundColor: '$brandAccent6',
     },
   },
 
   variants: {
     size: {
       '1': {
-        width: '$5',
+        width: '25px',
         height: '$3',
       },
       '2': {
-        width: '$7',
+        width: '45px',
         height: '$5',
         [`& ${StyledThumb}`]: {
           width: 21,

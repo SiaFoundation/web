@@ -44,8 +44,11 @@ export function Dialog({ children, ...props }: DialogProps) {
   return <DialogPrimitive.Root {...props}>{children}</DialogPrimitive.Root>
 }
 
-export const dialogContentStyles = css(panelStyles, {
-  borderRadius: 6,
+export const dialogContentStyles = css({
+  backgroundColor: '$panel',
+  transition: 'border 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+  color: '$hiContrast',
+  borderRadius: '$3',
   boxShadow:
     'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
   zIndex: 3,
@@ -61,7 +64,9 @@ export const dialogContentStyles = css(panelStyles, {
   '@media (prefers-reduced-motion: no-preference)': {
     animation: `${contentShow} 250ms cubic-bezier(0.16, 1, 0.3, 1)`,
   },
-  '&:focus': { outline: 'none' },
+  '&:focus': {
+    outline: 'none',
+  },
 })
 
 const StyledContent = styled(DialogPrimitive.Content, dialogContentStyles)

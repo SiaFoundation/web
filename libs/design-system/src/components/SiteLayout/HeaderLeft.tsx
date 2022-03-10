@@ -5,10 +5,10 @@ import { Heading } from '../../primitives/Heading'
 import { UserDropdownMenu } from '../UserDropdownMenu'
 
 type Props = {
-  title?: string
+  children: React.ReactNode
 }
 
-export function LeftNavbar({ title }: Props) {
+export function HeaderLeft({ children }: Props) {
   return (
     <AppBar
       sticky
@@ -17,12 +17,7 @@ export function LeftNavbar({ title }: Props) {
         zIndex: 2,
       }}
     >
-      <Container size="4">
-        <Flex align="center" justify="between" css={{ height: '50px' }}>
-          <Heading size="2">{title || 'Sia'}</Heading>
-          <UserDropdownMenu />
-        </Flex>
-      </Container>
+      <Container size="4">{children}</Container>
     </AppBar>
   )
 }

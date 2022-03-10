@@ -1,9 +1,14 @@
-import { Flex, Grid, Separator } from '@siafoundation/design-system'
-import { ContentBlock } from '../../components/ContentBlock'
+import {
+  Box,
+  Flex,
+  Grid,
+  Separator,
+  ContentGallery,
+  CtaBox,
+  ContentBlock,
+} from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { external, sitemap } from '../../config/site'
-import { ContentGallery } from '../../components/ContentGallery'
-import { CtaLarge } from '../../components/CtaLarge'
 import { getStats, Stats } from '../../content/stats'
 import { getDaysInSeconds } from '../../lib/time'
 
@@ -20,81 +25,81 @@ function Learn({ stats }: Props) {
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
         `}
       />
-      <Grid
+      <Flex
         align="center"
-        columns={{
-          '@initial': 1,
-          '@bp3': 2,
-        }}
+        justify="between"
+        wrap="wrap"
+        // columns={{
+        //   '@initial': 1,
+        //   '@bp3': 2,
+        // }}
       >
-        <ContentBlock
-          title="Sia 101"
-          align="start"
-          links={[
-            {
-              title: 'Learn more',
-              link: external.docs.sia101,
-              newTab: true,
-            },
-          ]}
-          description={`
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
-        `}
-        />
-        <Flex direction="column">
-          <ContentBlock
-            title="What Sia does"
-            size="1"
-            align="start"
+        <Box>
+          <Flex direction="column" css={{ maxWidth: '400px' }}>
+            <ContentBlock
+              title="What Sia does"
+              size="1"
+              align="start"
+              description={`
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
+              `}
+              links={[
+                {
+                  title: 'Learn how Sia works',
+                  link: external.docs.sia101,
+                  newTab: true,
+                },
+              ]}
+            />
+            <ContentBlock
+              title="Why it's here"
+              size="1"
+              align="start"
+              description={`
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
+              `}
+              links={[
+                {
+                  title: 'Explore the community',
+                  link: sitemap.community.index,
+                },
+              ]}
+            />
+            <ContentBlock
+              title="Who makes Sia?"
+              size="1"
+              align="start"
+              description={`
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
+              `}
+              links={[
+                {
+                  title: 'Meet the Sia Foundation',
+                  link: sitemap.foundation.index,
+                },
+              ]}
+            />
+          </Flex>
+        </Box>
+        <Box>
+          <CtaBox
+            title="Sia 101"
+            actionTitle="Learn more"
+            actionLink={external.docs.sia101}
+            actionNewTab
             description={`
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
-            `}
-            links={[
-              {
-                title: 'Learn how Sia works',
-                link: external.docs.sia101,
-                newTab: true,
-              },
-            ]}
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
+              `}
           />
-          <ContentBlock
-            title="Why it's here"
-            size="1"
-            align="start"
-            description={`
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
-            `}
-            links={[
-              {
-                title: 'Explore the community',
-                link: sitemap.community.index,
-              },
-            ]}
-          />
-          <ContentBlock
-            title="Who makes Sia?"
-            size="1"
-            align="start"
-            description={`
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
-            `}
-            links={[
-              {
-                title: 'Meet the Sia Foundation',
-                link: sitemap.foundation.index,
-              },
-            ]}
-          />
-        </Flex>
-      </Grid>
+        </Box>
+      </Flex>
       <Separator size="4" />
       <ContentBlock
         title="How Sia Works"
         size="2"
-        align="center"
         description={`
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
-            `}
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
+        `}
         links={[
           {
             title: 'Read the whitepaper',
@@ -106,8 +111,8 @@ function Learn({ stats }: Props) {
       <ContentGallery
         title="Get Started"
         description={`
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
-      `}
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis, sapiente!
+        `}
         links={[
           {
             title: 'Explore Documentation',
@@ -138,7 +143,7 @@ function Learn({ stats }: Props) {
         ]}
       />
       <Separator size="4" />
-      <CtaLarge
+      <CtaBox
         slogan="Start building"
         title="Developer Resources"
         description={`
@@ -146,6 +151,7 @@ function Learn({ stats }: Props) {
         `}
         actionTitle="Explore"
         actionLink={sitemap.developers.index}
+        size="2"
       />
     </Layout>
   )

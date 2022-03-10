@@ -13,20 +13,19 @@ export const Button = styled('button', {
     boxSizing: 'border-box',
   },
 
-  // Custom reset?
   display: 'inline-flex',
   flexShrink: 0,
   justifyContent: 'center',
   lineHeight: '1',
   WebkitTapHighlightColor: 'rgba(0,0,0,0)',
 
-  // Custom
   height: '$5',
   px: '$2',
-  fontFamily: '$sans',
+  fontFamily: '$mono',
   fontSize: '$2',
   fontWeight: 500,
   fontVariantNumeric: 'tabular-nums',
+  textTransform: 'uppercase',
 
   variants: {
     size: {
@@ -34,22 +33,22 @@ export const Button = styled('button', {
         borderRadius: '$1',
         height: '$5',
         px: '$2',
-        fontSize: '$1',
+        fontSize: '$0',
         lineHeight: '$sizes$5',
       },
       '2': {
         borderRadius: '$2',
-        height: '$6',
-        px: '$3',
-        fontSize: '$3',
-        lineHeight: '$sizes$6',
+        height: '$7',
+        px: '$4',
+        fontSize: '$2',
+        lineHeight: '$sizes$7',
       },
       '3': {
         borderRadius: '$2',
-        height: '$7',
-        px: '$4',
+        height: '$8',
+        px: '$5',
         fontSize: '$4',
-        lineHeight: '$sizes$7',
+        lineHeight: '$sizes$8',
       },
     },
     variant: {
@@ -83,55 +82,59 @@ export const Button = styled('button', {
           pointerEvents: 'none',
         },
       },
-      green: {
-        // backgroundColor: '$loContrast',
-        backgroundColor: '$primary12',
-        boxShadow: 'inset 0 0 0 1px $colors$primary7',
-        // color: '$primary12',
+      accent: {
+        backgroundColor: '$brandAccent9',
+        // boxShadow: 'inset 0 0 0 1px $colors$brandAccent6',
+        // color: '$brandAccent12',
         color: '$whiteA12',
         '@hover': {
           '&:hover': {
-            boxShadow: 'inset 0 0 0 1px $colors$primary8',
+            backgroundColor: '$brandAccent10',
+            // boxShadow: 'inset 0 0 0 1px $colors$brandAccent7',
           },
         },
         '&:active': {
-          backgroundColor: '$primary7',
-          boxShadow: 'inset 0 0 0 1px $colors$primary8',
+          backgroundColor: '$brandAccent10',
+          boxShadow: 'inset 0 0 0 1px $colors$brandAccent7',
         },
         '&:focus': {
-          boxShadow:
-            'inset 0 0 0 1px $colors$primary8, 0 0 0 1px $colors$primary8',
+          backgroundColor: '$brandAccent10',
+          // boxShadow:
+          //   'inset 0 0 0 1px $colors$brandAccent7, 0 0 0 1px $colors$brandAccent7',
+        },
+        '&:focus:active': {
+          backgroundColor: '$brandAccent11',
         },
         '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
-            backgroundColor: '$primary8',
-            boxShadow: 'inset 0 0 0 1px $colors$primary9',
+            backgroundColor: '$brandAccent10',
+            // boxShadow: 'inset 0 0 0 1px $colors$brandAccent7',
           },
         '&:disabled': {
-          backgroundColor: '$primary6',
-          boxShadow: 'inset 0 0 0 1px $colors$primary4',
+          backgroundColor: '$brandAccent6',
+          // boxShadow: 'inset 0 0 0 1px $colors$brandAccent4',
         },
         [`${ControlGroupBase} > &`]: {
           // same as green+ghost compound variant
-          color: '$primary12',
+          color: '$brandAccent12',
           borderColor: 'transparent',
           backgroundColor: 'transparent',
           '@hover': {
             '&:hover': {
-              backgroundColor: '$greenA3',
+              backgroundColor: '$brandAccent3',
               boxShadow: 'none',
             },
           },
           '&:active': {
-            backgroundColor: '$greenA4',
+            backgroundColor: '$brandAccent4',
           },
           '&:focus': {
             boxShadow:
-              'inset 0 0 0 1px $colors$greenA8, 0 0 0 1px $colors$greenA8',
+              'inset 0 0 0 1px $colors$brandAccent8, 0 0 0 1px $colors$brandAccent8',
           },
           '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
             {
-              backgroundColor: '$primary8',
+              backgroundColor: '$brandAccent8',
               boxShadow: 'none',
             },
         },
@@ -240,34 +243,38 @@ export const Button = styled('button', {
       },
     },
     {
-      variant: 'green',
+      variant: 'accent',
       ghost: 'true',
       css: {
-        color: '$primary12',
+        color: '$brandAccent12',
         borderColor: 'transparent',
         boxShadow: 'none',
         backgroundColor: 'transparent',
         '@hover': {
           '&:hover': {
-            backgroundColor: '$primary3',
+            backgroundColor: '$brandAccent3',
             boxShadow: 'none',
           },
         },
         '&:active': {
-          backgroundColor: '$primary4',
+          backgroundColor: '$brandAccent3',
         },
         '&:focus': {
+          backgroundColor: '$brandAccent3',
           boxShadow:
-            'inset 0 0 0 1px $colors$primary8, 0 0 0 1px $colors$primary8',
+            'inset 0 0 0 1px $colors$brandAccent7, 0 0 0 1px $colors$brandAccent7',
+        },
+        '&:focus:active': {
+          backgroundColor: '$brandAccent5',
         },
         '&:disabled': {
-          color: '$primary6',
+          color: '$brandAccent6',
           backgroundColor: 'transparent',
           boxShadow: 'none',
         },
         '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
-            backgroundColor: '$primary4',
+            backgroundColor: '$brandAccent4',
             boxShadow: 'none',
           },
       },

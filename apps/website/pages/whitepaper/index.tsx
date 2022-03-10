@@ -1,5 +1,5 @@
+import { ContentBlock } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
-import { ContentBlock } from '../../components/ContentBlock'
 import { sitemap } from '../../config/site'
 import { getStats, Stats } from '../../content/stats'
 import { getDaysInSeconds } from '../../lib/time'
