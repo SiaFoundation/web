@@ -1,29 +1,31 @@
 import { Button, Flex, Section } from '@siafoundation/design-system'
-import { Menu } from '../components/Menu'
+import { ExampleMenu } from '../components/ExampleMenu'
 import { SectionHeading } from '../components/SectionHeading'
 import { SubsectionHeading } from '../components/SubsectionHeading'
 
 export function Menus() {
   return (
-    <Section>
-      <SectionHeading>Menus</SectionHeading>
+    <>
+      <Section size="1">
+        <SectionHeading>Menus</SectionHeading>
+      </Section>
       <Section>
         <SubsectionHeading>DropdownMenu</SubsectionHeading>
         <Flex direction="row" gap="1">
-          <Menu>
+          <ExampleMenu>
             <Button>Auto</Button>
-          </Menu>
-          <Menu align="start">
+          </ExampleMenu>
+          <ExampleMenu align="start">
             <Button>Start</Button>
-          </Menu>
-          <Menu align="center">
+          </ExampleMenu>
+          <ExampleMenu align="center">
             <Button>Center</Button>
-          </Menu>
-          <Menu align="end">
+          </ExampleMenu>
+          <ExampleMenu align="end">
             <Button>End</Button>
-          </Menu>
+          </ExampleMenu>
         </Flex>
       </Section>
-    </Section>
+    </>
   )
 }

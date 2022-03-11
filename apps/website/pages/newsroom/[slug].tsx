@@ -1,9 +1,11 @@
 import {
   Grid,
-  Separator,
   Text,
-  ContentCard,
-  ContentBlock,
+  ContentItem,
+  Section,
+  getImageProps,
+  SiteHeading,
+  Box,
 } from '@siafoundation/design-system'
 import fs from 'fs'
 import path from 'path'
@@ -12,31 +14,48 @@ import { Layout } from '../../components/Layout'
 import { baseContentPath } from '../../config/app'
 import { GetNewsPost, getNewsPost } from '../../content/news'
 import { getStats, Stats } from '../../content/stats'
+import { format } from 'date-fns'
+import background from '../../assets/backgrounds/road-dither.png'
+
+const backgroundImage = getImageProps(background)
 
 type Props = GetNewsPost & { stats: Stats }
 
 function NewsroomPost({
-  post: { title, subtitle, description, source },
+  post: { title, subtitle, location, date, source },
   prev,
   next,
   stats,
 }: Props) {
   return (
-    <Layout stats={stats}>
-      <ContentBlock title={title} subtitle={description} />
-      <Text>{subtitle}</Text>
-      <MDXRemote {...source} />
-      <Separator size="3" />
-      <Grid
-        gap="3"
-        columns={{
-          '@initial': '1',
-          '@bp1': '2',
-        }}
-      >
-        {prev && <ContentCard {...prev} />}
-        {next && <ContentCard {...next} />}
-      </Grid>
+    <Layout
+      heading={
+        <Section size="4">
+          <SiteHeading size="3" title={title} description={subtitle} />
+        </Section>
+      }
+      stats={stats}
+      backgroundImage={backgroundImage}
+    >
+      <Section>
+        <Box>
+          <Text css={{ fontWeight: '600' }}>
+            {location} - {format(new Date(date), 'PP')}
+          </Text>
+          <MDXRemote {...source} />
+        </Box>
+        <Grid
+          gap="3"
+          css={{ marginTop: '$8' }}
+          columns={{
+            '@initial': '1',
+            '@bp1': '2',
+          }}
+        >
+          {prev && <ContentItem {...prev} />}
+          {next && <ContentItem {...next} />}
+        </Grid>
+      </Section>
     </Layout>
   )
 }

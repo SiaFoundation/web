@@ -1,7 +1,13 @@
-import { Container } from '@siafoundation/design-system'
+import { Section, Text } from '@siafoundation/design-system'
 
 export function Sites() {
-  return <Container size="3" css={{ py: '$5', bc: '$loContrast' }}></Container>
+  return (
+    <>
+      <Section>
+        <Text>Coming soon</Text>
+      </Section>
+    </>
+  )
 }
 
 export default Sites

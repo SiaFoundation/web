@@ -5,7 +5,7 @@ import {
   Button,
   Flex,
   Grid,
-  NImage,
+  NextImage,
   Section,
 } from '@siafoundation/design-system'
 import { SectionHeading } from '../components/SectionHeading'
@@ -18,8 +18,10 @@ import avatar3 from '../assets/avatar3.png'
 
 export function Images() {
   return (
-    <Section>
-      <SectionHeading>Images</SectionHeading>
+    <>
+      <Section size="1">
+        <SectionHeading>Images</SectionHeading>
+      </Section>
       <Section>
         <SubsectionHeading>Image</SubsectionHeading>
         <Grid
@@ -30,15 +32,40 @@ export function Images() {
           gap="2"
         >
           <Box>
-            <NImage {...bellLabs} alt="bell labs" />
+            <Box css={{ position: 'relative ' }}>
+              <NextImage {...bellLabs} alt="bell labs" />
+              <Button
+                size="1"
+                variant="transparentWhite"
+                css={{
+                  position: 'absolute',
+                  bottom: '$1',
+                  right: '$1',
+                }}
+              >
+                Bell Labs
+              </Button>
+            </Box>
           </Box>
           <Box>
-            <NImage {...macTeam} alt="mac team" />
+            <Box css={{ position: 'relative ' }}>
+              <NextImage {...macTeam} alt="mac team" radius="3" />
+              <Button
+                variant="transparentWhite"
+                css={{
+                  position: 'absolute',
+                  bottom: '$1',
+                  right: '$1',
+                }}
+              >
+                Apple
+              </Button>
+            </Box>
           </Box>
         </Grid>
       </Section>
       <Section>
-        <SubsectionHeading>Image - fill</SubsectionHeading>
+        <SubsectionHeading>NextImage - responsive</SubsectionHeading>
         <Flex gap="2" justify="start">
           <Box
             css={{
@@ -46,8 +73,76 @@ export function Images() {
               height: '250px',
               width: '250px',
             }}
+            debug
           >
-            <NImage {...bellLabs} alt="bell labs" layout="fill" />
+            <Box
+              css={{
+                position: 'relative',
+              }}
+              debug
+            >
+              <NextImage {...bellLabs} alt="bell labs" layout="responsive" />
+              <Button
+                size="1"
+                variant="transparentWhite"
+                css={{
+                  position: 'absolute',
+                  bottom: '$1',
+                  right: '$1',
+                }}
+              >
+                Bell Labs
+              </Button>
+            </Box>
+          </Box>
+          <Box
+            css={{
+              position: 'relative',
+              height: '350px',
+              width: '250px',
+            }}
+            debug
+          >
+            <Box
+              css={{
+                position: 'relative',
+              }}
+              debug
+            >
+              <NextImage {...macTeam} alt="mac team" layout="responsive" />
+              <Button
+                size="1"
+                variant="transparentWhite"
+                css={{
+                  position: 'absolute',
+                  bottom: '$1',
+                  right: '$1',
+                }}
+              >
+                Apple
+              </Button>
+            </Box>
+          </Box>
+        </Flex>
+      </Section>
+      <Section>
+        <SubsectionHeading>NextImage - fill & cover</SubsectionHeading>
+        <Flex gap="2" justify="start">
+          <Box
+            css={{
+              position: 'relative',
+              height: '250px',
+              width: '250px',
+            }}
+            debug
+          >
+            <NextImage
+              src={bellLabs.src}
+              blurDataURL={bellLabs.blurDataURL}
+              alt="bell labs"
+              layout="fill"
+              objectFit="cover"
+            />
             <Button
               size="1"
               variant="transparentWhite"
@@ -66,8 +161,15 @@ export function Images() {
               height: '350px',
               width: '250px',
             }}
+            debug
           >
-            <NImage {...macTeam} alt="mac team" layout="fill" />
+            <NextImage
+              src={macTeam.src}
+              blurDataURL={macTeam.blurDataURL}
+              alt="mac team"
+              layout="fill"
+              objectFit="cover"
+            />
             <Button
               variant="transparentWhite"
               css={{
@@ -160,6 +262,6 @@ export function Images() {
           </Flex>
         </Grid>
       </Section>
-    </Section>
+    </>
   )
 }

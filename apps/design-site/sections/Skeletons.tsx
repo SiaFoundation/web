@@ -5,8 +5,10 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 
 export function Skeletons() {
   return (
-    <Section>
-      <SectionHeading>Skeletons</SectionHeading>
+    <>
+      <Section size="1">
+        <SectionHeading>Skeletons</SectionHeading>
+      </Section>
       <Section>
         <SubsectionHeading>Skeleton</SubsectionHeading>
         <Flex direction="column" gap="5" align="stretch">
@@ -55,6 +57,6 @@ export function Skeletons() {
           </Flex>
         </Flex>
       </Section>
-    </Section>
+    </>
   )
 }

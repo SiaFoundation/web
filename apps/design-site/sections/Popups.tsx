@@ -28,8 +28,10 @@ function Content() {
 
 export function Popups() {
   return (
-    <Section>
-      <SectionHeading>Popups</SectionHeading>
+    <>
+      <Section size="1">
+        <SectionHeading>Popups</SectionHeading>
+      </Section>
       <Section>
         <SubsectionHeading>Popover</SubsectionHeading>
         <Text css={{ pb: '$3' }}>Click to see Popover</Text>
@@ -75,6 +77,6 @@ export function Popups() {
           </Tooltip>
         </Flex>
       </Section>
-    </Section>
+    </>
   )
 }

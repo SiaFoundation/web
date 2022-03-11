@@ -1,143 +1,30 @@
 import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuRightSlot,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-  DropdownMenuTriggerItem,
-  NLink,
-  LogoDiscord16,
-  Notebook16,
-  LicenseGlobal16,
-  ArrowRight16,
-  Information16,
+  Box,
+  Flex,
+  NextLink,
+  SimpleLogoIcon,
+  Text,
 } from '@siafoundation/design-system'
 
-type Props = {
-  align?: 'center' | 'end' | 'start'
-  children: React.ReactNode
-}
-
-export function Menu({ align, children }: Props) {
+export function Menu() {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
-      <DropdownMenuContent align={align}>
-        <DropdownMenuItem>
-          About
-          <DropdownMenuRightSlot>
-            <Information16 />
-          </DropdownMenuRightSlot>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <NLink
-            href="https://discord.gg/sia"
-            target="_blank"
-            css={{
-              display: 'flex',
-              width: '100%',
-              alignItems: 'center',
-            }}
-          >
-            Discord
-            <DropdownMenuRightSlot>
-              <LogoDiscord16 />
-            </DropdownMenuRightSlot>
-          </NLink>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          Docs
-          <DropdownMenuRightSlot>
-            <Notebook16 />
-          </DropdownMenuRightSlot>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          Privacy
-          <DropdownMenuRightSlot>
-            <LicenseGlobal16 />
-          </DropdownMenuRightSlot>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <SubMenu name="Sub menu 1">
-          <SubMenu name="Nested menu" />
-        </SubMenu>
-        <SubMenu name="Sub menu 2">
-          <SubMenu name="Nested menu" />
-        </SubMenu>
-        <DropdownMenuSeparator />
-        <DropdownMenuLabel>Choose multiple</DropdownMenuLabel>
-        <DropdownMenuGroup>
-          <DropdownMenuCheckboxItem>Item</DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem checked>Item</DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem>Item</DropdownMenuCheckboxItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuLabel>Choose one</DropdownMenuLabel>
-        <DropdownMenuRadioGroup value="one">
-          <DropdownMenuRadioItem value="one">Item</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="two">Item</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="three">Item</DropdownMenuRadioItem>
-        </DropdownMenuRadioGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Flex direction="column" gap="5" align="start">
+      <Box css={{ marginBottom: '$4' }}>
+        <SimpleLogoIcon />
+      </Box>
+      <Link href="/">Core</Link>
+      <Link href="/sites">Sites</Link>
+      <Link href="/apps">Apps</Link>
+    </Flex>
   )
 }
 
-type SubMenuProps = {
-  name: string
-  children?: React.ReactNode
+function Link({ href, children }) {
+  return (
+    <Text size="4">
+      <NextLink variant="light" href={href}>
+        {children}
+      </NextLink>
+    </Text>
+  )
 }
-
-const SubMenu = ({ name, children }: SubMenuProps) => (
-  <DropdownMenu>
-    <DropdownMenuTriggerItem>
-      {name}
-      <DropdownMenuRightSlot>
-        <ArrowRight16 />
-      </DropdownMenuRightSlot>
-    </DropdownMenuTriggerItem>
-    <DropdownMenuContent>
-      {children}
-      <DropdownMenuItem>
-        About
-        <DropdownMenuRightSlot>
-          <Information16 />
-        </DropdownMenuRightSlot>
-      </DropdownMenuItem>
-      <DropdownMenuItem>
-        <NLink
-          href="https://discord.gg/sia"
-          target="_blank"
-          css={{
-            display: 'flex',
-            width: '100%',
-            alignItems: 'center',
-          }}
-        >
-          Discord
-          <DropdownMenuRightSlot>
-            <LogoDiscord16 />
-          </DropdownMenuRightSlot>
-        </NLink>
-      </DropdownMenuItem>
-      <DropdownMenuItem>
-        Docs
-        <DropdownMenuRightSlot>
-          <Notebook16 />
-        </DropdownMenuRightSlot>
-      </DropdownMenuItem>
-      <DropdownMenuItem>
-        Privacy
-        <DropdownMenuRightSlot>
-          <LicenseGlobal16 />
-        </DropdownMenuRightSlot>
-      </DropdownMenuItem>
-    </DropdownMenuContent>
-  </DropdownMenu>
-)

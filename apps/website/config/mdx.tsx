@@ -2,20 +2,32 @@ import { DotIcon } from '@radix-ui/react-icons'
 import {
   Flex,
   Heading,
-  NLink,
+  NextLink,
   Paragraph,
   Text,
 } from '@siafoundation/design-system'
 
 // Components used in mardown rendering
 export const components = {
-  h1: ({ children }) => <Heading size="2">{children}</Heading>,
-  h2: ({ children }) => <Heading size="1">{children}</Heading>,
-  h3: ({ children }) => <Heading size="1">{children}</Heading>,
-  p: ({ children }) => (
-    <Paragraph css={{ marginBottom: '$3' }}>{children}</Paragraph>
+  h1: ({ children }) => (
+    <Heading size="3" css={{ margin: '$3 0' }}>
+      {children}
+    </Heading>
   ),
-  a: (props) => <NLink {...props} target="_blank" />,
+  h2: ({ children }) => (
+    <Heading size="2" css={{ margin: '$3 0' }}>
+      {children}
+    </Heading>
+  ),
+  h3: ({ children }) => (
+    <Heading size="1" css={{ margin: '$3 0' }}>
+      {children}
+    </Heading>
+  ),
+  p: ({ children }) => (
+    <Paragraph css={{ margin: '$3 0' }}>{children}</Paragraph>
+  ),
+  a: (props) => <NextLink {...props} target="_blank" />,
   ul: ({ children }) => (
     <Flex as="ul" direction="column" gap={2}>
       {children}

@@ -33,6 +33,7 @@ export const colors = {
   brandGray12: '#333333',
 
   // Semantic
+  waves: '#FAF8F7',
   hiContrast: '$slate12',
   textContrast: '$brandGray12',
   textSubtle: '$brandGray11',
@@ -40,6 +41,7 @@ export const colors = {
   loContrast: 'white',
   canvas: 'hsl(0 0% 93%)',
   panel: 'white',
+  panelDark: 'black',
   transparentPanel: 'hsl(0 0% 0% / 97%)',
   accentInactive: '$brandGray7',
   accentActive: '$brandGray8',
@@ -79,15 +81,17 @@ export const colorsDark = {
   brandGray12: '#FDFDFD',
 
   // Semantic
+  waves: '$slate3',
   hiContrast: '$brandGray12',
   loContrast: '$brandGray1',
   textContrast: '$brandGray12',
   textSubtle: '$brandGray11',
   canvas: 'hsl(0 0% 15%)',
   panel: '$mauve3',
+  panelDark: 'black',
   transparentPanel: 'hsl(0 100% 100% / 97%)',
   accentInactive: '$brandGray7',
   accentActive: '$brandGray8',
   accentInput: '$brandAccent8',
-  frame: '$blackA6',
+  frame: '$whiteA12',
 }

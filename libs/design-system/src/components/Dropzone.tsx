@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { Box } from '../primitives/Box'
-import { Paragraph } from '../primitives/Paragraph'
+import { Box } from '../core/Box'
+import { Paragraph } from '../core/Paragraph'
 
 type Props = {
   title?: React.ReactNode

@@ -1,4 +1,3 @@
-import { Container } from '@siafoundation/design-system'
 import { Buttons } from '../sections/Buttons'
 import { Colors } from '../sections/Colors'
 import { Typography } from '../sections/Typography'
@@ -14,11 +13,11 @@ import { Dialogs } from '../sections/Dialogs'
 
 export function Index() {
   return (
-    <Container size="3" css={{ py: '$5', bc: '$loContrast' }}>
+    <>
       <Colors />
       <Typography />
-      <Layout />
       <Images />
+      <Layout />
       <Buttons />
       <Inputs />
       <Menus />
@@ -27,7 +26,7 @@ export function Index() {
       <Dialogs />
       <Popups />
       <Skeletons />
-    </Container>
+    </>
   )
 }
 

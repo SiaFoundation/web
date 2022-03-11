@@ -1,14 +1,12 @@
 import React from 'react'
 import pattern from '../assets/background-pattern.jpg'
 import image from '../assets/background-image.gif'
-import { Box } from '../primitives/Box'
-import { Image } from '../primitives/Image'
+import { Box } from '../core/Box'
+import { Image } from '../core/Image'
 import { getImageProps } from '../lib/image'
 
 type Props = {
   children?: React.ReactNode
-  type?: 'default' | 'next'
-  level?: '1' | '2'
 }
 
 const imageProps = getImageProps(image)
