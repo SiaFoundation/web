@@ -24,19 +24,23 @@ Web packages for the Sia project and ecosystem.
 1. The Sia Web codebase is managed with the [Nx](https://nx.dev) build system. Either install `nx` globally via `npm install -g nx` or use `npx` to invoke commands.
 2. Install dependencies with `npm install`.
 
-### Website setup
+Run `nx serve website` for a dev server.
+
+### Env configuration
 
 ```sh
 # Create a local .env
 cp .env.example .env
+```
 
+### Asset setup
+
+```sh
 # Create asset directories in the projects root assets folder and add any test assets
 mkdir assets/docs
 mkdir assets/releases
 mkdir assets/transparency
 ```
-
-Run `nx serve website` for a dev server.
 
 ### Workflows
 

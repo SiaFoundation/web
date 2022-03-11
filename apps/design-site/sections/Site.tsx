@@ -1,76 +1,76 @@
 import {
-  ContentBlock,
-  ContentCard,
+  ContentItem,
   ContentGallery,
-  ContentLi,
-  CtaBox,
   Flex,
+  CenterCircle24,
   Grid,
   Section,
+  SiteHeading,
+  Callout,
+  ContentProject,
+  WavesBackdrop,
 } from '@siafoundation/design-system'
 import { times } from 'lodash'
-import { SectionHeading } from '../components/SectionHeading'
-import { SmallSection } from '../components/SmallSection'
+import { SectionHeading as DSSectionHeading } from '../components/SectionHeading'
 import { SubsectionHeading } from '../components/SubsectionHeading'
 
 export function Site() {
   return (
-    <Section>
-      <SectionHeading>ContentBlock</SectionHeading>
+    <>
       <Section>
-        <SubsectionHeading> size 1</SubsectionHeading>
-        <Flex direction="column" gap="2">
-          <ContentBlock
+        <DSSectionHeading>SiteHeading</DSSectionHeading>
+        <Flex direction="column" gap="9">
+          <SiteHeading
             size="1"
-            title="Title"
+            title="Size 1"
             description={`
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
             `}
-            links={[
-              {
-                title: 'Urbit',
-                link: 'https://urbit.org',
-                newTab: true,
-              },
-              {
-                title: 'Scuttlebutt',
-                link: 'https://ssbc.github.io/scuttlebutt-protocol-guide/',
-                newTab: true,
-              },
-            ]}
           />
-        </Flex>
-      </Section>
-      <Section>
-        <SubsectionHeading>size 2</SubsectionHeading>
-        <Flex direction="column" gap="2">
-          <ContentBlock
+          <SiteHeading
             size="2"
-            title="Title"
+            title="Size 2"
             description={`
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
             `}
-            links={[
-              {
-                title: 'Urbit',
-                link: 'https://urbit.org',
-                newTab: true,
-              },
-              {
-                title: 'Scuttlebutt',
-                link: 'https://ssbc.github.io/scuttlebutt-protocol-guide/',
-                newTab: true,
-              },
-            ]}
           />
-        </Flex>
-      </Section>
-      <Section>
-        <SubsectionHeading>size 3</SubsectionHeading>
-        <Flex direction="column" gap="2">
-          <ContentBlock
+          <SiteHeading
             size="3"
-            title="Title"
+            title="Size 3"
+            description={`
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
+            `}
+          />
+          <SiteHeading
+            size="3"
+            eyebrow="Eyebrow"
+            title="Heading with Eyebrow"
+            description={`
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
+            `}
+          />
+          <SiteHeading
+            size="2"
+            title="Heading 2 with Buttons"
+            description={`
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
+            `}
+            links={[
+              {
+                title: 'Urbit',
+                link: 'https://urbit.org',
+                newTab: true,
+              },
+              {
+                title: 'Scuttlebutt',
+                link: 'https://ssbc.github.io/scuttlebutt-protocol-guide/',
+                newTab: true,
+              },
+            ]}
+          />
+          <SiteHeading
+            size="3"
+            title="Heading 3 with Buttons"
             description={`
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
             `}
@@ -89,20 +89,45 @@ export function Site() {
           />
         </Flex>
       </Section>
-      <SectionHeading>ContentCard</SectionHeading>
       <Section>
+        <DSSectionHeading>ContentItem</DSSectionHeading>
         <Grid
-          gap="2"
+          gap="5"
           columns={{
             '@initial': 1,
             '@bp1': 2,
             '@bp3': 3,
           }}
         >
-          <ContentCard
-            title="Title"
-            subtitle="Subtitle"
-            description={`
+          <ContentItem
+            title="Content Item"
+            subtitle={`
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
+            `}
+            newTab
+          />
+          <ContentItem
+            title="Content Item with external link"
+            subtitle={`
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
+            `}
+            link={'https://urbit.org'}
+            newTab
+          />
+          <ContentItem
+            title="Content Item with date"
+            date={'10/04/2022'}
+            subtitle={`
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
+            `}
+            link={'https://urbit.org'}
+            newTab
+          />
+          <ContentItem
+            title="Content Item with date and icon"
+            icon={<CenterCircle24 />}
+            date={'10/04/2022'}
+            subtitle={`
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
             `}
             link={'https://urbit.org'}
@@ -110,49 +135,68 @@ export function Site() {
           />
         </Grid>
       </Section>
-      <SectionHeading>ContentLi</SectionHeading>
       <Section>
+        <DSSectionHeading>ContentProject</DSSectionHeading>
         <Grid
-          gap="2"
+          gap="5"
           columns={{
             '@initial': 1,
             '@bp1': 2,
             '@bp3': 3,
           }}
         >
-          <ContentLi
-            title="Title"
-            subtitle="Subtitle"
-            description={`
+          <ContentProject
+            title="Filebase"
+            logo="filebase"
+            tags={[]}
+            subtitle={`
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
             `}
-            link={'https://urbit.org'}
+            link={'https://filebase.com'}
             newTab
           />
         </Grid>
       </Section>
-      <SectionHeading>ContentGallery</SectionHeading>
+      <Section size="1">
+        <DSSectionHeading>ContentGallery</DSSectionHeading>
+      </Section>
       <Section>
-        <SubsectionHeading>variant list</SubsectionHeading>
+        <SubsectionHeading>default</SubsectionHeading>
         <ContentGallery
-          title="Title"
-          subtitle="Subtitle"
-          description={`
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
-            `}
-          links={[
-            {
-              title: 'Urbit',
-              link: 'https://urbit.org',
-              newTab: true,
-            },
-            {
-              title: 'Scuttlebutt',
-              link: 'https://ssbc.github.io/scuttlebutt-protocol-guide/',
-              newTab: true,
-            },
-          ]}
-          filterable="variant-list"
+          items={times(6, (i) => ({
+            title: `Lorem ipsum dolor, sit amet consectetur elit. ${i + 1}`,
+            tags: [`group_${(i % 3) + 1}`],
+            description: `
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
+                `,
+            link: 'https://ssbc.github.io/scuttlebutt-protocol-guide/',
+            newTab: true,
+          }))}
+        />
+      </Section>
+      <Section>
+        <SubsectionHeading>columns 1</SubsectionHeading>
+        <ContentGallery
+          columns={{
+            '@inital': '1',
+          }}
+          items={times(6, (i) => ({
+            title: `Lorem ipsum dolor, sit amet consectetur elit. ${i + 1}`,
+            tags: [`group_${(i % 3) + 1}`],
+            link: 'https://urbit.org',
+            newTab: true,
+          }))}
+        />
+      </Section>
+      <Section>
+        <SubsectionHeading>variant filterable / columns 3</SubsectionHeading>
+        <ContentGallery
+          filterable="filterable"
+          columns={{
+            '@initial': '1',
+            '@bp1': '2',
+            '@bp3': '3',
+          }}
           items={times(6, (i) => ({
             title: `Title ${i + 1}`,
             subtitle: 'Subtitle',
@@ -165,56 +209,47 @@ export function Site() {
           }))}
         />
       </Section>
-      <Section>
-        <SubsectionHeading>variant card</SubsectionHeading>
-        <ContentGallery
-          title="Title"
-          subtitle="Subtitle"
-          description={`
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
-            `}
-          links={[
-            {
-              title: 'Urbit',
-              link: 'https://urbit.org',
-              newTab: true,
-            },
-            {
-              title: 'Scuttlebutt',
-              link: 'https://ssbc.github.io/scuttlebutt-protocol-guide/',
-              newTab: true,
-            },
-          ]}
-          filterable="variant-card"
-          variant="card"
-          items={times(6, (i) => ({
-            title: `Title ${i + 1}`,
-            subtitle: 'Subtitle',
-            tags: [`group_${(i % 3) + 1}`],
-            description: `
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
-                `,
-            link: 'https://urbit.org',
-            newTab: true,
-          }))}
-        />
+      <Section size="1">
+        <DSSectionHeading>WavesBackdrop</DSSectionHeading>
       </Section>
-      <SectionHeading>CtaBox</SectionHeading>
+      <Section css={{ position: 'relative' }}>
+        <WavesBackdrop />
+      </Section>
+      <Section size="1">
+        <DSSectionHeading>Callout</DSSectionHeading>
+      </Section>
       <Section>
         <SubsectionHeading>size 1</SubsectionHeading>
-        <CtaBox
-          title="Title"
-          description={`
+        <Grid
+          columns={{
+            '@initial': '1',
+            '@bp2': '2',
+          }}
+          gap="5"
+        >
+          <Callout
+            title="Title"
+            description={`
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
           `}
-          actionTitle="Urbit"
-          actionLink="https://urbit.org"
-          actionNewTab
-        />
+            actionTitle="Urbit"
+            actionLink="https://urbit.org"
+            actionNewTab
+          />
+          <Callout
+            title="Title"
+            description={`
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
+          `}
+            actionTitle="Urbit"
+            actionLink="https://urbit.org"
+            actionNewTab
+          />
+        </Grid>
       </Section>
       <Section>
         <SubsectionHeading>size 2</SubsectionHeading>
-        <CtaBox
+        <Callout
           title="Title"
           size="2"
           description={`
@@ -225,6 +260,6 @@ export function Site() {
           actionNewTab
         />
       </Section>
-    </Section>
+    </>
   )
 }

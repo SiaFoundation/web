@@ -16,8 +16,10 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 
 export function Inputs() {
   return (
-    <Section>
-      <SectionHeading>Inputs</SectionHeading>
+    <>
+      <Section size="1">
+        <SectionHeading>Inputs</SectionHeading>
+      </Section>
       <Section>
         <SubsectionHeading>TextField</SubsectionHeading>
         <Flex direction="column" gap="2">
@@ -184,6 +186,6 @@ export function Inputs() {
           </Flex>
         </Grid>
       </Section>
-    </Section>
+    </>
   )
 }

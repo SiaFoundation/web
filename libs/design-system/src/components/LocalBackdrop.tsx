@@ -1,20 +1,12 @@
-import React from 'react'
-import pattern from '../assets/background-pattern.jpg'
-import image from '../assets/background-image.gif'
-import { Box } from '../primitives/Box'
-import { Image } from '../primitives/Image'
-import { getImageProps } from '../lib/image'
+import { useMemo } from 'react'
+import { Box } from '../core/Box'
+import { random } from 'lodash'
+import { useTheme } from '../hooks/useTheme'
 
-type Props = {
-  children?: React.ReactNode
-  type?: 'default' | 'next'
-  level?: '1' | '2'
-}
+export function LocalBackdrop() {
+  const { activeTheme } = useTheme()
+  const videoStart = useMemo(() => random(0, 20), [])
 
-const imageProps = getImageProps(image)
-const patternSrc = getImageProps(pattern).src
-
-export function LocalBackdrop({ children }: Props) {
   return (
     <Box
       css={{
@@ -29,58 +21,26 @@ export function LocalBackdrop({ children }: Props) {
       }}
     >
       <Box
+        as="video"
+        src={`/texture.webm#t=${videoStart}`}
+        preload="true"
+        autoPlay
+        loop
+        muted
         css={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: 1,
-          backgroundColor: '$loContrast',
-        }}
-      />
-      <Image
-        {...imageProps}
-        css={{
+          filter: activeTheme === 'dark' ? 'invert(1)' : 'none',
           position: 'absolute',
           top: 0,
           left: 0,
           zIndex: 2,
-          width: '100%',
+          objectFit: 'cover',
           height: '100%',
-          opacity: 0.75,
+          width: '100%',
           '@motion': {
             display: 'none',
           },
         }}
       />
-      <Box
-        css={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          width: '100%',
-          height: '100%',
-          opacity: 0.6,
-          zIndex: 3,
-          backgroundImage: `url(${patternSrc})`,
-          backgroundSize: 'auto',
-        }}
-      />
-      <Box
-        css={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          opacity: 0.95,
-          zIndex: 4,
-          backgroundColor: '$loContrast',
-        }}
-      />
-      {children}
     </Box>
   )
 }

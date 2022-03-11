@@ -3,7 +3,7 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuRightSlot,
-} from '../primitives/DropdownMenu'
+} from '../core/DropdownMenu'
 import { useTheme } from '../hooks/useTheme'
 import { useCallback } from 'react'
 import { Asleep16, Awake16, Screen16 } from '../icons'

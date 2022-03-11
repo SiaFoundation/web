@@ -6,7 +6,7 @@ import {
   Grid,
   Heading,
   IconButton,
-  NImage,
+  NextImage,
   ScrollArea,
   Section,
   Separator,
@@ -17,8 +17,10 @@ import bellLabs from '../assets/bell-labs.jpeg'
 
 export function Layout() {
   return (
-    <Section>
-      <SectionHeading hideSeparator>Layout</SectionHeading>
+    <>
+      <Section size="1">
+        <SectionHeading hideSeparator>Layout</SectionHeading>
+      </Section>
       <Section>
         <SubsectionHeading>Flex</SubsectionHeading>
         <Grid columns={1} gap="2">
@@ -136,7 +138,7 @@ export function Layout() {
               right: 0,
             }}
           >
-            <NImage {...bellLabs} layout="fill" alt="bell labs" />
+            <NextImage {...bellLabs} layout="fill" alt="bell labs" />
           </Box>
           <Grid
             columns={1}
@@ -188,6 +190,6 @@ export function Layout() {
           </Grid>
         </Box>
       </Section>
-    </Section>
+    </>
   )
 }

@@ -12,8 +12,10 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 
 export function Buttons() {
   return (
-    <Section>
-      <SectionHeading>Buttons</SectionHeading>
+    <>
+      <Section size="1">
+        <SectionHeading>Buttons</SectionHeading>
+      </Section>
       <Section>
         <SubsectionHeading>Button - sizes</SubsectionHeading>
         <Flex direction="column" gap="2">
@@ -150,6 +152,6 @@ export function Buttons() {
           </Flex>
         </Grid>
       </Section>
-    </Section>
+    </>
   )
 }

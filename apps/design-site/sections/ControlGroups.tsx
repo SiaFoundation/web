@@ -8,14 +8,16 @@ import {
   Search16,
   OverflowMenuHorizontal16,
 } from '@siafoundation/design-system'
-import { Menu } from '../components/Menu'
+import { ExampleMenu } from '../components/ExampleMenu'
 import { SectionHeading } from '../components/SectionHeading'
 import { SubsectionHeading } from '../components/SubsectionHeading'
 
 export function ControlGroups() {
   return (
-    <Section>
-      <SectionHeading>Control groups</SectionHeading>
+    <>
+      <Section size="1">
+        <SectionHeading>Control groups</SectionHeading>
+      </Section>
       <Section>
         <SubsectionHeading>ControlGroup - Buttons</SubsectionHeading>
         <Flex direction="column" gap="2">
@@ -63,11 +65,11 @@ export function ControlGroups() {
                 <option>Option D</option>
                 <option>Option Elephant</option>
               </Select>
-              <Menu>
+              <ExampleMenu>
                 <Button size="1">
                   <OverflowMenuHorizontal16 />
                 </Button>
-              </Menu>
+              </ExampleMenu>
             </ControlGroup>
           </Flex>
           <Flex direction="row" gap="1">
@@ -83,15 +85,15 @@ export function ControlGroups() {
                 <option>Option D</option>
                 <option>Option Elephant</option>
               </Select>
-              <Menu>
+              <ExampleMenu>
                 <Button size="2">
                   <OverflowMenuHorizontal16 />
                 </Button>
-              </Menu>
+              </ExampleMenu>
             </ControlGroup>
           </Flex>
         </Flex>
       </Section>
-    </Section>
+    </>
   )
 }

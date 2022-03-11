@@ -1,4 +1,4 @@
-import { Box, Heading, NLink, Link20 } from '@siafoundation/design-system'
+import { Box, Heading, NextLink, Link20 } from '@siafoundation/design-system'
 
 type Props = {
   id?: string
@@ -13,14 +13,14 @@ export function SubsectionHeading({ id, children }: Props) {
         pb: '$3',
       }}
     >
-      <NLink
+      <NextLink
         href={`#${cId}`}
         id={cId}
         css={{
-          color: '$slate11',
+          color: '$brandGray11',
           position: 'relative',
           '&:hover, &:hover > *': {
-            color: '$slate12',
+            color: '$brandGray12',
           },
         }}
       >
@@ -30,13 +30,13 @@ export function SubsectionHeading({ id, children }: Props) {
             position: 'absolute',
             top: '-8px',
             left: '-22px',
-            color: '$slate7',
+            color: '$brandGray7',
           }}
         >
           <Link20 />
         </Box>
         <Heading size={'2'}>{children}</Heading>
-      </NLink>
+      </NextLink>
     </Box>
   )
 }

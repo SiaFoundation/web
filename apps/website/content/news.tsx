@@ -5,14 +5,14 @@ import matter from 'gray-matter'
 import { Feed } from 'feed'
 import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
+import { format } from 'date-fns'
+import { getHosts } from '@siafoundation/env'
+import { ContentItemProps } from '@siafoundation/design-system'
 import { external, sitemap } from '../config/site'
 import { components } from '../config/mdx'
-import { getHosts } from '@siafoundation/env'
 import { baseContentPath, newsFeedName } from '../config/app'
-import { ContentItem } from '../lib/types'
-import { format } from 'date-fns'
 
-export type NewsPost = ContentItem & {
+export type NewsPost = ContentItemProps & {
   slug: string
   source: MDXRemoteSerializeResult<Record<string, unknown>>
   html?: string
@@ -38,7 +38,6 @@ export async function getNewsPosts(options: Options = {}): Promise<NewsPost[]> {
 
   const promises = fs
     .readdirSync(path.join(baseContentPath, 'news'))
-    .slice(0, limit)
     .map(async (filename) => {
       const post = await buildPost(filename.replace('.mdx', ''))
 
@@ -59,7 +58,7 @@ export async function getNewsPosts(options: Options = {}): Promise<NewsPost[]> {
   const posts = await Promise.all(promises)
   posts.sort((a, b) => (a.date < b.date ? 1 : -1))
 
-  return posts
+  return posts.slice(0, limit)
 }
 
 async function buildPost(slug?: string): Promise<NewsPost> {
@@ -76,13 +75,11 @@ async function buildPost(slug?: string): Promise<NewsPost> {
 
   const source = await serialize(content)
 
-  const date = new Date(data.date).getTime()
-  const subtitle = `${data.location} - ${format(date, 'PPPP')}`
-
   return {
     title: data.title,
-    subtitle,
-    date,
+    subtitle: data.subtitle,
+    location: data.location,
+    date: new Date(data.date).getTime(),
     link: sitemap.newsroom.newsPost.replace('[slug]', slug),
     slug,
     tags: [],
@@ -147,7 +144,7 @@ export function generateRssNewsFeed(posts: NewsPost[]) {
       title: post.title,
       id: url,
       link: url,
-      description: post.description,
+      description: post.subtitle as string,
       content: post.html,
       author: [author],
       contributor: [author],

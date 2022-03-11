@@ -26,6 +26,10 @@ const stitches = createStitches({
       7: '40px',
       8: '48px',
       9: '56px',
+      10: '64px',
+      11: '80px',
+      12: '96px',
+      13: '160px',
     },
     sizes: {
       0: '4px',
@@ -38,6 +42,11 @@ const stitches = createStitches({
       7: '40px',
       8: '48px',
       9: '56px',
+      10: '64px',
+      11: '80px',
+      12: '96px',
+      13: '160px',
+      frame: '$0',
     },
     fontSizes: {
       0: '12px',

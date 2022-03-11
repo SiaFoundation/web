@@ -1,7 +1,18 @@
-import { SiteLayout, ThemeProvider } from '@siafoundation/design-system'
+import {
+  getImageProps,
+  Section,
+  SiteHeading,
+  SiteLayout,
+  Text,
+  ThemeProvider,
+} from '@siafoundation/design-system'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
-import { Header } from '../components/Header'
+import { Menu } from '../components/Menu'
+import background from '../assets/jungle-dither.png'
+import { Heading } from '../components/Heading'
+
+const backgroundImage = getImageProps(background)
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -9,7 +20,11 @@ function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>Design system</title>
       </Head>
-      <SiteLayout headerLeft={<Header />}>
+      <SiteLayout
+        menu={<Menu />}
+        heading={<Heading />}
+        backgroundImage={backgroundImage}
+      >
         <Component {...pageProps} />
       </SiteLayout>
     </ThemeProvider>

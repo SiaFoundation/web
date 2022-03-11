@@ -1,88 +1,140 @@
-import { Separator, ContentGallery, CtaBox } from '@siafoundation/design-system'
-import { ContentBlock } from '../../../../libs/design-system/src/components/ContentBlock'
+import {
+  ContentGallery,
+  Callout,
+  Section,
+  ContentProject,
+  Flex,
+  Text,
+  Image,
+  SiteHeading,
+  getImageProps,
+} from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { external } from '../../config/site'
 import { getArticles } from '../../content/articles'
 import { AsyncReturnType } from '../../lib/types'
 import { getSoftware } from '../../content/software'
 import { getStats } from '../../content/stats'
+import { omit } from 'lodash'
+import background from '../../assets/backgrounds/jungle-dither.png'
+
+const backgroundImage = getImageProps(background)
+
+const blogs = getArticles(['ecosystem'], 4).map((i) => omit(i, ['icon']))
+const software = getSoftware('')
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-function CommunityEcosystem({ stats, blogs, software }: Props) {
+function CommunityEcosystem({ stats }: Props) {
   return (
-    <Layout stats={stats}>
-      <ContentBlock
-        size="3"
-        align="start"
-        title="Community & ecosystem"
-        description={`
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, officiis!
-        `}
-        links={[
-          {
-            title: 'Join our Discord',
-            link: external.discord,
-            newTab: true,
-          },
-          {
-            title: 'Browse Reddit',
-            link: external.reddit,
-            newTab: true,
-          },
-        ]}
-      />
-      <Separator size="4" />
-      <ContentGallery
-        title="The latest from the Sia community"
-        size="2"
-        align="start"
-        description={`
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, officiis!
-        `}
-        links={[
-          {
-            title: 'Browse the blog',
-            link: external.blog,
-            newTab: true,
-          },
-        ]}
-        items={blogs}
-      />
-      <Separator size="4" />
-      <ContentGallery
-        title="A vibrant & active ecosystem"
-        filterable="software"
-        description={`
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, officiis!
-        `}
-        items={software.map((i) => ({ ...i, newTab: true }))}
-      />
-      <Separator size="4" />
-      <CtaBox
-        title="Sia Forum"
-        size="2"
-        description={`
-          Do you have site feedback, development input, or a long-form proposal for the Sia Foundation?
-        `}
-        actionTitle="Join the discussion"
-        actionLink={external.forum}
-        actionNewTab
-      />
+    <Layout
+      heading={
+        <Section size="4">
+          <SiteHeading
+            size="3"
+            title="Community & Ecosystem"
+            description={
+              <>
+                Sia is a thriving ecosystem of open source software, commercial
+                data storage platforms, and other tools - made possible by a
+                vibrant community of contributors.
+              </>
+            }
+            links={[
+              {
+                title: 'Join our Discord',
+                link: external.discord,
+                newTab: true,
+              },
+              {
+                title: 'Browse Reddit',
+                link: external.reddit,
+                newTab: true,
+              },
+            ]}
+          />
+        </Section>
+      }
+      stats={stats}
+      backgroundImage={backgroundImage}
+    >
+      <Section>
+        <SiteHeading
+          size="2"
+          title="The Latest from the Sia Community"
+          description={
+            <>
+              Read about the latest updates and technical advancements in the
+              Sia ecosystem.
+            </>
+          }
+          links={[
+            {
+              title: 'Browse the blog',
+              link: external.blog,
+              newTab: true,
+            },
+          ]}
+        />
+        <ContentGallery columns="1" items={blogs} />
+      </Section>
+      <Section>
+        <Flex gap="6" align="start">
+          <Image
+            src={'/built-with-sia.png'}
+            alt="Built with Sia"
+            height="130px"
+            style={{
+              filter: 'grayscale(1)',
+            }}
+          />
+          <SiteHeading
+            size="2"
+            id="software"
+            title="A Vibrant & Active Ecosystem"
+            description={
+              <>
+                Sia is a thriving ecosystem of open source software, commercial
+                data storage platforms, and other tools - made possible by a
+                vibrant community of contributors.
+              </>
+            }
+          />
+        </Flex>
+        <Text size="0" css={{ fontWeight: '500' }}>
+          FILTER PROJECTS
+        </Text>
+        <ContentGallery
+          filterable="software"
+          component={ContentProject}
+          items={software.map((i) => ({ ...i, newTab: true }))}
+        />
+      </Section>
+      <Section>
+        <Callout
+          title="Sia Forum"
+          size="2"
+          description={
+            <>
+              Do you have site feedback, development input, or a long-form
+              proposal for the Sia Foundation?
+            </>
+          }
+          actionTitle="Join the discussion"
+          actionLink={external.forum}
+          actionNewTab
+        />
+      </Section>
     </Layout>
   )
 }
 
 export async function getStaticProps() {
   const stats = await getStats()
-  const blogs = getArticles('ecosystem', 3)
-  const software = getSoftware(null)
 
   return {
     props: {
       stats,
-      blogs,
-      software,
     },
   }
 }

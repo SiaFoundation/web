@@ -3,136 +3,182 @@ import {
   Box,
   Flex,
   Grid,
-  NLink,
-  Paragraph,
-  Separator,
+  NextLink,
   Text,
   ContentGallery,
-  ContentBlock,
-  LogoGithub16,
-  LogoTwitter16,
+  LogoGithub24,
+  LogoLinkedin24,
+  LogoTwitter32,
+  Section,
+  WavesBackdrop,
+  Separator,
+  SiteHeading,
+  getImageProps,
 } from '@siafoundation/design-system'
 import { MDXRemote } from 'next-mdx-remote'
 import { Layout } from '../../components/Layout'
-import { sitemap } from '../../config/site'
+import { external, sitemap } from '../../config/site'
 import { getMdxFile } from '../../lib/mdx'
 import { getDaysInSeconds } from '../../lib/time'
 import { AsyncReturnType } from '../../lib/types'
 import team from '../../content/team'
-import transparency from '../../content/transparency'
+import { getReports } from '../../content/reports'
 import { getNewsPosts } from '../../content/news'
 import { getStats } from '../../content/stats'
+import { Fragment } from 'react'
+import background from '../../assets/backgrounds/jungle-dither.png'
+
+const backgroundImage = getImageProps(background)
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-function Foundation({ stats, foundation, team, newsPosts }: Props) {
+function Foundation({ stats, foundation, team, newsPosts, reports }: Props) {
   return (
-    <Layout stats={stats}>
-      <ContentBlock
-        title="The Sia Foundation"
-        description={`
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi,
-            necessitatibus. Cumque fugiat, itaque repellendus corrupti quos
-            aperiam dolorum quibusdam.
-      `}
-      />
-      <Flex
-        gap="4"
-        wrap={{
-          '@initial': 'wrap',
-          '@bp3': 'noWrap',
-        }}
-      >
-        <Box css={{ '@bp3': { flex: 2 } }}>
-          <ContentBlock title="Vision">
-            <MDXRemote {...foundation.source} />
-          </ContentBlock>
-        </Box>
-        <Box css={{ '@bp3': { flex: 1 } }}>
-          <ContentBlock
-            title="Ethos"
-            description={`
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi,
-              necessitatibus. Cumque fugiat, itaque repellendus corrupti quos
-              aperiam dolorum quibusdam.
-          `}
+    <Layout
+      heading={
+        <Section size="4">
+          <SiteHeading
+            size="3"
+            title="The Sia Foundation"
+            description={
+              <>
+                The Foundation maintains, supports, promotes, and conducts
+                research for the Sia network.
+              </>
+            }
           />
-        </Box>
-      </Flex>
-      <ContentBlock
-        title="Contact"
-        description={`
-          For developer support please see our support docs. For general
-          inquiries email info@sia.tech.
-      `}
-      />
-      <Separator size="4" />
-      <ContentBlock title="Team">
+        </Section>
+      }
+      stats={stats}
+      backgroundImage={backgroundImage}
+    >
+      <Section>
+        <Flex direction="column" gap="9">
+          <Box>
+            <SiteHeading size="2" title="Vision" />
+            <MDXRemote {...foundation.source} />
+          </Box>
+          <Flex direction="column" gap="4">
+            <SiteHeading size="1" title="Contact" />
+            <Flex direction="column" gap="4">
+              <Text size="2" color="subtle">
+                For developer support please see{' '}
+                <NextLink href={external.docs.index} target="_blank">
+                  our documentation
+                </NextLink>
+                .
+              </Text>
+              <Text size="2" color="subtle">
+                For general inquiries email{' '}
+                <NextLink href={`mailto:${external.email}`}>
+                  info@sia.tech
+                </NextLink>
+                .
+              </Text>
+            </Flex>
+          </Flex>
+        </Flex>
+      </Section>
+      <Section size="3">
+        <SiteHeading size="2" title="The Sia Team" />
         <Grid
           columns={{
             '@initial': '1',
-            '@bp2': '2',
-            '@bp4': '3',
+            '@bp1': '2',
+            '@bp2': '3',
           }}
           gapX="3"
-          gapY="5"
+          gapY="6"
         >
           {team.map((member) => (
-            <Flex key={member.name} direction="column" gap="2">
-              <Avatar size="5" />
-              <Text>{member.name}</Text>
-              <Flex gap="1">
+            <Flex key={member.name} gap="2">
+              <Avatar size="3" />
+              <Flex key={member.name} direction="column" gap="1">
+                <Text css={{ fontWeight: '600' }}>{member.name}</Text>
                 <Text color="subtle">{member.title}</Text>
-                {member.twitter && (
-                  <NLink
-                    href={`https://twitter.com/${member.twitter}`}
-                    target="_blank"
-                    css={{ color: '$gray9' }}
-                  >
-                    <LogoTwitter16 />
-                  </NLink>
-                )}
-                {member.github && (
-                  <NLink
-                    href={`https://github.com/${member.github}`}
-                    target="_blank"
-                    css={{ color: '$gray9' }}
-                  >
-                    <LogoGithub16 />
-                  </NLink>
-                )}
+                <Flex gap="1" align="center">
+                  {member.twitter && (
+                    <NextLink
+                      href={`https://twitter.com/${member.twitter}`}
+                      target="_blank"
+                      variant="subtle"
+                    >
+                      <LogoTwitter32 />
+                    </NextLink>
+                  )}
+                  {member.github && (
+                    <NextLink
+                      href={`https://github.com/${member.github}`}
+                      target="_blank"
+                      variant="subtle"
+                    >
+                      <LogoGithub24 />
+                    </NextLink>
+                  )}
+                  {member.linkedin && (
+                    <NextLink
+                      href={`https://www.linkedin.com/in/${member.linkedin}`}
+                      target="_blank"
+                      variant="subtle"
+                    >
+                      <LogoLinkedin24 />
+                    </NextLink>
+                  )}
+                </Flex>
               </Flex>
-              <Paragraph size="1">{member.description}</Paragraph>
             </Flex>
           ))}
         </Grid>
-      </ContentBlock>
-      <Separator size="4" />
-      <ContentBlock title="Quarterly reports">
-        {transparency.map((report) => (
-          <Box key={report.link}>
-            <Text size="4">
-              <NLink href={report.link} target="_blank" variant="subtle">
-                {report.name}
-              </NLink>
-            </Text>
-          </Box>
-        ))}
-      </ContentBlock>
-      <Separator size="4" />
-      <ContentGallery
-        title="Recent News"
-        description={`
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, officiis!
-        `}
-        links={[
-          {
-            title: 'Explore the newsroom',
-            link: sitemap.newsroom.index,
-          },
-        ]}
-        items={newsPosts}
-      />
+      </Section>
+      <Section fullWidth>
+        <Section fullWidth css={{ position: 'relative' }}>
+          <WavesBackdrop />
+          <Section>
+            <SiteHeading size="2" title="Quarterly Reports" />
+            <Flex direction="column" gap="6">
+              {reports.map(([year, yearReports]) => (
+                <Flex key={year} direction="column" gap="2">
+                  <Text size="2" weight="bold">
+                    {year}
+                  </Text>
+                  <Flex gap="2" align="center">
+                    {yearReports.map((report, i) => (
+                      <Fragment key={report.link}>
+                        {i > 0 && i < yearReports.length && (
+                          <Separator orientation="vertical" />
+                        )}
+                        <Text size="2">
+                          <NextLink
+                            href={report.link}
+                            target="_blank"
+                            variant="subtle"
+                          >
+                            {report.quarter}
+                          </NextLink>
+                        </Text>
+                      </Fragment>
+                    ))}
+                  </Flex>
+                </Flex>
+              ))}
+            </Flex>
+          </Section>
+        </Section>
+      </Section>
+      <Section>
+        <SiteHeading
+          size="2"
+          title="Recent News"
+          description={<>Browse the newsroom for recent press releases.</>}
+          links={[
+            {
+              title: 'Explore the newsroom',
+              link: sitemap.newsroom.index,
+            },
+          ]}
+        />
+        <ContentGallery columns="1" items={newsPosts} />
+      </Section>
     </Layout>
   )
 }
@@ -144,6 +190,7 @@ export async function getStaticProps() {
     limit: 3,
     includeHtml: false,
   })
+  const reports = await getReports()
 
   return {
     props: {
@@ -151,6 +198,7 @@ export async function getStaticProps() {
       foundation,
       team,
       newsPosts,
+      reports,
     },
     revalidate: getDaysInSeconds(1),
   }

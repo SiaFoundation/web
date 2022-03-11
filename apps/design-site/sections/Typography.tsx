@@ -5,7 +5,7 @@ import {
   Grid,
   Heading,
   Kbd,
-  NLink,
+  NextLink,
   Paragraph,
   Section,
   Text,
@@ -24,8 +24,10 @@ const exampleCode = `func Fibonacci(n int) int {
 
 export function Typography() {
   return (
-    <Section>
-      <SectionHeading>Typography</SectionHeading>
+    <>
+      <Section size="1">
+        <SectionHeading>Typography</SectionHeading>
+      </Section>
       <Section>
         <SubsectionHeading>Headings</SubsectionHeading>
         <Flex direction="column" gap="2">
@@ -52,24 +54,27 @@ export function Typography() {
       <Section>
         <SubsectionHeading>Link</SubsectionHeading>
         <Flex direction="column" gap="2" align="start">
-          <NLink href={randomLink} target="_blank" variant="subtle">
+          <NextLink href={randomLink} target="_blank" variant="subtle">
             Subtle link
-          </NLink>
-          <NLink href={randomLink} target="_blank" variant="contrast">
+          </NextLink>
+          <NextLink href={randomLink} target="_blank" variant="contrast">
             Contrast link
-          </NLink>
+          </NextLink>
+          <NextLink href={randomLink} target="_blank" variant="accent">
+            Accent link
+          </NextLink>
           <Text size="5">
-            <NLink href={randomLink} target="_blank">
+            <NextLink href={randomLink} target="_blank">
               Link inside Text size 5
-            </NLink>
+            </NextLink>
           </Text>
         </Flex>
       </Section>
       <Section>
         <SubsectionHeading>Code</SubsectionHeading>
         <Grid gap="2" justify="start">
-          <Code variant="gray">{'fmt.Println("fibonacci")'}</Code>
-          <Code variant="accent">{'fmt.Println("fibonacci")'}</Code>
+          <Code variant="gray">{'fmt.Println("variant=gray")'}</Code>
+          <Code variant="accent">{'fmt.Println("variant=accent")'}</Code>
         </Grid>
       </Section>
       <Section>
@@ -93,14 +98,14 @@ export function Typography() {
               labore et dolore magna aliqua. Ut enim ad minim veniam, quis
               nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
               consequat. Duis aute irure{' '}
-              <NLink variant="subtle" href={randomLink} target="_blank">
+              <NextLink variant="subtle" href={randomLink} target="_blank">
                 example of an inline link
-              </NLink>{' '}
+              </NextLink>{' '}
               dolor in reprehenderit in voluptate velit esse cillum dolore eu
               fugiat nulla pariatur.{' '}
-              <NLink variant="contrast" href={randomLink} target="_blank">
+              <NextLink variant="contrast" href={randomLink} target="_blank">
                 Example of an inline link
-              </NLink>{' '}
+              </NextLink>{' '}
               <Code variant="gray">{'fmt.Println("pasta")'}</Code>. Excepteur
               sint occaecat cupidatat non proident, sunt in culpa qui officia
               deserunt mollit anim id est laborum.
@@ -111,14 +116,14 @@ export function Typography() {
               labore et dolore magna aliqua. Ut enim ad minim veniam, quis
               nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
               consequat. Duis aute irure{' '}
-              <NLink variant="subtle" href={randomLink} target="_blank">
+              <NextLink variant="subtle" href={randomLink} target="_blank">
                 example of an inline link
-              </NLink>{' '}
+              </NextLink>{' '}
               dolor in reprehenderit in voluptate velit esse cillum dolore eu
               fugiat nulla pariatur.{' '}
-              <NLink variant="contrast" href={randomLink} target="_blank">
+              <NextLink variant="contrast" href={randomLink} target="_blank">
                 Example of an inline link
-              </NLink>{' '}
+              </NextLink>{' '}
               <Code variant="gray">{'fmt.Println("pasta")'}</Code>. Excepteur
               sint occaecat cupidatat non proident, sunt in culpa qui officia
               deserunt mollit anim id est laborum.
@@ -129,14 +134,14 @@ export function Typography() {
               labore et dolore magna aliqua. Ut enim ad minim veniam, quis
               nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
               consequat. Duis aute irure{' '}
-              <NLink variant="subtle" href={randomLink} target="_blank">
+              <NextLink variant="subtle" href={randomLink} target="_blank">
                 example of an inline link
-              </NLink>{' '}
+              </NextLink>{' '}
               dolor in reprehenderit in voluptate velit esse cillum dolore eu
               fugiat nulla pariatur.{' '}
-              <NLink variant="contrast" href={randomLink} target="_blank">
+              <NextLink variant="contrast" href={randomLink} target="_blank">
                 Example of an inline link
-              </NLink>{' '}
+              </NextLink>{' '}
               <Code variant="gray">{'fmt.Println("pasta")'}</Code>. Excepteur
               sint occaecat cupidatat non proident, sunt in culpa qui officia
               deserunt mollit anim id est laborum.
@@ -183,6 +188,6 @@ export function Typography() {
           </Flex>
         </Flex>
       </Section>
-    </Section>
+    </>
   )
 }

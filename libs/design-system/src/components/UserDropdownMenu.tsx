@@ -5,9 +5,9 @@ import {
   DropdownMenuContent,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '../primitives/DropdownMenu'
+} from '../core/DropdownMenu'
 import { ThemeMenu } from './ThemeMenu'
-import { IconButton } from '../primitives/IconButton'
+import { IconButton } from '../core/IconButton'
 
 type Props = React.ComponentProps<typeof IconButton> & {
   trigger?: React.ReactNode

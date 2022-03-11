@@ -1,9 +1,10 @@
 import {
   Box,
   Heading,
-  NLink,
+  NextLink,
   Separator,
   Link20,
+  Flex,
 } from '@siafoundation/design-system'
 
 type Props = {
@@ -15,18 +16,22 @@ type Props = {
 export function SectionHeading({ id, children, hideSeparator }: Props) {
   const cId = id || children.toLowerCase()
   return (
-    <Box
+    <Flex
+      direction="column"
+      gap="3"
+      align="start"
       css={{
-        pb: '$3',
+        pb: '$5',
       }}
     >
       {!hideSeparator && <Separator size="3" />}
-      <NLink
+      <NextLink
         href={`#${cId}`}
         id={cId}
         css={{
           color: '$slate11',
           position: 'relative',
+          display: 'inline-block',
           '&:hover, &:hover > *': {
             color: '$slate12',
           },
@@ -36,7 +41,7 @@ export function SectionHeading({ id, children, hideSeparator }: Props) {
           css={{
             transition: 'color 0.1s linear',
             position: 'absolute',
-            top: '-8px',
+            top: '$3',
             left: '-22px',
             color: '$slate7',
           }}
@@ -44,7 +49,7 @@ export function SectionHeading({ id, children, hideSeparator }: Props) {
           <Link20 />
         </Box>
         <Heading size="3">{children}</Heading>
-      </NLink>
-    </Box>
+      </NextLink>
+    </Flex>
   )
 }
