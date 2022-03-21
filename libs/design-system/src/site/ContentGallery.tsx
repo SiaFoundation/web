@@ -105,6 +105,9 @@ export function ContentGallery({
             // '@bp3': '3',
           }
         }
+        css={{
+          overflow: 'hidden',
+        }}
       >
         {filteredItems.map((item) => (
           <ContentComponent key={item.title + item.link} {...item} />

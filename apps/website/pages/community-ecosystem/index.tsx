@@ -105,6 +105,11 @@ function CommunityEcosystem({ stats }: Props) {
           eyebrow="Filter projects"
           filterable="software"
           component={ContentProject}
+          columns={{
+            '@initial': 1,
+            '@bp2': 2,
+            '@bp4': 3,
+          }}
           items={software.map((i) => ({ ...i, newTab: true }))}
         />
       </Section>

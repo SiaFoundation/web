@@ -212,7 +212,7 @@ export default function Home({ stats, landing }: Props) {
             columns={{
               '@initial': 1,
               '@bp2': 2,
-              '@bp3': 3,
+              '@bp4': 3,
             }}
           />
         </Section>

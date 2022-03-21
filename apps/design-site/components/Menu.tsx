@@ -21,7 +21,7 @@ export function Menu() {
 
 function Link({ href, children }) {
   return (
-    <Text size="20">
+    <Text size="32" font="mono" css={{ lineHeight: '40px' }}>
       <NextLink variant="light" href={href}>
         {children}
       </NextLink>

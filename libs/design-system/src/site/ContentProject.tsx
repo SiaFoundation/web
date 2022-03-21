@@ -33,7 +33,9 @@ export function ContentProject({
           <Box
             css={{
               position: 'relative',
-              height: '40px',
+              height: '50px',
+              width: '300px',
+              overflow: 'hidden',
               filter: `grayscale(1) invert(${activeTheme === 'dark' ? 1 : 0})`,
             }}
           >
@@ -41,7 +43,7 @@ export function ContentProject({
             <Image
               src={`/logos/${logo}.png`}
               alt={title}
-              height="40px"
+              height="50px"
               width="300px"
             />
           </Box>
