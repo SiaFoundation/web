@@ -34,13 +34,16 @@ export function ContentProject({
             css={{
               position: 'relative',
               height: '40px',
-              filter: `grayscale(1) invert(${
-                activeTheme === 'dark' ? 1 : 0
-              })`,
+              filter: `grayscale(1) invert(${activeTheme === 'dark' ? 1 : 0})`,
             }}
           >
             {/* NextImage was having issues loading the file */}
-            <Image src={`/logos/${logo}.png`} alt={title} height="40px" />
+            <Image
+              src={`/logos/${logo}.png`}
+              alt={title}
+              height="40px"
+              width="300px"
+            />
           </Box>
         </NextLink>
         {subtitle && (
