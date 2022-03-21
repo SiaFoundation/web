@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.8.1](https://github.com/SiaFoundation/web/compare/design-site-0.8.0...design-site-0.8.1) (2022-03-21)
+
+
+### Bug Fixes
+
+* content project logo sizing, site menu text sizing ([58d3295](https://github.com/SiaFoundation/web/commit/58d3295e839e7e74574ea524e6bf6c578d0e6872))
+* set fixed width for logos ([8a9f3ff](https://github.com/SiaFoundation/web/commit/8a9f3ff0d16797fd9d3d646cf52db78e515a1eaa))
+* video backdrop start time deterministic, fix image prop warnings ([0791a07](https://github.com/SiaFoundation/web/commit/0791a078971e02511dd91861106be0bfd558a240))
+
+
+
 # [0.8.0](https://github.com/SiaFoundation/web/compare/design-site-0.7.0...design-site-0.8.0) (2022-03-21)
 
 
