@@ -1,7 +1,11 @@
 import { ContentItemProps } from '@siafoundation/design-system'
+import { addNewTab } from '../lib/utils'
 
 export function getSoftware(tag: string | null, limit?: number) {
-  return software.filter((a) => !tag || a.tags.includes(tag)).slice(0, limit)
+  return software
+    .filter((a) => !tag || a.tags.includes(tag))
+    .slice(0, limit)
+    .map(addNewTab)
 }
 
 type Software = ContentItemProps & {
