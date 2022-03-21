@@ -139,7 +139,12 @@ export function Layout() {
               right: 0,
             }}
           >
-            <NextImage {...bellLabs} layout="fill" alt="bell labs" />
+            <NextImage
+              src={bellLabs.src}
+              blurDataURL={bellLabs.blurDataURL}
+              layout="fill"
+              alt="bell labs"
+            />
           </Box>
           <Grid
             columns={1}

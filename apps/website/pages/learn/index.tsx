@@ -14,9 +14,6 @@ import {
   SiteHeading,
   Grid,
   getImageProps,
-  LocalBackdrop,
-  WavesBackdrop,
-  Container,
 } from '@siafoundation/design-system'
 import { getArticles } from '../../content/articles'
 import { Layout } from '../../components/Layout'
@@ -331,6 +328,7 @@ function Learn({ stats }: Props) {
               Software downloads, tutorials, technical walkthroughs, and more.
             </>
           }
+          startTime={20}
           actionTitle="Explore"
           actionLink={sitemap.developers.index}
           size="2"
