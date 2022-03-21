@@ -18,9 +18,6 @@ export const Image = styled('img', {
       },
     },
   },
-  defaultVariants: {
-    radius: '1',
-  },
 })
 
 type NextImageProps = React.ComponentProps<typeof BaseNextImage> &

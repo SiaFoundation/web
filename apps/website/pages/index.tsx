@@ -24,7 +24,7 @@ import { getMdxFile } from '../lib/mdx'
 import { AsyncReturnType } from '../lib/types'
 import { getArticles } from '../content/articles'
 import { getSoftware } from '../content/software'
-import background from '../assets/backgrounds/light-dither.png'
+import background from '../assets/backgrounds/mountain.png'
 import useLocalStorageState from 'use-local-storage-state'
 import { useCallback } from 'react'
 

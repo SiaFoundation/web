@@ -15,7 +15,7 @@ import { baseContentPath } from '../../config/app'
 import { GetNewsPost, getNewsPost } from '../../content/news'
 import { getStats, Stats } from '../../content/stats'
 import { format } from 'date-fns'
-import background from '../../assets/backgrounds/road-dither.png'
+import background from '../../assets/backgrounds/ocean.png'
 
 const backgroundImage = getImageProps(background)
 

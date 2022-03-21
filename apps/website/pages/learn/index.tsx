@@ -23,7 +23,7 @@ import { Layout } from '../../components/Layout'
 import { external, sitemap } from '../../config/site'
 import { getStats, Stats } from '../../content/stats'
 import { getDaysInSeconds } from '../../lib/time'
-import background from '../../assets/backgrounds/road-dither.png'
+import background from '../../assets/backgrounds/leaves.png'
 
 const backgroundImage = getImageProps(background)
 

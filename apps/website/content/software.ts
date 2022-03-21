@@ -78,7 +78,7 @@ const software: Software[] = [
   },
   {
     title: 'Decentralizer',
-    logo: 'keops',
+    logo: 'decentralizer',
     link: 'https://keops.cc/decentralizer',
     tags: ['open_source_software'],
     subtitle:
