@@ -1,11 +1,12 @@
-import { useMemo } from 'react'
 import { Box } from '../core/Box'
-import { random } from 'lodash'
 import { useTheme } from '../hooks/useTheme'
 
-export function LocalBackdrop() {
+type Props = {
+  startTime?: number
+}
+
+export function LocalBackdrop({ startTime = 0 }: Props) {
   const { activeTheme } = useTheme()
-  const videoStart = useMemo(() => random(0, 20), [])
 
   return (
     <Box
@@ -22,7 +23,7 @@ export function LocalBackdrop() {
     >
       <Box
         as="video"
-        src={`/texture.webm#t=${videoStart}`}
+        src={`/texture.webm#t=${startTime}`}
         preload="true"
         autoPlay
         loop

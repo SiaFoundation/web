@@ -160,6 +160,7 @@ export default function Home({ stats, landing }: Props) {
         >
           <Callout
             title="Developer Resources"
+            startTime={0}
             description={
               <>
                 Visit the developer pages for software downloads and developer
@@ -171,6 +172,7 @@ export default function Home({ stats, landing }: Props) {
           />
           <Callout
             title="Learn"
+            startTime={20}
             description={
               <>
                 Learn all about how Sia works, why it&apos;s here, and who

@@ -232,6 +232,7 @@ export function Site() {
             description={`
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
           `}
+            startTime={0}
             actionTitle="Urbit"
             actionLink="https://urbit.org"
             actionNewTab
@@ -241,6 +242,7 @@ export function Site() {
             description={`
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
           `}
+            startTime={20}
             actionTitle="Urbit"
             actionLink="https://urbit.org"
             actionNewTab
@@ -256,6 +258,7 @@ export function Site() {
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
           `}
           actionTitle="Urbit"
+          startTime={0}
           actionLink="https://urbit.org"
           actionNewTab
         />

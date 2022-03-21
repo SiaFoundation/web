@@ -17,6 +17,7 @@ type Props = {
   actionTitle: string
   actionLink: string
   actionNewTab?: boolean
+  startTime?: number
   size?: '1' | '2'
   css?: CSS
 }
@@ -28,6 +29,7 @@ export function Callout({
   actionTitle,
   actionLink,
   actionNewTab,
+  startTime,
   size = '1',
   css,
 }: Props) {
@@ -52,7 +54,7 @@ export function Callout({
           height: '100%',
         }}
       >
-        <LocalBackdrop />
+        <LocalBackdrop startTime={startTime} />
       </Box>
       <Flex
         direction="column"
