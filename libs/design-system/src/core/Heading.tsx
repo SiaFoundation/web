@@ -6,9 +6,9 @@ const DEFAULT_TAG = 'h1'
 
 // This is the mapping of Heading to Text size variants
 const textSize: Record<HeadingSizeVariants, TextSizeVariants['size']> = {
-  1: { '@initial': '2', '@bp2': '3' },
-  2: { '@initial': '4', '@bp2': '5' },
-  3: { '@initial': '5', '@bp2': '6' },
+  1: { '@initial': '16', '@bp2': '20' },
+  2: { '@initial': '24', '@bp2': '32' },
+  3: { '@initial': '40', '@bp2': '64' },
 }
 
 // This is the mapping of Heading to Text size variants
@@ -23,9 +23,9 @@ const textCss: Record<HeadingSizeVariants, CSS> = {
   1: {
     color: '$textContrast',
     fontWeight: 700,
-    lineHeight: '$sizes$5',
+    lineHeight: '$sizes$3',
     letterSpacing: '-1%',
-    '@bp2': { lineHeight: '$sizes$5' },
+    '@bp2': { lineHeight: '$sizes$3' },
   },
   2: {
     color: '$textContrast',

@@ -32,7 +32,7 @@ type ThemeConfig = {
 
 const defaultConfig: ThemeConfig = {
   theme: 'light',
-  mode: 'user',
+  mode: 'system',
 }
 
 export function ThemeProvider({ children, ssr }: Props) {

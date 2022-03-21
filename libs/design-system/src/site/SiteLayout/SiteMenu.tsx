@@ -7,6 +7,8 @@ import { LogoMenuIcon } from '../../icons/LogoMenuIcon'
 import { Box } from '../../core/Box'
 import { Close24 } from '../../icons'
 import { Flex } from '../../core/Flex'
+import { RadioCard, RadioCardGroup } from '../../core/RadioCard'
+import { ThemeRadio } from '../../components/ThemeRadio'
 
 const fadeIn = keyframes({
   from: { opacity: '0' },
@@ -138,10 +140,10 @@ export function SiteMenu({ children }: Props) {
     <Box css={{ position: 'relative', zIndex: 1 }}>
       <Container>
         <Trigger asChild>
-          <Box css={{ position: 'fixed', top: '$5', right: '$5' }}>
-            <IconButton size="3" variant="ghost">
+          <Box css={{ position: 'fixed', top: '$3', right: '$3' }}>
+            <Box css={{ height: '$8', width: '$8', display: 'inline-flex' }}>
               <LogoMenuIcon />
-            </IconButton>
+            </Box>
           </Box>
         </Trigger>
         <Content>
@@ -149,10 +151,18 @@ export function SiteMenu({ children }: Props) {
             direction="column"
             align="center"
             justify="center"
-            css={{ height: '100%' }}
+            css={{
+              height: '100%',
+              '& *': {
+                color: 'white',
+              },
+            }}
           >
             {children}
           </Flex>
+          <Box css={{ position: 'absolute', bottom: '$3', right: '$3' }}>
+            <ThemeRadio />
+          </Box>
         </Content>
       </Container>
     </Box>

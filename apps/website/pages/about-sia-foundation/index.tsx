@@ -60,15 +60,15 @@ function Foundation({ stats, foundation, team, newsPosts, reports }: Props) {
           </Box>
           <Flex direction="column" gap="4">
             <SiteHeading size="1" title="Contact" />
-            <Flex direction="column" gap="4">
-              <Text size="2" color="subtle">
+            <Flex direction="column" gap="3">
+              <Text color="subtle">
                 For developer support please see{' '}
                 <NextLink href={external.docs.index} target="_blank">
                   our documentation
                 </NextLink>
                 .
               </Text>
-              <Text size="2" color="subtle">
+              <Text color="subtle">
                 For general inquiries email{' '}
                 <NextLink href={`mailto:${external.email}`}>
                   info@sia.tech
@@ -138,7 +138,7 @@ function Foundation({ stats, foundation, team, newsPosts, reports }: Props) {
             <Flex direction="column" gap="6">
               {reports.map(([year, yearReports]) => (
                 <Flex key={year} direction="column" gap="2">
-                  <Text size="2" weight="bold">
+                  <Text weight="bold" size="16">
                     {year}
                   </Text>
                   <Flex gap="2" align="center">
@@ -147,7 +147,7 @@ function Foundation({ stats, foundation, team, newsPosts, reports }: Props) {
                         {i > 0 && i < yearReports.length && (
                           <Separator orientation="vertical" />
                         )}
-                        <Text size="2">
+                        <Text size="16">
                           <NextLink
                             href={report.link}
                             target="_blank"

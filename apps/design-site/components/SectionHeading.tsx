@@ -24,7 +24,6 @@ export function SectionHeading({ id, children, hideSeparator }: Props) {
         pb: '$5',
       }}
     >
-      {!hideSeparator && <Separator size="3" />}
       <NextLink
         href={`#${cId}`}
         id={cId}
@@ -41,9 +40,13 @@ export function SectionHeading({ id, children, hideSeparator }: Props) {
           css={{
             transition: 'color 0.1s linear',
             position: 'absolute',
-            top: '$3',
+            top: '$1',
             left: '-22px',
             color: '$slate7',
+            display: 'none',
+            '@bp2': {
+              display: 'block',
+            },
           }}
         >
           <Link20 />

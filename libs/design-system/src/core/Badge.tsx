@@ -1,7 +1,6 @@
 import { styled } from '../config/theme'
 
 export const Badge = styled('span', {
-  // Reset
   alignItems: 'center',
   appearance: 'none',
   borderWidth: '0',
@@ -19,9 +18,9 @@ export const Badge = styled('span', {
   userSelect: 'none',
   WebkitTapHighlightColor: 'rgba(0,0,0,0)',
   '&:disabled': {
-    backgroundColor: '$slate3',
+    backgroundColor: '$control',
     pointerEvents: 'none',
-    color: '$slate8',
+    color: '$textDisabled',
   },
   '&::before': {
     boxSizing: 'border-box',
@@ -33,47 +32,36 @@ export const Badge = styled('span', {
   },
 
   // Custom
-  backgroundColor: '$slate3',
-  // borderRadius: '$1',
-  color: '$slate11',
+  backgroundColor: '$control',
+  borderRadius: '$1',
+  color: '$textSubtle',
   whiteSpace: 'nowrap',
   fontVariantNumeric: 'tabular-nums',
   textTransform: 'uppercase',
+  height: '$3',
+  px: '$1-5',
+  fontSize: '$12',
 
   variants: {
-    size: {
-      '1': {
-        height: '$5',
-        px: '$2',
-        fontSize: '$0',
-      },
-      '2': {
-        height: '$5',
-        px: '$2',
-        fontSize: '$1',
-      },
-    },
     variant: {
       simple: {
         backgroundColor: '$loContrast',
         border: '1px solid $brandAccent9',
         color: '$brandAccent9',
         '&:focus': {
-          boxShadow:
-            'inset 0 0 0 1px $colors$brandAccent10, 0 0 0 1px $colors$brandAccent10',
+          boxShadow: '$colors$borderAccentActive, $colors$shadowActive',
         },
       },
       accent: {
         backgroundColor: '$brandAccent9',
         color: 'white',
         '&:focus': {
-          boxShadow:
-            'inset 0 0 0 1px $colors$brandAccent10, 0 0 0 1px $colors$brandAccent10',
+          boxShadow: '$colors$borderAccentActive, $colors$shadowActive',
         },
       },
       gray: {
-        backgroundColor: '$slate3',
-        color: '$slate11',
+        backgroundColor: '$control',
+        color: '$textSubtle',
         '&:focus': {
           boxShadow:
             'inset 0 0 0 1px $colors$accentActive, 0 0 0 1px $colors$accentActive',
@@ -192,6 +180,11 @@ export const Badge = styled('span', {
         },
       },
     },
+    flat: {
+      true: {
+        borderRadius: '0',
+      },
+    },
     interactive: {
       true: {},
     },
@@ -209,8 +202,8 @@ export const Badge = styled('span', {
           },
         },
         '&:active': {
-          borderColor: '$brandAccent11',
-          color: '$brandAccent11',
+          borderColor: '$brandAccent9',
+          color: '$brandAccent9',
         },
         '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
@@ -229,7 +222,7 @@ export const Badge = styled('span', {
           },
         },
         '&:active': {
-          backgroundColor: '$brandAccent11',
+          backgroundColor: '$brandAccent9',
         },
         '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
@@ -527,7 +520,6 @@ export const Badge = styled('span', {
     },
   ],
   defaultVariants: {
-    size: '1',
     variant: 'gray',
   },
 })

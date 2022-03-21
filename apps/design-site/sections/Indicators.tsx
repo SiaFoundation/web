@@ -1,7 +1,6 @@
 import {
   Alert,
   Badge,
-  Banner,
   Box,
   Flex,
   Grid,
@@ -18,30 +17,6 @@ export function Indicators() {
     <>
       <Section size="1">
         <SectionHeading>Indicators</SectionHeading>
-      </Section>
-      <Section>
-        <SubsectionHeading>Banner</SubsectionHeading>
-        <Flex direction="column" gap="2" align="stretch">
-          <Banner variant="gray">
-            <Text>Announcement, personal quantum computers now available.</Text>
-          </Banner>
-          <Banner variant="green">
-            <Text>Announcement, personal quantum computers now available.</Text>
-          </Banner>
-          <Banner variant="red">
-            <Text>
-              Announcement, personal quantum computers are being recalled.
-            </Text>
-          </Banner>
-          <Banner variant="loContrast">
-            <Text>Announcement, personal quantum computers now available.</Text>
-          </Banner>
-          <Banner variant="red">
-            <Heading>
-              Announcement, personal quantum computers no longer available.
-            </Heading>
-          </Banner>
-        </Flex>
       </Section>
       <Section>
         <SubsectionHeading>Alert</SubsectionHeading>
@@ -81,21 +56,67 @@ export function Indicators() {
       </Section>
       <Section>
         <SubsectionHeading>Badge</SubsectionHeading>
-        <Flex direction="row" gap="1" wrap="wrap">
-          <Badge variant="accent">Accent</Badge>
-          <Badge variant="simple">Simple</Badge>
-          <Badge variant="gold">Gold</Badge>
-          <Badge variant="gray">Gray</Badge>
-          <Badge variant="indigo">Indigo</Badge>
-          <Badge variant="lime">Lime</Badge>
-          <Badge variant="orange">Orange</Badge>
-          <Badge variant="pink">Pink</Badge>
-          <Badge variant="purple">Purple</Badge>
-          <Badge variant="green">Green</Badge>
-          <Badge variant="red">Red</Badge>
-          <Badge variant="teal">Teal</Badge>
-          <Badge variant="violet">Violet</Badge>
-          <Badge variant="yellow">Yellow</Badge>
+        <Flex direction="column" gap="3">
+          <Flex direction="row" gap="1" wrap="wrap">
+            <Badge variant="accent">Accent</Badge>
+            <Badge variant="simple">Simple</Badge>
+            <Badge variant="gold">Gold</Badge>
+            <Badge variant="gray">Gray</Badge>
+            <Badge variant="indigo">Indigo</Badge>
+            <Badge variant="lime">Lime</Badge>
+            <Badge variant="orange">Orange</Badge>
+            <Badge variant="pink">Pink</Badge>
+            <Badge variant="purple">Purple</Badge>
+            <Badge variant="green">Green</Badge>
+            <Badge variant="red">Red</Badge>
+            <Badge variant="teal">Teal</Badge>
+            <Badge variant="violet">Violet</Badge>
+            <Badge variant="yellow">Yellow</Badge>
+          </Flex>
+          <Flex direction="row" gap="1" wrap="wrap">
+            <Badge flat variant="accent">
+              Accent
+            </Badge>
+            <Badge flat variant="simple">
+              Simple
+            </Badge>
+            <Badge flat variant="gold">
+              Gold
+            </Badge>
+            <Badge flat variant="gray">
+              Gray
+            </Badge>
+            <Badge flat variant="indigo">
+              Indigo
+            </Badge>
+            <Badge flat variant="lime">
+              Lime
+            </Badge>
+            <Badge flat variant="orange">
+              Orange
+            </Badge>
+            <Badge flat variant="pink">
+              Pink
+            </Badge>
+            <Badge flat variant="purple">
+              Purple
+            </Badge>
+            <Badge flat variant="green">
+              Green
+            </Badge>
+            <Badge flat variant="red">
+              Red
+            </Badge>
+            <Badge flat variant="teal">
+              Teal
+            </Badge>
+            <Badge flat variant="violet">
+              Violet
+            </Badge>
+            <Badge flat variant="yellow">
+              Yellow
+            </Badge>
+          </Flex>
         </Flex>
       </Section>
       <Section>

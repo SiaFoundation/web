@@ -1,20 +1,26 @@
 import { styled } from '../config/theme'
+import { Text } from './Text'
 
 export const Code = styled('code', {
   fontFamily: '$mono',
-  fontSize: 'max(12px, 85%)',
   whiteSpace: 'nowrap',
-  padding: '2px 3px 2px 3px',
+  padding: '2px 2px',
   borderRadius: '$1',
+
+  fontSize: '$12',
+
+  [`${Text} &`]: {
+    fontSize: 'inherit',
+  },
 
   variants: {
     variant: {
       gray: {
-        backgroundColor: '$brandGray2',
-        color: '$brandGray11',
+        backgroundColor: '$brandGray3',
+        color: '$brandGray12',
       },
       accent: {
-        backgroundColor: '$brandAccent2',
+        backgroundColor: '$brandAccent3',
         color: '$brandAccent12',
       },
     },

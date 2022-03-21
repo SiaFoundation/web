@@ -80,14 +80,26 @@ export const Grid = styled('div', {
       },
     },
     gap: {
+      '0-5': {
+        gap: '$0-5',
+      },
       1: {
         gap: '$1',
+      },
+      '1-5': {
+        gap: '$1-5',
       },
       2: {
         gap: '$2',
       },
+      '2-5': {
+        gap: '$2-5',
+      },
       3: {
         gap: '$3',
+      },
+      '3-5': {
+        gap: '$3-5',
       },
       4: {
         gap: '$4',
@@ -109,14 +121,26 @@ export const Grid = styled('div', {
       },
     },
     gapX: {
+      '0-5': {
+        columnGap: '$0-5',
+      },
       1: {
         columnGap: '$1',
+      },
+      '1-5': {
+        columnGap: '$1-5',
       },
       2: {
         columnGap: '$2',
       },
+      '2-5': {
+        columnGap: '$2-5',
+      },
       3: {
         columnGap: '$3',
+      },
+      '3-5': {
+        columnGap: '$3-5',
       },
       4: {
         columnGap: '$4',
@@ -138,14 +162,26 @@ export const Grid = styled('div', {
       },
     },
     gapY: {
+      '0-5': {
+        rowGap: '$0-5',
+      },
       1: {
         rowGap: '$1',
+      },
+      '1-5': {
+        rowGap: '$1-5',
       },
       2: {
         rowGap: '$2',
       },
+      '2-5': {
+        rowGap: '$2-5',
+      },
       3: {
         rowGap: '$3',
+      },
+      '3-5': {
+        rowGap: '$3-5',
       },
       4: {
         rowGap: '$4',

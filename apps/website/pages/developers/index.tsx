@@ -98,7 +98,7 @@ function Developers({ stats }: Props) {
                       </>
                     }
                   />
-                  <Text size="1" css={{ fontWeight: '600' }}>
+                  <Text size="12" css={{ fontWeight: '600' }}>
                     Version {siaVersion.current}
                   </Text>
                   <Links
@@ -138,7 +138,7 @@ function Developers({ stats }: Props) {
                       </>
                     }
                   />
-                  <Text size="1" css={{ fontWeight: '600' }}>
+                  <Text size="12" css={{ fontWeight: '600' }}>
                     Version {siaVersion.current}
                   </Text>
                   <Links

@@ -114,7 +114,7 @@ export function Inputs() {
         <Flex direction="row" gap="1">
           <TextArea size="1" defaultValue="Here be dragons" />
           <TextArea size="2" state="invalid" defaultValue="Here be dragons" />
-          <TextArea size="3" state="valid" defaultValue="Here be dragons" />
+          <TextArea size="2" state="valid" defaultValue="Here be dragons" />
         </Flex>
       </Section>
       <Section>

@@ -77,7 +77,7 @@ export function SiteLayout({
                   css={{
                     position: 'relative',
                     width: '100%',
-                    height: '200px',
+                    height: '390px',
                     borderTop: '$sizes$frame solid $frame',
                     borderBottom: '$sizes$frame solid $frame',
                     '@initial': {

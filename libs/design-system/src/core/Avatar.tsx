@@ -37,16 +37,16 @@ const StyledAvatar = styled(AvatarPrimitive.Root, {
   variants: {
     size: {
       '1': {
+        width: '$3-5',
+        height: '$3-5',
+      },
+      '2': {
         width: '$6',
         height: '$6',
       },
-      '2': {
-        width: '$9',
-        height: '$9',
-      },
       '3': {
-        width: '$11',
-        height: '$11',
+        width: '$8',
+        height: '$8',
       },
     },
     variant: {
@@ -189,13 +189,13 @@ const StyledAvatarFallback = styled(AvatarPrimitive.Fallback, {
   variants: {
     size: {
       '1': {
-        fontSize: '$1',
+        fontSize: '$12',
       },
       '2': {
-        fontSize: '$2',
+        fontSize: '$14',
       },
       '3': {
-        fontSize: '$4',
+        fontSize: '$20',
       },
     },
   },

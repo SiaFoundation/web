@@ -21,7 +21,7 @@ export function ContentProject({
   css,
 }: ContentProjectProps) {
   return (
-    <Flex direction="column" gap="2" css={css}>
+    <Flex direction="column" gap="1-5" css={css}>
       <Flex direction="column" gap="1">
         <NextLink
           href={link}
@@ -44,7 +44,7 @@ export function ContentProject({
           </Paragraph>
         )}
       </Flex>
-      <Text size="1" font="mono">
+      <Text size="14" font="mono">
         {link && (
           <NextLink
             href={link}

@@ -22,7 +22,7 @@ export function WebDomain({ link }: Props) {
   return (
     <Flex gap="0" align="center">
       <Text
-        size="0"
+        size="12"
         color="subtle"
         font="sans"
         css={{ textDecoration: 'none' }}

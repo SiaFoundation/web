@@ -1,4 +1,5 @@
 import { styled } from '../config/theme'
+import { Text } from './Text'
 
 export const Kbd = styled('kbd', {
   boxSizing: 'border-box',
@@ -11,75 +12,15 @@ export const Kbd = styled('kbd', {
   userSelect: 'none',
   cursor: 'default',
   whiteSpace: 'nowrap',
-  boxShadow: `
-    inset 0 0.5px rgba(255, 255, 255, 0.1),
-    inset 0 1px 5px $colors$slate2,
-    0px 0px 0px 0.5px $colors$slate8,
-    0px 2px 1px -1px $colors$slate8,
-    0 1px $colors$slate8`,
-  textShadow: '0 0 1px rgba(255, 255, 255, 0.5)',
-  fontFamily: '$mono',
+  fontFamily: '$sans',
   fontWeight: 400,
   lineHeight: '1.5',
   mx: '2px',
+  borderRadius: '$sizes$0-5',
+  fontSize: '$16',
 
-  variants: {
-    size: {
-      '1': {
-        borderRadius: '$sizes$0',
-        px: '$1',
-        minWidth: '2em',
-        fontSize: '$0',
-        lineHeight: '200%',
-      },
-      '2': {
-        borderRadius: '$sizes$0',
-        px: '$2',
-        minWidth: '3em',
-        fontSize: '$2',
-        lineHeight: '180%',
-      },
-    },
-    width: {
-      shift: {
-        width: '4em',
-        justifyContent: 'flex-start',
-      },
-      command: {
-        width: '3em',
-        justifyContent: 'flex-end',
-      },
-      space: {
-        width: '8em',
-      },
-    },
-  },
-
-  compoundVariants: [
-    {
-      size: '1',
-      width: 'shift',
-      css: {
-        width: '3em',
-      },
-    },
-    {
-      size: '1',
-      width: 'command',
-      css: {
-        width: '2.5em',
-      },
-    },
-    {
-      size: '1',
-      width: 'space',
-      css: {
-        width: '5em',
-      },
-    },
-  ],
-
-  defaultVariants: {
-    size: '2',
+  [`${Text} &`]: {
+    color: 'inherit',
+    fontSize: 'inherit',
   },
 })

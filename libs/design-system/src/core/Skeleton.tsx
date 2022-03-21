@@ -26,35 +26,35 @@ export const Skeleton = styled('div', {
     variant: {
       avatar1: {
         borderRadius: '$round',
-        height: '$6',
-        width: '$6',
+        height: '$3-5',
+        width: '$3-5',
       },
       avatar2: {
         borderRadius: '$round',
-        height: '$9',
-        width: '$9',
+        height: '$6',
+        width: '$6',
       },
       avatar3: {
         borderRadius: '$round',
-        height: '$11',
-        width: '$11',
+        height: '$8',
+        width: '$8',
       },
       text: {
-        height: '$2',
+        height: '$1',
         borderRadius: '$1',
       },
       title: {
-        height: '$5',
+        height: '$3',
         borderRadius: '$1',
       },
       heading: {
-        height: '$3',
+        height: '$2',
         borderRadius: '$1',
       },
       button: {
         borderRadius: '$1',
-        height: '$5',
-        width: '$8',
+        height: '$3',
+        width: '$5',
       },
     },
   },

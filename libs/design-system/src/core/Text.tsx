@@ -26,6 +26,9 @@ export const Text = styled('span', {
       lo: {
         color: '$loContrast',
       },
+      accent: {
+        color: '$brandAccent11',
+      },
     },
     weight: {
       bold: {
@@ -39,26 +42,32 @@ export const Text = styled('span', {
       },
     },
     size: {
-      '0': {
-        fontSize: '$0',
+      '10': {
+        fontSize: '$10',
       },
-      '1': {
-        fontSize: '$1',
+      '12': {
+        fontSize: '$12',
       },
-      '2': {
-        fontSize: '$2',
+      '14': {
+        fontSize: '$14',
       },
-      '3': {
-        fontSize: '$3',
+      '16': {
+        fontSize: '$16',
       },
-      '4': {
-        fontSize: '$4',
+      '20': {
+        fontSize: '$20',
       },
-      '5': {
-        fontSize: '$5',
+      '24': {
+        fontSize: '$24',
       },
-      '6': {
-        fontSize: '$6',
+      '32': {
+        fontSize: '$32',
+      },
+      '40': {
+        fontSize: '$40',
+      },
+      '64': {
+        fontSize: '$64',
       },
     },
     ellipsis: {
@@ -75,6 +84,6 @@ export const Text = styled('span', {
     weight: 'regular',
     font: 'sans',
     color: 'contrast',
-    size: 2,
+    size: '14',
   },
 })

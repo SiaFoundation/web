@@ -1,5 +1,6 @@
 import { DotIcon } from '@radix-ui/react-icons'
 import {
+  Box,
   Flex,
   Heading,
   NextLink,
@@ -10,22 +11,22 @@ import {
 // Components used in mardown rendering
 export const components = {
   h1: ({ children }) => (
-    <Heading size="3" css={{ margin: '$3 0' }}>
+    <Heading size="3" css={{ display: 'block', margin: '$4 0' }}>
       {children}
     </Heading>
   ),
   h2: ({ children }) => (
-    <Heading size="2" css={{ margin: '$3 0' }}>
+    <Heading size="2" css={{ display: 'block', margin: '$4 0' }}>
       {children}
     </Heading>
   ),
   h3: ({ children }) => (
-    <Heading size="1" css={{ margin: '$3 0' }}>
+    <Heading size="1" css={{ display: 'block', margin: '$4 0' }}>
       {children}
     </Heading>
   ),
   p: ({ children }) => (
-    <Paragraph css={{ margin: '$3 0' }}>{children}</Paragraph>
+    <Paragraph css={{ display: 'block', margin: '$2 0' }}>{children}</Paragraph>
   ),
   a: (props) => <NextLink {...props} target="_blank" />,
   ul: ({ children }) => (
@@ -35,7 +36,9 @@ export const components = {
   ),
   li: ({ children }) => (
     <Flex as="li" align="center" gap="1" css={{ lineHeight: '24px' }}>
-      <DotIcon />
+      <Flex>
+        <DotIcon />
+      </Flex>
       <Text>{children}</Text>
     </Flex>
   ),

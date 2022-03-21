@@ -5,7 +5,6 @@ import { styled, css, CSS } from '../config/theme'
 import { Box } from './Box'
 import { Flex } from './Flex'
 import { panelStyles } from './Panel'
-import { Link } from './Link'
 
 export const baseItemCss = css({
   display: 'flex',
@@ -13,14 +12,15 @@ export const baseItemCss = css({
   justifyContent: 'space-between',
   color: '$textSubtle',
   fontFamily: '$sans',
-  fontSize: '$0',
+  fontSize: '$12',
   fontVariantNumeric: 'tabular-nums',
+  textDecoration: 'none !important',
   lineHeight: '1',
   cursor: 'default',
   userSelect: 'none',
   whiteSpace: 'nowrap',
-  height: '$6',
-  padding: '0 $2',
+  height: '$4',
+  padding: '0 $1-5',
 })
 
 export const itemCss = css(baseItemCss, {
@@ -28,28 +28,15 @@ export const itemCss = css(baseItemCss, {
   fontWeight: '500',
   borderRadius: '$1',
 
+  color: '$textSubtle',
+
   '&:focus': {
     outline: 'none',
-    color: '$brandGray12',
+    color: '$textSubtleActive',
   },
 
   '&[data-disabled]': {
-    color: '$brandGray9',
-  },
-
-  // Make nested links and icons within links match
-  [`& ${Link}`]: {
-    display: 'flex',
-    flex: 1,
-    fontFamily: '$sans',
-    textDecoration: 'none',
-    color: '$brandGray11',
-    '&:hover': {
-      color: '$brandGray12',
-    },
-    '&:hover > *': {
-      color: '$brandGray12',
-    },
+    color: '$textDisabled',
   },
 })
 
@@ -92,8 +79,8 @@ export const MenuRadioItem = React.forwardRef<
       <MenuPrimitive.ItemIndicator>
         <Flex
           css={{
-            width: '$3',
-            height: '$3',
+            width: '$2',
+            height: '$2',
             alignItems: 'center',
             justifyContent: 'center',
           }}

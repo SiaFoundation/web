@@ -79,7 +79,7 @@ function CommunityEcosystem({ stats }: Props) {
         <ContentGallery columns="1" items={blogs} />
       </Section>
       <Section>
-        <Flex gap="6" align="start">
+        <Flex gap="3" align="start">
           <Image
             src={'/built-with-sia.png'}
             alt="Built with Sia"
@@ -101,10 +101,8 @@ function CommunityEcosystem({ stats }: Props) {
             }
           />
         </Flex>
-        <Text size="0" css={{ fontWeight: '500' }}>
-          FILTER PROJECTS
-        </Text>
         <ContentGallery
+          eyebrow="Filter projects"
           filterable="software"
           component={ContentProject}
           items={software.map((i) => ({ ...i, newTab: true }))}

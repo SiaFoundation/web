@@ -30,7 +30,7 @@ export function Layout({ heading, children, stats, backgroundImage }: Props) {
         backgroundImage={backgroundImage}
         navbar={<Navbar />}
       >
-        <Flex direction="column" css={{ padding: '$9 0' }}>
+        <Flex direction="column" css={{ padding: '$6 0' }}>
           {children}
         </Flex>
       </SiteLayout>

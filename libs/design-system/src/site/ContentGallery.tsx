@@ -62,7 +62,7 @@ export function ContentGallery({
         <Flex direction="column" gap="2">
           {eyebrow && (
             <Text
-              size="1"
+              size="12"
               css={{
                 fontFamily: '$mono',
                 textTransform: 'uppercase',
@@ -77,8 +77,8 @@ export function ContentGallery({
               key="all"
               interactive
               variant={!activeFilter ? 'accent' : 'simple'}
-              size="2"
               onClick={() => changeFilter(undefined)}
+              flat
             >
               All
             </Badge>
@@ -87,8 +87,8 @@ export function ContentGallery({
                 key={filter}
                 interactive
                 variant={activeFilter === filter ? 'accent' : 'simple'}
-                size="2"
                 onClick={() => changeFilter(filter)}
+                flat
               >
                 {filter.replace(/_/g, ' ')}
               </Badge>

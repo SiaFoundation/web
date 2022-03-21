@@ -9,20 +9,19 @@ export const Link = styled('a', {
   alignItems: 'center',
   gap: '$1',
   flexShrink: 0,
-  outline: 'none',
   fontFamily: '$mono',
+  outline: 'none',
   textDecorationLine: 'underline',
   textUnderlineOffset: '2px',
   lineHeight: 'inherit',
   WebkitTapHighlightColor: 'rgba(0,0,0,0)',
-  '&:focus': {
-    outlineWidth: '2px',
-    outlineStyle: 'solid',
-    outlineOffset: '2px',
-    textDecorationLine: 'none',
-  },
-  [`& ${Text}`]: {
+
+  fontSize: '$16',
+
+  [`${Text} &`]: {
     color: 'inherit',
+    fontSize: 'inherit',
+    fontFamily: 'inherit',
   },
 
   variants: {
@@ -30,38 +29,14 @@ export const Link = styled('a', {
       subtle: {
         color: '$textSubtle',
         textDecorationColor: '$textSubtle',
-        '@hover': {
-          '&:hover': {
-            textDecorationColor: '$textContrast',
-          },
-        },
-        '&:focus': {
-          outlineColor: '$accentActive',
-        },
       },
       contrast: {
         color: '$textContrast',
         textDecorationColor: '$textContrast',
-        '@hover': {
-          '&:hover': {
-            textDecorationColor: '$textContrast',
-          },
-        },
-        '&:focus': {
-          outlineColor: '$accentActive',
-        },
       },
       accent: {
         color: '$brandAccent11',
         textDecorationColor: '$brandAccent11',
-        '@hover': {
-          '&:hover': {
-            textDecorationColor: '$brandAccent11',
-          },
-        },
-        '&:focus': {
-          outlineColor: '$accentActive',
-        },
       },
       light: {
         color: '$whiteA12',
@@ -71,9 +46,6 @@ export const Link = styled('a', {
             textDecorationColor: '$whiteA12',
             textDecorationLine: 'underline',
           },
-        },
-        '&:focus': {
-          outlineColor: '$accentActive',
         },
       },
     },
@@ -114,11 +86,7 @@ type NextLinkButtonProps = {
   id?: string
   href: string
   target?: string
-  children: React.ReactNode
-  variant?: React.ComponentProps<typeof Button>['variant']
-  size?: React.ComponentProps<typeof Button>['size']
-  css?: CSS
-}
+} & React.ComponentProps<typeof Button>
 
 // Next link
 export function NextLinkButton({
@@ -127,6 +95,7 @@ export function NextLinkButton({
   target,
   children,
   variant,
+  flat,
   size,
   css,
 }: NextLinkButtonProps) {
@@ -137,6 +106,7 @@ export function NextLinkButton({
         id={id}
         css={css}
         variant={variant}
+        flat={flat}
         size={size}
         target={target}
       >

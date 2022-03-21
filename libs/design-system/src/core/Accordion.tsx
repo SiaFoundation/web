@@ -56,7 +56,7 @@ const StyledTrigger = styled(AccordionPrimitive.Trigger, {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  p: '$2',
+  p: '$1-5',
   color: '$hiContrast',
   width: '100%',
 

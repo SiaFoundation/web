@@ -33,6 +33,7 @@ export function Callout({
 }: Props) {
   return (
     <Panel
+      flat
       css={{
         position: 'relative',
         background: 'none',
@@ -57,25 +58,31 @@ export function Callout({
         direction="column"
         align="start"
         justify="end"
-        gap="3"
+        gap="2"
         css={{
           position: 'relative',
           height: '100%',
-          padding: size === '2' ? '$13 $8' : '$13 $5 $6 $5',
+          padding: size === '2' ? '$max $9' : '$max $3 $4 $3',
         }}
       >
         {eyebrow && (
-          <Text size="1" color="subtle" css={{ textTransform: 'uppercase' }}>
+          <Text
+            size="14"
+            color="subtle"
+            font="mono"
+            css={{ textTransform: 'uppercase' }}
+          >
             {eyebrow}
           </Text>
         )}
-        <Text size="5" font="mono">
+        <Text size="40" font="mono">
           {title}
         </Text>
         <Paragraph>{description}</Paragraph>
         <NextLinkButton
           size="2"
           variant="accent"
+          flat
           href={actionLink}
           css={{ display: 'inline' }}
           target={actionNewTab ? '_blank' : undefined}

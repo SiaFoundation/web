@@ -35,22 +35,14 @@ export function ExampleMenu({ align, children }: Props) {
             <Information16 />
           </DropdownMenuRightSlot>
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          <NextLink
-            href="https://discord.gg/sia"
-            target="_blank"
-            css={{
-              display: 'flex',
-              width: '100%',
-              alignItems: 'center',
-            }}
-          >
+        <NextLink href="https://discord.gg/sia" target="_blank">
+          <DropdownMenuItem>
             Discord
             <DropdownMenuRightSlot>
               <LogoDiscord16 />
             </DropdownMenuRightSlot>
-          </NextLink>
-        </DropdownMenuItem>
+          </DropdownMenuItem>
+        </NextLink>
         <DropdownMenuItem>
           Docs
           <DropdownMenuRightSlot>

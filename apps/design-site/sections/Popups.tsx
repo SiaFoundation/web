@@ -16,9 +16,9 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 
 function Content() {
   return (
-    <Flex direction="column" gap="1" css={{ p: '$3' }}>
+    <Flex direction="column" gap="1" css={{ p: '$2' }}>
       <Heading>Hey there</Heading>
-      <Paragraph size="1">
+      <Paragraph size="2">
         Be sure to read the user manual before operating machinery like this
         button.
       </Paragraph>

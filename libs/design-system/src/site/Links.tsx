@@ -27,6 +27,7 @@ export function Links({ links = [], size = '1' }: Props) {
             size="2"
             href={link.link}
             target={link.newTab ? '_blank' : undefined}
+            flat
           >
             {link.title}
           </NextLinkButton>
@@ -38,7 +39,7 @@ export function Links({ links = [], size = '1' }: Props) {
   return (
     <Flex gap="3" wrap="wrap">
       {links.map((link) => (
-        <Text size="1" key={link.title + link.link}>
+        <Text size="14" key={link.title + link.link}>
           <NextLink
             variant="contrast"
             href={link.link}

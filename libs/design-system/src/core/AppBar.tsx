@@ -10,10 +10,10 @@ export const AppBar = styled('div', {
         py: '$1',
       },
       2: {
-        py: '$3',
+        py: '$2',
       },
       3: {
-        py: '$5',
+        py: '$3',
       },
     },
     sticky: {

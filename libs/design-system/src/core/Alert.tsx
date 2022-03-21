@@ -10,12 +10,12 @@ export const Alert = styled('div', {
   },
 
   border: '1px solid',
-  borderRadius: '$2',
+  borderRadius: '$1',
 
   variants: {
     size: {
       '1': {
-        p: '$3',
+        p: '$2',
       },
     },
     variant: {

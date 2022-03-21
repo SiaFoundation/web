@@ -25,9 +25,9 @@ export function Statsbar({
         backgroundColor: '$waves',
       }}
     >
-      <Section size="0" gap="3">
+      <Section size="0" gap="2">
         <Flex gap="1" wrap="wrap">
-          <Text size="1">
+          <Text size="12">
             <NextLink
               href={external.stats}
               target="_blank"
@@ -38,21 +38,21 @@ export function Statsbar({
             </NextLink>
           </Text>
           <Stat value={activeHosts} label="active hosts" />
-          <Text color="subtle" size="1">
+          <Text color="subtle" size="12">
             •
           </Text>
           <Stat value={onlineHosts} label="online hosts" />
-          <Text color="subtle" size="1">
+          <Text color="subtle" size="12">
             •
           </Text>
           <Stat value={totalStorage} label="total storage" />
-          <Text color="subtle" size="1">
+          <Text color="subtle" size="12">
             •
           </Text>
           <Stat value={usedStorage} label="used storage" />
         </Flex>
         <Flex gap="1" wrap="wrap">
-          <Text size="1">
+          <Text size="12">
             <NextLink
               href={external.github}
               target="_blank"
@@ -63,25 +63,25 @@ export function Statsbar({
             </NextLink>
           </Text>
           <Stat value={commits} label="commits" />
-          <Text color="subtle" size="1">
+          <Text color="subtle" size="12">
             •
           </Text>
           <Stat value={contributors} label="contributors" />
-          <Text color="subtle" size="1">
+          <Text color="subtle" size="12">
             •
           </Text>
           <Stat value={forks} label="forks" />
-          <Text color="subtle" size="1">
+          <Text color="subtle" size="12">
             •
           </Text>
           <Stat value={releases} label="releases" />
-          <Text color="subtle" size="1">
+          <Text color="subtle" size="12">
             •
           </Text>
           <Stat value={downloads} label="downloads" />
         </Flex>
         <Flex gap="1" wrap="wrap">
-          <Text size="1">
+          <Text size="12">
             <NextLink
               href={external.benchmarks}
               target="blank"
@@ -92,15 +92,15 @@ export function Statsbar({
             </NextLink>
           </Text>
           <Stat value={downloadSpeed} label="download" />
-          <Text color="subtle" size="1">
+          <Text color="subtle" size="12">
             •
           </Text>
           <Stat value={uploadSpeed} label="upload" />
-          <Text color="subtle" size="1">
+          <Text color="subtle" size="12">
             •
           </Text>
           <Stat value={cpuUsage} label="CPU usage" />
-          <Text color="subtle" size="1">
+          <Text color="subtle" size="12">
             •
           </Text>
           <Stat value={memoryUsage} label="memory usage" />
@@ -117,11 +117,11 @@ type StatProps = {
 
 function Stat({ value, label }: StatProps) {
   return (
-    <Flex gap="0">
-      <Text size="1" css={{ fontWeight: '600' }}>
+    <Flex gap="0-5">
+      <Text size="12" css={{ fontWeight: '600' }}>
         {value}
       </Text>
-      <Text size="1">{label}</Text>
+      <Text size="12">{label}</Text>
     </Flex>
   )
 }
