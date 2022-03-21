@@ -19,7 +19,7 @@ export function Footer({ stats }: Props) {
   return (
     <Flex direction="column">
       <Statsbar {...stats} />
-      <Section size="1" fullWidth css={{ backgroundColor: '$brandGray3' }}>
+      <Section size="1" width="flush" css={{ backgroundColor: '$brandGray3' }}>
         <Container>
           <Flex direction="column" align="start" gap="1">
             <Flex

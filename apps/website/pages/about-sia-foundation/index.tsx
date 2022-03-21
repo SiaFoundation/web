@@ -130,8 +130,8 @@ function Foundation({ stats, foundation, team, newsPosts, reports }: Props) {
           ))}
         </Grid>
       </Section>
-      <Section fullWidth>
-        <Section fullWidth css={{ position: 'relative' }}>
+      <Section width="flush">
+        <Section width="flush" css={{ position: 'relative' }}>
           <WavesBackdrop />
           <Section>
             <SiteHeading size="2" title="Quarterly Reports" />

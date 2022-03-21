@@ -39,7 +39,7 @@ export function Links({ links = [], size = '1' }: Props) {
   return (
     <Flex gap="3" wrap="wrap">
       {links.map((link) => (
-        <Text size="14" key={link.title + link.link}>
+        <Text size="14" font="mono" key={link.title + link.link}>
           <NextLink
             variant="contrast"
             href={link.link}

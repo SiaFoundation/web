@@ -71,7 +71,7 @@ function Developers({ stats }: Props) {
     >
       <Section
         size="3"
-        fullWidth
+        width="flush"
         css={{ position: 'relative', marginBottom: '$6' }}
       >
         <WavesBackdrop />
@@ -98,7 +98,7 @@ function Developers({ stats }: Props) {
                       </>
                     }
                   />
-                  <Text size="12" css={{ fontWeight: '600' }}>
+                  <Text size="14" css={{ fontWeight: '600' }}>
                     Version {siaVersion.current}
                   </Text>
                   <Links
@@ -138,7 +138,7 @@ function Developers({ stats }: Props) {
                       </>
                     }
                   />
-                  <Text size="12" css={{ fontWeight: '600' }}>
+                  <Text size="14" css={{ fontWeight: '600' }}>
                     Version {siaVersion.current}
                   </Text>
                   <Links

@@ -4,6 +4,7 @@ import { ContentItemProps } from './ContentItem'
 import { WebDomain } from './WebDomain'
 import { Image } from '../core/Image'
 import { Box } from '../core/Box'
+import { useTheme } from '../hooks/useTheme'
 
 export type ContentProjectProps = ContentItemProps & {
   logo: string
@@ -20,6 +21,7 @@ export function ContentProject({
   newTab,
   css,
 }: ContentProjectProps) {
+  const { activeTheme } = useTheme()
   return (
     <Flex direction="column" gap="1-5" css={css}>
       <Flex direction="column" gap="1">
@@ -32,6 +34,9 @@ export function ContentProject({
             css={{
               position: 'relative',
               height: '40px',
+              filter: `grayscale(1) invert(${
+                activeTheme === 'dark' ? 1 : 0
+              })`,
             }}
           >
             {/* NextImage was having issues loading the file */}
