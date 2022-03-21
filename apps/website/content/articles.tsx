@@ -15,11 +15,13 @@ import {
   ScalesTipped24,
 } from '@siafoundation/design-system'
 import { external } from '../config/site'
+import { addNewTab } from '../lib/utils'
 
 export function getArticles(tags: string[], limit?: number) {
   return articles
     .filter((a) => tags.find((section) => a.tags?.includes(section)))
     .slice(0, limit)
+    .map(addNewTab)
 }
 
 const articles: ContentItemProps[] = [
@@ -48,21 +50,18 @@ const articles: ContentItemProps[] = [
     icon: <Archive24 />,
     tags: ['tutorial'],
     link: external.docs.renting,
-    newTab: true,
   },
   {
     title: 'Learn how create a wallet and make transactions on the Sia network',
     icon: <Wallet24 />,
     tags: ['tutorial'],
     link: external.docs.wallet,
-    newTab: true,
   },
   {
     title: `Learn how offer storage space on the the Sia network's storage marketplace`,
     icon: <Currency24 />,
     tags: ['tutorial'],
     link: external.docs.hosting,
-    newTab: true,
   },
   {
     title: 'Learn how to mine on the Sia network',

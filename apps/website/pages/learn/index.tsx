@@ -315,9 +315,7 @@ function Learn({ stats }: Props) {
             </>
           }
         />
-        <ContentGallery
-          items={getStarted.map((i) => ({ ...i, newTab: true }))}
-        />
+        <ContentGallery items={getStarted} />
       </Section>
       <Section>
         <Callout

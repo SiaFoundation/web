@@ -110,7 +110,7 @@ function CommunityEcosystem({ stats }: Props) {
             '@bp2': 2,
             '@bp4': 3,
           }}
-          items={software.map((i) => ({ ...i, newTab: true }))}
+          items={software}
         />
       </Section>
       <Section>

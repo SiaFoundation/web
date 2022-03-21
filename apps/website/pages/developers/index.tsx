@@ -246,7 +246,7 @@ function Developers({ stats }: Props) {
             '@bp2': 2,
             '@bp4': 3,
           }}
-          items={services.map((item) => ({ ...item, newTab: true }))}
+          items={services}
         />
       </Section>
       <Section>

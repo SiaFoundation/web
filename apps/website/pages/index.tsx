@@ -82,12 +82,8 @@ export default function Home({ stats, landing }: Props) {
       }
       backgroundImage={backgroundImage}
     >
-      <Section width="flush">
-        <Section
-          width="flush"
-          size="1"
-          css={{ position: 'relative', marginBottom: '$6' }}
-        >
+      <Section size="0" width="flush">
+        <Section width="flush" size="1" css={{ position: 'relative' }}>
           <WavesBackdrop />
           <Section size="1" gap="6">
             <SiteHeading size="2" title="Why Sia" />
@@ -147,7 +143,7 @@ export default function Home({ stats, landing }: Props) {
           </Section>
         </Section>
       </Section>
-      <Section>
+      <Section size="4">
         <Grid
           gap={{
             '@initial': '4',
@@ -227,9 +223,7 @@ export default function Home({ stats, landing }: Props) {
               </>
             }
           />
-          <ContentGallery
-            items={tutorials.map((i) => ({ ...i, newTab: true }))}
-          />
+          <ContentGallery items={tutorials} />
         </Section>
         <Section width="flush" size="0">
           <SiteHeading
@@ -244,10 +238,7 @@ export default function Home({ stats, landing }: Props) {
               },
             ]}
           />
-          <ContentGallery
-            items={latest.map((i) => ({ ...i, newTab: true }))}
-            columns={'1'}
-          />
+          <ContentGallery items={latest} columns="1" />
         </Section>
       </Section>
     </Layout>
