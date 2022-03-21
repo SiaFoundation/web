@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.7.2](https://github.com/SiaFoundation/web/compare/website-0.7.1...website-0.7.2) (2022-03-21)
+
+
+### Bug Fixes
+
+* remove logos background ([9f412dd](https://github.com/SiaFoundation/web/commit/9f412dd92ee1e95ced223fa51c93825a89e23153))
+
+
+
 ## [0.7.1](https://github.com/SiaFoundation/web/compare/website-0.7.0...website-0.7.1) (2022-03-21)
 
 
