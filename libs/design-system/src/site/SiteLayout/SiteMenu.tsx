@@ -7,7 +7,6 @@ import { LogoMenuIcon } from '../../icons/LogoMenuIcon'
 import { Box } from '../../core/Box'
 import { Close24 } from '../../icons'
 import { Flex } from '../../core/Flex'
-import { RadioCard, RadioCardGroup } from '../../core/RadioCard'
 import { ThemeRadio } from '../../components/ThemeRadio'
 
 const fadeIn = keyframes({
@@ -153,6 +152,7 @@ export function SiteMenu({ children }: Props) {
             justify="center"
             css={{
               height: '100%',
+              padding: '$6',
               '& *': {
                 color: 'white',
               },

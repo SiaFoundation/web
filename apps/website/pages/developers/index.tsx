@@ -244,7 +244,7 @@ function Developers({ stats }: Props) {
           columns={{
             '@initial': 1,
             '@bp2': 2,
-            '@bp3': 3,
+            '@bp4': 3,
           }}
           items={services.map((item) => ({ ...item, newTab: true }))}
         />
