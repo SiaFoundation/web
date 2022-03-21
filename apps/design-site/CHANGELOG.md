@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.6.0](https://github.com/SiaFoundation/web/compare/design-site-0.5.0...design-site-0.6.0) (2022-03-21)
+
+
+### Features
+
+* refactor design system vars ([34690b9](https://github.com/SiaFoundation/web/commit/34690b9675391d92b18a87a0d80b49d364e10bd3))
+
+
+
 # [0.5.0](https://github.com/SiaFoundation/web/compare/design-site-0.4.2...design-site-0.5.0) (2022-03-17)
 
 
