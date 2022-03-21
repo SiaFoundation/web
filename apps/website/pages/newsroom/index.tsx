@@ -10,7 +10,7 @@ import { sitemap } from '../../config/site'
 import { generateRssNewsFeed, getNewsPosts } from '../../content/news'
 import { AsyncReturnType } from '../../lib/types'
 import { getStats } from '../../content/stats'
-import background from '../../assets/backgrounds/road-dither.png'
+import background from '../../assets/backgrounds/steps.png'
 
 const backgroundImage = getImageProps(background)
 

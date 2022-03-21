@@ -16,7 +16,7 @@ import { AsyncReturnType } from '../../lib/types'
 import { getSoftware } from '../../content/software'
 import { getStats } from '../../content/stats'
 import { omit } from 'lodash'
-import background from '../../assets/backgrounds/jungle-dither.png'
+import background from '../../assets/backgrounds/jungle.png'
 
 const backgroundImage = getImageProps(background)
 

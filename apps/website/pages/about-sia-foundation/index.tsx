@@ -26,7 +26,7 @@ import { getReports } from '../../content/reports'
 import { getNewsPosts } from '../../content/news'
 import { getStats } from '../../content/stats'
 import { Fragment } from 'react'
-import background from '../../assets/backgrounds/jungle-dither.png'
+import background from '../../assets/backgrounds/tree.png'
 
 const backgroundImage = getImageProps(background)
 

@@ -9,7 +9,7 @@ import {
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import { Menu } from '../components/Menu'
-import background from '../assets/jungle-dither.png'
+import background from '../assets/jungle.png'
 import { Heading } from '../components/Heading'
 
 const backgroundImage = getImageProps(background)
