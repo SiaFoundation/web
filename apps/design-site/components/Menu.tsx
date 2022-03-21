@@ -21,7 +21,7 @@ export function Menu() {
 
 function Link({ href, children }) {
   return (
-    <Text size="4">
+    <Text size="20">
       <NextLink variant="light" href={href}>
         {children}
       </NextLink>

@@ -22,13 +22,13 @@ export const TextField = styled('input', {
 
   // Custom
   backgroundColor: '$loContrast',
-  boxShadow: 'inset 0 0 0 1px $colors$accentInactive',
+  boxShadow: '$colors$border, $colors$shadow',
   color: '$hiContrast',
   fontVariantNumeric: 'tabular-nums',
 
   '&:-webkit-autofill': {
     boxShadow:
-      'inset 0 0 0 1px $colors$blue6, inset 0 0 0 100px $colors$brandAccent4',
+      '$colors$borderInput, $colors$shadow, inset 0 0 0 100px $colors$brandAccent4',
   },
 
   '&:-webkit-autofill::first-line': {
@@ -36,12 +36,17 @@ export const TextField = styled('input', {
     color: '$hiContrast',
   },
 
+  '@hover': {
+    '&:hover': {
+      boxShadow: '$colors$borderInputHover, $colors$shadow',
+    },
+  },
+
   '&:focus': {
-    boxShadow:
-      'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput',
+    boxShadow: '$colors$borderInputActive, $colors$shadowActive',
     '&:-webkit-autofill': {
       boxShadow:
-        'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput, inset 0 0 0 100px $colors$brandAccent4',
+        '$colors$borderInputActive, $colors$shadowActive, inset 0 0 0 100px $colors$brandAccent4',
     },
   },
   '&::placeholder': {
@@ -58,8 +63,9 @@ export const TextField = styled('input', {
   },
   '&:read-only': {
     backgroundColor: '$brandGray2',
+    boxShadow: '$colors$borderInput, $colors$shadow',
     '&:focus': {
-      boxShadow: 'inset 0px 0px 0px 1px $colors$brandGray7',
+      boxShadow: '$colors$borderInputActive, $colors$shadowActive',
     },
   },
 
@@ -67,12 +73,12 @@ export const TextField = styled('input', {
     size: {
       '1': {
         borderRadius: '$1',
-        height: '$5',
-        fontSize: '$0',
+        height: '$3-5',
+        fontSize: '$12',
         padding: '0 $1',
-        lineHeight: '$sizes$5',
+        lineHeight: '$sizes$3-5',
         '&:-webkit-autofill::first-line': {
-          fontSize: '$0',
+          fontSize: '$12',
         },
         '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
           position: 'relative',
@@ -81,12 +87,12 @@ export const TextField = styled('input', {
       },
       '2': {
         borderRadius: '$1',
-        height: '$7',
-        fontSize: '$2',
-        padding: '0 $2',
-        lineHeight: '$sizes$7',
+        height: '$5',
+        fontSize: '$16',
+        padding: '0 $1-5',
+        lineHeight: '$sizes$5',
         '&:-webkit-autofill::first-line': {
-          fontSize: '$2',
+          fontSize: '$16',
         },
         '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
           position: 'relative',
@@ -129,16 +135,6 @@ export const TextField = styled('input', {
       ghost: {
         boxShadow: 'none',
         backgroundColor: 'transparent',
-        '@hover': {
-          '&:hover': {
-            boxShadow: 'inset 0 0 0 1px $colors$brandGray7',
-          },
-        },
-        '&:focus': {
-          backgroundColor: '$loContrast',
-          boxShadow:
-            'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput',
-        },
         '&:disabled': {
           backgroundColor: 'transparent',
         },
@@ -149,17 +145,25 @@ export const TextField = styled('input', {
     },
     state: {
       invalid: {
-        boxShadow: 'inset 0 0 0 1px $colors$red7',
+        boxShadow: '$colors$borderRed, $colors$shadow',
+        '@hover': {
+          '&:hover': {
+            boxShadow: '$colors$borderRedHover, $colors$shadow',
+          },
+        },
         '&:focus': {
-          boxShadow:
-            'inset 0px 0px 0px 1px $colors$red8, 0px 0px 0px 1px $colors$red8',
+          boxShadow: '$colors$borderRedActive, $colors$shadowActive',
         },
       },
       valid: {
-        boxShadow: 'inset 0 0 0 1px $colors$brandAccent8',
+        boxShadow: '$colors$borderGreen, $colors$shadow',
+        '@hover': {
+          '&:hover': {
+            boxShadow: '$colors$borderGreenHover, $colors$shadow',
+          },
+        },
         '&:focus': {
-          boxShadow:
-            'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput',
+          boxShadow: '$colors$borderGreenActive, $colors$shadowActive',
         },
       },
     },

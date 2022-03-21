@@ -55,6 +55,17 @@ export function Buttons() {
               Red
             </Button>
           </Flex>
+          <Flex direction="row" gap="1">
+            <Button size="2" flat variant="accent">
+              Green
+            </Button>
+            <Button size="2" flat variant="gray">
+              Gray
+            </Button>
+            <Button size="2" flat variant="red">
+              Red
+            </Button>
+          </Flex>
         </Flex>
       </Section>
       <Section>
@@ -129,24 +140,18 @@ export function Buttons() {
             <IconButton size="2">
               <Search16 />
             </IconButton>
-            <IconButton size="3" state="waiting" variant="ghost">
-              <Search16 />
-            </IconButton>
-            <IconButton size="3" variant="ghost">
-              <Search16 />
-            </IconButton>
-            <IconButton size="3" disabled variant="ghost">
+            <IconButton size="3" disabled>
               <Search16 />
             </IconButton>
           </Flex>
           <Flex direction="row" gap="1">
-            <IconButton size="1" variant="raised">
+            <IconButton variant="gray" size="1">
               <Search16 />
             </IconButton>
-            <IconButton size="2" state="active" variant="raised">
+            <IconButton variant="gray" size="2">
               <Search16 />
             </IconButton>
-            <IconButton size="3" state="waiting" variant="raised">
+            <IconButton variant="gray" size="3" disabled>
               <Search16 />
             </IconButton>
           </Flex>

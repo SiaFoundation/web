@@ -2,6 +2,7 @@ import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import {
   AppBar,
   Box,
+  Container,
   Flex,
   Grid,
   Heading,
@@ -144,48 +145,58 @@ export function Layout() {
             columns={1}
             gap="2"
             css={{
-              padding: '$3',
+              padding: '$2',
             }}
           >
             <AppBar size="3" border>
-              <Flex css={{ px: '$3' }} justify="between">
-                <Heading>Xerox</Heading>
-                <IconButton css={{ color: '$gray10' }}>
-                  <DotsHorizontalIcon />
-                </IconButton>
-              </Flex>
+              <Container>
+                <Flex justify="between" align="center">
+                  <Heading>Xerox</Heading>
+                  <IconButton>
+                    <DotsHorizontalIcon />
+                  </IconButton>
+                </Flex>
+              </Container>
             </AppBar>
             <AppBar size="2" color="loContrast">
-              <Flex css={{ px: '$3' }} justify="between">
-                <Heading>Xerox</Heading>
-                <IconButton css={{ color: '$gray10' }}>
-                  <DotsHorizontalIcon />
-                </IconButton>
-              </Flex>
+              <Container>
+                <Flex justify="between" align="center">
+                  <Heading>Xerox</Heading>
+                  <IconButton>
+                    <DotsHorizontalIcon />
+                  </IconButton>
+                </Flex>
+              </Container>
             </AppBar>
             <AppBar size="1" color="plain" border glass>
-              <Flex css={{ px: '$3' }} justify="between">
-                <Heading>Xerox</Heading>
-                <IconButton css={{ color: '$gray10' }}>
-                  <DotsHorizontalIcon />
-                </IconButton>
-              </Flex>
+              <Container>
+                <Flex justify="between" align="center">
+                  <Heading>Xerox</Heading>
+                  <IconButton>
+                    <DotsHorizontalIcon />
+                  </IconButton>
+                </Flex>
+              </Container>
             </AppBar>
             <AppBar size="1" color="none" border glass>
-              <Flex css={{ px: '$3' }} justify="between">
-                <Heading>Xerox</Heading>
-                <IconButton css={{ color: '$gray10' }}>
-                  <DotsHorizontalIcon />
-                </IconButton>
-              </Flex>
+              <Container>
+                <Flex justify="between" align="center">
+                  <Heading>Xerox</Heading>
+                  <IconButton>
+                    <DotsHorizontalIcon />
+                  </IconButton>
+                </Flex>
+              </Container>
             </AppBar>
             <AppBar size="1" color="none" border>
-              <Flex css={{ px: '$3' }} justify="between">
-                <Heading>Xerox</Heading>
-                <IconButton css={{ color: '$gray10' }}>
-                  <DotsHorizontalIcon />
-                </IconButton>
-              </Flex>
+              <Container>
+                <Flex justify="between" align="center">
+                  <Heading>Xerox</Heading>
+                  <IconButton>
+                    <DotsHorizontalIcon />
+                  </IconButton>
+                </Flex>
+              </Container>
             </AppBar>
           </Grid>
         </Box>

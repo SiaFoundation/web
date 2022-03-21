@@ -1,5 +1,4 @@
 import { styled } from '../config/theme'
-import { ControlGroupBase } from './ControlGroupBase'
 
 export const Button = styled('button', {
   all: 'unset',
@@ -19,142 +18,114 @@ export const Button = styled('button', {
   lineHeight: '1',
   WebkitTapHighlightColor: 'rgba(0,0,0,0)',
 
-  height: '$5',
-  px: '$2',
   fontFamily: '$mono',
-  fontSize: '$2',
   fontWeight: 500,
   fontVariantNumeric: 'tabular-nums',
   textTransform: 'uppercase',
   cursor: 'pointer',
+  transition: 'background-color 50ms linear',
+
+  boxShadow: 'rgb(0 0 0 / 9%) 0px 3px 12px',
 
   variants: {
     size: {
       '1': {
         borderRadius: '$1',
-        height: '$5',
-        px: '$2',
-        fontSize: '$0',
-        lineHeight: '$sizes$5',
+        height: '$3-5',
+        px: '$1-5',
+        fontSize: '$12',
+        lineHeight: '$sizes$3-5',
       },
       '2': {
-        borderRadius: '$2',
-        height: '$7',
-        px: '$4',
-        fontSize: '$2',
-        lineHeight: '$sizes$7',
+        borderRadius: '$1',
+        height: '$5',
+        px: '$2-5',
+        fontSize: '$16',
+        lineHeight: '$sizes$5',
       },
       '3': {
-        borderRadius: '$2',
-        height: '$8',
-        px: '$5',
-        fontSize: '$4',
-        lineHeight: '$sizes$8',
+        borderRadius: '$1',
+        height: '$6',
+        px: '$3',
+        fontSize: '$20',
+        lineHeight: '$sizes$6',
       },
     },
     variant: {
       gray: {
-        backgroundColor: '$loContrast',
-        boxShadow: 'inset 0 0 0 1px $colors$accentInactive',
+        backgroundColor: '$control',
+        boxShadow: '$colors$border, $colors$shadow',
         color: '$hiContrast',
         '@hover': {
           '&:hover': {
-            boxShadow: 'inset 0 0 0 1px $colors$accentActive',
+            backgroundColor: '$controlHover',
+            boxShadow: '$colors$borderActive, $colors$shadow',
           },
         },
         '&:active': {
-          backgroundColor: '$slate2',
-          boxShadow: 'inset 0 0 0 1px $colors$accentActive',
+          backgroundColor: '$controlActive',
+          boxShadow: '$colors$borderActive, $colors$shadow',
         },
         '&:focus': {
-          boxShadow:
-            'inset 0 0 0 1px $colors$accentActive, 0 0 0 1px $colors$accentActive',
+          boxShadow: '$colors$borderActive, $colors$shadowActive',
         },
         '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
-            backgroundColor: '$slate4',
-            boxShadow: 'inset 0 0 0 1px $colors$accentActive',
+            backgroundColor: '$controlActive',
+            boxShadow: '$colors$borderActive, $colors$shadow',
           },
 
         '&:disabled': {
-          backgroundColor: '$slate2',
-          boxShadow: 'inset 0 0 0 1px $colors$accentInactive',
+          backgroundColor: '$control',
+          boxShadow: '$colors$border, $colors$shadow',
           color: '$slate8',
           pointerEvents: 'none',
         },
       },
       accent: {
         backgroundColor: '$brandAccent9',
-        // boxShadow: 'inset 0 0 0 1px $colors$brandAccent6',
-        // color: '$brandAccent12',
         color: '$whiteA12',
         '@hover': {
           '&:hover': {
             backgroundColor: '$brandAccent10',
-            // boxShadow: 'inset 0 0 0 1px $colors$brandAccent7',
           },
         },
         '&:active': {
           backgroundColor: '$brandAccent10',
-          boxShadow: 'inset 0 0 0 1px $colors$brandAccent7',
+          boxShadow: '$colors$borderAccent, $colors$shadow',
         },
         '&:focus': {
           backgroundColor: '$brandAccent10',
-          // boxShadow:
-          //   'inset 0 0 0 1px $colors$brandAccent7, 0 0 0 1px $colors$brandAccent7',
+          boxShadow: '$colors$borderAccent, $colors$shadow',
         },
         '&:focus:active': {
-          backgroundColor: '$brandAccent11',
+          backgroundColor: '$brandAccent9',
         },
         '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
             backgroundColor: '$brandAccent10',
-            // boxShadow: 'inset 0 0 0 1px $colors$brandAccent7',
+            boxShadow: '$colors$borderAccent, $colors$shadow',
           },
         '&:disabled': {
           backgroundColor: '$brandAccent6',
-          // boxShadow: 'inset 0 0 0 1px $colors$brandAccent4',
-        },
-        [`${ControlGroupBase} > &`]: {
-          // same as green+ghost compound variant
-          color: '$brandAccent12',
-          borderColor: 'transparent',
-          backgroundColor: 'transparent',
-          '@hover': {
-            '&:hover': {
-              backgroundColor: '$brandAccent3',
-              boxShadow: 'none',
-            },
-          },
-          '&:active': {
-            backgroundColor: '$brandAccent4',
-          },
-          '&:focus': {
-            boxShadow:
-              'inset 0 0 0 1px $colors$brandAccent8, 0 0 0 1px $colors$brandAccent8',
-          },
-          '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
-            {
-              backgroundColor: '$brandAccent8',
-              boxShadow: 'none',
-            },
+          boxShadow: '$colors$brandAccent6, $colors$shadow',
         },
       },
       red: {
-        backgroundColor: '$loContrast',
-        boxShadow: 'inset 0 0 0 1px $colors$accentInactive',
+        backgroundColor: '$red3',
+        boxShadow: '$colors$border',
         color: '$red11',
         '@hover': {
           '&:hover': {
-            boxShadow: 'inset 0 0 0 1px $colors$accentActive',
+            boxShadow: '$colors$borderActive',
           },
         },
         '&:active': {
-          backgroundColor: '$red3',
-          boxShadow: 'inset 0 0 0 1px $colors$red8',
+          backgroundColor: '$red4',
+          boxShadow: 'inset 0 0 0 1px $colors$red8, $colors$shadow',
         },
         '&:focus': {
-          boxShadow: 'inset 0 0 0 1px $colors$red8, 0 0 0 1px $colors$red8',
+          boxShadow: 'inset 0 0 0 1px $colors$red8, $colors$shadowActive',
         },
         '&:disabled': {
           color: '$red8',
@@ -203,6 +174,12 @@ export const Button = styled('button', {
         pointerEvents: 'none',
       },
     },
+    flat: {
+      true: {
+        borderRadius: '0',
+        boxShadow: 'none',
+      },
+    },
     ghost: {
       true: {
         backgroundColor: 'transparent',
@@ -230,8 +207,7 @@ export const Button = styled('button', {
           backgroundColor: '$slateA4',
         },
         '&:focus': {
-          boxShadow:
-            'inset 0 0 0 1px $colors$slateA8, 0 0 0 1px $colors$slateA8',
+          boxShadow: 'inset 0 0 0 1px $colors$slateA8, $colors$shadowActive',
         },
         '&:disabled': {
           backgroundColor: 'transparent',
@@ -262,8 +238,7 @@ export const Button = styled('button', {
         },
         '&:focus': {
           backgroundColor: '$brandAccent3',
-          boxShadow:
-            'inset 0 0 0 1px $colors$brandAccent7, 0 0 0 1px $colors$brandAccent7',
+          boxShadow: '$colors$borderAccent, $colors$shadowActive',
         },
         '&:focus:active': {
           backgroundColor: '$brandAccent5',
@@ -295,7 +270,7 @@ export const Button = styled('button', {
           backgroundColor: '$redA4',
         },
         '&:focus': {
-          boxShadow: 'inset 0 0 0 1px $colors$redA8, 0 0 0 1px $colors$redA8',
+          boxShadow: 'inset 0 0 0 1px $colors$redA8, $colors$shadowActive',
         },
         '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {

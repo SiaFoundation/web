@@ -28,14 +28,18 @@ export function SubsectionHeading({ id, children }: Props) {
           css={{
             transition: 'color 0.1s linear',
             position: 'absolute',
-            top: '-8px',
-            left: '-22px',
+            top: '-0px',
+            left: '-25px',
             color: '$brandGray7',
+            display: 'none',
+            '@bp2': {
+              display: 'block',
+            },
           }}
         >
           <Link20 />
         </Box>
-        <Heading size={'2'}>{children}</Heading>
+        <Heading size="2">{children}</Heading>
       </NextLink>
     </Box>
   )

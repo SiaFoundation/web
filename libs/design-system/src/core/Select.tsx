@@ -3,23 +3,20 @@ import { styled, CSS } from '../config/theme'
 import { CaretSortIcon } from '@radix-ui/react-icons'
 
 const SelectWrapper = styled('div', {
-  backgroundColor: '$loContrast',
+  backgroundColor: '$control',
   borderRadius: '$2',
-  boxShadow: 'inset 0 0 0 1px $colors$accentInactive',
+  boxShadow: '$colors$borderInput, $colors$shadow',
   color: '$hiContrast',
   fontFamily: '$sans',
-  fontSize: '$1',
   fontVariantNumeric: 'tabular-nums',
   fontWeight: 400,
-  height: '$5',
   flexShrink: 0,
   display: 'flex',
   alignItems: 'center',
 
   '&:focus-within': {
     zIndex: 1,
-    boxShadow:
-      'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput',
+    boxShadow: '$colors$borderInputActive, $colors$shadowActive',
   },
 
   '& > select:disabled': {
@@ -30,17 +27,17 @@ const SelectWrapper = styled('div', {
     size: {
       '1': {
         borderRadius: '$1',
-        height: '$5',
-        px: '$2',
-        fontSize: '$0',
-        lineHeight: '$sizes$5',
+        height: '$3-5',
+        padding: '0 $1 0 $0-5',
+        fontSize: '$12',
+        lineHeight: '$sizes$3-5',
       },
       '2': {
-        borderRadius: '$2',
-        height: '$7',
-        px: '$3',
-        fontSize: '$2',
-        lineHeight: '$sizes$7',
+        borderRadius: '$1',
+        height: '$5',
+        padding: '0 $1-5 0 $1',
+        fontSize: '$16',
+        lineHeight: '$sizes$5',
       },
     },
   },
@@ -61,7 +58,7 @@ const StyledSelect = styled('select', {
   width: '100%',
   height: '100%',
   pl: '$1',
-  pr: '$3',
+  pr: '$2',
   lineHeight: '25px',
 })
 

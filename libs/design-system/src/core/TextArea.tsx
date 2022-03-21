@@ -10,7 +10,7 @@ export const TextArea = styled('textarea', {
   width: '100%',
   WebkitTapHighlightColor: 'rgba(0,0,0,0)',
   backgroundColor: '$loContrast',
-  boxShadow: 'inset 0 0 0 1px $colors$accentInactive',
+  boxShadow: '$colors$borderInput, $colors$shadow',
   color: '$hiContrast',
   fontVariantNumeric: 'tabular-nums',
   position: 'relative',
@@ -18,27 +18,27 @@ export const TextArea = styled('textarea', {
   resize: 'vertical',
 
   '&:focus': {
-    boxShadow:
-      'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput',
+    boxShadow: '$colors$borderInputActive, $colors$shadowActive',
     zIndex: '1',
   },
   '&::placeholder': {
-    color: '$slate7',
+    color: '$brandGray7',
   },
   '&:disabled': {
     pointerEvents: 'none',
-    backgroundColor: '$slate2',
+    backgroundColor: '$brandGray2',
     color: '$accentActive',
     cursor: 'not-allowed',
     resize: 'none',
     '&::placeholder': {
-      color: '$slate7',
+      color: '$brandGray7',
     },
   },
   '&:read-only': {
-    backgroundColor: '$slate2',
+    backgroundColor: '$brandGray2',
+    boxShadow: '$colors$borderInput, $colors$shadow',
     '&:focus': {
-      boxShadow: 'inset 0px 0px 0px 1px $colors$accentInactive',
+      boxShadow: '$colors$borderInputActive, $colors$shadowActive',
     },
   },
 
@@ -47,35 +47,27 @@ export const TextArea = styled('textarea', {
       '1': {
         borderRadius: '$1',
         px: '$1',
-        fontSize: '$0',
+        fontSize: '$12',
         lineHeight: '150%',
       },
       '2': {
         borderRadius: '$1',
-        fontSize: '$2',
+        fontSize: '$16',
         lineHeight: '150%',
         px: '$1',
-      },
-      '3': {
-        borderRadius: '$1',
-        fontSize: '$4',
-        lineHeight: '150%',
-        px: '$2',
       },
     },
     state: {
       invalid: {
-        boxShadow: 'inset 0 0 0 1px $colors$red7',
+        boxShadow: '$colors$borderRed, $colors$shadow',
         '&:focus': {
-          boxShadow:
-            'inset 0px 0px 0px 1px $colors$red8, 0px 0px 0px 1px $colors$red8',
+          boxShadow: '$colors$borderRedActive, $colors$shadowActive',
         },
       },
       valid: {
-        boxShadow: 'inset 0 0 0 1px $colors$brandAccent8',
+        boxShadow: '$colors$borderGreen, $colors$shadow',
         '&:focus': {
-          boxShadow:
-            'inset 0px 0px 0px 1px $colors$accentInput, 0px 0px 0px 1px $colors$accentInput',
+          boxShadow: '$colors$borderGreenActive, $colors$shadowActive',
         },
       },
     },

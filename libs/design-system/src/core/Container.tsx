@@ -5,9 +5,9 @@ export const Container = styled('div', {
   flexShrink: 0,
   margin: '0 auto',
   width: '100%',
-  padding: '0 $4',
+  padding: '0 $2-5',
   '@bp2': {
-    padding: '0 $6',
+    padding: '0 $3-5',
   },
 
   variants: {

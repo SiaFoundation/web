@@ -48,9 +48,10 @@ export const dialogContentStyles = css({
   backgroundColor: '$panel',
   transition: 'border 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
   color: '$hiContrast',
-  borderRadius: '$3',
-  boxShadow:
-    'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
+  borderRadius: '$2',
+  // boxShadow:
+  //   'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
+  boxShadow: '$colors$shadowActive',
   zIndex: 3,
   position: 'fixed',
   top: '50%',
@@ -59,7 +60,7 @@ export const dialogContentStyles = css({
   width: '90vw',
   maxWidth: '450px',
   maxHeight: '85vh',
-  padding: '$3',
+  padding: '$2',
   willChange: 'transform, opacity',
   '@media (prefers-reduced-motion: no-preference)': {
     animation: `${contentShow} 250ms cubic-bezier(0.16, 1, 0.3, 1)`,

@@ -64,11 +64,11 @@ const StyledSwitch = styled(SwitchPrimitive.Root, {
     size: {
       '1': {
         width: '25px',
-        height: '$3',
+        height: '$2',
       },
       '2': {
         width: '45px',
-        height: '$5',
+        height: '$3',
         [`& ${StyledThumb}`]: {
           width: 21,
           height: 21,

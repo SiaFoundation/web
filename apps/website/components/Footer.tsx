@@ -19,7 +19,7 @@ export function Footer({ stats }: Props) {
   return (
     <Flex direction="column">
       <Statsbar {...stats} />
-      <Section size="1" fullWidth css={{ backgroundColor: '$brandGray2' }}>
+      <Section size="1" fullWidth css={{ backgroundColor: '$brandGray3' }}>
         <Container>
           <Flex direction="column" align="start" gap="1">
             <Flex
@@ -92,10 +92,13 @@ type LinkProps = {
 
 function TopLink({ children, href, target }: LinkProps) {
   return (
-    <Text size="2">
+    <Text size="20" weight="semibold" color="accent">
       <NextLink
         variant="accent"
-        css={{ fontFamily: '$sans', textDecoration: 'none' }}
+        css={{
+          textDecoration: 'none',
+          fontFamily: '$sans',
+        }}
         href={href}
         target={target}
       >
@@ -107,7 +110,7 @@ function TopLink({ children, href, target }: LinkProps) {
 
 function BottomLink({ children, href, target }: LinkProps) {
   return (
-    <Text size="1">
+    <Text size="14">
       <NextLink
         css={{ fontFamily: '$sans', textDecoration: 'none' }}
         href={href}

@@ -32,10 +32,10 @@ export function Heading() {
           <WavesBackdrop />
           <Container>
             <Section size="0" fullWidth gap="6">
-              <Text size="3" weight="bold">
+              <Text size="16" weight="bold">
                 Installation
               </Text>
-              <Text size="3">
+              <Text size="16">
                 <Code>npm install @siafoundation/design-system</Code>
               </Text>
             </Section>

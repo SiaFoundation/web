@@ -23,7 +23,7 @@ type Props = {
 const sizeToGap: Record<Size, React.ComponentProps<typeof Flex>['gap']> = {
   '1': '2',
   '2': '2',
-  '3': '3',
+  '3': '2',
 }
 
 const sizeToHeading: Record<
@@ -51,9 +51,9 @@ const sizeToLinks: Record<Size, React.ComponentProps<typeof Links>['size']> = {
 }
 
 const sizeToText: Record<Size, React.ComponentProps<typeof Text>['size']> = {
-  '1': '0',
-  '2': '0',
-  '3': '1',
+  '1': '12',
+  '2': '12',
+  '3': '14',
 }
 
 const sizeToPadding: Record<Size, CSS['padding']> = {
@@ -85,6 +85,7 @@ export function SiteHeading({
         <Text
           size={sizeToText[size]}
           color="subtle"
+          font="mono"
           css={{ textTransform: 'uppercase', fontWeight: 500 }}
         >
           {eyebrow}

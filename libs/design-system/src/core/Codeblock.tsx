@@ -3,11 +3,11 @@ import { styled } from '../config/theme'
 
 export const SCodeblock = styled('code', {
   fontFamily: '$mono',
-  fontSize: '$1',
+  fontSize: '$12',
   lineHeight: '150%',
   display: 'block',
-  padding: '$2',
-  backgroundColor: '$slate3',
+  padding: '$1-5',
+  backgroundColor: '$brandGray3',
   color: '$hiContrast',
   textAlign: 'left',
   borderRadius: '$1',

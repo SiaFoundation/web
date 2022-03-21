@@ -30,14 +30,14 @@ export function ContentItem({
   const externalLink = link && link.startsWith('http')
 
   return (
-    <Flex gap="4" align="start">
+    <Flex gap="2" align="start">
       {icon && (
         <Box css={{ paddingTop: '$1', color: '$textContrast' }}>{icon}</Box>
       )}
       <Box key={link} css={css}>
-        <Flex direction="column" gap="2">
+        <Flex direction="column" gap="1">
           <Flex direction="column" gap="1">
-            <Paragraph size="2" font="mono">
+            <Paragraph size="3" font="mono" css={{ color: '$brandGray12' }}>
               {link ? (
                 <NextLink
                   href={link}
@@ -53,12 +53,12 @@ export function ContentItem({
             {(date || externalLink) && (
               <Flex gap="1" align="center">
                 {date && (
-                  <Text size="0" color="subtle">
+                  <Text size="12" color="subtle">
                     {format(new Date(date), 'PP')}
                   </Text>
                 )}
                 {date && externalLink && (
-                  <Text size="0" color="subtle">
+                  <Text size="12" color="subtle">
                     •
                   </Text>
                 )}

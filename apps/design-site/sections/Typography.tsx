@@ -39,16 +39,21 @@ export function Typography() {
       <Section>
         <SubsectionHeading>Text</SubsectionHeading>
         <Flex direction="column" gap="2">
-          <Text size="1">Tiny processors 1</Text>
-          <Text size="2">Tools for thought 2</Text>
-          <Text size="3">A web of information and ideas - 3 contrast</Text>
-          <Text size="4" color="subtle">
-            A computer that fits in your pocket - 4 subtle
+          <Text size="10">Tiny processors 10</Text>
+          <Text size="12">Tiny processors 12</Text>
+          <Text size="14">Tools for thought 14</Text>
+          <Text size="16">A web of information and ideas - 16 contrast</Text>
+          <Text size="20" color="subtle">
+            A computer that fits in your pocket - 20 subtle
           </Text>
-          <Text size="5" css={{ fontStyle: 'italic' }}>
-            Brain-computer interface - 5 italic
+          <Text size="24" css={{ fontStyle: 'italic' }}>
+            Brain-computer interface - 24 italic
           </Text>
-          <Text size="6">Human test subjects - 6</Text>
+          <Text size="32">Human test subjects - 32</Text>
+          <Text size="40">Text size 40</Text>
+          <Text size="64" color="subtle">
+            Text size 64 - subtle
+          </Text>
         </Flex>
       </Section>
       <Section>
@@ -63,7 +68,7 @@ export function Typography() {
           <NextLink href={randomLink} target="_blank" variant="accent">
             Accent link
           </NextLink>
-          <Text size="5">
+          <Text size="24">
             <NextLink href={randomLink} target="_blank">
               Link inside Text size 5
             </NextLink>
@@ -72,10 +77,10 @@ export function Typography() {
       </Section>
       <Section>
         <SubsectionHeading>Code</SubsectionHeading>
-        <Grid gap="2" justify="start">
+        <Flex direction="column" gap="2" align="start">
           <Code variant="gray">{'fmt.Println("variant=gray")'}</Code>
           <Code variant="accent">{'fmt.Println("variant=accent")'}</Code>
-        </Grid>
+        </Flex>
       </Section>
       <Section>
         <SubsectionHeading>Codeblock</SubsectionHeading>
@@ -84,7 +89,7 @@ export function Typography() {
       </Section>
       <Section>
         <SubsectionHeading>Paragraph</SubsectionHeading>
-        <Flex direction="column" gap="1">
+        <Flex direction="column" gap="5">
           <Grid
             columns={{
               '@bp1': 1,
@@ -128,63 +133,39 @@ export function Typography() {
               sint occaecat cupidatat non proident, sunt in culpa qui officia
               deserunt mollit anim id est laborum.
             </Paragraph>
-            <Paragraph size="3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt <Code>{'fmt.Println("pizza")'}</Code> ut
-              labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-              nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure{' '}
-              <NextLink variant="subtle" href={randomLink} target="_blank">
-                example of an inline link
-              </NextLink>{' '}
-              dolor in reprehenderit in voluptate velit esse cillum dolore eu
-              fugiat nulla pariatur.{' '}
-              <NextLink variant="contrast" href={randomLink} target="_blank">
-                Example of an inline link
-              </NextLink>{' '}
-              <Code variant="gray">{'fmt.Println("pasta")'}</Code>. Excepteur
-              sint occaecat cupidatat non proident, sunt in culpa qui officia
-              deserunt mollit anim id est laborum.
-            </Paragraph>
           </Grid>
+          <Paragraph size="3">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt <Code>{'fmt.Println("pizza")'}</Code> ut
+            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure{' '}
+            <NextLink variant="subtle" href={randomLink} target="_blank">
+              example of an inline link
+            </NextLink>{' '}
+            dolor in reprehenderit in voluptate velit esse cillum dolore eu
+            fugiat nulla pariatur.{' '}
+            <NextLink variant="contrast" href={randomLink} target="_blank">
+              Example of an inline link
+            </NextLink>{' '}
+            <Code variant="gray">{'fmt.Println("pasta")'}</Code>. Excepteur sint
+            occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+            mollit anim id est laborum.
+          </Paragraph>
         </Flex>
       </Section>
       <Section>
         <SubsectionHeading>Keyboard</SubsectionHeading>
         <Flex direction="column" gap="3">
           <Flex direction="row" gap="1" wrap="wrap">
-            <Kbd size="1">Q</Kbd>
-            <Kbd size="1">W</Kbd>
-            <Kbd size="1">E</Kbd>
-            <Kbd size="1">R</Kbd>
-            <Kbd size="1">T</Kbd>
-            <Kbd size="1">Y</Kbd>
-            <Kbd size="1" width="space">
-              Space
-            </Kbd>
-            <Kbd size="1">⌘ + Tab</Kbd>
-            <Kbd size="1">⌘</Kbd>
-            <Kbd size="1">Tab</Kbd>
-            <Kbd size="1">⇧</Kbd>
-            <Kbd size="1">⌘</Kbd>
-            <Kbd size="1">A</Kbd>
-          </Flex>
-          <Flex direction="row" gap="1" wrap="wrap">
-            <Kbd size="2">Q</Kbd>
-            <Kbd size="2">W</Kbd>
-            <Kbd size="2">E</Kbd>
-            <Kbd size="2">R</Kbd>
-            <Kbd size="2">T</Kbd>
-            <Kbd size="2">Y</Kbd>
-            <Kbd size="2" width="space">
-              Space
-            </Kbd>
-            <Kbd size="2">⌘ + Tab</Kbd>
-            <Kbd size="2">⌘</Kbd>
-            <Kbd size="2">Tab</Kbd>
-            <Kbd size="2">⇧</Kbd>
-            <Kbd size="2">⌘</Kbd>
-            <Kbd>A</Kbd>
+            <Kbd>⌘</Kbd>
+            <Kbd>⌥</Kbd>
+            <Kbd>Tab</Kbd>
+            <Kbd>⇧</Kbd>
+            <Kbd>⌘</Kbd>
+            <Kbd>4</Kbd>
+            <Kbd>Q</Kbd>
+            <Kbd>Space</Kbd>
           </Flex>
         </Flex>
       </Section>

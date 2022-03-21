@@ -15,6 +15,13 @@ export const DropdownMenuContent = styled(
   menuCss,
   panelStyles,
   {
+    boxShadow: '$colors$shadowPopup',
+    color: '$hiContrast',
+    '@hover': {
+      '&:hover': {
+        boxShadow: '$colors$shadowPopupActive',
+      },
+    },
     minWidth: 180,
     padding: 5,
     willChange: 'transform, opacity',
@@ -62,8 +69,8 @@ export const DropdownMenuRadioItem = React.forwardRef<
       <DropdownMenuPrimitive.ItemIndicator>
         <Flex
           css={{
-            width: '$3',
-            height: '$3',
+            width: '$2',
+            height: '$2',
             alignItems: 'center',
             justifyContent: 'center',
           }}

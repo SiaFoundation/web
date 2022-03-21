@@ -19,34 +19,73 @@ export const colors = {
   brandAccent12: '#011F0A',
 
   // brandGray - light mode
-  brandGray1: '#FAFAFA',
-  brandGray2: '#F3F2F2',
-  brandGray3: '#EAEAEA',
-  brandGray4: '#DFDFDF',
-  brandGray5: '#D1D1D1',
-  brandGray6: '#C2C2C2',
-  brandGray7: '#B4B4B4',
-  brandGray8: '#A2A2A2',
-  brandGray9: '#8F8F8F',
-  brandGray10: '#787878',
+  brandGray1: '#FEFEFE',
+  brandGray2: '#F9F9F9',
+  brandGray3: '#F0F0F0',
+  brandGray4: '#E6E6E6',
+  brandGray5: '#DCDCDC',
+  brandGray6: '#CFCFCF',
+  brandGray7: '#C0C0C0',
+  brandGray8: '#AFAFAF',
+  brandGray9: '#9C9C9C',
+  brandGray10: '#858585',
   brandGray11: '#555555',
   brandGray12: '#333333',
 
   // Semantic
   waves: '#FAF8F7',
   hiContrast: '$slate12',
-  textContrast: '$brandGray12',
-  textSubtle: '$brandGray11',
-  // loContrast: '$brandGray1',
   loContrast: 'white',
   canvas: 'hsl(0 0% 93%)',
   panel: 'white',
   panelDark: 'black',
   transparentPanel: 'hsl(0 0% 0% / 97%)',
-  accentInactive: '$brandGray7',
-  accentActive: '$brandGray8',
-  accentInput: '$brandAccent8',
+  accentInactive: '$brandGray4',
+  accentActive: '$brandGray5',
+  accentInput: '$brandAccent7',
   frame: 'black',
+
+  textSubtle: '$brandGray11',
+  textSubtleActive: '$brandGray12',
+  textSubtleHover: '$brandGray12',
+  textContrast: '$brandGray12',
+  textDisabled: '$brandGray9',
+
+  control: 'white',
+  controlActive: '$brandGray4',
+  controlHover: '$brandGray5',
+
+  border: 'inset 0 0 0 1px $brandGray6',
+  borderActive: 'inset 0 0 0 1px $brandGray7',
+  borderHover: 'inset 0 0 0 1px $brandGray8',
+
+  borderAccent: 'inset 0 0 0 1px $brandAccent6',
+  borderAccentActive: 'inset 0 0 0 1px $brandAccent7',
+  borderAccentHover: 'inset 0 0 0 1px $brandAccent8',
+
+  borderInput: 'inset 0 0 0 1px $brandGray6',
+  borderInputActive: 'inset 0 0 0 1px $blue7',
+  borderInputHover: 'inset 0 0 0 1px $blue8',
+
+  borderGreen: 'inset 0 0 0 1px $brandAccent6',
+  borderGreenActive: 'inset 0 0 0 1px $brandAccent7',
+  borderGreenHover: 'inset 0 0 0 1px $brandAccent8',
+
+  borderRed: 'inset 0 0 0 1px $red6',
+  borderRedActive: 'inset 0 0 0 1px $red7',
+  borderRedHover: 'inset 0 0 0 1px $red8',
+
+  shadow: 'rgb(0 0 0 / 6%) 0px 1px 1px',
+  shadowActive: 'rgb(0 0 0 / 7%) 0px 1px 1px',
+
+  shadowButton: 'rgb(0 0 0 / 6%) 0px 1px 1px',
+  shadowButtonActive: 'rgb(0 0 0 / 7%) 0px 1px 1px',
+
+  shadowPopup: 'rgb(0 0 0 / 9%) 0px 3px 12px',
+  shadowPopupActive: 'rgb(0 0 0 / 10%) 0px 3px 12px',
+
+  shadowDialog: 'rgb(0 0 0 / 40%) 0px 16px 70px',
+  shadowDialogActive: 'rgb(0 0 0 / 50%) 0px 16px 70px',
 }
 
 export const colorsDark = {
@@ -67,31 +106,71 @@ export const colorsDark = {
   brandAccent12: '#D9F4E1',
 
   // brandGray - dark mode
-  brandGray1: '#1B1B1B',
-  brandGray2: '#232323',
-  brandGray3: '#2D2D2D',
-  brandGray4: '#3C3C3C',
-  brandGray5: '#4D4D4D',
-  brandGray6: '#636363',
-  brandGray7: '#737373',
-  brandGray8: '#8B8B8B',
-  brandGray9: '#9E9E9E',
-  brandGray10: '#B6B6B6',
-  brandGray11: '#C8C8C8',
-  brandGray12: '#FDFDFD',
+  brandGray1: '#161616',
+  brandGray2: '#1E1E1E',
+  brandGray3: '#272727',
+  brandGray4: '#313131',
+  brandGray5: '#3E3E3E',
+  brandGray6: '#4D4D4D',
+  brandGray7: '#5B5B5B',
+  brandGray8: '#686868',
+  brandGray9: '#7E7E7E',
+  brandGray10: '#A9A9A9',
+  brandGray11: '#D0D0D0',
+  brandGray12: '#EFEFEF',
 
   // Semantic
   waves: '$slate3',
   hiContrast: '$brandGray12',
   loContrast: '$brandGray1',
-  textContrast: '$brandGray12',
-  textSubtle: '$brandGray11',
   canvas: 'hsl(0 0% 15%)',
   panel: '$mauve3',
   panelDark: 'black',
   transparentPanel: 'hsl(0 100% 100% / 97%)',
-  accentInactive: '$brandGray7',
-  accentActive: '$brandGray8',
+  accentInactive: '$brandGray6',
+  accentActive: '$brandGray7',
   accentInput: '$brandAccent8',
   frame: '$whiteA12',
+
+  textSubtle: '$brandGray11',
+  textSubtleActive: '$brandGray12',
+  textSubtleHover: '$brandGray12',
+  textContrast: '$brandGray12',
+  textDisabled: '$brandGray9',
+
+  control: '$brandGray3',
+  controlActive: '$brandGray4',
+  controlHover: '$brandGray5',
+
+  border: 'inset 0 0 0 1px $brandGray6',
+  borderActive: 'inset 0 0 0 1px $brandGray7',
+  borderHover: 'inset 0 0 0 1px $brandGray8',
+
+  borderAccent: 'inset 0 0 0 1px $brandAccent6',
+  borderAccentHover: 'inset 0 0 0 1px $brandAccent7',
+  borderAccentActive: 'inset 0 0 0 1px $brandAccent8',
+
+  borderInput: 'inset 0 0 0 1px $brandGray6',
+  borderInputActive: 'inset 0 0 0 1px $blue7',
+  borderInputHover: 'inset 0 0 0 1px $blue8',
+
+  borderGreen: 'inset 0 0 0 1px $brandAccent6',
+  borderGreenActive: 'inset 0 0 0 1px $brandAccent7',
+  borderGreenHover: 'inset 0 0 0 1px $brandAccent8',
+
+  borderRed: 'inset 0 0 0 1px $red6',
+  borderRedActive: 'inset 0 0 0 1px $red7',
+  borderRedHover: 'inset 0 0 0 1px $red8',
+
+  shadow: 'rgb(0 0 0 / 22%) 0px 1px 1px',
+  shadowActive: 'rgb(0 0 0 / 25%) 0px 1px 1px',
+
+  shadowButton: 'rgb(0 0 0 / 22%) 0px 1px 1px',
+  shadowButtonActive: 'rgb(0 0 0 / 25%) 0px 1px 1px',
+
+  shadowPopup: 'rgb(0 0 0 / 18%) 0px 4px 24px',
+  shadowPopupActive: 'rgb(0 0 0 / 20%) 0px 4px 24px',
+
+  shadowDialog: 'rgb(0 0 0 / 45%) 0px 16px 70px',
+  shadowDialogActive: 'rgb(0 0 0 / 50%) 0px 16px 70px',
 }

@@ -3,6 +3,7 @@ import { keyframes, styled } from '../config/theme'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { Text } from './Text'
 import { scaleIn } from '../config/animations'
+import { Paragraph } from './Paragraph'
 
 type TooltipProps = React.ComponentProps<typeof TooltipPrimitive.Root> &
   React.ComponentProps<typeof TooltipPrimitive.Content> & {
@@ -12,9 +13,10 @@ type TooltipProps = React.ComponentProps<typeof TooltipPrimitive.Root> &
   }
 
 const Content = styled(TooltipPrimitive.Content, {
-  backgroundColor: '$transparentPanel',
+  boxShadow: '$colors$border, $colors$shadowActive',
+  backgroundColor: '$panel',
   borderRadius: '$1',
-  padding: '$1 $2',
+  padding: '$0-5 $1',
 
   willChange: 'transform, opacity',
   '@media (prefers-reduced-motion: no-preference)': {
@@ -58,7 +60,7 @@ export function Tooltip({
         {...props}
         multiline={multiline}
       >
-        <Text size="0" as="p" color="lo">
+        <Text size="12" as="p">
           {content}
         </Text>
       </Content>

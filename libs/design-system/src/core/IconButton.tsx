@@ -8,7 +8,6 @@ export const IconButton = styled('button', {
   display: 'inline-flex',
   flexShrink: 0,
   fontFamily: 'inherit',
-  fontSize: '14px',
   justifyContent: 'center',
   lineHeight: '1',
   outline: 'none',
@@ -17,127 +16,95 @@ export const IconButton = styled('button', {
   userSelect: 'none',
   WebkitTapHighlightColor: 'transparent',
   color: '$hiContrast',
+
   '&::before': {
     boxSizing: 'border-box',
   },
   '&::after': {
     boxSizing: 'border-box',
   },
-  backgroundColor: '$loContrast',
-  border: '1px solid $accentInactive',
-  '@hover': {
-    '&:hover': {
-      borderColor: '$accentActive',
-    },
-  },
-  '&:active': {
-    backgroundColor: '$brandGray2',
-  },
-  '&:focus': {
-    borderColor: '$accentActive',
-    boxShadow: '0 0 0 1px $colors$accentActive',
-  },
-  '&:disabled': {
-    pointerEvents: 'none',
-    color: '$slate6',
-  },
 
   variants: {
     size: {
       '1': {
         borderRadius: '$1',
-        height: '$5',
-        width: '$5',
-        fontSize: '$0',
-        lineHeight: '$sizes$5',
+        height: '$3-5',
+        width: '$3-5',
+        fontSize: '$10',
+        lineHeight: '$sizes$3-5',
       },
       '2': {
-        borderRadius: '$2',
-        height: '$7',
-        width: '$7',
-        fontSize: '$2',
-        lineHeight: '$sizes$7',
+        borderRadius: '$1',
+        height: '$5',
+        width: '$5',
+        fontSize: '$16',
+        lineHeight: '$sizes$5',
       },
       '3': {
-        borderRadius: '$2',
-        height: '$8',
-        width: '$8',
-        fontSize: '$4',
-        lineHeight: '$sizes$8',
+        borderRadius: '$1',
+        height: '$6',
+        width: '$6',
+        fontSize: '$20',
+        lineHeight: '$sizes$6',
       },
     },
     variant: {
-      ghost: {
-        backgroundColor: 'transparent',
-        borderWidth: '0',
+      gray: {
+        backgroundColor: '$control',
+        boxShadow: '$colors$border, $colors$shadow',
         '@hover': {
           '&:hover': {
-            // backgroundColor: '$brandGray3',
-            backgroundColor: 'transparent',
+            backgroundColor: '$controlHover',
+            boxShadow: '$colors$borderActive, $colors$shadow',
           },
         },
-        '&:focus': {
-          boxShadow:
-            'inset 0 0 0 1px $colors$brandGray8, 0 0 0 1px $colors$brandGray8',
-        },
         '&:active': {
-          // backgroundColor: '$brandGray4',
-          backgroundColor: 'transparent',
+          backgroundColor: '$controlActive',
+          boxShadow: '$colors$borderActive, $colors$shadow',
+        },
+        '&:focus': {
+          boxShadow: '$colors$borderActive, $colors$shadowActive',
         },
         '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
-            // backgroundColor: '$brandGray4',
-            backgroundColor: 'transparent',
+            backgroundColor: '$controlActive',
+            boxShadow: '$colors$borderActive, $colors$shadow',
           },
+
+        '&:disabled': {
+          backgroundColor: '$control',
+          boxShadow: '$colors$border, $colors$shadow',
+          color: '$textDisabled',
+        },
       },
-      raised: {
-        boxShadow:
-          '0 0 transparent, 0 16px 32px hsl(206deg 12% 5% / 25%), 0 3px 5px hsl(0deg 0% 0% / 10%)',
+      ghost: {
+        backgroundColor: 'transparent',
         '@hover': {
           '&:hover': {
-            boxShadow:
-              '0 0 transparent, 0 16px 32px hsl(206deg 12% 5% / 25%), 0 3px 5px hsl(0deg 0% 0% / 10%)',
+            boxShadow: '$colors$borderActive, $colors$shadow',
           },
+        },
+        '&:active': {
+          backgroundColor: '$control',
+          boxShadow: '$colors$borderActive, $colors$shadow',
         },
         '&:focus': {
-          borderColor: '$accentActive',
-          boxShadow:
-            '0 0 0 1px $colors$accentActive, 0 16px 32px hsl(206deg 12% 5% / 25%), 0 3px 5px hsl(0deg 0% 0% / 10%)',
+          boxShadow: '$colors$borderActive, $colors$shadowActive',
         },
-        '&:active': {
-          backgroundColor: '$slate4',
-        },
-      },
-    },
-    state: {
-      active: {
-        backgroundColor: '$slate4',
-        boxShadow: 'inset 0 0 0 1px hsl(206,10%,76%)',
-        '@hover': {
-          '&:hover': {
-            boxShadow: 'inset 0 0 0 1px hsl(206,10%,76%)',
+        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
+          {
+            backgroundColor: '$slate4',
+            boxShadow: '$colors$borderActive, $colors$shadow',
           },
-        },
-        '&:active': {
-          backgroundColor: '$slate4',
-        },
-      },
-      waiting: {
-        backgroundColor: '$slate4',
-        boxShadow: 'inset 0 0 0 1px hsl(206,10%,76%)',
-        '@hover': {
-          '&:hover': {
-            boxShadow: 'inset 0 0 0 1px hsl(206,10%,76%)',
-          },
-        },
-        '&:active': {
-          backgroundColor: '$slate4',
+        '&:disabled': {
+          boxShadow: 'none',
+          color: '$textDisabled',
         },
       },
     },
   },
   defaultVariants: {
-    size: '1',
+    size: '2',
     variant: 'ghost',
   },
 })

@@ -39,7 +39,7 @@ function NewsroomPost({
     >
       <Section>
         <Box>
-          <Text css={{ fontWeight: '600' }}>
+          <Text weight="bold" size="16">
             {location} - {format(new Date(date), 'PP')}
           </Text>
           <MDXRemote {...source} />

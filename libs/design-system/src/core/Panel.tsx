@@ -4,12 +4,21 @@ export const panelStyles = css({
   backgroundColor: '$panel',
 
   transition: 'border 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+  borderRadius: '$1',
 
-  boxShadow: 'inset 0 0 0 1px $colors$accentInactive',
+  boxShadow: '$colors$border, $colors$shadow',
   color: '$hiContrast',
   '@hover': {
     '&:hover': {
-      boxShadow: 'inset 0 0 0 1px $colors$accentActive',
+      boxShadow: '$colors$borderActive, $colors$shadowActive',
+    },
+  },
+
+  variants: {
+    flat: {
+      true: {
+        borderRadius: '0',
+      },
     },
   },
 })
