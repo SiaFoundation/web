@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.6.0](https://github.com/SiaFoundation/web/compare/website-0.5.0...website-0.6.0) (2022-03-21)
+
+
+### Features
+
+* add sized logos, add dithered backgrounds ([21d8771](https://github.com/SiaFoundation/web/commit/21d877138e271b4eef1ea4b8435bce9874a623d7))
+
+
+
 # [0.5.0](https://github.com/SiaFoundation/web/compare/website-0.4.0...website-0.5.0) (2022-03-21)
 
 
