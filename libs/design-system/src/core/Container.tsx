@@ -24,6 +24,13 @@ export const Container = styled('div', {
       '4': {
         maxWidth: 'none',
       },
+      flush: {
+        maxWidth: 'none',
+        padding: '0',
+        '@bp2': {
+          padding: '0',
+        },
+      },
     },
   },
   defaultVariants: {

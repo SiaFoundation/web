@@ -82,9 +82,9 @@ export default function Home({ stats, landing }: Props) {
       }
       backgroundImage={backgroundImage}
     >
-      <Section fullWidth>
+      <Section width="flush">
         <Section
-          fullWidth
+          width="flush"
           size="1"
           css={{ position: 'relative', marginBottom: '$6' }}
         >
@@ -183,7 +183,7 @@ export default function Home({ stats, landing }: Props) {
         </Grid>
       </Section>
       <Section gap="12">
-        <Section fullWidth size="0">
+        <Section width="flush" size="0">
           <SiteHeading
             size="2"
             title="Explore the Sia Community &amp; Ecosystem"
@@ -214,7 +214,7 @@ export default function Home({ stats, landing }: Props) {
             }}
           />
         </Section>
-        <Section fullWidth size="0">
+        <Section width="flush" size="0">
           <SiteHeading
             size="2"
             title="Start Building"
@@ -229,7 +229,7 @@ export default function Home({ stats, landing }: Props) {
             items={tutorials.map((i) => ({ ...i, newTab: true }))}
           />
         </Section>
-        <Section fullWidth size="0">
+        <Section width="flush" size="0">
           <SiteHeading
             size="2"
             title="The Latest"

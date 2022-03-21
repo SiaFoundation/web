@@ -102,7 +102,6 @@ export function SiteLayout({
                     blurDataURL={backgroundImage.blurDataURL}
                     layout="fill"
                     objectFit="cover"
-                    radius="1"
                   />
                 </Box>
                 {children}
@@ -151,7 +150,6 @@ export function SiteLayout({
             blurDataURL={backgroundImage.blurDataURL}
             layout="fill"
             objectFit="cover"
-            radius="1"
           />
         </Box>
       </Box>

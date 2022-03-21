@@ -19,7 +19,7 @@ export function Statsbar({
 }: Stats) {
   return (
     <Section
-      fullWidth
+      width="flush"
       size="1"
       css={{
         backgroundColor: '$waves',

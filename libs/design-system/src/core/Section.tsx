@@ -51,30 +51,13 @@ const BaseSection = styled('section', {
 })
 
 type Props = React.ComponentProps<typeof BaseSection> & {
-  fullWidth?: boolean
   gap?: React.ComponentProps<typeof Flex>['gap']
-  container?: React.ComponentProps<typeof Container>
+  width?: React.ComponentProps<typeof Container>['size']
 }
 
-export function Section({
-  children,
-  fullWidth = false,
-  gap = '7',
-  container,
-  ...props
-}: Props) {
-  if (fullWidth) {
-    return (
-      <BaseSection {...props}>
-        <Flex direction="column" gap={gap}>
-          {children}
-        </Flex>
-      </BaseSection>
-    )
-  }
-
+export function Section({ children, gap = '7', width, ...props }: Props) {
   return (
-    <Container {...container}>
+    <Container size={width}>
       <BaseSection {...props}>
         <Flex direction="column" gap={gap}>
           {children}

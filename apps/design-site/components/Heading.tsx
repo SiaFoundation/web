@@ -11,7 +11,7 @@ import {
 export function Heading() {
   return (
     <>
-      <Section fullWidth size="4" gap="13">
+      <Section width="flush" size="4" gap="13">
         <Container>
           <SiteHeading
             size="3"
@@ -28,10 +28,10 @@ export function Heading() {
             }
           />
         </Container>
-        {/* <Section fullWidth size="2" css={{ position: 'relative' }}>
+        {/* <Section width="flush" size="2" css={{ position: 'relative' }}>
           <WavesBackdrop />
           <Container>
-            <Section size="0" fullWidth gap="6">
+            <Section size="0" width="flush" gap="6">
               <Text size="16" weight="bold">
                 Installation
               </Text>
