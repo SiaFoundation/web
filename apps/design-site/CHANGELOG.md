@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.8.0](https://github.com/SiaFoundation/web/compare/design-site-0.7.0...design-site-0.8.0) (2022-03-21)
+
+
+### Features
+
+* size logos, small fixes, dark mode, nate photos ([77e9cd8](https://github.com/SiaFoundation/web/commit/77e9cd8732058caa49cd96edbee9b3d7d8078b2e))
+
+
+
 # [0.7.0](https://github.com/SiaFoundation/web/compare/design-site-0.6.0...design-site-0.7.0) (2022-03-21)
 
 
