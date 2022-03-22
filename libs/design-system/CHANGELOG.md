@@ -2,6 +2,22 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.10.0](https://github.com/SiaFoundation/web/compare/design-system-0.9.1...design-system-0.10.0) (2022-03-22)
+
+
+### Bug Fixes
+
+* add size to simple logo ([646d02f](https://github.com/SiaFoundation/web/commit/646d02f605687d3432c88d28a1c67b62636d1f1a))
+* tune borders and dialogs ([f008947](https://github.com/SiaFoundation/web/commit/f008947ddb89514720d5b76321ad43487e331e92))
+* tweak borders, embarcadero fixes ([35d61a6](https://github.com/SiaFoundation/web/commit/35d61a6f9a92438b5f2e2e8b5105dad63ad83f9e))
+
+
+### Features
+
+* add panel radii ([55da3a5](https://github.com/SiaFoundation/web/commit/55da3a5c924507baae4e480b570cfd08662b917c))
+
+
+
 ## [0.9.1](https://github.com/SiaFoundation/web/compare/design-system-0.9.0...design-system-0.9.1) (2022-03-21)
 
 
