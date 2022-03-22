@@ -1,13 +1,12 @@
-import { Section, Text } from '@siafoundation/design-system'
+import { Section } from '@siafoundation/design-system'
+import { Apps } from '../sections/Apps'
 
-export function Sites() {
+export function AppsPage() {
   return (
     <>
-      <Section>
-        <Text>Coming soon</Text>
-      </Section>
+      <Apps />
     </>
   )
 }
 
-export default Sites
+export default AppsPage

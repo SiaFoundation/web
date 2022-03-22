@@ -11,7 +11,7 @@ import { Popups } from '../sections/Popups'
 import { Skeletons } from '../sections/Skeletons'
 import { Dialogs } from '../sections/Dialogs'
 
-export function Index() {
+export function IndexPage() {
   return (
     <>
       <Colors />
@@ -30,4 +30,4 @@ export function Index() {
   )
 }
 
-export default Index
+export default IndexPage

@@ -18,7 +18,8 @@ export const TextArea = styled('textarea', {
   resize: 'vertical',
 
   '&:focus': {
-    boxShadow: '$colors$borderInputActive, $colors$shadowActive',
+    boxShadow:
+      '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive',
     zIndex: '1',
   },
   '&::placeholder': {
@@ -38,7 +39,8 @@ export const TextArea = styled('textarea', {
     backgroundColor: '$brandGray2',
     boxShadow: '$colors$borderInput, $colors$shadow',
     '&:focus': {
-      boxShadow: '$colors$borderInputActive, $colors$shadowActive',
+      boxShadow:
+        '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive',
     },
   },
 
@@ -61,13 +63,15 @@ export const TextArea = styled('textarea', {
       invalid: {
         boxShadow: '$colors$borderRed, $colors$shadow',
         '&:focus': {
-          boxShadow: '$colors$borderRedActive, $colors$shadowActive',
+          boxShadow:
+            '$colors$borderFocus, $colors$borderRedActive, $colors$shadowActive',
         },
       },
       valid: {
         boxShadow: '$colors$borderGreen, $colors$shadow',
         '&:focus': {
-          boxShadow: '$colors$borderGreenActive, $colors$shadowActive',
+          boxShadow:
+            '$colors$borderFocus, $colors$borderGreenActive, $colors$shadowActive',
         },
       },
     },

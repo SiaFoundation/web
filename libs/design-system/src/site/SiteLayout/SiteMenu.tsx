@@ -8,6 +8,7 @@ import { Box } from '../../core/Box'
 import { Close24 } from '../../icons'
 import { Flex } from '../../core/Flex'
 import { ThemeRadio } from '../../components/ThemeRadio'
+import { Text } from '../../core/Text'
 
 const fadeIn = keyframes({
   from: { opacity: '0' },
@@ -130,6 +131,22 @@ export const Close = DialogPrimitive.Close
 export const Title = DialogPrimitive.Title
 export const Description = DialogPrimitive.Description
 
+const radioCss: CSS = {
+  color: '$whiteA7',
+
+  [`& *, & ${Text}`]: {
+    color: '$whiteA10',
+  },
+
+  [`&[data-state="checked"]`]: {
+    color: 'white',
+  },
+
+  [`&[data-state="checked"] *, &[data-state="checked"] ${Text}`]: {
+    color: 'white',
+  },
+}
+
 type Props = {
   children: React.ReactNode
 }
@@ -161,7 +178,7 @@ export function SiteMenu({ children }: Props) {
             {children}
           </Flex>
           <Box css={{ position: 'absolute', bottom: '$3', right: '$3' }}>
-            <ThemeRadio />
+            <ThemeRadio radioCss={radioCss} />
           </Box>
         </Content>
       </Container>

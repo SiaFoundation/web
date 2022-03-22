@@ -59,21 +59,20 @@ export const Button = styled('button', {
         '@hover': {
           '&:hover': {
             backgroundColor: '$controlHover',
-            boxShadow: '$colors$borderActive, $colors$shadow',
+            boxShadow: '$colors$borderHover, $colors$shadow',
           },
+        },
+        '&:focus': {
+          boxShadow: '$colors$border, $colors$borderFocus, $colors$shadow',
         },
         '&:active': {
           backgroundColor: '$controlActive',
+          boxShadow: '$colors$borderActive $colors$shadow',
+        },
+        '&[data-state="open"]': {
+          backgroundColor: '$controlActive',
           boxShadow: '$colors$borderActive, $colors$shadow',
         },
-        '&:focus': {
-          boxShadow: '$colors$borderActive, $colors$shadowActive',
-        },
-        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
-          {
-            backgroundColor: '$controlActive',
-            boxShadow: '$colors$borderActive, $colors$shadow',
-          },
 
         '&:disabled': {
           backgroundColor: '$control',
@@ -84,57 +83,56 @@ export const Button = styled('button', {
       },
       accent: {
         backgroundColor: '$brandAccent9',
+        boxShadow: '$colors$borderAccent, $colors$shadow',
         color: '$whiteA12',
         '@hover': {
           '&:hover': {
             backgroundColor: '$brandAccent10',
+            boxShadow: '$colors$borderAccentHover, $colors$shadow',
           },
-        },
-        '&:active': {
-          backgroundColor: '$brandAccent10',
-          boxShadow: '$colors$borderAccent, $colors$shadow',
         },
         '&:focus': {
           backgroundColor: '$brandAccent10',
-          boxShadow: '$colors$borderAccent, $colors$shadow',
+          boxShadow:
+            '$colors$borderAccent, $colors$borderFocus, $colors$shadow',
         },
-        '&:focus:active': {
+        '&:active': {
           backgroundColor: '$brandAccent9',
+          boxShadow: '$colors$borderAccentActive, $colors$shadow',
         },
-        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
-          {
-            backgroundColor: '$brandAccent10',
-            boxShadow: '$colors$borderAccent, $colors$shadow',
-          },
+        '&[data-state="open"]': {
+          backgroundColor: '$brandAccent10',
+          boxShadow:
+            '$colors$borderAccent, $colors$borderFocus, $colors$shadow',
+        },
         '&:disabled': {
           backgroundColor: '$brandAccent6',
           boxShadow: '$colors$brandAccent6, $colors$shadow',
         },
       },
       red: {
+        color: '$red12',
         backgroundColor: '$red3',
-        boxShadow: '$colors$border',
-        color: '$red11',
+        boxShadow: '$colors$borderRed',
         '@hover': {
           '&:hover': {
-            boxShadow: '$colors$borderActive',
+            boxShadow: '$colors$borderRedHover, $colors$shadow',
           },
+        },
+        '&:focus': {
+          boxShadow: '$colors$borderRed, $colors$borderFocus, $colors$shadow',
         },
         '&:active': {
           backgroundColor: '$red4',
-          boxShadow: 'inset 0 0 0 1px $colors$red8, $colors$shadow',
-        },
-        '&:focus': {
-          boxShadow: 'inset 0 0 0 1px $colors$red8, $colors$shadowActive',
+          boxShadow: '$colors$borderRedActive, $colors$shadow',
         },
         '&:disabled': {
           color: '$red8',
         },
-        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
-          {
-            backgroundColor: '$red4',
-            boxShadow: 'inset 0 0 0 1px $colors$red8',
-          },
+        '&[data-state="open"]': {
+          backgroundColor: '$red4',
+          boxShadow: '$colors$borderRed, $colors$borderFocus, $colors$shadow',
+        },
       },
       transparentWhite: {
         backgroundColor: 'hsla(0,100%,100%,.2)',
@@ -203,20 +201,20 @@ export const Button = styled('button', {
             boxShadow: 'none',
           },
         },
+        '&:focus': {
+          backgroundColor: '$slateA3',
+          boxShadow: '$colors$borderFocus, $colors$shadowActive',
+        },
         '&:active': {
           backgroundColor: '$slateA4',
-        },
-        '&:focus': {
-          boxShadow: 'inset 0 0 0 1px $colors$slateA8, $colors$shadowActive',
         },
         '&:disabled': {
           backgroundColor: 'transparent',
         },
-        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
-          {
-            backgroundColor: '$slateA4',
-            boxShadow: 'none',
-          },
+        '&[data-state="open"]': {
+          backgroundColor: '$slateA4',
+          boxShadow: 'none',
+        },
       },
     },
     {
@@ -233,26 +231,22 @@ export const Button = styled('button', {
             boxShadow: 'none',
           },
         },
-        '&:active': {
-          backgroundColor: '$brandAccent3',
-        },
         '&:focus': {
           backgroundColor: '$brandAccent3',
-          boxShadow: '$colors$borderAccent, $colors$shadowActive',
+          boxShadow: '$colors$borderFocus, $colors$shadowActive',
         },
-        '&:focus:active': {
-          backgroundColor: '$brandAccent5',
+        '&:active': {
+          backgroundColor: '$brandAccent4',
         },
         '&:disabled': {
           color: '$brandAccent6',
           backgroundColor: 'transparent',
           boxShadow: 'none',
         },
-        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
-          {
-            backgroundColor: '$brandAccent4',
-            boxShadow: 'none',
-          },
+        '&[data-state="open"]': {
+          backgroundColor: '$brandAccent4',
+          boxShadow: 'none',
+        },
       },
     },
     {
@@ -266,17 +260,16 @@ export const Button = styled('button', {
             boxShadow: 'none',
           },
         },
+        '&:focus': {
+          boxShadow: '$colors$borderFocus, $colors$shadowActive',
+        },
         '&:active': {
           backgroundColor: '$redA4',
         },
-        '&:focus': {
-          boxShadow: 'inset 0 0 0 1px $colors$redA8, $colors$shadowActive',
+        '&[data-state="open"]': {
+          backgroundColor: '$redA4',
+          boxShadow: 'none',
         },
-        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
-          {
-            backgroundColor: '$redA4',
-            boxShadow: 'none',
-          },
       },
     },
   ],

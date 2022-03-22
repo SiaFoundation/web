@@ -55,15 +55,19 @@ export const colors = {
   controlActive: '$brandGray4',
   controlHover: '$brandGray5',
 
-  border: 'inset 0 0 0 1px $brandGray6',
-  borderActive: 'inset 0 0 0 1px $brandGray7',
-  borderHover: 'inset 0 0 0 1px $brandGray8',
+  separator: '$brandGray3',
+
+  borderFocus: '0 0 0 1px $blue8',
+
+  border: 'inset 0 0 0 1px $brandGray4',
+  borderActive: 'inset 0 0 0 1px $brandGray5',
+  borderHover: 'inset 0 0 0 1px $brandGray6',
 
   borderAccent: 'inset 0 0 0 1px $brandAccent6',
   borderAccentActive: 'inset 0 0 0 1px $brandAccent7',
   borderAccentHover: 'inset 0 0 0 1px $brandAccent8',
 
-  borderInput: 'inset 0 0 0 1px $brandGray6',
+  borderInput: 'inset 0 0 0 1px $brandGray4',
   borderInputActive: 'inset 0 0 0 1px $blue7',
   borderInputHover: 'inset 0 0 0 1px $blue8',
 
@@ -79,13 +83,13 @@ export const colors = {
   shadowActive: 'rgb(0 0 0 / 7%) 0px 1px 1px',
 
   shadowButton: 'rgb(0 0 0 / 6%) 0px 1px 1px',
-  shadowButtonActive: 'rgb(0 0 0 / 7%) 0px 1px 1px',
+  shadowButtonFocus: 'rgb(0 0 0 / 7%) 0px 1px 1px',
 
   shadowPopup: 'rgb(0 0 0 / 9%) 0px 3px 12px',
-  shadowPopupActive: 'rgb(0 0 0 / 10%) 0px 3px 12px',
+  shadowPopupFocus: 'rgb(0 0 0 / 10%) 0px 3px 12px',
 
   shadowDialog: 'rgb(0 0 0 / 40%) 0px 16px 70px',
-  shadowDialogActive: 'rgb(0 0 0 / 50%) 0px 16px 70px',
+  shadowDialogFocus: 'rgb(0 0 0 / 50%) 0px 16px 70px',
 }
 
 export const colorsDark = {
@@ -142,15 +146,19 @@ export const colorsDark = {
   controlActive: '$brandGray4',
   controlHover: '$brandGray5',
 
-  border: 'inset 0 0 0 1px $brandGray6',
-  borderActive: 'inset 0 0 0 1px $brandGray7',
-  borderHover: 'inset 0 0 0 1px $brandGray8',
+  separator: '$brandGray4',
+
+  borderFocus: '0 0 0 1px $blue8',
+
+  border: 'inset 0 0 0 1px $brandGray4',
+  borderActive: 'inset 0 0 0 1px $brandGray5',
+  borderHover: 'inset 0 0 0 1px $brandGray6',
 
   borderAccent: 'inset 0 0 0 1px $brandAccent6',
-  borderAccentHover: 'inset 0 0 0 1px $brandAccent7',
-  borderAccentActive: 'inset 0 0 0 1px $brandAccent8',
+  borderAccentActive: 'inset 0 0 0 1px $brandAccent7',
+  borderAccentHover: 'inset 0 0 0 1px $brandAccent8',
 
-  borderInput: 'inset 0 0 0 1px $brandGray6',
+  borderInput: 'inset 0 0 0 1px $brandGray4',
   borderInputActive: 'inset 0 0 0 1px $blue7',
   borderInputHover: 'inset 0 0 0 1px $blue8',
 
@@ -166,11 +174,11 @@ export const colorsDark = {
   shadowActive: 'rgb(0 0 0 / 25%) 0px 1px 1px',
 
   shadowButton: 'rgb(0 0 0 / 22%) 0px 1px 1px',
-  shadowButtonActive: 'rgb(0 0 0 / 25%) 0px 1px 1px',
+  shadowButtonFocus: 'rgb(0 0 0 / 25%) 0px 1px 1px',
 
   shadowPopup: 'rgb(0 0 0 / 18%) 0px 4px 24px',
-  shadowPopupActive: 'rgb(0 0 0 / 20%) 0px 4px 24px',
+  shadowPopupFocus: 'rgb(0 0 0 / 20%) 0px 4px 24px',
 
   shadowDialog: 'rgb(0 0 0 / 45%) 0px 16px 70px',
-  shadowDialogActive: 'rgb(0 0 0 / 50%) 0px 16px 70px',
+  shadowDialogFocus: 'rgb(0 0 0 / 50%) 0px 16px 70px',
 }

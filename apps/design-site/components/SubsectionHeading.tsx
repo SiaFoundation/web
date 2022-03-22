@@ -10,7 +10,8 @@ export function SubsectionHeading({ id, children }: Props) {
   return (
     <Box
       css={{
-        pb: '$3',
+        pt: '$2',
+        pb: '$1',
       }}
     >
       <NextLink

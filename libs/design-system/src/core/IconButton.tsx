@@ -16,6 +16,7 @@ export const IconButton = styled('button', {
   userSelect: 'none',
   WebkitTapHighlightColor: 'transparent',
   color: '$hiContrast',
+  cursor: 'pointer',
 
   '&::before': {
     boxSizing: 'border-box',
@@ -58,18 +59,17 @@ export const IconButton = styled('button', {
             boxShadow: '$colors$borderActive, $colors$shadow',
           },
         },
+        '&:focus': {
+          boxShadow: '$colors$border, $colors$borderFocus, $colors$shadow',
+        },
         '&:active': {
           backgroundColor: '$controlActive',
           boxShadow: '$colors$borderActive, $colors$shadow',
         },
-        '&:focus': {
-          boxShadow: '$colors$borderActive, $colors$shadowActive',
+        '&[data-state="open"]': {
+          backgroundColor: '$controlActive',
+          boxShadow: '$colors$borderActive, $colors$shadow',
         },
-        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
-          {
-            backgroundColor: '$controlActive',
-            boxShadow: '$colors$borderActive, $colors$shadow',
-          },
 
         '&:disabled': {
           backgroundColor: '$control',
@@ -77,25 +77,38 @@ export const IconButton = styled('button', {
           color: '$textDisabled',
         },
       },
-      ghost: {
+      simple: {
         backgroundColor: 'transparent',
         '@hover': {
           '&:hover': {
-            boxShadow: '$colors$borderActive, $colors$shadow',
+            boxShadow: '$colors$borderHover, $colors$shadow',
           },
-        },
-        '&:active': {
-          backgroundColor: '$control',
-          boxShadow: '$colors$borderActive, $colors$shadow',
         },
         '&:focus': {
-          boxShadow: '$colors$borderActive, $colors$shadowActive',
+          boxShadow: '$colors$borderFocus, $colors$shadow',
         },
-        '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
-          {
-            backgroundColor: '$slate4',
-            boxShadow: '$colors$borderActive, $colors$shadow',
+        '&:active': {
+          backgroundColor: '$controlActive',
+          boxShadow: '$colors$borderActive, $colors$shadow',
+        },
+        '&[data-state="open"]': {
+          backgroundColor: '$controlActive',
+          boxShadow: '$colors$borderActive, $colors$shadow',
+        },
+        '&:disabled': {
+          backgroundColor: 'transparent',
+          boxShadow: 'none',
+          color: '$textDisabled',
+        },
+      },
+      ghost: {
+        color: '$textSubtle',
+        background: 'none',
+        '@hover': {
+          '&:hover': {
+            color: '$textSubtleHover',
           },
+        },
         '&:disabled': {
           boxShadow: 'none',
           color: '$textDisabled',

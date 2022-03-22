@@ -35,8 +35,7 @@ const StyledCheckbox = styled(CheckboxPrimitive.Root, {
   '&:focus': {
     outline: 'none',
     borderColor: '$red7',
-    boxShadow:
-      'inset 0 0 0 1px $colors$accentInput, 0 0 0 1px $colors$accentInput',
+    boxShadow: '$colors$borderFocus, 0 0 0 1px $colors$accentInput',
   },
   '&:disabled': {
     color: '$brandGray8',

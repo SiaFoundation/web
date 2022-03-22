@@ -15,11 +15,11 @@ export const DropdownMenuContent = styled(
   menuCss,
   panelStyles,
   {
-    boxShadow: '$colors$shadowPopup',
+    boxShadow: '$colors$shadowPopup, $colors$border',
     color: '$hiContrast',
     '@hover': {
       '&:hover': {
-        boxShadow: '$colors$shadowPopupActive',
+        boxShadow: '$colors$shadowPopupFocus, $colors$border',
       },
     },
     minWidth: 180,
