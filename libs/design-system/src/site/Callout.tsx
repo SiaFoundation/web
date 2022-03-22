@@ -35,7 +35,7 @@ export function Callout({
 }: Props) {
   return (
     <Panel
-      flat
+      radius="0"
       css={{
         position: 'relative',
         background: 'none',
