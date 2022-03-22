@@ -1,8 +1,12 @@
-export function SimpleLogoIcon() {
+type Props = {
+  size?: number
+}
+
+export function SimpleLogoIcon({ size = '45' }: Props) {
   return (
     <svg
-      width="45"
-      height="45"
+      width={size}
+      height={size}
       viewBox="0 0 62 62"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
