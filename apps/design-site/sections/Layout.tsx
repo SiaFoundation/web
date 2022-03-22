@@ -8,6 +8,7 @@ import {
   Heading,
   IconButton,
   NextImage,
+  Panel,
   ScrollArea,
   Section,
   Separator,
@@ -118,6 +119,45 @@ export function Layout() {
             </Flex>
             <Box fill css={{ height: '50px', width: '50px' }} />
           </Flex>
+        </Grid>
+      </Section>
+      <Section>
+        <SubsectionHeading>Panel</SubsectionHeading>
+        <Grid
+          columns={{
+            '@initial': 1,
+            '@bp2': 3,
+          }}
+          gap="4"
+        >
+          <Panel
+            radius="0"
+            css={{
+              width: '100%',
+              height: '100px',
+            }}
+          ></Panel>
+          <Panel
+            radius="1"
+            css={{
+              width: '100%',
+              height: '100px',
+            }}
+          ></Panel>
+          <Panel
+            radius="2"
+            css={{
+              width: '100%',
+              height: '100px',
+            }}
+          ></Panel>
+          <Panel
+            radius="3"
+            css={{
+              width: '100%',
+              height: '100px',
+            }}
+          ></Panel>
         </Grid>
       </Section>
       <Section>

@@ -4,7 +4,6 @@ export const panelStyles = css({
   backgroundColor: '$panel',
 
   transition: 'border 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
-  borderRadius: '$1',
 
   boxShadow: '$colors$border, $colors$shadow',
   color: '$hiContrast',
@@ -15,11 +14,23 @@ export const panelStyles = css({
   },
 
   variants: {
-    flat: {
-      true: {
-        borderRadius: '0',
+    radius: {
+      0: {
+        borderRadius: 0,
+      },
+      1: {
+        borderRadius: '$1',
+      },
+      2: {
+        borderRadius: '$2',
+      },
+      3: {
+        borderRadius: '$3',
       },
     },
+  },
+  defaultVariants: {
+    radius: '1',
   },
 })
 

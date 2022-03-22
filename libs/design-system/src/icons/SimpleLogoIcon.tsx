@@ -2,7 +2,7 @@ type Props = {
   size?: number
 }
 
-export function SimpleLogoIcon({ size = '45' }: Props) {
+export function SimpleLogoIcon({ size = 45 }: Props) {
   return (
     <svg
       width={size}
