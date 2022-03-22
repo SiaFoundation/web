@@ -2,6 +2,22 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.9.0](https://github.com/SiaFoundation/web/compare/design-site-0.8.2...design-site-0.9.0) (2022-03-22)
+
+
+### Bug Fixes
+
+* remove grays from design site ([9d0beef](https://github.com/SiaFoundation/web/commit/9d0beef04c772eb3bde0245840be737d0dfc8f8a))
+* tune borders and dialogs ([f008947](https://github.com/SiaFoundation/web/commit/f008947ddb89514720d5b76321ad43487e331e92))
+* tweak borders, embarcadero fixes ([35d61a6](https://github.com/SiaFoundation/web/commit/35d61a6f9a92438b5f2e2e8b5105dad63ad83f9e))
+
+
+### Features
+
+* add panel radii ([55da3a5](https://github.com/SiaFoundation/web/commit/55da3a5c924507baae4e480b570cfd08662b917c))
+
+
+
 ## [0.8.2](https://github.com/SiaFoundation/web/compare/design-site-0.8.1...design-site-0.8.2) (2022-03-21)
 
 
