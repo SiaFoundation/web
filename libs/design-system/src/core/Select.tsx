@@ -19,8 +19,14 @@ const SelectWrapper = styled('div', {
     boxShadow: '$colors$borderInputActive, $colors$shadowActive',
   },
 
+  '@hover': {
+    '&:hover': {
+      boxShadow: '$colors$borderInputHover, $colors$shadow',
+    },
+  },
+
   '& > select:disabled': {
-    color: '$slate8',
+    color: '$textDisabled',
   },
 
   variants: {

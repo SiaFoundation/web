@@ -43,10 +43,11 @@ export const TextField = styled('input', {
   },
 
   '&:focus': {
-    boxShadow: '$colors$borderInputActive, $colors$shadowActive',
+    boxShadow:
+      '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive',
     '&:-webkit-autofill': {
       boxShadow:
-        '$colors$borderInputActive, $colors$shadowActive, inset 0 0 0 100px $colors$brandAccent4',
+        '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive, inset 0 0 0 100px $colors$brandAccent4',
     },
   },
   '&::placeholder': {
@@ -152,7 +153,8 @@ export const TextField = styled('input', {
           },
         },
         '&:focus': {
-          boxShadow: '$colors$borderRedActive, $colors$shadowActive',
+          boxShadow:
+            '$colors$borderFocus, $colors$borderRedActive, $colors$shadowActive',
         },
       },
       valid: {
@@ -163,7 +165,8 @@ export const TextField = styled('input', {
           },
         },
         '&:focus': {
-          boxShadow: '$colors$borderGreenActive, $colors$shadowActive',
+          boxShadow:
+            '$colors$borderFocus, $colors$borderGreenActive, $colors$shadowActive',
         },
       },
     },

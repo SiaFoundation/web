@@ -43,7 +43,7 @@ const StyledSwitch = styled(SwitchPrimitive.Root, {
   borderRadius: '$pill',
   position: 'relative',
   '&:focus': {
-    boxShadow: '0 0 0 2px $colors$brandGray8',
+    boxShadow: '$colors$borderFocus, 0 0 0 2px $colors$brandGray8',
   },
 
   '&:disabled': {
@@ -53,7 +53,7 @@ const StyledSwitch = styled(SwitchPrimitive.Root, {
   '&[data-state="checked"]': {
     backgroundColor: '$brandAccent9',
     '&:focus': {
-      boxShadow: '0 0 0 2px $colors$brandAccent8',
+      boxShadow: '$colors$borderFocus, 0 0 0 2px $colors$brandAccent8',
     },
     '&:disabled': {
       backgroundColor: '$brandAccent6',

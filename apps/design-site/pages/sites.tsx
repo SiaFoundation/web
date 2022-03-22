@@ -1,11 +1,11 @@
-import { Site } from '../sections/Site'
+import { Sites } from '../sections/Sites'
 
-export function Sites() {
+export function SitesPage() {
   return (
     <>
-      <Site />
+      <Sites />
     </>
   )
 }
 
-export default Sites
+export default SitesPage

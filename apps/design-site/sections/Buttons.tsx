@@ -155,6 +155,17 @@ export function Buttons() {
               <Search16 />
             </IconButton>
           </Flex>
+          <Flex direction="row" gap="1">
+            <IconButton variant="simple" size="1">
+              <Search16 />
+            </IconButton>
+            <IconButton variant="simple" size="2">
+              <Search16 />
+            </IconButton>
+            <IconButton variant="simple" size="3" disabled>
+              <Search16 />
+            </IconButton>
+          </Flex>
         </Grid>
       </Section>
     </>

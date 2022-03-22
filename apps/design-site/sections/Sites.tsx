@@ -14,7 +14,7 @@ import { times } from 'lodash'
 import { SectionHeading as DSSectionHeading } from '../components/SectionHeading'
 import { SubsectionHeading } from '../components/SubsectionHeading'
 
-export function Site() {
+export function Sites() {
   return (
     <>
       <Section>

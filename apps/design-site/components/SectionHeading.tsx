@@ -21,7 +21,8 @@ export function SectionHeading({ id, children, hideSeparator }: Props) {
       gap="3"
       align="start"
       css={{
-        pb: '$5',
+        pt: '$3',
+        pb: '$2',
       }}
     >
       <NextLink

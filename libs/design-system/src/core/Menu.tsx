@@ -53,7 +53,7 @@ export const menuCss = css({
 export const separatorCss = css({
   height: 1,
   my: '$1',
-  backgroundColor: '$brandGray6',
+  backgroundColor: '$separator',
 })
 
 export const Menu = styled(MenuPrimitive.Root, menuCss)
