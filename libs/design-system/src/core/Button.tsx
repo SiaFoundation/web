@@ -71,7 +71,7 @@ export const Button = styled('button', {
         },
         '&[data-state="open"]': {
           backgroundColor: '$controlActive',
-          boxShadow: '$colors$borderActive, $colors$shadow',
+          boxShadow: '$colors$border, $colors$borderFocus, $colors$shadow',
         },
 
         '&:disabled': {

@@ -16,7 +16,7 @@ const SelectWrapper = styled('div', {
 
   '&:focus-within': {
     zIndex: 1,
-    boxShadow: '$colors$borderInputActive, $colors$shadowActive',
+    boxShadow: '$colors$borderFocus, $colors$borderInputActive, $colors$shadow',
   },
 
   '@hover': {

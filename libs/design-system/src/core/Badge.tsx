@@ -186,7 +186,9 @@ export const Badge = styled('span', {
       },
     },
     interactive: {
-      true: {},
+      true: {
+        cursor: 'pointer',
+      },
     },
   },
 

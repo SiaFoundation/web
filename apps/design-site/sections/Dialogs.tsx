@@ -14,6 +14,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogControls,
   DialogDescription,
   DialogOverlay,
   DialogTitle,
@@ -39,25 +40,17 @@ export function Dialogs() {
             </DialogTrigger>
             <DialogPortal>
               <DialogOverlay />
-              <DialogContent
-                css={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '$2',
-                  maxWidth: '400px',
-                }}
-              >
-                <DialogTitle>Title</DialogTitle>
+              <DialogContent>
+                <DialogTitle>Privacy</DialogTitle>
                 <DialogDescription>
-                  Description - Lorem ipsum dolor sit amet, consectetur
-                  adipisicing elit. Non quia facere ad totam veritatis iure
-                  nesciunt provident quos vel reiciendis laboriosam corporis
-                  debitis, maiores rerum ab nobis quaerat consectetur
-                  asperiores?
+                  This app uses the following third-party APIs, all external
+                  APIs are not required and can be toggled on or off.
                 </DialogDescription>
-                <DialogClose asChild>
-                  <Button>Close</Button>
-                </DialogClose>
+                <DialogControls>
+                  <DialogClose asChild>
+                    <Button>Close</Button>
+                  </DialogClose>
+                </DialogControls>
               </DialogContent>
             </DialogPortal>
           </Dialog>
@@ -72,14 +65,7 @@ export function Dialogs() {
             </AlertDialogTrigger>
             <AlertDialogPortal>
               <AlertDialogOverlay />
-              <AlertDialogContent
-                css={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '$2',
-                  maxWidth: '400px',
-                }}
-              >
+              <AlertDialogContent>
                 <AlertDialogTitle>Title</AlertDialogTitle>
                 <AlertDialogDescription>
                   Description - Lorem ipsum dolor sit amet consectetur
@@ -88,14 +74,14 @@ export function Dialogs() {
                   repellendus veniam a dolore aspernatur inventore sit quae ad
                   deserunt.
                 </AlertDialogDescription>
-                <Flex gap="1" justify="end" css={{ width: '100%' }}>
+                <DialogControls>
                   <AlertDialogCancel asChild>
                     <Button>nvm, cancel</Button>
                   </AlertDialogCancel>
                   <AlertDialogAction asChild>
                     <Button variant="accent">Action</Button>
                   </AlertDialogAction>
-                </Flex>
+                </DialogControls>
               </AlertDialogContent>
             </AlertDialogPortal>
           </AlertDialog>

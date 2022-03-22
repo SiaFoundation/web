@@ -1,10 +1,10 @@
 import React from 'react'
 import { styled, CSS, keyframes, css } from '../config/theme'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { Close16 } from '../icons'
+import { Close24 } from '../icons'
 import { overlayStyles } from './Overlay'
-import { panelStyles } from './Panel'
 import { IconButton } from './IconButton'
+import { Flex } from './Flex'
 
 export const overlayShow = keyframes({
   '0%': { opacity: 0 },
@@ -58,8 +58,8 @@ export const dialogContentStyles = css({
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: '90vw',
-  maxWidth: '450px',
   maxHeight: '85vh',
+  maxWidth: '400px',
   padding: '$2',
   willChange: 'transform, opacity',
   '@media (prefers-reduced-motion: no-preference)': {
@@ -90,8 +90,8 @@ export const DialogContent = React.forwardRef<
   <StyledContent {...props} ref={forwardedRef}>
     {children}
     <StyledCloseButton asChild>
-      <IconButton variant="ghost">
-        <Close16 />
+      <IconButton size="1" variant="ghost">
+        <Close24 />
       </IconButton>
     </StyledCloseButton>
   </StyledContent>
@@ -101,18 +101,33 @@ export const DialogPortal = DialogPrimitive.Portal
 export const DialogTrigger = DialogPrimitive.Trigger
 export const DialogClose = DialogPrimitive.Close
 
+type DialogControlsProps = {
+  children: React.ReactNode
+}
+
+export function DialogControls({ children }: DialogControlsProps) {
+  return (
+    <Flex gap="1" justify="end" css={{ paddingTop: '$1', width: '100%' }}>
+      {children}
+    </Flex>
+  )
+}
+
 export const dialogTitleCss = css({
   color: '$hiContrast',
   fontFamily: '$sans',
+  fontSize: '$24',
   fontWeight: 500,
-  lineHeight: '20px',
+  lineHeight: '30px',
 })
 export const DialogTitle = styled(DialogPrimitive.Title, dialogTitleCss)
 export const dialogDescriptionCss = css({
-  color: '$hiContrast',
+  color: '$textSubtle',
   fontFamily: '$sans',
+  fontSize: '$14',
   fontWeight: 400,
-  lineHeight: '1',
+  lineHeight: '150%',
+  padding: '$1 0',
 })
 export const DialogDescription = styled(
   DialogPrimitive.Description,
