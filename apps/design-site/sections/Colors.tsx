@@ -73,7 +73,7 @@ export function Colors() {
             }}
           >
             <Headers />
-            <Box>
+            {/* <Box>
               <Text size="12">Gray</Text>
             </Box>
             <Box css={{ height: 35, backgroundColor: '$gray1' }} />
@@ -181,7 +181,7 @@ export function Colors() {
             <Box css={{ height: 35 }} />
             <Box css={{ height: 35 }} />
             <Box css={{ height: 35 }} />
-            <Box css={{ height: 35 }} />
+            <Box css={{ height: 35 }} /> */}
 
             <Box>
               <Text size="12">Tomato</Text>
