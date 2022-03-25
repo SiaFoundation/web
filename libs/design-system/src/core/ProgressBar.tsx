@@ -20,7 +20,7 @@ const indeterminateProgress = keyframes({
 const StyledProgressBar = styled(ProgressPrimitive.Root, {
   boxSizing: 'border-box',
   position: 'relative',
-  height: '$1',
+  height: '$0-5',
   overflow: 'hidden',
   borderRadius: '$pill',
 
@@ -55,7 +55,7 @@ const StyledProgressBar = styled(ProgressPrimitive.Root, {
         // backgroundImage:
         //   'linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%)',
         backgroundImage:
-          'linear-gradient(90deg, rgba(131,58,180,1) 0%, $brandAccent12 50%, rgba(252,176,69,1) 100%)',
+          'linear-gradient(90deg, rgba(131,58,180,1) 0%, $brandAccent9 50%, rgba(252,176,69,1) 100%)',
       },
     },
   },
