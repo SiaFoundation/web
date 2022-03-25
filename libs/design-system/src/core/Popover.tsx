@@ -26,10 +26,10 @@ const StyledContent = styled(PopoverPrimitive.Content, panelStyles, {
     animation: `${scaleIn} 0.05s ease-out`,
   },
   position: 'relative',
-  '&[data-side="top"]': { bottom: '$2' },
-  '&[data-side="bottom"]': { top: '$2' },
-  '&[data-side="left"]': { right: '$2' },
-  '&[data-side="right"]': { left: '$2' },
+  '&[data-side="top"]': { bottom: '$1' },
+  '&[data-side="bottom"]': { top: '$1' },
+  '&[data-side="left"]': { right: '$1' },
+  '&[data-side="right"]': { left: '$1' },
 })
 
 type PopoverContentPrimitiveProps = React.ComponentProps<

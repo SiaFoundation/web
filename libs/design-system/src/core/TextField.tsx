@@ -142,9 +142,11 @@ export const TextField = styled('input', {
         },
         '&:disabled': {
           backgroundColor: 'transparent',
+          boxShadow: 'none',
         },
         '&:read-only': {
           backgroundColor: 'transparent',
+          boxShadow: 'none',
         },
       },
       ghost: {
