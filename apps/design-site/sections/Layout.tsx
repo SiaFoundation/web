@@ -97,11 +97,11 @@ export function Layout() {
             </Flex>
             <Box fill css={{ height: '50px', width: '50px' }} />
             <Flex align="center">
-              <Separator orientation="vertical" size="2" />
+              <Separator orientation="vertical" size="95" />
             </Flex>
             <Box fill css={{ height: '50px', width: '50px' }} />
             <Flex align="center">
-              <Separator orientation="vertical" size="3" />
+              <Separator orientation="vertical" size="100" />
             </Flex>
             <Box fill css={{ height: '50px', width: '50px' }} />
           </Flex>
@@ -111,11 +111,11 @@ export function Layout() {
             </Flex>
             <Box fill css={{ height: '50px', width: '50px' }} />
             <Flex justify="center">
-              <Separator orientation="horizontal" size="2" />
+              <Separator orientation="horizontal" size="95" />
             </Flex>
             <Box fill css={{ height: '50px', width: '50px' }} />
             <Flex justify="center">
-              <Separator orientation="horizontal" size="3" />
+              <Separator orientation="horizontal" size="100" />
             </Flex>
             <Box fill css={{ height: '50px', width: '50px' }} />
           </Flex>

@@ -38,7 +38,6 @@ export function Links({ links = [], size = '1' }: Props) {
           <NextLink
             variant="contrast"
             href={link.link}
-            site
             target={link.newTab ? '_blank' : undefined}
           >
             {link.title}

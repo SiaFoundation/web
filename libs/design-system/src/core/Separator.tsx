@@ -69,36 +69,26 @@ export const Separator = styled(SeparatorPrimitive.Root, {
       '1': {
         '&[data-orientation="horizontal"]': {
           height: '1px',
-          width: '$2',
+          width: '$1',
         },
 
         '&[data-orientation="vertical"]': {
           width: '1px',
-          height: '$2',
+          height: '$1',
         },
       },
-      '2': {
+      '95': {
         '&[data-orientation="horizontal"]': {
           height: '1px',
-          width: '$4',
+          width: '95%',
         },
 
         '&[data-orientation="vertical"]': {
           width: '1px',
-          height: '$4',
+          height: '95%',
         },
       },
-      '3': {
-        '&[data-orientation="horizontal"]': {
-          height: '1px',
-          width: '100%',
-        },
-
-        '&[data-orientation="vertical"]': {
-          width: '1px',
-        },
-      },
-      '4': {
+      '100': {
         '&[data-orientation="horizontal"]': {
           height: '1px',
           width: '100%',
@@ -106,6 +96,7 @@ export const Separator = styled(SeparatorPrimitive.Root, {
 
         '&[data-orientation="vertical"]': {
           width: '1px',
+          height: '100%',
         },
       },
     },
