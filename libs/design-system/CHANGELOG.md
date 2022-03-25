@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.11.4](https://github.com/SiaFoundation/web/compare/design-system-0.11.3...design-system-0.11.4) (2022-03-25)
+
+
+### Bug Fixes
+
+* button text wrap, container size, 18 font size ([239d2c2](https://github.com/SiaFoundation/web/commit/239d2c221bbb431b49be50a2e4fb69d8c70e5f29))
+
+
+
 ## [0.11.3](https://github.com/SiaFoundation/web/compare/design-system-0.11.2...design-system-0.11.3) (2022-03-25)
 
 
