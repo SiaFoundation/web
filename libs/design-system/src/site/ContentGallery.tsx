@@ -78,7 +78,7 @@ export function ContentGallery({
               interactive
               variant={!activeFilter ? 'accent' : 'simple'}
               onClick={() => changeFilter(undefined)}
-              flat
+              site
             >
               All
             </Badge>
@@ -88,7 +88,7 @@ export function ContentGallery({
                 interactive
                 variant={activeFilter === filter ? 'accent' : 'simple'}
                 onClick={() => changeFilter(filter)}
-                flat
+                site
               >
                 {filter.replace(/_/g, ' ')}
               </Badge>

@@ -4,7 +4,7 @@ import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 
 export const RadioCardGroup = styled(RadioGroupPrimitive.Root, {
   display: 'flex',
-  gap: '$1',
+  gap: '$4',
 })
 
 const StyledRadio = styled(RadioGroupPrimitive.Item, {
@@ -20,7 +20,6 @@ const StyledRadio = styled(RadioGroupPrimitive.Item, {
   display: 'flex',
   alignItems: 'center',
   borderRadius: '$2',
-  p: '$2',
 })
 
 type RadioGroupItemPrimitiveProps = React.ComponentProps<

@@ -18,10 +18,9 @@ export const Button = styled('button', {
   lineHeight: '1',
   WebkitTapHighlightColor: 'rgba(0,0,0,0)',
 
-  fontFamily: '$mono',
+  fontFamily: '$sans',
   fontWeight: 500,
   fontVariantNumeric: 'tabular-nums',
-  textTransform: 'uppercase',
   cursor: 'pointer',
   transition: 'background-color 50ms linear',
 
@@ -44,7 +43,7 @@ export const Button = styled('button', {
         lineHeight: '$sizes$5',
       },
       '3': {
-        borderRadius: '$1',
+        borderRadius: '$2',
         height: '$6',
         px: '$3',
         fontSize: '$20',
@@ -172,10 +171,12 @@ export const Button = styled('button', {
         pointerEvents: 'none',
       },
     },
-    flat: {
+    site: {
       true: {
         borderRadius: '0',
         boxShadow: 'none',
+        fontFamily: '$mono',
+        textTransform: 'uppercase',
       },
     },
     ghost: {

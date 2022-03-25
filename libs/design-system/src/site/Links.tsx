@@ -1,11 +1,6 @@
 import { Flex, NextLink, Text } from '..'
 import { NextLinkButton } from '../core/Link'
-
-type Link = {
-  title: string
-  link: string
-  newTab?: boolean
-}
+import { Link } from '../lib/links'
 
 type Props = {
   links?: Link[]
@@ -27,7 +22,7 @@ export function Links({ links = [], size = '1' }: Props) {
             size="2"
             href={link.link}
             target={link.newTab ? '_blank' : undefined}
-            flat
+            site
           >
             {link.title}
           </NextLinkButton>
@@ -43,6 +38,7 @@ export function Links({ links = [], size = '1' }: Props) {
           <NextLink
             variant="contrast"
             href={link.link}
+            site
             target={link.newTab ? '_blank' : undefined}
           >
             {link.title}

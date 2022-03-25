@@ -84,7 +84,7 @@ export function Callout({
         <NextLinkButton
           size="2"
           variant="accent"
-          flat
+          site
           href={actionLink}
           css={{ display: 'inline' }}
           target={actionNewTab ? '_blank' : undefined}

@@ -56,13 +56,13 @@ export function Buttons() {
             </Button>
           </Flex>
           <Flex direction="row" gap="1">
-            <Button size="2" flat variant="accent">
+            <Button size="2" site variant="accent">
               Green
             </Button>
-            <Button size="2" flat variant="gray">
+            <Button size="2" site variant="gray">
               Gray
             </Button>
-            <Button size="2" flat variant="red">
+            <Button size="2" site variant="red">
               Red
             </Button>
           </Flex>

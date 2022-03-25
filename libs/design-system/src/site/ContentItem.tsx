@@ -37,7 +37,7 @@ export function ContentItem({
       <Box key={link} css={css}>
         <Flex direction="column" gap="1">
           <Flex direction="column" gap="1">
-            <Paragraph size="3" font="mono" css={{ color: '$brandGray12' }}>
+            <Paragraph size="3" font="mono" color="contrast">
               {link ? (
                 <NextLink
                   href={link}

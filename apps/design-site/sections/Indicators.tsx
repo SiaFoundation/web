@@ -74,46 +74,46 @@ export function Indicators() {
             <Badge variant="yellow">Yellow</Badge>
           </Flex>
           <Flex direction="row" gap="1" wrap="wrap">
-            <Badge flat variant="accent">
+            <Badge site variant="accent">
               Accent
             </Badge>
-            <Badge flat variant="simple">
+            <Badge site variant="simple">
               Simple
             </Badge>
-            <Badge flat variant="gold">
+            <Badge site variant="gold">
               Gold
             </Badge>
-            <Badge flat variant="gray">
+            <Badge site variant="gray">
               Gray
             </Badge>
-            <Badge flat variant="indigo">
+            <Badge site variant="indigo">
               Indigo
             </Badge>
-            <Badge flat variant="lime">
+            <Badge site variant="lime">
               Lime
             </Badge>
-            <Badge flat variant="orange">
+            <Badge site variant="orange">
               Orange
             </Badge>
-            <Badge flat variant="pink">
+            <Badge site variant="pink">
               Pink
             </Badge>
-            <Badge flat variant="purple">
+            <Badge site variant="purple">
               Purple
             </Badge>
-            <Badge flat variant="green">
+            <Badge site variant="green">
               Green
             </Badge>
-            <Badge flat variant="red">
+            <Badge site variant="red">
               Red
             </Badge>
-            <Badge flat variant="teal">
+            <Badge site variant="teal">
               Teal
             </Badge>
-            <Badge flat variant="violet">
+            <Badge site variant="violet">
               Violet
             </Badge>
-            <Badge flat variant="yellow">
+            <Badge site variant="yellow">
               Yellow
             </Badge>
           </Flex>

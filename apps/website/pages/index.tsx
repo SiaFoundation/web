@@ -82,10 +82,47 @@ export default function Home({ stats, landing }: Props) {
       }
       backgroundImage={backgroundImage}
     >
-      <Section size="0" width="flush">
+      <Section size="3">
+        <Grid
+          gap={{
+            '@initial': '4',
+            '@bp2': '5',
+          }}
+          columns={{
+            '@initial': '1',
+            '@bp2': '2',
+          }}
+        >
+          <Callout
+            title="Developer Resources"
+            startTime={0}
+            description={
+              <>
+                Visit the developer pages for software downloads and developer
+                resources, tutorials, technical walkthroughs, and more.
+              </>
+            }
+            actionTitle="Explore"
+            actionLink={sitemap.developers.index}
+          />
+          <Callout
+            title="Learn"
+            startTime={20}
+            description={
+              <>
+                Learn all about how Sia works, why it&apos;s here, and who
+                maintains it.
+              </>
+            }
+            actionTitle="Read more"
+            actionLink={sitemap.learn.index}
+          />
+        </Grid>
+      </Section>
+      <Section size="3" width="flush">
         <Section width="flush" size="1" css={{ position: 'relative' }}>
           <WavesBackdrop />
-          <Section size="1" gap="6">
+          <Section size="2" gap="6">
             <SiteHeading size="2" title="Why Sia" />
             <ContentGallery
               items={[
@@ -142,43 +179,6 @@ export default function Home({ stats, landing }: Props) {
             />
           </Section>
         </Section>
-      </Section>
-      <Section size="4">
-        <Grid
-          gap={{
-            '@initial': '4',
-            '@bp2': '5',
-          }}
-          columns={{
-            '@initial': '1',
-            '@bp2': '2',
-          }}
-        >
-          <Callout
-            title="Developer Resources"
-            startTime={0}
-            description={
-              <>
-                Visit the developer pages for software downloads and developer
-                resources, tutorials, technical walkthroughs, and more.
-              </>
-            }
-            actionTitle="Explore"
-            actionLink={sitemap.developers.index}
-          />
-          <Callout
-            title="Learn"
-            startTime={20}
-            description={
-              <>
-                Learn all about how Sia works, why it&apos;s here, and who
-                maintains it.
-              </>
-            }
-            actionTitle="Read more"
-            actionLink={sitemap.learn.index}
-          />
-        </Grid>
       </Section>
       <Section gap="12">
         <Section width="flush" size="0">
