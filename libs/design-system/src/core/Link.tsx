@@ -85,6 +85,7 @@ export function NextLink({
 type NextLinkButtonProps = {
   id?: string
   href: string
+  site?: boolean
   target?: string
 } & React.ComponentProps<typeof Button>
 
@@ -94,6 +95,7 @@ export function NextLinkButton({
   href,
   target,
   children,
+  site,
   variant,
   size,
   css,
@@ -104,6 +106,7 @@ export function NextLinkButton({
         as="a"
         id={id}
         css={css}
+        site={site}
         variant={variant}
         size={size}
         target={target}

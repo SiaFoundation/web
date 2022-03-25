@@ -118,7 +118,7 @@ export function SiteLayout({
           position: 'absolute',
           right: 0,
           top: 0,
-          zIndex: 0,
+          zIndex: 1,
           height: '100%',
           '@inital': {
             width: '0%',
@@ -128,6 +128,7 @@ export function SiteLayout({
             borderLeft: `$sizes$frame solid $frame`,
             width: '30%',
           },
+          overflow: 'hidden',
         }}
       >
         <Box
@@ -135,6 +136,13 @@ export function SiteLayout({
             position: 'relative',
             width: '100%',
             height: '100%',
+            willChange: 'transform',
+            transition: 'transform 2s linear',
+            '@hover': {
+              '&:hover': {
+                transform: 'scale(1.01)',
+              },
+            },
           }}
         >
           <Box
