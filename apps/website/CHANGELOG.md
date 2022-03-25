@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.7.4](https://github.com/SiaFoundation/web/compare/website-0.7.3...website-0.7.4) (2022-03-25)
+
+
+### Bug Fixes
+
+* site tweaks, button fix ([a2df25c](https://github.com/SiaFoundation/web/commit/a2df25cc91422eef5d2d37cc2d292c04d009458b))
+
+
+
 ## [0.7.3](https://github.com/SiaFoundation/web/compare/website-0.7.2...website-0.7.3) (2022-03-25)
 
 
