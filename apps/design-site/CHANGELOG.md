@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.10.2](https://github.com/SiaFoundation/web/compare/design-site-0.10.1...design-site-0.10.2) (2022-03-25)
+
+
+### Bug Fixes
+
+* design site heading size ([0098ecd](https://github.com/SiaFoundation/web/commit/0098ecd2180b44213c8ee3d82eb4500435ad22e5))
+
+
+
 ## [0.10.1](https://github.com/SiaFoundation/web/compare/design-site-0.10.0...design-site-0.10.1) (2022-03-25)
 
 
