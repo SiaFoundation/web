@@ -67,14 +67,27 @@ export default function Home({ stats, landing }: Props) {
               }}
             >
               <MDXRemote {...landing.source} />
-              {/* <Link onClick={toggleLanding}>Read less</Link> */}
+              <Link onClick={toggleLanding}>Read less</Link>
             </Box>
           </Section>
         ) : (
-          <Section size="1">
+          <Section size="3" css={{ paddingTop: '$12' }}>
             <SiteHeading
               size="3"
-              title="Cloud storage for a decentralized future"
+              title="Decentralized data storage"
+              description={
+                <>
+                  Cryptography has unleashed the latent power of the Internet by
+                  enabling interactions between mutually-distrustful parties.
+                  Sia harnesses this power to turn the cloud storage market into
+                  a proper marketplace, where buyers and sellers can transact
+                  directly, with no intermediaries, anywhere in the world. No
+                  more silos or walled gardens: your data is encrypted, so it
+                  can&apos;t be spied on, and it&apos;s stored on many servers,
+                  so no single entity can hold it hostage. Thanks to projects
+                  like Sia, the Internet is being re-decentralized.
+                </>
+              }
             />
             <Link onClick={toggleLanding}>Read more</Link>
           </Section>

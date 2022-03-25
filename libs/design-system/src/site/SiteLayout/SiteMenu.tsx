@@ -150,7 +150,7 @@ type Props = {
 
 export function SiteMenu({ links }: Props) {
   return (
-    <Box css={{ position: 'relative', zIndex: 1 }}>
+    <Box css={{ position: 'relative', zIndex: 2 }}>
       <Container>
         <Trigger asChild>
           <Box css={{ position: 'fixed', top: '$3', right: '$3' }}>
