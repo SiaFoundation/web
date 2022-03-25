@@ -1,4 +1,3 @@
-import { DropdownMenuRightSlot } from '../core/DropdownMenu'
 import { useTheme } from '../hooks/useTheme'
 import { useCallback } from 'react'
 import { Asleep16, Awake16, Screen16 } from '../icons'
@@ -31,12 +30,24 @@ export function ThemeRadio({ radioCss }: Props) {
     [setMode, setTheme]
   )
 
+  const css: CSS = {
+    [`& *, & ${Text}`]: {
+      color: '$brandGray9',
+    },
+
+    [`&[data-state="checked"] *, &[data-state="checked"] ${Text}`]: {
+      color: '$textContrast',
+    },
+
+    ...radioCss,
+  }
+
   return (
     <RadioCardGroup
       value={active}
       onValueChange={(val) => onChange(val as Value)}
     >
-      <RadioCard value="system" css={radioCss}>
+      <RadioCard value="system" css={css}>
         <Flex direction="column" align="center" gap="1">
           <Box css={{ color: '$textContrast' }}>
             <Screen16 />
@@ -44,7 +55,7 @@ export function ThemeRadio({ radioCss }: Props) {
           <Text>System</Text>
         </Flex>
       </RadioCard>
-      <RadioCard value="light" css={radioCss}>
+      <RadioCard value="light" css={css}>
         <Flex direction="column" align="center" gap="1">
           <Box css={{ color: '$textContrast' }}>
             <Awake16 />
@@ -52,7 +63,7 @@ export function ThemeRadio({ radioCss }: Props) {
           <Text>Light</Text>
         </Flex>
       </RadioCard>
-      <RadioCard value="dark" css={radioCss}>
+      <RadioCard value="dark" css={css}>
         <Flex direction="column" align="center" gap="1">
           <Box css={{ color: '$textContrast' }}>
             <Asleep16 />
