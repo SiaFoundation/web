@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.10.0](https://github.com/SiaFoundation/web/compare/design-site-0.9.0...design-site-0.10.0) (2022-03-25)
+
+
+### Bug Fixes
+
+* adjust separator variants ([35c597c](https://github.com/SiaFoundation/web/commit/35c597ceae3fa5dadf13ca9ecea65e9c68115962))
+* refactor site specific styles, abstract site menu ([0015d78](https://github.com/SiaFoundation/web/commit/0015d7895b9b4af2ae5b6c5d430c71b48d94d937))
+
+
+### Features
+
+* add button 3, fix theme radio colors ([96093df](https://github.com/SiaFoundation/web/commit/96093df773070ddcaa27d9f4543a87f48bcd397d))
+
+
+
 # [0.9.0](https://github.com/SiaFoundation/web/compare/design-site-0.8.2...design-site-0.9.0) (2022-03-22)
 
 
