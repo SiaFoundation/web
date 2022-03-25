@@ -16,7 +16,7 @@ export const baseItemCss = css({
   fontVariantNumeric: 'tabular-nums',
   textDecoration: 'none !important',
   lineHeight: '1',
-  cursor: 'default',
+  cursor: 'pointer',
   userSelect: 'none',
   whiteSpace: 'nowrap',
   height: '$4',

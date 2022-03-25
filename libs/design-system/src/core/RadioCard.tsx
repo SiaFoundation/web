@@ -20,6 +20,7 @@ const StyledRadio = styled(RadioGroupPrimitive.Item, {
   display: 'flex',
   alignItems: 'center',
   borderRadius: '$2',
+  cursor: 'pointer',
 })
 
 type RadioGroupItemPrimitiveProps = React.ComponentProps<
