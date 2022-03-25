@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.11.3](https://github.com/SiaFoundation/web/compare/design-system-0.11.2...design-system-0.11.3) (2022-03-25)
+
+
+### Bug Fixes
+
+* read only textfield outline, popover offset ([db6cd80](https://github.com/SiaFoundation/web/commit/db6cd80195445f8f2b7ff0b0c0ff4412ff59f8d2))
+
+
+
 ## [0.11.2](https://github.com/SiaFoundation/web/compare/design-system-0.11.1...design-system-0.11.2) (2022-03-25)
 
 
