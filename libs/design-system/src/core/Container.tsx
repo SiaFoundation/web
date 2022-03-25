@@ -13,7 +13,7 @@ export const Container = styled('div', {
   variants: {
     size: {
       '1': {
-        maxWidth: '430px',
+        maxWidth: '450px',
       },
       '2': {
         maxWidth: '715px',

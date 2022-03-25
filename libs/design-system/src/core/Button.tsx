@@ -24,7 +24,9 @@ export const Button = styled('button', {
   cursor: 'pointer',
   transition: 'background-color 50ms linear',
 
-  boxShadow: 'rgb(0 0 0 / 9%) 0px 3px 12px',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
 
   variants: {
     size: {
@@ -46,7 +48,7 @@ export const Button = styled('button', {
         borderRadius: '$2',
         height: '$6',
         px: '$3',
-        fontSize: '$20',
+        fontSize: '$18',
         lineHeight: '$sizes$6',
       },
     },
