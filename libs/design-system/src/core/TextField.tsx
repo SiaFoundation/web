@@ -100,6 +100,20 @@ export const TextField = styled('input', {
           right: '-13px',
         },
       },
+      '3': {
+        borderRadius: '$1',
+        height: '$6',
+        fontSize: '$24',
+        padding: '0 $1-5',
+        lineHeight: '$sizes$6',
+        '&:-webkit-autofill::first-line': {
+          fontSize: '$20',
+        },
+        '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+          position: 'relative',
+          right: '-13px',
+        },
+      },
     },
     noSpin: {
       true: {

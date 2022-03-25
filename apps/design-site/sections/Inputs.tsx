@@ -56,6 +56,15 @@ export function Inputs() {
               variant="totalGhost"
             />
           </Grid>
+          <Grid columns={{ '@initial': 1, '@bp1': 4 }} gap="2">
+            <TextField size="3" placeholder="Ada Lovelace" />
+            <TextField
+              size="3"
+              placeholder="placeholder"
+              defaultValue="Ada Lovelace"
+              variant="totalGhost"
+            />
+          </Grid>
           <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
             <TextField
               size="1"

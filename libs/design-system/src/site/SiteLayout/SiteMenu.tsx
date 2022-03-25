@@ -132,14 +132,8 @@ export const Title = DialogPrimitive.Title
 export const Description = DialogPrimitive.Description
 
 const radioCss: CSS = {
-  color: '$whiteA7',
-
   [`& *, & ${Text}`]: {
-    color: '$whiteA10',
-  },
-
-  [`&[data-state="checked"]`]: {
-    color: 'white',
+    color: '$whiteA9',
   },
 
   [`&[data-state="checked"] *, &[data-state="checked"] ${Text}`]: {
