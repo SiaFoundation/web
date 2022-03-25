@@ -40,7 +40,7 @@ export function SubsectionHeading({ id, children }: Props) {
         >
           <Link20 />
         </Box>
-        <Heading size="2">{children}</Heading>
+        <Heading size="1">{children}</Heading>
       </NextLink>
     </Box>
   )
