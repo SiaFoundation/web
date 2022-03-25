@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.10.1](https://github.com/SiaFoundation/web/compare/design-site-0.10.0...design-site-0.10.1) (2022-03-25)
+
+
+### Bug Fixes
+
+* padding theme menu ([2eed999](https://github.com/SiaFoundation/web/commit/2eed99976cd14e6cadf0b037b8abbeb5f7ff0f7e))
+
+
+
 # [0.10.0](https://github.com/SiaFoundation/web/compare/design-site-0.9.0...design-site-0.10.0) (2022-03-25)
 
 
