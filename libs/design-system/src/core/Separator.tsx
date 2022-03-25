@@ -19,6 +19,15 @@ export const Separator = styled(SeparatorPrimitive.Root, {
           mx: 0,
         },
       },
+      '0-5': {
+        '&[data-orientation="horizontal"]': {
+          my: '$0-5',
+        },
+
+        '&[data-orientation="vertical"]': {
+          mx: '$0-5',
+        },
+      },
       '1': {
         '&[data-orientation="horizontal"]': {
           my: '$1',

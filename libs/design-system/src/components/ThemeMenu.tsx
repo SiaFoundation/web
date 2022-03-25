@@ -8,7 +8,11 @@ export function ThemeMenu() {
     <DropdownMenuGroup>
       <DropdownMenuLabel>Theme</DropdownMenuLabel>
       <Box css={{ padding: '$1-5' }}>
-        <ThemeRadio />
+        <ThemeRadio
+          css={{
+            justifyContent: 'space-between',
+          }}
+        />
       </Box>
     </DropdownMenuGroup>
   )
