@@ -10,10 +10,11 @@ import { Box } from '../core/Box'
 type Value = 'light' | 'dark' | 'system'
 
 type Props = {
+  css?: CSS
   radioCss?: CSS
 }
 
-export function ThemeRadio({ radioCss }: Props) {
+export function ThemeRadio({ css, radioCss }: Props) {
   const { activeTheme, activeMode, setTheme, setMode } = useTheme()
 
   const active = activeMode === 'system' ? 'system' : activeTheme
@@ -30,7 +31,7 @@ export function ThemeRadio({ radioCss }: Props) {
     [setMode, setTheme]
   )
 
-  const css: CSS = {
+  const radioCardCss: CSS = {
     [`& *, & ${Text}`]: {
       color: '$brandGray9',
     },
@@ -46,8 +47,9 @@ export function ThemeRadio({ radioCss }: Props) {
     <RadioCardGroup
       value={active}
       onValueChange={(val) => onChange(val as Value)}
+      css={css}
     >
-      <RadioCard value="system" css={css}>
+      <RadioCard value="system" css={radioCardCss}>
         <Flex direction="column" align="center" gap="1">
           <Box css={{ color: '$textContrast' }}>
             <Screen16 />
@@ -55,7 +57,7 @@ export function ThemeRadio({ radioCss }: Props) {
           <Text>System</Text>
         </Flex>
       </RadioCard>
-      <RadioCard value="light" css={css}>
+      <RadioCard value="light" css={radioCardCss}>
         <Flex direction="column" align="center" gap="1">
           <Box css={{ color: '$textContrast' }}>
             <Awake16 />
@@ -63,7 +65,7 @@ export function ThemeRadio({ radioCss }: Props) {
           <Text>Light</Text>
         </Flex>
       </RadioCard>
-      <RadioCard value="dark" css={css}>
+      <RadioCard value="dark" css={radioCardCss}>
         <Flex direction="column" align="center" gap="1">
           <Box css={{ color: '$textContrast' }}>
             <Asleep16 />

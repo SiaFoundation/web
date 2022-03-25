@@ -6,10 +6,11 @@ import { Flex } from '../../core/Flex'
 import { SiteMenu } from './SiteMenu'
 import { AppBar } from '../../core/AppBar'
 import { Container } from '../../core/Container'
+import { Link } from '../../lib/links'
 
 type Props = {
   navbar?: React.ReactNode
-  menu: React.ReactNode
+  menuLinks: Link[]
   heading: React.ReactNode
   footer?: React.ReactNode
   children: React.ReactNode
@@ -18,7 +19,7 @@ type Props = {
 
 export function SiteLayout({
   navbar,
-  menu,
+  menuLinks,
   heading,
   children,
   footer,
@@ -111,7 +112,7 @@ export function SiteLayout({
           </Box>
         </Box>
       </ScrollArea>
-      <SiteMenu>{menu}</SiteMenu>
+      <SiteMenu links={menuLinks} />
       <Box
         css={{
           position: 'absolute',

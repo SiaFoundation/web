@@ -8,7 +8,6 @@ import {
 } from '@siafoundation/design-system'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
-import { Menu } from '../components/Menu'
 import background from '../assets/jungle.png'
 import { Heading } from '../components/Heading'
 
@@ -21,7 +20,20 @@ function App({ Component, pageProps }: AppProps) {
         <title>Design system</title>
       </Head>
       <SiteLayout
-        menu={<Menu />}
+        menuLinks={[
+          {
+            link: '/',
+            title: 'Core',
+          },
+          {
+            link: '/sites',
+            title: 'Sites',
+          },
+          {
+            link: '/apps',
+            title: 'Apps',
+          },
+        ]}
         heading={<Heading />}
         backgroundImage={backgroundImage}
       >

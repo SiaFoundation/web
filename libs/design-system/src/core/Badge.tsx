@@ -7,7 +7,7 @@ export const Badge = styled('span', {
   boxSizing: 'border-box',
   display: 'inline-flex',
   flexShrink: 0,
-  fontFamily: '$mono',
+  fontFamily: '$sans',
   fontWeight: 500,
   justifyContent: 'center',
   lineHeight: '1',
@@ -37,7 +37,6 @@ export const Badge = styled('span', {
   color: '$textSubtle',
   whiteSpace: 'nowrap',
   fontVariantNumeric: 'tabular-nums',
-  textTransform: 'uppercase',
   height: '$3',
   px: '$1-5',
   fontSize: '$12',
@@ -180,9 +179,11 @@ export const Badge = styled('span', {
         },
       },
     },
-    flat: {
+    site: {
       true: {
         borderRadius: '0',
+        fontFamily: '$mono',
+        textTransform: 'uppercase',
       },
     },
     interactive: {

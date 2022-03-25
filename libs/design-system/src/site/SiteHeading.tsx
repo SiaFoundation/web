@@ -1,12 +1,7 @@
 import { Flex, Heading, Paragraph, Text } from '..'
 import { CSS } from '../config/theme'
+import { Link } from '../lib/links'
 import { Links } from './Links'
-
-type Link = {
-  title: string
-  link: string
-  newTab?: boolean
-}
 
 type Size = '1' | '2' | '3'
 

@@ -9,6 +9,9 @@ import { Close24 } from '../../icons'
 import { Flex } from '../../core/Flex'
 import { ThemeRadio } from '../../components/ThemeRadio'
 import { Text } from '../../core/Text'
+import { SimpleLogoIcon } from '../../icons/SimpleLogoIcon'
+import { NextLink } from '../../core/Link'
+import { Link } from '../../lib/links'
 
 const fadeIn = keyframes({
   from: { opacity: '0' },
@@ -142,10 +145,10 @@ const radioCss: CSS = {
 }
 
 type Props = {
-  children: React.ReactNode
+  links: Link[]
 }
 
-export function SiteMenu({ children }: Props) {
+export function SiteMenu({ links }: Props) {
   return (
     <Box css={{ position: 'relative', zIndex: 1 }}>
       <Container>
@@ -169,13 +172,49 @@ export function SiteMenu({ children }: Props) {
               },
             }}
           >
-            {children}
+            <Flex
+              direction="column"
+              gap={{
+                '@initial': '3',
+                '@bp2': '5',
+              }}
+              align="start"
+            >
+              <Box css={{ marginBottom: '$4' }}>
+                <SimpleLogoIcon />
+              </Box>
+              {links.map(({ title, link }) => (
+                <MenuLink key={link} link={link} title={title} />
+              ))}
+              <ThemeRadio radioCss={radioCss} css={{ marginTop: '$3' }} />
+            </Flex>
           </Flex>
-          <Box css={{ position: 'absolute', bottom: '$3', right: '$3' }}>
-            <ThemeRadio radioCss={radioCss} />
-          </Box>
         </Content>
       </Container>
     </Box>
+  )
+}
+
+function MenuLink({ link, title }: Link) {
+  return (
+    <Text
+      size={{
+        '@initial': '20',
+        '@bp2': '24',
+      }}
+      font="mono"
+      css={{
+        '@initial': {
+          lineHeight: '24px',
+        },
+        '@bp2': {
+          lineHeight: '30px',
+        },
+      }}
+    >
+      <NextLink variant="light" href={link}>
+        {title}
+      </NextLink>
+    </Text>
   )
 }

@@ -2,8 +2,8 @@ import { Box, Flex, ImageProps, SiteLayout } from '@siafoundation/design-system'
 import { Stats } from '../content/stats'
 import { Footer } from './Footer'
 import { AppHead } from './Head'
-import { Menu } from './Menu'
 import { Navbar } from './Navbar'
+import { sitemap } from '../config/site'
 
 type Props = {
   heading: React.ReactNode
@@ -25,7 +25,32 @@ export function Layout({ heading, children, stats, backgroundImage }: Props) {
       <AppHead />
       <SiteLayout
         heading={heading}
-        menu={<Menu />}
+        menuLinks={[
+          {
+            link: sitemap.home.index,
+            title: 'Home',
+          },
+          {
+            link: sitemap.developers.index,
+            title: 'Developers',
+          },
+          {
+            link: sitemap.learn.index,
+            title: 'Learn',
+          },
+          {
+            link: sitemap.community.index,
+            title: 'Community & Ecosystem',
+          },
+          {
+            link: sitemap.foundation.index,
+            title: 'The Sia Foundation',
+          },
+          {
+            link: sitemap.newsroom.index,
+            title: 'Newsroom',
+          },
+        ]}
         footer={<Footer stats={stats} />}
         backgroundImage={backgroundImage}
         navbar={<Navbar />}

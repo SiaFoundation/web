@@ -9,7 +9,7 @@ export const Link = styled('a', {
   alignItems: 'center',
   gap: '$1',
   flexShrink: 0,
-  fontFamily: '$mono',
+  fontFamily: '$sans',
   outline: 'none',
   textDecorationLine: 'underline',
   textUnderlineOffset: '2px',
@@ -51,6 +51,7 @@ export const Link = styled('a', {
     },
   },
   defaultVariants: {
+    site: false,
     variant: 'contrast',
   },
 })
@@ -59,6 +60,7 @@ type NLinkProps = {
   id?: string
   href: string
   target?: string
+  site?: boolean
   children?: React.ReactNode
   variant?: React.ComponentProps<typeof Link>['variant']
   css?: CSS
@@ -70,12 +72,13 @@ export function NextLink({
   href,
   target,
   children,
+  site,
   variant = 'contrast',
   css,
 }: NLinkProps) {
   return (
     <BaseNextLink href={href} passHref>
-      <Link id={id} target={target} variant={variant} css={css}>
+      <Link id={id} target={target} variant={variant} css={css} site={site}>
         {children}
       </Link>
     </BaseNextLink>
@@ -95,7 +98,7 @@ export function NextLinkButton({
   target,
   children,
   variant,
-  flat,
+  site,
   size,
   css,
 }: NextLinkButtonProps) {
@@ -106,7 +109,7 @@ export function NextLinkButton({
         id={id}
         css={css}
         variant={variant}
-        flat={flat}
+        site={site}
         size={size}
         target={target}
       >

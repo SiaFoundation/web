@@ -97,7 +97,6 @@ function TopLink({ children, href, target }: LinkProps) {
         variant="accent"
         css={{
           textDecoration: 'none',
-          fontFamily: '$sans',
         }}
         href={href}
         target={target}
@@ -111,11 +110,7 @@ function TopLink({ children, href, target }: LinkProps) {
 function BottomLink({ children, href, target }: LinkProps) {
   return (
     <Text size="14">
-      <NextLink
-        css={{ fontFamily: '$sans', textDecoration: 'none' }}
-        href={href}
-        target={target}
-      >
+      <NextLink css={{ textDecoration: 'none' }} href={href} target={target}>
         {children}
       </NextLink>
     </Text>
