@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.11.2](https://github.com/SiaFoundation/web/compare/design-system-0.11.1...design-system-0.11.2) (2022-03-25)
+
+
+### Bug Fixes
+
+* add variant to separator, justify theme menu ([437f63a](https://github.com/SiaFoundation/web/commit/437f63a00246834dbe7eb6e43083532f5d2c30c4))
+
+
+
 ## [0.11.1](https://github.com/SiaFoundation/web/compare/design-system-0.11.0...design-system-0.11.1) (2022-03-25)
 
 
