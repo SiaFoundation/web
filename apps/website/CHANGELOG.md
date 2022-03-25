@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.7.3](https://github.com/SiaFoundation/web/compare/website-0.7.2...website-0.7.3) (2022-03-25)
+
+
+### Bug Fixes
+
+* refactor site specific styles, abstract site menu ([0015d78](https://github.com/SiaFoundation/web/commit/0015d7895b9b4af2ae5b6c5d430c71b48d94d937))
+
+
+
 ## [0.7.2](https://github.com/SiaFoundation/web/compare/website-0.7.1...website-0.7.2) (2022-03-21)
 
 
