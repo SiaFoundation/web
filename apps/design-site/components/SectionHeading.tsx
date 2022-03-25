@@ -52,7 +52,7 @@ export function SectionHeading({ id, children, hideSeparator }: Props) {
         >
           <Link20 />
         </Box>
-        <Heading size="3">{children}</Heading>
+        <Heading size="2">{children}</Heading>
       </NextLink>
     </Flex>
   )
