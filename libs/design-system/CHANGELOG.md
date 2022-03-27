@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.11.6](https://github.com/SiaFoundation/web/compare/design-system-0.11.5...design-system-0.11.6) (2022-03-27)
+
+
+### Bug Fixes
+
+* adjust dropzone color ([46e94e0](https://github.com/SiaFoundation/web/commit/46e94e0e989150ab79555918c08e3167a924bbb5))
+* remove site layout image hover ([eadfae6](https://github.com/SiaFoundation/web/commit/eadfae6415261ee93ee6bc53683b73b2c3552121))
+
+
+
 ## [0.11.5](https://github.com/SiaFoundation/web/compare/design-system-0.11.4...design-system-0.11.5) (2022-03-25)
 
 
