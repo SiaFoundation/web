@@ -136,13 +136,6 @@ export function SiteLayout({
             position: 'relative',
             width: '100%',
             height: '100%',
-            willChange: 'transform',
-            transition: 'transform 2s linear',
-            '@hover': {
-              '&:hover': {
-                transform: 'scale(1.01)',
-              },
-            },
           }}
         >
           <Box
