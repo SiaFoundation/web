@@ -22,7 +22,7 @@ export function Dropzone({ title, onFiles }: Props) {
     <Box
       {...getRootProps()}
       css={{
-        border: '3px dashed $brandAccent6',
+        border: '3px dashed $brandAccent9',
         width: '100%',
         height: '100px',
         borderRadius: '$2',
@@ -32,11 +32,11 @@ export function Dropzone({ title, onFiles }: Props) {
         alignItems: 'center',
         textAlign: 'center',
         '&:hover': {
-          border: '3px dashed $brandAccent7',
+          border: '3px dashed $brandAccent10',
         },
         ...(isDragActive && {
-          border: '3px dashed $brandAccent8',
-          backgroundColor: '$brandAccent1',
+          border: '3px dashed $brandAccent10',
+          backgroundColor: '$brandAccent2',
         }),
       }}
     >
