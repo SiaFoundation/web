@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.10.3](https://github.com/SiaFoundation/web/compare/design-site-0.10.2...design-site-0.10.3) (2022-03-28)
+
+
+### Bug Fixes
+
+* progress bar grays, text field total ghost read only outline ([07b3a55](https://github.com/SiaFoundation/web/commit/07b3a55b825e23eb295bf0aabda367923f1fc5a6))
+
+
+
 ## [0.10.2](https://github.com/SiaFoundation/web/compare/design-site-0.10.1...design-site-0.10.2) (2022-03-25)
 
 
