@@ -10,6 +10,8 @@ export const Code = styled('code', {
   fontSize: '$12',
 
   [`${Text} &`]: {
+    paddingTop: 'inherit',
+    paddingBottom: 'inherit',
     fontSize: 'inherit',
   },
 

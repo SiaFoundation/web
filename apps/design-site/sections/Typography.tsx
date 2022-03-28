@@ -100,9 +100,10 @@ export function Typography() {
             <Paragraph size="1">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt <Code>{'fmt.Println("pizza")'}</Code> ut
-              labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-              nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure{' '}
+              labore et dolore magna aliqua. Ut enim ad minim veniam, quis{' '}
+              <Code>{'fmt.Println("pizza")'}</Code> ut nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+              irure{' '}
               <NextLink variant="subtle" href={randomLink} target="_blank">
                 example of an inline link
               </NextLink>{' '}
