@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.11.8](https://github.com/SiaFoundation/web/compare/design-system-0.11.7...design-system-0.11.8) (2022-03-28)
+
+
+### Bug Fixes
+
+* code padding within text ([c1fcbe1](https://github.com/SiaFoundation/web/commit/c1fcbe1bcb66c3683f5de4902acf9aec30957ec5))
+
+
+
 ## [0.11.7](https://github.com/SiaFoundation/web/compare/design-system-0.11.6...design-system-0.11.7) (2022-03-28)
 
 
