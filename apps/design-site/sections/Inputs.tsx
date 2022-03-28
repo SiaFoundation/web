@@ -64,6 +64,13 @@ export function Inputs() {
               defaultValue="Ada Lovelace"
               variant="totalGhost"
             />
+            <TextField
+              size="3"
+              placeholder="placeholder"
+              defaultValue="Ada Lovelace"
+              variant="totalGhost"
+              readOnly
+            />
           </Grid>
           <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
             <TextField

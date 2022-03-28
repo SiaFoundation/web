@@ -25,13 +25,13 @@ const StyledProgressBar = styled(ProgressPrimitive.Root, {
   borderRadius: '$pill',
 
   '&[data-state="indeterminate"]': {
-    backgroundColor: '$slate4',
+    backgroundColor: '$brandGray4',
     '&::after': {
       animationName: indeterminateProgress,
       animationDuration: '1500ms',
       animationIterationCount: 'infinite',
       animationTimingFunction: 'cubic-bezier(0.65, 0, 0.35, 1)',
-      backgroundColor: '$slate7',
+      backgroundColor: '$brandGray7',
       boxSizing: 'border-box',
       borderRadius: '$pill',
       content: '""',
@@ -46,7 +46,7 @@ const StyledProgressBar = styled(ProgressPrimitive.Root, {
   variants: {
     variant: {
       gray: {
-        background: '$slate8',
+        background: '$brandGray8',
       },
       green: {
         backgroundColor: '$brandAccent10',
@@ -72,7 +72,7 @@ const ProgressBarIndicator = styled(ProgressPrimitive.Indicator, {
   bottom: 0,
   left: 0,
   width: '100%',
-  backgroundColor: '$slate4',
+  backgroundColor: '$brandGray4',
   transition: 'transform 150ms cubic-bezier(0.65, 0, 0.35, 1)',
 })
 
