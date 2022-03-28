@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.10.4](https://github.com/SiaFoundation/web/compare/design-site-0.10.3...design-site-0.10.4) (2022-03-28)
+
+
+### Bug Fixes
+
+* code padding within text ([c1fcbe1](https://github.com/SiaFoundation/web/commit/c1fcbe1bcb66c3683f5de4902acf9aec30957ec5))
+
+
+
 ## [0.10.3](https://github.com/SiaFoundation/web/compare/design-site-0.10.2...design-site-0.10.3) (2022-03-28)
 
 
