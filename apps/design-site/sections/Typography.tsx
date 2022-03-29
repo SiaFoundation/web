@@ -31,9 +31,10 @@ export function Typography() {
       <Section>
         <SubsectionHeading>Headings</SubsectionHeading>
         <Flex direction="column" gap="2">
-          <Heading size="1">Heading 1</Heading>
-          <Heading size="2">Heading 2</Heading>
-          <Heading size="3">Heading 3</Heading>
+          <Heading size="20">Heading 20</Heading>
+          <Heading size="24">Heading 24</Heading>
+          <Heading size="32">Heading 32</Heading>
+          <Heading size="64">Heading 64</Heading>
         </Flex>
       </Section>
       <Section>
@@ -97,7 +98,7 @@ export function Typography() {
             }}
             gap="2"
           >
-            <Paragraph size="1">
+            <Paragraph size="14">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt <Code>{'fmt.Println("pizza")'}</Code> ut
               labore et dolore magna aliqua. Ut enim ad minim veniam, quis{' '}
@@ -116,7 +117,7 @@ export function Typography() {
               sint occaecat cupidatat non proident, sunt in culpa qui officia
               deserunt mollit anim id est laborum.
             </Paragraph>
-            <Paragraph size="2">
+            <Paragraph size="18">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt <Code>{'fmt.Println("pizza")'}</Code> ut
               labore et dolore magna aliqua. Ut enim ad minim veniam, quis
@@ -135,7 +136,7 @@ export function Typography() {
               deserunt mollit anim id est laborum.
             </Paragraph>
           </Grid>
-          <Paragraph size="3">
+          <Paragraph size="20">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt <Code>{'fmt.Println("pizza")'}</Code> ut
             labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud

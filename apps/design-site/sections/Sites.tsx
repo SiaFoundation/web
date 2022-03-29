@@ -21,28 +21,35 @@ export function Sites() {
         <DSSectionHeading>SiteHeading</DSSectionHeading>
         <Flex direction="column" gap="9">
           <SiteHeading
-            size="1"
-            title="Size 1"
+            size="20"
+            title="Size 20"
             description={`
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
             `}
           />
           <SiteHeading
-            size="2"
-            title="Size 2"
+            size="24"
+            title="Size 24"
             description={`
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
             `}
           />
           <SiteHeading
-            size="3"
-            title="Size 3"
+            size="32"
+            title="Size 32"
             description={`
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
             `}
           />
           <SiteHeading
-            size="3"
+            size="64"
+            title="Size 64"
+            description={`
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
+            `}
+          />
+          <SiteHeading
+            size="64"
             eyebrow="Eyebrow"
             title="Heading with Eyebrow"
             description={`
@@ -50,8 +57,8 @@ export function Sites() {
             `}
           />
           <SiteHeading
-            size="2"
-            title="Heading 2 with Buttons"
+            size="32"
+            title="Heading 32 with Buttons"
             description={`
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
             `}
@@ -69,8 +76,8 @@ export function Sites() {
             ]}
           />
           <SiteHeading
-            size="3"
-            title="Heading 3 with Buttons"
+            size="64"
+            title="Heading 64 with Buttons"
             description={`
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!
             `}
