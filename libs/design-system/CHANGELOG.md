@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.12.0](https://github.com/SiaFoundation/web/compare/design-system-0.11.8...design-system-0.12.0) (2022-03-29)
+
+
+### Bug Fixes
+
+* lint and errors ([d8dcc23](https://github.com/SiaFoundation/web/commit/d8dcc23c246774020f7f2aeddb3ff6d70d14d069))
+
+
+### Features
+
+* refactor design system variants/sizes, adjust site components ([88d5ebf](https://github.com/SiaFoundation/web/commit/88d5ebf5e9f9281dfe77b0cb2bfc84383372a61c))
+
+
+
 ## [0.11.8](https://github.com/SiaFoundation/web/compare/design-system-0.11.7...design-system-0.11.8) (2022-03-28)
 
 
