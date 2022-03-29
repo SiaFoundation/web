@@ -5,7 +5,7 @@ import { VariantProps, CSS } from '../config/theme'
 const DEFAULT_TAG = 'p'
 
 type TextSizeVariants = Pick<VariantProps<typeof Text>, 'size'>
-type ParagraphSizeVariants = '1' | '2' | '3'
+type ParagraphSizeVariants = '14' | '18' | '20' | '24'
 type ParagraphVariants = { size?: ParagraphSizeVariants } & Omit<
   VariantProps<typeof Text>,
   'size'
@@ -17,28 +17,34 @@ export const Paragraph = React.forwardRef<
   React.ElementRef<typeof DEFAULT_TAG>,
   ParagraphProps
 >((props, forwardedRef) => {
-  const { size = '2', ...textProps } = props
+  const { size = '18', ...textProps } = props
 
   // This is the mapping of Paragraph Variants to Text variants
   const textSize: Record<ParagraphSizeVariants, TextSizeVariants['size']> = {
-    1: { '@initial': '14', '@bp2': '14' },
-    2: { '@initial': '16', '@bp2': '16' },
-    3: { '@initial': '20', '@bp2': '20' },
+    14: { '@initial': '14', '@bp2': '14' },
+    18: { '@initial': '18', '@bp2': '18' },
+    20: { '@initial': '20', '@bp2': '20' },
+    24: { '@initial': '20', '@bp2': '24' },
   }
 
   // This is the mapping of Paragraph Variants to Text css
   const textCss: Record<ParagraphSizeVariants, CSS> = {
-    1: {
+    14: {
       color: '$textSubtle',
       lineHeight: '150%',
       '@bp2': { lineHeight: '150%' },
     },
-    2: {
+    18: {
       color: '$textSubtle',
       lineHeight: '150%',
       '@bp2': { lineHeight: '150%' },
     },
-    3: {
+    20: {
+      color: '$textSubtle',
+      lineHeight: '150%',
+      '@bp2': { lineHeight: '150%' },
+    },
+    24: {
       color: '$textSubtle',
       lineHeight: '150%',
       '@bp2': { lineHeight: '150%' },

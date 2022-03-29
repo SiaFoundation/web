@@ -49,7 +49,7 @@ export function ContentProject({
           </Box>
         </NextLink>
         {subtitle && (
-          <Paragraph color="subtle" size="1">
+          <Paragraph color="subtle" size="14">
             {subtitle}
           </Paragraph>
         )}

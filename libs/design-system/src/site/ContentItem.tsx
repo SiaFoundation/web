@@ -37,7 +37,7 @@ export function ContentItem({
       <Box key={link} css={css}>
         <Flex direction="column" gap="1">
           <Flex direction="column" gap="1">
-            <Paragraph size="3" font="mono" color="contrast">
+            <Text size="20" font="mono" css={{ lineHeight: '150%' }}>
               {link ? (
                 <NextLink
                   href={link}
@@ -49,7 +49,7 @@ export function ContentItem({
               ) : (
                 title
               )}
-            </Paragraph>
+            </Text>
             {(date || externalLink) && (
               <Flex gap="1" align="center">
                 {date && (
@@ -66,11 +66,7 @@ export function ContentItem({
               </Flex>
             )}
           </Flex>
-          {subtitle && (
-            <Paragraph color="subtle" size="1">
-              {subtitle}
-            </Paragraph>
-          )}
+          {subtitle && <Paragraph size="14">{subtitle}</Paragraph>}
         </Flex>
       </Box>
     </Flex>

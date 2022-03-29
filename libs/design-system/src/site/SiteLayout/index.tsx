@@ -6,11 +6,11 @@ import { Flex } from '../../core/Flex'
 import { SiteMenu } from './SiteMenu'
 import { AppBar } from '../../core/AppBar'
 import { Container } from '../../core/Container'
-import { Link } from '../../lib/links'
+import { LinkData } from '../../lib/links'
 
 type Props = {
   navbar?: React.ReactNode
-  menuLinks: Link[]
+  menuLinks: LinkData[]
   heading: React.ReactNode
   footer?: React.ReactNode
   children: React.ReactNode
@@ -51,12 +51,6 @@ export function SiteLayout({
         >
           {navbar && (
             <AppBar
-              // sticky
-              // glass
-              color={{
-                '@initial': 'loContrast',
-                '@bp3': 'none',
-              }}
               size="3"
               css={{
                 zIndex: 2,
@@ -125,6 +119,10 @@ export function SiteLayout({
             display: 'none',
           },
           '@bp3': {
+            borderLeft: `$sizes$frame solid $frame`,
+            width: '30%',
+          },
+          '@bp4': {
             borderLeft: `$sizes$frame solid $frame`,
             width: '30%',
           },

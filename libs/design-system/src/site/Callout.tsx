@@ -2,7 +2,6 @@ import {
   LocalBackdrop,
   Box,
   Flex,
-  Heading,
   NextLinkButton,
   Panel,
   Paragraph,
@@ -64,7 +63,10 @@ export function Callout({
         css={{
           position: 'relative',
           height: '100%',
-          padding: size === '2' ? '$max $9' : '$max $3 $4 $3',
+          padding: size === '2' ? '$max $3' : '$max $3 $4 $3',
+          '@bp3': {
+            padding: size === '2' ? '$max $9' : '$max $3 $4 $3',
+          },
         }}
       >
         {eyebrow && (

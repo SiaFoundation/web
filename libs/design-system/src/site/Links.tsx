@@ -1,20 +1,22 @@
 import { Flex, NextLink, Text } from '..'
+import { CSS } from '../config/theme'
 import { NextLinkButton } from '../core/Link'
-import { Link } from '../lib/links'
+import { LinkData } from '../lib/links'
 
 type Props = {
-  links?: Link[]
-  size?: '1' | '2'
+  links?: LinkData[]
+  size?: '1' | '2' | '3'
+  css: CSS
 }
 
-export function Links({ links = [], size = '1' }: Props) {
+export function Links({ links = [], size = '1', css }: Props) {
   if (!links.length) {
     return null
   }
 
-  if (size === '2') {
+  if (size === '3') {
     return (
-      <Flex gap="3" wrap="wrap">
+      <Flex gap="3" wrap="wrap" css={css}>
         {links.map((link) => (
           <NextLinkButton
             key={link.title + link.link}
@@ -32,9 +34,13 @@ export function Links({ links = [], size = '1' }: Props) {
   }
 
   return (
-    <Flex gap="3" wrap="wrap">
+    <Flex gap="3" wrap="wrap" css={css}>
       {links.map((link) => (
-        <Text size="14" font="mono" key={link.title + link.link}>
+        <Text
+          size={size === '2' ? '16' : '14'}
+          font="mono"
+          key={link.title + link.link}
+        >
           <NextLink
             variant="contrast"
             href={link.link}

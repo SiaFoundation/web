@@ -6,35 +6,44 @@ const DEFAULT_TAG = 'h1'
 
 // This is the mapping of Heading to Text size variants
 const textSize: Record<HeadingSizeVariants, TextSizeVariants['size']> = {
-  1: { '@initial': '16', '@bp2': '20' },
-  2: { '@initial': '24', '@bp2': '32' },
-  3: { '@initial': '40', '@bp2': '64' },
+  20: { '@initial': '16', '@bp2': '20' },
+  24: { '@initial': '20', '@bp2': '24' },
+  32: { '@initial': '24', '@bp2': '32' },
+  64: { '@initial': '40', '@bp2': '64' },
 }
 
 // This is the mapping of Heading to Text size variants
 const textTag: Record<HeadingSizeVariants, string> = {
-  1: 'h3',
-  2: 'h2',
-  3: 'h1',
+  20: 'h3',
+  24: 'h3',
+  32: 'h2',
+  64: 'h1',
 }
 
 // This is the mapping of Heading Variants to Text css
 const textCss: Record<HeadingSizeVariants, CSS> = {
-  1: {
+  20: {
     color: '$textContrast',
     fontWeight: 700,
     lineHeight: '$sizes$3',
     letterSpacing: '-1%',
     '@bp2': { lineHeight: '$sizes$3' },
   },
-  2: {
+  24: {
+    color: '$textContrast',
+    fontWeight: 700,
+    lineHeight: '$sizes$3',
+    letterSpacing: '-1%',
+    '@bp2': { lineHeight: '$sizes$3' },
+  },
+  32: {
     color: '$textContrast',
     fontWeight: 600,
     lineHeight: '110%',
     letterSpacing: '-1%',
     '@bp2': { lineHeight: '110%' },
   },
-  3: {
+  64: {
     color: '$textContrast',
     fontWeight: 600,
     lineHeight: '110%',
@@ -44,7 +53,7 @@ const textCss: Record<HeadingSizeVariants, CSS> = {
 }
 
 type TextSizeVariants = Pick<VariantProps<typeof Text>, 'size'>
-type HeadingSizeVariants = '1' | '2' | '3'
+type HeadingSizeVariants = '20' | '24' | '32' | '64'
 type HeadingVariants = { size?: HeadingSizeVariants } & Omit<
   VariantProps<typeof Text>,
   'size'
@@ -56,7 +65,7 @@ export const Heading = React.forwardRef<
   React.ElementRef<typeof DEFAULT_TAG>,
   HeadingProps
 >((props, forwardedRef) => {
-  const { size = '1', ...textProps } = props
+  const { size = '24', ...textProps } = props
 
   const tag = textTag[size]
 

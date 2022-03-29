@@ -72,7 +72,7 @@ export function ContentGallery({
               {eyebrow}
             </Text>
           )}
-          <Flex gap="2" wrap="wrap">
+          <Flex gap="1" wrap="wrap">
             <Badge
               key="all"
               interactive
