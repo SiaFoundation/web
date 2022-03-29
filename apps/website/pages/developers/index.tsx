@@ -25,6 +25,7 @@ import { getSoftware } from '../../content/software'
 import { getStats } from '../../content/stats'
 import { omit } from 'lodash'
 import background from '../../assets/backgrounds/waterfall.png'
+import { SoftwareSection } from 'apps/website/components/SoftwareSection'
 
 const backgroundImage = getImageProps(background)
 
@@ -56,7 +57,7 @@ function Developers({ stats }: Props) {
       heading={
         <Section size="4">
           <SiteHeading
-            size="3"
+            size="64"
             title="Developer Resources"
             description={
               <>
@@ -77,7 +78,7 @@ function Developers({ stats }: Props) {
         <WavesBackdrop />
         <Container>
           <Flex direction="column" gap="5">
-            <SiteHeading size="2" title="Core Software" />
+            <SiteHeading size="32" title="Core Software" />
             <Flex direction="column" gap="9">
               <Grid
                 columns={{
@@ -85,104 +86,123 @@ function Developers({ stats }: Props) {
                   '@bp2': '2',
                 }}
                 gap="5"
-                gapY="7"
+                gapY="8"
               >
-                <Flex direction="column" gap="2">
-                  <SiteHeading
-                    size="1"
-                    title="Sia UI"
-                    description={
-                      <>
-                        Built for users who prefer to work with a Graphical User
-                        Interface.
-                      </>
-                    }
-                  />
-                  <Text size="14" css={{ fontWeight: '600' }}>
-                    Version {siaVersion.current}
-                  </Text>
-                  <Links
-                    links={[
-                      {
-                        title: 'Windows',
-                        link: getHref(
-                          `${hosts.app}/releases/Sia-UI-v${siaVersion.current}.exe`
-                        ),
-                        newTab: true,
-                      },
-                      {
-                        title: 'MacOS',
-                        link: getHref(
-                          `${hosts.app}/releases/Sia-UI-v${siaVersion.current}.dmg`
-                        ),
-                        newTab: true,
-                      },
-                      {
-                        title: 'Linux',
-                        link: getHref(
-                          `${hosts.app}/releases/Sia-UI-v${siaVersion.current}.AppImage`
-                        ),
-                        newTab: true,
-                      },
-                    ]}
-                  />
-                </Flex>
-                <Flex direction="column" gap="2">
-                  <SiteHeading
-                    size="1"
-                    title="Sia Daemon"
-                    description={
-                      <>
-                        Built for technical users comfortable with command line
-                        interfaces.
-                      </>
-                    }
-                  />
-                  <Text size="14" css={{ fontWeight: '600' }}>
-                    Version {siaVersion.current}
-                  </Text>
-                  <Links
-                    links={[
-                      {
-                        title: 'Windows',
-                        link: getHref(
-                          `${hosts.app}/releases/Sia-v${siaVersion.current}-windows-amd64.zip`
-                        ),
-                        newTab: true,
-                      },
-                      {
-                        title: 'MacOS',
-                        link: getHref(
-                          `${hosts.app}/releases/Sia-v${siaVersion.current}-darwin-amd64.zip`
-                        ),
-                        newTab: true,
-                      },
-                      {
-                        title: 'Linux',
-                        link: getHref(
-                          `${hosts.app}/releases/Sia-v${siaVersion.current}-linux-amd64.zip`
-                        ),
-                        newTab: true,
-                      },
-                      {
-                        title: 'Raspberry Pi',
-                        link: getHref(
-                          `${hosts.app}/releases/Sia-v${siaVersion.current}-linux-arm64.zip`
-                        ),
-                        newTab: true,
-                      },
-                      {
-                        title: 'Docker',
-                        link: 'https://github.com/SiaFoundation/siad/pkgs/container/siad',
-                        newTab: true,
-                      },
-                    ]}
-                  />
-                </Flex>
+                <SoftwareSection
+                  title="Sia UI"
+                  description={
+                    <>
+                      Built for users who prefer to work with a Graphical User
+                      Interface.
+                    </>
+                  }
+                  version={siaVersion.current}
+                  links={[
+                    {
+                      title: 'Windows',
+                      link: getHref(
+                        `${hosts.app}/releases/Sia-UI-v${siaVersion.current}.exe`
+                      ),
+                      newTab: true,
+                    },
+                    {
+                      title: 'MacOS',
+                      link: getHref(
+                        `${hosts.app}/releases/Sia-UI-v${siaVersion.current}.dmg`
+                      ),
+                      newTab: true,
+                    },
+                    {
+                      title: 'Linux',
+                      link: getHref(
+                        `${hosts.app}/releases/Sia-UI-v${siaVersion.current}.AppImage`
+                      ),
+                      newTab: true,
+                    },
+                  ]}
+                />
+                <SoftwareSection
+                  title="Sia Daemon"
+                  description={
+                    <>
+                      Built for technical users comfortable with command line
+                      interfaces.
+                    </>
+                  }
+                  version={siaVersion.current}
+                  links={[
+                    {
+                      title: 'Windows',
+                      link: getHref(
+                        `${hosts.app}/releases/Sia-v${siaVersion.current}-windows-amd64.zip`
+                      ),
+                      newTab: true,
+                    },
+                    {
+                      title: 'MacOS',
+                      link: getHref(
+                        `${hosts.app}/releases/Sia-v${siaVersion.current}-darwin-amd64.zip`
+                      ),
+                      newTab: true,
+                    },
+                    {
+                      title: 'Linux',
+                      link: getHref(
+                        `${hosts.app}/releases/Sia-v${siaVersion.current}-linux-amd64.zip`
+                      ),
+                      newTab: true,
+                    },
+                    {
+                      title: 'Raspberry Pi',
+                      link: getHref(
+                        `${hosts.app}/releases/Sia-v${siaVersion.current}-linux-arm64.zip`
+                      ),
+                      newTab: true,
+                    },
+                    {
+                      title: 'Docker',
+                      link: 'https://github.com/SiaFoundation/siad/pkgs/container/siad',
+                      newTab: true,
+                    },
+                  ]}
+                />
+                <SoftwareSection
+                  title="Embarcadero"
+                  description={
+                    <>
+                      Embarcadero is a tool for conducting escrowless SF
+                      {'<->'}SC swaps.
+                    </>
+                  }
+                  version={siaVersion.embc}
+                  links={[
+                    {
+                      title: 'Windows',
+                      link: getHref(
+                        `${hosts.app}/releases/embc-v${siaVersion.embc}-windows-amd64.zip`
+                      ),
+                      newTab: true,
+                    },
+                    {
+                      title: 'MacOS',
+                      link: getHref(
+                        `${hosts.app}/releases/embc-v${siaVersion.embc}-darwin-amd64.zip`
+                      ),
+                      newTab: true,
+                    },
+                    {
+                      title: 'Linux',
+                      link: getHref(
+                        `${hosts.app}/releases/embc-v${siaVersion.embc}-linux-amd64.zip`
+                      ),
+                      newTab: true,
+                    },
+                  ]}
+                />
               </Grid>
               <Flex direction="column" gap="5">
                 <SiteHeading
-                  size="1"
+                  size="20"
                   title="Documentation"
                   description={
                     <>
@@ -192,7 +212,7 @@ function Developers({ stats }: Props) {
                     </>
                   }
                 />
-                <Links links={docLinks} size="2" />
+                <Links links={docLinks} size="3" />
               </Flex>
             </Flex>
           </Flex>
@@ -200,7 +220,7 @@ function Developers({ stats }: Props) {
       </Section>
       <Section>
         <SiteHeading
-          size="2"
+          size="32"
           title="Developer Tutorials"
           description={
             <>Technical tutorials for new developers looking to build on Sia.</>
@@ -210,11 +230,11 @@ function Developers({ stats }: Props) {
       </Section>
       <Section>
         <SiteHeading
-          size="2"
+          size="32"
           title="Technical Walkthroughs"
           description={
             <>
-              Technical posts from the Sia Foundation core team and ecosystem of
+              Technical deep-dives from the core team and the ecosystem of
               developers building technology on top of Sia.
             </>
           }
@@ -223,13 +243,12 @@ function Developers({ stats }: Props) {
       </Section>
       <Section>
         <SiteHeading
-          size="2"
+          size="32"
           title="Built on Sia"
           description={
             <>
-              Sia is a thriving ecosystem of open source software, commercial
-              data storage platforms, and other tools - made possible by a
-              vibrant community of contributors.
+              Sia is a thriving ecosystem of open source software, layer 2
+              networks, and commercial data storage platforms.
             </>
           }
           links={[

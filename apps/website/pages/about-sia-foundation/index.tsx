@@ -14,6 +14,7 @@ import {
   Separator,
   SiteHeading,
   getImageProps,
+  Paragraph,
 } from '@siafoundation/design-system'
 import { MDXRemote } from 'next-mdx-remote'
 import { Layout } from '../../components/Layout'
@@ -38,7 +39,7 @@ function Foundation({ stats, foundation, team, newsPosts, reports }: Props) {
       heading={
         <Section size="4">
           <SiteHeading
-            size="3"
+            size="64"
             title="The Sia Foundation"
             description={
               <>
@@ -55,32 +56,32 @@ function Foundation({ stats, foundation, team, newsPosts, reports }: Props) {
       <Section>
         <Flex direction="column" gap="9">
           <Box>
-            <SiteHeading size="2" title="Vision" />
+            <SiteHeading size="32" title="Vision" />
             <MDXRemote {...foundation.source} />
           </Box>
           <Flex direction="column" gap="4">
-            <SiteHeading size="1" title="Contact" />
+            <SiteHeading size="24" title="Contact" />
             <Flex direction="column" gap="3">
-              <Text color="subtle">
+              <Paragraph color="subtle" size="18">
                 For developer support please see{' '}
                 <NextLink href={external.docs.index} target="_blank">
                   our documentation
                 </NextLink>
                 .
-              </Text>
-              <Text color="subtle">
+              </Paragraph>
+              <Paragraph color="subtle" size="18">
                 For general inquiries email{' '}
                 <NextLink href={`mailto:${external.email}`}>
                   info@sia.tech
                 </NextLink>
                 .
-              </Text>
+              </Paragraph>
             </Flex>
           </Flex>
         </Flex>
       </Section>
       <Section size="3">
-        <SiteHeading size="2" title="The Sia Team" />
+        <SiteHeading size="32" title="The Sia Team" />
         <Grid
           columns={{
             '@initial': '1',
@@ -134,7 +135,7 @@ function Foundation({ stats, foundation, team, newsPosts, reports }: Props) {
         <Section width="flush" css={{ position: 'relative' }}>
           <WavesBackdrop />
           <Section>
-            <SiteHeading size="2" title="Quarterly Reports" />
+            <SiteHeading size="32" title="Quarterly Reports" />
             <Flex direction="column" gap="6">
               {reports.map(([year, yearReports]) => (
                 <Flex key={year} direction="column" gap="2">
@@ -167,7 +168,7 @@ function Foundation({ stats, foundation, team, newsPosts, reports }: Props) {
       </Section>
       <Section>
         <SiteHeading
-          size="2"
+          size="32"
           title="Recent News"
           description={<>Browse the newsroom for recent press releases.</>}
           links={[

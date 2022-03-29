@@ -31,7 +31,7 @@ function NewsroomPost({
     <Layout
       heading={
         <Section size="4">
-          <SiteHeading size="3" title={title} description={subtitle} />
+          <SiteHeading size="64" title={title} description={subtitle} />
         </Section>
       }
       stats={stats}

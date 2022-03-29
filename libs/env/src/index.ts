@@ -4,6 +4,7 @@ export function isDev() {
 
 const current = process.env.SIA_CURRENT || '1.5.5'
 const rc = process.env.SIA_RC || '1.5.5'
+const embc = process.env.EMBC || '0.0.1'
 
 // Used to bind vhosts and route requests on the assets server.
 export function getHostnames() {
@@ -37,6 +38,7 @@ export function getSiaVersion() {
   return {
     current,
     rc,
+    embc,
   }
 }
 

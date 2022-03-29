@@ -8,6 +8,7 @@ import {
   Image,
   SiteHeading,
   getImageProps,
+  Box,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { external } from '../../config/site'
@@ -31,13 +32,13 @@ function CommunityEcosystem({ stats }: Props) {
       heading={
         <Section size="4">
           <SiteHeading
-            size="3"
+            size="64"
             title="Community & Ecosystem"
             description={
               <>
-                Sia is a thriving ecosystem of open source software, commercial
-                data storage platforms, and other tools - made possible by a
-                vibrant community of contributors.
+                Sia is a thriving ecosystem of open source software, layer 2
+                networks, and commercial data storage platforms - made possible
+                by a vibrant community of contributors.
               </>
             }
             links={[
@@ -60,7 +61,7 @@ function CommunityEcosystem({ stats }: Props) {
     >
       <Section>
         <SiteHeading
-          size="2"
+          size="32"
           title="The Latest from the Sia Community"
           description={
             <>
@@ -78,25 +79,33 @@ function CommunityEcosystem({ stats }: Props) {
         />
         <ContentGallery columns="1" items={blogs} />
       </Section>
-      <Section>
+      <Section size="4">
         <Flex gap="3" align="start">
-          <Image
-            src={'/built-with-sia.png'}
-            alt="Built with Sia"
-            height="130px"
-            style={{
-              filter: 'grayscale(1)',
+          <Box
+            css={{
+              display: 'none',
+              '@bp2': {
+                display: 'block',
+              },
             }}
-          />
+          >
+            <Image
+              src={'/built-with-sia.png'}
+              alt="Built with Sia"
+              height="130px"
+              style={{
+                filter: 'grayscale(1)',
+              }}
+            />
+          </Box>
           <SiteHeading
-            size="2"
+            size="32"
             id="software"
             title="A Vibrant & Active Ecosystem"
             description={
               <>
-                Sia is a thriving ecosystem of open source software, commercial
-                data storage platforms, and other tools - made possible by a
-                vibrant community of contributors.
+                Sia is a thriving ecosystem of open source software, layer 2
+                networks, and commercial data storage platforms.
               </>
             }
           />
@@ -115,16 +124,17 @@ function CommunityEcosystem({ stats }: Props) {
       </Section>
       <Section>
         <Callout
-          title="Sia Forum"
+          title="Sia Projects & Proposals"
           size="2"
           description={
             <>
               Do you have site feedback, development input, or a long-form
-              proposal for the Sia Foundation?
+              proposal? Share it with us on Reddit. The Sia Foundation is also
+              working on a grants program - watch this space!
             </>
           }
           actionTitle="Join the discussion"
-          actionLink={external.forum}
+          actionLink={external.reddit}
           actionNewTab
         />
       </Section>
