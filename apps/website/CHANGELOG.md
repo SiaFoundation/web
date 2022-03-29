@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.7.5](https://github.com/SiaFoundation/web/compare/website-0.7.4...website-0.7.5) (2022-03-29)
+
+
+### Bug Fixes
+
+* lint and errors ([d8dcc23](https://github.com/SiaFoundation/web/commit/d8dcc23c246774020f7f2aeddb3ff6d70d14d069))
+* website feedback and adjustments, add embarcadero ([eafadf2](https://github.com/SiaFoundation/web/commit/eafadf2c6a8c161c853938f9dd42747dc9f1f8c8))
+
+
+
 ## [0.7.4](https://github.com/SiaFoundation/web/compare/website-0.7.3...website-0.7.4) (2022-03-25)
 
 
