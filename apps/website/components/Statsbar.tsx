@@ -1,4 +1,4 @@
-import { Flex, NextLink, Section, Text } from '@siafoundation/design-system'
+import { Flex, NextLink, Text } from '@siafoundation/design-system'
 import { external } from '../config/site'
 import { Stats } from '../content/stats'
 
@@ -18,95 +18,87 @@ export function Statsbar({
   memoryUsage,
 }: Stats) {
   return (
-    <Section
-      width="flush"
-      size="1"
-      css={{
-        backgroundColor: '$waves',
+    <Flex
+      gap={{
+        '@initial': '5',
+        '@bp2': '2',
       }}
+      gapY="5"
+      direction={{
+        '@initial': 'row',
+        '@bp2': 'column',
+      }}
+      justify="start"
+      wrap="wrap"
     >
-      <Section size="0" gap="2">
-        <Flex gap="1" wrap="wrap">
-          <Text size="12">
-            <NextLink
-              href={external.stats}
-              target="_blank"
-              variant="subtle"
-              css={{ textDecoration: 'none', fontFamily: '$sans' }}
-            >
-              Network
-            </NextLink>
-          </Text>
-          <Stat value={activeHosts} label="active hosts" />
-          <Text color="subtle" size="12">
-            •
-          </Text>
-          <Stat value={onlineHosts} label="online hosts" />
-          <Text color="subtle" size="12">
-            •
-          </Text>
-          <Stat value={totalStorage} label="total storage" />
-          <Text color="subtle" size="12">
-            •
-          </Text>
-          <Stat value={usedStorage} label="used storage" />
-        </Flex>
-        <Flex gap="1" wrap="wrap">
-          <Text size="12">
-            <NextLink
-              href={external.github}
-              target="_blank"
-              variant="subtle"
-              css={{ textDecoration: 'none', fontFamily: '$sans' }}
-            >
-              Software
-            </NextLink>
-          </Text>
-          <Stat value={commits} label="commits" />
-          <Text color="subtle" size="12">
-            •
-          </Text>
-          <Stat value={contributors} label="contributors" />
-          <Text color="subtle" size="12">
-            •
-          </Text>
-          <Stat value={forks} label="forks" />
-          <Text color="subtle" size="12">
-            •
-          </Text>
-          <Stat value={releases} label="releases" />
-          <Text color="subtle" size="12">
-            •
-          </Text>
-          <Stat value={downloads} label="downloads" />
-        </Flex>
-        <Flex gap="1" wrap="wrap">
-          <Text size="12">
-            <NextLink
-              href={external.benchmarks}
-              target="blank"
-              variant="subtle"
-              css={{ textDecoration: 'none', fontFamily: '$sans' }}
-            >
-              Benchmarks
-            </NextLink>
-          </Text>
-          <Stat value={downloadSpeed} label="download" />
-          <Text color="subtle" size="12">
-            •
-          </Text>
-          <Stat value={uploadSpeed} label="upload" />
-          <Text color="subtle" size="12">
-            •
-          </Text>
-          <Stat value={cpuUsage} label="CPU usage" />
-          <Text color="subtle" size="12">
-            •
-          </Text>
-          <Stat value={memoryUsage} label="memory usage" />
-        </Flex>
-      </Section>
-    </Section>
+      <StatSection
+        title="Network"
+        stats={[
+          {
+            value: activeHosts,
+            label: 'active hosts',
+          },
+          {
+            value: onlineHosts,
+            label: 'online hosts',
+          },
+          {
+            value: totalStorage,
+            label: 'total storage',
+          },
+          {
+            value: usedStorage,
+            label: 'used storage',
+          },
+        ]}
+      />
+      <StatSection
+        title="Benchmarks"
+        stats={[
+          {
+            value: downloadSpeed,
+            label: 'download',
+          },
+          {
+            value: uploadSpeed,
+            label: 'upload',
+          },
+          {
+            value: cpuUsage,
+            label: 'CPU usage',
+          },
+          {
+            value: memoryUsage,
+            label: 'memory usage',
+          },
+        ]}
+      />
+      <StatSection
+        title="Software"
+        stats={[
+          {
+            value: commits,
+            label: 'commits',
+          },
+          {
+            value: contributors,
+            label: 'contributors',
+          },
+          {
+            value: forks,
+            label: 'forks',
+          },
+          {
+            value: releases,
+            label: 'releases',
+          },
+          {
+            value: downloads,
+            label: 'downloads',
+          },
+        ]}
+      />
+    </Flex>
   )
 }
 
@@ -117,11 +109,92 @@ type StatProps = {
 
 function Stat({ value, label }: StatProps) {
   return (
-    <Flex gap="0-5">
+    <Flex gap="0-5" wrap="noWrap">
       <Text size="12" css={{ fontWeight: '600' }}>
         {value}
       </Text>
       <Text size="12">{label}</Text>
+    </Flex>
+  )
+}
+
+function Separator() {
+  return (
+    <Text
+      color="subtle"
+      size="12"
+      css={{
+        display: 'none',
+        '@bp2': {
+          display: 'inline',
+        },
+      }}
+    >
+      •
+    </Text>
+  )
+}
+
+type Stat = {
+  value: string
+  label: string
+}
+
+type StatSectionProps = {
+  title: string
+  stats: Stat[]
+}
+
+function StatSection({ title, stats }: StatSectionProps) {
+  return (
+    <Flex
+      gap={{
+        '@initial': '2',
+        '@bp2': '1',
+      }}
+      align={{
+        '@initial': 'start',
+        '@bp2': 'center',
+      }}
+      direction={{
+        '@initial': 'column',
+        '@bp2': 'row',
+      }}
+    >
+      <Text
+        size="12"
+        color="accent"
+        css={{ position: 'relative', top: '-1px' }}
+      >
+        <NextLink
+          href={external.stats}
+          target="_blank"
+          variant="accent"
+          css={{
+            textDecoration: 'none',
+          }}
+        >
+          {title}
+        </NextLink>
+      </Text>
+      <Flex
+        gap={{
+          '@initial': '1-5',
+          '@bp2': '1',
+        }}
+        direction={{
+          '@initial': 'column',
+          '@bp2': 'row',
+        }}
+        wrap="wrap"
+      >
+        {stats.map(({ value, label }, i) => (
+          <>
+            <Stat key={label} value={value} label={label} />
+            {i < stats.length - 1 && <Separator />}
+          </>
+        ))}
+      </Flex>
     </Flex>
   )
 }

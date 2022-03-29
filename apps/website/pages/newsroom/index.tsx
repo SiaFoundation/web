@@ -22,7 +22,7 @@ function Newsroom({ posts, stats }: Props) {
       heading={
         <Section size="4">
           <SiteHeading
-            size="3"
+            size="64"
             title="Newsroom"
             description={
               <>Read the latest Sia announcements and press releases.</>

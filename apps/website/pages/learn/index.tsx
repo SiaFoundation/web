@@ -36,7 +36,7 @@ function Learn({ stats }: Props) {
       heading={
         <Section size="4">
           <SiteHeading
-            size="3"
+            size="64"
             title="Learn"
             description={
               <>
@@ -64,7 +64,7 @@ function Learn({ stats }: Props) {
           <Box css={{ maxWidth: '600px' }}>
             <Flex direction="column" gap="8">
               <SiteHeading
-                size="1"
+                size="20"
                 title="What Sia does"
                 description={
                   <>
@@ -81,7 +81,7 @@ function Learn({ stats }: Props) {
                 ]}
               />
               <SiteHeading
-                size="1"
+                size="20"
                 title="Why it's here"
                 description={
                   <>
@@ -97,7 +97,7 @@ function Learn({ stats }: Props) {
                 ]}
               />
               <SiteHeading
-                size="1"
+                size="20"
                 title="Who makes Sia?"
                 description={
                   <>
@@ -138,14 +138,20 @@ function Learn({ stats }: Props) {
               actionLink={external.docs.sia101}
               actionNewTab
               description={<>Visit our docs to learn more about Sia.</>}
-              css={{ height: '100%' }}
+              css={{
+                height: '100%',
+                '@bp2': {
+                  height: '120%',
+                  top: '-10%',
+                },
+              }}
             />
           </Box>
         </Grid>
       </Section>
       <Section css={{ maxWidth: '800px', marginTop: '$9' }} gap="9">
         <SiteHeading
-          size="2"
+          size="32"
           title="How Sia Works"
           description={
             <>
@@ -306,13 +312,10 @@ function Learn({ stats }: Props) {
       </Section>
       <Section>
         <SiteHeading
-          size="2"
+          size="32"
           title="Get Started"
           description={
-            <>
-              Visit the developer pages for software downloads and developer
-              resources, tutorials, technical walkthroughs, and more.
-            </>
+            <>Technical tutorials for new developers looking to build on Sia.</>
           }
         />
         <ContentGallery items={getStarted} />

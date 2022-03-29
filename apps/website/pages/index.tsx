@@ -5,6 +5,8 @@ import {
   Share24,
   Money24,
   Api24,
+  Development24,
+  Code24,
   ContentGallery,
   Callout,
   WavesBackdrop,
@@ -13,6 +15,7 @@ import {
   SiteHeading,
   getImageProps,
   Link,
+  Text,
 } from '@siafoundation/design-system'
 import { omit } from 'lodash'
 import { MDXRemote } from 'next-mdx-remote'
@@ -73,23 +76,30 @@ export default function Home({ stats, landing }: Props) {
         ) : (
           <Section size="3" css={{ paddingTop: '$12' }}>
             <SiteHeading
-              size="3"
+              size="64"
               title="Decentralized data storage"
               description={
                 <>
                   Cryptography has unleashed the latent power of the Internet by
                   enabling interactions between mutually-distrustful parties.
                   Sia harnesses this power to turn the cloud storage market into
-                  a proper marketplace, where buyers and sellers can transact
-                  directly, with no intermediaries, anywhere in the world. No
-                  more silos or walled gardens: your data is encrypted, so it
-                  can&apos;t be spied on, and it&apos;s stored on many servers,
-                  so no single entity can hold it hostage. Thanks to projects
-                  like Sia, the Internet is being re-decentralized.
+                  a proper market
+                  <Box as="span" css={{ fontStyle: 'italic' }}>
+                    place
+                  </Box>
+                  , where buyers and sellers can transact directly, with no
+                  intermediaries, anywhere in the world. No more silos or walled
+                  gardens: your data is encrypted, so it can&apos;t be spied on,
+                  and it&apos;s stored on many servers, so no single entity can
+                  hold it hostage. Thanks to projects like Sia, the Internet is
+                  being re-decentralized.
                 </>
               }
-            />
-            <Link onClick={toggleLanding}>Read more</Link>
+            >
+              <Box>
+                <Link onClick={toggleLanding}>Read more</Link>
+              </Box>
+            </SiteHeading>
           </Section>
         )
       }
@@ -99,7 +109,7 @@ export default function Home({ stats, landing }: Props) {
         <Grid
           gap={{
             '@initial': '4',
-            '@bp2': '5',
+            '@bp2': '3',
           }}
           columns={{
             '@initial': '1',
@@ -107,12 +117,12 @@ export default function Home({ stats, landing }: Props) {
           }}
         >
           <Callout
-            title="Developer Resources"
+            title="Developers"
             startTime={0}
             description={
               <>
-                Visit the developer pages for software downloads and developer
-                resources, tutorials, technical walkthroughs, and more.
+                Browse software downloads and developer resources, tutorials,
+                technical walkthroughs, and more.
               </>
             }
             actionTitle="Explore"
@@ -123,8 +133,8 @@ export default function Home({ stats, landing }: Props) {
             startTime={20}
             description={
               <>
-                Learn all about how Sia works, why it&apos;s here, and who
-                maintains it.
+                Learn all about how Sia works, why it was created, and the
+                foundation that maintains it.
               </>
             }
             actionTitle="Read more"
@@ -136,7 +146,7 @@ export default function Home({ stats, landing }: Props) {
         <Section width="flush" size="1" css={{ position: 'relative' }}>
           <WavesBackdrop />
           <Section size="2" gap="6">
-            <SiteHeading size="2" title="Why Sia" />
+            <SiteHeading size="32" title="Why Sia" />
             <ContentGallery
               items={[
                 {
@@ -153,7 +163,7 @@ export default function Home({ stats, landing }: Props) {
                   ),
                 },
                 {
-                  icon: <Api24 />,
+                  icon: <Development24 />,
                   title: 'Highly Redundant',
                   subtitle: (
                     <>
@@ -165,7 +175,7 @@ export default function Home({ stats, landing }: Props) {
                   ),
                 },
                 {
-                  icon: <Share24 />,
+                  icon: <Code24 />,
                   title: 'Open Source',
                   subtitle: (
                     <>
@@ -196,13 +206,12 @@ export default function Home({ stats, landing }: Props) {
       <Section gap="12">
         <Section width="flush" size="0">
           <SiteHeading
-            size="2"
+            size="32"
             title="Explore the Sia Community &amp; Ecosystem"
             description={
               <>
-                Sia is a thriving ecosystem of open source software, commercial
-                data storage platforms, and other tools - made possible by a
-                vibrant community of contributors.
+                Sia is a thriving ecosystem of open source software, layer 2
+                networks, and commercial data storage platforms.
               </>
             }
             links={[
@@ -227,7 +236,7 @@ export default function Home({ stats, landing }: Props) {
         </Section>
         <Section width="flush" size="0">
           <SiteHeading
-            size="2"
+            size="24"
             title="Start Building"
             description={
               <>
@@ -238,11 +247,16 @@ export default function Home({ stats, landing }: Props) {
           />
           <ContentGallery items={tutorials} />
         </Section>
-        <Section width="flush" size="0">
+        <Section width="flush" size="3">
           <SiteHeading
-            size="2"
+            size="32"
             title="The Latest"
-            description={<>Read the latest content on the official Sia blog.</>}
+            description={
+              <>
+                Read the latest from the core team and the ecosystem of
+                developers building technology on top of Sia.
+              </>
+            }
             links={[
               {
                 title: 'Browse the blog',

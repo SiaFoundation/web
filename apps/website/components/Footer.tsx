@@ -18,25 +18,28 @@ type Props = {
 export function Footer({ stats }: Props) {
   return (
     <Flex direction="column">
-      <Statsbar {...stats} />
-      <Section size="1" width="flush" css={{ backgroundColor: '$brandGray3' }}>
+      <Section size="1" width="flush" css={{ backgroundColor: '$waves' }}>
+        <Section size="0">
+          <Statsbar {...stats} />
+        </Section>
+      </Section>
+      <Section width="flush" css={{ backgroundColor: '$brandGray3' }}>
         <Container>
           <Flex direction="column" align="start" gap="1">
             <Flex
-              gap="3"
-              justify="center"
+              gap={{
+                '@initial': '2',
+                '@bp2': '3',
+              }}
+              justify="start"
               align="start"
               wrap="wrap"
               css={{
+                width: '100%',
                 margin: '$1 0',
               }}
             >
-              <Flex gap="1">
-                <TopLink href={sitemap.newsroom.index}>Newsroom</TopLink>
-                <TopLink href={sitemap.newsroom.feed.rss} target="_blank">
-                  <Rss16 />
-                </TopLink>
-              </Flex>
+              <TopLink href={sitemap.newsroom.index}>Newsroom</TopLink>
               <TopLink href={external.blog} target="_blank">
                 Blog
               </TopLink>
@@ -51,10 +54,11 @@ export function Footer({ stats }: Props) {
             </Flex>
             <Flex
               gap="3"
-              justify="center"
+              justify="start"
               align="start"
               wrap="wrap"
               css={{
+                width: '100%',
                 margin: '$1 0',
               }}
             >
@@ -73,9 +77,6 @@ export function Footer({ stats }: Props) {
               <BottomLink href={external.github} target="_blank">
                 Github
               </BottomLink>
-              <BottomLink href={external.forum} target="_blank">
-                Forum
-              </BottomLink>
             </Flex>
           </Flex>
         </Container>
@@ -92,7 +93,14 @@ type LinkProps = {
 
 function TopLink({ children, href, target }: LinkProps) {
   return (
-    <Text size="20" weight="semibold" color="accent">
+    <Text
+      size={{
+        '@initial': '16',
+        '@bp2': '20',
+      }}
+      weight="semibold"
+      color="accent"
+    >
       <NextLink
         variant="accent"
         css={{

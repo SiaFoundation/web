@@ -12,7 +12,7 @@ export function Navbar() {
   return (
     <Flex align="center" justify="between">
       <NextLink href="/">
-        <Heading size="2">
+        <Heading size="32">
           <NextImage
             {...wordmark}
             css={{

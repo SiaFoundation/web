@@ -45,7 +45,7 @@ export const external = {
     hosting: 'https://support.sia.tech/hosting/about-hosting-on-sia',
     mining: 'https://support.sia.tech/mining/about-mining-on-sia',
   },
-  forum: 'https://forum.sia.tech',
+  // forum: 'https://forum.sia.tech',
   github: 'https://github.com/siafoundation',
   discord: 'https://discord.gg/sia',
   twitter: 'https://twitter.com/sia__foundation',

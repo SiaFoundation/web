@@ -11,17 +11,17 @@ import {
 // Components used in mardown rendering
 export const components = {
   h1: ({ children }) => (
-    <Heading size="3" css={{ display: 'block', margin: '$4 0' }}>
+    <Heading size="64" css={{ display: 'block', margin: '$4 0' }}>
       {children}
     </Heading>
   ),
   h2: ({ children }) => (
-    <Heading size="2" css={{ display: 'block', margin: '$4 0' }}>
+    <Heading size="32" css={{ display: 'block', margin: '$4 0' }}>
       {children}
     </Heading>
   ),
   h3: ({ children }) => (
-    <Heading size="1" css={{ display: 'block', margin: '$4 0' }}>
+    <Heading size="24" css={{ display: 'block', margin: '$4 0' }}>
       {children}
     </Heading>
   ),
