@@ -134,7 +134,7 @@ export const colorsDark = {
   accentInactive: '$brandGray6',
   accentActive: '$brandGray7',
   accentInput: '$brandAccent8',
-  frame: '$whiteA12',
+  frame: '$brandGray11',
 
   textSubtle: '$brandGray11',
   textSubtleActive: '$brandGray12',

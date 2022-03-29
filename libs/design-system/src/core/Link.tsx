@@ -15,6 +15,7 @@ export const Link = styled('a', {
   textUnderlineOffset: '2px',
   lineHeight: 'inherit',
   WebkitTapHighlightColor: 'rgba(0,0,0,0)',
+  cursor: 'pointer',
 
   fontSize: '$16',
 

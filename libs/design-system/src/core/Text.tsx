@@ -73,6 +73,11 @@ export const Text = styled('span', {
         fontSize: '$64',
       },
     },
+    noWrap: {
+      true: {
+        whiteSpace: 'nowrap',
+      },
+    },
     ellipsis: {
       true: {
         width: '100%',

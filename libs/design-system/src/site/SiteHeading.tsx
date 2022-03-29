@@ -1,9 +1,9 @@
-import { Flex, Heading, Paragraph, Text } from '..'
+import { Box, Flex, Heading, Paragraph, Text } from '..'
 import { CSS } from '../config/theme'
-import { Link } from '../lib/links'
+import { LinkData } from '../lib/links'
 import { Links } from './Links'
 
-type Size = '1' | '2' | '3'
+type Size = '20' | '24' | '32' | '64'
 
 type Props = {
   id?: string
@@ -11,50 +11,57 @@ type Props = {
   eyebrow?: string
   title: string
   description?: React.ReactNode
-  links?: Link[]
+  links?: LinkData[]
   css?: CSS
+  children?: React.ReactNode
 }
 
 const sizeToGap: Record<Size, React.ComponentProps<typeof Flex>['gap']> = {
-  '1': '2',
-  '2': '2',
-  '3': '2',
+  '20': '2',
+  '24': '2',
+  '32': '2',
+  '64': '2',
 }
 
 const sizeToHeading: Record<
   Size,
   React.ComponentProps<typeof Heading>['size']
 > = {
-  '1': '1',
-  '2': '2',
-  '3': '3',
+  '20': '20',
+  '24': '24',
+  '32': '32',
+  '64': '64',
 }
 
 const sizeToParagraph: Record<
   Size,
   React.ComponentProps<typeof Paragraph>['size']
 > = {
-  '1': '1',
-  '2': '2',
-  '3': '3',
+  '20': '14',
+  '24': '18',
+  '32': '18',
+  '64': '20',
 }
 
 const sizeToLinks: Record<Size, React.ComponentProps<typeof Links>['size']> = {
-  '1': '1',
-  '2': '1',
-  '3': '2',
+  '20': '1',
+  '24': '1',
+  '32': '2',
+  '64': '3',
 }
 
-const sizeToText: Record<Size, React.ComponentProps<typeof Text>['size']> = {
-  '1': '12',
-  '2': '12',
-  '3': '14',
+const sizeToEyebrow: Record<Size, React.ComponentProps<typeof Text>['size']> = {
+  '20': '12',
+  '24': '12',
+  '32': '12',
+  '64': '14',
 }
 
 const sizeToPadding: Record<Size, CSS['padding']> = {
-  '1': '0',
-  '2': '$5 0',
-  '3': '$5 0',
+  '20': '0',
+  '24': '0',
+  '32': '$5 0',
+  '64': '$5 0',
 }
 
 export function SiteHeading({
@@ -63,8 +70,9 @@ export function SiteHeading({
   eyebrow,
   description,
   links,
-  size = '2',
+  size = '32',
   css,
+  children,
 }: Props) {
   return (
     <Flex
@@ -78,7 +86,7 @@ export function SiteHeading({
     >
       {eyebrow && (
         <Text
-          size={sizeToText[size]}
+          size={sizeToEyebrow[size]}
           color="subtle"
           font="mono"
           css={{ textTransform: 'uppercase', fontWeight: 500 }}
@@ -90,7 +98,12 @@ export function SiteHeading({
       {description && (
         <Paragraph size={sizeToParagraph[size]}>{description}</Paragraph>
       )}
-      <Links links={links} size={sizeToLinks[size]} />
+      <Links
+        links={links}
+        size={sizeToLinks[size]}
+        css={{ paddingTop: size === '64' ? '$2' : '0' }}
+      />
+      {children}
     </Flex>
   )
 }

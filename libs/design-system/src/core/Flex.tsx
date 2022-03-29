@@ -117,6 +117,118 @@ export const Flex = styled('div', {
         gap: '$13',
       },
     },
+    gapY: {
+      0: {
+        rowGap: '$0',
+      },
+      '0-5': {
+        rowGap: '$0-5',
+      },
+      1: {
+        rowGap: '$1',
+      },
+      '1-5': {
+        rowGap: '$1-5',
+      },
+      2: {
+        rowGap: '$2',
+      },
+      '2-5': {
+        rowGap: '$2-5',
+      },
+      3: {
+        rowGap: '$3',
+      },
+      '3-5': {
+        rowGap: '$3-5',
+      },
+      4: {
+        rowGap: '$4',
+      },
+      5: {
+        rowGap: '$5',
+      },
+      6: {
+        rowGap: '$6',
+      },
+      7: {
+        rowGap: '$7',
+      },
+      8: {
+        rowGap: '$8',
+      },
+      9: {
+        rowGap: '$9',
+      },
+      10: {
+        rowGap: '$10',
+      },
+      11: {
+        rowGap: '$11',
+      },
+      12: {
+        rowGap: '$12',
+      },
+      13: {
+        rowGap: '$13',
+      },
+    },
+    gapX: {
+      0: {
+        columnGap: '$0',
+      },
+      '0-5': {
+        columnGap: '$0-5',
+      },
+      1: {
+        columnGap: '$1',
+      },
+      '1-5': {
+        columnGap: '$1-5',
+      },
+      2: {
+        columnGap: '$2',
+      },
+      '2-5': {
+        columnGap: '$2-5',
+      },
+      3: {
+        columnGap: '$3',
+      },
+      '3-5': {
+        columnGap: '$3-5',
+      },
+      4: {
+        columnGap: '$4',
+      },
+      5: {
+        columnGap: '$5',
+      },
+      6: {
+        columnGap: '$6',
+      },
+      7: {
+        columnGap: '$7',
+      },
+      8: {
+        columnGap: '$8',
+      },
+      9: {
+        columnGap: '$9',
+      },
+      10: {
+        columnGap: '$10',
+      },
+      11: {
+        columnGap: '$11',
+      },
+      12: {
+        columnGap: '$12',
+      },
+      13: {
+        columnGap: '$13',
+      },
+    },
     debug: {
       true: {
         border: '1px solid $brandAccent9',

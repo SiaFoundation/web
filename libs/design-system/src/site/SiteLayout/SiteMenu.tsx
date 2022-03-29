@@ -11,7 +11,7 @@ import { ThemeRadio } from '../../components/ThemeRadio'
 import { Text } from '../../core/Text'
 import { SimpleLogoIcon } from '../../icons/SimpleLogoIcon'
 import { NextLink } from '../../core/Link'
-import { Link } from '../../lib/links'
+import { LinkData } from '../../lib/links'
 
 const fadeIn = keyframes({
   from: { opacity: '0' },
@@ -145,7 +145,7 @@ const radioCss: CSS = {
 }
 
 type Props = {
-  links: Link[]
+  links: LinkData[]
 }
 
 export function SiteMenu({ links }: Props) {
@@ -176,17 +176,17 @@ export function SiteMenu({ links }: Props) {
               direction="column"
               gap={{
                 '@initial': '3',
-                '@bp2': '5',
+                '@bp2': '4',
               }}
               align="start"
             >
-              <Box css={{ marginBottom: '$4' }}>
+              <Box css={{ marginBottom: '$3' }}>
                 <SimpleLogoIcon />
               </Box>
               {links.map(({ title, link }) => (
                 <MenuLink key={link} link={link} title={title} />
               ))}
-              <ThemeRadio radioCss={radioCss} css={{ marginTop: '$3' }} />
+              <ThemeRadio radioCss={radioCss} css={{ marginTop: '$9' }} />
             </Flex>
           </Flex>
         </Content>
@@ -195,7 +195,7 @@ export function SiteMenu({ links }: Props) {
   )
 }
 
-function MenuLink({ link, title }: Link) {
+function MenuLink({ link, title }: LinkData) {
   return (
     <Text
       size={{

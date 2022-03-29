@@ -19,6 +19,7 @@ export function LocalBackdrop({ startTime = 0 }: Props) {
         bottom: 0,
         opacity: 1,
         pointerEvents: 'none',
+        backgroundColor: '$panel',
       }}
     >
       <Box
@@ -29,7 +30,7 @@ export function LocalBackdrop({ startTime = 0 }: Props) {
         loop
         muted
         css={{
-          filter: activeTheme === 'dark' ? 'invert(1)' : 'none',
+          filter: activeTheme === 'dark' ? 'invert(0.9)' : 'none',
           position: 'absolute',
           top: 0,
           left: 0,
@@ -41,7 +42,14 @@ export function LocalBackdrop({ startTime = 0 }: Props) {
             display: 'none',
           },
         }}
-      />
+      >
+        <Box
+          as="source"
+          src={`/texture.webm#t=${startTime}`}
+          type="video/webm"
+        />
+        <Box as="source" src={`/texture.mp4#t=${startTime}`} type="video/mp4" />
+      </Box>
     </Box>
   )
 }
