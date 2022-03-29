@@ -6,7 +6,7 @@ import { LinkData } from '../lib/links'
 type Props = {
   links?: LinkData[]
   size?: '1' | '2' | '3'
-  css: CSS
+  css?: CSS
 }
 
 export function Links({ links = [], size = '1', css }: Props) {
