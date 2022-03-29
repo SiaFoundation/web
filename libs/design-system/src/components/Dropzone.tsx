@@ -41,7 +41,7 @@ export function Dropzone({ title, onFiles }: Props) {
       }}
     >
       <input {...getInputProps()} />
-      <Paragraph size="1">
+      <Paragraph size="14">
         {title || 'Drop your files here or click to to open the file picker.'}
       </Paragraph>
     </Box>

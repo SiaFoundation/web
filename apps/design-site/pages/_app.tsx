@@ -1,9 +1,6 @@
 import {
   getImageProps,
-  Section,
-  SiteHeading,
   SiteLayout,
-  Text,
   ThemeProvider,
 } from '@siafoundation/design-system'
 import { AppProps } from 'next/app'

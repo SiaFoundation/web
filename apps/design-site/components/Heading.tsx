@@ -14,7 +14,7 @@ export function Heading() {
       <Section width="flush" size="4" gap="13">
         <Container>
           <SiteHeading
-            size="3"
+            size="64"
             title="The Sia Design System"
             description={
               <>

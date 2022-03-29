@@ -25,7 +25,7 @@ import { getSoftware } from '../../content/software'
 import { getStats } from '../../content/stats'
 import { omit } from 'lodash'
 import background from '../../assets/backgrounds/waterfall.png'
-import { SoftwareSection } from 'apps/website/components/SoftwareSection'
+import { SoftwareSection } from '../../components/SoftwareSection'
 
 const backgroundImage = getImageProps(background)
 
