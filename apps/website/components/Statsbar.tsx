@@ -1,4 +1,5 @@
 import { Flex, NextLink, Text } from '@siafoundation/design-system'
+import { Fragment } from 'react'
 import { external } from '../config/site'
 import { Stats } from '../content/stats'
 
@@ -33,6 +34,7 @@ export function Statsbar({
     >
       <StatSection
         title="Network"
+        link={external.stats}
         stats={[
           {
             value: activeHosts,
@@ -54,6 +56,7 @@ export function Statsbar({
       />
       <StatSection
         title="Benchmarks"
+        link={external.benchmarks}
         stats={[
           {
             value: downloadSpeed,
@@ -75,6 +78,7 @@ export function Statsbar({
       />
       <StatSection
         title="Software"
+        link={external.github}
         stats={[
           {
             value: commits,
@@ -142,10 +146,11 @@ type Stat = {
 
 type StatSectionProps = {
   title: string
+  link: string
   stats: Stat[]
 }
 
-function StatSection({ title, stats }: StatSectionProps) {
+function StatSection({ title, link, stats }: StatSectionProps) {
   return (
     <Flex
       gap={{
@@ -167,7 +172,7 @@ function StatSection({ title, stats }: StatSectionProps) {
         css={{ position: 'relative', top: '-1px' }}
       >
         <NextLink
-          href={external.stats}
+          href={link}
           target="_blank"
           variant="accent"
           css={{
@@ -189,10 +194,10 @@ function StatSection({ title, stats }: StatSectionProps) {
         wrap="wrap"
       >
         {stats.map(({ value, label }, i) => (
-          <>
-            <Stat key={label} value={value} label={label} />
+          <Fragment key={label}>
+            <Stat value={value} label={label} />
             {i < stats.length - 1 && <Separator />}
-          </>
+          </Fragment>
         ))}
       </Flex>
     </Flex>
