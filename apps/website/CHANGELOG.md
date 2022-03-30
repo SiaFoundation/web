@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.9.0](https://github.com/SiaFoundation/web/compare/website-0.8.0...website-0.9.0) (2022-03-30)
+
+
+### Bug Fixes
+
+* button site variant, size on landing ([9dca048](https://github.com/SiaFoundation/web/commit/9dca048266bb94fc799bcc75405fdd6c0488887a))
+
+
+### Features
+
+* landing page, focused site layout ([716e4b0](https://github.com/SiaFoundation/web/commit/716e4b00d649fc1ca02f3bc40132dfd3af328e5b))
+* team details ([dde1849](https://github.com/SiaFoundation/web/commit/dde18494328cbc73921f10ced19f5efc28eb914d))
+
+
+
 # [0.8.0](https://github.com/SiaFoundation/web/compare/website-0.7.5...website-0.8.0) (2022-03-30)
 
 
