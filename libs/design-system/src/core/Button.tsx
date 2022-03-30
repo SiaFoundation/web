@@ -175,7 +175,7 @@ export const Button = styled('button', {
     },
     site: {
       true: {
-        borderRadius: 0,
+        borderRadius: '0 !important',
         fontFamily: '$mono',
         boxShadow: 'none',
         textTransform: 'uppercase',
