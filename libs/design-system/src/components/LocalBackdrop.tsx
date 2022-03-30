@@ -24,7 +24,6 @@ export function LocalBackdrop({ startTime = 0 }: Props) {
     >
       <Box
         as="video"
-        src={`/texture.webm#t=${startTime}`}
         preload="true"
         autoPlay
         loop
