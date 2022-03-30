@@ -93,7 +93,11 @@ function Foundation({ stats, foundation, team, newsPosts, reports }: Props) {
         >
           {team.map((member) => (
             <Flex key={member.name} gap="2">
-              <Avatar size="3" />
+              <Avatar
+                variant="filter"
+                size="3"
+                src={`/team/${member.image}.png`}
+              />
               <Flex key={member.name} direction="column" gap="1">
                 <Text css={{ fontWeight: '600' }}>{member.name}</Text>
                 <Text color="subtle">{member.title}</Text>
