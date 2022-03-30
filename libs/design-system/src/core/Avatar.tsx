@@ -50,6 +50,9 @@ const StyledAvatar = styled(AvatarPrimitive.Root, {
       },
     },
     variant: {
+      filter: {
+        backgroundColor: 'transparent',
+      },
       hiContrast: {
         backgroundColor: '$hiContrast',
         color: '$loContrast',
@@ -255,6 +258,17 @@ export const Avatar = React.forwardRef<
           variant={variant}
           shape={shape}
         >
+          {variant === 'filter' && (
+            <Box
+              css={{
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                zIndex: 1,
+                backgroundColor: 'rgba(30, 169, 76, 0.3)',
+              }}
+            />
+          )}
           <StyledAvatarImage alt={alt} src={src} />
           <StyledAvatarFallback size={size}>{fallback}</StyledAvatarFallback>
         </StyledAvatar>
