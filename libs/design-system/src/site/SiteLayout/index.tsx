@@ -15,6 +15,7 @@ type Props = {
   footer?: React.ReactNode
   children: React.ReactNode
   backgroundImage: ImageProps
+  focus?: boolean
 }
 
 export function SiteLayout({
@@ -24,7 +25,9 @@ export function SiteLayout({
   children,
   footer,
   backgroundImage,
+  focus,
 }: Props) {
+  const menuWidth = focus ? '55%' : '30%'
   return (
     <Box
       as="main"
@@ -36,7 +39,7 @@ export function SiteLayout({
         background: '$loContrast',
       }}
     >
-      <ScrollArea>
+      <ScrollArea id="main-scroll">
         <Box
           css={{
             position: 'relative',
@@ -45,7 +48,7 @@ export function SiteLayout({
               marginRight: '0%',
             },
             '@bp3': {
-              marginRight: '30%',
+              marginRight: menuWidth,
             },
           }}
         >
@@ -67,64 +70,67 @@ export function SiteLayout({
           >
             <Flex as="main" direction="column" gap="8" css={{ width: '100%' }}>
               <Flex direction="column">
-                {heading}
-                <Box
-                  css={{
-                    position: 'relative',
-                    width: '100%',
-                    height: '390px',
-                    borderTop: '$sizes$frame solid $frame',
-                    borderBottom: '$sizes$frame solid $frame',
-                    '@initial': {
-                      display: 'block',
-                    },
-                    '@bp3': {
-                      display: 'none',
-                    },
-                  }}
-                >
+                {!focus && heading}
+                {!focus && (
                   <Box
                     css={{
-                      position: 'absolute',
+                      position: 'relative',
                       width: '100%',
-                      height: '100%',
-                      zIndex: 1,
-                      backgroundColor: 'rgba(30, 169, 76, 0.3)',
+                      height: '390px',
+                      borderTop: '$sizes$frame solid $frame',
+                      borderBottom: '$sizes$frame solid $frame',
+                      '@initial': {
+                        display: 'block',
+                      },
+                      '@bp3': {
+                        display: 'none',
+                      },
                     }}
-                  />
-                  <NextImage
-                    src={backgroundImage.src}
-                    blurDataURL={backgroundImage.blurDataURL}
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                </Box>
+                  >
+                    <Box
+                      css={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: '100%',
+                        zIndex: 1,
+                        backgroundColor: 'rgba(30, 169, 76, 0.3)',
+                      }}
+                    />
+                    <NextImage
+                      src={backgroundImage.src}
+                      blurDataURL={backgroundImage.blurDataURL}
+                      layout="fill"
+                      objectFit="cover"
+                    />
+                  </Box>
+                )}
                 {children}
-                {footer}
+                {!focus && footer}
               </Flex>
             </Flex>
           </Box>
         </Box>
       </ScrollArea>
-      <SiteMenu links={menuLinks} />
+      <SiteMenu links={menuLinks} menuWidth={menuWidth} />
       <Box
         css={{
           position: 'absolute',
           right: 0,
           top: 0,
-          zIndex: 1,
+          zIndex: 0,
           height: '100%',
+          transition: 'width 50ms linear',
           '@inital': {
             width: '0%',
             display: 'none',
           },
           '@bp3': {
             borderLeft: `$sizes$frame solid $frame`,
-            width: '30%',
+            width: menuWidth,
           },
           '@bp4': {
             borderLeft: `$sizes$frame solid $frame`,
-            width: '30%',
+            width: menuWidth,
           },
           overflow: 'hidden',
         }}

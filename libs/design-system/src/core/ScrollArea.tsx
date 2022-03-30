@@ -14,11 +14,12 @@ type Vector = {
 }
 
 type ScrollAreaProps = {
+  id?: string
   children: React.ReactNode
 }
 
 // from: https://github.com/radix-ui/design-system/blob/master/components/Scrollbar.tsx
-export const ScrollArea = (props: ScrollAreaProps) => {
+export const ScrollArea = ({ id, children }: ScrollAreaProps) => {
   const thumbRef = React.useRef<HTMLDivElement>(null)
   const wrapperRef = React.useRef<HTMLDivElement>(null)
   const contentRef = React.useRef<HTMLDivElement>(null)
@@ -166,6 +167,7 @@ export const ScrollArea = (props: ScrollAreaProps) => {
       {/* Lock the content into its own zIndex */}
       <Box
         data-scroll-content
+        id={id}
         ref={contentRef}
         css={{
           position: 'relative',
@@ -178,7 +180,7 @@ export const ScrollArea = (props: ScrollAreaProps) => {
           WebkitOverflowScrolling: 'touch',
         }}
       >
-        {props.children}
+        {children}
       </Box>
       {/* Create the thumb on a higher zIndex */}
       <Box
