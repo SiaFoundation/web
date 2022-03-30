@@ -92,44 +92,37 @@ function Foundation({ stats, foundation, team, newsPosts, reports }: Props) {
           gapY="6"
         >
           {team.map((member) => (
-            <Flex key={member.name} gap="2">
-              <Avatar
-                variant="filter"
-                size="3"
-                src={`/team/${member.image}.png`}
-              />
-              <Flex key={member.name} direction="column" gap="1">
-                <Text css={{ fontWeight: '600' }}>{member.name}</Text>
-                <Text color="subtle">{member.title}</Text>
-                <Flex gap="1" align="center">
-                  {member.twitter && (
-                    <NextLink
-                      href={`https://twitter.com/${member.twitter}`}
-                      target="_blank"
-                      variant="subtle"
-                    >
-                      <LogoTwitter32 />
-                    </NextLink>
-                  )}
-                  {member.github && (
-                    <NextLink
-                      href={`https://github.com/${member.github}`}
-                      target="_blank"
-                      variant="subtle"
-                    >
-                      <LogoGithub24 />
-                    </NextLink>
-                  )}
-                  {member.linkedin && (
-                    <NextLink
-                      href={`https://www.linkedin.com/in/${member.linkedin}`}
-                      target="_blank"
-                      variant="subtle"
-                    >
-                      <LogoLinkedin24 />
-                    </NextLink>
-                  )}
-                </Flex>
+            <Flex key={member.name} direction="column" gap="1">
+              <Text css={{ fontWeight: '600' }}>{member.name}</Text>
+              <Text color="subtle">{member.title}</Text>
+              <Flex gap="1" align="center">
+                {member.twitter && (
+                  <NextLink
+                    href={`https://twitter.com/${member.twitter}`}
+                    target="_blank"
+                    variant="subtle"
+                  >
+                    <LogoTwitter32 />
+                  </NextLink>
+                )}
+                {member.github && (
+                  <NextLink
+                    href={`https://github.com/${member.github}`}
+                    target="_blank"
+                    variant="subtle"
+                  >
+                    <LogoGithub24 />
+                  </NextLink>
+                )}
+                {member.linkedin && (
+                  <NextLink
+                    href={`https://www.linkedin.com/in/${member.linkedin}`}
+                    target="_blank"
+                    variant="subtle"
+                  >
+                    <LogoLinkedin24 />
+                  </NextLink>
+                )}
               </Flex>
             </Flex>
           ))}
