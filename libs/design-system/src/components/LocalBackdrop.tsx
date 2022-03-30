@@ -26,8 +26,10 @@ export function LocalBackdrop({ startTime = 0 }: Props) {
         as="video"
         preload="true"
         autoPlay
+        playsInline
         loop
         muted
+        controls={false}
         css={{
           filter: activeTheme === 'dark' ? 'invert(0.9)' : 'none',
           position: 'absolute',
