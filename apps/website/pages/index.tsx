@@ -109,7 +109,7 @@ export default function Home({ stats, landing }: Props) {
           >
             <MDXRemote {...landing.source} />
             <Box css={{ marginTop: '$6' }}>
-              <Button size="3" variant="accent" site onClick={toggleLanding}>
+              <Button size="2" variant="accent" site onClick={toggleLanding}>
                 Continue
               </Button>
             </Box>
