@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.13.0](https://github.com/SiaFoundation/web/compare/design-system-0.12.0...design-system-0.13.0) (2022-03-30)
+
+
+### Bug Fixes
+
+* local backdrop video formats ([b547911](https://github.com/SiaFoundation/web/commit/b547911340a9f927b9345298c0bbafd80bad48c8))
+
+
+### Features
+
+* add team photos ([99f7bdd](https://github.com/SiaFoundation/web/commit/99f7bdd05f341c89231c5f6c94450e76fe1b02c7))
+
+
+
 # [0.12.0](https://github.com/SiaFoundation/web/compare/design-system-0.11.8...design-system-0.12.0) (2022-03-29)
 
 
