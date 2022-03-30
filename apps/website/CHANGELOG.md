@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.8.0](https://github.com/SiaFoundation/web/compare/website-0.7.5...website-0.8.0) (2022-03-30)
+
+
+### Bug Fixes
+
+* statsbar warning ([f04b29f](https://github.com/SiaFoundation/web/commit/f04b29fd6d60a3ff1d131e185e3ca8646f7165a7))
+* transparency host path, unused imports ([ea740b6](https://github.com/SiaFoundation/web/commit/ea740b6828b754a83a01a4dad38fa1186ce49400))
+
+
+### Features
+
+* add team photos ([99f7bdd](https://github.com/SiaFoundation/web/commit/99f7bdd05f341c89231c5f6c94450e76fe1b02c7))
+
+
+
 ## [0.7.5](https://github.com/SiaFoundation/web/compare/website-0.7.4...website-0.7.5) (2022-03-29)
 
 
