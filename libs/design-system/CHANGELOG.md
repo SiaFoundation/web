@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.13.1](https://github.com/SiaFoundation/web/compare/design-system-0.13.0...design-system-0.13.1) (2022-03-30)
+
+
+### Bug Fixes
+
+* local backdrop plays on ios ([28c0294](https://github.com/SiaFoundation/web/commit/28c0294aa714cebfef6d7e38c2a01612b67ea312))
+
+
+
 # [0.13.0](https://github.com/SiaFoundation/web/compare/design-system-0.12.0...design-system-0.13.0) (2022-03-30)
 
 
