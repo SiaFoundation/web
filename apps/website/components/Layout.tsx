@@ -10,9 +10,16 @@ type Props = {
   children: React.ReactNode
   backgroundImage: ImageProps
   stats: Stats
+  focus?: boolean
 }
 
-export function Layout({ heading, children, stats, backgroundImage }: Props) {
+export function Layout({
+  heading,
+  children,
+  stats,
+  backgroundImage,
+  focus,
+}: Props) {
   return (
     <Box
       css={{
@@ -24,6 +31,7 @@ export function Layout({ heading, children, stats, backgroundImage }: Props) {
     >
       <AppHead />
       <SiteLayout
+        focus={focus}
         heading={heading}
         menuLinks={[
           {

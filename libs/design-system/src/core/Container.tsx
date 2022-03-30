@@ -7,7 +7,7 @@ export const Container = styled('div', {
   width: '100%',
   padding: '0 $2-5',
   '@bp2': {
-    padding: '0 $3-5',
+    padding: '0 $5',
   },
 
   variants: {

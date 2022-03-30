@@ -80,12 +80,7 @@ const StyledContent = styled(DialogPrimitive.Content, {
   right: 0,
   bottom: 0,
 
-  width: '100%',
-
-  '@bp3': {
-    width: 'calc(30% + $sizes$frame)',
-  },
-
+  transition: 'width 50ms linear',
   $$transformValue: 'translate(10%, -10%) scale(0.7)',
   willChange: 'transform',
 
@@ -111,13 +106,25 @@ type DialogContentPrimitiveProps = React.ComponentProps<
   typeof DialogPrimitive.Content
 >
 type ContentProps = DialogContentPrimitiveProps &
-  ContentVariants & { css?: CSS }
+  ContentVariants & {
+    menuWidth: string
+    css?: CSS
+  }
 
 export const Content = React.forwardRef<
   React.ElementRef<typeof StyledContent>,
   ContentProps
->(({ children, ...props }, forwardedRef) => (
-  <StyledContent {...props} ref={forwardedRef}>
+>(({ children, menuWidth, ...props }, forwardedRef) => (
+  <StyledContent
+    {...props}
+    ref={forwardedRef}
+    css={{
+      width: '100%',
+      '@bp3': {
+        width: `calc(${menuWidth} + $sizes$frame)`,
+      },
+    }}
+  >
     {children}
     <StyledCloseButton asChild>
       <Box css={{ position: 'absolute', top: '$3', right: '$3' }}>
@@ -146,9 +153,10 @@ const radioCss: CSS = {
 
 type Props = {
   links: LinkData[]
+  menuWidth: string
 }
 
-export function SiteMenu({ links }: Props) {
+export function SiteMenu({ links, menuWidth }: Props) {
   return (
     <Box css={{ position: 'relative', zIndex: 2 }}>
       <Container>
@@ -159,7 +167,7 @@ export function SiteMenu({ links }: Props) {
             </Box>
           </Box>
         </Trigger>
-        <Content>
+        <Content menuWidth={menuWidth}>
           <Flex
             direction="column"
             align="center"
@@ -180,13 +188,13 @@ export function SiteMenu({ links }: Props) {
               }}
               align="start"
             >
-              <Box css={{ marginBottom: '$3' }}>
+              <Box css={{ marginBottom: '$5' }}>
                 <SimpleLogoIcon />
               </Box>
               {links.map(({ title, link }) => (
                 <MenuLink key={link} link={link} title={title} />
               ))}
-              <ThemeRadio radioCss={radioCss} css={{ marginTop: '$9' }} />
+              <ThemeRadio radioCss={radioCss} css={{ marginTop: '$8' }} />
             </Flex>
           </Flex>
         </Content>
