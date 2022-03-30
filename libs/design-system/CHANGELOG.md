@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.14.0](https://github.com/SiaFoundation/web/compare/design-system-0.13.1...design-system-0.14.0) (2022-03-30)
+
+
+### Bug Fixes
+
+* button site variant, size on landing ([9dca048](https://github.com/SiaFoundation/web/commit/9dca048266bb94fc799bcc75405fdd6c0488887a))
+
+
+### Features
+
+* landing page, focused site layout ([716e4b0](https://github.com/SiaFoundation/web/commit/716e4b00d649fc1ca02f3bc40132dfd3af328e5b))
+
+
+
 ## [0.13.1](https://github.com/SiaFoundation/web/compare/design-system-0.13.0...design-system-0.13.1) (2022-03-30)
 
 
