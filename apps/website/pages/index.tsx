@@ -2,9 +2,7 @@ import {
   Box,
   Grid,
   IbmSecurity24,
-  Share24,
   Money24,
-  Api24,
   Development24,
   Code24,
   ContentGallery,
@@ -15,7 +13,6 @@ import {
   SiteHeading,
   getImageProps,
   Link,
-  Text,
   Button,
 } from '@siafoundation/design-system'
 import { omit } from 'lodash'
@@ -31,12 +28,29 @@ import { getSoftware } from '../content/software'
 import background from '../assets/backgrounds/mountain.png'
 import useLocalStorageState from 'use-local-storage-state'
 import { useCallback } from 'react'
-
-const backgroundImage = getImageProps(background)
+import { textContent } from '../lib/utils'
 
 const tutorials = getArticles(['tutorial'])
 const latest = getArticles(['latest']).map((i) => omit(i, ['icon']))
 const services = getSoftware('storage_services', 3)
+
+const backgroundImage = getImageProps(background)
+
+const description = (
+  <>
+    Cryptography has unleashed the latent power of the Internet by enabling
+    interactions between mutually-distrustful parties. Sia harnesses this power
+    to turn the cloud storage market into a proper market
+    <Box as="span" css={{ fontStyle: 'italic' }}>
+      place
+    </Box>
+    , where buyers and sellers can transact directly, with no intermediaries,
+    anywhere in the world. No more silos or walled gardens: your data is
+    encrypted, so it can&apos;t be spied on, and it&apos;s stored on many
+    servers, so no single entity can hold it hostage. Thanks to projects like
+    Sia, the Internet is being re-decentralized.
+  </>
+)
 
 const defaultConfig = {
   showLanding: true,
@@ -66,6 +80,9 @@ export default function Home({ stats, landing }: Props) {
 
   return (
     <Layout
+      title="Decentralized data storage"
+      description={textContent(description)}
+      path={sitemap.home.index}
       stats={stats}
       focus={showLanding}
       heading={
@@ -73,23 +90,7 @@ export default function Home({ stats, landing }: Props) {
           <SiteHeading
             size="64"
             title="Decentralized data storage"
-            description={
-              <>
-                Cryptography has unleashed the latent power of the Internet by
-                enabling interactions between mutually-distrustful parties. Sia
-                harnesses this power to turn the cloud storage market into a
-                proper market
-                <Box as="span" css={{ fontStyle: 'italic' }}>
-                  place
-                </Box>
-                , where buyers and sellers can transact directly, with no
-                intermediaries, anywhere in the world. No more silos or walled
-                gardens: your data is encrypted, so it can&apos;t be spied on,
-                and it&apos;s stored on many servers, so no single entity can
-                hold it hostage. Thanks to projects like Sia, the Internet is
-                being re-decentralized.
-              </>
-            }
+            description={description}
           >
             <Box>
               <Link onClick={toggleLanding}>Read more</Link>

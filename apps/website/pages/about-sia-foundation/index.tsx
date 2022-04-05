@@ -31,23 +31,21 @@ import background from '../../assets/backgrounds/tree.png'
 
 const backgroundImage = getImageProps(background)
 
+const title = 'The Sia Foundation'
+const description =
+  'The Foundation maintains, supports, promotes, and conducts research for the Sia network.'
+
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
 function Foundation({ stats, foundation, team, newsPosts, reports }: Props) {
   return (
     <Layout
+      title={title}
+      description={description}
+      path={sitemap.foundation.index}
       heading={
         <Section size="4">
-          <SiteHeading
-            size="64"
-            title="The Sia Foundation"
-            description={
-              <>
-                The Foundation maintains, supports, promotes, and conducts
-                research for the Sia network.
-              </>
-            }
-          />
+          <SiteHeading size="64" title={title} description={description} />
         </Section>
       }
       stats={stats}

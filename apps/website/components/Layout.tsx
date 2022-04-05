@@ -1,13 +1,16 @@
 import { Box, Flex, ImageProps, SiteLayout } from '@siafoundation/design-system'
 import { Stats } from '../content/stats'
 import { Footer } from './Footer'
-import { AppHead } from './Head'
+import { PageHead } from './PageHead'
 import { Navbar } from './Navbar'
 import { sitemap } from '../config/site'
 
 type Props = {
   heading: React.ReactNode
   children: React.ReactNode
+  title: string
+  description: string
+  path: string
   backgroundImage: ImageProps
   stats: Stats
   focus?: boolean
@@ -16,6 +19,9 @@ type Props = {
 export function Layout({
   heading,
   children,
+  title,
+  description,
+  path,
   stats,
   backgroundImage,
   focus,
@@ -29,7 +35,12 @@ export function Layout({
         overflowY: 'auto',
       }}
     >
-      <AppHead />
+      <PageHead
+        title={title}
+        description={description}
+        image={backgroundImage.src}
+        path={path}
+      />
       <SiteLayout
         focus={focus}
         heading={heading}

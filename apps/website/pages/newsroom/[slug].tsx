@@ -10,25 +10,30 @@ import {
 import fs from 'fs'
 import path from 'path'
 import { MDXRemote } from 'next-mdx-remote'
+import { format } from 'date-fns'
 import { Layout } from '../../components/Layout'
 import { baseContentPath } from '../../config/app'
 import { GetNewsPost, getNewsPost } from '../../content/news'
 import { getStats, Stats } from '../../content/stats'
-import { format } from 'date-fns'
 import background from '../../assets/backgrounds/ocean.png'
+import { sitemap } from '../../config/site'
+import { textContent } from '../../lib/utils'
 
 const backgroundImage = getImageProps(background)
 
 type Props = GetNewsPost & { stats: Stats }
 
 function NewsroomPost({
-  post: { title, subtitle, location, date, source },
+  post: { title, subtitle, location, date, source, slug },
   prev,
   next,
   stats,
 }: Props) {
   return (
     <Layout
+      title={title}
+      description={textContent(subtitle)}
+      path={sitemap.newsroom.newsPost.replace('[slug]', slug)}
       heading={
         <Section size="4">
           <SiteHeading size="64" title={title} description={subtitle} />
