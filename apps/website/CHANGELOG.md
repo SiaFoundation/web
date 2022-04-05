@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.10.0](https://github.com/SiaFoundation/web/compare/website-0.9.0...website-0.10.0) (2022-04-05)
+
+
+### Features
+
+* add open graph and meta tags ([4dacce1](https://github.com/SiaFoundation/web/commit/4dacce1402d123e8b1378056bb029518a316efea))
+
+
+
 # [0.9.0](https://github.com/SiaFoundation/web/compare/website-0.8.0...website-0.9.0) (2022-03-30)
 
 
