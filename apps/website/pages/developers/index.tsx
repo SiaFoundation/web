@@ -47,22 +47,21 @@ const docLinks = [
   },
 ]
 
+const title = 'Developer Resources'
+const description =
+  'Software downloads, tutorials, technical walkthroughs, and more.'
+
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
 function Developers({ stats }: Props) {
   return (
     <Layout
+      title={title}
+      description={description}
+      path={sitemap.developers.index}
       heading={
         <Section size="4">
-          <SiteHeading
-            size="64"
-            title="Developer Resources"
-            description={
-              <>
-                Software downloads, tutorials, technical walkthroughs, and more.
-              </>
-            }
-          />
+          <SiteHeading size="64" title={title} description={description} />
         </Section>
       }
       stats={stats}

@@ -16,17 +16,21 @@ const backgroundImage = getImageProps(background)
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
+const title = 'Newsroom'
+const description = 'Read the latest Sia announcements and press releases.'
+
 function Newsroom({ posts, stats }: Props) {
   return (
     <Layout
+      title={title}
+      description={description}
+      path={sitemap.newsroom.index}
       heading={
         <Section size="4">
           <SiteHeading
             size="64"
-            title="Newsroom"
-            description={
-              <>Read the latest Sia announcements and press releases.</>
-            }
+            title={title}
+            description={description}
             links={[
               {
                 title: 'Subscribe with RSS',

@@ -10,7 +10,7 @@ export type ContentItemProps = {
   location?: string
   icon?: React.ReactNode
   logo?: string
-  subtitle?: string | React.ReactFragment
+  subtitle?: React.ReactNode
   link?: string
   tags?: string[]
   sections?: string[]

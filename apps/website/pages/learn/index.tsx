@@ -21,10 +21,15 @@ import { external, sitemap } from '../../config/site'
 import { getStats, Stats } from '../../content/stats'
 import { getDaysInSeconds } from '../../lib/time'
 import background from '../../assets/backgrounds/leaves.png'
+import { textContent } from '../../lib/utils'
 
 const backgroundImage = getImageProps(background)
 
 const getStarted = getArticles(['tutorial'])
+
+const title = 'Learn'
+const description =
+  'Learn how the Sia protocol is used to power redundant, decentralized, data storage.'
 
 type Props = {
   stats: Stats
@@ -33,18 +38,12 @@ type Props = {
 function Learn({ stats }: Props) {
   return (
     <Layout
+      title={title}
+      description={textContent(description)}
+      path={sitemap.learn.index}
       heading={
         <Section size="4">
-          <SiteHeading
-            size="64"
-            title="Learn"
-            description={
-              <>
-                Learn how the Sia protocol is used to power redundant,
-                decentralized, data storage.
-              </>
-            }
-          />
+          <SiteHeading size="64" title={title} description={description} />
         </Section>
       }
       stats={stats}

@@ -4,43 +4,49 @@ import {
   Section,
   ContentProject,
   Flex,
-  Text,
   Image,
   SiteHeading,
   getImageProps,
   Box,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
-import { external } from '../../config/site'
+import { external, sitemap } from '../../config/site'
 import { getArticles } from '../../content/articles'
 import { AsyncReturnType } from '../../lib/types'
 import { getSoftware } from '../../content/software'
 import { getStats } from '../../content/stats'
 import { omit } from 'lodash'
 import background from '../../assets/backgrounds/jungle.png'
+import { textContent } from '../../lib/utils'
 
 const backgroundImage = getImageProps(background)
 
 const blogs = getArticles(['ecosystem'], 4).map((i) => omit(i, ['icon']))
 const software = getSoftware('')
 
+const title = 'Community & Ecosystem'
+const description = (
+  <>
+    Sia is a thriving ecosystem of open source software, layer 2 networks, and
+    commercial data storage platforms - made possible by a vibrant community of
+    contributors.
+  </>
+)
+
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
 function CommunityEcosystem({ stats }: Props) {
   return (
     <Layout
+      title={title}
+      description={textContent(description)}
+      path={sitemap.community.index}
       heading={
         <Section size="4">
           <SiteHeading
+            title={title}
+            description={description}
             size="64"
-            title="Community & Ecosystem"
-            description={
-              <>
-                Sia is a thriving ecosystem of open source software, layer 2
-                networks, and commercial data storage platforms - made possible
-                by a vibrant community of contributors.
-              </>
-            }
             links={[
               {
                 title: 'Join our Discord',

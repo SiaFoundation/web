@@ -1,13 +1,19 @@
 import Head from 'next/head'
 import Script from 'next/script'
 import { appName, newsFeedName } from '../config/app'
-import { sitemap } from '../config/site'
+import { external, sitemap } from '../config/site'
 
-export function AppHead() {
+type Props = {
+  title: string
+  description: string
+  image: string
+  path: string
+}
+
+export function PageHead({ title, description, image, path }: Props) {
   return (
     <>
       <Head>
-        <title>{appName}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link
           rel="apple-touch-icon"
@@ -57,6 +63,20 @@ export function AppHead() {
           href={sitemap.newsroom.feed.json}
           title={newsFeedName}
         />
+
+        <title>{title}</title>
+        <meta name="description" content={description}></meta>
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content={external.twitterHandle} />
+
+        {/* Open Graph */}
+        <meta property="og:url" content={`https://sia.tech${path}`} />
+        <meta property="og:image" content={image} />
+        <meta property="og:site_name" content={appName} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
       </Head>
       <Script
         id="matomo"

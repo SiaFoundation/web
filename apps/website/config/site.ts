@@ -49,6 +49,7 @@ export const external = {
   github: 'https://github.com/siafoundation',
   discord: 'https://discord.gg/sia',
   twitter: 'https://twitter.com/sia__foundation',
+  twitterHandle: 'sia__foundation',
   reddit: 'https://reddit.com/r/siacoin',
   merch: 'https://siagear.tech/',
   email: 'hello@sia.tech',
