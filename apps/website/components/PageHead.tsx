@@ -16,6 +16,8 @@ type Props = {
 }
 
 export function PageHead({ title, description, image, date, path }: Props) {
+  // All pages get the 'Sia - ' prefix other than articles
+  const fullTitle = date ? title : `${appName} - ${title}`
   return (
     <>
       <Head>
@@ -69,7 +71,7 @@ export function PageHead({ title, description, image, date, path }: Props) {
           title={newsFeedName}
         />
 
-        <title>{title}</title>
+        <title>{fullTitle}</title>
         <meta name="description" content={description}></meta>
 
         {/* Twitter */}
@@ -80,7 +82,7 @@ export function PageHead({ title, description, image, date, path }: Props) {
         <meta property="og:url" content={getHref(hosts.app + path)} />
         <meta property="og:image" content={getHref(hosts.app + image)} />
         <meta property="og:site_name" content={appName} />
-        <meta property="og:title" content={title} />
+        <meta property="og:title" content={fullTitle} />
         <meta property="og:description" content={description} />
         {date && <meta property="og:article:published_time" content={date} />}
       </Head>
