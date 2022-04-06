@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.16.0](https://github.com/SiaFoundation/web/compare/design-system-0.15.0...design-system-0.16.0) (2022-04-06)
+
+
+### Features
+
+* move background image color filter into image data ([6efff00](https://github.com/SiaFoundation/web/commit/6efff00dbe6c35d6796dbda1e371b973e774eb52))
+
+
+
 # [0.15.0](https://github.com/SiaFoundation/web/compare/design-system-0.14.0...design-system-0.15.0) (2022-04-05)
 
 
