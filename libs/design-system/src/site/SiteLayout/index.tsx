@@ -27,7 +27,7 @@ export function SiteLayout({
   backgroundImage,
   focus,
 }: Props) {
-  const menuWidth = focus ? '55%' : '30%'
+  const menuWidth = focus ? '60%' : '30%'
   return (
     <Box
       as="main"
@@ -79,6 +79,7 @@ export function SiteLayout({
                       height: '390px',
                       borderTop: '$sizes$frame solid $frame',
                       borderBottom: '$sizes$frame solid $frame',
+                      backgroundColor: 'white',
                       '@initial': {
                         display: 'block',
                       },
@@ -87,12 +88,20 @@ export function SiteLayout({
                       },
                     }}
                   >
-                    <NextImage
-                      src={backgroundImage.src}
-                      blurDataURL={backgroundImage.blurDataURL}
-                      layout="fill"
-                      objectFit="cover"
-                    />
+                    <Box
+                      css={{
+                        backgroundColor: 'rgba(30, 169, 76, 0.3)',
+                        width: '100%',
+                        height: '100%',
+                      }}
+                    >
+                      <NextImage
+                        src={backgroundImage.src}
+                        blurDataURL={backgroundImage.blurDataURL}
+                        layout="fill"
+                        objectFit="cover"
+                      />
+                    </Box>
                   </Box>
                 )}
                 {children}
@@ -124,6 +133,7 @@ export function SiteLayout({
             width: menuWidth,
           },
           overflow: 'hidden',
+          background: 'white',
         }}
       >
         <Box
@@ -131,6 +141,7 @@ export function SiteLayout({
             position: 'relative',
             width: '100%',
             height: '100%',
+            backgroundColor: 'rgba(30, 169, 76, 0.3)',
           }}
         >
           <NextImage

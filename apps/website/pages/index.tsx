@@ -27,7 +27,7 @@ import { getArticles } from '../content/articles'
 import { getSoftware } from '../content/software'
 import background from '../assets/backgrounds/mountain.png'
 import useLocalStorageState from 'use-local-storage-state'
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { textContent } from '../lib/utils'
 
 const tutorials = getArticles(['tutorial'])
@@ -78,6 +78,14 @@ export default function Home({ stats, landing }: Props) {
     })
   }, [setUserConfig])
 
+  const [revealLetter, setRevealLetter] = useState<boolean>(false)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setRevealLetter(true)
+    }, 200)
+  }, [])
+
   return (
     <Layout
       title="Decentralized data storage"
@@ -86,7 +94,12 @@ export default function Home({ stats, landing }: Props) {
       stats={stats}
       focus={showLanding}
       heading={
-        <Section size="4" css={{ paddingBottom: '$8' }}>
+        <Section
+          size="4"
+          css={{
+            paddingBottom: '$8',
+          }}
+        >
           <SiteHeading
             size="64"
             title="Decentralized data storage"
@@ -106,6 +119,8 @@ export default function Home({ stats, landing }: Props) {
             css={{
               maxWidth: '800px',
               margin: '0 auto',
+              opacity: revealLetter ? 1 : 0,
+              transition: 'opacity 200ms linear',
             }}
           >
             <MDXRemote {...landing.source} />
