@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.11.0](https://github.com/SiaFoundation/web/compare/website-0.10.0...website-0.11.0) (2022-04-06)
+
+
+### Bug Fixes
+
+* update open graph and meta tags ([68115fb](https://github.com/SiaFoundation/web/commit/68115fb73b956de9d10ad3f287f3f3a836cbb066))
+
+
+### Features
+
+* move background image color filter into image data ([6efff00](https://github.com/SiaFoundation/web/commit/6efff00dbe6c35d6796dbda1e371b973e774eb52))
+
+
+
 # [0.10.0](https://github.com/SiaFoundation/web/compare/website-0.9.0...website-0.10.0) (2022-04-05)
 
 
