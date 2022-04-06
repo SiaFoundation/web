@@ -87,15 +87,6 @@ export function SiteLayout({
                       },
                     }}
                   >
-                    <Box
-                      css={{
-                        position: 'absolute',
-                        width: '100%',
-                        height: '100%',
-                        zIndex: 1,
-                        backgroundColor: 'rgba(30, 169, 76, 0.3)',
-                      }}
-                    />
                     <NextImage
                       src={backgroundImage.src}
                       blurDataURL={backgroundImage.blurDataURL}
@@ -142,15 +133,6 @@ export function SiteLayout({
             height: '100%',
           }}
         >
-          <Box
-            css={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              zIndex: 1,
-              backgroundColor: 'rgba(30, 169, 76, 0.3)',
-            }}
-          />
           <NextImage
             src={backgroundImage.src}
             blurDataURL={backgroundImage.blurDataURL}
