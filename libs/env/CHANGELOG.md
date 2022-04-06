@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.1.6](https://github.com/SiaFoundation/web/compare/env-0.1.5...env-0.1.6) (2022-04-06)
+
+
+### Bug Fixes
+
+* configure webpack to inject env vars ([2376625](https://github.com/SiaFoundation/web/commit/2376625b74c17c8fd66d75073059af659c70abe1))
+
+
+
 ## [0.1.5](https://github.com/SiaFoundation/web/compare/env-0.1.4...env-0.1.5) (2022-04-06)
 
 
