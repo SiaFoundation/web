@@ -70,40 +70,31 @@ export function SiteLayout({
           >
             <Flex as="main" direction="column" gap="8" css={{ width: '100%' }}>
               <Flex direction="column">
-                {!focus && heading}
-                {!focus && (
-                  <Box
-                    css={{
-                      position: 'relative',
-                      width: '100%',
-                      height: '390px',
-                      borderTop: '$sizes$frame solid $frame',
-                      borderBottom: '$sizes$frame solid $frame',
-                      backgroundColor: 'white',
-                      '@initial': {
-                        display: 'block',
-                      },
-                      '@bp3': {
-                        display: 'none',
-                      },
-                    }}
-                  >
-                    <Box
-                      css={{
-                        backgroundColor: 'rgba(30, 169, 76, 0.3)',
-                        width: '100%',
-                        height: '100%',
-                      }}
-                    >
-                      <NextImage
-                        src={backgroundImage.src}
-                        blurDataURL={backgroundImage.blurDataURL}
-                        layout="fill"
-                        objectFit="cover"
-                      />
-                    </Box>
-                  </Box>
-                )}
+                {heading}
+                {/* {!focus && ( */}
+                <Box
+                  css={{
+                    position: 'relative',
+                    width: '100%',
+                    height: '390px',
+                    borderTop: '$sizes$frame solid $frame',
+                    borderBottom: '$sizes$frame solid $frame',
+                    '@initial': {
+                      display: 'block',
+                    },
+                    '@bp3': {
+                      display: 'none',
+                    },
+                  }}
+                >
+                  <NextImage
+                    src={backgroundImage.src}
+                    blurDataURL={backgroundImage.blurDataURL}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </Box>
+                {/* )} */}
                 {children}
                 {!focus && footer}
               </Flex>
@@ -119,7 +110,7 @@ export function SiteLayout({
           top: 0,
           zIndex: 0,
           height: '100%',
-          transition: 'width 50ms linear',
+          transition: 'width 100ms linear',
           '@inital': {
             width: '0%',
             display: 'none',
