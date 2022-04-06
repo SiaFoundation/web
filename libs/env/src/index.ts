@@ -11,7 +11,7 @@ export function getHostnames() {
 }
 
 // Used to start the servers listening on port, and for links in dev mode.
-// NOTE: values are currently hardcoded in other places too.
+// Please note that these values are hardcoded in other places too.
 export function getPorts() {
   return {
     website: '3001',
