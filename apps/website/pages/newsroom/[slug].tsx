@@ -15,7 +15,7 @@ import { Layout } from '../../components/Layout'
 import { baseContentPath } from '../../config/app'
 import { GetNewsPost, getNewsPost } from '../../content/news'
 import { getStats, Stats } from '../../content/stats'
-import background from '../../assets/backgrounds/ocean.png'
+import background from '../../assets/backgrounds/nate-waterfall.png'
 import { sitemap } from '../../config/site'
 import { textContent } from '../../lib/utils'
 
@@ -33,6 +33,7 @@ function NewsroomPost({
     <Layout
       title={title}
       description={textContent(subtitle)}
+      date={new Date(date).toISOString()}
       path={sitemap.newsroom.newsPost.replace('[slug]', slug)}
       heading={
         <Section size="4">

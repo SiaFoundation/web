@@ -1,16 +1,21 @@
+import { getHosts } from '@siafoundation/env'
 import Head from 'next/head'
 import Script from 'next/script'
 import { appName, newsFeedName } from '../config/app'
 import { external, sitemap } from '../config/site'
+import { getHref } from '../lib/url'
+
+const hosts = getHosts()
 
 type Props = {
   title: string
   description: string
   image: string
+  date?: string
   path: string
 }
 
-export function PageHead({ title, description, image, path }: Props) {
+export function PageHead({ title, description, image, date, path }: Props) {
   return (
     <>
       <Head>
@@ -68,15 +73,16 @@ export function PageHead({ title, description, image, path }: Props) {
         <meta name="description" content={description}></meta>
 
         {/* Twitter */}
-        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content={external.twitterHandle} />
 
         {/* Open Graph */}
-        <meta property="og:url" content={`https://sia.tech${path}`} />
-        <meta property="og:image" content={image} />
+        <meta property="og:url" content={getHref(hosts.app + path)} />
+        <meta property="og:image" content={getHref(hosts.app + image)} />
         <meta property="og:site_name" content={appName} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
+        {date && <meta property="og:article:published_time" content={date} />}
       </Head>
       <Script
         id="matomo"

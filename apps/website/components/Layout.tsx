@@ -10,6 +10,7 @@ type Props = {
   children: React.ReactNode
   title: string
   description: string
+  date?: string
   path: string
   backgroundImage: ImageProps
   stats: Stats
@@ -21,6 +22,7 @@ export function Layout({
   children,
   title,
   description,
+  date,
   path,
   stats,
   backgroundImage,
@@ -39,6 +41,7 @@ export function Layout({
         title={title}
         description={description}
         image={backgroundImage.src}
+        date={date}
         path={path}
       />
       <SiteLayout
