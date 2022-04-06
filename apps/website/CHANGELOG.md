@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.11.1](https://github.com/SiaFoundation/web/compare/website-0.11.0...website-0.11.1) (2022-04-06)
+
+
+### Bug Fixes
+
+* adjust meta title ([d5463db](https://github.com/SiaFoundation/web/commit/d5463db0afe4fbac33280c78bbfa5d8e1f0e8975))
+* configure webpack to inject env vars ([2376625](https://github.com/SiaFoundation/web/commit/2376625b74c17c8fd66d75073059af659c70abe1))
+
+
+
 # [0.11.0](https://github.com/SiaFoundation/web/compare/website-0.10.0...website-0.11.0) (2022-04-06)
 
 
