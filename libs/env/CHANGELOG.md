@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.1.5](https://github.com/SiaFoundation/web/compare/env-0.1.4...env-0.1.5) (2022-04-06)
+
+
+### Bug Fixes
+
+* node env detection, read env vars at runtime ([701d817](https://github.com/SiaFoundation/web/commit/701d8171763da30d5d8aac2df5b94c32a22bfd6e))
+
+
+
 ## [0.1.4](https://github.com/SiaFoundation/web/compare/env-0.1.3...env-0.1.4) (2022-03-29)
 
 
