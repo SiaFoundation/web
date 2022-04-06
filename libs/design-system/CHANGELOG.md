@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.17.0](https://github.com/SiaFoundation/web/compare/design-system-0.16.0...design-system-0.17.0) (2022-04-06)
+
+
+### Features
+
+* animate reveal landing letter, background color for images ([d7b8f09](https://github.com/SiaFoundation/web/commit/d7b8f09cd4ff8936d0f2e1aa484ea32693b93d4f))
+
+
+
 # [0.16.0](https://github.com/SiaFoundation/web/compare/design-system-0.15.0...design-system-0.16.0) (2022-04-06)
 
 
