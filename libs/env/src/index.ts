@@ -1,10 +1,6 @@
 export function isDev() {
-  return process.env.NODE_ENV !== 'production'
+  return process.env.NODE_ENV === 'development'
 }
-
-const current = process.env.SIA_CURRENT || '1.5.5'
-const rc = process.env.SIA_RC || '1.5.5'
-const embc = process.env.EMBC || '0.0.1'
 
 // Used to bind vhosts and route requests on the assets server.
 export function getHostnames() {
@@ -36,9 +32,9 @@ export function getHosts() {
 
 export function getSiaVersion() {
   return {
-    current,
-    rc,
-    embc,
+    current: process.env.SIA_CURRENT || '0.0.0',
+    rc: process.env.SIA_RC || '0.0.0',
+    embc: process.env.EMBC || '0.0.0',
   }
 }
 
