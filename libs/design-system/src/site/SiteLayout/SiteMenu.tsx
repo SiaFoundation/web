@@ -101,15 +101,13 @@ const StyledCloseButton = styled(DialogPrimitive.Close, {
   right: '$2',
 })
 
-type ContentVariants = VariantProps<typeof StyledContent>
 type DialogContentPrimitiveProps = React.ComponentProps<
   typeof DialogPrimitive.Content
 >
-type ContentProps = DialogContentPrimitiveProps &
-  ContentVariants & {
-    menuWidth: string
-    css?: CSS
-  }
+type ContentProps = DialogContentPrimitiveProps & {
+  menuWidth: string
+  css?: CSS
+}
 
 export const Content = React.forwardRef<
   React.ElementRef<typeof StyledContent>,
@@ -154,9 +152,10 @@ const radioCss: CSS = {
 type Props = {
   links: LinkData[]
   menuWidth: string
+  transitionDuration: number
 }
 
-export function SiteMenu({ links, menuWidth }: Props) {
+export function SiteMenu({ links, menuWidth, transitionDuration }: Props) {
   return (
     <Box css={{ position: 'relative', zIndex: 2 }}>
       <Container>

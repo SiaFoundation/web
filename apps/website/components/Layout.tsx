@@ -15,6 +15,7 @@ type Props = {
   backgroundImage: ImageProps
   stats: Stats
   focus?: boolean
+  transitionDuration?: number
 }
 
 export function Layout({
@@ -27,6 +28,7 @@ export function Layout({
   stats,
   backgroundImage,
   focus,
+  transitionDuration,
 }: Props) {
   return (
     <Box
@@ -46,6 +48,7 @@ export function Layout({
       />
       <SiteLayout
         focus={focus}
+        transitionDuration={transitionDuration}
         heading={heading}
         menuLinks={[
           {

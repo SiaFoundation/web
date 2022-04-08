@@ -7,6 +7,7 @@ import { SiteMenu } from './SiteMenu'
 import { AppBar } from '../../core/AppBar'
 import { Container } from '../../core/Container'
 import { LinkData } from '../../lib/links'
+import React, { useEffect, useState } from 'react'
 
 type Props = {
   navbar?: React.ReactNode
@@ -16,18 +17,85 @@ type Props = {
   children: React.ReactNode
   backgroundImage: ImageProps
   focus?: boolean
+  transitionDuration?: number
 }
 
 export function SiteLayout({
   navbar,
   menuLinks,
-  heading,
-  children,
-  footer,
+  heading: _heading,
+  children: _children,
+  footer: _footer,
   backgroundImage,
   focus,
+  transitionDuration = 300,
 }: Props) {
-  const menuWidth = focus ? '60%' : '30%'
+  const menuWidth = focus ? '65%' : '30%'
+
+  const [transitioning, setTransitioning] = useState<boolean>(false)
+  useEffect(() => {
+    setTransitioning(true)
+
+    setTimeout(() => {
+      setTransitioning(false)
+    }, transitionDuration)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focus])
+
+  const imageEl = (
+    <Box
+      css={{
+        position: 'relative',
+        width: '100%',
+        height: '390px',
+        borderTop: '$sizes$frame solid $frame',
+        borderBottom: '$sizes$frame solid $frame',
+        '@initial': {
+          display: 'block',
+        },
+        '@bp3': {
+          display: 'none',
+        },
+      }}
+    >
+      <NextImage
+        src={backgroundImage.src}
+        blurDataURL={backgroundImage.blurDataURL}
+        layout="fill"
+        objectFit="cover"
+      />
+    </Box>
+  )
+
+  const [heading, setHeading] = useState<React.ReactNode>(_heading)
+  const [children, setChildren] = useState<React.ReactNode>(_children)
+  const [footer, setFooter] = useState<React.ReactNode>(_children)
+  const [image, setImage] = useState<React.ReactNode>(imageEl)
+
+  useEffect(() => {
+    setFooter(_heading)
+  }, [_heading])
+  useEffect(() => {
+    setFooter(_footer)
+  }, [_footer])
+
+  useEffect(() => {
+    setHeading(null)
+    setChildren(null)
+    setFooter(null)
+    setImage(null)
+
+    setTimeout(() => {
+      setHeading(_heading)
+    }, 50)
+    setTimeout(() => {
+      setChildren(_children)
+      setFooter(_footer)
+      setImage(imageEl)
+    }, 100)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [_children])
+
   return (
     <Box
       as="main"
@@ -43,12 +111,12 @@ export function SiteLayout({
         <Box
           css={{
             position: 'relative',
-            flex: 2,
-            '@inital': {
-              marginRight: '0%',
+            transition: `padding-right ${transitionDuration}ms ease-out`,
+            '@initial': {
+              paddingRight: '0%',
             },
             '@bp3': {
-              marginRight: menuWidth,
+              paddingRight: menuWidth,
             },
           }}
         >
@@ -62,47 +130,23 @@ export function SiteLayout({
               <Container size="4">{navbar}</Container>
             </AppBar>
           )}
-          <Box
-            css={{
-              position: 'relative',
-              flex: 2,
-            }}
-          >
-            <Flex as="main" direction="column" gap="8" css={{ width: '100%' }}>
-              <Flex direction="column">
-                {heading}
-                {/* {!focus && ( */}
-                <Box
-                  css={{
-                    position: 'relative',
-                    width: '100%',
-                    height: '390px',
-                    borderTop: '$sizes$frame solid $frame',
-                    borderBottom: '$sizes$frame solid $frame',
-                    '@initial': {
-                      display: 'block',
-                    },
-                    '@bp3': {
-                      display: 'none',
-                    },
-                  }}
-                >
-                  <NextImage
-                    src={backgroundImage.src}
-                    blurDataURL={backgroundImage.blurDataURL}
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                </Box>
-                {/* )} */}
-                {children}
-                {!focus && footer}
-              </Flex>
+          <Flex as="main" direction="column" gap="8" css={{ width: '100%' }}>
+            <Flex direction="column">
+              <Box css={{ opacity: transitioning ? 0 : 1 }}>
+                {!focus && heading}
+              </Box>
+              {!focus && image}
+              <Box css={{ opacity: transitioning ? 0 : 1 }}>{children}</Box>
+              {!focus && footer}
             </Flex>
-          </Box>
+          </Flex>
         </Box>
       </ScrollArea>
-      <SiteMenu links={menuLinks} menuWidth={menuWidth} />
+      <SiteMenu
+        links={menuLinks}
+        menuWidth={menuWidth}
+        transitionDuration={transitionDuration}
+      />
       <Box
         css={{
           position: 'absolute',
@@ -110,8 +154,8 @@ export function SiteLayout({
           top: 0,
           zIndex: 0,
           height: '100%',
-          transition: 'width 100ms linear',
-          '@inital': {
+          transition: `width ${transitionDuration}ms ease-out`,
+          '@initial': {
             width: '0%',
             display: 'none',
           },
