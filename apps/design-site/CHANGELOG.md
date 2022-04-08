@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.11.1](https://github.com/SiaFoundation/web/compare/design-site-0.11.0...design-site-0.11.1) (2022-04-08)
+
+
+### Bug Fixes
+
+* update design site background ([3282493](https://github.com/SiaFoundation/web/commit/32824932c26f093e32743d36b0296bd9be2d61b3))
+
+
+
 # [0.11.0](https://github.com/SiaFoundation/web/compare/design-site-0.10.4...design-site-0.11.0) (2022-03-29)
 
 
