@@ -64,7 +64,6 @@ export default function Home({ stats, landing }: Props) {
   const [{ seenLanding: seenLanding }, setUserConfig] = useLocalStorageState(
     'v0/userConfig',
     {
-      ssr: true,
       defaultValue: defaultConfig,
     }
   )
