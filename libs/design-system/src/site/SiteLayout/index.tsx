@@ -125,12 +125,7 @@ export function SiteLayout({
           }}
         >
           {navbar && (
-            <AppBar
-              size="3"
-              css={{
-                zIndex: 2,
-              }}
-            >
+            <AppBar size="3" color="none">
               <Container size="4">{navbar}</Container>
             </AppBar>
           )}
