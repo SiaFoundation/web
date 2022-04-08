@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.18.2](https://github.com/SiaFoundation/web/compare/design-system-0.18.1...design-system-0.18.2) (2022-04-08)
+
+
+### Bug Fixes
+
+* make app bar transparent ([cf12540](https://github.com/SiaFoundation/web/commit/cf12540d860872c6df21f67e9c71dfa5d6f58c3c))
+
+
+
 ## [0.18.1](https://github.com/SiaFoundation/web/compare/design-system-0.18.0...design-system-0.18.1) (2022-04-08)
 
 
