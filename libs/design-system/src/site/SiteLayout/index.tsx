@@ -21,8 +21,8 @@ type Props = {
 }
 
 export function SiteLayout({
-  navbar,
   menuLinks,
+  navbar: _navbar,
   heading: _heading,
   children: _children,
   footer: _footer,
@@ -67,28 +67,32 @@ export function SiteLayout({
     </Box>
   )
 
+  const [navbar, setNavbar] = useState<React.ReactNode>(_navbar)
   const [heading, setHeading] = useState<React.ReactNode>(_heading)
   const [children, setChildren] = useState<React.ReactNode>(_children)
-  const [footer, setFooter] = useState<React.ReactNode>(_children)
+  const [footer, setFooter] = useState<React.ReactNode>(_footer)
   const [image, setImage] = useState<React.ReactNode>(imageEl)
 
   useEffect(() => {
-    setFooter(_heading)
+    setNavbar(_navbar)
+  }, [_navbar])
+  useEffect(() => {
+    setHeading(_heading)
   }, [_heading])
   useEffect(() => {
     setFooter(_footer)
   }, [_footer])
 
   useEffect(() => {
+    setNavbar(null)
     setHeading(null)
     setChildren(null)
     setFooter(null)
     setImage(null)
 
     setTimeout(() => {
+      setNavbar(_navbar)
       setHeading(_heading)
-    }, 50)
-    setTimeout(() => {
       setChildren(_children)
       setFooter(_footer)
       setImage(imageEl)
