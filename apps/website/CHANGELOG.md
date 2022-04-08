@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.13.0](https://github.com/SiaFoundation/web/compare/website-0.12.0...website-0.13.0) (2022-04-08)
+
+
+### Features
+
+* dynamic width ([647ba9c](https://github.com/SiaFoundation/web/commit/647ba9c23617edee2c01099699eed73804651676))
+* spike on mixed approach to landing letter ([b21c8b6](https://github.com/SiaFoundation/web/commit/b21c8b656f9605d00f73de2f06fee8df3cd432a3))
+
+
+
 # [0.12.0](https://github.com/SiaFoundation/web/compare/website-0.11.1...website-0.12.0) (2022-04-06)
 
 
