@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.18.1](https://github.com/SiaFoundation/web/compare/design-system-0.18.0...design-system-0.18.1) (2022-04-08)
+
+
+### Bug Fixes
+
+* include navbar in animation ordering ([4d2f297](https://github.com/SiaFoundation/web/commit/4d2f297c00312742baacb54210e3ff927eeb4313))
+
+
+
 # [0.18.0](https://github.com/SiaFoundation/web/compare/design-system-0.17.0...design-system-0.18.0) (2022-04-08)
 
 
