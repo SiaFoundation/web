@@ -1,6 +1,9 @@
+import * as dotenv from 'dotenv'
 import { getPorts } from '@siafoundation/env'
 import * as express from 'express'
 import { setupStatic } from './app'
+
+dotenv.config()
 
 const app = express()
 
