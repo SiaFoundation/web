@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.15.1](https://github.com/SiaFoundation/web/compare/website-0.15.0...website-0.15.1) (2022-04-12)
+
+
+### Bug Fixes
+
+* copy casing ([5c285f5](https://github.com/SiaFoundation/web/commit/5c285f5ce39f0c8e1bb52f9de0e8582f079c7c6a))
+* layout padding ([3275bef](https://github.com/SiaFoundation/web/commit/3275befd2be427259461e1f9b5d568453b7be5c0))
+
+
+
 # [0.15.0](https://github.com/SiaFoundation/web/compare/website-0.14.0...website-0.15.0) (2022-04-12)
 
 
