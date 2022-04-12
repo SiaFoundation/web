@@ -15,7 +15,12 @@ type SiaStatsHostsStats = {
 
 export async function getSiaStatsHostsStats(): AsyncDataSourceResponse<SiaStatsHostsStats> {
   try {
-    const response = await axios.get('https://siastats.info/dbs/hostsRTdb.json')
+    const response = await axios.get(
+      'https://siastats.info/dbs/hostsRTdb.json',
+      {
+        timeout: 10_000,
+      }
+    )
     const result = response.data[0]
     return {
       status: 200,

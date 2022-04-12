@@ -7,7 +7,10 @@ export async function getSiaStatsHostsActive(): AsyncDataSourceResponse<
 > {
   try {
     const { data } = await axios.get(
-      'https://siastats.info/dbs/activehosts.json'
+      'https://siastats.info/dbs/activehosts.json',
+      {
+        timeout: 10_000,
+      }
     )
     const result = data[data.length - 1]
     return {

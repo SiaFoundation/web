@@ -7,7 +7,10 @@ export async function getSiaStatsHostsCoordinates(): AsyncDataSourceResponse<
 > {
   try {
     const { data } = await axios.get(
-      'https://siastats.info/dbs/hostscoordinates.json'
+      'https://siastats.info/dbs/hostscoordinates.json',
+      {
+        timeout: 10_000,
+      }
     )
     const result = data
     return {
