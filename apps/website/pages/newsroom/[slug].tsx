@@ -15,11 +15,13 @@ import { Layout } from '../../components/Layout'
 import { baseContentPath } from '../../config/app'
 import { GetNewsPost, getNewsPost } from '../../content/news'
 import { getStats, Stats } from '../../content/stats'
-import background from '../../assets/backgrounds/nate-waterfall.png'
 import { sitemap } from '../../config/site'
 import { textContent } from '../../lib/utils'
+import backgroundImage from '../../assets/backgrounds/nate-waterfall.png'
+import previewImage from '../../assets/previews/nate-waterfall.png'
 
-const backgroundImage = getImageProps(background)
+const backgroundImageProps = getImageProps(backgroundImage)
+const previewImageProps = getImageProps(previewImage)
 
 type Props = GetNewsPost & { stats: Stats }
 
@@ -41,7 +43,8 @@ function NewsroomPost({
         </Section>
       }
       stats={stats}
-      backgroundImage={backgroundImage}
+      backgroundImage={backgroundImageProps}
+      previewImage={previewImageProps}
     >
       <Section>
         <Box>

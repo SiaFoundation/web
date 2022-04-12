@@ -13,6 +13,7 @@ type Props = {
   date?: string
   path: string
   backgroundImage: ImageProps
+  previewImage: ImageProps
   stats: Stats
   focus?: boolean
   transitionDuration?: number
@@ -27,6 +28,7 @@ export function Layout({
   path,
   stats,
   backgroundImage,
+  previewImage,
   focus,
   transitionDuration,
 }: Props) {
@@ -42,7 +44,7 @@ export function Layout({
       <PageHead
         title={title}
         description={description}
-        image={backgroundImage.src}
+        image={previewImage.src}
         date={date}
         path={path}
       />
