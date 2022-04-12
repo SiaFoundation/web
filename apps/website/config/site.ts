@@ -37,13 +37,12 @@ export const sitemap = {
 export const external = {
   blog: 'https://blog.sia.tech',
   docs: {
-    // TODO: update all doc URLs to docs.sia.tech
-    index: 'https://support.sia.tech',
-    sia101: 'https://support.sia.tech/get-started-with-sia/sia101',
-    renting: 'https://support.sia.tech/renting/about-renting',
-    wallet: 'https://support.sia.tech/your-sia-wallet/wallet-overview',
-    hosting: 'https://support.sia.tech/hosting/about-hosting-on-sia',
-    mining: 'https://support.sia.tech/mining/about-mining-on-sia',
+    index: 'https://docs.sia.tech',
+    sia101: 'https://docs.sia.tech/get-started-with-sia/sia101',
+    renting: 'https://docs.sia.tech/renting/about-renting',
+    wallet: 'https://docs.sia.tech/your-sia-wallet/wallet-overview',
+    hosting: 'https://docs.sia.tech/hosting/about-hosting-on-sia',
+    mining: 'https://docs.sia.tech/mining/about-mining-on-sia',
   },
   // forum: 'https://forum.sia.tech',
   github: 'https://github.com/siafoundation',
