@@ -1,12 +1,7 @@
 import { Launch16 } from '../icons'
 import { Box, Flex, Text } from '..'
 
-const localDomains = [
-  'sia.tech',
-  'docs.sia.tech',
-  'support.sia.tech',
-  'blog.sia.tech',
-]
+const localDomains = ['sia.tech', 'docs.sia.tech', 'blog.sia.tech']
 
 type Props = {
   link: string

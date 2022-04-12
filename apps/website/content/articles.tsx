@@ -67,7 +67,7 @@ const articles: ContentItemProps[] = [
     title: 'Learn how to mine on the Sia network',
     icon: <Industry24 />,
     tags: ['tutorial'],
-    link: 'https://support.sia.tech/mining/about-mining-on-sia',
+    link: 'https://docs.sia.tech/mining/about-mining-on-sia',
   },
   {
     title: 'Evolving Skynet Portals to Better Survive on the Centralized Web',
