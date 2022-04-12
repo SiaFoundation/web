@@ -6,7 +6,9 @@ export async function getSiaStatsStorage(): AsyncDataSourceResponse<
   Record<string, unknown>
 > {
   try {
-    const { data } = await axios.get('https://siastats.info/dbs/storage.json')
+    const { data } = await axios.get('https://siastats.info/dbs/storage.json', {
+      timeout: 10_000,
+    })
     const result = data[data.length - 1]
     return {
       status: 200,
