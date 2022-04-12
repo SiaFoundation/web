@@ -53,17 +53,19 @@ function NewsroomPost({
           </Text>
           <MDXRemote {...source} />
         </Box>
-        <Grid
-          gap="3"
-          css={{ marginTop: '$8' }}
-          columns={{
-            '@initial': '1',
-            '@bp1': '2',
-          }}
-        >
-          {prev && <ContentItem {...prev} />}
-          {next && <ContentItem {...next} />}
-        </Grid>
+        {(prev || next) && (
+          <Grid
+            gap="3"
+            css={{ marginTop: '$8' }}
+            columns={{
+              '@initial': '1',
+              '@bp1': '2',
+            }}
+          >
+            {prev && <ContentItem {...prev} />}
+            {next && <ContentItem {...next} />}
+          </Grid>
+        )}
       </Section>
     </Layout>
   )

@@ -82,7 +82,7 @@ export function Layout({
         backgroundImage={backgroundImage}
         navbar={<Navbar />}
       >
-        <Flex direction="column" css={{ padding: '$6 0' }}>
+        <Flex direction="column" css={{ padding: '$6 0 $max 0' }}>
           {children}
         </Flex>
       </SiteLayout>
