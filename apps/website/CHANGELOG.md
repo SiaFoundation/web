@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.15.0](https://github.com/SiaFoundation/web/compare/website-0.14.0...website-0.15.0) (2022-04-12)
+
+
+### Features
+
+* disable old news content ([dc9a7b3](https://github.com/SiaFoundation/web/commit/dc9a7b3806533f8f95eaa0a933bba85e04d8cab6))
+* formatted preview images ([3d0b41d](https://github.com/SiaFoundation/web/commit/3d0b41d714d0350072cd6b6da6285e0deefa09b4))
+
+
+
 # [0.14.0](https://github.com/SiaFoundation/web/compare/website-0.13.1...website-0.14.0) (2022-04-12)
 
 
