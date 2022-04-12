@@ -20,10 +20,12 @@ import { Layout } from '../../components/Layout'
 import { external, sitemap } from '../../config/site'
 import { getStats, Stats } from '../../content/stats'
 import { getDaysInSeconds } from '../../lib/time'
-import background from '../../assets/backgrounds/leaves.png'
 import { textContent } from '../../lib/utils'
+import backgroundImage from '../../assets/backgrounds/leaves.png'
+import previewImage from '../../assets/previews/leaves.png'
 
-const backgroundImage = getImageProps(background)
+const backgroundImageProps = getImageProps(backgroundImage)
+const previewImageProps = getImageProps(previewImage)
 
 const getStarted = getArticles(['tutorial'])
 
@@ -47,7 +49,8 @@ function Learn({ stats }: Props) {
         </Section>
       }
       stats={stats}
-      backgroundImage={backgroundImage}
+      backgroundImage={backgroundImageProps}
+      previewImage={previewImageProps}
     >
       <Section>
         <Grid

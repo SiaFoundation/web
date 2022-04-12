@@ -23,7 +23,8 @@ import { getMdxFile } from '../lib/mdx'
 import { AsyncReturnType } from '../lib/types'
 import { getArticles } from '../content/articles'
 import { getSoftware } from '../content/software'
-import background from '../assets/backgrounds/mountain.png'
+import backgroundImage from '../assets/backgrounds/mountain.png'
+import previewImage from '../assets/previews/mountain.png'
 import useLocalStorageState from 'use-local-storage-state'
 import { useCallback, useEffect, useState } from 'react'
 import { textContent } from '../lib/utils'
@@ -33,7 +34,8 @@ const tutorials = getArticles(['tutorial'])
 const latest = getArticles(['latest']).map((i) => omit(i, ['icon']))
 const services = getSoftware('storage_services', 3)
 
-const backgroundImage = getImageProps(background)
+const backgroundImageProps = getImageProps(backgroundImage)
+const previewImageProps = getImageProps(previewImage)
 
 const description = (
   <>
@@ -111,7 +113,8 @@ export default function Home({ stats, landing }: Props) {
           </SiteHeading>
         </Section>
       }
-      backgroundImage={backgroundImage}
+      backgroundImage={backgroundImageProps}
+      previewImage={previewImageProps}
     >
       {showLanding ? (
         <Letter source={landing.source} onDone={() => toggleLanding()} />

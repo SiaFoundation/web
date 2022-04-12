@@ -27,9 +27,11 @@ import { getReports } from '../../content/reports'
 import { getNewsPosts } from '../../content/news'
 import { getStats } from '../../content/stats'
 import { Fragment } from 'react'
-import background from '../../assets/backgrounds/tree.png'
+import backgroundImage from '../../assets/backgrounds/tree.png'
+import previewImage from '../../assets/previews/tree.png'
 
-const backgroundImage = getImageProps(background)
+const backgroundImageProps = getImageProps(backgroundImage)
+const previewImageProps = getImageProps(previewImage)
 
 const title = 'The Sia Foundation'
 const description =
@@ -49,7 +51,8 @@ function Foundation({ stats, foundation, team, newsPosts, reports }: Props) {
         </Section>
       }
       stats={stats}
-      backgroundImage={backgroundImage}
+      backgroundImage={backgroundImageProps}
+      previewImage={previewImageProps}
     >
       <Section>
         <Flex direction="column" gap="9">

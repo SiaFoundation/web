@@ -22,10 +22,12 @@ import { AsyncReturnType } from '../../lib/types'
 import { getSoftware } from '../../content/software'
 import { getStats } from '../../content/stats'
 import { omit } from 'lodash'
-import background from '../../assets/backgrounds/waterfall.png'
 import { SoftwareSection } from '../../components/SoftwareSection'
+import backgroundImage from '../../assets/backgrounds/waterfall.png'
+import previewImage from '../../assets/previews/waterfall.png'
 
-const backgroundImage = getImageProps(background)
+const backgroundImageProps = getImageProps(backgroundImage)
+const previewImageProps = getImageProps(previewImage)
 
 const siaVersion = getSiaVersion()
 const hosts = getHosts()
@@ -65,7 +67,8 @@ function Developers({ stats }: Props) {
         </Section>
       }
       stats={stats}
-      backgroundImage={backgroundImage}
+      backgroundImage={backgroundImageProps}
+      previewImage={previewImageProps}
     >
       <Section
         size="3"

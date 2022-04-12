@@ -10,9 +10,11 @@ import { sitemap } from '../../config/site'
 import { generateRssNewsFeed, getNewsPosts } from '../../content/news'
 import { AsyncReturnType } from '../../lib/types'
 import { getStats } from '../../content/stats'
-import background from '../../assets/backgrounds/steps.png'
+import backgroundImage from '../../assets/backgrounds/steps.png'
+import previewImage from '../../assets/previews/steps.png'
 
-const backgroundImage = getImageProps(background)
+const backgroundImageProps = getImageProps(backgroundImage)
+const previewImageProps = getImageProps(previewImage)
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
@@ -42,7 +44,8 @@ function Newsroom({ posts, stats }: Props) {
         </Section>
       }
       stats={stats}
-      backgroundImage={backgroundImage}
+      backgroundImage={backgroundImageProps}
+      previewImage={previewImageProps}
     >
       <Section>
         <ContentGallery columns="1" items={posts} />

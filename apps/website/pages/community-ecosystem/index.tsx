@@ -16,10 +16,12 @@ import { AsyncReturnType } from '../../lib/types'
 import { getSoftware } from '../../content/software'
 import { getStats } from '../../content/stats'
 import { omit } from 'lodash'
-import background from '../../assets/backgrounds/jungle.png'
 import { textContent } from '../../lib/utils'
+import backgroundImage from '../../assets/backgrounds/jungle.png'
+import previewImage from '../../assets/previews/jungle.png'
 
-const backgroundImage = getImageProps(background)
+const backgroundImageProps = getImageProps(backgroundImage)
+const previewImageProps = getImageProps(previewImage)
 
 const blogs = getArticles(['ecosystem'], 4).map((i) => omit(i, ['icon']))
 const software = getSoftware('')
@@ -63,7 +65,8 @@ function CommunityEcosystem({ stats }: Props) {
         </Section>
       }
       stats={stats}
-      backgroundImage={backgroundImage}
+      backgroundImage={backgroundImageProps}
+      previewImage={previewImageProps}
     >
       <Section>
         <SiteHeading
