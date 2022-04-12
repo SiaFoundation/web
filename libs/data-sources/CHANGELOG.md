@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.2.0](https://github.com/SiaFoundation/web/compare/data-sources-0.1.2...data-sources-0.2.0) (2022-04-12)
+
+
+### Features
+
+* add timeouts to siastats ([9857522](https://github.com/SiaFoundation/web/commit/985752203c2a0c2cd286d9ae6c17934be505851e))
+
+
+
 ## [0.1.2](https://github.com/SiaFoundation/web/compare/data-sources-0.1.1...data-sources-0.1.2) (2022-03-03)
 
 
