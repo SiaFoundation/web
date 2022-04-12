@@ -92,8 +92,8 @@ function Developers({ stats }: Props) {
                   title="Sia UI"
                   description={
                     <>
-                      Built for users who prefer to work with a Graphical User
-                      Interface.
+                      Built for users who prefer to work with a graphical user
+                      interface.
                     </>
                   }
                   version={siaVersion.current}
