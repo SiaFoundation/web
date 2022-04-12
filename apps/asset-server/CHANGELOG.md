@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.0.4](https://github.com/SiaFoundation/web/compare/asset-server-0.0.3...asset-server-0.0.4) (2022-04-12)
+
+
+### Bug Fixes
+
+* apply dotenv in prod ([eec4487](https://github.com/SiaFoundation/web/commit/eec44878e7de76144860097e20244b42ae629fae))
+
+
+
 ## [0.0.3](https://github.com/SiaFoundation/web/compare/asset-server-0.0.2...asset-server-0.0.3) (2022-03-03)
 
 
