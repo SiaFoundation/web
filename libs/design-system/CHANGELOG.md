@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.19.0](https://github.com/SiaFoundation/web/compare/design-system-0.18.2...design-system-0.19.0) (2022-04-12)
+
+
+### Features
+
+* support => docs.sia.tech ([b21141a](https://github.com/SiaFoundation/web/commit/b21141a57eedd43f42ab35d5efa397f072ee9e6e))
+
+
+
 ## [0.18.2](https://github.com/SiaFoundation/web/compare/design-system-0.18.1...design-system-0.18.2) (2022-04-08)
 
 
