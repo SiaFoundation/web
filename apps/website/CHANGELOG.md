@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.15.2](https://github.com/SiaFoundation/web/compare/website-0.15.1...website-0.15.2) (2022-04-14)
+
+
+### Bug Fixes
+
+* move landing to ssr cookie ([7bcd9f3](https://github.com/SiaFoundation/web/commit/7bcd9f3c1814c7a0a936c728d609ce66a5c8ca88))
+
+
+
 ## [0.15.1](https://github.com/SiaFoundation/web/compare/website-0.15.0...website-0.15.1) (2022-04-12)
 
 
