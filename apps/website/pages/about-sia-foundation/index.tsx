@@ -1,5 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
 import {
-  Avatar,
   Box,
   Flex,
   Grid,
@@ -16,10 +16,8 @@ import {
   getImageProps,
   Paragraph,
 } from '@siafoundation/design-system'
-import { MDXRemote } from 'next-mdx-remote'
 import { Layout } from '../../components/Layout'
 import { external, sitemap } from '../../config/site'
-import { getMdxFile } from '../../lib/mdx'
 import { getDaysInSeconds } from '../../lib/time'
 import { AsyncReturnType } from '../../lib/types'
 import team from '../../content/team'
@@ -39,7 +37,7 @@ const description =
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-function Foundation({ stats, foundation, team, newsPosts, reports }: Props) {
+function Foundation({ stats, team, newsPosts, reports }: Props) {
   return (
     <Layout
       title={title}
@@ -56,10 +54,36 @@ function Foundation({ stats, foundation, team, newsPosts, reports }: Props) {
     >
       <Section>
         <Flex direction="column" gap="9">
-          <Box>
+          <Flex direction="column" gap="2">
             <SiteHeading size="32" title="Vision" />
-            <MDXRemote {...foundation.source} />
-          </Box>
+            <Paragraph>
+              Sia began its life as a startup, which means it has always been
+              subjected to two competing forces: the ideals of its founders, and
+              the profit motive inherent to all businesses. Its founders have
+              taken great pains to never compromise on the former, but this
+              often threatened the company's financial viability. With the
+              establishment of the Sia Foundation, this tension is resolved. The
+              Foundation, freed of the obligation to generate profit, is a pure
+              embodiment of the ideals from which Sia originally sprung.
+            </Paragraph>
+            <Paragraph>
+              The goals and responsibilities of the Foundation are numerous: to
+              maintain core Sia protocols and consensus code; to support
+              developers building on top of Sia and its protocols; to promote
+              Sia and facilitate partnerships in other spheres and communities;
+              to ensure that users can easily acquire and safely store siacoins;
+              to develop network scalability solutions; to implement hardforks
+              and lead the community through them; and much more. In a broader
+              sense, its mission is to commoditize data storage, making it
+              cheap, ubiquitous, and accessible to all, without compromising
+              privacy or performance.
+            </Paragraph>
+            <Paragraph>
+              Sia is a perfect example of how we can achieve better living
+              through cryptography. We now begin a new chapter in Sia's history.
+              May our stewardship lead it into a bright future.
+            </Paragraph>
+          </Flex>
           <Flex direction="column" gap="4">
             <SiteHeading size="24" title="Contact" />
             <Flex direction="column" gap="3">
@@ -184,7 +208,6 @@ function Foundation({ stats, foundation, team, newsPosts, reports }: Props) {
 
 export async function getStaticProps() {
   const stats = await getStats()
-  const foundation = await getMdxFile('content/sections/foundation.mdx')
   const newsPosts = await getNewsPosts({
     limit: 3,
     includeHtml: false,
@@ -194,7 +217,6 @@ export async function getStaticProps() {
   return {
     props: {
       stats,
-      foundation,
       team,
       newsPosts,
       reports,

@@ -14,7 +14,8 @@ type Props = {
   path: string
   backgroundImage: ImageProps
   previewImage: ImageProps
-  stats: Stats
+  onLogoClick?: () => void
+  stats?: Stats
   focus?: boolean
   transitionDuration?: number
 }
@@ -27,6 +28,7 @@ export function Layout({
   date,
   path,
   stats,
+  onLogoClick,
   backgroundImage,
   previewImage,
   focus,
@@ -80,7 +82,7 @@ export function Layout({
         ]}
         footer={<Footer stats={stats} />}
         backgroundImage={backgroundImage}
-        navbar={<Navbar />}
+        navbar={<Navbar onClick={onLogoClick} />}
       >
         <Flex direction="column" css={{ padding: '$6 0 $max 0' }}>
           {children}
