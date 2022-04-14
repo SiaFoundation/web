@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.0.5](https://github.com/SiaFoundation/web/compare/asset-server-0.0.4...asset-server-0.0.5) (2022-04-14)
+
+
+
 ## [0.0.4](https://github.com/SiaFoundation/web/compare/asset-server-0.0.3...asset-server-0.0.4) (2022-04-12)
 
 
