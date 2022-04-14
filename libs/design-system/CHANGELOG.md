@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.19.1](https://github.com/SiaFoundation/web/compare/design-system-0.19.0...design-system-0.19.1) (2022-04-14)
+
+
+### Bug Fixes
+
+* ssr global styles and fonts ([890787f](https://github.com/SiaFoundation/web/commit/890787ffa444eeed1ed5605c912853d884272ef0))
+
+
+
 # [0.19.0](https://github.com/SiaFoundation/web/compare/design-system-0.18.2...design-system-0.19.0) (2022-04-12)
 
 
