@@ -13,7 +13,7 @@ const withMDX = require('@next/mdx')({
  * @type {import('@nrwl/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
-  pageExtensions: ['tsx', 'md', 'mdx'],
+  pageExtensions: ['tsx', 'ts', 'md', 'mdx'],
   nx: {
     // Set this to true if you would like to to use SVGR
     // See: https://github.com/gregberge/svgr

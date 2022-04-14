@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import {
   Box,
   Grid,
@@ -13,22 +14,21 @@ import {
   SiteHeading,
   getImageProps,
   Link,
+  Flex,
+  Text,
 } from '@siafoundation/design-system'
 import { omit } from 'lodash'
 import { Layout } from '../components/Layout'
 import { external, sitemap } from '../config/site'
-import { getDaysInSeconds } from '../lib/time'
-import { getStats } from '../content/stats'
-import { getMdxFile } from '../lib/mdx'
 import { AsyncReturnType } from '../lib/types'
 import { getArticles } from '../content/articles'
 import { getSoftware } from '../content/software'
 import backgroundImage from '../assets/backgrounds/mountain.png'
 import previewImage from '../assets/previews/mountain.png'
-import useLocalStorageState from 'use-local-storage-state'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { textContent } from '../lib/utils'
 import Letter from '../components/Letter'
+import Italic from '../components/Italic'
 
 const tutorials = getArticles(['tutorial'])
 const latest = getArticles(['latest']).map((i) => omit(i, ['icon']))
@@ -41,60 +41,50 @@ const description = (
   <>
     Cryptography has unleashed the latent power of the Internet by enabling
     interactions between mutually-distrustful parties. Sia harnesses this power
-    to turn the cloud storage market into a proper market
-    <Box as="span" css={{ fontStyle: 'italic' }}>
-      place
-    </Box>
-    , where buyers and sellers can transact directly, with no intermediaries,
+    to turn the cloud storage market into a proper market<Italic>place</Italic>,
+    where buyers and sellers can transact directly, with no intermediaries,
     anywhere in the world. No more silos or walled gardens: your data is
-    encrypted, so it can&apos;t be spied on, and it&apos;s stored on many
-    servers, so no single entity can hold it hostage. Thanks to projects like
-    Sia, the Internet is being re-decentralized.
+    encrypted, so it can't be spied on, and it's stored on many servers, so no
+    single entity can hold it hostage. Thanks to projects like Sia, the Internet
+    is being re-decentralized.
   </>
 )
 
-const defaultConfig = {
-  seenLanding: false,
-}
-
 const transitionDuration = 300
 
-type Props = AsyncReturnType<typeof getStaticProps>['props']
+type Props = AsyncReturnType<typeof getServerSideProps>['props']
 
-export default function Home({ stats, landing }: Props) {
-  const [showLanding, setShowLanding] = useState<boolean>(false)
-  const [{ seenLanding: seenLanding }, setUserConfig] = useLocalStorageState(
-    'v0/userConfig',
-    {
-      defaultValue: defaultConfig,
-    }
-  )
+export default function Home({ seenLetter }: Props) {
+  const [showLetter, setShowLetter] = useState<boolean>(!seenLetter)
 
-  useEffect(() => {
-    setShowLanding(!seenLanding)
-  }, [seenLanding])
-
-  // In case we want to allow users to turn off the long landing message
   const toggleLanding = useCallback(() => {
-    setUserConfig((config) => ({
-      ...config,
-      seenLanding: !config.seenLanding,
-    }))
+    setShowLetter((showLetter) => {
+      const show = !showLetter
+
+      if (show) {
+        document.cookie = 'seen-letter=false; max-age=0; SameSite=None; Secure'
+      } else {
+        document.cookie =
+          'seen-letter=true; max-age=2147483647; SameSite=None; Secure'
+      }
+      return show
+    })
+
     setTimeout(() => {
       document.getElementById('main-scroll').scrollTo({
         top: 0,
       })
     }, transitionDuration)
-  }, [setUserConfig])
+  }, [setShowLetter])
 
   return (
     <Layout
       title="Decentralized data storage"
       description={textContent(description)}
       path={sitemap.home.index}
-      stats={stats}
-      focus={showLanding}
+      focus={showLetter}
       transitionDuration={transitionDuration}
+      onLogoClick={!showLetter ? toggleLanding : undefined}
       heading={
         <Section
           size="4"
@@ -107,17 +97,21 @@ export default function Home({ stats, landing }: Props) {
             title="Decentralized data storage"
             description={description}
           >
-            <Box>
-              <Link onClick={toggleLanding}>Read more</Link>
-            </Box>
+            <Flex gap="2" css={{ marginTop: '$1' }}>
+              <Text size="20">
+                <Link href={sitemap.developers.index}>
+                  Download the software →
+                </Link>
+              </Text>
+            </Flex>
           </SiteHeading>
         </Section>
       }
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      {showLanding ? (
-        <Letter source={landing.source} onDone={() => toggleLanding()} />
+      {showLetter ? (
+        <Letter onDone={() => toggleLanding()} />
       ) : (
         <>
           <Section size="3">
@@ -194,7 +188,7 @@ export default function Home({ stats, landing }: Props) {
                       title: 'Open Source',
                       subtitle: (
                         <>
-                          Sia&apos;s software is completely open source, with
+                          Sia's software is completely open source, with
                           contributions from leading software engineers and a
                           thriving community of developers building innovative
                           applications on the Sia API.
@@ -206,8 +200,8 @@ export default function Home({ stats, landing }: Props) {
                       title: 'Far More Affordable',
                       subtitle: (
                         <>
-                          On average, Sia&apos;s decentralized cloud storage
-                          costs 90% less than incumbent cloud storage providers.
+                          On average, Sia's decentralized cloud storage costs
+                          90% less than incumbent cloud storage providers.
                           Storing 1TB of files on Sia costs about $1-2 per
                           month, compared with $23 on Amazon S3.
                         </>
@@ -290,15 +284,12 @@ export default function Home({ stats, landing }: Props) {
   )
 }
 
-export async function getStaticProps() {
-  const stats = await getStats()
-  const landing = await getMdxFile('content/sections/landing.mdx')
+export async function getServerSideProps({ req }) {
+  const seenLetter: boolean = req.cookies['seen-letter'] || false
 
   return {
     props: {
-      stats,
-      landing,
+      seenLetter,
     },
-    revalidate: getDaysInSeconds(1),
   }
 }

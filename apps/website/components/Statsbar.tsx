@@ -1,23 +1,34 @@
 import { Flex, NextLink, Text } from '@siafoundation/design-system'
 import { Fragment } from 'react'
+import useSWR from 'swr'
 import { external } from '../config/site'
 import { Stats } from '../content/stats'
 
-export function Statsbar({
-  activeHosts,
-  onlineHosts,
-  totalStorage,
-  usedStorage,
-  commits,
-  contributors,
-  forks,
-  releases,
-  downloads,
-  downloadSpeed,
-  uploadSpeed,
-  cpuUsage,
-  memoryUsage,
-}: Stats) {
+type Props = {
+  stats?: Stats
+}
+
+export function Statsbar({ stats }: Props) {
+  const { data } = useSWR<Stats>(stats ? null : 'stats', async () => {
+    const response = await fetch('/api/stats')
+    const result = await response.json()
+    return result
+  })
+  const {
+    activeHosts,
+    onlineHosts,
+    totalStorage,
+    usedStorage,
+    commits,
+    contributors,
+    forks,
+    releases,
+    downloads,
+    downloadSpeed,
+    uploadSpeed,
+    cpuUsage,
+    memoryUsage,
+  } = stats || data || {}
   return (
     <Flex
       gap={{

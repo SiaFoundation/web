@@ -1,9 +1,7 @@
 import {
-  Box,
   Container,
   Flex,
   NextLink,
-  Rss16,
   Section,
   Text,
 } from '@siafoundation/design-system'
@@ -12,7 +10,7 @@ import { Stats } from '../content/stats'
 import { Statsbar } from './Statsbar'
 
 type Props = {
-  stats: Stats
+  stats?: Stats
 }
 
 export function Footer({ stats }: Props) {
@@ -20,7 +18,7 @@ export function Footer({ stats }: Props) {
     <Flex direction="column">
       <Section size="1" width="flush" css={{ backgroundColor: '$waves' }}>
         <Section size="0">
-          <Statsbar {...stats} />
+          <Statsbar stats={stats} />
         </Section>
       </Section>
       <Section width="flush" css={{ backgroundColor: '$brandGray3' }}>
