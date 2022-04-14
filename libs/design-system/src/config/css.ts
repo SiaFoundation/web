@@ -1,5 +1,4 @@
 import { globalCss } from './theme'
-import { useEffect } from 'react'
 import { fontStyles } from './fonts'
 
 // Reset, normalize, fonts css
@@ -31,8 +30,6 @@ const globalStyles = globalCss({
 })
 
 export function useGlobalStyles() {
-  useEffect(() => {
-    globalStyles()
-    fontStyles()
-  }, [])
+  globalStyles()
+  fontStyles()
 }
