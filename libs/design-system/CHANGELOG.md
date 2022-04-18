@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.19.2](https://github.com/SiaFoundation/web/compare/design-system-0.19.1...design-system-0.19.2) (2022-04-18)
+
+
+### Bug Fixes
+
+* site layout initial render transition ([fe5b557](https://github.com/SiaFoundation/web/commit/fe5b55726a90ad8439bd784076de733ef9ffd8f0))
+
+
+
 ## [0.19.1](https://github.com/SiaFoundation/web/compare/design-system-0.19.0...design-system-0.19.1) (2022-04-14)
 
 
