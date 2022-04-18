@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.15.3](https://github.com/SiaFoundation/web/compare/website-0.15.2...website-0.15.3) (2022-04-18)
+
+
+### Bug Fixes
+
+* site layout initial render transition ([fe5b557](https://github.com/SiaFoundation/web/commit/fe5b55726a90ad8439bd784076de733ef9ffd8f0))
+
+
+
 ## [0.15.2](https://github.com/SiaFoundation/web/compare/website-0.15.1...website-0.15.2) (2022-04-14)
 
 
