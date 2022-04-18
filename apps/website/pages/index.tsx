@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
-  Box,
   Grid,
   IbmSecurity24,
   Money24,
