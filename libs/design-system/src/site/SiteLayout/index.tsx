@@ -32,7 +32,7 @@ export function SiteLayout({
 }: Props) {
   const menuWidth = focus ? '65%' : '30%'
 
-  const [transitioning, setTransitioning] = useState<boolean>(false)
+  const [transitioning, setTransitioning] = useState<boolean>(true)
   useEffect(() => {
     setTransitioning(true)
 
@@ -42,7 +42,7 @@ export function SiteLayout({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focus])
 
-  const imageEl = (
+  const _image = (
     <Box
       css={{
         position: 'relative',
@@ -71,7 +71,7 @@ export function SiteLayout({
   const [heading, setHeading] = useState<React.ReactNode>(_heading)
   const [children, setChildren] = useState<React.ReactNode>(_children)
   const [footer, setFooter] = useState<React.ReactNode>(_footer)
-  const [image, setImage] = useState<React.ReactNode>(imageEl)
+  const [image, setImage] = useState<React.ReactNode>(_image)
 
   useEffect(() => {
     setNavbar(_navbar)
@@ -95,7 +95,7 @@ export function SiteLayout({
       setHeading(_heading)
       setChildren(_children)
       setFooter(_footer)
-      setImage(imageEl)
+      setImage(_image)
     }, 100)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [_children])
