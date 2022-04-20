@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.19.3](https://github.com/SiaFoundation/web/compare/design-system-0.19.2...design-system-0.19.3) (2022-04-20)
+
+
+### Bug Fixes
+
+* non next background images ([a681bf5](https://github.com/SiaFoundation/web/commit/a681bf5599e77391ec7d155ad8ced7cb7f3255fc))
+* smaller texture files, only provide 1 format ([f937faa](https://github.com/SiaFoundation/web/commit/f937faae29976ef9f5065eea7e55366b9bd40e4c))
+
+
+
 ## [0.19.2](https://github.com/SiaFoundation/web/compare/design-system-0.19.1...design-system-0.19.2) (2022-04-18)
 
 
