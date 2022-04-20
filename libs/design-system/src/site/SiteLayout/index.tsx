@@ -58,11 +58,14 @@ export function SiteLayout({
         },
       }}
     >
-      <NextImage
-        src={backgroundImage.src}
-        blurDataURL={backgroundImage.blurDataURL}
-        layout="fill"
-        objectFit="cover"
+      <Box
+        css={{
+          position: 'relative',
+          width: '100%',
+          height: '100%',
+          background: `url(${backgroundImage.src})`,
+          backgroundSize: 'cover',
+        }}
       />
     </Box>
   )
@@ -178,11 +181,14 @@ export function SiteLayout({
             backgroundColor: 'rgba(30, 169, 76, 0.3)',
           }}
         >
-          <NextImage
-            src={backgroundImage.src}
-            blurDataURL={backgroundImage.blurDataURL}
-            layout="fill"
-            objectFit="cover"
+          <Box
+            css={{
+              position: 'relative',
+              width: '100%',
+              height: '100%',
+              background: `url(${backgroundImage.src})`,
+              backgroundSize: 'cover',
+            }}
           />
         </Box>
       </Box>
