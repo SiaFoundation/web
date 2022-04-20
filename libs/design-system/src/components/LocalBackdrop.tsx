@@ -44,11 +44,6 @@ export function LocalBackdrop({ startTime = 0 }: Props) {
           },
         }}
       >
-        <Box
-          as="source"
-          src={`/texture.webm#t=${startTime}`}
-          type="video/webm"
-        />
         <Box as="source" src={`/texture.mp4#t=${startTime}`} type="video/mp4" />
       </Box>
     </Box>
