@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.1.7](https://github.com/SiaFoundation/web/compare/env-0.1.6...env-0.1.7) (2022-04-21)
+
+
+### Bug Fixes
+
+* github env runtime ([33f4e27](https://github.com/SiaFoundation/web/commit/33f4e27189547b86290b54d65572ae215b56f62f))
+
+
+
 ## [0.1.6](https://github.com/SiaFoundation/web/compare/env-0.1.5...env-0.1.6) (2022-04-06)
 
 
