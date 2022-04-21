@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.15.7](https://github.com/SiaFoundation/web/compare/website-0.15.6...website-0.15.7) (2022-04-21)
+
+
+### Bug Fixes
+
+* discrepancy in runtime env vars api routes ([eda3d72](https://github.com/SiaFoundation/web/commit/eda3d7232faa64b7d679b3e8b1870ec7a6a5759b))
+* logo img resolution ([4aad12d](https://github.com/SiaFoundation/web/commit/4aad12d593c6ad5b4a1d04a9305347c8a1fe374c))
+
+
+
 ## [0.15.6](https://github.com/SiaFoundation/web/compare/website-0.15.5...website-0.15.6) (2022-04-21)
 
 
