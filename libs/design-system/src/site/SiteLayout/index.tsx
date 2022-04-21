@@ -32,7 +32,7 @@ export function SiteLayout({
 }: Props) {
   const menuWidth = focus ? '65%' : '30%'
 
-  const [transitioning, setTransitioning] = useState<boolean>(false)
+  const [transitioning, setTransitioning] = useState<boolean>(true)
   useEffect(() => {
     setTransitioning(true)
 
@@ -145,11 +145,7 @@ export function SiteLayout({
           </Flex>
         </Box>
       </ScrollArea>
-      <SiteMenu
-        links={menuLinks}
-        menuWidth={menuWidth}
-        transitionDuration={transitionDuration}
-      />
+      <SiteMenu links={menuLinks} menuWidth={menuWidth} />
       <Box
         css={{
           position: 'absolute',
