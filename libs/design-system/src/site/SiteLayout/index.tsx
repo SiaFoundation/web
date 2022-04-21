@@ -48,6 +48,7 @@ export function SiteLayout({
         position: 'relative',
         width: '100%',
         height: '390px',
+        overflow: 'hidden',
         borderTop: '$sizes$frame solid $frame',
         borderBottom: '$sizes$frame solid $frame',
         '@initial': {
@@ -59,12 +60,15 @@ export function SiteLayout({
       }}
     >
       <Box
+        as="img"
+        loading="lazy"
+        src={backgroundImage.src}
+        alt="Sia"
         css={{
           position: 'relative',
           width: '100%',
-          height: '100%',
-          background: `url(${backgroundImage.src})`,
-          backgroundSize: 'cover',
+          height: '390px',
+          objectFit: 'cover',
         }}
       />
     </Box>
