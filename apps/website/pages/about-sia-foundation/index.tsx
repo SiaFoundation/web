@@ -126,6 +126,7 @@ function Foundation({ stats, team, newsPosts, reports }: Props) {
                     href={`https://twitter.com/${member.twitter}`}
                     target="_blank"
                     variant="subtle"
+                    aria-label="Twitter"
                   >
                     <LogoTwitter32 />
                   </NextLink>
@@ -135,6 +136,7 @@ function Foundation({ stats, team, newsPosts, reports }: Props) {
                     href={`https://github.com/${member.github}`}
                     target="_blank"
                     variant="subtle"
+                    aria-label="Github"
                   >
                     <LogoGithub24 />
                   </NextLink>
@@ -144,6 +146,7 @@ function Foundation({ stats, team, newsPosts, reports }: Props) {
                     href={`https://www.linkedin.com/in/${member.linkedin}`}
                     target="_blank"
                     variant="subtle"
+                    aria-label="LinkedIn"
                   >
                     <LogoLinkedin24 />
                   </NextLink>
