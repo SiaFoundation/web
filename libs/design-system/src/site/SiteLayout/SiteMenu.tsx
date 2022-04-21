@@ -160,7 +160,14 @@ export function SiteMenu({ links, menuWidth, transitionDuration }: Props) {
     <Box css={{ position: 'relative', zIndex: 2 }}>
       <Container>
         <Trigger asChild>
-          <Box css={{ position: 'fixed', top: '$3', right: '$3' }}>
+          <Box
+            css={{
+              position: 'fixed',
+              top: '$3',
+              right: '$3',
+              cursor: 'pointer',
+            }}
+          >
             <Box css={{ height: '$8', width: '$8', display: 'inline-flex' }}>
               <LogoMenuIcon />
             </Box>
