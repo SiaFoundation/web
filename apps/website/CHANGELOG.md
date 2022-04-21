@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.15.5](https://github.com/SiaFoundation/web/compare/website-0.15.4...website-0.15.5) (2022-04-21)
+
+
+### Bug Fixes
+
+* logo dimensions and alt ([3f7569e](https://github.com/SiaFoundation/web/commit/3f7569eaaf79bd437f97ee1200011afe42087a25))
+
+
+
 ## [0.15.4](https://github.com/SiaFoundation/web/compare/website-0.15.3...website-0.15.4) (2022-04-20)
 
 
