@@ -1,6 +1,11 @@
 import { getStats } from '../../content/stats'
 
+let stats = null
+
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 's-maxage=86400')
-  res.status(200).json(await getStats())
+  if (!stats) {
+    stats = await getStats()
+  }
+  res.status(200).json(stats)
 }

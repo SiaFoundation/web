@@ -11,19 +11,19 @@ import { AsyncReturnType } from '../lib/types'
 export async function getStats() {
   if (isDev()) {
     return {
-      activeHosts: '531',
-      onlineHosts: '634',
-      totalStorage: '7.38 PB',
-      usedStorage: '2.44 PB',
-      commits: '20,909',
-      contributors: '69',
-      forks: '472',
-      releases: '41',
-      downloads: '1,059,994',
-      downloadSpeed: '1.44 Gbps',
-      uploadSpeed: '71.08 Mbps',
-      cpuUsage: '30.147%',
-      memoryUsage: '151.69 MB',
+      activeHosts: '20,531',
+      onlineHosts: '20,634',
+      totalStorage: '207.38 PB',
+      usedStorage: '202.44 PB',
+      commits: '2,020,909',
+      contributors: '2,069',
+      forks: '20,472',
+      releases: '2,041',
+      downloads: '201,059,994',
+      downloadSpeed: '201.44 Gbps',
+      uploadSpeed: '2071.08 Mbps',
+      cpuUsage: '20.147%',
+      memoryUsage: '201.69 MB',
     }
   }
 
