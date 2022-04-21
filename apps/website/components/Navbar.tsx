@@ -1,7 +1,7 @@
 import {
+  Box,
   Flex,
   Heading,
-  NextImage,
   NextLink,
   useTheme,
 } from '@siafoundation/design-system'
@@ -18,12 +18,13 @@ export function Navbar({ onClick }: Props) {
     return (
       <Flex align="center" justify="between">
         <Heading size="32" onClick={onClick} css={{ cursor: 'pointer' }}>
-          <NextImage
-            {...wordmark}
+          <Box
+            as="img"
+            src={wordmark.src}
             css={{
-              height: '39px',
-              width: '65px',
               filter: `invert(${activeTheme === 'dark' ? 1 : 0})`,
+              height: '78px',
+              width: '130px',
             }}
             alt="Sia"
           />
@@ -36,12 +37,13 @@ export function Navbar({ onClick }: Props) {
     <Flex align="center" justify="between">
       <NextLink href="/">
         <Heading size="32">
-          <NextImage
-            {...wordmark}
+          <Box
+            as="img"
+            src={wordmark.src}
             css={{
-              height: '39px',
-              width: '65px',
               filter: `invert(${activeTheme === 'dark' ? 1 : 0})`,
+              height: '78px',
+              width: '130px',
             }}
             alt="Sia"
           />
