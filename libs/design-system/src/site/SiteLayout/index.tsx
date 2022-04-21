@@ -60,15 +60,12 @@ export function SiteLayout({
       }}
     >
       <Box
-        as="img"
-        loading="lazy"
-        src={backgroundImage.src}
-        alt="Sia"
         css={{
           position: 'relative',
           width: '100%',
           height: '390px',
-          objectFit: 'cover',
+          background: `url(${backgroundImage.src})`,
+          backgroundSize: 'cover',
         }}
       />
     </Box>
@@ -186,15 +183,12 @@ export function SiteLayout({
           }}
         >
           <Box
-            as="img"
-            loading="lazy"
-            src={backgroundImage.src}
-            alt="Sia"
             css={{
               position: 'relative',
               width: '100%',
               height: '100%',
-              objectFit: 'cover',
+              background: `url(${backgroundImage.src})`,
+              backgroundSize: 'cover',
             }}
           />
         </Box>
