@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.12.1](https://github.com/SiaFoundation/web/compare/design-site-0.12.0...design-site-0.12.1) (2022-04-21)
+
+
+### Bug Fixes
+
+* upgrade next-env.d.ts ([fcd6902](https://github.com/SiaFoundation/web/commit/fcd69021613f46e6ebc0efc3c4a25861a363dc12))
+
+
+
 # [0.12.0](https://github.com/SiaFoundation/web/compare/design-site-0.11.1...design-site-0.12.0) (2022-04-12)
 
 
