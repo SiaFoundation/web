@@ -54,3 +54,5 @@ apps/website/public/rss
 
 # Env
 .env
+.deploy.log
+
