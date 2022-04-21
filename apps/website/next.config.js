@@ -10,6 +10,8 @@ const withMDX = require('@next/mdx')({
  * @type {import('@nrwl/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
+  // Use nginx compression in production
+  compress: process.env.NODE_ENV === 'development',
   pageExtensions: ['tsx', 'ts', 'md', 'mdx'],
   nx: {
     // Set this to true if you would like to to use SVGR
