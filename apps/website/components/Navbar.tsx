@@ -21,8 +21,11 @@ export function Navbar({ onClick }: Props) {
           <NextImage
             {...wordmark}
             css={{
+              height: '39px',
+              width: '65px',
               filter: `invert(${activeTheme === 'dark' ? 1 : 0})`,
             }}
+            alt="Sia"
           />
         </Heading>
       </Flex>
@@ -36,8 +39,11 @@ export function Navbar({ onClick }: Props) {
           <NextImage
             {...wordmark}
             css={{
+              height: '39px',
+              width: '65px',
               filter: `invert(${activeTheme === 'dark' ? 1 : 0})`,
             }}
+            alt="Sia"
           />
         </Heading>
       </NextLink>
