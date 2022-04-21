@@ -32,7 +32,7 @@ export function SiteLayout({
 }: Props) {
   const menuWidth = focus ? '65%' : '30%'
 
-  const [transitioning, setTransitioning] = useState<boolean>(true)
+  const [transitioning, setTransitioning] = useState<boolean>(false)
   useEffect(() => {
     setTransitioning(true)
 
