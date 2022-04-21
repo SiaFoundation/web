@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.19.6](https://github.com/SiaFoundation/web/compare/design-system-0.19.5...design-system-0.19.6) (2022-04-21)
+
+
+### Bug Fixes
+
+* no lazy loading above fold ([be081a5](https://github.com/SiaFoundation/web/commit/be081a5e59dbae4960a60b3852e17a0aac61031f))
+
+
+
 ## [0.19.5](https://github.com/SiaFoundation/web/compare/design-system-0.19.4...design-system-0.19.5) (2022-04-21)
 
 
