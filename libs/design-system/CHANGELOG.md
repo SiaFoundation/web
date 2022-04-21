@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.19.4](https://github.com/SiaFoundation/web/compare/design-system-0.19.3...design-system-0.19.4) (2022-04-21)
+
+
+### Bug Fixes
+
+* lazy load background on mobile ([0d0c54b](https://github.com/SiaFoundation/web/commit/0d0c54bb86d1ec305a3df4f6e0b4994e04dc9b8f))
+
+
+
 ## [0.19.3](https://github.com/SiaFoundation/web/compare/design-system-0.19.2...design-system-0.19.3) (2022-04-20)
 
 
