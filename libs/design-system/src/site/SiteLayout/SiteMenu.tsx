@@ -152,10 +152,9 @@ const radioCss: CSS = {
 type Props = {
   links: LinkData[]
   menuWidth: string
-  transitionDuration: number
 }
 
-export function SiteMenu({ links, menuWidth, transitionDuration }: Props) {
+export function SiteMenu({ links, menuWidth }: Props) {
   return (
     <Box css={{ position: 'relative', zIndex: 2 }}>
       <Container>
