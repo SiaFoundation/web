@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.19.7](https://github.com/SiaFoundation/web/compare/design-system-0.19.6...design-system-0.19.7) (2022-04-21)
+
+
+### Bug Fixes
+
+* remove page load transition, load on js disabled ([c458f0f](https://github.com/SiaFoundation/web/commit/c458f0f172d8eb39fdf862eb0373d7044a5a1feb))
+
+
+
 ## [0.19.6](https://github.com/SiaFoundation/web/compare/design-system-0.19.5...design-system-0.19.6) (2022-04-21)
 
 
