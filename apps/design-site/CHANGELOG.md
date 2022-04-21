@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.13.0](https://github.com/SiaFoundation/web/compare/design-site-0.12.1...design-site-0.13.0) (2022-04-21)
+
+
+### Features
+
+* move prod compression to nginx ([4372f8d](https://github.com/SiaFoundation/web/commit/4372f8dd11f61eb3cadbf3c7718cd5c9e7e87141))
+
+
+
 ## [0.12.1](https://github.com/SiaFoundation/web/compare/design-site-0.12.0...design-site-0.12.1) (2022-04-21)
 
 
