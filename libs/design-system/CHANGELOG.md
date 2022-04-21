@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.19.5](https://github.com/SiaFoundation/web/compare/design-system-0.19.4...design-system-0.19.5) (2022-04-21)
+
+
+### Bug Fixes
+
+* lazy load all images ([e1875de](https://github.com/SiaFoundation/web/commit/e1875de0571dfc60ff184b01cf3f83af05782299))
+
+
+
 ## [0.19.4](https://github.com/SiaFoundation/web/compare/design-system-0.19.3...design-system-0.19.4) (2022-04-21)
 
 
