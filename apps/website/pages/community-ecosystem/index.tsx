@@ -101,7 +101,9 @@ function CommunityEcosystem({ stats }: Props) {
             <Image
               src={'/built-with-sia.png'}
               alt="Built with Sia"
+              loading="lazy"
               height="130px"
+              width="140px"
               style={{
                 filter: 'grayscale(1)',
               }}
@@ -117,6 +119,7 @@ function CommunityEcosystem({ stats }: Props) {
                 networks, and commercial data storage platforms.
               </>
             }
+            css={{ flex: 1 }}
           />
         </Flex>
         <ContentGallery

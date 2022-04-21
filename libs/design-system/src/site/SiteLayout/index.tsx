@@ -161,17 +161,17 @@ export function SiteLayout({
           zIndex: 0,
           height: '100%',
           transition: `width ${transitionDuration}ms ease-out`,
-          '@initial': {
-            width: '0%',
-            display: 'none',
-          },
+          width: '0%',
+          display: 'none',
           '@bp3': {
             borderLeft: `$sizes$frame solid $frame`,
             width: menuWidth,
+            display: 'block',
           },
           '@bp4': {
             borderLeft: `$sizes$frame solid $frame`,
             width: menuWidth,
+            display: 'block',
           },
           overflow: 'hidden',
           background: 'white',
@@ -186,12 +186,15 @@ export function SiteLayout({
           }}
         >
           <Box
+            as="img"
+            loading="lazy"
+            src={backgroundImage.src}
+            alt="Sia"
             css={{
               position: 'relative',
               width: '100%',
               height: '100%',
-              background: `url(${backgroundImage.src})`,
-              backgroundSize: 'cover',
+              objectFit: 'cover',
             }}
           />
         </Box>

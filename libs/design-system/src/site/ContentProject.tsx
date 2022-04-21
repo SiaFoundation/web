@@ -42,6 +42,7 @@ export function ContentProject({
             {/* NextImage was having issues loading the file */}
             <Image
               src={`/logos/${logo}.png`}
+              loading="lazy"
               alt={title}
               height="50px"
               width="300px"
