@@ -17,6 +17,7 @@ type Props = {
   onLogoClick?: () => void
   stats?: Stats
   focus?: boolean
+  transitions?: boolean
   transitionDuration?: number
 }
 
@@ -32,6 +33,7 @@ export function Layout({
   backgroundImage,
   previewImage,
   focus,
+  transitions,
   transitionDuration,
 }: Props) {
   return (
@@ -52,6 +54,7 @@ export function Layout({
       />
       <SiteLayout
         focus={focus}
+        transitions={transitions}
         transitionDuration={transitionDuration}
         heading={heading}
         menuLinks={[
