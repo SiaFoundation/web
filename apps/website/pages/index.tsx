@@ -24,7 +24,7 @@ import { getArticles } from '../content/articles'
 import { getSoftware } from '../content/software'
 import backgroundImage from '../assets/backgrounds/mountain.png'
 import previewImage from '../assets/previews/mountain.png'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { textContent } from '../lib/utils'
 import Letter from '../components/Letter'
 import Italic from '../components/Italic'
@@ -76,12 +76,20 @@ export default function Home({ seenLetter }: Props) {
     }, transitionDuration)
   }, [setShowLetter])
 
+  // Enable layout transition effect on the main page after its rendered on the client
+  // so that there is a transition when toggling between the letter and main content.
+  const [transitions, setTransitions] = useState<boolean>(false)
+  useEffect(() => {
+    setTransitions(true)
+  }, [])
+
   return (
     <Layout
       title="Decentralized data storage"
       description={textContent(description)}
       path={sitemap.home.index}
       focus={showLetter}
+      transitions={transitions}
       transitionDuration={transitionDuration}
       onLogoClick={!showLetter ? toggleLanding : undefined}
       heading={

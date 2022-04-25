@@ -1,6 +1,5 @@
 import { Box } from '../../core/Box'
 import { ScrollArea } from '../../core/ScrollArea'
-import { NextImage } from '../../core/Image'
 import { ImageProps } from '../../lib/image'
 import { Flex } from '../../core/Flex'
 import { SiteMenu } from './SiteMenu'
@@ -17,6 +16,7 @@ type Props = {
   children: React.ReactNode
   backgroundImage: ImageProps
   focus?: boolean
+  transitions?: boolean
   transitionDuration?: number
 }
 
@@ -28,12 +28,16 @@ export function SiteLayout({
   footer: _footer,
   backgroundImage,
   focus,
+  transitions = false,
   transitionDuration = 300,
 }: Props) {
   const menuWidth = focus ? '65%' : '30%'
 
-  const [transitioning, setTransitioning] = useState<boolean>(true)
+  const [transitioning, setTransitioning] = useState<boolean>(transitions)
   useEffect(() => {
+    if (!transitions) {
+      return
+    }
     setTransitioning(true)
 
     setTimeout(() => {
@@ -94,13 +98,19 @@ export function SiteLayout({
     setFooter(null)
     setImage(null)
 
-    setTimeout(() => {
+    const setAll = () => {
       setNavbar(_navbar)
       setHeading(_heading)
       setChildren(_children)
       setFooter(_footer)
       setImage(_image)
-    }, 100)
+    }
+
+    if (transitions) {
+      setTimeout(setAll, 100)
+    } else {
+      setAll()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [_children])
 
