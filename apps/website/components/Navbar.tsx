@@ -23,8 +23,8 @@ export function Navbar({ onClick }: Props) {
             src={wordmark.src}
             css={{
               filter: `invert(${activeTheme === 'dark' ? 1 : 0})`,
-              height: '78px',
-              width: '130px',
+              height: '39px',
+              width: '65px',
             }}
             alt="Sia"
           />
@@ -42,8 +42,8 @@ export function Navbar({ onClick }: Props) {
             src={wordmark.src}
             css={{
               filter: `invert(${activeTheme === 'dark' ? 1 : 0})`,
-              height: '78px',
-              width: '130px',
+              height: '39px',
+              width: '65px',
             }}
             alt="Sia"
           />
