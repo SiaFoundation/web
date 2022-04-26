@@ -101,7 +101,6 @@ export default function Home({ seenLetter }: Props) {
       focus={showLetter ? <Letter onDone={() => toggleLanding()} /> : null}
       transitions
       transitionDuration={transitionDuration}
-      onLogoClick={!showLetter ? toggleLanding : undefined}
       heading={
         <Section
           size="4"
