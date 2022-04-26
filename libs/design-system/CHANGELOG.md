@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.20.0](https://github.com/SiaFoundation/web/compare/design-system-0.19.8...design-system-0.20.0) (2022-04-26)
+
+
+### Bug Fixes
+
+* add simple logo svg ([6503376](https://github.com/SiaFoundation/web/commit/65033765888872c44287265b168acff7cfe44ef1))
+* layout transitions only for letter, site renders with no js ([703bacb](https://github.com/SiaFoundation/web/commit/703bacb76693e724b8b2f6dc45a54928d9b56b39))
+
+
+### Features
+
+* pull to top, streamline focus mode ([eb75917](https://github.com/SiaFoundation/web/commit/eb75917a945fc8d58159783b36279be96a0df3bf))
+
+
+
 ## [0.19.8](https://github.com/SiaFoundation/web/compare/design-system-0.19.7...design-system-0.19.8) (2022-04-21)
 
 
