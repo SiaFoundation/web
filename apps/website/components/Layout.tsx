@@ -16,7 +16,7 @@ type Props = {
   previewImage: ImageProps
   onLogoClick?: () => void
   stats?: Stats
-  focus?: boolean
+  focus?: React.ReactNode
   transitions?: boolean
   transitionDuration?: number
 }

@@ -15,104 +15,57 @@ type Props = {
   footer?: React.ReactNode
   children: React.ReactNode
   backgroundImage: ImageProps
-  focus?: boolean
+  focus?: React.ReactNode
   transitions?: boolean
   transitionDuration?: number
 }
 
 export function SiteLayout({
   menuLinks,
-  navbar: _navbar,
-  heading: _heading,
-  children: _children,
-  footer: _footer,
+  navbar,
+  heading,
+  children,
+  footer,
   backgroundImage,
-  focus,
-  transitions = false,
+  focus: _focus,
+  transitions: _transitions = false,
   transitionDuration = 300,
 }: Props) {
-  const menuWidth = focus ? '65%' : '30%'
+  const menuWidth = _focus ? '65%' : '30%'
 
-  const [transitioning, setTransitioning] = useState<boolean>(transitions)
+  // If transitions are on, enable after first client render
+  const [transitions, setTransitions] = useState<boolean>(false)
+  useEffect(() => {
+    if (_transitions) {
+      setTransitions(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const [transitioning, setTransitioning] = useState<boolean>(false)
   useEffect(() => {
     if (!transitions) {
       return
     }
     setTransitioning(true)
-
     setTimeout(() => {
       setTransitioning(false)
     }, transitionDuration)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [focus])
+  }, [_focus])
 
-  const _image = (
-    <Box
-      css={{
-        position: 'relative',
-        width: '100%',
-        height: '390px',
-        overflow: 'hidden',
-        borderTop: '$sizes$frame solid $frame',
-        borderBottom: '$sizes$frame solid $frame',
-        '@initial': {
-          display: 'block',
-        },
-        '@bp3': {
-          display: 'none',
-        },
-      }}
-    >
-      <Box
-        css={{
-          position: 'relative',
-          width: '100%',
-          height: '390px',
-          background: `url(${backgroundImage.src})`,
-          backgroundSize: 'cover',
-        }}
-      />
-    </Box>
-  )
-
-  const [navbar, setNavbar] = useState<React.ReactNode>(_navbar)
-  const [heading, setHeading] = useState<React.ReactNode>(_heading)
-  const [children, setChildren] = useState<React.ReactNode>(_children)
-  const [footer, setFooter] = useState<React.ReactNode>(_footer)
-  const [image, setImage] = useState<React.ReactNode>(_image)
+  const [focus, setFocus] = useState<React.ReactNode>(_focus)
 
   useEffect(() => {
-    setNavbar(_navbar)
-  }, [_navbar])
-  useEffect(() => {
-    setHeading(_heading)
-  }, [_heading])
-  useEffect(() => {
-    setFooter(_footer)
-  }, [_footer])
-
-  useEffect(() => {
-    setNavbar(null)
-    setHeading(null)
-    setChildren(null)
-    setFooter(null)
-    setImage(null)
-
-    const setAll = () => {
-      setNavbar(_navbar)
-      setHeading(_heading)
-      setChildren(_children)
-      setFooter(_footer)
-      setImage(_image)
-    }
-
-    if (transitions) {
-      setTimeout(setAll, 100)
+    if (!_focus) {
+      setFocus(_focus)
     } else {
-      setAll()
+      setTimeout(() => {
+        setFocus(_focus)
+      }, 100)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [_children])
+  }, [_focus])
 
   return (
     <Box
@@ -143,15 +96,45 @@ export function SiteLayout({
               <Container size="4">{navbar}</Container>
             </AppBar>
           )}
-          <Flex as="main" direction="column" gap="8" css={{ width: '100%' }}>
-            <Flex direction="column">
-              <Box css={{ opacity: transitioning ? 0 : 1 }}>
-                {!focus && heading}
-              </Box>
-              {!focus && image}
-              <Box css={{ opacity: transitioning ? 0 : 1 }}>{children}</Box>
-              {!focus && footer}
-            </Flex>
+          <Flex
+            as="main"
+            direction="column"
+            gap="8"
+            css={{ width: '100%', opacity: transitioning ? 0 : 1 }}
+          >
+            {focus || (
+              <Flex direction="column">
+                <Box>{heading}</Box>
+                <Box
+                  css={{
+                    position: 'relative',
+                    width: '100%',
+                    height: '390px',
+                    overflow: 'hidden',
+                    borderTop: '$sizes$frame solid $frame',
+                    borderBottom: '$sizes$frame solid $frame',
+                    '@initial': {
+                      display: 'block',
+                    },
+                    '@bp3': {
+                      display: 'none',
+                    },
+                  }}
+                >
+                  <Box
+                    css={{
+                      position: 'relative',
+                      width: '100%',
+                      height: '390px',
+                      background: `url(${backgroundImage.src})`,
+                      backgroundSize: 'cover',
+                    }}
+                  />
+                </Box>
+                <Box>{children}</Box>
+                {footer}
+              </Flex>
+            )}
           </Flex>
         </Box>
       </ScrollArea>

@@ -15,6 +15,10 @@ import {
   Link,
   Flex,
   Text,
+  usePullTop,
+  Box,
+  ArrowUp16,
+  keyframes,
 } from '@siafoundation/design-system'
 import { omit } from 'lodash'
 import { Layout } from '../components/Layout'
@@ -24,7 +28,7 @@ import { getArticles } from '../content/articles'
 import { getSoftware } from '../content/software'
 import backgroundImage from '../assets/backgrounds/mountain.png'
 import previewImage from '../assets/previews/mountain.png'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { textContent } from '../lib/utils'
 import Letter from '../components/Letter'
 import Italic from '../components/Italic'
@@ -51,6 +55,17 @@ const description = (
 
 const transitionDuration = 300
 
+const jiggle = keyframes({
+  '0%': { top: '0' },
+  '10%': { top: '0' },
+  '15%': { top: '5px' },
+  '20%': { top: '0' },
+  '30%': { top: '0' },
+  '35%': { top: '5px' },
+  '40%': { top: '0' },
+  '100%': { top: '0' },
+})
+
 type Props = AsyncReturnType<typeof getServerSideProps>['props']
 
 export default function Home({ seenLetter }: Props) {
@@ -76,20 +91,15 @@ export default function Home({ seenLetter }: Props) {
     }, transitionDuration)
   }, [setShowLetter])
 
-  // Enable layout transition effect on the main page after its rendered on the client
-  // so that there is a transition when toggling between the letter and main content.
-  const [transitions, setTransitions] = useState<boolean>(false)
-  useEffect(() => {
-    setTransitions(true)
-  }, [])
+  const pulls = usePullTop('main-scroll', !showLetter && toggleLanding)
 
   return (
     <Layout
       title="Decentralized data storage"
       description={textContent(description)}
       path={sitemap.home.index}
-      focus={showLetter}
-      transitions={transitions}
+      focus={showLetter ? <Letter onDone={() => toggleLanding()} /> : null}
+      transitions
       transitionDuration={transitionDuration}
       onLogoClick={!showLetter ? toggleLanding : undefined}
       heading={
@@ -103,7 +113,24 @@ export default function Home({ seenLetter }: Props) {
             size="64"
             title="Decentralized data storage"
             description={description}
+            css={{ position: 'relative' }}
           >
+            {pulls.filter((i) => i === 0).length > 2 && (
+              <Flex
+                align="center"
+                gap="0-5"
+                css={{
+                  position: 'absolute',
+                  marginTop: '-50px',
+                  animation: `${jiggle} 3s infinite`,
+                }}
+              >
+                <Box css={{ color: '$textSubtle' }}>
+                  <ArrowUp16 />
+                </Box>
+                <Text color="subtle">Go to letter</Text>
+              </Flex>
+            )}
             <Flex gap="2" css={{ marginTop: '$1' }}>
               <Text size="20">
                 <Link href={sitemap.developers.index}>
@@ -117,176 +144,169 @@ export default function Home({ seenLetter }: Props) {
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      {showLetter ? (
-        <Letter onDone={() => toggleLanding()} />
-      ) : (
-        <>
-          <Section size="3">
-            <Grid
-              gap={{
-                '@initial': '4',
-                '@bp2': '3',
-              }}
-              columns={{
-                '@initial': '1',
-                '@bp2': '2',
-              }}
-            >
-              <Callout
-                title="Developers"
-                startTime={0}
-                description={
-                  <>
-                    Browse software downloads and developer resources,
-                    tutorials, technical walkthroughs, and more.
-                  </>
-                }
-                actionTitle="Explore"
-                actionLink={sitemap.developers.index}
-              />
-              <Callout
-                title="Learn"
-                startTime={20}
-                description={
-                  <>
-                    Learn all about how Sia works, why it was created, and the
-                    foundation that maintains it.
-                  </>
-                }
-                actionTitle="Read more"
-                actionLink={sitemap.learn.index}
-              />
-            </Grid>
+      <Section size="3">
+        <Grid
+          gap={{
+            '@initial': '4',
+            '@bp2': '3',
+          }}
+          columns={{
+            '@initial': '1',
+            '@bp2': '2',
+          }}
+        >
+          <Callout
+            title="Developers"
+            startTime={0}
+            description={
+              <>
+                Browse software downloads and developer resources, tutorials,
+                technical walkthroughs, and more.
+              </>
+            }
+            actionTitle="Explore"
+            actionLink={sitemap.developers.index}
+          />
+          <Callout
+            title="Learn"
+            startTime={20}
+            description={
+              <>
+                Learn all about how Sia works, why it was created, and the
+                foundation that maintains it.
+              </>
+            }
+            actionTitle="Read more"
+            actionLink={sitemap.learn.index}
+          />
+        </Grid>
+      </Section>
+      <Section size="3" width="flush">
+        <Section width="flush" size="1" css={{ position: 'relative' }}>
+          <WavesBackdrop />
+          <Section size="2" gap="6">
+            <SiteHeading size="32" title="Why Sia" />
+            <ContentGallery
+              items={[
+                {
+                  icon: <IbmSecurity24 />,
+                  title: 'Completely Private',
+                  subtitle: (
+                    <>
+                      Sia encrypts and distributes your files across a
+                      decentralized network. You control your private encryption
+                      keys and you own your data. No outside company or third
+                      party can access or control your files, unlike traditional
+                      cloud storage providers.
+                    </>
+                  ),
+                },
+                {
+                  icon: <Development24 />,
+                  title: 'Highly Redundant',
+                  subtitle: (
+                    <>
+                      Sia distributes and stores redundant file segments on
+                      nodes across the globe, eliminating any single point of
+                      failure and ensuring uptime that rivals traditional cloud
+                      storage providers.
+                    </>
+                  ),
+                },
+                {
+                  icon: <Code24 />,
+                  title: 'Open Source',
+                  subtitle: (
+                    <>
+                      Sia's software is completely open source, with
+                      contributions from leading software engineers and a
+                      thriving community of developers building innovative
+                      applications on the Sia API.
+                    </>
+                  ),
+                },
+                {
+                  icon: <Money24 />,
+                  title: 'Far More Affordable',
+                  subtitle: (
+                    <>
+                      On average, Sia's decentralized cloud storage costs 90%
+                      less than incumbent cloud storage providers. Storing 1TB
+                      of files on Sia costs about $1-2 per month, compared with
+                      $23 on Amazon S3.
+                    </>
+                  ),
+                },
+              ]}
+            />
           </Section>
-          <Section size="3" width="flush">
-            <Section width="flush" size="1" css={{ position: 'relative' }}>
-              <WavesBackdrop />
-              <Section size="2" gap="6">
-                <SiteHeading size="32" title="Why Sia" />
-                <ContentGallery
-                  items={[
-                    {
-                      icon: <IbmSecurity24 />,
-                      title: 'Completely Private',
-                      subtitle: (
-                        <>
-                          Sia encrypts and distributes your files across a
-                          decentralized network. You control your private
-                          encryption keys and you own your data. No outside
-                          company or third party can access or control your
-                          files, unlike traditional cloud storage providers.
-                        </>
-                      ),
-                    },
-                    {
-                      icon: <Development24 />,
-                      title: 'Highly Redundant',
-                      subtitle: (
-                        <>
-                          Sia distributes and stores redundant file segments on
-                          nodes across the globe, eliminating any single point
-                          of failure and ensuring uptime that rivals traditional
-                          cloud storage providers.
-                        </>
-                      ),
-                    },
-                    {
-                      icon: <Code24 />,
-                      title: 'Open Source',
-                      subtitle: (
-                        <>
-                          Sia's software is completely open source, with
-                          contributions from leading software engineers and a
-                          thriving community of developers building innovative
-                          applications on the Sia API.
-                        </>
-                      ),
-                    },
-                    {
-                      icon: <Money24 />,
-                      title: 'Far More Affordable',
-                      subtitle: (
-                        <>
-                          On average, Sia's decentralized cloud storage costs
-                          90% less than incumbent cloud storage providers.
-                          Storing 1TB of files on Sia costs about $1-2 per
-                          month, compared with $23 on Amazon S3.
-                        </>
-                      ),
-                    },
-                  ]}
-                />
-              </Section>
-            </Section>
-          </Section>
-          <Section gap="12">
-            <Section width="flush" size="0">
-              <SiteHeading
-                size="32"
-                title="Explore the Sia Community &amp; Ecosystem"
-                description={
-                  <>
-                    Sia is a thriving ecosystem of open source software, layer 2
-                    networks, and commercial data storage platforms.
-                  </>
-                }
-                links={[
-                  {
-                    title: 'Browse all projects',
-                    link: sitemap.community.index,
-                  },
-                ]}
-              />
-              <ContentGallery
-                items={services.map((i) => ({
-                  ...i,
-                  newTab: true,
-                }))}
-                component={ContentProject}
-                columns={{
-                  '@initial': 1,
-                  '@bp2': 2,
-                  '@bp4': 3,
-                }}
-              />
-            </Section>
-            <Section width="flush" size="0">
-              <SiteHeading
-                size="24"
-                title="Start Building"
-                description={
-                  <>
-                    Visit the developer pages for software downloads and
-                    developer resources, tutorials, technical walkthroughs, and
-                    more.
-                  </>
-                }
-              />
-              <ContentGallery items={tutorials} />
-            </Section>
-            <Section width="flush" size="3">
-              <SiteHeading
-                size="32"
-                title="The Latest"
-                description={
-                  <>
-                    Read the latest from the core team and the ecosystem of
-                    developers building technology on top of Sia.
-                  </>
-                }
-                links={[
-                  {
-                    title: 'Browse the blog',
-                    link: external.blog,
-                    newTab: true,
-                  },
-                ]}
-              />
-              <ContentGallery items={latest} columns="1" />
-            </Section>
-          </Section>
-        </>
-      )}
+        </Section>
+      </Section>
+      <Section gap="12">
+        <Section width="flush" size="0">
+          <SiteHeading
+            size="32"
+            title="Explore the Sia Community &amp; Ecosystem"
+            description={
+              <>
+                Sia is a thriving ecosystem of open source software, layer 2
+                networks, and commercial data storage platforms.
+              </>
+            }
+            links={[
+              {
+                title: 'Browse all projects',
+                link: sitemap.community.index,
+              },
+            ]}
+          />
+          <ContentGallery
+            items={services.map((i) => ({
+              ...i,
+              newTab: true,
+            }))}
+            component={ContentProject}
+            columns={{
+              '@initial': 1,
+              '@bp2': 2,
+              '@bp4': 3,
+            }}
+          />
+        </Section>
+        <Section width="flush" size="0">
+          <SiteHeading
+            size="24"
+            title="Start Building"
+            description={
+              <>
+                Visit the developer pages for software downloads and developer
+                resources, tutorials, technical walkthroughs, and more.
+              </>
+            }
+          />
+          <ContentGallery items={tutorials} />
+        </Section>
+        <Section width="flush" size="3">
+          <SiteHeading
+            size="32"
+            title="The Latest"
+            description={
+              <>
+                Read the latest from the core team and the ecosystem of
+                developers building technology on top of Sia.
+              </>
+            }
+            links={[
+              {
+                title: 'Browse the blog',
+                link: external.blog,
+                newTab: true,
+              },
+            ]}
+          />
+          <ContentGallery items={latest} columns="1" />
+        </Section>
+      </Section>
     </Layout>
   )
 }
