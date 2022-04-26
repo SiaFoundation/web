@@ -2,6 +2,22 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.17.0](https://github.com/SiaFoundation/web/compare/website-0.16.1...website-0.17.0) (2022-04-26)
+
+
+### Bug Fixes
+
+* layout transitions only for letter, site renders with no js ([703bacb](https://github.com/SiaFoundation/web/commit/703bacb76693e724b8b2f6dc45a54928d9b56b39))
+* remove nav logo letter navigation ([a439a7b](https://github.com/SiaFoundation/web/commit/a439a7be9e382896f7b322715ffc09c97cb6d585))
+* wordmark dimensions ([f2b7aa2](https://github.com/SiaFoundation/web/commit/f2b7aa28342a96b7bbde783325b2c72cd639bff4))
+
+
+### Features
+
+* pull to top, streamline focus mode ([eb75917](https://github.com/SiaFoundation/web/commit/eb75917a945fc8d58159783b36279be96a0df3bf))
+
+
+
 ## [0.16.1](https://github.com/SiaFoundation/web/compare/website-0.16.0...website-0.16.1) (2022-04-21)
 
 
