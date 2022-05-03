@@ -21,8 +21,8 @@ import { external, sitemap } from '../../config/site'
 import { getStats, Stats } from '../../content/stats'
 import { getDaysInSeconds } from '../../lib/time'
 import { textContent } from '../../lib/utils'
-import backgroundImage from '../../assets/backgrounds/leaves.png'
-import previewImage from '../../assets/previews/leaves.png'
+import backgroundImage from '../../assets/backgrounds/mountain.png'
+import previewImage from '../../assets/previews/mountain.png'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
