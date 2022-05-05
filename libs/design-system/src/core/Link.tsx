@@ -60,6 +60,7 @@ type NLinkProps = {
   id?: string
   href: string
   target?: string
+  onClick?: () => void
   children?: React.ReactNode
   variant?: React.ComponentProps<typeof Link>['variant']
   css?: CSS
@@ -71,12 +72,19 @@ export function NextLink({
   href,
   target,
   children,
+  onClick,
   variant = 'contrast',
   css,
 }: NLinkProps) {
   return (
     <BaseNextLink href={href} passHref>
-      <Link id={id} target={target} variant={variant} css={css}>
+      <Link
+        id={id}
+        target={target}
+        variant={variant}
+        css={css}
+        onClick={onClick}
+      >
         {children}
       </Link>
     </BaseNextLink>

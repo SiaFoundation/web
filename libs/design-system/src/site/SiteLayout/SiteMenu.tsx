@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { styled, keyframes, VariantProps, CSS } from '../../config/theme'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { overlayStyles } from '../../core/Overlay'
@@ -155,10 +155,11 @@ type Props = {
 }
 
 export function SiteMenu({ links, menuWidth }: Props) {
+  const [open, setOpen] = useState<boolean>(false)
   return (
     <Box css={{ position: 'relative', zIndex: 2 }}>
-      <Container>
-        <Trigger asChild>
+      <Container open={open} onOpenChange={(open) => setOpen(open)}>
+        <Trigger asChild onClick={() => setOpen(!open)}>
           <Box
             css={{
               position: 'fixed',
@@ -197,7 +198,12 @@ export function SiteMenu({ links, menuWidth }: Props) {
                 <SimpleLogoIcon />
               </Box>
               {links.map(({ title, link }) => (
-                <MenuLink key={link} link={link} title={title} />
+                <MenuLink
+                  key={link}
+                  link={link}
+                  title={title}
+                  onClick={() => setOpen(false)}
+                />
               ))}
               <ThemeRadio radioCss={radioCss} css={{ marginTop: '$8' }} />
             </Flex>
@@ -208,7 +214,13 @@ export function SiteMenu({ links, menuWidth }: Props) {
   )
 }
 
-function MenuLink({ link, title }: LinkData) {
+type MenuLinkProps = {
+  link: string
+  title: string
+  onClick: () => void
+}
+
+function MenuLink({ link, title, onClick }: MenuLinkProps) {
   return (
     <Text
       size={{
@@ -225,7 +237,7 @@ function MenuLink({ link, title }: LinkData) {
         },
       }}
     >
-      <NextLink variant="light" href={link}>
+      <NextLink variant="light" href={link} onClick={onClick}>
         {title}
       </NextLink>
     </Text>
