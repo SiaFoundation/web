@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.21.0](https://github.com/SiaFoundation/web/compare/design-system-0.20.0...design-system-0.21.0) (2022-05-05)
+
+
+### Features
+
+* sitemenu closes after any link click, link accepts onclick ([1b4481c](https://github.com/SiaFoundation/web/commit/1b4481c077915bd2a306d8e4a59d812b8ae16986))
+
+
+
 # [0.20.0](https://github.com/SiaFoundation/web/compare/design-system-0.19.8...design-system-0.20.0) (2022-04-26)
 
 
