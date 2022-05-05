@@ -16,9 +16,6 @@ import {
   Flex,
   Text,
   usePullTop,
-  Box,
-  ArrowUp16,
-  keyframes,
 } from '@siafoundation/design-system'
 import { omit } from 'lodash'
 import { Layout } from '../components/Layout'
@@ -52,17 +49,6 @@ const description = (
 )
 
 const transitionDuration = 300
-
-const jiggle = keyframes({
-  '0%': { top: '0' },
-  '10%': { top: '0' },
-  '15%': { top: '5px' },
-  '20%': { top: '0' },
-  '30%': { top: '0' },
-  '35%': { top: '5px' },
-  '40%': { top: '0' },
-  '100%': { top: '0' },
-})
 
 type Props = AsyncReturnType<typeof getServerSideProps>['props']
 

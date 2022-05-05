@@ -1,6 +1,5 @@
 import { DotIcon } from '@radix-ui/react-icons'
 import {
-  Box,
   Flex,
   Heading,
   NextLink,
