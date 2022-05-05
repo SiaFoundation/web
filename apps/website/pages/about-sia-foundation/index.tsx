@@ -78,11 +78,6 @@ function Foundation({ stats, team, newsPosts, reports }: Props) {
               cheap, ubiquitous, and accessible to all, without compromising
               privacy or performance.
             </Paragraph>
-            <Paragraph>
-              Sia is a perfect example of how we can achieve better living
-              through cryptography. We now begin a new chapter in Sia's history.
-              May our stewardship lead it into a bright future.
-            </Paragraph>
           </Flex>
           <Flex direction="column" gap="4">
             <SiteHeading size="24" title="Contact" />
@@ -136,7 +131,7 @@ function Foundation({ stats, team, newsPosts, reports }: Props) {
                     href={`https://github.com/${member.github}`}
                     target="_blank"
                     variant="subtle"
-                    aria-label="Github"
+                    aria-label="GitHub"
                   >
                     <LogoGithub24 />
                   </NextLink>

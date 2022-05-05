@@ -169,32 +169,38 @@ function Developers({ stats }: Props) {
                 <SoftwareSection
                   title="Embarcadero"
                   description={
-                    <>
-                      Embarcadero is a tool for conducting escrowless SF
-                      {'<->'}SC swaps.
-                    </>
+                    <>A tool for conducting escrowless SF{'<->'}SC swaps.</>
                   }
                   version={siaVersion.embc}
                   links={[
                     {
-                      title: 'Windows',
-                      link: getHref(
-                        `${hosts.app}/releases/embc-v${siaVersion.embc}-windows-amd64.zip`
-                      ),
+                      title: 'Linux AMD',
+                      link: `https://github.com/SiaFoundation/embarcadero/releases/download/v${siaVersion.embc}/embarcadero_v${siaVersion.embc}_linux_amd64.zip`,
                       newTab: true,
                     },
                     {
-                      title: 'MacOS',
-                      link: getHref(
-                        `${hosts.app}/releases/embc-v${siaVersion.embc}-darwin-amd64.zip`
-                      ),
+                      title: 'Linux ARM',
+                      link: `https://github.com/SiaFoundation/embarcadero/releases/download/v${siaVersion.embc}/embarcadero_v${siaVersion.embc}_linux_arm64.zip`,
                       newTab: true,
                     },
                     {
-                      title: 'Linux',
-                      link: getHref(
-                        `${hosts.app}/releases/embc-v${siaVersion.embc}-linux-amd64.zip`
-                      ),
+                      title: 'MacOS AMD',
+                      link: `https://github.com/SiaFoundation/embarcadero/releases/download/v${siaVersion.embc}/embarcadero_v${siaVersion.embc}_darwin_amd64.zip`,
+                      newTab: true,
+                    },
+                    {
+                      title: 'MacOS ARM',
+                      link: `https://github.com/SiaFoundation/embarcadero/releases/download/v${siaVersion.embc}/embarcadero_v${siaVersion.embc}_darwin_arm64.zip`,
+                      newTab: true,
+                    },
+                    {
+                      title: 'Windows AMD',
+                      link: `https://github.com/SiaFoundation/embarcadero/releases/download/v${siaVersion.embc}/embarcadero_v${siaVersion.embc}_windows_amd64.zip`,
+                      newTab: true,
+                    },
+                    {
+                      title: 'Windows ARM',
+                      link: `https://github.com/SiaFoundation/embarcadero/releases/download/v${siaVersion.embc}/embarcadero_v${siaVersion.embc}_windows_arm64.zip`,
                       newTab: true,
                     },
                   ]}

@@ -31,7 +31,6 @@ import previewImage from '../assets/previews/mountain.png'
 import { useCallback, useState } from 'react'
 import { textContent } from '../lib/utils'
 import Letter from '../components/Letter'
-import Italic from '../components/Italic'
 
 const tutorials = getArticles(['tutorial'])
 const latest = getArticles(['latest']).map((i) => omit(i, ['icon']))
@@ -43,13 +42,11 @@ const previewImageProps = getImageProps(previewImage)
 const description = (
   <>
     Cryptography has unleashed the latent power of the Internet by enabling
-    interactions between mutually-distrustful parties. Sia harnesses this power
-    to turn the cloud storage market into a proper market<Italic>place</Italic>,
-    where buyers and sellers can transact directly, with no intermediaries,
-    anywhere in the world. No more silos or walled gardens: your data is
-    encrypted, so it can't be spied on, and it's stored on many servers, so no
-    single entity can hold it hostage. Thanks to projects like Sia, the Internet
-    is being re-decentralized.
+    interactions between mutually-distrusting parties. Sia harnesses this power
+    to create a trustless cloud storage marketplace, allowing buyers and sellers
+    to transact directly. No intermediaries, no borders, no vendor lock-in, no
+    spying, no throttling, no walled gardens; it's a return to the Internet we
+    once knew. The future is making a comeback.
   </>
 )
 
@@ -193,10 +190,9 @@ export default function Home({ seenLetter }: Props) {
                   subtitle: (
                     <>
                       Sia encrypts and distributes your files across a
-                      decentralized network. You control your private encryption
-                      keys and you own your data. No outside company or third
-                      party can access or control your files, unlike traditional
-                      cloud storage providers.
+                      decentralized network. Unlike traditional cloud storage
+                      providers, you truly own your data: no third party can
+                      access your files or prevent you from accessing them.
                     </>
                   ),
                 },
@@ -207,8 +203,8 @@ export default function Home({ seenLetter }: Props) {
                     <>
                       Sia distributes and stores redundant file segments on
                       nodes across the globe, eliminating any single point of
-                      failure and ensuring uptime that rivals traditional cloud
-                      storage providers.
+                      failure and achieving uptime and throughput that no
+                      centralized provider can compete with.
                     </>
                   ),
                 },
@@ -230,7 +226,7 @@ export default function Home({ seenLetter }: Props) {
                   subtitle: (
                     <>
                       On average, Sia's decentralized cloud storage costs 90%
-                      less than incumbent cloud storage providers. Storing 1TB
+                      less than incumbent cloud storage providers. Storing 1 TB
                       of files on Sia costs about $1-2 per month, compared with
                       $23 on Amazon S3.
                     </>

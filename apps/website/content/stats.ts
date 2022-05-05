@@ -1,7 +1,7 @@
 import {
   getBenchmarks,
   getCounts,
-  getGithub,
+  getGitHub,
   getSiaStatsHostsStats,
 } from '@siafoundation/data-sources'
 import { isDev } from '@siafoundation/env'
@@ -30,7 +30,7 @@ export async function getStats() {
   const [hostsStats, downloadCounts, github, benchmarks] = await Promise.all([
     getSiaStatsHostsStats(),
     getCounts(),
-    getGithub(),
+    getGitHub(),
     getBenchmarks(),
   ])
   const latestBenchmark = benchmarks.data[0]
