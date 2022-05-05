@@ -1,9 +1,9 @@
-import { getGithubToken } from '@siafoundation/env'
+import { getGitHubToken } from '@siafoundation/env'
 import Axios from 'axios'
 import { errorResponse500 } from './error'
 import { AsyncDataSourceResponse } from './types'
 
-const githubToken = getGithubToken()
+const githubToken = getGitHubToken()
 
 const axios = Axios.create({
   headers: {
@@ -64,14 +64,14 @@ async function getReleaseCount() {
 //   // TODO: Add next gen UI repo
 // }
 
-type Github = {
+type GitHub = {
   commits: number
   contributors: number
   forks: number
   releases: number
 }
 
-export async function getGithub(): AsyncDataSourceResponse<Github> {
+export async function getGitHub(): AsyncDataSourceResponse<GitHub> {
   try {
     let result = {
       commits: 20_905,

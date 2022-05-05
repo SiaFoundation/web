@@ -38,6 +38,6 @@ export function getSiaVersion() {
   }
 }
 
-export function getGithubToken() {
+export function getGitHubToken() {
   return process.env.GITHUB_TOKEN
 }
