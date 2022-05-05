@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.17.1](https://github.com/SiaFoundation/web/compare/website-0.17.0...website-0.17.1) (2022-05-05)
+
+
+### Bug Fixes
+
+* add immutable caching policy to fonts ([401fac2](https://github.com/SiaFoundation/web/commit/401fac2fce89cc32fe29f313e8eabcf80f4cf04c))
+* update content copy ([2cf0065](https://github.com/SiaFoundation/web/commit/2cf0065fde3d16cffd2df9550483796ec282a1da))
+
+
+
 # [0.17.0](https://github.com/SiaFoundation/web/compare/website-0.16.1...website-0.17.0) (2022-04-26)
 
 
