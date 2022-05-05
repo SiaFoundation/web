@@ -2,7 +2,6 @@
 import {
   Flex,
   Box,
-  Heading,
   Text,
   Paragraph,
   Section,
@@ -10,6 +9,7 @@ import {
 import { useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
 import Italic from './Italic'
+import { JiggleArrow } from './JiggleArrow'
 
 type Props = {
   onDone: () => void
@@ -123,6 +123,9 @@ export default function Letter({ onDone }: Props) {
           gardens; it's a return to the Internet we once knew. The future is
           making a comeback.
         </Paragraph>
+        <Box css={{ marginTop: '$3' }}>
+          <JiggleArrow title="Scroll to continue" direction="down" />
+        </Box>
       </Flex>
       <Box ref={ref} css={{ marginTop: '50vh' }} />
     </Section>
