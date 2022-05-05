@@ -10,14 +10,14 @@ type Member = {
 
 export default [
   {
-    name: 'Luke Champine',
+    name: 'Luke',
     image: 'luke',
     title: 'President & Core Developer',
     twitter: 'lukechampine',
     github: 'lukechampine',
   },
   {
-    name: 'Frances Lu',
+    name: 'Frances',
     image: 'frances',
     title: 'Director of Operations',
     linkedin: 'frances-lu-066762123',
@@ -29,7 +29,7 @@ export default [
     github: 'kinomora',
   },
   {
-    name: 'Nate Maninger',
+    name: 'Nate',
     image: 'nate',
     twitter: 'n8maninger',
     github: 'n8maninger',
@@ -42,14 +42,14 @@ export default [
     title: 'Core Developer',
   },
   {
-    name: 'Alex Freska',
+    name: 'Alex',
     image: 'alex',
     title: 'Product Engineer',
     twitter: 'alexfreska',
     github: 'alexfreska',
   },
   {
-    name: 'Eddie Wang',
+    name: 'Eddie',
     image: 'eddie',
     twitter: 'eddiepluswang',
     github: 'eddiewang',

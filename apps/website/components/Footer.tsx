@@ -73,7 +73,7 @@ export function Footer({ stats }: Props) {
                 Twitter
               </BottomLink>
               <BottomLink href={external.github} target="_blank">
-                Github
+                GitHub
               </BottomLink>
             </Flex>
           </Flex>
