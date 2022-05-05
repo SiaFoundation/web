@@ -28,9 +28,10 @@ import { getArticles } from '../content/articles'
 import { getSoftware } from '../content/software'
 import backgroundImage from '../assets/backgrounds/mountain.png'
 import previewImage from '../assets/previews/mountain.png'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { textContent } from '../lib/utils'
 import Letter from '../components/Letter'
+import { JiggleArrow } from '../components/JiggleArrow'
 
 const tutorials = getArticles(['tutorial'])
 const latest = getArticles(['latest']).map((i) => omit(i, ['icon']))
@@ -68,18 +69,13 @@ type Props = AsyncReturnType<typeof getServerSideProps>['props']
 export default function Home({ seenLetter }: Props) {
   const [showLetter, setShowLetter] = useState<boolean>(!seenLetter)
 
-  const toggleLanding = useCallback(() => {
-    setShowLetter((showLetter) => {
-      const show = !showLetter
+  useEffect(() => {
+    document.cookie =
+      'seen-letter=true; max-age=2147483647; SameSite=None; Secure'
+  }, [])
 
-      if (show) {
-        document.cookie = 'seen-letter=false; max-age=0; SameSite=None; Secure'
-      } else {
-        document.cookie =
-          'seen-letter=true; max-age=2147483647; SameSite=None; Secure'
-      }
-      return show
-    })
+  const toggleLanding = useCallback(() => {
+    setShowLetter((showLetter) => !showLetter)
 
     setTimeout(() => {
       document.getElementById('main-scroll').scrollTo({
@@ -112,20 +108,14 @@ export default function Home({ seenLetter }: Props) {
             css={{ position: 'relative' }}
           >
             {pulls.filter((i) => i === 0).length > 2 && (
-              <Flex
-                align="center"
-                gap="0-5"
+              <JiggleArrow
+                title="Go to letter"
+                direction="up"
                 css={{
                   position: 'absolute',
                   marginTop: '-50px',
-                  animation: `${jiggle} 3s infinite`,
                 }}
-              >
-                <Box css={{ color: '$textSubtle' }}>
-                  <ArrowUp16 />
-                </Box>
-                <Text color="subtle">Go to letter</Text>
-              </Flex>
+              />
             )}
             <Flex gap="2" css={{ marginTop: '$1' }}>
               <Text size="20">
