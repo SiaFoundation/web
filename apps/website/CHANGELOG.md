@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.17.2](https://github.com/SiaFoundation/web/compare/website-0.17.1...website-0.17.2) (2022-05-05)
+
+
+### Bug Fixes
+
+* auto cookie, scroll to continue, footer padding ([a6d9241](https://github.com/SiaFoundation/web/commit/a6d9241a850e7aa01c1e9db8e878237d529c89a0))
+* learn explicit section height ([9ebe257](https://github.com/SiaFoundation/web/commit/9ebe2573bdff87bbf5a538185cf76c8ea14f277a))
+
+
+
 ## [0.17.1](https://github.com/SiaFoundation/web/compare/website-0.17.0...website-0.17.1) (2022-05-05)
 
 
