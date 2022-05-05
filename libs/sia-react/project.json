@@ -1,5 +1,4 @@
 {
-  "root": "libs/sia-react",
   "sourceRoot": "libs/sia-react/src",
   "projectType": "library",
   "tags": [],
@@ -22,7 +21,8 @@
             "output": "."
           }
         ]
-      }
+      },
+      "configurations": {}
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
@@ -35,7 +35,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/sia-react"],
       "options": {
-        "jestConfig": "libs/sia-react/jest.config.js",
+        "jestConfig": "libs/sia-react/jest.config.ts",
         "passWithNoTests": true
       }
     },

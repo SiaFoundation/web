@@ -1,5 +1,4 @@
 {
-  "root": "libs/sia-js",
   "sourceRoot": "libs/sia-js/src",
   "projectType": "library",
   "targets": {
@@ -14,12 +13,12 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/sia-js"],
       "options": {
-        "jestConfig": "libs/sia-js/jest.config.js",
+        "jestConfig": "libs/sia-js/jest.config.ts",
         "passWithNoTests": true
       }
     },
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/sia-js",
@@ -27,7 +26,8 @@
         "packageJson": "libs/sia-js/package.json",
         "main": "libs/sia-js/src/index.ts",
         "assets": ["libs/sia-js/*.md"]
-      }
+      },
+      "configurations": {}
     },
     "version": {
       "executor": "@jscutlery/semver:version",

@@ -1,9 +1,10 @@
 module.exports = {
-  displayName: 'sia-react',
-  preset: '../../jest.preset.js',
+  displayName: 'design-system',
+
   transform: {
     '^.+\\.[tj]sx?$': 'babel-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/libs/sia-react',
+  coverageDirectory: '../../coverage/libs/design-system',
+  preset: '../../jest.preset.ts',
 }
