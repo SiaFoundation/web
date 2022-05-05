@@ -63,6 +63,11 @@ function Learn({ stats }: Props) {
           }}
           gapX="6"
           gapY="9"
+          css={{
+            '@bp2': {
+              height: '450px',
+            },
+          }}
         >
           <Box css={{ maxWidth: '600px' }}>
             <Flex direction="column" gap="8">
