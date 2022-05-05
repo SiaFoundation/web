@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'sia-js',
-  preset: '../../jest.preset.js',
+  displayName: 'data-sources',
+
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
@@ -11,5 +11,6 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/libs/sia-js',
+  coverageDirectory: '../../coverage/libs/data-sources',
+  preset: '../../jest.preset.ts',
 }

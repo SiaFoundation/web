@@ -1,5 +1,4 @@
 {
-  "root": "libs/data-sources",
   "sourceRoot": "libs/data-sources/src",
   "projectType": "library",
   "targets": {
@@ -14,7 +13,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/data-sources"],
       "options": {
-        "jestConfig": "libs/data-sources/jest.config.js",
+        "jestConfig": "libs/data-sources/jest.config.ts",
         "passWithNoTests": true
       }
     },

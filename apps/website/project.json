@@ -1,5 +1,4 @@
 {
-  "root": "apps/website",
   "sourceRoot": "apps/website",
   "projectType": "application",
   "targets": {
@@ -19,7 +18,8 @@
         ]
       },
       "configurations": {
-        "production": {}
+        "production": {},
+        "development": {}
       }
     },
     "serve": {
@@ -29,7 +29,14 @@
         "dev": true,
         "port": 3001,
         "proxyConfig": "apps/website/proxy.conf.json"
-      }
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "website:build:development",
+          "dev": true
+        }
+      },
+      "defaultConfiguration": "development"
     },
     "export": {
       "executor": "@nrwl/next:export",
@@ -41,7 +48,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/apps/website"],
       "options": {
-        "jestConfig": "apps/website/jest.config.js",
+        "jestConfig": "apps/website/jest.config.ts",
         "passWithNoTests": true
       }
     },
