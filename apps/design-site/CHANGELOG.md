@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.13.2](https://github.com/SiaFoundation/web/compare/design-site-0.13.1...design-site-0.13.2) (2022-05-06)
+
+
+
 ## [0.13.1](https://github.com/SiaFoundation/web/compare/design-site-0.13.0...design-site-0.13.1) (2022-05-05)
 
 
