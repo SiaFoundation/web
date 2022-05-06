@@ -139,12 +139,13 @@ export function generateRssNewsFeed(posts: NewsPost[]) {
       '[slug]',
       post.slug
     )}`
+    const content = post.html.replace(/\sclass="[a-zA-Z0-9:;.\s()\-,]*"/g, '')
     feed.addItem({
       title: post.title,
       id: url,
       link: url,
       description: post.subtitle as string,
-      content: post.html,
+      content,
       author: [author],
       contributor: [author],
       date: new Date(post.date),
