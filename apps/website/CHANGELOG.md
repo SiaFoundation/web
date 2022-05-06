@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.17.4](https://github.com/SiaFoundation/web/compare/website-0.17.3...website-0.17.4) (2022-05-06)
+
+
+### Bug Fixes
+
+* mobile scroll transitioning ([5182b2b](https://github.com/SiaFoundation/web/commit/5182b2b97c25dfa87116f313dc705b6534354a6b))
+
+
+
 ## [0.17.3](https://github.com/SiaFoundation/web/compare/website-0.17.2...website-0.17.3) (2022-05-06)
 
 
