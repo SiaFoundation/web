@@ -72,20 +72,23 @@ export function SiteLayout({
       as="main"
       css={{
         position: 'relative',
-        height: '100vh',
-        overflow: 'hidden',
+        height: '100%',
         border: `$sizes$frame solid $frame`,
         background: '$loContrast',
+        overflow: 'hidden',
       }}
     >
       <ScrollArea id="main-scroll">
         <Box
+          // After a focus Safari does not apply the padding until the content scrolls,
+          // this key fixes that
+          key={String(focus)}
           css={{
             position: 'relative',
+            zIndex: 1,
+            overflow: 'hidden',
             transition: `padding-right ${transitionDuration}ms ease-out`,
-            '@initial': {
-              paddingRight: '0%',
-            },
+            paddingRight: '0%',
             '@bp3': {
               paddingRight: menuWidth,
             },
