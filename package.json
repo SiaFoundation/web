@@ -31,6 +31,7 @@
     "@radix-ui/react-popover": "^0.1.7-rc.8",
     "@radix-ui/react-progress": "^0.1.5-rc.8",
     "@radix-ui/react-radio-group": "^0.1.6-rc.11",
+    "@radix-ui/react-scroll-area": "^0.1.5-rc.14",
     "@radix-ui/react-separator": "^0.1.5-rc.8",
     "@radix-ui/react-slider": "^0.1.5-rc.11",
     "@radix-ui/react-switch": "^0.1.6-rc.8",
