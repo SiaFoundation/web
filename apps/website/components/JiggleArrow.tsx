@@ -21,18 +21,21 @@ const jiggle = keyframes({
 
 type Props = {
   title: string
+  onClick: () => void
   direction: 'up' | 'down'
   css?: CSS
 }
 
-export function JiggleArrow({ title, direction, css }: Props) {
+export function JiggleArrow({ title, direction, onClick, css }: Props) {
   return (
     <Flex
       align="center"
       gap="0-5"
+      onClick={onClick}
       css={{
         position: 'relative',
         animation: `${jiggle} 3s infinite`,
+        cursor: 'pointer',
         ...css,
       }}
     >

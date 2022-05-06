@@ -124,7 +124,11 @@ export default function Letter({ onDone }: Props) {
           making a comeback.
         </Paragraph>
         <Box css={{ marginTop: '$3' }}>
-          <JiggleArrow title="Scroll to continue" direction="down" />
+          <JiggleArrow
+            title="Scroll to continue"
+            direction="down"
+            onClick={onDone}
+          />
         </Box>
       </Flex>
       <Box ref={ref} css={{ marginTop: '50vh' }} />

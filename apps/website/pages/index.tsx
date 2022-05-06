@@ -70,7 +70,7 @@ export default function Home({ seenLetter }: Props) {
     }, transitionDuration)
   }, [setShowLetter])
 
-  const pulls = usePullTop('main-scroll', !showLetter && toggleLanding)
+  const pullPending = usePullTop('main-scroll', !showLetter, toggleLanding)
 
   return (
     <Layout
@@ -93,9 +93,10 @@ export default function Home({ seenLetter }: Props) {
             description={description}
             css={{ position: 'relative' }}
           >
-            {pulls.filter((i) => i === 0).length > 2 && (
+            {pullPending && (
               <JiggleArrow
                 title="Go to letter"
+                onClick={toggleLanding}
                 direction="up"
                 css={{
                   position: 'absolute',

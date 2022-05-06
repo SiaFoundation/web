@@ -19,6 +19,7 @@ const StyledViewport = styled(ScrollAreaPrimitive.Viewport, {
 })
 
 const StyledScrollbar = styled(ScrollAreaPrimitive.Scrollbar, {
+  zIndex: 1,
   display: 'flex',
   // ensures no selection
   userSelect: 'none',

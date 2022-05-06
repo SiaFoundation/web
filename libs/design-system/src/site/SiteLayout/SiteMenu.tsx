@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { styled, keyframes, VariantProps, CSS } from '../../config/theme'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { overlayStyles } from '../../core/Overlay'
@@ -155,11 +155,22 @@ type Props = {
 }
 
 export function SiteMenu({ links, menuWidth }: Props) {
-  const [open, setOpen] = useState<boolean>(false)
+  const [open, _setOpen] = useState<boolean>(false)
+
+  const setOpen = useCallback(
+    (open: boolean) => {
+      _setOpen(open)
+      if (!open) {
+        document.body.setAttribute('style', '')
+      }
+    },
+    [_setOpen]
+  )
+
   return (
     <Box css={{ position: 'relative', zIndex: 2 }}>
-      <Container open={open} onOpenChange={(open) => setOpen(open)}>
-        <Trigger asChild onClick={() => setOpen(!open)}>
+      <Container open={open} onOpenChange={setOpen}>
+        <Trigger asChild>
           <Box
             css={{
               position: 'fixed',
