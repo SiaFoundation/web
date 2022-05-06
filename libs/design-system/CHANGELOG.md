@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.22.0](https://github.com/SiaFoundation/web/compare/design-system-0.21.1...design-system-0.22.0) (2022-05-06)
+
+
+### Bug Fixes
+
+* mobile scroll transitioning ([5182b2b](https://github.com/SiaFoundation/web/commit/5182b2b97c25dfa87116f313dc705b6534354a6b))
+
+
+### Features
+
+* radix scroll area ([ca4bd62](https://github.com/SiaFoundation/web/commit/ca4bd6262d46bdaad86a0fdcab59ab8c4131c9b0))
+
+
+
 ## [0.21.1](https://github.com/SiaFoundation/web/compare/design-system-0.21.0...design-system-0.21.1) (2022-05-06)
 
 
