@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.22.1](https://github.com/SiaFoundation/web/compare/design-system-0.22.0...design-system-0.22.1) (2022-05-07)
+
+
+### Bug Fixes
+
+* system theme filters ([2f3ee14](https://github.com/SiaFoundation/web/commit/2f3ee1418edb5a4946c3e0744a903fcb7797eef0))
+
+
+
 # [0.22.0](https://github.com/SiaFoundation/web/compare/design-system-0.21.1...design-system-0.22.0) (2022-05-06)
 
 
