@@ -24,10 +24,10 @@ export function Statsbar({ stats }: Props) {
     forks,
     releases,
     downloads,
-    downloadSpeed,
-    uploadSpeed,
-    cpuUsage,
-    memoryUsage,
+    // downloadSpeed,
+    // uploadSpeed,
+    // cpuUsage,
+    // memoryUsage,
   } = stats || data || {}
   return (
     <Flex
@@ -65,7 +65,7 @@ export function Statsbar({ stats }: Props) {
           },
         ]}
       />
-      <StatSection
+      {/* <StatSection
         title="Benchmarks"
         link={external.benchmarks}
         stats={[
@@ -86,7 +86,7 @@ export function Statsbar({ stats }: Props) {
             label: 'memory usage',
           },
         ]}
-      />
+      /> */}
       <StatSection
         title="Software"
         link={external.github}
