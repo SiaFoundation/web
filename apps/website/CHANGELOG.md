@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.17.5](https://github.com/SiaFoundation/web/compare/website-0.17.4...website-0.17.5) (2022-05-07)
+
+
+### Bug Fixes
+
+* sia pdf ([b8f656f](https://github.com/SiaFoundation/web/commit/b8f656f56b0b060bc84bd828d05c382df1ceab72))
+* strip classes from rss ([ab2026a](https://github.com/SiaFoundation/web/commit/ab2026a0804c1f6479235270c8c95596dd2cce3f))
+
+
+
 ## [0.17.4](https://github.com/SiaFoundation/web/compare/website-0.17.3...website-0.17.4) (2022-05-06)
 
 
