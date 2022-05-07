@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.17.8](https://github.com/SiaFoundation/web/compare/website-0.17.7...website-0.17.8) (2022-05-07)
+
+
+### Bug Fixes
+
+* spelling ([b75f03e](https://github.com/SiaFoundation/web/commit/b75f03e5957bf9d9b794284093fc56772a5bbb49))
+
+
+
 ## [0.17.7](https://github.com/SiaFoundation/web/compare/website-0.17.6...website-0.17.7) (2022-05-07)
 
 
