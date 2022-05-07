@@ -58,7 +58,7 @@ const articles: ContentItemProps[] = [
     link: external.docs.wallet,
   },
   {
-    title: `Learn how offer storage space on the the Sia network's storage marketplace`,
+    title: `Learn how to offer storage space on the Sia network's storage marketplace`,
     icon: <Currency24 />,
     tags: ['tutorial'],
     link: external.docs.hosting,
