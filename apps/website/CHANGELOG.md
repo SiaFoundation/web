@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.17.6](https://github.com/SiaFoundation/web/compare/website-0.17.5...website-0.17.6) (2022-05-07)
+
+
+### Bug Fixes
+
+* add vup, dupe blog footer link ([28da3e7](https://github.com/SiaFoundation/web/commit/28da3e738d22378a8fdee4f4e0f3103109325a8b))
+
+
+
 ## [0.17.5](https://github.com/SiaFoundation/web/compare/website-0.17.4...website-0.17.5) (2022-05-07)
 
 
