@@ -60,9 +60,6 @@ export function Footer({ stats }: Props) {
                 margin: '$1 0',
               }}
             >
-              <BottomLink href={external.blog} target="_blank">
-                Blog
-              </BottomLink>
               <BottomLink href={external.discord} target="_blank">
                 Discord
               </BottomLink>
