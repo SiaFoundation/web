@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import { useCallback, useEffect } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 import { useGlobalStyles } from '../config/css'
@@ -110,12 +110,20 @@ export function ThemeProvider({ children, ssr }: Props) {
     }
   }, [themeConfig, setTheme])
 
+  const [activeTheme, setActiveTheme] = useState<Theme>(themeConfig.theme)
+  const [activeMode, setActiveMode] = useState<Mode>(themeConfig.mode)
+
+  useEffect(() => {
+    setActiveTheme(themeConfig.theme)
+    setActiveMode(themeConfig.mode)
+  }, [themeConfig])
+
   const value = {
     toggleTheme,
     setTheme,
     setMode,
-    activeTheme: themeConfig.theme,
-    activeMode: themeConfig.mode,
+    activeTheme,
+    activeMode,
   } as State
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
