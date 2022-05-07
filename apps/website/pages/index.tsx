@@ -32,7 +32,7 @@ import { JiggleArrow } from '../components/JiggleArrow'
 
 const tutorials = getArticles(['tutorial'])
 const latest = getArticles(['latest']).map((i) => omit(i, ['icon']))
-const services = getSoftware('storage_services', 3)
+const services = getSoftware('storage_services', 4)
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
