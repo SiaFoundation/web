@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.17.7](https://github.com/SiaFoundation/web/compare/website-0.17.6...website-0.17.7) (2022-05-07)
+
+
+### Bug Fixes
+
+* disable benchmarks ([38e76df](https://github.com/SiaFoundation/web/commit/38e76dfaa2e00c1105c36e5dc6e9c791acc41822))
+
+
+
 ## [0.17.6](https://github.com/SiaFoundation/web/compare/website-0.17.5...website-0.17.6) (2022-05-07)
 
 
