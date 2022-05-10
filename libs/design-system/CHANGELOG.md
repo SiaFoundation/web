@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.23.0](https://github.com/SiaFoundation/web/compare/design-system-0.22.3...design-system-0.23.0) (2022-05-10)
+
+
+### Features
+
+* add banners ([62f86be](https://github.com/SiaFoundation/web/commit/62f86be5e150734ed5fd15d8df9f08c0adc752d9))
+
+
+
 ## [0.22.3](https://github.com/SiaFoundation/web/compare/design-system-0.22.2...design-system-0.22.3) (2022-05-10)
 
 
