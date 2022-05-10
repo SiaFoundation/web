@@ -1,3 +1,5 @@
+# [![Sia Web](https://sia.tech/banners/sia-banner-web.png)](http://sia.tech)
+
 # Web
 
 Web packages for the Sia project and ecosystem.
