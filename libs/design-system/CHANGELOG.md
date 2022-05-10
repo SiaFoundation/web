@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.22.2](https://github.com/SiaFoundation/web/compare/design-system-0.22.1...design-system-0.22.2) (2022-05-10)
+
+
+### Bug Fixes
+
+* add public assets ([47b8555](https://github.com/SiaFoundation/web/commit/47b8555171c4486e9a8f984f0006e373ff1677d4))
+* update server redirects ([304036c](https://github.com/SiaFoundation/web/commit/304036c69bd0b5158a46903e7731465a46e9f2fe))
+
+
+
 ## [0.22.1](https://github.com/SiaFoundation/web/compare/design-system-0.22.0...design-system-0.22.1) (2022-05-07)
 
 
