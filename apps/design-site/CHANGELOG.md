@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.14.0](https://github.com/SiaFoundation/web/compare/design-site-0.13.2...design-site-0.14.0) (2022-05-20)
+
+
+### Features
+
+* add combobox, update theme radio ([c2eeacb](https://github.com/SiaFoundation/web/commit/c2eeacb72b70807a4f76fd78808f5d8a434bd239))
+
+
+
 ## [0.13.2](https://github.com/SiaFoundation/web/compare/design-site-0.13.1...design-site-0.13.2) (2022-05-06)
 
 
