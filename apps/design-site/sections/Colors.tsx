@@ -1,12 +1,4 @@
-import {
-  Box,
-  Flex,
-  Grid,
-  NextLink,
-  Paragraph,
-  Section,
-  Text,
-} from '@siafoundation/design-system'
+import { Box, Flex, Grid, Section, Text } from '@siafoundation/design-system'
 import { Fragment } from 'react'
 import { SectionHeading } from '../components/SectionHeading'
 import { SubsectionHeading } from '../components/SubsectionHeading'

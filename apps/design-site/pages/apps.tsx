@@ -1,4 +1,3 @@
-import { Section } from '@siafoundation/design-system'
 import { Apps } from '../sections/Apps'
 
 export function AppsPage() {

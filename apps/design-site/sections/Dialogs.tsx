@@ -19,7 +19,6 @@ import {
   DialogOverlay,
   DialogTitle,
   DialogTrigger,
-  Flex,
   Section,
 } from '@siafoundation/design-system'
 import { SectionHeading } from '../components/SectionHeading'

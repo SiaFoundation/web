@@ -2,7 +2,6 @@ import {
   Box,
   Heading,
   NextLink,
-  Separator,
   Link20,
   Flex,
 } from '@siafoundation/design-system'
