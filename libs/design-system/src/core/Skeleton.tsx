@@ -1,5 +1,5 @@
 import { pulse } from '../config/animations'
-import { styled, keyframes } from '../config/theme'
+import { styled } from '../config/theme'
 
 export const Skeleton = styled('div', {
   backgroundColor: '$slate4',

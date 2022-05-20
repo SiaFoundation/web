@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { styled, keyframes, VariantProps, CSS } from '../../config/theme'
+import { styled, keyframes, CSS } from '../../config/theme'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { overlayStyles } from '../../core/Overlay'
 import { IconButton } from '../../core/IconButton'

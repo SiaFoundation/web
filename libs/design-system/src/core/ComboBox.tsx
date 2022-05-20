@@ -1,7 +1,7 @@
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { components, GroupBase, SelectComponentsConfig } from 'react-select'
 import Select from 'react-select/async'
-import { Flex, Box } from '..'
+import { Box } from '..'
 import { CSS, globalCss } from '../config/theme'
 
 type Option = {

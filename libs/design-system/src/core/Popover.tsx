@@ -1,5 +1,5 @@
 import React from 'react'
-import { styled, CSS, keyframes } from '../config/theme'
+import { styled, CSS } from '../config/theme'
 import * as PopoverPrimitive from '@radix-ui/react-popover'
 import { panelStyles } from './Panel'
 import { scaleIn } from '../config/animations'
