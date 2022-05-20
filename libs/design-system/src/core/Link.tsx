@@ -1,5 +1,5 @@
 import BaseNextLink from 'next/link'
-import { Link as BaseRRLink } from 'react-router-dom'
+import { Link as BaseRouterLink } from 'react-router-dom'
 import { CSS, styled } from '../config/theme'
 import { Box } from './Box'
 import { Button } from './Button'
@@ -91,12 +91,13 @@ export function NextLink({
   )
 }
 
-type NextLinkButtonProps = {
+type NextLinkButtonProps = React.ComponentProps<typeof Button> & {
   id?: string
   href: string
   site?: boolean
   target?: string
-} & React.ComponentProps<typeof Button>
+  children: string
+}
 
 // Next link
 export function NextLinkButton({
@@ -126,7 +127,7 @@ export function NextLinkButton({
   )
 }
 
-type RRLinkProps = {
+type RouterLinkProps = {
   id?: string
   to: string
   target?: string
@@ -136,17 +137,17 @@ type RRLinkProps = {
 }
 
 // React Router link
-export function RRLink({
+export function RouterLink({
   id,
   to,
   target,
   children,
   variant = 'contrast',
   css,
-}: RRLinkProps) {
+}: RouterLinkProps) {
   return (
     <Link
-      as={BaseRRLink}
+      as={BaseRouterLink}
       id={id}
       target={target}
       variant={variant}
@@ -158,16 +159,21 @@ export function RRLink({
   )
 }
 
-type RRLinkButtonProps = {
+type RouterLinkButtonProps = {
   to: string
   target?: string
 } & React.ComponentProps<typeof Button>
 
 // React Router link
-export function RRLinkButton({ to, target, css, ...props }: RRLinkButtonProps) {
+export function RouterLinkButton({
+  to,
+  target,
+  css,
+  ...props
+}: RouterLinkButtonProps) {
   return (
     <Box
-      as={BaseRRLink}
+      as={BaseRouterLink}
       target={target}
       to={to}
       css={{ textDecoration: 'none', width: css?.width }}
