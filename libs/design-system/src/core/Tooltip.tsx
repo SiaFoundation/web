@@ -1,9 +1,8 @@
 import React from 'react'
-import { keyframes, styled } from '../config/theme'
+import { styled } from '../config/theme'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { Text } from './Text'
 import { scaleIn } from '../config/animations'
-import { Paragraph } from './Paragraph'
 
 type TooltipProps = React.ComponentProps<typeof TooltipPrimitive.Root> &
   React.ComponentProps<typeof TooltipPrimitive.Content> & {

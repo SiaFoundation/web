@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Paragraph, Text } from '..'
+import { Flex, Heading, Paragraph, Text } from '..'
 import { CSS } from '../config/theme'
 import { LinkData } from '../lib/links'
 import { Links } from './Links'

@@ -1,7 +1,7 @@
 import { uniq } from 'lodash'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
-import { Badge, Flex, Grid, ContentItemProps, ContentItem, NextImage } from '..'
+import { Badge, Flex, Grid, ContentItemProps, ContentItem } from '..'
 import { Text } from '../core/Text'
 
 type Props = {
