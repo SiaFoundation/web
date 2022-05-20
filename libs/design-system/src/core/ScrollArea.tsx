@@ -16,6 +16,9 @@ const StyledViewport = styled(ScrollAreaPrimitive.Viewport, {
   width: '100%',
   height: '100%',
   borderRadius: 'inherit',
+  '> div[style]': {
+    display: 'block !important',
+  },
 })
 
 const StyledScrollbar = styled(ScrollAreaPrimitive.Scrollbar, {
