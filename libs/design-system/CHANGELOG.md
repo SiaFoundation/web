@@ -7,6 +7,25 @@ This file was generated using [@jscutlery/semver](https://github.com/jscutlery/s
 
 ### Bug Fixes
 
+* add comment ([96db370](https://github.com/SiaFoundation/web/commit/96db370c4ef92d252b33a5f0713583177ca1a0f3))
+* appbackdrop motion prop, defaults off ([95aac39](https://github.com/SiaFoundation/web/commit/95aac39ceda13d177dce447a5a0877da51fe1f13))
+* override scroll area table ([6a8eb88](https://github.com/SiaFoundation/web/commit/6a8eb88e97b3ae18161ed0e222e2e3ddcdbc2b80))
+* remove unused menu components ([764fef1](https://github.com/SiaFoundation/web/commit/764fef16a3e38ec2ed07bfc9261b97941c693f6e))
+
+
+### Features
+
+* add combobox, update theme radio ([c2eeacb](https://github.com/SiaFoundation/web/commit/c2eeacb72b70807a4f76fd78808f5d8a434bd239))
+* add web banner ([db076fa](https://github.com/SiaFoundation/web/commit/db076fa857117157f2baa1b579d576f70a920443))
+* update react router link naming ([a7a5c29](https://github.com/SiaFoundation/web/commit/a7a5c29da28fe0999d12f26af2d749c02259a9b6))
+
+
+
+# [0.24.0](https://github.com/SiaFoundation/web/compare/design-system-0.23.0...design-system-0.24.0) (2022-05-20)
+
+
+### Bug Fixes
+
 * override scroll area table ([6a8eb88](https://github.com/SiaFoundation/web/commit/6a8eb88e97b3ae18161ed0e222e2e3ddcdbc2b80))
 * remove unused menu components ([764fef1](https://github.com/SiaFoundation/web/commit/764fef16a3e38ec2ed07bfc9261b97941c693f6e))
 
