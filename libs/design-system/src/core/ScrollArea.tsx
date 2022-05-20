@@ -16,6 +16,7 @@ const StyledViewport = styled(ScrollAreaPrimitive.Viewport, {
   width: '100%',
   height: '100%',
   borderRadius: 'inherit',
+  // Temporary fix until removed upstream: https://github.com/radix-ui/primitives/issues/926
   '> div[style]': {
     display: 'block !important',
   },
