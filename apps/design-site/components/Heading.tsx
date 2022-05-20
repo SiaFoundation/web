@@ -1,11 +1,8 @@
 import {
-  Code,
   Container,
   NextLink,
   Section,
   SiteHeading,
-  Text,
-  WavesBackdrop,
 } from '@siafoundation/design-system'
 
 export function Heading() {
