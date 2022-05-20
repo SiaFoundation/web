@@ -6,13 +6,14 @@ import { Image } from '../core/Image'
 import { getImageProps } from '../lib/image'
 
 type Props = {
+  motion?: boolean
   children?: React.ReactNode
 }
 
 const imageProps = getImageProps(image)
 const patternSrc = getImageProps(pattern).src
 
-export function AppBackdrop({ children }: Props) {
+export function AppBackdrop({ motion = false, children }: Props) {
   return (
     <Box
       css={{
@@ -33,21 +34,23 @@ export function AppBackdrop({ children }: Props) {
           backgroundColor: '$loContrast',
         }}
       />
-      <Image
-        {...imageProps}
-        css={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          zIndex: 2,
-          width: '100%',
-          height: '100%',
-          opacity: 0.15,
-          '@motion': {
-            display: 'none',
-          },
-        }}
-      />
+      {motion && (
+        <Image
+          {...imageProps}
+          css={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            zIndex: 2,
+            width: '100%',
+            height: '100%',
+            opacity: 0.15,
+            '@motion': {
+              display: 'none',
+            },
+          }}
+        />
+      )}
       <Box
         css={{
           position: 'fixed',
