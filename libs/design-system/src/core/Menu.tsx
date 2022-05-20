@@ -75,7 +75,7 @@ export const MenuRadioItem = React.forwardRef<
   MenuRadioItemProps
 >(({ children, ...props }, forwardedRef) => (
   <StyledMenuRadioItem {...props} ref={forwardedRef}>
-    <Box as="span" css={{ position: 'absolute', left: '$1' }}>
+    <Box css={{ position: 'absolute', left: '$1' }}>
       <MenuPrimitive.ItemIndicator>
         <Flex
           css={{
@@ -112,7 +112,7 @@ export const MenuCheckboxItem = React.forwardRef<
   MenuCheckboxItemProps
 >(({ children, ...props }, forwardedRef) => (
   <StyledMenuCheckboxItem {...props} ref={forwardedRef}>
-    <Box as="span" css={{ position: 'absolute', left: '$1' }}>
+    <Box css={{ position: 'absolute', left: '$1' }}>
       <MenuPrimitive.ItemIndicator>
         <CheckIcon />
       </MenuPrimitive.ItemIndicator>
