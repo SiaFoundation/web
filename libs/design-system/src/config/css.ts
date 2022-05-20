@@ -1,5 +1,6 @@
 import { globalCss } from './theme'
 import { fontStyles } from './fonts'
+import { comboBoxGlobalCss } from '../core/ComboBox'
 
 // Reset, normalize, fonts css
 const globalStyles = globalCss({
@@ -33,4 +34,5 @@ const globalStyles = globalCss({
 export function useGlobalStyles() {
   globalStyles()
   fontStyles()
+  comboBoxGlobalCss()
 }

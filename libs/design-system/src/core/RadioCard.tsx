@@ -3,8 +3,27 @@ import { styled, CSS } from '../config/theme'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 
 export const RadioCardGroup = styled(RadioGroupPrimitive.Root, {
+  display: 'block',
+})
+
+const StyledRadioButton = styled('div', {
   display: 'flex',
-  gap: '$3',
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderRadius: '$round',
+  width: 25,
+  height: 25,
+  boxShadow: 'inset 0 0 0 1px $colors$brandGray7',
+  flexShrink: 0,
+  mr: '$3',
+})
+
+const StyledRadioIndicator = styled('div', {
+  borderRadius: '$round',
+  width: 15,
+  height: 15,
+  backgroundColor: '$brandAccent9',
+  transform: 'scale(0)',
 })
 
 const StyledRadio = styled(RadioGroupPrimitive.Item, {
@@ -20,19 +39,39 @@ const StyledRadio = styled(RadioGroupPrimitive.Item, {
   display: 'flex',
   alignItems: 'center',
   borderRadius: '$2',
-  cursor: 'pointer',
+  p: '$3',
+  boxShadow: '$colors$selectableBorder, $colors$shadow',
+  '@hover': {
+    '&:hover': {
+      boxShadow: '$colors$selectableBorderHover, $colors$shadow',
+    },
+  },
+  '&[data-state="checked"]': {
+    boxShadow: '$colors$selectableBorderActive, $colors$shadowActive',
+    [`& ${StyledRadioIndicator}`]: {
+      transform: 'scale(1)',
+    },
+  },
 })
 
 type RadioGroupItemPrimitiveProps = React.ComponentProps<
   typeof RadioGroupPrimitive.Item
 >
-type RadioCardProps = RadioGroupItemPrimitiveProps & { css?: CSS }
+type RadioCardProps = RadioGroupItemPrimitiveProps & {
+  indicator?: boolean
+  css?: CSS
+}
 
 export const RadioCard = React.forwardRef<
   React.ElementRef<typeof StyledRadio>,
   RadioCardProps
->((props, forwardedRef) => (
+>(({ indicator = true, ...props }, forwardedRef) => (
   <StyledRadio {...props} ref={forwardedRef}>
+    {indicator && (
+      <StyledRadioButton>
+        <StyledRadioIndicator />
+      </StyledRadioButton>
+    )}
     {props.children}
   </StyledRadio>
 ))

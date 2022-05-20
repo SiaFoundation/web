@@ -1,11 +1,47 @@
+import React from 'react'
 import { useTheme } from '../hooks/useTheme'
 import { useCallback } from 'react'
+import { styled, CSS } from '../config/theme'
 import { Asleep16, Awake16, Screen16 } from '../icons'
-import { RadioCard, RadioCardGroup } from '../core/RadioCard'
+import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 import { Text } from '../core/Text'
-import { CSS } from '../config/theme'
 import { Flex } from '../core/Flex'
 import { Box } from '../core/Box'
+
+const RadioCardGroup = styled(RadioGroupPrimitive.Root, {
+  display: 'flex',
+  gap: '$3',
+})
+
+const StyledRadio = styled(RadioGroupPrimitive.Item, {
+  all: 'unset',
+  boxSizing: 'border-box',
+  userSelect: 'none',
+  '&::before': {
+    boxSizing: 'border-box',
+  },
+  '&::after': {
+    boxSizing: 'border-box',
+  },
+  display: 'flex',
+  alignItems: 'center',
+  borderRadius: '$2',
+  cursor: 'pointer',
+})
+
+type RadioGroupItemPrimitiveProps = React.ComponentProps<
+  typeof RadioGroupPrimitive.Item
+>
+type RadioCardProps = RadioGroupItemPrimitiveProps & { css?: CSS }
+
+const RadioCard = React.forwardRef<
+  React.ElementRef<typeof StyledRadio>,
+  RadioCardProps
+>((props, forwardedRef) => (
+  <StyledRadio {...props} ref={forwardedRef}>
+    {props.children}
+  </StyledRadio>
+))
 
 type Value = 'light' | 'dark' | 'system'
 

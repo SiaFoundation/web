@@ -1,6 +1,5 @@
 import { Box } from '../core/Box'
 import { DropdownMenuGroup, DropdownMenuLabel } from '../core/DropdownMenu'
-import { useTheme } from '../hooks/useTheme'
 import { ThemeRadio } from './ThemeRadio'
 
 export function ThemeMenu() {
