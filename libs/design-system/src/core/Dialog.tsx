@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { styled, CSS, keyframes, css } from '../config/theme'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { Close24 } from '../icons'
 import { overlayStyles } from './Overlay'
 import { IconButton } from './IconButton'
-import { Flex } from './Flex'
+import { ScrollArea } from './ScrollArea'
+import { Box } from '..'
 
 export const overlayShow = keyframes({
   '0%': { opacity: 0 },
@@ -16,10 +17,6 @@ export const contentShow = keyframes({
   '70%': { opacity: 1, transform: 'translate(-50%, -50%) scale(1.01)' },
   '100%': { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
 })
-
-type DialogProps = React.ComponentProps<typeof DialogPrimitive.Root> & {
-  children: React.ReactNode
-}
 
 export const dialogOverlayStyles = css(overlayStyles, {
   position: 'fixed',
@@ -35,13 +32,65 @@ export const dialogOverlayStyles = css(overlayStyles, {
   },
 })
 
-export const DialogOverlay = styled(
-  DialogPrimitive.Overlay,
-  dialogOverlayStyles
+const DialogOverlay = styled(DialogPrimitive.Overlay, dialogOverlayStyles)
+
+const StyledCloseButton = styled(DialogPrimitive.Close, {
+  position: 'absolute',
+  top: '$2',
+  right: '$2',
+})
+
+const DialogPortal = DialogPrimitive.Portal
+
+export const dialogTitleCss = css({
+  color: '$hiContrast',
+  fontFamily: '$sans',
+  fontSize: '$24',
+  fontWeight: 500,
+  lineHeight: '30px',
+  margin: '0 $2',
+  padding: '$2 0 $1 0',
+  variants: {
+    separator: {
+      true: {
+        borderBottom: '1px solid $brandGray3',
+      },
+    },
+  },
+})
+const DialogTitle = styled(DialogPrimitive.Title, dialogTitleCss)
+
+export const dialogDescriptionCss = css({
+  color: '$textSubtle',
+  fontFamily: '$sans',
+  fontSize: '$14',
+  fontWeight: 400,
+  lineHeight: '150%',
+  padding: '$1 0',
+})
+const DialogDescription = styled(
+  DialogPrimitive.Description,
+  dialogDescriptionCss
 )
 
-export function Dialog({ children, ...props }: DialogProps) {
-  return <DialogPrimitive.Root {...props}>{children}</DialogPrimitive.Root>
+type DialogControlsProps = {
+  children: React.ReactNode
+  separator?: boolean
+}
+
+function DialogControls({ children, separator = true }: DialogControlsProps) {
+  return (
+    <Box
+      css={{
+        padding: '$1 0',
+        margin: '0 $2',
+        backgroundColor: '$loContrast',
+        borderTop: separator ? '1px solid $brandGray3' : 'none',
+      }}
+    >
+      {children}
+    </Box>
+  )
 }
 
 export const dialogContentStyles = css({
@@ -58,9 +107,8 @@ export const dialogContentStyles = css({
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: '90vw',
-  maxHeight: '85vh',
   maxWidth: '400px',
-  padding: '$2',
+  overflow: 'hidden',
   willChange: 'transform, opacity',
   '@media (prefers-reduced-motion: no-preference)': {
     animation: `${contentShow} 250ms cubic-bezier(0.16, 1, 0.3, 1)`,
@@ -72,64 +120,98 @@ export const dialogContentStyles = css({
 
 const StyledContent = styled(DialogPrimitive.Content, dialogContentStyles)
 
-const StyledCloseButton = styled(DialogPrimitive.Close, {
-  position: 'absolute',
-  top: '$2',
-  right: '$2',
-})
-
 type DialogContentPrimitiveProps = React.ComponentProps<
   typeof DialogPrimitive.Content
 >
-type DialogContentProps = DialogContentPrimitiveProps & { css?: CSS }
+type DialogContentProps = DialogContentPrimitiveProps & {
+  variant?: 'div' | 'form'
+  title: React.ReactNode
+  description?: React.ReactNode
+  controls?: React.ReactNode
+  children?: React.ReactNode
+  css?: CSS
+}
+
+const DialogInnerContent = React.forwardRef<
+  React.ElementRef<typeof StyledContent>,
+  DialogContentProps
+>(
+  (
+    { children, variant, title, description, controls, ...props },
+    forwardedRef
+  ) => {
+    const { ref, height } = useHeight([children, description])
+    const [showSeparator, setShowSeparator] = useState<boolean>(false)
+    useEffect(() => {
+      setShowSeparator(height > window.innerHeight * 0.7)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [height])
+    return (
+      <StyledContent {...props} ref={forwardedRef}>
+        <Box as={variant}>
+          {title && (
+            <DialogTitle separator={showSeparator}>{title}</DialogTitle>
+          )}
+          <Box css={{ height, maxHeight: '70vh', overflow: 'hidden' }}>
+            <ScrollArea>
+              <Box ref={ref} css={{ padding: '$2' }}>
+                {description && (
+                  <DialogDescription>{description}</DialogDescription>
+                )}
+                {children}
+              </Box>
+            </ScrollArea>
+          </Box>
+          {controls && (
+            <DialogControls separator={showSeparator}>
+              {controls}
+            </DialogControls>
+          )}
+          <StyledCloseButton asChild>
+            <IconButton size="1" variant="ghost">
+              <Close24 />
+            </IconButton>
+          </StyledCloseButton>
+        </Box>
+      </StyledContent>
+    )
+  }
+)
 
 export const DialogContent = React.forwardRef<
   React.ElementRef<typeof StyledContent>,
   DialogContentProps
->(({ children, ...props }, forwardedRef) => (
-  <StyledContent {...props} ref={forwardedRef}>
-    {children}
-    <StyledCloseButton asChild>
-      <IconButton size="1" variant="ghost">
-        <Close24 />
-      </IconButton>
-    </StyledCloseButton>
-  </StyledContent>
-))
+>((props, forwardedRef) => {
+  return (
+    <DialogPortal>
+      <DialogOverlay />
+      <DialogInnerContent {...props} ref={forwardedRef} />
+    </DialogPortal>
+  )
+})
 
-export const DialogPortal = DialogPrimitive.Portal
+export const Dialog = DialogPrimitive.Root
 export const DialogTrigger = DialogPrimitive.Trigger
 export const DialogClose = DialogPrimitive.Close
 
-type DialogControlsProps = {
-  children: React.ReactNode
+function useHeight(deps: unknown[] = []) {
+  const [height, setHeight] = useState<number>(0)
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (!ref.current) {
+      return
+    }
+    const node = ref.current
+    const update = () => setHeight(node.clientHeight || 0)
+    update()
+    ref.current.addEventListener('resize', update)
+    return () => {
+      node.removeEventListener('resize', update)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps)
+  return {
+    ref,
+    height,
+  }
 }
-
-export function DialogControls({ children }: DialogControlsProps) {
-  return (
-    <Flex gap="1" justify="end" css={{ paddingTop: '$1', width: '100%' }}>
-      {children}
-    </Flex>
-  )
-}
-
-export const dialogTitleCss = css({
-  color: '$hiContrast',
-  fontFamily: '$sans',
-  fontSize: '$24',
-  fontWeight: 500,
-  lineHeight: '30px',
-})
-export const DialogTitle = styled(DialogPrimitive.Title, dialogTitleCss)
-export const dialogDescriptionCss = css({
-  color: '$textSubtle',
-  fontFamily: '$sans',
-  fontSize: '$14',
-  fontWeight: 400,
-  lineHeight: '150%',
-  padding: '$1 0',
-})
-export const DialogDescription = styled(
-  DialogPrimitive.Description,
-  dialogDescriptionCss
-)

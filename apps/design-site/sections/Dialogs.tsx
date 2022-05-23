@@ -1,26 +1,17 @@
-import { DialogPortal } from '@radix-ui/react-dialog'
 import {
   AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogOverlay,
-  AlertDialogPortal,
-  AlertDialogTitle,
   AlertDialogTrigger,
-  Box,
   Button,
   Dialog,
   DialogClose,
   DialogContent,
-  DialogControls,
-  DialogDescription,
-  DialogOverlay,
-  DialogTitle,
   DialogTrigger,
+  Flex,
+  Paragraph,
   Section,
 } from '@siafoundation/design-system'
+import { times } from 'lodash'
 import { SectionHeading } from '../components/SectionHeading'
 import { SubsectionHeading } from '../components/SubsectionHeading'
 
@@ -32,59 +23,104 @@ export function Dialogs() {
       </Section>
       <Section>
         <SubsectionHeading>Dialog</SubsectionHeading>
-        <Box>
+        <Flex gap="2">
           <Dialog>
             <DialogTrigger asChild>
               <Button>Dialog</Button>
             </DialogTrigger>
-            <DialogPortal>
-              <DialogOverlay />
-              <DialogContent>
-                <DialogTitle>Privacy</DialogTitle>
-                <DialogDescription>
+            <DialogContent
+              title="Privacy"
+              description={
+                <>
                   This app uses the following third-party APIs, all external
                   APIs are not required and can be toggled on or off.
-                </DialogDescription>
-                <DialogControls>
+                </>
+              }
+              controls={
+                <Flex justify="end">
                   <DialogClose asChild>
                     <Button>Close</Button>
                   </DialogClose>
-                </DialogControls>
-              </DialogContent>
-            </DialogPortal>
+                </Flex>
+              }
+            />
           </Dialog>
-        </Box>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button>Dialog sroll</Button>
+            </DialogTrigger>
+            <DialogContent
+              variant="form"
+              title="Privacy"
+              description="This is the description"
+              controls={
+                <Flex gap="1" justify="end">
+                  <Button size="2" variant="gray">
+                    cancel
+                  </Button>
+                  <Button size="2" variant="accent" type="submit">
+                    submit
+                  </Button>
+                </Flex>
+              }
+            >
+              {times(10, (i) => (
+                <Paragraph key={i}>
+                  This app uses the following third-party APIs, all external
+                  APIs are not required and can be toggled on or off.
+                </Paragraph>
+              ))}
+            </DialogContent>
+          </Dialog>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button>Dialog no desc or controls</Button>
+            </DialogTrigger>
+            <DialogContent title="Dialog">
+              <Paragraph>
+                This app uses the following third-party APIs, all external APIs
+                are not required and can be toggled on or off.
+              </Paragraph>
+            </DialogContent>
+          </Dialog>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button>Dialog no desc or controls overflow</Button>
+            </DialogTrigger>
+            <DialogContent title="Dialog">
+              {times(10, (i) => (
+                <Paragraph key={i}>
+                  This app uses the following third-party APIs, all external
+                  APIs are not required and can be toggled on or off.
+                </Paragraph>
+              ))}
+            </DialogContent>
+          </Dialog>
+        </Flex>
       </Section>
       <Section>
         <SubsectionHeading>AlertDialog</SubsectionHeading>
-        <Box>
+        <Flex gap="2">
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button>Alert Dialog</Button>
             </AlertDialogTrigger>
-            <AlertDialogPortal>
-              <AlertDialogOverlay />
-              <AlertDialogContent>
-                <AlertDialogTitle>Title</AlertDialogTitle>
-                <AlertDialogDescription>
+            <AlertDialogContent
+              title="Title"
+              description={
+                <>
                   Description - Lorem ipsum dolor sit amet consectetur
                   adipisicing elit. Exercitationem dolor voluptates ipsum labore
                   architecto. Aperiam delectus illum earum commodi. Quod
                   repellendus veniam a dolore aspernatur inventore sit quae ad
                   deserunt.
-                </AlertDialogDescription>
-                <DialogControls>
-                  <AlertDialogCancel asChild>
-                    <Button>nvm, cancel</Button>
-                  </AlertDialogCancel>
-                  <AlertDialogAction asChild>
-                    <Button variant="accent">Action</Button>
-                  </AlertDialogAction>
-                </DialogControls>
-              </AlertDialogContent>
-            </AlertDialogPortal>
+                </>
+              }
+              cancel={<Button>nvm, cancel</Button>}
+              action={<Button variant="accent">Action</Button>}
+            />
           </AlertDialog>
-        </Box>
+        </Flex>
       </Section>
     </>
   )
