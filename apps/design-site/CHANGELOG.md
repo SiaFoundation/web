@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.15.1](https://github.com/SiaFoundation/web/compare/design-site-0.15.0...design-site-0.15.1) (2022-05-23)
+
+
+### Bug Fixes
+
+* dialog spacing ([15eabe6](https://github.com/SiaFoundation/web/commit/15eabe652f622ff6c85638174caeae21d2696277))
+
+
+
 # [0.15.0](https://github.com/SiaFoundation/web/compare/design-site-0.14.0...design-site-0.15.0) (2022-05-23)
 
 
