@@ -23,7 +23,7 @@ export function Dialogs() {
       </Section>
       <Section>
         <SubsectionHeading>Dialog</SubsectionHeading>
-        <Flex gap="2">
+        <Flex gap="1">
           <Dialog>
             <DialogTrigger asChild>
               <Button>Dialog</Button>
