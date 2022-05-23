@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.15.0](https://github.com/SiaFoundation/web/compare/design-site-0.14.0...design-site-0.15.0) (2022-05-23)
+
+
+### Features
+
+* update dialog components ([889724e](https://github.com/SiaFoundation/web/commit/889724e47ad4ce97b834e9bd7937b033cb36b9f6))
+
+
+
 # [0.14.0](https://github.com/SiaFoundation/web/compare/design-site-0.13.2...design-site-0.14.0) (2022-05-20)
 
 
