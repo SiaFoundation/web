@@ -141,6 +141,7 @@ const DialogInnerContent = React.forwardRef<
     const { ref, height } = useHeight([children, description])
     const [showSeparator, setShowSeparator] = useState<boolean>(false)
     useEffect(() => {
+      // 0.7 is eual to the maxHeight: 70vh below
       setShowSeparator(height > window.innerHeight * 0.7)
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [height])
