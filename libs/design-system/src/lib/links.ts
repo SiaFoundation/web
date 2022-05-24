@@ -1,5 +1,7 @@
+import React from 'react'
+
 export type LinkData = {
-  title: string
+  title: React.ReactNode
   link: string
   newTab?: boolean
 }
