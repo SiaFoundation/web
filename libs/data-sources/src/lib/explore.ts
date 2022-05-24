@@ -6,7 +6,7 @@ type ExploreNavigatorStatus = {
   coinsupply: number
   consensusblock: number
   heartbeat: number
-  lastblock: number
+  blockHeight: number
   mempool: number
   peers: number
   totalTx: number

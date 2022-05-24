@@ -17,7 +17,7 @@ export function Statsbar({ stats }: Props) {
   const {
     activeHosts,
     onlineHosts,
-    lastBlock,
+    blockHeight,
     totalStorage,
     usedStorage,
     totalRegistry,
@@ -51,7 +51,7 @@ export function Statsbar({ stats }: Props) {
         link={external.networkStats}
         stats={[
           {
-            value: lastBlock,
+            value: blockHeight,
             label: 'block height',
           },
           {
