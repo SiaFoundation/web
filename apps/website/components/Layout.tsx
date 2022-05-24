@@ -1,9 +1,17 @@
-import { Box, Flex, ImageProps, SiteLayout } from '@siafoundation/design-system'
+import {
+  Box,
+  Flex,
+  ImageProps,
+  LogoDiscord32,
+  LogoGithub32,
+  RedditIcon,
+  SiteLayout,
+} from '@siafoundation/design-system'
 import { Stats } from '../content/stats'
 import { Footer } from './Footer'
 import { PageHead } from './PageHead'
 import { Navbar } from './Navbar'
-import { sitemap } from '../config/site'
+import { external, sitemap } from '../config/site'
 
 type Props = {
   heading: React.ReactNode
@@ -55,6 +63,16 @@ export function Layout({
         transitions={transitions}
         transitionDuration={transitionDuration}
         heading={heading}
+        externalLinks={[
+          {
+            link: external.github,
+            title: 'GitHub',
+          },
+          {
+            link: external.discord,
+            title: 'Discord',
+          },
+        ]}
         menuLinks={[
           {
             link: sitemap.home.index,

@@ -5,13 +5,14 @@ import { overlayStyles } from '../../core/Overlay'
 import { IconButton } from '../../core/IconButton'
 import { LogoMenuIcon } from '../../icons/LogoMenuIcon'
 import { Box } from '../../core/Box'
-import { Close24 } from '../../icons'
+import { Close24, LogoDiscord32 } from '../../icons'
 import { Flex } from '../../core/Flex'
 import { ThemeRadio } from '../../components/ThemeRadio'
 import { Text } from '../../core/Text'
 import { SimpleLogoIcon } from '../../icons/SimpleLogoIcon'
 import { NextLink } from '../../core/Link'
 import { LinkData } from '../../lib/links'
+import { Separator } from '../../core/Separator'
 
 const fadeIn = keyframes({
   from: { opacity: '0' },
@@ -150,11 +151,12 @@ const radioCss: CSS = {
 }
 
 type Props = {
-  links: LinkData[]
+  externalLinks?: LinkData[]
+  menuLinks: LinkData[]
   menuWidth: string
 }
 
-export function SiteMenu({ links, menuWidth }: Props) {
+export function SiteMenu({ externalLinks, menuLinks, menuWidth }: Props) {
   const [open, _setOpen] = useState<boolean>(false)
 
   const setOpen = useCallback(
@@ -208,7 +210,7 @@ export function SiteMenu({ links, menuWidth }: Props) {
               <Box css={{ marginBottom: '$5' }}>
                 <SimpleLogoIcon />
               </Box>
-              {links.map(({ title, link }) => (
+              {menuLinks.map(({ title, link }) => (
                 <MenuLink
                   key={link}
                   link={link}
@@ -216,7 +218,17 @@ export function SiteMenu({ links, menuWidth }: Props) {
                   onClick={() => setOpen(false)}
                 />
               ))}
-              <ThemeRadio radioCss={radioCss} css={{ marginTop: '$8' }} />
+              {!!externalLinks?.length && (
+                <>
+                  <Separator />
+                  <Flex gap="3">
+                    {externalLinks.map(({ title, link }) => (
+                      <MenuLink key={link} link={link} title={title} newTab />
+                    ))}
+                  </Flex>
+                </>
+              )}
+              <ThemeRadio radioCss={radioCss} css={{ marginTop: '$6' }} />
             </Flex>
           </Flex>
         </Content>
@@ -227,11 +239,12 @@ export function SiteMenu({ links, menuWidth }: Props) {
 
 type MenuLinkProps = {
   link: string
-  title: string
-  onClick: () => void
+  title: React.ReactNode
+  onClick?: () => void
+  newTab?: boolean
 }
 
-function MenuLink({ link, title, onClick }: MenuLinkProps) {
+function MenuLink({ link, title, onClick, newTab }: MenuLinkProps) {
   return (
     <Text
       size={{
@@ -248,7 +261,12 @@ function MenuLink({ link, title, onClick }: MenuLinkProps) {
         },
       }}
     >
-      <NextLink variant="light" href={link} onClick={onClick}>
+      <NextLink
+        variant="light"
+        href={link}
+        onClick={onClick}
+        target={newTab ? '_blank' : undefined}
+      >
         {title}
       </NextLink>
     </Text>

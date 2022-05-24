@@ -68,6 +68,7 @@ export * from './lib/links'
 export * from './icons'
 export * from './icons/LogoMenuIcon'
 export * from './icons/SimpleLogoIcon'
+export * from './icons/RedditIcon'
 
 export {
   styled,

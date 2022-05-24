@@ -11,6 +11,7 @@ import React, { useEffect, useState } from 'react'
 type Props = {
   navbar?: React.ReactNode
   menuLinks: LinkData[]
+  externalLinks?: LinkData[]
   heading: React.ReactNode
   footer?: React.ReactNode
   children: React.ReactNode
@@ -22,6 +23,7 @@ type Props = {
 
 export function SiteLayout({
   menuLinks,
+  externalLinks,
   navbar,
   heading,
   children,
@@ -141,7 +143,11 @@ export function SiteLayout({
           </Flex>
         </Box>
       </ScrollArea>
-      <SiteMenu links={menuLinks} menuWidth={menuWidth} />
+      <SiteMenu
+        externalLinks={externalLinks}
+        menuLinks={menuLinks}
+        menuWidth={menuWidth}
+      />
       <Box
         css={{
           position: 'absolute',
