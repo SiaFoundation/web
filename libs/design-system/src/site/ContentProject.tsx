@@ -55,7 +55,7 @@ export function ContentProject({
           </Paragraph>
         )}
       </Flex>
-      <Text size="14" font="mono">
+      <Text size="14" font="mono" css={{ lineHeight: '150%' }}>
         {link && (
           <NextLink
             href={link}
