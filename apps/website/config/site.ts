@@ -53,5 +53,7 @@ export const external = {
   merch: 'https://siagear.tech/',
   email: 'hello@sia.tech',
   benchmarks: 'https://benchmarks.sia.tech',
-  stats: 'https://siastats.info',
+  storageStats: 'https://hosts.siacentral.com/',
+  networkStats: 'https://explore.sia.tech/',
+  // stats: 'https://siastats.info',
 }

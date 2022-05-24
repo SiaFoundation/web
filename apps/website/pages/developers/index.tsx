@@ -34,7 +34,7 @@ const hosts = getHosts()
 
 const technical = getArticles(['technical']).map((i) => omit(i, ['icon']))
 const tutorials = getArticles(['tutorial'])
-const services = getSoftware('storage_services', 3)
+const services = getSoftware('storage_services', 4)
 
 const docLinks = [
   {
