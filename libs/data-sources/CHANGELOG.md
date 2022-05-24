@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.3.0](https://github.com/SiaFoundation/web/compare/data-sources-0.2.3...data-sources-0.3.0) (2022-05-24)
+
+
+### Bug Fixes
+
+* var name, dev stub ([c448f97](https://github.com/SiaFoundation/web/commit/c448f97517ae75d5610cf785d83664cf7911a697))
+
+
+### Features
+
+* add sia central and explorer stats ([1c51d01](https://github.com/SiaFoundation/web/commit/1c51d01cc955b2285439b89cd604aa1a9163c19b))
+
+
+
 ## [0.2.3](https://github.com/SiaFoundation/web/compare/data-sources-0.2.2...data-sources-0.2.3) (2022-05-06)
 
 
