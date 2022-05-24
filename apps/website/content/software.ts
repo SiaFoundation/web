@@ -52,11 +52,41 @@ const software: Software[] = [
       'Customizable secure multi-cloud in France. End-to-end encryption. Very high availability. No commitment.',
   },
   {
+    title: 'Explorer',
+    link: 'https://explore.sia.tech',
+    logo: 'sia',
+    tags: ['network_stats'],
+    subtitle: 'Blockchain explorer for the Sia network.',
+  },
+  {
     title: 'Siastats',
     link: 'https://siastats.info',
     logo: 'siastats',
     tags: ['open_source_software', 'network_stats'],
     subtitle: 'Charts, metrics, and explorer for the Sia network.',
+  },
+  {
+    title: 'SiaCentral - Host Browser',
+    link: 'https://hosts.siacentral.com/',
+    logo: 'siacentral',
+    tags: ['network_stats'],
+    subtitle:
+      "Browse and search hosts powering Sia's decentralized storage network.",
+  },
+  {
+    title: 'SiaCentral - Host Troubleshoot Tool',
+    link: 'https://troubleshoot.siacentral.com/',
+    logo: 'siacentral',
+    tags: ['network_stats'],
+    subtitle: 'Troubleshoot issues with your Sia host.',
+  },
+  {
+    title: 'SiaCentral - Foundation Tracker',
+    link: 'https://foundation-tracker.siacentral.com/',
+    logo: 'siacentral',
+    tags: ['network_stats'],
+    subtitle:
+      'Track the Sia Foundation subsidy transactions from the blockchain.',
   },
   {
     title: 'CoinMarketCap',
