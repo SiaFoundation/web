@@ -1,8 +1,11 @@
 import { uniq } from 'lodash'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
-import { Badge, Flex, Grid, ContentItemProps, ContentItem } from '..'
+import { Badge } from '../core/Badge'
+import { Flex } from '../core/Flex'
+import { Grid } from '../core/Grid'
 import { Text } from '../core/Text'
+import { ContentItemProps, ContentItem } from '../site/ContentItem'
 
 type Props = {
   items: ContentItemProps[]

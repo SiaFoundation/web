@@ -1,5 +1,5 @@
 import { styled } from '../config/theme'
-import { Flex } from '..'
+import { Flex } from '../core/Flex'
 import { Container } from '../core/Container'
 
 const BaseSection = styled('section', {

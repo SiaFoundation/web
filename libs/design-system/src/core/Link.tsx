@@ -96,7 +96,7 @@ type NextLinkButtonProps = React.ComponentProps<typeof Button> & {
   href: string
   site?: boolean
   target?: string
-  children: string
+  children: React.ReactNode
 }
 
 // Next link

@@ -5,7 +5,7 @@ import { Close24 } from '../icons'
 import { overlayStyles } from './Overlay'
 import { IconButton } from './IconButton'
 import { ScrollArea } from './ScrollArea'
-import { Box } from '..'
+import { Box } from '../core/Box'
 
 export const overlayShow = keyframes({
   '0%': { opacity: 0 },
