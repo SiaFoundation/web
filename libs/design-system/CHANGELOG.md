@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.25.0](https://github.com/SiaFoundation/web/compare/design-system-0.24.1...design-system-0.25.0) (2022-05-24)
+
+
+### Bug Fixes
+
+* build errors ([f9ba1bb](https://github.com/SiaFoundation/web/commit/f9ba1bb0d3fcc553502430bb4087cf66284a0eb7))
+* contentproject line height ([c2cc32a](https://github.com/SiaFoundation/web/commit/c2cc32a52aab1e29cc1013ba220b0ed1a902924e))
+
+
+### Features
+
+* add external links to sitemenu ([f256083](https://github.com/SiaFoundation/web/commit/f256083238314a9b4e3bbfc31b495e3953afeac7))
+
+
+
 ## [0.24.1](https://github.com/SiaFoundation/web/compare/design-system-0.24.0...design-system-0.24.1) (2022-05-24)
 
 
