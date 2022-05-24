@@ -17,8 +17,11 @@ export function Statsbar({ stats }: Props) {
   const {
     activeHosts,
     onlineHosts,
+    lastBlock,
     totalStorage,
     usedStorage,
+    totalRegistry,
+    usedRegistry,
     commits,
     contributors,
     forks,
@@ -45,16 +48,26 @@ export function Statsbar({ stats }: Props) {
     >
       <StatSection
         title="Network"
-        link={external.stats}
+        link={external.networkStats}
         stats={[
           {
-            value: activeHosts,
-            label: 'active hosts',
+            value: lastBlock,
+            label: 'block height',
           },
           {
             value: onlineHosts,
             label: 'online hosts',
           },
+          {
+            value: activeHosts,
+            label: 'active hosts',
+          },
+        ]}
+      />
+      <StatSection
+        title="Storage"
+        link={external.storageStats}
+        stats={[
           {
             value: totalStorage,
             label: 'total storage',
@@ -62,6 +75,14 @@ export function Statsbar({ stats }: Props) {
           {
             value: usedStorage,
             label: 'used storage',
+          },
+          {
+            value: totalRegistry,
+            label: 'total registry',
+          },
+          {
+            value: usedRegistry,
+            label: 'used registry',
           },
         ]}
       />
