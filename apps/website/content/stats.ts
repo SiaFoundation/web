@@ -16,6 +16,9 @@ export async function getStats() {
       onlineHosts: '20,634',
       totalStorage: '207.38 PB',
       usedStorage: '202.44 PB',
+      totalRegistry: '1,000 M',
+      usedRegistry: '100 M',
+      blockHeight: '200,000',
       commits: '2,020,909',
       contributors: '2,069',
       forks: '20,472',
@@ -40,7 +43,7 @@ export async function getStats() {
 
   const stats = {
     // network
-    lastBlock: formatNumber(explore.data?.consensusblock),
+    blockHeight: formatNumber(explore.data?.consensusblock),
     activeHosts: formatNumber(hostsStats.data?.totals.active_hosts),
     onlineHosts: formatNumber(hostsStats.data?.totals.total_hosts),
     // storage
