@@ -1,4 +1,6 @@
-import { Flex, NextLink, Text } from '..'
+import { Flex } from '../core/Flex'
+import { NextLink } from '../core/Link'
+import { Text } from '../core/Text'
 import { CSS } from '../config/theme'
 import { NextLinkButton } from '../core/Link'
 import { LinkData } from '../lib/links'

@@ -1,5 +1,7 @@
 import { Launch16 } from '../icons'
-import { Box, Flex, Text } from '..'
+import { Box } from '../core/Box'
+import { Flex } from '../core/Flex'
+import { Text } from '../core/Text'
 
 const localDomains = ['sia.tech', 'docs.sia.tech', 'blog.sia.tech']
 

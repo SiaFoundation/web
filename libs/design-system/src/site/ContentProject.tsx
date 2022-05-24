@@ -1,4 +1,6 @@
-import { Flex, NextLink, Text } from '..'
+import { Flex } from '../core/Flex'
+import { NextLink } from '../core/Link'
+import { Text } from '../core/Text'
 import { Paragraph } from '../core/Paragraph'
 import { ContentItemProps } from './ContentItem'
 import { WebDomain } from './WebDomain'

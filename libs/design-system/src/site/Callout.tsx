@@ -1,12 +1,10 @@
-import {
-  LocalBackdrop,
-  Box,
-  Flex,
-  NextLinkButton,
-  Panel,
-  Paragraph,
-  Text,
-} from '..'
+import { LocalBackdrop } from '../components/LocalBackdrop'
+import { NextLinkButton } from '../core/Link'
+import { Text } from '../core/Text'
+import { Paragraph } from '../core/Paragraph'
+import { Panel } from '../core/Panel'
+import { Flex } from '../core/Flex'
+import { Box } from '../core/Box'
 import { CSS } from '../config/theme'
 
 type Props = {
