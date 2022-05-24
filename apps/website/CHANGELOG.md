@@ -2,6 +2,23 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.18.0](https://github.com/SiaFoundation/web/compare/website-0.17.9...website-0.18.0) (2022-05-24)
+
+
+### Bug Fixes
+
+* remove comments ([d67b0e2](https://github.com/SiaFoundation/web/commit/d67b0e245a9198843dd748022321716f4a4b9ecc))
+* var name, dev stub ([c448f97](https://github.com/SiaFoundation/web/commit/c448f97517ae75d5610cf785d83664cf7911a697))
+
+
+### Features
+
+* add external links to sitemenu ([f256083](https://github.com/SiaFoundation/web/commit/f256083238314a9b4e3bbfc31b495e3953afeac7))
+* add sia central and explorer stats ([1c51d01](https://github.com/SiaFoundation/web/commit/1c51d01cc955b2285439b89cd604aa1a9163c19b))
+* update ecosystem project ([e17af8a](https://github.com/SiaFoundation/web/commit/e17af8a6f289951ffe139f18e2bec0bf7e0255ab))
+
+
+
 ## [0.17.9](https://github.com/SiaFoundation/web/compare/website-0.17.8...website-0.17.9) (2022-05-20)
 
 
