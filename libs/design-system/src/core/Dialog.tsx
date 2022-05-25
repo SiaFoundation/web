@@ -84,7 +84,6 @@ function DialogControls({ children, separator = true }: DialogControlsProps) {
       css={{
         padding: '$1 0',
         margin: '0 $2',
-        backgroundColor: '$loContrast',
         borderTop: separator ? '1px solid $brandGray3' : 'none',
       }}
     >
@@ -123,6 +122,7 @@ type DialogContentPrimitiveProps = React.ComponentProps<
 >
 type DialogContentProps = DialogContentPrimitiveProps & {
   variant?: 'div' | 'form'
+  onSubmit?: React.FormEventHandler<HTMLFormElement>
   title: React.ReactNode
   description?: React.ReactNode
   controls?: React.ReactNode
@@ -135,7 +135,7 @@ const DialogInnerContent = React.forwardRef<
   DialogContentProps
 >(
   (
-    { children, variant, title, description, controls, ...props },
+    { children, variant, onSubmit, title, description, controls, ...props },
     forwardedRef
   ) => {
     const { ref, height } = useHeight([children, description])
@@ -147,11 +147,17 @@ const DialogInnerContent = React.forwardRef<
     }, [height])
     return (
       <StyledContent {...props} ref={forwardedRef}>
-        <Box as={variant}>
+        <Box as={variant} onSubmit={onSubmit}>
           {title && (
             <DialogTitle separator={showSeparator}>{title}</DialogTitle>
           )}
-          <Box css={{ height, maxHeight: '70vh', overflow: 'hidden' }}>
+          <Box
+            css={{
+              height: height || 'inherit',
+              maxHeight: '70vh',
+              overflow: 'hidden',
+            }}
+          >
             <ScrollArea>
               <Box ref={ref} css={{ padding: '$2' }}>
                 {description && (
@@ -201,7 +207,7 @@ function useHeight(deps: unknown[] = []) {
       return
     }
     const node = ref.current
-    const update = () => setHeight(node.clientHeight || 0)
+    const update = () => setHeight(node.clientHeight)
     update()
     ref.current.addEventListener('resize', update)
     return () => {

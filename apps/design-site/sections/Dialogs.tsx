@@ -12,10 +12,13 @@ import {
   Section,
 } from '@siafoundation/design-system'
 import { times } from 'lodash'
+import { useState } from 'react'
 import { SectionHeading } from '../components/SectionHeading'
 import { SubsectionHeading } from '../components/SubsectionHeading'
 
 export function Dialogs() {
+  const [open, setOpen] = useState<boolean>(false)
+
   return (
     <>
       <Section size="1">
@@ -86,6 +89,37 @@ export function Dialogs() {
           <Dialog>
             <DialogTrigger asChild>
               <Button>Dialog no desc or controls overflow</Button>
+            </DialogTrigger>
+            <DialogContent title="Dialog">
+              {times(10, (i) => (
+                <Paragraph key={i}>
+                  This app uses the following third-party APIs, all external
+                  APIs are not required and can be toggled on or off.
+                </Paragraph>
+              ))}
+            </DialogContent>
+          </Dialog>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button>Dialog wide</Button>
+            </DialogTrigger>
+            <DialogContent
+              title="Dialog"
+              css={{
+                maxWidth: '800px',
+              }}
+            >
+              {times(10, (i) => (
+                <Paragraph key={i}>
+                  This app uses the following third-party APIs, all external
+                  APIs are not required and can be toggled on or off.
+                </Paragraph>
+              ))}
+            </DialogContent>
+          </Dialog>
+          <Dialog open={open} onOpenChange={(val) => setOpen(val)}>
+            <DialogTrigger asChild>
+              <Button>Dialog controlled</Button>
             </DialogTrigger>
             <DialogContent title="Dialog">
               {times(10, (i) => (
