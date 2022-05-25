@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.16.0](https://github.com/SiaFoundation/web/compare/design-site-0.15.1...design-site-0.16.0) (2022-05-25)
+
+
+### Bug Fixes
+
+* dialog height change ([7cd0717](https://github.com/SiaFoundation/web/commit/7cd0717cf3e99f1e782725a0e238d3a4c9893580))
+
+
+### Features
+
+* combobox props ([2162a81](https://github.com/SiaFoundation/web/commit/2162a81c12e8fc73e8217419190d19e02cfa15e5))
+
+
+
 ## [0.15.1](https://github.com/SiaFoundation/web/compare/design-site-0.15.0...design-site-0.15.1) (2022-05-23)
 
 
