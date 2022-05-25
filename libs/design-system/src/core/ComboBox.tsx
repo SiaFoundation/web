@@ -1,5 +1,10 @@
 import { useMemo } from 'react'
-import { components, GroupBase, SelectComponentsConfig } from 'react-select'
+import {
+  components,
+  GroupBase,
+  SelectComponentsConfig,
+  SingleValue,
+} from 'react-select'
 import Select from 'react-select/async'
 import { Box } from '../core/Box'
 import { CSS, globalCss } from '../config/theme'
@@ -10,6 +15,9 @@ type Option = {
 }
 
 type Props = {
+  value?: Option
+  onChange?: (option: SingleValue<Option>) => void
+  disabled?: boolean
   size?: '1' | '2' | '3'
   prefix?: React.ReactNode
   indicators?: boolean
@@ -19,7 +27,10 @@ type Props = {
 }
 
 export function ComboBox({
+  value,
+  onChange,
   options,
+  disabled,
   size = '2',
   prefix,
   indicators = true,
@@ -72,7 +83,11 @@ export function ComboBox({
         options={options}
         cacheOptions
         loadOptions={loadOptions}
+        isDisabled={disabled}
+        onChange={onChange}
+        menuPlacement="auto"
         defaultOptions={options.slice(0, 10)}
+        value={value}
         classNamePrefix="react-select"
         className={
           `react-select-size-${size}` +
