@@ -20,7 +20,10 @@
       "@siafoundation/env": ["libs/env/src/index.ts"],
       "@siafoundation/sia-js": ["libs/sia-js/src/index.ts"],
       "@siafoundation/sia-nodejs": ["libs/sia-nodejs/src/index.ts"],
-      "@siafoundation/sia-react": ["libs/sia-react/src/index.ts"]
+      "@siafoundation/sia-react": ["libs/sia-react/src/index.ts"],
+      "@siafoundation/react-core": ["libs/react-core/src/index.ts"],
+      "@siafoundation/react-siad": ["libs/react-siad/src/index.ts"],
+      "@siafoundation/react-renterd": ["libs/react-renterd/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
