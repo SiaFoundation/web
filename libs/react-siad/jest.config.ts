@@ -1,7 +1,7 @@
 /* eslint-disable */
 export default {
   displayName: 'react-siad',
-  preset: '../../jest.preset.js',
+  preset: '../../jest.preset.ts',
   transform: {
     '^.+\\.[tj]sx?$': 'babel-jest',
   },
