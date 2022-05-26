@@ -1,14 +1,18 @@
 {
   "version": 2,
   "projects": {
+    "siad": "apps/siad",
+    "website": "apps/website",
+    "design-site": "apps/design-site",
     "asset-server": "apps/asset-server",
     "data-sources": "libs/data-sources",
-    "design-site": "apps/design-site",
     "design-system": "libs/design-system",
     "env": "libs/env",
     "sia-js": "libs/sia-js",
     "sia-nodejs": "libs/sia-nodejs",
     "sia-react": "libs/sia-react",
-    "website": "apps/website"
+    "react-core": "libs/react-core",
+    "react-siad": "libs/react-siad",
+    "react-renterd": "libs/react-renterd"
   }
 }
