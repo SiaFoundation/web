@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.26.1](https://github.com/SiaFoundation/web/compare/design-system-0.26.0...design-system-0.26.1) (2022-05-26)
+
+
+### Bug Fixes
+
+* dialog onsubmit type ([f9e809c](https://github.com/SiaFoundation/web/commit/f9e809cf2d534977c73079143b86dab135f50d12))
+
+
+
 # [0.26.0](https://github.com/SiaFoundation/web/compare/design-system-0.25.0...design-system-0.26.0) (2022-05-25)
 
 
