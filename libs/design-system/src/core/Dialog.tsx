@@ -120,7 +120,7 @@ const StyledContent = styled(DialogPrimitive.Content, dialogContentStyles)
 type DialogContentPrimitiveProps = React.ComponentProps<
   typeof DialogPrimitive.Content
 >
-type DialogContentProps = DialogContentPrimitiveProps & {
+type DialogContentProps = Omit<DialogContentPrimitiveProps, 'onSubmit'> & {
   variant?: 'div' | 'form'
   onSubmit?: React.FormEventHandler<HTMLFormElement>
   title: React.ReactNode
