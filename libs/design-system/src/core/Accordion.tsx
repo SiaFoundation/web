@@ -28,13 +28,23 @@ const StyledContent = styled(AccordionPrimitive.Content, {
 })
 
 const StyledItem = styled(AccordionPrimitive.Item, {
-  borderTop: '1px solid $colors$slate6',
+  variants: {
+    variant: {
+      default: {
+        borderTop: '1px solid $colors$slate6',
 
-  '&:last-of-type': {
-    borderBottom: '1px solid $colors$slate6',
+        '&:last-of-type': {
+          borderBottom: '1px solid $colors$slate6',
+        },
+        [`${StyledContent} > ${StyledContent} > &:last-of-type`]: {
+          borderBottom: 'none',
+        },
+      },
+      ghost: {},
+    },
   },
-  [`${StyledContent} > ${StyledContent} > &:last-of-type`]: {
-    borderBottom: 'none',
+  defaultVariants: {
+    variant: 'default',
   },
 })
 
@@ -56,15 +66,8 @@ const StyledTrigger = styled(AccordionPrimitive.Trigger, {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  p: '$1-5',
   color: '$hiContrast',
   width: '100%',
-
-  '@hover': {
-    '&:hover': {
-      backgroundColor: '$slate2',
-    },
-  },
 
   '&:focus': {
     outline: 'none',
@@ -80,12 +83,32 @@ const StyledTrigger = styled(AccordionPrimitive.Trigger, {
       transform: 'rotate(180deg)',
     },
   },
+
+  variants: {
+    variant: {
+      default: {
+        p: '$1-5',
+        '@hover': {
+          '&:hover': {
+            backgroundColor: '$slate2',
+          },
+        },
+      },
+      ghost: {
+        py: '$1-5',
+      },
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
 })
 
 type AccordionTriggerPrimitiveProps = React.ComponentProps<
   typeof AccordionPrimitive.Trigger
 >
-type AccordionTriggerProps = AccordionTriggerPrimitiveProps & { css?: CSS }
+type AccordionTriggerProps = AccordionTriggerPrimitiveProps &
+  React.ComponentProps<typeof StyledTrigger> & { css?: CSS }
 
 export const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof StyledTrigger>,
