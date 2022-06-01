@@ -1,12 +1,4 @@
-import {
-  Box,
-  Flex,
-  ImageProps,
-  LogoDiscord32,
-  LogoGithub32,
-  RedditIcon,
-  SiteLayout,
-} from '@siafoundation/design-system'
+import { Box, Flex, ImageProps, SiteLayout } from '@siafoundation/design-system'
 import { Stats } from '../content/stats'
 import { Footer } from './Footer'
 import { PageHead } from './PageHead'
