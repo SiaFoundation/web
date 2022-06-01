@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.27.0](https://github.com/SiaFoundation/web/compare/design-system-0.26.1...design-system-0.27.0) (2022-06-01)
+
+
+### Features
+
+* accordion variants ([1acf738](https://github.com/SiaFoundation/web/commit/1acf738db96b375f1a7ad557fc471374d334e7f7))
+
+
+
 ## [0.26.1](https://github.com/SiaFoundation/web/compare/design-system-0.26.0...design-system-0.26.1) (2022-05-26)
 
 
