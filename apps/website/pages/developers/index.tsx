@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { getHosts, getSiaVersion } from '@siafoundation/env'
 import {
   Flex,
@@ -12,6 +13,13 @@ import {
   ContentProject,
   SiteHeading,
   getImageProps,
+  Paragraph,
+  Accordion,
+  AccordionTrigger,
+  AccordionContent,
+  AccordionItem,
+  Codeblock,
+  Link,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { external, sitemap } from '../../config/site'
@@ -78,7 +86,97 @@ function Developers({ stats }: Props) {
         <WavesBackdrop />
         <Container>
           <Flex direction="column" gap="5">
-            <SiteHeading size="32" title="Core Software" />
+            <SiteHeading
+              size="32"
+              title="Core Software"
+              description={
+                <>
+                  <Accordion type="single">
+                    <AccordionItem value="steps" variant="ghost">
+                      <AccordionTrigger variant="ghost">
+                        <Flex direction="column">
+                          <Paragraph size="14">
+                            As a reminder, all release binaries are signed. You
+                            can download the signing key{' '}
+                            <Link
+                              onClick={(e) => {
+                                e.stopPropagation()
+                              }}
+                              target="_blank"
+                              href={getHref(
+                                `${hosts.app}/releases/sia-signing-key.asc`
+                              )}
+                            >
+                              here
+                            </Link>
+                            , and the signed hashes for the current release{' '}
+                            <Link
+                              onClick={(e) => {
+                                e.stopPropagation()
+                              }}
+                              target="_blank"
+                              href={getHref(
+                                `${hosts.app}/releases/Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`
+                              )}
+                            >
+                              here
+                            </Link>
+                            .
+                          </Paragraph>
+                          <Paragraph size="14">
+                            <Link>
+                              Click here to learn how to verify your release.
+                            </Link>
+                          </Paragraph>
+                        </Flex>
+                      </AccordionTrigger>
+                      <AccordionContent css={{ margin: '$3 0' }}>
+                        <Paragraph size="14">
+                          1. Download and import the Sia signing key.
+                        </Paragraph>
+                        <Codeblock>
+                          {`wget -c ${getHref(
+                            `${hosts.app}/releases/sia-signing-key.asc`
+                          )}
+gpg --import sia-signing-key.asc`}
+                        </Codeblock>
+
+                        <Paragraph size="14">
+                          2. Download the signed hash file, and verify the
+                          signature.
+                        </Paragraph>
+                        <Codeblock>
+                          {`wget -c ${getHref(
+                            `${hosts.app}/releases/Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`
+                          )}
+gpg --verify Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`}
+                        </Codeblock>
+
+                        <Paragraph size="14">
+                          3. If you downloaded a zip file, unzip that first.
+                        </Paragraph>
+                        <Codeblock>
+                          unzip Sia-v{siaVersion.current}-linux-amd64.zip
+                        </Codeblock>
+
+                        <Paragraph size="14">
+                          4. Check that the files you downloaded were signed.
+                        </Paragraph>
+                        <Codeblock>
+                          sha256sum --check --ignore-missing Sia-v
+                          {siaVersion.current}-SHA256SUMS.txt.asc
+                        </Codeblock>
+
+                        <Paragraph size="14">
+                          You should see "OK" next to the files you did download
+                          and errors for the files you have not downloaded.
+                        </Paragraph>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </>
+              }
+            />
             <Flex direction="column" gap="9">
               <Grid
                 columns={{
