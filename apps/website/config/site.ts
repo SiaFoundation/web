@@ -54,6 +54,6 @@ export const external = {
   email: 'hello@sia.tech',
   benchmarks: 'https://benchmarks.sia.tech',
   storageStats: 'https://hosts.siacentral.com/',
-  networkStats: 'https://explore.sia.tech/',
-  // stats: 'https://siastats.info',
+  exploreStats: 'https://explore.sia.tech/',
+  siaStats: 'https://siastats.info',
 }

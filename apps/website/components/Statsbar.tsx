@@ -48,7 +48,7 @@ export function Statsbar({ stats }: Props) {
     >
       <StatSection
         title="Network"
-        link={external.networkStats}
+        link={external.siaStats}
         stats={[
           {
             value: blockHeight,
