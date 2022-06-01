@@ -3,6 +3,10 @@ import { Image } from './Image'
 
 const props = typeof logo === 'string' ? { src: logo } : logo
 
-export function Logo() {
-  return <Image {...props} alt="Logo" height="30px" />
+type Props = {
+  size: number
+}
+
+export function Logo({ size = 30 }: Props) {
+  return <Image src={props.src} alt="Logo" width={size} height={size} />
 }

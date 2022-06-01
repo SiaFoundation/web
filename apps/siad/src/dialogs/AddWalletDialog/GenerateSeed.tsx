@@ -1,14 +1,4 @@
-import {
-  Box,
-  Button,
-  ComboBox,
-  copyToClipboard,
-  Flex,
-  Grid,
-  Panel,
-  Paragraph,
-  Text,
-} from '@siafoundation/design-system'
+import { ComboBox, Grid, Text } from '@siafoundation/design-system'
 import { useEffect, useMemo } from 'react'
 import { SeedLayout } from './SeedLayout'
 

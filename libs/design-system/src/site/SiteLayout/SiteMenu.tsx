@@ -74,7 +74,7 @@ const slideOut = keyframes({
 })
 
 const StyledContent = styled(DialogPrimitive.Content, {
-  backgroundColor: '$panelDark',
+  backgroundColor: 'black',
   border: '$sizes$frame solid $frame',
   position: 'fixed',
   top: 0,

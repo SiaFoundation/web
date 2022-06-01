@@ -26,14 +26,10 @@ export const TextField = styled('input', {
   color: '$hiContrast',
   fontVariantNumeric: 'tabular-nums',
 
-  '&:-webkit-autofill': {
-    boxShadow:
-      '$colors$borderInput, $colors$shadow, inset 0 0 0 100px $colors$brandAccent4',
-  },
-
-  '&:-webkit-autofill::first-line': {
-    fontFamily: '$untitled',
+  '&-webkit-autofill, &:-webkit-autofill:focus': {
+    backgroundColor: '$loContrast',
     color: '$hiContrast',
+    boxShadow: '$colors$border, $colors$shadow',
   },
 
   '@hover': {
@@ -47,7 +43,7 @@ export const TextField = styled('input', {
       '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive',
     '&:-webkit-autofill': {
       boxShadow:
-        '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive, inset 0 0 0 100px $colors$brandAccent4',
+        '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive, inset 0 0 0 100px $colors$gray3',
     },
   },
   '&::placeholder': {
@@ -79,7 +75,11 @@ export const TextField = styled('input', {
         padding: '0 $1',
         lineHeight: '$sizes$3-5',
         '&:-webkit-autofill::first-line': {
+          color: '$hiContrast',
           fontSize: '$12',
+        },
+        '&:-webkit-autofill': {
+          boxShadow: '$colors$border, $colors$shadow',
         },
         '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
           position: 'relative',
@@ -93,7 +93,11 @@ export const TextField = styled('input', {
         padding: '0 $1-5',
         lineHeight: '$sizes$5',
         '&:-webkit-autofill::first-line': {
+          color: '$hiContrast',
           fontSize: '$16',
+        },
+        '&:-webkit-autofill': {
+          boxShadow: '$colors$border, $colors$shadow',
         },
         '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
           position: 'relative',
@@ -107,7 +111,11 @@ export const TextField = styled('input', {
         padding: '0 $1-5',
         lineHeight: '$sizes$6',
         '&:-webkit-autofill::first-line': {
-          fontSize: '$20',
+          color: '$hiContrast',
+          fontSize: '$24 !important',
+        },
+        '&:-webkit-autofill': {
+          boxShadow: '$colors$border, $colors$shadow',
         },
         '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
           position: 'relative',

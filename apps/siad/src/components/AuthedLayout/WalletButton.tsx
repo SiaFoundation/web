@@ -1,7 +1,6 @@
 import {
   Avatar,
   Flex,
-  RouterLink,
   Snowflake16,
   Text,
   Usb16,

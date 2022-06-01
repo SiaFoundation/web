@@ -16,10 +16,11 @@ import {
   Flex,
   Text,
   usePullTop,
+  webLinks,
 } from '@siafoundation/design-system'
 import { omit } from 'lodash'
 import { Layout } from '../components/Layout'
-import { external, sitemap } from '../config/site'
+import { sitemap } from '../config/site'
 import { AsyncReturnType } from '../lib/types'
 import { getArticles } from '../content/articles'
 import { getSoftware } from '../content/software'
@@ -271,7 +272,7 @@ export default function Home({ seenLetter }: Props) {
             links={[
               {
                 title: 'Browse the blog',
-                link: external.blog,
+                link: webLinks.blog,
                 newTab: true,
               },
             ]}

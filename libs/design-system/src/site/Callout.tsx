@@ -1,11 +1,9 @@
-import { LocalBackdrop } from '../components/LocalBackdrop'
 import { NextLinkButton } from '../core/Link'
 import { Text } from '../core/Text'
 import { Paragraph } from '../core/Paragraph'
-import { Panel } from '../core/Panel'
 import { Flex } from '../core/Flex'
-import { Box } from '../core/Box'
 import { CSS } from '../config/theme'
+import { AnimatedPanel } from './AnimatedPanel'
 
 type Props = {
   eyebrow?: string
@@ -31,28 +29,7 @@ export function Callout({
   css,
 }: Props) {
   return (
-    <Panel
-      radius="0"
-      css={{
-        position: 'relative',
-        background: 'none',
-        border: '2px solid $frame',
-        // maxWidth: size === '1' ? '300px' : 'inherit',
-        ...css,
-      }}
-    >
-      <Box
-        css={{
-          zIndex: 0,
-          overflow: 'hidden',
-          position: 'absolute',
-          borderRadius: '$2',
-          width: '100%',
-          height: '100%',
-        }}
-      >
-        <LocalBackdrop startTime={startTime} />
-      </Box>
+    <AnimatedPanel startTime={startTime} css={css}>
       <Flex
         direction="column"
         align="start"
@@ -92,6 +69,6 @@ export function Callout({
           {actionTitle}
         </NextLinkButton>
       </Flex>
-    </Panel>
+    </AnimatedPanel>
   )
 }

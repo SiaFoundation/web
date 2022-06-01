@@ -7,16 +7,14 @@ import {
   Switch,
   Paragraph,
   DialogContent,
-  DialogTrigger,
   Dialog,
-  Button,
 } from '@siafoundation/design-system'
 import { useSettings } from '@siafoundation/react-core'
 import { useDialog } from '../contexts/dialog'
 
 export function PrivacyDialog() {
   const { settings, setSettings } = useSettings()
-  const { dialog, setDialog, openDialog } = useDialog()
+  const { dialog, setDialog } = useDialog()
 
   return (
     <Dialog

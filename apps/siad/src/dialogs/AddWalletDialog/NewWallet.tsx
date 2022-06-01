@@ -8,9 +8,7 @@ import {
   Box,
   DialogContent,
 } from '@siafoundation/design-system'
-import { useWalletAddressCreate } from '@siafoundation/react-siad'
 import { useFormik } from 'formik'
-import { useDialog } from '../../contexts/dialog'
 import * as Yup from 'yup'
 import { GenerateSeed } from './GenerateSeed'
 import { useState } from 'react'
@@ -29,8 +27,6 @@ const validationSchema = Yup.object().shape({
 export function NewWallet() {
   const seed =
     'dash rudely lunar balding zinger mystery feline catch ruling entrance portents makeup talent honked towel dabbing zones voice tucks iceberg both banjo weird ladder rumble tepid scamper fountain acumen'
-  const { closeDialog } = useDialog()
-  const addAddress = useWalletAddressCreate()
   // const [seed, setSeed] = useState<string>()
   const [step, setStep] = useState<string>('start')
   const [valid, setValid] = useState<boolean>(false)

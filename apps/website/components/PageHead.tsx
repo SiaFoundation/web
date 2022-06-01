@@ -1,8 +1,9 @@
 import { getHosts } from '@siafoundation/env'
+import { webLinks } from '@siafoundation/design-system'
 import Head from 'next/head'
 import Script from 'next/script'
 import { appName, newsFeedName } from '../config/app'
-import { external, sitemap } from '../config/site'
+import { sitemap } from '../config/site'
 import { getHref } from '../lib/url'
 
 const hosts = getHosts()
@@ -76,7 +77,7 @@ export function PageHead({ title, description, image, date, path }: Props) {
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content={external.twitterHandle} />
+        <meta name="twitter:site" content={webLinks.twitterHandle} />
 
         {/* Open Graph */}
         <meta property="og:url" content={getHref(hosts.app + path)} />

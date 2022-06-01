@@ -15,10 +15,11 @@ import {
   SiteHeading,
   Grid,
   getImageProps,
+  webLinks,
 } from '@siafoundation/design-system'
 import { getArticles } from '../../content/articles'
 import { Layout } from '../../components/Layout'
-import { external, sitemap } from '../../config/site'
+import { sitemap } from '../../config/site'
 import { getStats, Stats } from '../../content/stats'
 import { getDaysInSeconds } from '../../lib/time'
 import { textContent } from '../../lib/utils'
@@ -83,7 +84,7 @@ function Learn({ stats }: Props) {
                 links={[
                   {
                     title: 'Learn how Sia works',
-                    link: external.docs.sia101,
+                    link: webLinks.docs.sia101,
                     newTab: true,
                   },
                 ]}
@@ -143,7 +144,7 @@ function Learn({ stats }: Props) {
             <Callout
               title="Sia 101"
               actionTitle="Learn more"
-              actionLink={external.docs.sia101}
+              actionLink={webLinks.docs.sia101}
               actionNewTab
               description={<>Visit our docs to learn more about Sia.</>}
               css={{

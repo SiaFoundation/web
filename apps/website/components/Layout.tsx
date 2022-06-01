@@ -1,9 +1,15 @@
-import { Box, Flex, ImageProps, SiteLayout } from '@siafoundation/design-system'
+import {
+  Box,
+  Flex,
+  ImageProps,
+  SiteLayout,
+  webLinks,
+} from '@siafoundation/design-system'
 import { Stats } from '../content/stats'
 import { Footer } from './Footer'
 import { PageHead } from './PageHead'
 import { Navbar } from './Navbar'
-import { external, sitemap } from '../config/site'
+import { sitemap } from '../config/site'
 
 type Props = {
   heading: React.ReactNode
@@ -57,11 +63,11 @@ export function Layout({
         heading={heading}
         externalLinks={[
           {
-            link: external.github,
+            link: webLinks.github,
             title: 'GitHub',
           },
           {
-            link: external.discord,
+            link: webLinks.discord,
             title: 'Discord',
           },
         ]}

@@ -8,9 +8,10 @@ import {
   SiteHeading,
   getImageProps,
   Box,
+  webLinks,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
-import { external, sitemap } from '../../config/site'
+import { sitemap } from '../../config/site'
 import { getArticles } from '../../content/articles'
 import { AsyncReturnType } from '../../lib/types'
 import { getSoftware } from '../../content/software'
@@ -52,12 +53,12 @@ function CommunityEcosystem({ stats }: Props) {
             links={[
               {
                 title: 'Join our Discord',
-                link: external.discord,
+                link: webLinks.discord,
                 newTab: true,
               },
               {
                 title: 'Browse Reddit',
-                link: external.reddit,
+                link: webLinks.reddit,
                 newTab: true,
               },
             ]}
@@ -81,7 +82,7 @@ function CommunityEcosystem({ stats }: Props) {
           links={[
             {
               title: 'Browse the blog',
-              link: external.blog,
+              link: webLinks.blog,
               newTab: true,
             },
           ]}
@@ -146,7 +147,7 @@ function CommunityEcosystem({ stats }: Props) {
             </>
           }
           actionTitle="Join the discussion"
-          actionLink={external.reddit}
+          actionLink={webLinks.reddit}
           actionNewTab
         />
       </Section>

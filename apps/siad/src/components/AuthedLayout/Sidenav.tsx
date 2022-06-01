@@ -9,7 +9,6 @@ import {
   Panel,
   RouterLink,
   Separator,
-  Text,
   Tooltip,
 } from '@siafoundation/design-system'
 import { useSettings } from '@siafoundation/react-core'

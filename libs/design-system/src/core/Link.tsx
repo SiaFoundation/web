@@ -26,6 +26,16 @@ export const Link = styled('a', {
   },
 
   variants: {
+    underline: {
+      hover: {
+        textDecorationLine: 'none',
+        '@hover': {
+          '&:hover': {
+            textDecorationLine: 'underline',
+          },
+        },
+      },
+    },
     variant: {
       subtle: {
         color: '$textSubtle',
@@ -62,6 +72,7 @@ type NLinkProps = {
   target?: string
   onClick?: () => void
   children?: React.ReactNode
+  underline?: React.ComponentProps<typeof Link>['underline']
   variant?: React.ComponentProps<typeof Link>['variant']
   css?: CSS
 }
@@ -73,6 +84,7 @@ export function NextLink({
   target,
   children,
   onClick,
+  underline,
   variant = 'contrast',
   css,
 }: NLinkProps) {
@@ -81,6 +93,7 @@ export function NextLink({
       <Link
         id={id}
         target={target}
+        underline={underline}
         variant={variant}
         css={css}
         onClick={onClick}
@@ -132,6 +145,7 @@ type RouterLinkProps = {
   to: string
   target?: string
   children: React.ReactNode
+  underline?: React.ComponentProps<typeof Link>['underline']
   variant?: React.ComponentProps<typeof Link>['variant']
   css?: CSS
 }
@@ -142,6 +156,7 @@ export function RouterLink({
   to,
   target,
   children,
+  underline,
   variant = 'contrast',
   css,
 }: RouterLinkProps) {
@@ -150,6 +165,7 @@ export function RouterLink({
       as={BaseRouterLink}
       id={id}
       target={target}
+      underline={underline}
       variant={variant}
       css={css}
       to={to}

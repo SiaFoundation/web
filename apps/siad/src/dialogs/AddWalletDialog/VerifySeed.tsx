@@ -87,6 +87,7 @@ export function VerifySeed({ seed, onChange }: Props) {
     }
 
     setValidation(newValidationArray)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [seedInputs, seedList])
 
   return (

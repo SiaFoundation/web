@@ -27,6 +27,10 @@ export const IconButton = styled('button', {
 
   variants: {
     size: {
+      '0': {
+        borderRadius: '$1',
+        fontSize: '$10',
+      },
       '1': {
         borderRadius: '$1',
         height: '$3-5',

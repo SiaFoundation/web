@@ -6,7 +6,7 @@ import {
   getSiaCentralHostsNetworkMetrics,
 } from '@siafoundation/data-sources'
 import { isDev } from '@siafoundation/env'
-import { humanBytes, humanSpeed } from '@siafoundation/sia-js'
+import { humanBytes, humanNumber, humanSpeed } from '@siafoundation/sia-js'
 import { AsyncReturnType } from '../lib/types'
 
 export async function getStats() {
@@ -43,35 +43,35 @@ export async function getStats() {
 
   const stats = {
     // network
-    blockHeight: formatNumber(explore.data?.consensusblock),
-    activeHosts: formatNumber(hostsStats.data?.totals.active_hosts),
-    onlineHosts: formatNumber(hostsStats.data?.totals.total_hosts),
+    blockHeight: humanNumber(explore.data?.consensusblock),
+    activeHosts: humanNumber(hostsStats.data?.totals.active_hosts),
+    onlineHosts: humanNumber(hostsStats.data?.totals.total_hosts),
     // storage
     totalStorage: humanBytes(hostsStats.data?.totals.total_storage),
     usedStorage: humanBytes(
       hostsStats.data?.totals.total_storage -
         hostsStats.data?.totals.remaining_storage
     ),
-    totalRegistry: formatNumber(
+    totalRegistry: humanNumber(
       (hostsStats.data?.totals.total_registry_entries || 0) / 1_000_000,
-      'M'
+      { units: 'M' }
     ),
-    usedRegistry: formatNumber(
+    usedRegistry: humanNumber(
       ((hostsStats.data?.totals.total_registry_entries || 0) -
         (hostsStats.data?.totals.remaining_registry_entries || 0)) /
         1_000_000,
-      'M'
+      { units: 'M' }
     ),
     // software
-    commits: formatNumber(github.data?.commits),
-    contributors: formatNumber(github.data?.contributors),
-    forks: formatNumber(github.data?.forks),
-    releases: formatNumber(github.data?.releases),
-    downloads: formatNumber(downloadCounts.data?.total),
+    commits: humanNumber(github.data?.commits),
+    contributors: humanNumber(github.data?.contributors),
+    forks: humanNumber(github.data?.forks),
+    releases: humanNumber(github.data?.releases),
+    downloads: humanNumber(downloadCounts.data?.total),
     // benchmarks
     downloadSpeed: humanSpeed(latestBenchmark?.downloadThroughput),
     uploadSpeed: humanSpeed(latestBenchmark?.uploadThroughput),
-    cpuUsage: `${formatNumber(latestBenchmark?.maxCPUPct)}%`,
+    cpuUsage: `${humanNumber(latestBenchmark?.maxCPUPct)}%`,
     memoryUsage: humanBytes(latestBenchmark?.maxMemBytes),
   }
 
@@ -79,9 +79,3 @@ export async function getStats() {
 }
 
 export type Stats = AsyncReturnType<typeof getStats>
-
-function formatNumber(num: number | undefined, units?: string) {
-  return `${Number((num || 0).toFixed(0)).toLocaleString()}${
-    units ? ` ${units}` : ''
-  }`
-}

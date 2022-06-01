@@ -1,9 +1,4 @@
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogTrigger,
-} from '@siafoundation/design-system'
+import { Dialog } from '@siafoundation/design-system'
 import React, { createContext, useContext, useCallback, useState } from 'react'
 import { AddAddressDialog } from '../dialogs/AddAddressDialog'
 import { AddWalletDialog } from '../dialogs/AddWalletDialog'

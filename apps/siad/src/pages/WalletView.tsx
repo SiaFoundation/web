@@ -4,38 +4,30 @@ import {
   Checkmark16,
   Container,
   Flex,
-  Heading,
   Panel,
-  ScrollArea,
-  Separator,
   Text,
 } from '@siafoundation/design-system'
-import {
-  useWalletAddresses,
-  useWalletBalance,
-  useWalletSeedIndex,
-  useWalletTransactions,
-  useWalletUtxos,
-} from '@siafoundation/react-siad'
+// import {
+//   useWalletAddresses,
+//   useWalletBalance,
+//   useWalletSeedIndex,
+//   useWalletTransactions,
+//   useWalletUtxos,
+// } from '@siafoundation/react-siad'
 import { useParams } from 'react-router-dom'
 import { AuthedLayout } from '../components/AuthedLayout'
-import { DataPanel } from '../components/DataPanel'
-import { Navbar } from '../components/Navbar'
 import { Wallet } from '../components/User/Wallet'
 import { WalletSparkline } from '../components/WalletSparkline'
-import { useDialog } from '../contexts/dialog'
-import { fakeWallets } from '../lib/fakeWallets'
 
 export function WalletView() {
   const { walletId } = useParams()
-  const { openDialog } = useDialog()
-  const balance = useWalletBalance({
-    refreshInterval: 5_000,
-  })
-  const transactions = useWalletTransactions()
-  const utxos = useWalletUtxos()
-  const seedIndex = useWalletSeedIndex()
-  const addresses = useWalletAddresses()
+  // const balance = useWalletBalance({
+  //   refreshInterval: 5_000,
+  // })
+  // const transactions = useWalletTransactions()
+  // const utxos = useWalletUtxos()
+  // const seedIndex = useWalletSeedIndex()
+  // const addresses = useWalletAddresses()
   // const peers = useSyncerPeers()
   // const connect = useSyncerConnect()
   // const poolTransactions = useTxPoolTransactions({
