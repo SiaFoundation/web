@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.19.0](https://github.com/SiaFoundation/web/compare/website-0.18.0...website-0.19.0) (2022-06-01)
+
+
+### Features
+
+* add signature verification info ([f3c2ce9](https://github.com/SiaFoundation/web/commit/f3c2ce9f2d41d5851f6e59e3bbab9a3517102a6a))
+* stats link to siastats ([d699349](https://github.com/SiaFoundation/web/commit/d699349a800ed9ef95bbed71336bf6c3ef77e704))
+
+
+
 # [0.18.0](https://github.com/SiaFoundation/web/compare/website-0.17.9...website-0.18.0) (2022-05-24)
 
 
