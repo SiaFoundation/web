@@ -1,9 +1,13 @@
-export function RedditIcon() {
+type Props = {
+  size: number
+}
+
+export function RedditIcon({ size = 32 }: Props) {
   return (
     <svg
       // style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;"
-      width="32"
-      height="32"
+      width={size}
+      height={size}
       fill="currentColor"
       viewBox="0 0 1024 1024"
       version="1.1"

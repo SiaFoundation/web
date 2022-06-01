@@ -1,7 +1,6 @@
-import { Flex, NextLink, Text } from '@siafoundation/design-system'
+import { Flex, NextLink, Text, webLinks } from '@siafoundation/design-system'
 import { Fragment } from 'react'
 import useSWR from 'swr'
-import { external } from '../config/site'
 import { Stats } from '../content/stats'
 
 type Props = {
@@ -48,7 +47,7 @@ export function Statsbar({ stats }: Props) {
     >
       <StatSection
         title="Network"
-        link={external.siaStats}
+        link={webLinks.siaStats}
         stats={[
           {
             value: blockHeight,
@@ -66,7 +65,7 @@ export function Statsbar({ stats }: Props) {
       />
       <StatSection
         title="Storage"
-        link={external.storageStats}
+        link={webLinks.storageStats}
         stats={[
           {
             value: totalStorage,
@@ -88,7 +87,7 @@ export function Statsbar({ stats }: Props) {
       />
       {/* <StatSection
         title="Benchmarks"
-        link={external.benchmarks}
+        link={webLinks.benchmarks}
         stats={[
           {
             value: downloadSpeed,
@@ -110,7 +109,7 @@ export function Statsbar({ stats }: Props) {
       /> */}
       <StatSection
         title="Software"
-        link={external.github}
+        link={webLinks.github}
         stats={[
           {
             value: commits,

@@ -13,8 +13,8 @@ import {
   UserSimulation24,
   VirtualMachine24,
   ScalesTipped24,
+  webLinks,
 } from '@siafoundation/design-system'
-import { external } from '../config/site'
 import { addNewTab } from '../lib/utils'
 
 export function getArticles(tags: string[], limit?: number) {
@@ -49,19 +49,19 @@ const articles: ContentItemProps[] = [
     title: 'Learn how to rent storage space on the Sia network',
     icon: <Archive24 />,
     tags: ['tutorial'],
-    link: external.docs.renting,
+    link: webLinks.docs.renting,
   },
   {
     title: 'Learn how create a wallet and make transactions on the Sia network',
     icon: <Wallet24 />,
     tags: ['tutorial'],
-    link: external.docs.wallet,
+    link: webLinks.docs.wallet,
   },
   {
     title: `Learn how to offer storage space on the Sia network's storage marketplace`,
     icon: <Currency24 />,
     tags: ['tutorial'],
-    link: external.docs.hosting,
+    link: webLinks.docs.hosting,
   },
   {
     title: 'Learn how to mine on the Sia network',

@@ -4,8 +4,9 @@ import {
   NextLink,
   Section,
   Text,
+  webLinks,
 } from '@siafoundation/design-system'
-import { sitemap, external } from '../config/site'
+import { sitemap } from '../config/site'
 import { Stats } from '../content/stats'
 import { Statsbar } from './Statsbar'
 
@@ -38,7 +39,7 @@ export function Footer({ stats }: Props) {
               }}
             >
               <TopLink href={sitemap.newsroom.index}>Newsroom</TopLink>
-              <TopLink href={external.blog} target="_blank">
+              <TopLink href={webLinks.blog} target="_blank">
                 Blog
               </TopLink>
               <TopLink
@@ -60,16 +61,16 @@ export function Footer({ stats }: Props) {
                 margin: '$1 0',
               }}
             >
-              <BottomLink href={external.discord} target="_blank">
+              <BottomLink href={webLinks.discord} target="_blank">
                 Discord
               </BottomLink>
-              <BottomLink href={external.reddit} target="_blank">
+              <BottomLink href={webLinks.reddit} target="_blank">
                 Reddit
               </BottomLink>
-              <BottomLink href={external.twitter} target="_blank">
+              <BottomLink href={webLinks.twitter} target="_blank">
                 Twitter
               </BottomLink>
-              <BottomLink href={external.github} target="_blank">
+              <BottomLink href={webLinks.github} target="_blank">
                 GitHub
               </BottomLink>
             </Flex>

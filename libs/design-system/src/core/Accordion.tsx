@@ -68,6 +68,7 @@ const StyledTrigger = styled(AccordionPrimitive.Trigger, {
   justifyContent: 'space-between',
   color: '$hiContrast',
   width: '100%',
+  cursor: 'pointer',
 
   '&:focus': {
     outline: 'none',

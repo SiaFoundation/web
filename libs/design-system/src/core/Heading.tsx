@@ -23,28 +23,24 @@ const textTag: Record<HeadingSizeVariants, string> = {
 // This is the mapping of Heading Variants to Text css
 const textCss: Record<HeadingSizeVariants, CSS> = {
   20: {
-    color: '$textContrast',
     fontWeight: 700,
     lineHeight: '$sizes$3',
     letterSpacing: '-1%',
     '@bp2': { lineHeight: '$sizes$3' },
   },
   24: {
-    color: '$textContrast',
     fontWeight: 700,
     lineHeight: '$sizes$3',
     letterSpacing: '-1%',
     '@bp2': { lineHeight: '$sizes$3' },
   },
   32: {
-    color: '$textContrast',
     fontWeight: 600,
     lineHeight: '110%',
     letterSpacing: '-1%',
     '@bp2': { lineHeight: '110%' },
   },
   64: {
-    color: '$textContrast',
     fontWeight: 600,
     lineHeight: '110%',
     letterSpacing: '-1%',

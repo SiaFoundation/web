@@ -9,10 +9,10 @@ Web packages for the Sia project and ecosystem.
 - [siad](apps/siad) - The `siad` user interface, includes a wallet with support for hot, cold, and hardware wallets.
 - [renterd](apps/renterd) - The `renterd` user interface, dedicated to renter related functionality.
 - [hostd](apps/hostd) - The `hostd` user interface, dedicated to hosting related functionality.
-- [explorer](apps/explorer) - The `explorer` user interface, a Sia blockchain explorer.
-- [Website](apps/website) - The main [sia.tech](https://sia.tech) website with information on the Sia project and the Sia Foundation.
-- [Asset Server](apps/asset-server) - Powers [api.sia.tech](https://api.sia.tech) and all downloadable assets on [sia.tech](https://sia.tech) such as the Sia software releases.
-- [Design](apps/design-site) - The [design.sia.tech](https://design.sia.tech) website for exploring the design system used across Sia apps and websites.
+- [explorer-v1](apps/explorer-v1) - The `explorer-v1` user interface, a Sia blockchain explorer interface for [Navigator](https://github.com/hakkane84/navigator-sia).
+- [website](apps/website) - The main [sia.tech](https://sia.tech) website with information on the Sia project and the Sia Foundation.
+- [asset-server](apps/asset-server) - Powers [api.sia.tech](https://api.sia.tech) and all downloadable assets on [sia.tech](https://sia.tech) such as the Sia software releases.
+- [design-site](apps/design-site) - The [design.sia.tech](https://design.sia.tech) website for exploring the design system used across Sia apps and websites.
 
 ## Libraries
 

@@ -14,9 +14,10 @@ import {
   SiteHeading,
   getImageProps,
   Paragraph,
+  webLinks,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
-import { external, sitemap } from '../../config/site'
+import { sitemap } from '../../config/site'
 import { getDaysInSeconds } from '../../lib/time'
 import { AsyncReturnType } from '../../lib/types'
 import team from '../../content/team'
@@ -83,14 +84,14 @@ function Foundation({ stats, team, newsPosts, reports }: Props) {
             <Flex direction="column" gap="3">
               <Paragraph color="subtle" size="18">
                 For developer support please see{' '}
-                <NextLink href={external.docs.index} target="_blank">
+                <NextLink href={webLinks.docs.index} target="_blank">
                   our documentation
                 </NextLink>
                 .
               </Paragraph>
               <Paragraph color="subtle" size="18">
                 For general inquiries email{' '}
-                <NextLink href={`mailto:${external.email}`}>
+                <NextLink href={`mailto:${webLinks.email}`}>
                   info@sia.tech
                 </NextLink>
                 .

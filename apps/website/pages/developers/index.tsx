@@ -20,9 +20,10 @@ import {
   AccordionItem,
   Codeblock,
   Link,
+  webLinks,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
-import { external, sitemap } from '../../config/site'
+import { sitemap } from '../../config/site'
 import { getDaysInSeconds } from '../../lib/time'
 import { getHref } from '../../lib/url'
 import { getArticles } from '../../content/articles'
@@ -52,7 +53,7 @@ const docLinks = [
   },
   {
     title: 'Read the docs',
-    link: external.docs.index,
+    link: webLinks.docs.index,
     newTab: true,
   },
 ]

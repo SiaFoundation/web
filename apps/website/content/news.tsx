@@ -6,8 +6,8 @@ import { Feed } from 'feed'
 import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { getHosts } from '@siafoundation/env'
-import { ContentItemProps } from '@siafoundation/design-system'
-import { external, sitemap } from '../config/site'
+import { ContentItemProps, webLinks } from '@siafoundation/design-system'
+import { sitemap } from '../config/site'
 import { components } from '../config/mdx'
 import { baseContentPath, newsFeedName } from '../config/app'
 
@@ -112,8 +112,8 @@ export function generateRssNewsFeed(posts: NewsPost[]) {
   const date = new Date()
   const author = {
     name: 'Sia Foundation',
-    email: external.email,
-    link: external.twitter,
+    email: webLinks.email,
+    link: webLinks.twitter,
   }
 
   const feed = new Feed({

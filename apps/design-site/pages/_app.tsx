@@ -14,7 +14,7 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider ssr>
       <Head>
-        <title>Design system</title>
+        <title>Sia - Design system</title>
       </Head>
       <SiteLayout
         menuLinks={[
