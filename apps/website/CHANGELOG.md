@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.19.1](https://github.com/SiaFoundation/web/compare/website-0.19.0...website-0.19.1) (2022-06-02)
+
+
+### Bug Fixes
+
+* siad releases path ([42af21c](https://github.com/SiaFoundation/web/commit/42af21ccc25a63dbde6f449b8cbdbdf20e768107))
+
+
+
 # [0.19.0](https://github.com/SiaFoundation/web/compare/website-0.18.0...website-0.19.0) (2022-06-01)
 
 
