@@ -116,7 +116,7 @@ function Developers({ stats }: Props) {
                               }}
                               target="_blank"
                               href={getHref(
-                                `${hosts.app}/releases/Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`
+                                `${hosts.app}/releases/siad/Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`
                               )}
                             >
                               here
@@ -147,7 +147,7 @@ gpg --import sia-signing-key.asc`}
                         </Paragraph>
                         <Codeblock>
                           {`wget -c ${getHref(
-                            `${hosts.app}/releases/Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`
+                            `${hosts.app}/releases/siad/Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`
                           )}
 gpg --verify Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`}
                         </Codeblock>
@@ -232,28 +232,28 @@ gpg --verify Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`}
                     {
                       title: 'Windows',
                       link: getHref(
-                        `${hosts.app}/releases/Sia-v${siaVersion.current}-windows-amd64.zip`
+                        `${hosts.app}/releases/siad/Sia-v${siaVersion.current}-windows-amd64.zip`
                       ),
                       newTab: true,
                     },
                     {
                       title: 'MacOS',
                       link: getHref(
-                        `${hosts.app}/releases/Sia-v${siaVersion.current}-darwin-amd64.zip`
+                        `${hosts.app}/releases/siad/Sia-v${siaVersion.current}-darwin-amd64.zip`
                       ),
                       newTab: true,
                     },
                     {
                       title: 'Linux',
                       link: getHref(
-                        `${hosts.app}/releases/Sia-v${siaVersion.current}-linux-amd64.zip`
+                        `${hosts.app}/releases/siad/Sia-v${siaVersion.current}-linux-amd64.zip`
                       ),
                       newTab: true,
                     },
                     {
                       title: 'Raspberry Pi',
                       link: getHref(
-                        `${hosts.app}/releases/Sia-v${siaVersion.current}-linux-arm64.zip`
+                        `${hosts.app}/releases/siad/Sia-v${siaVersion.current}-linux-arm64.zip`
                       ),
                       newTab: true,
                     },
