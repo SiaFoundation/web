@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.19.2](https://github.com/SiaFoundation/web/compare/website-0.19.1...website-0.19.2) (2022-06-03)
+
+
+### Bug Fixes
+
+* update trysia logo ([f172623](https://github.com/SiaFoundation/web/commit/f172623f788d56484b7c8440bf2377bc2cf81330))
+
+
+
 ## [0.19.1](https://github.com/SiaFoundation/web/compare/website-0.19.0...website-0.19.1) (2022-06-02)
 
 
