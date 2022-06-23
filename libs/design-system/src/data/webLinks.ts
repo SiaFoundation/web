@@ -23,4 +23,5 @@ export const webLinks = {
   exploreStats: 'https://explore.sia.tech/',
   coinmarketcap: 'https://coinmarketcap.com/currencies/siacoin/',
   siaStats: 'https://siastats.info',
+  jobs: 'https://siafoundation.homerun.co/',
 }

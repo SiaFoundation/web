@@ -24,6 +24,7 @@ export function getArticles(tags: string[], limit?: number) {
     .map(addNewTab)
 }
 
+// tutorials should be assigned an icon, all others do not need one
 const articles: ContentItemProps[] = [
   {
     title: 'Sia 101: A Visual Introduction',
@@ -32,10 +33,15 @@ const articles: ContentItemProps[] = [
     link: 'https://siastats.info/sia101',
   },
   {
+    title: 'Escrowless Siafund Swaps',
+    tags: ['latest'],
+    date: '03/31/2022',
+    link: 'https://blog.sia.tech/escrowless-siafund-swaps-da418ed50df0',
+  },
+  {
     title: 'Utreexo in Sia: A Summary',
     tags: ['latest'],
     date: '06/22/2021',
-    icon: <Microscope24 />,
     link: 'https://blog.sia.tech/utreexo-for-sia-an-overview-fe14e80a7919',
   },
   {

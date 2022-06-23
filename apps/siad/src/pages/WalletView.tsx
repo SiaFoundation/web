@@ -18,6 +18,7 @@ import { useParams } from 'react-router-dom'
 import { AuthedLayout } from '../components/AuthedLayout'
 import { Wallet } from '../components/User/Wallet'
 import { WalletSparkline } from '../components/WalletSparkline'
+import { fakeWallets } from '../lib/fakeWallets'
 
 export function WalletView() {
   const { walletId } = useParams()

@@ -4,7 +4,7 @@ import { Image } from './Image'
 const props = typeof logo === 'string' ? { src: logo } : logo
 
 type Props = {
-  size: number
+  size?: number
 }
 
 export function Logo({ size = 30 }: Props) {
