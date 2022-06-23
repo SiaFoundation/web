@@ -18,17 +18,19 @@ export function TxEntityHeader({ entity }: Props) {
   const timestamp = humanDate(data[1].Timestamp * 1000, { time: true })
 
   return (
-    <Flex justify="between" align="center" wrap="wrap" gapY="1">
+    <Flex justify="between" align="center" wrap="wrap" gapY="2">
       <EntityHeading
         label={getEntityTypeLabel(entity.type)}
         type={entity.type}
         value={txHash}
         href={routes.tx.view.replace('[id]', txHash)}
       />
-      <Flex gap="2" align="center">
-        <Text font="mono" color="subtle">
-          {timestamp}
-        </Text>
+      <Flex gap="2" align="center" css={{ overflow: 'hidden' }}>
+        <Tooltip content={timestamp}>
+          <Text font="mono" color="subtle" ellipsis>
+            {timestamp}
+          </Text>
+        </Tooltip>
         <Badge variant="accent">
           <Flex gap="1">
             <Tooltip content="Block height">

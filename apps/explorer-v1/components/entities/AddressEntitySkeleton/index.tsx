@@ -9,6 +9,7 @@ import {
   TabsTrigger,
 } from '@siafoundation/design-system'
 import { times } from 'lodash'
+import { DatumSkeleton } from '../../DatumSkeleton'
 import { EntityList } from '../../EntityList'
 
 export function AddressEntitySkeleton() {
@@ -25,10 +26,10 @@ export function AddressEntitySkeleton() {
             }}
           >
             <Flex direction="column" gap="5">
-              <Skeleton css={{ height: '40px', width: '70%' }} />
-              <Flex justify="between" gap="3" wrap="wrap">
+              <Skeleton css={{ height: '32px', width: '70%' }} />
+              <Flex direction="column" gapY="3">
                 {times(4, (i) => (
-                  <Skeleton key={i} css={{ flex: 1, height: '75px' }} />
+                  <DatumSkeleton key={i} />
                 ))}
               </Flex>
             </Flex>

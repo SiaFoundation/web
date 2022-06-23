@@ -4,6 +4,8 @@ import {
   Flex,
   Skeleton,
 } from '@siafoundation/design-system'
+import { times } from 'lodash'
+import { DatumSkeleton } from '../../DatumSkeleton'
 import { EntityList } from '../../EntityList'
 
 export function BlockEntitySkeleton() {
@@ -24,14 +26,15 @@ export function BlockEntitySkeleton() {
                 <Skeleton css={{ height: '40px', width: '250px' }} />
                 <Skeleton css={{ height: '40px', width: '200px' }} />
               </Flex>
-              <Flex gap="3" wrap="wrap">
-                <Skeleton css={{ width: '150px', height: '75px' }} />
-                <Skeleton css={{ width: '150px', height: '75px' }} />
-                <Skeleton css={{ width: '150px', height: '75px' }} />
-                <Skeleton css={{ width: '300px', height: '75px' }} />
-                <Skeleton css={{ width: '300px', height: '75px' }} />
+              <Flex direction="column" gap="4">
+                <Flex direction="column" gapY="3">
+                  {times(5, (i) => (
+                    <DatumSkeleton key={i} />
+                  ))}
+                </Flex>
+                <Skeleton css={{ width: '100px', height: '24px' }} />
+                <Skeleton css={{ width: '80px', height: '24px' }} />
               </Flex>
-              <Skeleton css={{ width: '100%', height: '45px' }} />
             </Flex>
           </AnimatedPanel>
         </Flex>

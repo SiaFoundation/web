@@ -20,7 +20,7 @@ export const webLinks = {
   benchmarks: 'https://benchmarks.sia.tech',
   storageStats: 'https://hosts.siacentral.com/',
   hostTroubleshoot: 'https://troubleshoot.siacentral.com/',
-  exploreStats: 'https://explore.sia.tech/',
+  exploreStats: 'https://explorer.sia.tech/',
   coinmarketcap: 'https://coinmarketcap.com/currencies/siacoin/',
   siaStats: 'https://siastats.info',
   jobs: 'https://siafoundation.homerun.co/',

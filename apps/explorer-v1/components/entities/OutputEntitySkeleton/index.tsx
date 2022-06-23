@@ -4,6 +4,8 @@ import {
   Flex,
   Skeleton,
 } from '@siafoundation/design-system'
+import { times } from 'lodash'
+import { DatumSkeleton } from '../../DatumSkeleton'
 
 export function OutputEntitySkeleton() {
   return (
@@ -23,11 +25,10 @@ export function OutputEntitySkeleton() {
                 <Skeleton css={{ height: '30px', width: '450px' }} />
                 <Skeleton css={{ height: '30px', width: '100px' }} />
               </Flex>
-              <Flex gap="6" wrap="wrap">
-                <Skeleton css={{ width: '350px', height: '65px' }} />
-                <Skeleton css={{ width: '120px', height: '65px' }} />
-                <Skeleton css={{ width: '120px', height: '65px' }} />
-                <Skeleton css={{ width: '120px', height: '65px' }} />
+              <Flex direction="column" gapY="2-5">
+                {times(4, (i) => (
+                  <DatumSkeleton key={i} />
+                ))}
               </Flex>
             </Flex>
           </AnimatedPanel>

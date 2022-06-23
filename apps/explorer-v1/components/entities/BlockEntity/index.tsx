@@ -7,7 +7,6 @@ import {
   Badge,
   Container,
   Flex,
-  Grid,
   Heading,
   Tooltip,
 } from '@siafoundation/design-system'
@@ -162,31 +161,23 @@ export function BlockEntity({ entity }: Props) {
                   </Tooltip>
                 </Flex>
               </Flex>
-              <Flex wrap="wrap" gap="6">
+              <Flex direction="column" gapY="3">
                 {values.map((item) => (
                   <Datum key={item.label} {...item} />
                 ))}
               </Flex>
               <Accordion type="single">
-                <AccordionItem value="details" variant="ghost">
+                <AccordionItem value="contracts" variant="ghost">
                   <AccordionTrigger variant="ghost">
-                    <Heading size="20">Details</Heading>
+                    <Heading size="20">Contracts</Heading>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <Grid
-                      columns={{
-                        '@initial': 1,
-                        '@bp1': 2,
-                        '@bp2': 3,
-                      }}
-                      gap="3"
-                      css={{ padding: '$2 0' }}
-                    >
+                    <Flex direction="column" gap="5" css={{ padding: '$3 0' }}>
                       <Flex direction="column" gap="3">
                         <Heading size="20">Active</Heading>
                         <Flex direction="column" gap="3">
                           {active.map((item) => (
-                            <Datum size="14" key={item.label} {...item} />
+                            <Datum key={item.label} {...item} />
                           ))}
                         </Flex>
                       </Flex>
@@ -194,19 +185,23 @@ export function BlockEntity({ entity }: Props) {
                         <Heading size="20">Historic</Heading>
                         <Flex direction="column" gap="3">
                           {historic.map((item) => (
-                            <Datum size="14" key={item.label} {...item} />
+                            <Datum key={item.label} {...item} />
                           ))}
                         </Flex>
                       </Flex>
-                      <Flex direction="column" gap="3">
-                        <Heading size="20">Other</Heading>
-                        <Flex direction="column" gap="3">
-                          {other.map((item) => (
-                            <Datum size="14" key={item.label} {...item} />
-                          ))}
-                        </Flex>
-                      </Flex>
-                    </Grid>
+                    </Flex>
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="other" variant="ghost">
+                  <AccordionTrigger variant="ghost">
+                    <Heading size="20">Other</Heading>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <Flex direction="column" gap="3" css={{ padding: '$3 0' }}>
+                      {other.map((item) => (
+                        <Datum key={item.label} {...item} />
+                      ))}
+                    </Flex>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
