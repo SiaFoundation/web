@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.28.0](https://github.com/SiaFoundation/web/compare/design-system-0.27.2...design-system-0.28.0) (2022-06-23)
+
+
+### Features
+
+* add embarcadero article, add career links ([c2c406e](https://github.com/SiaFoundation/web/commit/c2c406ee65cc7fb904c536e6223d9e0fdfbcc742))
+* spike explorer v1 ([2985d8a](https://github.com/SiaFoundation/web/commit/2985d8abddce552a4f86e6f9a91b86096d815722))
+
+
+
 ## [0.27.2](https://github.com/SiaFoundation/web/compare/design-system-0.27.1...design-system-0.27.2) (2022-06-01)
 
 
