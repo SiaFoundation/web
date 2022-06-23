@@ -53,7 +53,7 @@ const software: Software[] = [
   },
   {
     title: 'Explorer',
-    link: 'https://explore.sia.tech',
+    link: 'https://explorer.sia.tech',
     logo: 'sia',
     tags: ['network_stats'],
     subtitle: 'Blockchain explorer for the Sia network.',

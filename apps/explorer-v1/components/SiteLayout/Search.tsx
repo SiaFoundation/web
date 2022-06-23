@@ -59,6 +59,7 @@ export function Search() {
           size="2"
           placeholder="Search an address, block, transaction, contract ID..."
           name="query"
+          spellCheck="false"
           autoComplete="off"
           value={formik.values.query}
           onChange={formik.handleChange}

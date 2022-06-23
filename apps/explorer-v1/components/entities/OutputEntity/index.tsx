@@ -5,9 +5,10 @@ import {
   Badge,
   Container,
   Flex,
-  Heading,
 } from '@siafoundation/design-system'
 import { Datum, ValueItemProps } from '../../Datum'
+import { EntityHeading } from '../../EntityHeading'
+import { routes } from '../../../config/routes'
 
 type Props = {
   entity: OutputEntity
@@ -54,6 +55,8 @@ export function OutputEntity({ entity }: Props) {
     return list
   }, [data])
 
+  const output = data[0].MasterHash
+
   return (
     <Container>
       <Flex direction="column" gap="8">
@@ -67,16 +70,19 @@ export function OutputEntity({ entity }: Props) {
         >
           <Flex direction="column" gap="5">
             <Flex justify="between" align="center" wrap="wrap" gapY="1">
-              <Heading>
-                Transaction output {data[0].MasterHash.slice(0, 20)}...
-              </Heading>
+              <EntityHeading
+                label="transaction output"
+                type="output"
+                value={output}
+                href={routes.output.view.replace('[id]', output)}
+              />
               <Flex gap="1" align="center">
                 <Badge variant={data[1].Spent ? 'accent' : 'simple'}>
                   {data[1].Spent ? 'Spent' : 'Unspent'}
                 </Badge>
               </Flex>
             </Flex>
-            <Flex gap="6" wrap="wrap">
+            <Flex direction="column" gapY="3">
               {values.map((item) => (
                 <Datum key={item.label} {...item} />
               ))}

@@ -6,8 +6,6 @@ import { getContractStatus } from '../../../lib/transaction'
 import { ContractEntity } from '../../../config/types'
 import { EntityListItem } from '../../EntityList'
 import { TxEntityLayout } from '../../TxEntityLayout'
-import { ValueSc } from '../../ValueSc'
-import { Flex, Text } from '@siafoundation/design-system'
 import { ContractConditionsSection } from '../../ContractConditionsSection'
 
 type Props = {
@@ -50,7 +48,7 @@ export function ContractForEntity({ entity }: Props) {
       },
       {
         label: 'Last revision number',
-        value: data[1].RevisionNum,
+        value: humanNumber(data[1].RevisionNum),
       },
       {
         label: 'Window for proof of storage',
@@ -69,21 +67,16 @@ export function ContractForEntity({ entity }: Props) {
       },
       {
         label: 'Fees paid to SFs',
-        value: (
-          <Flex direction="column" gap="1">
-            <ValueSc value={data[1].SfFees} variant="value" size="24" />
-            <Text color="subtle" size="12">
-              {feesPercentage}% of the renter's allowance
-            </Text>
-          </Flex>
-        ),
+        sc: BigInt(data[1].SfFees),
+        comment: `${feesPercentage}% of the renter's allowance`,
       },
     ]
 
     if (data[6].Height >= 0) {
       list.push({
         label: 'Renewed into Contract ID',
-        value: data[6].ContractId,
+        entityType: 'contract',
+        entityValue: data[6].ContractId,
       })
     }
 

@@ -51,8 +51,7 @@ export function ContractConditionsSection({ entity }: Props) {
           <Grid
             columns={{
               '@initial': 1,
-              '@bp1': 2,
-              '@bp2': 3,
+              '@bp2': 2,
             }}
             gap="3"
             css={{ padding: '$2 0' }}
@@ -61,7 +60,7 @@ export function ContractConditionsSection({ entity }: Props) {
               <Heading size="20">Success</Heading>
               <Flex direction="column" gap="3">
                 {success.map((item) => (
-                  <Datum size="14" key={item.label} {...item} />
+                  <Datum key={item.label} {...item} />
                 ))}
               </Flex>
             </Flex>
@@ -69,7 +68,7 @@ export function ContractConditionsSection({ entity }: Props) {
               <Heading size="20">Failure</Heading>
               <Flex direction="column" gap="3">
                 {failure.map((item) => (
-                  <Datum size="14" key={item.label} {...item} />
+                  <Datum key={item.label} {...item} />
                 ))}
               </Flex>
             </Flex>

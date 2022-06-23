@@ -7,6 +7,8 @@ import {
   Panel,
   Skeleton,
 } from '@siafoundation/design-system'
+import { times } from 'lodash'
+import { DatumSkeleton } from '../../DatumSkeleton'
 import { EntityList } from '../../EntityList'
 
 export function TxEntitySkeleton() {
@@ -27,12 +29,10 @@ export function TxEntitySkeleton() {
                 <Skeleton css={{ height: '40px', width: '450px' }} />
                 <Skeleton css={{ height: '40px', width: '200px' }} />
               </Flex>
-              <Flex gap="3" wrap="wrap">
-                <Skeleton css={{ width: '150px', height: '75px' }} />
-                <Skeleton css={{ width: '150px', height: '75px' }} />
-                <Skeleton css={{ width: '150px', height: '75px' }} />
-                <Skeleton css={{ width: '300px', height: '75px' }} />
-                <Skeleton css={{ width: '300px', height: '75px' }} />
+              <Flex direction="column" gapY="3">
+                {times(3, (i) => (
+                  <DatumSkeleton key={i} />
+                ))}
               </Flex>
             </Flex>
           </AnimatedPanel>

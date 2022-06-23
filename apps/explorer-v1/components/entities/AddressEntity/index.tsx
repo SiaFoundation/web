@@ -46,23 +46,21 @@ export function AddressEntity({ entity }: Props) {
     const list: ValueItemProps[] = [
       {
         label: 'Confirmed SC',
-        value: (
-          <Flex direction="column" gap="1">
-            <ValueSc value={data[1].balanceSc} variant="value" size="24" />
-            <Flex gap="1" wrap="wrap">
-              <ValueSc
-                tooltip="Received"
-                value={data[1].receivedSc}
-                variant="change"
-                size="12"
-              />
-              <ValueSc
-                tooltip="Sent"
-                value={-data[1].sentSc}
-                variant="change"
-                size="12"
-              />
-            </Flex>
+        sc: BigInt(data[1].balanceSc),
+        comment: (
+          <Flex gap="1" wrap="wrap">
+            <ValueSc
+              tooltip="Received"
+              value={data[1].receivedSc}
+              variant="change"
+              size="10"
+            />
+            <ValueSc
+              tooltip="Sent"
+              value={-data[1].sentSc}
+              variant="change"
+              size="10"
+            />
           </Flex>
         ),
       },
@@ -149,7 +147,7 @@ export function AddressEntity({ entity }: Props) {
                   </Tooltip>
                 </Flex>
               </Flex>
-              <Flex justify="between" gap="3" wrap="wrap">
+              <Flex direction="column" gapY="3">
                 {values.map((item) => (
                   <Datum key={item.label} {...item} />
                 ))}

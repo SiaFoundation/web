@@ -10,6 +10,7 @@ import {
   humanHashrate,
   humanNumber,
 } from '@siafoundation/sia-js'
+import { useMemo } from 'react'
 import { SWRResponse } from 'swr'
 import { BlockList } from '../components/BlockList'
 import { EntityList } from '../components/EntityList'
@@ -27,6 +28,66 @@ export function Index() {
     height ? String(height) : null
   ) as SWRResponse<BlockEntity>
 
+  const values = useMemo(() => {
+    if (!landing.data || !status.data || !block.data) {
+      return []
+    }
+    const list = [
+      {
+        label: 'Blockchain height',
+        value: (
+          <>
+            <Text
+              size={{
+                '@initial': '24',
+                '@bp1': '32',
+              }}
+              font="mono"
+              weight="semibold"
+            >
+              {humanNumber(status.data?.consensusblock)}
+            </Text>
+            {status.data &&
+              status.data.consensusblock !== status.data.lastblock && (
+                <Text size="16" font="mono" color="subtle">
+                  {humanNumber(status.data?.lastblock)} synced
+                </Text>
+              )}
+          </>
+        ),
+      },
+      {
+        label: 'Difficulty',
+        value: humanDifficulty(block.data?.data[1].Difficulty),
+      },
+      {
+        label: 'Hash rate',
+        value: humanHashrate(block.data?.data[1].Hashrate),
+      },
+      {
+        label: 'Blockchain transactions',
+        value: humanNumber(status.data?.totalTx),
+      },
+      {
+        label: 'Unconfirmed transactions',
+        value: humanNumber(status.data?.mempool),
+      },
+      {
+        label: 'Market cap',
+        value: humanNumber(
+          status.data?.consensusblock
+            ? status.data.coinsupply / 1_000_000_000
+            : 0,
+          {
+            units: 'B SC',
+            fixed: 2,
+          }
+        ),
+      },
+    ]
+    return list
+  }, [status, landing, block])
+
   if (!landing.data || !status.data || !block.data) {
     return <HomeSkeleton />
   }
@@ -43,69 +104,47 @@ export function Index() {
               borderRadius: '$2',
             }}
           >
-            <Grid columns="3" gap="6">
-              <Flex direction="column" gap="2">
-                <Text color="subtle" font="mono">
-                  Blockchain height
-                </Text>
-                <Text size="32" font="mono">
-                  {humanNumber(status.data?.consensusblock)}
-                </Text>
-                {status.data &&
-                  status.data.consensusblock !== status.data.lastblock && (
-                    <Text size="16" font="mono" color="subtle">
-                      {humanNumber(status.data?.lastblock)} synced
-                    </Text>
-                  )}
-              </Flex>
-              <Flex direction="column" gap="2">
-                <Text color="subtle" font="mono">
-                  Difficulty
-                </Text>
-                <Text size="32" font="mono">
-                  {humanDifficulty(block.data?.data[1].Difficulty)}
-                </Text>
-              </Flex>
-              <Flex direction="column" gap="2">
-                <Text color="subtle" font="mono">
-                  Hash rate
-                </Text>
-                <Text size="32" font="mono">
-                  {humanHashrate(block.data?.data[1].Hashrate)}
-                </Text>
-              </Flex>
-              <Flex direction="column" gap="2">
-                <Text color="subtle" font="mono">
-                  Blockchain transactions
-                </Text>
-                <Text size="32" font="mono">
-                  {humanNumber(status.data?.totalTx)}
-                </Text>
-              </Flex>
-              <Flex direction="column" gap="2">
-                <Text color="subtle" font="mono">
-                  Unconfirmed transactions
-                </Text>
-                <Text size="32" font="mono">
-                  {humanNumber(status.data?.mempool)}
-                </Text>
-              </Flex>
-              <Flex direction="column" gap="2">
-                <Text color="subtle" font="mono">
-                  Market cap
-                </Text>
-                <Text size="32" font="mono">
-                  {humanNumber(
-                    status.data?.consensusblock
-                      ? status.data.coinsupply / 1_000_000_000
-                      : 0,
-                    {
-                      units: 'B SC',
-                      fixed: 2,
-                    }
-                  )}
-                </Text>
-              </Flex>
+            <Grid
+              columns={{
+                '@initial': 2,
+                '@bp2': 3,
+              }}
+              gap={{
+                '@initial': 3,
+                '@bp2': 6,
+              }}
+              gapY="6"
+            >
+              {values.map(({ label, value }) => (
+                <Flex
+                  key={label}
+                  direction="column"
+                  gap="3"
+                  align="start"
+                  css={{ overflow: 'hidden' }}
+                >
+                  <Text
+                    color="subtle"
+                    size={{
+                      '@initial': 12,
+                      '@bp1': 14,
+                    }}
+                  >
+                    {label}
+                  </Text>
+                  <Text
+                    font="mono"
+                    weight="semibold"
+                    size={{
+                      '@initial': 24,
+                      '@bp1': 32,
+                    }}
+                    ellipsis
+                  >
+                    {value}
+                  </Text>
+                </Flex>
+              ))}
             </Grid>
           </AnimatedPanel>
         </Flex>

@@ -31,30 +31,35 @@ export function TxEntityLayout({
   return (
     <>
       <Container>
-        <Flex direction="column" gap="8">
-          <AnimatedPanel
-            variant="subtle"
-            startTime={0}
-            css={{
-              padding: '$3',
-              borderRadius: '$2',
-            }}
-          >
-            <Flex direction="column" gap="5">
-              <TxEntityHeader entity={entity} />
-              <Grid columns="3" gap="6">
-                {values.map((item) => (
-                  <Datum key={item.label} {...item} />
-                ))}
-              </Grid>
-              {details}
+        <AnimatedPanel
+          variant="subtle"
+          startTime={0}
+          css={{
+            padding: '$3',
+            borderRadius: '$2',
+          }}
+        >
+          <Flex direction="column" gap="8">
+            <TxEntityHeader entity={entity} />
+            <Flex direction="column" gapY="3">
+              {values.map((item) => (
+                <Datum key={item.label} {...item} />
+              ))}
             </Flex>
-          </AnimatedPanel>
-        </Flex>
+            {details}
+          </Flex>
+        </AnimatedPanel>
       </Container>
       <Container>
         <Flex direction="column" gap="5">
-          <Grid columns="2" gap="2">
+          <Grid
+            columns={{
+              '@initial': 1,
+              '@bp2': 2,
+            }}
+            gap="2"
+            gapY="4"
+          >
             <Box>
               <Panel>
                 <EntityList
