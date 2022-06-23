@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.17.0](https://github.com/SiaFoundation/web/compare/design-site-0.16.0...design-site-0.17.0) (2022-06-23)
+
+
+### Features
+
+* spike explorer v1 ([2985d8a](https://github.com/SiaFoundation/web/commit/2985d8abddce552a4f86e6f9a91b86096d815722))
+
+
+
 # [0.16.0](https://github.com/SiaFoundation/web/compare/design-site-0.15.1...design-site-0.16.0) (2022-05-25)
 
 
