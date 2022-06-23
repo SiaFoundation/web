@@ -43,13 +43,13 @@ export function BlockRewardEntity({ entity }: Props) {
 
     list.push({
       label: 'Coinbase',
-      sc: -fullSubsidy,
+      sc: -BigInt(fullSubsidy),
     })
 
     const minedFees = data[2].transactions[0].ScChange - subsidy
     list.push({
       label: 'Collected transaction fees',
-      sc: -minedFees,
+      sc: -BigInt(minedFees),
     })
     return list
   }, [data])

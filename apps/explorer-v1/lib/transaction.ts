@@ -100,12 +100,12 @@ export function getEntityTxInputs({ type, data }: EntityTxns2Index) {
       data[2].transactions[n].ScChange < 0 ||
       data[2].transactions[n].SfChange < 0
     ) {
-      let sc = 0
+      let sc = BigInt(0)
       let sf = 0
       let label = undefined
 
       if (data[2].transactions[n].ScChange < 0) {
-        sc = data[2].transactions[n].ScChange // Push the change in SC
+        sc = BigInt(data[2].transactions[n].ScChange) // Push the change in SC
       } else if (data[2].transactions[n].SfChange < 0) {
         sf = data[2].transactions[n].SfChange // Push the change in SF
       }
@@ -160,10 +160,10 @@ export function getEntityTxOutputs({
     ) {
       let label = undefined
       let type = 'address' as EntityType
-      let sc = 0
+      let sc = BigInt(0)
       let sf = 0
       if (data[2].transactions[n].ScChange > 0) {
-        sc = data[2].transactions[n].ScChange // Push the change in SC
+        sc = BigInt(data[2].transactions[n].ScChange) // Push the change in SC
       } else if (data[2].transactions[n].SfChange > 0) {
         sf = data[2].transactions[n].SfChange // Push the change in SF
       }
@@ -251,7 +251,7 @@ export function getEntityTxOutputs({
   if (data[1].Fees) {
     outputs.push({
       label: 'miner fees',
-      sc: data[1].Fees,
+      sc: BigInt(data[1].Fees),
     })
   }
 

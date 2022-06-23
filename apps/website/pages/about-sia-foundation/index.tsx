@@ -87,15 +87,37 @@ function Foundation({ stats, team, newsPosts, reports }: Props) {
                 <NextLink href={webLinks.docs.index} target="_blank">
                   our documentation
                 </NextLink>
-                .
-              </Paragraph>
-              <Paragraph color="subtle" size="18">
-                For general inquiries email{' '}
+                . For general inquiries email{' '}
                 <NextLink href={`mailto:${webLinks.email}`}>
                   info@sia.tech
                 </NextLink>
                 .
               </Paragraph>
+              <Paragraph color="subtle" size="18">
+                If you are interested in a career at The Sia Foundation please
+                see our{' '}
+                <NextLink href={webLinks.jobs} target="_blank">
+                  openings
+                </NextLink>
+                . We are currently looking for a{' '}
+                <NextLink
+                  href={
+                    'https://siafoundation.homerun.co/developer-evangelist/en'
+                  }
+                  target="_blank"
+                >
+                  Developer Evangelist
+                </NextLink>{' '}
+                and a{' '}
+                <NextLink
+                  href={'https://siafoundation.homerun.co/technical-writer/en'}
+                  target="_blank"
+                >
+                  Technical Writer
+                </NextLink>
+                .
+              </Paragraph>
+              <Paragraph color="subtle" size="18"></Paragraph>
             </Flex>
           </Flex>
         </Flex>
