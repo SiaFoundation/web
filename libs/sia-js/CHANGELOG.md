@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.3.0](https://github.com/SiaFoundation/web/compare/sia-js-0.2.5...sia-js-0.3.0) (2022-06-23)
+
+
+### Features
+
+* spike explorer v1 ([2985d8a](https://github.com/SiaFoundation/web/commit/2985d8abddce552a4f86e6f9a91b86096d815722))
+
+
+
 ## [0.2.5](https://github.com/SiaFoundation/web/compare/sia-js-0.2.4...sia-js-0.2.5) (2022-05-06)
 
 
