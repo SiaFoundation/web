@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.20.1](https://github.com/SiaFoundation/web/compare/website-0.20.0...website-0.20.1) (2022-06-24)
+
+
+### Bug Fixes
+
+* column layout, disable spellcheck searchbar, responsive layouts, add to deploy ([227ea03](https://github.com/SiaFoundation/web/commit/227ea034fba40a89c004fc38f57120c2ae482c81))
+
+
+
 # [0.20.0](https://github.com/SiaFoundation/web/compare/website-0.19.2...website-0.20.0) (2022-06-23)
 
 
