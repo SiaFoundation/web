@@ -155,13 +155,6 @@ const software: Software[] = [
     subtitle: 'Popular crypto mining pool provider.',
   },
   {
-    title: 'Binance',
-    logo: 'binance',
-    link: 'https://www.binance.com/en/trade/SC_BTC',
-    tags: ['exchanges'],
-    subtitle: 'Based in Malta, Binance is a popular crypto-to-crypto exchange.',
-  },
-  {
     title: 'Bittrex',
     logo: 'bittrex',
     link: 'https://bittrex.com/Market/Index?MarketName=btc-SC',
@@ -178,14 +171,6 @@ const software: Software[] = [
       'Based in the USA, Kraken is one of the largest and oldest Bitcoin exchanges in the world.',
   },
   {
-    title: 'Shapeshift',
-    logo: 'shapeshift',
-    link: 'https://shapeshift.com/',
-    tags: ['exchanges'],
-    subtitle:
-      'Shapeshift enables users to quickly exchange small amounts of cryptocurrency. Most user-friendly.',
-  },
-  {
     title: 'Poloniex',
     logo: 'poloniex',
     link: 'https://poloniex.com/exchange/BTC_SC',
@@ -200,6 +185,14 @@ const software: Software[] = [
     tags: ['exchanges'],
     subtitle:
       'Crypto.com is a popular crypto-to-crypto exchange. It is a trusted and secure platform for users to trade top cryptocurrencies with the lowest fees in the industry.',
+  },
+  {
+    title: 'change now',
+    logo: 'changenow',
+    link: 'https://changenow.io/?from=btc&to=sc',
+    tags: ['exchanges'],
+    subtitle:
+      'ChangeNOW is a non-custodial service created for simple and fast cryptocurrency exchanges.',
   },
   {
     title: 'Upbit',
