@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.28.2](https://github.com/SiaFoundation/web/compare/design-system-0.28.1...design-system-0.28.2) (2022-06-28)
+
+
+### Bug Fixes
+
+* update dns config ([4adfde9](https://github.com/SiaFoundation/web/commit/4adfde9b14c18cdb79d8dc3597767930376de023))
+
+
+
 ## [0.28.1](https://github.com/SiaFoundation/web/compare/design-system-0.28.0...design-system-0.28.1) (2022-06-24)
 
 
