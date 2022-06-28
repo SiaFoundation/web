@@ -1,2 +1,2 @@
-const api = process.env.EXPLORER_API || 'https://explore.sia.tech'
+const api = process.env.NAVIGATOR_API || 'https://navigator.sia.tech'
 export const apiBase = `${api}/navigator-api`
