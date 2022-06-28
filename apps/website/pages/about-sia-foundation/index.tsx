@@ -212,7 +212,12 @@ function Foundation({ stats, team, newsPosts, reports }: Props) {
         <SiteHeading
           size="32"
           title="Recent News"
-          description={<>Browse the newsroom for recent press releases.</>}
+          description={
+            <>
+              Browse the newsroom for recent press releases and updates from the
+              ecosystem.
+            </>
+          }
           links={[
             {
               title: 'Explore the newsroom',
@@ -230,7 +235,6 @@ export async function getStaticProps() {
   const stats = await getStats()
   const newsPosts = await getNewsPosts({
     limit: 3,
-    includeHtml: false,
   })
   const reports = await getReports()
 

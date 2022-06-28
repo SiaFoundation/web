@@ -70,7 +70,7 @@ function CommunityEcosystem({ blogs, stats }: Props) {
       <Section>
         <SiteHeading
           size="32"
-          title="The Latest from the Sia Community"
+          title="Featured updates from the Sia Community"
           description={
             <>
               Read about the latest updates and technical advancements in the

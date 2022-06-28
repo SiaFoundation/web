@@ -9,7 +9,7 @@ import { WebDomain } from './WebDomain'
 
 export type ContentItemProps = {
   title: string
-  date?: string | number
+  date?: string
   location?: string
   icon?: React.ReactNode
   logo?: string

@@ -8,12 +8,15 @@ type Article = {
   tags: Tag[]
   date: string
   link: string
+  newTab?: boolean
 }
 
-export function getArticles(tags: Tag[], limit?: number) {
-  return (articles as Article[])
+export function getArticles(tags: Tag[], limit?: number): Article[] {
+  return articles
     .sort((a, b) => (new Date(a.date) < new Date(b.date) ? 1 : -1))
-    .filter((a) => tags.find((section) => a.tags?.includes(section)))
+    .filter((a) =>
+      !tags.length ? true : tags.find((tag) => a.tags?.includes(tag))
+    )
     .slice(0, limit)
-    .map(addNewTab)
+    .map(addNewTab) as Article[]
 }

@@ -1,27 +1,40 @@
-import omit from 'lodash/omit'
 import {
   ContentGallery,
+  ContentItemProps,
   getImageProps,
   Section,
   SiteHeading,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { sitemap } from '../../config/site'
-import { generateRssNewsFeed, getNewsPosts } from '../../content/news'
-import { AsyncReturnType } from '../../lib/types'
-import { getStats } from '../../content/stats'
+import { getStats, Stats } from '../../content/stats'
 import backgroundImage from '../../assets/backgrounds/steps.png'
 import previewImage from '../../assets/previews/steps.png'
+import { generateRssNewsFeed } from '../../content/rss'
+import useSWR from 'swr'
+import { useRouter } from 'next/router'
+import { getFeed } from '../../content/feed'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
 
-type Props = AsyncReturnType<typeof getStaticProps>['props']
+type Props = {
+  stats: Stats
+  posts: ContentItemProps[]
+}
 
 const title = 'Newsroom'
-const description = 'Read the latest Sia announcements and press releases.'
+const description =
+  'News from around the ecosystem and official Sia Foundation press releases.'
 
-function Newsroom({ posts, stats }: Props) {
+function Newsroom({ stats }: Props) {
+  const router = useRouter()
+  const filter = router.query.news
+  const route = filter ? `/api/news?news=${filter}` : '/api/news'
+  const posts = useSWR<ContentItemProps[]>(route, async () => {
+    const response = await fetch(route)
+    return response.json()
+  })
   return (
     <Layout
       title={title}
@@ -35,7 +48,7 @@ function Newsroom({ posts, stats }: Props) {
             description={description}
             links={[
               {
-                title: 'Subscribe with RSS',
+                title: 'press releases RSS',
                 link: sitemap.newsroom.feed.rss,
                 newTab: true,
               },
@@ -48,26 +61,30 @@ function Newsroom({ posts, stats }: Props) {
       previewImage={previewImageProps}
     >
       <Section>
-        <ContentGallery columns="1" items={posts} />
+        <ContentGallery
+          filterMode="external"
+          filters={['press', 'ecosystem']}
+          filterable="news"
+          columns="1"
+          items={posts.data || []}
+        />
       </Section>
     </Layout>
   )
 }
 
 export async function getStaticProps() {
+  await generateRssNewsFeed()
+
   const stats = await getStats()
-  const posts = await getNewsPosts({
-    includeHtml: true,
-  })
+  const posts = await getFeed()
 
-  // Generate RSS feed, requires `html`
-  generateRssNewsFeed(posts)
-
-  // Remove `html` before rendering page
   return {
     props: {
       stats,
-      posts: posts.map((post) => omit(post, 'html')),
+      fallback: {
+        '/api/news': posts,
+      },
     },
   }
 }
