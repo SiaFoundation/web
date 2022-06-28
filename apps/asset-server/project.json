@@ -8,20 +8,13 @@
       "options": {
         "outputPath": "dist/apps/asset-server",
         "main": "apps/asset-server/src/main.ts",
-        "tsConfig": "apps/asset-server/tsconfig.app.json",
-        "assets": ["apps/asset-server/src/assets"]
+        "tsConfig": "apps/asset-server/tsconfig.app.json"
       },
       "configurations": {
         "production": {
           "optimization": true,
           "extractLicenses": true,
-          "inspect": false,
-          "fileReplacements": [
-            {
-              "replace": "apps/asset-server/src/environments/environment.ts",
-              "with": "apps/asset-server/src/environments/environment.prod.ts"
-            }
-          ]
+          "inspect": false
         }
       }
     },

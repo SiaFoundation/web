@@ -2,7 +2,8 @@ import { readdirSync } from 'fs'
 import * as express from 'express'
 import * as vhost from 'vhost'
 import { counterMiddleware } from '@siafoundation/data-sources'
-import { getHostnames, getSiaVersion } from '@siafoundation/env'
+import { getSiaVersion } from '@siafoundation/env'
+import { getHostnames } from './env'
 
 export function setupStatic(server) {
   const hostnames = getHostnames()

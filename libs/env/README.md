@@ -1,6 +1,6 @@
 # Env
 
-Environment variables for the website server configuration.
+Environment variables for use across projects.
 
 ## Running unit tests
 
