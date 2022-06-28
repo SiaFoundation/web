@@ -52,6 +52,9 @@ assets/transparency
 # Generated RSS feeds
 apps/website/public/rss
 
+# Aggregated feeds
+/feeds
+
 # Env
 .env
 deploy.log

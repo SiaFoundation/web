@@ -1,7 +1,4 @@
-import { getHosts } from '@siafoundation/env'
-import { getHref } from '../lib/url'
-
-const hosts = getHosts()
+import { webLinks } from '@siafoundation/design-system'
 
 export const sitemap = {
   home: {
@@ -15,7 +12,7 @@ export const sitemap = {
   },
   whitepaper: {
     index: '/whitepaper',
-    pdf: getHref(`${hosts.app}/sia.pdf`),
+    pdf: `${webLinks.website}/sia.pdf`,
   },
   community: {
     index: '/community-ecosystem',

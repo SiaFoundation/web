@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { getHosts, getSiaVersion } from '@siafoundation/env'
+import { getSiaVersion } from '@siafoundation/env'
 import {
   Flex,
   Grid,
@@ -25,30 +25,27 @@ import {
 import { Layout } from '../../components/Layout'
 import { sitemap } from '../../config/site'
 import { getDaysInSeconds } from '../../lib/time'
-import { getHref } from '../../lib/url'
 import { getArticles } from '../../content/articles'
 import { AsyncReturnType } from '../../lib/types'
 import { getSoftware } from '../../content/software'
 import { getStats } from '../../content/stats'
-import { omit } from 'lodash'
 import { SoftwareSection } from '../../components/SoftwareSection'
 import backgroundImage from '../../assets/backgrounds/waterfall.png'
 import previewImage from '../../assets/previews/waterfall.png'
+import { getTutorials } from '../../content/tutorials'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
 
 const siaVersion = getSiaVersion()
-const hosts = getHosts()
 
-const technical = getArticles(['technical']).map((i) => omit(i, ['icon']))
-const tutorials = getArticles(['tutorial'])
+const tutorials = getTutorials()
 const services = getSoftware('storage_services', 4)
 
 const docLinks = [
   {
     title: 'API Reference',
-    link: getHref(hosts.api),
+    link: webLinks.apiDocs,
     newTab: true,
   },
   {
@@ -64,7 +61,7 @@ const description =
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-function Developers({ stats }: Props) {
+function Developers({ technical, stats }: Props) {
   return (
     <Layout
       title={title}
@@ -104,9 +101,7 @@ function Developers({ stats }: Props) {
                                 e.stopPropagation()
                               }}
                               target="_blank"
-                              href={getHref(
-                                `${hosts.app}/releases/sia-signing-key.asc`
-                              )}
+                              href={`${webLinks.website}/releases/sia-signing-key.asc`}
                             >
                               here
                             </Link>
@@ -116,9 +111,7 @@ function Developers({ stats }: Props) {
                                 e.stopPropagation()
                               }}
                               target="_blank"
-                              href={getHref(
-                                `${hosts.app}/releases/siad/Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`
-                              )}
+                              href={`${webLinks.website}/releases/siad/Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`}
                             >
                               here
                             </Link>
@@ -136,9 +129,7 @@ function Developers({ stats }: Props) {
                           1. Download and import the Sia signing key.
                         </Paragraph>
                         <Codeblock>
-                          {`wget -c ${getHref(
-                            `${hosts.app}/releases/sia-signing-key.asc`
-                          )}
+                          {`wget -c ${webLinks.website}/releases/sia-signing-key.asc
 gpg --import sia-signing-key.asc`}
                         </Codeblock>
 
@@ -147,9 +138,7 @@ gpg --import sia-signing-key.asc`}
                           signature.
                         </Paragraph>
                         <Codeblock>
-                          {`wget -c ${getHref(
-                            `${hosts.app}/releases/siad/Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`
-                          )}
+                          {`wget -c ${webLinks.website}/releases/siad/Sia-v${siaVersion.current}-SHA256SUMS.txt.asc
 gpg --verify Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`}
                         </Codeblock>
 
@@ -199,23 +188,17 @@ gpg --verify Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`}
                   links={[
                     {
                       title: 'Windows',
-                      link: getHref(
-                        `${hosts.app}/releases/Sia-UI-v${siaVersion.current}.exe`
-                      ),
+                      link: `${webLinks.website}/releases/Sia-UI-v${siaVersion.current}.exe`,
                       newTab: true,
                     },
                     {
                       title: 'MacOS',
-                      link: getHref(
-                        `${hosts.app}/releases/Sia-UI-v${siaVersion.current}.dmg`
-                      ),
+                      link: `${webLinks.website}/releases/Sia-UI-v${siaVersion.current}.dmg`,
                       newTab: true,
                     },
                     {
                       title: 'Linux',
-                      link: getHref(
-                        `${hosts.app}/releases/Sia-UI-v${siaVersion.current}.AppImage`
-                      ),
+                      link: `${webLinks.website}/releases/Sia-UI-v${siaVersion.current}.AppImage`,
                       newTab: true,
                     },
                   ]}
@@ -232,30 +215,22 @@ gpg --verify Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`}
                   links={[
                     {
                       title: 'Windows',
-                      link: getHref(
-                        `${hosts.app}/releases/siad/Sia-v${siaVersion.current}-windows-amd64.zip`
-                      ),
+                      link: `${webLinks.website}/releases/siad/Sia-v${siaVersion.current}-windows-amd64.zip`,
                       newTab: true,
                     },
                     {
                       title: 'MacOS',
-                      link: getHref(
-                        `${hosts.app}/releases/siad/Sia-v${siaVersion.current}-darwin-amd64.zip`
-                      ),
+                      link: `${webLinks.website}/releases/siad/Sia-v${siaVersion.current}-darwin-amd64.zip`,
                       newTab: true,
                     },
                     {
                       title: 'Linux',
-                      link: getHref(
-                        `${hosts.app}/releases/siad/Sia-v${siaVersion.current}-linux-amd64.zip`
-                      ),
+                      link: `${webLinks.website}/releases/siad/Sia-v${siaVersion.current}-linux-amd64.zip`,
                       newTab: true,
                     },
                     {
                       title: 'Raspberry Pi',
-                      link: getHref(
-                        `${hosts.app}/releases/siad/Sia-v${siaVersion.current}-linux-arm64.zip`
-                      ),
+                      link: `${webLinks.website}/releases/siad/Sia-v${siaVersion.current}-linux-arm64.zip`,
                       newTab: true,
                     },
                     {
@@ -393,9 +368,11 @@ gpg --verify Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`}
 
 export async function getStaticProps() {
   const stats = await getStats()
+  const technical = getArticles(['technical'], 8)
 
   const props = {
     stats,
+    technical,
   }
 
   return {

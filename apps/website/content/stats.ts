@@ -5,12 +5,11 @@ import {
   getGitHub,
   getSiaCentralHostsNetworkMetrics,
 } from '@siafoundation/data-sources'
-import { isDev } from '@siafoundation/env'
 import { humanBytes, humanNumber, humanSpeed } from '@siafoundation/sia-js'
 import { AsyncReturnType } from '../lib/types'
 
 export async function getStats() {
-  if (isDev()) {
+  if (process.env.NODE_ENV === 'development') {
     return {
       activeHosts: '20,531',
       onlineHosts: '20,634',

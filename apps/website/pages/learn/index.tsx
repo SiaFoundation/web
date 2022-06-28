@@ -17,7 +17,6 @@ import {
   getImageProps,
   webLinks,
 } from '@siafoundation/design-system'
-import { getArticles } from '../../content/articles'
 import { Layout } from '../../components/Layout'
 import { sitemap } from '../../config/site'
 import { getStats, Stats } from '../../content/stats'
@@ -25,11 +24,12 @@ import { getDaysInSeconds } from '../../lib/time'
 import { textContent } from '../../lib/utils'
 import backgroundImage from '../../assets/backgrounds/leaves.png'
 import previewImage from '../../assets/previews/leaves.png'
+import { getTutorials } from '../../content/tutorials'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
 
-const getStarted = getArticles(['tutorial'])
+const getStarted = getTutorials()
 
 const title = 'Learn'
 const description =

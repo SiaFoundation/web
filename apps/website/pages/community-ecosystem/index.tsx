@@ -16,7 +16,6 @@ import { getArticles } from '../../content/articles'
 import { AsyncReturnType } from '../../lib/types'
 import { getSoftware } from '../../content/software'
 import { getStats } from '../../content/stats'
-import { omit } from 'lodash'
 import { textContent } from '../../lib/utils'
 import backgroundImage from '../../assets/backgrounds/jungle.png'
 import previewImage from '../../assets/previews/jungle.png'
@@ -24,7 +23,6 @@ import previewImage from '../../assets/previews/jungle.png'
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
 
-const blogs = getArticles(['ecosystem'], 4).map((i) => omit(i, ['icon']))
 const software = getSoftware('')
 
 const title = 'Community & Ecosystem'
@@ -38,7 +36,7 @@ const description = (
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-function CommunityEcosystem({ stats }: Props) {
+function CommunityEcosystem({ blogs, stats }: Props) {
   return (
     <Layout
       title={title}
@@ -157,9 +155,11 @@ function CommunityEcosystem({ stats }: Props) {
 
 export async function getStaticProps() {
   const stats = await getStats()
+  const blogs = getArticles(['ecosystem-featured'], 4)
 
   return {
     props: {
+      blogs,
       stats,
     },
   }
