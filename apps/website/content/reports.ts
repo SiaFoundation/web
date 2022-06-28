@@ -2,10 +2,7 @@ import { baseAssetPath } from '../config/app'
 import path from 'path'
 import fs from 'fs'
 import { toPairs } from 'lodash'
-import { getHref } from '../lib/url'
-import { getHosts } from '@siafoundation/env'
-
-const hosts = getHosts()
+import { webLinks } from '@siafoundation/design-system'
 
 type Report = {
   year: string
@@ -30,7 +27,7 @@ export function getReports(): [string, Report[]][] {
         return {
           year,
           quarter: quarter.toUpperCase(),
-          link: getHref(`${hosts.app}/transparency/${filename}`),
+          link: `${webLinks.website}/transparency/${filename}`,
         }
       })
       .filter((i) => i)

@@ -18,7 +18,6 @@ import {
   usePullTop,
   webLinks,
 } from '@siafoundation/design-system'
-import { omit } from 'lodash'
 import { Layout } from '../components/Layout'
 import { sitemap } from '../config/site'
 import { AsyncReturnType } from '../lib/types'
@@ -30,9 +29,9 @@ import { useCallback, useEffect, useState } from 'react'
 import { textContent } from '../lib/utils'
 import Letter from '../components/Letter'
 import { JiggleArrow } from '../components/JiggleArrow'
+import { getTutorials } from '../content/tutorials'
 
-const tutorials = getArticles(['tutorial'])
-const latest = getArticles(['latest']).map((i) => omit(i, ['icon']))
+const tutorials = getTutorials()
 const services = getSoftware('storage_services', 4)
 
 const backgroundImageProps = getImageProps(backgroundImage)
@@ -53,7 +52,7 @@ const transitionDuration = 300
 
 type Props = AsyncReturnType<typeof getServerSideProps>['props']
 
-export default function Home({ seenLetter }: Props) {
+export default function Home({ featured, seenLetter }: Props) {
   const [showLetter, setShowLetter] = useState<boolean>(!seenLetter)
 
   useEffect(() => {
@@ -277,7 +276,7 @@ export default function Home({ seenLetter }: Props) {
               },
             ]}
           />
-          <ContentGallery items={latest} columns="1" />
+          <ContentGallery items={featured} columns="1" />
         </Section>
       </Section>
     </Layout>
@@ -286,9 +285,15 @@ export default function Home({ seenLetter }: Props) {
 
 export async function getServerSideProps({ req }) {
   const seenLetter: boolean = req.cookies['seen-letter'] || false
+  // Articles are selected with a limit on the server-side because article list
+  // is large.
+  // Software and tutorials are smaller fixed lists so they are imported directy
+  // so entire file is included in bundle and cached.
+  const featured = getArticles(['sia-featured'], 5)
 
   return {
     props: {
+      featured,
       seenLetter,
     },
   }

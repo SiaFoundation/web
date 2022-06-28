@@ -5,7 +5,6 @@ import matter from 'gray-matter'
 import { Feed } from 'feed'
 import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
-import { getHosts } from '@siafoundation/env'
 import { ContentItemProps, webLinks } from '@siafoundation/design-system'
 import { sitemap } from '../config/site'
 import { components } from '../config/mdx'
@@ -16,8 +15,6 @@ export type NewsPost = ContentItemProps & {
   source: MDXRemoteSerializeResult<Record<string, unknown>>
   html?: string
 }
-
-const hosts = getHosts()
 
 type Options = {
   limit?: number
@@ -108,7 +105,7 @@ export async function getNewsPost(slug: string): Promise<GetNewsPost> {
 }
 
 export function generateRssNewsFeed(posts: NewsPost[]) {
-  const siteUrl = hosts.app
+  const siteUrl = webLinks.website
   const date = new Date()
   const author = {
     name: 'Sia Foundation',
