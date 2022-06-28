@@ -9,6 +9,7 @@ export const webLinks = {
     mining: 'https://docs.sia.tech/mining/about-mining-on-sia',
   },
   website: 'https://sia.tech',
+  apiDocs: 'https://api.sia.tech',
   // forum: 'https://forum.sia.tech',
   github: 'https://github.com/SiaFoundation',
   discord: 'https://discord.gg/sia',
