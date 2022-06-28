@@ -26,7 +26,7 @@
   {
     "title": "Utreexo in Context",
     "date": "05/08/2022",
-    "tags": ["sia-featured", "technical"],
+    "tags": ["ecosystem-all", "sia-featured", "technical"],
     "link": "https://lukechampine.com/utreexo-talk.html"
   },
   {
@@ -55,7 +55,7 @@
   },
   {
     "title": "Escrowless Siafund Swaps",
-    "tags": ["sia-featured"],
+    "tags": ["ecosystem-all", "sia-featured"],
     "date": "03/31/2022",
     "link": "https://blog.sia.tech/escrowless-siafund-swaps-da418ed50df0"
   },
@@ -74,7 +74,7 @@
   {
     "title": "Evolving Skynet Portals to Better Survive on the Centralized Web",
     "date": "03/09/2022",
-    "tags": ["ecosystem-featured"],
+    "tags": ["ecosystem-all", "ecosystem-featured"],
     "link": "https://blog.sia.tech/evolving-skynet-portals-to-better-survive-on-the-centralized-web-e08e050f15c1"
   },
   {
@@ -98,7 +98,7 @@
   {
     "title": "Introducing support for IPFS, backed by Sia decentralized storage",
     "date": "03/01/2022",
-    "tags": ["ecosystem-featured"],
+    "tags": ["ecosystem-all", "ecosystem-featured"],
     "link": "https://filebase.com/blog/introducing-support-for-ipfs-backed-by-decentralized-storage/"
   },
   {
@@ -158,32 +158,37 @@
   {
     "title": "Announcing the Filebase + Akash Hackathon Winners",
     "date": "10/29/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/announcing-the-filebase-akash-hackathon-winners/"
   },
   {
     "title": "Sia as NFS datastores for vSphere HA clusters using Arzen",
     "date": "10/19/2021",
-    "tags": ["ecosystem-featured"],
+    "tags": ["ecosystem-all", "ecosystem-featured"],
     "link": "https://blog.sia.tech/sia-as-nfs-datastores-for-vsphere-ha-clusters-using-arzen-aad477eea40e"
   },
   {
     "title": "Filebase + Akash Hackathon - Initial Project Showcase",
     "date": "10/18/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/filebase-akash-hackathon-initial-project-showcase/"
   },
   {
     "title": "What Happens When My Cloud Goes Down?",
     "date": "09/31/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/what-happens-when-my-cloud-goes-down/"
   },
   {
     "title": "Filebase + Akash Hackathon Survival Guide",
     "date": "09/30/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/filebase-akash-hackathon-survival-guide/"
   },
   {
     "title": "How to Create and Manage Buckets on Filebase",
     "date": "09/29/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/how-to-create-and-manage-buckets-on-filebase/"
   },
   {
@@ -195,31 +200,37 @@
   {
     "title": "Spotlight: How Nosible Saved 85% on Storage Costs with Filebase",
     "date": "09/14/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/spotlight-how-nosible-saved-85-on-storage-costs-with-filebase/"
   },
   {
     "title": "Equinix Metal \"Uncensored\": Decentralized Storage: More than Cheap Bits!",
     "date": "09/13/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/equinix-metal-uncensored-decentralized-storage-more-than-cheap-bits/"
   },
   {
     "title": "Filebase + Akash Hackathon",
     "date": "09/01/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/filebase-akash-hackathon/"
   },
   {
     "title": "Emptying buckets just got a whole lot easier",
     "date": "08/13/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/emptying-buckets-just-got-a-whole-lot-easier/"
   },
   {
     "title": "Filebase named a \"Hot Startup to Watch\" in the 2021 Big50 Startup Report",
     "date": "08/04/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/filebase-has-been-a-hot-startup-to-watch-in-the-2021-big50-startup-report/"
   },
   {
     "title": "Enabling Secure & Cost-Effective Backups with Comet Backup",
     "date": "08/04/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/enabling-secure-cost-effective-backups-with-comet-backup/"
   },
   {
@@ -231,11 +242,13 @@
   {
     "title": "Filebase and Akash Announce Partnership",
     "date": "07/27/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/filebase-and-akash-announce-partnership/"
   },
   {
     "title": "Filebase named a leader in GigaOm’s Sonar Report for Decentralized Storage",
     "date": "07/19/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/gigaom-sonar/"
   },
   {
@@ -265,43 +278,49 @@
   {
     "title": "Introducing Filebase Object Maps",
     "date": "06/23/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/introducing-filebase-object-maps/"
   },
   {
     "title": "Utreexo in Sia: A Summary",
-    "tags": ["sia-featured"],
+    "tags": ["ecosystem-all", "sia-featured"],
     "date": "06/22/2021",
     "link": "https://blog.sia.tech/utreexo-for-sia-an-overview-fe14e80a7919"
   },
   {
     "title": "Drag and drop files onto the decentralized web using Skynet and Filebase",
     "date": "06/04/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/drag-and-drop-files-onto-the-decentralized-web-using-skynet-and-filebase/"
   },
   {
     "title": "Introducing the new and improved Filebase dashboard!",
     "date": "05/27/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/introducing-the-new-and-improved-filebase-dashboard/"
   },
   {
     "title": "Celebrating two years of decentralized storage in production!",
     "date": "05/20/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/celebrating-two-years-of-decentralized-storage-in-production/"
   },
   {
     "title": "Announcing our $2M Seed Round",
     "date": "04/20/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/announcing-our-2m-seed-round/"
   },
   {
     "title": "Hello, Skynet!",
     "date": "04/15/2021",
+    "tags": ["ecosystem-all"],
     "link": "https://filebase.com/blog/hello-skynet/"
   },
   {
     "title": "Launching the Sia Foundation",
     "date": "01/12/2021",
-    "tags": ["sia-featured"],
+    "tags": ["ecosystem-all", "sia-featured"],
     "link": "https://blog.sia.tech/launching-the-sia-foundation-ee47dfab4d2c"
   },
   {
@@ -313,13 +332,13 @@
   {
     "title": "You Could Have Invented Skynet",
     "date": "01/01/2021",
-    "tags": ["sia-featured", "technical"],
+    "tags": ["ecosystem-all", "sia-featured", "technical"],
     "link": "https://lukechampine.com/skynet.html"
   },
   {
     "title": "Verifiable Computation on Skynet using a Merklized Virtual Machine",
     "date": "12/30/2020",
-    "tags": ["technical"],
+    "tags": ["ecosystem-all", "technical"],
     "link": "https://blog.sia.tech/verifiable-computation-on-skynet-using-a-merklized-virtual-machine-a4a24c7b9ec"
   },
   {
@@ -331,37 +350,37 @@
   {
     "title": "Optimizing Payment Channels to Achieve CDN Latencies",
     "date": "10/27/2020",
-    "tags": ["technical"],
+    "tags": ["ecosystem-all", "technical"],
     "link": "https://blog.sia.tech/optimizing-payment-channels-to-achieve-cdn-latencies-skyrocket-part-2-1ac6fcca58ae"
   },
   {
     "title": "Reducing Latency 96% by Switching P2P Platform Skynet to a Multiplexer",
     "date": "08/12/2020",
-    "tags": ["technical"],
+    "tags": ["ecosystem-all", "technical"],
     "link": "https://blog.sia.tech/reducing-latency-96-by-switching-p2p-platform-skynet-to-a-multiplexer-ddb4bbcf0b67"
   },
   {
     "title": "A Lightweight Wallet for Sia",
     "date": "06/01/2020",
-    "tags": ["technical"],
+    "tags": ["ecosystem-all", "technical"],
     "link": "https://lukechampine.com/narwal.html"
   },
   {
     "title": "One Year of us",
     "date": "05/01/2020",
-    "tags": ["technical"],
+    "tags": ["ecosystem-all", "technical"],
     "link": "https://lukechampine.com/retrospective.html"
   },
   {
     "title": "Files as Capabilities in us",
     "date": "04/01/2020",
-    "tags": ["technical"],
+    "tags": ["ecosystem-all", "technical"],
     "link": "https://lukechampine.com/capabilities.html"
   },
   {
     "title": "How to use Sia Irresponsibly",
     "date": "03/01/2020",
-    "tags": ["technical"],
+    "tags": ["ecosystem-all", "technical"],
     "link": "https://lukechampine.com/irresponsible.html"
   },
   {
@@ -373,37 +392,37 @@
   {
     "title": "How to use Sia Responsibly",
     "date": "02/01/2020",
-    "tags": ["technical"],
+    "tags": ["ecosystem-all", "technical"],
     "link": "https://lukechampine.com/responsible.html"
   },
   {
     "title": "The Sia Alerts System: Be more informed about your cloud storage",
     "date": "01/16/2020",
-    "tags": ["technical"],
+    "tags": ["ecosystem-all", "technical"],
     "link": "https://blog.sia.tech/the-sia-alerts-system-be-more-informed-about-your-cloud-storage-9d101f62fe6e"
   },
   {
     "title": "How I built Pixeldrain, Sia's first file sharing website",
     "date": "09/11/2019",
-    "tags": ["ecosystem-featured"],
+    "tags": ["ecosystem-all", "ecosystem-featured"],
     "link": "https://blog.sia.tech/how-i-built-pixeldrain-sias-first-file-sharing-website-3201fd717914"
   },
   {
     "title": "A Ransom Attack on Hardware Wallets",
     "date": "03/01/2019",
-    "tags": ["technical"],
+    "tags": ["ecosystem-all", "technical"],
     "link": "https://blog.sia.tech/a-ransom-attack-on-hardware-wallets-534c075b3a92"
   },
   {
     "title": "A New Kind of Sia",
     "date": "01/03/2019",
-    "tags": ["technical"],
+    "tags": ["ecosystem-all", "technical"],
     "link": "https://blog.sia.tech/a-new-kind-of-sia-2e7454a9b21a"
   },
   {
     "title": "The Sia Ethos",
     "date": "05/10/2017",
-    "tags": ["sia-featured"],
+    "tags": ["ecosystem-all", "sia-featured"],
     "link": "https://blog.sia.tech/the-sia-ethos-48f72f1cf382"
   }
 ]

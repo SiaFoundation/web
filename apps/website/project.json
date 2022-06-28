@@ -52,12 +52,6 @@
         "passWithNoTests": true
       }
     },
-    "feeds": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "command": "ts-node --esm --project apps/website/tsconfig.json apps/website/content/articles/sync.ts"
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

@@ -24,7 +24,7 @@ Web packages for the Sia project and ecosystem.
 - [@siafoundation/sia-nodejs](libs/sia-nodejs) - Sia NodeJS client for controlling a v1 `siad`.
 - [@siafoundation/design-system](libs/design-system) - React-based design system used across Sia apps and websites.
 - [@siafoundation/data-sources](libs/data-sources) - Data sources used for stats on the website.
-- [@siafoundation/env](libs/env) - Environment variables for the website server configuration.
+- [@siafoundation/env](libs/env) - Environment variables for use across projects.
 
 # Development
 

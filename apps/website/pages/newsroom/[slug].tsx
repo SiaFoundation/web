@@ -8,12 +8,10 @@ import {
   Box,
 } from '@siafoundation/design-system'
 import fs from 'fs'
-import path from 'path'
 import { MDXRemote } from 'next-mdx-remote'
 import { format } from 'date-fns'
 import { Layout } from '../../components/Layout'
-import { baseContentPath } from '../../config/app'
-import { GetNewsPost, getNewsPost } from '../../content/news'
+import { GetNewsPost, getNewsPost, newsDirectory } from '../../content/news'
 import { getStats, Stats } from '../../content/stats'
 import { sitemap } from '../../config/site'
 import { textContent } from '../../lib/utils'
@@ -72,7 +70,7 @@ function NewsroomPost({
 }
 
 async function getStaticPaths() {
-  const files = fs.readdirSync(path.join(baseContentPath, 'news'))
+  const files = fs.readdirSync(newsDirectory)
 
   const paths = files.map((filename) => ({
     params: {

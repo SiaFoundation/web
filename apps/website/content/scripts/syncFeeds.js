@@ -18,12 +18,13 @@ async function getFeed(feedFile) {
 // 2. Run the `npm run feeds` command to automatically update articles.json
 // with new posts.
 // 3. Manually categorize articles with tags.
-async function syncArticles() {
+async function sync() {
   const articleData = fs.readFileSync(articlesFilePath, 'utf-8')
   const articles = JSON.parse(articleData)
 
   const feeds = fs.readdirSync(feedFilesDirectory)
 
+  // eslint-disable-next-line no-undef
   await Promise.all(
     feeds.map(async (feedFile) => {
       try {
@@ -58,4 +59,4 @@ async function syncArticles() {
   fs.writeFileSync(articlesFilePath, updatedArticleData + '\n')
 }
 
-syncArticles()
+sync()

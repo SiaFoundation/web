@@ -9,7 +9,9 @@ import { ContentItemProps, ContentItem } from '../site/ContentItem'
 
 type Props = {
   items: ContentItemProps[]
+  filterMode?: 'internal' | 'external'
   filterable?: string
+  filters?: string[]
   eyebrow?: string
   columns?: React.ComponentProps<typeof Grid>['columns']
   gap?: React.ComponentProps<typeof Grid>['gap']
@@ -18,6 +20,8 @@ type Props = {
 
 export function ContentGallery({
   filterable,
+  filterMode = 'internal',
+  filters: customFilters = [],
   eyebrow,
   columns,
   gap = '5',
@@ -30,17 +34,25 @@ export function ContentGallery({
     | undefined
   const filters = useMemo(
     () =>
-      uniq(
-        items.reduce((acc, item) => acc.concat(item.tags || []), [] as string[])
-      ),
-    [items]
+      filterMode === 'external'
+        ? customFilters
+        : uniq(
+            items.reduce(
+              (acc, item) => acc.concat(item.tags || []),
+              [] as string[]
+            )
+          ),
+    [filterMode, items, customFilters]
   )
   const filteredItems = useMemo(() => {
+    if (filterMode === 'external') {
+      return items
+    }
     if (!activeFilter) {
       return items
     }
     return items.filter((i) => i.tags?.includes(activeFilter))
-  }, [items, activeFilter])
+  }, [filterMode, items, activeFilter])
 
   const changeFilter = useCallback(
     (filter?: string) => {
