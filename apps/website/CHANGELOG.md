@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.20.2](https://github.com/SiaFoundation/web/compare/website-0.20.1...website-0.20.2) (2022-06-28)
+
+
+### Bug Fixes
+
+* update dns config ([4adfde9](https://github.com/SiaFoundation/web/commit/4adfde9b14c18cdb79d8dc3597767930376de023))
+
+
+
 ## [0.20.1](https://github.com/SiaFoundation/web/compare/website-0.20.0...website-0.20.1) (2022-06-24)
 
 
