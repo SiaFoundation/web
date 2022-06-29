@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.1](https://github.com/SiaFoundation/web/compare/data-sources-0.3.0...data-sources-0.3.1) (2022-06-29)
+
+
+### Bug Fixes
+
+* update navigator endpoint and naming ([92e53e8](https://github.com/SiaFoundation/web/commit/92e53e89f72778c4e6399ca0b1f9da08e1beb32a))
+
+
+
 # [0.3.0](https://github.com/SiaFoundation/web/compare/data-sources-0.2.3...data-sources-0.3.0) (2022-05-24)
 
 
