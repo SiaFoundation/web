@@ -247,8 +247,8 @@ function Learn() {
               icon: <Wallet24 />,
               subtitle: (
                 <>
-                  Renters pay hosts in Siacoin, the the native cryptocurrency of
-                  the Sia blockchain. Instead of transferring the entire payment
+                  Renters pay hosts in Siacoin, the native cryptocurrency of the
+                  Sia blockchain. Instead of transferring the entire payment
                   up-front, storage is purchased in a rapid sequence of
                   micropayments that flows alongside the data being transferred.
                   This is accomplished using{' '}
