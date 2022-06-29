@@ -36,7 +36,7 @@ const description = (
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-function CommunityEcosystem({ blogs, stats }: Props) {
+function CommunityEcosystem({ blogs }: Props) {
   return (
     <Layout
       title={title}
@@ -63,7 +63,6 @@ function CommunityEcosystem({ blogs, stats }: Props) {
           />
         </Section>
       }
-      stats={stats}
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
@@ -160,7 +159,9 @@ export async function getStaticProps() {
   return {
     props: {
       blogs,
-      stats,
+      fallback: {
+        stats,
+      },
     },
   }
 }

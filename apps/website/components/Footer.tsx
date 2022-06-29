@@ -7,19 +7,14 @@ import {
   webLinks,
 } from '@siafoundation/design-system'
 import { sitemap } from '../config/site'
-import { Stats } from '../content/stats'
 import { Statsbar } from './Statsbar'
 
-type Props = {
-  stats?: Stats
-}
-
-export function Footer({ stats }: Props) {
+export function Footer() {
   return (
     <Flex direction="column">
       <Section size="1" width="flush" css={{ backgroundColor: '$waves' }}>
         <Section size="0">
-          <Statsbar stats={stats} />
+          <Statsbar />
         </Section>
       </Section>
       <Section width="flush" css={{ backgroundColor: '$brandGray3' }}>

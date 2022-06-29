@@ -19,7 +19,7 @@ import {
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { sitemap } from '../../config/site'
-import { getStats, Stats } from '../../content/stats'
+import { getStats } from '../../content/stats'
 import { getDaysInSeconds } from '../../lib/time'
 import { textContent } from '../../lib/utils'
 import backgroundImage from '../../assets/backgrounds/leaves.png'
@@ -35,11 +35,7 @@ const title = 'Learn'
 const description =
   'Learn how the Sia protocol is used to power redundant, decentralized, data storage.'
 
-type Props = {
-  stats: Stats
-}
-
-function Learn({ stats }: Props) {
+function Learn() {
   return (
     <Layout
       title={title}
@@ -50,7 +46,6 @@ function Learn({ stats }: Props) {
           <SiteHeading size="64" title={title} description={description} />
         </Section>
       }
-      stats={stats}
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
@@ -350,7 +345,9 @@ export async function getStaticProps() {
 
   return {
     props: {
-      stats,
+      fallback: {
+        stats,
+      },
     },
     revalidate: getDaysInSeconds(1),
   }

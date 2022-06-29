@@ -5,7 +5,6 @@ import {
   SiteLayout,
   webLinks,
 } from '@siafoundation/design-system'
-import { Stats } from '../content/stats'
 import { Footer } from './Footer'
 import { PageHead } from './PageHead'
 import { Navbar } from './Navbar'
@@ -20,7 +19,6 @@ type Props = {
   path: string
   backgroundImage: ImageProps
   previewImage: ImageProps
-  stats?: Stats
   focus?: React.ReactNode
   transitions?: boolean
   transitionDuration?: number
@@ -33,7 +31,6 @@ export function Layout({
   description,
   date,
   path,
-  stats,
   backgroundImage,
   previewImage,
   focus,
@@ -97,7 +94,7 @@ export function Layout({
             title: 'Newsroom',
           },
         ]}
-        footer={<Footer stats={stats} />}
+        footer={<Footer />}
         backgroundImage={backgroundImage}
         navbar={<Navbar />}
       >

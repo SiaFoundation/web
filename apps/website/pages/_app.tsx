@@ -3,9 +3,9 @@ import { ThemeProvider } from '@siafoundation/design-system'
 import { SWRConfig } from 'swr'
 import { components } from '../config/mdx'
 
-function App({ Component, pageProps, fallback = {} }) {
+function App({ Component, pageProps }) {
   return (
-    <SWRConfig value={{ fallback }}>
+    <SWRConfig value={{ fallback: pageProps.fallback }}>
       <MDXProvider components={components}>
         <ThemeProvider ssr>
           <Component {...pageProps} />

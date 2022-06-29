@@ -3,15 +3,10 @@ import { Fragment } from 'react'
 import useSWR from 'swr'
 import { Stats } from '../content/stats'
 
-type Props = {
-  stats?: Stats
-}
-
-export function Statsbar({ stats }: Props) {
-  const { data } = useSWR<Stats>(stats ? null : 'stats', async () => {
+export function Statsbar() {
+  const { data } = useSWR<Stats>('/api/stats', async () => {
     const response = await fetch('/api/stats')
-    const result = await response.json()
-    return result
+    return response.json()
   })
   const {
     activeHosts,
@@ -30,7 +25,7 @@ export function Statsbar({ stats }: Props) {
     // uploadSpeed,
     // cpuUsage,
     // memoryUsage,
-  } = stats || data || {}
+  } = data || {}
   return (
     <Flex
       gap={{

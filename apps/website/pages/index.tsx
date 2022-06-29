@@ -30,6 +30,7 @@ import { textContent } from '../lib/utils'
 import Letter from '../components/Letter'
 import { JiggleArrow } from '../components/JiggleArrow'
 import { getTutorials } from '../content/tutorials'
+import { getStats } from '../content/stats'
 
 const tutorials = getTutorials()
 const services = getSoftware('storage_services', 4)
@@ -290,11 +291,15 @@ export async function getServerSideProps({ req }) {
   // Software and tutorials are smaller fixed lists so they are imported directy
   // so entire file is included in bundle and cached.
   const featured = getArticles(['sia-featured'], 5)
+  const stats = await getStats()
 
   return {
     props: {
       featured,
       seenLetter,
+      fallback: {
+        stats,
+      },
     },
   }
 }
