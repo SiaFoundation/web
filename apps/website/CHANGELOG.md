@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.22.0](https://github.com/SiaFoundation/web/compare/website-0.21.1...website-0.22.0) (2022-06-29)
+
+
+### Features
+
+* add metadata and link previews ([644862c](https://github.com/SiaFoundation/web/commit/644862ce0f86a9784577e3d42a8499da1f43a695))
+
+
+
 ## [0.21.1](https://github.com/SiaFoundation/web/compare/website-0.21.0...website-0.21.1) (2022-06-29)
 
 
