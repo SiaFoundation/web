@@ -1,7 +1,7 @@
 import {
   getBenchmarks,
   getCounts,
-  getExploreNavigatorStatus,
+  getNavigatorStatus,
   getGitHub,
   getSiaCentralHostsNetworkMetrics,
 } from '@siafoundation/data-sources'
@@ -30,10 +30,10 @@ export async function getStats() {
     }
   }
 
-  const [hostsStats, explore, downloadCounts, github, benchmarks] =
+  const [hostsStats, navigator, downloadCounts, github, benchmarks] =
     await Promise.all([
       getSiaCentralHostsNetworkMetrics(),
-      getExploreNavigatorStatus(),
+      getNavigatorStatus(),
       getCounts(),
       getGitHub(),
       getBenchmarks(),
@@ -42,7 +42,7 @@ export async function getStats() {
 
   const stats = {
     // network
-    blockHeight: humanNumber(explore.data?.consensusblock),
+    blockHeight: humanNumber(navigator.data?.consensusblock),
     activeHosts: humanNumber(hostsStats.data?.totals.active_hosts),
     onlineHosts: humanNumber(hostsStats.data?.totals.total_hosts),
     // storage
