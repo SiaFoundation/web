@@ -2,7 +2,7 @@ import axios from 'axios'
 import { errorResponse500 } from './error'
 import { AsyncDataSourceResponse } from './types'
 
-type ExploreNavigatorStatus = {
+type NavigatorStatus = {
   coinsupply: number
   consensusblock: number
   heartbeat: number
@@ -13,10 +13,10 @@ type ExploreNavigatorStatus = {
   version: string
 }
 
-export async function getExploreNavigatorStatus(): AsyncDataSourceResponse<ExploreNavigatorStatus> {
+export async function getNavigatorStatus(): AsyncDataSourceResponse<NavigatorStatus> {
   try {
     const response = await axios.get(
-      'https://explore.sia.tech/navigator-api/status',
+      'https://navigator.sia.tech/navigator-api/status',
       {
         timeout: 10_000,
       }
