@@ -2,6 +2,22 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.21.0](https://github.com/SiaFoundation/web/compare/website-0.20.2...website-0.21.0) (2022-06-29)
+
+
+### Bug Fixes
+
+* remove binance and shapeshift, add changenow ([9f34957](https://github.com/SiaFoundation/web/commit/9f34957f9e33cdd8d658f9488f4bcbfc2a20b5e3))
+* upgrade stats to ssr fallback pattern ([d4284c5](https://github.com/SiaFoundation/web/commit/d4284c5af4a178fdc22d269f598c8fd12eaf01cc))
+
+
+### Features
+
+* news feed ([95e433e](https://github.com/SiaFoundation/web/commit/95e433eca2c8f5144aeade3fb4a4468784aa1b15))
+* upgrade news feed ([a15c784](https://github.com/SiaFoundation/web/commit/a15c78421fd903ad877025eb88cd13565c6a9be6))
+
+
+
 ## [0.20.2](https://github.com/SiaFoundation/web/compare/website-0.20.1...website-0.20.2) (2022-06-28)
 
 
