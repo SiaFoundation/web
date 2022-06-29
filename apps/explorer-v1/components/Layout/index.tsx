@@ -18,18 +18,23 @@ import {
   LogoTwitter24,
   LogoGithub24,
   Logo,
+  PageHead,
 } from '@siafoundation/design-system'
 import { routes } from '../../config/routes'
 import backgroundImage from '../../assets/jungle.png'
 import { Search } from './Search'
+import { appName } from '../../config'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 
 type Props = {
+  title: string
+  description: string
+  path: string
   children: React.ReactNode
 }
 
-export function SiteLayout({ children }: Props) {
+export function Layout({ title, description, path, children }: Props) {
   return (
     <Box
       css={{
@@ -39,6 +44,13 @@ export function SiteLayout({ children }: Props) {
         overflow: 'hidden',
       }}
     >
+      <PageHead
+        appName={appName}
+        title={title}
+        description={description}
+        path={path}
+        image={backgroundImageProps.src}
+      />
       <ScrollArea id="main-scroll">
         <Box
           css={{

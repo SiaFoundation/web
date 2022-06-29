@@ -13,7 +13,8 @@ import { SfTxEntity } from '../../components/entities/SfTxEntity'
 import { TxEntitySkeleton } from '../../components/entities/TxEntitySkeleton'
 import { TxEntity404 } from '../../components/entities/TxEntity404'
 import { routes } from '../../config/routes'
-import { getHrefForType } from '../../lib/utils'
+import { getHrefForType, getTitle } from '../../lib/utils'
+import { Layout } from '../../components/Layout'
 
 const typeToComponent = {
   contract: ContractForEntity,
@@ -30,22 +31,35 @@ const typeToComponent = {
 
 export default function ViewTx() {
   const router = useRouter()
-  const tx = useEntity(router.query.id as string)
+  const id = (router.query.id || '') as string
+  const tx = useEntity(id)
+
+  const title = getTitle('Transaction', id, 6)
+  const description = `View details for transaction ${id}`
+  const path = routes.tx.view.replace('[id]', id)
 
   // Sometimes things in transaction list like 'allowancePost' actually point to an address,
   // to silenty recover from the error we can redirect to the correct entity view.
   // All non tx entity types will return a route, otherwise this will be undefined.
   const nonTxRoute = routes[tx.data?.type]
   if (nonTxRoute) {
-    const href = getHrefForType(tx.data?.type, router.query.id as string)
+    const href = getHrefForType(tx.data?.type, id)
     router.replace(href)
   }
 
   if (tx.data) {
     const EntityComponent = typeToComponent[tx.data?.type] || TxEntity404
 
-    return <EntityComponent entity={tx.data} />
+    return (
+      <Layout title={title} description={description} path={path}>
+        <EntityComponent entity={tx.data} />
+      </Layout>
+    )
   }
 
-  return <TxEntitySkeleton />
+  return (
+    <Layout title={title} description={description} path={path}>
+      <TxEntitySkeleton />
+    </Layout>
+  )
 }

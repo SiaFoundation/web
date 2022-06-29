@@ -16,3 +16,10 @@ export function getHrefForType(type: string, value: string) {
     return undefined
   }
 }
+
+export function getTitle(title: string, id: string, limit?: number) {
+  if (id) {
+    return `${title} ${id.slice(0, limit)}`
+  }
+  return `${title}`
+}

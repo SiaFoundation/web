@@ -61,6 +61,7 @@ export * from './site/ContentProject'
 export * from './site/AnimatedPanel'
 export * from './site/Callout'
 export * from './site/Links'
+export * from './site/PageHead'
 
 export * from './hooks/useTheme'
 export * from './hooks/usePullTop'
