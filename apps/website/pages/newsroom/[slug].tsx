@@ -12,7 +12,7 @@ import { MDXRemote } from 'next-mdx-remote'
 import { format } from 'date-fns'
 import { Layout } from '../../components/Layout'
 import { GetNewsPost, getNewsPost, newsDirectory } from '../../content/news'
-import { getStats, Stats } from '../../content/stats'
+import { getStats } from '../../content/stats'
 import { sitemap } from '../../config/site'
 import { textContent } from '../../lib/utils'
 import backgroundImage from '../../assets/backgrounds/nate-waterfall.png'
@@ -21,13 +21,12 @@ import previewImage from '../../assets/previews/nate-waterfall.png'
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
 
-type Props = GetNewsPost & { stats: Stats }
+type Props = GetNewsPost
 
 function NewsroomPost({
   post: { title, subtitle, location, date, source, slug },
   prev,
   next,
-  stats,
 }: Props) {
   return (
     <Layout
@@ -40,7 +39,6 @@ function NewsroomPost({
           <SiteHeading size="64" title={title} description={subtitle} />
         </Section>
       }
-      stats={stats}
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
@@ -91,7 +89,9 @@ async function getStaticProps({ params: { slug } }) {
   return {
     props: {
       ...props,
-      stats,
+      fallback: {
+        stats,
+      },
     },
   }
 }

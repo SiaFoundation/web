@@ -61,7 +61,7 @@ const description =
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-function Developers({ technical, stats }: Props) {
+function Developers({ technical }: Props) {
   return (
     <Layout
       title={title}
@@ -72,7 +72,6 @@ function Developers({ technical, stats }: Props) {
           <SiteHeading size="64" title={title} description={description} />
         </Section>
       }
-      stats={stats}
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
@@ -371,8 +370,10 @@ export async function getStaticProps() {
   const technical = getArticles(['technical'], 8)
 
   const props = {
-    stats,
     technical,
+    fallback: {
+      stats,
+    },
   }
 
   return {

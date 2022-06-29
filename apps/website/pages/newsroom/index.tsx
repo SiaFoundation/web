@@ -7,7 +7,7 @@ import {
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { sitemap } from '../../config/site'
-import { getStats, Stats } from '../../content/stats'
+import { getStats } from '../../content/stats'
 import backgroundImage from '../../assets/backgrounds/steps.png'
 import previewImage from '../../assets/previews/steps.png'
 import { generateRssNewsFeed } from '../../content/rss'
@@ -18,16 +18,11 @@ import { getFeed } from '../../content/feed'
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
 
-type Props = {
-  stats: Stats
-  posts: ContentItemProps[]
-}
-
 const title = 'Newsroom'
 const description =
   'News from around the ecosystem and official Sia Foundation press releases.'
 
-function Newsroom({ stats }: Props) {
+function Newsroom() {
   const router = useRouter()
   const filter = router.query.news
   const route = filter ? `/api/news?news=${filter}` : '/api/news'
@@ -56,7 +51,6 @@ function Newsroom({ stats }: Props) {
           />
         </Section>
       }
-      stats={stats}
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
@@ -81,9 +75,9 @@ export async function getStaticProps() {
 
   return {
     props: {
-      stats,
       fallback: {
         '/api/news': posts,
+        '/api/stats': stats,
       },
     },
   }

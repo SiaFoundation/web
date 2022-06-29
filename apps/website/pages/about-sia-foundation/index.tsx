@@ -37,7 +37,7 @@ const description =
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-function Foundation({ stats, team, newsPosts, reports }: Props) {
+function Foundation({ team, newsPosts, reports }: Props) {
   return (
     <Layout
       title={title}
@@ -48,7 +48,6 @@ function Foundation({ stats, team, newsPosts, reports }: Props) {
           <SiteHeading size="64" title={title} description={description} />
         </Section>
       }
-      stats={stats}
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
@@ -240,10 +239,12 @@ export async function getStaticProps() {
 
   return {
     props: {
-      stats,
       team,
       newsPosts,
       reports,
+      fallback: {
+        stats,
+      },
     },
     revalidate: getDaysInSeconds(1),
   }
