@@ -372,7 +372,7 @@ export async function getStaticProps() {
   const props = {
     technical,
     fallback: {
-      stats,
+      '/api/stats': stats,
     },
   }
 

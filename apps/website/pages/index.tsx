@@ -298,7 +298,7 @@ export async function getServerSideProps({ req }) {
       featured,
       seenLetter,
       fallback: {
-        stats,
+        '/api/stats': stats,
       },
     },
   }

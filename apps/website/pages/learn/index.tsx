@@ -346,7 +346,7 @@ export async function getStaticProps() {
   return {
     props: {
       fallback: {
-        stats,
+        '/api/stats': stats,
       },
     },
     revalidate: getDaysInSeconds(1),
