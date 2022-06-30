@@ -53,9 +53,7 @@ export async function getServerSideProps({ params }) {
     }
   } catch (e) {
     return {
-      props: {
-        fallback: {},
-      },
+      props: {},
     }
   }
 }

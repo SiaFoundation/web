@@ -62,6 +62,8 @@ export * from './site/AnimatedPanel'
 export * from './site/Callout'
 export * from './site/Links'
 export * from './site/PageHead'
+export * from './site/NextApp'
+export * from './site/NextDocument'
 
 export * from './hooks/useTheme'
 export * from './hooks/usePullTop'
