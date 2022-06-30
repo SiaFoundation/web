@@ -90,7 +90,7 @@ async function getStaticProps({ params: { slug } }) {
     props: {
       ...props,
       fallback: {
-        stats,
+        '/api/stats': stats,
       },
     },
   }

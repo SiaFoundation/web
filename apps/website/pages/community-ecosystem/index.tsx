@@ -160,7 +160,7 @@ export async function getStaticProps() {
     props: {
       blogs,
       fallback: {
-        stats,
+        '/api/stats': stats,
       },
     },
   }

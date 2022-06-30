@@ -243,7 +243,7 @@ export async function getStaticProps() {
       newsPosts,
       reports,
       fallback: {
-        stats,
+        '/api/stats': stats,
       },
     },
     revalidate: getDaysInSeconds(1),
