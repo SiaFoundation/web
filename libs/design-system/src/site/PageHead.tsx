@@ -4,6 +4,7 @@ import Script from 'next/script'
 
 type Props = {
   appName: string
+  appLink: string
   title: string
   description: string
   image: string
@@ -15,6 +16,7 @@ type Props = {
 
 export function PageHead({
   appName,
+  appLink,
   title,
   description,
   image,
@@ -69,8 +71,8 @@ export function PageHead({
         <meta name="twitter:site" content={webLinks.twitterHandle} />
 
         {/* Open Graph */}
-        <meta property="og:url" content={`${webLinks.website}${path}`} />
-        <meta property="og:image" content={`${webLinks.website}${image}`} />
+        <meta property="og:url" content={`${appLink}${path}`} />
+        <meta property="og:image" content={`${appLink}${image}`} />
         <meta property="og:site_name" content={appName} />
         <meta property="og:title" content={fullTitle} />
         <meta property="og:description" content={description} />

@@ -47,6 +47,7 @@ export function Layout({ title, description, path, children }: Props) {
       }}
     >
       <PageHead
+        appLink={webLinks.explore}
         appName={appName}
         title={title}
         description={description}
