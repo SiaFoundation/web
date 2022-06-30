@@ -1,4 +1,4 @@
-import { PageHead as DsPageHead } from '@siafoundation/design-system'
+import { PageHead as DsPageHead, webLinks } from '@siafoundation/design-system'
 import { appName, newsFeedName } from '../config/app'
 import { sitemap } from '../config/site'
 
@@ -15,6 +15,7 @@ type Props = {
 export function PageHead({ title, description, image, date, path }: Props) {
   return (
     <DsPageHead
+      appLink={webLinks.website}
       appName={appName}
       title={title}
       description={description}
