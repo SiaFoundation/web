@@ -2,14 +2,18 @@ import useSWR from 'swr'
 import axios from 'axios'
 import { apiBase } from '../config'
 
-const url = `${apiBase}/balance-track`
+  const url = `${apiBase}/balance-track`
+
+function getBalanceHistoryKey(address?: string) {
+  return address ? `${url}/${address}` : null
+}
 
 type Point = {
   timestamp: number
   value: number
 }
 
-export type ExplorerBalanceHistory = {
+export type NavigatorBalanceHistory = {
   scDataBool: boolean
   scJson: Point[]
   scUsdJson: Point[]
@@ -20,8 +24,8 @@ export type ExplorerBalanceHistory = {
 }
 
 export function useBalanceHistory(address?: string) {
-  return useSWR<ExplorerBalanceHistory>(
-    address ? ['balance', address] : null,
+  return useSWR<NavigatorBalanceHistory>(
+    getBalanceHistoryKey(address),
     async () => {
       const response = await axios(url, {
         method: 'post',

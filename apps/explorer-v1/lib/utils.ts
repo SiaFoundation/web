@@ -17,7 +17,7 @@ export function getHrefForType(type: string, value: string) {
   }
 }
 
-export function getTitle(title: string, id: string, limit?: number) {
+export function getTitleId(title: string, id: string, limit?: number) {
   if (id) {
     return `${title} ${id.slice(0, limit)}`
   }

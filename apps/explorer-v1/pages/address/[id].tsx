@@ -1,19 +1,19 @@
-import { useEntity } from '../../hooks/useEntity'
+import { fetchEntity, getEntityKey, useEntity } from '../../hooks/useEntity'
 import { useRouter } from 'next/router'
 import { AddressEntity } from '../../components/entities/AddressEntity'
 import { AddressEntitySkeleton } from '../../components/entities/AddressEntitySkeleton'
 import { Entity404 } from '../../components/entities/Entity404'
 import { routes } from '../../config/routes'
 import { Layout } from '../../components/Layout'
-import { getTitle } from '../../lib/utils'
+import { getTitleId } from '../../lib/utils'
 
 export default function ViewAddress() {
   const router = useRouter()
   const id = (router.query.id || '') as string
   const entity = useEntity(id)
 
-  const title = getTitle('Address', id, 6)
-  const description = `View details for address ${id}`
+  const title = getTitleId('Address', id, 6)
+  const description = getTitleId('View details for address', id, 6)
   const path = routes.address.view.replace('[id]', id)
 
   if (entity.data?.type === 'address') {
@@ -37,4 +37,25 @@ export default function ViewAddress() {
       <AddressEntitySkeleton />
     </Layout>
   )
+}
+
+export async function getServerSideProps({ params }) {
+  try {
+    const id: string = params.id
+    const entity = await fetchEntity(id)
+
+    return {
+      props: {
+        fallback: {
+          [getEntityKey(id)]: entity,
+        },
+      },
+    }
+  } catch (e) {
+    return {
+      props: {
+        fallback: {},
+      },
+    }
+  }
 }

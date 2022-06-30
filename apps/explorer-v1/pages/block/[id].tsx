@@ -1,4 +1,4 @@
-import { useEntity } from '../../hooks/useEntity'
+import { fetchEntity, getEntityKey, useEntity } from '../../hooks/useEntity'
 import { useRouter } from 'next/router'
 import { BlockEntity } from '../../components/entities/BlockEntity'
 import { BlockEntitySkeleton } from '../../components/entities/BlockEntitySkeleton'
@@ -6,16 +6,16 @@ import { Entity404 } from '../../components/entities/Entity404'
 import { routes } from '../../config/routes'
 import { Layout } from '../../components/Layout'
 import { humanNumber } from '@siafoundation/sia-js'
-import { getTitle } from '../../lib/utils'
+import { getTitleId } from '../../lib/utils'
 
 export default function ViewBlock() {
   const router = useRouter()
   const id = (router.query.id || '') as string
   const entity = useEntity(id)
 
-  const block = humanNumber(id)
-  const title = getTitle('Block', block)
-  const description = `View details for block ${block}`
+  const block = id && humanNumber(id)
+  const title = getTitleId('Block', block)
+  const description = getTitleId('View details for block', block)
   const path = routes.block.view.replace('[id]', id)
 
   if (entity.data?.type === 'block') {
@@ -39,4 +39,25 @@ export default function ViewBlock() {
       <BlockEntitySkeleton />
     </Layout>
   )
+}
+
+export async function getServerSideProps({ params }) {
+  try {
+    const id: string = params.id
+    const entity = await fetchEntity(id)
+
+    return {
+      props: {
+        fallback: {
+          [getEntityKey(id)]: entity,
+        },
+      },
+    }
+  } catch (e) {
+    return {
+      props: {
+        fallback: {},
+      },
+    }
+  }
 }
