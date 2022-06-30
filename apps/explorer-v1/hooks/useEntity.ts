@@ -4,25 +4,27 @@ import { Entity } from '../config/types'
 
 const url = `${apiBase}/hash/`
 
-export function useEntity(hash: string) {
-  return useSWR<Entity>(
-    hash,
-    async () => {
-      const response = await fetch(url + hash)
-      const data = await response.json()
-      if (data?.length) {
-        return {
-          type: data[0].Type,
-          data,
-        }
-      }
-      return {
-        type: 'error',
-        data: [],
-      }
-    },
-    {
-      dedupingInterval: 30_000,
+export function getEntityKey(hash: string) {
+  return url + hash
+}
+
+export async function fetchEntity(hash: string): Promise<Entity> {
+  const response = await fetch(getEntityKey(hash))
+  const data = await response.json()
+  if (data?.length) {
+    return {
+      type: data[0].Type,
+      data,
     }
-  )
+  }
+  return {
+    type: 'error',
+    data: [],
+  }
+}
+
+export function useEntity(hash: string) {
+  return useSWR<Entity>(getEntityKey(hash), () => fetchEntity(hash), {
+    dedupingInterval: 30_000,
+  })
 }

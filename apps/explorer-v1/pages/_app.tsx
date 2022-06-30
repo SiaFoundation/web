@@ -1,12 +1,15 @@
 import { ThemeProvider, Toaster } from '@siafoundation/design-system'
 import { AppProps } from 'next/app'
+import { SWRConfig } from 'swr'
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider ssr>
-      <Toaster />
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <SWRConfig value={{ fallback: pageProps.fallback }}>
+      <ThemeProvider ssr>
+        <Toaster />
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </SWRConfig>
   )
 }
 

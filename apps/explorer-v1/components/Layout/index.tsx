@@ -22,10 +22,12 @@ import {
 } from '@siafoundation/design-system'
 import { routes } from '../../config/routes'
 import backgroundImage from '../../assets/jungle.png'
+import previewImage from '../../assets/jungle-preview.png'
 import { Search } from './Search'
 import { appName } from '../../config'
 
 const backgroundImageProps = getImageProps(backgroundImage)
+const previewImageProps = getImageProps(previewImage)
 
 type Props = {
   title: string
@@ -49,7 +51,7 @@ export function Layout({ title, description, path, children }: Props) {
         title={title}
         description={description}
         path={path}
-        image={backgroundImageProps.src}
+        image={previewImageProps.src}
       />
       <ScrollArea id="main-scroll">
         <Box

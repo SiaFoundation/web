@@ -1,19 +1,19 @@
-import { useEntity } from '../../hooks/useEntity'
+import { fetchEntity, getEntityKey, useEntity } from '../../hooks/useEntity'
 import { useRouter } from 'next/router'
 import { OutputEntity } from '../../components/entities/OutputEntity'
 import { OutputEntitySkeleton } from '../../components/entities/OutputEntitySkeleton'
 import { Entity404 } from '../../components/entities/Entity404'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
-import { getTitle } from '../../lib/utils'
+import { getTitleId } from '../../lib/utils'
 
 export default function ViewOutput() {
   const router = useRouter()
   const id = (router.query.id || '') as string
   const entity = useEntity(id)
 
-  const title = getTitle('Output', id, 6)
-  const description = `View details for output ${id}`
+  const title = getTitleId('Output', id, 6)
+  const description = getTitleId('View details for output', id, 6)
   const path = routes.output.view.replace('[id]', id)
 
   if (entity.data?.type === 'output') {
@@ -37,4 +37,25 @@ export default function ViewOutput() {
       <OutputEntitySkeleton />
     </Layout>
   )
+}
+
+export async function getServerSideProps({ params }) {
+  try {
+    const id: string = params.id
+    const entity = await fetchEntity(id)
+
+    return {
+      props: {
+        fallback: {
+          [getEntityKey(id)]: entity,
+        },
+      },
+    }
+  } catch (e) {
+    return {
+      props: {
+        fallback: {},
+      },
+    }
+  }
 }
