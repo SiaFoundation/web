@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.22.1](https://github.com/SiaFoundation/web/compare/website-0.22.0...website-0.22.1) (2022-06-30)
+
+
+### Bug Fixes
+
+* ssr prefetching ([4bb9c79](https://github.com/SiaFoundation/web/commit/4bb9c79ff20229085143d807aed7ca1b1e9642d6))
+
+
+
 # [0.22.0](https://github.com/SiaFoundation/web/compare/website-0.21.1...website-0.22.0) (2022-06-29)
 
 
