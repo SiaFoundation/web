@@ -22,7 +22,7 @@ export const Container = styled('div', {
         maxWidth: '1145px',
       },
       '4': {
-        maxWidth: 'none',
+        maxWidth: '1920px',
       },
       flush: {
         maxWidth: 'none',
