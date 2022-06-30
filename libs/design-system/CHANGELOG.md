@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.30.1](https://github.com/SiaFoundation/web/compare/design-system-0.30.0...design-system-0.30.1) (2022-06-30)
+
+
+### Bug Fixes
+
+* container 4 max width ([1ab3606](https://github.com/SiaFoundation/web/commit/1ab360676a0079ad3dd5c8145fea2a62fec6f75a))
+
+
+
 # [0.30.0](https://github.com/SiaFoundation/web/compare/design-system-0.29.0...design-system-0.30.0) (2022-06-29)
 
 
