@@ -33,10 +33,6 @@ export async function getServerSideProps() {
       },
     }
   } catch (e) {
-    return {
-      props: {
-        fallback: {},
-      },
-    }
+    return { props: {} }
   }
 }

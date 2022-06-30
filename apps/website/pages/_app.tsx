@@ -1,18 +1,3 @@
-import { MDXProvider } from '@mdx-js/react'
-import { ThemeProvider } from '@siafoundation/design-system'
-import { SWRConfig } from 'swr'
-import { components } from '../config/mdx'
+import { NextApp } from '@siafoundation/design-system'
 
-function App({ Component, pageProps }) {
-  return (
-    <SWRConfig value={{ fallback: pageProps.fallback }}>
-      <MDXProvider components={components}>
-        <ThemeProvider ssr>
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </MDXProvider>
-    </SWRConfig>
-  )
-}
-
-export default App
+export default NextApp
