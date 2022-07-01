@@ -1,76 +1,50 @@
 {
-  "sourceRoot": "apps/siad/src",
+  "sourceRoot": "apps/siad",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/web:webpack",
+      "executor": "@nrwl/next:build",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "compiler": "babel",
+        "root": "apps/siad",
         "outputPath": "dist/apps/siad",
-        "index": "apps/siad/src/index.html",
-        "baseHref": "/",
-        "main": "apps/siad/src/main.tsx",
-        "polyfills": "apps/siad/src/polyfills.ts",
-        "tsConfig": "apps/siad/tsconfig.app.json",
         "assets": [
-          {
-            "glob": "**/*",
-            "input": "apps/siad/src/public/",
-            "output": "/"
-          },
           {
             "glob": "**/*",
             "input": "libs/design-system/src/public/",
             "output": "/"
           }
-        ],
-        "styles": [],
-        "scripts": [],
-        "webpackConfig": "@nrwl/react/plugins/webpack"
+        ]
       },
       "configurations": {
-        "production": {
-          "fileReplacements": [
-            {
-              "replace": "apps/siad/src/environments/environment.ts",
-              "with": "apps/siad/src/environments/environment.prod.ts"
-            }
-          ],
-          "optimization": true,
-          "outputHashing": "all",
-          "sourceMap": false,
-          "namedChunks": false,
-          "extractLicenses": true,
-          "vendorChunk": false
-        },
-        "development": {}
+        "development": {},
+        "production": {}
       }
     },
     "serve": {
-      "executor": "@nrwl/web:dev-server",
+      "executor": "@nrwl/next:server",
+      "defaultConfiguration": "development",
       "options": {
         "buildTarget": "siad:build",
-        "hmr": true,
-        "proxyConfig": "apps/siad/proxy.conf.json"
+        "port": 3003,
+        "dev": true
       },
       "configurations": {
+        "development": {
+          "buildTarget": "siad:build:development",
+          "dev": true
+        },
         "production": {
           "buildTarget": "siad:build:production",
-          "hmr": false
-        },
-        "development": {
-          "buildTarget": "siad:build:development"
+          "dev": false
         }
-      },
-      "defaultConfiguration": "development"
+      }
     },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+    "export": {
+      "executor": "@nrwl/next:export",
       "options": {
-        "lintFilePatterns": ["apps/siad/**/*.{ts,tsx,js,jsx}"]
+        "buildTarget": "siad:build:production"
       }
     },
     "test": {
@@ -79,6 +53,13 @@
       "options": {
         "jestConfig": "apps/siad/jest.config.ts",
         "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/siad/**/*.{ts,tsx,js,jsx}"]
       }
     }
   },
