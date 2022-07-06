@@ -2,9 +2,10 @@ const Parser = require('rss-parser')
 const fs = require('fs')
 const path = require('path')
 const { format } = require('date-fns')
+const { getPath } = require('apps/website/config/app')
 
 const feedFilesDirectory = 'feeds'
-const articlesFilePath = 'apps/website/content/articles/articles.json'
+const articlesFilePath = getPath('content/articles/articles.json')
 
 async function getFeed(feedFile) {
   const feedData = fs.readFileSync(feedFile, 'utf-8')

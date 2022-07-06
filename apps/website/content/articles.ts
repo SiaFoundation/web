@@ -1,5 +1,5 @@
-import { addNewTab } from '../../lib/utils'
-import articles from './articles.json'
+import { addNewTab } from '../lib/utils'
+import articles from './articles/articles.json'
 
 type Tag = 'sia-featured' | 'ecosystem-featured' | 'ecosystem-all' | 'technical'
 

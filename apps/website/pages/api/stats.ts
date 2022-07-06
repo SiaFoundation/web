@@ -3,7 +3,7 @@ import { getStats } from '../../content/stats'
 let stats = null
 
 export default async function handler(req, res) {
-  res.setHeader('Cache-Control', 's-maxage=86400')
+  res.setHeader('Cache-Control', 's-maxage=120')
   if (!stats) {
     stats = await getStats()
   }
