@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.22.4](https://github.com/SiaFoundation/web/compare/website-0.22.3...website-0.22.4) (2022-07-06)
+
+
+### Bug Fixes
+
+* add revalidate to newsroom, add back mdx component config ([b52344f](https://github.com/SiaFoundation/web/commit/b52344f605dd7676a0ed137f06ece68b36903203))
+
+
+
 ## [0.22.3](https://github.com/SiaFoundation/web/compare/website-0.22.2...website-0.22.3) (2022-07-06)
 
 
