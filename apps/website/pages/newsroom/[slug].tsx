@@ -17,6 +17,7 @@ import { sitemap } from '../../config/site'
 import { textContent } from '../../lib/utils'
 import backgroundImage from '../../assets/backgrounds/nate-waterfall.png'
 import previewImage from '../../assets/previews/nate-waterfall.png'
+import { components } from '../../config/mdx'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -47,7 +48,7 @@ function NewsroomPost({
           <Text weight="bold" size="16">
             {location} - {format(new Date(date), 'PP')}
           </Text>
-          <MDXRemote {...source} />
+          <MDXRemote {...source} components={components} />
         </Box>
         {(prev || next) && (
           <Grid

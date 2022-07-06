@@ -1,5 +1,3 @@
-import path from 'path'
-import fs from 'fs'
 import {
   ContentGallery,
   ContentItemProps,
@@ -16,6 +14,7 @@ import { generateRssNewsFeed } from '../../content/rss'
 import useSWR from 'swr'
 import { useRouter } from 'next/router'
 import { getFeed } from '../../content/feed'
+import { getDaysInSeconds } from '../../lib/time'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -82,6 +81,7 @@ export async function getStaticProps() {
         '/api/stats': stats,
       },
     },
+    revalidate: getDaysInSeconds(1),
   }
 }
 
