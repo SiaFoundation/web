@@ -2,9 +2,8 @@ module.exports = {
   apps: [
     {
       name: 'sia-website',
-      cwd: 'dist/apps/website/',
-      script: 'npm',
-      args: 'start',
+      script: 'nx',
+      args: 'run website:serve:production',
       env: {
         PORT: 3001,
       },
@@ -15,9 +14,8 @@ module.exports = {
     },
     {
       name: 'sia-explorer-v1',
-      cwd: 'dist/apps/explorer-v1/',
-      script: 'npm',
-      args: 'start',
+      script: 'nx',
+      args: 'run explorer-v1:serve:production',
       env: {
         PORT: 3003,
       },
@@ -25,8 +23,8 @@ module.exports = {
     {
       name: 'sia-design',
       cwd: 'dist/apps/design-site/',
-      script: 'npm',
-      args: 'start',
+      script: 'nx',
+      args: 'run design-site:serve:production',
       env: {
         PORT: 3004,
       },

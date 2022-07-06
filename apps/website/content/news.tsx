@@ -6,10 +6,10 @@ import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { sitemap } from '../config/site'
 import { components } from '../config/mdx'
-import { baseContentPath } from '../config/app'
 import { pick } from 'lodash'
+import { getPath } from '../config/app'
 
-export const newsDirectory = path.join(baseContentPath, 'news')
+export const newsDirectory = getPath('content/news')
 
 export type NewsPost = {
   title: string

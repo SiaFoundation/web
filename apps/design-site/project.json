@@ -24,22 +24,21 @@
     },
     "serve": {
       "executor": "@nrwl/next:server",
+      "defaultConfiguration": "development",
       "options": {
         "buildTarget": "design-site:build",
-        "dev": true,
         "port": 3004
       },
       "configurations": {
-        "production": {
-          "buildTarget": "design-site:build:production",
-          "dev": false
-        },
         "development": {
           "buildTarget": "design-site:build:development",
           "dev": true
+        },
+        "production": {
+          "buildTarget": "design-site:build:production",
+          "dev": false
         }
-      },
-      "defaultConfiguration": "development"
+      }
     },
     "export": {
       "executor": "@nrwl/next:export",

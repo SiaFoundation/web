@@ -235,7 +235,7 @@ export async function getStaticProps() {
   const newsPosts = await getNewsPosts({
     limit: 3,
   })
-  const reports = await getReports()
+  const reports = getReports()
 
   return {
     props: {

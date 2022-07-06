@@ -27,8 +27,7 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "explorer-v1:build",
-        "port": 3003,
-        "dev": true
+        "port": 3003
       },
       "configurations": {
         "development": {
