@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.22.3](https://github.com/SiaFoundation/web/compare/website-0.22.2...website-0.22.3) (2022-07-06)
+
+
+### Bug Fixes
+
+* pm2 run nx serve, stats api cache to 2 min, refactor ([6d7660b](https://github.com/SiaFoundation/web/commit/6d7660bb3e0e163ac6df39e73d45cad218cd9eb8))
+
+
+
 ## [0.22.2](https://github.com/SiaFoundation/web/compare/website-0.22.1...website-0.22.2) (2022-06-30)
 
 
