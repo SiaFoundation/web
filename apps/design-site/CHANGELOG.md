@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.17.1](https://github.com/SiaFoundation/web/compare/design-site-0.17.0...design-site-0.17.1) (2022-07-06)
+
+
+### Bug Fixes
+
+* pm2 run nx serve, stats api cache to 2 min, refactor ([6d7660b](https://github.com/SiaFoundation/web/commit/6d7660bb3e0e163ac6df39e73d45cad218cd9eb8))
+
+
+
 # [0.17.0](https://github.com/SiaFoundation/web/compare/design-site-0.16.0...design-site-0.17.0) (2022-06-23)
 
 
