@@ -33,6 +33,8 @@ export async function getServerSideProps() {
       },
     }
   } catch (e) {
-    return { props: {} }
+    return {
+      props: {},
+    }
   }
 }
