@@ -27,8 +27,7 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "siad:build",
-        "port": 3003,
-        "dev": true
+        "port": 3005
       },
       "configurations": {
         "development": {
