@@ -3,20 +3,20 @@ import {
   getEntityTxOutputs,
   getTotalTransacted,
 } from '../../../lib/transaction'
-import { BlockRewardEntity } from '../../../config/types'
-import { ValueItemProps } from '../../Datum'
+import { NvgBlockRewardEntity } from '../../../config/navigatorTypes'
+import { DatumProps } from '../../Datum'
 import { TxEntityLayout } from '../../TxEntityLayout'
 import { EntityListItem } from '../../EntityList'
 
 type Props = {
-  entity: BlockRewardEntity
+  entity: NvgBlockRewardEntity
 }
 
 export function BlockRewardEntity({ entity }: Props) {
   const { data } = entity
 
   const values = useMemo(() => {
-    const list: ValueItemProps[] = [
+    const list: DatumProps[] = [
       {
         label: 'Total transacted',
         sc: getTotalTransacted(entity).sc,

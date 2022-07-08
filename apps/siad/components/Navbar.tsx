@@ -1,12 +1,6 @@
-import {
-  AppBar,
-  Box,
-  Container,
-  Flex,
-  Heading,
-} from '@siafoundation/design-system'
+import { AppBar } from '@siafoundation/design-system'
+import { routes } from '../config/routes'
 import { UserMenu } from './User/UserMenu'
-import { WalletSparkline } from './WalletSparkline'
 
 type Props = {
   title?: string
@@ -15,18 +9,8 @@ type Props = {
 
 export function Navbar({ title, children }: Props) {
   return (
-    <AppBar size="2" sticky border>
-      <Container size="4">
-        <Flex align="center" gap="1" justify="between">
-          {title && <Heading>{title}</Heading>}
-          <Box css={{ height: '20px', width: '100px' }}>
-            <WalletSparkline />
-          </Box>
-          <Box css={{ flex: 1 }} />
-          {children}
-          <UserMenu size="2" />
-        </Flex>
-      </Container>
+    <AppBar appName="siad" homeHref={routes.home} variant="app">
+      <UserMenu size="2" />
     </AppBar>
   )
 }

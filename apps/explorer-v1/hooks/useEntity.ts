@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 import { apiBase } from '../config'
-import { Entity } from '../config/types'
+import { Entity } from '../config/navigatorTypes'
 
 const url = `${apiBase}/hash/`
 

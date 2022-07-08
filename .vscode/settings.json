@@ -3,5 +3,6 @@
   "editor.formatOnSave": true,
   "[nginx]": {
     "editor.defaultFormatter": "ahmadalli.vscode-nginx-conf"
-  }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

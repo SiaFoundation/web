@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { SfTxEntity } from '../../../config/types'
+import { NvgSfTxEntity } from '../../../config/navigatorTypes'
 import { TxEntityLayout } from '../../TxEntityLayout'
 import {
   getEntityTxInputs,
@@ -8,7 +8,7 @@ import {
 } from '../../../lib/transaction'
 
 type Props = {
-  entity: SfTxEntity
+  entity: NvgSfTxEntity
 }
 
 export function SfTxEntity({ entity }: Props) {

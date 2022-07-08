@@ -17,9 +17,11 @@ export function UserMenu(props: Props) {
   return (
     <UserDropdownMenu
       trigger={
-        <Button {...props} css={{ color: all ? '$hiContrast' : '$red10' }}>
-          {all ? <Menu16 /> : <Warning16 />}
-        </Button>
+        !all && (
+          <Button {...props} css={{ color: '$red10' }}>
+            <Warning16 />
+          </Button>
+        )
       }
     >
       <StatusMenuGroup />

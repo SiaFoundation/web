@@ -1,26 +1,29 @@
-import { Avatar, Box, NextLink, Tooltip } from '@siafoundation/design-system'
-import { useMemo } from 'react'
 import {
-  EntityType,
+  Avatar,
+  Box,
+  NextLink,
+  Tooltip,
+  EntityTypes,
   getEntityTypeInitials,
   getEntityTypeLabel,
-} from '../config/types'
-import { getHrefForType } from '../lib/utils'
+} from '@siafoundation/design-system'
 
 type Props = {
   initials?: string
-  type?: EntityType
-  value?: string
+  type?: EntityTypes
+  label?: string
+  href?: string
+  shape?: 'square' | 'circle'
 }
 
-export function EntityAvatar({ initials, type, value }: Props) {
-  const href = useMemo(() => getHrefForType(type, value), [type, value])
+export function EntityAvatar({ type, label, initials, href, shape }: Props) {
   const avatarEl = (
     <Avatar
       interactive={!!href}
       fallback={initials || getEntityTypeInitials(type)}
       shape={
-        !type || type === 'address' || type === 'block' ? 'square' : 'circle'
+        shape ||
+        (!type || type === 'address' || type === 'block' ? 'square' : 'circle')
       }
     />
   )
@@ -29,7 +32,7 @@ export function EntityAvatar({ initials, type, value }: Props) {
 
   if (type) {
     return (
-      <Tooltip content={getEntityTypeLabel(type)}>
+      <Tooltip content={label || getEntityTypeLabel(type)}>
         <Box>{el}</Box>
       </Tooltip>
     )

@@ -10,7 +10,7 @@ import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
 import { apiBase } from '../../config'
 import { getHrefForType } from '../../lib/utils'
-import { EntityType, EntityTypeInfo } from '../../config/types'
+import { NvgEntityType, NvgEntityTypeInfo } from '../../config/navigatorTypes'
 
 export function Search() {
   const router = useRouter()
@@ -21,7 +21,7 @@ export function Search() {
     },
     onSubmit: async (values, actions) => {
       const response = await fetch(`${apiBase}/hash/${values.query}`)
-      const data: [EntityTypeInfo<EntityType>] = await response.json()
+      const data: [NvgEntityTypeInfo<NvgEntityType>] = await response.json()
 
       if (!data?.length) {
         actions.setErrors({

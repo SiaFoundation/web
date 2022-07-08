@@ -6,12 +6,12 @@ import {
   IconButton,
   NextLink,
 } from '@siafoundation/design-system'
-import { EntityType, getEntityTypeLabel } from '../config/types'
+import { NvgEntityType, getNvgEntityTypeLabel } from '../config/navigatorTypes'
 import { upperFirst } from 'lodash'
 
 type Props = {
   label: string
-  type: EntityType
+  type: NvgEntityType
   value: string
   href: string
 }
@@ -30,7 +30,7 @@ export function EntityHeading({ label, type, value, href }: Props) {
       </Heading>
       <IconButton
         size="0"
-        onClick={() => copyToClipboard(value, getEntityTypeLabel(type))}
+        onClick={() => copyToClipboard(value, getNvgEntityTypeLabel(type))}
       >
         <Copy24 />
       </IconButton>

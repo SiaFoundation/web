@@ -18,3 +18,7 @@ export const routes = {
     view: '/output/[id]',
   },
 }
+
+export function getRouteHref(viewRoute: string, id: string) {
+  return viewRoute.replace('[id]', id)
+}

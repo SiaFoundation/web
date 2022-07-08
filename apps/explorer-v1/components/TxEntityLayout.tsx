@@ -6,14 +6,14 @@ import {
   Grid,
   Panel,
 } from '@siafoundation/design-system'
-import { Datum, ValueItemProps } from './Datum'
-import { EntityTx } from '../config/types'
+import { Datum, DatumProps } from './Datum'
+import { NvgEntityTx } from '../config/navigatorTypes'
 import { EntityListItem, EntityList } from './EntityList'
 import { TxEntityHeader } from './TxEntityHeader'
 
 type Props = {
-  entity: EntityTx
-  values: ValueItemProps[]
+  entity: NvgEntityTx
+  values: DatumProps[]
   details?: React.ReactNode
   inputs: EntityListItem[]
   outputs: EntityListItem[]

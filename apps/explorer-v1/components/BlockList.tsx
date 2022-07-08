@@ -4,17 +4,20 @@ import {
   Heading,
   NextLink,
   Text,
+  getEntityTypeInitials,
+  getEntityTypeLabel,
+  EntityTypes,
 } from '@siafoundation/design-system'
 import { humanNumber } from '@siafoundation/sia-js'
 import { formatDistance } from 'date-fns'
-import { routes } from '../config/routes'
 import { EntityAvatar } from './EntityAvatar'
-import { EntityListSkeleton } from './EntityListSkeleton'
+import { EntityListSkeleton } from './EntityList'
 
 type BlockListItem = {
   miningPool: string
   timestamp: number
   height: number
+  href: string
 }
 
 type Props = {
@@ -51,15 +54,16 @@ export function BlockList({ title, blocks }: Props) {
                 borderTop: '1px solid $brandGray3',
               }}
             >
-              <EntityAvatar type="block" value={String(block.height)} />
+              <EntityAvatar
+                label={getEntityTypeLabel(EntityTypes.block)}
+                initials={getEntityTypeInitials(EntityTypes.block)}
+                href={block.href}
+              />
               <Flex direction="column" gap="1" justify="center">
                 <Text color="subtle">
                   <Text weight="bold">
                     <NextLink
-                      href={routes.block.view.replace(
-                        '[id]',
-                        String(block.height)
-                      )}
+                      href={block.href}
                       css={{ textDecoration: 'none' }}
                     >
                       {humanNumber(block.height)}

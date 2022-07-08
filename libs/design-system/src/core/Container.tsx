@@ -24,6 +24,9 @@ export const Container = styled('div', {
       '4': {
         maxWidth: '1920px',
       },
+      full: {
+        maxWidth: 'none',
+      },
       flush: {
         maxWidth: 'none',
         padding: '0',

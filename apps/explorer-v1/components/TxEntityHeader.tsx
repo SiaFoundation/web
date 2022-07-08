@@ -1,12 +1,12 @@
 import { Badge, Box, Flex, Text, Tooltip } from '@siafoundation/design-system'
 import { humanDate, humanNumber } from '@siafoundation/sia-js'
 import { useStatus } from '../hooks/useStatus'
-import { EntityTx, getEntityTypeLabel } from '../config/types'
+import { NvgEntityTx, getNvgEntityTypeLabel } from '../config/navigatorTypes'
 import { routes } from '../config/routes'
 import { EntityHeading } from './EntityHeading'
 
 type Props = {
-  entity: EntityTx
+  entity: NvgEntityTx
 }
 
 export function TxEntityHeader({ entity }: Props) {
@@ -20,7 +20,7 @@ export function TxEntityHeader({ entity }: Props) {
   return (
     <Flex justify="between" align="center" wrap="wrap" gapY="2">
       <EntityHeading
-        label={getEntityTypeLabel(entity.type)}
+        label={getNvgEntityTypeLabel(entity.type)}
         type={entity.type}
         value={txHash}
         href={routes.tx.view.replace('[id]', txHash)}

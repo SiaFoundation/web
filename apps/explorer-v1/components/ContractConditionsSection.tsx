@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Datum, ValueItemProps } from './Datum'
+import { Datum, DatumProps } from './Datum'
 import { getContractConditions } from '../lib/transaction'
-import { ContractEntity, RevisionEntity } from '../config/types'
+import { NvgContractEntity, NvgRevisionEntity } from '../config/navigatorTypes'
 import {
   Accordion,
   AccordionContent,
@@ -13,13 +13,13 @@ import {
 } from '@siafoundation/design-system'
 
 type Props = {
-  entity: ContractEntity | RevisionEntity
+  entity: NvgContractEntity | NvgRevisionEntity
 }
 
 export function ContractConditionsSection({ entity }: Props) {
   const conditions = getContractConditions(entity)
 
-  const success: ValueItemProps[] = [
+  const success: DatumProps[] = [
     {
       label: 'Returned allowance',
       sc: BigInt(conditions.success.returnedAllowance),
@@ -30,7 +30,7 @@ export function ContractConditionsSection({ entity }: Props) {
     },
   ]
 
-  const failure: ValueItemProps[] = [
+  const failure: DatumProps[] = [
     {
       label: 'Returned allowance',
       sc: BigInt(conditions.fail.returnedAllowance),

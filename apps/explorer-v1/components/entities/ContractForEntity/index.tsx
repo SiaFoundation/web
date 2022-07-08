@@ -1,15 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
 import { humanBytes, humanNumber, toSiacoins } from '@siafoundation/sia-js'
 import { useMemo } from 'react'
-import { ValueItemProps } from '../../Datum'
+import { DatumProps } from '../../Datum'
 import { getContractStatus } from '../../../lib/transaction'
-import { ContractEntity } from '../../../config/types'
+import { NvgContractEntity } from '../../../config/navigatorTypes'
 import { EntityListItem } from '../../EntityList'
 import { TxEntityLayout } from '../../TxEntityLayout'
 import { ContractConditionsSection } from '../../ContractConditionsSection'
 
 type Props = {
-  entity: ContractEntity
+  entity: NvgContractEntity
 }
 
 export function ContractForEntity({ entity }: Props) {
@@ -29,7 +29,7 @@ export function ContractForEntity({ entity }: Props) {
       .multipliedBy(100)
       .toFixed(2) // This avoid some errors on contracts formed by `us`
 
-    const list: ValueItemProps[] = [
+    const list: DatumProps[] = [
       {
         label: 'Status',
         value: getContractStatus(entity),

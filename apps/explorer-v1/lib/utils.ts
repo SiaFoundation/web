@@ -1,12 +1,12 @@
 import { humanNumber, toSiacoins } from '@siafoundation/sia-js'
 import { routes } from '../config/routes'
-import { entityTypes } from '../config/types'
+import { nvgEntityTypes } from '../config/navigatorTypes'
 
 export function formatSc(num: number) {
   return humanNumber(toSiacoins(num), { fixed: 4, units: 'SC' })
 }
 
-const linkableTypes = entityTypes
+const linkableTypes = nvgEntityTypes
 
 export function getHrefForType(type: string, value: string) {
   if (linkableTypes.includes(type)) {
