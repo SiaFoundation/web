@@ -7,10 +7,10 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
+  EntityList,
 } from '@siafoundation/design-system'
 import { times } from 'lodash'
 import { DatumSkeleton } from '../../DatumSkeleton'
-import { EntityList } from '../../EntityList'
 
 export function AddressEntitySkeleton() {
   return (

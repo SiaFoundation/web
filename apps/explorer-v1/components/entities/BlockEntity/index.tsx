@@ -9,6 +9,7 @@ import {
   Flex,
   Heading,
   Tooltip,
+  EntityList,
 } from '@siafoundation/design-system'
 import {
   humanBytes,
@@ -22,11 +23,11 @@ import {
   getNvgEntityTypeLabel,
   NvgBlockEntity,
 } from '../../../config/navigatorTypes'
-import { EntityList } from '../../EntityList'
 import { useMemo } from 'react'
 import { routes } from '../../../config/routes'
 import { EntityHeading } from '../../EntityHeading'
 import { getHrefForType } from '../../../lib/utils'
+import BigNumber from 'bignumber.js'
 
 type Props = {
   entity: NvgBlockEntity
@@ -71,7 +72,7 @@ export function BlockEntity({ entity }: Props) {
       },
       {
         label: 'Coins in circulation',
-        sc: BigInt(data[1].TotalCoins),
+        sc: new BigNumber(data[1].TotalCoins),
       },
     ]
     return list
@@ -89,7 +90,7 @@ export function BlockEntity({ entity }: Props) {
       },
       {
         label: 'Historic contracts cost',
-        sc: BigInt(data[1].TotalContractCost),
+        sc: new BigNumber(data[1].TotalContractCost),
       },
       {
         label: 'Historic transaction count',
@@ -119,7 +120,7 @@ export function BlockEntity({ entity }: Props) {
       },
       {
         label: 'Active contract cost',
-        sc: BigInt(data[1].ActiveContractCost),
+        sc: new BigNumber(data[1].ActiveContractCost),
       },
     ]
     return list
@@ -222,7 +223,7 @@ export function BlockEntity({ entity }: Props) {
             label: getNvgEntityTypeLabel(tx.TxType),
             initials: getNvgEntityTypeInitials(tx.TxType),
             href: getHrefForType(tx.TxType, tx.TxHash),
-            sc: BigInt(tx.TotalAmountSc),
+            sc: new BigNumber(tx.TotalAmountSc),
             sf: tx.TotalAmountSf,
           }))}
         />

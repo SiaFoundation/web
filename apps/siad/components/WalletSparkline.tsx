@@ -1,32 +1,44 @@
 import React from 'react'
-import appleStock from '@visx/mock-data/lib/mocks/appleStock'
-import { Box, ChartTimeValue } from '@siafoundation/design-system'
+import {
+  Box,
+  ChartTimeValue,
+  EntityListItemProps,
+} from '@siafoundation/design-system'
+import { humanNumber, humanSiacoin } from '@siafoundation/sia-js'
 
-const sc = appleStock.slice(400).map((val) => ({
-  timestamp: new Date(val.date).getTime(),
-  value: val.close,
-}))
+type Props = {
+  entities: EntityListItemProps[]
+}
 
-const sf = appleStock.slice(800, 1600).map((val) => ({
-  timestamp: new Date(val.date).getTime(),
-  value: val.close,
-}))
-
-export function WalletSparkline() {
+export function WalletSparkline({ entities }: Props) {
+  const sc = entities
+    .map((t) => ({
+      timestamp: t.timestamp,
+      value: Number(t.sc),
+    }))
+    .sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1))
+  const sf = entities
+    .map((t) => ({
+      timestamp: t.timestamp,
+      value: t.sf,
+    }))
+    .sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1))
   return (
-    <Box css={{ margin: '$3 $5' }}>
+    <Box css={{ position: 'relative', margin: '$3 $5' }}>
       <ChartTimeValue
         datasets={[
           {
             name: 'SC',
             dataset: sc,
+            formatValue: (v) => humanSiacoin(v),
           },
           {
             name: 'SF',
             dataset: sf,
+            formatValue: (v) => humanNumber(v, { units: 'SF' }),
           },
         ]}
-        height={200}
+        height={300}
         hideBrush
       />
     </Box>

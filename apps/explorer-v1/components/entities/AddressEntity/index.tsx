@@ -10,6 +10,8 @@ import {
   Tooltip,
   ChartTimeValue,
   ValueSc,
+  EntityList,
+  EntityListItemProps,
 } from '@siafoundation/design-system'
 import { humanNumber } from '@siafoundation/sia-js'
 import { Datum, DatumProps } from '../../Datum'
@@ -17,9 +19,7 @@ import {
   getNvgEntityTypeInitials,
   getNvgEntityTypeLabel,
   NvgAddressEntity,
-  NvgEntityType,
 } from '../../../config/navigatorTypes'
-import { EntityList, EntityListItem } from '../../EntityList'
 import { useBalanceHistory } from '../../../hooks/useBalanceHistory'
 import { useMemo, useState } from 'react'
 import { useStatus } from '../../../hooks/useStatus'
@@ -27,6 +27,7 @@ import { routes } from '../../../config/routes'
 import { EntityHeading } from '../../EntityHeading'
 import { useUtxos } from '../../../hooks/useUtxos'
 import { getHrefForType } from '../../../lib/utils'
+import BigNumber from 'bignumber.js'
 
 type Tab = 'transactions' | 'evolution' | 'utxos'
 
@@ -52,18 +53,18 @@ export function AddressEntity({ entity }: Props) {
     const list: DatumProps[] = [
       {
         label: 'Confirmed SC',
-        sc: BigInt(data[1].balanceSc),
+        sc: new BigNumber(data[1].balanceSc),
         comment: (
           <Flex gap="1" wrap="wrap">
             <ValueSc
               tooltip="Received"
-              value={data[1].receivedSc}
+              value={new BigNumber(data[1].receivedSc)}
               variant="change"
               size="10"
             />
             <ValueSc
               tooltip="Sent"
-              value={-data[1].sentSc}
+              value={new BigNumber(-data[1].sentSc)}
               variant="change"
               size="10"
             />
@@ -72,7 +73,7 @@ export function AddressEntity({ entity }: Props) {
       },
       {
         label: 'Pending SC',
-        sc: BigInt(data[1].pendingSc),
+        sc: new BigNumber(data[1].pendingSc),
       },
       {
         label: 'Confirmed SF',
@@ -89,26 +90,26 @@ export function AddressEntity({ entity }: Props) {
   const address = data[0].MasterHash
 
   const transactions = useMemo(() => {
-    const list: EntityListItem[] = [
+    const list: EntityListItemProps[] = [
       ...data[1].unconfirmedTransactions.map((tx) => ({
         hash: tx.TxHash,
-        sc: BigInt(tx.ScValue),
+        sc: new BigNumber(tx.ScValue),
         sf: tx.SfValue,
         label: getNvgEntityTypeLabel(tx.TxType),
         initials: getNvgEntityTypeInitials(tx.TxType),
         href: getHrefForType(tx.TxType, tx.TxHash),
-        timestamp: tx.Timestamp,
+        timestamp: tx.Timestamp * 1000,
         unconfirmed: true,
       })),
       ...data[1].last100Transactions.map((tx) => ({
         hash: tx.MasterHash,
-        sc: BigInt(tx.ScChange),
+        sc: new BigNumber(tx.ScChange),
         sf: tx.SfChange,
         label: getNvgEntityTypeLabel(tx.TxType),
         initials: getNvgEntityTypeInitials(tx.TxType),
         href: getHrefForType(tx.TxType, tx.MasterHash),
         height: tx.Height,
-        timestamp: tx.Timestamp,
+        timestamp: tx.Timestamp * 1000,
       })),
     ]
     return list
@@ -200,7 +201,7 @@ export function AddressEntity({ entity }: Props) {
           <TabsContent value="utxos">
             <EntityList
               entities={utxos.data?.map((output) => ({
-                sc: BigInt(output.hastings || '0'),
+                sc: new BigNumber(output.hastings || '0'),
                 sf: output.sf,
                 hash: output.output,
                 label: getNvgEntityTypeLabel('output'),

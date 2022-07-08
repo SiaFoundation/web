@@ -23,15 +23,17 @@ export function toHastings(siacoins: BigNumber | number | string) {
  * This is copy of the HumanString function from Sia repo.
  * @param hastings amount of hastings to convert
  */
-export function toHumanReadable(
+export function humanSiacoin(
   hastings: BigNumber | number | string
 ): string | null {
   const pico = new BigNumber(1e12)
   const exp = new BigNumber(1e3)
-  const amount = new BigNumber(hastings)
+  const val = new BigNumber(hastings)
+  const amount = new BigNumber(hastings).abs()
+  const sign = val.isNegative() ? '-' : ''
 
   if (amount.dividedBy(pico).isLessThan(1)) {
-    return `${amount} H`
+    return `${sign}${amount} H`
   }
 
   const suffixes = ['pS', 'nS', 'uS', 'mS', 'SC', 'KS', 'MS', 'GS', 'TS']
@@ -42,7 +44,7 @@ export function toHumanReadable(
       .reduce((acc) => acc.multipliedBy(exp), new BigNumber(1))
     const reduced = amount.dividedBy(pico.multipliedBy(mag))
     if (reduced.isLessThan(exp) || index === suffixes.length - 1) {
-      return `${reduced.decimalPlaces(3)} ${suffixes[index]}`
+      return `${sign}${reduced.decimalPlaces(3)} ${suffixes[index]}`
     }
   }
 

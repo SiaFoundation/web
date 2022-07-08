@@ -1,10 +1,11 @@
 import {
   AnimatedPanel,
   Container,
-  EntityTypes,
   Flex,
   Grid,
   Text,
+  EntityList,
+  BlockList,
 } from '@siafoundation/design-system'
 import {
   humanDifficulty,
@@ -13,8 +14,6 @@ import {
 } from '@siafoundation/sia-js'
 import { useMemo } from 'react'
 import { SWRResponse } from 'swr'
-import { BlockList } from '../components/BlockList'
-import { EntityList } from './EntityList'
 import { HomeSkeleton } from '../components/HomeSkeleton'
 import {
   getNvgEntityTypeInitials,
@@ -168,7 +167,7 @@ export function Home() {
             title="Latest blocks"
             blocks={landing.data?.last10Blocks?.map((block) => ({
               height: block.Height,
-              timestamp: block.Timestamp,
+              timestamp: block.Timestamp * 1000,
               miningPool: block.MiningPool,
               href: routes.block.view.replace('[id]', String(block.Height)),
             }))}
@@ -181,6 +180,7 @@ export function Home() {
               label: getNvgEntityTypeLabel('ScTx'),
               initials: getNvgEntityTypeInitials('ScTx'),
               href: routes.tx.view.replace('[id]', tx.TxHash),
+              avatarShape: 'circle',
             }))}
           />
           <EntityList
@@ -191,6 +191,7 @@ export function Home() {
               label: getNvgEntityTypeLabel(tx.TxType),
               initials: getNvgEntityTypeInitials(tx.TxType),
               href: routes.tx.view.replace('[id]', tx.TxHash),
+              avatarShape: 'circle',
             }))}
           />
           <EntityList
@@ -201,6 +202,7 @@ export function Home() {
               label: getNvgEntityTypeLabel(tx.TxType),
               initials: getNvgEntityTypeInitials(tx.TxType),
               href: routes.tx.view.replace('[id]', tx.TxHash),
+              avatarShape: 'circle',
             }))}
           />
         </Grid>

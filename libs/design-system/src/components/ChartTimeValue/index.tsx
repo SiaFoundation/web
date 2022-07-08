@@ -32,7 +32,6 @@ import {
 } from '../../index'
 import { throttle } from 'lodash'
 import AreaChart from './AreaChart'
-import { humanNumber } from '@siafoundation/sia-js'
 
 const background = 'var(--colors-panel)'
 // export const background = 'transparent'
@@ -101,6 +100,10 @@ const Chart = withTooltip<ChartProps, TooltipData>(
   }: ChartProps & WithTooltipProvidedProps<TooltipData>) => {
     const [selectedDatasetName, setSelectedDatasetName] = useState<string>(
       datasets[0]?.name
+    )
+    const selectedDataset = useMemo(
+      () => datasets.find((d) => d.name === selectedDatasetName),
+      [datasets, selectedDatasetName]
     )
 
     const dataset = useMemo(() => {
@@ -182,9 +185,9 @@ const Chart = withTooltip<ChartProps, TooltipData>(
           // range: [innerHeight + margin.top, margin.top],
           range: [yMax, 0],
           domain: [
-            min(filteredDataset, getPointValue),
-            max(filteredDataset, getPointValue) > 0
-              ? max(filteredDataset, getPointValue) * 1.01
+            min(filteredDataset, getPointValue) || 0,
+            (max(filteredDataset, getPointValue) || 0) > 0
+              ? (max(filteredDataset, getPointValue) || 0) * 1.01
               : 1,
           ],
           nice: true,
@@ -228,10 +231,14 @@ const Chart = withTooltip<ChartProps, TooltipData>(
     const handleResetClick = () => {
       if (brushRef?.current) {
         const updater: UpdateBrush = (prevBrush) => {
-          const newExtent = brushRef.current.getExtent(
+          const newExtent = brushRef.current?.getExtent(
             initialBrushPosition.start,
             initialBrushPosition.end
           )
+
+          if (!newExtent) {
+            return prevBrush
+          }
 
           const newState: BaseBrushState = {
             ...prevBrush,
@@ -420,10 +427,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
               left={tooltipLeft + 12}
               style={tooltipStyles}
             >
-              {humanNumber(getPointValue(tooltipData), {
-                fixed: 4,
-                units: 'SC',
-              })}
+              {selectedDataset?.formatValue(getPointValue(tooltipData))}
             </TooltipWithBounds>
             <Tooltip
               top={innerHeight + margin.top - 14}
@@ -473,6 +477,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
 
 type Dataset = {
   name: string
+  formatValue: (n: number) => string
   dataset: Point[]
 }
 
@@ -484,7 +489,7 @@ type Props = {
 
 export function ChartTimeValue({ datasets, height, hideBrush = false }: Props) {
   return (
-    <Box css={{ height }}>
+    <Box css={{ position: 'relative', height }}>
       <ParentSize>
         {({ width, height }) => (
           <Chart

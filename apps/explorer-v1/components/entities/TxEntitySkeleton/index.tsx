@@ -6,10 +6,10 @@ import {
   Grid,
   Panel,
   Skeleton,
+  EntityList,
 } from '@siafoundation/design-system'
 import { times } from 'lodash'
 import { DatumSkeleton } from '../../DatumSkeleton'
-import { EntityList } from '../../EntityList'
 
 export function TxEntitySkeleton() {
   return (
@@ -41,14 +41,10 @@ export function TxEntitySkeleton() {
       <Container>
         <Grid columns="2" gap="2">
           <Box>
-            <Panel>
-              <EntityList title={`Inputs`} entities={undefined} />
-            </Panel>
+            <EntityList title={`Inputs`} entities={undefined} />
           </Box>
           <Box>
-            <Panel>
-              <EntityList title={`Outputs`} entities={undefined} />
-            </Panel>
+            <EntityList title={`Outputs`} entities={undefined} />
           </Box>
         </Grid>
       </Container>

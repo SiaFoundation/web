@@ -6,6 +6,7 @@ import {
   ValueSc,
   ValueCopyable,
 } from '@siafoundation/design-system'
+import BigNumber from 'bignumber.js'
 import { upperFirst } from 'lodash'
 import { NvgEntityType, getNvgEntityTypeLabel } from '../config/navigatorTypes'
 import { getHrefForType } from '../lib/utils'
@@ -17,7 +18,7 @@ export type DatumProps = {
   hash?: string
   entityType?: NvgEntityType
   entityValue?: string
-  sc?: bigint
+  sc?: BigNumber
   sf?: number
   comment?: React.ReactNode
 }

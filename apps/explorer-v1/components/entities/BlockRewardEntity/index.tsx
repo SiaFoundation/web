@@ -6,7 +6,8 @@ import {
 import { NvgBlockRewardEntity } from '../../../config/navigatorTypes'
 import { DatumProps } from '../../Datum'
 import { TxEntityLayout } from '../../TxEntityLayout'
-import { EntityListItem } from '../../EntityList'
+import { EntityListItemProps } from '@siafoundation/design-system'
+import BigNumber from 'bignumber.js'
 
 type Props = {
   entity: NvgBlockRewardEntity
@@ -26,7 +27,7 @@ export function BlockRewardEntity({ entity }: Props) {
   }, [entity])
 
   const inputs = useMemo(() => {
-    const list: EntityListItem[] = []
+    const list: EntityListItemProps[] = []
     let subsidy = 300000 - data[1].Height
     if (subsidy < 30000) {
       subsidy = 30000
@@ -43,13 +44,13 @@ export function BlockRewardEntity({ entity }: Props) {
 
     list.push({
       label: 'Coinbase',
-      sc: -BigInt(fullSubsidy),
+      sc: new BigNumber(-fullSubsidy),
     })
 
     const minedFees = data[2].transactions[0].ScChange - subsidy
     list.push({
       label: 'Collected transaction fees',
-      sc: -BigInt(minedFees),
+      sc: new BigNumber(-minedFees),
     })
     return list
   }, [data])

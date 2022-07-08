@@ -9,6 +9,7 @@ import {
 import { Datum, DatumProps } from '../../Datum'
 import { EntityHeading } from '../../EntityHeading'
 import { routes } from '../../../config/routes'
+import BigNumber from 'bignumber.js'
 
 type Props = {
   entity: NvgOutputEntity
@@ -42,7 +43,7 @@ export function OutputEntity({ entity }: Props) {
     if (data[1].ScValue) {
       list.push({
         label: 'SC Value',
-        sc: BigInt(data[1].ScValue),
+        sc: new BigNumber(data[1].ScValue),
       })
     }
     if (data[1].SfValue) {

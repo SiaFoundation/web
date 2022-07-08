@@ -1,8 +1,11 @@
 import * as clipboard from 'clipboard-polyfill/text'
 import { ToastOptions, triggerToast } from './toast'
 
-export const copyToClipboard = (text: string, entity: string) => {
-  triggerToast(`Copied ${entity} to clipboard`)
+export const copyToClipboard = (text: string, entity?: string) => {
+  const message = entity
+    ? `Copied ${entity} to clipboard`
+    : 'Copied to clipboard'
+  triggerToast(message)
   clipboard.writeText(text)
 }
 

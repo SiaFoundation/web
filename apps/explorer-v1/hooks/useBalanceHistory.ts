@@ -2,7 +2,7 @@ import useSWR from 'swr'
 import axios from 'axios'
 import { apiBase } from '../config'
 
-  const url = `${apiBase}/balance-track`
+const url = `${apiBase}/balance-track`
 
 function getBalanceHistoryKey(address?: string) {
   return address ? `${url}/${address}` : null

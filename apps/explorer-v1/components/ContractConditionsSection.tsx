@@ -11,6 +11,7 @@ import {
   Grid,
   Heading,
 } from '@siafoundation/design-system'
+import BigNumber from 'bignumber.js'
 
 type Props = {
   entity: NvgContractEntity | NvgRevisionEntity
@@ -22,22 +23,22 @@ export function ContractConditionsSection({ entity }: Props) {
   const success: DatumProps[] = [
     {
       label: 'Returned allowance',
-      sc: BigInt(conditions.success.returnedAllowance),
+      sc: new BigNumber(conditions.success.returnedAllowance),
     },
     {
       label: 'Payout + collateral',
-      sc: BigInt(conditions.success.payoutCollateral),
+      sc: new BigNumber(conditions.success.payoutCollateral),
     },
   ]
 
   const failure: DatumProps[] = [
     {
       label: 'Returned allowance',
-      sc: BigInt(conditions.fail.returnedAllowance),
+      sc: new BigNumber(conditions.fail.returnedAllowance),
     },
     {
       label: 'Burnt collateral',
-      sc: BigInt(conditions.fail.burntCollateral),
+      sc: new BigNumber(conditions.fail.burntCollateral),
     },
   ]
 

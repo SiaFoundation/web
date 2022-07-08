@@ -12,7 +12,7 @@ import {
 type Props = {
   value: string
   displayValue?: string
-  label: string
+  label?: string
   href?: string
   size?: React.ComponentProps<typeof Text>['size']
   maxLength?: number

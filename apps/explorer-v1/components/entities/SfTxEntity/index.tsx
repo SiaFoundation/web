@@ -6,6 +6,7 @@ import {
   getEntityTxOutputs,
   getTotalTransacted,
 } from '../../../lib/transaction'
+import BigNumber from 'bignumber.js'
 
 type Props = {
   entity: NvgSfTxEntity
@@ -28,7 +29,7 @@ export function SfTxEntity({ entity }: Props) {
       },
       {
         label: 'Fees',
-        sc: BigInt(data[1].Fees),
+        sc: new BigNumber(data[1].Fees),
       },
     ]
   }, [entity, data])
