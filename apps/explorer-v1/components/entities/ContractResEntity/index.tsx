@@ -1,9 +1,11 @@
 import { useMemo } from 'react'
 import { getContractStatus, getTotalTransacted } from '../../../lib/transaction'
 import { NvgContractResEntity } from '../../../config/navigatorTypes'
-import { EntityListItem } from '../../EntityList'
 import { DatumProps } from '../../Datum'
 import { TxEntityLayout } from '../../TxEntityLayout'
+import { EntityListItemProps } from '@siafoundation/design-system'
+import { getNvgEntityItemProps } from '../../../lib/utils'
+import BigNumber from 'bignumber.js'
 
 type Props = {
   entity: NvgContractResEntity
@@ -32,55 +34,59 @@ export function ContractResEntity({ entity }: Props) {
   }, [entity, data])
 
   const inputs = useMemo(() => {
-    const list: EntityListItem[] = [
-      {
+    const list: EntityListItemProps[] = [
+      getNvgEntityItemProps('contract', {
         // label: 'File Contract ID',
         hash: data[1].ContractId,
-        type: 'contract',
-        sc: -BigInt(
-          data[1].Output0Value + data[1].Output1Value + data[1].Output2Value
+        sc: new BigNumber(
+          -(data[1].Output0Value + data[1].Output1Value + data[1].Output2Value)
         ),
-      },
+      }),
     ]
     return list
   }, [data])
 
   const outputs = useMemo(() => {
-    const list: EntityListItem[] = []
+    const list: EntityListItemProps[] = []
     if (data[1].Result == 'fail') {
-      list.push({
-        label: 'Renter address: returned allowance',
-        hash: data[1].Output0Address,
-        type: 'address',
-        sc: BigInt(data[1].Output0Value),
-      })
-      list.push({
-        label: 'Host address: unused collateral',
-        hash: data[1].Output1Address,
-        type: 'address',
-        sc: BigInt(data[1].Output1Value),
-      })
+      list.push(
+        getNvgEntityItemProps('address', {
+          label: 'Renter address: returned allowance',
+          hash: data[1].Output0Address,
+          sc: new BigNumber(data[1].Output0Value),
+        })
+      )
+      list.push(
+        getNvgEntityItemProps('address', {
+          label: 'Host address: unused collateral',
+          hash: data[1].Output1Address,
+          sc: new BigNumber(data[1].Output1Value),
+        })
+      )
     } else {
-      list.push({
-        label: 'Renter address: unused allowance',
-        hash: data[1].Output0Address,
-        type: 'address',
-        sc: BigInt(data[1].Output0Value),
-      })
-      list.push({
-        label: 'Host address: payout + collateral back',
-        hash: data[1].Output1Address,
-        type: 'address',
-        sc: BigInt(data[1].Output1Value),
-      })
+      list.push(
+        getNvgEntityItemProps('address', {
+          label: 'Renter address: unused allowance',
+          hash: data[1].Output0Address,
+          sc: new BigNumber(data[1].Output0Value),
+        })
+      )
+      list.push(
+        getNvgEntityItemProps('address', {
+          label: 'Host address: payout + collateral back',
+          hash: data[1].Output1Address,
+          sc: new BigNumber(data[1].Output1Value),
+        })
+      )
     }
     if (data[1].Result == 'fail') {
-      list.push({
-        label: 'Burning address: lost collateral',
-        hash: data[1].Output2Address,
-        type: 'address',
-        sc: BigInt(data[1].Output2Value),
-      })
+      list.push(
+        getNvgEntityItemProps('address', {
+          label: 'Burning address: lost collateral',
+          hash: data[1].Output2Address,
+          sc: new BigNumber(data[1].Output2Value),
+        })
+      )
     }
     return list
   }, [data])

@@ -7,13 +7,13 @@ import {
   getEntityTypeInitials,
   getEntityTypeLabel,
   EntityTypes,
-} from '@siafoundation/design-system'
+} from '../'
 import { humanNumber } from '@siafoundation/sia-js'
 import { formatDistance } from 'date-fns'
 import { EntityAvatar } from './EntityAvatar'
 import { EntityListSkeleton } from './EntityList'
 
-type BlockListItem = {
+type BlockListItemProps = {
   miningPool: string
   timestamp: number
   height: number
@@ -22,7 +22,7 @@ type BlockListItem = {
 
 type Props = {
   title: string
-  blocks?: BlockListItem[]
+  blocks?: BlockListItemProps[]
 }
 
 export function BlockList({ title, blocks }: Props) {
@@ -58,6 +58,7 @@ export function BlockList({ title, blocks }: Props) {
                 label={getEntityTypeLabel(EntityTypes.block)}
                 initials={getEntityTypeInitials(EntityTypes.block)}
                 href={block.href}
+                shape="square"
               />
               <Flex direction="column" gap="1" justify="center">
                 <Text color="subtle">
@@ -72,19 +73,15 @@ export function BlockList({ title, blocks }: Props) {
                   mined by <Text weight="bold">{block.miningPool}</Text>{' '}
                   {i < blocks.length - 1
                     ? `in ${formatDistance(
-                        new Date(block.timestamp * 1000),
-                        new Date(blocks[i + 1].timestamp * 1000)
+                        new Date(block.timestamp),
+                        new Date(blocks[i + 1].timestamp)
                       )}`
                     : ''}
                 </Text>
                 <Text color="subtle">
-                  {formatDistance(
-                    new Date(block.timestamp * 1000),
-                    new Date(),
-                    {
-                      addSuffix: true,
-                    }
-                  )}
+                  {formatDistance(new Date(block.timestamp), new Date(), {
+                    addSuffix: true,
+                  })}
                 </Text>
               </Flex>
             </Flex>

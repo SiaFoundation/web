@@ -1,10 +1,11 @@
-import { humanNumber, toSiacoins } from '@siafoundation/sia-js'
 import { routes } from '../config/routes'
-import { nvgEntityTypes } from '../config/navigatorTypes'
-
-export function formatSc(num: number) {
-  return humanNumber(toSiacoins(num), { fixed: 4, units: 'SC' })
-}
+import {
+  getNvgEntityTypeInitials,
+  getNvgEntityTypeLabel,
+  NvgEntityType,
+  nvgEntityTypes,
+} from '../config/navigatorTypes'
+import { EntityListItemProps } from '@siafoundation/design-system'
 
 const linkableTypes = nvgEntityTypes
 
@@ -22,4 +23,20 @@ export function getTitleId(title: string, id: string, limit?: number) {
     return `${title} ${id.slice(0, limit)}`
   }
   return `${title}`
+}
+
+export function getNvgEntityItemProps(
+  type: NvgEntityType,
+  props: EntityListItemProps
+): EntityListItemProps {
+  return {
+    label: getNvgEntityTypeLabel(type),
+    initials: getNvgEntityTypeInitials(type),
+    href: getHrefForType(type, props.hash),
+    avatarShape: type === 'address' || type === 'block' ? 'square' : 'circle',
+    blockHref: props.height
+      ? getHrefForType('block', String(props.height))
+      : undefined,
+    ...props,
+  }
 }

@@ -3,7 +3,7 @@ import { humanNumber } from '@siafoundation/sia-js'
 
 type Props = {
   size?: React.ComponentProps<typeof Text>['size']
-  value: bigint | number
+  value: number
   variant?: 'change' | 'value'
   tooltip?: string
 }

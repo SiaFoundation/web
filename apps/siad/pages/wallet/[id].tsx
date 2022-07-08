@@ -1,12 +1,13 @@
 import {
-  Box,
   Button,
-  Checkmark16,
   Container,
+  EntityList,
+  EntityListItemProps,
+  EntityTypes,
   Flex,
-  Panel,
   Text,
 } from '@siafoundation/design-system'
+import { times } from 'lodash'
 import { useRouter } from 'next/router'
 // import {
 //   useWalletAddresses,
@@ -19,6 +20,16 @@ import { AuthedLayout } from '../../components/AuthedLayout'
 import { Wallet } from '../../components/User/Wallet'
 import { WalletSparkline } from '../../components/WalletSparkline'
 import { fakeWallets } from '../../lib/fakeWallets'
+import BigNumber from 'bignumber.js'
+
+const inSc = (i: number) => i * 1e24
+
+const entities: EntityListItemProps[] = times(20, (i) => ({
+  type: EntityTypes.transaction,
+  hash: '39vewj8kxkpx828hffh28' + i,
+  timestamp: new Date().getTime() - 1_000 * 60 * 60 * 24 * i,
+  sc: new BigNumber(inSc(1e1) - i * inSc(1e8)),
+}))
 
 export default function WalletView() {
   const router = useRouter()
@@ -39,7 +50,6 @@ export default function WalletView() {
   // const tip = useConsensusTip({
   //   refreshInterval: 1_000,
   // })
-  const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
   const wallet = fakeWallets.find((w) => w.id === walletId)
 
@@ -58,89 +68,28 @@ export default function WalletView() {
         </>
       }
     >
-      <Flex direction="column" gap="4" css={{ paddingBottom: '$5' }}>
-        <Box css={{ height: '200px', width: '100%' }}>
-          <WalletSparkline />
-        </Box>
+      <Flex direction="column" gap="2" css={{ paddingBottom: '$5' }}>
+        <WalletSparkline entities={entities} />
         <Container size="4">
           <Flex direction="column" gap="1">
-            <Panel css={{ position: 'relative' }}>
-              <Flex
-                css={{
-                  padding: '$3 $3 $2-5',
-                  borderBottom: '1px solid $brandGray3',
-                }}
-                align="center"
-                justify="between"
-              >
-                <Flex css={{ flex: 3 }}>
-                  <Text weight="semibold" color="subtle">
-                    Amount
-                  </Text>
-                </Flex>
-                <Flex css={{ flex: 3 }}>
-                  <Text weight="semibold" color="subtle">
-                    Transaction ID
-                  </Text>
-                </Flex>
-                <Flex css={{ flex: 3 }}>
-                  <Text weight="semibold" color="subtle">
-                    Time
-                  </Text>
-                </Flex>
-                <Flex css={{ flex: 2 }}>
-                  <Text weight="semibold" color="subtle">
-                    Type
-                  </Text>
-                </Flex>
-                <Flex css={{ flex: 1 }}>
-                  <Text weight="semibold" color="subtle">
-                    Status
-                  </Text>
-                </Flex>
-              </Flex>
-              {rows.map((i) => (
-                <Flex
-                  key={i}
-                  css={{
-                    height: '70px',
-                    padding: '0 $3',
-                    borderBottom: '1px solid $brandGray2',
-                    '&:last-of-type': {
-                      borderBottom: 'none',
-                    },
-                  }}
-                  align="center"
-                  justify="between"
-                >
-                  <Flex css={{ flex: 3 }}>
-                    <Text weight="semibold" color="contrast">
-                      {(Math.random() * 10000).toFixed(0)} SC
+            <EntityList
+              title="Transactions"
+              actions={
+                <Flex gap="3" align="center">
+                  <Flex>
+                    <Text weight="semibold" color="subtle">
+                      Filters
                     </Text>
                   </Flex>
-                  <Flex css={{ flex: 3 }}>
-                    <Text weight="semibold" color="contrast">
-                      00fx9f2m4f9dw0842fd
-                    </Text>
-                  </Flex>
-                  <Flex css={{ flex: 3 }}>
-                    <Text weight="semibold" color="contrast">
-                      Jan 25, 2022
-                    </Text>
-                  </Flex>
-                  <Flex css={{ flex: 2 }}>
-                    <Text weight="semibold" color="contrast">
-                      Siacoin
-                    </Text>
-                  </Flex>
-                  <Flex css={{ flex: 1 }}>
-                    <Text weight="semibold" color="contrast">
-                      <Checkmark16 />
+                  <Flex>
+                    <Text weight="semibold" color="subtle">
+                      Sort by
                     </Text>
                   </Flex>
                 </Flex>
-              ))}
-            </Panel>
+              }
+              entities={entities}
+            />
           </Flex>
         </Container>
       </Flex>

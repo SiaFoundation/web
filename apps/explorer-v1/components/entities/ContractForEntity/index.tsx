@@ -1,12 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
-import { humanBytes, humanNumber, toSiacoins } from '@siafoundation/sia-js'
+import { EntityListItemProps } from '@siafoundation/design-system'
+import { humanBytes, humanNumber } from '@siafoundation/sia-js'
 import { useMemo } from 'react'
 import { DatumProps } from '../../Datum'
 import { getContractStatus } from '../../../lib/transaction'
 import { NvgContractEntity } from '../../../config/navigatorTypes'
-import { EntityListItem } from '../../EntityList'
 import { TxEntityLayout } from '../../TxEntityLayout'
 import { ContractConditionsSection } from '../../ContractConditionsSection'
+import { getNvgEntityItemProps } from '../../../lib/utils'
+import BigNumber from 'bignumber.js'
 
 type Props = {
   entity: NvgContractEntity
@@ -16,10 +18,10 @@ export function ContractForEntity({ entity }: Props) {
   const { data } = entity
 
   const values = useMemo(() => {
-    const sfFees = toSiacoins(data[1].SfFees)
+    const sfFees = new BigNumber(data[1].SfFees)
     const feesPercentage = sfFees
       .dividedBy(
-        toSiacoins(
+        new BigNumber(
           data[1].ValidProof1Value +
             data[1].ValidProof2Value +
             data[1].Fees -
@@ -59,15 +61,15 @@ export function ContractForEntity({ entity }: Props) {
       },
       {
         label: 'Total SC',
-        sc: BigInt(data[1].RenterValue + data[1].HostValue),
+        sc: new BigNumber(data[1].RenterValue + data[1].HostValue),
       },
       {
         label: 'Fees paid to miners',
-        sc: BigInt(data[1].Fees),
+        sc: new BigNumber(data[1].Fees),
       },
       {
         label: 'Fees paid to SFs',
-        sc: BigInt(data[1].SfFees),
+        sc: new BigNumber(data[1].SfFees),
         comment: `${feesPercentage}% of the renter's allowance`,
       },
     ]
@@ -88,119 +90,125 @@ export function ContractForEntity({ entity }: Props) {
   }, [entity])
 
   const inputs = useMemo(() => {
-    const list: EntityListItem[] = [
-      {
+    const list: EntityListItemProps[] = [
+      getNvgEntityItemProps('allowancePost', {
         // label: 'Renter: allowance posting hash',
         hash: data[1].AllowancePosting,
-        type: 'allowancePost',
-        sc: -BigInt(data[1].RenterValue),
-      },
+        sc: new BigNumber(-data[1].RenterValue),
+      }),
     ]
 
     if (data[1].Renter2Value > 0) {
       // Tri-input contracts
-      list.push({
-        // label: 'Renter: allowance posting hash',
-        hash: data[1].Allowance2Posting,
-        type: 'allowancePost',
-        sc: -BigInt(data[1].Renter2Value),
-      })
+      list.push(
+        getNvgEntityItemProps('allowancePost', {
+          // label: 'Renter: allowance posting hash',
+          hash: data[1].Allowance2Posting,
+          sc: new BigNumber(-data[1].Renter2Value),
+        })
+      )
     }
 
     if (data[1].Renter3Value > 0) {
       // Quad-input contracts
-      list.push({
-        // label: 'Renter: allowance posting hash',
-        hash: data[1].Allowance3Posting,
-        type: 'allowancePost',
-        sc: -BigInt(data[1].Renter3Value),
-      })
+      list.push(
+        getNvgEntityItemProps('allowancePost', {
+          // label: 'Renter: allowance posting hash',
+          hash: data[1].Allowance3Posting,
+          sc: new BigNumber(-data[1].Renter3Value),
+        })
+      )
     }
 
-    list.push({
-      // label: 'Host: collateral posting hash',
-      hash: data[1].CollateralPosting,
-      type: 'collateralPost',
-      sc: -BigInt(data[1].HostValue),
-    })
+    list.push(
+      getNvgEntityItemProps('collateralPost', {
+        // label: 'Host: collateral posting hash',
+        hash: data[1].CollateralPosting,
+        sc: new BigNumber(-data[1].HostValue),
+      })
+    )
 
     return list
   }, [data])
 
   const outputs = useMemo(() => {
-    const list: EntityListItem[] = [
-      {
+    const list: EntityListItemProps[] = [
+      getNvgEntityItemProps('contract', {
         label: 'Formed contract ID',
         hash: data[1].ContractId,
-        type: 'contract',
-        sc: BigInt(data[1].ValidProof1Value + data[1].ValidProof2Value),
-      },
+        sc: new BigNumber(data[1].ValidProof1Value + data[1].ValidProof2Value),
+      }),
     ]
 
     // Exceptional contracts where some amount returns to the renter address in the contract formation
     if (data[5].transactions.length > 0) {
       for (let i = 0; i < data[5].transactions.length; i++) {
-        list.push({
-          label: 'Renter address',
-          hash: data[5].transactions[i].Address,
-          type: 'address',
-          sc: BigInt(data[5].transactions[i].ScChange),
-        })
+        list.push(
+          getNvgEntityItemProps('address', {
+            label: 'Renter address',
+            hash: data[5].transactions[i].Address,
+            sc: new BigNumber(data[5].transactions[i].ScChange),
+          })
+        )
       }
     }
 
     // SiaFund fees
     list.push({
       label: 'Fees paid to SFs',
-      sc: BigInt(data[1].SfFees),
+      sc: new BigNumber(data[1].SfFees),
     })
 
     // Miner fees
     list.push({
       label: 'Fees paid to miners',
-      sc: BigInt(data[1].Fees),
+      sc: new BigNumber(data[1].Fees),
     })
 
     return list
   }, [data])
 
   const operations = useMemo(() => {
-    const list: EntityListItem[] = []
+    const list: EntityListItemProps[] = []
     if (data[2].Height >= 0) {
       // Only if there is a Revision
-      list.push({
-        type: 'revision',
-        hash: data[2].MasterHash,
-        height: data[2].Height,
-        timestamp: data[2].Timestamp,
-      })
+      list.push(
+        getNvgEntityItemProps('revision', {
+          hash: data[2].MasterHash,
+          height: data[2].Height,
+          timestamp: data[2].Timestamp * 1000,
+        })
+      )
     }
     if (data[4].Height >= 0) {
       // Only if there is an Storage Proof
-      list.push({
-        type: 'storageproof',
-        hash: data[4].MasterHash,
-        height: data[4].Height,
-        timestamp: data[4].Timestamp,
-      })
+      list.push(
+        getNvgEntityItemProps('storageproof', {
+          hash: data[4].MasterHash,
+          height: data[4].Height,
+          timestamp: data[4].Timestamp * 1000,
+        })
+      )
     }
     if (data[6].Height >= 0) {
       // Only if there is an atomic renewal
-      list.push({
-        type: 'contractrenewal',
-        hash: data[6].ContractId,
-        height: data[6].Height,
-        timestamp: data[6].Timestamp,
-      })
+      list.push(
+        getNvgEntityItemProps('contractrenewal', {
+          hash: data[6].ContractId,
+          height: data[6].Height,
+          timestamp: data[6].Timestamp * 1000,
+        })
+      )
     }
     if (data[3].Height >= 0) {
       // Only if there is a Resolution
-      list.push({
-        type: 'contractresol',
-        hash: data[3].MasterHash,
-        height: data[3].Height,
-        timestamp: data[3].Timestamp,
-      })
+      list.push(
+        getNvgEntityItemProps('contractresol', {
+          hash: data[3].MasterHash,
+          height: data[3].Height,
+          timestamp: data[3].Timestamp * 1000,
+        })
+      )
     }
     return list
   }, [data])

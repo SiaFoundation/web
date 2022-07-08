@@ -1,4 +1,4 @@
-import { EntityListItem } from '../components/EntityList'
+import { EntityListItemProps } from '@siafoundation/design-system'
 import {
   NvgContractEntity,
   Entity,
@@ -9,6 +9,7 @@ import {
   getNvgEntityTypeLabel,
 } from '../config/navigatorTypes'
 import { getHrefForType } from './utils'
+import BigNumber from 'bignumber.js'
 
 // Adapted from https://github.com/hakkane84/navigator-sia/blob/3f6ae63a48426c8810f0bd11de55a4b69b736200/web/nav_assets/navigator_web.js#L1571
 // commented out unreachable cases
@@ -56,17 +57,17 @@ export function getContractStatus(tx: Entity): string {
 
 export function getTotalTransacted(entity: NvgEntityTxns2Index) {
   const { data } = entity
-  let sc = BigInt(0)
+  let sc = new BigNumber(0)
   let sf = 0
   for (let n = 0; n < data[2].transactions.length; n++) {
     if (data[2].transactions[n].ScChange > 0) {
-      sc = sc + BigInt(data[2].transactions[n].ScChange)
+      sc = sc.plus(data[2].transactions[n].ScChange)
     } else if (data[2].transactions[n].SfChange > 0) {
       sf = sf + data[2].transactions[n].SfChange
     }
   }
   if (data[1].Fees) {
-    sc = sc + BigInt(data[1].Fees)
+    sc = sc.plus(data[1].Fees)
   }
   return {
     sc,
@@ -93,7 +94,7 @@ export function getContractConditions({
 }
 
 export function getEntityTxInputs({ type, data }: NvgEntityTxns2Index) {
-  const inputs: EntityListItem[] = []
+  const inputs: EntityListItemProps[] = []
 
   for (let n = 0; n < data[2].transactions.length; n++) {
     const hash = data[2].transactions[n].Address
@@ -103,12 +104,12 @@ export function getEntityTxInputs({ type, data }: NvgEntityTxns2Index) {
       data[2].transactions[n].ScChange < 0 ||
       data[2].transactions[n].SfChange < 0
     ) {
-      let sc = BigInt(0)
+      let sc = new BigNumber(0)
       let sf = 0
       let label = getNvgEntityTypeLabel('address')
 
       if (data[2].transactions[n].ScChange < 0) {
-        sc = BigInt(data[2].transactions[n].ScChange) // Push the change in SC
+        sc = new BigNumber(data[2].transactions[n].ScChange) // Push the change in SC
       } else if (data[2].transactions[n].SfChange < 0) {
         sf = data[2].transactions[n].SfChange // Push the change in SF
       }
@@ -144,7 +145,7 @@ export function getEntityTxOutputs({
   type: entityType,
   data,
 }: NvgEntityTxns2Index) {
-  const outputs: EntityListItem[] = []
+  const outputs: EntityListItemProps[] = []
 
   for (let n = 0; n < data[2].transactions.length; n++) {
     let hash = data[2].transactions[n].Address
@@ -164,10 +165,10 @@ export function getEntityTxOutputs({
     ) {
       let label = getNvgEntityTypeLabel('address')
       let type = 'address' as NvgEntityType
-      let sc = BigInt(0)
+      let sc = new BigNumber(0)
       let sf = 0
       if (data[2].transactions[n].ScChange > 0) {
-        sc = BigInt(data[2].transactions[n].ScChange) // Push the change in SC
+        sc = new BigNumber(data[2].transactions[n].ScChange) // Push the change in SC
       } else if (data[2].transactions[n].SfChange > 0) {
         sf = data[2].transactions[n].SfChange // Push the change in SF
       }
@@ -256,7 +257,7 @@ export function getEntityTxOutputs({
   if (data[1].Fees) {
     outputs.push({
       label: 'miner fees',
-      sc: BigInt(data[1].Fees),
+      sc: new BigNumber(data[1].Fees),
     })
   }
 

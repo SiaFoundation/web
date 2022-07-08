@@ -54,6 +54,9 @@ export * from './components/ChartTimeValue'
 export * from './components/ValueCopyable'
 export * from './components/ValueSf'
 export * from './components/ValueSc'
+export * from './components/EntityList'
+export * from './components/EntityAvatar'
+export * from './components/BlockList'
 
 export * from './data/webLinks'
 

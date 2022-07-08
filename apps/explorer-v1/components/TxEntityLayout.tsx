@@ -5,19 +5,20 @@ import {
   Flex,
   Grid,
   Panel,
+  EntityList,
+  EntityListItemProps,
 } from '@siafoundation/design-system'
 import { Datum, DatumProps } from './Datum'
 import { NvgEntityTx } from '../config/navigatorTypes'
-import { EntityListItem, EntityList } from './EntityList'
 import { TxEntityHeader } from './TxEntityHeader'
 
 type Props = {
   entity: NvgEntityTx
   values: DatumProps[]
   details?: React.ReactNode
-  inputs: EntityListItem[]
-  outputs: EntityListItem[]
-  relatedOperations?: EntityListItem[]
+  inputs: EntityListItemProps[]
+  outputs: EntityListItemProps[]
+  relatedOperations?: EntityListItemProps[]
 }
 
 export function TxEntityLayout({
@@ -61,20 +62,16 @@ export function TxEntityLayout({
             gapY="4"
           >
             <Box>
-              <Panel>
-                <EntityList
-                  title={`Inputs (${inputs.length})`}
-                  entities={inputs}
-                />
-              </Panel>
+              <EntityList
+                title={`Inputs (${inputs.length})`}
+                entities={inputs}
+              />
             </Box>
             <Box>
-              <Panel>
-                <EntityList
-                  title={`Outputs (${outputs.length})`}
-                  entities={outputs}
-                />
-              </Panel>
+              <EntityList
+                title={`Outputs (${outputs.length})`}
+                entities={outputs}
+              />
             </Box>
           </Grid>
           {!!relatedOperations?.length && (

@@ -12,33 +12,37 @@ import {
   EntityTypes,
   getEntityTypeInitials,
   getEntityTypeLabel,
-} from '@siafoundation/design-system'
+} from '../'
 import { times } from 'lodash'
 import { humanNumber } from '@siafoundation/sia-js'
 import { formatDistance } from 'date-fns'
 import { upperFirst } from 'lodash'
 import { EntityAvatar } from './EntityAvatar'
+import React from 'react'
+import BigNumber from 'bignumber.js'
 
-export type EntityListItem = {
+export type EntityListItemProps = {
   label?: string
   hash?: string
   href?: string
   blockHref?: string
   type?: EntityTypes
   initials?: string
-  sc?: bigint
+  sc?: BigNumber
   sf?: number
   height?: number
   timestamp?: number
   unconfirmed?: boolean
+  avatarShape?: 'square' | 'circle'
 }
 
 type Props = {
   title?: string
-  entities?: EntityListItem[]
+  actions?: React.ReactNode
+  entities?: EntityListItemProps[]
 }
 
-export function EntityList({ title, entities }: Props) {
+export function EntityList({ title, actions, entities }: Props) {
   return (
     <Panel>
       <Flex
@@ -48,16 +52,21 @@ export function EntityList({ title, entities }: Props) {
           overflow: 'hidden',
         }}
       >
-        {title && (
-          <Heading
-            size="20"
-            font="mono"
+        {(title || actions) && (
+          <Flex
+            align="center"
             css={{
               padding: '$2 $2',
             }}
           >
-            {title}
-          </Heading>
+            {title && (
+              <Heading size="20" font="mono">
+                {title}
+              </Heading>
+            )}
+            <Box css={{ flex: 1 }} />
+            {actions}
+          </Flex>
         )}
         <Flex
           direction="column"
@@ -91,9 +100,8 @@ export function EntityList({ title, entities }: Props) {
                 />
               )
             )
-            const label = upperFirst(
-              entity.label || getEntityTypeLabel(entity.type)
-            )
+            const label = entity.label || getEntityTypeLabel(entity.type)
+            const title = upperFirst(label)
             return (
               <Flex
                 gap="2"
@@ -104,7 +112,8 @@ export function EntityList({ title, entities }: Props) {
                 }}
               >
                 <EntityAvatar
-                  label={entity.label || getEntityTypeLabel(entity.type)}
+                  label={label}
+                  shape={entity.avatarShape}
                   initials={
                     entity.initials || getEntityTypeInitials(entity.type)
                   }
@@ -128,19 +137,19 @@ export function EntityList({ title, entities }: Props) {
                           </NextLink>
                         </Text>
                       )}
-                      <Text weight="bold">{label || truncHashEl}</Text>
+                      <Text weight="bold">{title || truncHashEl}</Text>
                     </Flex>
                     <Box css={{ flex: 1 }} />
                     {!!sc && <ValueSc value={sc} />}
                     {!!sf && <ValueSf value={sf} />}
                   </Flex>
                   <Flex justify="between">
-                    <Flex gap="1">{!!label && truncHashEl}</Flex>
+                    <Flex gap="1">{!!title && truncHashEl}</Flex>
                     <Flex gap="1">
                       {entity.timestamp && (
                         <Text color="subtle">
                           {formatDistance(
-                            new Date(entity.timestamp * 1000),
+                            new Date(entity.timestamp),
                             new Date(),
                             {
                               addSuffix: true,

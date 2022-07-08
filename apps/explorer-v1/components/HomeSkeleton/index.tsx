@@ -4,9 +4,9 @@ import {
   Flex,
   Grid,
   Skeleton,
+  EntityList,
+  BlockList,
 } from '@siafoundation/design-system'
-import { BlockList } from '../BlockList'
-import { EntityList } from '../EntityList'
 
 export function HomeSkeleton() {
   return (

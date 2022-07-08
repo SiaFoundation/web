@@ -1,9 +1,10 @@
 import { Text, Tooltip } from '../'
-import { humanNumber, toSiacoins } from '@siafoundation/sia-js'
+import { humanNumber, humanSiacoin, toSiacoins } from '@siafoundation/sia-js'
+import BigNumber from 'bignumber.js'
 
 type Props = {
   size?: React.ComponentProps<typeof Text>['size']
-  value: bigint | number
+  value: BigNumber
   variant?: 'change' | 'value'
   tooltip?: string
 }
@@ -18,7 +19,7 @@ export function ValueSc({
     <Tooltip
       content={
         (tooltip ? `${tooltip} ` : '') +
-        humanNumber(toSiacoins(value.toString()), {
+        humanNumber(toSiacoins(value), {
           fixed: 16,
           units: 'SC',
         })
@@ -31,19 +32,17 @@ export function ValueSc({
         css={{
           color:
             variant === 'change'
-              ? value > 0
+              ? value.isGreaterThan(0)
                 ? '$green11'
-                : value < 0
+                : value.isLessThan(0)
                 ? '$red11'
                 : '$gray7'
               : '$textContrast',
         }}
       >
-        {variant === 'change' && value > 0 ? '+' : ''}
-        {humanNumber(toSiacoins(value.toString()), {
-          fixed: 2,
-          units: 'SC',
-        })}
+        {variant === 'change' &&
+          (value.isGreaterThan(0) ? '+' : value.isLessThan(0) ? '-' : '')}
+        {humanSiacoin(value.absoluteValue())}
       </Text>
     </Tooltip>
   )

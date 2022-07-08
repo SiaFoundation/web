@@ -1,4 +1,5 @@
 import { Transaction } from '@siafoundation/react-renterd'
+import BigNumber from 'bignumber.js'
 
 export enum EntityTypes {
   transaction = 'transaction',
@@ -25,31 +26,31 @@ export const transactionTypesList = (Object.keys(TxTypes) as TxTypes[]).map(
 export function getTransactionTypes(txn: Transaction) {
   const totalSiacoinInput = (txn.SiacoinInputs || [])
     .filter((i) => i.Parent.Address && i.Parent.Value)
-    .reduce((acc, i) => acc + BigInt(i.Parent.Value), BigInt(0))
+    .reduce((acc, i) => acc.plus(i.Parent.Value), new BigNumber(0))
   const totalSiafundInput = (txn.SiafundInputs || [])
     .filter((i) => i.Parent.Address && i.Parent.Value)
-    .reduce((acc, i) => acc + BigInt(i.Parent.Value), BigInt(0))
+    .reduce((acc, i) => acc.plus(i.Parent.Value), new BigNumber(0))
 
   const totalSiacoinOuput = (txn.SiacoinOutputs || []).reduce(
-    (acc, i) => acc + BigInt(i.Value),
-    BigInt(0)
+    (acc, i) => acc.plus(i.Value),
+    new BigNumber(0)
   )
   const totalSiafundOutput = (txn.SiafundOutputs || []).reduce(
-    (acc, i) => acc + BigInt(i.Value),
-    BigInt(0)
+    (acc, i) => acc.plus(i.Value),
+    new BigNumber(0)
   )
 
   // Calculation totals
-  const totalSiacoin = totalSiacoinOuput - totalSiacoinInput
-  const totalSiafund = totalSiafundOutput - totalSiafundInput
+  const totalSiacoin = totalSiacoinOuput.minus(totalSiacoinInput)
+  const totalSiafund = totalSiafundOutput.minus(totalSiafundInput)
 
   const txTypes: TxTypes[] = []
 
   // add labels
-  if (totalSiacoin !== BigInt(0)) {
+  if (!totalSiacoin.isZero()) {
     txTypes.push(TxTypes.siacoin)
   }
-  if (totalSiafund !== BigInt(0)) {
+  if (!totalSiafund.isZero()) {
     txTypes.push(TxTypes.siafund)
   }
   if (txn.FileContracts && txn.FileContracts.length > 0) {
@@ -107,14 +108,14 @@ const entityTypeInitialsMap: Record<EntityTypes, string> = {
   address: 'A',
 }
 
-export function getEntityTypeLabel(type: EntityTypes): string {
-  return entityTypeMap[type]
+export function getEntityTypeLabel(type?: EntityTypes): string | undefined {
+  return type ? entityTypeMap[type] : undefined
 }
 
-export function getTxTypeLabel(type: TxTypes): string {
-  return txTypeMap[type]
+export function getTxTypeLabel(type?: TxTypes): string | undefined {
+  return type ? txTypeMap[type] : undefined
 }
 
-export function getEntityTypeInitials(type: EntityTypes): string {
-  return entityTypeInitialsMap[type]
+export function getEntityTypeInitials(type?: EntityTypes): string | undefined {
+  return type ? entityTypeInitialsMap[type] : undefined
 }
