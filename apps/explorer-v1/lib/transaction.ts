@@ -1,11 +1,14 @@
 import { EntityListItem } from '../components/EntityList'
 import {
-  ContractEntity,
+  NvgContractEntity,
   Entity,
-  EntityTxns2Index,
-  EntityType,
-  RevisionEntity,
-} from '../config/types'
+  NvgEntityTxns2Index,
+  NvgEntityType,
+  NvgRevisionEntity,
+  getNvgEntityTypeInitials,
+  getNvgEntityTypeLabel,
+} from '../config/navigatorTypes'
+import { getHrefForType } from './utils'
 
 // Adapted from https://github.com/hakkane84/navigator-sia/blob/3f6ae63a48426c8810f0bd11de55a4b69b736200/web/nav_assets/navigator_web.js#L1571
 // commented out unreachable cases
@@ -51,7 +54,7 @@ export function getContractStatus(tx: Entity): string {
   }
 }
 
-export function getTotalTransacted(entity: EntityTxns2Index) {
+export function getTotalTransacted(entity: NvgEntityTxns2Index) {
   const { data } = entity
   let sc = BigInt(0)
   let sf = 0
@@ -73,7 +76,7 @@ export function getTotalTransacted(entity: EntityTxns2Index) {
 
 export function getContractConditions({
   data,
-}: ContractEntity | RevisionEntity) {
+}: NvgContractEntity | NvgRevisionEntity) {
   return {
     // Conditions upon success
     success: {
@@ -89,7 +92,7 @@ export function getContractConditions({
   }
 }
 
-export function getEntityTxInputs({ type, data }: EntityTxns2Index) {
+export function getEntityTxInputs({ type, data }: NvgEntityTxns2Index) {
   const inputs: EntityListItem[] = []
 
   for (let n = 0; n < data[2].transactions.length; n++) {
@@ -102,7 +105,7 @@ export function getEntityTxInputs({ type, data }: EntityTxns2Index) {
     ) {
       let sc = BigInt(0)
       let sf = 0
-      let label = undefined
+      let label = getNvgEntityTypeLabel('address')
 
       if (data[2].transactions[n].ScChange < 0) {
         sc = BigInt(data[2].transactions[n].ScChange) // Push the change in SC
@@ -112,20 +115,21 @@ export function getEntityTxInputs({ type, data }: EntityTxns2Index) {
 
       // Naming the sending object
       if (type == 'ScTx' || type == 'SfTx') {
-        label = 'Sender address'
+        label = 'sender address'
       } else if (type == 'host ann') {
-        label = 'Host address'
+        label = 'host address'
       } else if (type == 'allowancePost') {
-        label = 'Renter address'
+        label = 'renter address'
       } else if (type == 'collateralPost' || type == 'storageproof') {
-        label = 'Host address'
+        label = 'host address'
       } else if (type == 'revision') {
-        label = 'Address'
+        label = 'address'
       }
 
       inputs.push({
         label,
-        type: 'address',
+        initials: getNvgEntityTypeInitials('address'),
+        href: getHrefForType('address', hash),
         sc,
         sf,
         hash,
@@ -139,7 +143,7 @@ export function getEntityTxInputs({ type, data }: EntityTxns2Index) {
 export function getEntityTxOutputs({
   type: entityType,
   data,
-}: EntityTxns2Index) {
+}: NvgEntityTxns2Index) {
   const outputs: EntityListItem[] = []
 
   for (let n = 0; n < data[2].transactions.length; n++) {
@@ -158,8 +162,8 @@ export function getEntityTxOutputs({
       data[2].transactions[n].ScChange > 0 ||
       data[2].transactions[n].SfChange > 0
     ) {
-      let label = undefined
-      let type = 'address' as EntityType
+      let label = getNvgEntityTypeLabel('address')
+      let type = 'address' as NvgEntityType
       let sc = BigInt(0)
       let sf = 0
       if (data[2].transactions[n].ScChange > 0) {
@@ -169,21 +173,21 @@ export function getEntityTxOutputs({
       }
 
       if (entityType == 'ScTx') {
-        label = 'Receiver address'
+        label = 'receiver address'
         type = 'address'
       } else if (
         entityType == 'SfTx' &&
         data[2].transactions[n].TxType != 'SfClaim' &&
         data[2].transactions[n].SfChange > 0
       ) {
-        label = 'Receiver address'
+        label = 'receiver address'
         type = 'address'
       } else if (
         entityType == 'SfTx' &&
         data[2].transactions[n].TxType != 'SfClaim' &&
         data[2].transactions[n].ScChange > 0
       ) {
-        label = 'Sender wallet return (unspent output)'
+        label = 'sender wallet return (unspent output)'
         type = 'address'
       } else if (
         entityType == 'SfTx' &&
@@ -192,41 +196,41 @@ export function getEntityTxOutputs({
         type = 'address'
         label = 'SiaFund dividend claim address (sender)'
       } else if (entityType == 'host ann') {
-        label = 'Host address'
+        label = 'host address'
         type = 'address'
       } else if (
         entityType == 'allowancePost' &&
         data[2].transactions[n].TxType != 'contractform'
       ) {
         type = 'address'
-        label = 'Renter address'
+        label = 'renter address'
       } else if (
         entityType == 'allowancePost' &&
         data[2].transactions[n].TxType == 'contractform'
       ) {
         type = 'contract'
-        label = 'Allowance for Contract ID'
+        label = 'allowance for contract ID'
       } else if (
         entityType == 'collateralPost' &&
         data[2].transactions[n].TxType != 'contractform'
       ) {
         type = 'address'
-        label = 'Host address'
+        label = 'host address'
       } else if (
         entityType == 'collateralPost' &&
         data[2].transactions[n].TxType == 'contractform'
       ) {
         type = 'contract'
-        label = 'Collateral for Contract ID'
+        label = 'collateral for contract ID'
       } else if (entityType == 'storageproof') {
         type = 'address'
-        label = 'Host address'
+        label = 'host address'
       } else if (
         entityType == 'blockreward' &&
         data[2].transactions[n].TxType == 'blockreward'
       ) {
         type = 'address'
-        label = 'Miner payout address'
+        label = 'miner payout address'
       } else if (
         entityType == 'blockreward' &&
         data[2].transactions[n].TxType == 'foundationsub'
@@ -235,12 +239,13 @@ export function getEntityTxOutputs({
         label = 'Sia Foundation address'
       } else if (entityType == 'revision') {
         type = 'address'
-        label = 'Address (same wallet)'
+        label = 'address (same wallet)'
       }
 
       outputs.push({
         label,
-        type,
+        initials: getNvgEntityTypeInitials(type),
+        href: getHrefForType(type, hash),
         sc,
         sf,
         hash,

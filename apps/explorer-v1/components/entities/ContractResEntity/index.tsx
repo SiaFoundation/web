@@ -1,19 +1,19 @@
 import { useMemo } from 'react'
 import { getContractStatus, getTotalTransacted } from '../../../lib/transaction'
-import { ContractResEntity } from '../../../config/types'
+import { NvgContractResEntity } from '../../../config/navigatorTypes'
 import { EntityListItem } from '../../EntityList'
-import { ValueItemProps } from '../../Datum'
+import { DatumProps } from '../../Datum'
 import { TxEntityLayout } from '../../TxEntityLayout'
 
 type Props = {
-  entity: ContractResEntity
+  entity: NvgContractResEntity
 }
 
 export function ContractResEntity({ entity }: Props) {
   const { data } = entity
 
   const values = useMemo(() => {
-    const list: ValueItemProps[] = [
+    const list: DatumProps[] = [
       {
         label: 'Total transacted',
         sc: getTotalTransacted(entity).sc,

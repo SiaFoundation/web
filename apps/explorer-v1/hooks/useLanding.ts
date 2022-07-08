@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 import { apiBase } from '../config'
-import { BlockInfo, BlockTransaction } from '../config/types'
+import { NvgBlockInfo, BlockTransaction } from '../config/navigatorTypes'
 
 export const landingKey = `${apiBase}/landing`
 
@@ -8,7 +8,7 @@ type NavigatorLanding = {
   last10ScTx: Pick<BlockTransaction, 'Height' | 'TxHash'>[]
   last10Contracts: Pick<BlockTransaction, 'Height' | 'TxHash' | 'TxType'>[]
   last10Others: Pick<BlockTransaction, 'Height' | 'TxHash' | 'TxType'>[]
-  last10Blocks: Pick<BlockInfo, 'Height' | 'MiningPool' | 'Timestamp'>[]
+  last10Blocks: Pick<NvgBlockInfo, 'Height' | 'MiningPool' | 'Timestamp'>[]
 }
 
 export async function fetchLanding(): Promise<NavigatorLanding> {

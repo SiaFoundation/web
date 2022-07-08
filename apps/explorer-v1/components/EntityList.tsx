@@ -5,22 +5,27 @@ import {
   NextLink,
   Panel,
   Text,
+  Skeleton,
+  ValueSf,
+  ValueSc,
+  ValueCopyable,
+  EntityTypes,
+  getEntityTypeInitials,
+  getEntityTypeLabel,
 } from '@siafoundation/design-system'
+import { times } from 'lodash'
 import { humanNumber } from '@siafoundation/sia-js'
 import { formatDistance } from 'date-fns'
 import { upperFirst } from 'lodash'
-import { EntityType, getEntityTypeLabel } from '../config/types'
-import { routes } from '../config/routes'
 import { EntityAvatar } from './EntityAvatar'
-import { ValueCopyable } from './ValueCopyable'
-import { ValueSc } from './ValueSc'
-import { ValueSf } from './ValueSf'
-import { EntityListSkeleton } from './EntityListSkeleton'
 
 export type EntityListItem = {
   label?: string
   hash?: string
-  type?: EntityType
+  href?: string
+  blockHref?: string
+  type?: EntityTypes
+  initials?: string
   sc?: bigint
   sf?: number
   height?: number
@@ -69,36 +74,42 @@ export function EntityList({ title, entities }: Props) {
               </Text>
             </Flex>
           )}
-          {entities?.map((change) => {
-            const sc = change.sc
-            const sf = change.sf
-            const truncHashEl = change.unconfirmed ? (
+          {entities?.map((entity) => {
+            const sc = entity.sc
+            const sf = entity.sf
+            const truncHashEl = entity.unconfirmed ? (
               <Text color="accent" weight="semibold">
                 Unconfirmed
               </Text>
             ) : (
-              change.type &&
-              change.hash && (
+              entity.hash && (
                 <ValueCopyable
-                  value={change.hash}
-                  type={change.type}
+                  value={entity.hash}
+                  label={entity.label}
+                  href={entity.href}
                   color="subtle"
                 />
               )
             )
             const label = upperFirst(
-              change.label || getEntityTypeLabel(change.type)
+              entity.label || getEntityTypeLabel(entity.type)
             )
             return (
               <Flex
                 gap="2"
-                key={change.hash || change.label}
+                key={entity.hash || entity.label}
                 css={{
                   padding: '$2 $2',
                   borderTop: '1px solid $brandGray3',
                 }}
               >
-                <EntityAvatar type={change.type} value={change.hash} />
+                <EntityAvatar
+                  label={entity.label || getEntityTypeLabel(entity.type)}
+                  initials={
+                    entity.initials || getEntityTypeInitials(entity.type)
+                  }
+                  href={entity.href}
+                />
                 <Flex
                   direction="column"
                   gap="1"
@@ -107,16 +118,13 @@ export function EntityList({ title, entities }: Props) {
                 >
                   <Flex gap="1" align="center">
                     <Flex gap="1" align="center">
-                      {change.height && (
-                        <Text weight="bold">
+                      {entity.height && entity.blockHref && (
+                        <Text color="subtle" weight="semibold">
                           <NextLink
-                            href={routes.block.view.replace(
-                              '[id]',
-                              String(change.height)
-                            )}
+                            href={entity.blockHref}
                             css={{ textDecoration: 'none' }}
                           >
-                            {humanNumber(change.height)}
+                            {humanNumber(entity.height)}
                           </NextLink>
                         </Text>
                       )}
@@ -127,18 +135,20 @@ export function EntityList({ title, entities }: Props) {
                     {!!sf && <ValueSf value={sf} />}
                   </Flex>
                   <Flex justify="between">
-                    {!!label && truncHashEl}
-                    {change.timestamp && (
-                      <Text color="subtle">
-                        {formatDistance(
-                          new Date(change.timestamp * 1000),
-                          new Date(),
-                          {
-                            addSuffix: true,
-                          }
-                        )}
-                      </Text>
-                    )}
+                    <Flex gap="1">{!!label && truncHashEl}</Flex>
+                    <Flex gap="1">
+                      {entity.timestamp && (
+                        <Text color="subtle">
+                          {formatDistance(
+                            new Date(entity.timestamp * 1000),
+                            new Date(),
+                            {
+                              addSuffix: true,
+                            }
+                          )}
+                        </Text>
+                      )}
+                    </Flex>
                   </Flex>
                 </Flex>
               </Flex>
@@ -147,5 +157,25 @@ export function EntityList({ title, entities }: Props) {
         </Flex>
       </Flex>
     </Panel>
+  )
+}
+
+export function EntityListSkeleton() {
+  return (
+    <>
+      {times(10, (i) => (
+        <Flex
+          key={i}
+          css={{ padding: '$2 $2', borderTop: '1px solid $gray3' }}
+          gap="2"
+        >
+          <Skeleton css={{ width: '60px', height: '50px' }} />
+          <Flex direction="column" gap="1" css={{ width: '100%' }}>
+            <Skeleton css={{ width: '90%', height: '20px' }} />
+            <Skeleton css={{ width: '140px', height: '14px' }} />
+          </Flex>
+        </Flex>
+      ))}
+    </>
   )
 }

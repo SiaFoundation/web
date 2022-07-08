@@ -4,20 +4,20 @@ import {
   getEntityTxOutputs,
   getTotalTransacted,
 } from '../../../lib/transaction'
-import { HostAnnEntity } from '../../../config/types'
-import { ValueItemProps } from '../../Datum'
+import { NvgHostAnnEntity } from '../../../config/navigatorTypes'
+import { DatumProps } from '../../Datum'
 import { TxEntityLayout } from '../../TxEntityLayout'
-import { ValueCopyable } from '../../ValueCopyable'
+import { ValueCopyable } from '@siafoundation/design-system'
 
 type Props = {
-  entity: HostAnnEntity
+  entity: NvgHostAnnEntity
 }
 
 export function HostAnnEntity({ entity }: Props) {
   const { data } = entity
 
   const values = useMemo(() => {
-    const list: ValueItemProps[] = [
+    const list: DatumProps[] = [
       {
         label: 'Total transacted',
         sc: getTotalTransacted(entity).sc,
@@ -30,9 +30,9 @@ export function HostAnnEntity({ entity }: Props) {
               '@initial': '16',
               '@bp1': '18',
             }}
+            label="IP"
             value={data[1].IP}
             maxLength={100}
-            type="IP"
           />
         ),
       },

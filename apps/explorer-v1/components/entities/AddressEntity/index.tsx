@@ -8,24 +8,30 @@ import {
   TabsList,
   TabsTrigger,
   Tooltip,
+  ChartTimeValue,
+  ValueSc,
 } from '@siafoundation/design-system'
 import { humanNumber } from '@siafoundation/sia-js'
-import { Datum, ValueItemProps } from '../../Datum'
-import { AddressEntity, EntityType } from '../../../config/types'
-import { EntityList } from '../../EntityList'
-import { ChartTimeValue } from '../../ChartTimeValue'
+import { Datum, DatumProps } from '../../Datum'
+import {
+  getNvgEntityTypeInitials,
+  getNvgEntityTypeLabel,
+  NvgAddressEntity,
+  NvgEntityType,
+} from '../../../config/navigatorTypes'
+import { EntityList, EntityListItem } from '../../EntityList'
 import { useBalanceHistory } from '../../../hooks/useBalanceHistory'
 import { useMemo, useState } from 'react'
 import { useStatus } from '../../../hooks/useStatus'
-import { ValueSc } from '../../ValueSc'
 import { routes } from '../../../config/routes'
 import { EntityHeading } from '../../EntityHeading'
 import { useUtxos } from '../../../hooks/useUtxos'
+import { getHrefForType } from '../../../lib/utils'
 
 type Tab = 'transactions' | 'evolution' | 'utxos'
 
 type Props = {
-  entity: AddressEntity
+  entity: NvgAddressEntity
 }
 
 export function AddressEntity({ entity }: Props) {
@@ -43,7 +49,7 @@ export function AddressEntity({ entity }: Props) {
     status.data?.lastblock && status.data.lastblock - firstSeen
 
   const values = useMemo(() => {
-    const list: ValueItemProps[] = [
+    const list: DatumProps[] = [
       {
         label: 'Confirmed SC',
         sc: BigInt(data[1].balanceSc),
@@ -82,27 +88,31 @@ export function AddressEntity({ entity }: Props) {
 
   const address = data[0].MasterHash
 
-  const transactions = useMemo(
-    () => [
+  const transactions = useMemo(() => {
+    const list: EntityListItem[] = [
       ...data[1].unconfirmedTransactions.map((tx) => ({
         hash: tx.TxHash,
-        type: tx.TxType as EntityType,
         sc: BigInt(tx.ScValue),
         sf: tx.SfValue,
+        label: getNvgEntityTypeLabel(tx.TxType),
+        initials: getNvgEntityTypeInitials(tx.TxType),
+        href: getHrefForType(tx.TxType, tx.TxHash),
         timestamp: tx.Timestamp,
         unconfirmed: true,
       })),
       ...data[1].last100Transactions.map((tx) => ({
         hash: tx.MasterHash,
-        type: tx.TxType as EntityType,
         sc: BigInt(tx.ScChange),
         sf: tx.SfChange,
+        label: getNvgEntityTypeLabel(tx.TxType),
+        initials: getNvgEntityTypeInitials(tx.TxType),
+        href: getHrefForType(tx.TxType, tx.MasterHash),
         height: tx.Height,
         timestamp: tx.Timestamp,
       })),
-    ],
-    [data]
-  )
+    ]
+    return list
+  }, [data])
 
   // const qrCode = `${apiBase}/navigator-api/qr/${address}.svg`
 
@@ -193,7 +203,9 @@ export function AddressEntity({ entity }: Props) {
                 sc: BigInt(output.hastings || '0'),
                 sf: output.sf,
                 hash: output.output,
-                type: 'output' as EntityType,
+                label: getNvgEntityTypeLabel('output'),
+                initials: getNvgEntityTypeInitials('output'),
+                href: getHrefForType('output', output.output),
               }))}
             />
           </TabsContent>

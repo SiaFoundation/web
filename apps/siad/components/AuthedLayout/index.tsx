@@ -14,10 +14,10 @@ export function AuthedLayout({ title, actions, children }: Props) {
   return (
     <RootLayout>
       <AppBackdrop />
-      <Flex css={{ height: '100%', width: '100%' }}>
-        <Sidenav />
-        <Flex direction="column" css={{ flex: 1, overflow: 'hidden' }}>
-          <Navbar title={title}>{actions}</Navbar>
+      <Flex direction="column" css={{ height: '100%', width: '100%' }}>
+        <Navbar title={title}>{actions}</Navbar>
+        <Flex css={{ flex: 1, overflow: 'hidden' }}>
+          <Sidenav />
           <ScrollArea>{children}</ScrollArea>
         </Flex>
       </Flex>

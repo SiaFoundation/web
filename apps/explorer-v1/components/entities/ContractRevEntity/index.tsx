@@ -1,23 +1,23 @@
 import { useMemo } from 'react'
-import { ValueItemProps } from '../../Datum'
+import { DatumProps } from '../../Datum'
 import {
   getEntityTxInputs,
   getEntityTxOutputs,
   getTotalTransacted,
 } from '../../../lib/transaction'
-import { RevisionEntity } from '../../../config/types'
+import { NvgRevisionEntity } from '../../../config/navigatorTypes'
 import { TxEntityLayout } from '../../TxEntityLayout'
 import { ContractConditionsSection } from '../../ContractConditionsSection'
 
 type Props = {
-  entity: RevisionEntity
+  entity: NvgRevisionEntity
 }
 
 export function ContractRevEntity({ entity }: Props) {
   const { data } = entity
 
   const values = useMemo(() => {
-    const list: ValueItemProps[] = [
+    const list: DatumProps[] = [
       {
         label: 'Total transacted',
         sc: getTotalTransacted(entity).sc,

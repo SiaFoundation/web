@@ -7,14 +7,13 @@ import {
   IconButton,
   NextLink,
   Text,
-} from '@siafoundation/design-system'
-import { EntityType, getEntityTypeLabel } from '../config/types'
-import { getHrefForType } from '../lib/utils'
+} from '../'
 
 type Props = {
-  value?: string
+  value: string
   displayValue?: string
-  type: EntityType | string
+  label: string
+  href?: string
   size?: React.ComponentProps<typeof Text>['size']
   maxLength?: number
   color?: React.ComponentProps<typeof Text>['color']
@@ -24,36 +23,30 @@ type Props = {
 export function ValueCopyable({
   value,
   displayValue,
-  type,
+  label,
+  href,
   maxLength = 12,
   size = '14',
   color = 'contrast',
   css,
 }: Props) {
-  const href = getHrefForType(type, value)
-
   const renderValue = displayValue || value
 
-  const label = `${renderValue.slice(0, maxLength)}${
-    renderValue.length > maxLength ? '...' : ''
+  const text = `${renderValue?.slice(0, maxLength)}${
+    (renderValue?.length || 0) > maxLength ? '...' : ''
   }`
   return (
     <Flex gap="0-5" align="center" css={css}>
       <Text size={size} weight="semibold" color={color}>
         {href ? (
           <NextLink href={href} underline="hover">
-            {label}
+            {text}
           </NextLink>
         ) : (
-          label
+          text
         )}
       </Text>
-      <IconButton
-        size="0"
-        onClick={() =>
-          copyToClipboard(value, getEntityTypeLabel(type as EntityType) || type)
-        }
-      >
+      <IconButton size="0" onClick={() => copyToClipboard(value, label)}>
         {size === '14' ? <Copy16 /> : <Copy20 />}
       </IconButton>
     </Flex>

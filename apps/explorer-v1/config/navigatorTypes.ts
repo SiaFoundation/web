@@ -1,4 +1,4 @@
-export type EntityType =
+export type NvgEntityType =
   | 'ScTx'
   | 'SfTx'
   | 'contract'
@@ -18,7 +18,7 @@ export type EntityType =
   | 'foundationsub'
   | 'unconfirmed'
 
-export const entityTypes = [
+export const nvgEntityTypes = [
   'ScTx',
   'SfTx',
   'contract',
@@ -39,7 +39,7 @@ export const entityTypes = [
   'unconfirmed',
 ]
 
-const entityTypeMap: Record<EntityType, string> = {
+const nvgEntityTypeMap: Record<NvgEntityType, string> = {
   block: 'block',
   ScTx: 'siacoin transfer',
   SfTx: 'siafund transfer',
@@ -60,7 +60,7 @@ const entityTypeMap: Record<EntityType, string> = {
   unconfirmed: 'unconfirmed',
 }
 
-const entityTypeInitialsMap: Record<EntityType, string> = {
+const nvgEntityTypeInitialsMap: Record<NvgEntityType, string> = {
   block: 'Bk',
   ScTx: 'Tx',
   SfTx: 'Tx',
@@ -81,20 +81,20 @@ const entityTypeInitialsMap: Record<EntityType, string> = {
   unconfirmed: 'Tx',
 }
 
-export function getEntityTypeLabel(txType: EntityType): string {
-  return entityTypeMap[txType]
+export function getNvgEntityTypeLabel(txType: NvgEntityType): string {
+  return nvgEntityTypeMap[txType]
 }
 
-export function getEntityTypeInitials(txType: EntityType): string {
-  return entityTypeInitialsMap[txType]
+export function getNvgEntityTypeInitials(txType: NvgEntityType): string {
+  return nvgEntityTypeInitialsMap[txType]
 }
 
-export type EntityTypeInfo<T extends EntityType> = {
+export type NvgEntityTypeInfo<T extends NvgEntityType> = {
   Type: T
   MasterHash: string
 }
 
-export type BlockInfo = {
+export type NvgBlockInfo = {
   Height: number
   Timestamp: number
   TransactionCount: number
@@ -123,7 +123,7 @@ export type BlockInfo = {
   FeeCountHastings: number
 }
 
-type ContractInfo = {
+type NvgContractInfo = {
   MasterHash: string
   ContractId: string
   AllowancePosting: string
@@ -164,7 +164,7 @@ type ContractInfo = {
   SfFees: number
 }
 
-type RevisionInfo = {
+type NvgRevisionInfo = {
   MasterHash: string
   ContractId: string
   Fees: number
@@ -185,7 +185,7 @@ type RevisionInfo = {
   HashSynonyms: string
 }
 
-type ContractResolution = {
+type NvgContractResolution = {
   MasterHash: string
   ContractId: string
   Fees: number
@@ -200,7 +200,7 @@ type ContractResolution = {
   Output2Value: number
 }
 
-type StorageProofInfo = {
+type NvgStorageProofInfo = {
   MasterHash: string
   ContractId: string
   HashSynonyms: string
@@ -209,26 +209,26 @@ type StorageProofInfo = {
   Fees: number
 }
 
-export type AddressChange = {
+export type NvgAddressChange = {
   MasterHash: string
   Address: string
   ScChange: number
   SfChange: number
   Height: number
   Timestamp: number
-  TxType: string
+  TxType: NvgEntityType
 }
 
-type UnconfirmedBalance = {
+type NvgUnconfirmedBalance = {
   Address: string
   TxHash: string
   Timestamp: number
   ScValue: number
   SfValue: number
-  TxType: string
+  TxType: NvgEntityType
 }
 
-type HostAnnInfo = {
+type NvgHostAnnInfo = {
   TxHash: string
   HashSynonyms: string
   Height: number
@@ -237,7 +237,7 @@ type HostAnnInfo = {
   IP: string
 }
 
-type TxInfo = {
+type NvgTxInfo = {
   TxHash: string
   HashSynonyms: string
   Height: number
@@ -248,12 +248,12 @@ type TxInfo = {
 export type BlockTransaction = {
   Height: number
   TxHash: string
-  TxType: EntityType
+  TxType: NvgEntityType
   TotalAmountSc: number
   TotalAmountSf: number
 }
 
-type AddressInfo = {
+type NvgAddressInfo = {
   balanceSc: number
   receivedSc: number
   sentSc: number
@@ -261,18 +261,18 @@ type AddressInfo = {
   TotalTxCount: number
   firstSeen: number | '-'
   last100Transactions: Pick<
-    AddressChange,
+    NvgAddressChange,
     'MasterHash' | 'ScChange' | 'SfChange' | 'Height' | 'Timestamp' | 'TxType'
   >[]
   pendingSc: number
   pendingSf: number
   unconfirmedTransactions: Pick<
-    UnconfirmedBalance,
+    NvgUnconfirmedBalance,
     'ScValue' | 'SfValue' | 'TxType' | 'Timestamp' | 'TxHash'
   >[]
 }
 
-type OutputInfo = {
+type NvgOutputInfo = {
   OutputId: string
   ScValue: number
   SfValue: number
@@ -283,21 +283,21 @@ type OutputInfo = {
   FoundationUnclaimed: number
 }
 
-export type AddressEntity = {
+export type NvgAddressEntity = {
   type: 'address'
-  data: [EntityTypeInfo<'address'>, AddressInfo]
+  data: [NvgEntityTypeInfo<'address'>, NvgAddressInfo]
 }
 
-export type OutputEntity = {
+export type NvgOutputEntity = {
   type: 'output'
-  data: [EntityTypeInfo<'output'>, OutputInfo]
+  data: [NvgEntityTypeInfo<'output'>, NvgOutputInfo]
 }
 
-export type BlockEntity = {
+export type NvgBlockEntity = {
   type: 'block'
   data: [
-    EntityTypeInfo<'block'>,
-    BlockInfo,
+    NvgEntityTypeInfo<'block'>,
+    NvgBlockInfo,
     {
       transactions: Pick<
         BlockTransaction,
@@ -307,154 +307,174 @@ export type BlockEntity = {
   ]
 }
 
-export type SimpleTxEntity<T extends EntityType> = {
+export type NvgSimpleTxEntity<T extends NvgEntityType> = {
   type: T
   data: [
-    EntityTypeInfo<T>,
-    Pick<TxInfo, 'HashSynonyms' | 'Height' | 'Timestamp' | 'Fees'>,
+    NvgEntityTypeInfo<T>,
+    Pick<NvgTxInfo, 'HashSynonyms' | 'Height' | 'Timestamp' | 'Fees'>,
     {
       transactions: Pick<
-        AddressChange,
+        NvgAddressChange,
         'Address' | 'ScChange' | 'SfChange' | 'TxType'
       >[]
     }
   ]
 }
-export type ScTxEntity = SimpleTxEntity<'ScTx'>
-export type SfTxEntity = SimpleTxEntity<'SfTx'>
-export type BlockRewardEntity = SimpleTxEntity<'blockreward'>
-export type AllowancePostEntity = SimpleTxEntity<'allowancePost'>
-export type CollateralPostEntity = SimpleTxEntity<'collateralPost'>
+export type NvgScTxEntity = NvgSimpleTxEntity<'ScTx'>
+export type NvgSfTxEntity = NvgSimpleTxEntity<'SfTx'>
+export type NvgBlockRewardEntity = NvgSimpleTxEntity<'blockreward'>
+export type NvgAllowancePostEntity = NvgSimpleTxEntity<'allowancePost'>
+export type NvgCollateralPostEntity = NvgSimpleTxEntity<'collateralPost'>
 
-export type HostAnnEntity = {
+export type NvgHostAnnEntity = {
   type: 'host ann'
   data: [
     // 0: type
-    EntityTypeInfo<'host ann'>,
+    NvgEntityTypeInfo<'host ann'>,
     // 1: hostanninfo
     (
       | Record<string, never>
       | Pick<
-          HostAnnInfo,
+          NvgHostAnnInfo,
           'HashSynonyms' | 'Height' | 'Timestamp' | 'Fees' | 'IP'
         >
     ),
-    { transactions: Pick<AddressChange, 'Address' | 'ScChange' | 'SfChange'>[] }
+    {
+      transactions: Pick<
+        NvgAddressChange,
+        'Address' | 'ScChange' | 'SfChange'
+      >[]
+    }
   ]
 }
 
-export type ContractEntity = {
+export type NvgContractEntity = {
   type: 'contract'
   data: [
     // 0: type
-    EntityTypeInfo<'contract'>,
+    NvgEntityTypeInfo<'contract'>,
     // 1: contract
-    ContractInfo,
+    NvgContractInfo,
     // 2: revision
-    Record<string, never> | RevisionInfo,
+    Record<string, never> | NvgRevisionInfo,
     // 3: resolution
-    Record<string, never> | ContractResolution,
+    Record<string, never> | NvgContractResolution,
     // 4: storage proof
-    Record<string, never> | StorageProofInfo,
+    Record<string, never> | NvgStorageProofInfo,
     // 5: transactions
-    { transactions: Pick<AddressChange, 'Address' | 'ScChange'>[] },
+    { transactions: Pick<NvgAddressChange, 'Address' | 'ScChange'>[] },
     // 6: atomic renewal
-    Record<string, never> | ContractInfo
+    Record<string, never> | NvgContractInfo
   ]
 }
 
-export type ContractResEntity = {
+export type NvgContractResEntity = {
   type: 'contractresol'
   data: [
     // 0: type
-    EntityTypeInfo<'contractresol'>,
+    NvgEntityTypeInfo<'contractresol'>,
     // 1: contractresolutions
-    Record<string, never> | ContractResolution,
-    { transactions: Pick<AddressChange, 'Address' | 'ScChange' | 'SfChange'>[] }
+    Record<string, never> | NvgContractResolution,
+    {
+      transactions: Pick<
+        NvgAddressChange,
+        'Address' | 'ScChange' | 'SfChange'
+      >[]
+    }
   ]
 }
 
-export type RevisionEntity = {
+export type NvgRevisionEntity = {
   type: 'revision'
   data: [
     // 0: type
-    EntityTypeInfo<'revision'>,
+    NvgEntityTypeInfo<'revision'>,
     // 1: revisioninfo
-    Record<string, never> | RevisionInfo,
-    { transactions: Pick<AddressChange, 'Address' | 'ScChange' | 'SfChange'>[] }
+    Record<string, never> | NvgRevisionInfo,
+    {
+      transactions: Pick<
+        NvgAddressChange,
+        'Address' | 'ScChange' | 'SfChange'
+      >[]
+    }
   ]
 }
 
-export type StorageProofEntity = {
+export type NvgStorageProofEntity = {
   type: 'storageproof'
   data: [
     // 0: type
-    EntityTypeInfo<'storageproof'>,
+    NvgEntityTypeInfo<'storageproof'>,
     // 1: storageproofsinfo
-    Record<string, never> | RevisionInfo,
-    { transactions: Pick<AddressChange, 'Address' | 'ScChange' | 'SfChange'>[] }
+    Record<string, never> | NvgRevisionInfo,
+    {
+      transactions: Pick<
+        NvgAddressChange,
+        'Address' | 'ScChange' | 'SfChange'
+      >[]
+    }
   ]
 }
 
-export type UnconfirmedEntity = {
+export type NvgUnconfirmedEntity = {
   type: 'unconfirmed'
   data: [
     // 0: type
-    EntityTypeInfo<'unconfirmed'>
+    NvgEntityTypeInfo<'unconfirmed'>
   ]
 }
 
-export type ErrorEntity = {
+export type NvgErrorEntity = {
   type: 'error'
   data: []
 }
 
 export type Entity =
-  | AddressEntity
-  | OutputEntity
-  | BlockEntity
-  | ScTxEntity
-  | SfTxEntity
-  | BlockRewardEntity
-  | AllowancePostEntity
-  | CollateralPostEntity
-  | HostAnnEntity
-  | ContractEntity
-  | ContractResEntity
-  | RevisionEntity
-  | StorageProofEntity
-  | UnconfirmedEntity
-  | ErrorEntity
+  | NvgAddressEntity
+  | NvgOutputEntity
+  | NvgBlockEntity
+  | NvgScTxEntity
+  | NvgSfTxEntity
+  | NvgBlockRewardEntity
+  | NvgAllowancePostEntity
+  | NvgCollateralPostEntity
+  | NvgHostAnnEntity
+  | NvgContractEntity
+  | NvgContractResEntity
+  | NvgRevisionEntity
+  | NvgStorageProofEntity
+  | NvgUnconfirmedEntity
+  | NvgErrorEntity
 
-export type EntityTx =
-  | ScTxEntity
-  | SfTxEntity
-  | BlockRewardEntity
-  | AllowancePostEntity
-  | CollateralPostEntity
-  | HostAnnEntity
-  | ContractEntity
-  | ContractResEntity
-  | RevisionEntity
-  | StorageProofEntity
+export type NvgEntityTx =
+  | NvgScTxEntity
+  | NvgSfTxEntity
+  | NvgBlockRewardEntity
+  | NvgAllowancePostEntity
+  | NvgCollateralPostEntity
+  | NvgHostAnnEntity
+  | NvgContractEntity
+  | NvgContractResEntity
+  | NvgRevisionEntity
+  | NvgStorageProofEntity
 
 // Tx entity types that have a transactions list in the 2 index of their data array
-export type EntityTxns2Index =
-  | ScTxEntity
-  | SfTxEntity
-  | BlockRewardEntity
-  | AllowancePostEntity
-  | CollateralPostEntity
-  | HostAnnEntity
+export type NvgEntityTxns2Index =
+  | NvgScTxEntity
+  | NvgSfTxEntity
+  | NvgBlockRewardEntity
+  | NvgAllowancePostEntity
+  | NvgCollateralPostEntity
+  | NvgHostAnnEntity
   // | ContractEntity
-  | ContractResEntity
-  | RevisionEntity
-  | StorageProofEntity
+  | NvgContractResEntity
+  | NvgRevisionEntity
+  | NvgStorageProofEntity
 
-export type AddressUtxo = {
+export type NvgAddressUtxo = {
   hastings?: string
   output: string
   sf?: number
 }
 
-export type AddressUtxos = AddressUtxo[]
+export type NvgAddressUtxos = NvgAddressUtxo[]

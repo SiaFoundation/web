@@ -1,5 +1,5 @@
-import { Text, Tooltip } from '@siafoundation/design-system'
-import { humanNumber, toSiacoins } from '@siafoundation/sia-js'
+import { Text, Tooltip } from '../'
+import { humanNumber } from '@siafoundation/sia-js'
 
 type Props = {
   size?: React.ComponentProps<typeof Text>['size']
@@ -8,22 +8,18 @@ type Props = {
   tooltip?: string
 }
 
-export function ValueSc({
+export function ValueSf({
   value,
   size = '14',
   tooltip = '',
   variant = 'change',
 }: Props) {
+  const formattedValue = humanNumber(String(value), {
+    units: 'SF',
+  })
+
   return (
-    <Tooltip
-      content={
-        (tooltip ? `${tooltip} ` : '') +
-        humanNumber(toSiacoins(value.toString()), {
-          fixed: 16,
-          units: 'SC',
-        })
-      }
-    >
+    <Tooltip content={(tooltip ? `${tooltip} ` : '') + formattedValue}>
       <Text
         size={size}
         weight="semibold"
@@ -40,10 +36,7 @@ export function ValueSc({
         }}
       >
         {variant === 'change' && value > 0 ? '+' : ''}
-        {humanNumber(toSiacoins(value.toString()), {
-          fixed: 2,
-          units: 'SC',
-        })}
+        {formattedValue}
       </Text>
     </Tooltip>
   )

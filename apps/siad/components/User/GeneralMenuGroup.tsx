@@ -8,6 +8,7 @@ import {
   LicenseGlobal16,
   Information16,
   Link,
+  webLinks,
 } from '@siafoundation/design-system'
 import { useDialog } from '../../contexts/dialog'
 
@@ -17,7 +18,7 @@ export function GeneralMenuGroup() {
   return (
     <DropdownMenuGroup>
       <DropdownMenuLabel>General</DropdownMenuLabel>
-      <Link href="https://github.com/SiaFoundation/siad" target="_blank">
+      <Link href={webLinks.github} target="_blank">
         <DropdownMenuItem>
           About
           <DropdownMenuRightSlot>
@@ -25,7 +26,7 @@ export function GeneralMenuGroup() {
           </DropdownMenuRightSlot>
         </DropdownMenuItem>
       </Link>
-      <Link href="https://discord.gg/sia" target="_blank">
+      <Link href={webLinks.discord} target="_blank">
         <DropdownMenuItem>
           Discord
           <DropdownMenuRightSlot>
@@ -33,7 +34,7 @@ export function GeneralMenuGroup() {
           </DropdownMenuRightSlot>
         </DropdownMenuItem>
       </Link>
-      <Link href="https://support.sia.tech" target="_blank">
+      <Link href={webLinks.docs.index} target="_blank">
         <DropdownMenuItem>
           Docs
           <DropdownMenuRightSlot>

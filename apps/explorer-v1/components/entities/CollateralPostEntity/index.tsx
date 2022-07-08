@@ -4,19 +4,19 @@ import {
   getEntityTxOutputs,
   getTotalTransacted,
 } from '../../../lib/transaction'
-import { CollateralPostEntity } from '../../../config/types'
-import { ValueItemProps } from '../../Datum'
+import { NvgCollateralPostEntity } from '../../../config/navigatorTypes'
+import { DatumProps } from '../../Datum'
 import { TxEntityLayout } from '../../TxEntityLayout'
 
 type Props = {
-  entity: CollateralPostEntity
+  entity: NvgCollateralPostEntity
 }
 
 export function CollateralPostEntity({ entity }: Props) {
   const { data } = entity
 
   const values = useMemo(() => {
-    const list: ValueItemProps[] = [
+    const list: DatumProps[] = [
       {
         label: 'Total transacted',
         sc: getTotalTransacted(entity).sc,

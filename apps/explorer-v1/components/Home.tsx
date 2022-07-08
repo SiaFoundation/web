@@ -1,6 +1,7 @@
 import {
   AnimatedPanel,
   Container,
+  EntityTypes,
   Flex,
   Grid,
   Text,
@@ -13,12 +14,17 @@ import {
 import { useMemo } from 'react'
 import { SWRResponse } from 'swr'
 import { BlockList } from '../components/BlockList'
-import { EntityList } from '../components/EntityList'
+import { EntityList } from './EntityList'
 import { HomeSkeleton } from '../components/HomeSkeleton'
-import { BlockEntity } from '../config/types'
+import {
+  getNvgEntityTypeInitials,
+  getNvgEntityTypeLabel,
+  NvgBlockEntity,
+} from '../config/navigatorTypes'
 import { useEntity } from '../hooks/useEntity'
 import { useLanding } from '../hooks/useLanding'
 import { useStatus } from '../hooks/useStatus'
+import { routes } from '../config/routes'
 
 export function Home() {
   const status = useStatus()
@@ -26,7 +32,7 @@ export function Home() {
   const height = status.data?.lastblock
   const block = useEntity(
     height ? String(height) : null
-  ) as SWRResponse<BlockEntity>
+  ) as SWRResponse<NvgBlockEntity>
 
   const values = useMemo(() => {
     if (!landing.data || !status.data || !block.data) {
@@ -164,6 +170,7 @@ export function Home() {
               height: block.Height,
               timestamp: block.Timestamp,
               miningPool: block.MiningPool,
+              href: routes.block.view.replace('[id]', String(block.Height)),
             }))}
           />
           <EntityList
@@ -171,7 +178,9 @@ export function Home() {
             entities={landing.data?.last10ScTx?.map((tx) => ({
               hash: tx.TxHash,
               height: tx.Height,
-              type: 'ScTx',
+              label: getNvgEntityTypeLabel('ScTx'),
+              initials: getNvgEntityTypeInitials('ScTx'),
+              href: routes.tx.view.replace('[id]', tx.TxHash),
             }))}
           />
           <EntityList
@@ -179,7 +188,9 @@ export function Home() {
             entities={landing.data?.last10Contracts?.map((tx) => ({
               hash: tx.TxHash,
               height: tx.Height,
-              type: tx.TxType,
+              label: getNvgEntityTypeLabel(tx.TxType),
+              initials: getNvgEntityTypeInitials(tx.TxType),
+              href: routes.tx.view.replace('[id]', tx.TxHash),
             }))}
           />
           <EntityList
@@ -187,7 +198,9 @@ export function Home() {
             entities={landing.data?.last10Others?.map((tx) => ({
               hash: tx.TxHash,
               height: tx.Height,
-              type: tx.TxType,
+              label: getNvgEntityTypeLabel(tx.TxType),
+              initials: getNvgEntityTypeInitials(tx.TxType),
+              href: routes.tx.view.replace('[id]', tx.TxHash),
             }))}
           />
         </Grid>

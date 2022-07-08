@@ -16,22 +16,27 @@ import {
   humanHashrate,
   humanNumber,
 } from '@siafoundation/sia-js'
-import { Datum, ValueItemProps } from '../../Datum'
-import { BlockEntity, EntityType } from '../../../config/types'
+import { Datum, DatumProps } from '../../Datum'
+import {
+  getNvgEntityTypeInitials,
+  getNvgEntityTypeLabel,
+  NvgBlockEntity,
+} from '../../../config/navigatorTypes'
 import { EntityList } from '../../EntityList'
 import { useMemo } from 'react'
 import { routes } from '../../../config/routes'
 import { EntityHeading } from '../../EntityHeading'
+import { getHrefForType } from '../../../lib/utils'
 
 type Props = {
-  entity: BlockEntity
+  entity: NvgBlockEntity
 }
 
 export function BlockEntity({ entity }: Props) {
   const { data } = entity
 
   const values = useMemo(() => {
-    const list: ValueItemProps[] = [
+    const list: DatumProps[] = [
       {
         label: 'Mined by',
         value: data[1].MiningPool,
@@ -59,7 +64,7 @@ export function BlockEntity({ entity }: Props) {
   }, [data])
 
   const other = useMemo(() => {
-    const list: ValueItemProps[] = [
+    const list: DatumProps[] = [
       {
         label: 'Miner arbitrary data',
         hash: data[1].MinerArbitraryData,
@@ -73,7 +78,7 @@ export function BlockEntity({ entity }: Props) {
   }, [data])
 
   const historic = useMemo(() => {
-    const list: ValueItemProps[] = [
+    const list: DatumProps[] = [
       {
         label: 'Historic contracts count',
         value: data[1].TotalContractCount.toLocaleString(),
@@ -103,7 +108,7 @@ export function BlockEntity({ entity }: Props) {
   }, [data])
 
   const active = useMemo(() => {
-    const list: ValueItemProps[] = [
+    const list: DatumProps[] = [
       {
         label: 'Active contract count',
         value: data[1].ActiveContractCount.toLocaleString(),
@@ -214,7 +219,9 @@ export function BlockEntity({ entity }: Props) {
           title={`Transactions (${data[2].transactions.length})`}
           entities={data[2].transactions.map((tx) => ({
             hash: tx.TxHash,
-            type: tx.TxType as EntityType,
+            label: getNvgEntityTypeLabel(tx.TxType),
+            initials: getNvgEntityTypeInitials(tx.TxType),
+            href: getHrefForType(tx.TxType, tx.TxHash),
             sc: BigInt(tx.TotalAmountSc),
             sf: tx.TotalAmountSf,
           }))}

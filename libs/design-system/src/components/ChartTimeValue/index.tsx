@@ -29,7 +29,7 @@ import {
   Reset24,
   Text,
   Tooltip as DsTooltip,
-} from '@siafoundation/design-system'
+} from '../../index'
 import { throttle } from 'lodash'
 import AreaChart from './AreaChart'
 import { humanNumber } from '@siafoundation/sia-js'
@@ -80,6 +80,7 @@ export type ChartProps = {
   width: number
   height: number
   margin?: { top: number; right: number; bottom: number; left: number }
+  hideBrush?: boolean
 }
 
 type TooltipData = Point
@@ -87,6 +88,7 @@ type TooltipData = Point
 const Chart = withTooltip<ChartProps, TooltipData>(
   ({
     compact = false,
+    hideBrush = false,
     datasets,
     width,
     height,
@@ -338,43 +340,45 @@ const Chart = withTooltip<ChartProps, TooltipData>(
             onMouseMove={handleTooltip}
             onMouseLeave={() => hideTooltip()}
           />
-          <AreaChart
-            hideBottomAxis
-            hideLeftAxis
-            data={dataset}
-            width={width}
-            yMax={yBrushMax}
-            xScale={brushTimeScale}
-            yScale={brushValueScale}
-            margin={brushMargin}
-            top={topChartHeight + topChartBottomMargin + margin.top}
-            gradientColor={accentColor}
-          >
-            <PatternLines
-              id={PATTERN_ID}
-              height={8}
-              width={8}
-              stroke={accentColor}
-              strokeWidth={1}
-              orientation={['diagonal']}
-            />
-            <Brush
+          {!hideBrush && (
+            <AreaChart
+              hideBottomAxis
+              hideLeftAxis
+              data={dataset}
+              width={width}
+              yMax={yBrushMax}
               xScale={brushTimeScale}
               yScale={brushValueScale}
-              width={xBrushMax}
-              height={yBrushMax}
               margin={brushMargin}
-              handleSize={8}
-              innerRef={brushRef}
-              resizeTriggerAreas={['left', 'right']}
-              brushDirection="horizontal"
-              initialBrushPosition={initialBrushPosition}
-              onChange={onBrushChange}
-              onClick={() => setFilteredDataset(dataset)}
-              selectedBoxStyle={selectedBrushStyle}
-              useWindowMoveEvents
-            />
-          </AreaChart>
+              top={topChartHeight + topChartBottomMargin + margin.top}
+              gradientColor={accentColor}
+            >
+              <PatternLines
+                id={PATTERN_ID}
+                height={8}
+                width={8}
+                stroke={accentColor}
+                strokeWidth={1}
+                orientation={['diagonal']}
+              />
+              <Brush
+                xScale={brushTimeScale}
+                yScale={brushValueScale}
+                width={xBrushMax}
+                height={yBrushMax}
+                margin={brushMargin}
+                handleSize={8}
+                innerRef={brushRef}
+                resizeTriggerAreas={['left', 'right']}
+                brushDirection="horizontal"
+                initialBrushPosition={initialBrushPosition}
+                onChange={onBrushChange}
+                onClick={() => setFilteredDataset(dataset)}
+                selectedBoxStyle={selectedBrushStyle}
+                useWindowMoveEvents
+              />
+            </AreaChart>
+          )}
           {tooltipData && (
             <g>
               <Line
@@ -475,14 +479,20 @@ type Dataset = {
 type Props = {
   datasets: Dataset[]
   height: number
+  hideBrush?: boolean
 }
 
-export function ChartTimeValue({ datasets, height }: Props) {
+export function ChartTimeValue({ datasets, height, hideBrush = false }: Props) {
   return (
     <Box css={{ height }}>
       <ParentSize>
         {({ width, height }) => (
-          <Chart datasets={datasets} width={width} height={height} />
+          <Chart
+            datasets={datasets}
+            width={width}
+            height={height}
+            hideBrush={hideBrush}
+          />
         )}
       </ParentSize>
     </Box>

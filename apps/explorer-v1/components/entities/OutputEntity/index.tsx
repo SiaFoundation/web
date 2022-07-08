@@ -1,24 +1,24 @@
 import { useMemo } from 'react'
-import { OutputEntity } from '../../../config/types'
+import { NvgOutputEntity } from '../../../config/navigatorTypes'
 import {
   AnimatedPanel,
   Badge,
   Container,
   Flex,
 } from '@siafoundation/design-system'
-import { Datum, ValueItemProps } from '../../Datum'
+import { Datum, DatumProps } from '../../Datum'
 import { EntityHeading } from '../../EntityHeading'
 import { routes } from '../../../config/routes'
 
 type Props = {
-  entity: OutputEntity
+  entity: NvgOutputEntity
 }
 
 export function OutputEntity({ entity }: Props) {
   const { data } = entity
 
   const values = useMemo(() => {
-    const list: ValueItemProps[] = [
+    const list: DatumProps[] = [
       {
         label: 'Belongs to address',
         entityType: 'address',

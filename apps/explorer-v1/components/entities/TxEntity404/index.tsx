@@ -1,4 +1,4 @@
-import { Entity, entityTypes } from '../../../config/types'
+import { Entity, nvgEntityTypes } from '../../../config/navigatorTypes'
 import { Entity404 } from '../Entity404'
 
 type Props = {
@@ -6,7 +6,7 @@ type Props = {
 }
 
 export function TxEntity404({ entity }: Props) {
-  if (!entityTypes.includes(entity.type)) {
+  if (!nvgEntityTypes.includes(entity.type)) {
     return (
       <Entity404
         message={`The transaction (${entity.type}) is either not yet confirmed or may be invalid.`}

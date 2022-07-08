@@ -44,16 +44,6 @@ export function Sidenav() {
           align="center"
           css={{ height: '100%' }}
         >
-          <NextLink href={routes.home} css={{ textDecoration: 'none' }}>
-            <Box
-              css={{
-                marginBottom: '10px',
-                transform: 'scale(1.4)',
-              }}
-            >
-              <Logo />
-            </Box>
-          </NextLink>
           <Flex direction="column" gap="4" align="center">
             {fakeWallets.map((wallet) => (
               <WalletButton key={wallet.name} {...wallet} />

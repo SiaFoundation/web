@@ -12,6 +12,7 @@ import {
   ScrollArea,
   Section,
   Separator,
+  UserDropdownMenu,
 } from '@siafoundation/design-system'
 import { SectionHeading } from '../components/SectionHeading'
 import { SubsectionHeading } from '../components/SubsectionHeading'
@@ -193,55 +194,11 @@ export function Layout() {
               padding: '$2',
             }}
           >
-            <AppBar size="3" border>
-              <Container>
-                <Flex justify="between" align="center">
-                  <Heading>Xerox</Heading>
-                  <IconButton>
-                    <DotsHorizontalIcon />
-                  </IconButton>
-                </Flex>
-              </Container>
+            <AppBar appName="Xerox" homeHref={'#'} variant="app">
+              <UserDropdownMenu />
             </AppBar>
-            <AppBar size="2" color="loContrast">
-              <Container>
-                <Flex justify="between" align="center">
-                  <Heading>Xerox</Heading>
-                  <IconButton>
-                    <DotsHorizontalIcon />
-                  </IconButton>
-                </Flex>
-              </Container>
-            </AppBar>
-            <AppBar size="1" color="plain" border glass>
-              <Container>
-                <Flex justify="between" align="center">
-                  <Heading>Xerox</Heading>
-                  <IconButton>
-                    <DotsHorizontalIcon />
-                  </IconButton>
-                </Flex>
-              </Container>
-            </AppBar>
-            <AppBar size="1" color="none" border glass>
-              <Container>
-                <Flex justify="between" align="center">
-                  <Heading>Xerox</Heading>
-                  <IconButton>
-                    <DotsHorizontalIcon />
-                  </IconButton>
-                </Flex>
-              </Container>
-            </AppBar>
-            <AppBar size="1" color="none" border>
-              <Container>
-                <Flex justify="between" align="center">
-                  <Heading>Xerox</Heading>
-                  <IconButton>
-                    <DotsHorizontalIcon />
-                  </IconButton>
-                </Flex>
-              </Container>
+            <AppBar appName="Xerox" homeHref={'#'} variant="site">
+              <UserDropdownMenu />
             </AppBar>
           </Grid>
         </Box>

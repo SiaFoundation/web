@@ -17,7 +17,6 @@ import {
   LogoDiscord24,
   LogoTwitter24,
   LogoGithub24,
-  Logo,
   PageHead,
 } from '@siafoundation/design-system'
 import { routes } from '../../config/routes'
@@ -62,55 +61,13 @@ export function Layout({ title, description, path, children }: Props) {
             overflow: 'hidden',
           }}
         >
-          <AppBar size="2" color="none">
-            <Container size="4" css={{ position: 'relative' }}>
-              <Flex align="center" justify="between" gap="3">
-                <Box
-                  css={{
-                    position: 'relative',
-                    zIndex: 1,
-                    display: 'none',
-                    '@bp1': {
-                      display: 'flex',
-                    },
-                  }}
-                >
-                  <NextLink
-                    href={routes.home.index}
-                    css={{ textDecoration: 'none' }}
-                  >
-                    <Flex align="center" gap="2">
-                      <Logo size={40} />
-                      <Box
-                        css={{
-                          height: '30px',
-                          display: 'none',
-                          '@bp3': {
-                            display: 'block',
-                          },
-                        }}
-                      >
-                        <Separator orientation="vertical" size="100" pad="0" />
-                      </Box>
-                      <Heading
-                        font="mono"
-                        size="20"
-                        css={{
-                          display: 'none',
-                          '@bp3': {
-                            display: 'block',
-                          },
-                        }}
-                      >
-                        explorer
-                      </Heading>
-                    </Flex>
-                  </NextLink>
-                </Box>
-                <Search />
-                <UserDropdownMenu />
-              </Flex>
-            </Container>
+          <AppBar
+            appName="explorer"
+            homeHref={routes.home.index}
+            variant="site"
+          >
+            <Search />
+            <UserDropdownMenu />
           </AppBar>
           <Flex direction="column" gap="8" css={{ width: '100%' }}>
             <Flex direction="column">
