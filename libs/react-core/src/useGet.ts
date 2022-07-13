@@ -4,10 +4,10 @@ import { SWRError, SWROptions } from './types'
 import { useSettings } from './useSettings'
 import { getKey } from './utils'
 
-export function useGet<T>(route: string, options?: SWROptions<T>) {
+export function useGet<T>(route: string | null, options?: SWROptions<T>) {
   const { settings } = useSettings()
   return useSWR<T, SWRError>(
-    getKey(route, options?.disabled),
+    getKey(route ? settings.password + route : null, options?.disabled),
     async () => {
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',

@@ -6,7 +6,7 @@ import { Entity404 } from '../../components/entities/Entity404'
 import { routes } from '../../config/routes'
 import { Layout } from '../../components/Layout'
 import { humanNumber } from '@siafoundation/sia-js'
-import { getTitleId } from '../../lib/utils'
+import { getTitleId } from '@siafoundation/design-system'
 
 export default function ViewBlock() {
   const router = useRouter()

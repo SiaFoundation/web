@@ -1,16 +1,21 @@
-import { AppBar } from '@siafoundation/design-system'
+import { Flex, AppBar } from '@siafoundation/design-system'
 import { routes } from '../config/routes'
 import { UserMenu } from './User/UserMenu'
 
 type Props = {
   title?: string
-  children?: React.ReactNode
+  actions?: React.ReactNode
 }
 
-export function Navbar({ title, children }: Props) {
+export function Navbar({ title, actions }: Props) {
   return (
-    <AppBar appName="siad" homeHref={routes.home} variant="app">
-      <UserMenu size="2" />
+    <AppBar appName={title} homeHref={routes.home} variant="app">
+      <Flex gap="2" align="center">
+        <Flex gap="1" align="center">
+          {actions}
+        </Flex>
+        <UserMenu size="2" />
+      </Flex>
     </AppBar>
   )
 }

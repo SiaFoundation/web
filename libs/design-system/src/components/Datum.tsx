@@ -1,22 +1,15 @@
-import {
-  Box,
-  Flex,
-  Text,
-  ValueSf,
-  ValueSc,
-  ValueCopyable,
-} from '@siafoundation/design-system'
+import { Flex, Text, ValueSf, ValueSc, ValueCopyable } from '../'
 import BigNumber from 'bignumber.js'
 import { upperFirst } from 'lodash'
-import { NvgEntityType, getNvgEntityTypeLabel } from '../config/navigatorTypes'
-import { getHrefForType } from '../lib/utils'
+import { EntityType, getEntityTypeLabel } from '../lib/entityTypes'
 
 // entityType&entityValue | value | values | sc | sf
 export type DatumProps = {
   label: string
   value?: React.ReactNode
   hash?: string
-  entityType?: NvgEntityType
+  href?: string
+  entityType?: EntityType
   entityValue?: string
   sc?: BigNumber
   sf?: number
@@ -32,6 +25,7 @@ export function Datum({
   label,
   entityType,
   entityValue,
+  href,
   value,
   hash,
   sc,
@@ -39,10 +33,17 @@ export function Datum({
   comment,
 }: DatumProps) {
   return (
-    <Flex gap="6" wrap="wrap" align="center" css={{ overflow: 'hidden' }}>
-      <Box css={{ flex: 1 }}>
+    <Flex
+      gapX="6"
+      gapY="2"
+      wrap="wrap"
+      align="center"
+      css={{ overflow: 'hidden' }}
+    >
+      <Flex css={{ position: 'relative', top: '1px', flex: 1 }}>
         <Text
           color="subtle"
+          ellipsis
           size={{
             '@initial': '12',
             '@bp1': '14',
@@ -50,7 +51,7 @@ export function Datum({
         >
           {upperFirst(label)}
         </Text>
-      </Box>
+      </Flex>
       <Flex
         direction="column"
         align={{
@@ -70,8 +71,8 @@ export function Datum({
           (entityValue ? (
             <ValueCopyable
               size={size}
-              label={getNvgEntityTypeLabel(entityType)}
-              href={getHrefForType(entityType, entityValue)}
+              label={getEntityTypeLabel(entityType)}
+              href={href}
               value={entityValue}
               displayValue={
                 entityType === 'block' && entityValue

@@ -16,9 +16,9 @@ export function useWalletSeedIndex(options?: SWROptions<string>) {
 
 export function useWalletAddress(
   address: string,
-  options?: SWROptions<string>
+  options?: SWROptions<AddressInfo>
 ) {
-  return useGet(`wallet/address/${address}`, options)
+  return useGet(address ? `wallet/address/${address}` : null, options)
 }
 
 export function useWalletAddressCreate() {

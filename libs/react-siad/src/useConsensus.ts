@@ -1,6 +1,5 @@
 import { SWROptions, useGet } from '@siafoundation/react-core'
-import { WalletBalanceResponse } from './types'
 
-export function useConsensusTip(options?: SWROptions<WalletBalanceResponse>) {
+export function useConsensusTip(options?: SWROptions<string>) {
   return useGet('consensus/tip', options)
 }

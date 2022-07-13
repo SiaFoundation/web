@@ -1,30 +1,52 @@
-import React from 'react'
-import {
-  Box,
-  ChartTimeValue,
-  EntityListItemProps,
-} from '@siafoundation/design-system'
+import React, { useMemo } from 'react'
+import { Box, ChartTimeValue, Point } from '@siafoundation/design-system'
 import { humanNumber, humanSiacoin } from '@siafoundation/sia-js'
+import {
+  useWalletBalance,
+  useWalletTransactions,
+} from '@siafoundation/react-siad'
+import BigNumber from 'bignumber.js'
 
-type Props = {
-  entities: EntityListItemProps[]
-}
+export function WalletSparkline() {
+  const balance = useWalletBalance()
+  const transactions = useWalletTransactions()
 
-export function WalletSparkline({ entities }: Props) {
-  const sc = entities
-    .map((t) => ({
-      timestamp: t.timestamp,
-      value: Number(t.sc),
-    }))
-    .sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1))
-  const sf = entities
-    .map((t) => ({
-      timestamp: t.timestamp,
-      value: t.sf,
-    }))
-    .sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1))
+  // TODO: add a proper endpoint for balance evolution
+  const sc: Point[] = useMemo(() => {
+    if (!balance.data || !transactions.data) {
+      return []
+    }
+
+    const vals: { value: BigNumber; timestamp: number }[] =
+      transactions.data?.reduce((acc, t, i) => {
+        return acc.concat({
+          value: new BigNumber(acc[i - 1]?.value || 0)
+            .plus(String(t.Inflow))
+            .minus(String(t.Outflow)),
+          timestamp: new Date(t.Timestamp).getTime(),
+        })
+      }, []) || []
+
+    if (!vals.length) {
+      return []
+    }
+
+    const lastVal = vals[vals.length - 1]
+
+    const diff = lastVal.value.minus(
+      new BigNumber(String(balance.data?.siacoins))
+    )
+
+    return vals.map((v) => ({
+      value: v.value.minus(diff).toNumber(),
+      timestamp: v.timestamp,
+    })) as Point[]
+  }, [balance, transactions])
+
+  const sf = []
+
   return (
-    <Box css={{ position: 'relative', margin: '$3 $5' }}>
+    <Box css={{ position: 'relative' }}>
       <ChartTimeValue
         datasets={[
           {

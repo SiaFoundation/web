@@ -1,0 +1,24 @@
+export function truncate(id: string, limit?: number) {
+  if (!id) {
+    return ''
+  }
+  if (limit && id.length > limit) {
+    return `${id.slice(0, limit)}...`
+  }
+  return `${id.slice(0, limit)}`
+}
+
+export function stripPrefix(hash: string) {
+  return hash.replace('addr:', '')
+}
+
+export function getTitleId(title: string, id: string, limit?: number) {
+  if (id) {
+    return `${title} ${humanId(id, limit)}`
+  }
+  return `${title}`
+}
+
+export function humanId(id: string, limit?: number) {
+  return truncate(id, limit)
+}

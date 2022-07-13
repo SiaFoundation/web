@@ -29,7 +29,7 @@ export function SelectType({ onSelect }: Props) {
           <Grid columns="2" gap="1">
             <WalletRadio
               value="create"
-              title="Create a brand new hot wallet"
+              title="Create a wallet"
               description={
                 <>
                   Generates a brand new seed. The hot wallet will automatically
@@ -39,26 +39,28 @@ export function SelectType({ onSelect }: Props) {
             />
             <WalletRadio
               value="recover"
-              title="Create a hot wallet from existing wallet seed"
+              title="Recover from seed"
               description={
                 <>
-                  Creates a hot wallet from the seed. The hot wallet will
-                  automatically sign transactions.
+                  Restores a wallet from seed. The hot wallet will automatically
+                  sign transactions.
                 </>
               }
             />
             <WalletRadio
               value="cold"
-              title="Create a cold wallet from existing wallet addresses"
+              title="Add a cold wallet"
+              disabled
               description={
                 <>
-                  Creates a cold wallet with the provided addresses. You will
+                  Creates a cold wallet from provided addresses. You will
                   manually sign transactions.
                 </>
               }
             />
             <WalletRadio
               value="ledger"
+              disabled
               title="Add a Ledger hardware wallet"
               description={
                 <>
@@ -78,11 +80,17 @@ type WalletRadioProps = {
   value: string
   title: React.ReactNode
   description: React.ReactNode
+  disabled?: boolean
 }
 
-function WalletRadio({ value, title, description }: WalletRadioProps) {
+function WalletRadio({
+  value,
+  title,
+  description,
+  disabled,
+}: WalletRadioProps) {
   return (
-    <RadioCard indicator={false} value={value}>
+    <RadioCard indicator={false} value={value} disabled={disabled}>
       <Flex direction="column" gap="1">
         <Heading size="20">{title}</Heading>
         <Paragraph size="14" color="subtle">

@@ -172,6 +172,10 @@ export const colorsDark = {
   borderRedActive: 'inset 0 0 0 1px $red7',
   borderRedHover: 'inset 0 0 0 1px $red8',
 
+  selectableBorder: 'inset 0 0 0 1px $brandGray4',
+  selectableBorderHover: 'inset 0 0 0 1px $brandGray6',
+  selectableBorderActive: 'inset 0 0 0 3px $brandAccent7',
+
   shadow: 'rgb(0 0 0 / 22%) 0px 1px 1px',
   shadowActive: 'rgb(0 0 0 / 25%) 0px 1px 1px',
 

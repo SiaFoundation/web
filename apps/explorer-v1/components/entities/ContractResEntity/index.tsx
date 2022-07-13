@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { getContractStatus, getTotalTransacted } from '../../../lib/transaction'
 import { NvgContractResEntity } from '../../../config/navigatorTypes'
-import { DatumProps } from '../../Datum'
+import { DatumProps } from '../../NvgDatum'
 import { TxEntityLayout } from '../../TxEntityLayout'
 import { EntityListItemProps } from '@siafoundation/design-system'
 import { getNvgEntityItemProps } from '../../../lib/utils'

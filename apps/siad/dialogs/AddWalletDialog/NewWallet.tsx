@@ -1,10 +1,7 @@
 import {
   Flex,
   Paragraph,
-  TextField,
   Button,
-  Label,
-  Text,
   Box,
   DialogContent,
 } from '@siafoundation/design-system'
@@ -13,6 +10,7 @@ import * as Yup from 'yup'
 import { GenerateSeed } from './GenerateSeed'
 import { useState } from 'react'
 import { VerifySeed } from './VerifySeed'
+import { FormField, FieldGroup } from '../../components/Field'
 
 const initialValues = {
   name: '',
@@ -85,7 +83,7 @@ export function NewWallet() {
             Generates a brand new seed and adds it as a hot wallet. The hot
             wallet will automatically sign transactions.
           </Paragraph>
-          <Field
+          <FormField
             formik={formik}
             title="Name"
             name="name"
@@ -100,64 +98,5 @@ export function NewWallet() {
         )}
       </FieldGroup>
     </DialogContent>
-  )
-}
-
-type FieldProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  formik: any
-  title: string
-  name: string
-  placeholder: string
-  autoComplete?: string
-  type?: string
-}
-
-function Field({
-  formik,
-  title,
-  name,
-  placeholder,
-  autoComplete,
-  type,
-}: FieldProps) {
-  return (
-    <FieldGroup formik={formik} title={title} name={name}>
-      <TextField
-        id={name}
-        name={name}
-        autoComplete={autoComplete}
-        placeholder={placeholder}
-        type={type}
-        onBlur={formik.handleBlur}
-        onChange={formik.handleChange}
-        value={formik.values[name]}
-        size="2"
-      />
-    </FieldGroup>
-  )
-}
-
-type FieldGroupProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  formik: any
-  title: string
-  name: string
-  children: React.ReactNode
-}
-
-function FieldGroup({ formik, title, name, children }: FieldGroupProps) {
-  return (
-    <Flex direction="column" gap="1">
-      <Flex justify="between">
-        <Label htmlFor={name} css={{ color: '$gray9' }}>
-          {title}
-        </Label>
-        {formik.errors[name] && formik.touched[name] && (
-          <Text css={{ color: '$red11' }}>{formik.errors[name]}</Text>
-        )}
-      </Flex>
-      {children}
-    </Flex>
   )
 }

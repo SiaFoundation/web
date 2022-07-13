@@ -9,7 +9,7 @@ import {
   ValueSf,
   ValueSc,
   ValueCopyable,
-  EntityTypes,
+  EntityType,
   getEntityTypeInitials,
   getEntityTypeLabel,
 } from '../'
@@ -24,9 +24,10 @@ import BigNumber from 'bignumber.js'
 export type EntityListItemProps = {
   label?: string
   hash?: string
+  onClick?: () => void
   href?: string
   blockHref?: string
-  type?: EntityTypes
+  type?: EntityType
   initials?: string
   sc?: BigNumber
   sf?: number
@@ -40,9 +41,10 @@ type Props = {
   title?: string
   actions?: React.ReactNode
   entities?: EntityListItemProps[]
+  emptyMessage?: string
 }
 
-export function EntityList({ title, actions, entities }: Props) {
+export function EntityList({ title, actions, entities, emptyMessage }: Props) {
   return (
     <Panel>
       <Flex
@@ -79,7 +81,7 @@ export function EntityList({ title, actions, entities }: Props) {
               css={{ height: '100px', borderTop: '1px solid $brandGray3' }}
             >
               <Text size="18" color="subtle">
-                No results
+                {emptyMessage || 'No results'}
               </Text>
             </Flex>
           )}
@@ -94,6 +96,7 @@ export function EntityList({ title, actions, entities }: Props) {
               entity.hash && (
                 <ValueCopyable
                   value={entity.hash}
+                  type={entity.type}
                   label={entity.label}
                   href={entity.href}
                   color="subtle"
@@ -106,6 +109,7 @@ export function EntityList({ title, actions, entities }: Props) {
               <Flex
                 gap="2"
                 key={entity.hash || entity.label}
+                onClick={entity.onClick}
                 css={{
                   padding: '$2 $2',
                   borderTop: '1px solid $brandGray3',
@@ -113,6 +117,7 @@ export function EntityList({ title, actions, entities }: Props) {
               >
                 <EntityAvatar
                   label={label}
+                  type={entity.type}
                   shape={entity.avatarShape}
                   initials={
                     entity.initials || getEntityTypeInitials(entity.type)

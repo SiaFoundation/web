@@ -26,12 +26,6 @@ export const TextField = styled('input', {
   color: '$hiContrast',
   fontVariantNumeric: 'tabular-nums',
 
-  '&-webkit-autofill, &:-webkit-autofill:focus': {
-    backgroundColor: '$loContrast',
-    color: '$hiContrast',
-    boxShadow: '$colors$border, $colors$shadow',
-  },
-
   '@hover': {
     '&:hover': {
       boxShadow: '$colors$borderInputHover, $colors$shadow',
@@ -41,10 +35,6 @@ export const TextField = styled('input', {
   '&:focus': {
     boxShadow:
       '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive',
-    '&:-webkit-autofill': {
-      boxShadow:
-        '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive, inset 0 0 0 100px $colors$gray3',
-    },
   },
   '&::placeholder': {
     color: '$brandGray9',
@@ -66,6 +56,26 @@ export const TextField = styled('input', {
     },
   },
 
+  '&:-webkit-autofill': {
+    boxShadow:
+      '$colors$border, $colors$shadow, 0 0 0px 1000px $colors$loContrast inset',
+    transition: 'background-color 5000s ease-in-out 0s',
+  },
+  '&:-webkit-autofill:hover': {
+    boxShadow:
+      '$colors$borderInputHover, $colors$shadow, 0 0 0px 1000px $colors$loContrast inset',
+    transition: 'background-color 5000s ease-in-out 0s',
+  },
+  '&:-webkit-autofill:focus': {
+    boxShadow:
+      '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive, 0 0 0px 1000px $colors$loContrast inset',
+    transition: 'background-color 5000s ease-in-out 0s',
+  },
+
+  '&:-webkit-autofill::first-line': {
+    color: '$hiContrast',
+  },
+
   variants: {
     size: {
       '1': {
@@ -75,11 +85,7 @@ export const TextField = styled('input', {
         padding: '0 $1',
         lineHeight: '$sizes$3-5',
         '&:-webkit-autofill::first-line': {
-          color: '$hiContrast',
           fontSize: '$12',
-        },
-        '&:-webkit-autofill': {
-          boxShadow: '$colors$border, $colors$shadow',
         },
         '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
           position: 'relative',
@@ -93,11 +99,7 @@ export const TextField = styled('input', {
         padding: '0 $1-5',
         lineHeight: '$sizes$5',
         '&:-webkit-autofill::first-line': {
-          color: '$hiContrast',
           fontSize: '$16',
-        },
-        '&:-webkit-autofill': {
-          boxShadow: '$colors$border, $colors$shadow',
         },
         '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
           position: 'relative',
@@ -111,11 +113,7 @@ export const TextField = styled('input', {
         padding: '0 $1-5',
         lineHeight: '$sizes$6',
         '&:-webkit-autofill::first-line': {
-          color: '$hiContrast',
-          fontSize: '$24 !important',
-        },
-        '&:-webkit-autofill': {
-          boxShadow: '$colors$border, $colors$shadow',
+          fontSize: '$24',
         },
         '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
           position: 'relative',

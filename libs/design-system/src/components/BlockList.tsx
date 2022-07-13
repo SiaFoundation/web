@@ -6,7 +6,6 @@ import {
   Text,
   getEntityTypeInitials,
   getEntityTypeLabel,
-  EntityTypes,
 } from '../'
 import { humanNumber } from '@siafoundation/sia-js'
 import { formatDistance } from 'date-fns'
@@ -55,8 +54,8 @@ export function BlockList({ title, blocks }: Props) {
               }}
             >
               <EntityAvatar
-                label={getEntityTypeLabel(EntityTypes.block)}
-                initials={getEntityTypeInitials(EntityTypes.block)}
+                label={getEntityTypeLabel('block')}
+                initials={getEntityTypeInitials('block')}
                 href={block.href}
                 shape="square"
               />

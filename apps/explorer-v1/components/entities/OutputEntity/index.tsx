@@ -6,7 +6,7 @@ import {
   Container,
   Flex,
 } from '@siafoundation/design-system'
-import { Datum, DatumProps } from '../../Datum'
+import { NvgDatum, DatumProps } from '../../NvgDatum'
 import { EntityHeading } from '../../EntityHeading'
 import { routes } from '../../../config/routes'
 import BigNumber from 'bignumber.js'
@@ -85,7 +85,7 @@ export function OutputEntity({ entity }: Props) {
             </Flex>
             <Flex direction="column" gapY="3">
               {values.map((item) => (
-                <Datum key={item.label} {...item} />
+                <NvgDatum key={item.label} {...item} />
               ))}
             </Flex>
           </Flex>

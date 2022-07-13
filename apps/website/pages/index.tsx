@@ -12,11 +12,11 @@ import {
   Section,
   SiteHeading,
   getImageProps,
-  Link,
   Flex,
   Text,
   usePullTop,
   webLinks,
+  NextLink,
 } from '@siafoundation/design-system'
 import { Layout } from '../components/Layout'
 import { sitemap } from '../config/site'
@@ -30,7 +30,6 @@ import { textContent } from '../lib/utils'
 import Letter from '../components/Letter'
 import { JiggleArrow } from '../components/JiggleArrow'
 import { getTutorials } from '../content/tutorials'
-import { getStats } from '../content/stats'
 
 const tutorials = getTutorials()
 const services = getSoftware('storage_services', 4)
@@ -107,9 +106,9 @@ export default function Home({ featured, seenLetter }: Props) {
             )}
             <Flex gap="2" css={{ marginTop: '$1' }}>
               <Text size="20">
-                <Link href={sitemap.developers.index}>
+                <NextLink href={sitemap.developers.index}>
                   Download the software →
-                </Link>
+                </NextLink>
               </Text>
             </Flex>
           </SiteHeading>
@@ -291,15 +290,15 @@ export async function getServerSideProps({ req }) {
   // Software and tutorials are smaller fixed lists so they are imported directy
   // so entire file is included in bundle and cached.
   const featured = getArticles(['sia-featured'], 5)
-  const stats = await getStats()
 
   return {
     props: {
       featured,
       seenLetter,
-      fallback: {
-        '/api/stats': stats,
-      },
+      // Because this page is SSR'd, do not block requests with slow stats query
+      // fallback: {
+      //   '/api/stats': stats,
+      // },
     },
   }
 }

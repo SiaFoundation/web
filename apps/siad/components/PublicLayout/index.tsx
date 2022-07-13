@@ -1,4 +1,4 @@
-import { Container, Flex } from '@siafoundation/design-system'
+import { AppBackdrop, Box, Container, Flex } from '@siafoundation/design-system'
 import React, { useEffect } from 'react'
 import { Navbar } from '../Navbar'
 import { routes } from '../../config/routes'
@@ -22,10 +22,13 @@ export function PublicLayout({ children }: Props) {
 
   return (
     <RootLayout>
-      <Flex css={{ height: '100%', background: '$loContrast' }}>
+      <AppBackdrop />
+      <Flex css={{ height: '100%' }}>
         <Flex direction="column" css={{ flex: 1 }}>
           <Navbar />
-          <Container>{children}</Container>
+          <Box css={{ flex: 1 }}>
+            <Container css={{ height: '100%' }}>{children}</Container>
+          </Box>
         </Flex>
       </Flex>
     </RootLayout>

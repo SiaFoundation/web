@@ -2,7 +2,7 @@
 import { EntityListItemProps } from '@siafoundation/design-system'
 import { humanBytes, humanNumber } from '@siafoundation/sia-js'
 import { useMemo } from 'react'
-import { DatumProps } from '../../Datum'
+import { DatumProps } from '../../NvgDatum'
 import { getContractStatus } from '../../../lib/transaction'
 import { NvgContractEntity } from '../../../config/navigatorTypes'
 import { TxEntityLayout } from '../../TxEntityLayout'

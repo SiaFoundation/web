@@ -9,6 +9,8 @@ import { LinkData } from '../../lib/links'
 import React, { useEffect, useState } from 'react'
 
 type Props = {
+  appName: string
+  homeHref: string
   navbar?: React.ReactNode
   menuLinks: LinkData[]
   externalLinks?: LinkData[]
@@ -22,6 +24,8 @@ type Props = {
 }
 
 export function SiteLayout({
+  appName,
+  homeHref,
   menuLinks,
   externalLinks,
   navbar,
@@ -97,9 +101,9 @@ export function SiteLayout({
           }}
         >
           {navbar && (
-            <AppBar size="3" color="none">
-              <Container size="4">{navbar}</Container>
-            </AppBar>
+            <Container size="4" css={{ py: '$3' }}>
+              {navbar}
+            </Container>
           )}
           <Flex
             as="main"

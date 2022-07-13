@@ -3,9 +3,9 @@ import {
   Container,
   Flex,
   Skeleton,
+  DatumSkeleton,
 } from '@siafoundation/design-system'
 import { times } from 'lodash'
-import { DatumSkeleton } from '../../DatumSkeleton'
 
 export function OutputEntitySkeleton() {
   return (

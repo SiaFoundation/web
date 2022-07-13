@@ -52,6 +52,12 @@ const StyledRadio = styled(RadioGroupPrimitive.Item, {
       transform: 'scale(1)',
     },
   },
+  '&:disabled': {
+    pointerEvents: 'none',
+    backgroundColor: '$brandGray2',
+    opacity: '0.5',
+    cursor: 'not-allowed',
+  },
 })
 
 type RadioGroupItemPrimitiveProps = React.ComponentProps<

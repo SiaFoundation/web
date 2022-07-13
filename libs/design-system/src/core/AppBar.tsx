@@ -9,10 +9,10 @@ import {
 } from '../index'
 
 type Props = {
-  appName: string
+  appName?: string
   homeHref: string
   children: React.ReactNode
-  variant: 'site' | 'app'
+  variant?: 'site' | 'app'
 }
 
 export function AppBar({
@@ -51,29 +51,34 @@ export function AppBar({
             <NextLink href={homeHref} css={{ textDecoration: 'none' }}>
               <Flex align="center" gap={variant === 'site' ? '2' : '3'}>
                 <Logo size={40} />
-                <Box
-                  css={{
-                    height: '30px',
-                    display: 'none',
-                    '@bp3': {
-                      display: 'block',
-                    },
-                  }}
-                >
-                  <Separator orientation="vertical" size="100" pad="0" />
-                </Box>
-                <Heading
-                  font="mono"
-                  size="20"
-                  css={{
-                    display: 'none',
-                    '@bp3': {
-                      display: 'block',
-                    },
-                  }}
-                >
-                  {appName}
-                </Heading>
+                {appName && (
+                  <>
+                    <Box
+                      css={{
+                        height: '30px',
+                        display: 'none',
+                        '@bp3': {
+                          display: 'block',
+                        },
+                      }}
+                    >
+                      <Separator orientation="vertical" size="100" pad="0" />
+                    </Box>
+                    <Heading
+                      font="mono"
+                      size="20"
+                      css={{
+                        display: 'none',
+                        paddingLeft: variant === 'site' ? 0 : '$0-5',
+                        '@bp3': {
+                          display: 'block',
+                        },
+                      }}
+                    >
+                      {appName}
+                    </Heading>
+                  </>
+                )}
               </Flex>
             </NextLink>
           </Box>

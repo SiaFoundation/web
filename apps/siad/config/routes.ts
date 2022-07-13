@@ -1,9 +1,13 @@
 export const routes = {
   home: '/',
   wallet: {
-    index: '/wallet',
     view: '/wallet/[id]',
+    receive: '/wallet/[id]/receive',
   },
-  advanced: '/advanced',
+  node: {
+    index: '/node',
+    txPool: '/node/txpool',
+    peers: '/node/peers',
+  },
   unlock: '/unlock',
 }

@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Datum, DatumProps } from './Datum'
+import { NvgDatum, DatumProps } from './NvgDatum'
 import { getContractConditions } from '../lib/transaction'
 import { NvgContractEntity, NvgRevisionEntity } from '../config/navigatorTypes'
 import {
@@ -61,7 +61,7 @@ export function ContractConditionsSection({ entity }: Props) {
               <Heading size="20">Success</Heading>
               <Flex direction="column" gap="3">
                 {success.map((item) => (
-                  <Datum key={item.label} {...item} />
+                  <NvgDatum key={item.label} {...item} />
                 ))}
               </Flex>
             </Flex>
@@ -69,7 +69,7 @@ export function ContractConditionsSection({ entity }: Props) {
               <Heading size="20">Failure</Heading>
               <Flex direction="column" gap="3">
                 {failure.map((item) => (
-                  <Datum key={item.label} {...item} />
+                  <NvgDatum key={item.label} {...item} />
                 ))}
               </Flex>
             </Flex>

@@ -27,7 +27,7 @@ const validationSchema = Yup.object().shape({
   index: Yup.number().integer().required('Required'),
 })
 
-export function AddAddressDialog() {
+export function WalletAddAddressDialog() {
   const { closeDialog } = useDialog()
   const addAddress = useWalletAddressCreate()
 

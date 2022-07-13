@@ -57,6 +57,9 @@ export * from './components/ValueSc'
 export * from './components/EntityList'
 export * from './components/EntityAvatar'
 export * from './components/BlockList'
+export * from './components/Datum'
+export * from './components/DatumLarge'
+export * from './components/DatumSkeleton'
 
 export * from './data/webLinks'
 
@@ -80,6 +83,7 @@ export * from './lib/clipboard'
 export * from './lib/image'
 export * from './lib/links'
 export * from './lib/entityTypes'
+export * from './lib/utils'
 
 export * from './icons'
 export * from './icons/LogoMenuIcon'

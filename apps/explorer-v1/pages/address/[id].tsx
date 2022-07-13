@@ -5,7 +5,7 @@ import { AddressEntitySkeleton } from '../../components/entities/AddressEntitySk
 import { Entity404 } from '../../components/entities/Entity404'
 import { routes } from '../../config/routes'
 import { Layout } from '../../components/Layout'
-import { getTitleId } from '../../lib/utils'
+import { getTitleId } from '@siafoundation/design-system'
 
 export default function ViewAddress() {
   const router = useRouter()

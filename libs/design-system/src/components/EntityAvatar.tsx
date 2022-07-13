@@ -3,14 +3,14 @@ import {
   Box,
   NextLink,
   Tooltip,
-  EntityTypes,
+  EntityType,
   getEntityTypeInitials,
   getEntityTypeLabel,
 } from '../'
 
 type Props = {
   initials?: string
-  type?: EntityTypes
+  type?: EntityType
   label?: string
   href?: string
   shape?: 'square' | 'circle'

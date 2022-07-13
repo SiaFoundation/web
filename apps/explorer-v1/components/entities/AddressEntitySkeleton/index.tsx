@@ -8,9 +8,9 @@ import {
   TabsList,
   TabsTrigger,
   EntityList,
+  DatumSkeleton,
 } from '@siafoundation/design-system'
 import { times } from 'lodash'
-import { DatumSkeleton } from '../../DatumSkeleton'
 
 export function AddressEntitySkeleton() {
   return (

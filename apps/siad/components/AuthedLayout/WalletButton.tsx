@@ -1,19 +1,8 @@
-import {
-  Avatar,
-  Flex,
-  Snowflake16,
-  Text,
-  Usb16,
-} from '@siafoundation/design-system'
+import { Avatar, Flex, Snowflake16, Usb16 } from '@siafoundation/design-system'
+import { Wallet } from '../../contexts/wallets'
 import { useRouter } from 'next/router'
 import { routes } from '../../config/routes'
-
-type Props = {
-  name: string
-  sf?: string
-  sc: string
-  type: 'hot' | 'cold' | 'hw'
-}
+import { WalletBalance } from '../WalletBalance'
 
 const colorMap = {
   hw: '$green4',
@@ -30,11 +19,12 @@ const variantMap: Record<
   hot: 'red',
 }
 
-export function WalletButton({ name, sc, sf, type }: Props) {
+export function WalletButton(wallet: Wallet) {
+  const { id, name, type } = wallet
   const router = useRouter()
   const color = colorMap[type]
   const variant = variantMap[type]
-  const route = routes.wallet.view.replace('[id]', name)
+  const route = routes.wallet.view.replace('[id]', id)
   return (
     <Flex
       direction="column"
@@ -62,10 +52,8 @@ export function WalletButton({ name, sc, sf, type }: Props) {
           {type === 'hw' ? <Usb16 /> : <Snowflake16 />}
         </Flex>
       )}
-      <Avatar interactive fallback={name} variant={variant} />
-      <Text size="10" weight="semibold">
-        {sc} {sf && ` / ${sf}`}
-      </Text>
+      <Avatar interactive fallback={name.slice(0, 4)} variant={variant} />
+      <WalletBalance size="10" wallet={wallet} />
     </Flex>
   )
 }

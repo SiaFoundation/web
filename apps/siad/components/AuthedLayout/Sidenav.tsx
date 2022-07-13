@@ -5,8 +5,6 @@ import {
   Flex,
   IconButton,
   Locked32,
-  Logo,
-  NextLink,
   Panel,
   Separator,
   Tooltip,
@@ -14,13 +12,14 @@ import {
 import { useSettings } from '@siafoundation/react-core'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
-import { fakeWallets } from '../../lib/fakeWallets'
+import { useWallets } from '../../contexts/wallets'
 import { WalletButton } from './WalletButton'
 import { useRouter } from 'next/router'
 
 export function Sidenav() {
   const { setSettings } = useSettings()
   const { openDialog } = useDialog()
+  const { wallets } = useWallets()
   const router = useRouter()
   return (
     <Box
@@ -45,7 +44,7 @@ export function Sidenav() {
           css={{ height: '100%' }}
         >
           <Flex direction="column" gap="4" align="center">
-            {fakeWallets.map((wallet) => (
+            {wallets.data?.map((wallet) => (
               <WalletButton key={wallet.name} {...wallet} />
             ))}
           </Flex>
@@ -59,7 +58,7 @@ export function Sidenav() {
           <Tooltip align="start" content="Advanced blockchain view">
             <IconButton
               variant="ghost"
-              onClick={() => router.push(routes.advanced)}
+              onClick={() => router.push(routes.node.index)}
             >
               <Blockchain32 />
             </IconButton>
@@ -67,7 +66,10 @@ export function Sidenav() {
           <Tooltip align="start" content="Lock siad">
             <IconButton
               variant="ghost"
-              onClick={() => setSettings({ password: '' })}
+              onClick={() => {
+                setSettings({ password: '' })
+                router.replace(routes.home)
+              }}
             >
               <Locked32 />
             </IconButton>

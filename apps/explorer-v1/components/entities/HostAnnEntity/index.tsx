@@ -5,7 +5,7 @@ import {
   getTotalTransacted,
 } from '../../../lib/transaction'
 import { NvgHostAnnEntity } from '../../../config/navigatorTypes'
-import { DatumProps } from '../../Datum'
+import { DatumProps } from '../../NvgDatum'
 import { TxEntityLayout } from '../../TxEntityLayout'
 import { ValueCopyable } from '@siafoundation/design-system'
 
