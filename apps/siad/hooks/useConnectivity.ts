@@ -5,17 +5,10 @@ export function useConnectivity() {
 
   const connError = w.error
 
-  console.log(connError)
-
-  // Any error fetching wallet data means daemon is not connected
-  const daemon = !connError
-
-  // const wallet = !!w.data?.unlocked
-  const wallet = !!w.data
+  const daemon = connError?.status !== 504
+  const wallet = !w.error
 
   return {
-    all: daemon && wallet,
-    connections: daemon,
     daemon,
     wallet,
   }

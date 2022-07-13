@@ -17,6 +17,8 @@ function App({ Component, pageProps }: AppProps) {
         <title>Sia - Design system</title>
       </Head>
       <SiteLayout
+        appName="Design system"
+        homeHref="/"
         menuLinks={[
           {
             link: '/',

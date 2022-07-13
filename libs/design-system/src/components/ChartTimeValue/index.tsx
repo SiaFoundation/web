@@ -3,12 +3,7 @@ import { Line, Bar } from '@visx/shape'
 import { GridColumns, GridRows } from '@visx/grid'
 import { scaleTime, scaleLinear } from '@visx/scale'
 import { PatternLines } from '@visx/pattern'
-import {
-  withTooltip,
-  Tooltip,
-  TooltipWithBounds,
-  defaultStyles,
-} from '@visx/tooltip'
+import { withTooltip, TooltipWithBounds, defaultStyles } from '@visx/tooltip'
 import { Brush } from '@visx/brush'
 import { Bounds } from '@visx/brush/lib/types'
 import BaseBrush, {
@@ -21,17 +16,11 @@ import { LinearGradient } from '@visx/gradient'
 import { max, extent, bisector, min } from 'd3-array'
 import { timeFormat } from 'd3-time-format'
 import ParentSize from '@visx/responsive/lib/components/ParentSize'
-import {
-  Box,
-  Button,
-  Close24,
-  Flex,
-  Reset24,
-  Text,
-  Tooltip as DsTooltip,
-} from '../../index'
+import { Box, Button, Flex, Text, Tooltip as DsTooltip } from '../../index'
 import { throttle } from 'lodash'
 import AreaChart from './AreaChart'
+import { Reset16 } from '@carbon/icons-react'
+import { Panel } from '../../core/Panel'
 
 const background = 'var(--colors-panel)'
 // export const background = 'transparent'
@@ -157,7 +146,8 @@ const Chart = withTooltip<ChartProps, TooltipData>(
     const topChartBottomMargin = compact
       ? chartSeparation / 2
       : chartSeparation + 10
-    const topChartHeight = 0.8 * innerHeight - topChartBottomMargin
+    const topChartHeight =
+      (hideBrush ? 1 : 0.8) * innerHeight - topChartBottomMargin
     const bottomChartHeight = innerHeight - topChartHeight - chartSeparation
 
     // bounds
@@ -285,7 +275,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
     if (width < 10) return null
 
     return (
-      <Box css={{ position: 'relative' }}>
+      <Box>
         <svg width={width} height={height}>
           <LinearGradient
             id={GRADIENT_ID}
@@ -427,23 +417,21 @@ const Chart = withTooltip<ChartProps, TooltipData>(
               left={tooltipLeft + 12}
               style={tooltipStyles}
             >
-              {selectedDataset?.formatValue(getPointValue(tooltipData))}
+              <Flex direction="column" gap="0-5" align="end">
+                <Text color="subtle" size="10">
+                  {formatDate(getPointTime(tooltipData))}
+                </Text>
+                <Text font="mono">
+                  {selectedDataset?.formatValue(getPointValue(tooltipData))}
+                </Text>
+              </Flex>
             </TooltipWithBounds>
-            <Tooltip
-              top={innerHeight + margin.top - 14}
-              left={tooltipLeft}
-              style={{
-                ...tooltipStyles,
-                minWidth: 72,
-                textAlign: 'center',
-                transform: 'translateX(-50%)',
-              }}
-            >
-              <Text>{formatDate(getPointTime(tooltipData))}</Text>
-            </Tooltip>
           </Box>
         )}
-        <Flex gap="1" css={{ position: 'absolute', top: '$1-5', left: '$1-5' }}>
+        <Flex
+          gap="1"
+          css={{ position: 'absolute', top: '$1-5', right: '$1-5' }}
+        >
           {datasets.map(({ name }) => (
             <DsTooltip key={name} content={`Select ${name} dataset`}>
               <Button
@@ -454,21 +442,13 @@ const Chart = withTooltip<ChartProps, TooltipData>(
               </Button>
             </DsTooltip>
           ))}
-        </Flex>
-        <Flex
-          gap="1"
-          css={{ position: 'absolute', top: '$1-5', right: '$1-5' }}
-        >
-          <DsTooltip content="Clear time range selection">
-            <Button onClick={handleClearClick}>
-              <Close24 />
-            </Button>
-          </DsTooltip>
-          <DsTooltip content="Reset to default time range selection">
-            <Button onClick={handleResetClick}>
-              <Reset24 />
-            </Button>
-          </DsTooltip>
+          {!hideBrush && (
+            <DsTooltip content="Reset to default time range selection">
+              <Button onClick={handleResetClick}>
+                <Reset16 />
+              </Button>
+            </DsTooltip>
+          )}
         </Flex>
       </Box>
     )
@@ -489,7 +469,7 @@ type Props = {
 
 export function ChartTimeValue({ datasets, height, hideBrush = false }: Props) {
   return (
-    <Box css={{ position: 'relative', height }}>
+    <Panel css={{ height, padding: '1px' }}>
       <ParentSize>
         {({ width, height }) => (
           <Chart
@@ -500,6 +480,6 @@ export function ChartTimeValue({ datasets, height, hideBrush = false }: Props) {
           />
         )}
       </ParentSize>
-    </Box>
+    </Panel>
   )
 }

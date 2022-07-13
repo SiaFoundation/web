@@ -3,6 +3,7 @@ import {
   copyToClipboard,
   Flex,
   Heading,
+  humanId,
   IconButton,
   NextLink,
 } from '@siafoundation/design-system'
@@ -22,10 +23,8 @@ export function EntityHeading({ label, type, value, href }: Props) {
       <Heading css={{ display: 'inline' }} ellipsis>
         {upperFirst(label)}{' '}
         <NextLink href={href} underline="hover">
-          {type === 'block'
-            ? Number(value).toLocaleString()
-            : value.slice(0, 15)}
-          {value.length > 20 ? '...' : ''}
+          {type === 'block' && Number(value).toLocaleString()}
+          {type !== 'block' && humanId(value, 15)}
         </NextLink>
       </Heading>
       <IconButton

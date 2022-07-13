@@ -2,6 +2,7 @@ import React from 'react'
 import { AreaClosed } from '@visx/shape'
 import { Group } from '@visx/group'
 import { curveStep } from '@visx/curve'
+import { MarkerCircle } from '@visx/marker'
 import { AxisLeft, AxisBottom, AxisScale } from '@visx/axis'
 import { LinearGradient } from '@visx/gradient'
 import { getPointTime, getPointValue, Point } from '.'
@@ -52,6 +53,12 @@ export default function AreaChart({
   if (width < 10) return null
   return (
     <Group left={left || margin.left} top={top || margin.top}>
+      <MarkerCircle
+        id="marker-circle"
+        fill="var(--colors-brandAccent11)"
+        size={1.5}
+        refX={1.5}
+      />
       <LinearGradient
         id="gradient"
         from={gradientColor}
@@ -67,6 +74,7 @@ export default function AreaChart({
         strokeWidth={1}
         stroke="url(#gradient)"
         fill="url(#gradient)"
+        markerMid="url(#marker-circle)"
         curve={curveStep}
       />
       {!hideBottomAxis && (

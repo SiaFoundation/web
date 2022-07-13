@@ -8,12 +8,17 @@ type Post<T> = {
   param?: string
 }
 
-type PostError = {
+type Response<T> = {
   status: number
-  error: string
+  data?: T
+  error?: string
 }
 
-export function usePost<P, R>(route: string, deps?: string[]) {
+type UsePost<P, R> = {
+  post: (p: Post<P>) => Promise<Response<R>>
+}
+
+export function usePost<P, R>(route: string, deps?: string[]): UsePost<P, R> {
   const { settings } = useSettings()
   return {
     post: async ({ payload, param = '' }: Post<P>) => {
@@ -24,21 +29,24 @@ export function usePost<P, R>(route: string, deps?: string[]) {
         headers['Authorization'] = 'Basic ' + btoa(`:${settings.password}`)
       }
       try {
-        const response = await axios.post<P, R>(
-          `/api/${route}/${param}`,
+        const response = await axios.post<R>(
+          param ? `/api/${route}/${param}` : `/api/${route}`,
           payload,
           {
             headers,
           }
         )
         deps?.forEach((dep) => mutate(getKey(dep)))
-        return response
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return {
+          status: response.status,
+          data: response.data,
+        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         return {
           status: e.response.status,
           error: e.response.data,
-        } as PostError
+        } as Response<R>
       }
     },
   }

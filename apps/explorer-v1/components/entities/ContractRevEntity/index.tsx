@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { DatumProps } from '../../Datum'
+import { DatumProps } from '../../NvgDatum'
 import {
   getEntityTxInputs,
   getEntityTxOutputs,

@@ -4,9 +4,9 @@ import {
   Flex,
   Skeleton,
   EntityList,
+  DatumSkeleton,
 } from '@siafoundation/design-system'
 import { times } from 'lodash'
-import { DatumSkeleton } from '../../DatumSkeleton'
 
 export function BlockEntitySkeleton() {
   return (

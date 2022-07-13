@@ -4,7 +4,7 @@ import {
   getTotalTransacted,
 } from '../../../lib/transaction'
 import { NvgBlockRewardEntity } from '../../../config/navigatorTypes'
-import { DatumProps } from '../../Datum'
+import { DatumProps } from '../../NvgDatum'
 import { TxEntityLayout } from '../../TxEntityLayout'
 import { EntityListItemProps } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'

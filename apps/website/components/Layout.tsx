@@ -54,6 +54,8 @@ export function Layout({
         path={path}
       />
       <SiteLayout
+        appName="Sia"
+        homeHref={sitemap.home.index}
         focus={focus}
         transitions={transitions}
         transitionDuration={transitionDuration}

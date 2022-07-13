@@ -1,4 +1,4 @@
-import { Box, Flex, Skeleton } from '@siafoundation/design-system'
+import { Box, Flex, Skeleton } from '../'
 
 export function DatumSkeleton() {
   return (

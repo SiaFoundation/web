@@ -13,8 +13,8 @@ import {
   EntityList,
   EntityListItemProps,
 } from '@siafoundation/design-system'
-import { humanNumber } from '@siafoundation/sia-js'
-import { Datum, DatumProps } from '../../Datum'
+import { humanNumber, humanSiacoin } from '@siafoundation/sia-js'
+import { NvgDatum, DatumProps } from '../../NvgDatum'
 import {
   getNvgEntityTypeInitials,
   getNvgEntityTypeLabel,
@@ -160,7 +160,7 @@ export function AddressEntity({ entity }: Props) {
               </Flex>
               <Flex direction="column" gapY="3">
                 {values.map((item) => (
-                  <Datum key={item.label} {...item} />
+                  <NvgDatum key={item.label} {...item} />
                 ))}
               </Flex>
             </Flex>
@@ -189,10 +189,12 @@ export function AddressEntity({ entity }: Props) {
                 {
                   name: 'SC',
                   dataset: balanceHistory.data?.scJson || [],
+                  formatValue: (v) => humanSiacoin(v),
                 },
                 {
                   name: 'SF',
                   dataset: balanceHistory.data?.sfJson || [],
+                  formatValue: (v) => humanNumber(v, { units: 'SF' }),
                 },
               ]}
               height={300}

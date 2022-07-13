@@ -50,3 +50,7 @@ export function humanSiacoin(
 
   return null
 }
+
+export function humanSiafund(siafunds: number) {
+  return siafunds.toLocaleString() + ' SF'
+}

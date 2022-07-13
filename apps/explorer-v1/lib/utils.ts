@@ -18,13 +18,6 @@ export function getHrefForType(type: string, value: string) {
   }
 }
 
-export function getTitleId(title: string, id: string, limit?: number) {
-  if (id) {
-    return `${title} ${id.slice(0, limit)}`
-  }
-  return `${title}`
-}
-
 export function getNvgEntityItemProps(
   type: NvgEntityType,
   props: EntityListItemProps

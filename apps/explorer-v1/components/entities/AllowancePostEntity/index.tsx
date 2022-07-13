@@ -5,7 +5,7 @@ import {
   getTotalTransacted,
 } from '../../../lib/transaction'
 import { NvgAllowancePostEntity } from '../../../config/navigatorTypes'
-import { DatumProps } from '../../Datum'
+import { DatumProps } from '../../NvgDatum'
 import { TxEntityLayout } from '../../TxEntityLayout'
 
 type Props = {

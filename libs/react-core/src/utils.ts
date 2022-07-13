@@ -1,5 +1,5 @@
-export function getKey(name: string, disabled?: boolean) {
-  if (disabled) {
+export function getKey(name: string | null, disabled?: boolean) {
+  if (!name || disabled) {
     return null
   }
 

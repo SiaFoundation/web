@@ -4,12 +4,11 @@ import {
   Container,
   Flex,
   Grid,
-  Panel,
   Skeleton,
   EntityList,
+  DatumSkeleton,
 } from '@siafoundation/design-system'
 import { times } from 'lodash'
-import { DatumSkeleton } from '../../DatumSkeleton'
 
 export function TxEntitySkeleton() {
   return (

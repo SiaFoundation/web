@@ -5,7 +5,7 @@ import { OutputEntitySkeleton } from '../../components/entities/OutputEntitySkel
 import { Entity404 } from '../../components/entities/Entity404'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
-import { getTitleId } from '../../lib/utils'
+import { getTitleId } from '@siafoundation/design-system'
 
 export default function ViewOutput() {
   const router = useRouter()

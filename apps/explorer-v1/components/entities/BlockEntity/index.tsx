@@ -17,7 +17,7 @@ import {
   humanHashrate,
   humanNumber,
 } from '@siafoundation/sia-js'
-import { Datum, DatumProps } from '../../Datum'
+import { NvgDatum, DatumProps } from '../../NvgDatum'
 import {
   getNvgEntityTypeInitials,
   getNvgEntityTypeLabel,
@@ -52,8 +52,7 @@ export function BlockEntity({ entity }: Props) {
       },
       {
         label: 'Block hash',
-        entityType: 'block',
-        entityValue: data[1].Hash,
+        hash: data[1].Hash,
       },
       {
         label: 'Miner payout address',
@@ -169,7 +168,7 @@ export function BlockEntity({ entity }: Props) {
               </Flex>
               <Flex direction="column" gapY="3">
                 {values.map((item) => (
-                  <Datum key={item.label} {...item} />
+                  <NvgDatum key={item.label} {...item} />
                 ))}
               </Flex>
               <Accordion type="single">
@@ -183,7 +182,7 @@ export function BlockEntity({ entity }: Props) {
                         <Heading size="20">Active</Heading>
                         <Flex direction="column" gap="3">
                           {active.map((item) => (
-                            <Datum key={item.label} {...item} />
+                            <NvgDatum key={item.label} {...item} />
                           ))}
                         </Flex>
                       </Flex>
@@ -191,7 +190,7 @@ export function BlockEntity({ entity }: Props) {
                         <Heading size="20">Historic</Heading>
                         <Flex direction="column" gap="3">
                           {historic.map((item) => (
-                            <Datum key={item.label} {...item} />
+                            <NvgDatum key={item.label} {...item} />
                           ))}
                         </Flex>
                       </Flex>
@@ -205,7 +204,7 @@ export function BlockEntity({ entity }: Props) {
                   <AccordionContent>
                     <Flex direction="column" gap="3" css={{ padding: '$3 0' }}>
                       {other.map((item) => (
-                        <Datum key={item.label} {...item} />
+                        <NvgDatum key={item.label} {...item} />
                       ))}
                     </Flex>
                   </AccordionContent>

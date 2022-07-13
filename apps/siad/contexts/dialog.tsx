@@ -1,8 +1,11 @@
-import { Dialog } from '@siafoundation/design-system'
 import React, { createContext, useContext, useCallback, useState } from 'react'
-import { AddAddressDialog } from '../dialogs/AddAddressDialog'
+import { WalletAddAddressDialog } from '../dialogs/WalletAddAddressDialog'
+import { AddressDetailsDialog } from '../dialogs/AddressDetailsDialog'
 import { AddWalletDialog } from '../dialogs/AddWalletDialog'
+import { ControlledDialog } from '../dialogs/ControlledDialog'
 import { PrivacyDialog } from '../dialogs/PrivacyDialog'
+import { TransactionDetailsDialog } from '../dialogs/TransactionDetailsDialog'
+import { SyncerConnectPeerDialog } from '../dialogs/SyncerConnectPeerDialog'
 
 const DialogContext = createContext({} as State)
 export const useDialog = () => useContext(DialogContext)
@@ -11,57 +14,65 @@ type Props = {
   children: React.ReactNode
 }
 
-type Dialog = 'privacy' | 'addAddress' | 'addWallet'
+export type DialogType =
+  | 'privacy'
+  | 'addAddress'
+  | 'addWallet'
+  | 'transactionDetails'
+  | 'addressDetails'
+  | 'connectPeer'
 
 type State = {
-  dialog?: Dialog
-  openDialog: (dialog: Dialog) => void
-  setDialog: (dialog?: Dialog) => void
+  dialog?: DialogType
+  id?: string
+  openDialog: (dialog: DialogType, id?: string) => void
   closeDialog: () => void
 }
 
 export function DialogProvider({ children }: Props) {
-  const [dialog, setDialog] = useState<Dialog>()
+  const [dialog, setDialog] = useState<DialogType>()
+  const [id, setId] = useState<string>()
 
   const openDialog = useCallback(
-    (dialog: Dialog) => {
+    (dialog: DialogType, id?: string) => {
       setDialog(dialog)
+      setId(id)
     },
-    [setDialog]
+    [setDialog, setId]
   )
 
   const closeDialog = useCallback(() => {
     setDialog(undefined)
-  }, [setDialog])
+    setId(undefined)
+  }, [setDialog, setId])
 
   const value: State = {
     dialog,
+    id,
     openDialog,
-    setDialog,
     closeDialog,
   }
 
   return (
     <DialogContext.Provider value={value}>
-      {/* <Dialog
-        open={dialog === 'privacy'}
-        onOpenChange={(val) => setDialog(val ? 'privacy' : undefined)}
-      >
-        <DialogTrigger asChild>
-          <Button onClick={() => openDialog('privacy')}>foo</Button>
-        </DialogTrigger>
-        <DialogTrigger asChild>
-          <Box css={{ display: 'none' }} />
-        </DialogTrigger> 
+      <ControlledDialog dialog="privacy">
         <PrivacyDialog />
-      </Dialog> */}
-      <PrivacyDialog />
-      <Dialog open={dialog === 'addWallet'} onOpenChange={() => closeDialog()}>
+      </ControlledDialog>
+      <ControlledDialog dialog="transactionDetails">
+        <TransactionDetailsDialog />
+      </ControlledDialog>
+      <ControlledDialog dialog="addWallet">
         <AddWalletDialog />
-      </Dialog>
-      <Dialog open={dialog === 'addAddress'} onOpenChange={() => closeDialog()}>
-        <AddAddressDialog />
-      </Dialog>
+      </ControlledDialog>
+      <ControlledDialog dialog="addAddress">
+        <WalletAddAddressDialog />
+      </ControlledDialog>
+      <ControlledDialog dialog="addressDetails">
+        <AddressDetailsDialog />
+      </ControlledDialog>
+      <ControlledDialog dialog="connectPeer">
+        <SyncerConnectPeerDialog />
+      </ControlledDialog>
       {children}
     </DialogContext.Provider>
   )

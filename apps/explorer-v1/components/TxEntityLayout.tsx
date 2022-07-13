@@ -4,11 +4,10 @@ import {
   Container,
   Flex,
   Grid,
-  Panel,
   EntityList,
   EntityListItemProps,
 } from '@siafoundation/design-system'
-import { Datum, DatumProps } from './Datum'
+import { NvgDatum, DatumProps } from './NvgDatum'
 import { NvgEntityTx } from '../config/navigatorTypes'
 import { TxEntityHeader } from './TxEntityHeader'
 
@@ -44,7 +43,7 @@ export function TxEntityLayout({
             <TxEntityHeader entity={entity} />
             <Flex direction="column" gapY="3">
               {values.map((item) => (
-                <Datum key={item.label} {...item} />
+                <NvgDatum key={item.label} {...item} />
               ))}
             </Flex>
             {details}

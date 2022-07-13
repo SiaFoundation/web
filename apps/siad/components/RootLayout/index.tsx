@@ -1,22 +1,13 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Box, Toaster } from '@siafoundation/design-system'
-import { routes } from '../../config/routes'
-import { useSettings } from '@siafoundation/react-core'
-import { useRouter } from 'next/router'
+import { useMonitorConnAndLock } from '../../hooks/useMonitorConnAndLock'
 
 type Props = {
   children: React.ReactNode
 }
 
 export function RootLayout({ children }: Props) {
-  const router = useRouter()
-  const { settings } = useSettings()
-
-  useEffect(() => {
-    if (router.pathname !== routes.unlock && !settings.password) {
-      router.replace(routes.unlock)
-    }
-  }, [router, settings])
+  useMonitorConnAndLock()
 
   return (
     <Box>

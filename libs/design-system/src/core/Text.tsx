@@ -7,7 +7,7 @@ export const Text = styled('span', {
   fontFamily: '$sans',
   lineHeight: '1',
   // avoid clipping decenders when overflow is hidden
-  paddingBottom: '0.14em',
+  padding: '0.14em 0',
 
   variants: {
     font: {

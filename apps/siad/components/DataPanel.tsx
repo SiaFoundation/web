@@ -28,7 +28,9 @@ export function DataPanel({ title, data, actions }: Props) {
     <Panel css={{ padding: '$3' }}>
       <Flex direction="column" gap="3">
         <Flex gap="3" justify="between" align="center">
-          <Heading size="20">{title}</Heading>
+          <Heading size="20" font="mono">
+            {title}
+          </Heading>
           {actions && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

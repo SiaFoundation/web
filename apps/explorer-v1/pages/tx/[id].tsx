@@ -13,8 +13,9 @@ import { SfTxEntity } from '../../components/entities/SfTxEntity'
 import { TxEntitySkeleton } from '../../components/entities/TxEntitySkeleton'
 import { TxEntity404 } from '../../components/entities/TxEntity404'
 import { routes } from '../../config/routes'
-import { getHrefForType, getTitleId } from '../../lib/utils'
+import { getHrefForType } from '../../lib/utils'
 import { Layout } from '../../components/Layout'
+import { getTitleId } from '@siafoundation/design-system'
 
 const typeToComponent = {
   contract: ContractForEntity,
