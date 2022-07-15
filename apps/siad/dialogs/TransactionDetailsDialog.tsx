@@ -7,7 +7,7 @@ import {
   ValueSc,
   Text,
 } from '@siafoundation/design-system'
-import { useWalletTransactions } from '@siafoundation/react-renterd'
+import { useWalletTransactions } from '@siafoundation/react-core'
 import { humanDate } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
 import { useDialog } from '../contexts/dialog'
@@ -17,7 +17,7 @@ export function TransactionDetailsDialog() {
 
   // TODO: add transaction endpoint
   const transactions = useWalletTransactions()
-  const transaction = transactions.data?.find((t) => String(t.ID) === id)
+  const transaction = transactions.data?.find((t) => t.ID === id)
 
   if (transactions.data && !transaction) {
     return (
@@ -49,7 +49,7 @@ export function TransactionDetailsDialog() {
           </Flex>
           <Flex gap="1">
             <Text>Outflow</Text>
-            <ValueSc value={new BigNumber(-transaction?.Outflow)} />
+            <ValueSc value={new BigNumber(transaction?.Outflow).negated()} />
           </Flex>
           <Flex gap="1">
             <Text>Miner fee</Text>

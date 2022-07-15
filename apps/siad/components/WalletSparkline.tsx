@@ -4,7 +4,7 @@ import { humanNumber, humanSiacoin } from '@siafoundation/sia-js'
 import {
   useWalletBalance,
   useWalletTransactions,
-} from '@siafoundation/react-siad'
+} from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 
 export function WalletSparkline() {
@@ -21,8 +21,8 @@ export function WalletSparkline() {
       transactions.data?.reduce((acc, t, i) => {
         return acc.concat({
           value: new BigNumber(acc[i - 1]?.value || 0)
-            .plus(String(t.Inflow))
-            .minus(String(t.Outflow)),
+            .plus(t.Inflow)
+            .minus(t.Outflow),
           timestamp: new Date(t.Timestamp).getTime(),
         })
       }, []) || []
@@ -33,9 +33,7 @@ export function WalletSparkline() {
 
     const lastVal = vals[vals.length - 1]
 
-    const diff = lastVal.value.minus(
-      new BigNumber(String(balance.data?.siacoins))
-    )
+    const diff = lastVal.value.minus(balance.data?.siacoins)
 
     return vals.map((v) => ({
       value: v.value.minus(diff).toNumber(),

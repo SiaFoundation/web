@@ -10,7 +10,7 @@ import {
   truncate,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
-import { useWalletTransactions } from '@siafoundation/react-siad'
+import { useWalletTransactions } from '@siafoundation/react-core'
 import { AuthedLayout } from '../../../components/AuthedLayout'
 import { Wallet } from '../../../components/User/Wallet'
 import { WalletSparkline } from '../../../components/WalletSparkline'
@@ -35,10 +35,10 @@ export default function WalletView() {
         ?.map((t): EntityListItemProps => {
           return {
             type: 'transaction',
-            hash: String(t.ID),
+            hash: t.ID,
             timestamp: new Date(t.Timestamp).getTime(),
-            onClick: () => openDialog('transactionDetails', String(t.ID)),
-            sc: new BigNumber(String(t.Inflow)).minus(String(t.Outflow)),
+            onClick: () => openDialog('transactionDetails', t.ID),
+            sc: new BigNumber(t.Inflow).minus(t.Outflow),
           }
         })
         .sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1)) || [],

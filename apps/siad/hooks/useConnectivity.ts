@@ -1,4 +1,4 @@
-import { useWalletBalance } from '@siafoundation/react-siad'
+import { useWalletBalance } from '@siafoundation/react-core'
 
 export function useConnectivity() {
   const w = useWalletBalance()

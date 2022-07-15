@@ -1,4 +1,4 @@
-import { Transaction } from '@siafoundation/react-siad'
+import { Transaction } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 
 export type EntityType = 'transaction' | 'block' | 'output' | 'address' | 'ip'

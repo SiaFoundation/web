@@ -1,5 +1,7 @@
-import { useGet, SWROptions, usePost } from '@siafoundation/react-core'
-import { SyncerConnectRequest, SyncerPeerResponse } from './types'
+import { useGet } from './useGet'
+import { usePost } from './usePost'
+import { SWROptions } from './types'
+import { SyncerConnectRequest, SyncerPeerResponse } from './siaTypes'
 
 const syncerPeers = 'syncer/peers'
 

@@ -1,5 +1,5 @@
 import { EntityList, getTransactionTotals } from '@siafoundation/design-system'
-import { useTxPoolTransactions } from '@siafoundation/react-siad'
+import { useTxPoolTransactions } from '@siafoundation/react-core'
 
 export function TxPoolList() {
   const txPool = useTxPoolTransactions()

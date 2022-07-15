@@ -4,7 +4,7 @@ import {
   getTitleId,
   Text,
 } from '@siafoundation/design-system'
-import { useWalletAddress } from '@siafoundation/react-siad'
+import { useWalletAddress } from '@siafoundation/react-core'
 import { AddressCode } from '../components/AddressCode'
 import { useDialog } from '../contexts/dialog'
 

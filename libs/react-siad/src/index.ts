@@ -1,5 +1,1 @@
-export * from './types'
-export * from './useSyncer'
-export * from './useWallet'
-export * from './useTxPool'
-export * from './useConsensus'
+export const foo = 1

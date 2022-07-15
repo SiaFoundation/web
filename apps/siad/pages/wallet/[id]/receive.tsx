@@ -10,7 +10,7 @@ import {
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
-import { useWalletAddresses } from '@siafoundation/react-siad'
+import { useWalletAddresses } from '@siafoundation/react-core'
 import { AuthedLayout } from '../../../components/AuthedLayout'
 import { Wallet } from '../../../components/User/Wallet'
 import { useWallets } from '../../../contexts/wallets'

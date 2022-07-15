@@ -6,7 +6,7 @@ import {
   DialogContent,
   triggerToast,
 } from '@siafoundation/design-system'
-import { useSyncerConnect } from '@siafoundation/react-siad'
+import { useSyncerConnect } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
 import { useDialog } from '../contexts/dialog'
 import * as Yup from 'yup'

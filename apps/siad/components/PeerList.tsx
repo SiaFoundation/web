@@ -1,5 +1,5 @@
 import { Button, EntityList } from '@siafoundation/design-system'
-import { useSyncerPeers } from '@siafoundation/react-siad'
+import { useSyncerPeers } from '@siafoundation/react-core'
 import { useDialog } from '../contexts/dialog'
 
 export function PeerList() {
