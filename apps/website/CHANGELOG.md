@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.23.0](https://github.com/SiaFoundation/web/compare/website-0.22.4...website-0.23.0) (2022-07-15)
+
+
+### Features
+
+* extract data components, spike siad ([a6f7159](https://github.com/SiaFoundation/web/commit/a6f71593796ed763486e2556104ea71598f0e208))
+
+
+
 ## [0.22.4](https://github.com/SiaFoundation/web/compare/website-0.22.3...website-0.22.4) (2022-07-06)
 
 
