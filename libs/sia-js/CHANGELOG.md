@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.4.0](https://github.com/SiaFoundation/web/compare/sia-js-0.3.0...sia-js-0.4.0) (2022-07-15)
+
+
+### Features
+
+* extract data components, spike siad ([a6f7159](https://github.com/SiaFoundation/web/commit/a6f71593796ed763486e2556104ea71598f0e208))
+* spike on siad, align on bignumber ([da05988](https://github.com/SiaFoundation/web/commit/da0598867dcf56006ed912d21486a9ab6da4ab47))
+
+
+
 # [0.3.0](https://github.com/SiaFoundation/web/compare/sia-js-0.2.5...sia-js-0.3.0) (2022-06-23)
 
 
