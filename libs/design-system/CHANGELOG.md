@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.31.0](https://github.com/SiaFoundation/web/compare/design-system-0.30.3...design-system-0.31.0) (2022-07-15)
+
+
+### Features
+
+* extract data components, spike siad ([a6f7159](https://github.com/SiaFoundation/web/commit/a6f71593796ed763486e2556104ea71598f0e208))
+* extract explorer components ([f9a66f4](https://github.com/SiaFoundation/web/commit/f9a66f431d6e3cf38b65c8d5b23fe8b48b7576c5))
+* spike on siad, align on bignumber ([da05988](https://github.com/SiaFoundation/web/commit/da0598867dcf56006ed912d21486a9ab6da4ab47))
+
+
+
 ## [0.30.3](https://github.com/SiaFoundation/web/compare/design-system-0.30.2...design-system-0.30.3) (2022-07-06)
 
 
