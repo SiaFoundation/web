@@ -15,7 +15,7 @@ export function ControlledDialog({ dialog, children }: Props) {
       open={dialog === activeDialog}
       onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
     >
-      {children}
+      {dialog === activeDialog && children}
     </Dialog>
   )
 }

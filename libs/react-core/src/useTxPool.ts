@@ -1,5 +1,7 @@
-import { SWROptions, useGet, usePost } from '@siafoundation/react-core'
-import { Transaction, TxpoolBroadcastRequest } from './types'
+import { useGet } from './useGet'
+import { usePost } from './usePost'
+import { SWROptions } from './types'
+import { Transaction, TxpoolBroadcastRequest } from './siaTypes'
 
 export function useTxPoolTransactions(options?: SWROptions<Transaction[]>) {
   return useGet('txpool/transactions', options)

@@ -1,7 +1,7 @@
 import { toSiacoins } from '@siafoundation/sia-js'
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
-import { useWalletBalance } from '@siafoundation/react-siad'
+import { useWalletBalance } from '@siafoundation/react-core'
 
 type Props = {
   isOffer?: boolean

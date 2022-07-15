@@ -17,7 +17,7 @@ import { useWallets } from '../contexts/wallets'
 import {
   useSyncerPeers,
   useTxPoolTransactions,
-} from '@siafoundation/react-siad'
+} from '@siafoundation/react-core'
 
 export default function HomePage() {
   const { openDialog } = useDialog()
@@ -27,7 +27,7 @@ export default function HomePage() {
   const txPool = useTxPoolTransactions()
   return (
     <AuthedLayout
-      title=""
+      title="siad"
       actions={
         <Button
           size="2"

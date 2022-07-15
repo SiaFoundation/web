@@ -1,5 +1,5 @@
 import { Flex, Panel, Separator, Text } from '@siafoundation/design-system'
-import { useWalletBalance } from '@siafoundation/react-siad'
+import { useWalletBalance } from '@siafoundation/react-core'
 
 export function Wallet() {
   const { data: wallet } = useWalletBalance()

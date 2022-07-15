@@ -1,3 +1,2 @@
-export * from './types'
-export * from './useSyncer'
-export * from './useWallet'
+// placeholder
+export const foo = 1

@@ -1,10 +1,12 @@
-import { SWROptions, useGet, usePost } from '@siafoundation/react-core'
+import { useGet } from './useGet'
+import { usePost } from './usePost'
+import { SWROptions } from './types'
 import {
   AddressInfo,
-  Transaction,
   WalletBalanceResponse,
+  WalletTransaction,
   WalletUTXOsResponse,
-} from './types'
+} from './siaTypes'
 
 export function useWalletBalance(options?: SWROptions<WalletBalanceResponse>) {
   return useGet('wallet/balance', options)
@@ -32,7 +34,9 @@ export function useWalletAddresses(options?: SWROptions<string[]>) {
   return useGet('wallet/addresses', options)
 }
 
-export function useWalletTransactions(options?: SWROptions<Transaction[]>) {
+export function useWalletTransactions(
+  options?: SWROptions<WalletTransaction[]>
+) {
   return useGet('wallet/transactions', options)
 }
 

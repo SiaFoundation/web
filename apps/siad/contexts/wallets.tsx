@@ -1,5 +1,4 @@
-import { useWalletBalance } from '@siafoundation/react-siad'
-import { toHastings } from '@siafoundation/sia-js'
+import { useWalletBalance } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 import React, {
   createContext,
@@ -68,7 +67,7 @@ export function WalletsProvider({ children }: Props) {
           {
             id: 'default',
             name: 'Default',
-            sc: new BigNumber(String(wallet.data.siacoins)),
+            sc: new BigNumber(wallet.data.siacoins),
             sf: wallet.data.siafunds,
             type: 'hot' as WalletType,
           },

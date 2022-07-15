@@ -4,13 +4,9 @@ import (
 	"os"
 
 	"github.com/OneOfOne/struct2ts"
-	"go.sia.tech/siad/v2/api/siad"
-	"go.sia.tech/siad/v2/wallet"
 )
 
 var missing = `
-type Hash256 = string;
-type Signature = string;
 `
 
 func check(e error) {
@@ -25,16 +21,8 @@ func GenerateTypes() {
 		InterfaceOnly: true,
 	})
 
-	converter.Add(siad.WalletBalanceResponse{})
-	converter.Add(wallet.AddressInfo{})
-	converter.Add(siad.WalletUTXOsResponse{})
-	converter.Add(siad.TxpoolBroadcastRequest{})
-	converter.Add(wallet.Transaction{})
-	converter.Add(siad.SyncerPeerResponse{})
-	converter.Add(siad.SyncerConnectRequest{})
-	// converter.Add(siad.ConsensusTipResponse{})
 
-	f, err := os.Create("libs/react-siad/src/types.ts")
+	f, err := os.Create("libs/react-siad/src/rawTypes.ts")
 	check(err)
 	defer f.Close()
 	err = converter.RenderTo(f)

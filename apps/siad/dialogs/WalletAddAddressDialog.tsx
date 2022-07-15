@@ -7,7 +7,7 @@ import {
   Text,
   DialogContent,
 } from '@siafoundation/design-system'
-import { useWalletAddressCreate } from '@siafoundation/react-siad'
+import { useWalletAddressCreate } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
 import { useDialog } from '../contexts/dialog'
 import * as Yup from 'yup'

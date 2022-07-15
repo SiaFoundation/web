@@ -3,7 +3,7 @@ import {
   useConsensusTip,
   useSyncerPeers,
   useTxPoolTransactions,
-} from '@siafoundation/react-siad'
+} from '@siafoundation/react-core'
 import { PeerList } from '../../components/PeerList'
 import { TxPoolList } from '../../components/TxPoolList'
 import { routes } from '../../config/routes'
