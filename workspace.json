@@ -9,6 +9,7 @@
     "explorer-v1": "apps/explorer-v1",
     "react-core": "libs/react-core",
     "react-renterd": "libs/react-renterd",
+    "react-hostd": "libs/react-hostd",
     "react-siad": "libs/react-siad",
     "sia-js": "libs/sia-js",
     "sia-nodejs": "libs/sia-nodejs",
