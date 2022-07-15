@@ -20,6 +20,7 @@
       "@siafoundation/env": ["libs/env/src/index.ts"],
       "@siafoundation/react-core": ["libs/react-core/src/index.ts"],
       "@siafoundation/react-renterd": ["libs/react-renterd/src/index.ts"],
+      "@siafoundation/react-hostd": ["libs/react-hostd/src/index.ts"],
       "@siafoundation/react-siad": ["libs/react-siad/src/index.ts"],
       "@siafoundation/sia-js": ["libs/sia-js/src/index.ts"],
       "@siafoundation/sia-nodejs": ["libs/sia-nodejs/src/index.ts"],
