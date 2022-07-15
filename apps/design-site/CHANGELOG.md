@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.18.0](https://github.com/SiaFoundation/web/compare/design-site-0.17.1...design-site-0.18.0) (2022-07-15)
+
+
+### Features
+
+* extract data components, spike siad ([a6f7159](https://github.com/SiaFoundation/web/commit/a6f71593796ed763486e2556104ea71598f0e208))
+* extract explorer components ([f9a66f4](https://github.com/SiaFoundation/web/commit/f9a66f431d6e3cf38b65c8d5b23fe8b48b7576c5))
+
+
+
 ## [0.17.1](https://github.com/SiaFoundation/web/compare/design-site-0.17.0...design-site-0.17.1) (2022-07-06)
 
 
