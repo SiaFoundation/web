@@ -85,7 +85,7 @@ export function EntityList({ title, actions, entities, emptyMessage }: Props) {
               </Text>
             </Flex>
           )}
-          {entities?.map((entity) => {
+          {entities?.map((entity, i) => {
             const sc = entity.sc
             const sf = entity.sf
             const truncHashEl = entity.unconfirmed ? (
@@ -108,7 +108,7 @@ export function EntityList({ title, actions, entities, emptyMessage }: Props) {
             return (
               <Flex
                 gap="2"
-                key={entity.hash || entity.label}
+                key={entity.hash || entity.label || i}
                 onClick={entity.onClick}
                 css={{
                   padding: '$2 $2',

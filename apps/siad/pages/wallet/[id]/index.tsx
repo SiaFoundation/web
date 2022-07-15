@@ -36,7 +36,7 @@ export default function WalletView() {
           return {
             type: 'transaction',
             hash: String(t.ID),
-            timestamp: t.Timestamp.getTime(),
+            timestamp: new Date(t.Timestamp).getTime(),
             onClick: () => openDialog('transactionDetails', String(t.ID)),
             sc: new BigNumber(String(t.Inflow)).minus(String(t.Outflow)),
           }
