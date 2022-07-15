@@ -10,7 +10,7 @@ export function TxPoolList() {
       emptyMessage="No transactions in pool"
       entities={txPool.data?.map((t) => ({
         type: 'transaction',
-        hash: String(t.ID),
+        unconfirmed: true,
         sc: getTransactionTotals(t).sc,
         sf: getTransactionTotals(t).sf,
       }))}

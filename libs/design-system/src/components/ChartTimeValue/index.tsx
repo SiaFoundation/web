@@ -48,7 +48,7 @@ const selectedBrushStyle = {
 const throttled = throttle((func: () => void) => func(), 15)
 
 // util
-const formatDate = timeFormat("%b %d, '%y")
+const formatDate = timeFormat('%x %X')
 
 // accessors
 export const getPointTime = (d: Point) => new Date(d?.timestamp || 0)
