@@ -64,7 +64,7 @@ const StyledSelect = styled('select', {
   width: '100%',
   height: '100%',
   pl: '$1',
-  pr: '$2',
+  pr: '$1',
   lineHeight: '25px',
 })
 

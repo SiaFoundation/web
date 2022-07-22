@@ -53,7 +53,7 @@ const formatDate = timeFormat('%x %X')
 // accessors
 export const getPointTime = (d: Point) => new Date(d?.timestamp || 0)
 export const getPointValue = (d: Point) => d?.value || 0
-const bisectDate = bisector<Point, Date>(
+export const bisectDate = bisector<Point, Date>(
   (d) => new Date(d?.timestamp || 0)
 ).left
 
@@ -64,6 +64,7 @@ export type Point = {
 
 export type ChartProps = {
   compact?: boolean
+  curve?: 'step' | 'monotone'
   datasets: Dataset[]
   width: number
   height: number
@@ -77,6 +78,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
   ({
     compact = false,
     hideBrush = false,
+    curve,
     datasets,
     width,
     height,
@@ -210,13 +212,13 @@ const Chart = withTooltip<ChartProps, TooltipData>(
       [dataset, brushTimeScale]
     )
 
-    // event handlers
-    const handleClearClick = () => {
-      if (brushRef?.current) {
-        setFilteredDataset(dataset)
-        brushRef.current.reset()
-      }
-    }
+    // // event handlers
+    // const handleClearClick = () => {
+    //   if (brushRef?.current) {
+    //     setFilteredDataset(dataset)
+    //     brushRef.current.reset()
+    //   }
+    // }
 
     const handleResetClick = () => {
       if (brushRef?.current) {
@@ -297,7 +299,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
             width={innerWidth}
             strokeDasharray="1,3"
             stroke={accentColor}
-            strokeOpacity={0}
+            strokeOpacity={0.2}
             pointerEvents="none"
           />
           <GridColumns
@@ -320,7 +322,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
             // strokeWidth={1}
             // stroke="url(#area-gradient)"
             // fill="url(#area-gradient)"
-            // curve={curveMonotoneX}
+            curve={curve}
             width={width}
             yMax={yMax}
             gradientColor={accentColor}
@@ -346,6 +348,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
               yMax={yBrushMax}
               xScale={brushTimeScale}
               yScale={brushValueScale}
+              curve={curve}
               margin={brushMargin}
               top={topChartHeight + topChartBottomMargin + margin.top}
               gradientColor={accentColor}
@@ -465,9 +468,15 @@ type Props = {
   datasets: Dataset[]
   height: number
   hideBrush?: boolean
+  curve?: 'step' | 'monotone'
 }
 
-export function ChartTimeValue({ datasets, height, hideBrush = false }: Props) {
+export function ChartTimeValue({
+  datasets,
+  height,
+  hideBrush = false,
+  curve,
+}: Props) {
   return (
     <Panel css={{ height, padding: '1px' }}>
       <ParentSize>
@@ -477,6 +486,7 @@ export function ChartTimeValue({ datasets, height, hideBrush = false }: Props) {
             width={width}
             height={height}
             hideBrush={hideBrush}
+            curve={curve}
           />
         )}
       </ParentSize>

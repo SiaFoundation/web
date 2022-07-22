@@ -1,4 +1,4 @@
-import { Flex, Text, ValueSf, ValueSc, ValueCopyable } from '../'
+import { Flex, Text, ValueSf, ValueSc, ValueCopyable, Tooltip } from '..'
 import BigNumber from 'bignumber.js'
 import { upperFirst } from 'lodash'
 import { Panel } from '../core/Panel'
@@ -6,7 +6,7 @@ import { EntityType, getEntityTypeLabel } from '../lib/entityTypes'
 
 // entityType&entityValue | value | values | sc | sf
 type Props = {
-  label: string
+  label: React.ReactNode
   value?: React.ReactNode
   hash?: string
   href?: string
@@ -15,6 +15,8 @@ type Props = {
   sc?: BigNumber
   sf?: number
   comment?: React.ReactNode
+  commentTip?: React.ReactNode
+  actions?: React.ReactNode
   onClick?: () => void
 }
 
@@ -27,14 +29,22 @@ export function DatumCard({
   label,
   entityType,
   entityValue,
+  actions,
   href,
   value,
   hash,
   sc,
   sf,
   comment,
+  commentTip,
   onClick,
 }: Props) {
+  const commentEl = (
+    <Text color="subtle" size="12" css={{ height: '$3' }}>
+      {comment}
+    </Text>
+  )
+
   return (
     <Panel>
       <Flex
@@ -47,14 +57,13 @@ export function DatumCard({
           cursor: onClick ? 'pointer' : undefined,
         }}
       >
-        <Flex
-          direction="column"
-          gap="2"
-          wrap="wrap"
-          align="start"
-          css={{ overflow: 'hidden' }}
-        >
-          <Flex css={{ position: 'relative', top: '1px', flex: 1 }}>
+        <Flex direction="column" gap="2" wrap="wrap" align="start">
+          <Flex
+            css={{ position: 'relative', top: '1px', flex: 1, width: '100%' }}
+            gap="3"
+            align="center"
+            justify="between"
+          >
             <Text
               color="subtle"
               ellipsis
@@ -63,8 +72,9 @@ export function DatumCard({
                 '@bp1': '14',
               }}
             >
-              {upperFirst(label)}
+              {typeof label === 'string' ? upperFirst(label) : label}
             </Text>
+            {actions}
           </Flex>
           <Flex
             direction="column"
@@ -80,7 +90,7 @@ export function DatumCard({
             }}
           >
             {sc !== undefined && (
-              <ValueSc size={size} variant="value" value={sc} />
+              <ValueSc size={size} variant="value" value={sc} fixed={0} />
             )}
             {sf !== undefined && (
               <ValueSf size={size} variant="value" value={sf} />
@@ -113,10 +123,10 @@ export function DatumCard({
                 {value}
               </Text>
             )}
-            {comment && (
-              <Text color="subtle" size="12">
-                {comment}
-              </Text>
+            {commentEl && commentTip ? (
+              <Tooltip content={commentTip}>{commentEl}</Tooltip>
+            ) : (
+              commentEl
             )}
           </Flex>
         </Flex>

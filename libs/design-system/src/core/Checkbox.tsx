@@ -2,6 +2,8 @@ import React from 'react'
 import { styled, CSS, VariantProps } from '../config/theme'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import { Checkmark16 } from '../icons'
+import { Text } from './Text'
+import { Flex } from './Flex'
 
 const StyledCheckbox = styled(CheckboxPrimitive.Root, {
   all: 'unset',
@@ -78,10 +80,15 @@ type CheckboxProps = CheckboxPrimitiveProps & CheckboxVariants & { css?: CSS }
 export const Checkbox = React.forwardRef<
   React.ElementRef<typeof StyledCheckbox>,
   CheckboxProps
->((props, forwardedRef) => (
-  <StyledCheckbox {...props} ref={forwardedRef}>
-    <StyledIndicator>
-      <Checkmark16 />
-    </StyledIndicator>
-  </StyledCheckbox>
+>(({ children, ...props }, forwardedRef) => (
+  <Flex gap="1">
+    <StyledCheckbox {...props} ref={forwardedRef}>
+      <StyledIndicator>
+        <Checkmark16 />
+      </StyledIndicator>
+    </StyledCheckbox>
+    <Text css={{ color: props.disabled ? '$gray9' : '$hiContrast' }}>
+      {children}
+    </Text>
+  </Flex>
 ))

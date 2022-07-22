@@ -1,6 +1,8 @@
 import React from 'react'
 import { styled, keyframes, CSS, VariantProps } from '../config/theme'
 import * as ProgressPrimitive from '@radix-ui/react-progress'
+import { Flex } from './Flex'
+import { Text } from './Text'
 
 const indeterminateProgress = keyframes({
   '0%': {
@@ -21,6 +23,7 @@ const StyledProgressBar = styled(ProgressPrimitive.Root, {
   boxSizing: 'border-box',
   position: 'relative',
   height: '$0-5',
+  width: '100%',
   overflow: 'hidden',
   borderRadius: '$pill',
 
@@ -48,8 +51,8 @@ const StyledProgressBar = styled(ProgressPrimitive.Root, {
       gray: {
         background: '$brandGray8',
       },
-      green: {
-        backgroundColor: '$brandAccent10',
+      accent: {
+        backgroundColor: '$brandAccent9',
       },
       gradient: {
         // backgroundImage:
@@ -81,19 +84,26 @@ type ProgressBarPrimitiveProps = React.ComponentProps<
   typeof ProgressPrimitive.Root
 >
 type ProgressBarProps = ProgressBarPrimitiveProps &
-  ProgressBarVariants & { css?: CSS }
+  ProgressBarVariants & { css?: CSS; label?: string }
 
 export const ProgressBar = React.forwardRef<
   React.ElementRef<typeof StyledProgressBar>,
   ProgressBarProps
->(({ value, max = 100, ...props }, forwardedRef) => {
+>(({ label, value, max = 100, ...props }, forwardedRef) => {
   const percentage = value != null ? Math.round((value / max) * 100) : null
 
   return (
-    <StyledProgressBar {...props} ref={forwardedRef} value={value} max={max}>
-      <ProgressBarIndicator
-        style={{ transform: `translateX(${percentage}%)` }}
-      />
-    </StyledProgressBar>
+    <Flex direction="column" gap="0-5" css={{ width: '100%' }}>
+      <StyledProgressBar {...props} ref={forwardedRef} value={value} max={max}>
+        <ProgressBarIndicator
+          style={{ transform: `translateX(${percentage}%)` }}
+        />
+      </StyledProgressBar>
+      {label && (
+        <Text color="subtle" size="12" ellipsis>
+          {label}
+        </Text>
+      )}
+    </Flex>
   )
 })

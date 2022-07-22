@@ -53,6 +53,7 @@
     "@visx/scale": "^2.2.2",
     "@visx/shape": "^2.10.0",
     "@visx/tooltip": "^2.10.0",
+    "@visx/xychart": "^2.11.1",
     "axios": "^0.27.2",
     "bignumber.js": "^9.0.2",
     "blakejs": "^1.2.1",

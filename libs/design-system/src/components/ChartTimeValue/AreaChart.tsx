@@ -1,7 +1,7 @@
 import React from 'react'
 import { AreaClosed } from '@visx/shape'
 import { Group } from '@visx/group'
-import { curveStep } from '@visx/curve'
+import { curveStep, curveMonotoneX } from '@visx/curve'
 import { MarkerCircle } from '@visx/marker'
 import { AxisLeft, AxisBottom, AxisScale } from '@visx/axis'
 import { LinearGradient } from '@visx/gradient'
@@ -35,6 +35,7 @@ export default function AreaChart({
   hideLeftAxis = false,
   top,
   left,
+  curve = 'step',
   children,
 }: {
   data: Point[]
@@ -48,6 +49,7 @@ export default function AreaChart({
   hideLeftAxis?: boolean
   top?: number
   left?: number
+  curve?: 'step' | 'monotone'
   children?: React.ReactNode
 }) {
   if (width < 10) return null
@@ -75,7 +77,7 @@ export default function AreaChart({
         stroke="url(#gradient)"
         fill="url(#gradient)"
         markerMid="url(#marker-circle)"
-        curve={curveStep}
+        curve={curve === 'step' ? curveStep : curveMonotoneX}
       />
       {!hideBottomAxis && (
         <AxisBottom

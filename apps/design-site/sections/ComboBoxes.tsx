@@ -6,11 +6,11 @@ import {
   TextField,
   ComboBox,
   Code,
+  mnemonics,
 } from '@siafoundation/design-system'
 import { useState } from 'react'
 import { SmallSection } from '../components/SmallSection'
 import { SubsectionHeading } from '../components/SubsectionHeading'
-import { mnemonics } from '../lib/mnemonics'
 
 const options = mnemonics.map((word) => ({
   label: word,

@@ -1,6 +1,8 @@
 import React from 'react'
 import { styled, VariantProps, CSS } from '../config/theme'
 import * as SwitchPrimitive from '@radix-ui/react-switch'
+import { Flex } from './Flex'
+import { Text } from './Text'
 
 const StyledThumb = styled(SwitchPrimitive.Thumb, {
   position: 'absolute',
@@ -92,8 +94,15 @@ type SwitchProps = SwitchPrimitiveProps & SwitchVariants & { css?: CSS }
 export const Switch = React.forwardRef<
   React.ElementRef<typeof StyledSwitch>,
   SwitchProps
->((props, forwardedRef) => (
-  <StyledSwitch {...props} ref={forwardedRef}>
-    <StyledThumb />
-  </StyledSwitch>
+>(({ children, ...props }, forwardedRef) => (
+  <Flex gap="1" align="center">
+    <StyledSwitch {...props} ref={forwardedRef}>
+      <StyledThumb />
+    </StyledSwitch>
+    {children && (
+      <Text css={{ color: props.disabled ? '$gray9' : '$hiContrast' }}>
+        {children}
+      </Text>
+    )}
+  </Flex>
 ))

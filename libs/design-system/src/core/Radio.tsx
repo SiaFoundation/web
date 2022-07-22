@@ -1,6 +1,7 @@
 import React from 'react'
 import { styled, CSS, VariantProps } from '../config/theme'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
+import { Flex, Text } from '..'
 
 export const RadioGroup = styled(RadioGroupPrimitive.Root, {
   display: 'flex',
@@ -58,6 +59,13 @@ const StyledRadio = styled(RadioGroupPrimitive.Item, {
     boxShadow: '$colors$borderAccentActive, $colors$shadowActive',
   },
 
+  '&:disabled': {
+    pointerEvents: 'none',
+    backgroundColor: '$brandGray2',
+    color: '$brandGray8',
+    cursor: 'not-allowed',
+  },
+
   variants: {
     size: {
       '1': {
@@ -86,13 +94,27 @@ type RadioVariants = VariantProps<typeof StyledRadio>
 type RadioGroupItemPrimitiveProps = React.ComponentProps<
   typeof RadioGroupPrimitive.Item
 >
-type RadioProps = RadioGroupItemPrimitiveProps & RadioVariants & { css?: CSS }
+type RadioProps = RadioGroupItemPrimitiveProps &
+  RadioVariants & { css?: CSS; children: React.ReactNode }
 
 export const Radio = React.forwardRef<
   React.ElementRef<typeof StyledRadio>,
   RadioProps
->((props, forwardedRef) => (
-  <StyledRadio {...props} ref={forwardedRef}>
-    <StyledIndicator />
-  </StyledRadio>
+>(({ children, ...props }, forwardedRef) => (
+  <Flex gap="1" align="center">
+    <StyledRadio {...props} ref={forwardedRef}>
+      <StyledIndicator />
+    </StyledRadio>
+    <Text
+      css={{
+        position: 'relative',
+        top: '1px',
+        display: 'flex',
+        alignItems: 'center',
+        color: props.disabled ? '$gray9' : '$hiContrast',
+      }}
+    >
+      {children}
+    </Text>
+  </Flex>
 ))
