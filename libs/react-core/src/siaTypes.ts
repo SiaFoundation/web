@@ -50,6 +50,7 @@ export interface WalletUTXOsResponse {
 // struct2ts:go.sia.tech/core/types.SiacoinInput
 export interface SiacoinInput {
   Parent: SiacoinElement
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   SpendPolicy: any
   Signatures: Signature[] | null
 }
@@ -64,6 +65,7 @@ export interface SiacoinOutput {
 export interface SiafundInput {
   Parent: SiafundElement
   ClaimAddress: number[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   SpendPolicy: any
   Signatures: Signature[] | null
 }

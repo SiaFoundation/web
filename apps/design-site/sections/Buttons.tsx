@@ -156,13 +156,13 @@ export function Buttons() {
             </IconButton>
           </Flex>
           <Flex direction="row" gap="1">
-            <IconButton variant="simple" size="1">
+            <IconButton variant="state" size="1">
               <Search16 />
             </IconButton>
-            <IconButton variant="simple" size="2">
+            <IconButton variant="state" size="2">
               <Search16 />
             </IconButton>
-            <IconButton variant="simple" size="3" disabled>
+            <IconButton variant="state" size="3" disabled>
               <Search16 />
             </IconButton>
           </Flex>

@@ -47,7 +47,7 @@ export function Indicators() {
             <ProgressBar value={50} variant="gray" />
           </Box>
           <Box>
-            <ProgressBar value={25} variant="green" />
+            <ProgressBar value={25} variant="accent" />
           </Box>
           <Box>
             <ProgressBar value={75} variant="gradient" />

@@ -7,6 +7,7 @@ type Props = {
   value: BigNumber
   variant?: 'change' | 'value'
   tooltip?: string
+  fixed?: number
 }
 
 export function ValueSc({
@@ -14,7 +15,17 @@ export function ValueSc({
   size = '14',
   tooltip = '',
   variant = 'change',
+  fixed = 3,
 }: Props) {
+  const sign = value.isGreaterThan(0) ? '+' : value.isLessThan(0) ? '-' : ''
+  const color =
+    variant === 'change'
+      ? value.isGreaterThan(0)
+        ? '$green11'
+        : value.isLessThan(0)
+        ? '$red11'
+        : '$gray7'
+      : '$textContrast'
   return (
     <Tooltip
       content={
@@ -29,20 +40,14 @@ export function ValueSc({
         size={size}
         weight="semibold"
         font="mono"
+        ellipsis
         css={{
-          color:
-            variant === 'change'
-              ? value.isGreaterThan(0)
-                ? '$green11'
-                : value.isLessThan(0)
-                ? '$red11'
-                : '$gray7'
-              : '$textContrast',
+          color,
         }}
       >
-        {variant === 'change' &&
-          (value.isGreaterThan(0) ? '+' : value.isLessThan(0) ? '-' : '')}
-        {humanSiacoin(value.absoluteValue())}
+        {variant === 'change'
+          ? `${sign}${humanSiacoin(value.absoluteValue(), { fixed })}`
+          : humanSiacoin(value, { fixed })}
       </Text>
     </Tooltip>
   )

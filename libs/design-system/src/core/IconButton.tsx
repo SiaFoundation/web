@@ -81,33 +81,28 @@ export const IconButton = styled('button', {
           color: '$textDisabled',
         },
       },
-      simple: {
-        backgroundColor: 'transparent',
+      ghost: {
+        color: '$textSubtle',
+        background: 'none',
         '@hover': {
           '&:hover': {
-            boxShadow: '$colors$borderHover, $colors$shadow',
+            color: '$textSubtleHover',
           },
         },
-        '&:focus': {
-          boxShadow: '$colors$borderFocus, $colors$shadow',
-        },
-        '&:active': {
-          backgroundColor: '$controlActive',
-          boxShadow: '$colors$borderActive, $colors$shadow',
-        },
-        '&[data-state="open"]': {
-          backgroundColor: '$controlActive',
-          boxShadow: '$colors$borderActive, $colors$shadow',
-        },
         '&:disabled': {
-          backgroundColor: 'transparent',
           boxShadow: 'none',
           color: '$textDisabled',
         },
       },
-      ghost: {
+      state: {
         color: '$textSubtle',
         background: 'none',
+        '&[data-state="open"]': {
+          color: '$textSubtleActive',
+        },
+        '&[data-state="closed"]': {
+          color: '$gray10',
+        },
         '@hover': {
           '&:hover': {
             color: '$textSubtleHover',

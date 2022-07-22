@@ -82,7 +82,6 @@ export const Text = styled('span', {
     },
     ellipsis: {
       true: {
-        width: '100%',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',

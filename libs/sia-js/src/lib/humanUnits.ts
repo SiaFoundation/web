@@ -42,7 +42,7 @@ export function humanBytes(b: number): string {
     digits = Math.floor(Math.log10(b) / Math.log10(1000)),
     d = Math.floor((b / Math.pow(1000, digits)) * 100) / 100
 
-  return d + ' ' + units[digits]
+  return d.toFixed(2) + ' ' + units[digits]
 }
 
 export function humanTime(ns: number): string {

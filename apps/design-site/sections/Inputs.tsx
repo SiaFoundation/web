@@ -140,36 +140,62 @@ export function Inputs() {
       <Section>
         <SubsectionHeading>Checkbox</SubsectionHeading>
         <Flex direction="row" gap="1">
-          <Checkbox size="1" />
-          <Checkbox size="2" />
-          <Checkbox size="1" defaultChecked />
-          <Checkbox size="2" defaultChecked />
-          <Checkbox disabled size="1" />
-          <Checkbox disabled size="2" defaultChecked />
+          <Checkbox size="1">Checkbox</Checkbox>
+          <Checkbox size="2">Checkbox</Checkbox>
+          <Checkbox size="1" defaultChecked>
+            Checkbox
+          </Checkbox>
+          <Checkbox size="2" defaultChecked>
+            Checkbox
+          </Checkbox>
+          <Checkbox disabled size="1">
+            Checkbox
+          </Checkbox>
+          <Checkbox disabled size="2" defaultChecked>
+            Checkbox
+          </Checkbox>
         </Flex>
       </Section>
       <Section>
         <SubsectionHeading>Switch</SubsectionHeading>
         <Flex direction="row" gap="1">
-          <Switch size="1" />
-          <Switch size="2" />
-          <Switch size="1" defaultChecked />
-          <Switch size="2" defaultChecked />
-          <Switch disabled size="1" />
-          <Switch disabled size="2" defaultChecked />
+          <Switch size="1">Switch</Switch>
+          <Switch size="2">Switch</Switch>
+          <Switch size="1" defaultChecked>
+            Switch
+          </Switch>
+          <Switch size="2" defaultChecked>
+            Switch
+          </Switch>
+          <Switch disabled size="1">
+            Switch
+          </Switch>
+          <Switch disabled size="2" defaultChecked>
+            Switch
+          </Switch>
         </Flex>
       </Section>
       <Section>
         <SubsectionHeading>Radio</SubsectionHeading>
         <Flex direction="row" gap="3">
           <RadioGroup css={{ display: 'flex', gap: '$1' }}>
-            <Radio size="1" value="1" />
-            <Radio size="1" value="2" />
-            <Radio size="2" value="3" />
+            <Radio size="1" value="1">
+              1
+            </Radio>
+            <Radio size="1" value="2">
+              2
+            </Radio>
+            <Radio size="2" value="3">
+              3
+            </Radio>
           </RadioGroup>
           <RadioGroup defaultValue="2" css={{ display: 'flex', gap: '$1' }}>
-            <Radio size="1" value="1" />
-            <Radio size="2" value="2" />
+            <Radio size="1" value="1">
+              1
+            </Radio>
+            <Radio size="2" value="2">
+              2
+            </Radio>
           </RadioGroup>
         </Flex>
       </Section>

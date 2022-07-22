@@ -1,12 +1,8 @@
-import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import {
   AppBar,
   Box,
-  Container,
   Flex,
   Grid,
-  Heading,
-  IconButton,
   NextImage,
   Panel,
   ScrollArea,

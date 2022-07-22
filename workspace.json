@@ -15,6 +15,7 @@
     "sia-nodejs": "libs/sia-nodejs",
     "sia-react": "libs/sia-react",
     "siad": "apps/siad",
+    "hostd": "apps/hostd",
     "website": "apps/website"
   }
 }
