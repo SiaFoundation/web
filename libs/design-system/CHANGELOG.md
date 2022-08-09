@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.32.0](https://github.com/SiaFoundation/web/compare/design-system-0.31.1...design-system-0.32.0) (2022-08-09)
+
+
+### Features
+
+* hostd spike ([09f3fb2](https://github.com/SiaFoundation/web/commit/09f3fb2f9d7193d5a137d8a252c0a6566f15e2cb))
+
+
+
 ## [0.31.1](https://github.com/SiaFoundation/web/compare/design-system-0.31.0...design-system-0.31.1) (2022-07-18)
 
 

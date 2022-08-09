@@ -1,6 +1,6 @@
 {
   "name": "@siafoundation/design-system",
   "description": "React-based design system used across Sia apps and websites",
-  "version": "0.31.1",
+  "version": "0.32.0",
   "license": "MIT"
 }
