@@ -13,6 +13,7 @@ export const Button = styled('button', {
   },
 
   display: 'inline-flex',
+  gap: '$1',
   flexShrink: 0,
   justifyContent: 'center',
   lineHeight: '1',
@@ -190,6 +191,9 @@ export const Button = styled('button', {
         },
       },
     },
+    icon: {
+      true: {},
+    },
   },
   compoundVariants: [
     {
@@ -273,6 +277,27 @@ export const Button = styled('button', {
           backgroundColor: '$redA4',
           boxShadow: 'none',
         },
+      },
+    },
+    {
+      size: '1',
+      icon: 'true',
+      css: {
+        paddingLeft: '$1',
+      },
+    },
+    {
+      size: '2',
+      icon: 'true',
+      css: {
+        paddingLeft: '$1-5',
+      },
+    },
+    {
+      size: '3',
+      icon: 'true',
+      css: {
+        paddingLeft: '$2-5',
       },
     },
   ],

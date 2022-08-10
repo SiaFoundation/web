@@ -10,7 +10,7 @@ import * as Yup from 'yup'
 import { GenerateSeed } from './GenerateSeed'
 import { useState } from 'react'
 import { VerifySeed } from './VerifySeed'
-import { FormField, FieldGroup } from '../../components/Field'
+import { FormField, FieldGroup } from '../../components/Form'
 
 const initialValues = {
   name: '',
