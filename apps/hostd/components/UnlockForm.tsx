@@ -1,9 +1,9 @@
-import { Button, Flex } from '@siafoundation/design-system'
+import { Flex } from '@siafoundation/design-system'
 import { useSettings } from '@siafoundation/react-core'
 import { useRouter } from 'next/router'
 import { routes } from '../config/routes'
 import { useFormik } from 'formik'
-import { FieldGroup, Field } from './Field'
+import { FieldGroup, FormSubmitButton, FormTextField } from './Form'
 
 async function checkPassword(password: string) {
   const resp = await fetch('/api/wallet/balance', {
@@ -61,20 +61,16 @@ export default function UnlockForm() {
     <form onSubmit={formik.handleSubmit}>
       <FieldGroup name="password" formik={formik}>
         <Flex gap="1">
-          <Field
-            size="1"
+          <FormTextField
+            size={1}
             formik={formik}
             name="password"
             placeholder="Enter password"
             type="password"
           />
-          <Button
-            variant="accent"
-            state={formik.isSubmitting ? 'waiting' : undefined}
-            type="submit"
-          >
+          <FormSubmitButton size="1" formik={formik}>
             Unlock
-          </Button>
+          </FormSubmitButton>
         </Flex>
       </FieldGroup>
     </form>

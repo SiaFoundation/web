@@ -1,5 +1,8 @@
 import {
+  Badge,
   Button,
+  Add16,
+  Add20,
   DatumCard,
   Flex,
   ProgressBar,
@@ -92,16 +95,16 @@ export default function StoragePage() {
       key: 'status',
       label: 'Status',
       size: 1,
-      render: ({ status }) => <Text font="mono">{status}</Text>,
+      render: ({ status }) => <Badge variant="green">{status}</Badge>,
     },
     {
       key: 'errors',
       label: 'Errors',
-      tip: 'Read / write',
+      tip: 'Read | write',
       size: 1,
       render: ({ readErrors, writeErrors }) => (
         <Text font="mono">
-          {readErrors}/{writeErrors}
+          {readErrors}|{writeErrors}
         </Text>
       ),
     },
@@ -125,7 +128,8 @@ export default function StoragePage() {
       title="Storage"
       actions={
         <>
-          <Button size="2" onClick={() => openDialog('storageFolderAdd')}>
+          <Button size="2" onClick={() => openDialog('storageFolderAdd')} icon>
+            <Add20 />
             Add folder
           </Button>
         </>

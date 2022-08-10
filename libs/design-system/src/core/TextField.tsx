@@ -1,6 +1,6 @@
-import { styled } from '../config/theme'
+import { CSS, styled } from '../config/theme'
 
-export const TextField = styled('input', {
+export const textFieldStyles: CSS = {
   appearance: 'none',
   borderWidth: '0',
   boxSizing: 'border-box',
@@ -211,4 +211,6 @@ export const TextField = styled('input', {
   defaultVariants: {
     size: '1',
   },
-})
+}
+
+export const TextField = styled('input', textFieldStyles)

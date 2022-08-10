@@ -10,7 +10,7 @@ import { useSyncerConnect } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
 import { useDialog } from '../contexts/dialog'
 import * as Yup from 'yup'
-import { FormField } from '../components/Field'
+import { FormField } from '../components/Form'
 import { ipRegex } from './ipRegex'
 
 const initialValues = {
