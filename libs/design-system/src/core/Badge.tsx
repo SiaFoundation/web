@@ -51,6 +51,27 @@ export const Badge = styled('span', {
           boxShadow: '$colors$borderAccentActive, $colors$shadowActive',
         },
       },
+      active: {
+        backgroundColor: '$control',
+        border: '1px solid $gray5',
+        color: '$textContrast',
+        '&:focus': {
+          boxShadow: '$colors$borderAccentActive, $colors$shadowActive',
+        },
+      },
+      inactive: {
+        backgroundColor: 'transparent',
+        border: '1px solid $gray5',
+        color: '$textExtraSubtle',
+        opacity: 0.6,
+        '&:hover': {
+          color: '$textContrast',
+          opacity: 1,
+        },
+        '&:focus': {
+          boxShadow: '$colors$borderAccentActive, $colors$shadowActive',
+        },
+      },
       accent: {
         backgroundColor: '$brandAccent9',
         color: 'white',

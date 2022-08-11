@@ -35,7 +35,8 @@ export const itemCss = css(baseItemCss, {
 })
 
 export const labelCss = css(baseItemCss, {
-  color: '$brandGray11',
+  color: '$textExtraSubtle',
+  fontWeight: '500',
 })
 
 export const menuCss = css({

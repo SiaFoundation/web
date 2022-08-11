@@ -49,6 +49,7 @@ export const colors = {
   textSubtleHover: '$brandGray12',
   textContrast: '$brandGray12',
   textDisabled: '$brandGray9',
+  textExtraSubtle: '$brandGray9',
 
   control: 'white',
   controlActive: '$brandGray4',
