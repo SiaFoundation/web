@@ -283,7 +283,10 @@ export const Button = styled('button', {
       size: '1',
       icon: 'true',
       css: {
-        paddingLeft: '$1',
+        px: '$1',
+        '& > svg': {
+          opacity: 0.5,
+        },
       },
     },
     {

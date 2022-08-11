@@ -44,6 +44,7 @@ export * from './core/Skeleton'
 export * from './core/Slider'
 export * from './core/Status'
 export * from './core/Switch'
+export * from './core/Sheet'
 
 export * from './components/AppBackdrop'
 export * from './components/LocalBackdrop'

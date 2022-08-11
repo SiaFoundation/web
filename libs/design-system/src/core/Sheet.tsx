@@ -1,9 +1,9 @@
 import React from 'react'
-import { styled, keyframes, VariantProps, CSS } from '../stitches.config'
+import { styled, keyframes, VariantProps, CSS } from '../config/theme'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { Cross1Icon } from '@radix-ui/react-icons'
 import { overlayStyles } from './Overlay'
 import { IconButton } from './IconButton'
+import { Misuse24 } from '../icons'
 
 const Sheet = DialogPrimitive.Root
 const SheetTrigger = DialogPrimitive.Trigger
@@ -123,7 +123,7 @@ const SheetContent = React.forwardRef<
       {children}
       <StyledCloseButton asChild>
         <IconButton variant="ghost">
-          <Cross1Icon />
+          <Misuse24 />
         </IconButton>
       </StyledCloseButton>
     </StyledContent>

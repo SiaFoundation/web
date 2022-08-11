@@ -1,8 +1,8 @@
 import {
   CSS,
   Flex,
-  Grid,
   InfoTip,
+  Tooltip,
   Panel,
   Text,
 } from '@siafoundation/design-system'
@@ -21,6 +21,8 @@ export type TableColumn<R> = {
   css?: CSS
   render: (row: R) => React.ReactNode
   summary?: (row: R) => React.ReactNode
+  type?: 'fixed'
+  sortable?: string
 }
 
 type Props<R extends Row> = {
@@ -36,74 +38,65 @@ export function Table<R extends Row>({
 }: Props<R>) {
   const columns = useMemo(
     () =>
-      _columns?.reduce((acc, column, i) => {
+      _columns?.map((column) => {
         const size = column.size || 1
-        const last = acc[i - 1]
-        const start = last?.end || 1
-        const end = start + size
-        return acc.concat({
+        return {
           ...column,
-          start,
-          end,
-          gridColumn: `${start} / span ${size}`,
-        })
+          tableCss: {
+            minWidth: `${size * 50}px`,
+            flex: size,
+          },
+        }
       }, []) || [],
     [_columns]
   )
 
-  const columnCount = columns[columns.length - 1]?.start || 0
-
   return (
     <Panel>
-      <Flex
-        direction="column"
-        css={{
-          overflow: 'hidden',
-        }}
-      >
-        <Grid
+      <Flex direction="column">
+        <Flex
           gap="3-5"
           css={{
             padding: '$2-5 $3',
             borderBottom: '1px solid $slate7',
-            gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
           }}
         >
-          {columns.map(({ key, label, tip, props, gridColumn }) => (
+          {columns.map(({ key, label, tip, props, tableCss }) => (
             <Flex
-              key={key || label}
+              key={key}
               {...props}
-              css={{ gridColumn, overflow: 'hidden' }}
+              css={{ ...tableCss, overflow: 'hidden' }}
             >
-              <Text
-                weight="semibold"
-                color="subtle"
-                css={{ position: 'relative', top: '1px' }}
-                ellipsis
-              >
-                {label}
-              </Text>
+              <Tooltip content={label}>
+                <Text
+                  weight="semibold"
+                  color="subtle"
+                  css={{ position: 'relative', top: '1px' }}
+                  ellipsis
+                >
+                  {label}
+                </Text>
+              </Tooltip>
               {tip && <InfoTip>{tip}</InfoTip>}
             </Flex>
           ))}
-        </Grid>
+        </Flex>
         {summary && (
-          <Grid
+          <Flex
             gap="3-5"
             align="center"
             css={{
               padding: '$1 $3',
               background: '$slate1',
               border: '2px solid $slate5',
-              gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
             }}
           >
-            {columns.map(({ gridColumn, summary, props, css }, i) => (
+            {columns.map(({ key, summary, props, tableCss, css }) => (
               <Flex
-                key={gridColumn}
+                key={key}
                 {...props}
                 css={{
-                  gridColumn,
+                  ...tableCss,
                   overflow: 'hidden',
                   ...css,
                 }}
@@ -111,26 +104,25 @@ export function Table<R extends Row>({
                 {summary && summary()}
               </Flex>
             ))}
-          </Grid>
+          </Flex>
         )}
         <Flex direction="column">
           {data.map((row) => (
-            <Grid
+            <Flex
               key={row.key}
               gap="3-5"
               align="center"
               css={{
                 padding: '$3',
                 borderBottom: '1px solid $slate5',
-                gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
               }}
             >
-              {columns.map(({ gridColumn, render, props, css }, i) => (
+              {columns.map(({ key, render, props, tableCss, css }, i) => (
                 <Flex
-                  key={gridColumn}
+                  key={row.key + key}
                   {...props}
                   css={{
-                    gridColumn,
+                    ...tableCss,
                     overflow: 'hidden',
                     ...css,
                   }}
@@ -138,7 +130,7 @@ export function Table<R extends Row>({
                   {render(row)}
                 </Flex>
               ))}
-            </Grid>
+            </Flex>
           ))}
         </Flex>
       </Flex>
