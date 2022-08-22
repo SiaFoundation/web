@@ -1,12 +1,12 @@
+import { Avatar } from '../core/Avatar'
+import { Box } from '../core/Box'
+import { NextLink } from '../core/Link'
+import { Tooltip } from '../core/Tooltip'
 import {
-  Avatar,
-  Box,
-  NextLink,
-  Tooltip,
   EntityType,
   getEntityTypeInitials,
   getEntityTypeLabel,
-} from '../'
+} from '../lib/entityTypes'
 
 type Props = {
   initials?: string

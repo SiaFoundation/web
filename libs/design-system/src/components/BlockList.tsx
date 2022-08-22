@@ -1,12 +1,9 @@
-import {
-  Flex,
-  Panel,
-  Heading,
-  NextLink,
-  Text,
-  getEntityTypeInitials,
-  getEntityTypeLabel,
-} from '../'
+import { Flex } from '../core/Flex'
+import { Panel } from '../core/Panel'
+import { Heading } from '../core/Heading'
+import { NextLink } from '../core/Link'
+import { Text } from '../core/Text'
+import { getEntityTypeInitials, getEntityTypeLabel } from '../lib/entityTypes'
 import { humanNumber } from '@siafoundation/sia-js'
 import { formatDistance } from 'date-fns'
 import { EntityAvatar } from './EntityAvatar'

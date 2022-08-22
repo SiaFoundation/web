@@ -1,4 +1,5 @@
-import { Box, Flex } from '../index'
+import { Box } from '../core/Box'
+import { Flex } from '../core/Flex'
 import { Text } from './Text'
 
 type Props = {

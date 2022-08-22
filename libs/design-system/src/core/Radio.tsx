@@ -1,7 +1,8 @@
 import React from 'react'
 import { styled, CSS, VariantProps } from '../config/theme'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
-import { Flex, Text } from '..'
+import { Flex } from '../core/Flex'
+import { Text } from '../core/Text'
 
 export const RadioGroup = styled(RadioGroupPrimitive.Root, {
   display: 'flex',
