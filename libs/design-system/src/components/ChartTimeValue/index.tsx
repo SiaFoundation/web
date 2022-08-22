@@ -16,11 +16,18 @@ import { LinearGradient } from '@visx/gradient'
 import { max, extent, bisector, min } from 'd3-array'
 import { timeFormat } from 'd3-time-format'
 import ParentSize from '@visx/responsive/lib/components/ParentSize'
-import { Box, Button, Flex, Text, Tooltip as DsTooltip } from '../../index'
+import { Box } from '../../core/Box'
+import { Button } from '../../core/Button'
+import { Flex } from '../../core/Flex'
+import { Text } from '../../core/Text'
+import { Tooltip as DsTooltip } from '../../core/Tooltip'
 import { throttle } from 'lodash'
-import AreaChart from './AreaChart'
+import { AreaChart } from './AreaChart'
 import { Reset16 } from '@carbon/icons-react'
 import { Panel } from '../../core/Panel'
+import { getPointTime, getPointValue, Point } from './utils'
+
+export type { Point }
 
 const background = 'var(--colors-panel)'
 // export const background = 'transparent'
@@ -51,16 +58,9 @@ const throttled = throttle((func: () => void) => func(), 15)
 const formatDate = timeFormat('%x %X')
 
 // accessors
-export const getPointTime = (d: Point) => new Date(d?.timestamp || 0)
-export const getPointValue = (d: Point) => d?.value || 0
 export const bisectDate = bisector<Point, Date>(
   (d) => new Date(d?.timestamp || 0)
 ).left
-
-export type Point = {
-  timestamp: number
-  value: number
-}
 
 export type ChartProps = {
   compact?: boolean

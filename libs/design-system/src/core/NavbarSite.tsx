@@ -1,12 +1,10 @@
-import {
-  Box,
-  Container,
-  Flex,
-  Heading,
-  NextLink,
-  Separator,
-  Logo,
-} from '../index'
+import { Box } from '../core/Box'
+import { Flex } from '../core/Flex'
+import { Container } from '../core/Container'
+import { Heading } from '../core/Heading'
+import { NextLink } from '../core/Link'
+import { Separator } from '../core/Separator'
+import { Logo } from '../core/Logo'
 
 type Props = {
   appName?: string

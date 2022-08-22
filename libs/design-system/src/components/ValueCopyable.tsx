@@ -1,14 +1,11 @@
-import {
-  Copy16,
-  Copy20,
-  copyToClipboard,
-  CSS,
-  Flex,
-  IconButton,
-  NextLink,
-  stripPrefix,
-  Text,
-} from '../'
+import { Flex } from '../core/Flex'
+import { Text } from '../core/Text'
+import { IconButton } from '../core/IconButton'
+import { NextLink } from '../core/Link'
+import { Copy16, Copy20 } from '../icons'
+import { copyToClipboard } from '../lib/clipboard'
+import { stripPrefix } from '../lib/utils'
+import { CSS } from '../config/theme'
 import { EntityType, getEntityTypeLabel } from '../lib/entityTypes'
 
 type Props = {

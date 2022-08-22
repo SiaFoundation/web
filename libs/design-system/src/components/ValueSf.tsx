@@ -1,4 +1,5 @@
-import { Text, Tooltip } from '../'
+import { Text } from '../core/Text'
+import { Tooltip } from '../core/Tooltip'
 import { humanNumber } from '@siafoundation/sia-js'
 
 type Props = {

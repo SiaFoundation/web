@@ -1,4 +1,6 @@
-import { Box, Flex, Skeleton } from '../'
+import { Box } from '../core/Box'
+import { Flex } from '../core/Flex'
+import { Skeleton } from '../core/Skeleton'
 
 export function DatumSkeleton() {
   return (

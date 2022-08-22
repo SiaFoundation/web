@@ -5,7 +5,7 @@ import { curveStep, curveMonotoneX } from '@visx/curve'
 import { MarkerCircle } from '@visx/marker'
 import { AxisLeft, AxisBottom, AxisScale } from '@visx/axis'
 import { LinearGradient } from '@visx/gradient'
-import { getPointTime, getPointValue, Point } from '.'
+import { getPointTime, getPointValue, Point } from './utils'
 
 const axisColor = 'var(--colors-hiContrast)'
 const axisBottomTickLabelProps = {
@@ -23,7 +23,7 @@ const axisLeftTickLabelProps = {
   fill: axisColor,
 }
 
-export default function AreaChart({
+export function AreaChart({
   data,
   gradientColor,
   width,

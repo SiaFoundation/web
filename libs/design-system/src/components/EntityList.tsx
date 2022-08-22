@@ -1,18 +1,18 @@
+import { Box } from '../core/Box'
+import { Flex } from '../core/Flex'
+import { Heading } from '../core/Heading'
+import { NextLink } from '../core/Link'
+import { Panel } from '../core/Panel'
+import { Text } from '../core/Text'
+import { Skeleton } from '../core/Skeleton'
+import { ValueSf } from '../components/ValueSf'
+import { ValueSc } from '../components/ValueSc'
+import { ValueCopyable } from '../components/ValueCopyable'
 import {
-  Box,
-  Flex,
-  Heading,
-  NextLink,
-  Panel,
-  Text,
-  Skeleton,
-  ValueSf,
-  ValueSc,
-  ValueCopyable,
   EntityType,
   getEntityTypeInitials,
   getEntityTypeLabel,
-} from '../'
+} from '../lib/entityTypes'
 import { times } from 'lodash'
 import { humanNumber } from '@siafoundation/sia-js'
 import { formatDistance } from 'date-fns'
