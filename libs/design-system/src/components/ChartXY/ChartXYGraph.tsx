@@ -252,11 +252,14 @@ export function ChartXYGraph({
               return null
             }
 
+            const formatTimestamp =
+              config.formatTimestamp || ((v) => format(v, 'Pp'))
+
             return (
               <Flex direction="column" gap="1" css={{ py: '$0-5' }}>
                 <Text size="12" color="subtle" css={{ textAlign: 'end' }}>
                   {nearestDatum
-                    ? format(accessors.date(nearestDatum), 'Pp')
+                    ? formatTimestamp(accessors.date(nearestDatum))
                     : 'No date'}
                 </Text>
                 <Separator size="100" pad="0" />

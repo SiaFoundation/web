@@ -1,4 +1,4 @@
-import { Flex } from '@siafoundation/design-system'
+import { Button, ControlGroup, Flex, Text } from '@siafoundation/design-system'
 import { AuthedLayout } from '../components/AuthedLayout'
 import { TimeSpan, useData } from '../contexts/data'
 import { format } from 'date-fns'
@@ -37,10 +37,24 @@ export default function HomePage() {
 
   return (
     <AuthedLayout
-      title={`${format(timeRange.start, 'PP')} - ${format(
-        timeRange.end,
-        'PP'
-      )}`}
+      title="Overview"
+      filters={
+        <Flex gap="1" css={{ flex: 1 }}>
+          <ControlGroup>
+            <Button>
+              <Text size="12">{format(timeRange.start, 'PP')}</Text>
+            </Button>
+            <Button disabled>
+              <Text size="12" color="subtle">
+                to
+              </Text>
+            </Button>
+            <Button>
+              <Text size="12">{format(timeRange.end, 'PP')}</Text>
+            </Button>
+          </ControlGroup>
+        </Flex>
+      }
       actions={
         <>
           <RadioButton

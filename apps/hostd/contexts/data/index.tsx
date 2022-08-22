@@ -7,7 +7,7 @@ import { chartConfigs } from '../../config/charts'
 import { getDaysInMs } from '@siafoundation/design-system'
 import { mockData } from './mockData'
 import { ChartStats, computeStats } from './computeStats'
-import { formatData } from './formatData'
+import { formatData, getTimeRangeRollup } from './formatData'
 
 const debounced = throttle((func: () => void) => func(), 100, {
   trailing: true,
@@ -85,6 +85,11 @@ export function DataProvider({ children }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeSpan])
 
+  const formatTimestamp = useCallback(
+    (v: number) => getTimeRangeRollup(timeRange).label(v),
+    [timeRange]
+  )
+
   const revenue = useMemo<Chart>(() => {
     const data = formatData(mockData.revenue, timeRange, 'total')
     const stats = computeStats(mockData.revenue, timeRange, ['potential'])
@@ -102,9 +107,10 @@ export function DataProvider({ children }: Props) {
           lost: chartConfigs.failed,
         },
         format: (v) => humanSiacoin(v),
+        formatTimestamp,
       },
     }
-  }, [timeRange])
+  }, [timeRange, formatTimestamp])
 
   const pricing = useMemo<Chart>(() => {
     const data = formatData(mockData.pricing, timeRange, 'average')
@@ -120,9 +126,10 @@ export function DataProvider({ children }: Props) {
           ingress: chartConfigs.ingress,
         },
         format: (v) => humanSiacoin(v),
+        formatTimestamp,
       },
     }
-  }, [timeRange])
+  }, [timeRange, formatTimestamp])
 
   const collateral = useMemo<Chart>(() => {
     const data = formatData(mockData.collateral, timeRange, 'average')
@@ -137,9 +144,10 @@ export function DataProvider({ children }: Props) {
           burnt: chartConfigs.burnt,
         },
         format: (v) => humanSiacoin(v),
+        formatTimestamp,
       },
     }
-  }, [timeRange])
+  }, [timeRange, formatTimestamp])
 
   const contracts = useMemo<Chart>(() => {
     const data = formatData(mockData.contracts, timeRange, 'average')
@@ -159,9 +167,10 @@ export function DataProvider({ children }: Props) {
           expiring: chartConfigs.expiring,
         },
         format: (v) => `${v} contracts`,
+        formatTimestamp,
       },
     }
-  }, [timeRange])
+  }, [timeRange, formatTimestamp])
 
   const storage = useMemo<Chart>(() => {
     const data = formatData(mockData.storage, timeRange, 'average')
@@ -175,9 +184,10 @@ export function DataProvider({ children }: Props) {
           registry: chartConfigs.registry,
         },
         format: (v) => humanBytes(v),
+        formatTimestamp,
       },
     }
-  }, [timeRange])
+  }, [timeRange, formatTimestamp])
 
   const bandwidth = useMemo<Chart>(() => {
     const data = formatData(mockData.bandwidth, timeRange, 'total')
@@ -191,9 +201,10 @@ export function DataProvider({ children }: Props) {
           egress: chartConfigs.egress,
         },
         format: (v) => humanBytes(v),
+        formatTimestamp,
       },
     }
-  }, [timeRange])
+  }, [timeRange, formatTimestamp])
 
   const value: State = {
     timeSpan,
