@@ -24,7 +24,7 @@ type TimeRange = {
   end: number
 }
 
-type TimeSpan = 7 | 30 | 90 | 365 | 'all'
+export type TimeSpan = 7 | 30 | 90 | 365 | 'all'
 
 const defaultTimeSpan: TimeSpan = 90
 export const futureSpan = 90

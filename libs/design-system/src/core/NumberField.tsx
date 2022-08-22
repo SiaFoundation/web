@@ -1,12 +1,12 @@
 import { styled } from '../config/theme'
 import CurrencyInput from 'react-currency-input-field'
-import { textFieldStyles } from './TextField'
+import { TextField } from './TextField'
 import { Box } from './Box'
 import { Flex } from './Flex'
 import { Text } from './Text'
 import { Panel } from './Panel'
 
-export const NumberInput = styled(CurrencyInput, textFieldStyles)
+export const NumberInput = styled(CurrencyInput, TextField)
 
 type Props = {
   units?: string

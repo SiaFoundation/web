@@ -27,10 +27,10 @@ export function AuthedLayout({
   return (
     <RootLayout>
       <AppBackdrop />
-      <Flex direction="column" css={{ height: '100%', width: '100%' }}>
-        <Navbar title={title} filters={filters} actions={actions} />
-        <Flex css={{ flex: 1, overflow: 'hidden' }}>
-          <Sidenav />
+      <Flex css={{ height: '100%', width: '100%' }}>
+        <Sidenav />
+        <Flex direction="column" css={{ flex: 1, overflow: 'hidden' }}>
+          <Navbar title={title} filters={filters} actions={actions} />
           <ScrollArea>
             <Container
               size={size}

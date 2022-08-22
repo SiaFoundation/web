@@ -13,7 +13,7 @@ import { FormField, FormSubmitButton } from '../components/Form'
 import { useDialog } from '../contexts/dialog'
 
 export function StorageFolderRemoveDialog() {
-  const { id, closeDialog } = useDialog()
+  const { closeDialog } = useDialog()
 
   // TODO: fetch current size
   const size = 50_000_000

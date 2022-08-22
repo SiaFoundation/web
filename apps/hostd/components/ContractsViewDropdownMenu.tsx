@@ -1,8 +1,6 @@
 import {
-  Badge,
   Button,
   CaretDown16,
-  Flex,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
@@ -12,10 +10,12 @@ import {
   Select,
   DropdownMenuRightSlot,
   DropdownMenuSeparator,
+  Box,
 } from '@siafoundation/design-system'
 import { useContracts } from '../hooks/useContracts'
+import { ComboPool } from './ComboPool'
 
-export function ContractsDropdownView() {
+export function ContractsViewDropdownMenu() {
   const {
     configurableColumns,
     toggleColumn,
@@ -30,7 +30,7 @@ export function ContractsDropdownView() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size="1" icon>
+        <Button size="1">
           <SettingsAdjust16 />
           View
           <CaretDown16 />
@@ -110,22 +110,16 @@ export function ContractsDropdownView() {
             </Button>
           </DropdownMenuRightSlot>
         </DropdownMenuItem>
-        <Flex gap="0-5" wrap="wrap" css={{ padding: '$1' }}>
-          {configurableColumns.map((column) => {
-            return (
-              <Badge
-                key={column.key}
-                interactive
-                variant={
-                  enabledColumns.includes(column.key) ? 'active' : 'inactive'
-                }
-                onClick={() => toggleColumn(column.key)}
-              >
-                {column.label}
-              </Badge>
-            )
-          })}
-        </Flex>
+        <Box css={{ padding: '$1' }}>
+          <ComboPool
+            options={configurableColumns.map((column) => ({
+              label: column.label,
+              value: column.key,
+            }))}
+            values={enabledColumns}
+            onChange={(value) => toggleColumn(value)}
+          />
+        </Box>
       </DropdownMenuContent>
     </DropdownMenu>
   )

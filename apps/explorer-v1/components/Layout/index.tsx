@@ -1,5 +1,5 @@
 import {
-  AppBar,
+  NavbarSite,
   Box,
   Container,
   Flex,
@@ -61,14 +61,10 @@ export function Layout({ title, description, path, children }: Props) {
             overflow: 'hidden',
           }}
         >
-          <AppBar
-            appName="explorer"
-            homeHref={routes.home.index}
-            variant="site"
-          >
+          <NavbarSite appName="explorer" homeHref={routes.home.index}>
             <Search />
             <UserDropdownMenu />
-          </AppBar>
+          </NavbarSite>
           <Flex direction="column" gap="8" css={{ width: '100%' }}>
             <Flex direction="column">
               <Flex

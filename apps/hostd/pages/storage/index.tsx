@@ -1,7 +1,6 @@
 import {
   Badge,
   Button,
-  Add16,
   Add20,
   DatumCard,
   Flex,
@@ -128,7 +127,7 @@ export default function StoragePage() {
       title="Storage"
       actions={
         <>
-          <Button size="2" onClick={() => openDialog('storageFolderAdd')} icon>
+          <Button onClick={() => openDialog('storageFolderAdd')}>
             <Add20 />
             Add folder
           </Button>

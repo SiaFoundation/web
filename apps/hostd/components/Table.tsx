@@ -20,7 +20,7 @@ export type TableColumn<R> = {
   props?: React.ComponentProps<typeof Flex>
   css?: CSS
   render: (row: R) => React.ReactNode
-  summary?: (row: R) => React.ReactNode
+  summary?: () => React.ReactNode
   type?: 'fixed'
   sortable?: string
 }
@@ -57,7 +57,7 @@ export function Table<R extends Row>({
         <Flex
           gap="3-5"
           css={{
-            padding: '$2-5 $3',
+            padding: '$1-5 $3',
             borderBottom: '1px solid $slate7',
           }}
         >
@@ -71,6 +71,7 @@ export function Table<R extends Row>({
                 <Text
                   weight="semibold"
                   color="subtle"
+                  size="12"
                   css={{ position: 'relative', top: '1px' }}
                   ellipsis
                 >
@@ -88,7 +89,9 @@ export function Table<R extends Row>({
             css={{
               padding: '$1 $3',
               background: '$slate1',
-              border: '2px solid $slate5',
+              borderLeft: '1px solid $slate5',
+              borderRight: '1px solid $slate5',
+              borderBottom: '1px solid $slate5',
             }}
           >
             {columns.map(({ key, summary, props, tableCss, css }) => (
@@ -115,6 +118,9 @@ export function Table<R extends Row>({
               css={{
                 padding: '$3',
                 borderBottom: '1px solid $slate5',
+                '&:last-of-type': {
+                  borderBottom: 'none',
+                },
               }}
             >
               {columns.map(({ key, render, props, tableCss, css }, i) => (

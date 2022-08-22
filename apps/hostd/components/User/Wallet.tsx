@@ -18,14 +18,15 @@ export function Wallet() {
         },
       }}
     >
-      <Flex align="center" css={{ height: '$5', padding: '0 $2' }}>
+      <Flex align="center" css={{ height: '28px', padding: '0 $2' }}>
         {wallet && (
           <WalletBalance
+            size="12"
             wallet={{ sc: wallet.siacoins, sf: wallet.siafunds }}
           />
         )}
         <Separator orientation="vertical" pad="1-5" size="1" />
-        <Text css={{ fontWeight: '600' }}>
+        <Text size="12" weight="semibold">
           {Number(wallet?.siafunds || 0).toLocaleString()} SF
         </Text>
       </Flex>
