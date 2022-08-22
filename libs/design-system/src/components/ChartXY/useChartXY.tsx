@@ -25,6 +25,7 @@ export type ChartConfig = {
     }
   }
   format: (v: number) => string
+  formatTimestamp?: (v: number) => string
   disableAnimations?: boolean
 }
 
