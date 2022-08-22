@@ -6,14 +6,12 @@ import {
   NextLinkButton,
   Text,
   Tooltip,
-  truncate,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import { useWalletTransactions } from '@siafoundation/react-core'
 import { AuthedLayout } from '../../../components/AuthedLayout'
 import { Wallet } from '../../../components/User/Wallet'
 import { WalletSparkline } from '../../../components/WalletSparkline'
-import { useWallets } from '../../../contexts/wallets'
 import { routes } from '../../../config/routes'
 import { useMemo } from 'react'
 import { useDialog } from '../../../contexts/dialog'
@@ -23,8 +21,6 @@ export default function WalletView() {
   const router = useRouter()
   const walletId = router.query.id as string
   const transactions = useWalletTransactions()
-
-  const { activeWallet } = useWallets()
 
   const { openDialog } = useDialog()
 
@@ -46,17 +42,17 @@ export default function WalletView() {
 
   return (
     <AuthedLayout
-      title={`Wallets / ${truncate(activeWallet?.name, 20)}`}
+      title="Wallet"
       actions={
         <>
           <Wallet />
-          <Button variant="accent" size="2">
+          <Button variant="accent" size="1">
             Send
           </Button>
           <NextLinkButton
             href={routes.wallet.receive.replace('[id]', walletId)}
             variant="accent"
-            size="2"
+            size="1"
           >
             Receive
           </NextLinkButton>

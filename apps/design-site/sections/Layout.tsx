@@ -1,5 +1,6 @@
 import {
-  AppBar,
+  NavbarApp,
+  NavbarSite,
   Box,
   Flex,
   Grid,
@@ -158,7 +159,7 @@ export function Layout() {
         </Grid>
       </Section>
       <Section>
-        <SubsectionHeading>AppBar</SubsectionHeading>
+        <SubsectionHeading>Navbar</SubsectionHeading>
         <Box
           css={{
             position: 'relative',
@@ -190,12 +191,12 @@ export function Layout() {
               padding: '$2',
             }}
           >
-            <AppBar appName="Xerox" homeHref={'#'} variant="app">
+            <NavbarApp appName="Xerox" homeHref={'#'}>
               <UserDropdownMenu />
-            </AppBar>
-            <AppBar appName="Xerox" homeHref={'#'} variant="site">
+            </NavbarApp>
+            <NavbarSite appName="Xerox" homeHref={'#'}>
               <UserDropdownMenu />
-            </AppBar>
+            </NavbarSite>
           </Grid>
         </Box>
       </Section>

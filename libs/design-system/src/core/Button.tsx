@@ -13,7 +13,7 @@ export const Button = styled('button', {
   },
 
   display: 'inline-flex',
-  gap: '$1',
+  // gap: '$1',
   flexShrink: 0,
   justifyContent: 'center',
   lineHeight: '1',
@@ -28,6 +28,9 @@ export const Button = styled('button', {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
+  '& > svg': {
+    opacity: 0.5,
+  },
 
   variants: {
     size: {
@@ -37,6 +40,16 @@ export const Button = styled('button', {
         px: '$1-5',
         fontSize: '$12',
         lineHeight: '$sizes$3-5',
+        '& > svg:first-child': {
+          marginRight: '$0-5',
+          left: '-$0-5',
+          position: 'relative',
+        },
+        '& > svg:last-child': {
+          marginLeft: '$0-5',
+          right: '-$0-5',
+          position: 'relative',
+        },
       },
       '2': {
         borderRadius: '$1',
@@ -191,9 +204,6 @@ export const Button = styled('button', {
         },
       },
     },
-    icon: {
-      true: {},
-    },
   },
   compoundVariants: [
     {
@@ -277,30 +287,6 @@ export const Button = styled('button', {
           backgroundColor: '$redA4',
           boxShadow: 'none',
         },
-      },
-    },
-    {
-      size: '1',
-      icon: 'true',
-      css: {
-        px: '$1',
-        '& > svg': {
-          opacity: 0.5,
-        },
-      },
-    },
-    {
-      size: '2',
-      icon: 'true',
-      css: {
-        paddingLeft: '$1-5',
-      },
-    },
-    {
-      size: '3',
-      icon: 'true',
-      css: {
-        paddingLeft: '$2-5',
       },
     },
   ],

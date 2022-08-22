@@ -79,7 +79,6 @@ export function ContractTimeline({ start, end, payout, range, color }: Props) {
           justify="between"
           gap="1"
           css={{
-            direction: 'rtl',
             position: 'absolute',
             height: '100%',
             left: toPercent(startPos),
@@ -121,10 +120,11 @@ export function ContractTimeline({ start, end, payout, range, color }: Props) {
 
 type RelativeLabelProps = {
   children: React.ReactNode
+  align: 'start' | 'end'
   variant: 'primary' | 'secondary'
 }
 
-function RelativeLabel({ children, variant }: RelativeLabelProps) {
+function RelativeLabel({ children, variant, align }: RelativeLabelProps) {
   return (
     <Box
       css={{
@@ -137,6 +137,7 @@ function RelativeLabel({ children, variant }: RelativeLabelProps) {
         size="10"
         css={{
           color: variant === 'primary' ? '$textContrast' : '$gray10',
+          direction: align === 'start' ? 'rtl' : 'ltr',
         }}
         weight={variant === 'primary' ? 'semibold' : 'regular'}
         ellipsis
@@ -153,9 +154,9 @@ type DateLabelProps = {
   variant: 'primary' | 'secondary'
 }
 
-function DateLabel({ date, variant }: DateLabelProps) {
+function DateLabel({ date, align, variant }: DateLabelProps) {
   return (
-    <RelativeLabel variant={variant}>
+    <RelativeLabel variant={variant} align={align}>
       {variant === 'primary'
         ? format(date, 'MMM d')
         : format(date, 'MMM d, yy')}

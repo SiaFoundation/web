@@ -6,6 +6,11 @@ import {
   Text,
   ValueNum,
   ValueSc,
+  getMonthsInMs,
+  getNowInMs,
+  getWeeksInMs,
+  getYearsInMs,
+  getDaysInMs,
 } from '@siafoundation/design-system'
 import {
   humanBytes,
@@ -15,7 +20,7 @@ import {
 } from '@siafoundation/sia-js'
 import { Chart } from '../contexts/data'
 import { TableColumn } from '../components/Table'
-import { upperFirst, values } from 'lodash'
+import { countBy, upperFirst, values } from 'lodash'
 import { ContractTimeline } from '../components/ContractTimeline'
 import { useCallback, useMemo } from 'react'
 import { allDatesMap, contractsData, contractsTimeRange } from './mockContracts'
@@ -77,6 +82,13 @@ export type Row = {
   gainLoss: number
 }
 
+export type ContractFilter = {
+  key: string
+  timeRange?: [number, number]
+  values?: string[]
+  value?: string
+}
+
 const defaultColumns: ContractColumn[] = ['timeline', 'revenue']
 
 function getStatus({ status }: Row): {
@@ -94,7 +106,7 @@ function getStatus({ status }: Row): {
 }
 
 export function useContracts() {
-  const contracts = useMemo<Chart>(
+  const contractsChart = useMemo<Chart>(
     () => ({
       data: values(
         contractsData.reduce((acc, row) => {
@@ -138,17 +150,6 @@ export function useContracts() {
     defaultValue: 'desc',
   })
 
-  const sortedContracts = useMemo(
-    () =>
-      contractsData.sort((a, b) => {
-        if (sortDirection === 'desc') {
-          return a[sortColumn] < b[sortColumn] ? 1 : -1
-        }
-        return a[sortColumn] > b[sortColumn] ? 1 : -1
-      }),
-    [sortColumn, sortDirection]
-  )
-
   const toggleColumn = useCallback(
     (column: string) => {
       setEnabledColumns((columns) => {
@@ -164,6 +165,63 @@ export function useContracts() {
   const resetDefaultColumns = useCallback(() => {
     setEnabledColumns(defaultColumns)
   }, [setEnabledColumns])
+
+  const [filters, _setFilters] = useLocalStorageState<
+    Record<string, ContractFilter>
+  >('v0/contracts/filters', {
+    defaultValue: {},
+  })
+
+  const setFilter = useCallback(
+    (value: ContractFilter) => {
+      _setFilters((filters) => ({
+        ...filters,
+        [value.key]: value,
+      }))
+    },
+    [_setFilters]
+  )
+
+  const removeFilter = useCallback(
+    (key: string) => {
+      _setFilters((filters) => ({
+        ...filters,
+        [key]: undefined,
+      }))
+    },
+    [_setFilters]
+  )
+
+  const filteredContracts = useMemo(() => {
+    const filterList = Object.entries(filters).filter(([_, val]) => val)
+    const filtered = filterList.length
+      ? contractsData.filter((contract) => {
+          for (const [key, filter] of Object.entries(filters)) {
+            const value = contract[key]
+            if (key === 'expirationDate') {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              const range = getTimeRange(filter.value as any)
+              if (!range) {
+                return false
+              }
+              console.log(filter, range)
+              return value >= range[0] && value <= range[1]
+            }
+            if (key === 'status') {
+              return filter.values?.includes(value)
+            }
+          }
+          return false
+        })
+      : contractsData
+    const sorted = filtered.sort((a, b) => {
+      if (sortDirection === 'desc') {
+        return a[sortColumn] < b[sortColumn] ? 1 : -1
+      }
+      return a[sortColumn] > b[sortColumn] ? 1 : -1
+    })
+    return sorted
+  }, [filters, sortColumn, sortDirection])
 
   const columns = useMemo(
     () =>
@@ -188,19 +246,22 @@ export function useContracts() {
               </Flex>
             )
           },
-          summary: () => (
-            <Flex direction="row" gap="1" css={{ width: '100%' }}>
-              <Text size="12" css={{ color: '$amber9' }}>
-                32 active
-              </Text>
-              <Text size="12" css={{ color: '$green9' }}>
-                120 successful
-              </Text>
-              <Text size="12" css={{ color: '$red11' }}>
-                3 failed
-              </Text>
-            </Flex>
-          ),
+          summary: () => {
+            const counts = countBy(filteredContracts, 'status')
+            return (
+              <Flex direction="row" gap="1" css={{ width: '100%' }}>
+                <Text size="12" css={{ color: '$amber9' }}>
+                  {counts.active || 0} active
+                </Text>
+                <Text size="12" css={{ color: '$green9' }}>
+                  {counts.successful || 0} successful
+                </Text>
+                <Text size="12" css={{ color: '$red11' }}>
+                  {counts.failed || 0} failed
+                </Text>
+              </Flex>
+            )
+          },
         },
         {
           key: 'timeline',
@@ -224,8 +285,8 @@ export function useContracts() {
               <ChartXY
                 variant="ghost"
                 id="contracts"
-                data={contracts.data}
-                config={contracts.config}
+                data={contractsChart.data}
+                config={contractsChart.config}
                 chartType="barstack"
                 height={80}
               />
@@ -473,7 +534,7 @@ export function useContracts() {
           sortable: 'financial',
         },
       ] as TableColumn<Row>[],
-    [contracts]
+    [contractsChart, filteredContracts]
   )
 
   const configurableColumns = useMemo(
@@ -497,15 +558,34 @@ export function useContracts() {
 
   return {
     columns: filteredColumns,
-    sortedContracts,
+    contracts: filteredContracts,
     configurableColumns,
     enabledColumns,
     toggleColumn,
     setSortDirection,
     setSortColumn,
     sortColumn,
+    filters,
+    setFilter,
+    removeFilter,
     sortDirection,
     sortOptions,
     resetDefaultColumns,
+  }
+}
+
+function getTimeRange(range: 'day' | 'week' | 'month' | 'year') {
+  const now = getNowInMs()
+  if (range === 'month') {
+    return [now - getMonthsInMs(1), now]
+  }
+  if (range === 'week') {
+    return [now - getWeeksInMs(1), now]
+  }
+  if (range === 'year') {
+    return [now - getYearsInMs(1), now]
+  }
+  if (range === 'day') {
+    return [now - getDaysInMs(1), now]
   }
 }

@@ -60,6 +60,9 @@ export const contractsData: Row[] = [
   buildRow('07/07/2022'),
   buildRow('07/27/2022'),
   buildRow('07/17/2022'),
+  buildRow('07/17/2022'),
+  buildRow('07/17/2022'),
+  buildRow('07/17/2022'),
 ]
 
 export const contractsTimeRange = contractsData.reduce(
