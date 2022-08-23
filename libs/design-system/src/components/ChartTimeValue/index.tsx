@@ -23,7 +23,7 @@ import { Text } from '../../core/Text'
 import { Tooltip as DsTooltip } from '../../core/Tooltip'
 import { throttle } from 'lodash'
 import { AreaChart } from './AreaChart'
-import { Reset16 } from '@carbon/icons-react'
+import { Reset16 } from '../../icons'
 import { Panel } from '../../core/Panel'
 import { getPointTime, getPointValue, Point } from './utils'
 
