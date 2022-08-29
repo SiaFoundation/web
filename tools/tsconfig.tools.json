@@ -8,6 +8,5 @@
     "types": ["node"],
     "importHelpers": false
   },
-  "include": ["**/*.ts"],
-  "foo": "foo"
+  "include": ["**/*.ts"]
 }
