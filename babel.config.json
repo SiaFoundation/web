@@ -1,3 +1,4 @@
 {
-  "babelrcRoots": ["*"]
+  "babelrcRoots": ["*"],
+  "foo": true
 }
