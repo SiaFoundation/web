@@ -134,7 +134,6 @@ export const TextField = styled('input', {
     },
     variant: {
       totalGhost: {
-        padding: 0,
         boxShadow: 'none',
         backgroundColor: 'transparent',
         '@hover': {

@@ -4,22 +4,22 @@ import { TextField } from './TextField'
 import { Box } from './Box'
 import { Flex } from './Flex'
 import { Text } from './Text'
-import { Panel } from './Panel'
 
-export const NumberInput = styled(CurrencyInput, TextField)
+const NumberInput = styled(CurrencyInput, TextField)
 
 type Props = {
   units?: string
 } & React.ComponentProps<typeof NumberInput>
 
-export function NumberField({ units, ...props }: Props) {
+export function NumberField({ units, size = '1', ...props }: Props) {
   return (
     <Box css={{ position: 'relative' }}>
       <NumberInput
         {...props}
         autoComplete="off"
+        size={size}
         spellCheck={false}
-        css={{ paddingRight: units ? '$6' : undefined }}
+        css={{ ...props.css, paddingRight: units ? '$6' : undefined }}
       />
       {units && (
         <Flex
@@ -27,14 +27,13 @@ export function NumberField({ units, ...props }: Props) {
           css={{
             position: 'absolute',
             top: 0,
-            right: '$0-5',
             height: '100%',
-            width: '$5',
+            right: size === '1' ? '$1' : '$1-5',
           }}
         >
-          <Panel css={{ padding: '$0-5 $1' }}>
-            <Text weight="semibold">{units}</Text>
-          </Panel>
+          <Text size={size === '1' ? '12' : '14'} weight="semibold">
+            {units}
+          </Text>
         </Flex>
       )}
     </Box>

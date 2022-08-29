@@ -1,6 +1,6 @@
 import { Text } from '../core/Text'
 import { Tooltip } from '../core/Tooltip'
-import { humanNumber, humanSiacoin, toSiacoins } from '@siafoundation/sia-js'
+import { humanSiacoin } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
 
 type Props = {
@@ -9,6 +9,8 @@ type Props = {
   variant?: 'change' | 'value'
   tooltip?: string
   fixed?: number
+  dynamicUnits?: boolean
+  showTooltip?: boolean
 }
 
 export function ValueSc({
@@ -17,6 +19,8 @@ export function ValueSc({
   tooltip = '',
   variant = 'change',
   fixed = 3,
+  dynamicUnits = true,
+  showTooltip = true,
 }: Props) {
   const sign = value.isGreaterThan(0) ? '+' : value.isLessThan(0) ? '-' : ''
   const color =
@@ -27,29 +31,41 @@ export function ValueSc({
         ? '$red11'
         : '$gray7'
       : '$textContrast'
-  return (
-    <Tooltip
-      content={
-        (tooltip ? `${tooltip} ` : '') +
-        humanNumber(toSiacoins(value), {
-          fixed: 16,
-          units: 'SC',
-        })
-      }
+
+  const el = (
+    <Text
+      size={size}
+      weight="semibold"
+      font="mono"
+      ellipsis
+      css={{
+        color,
+      }}
     >
-      <Text
-        size={size}
-        weight="semibold"
-        font="mono"
-        ellipsis
-        css={{
-          color,
-        }}
-      >
-        {variant === 'change'
-          ? `${sign}${humanSiacoin(value.absoluteValue(), { fixed })}`
-          : humanSiacoin(value, { fixed })}
-      </Text>
-    </Tooltip>
+      {variant === 'change'
+        ? `${sign}${humanSiacoin(value.absoluteValue(), {
+            fixed,
+            dynamicUnits,
+          })}`
+        : humanSiacoin(value, { fixed, dynamicUnits })}
+    </Text>
   )
+
+  if (showTooltip) {
+    return (
+      <Tooltip
+        content={
+          (tooltip ? `${tooltip} ` : '') +
+          humanSiacoin(value, {
+            fixed: 16,
+            dynamicUnits: false,
+          })
+        }
+      >
+        {el}
+      </Tooltip>
+    )
+  }
+
+  return el
 }

@@ -3,6 +3,8 @@ import { SWROptions } from './types'
 import { useSettings } from './useSettings'
 import { getKey } from './utils'
 
+const api = 'https://siastats.info/'
+
 type SiaStatsNetworkStatusGET = {
   active_contracts: number
   block_height: number
@@ -26,9 +28,7 @@ type SiaStatsNetworkStatusGET = {
   used_storage_TB: number
 }
 
-const api = 'https://siastats.info/'
-const route = 'dbs/network_status.json'
-const path = api + route
+const path = api + 'dbs/network_status.json'
 
 export function useSiaStatsNetworkStatus(
   options?: SWROptions<SiaStatsNetworkStatusGET>
