@@ -31,6 +31,5 @@
       "extends": ["plugin:@nrwl/nx/javascript"],
       "rules": {}
     }
-  ],
-  "foo": "foo"
+  ]
 }
