@@ -34,6 +34,7 @@ export * from './core/Text'
 export * from './core/TextArea'
 export * from './core/TextField'
 export * from './core/NumberField'
+export * from './core/CurrencyField'
 export * from './core/Tooltip'
 export * from './core/InfoTip'
 export * from './core/ComboBox'
@@ -105,6 +106,7 @@ export * from './icons/WrenchIcon'
 export * from './icons/LockIcon'
 export * from './icons/HouseIcon'
 export * from './icons/DiceIcon'
+export * from './icons/GearIcon'
 
 export {
   styled,

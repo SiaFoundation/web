@@ -1,8 +1,8 @@
 import React from 'react'
 import { styled } from '../config/theme'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
-import { Text } from './Text'
 import { scaleIn } from '../config/animations'
+import { Paragraph } from './Paragraph'
 
 type TooltipProps = React.ComponentProps<typeof TooltipPrimitive.Root> &
   React.ComponentProps<typeof TooltipPrimitive.Content> & {
@@ -23,6 +23,7 @@ const Content = styled(TooltipPrimitive.Content, {
     animation: `${scaleIn} 0.05s ease-out`,
   },
   position: 'relative',
+  maxWidth: '250px',
 
   variants: {
     multiline: {
@@ -59,9 +60,7 @@ export function Tooltip({
         {...props}
         multiline={multiline}
       >
-        <Text size="12" as="p">
-          {content}
-        </Text>
+        <Paragraph size="12">{content}</Paragraph>
       </Content>
     </TooltipPrimitive.Root>
   )

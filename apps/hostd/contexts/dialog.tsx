@@ -3,12 +3,13 @@ import { WalletAddAddressDialog } from '../dialogs/WalletAddAddressDialog'
 import { AddressDetailsDialog } from '../dialogs/AddressDetailsDialog'
 import { AddWalletDialog } from '../dialogs/AddWalletDialog'
 import { ControlledDialog } from '../dialogs/ControlledDialog'
-import { PrivacyDialog } from '../dialogs/PrivacyDialog'
 import { TransactionDetailsDialog } from '../dialogs/TransactionDetailsDialog'
 import { SyncerConnectPeerDialog } from '../dialogs/SyncerConnectPeerDialog'
 import { StorageFolderAddDialog } from '../dialogs/StorageFolderAddDialog'
 import { StorageFolderResizeDialog } from '../dialogs/StorageFolderResizeDialog'
 import { StorageFolderRemoveDialog } from '../dialogs/StorageFolderRemoveDialog'
+import { HostAnnounceDialog } from '../dialogs/HostAnnounceDialog'
+import { SettingsDialog } from '../dialogs/SettingsDialog'
 
 const DialogContext = createContext({} as State)
 export const useDialog = () => useContext(DialogContext)
@@ -18,7 +19,7 @@ type Props = {
 }
 
 export type DialogType =
-  | 'privacy'
+  | 'settings'
   | 'addAddress'
   | 'addWallet'
   | 'transactionDetails'
@@ -27,6 +28,7 @@ export type DialogType =
   | 'storageFolderAdd'
   | 'storageFolderResize'
   | 'storageFolderRemove'
+  | 'hostAnnounce'
 
 type State = {
   dialog?: DialogType
@@ -61,8 +63,8 @@ export function DialogProvider({ children }: Props) {
 
   return (
     <DialogContext.Provider value={value}>
-      <ControlledDialog dialog="privacy">
-        <PrivacyDialog />
+      <ControlledDialog dialog="settings">
+        <SettingsDialog />
       </ControlledDialog>
       <ControlledDialog dialog="transactionDetails">
         <TransactionDetailsDialog />
@@ -87,6 +89,9 @@ export function DialogProvider({ children }: Props) {
       </ControlledDialog>
       <ControlledDialog dialog="storageFolderRemove">
         <StorageFolderRemoveDialog />
+      </ControlledDialog>
+      <ControlledDialog dialog="hostAnnounce">
+        <HostAnnounceDialog />
       </ControlledDialog>
       {children}
     </DialogContext.Provider>

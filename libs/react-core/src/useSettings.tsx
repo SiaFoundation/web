@@ -2,18 +2,65 @@ import React, { createContext, useContext } from 'react'
 import { useCallback } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 
+type CurrencyId = 'usd' | 'eur' | 'gbp' | 'jpy' | 'btc' | 'eth'
+
+type CurrencyOption = {
+  id: CurrencyId
+  label: string
+  prefix: string
+}
+
+const currencyOptions: CurrencyOption[] = [
+  {
+    id: 'usd',
+    label: 'USD',
+    prefix: '$',
+  },
+  {
+    id: 'eur',
+    label: 'EUR',
+    prefix: '€',
+  },
+  {
+    id: 'gbp',
+    label: 'GBP',
+    prefix: '£',
+  },
+  {
+    id: 'jpy',
+    label: 'JPY',
+    prefix: '¥',
+  },
+  {
+    id: 'btc',
+    label: 'BTC',
+    prefix: '₿',
+  },
+  {
+    id: 'eth',
+    label: 'ETH',
+    prefix: 'Ξ',
+  },
+]
+
 type Settings = {
   siaStats: boolean
+  siaCentral: boolean
   password?: string
+  currency: CurrencyOption
 }
 
 const defaultSettings: Settings = {
   siaStats: true,
+  siaCentral: true,
   password: undefined,
+  currency: currencyOptions[0],
 }
 
 type State = {
   settings: Settings
+  currencyOptions: CurrencyOption[]
+  setCurrency: (id: CurrencyId) => void
   setSettings: (settings: Partial<Settings>) => void
 }
 
@@ -40,10 +87,23 @@ export function SettingsProvider({ children }: Props) {
     },
     [_setSettings]
   )
+  const setCurrency = useCallback(
+    (id: CurrencyId) => {
+      const currency = currencyOptions.find((i) => i.id === id)
+      if (currency) {
+        setSettings({
+          currency,
+        })
+      }
+    },
+    [setSettings]
+  )
 
   const value = {
     settings,
     setSettings,
+    setCurrency,
+    currencyOptions,
   } as State
 
   return (

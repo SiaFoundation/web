@@ -14,6 +14,7 @@ import {
   NextLink,
   Logo,
   navbarAppHeight,
+  GearIcon,
 } from '@siafoundation/design-system'
 import { useSettings } from '@siafoundation/react-core'
 import { routes } from '../../config/routes'
@@ -21,9 +22,11 @@ import { useWallets } from '../../contexts/wallets'
 import { WalletNavItem } from './WalletNavItem'
 import { useRouter } from 'next/router'
 import { NavItem } from './NavItem'
+import { useDialog } from '../../contexts/dialog'
 
 export function Sidenav() {
   const { setSettings } = useSettings()
+  const { openDialog } = useDialog()
   const { wallets } = useWallets()
   const router = useRouter()
   return (
@@ -83,6 +86,9 @@ export function Sidenav() {
             ))}
             <NavItem title="Blockchain node" route={routes.node.index}>
               <DiceIcon />
+            </NavItem>
+            <NavItem title="Settings" onClick={() => openDialog('settings')}>
+              <GearIcon />
             </NavItem>
             <Tooltip
               content="Lock hostd"

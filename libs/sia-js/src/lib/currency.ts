@@ -18,8 +18,11 @@ export function toHastings(siacoins: BigNumber | number | string) {
   return new BigNumber(siacoins).times(hastingsPerSiacoin)
 }
 
-type HumanSiacoinOptions = { fixed: number }
-const humanSiacoinOptionDefaults: HumanSiacoinOptions = { fixed: 3 }
+type HumanSiacoinOptions = { fixed?: number; dynamicUnits?: boolean }
+const humanSiacoinOptionDefaults: HumanSiacoinOptions = {
+  fixed: 3,
+  dynamicUnits: true,
+}
 /**
  * Converts hastings amount into human readable format.
  * This is copy of the HumanString function from Sia repo.
@@ -29,7 +32,7 @@ export function humanSiacoin(
   hastings: BigNumber | number | string,
   options?: HumanSiacoinOptions
 ): string | null {
-  const { fixed } = {
+  const { fixed, dynamicUnits } = {
     ...humanSiacoinOptionDefaults,
     ...options,
   }
@@ -38,6 +41,10 @@ export function humanSiacoin(
   const val = new BigNumber(hastings)
   const amount = new BigNumber(hastings).abs()
   const sign = val.isNegative() ? '-' : ''
+
+  if (!dynamicUnits) {
+    return `${sign}${toSiacoins(amount).toFormat(fixed)} SC`
+  }
 
   if (amount.dividedBy(pico).isLessThan(1)) {
     return `${sign}${amount} H`
@@ -51,7 +58,7 @@ export function humanSiacoin(
       .reduce((acc) => acc.multipliedBy(exp), new BigNumber(1))
     const reduced = amount.dividedBy(pico.multipliedBy(mag))
     if (reduced.isLessThan(exp) || index === suffixes.length - 1) {
-      return `${sign}${reduced.decimalPlaces(fixed)} ${suffixes[index]}`
+      return `${sign}${reduced.toFormat(fixed)} ${suffixes[index]}`
     }
   }
 
