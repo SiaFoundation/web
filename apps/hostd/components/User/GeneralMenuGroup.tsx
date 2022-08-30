@@ -42,8 +42,8 @@ export function GeneralMenuGroup() {
           </DropdownMenuRightSlot>
         </DropdownMenuItem>
       </Link>
-      <DropdownMenuItem onSelect={() => openDialog('privacy')}>
-        Privacy
+      <DropdownMenuItem onSelect={() => openDialog('settings')}>
+        Settings
         <DropdownMenuRightSlot>
           <LicenseGlobal16 />
         </DropdownMenuRightSlot>

@@ -1,10 +1,8 @@
 import {
   Box,
   Flex,
-  IconButton,
   Panel,
   Separator,
-  Tooltip,
   BarsProgressIcon,
   HardDriveIcon,
   FileContractIcon,
@@ -18,8 +16,7 @@ import {
 } from '@siafoundation/design-system'
 import { useSettings } from '@siafoundation/react-core'
 import { routes } from '../../config/routes'
-import { useWallets } from '../../contexts/wallets'
-import { WalletNavItem } from './WalletNavItem'
+import { NavItemWallet } from './NavItemWallet'
 import { useRouter } from 'next/router'
 import { NavItem } from './NavItem'
 import { useDialog } from '../../contexts/dialog'
@@ -27,7 +24,6 @@ import { useDialog } from '../../contexts/dialog'
 export function Sidenav() {
   const { setSettings } = useSettings()
   const { openDialog } = useDialog()
-  const { wallets } = useWallets()
   const router = useRouter()
   return (
     <Box
@@ -81,32 +77,22 @@ export function Sidenav() {
             </Flex>
             <Box css={{ flex: 1 }} />
             <Separator size="100" pad="0" />
-            {wallets.data?.map((wallet) => (
-              <WalletNavItem key={wallet.name} wallet={wallet} />
-            ))}
+            <NavItemWallet />
             <NavItem title="Blockchain node" route={routes.node.index}>
               <DiceIcon />
             </NavItem>
             <NavItem title="Settings" onClick={() => openDialog('settings')}>
               <GearIcon />
             </NavItem>
-            <Tooltip
-              content="Lock hostd"
-              side="right"
-              align="end"
-              sideOffset={5}
-              alignOffset={7}
+            <NavItem
+              title="Lock hostd"
+              onClick={() => {
+                setSettings({ password: '' })
+                router.replace(routes.home)
+              }}
             >
-              <IconButton
-                variant="ghost"
-                onClick={() => {
-                  setSettings({ password: '' })
-                  router.replace(routes.home)
-                }}
-              >
-                <LockIcon />
-              </IconButton>
-            </Tooltip>
+              <LockIcon />
+            </NavItem>
           </Flex>
         </Flex>
       </Panel>

@@ -10,8 +10,8 @@ export const routes = {
     index: '/config',
   },
   wallet: {
-    view: '/wallet/[id]',
-    receive: '/wallet/[id]/receive',
+    view: '/wallet',
+    addresses: '/wallet/addresses',
   },
   node: {
     index: '/node',

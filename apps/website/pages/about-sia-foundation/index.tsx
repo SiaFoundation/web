@@ -98,25 +98,8 @@ function Foundation({ team, newsPosts, reports }: Props) {
                 <NextLink href={webLinks.jobs} target="_blank">
                   openings
                 </NextLink>
-                . We are currently looking for a{' '}
-                <NextLink
-                  href={
-                    'https://siafoundation.homerun.co/developer-evangelist/en'
-                  }
-                  target="_blank"
-                >
-                  Developer Evangelist
-                </NextLink>{' '}
-                and a{' '}
-                <NextLink
-                  href={'https://siafoundation.homerun.co/technical-writer/en'}
-                  target="_blank"
-                >
-                  Technical Writer
-                </NextLink>
                 .
               </Paragraph>
-              <Paragraph color="subtle" size="18"></Paragraph>
             </Flex>
           </Flex>
         </Flex>

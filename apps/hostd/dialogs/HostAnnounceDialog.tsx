@@ -11,7 +11,7 @@ import { useFormik } from 'formik'
 import { useDialog } from '../contexts/dialog'
 import * as Yup from 'yup'
 import { FormField } from '../components/Form'
-import { ipRegex } from './ipRegex'
+import { hostnameOrIpRegex } from './ipRegex'
 
 const initialValues = {
   port: 9981,
@@ -25,8 +25,8 @@ const validationSchema = Yup.object().shape({
     .max(65535, 'Out of valid range'),
   ip: Yup.string()
     .required('Required')
-    .test('ip', 'Invalid IP address', (v) =>
-      ipRegex.v4({ exact: true }).test(v)
+    .test('ip', 'Invalid hostname or IP address', (v) =>
+      hostnameOrIpRegex().test(v)
     ),
 })
 
@@ -74,7 +74,7 @@ export function HostAnnounceDialog() {
               formik={formik}
               title="Address"
               name="ip"
-              placeholder="127.0.0.1 or host.acme.com"
+              placeholder="host.acme.com or 127.0.0.1"
               autoComplete="off"
               type="text"
             />
