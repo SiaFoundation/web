@@ -58,7 +58,7 @@ export function WalletSparkline() {
             formatValue: (v) => humanNumber(v, { units: 'SF' }),
           },
         ]}
-        height={300}
+        height={200}
         hideBrush
       />
     </Box>

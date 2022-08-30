@@ -19,6 +19,7 @@ type FormFieldProps = {
   autoComplete?: string
   spellCheck?: boolean
   tabIndex?: number
+  allowDecimals?: boolean
   type?: string
   size?: React.ComponentProps<typeof TextField>['size']
 }
@@ -33,6 +34,7 @@ export function FormField({
   autoComplete = 'off',
   spellCheck = false,
   tabIndex,
+  allowDecimals = false,
   units,
   type,
   size = 2,
@@ -47,6 +49,7 @@ export function FormField({
           disabled={disabled}
           readOnly={readOnly}
           tabIndex={tabIndex}
+          allowDecimals={allowDecimals}
           placeholder={placeholder}
           size={size}
         />
@@ -122,6 +125,7 @@ type FormNumberFieldProps = {
   readOnly?: boolean
   tabIndex?: number
   placeholder: string
+  allowDecimals?: boolean
   size?: React.ComponentProps<typeof TextField>['size']
 }
 
@@ -133,6 +137,7 @@ export function FormNumberField({
   readOnly,
   tabIndex,
   placeholder,
+  allowDecimals = false,
   size = 2,
 }: FormNumberFieldProps) {
   return (
@@ -142,6 +147,7 @@ export function FormNumberField({
       name={name}
       placeholder={placeholder}
       disabled={disabled}
+      allowDecimals={allowDecimals}
       readOnly={readOnly || formik.isSubmitting}
       tabIndex={tabIndex}
       onBlur={formik.handleBlur}

@@ -1,6 +1,5 @@
 import { Flex, NavbarApp } from '@siafoundation/design-system'
 import { routes } from '../config/routes'
-import { UserMenu } from './User/UserMenu'
 
 type Props = {
   title?: string
@@ -19,7 +18,7 @@ export function Navbar({ title, filters, actions }: Props) {
           <Flex gap="1" align="center">
             {actions}
           </Flex>
-          <UserMenu size="2" />
+          {/* <UserMenu size="2" /> */}
         </Flex>
       </Flex>
     </NavbarApp>

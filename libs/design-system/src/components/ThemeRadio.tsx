@@ -7,6 +7,7 @@ import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 import { Text } from '../core/Text'
 import { Flex } from '../core/Flex'
 import { Box } from '../core/Box'
+import { Tooltip } from '../core/Tooltip'
 
 const RadioCardGroup = styled(RadioGroupPrimitive.Root, {
   display: 'flex',
@@ -86,28 +87,25 @@ export function ThemeRadio({ css, radioCss }: Props) {
       css={css}
     >
       <RadioCard value="system" css={radioCardCss}>
-        <Flex direction="column" align="center" gap="1">
+        <Tooltip content="System">
           <Box css={{ color: '$textContrast' }}>
             <Screen16 />
           </Box>
-          <Text>System</Text>
-        </Flex>
+        </Tooltip>
       </RadioCard>
       <RadioCard value="light" css={radioCardCss}>
-        <Flex direction="column" align="center" gap="1">
+        <Tooltip content="Light">
           <Box css={{ color: '$textContrast' }}>
             <Awake16 />
           </Box>
-          <Text>Light</Text>
-        </Flex>
+        </Tooltip>
       </RadioCard>
       <RadioCard value="dark" css={radioCardCss}>
-        <Flex direction="column" align="center" gap="1">
+        <Tooltip content="Dark">
           <Box css={{ color: '$textContrast' }}>
             <Asleep16 />
           </Box>
-          <Text>Dark</Text>
-        </Flex>
+        </Tooltip>
       </RadioCard>
     </RadioCardGroup>
   )
