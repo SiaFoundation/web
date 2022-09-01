@@ -31,6 +31,12 @@ export const chartConfigs = {
   contract: {
     color: 'var(--colors-gray9)',
   },
+  sc: {
+    color: 'var(--colors-brandAccent9)',
+  },
+  sf: {
+    color: 'var(--colors-yellow9)',
+  },
   other: {
     color: 'var(--colors-gray9)',
   },

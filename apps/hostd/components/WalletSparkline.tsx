@@ -1,65 +1,95 @@
-import React, { useMemo } from 'react'
-import { Box, ChartTimeValue, Point } from '@siafoundation/design-system'
-import { humanNumber, humanSiacoin } from '@siafoundation/sia-js'
-import {
-  useWalletBalance,
-  useWalletTransactions,
-} from '@siafoundation/react-core'
-import BigNumber from 'bignumber.js'
+import React, { useCallback, useMemo, useState } from 'react'
+import { Box, Button, ChartXY } from '@siafoundation/design-system'
+import { humanSiacoin, humanSiafund } from '@siafoundation/sia-js'
+// import {
+//   useWalletBalance,
+//   useWalletTransactions,
+// } from '@siafoundation/react-core'
+import { Chart } from '../contexts/data'
+import { formatData, getTimeRangeRollup } from '../contexts/data/formatData'
+import { mockData } from '../contexts/data/mockData'
+import { computeStats } from '../contexts/data/computeStats'
+import { chartConfigs } from '../config/charts'
+import { pick } from 'lodash'
 
 export function WalletSparkline() {
-  const balance = useWalletBalance()
-  const transactions = useWalletTransactions()
-
   // TODO: add a proper endpoint for balance evolution
-  const sc: Point[] = useMemo(() => {
-    if (!balance.data || !transactions.data) {
-      return []
+  // const balance = useWalletBalance()
+  // const transactions = useWalletTransactions()
+
+  const timeRange = useMemo(
+    () => ({
+      start: 0,
+      end: new Date().getTime(),
+    }),
+    []
+  )
+
+  const formatTimestamp = useCallback(
+    (v: number) => getTimeRangeRollup(timeRange).label(v),
+    [timeRange]
+  )
+
+  const scChart = useMemo<Chart>(() => {
+    const scData = mockData.balance.map((i) => pick(i, ['sc', 'timestamp']))
+    const data = formatData(scData, timeRange, 'total')
+    const stats = computeStats(scData, timeRange, ['potential'])
+    return {
+      data,
+      stats,
+      config: {
+        data: {
+          sc: chartConfigs.sc,
+        },
+        format: (v) => humanSiacoin(v),
+        formatTimestamp,
+      },
     }
+  }, [timeRange, formatTimestamp])
 
-    const vals: { value: BigNumber; timestamp: number }[] =
-      transactions.data?.reduce((acc, t, i) => {
-        return acc.concat({
-          value: new BigNumber(acc[i - 1]?.value || 0)
-            .plus(t.Inflow)
-            .minus(t.Outflow),
-          timestamp: new Date(t.Timestamp).getTime(),
-        })
-      }, []) || []
-
-    if (!vals.length) {
-      return []
+  const sfChart = useMemo<Chart>(() => {
+    const sfData = mockData.balance.map((i) => pick(i, ['sf', 'timestamp']))
+    const data = formatData(sfData, timeRange, 'total')
+    const stats = computeStats(sfData, timeRange, ['potential'])
+    return {
+      data,
+      stats,
+      config: {
+        data: {
+          sc: chartConfigs.sc,
+        },
+        format: (v) => humanSiafund(v),
+        formatTimestamp,
+      },
     }
+  }, [timeRange, formatTimestamp])
 
-    const lastVal = vals[vals.length - 1]
-
-    const diff = lastVal.value.minus(balance.data?.siacoins)
-
-    return vals.map((v) => ({
-      value: v.value.minus(diff).toNumber(),
-      timestamp: v.timestamp,
-    })) as Point[]
-  }, [balance, transactions])
-
-  const sf = []
+  const [toggle, setToggle] = useState<'sc' | 'sf'>('sc')
 
   return (
     <Box css={{ position: 'relative' }}>
-      <ChartTimeValue
-        datasets={[
-          {
-            name: 'SC',
-            dataset: sc,
-            formatValue: (v) => humanSiacoin(v),
-          },
-          {
-            name: 'SF',
-            dataset: sf,
-            formatValue: (v) => humanNumber(v, { units: 'SF' }),
-          },
-        ]}
+      <ChartXY
+        id="balance"
         height={200}
-        hideBrush
+        key={toggle}
+        data={toggle === 'sc' ? scChart.data : sfChart.data}
+        config={toggle === 'sc' ? scChart.config : sfChart.config}
+        actionsLeft={
+          <>
+            <Button
+              variant={toggle === 'sc' ? 'accent' : 'gray'}
+              onClick={() => setToggle('sc')}
+            >
+              Siacoins
+            </Button>
+            <Button
+              variant={toggle === 'sf' ? 'accent' : 'gray'}
+              onClick={() => setToggle('sf')}
+            >
+              Siafunds
+            </Button>
+          </>
+        }
       />
     </Box>
   )

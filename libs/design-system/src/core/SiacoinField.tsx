@@ -1,4 +1,3 @@
-import { styled } from '../config/theme'
 import { Flex } from './Flex'
 import { NumberField } from './NumberField'
 import {
@@ -7,23 +6,6 @@ import {
 } from '@siafoundation/react-core'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
-
-const Div = styled(Flex, {
-  backgroundColor: '$loContrast',
-  boxShadow: '$colors$border, $colors$shadow',
-  borderRadius: '$1',
-  padding: '$0-5 0',
-  '@hover': {
-    '&:hover': {
-      boxShadow: '$colors$borderInputHover, $colors$shadow',
-    },
-  },
-
-  '&:focus-within': {
-    boxShadow:
-      '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive',
-  },
-})
 
 type Props = Omit<
   React.ComponentProps<typeof NumberField>,
@@ -38,12 +20,13 @@ type Props = Omit<
 
 const zero = new BigNumber(0)
 
-export function CurrencyField({
+export function SiacoinField({
   sc: externalSc,
   placeholder = new BigNumber(100),
   decimalsLimitFiat = 3,
   decimalsLimitSc = 3,
   onChange,
+  size = 2,
   ...props
 }: Props) {
   const { settings } = useSettings()
@@ -113,10 +96,32 @@ export function CurrencyField({
     [fiat, decimalsLimitFiat]
   )
 
+  const size2 = String(size) === '2'
+
   return (
-    <Div direction="column" css={{ height: 'inherit' }}>
+    <Flex
+      direction="column"
+      gap={size2 ? '1' : undefined}
+      css={{
+        backgroundColor: '$loContrast',
+        boxShadow: '$colors$border, $colors$shadow',
+        borderRadius: '$1',
+        padding: size2 ? '$1 0' : '$0-5 0',
+        '@hover': {
+          '&:hover': {
+            boxShadow: '$colors$borderInputHover, $colors$shadow',
+          },
+        },
+
+        '&:focus-within': {
+          boxShadow:
+            '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive',
+        },
+      }}
+    >
       <NumberField
         {...props}
+        size={size}
         variant="totalGhost"
         placeholder={placeholder.toFixed(decimalsLimitSc)}
         units="SC"
@@ -132,6 +137,7 @@ export function CurrencyField({
       />
       <NumberField
         {...props}
+        size={size}
         variant="totalGhost"
         value={formattedFiat}
         units={settings.currency.label}
@@ -149,6 +155,6 @@ export function CurrencyField({
         }}
         css={{ height: '$3' }}
       />
-    </Div>
+    </Flex>
   )
 }

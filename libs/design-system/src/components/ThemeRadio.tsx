@@ -5,7 +5,6 @@ import { styled, CSS } from '../config/theme'
 import { Asleep16, Awake16, Screen16 } from '../icons'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 import { Text } from '../core/Text'
-import { Flex } from '../core/Flex'
 import { Box } from '../core/Box'
 import { Tooltip } from '../core/Tooltip'
 

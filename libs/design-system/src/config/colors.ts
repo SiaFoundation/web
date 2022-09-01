@@ -43,6 +43,7 @@ export const colors = {
   accentInput: '$brandAccent7',
   frame: 'black',
 
+  textVerySubtle: '$brandGray8',
   textSubtle: '$brandGray11',
   textSubtleActive: '$brandGray12',
   textSubtleHover: '$brandGray12',
@@ -137,6 +138,7 @@ export const colorsDark = {
   accentInput: '$brandAccent8',
   frame: '$brandGray11',
 
+  textVerySubtle: '$brandGray8',
   textSubtle: '$brandGray11',
   textSubtleActive: '$brandGray12',
   textSubtleHover: '$brandGray12',

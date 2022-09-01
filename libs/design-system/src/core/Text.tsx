@@ -19,6 +19,9 @@ export const Text = styled('span', {
       },
     },
     color: {
+      verySubtle: {
+        color: '$textVerySubtle',
+      },
       subtle: {
         color: '$textSubtle',
       },

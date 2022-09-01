@@ -6,8 +6,10 @@ import {
 } from '@siafoundation/design-system'
 import { WalletBalance } from './WalletBalance'
 import { routes } from '../config/routes'
+import { useDialog } from '../contexts/dialog'
 
 export function WalletLayoutActions() {
+  const { openDialog } = useDialog()
   return (
     <>
       <WalletBalance />
@@ -15,7 +17,11 @@ export function WalletLayoutActions() {
         <ArrowDownLeft16 />
         Receive
       </NextLinkButton>
-      <Button size="1" variant="accent">
+      <Button
+        size="1"
+        variant="accent"
+        onClick={() => openDialog('sendSiacoin')}
+      >
         <ArrowUpRight16 />
         Send
       </Button>
