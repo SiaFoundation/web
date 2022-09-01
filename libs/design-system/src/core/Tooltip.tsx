@@ -4,13 +4,6 @@ import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { scaleIn } from '../config/animations'
 import { Paragraph } from './Paragraph'
 
-type TooltipProps = React.ComponentProps<typeof TooltipPrimitive.Root> &
-  React.ComponentProps<typeof TooltipPrimitive.Content> & {
-    children: React.ReactElement
-    content: React.ReactNode
-    multiline?: boolean
-  }
-
 const Content = styled(TooltipPrimitive.Content, {
   boxShadow: '$colors$border, $colors$shadowActive',
   backgroundColor: '$panel',
@@ -24,16 +17,13 @@ const Content = styled(TooltipPrimitive.Content, {
   },
   position: 'relative',
   maxWidth: '250px',
-
-  variants: {
-    multiline: {
-      true: {
-        maxWidth: 250,
-        pb: 7,
-      },
-    },
-  },
 })
+
+type TooltipProps = React.ComponentProps<typeof TooltipPrimitive.Root> &
+  React.ComponentProps<typeof TooltipPrimitive.Content> & {
+    children: React.ReactElement
+    content: React.ReactNode
+  } & React.ComponentProps<typeof Content>
 
 export function Tooltip({
   children,
@@ -41,7 +31,6 @@ export function Tooltip({
   open,
   defaultOpen,
   onOpenChange,
-  multiline,
   ...props
 }: TooltipProps) {
   return (
@@ -53,13 +42,7 @@ export function Tooltip({
     >
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
 
-      <Content
-        side="top"
-        align="center"
-        sideOffset={5}
-        {...props}
-        multiline={multiline}
-      >
+      <Content side="top" align="center" sideOffset={5} {...props}>
         <Paragraph size="12">{content}</Paragraph>
       </Content>
     </TooltipPrimitive.Root>

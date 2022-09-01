@@ -5,7 +5,9 @@ import {
   Label,
   Text,
   NumberField,
+  SiacoinField,
 } from '@siafoundation/design-system'
+import BigNumber from 'bignumber.js'
 
 type FormFieldProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -20,6 +22,8 @@ type FormFieldProps = {
   spellCheck?: boolean
   tabIndex?: number
   allowDecimals?: boolean
+  decimalsLimitFiat?: number
+  decimalsLimitSc?: number
   type?: string
   size?: React.ComponentProps<typeof TextField>['size']
 }
@@ -35,6 +39,8 @@ export function FormField({
   spellCheck = false,
   tabIndex,
   allowDecimals = false,
+  decimalsLimitFiat = 3,
+  decimalsLimitSc = 3,
   units,
   type,
   size = 2,
@@ -52,6 +58,18 @@ export function FormField({
           allowDecimals={allowDecimals}
           placeholder={placeholder}
           size={size}
+        />
+      ) : type === 'siacoin' ? (
+        <FormSiacoinField
+          formik={formik}
+          name={name}
+          disabled={disabled}
+          readOnly={readOnly}
+          placeholder={placeholder}
+          tabIndex={tabIndex}
+          size={size}
+          decimalsLimitFiat={decimalsLimitFiat}
+          decimalsLimitSc={decimalsLimitSc}
         />
       ) : (
         <FormTextField
@@ -154,6 +172,48 @@ export function FormNumberField({
       onValueChange={(value, name) => formik.setFieldValue(name, value)}
       value={formik.values[name]}
       size={size}
+    />
+  )
+}
+
+type FormSiacoinFieldProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formik: any
+  name: string
+  disabled?: boolean
+  readOnly?: boolean
+  tabIndex?: number
+  placeholder: string
+  decimalsLimitFiat?: number
+  decimalsLimitSc?: number
+  size?: React.ComponentProps<typeof TextField>['size']
+}
+
+export function FormSiacoinField({
+  formik,
+  name,
+  disabled,
+  readOnly,
+  tabIndex,
+  placeholder,
+  decimalsLimitFiat = 3,
+  decimalsLimitSc = 3,
+  size = 2,
+}: FormSiacoinFieldProps) {
+  return (
+    <SiacoinField
+      id={name}
+      name={name}
+      disabled={disabled}
+      decimalsLimitFiat={decimalsLimitFiat}
+      decimalsLimitSc={decimalsLimitSc}
+      readOnly={readOnly || formik.isSubmitting}
+      tabIndex={tabIndex}
+      onBlur={formik.handleBlur}
+      size={size}
+      sc={new BigNumber(formik.values[name])}
+      placeholder={new BigNumber(placeholder)}
+      onChange={(val) => formik.setFieldValue(name, val.toString())}
     />
   )
 }

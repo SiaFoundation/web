@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useCallback, useState } from 'react'
-import { WalletAddAddressDialog } from '../dialogs/WalletAddAddressDialog'
+import { WalletSendSiacoinDialog } from '../dialogs/WalletSendSiacoinDialog'
 import { AddressDetailsDialog } from '../dialogs/AddressDetailsDialog'
 import { AddWalletDialog } from '../dialogs/AddWalletDialog'
 import { ControlledDialog } from '../dialogs/ControlledDialog'
@@ -20,7 +20,7 @@ type Props = {
 
 export type DialogType =
   | 'settings'
-  | 'addAddress'
+  | 'sendSiacoin'
   | 'addWallet'
   | 'transactionDetails'
   | 'addressDetails'
@@ -72,8 +72,8 @@ export function DialogProvider({ children }: Props) {
       <ControlledDialog dialog="addWallet">
         <AddWalletDialog />
       </ControlledDialog>
-      <ControlledDialog dialog="addAddress">
-        <WalletAddAddressDialog />
+      <ControlledDialog dialog="sendSiacoin">
+        <WalletSendSiacoinDialog />
       </ControlledDialog>
       <ControlledDialog dialog="addressDetails">
         <AddressDetailsDialog />

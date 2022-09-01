@@ -1,6 +1,6 @@
 import {
   Box,
-  CurrencyField,
+  SiacoinField,
   Information16,
   Flex,
   NextLink,
@@ -32,7 +32,7 @@ export function ConfigurationSiacoin({
 }: Props) {
   return (
     <Flex gap="1-5" direction="column" css={{ width: '220px' }}>
-      <CurrencyField
+      <SiacoinField
         sc={toSiacoins(value)}
         decimalsLimitSc={decimalsLimitSc}
         decimalsLimitFiat={decimalsLimitFiat}
