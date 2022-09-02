@@ -53,7 +53,7 @@ export const dialogTitleCss = css({
   variants: {
     separator: {
       true: {
-        borderBottom: '1px solid $brandGray3',
+        borderBottom: '1px solid $gray3',
       },
     },
   },
@@ -84,7 +84,7 @@ function DialogControls({ children, separator = true }: DialogControlsProps) {
       css={{
         padding: '$1 0',
         margin: '0 $2',
-        borderTop: separator ? '1px solid $brandGray3' : 'none',
+        borderTop: separator ? '1px solid $gray3' : 'none',
       }}
     >
       {children}

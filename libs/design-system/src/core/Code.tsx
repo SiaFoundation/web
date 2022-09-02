@@ -18,8 +18,8 @@ export const Code = styled('code', {
   variants: {
     variant: {
       gray: {
-        backgroundColor: '$brandGray3',
-        color: '$brandGray12',
+        backgroundColor: '$gray3',
+        color: '$gray12',
       },
       accent: {
         backgroundColor: '$accent3',

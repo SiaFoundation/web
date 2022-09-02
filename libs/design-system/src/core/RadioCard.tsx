@@ -13,7 +13,7 @@ const StyledRadioButton = styled('div', {
   borderRadius: '$round',
   width: 25,
   height: 25,
-  boxShadow: 'inset 0 0 0 1px $colors$brandGray7',
+  boxShadow: 'inset 0 0 0 1px $colors$gray7',
   flexShrink: 0,
   mr: '$3',
 })
@@ -54,7 +54,7 @@ const StyledRadio = styled(RadioGroupPrimitive.Item, {
   },
   '&:disabled': {
     pointerEvents: 'none',
-    backgroundColor: '$brandGray2',
+    backgroundColor: '$gray2',
     opacity: '0.5',
     cursor: 'not-allowed',
   },

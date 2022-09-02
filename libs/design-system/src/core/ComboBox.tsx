@@ -130,7 +130,7 @@ export const comboBoxGlobalCss = globalCss({
     color: '$hiContrast !important',
   },
   '.react-select__placeholder': {
-    color: '$brandGray9',
+    color: '$gray9',
   },
   '.react-select__menu': {
     backgroundColor: '$panel !important',

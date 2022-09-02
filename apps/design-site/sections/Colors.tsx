@@ -40,18 +40,18 @@ export function Colors() {
               <Box>
                 <Text size="12">Gray</Text>
               </Box>
-              <Box css={{ height: 35, backgroundColor: '$brandGray1' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandGray2' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandGray3' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandGray4' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandGray5' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandGray6' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandGray7' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandGray8' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandGray9' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandGray10' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandGray11' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandGray12' }} />
+              <Box css={{ height: 35, backgroundColor: '$gray1' }} />
+              <Box css={{ height: 35, backgroundColor: '$gray2' }} />
+              <Box css={{ height: 35, backgroundColor: '$gray3' }} />
+              <Box css={{ height: 35, backgroundColor: '$gray4' }} />
+              <Box css={{ height: 35, backgroundColor: '$gray5' }} />
+              <Box css={{ height: 35, backgroundColor: '$gray6' }} />
+              <Box css={{ height: 35, backgroundColor: '$gray7' }} />
+              <Box css={{ height: 35, backgroundColor: '$gray8' }} />
+              <Box css={{ height: 35, backgroundColor: '$gray9' }} />
+              <Box css={{ height: 35, backgroundColor: '$gray10' }} />
+              <Box css={{ height: 35, backgroundColor: '$gray11' }} />
+              <Box css={{ height: 35, backgroundColor: '$gray12' }} />
             </Grid>
           </Flex>
         </Section>
@@ -572,98 +572,98 @@ function Legend() {
       gap="2"
     >
       <Flex gap="1" align="center">
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           1
         </Text>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           App background
         </Text>
       </Flex>
       <Flex gap="1" align="center">
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           2
         </Text>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           Subtle background
         </Text>
       </Flex>
       <Flex gap="1" align="center">
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           3
         </Text>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           UI element background
         </Text>
       </Flex>
       <Flex gap="1" align="center">
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           4
         </Text>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           Hovered UI element background
         </Text>
       </Flex>
       <Flex gap="1" align="center">
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           5
         </Text>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           Active UI element background
         </Text>
       </Flex>
       <Flex gap="1" align="center">
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           6
         </Text>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           Subtle borders and separators
         </Text>
       </Flex>
       <Flex gap="1" align="center">
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           7
         </Text>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           UI element border and focus rings
         </Text>
       </Flex>
       <Flex gap="1" align="center">
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           8
         </Text>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           Hovered UI element border
         </Text>
       </Flex>
       <Flex gap="1" align="center">
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           9
         </Text>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           Solid backgrounds
         </Text>
       </Flex>
       <Flex gap="1" align="center">
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           10
         </Text>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           Hovered solid backgrounds
         </Text>
       </Flex>
       <Flex gap="1" align="center">
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           11
         </Text>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           Low-contrast text
         </Text>
       </Flex>
       <Flex gap="1" align="center">
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           12
         </Text>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           High-contrast text
         </Text>
       </Flex>
@@ -676,62 +676,62 @@ function Headers() {
     <Fragment>
       <Box />
       <Box css={{ ta: 'center', pb: '$2' }}>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           1
         </Text>
       </Box>
       <Box css={{ ta: 'center', pb: '$2' }}>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           2
         </Text>
       </Box>
       <Box css={{ ta: 'center', pb: '$2' }}>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           3
         </Text>
       </Box>
       <Box css={{ ta: 'center', pb: '$2' }}>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           4
         </Text>
       </Box>
       <Box css={{ ta: 'center', pb: '$2' }}>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           5
         </Text>
       </Box>
       <Box css={{ ta: 'center', pb: '$2' }}>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           6
         </Text>
       </Box>
       <Box css={{ ta: 'center', pb: '$2' }}>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           7
         </Text>
       </Box>
       <Box css={{ ta: 'center', pb: '$2' }}>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           8
         </Text>
       </Box>
       <Box css={{ ta: 'center', pb: '$2' }}>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           9
         </Text>
       </Box>
       <Box css={{ ta: 'center', pb: '$2' }}>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           10
         </Text>
       </Box>
       <Box css={{ ta: 'center', pb: '$2' }}>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           11
         </Text>
       </Box>
       <Box css={{ ta: 'center', pb: '$2' }}>
-        <Text size="12" css={{ color: '$brandGray11' }}>
+        <Text size="12" css={{ color: '$gray11' }}>
           12
         </Text>
       </Box>

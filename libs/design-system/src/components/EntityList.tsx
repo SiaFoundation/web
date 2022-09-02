@@ -78,7 +78,7 @@ export function EntityList({ title, actions, entities, emptyMessage }: Props) {
             <Flex
               align="center"
               justify="center"
-              css={{ height: '100px', borderTop: '1px solid $brandGray3' }}
+              css={{ height: '100px', borderTop: '1px solid $gray3' }}
             >
               <Text size="18" color="subtle">
                 {emptyMessage || 'No results'}
@@ -112,7 +112,7 @@ export function EntityList({ title, actions, entities, emptyMessage }: Props) {
                 onClick={entity.onClick}
                 css={{
                   padding: '$2 $2',
-                  borderTop: '1px solid $brandGray3',
+                  borderTop: '1px solid $gray3',
                 }}
               >
                 <EntityAvatar

@@ -47,7 +47,7 @@ export function BlockList({ title, blocks }: Props) {
               key={block.height}
               css={{
                 padding: '$2 $2',
-                borderTop: '1px solid $brandGray3',
+                borderTop: '1px solid $gray3',
               }}
             >
               <EntityAvatar
