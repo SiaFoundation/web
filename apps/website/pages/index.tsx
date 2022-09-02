@@ -106,7 +106,7 @@ export default function Home({ featured, seenLetter }: Props) {
             )}
             <Flex gap="2" css={{ marginTop: '$1' }}>
               <Text size="20">
-                <NextLink href={sitemap.developers.index}>
+                <NextLink href={sitemap.getStarted.index}>
                   Download the software →
                 </NextLink>
               </Text>
@@ -138,7 +138,7 @@ export default function Home({ featured, seenLetter }: Props) {
               </>
             }
             actionTitle="Explore"
-            actionLink={sitemap.developers.index}
+            actionLink={sitemap.getStarted.index}
           />
           <Callout
             title="Learn"

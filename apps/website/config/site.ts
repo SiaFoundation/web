@@ -4,8 +4,8 @@ export const sitemap = {
   home: {
     index: '/',
   },
-  developers: {
-    index: '/developers',
+  getStarted: {
+    index: '/get-started',
   },
   learn: {
     index: '/learn',

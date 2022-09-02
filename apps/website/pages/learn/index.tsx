@@ -332,7 +332,7 @@ function Learn() {
           }
           startTime={20}
           actionTitle="Explore"
-          actionLink={sitemap.developers.index}
+          actionLink={sitemap.getStarted.index}
           size="2"
         />
       </Section>
