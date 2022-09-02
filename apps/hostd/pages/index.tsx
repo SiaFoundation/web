@@ -7,7 +7,7 @@ import { HomeRevenue } from '../components/HomeRevenue'
 import { HomeUtilization } from '../components/HomeUtilization'
 import { HomeContracts } from '../components/HomeContracts'
 import { HomePricing } from '../components/HomePricing'
-import { RadioButton } from '../components/RadioButton'
+import { SwitchMulti } from '../components/SwitchMulti'
 
 const options = [
   {
@@ -41,7 +41,7 @@ export default function HomePage() {
       filters={
         <Flex gap="1" css={{ flex: 1 }}>
           <ControlGroup>
-            <Button>
+            <Button disabled>
               <Text size="12">{format(timeRange.start, 'PP')}</Text>
             </Button>
             <Button disabled>
@@ -49,7 +49,7 @@ export default function HomePage() {
                 to
               </Text>
             </Button>
-            <Button>
+            <Button disabled>
               <Text size="12">{format(timeRange.end, 'PP')}</Text>
             </Button>
           </ControlGroup>
@@ -57,7 +57,7 @@ export default function HomePage() {
       }
       actions={
         <>
-          <RadioButton
+          <SwitchMulti
             options={options}
             value={String(timeSpan)}
             onChange={(value) =>

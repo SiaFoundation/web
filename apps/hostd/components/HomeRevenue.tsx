@@ -2,6 +2,7 @@ import { ChartXY, Flex, Text, Heading } from '@siafoundation/design-system'
 import { useData } from '../contexts/data'
 import { chartConfigs } from '../config/charts'
 import { DatumCardConfigurable } from './DatumCardConfigurable'
+import { DatumScrollArea } from './DatumScrollArea'
 
 export function HomeRevenue() {
   const { revenue } = useData()
@@ -9,7 +10,7 @@ export function HomeRevenue() {
   return (
     <Flex direction="column" gap="3-5">
       <Heading>Revenue</Heading>
-      <Flex gap="2">
+      <DatumScrollArea bleed>
         <DatumCardConfigurable
           label="Earned revenue"
           sc={revenue.stats['total']}
@@ -51,7 +52,7 @@ export function HomeRevenue() {
           sc={revenue.stats['other']}
           defaultMode="total"
         />
-      </Flex>
+      </DatumScrollArea>
       <ChartXY
         id="revenue"
         height={300}

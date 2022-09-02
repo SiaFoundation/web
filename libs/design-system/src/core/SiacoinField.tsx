@@ -32,6 +32,9 @@ export function SiacoinField({
   const { settings } = useSettings()
   const rates = useSiaCentralMarketExchangeRate()
   const rate = useMemo(() => {
+    if (!settings.siaCentral || !rates.data) {
+      return zero
+    }
     return new BigNumber(rates.data?.rates.sc[settings.currency.id] || zero)
   }, [rates.data, settings])
   const [active, setActive] = useState<'sc' | 'fiat'>()
@@ -57,21 +60,21 @@ export function SiacoinField({
   useEffect(() => {
     if (!externalSc.isEqualTo(sc)) {
       setSc(externalSc)
-      setFiat(rate ? externalSc.multipliedBy(rate) : zero)
+      setFiat(externalSc.multipliedBy(rate))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [externalSc])
 
   useEffect(() => {
     if (active === 'sc') {
-      setFiat(rate ? sc.multipliedBy(rate) : zero)
+      setFiat(sc.multipliedBy(rate))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sc])
 
   useEffect(() => {
     if (active === 'fiat') {
-      setScAndTriggerChange(rate ? fiat.dividedBy(rate) : zero)
+      setScAndTriggerChange(fiat.dividedBy(rate))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fiat])
@@ -135,26 +138,28 @@ export function SiacoinField({
         }}
         css={{ height: '$3' }}
       />
-      <NumberField
-        {...props}
-        size={size}
-        variant="totalGhost"
-        value={formattedFiat}
-        units={settings.currency.label}
-        decimalsLimit={decimalsLimitFiat}
-        placeholder={`${settings.currency.prefix}${
-          rate
-            ? rate.multipliedBy(placeholder).toFixed(decimalsLimitFiat)
-            : '0.42'
-        }`}
-        prefix={settings.currency.prefix}
-        onFocus={() => setActive('fiat')}
-        onValueChange={(value) => {
-          const fiat = new BigNumber(value || 0)
-          setFiat(fiat)
-        }}
-        css={{ height: '$3' }}
-      />
+      {settings.siaCentral && (
+        <NumberField
+          {...props}
+          size={size}
+          variant="totalGhost"
+          value={formattedFiat}
+          units={settings.currency.label}
+          decimalsLimit={decimalsLimitFiat}
+          placeholder={`${settings.currency.prefix}${
+            rate
+              ? rate.multipliedBy(placeholder).toFixed(decimalsLimitFiat)
+              : '0.42'
+          }`}
+          prefix={settings.currency.prefix}
+          onFocus={() => setActive('fiat')}
+          onValueChange={(value) => {
+            const fiat = new BigNumber(value || 0)
+            setFiat(fiat)
+          }}
+          css={{ height: '$3' }}
+        />
+      )}
     </Flex>
   )
 }

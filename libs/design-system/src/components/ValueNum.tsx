@@ -4,6 +4,7 @@ import BigNumber from 'bignumber.js'
 
 type Props = {
   size?: React.ComponentProps<typeof Text>['size']
+  weight?: React.ComponentProps<typeof Text>['weight']
   value: BigNumber
   variant?: 'change' | 'value'
   tooltip?: string
@@ -14,6 +15,7 @@ type Props = {
 export function ValueNum({
   value,
   size = '14',
+  weight = 'semibold',
   tooltip = '',
   variant = 'change',
   color: customColor,
@@ -33,7 +35,7 @@ export function ValueNum({
     <Tooltip content={(tooltip ? `${tooltip} ` : '') + format(value)}>
       <Text
         size={size}
-        weight="semibold"
+        weight={weight}
         font="mono"
         ellipsis
         css={{

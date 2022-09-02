@@ -1,22 +1,17 @@
-import {
-  ChartXY,
-  Flex,
-  Grid,
-  Text,
-  Heading,
-} from '@siafoundation/design-system'
+import { ChartXY, Flex, Text, Heading } from '@siafoundation/design-system'
 import { humanBytes } from '@siafoundation/sia-js'
 import { chartConfigs } from '../config/charts'
 import { useData } from '../contexts/data'
 import { DatumCardConfigurable } from './DatumCardConfigurable'
+import { DatumScrollArea } from './DatumScrollArea'
 
 export function HomeUtilization() {
   const { storage, bandwidth } = useData()
   return (
-    <Grid columns="2" gap="3-5">
-      <Flex direction="column" gap="3-5">
+    <Flex gap="3-5">
+      <Flex direction="column" gap="3-5" css={{ flex: 1, overflow: 'hidden' }}>
         <Heading>Storage</Heading>
-        <Flex gap="2" wrap="wrap">
+        <DatumScrollArea>
           <DatumCardConfigurable
             label="storage"
             color={chartConfigs.storage.color}
@@ -33,7 +28,7 @@ export function HomeUtilization() {
             enabledModes={['latest', 'average']}
             format={humanBytes}
           />
-        </Flex>
+        </DatumScrollArea>
         <ChartXY
           id="storage"
           height={300}
@@ -49,9 +44,9 @@ export function HomeUtilization() {
           }
         />
       </Flex>
-      <Flex direction="column" gap="3-5">
+      <Flex direction="column" gap="3-5" css={{ flex: 1, overflow: 'hidden' }}>
         <Heading>Bandwidth</Heading>
-        <Flex gap="2" wrap="wrap">
+        <DatumScrollArea>
           <DatumCardConfigurable
             label="ingress"
             color={chartConfigs.ingress.color}
@@ -66,7 +61,7 @@ export function HomeUtilization() {
             defaultMode="total"
             format={humanBytes}
           />
-        </Flex>
+        </DatumScrollArea>
         <ChartXY
           id="bandwidth"
           height={300}
@@ -82,6 +77,6 @@ export function HomeUtilization() {
           }
         />
       </Flex>
-    </Grid>
+    </Flex>
   )
 }

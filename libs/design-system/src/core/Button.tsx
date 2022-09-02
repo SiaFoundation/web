@@ -13,7 +13,7 @@ export const Button = styled('button', {
   },
 
   display: 'inline-flex',
-  // gap: '$1',
+  gap: '$0-5',
   flexShrink: 0,
   justifyContent: 'center',
   lineHeight: '1',
@@ -41,12 +41,12 @@ export const Button = styled('button', {
         fontSize: '$12',
         lineHeight: '$sizes$3-5',
         '& > svg:first-child': {
-          marginRight: '$0-5',
+          // marginRight: '$0-5',
           left: '-$0-5',
           position: 'relative',
         },
         '& > svg:last-child': {
-          marginLeft: '$0-5',
+          // marginLeft: '$0-5',
           right: '-$0-5',
           position: 'relative',
         },

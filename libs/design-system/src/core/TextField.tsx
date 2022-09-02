@@ -25,6 +25,7 @@ export const TextField = styled('input', {
   boxShadow: '$colors$border, $colors$shadow',
   color: '$hiContrast',
   fontVariantNumeric: 'tabular-nums',
+  lineHeight: '1',
 
   '@hover': {
     '&:hover': {
@@ -83,7 +84,6 @@ export const TextField = styled('input', {
         height: '$3-5',
         fontSize: '$12',
         padding: '0 $1',
-        lineHeight: '$sizes$3-5',
         '&:-webkit-autofill::first-line': {
           fontSize: '$12',
         },
@@ -97,7 +97,6 @@ export const TextField = styled('input', {
         height: '$5',
         fontSize: '$16',
         padding: '0 $1-5',
-        lineHeight: '$sizes$5',
         '&:-webkit-autofill::first-line': {
           fontSize: '$16',
         },
@@ -111,7 +110,6 @@ export const TextField = styled('input', {
         height: '$6',
         fontSize: '$24',
         padding: '0 $1-5',
-        lineHeight: '$sizes$6',
         '&:-webkit-autofill::first-line': {
           fontSize: '$24',
         },

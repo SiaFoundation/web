@@ -1,15 +1,7 @@
-import {
-  Box,
-  SiacoinField,
-  Information16,
-  Flex,
-  NextLink,
-  Text,
-  ValueSc,
-  Tooltip,
-} from '@siafoundation/design-system'
+import { SiacoinField, Flex } from '@siafoundation/design-system'
 import { toHastings, toSiacoins } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
+import { ConfigurationTip } from './ConfigurationTip'
 
 type Props = {
   average?: BigNumber
@@ -33,6 +25,7 @@ export function ConfigurationSiacoin({
   return (
     <Flex gap="1-5" direction="column" css={{ width: '220px' }}>
       <SiacoinField
+        size="1"
         sc={toSiacoins(value)}
         decimalsLimitSc={decimalsLimitSc}
         decimalsLimitFiat={decimalsLimitFiat}
@@ -47,7 +40,8 @@ export function ConfigurationSiacoin({
       />
       <Flex gap="1" direction="column">
         {average && (
-          <Tip
+          <ConfigurationTip
+            type="siacoin"
             label="Network average"
             tip="Averages provided by SiaCentral."
             decimalsLimit={decimalsLimitSc}
@@ -56,7 +50,8 @@ export function ConfigurationSiacoin({
           />
         )}
         {suggestion && (
-          <Tip
+          <ConfigurationTip
+            type="siacoin"
             label="Suggestion"
             tip={suggestionTip}
             decimalsLimit={decimalsLimitSc}
@@ -65,46 +60,6 @@ export function ConfigurationSiacoin({
           />
         )}
       </Flex>
-    </Flex>
-  )
-}
-
-type TipProps = {
-  label: string
-  link?: string
-  tip: string
-  value: BigNumber
-  onChange: (value: BigNumber) => void
-  decimalsLimit: number
-}
-
-function Tip({ label, link, tip, value, onChange, decimalsLimit }: TipProps) {
-  return (
-    <Flex justify="between" align="center">
-      <Tooltip align="start" content={tip}>
-        <Flex gap="0-5" align="center">
-          <Information16 />
-          <Text size="12">
-            {link ? (
-              <NextLink underline="hover" href={link} target="_blank">
-                {label}
-              </NextLink>
-            ) : (
-              label
-            )}
-          </Text>
-        </Flex>
-      </Tooltip>
-      <Box onClick={() => onChange(value)} css={{ cursor: 'pointer' }}>
-        <ValueSc
-          value={value}
-          variant="value"
-          size="12"
-          fixed={decimalsLimit}
-          dynamicUnits={false}
-          showTooltip={false}
-        />
-      </Box>
     </Flex>
   )
 }
