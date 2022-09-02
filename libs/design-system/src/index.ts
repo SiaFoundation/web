@@ -92,6 +92,7 @@ export * from './lib/links'
 export * from './lib/entityTypes'
 export * from './lib/utils'
 export * from './lib/time'
+export * from './lib/numbers'
 export * from './lib/mnemonics'
 
 export * from './icons'

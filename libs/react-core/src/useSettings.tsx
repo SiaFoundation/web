@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useEffect } from 'react'
 import { useCallback } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 
@@ -77,6 +77,15 @@ export function SettingsProvider({ children }: Props) {
     ssr: false,
     defaultValue: defaultSettings,
   })
+
+  // Merge in defaults incase new settings have been introduced
+  useEffect(() => {
+    _setSettings((settings) => ({
+      ...defaultSettings,
+      ...settings,
+    }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const setSettings = useCallback(
     (values: Partial<Settings>) => {

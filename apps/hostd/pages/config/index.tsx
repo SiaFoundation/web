@@ -5,6 +5,7 @@ import {
   Heading,
   Panel,
   Paragraph,
+  Bullhorn16,
   Separator,
   Switch,
   Text,
@@ -17,34 +18,42 @@ import BigNumber from 'bignumber.js'
 import { useState } from 'react'
 import { AuthedLayout } from '../../components/AuthedLayout'
 import { useDialog } from '../../contexts/dialog'
+import { useSettings } from '@siafoundation/react-core'
 import { ConfigurationNumber } from '../../components/ConfigurationNumber'
 
 export default function ConfigPage() {
   const { openDialog } = useDialog()
+  const {
+    settings: { siaCentral },
+  } = useSettings()
   const networkAverages = useSiaCentralHostsNetworkAverages()
 
   const [ingressPrice, setIngressPrice] = useState<BigNumber | undefined>(
     new BigNumber(0)
   )
-  const ingressAverage = new BigNumber(
-    networkAverages.data?.settings.upload_price
-  ).multipliedBy(1e12)
+  const ingressAverage =
+    siaCentral &&
+    new BigNumber(
+      networkAverages.data?.settings.upload_price || 0
+    ).multipliedBy(1e12)
 
   const [egressPrice, setEgressPrice] = useState<BigNumber | undefined>(
     new BigNumber(0)
   )
-  const egressAverage = new BigNumber(
-    networkAverages.data?.settings.download_price
-  ).multipliedBy(1e12)
+  const egressAverage =
+    siaCentral &&
+    new BigNumber(
+      networkAverages.data?.settings.download_price || 0
+    ).multipliedBy(1e12)
 
   const [storagePrice, setStoragePrice] = useState<BigNumber | undefined>(
     new BigNumber(0)
   )
-  const storageAverage = new BigNumber(
-    networkAverages.data?.settings.storage_price
-  )
-    .multipliedBy(4320)
-    .multipliedBy(1e12)
+  const storageAverage =
+    siaCentral &&
+    new BigNumber(networkAverages.data?.settings.storage_price || 0)
+      .multipliedBy(4320)
+      .multipliedBy(1e12)
 
   const [registrySize, setRegistrySize] = useState<BigNumber | undefined>(
     new BigNumber(0)
@@ -55,19 +64,21 @@ export default function ConfigPage() {
   const [contractPrice, setContractPrice] = useState<BigNumber | undefined>(
     new BigNumber(0)
   )
-  const contractAverage = new BigNumber(
-    networkAverages.data?.settings.contract_price
-  ).dividedBy(1e24)
+  const contractAverage =
+    siaCentral &&
+    new BigNumber(networkAverages.data?.settings.contract_price || 0).dividedBy(
+      1e24
+    )
 
   const [maxContractDuration, setMaxContractDuration] = useState<
     BigNumber | undefined
   >(new BigNumber(0))
-  const maxContractDuractionAverage = new BigNumber(
-    networkAverages.data?.settings.max_duration
-  )
-    .dividedBy(24)
-    .dividedBy(60)
-    .dividedBy(60)
+  const maxContractDuractionAverage =
+    siaCentral &&
+    new BigNumber(networkAverages.data?.settings.max_duration || 0)
+      .dividedBy(24)
+      .dividedBy(60)
+      .dividedBy(60)
 
   const [collateralBudget, setCollateralBudget] = useState<
     BigNumber | undefined
@@ -76,11 +87,11 @@ export default function ConfigPage() {
   const [collateral, setCollateral] = useState<BigNumber | undefined>(
     new BigNumber(0)
   )
-  const collateralAverage = new BigNumber(
-    networkAverages.data?.settings.collateral
-  )
-    .multipliedBy(4320)
-    .multipliedBy(1e12)
+  const collateralAverage =
+    siaCentral &&
+    new BigNumber(networkAverages.data?.settings.collateral || 0)
+      .multipliedBy(4320)
+      .multipliedBy(1e12)
 
   const collateralSuggestion = new BigNumber(
     collateral.multipliedBy(maxContractDuration)
@@ -89,24 +100,27 @@ export default function ConfigPage() {
   const [baseRpcPrice, setBaseRpcPrice] = useState<BigNumber | undefined>(
     new BigNumber(0)
   )
-  const baseRpcAverage = new BigNumber(
-    networkAverages.data?.settings.base_rpc_price
-  )
+  const baseRpcAverage =
+    siaCentral &&
+    new BigNumber(networkAverages.data?.settings.base_rpc_price || 0)
 
   const [sectorAccessPrice, setSectorAccessPrice] = useState<
     BigNumber | undefined
   >(new BigNumber(0))
-  const sectorAccessAverage = new BigNumber(
-    networkAverages.data?.settings.sector_access_price
-  )
+  const sectorAccessAverage =
+    siaCentral &&
+    new BigNumber(networkAverages.data?.settings.sector_access_price || 0)
 
   return (
     <AuthedLayout
       title="Configuration"
       actions={
         <Flex gap="2" wrap="wrap">
-          <Switch size="1">Accepting contracts</Switch>
-          <Button onClick={() => openDialog('hostAnnounce')}>Announce</Button>
+          <Switch size="1">Accept contracts</Switch>
+          <Button onClick={() => openDialog('hostAnnounce')}>
+            <Bullhorn16 />
+            Announce
+          </Button>
         </Flex>
       }
     >

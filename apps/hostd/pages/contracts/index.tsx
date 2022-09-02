@@ -23,7 +23,7 @@ export default function ContractsPage() {
         <Flex gap="1" css={{ flex: 1 }}>
           {Object.entries(filters).map(([key, filter]) => (
             <ControlGroup key={key}>
-              <Button>
+              <Button disabled>
                 <Text size="12">{key}</Text>
               </Button>
               <Button disabled>
@@ -31,7 +31,7 @@ export default function ContractsPage() {
                   is
                 </Text>
               </Button>
-              <Button>
+              <Button disabled>
                 {filter.value && <Text size="12">{filter.value}</Text>}
                 {filter.values && (
                   <Text size="12">

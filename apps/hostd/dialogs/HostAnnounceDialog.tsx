@@ -3,6 +3,7 @@ import {
   Paragraph,
   Button,
   Text,
+  Bullhorn20,
   DialogContent,
   triggerToast,
 } from '@siafoundation/design-system'
@@ -96,6 +97,7 @@ export function HostAnnounceDialog() {
               state={formik.isSubmitting ? 'waiting' : undefined}
               type="submit"
             >
+              <Bullhorn20 />
               Announce
             </Button>
           </Flex>

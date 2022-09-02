@@ -1,12 +1,7 @@
-import {
-  ChartXY,
-  Flex,
-  Grid,
-  Text,
-  Heading,
-} from '@siafoundation/design-system'
+import { ChartXY, Flex, Text, Heading, Box } from '@siafoundation/design-system'
 import { useData } from '../contexts/data'
 import { DatumCardConfigurable } from './DatumCardConfigurable'
+import { DatumScrollArea } from './DatumScrollArea'
 
 export function HomeContracts() {
   const { collateral, contracts } = useData()
@@ -14,7 +9,7 @@ export function HomeContracts() {
   return (
     <Flex direction="column" gap="3-5">
       <Heading>Contracts</Heading>
-      <Flex gap="2" wrap="wrap">
+      <DatumScrollArea bleed>
         <DatumCardConfigurable
           label="Active contracts"
           value={contracts.stats['active']}
@@ -33,36 +28,40 @@ export function HomeContracts() {
           defaultMode="latest"
           enabledModes={['latest', 'average']}
         />
+      </DatumScrollArea>
+      <Flex gap="2">
+        <Box css={{ flex: 1, overflow: 'hidden' }}>
+          <ChartXY
+            id="contracts"
+            actionsLeft={
+              <>
+                <Text font="mono" weight="semibold">
+                  Contracts
+                </Text>
+              </>
+            }
+            data={contracts.data}
+            config={contracts.config}
+            height={300}
+          />
+        </Box>
+        <Box css={{ flex: 1, overflow: 'hidden' }}>
+          <ChartXY
+            id="collateral"
+            height={300}
+            data={collateral.data}
+            config={collateral.config}
+            chartType="area"
+            actionsLeft={
+              <>
+                <Text font="mono" weight="semibold">
+                  Collateral
+                </Text>
+              </>
+            }
+          />
+        </Box>
       </Flex>
-      <Grid columns="2" gap="2">
-        <ChartXY
-          id="contracts"
-          actionsLeft={
-            <>
-              <Text font="mono" weight="semibold">
-                Contracts
-              </Text>
-            </>
-          }
-          data={contracts.data}
-          config={contracts.config}
-          height={300}
-        />
-        <ChartXY
-          id="collateral"
-          height={300}
-          data={collateral.data}
-          config={collateral.config}
-          chartType="area"
-          actionsLeft={
-            <>
-              <Text font="mono" weight="semibold">
-                Collateral
-              </Text>
-            </>
-          }
-        />
-      </Grid>
     </Flex>
   )
 }

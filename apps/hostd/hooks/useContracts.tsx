@@ -347,7 +347,7 @@ export function useContracts() {
             />
           ),
           summary: () => (
-            <Text font="mono" ellipsis>
+            <Text font="mono" ellipsis weight="semibold">
               {humanBytes(5_323_000_300_000)}
             </Text>
           ),

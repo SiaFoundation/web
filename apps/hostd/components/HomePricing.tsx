@@ -2,6 +2,7 @@ import { ChartXY, Flex, Text, Heading } from '@siafoundation/design-system'
 import { useData } from '../contexts/data'
 import { chartConfigs } from '../config/charts'
 import { DatumCardConfigurable } from './DatumCardConfigurable'
+import { DatumScrollArea } from './DatumScrollArea'
 
 export function HomePricing() {
   const { pricing } = useData()
@@ -9,7 +10,7 @@ export function HomePricing() {
   return (
     <Flex direction="column" gap="3-5">
       <Heading>Pricing</Heading>
-      <Flex gap="2">
+      <DatumScrollArea bleed>
         <DatumCardConfigurable
           label="contract"
           color={chartConfigs.contract.color}
@@ -45,7 +46,7 @@ export function HomePricing() {
           defaultMode="latest"
           enabledModes={['latest', 'average']}
         />
-      </Flex>
+      </DatumScrollArea>
       <ChartXY
         id="pricing"
         height={300}
