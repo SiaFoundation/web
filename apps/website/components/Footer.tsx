@@ -17,7 +17,7 @@ export function Footer() {
           <Statsbar />
         </Section>
       </Section>
-      <Section width="flush" css={{ backgroundColor: '$gray3' }}>
+      <Section width="flush" css={{ backgroundColor: '$waves' }}>
         <Container>
           <Flex direction="column" align="start" gap="1">
             <Flex

@@ -24,36 +24,36 @@ export const colors = {
   loContrast: 'white',
   canvas: 'hsl(0 0% 93%)',
   panel: 'white',
-  accentInactive: '$gray4',
-  accentActive: '$gray5',
+  accentInactive: '$slate4',
+  accentActive: '$slate5',
   accentInput: '$accent7',
   frame: 'black',
 
-  textVerySubtle: '$gray8',
-  textSubtle: '$gray10',
-  textSubtleActive: '$gray12',
-  textSubtleHover: '$gray12',
-  textContrast: '$gray12',
-  textDisabled: '$gray9',
-  textExtraSubtle: '$gray9',
+  textVerySubtle: '$slate8',
+  textSubtle: '$slate11',
+  textSubtleActive: '$slate12',
+  textSubtleHover: '$slate12',
+  textContrast: '$slate12',
+  textDisabled: '$slate9',
+  textExtraSubtle: '$slate9',
 
   control: 'white',
-  controlActive: '$gray4',
-  controlHover: '$gray5',
+  controlActive: '$slate4',
+  controlHover: '$slate5',
 
-  separator: '$gray3',
+  separator: '$slate3',
 
   borderFocus: '0 0 0 1px $blue8',
 
-  border: 'inset 0 0 0 1px $gray4',
-  borderActive: 'inset 0 0 0 1px $gray5',
-  borderHover: 'inset 0 0 0 1px $gray6',
+  border: 'inset 0 0 0 1px $slate4',
+  borderActive: 'inset 0 0 0 1px $slate5',
+  borderHover: 'inset 0 0 0 1px $slate6',
 
   borderAccent: 'inset 0 0 0 1px $accent6',
   borderAccentActive: 'inset 0 0 0 1px $accent7',
   borderAccentHover: 'inset 0 0 0 1px $accent8',
 
-  borderInput: 'inset 0 0 0 1px $gray4',
+  borderInput: 'inset 0 0 0 1px $slate4',
   borderInputActive: 'inset 0 0 0 1px $blue7',
   borderInputHover: 'inset 0 0 0 1px $blue8',
 
@@ -65,8 +65,8 @@ export const colors = {
   borderRedActive: 'inset 0 0 0 1px $red7',
   borderRedHover: 'inset 0 0 0 1px $red8',
 
-  selectableBorder: 'inset 0 0 0 1px $gray4',
-  selectableBorderHover: 'inset 0 0 0 1px $gray6',
+  selectableBorder: 'inset 0 0 0 1px $slate4',
+  selectableBorderHover: 'inset 0 0 0 1px $slate6',
   selectableBorderActive: 'inset 0 0 0 3px $accent7',
 
   shadow: 'rgb(0 0 0 / 6%) 0px 1px 1px',
@@ -101,39 +101,39 @@ export const colorsDark = {
 
   // Semantic
   waves: '$slate3',
-  hiContrast: '$gray12',
-  loContrast: '$gray1',
+  hiContrast: '$slate12',
+  loContrast: '$slate1',
   canvas: 'hsl(0 0% 15%)',
   panel: '$mauve3',
-  accentInactive: '$gray6',
-  accentActive: '$gray7',
+  accentInactive: '$slate6',
+  accentActive: '$slate7',
   accentInput: '$accent8',
-  frame: '$gray12',
+  frame: '$slate12',
 
-  textVerySubtle: '$gray8',
-  textSubtle: '$gray11',
-  textSubtleActive: '$gray12',
-  textSubtleHover: '$gray12',
-  textContrast: '$gray12',
-  textDisabled: '$gray9',
+  textVerySubtle: '$slate8',
+  textSubtle: '$slate11',
+  textSubtleActive: '$slate12',
+  textSubtleHover: '$slate12',
+  textContrast: '$slate12',
+  textDisabled: '$slate9',
 
-  control: '$gray3',
-  controlActive: '$gray4',
-  controlHover: '$gray5',
+  control: '$slate3',
+  controlActive: '$slate4',
+  controlHover: '$slate5',
 
-  separator: '$gray4',
+  separator: '$slate4',
 
   borderFocus: '0 0 0 1px $blue8',
 
-  border: 'inset 0 0 0 1px $gray4',
-  borderActive: 'inset 0 0 0 1px $gray5',
-  borderHover: 'inset 0 0 0 1px $gray6',
+  border: 'inset 0 0 0 1px $slate4',
+  borderActive: 'inset 0 0 0 1px $slate5',
+  borderHover: 'inset 0 0 0 1px $slate6',
 
   borderAccent: 'inset 0 0 0 1px $accent6',
   borderAccentActive: 'inset 0 0 0 1px $accent7',
   borderAccentHover: 'inset 0 0 0 1px $accent8',
 
-  borderInput: 'inset 0 0 0 1px $gray4',
+  borderInput: 'inset 0 0 0 1px $slate4',
   borderInputActive: 'inset 0 0 0 1px $blue7',
   borderInputHover: 'inset 0 0 0 1px $blue8',
 
@@ -145,8 +145,8 @@ export const colorsDark = {
   borderRedActive: 'inset 0 0 0 1px $red7',
   borderRedHover: 'inset 0 0 0 1px $red8',
 
-  selectableBorder: 'inset 0 0 0 1px $gray4',
-  selectableBorderHover: 'inset 0 0 0 1px $gray6',
+  selectableBorder: 'inset 0 0 0 1px $slate4',
+  selectableBorderHover: 'inset 0 0 0 1px $slate6',
   selectableBorderActive: 'inset 0 0 0 3px $accent7',
 
   shadow: 'rgb(0 0 0 / 22%) 0px 1px 1px',
