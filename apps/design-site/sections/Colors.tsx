@@ -25,18 +25,18 @@ export function Colors() {
               <Box>
                 <Text size="12">Accent</Text>
               </Box>
-              <Box css={{ height: 35, backgroundColor: '$brandAccent1' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandAccent2' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandAccent3' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandAccent4' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandAccent5' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandAccent6' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandAccent7' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandAccent8' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandAccent9' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandAccent10' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandAccent11' }} />
-              <Box css={{ height: 35, backgroundColor: '$brandAccent12' }} />
+              <Box css={{ height: 35, backgroundColor: '$accent1' }} />
+              <Box css={{ height: 35, backgroundColor: '$accent2' }} />
+              <Box css={{ height: 35, backgroundColor: '$accent3' }} />
+              <Box css={{ height: 35, backgroundColor: '$accent4' }} />
+              <Box css={{ height: 35, backgroundColor: '$accent5' }} />
+              <Box css={{ height: 35, backgroundColor: '$accent6' }} />
+              <Box css={{ height: 35, backgroundColor: '$accent7' }} />
+              <Box css={{ height: 35, backgroundColor: '$accent8' }} />
+              <Box css={{ height: 35, backgroundColor: '$accent9' }} />
+              <Box css={{ height: 35, backgroundColor: '$accent10' }} />
+              <Box css={{ height: 35, backgroundColor: '$accent11' }} />
+              <Box css={{ height: 35, backgroundColor: '$accent12' }} />
               <Box>
                 <Text size="12">Gray</Text>
               </Box>

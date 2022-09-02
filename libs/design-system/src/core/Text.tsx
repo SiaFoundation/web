@@ -32,7 +32,7 @@ export const Text = styled('span', {
         color: '$loContrast',
       },
       accent: {
-        color: '$brandAccent11',
+        color: '$accent11',
       },
     },
     weight: {

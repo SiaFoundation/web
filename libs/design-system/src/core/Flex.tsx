@@ -231,7 +231,7 @@ export const Flex = styled('div', {
     },
     debug: {
       true: {
-        border: '1px solid $brandAccent9',
+        border: '1px solid $accent9',
         borderRadius: '$1',
       },
     },

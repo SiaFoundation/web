@@ -77,9 +77,9 @@ export function ChartXYGraph({
       </g>
       <LinearGradient
         id={'gradient-default'}
-        from={'var(--colors-brandAccent9)'}
+        from={'var(--colors-accent9)'}
         fromOpacity={1}
-        to={'var(--colors-brandAccent9)'}
+        to={'var(--colors-accent9)'}
         toOpacity={0.4}
       />
       {Object.entries(config.data).map(([key, val]) => (
@@ -272,7 +272,7 @@ export function ChartXYGraph({
                       <Fragment key={key}>
                         <Text
                           css={{
-                            color: config.data?.[key]?.color || '$brandAccent9',
+                            color: config.data?.[key]?.color || '$accent9',
                             opacity: nearestKey === key ? 1 : 0.3,
                           }}
                         >

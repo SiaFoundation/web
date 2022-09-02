@@ -22,8 +22,8 @@ export const Code = styled('code', {
         color: '$brandGray12',
       },
       accent: {
-        backgroundColor: '$brandAccent3',
-        color: '$brandAccent12',
+        backgroundColor: '$accent3',
+        color: '$accent12',
       },
     },
   },

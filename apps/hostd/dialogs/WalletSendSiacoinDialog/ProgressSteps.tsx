@@ -54,7 +54,7 @@ export function ProgressSteps({ activeStep, steps, onChange }: Props) {
           position: 'absolute',
           width: `${(activeIndex / lastIndex) * 100}%`,
           height: '4px',
-          backgroundColor: '$brandAccent9',
+          backgroundColor: '$accent9',
           borderRadius: '$pill',
         }}
       />
@@ -103,9 +103,9 @@ export function ProgressSteps({ activeStep, steps, onChange }: Props) {
                 height: '100%',
                 width: '100%',
                 borderRadius: '$round',
-                backgroundColor: isActiveOrPrev ? '$brandAccent9' : '$gray6',
+                backgroundColor: isActiveOrPrev ? '$accent9' : '$gray6',
                 border: isActiveOrPrev
-                  ? '1px solid $brandAccent10'
+                  ? '1px solid $accent10'
                   : '1px solid $gray7',
               }}
             />
@@ -118,7 +118,7 @@ export function ProgressSteps({ activeStep, steps, onChange }: Props) {
                   height: '100%',
                   width: '100%',
                   borderRadius: '$round',
-                  backgroundColor: '$brandAccent9',
+                  backgroundColor: '$accent9',
                   animation: `${pulse} 2s infinite`,
                   willChange: 'transform',
                 }}

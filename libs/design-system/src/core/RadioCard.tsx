@@ -22,7 +22,7 @@ const StyledRadioIndicator = styled('div', {
   borderRadius: '$round',
   width: 15,
   height: 15,
-  backgroundColor: '$brandAccent9',
+  backgroundColor: '$accent9',
   transform: 'scale(0)',
 })
 

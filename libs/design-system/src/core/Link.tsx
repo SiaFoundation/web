@@ -46,8 +46,8 @@ export const Link = styled('a', {
         textDecorationColor: '$textContrast',
       },
       accent: {
-        color: '$brandAccent11',
-        textDecorationColor: '$brandAccent11',
+        color: '$accent11',
+        textDecorationColor: '$accent11',
       },
       light: {
         color: '$whiteA12',

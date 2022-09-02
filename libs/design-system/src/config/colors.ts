@@ -3,20 +3,20 @@ import * as colorsExt from './colorsExt'
 export const colors = {
   ...colorsExt.colors,
 
-  // brandAccent - light mode
+  // accent - light mode
 
-  brandAccent1: '#F6FFF9',
-  brandAccent2: '#E9FBEF',
-  brandAccent3: '#D5F2DE',
-  brandAccent4: '#C9EED4',
-  brandAccent5: '#BBE8C9',
-  brandAccent6: '#9BDAAE',
-  brandAccent7: '#71C48A',
-  brandAccent8: '#3EAA5F',
-  brandAccent9: '#05872D',
-  brandAccent10: '#056B24',
-  brandAccent11: '#04511B',
-  brandAccent12: '#011F0A',
+  accent1: '#F6FFF9',
+  accent2: '#E9FBEF',
+  accent3: '#D5F2DE',
+  accent4: '#C9EED4',
+  accent5: '#BBE8C9',
+  accent6: '#9BDAAE',
+  accent7: '#71C48A',
+  accent8: '#3EAA5F',
+  accent9: '#05872D',
+  accent10: '#056B24',
+  accent11: '#04511B',
+  accent12: '#011F0A',
 
   // brandGray - light mode
   brandGray1: '#FEFEFE',
@@ -40,7 +40,7 @@ export const colors = {
   panel: 'white',
   accentInactive: '$brandGray4',
   accentActive: '$brandGray5',
-  accentInput: '$brandAccent7',
+  accentInput: '$accent7',
   frame: 'black',
 
   textVerySubtle: '$brandGray8',
@@ -63,17 +63,17 @@ export const colors = {
   borderActive: 'inset 0 0 0 1px $brandGray5',
   borderHover: 'inset 0 0 0 1px $brandGray6',
 
-  borderAccent: 'inset 0 0 0 1px $brandAccent6',
-  borderAccentActive: 'inset 0 0 0 1px $brandAccent7',
-  borderAccentHover: 'inset 0 0 0 1px $brandAccent8',
+  borderAccent: 'inset 0 0 0 1px $accent6',
+  borderAccentActive: 'inset 0 0 0 1px $accent7',
+  borderAccentHover: 'inset 0 0 0 1px $accent8',
 
   borderInput: 'inset 0 0 0 1px $brandGray4',
   borderInputActive: 'inset 0 0 0 1px $blue7',
   borderInputHover: 'inset 0 0 0 1px $blue8',
 
-  borderGreen: 'inset 0 0 0 1px $brandAccent6',
-  borderGreenActive: 'inset 0 0 0 1px $brandAccent7',
-  borderGreenHover: 'inset 0 0 0 1px $brandAccent8',
+  borderGreen: 'inset 0 0 0 1px $accent6',
+  borderGreenActive: 'inset 0 0 0 1px $accent7',
+  borderGreenHover: 'inset 0 0 0 1px $accent8',
 
   borderRed: 'inset 0 0 0 1px $red6',
   borderRedActive: 'inset 0 0 0 1px $red7',
@@ -81,7 +81,7 @@ export const colors = {
 
   selectableBorder: 'inset 0 0 0 1px $brandGray4',
   selectableBorderHover: 'inset 0 0 0 1px $brandGray6',
-  selectableBorderActive: 'inset 0 0 0 3px $brandAccent7',
+  selectableBorderActive: 'inset 0 0 0 3px $accent7',
 
   shadow: 'rgb(0 0 0 / 6%) 0px 1px 1px',
   shadowActive: 'rgb(0 0 0 / 7%) 0px 1px 1px',
@@ -99,19 +99,19 @@ export const colors = {
 export const colorsDark = {
   ...colorsExt.colorsDark,
 
-  // brandAccent - dark mode
-  brandAccent1: '#05150A',
-  brandAccent2: '#051C0C',
-  brandAccent3: '#062811',
-  brandAccent4: '#073515',
-  brandAccent5: '#064018',
-  brandAccent6: '#075820',
-  brandAccent7: '#056824',
-  brandAccent8: '#077A2A',
-  brandAccent9: '#05872D',
-  brandAccent10: '#069F35',
-  brandAccent11: '#2FA052',
-  brandAccent12: '#D9F4E1',
+  // accent - dark mode
+  accent1: '#05150A',
+  accent2: '#051C0C',
+  accent3: '#062811',
+  accent4: '#073515',
+  accent5: '#064018',
+  accent6: '#075820',
+  accent7: '#056824',
+  accent8: '#077A2A',
+  accent9: '#05872D',
+  accent10: '#069F35',
+  accent11: '#2FA052',
+  accent12: '#D9F4E1',
 
   // brandGray - dark mode
   brandGray1: '#161616',
@@ -135,7 +135,7 @@ export const colorsDark = {
   panel: '$mauve3',
   accentInactive: '$brandGray6',
   accentActive: '$brandGray7',
-  accentInput: '$brandAccent8',
+  accentInput: '$accent8',
   frame: '$brandGray11',
 
   textVerySubtle: '$brandGray8',
@@ -157,17 +157,17 @@ export const colorsDark = {
   borderActive: 'inset 0 0 0 1px $brandGray5',
   borderHover: 'inset 0 0 0 1px $brandGray6',
 
-  borderAccent: 'inset 0 0 0 1px $brandAccent6',
-  borderAccentActive: 'inset 0 0 0 1px $brandAccent7',
-  borderAccentHover: 'inset 0 0 0 1px $brandAccent8',
+  borderAccent: 'inset 0 0 0 1px $accent6',
+  borderAccentActive: 'inset 0 0 0 1px $accent7',
+  borderAccentHover: 'inset 0 0 0 1px $accent8',
 
   borderInput: 'inset 0 0 0 1px $brandGray4',
   borderInputActive: 'inset 0 0 0 1px $blue7',
   borderInputHover: 'inset 0 0 0 1px $blue8',
 
-  borderGreen: 'inset 0 0 0 1px $brandAccent6',
-  borderGreenActive: 'inset 0 0 0 1px $brandAccent7',
-  borderGreenHover: 'inset 0 0 0 1px $brandAccent8',
+  borderGreen: 'inset 0 0 0 1px $accent6',
+  borderGreenActive: 'inset 0 0 0 1px $accent7',
+  borderGreenHover: 'inset 0 0 0 1px $accent8',
 
   borderRed: 'inset 0 0 0 1px $red6',
   borderRedActive: 'inset 0 0 0 1px $red7',
@@ -175,7 +175,7 @@ export const colorsDark = {
 
   selectableBorder: 'inset 0 0 0 1px $brandGray4',
   selectableBorderHover: 'inset 0 0 0 1px $brandGray6',
-  selectableBorderActive: 'inset 0 0 0 3px $brandAccent7',
+  selectableBorderActive: 'inset 0 0 0 3px $accent7',
 
   shadow: 'rgb(0 0 0 / 22%) 0px 1px 1px',
   shadowActive: 'rgb(0 0 0 / 25%) 0px 1px 1px',

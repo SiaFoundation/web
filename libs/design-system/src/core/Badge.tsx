@@ -45,8 +45,8 @@ export const Badge = styled('span', {
     variant: {
       simple: {
         backgroundColor: '$loContrast',
-        border: '1px solid $brandAccent9',
-        color: '$brandAccent9',
+        border: '1px solid $accent9',
+        color: '$accent9',
         '&:focus': {
           boxShadow: '$colors$borderAccentActive, $colors$shadowActive',
         },
@@ -73,7 +73,7 @@ export const Badge = styled('span', {
         },
       },
       accent: {
-        backgroundColor: '$brandAccent9',
+        backgroundColor: '$accent9',
         color: 'white',
         '&:focus': {
           boxShadow: '$colors$borderAccentActive, $colors$shadowActive',
@@ -221,18 +221,18 @@ export const Badge = styled('span', {
       css: {
         '@hover': {
           '&:hover': {
-            borderColor: '$brandAccent10',
-            color: '$brandAccent10',
+            borderColor: '$accent10',
+            color: '$accent10',
           },
         },
         '&:active': {
-          borderColor: '$brandAccent9',
-          color: '$brandAccent9',
+          borderColor: '$accent9',
+          color: '$accent9',
         },
         '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
-            borderColor: '$brandAccent10',
-            color: '$brandAccent10',
+            borderColor: '$accent10',
+            color: '$accent10',
           },
       },
     },
@@ -242,15 +242,15 @@ export const Badge = styled('span', {
       css: {
         '@hover': {
           '&:hover': {
-            backgroundColor: '$brandAccent10',
+            backgroundColor: '$accent10',
           },
         },
         '&:active': {
-          backgroundColor: '$brandAccent9',
+          backgroundColor: '$accent9',
         },
         '&[data-radix-popover-trigger][data-state="open"], &[data-radix-dropdown-menu-trigger][data-state="open"]':
           {
-            backgroundColor: '$brandAccent10',
+            backgroundColor: '$accent10',
           },
       },
     },

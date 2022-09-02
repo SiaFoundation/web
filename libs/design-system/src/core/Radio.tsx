@@ -21,7 +21,7 @@ const StyledIndicator = styled(RadioGroupPrimitive.Indicator, {
     width: '7px',
     height: '7px',
     borderRadius: '50%',
-    backgroundColor: '$brandAccent9',
+    backgroundColor: '$accent9',
   },
 })
 

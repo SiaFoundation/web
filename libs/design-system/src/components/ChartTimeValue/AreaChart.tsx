@@ -57,7 +57,7 @@ export function AreaChart({
     <Group left={left || margin.left} top={top || margin.top}>
       <MarkerCircle
         id="marker-circle"
-        fill="var(--colors-brandAccent11)"
+        fill="var(--colors-accent11)"
         size={1.5}
         refX={1.5}
       />

@@ -119,7 +119,7 @@ export const comboBoxGlobalCss = globalCss({
         '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive',
       '&:-webkit-autofill': {
         boxShadow:
-          '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive, inset 0 0 0 100px $colors$brandAccent4',
+          '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive, inset 0 0 0 100px $colors$accent4',
       },
     },
   },
