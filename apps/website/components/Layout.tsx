@@ -76,8 +76,8 @@ export function Layout({
             title: 'Home',
           },
           {
-            link: sitemap.developers.index,
-            title: 'Developers',
+            link: sitemap.getStarted.index,
+            title: 'Get Started',
           },
           {
             link: sitemap.learn.index,

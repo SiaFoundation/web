@@ -55,18 +55,18 @@ const docLinks = [
   },
 ]
 
-const title = 'Developer Resources'
+const title = 'Get Started'
 const description =
   'Software downloads, tutorials, technical walkthroughs, and more.'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-function Developers({ technical }: Props) {
+function GetStarted({ technical }: Props) {
   return (
     <Layout
       title={title}
       description={description}
-      path={sitemap.developers.index}
+      path={sitemap.getStarted.index}
       heading={
         <Section size="4">
           <SiteHeading size="64" title={title} description={description} />
@@ -382,4 +382,4 @@ export async function getStaticProps() {
   }
 }
 
-export default Developers
+export default GetStarted
