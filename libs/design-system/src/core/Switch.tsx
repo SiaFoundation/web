@@ -41,15 +41,15 @@ const StyledSwitch = styled(SwitchPrimitive.Root, {
   outline: 'none',
   WebkitTapHighlightColor: 'rgba(0,0,0,0)',
 
-  backgroundColor: '$brandGray5',
+  backgroundColor: '$gray5',
   borderRadius: '$pill',
   position: 'relative',
   '&:focus': {
-    boxShadow: '$colors$borderFocus, 0 0 0 2px $colors$brandGray8',
+    boxShadow: '$colors$borderFocus, 0 0 0 2px $colors$gray8',
   },
 
   '&:disabled': {
-    backgroundColor: '$brandGray3',
+    backgroundColor: '$gray3',
   },
 
   '&[data-state="checked"]': {

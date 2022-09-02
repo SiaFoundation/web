@@ -69,7 +69,7 @@ export function ThemeRadio({ css, radioCss }: Props) {
 
   const radioCardCss: CSS = {
     [`& *, & ${Text}`]: {
-      color: '$brandGray9',
+      color: '$gray9',
     },
 
     [`&[data-state="checked"] *, &[data-state="checked"] ${Text}`]: {

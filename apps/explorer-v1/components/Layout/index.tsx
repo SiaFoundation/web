@@ -73,8 +73,8 @@ export function Layout({ title, description, path, children }: Props) {
                   width: '100%',
                   height: '300px',
                   overflow: 'hidden',
-                  borderTop: '2px solid $brandGray3',
-                  borderBottom: '2px solid $brandGray3',
+                  borderTop: '2px solid $gray3',
+                  borderBottom: '2px solid $gray3',
                   background: `url(${backgroundImageProps.src})`,
                   backgroundSize: 'cover',
                 }}
@@ -141,7 +141,7 @@ export function Layout({ title, description, path, children }: Props) {
                         font="mono"
                         weight="bold"
                         size="14"
-                        css={{ marginBottom: '$1', color: '$brandGray9' }}
+                        css={{ marginBottom: '$1', color: '$gray9' }}
                       >
                         Ecosystem
                       </Text>

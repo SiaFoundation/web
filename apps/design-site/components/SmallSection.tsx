@@ -8,7 +8,7 @@ export function SmallSection({ children }: Props) {
   return (
     <Text
       css={{
-        color: '$brandGray11',
+        color: '$gray11',
       }}
     >
       {children}

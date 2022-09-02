@@ -9,7 +9,7 @@ const StyledTabs = styled(TabsPrimitive.Root, {
 const StyledList = styled(TabsPrimitive.List, {
   flexShrink: 0,
   display: 'flex',
-  borderBottom: `1px solid $brandGray6`,
+  borderBottom: `1px solid $gray6`,
 })
 
 const StyledTrigger = styled(TabsPrimitive.Trigger, {

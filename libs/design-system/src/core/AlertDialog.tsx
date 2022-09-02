@@ -41,7 +41,7 @@ function DialogControls({ children, separator = true }: DialogControlsProps) {
         padding: '$1 0',
         margin: '0 $2',
         backgroundColor: '$loContrast',
-        borderTop: separator ? '1px solid $brandGray3' : 'none',
+        borderTop: separator ? '1px solid $gray3' : 'none',
       }}
     >
       {children}

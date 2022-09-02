@@ -7,7 +7,7 @@ export const SCodeblock = styled('code', {
   lineHeight: '150%',
   display: 'block',
   padding: '$1-5',
-  backgroundColor: '$brandGray3',
+  backgroundColor: '$gray3',
   color: '$hiContrast',
   textAlign: 'left',
   borderRadius: '$1',

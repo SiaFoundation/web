@@ -23,20 +23,20 @@ export const TextArea = styled('textarea', {
     zIndex: '1',
   },
   '&::placeholder': {
-    color: '$brandGray7',
+    color: '$gray7',
   },
   '&:disabled': {
     pointerEvents: 'none',
-    backgroundColor: '$brandGray2',
+    backgroundColor: '$gray2',
     color: '$accentActive',
     cursor: 'not-allowed',
     resize: 'none',
     '&::placeholder': {
-      color: '$brandGray7',
+      color: '$gray7',
     },
   },
   '&:read-only': {
-    backgroundColor: '$brandGray2',
+    backgroundColor: '$gray2',
     boxShadow: '$colors$borderInput, $colors$shadow',
     '&:focus': {
       boxShadow:

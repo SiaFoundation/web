@@ -18,10 +18,10 @@ export function SubsectionHeading({ id, children }: Props) {
         href={`#${cId}`}
         id={cId}
         css={{
-          color: '$brandGray11',
+          color: '$gray11',
           position: 'relative',
           '&:hover, &:hover > *': {
-            color: '$brandGray12',
+            color: '$gray12',
           },
         }}
       >
@@ -31,7 +31,7 @@ export function SubsectionHeading({ id, children }: Props) {
             position: 'absolute',
             top: '-0px',
             left: '-25px',
-            color: '$brandGray7',
+            color: '$gray7',
             display: 'none',
             '@bp2': {
               display: 'block',

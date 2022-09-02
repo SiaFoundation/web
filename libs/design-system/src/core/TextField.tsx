@@ -38,19 +38,19 @@ export const TextField = styled('input', {
       '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive',
   },
   '&::placeholder': {
-    color: '$brandGray9',
+    color: '$gray9',
   },
   '&:disabled': {
     pointerEvents: 'none',
-    backgroundColor: '$brandGray2',
-    color: '$brandGray8',
+    backgroundColor: '$gray2',
+    color: '$gray8',
     cursor: 'not-allowed',
     '&::placeholder': {
-      color: '$brandGray7',
+      color: '$gray7',
     },
   },
   '&:read-only': {
-    backgroundColor: '$brandGray2',
+    backgroundColor: '$gray2',
     boxShadow: '$colors$borderInput, $colors$shadow',
     '&:focus': {
       boxShadow: '$colors$borderInputActive, $colors$shadowActive',

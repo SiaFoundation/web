@@ -62,8 +62,8 @@ const StyledRadio = styled(RadioGroupPrimitive.Item, {
 
   '&:disabled': {
     pointerEvents: 'none',
-    backgroundColor: '$brandGray2',
-    color: '$brandGray8',
+    backgroundColor: '$gray2',
+    color: '$gray8',
     cursor: 'not-allowed',
   },
 
