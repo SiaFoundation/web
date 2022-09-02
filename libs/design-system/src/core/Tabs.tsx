@@ -31,9 +31,8 @@ const StyledTrigger = styled(TabsPrimitive.Trigger, {
   '&:last-child': { borderTopRightRadius: 6 },
   '&:hover': { color: '$textSubtleHover' },
   '&[data-state="active"]': {
-    color: '$brandAccent10',
-    boxShadow:
-      'inset 0 -1px 0 0 $colors$brandAccent9, 0 1px 0 0 $colors$brandAccent9',
+    color: '$accent10',
+    boxShadow: 'inset 0 -1px 0 0 $colors$accent9, 0 1px 0 0 $colors$accent9',
   },
 })
 

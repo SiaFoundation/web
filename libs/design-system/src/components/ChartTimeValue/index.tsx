@@ -32,7 +32,7 @@ export type { Point }
 const background = 'var(--colors-panel)'
 // export const background = 'transparent'
 const background2 = 'var(--colors-panel)'
-const accentColor = 'var(--colors-brandAccent9)'
+const accentColor = 'var(--colors-accent9)'
 const lineColor = 'var(--colors-hiContrast)'
 const borderColor = 'var(--colors-gray4)'
 const tooltipStyles = {

@@ -2,7 +2,7 @@ import { buildChartTheme } from '@visx/xychart'
 
 export const lightTheme = buildChartTheme({
   backgroundColor: 'var(--colors-panel)',
-  colors: ['var(--colors-brandAccent9)', '#6078EA', '#F02FC2'],
+  colors: ['var(--colors-accent9)', '#6078EA', '#F02FC2'],
   gridColor: 'var(--colors-slate8)',
   gridColorDark: 'transparent',
   svgLabelBig: { fill: '#1d1b38' },
@@ -15,7 +15,7 @@ export const lightTheme = buildChartTheme({
 
 export const darkTheme = buildChartTheme({
   backgroundColor: 'var(--colors-panel)',
-  colors: ['var(--colors-brandAccent9)', '#6078EA', '#F02FC2'],
+  colors: ['var(--colors-accent9)', '#6078EA', '#F02FC2'],
   gridColor: 'var(--colors-slate8)',
   gridColorDark: 'transparent',
   svgLabelBig: { fill: '#1d1b38' },

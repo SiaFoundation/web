@@ -97,32 +97,32 @@ export const Button = styled('button', {
         },
       },
       accent: {
-        backgroundColor: '$brandAccent9',
+        backgroundColor: '$accent9',
         boxShadow: '$colors$borderAccent, $colors$shadow',
         color: '$whiteA12',
         '@hover': {
           '&:hover': {
-            backgroundColor: '$brandAccent10',
+            backgroundColor: '$accent10',
             boxShadow: '$colors$borderAccentHover, $colors$shadow',
           },
         },
         '&:focus': {
-          backgroundColor: '$brandAccent10',
+          backgroundColor: '$accent10',
           boxShadow:
             '$colors$borderAccent, $colors$borderFocus, $colors$shadow',
         },
         '&:active': {
-          backgroundColor: '$brandAccent9',
+          backgroundColor: '$accent9',
           boxShadow: '$colors$borderAccentActive, $colors$shadow',
         },
         '&[data-state="open"]': {
-          backgroundColor: '$brandAccent10',
+          backgroundColor: '$accent10',
           boxShadow:
             '$colors$borderAccent, $colors$borderFocus, $colors$shadow',
         },
         '&:disabled': {
-          backgroundColor: '$brandAccent6',
-          boxShadow: '$colors$brandAccent6, $colors$shadow',
+          backgroundColor: '$accent6',
+          boxShadow: '$colors$accent6, $colors$shadow',
         },
       },
       red: {
@@ -238,30 +238,30 @@ export const Button = styled('button', {
       variant: 'accent',
       ghost: 'true',
       css: {
-        color: '$brandAccent12',
+        color: '$accent12',
         borderColor: 'transparent',
         boxShadow: 'none',
         backgroundColor: 'transparent',
         '@hover': {
           '&:hover': {
-            backgroundColor: '$brandAccent3',
+            backgroundColor: '$accent3',
             boxShadow: 'none',
           },
         },
         '&:focus': {
-          backgroundColor: '$brandAccent3',
+          backgroundColor: '$accent3',
           boxShadow: '$colors$borderFocus, $colors$shadowActive',
         },
         '&:active': {
-          backgroundColor: '$brandAccent4',
+          backgroundColor: '$accent4',
         },
         '&:disabled': {
-          color: '$brandAccent6',
+          color: '$accent6',
           backgroundColor: 'transparent',
           boxShadow: 'none',
         },
         '&[data-state="open"]': {
-          backgroundColor: '$brandAccent4',
+          backgroundColor: '$accent4',
           boxShadow: 'none',
         },
       },

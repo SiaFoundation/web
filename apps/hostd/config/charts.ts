@@ -32,7 +32,7 @@ export const chartConfigs = {
     color: 'var(--colors-gray9)',
   },
   sc: {
-    color: 'var(--colors-brandAccent9)',
+    color: 'var(--colors-accent9)',
   },
   sf: {
     color: 'var(--colors-yellow9)',

@@ -27,7 +27,7 @@ export function WalletSendSiacoinDialog() {
   // TODO: get network fee
   const fee = new BigNumber(toHastings(30))
 
-  // TODO: transaction id
+  // TODO: get transaction id
   const transactionId = '923fu923jf2j3o'
 
   return (

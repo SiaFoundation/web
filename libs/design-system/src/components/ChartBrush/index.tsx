@@ -10,8 +10,8 @@ import { AreaChart } from '../ChartTimeValue/AreaChart'
 import { Panel } from '../../core/Panel'
 import { getDaysInMs } from '../../lib/time'
 
-const accentColor = 'var(--colors-brandAccent9)'
-const patternColor = 'var(--colors-brandAccent9)'
+const accentColor = 'var(--colors-accent9)'
+const patternColor = 'var(--colors-accent9)'
 
 const margin = { top: 3, bottom: 3, left: 3, right: 3 }
 const PATTERN_ID = 'brush_pattern'
