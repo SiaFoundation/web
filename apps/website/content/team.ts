@@ -17,18 +17,6 @@ export default [
     github: 'lukechampine',
   },
   {
-    name: 'Frances',
-    image: 'frances',
-    title: 'Director of Operations',
-    linkedin: 'frances-lu-066762123',
-  },
-  {
-    name: 'Kino',
-    image: 'kino',
-    title: 'Community Manager',
-    github: 'kinomora',
-  },
-  {
     name: 'Nate',
     image: 'nate',
     twitter: 'n8maninger',
@@ -42,11 +30,29 @@ export default [
     title: 'Core Developer',
   },
   {
+    name: 'Frances',
+    image: 'frances',
+    title: 'Director of Operations',
+    linkedin: 'frances-lu-066762123',
+  },
+  {
+    name: 'Kino',
+    image: 'kino',
+    title: 'Community Manager',
+    github: 'kinomora',
+  },
+  {
     name: 'Alex',
     image: 'alex',
     title: 'Product Engineer',
     twitter: 'alexfreska',
     github: 'alexfreska',
+  },
+  {
+    name: 'Steve',
+    image: 'steve',
+    title: 'Director of People and Support',
+    github: 'stevefunk',
   },
   {
     name: 'Eddie',
