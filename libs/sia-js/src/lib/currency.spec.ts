@@ -26,32 +26,32 @@ describe('currency', () => {
     expect(humanSiacoin('1')).toBe('1 H')
     expect(humanSiacoin('1000')).toBe('1000 H')
     expect(humanSiacoin('100000000000')).toBe('100000000000 H')
-    expect(humanSiacoin('1000000000000')).toBe('1 pS')
+    expect(humanSiacoin('1000000000000')).toBe('1.000 pS')
     expect(humanSiacoin('1234560000000')).toBe('1.235 pS')
     expect(humanSiacoin('12345600000000')).toBe('12.346 pS')
     expect(humanSiacoin('123456000000000')).toBe('123.456 pS')
-    expect(humanSiacoin('1000000000000000')).toBe('1 nS')
-    expect(humanSiacoin('1000000000000000000')).toBe('1 uS')
-    expect(humanSiacoin('1000000000000000000000')).toBe('1 mS')
+    expect(humanSiacoin('1000000000000000')).toBe('1.000 nS')
+    expect(humanSiacoin('1000000000000000000')).toBe('1.000 uS')
+    expect(humanSiacoin('1000000000000000000000')).toBe('1.000 mS')
     expect(
       humanSiacoin(new BigNumber('1').multipliedBy(HASTINGS_PER_SIACOIN))
-    ).toBe('1 SC')
+    ).toBe('1.000 SC')
     expect(
       humanSiacoin(new BigNumber('1000').multipliedBy(HASTINGS_PER_SIACOIN))
-    ).toBe('1 KS')
+    ).toBe('1.000 KS')
     expect(
       humanSiacoin(new BigNumber('1000000').multipliedBy(HASTINGS_PER_SIACOIN))
-    ).toBe('1 MS')
+    ).toBe('1.000 MS')
     expect(
       humanSiacoin(
         new BigNumber('1000000000').multipliedBy(HASTINGS_PER_SIACOIN)
       )
-    ).toBe('1 GS')
+    ).toBe('1.000 GS')
     expect(
       humanSiacoin(
         new BigNumber('1000000000000').multipliedBy(HASTINGS_PER_SIACOIN)
       )
-    ).toBe('1 TS')
+    ).toBe('1.000 TS')
     expect(
       humanSiacoin(
         new BigNumber('1234560000000').multipliedBy(HASTINGS_PER_SIACOIN)
@@ -61,6 +61,6 @@ describe('currency', () => {
       humanSiacoin(
         new BigNumber('1234560000000000').multipliedBy(HASTINGS_PER_SIACOIN)
       )
-    ).toBe('1234.56 TS')
+    ).toBe('1,234.560 TS')
   })
 })
