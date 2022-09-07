@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.24.0](https://github.com/SiaFoundation/web/compare/website-0.23.0...website-0.24.0) (2022-09-07)
+
+
+### Features
+
+* merge menu and settings, single address wallet, ip and hostname support ([bc1507a](https://github.com/SiaFoundation/web/commit/bc1507a4f10bc4d8b26b3152d264400c5d8d796f))
+* migrate to radix gray ([d75d04f](https://github.com/SiaFoundation/web/commit/d75d04f0d32e7077c54fc1ad14d44ec6028ce71b))
+* move grays to slate ([8c4d89e](https://github.com/SiaFoundation/web/commit/8c4d89e8f9466bc310d8c292c4956ea2ddef2ee1))
+* **website:** rename /developers to /get-started ([d977e4c](https://github.com/SiaFoundation/web/commit/d977e4c3b62c7d8191a9fcccd5f3c8ccc2fd2fad))
+
+
+
 # [0.23.0](https://github.com/SiaFoundation/web/compare/website-0.22.4...website-0.23.0) (2022-07-15)
 
 
