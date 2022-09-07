@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.6.0](https://github.com/SiaFoundation/web/compare/sia-js-0.5.0...sia-js-0.6.0) (2022-09-07)
+
+
+### Bug Fixes
+
+* currency tests ([6cd0781](https://github.com/SiaFoundation/web/commit/6cd078165f15834950bde8d575be6a648a4fc134))
+
+
+### Features
+
+* hostd configuration, currency inputs, settings and privacy dialog, siacentral hooks ([0cc8bcc](https://github.com/SiaFoundation/web/commit/0cc8bcc2ab4057e7dbdc80aa3f06c06dfb0bd907))
+
+
+
 # [0.5.0](https://github.com/SiaFoundation/web/compare/sia-js-0.4.0...sia-js-0.5.0) (2022-08-09)
 
 
