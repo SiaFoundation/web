@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.20.0](https://github.com/SiaFoundation/web/compare/design-site-0.19.0...design-site-0.20.0) (2022-09-07)
+
+
+### Features
+
+* filter system and layout changes, contract filters ([08f919a](https://github.com/SiaFoundation/web/commit/08f919a492c47797d862eab5985e7cbbf3e913b0))
+* migrate to radix gray ([d75d04f](https://github.com/SiaFoundation/web/commit/d75d04f0d32e7077c54fc1ad14d44ec6028ce71b))
+
+
+
 # [0.19.0](https://github.com/SiaFoundation/web/compare/design-site-0.18.0...design-site-0.19.0) (2022-08-09)
 
 
