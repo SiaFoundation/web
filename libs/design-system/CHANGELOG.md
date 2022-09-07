@@ -2,6 +2,29 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.33.0](https://github.com/SiaFoundation/web/compare/design-system-0.32.0...design-system-0.33.0) (2022-09-07)
+
+
+### Bug Fixes
+
+* incorrect icon import ([ad85601](https://github.com/SiaFoundation/web/commit/ad856015d34522f6477e3052b8b3b1f10705f3c7))
+
+
+### Features
+
+* add numberfield with currency support, improve form components, build out storage dialogs ([7fa5d67](https://github.com/SiaFoundation/web/commit/7fa5d677586a886f7e22c901b4094253f982a0e0))
+* build out contracts feature ([17ed1e5](https://github.com/SiaFoundation/web/commit/17ed1e56271df0ac14f6f247e84da65f4bcbc94b))
+* dynamic chart tooltip date label, hostd dashboard date controlgroup ([9a15f02](https://github.com/SiaFoundation/web/commit/9a15f02fcdfccd15e0e5c529f4a86b0d55c72b1b))
+* filter system and layout changes, contract filters ([08f919a](https://github.com/SiaFoundation/web/commit/08f919a492c47797d862eab5985e7cbbf3e913b0))
+* hostd configuration, currency inputs, settings and privacy dialog, siacentral hooks ([0cc8bcc](https://github.com/SiaFoundation/web/commit/0cc8bcc2ab4057e7dbdc80aa3f06c06dfb0bd907))
+* merge menu and settings, single address wallet, ip and hostname support ([bc1507a](https://github.com/SiaFoundation/web/commit/bc1507a4f10bc4d8b26b3152d264400c5d8d796f))
+* migrate to radix gray ([d75d04f](https://github.com/SiaFoundation/web/commit/d75d04f0d32e7077c54fc1ad14d44ec6028ce71b))
+* move grays to slate ([8c4d89e](https://github.com/SiaFoundation/web/commit/8c4d89e8f9466bc310d8c292c4956ea2ddef2ee1))
+* safari support, datum card scroll, rename SwitchMulti, siacentral disabled support ([ac45299](https://github.com/SiaFoundation/web/commit/ac4529911960698c552edbc40c603f6872cb0525))
+* wallet send feature, move balance to ChartXY, tweaks to system components ([f64e729](https://github.com/SiaFoundation/web/commit/f64e729d77c99d32dd2118ecb6bbdc4cb9bef832))
+
+
+
 # [0.32.0](https://github.com/SiaFoundation/web/compare/design-system-0.31.1...design-system-0.32.0) (2022-08-09)
 
 
