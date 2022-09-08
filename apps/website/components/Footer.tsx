@@ -13,61 +13,61 @@ export function Footer() {
   return (
     <Flex direction="column">
       <Section size="1" width="flush" css={{ backgroundColor: '$waves' }}>
-        <Section size="0">
-          <Statsbar />
-        </Section>
-      </Section>
-      <Section width="flush" css={{ backgroundColor: '$waves' }}>
         <Container>
-          <Flex direction="column" align="start" gap="1">
-            <Flex
-              gap={{
-                '@initial': '2',
-                '@bp2': '3',
-              }}
-              justify="start"
-              align="start"
-              wrap="wrap"
-              css={{
-                width: '100%',
-                margin: '$1 0',
-              }}
-            >
-              <TopLink href={sitemap.newsroom.index}>Newsroom</TopLink>
-              <TopLink href={webLinks.blog} target="_blank">
-                Blog
-              </TopLink>
-              <TopLink
-                href={sitemap.community.index + '?software=exchanges#software'}
+          <Flex direction="column" align="start" gap="9" css={{ my: '$2' }}>
+            <Statsbar />
+            <Flex direction="column" align="start" gap="1">
+              <Flex
+                gap={{
+                  '@initial': '2',
+                  '@bp2': '3',
+                }}
+                justify="start"
+                align="start"
+                wrap="wrap"
+                css={{
+                  width: '100%',
+                  margin: '$1 0',
+                }}
               >
-                Get Siacoin
-              </TopLink>
-              <TopLink href={sitemap.whitepaper.pdf} target="_blank">
-                Whitepaper
-              </TopLink>
-            </Flex>
-            <Flex
-              gap="3"
-              justify="start"
-              align="start"
-              wrap="wrap"
-              css={{
-                width: '100%',
-                margin: '$1 0',
-              }}
-            >
-              <BottomLink href={webLinks.discord} target="_blank">
-                Discord
-              </BottomLink>
-              <BottomLink href={webLinks.reddit} target="_blank">
-                Reddit
-              </BottomLink>
-              <BottomLink href={webLinks.twitter} target="_blank">
-                Twitter
-              </BottomLink>
-              <BottomLink href={webLinks.github} target="_blank">
-                GitHub
-              </BottomLink>
+                <TopLink href={sitemap.newsroom.index}>Newsroom</TopLink>
+                <TopLink href={webLinks.blog} target="_blank">
+                  Blog
+                </TopLink>
+                <TopLink
+                  href={
+                    sitemap.community.index + '?software=exchanges#software'
+                  }
+                >
+                  Get Siacoin
+                </TopLink>
+                <TopLink href={sitemap.whitepaper.pdf} target="_blank">
+                  Whitepaper
+                </TopLink>
+              </Flex>
+              <Flex
+                gap="3"
+                justify="start"
+                align="start"
+                wrap="wrap"
+                css={{
+                  width: '100%',
+                  margin: '$1 0',
+                }}
+              >
+                <BottomLink href={webLinks.discord} target="_blank">
+                  Discord
+                </BottomLink>
+                <BottomLink href={webLinks.reddit} target="_blank">
+                  Reddit
+                </BottomLink>
+                <BottomLink href={webLinks.twitter} target="_blank">
+                  Twitter
+                </BottomLink>
+                <BottomLink href={webLinks.github} target="_blank">
+                  GitHub
+                </BottomLink>
+              </Flex>
             </Flex>
           </Flex>
         </Container>
