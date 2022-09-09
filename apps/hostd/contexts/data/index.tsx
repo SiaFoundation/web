@@ -1,13 +1,18 @@
 import React, { createContext, useContext } from 'react'
-import { ChartConfig, ChartData } from '@siafoundation/design-system'
+import {
+  ChartConfig,
+  ChartData,
+  ChartStats,
+  computeChartStats,
+  formatChartData,
+  getTimeRangeRollup,
+} from '@siafoundation/design-system'
 import { humanBytes, humanSiacoin } from '@siafoundation/sia-js'
 import { throttle } from 'lodash'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { chartConfigs } from '../../config/charts'
 import { getDaysInMs } from '@siafoundation/design-system'
 import { mockData } from './mockData'
-import { ChartStats, computeStats } from './computeStats'
-import { formatData, getTimeRangeRollup } from './formatData'
 
 const debounced = throttle((func: () => void) => func(), 100, {
   trailing: true,
@@ -91,8 +96,8 @@ export function DataProvider({ children }: Props) {
   )
 
   const revenue = useMemo<Chart>(() => {
-    const data = formatData(mockData.revenue, timeRange, 'total')
-    const stats = computeStats(mockData.revenue, timeRange, ['potential'])
+    const data = formatChartData(mockData.revenue, timeRange, 'total')
+    const stats = computeChartStats(mockData.revenue, timeRange, ['potential'])
     return {
       data,
       stats,
@@ -113,8 +118,8 @@ export function DataProvider({ children }: Props) {
   }, [timeRange, formatTimestamp])
 
   const pricing = useMemo<Chart>(() => {
-    const data = formatData(mockData.pricing, timeRange, 'average')
-    const stats = computeStats(mockData.pricing, timeRange)
+    const data = formatChartData(mockData.pricing, timeRange, 'average')
+    const stats = computeChartStats(mockData.pricing, timeRange)
     return {
       data,
       stats,
@@ -132,8 +137,8 @@ export function DataProvider({ children }: Props) {
   }, [timeRange, formatTimestamp])
 
   const collateral = useMemo<Chart>(() => {
-    const data = formatData(mockData.collateral, timeRange, 'average')
-    const stats = computeStats(mockData.collateral, timeRange)
+    const data = formatChartData(mockData.collateral, timeRange, 'average')
+    const stats = computeChartStats(mockData.collateral, timeRange)
     return {
       data,
       stats,
@@ -150,8 +155,8 @@ export function DataProvider({ children }: Props) {
   }, [timeRange, formatTimestamp])
 
   const contracts = useMemo<Chart>(() => {
-    const data = formatData(mockData.contracts, timeRange, 'average')
-    const stats = computeStats(mockData.contracts, timeRange)
+    const data = formatChartData(mockData.contracts, timeRange, 'average')
+    const stats = computeChartStats(mockData.contracts, timeRange)
     return {
       data,
       stats,
@@ -173,8 +178,8 @@ export function DataProvider({ children }: Props) {
   }, [timeRange, formatTimestamp])
 
   const storage = useMemo<Chart>(() => {
-    const data = formatData(mockData.storage, timeRange, 'average')
-    const stats = computeStats(mockData.storage, timeRange)
+    const data = formatChartData(mockData.storage, timeRange, 'average')
+    const stats = computeChartStats(mockData.storage, timeRange)
     return {
       data,
       stats,
@@ -190,8 +195,8 @@ export function DataProvider({ children }: Props) {
   }, [timeRange, formatTimestamp])
 
   const bandwidth = useMemo<Chart>(() => {
-    const data = formatData(mockData.bandwidth, timeRange, 'total')
-    const stats = computeStats(mockData.bandwidth, timeRange)
+    const data = formatChartData(mockData.bandwidth, timeRange, 'total')
+    const stats = computeChartStats(mockData.bandwidth, timeRange)
     return {
       data,
       stats,

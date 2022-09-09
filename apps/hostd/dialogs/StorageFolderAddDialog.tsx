@@ -1,7 +1,12 @@
-import { Flex, DialogContent, Paragraph } from '@siafoundation/design-system'
+import {
+  Flex,
+  DialogContent,
+  Paragraph,
+  FormField,
+  FormSubmitButton,
+} from '@siafoundation/design-system'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { FormField, FormSubmitButton } from '../components/Form'
 import { useDialog } from '../contexts/dialog'
 
 const initialValues = {

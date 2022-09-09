@@ -4,11 +4,12 @@ import {
   Paragraph,
   Box,
   Text,
+  FormField,
+  FormSubmitButton,
 } from '@siafoundation/design-system'
 import { humanBytes } from '@siafoundation/sia-js'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { FormField, FormSubmitButton } from '../components/Form'
 import { useDialog } from '../contexts/dialog'
 
 const gb = 1_000_000_000

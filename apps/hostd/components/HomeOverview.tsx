@@ -1,7 +1,11 @@
-import { DatumCard, Flex, Heading } from '@siafoundation/design-system'
+import {
+  DatumCard,
+  Flex,
+  Heading,
+  DatumScrollArea,
+} from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { toHastings } from '@siafoundation/sia-js'
-import { DatumScrollArea } from './DatumScrollArea'
 
 export function HomeOverview() {
   return (

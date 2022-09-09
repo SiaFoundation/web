@@ -11,9 +11,9 @@ import {
   DropdownMenuRightSlot,
   DropdownMenuSeparator,
   Box,
+  ComboPool,
 } from '@siafoundation/design-system'
-import { useContracts } from '../hooks/useContracts'
-import { ComboPool } from './ComboPool'
+import { useContracts, ContractColumn } from '../hooks/useContracts'
 
 export function ContractsViewDropdownMenu() {
   const {
@@ -51,7 +51,7 @@ export function ContractsViewDropdownMenu() {
                   e.stopPropagation()
                 }}
                 onChange={(e) => {
-                  setSortColumn(e.target.value)
+                  setSortColumn(e.target.value as ContractColumn)
                 }}
               >
                 {Object.entries(sortOptions).map(([category, options]) => (
@@ -79,7 +79,7 @@ export function ContractsViewDropdownMenu() {
                   e.stopPropagation()
                 }}
                 onChange={(e) => {
-                  setSortDirection(e.target.value)
+                  setSortDirection(e.target.value as 'asc' | 'desc')
                 }}
               >
                 <option key="desc" value="desc">

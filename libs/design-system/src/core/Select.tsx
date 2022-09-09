@@ -73,7 +73,7 @@ const StyledCaretSortIcon = styled(CaretSortIcon, {
 })
 
 type SelectProps = Omit<React.ComponentProps<typeof StyledSelect>, 'size'> &
-  React.ComponentProps<typeof SelectWrapper> & { css?: CSS }
+  Pick<React.ComponentProps<typeof SelectWrapper>, 'size'> & { css?: CSS }
 
 export const Select = React.forwardRef<
   React.ElementRef<typeof StyledSelect>,

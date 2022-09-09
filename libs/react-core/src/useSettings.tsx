@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect } from 'react'
 import { useCallback } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 
-type CurrencyId = 'usd' | 'eur' | 'gbp' | 'jpy' | 'btc' | 'eth'
+export type CurrencyId = 'usd' | 'eur' | 'gbp' | 'jpy' | 'btc' | 'eth'
 
 type CurrencyOption = {
   id: CurrencyId

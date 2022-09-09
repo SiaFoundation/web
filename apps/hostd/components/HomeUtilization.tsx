@@ -1,9 +1,14 @@
-import { ChartXY, Flex, Text, Heading } from '@siafoundation/design-system'
+import {
+  ChartXY,
+  Flex,
+  Text,
+  Heading,
+  DatumCardConfigurable,
+  DatumScrollArea,
+} from '@siafoundation/design-system'
 import { humanBytes } from '@siafoundation/sia-js'
 import { chartConfigs } from '../config/charts'
 import { useData } from '../contexts/data'
-import { DatumCardConfigurable } from './DatumCardConfigurable'
-import { DatumScrollArea } from './DatumScrollArea'
 
 export function HomeUtilization() {
   const { storage, bandwidth } = useData()

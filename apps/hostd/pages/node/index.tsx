@@ -1,14 +1,18 @@
-import { DatumCard, Flex } from '@siafoundation/design-system'
+import {
+  DatumCard,
+  Flex,
+  PeerList,
+  TxPoolList,
+} from '@siafoundation/design-system'
 import {
   useConsensusTip,
   useSyncerPeers,
   useTxPoolTransactions,
 } from '@siafoundation/react-core'
-import { PeerList } from '../../components/PeerList'
-import { TxPoolList } from '../../components/TxPoolList'
 import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
-import { AuthedLayout } from '../../components/AuthedLayout'
+import { HostdAuthedLayout } from '../../components/HostdAuthedLayout'
+import { useDialog } from '../../contexts/dialog'
 
 export default function NodePage() {
   const peers = useSyncerPeers()
@@ -19,9 +23,10 @@ export default function NodePage() {
     refreshInterval: 30_000,
   })
   const router = useRouter()
+  const { openDialog } = useDialog()
 
   return (
-    <AuthedLayout title="Node">
+    <HostdAuthedLayout title="Node">
       <Flex gap="3-5" wrap="wrap">
         <DatumCard
           label="Connected peers"
@@ -31,8 +36,8 @@ export default function NodePage() {
         <DatumCard label="Transactions in pool" value={txPool.data?.length} />
         <DatumCard label="Consensus tip" hash={tip.data} />
       </Flex>
-      <PeerList />
+      <PeerList connectPeer={() => openDialog('connectPeer')} />
       <TxPoolList />
-    </AuthedLayout>
+    </HostdAuthedLayout>
   )
 }

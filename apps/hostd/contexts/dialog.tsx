@@ -1,15 +1,16 @@
 import React, { createContext, useContext, useCallback, useState } from 'react'
-import { WalletSendSiacoinDialog } from '../dialogs/WalletSendSiacoinDialog'
-import { AddressDetailsDialog } from '../dialogs/AddressDetailsDialog'
-import { AddWalletDialog } from '../dialogs/AddWalletDialog'
+import {
+  WalletSendSiacoinDialog,
+  AddressDetailsDialog,
+  TransactionDetailsDialog,
+  SyncerConnectPeerDialog,
+  SettingsDialog,
+} from '@siafoundation/design-system'
 import { ControlledDialog } from '../dialogs/ControlledDialog'
-import { TransactionDetailsDialog } from '../dialogs/TransactionDetailsDialog'
-import { SyncerConnectPeerDialog } from '../dialogs/SyncerConnectPeerDialog'
 import { StorageFolderAddDialog } from '../dialogs/StorageFolderAddDialog'
 import { StorageFolderResizeDialog } from '../dialogs/StorageFolderResizeDialog'
 import { StorageFolderRemoveDialog } from '../dialogs/StorageFolderRemoveDialog'
 import { HostAnnounceDialog } from '../dialogs/HostAnnounceDialog'
-import { SettingsDialog } from '../dialogs/SettingsDialog'
 
 const DialogContext = createContext({} as State)
 export const useDialog = () => useContext(DialogContext)
@@ -67,19 +68,16 @@ export function DialogProvider({ children }: Props) {
         <SettingsDialog />
       </ControlledDialog>
       <ControlledDialog dialog="transactionDetails">
-        <TransactionDetailsDialog />
-      </ControlledDialog>
-      <ControlledDialog dialog="addWallet">
-        <AddWalletDialog />
+        <TransactionDetailsDialog id={id} />
       </ControlledDialog>
       <ControlledDialog dialog="sendSiacoin">
         <WalletSendSiacoinDialog />
       </ControlledDialog>
       <ControlledDialog dialog="addressDetails">
-        <AddressDetailsDialog />
+        <AddressDetailsDialog id={id} />
       </ControlledDialog>
       <ControlledDialog dialog="connectPeer">
-        <SyncerConnectPeerDialog />
+        <SyncerConnectPeerDialog closeDialog={closeDialog} />
       </ControlledDialog>
       <ControlledDialog dialog="storageFolderAdd">
         <StorageFolderAddDialog />

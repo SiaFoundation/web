@@ -1,10 +1,16 @@
-import { Flex, Panel, Separator, Text } from '@siafoundation/design-system'
-import { PublicLayout } from '../components/PublicLayout'
-import UnlockForm from '../components/UnlockForm'
+import {
+  Flex,
+  Panel,
+  Separator,
+  Text,
+  AppPublicLayout,
+  AppUnlockForm,
+} from '@siafoundation/design-system'
+import { routes } from '../config/routes'
 
 export default function Unlock() {
   return (
-    <PublicLayout>
+    <AppPublicLayout routes={routes}>
       <Flex
         direction="column"
         align="center"
@@ -25,10 +31,10 @@ export default function Unlock() {
               hostd
             </Text>
             <Separator size="100" pad={0} />
-            <UnlockForm />
+            <AppUnlockForm routes={routes} />
           </Flex>
         </Panel>
       </Flex>
-    </PublicLayout>
+    </AppPublicLayout>
   )
 }

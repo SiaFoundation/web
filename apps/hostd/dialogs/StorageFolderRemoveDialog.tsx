@@ -5,11 +5,12 @@ import {
   Paragraph,
   Switch,
   InfoTip,
+  FormField,
+  FormSubmitButton,
 } from '@siafoundation/design-system'
 import { humanBytes } from '@siafoundation/sia-js'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { FormField, FormSubmitButton } from '../components/Form'
 import { useDialog } from '../contexts/dialog'
 
 export function StorageFolderRemoveDialog() {

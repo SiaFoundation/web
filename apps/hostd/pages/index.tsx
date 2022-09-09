@@ -1,5 +1,10 @@
-import { Button, ControlGroup, Flex, Text } from '@siafoundation/design-system'
-import { AuthedLayout } from '../components/AuthedLayout'
+import {
+  Button,
+  ControlGroup,
+  Flex,
+  Text,
+  SwitchMulti,
+} from '@siafoundation/design-system'
 import { TimeSpan, useData } from '../contexts/data'
 import { format } from 'date-fns'
 import { HomeRevenue } from '../components/HomeRevenue'
@@ -7,7 +12,7 @@ import { HomeRevenue } from '../components/HomeRevenue'
 import { HomeUtilization } from '../components/HomeUtilization'
 import { HomeContracts } from '../components/HomeContracts'
 import { HomePricing } from '../components/HomePricing'
-import { SwitchMulti } from '../components/SwitchMulti'
+import { HostdAuthedLayout } from '../components/HostdAuthedLayout'
 
 const options = [
   {
@@ -36,7 +41,7 @@ export default function HomePage() {
   const { timeRange, timeSpan, setTimeSpan } = useData()
 
   return (
-    <AuthedLayout
+    <HostdAuthedLayout
       title="Overview"
       filters={
         <Flex gap="1" css={{ flex: 1 }}>
@@ -74,6 +79,6 @@ export default function HomePage() {
         <HomeContracts />
         <HomePricing />
       </Flex>
-    </AuthedLayout>
+    </HostdAuthedLayout>
   )
 }

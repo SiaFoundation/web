@@ -6,12 +6,13 @@ import {
   Flex,
   ProgressBar,
   Text,
+  Table,
+  TableColumn,
 } from '@siafoundation/design-system'
 import { humanBytes } from '@siafoundation/sia-js'
 import { StorageFolderDropdownMenu } from '../../components/StorageFolderDropdownMenu'
-import { AuthedLayout } from '../../components/AuthedLayout'
+import { HostdAuthedLayout } from '../../components/HostdAuthedLayout'
 import { useDialog } from '../../contexts/dialog'
-import { Table, TableColumn } from '../../components/Table'
 
 type Data = {
   key: string
@@ -123,7 +124,7 @@ export default function StoragePage() {
   const free = total - used
 
   return (
-    <AuthedLayout
+    <HostdAuthedLayout
       title="Storage"
       actions={
         <>
@@ -141,6 +142,6 @@ export default function StoragePage() {
         <DatumCard label="Write failure rate" value={'1%'} />
       </Flex>
       <Table data={data} columns={columns} />
-    </AuthedLayout>
+    </HostdAuthedLayout>
   )
 }
