@@ -6,18 +6,18 @@ import {
   Button,
   IconButton,
   ControlGroup,
+  Table,
 } from '@siafoundation/design-system'
-import { AuthedLayout } from '../../components/AuthedLayout'
-import { Table } from '../../components/Table'
 import { ContractsViewDropdownMenu } from '../../components/ContractsViewDropdownMenu'
 import { ContractsFilterDropdownMenu } from '../../components/ContractsFilterDropdownMenu'
 import { useContracts } from '../../hooks/useContracts'
+import { HostdAuthedLayout } from '../../components/HostdAuthedLayout'
 
 export default function ContractsPage() {
   const { columns, filters, removeFilter, contracts } = useContracts()
 
   return (
-    <AuthedLayout
+    <HostdAuthedLayout
       title="Contracts"
       filters={
         <Flex gap="1" css={{ flex: 1 }}>
@@ -68,6 +68,6 @@ export default function ContractsPage() {
       >
         <Table data={contracts} columns={columns} summary />
       </Box>
-    </AuthedLayout>
+    </HostdAuthedLayout>
   )
 }

@@ -29,7 +29,7 @@ import groupBy from 'lodash/groupBy'
 import filter from 'lodash/filter'
 import useLocalStorageState from 'use-local-storage-state'
 
-type ContractColumn =
+export type ContractColumn =
   | 'overview'
   | 'timeline'
   | 'startDate'

@@ -31,7 +31,7 @@ const humanSiacoinOptionDefaults: HumanSiacoinOptions = {
 export function humanSiacoin(
   hastings: BigNumber | number | string,
   options?: HumanSiacoinOptions
-): string | null {
+): string {
   const { fixed, dynamicUnits } = {
     ...humanSiacoinOptionDefaults,
     ...options,
@@ -62,7 +62,7 @@ export function humanSiacoin(
     }
   }
 
-  return null
+  return ''
 }
 
 export function humanSiafund(siafunds: number) {

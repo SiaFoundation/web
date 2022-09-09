@@ -1,7 +1,13 @@
-import { ChartXY, Flex, Text, Heading, Box } from '@siafoundation/design-system'
+import {
+  ChartXY,
+  Flex,
+  Text,
+  Heading,
+  Box,
+  DatumCardConfigurable,
+  DatumScrollArea,
+} from '@siafoundation/design-system'
 import { useData } from '../contexts/data'
-import { DatumCardConfigurable } from './DatumCardConfigurable'
-import { DatumScrollArea } from './DatumScrollArea'
 
 export function HomeContracts() {
   const { collateral, contracts } = useData()

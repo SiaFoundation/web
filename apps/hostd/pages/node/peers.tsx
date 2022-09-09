@@ -1,10 +1,12 @@
-import { PeerList } from '../../components/PeerList'
-import { AuthedLayout } from '../../components/AuthedLayout'
+import { PeerList } from '@siafoundation/design-system'
+import { useDialog } from '../../contexts/dialog'
+import { HostdAuthedLayout } from '../../components/HostdAuthedLayout'
 
 export default function NodePeersPage() {
+  const { openDialog } = useDialog()
   return (
-    <AuthedLayout title="Node / Peers">
-      <PeerList />
-    </AuthedLayout>
+    <HostdAuthedLayout title="Node / Peers">
+      <PeerList connectPeer={() => openDialog('connectPeer')} />
+    </HostdAuthedLayout>
   )
 }

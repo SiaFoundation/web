@@ -16,6 +16,7 @@
     "sia-react": "libs/sia-react",
     "siad": "apps/siad",
     "hostd": "apps/hostd",
+    "renterd": "apps/renterd",
     "website": "apps/website"
   }
 }

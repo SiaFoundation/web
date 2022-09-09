@@ -10,16 +10,16 @@ import {
   Switch,
   Text,
   TextField,
+  ConfigurationSiacoin,
+  ConfigurationNumber,
 } from '@siafoundation/design-system'
 import { useSiaCentralHostsNetworkAverages } from '@siafoundation/react-core'
 import { toHastings } from '@siafoundation/sia-js'
-import { ConfigurationSiacoin } from '../../components/ConfigurationSiacoin'
 import BigNumber from 'bignumber.js'
 import { useState } from 'react'
-import { AuthedLayout } from '../../components/AuthedLayout'
+import { HostdAuthedLayout } from '../../components/HostdAuthedLayout'
 import { useDialog } from '../../contexts/dialog'
 import { useSettings } from '@siafoundation/react-core'
-import { ConfigurationNumber } from '../../components/ConfigurationNumber'
 
 export default function ConfigPage() {
   const { openDialog } = useDialog()
@@ -112,7 +112,7 @@ export default function ConfigPage() {
     new BigNumber(networkAverages.data?.settings.sector_access_price || 0)
 
   return (
-    <AuthedLayout
+    <HostdAuthedLayout
       title="Configuration"
       actions={
         <Flex gap="2" wrap="wrap">
@@ -352,7 +352,7 @@ export default function ConfigPage() {
           />
         </Section>
       </Flex>
-    </AuthedLayout>
+    </HostdAuthedLayout>
   )
 }
 

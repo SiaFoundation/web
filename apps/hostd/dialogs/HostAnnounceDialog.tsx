@@ -6,13 +6,13 @@ import {
   Bullhorn20,
   DialogContent,
   triggerToast,
+  hostnameOrIpRegex,
+  FormField,
 } from '@siafoundation/design-system'
 import { useSyncerConnect } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
 import { useDialog } from '../contexts/dialog'
 import * as Yup from 'yup'
-import { FormField } from '../components/Form'
-import { hostnameOrIpRegex } from './ipRegex'
 
 const initialValues = {
   port: 9981,

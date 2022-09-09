@@ -103,12 +103,4 @@ export const mockData = {
     egress: random(100, 200) * 1e10 + (count - i) + 1e12,
     ingress: random(50, 100) * 1e10 + (i > count * 0.75 ? 5 : 1) * 1e12,
   })),
-
-  balance: getTimes().map(({ i, timestamp }) => ({
-    timestamp,
-    sc:
-      random(100, 200) * 1e24 +
-      (i > count * 0.75 ? count - i : count / 4) * 1e24,
-    sf: random(1, 4) + 1 * (count - i),
-  })),
 }

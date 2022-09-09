@@ -10,9 +10,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel,
   Box,
+  ComboPool,
 } from '@siafoundation/design-system'
 import { useContracts } from '../hooks/useContracts'
-import { ComboPool } from './ComboPool'
 
 export function ContractsFilterDropdownMenu() {
   const { filters, setFilter } = useContracts()

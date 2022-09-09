@@ -1,0 +1,66 @@
+{
+  "sourceRoot": "apps/renterd",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "root": "apps/renterd",
+        "outputPath": "dist/apps/renterd",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "libs/design-system/src/public/",
+            "output": "/"
+          }
+        ]
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "renterd:build",
+        "port": 3007
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "renterd:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "renterd:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nrwl/next:export",
+      "options": {
+        "buildTarget": "renterd:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/renterd"],
+      "options": {
+        "jestConfig": "apps/renterd/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/renterd/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": []
+}

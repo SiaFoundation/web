@@ -4,14 +4,15 @@ import {
   Flex,
   Text,
   Tooltip,
+  WalletSparkline,
+  WalletLayoutActions,
 } from '@siafoundation/design-system'
 import { useWalletTransactions } from '@siafoundation/react-core'
-import { AuthedLayout } from '../../components/AuthedLayout'
-import { WalletSparkline } from '../../components/WalletSparkline'
+import { HostdAuthedLayout } from '../../components/HostdAuthedLayout'
 import { useMemo } from 'react'
 import { useDialog } from '../../contexts/dialog'
 import BigNumber from 'bignumber.js'
-import { WalletLayoutActions } from '../../components/WalletLayoutActions'
+import { routes } from '../../config/routes'
 
 export default function WalletView() {
   const transactions = useWalletTransactions()
@@ -35,7 +36,15 @@ export default function WalletView() {
   )
 
   return (
-    <AuthedLayout title="Wallet" actions={<WalletLayoutActions />}>
+    <HostdAuthedLayout
+      title="Wallet"
+      actions={
+        <WalletLayoutActions
+          routes={routes}
+          sendSiacoin={() => openDialog('sendSiacoin')}
+        />
+      }
+    >
       <WalletSparkline />
       <Flex direction="column" gap="1">
         <EntityList
@@ -61,6 +70,6 @@ export default function WalletView() {
           entities={entities}
         />
       </Flex>
-    </AuthedLayout>
+    </HostdAuthedLayout>
   )
 }
