@@ -4,8 +4,8 @@ import { useFormik } from 'formik'
 import { Flex } from '../core'
 import { FieldGroup, FormSubmitButton, FormTextField } from '../components/Form'
 
-async function checkPassword(password: string) {
-  const resp = await fetch('/api/wallet/balance', {
+async function checkPassword(api: string, password: string) {
+  const resp = await fetch(`${api}/wallet/balance`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -40,14 +40,14 @@ type Props = {
 
 export function AppUnlockForm({ routes }: Props) {
   const router = useRouter()
-  const { setSettings } = useSettings()
+  const { setSettings, api } = useSettings()
 
   const formik = useFormik({
     initialValues: {
       password: '',
     },
     onSubmit: async (values, actions) => {
-      const err = await checkPassword(values.password)
+      const err = await checkPassword(api, values.password)
       if (!err) {
         setSettings({ password: values.password })
         // allow password to propagate to swr hooks

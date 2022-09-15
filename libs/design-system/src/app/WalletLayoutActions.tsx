@@ -1,24 +1,20 @@
-import { NextLinkButton, Button } from '../core'
+import { Button } from '../core'
 import { ArrowUpRight16, ArrowDownLeft16 } from '../icons'
 import { WalletBalance } from './WalletBalance'
 
 type Props = {
-  routes: {
-    wallet: {
-      addresses: string
-    }
-  }
+  receiveSiacoin: () => void
   sendSiacoin: () => void
 }
 
-export function WalletLayoutActions({ routes, sendSiacoin }: Props) {
+export function WalletLayoutActions({ sendSiacoin, receiveSiacoin }: Props) {
   return (
     <>
       <WalletBalance />
-      <NextLinkButton href={routes.wallet.addresses} size="1">
+      <Button size="1" onClick={receiveSiacoin}>
         <ArrowDownLeft16 />
         Receive
-      </NextLinkButton>
+      </Button>
       <Button size="1" variant="accent" onClick={sendSiacoin}>
         <ArrowUpRight16 />
         Send

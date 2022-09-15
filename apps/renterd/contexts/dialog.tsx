@@ -4,7 +4,7 @@ import {
   SettingsDialog,
   SyncerConnectPeerDialog,
   TransactionDetailsDialog,
-  AddressDetailsDialog,
+  WalletSingleAddressDetailsDialog,
 } from '@siafoundation/design-system'
 import { ControlledDialog } from '../dialogs/ControlledDialog'
 
@@ -65,7 +65,7 @@ export function DialogProvider({ children }: Props) {
         <WalletSendSiacoinDialog />
       </ControlledDialog>
       <ControlledDialog dialog="addressDetails">
-        <AddressDetailsDialog id={id} />
+        <WalletSingleAddressDetailsDialog />
       </ControlledDialog>
       <ControlledDialog dialog="connectPeer">
         <SyncerConnectPeerDialog closeDialog={closeDialog} />

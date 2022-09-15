@@ -1,4 +1,5 @@
-import { CSS, Flex, InfoTip, Tooltip, Panel, Text } from '../core'
+import { Flex, InfoTip, Tooltip, Panel, Text } from '../core'
+import { CSS } from '../config/theme'
 import { useMemo } from 'react'
 
 export type Row = {

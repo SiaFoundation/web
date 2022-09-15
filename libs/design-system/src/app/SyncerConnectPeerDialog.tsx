@@ -36,9 +36,7 @@ export function SyncerConnectPeerDialog({ closeDialog }: Props) {
     onSubmit: async (values, actions) => {
       const netAddress = `${values.ip}:${values.port}`
       const response = await connect.post({
-        payload: {
-          netAddress,
-        },
+        payload: netAddress,
       })
       if (response.error) {
         const formattedError = response.error.replace(

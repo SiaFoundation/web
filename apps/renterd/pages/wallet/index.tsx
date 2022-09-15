@@ -7,6 +7,7 @@ import {
   AppAuthedLayout,
   WalletSparkline,
   WalletLayoutActions,
+  getTransactionTypes,
 } from '@siafoundation/design-system'
 import { useWalletTransactions } from '@siafoundation/react-core'
 import { useMemo } from 'react'
@@ -26,6 +27,7 @@ export default function WalletView() {
         ?.map((t): EntityListItemProps => {
           return {
             type: 'transaction',
+            txType: getTransactionTypes(t.Raw),
             hash: t.ID,
             timestamp: new Date(t.Timestamp).getTime(),
             onClick: () => openDialog('transactionDetails', t.ID),
@@ -44,35 +46,14 @@ export default function WalletView() {
       title="Wallet"
       actions={
         <WalletLayoutActions
-          routes={routes}
+          receiveSiacoin={() => openDialog('addressDetails')}
           sendSiacoin={() => openDialog('sendSiacoin')}
         />
       }
     >
       <WalletSparkline />
       <Flex direction="column" gap="1">
-        <EntityList
-          title="Transactions"
-          actions={
-            <Flex gap="3" align="center">
-              <Flex>
-                <Tooltip content="Coming soon">
-                  <Text weight="semibold" color="subtle">
-                    Filters
-                  </Text>
-                </Tooltip>
-              </Flex>
-              <Flex>
-                <Tooltip content="Coming soon">
-                  <Text weight="semibold" color="subtle">
-                    Sort by
-                  </Text>
-                </Tooltip>
-              </Flex>
-            </Flex>
-          }
-          entities={entities}
-        />
+        <EntityList title="Transactions" entities={entities} />
       </Flex>
     </AppAuthedLayout>
   )

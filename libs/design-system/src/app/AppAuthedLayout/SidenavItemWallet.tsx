@@ -25,8 +25,7 @@ export function SidenavItemWallet({ routes }: Props) {
           <WalletBalanceMini
             size="10"
             wallet={{
-              sc: new BigNumber(balance.data?.siacoins),
-              sf: balance.data?.siafunds,
+              sc: new BigNumber(balance.data),
             }}
           />
         )}

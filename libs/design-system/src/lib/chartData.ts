@@ -3,7 +3,7 @@ import { ChartPoint } from '../components'
 import { getDaysInMs } from './time'
 import { format, startOfMonth, startOfWeek } from 'date-fns'
 
-type AggregationMode = 'total' | 'average'
+type AggregationMode = 'total' | 'average' | 'none'
 
 type TimeRange = {
   start: number
@@ -13,7 +13,8 @@ type TimeRange = {
 export function formatChartData(
   data: ChartPoint[],
   timeRange: TimeRange,
-  mode: AggregationMode
+  mode: AggregationMode,
+  futureSpan = 90
 ) {
   const { start, end } = timeRange
   const keys = Object.keys(omit(data[0], 'timestamp'))
@@ -22,7 +23,10 @@ export function formatChartData(
   data.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1))
 
   // aggregate
-  const { normalize } = getTimeRangeRollup(timeRange)
+  const { normalize } =
+    mode !== 'none'
+      ? getTimeRangeRollup(timeRange, futureSpan)
+      : timeRangeNoRollup
   const grouped = groupBy(data, (point) => {
     const normalizedTimestamp = normalize(point.timestamp)
     return normalizedTimestamp
@@ -51,7 +55,7 @@ export function formatChartData(
 
   // filter
   return aggregated.filter(
-    (point) => point.timestamp >= start && point.timestamp < end
+    (point) => point.timestamp >= start && point.timestamp <= end
   )
 }
 
@@ -81,4 +85,11 @@ export function getTimeRangeRollup(timeRange: TimeRange, futureSpan = 90) {
           return `Day of ${format(timestamp, 'PP')}`
         },
       }
+}
+
+export const timeRangeNoRollup = {
+  normalize: (timestamp: number) => timestamp,
+  label: (timestamp: number) => {
+    return `${format(timestamp, 'Pp')}`
+  },
 }

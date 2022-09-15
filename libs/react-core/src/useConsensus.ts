@@ -1,6 +1,11 @@
 import { useGet } from './useGet'
 import { SWROptions } from './types'
 
-export function useConsensusTip(options?: SWROptions<string>) {
-  return useGet('consensus/tip', options)
+type ConsensusTipResponse = {
+  ID: string
+  Height: number
+}
+
+export function useConsensusTip(options?: SWROptions<ConsensusTipResponse>) {
+  return useGet<ConsensusTipResponse>('consensus/tip', options)
 }

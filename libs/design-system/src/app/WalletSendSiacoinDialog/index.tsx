@@ -6,8 +6,9 @@ import { WalletSendSiacoinGenerate } from './Generate'
 import { WalletSendSiacoinConfirm } from './Confirm'
 import { ProgressSteps } from './ProgressSteps'
 import { WalletSendSiacoinComplete } from './Complete'
+import { Transaction } from '@siafoundation/react-core'
 
-export type TransactionData = {
+export type SendSiacoinFormData = {
   address: string
   siacoin: BigNumber
   includeFee: boolean
@@ -15,15 +16,12 @@ export type TransactionData = {
 
 type Step = 'setup' | 'confirm' | 'done'
 
+const fee = toHastings(0.00393)
+
 export function WalletSendSiacoinDialog() {
   const [step, setStep] = useState<Step>('setup')
-  const [data, setData] = useState<TransactionData>()
-
-  // TODO: get network fee
-  const fee = new BigNumber(toHastings(30))
-
-  // TODO: get transaction id
-  const transactionId = '923fu923jf2j3o'
+  const [signedTxn, setSignedTxn] = useState<Transaction>()
+  const [data, setData] = useState<SendSiacoinFormData>()
 
   return (
     <DialogContent
@@ -68,16 +66,17 @@ export function WalletSendSiacoinDialog() {
           <WalletSendSiacoinConfirm
             {...data}
             fee={fee}
-            onConfirm={() => {
+            onConfirm={({ transaction }) => {
               setStep('done')
+              setSignedTxn(transaction)
             }}
           />
         )}
-        {step === 'done' && data && (
+        {step === 'done' && data && signedTxn && (
           <WalletSendSiacoinComplete
             {...data}
             fee={fee}
-            transactionId={transactionId}
+            transactionId={'TODO'}
           />
         )}
       </Flex>

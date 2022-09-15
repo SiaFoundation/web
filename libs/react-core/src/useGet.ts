@@ -5,7 +5,7 @@ import { useSettings } from './useSettings'
 import { getKey } from './utils'
 
 export function useGet<T>(route: string | null, options?: SWROptions<T>) {
-  const { settings } = useSettings()
+  const { settings, api } = useSettings()
   return useSWR<T, SWRError>(
     getKey(route ? settings.password + route : null, options?.disabled),
     async () => {
@@ -17,7 +17,7 @@ export function useGet<T>(route: string | null, options?: SWROptions<T>) {
         headers['Authorization'] = 'Basic ' + btoa(`:${settings.password}`)
       }
 
-      const r = await fetch(`/api/${route}`, {
+      const r = await fetch(`${api}/${route}`, {
         headers,
       })
       return handleResponse(r)

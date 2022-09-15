@@ -14,72 +14,61 @@ export type TxType =
   | 'setup'
 
 export function getTransactionTotals(txn: Transaction) {
-  const totalSiacoinInput = (txn.SiacoinInputs || [])
-    .filter((i) => i.Parent.Address && i.Parent.Value)
-    .reduce((acc, i) => acc.plus(String(i.Parent.Value)), new BigNumber(0))
-  const totalSiafundInput = (txn.SiafundInputs || [])
-    .filter((i) => i.Parent.Address && i.Parent.Value)
-    .reduce((acc, i) => acc + i.Parent.Value, 0)
-
-  const totalSiacoinOuput = (txn.SiacoinOutputs || []).reduce(
-    (acc, i) => acc.plus(String(i.Value)),
+  const sc = (txn.siacoinoutputs || []).reduce(
+    (acc, i) => acc.plus(String(i.value)),
     new BigNumber(0)
   )
-  const totalSiafundOutput = (txn.SiafundOutputs || []).reduce(
-    (acc, i) => acc + i.Value,
-    0
+  const sf = (txn.siafundoutputs || []).reduce(
+    (acc, i) => acc.plus(String(i.value)),
+    new BigNumber(0)
   )
-
-  // Calculation totals
-  const sc = totalSiacoinOuput.minus(totalSiacoinInput)
-  const sf = totalSiafundOutput - totalSiafundInput
 
   return {
     sc,
-    sf,
+    sf: sf.toNumber(),
   }
 }
 
-export function getTransactionTypes(txn: Transaction) {
+export function getTransactionTypes(txn: Transaction): TxType | undefined {
   const { sc: totalSiacoin, sf: totalSiafund } = getTransactionTotals(txn)
 
-  const txTypes: TxType[] = []
+  if (txn.filecontracts && txn.filecontracts.length > 0) {
+    return 'contract'
+  }
+  if (txn.filecontractrevisions && txn.filecontractrevisions.length > 0) {
+    return 'revision'
+  }
+  if (txn.storageproofs && txn.storageproofs.length > 0) {
+    return 'proof'
+  }
 
-  // add labels
-  if (!totalSiacoin.isZero()) {
-    txTypes.push('siacoin')
-  }
   if (totalSiafund !== 0) {
-    txTypes.push('siafund')
+    return 'siafund'
   }
-  if (txn.FileContracts && txn.FileContracts.length > 0) {
-    txTypes.push('contract')
+  if (!totalSiacoin.isZero()) {
+    return 'siacoin'
   }
-  if (txn.FileContractRevisions && txn.FileContractRevisions.length > 0) {
-    txTypes.push('revision')
-  }
-  if (txn.FileContractResolutions?.find((i) => i.StorageProof)) {
-    txTypes.push('proof')
-  }
+
+  // https://gitlab.com/NebulousLabs/Sia-UI/-/blob/master/app/utils/index.ts
   // if (isSetupTransaction(txn)) {
   //   txTypes.push(TransactionTypes.setup)
   // }
 
   if (
-    txn.SiacoinOutputs &&
-    txn.SiacoinInputs?.length === 0 &&
-    txn.SiafundInputs?.length === 0
+    txn.siacoinoutputs &&
+    txn.siacoininputs?.length === 0 &&
+    txn.siafundinputs?.length === 0
   ) {
-    txTypes.push('block')
+    return 'block'
   }
   if (
-    (txn.SiacoinInputs?.length || 0) >= 20 &&
-    txn.SiacoinOutputs?.length === 1
+    (txn.siacoininputs?.length || 0) >= 20 &&
+    txn.siacoinoutputs?.length === 1
   ) {
-    txTypes.push('defrag')
+    return 'defrag'
   }
 
-  return txTypes
+  return undefined
 }
 
 const entityTypeMap: Record<EntityType, string> = {
@@ -91,11 +80,11 @@ const entityTypeMap: Record<EntityType, string> = {
 }
 
 const txTypeMap: Record<TxType, string> = {
-  siacoin: 'siacoin',
-  siafund: 'siafund',
-  contract: 'contract',
-  proof: 'proof',
-  revision: 'revision',
+  siacoin: 'siacoin transfer',
+  siafund: 'siafund transfer',
+  contract: 'contract formation',
+  proof: 'storage proof',
+  revision: 'contract revision',
   block: 'block',
   defrag: 'defrag',
   setup: 'setup',

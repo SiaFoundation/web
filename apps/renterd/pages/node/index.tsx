@@ -4,6 +4,7 @@ import {
   AppAuthedLayout,
   TxPoolList,
   PeerList,
+  Box,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import {
@@ -35,15 +36,30 @@ export default function NodePage() {
     >
       <Flex gap="3-5" wrap="wrap">
         <DatumCard
+          label="Height"
+          value={
+            tip.data ? Number(tip.data.Height).toLocaleString() : undefined
+          }
+        />
+        <DatumCard
           label="Connected peers"
           value={peers.data?.length}
           onClick={() => router.push(routes.node.peers)}
         />
         <DatumCard label="Transactions in pool" value={txPool.data?.length} />
-        <DatumCard label="Consensus tip" hash={tip.data} />
+        <DatumCard
+          label="Consensus tip"
+          hash={tip.data?.ID.replace('bid:', '')}
+        />
       </Flex>
-      <PeerList connectPeer={() => openDialog('connectPeer')} />
-      <TxPoolList />
+      <Flex gap="3-5" wrap="wrap">
+        <Box css={{ flex: 1 }}>
+          <PeerList connectPeer={() => openDialog('connectPeer')} />
+        </Box>
+        <Box css={{ flex: 1 }}>
+          <TxPoolList />
+        </Box>
+      </Flex>
     </AppAuthedLayout>
   )
 }

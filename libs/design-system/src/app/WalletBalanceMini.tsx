@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js'
 type Props = {
   wallet: {
     sc: BigNumber | string
-    sf: number
+    sf?: number
   }
   size?: React.ComponentProps<typeof Text>['size']
 }
@@ -13,7 +13,9 @@ type Props = {
 export function WalletBalanceMini({ size = '14', wallet: { sc, sf } }: Props) {
   return (
     <Text size={size} weight="semibold">
-      {`${humanSiacoin(sc)} ${sf > 0 ? ` | ${humanSiafund(sf)}` : ''}`}
+      {`${humanSiacoin(sc, { fixed: 0 })} ${
+        sf && sf > 0 ? ` | ${humanSiafund(sf)}` : ''
+      }`}
     </Text>
   )
 }

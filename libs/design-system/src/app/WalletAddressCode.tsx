@@ -3,7 +3,7 @@ import { ValueCopyable } from '../components'
 import QRCode from 'react-qr-code'
 
 type Props = {
-  title: string
+  title?: string
   description?: string
   address: string
 }
@@ -11,12 +11,24 @@ type Props = {
 export function WalletAddressCode({ title, description, address }: Props) {
   return (
     <Flex direction="column" gap="2" align="center" justify="center">
-      <Heading size="20" font="mono">
-        {title}
-      </Heading>
+      {title && (
+        <Heading size="20" font="mono">
+          {title}
+        </Heading>
+      )}
       {description && <Text>{description}</Text>}
-      <Flex css={{ p: '$1', background: 'white' }}>
-        <QRCode size={200} value={address} />
+      <Flex
+        css={{
+          position: 'relative',
+          p: '5px',
+          background: 'white',
+          height: '210px',
+          width: '210px',
+        }}
+      >
+        <Flex css={{ position: 'absolute' }}>
+          <QRCode size={200} value={address} />
+        </Flex>
       </Flex>
       <ValueCopyable type="address" value={address} />
     </Flex>

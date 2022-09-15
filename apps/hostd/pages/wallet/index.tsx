@@ -12,7 +12,6 @@ import { HostdAuthedLayout } from '../../components/HostdAuthedLayout'
 import { useMemo } from 'react'
 import { useDialog } from '../../contexts/dialog'
 import BigNumber from 'bignumber.js'
-import { routes } from '../../config/routes'
 
 export default function WalletView() {
   const transactions = useWalletTransactions()
@@ -40,8 +39,9 @@ export default function WalletView() {
       title="Wallet"
       actions={
         <WalletLayoutActions
-          routes={routes}
           sendSiacoin={() => openDialog('sendSiacoin')}
+          // TODO
+          receiveSiacoin={() => openDialog('sendSiacoin')}
         />
       }
     >
