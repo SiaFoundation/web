@@ -5,8 +5,6 @@ import (
 
 	"github.com/OneOfOne/struct2ts"
 	// "go.sia.tech/hostd"
-	"go.sia.tech/siad/v2/siad"
-	"go.sia.tech/siad/v2/wallet"
 )
 
 var missing = `
@@ -24,7 +22,7 @@ func GenerateTypes() {
 		InterfaceOnly: true,
 	})
 
-	converter.Add(siad.WalletBalanceResponse{})
+	// converter.Add(renterd.WalletFundResponse{})
 	converter.Add(wallet.AddressInfo{})
 	converter.Add(siad.WalletUTXOsResponse{})
 	converter.Add(siad.TxpoolBroadcastRequest{})

@@ -1,15 +1,22 @@
 import { useFormik } from 'formik'
 import BigNumber from 'bignumber.js'
-import { Flex, Text } from '../../core'
+import { Flex } from '../../core'
 import { FormSubmitButton } from '../../components'
 import { WalletSendSiacoinReceipt } from './Receipt'
+import {
+  useWalletSign,
+  Transaction,
+  useWalletFund,
+  useTxPoolBroadcast,
+} from '@siafoundation/react-core'
+import { toHastings } from '@siafoundation/sia-js'
 
 type Props = {
   address: string
   siacoin: BigNumber
   fee: BigNumber
   includeFee: boolean
-  onConfirm: () => void
+  onConfirm: (params: { transaction: Transaction }) => void
 }
 
 export function WalletSendSiacoinConfirm({
@@ -19,10 +26,63 @@ export function WalletSendSiacoinConfirm({
   includeFee,
   onConfirm,
 }: Props) {
+  const fund = useWalletFund()
+  const sign = useWalletSign()
+  const broadcast = useTxPoolBroadcast()
   const formik = useFormik({
     initialValues: {},
-    onSubmit: (values) => {
-      onConfirm()
+    onSubmit: async () => {
+      const finalSiacoin = includeFee
+        ? toHastings(siacoin).minus(fee)
+        : toHastings(siacoin)
+
+      const fundResponse = await fund.post({
+        payload: {
+          amount: finalSiacoin.toString(),
+          transaction: {
+            siacoinoutputs: [
+              {
+                unlockhash: address,
+                value: finalSiacoin.toString(),
+              },
+            ],
+          },
+        },
+      })
+      if (!fundResponse.data) {
+        formik.setStatus({
+          error: fundResponse.error,
+        })
+        return
+      }
+      const signResponse = await sign.post({
+        payload: {
+          transaction: fundResponse.data.transaction,
+          toSign: fundResponse.data.toSign,
+          coveredFields: {
+            wholetransaction: true,
+          },
+        },
+      })
+      if (!signResponse.data) {
+        formik.setStatus({
+          error: signResponse.error,
+        })
+        return
+      }
+      const broadcastResponse = await broadcast.post({
+        payload: [signResponse.data],
+      })
+      if (broadcastResponse.error) {
+        formik.setStatus({
+          error: broadcastResponse.error,
+        })
+        return
+      }
+
+      onConfirm({
+        transaction: signResponse.data,
+      })
     },
   })
 
@@ -35,9 +95,6 @@ export function WalletSendSiacoinConfirm({
           fee={fee}
           includeFee={includeFee}
         />
-        {formik.status?.error && (
-          <Text css={{ color: '$red11' }}>{formik.status.error}</Text>
-        )}
         <FormSubmitButton formik={formik}>
           Broadcast transaction
         </FormSubmitButton>

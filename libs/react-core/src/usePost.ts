@@ -19,7 +19,7 @@ type UsePost<P, R> = {
 }
 
 export function usePost<P, R>(route: string, deps?: string[]): UsePost<P, R> {
-  const { settings } = useSettings()
+  const { settings, api } = useSettings()
   return {
     post: async ({ payload, param = '' }: Post<P>) => {
       const headers: Record<string, string> = {
@@ -30,7 +30,7 @@ export function usePost<P, R>(route: string, deps?: string[]): UsePost<P, R> {
       }
       try {
         const response = await axios.post<R>(
-          param ? `/api/${route}/${param}` : `/api/${route}`,
+          param ? `${api}/${route}/${param}` : `${api}/${route}`,
           payload,
           {
             headers,

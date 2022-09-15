@@ -1,5 +1,5 @@
 import { EntityList } from '../components'
-import { getTransactionTotals } from '../lib/entityTypes'
+import { getTransactionTotals, getTransactionTypes } from '../lib/entityTypes'
 import { useTxPoolTransactions } from '@siafoundation/react-core'
 
 export function TxPoolList() {
@@ -11,7 +11,7 @@ export function TxPoolList() {
       emptyMessage="No transactions in pool"
       entities={txPool.data?.map((t) => ({
         type: 'transaction',
-        unconfirmed: true,
+        txType: getTransactionTypes(t),
         sc: getTransactionTotals(t).sc,
         sf: getTransactionTotals(t).sf,
       }))}

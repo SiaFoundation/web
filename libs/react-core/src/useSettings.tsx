@@ -60,6 +60,7 @@ const defaultSettings: Settings = {
 type State = {
   settings: Settings
   currencyOptions: CurrencyOption[]
+  api: string
   setCurrency: (id: CurrencyId) => void
   setSettings: (settings: Partial<Settings>) => void
 }
@@ -72,7 +73,7 @@ type Props = {
   api?: string
 }
 
-export function SettingsProvider({ children }: Props) {
+export function SettingsProvider({ children, api }: Props) {
   const [settings, _setSettings] = useLocalStorageState('v0/settings', {
     ssr: false,
     defaultValue: defaultSettings,
@@ -110,6 +111,7 @@ export function SettingsProvider({ children }: Props) {
 
   const value = {
     settings,
+    api: typeof api === 'string' ? api : '/api',
     setSettings,
     setCurrency,
     currencyOptions,

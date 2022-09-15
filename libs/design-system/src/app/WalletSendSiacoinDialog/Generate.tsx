@@ -4,13 +4,14 @@ import BigNumber from 'bignumber.js'
 import { toHastings } from '@siafoundation/sia-js'
 import { Flex, InfoTip, Switch, Text } from '../../core'
 import { ValueSc, FormField, FormSubmitButton } from '../../components'
+import { useWalletBalance } from '@siafoundation/react-core'
 
 const exampleAddr =
-  'addr:e3b1050aef388438668b52983cf78f40925af8f0aa8b9de80c18eadcefce8388d168a313e3f2'
+  'e3b1050aef388438668b52983cf78f40925af8f0aa8b9de80c18eadcefce8388d168a313e3f2'
 
 const initialValues = {
   address: '',
-  siacoin: new BigNumber(0),
+  siacoin: 0,
   includeFee: false,
 }
 
@@ -25,22 +26,45 @@ const validationSchema = Yup.object().shape({
     ),
 })
 
-type Data = { address: string; siacoin: BigNumber; includeFee: boolean }
+type FormData = {
+  address: string
+  siacoin: BigNumber
+  includeFee: boolean
+}
 
 type Props = {
   fee: BigNumber
-  onComplete: (data: Data) => void
+  onComplete: (data: FormData) => void
 }
 
 export function WalletSendSiacoinGenerate({ fee, onComplete }: Props) {
+  const balance = useWalletBalance()
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      const siacoin = values.includeFee
+        ? toHastings(values.siacoin).minus(fee)
+        : toHastings(values.siacoin)
+
+      if (!balance.data) {
+        return
+      }
+
+      if (
+        new BigNumber(balance.data).isLessThan(
+          toHastings(values.siacoin).plus(fee)
+        )
+      ) {
+        formik.setStatus({ error: 'Not enough funds in wallet.' })
+        return
+      }
+
+      formik.setStatus({})
       onComplete({
         includeFee: values.includeFee,
         address: values.address,
-        siacoin: toHastings(values.siacoin),
+        siacoin: siacoin.dividedBy(1e24),
       })
     },
   })
@@ -101,9 +125,6 @@ export function WalletSendSiacoinGenerate({ fee, onComplete }: Props) {
             </Flex>
           </Flex>
         </Flex>
-        {formik.status?.error && (
-          <Text css={{ color: '$red11' }}>{formik.status.error}</Text>
-        )}
         <FormSubmitButton formik={formik}>
           Generate transaction
         </FormSubmitButton>

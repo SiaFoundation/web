@@ -4,14 +4,14 @@ import {
   getTitleId,
   Text,
 } from '@siafoundation/design-system'
-import { useWalletAddress } from '@siafoundation/react-core'
+import { useWalletAddressById } from '@siafoundation/react-core'
 import { AddressCode } from '../components/AddressCode'
 import { useDialog } from '../contexts/dialog'
 
 export function AddressDetailsDialog() {
   const { id } = useDialog()
 
-  const address = useWalletAddress(id)
+  const address = useWalletAddressById(id)
 
   if (!address.data) {
     return (

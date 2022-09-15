@@ -12,6 +12,8 @@ import {
   EntityType,
   getEntityTypeInitials,
   getEntityTypeLabel,
+  getTxTypeLabel,
+  TxType,
 } from '../lib/entityTypes'
 import { times } from 'lodash'
 import { humanNumber } from '@siafoundation/sia-js'
@@ -28,6 +30,7 @@ export type EntityListItemProps = {
   href?: string
   blockHref?: string
   type?: EntityType
+  txType?: TxType
   initials?: string
   sc?: BigNumber
   sf?: number
@@ -103,7 +106,13 @@ export function EntityList({ title, actions, entities, emptyMessage }: Props) {
                 />
               )
             )
-            const label = entity.label || getEntityTypeLabel(entity.type)
+            const label =
+              entity.label ||
+              (entity.type === 'transaction' &&
+                entity.txType &&
+                getTxTypeLabel(entity.txType)) ||
+              getEntityTypeLabel(entity.type)
+
             const title = upperFirst(label)
             return (
               <Flex

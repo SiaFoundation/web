@@ -50,7 +50,16 @@ export function TransactionDetailsDialog({ id }: Props) {
           </Flex>
           <Flex gap="1">
             <Text>Miner fee</Text>
-            <ValueSc value={new BigNumber(transaction?.Raw.MinerFee || 0)} />
+            <ValueSc
+              value={
+                new BigNumber(
+                  transaction?.Raw.minerfees?.reduce(
+                    (acc, val) => acc.plus(val),
+                    new BigNumber(0)
+                  ) || 0
+                )
+              }
+            />
           </Flex>
           <Box css={{ flex: 1 }} />
           <Flex gap="1">

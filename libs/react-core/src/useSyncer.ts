@@ -1,14 +1,13 @@
 import { useGet } from './useGet'
 import { usePost } from './usePost'
 import { SWROptions } from './types'
-import { SyncerConnectRequest, SyncerPeerResponse } from './siaTypes'
 
 const syncerPeers = 'syncer/peers'
 
-export function useSyncerPeers(options?: SWROptions<SyncerPeerResponse[]>) {
+export function useSyncerPeers(options?: SWROptions<string[]>) {
   return useGet(syncerPeers, options)
 }
 
 export function useSyncerConnect() {
-  return usePost<SyncerConnectRequest, never>('syncer/connect', [syncerPeers])
+  return usePost<string, never>('syncer/connect', [syncerPeers])
 }

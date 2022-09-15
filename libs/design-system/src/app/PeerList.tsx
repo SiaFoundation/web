@@ -1,6 +1,7 @@
 import { Button } from '../core'
 import { EntityList } from '../components'
 import { useSyncerPeers } from '@siafoundation/react-core'
+import { sortBy } from 'lodash'
 
 type Props = {
   connectPeer: () => void
@@ -13,9 +14,9 @@ export function PeerList({ connectPeer }: Props) {
     <EntityList
       title="Peers"
       actions={<Button onClick={connectPeer}>Connect</Button>}
-      entities={peers.data?.map((p) => ({
+      entities={sortBy(peers.data || []).map((netAddress) => ({
         type: 'ip',
-        hash: p.netAddress,
+        hash: netAddress,
       }))}
     />
   )

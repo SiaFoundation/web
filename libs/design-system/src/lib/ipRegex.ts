@@ -1,6 +1,11 @@
+type Options = {
+  includeBoundaries?: boolean
+  exact?: boolean
+}
+
 const word = '[a-fA-F\\d:]'
 
-const boundry = (options) =>
+const boundry = (options?: Options) =>
   options && options.includeBoundaries
     ? `(?:(?<=\\s|^)(?=${word})|(?<=${word})(?=\\s|$))`
     : ''
@@ -31,7 +36,7 @@ const v46Exact = new RegExp(`(?:^${v4}$)|(?:^${v6}$)`)
 const v4exact = new RegExp(`^${v4}$`)
 const v6exact = new RegExp(`^${v6}$`)
 
-const ipRegex = (options) =>
+const ipRegex = (options?: Options) =>
   options && options.exact
     ? v46Exact
     : new RegExp(
@@ -41,11 +46,11 @@ const ipRegex = (options) =>
         'g'
       )
 
-ipRegex.v4 = (options) =>
+ipRegex.v4 = (options?: Options) =>
   options && options.exact
     ? v4exact
     : new RegExp(`${boundry(options)}${v4}${boundry(options)}`, 'g')
-ipRegex.v6 = (options) =>
+ipRegex.v6 = (options?: Options) =>
   options && options.exact
     ? v6exact
     : new RegExp(`${boundry(options)}${v6}${boundry(options)}`, 'g')
