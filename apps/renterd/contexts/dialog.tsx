@@ -61,9 +61,10 @@ export function DialogProvider({ children }: Props) {
       <ControlledDialog dialog="transactionDetails">
         <TransactionDetailsDialog id={id} />
       </ControlledDialog>
-      <ControlledDialog dialog="sendSiacoin">
-        <WalletSendSiacoinDialog />
-      </ControlledDialog>
+      <WalletSendSiacoinDialog
+        open={dialog === 'sendSiacoin'}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
       <ControlledDialog dialog="addressDetails">
         <WalletSingleAddressDetailsDialog />
       </ControlledDialog>

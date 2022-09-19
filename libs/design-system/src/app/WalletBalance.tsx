@@ -1,6 +1,6 @@
-import { Flex, Panel, Separator, Text } from '../core'
+import { Flex, Panel, Text } from '../core'
 import { useWalletBalance } from '@siafoundation/react-core'
-import { humanSiacoin, humanSiafund } from '@siafoundation/sia-js'
+import { humanSiacoin } from '@siafoundation/sia-js'
 
 export function WalletBalance() {
   const { data: siacoin } = useWalletBalance()

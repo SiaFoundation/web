@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { useSettings } from '@siafoundation/react-core'
-import { LockIcon, DiceIcon, HouseIcon, GearIcon } from '../../icons'
+import { LockIcon, DiceIcon, GearIcon } from '../../icons'
 import { Box, Flex, Panel, Separator, NextLink, Logo } from '../../core'
 import { navbarAppHeight } from '../AppNavbar'
 import { SidenavItemWallet } from './SidenavItemWallet'

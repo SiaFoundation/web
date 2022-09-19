@@ -2,8 +2,6 @@ import {
   EntityList,
   EntityListItemProps,
   Flex,
-  Text,
-  Tooltip,
   AppAuthedLayout,
   WalletSparkline,
   WalletLayoutActions,

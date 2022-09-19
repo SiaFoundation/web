@@ -47,10 +47,10 @@ export default function NodePage() {
           onClick={() => router.push(routes.node.peers)}
         />
         <DatumCard label="Transactions in pool" value={txPool.data?.length} />
-        <DatumCard
+        {/* <DatumCard
           label="Consensus tip"
           hash={tip.data?.ID.replace('bid:', '')}
-        />
+        /> */}
       </Flex>
       <Flex gap="3-5" wrap="wrap">
         <Box css={{ flex: 1 }}>

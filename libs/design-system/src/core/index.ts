@@ -1,7 +1,6 @@
 export * from './Accordion'
 export * from './Alert'
 export * from './AlertDialog'
-export * from './NavbarApp'
 export * from './NavbarSite'
 export * from './Avatar'
 export * from './Badge'
