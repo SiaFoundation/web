@@ -4,18 +4,18 @@ import { CheckmarkFilled32 } from '../../icons'
 import { WalletSendSiacoinReceipt } from './Receipt'
 
 type Props = {
-  address: string
-  siacoin: BigNumber
+  formData: {
+    address: string
+    siacoin: BigNumber
+    includeFee: boolean
+  }
   fee: BigNumber
-  includeFee: boolean
   transactionId: string
 }
 
 export function WalletSendSiacoinComplete({
-  address,
-  siacoin,
+  formData: { address, siacoin, includeFee },
   fee,
-  includeFee,
   transactionId,
 }: Props) {
   return (

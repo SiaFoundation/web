@@ -1,7 +1,6 @@
 import { useFormik } from 'formik'
 import BigNumber from 'bignumber.js'
 import { Flex } from '../../core'
-import { FormSubmitButton } from '../../components'
 import { WalletSendSiacoinReceipt } from './Receipt'
 import {
   useWalletSign,
@@ -9,32 +8,26 @@ import {
   useWalletFund,
   useTxPoolBroadcast,
 } from '@siafoundation/react-core'
-import { toHastings } from '@siafoundation/sia-js'
 
 type Props = {
-  address: string
-  siacoin: BigNumber
+  formData: {
+    address: string
+    siacoin: BigNumber
+    includeFee: boolean
+  }
   fee: BigNumber
-  includeFee: boolean
   onConfirm: (params: { transaction: Transaction }) => void
 }
 
-export function WalletSendSiacoinConfirm({
-  address,
-  siacoin,
-  fee,
-  includeFee,
-  onConfirm,
-}: Props) {
+export function useSendSiacoinConfirmForm({ formData, fee, onConfirm }: Props) {
+  const { address, siacoin, includeFee } = formData || {}
   const fund = useWalletFund()
   const sign = useWalletSign()
   const broadcast = useTxPoolBroadcast()
   const formik = useFormik({
     initialValues: {},
     onSubmit: async () => {
-      const finalSiacoin = includeFee
-        ? toHastings(siacoin).minus(fee)
-        : toHastings(siacoin)
+      const finalSiacoin = includeFee ? siacoin.minus(fee) : siacoin
 
       const fundResponse = await fund.post({
         payload: {
@@ -86,19 +79,19 @@ export function WalletSendSiacoinConfirm({
     },
   })
 
-  return (
-    <form onSubmit={formik.handleSubmit}>
-      <Flex direction="column" gap="2">
-        <WalletSendSiacoinReceipt
-          address={address}
-          siacoin={siacoin}
-          fee={fee}
-          includeFee={includeFee}
-        />
-        <FormSubmitButton formik={formik}>
-          Broadcast transaction
-        </FormSubmitButton>
-      </Flex>
-    </form>
+  const form = (
+    <Flex direction="column" gap="2">
+      <WalletSendSiacoinReceipt
+        address={address}
+        siacoin={siacoin}
+        fee={fee}
+        includeFee={includeFee}
+      />
+    </Flex>
   )
+
+  return {
+    form,
+    formik,
+  }
 }

@@ -121,7 +121,6 @@ type DialogContentPrimitiveProps = React.ComponentProps<
   typeof DialogPrimitive.Content
 >
 type DialogContentProps = Omit<DialogContentPrimitiveProps, 'onSubmit'> & {
-  variant?: 'div' | 'form'
   onSubmit?: React.FormEventHandler<HTMLFormElement>
   title: React.ReactNode
   description?: React.ReactNode
@@ -135,7 +134,7 @@ const DialogInnerContent = React.forwardRef<
   DialogContentProps
 >(
   (
-    { children, variant, onSubmit, title, description, controls, ...props },
+    { children, onSubmit, title, description, controls, ...props },
     forwardedRef
   ) => {
     const { ref, height } = useHeight([children, description])
@@ -147,7 +146,7 @@ const DialogInnerContent = React.forwardRef<
     }, [height])
     return (
       <StyledContent {...props} ref={forwardedRef}>
-        <Box as={variant} onSubmit={onSubmit}>
+        <Box as={onSubmit ? 'form' : 'div'} onSubmit={onSubmit}>
           {title && (
             <DialogTitle separator={showSeparator}>{title}</DialogTitle>
           )}
