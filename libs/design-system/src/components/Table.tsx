@@ -23,12 +23,14 @@ type Props<R extends Row> = {
   data: R[]
   columns: TableColumn<R>[]
   summary?: boolean
+  rowSize?: 'dense' | 'default'
 }
 
 export function Table<R extends Row>({
   columns: _columns,
   data,
   summary,
+  rowSize = 'default',
 }: Props<R>) {
   const columns = useMemo(
     () =>
@@ -52,7 +54,7 @@ export function Table<R extends Row>({
           gap="3-5"
           css={{
             padding: '$1-5 $3',
-            borderBottom: '1px solid $slate7',
+            borderBottom: '1px solid $slate3',
           }}
         >
           {columns.map(({ key, label, tip, props, tableCss }) => (
@@ -83,9 +85,9 @@ export function Table<R extends Row>({
             css={{
               padding: '$1 $3',
               background: '$slate1',
-              borderLeft: '1px solid $slate5',
-              borderRight: '1px solid $slate5',
-              borderBottom: '1px solid $slate5',
+              borderLeft: '1px solid $slate3',
+              borderRight: '1px solid $slate3',
+              borderBottom: '1px solid $slate3',
             }}
           >
             {columns.map(({ key, summary, props, tableCss, css }) => (
@@ -110,8 +112,8 @@ export function Table<R extends Row>({
               gap="3-5"
               align="center"
               css={{
-                padding: '$3',
-                borderBottom: '1px solid $slate5',
+                padding: rowSize === 'dense' ? '$1 $3' : '$3 $3',
+                borderBottom: '1px solid $slate3',
                 '&:last-of-type': {
                   borderBottom: 'none',
                 },

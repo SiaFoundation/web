@@ -21,6 +21,9 @@ export type DialogType =
   | 'transactionDetails'
   | 'addressDetails'
   | 'connectPeer'
+  | 'hostScoreSet'
+  | 'hostBlocklistAdd'
+  | 'hostBlocklistRemove'
 
 type State = {
   dialog?: DialogType

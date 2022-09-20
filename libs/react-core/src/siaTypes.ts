@@ -8,10 +8,33 @@ export type EncryptionKey = string
 
 // structs
 
+// structs
 // struct2ts:go.sia.tech/renterd/internal/consensus.ChainIndex
 export interface ChainIndex {
   Height: number
   ID: string
+}
+
+// struct2ts:go.sia.tech/renterd/hostdb.Announcement
+export interface Announcement {
+  Index: ChainIndex
+  Timestamp: string
+  NetAddress: string
+}
+
+// struct2ts:go.sia.tech/renterd/hostdb.Interaction
+export interface Interaction {
+  Timestamp: string
+  Type: string
+  Result?: string
+}
+
+// struct2ts:go.sia.tech/renterd/hostdb.Host
+export interface Host {
+  PublicKey: string
+  Score: number
+  Announcements?: Announcement[]
+  Interactions?: Interaction[]
 }
 
 // struct2ts:go.sia.tech/renterd/wallet.SiacoinElement
@@ -417,4 +440,25 @@ export interface SlabsMigrateRequest {
   from: Contract[] | null
   to: Contract[] | null
   currentHeight: number
+}
+
+// struct2ts:go.sia.tech/renterd/slab.Sector
+export interface Sector {
+  Host: string
+  Root: string
+}
+
+// struct2ts:go.sia.tech/renterd/slab.Slice
+export interface Slice {
+  Key: EncryptionKey
+  MinShards: number
+  Shards: Sector[] | null
+  Offset: number
+  Length: number
+}
+
+// struct2ts:go.sia.tech/renterd/object.Object
+export interface Object {
+  Key: EncryptionKey
+  Slabs: Slice[] | null
 }

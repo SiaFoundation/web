@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useCallback, useState } from 'react'
 import {
   WalletSendSiacoinDialog,
-  AddressDetailsDialog,
+  WalletSingleAddressDetailsDialog,
   TransactionDetailsDialog,
   SyncerConnectPeerDialog,
   SettingsDialog,
@@ -70,11 +70,12 @@ export function DialogProvider({ children }: Props) {
       <ControlledDialog dialog="transactionDetails">
         <TransactionDetailsDialog id={id} />
       </ControlledDialog>
-      <ControlledDialog dialog="sendSiacoin">
-        <WalletSendSiacoinDialog />
-      </ControlledDialog>
+      <WalletSendSiacoinDialog
+        open={dialog === 'sendSiacoin'}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
       <ControlledDialog dialog="addressDetails">
-        <AddressDetailsDialog id={id} />
+        <WalletSingleAddressDetailsDialog />
       </ControlledDialog>
       <ControlledDialog dialog="connectPeer">
         <SyncerConnectPeerDialog closeDialog={closeDialog} />

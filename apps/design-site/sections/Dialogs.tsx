@@ -53,7 +53,6 @@ export function Dialogs() {
               <Button>Dialog sroll</Button>
             </DialogTrigger>
             <DialogContent
-              variant="form"
               title="Privacy"
               description="This is the description"
               controls={
