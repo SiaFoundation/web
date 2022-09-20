@@ -1,5 +1,4 @@
 import {
-  NavbarApp,
   NavbarSite,
   Box,
   Flex,
@@ -191,9 +190,6 @@ export function Layout() {
               padding: '$2',
             }}
           >
-            <NavbarApp appName="Xerox" homeHref={'#'}>
-              <UserDropdownMenu />
-            </NavbarApp>
             <NavbarSite appName="Xerox" homeHref={'#'}>
               <UserDropdownMenu />
             </NavbarSite>

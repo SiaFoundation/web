@@ -27,6 +27,14 @@ export const Link = styled('a', {
 
   variants: {
     underline: {
+      none: {
+        textDecorationLine: 'none',
+        '@hover': {
+          '&:hover': {
+            textDecorationLine: 'none',
+          },
+        },
+      },
       hover: {
         textDecorationLine: 'none',
         '@hover': {

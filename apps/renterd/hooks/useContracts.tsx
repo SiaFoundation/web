@@ -1,7 +1,5 @@
 import {
   Badge,
-  Box,
-  ChartXY,
   Flex,
   Text,
   ValueNum,
@@ -14,16 +12,10 @@ import {
   TableColumn,
   ContractTimeline,
 } from '@siafoundation/design-system'
-import {
-  humanBytes,
-  toHastings,
-  humanSiacoin,
-  humanDate,
-} from '@siafoundation/sia-js'
-import { Chart } from '../contexts/data'
-import { countBy, upperFirst, values } from 'lodash'
+import { humanBytes, humanDate } from '@siafoundation/sia-js'
+import { countBy, upperFirst } from 'lodash'
 import { useCallback, useMemo } from 'react'
-import { allDatesMap, contractsData, contractsTimeRange } from './mockContracts'
+import { contractsData, contractsTimeRange } from './mockContracts'
 import BigNumber from 'bignumber.js'
 import groupBy from 'lodash/groupBy'
 import filter from 'lodash/filter'
@@ -32,54 +24,30 @@ import useLocalStorageState from 'use-local-storage-state'
 export type ContractColumn =
   | 'overview'
   | 'timeline'
+  | 'proofWindowDate'
   | 'startDate'
   | 'expirationDate'
-  | 'payoutDate'
-  | 'estDataSize'
-  | 'lockedCollateral'
-  | 'riskedCollateral'
-  | 'returnedCollateral'
-  | 'lostCollateral'
+  | 'dataSize'
   | 'contractFee'
-  | 'accountFunding'
-  | 'estStorageRevenue'
-  | 'estIngressRevenue'
-  | 'estEgressRevenue'
-  | 'potentialRevenue'
-  | 'earnedRevenue'
-  | 'lostRevenue'
-  | 'contractPayout'
-  | 'revenue'
-  | 'costBasis'
-  | 'baseExchangeRate'
-  | 'gainLoss'
+  | 'storagePrice'
+  | 'uploadPrice'
+  | 'downloadPrice'
+  | 'spending'
 
 export type Row = {
   id: string
   key: string
   status: 'active' | 'successful' | 'failed'
   renewed: boolean
+  proofWindowDate: number
   startDate: number
   expirationDate: number
-  payoutDate: number
-  estDataSize: number
-  lockedCollateral: BigNumber
-  riskedCollateral: BigNumber
-  returnedCollateral: BigNumber
-  lostCollateral: BigNumber
+  dataSize: number
+  storagePrice: BigNumber
+  uploadPrice: BigNumber
+  downloadPrice: BigNumber
   contractFee: BigNumber
-  accountFunding: BigNumber
-  estStorageRevenue: BigNumber
-  estIngressRevenue: BigNumber
-  estEgressRevenue: BigNumber
-  potentialRevenue: BigNumber
-  earnedRevenue: BigNumber
-  lostRevenue: BigNumber
-  contractPayout: BigNumber
-  revenue: BigNumber
-  costBasis: BigNumber
-  baseExchangeRate: BigNumber
-  gainLoss: number
+  spending: BigNumber
 }
 
 export type ContractFilter = {
@@ -89,7 +57,15 @@ export type ContractFilter = {
   value?: string
 }
 
-const defaultColumns: ContractColumn[] = ['timeline', 'revenue']
+const defaultColumns: ContractColumn[] = [
+  'overview',
+  'timeline',
+  'dataSize',
+  'spending',
+  'storagePrice',
+  'uploadPrice',
+  'downloadPrice',
+]
 
 function getStatus({ status }: Row): {
   label: string
@@ -106,39 +82,15 @@ function getStatus({ status }: Row): {
 }
 
 export function useContracts() {
-  const contractsChart = useMemo<Chart>(
-    () => ({
-      data: values(
-        contractsData.reduce((acc, row) => {
-          const accDate = acc[row.payoutDate]
-          return {
-            ...acc,
-            [row.payoutDate]: {
-              ...accDate,
-              total: (accDate.total || 0) + row.contractPayout.toNumber(),
-            },
-          }
-        }, allDatesMap)
-      ),
-      stats: {},
-      config: {
-        data: {},
-        format: (v) => humanSiacoin(v),
-        disableAnimations: true,
-      },
-    }),
-    []
-  )
-
   const [enabledColumns, setEnabledColumns] = useLocalStorageState<string[]>(
-    'v0/contracts/enabledColumns',
+    'renterd/v0/contracts/enabledColumns',
     {
       defaultValue: defaultColumns,
     }
   )
 
   const [sortColumn, setSortColumn] = useLocalStorageState<ContractColumn>(
-    'v0/contracts/sortColumn',
+    'renterd/v0/contracts/sortColumn',
     {
       defaultValue: 'expirationDate',
     }
@@ -146,7 +98,7 @@ export function useContracts() {
 
   const [sortDirection, setSortDirection] = useLocalStorageState<
     'desc' | 'asc'
-  >('v0/contracts/sortDirection', {
+  >('renterd/v0/contracts/sortDirection', {
     defaultValue: 'desc',
   })
 
@@ -168,7 +120,7 @@ export function useContracts() {
 
   const [filters, _setFilters] = useLocalStorageState<
     Record<string, ContractFilter>
-  >('v0/contracts/filters', {
+  >('renterd/v0/contracts/filters', {
     defaultValue: {},
   })
 
@@ -268,30 +220,18 @@ export function useContracts() {
           label: 'Timeline',
           size: 4,
           render: (row) => {
-            const { startDate, expirationDate, payoutDate } = row
+            const { startDate, expirationDate, proofWindowDate } = row
             const { color } = getStatus(row)
             return (
               <ContractTimeline
                 start={startDate}
                 end={expirationDate}
-                payout={payoutDate}
+                payout={proofWindowDate}
                 color={color}
                 range={contractsTimeRange}
               />
             )
           },
-          summary: () => (
-            <Box css={{ width: '100%', p: '0 $3' }}>
-              <ChartXY
-                variant="ghost"
-                id="contracts"
-                data={contractsChart.data}
-                config={contractsChart.config}
-                chartType="barstack"
-                height={80}
-              />
-            </Box>
-          ),
         },
         {
           key: 'startDate',
@@ -320,12 +260,12 @@ export function useContracts() {
           },
         },
         {
-          key: 'payoutDate',
-          label: 'Payout date',
+          key: 'proofWindowDate',
+          label: 'Proof window date',
           sortable: 'time',
-          render: ({ payoutDate }) => (
+          render: ({ proofWindowDate }) => (
             <Text font="mono" ellipsis>
-              {humanDate(payoutDate)}
+              {humanDate(proofWindowDate)}
             </Text>
           ),
           props: {
@@ -333,15 +273,15 @@ export function useContracts() {
           },
         },
         {
-          key: 'estDataSize',
-          label: 'Est. data size',
+          key: 'dataSize',
+          label: 'Data size',
           props: {
             justify: 'end',
           },
           sortable: 'data',
-          render: ({ estDataSize }) => (
+          render: ({ dataSize }) => (
             <ValueNum
-              value={new BigNumber(estDataSize)}
+              value={new BigNumber(dataSize)}
               format={(val) => humanBytes(val.toNumber())}
               variant="value"
             />
@@ -353,46 +293,40 @@ export function useContracts() {
           ),
         },
         {
-          key: 'lockedCollateral',
-          label: 'Locked collateral',
+          key: 'storagePrice',
+          label: 'Storage price',
           sortable: 'financial',
           props: {
             justify: 'end',
           },
-          render: ({ lockedCollateral }) => (
-            <ValueSc value={lockedCollateral} />
-          ),
+          render: ({ storagePrice }) => <ValueSc value={storagePrice} />,
         },
         {
-          key: 'riskedCollateral',
-          label: 'Risked collateral',
+          key: 'uploadPrice',
+          label: 'Upload price',
           sortable: 'financial',
           props: {
             justify: 'end',
           },
-          render: ({ riskedCollateral }) => (
-            <ValueSc value={riskedCollateral} />
-          ),
+          render: ({ uploadPrice }) => <ValueSc value={uploadPrice} />,
         },
         {
-          key: 'returnedCollateral',
-          label: 'Returned collateral',
+          key: 'downloadPrice',
+          label: 'Download price',
           sortable: 'financial',
           props: {
             justify: 'end',
           },
-          render: ({ returnedCollateral }) => (
-            <ValueSc value={returnedCollateral} />
-          ),
+          render: ({ downloadPrice }) => <ValueSc value={downloadPrice} />,
         },
         {
-          key: 'lostCollateral',
-          label: 'Lost collateral',
+          key: 'spending',
+          label: 'Spending',
           sortable: 'financial',
           props: {
             justify: 'end',
           },
-          render: ({ lostCollateral }) => <ValueSc value={lostCollateral} />,
+          render: ({ spending }) => <ValueSc value={spending} />,
         },
         {
           key: 'contractFee',
@@ -403,138 +337,8 @@ export function useContracts() {
           },
           render: ({ contractFee }) => <ValueSc value={contractFee} />,
         },
-        {
-          key: 'accountFunding',
-          label: 'Account funding',
-          sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
-          render: ({ accountFunding }) => <ValueSc value={accountFunding} />,
-        },
-        {
-          key: 'estStorageRevenue',
-          label: 'Est. storage revenue',
-          sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
-          render: ({ estStorageRevenue }) => (
-            <ValueSc value={estStorageRevenue} />
-          ),
-        },
-        {
-          key: 'estIngressRevenue',
-          label: 'Est. ingress revenue',
-          sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
-          render: ({ estIngressRevenue }) => (
-            <ValueSc value={estIngressRevenue} />
-          ),
-        },
-        {
-          key: 'estEgressRevenue',
-          label: 'Est. egress revenue',
-          sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
-          render: ({ estEgressRevenue }) => (
-            <ValueSc value={estEgressRevenue} />
-          ),
-        },
-        {
-          key: 'potentialRevenue',
-          label: 'Potential revenue',
-          sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
-          render: ({ potentialRevenue }) => (
-            <ValueSc value={potentialRevenue} />
-          ),
-        },
-        {
-          key: 'earnedRevenue',
-          label: 'Earned revenue',
-          sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
-          render: ({ earnedRevenue }) => <ValueSc value={earnedRevenue} />,
-        },
-        {
-          key: 'lostRevenue',
-          label: 'Lost revenue',
-          sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
-          render: ({ lostRevenue }) => <ValueSc value={lostRevenue} />,
-        },
-        {
-          key: 'contractPayout',
-          label: 'Contract Payout',
-          sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
-          render: ({ contractPayout }) => <ValueSc value={contractPayout} />,
-          summary: () => <ValueSc value={toHastings(5e9)} />,
-        },
-        {
-          key: 'revenue',
-          label: 'Revenue',
-          sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
-          render: ({ revenue }) => <ValueSc value={revenue} />,
-          summary: () => <ValueSc value={toHastings(5e9)} />,
-        },
-        {
-          key: 'costBasis',
-          label: 'Cost Basis',
-          sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
-          render: ({ costBasis }) => <ValueSc value={costBasis} />,
-          summary: () => <ValueSc value={toHastings(5e9)} />,
-        },
-        {
-          key: 'gainLoss',
-          label: 'Gain / Loss',
-          sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
-          render: ({ gainLoss }) => (
-            <Text font="mono" ellipsis>
-              {gainLoss.toFixed(2)}%
-            </Text>
-          ),
-          summary: () => (
-            <Text font="mono" ellipsis>
-              {(34).toFixed(2)}%
-            </Text>
-          ),
-        },
-        {
-          key: 'baseExchangeRate',
-          label: 'Base exchange rate',
-          props: {
-            justify: 'end',
-          },
-          render: ({ baseExchangeRate }) => (
-            <ValueSc value={baseExchangeRate} />
-          ),
-          sortable: 'financial',
-        },
       ] as TableColumn<Row>[],
-    [contractsChart, filteredContracts]
+    [filteredContracts]
   )
 
   const configurableColumns = useMemo(

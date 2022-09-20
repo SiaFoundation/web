@@ -1,4 +1,4 @@
-import { Box } from '../core/Box'
+import { Flex } from '../core'
 import { DropdownMenuGroup, DropdownMenuLabel } from '../core/DropdownMenu'
 import { ThemeRadio } from './ThemeRadio'
 
@@ -6,13 +6,13 @@ export function ThemeMenu() {
   return (
     <DropdownMenuGroup>
       <DropdownMenuLabel>Theme</DropdownMenuLabel>
-      <Box css={{ padding: '$1-5' }}>
+      <Flex css={{ padding: '$1-5' }} justify="start">
         <ThemeRadio
           css={{
             justifyContent: 'space-between',
           }}
         />
-      </Box>
+      </Flex>
     </DropdownMenuGroup>
   )
 }

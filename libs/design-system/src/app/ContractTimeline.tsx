@@ -1,5 +1,7 @@
-import { Box, Flex, Text } from '@siafoundation/design-system'
+import { Box, Flex, Text } from '../core'
 import { format } from 'date-fns'
+
+type Color = 'red' | 'green' | 'yellow'
 
 type Props = {
   start: number
@@ -9,10 +11,10 @@ type Props = {
     start: number
     end: number
   }
-  color?: 'red' | 'yellow' | 'green'
+  color?: Color
 }
 
-const colorMap = {
+const colorMap: Record<Color, string> = {
   red: '$red9',
   green: '$green9',
   yellow: '$amber9',
@@ -84,7 +86,7 @@ export function ContractTimeline({ start, end, payout, range, color }: Props) {
             left: toPercent(startPos),
             width: toPercent(endPos - startPos),
             borderRadius: '$pill',
-            background: colorMap[color] || '$slate10',
+            background: color ? colorMap[color] : '$slate10',
           }}
         >
           <DateLabel date={start} align="start" variant="primary" />
