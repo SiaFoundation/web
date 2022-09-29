@@ -24,6 +24,8 @@ export type DialogType =
   | 'hostScoreSet'
   | 'hostBlocklistAdd'
   | 'hostBlocklistRemove'
+  | 'objectDownload'
+  | 'objectDelete'
 
 type State = {
   dialog?: DialogType

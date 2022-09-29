@@ -11,7 +11,6 @@ export const routes = {
   },
   wallet: {
     view: '/wallet',
-    addresses: '/wallet/addresses',
   },
   node: {
     index: '/node',

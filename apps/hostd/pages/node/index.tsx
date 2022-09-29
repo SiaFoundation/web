@@ -34,7 +34,7 @@ export default function NodePage() {
           onClick={() => router.push(routes.node.peers)}
         />
         <DatumCard label="Transactions in pool" value={txPool.data?.length} />
-        <DatumCard label="Consensus tip" hash={tip.data.ID} />
+        <DatumCard label="Consensus tip" hash={tip.data?.ID} />
       </Flex>
       <PeerList connectPeer={() => openDialog('connectPeer')} />
       <TxPoolList />

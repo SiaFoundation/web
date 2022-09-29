@@ -39,9 +39,8 @@ export default function WalletView() {
       title="Wallet"
       actions={
         <WalletLayoutActions
+          receiveSiacoin={() => openDialog('addressDetails')}
           sendSiacoin={() => openDialog('sendSiacoin')}
-          // TODO
-          receiveSiacoin={() => openDialog('sendSiacoin')}
         />
       }
     >
