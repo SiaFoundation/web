@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.21.0](https://github.com/SiaFoundation/web/compare/design-site-0.20.0...design-site-0.21.0) (2022-09-29)
+
+
+### Features
+
+* renterd file explorer, contracts, hosts, config ([ba5126a](https://github.com/SiaFoundation/web/commit/ba5126a4d2615bfd2a0ab338830c3d252477b2ec))
+
+
+
 # [0.20.0](https://github.com/SiaFoundation/web/compare/design-site-0.19.0...design-site-0.20.0) (2022-09-07)
 
 
