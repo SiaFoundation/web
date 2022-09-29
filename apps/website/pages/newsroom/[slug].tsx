@@ -13,7 +13,7 @@ import { format } from 'date-fns'
 import { Layout } from '../../components/Layout'
 import { GetNewsPost, getNewsPost, newsDirectory } from '../../content/news'
 import { getStats } from '../../content/stats'
-import { sitemap } from '../../config/site'
+import { routes } from '../../config/routes'
 import { textContent } from '../../lib/utils'
 import backgroundImage from '../../assets/backgrounds/nate-waterfall.png'
 import previewImage from '../../assets/previews/nate-waterfall.png'
@@ -34,7 +34,7 @@ function NewsroomPost({
       title={title}
       description={textContent(subtitle)}
       date={new Date(date).toISOString()}
-      path={sitemap.newsroom.newsPost.replace('[slug]', slug)}
+      path={routes.newsroom.newsPost.replace('[slug]', slug)}
       heading={
         <Section size="4">
           <SiteHeading size="64" title={title} description={subtitle} />

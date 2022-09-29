@@ -1,4 +1,3 @@
-export * from './LocalBackdrop'
 export * from './WavesBackdrop'
 export * from './UserDropdownMenu'
 export * from './Dropzone'

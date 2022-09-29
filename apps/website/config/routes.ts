@@ -1,6 +1,6 @@
 import { webLinks } from '@siafoundation/design-system'
 
-export const sitemap = {
+export const routes = {
   home: {
     index: '/',
   },
@@ -19,6 +19,9 @@ export const sitemap = {
   },
   foundation: {
     index: '/about-sia-foundation',
+  },
+  grants: {
+    index: '/grants',
   },
   newsroom: {
     index: '/newsroom',

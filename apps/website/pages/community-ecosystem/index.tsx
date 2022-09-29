@@ -11,7 +11,7 @@ import {
   webLinks,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
-import { sitemap } from '../../config/site'
+import { routes } from '../../config/routes'
 import { getArticles } from '../../content/articles'
 import { AsyncReturnType } from '../../lib/types'
 import { getSoftware } from '../../content/software'
@@ -41,7 +41,7 @@ function CommunityEcosystem({ blogs }: Props) {
     <Layout
       title={title}
       description={textContent(description)}
-      path={sitemap.community.index}
+      path={routes.community.index}
       heading={
         <Section size="4">
           <SiteHeading

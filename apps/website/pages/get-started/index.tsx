@@ -23,7 +23,7 @@ import {
   webLinks,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
-import { sitemap } from '../../config/site'
+import { routes } from '../../config/routes'
 import { getDaysInSeconds } from '../../lib/time'
 import { getArticles } from '../../content/articles'
 import { AsyncReturnType } from '../../lib/types'
@@ -40,7 +40,7 @@ const previewImageProps = getImageProps(previewImage)
 const siaVersion = getSiaVersion()
 
 const tutorials = getTutorials()
-const services = getSoftware('storage_services', 4)
+const services = getSoftware('storage_services', 5)
 
 const docLinks = [
   {
@@ -66,7 +66,7 @@ function GetStarted({ technical }: Props) {
     <Layout
       title={title}
       description={description}
-      path={sitemap.getStarted.index}
+      path={routes.getStarted.index}
       heading={
         <Section size="4">
           <SiteHeading size="64" title={title} description={description} />
@@ -332,8 +332,8 @@ gpg --verify Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`}
           }
           links={[
             {
-              title: 'Browse the entire ecosystem',
-              link: sitemap.community.index,
+              title: 'Learn about the ecosystem',
+              link: routes.community.index,
             },
           ]}
         />
@@ -358,7 +358,7 @@ gpg --verify Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`}
             </>
           }
           actionTitle="Learn more"
-          actionLink={sitemap.learn.index}
+          actionLink={routes.learn.index}
         />
       </Section>
     </Layout>

@@ -6,7 +6,7 @@ import {
   SiteHeading,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
-import { sitemap } from '../../config/site'
+import { routes } from '../../config/routes'
 import { getStats } from '../../content/stats'
 import backgroundImage from '../../assets/backgrounds/steps.png'
 import previewImage from '../../assets/previews/steps.png'
@@ -35,7 +35,7 @@ function Newsroom() {
     <Layout
       title={title}
       description={description}
-      path={sitemap.newsroom.index}
+      path={routes.newsroom.index}
       heading={
         <Section size="4">
           <SiteHeading
@@ -45,7 +45,7 @@ function Newsroom() {
             links={[
               {
                 title: 'press releases RSS',
-                link: sitemap.newsroom.feed.rss,
+                link: routes.newsroom.feed.rss,
                 newTab: true,
               },
             ]}

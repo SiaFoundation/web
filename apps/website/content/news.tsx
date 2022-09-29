@@ -4,7 +4,7 @@ import path from 'path'
 import matter from 'gray-matter'
 import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
-import { sitemap } from '../config/site'
+import { routes } from '../config/routes'
 import { components } from '../config/mdx'
 import { pick } from 'lodash'
 import { getPath } from '../config/app'
@@ -108,7 +108,7 @@ async function buildPost(slug?: string): Promise<NewsPostSource> {
     subtitle: data.subtitle,
     location: data.location,
     date: data.date,
-    link: sitemap.newsroom.newsPost.replace('[slug]', slug),
+    link: routes.newsroom.newsPost.replace('[slug]', slug),
     slug,
     tags: [],
     source,

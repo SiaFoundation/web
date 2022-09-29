@@ -29,7 +29,7 @@ export function Callout({
   css,
 }: Props) {
   return (
-    <AnimatedPanel startTime={startTime} css={css}>
+    <AnimatedPanel startTime={startTime} css={css} variant="subtle">
       <Flex
         direction="column"
         align="start"

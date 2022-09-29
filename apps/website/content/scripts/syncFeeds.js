@@ -2,10 +2,10 @@ const Parser = require('rss-parser')
 const fs = require('fs')
 const path = require('path')
 const { format } = require('date-fns')
-const { getPath } = require('apps/website/config/app')
+const { sortBy } = require('lodash')
 
 const feedFilesDirectory = 'feeds'
-const articlesFilePath = getPath('content/articles/articles.json')
+const articlesFilePath = 'apps/website/content/articles/articles.json'
 
 async function getFeed(feedFile) {
   const feedData = fs.readFileSync(feedFile, 'utf-8')
@@ -21,7 +21,7 @@ async function getFeed(feedFile) {
 // 3. Manually categorize articles with tags.
 async function sync() {
   const articleData = fs.readFileSync(articlesFilePath, 'utf-8')
-  const articles = JSON.parse(articleData)
+  let articles = JSON.parse(articleData)
 
   const feeds = fs.readdirSync(feedFilesDirectory)
 
@@ -54,7 +54,10 @@ async function sync() {
     })
   )
 
-  articles.sort((a, b) => (new Date(a.date) < new Date(b.date) ? 1 : -1))
+  articles = sortBy(
+    articles,
+    (a) => new Date(a.date).getTime() + a.title
+  ).reverse()
 
   const updatedArticleData = JSON.stringify(articles, null, 2)
   fs.writeFileSync(articlesFilePath, updatedArticleData + '\n')

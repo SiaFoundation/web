@@ -18,7 +18,7 @@ import {
   webLinks,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
-import { sitemap } from '../../config/site'
+import { routes } from '../../config/routes'
 import { getStats } from '../../content/stats'
 import { getDaysInSeconds } from '../../lib/time'
 import { textContent } from '../../lib/utils'
@@ -40,7 +40,7 @@ function Learn() {
     <Layout
       title={title}
       description={textContent(description)}
-      path={sitemap.learn.index}
+      path={routes.learn.index}
       heading={
         <Section size="4">
           <SiteHeading size="64" title={title} description={description} />
@@ -96,7 +96,7 @@ function Learn() {
                 links={[
                   {
                     title: 'Explore the community',
-                    link: sitemap.community.index,
+                    link: routes.community.index,
                   },
                 ]}
               />
@@ -112,7 +112,7 @@ function Learn() {
                 links={[
                   {
                     title: 'Meet the Sia Foundation',
-                    link: sitemap.foundation.index,
+                    link: routes.foundation.index,
                   },
                 ]}
               />
@@ -166,7 +166,7 @@ function Learn() {
           links={[
             {
               title: 'Read the whitepaper',
-              link: sitemap.whitepaper.pdf,
+              link: routes.whitepaper.pdf,
               newTab: true,
             },
           ]}
@@ -332,7 +332,7 @@ function Learn() {
           }
           startTime={20}
           actionTitle="Explore"
-          actionLink={sitemap.getStarted.index}
+          actionLink={routes.getStarted.index}
           size="2"
         />
       </Section>

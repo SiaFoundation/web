@@ -17,7 +17,7 @@ import {
   webLinks,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
-import { sitemap } from '../../config/site'
+import { routes } from '../../config/routes'
 import { getDaysInSeconds } from '../../lib/time'
 import { AsyncReturnType } from '../../lib/types'
 import team from '../../content/team'
@@ -42,7 +42,7 @@ function Foundation({ team, newsPosts, reports }: Props) {
     <Layout
       title={title}
       description={description}
-      path={sitemap.foundation.index}
+      path={routes.foundation.index}
       heading={
         <Section size="4">
           <SiteHeading size="64" title={title} description={description} />
@@ -203,7 +203,7 @@ function Foundation({ team, newsPosts, reports }: Props) {
           links={[
             {
               title: 'Explore the newsroom',
-              link: sitemap.newsroom.index,
+              link: routes.newsroom.index,
             },
           ]}
         />
