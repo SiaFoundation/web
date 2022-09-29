@@ -22,10 +22,10 @@ export function ObjectDropdownMenu({ id }: Props) {
         </IconButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => openDialog('downloadObject', id)}>
+        <DropdownMenuItem onClick={() => openDialog('objectDownload', id)}>
           Download
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => openDialog('deleteObject', id)}>
+        <DropdownMenuItem onClick={() => openDialog('objectDelete', id)}>
           Delete
         </DropdownMenuItem>
       </DropdownMenuContent>
