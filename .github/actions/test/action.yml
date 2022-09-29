@@ -19,12 +19,12 @@ runs:
       run: npx nx workspace-lint
     - name: Lint
       shell: bash
-      run: npx nx affected --target=lint --base=last-release --parallel=3
+      run: npx nx affected --target=lint --base=last-release --parallel=10
     - name: Build
       shell: bash
-      run: npx nx affected --target=build --base=last-release --parallel=3
+      run: npx nx affected --target=build --base=last-release --parallel=10
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
     - name: Test
       shell: bash
-      run: npx nx affected --target=test --base=last-release --parallel=3
+      run: npx nx affected --target=test --base=last-release --parallel=10
