@@ -1,11 +1,7 @@
 import React, { createContext, useContext, useCallback, useState } from 'react'
 import { WalletAddAddressDialog } from '../dialogs/WalletAddAddressDialog'
-import { AddressDetailsDialog } from '../dialogs/AddressDetailsDialog'
 import { AddWalletDialog } from '../dialogs/AddWalletDialog'
 import { ControlledDialog } from '../dialogs/ControlledDialog'
-import { PrivacyDialog } from '../dialogs/PrivacyDialog'
-import { TransactionDetailsDialog } from '../dialogs/TransactionDetailsDialog'
-import { SyncerConnectPeerDialog } from '../dialogs/SyncerConnectPeerDialog'
 
 const DialogContext = createContext({} as State)
 export const useDialog = () => useContext(DialogContext)
@@ -14,13 +10,7 @@ type Props = {
   children: React.ReactNode
 }
 
-export type DialogType =
-  | 'privacy'
-  | 'addAddress'
-  | 'addWallet'
-  | 'transactionDetails'
-  | 'addressDetails'
-  | 'connectPeer'
+export type DialogType = 'privacy' | 'addAddress' | 'addWallet'
 
 type State = {
   dialog?: DialogType
@@ -55,24 +45,24 @@ export function DialogProvider({ children }: Props) {
 
   return (
     <DialogContext.Provider value={value}>
-      <ControlledDialog dialog="privacy">
+      {/* <ControlledDialog dialog="privacy">
         <PrivacyDialog />
-      </ControlledDialog>
-      <ControlledDialog dialog="transactionDetails">
+      </ControlledDialog> */}
+      {/* <ControlledDialog dialog="transactionDetails">
         <TransactionDetailsDialog />
-      </ControlledDialog>
+      </ControlledDialog> */}
       <ControlledDialog dialog="addWallet">
         <AddWalletDialog />
       </ControlledDialog>
       <ControlledDialog dialog="addAddress">
         <WalletAddAddressDialog />
       </ControlledDialog>
-      <ControlledDialog dialog="addressDetails">
+      {/* <ControlledDialog dialog="addressDetails">
         <AddressDetailsDialog />
       </ControlledDialog>
       <ControlledDialog dialog="connectPeer">
         <SyncerConnectPeerDialog />
-      </ControlledDialog>
+      </ControlledDialog> */}
       {children}
     </DialogContext.Provider>
   )

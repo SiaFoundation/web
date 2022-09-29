@@ -67,8 +67,8 @@ export function WalletsProvider({ children }: Props) {
           {
             id: 'default',
             name: 'Default',
-            sc: new BigNumber(wallet.data.siacoins),
-            sf: wallet.data.siafunds,
+            sc: new BigNumber(wallet.data),
+            sf: 0,
             type: 'hot' as WalletType,
           },
         ]
