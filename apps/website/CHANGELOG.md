@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.26.0](https://github.com/SiaFoundation/web/compare/website-0.25.1...website-0.26.0) (2022-09-29)
+
+
+### Features
+
+* grants page, dim animated panels, scale paragraphs ([8e0ab87](https://github.com/SiaFoundation/web/commit/8e0ab879edb71b8c9c7f3e40220e391ece1d4540))
+
+
+
 ## [0.25.1](https://github.com/SiaFoundation/web/compare/website-0.25.0...website-0.25.1) (2022-09-29)
 
 
