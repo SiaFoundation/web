@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.25.1](https://github.com/SiaFoundation/web/compare/website-0.25.0...website-0.25.1) (2022-09-29)
+
+
+### Bug Fixes
+
+* adjust website footer spacing ([ec62cf5](https://github.com/SiaFoundation/web/commit/ec62cf56e16a154f8a689177cfcf7a84d1a88088))
+
+
+
 # [0.25.0](https://github.com/SiaFoundation/web/compare/website-0.24.0...website-0.25.0) (2022-09-07)
 
 
