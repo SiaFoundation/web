@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.7.0](https://github.com/SiaFoundation/web/compare/sia-js-0.6.0...sia-js-0.7.0) (2022-09-29)
+
+
+### Features
+
+* renterd app, extract shared components ([0b3c9f3](https://github.com/SiaFoundation/web/commit/0b3c9f3e77803d0a2520ee6c5b8e08f4d4f12934))
+
+
+
 # [0.6.0](https://github.com/SiaFoundation/web/compare/sia-js-0.5.0...sia-js-0.6.0) (2022-09-07)
 
 
