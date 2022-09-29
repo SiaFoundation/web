@@ -1,6 +1,6 @@
 import { PageHead as DsPageHead, webLinks } from '@siafoundation/design-system'
 import { appName, newsFeedName } from '../config/app'
-import { sitemap } from '../config/site'
+import { routes } from '../config/routes'
 
 type Props = {
   title: string
@@ -27,19 +27,19 @@ export function PageHead({ title, description, image, date, path }: Props) {
       <link
         rel="alternate"
         type="application/rss+xml"
-        href={sitemap.newsroom.feed.rss}
+        href={routes.newsroom.feed.rss}
         title={newsFeedName}
       />
       <link
         rel="alternate"
         type="application/atom+xml"
-        href={sitemap.newsroom.feed.atom}
+        href={routes.newsroom.feed.atom}
         title={newsFeedName}
       />
       <link
         rel="alternate"
         type="application/json"
-        href={sitemap.newsroom.feed.json}
+        href={routes.newsroom.feed.json}
         title={newsFeedName}
       />
     </DsPageHead>

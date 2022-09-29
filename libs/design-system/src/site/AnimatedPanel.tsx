@@ -1,4 +1,4 @@
-import { LocalBackdrop } from '../components/LocalBackdrop'
+import { LocalBackdrop } from './LocalBackdrop'
 import { Panel } from '../core/Panel'
 import { Box } from '../core/Box'
 import { CSS } from '../config/theme'
@@ -35,7 +35,7 @@ export function AnimatedPanel({
           left: 0,
           width: '100%',
           height: '100%',
-          opacity: variant === 'default' ? 1 : 0.3,
+          opacity: variant === 'default' ? 1 : 0.7,
         }}
       >
         <LocalBackdrop startTime={startTime} />

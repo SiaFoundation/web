@@ -8,7 +8,7 @@ import {
 import { Footer } from './Footer'
 import { PageHead } from './PageHead'
 import { Navbar } from './Navbar'
-import { sitemap } from '../config/site'
+import { routes } from '../config/routes'
 
 type Props = {
   heading: React.ReactNode
@@ -55,7 +55,7 @@ export function Layout({
       />
       <SiteLayout
         appName="Sia"
-        homeHref={sitemap.home.index}
+        homeHref={routes.home.index}
         focus={focus}
         transitions={transitions}
         transitionDuration={transitionDuration}
@@ -72,27 +72,31 @@ export function Layout({
         ]}
         menuLinks={[
           {
-            link: sitemap.home.index,
+            link: routes.home.index,
             title: 'Home',
           },
           {
-            link: sitemap.getStarted.index,
+            link: routes.getStarted.index,
             title: 'Get Started',
           },
           {
-            link: sitemap.learn.index,
+            link: routes.learn.index,
             title: 'Learn',
           },
           {
-            link: sitemap.community.index,
+            link: routes.community.index,
             title: 'Community & Ecosystem',
           },
           {
-            link: sitemap.foundation.index,
+            link: routes.foundation.index,
             title: 'The Sia Foundation',
           },
+          // {
+          //   link: routes.grants.index,
+          //   title: 'Grants',
+          // },
           {
-            link: sitemap.newsroom.index,
+            link: routes.newsroom.index,
             title: 'Newsroom',
           },
         ]}

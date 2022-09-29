@@ -207,7 +207,7 @@ export function SiteMenu({ externalLinks, menuLinks, menuWidth }: Props) {
               }}
               align="start"
             >
-              <Box css={{ marginBottom: '$5' }}>
+              <Box css={{ margin: '$3 0' }}>
                 <SimpleLogoIcon />
               </Box>
               {menuLinks.map(({ title, link }) => (

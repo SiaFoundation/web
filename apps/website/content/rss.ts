@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { Feed } from 'feed'
 import { webLinks } from '@siafoundation/design-system'
-import { sitemap } from '../config/site'
+import { routes } from '../config/routes'
 import { getPath, newsFeedName } from '../config/app'
 import { getNewsPostsWithHtml } from './news'
 
@@ -34,7 +34,7 @@ export async function generateRssNewsFeed() {
   })
 
   posts.forEach((post) => {
-    const url = `${siteUrl}${sitemap.newsroom.newsPost.replace(
+    const url = `${siteUrl}${routes.newsroom.newsPost.replace(
       '[slug]',
       post.slug
     )}`

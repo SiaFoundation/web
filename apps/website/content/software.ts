@@ -14,20 +14,6 @@ type Software = ContentItemProps & {
 
 const software: Software[] = [
   {
-    title: 'Skynet',
-    link: 'https://skynetlabs.com',
-    logo: 'skynet',
-    tags: ['storage_services'],
-    subtitle: 'Decentralized CDN and file sharing platform for developers.',
-  },
-  {
-    title: 'PixelDrain',
-    link: 'https://pixeldrain.com',
-    logo: 'pixeldrain',
-    tags: ['storage_services'],
-    subtitle: 'File sharing site that uses Sia the network.',
-  },
-  {
     title: 'Filebase',
     link: 'https://filebase.com',
     logo: 'filebase',
@@ -42,6 +28,28 @@ const software: Software[] = [
     tags: ['storage_services', 'open_source_software'],
     subtitle:
       'Private and decentralized cloud storage app with encrypted file sharing and media streaming support.',
+  },
+  {
+    title: 'PixelDrain',
+    link: 'https://pixeldrain.com',
+    logo: 'pixeldrain',
+    tags: ['storage_services'],
+    subtitle: 'File sharing site that uses the Sia network.',
+  },
+  {
+    title: 'Skynet',
+    link: 'https://skynetlabs.com',
+    logo: 'skynet',
+    tags: ['storage_services'],
+    subtitle: 'Decentralized CDN and file sharing platform for developers.',
+  },
+  {
+    title: 'SiaCentral - Host Browser',
+    link: 'https://hosts.siacentral.com/',
+    logo: 'siacentral',
+    tags: ['network_stats'],
+    subtitle:
+      "Browse and search hosts powering Sia's decentralized storage network.",
   },
   {
     title: 'Arzen',
@@ -66,14 +74,6 @@ const software: Software[] = [
     subtitle: 'Charts, metrics, and explorer for the Sia network.',
   },
   {
-    title: 'SiaCentral - Host Browser',
-    link: 'https://hosts.siacentral.com/',
-    logo: 'siacentral',
-    tags: ['network_stats'],
-    subtitle:
-      "Browse and search hosts powering Sia's decentralized storage network.",
-  },
-  {
     title: 'SiaCentral - Host Troubleshoot Tool',
     link: 'https://troubleshoot.siacentral.com/',
     logo: 'siacentral',
@@ -96,13 +96,6 @@ const software: Software[] = [
     subtitle: 'Basic information and financial charts for the Sia network.',
   },
   {
-    title: 'Sia Central - Host Dashboard',
-    logo: 'siacentral',
-    link: 'https://github.com/siacentral/sia-host-dashboard',
-    tags: ['open_source_software'],
-    subtitle: 'A powerful web based monitoring dashboard for Sia hosts.',
-  },
-  {
     title: 'Sia Central - Host Manager',
     logo: 'siacentral',
     link: 'https://siacentral.com/host-manager',
@@ -117,6 +110,13 @@ const software: Software[] = [
     tags: ['open_source_software'],
     subtitle:
       'Sia companion app that provides renters with more granular controls over hosts and contracts.',
+  },
+  {
+    title: 'Sia Central - Host Dashboard',
+    logo: 'siacentral',
+    link: 'https://github.com/siacentral/sia-host-dashboard',
+    tags: ['open_source_software'],
+    subtitle: 'A powerful web based monitoring dashboard for Sia hosts.',
   },
   {
     title: 'TrySia',

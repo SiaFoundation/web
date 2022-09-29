@@ -19,7 +19,7 @@ import {
   NextLink,
 } from '@siafoundation/design-system'
 import { Layout } from '../components/Layout'
-import { sitemap } from '../config/site'
+import { routes } from '../config/routes'
 import { AsyncReturnType } from '../lib/types'
 import { getArticles } from '../content/articles'
 import { getSoftware } from '../content/software'
@@ -32,7 +32,7 @@ import { JiggleArrow } from '../components/JiggleArrow'
 import { getTutorials } from '../content/tutorials'
 
 const tutorials = getTutorials()
-const services = getSoftware('storage_services', 4)
+const services = getSoftware('storage_services', 3)
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -76,7 +76,7 @@ export default function Home({ featured, seenLetter }: Props) {
     <Layout
       title="Decentralized data storage"
       description={textContent(description)}
-      path={sitemap.home.index}
+      path={routes.home.index}
       focus={showLetter ? <Letter onDone={() => toggleLanding()} /> : null}
       transitions
       transitionDuration={transitionDuration}
@@ -106,7 +106,7 @@ export default function Home({ featured, seenLetter }: Props) {
             )}
             <Flex gap="2" css={{ marginTop: '$1' }}>
               <Text size="20">
-                <NextLink href={sitemap.getStarted.index}>
+                <NextLink href={routes.getStarted.index}>
                   Download the software →
                 </NextLink>
               </Text>
@@ -138,7 +138,7 @@ export default function Home({ featured, seenLetter }: Props) {
               </>
             }
             actionTitle="Explore"
-            actionLink={sitemap.getStarted.index}
+            actionLink={routes.getStarted.index}
           />
           <Callout
             title="Learn"
@@ -150,7 +150,7 @@ export default function Home({ featured, seenLetter }: Props) {
               </>
             }
             actionTitle="Read more"
-            actionLink={sitemap.learn.index}
+            actionLink={routes.learn.index}
           />
         </Grid>
       </Section>
@@ -228,7 +228,7 @@ export default function Home({ featured, seenLetter }: Props) {
             links={[
               {
                 title: 'Browse all projects',
-                link: sitemap.community.index,
+                link: routes.community.index,
               },
             ]}
           />

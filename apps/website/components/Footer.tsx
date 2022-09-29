@@ -6,7 +6,7 @@ import {
   Text,
   webLinks,
 } from '@siafoundation/design-system'
-import { sitemap } from '../config/site'
+import { routes } from '../config/routes'
 import { Statsbar } from './Statsbar'
 
 export function Footer() {
@@ -30,18 +30,16 @@ export function Footer() {
                   margin: '$1 0',
                 }}
               >
-                <TopLink href={sitemap.newsroom.index}>Newsroom</TopLink>
+                <TopLink href={routes.newsroom.index}>Newsroom</TopLink>
                 <TopLink href={webLinks.blog} target="_blank">
                   Blog
                 </TopLink>
                 <TopLink
-                  href={
-                    sitemap.community.index + '?software=exchanges#software'
-                  }
+                  href={routes.community.index + '?software=exchanges#software'}
                 >
                   Get Siacoin
                 </TopLink>
-                <TopLink href={sitemap.whitepaper.pdf} target="_blank">
+                <TopLink href={routes.whitepaper.pdf} target="_blank">
                   Whitepaper
                 </TopLink>
               </Flex>
@@ -66,6 +64,9 @@ export function Footer() {
                 </BottomLink>
                 <BottomLink href={webLinks.github} target="_blank">
                   GitHub
+                </BottomLink>
+                <BottomLink href={webLinks.forum} target="_blank">
+                  Forum
                 </BottomLink>
               </Flex>
             </Flex>
