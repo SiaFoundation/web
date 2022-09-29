@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.35.0](https://github.com/SiaFoundation/web/compare/design-system-0.34.0...design-system-0.35.0) (2022-09-29)
+
+
+### Features
+
+* grants page, dim animated panels, scale paragraphs ([8e0ab87](https://github.com/SiaFoundation/web/commit/8e0ab879edb71b8c9c7f3e40220e391ece1d4540))
+
+
+
 # [0.34.0](https://github.com/SiaFoundation/web/compare/design-system-0.33.0...design-system-0.34.0) (2022-09-29)
 
 
