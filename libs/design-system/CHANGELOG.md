@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.34.0](https://github.com/SiaFoundation/web/compare/design-system-0.33.0...design-system-0.34.0) (2022-09-29)
+
+
+### Features
+
+* renter wallet, update renterd hooks ([219476f](https://github.com/SiaFoundation/web/commit/219476fe780ecf3da54f5684046176128ab8d6b2))
+* renterd app, extract shared components ([0b3c9f3](https://github.com/SiaFoundation/web/commit/0b3c9f3e77803d0a2520ee6c5b8e08f4d4f12934))
+* renterd file explorer, contracts, hosts, config ([ba5126a](https://github.com/SiaFoundation/web/commit/ba5126a4d2615bfd2a0ab338830c3d252477b2ec))
+* send siacoin ([551d37c](https://github.com/SiaFoundation/web/commit/551d37cb785731e55949b43a389bda1c318a4580))
+
+
+
 # [0.33.0](https://github.com/SiaFoundation/web/compare/design-system-0.32.0...design-system-0.33.0) (2022-09-07)
 
 
