@@ -4,13 +4,14 @@ import {
   Button,
   Box,
   DialogContent,
+  FormField,
+  FieldGroup,
 } from '@siafoundation/design-system'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { GenerateSeed } from './GenerateSeed'
 import { useState } from 'react'
 import { VerifySeed } from './VerifySeed'
-import { FormField, FieldGroup } from '../../components/Field'
 
 const initialValues = {
   name: '',
@@ -32,7 +33,7 @@ export function NewWallet() {
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values, actions) => {
+    onSubmit: (values) => {
       console.log(values)
     },
   })
