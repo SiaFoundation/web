@@ -36,14 +36,14 @@ function NewsroomPost({
       date={new Date(date).toISOString()}
       path={routes.newsroom.newsPost.replace('[slug]', slug)}
       heading={
-        <Section size="4">
+        <Section py="4">
           <SiteHeading size="64" title={title} description={subtitle} />
         </Section>
       }
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <Section>
+      <Section pt="2" pb="4">
         <Box>
           <Text weight="bold" size="16">
             {location} - {format(new Date(date), 'PP')}

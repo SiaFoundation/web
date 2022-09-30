@@ -51,19 +51,20 @@ export const Link = styled('a', {
       },
       contrast: {
         color: '$textContrast',
-        textDecorationColor: '$textContrast',
+        textDecorationColor: '$frame',
       },
       accent: {
         color: '$accent11',
         textDecorationColor: '$accent11',
       },
-      light: {
-        color: '$whiteA12',
-        textDecorationLine: 'none',
+    },
+    disabled: {
+      true: {
+        opacity: 0.5,
+        pointerEvents: 'none',
         '@hover': {
           '&:hover': {
-            textDecorationColor: '$whiteA12',
-            textDecorationLine: 'underline',
+            textDecorationLine: 'none',
           },
         },
       },
@@ -80,6 +81,7 @@ type NLinkProps = {
   target?: string
   onClick?: () => void
   children?: React.ReactNode
+  disabled?: boolean
   underline?: React.ComponentProps<typeof Link>['underline']
   variant?: React.ComponentProps<typeof Link>['variant']
   css?: CSS
@@ -93,6 +95,7 @@ export function NextLink({
   children,
   onClick,
   underline,
+  disabled,
   variant = 'contrast',
   css,
 }: NLinkProps) {
@@ -103,6 +106,7 @@ export function NextLink({
         target={target}
         underline={underline}
         variant={variant}
+        disabled={disabled}
         css={css}
         onClick={onClick}
       >

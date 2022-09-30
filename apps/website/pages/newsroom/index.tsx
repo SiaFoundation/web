@@ -37,7 +37,7 @@ function Newsroom() {
       description={description}
       path={routes.newsroom.index}
       heading={
-        <Section size="4">
+        <Section py="4">
           <SiteHeading
             size="64"
             title={title}
@@ -55,7 +55,7 @@ function Newsroom() {
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <Section>
+      <Section py="2">
         <ContentGallery
           filterMode="external"
           filters={['press', 'ecosystem']}

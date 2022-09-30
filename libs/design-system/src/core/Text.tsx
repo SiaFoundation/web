@@ -36,6 +36,9 @@ export const Text = styled('span', {
       },
     },
     weight: {
+      extrabold: {
+        fontWeight: '700',
+      },
       bold: {
         fontWeight: '600',
       },

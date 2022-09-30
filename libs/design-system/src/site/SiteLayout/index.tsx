@@ -2,7 +2,7 @@ import { Box } from '../../core/Box'
 import { ScrollArea } from '../../core/ScrollArea'
 import { ImageProps } from '../../lib/image'
 import { Flex } from '../../core/Flex'
-import { SiteMenu } from './SiteMenu'
+import { MenuSection, SiteMenu } from './SiteMenu'
 import { Container } from '../../core/Container'
 import { LinkData } from '../../lib/links'
 import React, { useEffect, useState } from 'react'
@@ -11,7 +11,7 @@ type Props = {
   appName: string
   homeHref: string
   navbar?: React.ReactNode
-  menuLinks: LinkData[]
+  menuSections: MenuSection[]
   externalLinks?: LinkData[]
   heading: React.ReactNode
   footer?: React.ReactNode
@@ -19,13 +19,14 @@ type Props = {
   backgroundImage: ImageProps
   focus?: React.ReactNode
   transitions?: boolean
-  transitionDuration?: number
+  transitionWidthDuration?: number
+  transitionFadeDelay?: number
 }
 
 export function SiteLayout({
   appName,
   homeHref,
-  menuLinks,
+  menuSections,
   externalLinks,
   navbar,
   heading,
@@ -34,10 +35,9 @@ export function SiteLayout({
   backgroundImage,
   focus: _focus,
   transitions: _transitions = false,
-  transitionDuration = 300,
+  transitionWidthDuration = 300,
+  transitionFadeDelay = 500,
 }: Props) {
-  const menuWidth = _focus ? '65%' : '30%'
-
   // If transitions are on, enable after first client render
   const [transitions, setTransitions] = useState<boolean>(false)
   useEffect(() => {
@@ -55,7 +55,7 @@ export function SiteLayout({
     setTransitioning(true)
     setTimeout(() => {
       setTransitioning(false)
-    }, transitionDuration)
+    }, transitionFadeDelay)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [_focus])
 
@@ -78,79 +78,90 @@ export function SiteLayout({
       css={{
         position: 'relative',
         height: '100%',
-        border: `$sizes$frame solid $frame`,
         background: '$loContrast',
         overflow: 'hidden',
       }}
     >
       <ScrollArea id="main-scroll">
         <Box
-          // After a focus Safari does not apply the padding until the content scrolls,
-          // this key fixes that
-          key={String(focus)}
           css={{
             position: 'relative',
             zIndex: 1,
-            overflow: 'hidden',
-            transition: `padding-right ${transitionDuration}ms ease-out`,
-            paddingRight: '0%',
-            '@bp3': {
-              paddingRight: menuWidth,
+            transition: 'margin 100ms ease-in',
+            '@bp2': {
+              margin: focus ? '0 $5' : '0 $6',
             },
           }}
         >
-          {navbar && (
-            <Container size="4" css={{ py: '$3' }}>
-              {navbar}
-            </Container>
-          )}
-          <Flex
-            as="main"
-            direction="column"
-            gap="8"
-            css={{ width: '100%', opacity: transitioning ? 0 : 1 }}
+          <Container
+            size="4"
+            css={{
+              width: focus ? '800px' : '100%',
+              margin: focus ? '0' : '0 auto',
+              zIndex: 1,
+              maxWidth: focus ? '100%' : '1600px',
+              transition: `width ${transitionWidthDuration}ms ease-out`,
+              position: 'relative',
+              overflow: 'hidden',
+              backgroundColor: '$loContrast',
+              borderLeft: `$sizes$frame solid $frame`,
+              borderRight: `$sizes$frame solid $frame`,
+              padding: 0,
+              paddingTop: '$5',
+            }}
           >
-            {focus || (
-              <Flex direction="column">
-                <Box>{heading}</Box>
-                <Box
-                  css={{
-                    position: 'relative',
-                    width: '100%',
-                    height: '390px',
-                    overflow: 'hidden',
-                    borderTop: '$sizes$frame solid $frame',
-                    borderBottom: '$sizes$frame solid $frame',
-                    '@initial': {
-                      display: 'block',
-                    },
-                    '@bp3': {
-                      display: 'none',
-                    },
-                  }}
-                >
+            <Container size="4">
+              <Flex justify="between" align="center">
+                {navbar}
+                <SiteMenu menuSections={menuSections} />
+              </Flex>
+            </Container>
+            <Flex
+              as="main"
+              direction="column"
+              gap="8"
+              css={{
+                width: '100%',
+                opacity: transitioning ? 0 : 1,
+              }}
+            >
+              {focus || (
+                <Flex direction="column">
+                  <Box>{heading}</Box>
                   <Box
                     css={{
                       position: 'relative',
                       width: '100%',
                       height: '390px',
-                      background: `url(${backgroundImage.src})`,
-                      backgroundSize: 'cover',
+                      overflow: 'hidden',
+                      borderTop: '$sizes$frame solid $frame',
+                      borderBottom: '$sizes$frame solid $frame',
+                      '@initial': {
+                        display: 'block',
+                      },
+                      '@bp2': {
+                        display: 'none',
+                      },
                     }}
-                  />
-                </Box>
-                <Box>{children}</Box>
-                {footer}
-              </Flex>
-            )}
-          </Flex>
+                  >
+                    <Box
+                      css={{
+                        position: 'relative',
+                        width: '100%',
+                        height: '390px',
+                        background: `url(${backgroundImage.src})`,
+                        backgroundSize: 'cover',
+                      }}
+                    />
+                  </Box>
+                  <Box>{children}</Box>
+                  {footer}
+                </Flex>
+              )}
+            </Flex>
+          </Container>
         </Box>
       </ScrollArea>
-      <SiteMenu
-        externalLinks={externalLinks}
-        menuLinks={menuLinks}
-        menuWidth={menuWidth}
-      />
       <Box
         css={{
           position: 'absolute',
@@ -158,19 +169,7 @@ export function SiteLayout({
           top: 0,
           zIndex: 0,
           height: '100%',
-          transition: `width ${transitionDuration}ms ease-out`,
-          width: '0%',
-          display: 'none',
-          '@bp3': {
-            borderLeft: `$sizes$frame solid $frame`,
-            width: menuWidth,
-            display: 'block',
-          },
-          '@bp4': {
-            borderLeft: `$sizes$frame solid $frame`,
-            width: menuWidth,
-            display: 'block',
-          },
+          width: '100%',
           overflow: 'hidden',
           background: 'white',
         }}
@@ -190,6 +189,7 @@ export function SiteLayout({
               height: '100%',
               background: `url(${backgroundImage.src})`,
               backgroundSize: 'cover',
+              // opacity: 0.7,
             }}
           />
         </Box>

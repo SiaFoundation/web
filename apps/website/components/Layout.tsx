@@ -9,6 +9,7 @@ import { Footer } from './Footer'
 import { PageHead } from './PageHead'
 import { Navbar } from './Navbar'
 import { routes } from '../config/routes'
+import { menuSections } from '../config/siteMap'
 
 type Props = {
   heading: React.ReactNode
@@ -21,7 +22,8 @@ type Props = {
   previewImage: ImageProps
   focus?: React.ReactNode
   transitions?: boolean
-  transitionDuration?: number
+  transitionWidthDuration?: number
+  transitionFadeDelay?: number
 }
 
 export function Layout({
@@ -35,7 +37,8 @@ export function Layout({
   previewImage,
   focus,
   transitions,
-  transitionDuration,
+  transitionWidthDuration,
+  transitionFadeDelay,
 }: Props) {
   return (
     <Box
@@ -58,7 +61,8 @@ export function Layout({
         homeHref={routes.home.index}
         focus={focus}
         transitions={transitions}
-        transitionDuration={transitionDuration}
+        transitionWidthDuration={transitionWidthDuration}
+        transitionFadeDelay={transitionFadeDelay}
         heading={heading}
         externalLinks={[
           {
@@ -70,41 +74,17 @@ export function Layout({
             title: 'Discord',
           },
         ]}
-        menuLinks={[
-          {
-            link: routes.home.index,
-            title: 'Home',
-          },
-          {
-            link: routes.getStarted.index,
-            title: 'Get Started',
-          },
-          {
-            link: routes.learn.index,
-            title: 'Learn',
-          },
-          {
-            link: routes.community.index,
-            title: 'Community & Ecosystem',
-          },
-          {
-            link: routes.foundation.index,
-            title: 'The Sia Foundation',
-          },
-          // {
-          //   link: routes.grants.index,
-          //   title: 'Grants',
-          // },
-          {
-            link: routes.newsroom.index,
-            title: 'Newsroom',
-          },
-        ]}
+        menuSections={menuSections}
         footer={<Footer />}
         backgroundImage={backgroundImage}
         navbar={<Navbar />}
       >
-        <Flex direction="column" css={{ padding: '$6 0 $max 0' }}>
+        <Flex
+          direction="column"
+          css={{
+            padding: '$6 0',
+          }}
+        >
           {children}
         </Flex>
       </SiteLayout>

@@ -27,7 +27,7 @@ export const colors = {
   accentInactive: '$slate4',
   accentActive: '$slate5',
   accentInput: '$accent7',
-  frame: 'black',
+  frame: '$slate6',
 
   textVerySubtle: '$slate8',
   textSubtle: '$slate11',
@@ -108,7 +108,7 @@ export const colorsDark = {
   accentInactive: '$slate6',
   accentActive: '$slate7',
   accentInput: '$accent8',
-  frame: '$slate12',
+  frame: '$slate6',
 
   textVerySubtle: '$slate8',
   textSubtle: '$slate11',

@@ -15,6 +15,7 @@ import {
   getImageProps,
   Paragraph,
   webLinks,
+  Callout,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
@@ -44,14 +45,14 @@ function Foundation({ team, newsPosts, reports }: Props) {
       description={description}
       path={routes.foundation.index}
       heading={
-        <Section size="4">
+        <Section py="4">
           <SiteHeading size="64" title={title} description={description} />
         </Section>
       }
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <Section>
+      <Section py="2">
         <Flex direction="column" gap="9">
           <Flex direction="column" gap="2">
             <SiteHeading size="32" title="Vision" />
@@ -104,8 +105,8 @@ function Foundation({ team, newsPosts, reports }: Props) {
           </Flex>
         </Flex>
       </Section>
-      <Section size="3">
-        <SiteHeading size="32" title="The Sia Team" />
+      <Section py="3">
+        <SiteHeading size="32" title="The Sia team" />
         <Grid
           columns={{
             '@initial': '1',
@@ -155,11 +156,20 @@ function Foundation({ team, newsPosts, reports }: Props) {
           ))}
         </Grid>
       </Section>
-      <Section width="flush">
-        <Section width="flush" css={{ position: 'relative' }}>
+      <Section py="2" width="flush">
+        <Section
+          pt="1"
+          pb="2"
+          width="flush"
+          css={{
+            position: 'relative',
+            borderTop: '$sizes$frame solid $slate2',
+            borderBottom: '$sizes$frame solid $slate2',
+          }}
+        >
           <WavesBackdrop />
-          <Section>
-            <SiteHeading size="32" title="Quarterly Reports" />
+          <Section py="3">
+            <SiteHeading size="32" title="Quarterly reports" />
             <Flex direction="column" gap="6">
               {reports.map(([year, yearReports]) => (
                 <Flex key={year} direction="column" gap="2">
@@ -190,10 +200,10 @@ function Foundation({ team, newsPosts, reports }: Props) {
           </Section>
         </Section>
       </Section>
-      <Section>
+      <Section pt="3" pb="4">
         <SiteHeading
           size="32"
-          title="Recent News"
+          title="Recent news"
           description={
             <>
               Browse the newsroom for recent press releases and updates from the
@@ -208,6 +218,21 @@ function Foundation({ team, newsPosts, reports }: Props) {
           ]}
         />
         <ContentGallery columns="1" items={newsPosts} />
+      </Section>
+      <Section pt="2" pb="4">
+        <Callout
+          title="Apply for a role at The Sia Foundation"
+          size="2"
+          description={
+            <>
+              If you are interested in a career at The Sia Foundation please see
+              our openings.
+            </>
+          }
+          actionTitle="View openings"
+          actionLink={webLinks.jobs}
+          actionNewTab
+        />
       </Section>
     </Layout>
   )

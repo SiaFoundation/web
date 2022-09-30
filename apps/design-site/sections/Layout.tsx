@@ -17,7 +17,7 @@ import bellLabs from '../assets/bell-labs.jpeg'
 export function Layout() {
   return (
     <>
-      <Section size="1">
+      <Section py="1">
         <SectionHeading hideSeparator>Layout</SectionHeading>
       </Section>
       <Section>

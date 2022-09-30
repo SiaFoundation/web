@@ -42,14 +42,14 @@ function Learn() {
       description={textContent(description)}
       path={routes.learn.index}
       heading={
-        <Section size="4">
+        <Section py="4">
           <SiteHeading size="64" title={title} description={description} />
         </Section>
       }
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <Section>
+      <Section py="3" pt="4">
         <Grid
           align="center"
           justify="between"
@@ -128,7 +128,7 @@ function Learn() {
               '@bp3': {
                 margin: '0 0 0 auto',
                 height: '100%',
-                width: '400px',
+                width: '500px',
               },
               '@bp4': {
                 height: '100%',
@@ -153,10 +153,10 @@ function Learn() {
           </Box>
         </Grid>
       </Section>
-      <Section css={{ maxWidth: '800px', marginTop: '$9' }} gap="9">
+      <Section py="4" css={{ maxWidth: '800px' }} gap="9">
         <SiteHeading
           size="32"
-          title="How Sia Works"
+          title="An introduction to the Sia protocol"
           description={
             <>
               Learn how Sia creates contracts between renters and hosts and
@@ -311,17 +311,17 @@ function Learn() {
           ]}
         />
       </Section>
-      <Section>
+      <Section py="2">
         <SiteHeading
           size="32"
-          title="Get Started"
+          title="Learn more about the basics"
           description={
             <>Technical tutorials for new developers looking to build on Sia.</>
           }
         />
         <ContentGallery items={getStarted} />
       </Section>
-      <Section>
+      <Section py="4">
         <Callout
           eyebrow="Start building"
           title="Developer Resources"

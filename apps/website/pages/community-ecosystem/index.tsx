@@ -36,14 +36,14 @@ const description = (
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-function CommunityEcosystem({ blogs }: Props) {
+export default function CommunityEcosystem({ blogs }: Props) {
   return (
     <Layout
       title={title}
       description={textContent(description)}
       path={routes.community.index}
       heading={
-        <Section size="4">
+        <Section py="4">
           <SiteHeading
             title={title}
             description={description}
@@ -66,10 +66,10 @@ function CommunityEcosystem({ blogs }: Props) {
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <Section>
+      <Section py="2">
         <SiteHeading
           size="32"
-          title="Featured updates from the Sia Community"
+          title="Featured updates from the Sia community"
           description={
             <>
               Read about the latest updates and technical advancements in the
@@ -86,7 +86,7 @@ function CommunityEcosystem({ blogs }: Props) {
         />
         <ContentGallery columns="1" items={blogs} />
       </Section>
-      <Section size="4">
+      <Section py="4">
         <Flex gap="3" align="start">
           <Box
             css={{
@@ -110,7 +110,7 @@ function CommunityEcosystem({ blogs }: Props) {
           <SiteHeading
             size="32"
             id="software"
-            title="A Vibrant & Active Ecosystem"
+            title="A vibrant & active ecosystem"
             description={
               <>
                 Sia is a thriving ecosystem of open source software, layer 2
@@ -132,19 +132,18 @@ function CommunityEcosystem({ blogs }: Props) {
           items={software}
         />
       </Section>
-      <Section>
+      <Section pt="2" pb="4">
         <Callout
-          title="Sia Projects & Proposals"
+          title="Sia grants"
           size="2"
           description={
             <>
-              Do you have site feedback, development input, or a long-form
-              proposal? Share it with us on Reddit. The Sia Foundation is also
-              working on a grants program - watch this space!
+              The Sia Foundation welcomes and supports contributors from all
+              over the world to come and build on Sia by offering grants.
             </>
           }
-          actionTitle="Join the discussion"
-          actionLink={webLinks.reddit}
+          actionTitle="Learn about grants"
+          actionLink={routes.grants.index}
           actionNewTab
         />
       </Section>
@@ -165,5 +164,3 @@ export async function getStaticProps() {
     },
   }
 }
-
-export default CommunityEcosystem

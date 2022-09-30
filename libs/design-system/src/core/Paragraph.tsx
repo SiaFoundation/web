@@ -5,7 +5,7 @@ import { VariantProps, CSS } from '../config/theme'
 const DEFAULT_TAG = 'p'
 
 type TextSizeVariants = Pick<VariantProps<typeof Text>, 'size'>
-type ParagraphSizeVariants = '12' | '14' | '18' | '20'
+type ParagraphSizeVariants = '12' | '14' | '16' | '18' | '20'
 type ParagraphVariants = { size?: ParagraphSizeVariants } & Omit<
   VariantProps<typeof Text>,
   'size'
@@ -23,7 +23,8 @@ export const Paragraph = React.forwardRef<
   const textSize: Record<ParagraphSizeVariants, TextSizeVariants['size']> = {
     12: { '@initial': '10', '@bp2': '12' },
     14: { '@initial': '12', '@bp2': '14' },
-    18: { '@initial': '14', '@bp2': '18' },
+    16: { '@initial': '14', '@bp2': '16' },
+    18: { '@initial': '16', '@bp2': '18' },
     20: { '@initial': '16', '@bp2': '20' },
   }
 
@@ -35,6 +36,11 @@ export const Paragraph = React.forwardRef<
       '@bp2': { lineHeight: '150%' },
     },
     14: {
+      color: '$textSubtle',
+      lineHeight: '150%',
+      '@bp2': { lineHeight: '150%' },
+    },
+    16: {
       color: '$textSubtle',
       lineHeight: '150%',
       '@bp2': { lineHeight: '150%' },

@@ -1,118 +1,52 @@
 import {
   Container,
   Flex,
-  NextLink,
   Section,
-  Text,
-  webLinks,
+  SiteMap,
+  WavesBackdrop,
 } from '@siafoundation/design-system'
-import { routes } from '../config/routes'
+import { menuSections } from '../config/siteMap'
 import { Statsbar } from './Statsbar'
 
 export function Footer() {
   return (
     <Flex direction="column">
-      <Section size="1" width="flush" css={{ backgroundColor: '$waves' }}>
+      <Section
+        py="1"
+        width="flush"
+        css={{
+          position: 'relative',
+          borderTop: '$sizes$frame solid $slate3',
+          borderBottom: '$sizes$frame solid $slate3',
+        }}
+      >
+        <WavesBackdrop />
         <Container>
-          <Flex direction="column" align="start" gap="9" css={{ my: '$2' }}>
-            <Statsbar />
-            <Flex direction="column" align="start" gap="1">
-              <Flex
-                gap={{
-                  '@initial': '2',
-                  '@bp2': '3',
-                }}
-                justify="start"
-                align="start"
-                wrap="wrap"
-                css={{
-                  width: '100%',
-                  margin: '$1 0',
-                }}
-              >
-                <TopLink href={routes.newsroom.index}>Newsroom</TopLink>
-                <TopLink href={webLinks.blog} target="_blank">
-                  Blog
-                </TopLink>
-                <TopLink
-                  href={routes.community.index + '?software=exchanges#software'}
-                >
-                  Get Siacoin
-                </TopLink>
-                <TopLink href={routes.whitepaper.pdf} target="_blank">
-                  Whitepaper
-                </TopLink>
-              </Flex>
-              <Flex
-                gap="3"
-                justify="start"
-                align="start"
-                wrap="wrap"
-                css={{
-                  width: '100%',
-                  margin: '$1 0',
-                }}
-              >
-                <BottomLink href={webLinks.discord} target="_blank">
-                  Discord
-                </BottomLink>
-                <BottomLink href={webLinks.reddit} target="_blank">
-                  Reddit
-                </BottomLink>
-                <BottomLink href={webLinks.twitter} target="_blank">
-                  Twitter
-                </BottomLink>
-                <BottomLink href={webLinks.github} target="_blank">
-                  GitHub
-                </BottomLink>
-                <BottomLink href={webLinks.forum} target="_blank">
-                  Forum
-                </BottomLink>
-              </Flex>
-            </Flex>
+          <Flex
+            direction="column"
+            align="start"
+            gap={{
+              '@initial': '6',
+              '@bp2': '15',
+            }}
+            css={{ mt: '$5', mb: '$9' }}
+          >
+            <SiteMap menuSections={menuSections} />
           </Flex>
         </Container>
       </Section>
-    </Flex>
-  )
-}
-
-type LinkProps = {
-  children: React.ReactNode
-  href: string
-  target?: string
-}
-
-function TopLink({ children, href, target }: LinkProps) {
-  return (
-    <Text
-      size={{
-        '@initial': '16',
-        '@bp2': '20',
-      }}
-      weight="semibold"
-      color="accent"
-    >
-      <NextLink
-        variant="accent"
+      <Section
+        py="3"
+        width="flush"
         css={{
-          textDecoration: 'none',
+          position: 'relative',
+          backgroundColor: '$waves',
         }}
-        href={href}
-        target={target}
       >
-        {children}
-      </NextLink>
-    </Text>
-  )
-}
-
-function BottomLink({ children, href, target }: LinkProps) {
-  return (
-    <Text size="14">
-      <NextLink css={{ textDecoration: 'none' }} href={href} target={target}>
-        {children}
-      </NextLink>
-    </Text>
+        <Container>
+          <Statsbar />
+        </Container>
+      </Section>
+    </Flex>
   )
 }

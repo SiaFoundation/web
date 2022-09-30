@@ -96,7 +96,7 @@ const software: Software[] = [
     subtitle: 'Basic information and financial charts for the Sia network.',
   },
   {
-    title: 'Sia Central - Host Manager',
+    title: 'SiaCentral - Host Manager',
     logo: 'siacentral',
     link: 'https://siacentral.com/host-manager',
     tags: ['open_source_software'],
@@ -112,7 +112,7 @@ const software: Software[] = [
       'Sia companion app that provides renters with more granular controls over hosts and contracts.',
   },
   {
-    title: 'Sia Central - Host Dashboard',
+    title: 'SiaCentral - Host Dashboard',
     logo: 'siacentral',
     link: 'https://github.com/siacentral/sia-host-dashboard',
     tags: ['open_source_software'],

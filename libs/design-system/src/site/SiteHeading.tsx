@@ -20,7 +20,7 @@ type Props = {
 }
 
 const sizeToGap: Record<Size, React.ComponentProps<typeof Flex>['gap']> = {
-  '20': '2',
+  '20': '1',
   '24': '2',
   '32': '2',
   '64': '2',
@@ -58,6 +58,13 @@ const sizeToEyebrow: Record<Size, React.ComponentProps<typeof Text>['size']> = {
   '24': '12',
   '32': '12',
   '64': '14',
+}
+
+const sizeToLinkPadTop: Record<Size, CSS['padding']> = {
+  '20': '$1',
+  '24': '$1',
+  '32': '$1',
+  '64': '$2',
 }
 
 const sizeToPadding: Record<Size, CSS['padding']> = {
@@ -104,7 +111,7 @@ export function SiteHeading({
       <Links
         links={links}
         size={sizeToLinks[size]}
-        css={{ paddingTop: size === '64' ? '$2' : '0' }}
+        css={{ paddingTop: sizeToLinkPadTop[size] }}
       />
       {children}
     </Flex>

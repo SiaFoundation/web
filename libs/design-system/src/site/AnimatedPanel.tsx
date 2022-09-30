@@ -21,7 +21,7 @@ export function AnimatedPanel({
       radius="0"
       css={{
         position: 'relative',
-        border: '2px solid $frame',
+        border: '$sizes$frame solid $frame',
         ...css,
       }}
     >
