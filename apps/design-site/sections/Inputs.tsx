@@ -21,7 +21,7 @@ import { ComboBoxes } from './ComboBoxes'
 export function Inputs() {
   return (
     <>
-      <Section size="1">
+      <Section py="1">
         <SectionHeading>Inputs</SectionHeading>
       </Section>
       <Section>

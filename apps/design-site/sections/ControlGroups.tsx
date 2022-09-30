@@ -15,7 +15,7 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 export function ControlGroups() {
   return (
     <>
-      <Section size="1">
+      <Section py="1">
         <SectionHeading>Control groups</SectionHeading>
       </Section>
       <Section>

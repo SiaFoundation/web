@@ -13,7 +13,7 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 export function Buttons() {
   return (
     <>
-      <Section size="1">
+      <Section py="1">
         <SectionHeading>Buttons</SectionHeading>
       </Section>
       <Section>

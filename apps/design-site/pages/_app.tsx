@@ -19,18 +19,23 @@ function App({ Component, pageProps }: AppProps) {
       <SiteLayout
         appName="Design system"
         homeHref="/"
-        menuLinks={[
+        menuSections={[
           {
-            link: '/',
-            title: 'Core',
-          },
-          {
-            link: '/sites',
-            title: 'Sites',
-          },
-          {
-            link: '/apps',
-            title: 'Apps',
+            title: 'Sections',
+            links: [
+              {
+                link: '/',
+                title: 'Core',
+              },
+              {
+                link: '/sites',
+                title: 'Sites',
+              },
+              {
+                link: '/apps',
+                title: 'Apps',
+              },
+            ],
           },
         ]}
         heading={<Heading />}

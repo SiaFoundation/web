@@ -29,7 +29,7 @@ function Content() {
 export function Popups() {
   return (
     <>
-      <Section size="1">
+      <Section py="1">
         <SectionHeading>Popups</SectionHeading>
       </Section>
       <Section>

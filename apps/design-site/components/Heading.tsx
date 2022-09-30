@@ -8,7 +8,7 @@ import {
 export function Heading() {
   return (
     <>
-      <Section width="flush" size="4" gap="13">
+      <Section width="flush" py="4" gap="13">
         <Container>
           <SiteHeading
             size="64"
@@ -25,10 +25,10 @@ export function Heading() {
             }
           />
         </Container>
-        {/* <Section width="flush" size="2" css={{ position: 'relative' }}>
+        {/* <Section width="flush" py="2" css={{ position: 'relative' }}>
           <WavesBackdrop />
           <Container>
-            <Section size="0" width="flush" gap="6">
+            <Section py="0" width="flush" gap="6">
               <Text size="16" weight="bold">
                 Installation
               </Text>

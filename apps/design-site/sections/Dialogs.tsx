@@ -21,7 +21,7 @@ export function Dialogs() {
 
   return (
     <>
-      <Section size="1">
+      <Section py="1">
         <SectionHeading>Dialogs</SectionHeading>
       </Section>
       <Section>

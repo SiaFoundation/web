@@ -19,7 +19,7 @@ import avatar3 from '../assets/avatar3.png'
 export function Images() {
   return (
     <>
-      <Section size="1">
+      <Section py="1">
         <SectionHeading>Images</SectionHeading>
       </Section>
       <Section>

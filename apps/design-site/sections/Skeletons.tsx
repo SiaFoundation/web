@@ -6,7 +6,7 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 export function Skeletons() {
   return (
     <>
-      <Section size="1">
+      <Section py="1">
         <SectionHeading>Skeletons</SectionHeading>
       </Section>
       <Section>

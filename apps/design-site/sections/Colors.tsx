@@ -7,7 +7,7 @@ export function Colors() {
   return (
     <>
       <Flex direction="column" gap="5">
-        <Section size="1">
+        <Section py="1">
           <SectionHeading>Colors</SectionHeading>
           <Legend />
         </Section>

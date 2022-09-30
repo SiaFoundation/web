@@ -164,7 +164,7 @@ export function Sites() {
           />
         </Grid>
       </Section>
-      <Section size="1">
+      <Section py="1">
         <DSSectionHeading>ContentGallery</DSSectionHeading>
       </Section>
       <Section>
@@ -216,13 +216,13 @@ export function Sites() {
           }))}
         />
       </Section>
-      <Section size="1">
+      <Section py="1">
         <DSSectionHeading>WavesBackdrop</DSSectionHeading>
       </Section>
       <Section css={{ position: 'relative' }}>
         <WavesBackdrop />
       </Section>
-      <Section size="1">
+      <Section py="1">
         <DSSectionHeading>Callout</DSSectionHeading>
       </Section>
       <Section>
