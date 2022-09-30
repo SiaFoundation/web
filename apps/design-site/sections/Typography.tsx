@@ -25,7 +25,7 @@ const exampleCode = `func Fibonacci(n int) int {
 export function Typography() {
   return (
     <>
-      <Section size="1">
+      <Section py="1">
         <SectionHeading>Typography</SectionHeading>
       </Section>
       <Section>

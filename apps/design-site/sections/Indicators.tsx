@@ -15,7 +15,7 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 export function Indicators() {
   return (
     <>
-      <Section size="1">
+      <Section py="1">
         <SectionHeading>Indicators</SectionHeading>
       </Section>
       <Section>
