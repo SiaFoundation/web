@@ -26,7 +26,7 @@ export default function Letter({ onDone }: Props) {
   }, [inView])
 
   return (
-    <Section size="3">
+    <Section py="3">
       <Flex
         direction="column"
         gap="2"

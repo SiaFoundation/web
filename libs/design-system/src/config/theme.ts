@@ -32,6 +32,9 @@ const stitches = createStitches({
       10: '80px',
       11: '88px',
       12: '96px',
+      13: '112px',
+      14: '128px',
+      15: '142px',
       max: '160px',
       frame: '$0-5',
     },
@@ -52,6 +55,9 @@ const stitches = createStitches({
       10: '80px', // 12
       11: '88px', //
       12: '96px',
+      13: '112px',
+      14: '128px',
+      15: '142px',
       max: '160px', // 13
       frame: '$0-5',
     },
@@ -68,6 +74,7 @@ const stitches = createStitches({
       64: '64px',
     },
     radii: {
+      '0-5': '2px',
       1: '4px',
       2: '8px',
       3: '16px',

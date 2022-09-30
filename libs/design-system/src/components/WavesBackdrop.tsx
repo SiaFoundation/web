@@ -27,6 +27,7 @@ export function WavesBackdrop() {
           height: '100%',
           background: `url(${wavesProps.src})`,
           backgroundRepeat: 'repeat',
+          opacity: 0.5,
         }}
       />
     </Box>

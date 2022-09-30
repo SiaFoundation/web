@@ -3,19 +3,8 @@ import { Flex } from '../core/Flex'
 import { Container } from '../core/Container'
 
 const BaseSection = styled('section', {
-  boxSizing: 'border-box',
-  flexShrink: 0,
-  '&::before': {
-    boxSizing: 'border-box',
-    content: '""',
-  },
-  '&::after': {
-    boxSizing: 'border-box',
-    content: '""',
-  },
-
   variants: {
-    size: {
+    py: {
       '0': {
         py: '0',
       },
@@ -44,9 +33,64 @@ const BaseSection = styled('section', {
         },
       },
     },
-  },
-  defaultVariants: {
-    size: '2',
+    pb: {
+      '0': {
+        pb: '0',
+      },
+      '1': {
+        pb: '$3',
+        '@bp2': {
+          pb: '$3-5',
+        },
+      },
+      '2': {
+        pb: '$3-5',
+        '@bp2': {
+          pb: '$6',
+        },
+      },
+      '3': {
+        pb: '$6',
+        '@bp2': {
+          pb: '$8',
+        },
+      },
+      '4': {
+        pb: '$9',
+        '@bp2': {
+          pb: '$max',
+        },
+      },
+    },
+    pt: {
+      '0': {
+        pt: '0',
+      },
+      '1': {
+        pt: '$3',
+        '@bp2': {
+          pt: '$3-5',
+        },
+      },
+      '2': {
+        pt: '$3-5',
+        '@bp2': {
+          pt: '$6',
+        },
+      },
+      '3': {
+        pt: '$6',
+        '@bp2': {
+          pt: '$8',
+        },
+      },
+      '4': {
+        pt: '$9',
+        '@bp2': {
+          pt: '$max',
+        },
+      },
+    },
   },
 })
 

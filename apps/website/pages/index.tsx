@@ -32,7 +32,7 @@ import { JiggleArrow } from '../components/JiggleArrow'
 import { getTutorials } from '../content/tutorials'
 
 const tutorials = getTutorials()
-const services = getSoftware('storage_services', 3)
+const services = getSoftware('storage_services', 5)
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -48,7 +48,8 @@ const description = (
   </>
 )
 
-const transitionDuration = 300
+const transitionWidthDuration = 300
+const transitionFadeDelay = 500
 
 type Props = AsyncReturnType<typeof getServerSideProps>['props']
 
@@ -67,7 +68,7 @@ export default function Home({ featured, seenLetter }: Props) {
       document.getElementById('main-scroll').scrollTo({
         top: 0,
       })
-    }, transitionDuration)
+    }, transitionWidthDuration)
   }, [setShowLetter])
 
   const pullPending = usePullTop('main-scroll', !showLetter, toggleLanding)
@@ -79,10 +80,11 @@ export default function Home({ featured, seenLetter }: Props) {
       path={routes.home.index}
       focus={showLetter ? <Letter onDone={() => toggleLanding()} /> : null}
       transitions
-      transitionDuration={transitionDuration}
+      transitionWidthDuration={transitionWidthDuration}
+      transitionFadeDelay={transitionFadeDelay}
       heading={
         <Section
-          size="4"
+          py="4"
           css={{
             paddingBottom: '$8',
           }}
@@ -117,7 +119,7 @@ export default function Home({ featured, seenLetter }: Props) {
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <Section size="3">
+      <Section py="3">
         <Grid
           gap={{
             '@initial': '4',
@@ -129,15 +131,15 @@ export default function Home({ featured, seenLetter }: Props) {
           }}
         >
           <Callout
-            title="Developers"
+            title="Start"
             startTime={0}
             description={
               <>
-                Browse software downloads and developer resources, tutorials,
-                technical walkthroughs, and more.
+                Find software downloads, beginner tutorials, developer
+                resources, technical walkthroughs, and more.
               </>
             }
-            actionTitle="Explore"
+            actionTitle="Get started"
             actionLink={routes.getStarted.index}
           />
           <Callout
@@ -154,10 +156,19 @@ export default function Home({ featured, seenLetter }: Props) {
           />
         </Grid>
       </Section>
-      <Section size="3" width="flush">
-        <Section width="flush" size="1" css={{ position: 'relative' }}>
+      <Section py="3" width="flush">
+        <Section
+          width="flush"
+          py="2"
+          pb="3"
+          css={{
+            position: 'relative',
+            borderTop: '$sizes$frame solid $slate3',
+            borderBottom: '$sizes$frame solid $slate3',
+          }}
+        >
           <WavesBackdrop />
-          <Section size="2" gap="6">
+          <Section py="2" gap="6">
             <SiteHeading size="32" title="Why Sia" />
             <ContentGallery
               items={[
@@ -214,11 +225,11 @@ export default function Home({ featured, seenLetter }: Props) {
           </Section>
         </Section>
       </Section>
-      <Section gap="12">
-        <Section width="flush" size="0">
+      <Section gap="12" py="3">
+        <Section width="flush" py="0">
           <SiteHeading
             size="32"
-            title="Explore the Sia Community &amp; Ecosystem"
+            title="Explore the companies and projects building on Sia"
             description={
               <>
                 Sia is a thriving ecosystem of open source software, layer 2
@@ -245,10 +256,10 @@ export default function Home({ featured, seenLetter }: Props) {
             }}
           />
         </Section>
-        <Section width="flush" size="0">
+        <Section width="flush" py="2">
           <SiteHeading
             size="24"
-            title="Start Building"
+            title="Learn how Sia works"
             description={
               <>
                 Visit the developer pages for software downloads and developer
@@ -258,10 +269,10 @@ export default function Home({ featured, seenLetter }: Props) {
           />
           <ContentGallery items={tutorials} />
         </Section>
-        <Section width="flush" size="3">
+        <Section width="flush" py="3">
           <SiteHeading
             size="32"
-            title="The Latest"
+            title="Read some of the latest updates"
             description={
               <>
                 Read the latest from the core team and the ecosystem of

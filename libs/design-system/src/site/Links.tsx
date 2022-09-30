@@ -18,12 +18,15 @@ export function Links({ links = [], size = '1', css }: Props) {
 
   if (size === '3') {
     return (
-      <Flex gap="3" wrap="wrap" css={css}>
+      <Flex gap="1-5" wrap="wrap" css={css}>
         {links.map((link) => (
           <NextLinkButton
             key={link.title + link.link}
             variant="accent"
-            size="2"
+            size={{
+              '@initial': '1',
+              '@bp2': '2',
+            }}
             href={link.link}
             target={link.newTab ? '_blank' : undefined}
             site

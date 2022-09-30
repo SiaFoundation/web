@@ -5,14 +5,11 @@ import { overlayStyles } from '../../core/Overlay'
 import { IconButton } from '../../core/IconButton'
 import { LogoMenuIcon } from '../../icons/LogoMenuIcon'
 import { Box } from '../../core/Box'
-import { Close24 } from '../../icons'
 import { Flex } from '../../core/Flex'
-import { ThemeRadio } from '../../components/ThemeRadio'
-import { Text } from '../../core/Text'
-import { SimpleLogoIcon } from '../../icons/SimpleLogoIcon'
-import { NextLink } from '../../core/Link'
+import { Close24 } from '../../icons'
 import { LinkData } from '../../lib/links'
-import { Separator } from '../../core/Separator'
+import { SiteMap } from '../SiteMap'
+import { ScrollArea } from '../../core'
 
 const fadeIn = keyframes({
   from: { opacity: '0' },
@@ -75,11 +72,13 @@ const slideOut = keyframes({
 
 const StyledContent = styled(DialogPrimitive.Content, {
   backgroundColor: 'black',
-  border: '$sizes$frame solid $frame',
-  position: 'fixed',
+  borderLeft: '$sizes$frame solid $frame',
+  borderRight: '$sizes$frame solid $frame',
+  position: 'absolute',
   top: 0,
   right: 0,
   bottom: 0,
+  left: 0,
 
   transition: 'width 50ms linear',
   $$transformValue: 'translate(10%, -10%) scale(0.7)',
@@ -106,22 +105,27 @@ type DialogContentPrimitiveProps = React.ComponentProps<
   typeof DialogPrimitive.Content
 >
 type ContentProps = DialogContentPrimitiveProps & {
-  menuWidth: string
   css?: CSS
 }
 
-export const Content = React.forwardRef<
+const Content = React.forwardRef<
   React.ElementRef<typeof StyledContent>,
   ContentProps
->(({ children, menuWidth, ...props }, forwardedRef) => (
+>(({ children, ...props }, forwardedRef) => (
   <StyledContent
     {...props}
     ref={forwardedRef}
     css={{
-      width: '100%',
-      '@bp3': {
-        width: `calc(${menuWidth} + $sizes$frame)`,
+      position: 'fixed',
+      margin: '0 auto',
+      maxWidth: '1600px',
+      '@bp2': {
+        margin: '0 $6',
       },
+      '@bp4': {
+        margin: '0 auto',
+      },
+      height: '100%',
     }}
   >
     {children}
@@ -140,23 +144,16 @@ export const Close = DialogPrimitive.Close
 export const Title = DialogPrimitive.Title
 export const Description = DialogPrimitive.Description
 
-const radioCss: CSS = {
-  [`& *, & ${Text}`]: {
-    color: '$whiteA9',
-  },
-
-  [`&[data-state="checked"] *, &[data-state="checked"] ${Text}`]: {
-    color: 'white',
-  },
+export type MenuSection = {
+  title: string
+  links: LinkData[]
 }
 
 type Props = {
-  externalLinks?: LinkData[]
-  menuLinks: LinkData[]
-  menuWidth: string
+  menuSections: MenuSection[]
 }
 
-export function SiteMenu({ externalLinks, menuLinks, menuWidth }: Props) {
+export function SiteMenu({ menuSections }: Props) {
   const [open, _setOpen] = useState<boolean>(false)
 
   const setOpen = useCallback(
@@ -175,9 +172,6 @@ export function SiteMenu({ externalLinks, menuLinks, menuWidth }: Props) {
         <Trigger asChild>
           <Box
             css={{
-              position: 'fixed',
-              top: '$3',
-              right: '$3',
               cursor: 'pointer',
             }}
           >
@@ -186,89 +180,31 @@ export function SiteMenu({ externalLinks, menuLinks, menuWidth }: Props) {
             </Box>
           </Box>
         </Trigger>
-        <Content menuWidth={menuWidth}>
-          <Flex
-            direction="column"
-            align="center"
-            justify="center"
-            css={{
-              height: '100%',
-              padding: '$6',
-              '& *': {
-                color: 'white',
-              },
-            }}
-          >
+        <Content>
+          <ScrollArea>
             <Flex
               direction="column"
-              gap={{
-                '@initial': '3',
-                '@bp2': '4',
+              align="center"
+              justify="center"
+              css={{
+                height: '100%',
+                padding: '$12 $6',
+                margin: '0 auto',
+                maxWidth: '1200px',
+                '& *': {
+                  color: 'white',
+                },
               }}
-              align="start"
             >
-              <Box css={{ margin: '$3 0' }}>
-                <SimpleLogoIcon />
-              </Box>
-              {menuLinks.map(({ title, link }) => (
-                <MenuLink
-                  key={link}
-                  link={link}
-                  title={title}
-                  onClick={() => setOpen(false)}
-                />
-              ))}
-              {!!externalLinks?.length && (
-                <>
-                  <Separator />
-                  <Flex gap="3">
-                    {externalLinks.map(({ title, link }) => (
-                      <MenuLink key={link} link={link} title={title} newTab />
-                    ))}
-                  </Flex>
-                </>
-              )}
-              <ThemeRadio radioCss={radioCss} css={{ marginTop: '$6' }} />
+              <SiteMap
+                menuSections={menuSections}
+                onClick={() => setOpen(false)}
+                inSiteMenu
+              />
             </Flex>
-          </Flex>
+          </ScrollArea>
         </Content>
       </Container>
     </Box>
-  )
-}
-
-type MenuLinkProps = {
-  link: string
-  title: React.ReactNode
-  onClick?: () => void
-  newTab?: boolean
-}
-
-function MenuLink({ link, title, onClick, newTab }: MenuLinkProps) {
-  return (
-    <Text
-      size={{
-        '@initial': '20',
-        '@bp2': '24',
-      }}
-      font="mono"
-      css={{
-        '@initial': {
-          lineHeight: '24px',
-        },
-        '@bp2': {
-          lineHeight: '30px',
-        },
-      }}
-    >
-      <NextLink
-        variant="light"
-        href={link}
-        onClick={onClick}
-        target={newTab ? '_blank' : undefined}
-      >
-        {title}
-      </NextLink>
-    </Text>
   )
 }

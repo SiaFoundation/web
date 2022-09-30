@@ -100,11 +100,6 @@ export function Li({ children, index = 0, size = '18', css }: LiProps) {
           <Text color="contrast">{numEl || <DotMark16 />}</Text>
         </Flex>
       </Flex>
-      {/* ) : (
-        <Text color="contrast">
-          <DotMark16 />
-        </Text>
-      )} */}
       <Paragraph color="contrast" size={size} css={{ flex: 1 }}>
         {children}
       </Paragraph>

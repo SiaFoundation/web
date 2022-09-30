@@ -1,5 +1,6 @@
 export * from './SiteLayout'
 export * from './SiteHeading'
+export * from './SiteMap'
 export * from './ContentGallery'
 export * from './ContentItem'
 export * from './ContentProject'

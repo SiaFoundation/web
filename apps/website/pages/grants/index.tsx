@@ -14,12 +14,11 @@ import {
   Ol,
   Li,
   Code,
+  Text,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
-import { getArticles } from '../../content/articles'
 import { getSoftware } from '../../content/software'
-import { AsyncReturnType } from '../../lib/types'
 import { getStats } from '../../content/stats'
 import { textContent } from '../../lib/utils'
 import backgroundImage from '../../assets/backgrounds/nate-snow.png'
@@ -41,16 +40,14 @@ const description = (
   </>
 )
 
-type Props = AsyncReturnType<typeof getStaticProps>['props']
-
-function CommunityEcosystem({ blogs }: Props) {
+export default function Grants() {
   return (
     <Layout
       title={title}
       description={textContent(description)}
       path={routes.community.index}
       heading={
-        <Section size="4">
+        <Section py="4">
           <SiteHeading
             title={title}
             description={description}
@@ -73,7 +70,7 @@ function CommunityEcosystem({ blogs }: Props) {
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <Section css={{ maxWidth: '800px' }} gap="9">
+      <Section py="4" css={{ maxWidth: '800px' }} gap="7">
         <SiteHeading
           size="32"
           title="The Grant Process"
@@ -144,17 +141,17 @@ function CommunityEcosystem({ blogs }: Props) {
                       community.
                     </Li>
                     <Li size="14" index={4}>
-                      The Grant Committee convenes bi-weekly to review the
+                      The Grant Committee convenes every two weeks to review the
                       following:
                       <Ol css={{ marginTop: '$3' }}>
-                        <Li size="14" index={1}>
+                        <Li size="14">
                           New proposals, to accept, reject, or request more
                           info.
                         </Li>
-                        <Li size="14" index={2}>
+                        <Li size="14">
                           Existing grants, to assess their progress.
                         </Li>
-                        <Li size="14" index={3}>
+                        <Li size="14">
                           Newly completed grants, to review their outcomes.
                         </Li>
                       </Ol>
@@ -173,10 +170,66 @@ function CommunityEcosystem({ blogs }: Props) {
                   following factors while utilizing a scoring matrix to ensure a
                   thorough vetting process.
                   <Ol css={{ marginTop: '$4' }}>
-                    <Li size="14">Mission of user-owned data</Li>
-                    <Li size="14">Network adoption</Li>
-                    <Li size="14">Decentralization</Li>
-                    <Li size="14">Community impact</Li>
+                    <Li size="14" index={1}>
+                      <Text weight="semibold">
+                        In line with Foundation’s mission
+                      </Text>
+                      <Ol css={{ marginTop: '$1' }}>
+                        <Li size="14">
+                          Does the proposal address a recognized need in the
+                          decentralized cloud storage community? Is the need
+                          consistent with The Sia Foundation’s mission of
+                          user-owned data?
+                        </Li>
+                      </Ol>
+                    </Li>
+                    <Li size="14" index={2}>
+                      <Text weight="semibold">Community Impact</Text>
+                      <Ol css={{ marginTop: '$1' }}>
+                        <Li size="14">
+                          Will the project provide a meaningful volume of
+                          services and/or people served in the decentralized
+                          cloud storage community (in particular the Sia
+                          community)?
+                        </Li>
+                      </Ol>
+                    </Li>
+                    <Li size="14" index={3}>
+                      <Text weight="semibold">Goals, Objectives & Outcome</Text>
+                      <Ol css={{ marginTop: '$1' }}>
+                        <Li size="14">
+                          Are there clear goals and objectives written? Are
+                          measurable outcomes evident?
+                        </Li>
+                      </Ol>
+                    </Li>
+                    <Li size="14" index={4}>
+                      <Text weight="semibold">Deliverable</Text>
+                      <Ol css={{ marginTop: '$1' }}>
+                        <Li size="14">
+                          How well does the individual/organization demonstrate
+                          the ability to deliver and measure proposed outcomes?
+                        </Li>
+                      </Ol>
+                    </Li>
+                    <Li size="14" index={5}>
+                      <Text weight="semibold">Risks</Text>
+                      <Ol css={{ marginTop: '$1' }}>
+                        <Li size="14">
+                          Is the risk reasonable for the timeline provided?
+                          Please be thoughtful if the risk is high enough to
+                          impact the outcome of the project.
+                        </Li>
+                      </Ol>
+                    </Li>
+                    <Li size="14" index={6}>
+                      <Text weight="semibold">Budget Justification</Text>
+                      <Ol css={{ marginTop: '$1' }}>
+                        <Li size="14">
+                          How well does the applicant justify the budget?
+                        </Li>
+                      </Ol>
+                    </Li>
                   </Ol>
                 </>
               ),
@@ -184,7 +237,7 @@ function CommunityEcosystem({ blogs }: Props) {
           ]}
         />
       </Section>
-      <Section size="3">
+      <Section py="3">
         <SiteHeading
           size="32"
           title="Interested in a grant but have questions?"
@@ -206,7 +259,7 @@ function CommunityEcosystem({ blogs }: Props) {
           ]}
         />
       </Section>
-      <Section size="4">
+      <Section py="4">
         <SiteHeading
           size="32"
           title="Check out what people are building on Sia"
@@ -237,7 +290,7 @@ function CommunityEcosystem({ blogs }: Props) {
           }}
         />
       </Section>
-      <Section size="3">
+      <Section pt="2" pb="4">
         <Callout
           title="Get started on your grant proposal"
           size="2"
@@ -258,16 +311,11 @@ function CommunityEcosystem({ blogs }: Props) {
 
 export async function getStaticProps() {
   const stats = await getStats()
-  const blogs = getArticles(['ecosystem-featured'], 4)
-
   return {
     props: {
-      blogs,
       fallback: {
         '/api/stats': stats,
       },
     },
   }
 }
-
-export default CommunityEcosystem

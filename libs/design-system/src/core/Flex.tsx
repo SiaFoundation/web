@@ -116,6 +116,15 @@ export const Flex = styled('div', {
       13: {
         gap: '$13',
       },
+      14: {
+        gap: '$14',
+      },
+      15: {
+        gap: '$15',
+      },
+      16: {
+        gap: '$16',
+      },
     },
     gapY: {
       0: {
@@ -172,6 +181,15 @@ export const Flex = styled('div', {
       13: {
         rowGap: '$13',
       },
+      14: {
+        rowGap: '$14',
+      },
+      15: {
+        rowGap: '$15',
+      },
+      16: {
+        rowGap: '$16',
+      },
     },
     gapX: {
       0: {
@@ -227,6 +245,15 @@ export const Flex = styled('div', {
       },
       13: {
         columnGap: '$13',
+      },
+      14: {
+        columnGap: '$14',
+      },
+      15: {
+        columnGap: '$15',
+      },
+      16: {
+        columnGap: '$16',
       },
     },
     debug: {

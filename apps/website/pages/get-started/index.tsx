@@ -68,7 +68,7 @@ function GetStarted({ technical }: Props) {
       description={description}
       path={routes.getStarted.index}
       heading={
-        <Section size="4">
+        <Section py="4">
           <SiteHeading size="64" title={title} description={description} />
         </Section>
       }
@@ -76,9 +76,15 @@ function GetStarted({ technical }: Props) {
       previewImage={previewImageProps}
     >
       <Section
-        size="3"
+        py="3"
         width="flush"
-        css={{ position: 'relative', marginBottom: '$6' }}
+        css={{
+          paddingBottom: '$12',
+          position: 'relative',
+          marginBottom: '$9',
+          borderTop: '$sizes$frame solid $slate2',
+          borderBottom: '$sizes$frame solid $slate2',
+        }}
       >
         <WavesBackdrop />
         <Container>
@@ -297,20 +303,20 @@ gpg --verify Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`}
           </Flex>
         </Container>
       </Section>
-      <Section>
+      <Section py="3">
         <SiteHeading
           size="32"
-          title="Developer Tutorials"
+          title="Tutorials for developers new to Sia"
           description={
             <>Technical tutorials for new developers looking to build on Sia.</>
           }
         />
         <ContentGallery items={tutorials} />
       </Section>
-      <Section>
+      <Section py="3">
         <SiteHeading
           size="32"
-          title="Technical Walkthroughs"
+          title="Learn about the technology behind Sia"
           description={
             <>
               Technical deep-dives from the core team and the ecosystem of
@@ -320,10 +326,10 @@ gpg --verify Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`}
         />
         <ContentGallery columns="1" items={technical} />
       </Section>
-      <Section>
+      <Section py="3">
         <SiteHeading
           size="32"
-          title="Built on Sia"
+          title="Companies and projects building on Sia"
           description={
             <>
               Sia is a thriving ecosystem of open source software, layer 2
@@ -347,7 +353,7 @@ gpg --verify Sia-v${siaVersion.current}-SHA256SUMS.txt.asc`}
           items={services}
         />
       </Section>
-      <Section>
+      <Section py="3">
         <Callout
           title="Sia 101"
           size="2"
