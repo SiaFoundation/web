@@ -82,6 +82,7 @@ function GetStarted({ technical }: Props) {
           paddingBottom: '$12',
           position: 'relative',
           marginBottom: '$9',
+          zIndex: 1,
           borderTop: '$sizes$frame solid $slate2',
           borderBottom: '$sizes$frame solid $slate2',
         }}

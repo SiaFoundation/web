@@ -32,11 +32,11 @@ const services = getSoftware('open_source_software', 6)
 const title = 'Grants'
 const description = (
   <>
-    The Sia Foundation welcomes and supports contributors from all over the
-    world to come and build on Sia. The goal of the Foundation's grant program
-    is to fund research, development, developer tools, and anything else that
-    will support and further the mission of user-owned data while enriching the
-    Sia ecosystem.
+    We’re excited to announce the launch of the Sia Foundation’s Grants Program!
+    We welcome and support contributors from all over the world to come and
+    build on Sia. Our goal for this program is to fund research, development,
+    developer tools, and anything else that will support and further our mission
+    of user-owned data while enriching the Sia ecosystem.
   </>
 )
 
@@ -172,63 +172,40 @@ export default function Grants() {
                   <Ol css={{ marginTop: '$4' }}>
                     <Li size="14" index={1}>
                       <Text weight="semibold">
-                        In line with Foundation’s mission
-                      </Text>
-                      <Ol css={{ marginTop: '$1' }}>
-                        <Li size="14">
-                          Does the proposal address a recognized need in the
-                          decentralized cloud storage community? Is the need
-                          consistent with The Sia Foundation’s mission of
-                          user-owned data?
-                        </Li>
-                      </Ol>
+                        In line with Foundation’s mission:
+                      </Text>{' '}
+                      Does the proposal address a recognized need in the
+                      decentralized cloud storage community? Is the need
+                      consistent with The Sia Foundation’s mission of user-owned
+                      data?
                     </Li>
                     <Li size="14" index={2}>
-                      <Text weight="semibold">Community Impact</Text>
-                      <Ol css={{ marginTop: '$1' }}>
-                        <Li size="14">
-                          Will the project provide a meaningful volume of
-                          services and/or people served in the decentralized
-                          cloud storage community (in particular the Sia
-                          community)?
-                        </Li>
-                      </Ol>
+                      <Text weight="semibold">Community Impact:</Text> Will the
+                      project provide a meaningful volume of services and/or
+                      people served in the decentralized cloud storage community
+                      (in particular the Sia community)?
                     </Li>
                     <Li size="14" index={3}>
-                      <Text weight="semibold">Goals, Objectives & Outcome</Text>
-                      <Ol css={{ marginTop: '$1' }}>
-                        <Li size="14">
-                          Are there clear goals and objectives written? Are
-                          measurable outcomes evident?
-                        </Li>
-                      </Ol>
+                      <Text weight="semibold">
+                        Goals, Objectives & Outcome:
+                      </Text>{' '}
+                      Are there clear goals and objectives written? Are
+                      measurable outcomes evident?
                     </Li>
                     <Li size="14" index={4}>
-                      <Text weight="semibold">Deliverable</Text>
-                      <Ol css={{ marginTop: '$1' }}>
-                        <Li size="14">
-                          How well does the individual/organization demonstrate
-                          the ability to deliver and measure proposed outcomes?
-                        </Li>
-                      </Ol>
+                      <Text weight="semibold">Deliverable:</Text> How well does
+                      the individual/organization demonstrate the ability to
+                      deliver and measure proposed outcomes?
                     </Li>
                     <Li size="14" index={5}>
-                      <Text weight="semibold">Risks</Text>
-                      <Ol css={{ marginTop: '$1' }}>
-                        <Li size="14">
-                          Is the risk reasonable for the timeline provided?
-                          Please be thoughtful if the risk is high enough to
-                          impact the outcome of the project.
-                        </Li>
-                      </Ol>
+                      <Text weight="semibold">Risks:</Text> Is the risk
+                      reasonable for the timeline provided? Please be thoughtful
+                      if the risk is high enough to impact the outcome of the
+                      project.
                     </Li>
                     <Li size="14" index={6}>
-                      <Text weight="semibold">Budget Justification</Text>
-                      <Ol css={{ marginTop: '$1' }}>
-                        <Li size="14">
-                          How well does the applicant justify the budget?
-                        </Li>
-                      </Ol>
+                      <Text weight="semibold">Budget Justification:</Text> How
+                      well does the applicant justify the budget?
                     </Li>
                   </Ol>
                 </>
@@ -243,11 +220,12 @@ export default function Grants() {
           title="Interested in a grant but have questions?"
           description={
             <>
-              Come chat with Kino, Frances, and committee members who are
-              currently building out the program in the{' '}
-              <Code>#grants-program</Code> Discord channel. This channel
-              provides a space to ask questions, discuss grants, share ideas,
-              provide feedback, and collaborate with community members.
+              If you’re interested but have questions or need help submitting
+              your grant feel free to join the discord server and hop in the{' '}
+              <Code>#grants-program</Code> channel to chat with Kino, Frances,
+              and the committee members. This channel provides a space to ask
+              questions, discuss the grant program, share ideas, provide
+              feedback, and collaborate with community members.
             </>
           }
           links={[

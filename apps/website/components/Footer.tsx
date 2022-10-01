@@ -16,6 +16,7 @@ export function Footer() {
         width="flush"
         css={{
           position: 'relative',
+          zIndex: 1,
           borderTop: '$sizes$frame solid $slate3',
           borderBottom: '$sizes$frame solid $slate3',
         }}
