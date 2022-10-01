@@ -9,6 +9,7 @@ const textSize: Record<HeadingSizeVariants, TextSizeVariants['size']> = {
   20: { '@initial': '16', '@bp2': '20' },
   24: { '@initial': '20', '@bp2': '24' },
   32: { '@initial': '24', '@bp2': '32' },
+  40: { '@initial': '32', '@bp2': '40' },
   64: { '@initial': '40', '@bp2': '64' },
 }
 
@@ -17,6 +18,7 @@ const textTag: Record<HeadingSizeVariants, string> = {
   20: 'h3',
   24: 'h3',
   32: 'h2',
+  40: 'h2',
   64: 'h1',
 }
 
@@ -40,6 +42,12 @@ const textCss: Record<HeadingSizeVariants, CSS> = {
     letterSpacing: '-1%',
     '@bp2': { lineHeight: '110%' },
   },
+  40: {
+    fontWeight: 600,
+    lineHeight: '110%',
+    letterSpacing: '-1%',
+    '@bp2': { lineHeight: '110%' },
+  },
   64: {
     fontWeight: 600,
     lineHeight: '110%',
@@ -49,7 +57,7 @@ const textCss: Record<HeadingSizeVariants, CSS> = {
 }
 
 type TextSizeVariants = Pick<VariantProps<typeof Text>, 'size'>
-type HeadingSizeVariants = '20' | '24' | '32' | '64'
+type HeadingSizeVariants = '20' | '24' | '32' | '40' | '64'
 type HeadingVariants = { size?: HeadingSizeVariants } & Omit<
   VariantProps<typeof Text>,
   'size'

@@ -4,6 +4,7 @@ import { Paragraph } from '../core/Paragraph'
 import { Flex } from '../core/Flex'
 import { CSS } from '../config/theme'
 import { AnimatedPanel } from './AnimatedPanel'
+import { Heading } from '../core'
 
 type Props = {
   eyebrow?: string
@@ -54,9 +55,9 @@ export function Callout({
             {eyebrow}
           </Text>
         )}
-        <Text size="40" font="mono">
+        <Heading size="40" font="mono" css={{ fontWeight: '500' }}>
           {title}
-        </Text>
+        </Heading>
         <Paragraph>{description}</Paragraph>
         <NextLinkButton
           size="2"
