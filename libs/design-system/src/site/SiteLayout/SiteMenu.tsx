@@ -164,7 +164,7 @@ export function SiteMenu({ menuSections }: Props) {
           document.getElementById('menu-scroll')?.scrollTo({
             top: 0,
           })
-        }, 0)
+        }, 100)
       }
       if (!open) {
         document.body.setAttribute('style', '')
