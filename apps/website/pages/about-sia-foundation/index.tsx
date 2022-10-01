@@ -163,6 +163,7 @@ function Foundation({ team, newsPosts, reports }: Props) {
           width="flush"
           css={{
             position: 'relative',
+            zIndex: 1,
             borderTop: '$sizes$frame solid $slate2',
             borderBottom: '$sizes$frame solid $slate2',
           }}
