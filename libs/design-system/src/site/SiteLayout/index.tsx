@@ -74,7 +74,6 @@ export function SiteLayout({
 
   return (
     <Box
-      as="main"
       css={{
         position: 'relative',
         height: '100%',
@@ -82,86 +81,85 @@ export function SiteLayout({
         overflow: 'hidden',
       }}
     >
-      <ScrollArea id="main-scroll">
-        <Box
-          css={{
-            position: 'relative',
-            zIndex: 1,
-            transition: 'margin 100ms ease-in',
-            '@bp2': {
-              margin: focus ? '0 $5' : '0 $6',
-            },
-          }}
-        >
-          <Container
-            size="4"
+      <Box css={{ position: 'relative', zIndex: 1, height: '100%' }}>
+        <ScrollArea id="main-scroll">
+          <Box
             css={{
-              width: focus ? '800px' : '100%',
-              margin: focus ? '0' : '0 auto',
-              zIndex: 1,
-              maxWidth: focus ? '100%' : '1600px',
-              transition: `width ${transitionWidthDuration}ms ease-out`,
-              position: 'relative',
-              overflow: 'hidden',
-              backgroundColor: '$loContrast',
-              borderLeft: `$sizes$frame solid $frame`,
-              borderRight: `$sizes$frame solid $frame`,
-              padding: 0,
-              paddingTop: '$5',
+              transition: 'margin 100ms ease-in',
+              '@bp2': {
+                margin: focus ? '0 $5' : '0 $6',
+              },
             }}
           >
-            <Container size="4">
-              <Flex justify="between" align="center">
-                {navbar}
-                <SiteMenu menuSections={menuSections} />
-              </Flex>
-            </Container>
-            <Flex
-              as="main"
-              direction="column"
-              gap="8"
+            <Container
+              size="4"
               css={{
-                width: '100%',
-                opacity: transitioning ? 0 : 1,
+                width: focus ? '800px' : '100%',
+                margin: focus ? '0' : '0 auto',
+                maxWidth: focus ? '100%' : '1600px',
+                transition: `width ${transitionWidthDuration}ms ease-out`,
+                position: 'relative',
+                overflow: 'hidden',
+                backgroundColor: '$loContrast',
+                borderLeft: `$sizes$frame solid $frame`,
+                borderRight: `$sizes$frame solid $frame`,
+                padding: 0,
+                paddingTop: '$5',
               }}
             >
-              {focus || (
-                <Flex direction="column">
-                  <Box>{heading}</Box>
-                  <Box
-                    css={{
-                      position: 'relative',
-                      width: '100%',
-                      height: '390px',
-                      overflow: 'hidden',
-                      borderTop: '$sizes$frame solid $frame',
-                      borderBottom: '$sizes$frame solid $frame',
-                      '@initial': {
-                        display: 'block',
-                      },
-                      '@bp2': {
-                        display: 'none',
-                      },
-                    }}
-                  >
+              <Container size="4">
+                <Flex justify="between" align="center">
+                  {navbar}
+                  <SiteMenu menuSections={menuSections} />
+                </Flex>
+              </Container>
+              <Flex
+                as="main"
+                direction="column"
+                gap="8"
+                css={{
+                  width: '100%',
+                  opacity: transitioning ? 0 : 1,
+                }}
+              >
+                {focus || (
+                  <Flex direction="column">
+                    <Box>{heading}</Box>
                     <Box
                       css={{
                         position: 'relative',
                         width: '100%',
                         height: '390px',
-                        background: `url(${backgroundImage.src})`,
-                        backgroundSize: 'cover',
+                        overflow: 'hidden',
+                        borderTop: '$sizes$frame solid $frame',
+                        borderBottom: '$sizes$frame solid $frame',
+                        '@initial': {
+                          display: 'block',
+                        },
+                        '@bp2': {
+                          display: 'none',
+                        },
                       }}
-                    />
-                  </Box>
-                  <Box>{children}</Box>
-                  {footer}
-                </Flex>
-              )}
-            </Flex>
-          </Container>
-        </Box>
-      </ScrollArea>
+                    >
+                      <Box
+                        css={{
+                          position: 'relative',
+                          width: '100%',
+                          height: '390px',
+                          background: `url(${backgroundImage.src})`,
+                          backgroundSize: 'cover',
+                        }}
+                      />
+                    </Box>
+                    <Box>{children}</Box>
+                    {footer}
+                  </Flex>
+                )}
+              </Flex>
+            </Container>
+          </Box>
+        </ScrollArea>
+      </Box>
       <Box
         css={{
           position: 'absolute',
