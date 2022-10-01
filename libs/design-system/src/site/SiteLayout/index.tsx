@@ -19,6 +19,8 @@ type Props = {
   transitionFadeDelay?: number
 }
 
+const focusWidth = '600px'
+
 export function SiteLayout({
   menuSections,
   navbar,
@@ -71,9 +73,15 @@ export function SiteLayout({
         position: 'relative',
         height: '100%',
         background: '$loContrast',
+        border: focus ? '$sizes$frame solid $frame' : 'none',
         overflow: 'hidden',
       }}
     >
+      {focus && (
+        <Box css={{ position: 'fixed', zIndex: 2, top: '$4', right: '$4' }}>
+          <SiteMenu menuSections={menuSections} />
+        </Box>
+      )}
       <Box css={{ position: 'relative', zIndex: 1, height: '100%' }}>
         <ScrollArea id="main-scroll">
           <Box
@@ -87,7 +95,7 @@ export function SiteLayout({
             <Container
               size="4"
               css={{
-                width: focus ? '600px' : '100%',
+                width: focus ? focusWidth : '100%',
                 margin: focus ? '0' : '0 auto',
                 maxWidth: focus ? '100%' : '1600px',
                 transition: `width ${transitionWidthDuration}ms ease-out`,
@@ -96,7 +104,8 @@ export function SiteLayout({
                 backgroundColor: '$loContrast',
                 // borderLeft: `$sizes$frame solid $frame`,
                 // borderRight: `$sizes$frame solid $frame`,
-                border: '$sizes$frame solid $frame',
+                border: focus ? 'none' : '$sizes$frame solid $frame',
+                borderRight: '$sizes$frame solid $frame',
                 padding: 0,
                 paddingTop: '$5',
               }}
@@ -104,9 +113,7 @@ export function SiteLayout({
               <Container size="4">
                 <Flex justify="between" align="start">
                   {navbar}
-                  <Flex css={{}}>
-                    <SiteMenu menuSections={menuSections} />
-                  </Flex>
+                  {!focus && <SiteMenu menuSections={menuSections} />}
                 </Flex>
               </Container>
               <Flex
@@ -164,7 +171,8 @@ export function SiteLayout({
           top: 0,
           zIndex: 0,
           height: '100%',
-          width: '100%',
+          width: focus ? `calc(100% - ${focusWidth})` : '100%',
+          left: focus ? focusWidth : 0,
           overflow: 'hidden',
           background: 'white',
         }}
