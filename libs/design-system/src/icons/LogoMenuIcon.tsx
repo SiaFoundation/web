@@ -1,14 +1,13 @@
-import { keyframes } from '../config/theme'
 import { Box } from '../core'
 
-const spin = keyframes({
-  from: {
-    transform: 'rotate(0deg)',
-  },
-  to: {
-    transform: 'rotate(360deg)',
-  },
-})
+// const spin = keyframes({
+//   from: {
+//     transform: 'rotate(0deg)',
+//   },
+//   to: {
+//     transform: 'rotate(360deg)',
+//   },
+// })
 
 export function LogoMenuIcon() {
   return (
@@ -28,8 +27,9 @@ export function LogoMenuIcon() {
         clipPath="url(#clip0_168_52647)"
         css={{
           fill: '$loContrast',
-          transformOrigin: 'center',
-          animation: `${spin} 1s`,
+          // transformOrigin: 'center',
+          // transformBox: 'fill-box',
+          // animation: `${spin} 1s`,
         }}
       >
         <path

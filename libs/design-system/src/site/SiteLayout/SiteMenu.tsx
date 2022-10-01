@@ -179,6 +179,7 @@ export function SiteMenu({ menuSections }: Props) {
         <Trigger asChild>
           <Box
             css={{
+              position: 'relative',
               cursor: 'pointer',
             }}
           >
