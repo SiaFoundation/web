@@ -1,14 +1,7 @@
-import {
-  Box,
-  Flex,
-  ImageProps,
-  SiteLayout,
-  webLinks,
-} from '@siafoundation/design-system'
+import { Box, Flex, ImageProps, SiteLayout } from '@siafoundation/design-system'
 import { Footer } from './Footer'
 import { PageHead } from './PageHead'
 import { Navbar } from './Navbar'
-import { routes } from '../config/routes'
 import { menuSections } from '../config/siteMap'
 
 type Props = {
@@ -57,23 +50,11 @@ export function Layout({
         path={path}
       />
       <SiteLayout
-        appName="Sia"
-        homeHref={routes.home.index}
         focus={focus}
         transitions={transitions}
         transitionWidthDuration={transitionWidthDuration}
         transitionFadeDelay={transitionFadeDelay}
         heading={heading}
-        externalLinks={[
-          {
-            link: webLinks.github,
-            title: 'GitHub',
-          },
-          {
-            link: webLinks.discord,
-            title: 'Discord',
-          },
-        ]}
         menuSections={menuSections}
         footer={<Footer />}
         backgroundImage={backgroundImage}

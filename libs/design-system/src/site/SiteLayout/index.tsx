@@ -4,15 +4,11 @@ import { ImageProps } from '../../lib/image'
 import { Flex } from '../../core/Flex'
 import { MenuSection, SiteMenu } from './SiteMenu'
 import { Container } from '../../core/Container'
-import { LinkData } from '../../lib/links'
 import React, { useEffect, useState } from 'react'
 
 type Props = {
-  appName: string
-  homeHref: string
   navbar?: React.ReactNode
   menuSections: MenuSection[]
-  externalLinks?: LinkData[]
   heading: React.ReactNode
   footer?: React.ReactNode
   children: React.ReactNode
@@ -24,10 +20,7 @@ type Props = {
 }
 
 export function SiteLayout({
-  appName,
-  homeHref,
   menuSections,
-  externalLinks,
   navbar,
   heading,
   children,
@@ -87,22 +80,23 @@ export function SiteLayout({
             css={{
               transition: 'margin 100ms ease-in',
               '@bp2': {
-                margin: focus ? '0 $5' : '0 $6',
+                margin: focus ? '0' : '0 $6',
               },
             }}
           >
             <Container
               size="4"
               css={{
-                width: focus ? '800px' : '100%',
+                width: focus ? '600px' : '100%',
                 margin: focus ? '0' : '0 auto',
                 maxWidth: focus ? '100%' : '1600px',
                 transition: `width ${transitionWidthDuration}ms ease-out`,
                 position: 'relative',
                 overflow: 'hidden',
                 backgroundColor: '$loContrast',
-                borderLeft: `$sizes$frame solid $frame`,
-                borderRight: `$sizes$frame solid $frame`,
+                // borderLeft: `$sizes$frame solid $frame`,
+                // borderRight: `$sizes$frame solid $frame`,
+                border: '$sizes$frame solid $frame',
                 padding: 0,
                 paddingTop: '$5',
               }}
