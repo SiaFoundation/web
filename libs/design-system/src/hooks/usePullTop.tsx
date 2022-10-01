@@ -2,9 +2,10 @@ import { throttle } from 'lodash'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 const cooldown = 300
-const count = 7
-const countThreshold = 3
-const topThreshold = 50
+const count = 10
+const countThreshold = 4
+const topThreshold = 60
+const resetThreshold = 80
 
 export function usePullTop(
   id: string,
@@ -25,6 +26,9 @@ export function usePullTop(
           return
         }
         const top = element?.scrollTop
+        if (top > resetThreshold) {
+          ref.current.positions = []
+        }
         ref.current.positions = [top, ...ref.current.positions].slice(0, count)
         if (
           ref.current.positions.length >= count &&
