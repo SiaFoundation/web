@@ -20,14 +20,6 @@ export function LogoMenuIcon() {
       xmlns="http://www.w3.org/2000/svg"
       css={{
         fill: 'none',
-        '& > rect': {
-          display: 'none',
-        },
-        '@hover': {
-          '& > rect': {
-            display: 'block',
-          },
-        },
       }}
     >
       <circle cx="31" cy="30" r="30" fill="var(--colors-loContrast)" />
@@ -37,9 +29,7 @@ export function LogoMenuIcon() {
         css={{
           fill: '$loContrast',
           transformOrigin: 'center',
-          '@hover': {
-            animation: `${spin} 1s`,
-          },
+          animation: `${spin} 1s`,
         }}
       >
         <path

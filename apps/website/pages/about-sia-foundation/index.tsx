@@ -222,11 +222,11 @@ function Foundation({ team, newsPosts, reports }: Props) {
       </Section>
       <Section pt="2" pb="4">
         <Callout
-          title="Apply for a role at The Sia Foundation"
+          title="Work at the Sia Foundation"
           size="2"
           description={
             <>
-              If you are interested in a career at The Sia Foundation please see
+              If you are interested in a career at the Sia Foundation please see
               our openings.
             </>
           }

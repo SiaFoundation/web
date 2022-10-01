@@ -159,6 +159,13 @@ export function SiteMenu({ menuSections }: Props) {
   const setOpen = useCallback(
     (open: boolean) => {
       _setOpen(open)
+      if (open) {
+        setTimeout(() => {
+          document.getElementById('menu-scroll')?.scrollTo({
+            top: 0,
+          })
+        }, 0)
+      }
       if (!open) {
         document.body.setAttribute('style', '')
       }
@@ -181,7 +188,7 @@ export function SiteMenu({ menuSections }: Props) {
           </Box>
         </Trigger>
         <Content>
-          <ScrollArea>
+          <ScrollArea id="menu-scroll">
             <Flex
               direction="column"
               align="center"

@@ -102,9 +102,11 @@ export function SiteLayout({
               }}
             >
               <Container size="4">
-                <Flex justify="between" align="center">
+                <Flex justify="between" align="start">
                   {navbar}
-                  <SiteMenu menuSections={menuSections} />
+                  <Flex css={{}}>
+                    <SiteMenu menuSections={menuSections} />
+                  </Flex>
                 </Flex>
               </Container>
               <Flex
@@ -116,7 +118,8 @@ export function SiteLayout({
                   opacity: transitioning ? 0 : 1,
                 }}
               >
-                {focus || (
+                {focus}
+                {!focus && (
                   <Flex direction="column">
                     <Box>{heading}</Box>
                     <Box
