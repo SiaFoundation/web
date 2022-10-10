@@ -40,12 +40,7 @@ const StyledOverlay = styled(DialogPrimitive.Overlay, overlayStyles, {
 type ContainerProps = React.ComponentProps<typeof DialogPrimitive.Root>
 
 function Container({ children, ...props }: ContainerProps) {
-  return (
-    <DialogPrimitive.Root {...props}>
-      <StyledOverlay />
-      {children}
-    </DialogPrimitive.Root>
-  )
+  return <DialogPrimitive.Root {...props}>{children}</DialogPrimitive.Root>
 }
 
 const slideIn = keyframes({
@@ -112,31 +107,34 @@ const Content = React.forwardRef<
   React.ElementRef<typeof StyledContent>,
   ContentProps
 >(({ children, ...props }, forwardedRef) => (
-  <StyledContent
-    {...props}
-    ref={forwardedRef}
-    css={{
-      position: 'fixed',
-      margin: '0 auto',
-      maxWidth: '1600px',
-      '@bp2': {
-        margin: '0 $6',
-      },
-      '@bp4': {
+  <DialogPrimitive.DialogPortal>
+    <StyledOverlay />
+    <StyledContent
+      {...props}
+      ref={forwardedRef}
+      css={{
+        position: 'fixed',
         margin: '0 auto',
-      },
-      height: '100%',
-    }}
-  >
-    {children}
-    <StyledCloseButton asChild>
-      <Box css={{ position: 'absolute', top: '$3', right: '$3' }}>
-        <IconButton size="3" variant="ghost" css={{ color: 'white' }}>
-          <Close24 />
-        </IconButton>
-      </Box>
-    </StyledCloseButton>
-  </StyledContent>
+        maxWidth: '1600px',
+        '@bp2': {
+          margin: '0 $6',
+        },
+        '@bp4': {
+          margin: '0 auto',
+        },
+        height: '100%',
+      }}
+    >
+      {children}
+      <StyledCloseButton asChild>
+        <Box css={{ position: 'absolute', top: '$3', right: '$3' }}>
+          <IconButton size="3" variant="ghost" css={{ color: 'white' }}>
+            <Close24 />
+          </IconButton>
+        </Box>
+      </StyledCloseButton>
+    </StyledContent>
+  </DialogPrimitive.DialogPortal>
 ))
 
 export const Trigger = DialogPrimitive.Trigger
