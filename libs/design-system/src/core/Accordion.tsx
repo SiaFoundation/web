@@ -1,7 +1,7 @@
 import React from 'react'
 import { styled, CSS } from '../config/theme'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
-import { ChevronDownIcon } from '@radix-ui/react-icons'
+import { ChevronDown16 } from '../icons'
 
 const StyledAccordion = styled(AccordionPrimitive.Root, {})
 
@@ -118,7 +118,7 @@ export const AccordionTrigger = React.forwardRef<
   <StyledHeader>
     <StyledTrigger {...props} ref={forwardedRef}>
       {children}
-      <ChevronDownIcon />
+      <ChevronDown16 />
     </StyledTrigger>
   </StyledHeader>
 ))

@@ -12,6 +12,7 @@ const globalStyles = globalCss({
     margin: 0,
     '-webkit-font-smoothing': 'antialiased',
     '-moz-osx-font-smoothing': 'grayscale',
+    '-webkit-text-size-adjust': 'none',
     lineHeight: 1,
     overflow: 'hidden',
   },

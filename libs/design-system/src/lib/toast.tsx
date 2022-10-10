@@ -1,4 +1,4 @@
-import { CheckCircledIcon, CrossCircledIcon } from '@radix-ui/react-icons'
+import { CheckmarkOutline16, CloseOutline16 } from '../icons'
 import toast, {
   DefaultToastOptions,
   Toaster as RToaster,
@@ -48,11 +48,11 @@ const defaultOptions: DefaultToastOptions = {
   style: defaultStyles,
   success: {
     style: successStyles,
-    icon: <CheckCircledIcon />,
+    icon: <CheckmarkOutline16 />,
   },
   error: {
     style: errorStyles,
-    icon: <CrossCircledIcon />,
+    icon: <CloseOutline16 />,
   },
 }
 

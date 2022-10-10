@@ -86,21 +86,21 @@ export function ThemeRadio({ css, radioCss }: Props) {
       css={css}
     >
       <RadioCard value="system" css={radioCardCss}>
-        <Tooltip content="System">
+        <Tooltip sideOffset={16} content="System">
           <Box css={{ color: '$textContrast' }}>
             <Screen16 />
           </Box>
         </Tooltip>
       </RadioCard>
       <RadioCard value="light" css={radioCardCss}>
-        <Tooltip content="Light">
+        <Tooltip sideOffset={16} content="Light">
           <Box css={{ color: '$textContrast' }}>
             <Awake16 />
           </Box>
         </Tooltip>
       </RadioCard>
       <RadioCard value="dark" css={radioCardCss}>
-        <Tooltip content="Dark">
+        <Tooltip sideOffset={16} content="Dark">
           <Box css={{ color: '$textContrast' }}>
             <Asleep16 />
           </Box>

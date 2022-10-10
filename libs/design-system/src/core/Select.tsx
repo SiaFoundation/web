@@ -1,6 +1,6 @@
 import React from 'react'
 import { styled, CSS } from '../config/theme'
-import { CaretSortIcon } from '@radix-ui/react-icons'
+import { CaretSort16 } from '../icons'
 
 const SelectWrapper = styled('div', {
   backgroundColor: '$control',
@@ -68,8 +68,9 @@ const StyledSelect = styled('select', {
   lineHeight: '25px',
 })
 
-const StyledCaretSortIcon = styled(CaretSortIcon, {
+const StyledCaretSortIcon = styled(CaretSort16, {
   pointerEvents: 'none',
+  transform: 'scale(0.75)',
 })
 
 type SelectProps = Omit<React.ComponentProps<typeof StyledSelect>, 'size'> &

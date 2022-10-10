@@ -1,7 +1,7 @@
 import BaseNextImage from 'next/image'
 import { CSS, styled } from '../config/theme'
 
-export const Image = styled('img', {
+const imageCss: CSS = {
   verticalAlign: 'middle',
   maxWidth: '100%',
 
@@ -18,13 +18,7 @@ export const Image = styled('img', {
       },
     },
   },
-})
-
-type NextImageProps = React.ComponentProps<typeof BaseNextImage> &
-  React.ComponentProps<typeof Image> & {
-    css?: CSS
-  }
-
-export function NextImage(props: NextImageProps) {
-  return <Image as={BaseNextImage} {...props} />
 }
+
+export const Image = styled('img', imageCss)
+export const NextImage = styled(BaseNextImage, imageCss)

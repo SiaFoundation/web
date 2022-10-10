@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from 'react'
 import { useCallback, useEffect } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
+import { Provider as TooltipProvider } from '@radix-ui/react-tooltip'
 import { useGlobalStyles } from '../config/css'
 import { darkTheme } from '../config/theme'
 
@@ -126,5 +127,9 @@ export function ThemeProvider({ children, ssr }: Props) {
     activeMode,
   } as State
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+  return (
+    <ThemeContext.Provider value={value}>
+      <TooltipProvider>{children}</TooltipProvider>
+    </ThemeContext.Provider>
+  )
 }
