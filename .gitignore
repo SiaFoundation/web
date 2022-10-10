@@ -59,3 +59,5 @@ apps/website/public/rss
 .env
 deploy.log
 
+# Next.js
+.next

@@ -1,14 +1,17 @@
 {
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/asset-server/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:webpack",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/asset-server",
         "main": "apps/asset-server/src/main.ts",
-        "tsConfig": "apps/asset-server/tsconfig.app.json"
+        "tsConfig": "apps/asset-server/tsconfig.app.json",
+        "target": "node",
+        "compiler": "tsc"
       },
       "configurations": {
         "production": {
