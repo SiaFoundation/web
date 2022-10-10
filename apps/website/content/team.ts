@@ -30,6 +30,12 @@ export default [
     title: 'Core Developer',
   },
   {
+    name: 'PJ',
+    image: 'pj',
+    github: 'peterjan',
+    title: 'Core Developer',
+  },
+  {
     name: 'Frances',
     image: 'frances',
     title: 'Director of Operations',
