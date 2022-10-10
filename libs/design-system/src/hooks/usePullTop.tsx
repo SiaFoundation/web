@@ -1,11 +1,14 @@
 import { throttle } from 'lodash'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-const cooldown = 300
-const count = 10
-const countThreshold = 4
-const topThreshold = 60
-const resetThreshold = 80
+const throttleDelay = 300
+
+const countThresholdTriggerStart = 3
+const countThresholdTriggerTransition = 10
+
+const topMaximumTriggerValue = 60
+const topResetThreshold = 80
+const noActivityResetThreshold = 5_000
 
 export function usePullTop(
   id: string,
@@ -18,6 +21,20 @@ export function usePullTop(
   })
   const [positions, setPositions] = useState<number[]>([])
 
+  // Reset after a no scroll activity for certain time
+  useEffect(() => {
+    if (!ref.current.positions.length) {
+      return
+    }
+    const noActivityTimeout = setTimeout(() => {
+      ref.current.positions = []
+      setPositions(ref.current.positions)
+    }, noActivityResetThreshold)
+    return () => {
+      clearTimeout(noActivityTimeout)
+    }
+  }, [positions])
+
   const updatePosition = useMemo(
     () =>
       throttle(() => {
@@ -26,19 +43,22 @@ export function usePullTop(
           return
         }
         const top = element?.scrollTop
-        if (top > resetThreshold) {
+        if (top > topResetThreshold) {
           ref.current.positions = []
         }
-        ref.current.positions = [top, ...ref.current.positions].slice(0, count)
+        ref.current.positions = [top, ...ref.current.positions].slice(
+          0,
+          countThresholdTriggerTransition
+        )
         if (
-          ref.current.positions.length >= count &&
-          !ref.current.positions.find((p) => p > topThreshold)
+          ref.current.positions.length >= countThresholdTriggerTransition &&
+          !ref.current.positions.find((p) => p > topMaximumTriggerValue)
         ) {
           onTrigger()
           ref.current.positions = []
         }
         setPositions(ref.current.positions)
-      }, cooldown),
+      }, throttleDelay),
     [ref, setPositions, id, onTrigger]
   )
 
@@ -46,20 +66,26 @@ export function usePullTop(
     if (!isActive) {
       return
     }
-
-    window.addEventListener('wheel', updatePosition, {
+    const main = document.getElementById('main-scroll')
+    if (!main) {
+      return
+    }
+    main.addEventListener('wheel', updatePosition, {
       passive: true,
     })
-    window.addEventListener('touchmove', updatePosition, {
+    main.addEventListener('touchmove', updatePosition, {
       passive: true,
     })
 
     updatePosition()
     return () => {
-      window.removeEventListener('wheel', updatePosition)
-      window.removeEventListener('touchmove', updatePosition)
+      main.removeEventListener('wheel', updatePosition)
+      main.removeEventListener('touchmove', updatePosition)
     }
   }, [isActive, updatePosition])
 
-  return positions.filter((i) => i <= topThreshold).length > countThreshold
+  return (
+    positions.filter((i) => i <= topMaximumTriggerValue).length >
+    countThresholdTriggerStart
+  )
 }

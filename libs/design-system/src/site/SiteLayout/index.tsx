@@ -102,10 +102,10 @@ export function SiteLayout({
                 position: 'relative',
                 overflow: 'hidden',
                 backgroundColor: '$loContrast',
-                // borderLeft: `$sizes$frame solid $frame`,
-                // borderRight: `$sizes$frame solid $frame`,
                 border: focus ? 'none' : '$sizes$frame solid $frame',
-                borderRight: '$sizes$frame solid $frame',
+                '@bp1': {
+                  borderRight: '$sizes$frame solid $frame',
+                },
                 padding: 0,
                 paddingTop: '$5',
               }}
