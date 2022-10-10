@@ -7,16 +7,17 @@
     "design-system": "libs/design-system",
     "env": "libs/env",
     "explorer-v1": "apps/explorer-v1",
+    "hostd": "apps/hostd",
     "react-core": "libs/react-core",
-    "react-renterd": "libs/react-renterd",
     "react-hostd": "libs/react-hostd",
+    "react-renterd": "libs/react-renterd",
     "react-siad": "libs/react-siad",
+    "renterd": "apps/renterd",
     "sia-js": "libs/sia-js",
     "sia-nodejs": "libs/sia-nodejs",
     "sia-react": "libs/sia-react",
     "siad": "apps/siad",
-    "hostd": "apps/hostd",
-    "renterd": "apps/renterd",
     "website": "apps/website"
-  }
+  },
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }
