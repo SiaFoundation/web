@@ -1,11 +1,11 @@
 import React from 'react'
-import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../core/DropdownMenu'
+import { OverflowMenuHorizontal20 } from '../icons'
 import { ThemeMenu } from './ThemeMenu'
 import { IconButton } from '../core/IconButton'
 
@@ -17,7 +17,7 @@ type Props = React.ComponentProps<typeof IconButton> & {
 export function UserDropdownMenu({ trigger, children, ...props }: Props) {
   const triggerEl = trigger || (
     <IconButton size="1" {...props} css={{ transform: 'scale(1.5)' }}>
-      <HamburgerMenuIcon />
+      <OverflowMenuHorizontal20 />
     </IconButton>
   )
 

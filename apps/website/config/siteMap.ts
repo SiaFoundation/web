@@ -64,7 +64,7 @@ export const menuSections = [
       },
       {
         link: routes.getStarted.index,
-        title: 'explored',
+        title: 'explorerd',
         disabled: true,
       },
     ],

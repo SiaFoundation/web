@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { styled, keyframes, CSS } from '../../config/theme'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { overlayStyles } from '../../core/Overlay'
@@ -112,6 +112,9 @@ const Content = React.forwardRef<
     <StyledContent
       {...props}
       ref={forwardedRef}
+      onOpenAutoFocus={(e) => {
+        e.preventDefault()
+      }}
       css={{
         position: 'fixed',
         margin: '0 auto',
@@ -152,24 +155,7 @@ type Props = {
 }
 
 export function SiteMenu({ menuSections }: Props) {
-  const [open, _setOpen] = useState<boolean>(false)
-
-  const setOpen = useCallback(
-    (open: boolean) => {
-      _setOpen(open)
-      if (open) {
-        setTimeout(() => {
-          document.getElementById('menu-scroll')?.scrollTo({
-            top: 0,
-          })
-        }, 100)
-      }
-      if (!open) {
-        document.body.setAttribute('style', '')
-      }
-    },
-    [_setOpen]
-  )
+  const [open, setOpen] = useState<boolean>(false)
 
   return (
     <Box css={{ position: 'relative', zIndex: 2 }}>

@@ -1,40 +1,64 @@
 import React from 'react'
-import { CheckIcon } from '@radix-ui/react-icons'
 import { styled, CSS } from '../config/theme'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { menuCss, separatorCss, itemCss, labelCss } from './Menu'
 import { Box } from './Box'
 import { Flex } from './Flex'
 import { panelStyles } from './Panel'
+import { CheckmarkOutline16 } from '../icons'
 import { scaleIn } from '../config/animations'
 
 export const DropdownMenu = DropdownMenuPrimitive.Root
 export const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
-export const DropdownMenuContent = styled(
+
+const dropdownMenuContentCss: CSS = {
+  boxShadow: '$colors$shadowPopup, $colors$border',
+  color: '$hiContrast',
+  '@hover': {
+    '&:hover': {
+      boxShadow: '$colors$shadowPopupFocus, $colors$border',
+    },
+  },
+  minWidth: 180,
+  padding: 5,
+  willChange: 'transform, opacity',
+  '@media (prefers-reduced-motion: no-preference)': {
+    transformOrigin: 'var(--radix-dropdown-menu-content-transform-origin)',
+    animation: `${scaleIn} 0.05s ease-out`,
+  },
+  position: 'relative',
+  '&[data-side="top"]': { bottom: '$1' },
+  '&[data-side="bottom"]': { top: '$1' },
+  '&[data-side="left"]': { right: '$1' },
+  '&[data-side="right"]': { left: '$1' },
+}
+
+const StyledDropdownMenuContent = styled(
   DropdownMenuPrimitive.Content,
   menuCss,
   panelStyles,
-  {
-    boxShadow: '$colors$shadowPopup, $colors$border',
-    color: '$hiContrast',
-    '@hover': {
-      '&:hover': {
-        boxShadow: '$colors$shadowPopupFocus, $colors$border',
-      },
-    },
-    minWidth: 180,
-    padding: 5,
-    willChange: 'transform, opacity',
-    '@media (prefers-reduced-motion: no-preference)': {
-      transformOrigin: 'var(--radix-dropdown-menu-content-transform-origin)',
-      animation: `${scaleIn} 0.05s ease-out`,
-    },
-    position: 'relative',
-    '&[data-side="top"]': { bottom: '$1' },
-    '&[data-side="bottom"]': { top: '$1' },
-    '&[data-side="left"]': { right: '$1' },
-    '&[data-side="right"]': { left: '$1' },
-  }
+  dropdownMenuContentCss
+)
+
+export const DropdownMenuContent = React.forwardRef<
+  React.ElementRef<typeof StyledDropdownMenuContent>,
+  React.ComponentProps<typeof StyledDropdownMenuContent>
+>((props, forwardedRef) => (
+  <DropdownMenuPrimitive.Portal>
+    <StyledDropdownMenuContent {...props} ref={forwardedRef} />
+  </DropdownMenuPrimitive.Portal>
+))
+
+export const DropdownMenuSub = DropdownMenuPrimitive.Sub
+export const DropdownMenuSubContent = styled(
+  DropdownMenuPrimitive.SubContent,
+  menuCss,
+  panelStyles,
+  dropdownMenuContentCss
+)
+export const DropdownMenuSubTrigger = styled(
+  DropdownMenuPrimitive.SubTrigger,
+  itemCss
 )
 
 export const DropdownMenuSeparator = styled(
@@ -42,10 +66,6 @@ export const DropdownMenuSeparator = styled(
   separatorCss
 )
 export const DropdownMenuItem = styled(DropdownMenuPrimitive.Item, itemCss)
-export const DropdownMenuTriggerItem = styled(
-  DropdownMenuPrimitive.TriggerItem,
-  itemCss
-)
 
 const StyledDropdownMenuRadioItem = styled(
   DropdownMenuPrimitive.RadioItem,
@@ -109,7 +129,7 @@ export const DropdownMenuCheckboxItem = React.forwardRef<
     {children}
     <DropdownMenuRightSlot>
       <DropdownMenuPrimitive.ItemIndicator>
-        <CheckIcon />
+        <CheckmarkOutline16 />
       </DropdownMenuPrimitive.ItemIndicator>
     </DropdownMenuRightSlot>
   </StyledDropdownMenuCheckboxItem>

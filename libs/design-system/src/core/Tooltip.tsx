@@ -42,7 +42,12 @@ export function Tooltip({
     >
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
 
-      <Content side="top" align="center" sideOffset={5} {...props}>
+      <Content
+        side="top"
+        align="center"
+        sideOffset={props.sideOffset || 5}
+        {...props}
+      >
         <Paragraph size="12">{content}</Paragraph>
       </Content>
     </TooltipPrimitive.Root>

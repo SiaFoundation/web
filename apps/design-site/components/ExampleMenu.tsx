@@ -10,13 +10,15 @@ import {
   DropdownMenuRightSlot,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  DropdownMenuTriggerItem,
   NextLink,
   LogoDiscord16,
   Notebook16,
   LicenseGlobal16,
   ArrowRight16,
   Information16,
+  DropdownMenuSubTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
 } from '@siafoundation/design-system'
 
 type Props = {
@@ -87,14 +89,14 @@ type SubMenuProps = {
 }
 
 const SubMenu = ({ name, children }: SubMenuProps) => (
-  <DropdownMenu>
-    <DropdownMenuTriggerItem>
+  <DropdownMenuSub>
+    <DropdownMenuSubTrigger>
       {name}
       <DropdownMenuRightSlot>
         <ArrowRight16 />
       </DropdownMenuRightSlot>
-    </DropdownMenuTriggerItem>
-    <DropdownMenuContent>
+    </DropdownMenuSubTrigger>
+    <DropdownMenuSubContent>
       {children}
       <DropdownMenuItem>
         About
@@ -122,6 +124,6 @@ const SubMenu = ({ name, children }: SubMenuProps) => (
           <LicenseGlobal16 />
         </DropdownMenuRightSlot>
       </DropdownMenuItem>
-    </DropdownMenuContent>
-  </DropdownMenu>
+    </DropdownMenuSubContent>
+  </DropdownMenuSub>
 )
