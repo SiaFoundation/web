@@ -1,9 +1,9 @@
-import { getContentPath } from '../config/content'
 import fs from 'fs'
 import { toPairs } from 'lodash'
 import { webLinks } from '@siafoundation/design-system'
 import { getMinutesInSeconds } from '../lib/time'
 import { getCacheValue } from '../lib/cache'
+import { getContentPath } from '@siafoundation/env'
 
 type Report = {
   year: string

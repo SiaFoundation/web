@@ -1,7 +1,7 @@
 import BaseNextImage from 'next/image'
-import { CSS, styled } from '../config/theme'
+import { styled } from '../config/theme'
 
-const imageCss: CSS = {
+export const Image = styled('img', {
   verticalAlign: 'middle',
   maxWidth: '100%',
 
@@ -18,7 +18,24 @@ const imageCss: CSS = {
       },
     },
   },
-}
+})
 
-export const Image = styled('img', imageCss)
-export const NextImage = styled(BaseNextImage, imageCss)
+// For some reason the radius prop was not working when sharing the css object with Image
+export const NextImage = styled(BaseNextImage, {
+  verticalAlign: 'middle',
+  maxWidth: '100%',
+
+  variants: {
+    radius: {
+      '1': {
+        borderRadius: '$1',
+      },
+      '2': {
+        borderRadius: '$2',
+      },
+      '3': {
+        borderRadius: '$3',
+      },
+    },
+  },
+})

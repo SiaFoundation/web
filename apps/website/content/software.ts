@@ -1,7 +1,7 @@
 import { ContentItemProps } from '@siafoundation/design-system'
 import { addNewTab } from '../lib/utils'
-import { readCacheJsonFile } from '../lib/readJson'
 import { getMinutesInSeconds } from '../lib/time'
+import { readCacheJsonFile } from '../lib/cache'
 
 type Software = ContentItemProps & {
   logo: string

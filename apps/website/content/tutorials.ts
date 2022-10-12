@@ -1,6 +1,6 @@
 import { addNewTab } from '../lib/utils'
-import { readCacheJsonFile } from '../lib/readJson'
 import { getMinutesInSeconds } from '../lib/time'
+import { readCacheJsonFile } from '../lib/cache'
 
 type Tutorial = {
   title: string
