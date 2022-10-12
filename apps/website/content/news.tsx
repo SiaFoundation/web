@@ -7,9 +7,11 @@ import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { routes } from '../config/routes'
 import { components } from '../config/mdx'
 import { pick } from 'lodash'
-import { getPath } from '../config/app'
+import { getContentPath } from '../config/content'
+import { getCacheValue } from '../lib/cache'
+import { getMinutesInSeconds } from '../lib/time'
 
-export const newsDirectory = getPath('content/news')
+export const newsDirectory = getContentPath('news')
 
 export type NewsPost = {
   title: string
@@ -24,6 +26,26 @@ export type NewsPost = {
 export type NewsPostHtml = NewsPost & { html: string }
 export type NewsPostSource = NewsPost & {
   source: MDXRemoteSerializeResult<Record<string, unknown>>
+}
+
+// Used in content lists
+export async function getCacheNewsPostsList(limit: number) {
+  const posts = await getCacheValue(
+    'newsPostsList',
+    () => getNewsPosts(),
+    getMinutesInSeconds(1)
+  )
+  return posts.slice(0, limit)
+}
+
+// Used to generate RSS feed
+export async function getNewsPostsWithHtml() {
+  return getNewsPosts({ includeHtml: true }) as Promise<NewsPostHtml[]>
+}
+
+// Used to SSG individual news post pages
+async function getNewsPostsWithSource() {
+  return getNewsPosts({ includeSource: true }) as Promise<NewsPostSource[]>
 }
 
 type Options = {
@@ -75,18 +97,6 @@ export async function getNewsPosts(options: Options = {}): Promise<NewsPost[]> {
   posts.sort((a, b) => (a.date < b.date ? 1 : -1))
 
   return posts.slice(0, limit)
-}
-
-export async function getNewsPostsWithHtml(options: Options = {}) {
-  return getNewsPosts({ ...options, includeHtml: true }) as Promise<
-    NewsPostHtml[]
-  >
-}
-
-export async function getNewsPostsWithSource(options: Options = {}) {
-  return getNewsPosts({ ...options, includeSource: true }) as Promise<
-    NewsPostSource[]
-  >
 }
 
 async function buildPost(slug?: string): Promise<NewsPostSource> {

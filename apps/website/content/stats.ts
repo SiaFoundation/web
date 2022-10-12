@@ -7,13 +7,21 @@ import {
 } from '@siafoundation/data-sources'
 import { humanBytes, humanNumber, humanSpeed } from '@siafoundation/sia-js'
 import { AsyncReturnType } from '../lib/types'
+import { getCacheValue } from '../lib/cache'
+import { getMinutesInSeconds } from '../lib/time'
+
+const maxAge = getMinutesInSeconds(5)
+
+export async function getCacheStats() {
+  return getCacheValue('stats', () => getStats(), maxAge)
+}
 
 // This function is used to SSG pages and in the /api/stats API route.
 // the SSG values are not configured to revalidate because this would affect
 // all the other props which ideally are not revalidated nearly as often.
 // The stats components revalidate against the API endpoint which has a low SWR
 // cache value, which avoids needing to change the SSG revalidate value.
-export async function getStats() {
+async function getStats() {
   if (process.env.NODE_ENV === 'development') {
     return {
       activeHosts: '20,531',

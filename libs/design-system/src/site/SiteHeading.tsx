@@ -76,8 +76,8 @@ const sizeToPadding: Record<Size, CSS['padding']> = {
 
 export function SiteHeading({
   id,
-  title,
   eyebrow,
+  title,
   description,
   links,
   size = '32',

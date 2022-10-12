@@ -14,6 +14,7 @@ import {
 import React, { useMemo } from 'react'
 import { CSS } from '../config/theme'
 import { Paragraph } from './Paragraph'
+import { Box } from './Box'
 
 type Props = {
   children: React.ReactNode
@@ -47,12 +48,19 @@ const numMap: Record<number, React.ReactNode> = {
 
 type LiProps = {
   children: React.ReactNode
+  subList?: React.ReactNode
   css?: CSS
   index?: number
   size?: React.ComponentProps<typeof Paragraph>['size']
 }
 
-export function Li({ children, index = 0, size = '18', css }: LiProps) {
+export function Li({
+  children,
+  index = 0,
+  size = '18',
+  subList,
+  css,
+}: LiProps) {
   const numEl = numMap[index]
 
   const posCss: CSS = useMemo(
@@ -100,9 +108,12 @@ export function Li({ children, index = 0, size = '18', css }: LiProps) {
           <Text color="contrast">{numEl || <DotMark16 />}</Text>
         </Flex>
       </Flex>
-      <Paragraph color="contrast" size={size} css={{ flex: 1 }}>
-        {children}
-      </Paragraph>
+      <Box css={{ flex: 1 }}>
+        <Paragraph color="contrast" size={size}>
+          {children}
+        </Paragraph>
+        {subList}
+      </Box>
     </Flex>
   )
 }

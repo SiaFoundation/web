@@ -156,7 +156,12 @@ function StatSection({ title, link, stats }: StatSectionProps) {
   return (
     <Flex direction="column" gap="3">
       <Text size="18" font="mono" color="accent" weight="extrabold">
-        <NextLink href={link} target="_blank" variant="accent">
+        <NextLink
+          href={link}
+          target="_blank"
+          variant="accent"
+          underline="hover"
+        >
           {title}
         </NextLink>
       </Text>
