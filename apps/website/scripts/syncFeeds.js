@@ -5,9 +5,9 @@ const { format } = require('date-fns')
 const { sortBy } = require('lodash')
 
 const feedFilesDirectory = 'feeds'
-const articlesFilePath = 'apps/website/content/articles/articles.json'
+const articlesFilePath = 'articles.json'
 
-async function getFeed(feedFile) {
+async function getFeedFile(feedFile) {
   const feedData = fs.readFileSync(feedFile, 'utf-8')
   const parser = new Parser()
   const feed = await parser.parseString(feedData)
@@ -16,12 +16,17 @@ async function getFeed(feedFile) {
 
 // 1. Save fresh feeds to feeds/ directory.
 // (There were CF issues fetching filebase rss feed)
-// 2. Run the `npm run feeds` command to automatically update articles.json
-// with new posts.
+// 2. Run `node syncFeeds.js` in the web content directory so paths are relative for feeds/ and articles.json.
 // 3. Manually categorize articles with tags.
 async function sync() {
   const articleData = fs.readFileSync(articlesFilePath, 'utf-8')
-  let articles = JSON.parse(articleData)
+  let articles = []
+  try {
+    const json = JSON.parse(articleData)
+    articles = json
+  } catch (e) {
+    throw Error('Error parsing articles.json')
+  }
 
   const feeds = fs.readdirSync(feedFilesDirectory)
 
@@ -30,7 +35,7 @@ async function sync() {
     feeds.map(async (feedFile) => {
       try {
         const feedPath = path.join(feedFilesDirectory, feedFile)
-        const feed = await getFeed(feedPath)
+        const feed = await getFeedFile(feedPath)
 
         feed.items.forEach((post) => {
           const url = new URL(post.link)

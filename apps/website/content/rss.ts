@@ -2,7 +2,8 @@ import fs from 'fs'
 import { Feed } from 'feed'
 import { webLinks } from '@siafoundation/design-system'
 import { routes } from '../config/routes'
-import { getPath, newsFeedName } from '../config/app'
+import { newsFeedName } from '../config/app'
+import { getContentPath } from '../config/content'
 import { getNewsPostsWithHtml } from './news'
 
 export async function generateRssNewsFeed() {
@@ -51,7 +52,7 @@ export async function generateRssNewsFeed() {
     })
   })
 
-  const rssDirectory = getPath('public/rss')
+  const rssDirectory = getContentPath('rss')
   fs.mkdirSync(rssDirectory, { recursive: true })
   fs.writeFileSync(rssDirectory + '/feed.xml', feed.rss2())
   fs.writeFileSync(rssDirectory + '/atom.xml', feed.atom1())

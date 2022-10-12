@@ -105,15 +105,9 @@ const StyledTrigger = styled(AccordionPrimitive.Trigger, {
   },
 })
 
-type AccordionTriggerPrimitiveProps = React.ComponentProps<
-  typeof AccordionPrimitive.Trigger
->
-type AccordionTriggerProps = AccordionTriggerPrimitiveProps &
-  React.ComponentProps<typeof StyledTrigger> & { css?: CSS }
-
 export const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof StyledTrigger>,
-  AccordionTriggerProps
+  React.ComponentProps<typeof StyledTrigger>
 >(({ children, ...props }, forwardedRef) => (
   <StyledHeader>
     <StyledTrigger {...props} ref={forwardedRef}>

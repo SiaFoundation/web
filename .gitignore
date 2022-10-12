@@ -44,16 +44,8 @@ Thumbs.db
 # counters local storage files
 /persist
 
-# docs and releases
-assets/docs
-assets/releases
-assets/transparency
-
-# Generated RSS feeds
-apps/website/public/rss
-
-# Aggregated feeds
-/feeds
+# site content, rss, docs, releases, reports
+/content
 
 # Env
 .env

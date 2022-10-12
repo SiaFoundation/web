@@ -1,10 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
   Grid,
-  IbmSecurity24,
-  Money24,
-  Development24,
-  Code24,
   ContentGallery,
   Callout,
   WavesBackdrop,
@@ -21,18 +17,15 @@ import {
 import { Layout } from '../components/Layout'
 import { routes } from '../config/routes'
 import { AsyncReturnType } from '../lib/types'
-import { getArticles } from '../content/articles'
-import { getSoftware } from '../content/software'
+import { getCacheArticles } from '../content/articles'
+import { getCacheSoftware } from '../content/software'
+import { getCacheTutorials } from '../content/tutorials'
 import backgroundImage from '../assets/backgrounds/mountain.png'
 import previewImage from '../assets/previews/mountain.png'
 import { useCallback, useEffect, useState } from 'react'
 import { textContent } from '../lib/utils'
 import Letter from '../components/Letter'
 import { JiggleArrow } from '../components/JiggleArrow'
-import { getTutorials } from '../content/tutorials'
-
-const tutorials = getTutorials()
-const services = getSoftware('storage_services', 5)
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -53,7 +46,12 @@ const transitionFadeDelay = 500
 
 type Props = AsyncReturnType<typeof getServerSideProps>['props']
 
-export default function Home({ featured, seenLetter }: Props) {
+export default function Home({
+  featured,
+  tutorials,
+  services,
+  seenLetter,
+}: Props) {
   const [showLetter, setShowLetter] = useState<boolean>(!seenLetter)
 
   useEffect(() => {
@@ -174,7 +172,7 @@ export default function Home({ featured, seenLetter }: Props) {
             <ContentGallery
               items={[
                 {
-                  icon: <IbmSecurity24 />,
+                  icon: 'Security',
                   title: 'Completely Private',
                   subtitle: (
                     <>
@@ -186,7 +184,7 @@ export default function Home({ featured, seenLetter }: Props) {
                   ),
                 },
                 {
-                  icon: <Development24 />,
+                  icon: 'Development',
                   title: 'Highly Redundant',
                   subtitle: (
                     <>
@@ -198,7 +196,7 @@ export default function Home({ featured, seenLetter }: Props) {
                   ),
                 },
                 {
-                  icon: <Code24 />,
+                  icon: 'Code',
                   title: 'Open Source',
                   subtitle: (
                     <>
@@ -210,7 +208,7 @@ export default function Home({ featured, seenLetter }: Props) {
                   ),
                 },
                 {
-                  icon: <Money24 />,
+                  icon: 'Money',
                   title: 'Far More Affordable',
                   subtitle: (
                     <>
@@ -297,15 +295,15 @@ export default function Home({ featured, seenLetter }: Props) {
 
 export async function getServerSideProps({ req }) {
   const seenLetter: boolean = req.cookies['seen-letter'] || false
-  // Articles are selected with a limit on the server-side because article list
-  // is large.
-  // Software and tutorials are smaller fixed lists so they are imported directy
-  // so entire file is included in bundle and cached.
-  const featured = getArticles(['sia-featured'], 5)
+  const featured = await getCacheArticles(['sia-featured'], 5)
+  const tutorials = await getCacheTutorials()
+  const services = await getCacheSoftware('storage_services', 5)
 
   return {
     props: {
       featured,
+      tutorials,
+      services,
       seenLetter,
       // Because this page is SSR'd, do not block requests with slow stats query
       // fallback: {

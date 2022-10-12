@@ -1,21 +1,29 @@
-import { baseAssetPath } from '../config/app'
-import path from 'path'
+import { getContentPath } from '../config/content'
 import fs from 'fs'
 import { toPairs } from 'lodash'
 import { webLinks } from '@siafoundation/design-system'
+import { getMinutesInSeconds } from '../lib/time'
+import { getCacheValue } from '../lib/cache'
 
 type Report = {
   year: string
   quarter: string
   link: string
 }
+type ReportPair = [string, Report[]]
 
-export function getReports(): [string, Report[]][] {
+const maxAge = getMinutesInSeconds(5)
+
+export async function getCacheReports(): Promise<ReportPair[]> {
+  return getCacheValue('articles', async () => getReports(), maxAge)
+}
+
+function getReports(): ReportPair[] {
   let reports: Report[] = []
 
   try {
     reports = fs
-      .readdirSync(path.join(baseAssetPath, 'transparency'))
+      .readdirSync(getContentPath('transparency'))
       .map((filename) => {
         const [name, ext] = filename.split('.')
         const [year, quarter] = name.split('-')

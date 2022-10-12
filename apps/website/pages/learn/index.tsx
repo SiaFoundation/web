@@ -5,12 +5,6 @@ import {
   ContentGallery,
   Callout,
   Section,
-  Idea24,
-  Password24,
-  Wallet24,
-  TreeViewAlt24,
-  Policy24,
-  EventSchedule24,
   NextLink,
   SiteHeading,
   Grid,
@@ -19,23 +13,24 @@ import {
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
-import { getStats } from '../../content/stats'
-import { getDaysInSeconds } from '../../lib/time'
+import { getCacheStats } from '../../content/stats'
+import { getMinutesInSeconds } from '../../lib/time'
 import { textContent } from '../../lib/utils'
 import backgroundImage from '../../assets/backgrounds/leaves.png'
 import previewImage from '../../assets/previews/leaves.png'
-import { getTutorials } from '../../content/tutorials'
+import { getCacheTutorials } from '../../content/tutorials'
+import { AsyncReturnType } from '../../lib/types'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
-
-const getStarted = getTutorials()
 
 const title = 'Learn'
 const description =
   'Learn how the Sia protocol is used to power redundant, decentralized, data storage.'
 
-function Learn() {
+type Props = AsyncReturnType<typeof getStaticProps>['props']
+
+export default function Learn({ getStarted }: Props) {
   return (
     <Layout
       title={title}
@@ -177,7 +172,7 @@ function Learn() {
           items={[
             {
               title: 'Files are divided prior to upload',
-              icon: <TreeViewAlt24 />,
+              icon: 'TreeViewAlt',
               subtitle: (
                 <>
                   The Sia software divides files into dozens of shards, each
@@ -202,7 +197,7 @@ function Learn() {
             },
             {
               title: 'Each file segment is encrypted',
-              icon: <Password24 />,
+              icon: 'Password',
               subtitle: (
                 <>
                   Before leaving a renter's computer, each file shard is
@@ -221,7 +216,7 @@ function Learn() {
             },
             {
               title: 'Storage is incentivized with smart contracts',
-              icon: <Idea24 />,
+              icon: 'Idea',
               subtitle: (
                 <>
                   Using the Sia blockchain, renters form file contracts with
@@ -244,7 +239,7 @@ function Learn() {
             },
             {
               title: 'Renters and hosts pay with Siacoin',
-              icon: <Wallet24 />,
+              icon: 'Wallet',
               subtitle: (
                 <>
                   Renters pay hosts in Siacoin, the native cryptocurrency of the
@@ -268,7 +263,7 @@ function Learn() {
             },
             {
               title: 'Contracts are renewed over time',
-              icon: <EventSchedule24 />,
+              icon: 'EventSchedule',
               subtitle: (
                 <>
                   Renters prepay for storage within file contracts, setting
@@ -284,7 +279,7 @@ function Learn() {
             },
             {
               title: 'Hosts submit storage proofs',
-              icon: <Policy24 />,
+              icon: 'Policy',
               subtitle: (
                 <>
                   At the end of a file contract, the host must prove that they
@@ -341,16 +336,15 @@ function Learn() {
 }
 
 export async function getStaticProps() {
-  const stats = await getStats()
-
+  const stats = await getCacheStats()
+  const getStarted = await getCacheTutorials()
   return {
     props: {
+      getStarted,
       fallback: {
         '/api/stats': stats,
       },
     },
-    revalidate: getDaysInSeconds(1),
+    revalidate: getMinutesInSeconds(5),
   }
 }
-
-export default Learn

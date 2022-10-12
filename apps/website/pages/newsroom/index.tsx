@@ -7,14 +7,14 @@ import {
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
-import { getStats } from '../../content/stats'
+import { getCacheStats } from '../../content/stats'
 import backgroundImage from '../../assets/backgrounds/steps.png'
 import previewImage from '../../assets/previews/steps.png'
 import { generateRssNewsFeed } from '../../content/rss'
 import useSWR from 'swr'
 import { useRouter } from 'next/router'
-import { getFeed } from '../../content/feed'
-import { getDaysInSeconds } from '../../lib/time'
+import { getCacheFeed } from '../../content/feed'
+import { getMinutesInSeconds } from '../../lib/time'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -70,9 +70,8 @@ function Newsroom() {
 
 export async function getStaticProps() {
   await generateRssNewsFeed()
-
-  const stats = await getStats()
-  const posts = await getFeed()
+  const stats = await getCacheStats()
+  const posts = await getCacheFeed()
 
   return {
     props: {
@@ -81,7 +80,7 @@ export async function getStaticProps() {
         '/api/stats': stats,
       },
     },
-    revalidate: getDaysInSeconds(1),
+    revalidate: getMinutesInSeconds(5),
   }
 }
 

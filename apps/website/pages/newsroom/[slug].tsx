@@ -12,12 +12,13 @@ import { MDXRemote } from 'next-mdx-remote'
 import { format } from 'date-fns'
 import { Layout } from '../../components/Layout'
 import { GetNewsPost, getNewsPost, newsDirectory } from '../../content/news'
-import { getStats } from '../../content/stats'
+import { getCacheStats } from '../../content/stats'
 import { routes } from '../../config/routes'
 import { textContent } from '../../lib/utils'
 import backgroundImage from '../../assets/backgrounds/nate-waterfall.png'
 import previewImage from '../../assets/previews/nate-waterfall.png'
 import { components } from '../../config/mdx'
+import { getMinutesInSeconds } from '../../lib/time'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -79,12 +80,12 @@ async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false,
+    fallback: 'blocking',
   }
 }
 
 async function getStaticProps({ params: { slug } }) {
-  const stats = await getStats()
+  const stats = await getCacheStats()
   const props = await getNewsPost(slug)
 
   return {
@@ -94,6 +95,7 @@ async function getStaticProps({ params: { slug } }) {
         '/api/stats': stats,
       },
     },
+    revalidate: getMinutesInSeconds(5),
   }
 }
 

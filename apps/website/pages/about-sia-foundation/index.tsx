@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+import { Fragment } from 'react'
 import {
   Flex,
   Grid,
@@ -19,13 +20,12 @@ import {
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
-import { getDaysInSeconds } from '../../lib/time'
+import { getMinutesInSeconds } from '../../lib/time'
 import { AsyncReturnType } from '../../lib/types'
-import team from '../../content/team'
-import { getReports } from '../../content/reports'
-import { getNewsPosts } from '../../content/news'
-import { getStats } from '../../content/stats'
-import { Fragment } from 'react'
+import { getCacheReports } from '../../content/reports'
+import { getCacheNewsPostsList } from '../../content/news'
+import { getCacheStats } from '../../content/stats'
+import { getCacheTeam } from '../../content/team'
 import backgroundImage from '../../assets/backgrounds/tree.png'
 import previewImage from '../../assets/previews/tree.png'
 
@@ -240,11 +240,10 @@ function Foundation({ team, newsPosts, reports }: Props) {
 }
 
 export async function getStaticProps() {
-  const stats = await getStats()
-  const newsPosts = await getNewsPosts({
-    limit: 3,
-  })
-  const reports = getReports()
+  const stats = await getCacheStats()
+  const newsPosts = await getCacheNewsPostsList(3)
+  const reports = await getCacheReports()
+  const team = await getCacheTeam()
 
   return {
     props: {
@@ -255,7 +254,7 @@ export async function getStaticProps() {
         '/api/stats': stats,
       },
     },
-    revalidate: getDaysInSeconds(1),
+    revalidate: getMinutesInSeconds(5),
   }
 }
 

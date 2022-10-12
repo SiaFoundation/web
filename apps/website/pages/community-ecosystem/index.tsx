@@ -12,18 +12,17 @@ import {
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
-import { getArticles } from '../../content/articles'
+import { getCacheArticles } from '../../content/articles'
+import { getCacheSoftware } from '../../content/software'
+import { getCacheStats } from '../../content/stats'
 import { AsyncReturnType } from '../../lib/types'
-import { getSoftware } from '../../content/software'
-import { getStats } from '../../content/stats'
 import { textContent } from '../../lib/utils'
 import backgroundImage from '../../assets/backgrounds/jungle.png'
 import previewImage from '../../assets/previews/jungle.png'
+import { getMinutesInSeconds } from '../../lib/time'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
-
-const software = getSoftware('')
 
 const title = 'Community & Ecosystem'
 const description = (
@@ -36,7 +35,7 @@ const description = (
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-export default function CommunityEcosystem({ blogs }: Props) {
+export default function CommunityEcosystem({ blogs, software }: Props) {
   return (
     <Layout
       title={title}
@@ -152,15 +151,18 @@ export default function CommunityEcosystem({ blogs }: Props) {
 }
 
 export async function getStaticProps() {
-  const stats = await getStats()
-  const blogs = getArticles(['ecosystem-featured'], 4)
+  const stats = await getCacheStats()
+  const blogs = await getCacheArticles(['ecosystem-featured'], 4)
+  const software = await getCacheSoftware('')
 
   return {
     props: {
       blogs,
+      software,
       fallback: {
         '/api/stats': stats,
       },
     },
+    revalidate: getMinutesInSeconds(5),
   }
 }

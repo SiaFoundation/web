@@ -40,11 +40,6 @@ Web packages for the Sia project and ecosystem.
 cp .env.example .env
 ```
 
-### Workflows
-
-- [Sia release process →](https://www.notion.so/siafoundation/Web-6de3b72ac13e44a989bdffb72fce8996#bd5cb0ab038d4b35a49d4433dd6af614)
-- [News release process →](https://www.notion.so/siafoundation/Web-6de3b72ac13e44a989bdffb72fce8996#4fc04d6e7c0749cfa6a99c6a83fc41bd)
-
 ## Tooling
 
 The following examples outline how to use common `nx` commands.

@@ -1,20 +1,20 @@
 import { ContentItemProps } from '@siafoundation/design-system'
-import { getNewsPosts } from './news'
-import { getArticles } from './articles'
+import { getCacheNewsPostsList } from './news'
+import { getCacheArticles } from './articles'
 
 const limit = 50
 
 type Filter = 'press' | 'ecosystem'
 
-export async function getFeed(filter?: Filter) {
+export async function getCacheFeed(filter?: Filter) {
   let posts = []
 
   if ([undefined, 'press'].includes(filter)) {
-    const news = await getNewsPosts({ limit })
+    const news = await getCacheNewsPostsList(limit)
     posts.push(...news)
   }
   if ([undefined, 'ecosystem'].includes(filter)) {
-    const articles = getArticles([], limit)
+    const articles = await getCacheArticles([], limit)
     posts.push(...articles)
   }
 

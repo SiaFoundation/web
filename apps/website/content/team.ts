@@ -1,3 +1,6 @@
+import { getMinutesInSeconds } from '../lib/time'
+import { readCacheJsonFile } from '../lib/readJson'
+
 type Member = {
   name: string
   title: string
@@ -8,77 +11,8 @@ type Member = {
   description: string
 }
 
-export default [
-  {
-    name: 'Luke',
-    image: 'luke',
-    title: 'President & Core Developer',
-    twitter: 'lukechampine',
-    github: 'lukechampine',
-  },
-  {
-    name: 'Nate',
-    image: 'nate',
-    twitter: 'n8maninger',
-    github: 'n8maninger',
-    title: 'Core Developer',
-  },
-  {
-    name: 'Chris',
-    image: 'chris',
-    github: 'chris124567',
-    title: 'Core Developer',
-  },
-  {
-    name: 'PJ',
-    image: 'pj',
-    github: 'peterjan',
-    title: 'Core Developer',
-  },
-  {
-    name: 'Frances',
-    image: 'frances',
-    title: 'Director of Operations',
-    linkedin: 'frances-lu-066762123',
-  },
-  {
-    name: 'Kino',
-    image: 'kino',
-    title: 'Community Manager',
-    github: 'kinomora',
-  },
-  {
-    name: 'Alex',
-    image: 'alex',
-    title: 'Product Engineer',
-    twitter: 'alexfreska',
-    github: 'alexfreska',
-  },
-  {
-    name: 'Steve',
-    image: 'steve',
-    title: 'Director of People and Support',
-    github: 'stevefunk',
-  },
-  {
-    name: 'Eddie',
-    image: 'eddie',
-    twitter: 'eddiepluswang',
-    github: 'eddiewang',
-    title: 'Chairman',
-  },
-  {
-    name: 'Josh Cincinatti',
-    image: 'josh',
-    twitter: 'acityinohio',
-    github: 'acityinohio',
-    title: 'Advisor',
-  },
-  {
-    name: 'James Prestwich',
-    image: 'james',
-    twitter: '_prestwich',
-    github: 'prestwich',
-    title: 'Advisor',
-  },
-] as Member[]
+const maxAge = getMinutesInSeconds(5)
+
+export async function getCacheTeam(): Promise<Member[]> {
+  return readCacheJsonFile('team.json', [], maxAge)
+}
