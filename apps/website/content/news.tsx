@@ -7,9 +7,9 @@ import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { routes } from '../config/routes'
 import { components } from '../config/mdx'
 import { pick } from 'lodash'
-import { getContentPath } from '../config/content'
 import { getCacheValue } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
+import { getContentPath } from '@siafoundation/env'
 
 export const newsDirectory = getContentPath('news')
 
@@ -28,12 +28,14 @@ export type NewsPostSource = NewsPost & {
   source: MDXRemoteSerializeResult<Record<string, unknown>>
 }
 
+const maxAge = getMinutesInSeconds(0.2)
+
 // Used in content lists
 export async function getCacheNewsPostsList(limit: number) {
   const posts = await getCacheValue(
     'newsPostsList',
     () => getNewsPosts(),
-    getMinutesInSeconds(1)
+    maxAge
   )
   return posts.slice(0, limit)
 }

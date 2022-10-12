@@ -2,19 +2,22 @@ import { readdirSync } from 'fs'
 import * as express from 'express'
 import * as vhost from 'vhost'
 import { counterMiddleware } from '@siafoundation/data-sources'
-import { getSiaVersion } from '@siafoundation/env'
+import { getContentPath, readJsonFile } from '@siafoundation/env'
 import { getHostnames } from './env'
 
 export function setupStatic(server) {
   const hostnames = getHostnames()
-  const siaVersion = getSiaVersion()
+  const versions = getVersions()
 
   // Serve api docs on the api domain
   const apiApp = express()
-  const apiPath = getAssetPath('docs')
+  const apiPath = getContentPath('docs')
   const apiVersions = getDirectories(apiPath)
-  apiApp.use('/', express.static(`${apiPath}/${siaVersion.current}`))
-  apiApp.use('/rc', express.static(`${apiPath}/${siaVersion.rc}`))
+  apiApp.use('/', express.static(`${apiPath}/${versions.sia.latest}`))
+  apiApp.use(
+    '/rc',
+    express.static(`${apiPath}/${versions.sia.rc || versions.sia.latest}`)
+  )
   apiVersions.forEach((version) => {
     apiApp.use(
       `/v${version.split('.').join('')}`,
@@ -22,8 +25,8 @@ export function setupStatic(server) {
     )
   })
   console.log('API versions')
-  console.log(`\tCurrent: ${siaVersion.current}`)
-  console.log(`\tRC: ${siaVersion.rc}`)
+  console.log(`\tLatest: ${versions.sia.latest}`)
+  console.log(`\tRC: ${versions.sia.rc}`)
   console.log(`\tHistoric: ${apiVersions}\n`)
 
   server.use(vhost(hostnames.api, apiApp))
@@ -31,14 +34,14 @@ export function setupStatic(server) {
   // Rest of static assets on root domain
   const rootApp = express()
   // Serve binaries
-  const releasesPath = getAssetPath('releases')
+  const releasesPath = getContentPath('releases')
   rootApp.get('/releases', (req, res) => {
     res.redirect('/')
   })
   rootApp.use('/releases', counterMiddleware, express.static(releasesPath))
 
   // Serve transparency reports
-  const transparencyPath = getAssetPath('transparency')
+  const transparencyPath = getContentPath('transparency')
   rootApp.get('/transparency', (req, res) => {
     res.redirect('/')
   })
@@ -48,15 +51,40 @@ export function setupStatic(server) {
     express.static(transparencyPath)
   )
 
+  // Serve rss feeds
+  const rssPath = getContentPath('rss')
+  rootApp.get('/rss', (req, res) => {
+    res.redirect('/')
+  })
+  rootApp.use('/rss', counterMiddleware, express.static(rssPath))
+
   server.use(vhost(hostnames.app, rootApp))
+}
+
+type Versions = {
+  sia: {
+    latest: string
+    rc: string
+  }
+  embarcadero: {
+    latest: string
+  }
+}
+
+function getVersions(): Versions {
+  return readJsonFile('versions.json', {
+    sia: {
+      latest: '1.5.9',
+      rc: '1.5.9',
+    },
+    embarcadero: {
+      latest: '1.0.0',
+    },
+  })
 }
 
 function getDirectories(source) {
   return readdirSync(source, { withFileTypes: true })
     .filter((node) => node.isDirectory())
     .map((node) => node.name)
-}
-
-function getAssetPath(resource) {
-  return `assets/${resource}`
 }

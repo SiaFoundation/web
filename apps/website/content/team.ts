@@ -1,5 +1,5 @@
+import { readCacheJsonFile } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
-import { readCacheJsonFile } from '../lib/readJson'
 
 type Member = {
   name: string

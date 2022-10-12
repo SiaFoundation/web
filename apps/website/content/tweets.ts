@@ -1,4 +1,4 @@
-import { readCacheJsonFile } from '../lib/readJson'
+import { readCacheJsonFile } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
 
 type Tweet = {

@@ -1,6 +1,6 @@
+import { readCacheJsonFile } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
 import { addNewTab } from '../lib/utils'
-import { readCacheJsonFile } from '../lib/readJson'
 
 type Tag = 'sia-featured' | 'ecosystem-featured' | 'ecosystem-all' | 'technical'
 
