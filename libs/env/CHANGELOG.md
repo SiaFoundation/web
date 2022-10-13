@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.2.0](https://github.com/SiaFoundation/web/compare/env-0.1.10...env-0.2.0) (2022-10-13)
+
+
+### Features
+
+* dynamic website content ([052d81c](https://github.com/SiaFoundation/web/commit/052d81c77df79d998be043c7c713078a0d77410c))
+* extract content path utils to env, add rss to asset server and nginx ([99dd3c1](https://github.com/SiaFoundation/web/commit/99dd3c160c39e0cad0c50d33a88caaa983ae791b))
+
+
+
 ## [0.1.10](https://github.com/SiaFoundation/web/compare/env-0.1.9...env-0.1.10) (2022-06-29)
 
 
