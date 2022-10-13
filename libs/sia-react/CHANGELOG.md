@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.5](https://github.com/SiaFoundation/web/compare/sia-react-0.3.4...sia-react-0.3.5) (2022-10-13)
+
+
+
 ## [0.3.4](https://github.com/SiaFoundation/web/compare/sia-react-0.3.3...sia-react-0.3.4) (2022-05-06)
 
 
