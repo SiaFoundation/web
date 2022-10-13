@@ -28,7 +28,7 @@ export type NewsPostSource = NewsPost & {
   source: MDXRemoteSerializeResult<Record<string, unknown>>
 }
 
-const maxAge = getMinutesInSeconds(0.2)
+const maxAge = getMinutesInSeconds(5)
 
 // Used in content lists
 export async function getCacheNewsPostsList(limit: number) {
