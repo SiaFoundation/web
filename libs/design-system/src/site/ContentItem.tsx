@@ -19,6 +19,7 @@ import {
   EventSchedule24,
   Policy24,
   TestToolIcon,
+  EventsAlt24,
 } from '../icons'
 import { Box } from '../core/Box'
 import { Flex } from '../core/Flex'
@@ -44,7 +45,7 @@ export type ContentItemProps = {
   css?: CSS
 }
 
-// tutorials should be assigned an icon
+// Icon selection is mapped from strings so that component prop data is serializable
 const icons: Record<string, React.ReactNode> = {
   WindGusts: <WindGusts24 />,
   Archive: <Archive24 />,
@@ -52,6 +53,7 @@ const icons: Record<string, React.ReactNode> = {
   Currency: <Currency24 />,
   Industry: <Industry24 />,
   Finance: <Finance24 />,
+  EventsAlt: <EventsAlt24 />,
   Security: <IbmSecurity24 />,
   Development: <Development24 />,
   Code: <Code24 />,

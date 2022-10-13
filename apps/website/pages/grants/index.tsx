@@ -22,6 +22,7 @@ import backgroundImage from '../../assets/backgrounds/nate-snow.png'
 import previewImage from '../../assets/previews/nate-snow.png'
 import { AsyncReturnType } from '../../lib/types'
 import { getMinutesInSeconds } from '../../lib/time'
+import { getCacheGrantCommittee } from '../../content/grantCommittee'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -39,7 +40,7 @@ const description = (
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-export default function Grants({ services }: Props) {
+export default function Grants({ services, grantCommittee }: Props) {
   return (
     <Layout
       title={title}
@@ -157,6 +158,19 @@ export default function Grants({ services }: Props) {
                     The Grant Committee convenes every two weeks to review the
                     following:
                   </Li>
+                </Ol>
+              ),
+            },
+            {
+              title: 'Grant committee',
+              icon: 'EventsAlt',
+              children: (
+                <Ol>
+                  {grantCommittee.map(({ name }) => (
+                    <Li key={name} size="14">
+                      {name}
+                    </Li>
+                  ))}
                 </Ol>
               ),
             },
@@ -289,9 +303,11 @@ export default function Grants({ services }: Props) {
 export async function getStaticProps() {
   const stats = await getCacheStats()
   const services = await getCacheSoftware('open_source_software', 6)
+  const grantCommittee = await getCacheGrantCommittee()
   return {
     props: {
       services,
+      grantCommittee,
       fallback: {
         '/api/stats': stats,
       },

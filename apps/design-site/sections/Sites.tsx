@@ -2,7 +2,6 @@ import {
   ContentItem,
   ContentGallery,
   Flex,
-  CenterCircle24,
   Grid,
   Section,
   SiteHeading,
