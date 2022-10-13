@@ -132,7 +132,7 @@ export function Sites() {
           />
           <ContentItem
             title="Content Item with date and icon"
-            icon={<CenterCircle24 />}
+            icon="CenterCircle"
             date={'10/04/2022'}
             subtitle={`
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, qui!

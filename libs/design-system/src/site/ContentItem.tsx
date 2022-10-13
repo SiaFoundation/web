@@ -8,6 +8,7 @@ import {
   Archive24,
   IbmSecurity24,
   Development24,
+  CenterCircle24,
   Code24,
   Money24,
   ListChecked24,
@@ -62,6 +63,7 @@ const icons: Record<string, React.ReactNode> = {
   Password: <Password24 />,
   Idea: <Idea24 />,
   EventSchedule: <EventSchedule24 />,
+  CenterCircle: <CenterCircle24 />,
   Policy: <Policy24 />,
 }
 
