@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.1.0](https://github.com/SiaFoundation/web/compare/asset-server-0.0.7...asset-server-0.1.0) (2022-10-13)
+
+
+### Features
+
+* extract content path utils to env, add rss to asset server and nginx ([99dd3c1](https://github.com/SiaFoundation/web/commit/99dd3c160c39e0cad0c50d33a88caaa983ae791b))
+
+
+
 ## [0.0.7](https://github.com/SiaFoundation/web/compare/asset-server-0.0.6...asset-server-0.0.7) (2022-06-29)
 
 
