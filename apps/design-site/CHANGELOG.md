@@ -2,6 +2,25 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.22.0](https://github.com/SiaFoundation/web/compare/design-site-0.21.0...design-site-0.22.0) (2022-10-13)
+
+
+### Bug Fixes
+
+* address feedback and bugs, add new blogs ([12db7fd](https://github.com/SiaFoundation/web/commit/12db7fdd44358ba1aac67d96c8ea8392e7cdc3b6))
+* ios safari font size glitch, site menu scroll top, update radix breaking changes ([244f412](https://github.com/SiaFoundation/web/commit/244f4120d671b8f771a0c9e60cfb5168d70653e8))
+* missing icon in content item ([a8015d6](https://github.com/SiaFoundation/web/commit/a8015d6e61b07d7090ac752c91a46dc11195e7b7))
+* sync up design-site Section props ([ff659f6](https://github.com/SiaFoundation/web/commit/ff659f61757867f84ddcdac20df3dce5115bf748))
+* workaround for nx issue with dynamic assets ([76d93f6](https://github.com/SiaFoundation/web/commit/76d93f62d54950c4995cb9d0ef986420aef1ac0b))
+
+
+### Features
+
+* add grant committee ([a3e32e7](https://github.com/SiaFoundation/web/commit/a3e32e730f900d4f61eaa33efc503ce6241c0a49))
+* refine website and scale information, updates to grants program content ([c618f80](https://github.com/SiaFoundation/web/commit/c618f80ae3e7ecebb64bf1388703ad763481b828))
+
+
+
 # [0.21.0](https://github.com/SiaFoundation/web/compare/design-site-0.20.0...design-site-0.21.0) (2022-09-29)
 
 
