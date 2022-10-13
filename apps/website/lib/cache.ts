@@ -22,15 +22,17 @@ export async function getCacheValue<T>(
       value,
       updatedAt: new Date().getTime(),
     } as Item<T>
-    console.log(
-      `cache refreshed key: ${key}, prev update: ${
-        lastUpdatedAt
-          ? formatDistance(lastUpdatedAt, new Date(), {
-              addSuffix: true,
-            })
-          : 'never'
-      }`
-    )
+    if (lastUpdatedAt) {
+      console.log(
+        `cache refreshed key: ${key}, prev update: ${formatDistance(
+          lastUpdatedAt,
+          new Date(),
+          {
+            addSuffix: true,
+          }
+        )}`
+      )
+    }
     return value
   }
 
