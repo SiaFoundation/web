@@ -2,6 +2,32 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.36.0](https://github.com/SiaFoundation/web/compare/design-system-0.35.0...design-system-0.36.0) (2022-10-13)
+
+
+### Bug Fixes
+
+* address feedback and bugs, add new blogs ([12db7fd](https://github.com/SiaFoundation/web/commit/12db7fdd44358ba1aac67d96c8ea8392e7cdc3b6))
+* border contrast, grants copy ([7431e10](https://github.com/SiaFoundation/web/commit/7431e103d32c85abf7731774ab456aa25ffacbe6))
+* ios safari font size glitch, site menu scroll top, update radix breaking changes ([244f412](https://github.com/SiaFoundation/web/commit/244f4120d671b8f771a0c9e60cfb5168d70653e8))
+* letter width, site borders ([4481fe2](https://github.com/SiaFoundation/web/commit/4481fe2e911109490e6ba19ce75eeeb982cd082d))
+* missing icon in content item ([a8015d6](https://github.com/SiaFoundation/web/commit/a8015d6e61b07d7090ac752c91a46dc11195e7b7))
+* site layout safari mobile z-index ([a416565](https://github.com/SiaFoundation/web/commit/a416565d0ae256b9b2ac50b0ae5a89b7e747ad85))
+* site menu add delay scroll top ([4d01d5d](https://github.com/SiaFoundation/web/commit/4d01d5d9d17a33d8305113ebdd0eebb62f1da790))
+* site menu dialog portal, pulltop reset ([530e886](https://github.com/SiaFoundation/web/commit/530e88647d194994f47b2f75d5f1214f0d458a00))
+* site menu scroll top, visual tweaks ([30adfd1](https://github.com/SiaFoundation/web/commit/30adfd165793ffa8d36ae2e270f5198208b649c8))
+
+
+### Features
+
+* add grant committee ([a3e32e7](https://github.com/SiaFoundation/web/commit/a3e32e730f900d4f61eaa33efc503ce6241c0a49))
+* dynamic website content ([052d81c](https://github.com/SiaFoundation/web/commit/052d81c77df79d998be043c7c713078a0d77410c))
+* extract content path utils to env, add rss to asset server and nginx ([99dd3c1](https://github.com/SiaFoundation/web/commit/99dd3c160c39e0cad0c50d33a88caaa983ae791b))
+* refine pull to letter ([44d9e37](https://github.com/SiaFoundation/web/commit/44d9e370b22a6d1002424746bf03a29abe1749d6))
+* refine website and scale information, updates to grants program content ([c618f80](https://github.com/SiaFoundation/web/commit/c618f80ae3e7ecebb64bf1388703ad763481b828))
+
+
+
 # [0.35.0](https://github.com/SiaFoundation/web/compare/design-system-0.34.0...design-system-0.35.0) (2022-09-29)
 
 
