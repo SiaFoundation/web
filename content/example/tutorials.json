@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Sia 101: A Visual Introduction",
+    "icon": "WindGusts",
+    "link": "https://siastats.info/sia101"
+  },
+  {
+    "title": "Learn how to rent storage space on the Sia network",
+    "icon": "Archive",
+    "link": "https://docs.sia.tech/renting/about-renting"
+  },
+  {
+    "title": "Learn how create a wallet and make transactions on the Sia network",
+    "icon": "Wallet",
+    "link": "https://docs.sia.tech/your-sia-wallet/wallet-overview"
+  },
+  {
+    "title": "Learn how to offer storage space on the Sia network's storage marketplace",
+    "icon": "Currency",
+    "link": "https://docs.sia.tech/hosting/about-hosting-on-sia"
+  },
+  {
+    "title": "Learn how to mine on the Sia network",
+    "icon": "Industry",
+    "link": "https://docs.sia.tech/mining/about-mining-on-sia"
+  },
+  {
+    "title": "SC and SF - The economics that power the Sia network.",
+    "icon": "Finance",
+    "link": "https://blog.sia.tech/sc-and-sf-the-economics-that-power-the-sia-network-f0b8d1899348"
+  }
+]

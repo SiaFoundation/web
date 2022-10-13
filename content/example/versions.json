@@ -1,0 +1,8 @@
+{
+  "sia": {
+    "latest": "1.6.7"
+  },
+  "embarcadero": {
+    "latest": "1.0.0"
+  }
+}

@@ -44,9 +44,6 @@ Thumbs.db
 # counters local storage files
 /persist
 
-# site content, rss, docs, releases, reports
-/content
-
 # Env
 .env
 deploy.log

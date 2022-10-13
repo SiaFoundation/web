@@ -1,0 +1,184 @@
+[
+  {
+    "title": "Filebase",
+    "link": "https://filebase.com",
+    "logo": "filebase",
+    "tags": ["storage_services"],
+    "subtitle": "S3-compatible object storage powered by blockchain and the Sia network."
+  },
+  {
+    "title": "Vup",
+    "link": "https://vup.app",
+    "logo": "vup",
+    "tags": ["storage_services", "open_source_software"],
+    "subtitle": "Private and decentralized cloud storage app with encrypted file sharing and media streaming support."
+  },
+  {
+    "title": "PixelDrain",
+    "link": "https://pixeldrain.com",
+    "logo": "pixeldrain",
+    "tags": ["storage_services"],
+    "subtitle": "File sharing site that uses the Sia network."
+  },
+  {
+    "title": "Skynet",
+    "link": "https://skynetlabs.com",
+    "logo": "skynet",
+    "tags": ["storage_services"],
+    "subtitle": "Decentralized CDN and file sharing platform for developers."
+  },
+  {
+    "title": "SiaCentral - Host Browser",
+    "link": "https://hosts.siacentral.com/",
+    "logo": "siacentral",
+    "tags": ["network_stats"],
+    "subtitle": "Browse and search hosts powering Sia's decentralized storage network."
+  },
+  {
+    "title": "Arzen",
+    "link": "https://arzen.tech",
+    "logo": "arzen",
+    "tags": ["storage_services"],
+    "subtitle": "Customizable secure multi-cloud in France. End-to-end encryption. Very high availability. No commitment."
+  },
+  {
+    "title": "Explorer",
+    "link": "https://explore.sia.tech",
+    "logo": "sia",
+    "tags": ["network_stats"],
+    "subtitle": "Blockchain explorer for the Sia network."
+  },
+  {
+    "title": "Siastats",
+    "link": "https://siastats.info",
+    "logo": "siastats",
+    "tags": ["open_source_software", "network_stats"],
+    "subtitle": "Charts, metrics, and explorer for the Sia network."
+  },
+  {
+    "title": "SiaCentral - Host Troubleshoot Tool",
+    "link": "https://troubleshoot.siacentral.com/",
+    "logo": "siacentral",
+    "tags": ["network_stats"],
+    "subtitle": "Troubleshoot issues with your Sia host."
+  },
+  {
+    "title": "SiaCentral - Foundation Tracker",
+    "link": "https://foundation-tracker.siacentral.com/",
+    "logo": "siacentral",
+    "tags": ["network_stats"],
+    "subtitle": "Track the Sia Foundation subsidy transactions from the blockchain."
+  },
+  {
+    "title": "CoinMarketCap",
+    "logo": "coinmarketcap",
+    "link": "https://coinmarketcap.com/currencies/siacoin/",
+    "tags": ["network_stats"],
+    "subtitle": "Basic information and financial charts for the Sia network."
+  },
+  {
+    "title": "SiaCentral - Host Manager",
+    "logo": "siacentral",
+    "link": "https://siacentral.com/host-manager",
+    "tags": ["open_source_software"],
+    "subtitle": "User-friendly desktop app for Sia hosts. Provides easy configuration, better financials, and smart alerts to make hosting simpler."
+  },
+  {
+    "title": "Decentralizer",
+    "logo": "decentralizer",
+    "link": "https://keops.cc/decentralizer",
+    "tags": ["open_source_software"],
+    "subtitle": "Sia companion app that provides renters with more granular controls over hosts and contracts."
+  },
+  {
+    "title": "SiaCentral - Host Dashboard",
+    "logo": "siacentral",
+    "link": "https://github.com/siacentral/sia-host-dashboard",
+    "tags": ["open_source_software"],
+    "subtitle": "A powerful web based monitoring dashboard for Sia hosts."
+  },
+  {
+    "title": "TrySia",
+    "logo": "trysia",
+    "link": "https://trysia.tech/",
+    "tags": ["open_source_software"],
+    "subtitle": "Give Sia a spin with this Docker image that includes a fully-synced node and ready-to-use file contracts."
+  },
+  {
+    "title": "Luxor",
+    "logo": "luxor",
+    "link": "https://mining.luxor.tech/coins/siacoin",
+    "tags": ["mining_pools"],
+    "subtitle": "Mining pool for Siacoin."
+  },
+  {
+    "title": "SiaMining",
+    "logo": "siamining",
+    "link": "https://siamining.com/",
+    "tags": ["mining_pools"],
+    "subtitle": "The first and largest mining pool for Siacoin."
+  },
+  {
+    "title": "DxPool",
+    "logo": "dxpool",
+    "link": "https://www.dxpool.com/pool/sc/info",
+    "tags": ["mining_pools"],
+    "subtitle": "Leading blockchain infrastructure service provider."
+  },
+  {
+    "title": "f2pool",
+    "logo": "f2pool",
+    "link": "https://www.f2pool.com/coin/siacoin?lang=en_US",
+    "tags": ["mining_pools"],
+    "subtitle": "Popular crypto mining pool provider."
+  },
+  {
+    "title": "Bittrex",
+    "logo": "bittrex",
+    "link": "https://bittrex.com/Market/Index?MarketName=btc-SC",
+    "tags": ["exchanges"],
+    "subtitle": "Based in the USA, Bittrex is a popular crypto-to-crypto exchange that is currently rolling out USD deposits."
+  },
+  {
+    "title": "Kraken",
+    "logo": "kraken",
+    "link": "https://www.kraken.com/prices/sc-siacoin-price-chart/usd-us-dollar?interval=1m",
+    "tags": ["exchanges"],
+    "subtitle": "Based in the USA, Kraken is one of the largest and oldest Bitcoin exchanges in the world."
+  },
+  {
+    "title": "Poloniex",
+    "logo": "poloniex",
+    "link": "https://poloniex.com/exchange/BTC_SC",
+    "tags": ["exchanges"],
+    "subtitle": "Based in the USA and recently acquired by Circle, Poloniex is a popular crypto-to-crypto exchange."
+  },
+  {
+    "title": "Crypto.com",
+    "logo": "cryptocom",
+    "link": "https://crypto.com/app",
+    "tags": ["exchanges"],
+    "subtitle": "Crypto.com is a popular crypto-to-crypto exchange. It is a trusted and secure platform for users to trade top cryptocurrencies with the lowest fees in the industry."
+  },
+  {
+    "title": "change now",
+    "logo": "changenow",
+    "link": "https://changenow.io/?from=btc&to=sc",
+    "tags": ["exchanges"],
+    "subtitle": "ChangeNOW is a non-custodial service created for simple and fast cryptocurrency exchanges."
+  },
+  {
+    "title": "Upbit",
+    "logo": "upbit",
+    "link": "https://upbit.com/home",
+    "tags": ["exchanges"],
+    "subtitle": "Based in South Korea and partnered with Bittrex, Upbit is a popular crypto-to-crypto exchange."
+  },
+  {
+    "title": "SevenB",
+    "logo": "sevenb",
+    "link": "https://sevenb.io/currencies/siacoin",
+    "tags": ["exchanges"],
+    "subtitle": "A simple & straightforward crypto broker, powered by Binance."
+  }
+]
