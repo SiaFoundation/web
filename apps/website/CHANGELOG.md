@@ -2,6 +2,31 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.27.0](https://github.com/SiaFoundation/web/compare/website-0.26.0...website-0.27.0) (2022-10-13)
+
+
+### Bug Fixes
+
+* add copy of banners to website public ([cf7c6b7](https://github.com/SiaFoundation/web/commit/cf7c6b7803ab4cc948be23817f049a50d61293e7))
+* address feedback and bugs, add new blogs ([12db7fd](https://github.com/SiaFoundation/web/commit/12db7fdd44358ba1aac67d96c8ea8392e7cdc3b6))
+* adjust cache logging ([26b4ab0](https://github.com/SiaFoundation/web/commit/26b4ab0b3cbb765b1c7ff54a4003b39597708aeb))
+* adjust news cache age, add missing test dep ([91aa06d](https://github.com/SiaFoundation/web/commit/91aa06dac6fcb1463131941fe9623fa0ee6779c4))
+* border contrast, grants copy ([7431e10](https://github.com/SiaFoundation/web/commit/7431e103d32c85abf7731774ab456aa25ffacbe6))
+* ios safari font size glitch, site menu scroll top, update radix breaking changes ([244f412](https://github.com/SiaFoundation/web/commit/244f4120d671b8f771a0c9e60cfb5168d70653e8))
+* letter width, site borders ([4481fe2](https://github.com/SiaFoundation/web/commit/4481fe2e911109490e6ba19ce75eeeb982cd082d))
+* site menu scroll top, visual tweaks ([30adfd1](https://github.com/SiaFoundation/web/commit/30adfd165793ffa8d36ae2e270f5198208b649c8))
+* workaround for nx issue with dynamic assets ([76d93f6](https://github.com/SiaFoundation/web/commit/76d93f62d54950c4995cb9d0ef986420aef1ac0b))
+
+
+### Features
+
+* add grant committee ([a3e32e7](https://github.com/SiaFoundation/web/commit/a3e32e730f900d4f61eaa33efc503ce6241c0a49))
+* dynamic website content ([052d81c](https://github.com/SiaFoundation/web/commit/052d81c77df79d998be043c7c713078a0d77410c))
+* extract content path utils to env, add rss to asset server and nginx ([99dd3c1](https://github.com/SiaFoundation/web/commit/99dd3c160c39e0cad0c50d33a88caaa983ae791b))
+* refine website and scale information, updates to grants program content ([c618f80](https://github.com/SiaFoundation/web/commit/c618f80ae3e7ecebb64bf1388703ad763481b828))
+
+
+
 # [0.26.0](https://github.com/SiaFoundation/web/compare/website-0.25.1...website-0.26.0) (2022-09-29)
 
 
