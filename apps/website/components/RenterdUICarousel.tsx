@@ -1,4 +1,9 @@
-import { Box, NextImage, getImageProps } from '@siafoundation/design-system'
+import {
+  Flex,
+  Box,
+  NextImage,
+  getImageProps,
+} from '@siafoundation/design-system'
 import { useInView } from 'react-intersection-observer'
 import { useCarousel, CarouselTags } from './Carousel'
 import imageFiles from '../assets/renterd/renterd-files.png'
@@ -53,7 +58,7 @@ export function RenterdUICarousel() {
   const props = useCarousel(images)
 
   return (
-    <>
+    <Flex direction="column">
       <Box
         css={{
           position: 'relative',
@@ -84,7 +89,7 @@ export function RenterdUICarousel() {
                   props.currentItem.key === item.key ? 'relative' : 'absolute',
               }}
             >
-              <NextImage key={item.key} {...item.props} alt={item.title} />
+              <NextImage {...item.props} alt={item.title} />
             </Box>
           ))}
         </Box>
@@ -101,6 +106,6 @@ export function RenterdUICarousel() {
       >
         <CarouselTags {...props} />
       </Box>
-    </>
+    </Flex>
   )
 }
