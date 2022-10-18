@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.37.0](https://github.com/SiaFoundation/web/compare/design-system-0.36.0...design-system-0.37.0) (2022-10-18)
+
+
+### Features
+
+* spike on renterd page ([c5b720a](https://github.com/SiaFoundation/web/commit/c5b720a257eacc5ba149ca5bdea359f59630eee2))
+
+
+
 # [0.36.0](https://github.com/SiaFoundation/web/compare/design-system-0.35.0...design-system-0.36.0) (2022-10-13)
 
 
