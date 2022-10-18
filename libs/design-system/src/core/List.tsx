@@ -18,19 +18,20 @@ import { Box } from './Box'
 
 type Props = {
   children: React.ReactNode
+  gap?: React.ComponentProps<typeof Flex>['gap']
   css?: CSS
 }
 
-export function Ol({ children, css }: Props) {
+export function Ol({ children, gap = '2', css }: Props) {
   return (
-    <Flex as="ol" direction="column" gap={2} css={{ padding: 0, ...css }}>
+    <Flex as="ol" direction="column" gap={gap} css={{ padding: 0, ...css }}>
       {children}
     </Flex>
   )
 }
-export function Ul({ children, css }: Props) {
+export function Ul({ children, gap = '2', css }: Props) {
   return (
-    <Flex as="ul" direction="column" gap={2} css={{ padding: 0, ...css }}>
+    <Flex as="ul" direction="column" gap={gap} css={{ padding: 0, ...css }}>
       {children}
     </Flex>
   )

@@ -1,3 +1,4 @@
+import React from 'react'
 import { styled } from '../config/theme'
 import { Flex } from '../core/Flex'
 import { Container } from '../core/Container'
@@ -99,14 +100,15 @@ type Props = React.ComponentProps<typeof BaseSection> & {
   width?: React.ComponentProps<typeof Container>['size']
 }
 
-export function Section({ children, gap = '7', width, ...props }: Props) {
-  return (
-    <Container size={width}>
-      <BaseSection {...props}>
-        <Flex direction="column" gap={gap}>
-          {children}
-        </Flex>
-      </BaseSection>
-    </Container>
-  )
-}
+export const Section = React.forwardRef<
+  React.ElementRef<typeof BaseSection>,
+  Props
+>(({ children, gap = '7', width, ...props }, ref) => (
+  <Container size={width}>
+    <BaseSection {...props} ref={ref}>
+      <Flex direction="column" gap={gap}>
+        {children}
+      </Flex>
+    </BaseSection>
+  </Container>
+))

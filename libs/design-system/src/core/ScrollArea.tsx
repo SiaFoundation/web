@@ -74,9 +74,14 @@ type Props = {
   children: React.ReactNode
 }
 
-export const ScrollArea = ({ id, children }: Props) => (
+export const ScrollArea = React.forwardRef<
+  React.ElementRef<typeof ScrollAreaViewport>,
+  Props
+>(({ id, children }, ref) => (
   <ScrollAreaContainer>
-    <ScrollAreaViewport id={id}>{children}</ScrollAreaViewport>
+    <ScrollAreaViewport id={id} ref={ref}>
+      {children}
+    </ScrollAreaViewport>
     <ScrollAreaScrollbar orientation="vertical">
       <ScrollAreaThumb />
     </ScrollAreaScrollbar>
@@ -85,4 +90,4 @@ export const ScrollArea = ({ id, children }: Props) => (
     </ScrollAreaScrollbar>
     <ScrollAreaCorner />
   </ScrollAreaContainer>
-)
+))

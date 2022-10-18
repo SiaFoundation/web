@@ -1,4 +1,10 @@
-import { Box, Flex, ImageProps, SiteLayout } from '@siafoundation/design-system'
+import {
+  Box,
+  Flex,
+  ImageProps,
+  SiteLayout,
+  CSS,
+} from '@siafoundation/design-system'
 import { Footer } from './Footer'
 import { PageHead } from './PageHead'
 import { Navbar } from './Navbar'
@@ -17,6 +23,7 @@ type Props = {
   transitions?: boolean
   transitionWidthDuration?: number
   transitionFadeDelay?: number
+  contentCss?: CSS
 }
 
 export function Layout({
@@ -32,6 +39,7 @@ export function Layout({
   transitions,
   transitionWidthDuration,
   transitionFadeDelay,
+  contentCss,
 }: Props) {
   return (
     <Box
@@ -64,6 +72,7 @@ export function Layout({
           direction="column"
           css={{
             padding: '$6 0',
+            ...contentCss,
           }}
         >
           {children}
