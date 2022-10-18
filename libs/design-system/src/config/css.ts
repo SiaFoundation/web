@@ -26,7 +26,7 @@ const globalStyles = globalCss({
     zIndex: 0,
   },
 
-  'h1, h2, h3, h4, h5, h6, p, span, ul, li': {
+  'h1, h2, h3, h4, h5, h6, p, span, ul, li, pre': {
     padding: 0,
     margin: 0,
   },

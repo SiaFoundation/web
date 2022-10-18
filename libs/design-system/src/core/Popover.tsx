@@ -44,8 +44,8 @@ type PopoverContentProps = PopoverContentPrimitiveProps & {
 export const PopoverContent = React.forwardRef<
   React.ElementRef<typeof StyledContent>,
   PopoverContentProps
->(({ children, hideArrow, ...props }, fowardedRef) => (
-  <StyledContent sideOffset={0} {...props} ref={fowardedRef}>
+>(({ children, hideArrow, ...props }, ref) => (
+  <StyledContent sideOffset={0} {...props} ref={ref}>
     {children}
     {/* {!hideArrow && (
       <Box css={{ color: '$panel' }}>

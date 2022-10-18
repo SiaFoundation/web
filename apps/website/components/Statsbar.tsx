@@ -136,7 +136,10 @@ type StatProps = {
 function Stat({ value, label }: StatProps) {
   return (
     <Paragraph font="mono" size="14">
-      {value} {label}
+      {value}{' '}
+      <Text color="subtle" font="sans">
+        {label}
+      </Text>
     </Paragraph>
   )
 }
