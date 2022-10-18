@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
   Flex,
+  Box,
   ContentGallery,
   Callout,
   Section,
@@ -146,166 +147,174 @@ export default function Renterd({ technical, tutorials, services }: Props) {
           />
         </Flex>
       </WaveSection>
-      <Section py="4">
-        <SiteHeading
-          title="Modular APIs that give developers more control"
-          description={
-            <>
-              renterd includes modular APIs that allow developers to tune renter
-              behaviours and build customized data storage integrations.
-              renterd's <Code>stateless</Code> mode is another great way for
-              developers to scale nodes horizontally.
-            </>
-          }
-        >
-          <Flex
-            direction={{
-              '@initial': 'column',
-              '@bp2': 'row',
-            }}
-            gap="3"
-            css={{ width: '100%' }}
+      <Box
+        css={{
+          position: 'relative',
+          background:
+            'linear-gradient(4deg, $colors$loContrast, $colors$slate3, $colors$loContrast)',
+        }}
+      >
+        <Section py="4">
+          <SiteHeading
+            title="Modular APIs that give developers more control"
+            description={
+              <>
+                renterd includes modular APIs that allow developers to tune
+                renter behaviours and build customized data storage
+                integrations. renterd's <Code>stateless</Code> mode is another
+                great way for developers to scale nodes horizontally.
+              </>
+            }
           >
             <Flex
-              direction="column"
-              gap="1"
-              css={{ flex: 1, overflow: 'hidden' }}
+              direction={{
+                '@initial': 'column',
+                '@bp2': 'row',
+              }}
+              gap="3"
+              css={{ width: '100%' }}
             >
-              <Text css={{ marginTop: '$3' }}>
-                <Text weight="bold">Example:</Text> Build a contract formation
-                transaction.
-              </Text>
-              <TerminalCommands
-                css={{
-                  '@bp3': {
-                    width: '500px',
-                  },
-                }}
-                sequences={[
-                  [
-                    {
-                      command: [
-                        'curl -X POST http://localhost:9980/api/rhp/prepare/form \\',
-                        JSON.stringify({ contract: 'new' }, null, 2),
-                      ],
-                      result: [
-                        JSON.stringify({ contract: 'prepared' }, null, 2),
-                      ],
+              <Flex
+                direction="column"
+                gap="1"
+                css={{ flex: 1, overflow: 'hidden' }}
+              >
+                <Text css={{ marginTop: '$3' }}>
+                  <Text weight="bold">Example:</Text> Build a contract formation
+                  transaction.
+                </Text>
+                <TerminalCommands
+                  css={{
+                    '@bp3': {
+                      width: '500px',
                     },
-                    {
-                      command: [
-                        'curl -X POST http://localhost:9980/api/wallet/fund \\',
-                        JSON.stringify(
-                          { transaction: { contract: 'prepared' } },
-                          null,
-                          2
-                        ),
-                      ],
-                      result: [
-                        JSON.stringify(
-                          {
-                            transaction: { contract: 'prepared' },
-                            status: 'funded',
-                          },
-                          null,
-                          2
-                        ),
-                      ],
+                  }}
+                  sequences={[
+                    [
+                      {
+                        command: [
+                          'curl -X POST http://localhost:9980/api/rhp/prepare/form \\',
+                          JSON.stringify({ contract: 'new' }, null, 2),
+                        ],
+                        result: [
+                          JSON.stringify({ contract: 'prepared' }, null, 2),
+                        ],
+                      },
+                      {
+                        command: [
+                          'curl -X POST http://localhost:9980/api/wallet/fund \\',
+                          JSON.stringify(
+                            { transaction: { contract: 'prepared' } },
+                            null,
+                            2
+                          ),
+                        ],
+                        result: [
+                          JSON.stringify(
+                            {
+                              transaction: { contract: 'prepared' },
+                              status: 'funded',
+                            },
+                            null,
+                            2
+                          ),
+                        ],
+                      },
+                      {
+                        command: [
+                          'curl -X POST http://localhost:9980/api/wallet/sign \\',
+                          JSON.stringify(
+                            {
+                              transaction: { contract: 'prepared' },
+                              status: 'funded',
+                            },
+                            null,
+                            2
+                          ),
+                        ],
+                        result: [
+                          JSON.stringify(
+                            {
+                              transaction: { contract: 'prepared' },
+                              status: 'signed',
+                            },
+                            null,
+                            2
+                          ),
+                        ],
+                      },
+                      {
+                        command: [
+                          'curl -X POST http://localhost:9980/api/rhp/form \\',
+                          JSON.stringify(
+                            {
+                              transaction: { contract: 'prepared' },
+                              status: 'signed',
+                            },
+                            null,
+                            2
+                          ),
+                        ],
+                        result: [
+                          JSON.stringify(
+                            {
+                              status: '200',
+                              message:
+                                'Host will finalize and broadcast transaction.',
+                            },
+                            null,
+                            2
+                          ),
+                        ],
+                      },
+                    ],
+                  ]}
+                />
+              </Flex>
+              <Flex
+                direction="column"
+                gap="1"
+                css={{ flex: 1, overflow: 'hidden' }}
+              >
+                <Text css={{ marginTop: '$3' }}>
+                  <Text weight="bold">Example:</Text> Migrate data to a specific
+                  contract.
+                </Text>
+                <TerminalCommands
+                  css={{
+                    '@bp3': {
+                      width: '500px',
                     },
-                    {
-                      command: [
-                        'curl -X POST http://localhost:9980/api/wallet/sign \\',
-                        JSON.stringify(
-                          {
-                            transaction: { contract: 'prepared' },
-                            status: 'funded',
-                          },
-                          null,
-                          2
-                        ),
-                      ],
-                      result: [
-                        JSON.stringify(
-                          {
-                            transaction: { contract: 'prepared' },
-                            status: 'signed',
-                          },
-                          null,
-                          2
-                        ),
-                      ],
-                    },
-                    {
-                      command: [
-                        'curl -X POST http://localhost:9980/api/rhp/form \\',
-                        JSON.stringify(
-                          {
-                            transaction: { contract: 'prepared' },
-                            status: 'signed',
-                          },
-                          null,
-                          2
-                        ),
-                      ],
-                      result: [
-                        JSON.stringify(
-                          {
-                            status: '200',
-                            message:
-                              'Host will finalize and broadcast transaction.',
-                          },
-                          null,
-                          2
-                        ),
-                      ],
-                    },
-                  ],
-                ]}
-              />
+                  }}
+                  sequences={[
+                    [
+                      {
+                        command: [
+                          'http http://localhost:9980/api/slabs/migrate \\',
+                          '    slabs:=@files/slabs.json \\    # data slabs to be moved',
+                          '    from:=@files/contract1.json \\ # originating contract',
+                          '    to:=@files/contract2.json \\   # destination contract',
+                          '    currentHeight:=383331         # current block height',
+                        ],
+                        result: [
+                          JSON.stringify(
+                            {
+                              status: '200',
+                              message: 'Data migration initiated.',
+                            },
+                            null,
+                            2
+                          ),
+                        ],
+                      },
+                    ],
+                  ]}
+                />
+              </Flex>
             </Flex>
-            <Flex
-              direction="column"
-              gap="1"
-              css={{ flex: 1, overflow: 'hidden' }}
-            >
-              <Text css={{ marginTop: '$3' }}>
-                <Text weight="bold">Example:</Text> Migrate data to a specific
-                contract.
-              </Text>
-              <TerminalCommands
-                css={{
-                  '@bp3': {
-                    width: '500px',
-                  },
-                }}
-                sequences={[
-                  [
-                    {
-                      command: [
-                        'http http://localhost:9980/api/slabs/migrate \\',
-                        '    slabs:=@files/slabs.json \\    # data slabs to be moved',
-                        '    from:=@files/contract1.json \\ # originating contract',
-                        '    to:=@files/contract2.json \\   # destination contract',
-                        '    currentHeight:=383331         # current block height',
-                      ],
-                      result: [
-                        JSON.stringify(
-                          {
-                            status: '200',
-                            message: 'Data migration initiated.',
-                          },
-                          null,
-                          2
-                        ),
-                      ],
-                    },
-                  ],
-                ]}
-              />
-            </Flex>
-          </Flex>
-        </SiteHeading>
-      </Section>
+          </SiteHeading>
+        </Section>
+      </Box>
       <WaveSection pt="4">
         <SiteHeading
           title="Manage everything with a powerful user interface"
