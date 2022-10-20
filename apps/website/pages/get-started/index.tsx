@@ -31,8 +31,8 @@ import { getCacheStats } from '../../content/stats'
 import { getCacheTutorials } from '../../content/tutorials'
 import { getCacheVersions } from '../../content/versions'
 import { SoftwareSection } from '../../components/SoftwareSection'
-import backgroundImage from '../../assets/backgrounds/waterfall.png'
-import previewImage from '../../assets/previews/waterfall.png'
+import backgroundImage from '../../assets/backgrounds/leaves.png'
+import previewImage from '../../assets/previews/leaves.png'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)

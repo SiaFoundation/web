@@ -43,7 +43,7 @@ export function ConfigurationSiacoin({
           <ConfigurationTip
             type="siacoin"
             label="Network average"
-            tip="Averages provided by SiaCentral."
+            tip="Averages provided by Sia Central."
             decimalsLimit={decimalsLimitSc}
             value={average}
             onChange={onChange}

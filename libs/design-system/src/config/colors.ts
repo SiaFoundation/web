@@ -22,6 +22,7 @@ export const colors = {
   waves: '#FAF8F7',
   hiContrast: '$slate12',
   loContrast: 'white',
+  loContrastA: '$whiteA12',
   canvas: 'hsl(0 0% 93%)',
   panel: 'white',
   accentInactive: '$slate4',
@@ -80,6 +81,8 @@ export const colors = {
 
   shadowDialog: 'rgb(0 0 0 / 40%) 0px 16px 70px',
   shadowDialogFocus: 'rgb(0 0 0 / 50%) 0px 16px 70px',
+
+  transparent: 'rgba(255,255,255,0)',
 }
 
 export const colorsDark = {
@@ -103,6 +106,7 @@ export const colorsDark = {
   waves: '$slate3',
   hiContrast: '$slate12',
   loContrast: '$slate1',
+  loContrastA: '$slateA1',
   canvas: 'hsl(0 0% 15%)',
   panel: '$mauve3',
   accentInactive: '$slate6',
@@ -160,4 +164,6 @@ export const colorsDark = {
 
   shadowDialog: 'rgb(0 0 0 / 45%) 0px 16px 70px',
   shadowDialogFocus: 'rgb(0 0 0 / 50%) 0px 16px 70px',
+
+  transparent: 'rgba(255,255,255,0)',
 }

@@ -52,7 +52,7 @@ export function SettingsDialog() {
                   </Flex>
                   <Paragraph size="14">
                     Select a currency for price conversions from Siacoin.
-                    Requires SiaCentral 3rd party data enabled under Privacy.
+                    Requires Sia Central 3rd party data enabled under Privacy.
                   </Paragraph>
                 </Flex>
               </Alert>
@@ -91,7 +91,7 @@ export function SettingsDialog() {
                       <Information16 />
                     </Box>
                     <Heading size="20" css={{ flex: 1 }}>
-                      SiaCentral
+                      Sia Central
                     </Heading>
                     <Switch
                       size="2"
@@ -102,7 +102,7 @@ export function SettingsDialog() {
                     />
                   </Flex>
                   <Paragraph size="14">
-                    The app fetches Siacoin exchange rates from the SiaCentral
+                    The app fetches Siacoin exchange rates from the Sia Central
                     API.
                   </Paragraph>
                 </Flex>

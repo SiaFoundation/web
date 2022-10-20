@@ -1,9 +1,4 @@
-import {
-  Flex,
-  Box,
-  NextImage,
-  getImageProps,
-} from '@siafoundation/design-system'
+import { Flex, Box, Image, getImageProps } from '@siafoundation/design-system'
 import { useInView } from 'react-intersection-observer'
 import { useCarousel, CarouselTags } from './Carousel'
 import imageFiles from '../assets/renterd/renterd-files.png'
@@ -19,6 +14,13 @@ const hostsProps = getImageProps(imageHosts)
 const configProps = getImageProps(imageConfig)
 const walletProps = getImageProps(imageWallet)
 const nodeProps = getImageProps(imageNode)
+
+// const animation = keyframes({
+//   '0%': { transform: 'rotateX(25deg)' },
+//   '25%': { transform: 'rotateX(25deg) scale(0.9)' },
+//   '60%': { transform: 'rotateX(25deg) scale(0.9)' },
+//   to: { transform: 'none' },
+// })
 
 const images = [
   {
@@ -76,6 +78,21 @@ export function RenterdUICarousel() {
             top: appInView ? '0px' : '80px',
             padding: '0 $1',
             transform: appInView ? 'scale(1.03)' : 'none',
+            // marginTop: '128px',
+            // ...(appInView
+            //   ? {
+            //       transition: 'transform 400ms ease-out 0s',
+            //       transform: 'rotateX(35deg)',
+            //       animationDuration: '1400ms',
+            //       animationTimingFunction: 'ease',
+            //       animationIterationCount: '1',
+            //       animationDirection: 'normal',
+            //       animationFillMode: 'forwards',
+            //       animationPlayState: 'running',
+            //       animationName: animation,
+            //       animationDelay: 'calc(var(--base-delay) + 400ms)',
+            //     }
+            //   : {}),
           }}
         >
           {images.map((item) => (
@@ -87,9 +104,35 @@ export function RenterdUICarousel() {
                 top: 0,
                 position:
                   props.currentItem.key === item.key ? 'relative' : 'absolute',
+                // '&::before': {
+                //   content: '',
+                //   margin: '26px 39px 80px',
+                //   pointerEvents: 'none',
+                //   userSelect: 'none',
+                //   position: 'absolute',
+                //   inset: '0px',
+                //   borderRadius: '$2',
+                //   // padding: '1px',
+                //   backgroundImage:
+                //     'linear-gradient(to bottom, rgba(0,255,100, 0.3), rgba(255,255,255,0))',
+                //   zIndex: -1,
+                // },
+                // '&::after': {
+                //   content: '',
+                //   position: 'absolute',
+                //   margin: '26px 39px 80px',
+                //   inset: '0px',
+                //   zIndex: -1,
+                //   opacity: 1,
+                //   transition: 'opacity 480ms ease 0s',
+                //   $$alpha: 0.3,
+                //   backgroundImage:
+                //     'radial-gradient(ellipse 50px 20px at 46% 0%,rgba(74,101,199,$$alpha),$transparent), radial-gradient(ellipse 50px 20px at 50% 0%,rgba(95,75,218,$$alpha),$transparent), radial-gradient(ellipse 50px 20px at 54% 0%,rgba(91,45,221,$$alpha),$transparent)',
+                // },
               }}
             >
-              <NextImage {...item.props} alt={item.title} />
+              <Image src={item.props.src} alt={item.title} />
+              {/* <NextImage {...item.props} alt={item.title} /> */}
             </Box>
           ))}
         </Box>

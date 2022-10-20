@@ -25,8 +25,8 @@ import { AsyncReturnType } from '../../lib/types'
 import { getCacheSoftware } from '../../content/software'
 import { getCacheStats } from '../../content/stats'
 import { getCacheTutorials } from '../../content/tutorials'
-import backgroundImage from '../../assets/backgrounds/nate-bridge.png'
-import previewImage from '../../assets/previews/renterd.png'
+import backgroundImage from '../../assets/backgrounds/nate-snow.png'
+import previewImage from '../../assets/previews/nate-snow.png'
 import { textContent } from '../../lib/utils'
 import { WaveSection } from '../../components/WaveSection'
 import { TerminalCommands } from '../../components/TerminalCommands'
@@ -151,7 +151,7 @@ export default function Renterd({ technical, tutorials, services }: Props) {
         css={{
           position: 'relative',
           background:
-            'linear-gradient(4deg, $colors$loContrast, $colors$slate3, $colors$loContrast)',
+            'linear-gradient(4deg, $colors$loContrastA, $colors$slateA3, $colors$loContrastA)',
         }}
       >
         <Section py="4">

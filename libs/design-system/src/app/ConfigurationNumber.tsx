@@ -37,7 +37,7 @@ export function ConfigurationNumber({
           <ConfigurationTip
             type="number"
             label="Network average"
-            tip="Averages provided by SiaCentral."
+            tip="Averages provided by Sia Central."
             decimalsLimit={decimalsLimit}
             value={average}
             units={units}
