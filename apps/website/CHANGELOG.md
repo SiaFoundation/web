@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.29.0](https://github.com/SiaFoundation/web/compare/website-0.28.0...website-0.29.0) (2022-10-20)
+
+
+### Bug Fixes
+
+* renterd page dark mode ([689e0e7](https://github.com/SiaFoundation/web/commit/689e0e7f63bd70a85b3410e0f906418ab5401927))
+
+
+### Features
+
+* high rez assets, update sia central naming, design tweaks ([4ad9e13](https://github.com/SiaFoundation/web/commit/4ad9e13ba3e889136972c7704764239b5c5c2688))
+
+
+
 # [0.28.0](https://github.com/SiaFoundation/web/compare/website-0.27.0...website-0.28.0) (2022-10-18)
 
 
