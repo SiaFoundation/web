@@ -1,13 +1,15 @@
 import React from 'react'
 import { CSS } from '../config/theme'
 import { Grid } from '../core/Grid'
+import { Launch16 } from '../icons'
 import { Flex } from '../core/Flex'
 import { ThemeRadio } from '../components/ThemeRadio'
 import { Text } from '../core/Text'
 import { SimpleLogoIcon } from '../icons/SimpleLogoIcon'
 import { NextLink } from '../core/Link'
 import { LinkData } from '../lib/links'
-import { Heading, Paragraph } from '../core'
+import { Box, Heading, Paragraph } from '../core'
+import { useIsExternalDomain } from '../hooks'
 
 const radioCss: CSS = {
   [`& *, & ${Text}`]: {
@@ -47,7 +49,6 @@ export function SiteMap({ menuSections, onClick, inSiteMenu }: Props) {
         <SimpleLogoIcon size={50} />
       </Flex>
       <Grid
-        gapX="6"
         gapY="6"
         columns={{
           '@initial': '2',
@@ -102,6 +103,7 @@ function MenuLink({
   disabled,
   inSiteMenu,
 }: MenuLinkProps) {
+  const isExternal = useIsExternalDomain(link)
   return (
     <Paragraph
       size="16"
@@ -126,8 +128,23 @@ function MenuLink({
         disabled={disabled}
         onClick={onClick}
         target={newTab ? '_blank' : undefined}
+        css={{ display: 'flex', gap: 0, alignItems: 'center' }}
       >
-        {title}
+        <Box as="span" css={{ flex: 'inherit' }}>
+          {title}
+        </Box>
+        {isExternal && (
+          <Box
+            as="span"
+            css={{
+              position: 'relative',
+              top: '2px',
+              transform: 'scale(0.75)',
+            }}
+          >
+            <Launch16 />
+          </Box>
+        )}
       </NextLink>
     </Paragraph>
   )

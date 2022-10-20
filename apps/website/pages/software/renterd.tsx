@@ -150,8 +150,10 @@ export default function Renterd({ technical, tutorials, services }: Props) {
       <Box
         css={{
           position: 'relative',
+          // background:
+          //   'linear-gradient(4deg, $colors$loContrast, $colors$slate3, $colors$slate3)',
           background:
-            'linear-gradient(4deg, $colors$loContrastA, $colors$slateA3, $colors$loContrastA)',
+            'linear-gradient(177deg, $colors$loContrast 0%, $colors$slate3 78%, $colors$slate2 88%)',
         }}
       >
         <Section py="4">
@@ -335,7 +337,10 @@ export default function Renterd({ technical, tutorials, services }: Props) {
         css={{
           position: 'relative',
           zIndex: 1,
-          backgroundColor: '$loContrast',
+          background:
+            'linear-gradient(172deg, $colors$loContrast 0%, $colors$slate3 48%, $colors$loContrast 86%)',
+          // background:
+          //   'radial-gradient(circle, $colors$slate3 0%, $colors$loContrast 86%)',
         }}
       >
         {/* <WavesBackdrop /> */}

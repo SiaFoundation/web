@@ -162,7 +162,7 @@ export function SiteLayout({
                           height: '100%',
                           mixBlendMode: 'darken',
                           zIndex: 1,
-                          backgroundColor: 'rgba(30, 169, 76, .3)',
+                          backgroundColor: '$subtleAccentMask',
                         }}
                       />
                       <Box
@@ -211,7 +211,7 @@ export function SiteLayout({
               height: '100%',
               mixBlendMode: 'darken',
               zIndex: 1,
-              backgroundColor: 'rgba(30, 169, 76, .3)',
+              backgroundColor: '$subtleAccentMask',
             }}
           />
           {/* <Box key={pixelKey}>

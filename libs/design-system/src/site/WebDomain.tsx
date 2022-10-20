@@ -2,18 +2,14 @@ import { Launch16 } from '../icons'
 import { Box } from '../core/Box'
 import { Flex } from '../core/Flex'
 import { Text } from '../core/Text'
-
-const localDomains = ['sia.tech', 'docs.sia.tech', 'blog.sia.tech']
+import { useIsExternalDomain } from '../hooks'
 
 type Props = {
   link: string
 }
 
 export function WebDomain({ link }: Props) {
-  if (!link.startsWith('http')) {
-    return null
-  }
-
+  const isExternal = useIsExternalDomain(link)
   const url = new URL(link)
 
   return (
@@ -26,7 +22,7 @@ export function WebDomain({ link }: Props) {
       >
         {url.host}
       </Text>
-      {!localDomains.includes(url.host) && (
+      {isExternal && (
         <Box
           css={{
             transform: 'scale(0.75)',

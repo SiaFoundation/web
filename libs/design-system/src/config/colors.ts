@@ -18,6 +18,8 @@ export const colors = {
   accent11: '#04511B',
   accent12: '#011F0A',
 
+  subtleAccentMask: 'rgba(30, 169, 76, .3)',
+
   // Semantic
   waves: '#FAF8F7',
   hiContrast: '$slate12',
@@ -101,6 +103,8 @@ export const colorsDark = {
   accent10: '#069F35',
   accent11: '#2FA052',
   accent12: '#D9F4E1',
+
+  subtleAccentMask: 'rgba(30, 169, 76, .3)',
 
   // Semantic
   waves: '$slate3',
