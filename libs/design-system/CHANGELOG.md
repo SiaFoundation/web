@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [0.38.0](https://github.com/SiaFoundation/web/compare/design-system-0.37.0...design-system-0.38.0) (2022-10-20)
+
+
+### Features
+
+* high rez assets, update sia central naming, design tweaks ([4ad9e13](https://github.com/SiaFoundation/web/commit/4ad9e13ba3e889136972c7704764239b5c5c2688))
+
+
+
 # [0.37.0](https://github.com/SiaFoundation/web/compare/design-system-0.36.0...design-system-0.37.0) (2022-10-18)
 
 
