@@ -135,12 +135,12 @@ export const menuSections = [
       },
       {
         link: webLinks.storageStats,
-        title: 'SiaCentral Host Explorer',
+        title: 'Sia Central Host Explorer',
         newTab: true,
       },
       {
         link: webLinks.hostTroubleshoot,
-        title: 'SiaCentral Host Troubleshoot',
+        title: 'Sia Central Host Troubleshooter',
         newTab: true,
       },
     ],

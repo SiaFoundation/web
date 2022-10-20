@@ -149,13 +149,13 @@ export function Layout({ title, description, path, children }: Props) {
                         SiaStats
                       </BottomLink>
                       <BottomLink href={webLinks.storageStats} target="_blank">
-                        SiaCentral Host Browser
+                        Sia Central Host Browser
                       </BottomLink>
                       <BottomLink
                         href={webLinks.hostTroubleshoot}
                         target="_blank"
                       >
-                        SiaCentral Host Troubleshoot
+                        Sia Central Host Troubleshoot
                       </BottomLink>
                       <BottomLink href={webLinks.coinmarketcap} target="_blank">
                         Coinmarketcap

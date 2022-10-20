@@ -67,6 +67,16 @@ export function SiteLayout({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [_focus])
 
+  // const [pixelKey, setPixelKey] = useState<string>('pixel')
+  // useEffect(() => {
+  //   const i = setInterval(() => {
+  //     setPixelKey(String(Math.random()))
+  //   }, 5_000)
+  //   return () => {
+  //     clearInterval(i)
+  //   }
+  // }, [])
+
   return (
     <Box
       css={{
@@ -147,6 +157,16 @@ export function SiteLayout({
                     >
                       <Box
                         css={{
+                          position: 'absolute',
+                          width: '100%',
+                          height: '100%',
+                          mixBlendMode: 'darken',
+                          zIndex: 1,
+                          backgroundColor: 'rgba(30, 169, 76, .3)',
+                        }}
+                      />
+                      <Box
+                        css={{
                           position: 'relative',
                           width: '100%',
                           height: '390px',
@@ -182,11 +202,37 @@ export function SiteLayout({
             position: 'relative',
             width: '100%',
             height: '100%',
-            backgroundColor: 'rgba(30, 169, 76, 0.3)',
           }}
         >
           <Box
             css={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              mixBlendMode: 'darken',
+              zIndex: 1,
+              backgroundColor: 'rgba(30, 169, 76, .3)',
+            }}
+          />
+          {/* <Box key={pixelKey}>
+            {times(1000, (i) => (
+              <Box
+                css={{
+                  position: 'absolute',
+                  left: `${random(0, 100)}%`,
+                  top: `${random(0, 100)}%`,
+                  width: `0.15%`,
+                  height: `2px`,
+                  borderRadius: '1px',
+                  backgroundColor: 'black',
+                  zIndex: 1,
+                }}
+              />
+            ))}
+          </Box> */}
+          <Box
+            css={{
+              zIndex: 0,
               position: 'relative',
               width: '100%',
               height: '100%',

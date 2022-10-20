@@ -28,7 +28,7 @@
     "subtitle": "Decentralized CDN and file sharing platform for developers."
   },
   {
-    "title": "SiaCentral - Host Browser",
+    "title": "Sia Central - Host Browser",
     "link": "https://hosts.siacentral.com/",
     "logo": "siacentral",
     "tags": ["network_stats"],
@@ -56,14 +56,14 @@
     "subtitle": "Charts, metrics, and explorer for the Sia network."
   },
   {
-    "title": "SiaCentral - Host Troubleshoot Tool",
+    "title": "Sia Central - Host Troubleshoot Tool",
     "link": "https://troubleshoot.siacentral.com/",
     "logo": "siacentral",
     "tags": ["network_stats"],
     "subtitle": "Troubleshoot issues with your Sia host."
   },
   {
-    "title": "SiaCentral - Foundation Tracker",
+    "title": "Sia Central - Foundation Tracker",
     "link": "https://foundation-tracker.siacentral.com/",
     "logo": "siacentral",
     "tags": ["network_stats"],
@@ -77,7 +77,7 @@
     "subtitle": "Basic information and financial charts for the Sia network."
   },
   {
-    "title": "SiaCentral - Host Manager",
+    "title": "Sia Central - Host Manager",
     "logo": "siacentral",
     "link": "https://siacentral.com/host-manager",
     "tags": ["open_source_software"],
@@ -91,7 +91,7 @@
     "subtitle": "Sia companion app that provides renters with more granular controls over hosts and contracts."
   },
   {
-    "title": "SiaCentral - Host Dashboard",
+    "title": "Sia Central - Host Dashboard",
     "logo": "siacentral",
     "link": "https://github.com/siacentral/sia-host-dashboard",
     "tags": ["open_source_software"],

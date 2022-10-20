@@ -143,7 +143,6 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
           }
           actionTitle="Learn about grants"
           actionLink={routes.grants.index}
-          actionNewTab
         />
       </Section>
     </Layout>
