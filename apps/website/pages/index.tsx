@@ -120,6 +120,7 @@ export default function Home({
     >
       <SectionSimple
         css={{
+          pt: '$6',
           pb: '$12',
         }}
       >
