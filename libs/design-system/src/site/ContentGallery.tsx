@@ -1,6 +1,7 @@
 import { uniq } from 'lodash'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
+import { CSS } from '../config/theme'
 import { Badge } from '../core/Badge'
 import { Flex } from '../core/Flex'
 import { Grid } from '../core/Grid'
@@ -16,6 +17,7 @@ type Props = {
   columns?: React.ComponentProps<typeof Grid>['columns']
   gap?: React.ComponentProps<typeof Grid>['gap']
   component?: (props: ContentItemProps) => JSX.Element | null
+  css?: CSS
 }
 
 export function ContentGallery({
@@ -27,6 +29,7 @@ export function ContentGallery({
   gap = '5',
   component,
   items,
+  css,
 }: Props) {
   const router = useRouter()
   const activeFilter = (filterable ? router.query[filterable] : undefined) as
@@ -72,7 +75,7 @@ export function ContentGallery({
   const ContentComponent = component || ContentItem
 
   return (
-    <Flex direction="column" gap="5">
+    <Flex direction="column" gap="5" css={css}>
       {filterable && (
         <Flex direction="column" gap="2">
           {eyebrow && (

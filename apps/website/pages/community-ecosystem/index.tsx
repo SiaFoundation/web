@@ -1,7 +1,6 @@
 import {
   ContentGallery,
   Callout,
-  Section,
   ContentProject,
   Flex,
   Image,
@@ -20,6 +19,9 @@ import { textContent } from '../../lib/utils'
 import backgroundImage from '../../assets/backgrounds/jungle.png'
 import previewImage from '../../assets/previews/jungle.png'
 import { getMinutesInSeconds } from '../../lib/time'
+import { SectionSimple } from '../../components/SectionSimple'
+import { SectionWaves } from '../../components/SectionWaves'
+import { SectionGradient } from '../../components/SectionGradient'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -42,7 +44,7 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
       description={textContent(description)}
       path={routes.community.index}
       heading={
-        <Section py="4">
+        <SectionSimple css={{ py: '$max' }}>
           <SiteHeading
             title={title}
             description={description}
@@ -60,12 +62,12 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
               },
             ]}
           />
-        </Section>
+        </SectionSimple>
       }
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <Section py="2">
+      <SectionWaves css={{ pt: '$12', pb: '$12' }}>
         <SiteHeading
           size="32"
           title="Featured updates from the Sia community"
@@ -84,8 +86,8 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
           ]}
         />
         <ContentGallery columns="1" items={blogs} />
-      </Section>
-      <Section py="4">
+      </SectionWaves>
+      <SectionGradient css={{ pt: '$max', pb: '$12' }}>
         <Flex gap="3" align="start">
           <Box
             css={{
@@ -130,9 +132,8 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
           }}
           items={software}
         />
-      </Section>
-      <Section pt="2" pb="4">
         <Callout
+          css={{ mt: '$12', mb: '$6' }}
           title="Sia grants"
           size="2"
           description={
@@ -144,7 +145,7 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
           actionTitle="Learn about grants"
           actionLink={routes.grants.index}
         />
-      </Section>
+      </SectionGradient>
     </Layout>
   )
 }

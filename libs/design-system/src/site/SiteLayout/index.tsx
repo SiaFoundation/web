@@ -82,7 +82,6 @@ export function SiteLayout({
       css={{
         position: 'relative',
         height: '100%',
-        background: '$loContrast',
         border: focus ? '$sizes$frame solid $frame' : 'none',
         overflow: 'hidden',
       }}
@@ -108,19 +107,22 @@ export function SiteLayout({
                 width: focus ? focusWidth : '100%',
                 margin: focus ? '0' : '0 auto',
                 maxWidth: focus ? '100%' : '1600px',
+                background: transitioning ? '$loContrast' : 'none',
                 transition: `width ${transitionWidthDuration}ms ease-out`,
                 position: 'relative',
                 overflow: 'hidden',
-                backgroundColor: '$loContrast',
                 border: focus ? 'none' : '$sizes$frame solid $frame',
                 '@bp1': {
                   borderRight: '$sizes$frame solid $frame',
                 },
                 padding: 0,
-                paddingTop: '$5',
+                // paddingTop: '$5',
               }}
             >
-              <Container size="4">
+              <Container
+                size="4"
+                css={{ backgroundColor: '$loContrast', paddingTop: '$5' }}
+              >
                 <Flex justify="between" align="start">
                   {navbar}
                   {!focus && <SiteMenu menuSections={menuSections} />}

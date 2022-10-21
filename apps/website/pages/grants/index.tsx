@@ -2,7 +2,6 @@
 import {
   ContentGallery,
   Callout,
-  Section,
   SiteHeading,
   getImageProps,
   webLinks,
@@ -12,6 +11,7 @@ import {
   Li,
   Code,
   Text,
+  Flex,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
@@ -23,6 +23,9 @@ import previewImage from '../../assets/previews/nate-snow.png'
 import { AsyncReturnType } from '../../lib/types'
 import { getMinutesInSeconds } from '../../lib/time'
 import { getCacheGrantCommittee } from '../../content/grantCommittee'
+import { SectionSimple } from '../../components/SectionSimple'
+import { SectionWaves } from '../../components/SectionWaves'
+import { SectionGradient } from '../../components/SectionGradient'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -47,7 +50,7 @@ export default function Grants({ services, grantCommittee }: Props) {
       description={textContent(description)}
       path={routes.community.index}
       heading={
-        <Section py="4">
+        <SectionSimple css={{ py: '$max' }}>
           <SiteHeading
             title={title}
             description={description}
@@ -65,171 +68,178 @@ export default function Grants({ services, grantCommittee }: Props) {
               },
             ]}
           />
-        </Section>
+        </SectionSimple>
       }
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <Section py="4" css={{ maxWidth: '800px' }} gap="7">
-        <SiteHeading
-          size="32"
-          title="The Grant Process"
-          description={
-            <>
-              The following section outlines the proposal requirements, the
-              proposal process, and evaluation criteria for the Sia grant
-              program. Read on to get started on your own grant application.
-            </>
-          }
-        />
-        <ContentGallery
-          columns="1"
-          gap="7"
-          items={[
-            {
-              title: 'Proposal requirements',
-              icon: 'ListChecked',
-              children: (
-                <Ol>
-                  <Li size="14" index={1}>
-                    Name of organization or individual and project name.
-                  </Li>
-                  <Li size="14" index={2}>
-                    Purpose of the grant: who benefits and how the project will
-                    serve the Foundation’s mission of user-owned data.
-                  </Li>
-                  <Li size="14" index={3}>
-                    Code contributions must be open source.
-                  </Li>
-                  <Li size="14" index={4}>
-                    Timeline with measurable objectives and goals.
-                  </Li>
-                  <Li size="14" index={5}>
-                    Any potential risks that will affect the outcome of the
-                    project.
-                  </Li>
-                  <Li size="14" index={6}>
-                    Budget and justification.
-                  </Li>
-                  <Li size="14" index={7}>
-                    Reporting requirements: Progress reports to the
-                    foundation/committee and to the community.
-                  </Li>
-                </Ol>
-              ),
-            },
-            {
-              title: 'Proposal process',
-              icon: 'MailAll',
-              children: (
-                <Ol>
-                  <Li size="14" index={1}>
-                    Create a proposal with the above requirements in mind.
-                  </Li>
-                  <Li size="14" index={2}>
-                    Submit your proposal at{' '}
-                    <NextLink href={webLinks.forumGrants} target="_blank">
-                      {webLinks.forumGrants}
-                    </NextLink>
-                    .
-                  </Li>
-                  <Li size="14" index={3}>
-                    Open discussion will ensue in the comment section from the
-                    community.
-                  </Li>
-                  <Li
-                    size="14"
-                    index={4}
-                    subList={
-                      <Ol css={{ marginTop: '$3' }}>
-                        <Li size="14">
-                          New proposals, to accept, reject, or request more
-                          info.
-                        </Li>
-                        <Li size="14">
-                          Existing grants, to assess their progress.
-                        </Li>
-                        <Li size="14">
-                          Newly completed grants, to review their outcomes.
-                        </Li>
-                      </Ol>
-                    }
-                  >
-                    The Grant Committee convenes every two weeks to review the
-                    following:
-                  </Li>
-                </Ol>
-              ),
-            },
-            {
-              title: 'Grant committee',
-              icon: 'EventsAlt',
-              children: (
-                <Ol>
-                  {grantCommittee.map(({ name }) => (
-                    <Li key={name} size="14">
-                      {name}
+      <SectionWaves css={{ pt: '$12', pb: '$12' }}>
+        <Flex direction="column" css={{ maxWidth: '800px' }}>
+          <SiteHeading
+            size="32"
+            css={{ mb: '$12' }}
+            title="The Grant Process"
+            description={
+              <>
+                The following section outlines the proposal requirements, the
+                proposal process, and evaluation criteria for the Sia grant
+                program. Read on to get started on your own grant application.
+              </>
+            }
+          />
+          <ContentGallery
+            columns="1"
+            gap="7"
+            items={[
+              {
+                title: 'Proposal requirements',
+                icon: 'ListChecked',
+                children: (
+                  <Ol>
+                    <Li size="14" index={1}>
+                      Name of organization or individual and project name.
                     </Li>
-                  ))}
-                </Ol>
-              ),
-            },
-            {
-              title: 'Scoring rubric',
-              icon: 'TestTool',
-              subtitle: (
-                <>
-                  All proposals are reviewed by the Grant Committee. When
-                  evaluating a grant proposal, the Committee considers the
-                  following factors while utilizing a scoring matrix to ensure a
-                  thorough vetting process.
-                </>
-              ),
-              children: (
-                <Ol css={{ marginTop: '$4' }}>
-                  <Li size="14" index={1}>
-                    <Text weight="semibold">
-                      In line with Foundation’s mission:
-                    </Text>{' '}
-                    Does the proposal address a recognized need in the
-                    decentralized cloud storage community? Is the need
-                    consistent with The Sia Foundation’s mission of user-owned
-                    data?
-                  </Li>
-                  <Li size="14" index={2}>
-                    <Text weight="semibold">Community Impact:</Text> Will the
-                    project provide a meaningful volume of services and/or
-                    people served in the decentralized cloud storage community
-                    (in particular the Sia community)?
-                  </Li>
-                  <Li size="14" index={3}>
-                    <Text weight="semibold">Goals, Objectives & Outcome:</Text>{' '}
-                    Are there clear goals and objectives written? Are measurable
-                    outcomes evident?
-                  </Li>
-                  <Li size="14" index={4}>
-                    <Text weight="semibold">Deliverable:</Text> How well does
-                    the individual/organization demonstrate the ability to
-                    deliver and measure proposed outcomes?
-                  </Li>
-                  <Li size="14" index={5}>
-                    <Text weight="semibold">Risks:</Text> Is the risk reasonable
-                    for the timeline provided? Please be thoughtful if the risk
-                    is high enough to impact the outcome of the project.
-                  </Li>
-                  <Li size="14" index={6}>
-                    <Text weight="semibold">Budget Justification:</Text> How
-                    well does the applicant justify the budget?
-                  </Li>
-                </Ol>
-              ),
-            },
-          ]}
-        />
-      </Section>
-      <Section py="3">
+                    <Li size="14" index={2}>
+                      Purpose of the grant: who benefits and how the project
+                      will serve the Foundation’s mission of user-owned data.
+                    </Li>
+                    <Li size="14" index={3}>
+                      Code contributions must be open source.
+                    </Li>
+                    <Li size="14" index={4}>
+                      Timeline with measurable objectives and goals.
+                    </Li>
+                    <Li size="14" index={5}>
+                      Any potential risks that will affect the outcome of the
+                      project.
+                    </Li>
+                    <Li size="14" index={6}>
+                      Budget and justification.
+                    </Li>
+                    <Li size="14" index={7}>
+                      Reporting requirements: Progress reports to the
+                      foundation/committee and to the community.
+                    </Li>
+                  </Ol>
+                ),
+              },
+              {
+                title: 'Proposal process',
+                icon: 'MailAll',
+                children: (
+                  <Ol>
+                    <Li size="14" index={1}>
+                      Create a proposal with the above requirements in mind.
+                    </Li>
+                    <Li size="14" index={2}>
+                      Submit your proposal at{' '}
+                      <NextLink href={webLinks.forumGrants} target="_blank">
+                        {webLinks.forumGrants}
+                      </NextLink>
+                      .
+                    </Li>
+                    <Li size="14" index={3}>
+                      Open discussion will ensue in the comment section from the
+                      community.
+                    </Li>
+                    <Li
+                      size="14"
+                      index={4}
+                      subList={
+                        <Ol css={{ marginTop: '$3' }}>
+                          <Li size="14">
+                            New proposals, to accept, reject, or request more
+                            info.
+                          </Li>
+                          <Li size="14">
+                            Existing grants, to assess their progress.
+                          </Li>
+                          <Li size="14">
+                            Newly completed grants, to review their outcomes.
+                          </Li>
+                        </Ol>
+                      }
+                    >
+                      The Grant Committee convenes every two weeks to review the
+                      following:
+                    </Li>
+                  </Ol>
+                ),
+              },
+              {
+                title: 'Grant committee',
+                icon: 'EventsAlt',
+                children: (
+                  <Ol>
+                    {grantCommittee.map(({ name }) => (
+                      <Li key={name} size="14">
+                        {name}
+                      </Li>
+                    ))}
+                  </Ol>
+                ),
+              },
+              {
+                title: 'Scoring rubric',
+                icon: 'TestTool',
+                subtitle: (
+                  <>
+                    All proposals are reviewed by the Grant Committee. When
+                    evaluating a grant proposal, the Committee considers the
+                    following factors while utilizing a scoring matrix to ensure
+                    a thorough vetting process.
+                  </>
+                ),
+                children: (
+                  <Ol css={{ marginTop: '$4' }}>
+                    <Li size="14" index={1}>
+                      <Text weight="semibold">
+                        In line with Foundation’s mission:
+                      </Text>{' '}
+                      Does the proposal address a recognized need in the
+                      decentralized cloud storage community? Is the need
+                      consistent with The Sia Foundation’s mission of user-owned
+                      data?
+                    </Li>
+                    <Li size="14" index={2}>
+                      <Text weight="semibold">Community Impact:</Text> Will the
+                      project provide a meaningful volume of services and/or
+                      people served in the decentralized cloud storage community
+                      (in particular the Sia community)?
+                    </Li>
+                    <Li size="14" index={3}>
+                      <Text weight="semibold">
+                        Goals, Objectives & Outcome:
+                      </Text>{' '}
+                      Are there clear goals and objectives written? Are
+                      measurable outcomes evident?
+                    </Li>
+                    <Li size="14" index={4}>
+                      <Text weight="semibold">Deliverable:</Text> How well does
+                      the individual/organization demonstrate the ability to
+                      deliver and measure proposed outcomes?
+                    </Li>
+                    <Li size="14" index={5}>
+                      <Text weight="semibold">Risks:</Text> Is the risk
+                      reasonable for the timeline provided? Please be thoughtful
+                      if the risk is high enough to impact the outcome of the
+                      project.
+                    </Li>
+                    <Li size="14" index={6}>
+                      <Text weight="semibold">Budget Justification:</Text> How
+                      well does the applicant justify the budget?
+                    </Li>
+                  </Ol>
+                ),
+              },
+            ]}
+          />
+        </Flex>
+      </SectionWaves>
+      <SectionGradient css={{ py: '$9' }}>
         <SiteHeading
           size="32"
+          css={{ mt: '$9' }}
           title="Interested in a grant but have questions?"
           description={
             <>
@@ -249,10 +259,9 @@ export default function Grants({ services, grantCommittee }: Props) {
             },
           ]}
         />
-      </Section>
-      <Section py="4">
         <SiteHeading
           size="32"
+          css={{ mt: '$15' }}
           title="Check out what people are building on Sia"
           description={
             <>
@@ -280,9 +289,8 @@ export default function Grants({ services, grantCommittee }: Props) {
             '@bp4': 3,
           }}
         />
-      </Section>
-      <Section pt="2" pb="4">
         <Callout
+          css={{ my: '$12' }}
           title="Get started on your grant proposal"
           size="2"
           description={
@@ -295,7 +303,7 @@ export default function Grants({ services, grantCommittee }: Props) {
           actionLink={webLinks.forumGrants}
           actionNewTab
         />
-      </Section>
+      </SectionGradient>
     </Layout>
   )
 }

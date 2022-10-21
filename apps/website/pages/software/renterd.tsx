@@ -1,12 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
   Flex,
-  Box,
   ContentGallery,
   Callout,
-  Section,
-  WavesBackdrop,
-  Container,
   Code,
   ContentProject,
   SiteHeading,
@@ -26,10 +22,12 @@ import { getCacheSoftware } from '../../content/software'
 import { getCacheStats } from '../../content/stats'
 import { getCacheTutorials } from '../../content/tutorials'
 import backgroundImage from '../../assets/backgrounds/nate-snow.png'
-import previewImage from '../../assets/previews/nate-snow.png'
+import previewImage from '../../assets/previews/renterd.png'
 import { textContent } from '../../lib/utils'
-import { WaveSection } from '../../components/WaveSection'
 import { TerminalCommands } from '../../components/TerminalCommands'
+import { SectionGradient } from '../../components/SectionGradient'
+import { SectionWaves } from '../../components/SectionWaves'
+import { SectionSimple } from '../../components/SectionSimple'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -81,19 +79,19 @@ export default function Renterd({ technical, tutorials, services }: Props) {
       description={textContent(description)}
       path={routes.getStarted.index}
       heading={
-        <Section pt="4" pb="0">
+        <SectionSimple css={{ pt: '$max' }}>
           <SiteHeading size="64" title={title} description={description}>
             <Flex direction="column" gap="2" css={{ m: '$12 0 $2' }}>
               {downloadEl}
             </Flex>
           </SiteHeading>
-        </Section>
+        </SectionSimple>
       }
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
       contentCss={{ paddingTop: 0 }}
     >
-      <WaveSection py="3">
+      <SectionWaves css={{ py: '$9' }}>
         <Flex
           gap="9"
           direction={{
@@ -146,178 +144,168 @@ export default function Renterd({ technical, tutorials, services }: Props) {
             ]}
           />
         </Flex>
-      </WaveSection>
-      <Box
-        css={{
-          position: 'relative',
-          // background:
-          //   'linear-gradient(4deg, $colors$loContrast, $colors$slate3, $colors$slate3)',
-          background:
-            'linear-gradient(177deg, $colors$loContrast 0%, $colors$slate3 78%, $colors$slate2 88%)',
-        }}
-      >
-        <Section py="4">
-          <SiteHeading
-            title="Modular APIs that give developers more control"
-            description={
-              <>
-                renterd includes modular APIs that allow developers to tune
-                renter behaviours and build customized data storage
-                integrations. renterd's <Code>stateless</Code> mode is another
-                great way for developers to scale nodes horizontally.
-              </>
-            }
+      </SectionWaves>
+      <SectionGradient css={{ py: '$15' }}>
+        <SiteHeading
+          title="Modular APIs that give developers more control"
+          description={
+            <>
+              renterd includes modular APIs that allow developers to tune renter
+              behaviours and build customized data storage integrations.
+              renterd's <Code>stateless</Code> mode is another great way for
+              developers to scale nodes horizontally.
+            </>
+          }
+        >
+          <Flex
+            direction={{
+              '@initial': 'column',
+              '@bp2': 'row',
+            }}
+            gap="3"
+            css={{ width: '100%' }}
           >
             <Flex
-              direction={{
-                '@initial': 'column',
-                '@bp2': 'row',
-              }}
-              gap="3"
-              css={{ width: '100%' }}
+              direction="column"
+              gap="1"
+              css={{ flex: 1, overflow: 'hidden' }}
             >
-              <Flex
-                direction="column"
-                gap="1"
-                css={{ flex: 1, overflow: 'hidden' }}
-              >
-                <Text css={{ marginTop: '$3' }}>
-                  <Text weight="bold">Example:</Text> Build a contract formation
-                  transaction.
-                </Text>
-                <TerminalCommands
-                  css={{
-                    '@bp3': {
-                      width: '500px',
+              <Text css={{ marginTop: '$3' }}>
+                <Text weight="bold">Example:</Text> Build a contract formation
+                transaction.
+              </Text>
+              <TerminalCommands
+                css={{
+                  '@bp3': {
+                    width: '500px',
+                  },
+                }}
+                sequences={[
+                  [
+                    {
+                      command: [
+                        'curl -X POST http://localhost:9980/api/rhp/prepare/form \\',
+                        JSON.stringify({ contract: 'new' }, null, 2),
+                      ],
+                      result: [
+                        JSON.stringify({ contract: 'prepared' }, null, 2),
+                      ],
                     },
-                  }}
-                  sequences={[
-                    [
-                      {
-                        command: [
-                          'curl -X POST http://localhost:9980/api/rhp/prepare/form \\',
-                          JSON.stringify({ contract: 'new' }, null, 2),
-                        ],
-                        result: [
-                          JSON.stringify({ contract: 'prepared' }, null, 2),
-                        ],
-                      },
-                      {
-                        command: [
-                          'curl -X POST http://localhost:9980/api/wallet/fund \\',
-                          JSON.stringify(
-                            { transaction: { contract: 'prepared' } },
-                            null,
-                            2
-                          ),
-                        ],
-                        result: [
-                          JSON.stringify(
-                            {
-                              transaction: { contract: 'prepared' },
-                              status: 'funded',
-                            },
-                            null,
-                            2
-                          ),
-                        ],
-                      },
-                      {
-                        command: [
-                          'curl -X POST http://localhost:9980/api/wallet/sign \\',
-                          JSON.stringify(
-                            {
-                              transaction: { contract: 'prepared' },
-                              status: 'funded',
-                            },
-                            null,
-                            2
-                          ),
-                        ],
-                        result: [
-                          JSON.stringify(
-                            {
-                              transaction: { contract: 'prepared' },
-                              status: 'signed',
-                            },
-                            null,
-                            2
-                          ),
-                        ],
-                      },
-                      {
-                        command: [
-                          'curl -X POST http://localhost:9980/api/rhp/form \\',
-                          JSON.stringify(
-                            {
-                              transaction: { contract: 'prepared' },
-                              status: 'signed',
-                            },
-                            null,
-                            2
-                          ),
-                        ],
-                        result: [
-                          JSON.stringify(
-                            {
-                              status: '200',
-                              message:
-                                'Host will finalize and broadcast transaction.',
-                            },
-                            null,
-                            2
-                          ),
-                        ],
-                      },
-                    ],
-                  ]}
-                />
-              </Flex>
-              <Flex
-                direction="column"
-                gap="1"
-                css={{ flex: 1, overflow: 'hidden' }}
-              >
-                <Text css={{ marginTop: '$3' }}>
-                  <Text weight="bold">Example:</Text> Migrate data to a specific
-                  contract.
-                </Text>
-                <TerminalCommands
-                  css={{
-                    '@bp3': {
-                      width: '500px',
+                    {
+                      command: [
+                        'curl -X POST http://localhost:9980/api/wallet/fund \\',
+                        JSON.stringify(
+                          { transaction: { contract: 'prepared' } },
+                          null,
+                          2
+                        ),
+                      ],
+                      result: [
+                        JSON.stringify(
+                          {
+                            transaction: { contract: 'prepared' },
+                            status: 'funded',
+                          },
+                          null,
+                          2
+                        ),
+                      ],
                     },
-                  }}
-                  sequences={[
-                    [
-                      {
-                        command: [
-                          'http http://localhost:9980/api/slabs/migrate \\',
-                          '    slabs:=@files/slabs.json \\    # data slabs to be moved',
-                          '    from:=@files/contract1.json \\ # originating contract',
-                          '    to:=@files/contract2.json \\   # destination contract',
-                          '    currentHeight:=383331         # current block height',
-                        ],
-                        result: [
-                          JSON.stringify(
-                            {
-                              status: '200',
-                              message: 'Data migration initiated.',
-                            },
-                            null,
-                            2
-                          ),
-                        ],
-                      },
-                    ],
-                  ]}
-                />
-              </Flex>
+                    {
+                      command: [
+                        'curl -X POST http://localhost:9980/api/wallet/sign \\',
+                        JSON.stringify(
+                          {
+                            transaction: { contract: 'prepared' },
+                            status: 'funded',
+                          },
+                          null,
+                          2
+                        ),
+                      ],
+                      result: [
+                        JSON.stringify(
+                          {
+                            transaction: { contract: 'prepared' },
+                            status: 'signed',
+                          },
+                          null,
+                          2
+                        ),
+                      ],
+                    },
+                    {
+                      command: [
+                        'curl -X POST http://localhost:9980/api/rhp/form \\',
+                        JSON.stringify(
+                          {
+                            transaction: { contract: 'prepared' },
+                            status: 'signed',
+                          },
+                          null,
+                          2
+                        ),
+                      ],
+                      result: [
+                        JSON.stringify(
+                          {
+                            status: '200',
+                            message:
+                              'Host will finalize and broadcast transaction.',
+                          },
+                          null,
+                          2
+                        ),
+                      ],
+                    },
+                  ],
+                ]}
+              />
             </Flex>
-          </SiteHeading>
-        </Section>
-      </Box>
-      <WaveSection pt="4">
+            <Flex
+              direction="column"
+              gap="1"
+              css={{ flex: 1, overflow: 'hidden' }}
+            >
+              <Text css={{ marginTop: '$3' }}>
+                <Text weight="bold">Example:</Text> Migrate data to a specific
+                contract.
+              </Text>
+              <TerminalCommands
+                css={{
+                  '@bp3': {
+                    width: '500px',
+                  },
+                }}
+                sequences={[
+                  [
+                    {
+                      command: [
+                        'http http://localhost:9980/api/slabs/migrate \\',
+                        '    slabs:=@files/slabs.json \\    # data slabs to be moved',
+                        '    from:=@files/contract1.json \\ # originating contract',
+                        '    to:=@files/contract2.json \\   # destination contract',
+                        '    currentHeight:=383331         # current block height',
+                      ],
+                      result: [
+                        JSON.stringify(
+                          {
+                            status: '200',
+                            message: 'Data migration initiated.',
+                          },
+                          null,
+                          2
+                        ),
+                      ],
+                    },
+                  ],
+                ]}
+              />
+            </Flex>
+          </Flex>
+        </SiteHeading>
+      </SectionGradient>
+      <SectionWaves css={{ pt: '$12' }}>
         <SiteHeading
           title="Manage everything with a powerful user interface"
           description={
@@ -330,78 +318,49 @@ export default function Renterd({ technical, tutorials, services }: Props) {
         >
           <RenterdUICarousel />
         </SiteHeading>
-      </WaveSection>
-      <Section
-        py="4"
-        width="flush"
-        css={{
-          position: 'relative',
-          zIndex: 1,
-          background:
-            'linear-gradient(172deg, $colors$loContrast 0%, $colors$slate3 48%, $colors$loContrast 86%)',
-          // background:
-          //   'radial-gradient(circle, $colors$slate3 0%, $colors$loContrast 86%)',
-        }}
-      >
-        {/* <WavesBackdrop /> */}
-        <Container>
-          <Flex gap="6" justify="between" wrap="wrap">
-            <SiteHeading
-              css={{
-                '@bp2': {
-                  mt: '$12',
-                },
-              }}
-              title="Download renterd"
-              // description={
-              //   <>
-              //     <Code>renterd</Code> is currently Alpha software.
-              //   </>
-              // }
-            >
-              <Flex css={{ m: '$5 0' }}>{downloadEl}</Flex>
-            </SiteHeading>
-            <Callout
-              css={{ maxWidth: '500px' }}
-              title="Learn more about renterd"
-              description={
-                <>
-                  Join the Sia Discord to chat with the team and community about
-                  renterd development, features, use-cases, bugs, and more.
-                </>
-              }
-              actionTitle="Join the Discord"
-              actionLink={webLinks.discord}
-            />
-          </Flex>
-        </Container>
-      </Section>
-      <Section
-        width="flush"
-        css={{
-          position: 'relative',
-          zIndex: 1,
-          borderTop: '$sizes$frame solid $slate2',
-          borderBottom: '$sizes$frame solid $slate2',
-        }}
-      >
-        <WavesBackdrop />
-        <Section py="4">
+      </SectionWaves>
+      <SectionGradient css={{ py: '$12' }}>
+        <Flex gap="6" justify="between" wrap="wrap">
           <SiteHeading
-            size="32"
-            title="Tutorials for developers new to Sia"
+            css={{
+              '@bp2': {
+                mt: '$12',
+              },
+            }}
+            title="Download renterd"
+            // description={
+            //   <>
+            //     <Code>renterd</Code> is currently Alpha software.
+            //   </>
+            // }
+          >
+            <Flex css={{ m: '$5 0' }}>{downloadEl}</Flex>
+          </SiteHeading>
+          <Callout
+            css={{ maxWidth: '500px' }}
+            title="Learn more about renterd"
             description={
               <>
-                Technical tutorials for new developers looking to build on Sia.
+                Join the Sia Discord to chat with the team and community about
+                renterd development, features, use-cases, bugs, and more.
               </>
             }
+            actionTitle="Join the Discord"
+            actionLink={webLinks.discord}
           />
-          <ContentGallery items={tutorials} />
-        </Section>
-      </Section>
-      <Section pt="4" pb="3">
+        </Flex>
         <SiteHeading
           size="32"
+          css={{ mt: '$max' }}
+          title="Tutorials for developers new to Sia"
+          description={
+            <>Technical tutorials for new developers looking to build on Sia.</>
+          }
+        />
+        <ContentGallery items={tutorials} />
+        <SiteHeading
+          size="32"
+          css={{ mt: '$12' }}
           title="Learn about the technology behind Sia"
           description={
             <>
@@ -411,10 +370,9 @@ export default function Renterd({ technical, tutorials, services }: Props) {
           }
         />
         <ContentGallery columns="1" items={technical} />
-      </Section>
-      <Section py="3">
         <SiteHeading
           size="32"
+          css={{ mt: '$12' }}
           title="Companies and projects building on Sia"
           description={
             <>
@@ -438,9 +396,8 @@ export default function Renterd({ technical, tutorials, services }: Props) {
           }}
           items={services}
         />
-      </Section>
-      <Section py="3">
         <Callout
+          css={{ mt: '$12', mb: '$6' }}
           title="Sia 101"
           size="2"
           description={
@@ -452,7 +409,7 @@ export default function Renterd({ technical, tutorials, services }: Props) {
           actionTitle="Learn more"
           actionLink={routes.learn.index}
         />
-      </Section>
+      </SectionGradient>
     </Layout>
   )
 }

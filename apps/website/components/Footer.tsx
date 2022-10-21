@@ -1,53 +1,21 @@
-import {
-  Container,
-  Flex,
-  Section,
-  SiteMap,
-  WavesBackdrop,
-} from '@siafoundation/design-system'
+import { Flex, SiteMap, ThemeRadio } from '@siafoundation/design-system'
 import { menuSections } from '../config/siteMap'
+import { SectionGradient } from './SectionGradient'
 import { Statsbar } from './Statsbar'
+import { SectionWaves } from './SectionWaves'
 
 export function Footer() {
   return (
     <Flex direction="column">
-      <Section
-        py="1"
-        width="flush"
-        css={{
-          position: 'relative',
-          zIndex: 1,
-          borderTop: '$sizes$frame solid $slate3',
-          borderBottom: '$sizes$frame solid $slate3',
-        }}
-      >
-        <WavesBackdrop />
-        <Container>
-          <Flex
-            direction="column"
-            align="start"
-            gap={{
-              '@initial': '6',
-              '@bp2': '15',
-            }}
-            css={{ mt: '$5', mb: '$9' }}
-          >
-            <SiteMap menuSections={menuSections} />
-          </Flex>
-        </Container>
-      </Section>
-      <Section
-        py="3"
-        width="flush"
-        css={{
-          position: 'relative',
-          backgroundColor: '$waves',
-        }}
-      >
-        <Container>
-          <Statsbar />
-        </Container>
-      </Section>
+      <SectionWaves css={{ pt: '$5', pb: '$9' }}>
+        <SiteMap menuSections={menuSections} />
+      </SectionWaves>
+      <SectionGradient css={{ py: '$8', opacity: 0.99 }}>
+        <Statsbar />
+        <Flex css={{ marginTop: '$4' }}>
+          <ThemeRadio />
+        </Flex>
+      </SectionGradient>
     </Flex>
   )
 }

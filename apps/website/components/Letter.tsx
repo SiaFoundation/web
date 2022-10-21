@@ -1,15 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
-import {
-  Flex,
-  Box,
-  Text,
-  Paragraph,
-  Section,
-} from '@siafoundation/design-system'
+import { Flex, Box, Text, Paragraph } from '@siafoundation/design-system'
 import { useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
 import Italic from './Italic'
 import { JiggleArrow } from './JiggleArrow'
+import { SectionGradient } from './SectionGradient'
 
 type Props = {
   onDone: () => void
@@ -26,11 +21,19 @@ export default function Letter({ onDone }: Props) {
   }, [inView])
 
   return (
-    <Section py="3">
+    <SectionGradient
+      css={{ py: '$12' }}
+      gradientCss={{
+        height: '200px',
+        background:
+          'linear-gradient(177deg, $colors$loContrast 20%, $colors$slate7 58%, $colors$loContrast 79%)',
+      }}
+    >
       <Flex
         direction="column"
         gap="2"
         css={{
+          zIndex: 1,
           maxWidth: '800px',
           margin: '0 auto',
         }}
@@ -132,6 +135,6 @@ export default function Letter({ onDone }: Props) {
         </Box>
       </Flex>
       <Box ref={ref} css={{ marginTop: '50vh' }} />
-    </Section>
+    </SectionGradient>
   )
 }

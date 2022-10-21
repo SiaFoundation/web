@@ -3,9 +3,7 @@ import {
   Grid,
   ContentGallery,
   Callout,
-  WavesBackdrop,
   ContentProject,
-  Section,
   SiteHeading,
   getImageProps,
   Flex,
@@ -26,6 +24,9 @@ import { useCallback, useEffect, useState } from 'react'
 import { textContent } from '../lib/utils'
 import Letter from '../components/Letter'
 import { JiggleArrow } from '../components/JiggleArrow'
+import { SectionGradient } from '../components/SectionGradient'
+import { SectionSimple } from '../components/SectionSimple'
+import { SectionWaves } from '../components/SectionWaves'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -81,10 +82,9 @@ export default function Home({
       transitionWidthDuration={transitionWidthDuration}
       transitionFadeDelay={transitionFadeDelay}
       heading={
-        <Section
-          py="4"
+        <SectionSimple
           css={{
-            paddingBottom: '$8',
+            py: '$max',
           }}
         >
           <SiteHeading
@@ -112,12 +112,16 @@ export default function Home({
               </Text>
             </Flex>
           </SiteHeading>
-        </Section>
+        </SectionSimple>
       }
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <Section py="3">
+      <SectionSimple
+        css={{
+          pb: '$12',
+        }}
+      >
         <Grid
           gap={{
             '@initial': '4',
@@ -153,142 +157,129 @@ export default function Home({
             actionLink={routes.learn.index}
           />
         </Grid>
-      </Section>
-      <Section py="3" width="flush">
-        <Section
-          width="flush"
-          py="2"
-          pb="3"
-          css={{
-            position: 'relative',
-            zIndex: 1,
-            borderTop: '$sizes$frame solid $slate3',
-            borderBottom: '$sizes$frame solid $slate3',
+      </SectionSimple>
+      <SectionGradient css={{ pt: '$12', pb: '$max' }}>
+        <SiteHeading
+          size="32"
+          title="Storage companies and projects building on Sia"
+          description={
+            <>
+              Sia is a thriving ecosystem of open source software, layer 2
+              networks, and commercial data storage platforms.
+            </>
+          }
+          links={[
+            {
+              title: 'Browse all projects',
+              link: routes.community.index,
+            },
+          ]}
+        />
+        <ContentGallery
+          items={services.map((i) => ({
+            ...i,
+            newTab: true,
+          }))}
+          component={ContentProject}
+          columns={{
+            '@initial': 1,
+            '@bp2': 2,
+            '@bp4': 3,
           }}
-        >
-          <WavesBackdrop />
-          <Section py="2" gap="6">
-            <SiteHeading size="32" title="Why Sia" />
-            <ContentGallery
-              items={[
-                {
-                  icon: 'Security',
-                  title: 'Completely Private',
-                  subtitle: (
-                    <>
-                      Sia encrypts and distributes your files across a
-                      decentralized network. Unlike traditional cloud storage
-                      providers, you truly own your data: no third party can
-                      access your files or prevent you from accessing them.
-                    </>
-                  ),
-                },
-                {
-                  icon: 'Development',
-                  title: 'Highly Redundant',
-                  subtitle: (
-                    <>
-                      Sia distributes and stores redundant file segments on
-                      nodes across the globe, eliminating any single point of
-                      failure and achieving uptime and throughput that no
-                      centralized provider can compete with.
-                    </>
-                  ),
-                },
-                {
-                  icon: 'Code',
-                  title: 'Open Source',
-                  subtitle: (
-                    <>
-                      Sia's software is completely open source, with
-                      contributions from leading software engineers and a
-                      thriving community of developers building innovative
-                      applications on the Sia API.
-                    </>
-                  ),
-                },
-                {
-                  icon: 'Money',
-                  title: 'Far More Affordable',
-                  subtitle: (
-                    <>
-                      On average, Sia's decentralized cloud storage costs 90%
-                      less than incumbent cloud storage providers. Storing 1 TB
-                      of files on Sia costs about $1-2 per month, compared with
-                      $23 on Amazon S3.
-                    </>
-                  ),
-                },
-              ]}
-            />
-          </Section>
-        </Section>
-      </Section>
-      <Section gap="12" py="3">
-        <Section width="flush" py="0">
-          <SiteHeading
-            size="32"
-            title="Explore the companies and projects building on Sia"
-            description={
-              <>
-                Sia is a thriving ecosystem of open source software, layer 2
-                networks, and commercial data storage platforms.
-              </>
-            }
-            links={[
-              {
-                title: 'Browse all projects',
-                link: routes.community.index,
-              },
-            ]}
-          />
-          <ContentGallery
-            items={services.map((i) => ({
-              ...i,
+        />
+      </SectionGradient>
+      <SectionWaves
+        css={{
+          pt: '$12',
+          pb: '$13',
+        }}
+      >
+        <SiteHeading size="32" title="Why projects choose Sia" />
+        <ContentGallery
+          items={[
+            {
+              icon: 'Security',
+              title: 'Completely Private',
+              subtitle: (
+                <>
+                  Sia encrypts and distributes your files across a decentralized
+                  network. Unlike traditional cloud storage providers, you truly
+                  own your data: no third party can access your files or prevent
+                  you from accessing them.
+                </>
+              ),
+            },
+            {
+              icon: 'Development',
+              title: 'Highly Redundant',
+              subtitle: (
+                <>
+                  Sia distributes and stores redundant file segments on nodes
+                  across the globe, eliminating any single point of failure and
+                  achieving uptime and throughput that no centralized provider
+                  can compete with.
+                </>
+              ),
+            },
+            {
+              icon: 'Code',
+              title: 'Open Source',
+              subtitle: (
+                <>
+                  Sia's software is completely open source, with contributions
+                  from leading software engineers and a thriving community of
+                  developers building innovative applications on the Sia API.
+                </>
+              ),
+            },
+            {
+              icon: 'Money',
+              title: 'Far More Affordable',
+              subtitle: (
+                <>
+                  On average, Sia's decentralized cloud storage costs 90% less
+                  than incumbent cloud storage providers. Storing 1 TB of files
+                  on Sia costs about $1-2 per month, compared with $23 on Amazon
+                  S3.
+                </>
+              ),
+            },
+          ]}
+        />
+      </SectionWaves>
+      <SectionGradient css={{ pt: '$9', pb: '$9' }}>
+        <SiteHeading
+          size="32"
+          css={{ mt: '$9' }}
+          title="Learn how Sia works"
+          description={
+            <>
+              Visit the developer pages for software downloads and developer
+              resources, tutorials, technical walkthroughs, and more.
+            </>
+          }
+        />
+        <ContentGallery items={tutorials} />
+        <SiteHeading
+          size="32"
+          css={{ mt: '$12' }}
+          title="Read the latest updates"
+          description={
+            <>
+              Read the latest from the core team and the ecosystem of developers
+              building technology on top of Sia.
+            </>
+          }
+          links={[
+            {
+              title: 'Browse the blog',
+              link: webLinks.blog,
               newTab: true,
-            }))}
-            component={ContentProject}
-            columns={{
-              '@initial': 1,
-              '@bp2': 2,
-              '@bp4': 3,
-            }}
-          />
-        </Section>
-        <Section width="flush" py="2">
-          <SiteHeading
-            size="24"
-            title="Learn how Sia works"
-            description={
-              <>
-                Visit the developer pages for software downloads and developer
-                resources, tutorials, technical walkthroughs, and more.
-              </>
-            }
-          />
-          <ContentGallery items={tutorials} />
-        </Section>
-        <Section width="flush" py="3">
-          <SiteHeading
-            size="32"
-            title="Read some of the latest updates"
-            description={
-              <>
-                Read the latest from the core team and the ecosystem of
-                developers building technology on top of Sia.
-              </>
-            }
-            links={[
-              {
-                title: 'Browse the blog',
-                link: webLinks.blog,
-                newTab: true,
-              },
-            ]}
-          />
-          <ContentGallery items={featured} columns="1" />
-        </Section>
-      </Section>
+            },
+          ]}
+        />
+        <ContentGallery css={{ mb: '$9' }} items={featured} columns="1" />
+      </SectionGradient>
     </Layout>
   )
 }

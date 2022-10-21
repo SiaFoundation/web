@@ -25,19 +25,6 @@ export function Heading() {
             }
           />
         </Container>
-        {/* <Section width="flush" py="2" css={{ position: 'relative' }}>
-          <WavesBackdrop />
-          <Container>
-            <Section py="0" width="flush" gap="6">
-              <Text size="16" weight="bold">
-                Installation
-              </Text>
-              <Text size="16">
-                <Code>npm install @siafoundation/design-system</Code>
-              </Text>
-            </Section>
-          </Container>
-        </Section> */}
       </Section>
     </>
   )
