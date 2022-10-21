@@ -20,8 +20,8 @@ import {
   PageHead,
 } from '@siafoundation/design-system'
 import { routes } from '../../config/routes'
-import backgroundImage from '../../assets/jungle.png'
-import previewImage from '../../assets/jungle-preview.png'
+import backgroundImage from '../../assets/leaves-background.png'
+import previewImage from '../../assets/leaves-preview.png'
 import { Search } from './Search'
 import { appName } from '../../config'
 
@@ -75,11 +75,31 @@ export function Layout({ title, description, path, children }: Props) {
                   overflow: 'hidden',
                   borderTop: '2px solid $gray3',
                   borderBottom: '2px solid $gray3',
-                  background: `url(${backgroundImageProps.src})`,
-                  backgroundSize: 'cover',
+                  zIndex: 0,
                 }}
                 align="center"
-              />
+              >
+                <Box
+                  css={{
+                    zIndex: 0,
+                    position: 'relative',
+                    width: '100%',
+                    height: '100%',
+                    background: `url(${backgroundImageProps.src})`,
+                    backgroundSize: 'cover',
+                  }}
+                />
+                <Box
+                  css={{
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    mixBlendMode: 'darken',
+                    zIndex: 1,
+                    backgroundColor: '$subtleAccentMask',
+                  }}
+                />
+              </Flex>
               <Flex
                 direction="column"
                 gap="8"
