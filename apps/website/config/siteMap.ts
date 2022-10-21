@@ -29,6 +29,7 @@ export const menuSections = [
       {
         link: routes.whitepaper.pdf,
         title: 'Whitepaper',
+        newTab: true,
       },
     ],
   },

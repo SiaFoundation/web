@@ -71,7 +71,6 @@ export function Layout({
         <Flex
           direction="column"
           css={{
-            padding: '$6 0',
             ...contentCss,
           }}
         >

@@ -2,7 +2,6 @@ import {
   Grid,
   Text,
   ContentItem,
-  Section,
   getImageProps,
   SiteHeading,
   Box,
@@ -19,6 +18,7 @@ import backgroundImage from '../../assets/backgrounds/nate-waterfall.png'
 import previewImage from '../../assets/previews/nate-waterfall.png'
 import { components } from '../../config/mdx'
 import { getMinutesInSeconds } from '../../lib/time'
+import { SectionSimple } from '../../components/SectionSimple'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -37,14 +37,14 @@ function NewsroomPost({
       date={new Date(date).toISOString()}
       path={routes.newsroom.newsPost.replace('[slug]', slug)}
       heading={
-        <Section py="4">
+        <SectionSimple css={{ py: '$max' }}>
           <SiteHeading size="64" title={title} description={subtitle} />
-        </Section>
+        </SectionSimple>
       }
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <Section pt="2" pb="4">
+      <SectionSimple css={{ pt: '$9', pb: '$max' }}>
         <Box>
           <Text weight="bold" size="16">
             {location} - {format(new Date(date), 'PP')}
@@ -64,7 +64,7 @@ function NewsroomPost({
             {next && <ContentItem {...next} />}
           </Grid>
         )}
-      </Section>
+      </SectionSimple>
     </Layout>
   )
 }

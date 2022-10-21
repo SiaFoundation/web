@@ -16,8 +16,8 @@ export function WavesBackdrop() {
         zIndex: -1,
         top: 0,
         left: 0,
-        opacity: 0.6,
         backgroundColor: '$waves',
+        opacity: 0.983,
       }}
     >
       <Box
@@ -27,7 +27,7 @@ export function WavesBackdrop() {
           height: '100%',
           background: `url(${wavesProps.src})`,
           backgroundRepeat: 'repeat',
-          opacity: 0.5,
+          opacity: 0.3,
         }}
       />
     </Box>

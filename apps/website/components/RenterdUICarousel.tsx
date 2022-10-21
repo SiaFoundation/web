@@ -75,7 +75,6 @@ export function RenterdUICarousel() {
             css={{
               position: 'relative',
               transition: 'transform 200ms ease-out',
-              // top: appInView ? '0px' : '80px',
               padding: '0 $1',
               transform: appInView ? 'scale(1.03)' : 'none',
               // marginTop: '128px',

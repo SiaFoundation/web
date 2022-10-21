@@ -119,6 +119,7 @@ const Content = React.forwardRef<
         position: 'fixed',
         margin: '0 auto',
         maxWidth: '1600px',
+        border: '$sizes$frame solid white',
         '@bp2': {
           margin: '0 $6',
         },

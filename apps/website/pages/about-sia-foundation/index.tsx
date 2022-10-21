@@ -9,8 +9,6 @@ import {
   LogoGithub24,
   LogoLinkedin24,
   LogoTwitter32,
-  Section,
-  WavesBackdrop,
   Separator,
   SiteHeading,
   getImageProps,
@@ -28,6 +26,9 @@ import { getCacheStats } from '../../content/stats'
 import { getCacheTeam } from '../../content/team'
 import backgroundImage from '../../assets/backgrounds/tree.png'
 import previewImage from '../../assets/previews/tree.png'
+import { SectionSimple } from '../../components/SectionSimple'
+import { SectionGradient } from '../../components/SectionGradient'
+import { SectionWaves } from '../../components/SectionWaves'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -45,14 +46,14 @@ function Foundation({ team, newsPosts, reports }: Props) {
       description={description}
       path={routes.foundation.index}
       heading={
-        <Section py="4">
+        <SectionSimple css={{ py: '$max' }}>
           <SiteHeading size="64" title={title} description={description} />
-        </Section>
+        </SectionSimple>
       }
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <Section py="2">
+      <SectionGradient css={{ pt: '$6', pb: '$12' }}>
         <Flex direction="column" gap="9">
           <Flex direction="column" gap="2">
             <SiteHeading size="32" title="Vision" />
@@ -104,8 +105,8 @@ function Foundation({ team, newsPosts, reports }: Props) {
             </Flex>
           </Flex>
         </Flex>
-      </Section>
-      <Section py="3">
+      </SectionGradient>
+      <SectionWaves css={{ pt: '$12', pb: '$12' }}>
         <SiteHeading size="32" title="The Sia team" />
         <Grid
           columns={{
@@ -155,55 +156,39 @@ function Foundation({ team, newsPosts, reports }: Props) {
             </Flex>
           ))}
         </Grid>
-      </Section>
-      <Section py="2" width="flush">
-        <Section
-          pt="1"
-          pb="2"
-          width="flush"
-          css={{
-            position: 'relative',
-            zIndex: 1,
-            borderTop: '$sizes$frame solid $slate2',
-            borderBottom: '$sizes$frame solid $slate2',
-          }}
-        >
-          <WavesBackdrop />
-          <Section py="3">
-            <SiteHeading size="32" title="Quarterly reports" />
-            <Flex direction="column" gap="6">
-              {reports.map(([year, yearReports]) => (
-                <Flex key={year} direction="column" gap="2">
-                  <Text weight="bold" size="16">
-                    {year}
-                  </Text>
-                  <Flex gap="2" align="center">
-                    {yearReports.map((report, i) => (
-                      <Fragment key={report.link}>
-                        {i > 0 && i < yearReports.length && (
-                          <Separator orientation="vertical" />
-                        )}
-                        <Text size="16">
-                          <NextLink
-                            href={report.link}
-                            target="_blank"
-                            variant="subtle"
-                          >
-                            {report.quarter}
-                          </NextLink>
-                        </Text>
-                      </Fragment>
-                    ))}
-                  </Flex>
-                </Flex>
-              ))}
+      </SectionWaves>
+      <SectionGradient css={{ py: '$12' }}>
+        <SiteHeading size="32" title="Quarterly reports" />
+        <Flex direction="column" gap="6">
+          {reports.map(([year, yearReports]) => (
+            <Flex key={year} direction="column" gap="2">
+              <Text weight="bold" size="16">
+                {year}
+              </Text>
+              <Flex gap="2" align="center">
+                {yearReports.map((report, i) => (
+                  <Fragment key={report.link}>
+                    {i > 0 && i < yearReports.length && (
+                      <Separator orientation="vertical" />
+                    )}
+                    <Text size="16">
+                      <NextLink
+                        href={report.link}
+                        target="_blank"
+                        variant="subtle"
+                      >
+                        {report.quarter}
+                      </NextLink>
+                    </Text>
+                  </Fragment>
+                ))}
+              </Flex>
             </Flex>
-          </Section>
-        </Section>
-      </Section>
-      <Section pt="3" pb="4">
+          ))}
+        </Flex>
         <SiteHeading
           size="32"
+          css={{ mt: '$12' }}
           title="Recent news"
           description={
             <>
@@ -219,10 +204,9 @@ function Foundation({ team, newsPosts, reports }: Props) {
           ]}
         />
         <ContentGallery columns="1" items={newsPosts} />
-      </Section>
-      <Section pt="2" pb="4">
         <Callout
           title="Work at the Sia Foundation"
+          css={{ mt: '$12', mb: '$6' }}
           size="2"
           description={
             <>
@@ -234,7 +218,7 @@ function Foundation({ team, newsPosts, reports }: Props) {
           actionLink={webLinks.jobs}
           actionNewTab
         />
-      </Section>
+      </SectionGradient>
     </Layout>
   )
 }

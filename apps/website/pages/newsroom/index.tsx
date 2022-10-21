@@ -2,7 +2,6 @@ import {
   ContentGallery,
   ContentItemProps,
   getImageProps,
-  Section,
   SiteHeading,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
@@ -15,6 +14,7 @@ import useSWR from 'swr'
 import { useRouter } from 'next/router'
 import { getCacheFeed } from '../../content/feed'
 import { getMinutesInSeconds } from '../../lib/time'
+import { SectionSimple } from '../../components/SectionSimple'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -37,7 +37,7 @@ function Newsroom() {
       description={description}
       path={routes.newsroom.index}
       heading={
-        <Section py="4">
+        <SectionSimple css={{ py: '$max' }}>
           <SiteHeading
             size="64"
             title={title}
@@ -50,12 +50,12 @@ function Newsroom() {
               },
             ]}
           />
-        </Section>
+        </SectionSimple>
       }
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <Section py="2">
+      <SectionSimple css={{ pt: '$12', pb: '$max' }}>
         <ContentGallery
           filterMode="external"
           filters={['press', 'ecosystem']}
@@ -63,7 +63,7 @@ function Newsroom() {
           columns="1"
           items={posts.data || []}
         />
-      </Section>
+      </SectionSimple>
     </Layout>
   )
 }
