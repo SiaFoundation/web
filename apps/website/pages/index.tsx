@@ -11,6 +11,7 @@ import {
   usePullTop,
   webLinks,
   NextLink,
+  Code,
 } from '@siafoundation/design-system'
 import { Layout } from '../components/Layout'
 import { routes } from '../config/routes'
@@ -191,7 +192,7 @@ export default function Home({
       <SectionWaves
         css={{
           pt: '$12',
-          pb: '$13',
+          pb: '$14',
         }}
       >
         <SiteHeading size="32" title="Why projects choose Sia" />
@@ -222,17 +223,6 @@ export default function Home({
               ),
             },
             {
-              icon: 'Code',
-              title: 'Open Source',
-              subtitle: (
-                <>
-                  Sia's software is completely open source, with contributions
-                  from leading software engineers and a thriving community of
-                  developers building innovative applications on the Sia API.
-                </>
-              ),
-            },
-            {
               icon: 'Money',
               title: 'Far More Affordable',
               subtitle: (
@@ -240,7 +230,44 @@ export default function Home({
                   On average, Sia's decentralized cloud storage costs 90% less
                   than incumbent cloud storage providers. Storing 1 TB of files
                   on Sia costs about $1-2 per month, compared with $23 on Amazon
-                  S3.
+                  S3 - bandwidth is also a magnitude cheaper.
+                </>
+              ),
+            },
+            {
+              icon: 'Integration',
+              title: 'Designed for integration',
+              subtitle: (
+                <>
+                  The Sia software exposes highly modular JSON-speaking
+                  endpoints. <Code>renterd</Code> can even scale horizontally:
+                  in stateless mode, it provides raw access to the Sia
+                  renter-host protocol, with no UI, no blockchain, and no disk
+                  I/O -- perfect for massive renting operations.
+                </>
+              ),
+            },
+            {
+              icon: 'Microscope',
+              title: 'R&D leader',
+              subtitle: (
+                <>
+                  The Sia storage network has been securely storing data since
+                  2014. Sia has pioneered the use of many new technologies at
+                  scale, such as its use of state channels to process an
+                  estimated 20 billion micropayments per day.
+                </>
+              ),
+            },
+            {
+              icon: 'Code',
+              title: 'Open Source',
+              subtitle: (
+                <>
+                  Sia's software is completely open source, with contributions
+                  from leading software engineers. Sia has a thriving community
+                  of developers and companies building innovative applications
+                  and businesses on top of Sia.
                 </>
               ),
             },
@@ -252,10 +279,15 @@ export default function Home({
           size="32"
           css={{ mt: '$9' }}
           title="Learn how Sia works"
+          links={[
+            {
+              title: 'Learn about the protocol',
+              link: routes.learn.index,
+            },
+          ]}
           description={
             <>
-              Visit the developer pages for software downloads and developer
-              resources, tutorials, technical walkthroughs, and more.
+              Find developer resources, tutorials, software downloads, and more.
             </>
           }
         />

@@ -17,6 +17,8 @@ import {
   Password24,
   Idea24,
   EventSchedule24,
+  Integration24,
+  Microscope24,
   Policy24,
   TestToolIcon,
   EventsAlt24,
@@ -67,6 +69,8 @@ const icons: Record<string, React.ReactNode> = {
   EventSchedule: <EventSchedule24 />,
   CenterCircle: <CenterCircle24 />,
   Policy: <Policy24 />,
+  Integration: <Integration24 />,
+  Microscope: <Microscope24 />,
 }
 
 export function ContentItem({
