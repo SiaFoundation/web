@@ -1,25 +1,12 @@
 import React from 'react'
-import { CSS } from '../config/theme'
 import { Grid } from '../core/Grid'
 import { Launch16 } from '../icons'
 import { Flex } from '../core/Flex'
-import { ThemeRadio } from '../components/ThemeRadio'
-import { Text } from '../core/Text'
 import { SimpleLogoIcon } from '../icons/SimpleLogoIcon'
 import { NextLink } from '../core/Link'
 import { LinkData } from '../lib/links'
 import { Box, Heading, Paragraph } from '../core'
 import { useIsExternalDomain } from '../hooks'
-
-const radioCss: CSS = {
-  [`& *, & ${Text}`]: {
-    color: '$whiteA9',
-  },
-
-  [`&[data-state="checked"] *, &[data-state="checked"] ${Text}`]: {
-    color: 'white',
-  },
-}
 
 export type MenuSection = {
   title: string
@@ -59,7 +46,12 @@ export function SiteMap({ menuSections, onClick, inSiteMenu }: Props) {
         {menuSections.map(({ title, links }) => (
           <Flex key={title}>
             <Flex direction="column" gap="4">
-              <Heading font="mono">{title}</Heading>
+              <Heading
+                font="mono"
+                css={{ color: inSiteMenu ? '$whiteA12' : undefined }}
+              >
+                {title}
+              </Heading>
               <Flex direction="column" gap="1">
                 {links.map(({ title, link, newTab, disabled }) => (
                   <MenuLink
@@ -77,11 +69,6 @@ export function SiteMap({ menuSections, onClick, inSiteMenu }: Props) {
           </Flex>
         ))}
       </Grid>
-      {inSiteMenu && (
-        <Flex css={{ marginTop: '$6' }}>
-          <ThemeRadio radioCss={radioCss} />
-        </Flex>
-      )}
     </Flex>
   )
 }

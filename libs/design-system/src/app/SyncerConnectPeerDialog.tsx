@@ -76,6 +76,7 @@ export function SyncerConnectPeerDialog({ closeDialog }: Props) {
               formik={formik}
               title="Port"
               name="port"
+              disableGroupSeparators
               placeholder="9981"
               autoComplete="off"
               type="number"

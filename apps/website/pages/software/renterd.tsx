@@ -189,7 +189,8 @@ export default function Renterd({ technical, tutorials, services }: Props) {
       </SectionWaves>
       <SectionGradient
         css={{
-          py: '$12',
+          pt: '$15',
+          pb: '$12',
           background:
             'linear-gradient(177deg, $colors$loContrast 5%, $colors$slate2 25%, $colors$loContrast 45%)',
         }}

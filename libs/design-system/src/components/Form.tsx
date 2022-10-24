@@ -24,6 +24,7 @@ type FormFieldProps = {
   allowDecimals?: boolean
   decimalsLimitFiat?: number
   decimalsLimitSc?: number
+  disableGroupSeparators?: boolean
   type?: string
   size?: React.ComponentProps<typeof TextField>['size']
 }
@@ -41,6 +42,7 @@ export function FormField({
   allowDecimals = false,
   decimalsLimitFiat = 3,
   decimalsLimitSc = 3,
+  disableGroupSeparators = false,
   units,
   type,
   size = 2,
@@ -56,6 +58,7 @@ export function FormField({
           readOnly={readOnly}
           tabIndex={tabIndex}
           allowDecimals={allowDecimals}
+          disableGroupSeparators={disableGroupSeparators}
           placeholder={placeholder}
           size={size}
         />
@@ -144,6 +147,7 @@ type FormNumberFieldProps = {
   tabIndex?: number
   placeholder: string
   allowDecimals?: boolean
+  disableGroupSeparators?: boolean
   size?: React.ComponentProps<typeof TextField>['size']
 }
 
@@ -156,6 +160,7 @@ export function FormNumberField({
   tabIndex,
   placeholder,
   allowDecimals = false,
+  disableGroupSeparators = false,
   size = 2,
 }: FormNumberFieldProps) {
   return (
@@ -166,6 +171,7 @@ export function FormNumberField({
       placeholder={placeholder}
       disabled={disabled}
       allowDecimals={allowDecimals}
+      disableGroupSeparators={disableGroupSeparators}
       readOnly={readOnly || formik.isSubmitting}
       tabIndex={tabIndex}
       onBlur={formik.handleBlur}

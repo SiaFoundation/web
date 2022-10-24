@@ -3,6 +3,7 @@ import { Link as BaseRouterLink } from 'react-router-dom'
 import { CSS, styled } from '../config/theme'
 import { Box } from './Box'
 import { Button } from './Button'
+import { Paragraph } from './Paragraph'
 import { Text } from './Text'
 
 export const Link = styled('a', {
@@ -18,6 +19,12 @@ export const Link = styled('a', {
   cursor: 'pointer',
 
   fontSize: '$16',
+
+  [`${Paragraph} &`]: {
+    color: 'inherit',
+    fontSize: 'inherit',
+    fontFamily: 'inherit',
+  },
 
   [`${Text} &`]: {
     color: 'inherit',

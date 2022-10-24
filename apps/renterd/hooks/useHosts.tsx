@@ -107,25 +107,25 @@ export function useHosts() {
   const data: Row[] = useMemo(
     () => [
       {
-        key: 'AAAAC3NzaC1lZDI1NTE5AAAAIK0wmN/Cr3JXqmLW7u+g9pTh+wyqDHpSQEIQczXkVx9q',
+        key: 'ed25519:3fb9dfa29ec4263b436ecbc13d69451a84bc9ca7d46ee0d1db0a03be043ccda3',
         publicKey:
-          'AAAAC3NzaC1lZDI1NTE5AAAAIK0wmN/Cr3JXqmLW7u+g9pTh+wyqDHpSQEIQczXkVx9q',
+          'ed25519:3fb9dfa29ec4263b436ecbc13d69451a84bc9ca7d46ee0d1db0a03be043ccda3',
         score: 44,
         announcement: '192.0.0.23',
         status: 'active',
       },
       {
-        key: 'AAAAD4RxxC1lZDI1NTE5AdjAxK0wmN/Cr3JXqmLW7u+g9pTh+wyqDHpSQEIQczXkVx9q',
+        key: 'ed25519:90730bbc9edc3fab5f9276bc5c0de9e5f5ac329c9f1ac5d16b4c8d709ade23b1',
         publicKey:
-          'AAAAD4RxxC1lZDI1NTE5AdjAxK0wmN/Cr3JXqmLW7u+g9pTh+wyqDHpSQEIQczXkVx9q',
+          'ed25519:90730bbc9edc3fab5f9276bc5c0de9e5f5ac329c9f1ac5d16b4c8d709ade23b1',
         score: 131,
         announcement: 'host.freedns.com',
         status: 'blocked',
       },
       {
-        key: 'AA4A3JXqmLW7u+g9pTh+wyqDD4RxxC1lZDI1NTE5AAAAIK0wmN/CrHpSQEIQczXkVx9q',
+        key: 'ed25519:b893195b5306acb0917f5a36a628fc94a89cdc7046ce8cea65b85b8a841104e2',
         publicKey:
-          'AA4A3JXqmLW7u+g9pTh+wyqDD4RxxC1lZDI1NTE5AAAAIK0wmN/CrHpSQEIQczXkVx9q',
+          'ed25519:b893195b5306acb0917f5a36a628fc94a89cdc7046ce8cea65b85b8a841104e2',
         score: 128,
         announcement: 'host-329fu32.spam.com',
         status: 'blocked',
