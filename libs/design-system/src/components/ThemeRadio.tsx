@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useTheme } from '../hooks/useTheme'
 import { useCallback } from 'react'
 import { styled, CSS } from '../config/theme'
@@ -43,14 +43,21 @@ const RadioCard = React.forwardRef<
   </StyledRadio>
 ))
 
+const lightTooltipCss: CSS = {
+  backgroundColor: 'white',
+  '& *': {
+    color: 'black !important',
+  },
+}
+
 type Value = 'light' | 'dark' | 'system'
 
 type Props = {
   css?: CSS
-  radioCss?: CSS
+  light?: boolean
 }
 
-export function ThemeRadio({ css, radioCss }: Props) {
+export function ThemeRadio({ css, light }: Props) {
   const { activeTheme, activeMode, setTheme, setMode } = useTheme()
 
   const active = activeMode === 'system' ? 'system' : activeTheme
@@ -67,17 +74,29 @@ export function ThemeRadio({ css, radioCss }: Props) {
     [setMode, setTheme]
   )
 
-  const radioCardCss: CSS = {
-    [`& *, & ${Text}`]: {
-      color: '$gray9',
-    },
+  const radioCardCss = useMemo<CSS>(
+    () =>
+      light
+        ? {
+            [`& *, & ${Text}`]: {
+              color: '$whiteA9',
+            },
 
-    [`&[data-state="checked"] *, &[data-state="checked"] ${Text}`]: {
-      color: '$textContrast',
-    },
+            [`&[data-state="checked"] *, &[data-state="checked"] ${Text}`]: {
+              color: 'white',
+            },
+          }
+        : {
+            [`& *, & ${Text}`]: {
+              color: '$gray9',
+            },
 
-    ...radioCss,
-  }
+            [`&[data-state="checked"] *, &[data-state="checked"] ${Text}`]: {
+              color: '$textContrast',
+            },
+          },
+    [light]
+  )
 
   return (
     <RadioCardGroup
@@ -86,21 +105,21 @@ export function ThemeRadio({ css, radioCss }: Props) {
       css={css}
     >
       <RadioCard value="system" css={radioCardCss}>
-        <Tooltip sideOffset={16} content="System">
+        <Tooltip css={lightTooltipCss} sideOffset={16} content="System">
           <Box css={{ color: '$textContrast' }}>
             <Screen16 />
           </Box>
         </Tooltip>
       </RadioCard>
       <RadioCard value="light" css={radioCardCss}>
-        <Tooltip sideOffset={16} content="Light">
+        <Tooltip css={lightTooltipCss} sideOffset={16} content="Light">
           <Box css={{ color: '$textContrast' }}>
             <Awake16 />
           </Box>
         </Tooltip>
       </RadioCard>
       <RadioCard value="dark" css={radioCardCss}>
-        <Tooltip sideOffset={16} content="Dark">
+        <Tooltip css={lightTooltipCss} sideOffset={16} content="Dark">
           <Box css={{ color: '$textContrast' }}>
             <Asleep16 />
           </Box>

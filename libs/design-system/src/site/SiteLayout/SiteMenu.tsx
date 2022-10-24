@@ -10,6 +10,7 @@ import { Close24 } from '../../icons'
 import { LinkData } from '../../lib/links'
 import { SiteMap } from '../SiteMap'
 import { ScrollArea } from '../../core'
+import { ThemeRadio } from '../../components'
 
 const fadeIn = keyframes({
   from: { opacity: '0' },
@@ -177,16 +178,13 @@ export function SiteMenu({ menuSections }: Props) {
           <ScrollArea id="menu-scroll">
             <Flex
               direction="column"
-              align="center"
+              align="start"
               justify="center"
               css={{
                 height: '100%',
                 padding: '$12 $6',
                 margin: '0 auto',
                 maxWidth: '1200px',
-                '& *': {
-                  color: 'white',
-                },
               }}
             >
               <SiteMap
@@ -194,6 +192,9 @@ export function SiteMenu({ menuSections }: Props) {
                 onClick={() => setOpen(false)}
                 inSiteMenu
               />
+              <Flex css={{ marginTop: '$12' }}>
+                <ThemeRadio light />
+              </Flex>
             </Flex>
           </ScrollArea>
         </Content>

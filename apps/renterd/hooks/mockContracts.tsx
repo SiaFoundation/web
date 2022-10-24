@@ -3,6 +3,12 @@ import { toHastings } from '@siafoundation/sia-js'
 import { random } from 'lodash'
 import { Row } from './useContracts'
 
+function randomHexString(size: number) {
+  return [...Array(size)]
+    .map(() => Math.floor(Math.random() * 16).toString(16))
+    .join('')
+}
+
 function buildRow(start: string): Row {
   const i = random(0, 1_000_000)
   const startDate = new Date(start).getTime()
@@ -10,10 +16,10 @@ function buildRow(start: string): Row {
   const proofWindowDate = expirationDate + getDaysInMs(3)
   const now = new Date().getTime()
   const active = proofWindowDate > now
-
+  const id = randomHexString(32)
   return {
-    id: i + '0x9u2f923fuewij',
-    key: i + '0x9u2f923fuewij',
+    id,
+    key: id,
     status: active ? 'active' : random(0, 10) < 3 ? 'failed' : 'successful',
     renewed: active && random(0, 1) === 0,
     proofWindowDate,
