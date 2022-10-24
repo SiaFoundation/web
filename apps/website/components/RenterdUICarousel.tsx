@@ -146,10 +146,10 @@ export function RenterdUICarousel() {
           css={{
             position: 'relative',
             // top: '-$1',
-            pb: '$1',
-            // '@bp2': {
-            //   top: '-$2',
-            // },
+            pt: '$1',
+            '@bp2': {
+              top: '-$3',
+            },
           }}
         >
           <CarouselTags {...props} />

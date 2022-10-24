@@ -89,7 +89,7 @@ export default function Renterd({ technical, tutorials, services }: Props) {
           }}
         >
           <SiteHeading size="64" title={title} description={description}>
-            <Flex direction="column" gap="2" css={{ pt: '$max' }}>
+            <Flex direction="column" gap="2" css={{ pt: '200px' }}>
               {downloadEl}
             </Flex>
           </SiteHeading>
@@ -102,7 +102,7 @@ export default function Renterd({ technical, tutorials, services }: Props) {
         css={{
           pt: '$3',
           '@bp2': {
-            pt: 0,
+            pt: '$1',
           },
           pb: '$12',
         }}
