@@ -25,16 +25,40 @@ export function FileExplorer() {
       health: 0.54,
     },
     {
-      key: 'archive.zip',
-      path: 'archive.zip',
-      size: 913_280_000,
+      key: 'database-snapshot-2021-02-03.zip',
+      path: 'database-snapshot-2021-02-03.zip',
+      size: 313_280_000,
       health: 1,
     },
     {
-      key: 'movie-2021-02-03.mp4',
-      path: 'movie-2021-02-03.mp4',
-      size: 313_280_000,
+      key: 'database-snapshot-2021-02-04.zip',
+      path: 'database-snapshot-2021-02-04.zip',
+      size: 341_939_000,
       health: 1,
+    },
+    {
+      key: 'database-snapshot-2021-02-05.zip',
+      path: 'database-snapshot-2021-02-05.zip',
+      size: 374_440_000,
+      health: 1,
+    },
+    {
+      key: 'database-snapshot-2021-02-06.zip',
+      path: 'database-snapshot-2021-02-06.zip',
+      size: 389_311_000,
+      health: 1,
+    },
+    {
+      key: 'database-snapshot-2021-02-07.zip',
+      path: 'database-snapshot-2021-02-07.zip',
+      size: 476_680_000,
+      health: 1,
+    },
+    {
+      key: 'database-snapshot-2021-02-08.zip',
+      path: 'database-snapshot-2021-02-08.zip',
+      size: 499_104_000,
+      health: 0.98,
     },
   ]
 
