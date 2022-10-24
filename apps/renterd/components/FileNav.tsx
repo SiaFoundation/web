@@ -7,7 +7,7 @@ import {
 } from '@siafoundation/design-system'
 
 export function FileNav() {
-  const parts = ['files', 'videos', 'random']
+  const parts = ['files', 'backups', 'random']
 
   return (
     <Flex gap="0-5" align="center">

@@ -7,6 +7,7 @@ import imageHosts from '../assets/renterd/renterd-hosts.png'
 import imageConfig from '../assets/renterd/renterd-config.png'
 import imageWallet from '../assets/renterd/renterd-wallet.png'
 import imageNode from '../assets/renterd/renterd-node.png'
+import imageSettings from '../assets/renterd/renterd-settings.png'
 
 const filesProps = getImageProps(imageFiles)
 const contractsProps = getImageProps(imageContracts)
@@ -14,6 +15,7 @@ const hostsProps = getImageProps(imageHosts)
 const configProps = getImageProps(imageConfig)
 const walletProps = getImageProps(imageWallet)
 const nodeProps = getImageProps(imageNode)
+const settingsProps = getImageProps(imageSettings)
 
 // const animation = keyframes({
 //   '0%': { transform: 'rotateX(25deg)' },
@@ -52,6 +54,11 @@ const images = [
     title: 'Node',
     key: 'Node',
     props: nodeProps,
+  },
+  {
+    title: 'Settings',
+    key: 'Settings',
+    props: settingsProps,
   },
 ]
 
