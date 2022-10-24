@@ -5,19 +5,43 @@ import {
   ScrollArea,
   CSS,
 } from '@siafoundation/design-system'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useMemo } from 'react'
 import Typed from 'typed.js'
 
-type Props = { strings: string[]; wrap?: boolean; css?: CSS }
+type Command = {
+  command: string[]
+  result: string[]
+}
 
-export function Terminal({ strings, wrap, css }: Props) {
+type Sequence = Command[]
+
+type Props = { sequences: Sequence[]; wrap?: boolean; css?: CSS }
+
+export function Terminal({ sequences, wrap, css }: Props) {
+  const strings = useMemo(
+    () =>
+      sequences.map((s) =>
+        s
+          .map(
+            (c) =>
+              '<span style="color:green">~ </span>' +
+              '<span style="color:white">' +
+              c.command.join('\n') +
+              '</span>^500\n' +
+              c.result.map((line) => `\`${line}\`\n`).join('')
+          )
+          .join('')
+      ),
+    [sequences]
+  )
+
   const scrollEl = useRef<HTMLDivElement>(null)
   const el = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const typed = new Typed(el.current, {
       strings,
       backDelay: 5000,
-      typeSpeed: 20,
+      typeSpeed: 10,
       fadeOut: true,
       loop: true,
     })
@@ -27,12 +51,16 @@ export function Terminal({ strings, wrap, css }: Props) {
     }
   }, [strings])
 
+  const focusRef = useRef<{ mouseOver: boolean }>({ mouseOver: false })
   useEffect(() => {
     const i = setInterval(() => {
+      if (focusRef.current.mouseOver) {
+        return
+      }
       scrollEl.current.scrollTo({
         top: scrollEl.current.scrollHeight,
       })
-    }, 1000)
+    }, 200)
     return () => {
       clearInterval(i)
     }
@@ -42,8 +70,11 @@ export function Terminal({ strings, wrap, css }: Props) {
     <Flex
       direction="column"
       gap="1"
+      onMouseEnter={() => (focusRef.current.mouseOver = true)}
+      onMouseLeave={() => (focusRef.current.mouseOver = false)}
       css={{
         backgroundColor: '#151718',
+        border: '1px solid $slate3',
         borderRadius: '$2',
         height: '300px',
         pt: '$1-5',

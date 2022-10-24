@@ -283,7 +283,7 @@ gpg --verify Sia-v${versions.sia.latest}-SHA256SUMS.txt.asc`}
           </Flex>
         </Flex>
       </SectionWaves>
-      <SectionGradient css={{ py: '$9' }}>
+      <SectionGradient css={{ py: '$12' }}>
         <SiteHeading
           size="32"
           title="Tutorials for developers new to Sia"

@@ -24,7 +24,7 @@ import { getCacheTutorials } from '../../content/tutorials'
 import backgroundImage from '../../assets/backgrounds/nate-snow.png'
 import previewImage from '../../assets/previews/renterd.png'
 import { textContent } from '../../lib/utils'
-import { TerminalCommands } from '../../components/TerminalCommands'
+import { Terminal } from '../../components/Terminal'
 import { SectionGradient } from '../../components/SectionGradient'
 import { SectionWaves } from '../../components/SectionWaves'
 import { SectionSimple } from '../../components/SectionSimple'
@@ -35,11 +35,11 @@ const previewImageProps = getImageProps(previewImage)
 const title = 'renterd'
 const description = (
   <>
-    renterd is a next-generation Sia renter, developed by the Sia Foundation. It
-    aims to serve the needs of both everyday users -- who want a simple
-    interface for storing and retrieving their personal data -- and developers
-    -- who want to a powerful, flexible, and reliable API for building apps on
-    Sia.
+    <Code>renterd</Code> is a next-generation Sia renter, developed by the Sia
+    Foundation. It aims to serve the needs of both everyday users -- who want a
+    simple interface for storing and retrieving their personal data -- and
+    developers -- who want to a powerful, flexible, and reliable API for
+    building apps on Sia.
   </>
 )
 
@@ -79,9 +79,17 @@ export default function Renterd({ technical, tutorials, services }: Props) {
       description={textContent(description)}
       path={routes.getStarted.index}
       heading={
-        <SectionSimple css={{ pt: '$max' }}>
+        <SectionSimple
+          css={{
+            pt: '$max',
+            pb: '$3',
+            '@bp2': {
+              pb: 0,
+            },
+          }}
+        >
           <SiteHeading size="64" title={title} description={description}>
-            <Flex direction="column" gap="2" css={{ m: '$12 0 $2' }}>
+            <Flex direction="column" gap="2" css={{ pt: '$max' }}>
               {downloadEl}
             </Flex>
           </SiteHeading>
@@ -89,9 +97,30 @@ export default function Renterd({ technical, tutorials, services }: Props) {
       }
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
-      contentCss={{ paddingTop: 0 }}
     >
-      <SectionWaves css={{ py: '$9' }}>
+      <SectionGradient
+        css={{
+          pt: '$3',
+          '@bp2': {
+            pt: 0,
+          },
+          pb: '$12',
+        }}
+      >
+        <RenterdUICarousel />
+        <SiteHeading
+          size="24"
+          title="Manage your storage with a powerful user interface"
+          description={
+            <>
+              Manage your files, contracts, hosts, and blockchain node with an
+              intuitive interface. The embedded interface can be accessed with
+              your web browser.
+            </>
+          }
+        />
+      </SectionGradient>
+      <SectionWaves css={{ py: '$12' }}>
         <Flex
           gap="9"
           direction={{
@@ -101,17 +130,20 @@ export default function Renterd({ technical, tutorials, services }: Props) {
           css={{ width: '100%', overflow: 'hidden' }}
         >
           <SiteHeading
-            css={{ marginTop: '50px', flex: 1 }}
+            css={{ marginTop: '30px', flex: 1 }}
             title="Smart defaults for the everyday user"
             description={
               <>
-                Run renterd in <Code>autopilot</Code> mode to automate host
-                selection, contract management, and all other details. renterd
-                can also be used in manual and <Code>stateless</Code> modes.
+                <Code>renterd</Code> comes with a built-in{' '}
+                <Code>"autopilot"</Code> that handles host selection, contract
+                management, and file repair. Want more control? Just disable it
+                with <Code>--autopilot=false</Code>, and use the renterd HTTP
+                API to implement custom maintenance logic in your favorite
+                language.
               </>
             }
           />
-          <TerminalCommands
+          <Terminal
             css={{
               '@initial': {
                 width: '100%',
@@ -123,12 +155,22 @@ export default function Renterd({ technical, tutorials, services }: Props) {
             sequences={[
               [
                 {
-                  command: ['renterd --autopilot --ui'],
+                  command: ['renterd'],
                   result: [
                     '  Starting renterd in autopilot mode...',
                     '  API now running at localhost:9980...',
                     '  Opening user interface in browser...',
                     '  Selecting hosts and forming contracts...',
+                  ],
+                },
+              ],
+              [
+                {
+                  command: ['renterd --autopilot=false'],
+                  result: [
+                    '  Starting renterd in manual mode...',
+                    '  API now running at localhost:9980...',
+                    '  Opening user interface in browser...',
                   ],
                 },
               ],
@@ -145,15 +187,24 @@ export default function Renterd({ technical, tutorials, services }: Props) {
           />
         </Flex>
       </SectionWaves>
-      <SectionGradient css={{ py: '$15' }}>
+      <SectionGradient
+        css={{
+          py: '$12',
+          background:
+            'linear-gradient(177deg, $colors$loContrast 5%, $colors$slate2 25%, $colors$loContrast 45%)',
+        }}
+      >
         <SiteHeading
           title="Modular APIs that give developers more control"
           description={
             <>
-              renterd includes modular APIs that allow developers to tune renter
-              behaviours and build customized data storage integrations.
-              renterd's <Code>stateless</Code> mode is another great way for
-              developers to scale nodes horizontally.
+              We've designed a brand-new API for renting that offers both power
+              and performance. Form contracts, transfer data, and manage your
+              files with clean and consistent JSON-speaking endpoints.{' '}
+              <Code>renterd</Code> can even scale horizontally: in{' '}
+              <Code>--stateless</Code> mode, it provides raw access to the Sia
+              renter-host protocol, with no UI, no blockchain, and no disk I/O
+              -- perfect for massive renting operations.
             </>
           }
         >
@@ -163,7 +214,7 @@ export default function Renterd({ technical, tutorials, services }: Props) {
               '@bp2': 'row',
             }}
             gap="3"
-            css={{ width: '100%' }}
+            css={{ width: '100%', pb: '$6' }}
           >
             <Flex
               direction="column"
@@ -174,7 +225,7 @@ export default function Renterd({ technical, tutorials, services }: Props) {
                 <Text weight="bold">Example:</Text> Build a contract formation
                 transaction.
               </Text>
-              <TerminalCommands
+              <Terminal
                 css={{
                   '@bp3': {
                     width: '500px',
@@ -184,74 +235,44 @@ export default function Renterd({ technical, tutorials, services }: Props) {
                   [
                     {
                       command: [
-                        'curl -X POST http://localhost:9980/api/rhp/prepare/form \\',
-                        JSON.stringify({ contract: 'new' }, null, 2),
+                        'curl -X POST http://localhost:9980/api/wallet/prepare/form --json \\',
+                        "'" +
+                          JSON.stringify(
+                            {
+                              hostKey:
+                                'ed25519:15433dcd697167a6b40f2434aaf462badc9b9cbc5894726644d3221a6a196c2f',
+                              renterFunds: '1000000000000000',
+                              endHeight: '400000',
+                            },
+                            null,
+                            2
+                          ) +
+                          "'",
                       ],
-                      result: [
-                        JSON.stringify({ contract: 'prepared' }, null, 2),
-                      ],
+                      result: ['[{ file contract transaction }]'],
                     },
                     {
                       command: [
-                        'curl -X POST http://localhost:9980/api/wallet/fund \\',
-                        JSON.stringify(
-                          { transaction: { contract: 'prepared' } },
-                          null,
-                          2
-                        ),
+                        'curl -X POST http://localhost:9980/api/wallet/sign --json \\',
+                        "'{ file contract transaction }'",
                       ],
-                      result: [
-                        JSON.stringify(
-                          {
-                            transaction: { contract: 'prepared' },
-                            status: 'funded',
-                          },
-                          null,
-                          2
-                        ),
-                      ],
+                      result: ['{ signed transaction }'],
                     },
                     {
                       command: [
-                        'curl -X POST http://localhost:9980/api/wallet/sign \\',
-                        JSON.stringify(
-                          {
-                            transaction: { contract: 'prepared' },
-                            status: 'funded',
-                          },
-                          null,
-                          2
-                        ),
+                        'curl -X POST http://localhost:9980/api/rhp/form --json \\',
+                        "'" +
+                          `{
+  "hostKey": "ed25519:15433dcd697167a6b40f2434aaf462badc9b9cbc5894726644d3221a6a196c2f",
+  "hostIP": "161.88.0.733:9982",
+  "transactionSet": [{ signed transaction }]
+}'`,
                       ],
                       result: [
                         JSON.stringify(
                           {
-                            transaction: { contract: 'prepared' },
-                            status: 'signed',
-                          },
-                          null,
-                          2
-                        ),
-                      ],
-                    },
-                    {
-                      command: [
-                        'curl -X POST http://localhost:9980/api/rhp/form \\',
-                        JSON.stringify(
-                          {
-                            transaction: { contract: 'prepared' },
-                            status: 'signed',
-                          },
-                          null,
-                          2
-                        ),
-                      ],
-                      result: [
-                        JSON.stringify(
-                          {
-                            status: '200',
-                            message:
-                              'Host will finalize and broadcast transaction.',
+                            contractID:
+                              'f68272bad8ae85a075158e8065ce67823a311be4416c02ad993cc29777a6694a',
                           },
                           null,
                           2
@@ -271,7 +292,7 @@ export default function Renterd({ technical, tutorials, services }: Props) {
                 <Text weight="bold">Example:</Text> Migrate data to a specific
                 contract.
               </Text>
-              <TerminalCommands
+              <Terminal
                 css={{
                   '@bp3': {
                     width: '500px',
@@ -281,18 +302,28 @@ export default function Renterd({ technical, tutorials, services }: Props) {
                   [
                     {
                       command: [
-                        'http http://localhost:9980/api/slabs/migrate \\',
-                        '    slabs:=@files/slabs.json \\    # data slabs to be moved',
-                        '    from:=@files/contract1.json \\ # originating contract',
-                        '    to:=@files/contract2.json \\   # destination contract',
-                        '    currentHeight:=383331         # current block height',
+                        'curl http://localhost:9980/api/slabs/upload \\',
+                        `  -F meta='{
+  "minShards": 3,
+  "totalShards": 10,
+  "contracts": [ file contracts ]
+}' \\`,
+                        '-F data=@movie.mp4',
                       ],
                       result: [
                         JSON.stringify(
-                          {
-                            status: '200',
-                            message: 'Data migration initiated.',
-                          },
+                          [
+                            {
+                              key: 'key:35d3ee7e94f74c671cbb754ce7b2568a740874b2921e370d6444b356752f23e8',
+                              minShards: 3,
+                              shards: [
+                                {
+                                  host: 'ed25519:15433dcd697167a6b40f2434aaf462badc9b9cbc5894726644d3221a6a196c2f',
+                                  root: 'a0e70901fb4753db933a27b5cc9dd77c5dcbf55b879ece34555a3928d4178b83',
+                                },
+                              ],
+                            },
+                          ],
                           null,
                           2
                         ),
@@ -304,23 +335,13 @@ export default function Renterd({ technical, tutorials, services }: Props) {
             </Flex>
           </Flex>
         </SiteHeading>
-      </SectionGradient>
-      <SectionWaves css={{ pt: '$12' }}>
-        <SiteHeading
-          title="Manage everything with a powerful user interface"
-          description={
-            <>
-              Manage your files, contracts, hosts, and blockchain node with an
-              intuitive interface. The embedded interface can be accessed with
-              your web browser.
-            </>
-          }
+        <Flex
+          gapX="6"
+          gapY="15"
+          justify="between"
+          wrap="wrap"
+          css={{ '@bp1': { mt: '$12' } }}
         >
-          <RenterdUICarousel />
-        </SiteHeading>
-      </SectionWaves>
-      <SectionGradient css={{ py: '$12' }}>
-        <Flex gap="6" justify="between" wrap="wrap">
           <SiteHeading
             css={{
               '@bp2': {
@@ -328,11 +349,6 @@ export default function Renterd({ technical, tutorials, services }: Props) {
               },
             }}
             title="Download renterd"
-            // description={
-            //   <>
-            //     <Code>renterd</Code> is currently Alpha software.
-            //   </>
-            // }
           >
             <Flex css={{ m: '$5 0' }}>{downloadEl}</Flex>
           </SiteHeading>
@@ -341,8 +357,9 @@ export default function Renterd({ technical, tutorials, services }: Props) {
             title="Learn more about renterd"
             description={
               <>
-                Join the Sia Discord to chat with the team and community about
-                renterd development, features, use-cases, bugs, and more.
+                Join the Sia Discord to chat with the team and community about{' '}
+                <Code>renterd</Code> development, features, use-cases, bugs, and
+                more.
               </>
             }
             actionTitle="Join the Discord"
@@ -352,27 +369,6 @@ export default function Renterd({ technical, tutorials, services }: Props) {
         <SiteHeading
           size="32"
           css={{ mt: '$max' }}
-          title="Tutorials for developers new to Sia"
-          description={
-            <>Technical tutorials for new developers looking to build on Sia.</>
-          }
-        />
-        <ContentGallery items={tutorials} />
-        <SiteHeading
-          size="32"
-          css={{ mt: '$12' }}
-          title="Learn about the technology behind Sia"
-          description={
-            <>
-              Technical deep-dives from the core team and the ecosystem of
-              developers building technology on top of Sia.
-            </>
-          }
-        />
-        <ContentGallery columns="1" items={technical} />
-        <SiteHeading
-          size="32"
-          css={{ mt: '$12' }}
           title="Companies and projects building on Sia"
           description={
             <>
@@ -396,8 +392,31 @@ export default function Renterd({ technical, tutorials, services }: Props) {
           }}
           items={services}
         />
+      </SectionGradient>
+      <SectionGradient>
+        <SiteHeading
+          size="32"
+          css={{ mt: '$12' }}
+          title="Tutorials for developers new to Sia"
+          description={
+            <>Technical tutorials for new developers looking to build on Sia.</>
+          }
+        />
+        <ContentGallery items={tutorials} />
+        <SiteHeading
+          size="32"
+          css={{ mt: '$12' }}
+          title="Learn about the technology behind Sia"
+          description={
+            <>
+              Technical deep-dives from the core team and the ecosystem of
+              developers building technology on top of Sia.
+            </>
+          }
+        />
+        <ContentGallery columns="1" items={technical} />
         <Callout
-          css={{ mt: '$12', mb: '$6' }}
+          css={{ mt: '$12', mb: '$max' }}
           title="Sia 101"
           size="2"
           description={

@@ -7,7 +7,7 @@ import { SectionWaves } from './SectionWaves'
 export function Footer() {
   return (
     <Flex direction="column">
-      <SectionWaves css={{ pt: '$5', pb: '$9' }}>
+      <SectionWaves css={{ pt: '$6', pb: '$9' }}>
         <SiteMap menuSections={menuSections} />
       </SectionWaves>
       <SectionGradient css={{ py: '$8', opacity: 0.99 }}>
