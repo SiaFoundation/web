@@ -17,10 +17,10 @@ import bellLabs from '../assets/bell-labs.jpeg'
 export function Layout() {
   return (
     <>
-      <Section py="1">
+      <Section css={{ pt: '$12' }}>
         <SectionHeading hideSeparator>Layout</SectionHeading>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Flex</SubsectionHeading>
         <Grid columns={1} gap="2">
           <Flex debug gap="1" css={{ p: '$1' }}>
@@ -35,7 +35,7 @@ export function Layout() {
           </Flex>
         </Grid>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Grid</SubsectionHeading>
         <Grid columns={1} gap="2">
           <Grid debug columns={4} gap="1" css={{ p: '$1' }}>
@@ -70,7 +70,7 @@ export function Layout() {
           </Grid>
         </Grid>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>ScrollArea</SubsectionHeading>
         <Box debug css={{ height: '200px', width: '200px' }}>
           <ScrollArea>
@@ -84,7 +84,7 @@ export function Layout() {
           </ScrollArea>
         </Box>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Separator</SubsectionHeading>
         <Grid columns={1} gap="4">
           <Flex direction="row" gap="3" css={{ height: '50px' }}>
@@ -118,7 +118,7 @@ export function Layout() {
           </Flex>
         </Grid>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Panel</SubsectionHeading>
         <Grid
           columns={{
@@ -157,7 +157,7 @@ export function Layout() {
           ></Panel>
         </Grid>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Navbar</SubsectionHeading>
         <Box
           css={{

@@ -6,10 +6,10 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 export function Skeletons() {
   return (
     <>
-      <Section py="1">
+      <Section css={{ pt: '$12' }}>
         <SectionHeading>Skeletons</SectionHeading>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Skeleton</SubsectionHeading>
         <Flex direction="column" gap="5" align="stretch">
           <SmallSection>Avatar</SmallSection>

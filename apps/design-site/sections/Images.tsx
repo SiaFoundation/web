@@ -19,10 +19,10 @@ import avatar3 from '../assets/avatar3.png'
 export function Images() {
   return (
     <>
-      <Section py="1">
+      <Section css={{ pt: '$12' }}>
         <SectionHeading>Images</SectionHeading>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Image</SubsectionHeading>
         <Grid
           columns={{
@@ -64,7 +64,7 @@ export function Images() {
           </Box>
         </Grid>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>NextImage - responsive</SubsectionHeading>
         <Flex gap="2" justify="start">
           <Box
@@ -125,7 +125,7 @@ export function Images() {
           </Box>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>NextImage - fill & cover</SubsectionHeading>
         <Flex gap="2" justify="start">
           <Box
@@ -183,7 +183,7 @@ export function Images() {
           </Box>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Avatar</SubsectionHeading>
         <Grid columns={{ '@initial': 1, '@bp2': 2 }} justify="start" gap="3">
           <Flex gap="2" align="center" justify="start">
@@ -203,7 +203,7 @@ export function Images() {
           </Flex>
         </Grid>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>AvatarGroup</SubsectionHeading>
         <Grid columns={{ '@initial': 1, '@bp2': 2 }} justify="start" gap="3">
           <Flex gap="2" align="center" justify="start">

@@ -15,10 +15,10 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 export function ControlGroups() {
   return (
     <>
-      <Section py="1">
+      <Section css={{ pt: '$12' }}>
         <SectionHeading>Control groups</SectionHeading>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>ControlGroup - Buttons</SubsectionHeading>
         <Flex direction="column" gap="2">
           <Flex direction="row" gap="1">
@@ -49,7 +49,7 @@ export function ControlGroups() {
           </Flex>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>ControlGroup - Mixed</SubsectionHeading>
         <Flex direction="column" gap="2">
           <Flex direction="row" gap="1">

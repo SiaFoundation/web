@@ -9,13 +9,13 @@ import { SectionHeading as DSSectionHeading } from '../components/SectionHeading
 export function Apps() {
   return (
     <>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <DSSectionHeading>ThemeRadio</DSSectionHeading>
         <Flex direction="column" gap="3">
           <ThemeRadio />
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <DSSectionHeading>UserDropdownMenu</DSSectionHeading>
         <Flex direction="column" gap="3">
           <UserDropdownMenu />

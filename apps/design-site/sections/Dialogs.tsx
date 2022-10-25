@@ -21,10 +21,10 @@ export function Dialogs() {
 
   return (
     <>
-      <Section py="1">
+      <Section css={{ pt: '$12' }}>
         <SectionHeading>Dialogs</SectionHeading>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Dialog</SubsectionHeading>
         <Flex gap="1">
           <Dialog>
@@ -131,7 +131,7 @@ export function Dialogs() {
           </Dialog>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>AlertDialog</SubsectionHeading>
         <Flex gap="2">
           <AlertDialog>

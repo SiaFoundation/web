@@ -25,10 +25,10 @@ const exampleCode = `func Fibonacci(n int) int {
 export function Typography() {
   return (
     <>
-      <Section py="1">
+      <Section css={{ pt: '$12' }}>
         <SectionHeading>Typography</SectionHeading>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Headings</SubsectionHeading>
         <Flex direction="column" gap="2">
           <Heading size="20">Heading 20</Heading>
@@ -37,7 +37,7 @@ export function Typography() {
           <Heading size="64">Heading 64</Heading>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Text</SubsectionHeading>
         <Flex direction="column" gap="2">
           <Text size="10">Tiny processors 10</Text>
@@ -57,7 +57,7 @@ export function Typography() {
           </Text>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Link</SubsectionHeading>
         <Flex direction="column" gap="2" align="start">
           <NextLink href={randomLink} target="_blank" variant="subtle">
@@ -76,19 +76,19 @@ export function Typography() {
           </Text>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Code</SubsectionHeading>
         <Flex direction="column" gap="2" align="start">
           <Code variant="gray">{'fmt.Println("variant=gray")'}</Code>
           <Code variant="accent">{'fmt.Println("variant=accent")'}</Code>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Codeblock</SubsectionHeading>
         <Codeblock>{exampleCode}</Codeblock>
         <Flex direction="column" gap="2" align="start"></Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Paragraph</SubsectionHeading>
         <Flex direction="column" gap="5">
           <Grid
@@ -156,7 +156,7 @@ export function Typography() {
           </Paragraph>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Keyboard</SubsectionHeading>
         <Flex direction="column" gap="3">
           <Flex direction="row" gap="1" wrap="wrap">

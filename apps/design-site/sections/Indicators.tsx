@@ -15,10 +15,10 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 export function Indicators() {
   return (
     <>
-      <Section py="1">
+      <Section css={{ pt: '$12' }}>
         <SectionHeading>Indicators</SectionHeading>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Alert</SubsectionHeading>
         <Flex direction="column" gap="2" align="stretch">
           <Alert variant="gray">
@@ -40,7 +40,7 @@ export function Indicators() {
           </Alert>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>ProgressBar</SubsectionHeading>
         <Grid columns="3" gap="3">
           <Box>
@@ -54,7 +54,7 @@ export function Indicators() {
           </Box>
         </Grid>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Badge</SubsectionHeading>
         <Flex direction="column" gap="3">
           <Flex direction="row" gap="1" wrap="wrap">
@@ -119,7 +119,7 @@ export function Indicators() {
           </Flex>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Badge - interactive</SubsectionHeading>
         <Flex direction="row" gap="1" wrap="wrap">
           <Badge interactive variant="accent">

@@ -1,4 +1,5 @@
 import {
+  Box,
   getImageProps,
   SiteLayout,
   ThemeProvider,
@@ -36,10 +37,13 @@ function App({ Component, pageProps }: AppProps) {
             ],
           },
         ]}
+        navbar={<Box />}
         heading={<Heading />}
         backgroundImage={backgroundImage}
       >
-        <Component {...pageProps} />
+        <Box css={{ backgroundColor: '$loContrast', pb: '$max' }}>
+          <Component {...pageProps} />
+        </Box>
       </SiteLayout>
     </ThemeProvider>
   )

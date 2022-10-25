@@ -23,7 +23,7 @@ export function ComboBoxes() {
   )
   return (
     <>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>ComboBox</SubsectionHeading>
         <Flex direction="column" gap="3">
           <SmallSection>sizes</SmallSection>
@@ -129,7 +129,7 @@ export function ComboBoxes() {
           </Grid>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Mixed</SubsectionHeading>
         <Flex direction="row" gap="1">
           <ComboBox options={options} size="1" />

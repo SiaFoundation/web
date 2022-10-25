@@ -110,6 +110,7 @@ export default function Renterd({ technical, tutorials, services }: Props) {
         <RenterdUICarousel />
         <SiteHeading
           size="24"
+          eyebrow="Coming soon"
           title="Manage your storage with a powerful user interface"
           description={
             <>

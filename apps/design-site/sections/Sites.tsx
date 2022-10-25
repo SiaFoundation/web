@@ -16,7 +16,7 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 export function Sites() {
   return (
     <>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <DSSectionHeading>SiteHeading</DSSectionHeading>
         <Flex direction="column" gap="9">
           <SiteHeading
@@ -95,7 +95,7 @@ export function Sites() {
           />
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <DSSectionHeading>ContentItem</DSSectionHeading>
         <Grid
           gap="5"
@@ -141,7 +141,7 @@ export function Sites() {
           />
         </Grid>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <DSSectionHeading>ContentProject</DSSectionHeading>
         <Grid
           gap="5"
@@ -163,10 +163,10 @@ export function Sites() {
           />
         </Grid>
       </Section>
-      <Section py="1">
+      <Section css={{ pt: '$12' }}>
         <DSSectionHeading>ContentGallery</DSSectionHeading>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>default</SubsectionHeading>
         <ContentGallery
           items={times(6, (i) => ({
@@ -180,7 +180,7 @@ export function Sites() {
           }))}
         />
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>columns 1</SubsectionHeading>
         <ContentGallery
           columns={{
@@ -194,7 +194,7 @@ export function Sites() {
           }))}
         />
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>variant filterable / columns 3</SubsectionHeading>
         <ContentGallery
           filterable="filterable"
@@ -215,16 +215,16 @@ export function Sites() {
           }))}
         />
       </Section>
-      <Section py="1">
+      <Section css={{ pt: '$12' }}>
         <DSSectionHeading>WavesBackdrop</DSSectionHeading>
       </Section>
       <Section css={{ position: 'relative' }}>
         <WavesBackdrop />
       </Section>
-      <Section py="1">
+      <Section css={{ pt: '$12' }}>
         <DSSectionHeading>Callout</DSSectionHeading>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>size 1</SubsectionHeading>
         <Grid
           columns={{
@@ -255,7 +255,7 @@ export function Sites() {
           />
         </Grid>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>size 2</SubsectionHeading>
         <Callout
           title="Title"
