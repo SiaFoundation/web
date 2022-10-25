@@ -158,10 +158,10 @@ export default function Renterd({ technical, tutorials, services }: Props) {
                 {
                   command: ['renterd'],
                   result: [
-                    '  Starting renterd in autopilot mode...',
-                    '  API now running at localhost:9980...',
-                    '  Opening user interface in browser...',
-                    '  Selecting hosts and forming contracts...',
+                    'renterd v0.1.0',
+                    'Starting renterd in autopilot mode...',
+                    'p2p: Listening on 127.0.0.1:56700',
+                    'api: Listening on 127.0.0.1:9980',
                   ],
                 },
               ],
@@ -169,9 +169,10 @@ export default function Renterd({ technical, tutorials, services }: Props) {
                 {
                   command: ['renterd --autopilot=false'],
                   result: [
-                    '  Starting renterd in manual mode...',
-                    '  API now running at localhost:9980...',
-                    '  Opening user interface in browser...',
+                    'renterd v0.1.0',
+                    'Starting renterd in manual mode...',
+                    'p2p: Listening on 127.0.0.1:56700',
+                    'api: Listening on 127.0.0.1:9980',
                   ],
                 },
               ],
@@ -179,8 +180,9 @@ export default function Renterd({ technical, tutorials, services }: Props) {
                 {
                   command: ['renterd --stateless'],
                   result: [
-                    '  Starting renterd in stateless mode...',
-                    '  API now running at localhost:9980...',
+                    'renterd v0.1.0',
+                    'Starting renterd in stateless mode...',
+                    'api: Listening on 127.0.0.1:9980',
                   ],
                 },
               ],
