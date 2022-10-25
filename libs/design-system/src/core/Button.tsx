@@ -20,6 +20,7 @@ export const Button = styled('button', {
   WebkitTapHighlightColor: 'rgba(0,0,0,0)',
 
   fontFamily: '$sans',
+  backgroundColor: 'green',
   fontWeight: 500,
   fontVariantNumeric: 'tabular-nums',
   cursor: 'pointer',

@@ -12,7 +12,7 @@ runs:
   using: composite
   steps:
     - name: Checkout all commits
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         fetch-depth: 0
     - name: git user config
@@ -21,24 +21,26 @@ runs:
         git config user.name "${GITHUB_ACTOR}"
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
     - name: Derive appropriate SHAs for base and head for `nx affected` commands
-      uses: nrwl/nx-set-shas@v2
-    - uses: actions/setup-node@v2
+      uses: nrwl/nx-set-shas@v3
+    - uses: actions/setup-node@v3
       with:
         node-version: ${{ inputs.node_version }}
         registry-url: https://registry.npmjs.org
-    - name: Get npm cache directory
-      id: npm-cache-dir
-      shell: bash
-      run: |
-        echo "::set-output name=dir::$(npm config get cache)"
-    - name: Set up npm cache
+    - name: Set up node cache
       uses: actions/cache@v3
-      id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
       with:
-        path: ${{ steps.npm-cache-dir.outputs.dir }}
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        # See here for caching with `yarn` https://github.com/actions/cache/blob/main/examples.md#node---yarn or you can leverage caching with actions/setup-node https://github.com/actions/setup-node
+        path: |
+          ~/.npm
+          ~/node_modules
+          ${{ github.workspace }}/.next/cache
+        # Generate a new cache whenever packages or source files change.
+        key: ${{ runner.os }}-${{ inputs.node_version }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+        # If source files changed but packages didn't, rebuild from a prior cache.
         restore-keys: |
-          ${{ runner.os }}-node-
+          ${{ runner.os }}-${{ inputs.node_version }}-${{ hashFiles('**/package-lock.json') }}-
     - name: Install
+      # could do this since its a ci, but it force rebuilds node_modules
+      # run: npm ci
       run: npm install
       shell: bash
