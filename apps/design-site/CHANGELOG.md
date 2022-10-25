@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.22.1](https://github.com/SiaFoundation/web/compare/design-site-0.22.0...design-site-0.22.1) (2022-10-25)
+
+
+### Bug Fixes
+
+* add coming soon to ui, update design-site ([a282026](https://github.com/SiaFoundation/web/commit/a2820269363094c23b0f6827aae5ff3c20074412))
+* renterd changes, numberfield options, theme radio fix, asset cleanup ([fa94e07](https://github.com/SiaFoundation/web/commit/fa94e0741e0c365f6adef3b8987186f36725e067))
+
+
+
 # [0.22.0](https://github.com/SiaFoundation/web/compare/design-site-0.21.0...design-site-0.22.0) (2022-10-13)
 
 
