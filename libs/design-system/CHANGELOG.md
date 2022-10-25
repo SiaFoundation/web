@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.38.1](https://github.com/SiaFoundation/web/compare/design-system-0.38.0...design-system-0.38.1) (2022-10-25)
+
+
+### Bug Fixes
+
+* external link icons in sitemap, section gradients ([d6d96c4](https://github.com/SiaFoundation/web/commit/d6d96c46cd2de37eb18972311dd4023147eec437))
+* renterd changes, numberfield options, theme radio fix, asset cleanup ([fa94e07](https://github.com/SiaFoundation/web/commit/fa94e0741e0c365f6adef3b8987186f36725e067))
+* update copy, add icons ([876c392](https://github.com/SiaFoundation/web/commit/876c39208d8f4f3cfadbcb23441d73cd5cde9ee5))
+
+
+
 # [0.38.0](https://github.com/SiaFoundation/web/compare/design-system-0.37.0...design-system-0.38.0) (2022-10-20)
 
 
