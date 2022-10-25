@@ -1,11 +1,7 @@
 import { Apps } from '../sections/Apps'
 
 export function AppsPage() {
-  return (
-    <>
-      <Apps />
-    </>
-  )
+  return <Apps />
 }
 
 export default AppsPage

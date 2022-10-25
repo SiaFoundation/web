@@ -7,11 +7,11 @@ export function Colors() {
   return (
     <>
       <Flex direction="column" gap="5">
-        <Section py="1">
+        <Section css={{ pt: '$12' }}>
           <SectionHeading>Colors</SectionHeading>
           <Legend />
         </Section>
-        <Section>
+        <Section css={{ pt: '$9' }}>
           <SubsectionHeading>Brand color system</SubsectionHeading>
           <Flex direction="column" gap="2">
             <Grid
@@ -55,7 +55,7 @@ export function Colors() {
             </Grid>
           </Flex>
         </Section>
-        <Section>
+        <Section css={{ pt: '$9' }}>
           <SubsectionHeading>Semantic color system</SubsectionHeading>
           <Grid
             css={{

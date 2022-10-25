@@ -21,10 +21,10 @@ import { ComboBoxes } from './ComboBoxes'
 export function Inputs() {
   return (
     <>
-      <Section py="1">
+      <Section css={{ pt: '$12' }}>
         <SectionHeading>Inputs</SectionHeading>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>TextField</SubsectionHeading>
         <Flex direction="column" gap="2">
           <Grid columns={{ '@initial': 1, '@bp1': 4 }} gap="2">
@@ -125,11 +125,11 @@ export function Inputs() {
           </Grid>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Dropzone</SubsectionHeading>
         <Dropzone onFiles={() => null} />
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>TextArea</SubsectionHeading>
         <Flex direction="row" gap="1">
           <TextArea size="1" defaultValue="Here be dragons" />
@@ -137,7 +137,7 @@ export function Inputs() {
           <TextArea size="2" state="valid" defaultValue="Here be dragons" />
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Checkbox</SubsectionHeading>
         <Flex direction="row" gap="1">
           <Checkbox size="1">Checkbox</Checkbox>
@@ -156,7 +156,7 @@ export function Inputs() {
           </Checkbox>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Switch</SubsectionHeading>
         <Flex direction="row" gap="1">
           <Switch size="1">Switch</Switch>
@@ -175,7 +175,7 @@ export function Inputs() {
           </Switch>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Radio</SubsectionHeading>
         <Flex direction="row" gap="3">
           <RadioGroup css={{ display: 'flex', gap: '$1' }}>
@@ -199,7 +199,7 @@ export function Inputs() {
           </RadioGroup>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>RadioCard</SubsectionHeading>
         <RadioCardGroup>
           <Grid columns="2" gap="2">
@@ -258,7 +258,7 @@ export function Inputs() {
           </Grid>
         </RadioCardGroup>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Select</SubsectionHeading>
         <Grid columns={{ '@initial': 1, '@bp2': 2, '@bp4': 3 }} gap="2">
           <Flex direction="row" gap="1">

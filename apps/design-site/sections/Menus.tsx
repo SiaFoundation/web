@@ -6,10 +6,10 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 export function Menus() {
   return (
     <>
-      <Section py="1">
+      <Section css={{ pt: '$12' }}>
         <SectionHeading>Menus</SectionHeading>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>DropdownMenu</SubsectionHeading>
         <Flex direction="row" gap="1">
           <ExampleMenu>

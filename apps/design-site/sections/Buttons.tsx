@@ -13,10 +13,10 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 export function Buttons() {
   return (
     <>
-      <Section py="1">
+      <Section css={{ py: '$3', backgroundColor: '$loContrast' }}>
         <SectionHeading>Buttons</SectionHeading>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Button - sizes</SubsectionHeading>
         <Flex direction="column" gap="2">
           <Flex direction="row" gap="1">
@@ -68,7 +68,7 @@ export function Buttons() {
           </Flex>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Button - states</SubsectionHeading>
         <Flex direction="column" gap="3">
           <SmallSection>default</SmallSection>
@@ -130,7 +130,7 @@ export function Buttons() {
           </Flex>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>IconButton</SubsectionHeading>
         <Grid columns={{ '@initial': 1, '@bp1': 2 }} gap="2">
           <Flex direction="row" gap="1">

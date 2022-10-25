@@ -29,10 +29,10 @@ function Content() {
 export function Popups() {
   return (
     <>
-      <Section py="1">
+      <Section css={{ pt: '$12' }}>
         <SectionHeading>Popups</SectionHeading>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Popover</SubsectionHeading>
         <Text css={{ pb: '$3' }}>Click to see Popover</Text>
         <Flex direction="row" gap="2" align="center">
@@ -62,7 +62,7 @@ export function Popups() {
           </Popover>
         </Flex>
       </Section>
-      <Section>
+      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Tooltip</SubsectionHeading>
         <Text css={{ pb: '$3' }}>Hover to see Tooltip</Text>
         <Flex direction="row" gap="2">
