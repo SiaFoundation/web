@@ -2,6 +2,24 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.29.1](https://github.com/SiaFoundation/web/compare/website-0.29.0...website-0.29.1) (2022-10-25)
+
+
+### Bug Fixes
+
+* add coming soon to ui, update design-site ([a282026](https://github.com/SiaFoundation/web/commit/a2820269363094c23b0f6827aae5ff3c20074412))
+* adjust terminal output ([5e6762f](https://github.com/SiaFoundation/web/commit/5e6762f3d28374621992b63dc1eeae9d0778daa9))
+* external link icons in sitemap, section gradients ([d6d96c4](https://github.com/SiaFoundation/web/commit/d6d96c46cd2de37eb18972311dd4023147eec437))
+* mobile padding ([be8191a](https://github.com/SiaFoundation/web/commit/be8191a0df0c7168089774166c23d1efbc190272))
+* renterd changes, numberfield options, theme radio fix, asset cleanup ([fa94e07](https://github.com/SiaFoundation/web/commit/fa94e0741e0c365f6adef3b8987186f36725e067))
+* renterd spacing ([4bccfcc](https://github.com/SiaFoundation/web/commit/4bccfcc1b62fe365eea39832b05f6a54fc38e421))
+* update copy, add icons ([876c392](https://github.com/SiaFoundation/web/commit/876c39208d8f4f3cfadbcb23441d73cd5cde9ee5))
+* update renterd images ([3b60315](https://github.com/SiaFoundation/web/commit/3b6031511aabba011dbca11e9b4b76dd2ab12b53))
+* update renterd images ([d753781](https://github.com/SiaFoundation/web/commit/d753781a4cf8037f61c8c95781c8af84c1acdb2d))
+* update renterd page ([8f1a3b6](https://github.com/SiaFoundation/web/commit/8f1a3b6c75884e9bb8be87edadfaff984c6cdbc9))
+
+
+
 # [0.29.0](https://github.com/SiaFoundation/web/compare/website-0.28.0...website-0.29.0) (2022-10-20)
 
 
