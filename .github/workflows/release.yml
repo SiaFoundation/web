@@ -1,4 +1,4 @@
-name: Create Release Pull Request or Publish
+name: Release or Publish
 on:
   push:
     branches:
@@ -15,8 +15,21 @@ jobs:
         uses: ./.github/actions/setup
         with:
           node_version: 16
+      - name: Workspace lint
+        shell: bash
+        run: npx nx workspace-lint
+      - name: Lint
+        shell: bash
+        run: npx nx affected --target=lint --parallel=5
+      - name: Build
+        shell: bash
+        run: npx nx affected --target=build --parallel=5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CONTENT: ${{ github.workspace }}/content/example
       - name: Test
-        uses: ./.github/actions/test
+        shell: bash
+        run: npx nx affected --target=test --parallel=5
       - name: Create Release Pull Request or Publish to NPM
         uses: changesets/action@v1
         with:

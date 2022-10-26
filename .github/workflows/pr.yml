@@ -12,7 +12,21 @@ jobs:
         uses: ./.github/actions/setup
         with:
           node_version: 16
-      - name: Test
-        uses: ./.github/actions/test
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Commit lint
+      shell: bash
+      run: npx commitlint --from ${{ github.event.workflow_run.base_sha }} --to ${{ github.event.workflow_run.head_sha }}
+    - name: Workspace lint
+      shell: bash
+      run: npx nx workspace-lint
+    - name: Lint
+      shell: bash
+      run: npx nx affected --target=lint --parallel=5
+    - name: Build
+      shell: bash
+      run: npx nx affected --target=build --parallel=5
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        CONTENT: ${{ github.workspace }}/content/example
+    - name: Test
+      shell: bash
+      run: npx nx affected --target=test --parallel=5
