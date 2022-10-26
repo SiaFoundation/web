@@ -16,7 +16,7 @@ runs:
   steps:
     - name: Commit lint
       shell: bash
-      run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
+      run: npx commitlint --from ${{ github.event.workflow_run.base_sha }} --to ${{ github.event.workflow_run.head_sha }}
     - name: Workspace lint
       shell: bash
       run: npx nx workspace-lint
