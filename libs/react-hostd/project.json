@@ -14,7 +14,7 @@
         "entryFile": "libs/react-hostd/src/index.ts",
         "external": ["react/jsx-runtime"],
         "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "babel",
+        "compiler": "swc",
         "assets": [
           {
             "glob": "libs/react-hostd/README.md",
