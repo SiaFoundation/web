@@ -20,16 +20,16 @@ jobs:
         run: npx nx workspace-lint
       - name: Lint
         shell: bash
-        run: npx nx affected --target=lint --parallel=5
+        run: npx nx run-many --target=lint --all --parallel=5
       - name: Build
         shell: bash
-        run: npx nx affected --target=build --parallel=5
+        run: npx nx run-many --target=build --all --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CONTENT: ${{ github.workspace }}/content/example
       - name: Test
         shell: bash
-        run: npx nx affected --target=test --parallel=5
+        run: npx nx run-many --target=test --all --parallel=5
       - name: Create Release Pull Request or Publish to NPM
         uses: changesets/action@v1
         with:
