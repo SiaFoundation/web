@@ -9,12 +9,20 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
+    "release": "changeset publish",
     "types": "go run libs/sia-js/src/types/gen.go",
     "feeds": "node apps/website/content/scripts/syncFeeds.js"
   },
   "private": true,
+  "workspaces": {
+    "packages": [
+      "dist/libs/*",
+      "dist/apps/*"
+    ]
+  },
   "dependencies": {
     "@carbon/icons-react": "^10.47.0",
+    "@changesets/cli": "^2.25.0",
     "@mdx-js/loader": "^2.1.1",
     "@mdx-js/react": "^2.1.1",
     "@next/mdx": "^12.1.6",

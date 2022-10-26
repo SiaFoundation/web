@@ -61,21 +61,6 @@
       "options": {
         "lintFilePatterns": ["apps/design-site/**/*.{ts,tsx,js,jsx}"]
       }
-    },
-    "version": {
-      "executor": "@jscutlery/semver:version",
-      "options": {
-        "commitMessageFormat": "chore(${projectName}): release version ${version}",
-        "postTargets": ["design-site:publish-github"],
-        "push": true
-      }
-    },
-    "publish-github": {
-      "executor": "@jscutlery/semver:github",
-      "options": {
-        "tag": "${tag}",
-        "notesFile": "./apps/design-site/CHANGELOG.md"
-      }
     }
   },
   "tags": []

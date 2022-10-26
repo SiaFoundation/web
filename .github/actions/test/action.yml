@@ -16,19 +16,19 @@ runs:
   steps:
     - name: Commit lint
       shell: bash
-      run: npx commitlint --from=last-release
+      run: npx commitlint
     - name: Workspace lint
       shell: bash
       run: npx nx workspace-lint
     - name: Lint
       shell: bash
-      run: npx nx affected --target=lint --base=last-release --parallel=5
+      run: npx nx affected --target=lint --parallel=5
     - name: Build
       shell: bash
-      run: npx nx affected --target=build --base=last-release --parallel=5
+      run: npx nx affected --target=build --parallel=5
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
         CONTENT: ${{ github.workspace }}/content/example
     - name: Test
       shell: bash
-      run: npx nx affected --target=test --base=last-release --parallel=5
+      run: npx nx affected --target=test --parallel=5

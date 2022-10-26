@@ -17,21 +17,6 @@
         "jestConfig": "libs/env/jest.config.ts",
         "passWithNoTests": true
       }
-    },
-    "version": {
-      "executor": "@jscutlery/semver:version",
-      "options": {
-        "commitMessageFormat": "chore(${projectName}): release version ${version}",
-        "postTargets": ["env:publish-github"],
-        "push": true
-      }
-    },
-    "publish-github": {
-      "executor": "@jscutlery/semver:github",
-      "options": {
-        "tag": "${tag}",
-        "notesFile": "./libs/env/CHANGELOG.md"
-      }
     }
   },
   "tags": []

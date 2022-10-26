@@ -45,30 +45,6 @@
         "jestConfig": "libs/design-system/jest.config.ts",
         "passWithNoTests": true
       }
-    },
-    "version": {
-      "executor": "@jscutlery/semver:version",
-      "options": {
-        "commitMessageFormat": "chore(${projectName}): release version ${version}",
-        "postTargets": [
-          "design-system:publish-npm",
-          "design-system:publish-github"
-        ],
-        "push": true
-      }
-    },
-    "publish-npm": {
-      "executor": "ngx-deploy-npm:deploy",
-      "options": {
-        "access": "public"
-      }
-    },
-    "publish-github": {
-      "executor": "@jscutlery/semver:github",
-      "options": {
-        "tag": "${tag}",
-        "notesFile": "./libs/design-system/CHANGELOG.md"
-      }
     }
   }
 }
