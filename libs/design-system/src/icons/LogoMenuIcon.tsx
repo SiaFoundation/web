@@ -1,4 +1,4 @@
-import { Box } from '../core'
+import { Box } from '../core/Box'
 
 // const spin = keyframes({
 //   from: {

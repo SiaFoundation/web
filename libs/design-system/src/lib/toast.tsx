@@ -1,4 +1,4 @@
-import { CheckmarkOutline16, CloseOutline16 } from '../icons'
+import { CheckmarkOutline16, CloseOutline16 } from '../icons/carbon'
 import toast, {
   DefaultToastOptions,
   Toaster as RToaster,

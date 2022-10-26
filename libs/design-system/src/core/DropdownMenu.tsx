@@ -5,7 +5,7 @@ import { menuCss, separatorCss, itemCss, labelCss } from './Menu'
 import { Box } from './Box'
 import { Flex } from './Flex'
 import { panelStyles } from './Panel'
-import { CheckmarkOutline16 } from '../icons'
+import { CheckmarkOutline16 } from '../icons/carbon'
 import { scaleIn } from '../config/animations'
 
 export const DropdownMenu = DropdownMenuPrimitive.Root

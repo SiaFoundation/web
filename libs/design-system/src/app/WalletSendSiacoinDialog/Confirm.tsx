@@ -1,6 +1,6 @@
 import { useFormik } from 'formik'
 import BigNumber from 'bignumber.js'
-import { Flex } from '../../core'
+import { Flex } from '../../core/Flex'
 import { WalletSendSiacoinReceipt } from './Receipt'
 import {
   useWalletSign,

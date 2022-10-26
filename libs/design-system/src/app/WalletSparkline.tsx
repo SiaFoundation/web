@@ -1,6 +1,11 @@
 import { useMemo } from 'react'
-import { Box } from '../core'
-import { ChartXY, ChartPoint, ChartData, ChartConfig } from '../components'
+import { Box } from '../core/Box'
+import {
+  ChartXY,
+  ChartPoint,
+  ChartData,
+  ChartConfig,
+} from '../components/ChartXY'
 import { getDaysInMs } from '../lib/time'
 import { sortBy } from 'lodash'
 import { humanSiacoin } from '@siafoundation/sia-js'

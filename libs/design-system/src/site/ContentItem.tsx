@@ -20,9 +20,9 @@ import {
   Integration24,
   Microscope24,
   Policy24,
-  TestToolIcon,
   EventsAlt24,
-} from '../icons'
+} from '../icons/carbon'
+import { TestToolIcon } from '../icons/TestToolIcon'
 import { Box } from '../core/Box'
 import { Flex } from '../core/Flex'
 import { NextLink } from '../core/Link'

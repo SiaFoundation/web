@@ -1,4 +1,6 @@
-import { Button, Flex, Panel } from '../core'
+import { Button } from '../core/Button'
+import { Flex } from '../core/Flex'
+import { Panel } from '../core/Panel'
 
 type Option = {
   label: React.ReactNode

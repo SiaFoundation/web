@@ -1,7 +1,7 @@
 import { useWalletBalance } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
-import { Flex } from '../../core'
-import { WalletIcon } from '../../icons'
+import { Flex } from '../../core/Flex'
+import { WalletIcon } from '../../icons/WalletIcon'
 import { WalletBalanceMini } from '../WalletBalanceMini'
 import { SidenavItem } from './SidenavItem'
 

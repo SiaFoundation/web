@@ -6,11 +6,11 @@ import { IconButton } from '../../core/IconButton'
 import { LogoMenuIcon } from '../../icons/LogoMenuIcon'
 import { Box } from '../../core/Box'
 import { Flex } from '../../core/Flex'
-import { Close24 } from '../../icons'
+import { Close24 } from '../../icons/carbon'
 import { LinkData } from '../../lib/links'
 import { SiteMap } from '../SiteMap'
-import { ScrollArea } from '../../core'
-import { ThemeRadio } from '../../components'
+import { ScrollArea } from '../../core/ScrollArea'
+import { ThemeRadio } from '../../components/ThemeRadio'
 
 const fadeIn = keyframes({
   from: { opacity: '0' },

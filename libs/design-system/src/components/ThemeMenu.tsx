@@ -1,4 +1,4 @@
-import { Flex } from '../core'
+import { Flex } from '../core/Flex'
 import { DropdownMenuGroup, DropdownMenuLabel } from '../core/DropdownMenu'
 import { ThemeRadio } from './ThemeRadio'
 

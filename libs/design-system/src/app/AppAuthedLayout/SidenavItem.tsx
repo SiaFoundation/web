@@ -1,4 +1,6 @@
-import { IconButton, NextLink, Tooltip } from '../../core'
+import { IconButton } from '../../core/IconButton'
+import { NextLink } from '../../core/Link'
+import { Tooltip } from '../../core/Tooltip'
 import { useRouter } from 'next/router'
 
 type Props = {

@@ -1,6 +1,6 @@
 import { Box } from './Box'
 import { Tooltip } from './Tooltip'
-import { Information16 } from '../icons'
+import { Information16 } from '../icons/carbon'
 
 type Props = {
   children: React.ReactNode

@@ -1,4 +1,8 @@
-import { Flex, InfoTip, Tooltip, Panel, Text } from '../core'
+import { Flex } from '../core/Flex'
+import { InfoTip } from '../core/InfoTip'
+import { Tooltip } from '../core/Tooltip'
+import { Panel } from '../core/Panel'
+import { Text } from '../core/Text'
 import { CSS } from '../config/theme'
 import { useMemo } from 'react'
 

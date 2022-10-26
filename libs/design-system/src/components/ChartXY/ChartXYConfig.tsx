@@ -6,7 +6,7 @@ import { Grid } from '../../core/Grid'
 import { InfoTip } from '../../core/InfoTip'
 import { Dialog, DialogContent, DialogTrigger } from '../../core/Dialog'
 import { Tooltip } from '../../core/Tooltip'
-import { Settings16 } from '../../icons'
+import { Settings16 } from '../../icons/carbon'
 import { Box } from '../../core/Box'
 import { IconButton } from '../../core/IconButton'
 

@@ -1,5 +1,5 @@
-import { Button } from '../core'
-import { EntityList } from '../components'
+import { Button } from '../core/Button'
+import { EntityList } from '../components/EntityList'
 import { useSyncerPeers } from '@siafoundation/react-core'
 import { sortBy } from 'lodash'
 

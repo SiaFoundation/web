@@ -110,6 +110,8 @@
     "@nrwl/react": "14.8.4",
     "@nrwl/web": "14.8.4",
     "@nrwl/workspace": "14.8.4",
+    "@swc/core": "^1.2.173",
+    "@swc/jest": "0.2.20",
     "@testing-library/react": "13.4.0",
     "@types/carbon__icons-react": "^10.31.2",
     "@types/d3-array": "^3.0.2",

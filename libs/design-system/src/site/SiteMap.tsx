@@ -1,12 +1,14 @@
 import React from 'react'
 import { Grid } from '../core/Grid'
-import { Launch16 } from '../icons'
+import { Launch16 } from '../icons/carbon'
 import { Flex } from '../core/Flex'
 import { SimpleLogoIcon } from '../icons/SimpleLogoIcon'
 import { NextLink } from '../core/Link'
 import { LinkData } from '../lib/links'
-import { Box, Heading, Paragraph } from '../core'
-import { useIsExternalDomain } from '../hooks'
+import { Box } from '../core/Box'
+import { Heading } from '../core/Heading'
+import { Paragraph } from '../core/Paragraph'
+import { useIsExternalDomain } from '../hooks/useIsExternalDomain'
 
 export type MenuSection = {
   title: string

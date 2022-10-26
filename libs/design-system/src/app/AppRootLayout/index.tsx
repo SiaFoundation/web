@@ -1,7 +1,7 @@
 import React from 'react'
-import { Box } from '../../core'
+import { Box } from '../../core/Box'
 import { Toaster } from '../../lib/toast'
-import { useMonitorConnAndLock } from '../../hooks'
+import { useMonitorConnAndLock } from '../../hooks/useMonitorConnAndLock'
 
 type Routes = {
   unlock: string

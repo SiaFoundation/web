@@ -1,6 +1,6 @@
 import React from 'react'
-import { Flex } from '../core/Flex'
-import { Container } from '../core/Container'
+import { Flex } from './Flex'
+import { Container } from './Container'
 import { Box } from './Box'
 
 type Props = React.ComponentProps<typeof Box> & {

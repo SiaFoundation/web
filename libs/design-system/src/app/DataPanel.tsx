@@ -1,15 +1,15 @@
+import { Button } from '../core/Button'
+import { Codeblock } from '../core/Codeblock'
 import {
-  Button,
-  Codeblock,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  Flex,
-  Heading,
-  Panel,
-} from '../core'
-import { OverflowMenuHorizontal16 } from '../icons'
+} from '../core/DropdownMenu'
+import { Flex } from '../core/Flex'
+import { Heading } from '../core/Heading'
+import { Panel } from '../core/Panel'
+import { OverflowMenuHorizontal16 } from '../icons/carbon'
 
 type Action = {
   title: string

@@ -1,6 +1,6 @@
 import React from 'react'
 import { styled, CSS } from '../config/theme'
-import { CaretSort16 } from '../icons'
+import { CaretSort16 } from '../icons/carbon'
 
 const SelectWrapper = styled('div', {
   backgroundColor: '$control',

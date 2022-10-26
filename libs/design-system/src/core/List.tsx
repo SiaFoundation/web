@@ -10,7 +10,7 @@ import {
   Number_532,
   Number_632,
   Number_732,
-} from '../icons'
+} from '../icons/carbon'
 import React, { useMemo } from 'react'
 import { CSS } from '../config/theme'
 import { Paragraph } from './Paragraph'

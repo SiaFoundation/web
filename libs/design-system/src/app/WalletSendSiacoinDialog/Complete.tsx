@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js'
-import { Flex, Text } from '../../core'
-import { CheckmarkFilled32 } from '../../icons'
+import { Flex } from '../../core/Flex'
+import { Text } from '../../core/Text'
+import { CheckmarkFilled32 } from '../../icons/carbon'
 import { WalletSendSiacoinReceipt } from './Receipt'
 
 type Props = {

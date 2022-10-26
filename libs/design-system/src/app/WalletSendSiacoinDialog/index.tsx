@@ -1,13 +1,17 @@
 import BigNumber from 'bignumber.js'
 import { useMemo, useState } from 'react'
 import { toHastings } from '@siafoundation/sia-js'
-import { Flex, DialogContent, Separator, Box, Dialog } from '../../core'
+import { Flex } from '../../core/Flex'
+import { DialogContent } from '../../core/Dialog'
+import { Separator } from '../../core/Separator'
+import { Box } from '../../core/Box'
+import { Dialog } from '../../core/Dialog'
 import { useSendSiacoinGenerateForm } from './Generate'
 import { useSendSiacoinConfirmForm } from './Confirm'
 import { ProgressSteps } from './ProgressSteps'
 import { WalletSendSiacoinComplete } from './Complete'
 import { Transaction } from '@siafoundation/react-core'
-import { FormSubmitButton } from '../../components'
+import { FormSubmitButton } from '../../components/Form'
 
 export type SendSiacoinFormData = {
   address: string

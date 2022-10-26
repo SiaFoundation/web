@@ -4,7 +4,7 @@ import { Paragraph } from '../core/Paragraph'
 import { Flex } from '../core/Flex'
 import { CSS } from '../config/theme'
 import { AnimatedPanel } from './AnimatedPanel'
-import { Heading } from '../core'
+import { Heading } from '../core/Heading'
 
 type Props = {
   eyebrow?: string

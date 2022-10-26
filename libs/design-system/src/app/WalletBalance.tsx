@@ -1,4 +1,6 @@
-import { Flex, Panel, Text } from '../core'
+import { Flex } from '../core/Flex'
+import { Panel } from '../core/Panel'
+import { Text } from '../core/Text'
 import { useWalletBalance } from '@siafoundation/react-core'
 import { humanSiacoin } from '@siafoundation/sia-js'
 

@@ -1,5 +1,5 @@
-import { Button } from '../core'
-import { ArrowUpRight16, ArrowDownLeft16 } from '../icons'
+import { Button } from '../core/Button'
+import { ArrowUpRight16, ArrowDownLeft16 } from '../icons/carbon'
 import { WalletBalance } from './WalletBalance'
 
 type Props = {

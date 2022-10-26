@@ -1,7 +1,7 @@
 import { useSettings } from '@siafoundation/react-core'
 import { useRouter } from 'next/router'
 import { useFormik } from 'formik'
-import { Flex } from '../core'
+import { Flex } from '../core/Flex'
 import { FieldGroup, FormSubmitButton, FormTextField } from '../components/Form'
 
 async function checkPassword(api: string, password: string) {

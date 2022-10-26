@@ -1,4 +1,6 @@
-import { Flex, Status, Text } from '../core'
+import { Flex } from '../core/Flex'
+import { Status } from '../core/Status'
+import { Text } from '../core/Text'
 
 type Props = {
   label: string

@@ -1,12 +1,10 @@
-import {
-  Flex,
-  Button,
-  TextField,
-  Label,
-  Text,
-  NumberField,
-  SiacoinField,
-} from '../core'
+import { Flex } from '../core/Flex'
+import { Button } from '../core/Button'
+import { TextField } from '../core/TextField'
+import { Label } from '../core/Label'
+import { Text } from '../core/Text'
+import { NumberField } from '../core/NumberField'
+import { SiacoinField } from '../core/SiacoinField'
 import BigNumber from 'bignumber.js'
 
 type FormFieldProps = {

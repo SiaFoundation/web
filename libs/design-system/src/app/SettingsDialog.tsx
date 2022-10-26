@@ -1,18 +1,21 @@
+import { Alert } from '../core/Alert'
+import { Box } from '../core/Box'
+import { Flex } from '../core/Flex'
+import { Heading } from '../core/Heading'
+import { Paragraph } from '../core/Paragraph'
+import { Select } from '../core/Select'
+import { Switch } from '../core/Switch'
+import { Text } from '../core/Text'
+import { Separator } from '../core/Separator'
+import { Link } from '../core/Link'
+import { DialogContent } from '../core/Dialog'
 import {
-  Alert,
-  Box,
-  Flex,
-  Heading,
-  Paragraph,
-  Select,
-  Switch,
-  Text,
-  Separator,
-  Link,
-  DialogContent,
-} from '../core'
-import { Information16, LogoDiscord16, Globe16, LogoGithub16 } from '../icons'
-import { ThemeRadio } from '../components'
+  Information16,
+  LogoDiscord16,
+  Globe16,
+  LogoGithub16,
+} from '../icons/carbon'
+import { ThemeRadio } from '../components/ThemeRadio'
 import { webLinks } from '../data/webLinks'
 import { CurrencyId, useSettings } from '@siafoundation/react-core'
 

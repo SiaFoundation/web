@@ -1,5 +1,7 @@
 import React from 'react'
-import { Container, Flex, ScrollArea } from '../../core'
+import { Container } from '../../core/Container'
+import { Flex } from '../../core/Flex'
+import { ScrollArea } from '../../core/ScrollArea'
 import { AppBackdrop } from '../AppBackdrop'
 import { Sidenav } from './Sidenav'
 import { AppRootLayout } from '../AppRootLayout'
