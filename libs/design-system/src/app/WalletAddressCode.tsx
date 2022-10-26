@@ -1,5 +1,7 @@
-import { Flex, Heading, Text } from '../core'
-import { ValueCopyable } from '../components'
+import { Flex } from '../core/Flex'
+import { Heading } from '../core/Heading'
+import { Text } from '../core/Text'
+import { ValueCopyable } from '../components/ValueCopyable'
 import QRCode from 'react-qr-code'
 
 type Props = {

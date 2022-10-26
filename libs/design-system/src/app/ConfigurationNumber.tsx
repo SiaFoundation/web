@@ -1,4 +1,5 @@
-import { Flex, NumberField } from '../core'
+import { Flex } from '../core/Flex'
+import { NumberField } from '../core/NumberField'
 import { toFixedMax } from '../lib/numbers'
 import BigNumber from 'bignumber.js'
 import { ConfigurationTip } from './ConfigurationTip'

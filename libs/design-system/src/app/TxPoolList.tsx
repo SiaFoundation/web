@@ -1,4 +1,4 @@
-import { EntityList } from '../components'
+import { EntityList } from '../components/EntityList'
 import { getTransactionTotals, getTransactionTypes } from '../lib/entityTypes'
 import { useTxPoolTransactions } from '@siafoundation/react-core'
 

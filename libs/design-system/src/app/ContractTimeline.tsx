@@ -1,4 +1,6 @@
-import { Box, Flex, Text } from '../core'
+import { Box } from '../core/Box'
+import { Flex } from '../core/Flex'
+import { Text } from '../core/Text'
 import { format } from 'date-fns'
 
 type Color = 'red' | 'green' | 'yellow'

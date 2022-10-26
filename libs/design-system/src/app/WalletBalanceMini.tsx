@@ -1,4 +1,4 @@
-import { Text } from '../core'
+import { Text } from '../core/Text'
 import { humanSiacoin, humanSiafund } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
 

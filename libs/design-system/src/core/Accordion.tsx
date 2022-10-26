@@ -1,7 +1,7 @@
 import React from 'react'
 import { styled, CSS } from '../config/theme'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
-import { ChevronDown16 } from '../icons'
+import { ChevronDown16 } from '../icons/carbon'
 
 const StyledAccordion = styled(AccordionPrimitive.Root, {})
 

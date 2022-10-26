@@ -1,4 +1,6 @@
-import { Flex, ScrollArea, Box } from '../core'
+import { Flex } from '../core/Flex'
+import { ScrollArea } from '../core/ScrollArea'
+import { Box } from '../core/Box'
 
 type Props = {
   children: React.ReactNode

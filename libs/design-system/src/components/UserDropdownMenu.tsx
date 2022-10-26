@@ -5,7 +5,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../core/DropdownMenu'
-import { OverflowMenuHorizontal20 } from '../icons'
+import { OverflowMenuHorizontal20 } from '../icons/carbon'
 import { ThemeMenu } from './ThemeMenu'
 import { IconButton } from '../core/IconButton'
 

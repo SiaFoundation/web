@@ -1,4 +1,6 @@
-import { Flex, DialogContent, Text } from '../core'
+import { Flex } from '../core/Flex'
+import { DialogContent } from '../core/Dialog'
+import { Text } from '../core/Text'
 import { WalletAddressCode } from './WalletAddressCode'
 import { getTitleId } from '../lib/utils'
 import { useWalletAddress } from '@siafoundation/react-core'

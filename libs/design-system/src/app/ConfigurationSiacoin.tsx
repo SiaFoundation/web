@@ -1,4 +1,5 @@
-import { SiacoinField, Flex } from '../core'
+import { Flex } from '../core/Flex'
+import { SiacoinField } from '../core/SiacoinField'
 import { toHastings, toSiacoins } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
 import { ConfigurationTip } from './ConfigurationTip'

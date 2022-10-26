@@ -1,12 +1,10 @@
-import {
-  Flex,
-  Paragraph,
-  TextField,
-  Button,
-  Label,
-  Text,
-  DialogContent,
-} from '../core'
+import { Flex } from '../core/Flex'
+import { Paragraph } from '../core/Paragraph'
+import { TextField } from '../core/TextField'
+import { Button } from '../core/Button'
+import { Label } from '../core/Label'
+import { Text } from '../core/Text'
+import { DialogContent } from '../core/Dialog'
 import { useWalletAddressCreate } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'

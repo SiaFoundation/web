@@ -2,7 +2,7 @@ import { LocalBackdrop } from './LocalBackdrop'
 import { Panel } from '../core/Panel'
 import { Box } from '../core/Box'
 import { CSS } from '../config/theme'
-import { useTheme } from '../hooks'
+import { useTheme } from '../hooks/useTheme'
 
 type Props = {
   variant?: 'default' | 'subtle'

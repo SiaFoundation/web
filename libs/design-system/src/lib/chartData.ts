@@ -1,5 +1,5 @@
 import { groupBy, omit } from 'lodash'
-import { ChartPoint } from '../components'
+import { ChartPoint } from '../components/ChartXY'
 import { getDaysInMs } from './time'
 import { format, startOfMonth, startOfWeek } from 'date-fns'
 

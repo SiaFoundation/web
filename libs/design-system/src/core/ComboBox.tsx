@@ -6,7 +6,7 @@ import {
   SingleValue,
 } from 'react-select'
 import Select from 'react-select/async'
-import { Box } from '../core/Box'
+import { Box } from './Box'
 import { CSS, globalCss } from '../config/theme'
 
 type Option = {

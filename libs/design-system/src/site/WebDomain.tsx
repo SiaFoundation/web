@@ -1,8 +1,8 @@
-import { Launch16 } from '../icons'
+import { Launch16 } from '../icons/carbon'
 import { Box } from '../core/Box'
 import { Flex } from '../core/Flex'
 import { Text } from '../core/Text'
-import { useIsExternalDomain } from '../hooks'
+import { useIsExternalDomain } from '../hooks/useIsExternalDomain'
 
 type Props = {
   link: string

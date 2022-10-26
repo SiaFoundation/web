@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { styled, CSS, keyframes, css } from '../config/theme'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { Close24 } from '../icons'
+import { Close24 } from '../icons/carbon'
 import { overlayStyles } from './Overlay'
 import { IconButton } from './IconButton'
 import { ScrollArea } from './ScrollArea'
-import { Box } from '../core/Box'
+import { Box } from './Box'
 
 export const overlayShow = keyframes({
   '0%': { opacity: 0 },

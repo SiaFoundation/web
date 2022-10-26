@@ -1,5 +1,7 @@
-import { Flex, Text, Tooltip } from '../../core'
-import { ValueSc } from '../../components'
+import { Flex } from '../../core/Flex'
+import { Text } from '../../core/Text'
+import { Tooltip } from '../../core/Tooltip'
+import { ValueSc } from '../../components/ValueSc'
 import BigNumber from 'bignumber.js'
 
 type Props = {

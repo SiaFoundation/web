@@ -1,4 +1,5 @@
-import { Text, Box } from '../../core'
+import { Text } from '../../core/Text'
+import { Box } from '../../core/Box'
 import { keyframes } from '../../config/theme'
 import BigNumber from 'bignumber.js'
 

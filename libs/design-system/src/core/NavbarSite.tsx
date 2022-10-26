@@ -1,10 +1,10 @@
-import { Box } from '../core/Box'
-import { Flex } from '../core/Flex'
-import { Container } from '../core/Container'
-import { Heading } from '../core/Heading'
-import { NextLink } from '../core/Link'
-import { Separator } from '../core/Separator'
-import { Logo } from '../core/Logo'
+import { Box } from './Box'
+import { Flex } from './Flex'
+import { Container } from './Container'
+import { Heading } from './Heading'
+import { NextLink } from './Link'
+import { Separator } from './Separator'
+import { Logo } from './Logo'
 
 type Props = {
   appName?: string

@@ -1,6 +1,10 @@
-import { Flex, NextLink, Text, Tooltip } from '../core'
-import { ValueSc, ValueNum } from '../components'
-import { Information16 } from '../icons'
+import { NextLink } from '../core/Link'
+import { Flex } from '../core/Flex'
+import { Text } from '../core/Text'
+import { Tooltip } from '../core/Tooltip'
+import { ValueSc } from '../components/ValueSc'
+import { ValueNum } from '../components/ValueNum'
+import { Information16 } from '../icons/carbon'
 import { toFixedMax } from '../lib/numbers'
 import BigNumber from 'bignumber.js'
 

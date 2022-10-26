@@ -1,7 +1,7 @@
 import React from 'react'
 import { styled, CSS, VariantProps } from '../config/theme'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
-import { Checkmark16 } from '../icons'
+import { Checkmark16 } from '../icons/carbon'
 import { Text } from './Text'
 import { Flex } from './Flex'
 
