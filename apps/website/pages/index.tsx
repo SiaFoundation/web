@@ -244,7 +244,7 @@ export default function Home({
                   endpoints. <Code>renterd</Code> can even scale horizontally:
                   in stateless mode, it provides raw access to the Sia
                   renter-host protocol, with no UI, no blockchain, and no disk
-                  I/O -- perfect for massive renting operations.
+                  I/O — perfect for massive renting operations.
                 </>
               ),
             },

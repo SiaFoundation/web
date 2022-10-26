@@ -36,10 +36,10 @@ const title = 'renterd'
 const description = (
   <>
     <Code>renterd</Code> is a next-generation Sia renter, developed by the Sia
-    Foundation. It aims to serve the needs of both everyday users -- who want a
-    simple interface for storing and retrieving their personal data -- and
-    developers -- who want to a powerful, flexible, and reliable API for
-    building apps on Sia.
+    Foundation. It aims to serve the needs of both everyday users — who want a
+    simple interface for storing and retrieving their personal data — and
+    developers — who want to a powerful, flexible, and reliable API for building
+    apps on Sia.
   </>
 )
 
@@ -135,12 +135,11 @@ export default function Renterd({ technical, tutorials, services }: Props) {
             title="Smart defaults for the everyday user"
             description={
               <>
-                <Code>renterd</Code> comes with a built-in{' '}
-                <Code>"autopilot"</Code> that handles host selection, contract
-                management, and file repair. Want more control? Just disable it
-                with <Code>--autopilot=false</Code>, and use the renterd HTTP
-                API to implement custom maintenance logic in your favorite
-                language.
+                <Code>renterd</Code> comes with a built-in "autopilot" that
+                handles host selection, contract management, and file repair.
+                Want more control? Just disable it with{' '}
+                <Code>--autopilot=false</Code>, and use the renterd HTTP API to
+                implement custom maintenance logic in your favorite language.
               </>
             }
           />
@@ -207,8 +206,8 @@ export default function Renterd({ technical, tutorials, services }: Props) {
               files with clean and consistent JSON-speaking endpoints.{' '}
               <Code>renterd</Code> can even scale horizontally: in{' '}
               <Code>--stateless</Code> mode, it provides raw access to the Sia
-              renter-host protocol, with no UI, no blockchain, and no disk I/O
-              -- perfect for massive renting operations.
+              renter-host protocol, with no UI, no blockchain, and no disk I/O —
+              perfect for massive renting operations.
             </>
           }
         >
@@ -293,8 +292,7 @@ export default function Renterd({ technical, tutorials, services }: Props) {
               css={{ flex: 1, overflow: 'hidden' }}
             >
               <Text css={{ marginTop: '$3' }}>
-                <Text weight="bold">Example:</Text> Migrate data to a specific
-                contract.
+                <Text weight="bold">Example:</Text> Upload a file.
               </Text>
               <Terminal
                 css={{

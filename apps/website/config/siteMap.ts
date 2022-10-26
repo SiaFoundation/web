@@ -49,9 +49,8 @@ export const menuSections = [
         title: 'embarcadero',
       },
       {
-        link: routes.getStarted.index,
+        link: routes.software.renterd,
         title: 'renterd',
-        disabled: true,
       },
       {
         link: routes.getStarted.index,

@@ -23,6 +23,9 @@ export const routes = {
   grants: {
     index: '/grants',
   },
+  software: {
+    renterd: '/software/renterd',
+  },
   newsroom: {
     index: '/newsroom',
     newsPost: '/newsroom/[slug]',
