@@ -38,7 +38,7 @@ const description = (
     <Code>renterd</Code> is a next-generation Sia renter, developed by the Sia
     Foundation. It aims to serve the needs of both everyday users — who want a
     simple interface for storing and retrieving their personal data — and
-    developers — who want to a powerful, flexible, and reliable API for building
+    developers — who want a powerful, flexible, and reliable API for building
     apps on Sia.
   </>
 )
