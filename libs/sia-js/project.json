@@ -29,27 +29,6 @@
         "assets": ["libs/sia-js/*.md"]
       },
       "configurations": {}
-    },
-    "version": {
-      "executor": "@jscutlery/semver:version",
-      "options": {
-        "commitMessageFormat": "chore(${projectName}): release version ${version}",
-        "postTargets": ["sia-js:publish-npm", "sia-js:publish-github"],
-        "push": true
-      }
-    },
-    "publish-npm": {
-      "executor": "ngx-deploy-npm:deploy",
-      "options": {
-        "access": "public"
-      }
-    },
-    "publish-github": {
-      "executor": "@jscutlery/semver:github",
-      "options": {
-        "tag": "${tag}",
-        "notesFile": "./libs/sia-js/CHANGELOG.md"
-      }
     }
   },
   "tags": []
