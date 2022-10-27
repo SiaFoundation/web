@@ -6,8 +6,6 @@
 
 - f2a4829: Added a landing page for the all new renterd
 
-This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
-
 ## [0.29.1](https://github.com/SiaFoundation/web/compare/website-0.29.0...website-0.29.1) (2022-10-25)
 
 ### Bug Fixes

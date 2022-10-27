@@ -26,48 +26,11 @@ Web packages for the Sia project and ecosystem.
 - [@siafoundation/data-sources](libs/data-sources) - Data sources used for stats on the website.
 - [@siafoundation/env](libs/env) - Environment variables for use across projects.
 
-# Development
-
-## Setup
+## Development
 
 1. The Sia Web codebase is managed with the [Nx](https://nx.dev) build system. Either install `nx` globally via `npm install -g nx` or use `npx` to invoke commands.
 2. Install dependencies with `npm install`.
 
-### Env configuration
+## Community
 
-```sh
-# Create a local .env
-cp .env.example .env
-```
-
-## Tooling
-
-The following examples outline how to use common `nx` commands.
-
-## Development server
-
-Run `nx serve <app>` for a dev server.
-
-## Code scaffolding
-
-Run `nx g @nrwl/react:component <component> --project=<project>` to generate a new component. Review the `nx` documentation for many more examples.
-
-## Build
-
-Run `nx build <project>` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `nx test <project>` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `nx e2e <app>` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand the workspace
-
-Run `nx dep-graph` to see a diagram of project dependencies.
+Join the [Sia Discord](https://discord.gg/sia) to discuss Sia projects, codebases, and more!
