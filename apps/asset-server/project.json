@@ -14,6 +14,7 @@
         "compiler": "tsc"
       },
       "configurations": {
+        "development": {},
         "production": {
           "optimization": true,
           "extractLicenses": true,
@@ -22,7 +23,8 @@
         "ci": {
           "optimization": true,
           "extractLicenses": true,
-          "inspect": false
+          "inspect": false,
+          "outputPath": "apps/asset-server/dist"
         }
       }
     },

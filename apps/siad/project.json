@@ -20,8 +20,10 @@
       },
       "configurations": {
         "development": {},
-        "ci": {},
-        "production": {}
+        "production": {},
+        "ci": {
+          "outputPath": "apps/siad/dist"
+        }
       }
     },
     "serve": {

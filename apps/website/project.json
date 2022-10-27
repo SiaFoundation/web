@@ -19,9 +19,11 @@
         ]
       },
       "configurations": {
+        "development": {},
         "production": {},
-        "ci": {},
-        "development": {}
+        "ci": {
+          "outputPath": "apps/website/dist"
+        }
       }
     },
     "serve": {
