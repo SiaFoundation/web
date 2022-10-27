@@ -23,7 +23,11 @@
           }
         ]
       },
-      "configurations": {}
+      "configurations": {
+        "ci": {
+          "outputPath": "libs/sia-react/dist"
+        }
+      }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",

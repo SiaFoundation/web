@@ -16,8 +16,8 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "dist/libs/*",
-      "dist/apps/*"
+      "libs/*",
+      "apps/*"
     ]
   },
   "dependencies": {

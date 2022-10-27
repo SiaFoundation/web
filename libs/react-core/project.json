@@ -22,6 +22,11 @@
             "output": "."
           }
         ]
+      },
+      "configurations": {
+        "ci": {
+          "outputPath": "libs/react-core/dist"
+        }
       }
     },
     "lint": {

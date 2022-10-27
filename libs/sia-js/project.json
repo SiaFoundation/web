@@ -28,7 +28,11 @@
         "main": "libs/sia-js/src/index.ts",
         "assets": ["libs/sia-js/*.md"]
       },
-      "configurations": {}
+      "configurations": {
+        "ci": {
+          "outputPath": "libs/sia-js/dist"
+        }
+      }
     }
   },
   "tags": []

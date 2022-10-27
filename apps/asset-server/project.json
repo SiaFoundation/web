@@ -18,6 +18,11 @@
           "optimization": true,
           "extractLicenses": true,
           "inspect": false
+        },
+        "ci": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false
         }
       }
     },

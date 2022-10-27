@@ -29,7 +29,11 @@
           }
         ]
       },
-      "configurations": {}
+      "configurations": {
+        "ci": {
+          "outputPath": "libs/design-system/dist"
+        }
+      }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",

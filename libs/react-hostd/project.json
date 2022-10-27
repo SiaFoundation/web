@@ -22,6 +22,11 @@
             "output": "."
           }
         ]
+      },
+      "configurations": {
+        "ci": {
+          "outputPath": "libs/react-hostd/dist"
+        }
       }
     },
     "lint": {

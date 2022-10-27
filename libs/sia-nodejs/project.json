@@ -28,7 +28,11 @@
         "main": "libs/sia-nodejs/src/index.ts",
         "assets": ["libs/sia-nodejs/*.md"]
       },
-      "configurations": {}
+      "configurations": {
+        "ci": {
+          "outputPath": "libs/sia-nodejs/dist"
+        }
+      }
     }
   },
   "tags": []

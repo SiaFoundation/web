@@ -23,7 +23,8 @@ jobs:
         run: npx nx run-many --target=lint --all --parallel=5
       - name: Build
         shell: bash
-        run: npx nx run-many --target=build --all --parallel=5
+        # configuration ci will put the dists in each project directory so changesets can publish
+        run: npx nx run-many --target=build --configuration=ci --all --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CONTENT: ${{ github.workspace }}/content/example
