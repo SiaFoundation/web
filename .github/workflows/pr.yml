@@ -23,7 +23,7 @@ jobs:
         run: npx nx affected --target=lint --parallel=5
       - name: Build
         shell: bash
-        run: npx nx affected --target=build --parallel=5
+        run: npx nx affected --target=build --configuration=ci --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CONTENT: ${{ github.workspace }}/content/example
