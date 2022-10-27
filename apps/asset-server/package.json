@@ -1,0 +1,6 @@
+{
+  "name": "@siafoundation/asset-server",
+  "description": "Powers api.sia.tech and all downloadable assets on sia.tech such as the Sia software releases.",
+  "version": "0.0.0",
+  "license": "MIT"
+}

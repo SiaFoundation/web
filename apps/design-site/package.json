@@ -1,0 +1,6 @@
+{
+  "name": "@siafoundation/design-site",
+  "description": "The design.sia.tech website for exploring the design system used across Sia apps and websites.",
+  "version": "0.0.0",
+  "license": "MIT"
+}

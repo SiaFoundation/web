@@ -1,0 +1,6 @@
+{
+  "name": "@siafoundation/renterd",
+  "description": "The `renterd` user interface, dedicated to renter related functionality.",
+  "version": "0.0.0",
+  "license": "MIT"
+}

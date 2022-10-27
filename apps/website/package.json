@@ -1,0 +1,6 @@
+{
+  "name": "@siafoundation/website",
+  "description": "The main sia.tech website with information on the Sia project and the Sia Foundation.",
+  "version": "0.29.1",
+  "license": "MIT"
+}
