@@ -1,4 +1,7 @@
 {
   "name": "@siafoundation/env",
-  "version": "0.2.0"
+  "description": "Environment variables for use across projects.",
+  "version": "0.2.0",
+  "private": true,
+  "license": "MIT"
 }

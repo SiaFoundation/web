@@ -1,0 +1,7 @@
+{
+  "name": "@siafoundation/data-sources",
+  "description": "Data sources used for stats on the website.",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT"
+}

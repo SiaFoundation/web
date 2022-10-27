@@ -1,4 +1,7 @@
 {
   "name": "@siafoundation/sia-nodejs",
-  "version": "0.1.7"
+  "description": "Sia NodeJS client for controlling a v1 `siad`.",
+  "version": "0.1.7",
+  "private": true,
+  "license": "MIT"
 }

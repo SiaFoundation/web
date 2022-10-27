@@ -1,4 +1,6 @@
 {
   "name": "@siafoundation/sia-js",
-  "version": "0.7.1"
+  "description": "Core Sia types and library methods for v1 `siad`.",
+  "version": "0.7.1",
+  "license": "MIT"
 }
