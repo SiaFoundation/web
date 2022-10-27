@@ -2,5 +2,6 @@
   "name": "@siafoundation/hostd",
   "description": "The `hostd` user interface, dedicated to hosting related functionality.",
   "version": "0.0.0",
+  "private": true,
   "license": "MIT"
 }
