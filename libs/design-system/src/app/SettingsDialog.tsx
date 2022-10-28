@@ -146,7 +146,7 @@ export function SettingsDialog() {
                 </Text>
                 <Text>
                   <Link
-                    href={webLinks.github}
+                    href={webLinks.github.index}
                     target="_blank"
                     css={{ display: 'flex', gap: '$0-5' }}
                   >

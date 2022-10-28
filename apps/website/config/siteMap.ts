@@ -114,7 +114,7 @@ export const menuSections = [
         newTab: true,
       },
       {
-        link: webLinks.github,
+        link: webLinks.github.index,
         title: 'GitHub',
         newTab: true,
       },

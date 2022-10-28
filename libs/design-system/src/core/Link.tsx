@@ -125,8 +125,9 @@ export function NextLink({
 
 type NextLinkButtonProps = React.ComponentProps<typeof Button> & {
   id?: string
-  href: string
+  href?: string
   site?: boolean
+  disabled?: boolean
   target?: string
   children: React.ReactNode
 }
@@ -140,8 +141,23 @@ export function NextLinkButton({
   site,
   variant,
   size,
+  disabled,
   css,
 }: NextLinkButtonProps) {
+  if (!href || disabled) {
+    return (
+      <Button
+        id={id}
+        css={css}
+        site={site}
+        variant={variant}
+        size={size}
+        disabled={disabled}
+      >
+        {children}
+      </Button>
+    )
+  }
   return (
     <BaseNextLink href={href} passHref>
       <Button

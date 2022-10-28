@@ -32,6 +32,10 @@ export const Button = styled('button', {
     opacity: 0.5,
   },
 
+  '&:disabled': {
+    cursor: 'auto',
+  },
+
   variants: {
     size: {
       '1': {
@@ -121,8 +125,8 @@ export const Button = styled('button', {
             '$colors$borderAccent, $colors$borderFocus, $colors$shadow',
         },
         '&:disabled': {
-          backgroundColor: '$accent6',
-          boxShadow: '$colors$accent6, $colors$shadow',
+          backgroundColor: '$accent7',
+          boxShadow: '$colors$accent7, $colors$shadow',
         },
       },
       red: {

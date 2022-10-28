@@ -99,7 +99,7 @@ export function Statsbar() {
       /> */}
         <StatSection
           title="Development"
-          link={webLinks.github}
+          link={webLinks.github.index}
           stats={[
             {
               value: commits,

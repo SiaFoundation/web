@@ -142,7 +142,10 @@ export function Layout({ title, description, path, children }: Props) {
                           <BottomLink href={webLinks.discord} target="_blank">
                             <LogoDiscord24 />
                           </BottomLink>
-                          <BottomLink href={webLinks.github} target="_blank">
+                          <BottomLink
+                            href={webLinks.github.index}
+                            target="_blank"
+                          >
                             <LogoGithub24 />
                           </BottomLink>
                           <BottomLink href={webLinks.reddit} target="_blank">

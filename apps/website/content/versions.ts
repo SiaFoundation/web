@@ -1,7 +1,7 @@
 import { readCacheJsonFile } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
 
-type Versions = {
+export type Versions = {
   sia: {
     latest: string
   }
