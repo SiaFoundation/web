@@ -20,6 +20,8 @@ import { getCacheArticles } from '../content/articles'
 import { getCacheSoftware } from '../content/software'
 import { getCacheTutorials } from '../content/tutorials'
 import backgroundImage from '../assets/backgrounds/mountain.png'
+import renterdImage from '../assets/renterd/renterd-peek.png'
+import hostdImage from '../assets/hostd/hostd-peek.png'
 import previewImage from '../assets/previews/mountain.png'
 import { useCallback, useEffect, useState } from 'react'
 import { textContent } from '../lib/utils'
@@ -28,9 +30,12 @@ import { JiggleArrow } from '../components/JiggleArrow'
 import { SectionGradient } from '../components/SectionGradient'
 import { SectionSimple } from '../components/SectionSimple'
 import { SectionWaves } from '../components/SectionWaves'
+import { CalloutSoftware } from '../components/CalloutSoftware'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
+const renterdImageProps = getImageProps(renterdImage)
+const hostdImageProps = getImageProps(hostdImage)
 
 const description = (
   <>
@@ -135,6 +140,7 @@ export default function Home({
           }}
         >
           <Callout
+            size="0"
             title="Start"
             startTime={0}
             description={
@@ -147,6 +153,7 @@ export default function Home({
             actionLink={routes.getStarted.index}
           />
           <Callout
+            size="0"
             title="Learn"
             startTime={20}
             description={
@@ -158,9 +165,26 @@ export default function Home({
             actionTitle="Read more"
             actionLink={routes.learn.index}
           />
+          <CalloutSoftware
+            name="renterd"
+            startTime={30}
+            description={
+              'A next-generation Sia renter, developed by the Sia Foundation. Smart defaults and a highly extensible API.'
+            }
+            href={routes.software.renterd}
+            imageProps={renterdImageProps}
+          />
+          <CalloutSoftware
+            name="hostd"
+            startTime={40}
+            description={
+              'A next-generation Sia host, developed by the Sia Foundation. Built for performance and reliability.'
+            }
+            imageProps={hostdImageProps}
+          />
         </Grid>
       </SectionSimple>
-      <SectionGradient css={{ pt: '$12', pb: '$max' }}>
+      <SectionGradient css={{ pt: '$9', pb: '$max' }}>
         <SiteHeading
           size="32"
           title="Storage companies and projects building on Sia"

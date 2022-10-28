@@ -1,4 +1,4 @@
-import { NextLinkButton } from '../core/Link'
+import { NextLink, NextLinkButton } from '../core/Link'
 import { Text } from '../core/Text'
 import { Paragraph } from '../core/Paragraph'
 import { Flex } from '../core/Flex'
@@ -14,7 +14,7 @@ type Props = {
   actionLink: string
   actionNewTab?: boolean
   startTime?: number
-  size?: '1' | '2'
+  size?: '0' | '1' | '2'
   css?: CSS
 }
 
@@ -39,10 +39,16 @@ export function Callout({
         css={{
           position: 'relative',
           height: '100%',
-          padding: size === '2' ? '$max $3' : '$max $3 $4 $3',
-          '@bp3': {
-            padding: size === '2' ? '$max $9' : '$max $3 $4 $3',
-          },
+          ...(size === '0'
+            ? {
+                padding: '$7 $3',
+              }
+            : {
+                padding: size === '2' ? '$max $3' : '$max $3 $4 $3',
+                '@bp3': {
+                  padding: size === '2' ? '$max $9' : '$max $3 $4 $3',
+                },
+              }),
         }}
       >
         {eyebrow && (
@@ -59,16 +65,25 @@ export function Callout({
           {title}
         </Heading>
         <Paragraph>{description}</Paragraph>
-        <NextLinkButton
-          size="2"
-          variant="accent"
-          site
-          href={actionLink}
-          css={{ display: 'inline' }}
-          target={actionNewTab ? '_blank' : undefined}
-        >
-          {actionTitle}
-        </NextLinkButton>
+        {size !== '2' ? (
+          <NextLink
+            href={actionLink}
+            target={actionNewTab ? '_blank' : undefined}
+          >
+            {actionTitle}
+          </NextLink>
+        ) : (
+          <NextLinkButton
+            size="2"
+            variant="accent"
+            site
+            href={actionLink}
+            css={{ display: 'inline' }}
+            target={actionNewTab ? '_blank' : undefined}
+          >
+            {actionTitle}
+          </NextLinkButton>
+        )}
       </Flex>
     </AnimatedPanel>
   )

@@ -5,7 +5,7 @@ import { CSS } from '../config/theme'
 import { useTheme } from '../hooks/useTheme'
 
 type Props = {
-  variant?: 'default' | 'subtle'
+  variant?: 'default' | 'subtle' | 'verySubtle'
   children: React.ReactNode
   startTime?: number
   css?: CSS
@@ -51,7 +51,8 @@ export function AnimatedPanel({
         />
         <Box
           css={{
-            opacity: variant === 'default' ? 1 : 0.75,
+            opacity:
+              variant === 'default' ? 1 : variant === 'subtle' ? 0.75 : 0.65,
           }}
         >
           <LocalBackdrop startTime={startTime} />
