@@ -3,9 +3,10 @@ const fs = require('fs')
 const path = require('path')
 const { format } = require('date-fns')
 const { sortBy } = require('lodash')
+require('dotenv').config()
 
-const feedFilesDirectory = 'feeds'
-const articlesFilePath = 'articles.json'
+const feedFilesDirectory = path.join(process.env.CONTENT, 'feeds')
+const articlesFilePath = path.join(process.env.CONTENT, 'articles.json')
 
 async function getFeedFile(feedFile) {
   const feedData = fs.readFileSync(feedFile, 'utf-8')
