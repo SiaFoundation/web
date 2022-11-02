@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.30.0
+
+### Minor Changes
+
+- d347443: Updated the software sections across the website to reflect and advertise next-gen software, and restructure for more items.
+
 ## 0.29.2
 
 ### Patch Changes
