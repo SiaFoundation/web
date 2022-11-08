@@ -57,7 +57,7 @@ export function ValueCopyable({
           copyToClipboard(cleanValue, label)
         }}
       >
-        {size === '14' ? <Copy16 /> : <Copy20 />}
+        {Number(size) <= 14 ? <Copy16 /> : <Copy20 />}
       </IconButton>
     </Flex>
   )

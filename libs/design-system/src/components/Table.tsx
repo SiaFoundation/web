@@ -55,17 +55,21 @@ export function Table<R extends Row>({
     <Panel>
       <Flex direction="column">
         <Flex
-          gap="3-5"
+          // gap="3-5"
           css={{
-            padding: '$1-5 $3',
-            borderBottom: '1px solid $slate3',
+            borderBottom: '1px solid $mauve5',
           }}
         >
-          {columns.map(({ key, label, tip, props, tableCss }) => (
+          {columns.map(({ key, label, tip, props, tableCss, css }) => (
             <Flex
               key={key}
               {...props}
-              css={{ ...tableCss, overflow: 'hidden' }}
+              css={{
+                padding: '$1-5 $3',
+                ...tableCss,
+                ...css,
+                overflow: 'hidden',
+              }}
             >
               <Tooltip content={label}>
                 <Text
@@ -84,10 +88,9 @@ export function Table<R extends Row>({
         </Flex>
         {summary && (
           <Flex
-            gap="3-5"
             align="center"
             css={{
-              padding: '$1 $3',
+              py: '$1',
               background: '$slate1',
               borderLeft: '1px solid $slate3',
               borderRight: '1px solid $slate3',
@@ -99,8 +102,9 @@ export function Table<R extends Row>({
                 key={key}
                 {...props}
                 css={{
-                  ...tableCss,
+                  px: '$3',
                   overflow: 'hidden',
+                  ...tableCss,
                   ...css,
                 }}
               >
@@ -113,23 +117,38 @@ export function Table<R extends Row>({
           {data.map((row) => (
             <Flex
               key={row.key}
-              gap="3-5"
+              // gap="3-5"
               align="center"
               css={{
-                padding: rowSize === 'dense' ? '$1 $3' : '$3 $3',
-                borderBottom: '1px solid $slate3',
+                borderBottom: '1px solid $mauve4',
                 '&:last-of-type': {
                   borderBottom: 'none',
                 },
+                overflow: 'hidden',
               }}
             >
+              {/* {toPairs(groupBy(columns, 'group')).map(
+                ([name, groupColumns]) => (
+                  <Flex
+                    key={name}
+                    gap="3-5"
+                    align="center"
+                    css={
+                      {
+                        // padding: rowSize === 'dense' ? '$1 $3' : '$3 $3',
+                      }
+                    }
+                  > */}
               {columns.map(({ key, render, props, tableCss, css }, i) => (
                 <Flex
                   key={row.key + key}
+                  align="center"
                   {...props}
                   css={{
-                    ...tableCss,
+                    height: rowSize === 'dense' ? '50px' : '100px',
+                    px: '$3',
                     overflow: 'hidden',
+                    ...tableCss,
                     ...css,
                   }}
                 >

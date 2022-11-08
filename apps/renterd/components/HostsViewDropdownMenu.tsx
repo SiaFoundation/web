@@ -13,7 +13,8 @@ import {
   Box,
   ComboPool,
 } from '@siafoundation/design-system'
-import { HostColumn, useHosts } from '../hooks/useHosts'
+import { HostSortBy } from '@siafoundation/react-core'
+import { useHosts } from '../hooks/useHosts'
 
 export function HostsViewDropdownMenu() {
   const {
@@ -21,10 +22,10 @@ export function HostsViewDropdownMenu() {
     toggleColumn,
     resetDefaultColumns,
     sortOptions,
-    sortColumn,
-    setSortColumn,
-    sortDirection,
-    setSortDirection,
+    sortBy,
+    setSortBy,
+    sortDir,
+    setSortDir,
     enabledColumns,
   } = useHosts()
   return (
@@ -46,12 +47,12 @@ export function HostsViewDropdownMenu() {
             Order by
             <DropdownMenuRightSlot>
               <Select
-                value={sortColumn}
+                value={sortBy}
                 onClick={(e) => {
                   e.stopPropagation()
                 }}
                 onChange={(e) => {
-                  setSortColumn(e.target.value as HostColumn)
+                  setSortBy(e.target.value as HostSortBy)
                 }}
               >
                 {Object.entries(sortOptions).map(([category, options]) => (
@@ -74,12 +75,12 @@ export function HostsViewDropdownMenu() {
             Direction
             <DropdownMenuRightSlot>
               <Select
-                value={sortDirection}
+                value={sortDir}
                 onClick={(e) => {
                   e.stopPropagation()
                 }}
                 onChange={(e) => {
-                  setSortDirection(e.target.value as 'asc' | 'desc')
+                  setSortDir(e.target.value as 'asc' | 'desc')
                 }}
               >
                 <option key="desc" value="desc">
