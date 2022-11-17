@@ -1,5 +1,3 @@
-import { Box } from '../core/Box'
-import { Flex } from '../core/Flex'
 import { Text } from '../core/Text'
 import { format } from 'date-fns'
 
@@ -30,95 +28,44 @@ export function ContractTimeline({ start, end, payout, range, color }: Props) {
   const payoutPos = (payout - range.start) / span
   const todayPos = (today - range.start) / span
   return (
-    <Box
-      css={{
-        position: 'relative',
-        width: '100%',
-        padding: '$3',
-      }}
-    >
-      <Box
-        css={{
-          position: 'relative',
-          zIndex: 1,
-          width: '100%',
-          height: '4px',
-          borderRadius: '$pill',
-        }}
-      >
+    <div className="relative w-full p-6">
+      <div className="relative z-10 w-full h-1 rounded-lg">
         {/* <DateLabel date={range.start} align="start" variant="secondary" />
         <DateLabel date={range.end} align="end" variant="secondary" /> */}
-        <Flex
-          css={{
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            width: '100%',
-          }}
-        >
-          <Flex
-            justify="between"
-            gap="1"
-            css={{
-              position: 'relative',
-              left: 0,
-              top: 0,
-              width: '100%',
-            }}
-          >
+        <div className="absolute left-0 top-0 w-full">
+          <div className="flex justify-between gap-2 relative top-0 left-0 w-full">
             <DateLabel date={range.start} align="start" variant="secondary" />
             <DateLabel date={range.end} align="end" variant="secondary" />
-          </Flex>
-        </Flex>
-        <Box
-          css={{
-            position: 'absolute',
-            height: '100%',
-            width: '100%',
-            background: '$gray4',
-            borderRadius: '$pill',
-          }}
-        />
-        <Flex
-          justify="between"
-          gap="1"
-          css={{
-            position: 'absolute',
-            height: '100%',
+          </div>
+        </div>
+        <div className="absolute h-full w-full bg-gray-300 dark:bg-graydark-300" />
+        <div
+          className="flex justify-between gap-2 absolute h-full rounded-lg bg-gray-900 dark:bg-graydark-900"
+          style={{
             left: toPercent(startPos),
             width: toPercent(endPos - startPos),
-            borderRadius: '$pill',
-            background: color ? colorMap[color] : '$slate10',
+            background: color ? colorMap[color] : undefined,
           }}
         >
           <DateLabel date={start} align="start" variant="primary" />
           <DateLabel date={end} align="end" variant="primary" />
-        </Flex>
-        <Box
-          css={{
-            position: 'absolute',
+        </div>
+        <div
+          className="absolute w-1 h-1 shadow shadow-green-500 dark:shadow-green-500 rounded bg-green-500 dark:bg-green-500"
+          style={{
             left: toPercent(payoutPos),
-            width: '4px',
-            height: '4px',
-            boxShadow: '0 0 10px 5px $colors$grass5',
-            borderRadius: '$round',
-            backgroundColor: '$grass11',
           }}
         >
           <DateLabel date={payout} align="start" variant="primary" />
-        </Box>
-      </Box>
-      <Box
-        css={{
-          position: 'absolute',
-          top: 0,
+        </div>
+      </div>
+      <div
+        className="absolute top-0 w-px h-full bg-gray-600 dark:bg-graydark-600"
+        style={{
           left: toPercent(todayPos),
-          width: '1px',
-          height: '100%',
-          background: '$slate7',
         }}
       />
-    </Box>
+    </div>
   )
 }
 
@@ -130,25 +77,23 @@ type RelativeLabelProps = {
 
 function RelativeLabel({ children, variant, align }: RelativeLabelProps) {
   return (
-    <Box
-      css={{
-        position: 'relative',
+    <div
+      className="realtive"
+      style={{
         top: variant === 'primary' ? '-18px' : undefined,
         bottom: variant === 'secondary' ? '-5px' : undefined,
       }}
     >
       <Text
         size="10"
-        css={{
-          color: variant === 'primary' ? '$textContrast' : '$gray10',
-          direction: align === 'start' ? 'rtl' : 'ltr',
-        }}
+        color={variant === 'primary' ? 'contrast' : 'subtle'}
+        dir={align === 'start' ? 'rtl' : 'ltr'}
         weight={variant === 'primary' ? 'semibold' : 'regular'}
         ellipsis
       >
         {children}
       </Text>
-    </Box>
+    </div>
   )
 }
 

@@ -1,4 +1,3 @@
-import { Flex } from './Flex'
 import { NumberField } from './NumberField'
 import {
   useSettings,
@@ -6,6 +5,7 @@ import {
 } from '@siafoundation/react-core'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
+import { cx } from 'class-variance-authority'
 
 type Props = Omit<
   React.ComponentProps<typeof NumberField>,
@@ -26,7 +26,7 @@ export function SiacoinField({
   decimalsLimitFiat = 3,
   decimalsLimitSc = 3,
   onChange,
-  size = 2,
+  size = 'medium',
   ...props
 }: Props) {
   const { settings } = useSettings()
@@ -102,30 +102,19 @@ export function SiacoinField({
   const size2 = String(size) === '2'
 
   return (
-    <Flex
-      direction="column"
-      gap={size2 ? '1' : undefined}
-      css={{
-        backgroundColor: '$loContrast',
-        boxShadow: '$colors$border, $colors$shadow',
-        borderRadius: '$1',
-        padding: size2 ? '$1 0' : '$0-5 0',
-        '@hover': {
-          '&:hover': {
-            boxShadow: '$colors$borderInputHover, $colors$shadow',
-          },
-        },
-
-        '&:focus-within': {
-          boxShadow:
-            '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive',
-        },
-      }}
+    <div
+      className={cx(
+        'flex flex-col bg-white dark:bg-graydark-50',
+        'focus-within:ring ring-blue-500 dark:ring-blue-200',
+        'border border-gray-200 dark:border-graydark-200',
+        'rounded',
+        size2 ? 'gap-2 py-2' : 'py-1'
+      )}
     >
       <NumberField
         {...props}
         size={size}
-        variant="totalGhost"
+        variant="ghost"
         placeholder={placeholder.toFixed(decimalsLimitSc)}
         units="SC"
         value={formattedSc}
@@ -136,13 +125,13 @@ export function SiacoinField({
           const sc = new BigNumber(value || 0)
           setScAndTriggerChange(sc)
         }}
-        css={{ height: '$3' }}
+        className="h-6"
       />
       {settings.siaCentral && (
         <NumberField
           {...props}
           size={size}
-          variant="totalGhost"
+          variant="ghost"
           value={formattedFiat}
           units={settings.currency.label}
           decimalsLimit={decimalsLimitFiat}
@@ -157,9 +146,9 @@ export function SiacoinField({
             const fiat = new BigNumber(value || 0)
             setFiat(fiat)
           }}
-          css={{ height: '$3' }}
+          className="h-6"
         />
       )}
-    </Flex>
+    </div>
   )
 }

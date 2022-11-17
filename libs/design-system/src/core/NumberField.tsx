@@ -1,41 +1,54 @@
-import { styled } from '../config/theme'
 import CurrencyInput from 'react-currency-input-field'
-import { TextField } from './TextField'
-import { Box } from './Box'
-import { Flex } from './Flex'
+import { textFieldStyles } from './TextField'
 import { Text } from './Text'
+import { cx } from 'class-variance-authority'
+import { VariantProps } from '../types'
 
-const NumberInput = styled(CurrencyInput, TextField)
+type Props = VariantProps<typeof textFieldStyles> &
+  Omit<React.ComponentProps<typeof CurrencyInput>, 'size'> & {
+    units?: string
+  }
 
-type Props = {
-  units?: string
-} & React.ComponentProps<typeof NumberInput>
-
-export function NumberField({ units, size = '1', ...props }: Props) {
+export function NumberField({
+  units,
+  variant,
+  size,
+  state,
+  noSpin,
+  cursor,
+  className,
+  ...props
+}: Props) {
   return (
-    <Box css={{ position: 'relative' }}>
-      <NumberInput
+    <div className="relative">
+      <CurrencyInput
         {...props}
         autoComplete="off"
-        size={size}
         spellCheck={false}
-        css={{ ...props.css, paddingRight: units ? '$6' : undefined }}
+        className={cx(
+          textFieldStyles({
+            variant,
+            size,
+            state,
+            noSpin,
+            cursor,
+            className,
+          }),
+          units ? 'pr-12' : ''
+        )}
       />
       {units && (
-        <Flex
-          align="center"
-          css={{
-            position: 'absolute',
-            top: 0,
-            height: '100%',
-            right: size === '1' ? '$1' : '$1-5',
-          }}
+        <div
+          className={cx(
+            'flex items-center absolute top-0 h-full',
+            size === 'small' ? 'r-2' : 'r-3'
+          )}
         >
-          <Text size={size === '1' ? '12' : '14'} weight="semibold">
+          <Text size={size === 'small' ? '12' : '14'} weight="semibold">
             {units}
           </Text>
-        </Flex>
+        </div>
       )}
-    </Box>
+    </div>
   )
 }

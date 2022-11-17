@@ -1,4 +1,3 @@
-import { Flex } from '../core/Flex'
 import { Button } from '../core/Button'
 import { TextField } from '../core/TextField'
 import { Label } from '../core/Label'
@@ -43,7 +42,7 @@ export function FormField({
   disableGroupSeparators = false,
   units,
   type,
-  size = 2,
+  size = 'medium',
 }: FormFieldProps) {
   return (
     <FieldGroup formik={formik} title={title} name={name}>
@@ -114,7 +113,7 @@ export function FormTextField({
   tabIndex,
   spellCheck = false,
   type,
-  size = 2,
+  size = 'medium',
 }: FormTextFieldProps) {
   return (
     <TextField
@@ -159,7 +158,7 @@ export function FormNumberField({
   placeholder,
   allowDecimals = false,
   disableGroupSeparators = false,
-  size = 2,
+  size = 'medium',
 }: FormNumberFieldProps) {
   return (
     <NumberField
@@ -202,7 +201,7 @@ export function FormSiacoinField({
   placeholder,
   decimalsLimitFiat = 3,
   decimalsLimitSc = 3,
-  size = 2,
+  size = 'medium',
 }: FormSiacoinFieldProps) {
   return (
     <SiacoinField
@@ -233,21 +232,22 @@ type FieldGroupProps = {
 export function FieldGroup({ formik, title, name, children }: FieldGroupProps) {
   const showError = formik.errors[name] && formik.touched[name]
   return (
-    <Flex direction="column" gap="1">
+    <div className="flex flex-col gap-2">
       {(title || showError) && (
-        <Flex justify="between" gap="2">
+        <div className="flex justify-between gap-4">
           {title && (
-            <Label htmlFor={name} css={{ color: '$gray9' }}>
+            <Label
+              htmlFor={name}
+              className="text-gray-800 dark:text-graydark-800"
+            >
               {title}
             </Label>
           )}
-          {showError && (
-            <Text css={{ color: '$red11' }}>{formik.errors[name]}</Text>
-          )}
-        </Flex>
+          {showError && <Text color="red">{formik.errors[name]}</Text>}
+        </div>
       )}
       {children}
-    </Flex>
+    </div>
   )
 }
 
@@ -260,14 +260,12 @@ type FormSubmitProps = {
 
 export function FormSubmitButton({
   formik,
-  size = 2,
+  size = 'medium',
   children,
 }: FormSubmitProps) {
   return (
     <>
-      {formik.status?.error && (
-        <Text css={{ color: '$red11' }}>{formik.status.error}</Text>
-      )}
+      {formik.status?.error && <Text color="red">{formik.status.error}</Text>}
       <Button
         size={size}
         disabled={formik.isSubmitting || !formik.isValid}

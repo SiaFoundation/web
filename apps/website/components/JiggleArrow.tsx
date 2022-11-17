@@ -1,48 +1,26 @@
-import {
-  Flex,
-  Text,
-  Box,
-  ArrowUp16,
-  keyframes,
-  ArrowDown16,
-  CSS,
-} from '@siafoundation/design-system'
-
-const jiggle = keyframes({
-  '0%': { top: '0' },
-  '10%': { top: '0' },
-  '15%': { top: '5px' },
-  '20%': { top: '0' },
-  '30%': { top: '0' },
-  '35%': { top: '5px' },
-  '40%': { top: '0' },
-  '100%': { top: '0' },
-})
+import { Text, ArrowUp16, ArrowDown16 } from '@siafoundation/design-system'
+import { cx } from 'class-variance-authority'
 
 type Props = {
   title: string
   onClick: () => void
   direction: 'up' | 'down'
-  css?: CSS
+  className?: string
 }
 
-export function JiggleArrow({ title, direction, onClick, css }: Props) {
+export function JiggleArrow({ title, direction, onClick, className }: Props) {
   return (
-    <Flex
-      align="center"
-      gap="0-5"
+    <div
+      className={cx(
+        'flex items-center gap-1 cursor-pointer animate-jiggle',
+        className
+      )}
       onClick={onClick}
-      css={{
-        position: 'relative',
-        animation: `${jiggle} 3s infinite`,
-        cursor: 'pointer',
-        ...css,
-      }}
     >
-      <Box css={{ color: '$textSubtle' }}>
+      <Text color="subtle">
         {direction === 'up' ? <ArrowUp16 /> : <ArrowDown16 />}
-      </Box>
+      </Text>
       <Text color="subtle">{title}</Text>
-    </Flex>
+    </div>
   )
 }

@@ -3,7 +3,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  IconButton,
+  Button,
   Settings20,
 } from '@siafoundation/design-system'
 import { useDialog } from '../contexts/dialog'
@@ -17,9 +17,9 @@ export function StorageFolderDropdownMenu({ id }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <IconButton>
+        <Button>
           <Settings20 />
-        </IconButton>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => openDialog('storageFolderResize', id)}>

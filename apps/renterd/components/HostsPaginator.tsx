@@ -3,11 +3,9 @@ import {
   ControlGroup,
   CaretLeft16,
   CaretRight16,
-  IconButton,
   PageFirst16,
   PageLast16,
   Text,
-  Flex,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import { useHosts } from '../hooks/useHosts'
@@ -17,10 +15,11 @@ export function HostsPaginator() {
   const { skip, limit, meta } = useHosts()
   return (
     <ControlGroup>
-      <IconButton
+      <Button
         disabled={skip <= 0}
-        size="1"
+        size="small"
         variant="gray"
+        className="rounded-r-none"
         onClick={() =>
           router.push({
             query: {
@@ -30,14 +29,15 @@ export function HostsPaginator() {
           })
         }
       >
-        <Flex css={{ transform: 'scale(0.65)' }}>
+        <div className="flex" style={{ transform: 'scale(0.65)' }}>
           <PageFirst16 />
-        </Flex>
-      </IconButton>
-      <IconButton
+        </div>
+      </Button>
+      <Button
         disabled={skip <= 0}
-        size="1"
+        size="small"
         variant="gray"
+        className="rounded-none"
         onClick={() =>
           router.push({
             query: {
@@ -48,8 +48,8 @@ export function HostsPaginator() {
         }
       >
         <CaretLeft16 />
-      </IconButton>
-      <Button size="1">
+      </Button>
+      <Button className="rounded-none px-3">
         {skip + 1} - {Math.min(skip + limit, meta.totalFiltered)}
         <Text size="12" color="subtle">
           {' '}
@@ -57,10 +57,11 @@ export function HostsPaginator() {
           {meta.totalFiltered ? meta.totalFiltered.toLocaleString() : '68,590'}
         </Text>
       </Button>
-      <IconButton
+      <Button
         disabled={skip + limit >= meta.totalFiltered}
-        size="1"
+        size="small"
         variant="gray"
+        className="rounded-none"
         onClick={() =>
           router.push({
             query: {
@@ -71,11 +72,12 @@ export function HostsPaginator() {
         }
       >
         <CaretRight16 />
-      </IconButton>
-      <IconButton
+      </Button>
+      <Button
         disabled={skip + limit >= meta.totalFiltered}
-        size="1"
+        size="small"
         variant="gray"
+        className="rounded-l-none"
         onClick={() =>
           router.push({
             query: {
@@ -85,10 +87,10 @@ export function HostsPaginator() {
           })
         }
       >
-        <Flex css={{ transform: 'scale(0.65)' }}>
+        <div className="flex" style={{ transform: 'scale(0.65)' }}>
           <PageLast16 />
-        </Flex>
-      </IconButton>
+        </div>
+      </Button>
     </ControlGroup>
   )
 }

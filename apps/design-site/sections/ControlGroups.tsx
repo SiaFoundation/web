@@ -1,7 +1,6 @@
 import {
   Button,
   ControlGroup,
-  Flex,
   Section,
   Select,
   TextField,
@@ -15,50 +14,50 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 export function ControlGroups() {
   return (
     <>
-      <Section css={{ pt: '$12' }}>
+      <Section>
         <SectionHeading>Control groups</SectionHeading>
-      </Section>
-      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>ControlGroup - Buttons</SubsectionHeading>
-        <Flex direction="column" gap="2">
-          <Flex direction="row" gap="1">
+        <div className="flex flex-col gap-4">
+          <div className="flex gap-2">
             <ControlGroup>
-              <Button size="1" variant="accent">
+              <Button size="small" variant="accent">
                 Green
               </Button>
-              <Button size="1" variant="gray">
+              <Button size="small" variant="gray">
+                <Search16 />
                 Gray
+                <Search16 />
               </Button>
-              <Button size="1" disabled variant="red">
+              <Button size="small" disabled variant="red">
                 Red
               </Button>
             </ControlGroup>
-          </Flex>
-          <Flex direction="row" gap="1">
+          </div>
+          <div className="flex gap-2">
             <ControlGroup>
-              <Button size="2" variant="accent">
+              <Button size="medium" variant="accent">
                 Green
               </Button>
-              <Button size="2" variant="gray">
+              <Button size="medium" variant="gray">
                 Gray
               </Button>
-              <Button size="2" disabled variant="red">
+              <Button size="medium" disabled variant="red">
                 Red
               </Button>
             </ControlGroup>
-          </Flex>
-        </Flex>
+          </div>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section>
         <SubsectionHeading>ControlGroup - Mixed</SubsectionHeading>
-        <Flex direction="column" gap="2">
-          <Flex direction="row" gap="1">
+        <div className="flex flex-col gap-4">
+          <div className="flex gap-2">
             <ControlGroup>
-              <Button size="1">
+              <Button size="small">
                 <Search16 />
               </Button>
-              <TextField size="1" />
-              <Select size="1">
+              <TextField size="small" />
+              <Select size="small">
                 <option>Option A</option>
                 <option>Option B</option>
                 <option>Option C</option>
@@ -66,19 +65,19 @@ export function ControlGroups() {
                 <option>Option Elephant</option>
               </Select>
               <ExampleMenu>
-                <Button size="1">
+                <Button size="small">
                   <OverflowMenuHorizontal16 />
                 </Button>
               </ExampleMenu>
             </ControlGroup>
-          </Flex>
-          <Flex direction="row" gap="1">
+          </div>
+          <div className="flex gap-2">
             <ControlGroup>
-              <Button size="2">
+              <Button size="medium">
                 <Search16 />
               </Button>
-              <TextField size="2" />
-              <Select size="2">
+              <TextField size="medium" />
+              <Select size="medium">
                 <option>Option A</option>
                 <option>Option B</option>
                 <option>Option C</option>
@@ -86,13 +85,13 @@ export function ControlGroups() {
                 <option>Option Elephant</option>
               </Select>
               <ExampleMenu>
-                <Button size="2">
+                <Button size="medium">
                   <OverflowMenuHorizontal16 />
                 </Button>
               </ExampleMenu>
             </ControlGroup>
-          </Flex>
-        </Flex>
+          </div>
+        </div>
       </Section>
     </>
   )

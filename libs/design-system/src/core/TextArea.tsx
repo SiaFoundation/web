@@ -1,93 +1,67 @@
-import { styled } from '../config/theme'
+import React from 'react'
+import { cva, VariantProps } from 'class-variance-authority'
+import { textStyles } from './Text'
 
-export const TextArea = styled('textarea', {
-  appearance: 'none',
-  borderWidth: '0',
-  fontFamily: '$sans',
-  margin: '0',
-  outline: 'none',
-  padding: '$1',
-  width: '100%',
-  WebkitTapHighlightColor: 'rgba(0,0,0,0)',
-  backgroundColor: '$loContrast',
-  boxShadow: '$colors$borderInput, $colors$shadow',
-  color: '$hiContrast',
-  fontVariantNumeric: 'tabular-nums',
-  position: 'relative',
-  minHeight: 80,
-  resize: 'vertical',
+export const styles = cva(
+  [
+    'relative appearance-none outline-none',
+    'p-2 m-0 w-full',
+    'min-h-[80px]',
+    textStyles(),
+    'tabular-nums',
+    'resize-y',
+    'rounded',
+    'focus:ring ring-blue-500 dark:ring-blue-200',
+    'text-gray-1100 dark:text-white',
+    'placeholder:text-gray-600 placeholder:dark:text-graydark-500',
+    'disabled:text-gray-400 disabled:dark:text-graydark-400',
+  ],
+  {
+    variants: {
+      size: {
+        small: 'h-7 text-sm px-2',
+        medium: 'h-10 text-base px-3',
+        large: 'h-12 text-lg px-3',
+      },
+      variant: {
+        default: [
+          'border',
+          'bg-white dark:bg-graydark-50',
+          'autofill:bg-blue-100 autofill:dark:bg-blue-800',
+        ],
+        ghost: 'bg-transparent',
+      },
+      state: {
+        default: [
+          'border-gray-400 dark:border-graydark-400',
+          'enabled:hover:border-gray-500 enabled:hover:dark:border-graydark-500',
+        ],
+        invalid: ['border-red-500 dark:border-red-400'],
+        valid: ['border-green-500 dark:border-green-400'],
+      },
+      cursor: {
+        default: '',
+        text: 'cursor-text',
+      },
+    },
+    defaultVariants: {
+      size: 'small',
+      variant: 'default',
+      cursor: 'default',
+      state: 'default',
+    },
+  }
+)
 
-  '&:focus': {
-    boxShadow:
-      '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive',
-    zIndex: '1',
-  },
-  '&::placeholder': {
-    color: '$gray7',
-  },
-  '&:disabled': {
-    pointerEvents: 'none',
-    backgroundColor: '$gray2',
-    color: '$accentActive',
-    cursor: 'not-allowed',
-    resize: 'none',
-    '&::placeholder': {
-      color: '$gray7',
-    },
-  },
-  '&:read-only': {
-    backgroundColor: '$gray2',
-    boxShadow: '$colors$borderInput, $colors$shadow',
-    '&:focus': {
-      boxShadow:
-        '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive',
-    },
-  },
-
-  variants: {
-    size: {
-      '1': {
-        borderRadius: '$1',
-        px: '$1',
-        fontSize: '$12',
-        lineHeight: '150%',
-      },
-      '2': {
-        borderRadius: '$1',
-        fontSize: '$16',
-        lineHeight: '150%',
-        px: '$1',
-      },
-    },
-    state: {
-      invalid: {
-        boxShadow: '$colors$borderRed, $colors$shadow',
-        '&:focus': {
-          boxShadow:
-            '$colors$borderFocus, $colors$borderRedActive, $colors$shadowActive',
-        },
-      },
-      valid: {
-        boxShadow: '$colors$borderGreen, $colors$shadow',
-        '&:focus': {
-          boxShadow:
-            '$colors$borderFocus, $colors$borderGreenActive, $colors$shadowActive',
-        },
-      },
-    },
-    cursor: {
-      default: {
-        cursor: 'default',
-        '&:focus': {
-          cursor: 'text',
-        },
-      },
-      text: {
-        cursor: 'text',
-      },
-    },
-  },
-  defaultVariants: {
-    size: '1',
-  },
+export const TextArea = React.forwardRef<
+  HTMLTextAreaElement,
+  VariantProps<typeof styles> & React.HTMLAttributes<HTMLTextAreaElement>
+>(({ size, variant, state, cursor, className, ...props }, ref) => {
+  return (
+    <textarea
+      ref={ref}
+      className={styles({ size, variant, state, cursor, className })}
+      {...props}
+    />
+  )
 })

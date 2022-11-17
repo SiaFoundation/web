@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useSettings } from '@siafoundation/react-core'
-import { Box } from '../../core/Box'
 import { Container } from '../../core/Container'
-import { Flex } from '../../core/Flex'
 import { AppNavbar } from '../AppNavbar'
 import { AppBackdrop } from '../AppBackdrop'
 import { AppRootLayout } from '../AppRootLayout'
@@ -39,14 +37,14 @@ export function AppPublicLayout({
   return (
     <AppRootLayout routes={routes}>
       <AppBackdrop />
-      <Flex css={{ height: '100%' }}>
-        <Flex direction="column" css={{ flex: 1 }}>
+      <div className="flex h-full">
+        <div className="flex flex-col flex-1">
           <AppNavbar title={title} filters={filters} actions={actions} />
-          <Box css={{ flex: 1 }}>
-            <Container css={{ height: '100%' }}>{children}</Container>
-          </Box>
-        </Flex>
-      </Flex>
+          <div className="flex-1">
+            <Container className="h-full">{children}</Container>
+          </div>
+        </div>
+      </div>
     </AppRootLayout>
   )
 }

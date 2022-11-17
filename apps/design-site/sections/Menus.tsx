@@ -1,4 +1,4 @@
-import { Button, Flex, Section } from '@siafoundation/design-system'
+import { Button, Section } from '@siafoundation/design-system'
 import { ExampleMenu } from '../components/ExampleMenu'
 import { SectionHeading } from '../components/SectionHeading'
 import { SubsectionHeading } from '../components/SubsectionHeading'
@@ -6,12 +6,10 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 export function Menus() {
   return (
     <>
-      <Section css={{ pt: '$12' }}>
+      <Section>
         <SectionHeading>Menus</SectionHeading>
-      </Section>
-      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>DropdownMenu</SubsectionHeading>
-        <Flex direction="row" gap="1">
+        <div className="flex gap-2">
           <ExampleMenu>
             <Button>Auto</Button>
           </ExampleMenu>
@@ -24,7 +22,7 @@ export function Menus() {
           <ExampleMenu align="end">
             <Button>End</Button>
           </ExampleMenu>
-        </Flex>
+        </div>
       </Section>
     </>
   )

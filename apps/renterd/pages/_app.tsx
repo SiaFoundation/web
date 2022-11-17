@@ -1,11 +1,4 @@
-import { NextApp } from '@siafoundation/design-system'
-import { AppProps } from 'next/app'
-import { Providers } from '../config/providers'
+import '../config/style.css'
+import { NextAppCsr } from '@siafoundation/design-system'
 
-export default function App(props: AppProps) {
-  return (
-    <Providers>
-      <NextApp {...props} />
-    </Providers>
-  )
-}
+export default NextAppCsr

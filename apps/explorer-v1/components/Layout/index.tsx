@@ -111,7 +111,7 @@ export function Layout({ title, description, path, children }: Props) {
                 {children}
               </Flex>
               <Container css={{ paddingTop: '$11' }}>
-                <Separator size="100" />
+                <Separator className="w-full" />
                 <Flex
                   justify="between"
                   wrap="wrap"

@@ -1,10 +1,8 @@
 import {
-  Grid,
   Text,
   ContentItem,
   getImageProps,
   SiteHeading,
-  Box,
 } from '@siafoundation/design-system'
 import fs from 'fs'
 import { MDXRemote } from 'next-mdx-remote'
@@ -37,32 +35,25 @@ function NewsroomPost({
       date={new Date(date).toISOString()}
       path={routes.newsroom.newsPost.replace('[slug]', slug)}
       heading={
-        <SectionSimple css={{ py: '$max' }}>
+        <SectionSimple className="pt-24 md:pt-40 pb-6 md:pb-20">
           <SiteHeading size="64" title={title} description={subtitle} />
         </SectionSimple>
       }
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <SectionSimple css={{ pt: '$9', pb: '$max' }}>
-        <Box>
-          <Text weight="bold" size="16">
+      <SectionSimple className="pt-12 xl:pt-20 pb-24 md:pb-40">
+        <div>
+          <Text weight="bold" size="16" className="mb-5">
             {location} - {format(new Date(date), 'PP')}
           </Text>
           <MDXRemote {...source} components={components} />
-        </Box>
+        </div>
         {(prev || next) && (
-          <Grid
-            gap="3"
-            css={{ marginTop: '$8' }}
-            columns={{
-              '@initial': '1',
-              '@bp1': '2',
-            }}
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-24 md:mt-48">
             {prev && <ContentItem {...prev} />}
             {next && <ContentItem {...next} />}
-          </Grid>
+          </div>
         )}
       </SectionSimple>
     </Layout>

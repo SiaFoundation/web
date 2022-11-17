@@ -1,89 +1,59 @@
+import { cva } from 'class-variance-authority'
 import React from 'react'
-import { styled, CSS } from '../config/theme'
 import { CaretSort16 } from '../icons/carbon'
+import { VariantProps } from '../types'
 
-const SelectWrapper = styled('div', {
-  backgroundColor: '$control',
-  borderRadius: '$2',
-  boxShadow: '$colors$borderInput, $colors$shadow',
-  color: '$hiContrast',
-  fontFamily: '$sans',
-  fontVariantNumeric: 'tabular-nums',
-  fontWeight: 400,
-  flexShrink: 0,
-  display: 'flex',
-  alignItems: 'center',
+const containerStyles = cva(
+  [
+    'font-sans',
+    'font-normal',
+    'tabular-nums',
+    'flex-shrink-0',
+    'rounded',
+    'flex items-center',
 
-  '&:focus-within': {
-    zIndex: 1,
-    boxShadow: '$colors$borderFocus, $colors$borderInputActive, $colors$shadow',
-  },
-
-  '@hover': {
-    '&:hover': {
-      boxShadow: '$colors$borderInputHover, $colors$shadow',
-    },
-  },
-
-  '& > select:disabled': {
-    color: '$textDisabled',
-  },
-
-  variants: {
-    size: {
-      '1': {
-        borderRadius: '$1',
-        height: '$3-5',
-        padding: '0 $1 0 $0-5',
-        fontSize: '$12',
-        lineHeight: '$sizes$3-5',
-      },
-      '2': {
-        borderRadius: '$1',
-        height: '$5',
-        padding: '0 $1-5 0 $1',
-        fontSize: '$16',
-        lineHeight: '$sizes$5',
+    'bg-white dark:bg-graydark-200',
+    'hover:bg-gray-50 dark:hover:bg-graydark-300',
+    'disabled:bg-gray-200 disabled:dark:bg-graydark-200',
+    'autofill:bg-blue-100 autofill:dark:bg-blue-800',
+    'border',
+    'border-gray-400 dark:border-graydark-400',
+    'hover:border-gray-500 hover:dark:border-graydark-500',
+    'focus-within:z-10',
+    'focus-within:ring ring-blue-500 dark:ring-blue-200',
+    'text-gray-1100 dark:text-white',
+    '[&>select:disabled]:text-gray-600 [&>select:disabled]:dark:text-graydark-700',
+  ],
+  {
+    variants: {
+      size: {
+        small: 'h-7 text-sm px-1',
+        medium: 'h-10 text-base px-3',
+        large: 'h-12 text-lg px-3',
       },
     },
-  },
-  defaultVariants: {
-    size: '1',
-  },
-})
+    defaultVariants: {
+      size: 'small',
+    },
+  }
+)
 
-const StyledSelect = styled('select', {
-  appearance: 'none',
-  flex: 1,
-  backgroundColor: 'transparent',
-  border: 'none',
-  borderRadius: 'inherit',
-  color: 'inherit',
-  font: 'inherit',
-  outline: 'none',
-  width: '100%',
-  height: '100%',
-  pl: '$1',
-  pr: '$1',
-  lineHeight: '25px',
-})
-
-const StyledCaretSortIcon = styled(CaretSort16, {
-  pointerEvents: 'none',
-  transform: 'scale(0.75)',
-})
-
-type SelectProps = Omit<React.ComponentProps<typeof StyledSelect>, 'size'> &
-  Pick<React.ComponentProps<typeof SelectWrapper>, 'size'> & { css?: CSS }
+// TODO: convert to radix select
 
 export const Select = React.forwardRef<
-  React.ElementRef<typeof StyledSelect>,
-  SelectProps
->(({ css, size, ...props }, forwardedRef) => (
-  <SelectWrapper size={size} css={css}>
-    <StyledSelect ref={forwardedRef} {...props} />
-    <StyledCaretSortIcon />
-  </SelectWrapper>
+  HTMLSelectElement,
+  VariantProps<typeof containerStyles> &
+    React.HTMLAttributes<HTMLSelectElement> & {
+      value?: string
+      disabled?: boolean
+    }
+>(({ size, className, ...props }, ref) => (
+  <div className={containerStyles({ size, className })}>
+    <select
+      ref={ref}
+      {...props}
+      className="appearance-none flex-1 bg-transparent outline-none w-full h-full pl-2 pr-2"
+    />
+    <CaretSort16 className="pointer-events-none scale-75" />
+  </div>
 ))
-
-Select.toString = () => `.${SelectWrapper.className}`

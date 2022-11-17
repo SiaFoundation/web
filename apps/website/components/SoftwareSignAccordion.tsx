@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
-  Flex,
   Paragraph,
   Accordion,
   AccordionTrigger,
@@ -20,9 +19,9 @@ export function SoftwareSignAccordion({ versions }: Props) {
   return (
     <Accordion type="single">
       <AccordionItem value="steps" variant="ghost">
-        <AccordionTrigger variant="ghost">
-          <Flex direction="column" gap="3">
-            <Paragraph size="18">
+        <AccordionTrigger className="mb-6">
+          <div className="flex flex-col items-start gap-2">
+            <Paragraph size="14">
               As a reminder, all release binaries are signed. You can download
               the signing key{' '}
               <Link
@@ -44,19 +43,23 @@ export function SoftwareSignAccordion({ versions }: Props) {
               >
                 here
               </Link>
-              .
+              .{' '}
             </Paragraph>
-            <Paragraph size="18">
-              <Link>Learn how to verify a release</Link>
+            <Paragraph
+              size="14"
+              className="underline underline-offset-2"
+              color="contrast"
+            >
+              Learn how to verify a release →
             </Paragraph>
-          </Flex>
+          </div>
         </AccordionTrigger>
-        <AccordionContent css={{ margin: '$3 0' }}>
-          <Flex direction="column" gap="1">
+        <AccordionContent className="mt-3">
+          <div className="flex flex-col gap-2">
             <Paragraph size="14">
               1. Download and import the Sia signing key.
             </Paragraph>
-            <Codeblock>
+            <Codeblock size="14">
               {`wget -c ${webLinks.website}/releases/sia-signing-key.asc
 gpg --import sia-signing-key.asc`}
             </Codeblock>
@@ -64,7 +67,7 @@ gpg --import sia-signing-key.asc`}
             <Paragraph size="14">
               2. Download the signed hash file, and verify the signature.
             </Paragraph>
-            <Codeblock>
+            <Codeblock size="14">
               {`wget -c ${webLinks.website}/releases/siad/Sia-v${versions.sia.latest}-SHA256SUMS.txt.asc
 gpg --verify Sia-v${versions.sia.latest}-SHA256SUMS.txt.asc`}
             </Codeblock>
@@ -72,14 +75,14 @@ gpg --verify Sia-v${versions.sia.latest}-SHA256SUMS.txt.asc`}
             <Paragraph size="14">
               3. If you downloaded a zip file, unzip that first.
             </Paragraph>
-            <Codeblock>
+            <Codeblock size="14">
               unzip Sia-v{versions.sia.latest}-linux-amd64.zip
             </Codeblock>
 
             <Paragraph size="14">
               4. Check that the files you downloaded were signed.
             </Paragraph>
-            <Codeblock>
+            <Codeblock size="14">
               sha256sum --check --ignore-missing Sia-v
               {versions.sia.latest}-SHA256SUMS.txt.asc
             </Codeblock>
@@ -88,7 +91,7 @@ gpg --verify Sia-v${versions.sia.latest}-SHA256SUMS.txt.asc`}
               You should see "OK" next to the files you did download and errors
               for the files you have not downloaded.
             </Paragraph>
-          </Flex>
+          </div>
         </AccordionContent>
       </AccordionItem>
     </Accordion>

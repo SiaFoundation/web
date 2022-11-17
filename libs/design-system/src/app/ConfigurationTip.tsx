@@ -1,5 +1,4 @@
-import { NextLink } from '../core/Link'
-import { Flex } from '../core/Flex'
+import { Link } from '../core/Link'
 import { Text } from '../core/Text'
 import { Tooltip } from '../core/Tooltip'
 import { ValueSc } from '../components/ValueSc'
@@ -30,28 +29,24 @@ export function ConfigurationTip({
   units,
 }: Props) {
   return (
-    <Flex justify="between" align="center">
+    <div className="flex justify-between items-center">
       <Tooltip align="start" content={tip}>
-        <Flex
-          gap="0-5"
-          align="center"
-          css={{ position: 'relative', top: '1px' }}
-        >
-          <Flex css={{ position: 'relative', top: '-1px' }}>
+        <div className="flex gap-1 items-center relative top-px">
+          <div className="flex relative -top-px">
             <Information16 />
-          </Flex>
+          </div>
           <Text size="12">
             {link ? (
-              <NextLink underline="hover" href={link} target="_blank">
+              <Link href={link} target="_blank">
                 {label}
-              </NextLink>
+              </Link>
             ) : (
               label
             )}
           </Text>
-        </Flex>
+        </div>
       </Tooltip>
-      <Flex onClick={() => onChange(value)} css={{ cursor: 'pointer' }}>
+      <div className="flex cursor-pointer" onClick={() => onChange(value)}>
         {type === 'siacoin' ? (
           <ValueSc
             value={value}
@@ -69,7 +64,7 @@ export function ConfigurationTip({
             format={(val) => `${toFixedMax(val, decimalsLimit)} ${units}`}
           />
         )}
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   )
 }

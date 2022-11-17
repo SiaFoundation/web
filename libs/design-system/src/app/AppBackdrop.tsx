@@ -1,8 +1,6 @@
 import React from 'react'
 import pattern from '../assets/background-pattern.jpg'
 import image from '../assets/background-image.gif'
-import { Box } from '../core/Box'
-import { Image } from '../core/Image'
 import { getImageProps } from '../lib/image'
 
 type Props = {
@@ -15,71 +13,25 @@ const patternSrc = getImageProps(pattern).src
 
 export function AppBackdrop({ motion = false, children }: Props) {
   return (
-    <Box
-      css={{
-        position: 'relative',
-        zIndex: -1,
-        opacity: 1,
-        pointerEvents: 'none',
-      }}
-    >
-      <Box
-        css={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: 1,
-          backgroundColor: '$loContrast',
-        }}
-      />
+    <div className="relative -z-10 opacity-100 pointer-events-none">
+      <div className="fixed top-0 left-0 right-0 bottom-0 z-10 bg-white dark:bg-graydark-50" />
       {motion && (
-        <Image
+        <img
           {...imageProps}
-          css={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            zIndex: 2,
-            width: '100%',
-            height: '100%',
-            opacity: 0.15,
-            '@motion': {
-              display: 'none',
-            },
-          }}
+          alt="background pattern"
+          className="fixed top-0 left-0 z-20 w-full h-full opacity-[.15] motion-reduce:hidden"
         />
       )}
-      <Box
-        css={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          width: '200vw',
-          height: '200vh',
-          opacity: 0.3,
-          zIndex: 3,
+      <div
+        className="fixed top-0 left-0 right-0 w-[200vw] h-[200vh] opacity-30 z-30 translate-x[-50vw] translate-y[-100vh]"
+        style={{
           backgroundImage: `url(${patternSrc})`,
           backgroundPositionY: 'bottom',
           backgroundSize: 'auto',
-          transform: 'translate(-50vw,-100vh)',
         }}
       />
-      <Box
-        css={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          opacity: 0.95,
-          zIndex: 4,
-          backgroundColor: '$loContrast',
-        }}
-      />
+      <div className="fixed top-0 left-0 right-0 bottom-0 opacity-95 z-40 bg-white dark:bg-graydark-50" />
       {children}
-    </Box>
+    </div>
   )
 }

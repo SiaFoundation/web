@@ -1,20 +1,19 @@
-import { NextLink, Section, SiteHeading } from '@siafoundation/design-system'
+import { Link, Section, SiteHeading } from '@siafoundation/design-system'
 
 export function Heading() {
   return (
-    <Section css={{ py: '$12', backgroundColor: '$loContrast' }}>
+    <Section className="py-24 bg-white dark:bg-graydark-50">
       <SiteHeading
         size="64"
         title="The Sia Design System"
-        css={{ mb: '$max' }}
+        className="mb-40"
         description={
           <>
             The Sia Design System is a component framework used across Sia web
             properties and apps. This site demonstrates each component and its
             main variants. The site features three sections{' '}
-            <NextLink href="/">core</NextLink>,{' '}
-            <NextLink href="/sites">sites</NextLink>, and{' '}
-            <NextLink href="/apps">apps</NextLink>.
+            <Link href="/">core</Link>, <Link href="/sites">sites</Link>, and{' '}
+            <Link href="/apps">apps</Link>.
           </>
         }
       />

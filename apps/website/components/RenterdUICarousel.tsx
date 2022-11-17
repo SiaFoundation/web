@@ -1,4 +1,5 @@
-import { Flex, Box, Image, getImageProps } from '@siafoundation/design-system'
+/* eslint-disable @next/next/no-img-element */
+import { getImageProps } from '@siafoundation/design-system'
 import { useInView } from 'react-intersection-observer'
 import { useCarousel, CarouselTags } from './Carousel'
 import imageFiles from '../assets/renterd/renterd-files.png'
@@ -8,6 +9,7 @@ import imageConfig from '../assets/renterd/renterd-config.png'
 import imageWallet from '../assets/renterd/renterd-wallet.png'
 import imageNode from '../assets/renterd/renterd-node.png'
 import imageSettings from '../assets/renterd/renterd-settings.png'
+import { cx } from 'class-variance-authority'
 
 const filesProps = getImageProps(imageFiles)
 const contractsProps = getImageProps(imageContracts)
@@ -16,13 +18,6 @@ const configProps = getImageProps(imageConfig)
 const walletProps = getImageProps(imageWallet)
 const nodeProps = getImageProps(imageNode)
 const settingsProps = getImageProps(imageSettings)
-
-// const animation = keyframes({
-//   '0%': { transform: 'rotateX(25deg)' },
-//   '25%': { transform: 'rotateX(25deg) scale(0.9)' },
-//   '60%': { transform: 'rotateX(25deg) scale(0.9)' },
-//   to: { transform: 'none' },
-// })
 
 const images = [
   {
@@ -67,94 +62,35 @@ export function RenterdUICarousel() {
   const props = useCarousel(images)
 
   return (
-    <Flex direction="column">
-      <Box
-        css={{
-          position: 'relative',
-          margin: '0 -$3',
-          '@bp2': {
-            margin: '0 -$6',
-          },
-        }}
-      >
-        <Box ref={appRef} css={{ position: 'absolute', top: '70%' }} />
-        <Box
-          css={{
-            position: 'relative',
-            transition: 'transform 200ms ease-out',
-            padding: '0 $1',
-            transform: appInView ? 'scale(1.03)' : 'none',
-            // marginTop: '128px',
-            // ...(appInView
-            //   ? {
-            //       transition: 'transform 400ms ease-out 0s',
-            //       transform: 'rotateX(35deg)',
-            //       animationDuration: '1400ms',
-            //       animationTimingFunction: 'ease',
-            //       animationIterationCount: '1',
-            //       animationDirection: 'normal',
-            //       animationFillMode: 'forwards',
-            //       animationPlayState: 'running',
-            //       animationName: animation,
-            //       animationDelay: 'calc(var(--base-delay) + 400ms)',
-            //     }
-            //   : {}),
-          }}
+    <div className="flex flex-col">
+      <div className="relative">
+        <div ref={appRef} className="absolute top-[70%]" />
+        <div
+          className={cx(
+            'relative mx-2 xl:-mx-10 transition-transform',
+            appInView ? 'scale-[1.03]' : ''
+          )}
         >
           {images.map((item) => (
-            <Box
+            <div
               key={item.key}
-              css={{
-                zIndex: props.currentItem.key === item.key ? 1 : 0,
-                opacity: props.currentItem.key === item.key ? 1 : 0,
-                top: 0,
-                position:
-                  props.currentItem.key === item.key ? 'relative' : 'absolute',
-                // '&::before': {
-                //   content: '',
-                //   margin: '26px 39px 80px',
-                //   pointerEvents: 'none',
-                //   userSelect: 'none',
-                //   position: 'absolute',
-                //   inset: '0px',
-                //   borderRadius: '$2',
-                //   // padding: '1px',
-                //   backgroundImage:
-                //     'linear-gradient(to bottom, rgba(0,255,100, 0.3), rgba(255,255,255,0))',
-                //   zIndex: -1,
-                // },
-                // '&::after': {
-                //   content: '',
-                //   position: 'absolute',
-                //   margin: '26px 39px 80px',
-                //   inset: '0px',
-                //   zIndex: -1,
-                //   opacity: 1,
-                //   transition: 'opacity 480ms ease 0s',
-                //   $$alpha: 0.3,
-                //   backgroundImage:
-                //     'radial-gradient(ellipse 50px 20px at 46% 0%,rgba(74,101,199,$$alpha),$transparent), radial-gradient(ellipse 50px 20px at 50% 0%,rgba(95,75,218,$$alpha),$transparent), radial-gradient(ellipse 50px 20px at 54% 0%,rgba(91,45,221,$$alpha),$transparent)',
-                // },
-              }}
+              className={cx(
+                props.currentItem.key === item.key ? 'z-10' : 'z-0',
+                props.currentItem.key === item.key
+                  ? 'opacity-100'
+                  : 'opacity-0',
+                'top-0',
+                props.currentItem.key === item.key ? 'relative' : 'absolute'
+              )}
             >
-              <Image src={item.props.src} alt={item.title} />
-              {/* <NextImage {...item.props} alt={item.title} /> */}
-            </Box>
+              <img src={item.props.src} alt={item.title} />
+            </div>
           ))}
-        </Box>
-        <Box
-          css={{
-            position: 'relative',
-            // top: '-$1',
-            pt: '$1',
-            '@bp2': {
-              top: '-$3',
-            },
-          }}
-        >
+        </div>
+        <div className="relative pt-2 md:-top-6">
           <CarouselTags {...props} />
-        </Box>
-      </Box>
-    </Flex>
+        </div>
+      </div>
+    </div>
   )
 }

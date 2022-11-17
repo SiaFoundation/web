@@ -1,108 +1,80 @@
 import React from 'react'
-import { styled, VariantProps, CSS } from '../config/theme'
 import * as SwitchPrimitive from '@radix-ui/react-switch'
-import { Flex } from './Flex'
 import { Text } from './Text'
+import { cva } from 'class-variance-authority'
+import { VariantProps } from '../types'
 
-const StyledThumb = styled(SwitchPrimitive.Thumb, {
-  position: 'absolute',
-  left: 0,
-  width: 13,
-  height: 13,
-  backgroundColor: 'white',
-  borderRadius: '$round',
-  boxShadow: 'rgba(0, 0, 0, 0.3) 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px 1px 2px;',
-  transition: 'transform 100ms cubic-bezier(0.22, 1, 0.36, 1)',
-  transform: 'translateX(1px)',
-  willChange: 'transform',
-
-  '&[data-state="checked"]': {
-    transform: 'translateX(11px)',
-  },
-})
-
-const StyledSwitch = styled(SwitchPrimitive.Root, {
-  all: 'unset',
-  boxSizing: 'border-box',
-  userSelect: 'none',
-  '&::before': {
-    boxSizing: 'border-box',
-  },
-  '&::after': {
-    boxSizing: 'border-box',
-  },
-
-  // Reset
-  alignItems: 'center',
-  display: 'inline-flex',
-  justifyContent: 'center',
-  lineHeight: '1',
-  margin: '0',
-  outline: 'none',
-  WebkitTapHighlightColor: 'rgba(0,0,0,0)',
-
-  backgroundColor: '$gray5',
-  borderRadius: '$pill',
-  position: 'relative',
-  '&:focus': {
-    boxShadow: '$colors$borderFocus, 0 0 0 2px $colors$gray8',
-  },
-
-  '&:disabled': {
-    backgroundColor: '$gray3',
-  },
-
-  '&[data-state="checked"]': {
-    backgroundColor: '$accent9',
-    '&:focus': {
-      boxShadow: '$colors$borderFocus, 0 0 0 2px $colors$accent8',
-    },
-    '&:disabled': {
-      backgroundColor: '$accent6',
-    },
-  },
-
-  variants: {
-    size: {
-      '1': {
-        width: '25px',
-        height: '$2',
-      },
-      '2': {
-        width: '45px',
-        height: '$3',
-        [`& ${StyledThumb}`]: {
-          width: 21,
-          height: 21,
-          transform: 'translateX(2px)',
-          '&[data-state="checked"]': {
-            transform: 'translateX(22px)',
-          },
-        },
+const thumbStyles = cva(
+  [
+    'absolute left-0 rounded-full',
+    'transition-transform',
+    'bg-white dark:bg-graydark-500',
+  ],
+  {
+    variants: {
+      size: {
+        small: [
+          'w-3 h-3',
+          'translate-x-px',
+          'data-[state=checked]:translate-x-[9px]',
+        ],
+        medium: [
+          'w-5 h-5',
+          'translate-x-0.5',
+          'data-[state=checked]:translate-x-[20px]',
+        ],
       },
     },
-  },
-  defaultVariants: {
-    size: '1',
-  },
-})
+    defaultVariants: {
+      size: 'small',
+    },
+  }
+)
 
-type SwitchVariants = VariantProps<typeof StyledSwitch>
-type SwitchPrimitiveProps = React.ComponentProps<typeof SwitchPrimitive.Root>
-type SwitchProps = SwitchPrimitiveProps & SwitchVariants & { css?: CSS }
+const styles = cva(
+  [
+    'select-none outline-none',
+    'relative inline-flex items-center justify-center',
+    'm-0 rounded-full',
+
+    'focus:ring ring-blue-500 dark:ring-blue-200',
+    'border',
+    'bg-gray-300 dark:bg-graydark-50',
+    'autofill:bg-blue-100 autofill:dark:bg-blue-800',
+    'border-gray-400 dark:border-graydark-400',
+    'enabled:hover:border-gray-500 enabled:hover:dark:border-graydark-500',
+    'disabled:cursor-default',
+
+    'enabled:data-[state=checked]:bg-green-600 dark:enabled:data-[state=checked]:bg-green-500',
+    'disabled:data-[state=checked]:bg-green-600/50 dark:disabled:data-[state=checked]:bg-green-500/50',
+  ],
+  {
+    variants: {
+      size: {
+        small: 'w-6 h-4',
+        medium: 'w-11 h-6',
+      },
+    },
+    defaultVariants: {
+      size: 'small',
+    },
+  }
+)
 
 export const Switch = React.forwardRef<
-  React.ElementRef<typeof StyledSwitch>,
-  SwitchProps
->(({ children, ...props }, forwardedRef) => (
-  <Flex gap="1" align="center">
-    <StyledSwitch {...props} ref={forwardedRef}>
-      <StyledThumb />
-    </StyledSwitch>
+  React.ElementRef<typeof SwitchPrimitive.Root>,
+  VariantProps<typeof styles> & SwitchPrimitive.SwitchProps
+>(({ size, className, children, ...props }, ref) => (
+  <div className="flex gap-2 items-center">
+    <SwitchPrimitive.Root
+      className={styles({ size, className })}
+      {...props}
+      ref={ref}
+    >
+      <SwitchPrimitive.Thumb className={thumbStyles({ size })} />
+    </SwitchPrimitive.Root>
     {children && (
-      <Text css={{ color: props.disabled ? '$gray9' : '$hiContrast' }}>
-        {children}
-      </Text>
+      <Text color={props.disabled ? 'subtle' : 'contrast'}>{children}</Text>
     )}
-  </Flex>
+  </div>
 ))

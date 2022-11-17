@@ -1,8 +1,6 @@
 import {
   Checkbox,
   Dropzone,
-  Flex,
-  Grid,
   Radio,
   RadioGroup,
   Section,
@@ -21,247 +19,267 @@ import { ComboBoxes } from './ComboBoxes'
 export function Inputs() {
   return (
     <>
-      <Section css={{ pt: '$12' }}>
+      <Section>
         <SectionHeading>Inputs</SectionHeading>
-      </Section>
-      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>TextField</SubsectionHeading>
-        <Flex direction="column" gap="2">
-          <Grid columns={{ '@initial': 1, '@bp1': 4 }} gap="2">
-            <TextField size="2" placeholder="Ada Lovelace"></TextField>
-            <TextField size="2" placeholder="Ada Lovelace"></TextField>
+        <div className="flex flex-col gap-4">
+          <div className="grid grid-cols-2 gap-4">
+            <TextField size="small" placeholder="Ada Lovelace" />
             <TextField
-              size="2"
-              placeholder="placeholder"
+              size="small"
+              placeholder="Ada Lovelace"
               defaultValue="Ada Lovelace"
             />
+            <TextField size="small" value="Ada Lovelace" readOnly />
             <TextField
-              size="2"
-              placeholder="placeholder"
-              defaultValue="Ada Lovelace"
-              readOnly
-            />
-            <TextField
-              size="2"
+              size="small"
               placeholder="placeholder"
               defaultValue="Ada Lovelace"
               disabled
             />
             <TextField
-              size="2"
+              size="small"
               placeholder="placeholder"
               defaultValue="Ada Lovelace"
               variant="ghost"
             />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <TextField size="medium" placeholder="Ada Lovelace" />
             <TextField
-              size="2"
+              size="medium"
+              placeholder="Ada Lovelace"
+              defaultValue="Ada Lovelace"
+            />
+            <TextField size="medium" value="Ada Lovelace" readOnly />
+            <TextField
+              size="medium"
               placeholder="placeholder"
               defaultValue="Ada Lovelace"
-              variant="totalGhost"
+              disabled
             />
-          </Grid>
-          <Grid columns={{ '@initial': 1, '@bp1': 4 }} gap="2">
-            <TextField size="3" placeholder="Ada Lovelace" />
             <TextField
-              size="3"
+              size="medium"
               placeholder="placeholder"
               defaultValue="Ada Lovelace"
-              variant="totalGhost"
+              variant="ghost"
             />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <TextField size="large" placeholder="Ada Lovelace" />
             <TextField
-              size="3"
+              size="large"
+              placeholder="Ada Lovelace"
+              defaultValue="Ada Lovelace"
+            />
+            <TextField size="large" value="Ada Lovelace" readOnly />
+            <TextField
+              size="large"
               placeholder="placeholder"
               defaultValue="Ada Lovelace"
-              variant="totalGhost"
-              readOnly
+              disabled
             />
-          </Grid>
-          <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
             <TextField
-              size="1"
+              size="large"
+              placeholder="placeholder"
+              defaultValue="Ada Lovelace"
+              variant="ghost"
+            />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <TextField
+              size="small"
               type="email"
               placeholder="thompson@bell-labs.com"
             />
-            <TextField size="1" type="password" placeholder="password" />
-            <TextField size="1" type="number" placeholder="5" />
-          </Grid>
-          <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
+            <TextField size="small" type="password" placeholder="password" />
+            <TextField size="small" type="number" placeholder="5" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <TextField
-              size="2"
+              size="medium"
               type="email"
               placeholder="thompson@bell-labs.com"
             />
             <TextField
-              size="2"
+              size="medium"
               type="password"
               placeholder="password"
               defaultValue="foobar"
             />
-            <TextField size="2" type="number" placeholder="5" />
-          </Grid>
-          <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
-            <TextField size="1" type="date" />
-            <TextField size="2" type="date" />
-          </Grid>
-          <Grid columns={{ '@initial': 1, '@bp1': 3 }} gap="2">
+            <TextField size="medium" type="number" placeholder="5" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <TextField size="small" type="date" />
+            <TextField size="medium" type="date" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <TextField
-              size="2"
+              size="medium"
               type="email"
               state="invalid"
               placeholder="thompson@bell-labs.com"
               defaultValue="thompson@@belllabs"
             />
             <TextField
-              size="2"
+              size="medium"
               type="email"
               placeholder="thompson@bell-labs.com"
             />
             <TextField
-              size="2"
+              size="medium"
               type="email"
               state="valid"
               placeholder="thompson@bell-labs.com"
             />
-          </Grid>
-        </Flex>
+          </div>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section>
         <SubsectionHeading>Dropzone</SubsectionHeading>
         <Dropzone onFiles={() => null} />
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section>
         <SubsectionHeading>TextArea</SubsectionHeading>
-        <Flex direction="row" gap="1">
-          <TextArea size="1" defaultValue="Here be dragons" />
-          <TextArea size="2" state="invalid" defaultValue="Here be dragons" />
-          <TextArea size="2" state="valid" defaultValue="Here be dragons" />
-        </Flex>
+        <div className="flex gap-2">
+          <TextArea size="small" defaultValue="Here be dragons" />
+          <TextArea
+            size="medium"
+            state="invalid"
+            defaultValue="Here be dragons"
+          />
+          <TextArea
+            size="medium"
+            state="valid"
+            defaultValue="Here be dragons"
+          />
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section>
         <SubsectionHeading>Checkbox</SubsectionHeading>
-        <Flex direction="row" gap="1">
-          <Checkbox size="1">Checkbox</Checkbox>
-          <Checkbox size="2">Checkbox</Checkbox>
-          <Checkbox size="1" defaultChecked>
+        <div className="flex gap-2">
+          <Checkbox size="small">Checkbox</Checkbox>
+          <Checkbox size="medium">Checkbox</Checkbox>
+          <Checkbox size="small" defaultChecked>
             Checkbox
           </Checkbox>
-          <Checkbox size="2" defaultChecked>
+          <Checkbox size="medium" defaultChecked>
             Checkbox
           </Checkbox>
-          <Checkbox disabled size="1">
+          <Checkbox disabled size="small">
             Checkbox
           </Checkbox>
-          <Checkbox disabled size="2" defaultChecked>
+          <Checkbox disabled size="medium" defaultChecked>
             Checkbox
           </Checkbox>
-        </Flex>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section>
         <SubsectionHeading>Switch</SubsectionHeading>
-        <Flex direction="row" gap="1">
-          <Switch size="1">Switch</Switch>
-          <Switch size="2">Switch</Switch>
-          <Switch size="1" defaultChecked>
+        <div className="flex gap-2">
+          <Switch size="small">Switch</Switch>
+          <Switch size="medium">Switch</Switch>
+          <Switch size="small" defaultChecked>
             Switch
           </Switch>
-          <Switch size="2" defaultChecked>
+          <Switch size="medium" defaultChecked>
             Switch
           </Switch>
-          <Switch disabled size="1">
+          <Switch disabled size="small">
             Switch
           </Switch>
-          <Switch disabled size="2" defaultChecked>
+          <Switch disabled size="medium" defaultChecked>
             Switch
           </Switch>
-        </Flex>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section>
         <SubsectionHeading>Radio</SubsectionHeading>
-        <Flex direction="row" gap="3">
-          <RadioGroup css={{ display: 'flex', gap: '$1' }}>
-            <Radio size="1" value="1">
+        <div className="flex gap-6">
+          <RadioGroup className="flex gap-2">
+            <Radio size="small" value="1">
               1
             </Radio>
-            <Radio size="1" value="2">
+            <Radio size="small" value="2">
               2
             </Radio>
-            <Radio size="2" value="3">
+            <Radio size="medium" value="3">
               3
             </Radio>
           </RadioGroup>
-          <RadioGroup defaultValue="2" css={{ display: 'flex', gap: '$1' }}>
-            <Radio size="1" value="1">
+          <RadioGroup defaultValue="2">
+            <Radio size="small" value="1">
               1
             </Radio>
-            <Radio size="2" value="2">
+            <Radio size="medium" value="2">
               2
             </Radio>
           </RadioGroup>
-        </Flex>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section>
         <SubsectionHeading>RadioCard</SubsectionHeading>
         <RadioCardGroup>
-          <Grid columns="2" gap="2">
+          <div className="grid grid-cols-2 gap-4">
             <RadioCard value="1">
-              <Flex direction="column" gap="1">
+              <div className="flex flex-col gap-2 items-start">
                 <Text size="18">Create a new wallet</Text>
                 <Text>Generates a new wallet seed.</Text>
-              </Flex>
+              </div>
             </RadioCard>
             <RadioCard value="2">
-              <Flex direction="column" gap="1">
+              <div className="flex flex-col gap-2 items-start">
                 <Text size="18">Recover an existing wallet</Text>
                 <Text>Add an existing wallet seed.</Text>
-              </Flex>
+              </div>
             </RadioCard>
             <RadioCard value="3">
-              <Flex direction="column" gap="1">
+              <div className="flex flex-col gap-2 items-start">
                 <Text size="18">Recover an existing wallet via addresses</Text>
                 <Text>Add an existing wallet via address.</Text>
-              </Flex>
+              </div>
             </RadioCard>
             <RadioCard value="4">
-              <Flex direction="column" gap="1">
+              <div className="flex flex-col gap-2 items-start">
                 <Text size="18">Add a Ledger hardware wallet</Text>
                 <Text>Add an existing hardware wallet.</Text>
-              </Flex>
+              </div>
             </RadioCard>
-          </Grid>
+          </div>
         </RadioCardGroup>
-        <RadioCardGroup onChange={(val) => alert(val)}>
-          <Grid columns="2" gap="2">
+        <RadioCardGroup className="pt-12" onChange={(val) => alert(val)}>
+          <div className="grid grid-cols-2 gap-4">
             <RadioCard indicator={false} value="1">
-              <Flex direction="column" gap="1">
+              <div className="flex flex-col gap-2 items-start">
                 <Text size="18">Create a new wallet</Text>
                 <Text>Generates a new wallet seed.</Text>
-              </Flex>
+              </div>
             </RadioCard>
             <RadioCard indicator={false} value="2">
-              <Flex direction="column" gap="1">
+              <div className="flex flex-col gap-2 items-start">
                 <Text size="18">Recover an existing wallet</Text>
                 <Text>Add an existing wallet seed.</Text>
-              </Flex>
+              </div>
             </RadioCard>
             <RadioCard indicator={false} value="3">
-              <Flex direction="column" gap="1">
+              <div className="flex flex-col gap-2 items-start">
                 <Text size="18">Recover an existing wallet via addresses</Text>
                 <Text>Add an existing wallet via address.</Text>
-              </Flex>
+              </div>
             </RadioCard>
             <RadioCard indicator={false} value="4">
-              <Flex direction="column" gap="1">
+              <div className="flex flex-col gap-2 items-start">
                 <Text size="18">Add a Ledger hardware wallet</Text>
                 <Text>Add an existing hardware wallet.</Text>
-              </Flex>
+              </div>
             </RadioCard>
-          </Grid>
+          </div>
         </RadioCardGroup>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section>
         <SubsectionHeading>Select</SubsectionHeading>
-        <Grid columns={{ '@initial': 1, '@bp2': 2, '@bp4': 3 }} gap="2">
-          <Flex direction="row" gap="1">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="flex gap-2">
             <Select>
               <option>Option A</option>
               <option>Option B</option>
@@ -274,22 +292,36 @@ export function Inputs() {
               <option>Option C</option>
               <option>Option D</option>
             </Select>
-          </Flex>
-          <Flex direction="row" gap="1">
-            <Select size="2">
+          </div>
+          <div className="flex gap-2">
+            <Select size="medium">
               <option>Option A</option>
               <option>Option B</option>
               <option>Option C</option>
               <option>Option D</option>
             </Select>
-            <Select disabled size="2">
+            <Select disabled size="medium">
               <option>Option A</option>
               <option>Option B</option>
               <option>Option C</option>
               <option>Option D</option>
             </Select>
-          </Flex>
-        </Grid>
+          </div>
+          <div className="flex gap-2">
+            <Select size="large">
+              <option>Option A</option>
+              <option>Option B</option>
+              <option>Option C</option>
+              <option>Option D</option>
+            </Select>
+            <Select disabled size="large">
+              <option>Option A</option>
+              <option>Option B</option>
+              <option>Option C</option>
+              <option>Option D</option>
+            </Select>
+          </div>
+        </div>
       </Section>
       <ComboBoxes />
     </>

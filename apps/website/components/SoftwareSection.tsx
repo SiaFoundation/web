@@ -1,9 +1,8 @@
 import {
-  Flex,
   Links,
   Text,
   LinkData,
-  NextLink,
+  Link,
   Book16,
   LogoGithub16,
 } from '@siafoundation/design-system'
@@ -33,44 +32,41 @@ export function SoftwareSection({
       name={title}
       description={description}
       startTime={startTime}
+      variant="verySubtle"
     >
-      <Flex direction="column" gap="2">
-        <Text size="14" weight="bold" css={{ mt: '$2' }}>
+      <div className="flex flex-col">
+        <Text size="14" weight="bold" className="mt-4 mb-4">
           Binaries (Version {version})
         </Text>
-        <Links links={links} />
-        <Flex
-          gap="3"
-          css={{
-            mt: '$4',
-          }}
-        >
-          <Text
-            size="14"
-            font="mono"
-            css={{ display: 'flex', alignItems: 'center', gap: '$0-5' }}
-          >
+        <Links links={links} className="mb-12" />
+        <div className="flex-1" />
+        <div className="flex gap-6">
+          <Text className="flex items-center gap-x-1">
             <LogoGithub16 />
-            <NextLink underline="hover" href={sourceLink} target="_blank">
+            <Link
+              size="14"
+              font="mono"
+              href={sourceLink}
+              target="_blank"
+              underline={false}
+            >
               Source
-            </NextLink>
+            </Link>
           </Text>
-          <Text
-            size="14"
-            font="mono"
-            css={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '$0-5',
-            }}
-          >
+          <Text className="flex items-center gap-x-1">
             <Book16 />
-            <NextLink underline="hover" href={docsLink} target="_blank">
+            <Link
+              size="14"
+              font="mono"
+              href={docsLink}
+              target="_blank"
+              underline={false}
+            >
               Documentation
-            </NextLink>
+            </Link>
           </Text>
-        </Flex>
-      </Flex>
+        </div>
+      </div>
     </CalloutSoftware>
   )
 }

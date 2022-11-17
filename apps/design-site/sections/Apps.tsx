@@ -1,5 +1,4 @@
 import {
-  Flex,
   Section,
   ThemeRadio,
   UserDropdownMenu,
@@ -9,17 +8,17 @@ import { SectionHeading as DSSectionHeading } from '../components/SectionHeading
 export function Apps() {
   return (
     <>
-      <Section css={{ pt: '$9' }}>
+      <Section className="pt-20">
         <DSSectionHeading>ThemeRadio</DSSectionHeading>
-        <Flex direction="column" gap="3">
+        <div className="flex flex-col gap-6">
           <ThemeRadio />
-        </Flex>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section className="pt-20">
         <DSSectionHeading>UserDropdownMenu</DSSectionHeading>
-        <Flex direction="column" gap="3">
+        <div className="flex flex-col gap-6">
           <UserDropdownMenu />
-        </Flex>
+        </div>
       </Section>
     </>
   )

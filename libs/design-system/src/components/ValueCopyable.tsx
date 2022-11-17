@@ -1,12 +1,11 @@
-import { Flex } from '../core/Flex'
 import { Text } from '../core/Text'
-import { IconButton } from '../core/IconButton'
-import { NextLink } from '../core/Link'
+import { Button } from '../core/Button'
+import { Link } from '../core/Link'
 import { Copy16, Copy20 } from '../icons/carbon'
 import { copyToClipboard } from '../lib/clipboard'
 import { stripPrefix } from '../lib/utils'
-import { CSS } from '../config/theme'
 import { EntityType, getEntityTypeLabel } from '../lib/entityTypes'
+import { cx } from 'class-variance-authority'
 
 type Props = {
   value: string
@@ -15,9 +14,10 @@ type Props = {
   label?: string
   href?: string
   size?: React.ComponentProps<typeof Text>['size']
+  scaleSize?: React.ComponentProps<typeof Text>['scaleSize']
   maxLength?: number
   color?: React.ComponentProps<typeof Text>['color']
-  css?: CSS
+  className?: string
 }
 
 export function ValueCopyable({
@@ -27,9 +27,10 @@ export function ValueCopyable({
   label: customLabel,
   href,
   maxLength: customMaxLength,
-  size = '14',
+  size,
+  scaleSize,
   color = 'contrast',
-  css,
+  className,
 }: Props) {
   const label = customLabel || getEntityTypeLabel(type)
   const maxLength = customMaxLength || (type === 'ip' ? 20 : 12)
@@ -39,26 +40,27 @@ export function ValueCopyable({
   const text = `${renderValue?.slice(0, maxLength)}${
     (renderValue?.length || 0) > maxLength ? '...' : ''
   }`
+
   return (
-    <Flex gap="0-5" align="center" css={css}>
-      <Text size={size} weight="semibold" color={color}>
+    <div className={cx('flex gap-1 items-center', className)}>
+      <Text size={size} scaleSize={scaleSize} weight="semibold" color={color}>
         {href ? (
-          <NextLink href={href} underline="hover">
+          <Link href={href} underline={false}>
             {text}
-          </NextLink>
+          </Link>
         ) : (
           text
         )}
       </Text>
-      <IconButton
-        size="0"
+      <Button
+        size="small"
         onClick={(e) => {
           e.stopPropagation()
           copyToClipboard(cleanValue, label)
         }}
       >
         {Number(size) <= 14 ? <Copy16 /> : <Copy20 />}
-      </IconButton>
-    </Flex>
+      </Button>
+    </div>
   )
 }

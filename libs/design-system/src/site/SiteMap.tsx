@@ -1,14 +1,12 @@
 import React from 'react'
-import { Grid } from '../core/Grid'
 import { Launch16 } from '../icons/carbon'
-import { Flex } from '../core/Flex'
 import { SimpleLogoIcon } from '../icons/SimpleLogoIcon'
-import { NextLink } from '../core/Link'
+import { Link } from '../core/Link'
 import { LinkData } from '../lib/links'
-import { Box } from '../core/Box'
 import { Heading } from '../core/Heading'
-import { Paragraph } from '../core/Paragraph'
 import { useIsExternalDomain } from '../hooks/useIsExternalDomain'
+import { Text } from '../core/Text'
+import { cx } from 'class-variance-authority'
 
 export type MenuSection = {
   title: string
@@ -18,43 +16,20 @@ export type MenuSection = {
 type Props = {
   menuSections: MenuSection[]
   onClick?: () => void
-  inSiteMenu?: boolean
 }
 
-export function SiteMap({ menuSections, onClick, inSiteMenu }: Props) {
+export function SiteMap({ menuSections, onClick }: Props) {
   return (
-    <Flex direction="column" gap="6" align="start">
-      <Flex
-        css={{
-          color: '$hiContrast',
-          '@initial': {
-            py: '$1',
-          },
-          '@bp2': {
-            py: '$3',
-          },
-        }}
-      >
+    <div className="flex flex-col py-5 gap-10 items-start">
+      <Text className="flex pb-2 sm:pb-6">
         <SimpleLogoIcon size={50} />
-      </Flex>
-      <Grid
-        gapY="6"
-        columns={{
-          '@initial': '2',
-          '@bp2': '4',
-          '@bp3': '5',
-        }}
-      >
+      </Text>
+      <div className="grid gap-x-6 gap-y-12 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {menuSections.map(({ title, links }) => (
-          <Flex key={title}>
-            <Flex direction="column" gap="4">
-              <Heading
-                font="mono"
-                css={{ color: inSiteMenu ? '$whiteA12' : undefined }}
-              >
-                {title}
-              </Heading>
-              <Flex direction="column" gap="1">
+          <div className="flex" key={title}>
+            <div className="flex flex-col gap-8">
+              <Heading font="mono">{title}</Heading>
+              <div className="flex flex-col gap-2 md:gap-3">
                 {links.map(({ title, link, newTab, disabled }) => (
                   <MenuLink
                     key={title + link}
@@ -63,15 +38,14 @@ export function SiteMap({ menuSections, onClick, inSiteMenu }: Props) {
                     newTab={newTab}
                     disabled={disabled}
                     onClick={!disabled ? onClick : undefined}
-                    inSiteMenu={inSiteMenu}
                   />
                 ))}
-              </Flex>
-            </Flex>
-          </Flex>
+              </div>
+            </div>
+          </div>
         ))}
-      </Grid>
-    </Flex>
+      </div>
+    </div>
   )
 }
 
@@ -81,60 +55,26 @@ type MenuLinkProps = {
   onClick?: () => void
   newTab?: boolean
   disabled?: boolean
-  inSiteMenu?: boolean
 }
 
-function MenuLink({
-  link,
-  title,
-  onClick,
-  newTab,
-  disabled,
-  inSiteMenu,
-}: MenuLinkProps) {
+function MenuLink({ link, title, onClick, newTab, disabled }: MenuLinkProps) {
   const isExternal = useIsExternalDomain(link)
   return (
-    <Paragraph
-      size="16"
-      css={
-        inSiteMenu
-          ? {
-              color: '$whiteA11',
-              '@hover': !disabled
-                ? {
-                    '&:hover': {
-                      color: '$whiteA12',
-                    },
-                  }
-                : {},
-            }
-          : {}
-      }
+    <Link
+      scaleSize="16"
+      href={link}
+      disabled={disabled}
+      onClick={onClick}
+      target={newTab ? '_blank' : undefined}
+      color="subtle"
+      className={cx('flex gap-0.5 items-center no-underline hover:underline')}
     >
-      <NextLink
-        href={link}
-        underline="hover"
-        disabled={disabled}
-        onClick={onClick}
-        target={newTab ? '_blank' : undefined}
-        css={{ display: 'flex', gap: 0, alignItems: 'center' }}
-      >
-        <Box as="span" css={{ flex: 'inherit' }}>
-          {title}
-        </Box>
-        {isExternal && (
-          <Box
-            as="span"
-            css={{
-              position: 'relative',
-              top: '2px',
-              transform: 'scale(0.75)',
-            }}
-          >
-            <Launch16 />
-          </Box>
-        )}
-      </NextLink>
-    </Paragraph>
+      <span className="flex-none">{title}</span>
+      {isExternal && (
+        <span className="scale-75">
+          <Launch16 />
+        </span>
+      )}
+    </Link>
   )
 }

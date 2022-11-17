@@ -1,44 +1,14 @@
-import { styled } from '../config/theme'
+import { cva } from 'class-variance-authority'
+import React from 'react'
+import { VariantProps } from '../types'
 
-export const Alert = styled('div', {
-  boxSizing: 'border-box',
-  '&::before': {
-    boxSizing: 'border-box',
-  },
-  '&::after': {
-    boxSizing: 'border-box',
-  },
+const styles = cva(
+  'border border-gray-500 dark:border-graydark-500 bg-gray-100 dark:bg-graydark-100 rounded p-4'
+)
 
-  border: '1px solid',
-  borderRadius: '$1',
-
-  variants: {
-    size: {
-      '1': {
-        p: '$2',
-      },
-    },
-    variant: {
-      loContrast: {
-        backgroundColor: '$loContrast',
-        borderColor: '$slate6',
-      },
-      gray: {
-        backgroundColor: '$slate2',
-        borderColor: '$slate6',
-      },
-      green: {
-        backgroundColor: '$accent2',
-        borderColor: '$accent8',
-      },
-      red: {
-        backgroundColor: '$red2',
-        borderColor: '$red6',
-      },
-    },
-  },
-  defaultVariants: {
-    size: '1',
-    variant: 'gray',
-  },
-})
+export const Alert = React.forwardRef<
+  HTMLDivElement,
+  VariantProps<typeof styles> & React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div {...props} className={styles({ className })} ref={ref} />
+))

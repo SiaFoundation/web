@@ -1,4 +1,3 @@
-import { Flex } from '../core/Flex'
 import { Text } from '../core/Text'
 import { ValueSf } from '../components/ValueSf'
 import { ValueSc } from '../components/ValueSc'
@@ -8,9 +7,11 @@ import BigNumber from 'bignumber.js'
 import { upperFirst } from 'lodash'
 import { Panel } from '../core/Panel'
 import { EntityType, getEntityTypeLabel } from '../lib/entityTypes'
+import { cx } from 'class-variance-authority'
 
 // entityType&entityValue | value | values | sc | sf
 type Props = {
+  scaleSize?: React.ComponentProps<typeof Text>['scaleSize']
   label: React.ReactNode
   value?: React.ReactNode
   hash?: string
@@ -25,11 +26,6 @@ type Props = {
   onClick?: () => void
 }
 
-const size: React.ComponentProps<typeof Text>['size'] = {
-  '@initial': '32',
-  '@bp1': '40',
-}
-
 export function DatumCard({
   label,
   entityType,
@@ -42,68 +38,47 @@ export function DatumCard({
   sf,
   comment,
   commentTip,
+  scaleSize,
   onClick,
 }: Props) {
   const commentEl = (
-    <Text color="subtle" size="12" css={{ height: '$3' }}>
+    <Text color="subtle" size="12" className="h-6">
       {comment}
     </Text>
   )
 
   return (
     <Panel>
-      <Flex
-        align="center"
+      <div
+        className={cx(
+          'flex items-center py-4 px-6 h-full min-w-[200px]',
+          onClick ? 'cursor-pointer' : ''
+        )}
         onClick={onClick}
-        css={{
-          p: '$2 $3',
-          height: '100%',
-          minWidth: '200px',
-          cursor: onClick ? 'pointer' : undefined,
-        }}
       >
-        <Flex direction="column" gap="2" wrap="wrap" align="start">
-          <Flex
-            css={{ position: 'relative', top: '1px', flex: 1, width: '100%' }}
-            gap="3"
-            align="center"
-            justify="between"
-          >
-            <Text
-              color="subtle"
-              ellipsis
-              size={{
-                '@initial': '12',
-                '@bp1': '14',
-              }}
-            >
+        <div className="flex flex-col gap-4 flex-wrap items-start">
+          <div className="flex relative top-px flex-1 w-full gap-6 items-center justify-between">
+            <Text color="subtle" ellipsis scaleSize="14">
               {typeof label === 'string' ? upperFirst(label) : label}
             </Text>
             {actions}
-          </Flex>
-          <Flex
-            direction="column"
-            align={{
-              '@initial': 'end',
-              '@bp2': 'start',
-            }}
-            gap="1"
-            css={{
-              '@bp2': {
-                flex: 2,
-              },
-            }}
-          >
+          </div>
+          <div className="flex flex-col items-end md:items-start gap-2 md:flex-2">
             {sc !== undefined && (
-              <ValueSc size={size} variant="value" value={sc} fixed={0} />
+              <ValueSc
+                scaleSize={scaleSize}
+                variant="value"
+                value={sc}
+                fixed={0}
+              />
             )}
             {sf !== undefined && (
-              <ValueSf size={size} variant="value" value={sf} />
+              <ValueSf scaleSize={scaleSize} variant="value" value={sf} />
             )}
             {entityType &&
               (entityValue ? (
                 <ValueCopyable
-                  size={size}
+                  scaleSize={scaleSize}
                   label={getEntityTypeLabel(entityType)}
                   href={href}
                   value={entityValue}
@@ -112,19 +87,23 @@ export function DatumCard({
                       ? Number(entityValue).toLocaleString()
                       : entityValue
                   }
-                  css={{
-                    position: 'relative',
-                    top: '2px',
-                  }}
+                  className="relative top-0.5"
                 />
               ) : (
-                <Text font="mono" weight="semibold" size={size}>
+                <Text font="mono" weight="semibold" scaleSize={scaleSize}>
                   -
                 </Text>
               ))}
-            {hash && <ValueCopyable size={size} label="hash" value={hash} />}
+            {hash && (
+              <ValueCopyable scaleSize={scaleSize} label="hash" value={hash} />
+            )}
             {value !== undefined && (
-              <Text font="mono" weight="semibold" size={size} ellipsis>
+              <Text
+                font="mono"
+                weight="semibold"
+                scaleSize={scaleSize}
+                ellipsis
+              >
                 {value}
               </Text>
             )}
@@ -133,9 +112,9 @@ export function DatumCard({
             ) : (
               commentEl
             )}
-          </Flex>
-        </Flex>
-      </Flex>
+          </div>
+        </div>
+      </div>
     </Panel>
   )
 }

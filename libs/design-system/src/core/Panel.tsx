@@ -1,37 +1,32 @@
-import { css, styled } from '../config/theme'
+import { cva, VariantProps } from 'class-variance-authority'
+import React from 'react'
 
-export const panelStyles = css({
-  backgroundColor: '$panel',
-
-  transition: 'border 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
-
-  boxShadow: '$colors$border, $colors$shadow',
-  color: '$hiContrast',
-  '@hover': {
-    '&:hover': {
-      boxShadow: '$colors$borderActive, $colors$shadowActive',
-    },
-  },
-
-  variants: {
-    radius: {
-      0: {
-        borderRadius: 0,
-      },
-      1: {
-        borderRadius: '$1',
-      },
-      2: {
-        borderRadius: '$2',
-      },
-      3: {
-        borderRadius: '$3',
+export const panelStyles = cva(
+  [
+    'bg-white dark:bg-graydark-200',
+    'transition-shadow ease-in-out duration-300',
+    'shadow-sm hover:shadow-md',
+    'rounded',
+    'border',
+  ],
+  {
+    variants: {
+      border: {
+        default: 'border-gray-400 dark:border-graydark-400',
+        contrast: 'border-black dark:border-graydark-1100',
       },
     },
-  },
-  defaultVariants: {
-    radius: '1',
-  },
+    defaultVariants: {
+      border: 'default',
+    },
+  }
+)
+
+export const Panel = React.forwardRef<
+  HTMLDivElement,
+  VariantProps<typeof panelStyles> & React.HTMLAttributes<HTMLDivElement>
+>(({ border, className, ...props }, ref) => {
+  return (
+    <div ref={ref} className={panelStyles({ border, className })} {...props} />
+  )
 })
-
-export const Panel = styled('div', panelStyles)

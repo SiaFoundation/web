@@ -1,5 +1,4 @@
 import { Buttons } from '../sections/Buttons'
-import { Colors } from '../sections/Colors'
 import { Typography } from '../sections/Typography'
 import { Layout } from '../sections/Layout'
 import { Menus } from '../sections/Menus'
@@ -10,19 +9,20 @@ import { Indicators } from '../sections/Indicators'
 import { Popups } from '../sections/Popups'
 import { Skeletons } from '../sections/Skeletons'
 import { Dialogs } from '../sections/Dialogs'
+import { Section } from '@siafoundation/design-system'
 
 export function IndexPage() {
   return (
     <>
-      <Colors />
+      <Section></Section>
       <Typography />
       <Images />
       <Layout />
       <Buttons />
       <Inputs />
+      <Indicators />
       <Menus />
       <ControlGroups />
-      <Indicators />
       <Dialogs />
       <Popups />
       <Skeletons />

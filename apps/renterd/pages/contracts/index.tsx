@@ -1,10 +1,9 @@
 import {
-  AppAuthedLayout,
   Button,
   ControlGroup,
   Box,
   Flex,
-  IconButton,
+  Button,
   Close16,
 } from '@siafoundation/design-system'
 import { RenterSidenav } from '../../components/RenterSidenav'
@@ -14,13 +13,14 @@ import { useDialog } from '../../contexts/dialog'
 import { useContracts } from '../../hooks/useContracts'
 import { ContractsFilterDropdownMenu } from '../../components/ContractsFilterDropdownMenu'
 import { ContractsViewDropdownMenu } from '../../components/ContractsViewDropdownMenu'
+import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
 
 export default function ContractsPage() {
   const { openDialog } = useDialog()
   const { columns, filters, removeFilter, contracts } = useContracts()
 
   return (
-    <AppAuthedLayout
+    <RenterdAuthedLayout
       title="Contracts"
       routes={routes}
       sidenav={<RenterSidenav />}
@@ -47,13 +47,9 @@ export default function ContractsPage() {
                   </Text>
                 )}
               </Button>
-              <IconButton
-                variant="gray"
-                size="1"
-                onClick={() => removeFilter(key)}
-              >
+              <Button variant="gray" size="1" onClick={() => removeFilter(key)}>
                 <Close16 />
-              </IconButton>
+              </Button>
             </ControlGroup>
           ))}
           <ContractsFilterDropdownMenu />
@@ -74,6 +70,6 @@ export default function ContractsPage() {
       >
         <Table data={contracts} columns={columns} summary />
       </Box>
-    </AppAuthedLayout>
+    </RenterdAuthedLayout>
   )
 }

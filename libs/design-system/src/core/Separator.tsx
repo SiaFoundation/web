@@ -1,117 +1,20 @@
-import { styled } from '../config/theme'
+import React from 'react'
+import { cva, VariantProps } from 'class-variance-authority'
 import * as SeparatorPrimitive from '@radix-ui/react-separator'
 
-export const Separator = styled(SeparatorPrimitive.Root, {
-  border: 'none',
-  margin: 0,
-  flexShrink: 0,
-  backgroundColor: '$slate4',
-  cursor: 'default',
+const styles = cva([
+  'border-none m-0 flex-shrink-0 bg-gray-300 dark:bg-graydark-300 cursor-default',
+])
 
-  variants: {
-    pad: {
-      '0': {
-        '&[data-orientation="horizontal"]': {
-          my: 0,
-        },
-
-        '&[data-orientation="vertical"]': {
-          mx: 0,
-        },
-      },
-      '0-5': {
-        '&[data-orientation="horizontal"]': {
-          my: '$0-5',
-        },
-
-        '&[data-orientation="vertical"]': {
-          mx: '$0-5',
-        },
-      },
-      '1': {
-        '&[data-orientation="horizontal"]': {
-          my: '$1',
-        },
-
-        '&[data-orientation="vertical"]': {
-          mx: '$1',
-        },
-      },
-      '1-5': {
-        '&[data-orientation="horizontal"]': {
-          my: '$1-5',
-        },
-
-        '&[data-orientation="vertical"]': {
-          mx: '$1-5',
-        },
-      },
-      '2': {
-        '&[data-orientation="horizontal"]': {
-          my: '$2',
-        },
-
-        '&[data-orientation="vertical"]': {
-          mx: '$2',
-        },
-      },
-      '3': {
-        '&[data-orientation="horizontal"]': {
-          my: '$3',
-        },
-
-        '&[data-orientation="vertical"]': {
-          mx: '$3',
-        },
-      },
-      '4': {
-        '&[data-orientation="horizontal"]': {
-          my: '$4',
-        },
-
-        '&[data-orientation="vertical"]': {
-          mx: '$4',
-        },
-      },
-    },
-    size: {
-      '1': {
-        '&[data-orientation="horizontal"]': {
-          height: '1px',
-          width: '$1',
-        },
-
-        '&[data-orientation="vertical"]': {
-          width: '1px',
-          height: '$1',
-        },
-      },
-      '95': {
-        '&[data-orientation="horizontal"]': {
-          height: '1px',
-          width: '95%',
-        },
-
-        '&[data-orientation="vertical"]': {
-          width: '1px',
-          height: '95%',
-        },
-      },
-      '100': {
-        '&[data-orientation="horizontal"]': {
-          height: '1px',
-          width: '100%',
-        },
-
-        '&[data-orientation="vertical"]': {
-          width: '1px',
-          height: '100%',
-        },
-      },
-    },
-  },
-  defaultVariants: {
-    pad: '1',
-    size: '1',
-  },
+export const Separator = React.forwardRef<
+  React.ElementRef<typeof SeparatorPrimitive.Root>,
+  VariantProps<typeof styles> & SeparatorPrimitive.SeparatorProps
+>(({ className, ...props }, ref) => {
+  return (
+    <SeparatorPrimitive.Root
+      ref={ref}
+      className={styles({ className })}
+      {...props}
+    />
+  )
 })

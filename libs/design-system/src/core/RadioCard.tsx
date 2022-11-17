@@ -1,83 +1,54 @@
 import React from 'react'
-import { styled, CSS } from '../config/theme'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
+import { cx } from 'class-variance-authority'
+import { radioIndicatorStyles, radioStyles } from './Radio'
 
-export const RadioCardGroup = styled(RadioGroupPrimitive.Root, {
-  display: 'block',
-})
-
-const StyledRadioButton = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderRadius: '$round',
-  width: 25,
-  height: 25,
-  boxShadow: 'inset 0 0 0 1px $colors$gray7',
-  flexShrink: 0,
-  mr: '$3',
-})
-
-const StyledRadioIndicator = styled('div', {
-  borderRadius: '$round',
-  width: 15,
-  height: 15,
-  backgroundColor: '$accent9',
-  transform: 'scale(0)',
-})
-
-const StyledRadio = styled(RadioGroupPrimitive.Item, {
-  all: 'unset',
-  boxSizing: 'border-box',
-  userSelect: 'none',
-  '&::before': {
-    boxSizing: 'border-box',
-  },
-  '&::after': {
-    boxSizing: 'border-box',
-  },
-  display: 'flex',
-  alignItems: 'center',
-  borderRadius: '$2',
-  p: '$3',
-  boxShadow: '$colors$selectableBorder, $colors$shadow',
-  '@hover': {
-    '&:hover': {
-      boxShadow: '$colors$selectableBorderHover, $colors$shadow',
-    },
-  },
-  '&[data-state="checked"]': {
-    boxShadow: '$colors$selectableBorderActive, $colors$shadowActive',
-    [`& ${StyledRadioIndicator}`]: {
-      transform: 'scale(1)',
-    },
-  },
-  '&:disabled': {
-    pointerEvents: 'none',
-    backgroundColor: '$gray2',
-    opacity: '0.5',
-    cursor: 'not-allowed',
-  },
-})
-
-type RadioGroupItemPrimitiveProps = React.ComponentProps<
-  typeof RadioGroupPrimitive.Item
->
-type RadioCardProps = RadioGroupItemPrimitiveProps & {
-  indicator?: boolean
-  css?: CSS
+export function RadioCardGroup({
+  className,
+  ...props
+}: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {
+  return (
+    <RadioGroupPrimitive.Root className={cx('block', className)} {...props} />
+  )
 }
 
 export const RadioCard = React.forwardRef<
-  React.ElementRef<typeof StyledRadio>,
-  RadioCardProps
+  React.ElementRef<typeof RadioGroupPrimitive.Item>,
+  RadioGroupPrimitive.RadioGroupItemProps & {
+    indicator?: boolean
+  }
 >(({ indicator = true, ...props }, forwardedRef) => (
-  <StyledRadio {...props} ref={forwardedRef}>
-    {indicator && (
-      <StyledRadioButton>
-        <StyledRadioIndicator />
-      </StyledRadioButton>
+  <RadioGroupPrimitive.Item
+    {...props}
+    ref={forwardedRef}
+    className={cx(
+      'select-none flex items-center gap-4 rounded py-4 px-4',
+
+      'focus:ring ring-blue-500 dark:ring-blue-200',
+      'border',
+      'bg-gray-200 dark:bg-graydark-50',
+      'border-gray-400 dark:border-graydark-400',
+      'enabled:hover:border-gray-500 enabled:hover:dark:border-graydark-500',
+      'disabled:cursor-default',
+
+      'enabled:data-[state=checked]:ring',
+      'enabled:data-[state=checked]:ring-green-600 dark:enabled:data-[state=checked]:ring-green-500',
+      'disabled:data-[state=checked]:ring-green-600/50 dark:disabled:data-[state=checked]:ring-green-500/50'
     )}
-    {props.children}
-  </StyledRadio>
+  >
+    {indicator && (
+      <div>
+        <div
+          className={radioStyles({
+            size: 'medium',
+          })}
+        >
+          <RadioGroupPrimitive.Indicator
+            className={radioIndicatorStyles({ size: 'medium' })}
+          />
+        </div>
+      </div>
+    )}
+    <div className="flex-1">{props.children}</div>
+  </RadioGroupPrimitive.Item>
 ))

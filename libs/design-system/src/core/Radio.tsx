@@ -1,121 +1,86 @@
 import React from 'react'
-import { styled, CSS, VariantProps } from '../config/theme'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
-import { Flex } from './Flex'
 import { Text } from './Text'
+import { cva, cx } from 'class-variance-authority'
+import { VariantProps } from '../types'
 
-export const RadioGroup = styled(RadioGroupPrimitive.Root, {
-  display: 'flex',
-})
-
-const StyledIndicator = styled(RadioGroupPrimitive.Indicator, {
-  alignItems: 'center',
-  display: 'flex',
-  height: '100%',
-  justifyContent: 'center',
-  width: '100%',
-  position: 'relative',
-  '&::after': {
-    content: '""',
-    display: 'block',
-    width: '7px',
-    height: '7px',
-    borderRadius: '50%',
-    backgroundColor: '$accent9',
-  },
-})
-
-const StyledRadio = styled(RadioGroupPrimitive.Item, {
-  all: 'unset',
-  boxSizing: 'border-box',
-  userSelect: 'none',
-  '&::before': {
-    boxSizing: 'border-box',
-  },
-  '&::after': {
-    boxSizing: 'border-box',
-  },
-  alignItems: 'center',
-  appearance: 'none',
-  display: 'inline-flex',
-  justifyContent: 'center',
-  lineHeight: '1',
-  margin: '0',
-  outline: 'none',
-  padding: '0',
-  textDecoration: 'none',
-  WebkitTapHighlightColor: 'rgba(0,0,0,0)',
-
-  borderRadius: '50%',
-  color: '$hiContrast',
-  boxShadow: '$colors$border, $colors$shadow',
-  overflow: 'hidden',
-  '@hover': {
-    '&:hover': {
-      boxShadow: '$colors$borderAccentHover, $colors$shadow',
-    },
-  },
-  '&:focus': {
-    outline: 'none',
-    boxShadow: '$colors$borderAccentActive, $colors$shadowActive',
-  },
-
-  '&:disabled': {
-    pointerEvents: 'none',
-    backgroundColor: '$gray2',
-    color: '$gray8',
-    cursor: 'not-allowed',
-  },
-
-  variants: {
-    size: {
-      '1': {
-        width: '$2',
-        height: '$2',
-      },
-      '2': {
-        width: '$3',
-        height: '$3',
-
-        [`& ${StyledIndicator}`]: {
-          '&::after': {
-            width: '15px',
-            height: '15px',
-          },
-        },
+export const radioIndicatorStyles = cva(
+  [
+    'relative flex items-center h-full justify-center w-full',
+    'after:content-[""] after:block after:rounded-full after:bg-green-600 after:dark:bg-green-500',
+  ],
+  {
+    variants: {
+      size: {
+        small: 'after:w-2 after:h-2 ',
+        medium: 'after:w-4 after:h-4',
       },
     },
-  },
-  defaultVariants: {
-    size: '1',
-  },
-})
+    defaultVariants: {
+      size: 'small',
+    },
+  }
+)
 
-type RadioVariants = VariantProps<typeof StyledRadio>
-type RadioGroupItemPrimitiveProps = React.ComponentProps<
-  typeof RadioGroupPrimitive.Item
->
-type RadioProps = RadioGroupItemPrimitiveProps &
-  RadioVariants & { css?: CSS; children: React.ReactNode }
+export const radioStyles = cva(
+  [
+    'select-none',
+    'inline-flex items-center justify-center',
+    'm-0 p-0',
+    'outline-none',
+    'rounded-full',
+    'overflow-hidden',
+    'focus:ring ring-blue-500 dark:ring-blue-200',
+    'bg-white dark:bg-graydark-200',
+    'border border-gray-500 dark:border-graydark-400',
+    'enabled:hover:border-gray-700 enabled:hover:dark:border-graydark-600',
+    'text-gray-1100 dark:text-white',
+    'disabled:text-gray-600 disabled:dark:text-graydark-400',
+    'disabled:bg-gray-200 disabled:dark:bg-graydark-200',
+  ],
+  {
+    variants: {
+      size: {
+        small: 'w-4 h-4',
+        medium: 'w-6 h-6',
+      },
+    },
+    defaultVariants: {
+      size: 'small',
+    },
+  }
+)
 
 export const Radio = React.forwardRef<
-  React.ElementRef<typeof StyledRadio>,
-  RadioProps
->(({ children, ...props }, forwardedRef) => (
-  <Flex gap="1" align="center">
-    <StyledRadio {...props} ref={forwardedRef}>
-      <StyledIndicator />
-    </StyledRadio>
+  React.ElementRef<typeof RadioGroupPrimitive.Item>,
+  VariantProps<typeof radioStyles> & RadioGroupPrimitive.RadioGroupItemProps
+>(({ size, className, children, ...props }, ref) => (
+  <div className="flex gap-2 items-center">
+    <RadioGroupPrimitive.Item
+      {...props}
+      className={radioStyles({ size, className })}
+      ref={ref}
+    >
+      <RadioGroupPrimitive.Indicator
+        className={radioIndicatorStyles({ size })}
+      />
+    </RadioGroupPrimitive.Item>
     <Text
-      css={{
-        position: 'relative',
-        top: '1px',
-        display: 'flex',
-        alignItems: 'center',
-        color: props.disabled ? '$gray9' : '$hiContrast',
-      }}
+      className="relative top-px flex items-center"
+      color={props.disabled ? 'subtle' : 'contrast'}
     >
       {children}
     </Text>
-  </Flex>
+  </div>
+))
+
+export const RadioGroup = React.forwardRef<
+  React.ElementRef<typeof RadioGroupPrimitive.RadioGroup>,
+  RadioGroupPrimitive.RadioGroupProps
+>(({ className, ...props }, ref) => (
+  <RadioGroupPrimitive.RadioGroup
+    {...props}
+    className={cx('flex gap-2', className)}
+    ref={ref}
+  />
 ))

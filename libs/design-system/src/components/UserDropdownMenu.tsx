@@ -1,34 +1,29 @@
 import React from 'react'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '../core/DropdownMenu'
+import { DropdownMenu, DropdownMenuSeparator } from '../core/DropdownMenu'
 import { OverflowMenuHorizontal20 } from '../icons/carbon'
 import { ThemeMenu } from './ThemeMenu'
-import { IconButton } from '../core/IconButton'
+import { Button } from '../core/Button'
 
-type Props = React.ComponentProps<typeof IconButton> & {
+type Props = React.ComponentProps<typeof Button> & {
   trigger?: React.ReactNode
   children?: React.ReactNode
 }
 
 export function UserDropdownMenu({ trigger, children, ...props }: Props) {
-  const triggerEl = trigger || (
-    <IconButton size="1" {...props} css={{ transform: 'scale(1.5)' }}>
-      <OverflowMenuHorizontal20 />
-    </IconButton>
-  )
-
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>{triggerEl}</DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        {children}
-        {children && <DropdownMenuSeparator />}
-        <ThemeMenu />
-      </DropdownMenuContent>
+    <DropdownMenu
+      trigger={
+        trigger || (
+          <Button size="small" {...props} className="scale-150">
+            <OverflowMenuHorizontal20 />
+          </Button>
+        )
+      }
+      contentProps={{ align: 'end' }}
+    >
+      {children}
+      {children && <DropdownMenuSeparator />}
+      <ThemeMenu />
     </DropdownMenu>
   )
 }

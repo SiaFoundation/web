@@ -8,7 +8,7 @@ type Props = {
   value: BigNumber
   variant?: 'change' | 'value'
   tooltip?: string
-  color?: string
+  color?: React.ComponentProps<typeof Text>['color']
   format: (value: BigNumber) => string
 }
 
@@ -25,11 +25,11 @@ export function ValueNum({
   const color =
     variant === 'change'
       ? value.isGreaterThan(0)
-        ? '$green11'
+        ? 'green'
         : value.isLessThan(0)
-        ? '$red11'
-        : '$gray7'
-      : '$textContrast'
+        ? 'red'
+        : 'subtle'
+      : 'contrast'
 
   return (
     <Tooltip content={(tooltip ? `${tooltip} ` : '') + format(value)}>
@@ -38,9 +38,7 @@ export function ValueNum({
         weight={weight}
         font="mono"
         ellipsis
-        css={{
-          color: customColor || color,
-        }}
+        color={customColor || color}
       >
         {variant === 'change'
           ? `${sign}${format(value.absoluteValue())}`

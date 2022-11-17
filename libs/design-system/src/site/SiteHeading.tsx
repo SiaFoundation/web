@@ -1,8 +1,8 @@
-import { Flex } from '../core/Flex'
+import { cx } from 'class-variance-authority'
+import React from 'react'
 import { Heading } from '../core/Heading'
 import { Paragraph } from '../core/Paragraph'
 import { Text } from '../core/Text'
-import { CSS } from '../config/theme'
 import { LinkData } from '../lib/links'
 import { Links } from './Links'
 
@@ -15,25 +15,15 @@ type Props = {
   title: string
   description?: React.ReactNode
   links?: LinkData[]
-  css?: CSS
+  className?: string
   children?: React.ReactNode
 }
 
-const sizeToGap: Record<Size, React.ComponentProps<typeof Flex>['gap']> = {
-  '20': '1',
-  '24': '2',
-  '32': '2',
-  '64': '2',
-}
-
-const sizeToHeading: Record<
-  Size,
-  React.ComponentProps<typeof Heading>['size']
-> = {
-  '20': '20',
-  '24': '24',
-  '32': '32',
-  '64': '64',
+const sizeToGap: Record<Size, string> = {
+  '20': 'gap-2',
+  '24': 'gap-3',
+  '32': 'gap-3',
+  '64': 'gap-8',
 }
 
 const sizeToParagraph: Record<
@@ -41,7 +31,7 @@ const sizeToParagraph: Record<
   React.ComponentProps<typeof Paragraph>['size']
 > = {
   '20': '14',
-  '24': '18',
+  '24': '16',
   '32': '18',
   '64': '20',
 }
@@ -60,18 +50,18 @@ const sizeToEyebrow: Record<Size, React.ComponentProps<typeof Text>['size']> = {
   '64': '14',
 }
 
-const sizeToLinkPadTop: Record<Size, CSS['padding']> = {
-  '20': '$1',
-  '24': '$1',
-  '32': '$1',
-  '64': '$2',
+const sizeToLinkPadTop: Record<Size, string> = {
+  '20': 'pt-2',
+  '24': 'pt-2',
+  '32': 'pt-2',
+  '64': 'pt-4',
 }
 
-const sizeToPadding: Record<Size, CSS['padding']> = {
-  '20': '0',
-  '24': '0',
-  '32': '$5 0',
-  '64': '$5 0',
+const sizeToPadding: Record<Size, string> = {
+  '20': 'p-0',
+  '24': 'p-0',
+  '32': 'py-10',
+  '64': 'py-10',
 }
 
 export function SiteHeading({
@@ -81,39 +71,41 @@ export function SiteHeading({
   description,
   links,
   size = '32',
-  css,
+  className,
   children,
 }: Props) {
   return (
-    <Flex
+    <div
       id={id}
-      direction="column"
-      gap={sizeToGap[size]}
-      css={{
-        paddingBottom: sizeToPadding[size],
-        ...css,
-      }}
+      className={cx(
+        'flex flex-col',
+        sizeToGap[size],
+        sizeToPadding[size],
+        className
+      )}
     >
       {eyebrow && (
         <Text
           size={sizeToEyebrow[size]}
           color="subtle"
           font="mono"
-          css={{ textTransform: 'uppercase', fontWeight: 500 }}
+          className="uppercase font-medium"
         >
           {eyebrow}
         </Text>
       )}
-      <Heading size={sizeToHeading[size]}>{title}</Heading>
+      <Heading size={size} className="pb-2">
+        {title}
+      </Heading>
       {description && (
         <Paragraph size={sizeToParagraph[size]}>{description}</Paragraph>
       )}
       <Links
         links={links}
         size={sizeToLinks[size]}
-        css={{ paddingTop: sizeToLinkPadTop[size] }}
+        className={sizeToLinkPadTop[size]}
       />
       {children}
-    </Flex>
+    </div>
   )
 }

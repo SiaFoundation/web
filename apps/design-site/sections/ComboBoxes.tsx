@@ -1,6 +1,4 @@
 import {
-  Flex,
-  Grid,
   Section,
   Text,
   TextField,
@@ -23,45 +21,33 @@ export function ComboBoxes() {
   )
   return (
     <>
-      <Section css={{ pt: '$9' }}>
+      <Section className="pt-20">
         <SubsectionHeading>ComboBox</SubsectionHeading>
-        <Flex direction="column" gap="3">
+        <div className="flex flex-col gap-6">
           <SmallSection>sizes</SmallSection>
-          <Grid
-            columns={{
-              '@initial': 1,
-              '@bp1': 3,
-            }}
-            gap="1"
-          >
-            <ComboBox options={options} size="1" />
-            <ComboBox options={options} size="2" />
-            <ComboBox options={options} size="3" />
-          </Grid>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <ComboBox options={options} size="small" />
+            <ComboBox options={options} size="medium" />
+            <ComboBox options={options} size="large" />
+          </div>
           <SmallSection>
             controlled, <Code>disabled</Code>
           </SmallSection>
-          <Grid
-            columns={{
-              '@initial': 1,
-              '@bp1': 3,
-            }}
-            gap="1"
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <ComboBox
               value={value}
               onChange={setValue}
               options={options}
-              size="2"
+              size="medium"
             />
             <ComboBox
               value={value}
               disabled
               onChange={setValue}
               options={options}
-              size="2"
+              size="medium"
             />
-          </Grid>
+          </div>
           <SmallSection>
             with <Code>prefix</Code> and <Code>{`indicators={false}`}</Code>
           </SmallSection>
@@ -69,88 +55,82 @@ export function ComboBoxes() {
             with <Code>{`state="invalid"`}</Code> and{' '}
             <Code>{`state="valid"`}</Code>
           </SmallSection>
-          <Grid
-            columns={{
-              '@initial': 2,
-              '@bp1': 4,
-            }}
-            gap="1"
-          >
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             <ComboBox
               options={options}
-              size="1"
+              size="small"
               indicators={false}
               prefix={<Prefix n={1} />}
             />
             <ComboBox
               options={options}
-              size="1"
+              size="small"
               indicators={false}
               prefix={<Prefix n={2} />}
             />
             <ComboBox
               options={options}
-              size="1"
+              size="small"
               indicators={false}
               prefix={<Prefix n={3} />}
             />
             <ComboBox
               options={options}
-              size="1"
+              size="small"
               indicators={false}
               prefix={<Prefix n={4} />}
             />
             <ComboBox
               options={options}
-              size="1"
+              size="small"
               indicators={false}
               state="invalid"
               prefix={<Prefix n={11} />}
             />
             <ComboBox
               options={options}
-              size="1"
+              size="small"
               indicators={false}
               state="valid"
               prefix={<Prefix n={12} />}
             />
             <ComboBox
               options={options}
-              size="1"
+              size="small"
               indicators={false}
               prefix={<Prefix n={13} />}
             />
             <ComboBox
               options={options}
-              size="1"
+              size="small"
               indicators={false}
               prefix={<Prefix n={14} />}
             />
-          </Grid>
-        </Flex>
+          </div>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section className="pt-20">
         <SubsectionHeading>Mixed</SubsectionHeading>
-        <Flex direction="row" gap="1">
-          <ComboBox options={options} size="1" />
+        <div className="flex gap-2">
+          <ComboBox options={options} size="small" />
           <TextField
-            size="1"
+            size="small"
             type="email"
             state="invalid"
             placeholder="thompson@bell-labs.com"
             defaultValue="thompson@@belllabs"
           />
-          <ComboBox options={options} size="2" />
+          <ComboBox options={options} size="medium" />
           <TextField
-            size="2"
+            size="medium"
             type="email"
             state="invalid"
             placeholder="thompson@bell-labs.com"
             defaultValue="thompson@@belllabs"
           />
-          <ComboBox options={options} size="3" />
-          <ComboBox options={options} size="3" />
-        </Flex>
+          <ComboBox options={options} size="large" />
+          <ComboBox options={options} size="large" />
+        </div>
       </Section>
     </>
   )
@@ -158,7 +138,7 @@ export function ComboBoxes() {
 
 function Prefix({ n }) {
   return (
-    <Text size="10" color="subtle" css={{ width: '16px', textAlign: 'right' }}>
+    <Text size="10" color="subtle" className="w-4 text-right">
       {n}
     </Text>
   )

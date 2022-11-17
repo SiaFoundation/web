@@ -1,4 +1,3 @@
-import { Flex } from '../core/Flex'
 import { Text } from '../core/Text'
 import { ValueSf } from '../components/ValueSf'
 import { ValueSc } from '../components/ValueSc'
@@ -20,11 +19,6 @@ export type DatumProps = {
   comment?: React.ReactNode
 }
 
-const size: React.ComponentProps<typeof Text>['size'] = {
-  '@initial': '16',
-  '@bp1': '18',
-}
-
 export function Datum({
   label,
   entityType,
@@ -37,44 +31,24 @@ export function Datum({
   comment,
 }: DatumProps) {
   return (
-    <Flex
-      gapX="6"
-      gapY="2"
-      wrap="wrap"
-      align="center"
-      css={{ overflow: 'hidden' }}
-    >
-      <Flex css={{ position: 'relative', top: '1px', flex: 1 }}>
-        <Text
-          color="subtle"
-          ellipsis
-          size={{
-            '@initial': '12',
-            '@bp1': '14',
-          }}
-        >
+    <div className="flex gap-x-12 gap-y-4 flex-wrap items-center overflow-hidden">
+      <div className="flex relative top-px flex-1">
+        <Text color="subtle" ellipsis scaleSize="14">
           {upperFirst(label)}
         </Text>
-      </Flex>
-      <Flex
-        direction="column"
-        align={{
-          '@initial': 'end',
-          '@bp2': 'start',
-        }}
-        gap="1"
-        css={{
-          '@bp2': {
-            flex: 2,
-          },
-        }}
-      >
-        {sc !== undefined && <ValueSc size={size} variant="value" value={sc} />}
-        {sf !== undefined && <ValueSf size={size} variant="value" value={sf} />}
+      </div>
+      <div className="flex flex-col items-end md:items-start gap-2 md:flex-2">
+        {sc !== undefined && (
+          <ValueSc scaleSize="18" variant="value" value={sc} />
+        )}
+        {sf !== undefined && (
+          <ValueSf scaleSize="18" variant="value" value={sf} />
+        )}
         {entityType &&
           (entityValue ? (
             <ValueCopyable
-              size={size}
+              className="relative top-0.5"
+              scaleSize="18"
               label={getEntityTypeLabel(entityType)}
               href={href}
               value={entityValue}
@@ -83,19 +57,15 @@ export function Datum({
                   ? Number(entityValue).toLocaleString()
                   : entityValue
               }
-              css={{
-                position: 'relative',
-                top: '2px',
-              }}
             />
           ) : (
-            <Text font="mono" weight="semibold" size={size}>
+            <Text font="mono" weight="semibold" scaleSize="18">
               -
             </Text>
           ))}
-        {hash && <ValueCopyable size={size} label="hash" value={hash} />}
+        {hash && <ValueCopyable scaleSize="18" label="hash" value={hash} />}
         {value !== undefined && (
-          <Text font="mono" weight="semibold" size={size} ellipsis>
+          <Text font="mono" weight="semibold" scaleSize="18" ellipsis>
             {value}
           </Text>
         )}
@@ -104,7 +74,7 @@ export function Datum({
             {comment}
           </Text>
         )}
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   )
 }
