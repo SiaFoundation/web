@@ -1,6 +1,5 @@
 import { Avatar } from '../core/Avatar'
-import { Box } from '../core/Box'
-import { NextLink } from '../core/Link'
+import { Link } from '../core/Link'
 import { Tooltip } from '../core/Tooltip'
 import {
   EntityType,
@@ -27,13 +26,13 @@ export function EntityAvatar({ type, label, initials, href, shape }: Props) {
       }
     />
   )
-  const linkEl = href && <NextLink href={href}>{avatarEl}</NextLink>
+  const linkEl = href && <Link href={href}>{avatarEl}</Link>
   const el = linkEl || avatarEl
 
   if (type) {
     return (
       <Tooltip content={label || getEntityTypeLabel(type)}>
-        <Box>{el}</Box>
+        <div className="">{el}</div>
       </Tooltip>
     )
   }

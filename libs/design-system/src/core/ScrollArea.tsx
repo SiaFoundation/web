@@ -1,73 +1,6 @@
 import React from 'react'
-import { styled } from '../config/theme'
-import { mauve, blackA } from '@radix-ui/colors'
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area'
-
-const SCROLLBAR_SIZE = 10
-
-const StyledScrollArea = styled(ScrollAreaPrimitive.Root, {
-  width: '100%',
-  height: '100%',
-  overflow: 'hidden',
-})
-
-const StyledViewport = styled(ScrollAreaPrimitive.Viewport, {
-  width: '100%',
-  height: '100%',
-  borderRadius: 'inherit',
-  // Temporary fix until removed upstream: https://github.com/radix-ui/primitives/issues/926
-  '> div[style]': {
-    display: 'block !important',
-  },
-})
-
-const StyledScrollbar = styled(ScrollAreaPrimitive.Scrollbar, {
-  zIndex: 1,
-  display: 'flex',
-  // ensures no selection
-  userSelect: 'none',
-  // disable browser handling of all panning and zooming gestures on touch devices
-  touchAction: 'none',
-  padding: 2,
-  // background: blackA.blackA3,
-  transition: 'background 160ms ease-out',
-  '&:hover': { background: blackA.blackA6 },
-  '&[data-orientation="vertical"]': { width: SCROLLBAR_SIZE },
-  '&[data-orientation="horizontal"]': {
-    flexDirection: 'column',
-    height: SCROLLBAR_SIZE,
-  },
-})
-
-const StyledThumb = styled(ScrollAreaPrimitive.Thumb, {
-  flex: 1,
-  background: mauve.mauve10,
-  borderRadius: SCROLLBAR_SIZE,
-  // increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html
-  position: 'relative',
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '100%',
-    height: '100%',
-    minWidth: 44,
-    minHeight: 44,
-  },
-})
-
-const StyledCorner = styled(ScrollAreaPrimitive.Corner, {
-  background: blackA.blackA8,
-})
-
-// Exports
-const ScrollAreaContainer = StyledScrollArea
-const ScrollAreaViewport = StyledViewport
-const ScrollAreaScrollbar = StyledScrollbar
-const ScrollAreaThumb = StyledThumb
-const ScrollAreaCorner = StyledCorner
+import { cx } from 'class-variance-authority'
 
 type Props = {
   id?: string
@@ -75,19 +8,43 @@ type Props = {
 }
 
 export const ScrollArea = React.forwardRef<
-  React.ElementRef<typeof ScrollAreaViewport>,
+  React.ElementRef<typeof ScrollAreaPrimitive.Viewport>,
   Props
 >(({ id, children }, ref) => (
-  <ScrollAreaContainer>
-    <ScrollAreaViewport id={id} ref={ref}>
+  <ScrollAreaPrimitive.Root className="w-full h-full overflow-hidden">
+    <ScrollAreaPrimitive.Viewport
+      id={id}
+      ref={ref}
+      // Temporary fix until removed upstream: https://github.com/radix-ui/primitives/issues/926
+      // '> div[style]': {
+      //   display: 'block !important',
+      // },
+      className="w-full h-full [&>div[style]]:block"
+    >
       {children}
-    </ScrollAreaViewport>
-    <ScrollAreaScrollbar orientation="vertical">
-      <ScrollAreaThumb />
-    </ScrollAreaScrollbar>
-    <ScrollAreaScrollbar orientation="horizontal">
-      <ScrollAreaThumb />
-    </ScrollAreaScrollbar>
-    <ScrollAreaCorner />
-  </ScrollAreaContainer>
+    </ScrollAreaPrimitive.Viewport>
+    <ScrollAreaPrimitive.Scrollbar
+      orientation="vertical"
+      className="z-10 flex select-none touch-none transition-colors hover:bg-black/20 w-1.5 m-px"
+    >
+      <ScrollAreaPrimitive.Thumb
+        className={cx(
+          'flex-1 relative bg-gray-300 rounded',
+          'before:content[""] before:absolute before:top-1/2 before:left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full'
+        )}
+      />
+    </ScrollAreaPrimitive.Scrollbar>
+    <ScrollAreaPrimitive.Scrollbar
+      orientation="horizontal"
+      className="z-10 flex flex-col select-none touch-none transition-colors duration-1000 hover:bg-black/20 h-1.5 m-px"
+    >
+      <ScrollAreaPrimitive.Thumb
+        className={cx(
+          'flex-1 relative bg-gray-300 rounded',
+          'before:content[""] before:absolute before:top-1/2 before:left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full'
+        )}
+      />
+    </ScrollAreaPrimitive.Scrollbar>
+    <ScrollAreaPrimitive.Corner className="bg-black/70" />
+  </ScrollAreaPrimitive.Root>
 ))

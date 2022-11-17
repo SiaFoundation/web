@@ -37,14 +37,14 @@ function Newsroom() {
       description={description}
       path={routes.newsroom.index}
       heading={
-        <SectionSimple css={{ py: '$max' }}>
+        <SectionSimple className="pt-24 md:py-40">
           <SiteHeading
             size="64"
             title={title}
             description={description}
             links={[
               {
-                title: 'press releases RSS',
+                title: 'Press releases RSS',
                 link: routes.newsroom.feed.rss,
                 newTab: true,
               },
@@ -55,12 +55,12 @@ function Newsroom() {
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <SectionSimple css={{ pt: '$12', pb: '$max' }}>
+      <SectionSimple className="pt-20 pb-40">
         <ContentGallery
           filterMode="external"
           filters={['press', 'ecosystem']}
           filterable="news"
-          columns="1"
+          columnClassName="grid-cols-1"
           items={posts.data || []}
         />
       </SectionSimple>

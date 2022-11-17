@@ -1,4 +1,4 @@
-import { Flex } from '../core/Flex'
+import { cx } from 'class-variance-authority'
 import { Status } from '../core/Status'
 import { Text } from '../core/Text'
 
@@ -11,20 +11,17 @@ type Props = {
 
 export function DataLabel({ label, enabled = true, onChange, color }: Props) {
   return (
-    <Flex
-      gap="1"
-      align="center"
+    <div
+      className={cx(
+        'flex gap-2 items-center',
+        enabled ? 'opacity-100' : 'opacity-50',
+        onChange ? 'cursor-pointer' : 'cursor-auto',
+        onChange && (enabled ? 'hover:opacity-90' : 'hover:opacity-60')
+      )}
       onClick={() => onChange && onChange(!enabled)}
-      css={{
-        opacity: enabled ? 1 : 0.5,
-        cursor: onChange ? 'pointer' : 'auto',
-        '&:hover': onChange && {
-          opacity: enabled ? 0.9 : 0.6,
-        },
-      }}
     >
-      {color && <Status size="2" css={{ backgroundColor: color }} />}
+      {color && <Status size="medium" style={{ backgroundColor: color }} />}
       <Text>{label}</Text>
-    </Flex>
+    </div>
   )
 }

@@ -1,4 +1,3 @@
-import { Box } from './Box'
 import { Tooltip } from './Tooltip'
 import { Information16 } from '../icons/carbon'
 
@@ -9,16 +8,9 @@ type Props = {
 export function InfoTip({ children }: Props) {
   return (
     <Tooltip content={children}>
-      <Box
-        css={{
-          display: 'inline-block',
-          mx: '$0-5',
-          position: 'relative',
-          transform: 'scale(0.75)',
-        }}
-      >
+      <div className="inline mx-1 relative scale-75">
         <Information16 />
-      </Box>
+      </div>
     </Tooltip>
   )
 }

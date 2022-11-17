@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: PlexSans;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/PlexSans/IBMPlexSansVar-Roman.woff2') format('woff2');
+}
+@font-face {
+  font-family: PlexSans;
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/PlexSans/IBMPlexSansVar-Italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: PlexMono;
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url('/fonts/PlexMono/IBMPlexMono-Thin.woff2') format('woff2');
+}
+@font-face {
+  font-family: PlexMono;
+  font-style: italic;
+  font-weight: 100;
+  font-display: swap;
+  src: url('/fonts/PlexMono/IBMPlexMono-ThinItalic.woff2') format('woff2');
+}
+@font-face {
+  font-family: PlexMono;
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url('/fonts/PlexMono/IBMPlexMono-ExtraLight.woff2') format('woff2');
+}
+@font-face {
+  font-family: PlexMono;
+  font-style: italic;
+  font-weight: 200;
+  font-display: swap;
+  src: url('/fonts/PlexMono/IBMPlexMono-ExtraLightItalic.woff2') format('woff2');
+}
+@font-face {
+  font-family: PlexMono;
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/PlexMono/IBMPlexMono-Light.woff2') format('woff2');
+}
+@font-face {
+  font-family: PlexMono;
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/PlexMono/IBMPlexMono-LightItalic.woff2') format('woff2');
+}
+@font-face {
+  font-family: PlexMono;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/PlexMono/IBMPlexMono-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: PlexMono;
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/PlexMono/IBMPlexMono-Italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: PlexMono;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/PlexMono/IBMPlexMono-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: PlexMono;
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/PlexMono/IBMPlexMono-MediumItalic.woff2') format('woff2');
+}
+@font-face {
+  font-family: PlexMono;
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/PlexMono/IBMPlexMono-SemiBold.woff2') format('woff2');
+}
+@font-face {
+  font-family: PlexMono;
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/PlexMono/IBMPlexMono-SemiBoldItalic.woff2') format('woff2');
+}
+@font-face {
+  font-family: PlexMono;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/PlexMono/IBMPlexMono-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: PlexMono;
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/PlexMono/IBMPlexMono-BoldItalic.woff2') format('woff2');
+}
+@font-face {
+  font-family: PlexMono;
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/PlexMono/IBMPlexMono-ExtraBold.woff2') format('woff2');
+}
+@font-face {
+  font-family: PlexMono;
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/PlexMono/IBMPlexMono-ExtraBoldItalic.woff2') format('woff2');
+}

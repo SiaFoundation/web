@@ -1,4 +1,5 @@
-import { Text, Flex } from '@siafoundation/design-system'
+import { Text } from '@siafoundation/design-system'
+import { cx } from 'class-variance-authority'
 
 import { useCallback, useEffect, useState } from 'react'
 
@@ -61,18 +62,7 @@ export function CarouselTags({
   items,
 }: CarouselTagsProps) {
   return (
-    <Flex
-      gapX={{
-        '@initial': 2,
-        '@bp2': 5,
-      }}
-      gapY={{
-        '@initial': 1,
-        '@bp2': 5,
-      }}
-      justify="center"
-      wrap="wrap"
-    >
+    <div className="flex flex-wrap gap-x-4 md:gap-x-10 gap-y-2 md:gap-y-10 items-center justify-center">
       {items.map((item) => (
         <Text
           key={item.key}
@@ -80,15 +70,14 @@ export function CarouselTags({
           font="mono"
           weight={currentItem.key === item.key ? 'semibold' : 'regular'}
           color={currentItem.key === item.key ? 'contrast' : 'subtle'}
-          css={{
-            cursor: 'pointer',
-            textUnderlineOffset: '2px',
-            textDecoration: currentItem.key === item.key ? 'underline' : 'none',
-          }}
+          className={cx(
+            'cursor-pointer underline-offset-2',
+            currentItem.key === item.key ? 'underline' : ''
+          )}
         >
           {item.title}
         </Text>
       ))}
-    </Flex>
+    </div>
   )
 }

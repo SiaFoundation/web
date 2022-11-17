@@ -1,3 +1,3 @@
-import { NextApp } from '@siafoundation/design-system'
+import { NextAppSsr } from '@siafoundation/design-system'
 
-export default NextApp
+export default NextAppSsr

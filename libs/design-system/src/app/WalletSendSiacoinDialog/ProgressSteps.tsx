@@ -1,23 +1,11 @@
 import { Text } from '../../core/Text'
-import { Box } from '../../core/Box'
-import { keyframes } from '../../config/theme'
 import BigNumber from 'bignumber.js'
+import { cx } from 'class-variance-authority'
 
 export type TransactionData = {
   address: string
   siacoin: BigNumber
 }
-
-const pulse = keyframes({
-  '0%': {
-    transform: 'scale(1)',
-    opacity: 1,
-  },
-  '100%': {
-    transform: 'scale(2)',
-    opacity: 0,
-  },
-})
 
 type Step = {
   id: string
@@ -34,30 +22,12 @@ export function ProgressSteps({ activeStep, steps, onChange }: Props) {
   const activeIndex = steps.findIndex((s) => s.id === activeStep)
   const lastIndex = steps.length - 1
   return (
-    <Box
-      css={{
-        position: 'relative',
-        width: '100%',
-        marginTop: '30px',
-        marginBottom: '10px',
-      }}
-    >
-      <Box
-        css={{
-          position: 'absolute',
-          width: '100%',
-          height: '4px',
-          backgroundColor: '$gray6',
-          borderRadius: '$pill',
-        }}
-      />
-      <Box
-        css={{
-          position: 'absolute',
+    <div className="relative w-full mt-8 mb-3">
+      <div className="absolute w-full h-1 bg-gray-500 dark:bg-graydark-500 rounded-lg" />
+      <div
+        className="absolute h-1 bg-accent-800 dark:bg-accentdark-800 rounded-lg"
+        style={{
           width: `${(activeIndex / lastIndex) * 100}%`,
-          height: '4px',
-          backgroundColor: '$accent9',
-          borderRadius: '$pill',
         }}
       />
       {steps.map(({ id, label }, i) => {
@@ -67,17 +37,16 @@ export function ProgressSteps({ activeStep, steps, onChange }: Props) {
         const isFirst = i === 0
         const isBacktrackable = isActiveOrPrev && activeIndex !== lastIndex
         return (
-          <Box
+          <div
             key={id}
-            css={{
-              position: 'absolute',
+            className={cx(
+              'absolute h-2 w-2 -top-0.5',
+              isBacktrackable ? 'cursor-pointer' : 'cursor-default'
+            )}
+            style={{
               left: `calc(${(i / lastIndex) * 100}% - ${
                 isLast ? 8 : isFirst ? 0 : 4
               }px)`,
-              height: '8px',
-              width: '8px',
-              top: '-2px',
-              cursor: isBacktrackable ? 'pointer' : 'default',
             }}
             onClick={() => {
               if (isBacktrackable) {
@@ -87,71 +56,32 @@ export function ProgressSteps({ activeStep, steps, onChange }: Props) {
           >
             <Text
               color={isActive ? 'contrast' : 'verySubtle'}
-              css={{
-                position: 'absolute',
-                top: '-30px',
-                left: isFirst ? 0 : undefined,
-                right: isLast ? 0 : undefined,
-                transform: !isFirst && !isLast ? 'translateX(-50%)' : undefined,
-              }}
+              className={cx(
+                'absolute top-[-30px]',
+                isFirst ? 'left-0' : '',
+                isLast ? 'right-0' : '',
+                !isFirst && !isLast ? '-translate-x-1/2' : ''
+              )}
             >
               {label}
             </Text>
-            <Box
-              css={{
-                position: 'absolute',
-                left: 0,
-                top: 0,
-                height: '100%',
-                width: '100%',
-                borderRadius: '$round',
-                backgroundColor: isActiveOrPrev ? '$accent9' : '$gray6',
-                border: isActiveOrPrev
-                  ? '1px solid $accent10'
-                  : '1px solid $gray7',
-              }}
+            <div
+              className={cx(
+                'absolute left-0 top-0 h-full w-full rounded-lg border',
+                isActiveOrPrev
+                  ? 'bg-accent-800 dark-accentdark-800'
+                  : 'bg-gray-500 dark:bg-graydark-500',
+                isActiveOrPrev
+                  ? 'border-accent-900 dark:border-accentdark-900'
+                  : 'border-gray-600 dark:border-graydark-600'
+              )}
             />
             {isActive && (
-              <Box
-                css={{
-                  position: 'absolute',
-                  left: 0,
-                  top: 0,
-                  height: '100%',
-                  width: '100%',
-                  borderRadius: '$round',
-                  backgroundColor: '$accent9',
-                  animation: `${pulse} 2s infinite`,
-                  willChange: 'transform',
-                }}
-              />
+              <div className="absolute left-0 top-0 h-full w-full rounded-lg bg-accent-800 dark:bg-accentdark-800 animate-ping" />
             )}
-          </Box>
+          </div>
         )
       })}
-    </Box>
+    </div>
   )
 }
-
-// <Box
-//   css={{
-//     position: 'absolute',
-//     left: 'calc(50% - 3px)',
-//     height: '6px',
-//     width: '6px',
-//     top: '-1px',
-//     borderRadius: '$round',
-//     backgroundColor: '$gray8',
-//   }}
-// />
-// <Box
-//   css={{
-//     position: 'absolute',
-//     right: 0,
-//     height: '6px',
-//     width: '6px',
-//     top: '-1px',
-//     borderRadius: '$round',
-//     backgroundColor: '$gray8',
-//   }}
-// />

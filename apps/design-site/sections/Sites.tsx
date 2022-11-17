@@ -16,9 +16,9 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 export function Sites() {
   return (
     <>
-      <Section css={{ pt: '$9' }}>
+      <Section className="pt-20">
         <DSSectionHeading>SiteHeading</DSSectionHeading>
-        <Flex direction="column" gap="9">
+        <div className="flex flex-col" gap="9">
           <SiteHeading
             size="20"
             title="Size 20"
@@ -93,11 +93,12 @@ export function Sites() {
               },
             ]}
           />
-        </Flex>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section className="pt-20">
         <DSSectionHeading>ContentItem</DSSectionHeading>
-        <Grid
+        <div
+          className="grid"
           gap="5"
           columns={{
             '@initial': 1,
@@ -139,11 +140,12 @@ export function Sites() {
             link={'https://urbit.org'}
             newTab
           />
-        </Grid>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section className="pt-20">
         <DSSectionHeading>ContentProject</DSSectionHeading>
-        <Grid
+        <div
+          className="grid"
           gap="5"
           columns={{
             '@initial': 1,
@@ -161,12 +163,12 @@ export function Sites() {
             link={'https://filebase.com'}
             newTab
           />
-        </Grid>
+        </div>
       </Section>
-      <Section css={{ pt: '$12' }}>
+      <Section className="pt-24">
         <DSSectionHeading>ContentGallery</DSSectionHeading>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section className="pt-20">
         <SubsectionHeading>default</SubsectionHeading>
         <ContentGallery
           items={times(6, (i) => ({
@@ -180,7 +182,7 @@ export function Sites() {
           }))}
         />
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section className="pt-20">
         <SubsectionHeading>columns 1</SubsectionHeading>
         <ContentGallery
           columns={{
@@ -194,7 +196,7 @@ export function Sites() {
           }))}
         />
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section className="pt-20">
         <SubsectionHeading>variant filterable / columns 3</SubsectionHeading>
         <ContentGallery
           filterable="filterable"
@@ -215,18 +217,19 @@ export function Sites() {
           }))}
         />
       </Section>
-      <Section css={{ pt: '$12' }}>
+      <Section className="pt-24">
         <DSSectionHeading>WavesBackdrop</DSSectionHeading>
       </Section>
       <Section css={{ position: 'relative' }}>
         <WavesBackdrop />
       </Section>
-      <Section css={{ pt: '$12' }}>
+      <Section className="pt-24">
         <DSSectionHeading>Callout</DSSectionHeading>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section className="pt-20">
         <SubsectionHeading>size 1</SubsectionHeading>
-        <Grid
+        <div
+          className="grid"
           columns={{
             '@initial': '1',
             '@bp2': '2',
@@ -253,9 +256,9 @@ export function Sites() {
             actionLink="https://urbit.org"
             actionNewTab
           />
-        </Grid>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section className="pt-20">
         <SubsectionHeading>size 2</SubsectionHeading>
         <Callout
           title="Title"

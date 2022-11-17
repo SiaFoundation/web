@@ -2,11 +2,9 @@ import {
   ContentGallery,
   Callout,
   ContentProject,
-  Flex,
   Image,
   SiteHeading,
   getImageProps,
-  Box,
   webLinks,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
@@ -44,7 +42,7 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
       description={textContent(description)}
       path={routes.community.index}
       heading={
-        <SectionSimple css={{ py: '$max' }}>
+        <SectionSimple className="pt-24 pb-20 md:py-40">
           <SiteHeading
             title={title}
             description={description}
@@ -67,9 +65,10 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <SectionWaves css={{ pt: '$12', pb: '$12' }}>
+      <SectionWaves className="pt-20 pb-32">
         <SiteHeading
           size="32"
+          className="pb-20"
           title="Featured updates from the Sia community"
           description={
             <>
@@ -85,18 +84,11 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
             },
           ]}
         />
-        <ContentGallery columns="1" items={blogs} />
+        <ContentGallery columnClassName="grid-cols-1" items={blogs} />
       </SectionWaves>
-      <SectionGradient css={{ pt: '$max', pb: '$12' }}>
-        <Flex gap="3" align="start">
-          <Box
-            css={{
-              display: 'none',
-              '@bp2': {
-                display: 'block',
-              },
-            }}
-          >
+      <SectionGradient className="py-24">
+        <div className="flex gap-10 items-start">
+          <div className="hidden md:block">
             <Image
               src={'/built-with-sia.png'}
               alt="Built with Sia"
@@ -107,10 +99,11 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
                 filter: 'grayscale(1)',
               }}
             />
-          </Box>
+          </div>
           <SiteHeading
             size="32"
             id="software"
+            className="flex-1 pb-20"
             title="A vibrant & active ecosystem"
             description={
               <>
@@ -118,22 +111,16 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
                 networks, and commercial data storage platforms.
               </>
             }
-            css={{ flex: 1 }}
           />
-        </Flex>
+        </div>
         <ContentGallery
           eyebrow="Filter projects"
           filterable="software"
           component={ContentProject}
-          columns={{
-            '@initial': 1,
-            '@bp2': 2,
-            '@bp4': 3,
-          }}
           items={software}
         />
         <Callout
-          css={{ mt: '$12', mb: '$6' }}
+          className="mt-40 mb-10"
           title="Sia grants"
           size="2"
           description={

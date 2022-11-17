@@ -5,7 +5,6 @@ import { Brush } from '@visx/brush'
 import { Bounds } from '@visx/brush/lib/types'
 import BaseBrush from '@visx/brush/lib/BaseBrush'
 import ParentSize from '@visx/responsive/lib/components/ParentSize'
-import { Box } from '../../core/Box'
 import { AreaChart } from '../ChartTimeValue/AreaChart'
 import { Panel } from '../../core/Panel'
 import { getDaysInMs } from '../../lib/time'
@@ -89,7 +88,7 @@ function Chart({
   if (width < 10) return null
 
   return (
-    <Box>
+    <div className="">
       <svg width={width} height={height}>
         <AreaChart
           // hideBottomAxis
@@ -128,7 +127,7 @@ function Chart({
           />
         </AreaChart>
       </svg>
-    </Box>
+    </div>
   )
 }
 
@@ -150,7 +149,7 @@ export function ChartBrush({
   brushRef,
 }: Props) {
   return (
-    <Panel css={{ width: '100%', height, padding: '1px' }}>
+    <Panel className="w-full p-px" style={{ height }}>
       <ParentSize>
         {({ width, height }) => (
           <Chart

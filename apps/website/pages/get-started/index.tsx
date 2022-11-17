@@ -1,7 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
-  Flex,
-  Grid,
   ContentGallery,
   Callout,
   ContentProject,
@@ -34,59 +32,53 @@ const description =
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-function GetStarted({ technical, versions, tutorials, services }: Props) {
+export default function GetStarted({
+  technical,
+  versions,
+  tutorials,
+  services,
+}: Props) {
   return (
     <Layout
       title={title}
       description={description}
       path={routes.getStarted.index}
       heading={
-        <SectionSimple css={{ py: '$max' }}>
+        <SectionSimple className="pt-24 pb-20 md:py-40">
           <SiteHeading size="64" title={title} description={description} />
         </SectionSimple>
       }
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <SectionGradient
-        css={{
-          pt: '$9',
-          pb: '$12',
-        }}
-      >
-        <Flex direction="column" gap="9">
-          <SiteHeading size="32" title="Core Software">
-            <SoftwareSignAccordion versions={versions} />
-          </SiteHeading>
-          <Grid
-            columns={{
-              '@initial': '1',
-              '@bp2': '2',
-            }}
-            gap="5"
-          >
+      <SectionGradient className="pt-12 pb-20">
+        <div className="flex flex-col">
+          <SiteHeading
+            size="32"
+            title="Core Software"
+            description="Binary downloads, documentation, and source code for the latest Sia software."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <CurrentGenSoftware versions={versions} />
-          </Grid>
+          </div>
+          <div className="mt-12">
+            <SoftwareSignAccordion versions={versions} />
+          </div>
           <SiteHeading
             size="32"
             title="Next-Gen Software"
             description="New and improved Sia software, developed by the Sia Foundation."
-            css={{ mt: '$9' }}
+            className="mt-24"
           />
-          <Grid
-            columns={{
-              '@initial': '1',
-              '@bp2': '2',
-            }}
-            gap="5"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <NextGenSoftware />
-          </Grid>
-        </Flex>
+          </div>
+        </div>
       </SectionGradient>
-      <SectionGradient css={{ py: '$12' }}>
+      <SectionGradient className="pt-12 pb-20">
         <SiteHeading
           size="32"
+          className="pt-24 pb-20"
           title="Tutorials for developers new to Sia"
           description={
             <>Technical tutorials for new developers looking to build on Sia.</>
@@ -95,7 +87,7 @@ function GetStarted({ technical, versions, tutorials, services }: Props) {
         <ContentGallery items={tutorials} />
         <SiteHeading
           size="32"
-          css={{ mt: '$9' }}
+          className="pt-60 pb-20"
           title="Learn about the technology behind Sia"
           description={
             <>
@@ -104,10 +96,10 @@ function GetStarted({ technical, versions, tutorials, services }: Props) {
             </>
           }
         />
-        <ContentGallery columns="1" items={technical} />
+        <ContentGallery columnClassName="grid-cols-1" items={technical} />
         <SiteHeading
           size="32"
-          css={{ mt: '$9' }}
+          className="pt-60 pb-20"
           title="Companies and projects building on Sia"
           description={
             <>
@@ -122,18 +114,10 @@ function GetStarted({ technical, versions, tutorials, services }: Props) {
             },
           ]}
         />
-        <ContentGallery
-          component={ContentProject}
-          columns={{
-            '@initial': 1,
-            '@bp2': 2,
-            '@bp4': 3,
-          }}
-          items={services}
-        />
+        <ContentGallery component={ContentProject} items={services} />
         <Callout
           title="Sia 101"
-          css={{ my: '$9' }}
+          className="mt-40 mb-24"
           size="2"
           description={
             <>
@@ -171,5 +155,3 @@ export async function getStaticProps() {
     revalidate: getMinutesInSeconds(5),
   }
 }
-
-export default GetStarted

@@ -1,4 +1,4 @@
-import { Flex, Section, Skeleton } from '@siafoundation/design-system'
+import { Section, Skeleton } from '@siafoundation/design-system'
 import { SectionHeading } from '../components/SectionHeading'
 import { SmallSection } from '../components/SmallSection'
 import { SubsectionHeading } from '../components/SubsectionHeading'
@@ -6,56 +6,21 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 export function Skeletons() {
   return (
     <>
-      <Section css={{ pt: '$12' }}>
+      <Section>
         <SectionHeading>Skeletons</SectionHeading>
-      </Section>
-      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Skeleton</SubsectionHeading>
-        <Flex direction="column" gap="5" align="stretch">
-          <SmallSection>Avatar</SmallSection>
-          <Flex
-            css={{
-              ai: 'center',
-              gap: '$1',
-              fw: 'wrap',
-            }}
-          >
-            <Skeleton variant="avatar1" />
-            <Skeleton variant="avatar2" />
-            <Skeleton variant="avatar3" />
-          </Flex>
+        <div className="flex flex-col gap-10 items-stretch">
           <SmallSection>Text</SmallSection>
-          <Flex
-            css={{
-              fd: 'column',
-              gap: '$4',
-              mb: '$3',
-            }}
-          >
-            <Skeleton variant="title" css={{ width: '50%' }} />
-            <Skeleton variant="heading" css={{ width: '25%' }} />
-          </Flex>
-          <Flex
-            css={{
-              fd: 'column',
-              gap: '$4',
-            }}
-          >
-            <Skeleton variant="text" css={{ width: '30%' }} />
-            <Skeleton variant="text" css={{ width: '75%' }} />
-            <Skeleton variant="text" css={{ width: '50%' }} />
-          </Flex>
-          <SmallSection>Button</SmallSection>
-          <Flex
-            css={{
-              gap: '$2',
-            }}
-          >
-            <Skeleton variant="button" />
-            <Skeleton variant="button" />
-            <Skeleton variant="button" />
-          </Flex>
-        </Flex>
+          <div className="flex flex-col gap-4 mb-6">
+            <Skeleton variant="text" className="w-[50%]" />
+            <Skeleton variant="text" className="w-[25%]" />
+          </div>
+          <div className="flex flex-col gap-4">
+            <Skeleton variant="text" className="w-[30%]" />
+            <Skeleton variant="text" className="w-[75%]" />
+            <Skeleton variant="text" className="w-[50%]" />
+          </div>
+        </div>
       </Section>
     </>
   )

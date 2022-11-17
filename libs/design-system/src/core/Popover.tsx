@@ -1,64 +1,85 @@
 import React from 'react'
-import { styled, CSS } from '../config/theme'
+import { AnimatePresence, motion } from 'framer-motion'
 import * as PopoverPrimitive from '@radix-ui/react-popover'
 import { panelStyles } from './Panel'
-import { scaleIn } from '../config/animations'
+import { cva, cx } from 'class-variance-authority'
+import { useOpen } from '../hooks/useOpen'
 
-type PopoverProps = React.ComponentProps<typeof PopoverPrimitive.Root> & {
+const contentContainerStyles = cva([
+  'relative',
+  'z-10',
+  'data-[side=top]:bottom-5',
+  'data-[side=top]:origin-bottom',
+  'data-[side=bottom]:top-5',
+  'data-[side=bottom]:origin-top',
+  'data-[side=left]:right-5',
+  'data-[side=left]:origin-right',
+  'data-[side=right]:left-5',
+  'data-[side=right]:origin-left',
+])
+
+const contentStyles = cx(panelStyles(), cva(['max-w-sm', 'py-0.5', 'px-1'])())
+
+export const PopoverClose = PopoverPrimitive.Close
+
+type Props = {
+  rootProps?: React.ComponentProps<typeof PopoverPrimitive.Root>
+  contentProps?: React.ComponentProps<typeof PopoverPrimitive.Content>
+  trigger: React.ReactNode
   children: React.ReactNode
 }
 
-export function Popover({ children, ...props }: PopoverProps) {
-  return <PopoverPrimitive.Root {...props}>{children}</PopoverPrimitive.Root>
+const variants = {
+  show: {
+    opacity: [0, 1],
+    scale: [0.95, 1],
+    transition: { duration: 0.1, ease: 'easeOut' },
+  },
+  exit: {
+    opacity: [1, 0],
+    scale: [1, 0.95],
+    transition: { duration: 0.1, ease: 'easeIn' },
+  },
 }
 
-const StyledContent = styled(PopoverPrimitive.Content, panelStyles, {
-  minWidth: 200,
-  minHeight: '$6',
-  maxWidth: 265,
-  '&:focus': {
-    outline: 'none',
-  },
-
-  willChange: 'transform, opacity',
-  '@media (prefers-reduced-motion: no-preference)': {
-    transformOrigin: 'var(--radix-popover-content-transform-origin)',
-    animation: `${scaleIn} 0.05s ease-out`,
-  },
-  position: 'relative',
-  '&[data-side="top"]': { bottom: '$1' },
-  '&[data-side="bottom"]': { top: '$1' },
-  '&[data-side="left"]': { right: '$1' },
-  '&[data-side="right"]': { left: '$1' },
+export const Popover = React.forwardRef<
+  React.ElementRef<typeof PopoverPrimitive.Content>,
+  Props
+>(({ trigger, children, rootProps, contentProps }, ref) => {
+  const { open, onOpenChange } = useOpen({
+    open: rootProps?.open,
+    onOpenChange: rootProps?.onOpenChange,
+  })
+  return (
+    <PopoverPrimitive.Root
+      open={open}
+      onOpenChange={onOpenChange}
+      {...rootProps}
+    >
+      <PopoverPrimitive.Trigger asChild>{trigger}</PopoverPrimitive.Trigger>
+      <PopoverPrimitive.Anchor />
+      <AnimatePresence>
+        {open ? (
+          <PopoverPrimitive.Portal forceMount>
+            <PopoverPrimitive.Content
+              asChild
+              forceMount
+              ref={ref}
+              {...contentProps}
+            >
+              <motion.div
+                variants={variants}
+                initial="init"
+                animate="show"
+                exit="exit"
+                className={contentContainerStyles()}
+              >
+                <div className={contentStyles}>{children}</div>
+              </motion.div>
+            </PopoverPrimitive.Content>
+          </PopoverPrimitive.Portal>
+        ) : null}
+      </AnimatePresence>
+    </PopoverPrimitive.Root>
+  )
 })
-
-type PopoverContentPrimitiveProps = React.ComponentProps<
-  typeof PopoverPrimitive.Content
->
-
-type PopoverContentProps = PopoverContentPrimitiveProps & {
-  css?: CSS
-  hideArrow?: boolean
-}
-
-export const PopoverContent = React.forwardRef<
-  React.ElementRef<typeof StyledContent>,
-  PopoverContentProps
->(({ children, hideArrow, ...props }, ref) => (
-  <StyledContent sideOffset={0} {...props} ref={ref}>
-    {children}
-    {/* {!hideArrow && (
-      <Box css={{ color: '$panel' }}>
-        <PopoverPrimitive.Arrow
-          width={11}
-          height={5}
-          offset={5}
-          style={{ fill: 'currentColor' }}
-        />
-      </Box>
-    )} */}
-  </StyledContent>
-))
-
-export const PopoverTrigger = PopoverPrimitive.Trigger
-export const PopoverClose = PopoverPrimitive.Close

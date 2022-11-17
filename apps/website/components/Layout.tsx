@@ -1,14 +1,9 @@
-import {
-  Box,
-  Flex,
-  ImageProps,
-  SiteLayout,
-  CSS,
-} from '@siafoundation/design-system'
+import { ImageProps, SiteLayout } from '@siafoundation/design-system'
 import { Footer } from './Footer'
 import { PageHead } from './PageHead'
 import { Navbar } from './Navbar'
 import { menuSections } from '../config/siteMap'
+import { cx } from 'class-variance-authority'
 
 type Props = {
   heading: React.ReactNode
@@ -23,7 +18,7 @@ type Props = {
   transitions?: boolean
   transitionWidthDuration?: number
   transitionFadeDelay?: number
-  contentCss?: CSS
+  className?: string
 }
 
 export function Layout({
@@ -39,17 +34,10 @@ export function Layout({
   transitions,
   transitionWidthDuration,
   transitionFadeDelay,
-  contentCss,
+  className,
 }: Props) {
   return (
-    <Box
-      css={{
-        backgroundColor: '$loContrast',
-        height: '100%',
-        overflowX: 'hidden',
-        overflowY: 'auto',
-      }}
-    >
+    <div className="bg-white dark:bg-graydark-50 h-full overflow-x-hidden overflow-y-auto">
       <PageHead
         title={title}
         description={description}
@@ -68,15 +56,8 @@ export function Layout({
         backgroundImage={backgroundImage}
         navbar={<Navbar />}
       >
-        <Flex
-          direction="column"
-          css={{
-            ...contentCss,
-          }}
-        >
-          {children}
-        </Flex>
+        <div className={cx('flex flex-col', className)}>{children}</div>
       </SiteLayout>
-    </Box>
+    </div>
   )
 }

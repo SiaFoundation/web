@@ -1,4 +1,3 @@
-import { Flex } from '../core/Flex'
 import { SiacoinField } from '../core/SiacoinField'
 import { toHastings, toSiacoins } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
@@ -24,9 +23,9 @@ export function ConfigurationSiacoin({
   onChange,
 }: Props) {
   return (
-    <Flex gap="1-5" direction="column" css={{ width: '220px' }}>
+    <div className="flex flex-col gap-3 w-[220px]">
       <SiacoinField
-        size="1"
+        size="small"
         sc={toSiacoins(value)}
         decimalsLimitSc={decimalsLimitSc}
         decimalsLimitFiat={decimalsLimitFiat}
@@ -39,7 +38,7 @@ export function ConfigurationSiacoin({
         }
         onChange={(val) => onChange(toHastings(val || 0))}
       />
-      <Flex gap="1" direction="column">
+      <div className="flex flex-col gap-2">
         {average && (
           <ConfigurationTip
             type="siacoin"
@@ -60,7 +59,7 @@ export function ConfigurationSiacoin({
             onChange={onChange}
           />
         )}
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   )
 }

@@ -1,4 +1,3 @@
-import { Flex } from '../core/Flex'
 import { Heading } from '../core/Heading'
 import { Text } from '../core/Text'
 import { ValueCopyable } from '../components/ValueCopyable'
@@ -12,27 +11,19 @@ type Props = {
 
 export function WalletAddressCode({ title, description, address }: Props) {
   return (
-    <Flex direction="column" gap="2" align="center" justify="center">
+    <div className="flex flex-col gap-4 items-center justify-center">
       {title && (
         <Heading size="20" font="mono">
           {title}
         </Heading>
       )}
       {description && <Text>{description}</Text>}
-      <Flex
-        css={{
-          position: 'relative',
-          p: '5px',
-          background: 'white',
-          height: '210px',
-          width: '210px',
-        }}
-      >
-        <Flex css={{ position: 'absolute' }}>
+      <div className="flex relative p-[5px] bg-white h-[210px] w-[210px]">
+        <div className="flex absolute">
           <QRCode size={200} value={address} />
-        </Flex>
-      </Flex>
+        </div>
+      </div>
       <ValueCopyable type="address" value={address} />
-    </Flex>
+    </div>
   )
 }

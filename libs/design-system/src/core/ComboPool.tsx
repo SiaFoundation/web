@@ -1,4 +1,3 @@
-import { Flex } from './Flex'
 import { Badge } from './Badge'
 
 type Option = {
@@ -14,7 +13,7 @@ type Props = {
 
 export function ComboPool({ values, options, onChange }: Props) {
   return (
-    <Flex gap="0-5" wrap="wrap">
+    <div className="flex flex-wrap gap-1">
       {options.map((option) => {
         return (
           <Badge
@@ -29,6 +28,6 @@ export function ComboPool({ values, options, onChange }: Props) {
           </Badge>
         )
       })}
-    </Flex>
+    </div>
   )
 }

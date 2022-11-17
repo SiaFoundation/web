@@ -1,7 +1,6 @@
 import {
   DatumCard,
   Flex,
-  AppAuthedLayout,
   TxPoolList,
   PeerList,
   Box,
@@ -15,6 +14,7 @@ import {
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { RenterSidenav } from '../../components/RenterSidenav'
+import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
 
 export default function NodePage() {
   const peers = useSyncerPeers()
@@ -28,7 +28,7 @@ export default function NodePage() {
   const { openDialog } = useDialog()
 
   return (
-    <AppAuthedLayout
+    <RenterdAuthedLayout
       routes={routes}
       sidenav={<RenterSidenav />}
       openSettings={() => openDialog('settings')}
@@ -60,6 +60,6 @@ export default function NodePage() {
           <TxPoolList />
         </Box>
       </Flex>
-    </AppAuthedLayout>
+    </RenterdAuthedLayout>
   )
 }

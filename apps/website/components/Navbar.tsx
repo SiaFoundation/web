@@ -1,13 +1,13 @@
-import { Flex, Heading, NextLink, Wordmark } from '@siafoundation/design-system'
+import { Heading, Link, Wordmark } from '@siafoundation/design-system'
 
 export function Navbar() {
   return (
-    <Flex align="center" justify="between">
-      <NextLink href="/">
+    <div className="flex items-center justify-between">
+      <Link href="/">
         <Heading size="32">
           <Wordmark />
         </Heading>
-      </NextLink>
-    </Flex>
+      </Link>
+    </div>
   )
 }

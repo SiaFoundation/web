@@ -11,10 +11,10 @@ import {
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { useEffect, useState } from 'react'
-import { AppAuthedLayout } from '@siafoundation/design-system'
 import { RenterSidenav } from '../../components/RenterSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
+import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
 
 export default function ConfigPage() {
   const { openDialog } = useDialog()
@@ -54,7 +54,7 @@ export default function ConfigPage() {
   }, [targetPrice, expectedStorage, period])
 
   return (
-    <AppAuthedLayout
+    <RenterdAuthedLayout
       title="Configuration"
       routes={routes}
       sidenav={<RenterSidenav />}
@@ -74,7 +74,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Expected storage"
             description={
@@ -88,7 +88,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Expected upload"
             description={
@@ -104,7 +104,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Expected download"
             description={
@@ -139,7 +139,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Period"
             description={<>The length of the storage contracts.</>}
@@ -153,7 +153,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Renew window"
             description={
@@ -172,7 +172,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Hosts"
             description={<>The number of hosts to create contracts with.</>}
@@ -188,7 +188,7 @@ export default function ConfigPage() {
           />
         </Section>
       </Flex>
-    </AppAuthedLayout>
+    </RenterdAuthedLayout>
   )
 }
 

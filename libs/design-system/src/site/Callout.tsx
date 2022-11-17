@@ -1,10 +1,9 @@
-import { NextLink, NextLinkButton } from '../core/Link'
+import { Link, LinkButton } from '../core/Link'
 import { Text } from '../core/Text'
 import { Paragraph } from '../core/Paragraph'
-import { Flex } from '../core/Flex'
-import { CSS } from '../config/theme'
 import { AnimatedPanel } from './AnimatedPanel'
 import { Heading } from '../core/Heading'
+import { cx } from 'class-variance-authority'
 
 type Props = {
   eyebrow?: string
@@ -15,7 +14,7 @@ type Props = {
   actionNewTab?: boolean
   startTime?: number
   size?: '0' | '1' | '2'
-  css?: CSS
+  className?: string
 }
 
 export function Callout({
@@ -27,64 +26,50 @@ export function Callout({
   actionNewTab,
   startTime,
   size = '1',
-  css,
+  className,
 }: Props) {
   return (
-    <AnimatedPanel startTime={startTime} css={css} variant="subtle">
-      <Flex
-        direction="column"
-        align="start"
-        justify="end"
-        gap="2"
-        css={{
-          position: 'relative',
-          height: '100%',
-          ...(size === '0'
-            ? {
-                padding: '$7 $3',
-              }
-            : {
-                padding: size === '2' ? '$max $3' : '$max $3 $4 $3',
-                '@bp3': {
-                  padding: size === '2' ? '$max $9' : '$max $3 $4 $3',
-                },
-              }),
-        }}
+    <AnimatedPanel startTime={startTime} className={className} variant="subtle">
+      <div
+        className={cx(
+          'flex flex-col items-start justify-end gap-4 relative h-full',
+          size === '0'
+            ? 'py-14 px-6'
+            : size === '2'
+            ? 'py-40 px-5 lg:px-16'
+            : 'pt-40 pr-5 pb-6 pl-5'
+        )}
       >
         {eyebrow && (
-          <Text
-            size="14"
-            color="subtle"
-            font="mono"
-            css={{ textTransform: 'uppercase' }}
-          >
+          <Text size="14" color="subtle" font="mono" className="uppercase">
             {eyebrow}
           </Text>
         )}
-        <Heading size="40" font="mono" css={{ fontWeight: '500' }}>
+        <Heading size="40" font="mono" weight="semibold">
           {title}
         </Heading>
-        <Paragraph>{description}</Paragraph>
+        <Paragraph className="pb-3">{description}</Paragraph>
         {size !== '2' ? (
-          <NextLink
+          <Link
             href={actionLink}
+            size="16"
             target={actionNewTab ? '_blank' : undefined}
           >
             {actionTitle}
-          </NextLink>
+          </Link>
         ) : (
-          <NextLinkButton
-            size="2"
+          <LinkButton
+            size="medium"
             variant="accent"
-            site
+            rounded={false}
             href={actionLink}
-            css={{ display: 'inline' }}
+            className="inline"
             target={actionNewTab ? '_blank' : undefined}
           >
             {actionTitle}
-          </NextLinkButton>
+          </LinkButton>
         )}
-      </Flex>
+      </div>
     </AnimatedPanel>
   )
 }

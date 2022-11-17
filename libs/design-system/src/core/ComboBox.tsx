@@ -6,8 +6,8 @@ import {
   SingleValue,
 } from 'react-select'
 import Select from 'react-select/async'
-import { Box } from './Box'
-import { CSS, globalCss } from '../config/theme'
+import { globalCss } from '../config/theme'
+import { cx } from 'class-variance-authority'
 
 type Option = {
   value: string
@@ -18,12 +18,12 @@ type Props = {
   value?: Option
   onChange?: (option: SingleValue<Option>) => void
   disabled?: boolean
-  size?: '1' | '2' | '3'
+  size?: 'small' | 'medium' | 'large'
   prefix?: React.ReactNode
   indicators?: boolean
   state?: 'valid' | 'invalid'
   options: Option[]
-  css?: CSS
+  className?: string
 }
 
 export function ComboBox({
@@ -31,11 +31,11 @@ export function ComboBox({
   onChange,
   options,
   disabled,
-  size = '2',
+  size = 'small',
   prefix,
   indicators = true,
   state,
-  css,
+  className,
 }: Props) {
   const filter = useMemo(
     () => (inputValue: string) => {
@@ -62,7 +62,7 @@ export function ComboBox({
       Control: ({ children, ...props }) => {
         return (
           <components.Control {...props}>
-            {prefix && <Box>{prefix}</Box>}
+            {prefix && <div className="">{prefix}</div>}
             {children}
           </components.Control>
         )
@@ -78,7 +78,7 @@ export function ComboBox({
   }, [prefix, indicators])
 
   return (
-    <Box css={{ width: '100%', ...css }}>
+    <div className={cx('w-full', className)}>
       <Select
         options={options}
         cacheOptions
@@ -95,7 +95,7 @@ export function ComboBox({
         }
         components={customComponents}
       />
-    </Box>
+    </div>
   )
 }
 
@@ -144,7 +144,7 @@ export const comboBoxGlobalCss = globalCss({
   },
 
   // variant size
-  '.react-select-size-1': {
+  '.react-select-size-small': {
     '.react-select__control': {
       borderRadius: '$1',
       height: '$3-5',
@@ -156,7 +156,7 @@ export const comboBoxGlobalCss = globalCss({
       height: '$3-5',
     },
   },
-  '.react-select-size-2': {
+  '.react-select-size-medium': {
     '.react-select__control': {
       borderRadius: '$1',
       height: '$5',
@@ -168,7 +168,7 @@ export const comboBoxGlobalCss = globalCss({
       height: '$5',
     },
   },
-  '.react-select-size-3': {
+  '.react-select-size-large': {
     '.react-select__control': {
       borderRadius: '$1',
       height: '$6',

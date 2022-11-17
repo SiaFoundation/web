@@ -4,6 +4,7 @@ import { humanNumber } from '@siafoundation/sia-js'
 
 type Props = {
   size?: React.ComponentProps<typeof Text>['size']
+  scaleSize?: React.ComponentProps<typeof Text>['scaleSize']
   value: number
   variant?: 'change' | 'value'
   tooltip?: string
@@ -11,7 +12,8 @@ type Props = {
 
 export function ValueSf({
   value,
-  size = '14',
+  size,
+  scaleSize,
   tooltip = '',
   variant = 'change',
 }: Props) {
@@ -23,18 +25,18 @@ export function ValueSf({
     <Tooltip content={(tooltip ? `${tooltip} ` : '') + formattedValue}>
       <Text
         size={size}
+        scaleSize={scaleSize}
         weight="semibold"
         font="mono"
-        css={{
-          color:
-            variant === 'change'
-              ? value > 0
-                ? '$green11'
-                : value < 0
-                ? '$red11'
-                : '$gray7'
-              : '$textContrast',
-        }}
+        color={
+          variant === 'change'
+            ? value > 0
+              ? 'green'
+              : value < 0
+              ? 'red'
+              : 'subtle'
+            : 'contrast'
+        }
       >
         {variant === 'change' && value > 0 ? '+' : ''}
         {formattedValue}

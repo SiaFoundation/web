@@ -4,7 +4,7 @@ import {
   Flex,
   Box,
   Button,
-  IconButton,
+  Button,
   ControlGroup,
   Table,
 } from '@siafoundation/design-system'
@@ -41,13 +41,9 @@ export default function ContractsPage() {
                   </Text>
                 )}
               </Button>
-              <IconButton
-                variant="gray"
-                size="1"
-                onClick={() => removeFilter(key)}
-              >
+              <Button variant="gray" size="1" onClick={() => removeFilter(key)}>
                 <Close16 />
-              </IconButton>
+              </Button>
             </ControlGroup>
           ))}
           <ContractsFilterDropdownMenu />

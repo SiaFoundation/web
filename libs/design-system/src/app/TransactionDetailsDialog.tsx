@@ -1,10 +1,6 @@
-import { Flex } from '../core/Flex'
-import { DialogContent } from '../core/Dialog'
 import { Codeblock } from '../core/Codeblock'
-import { Box } from '../core/Box'
 import { Text } from '../core/Text'
 import { ValueSc } from '../components/ValueSc'
-import { getTitleId } from '../lib/utils'
 import { useWalletTransactions } from '@siafoundation/react-core'
 import { humanDate } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
@@ -19,64 +15,42 @@ export function TransactionDetailsDialog({ id }: Props) {
   const transaction = transactions.data?.find((t) => t.ID === id)
 
   if (transactions.data && !transaction) {
-    return (
-      <DialogContent
-        title={getTitleId('Transaction', id, 6)}
-        css={{
-          maxWidth: '800px',
-          overflow: 'hidden',
-        }}
-      >
-        <Text>Could not find transaction in wallet</Text>
-      </DialogContent>
-    )
+    return <Text>Could not find transaction in wallet</Text>
   }
 
   return (
-    <DialogContent
-      title={getTitleId('Transaction', id, 16)}
-      css={{
-        maxWidth: '800px',
-        overflow: 'hidden',
-      }}
-    >
-      <Flex direction="column" gap="2">
-        <Flex gap="2">
-          <Flex gap="1">
-            <Text>Inflow</Text>
-            <ValueSc value={new BigNumber(transaction?.Inflow || 0)} />
-          </Flex>
-          <Flex gap="1">
-            <Text>Outflow</Text>
-            <ValueSc
-              value={new BigNumber(transaction?.Outflow || 0).negated()}
-            />
-          </Flex>
-          <Flex gap="1">
-            <Text>Miner fee</Text>
-            <ValueSc
-              value={
-                new BigNumber(
-                  transaction?.Raw.minerfees?.reduce(
-                    (acc, val) => acc.plus(val),
-                    new BigNumber(0)
-                  ) || 0
-                )
-              }
-            />
-          </Flex>
-          <Box css={{ flex: 1 }} />
-          <Flex gap="1">
-            <Text>Timestamp</Text>
-            <Text>
-              {humanDate(transaction?.Timestamp || 0, { time: true })}
-            </Text>
-          </Flex>
-        </Flex>
-        <Box>
-          <Codeblock>{JSON.stringify(transaction?.Raw, null, 2)}</Codeblock>
-        </Box>
-      </Flex>
-    </DialogContent>
+    <div className="flex flex-col gap-4">
+      <div className="flex gap-4">
+        <div className="flex gap-2">
+          <Text>Inflow</Text>
+          <ValueSc value={new BigNumber(transaction?.Inflow || 0)} />
+        </div>
+        <div className="flex gap-2">
+          <Text>Outflow</Text>
+          <ValueSc value={new BigNumber(transaction?.Outflow || 0).negated()} />
+        </div>
+        <div className="flex gap-2">
+          <Text>Miner fee</Text>
+          <ValueSc
+            value={
+              new BigNumber(
+                transaction?.Raw.minerfees?.reduce(
+                  (acc, val) => acc.plus(val),
+                  new BigNumber(0)
+                ) || 0
+              )
+            }
+          />
+        </div>
+        <div className="flex-1" />
+        <div className="flex gap-2">
+          <Text>Timestamp</Text>
+          <Text>{humanDate(transaction?.Timestamp || 0, { time: true })}</Text>
+        </div>
+      </div>
+      <div className="">
+        <Codeblock>{JSON.stringify(transaction?.Raw, null, 2)}</Codeblock>
+      </div>
+    </div>
   )
 }

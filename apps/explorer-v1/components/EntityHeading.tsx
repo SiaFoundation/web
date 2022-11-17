@@ -4,7 +4,7 @@ import {
   Flex,
   Heading,
   humanId,
-  IconButton,
+  Button,
   NextLink,
 } from '@siafoundation/design-system'
 import { NvgEntityType, getNvgEntityTypeLabel } from '../config/navigatorTypes'
@@ -27,12 +27,12 @@ export function EntityHeading({ label, type, value, href }: Props) {
           {type !== 'block' && humanId(value, 15)}
         </NextLink>
       </Heading>
-      <IconButton
+      <Button
         size="0"
         onClick={() => copyToClipboard(value, getNvgEntityTypeLabel(type))}
       >
         <Copy24 />
-      </IconButton>
+      </Button>
     </Flex>
   )
 }

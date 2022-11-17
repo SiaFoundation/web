@@ -1,41 +1,35 @@
-import { CSS, Section, useTheme } from '@siafoundation/design-system'
+import { Section } from '@siafoundation/design-system'
+import { cx } from 'class-variance-authority'
 
 type Props = React.ComponentProps<typeof Section> & {
-  gradientCss?: CSS
+  className?: string
 }
 
-export function SectionGradient({
-  children,
-  gradientCss,
-  css,
-  ...props
-}: Props) {
-  const { activeTheme } = useTheme()
+export function SectionGradient({ children, className, ...props }: Props) {
   return (
     <Section
       {...props}
-      css={{
-        position: 'relative',
-        backgroundColor: '$loContrast',
-        zIndex: 1,
-        '&::after': {
-          position: 'absolute',
-          pointerEvents: 'none',
-          top: 0,
-          width: '100%',
-          zIndex: -1,
-          height: '100%',
-          content: '',
-          opacity: 0.3,
-          mixBlendMode: activeTheme === 'dark' ? 'lighten' : 'darken',
-          background:
-            'linear-gradient(177deg, $colors$loContrast 0%, $colors$slate7 78%, $colors$loContrast 98%)',
-          // background:
-          //   'radial-gradient(circle, $colors$slate6 0%, $colors$loContrast 46%)',
-          ...gradientCss,
-        },
-        ...css,
-      }}
+      className={cx(
+        [
+          'relative',
+          'bg-white',
+          'dark:bg-graydark-50',
+          'z-10',
+          "after:content=['*']",
+          'after:absolute',
+          'after:pointer-events-none',
+          'after:top-0',
+          'after:w-full',
+          'after:-z-10',
+          'after:h-full',
+          'after:opacity-30',
+          'after:mix-blend-darken',
+          'dark:after:mix-blend-lighten',
+          'after:bg-gradient-to-b after:from-white after:via-gray-100 after:to-white',
+          'dark:after:bg-gradient-to-b dark:after:from-graydark-50 dark:after:via-graydark-600 dark:after:to-graydark-50',
+        ],
+        className
+      )}
     >
       {children}
     </Section>

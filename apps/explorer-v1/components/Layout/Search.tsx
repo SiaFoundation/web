@@ -1,6 +1,6 @@
 import {
   Flex,
-  IconButton,
+  Button,
   Search24,
   TextField,
   triggerToast,
@@ -71,9 +71,9 @@ export function Search() {
             },
           }}
         />
-        <IconButton size="2" variant="gray" type="submit">
+        <Button size="2" variant="gray" type="submit">
           <Search24 />
-        </IconButton>
+        </Button>
       </Flex>
     </Flex>
   )

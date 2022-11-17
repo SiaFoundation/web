@@ -16,9 +16,7 @@ import { LinearGradient } from '@visx/gradient'
 import { max, extent, bisector, min } from 'd3-array'
 import { timeFormat } from 'd3-time-format'
 import ParentSize from '@visx/responsive/lib/components/ParentSize'
-import { Box } from '../../core/Box'
 import { Button } from '../../core/Button'
-import { Flex } from '../../core/Flex'
 import { Text } from '../../core/Text'
 import { Tooltip as DsTooltip } from '../../core/Tooltip'
 import { throttle } from 'lodash'
@@ -277,7 +275,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
     if (width < 10) return null
 
     return (
-      <Box>
+      <div className="">
         <svg width={width} height={height}>
           <LinearGradient
             id={GRADIENT_ID}
@@ -413,28 +411,25 @@ const Chart = withTooltip<ChartProps, TooltipData>(
           )}
         </svg>
         {tooltipData && (
-          <Box>
+          <div className="">
             <TooltipWithBounds
               key={Math.random()}
               top={tooltipTop - 12}
               left={tooltipLeft + 12}
               style={tooltipStyles}
             >
-              <Flex direction="column" gap="0-5" align="end">
+              <div className="flex flex-col gap-1 items-end">
                 <Text color="subtle" size="10">
                   {formatDate(getPointTime(tooltipData))}
                 </Text>
                 <Text font="mono">
                   {selectedDataset?.formatValue(getPointValue(tooltipData))}
                 </Text>
-              </Flex>
+              </div>
             </TooltipWithBounds>
-          </Box>
+          </div>
         )}
-        <Flex
-          gap="1"
-          css={{ position: 'absolute', top: '$1-5', right: '$1-5' }}
-        >
+        <div className="flex absolute gap-2 top-3 right-3">
           {datasets.map(({ name }) => (
             <DsTooltip key={name} content={`Select ${name} dataset`}>
               <Button
@@ -452,8 +447,8 @@ const Chart = withTooltip<ChartProps, TooltipData>(
               </Button>
             </DsTooltip>
           )}
-        </Flex>
-      </Box>
+        </div>
+      </div>
     )
   }
 )
@@ -478,7 +473,7 @@ export function ChartTimeValue({
   curve,
 }: Props) {
   return (
-    <Panel css={{ height, padding: '1px' }}>
+    <Panel className="p-px" style={{ height }}>
       <ParentSize>
         {({ width, height }) => (
           <Chart

@@ -1,60 +1,52 @@
-import { Flex } from '../core/Flex'
-import { NextLink } from '../core/Link'
-import { Text } from '../core/Text'
-import { CSS } from '../config/theme'
-import { NextLinkButton } from '../core/Link'
+import { Link, LinkButton } from '../core/Link'
 import { LinkData } from '../lib/links'
+import { cx } from 'class-variance-authority'
 
 type Props = {
   links?: LinkData[]
   size?: '1' | '2' | '3'
-  css?: CSS
+  className?: string
 }
 
-export function Links({ links = [], size = '1', css }: Props) {
+export function Links({ links = [], size = '1', className }: Props) {
   if (!links.length) {
     return null
   }
 
   if (size === '3') {
     return (
-      <Flex gap="1-5" wrap="wrap" css={css}>
+      <div className={cx('flex gap-2 flex-wrap', className)}>
         {links.map((link) => (
-          <NextLinkButton
-            key={link.title + link.link}
-            variant="accent"
-            size={{
-              '@initial': '1',
-              '@bp2': '2',
-            }}
-            href={link.link}
-            target={link.newTab ? '_blank' : undefined}
-            site
-          >
-            {link.title}
-          </NextLinkButton>
+          <div key={link.title + link.link}>
+            <LinkButton
+              variant="accent"
+              size="medium"
+              href={link.link}
+              target={link.newTab ? '_blank' : undefined}
+              rounded={false}
+            >
+              {link.title}
+            </LinkButton>
+          </div>
         ))}
-      </Flex>
+      </div>
     )
   }
 
   return (
-    <Flex gap="3" wrap="wrap" css={css}>
+    <div className={cx('flex gap-6 flex-wrap', className)}>
       {links.map((link) => (
-        <Text
+        <Link
+          key={link.title + link.link}
+          color="contrast"
           size={size === '2' ? '16' : '14'}
           font="mono"
-          key={link.title + link.link}
+          href={link.link}
+          target={link.newTab ? '_blank' : undefined}
         >
-          <NextLink
-            variant="contrast"
-            href={link.link}
-            target={link.newTab ? '_blank' : undefined}
-          >
-            {link.title}
-          </NextLink>
-        </Text>
+          {link.title}
+        </Link>
       ))}
-    </Flex>
+    </div>
   )
 }

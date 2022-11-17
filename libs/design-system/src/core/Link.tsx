@@ -1,235 +1,111 @@
+import { cva, cx, VariantProps } from 'class-variance-authority'
 import BaseNextLink from 'next/link'
-import { Link as BaseRouterLink } from 'react-router-dom'
-import { CSS, styled } from '../config/theme'
-import { Box } from './Box'
-import { Button } from './Button'
-import { Paragraph } from './Paragraph'
-import { Text } from './Text'
+import React from 'react'
+import { textStyles } from './Text'
+import { Button, ButtonLink } from './Button'
 
-export const Link = styled('a', {
-  alignItems: 'center',
-  gap: '$1',
-  flexShrink: 0,
-  fontFamily: '$sans',
-  outline: 'none',
-  textDecorationLine: 'underline',
-  textUnderlineOffset: '2px',
-  lineHeight: 'inherit',
-  WebkitTapHighlightColor: 'rgba(0,0,0,0)',
-  cursor: 'pointer',
-
-  fontSize: '$16',
-
-  [`${Paragraph} &`]: {
-    color: 'inherit',
-    fontSize: 'inherit',
-    fontFamily: 'inherit',
-  },
-
-  [`${Text} &`]: {
-    color: 'inherit',
-    fontSize: 'inherit',
-    fontFamily: 'inherit',
-  },
-
+const linkVariants = cva([], {
   variants: {
-    underline: {
-      none: {
-        textDecorationLine: 'none',
-        '@hover': {
-          '&:hover': {
-            textDecorationLine: 'none',
-          },
-        },
-      },
-      hover: {
-        textDecorationLine: 'none',
-        '@hover': {
-          '&:hover': {
-            textDecorationLine: 'underline',
-          },
-        },
-      },
-    },
-    variant: {
-      subtle: {
-        color: '$textSubtle',
-        textDecorationColor: '$textSubtle',
-      },
-      contrast: {
-        color: '$textContrast',
-        textDecorationColor: '$frame',
-      },
-      accent: {
-        color: '$accent11',
-        textDecorationColor: '$accent11',
-      },
-    },
     disabled: {
-      true: {
-        opacity: 0.5,
-        pointerEvents: 'none',
-        '@hover': {
-          '&:hover': {
-            textDecorationLine: 'none',
-          },
-        },
-      },
+      true: 'opacity-50',
+    },
+    underline: {
+      true: 'underline underline-offset-2 decoration-gray-1100 dark:decoration-gray-500',
     },
   },
   defaultVariants: {
-    variant: 'contrast',
+    disabled: false,
+    underline: true,
   },
 })
 
-type NLinkProps = {
-  id?: string
-  href: string
-  target?: string
-  onClick?: () => void
-  children?: React.ReactNode
-  disabled?: boolean
-  underline?: React.ComponentProps<typeof Link>['underline']
-  variant?: React.ComponentProps<typeof Link>['variant']
-  css?: CSS
-}
-
-// Next link
-export function NextLink({
-  id,
-  href,
-  target,
-  children,
-  onClick,
+type Variants = VariantProps<typeof linkVariants> &
+  VariantProps<typeof textStyles> & {
+    className?: string
+  }
+const variants = ({
+  font,
+  size,
+  color,
+  weight,
+  noWrap,
+  ellipsis,
   underline,
   disabled,
-  variant = 'contrast',
-  css,
-}: NLinkProps) {
-  return (
-    <BaseNextLink href={href} passHref>
-      <Link
-        id={id}
-        target={target}
-        underline={underline}
-        variant={variant}
-        disabled={disabled}
-        css={css}
-        onClick={onClick}
-      >
-        {children}
-      </Link>
-    </BaseNextLink>
+  className,
+}: Variants) =>
+  cx(
+    textStyles({ size, font, color, weight, noWrap, ellipsis }),
+    linkVariants({ disabled, underline }),
+    className
   )
-}
+
+type Props = React.ComponentProps<typeof BaseNextLink> & Variants
+
+export const Link = React.forwardRef<HTMLAnchorElement, Props>(
+  (
+    {
+      href,
+      font,
+      size,
+      color,
+      weight,
+      noWrap,
+      ellipsis,
+      underline,
+      className,
+      children,
+      disabled,
+      ...props
+    },
+    ref
+  ) => {
+    return (
+      <BaseNextLink href={href} passHref>
+        <a
+          ref={ref}
+          className={variants({
+            font,
+            size,
+            color,
+            weight,
+            noWrap,
+            ellipsis,
+            underline,
+            disabled,
+            className,
+          })}
+          {...props}
+        >
+          {children}
+        </a>
+      </BaseNextLink>
+    )
+  }
+)
 
 type NextLinkButtonProps = React.ComponentProps<typeof Button> & {
   id?: string
   href?: string
-  site?: boolean
   disabled?: boolean
   target?: string
-  children: React.ReactNode
 }
 
 // Next link
-export function NextLinkButton({
+export function LinkButton({
   id,
   href,
   target,
-  children,
-  site,
-  variant,
-  size,
   disabled,
-  css,
+  ...props
 }: NextLinkButtonProps) {
   if (!href || disabled) {
-    return (
-      <Button
-        id={id}
-        css={css}
-        site={site}
-        variant={variant}
-        size={size}
-        disabled={disabled}
-      >
-        {children}
-      </Button>
-    )
+    return <Button id={id} {...props} disabled={disabled} />
   }
   return (
     <BaseNextLink href={href} passHref>
-      <Button
-        as="a"
-        id={id}
-        css={css}
-        site={site}
-        variant={variant}
-        size={size}
-        target={target}
-      >
-        {children}
-      </Button>
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+      <ButtonLink id={id} target={target} {...(props as any)} />
     </BaseNextLink>
-  )
-}
-
-type RouterLinkProps = {
-  id?: string
-  to: string
-  target?: string
-  children: React.ReactNode
-  underline?: React.ComponentProps<typeof Link>['underline']
-  variant?: React.ComponentProps<typeof Link>['variant']
-  css?: CSS
-}
-
-// React Router link
-export function RouterLink({
-  id,
-  to,
-  target,
-  children,
-  underline,
-  variant = 'contrast',
-  css,
-}: RouterLinkProps) {
-  return (
-    <Link
-      as={BaseRouterLink}
-      id={id}
-      target={target}
-      underline={underline}
-      variant={variant}
-      css={css}
-      to={to}
-    >
-      {children}
-    </Link>
-  )
-}
-
-type RouterLinkButtonProps = {
-  to: string
-  target?: string
-} & React.ComponentProps<typeof Button>
-
-// React Router link
-export function RouterLinkButton({
-  to,
-  target,
-  css,
-  ...props
-}: RouterLinkButtonProps) {
-  return (
-    <Box
-      as={BaseRouterLink}
-      target={target}
-      to={to}
-      css={{ textDecoration: 'none', width: css?.width }}
-    >
-      <Button {...props} css={css} />
-    </Box>
   )
 }

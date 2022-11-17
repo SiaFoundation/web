@@ -1,10 +1,9 @@
-import { Box } from '../../core/Box'
 import { ScrollArea } from '../../core/ScrollArea'
 import { ImageProps } from '../../lib/image'
-import { Flex } from '../../core/Flex'
 import { MenuSection, SiteMenu } from './SiteMenu'
 import { Container } from '../../core/Container'
 import React, { useEffect, useState } from 'react'
+import { cx } from 'class-variance-authority'
 
 type Props = {
   navbar?: React.ReactNode
@@ -18,8 +17,6 @@ type Props = {
   transitionWidthDuration?: number
   transitionFadeDelay?: number
 }
-
-const focusWidth = '600px'
 
 export function SiteLayout({
   menuSections,
@@ -67,184 +64,102 @@ export function SiteLayout({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [_focus])
 
-  // const [pixelKey, setPixelKey] = useState<string>('pixel')
-  // useEffect(() => {
-  //   const i = setInterval(() => {
-  //     setPixelKey(String(Math.random()))
-  //   }, 5_000)
-  //   return () => {
-  //     clearInterval(i)
-  //   }
-  // }, [])
-
   return (
-    <Box
-      css={{
-        position: 'relative',
-        height: '100%',
-        border: focus ? '$sizes$frame solid $frame' : 'none',
-        overflow: 'hidden',
-      }}
+    <div
+      className={cx(
+        'relative h-screen overflow-hidden',
+        focus ? 'border border-black dark:border-graydark-1100' : ''
+      )}
+      style={{ borderWidth: focus ? '3px' : '0' }}
     >
       {focus && (
-        <Box css={{ position: 'fixed', zIndex: 2, top: '$4', right: '$4' }}>
+        <div className="fixed z-20 top-8 right-8">
           <SiteMenu menuSections={menuSections} />
-        </Box>
+        </div>
       )}
-      <Box css={{ position: 'relative', zIndex: 1, height: '100%' }}>
+      <div className="relative z-10 h-full">
         <ScrollArea id="main-scroll">
-          <Box
-            css={{
+          <div
+            className={focus ? 'm-0' : 'my-0 mx-0 xl:mx-12'}
+            style={{
               transition: 'margin 100ms ease-in',
-              '@bp2': {
-                margin: focus ? '0' : '0 $6',
-              },
             }}
           >
             <Container
               size="4"
-              css={{
-                width: focus ? focusWidth : '100%',
-                margin: focus ? '0' : '0 auto',
-                maxWidth: focus ? '100%' : '1600px',
-                background: transitioning ? '$loContrast' : 'none',
+              pad={false}
+              className={cx(
+                'relative overflow-hidden p-0',
+                focus ? 'sm:border-r-black' : 'border-black',
+                focus
+                  ? 'sm:dark:border-r-graydark-1100 '
+                  : 'dark:border-graydark-1100',
+                focus ? 'sm:border-r-3' : 'border-3',
+                focus ? 'ml-0 max-w-full' : 'mx-auto max-w-screen-2xl',
+                focus ? 'w-full sm:w-[600px]' : '',
+                transitioning ? 'bg-white dark:bg-graydark-50' : ''
+              )}
+              style={{
                 transition: `width ${transitionWidthDuration}ms ease-out`,
-                position: 'relative',
-                overflow: 'hidden',
-                border: focus ? 'none' : '$sizes$frame solid $frame',
-                '@bp1': {
-                  borderRight: '$sizes$frame solid $frame',
-                },
-                padding: 0,
-                // paddingTop: '$5',
               }}
             >
               <Container
                 size="4"
-                css={{ backgroundColor: '$loContrast', paddingTop: '$5' }}
+                className="bg-white dark:bg-graydark-50 pt-10"
               >
-                <Flex justify="between" align="start">
+                <div className="flex justify-between items-start">
                   {navbar}
                   {!focus && <SiteMenu menuSections={menuSections} />}
-                </Flex>
+                </div>
               </Container>
-              <Flex
-                as="main"
-                direction="column"
-                gap="8"
-                css={{
-                  width: '100%',
+              <main
+                className="flex flex-col gap-14 w-full"
+                style={{
                   opacity: transitioning ? 0 : 1,
                 }}
               >
                 {focus}
                 {!focus && (
-                  <Flex direction="column">
-                    <Box>{heading}</Box>
-                    <Box
-                      css={{
-                        position: 'relative',
-                        width: '100%',
-                        height: '390px',
-                        overflow: 'hidden',
-                        borderTop: '$sizes$frame solid $frame',
-                        borderBottom: '$sizes$frame solid $frame',
-                        '@initial': {
-                          display: 'block',
-                        },
-                        '@bp2': {
-                          display: 'none',
-                        },
-                      }}
-                    >
-                      <Box
-                        css={{
-                          position: 'absolute',
-                          width: '100%',
-                          height: '100%',
-                          mixBlendMode: 'darken',
-                          zIndex: 1,
-                          backgroundColor: '$subtleAccentMask',
-                        }}
-                      />
-                      <Box
-                        css={{
-                          position: 'relative',
-                          width: '100%',
-                          height: '390px',
+                  <div className="flex flex-col">
+                    <div>{heading}</div>
+                    <div className="relative w-full h-96 overflow-hidden border-t border-b border-black dark:border-graydark-1100 xl:hidden">
+                      <div className="absolute w-full h-full mix-blend-darken z-10 bg-mask" />
+                      <div
+                        className="relative w-full h-96"
+                        style={{
                           background: `url(${backgroundImage.src})`,
                           backgroundSize: 'cover',
                         }}
                       />
-                    </Box>
-                    <Box>{children}</Box>
+                    </div>
+                    <div>{children}</div>
                     {footer}
-                  </Flex>
+                  </div>
                 )}
-              </Flex>
+              </main>
             </Container>
-          </Box>
+          </div>
         </ScrollArea>
-      </Box>
-      <Box
-        css={{
-          position: 'absolute',
-          right: 0,
-          top: 0,
-          zIndex: 0,
-          height: '100%',
-          width: focus ? `calc(100% - ${focusWidth})` : '100%',
-          left: focus ? focusWidth : 0,
-          overflow: 'hidden',
-          background: 'white',
+      </div>
+      <div
+        className="hidden sm:block absolute right-0 top-0 z-0 h-full overflow-hidden bg-white"
+        style={{
+          width: focus ? 'calc(100% - 600px)' : '100%',
+          left: focus ? '600px' : 0,
         }}
       >
-        <Box
-          css={{
-            position: 'relative',
-            width: '100%',
-            height: '100%',
-          }}
-        >
-          <Box
-            css={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              mixBlendMode: 'darken',
-              zIndex: 1,
-              backgroundColor: '$subtleAccentMask',
-            }}
-          />
-          {/* <Box key={pixelKey}>
-            {times(1000, (i) => (
-              <Box
-                css={{
-                  position: 'absolute',
-                  left: `${random(0, 100)}%`,
-                  top: `${random(0, 100)}%`,
-                  width: `0.15%`,
-                  height: `2px`,
-                  borderRadius: '1px',
-                  backgroundColor: 'black',
-                  zIndex: 1,
-                }}
-              />
-            ))}
-          </Box> */}
-          <Box
-            css={{
-              zIndex: 0,
-              position: 'relative',
-              width: '100%',
-              height: '100%',
+        <div className="relative w-full h-full">
+          <div className="absolute w-full h-full mix-blend-darken z-10 bg-mask" />
+          <div
+            className="z-0 relative w-ful h-full"
+            style={{
               background: `url(${backgroundImage.src})`,
               backgroundSize: 'cover',
               // opacity: 0.7,
             }}
           />
-        </Box>
-      </Box>
-    </Box>
+        </div>
+      </div>
+    </div>
   )
 }

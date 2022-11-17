@@ -3,17 +3,15 @@ import {
   Add16,
   Filter16,
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
   TextField,
   Text,
-  Box,
   Flex,
   ChevronRight16,
   ipRegex,
 } from '@siafoundation/design-system'
 import { useCallback, useMemo, useEffect, useRef, useState } from 'react'
 import { HostFilter, useHosts } from '../hooks/useHosts'
+import { cx } from 'class-variance-authority'
 
 export function HostsFilterDropdownMenu() {
   const { setFilter } = useHosts()
@@ -211,18 +209,19 @@ export function HostsFilterDropdownMenu() {
   )
 
   return (
-    <DropdownMenu open={open} onOpenChange={setOpen}>
-      <DropdownMenuTrigger asChild>
-        <Button size="1">
+    <DropdownMenu
+      open={open}
+      onOpenChange={setOpen}
+      trigger={
+        <Button>
           <Filter16 />
           Filter
           <Add16 />
         </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="start"
-        css={{ maxWidth: '300px' }}
-        onKeyDown={(e) => {
+      }
+      contentProps={{
+        align: 'start',
+        onKeyDown: (e) => {
           if (e.key === 'Tab') {
             if (e.shiftKey) {
               indexUp()
@@ -243,34 +242,34 @@ export function HostsFilterDropdownMenu() {
             select(index)
             return
           }
+        },
+      }}
+      className="w-60"
+    >
+      <TextField
+        ref={inputRef}
+        variant="ghost"
+        placeholder="Filter..."
+        onChange={(e) => {
+          setIndex(0)
+          setValue(e.target.value)
         }}
-      >
-        <TextField
-          ref={inputRef}
-          variant="totalGhost"
-          placeholder="Filter..."
-          onChange={(e) => {
-            setIndex(0)
-            setValue(e.target.value)
-          }}
-        />
+      />
+      <div className="flex flex-col pb-0.5">
         {filteredOptions.map(({ key, display }, i) => (
-          <Box
+          <div
             key={key}
             onMouseEnter={() => setIndex(i)}
             onClick={() => select(i)}
-            css={{
-              padding: '$0-5 $1',
-              backgroundColor: i === index ? '$mauve5' : undefined,
-              borderRadius: '$0-5',
-              cursor: 'pointer',
-              overflow: 'hidden',
-            }}
+            className={cx([
+              'py-1 px-2 rounded cursor-pointer overflow-hidden',
+              i === index && 'bg-gray-200',
+            ])}
           >
             {display()}
-          </Box>
+          </div>
         ))}
-      </DropdownMenuContent>
+      </div>
     </DropdownMenu>
   )
 }

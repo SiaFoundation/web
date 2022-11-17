@@ -1,121 +1,84 @@
 import React from 'react'
-import { styled, CSS } from '../config/theme'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { ChevronDown16 } from '../icons/carbon'
-
-const StyledAccordion = styled(AccordionPrimitive.Root, {})
-
-type AccordionPrimitiveProps = React.ComponentProps<
-  typeof AccordionPrimitive.Root
->
-type AccordionProps = AccordionPrimitiveProps & { css?: CSS }
+import { cva } from 'class-variance-authority'
+import { VariantProps } from '../types'
 
 export const Accordion = React.forwardRef<
-  React.ElementRef<typeof StyledAccordion>,
-  AccordionProps
->(({ children, ...props }, forwardedRef) => (
-  <StyledAccordion
-    ref={forwardedRef}
+  React.ElementRef<typeof AccordionPrimitive.Root>,
+  React.ComponentProps<typeof AccordionPrimitive.Root>
+>(({ children, ...props }, ref) => (
+  <AccordionPrimitive.Root
+    ref={ref}
     {...props}
     {...(props.type === 'single' ? { collapsible: true } : {})}
   >
     {children}
-  </StyledAccordion>
+  </AccordionPrimitive.Root>
 ))
 
-const StyledContent = styled(AccordionPrimitive.Content, {
-  // p: '$2',
-})
-
-const StyledItem = styled(AccordionPrimitive.Item, {
-  variants: {
-    variant: {
-      default: {
-        borderTop: '1px solid $colors$slate6',
-
-        '&:last-of-type': {
-          borderBottom: '1px solid $colors$slate6',
-        },
-        [`${StyledContent} > ${StyledContent} > &:last-of-type`]: {
-          borderBottom: 'none',
-        },
-      },
-      ghost: {},
-    },
-  },
-  defaultVariants: {
-    variant: 'default',
-  },
-})
-
-const StyledHeader = styled(AccordionPrimitive.Header, {
-  all: 'unset',
-})
-
-const StyledTrigger = styled(AccordionPrimitive.Trigger, {
-  all: 'unset',
-  boxSizing: 'border-box',
-  userSelect: 'none',
-  '&::before': {
-    boxSizing: 'border-box',
-  },
-  '&::after': {
-    boxSizing: 'border-box',
-  },
-
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  color: '$hiContrast',
-  width: '100%',
-  cursor: 'pointer',
-
-  '&:focus': {
-    outline: 'none',
-    // boxShadow: 'inset 0 0 0 1px $colors$accentActive, 0 0 0 1px $colors$accentActive',
-  },
-
-  svg: {
-    transition: 'transform 175ms cubic-bezier(0.65, 0, 0.35, 1)',
-  },
-
-  '&[data-state="open"]': {
-    svg: {
-      transform: 'rotate(180deg)',
-    },
-  },
-
-  variants: {
-    variant: {
-      default: {
-        p: '$1-5',
-        '@hover': {
-          '&:hover': {
-            backgroundColor: '$slate2',
-          },
-        },
-      },
-      ghost: {
-        py: '$1-5',
+const triggerStyles = cva(
+  [
+    'select-none flex items-center justify-between text-gray-900 dark:text-graydark-900 w-full cursor-pointer focus:outline-none [&>svg]:open:rotate-180',
+  ],
+  {
+    variants: {
+      variant: {
+        default: 'hover:bg-gray-100 dark:hover:bg-graydark-100',
+        ghost: '',
       },
     },
-  },
-  defaultVariants: {
-    variant: 'default',
-  },
-})
+    defaultVariants: {
+      variant: 'default',
+    },
+  }
+)
+
+const Trigger = React.forwardRef<
+  HTMLButtonElement,
+  VariantProps<typeof triggerStyles> & AccordionPrimitive.AccordionTriggerProps
+>(({ variant, className, ...props }, ref) => (
+  <AccordionPrimitive.Trigger
+    {...props}
+    className={triggerStyles({ variant, className })}
+    ref={ref}
+  />
+))
 
 export const AccordionTrigger = React.forwardRef<
-  React.ElementRef<typeof StyledTrigger>,
-  React.ComponentProps<typeof StyledTrigger>
->(({ children, ...props }, forwardedRef) => (
-  <StyledHeader>
-    <StyledTrigger {...props} ref={forwardedRef}>
+  React.ElementRef<typeof Trigger>,
+  React.ComponentProps<typeof Trigger>
+>(({ children, ...props }, ref) => (
+  <AccordionPrimitive.Header>
+    <Trigger {...props} ref={ref}>
       {children}
       <ChevronDown16 />
-    </StyledTrigger>
-  </StyledHeader>
+    </Trigger>
+  </AccordionPrimitive.Header>
 ))
 
-export const AccordionItem = StyledItem
-export const AccordionContent = StyledContent
+const itemStyles = cva([], {
+  variants: {
+    variant: {
+      default:
+        'border-t border-gray-500 dark:border-graydark-500 last-of-type:border-b',
+      ghost: '',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+})
+
+export const AccordionItem = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Content>,
+  VariantProps<typeof itemStyles> & AccordionPrimitive.AccordionItemProps
+>(({ variant, className, ...props }, ref) => (
+  <AccordionPrimitive.Item
+    {...props}
+    className={itemStyles({ variant, className })}
+    ref={ref}
+  />
+))
+
+export const AccordionContent = AccordionPrimitive.Content

@@ -1,16 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
-  Grid,
   ContentGallery,
   Callout,
   ContentProject,
   SiteHeading,
   getImageProps,
-  Flex,
-  Text,
   usePullTop,
   webLinks,
-  NextLink,
+  Link,
   Code,
 } from '@siafoundation/design-system'
 import { Layout } from '../components/Layout'
@@ -23,7 +20,7 @@ import backgroundImage from '../assets/backgrounds/mountain.png'
 import renterdImage from '../assets/renterd/renterd-peek.png'
 import hostdImage from '../assets/hostd/hostd-peek.png'
 import previewImage from '../assets/previews/mountain.png'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { textContent } from '../lib/utils'
 import Letter from '../components/Letter'
 import { JiggleArrow } from '../components/JiggleArrow'
@@ -78,67 +75,47 @@ export default function Home({
 
   const pullPending = usePullTop('main-scroll', !showLetter, toggleLanding)
 
+  const letterEl = useMemo(
+    () => <Letter onDone={() => toggleLanding()} />,
+    [toggleLanding]
+  )
+
   return (
     <Layout
       title="Decentralized data storage"
       description={textContent(description)}
       path={routes.home.index}
-      focus={showLetter ? <Letter onDone={() => toggleLanding()} /> : null}
+      focus={showLetter ? letterEl : null}
       transitions
       transitionWidthDuration={transitionWidthDuration}
       transitionFadeDelay={transitionFadeDelay}
       heading={
-        <SectionSimple
-          css={{
-            py: '$max',
-          }}
-        >
+        <SectionSimple className="pt-24 pb-20 md:py-40">
           <SiteHeading
             size="64"
             title="Decentralized data storage"
             description={description}
-            css={{ position: 'relative' }}
+            className="relative"
           >
             {pullPending && (
               <JiggleArrow
                 title="Go to letter"
                 onClick={toggleLanding}
                 direction="up"
-                css={{
-                  position: 'absolute',
-                  marginTop: '-50px',
-                }}
+                className="absolute -mt-6"
               />
             )}
-            <Flex gap="2" css={{ marginTop: '$1' }}>
-              <Text size="20">
-                <NextLink href={routes.getStarted.index}>
-                  Download the software →
-                </NextLink>
-              </Text>
-            </Flex>
+            <Link size="20" href={routes.getStarted.index}>
+              Download the software →
+            </Link>
           </SiteHeading>
         </SectionSimple>
       }
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <SectionSimple
-        css={{
-          pt: '$6',
-          pb: '$12',
-        }}
-      >
-        <Grid
-          gap={{
-            '@initial': '4',
-            '@bp2': '3',
-          }}
-          columns={{
-            '@initial': '1',
-            '@bp2': '2',
-          }}
-        >
+      <SectionSimple className="pt-12 pb-20">
+        <div className="grid gap-4 sm:gap-5 grid-cols-1 md:grid-cols-2">
           <Callout
             size="0"
             title="Start"
@@ -182,12 +159,13 @@ export default function Home({
             }
             imageProps={hostdImageProps}
           />
-        </Grid>
+        </div>
       </SectionSimple>
-      <SectionGradient css={{ pt: '$9', pb: '$max' }}>
+      <SectionGradient className="pt-16 pb-40">
         <SiteHeading
           size="32"
           title="Storage companies and projects building on Sia"
+          className="pb-20"
           description={
             <>
               Sia is a thriving ecosystem of open source software, layer 2
@@ -207,20 +185,15 @@ export default function Home({
             newTab: true,
           }))}
           component={ContentProject}
-          columns={{
-            '@initial': 1,
-            '@bp2': 2,
-            '@bp4': 3,
-          }}
+          columnClassName="grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
         />
       </SectionGradient>
-      <SectionWaves
-        css={{
-          pt: '$12',
-          pb: '$14',
-        }}
-      >
-        <SiteHeading size="32" title="Why projects choose Sia" />
+      <SectionWaves className="pt-16 pb-32">
+        <SiteHeading
+          size="32"
+          title="Why projects choose Sia"
+          className="pb-20"
+        />
         <ContentGallery
           items={[
             {
@@ -299,11 +272,11 @@ export default function Home({
           ]}
         />
       </SectionWaves>
-      <SectionGradient css={{ pt: '$9', pb: '$9' }}>
+      <SectionGradient className="pt-32 pb-20">
         <SiteHeading
           size="32"
-          css={{ mt: '$9' }}
           title="Learn how Sia works"
+          className="pb-20"
           links={[
             {
               title: 'Learn about the protocol',
@@ -319,7 +292,7 @@ export default function Home({
         <ContentGallery items={tutorials} />
         <SiteHeading
           size="32"
-          css={{ mt: '$12' }}
+          className="mt-60 pb-20"
           title="Read the latest updates"
           description={
             <>
@@ -335,7 +308,11 @@ export default function Home({
             },
           ]}
         />
-        <ContentGallery css={{ mb: '$9' }} items={featured} columns="1" />
+        <ContentGallery
+          className="mb-32"
+          items={featured}
+          columnClassName="grid-cols-1"
+        />
       </SectionGradient>
     </Layout>
   )

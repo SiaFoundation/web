@@ -1,52 +1,44 @@
-import { css } from '../config/theme'
+import { cva, cx } from 'class-variance-authority'
+import { textStyles } from './Text'
 
-export const baseItemCss = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  color: '$textSubtle',
-  fontFamily: '$sans',
-  fontSize: '$12',
-  fontVariantNumeric: 'tabular-nums',
-  textDecoration: 'none !important',
-  lineHeight: '1',
-  cursor: 'pointer',
-  userSelect: 'none',
-  whiteSpace: 'nowrap',
-  height: '$4',
-  padding: '0 $1-5',
-})
+export const baseItemStyles = cva([
+  'flex',
+  'items-center',
+  'justify-center',
+  textStyles({ size: '14' }),
+  'tabular-nums',
+  'cursor-pointer',
+  'select-none',
+  'whitespace-nowrap',
+  // 'h-4',
+  'px-1.5',
+  'py-1.5',
+])
 
-export const itemCss = css(baseItemCss, {
-  position: 'relative',
-  fontWeight: '500',
-  borderRadius: '$1',
+export const itemStyles = (className?: string) =>
+  cx(
+    baseItemStyles(),
+    cva([
+      'relative',
+      'rounded-sm',
+      'focus:outline-none',
+      // 'focus:ring ring-blue-500 dark:ring-blue-200',
+      'focus:text-gray-900',
+      'dark:focus:text-white',
+      'data-[disabled]:text-gray-500',
+      'dark:data-[disabled]:text-gray-100',
+    ])({
+      className,
+    })
+  )
 
-  color: '$textSubtle',
+export const labelStyles = (className?: string) =>
+  cx(
+    baseItemStyles(),
+    cva(['font-medium', 'text-gray-700', 'dark:text-gray-100'])({
+      className,
+    })
+  )
 
-  '&:focus': {
-    outline: 'none',
-    color: '$textSubtleActive',
-  },
-
-  '&[data-disabled]': {
-    color: '$textDisabled',
-  },
-})
-
-export const labelCss = css(baseItemCss, {
-  color: '$textExtraSubtle',
-  fontWeight: '500',
-})
-
-export const menuCss = css({
-  boxSizing: 'border-box',
-  minWidth: 120,
-  py: '$1',
-})
-
-export const separatorCss = css({
-  height: 1,
-  my: '$1',
-  backgroundColor: '$separator',
-})
+export const separatorStyles = (className?: string) =>
+  cx(['h-px', 'my-1', 'bg-gray-200', 'dark:bg-gray-700', className])

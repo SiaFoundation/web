@@ -1,8 +1,6 @@
-import { Flex } from '../core/Flex'
 import { Paragraph } from '../core/Paragraph'
 import { Button } from '../core/Button'
 import { Text } from '../core/Text'
-import { DialogContent } from '../core/Dialog'
 import { triggerToast } from '../lib/toast'
 import { FormField } from '../components/Form'
 import { useSyncerConnect } from '@siafoundation/react-core'
@@ -57,49 +55,41 @@ export function SyncerConnectPeerDialog({ closeDialog }: Props) {
   })
 
   return (
-    <DialogContent
-      title="Connect Peer"
-      css={{
-        maxWidth: '400px',
-        overflow: 'hidden',
-      }}
-    >
-      <Flex direction="column" gap="2">
-        <Paragraph size="14">Connect to a peer by IP address.</Paragraph>
-        <form onSubmit={formik.handleSubmit}>
-          <Flex direction="column" gap="2">
-            <FormField
-              formik={formik}
-              title="Address"
-              name="ip"
-              placeholder="host.acme.com or 127.0.0.1"
-              autoComplete="off"
-              type="text"
-            />
-            <FormField
-              formik={formik}
-              title="Port"
-              name="port"
-              disableGroupSeparators
-              placeholder="9981"
-              autoComplete="off"
-              type="number"
-            />
-            {formik.status?.error && (
-              <Text css={{ color: '$red11' }}>{formik.status.error}</Text>
-            )}
-            <Button
-              size="2"
-              disabled={formik.isSubmitting || !formik.isValid}
-              variant="accent"
-              state={formik.isSubmitting ? 'waiting' : undefined}
-              type="submit"
-            >
-              Connect
-            </Button>
-          </Flex>
-        </form>
-      </Flex>
-    </DialogContent>
+    <div className="flex flex-col gap-4">
+      <Paragraph size="14">Connect to a peer by IP address.</Paragraph>
+      <form onSubmit={formik.handleSubmit}>
+        <div className="flex flex-col gap-4">
+          <FormField
+            formik={formik}
+            title="Address"
+            name="ip"
+            placeholder="host.acme.com or 127.0.0.1"
+            autoComplete="off"
+            type="text"
+          />
+          <FormField
+            formik={formik}
+            title="Port"
+            name="port"
+            disableGroupSeparators
+            placeholder="9981"
+            autoComplete="off"
+            type="number"
+          />
+          {formik.status?.error && (
+            <Text color="red">{formik.status.error}</Text>
+          )}
+          <Button
+            size="medium"
+            disabled={formik.isSubmitting || !formik.isValid}
+            variant="accent"
+            state={formik.isSubmitting ? 'waiting' : undefined}
+            type="submit"
+          >
+            Connect
+          </Button>
+        </div>
+      </form>
+    </div>
   )
 }

@@ -1,9 +1,5 @@
-import {
-  Flex,
-  Heading,
-  AppAuthedLayout,
-  DatumCard,
-} from '@siafoundation/design-system'
+import { Flex, Heading, DatumCard } from '@siafoundation/design-system'
+import { RenterdAuthedLayout } from '../components/RenterdAuthedLayout'
 import { RenterSidenav } from '../components/RenterSidenav'
 import { routes } from '../config/routes'
 import { useDialog } from '../contexts/dialog'
@@ -12,7 +8,7 @@ export default function HomePage() {
   const { openDialog } = useDialog()
 
   return (
-    <AppAuthedLayout
+    <RenterdAuthedLayout
       title="Dashboard"
       routes={routes}
       sidenav={<RenterSidenav />}
@@ -30,6 +26,6 @@ export default function HomePage() {
         <DatumCard label="Total spent" value={54} />
         <DatumCard label="Storage spending" value={54} />
       </Flex>
-    </AppAuthedLayout>
+    </RenterdAuthedLayout>
   )
 }

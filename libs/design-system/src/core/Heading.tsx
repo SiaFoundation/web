@@ -1,17 +1,8 @@
 import React from 'react'
 import { Text } from './Text'
-import { VariantProps, CSS } from '../config/theme'
+import { cx, VariantProps } from 'class-variance-authority'
 
 const DEFAULT_TAG = 'h1'
-
-// This is the mapping of Heading to Text size variants
-const textSize: Record<HeadingSizeVariants, TextSizeVariants['size']> = {
-  20: { '@initial': '16', '@bp2': '20' },
-  24: { '@initial': '20', '@bp2': '24' },
-  32: { '@initial': '24', '@bp2': '32' },
-  40: { '@initial': '32', '@bp2': '40' },
-  64: { '@initial': '40', '@bp2': '64' },
-}
 
 // This is the mapping of Heading to Text size variants
 const textTag: Record<HeadingSizeVariants, string> = {
@@ -22,54 +13,27 @@ const textTag: Record<HeadingSizeVariants, string> = {
   64: 'h1',
 }
 
-// This is the mapping of Heading Variants to Text css
-const textCss: Record<HeadingSizeVariants, CSS> = {
-  20: {
-    fontWeight: 700,
-    lineHeight: '$sizes$3',
-    letterSpacing: '-1%',
-    '@bp2': { lineHeight: '$sizes$3' },
-  },
-  24: {
-    fontWeight: 700,
-    lineHeight: '$sizes$3',
-    letterSpacing: '-1%',
-    '@bp2': { lineHeight: '$sizes$3' },
-  },
-  32: {
-    fontWeight: 600,
-    lineHeight: '110%',
-    letterSpacing: '-1%',
-    '@bp2': { lineHeight: '110%' },
-  },
-  40: {
-    fontWeight: 600,
-    lineHeight: '110%',
-    letterSpacing: '-1%',
-    '@bp2': { lineHeight: '110%' },
-  },
-  64: {
-    fontWeight: 600,
-    lineHeight: '110%',
-    letterSpacing: '-1%',
-    '@bp2': { lineHeight: '110%' },
-  },
+const textStyles: Record<HeadingSizeVariants, string> = {
+  20: 'font-semibold text-base md:text-xl',
+  24: 'font-bold text-xl md:text-2xl',
+  32: 'font-semibold text-2xl md:text-3xl',
+  40: 'font-semibold text-3xl md:text-4xl',
+  64: 'font-semibold text-4xl md:text-6xl',
 }
 
-type TextSizeVariants = Pick<VariantProps<typeof Text>, 'size'>
 type HeadingSizeVariants = '20' | '24' | '32' | '40' | '64'
 type HeadingVariants = { size?: HeadingSizeVariants } & Omit<
   VariantProps<typeof Text>,
   'size'
 >
 type HeadingProps = React.ComponentProps<typeof DEFAULT_TAG> &
-  HeadingVariants & { css?: CSS; as?: string }
+  HeadingVariants & { className?: string; as?: string }
 
 export const Heading = React.forwardRef<
   React.ElementRef<typeof DEFAULT_TAG>,
   HeadingProps
 >((props, forwardedRef) => {
-  const { size = '24', ...textProps } = props
+  const { size = '24', className, ...textProps } = props
 
   const tag = textTag[size]
 
@@ -78,13 +42,12 @@ export const Heading = React.forwardRef<
       as={tag}
       {...textProps}
       ref={forwardedRef}
-      size={textSize[size]}
-      css={{
-        fontVariantNumeric: 'proportional-nums',
-        display: 'inline-block',
-        ...textCss[size],
-        ...props.css,
-      }}
+      weight="none"
+      className={cx(
+        'proportional-nums inline-block',
+        textStyles[size],
+        className
+      )}
     />
   )
 })

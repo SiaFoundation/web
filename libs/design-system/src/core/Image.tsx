@@ -1,41 +1,12 @@
-import BaseNextImage from 'next/image'
-import { styled } from '../config/theme'
+import NextImage from 'next/image'
+import { cva, VariantProps } from 'class-variance-authority'
+import React from 'react'
 
-export const Image = styled('img', {
-  verticalAlign: 'middle',
-  maxWidth: '100%',
+const styles = cva(['rounded'])
 
-  variants: {
-    radius: {
-      '1': {
-        borderRadius: '$1',
-      },
-      '2': {
-        borderRadius: '$2',
-      },
-      '3': {
-        borderRadius: '$3',
-      },
-    },
-  },
-})
+type Props = React.ComponentProps<typeof NextImage> &
+  VariantProps<typeof styles>
 
-// For some reason the radius prop was not working when sharing the css object with Image
-export const NextImage = styled(BaseNextImage, {
-  verticalAlign: 'middle',
-  maxWidth: '100%',
-
-  variants: {
-    radius: {
-      '1': {
-        borderRadius: '$1',
-      },
-      '2': {
-        borderRadius: '$2',
-      },
-      '3': {
-        borderRadius: '$3',
-      },
-    },
-  },
-})
+export function Image({ className, ...props }: Props) {
+  return <NextImage className={styles({ className })} {...props} />
+}

@@ -1,12 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
-  Box,
-  Flex,
   ContentGallery,
   Callout,
-  NextLink,
+  Link,
   SiteHeading,
-  Grid,
   getImageProps,
   webLinks,
 } from '@siafoundation/design-system'
@@ -39,31 +36,17 @@ export default function Learn({ getStarted }: Props) {
       description={textContent(description)}
       path={routes.learn.index}
       heading={
-        <SectionSimple css={{ py: '$max' }}>
+        <SectionSimple className="pt-24 pb-20 md:py-40">
           <SiteHeading size="64" title={title} description={description} />
         </SectionSimple>
       }
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <SectionGradient css={{ pt: '$9', pb: '$max' }}>
-        <Grid
-          align="center"
-          justify="between"
-          columns={{
-            '@initial': '1',
-            '@bp2': '2',
-          }}
-          gapX="6"
-          gapY="9"
-          css={{
-            '@bp2': {
-              height: '450px',
-            },
-          }}
-        >
-          <Box css={{ maxWidth: '600px' }}>
-            <Flex direction="column" gap="8">
+      <SectionGradient className="pt-24 pb-32">
+        <div className="flex flex-wrap items-center justify-between gap-4 gap-y-20">
+          <div className="max-w-sm">
+            <div className="flex flex-col gap-y-16">
               <SiteHeading
                 size="20"
                 title="What Sia does"
@@ -113,50 +96,25 @@ export default function Learn({ getStarted }: Props) {
                   },
                 ]}
               />
-            </Flex>
-          </Box>
-          <Box
-            css={{
-              height: '100%',
-              '@initial': {
-                height: '100%',
-                width: '100%',
-              },
-              '@bp3': {
-                margin: '0 0 0 auto',
-                height: '100%',
-                width: '500px',
-              },
-              '@bp4': {
-                height: '100%',
-                width: '500px',
-              },
-            }}
-          >
+            </div>
+          </div>
+          <div className="h-full max-w-lg overflow-hidden">
             <Callout
               title="Sia 101"
               actionTitle="Learn more"
               actionLink={webLinks.docs.sia101}
               actionNewTab
               description={<>Visit our docs to learn more about Sia.</>}
-              css={{
-                height: '120%',
-                '@bp2': {
-                  height: '120%',
-                  top: '-10%',
-                },
-              }}
+              className="w-[400px] lg:w-[500px] md:h-[500px] max-w-full"
             />
-          </Box>
-        </Grid>
+          </div>
+        </div>
       </SectionGradient>
-      <SectionWaves css={{ py: '$13' }}>
-        <Flex direction="column" css={{ maxWidth: '800px' }}>
+      <SectionWaves className="pt-32 pb-40">
+        <div className="flex flex-col max-w-3xl">
           <SiteHeading
             size="32"
-            css={{
-              pb: '$12',
-            }}
+            className="pb-24"
             title="An introduction to the Sia protocol"
             description={
               <>
@@ -173,8 +131,8 @@ export default function Learn({ getStarted }: Props) {
             ]}
           />
           <ContentGallery
-            columns="1"
-            gap="7"
+            columnClassName="grid-cols-1"
+            gapClassName="gap-20"
             items={[
               {
                 title: 'Files are divided prior to upload',
@@ -187,12 +145,12 @@ export default function Learn({ getStarted }: Props) {
                     transfer speeds by connecting to multiple hosts
                     simultaneously. File shards are created using a technology
                     called{' '}
-                    <NextLink
+                    <Link
                       href="https://en.wikipedia.org/wiki/Reed%E2%80%93Solomon_error_correction"
                       target="_blank"
                     >
                       Reed-Solomon erasure coding
-                    </NextLink>
+                    </Link>
                     , commonly used in CDs and DVDs. Erasure coding adds
                     redundancy to your files, such that (for example) any 10 of
                     30 shards can be used to recover the original data. This
@@ -210,12 +168,12 @@ export default function Learn({ getStarted }: Props) {
                     encrypted with a different key. This ensures that, unlike
                     traditional cloud storage providers, hosts on Sia cannot see
                     your data. By default, Sia uses the{' '}
-                    <NextLink
+                    <Link
                       href="https://en.wikipedia.org/wiki/threefish"
                       target="_blank"
                     >
                       Threefish
-                    </NextLink>{' '}
+                    </Link>{' '}
                     algorithm, a high-performance block cipher.
                   </>
                 ),
@@ -229,12 +187,12 @@ export default function Learn({ getStarted }: Props) {
                     hosts. These contracts establish pricing, storage duration,
                     and other aspects of the relationship between the renters
                     and the hosts. File contracts are a type of{' '}
-                    <NextLink
+                    <Link
                       href="https://en.wikipedia.org/wiki/Smart_contract"
                       target="_blank"
                     >
                       smart contract
-                    </NextLink>
+                    </Link>
                     . They allow us to create cryptographic service-level
                     agreements (SLAs) that are secured by the Sia blockchain.
                     Hosts that satisfy the terms of a contract are rewarded at
@@ -253,12 +211,12 @@ export default function Learn({ getStarted }: Props) {
                     payment up-front, storage is purchased in a rapid sequence
                     of micropayments that flows alongside the data being
                     transferred. This is accomplished using{' '}
-                    <NextLink
+                    <Link
                       href="https://en.bitcoin.it/wiki/Payment_channels"
                       target="_blank"
                     >
                       payment channels
-                    </NextLink>
+                    </Link>
                     , the same technology used in Bitcoin's Lightning Network.
                     Furthermore, most contracts require the host to lock up some
                     of their own siacoins as collateral, giving them a strong
@@ -296,12 +254,12 @@ export default function Learn({ getStarted }: Props) {
                     receives nothing, and loses any collateral that they paid
                     into the contract. Storage proofs are made possible by a
                     cryptographic data structure called a{' '}
-                    <NextLink
+                    <Link
                       href="https://en.wikipedia.org/wiki/Merkle_tree"
                       target="_blank"
                     >
                       Merkle tree
-                    </NextLink>
+                    </Link>
                     . Merkle trees make it possible to prove that a piece of
                     data is part of a larger file. Even better, these proofs are
                     quite small, no matter how large the file is. This is
@@ -312,12 +270,12 @@ export default function Learn({ getStarted }: Props) {
               },
             ]}
           />
-        </Flex>
+        </div>
       </SectionWaves>
-      <SectionGradient css={{ py: '$6' }}>
+      <SectionGradient className="pt-32 pb-40">
         <SiteHeading
           size="32"
-          css={{ mt: '$9' }}
+          className="pb-20"
           title="Learn more about the basics"
           description={
             <>Technical tutorials for new developers looking to build on Sia.</>
@@ -325,7 +283,7 @@ export default function Learn({ getStarted }: Props) {
         />
         <ContentGallery items={getStarted} />
         <Callout
-          css={{ my: '$9' }}
+          className="mt-48"
           eyebrow="Start building"
           title="Developer Resources"
           description={

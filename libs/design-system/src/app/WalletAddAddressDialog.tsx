@@ -1,10 +1,8 @@
-import { Flex } from '../core/Flex'
 import { Paragraph } from '../core/Paragraph'
 import { TextField } from '../core/TextField'
 import { Button } from '../core/Button'
 import { Label } from '../core/Label'
 import { Text } from '../core/Text'
-import { DialogContent } from '../core/Dialog'
 import { useWalletAddressCreate } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -52,51 +50,42 @@ export function WalletAddAddressDialog({ closeDialog }: Props) {
   })
 
   return (
-    <DialogContent
-      title="Add Address"
-      css={{
-        width: 'inherit',
-        maxWidth: '1000px',
-        overflow: 'hidden',
-      }}
-    >
-      <Flex direction="column" gap="2">
-        <Paragraph size="14">Add an address to cold storage wallet.</Paragraph>
-        <form onSubmit={formik.handleSubmit}>
-          <Flex direction="column" gap="2">
-            <Field
-              formik={formik}
-              title="Address"
-              name="address"
-              placeholder={exampleAddr}
-              autoComplete="off"
-              type="text"
-            />
-            <Field
-              formik={formik}
-              title="Description"
-              name="description"
-              placeholder="My address"
-              autoComplete="off"
-              type="text"
-            />
-            <Field
-              formik={formik}
-              title="Index"
-              name="index"
-              placeholder="0"
-              type="number"
-            />
-            {formik.status?.error && (
-              <Text css={{ color: '$red11' }}>{formik.status.error}</Text>
-            )}
-            <Button size="2" variant="accent" type="submit">
-              Add
-            </Button>
-          </Flex>
-        </form>
-      </Flex>
-    </DialogContent>
+    <div className="flex flex-col gap-4">
+      <Paragraph size="14">Add an address to cold storage wallet.</Paragraph>
+      <form onSubmit={formik.handleSubmit}>
+        <div className="flex flex-col gap-4">
+          <Field
+            formik={formik}
+            title="Address"
+            name="address"
+            placeholder={exampleAddr}
+            autoComplete="off"
+            type="text"
+          />
+          <Field
+            formik={formik}
+            title="Description"
+            name="description"
+            placeholder="My address"
+            autoComplete="off"
+            type="text"
+          />
+          <Field
+            formik={formik}
+            title="Index"
+            name="index"
+            placeholder="0"
+            type="number"
+          />
+          {formik.status?.error && (
+            <Text color="red">{formik.status.error}</Text>
+          )}
+          <Button size="large" variant="accent" type="submit">
+            Add
+          </Button>
+        </div>
+      </form>
+    </div>
   )
 }
 
@@ -119,15 +108,15 @@ function Field({
   type,
 }: FieldProps) {
   return (
-    <Flex direction="column" gap="1">
-      <Flex justify="between">
-        <Label htmlFor={name} css={{ color: '$gray9' }}>
+    <div className="flex flex-col gap-2">
+      <div className="flex justify-between">
+        <Label htmlFor={name} color="subtle">
           {title}
         </Label>
         {formik.errors[name] && formik.touched[name] && (
-          <Text css={{ color: '$red11' }}>{formik.errors[name]}</Text>
+          <Text color="red">{formik.errors[name]}</Text>
         )}
-      </Flex>
+      </div>
       <TextField
         id={name}
         name={name}
@@ -136,8 +125,8 @@ function Field({
         type={type}
         onChange={formik.handleChange}
         value={formik.values[name]}
-        size="2"
+        size="medium"
       />
-    </Flex>
+    </div>
   )
 }

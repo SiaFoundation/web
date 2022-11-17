@@ -1,27 +1,28 @@
+import { cx } from 'class-variance-authority'
 import React from 'react'
-import { styled } from '../config/theme'
-
-export const SCodeblock = styled('code', {
-  fontFamily: '$mono',
-  fontSize: '$12',
-  lineHeight: '150%',
-  display: 'block',
-  padding: '$1-5',
-  backgroundColor: '$gray3',
-  color: '$hiContrast',
-  textAlign: 'left',
-  borderRadius: '$1',
-})
-
-type Props = React.ComponentProps<typeof SCodeblock>
+import { VariantProps } from '../types'
+import { textStyles } from './Text'
 
 export const Codeblock = React.forwardRef<
-  React.ElementRef<typeof SCodeblock>,
-  Props
->((props, forwardedRef) => {
+  HTMLElement,
+  React.HTMLAttributes<HTMLElement> & VariantProps<typeof textStyles>
+>(({ className, size, ...props }, forwardedRef) => {
   return (
     <pre>
-      <SCodeblock {...props} ref={forwardedRef} />
+      <code
+        className={cx(
+          textStyles({ font: 'mono', size }),
+          'block',
+          'w-full',
+          'p-3',
+          'bg-white dark:bg-graydark-200',
+          'border border-gray-400 dark:border-graydark-400',
+          'rounded',
+          className
+        )}
+        {...props}
+        ref={forwardedRef}
+      />
     </pre>
   )
 })
