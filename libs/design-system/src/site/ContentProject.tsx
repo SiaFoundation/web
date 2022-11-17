@@ -1,12 +1,10 @@
-import { Flex } from '../core/Flex'
-import { NextLink } from '../core/Link'
+import { Link } from '../core/Link'
 import { Text } from '../core/Text'
 import { Paragraph } from '../core/Paragraph'
 import { ContentItemProps } from './ContentItem'
 import { WebDomain } from './WebDomain'
-import { Image } from '../core/Image'
-import { Box } from '../core/Box'
 import { useTheme } from '../hooks/useTheme'
+import { cx } from 'class-variance-authority'
 
 export type ContentProjectProps = ContentItemProps & {
   logo: string
@@ -21,54 +19,49 @@ export function ContentProject({
   subtitle,
   link,
   newTab,
-  css,
+  className,
 }: ContentProjectProps) {
   const { activeTheme } = useTheme()
   return (
-    <Flex direction="column" gap="1-5" css={css}>
-      <Flex direction="column" gap="1">
-        <NextLink
-          href={link}
-          target={newTab ? '_blank' : undefined}
-          variant="contrast"
+    <div className={cx('flex flex-col', className)}>
+      <Link
+        href={link}
+        target={newTab ? '_blank' : undefined}
+        color="contrast"
+        className="mb-5"
+      >
+        <div
+          className="relative"
+          style={{
+            filter: `grayscale(1) invert(${activeTheme === 'dark' ? 1 : 0})`,
+          }}
         >
-          <Box
-            css={{
-              position: 'relative',
-              height: '50px',
-              width: '300px',
-              overflow: 'hidden',
-              filter: `grayscale(1) invert(${activeTheme === 'dark' ? 1 : 0})`,
-            }}
-          >
-            {/* NextImage was having issues loading the file */}
-            <Image
-              src={`/logos/${logo}.png`}
-              loading="lazy"
-              alt={title}
-              height="50px"
-              width="300px"
-            />
-          </Box>
-        </NextLink>
-        {subtitle && (
-          <Paragraph color="subtle" size="14">
-            {subtitle}
-          </Paragraph>
-        )}
-      </Flex>
-      <Text size="14" font="mono" css={{ lineHeight: '150%' }}>
+          {/* NextImage was having issues loading the file */}
+          <img
+            src={`/logos/${logo}.png`}
+            loading="lazy"
+            alt={title}
+            className="h-[30px] md:h-[50px]"
+          />
+        </div>
+      </Link>
+      {subtitle && (
+        <Paragraph color="subtle" size="14" className="mb-3">
+          {subtitle}
+        </Paragraph>
+      )}
+      <Text size="14" font="mono" className="mb-1">
         {link && (
-          <NextLink
+          <Link
             href={link}
             target={newTab ? '_blank' : undefined}
-            variant="contrast"
+            color="contrast"
           >
             Learn more about {title}
-          </NextLink>
+          </Link>
         )}
       </Text>
       <WebDomain link={link} />
-    </Flex>
+    </div>
   )
 }

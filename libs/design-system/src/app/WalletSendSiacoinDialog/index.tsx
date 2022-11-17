@@ -1,10 +1,7 @@
 import BigNumber from 'bignumber.js'
 import { useMemo, useState } from 'react'
 import { toHastings } from '@siafoundation/sia-js'
-import { Flex } from '../../core/Flex'
-import { DialogContent } from '../../core/Dialog'
 import { Separator } from '../../core/Separator'
-import { Box } from '../../core/Box'
 import { Dialog } from '../../core/Dialog'
 import { useSendSiacoinGenerateForm } from './Generate'
 import { useSendSiacoinConfirmForm } from './Confirm'
@@ -30,11 +27,16 @@ const emptyFormData = {
 }
 
 type Props = {
+  trigger: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
 }
 
-export function WalletSendSiacoinDialog({ open, onOpenChange }: Props) {
+export function WalletSendSiacoinDialog({
+  trigger,
+  open,
+  onOpenChange,
+}: Props) {
   const [step, setStep] = useState<Step>('setup')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [signedTxn, setSignedTxn] = useState<Transaction>()
@@ -75,6 +77,7 @@ export function WalletSendSiacoinDialog({ open, onOpenChange }: Props) {
 
   return (
     <Dialog
+      trigger={trigger}
       open={open}
       onOpenChange={(val) => {
         if (!val) {
@@ -84,62 +87,56 @@ export function WalletSendSiacoinDialog({ open, onOpenChange }: Props) {
         }
         onOpenChange(val)
       }}
+      title="Send siacoin"
+      className="max-w-md"
+      onSubmit={
+        controls
+          ? (controls.formik
+              .handleSubmit as React.FormEventHandler<HTMLFormElement>)
+          : undefined
+      }
+      controls={
+        controls && (
+          <div className="flex flex-col gap-1">
+            <FormSubmitButton formik={controls.formik}>
+              {controls.submitLabel}
+            </FormSubmitButton>
+          </div>
+        )
+      }
     >
-      <DialogContent
-        title="Send siacoin"
-        css={{
-          maxWidth: '400px',
-          overflow: 'hidden',
-        }}
-        onSubmit={
-          controls
-            ? (controls.formik
-                .handleSubmit as React.FormEventHandler<HTMLFormElement>)
-            : undefined
-        }
-        controls={
-          controls && (
-            <Flex direction="column" gap="0-5">
-              <FormSubmitButton formik={controls.formik}>
-                {controls.submitLabel}
-              </FormSubmitButton>
-            </Flex>
-          )
-        }
-      >
-        <Flex direction="column" gap="2">
-          <ProgressSteps
-            onChange={(val) => setStep(val as Step)}
-            activeStep={step}
-            steps={[
-              {
-                id: 'setup',
-                label: 'Setup',
-              },
-              {
-                id: 'confirm',
-                label: 'Confirm',
-              },
-              {
-                id: 'done',
-                label: 'Complete',
-              },
-            ]}
+      <div className="flex flex-col gap-4">
+        <ProgressSteps
+          onChange={(val) => setStep(val as Step)}
+          activeStep={step}
+          steps={[
+            {
+              id: 'setup',
+              label: 'Setup',
+            },
+            {
+              id: 'confirm',
+              label: 'Confirm',
+            },
+            {
+              id: 'done',
+              label: 'Complete',
+            },
+          ]}
+        />
+        <div className="mt-4">
+          <Separator className="w-full" />
+        </div>
+        {step === 'setup' && generate.form}
+        {step === 'confirm' && confirm.form}
+        {step === 'done' && (
+          <WalletSendSiacoinComplete
+            formData={formData}
+            fee={fee}
+            transactionId={'TODO'}
           />
-          <Box css={{ marginTop: '$2' }}>
-            <Separator size="100" pad="0" />
-          </Box>
-          {step === 'setup' && generate.form}
-          {step === 'confirm' && confirm.form}
-          {step === 'done' && (
-            <WalletSendSiacoinComplete
-              formData={formData}
-              fee={fee}
-              transactionId={'TODO'}
-            />
-          )}
-        </Flex>
-      </DialogContent>
+        )}
+      </div>
     </Dialog>
   )
 }

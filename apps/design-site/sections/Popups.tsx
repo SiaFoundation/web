@@ -1,12 +1,9 @@
 import {
   Badge,
   Button,
-  Flex,
   Heading,
   Paragraph,
   Popover,
-  PopoverContent,
-  PopoverTrigger,
   Section,
   Text,
   Tooltip,
@@ -16,56 +13,54 @@ import { SubsectionHeading } from '../components/SubsectionHeading'
 
 function Content() {
   return (
-    <Flex direction="column" gap="1" css={{ p: '$2' }}>
+    <div className="flex flex-col gap-2 p-4">
       <Heading>Hey there</Heading>
       <Paragraph size="18">
         Be sure to read the user manual before operating machinery like this
         button.
       </Paragraph>
-    </Flex>
+    </div>
   )
 }
 
 export function Popups() {
   return (
     <>
-      <Section css={{ pt: '$12' }}>
+      <Section>
         <SectionHeading>Popups</SectionHeading>
-      </Section>
-      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Popover</SubsectionHeading>
-        <Text css={{ pb: '$3' }}>Click to see Popover</Text>
-        <Flex direction="row" gap="2" align="center">
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="accent">Start aligned</Button>
-            </PopoverTrigger>
-            <PopoverContent align="start">
-              <Content />
-            </PopoverContent>
+        <Text className="pb-6">Click to see Popover</Text>
+        <div className="flex gap-4 items-center">
+          <Popover
+            trigger={<Button variant="accent">Start aligned</Button>}
+            contentProps={{
+              align: 'start',
+            }}
+          >
+            <Content />
           </Popover>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="accent">Center aligned</Button>
-            </PopoverTrigger>
-            <PopoverContent align="center">
-              <Content />
-            </PopoverContent>
+          <Popover
+            trigger={<Button variant="accent">Center aligned</Button>}
+            contentProps={{
+              align: 'center',
+            }}
+          >
+            <Content />
           </Popover>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="accent">End aligned</Button>
-            </PopoverTrigger>
-            <PopoverContent align="end">
-              <Content />
-            </PopoverContent>
+          <Popover
+            trigger={<Button variant="accent">End aligned</Button>}
+            contentProps={{
+              align: 'end',
+            }}
+          >
+            <Content />
           </Popover>
-        </Flex>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section>
         <SubsectionHeading>Tooltip</SubsectionHeading>
-        <Text css={{ pb: '$3' }}>Hover to see Tooltip</Text>
-        <Flex direction="row" gap="2">
+        <Text className="pb-6">Hover to see Tooltip</Text>
+        <div className="flex gap-4">
           <Tooltip align="start" content="Start aligned">
             <Badge variant="accent">Start aligned</Badge>
           </Tooltip>
@@ -75,7 +70,7 @@ export function Popups() {
           <Tooltip align="end" content="End aligned">
             <Badge variant="accent">End aligned</Badge>
           </Tooltip>
-        </Flex>
+        </div>
       </Section>
     </>
   )

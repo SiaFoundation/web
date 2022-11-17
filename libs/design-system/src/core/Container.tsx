@@ -1,42 +1,30 @@
-import { styled } from '../config/theme'
+import { cva } from 'class-variance-authority'
+import React from 'react'
+import { VariantProps } from '../types'
 
-export const Container = styled('div', {
-  boxSizing: 'border-box',
-  flexShrink: 0,
-  margin: '0 auto',
-  width: '100%',
-  padding: '0 $2-5',
-  '@bp2': {
-    padding: '0 $5',
-  },
-
+const styles = cva(['flex-shrink-0 w-full mx-auto'], {
   variants: {
+    pad: {
+      true: 'px-5 md:px-10',
+      false: '',
+    },
     size: {
-      '1': {
-        maxWidth: '450px',
-      },
-      '2': {
-        maxWidth: '715px',
-      },
-      '3': {
-        maxWidth: '1145px',
-      },
-      '4': {
-        maxWidth: '1920px',
-      },
-      full: {
-        maxWidth: 'none',
-      },
-      flush: {
-        maxWidth: 'none',
-        padding: '0',
-        '@bp2': {
-          padding: '0',
-        },
-      },
+      '1': 'max-w-screen-sm',
+      '2': 'max-w-screen-md',
+      '3': 'max-w-[1145px]',
+      '4': 'max-w-screen-2xl',
+      full: 'max-w-none',
     },
   },
   defaultVariants: {
+    pad: true,
     size: '3',
   },
 })
+
+export const Container = React.forwardRef<
+  HTMLDivElement,
+  VariantProps<typeof styles> & React.HTMLAttributes<HTMLDivElement>
+>(({ className, pad, size, ...props }, ref) => (
+  <div ref={ref} {...props} className={styles({ size, pad, className })} />
+))

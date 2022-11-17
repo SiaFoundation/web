@@ -1,6 +1,5 @@
-import { Flex } from '../core/Flex'
 import { ScrollArea } from '../core/ScrollArea'
-import { Box } from '../core/Box'
+import { cx } from 'class-variance-authority'
 
 type Props = {
   children: React.ReactNode
@@ -9,27 +8,17 @@ type Props = {
 
 export function DatumScrollArea({ children, bleed }: Props) {
   return (
-    <Box
-      css={{
-        overflow: 'hidden',
-        ...(bleed && {
-          margin: '0 -$3-5 0 -$3-5',
-          width: 'calc(100% + $3-5 * 2)',
-        }),
+    <div
+      className={cx('overflow-hidden', bleed ? '-mx-8' : '')}
+      style={{
+        width: bleed ? 'calc(100% + $3-5 * 2)' : undefined,
       }}
     >
       <ScrollArea>
-        <Flex
-          gap="2"
-          css={
-            bleed
-              ? { padding: '0 $3-5 0 $3-5', width: 'fit-content' }
-              : undefined
-          }
-        >
+        <div className={cx('flex gap-4', bleed ? 'px-8 w-fit' : '')}>
           {children}
-        </Flex>
+        </div>
       </ScrollArea>
-    </Box>
+    </div>
   )
 }

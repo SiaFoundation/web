@@ -1,202 +1,225 @@
+import { AnimatePresence, motion } from 'framer-motion'
+import { cva, cx } from 'class-variance-authority'
+import { panelStyles } from './Panel'
+import { useOpen } from '../hooks/useOpen'
 import React, { useEffect, useRef, useState } from 'react'
-import { styled, CSS, keyframes, css } from '../config/theme'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { Close24 } from '../icons/carbon'
-import { overlayStyles } from './Overlay'
-import { IconButton } from './IconButton'
+import { Button } from './Button'
 import { ScrollArea } from './ScrollArea'
-import { Box } from './Box'
+import { textStyles } from './Text'
+import { VariantProps } from '../types'
 
-export const overlayShow = keyframes({
-  '0%': { opacity: 0 },
-  '100%': { opacity: 1 },
-})
-
-export const contentShow = keyframes({
-  '0%': { opacity: 0, transform: 'translate(-50%, -48%) scale(.56)' },
-  '70%': { opacity: 1, transform: 'translate(-50%, -50%) scale(1.01)' },
-  '100%': { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
-})
-
-export const dialogOverlayStyles = css(overlayStyles, {
-  position: 'fixed',
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0,
-  zIndex: 3,
-  inset: 0,
-  willChange: 'opacity',
-  '@media (prefers-reduced-motion: no-preference)': {
-    animation: `${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
-  },
-})
-
-const DialogOverlay = styled(DialogPrimitive.Overlay, dialogOverlayStyles)
-
-const StyledCloseButton = styled(DialogPrimitive.Close, {
-  position: 'absolute',
-  top: '$2',
-  right: '$2',
-})
-
-const DialogPortal = DialogPrimitive.Portal
-
-export const dialogTitleCss = css({
-  color: '$hiContrast',
-  fontFamily: '$sans',
-  fontSize: '$24',
-  fontWeight: 500,
-  lineHeight: '30px',
-  margin: '0 $2',
-  padding: '$2 0 $1 0',
+const containerStyles = cva(['z-20', 'overflow-hidden'], {
   variants: {
-    separator: {
-      true: {
-        borderBottom: '1px solid $gray3',
-      },
+    variant: {
+      default: 'flex items-center justify-center w-full h-full',
+      fullscreen: ['m-auto', 'max-w-[1560px]'],
     },
   },
+  defaultVariants: {
+    variant: 'default',
+  },
 })
-const DialogTitle = styled(DialogPrimitive.Title, dialogTitleCss)
 
-export const dialogDescriptionCss = css({
-  color: '$textSubtle',
-  fontFamily: '$sans',
-  fontSize: '$14',
-  fontWeight: 400,
-  lineHeight: '150%',
-  padding: '$1 0',
-})
-const DialogDescription = styled(
-  DialogPrimitive.Description,
-  dialogDescriptionCss
+const animationVariants = {
+  show: {
+    opacity: [0, 1],
+    scale: [0.95, 1],
+    // translateX: [-50, -50],
+    transition: { duration: 0.1, ease: 'easeOut' },
+  },
+  exit: {
+    opacity: [1, 0],
+    scale: [1, 0.95],
+    transition: { duration: 0.1, ease: 'easeIn' },
+  },
+}
+
+export const Dialog = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Content>,
+  {
+    rootProps?: React.ComponentProps<typeof DialogPrimitive.Root>
+    trigger: React.ReactNode
+    open?: boolean
+    onOpenChange?: (open: boolean) => void
+    containerVariants?: VariantProps<typeof containerStyles>
+  } & ContentProps
+>(
+  (
+    {
+      trigger,
+      rootProps,
+      open: _open,
+      onOpenChange: _onOpenChange,
+      onSubmit,
+      title,
+      description,
+      containerVariants,
+      contentVariants,
+      controls,
+      children,
+      dynamicHeight = false,
+      maxHeight = 'default',
+      closeClassName,
+    },
+    ref
+  ) => {
+    const { open, onOpenChange } = useOpen({
+      open: _open,
+      onOpenChange: _onOpenChange,
+    })
+
+    return (
+      <DialogPrimitive.Root
+        open={open}
+        onOpenChange={onOpenChange}
+        {...rootProps}
+      >
+        <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
+        <AnimatePresence>
+          {open ? (
+            <DialogPrimitive.Portal forceMount>
+              <DialogPrimitive.Content asChild forceMount ref={ref}>
+                <div className="fixed w-full h-full top-0 left-0 z-20">
+                  <DialogPrimitive.Overlay
+                    onClick={() => onOpenChange(false)}
+                    className="fixed z-20 top-0 right-0 bottom-0 left-0 inset-0 transition-opacity opacity-0 open:opacity-20 bg-black"
+                  />
+                  <motion.div
+                    variants={animationVariants}
+                    initial="init"
+                    animate="show"
+                    exit="exit"
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    className={containerStyles(containerVariants as any)}
+                  >
+                    <Content
+                      title={title}
+                      description={description}
+                      contentVariants={contentVariants}
+                      onSubmit={onSubmit}
+                      controls={controls}
+                      dynamicHeight={dynamicHeight}
+                      maxHeight={maxHeight}
+                      closeClassName={closeClassName}
+                    >
+                      {children}
+                    </Content>
+                  </motion.div>
+                </div>
+              </DialogPrimitive.Content>
+            </DialogPrimitive.Portal>
+          ) : null}
+        </AnimatePresence>
+      </DialogPrimitive.Root>
+    )
+  }
 )
 
-type DialogControlsProps = {
-  children: React.ReactNode
-  separator?: boolean
-}
-
-function DialogControls({ children, separator = true }: DialogControlsProps) {
-  return (
-    <Box
-      css={{
-        padding: '$1 0',
-        margin: '0 $2',
-        borderTop: separator ? '1px solid $gray3' : 'none',
-      }}
-    >
-      {children}
-    </Box>
-  )
-}
-
-export const dialogContentStyles = css({
-  backgroundColor: '$panel',
-  transition: 'border 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
-  color: '$hiContrast',
-  borderRadius: '$2',
-  boxShadow: '$colors$shadowActive',
-  zIndex: 3,
-  position: 'fixed',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '90vw',
-  maxWidth: '400px',
-  overflow: 'hidden',
-  willChange: 'transform, opacity',
-  '@media (prefers-reduced-motion: no-preference)': {
-    animation: `${contentShow} 250ms cubic-bezier(0.16, 1, 0.3, 1)`,
+const contentStyles = cva(['relative', 'z-40'], {
+  variants: {
+    variant: {
+      default: [panelStyles(), 'max-w-[500px]'],
+      ghost: '',
+    },
   },
-  '&:focus': {
-    outline: 'none',
+  defaultVariants: {
+    variant: 'default',
   },
 })
 
-const StyledContent = styled(DialogPrimitive.Content, dialogContentStyles)
-
-type DialogContentPrimitiveProps = React.ComponentProps<
-  typeof DialogPrimitive.Content
->
-type DialogContentProps = Omit<DialogContentPrimitiveProps, 'onSubmit'> & {
+type ContentProps = {
   onSubmit?: React.FormEventHandler<HTMLFormElement>
-  title: React.ReactNode
+  title?: React.ReactNode
   description?: React.ReactNode
   controls?: React.ReactNode
   children?: React.ReactNode
-  css?: CSS
+  dynamicHeight?: boolean
+  maxHeight?: 'default' | 'screen'
+  className?: string
+  contentVariants?: VariantProps<typeof contentStyles>
+  closeClassName?: string
 }
 
-const DialogInnerContent = React.forwardRef<
-  React.ElementRef<typeof StyledContent>,
-  DialogContentProps
->(
+const Content = React.forwardRef<HTMLDivElement, ContentProps>(
   (
-    { children, onSubmit, title, description, controls, ...props },
-    forwardedRef
+    {
+      children,
+      onSubmit,
+      title,
+      description,
+      controls,
+      maxHeight = 'default',
+      dynamicHeight = true,
+      contentVariants,
+      closeClassName,
+    },
+    ref
   ) => {
-    const { ref, height } = useHeight([children, description])
+    const { ref: heightRef, height } = useHeight([children, description])
     const [showSeparator, setShowSeparator] = useState<boolean>(false)
     useEffect(() => {
       // 0.7 is eual to the maxHeight: 70vh below
       setShowSeparator(height > window.innerHeight * 0.7)
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [height])
+    const Tag = onSubmit ? 'form' : 'div'
     return (
-      <StyledContent {...props} ref={forwardedRef}>
-        <Box as={onSubmit ? 'form' : 'div'} onSubmit={onSubmit}>
-          {title && (
-            <DialogTitle separator={showSeparator}>{title}</DialogTitle>
-          )}
-          <Box
-            css={{
-              height: height || 'inherit',
-              maxHeight: '70vh',
-              overflow: 'hidden',
-            }}
+      <Tag
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onSubmit={onSubmit as any}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ref={ref as any}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        className={contentStyles(contentVariants as any)}
+      >
+        {title && (
+          <DialogPrimitive.Title
+            className={dialogTitleStyles({ showSeparator })}
           >
-            <ScrollArea>
-              <Box ref={ref} css={{ padding: '$2' }}>
-                {description && (
-                  <DialogDescription>{description}</DialogDescription>
-                )}
-                {children}
-              </Box>
-            </ScrollArea>
-          </Box>
-          {controls && (
-            <DialogControls separator={showSeparator}>
-              {controls}
-            </DialogControls>
+            {title}
+          </DialogPrimitive.Title>
+        )}
+        <div
+          className={cx(
+            'overflow-hidden',
+            dynamicHeight ? `h-[${height}px]` : '',
+            maxHeight === 'default' ? 'h-[70vh]' : 'h-screen'
           )}
-          <StyledCloseButton asChild>
-            <IconButton size="1" variant="ghost">
+        >
+          <ScrollArea>
+            <div ref={heightRef} className="p-4">
+              {description && (
+                <DialogPrimitive.Description
+                  className={dialogDescriptionStyles()}
+                >
+                  {description}
+                </DialogPrimitive.Description>
+              )}
+              {children}
+            </div>
+          </ScrollArea>
+        </div>
+        {controls && (
+          <DialogControls separator={showSeparator}>{controls}</DialogControls>
+        )}
+        <DialogPrimitive.Close asChild>
+          <div
+            className={cx(
+              'appearance-none',
+              closeClassName || 'absolute top-5 right-2'
+            )}
+          >
+            <Button size="small" variant="ghost">
               <Close24 />
-            </IconButton>
-          </StyledCloseButton>
-        </Box>
-      </StyledContent>
+            </Button>
+          </div>
+        </DialogPrimitive.Close>
+      </Tag>
     )
   }
 )
-
-export const DialogContent = React.forwardRef<
-  React.ElementRef<typeof StyledContent>,
-  DialogContentProps
->((props, forwardedRef) => {
-  return (
-    <DialogPortal>
-      <DialogOverlay />
-      <DialogInnerContent {...props} ref={forwardedRef} />
-    </DialogPortal>
-  )
-})
-
-export const Dialog = DialogPrimitive.Root
-export const DialogTrigger = DialogPrimitive.Trigger
-export const DialogClose = DialogPrimitive.Close
 
 function useHeight(deps: unknown[] = []) {
   const [height, setHeight] = useState<number>(0)
@@ -219,3 +242,50 @@ function useHeight(deps: unknown[] = []) {
     height,
   }
 }
+
+export const dialogTitleStyles = cva(
+  [
+    'pt-5 pb-2 mx-4',
+    textStyles({
+      size: '20',
+      weight: 'semibold',
+      font: 'sans',
+      color: 'contrast',
+    }),
+  ],
+  {
+    variants: {
+      showSeparator: {
+        true: 'border-b border-gray-200 dark:border-graydark-200',
+      },
+    },
+  }
+)
+
+export const dialogDescriptionStyles = cva([
+  textStyles({
+    color: 'subtle',
+    size: '14',
+  }),
+  'py-2',
+])
+
+type DialogControlsProps = {
+  children: React.ReactNode
+  separator?: boolean
+}
+
+function DialogControls({ children, separator = true }: DialogControlsProps) {
+  return (
+    <div
+      className={cx(
+        'py-2 mx-3 border-t',
+        separator ? 'border-gray-200 dark:border-graydark-200' : ''
+      )}
+    >
+      {children}
+    </div>
+  )
+}
+
+export const DialogClose = DialogPrimitive.Close

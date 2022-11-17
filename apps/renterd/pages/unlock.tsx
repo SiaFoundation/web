@@ -30,7 +30,7 @@ export default function Unlock() {
             <Text font="mono" weight="bold" size="20">
               renterd
             </Text>
-            <Separator size="100" pad={0} />
+            <Separator className="w-full" />
             <AppUnlockForm routes={routes} />
           </Flex>
         </Panel>

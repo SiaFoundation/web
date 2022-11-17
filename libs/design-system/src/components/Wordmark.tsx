@@ -1,22 +1,13 @@
-import { Box } from '../core/Box'
-import { useTheme } from '../hooks/useTheme'
 import { getImageProps } from '../lib/image'
 import wordmark from '../assets/wordmark.svg'
 
 const wordmarkProps = getImageProps(wordmark)
 
 export function Wordmark() {
-  const { activeTheme } = useTheme()
-
   return (
-    <Box
-      as="img"
+    <img
+      className="h-[39px] w-[65px] dark:brightness-0 dark:invert"
       src={wordmarkProps.src}
-      css={{
-        filter: activeTheme === 'dark' ? 'brightness(0) invert(1)' : 'none',
-        height: '39px',
-        width: '65px',
-      }}
       alt="Sia"
     />
   )

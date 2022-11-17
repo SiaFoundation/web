@@ -1,20 +1,13 @@
 import { Section } from '@siafoundation/design-system'
+import { cx } from 'class-variance-authority'
 
-type Props = {
-  children: React.ReactNode
-} & React.ComponentProps<typeof Section>
+type Props = React.ComponentProps<typeof Section>
 
-export function SectionSimple({ children, css, ...props }: Props) {
+export function SectionSimple({ className, ...props }: Props) {
   return (
     <Section
       {...props}
-      css={{
-        position: 'relative',
-        backgroundColor: '$loContrast',
-        ...css,
-      }}
-    >
-      {children}
-    </Section>
+      className={cx('relative bg-white dark:bg-graydark-50', className)}
+    />
   )
 }

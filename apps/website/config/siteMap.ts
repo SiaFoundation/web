@@ -31,6 +31,11 @@ export const menuSections = [
         title: 'Whitepaper',
         newTab: true,
       },
+      {
+        link: webLinks.docs.brand,
+        title: 'Brand guidelines',
+        newTab: true,
+      },
     ],
   },
   {

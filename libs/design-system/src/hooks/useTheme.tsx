@@ -2,10 +2,8 @@ import React, { createContext, useContext, useState } from 'react'
 import { useCallback, useEffect } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 import { Provider as TooltipProvider } from '@radix-ui/react-tooltip'
-import { useGlobalStyles } from '../config/css'
-import { darkTheme } from '../config/theme'
 
-const lightTheme = 'theme-default'
+const darkThemeClass = 'dark'
 
 type Theme = 'dark' | 'light'
 type Mode = 'user' | 'system'
@@ -37,8 +35,6 @@ const defaultConfig: ThemeConfig = {
 }
 
 export function ThemeProvider({ children, ssr }: Props) {
-  useGlobalStyles()
-
   const [themeConfig, setThemeConfig] = useLocalStorageState('v0/themeConfig', {
     ssr,
     defaultValue: defaultConfig,
@@ -82,9 +78,9 @@ export function ThemeProvider({ children, ssr }: Props) {
 
   useEffect(() => {
     document.body.className = ''
-    document.body.classList.add(
-      themeConfig.theme === 'light' ? lightTheme : darkTheme
-    )
+    if (themeConfig.theme === 'dark') {
+      document.body.classList.add(darkThemeClass)
+    }
   }, [themeConfig])
 
   useEffect(() => {

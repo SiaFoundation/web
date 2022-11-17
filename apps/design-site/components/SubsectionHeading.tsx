@@ -1,47 +1,20 @@
-import { Box, Heading, NextLink, Link20 } from '@siafoundation/design-system'
+import { Heading, Link, Link20 } from '@siafoundation/design-system'
+import { cx } from 'class-variance-authority'
 
 type Props = {
   id?: string
   children: string
+  className?: string
 }
 
-export function SubsectionHeading({ id, children }: Props) {
+export function SubsectionHeading({ id, className, children }: Props) {
   const cId = id || encodeURI(children.toLowerCase())
   return (
-    <Box
-      css={{
-        pt: '$2',
-        pb: '$1',
-      }}
-    >
-      <NextLink
-        href={`#${cId}`}
-        id={cId}
-        css={{
-          color: '$gray11',
-          position: 'relative',
-          '&:hover, &:hover > *': {
-            color: '$gray12',
-          },
-        }}
-      >
-        <Box
-          css={{
-            transition: 'color 0.1s linear',
-            position: 'absolute',
-            top: '-0px',
-            left: '-25px',
-            color: '$gray7',
-            display: 'none',
-            '@bp2': {
-              display: 'block',
-            },
-          }}
-        >
-          <Link20 />
-        </Box>
+    <div className={cx('pt-4 pb-8', className)}>
+      <Link href={`#${cId}`} id={cId} className="relative">
+        <Link20 className="absolute top-1 -left-7 hidden md:block" />
         <Heading size="24">{children}</Heading>
-      </NextLink>
-    </Box>
+      </Link>
+    </div>
   )
 }

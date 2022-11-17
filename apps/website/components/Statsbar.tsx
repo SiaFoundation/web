@@ -1,10 +1,4 @@
-import {
-  Flex,
-  NextLink,
-  Paragraph,
-  Text,
-  webLinks,
-} from '@siafoundation/design-system'
+import { Link, Paragraph, Text, webLinks } from '@siafoundation/design-system'
 import useSWR from 'swr'
 import { Stats } from '../content/stats'
 
@@ -32,9 +26,9 @@ export function Statsbar() {
     // memoryUsage,
   } = data || {}
   return (
-    <Flex direction="column" gap="3">
+    <div className="flex flex-col gap6">
       {/* <Heading font="mono">Numbers</Heading> */}
-      <Flex gap="10" gapY="6" justify="start" wrap="wrap">
+      <div className="flex gap-x-20 gap-y-12 justify-start flex-wrap">
         <StatSection
           title="Network"
           link={webLinks.siaStats}
@@ -123,8 +117,8 @@ export function Statsbar() {
             },
           ]}
         />
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   )
 }
 
@@ -137,7 +131,7 @@ function Stat({ value, label }: StatProps) {
   return (
     <Paragraph font="mono" size="14">
       {value}{' '}
-      <Text color="subtle" font="sans">
+      <Text color="subtle" font="sans" size="14">
         {label}
       </Text>
     </Paragraph>
@@ -157,22 +151,23 @@ type StatSectionProps = {
 
 function StatSection({ title, link, stats }: StatSectionProps) {
   return (
-    <Flex direction="column" gap="3">
-      <Text size="18" font="mono" color="accent" weight="extrabold">
-        <NextLink
-          href={link}
-          target="_blank"
-          variant="accent"
-          underline="hover"
-        >
-          {title}
-        </NextLink>
-      </Text>
-      <Flex direction="column" gap="1">
+    <div className="flex flex-col gap-6">
+      <Link
+        scaleSize="18"
+        font="mono"
+        color="accent"
+        weight="extrabold"
+        href={link}
+        target="_blank"
+        className="no-underline hover:underline"
+      >
+        {title}
+      </Link>
+      <div className="flex flex-col gap-2">
         {stats.map(({ value, label }) => (
           <Stat key={label} value={value} label={label} />
         ))}
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   )
 }

@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useCallback, useState } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useCallback,
+  useState,
+  useEffect,
+} from 'react'
 import {
   WalletSendSiacoinDialog,
   SettingsDialog,
@@ -35,6 +41,9 @@ type State = {
 }
 
 export function DialogProvider({ children }: Props) {
+  useEffect(() => {
+    console.log('Hello')
+  }, [])
   const [dialog, setDialog] = useState<DialogType>()
   const [id, setId] = useState<string>()
 

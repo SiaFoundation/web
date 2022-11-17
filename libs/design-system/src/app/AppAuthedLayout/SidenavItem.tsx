@@ -1,5 +1,5 @@
-import { IconButton } from '../../core/IconButton'
-import { NextLink } from '../../core/Link'
+import { Button } from '../../core/Button'
+import { Link } from '../../core/Link'
 import { Tooltip } from '../../core/Tooltip'
 import { useRouter } from 'next/router'
 
@@ -23,19 +23,19 @@ export function SidenavItem({ title, children, route, onClick }: Props) {
         alignOffset={7}
         content={title}
       >
-        <IconButton
+        <Button
           variant="state"
           data-state={state ? 'open' : 'closed'}
           onClick={onClick}
         >
           {children}
-        </IconButton>
+        </Button>
       </Tooltip>
     )
   }
 
   return (
-    <NextLink href={route} css={{ textDecoration: 'none' }}>
+    <Link href={route} className="no-underline">
       <Tooltip
         side="right"
         align="end"
@@ -43,14 +43,14 @@ export function SidenavItem({ title, children, route, onClick }: Props) {
         alignOffset={7}
         content={title}
       >
-        <IconButton
+        <Button
           variant="state"
           data-state={state ? 'open' : 'closed'}
           onClick={onClick}
         >
           {children}
-        </IconButton>
+        </Button>
       </Tooltip>
-    </NextLink>
+    </Link>
   )
 }

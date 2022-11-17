@@ -10,6 +10,7 @@
       "options": {
         "root": "apps/website",
         "outputPath": "dist/apps/website",
+        "postcssConfig": "apps/website/postcss.config.js",
         "assets": [
           {
             "glob": "**/*",
@@ -31,6 +32,7 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "website:build",
+        "hostname": "0.0.0.0",
         "port": 3001
       },
       "configurations": {

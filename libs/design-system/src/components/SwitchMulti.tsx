@@ -1,5 +1,4 @@
 import { Button } from '../core/Button'
-import { Flex } from '../core/Flex'
 import { Panel } from '../core/Panel'
 
 type Option = {
@@ -15,35 +14,20 @@ type Props = {
 
 export function SwitchMulti({ options, value, onChange }: Props) {
   return (
-    <Panel
-      css={{
-        height: '30px',
-        backgroundColor: '$slate5',
-        borderRadius: '$1',
-      }}
-    >
-      <Flex
-        gap="0-5"
-        align="center"
-        css={{ position: 'relative', top: '-0.5px', height: '100%' }}
-      >
+    <Panel className="h-8 bg-gray-400 dark:bg-graydark-400 rounded">
+      <div className="relative flex gap-1 items-center top-[-0.5px] h-full">
         {options.map((option) => (
           <Button
             key={option.value}
-            size="1"
+            size="medium"
             onClick={() => onChange(option.value)}
-            ghost={value !== option.value}
-            css={{
-              color: value !== option.value ? '$textVerySubtle' : undefined,
-              '&:hover': {
-                color: value !== option.value ? '$textSubtle' : undefined,
-              },
-            }}
+            variant={value !== option.value ? 'ghost' : 'gray'}
+            color={value !== option.value ? 'verySubtle' : 'subtle'}
           >
             {option.label}
           </Button>
         ))}
-      </Flex>
+      </div>
     </Panel>
   )
 }

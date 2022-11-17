@@ -1,7 +1,6 @@
 import { useSettings } from '@siafoundation/react-core'
 import { useRouter } from 'next/router'
 import { useFormik } from 'formik'
-import { Flex } from '../core/Flex'
 import { FieldGroup, FormSubmitButton, FormTextField } from '../components/Form'
 
 async function checkPassword(api: string, password: string) {
@@ -65,18 +64,18 @@ export function AppUnlockForm({ routes }: Props) {
   return (
     <form onSubmit={formik.handleSubmit}>
       <FieldGroup name="password" formik={formik}>
-        <Flex gap="1">
+        <div className="flex gap-2">
           <FormTextField
-            size={1}
+            size="small"
             formik={formik}
             name="password"
             placeholder="Enter password"
             type="password"
           />
-          <FormSubmitButton size="1" formik={formik}>
+          <FormSubmitButton size="small" formik={formik}>
             Unlock
           </FormSubmitButton>
-        </Flex>
+        </div>
       </FieldGroup>
     </form>
   )

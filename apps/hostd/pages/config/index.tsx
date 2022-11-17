@@ -139,7 +139,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Egress price"
             description={
@@ -176,7 +176,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Registry location"
             description={
@@ -210,7 +210,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Contract price"
             description={
@@ -231,7 +231,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Collateral"
             description={
@@ -248,7 +248,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Max collateral"
             description={
@@ -269,7 +269,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Collateral budget"
             description={
@@ -286,7 +286,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Max contract duration"
             description={
@@ -327,7 +327,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Sector access price"
             description={

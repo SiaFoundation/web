@@ -10,6 +10,7 @@
       "options": {
         "root": "apps/design-site",
         "outputPath": "dist/apps/design-site",
+        "postcssConfig": "apps/design-site/postcss.config.js",
         "assets": [
           {
             "glob": "**/*",

@@ -1,4 +1,3 @@
-import { Flex } from '../core/Flex'
 import { NumberField } from '../core/NumberField'
 import { toFixedMax } from '../lib/numbers'
 import BigNumber from 'bignumber.js'
@@ -24,7 +23,7 @@ export function ConfigurationNumber({
   onChange,
 }: Props) {
   return (
-    <Flex gap="1-5" direction="column" css={{ width: '220px' }}>
+    <div className="flex flex-col gap-3 w-[220px]">
       <NumberField
         value={value ? toFixedMax(value, decimalsLimit) : ''}
         units={units}
@@ -33,7 +32,7 @@ export function ConfigurationNumber({
           onChange(new BigNumber(val || 0))
         }}
       />
-      <Flex gap="1" direction="column">
+      <div className="flex flex-col gap-2">
         {average && (
           <ConfigurationTip
             type="number"
@@ -56,7 +55,7 @@ export function ConfigurationNumber({
             onChange={onChange}
           />
         )}
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   )
 }

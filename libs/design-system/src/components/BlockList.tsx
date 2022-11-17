@@ -1,7 +1,6 @@
-import { Flex } from '../core/Flex'
 import { Panel } from '../core/Panel'
 import { Heading } from '../core/Heading'
-import { NextLink } from '../core/Link'
+import { Link } from '../core/Link'
 import { Text } from '../core/Text'
 import { getEntityTypeInitials, getEntityTypeLabel } from '../lib/entityTypes'
 import { humanNumber } from '@siafoundation/sia-js'
@@ -24,31 +23,15 @@ type Props = {
 export function BlockList({ title, blocks }: Props) {
   return (
     <Panel>
-      <Flex
-        direction="column"
-        css={{
-          borderRadius: '$1',
-          overflow: 'hidden',
-        }}
-      >
-        <Heading
-          size="20"
-          css={{
-            padding: '$2 $2',
-            fontFamily: '$mono',
-          }}
-        >
+      <div className="flex flex-col rounded overflow-hidden">
+        <Heading size="20" font="mono" className="p-4">
           {title}
         </Heading>
-        <Flex direction="column">
+        <div className="flex flex-col">
           {blocks?.map((block, i) => (
-            <Flex
-              gap="2"
+            <div
+              className="flex gap-4 p-4 border border-gray-200 dark:border-graydark-200"
               key={block.height}
-              css={{
-                padding: '$2 $2',
-                borderTop: '1px solid $gray3',
-              }}
             >
               <EntityAvatar
                 label={getEntityTypeLabel('block')}
@@ -56,15 +39,12 @@ export function BlockList({ title, blocks }: Props) {
                 href={block.href}
                 shape="square"
               />
-              <Flex direction="column" gap="1" justify="center">
+              <div className="flex flex-col gap-2 justify-center">
                 <Text color="subtle">
                   <Text weight="bold">
-                    <NextLink
-                      href={block.href}
-                      css={{ textDecoration: 'none' }}
-                    >
+                    <Link href={block.href} underline={false}>
                       {humanNumber(block.height)}
-                    </NextLink>
+                    </Link>
                   </Text>{' '}
                   mined by <Text weight="bold">{block.miningPool}</Text>{' '}
                   {i < blocks.length - 1
@@ -79,11 +59,11 @@ export function BlockList({ title, blocks }: Props) {
                     addSuffix: true,
                   })}
                 </Text>
-              </Flex>
-            </Flex>
+              </div>
+            </div>
           )) || <EntityListSkeleton />}
-        </Flex>
-      </Flex>
+        </div>
+      </div>
     </Panel>
   )
 }

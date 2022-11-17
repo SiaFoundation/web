@@ -1,5 +1,4 @@
 import { useMemo } from 'react'
-import { Box } from '../core/Box'
 import {
   ChartXY,
   ChartPoint,
@@ -85,13 +84,13 @@ export function WalletSparkline() {
   }, [scData, timeRange])
 
   return (
-    <Box css={{ position: 'relative' }}>
+    <div className="relative">
       <ChartXY
         id="balance"
         height={200}
         data={scChart.data}
         config={scChart.config}
       />
-    </Box>
+    </div>
   )
 }

@@ -13,6 +13,7 @@ export function NextGenSoftware() {
       <CalloutSoftware
         name="renterd"
         startTime={30}
+        variant="verySubtle"
         description={
           'A next-generation Sia renter, developed by the Sia Foundation. Smart defaults and a highly extensible API.'
         }
@@ -22,6 +23,7 @@ export function NextGenSoftware() {
       <CalloutSoftware
         name="hostd"
         startTime={40}
+        variant="verySubtle"
         description={
           'A next-generation Sia host, developed by the Sia Foundation. Built for performance and reliability.'
         }

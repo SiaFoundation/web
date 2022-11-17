@@ -1,51 +1,21 @@
-import { Box } from '../core/Box'
-import { useTheme } from '../hooks/useTheme'
-
 type Props = {
   startTime?: number
 }
 
 export function LocalBackdrop({ startTime = 0 }: Props) {
-  const { activeTheme } = useTheme()
-
   return (
-    <Box
-      css={{
-        position: 'absolute',
-        zIndex: -1,
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        opacity: 1,
-        pointerEvents: 'none',
-        backgroundColor: '$panel',
-      }}
-    >
-      <Box
-        as="video"
+    <div className="absolute opacity-100 -z-10 top-0 left-0 right-0 bottom-0 pointer-events-none bg-white dark:bg-slate-900">
+      <video
+        className="absolute top-0 left-0 z-20 object-cover h-full w-full motion-reduce:hidden dark:invert-[0.9]"
         preload="true"
         autoPlay
         playsInline
         loop
         muted
         controls={false}
-        css={{
-          filter: activeTheme === 'dark' ? 'invert(0.9)' : 'none',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          zIndex: 2,
-          objectFit: 'cover',
-          height: '100%',
-          width: '100%',
-          '@motion': {
-            display: 'none',
-          },
-        }}
       >
-        <Box as="source" src={`/texture.mp4#t=${startTime}`} type="video/mp4" />
-      </Box>
-    </Box>
+        <source src={`/texture.mp4#t=${startTime}`} type="video/mp4" />
+      </video>
+    </div>
   )
 }

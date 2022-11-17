@@ -1,94 +1,49 @@
 import React from 'react'
-import { styled, CSS, VariantProps } from '../config/theme'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import { Checkmark16 } from '../icons/carbon'
 import { Text } from './Text'
-import { Flex } from './Flex'
+import { cva } from 'class-variance-authority'
+import { VariantProps } from '../types'
 
-const StyledCheckbox = styled(CheckboxPrimitive.Root, {
-  all: 'unset',
-  boxSizing: 'border-box',
-  userSelect: 'none',
-  '&::before': {
-    boxSizing: 'border-box',
-  },
-  '&::after': {
-    boxSizing: 'border-box',
-  },
+const styles = cva(
+  [
+    'select-none appearance-none outline-none overflow-hidden',
+    'inline-flex items-center justify-center',
 
-  alignItems: 'center',
-  appearance: 'none',
-  display: 'inline-flex',
-  justifyContent: 'center',
-  lineHeight: '1',
-  margin: '0',
-  outline: 'none',
-  padding: '0',
-  WebkitTapHighlightColor: 'rgba(0,0,0,0)',
+    'focus:ring ring-blue-500 dark:ring-blue-200',
+    'border',
+    'bg-gray-300 dark:bg-graydark-50',
+    'autofill:bg-blue-100 autofill:dark:bg-blue-800',
+    'border-gray-400 dark:border-graydark-400',
+    'enabled:hover:border-gray-500 enabled:hover:dark:border-graydark-500',
+    'disabled:cursor-default',
 
-  color: '$hiContrast',
-  boxShadow: 'inset 0 0 0 1px $colors$accentInactive',
-  overflow: 'hidden',
-  '@hover': {
-    '&:hover': {
-      boxShadow: 'inset 0 0 0 1px $colors$accentActive',
-    },
-  },
-  '&:focus': {
-    outline: 'none',
-    borderColor: '$red7',
-    boxShadow: '$colors$borderFocus, 0 0 0 1px $colors$accentInput',
-  },
-  '&:disabled': {
-    color: '$gray8',
-    boxShadow: 'inset 0 0 0 1px $colors$accentInactive',
-  },
-
-  variants: {
-    size: {
-      '1': {
-        width: '$2',
-        height: '$2',
-        borderRadius: '$1',
-      },
-      '2': {
-        width: '$3',
-        height: '$3',
-        borderRadius: '$1',
+    'enabled:data-[state=checked]:bg-green-600 dark:enabled:data-[state=checked]:bg-green-500',
+    'disabled:data-[state=checked]:bg-green-600/50 dark:disabled:data-[state=checked]:bg-green-500/50',
+  ],
+  {
+    variants: {
+      size: {
+        small: 'w-4 h-4 rounded',
+        medium: 'w-6 h-6 rounded',
       },
     },
-  },
-  defaultVariants: {
-    size: '1',
-  },
-})
-
-const StyledIndicator = styled(CheckboxPrimitive.Indicator, {
-  alignItems: 'center',
-  display: 'flex',
-  height: '100%',
-  justifyContent: 'center',
-  width: '100%',
-})
-
-type CheckboxPrimitiveProps = React.ComponentProps<
-  typeof CheckboxPrimitive.Root
->
-type CheckboxVariants = VariantProps<typeof StyledCheckbox>
-type CheckboxProps = CheckboxPrimitiveProps & CheckboxVariants & { css?: CSS }
+    defaultVariants: {
+      size: 'small',
+    },
+  }
+)
 
 export const Checkbox = React.forwardRef<
-  React.ElementRef<typeof StyledCheckbox>,
-  CheckboxProps
->(({ children, ...props }, forwardedRef) => (
-  <Flex gap="1">
-    <StyledCheckbox {...props} ref={forwardedRef}>
-      <StyledIndicator>
+  React.ElementRef<typeof CheckboxPrimitive.Root>,
+  VariantProps<typeof styles> & CheckboxPrimitive.CheckboxProps
+>(({ size, children, ...props }, ref) => (
+  <div className="flex gap-2">
+    <CheckboxPrimitive.Root className={styles({ size })} {...props} ref={ref}>
+      <CheckboxPrimitive.Indicator className="flex items-center justify-center h-full w-full text-white">
         <Checkmark16 />
-      </StyledIndicator>
-    </StyledCheckbox>
-    <Text css={{ color: props.disabled ? '$gray9' : '$hiContrast' }}>
-      {children}
-    </Text>
-  </Flex>
+      </CheckboxPrimitive.Indicator>
+    </CheckboxPrimitive.Root>
+    <Text color={props.disabled ? 'subtle' : 'contrast'}>{children}</Text>
+  </div>
 ))

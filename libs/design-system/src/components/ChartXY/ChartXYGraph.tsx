@@ -1,10 +1,7 @@
 import { Fragment } from 'react'
 import { LinearGradient } from '@visx/gradient'
 import { format } from 'date-fns'
-import { Box } from '../../core/Box'
-import { Flex } from '../../core/Flex'
 import { Text } from '../../core/Text'
-import { Grid as DsGrid } from '../../core/Grid'
 import { ChartConfig, ChartPoint, ChartXYProps } from './useChartXY'
 import { Separator } from '../../core/Separator'
 import { PatternLines } from '@visx/pattern'
@@ -64,14 +61,11 @@ export function ChartXYGraph({
       <g
         key={`today-line-${width}-${height}`} // force animate on update
       >
-        <Box
-          as="rect"
-          css={{
-            y: '0px',
-            x: `${todayOffset * 100}%`,
-            width: '1px',
-            height: '100%',
-            fill: 'var(--colors-slate7)',
+        <rect
+          className="fill-gray-600 dark:fill-graydark-600 h-full w-px y-0"
+          style={{
+            // x:
+            left: `${todayOffset * 100}%`,
           }}
         />
       </g>
@@ -256,14 +250,14 @@ export function ChartXYGraph({
               config.formatTimestamp || ((v) => format(v, 'Pp'))
 
             return (
-              <Flex direction="column" gap="1" css={{ py: '$0-5' }}>
-                <Text size="12" color="subtle" css={{ textAlign: 'end' }}>
+              <div className="flex flex-col gap-2 py-1">
+                <Text size="12" color="subtle" className="text-end">
                   {nearestDatum
                     ? formatTimestamp(accessors.date(nearestDatum))
                     : 'No date'}
                 </Text>
-                <Separator size="100" pad="0" />
-                <DsGrid columns="2" gapX="2" gapY="0-5" align="center">
+                <Separator className="w-full" />
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1 items-center">
                   {keys.reverse().map((key) => {
                     const val =
                       nearestDatum && accessors['y'][key](nearestDatum)
@@ -271,8 +265,9 @@ export function ChartXYGraph({
                     return (
                       <Fragment key={key}>
                         <Text
-                          css={{
-                            color: config.data?.[key]?.color || '$accent9',
+                          color="accent"
+                          style={{
+                            color: config.data?.[key]?.color,
                             opacity: nearestKey === key ? 1 : 0.3,
                           }}
                         >
@@ -280,7 +275,7 @@ export function ChartXYGraph({
                         </Text>
                         <Text
                           size="12"
-                          css={{
+                          style={{
                             textAlign: 'end',
                             opacity: nearestKey === key ? 1 : 0.3,
                           }}
@@ -294,21 +289,14 @@ export function ChartXYGraph({
                   })}
                   {keys.length > 1 && isStack && (
                     <>
-                      <Text css={{ paddingTop: '$1' }}>total</Text>
-                      <Text
-                        size="12"
-                        weight="bold"
-                        css={{
-                          paddingTop: '$1',
-                          textAlign: 'end',
-                        }}
-                      >
+                      <Text className="pt-2">total</Text>
+                      <Text size="12" weight="bold" className="pt-2 text-end">
                         {config.format(total)}
                       </Text>
                     </>
                   )}
-                </DsGrid>
-              </Flex>
+                </div>
+              </div>
             )
           }}
         />

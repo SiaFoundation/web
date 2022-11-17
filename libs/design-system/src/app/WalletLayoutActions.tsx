@@ -11,11 +11,11 @@ export function WalletLayoutActions({ sendSiacoin, receiveSiacoin }: Props) {
   return (
     <>
       <WalletBalance />
-      <Button size="1" onClick={receiveSiacoin}>
+      <Button size="small" onClick={receiveSiacoin}>
         <ArrowDownLeft16 />
         Receive
       </Button>
-      <Button size="1" variant="accent" onClick={sendSiacoin}>
+      <Button size="small" variant="accent" onClick={sendSiacoin}>
         <ArrowUpRight16 />
         Send
       </Button>

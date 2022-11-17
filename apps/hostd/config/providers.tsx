@@ -1,5 +1,3 @@
-import { ThemeProvider } from '@siafoundation/design-system'
-import { SettingsProvider } from '@siafoundation/react-core'
 import { DataProvider } from '../contexts/data'
 import { DialogProvider } from '../contexts/dialog'
 
@@ -9,12 +7,8 @@ type Props = {
 
 export function Providers({ children }: Props) {
   return (
-    <ThemeProvider>
-      <SettingsProvider>
-        <DialogProvider>
-          <DataProvider>{children}</DataProvider>
-        </DialogProvider>
-      </SettingsProvider>
-    </ThemeProvider>
+    <DialogProvider>
+      <DataProvider>{children}</DataProvider>
+    </DialogProvider>
   )
 }
