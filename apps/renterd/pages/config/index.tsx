@@ -1,6 +1,4 @@
 import {
-  Box,
-  Flex,
   Heading,
   Panel,
   Paragraph,
@@ -60,7 +58,7 @@ export default function ConfigPage() {
       sidenav={<RenterSidenav />}
       openSettings={() => openDialog('settings')}
     >
-      <Flex gap="7" direction="column" css={{ maxWidth: '1200px' }}>
+      <div className="flex flex-col gap-16 max-w-screen-xl">
         <Section title="Basic">
           <Setting
             title="Target price"
@@ -187,7 +185,7 @@ export default function ConfigPage() {
             }
           />
         </Section>
-      </Flex>
+      </div>
     </RenterdAuthedLayout>
   )
 }
@@ -201,16 +199,16 @@ type SettingProps = {
 
 function Setting({ title, description, suggestion, control }: SettingProps) {
   return (
-    <Flex justify="between">
-      <Flex gap="1" direction="column" css={{ maxWidth: '700px' }}>
+    <div className="flex justify-between">
+      <div className="flex flex-col gap-2 max-w-screen-md">
         <Text size="20" weight="semibold">
           {title}
         </Text>
         <Paragraph size="14">{description}</Paragraph>
         {suggestion && <Text color="accent">Suggestion: {suggestion}</Text>}
-      </Flex>
-      <Box>{control}</Box>
-    </Flex>
+      </div>
+      <div className="">{control}</div>
+    </div>
   )
 }
 
@@ -221,13 +219,11 @@ type SectionProps = {
 
 function Section({ title, children }: SectionProps) {
   return (
-    <Flex gap="3" direction="column">
+    <div className="flex flex-col gap-6">
       <Heading size="24">{title}</Heading>
-      <Panel css={{ p: '$3' }}>
-        <Flex gap="3" direction="column">
-          {children}
-        </Flex>
+      <Panel className="p-6">
+        <div className="flex flex-col gap-6">{children}</div>
       </Panel>
-    </Flex>
+    </div>
   )
 }

@@ -29,7 +29,7 @@ export function HostsPaginator() {
           })
         }
       >
-        <div className="flex" style={{ transform: 'scale(0.65)' }}>
+        <div className="flex scale-[0.65]">
           <PageFirst16 />
         </div>
       </Button>

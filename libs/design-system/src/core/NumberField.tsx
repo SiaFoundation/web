@@ -5,7 +5,7 @@ import { cx } from 'class-variance-authority'
 import { VariantProps } from '../types'
 
 type Props = VariantProps<typeof textFieldStyles> &
-  Omit<React.ComponentProps<typeof CurrencyInput>, 'size'> & {
+  Omit<React.ComponentProps<typeof CurrencyInput>, 'size' | 'className'> & {
     units?: string
   }
 
@@ -15,6 +15,7 @@ export function NumberField({
   size,
   state,
   noSpin,
+  focus,
   cursor,
   className,
   ...props
@@ -30,11 +31,12 @@ export function NumberField({
             variant,
             size,
             state,
+            focus,
             noSpin,
             cursor,
             className,
           }),
-          units ? 'pr-12' : ''
+          units ? 'pl-9' : ''
         )}
       />
       {units && (

@@ -72,7 +72,7 @@ export function EntityList({ title, actions, entities, emptyMessage }: Props) {
             const sc = entity.sc
             const sf = entity.sf
             const truncHashEl = entity.unconfirmed ? (
-              <Text color="accent" weight="semibold">
+              <Text color="accent" weight="medium">
                 Unconfirmed
               </Text>
             ) : (
@@ -96,7 +96,7 @@ export function EntityList({ title, actions, entities, emptyMessage }: Props) {
             const title = upperFirst(label)
             return (
               <div
-                className="flex gap-4 p-4 border border-gray-200 dark:border-graydark-200"
+                className="flex gap-4 p-4 border-t border-gray-200 dark:border-graydark-200"
                 key={entity.hash || entity.label || i}
                 onClick={entity.onClick}
               >
@@ -109,8 +109,8 @@ export function EntityList({ title, actions, entities, emptyMessage }: Props) {
                   }
                   href={entity.href}
                 />
-                <div className="flex flex-col items-center gap-2 w-full">
-                  <div className="flex gap-2 items-center">
+                <div className="flex flex-col items-center gap-1 w-full">
+                  <div className="flex gap-2 items-center w-full">
                     <div className="flex gap-2 items-center">
                       {entity.height && entity.blockHref && (
                         <Text color="subtle" weight="semibold">
@@ -119,13 +119,13 @@ export function EntityList({ title, actions, entities, emptyMessage }: Props) {
                           </Link>
                         </Text>
                       )}
-                      <Text weight="bold">{title || truncHashEl}</Text>
+                      <Text weight="medium">{title || truncHashEl}</Text>
                     </div>
                     <div className="flex-1" />
                     {!!sc && <ValueSc value={sc} />}
                     {!!sf && <ValueSf value={sf} />}
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between w-full">
                     <div className="flex gap-1">{!!title && truncHashEl}</div>
                     <div className="flex gap-1">
                       {entity.timestamp && (
@@ -157,12 +157,12 @@ export function EntityListSkeleton() {
       {times(10, (i) => (
         <div
           key={i}
-          className="flex gap-4 border border-gray-200 dark:border-graydark-200"
+          className="relative flex gap-4 p-3.5 border-t border-gray-200 dark:border-graydark-200"
         >
-          <Skeleton className="w-[60px] h-[50px]" />
+          <Skeleton className="w-[60px] h-[50px] rounded" />
           <div className="flex flex-col gap-2 w-full">
-            <Skeleton className="w-[90%] h-[20px]" />
-            <Skeleton className="w-[140px] h-[14px]" />
+            <Skeleton className="w-[90%] h-[20px] rounded" />
+            <Skeleton className="w-[140px] h-[14px] rounded" />
           </div>
         </div>
       ))}

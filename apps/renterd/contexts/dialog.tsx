@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useCallback,
-  useState,
-  useEffect,
-} from 'react'
+import React, { createContext, useContext, useCallback, useState } from 'react'
 import {
   WalletSendSiacoinDialog,
   SettingsDialog,
@@ -12,7 +6,7 @@ import {
   TransactionDetailsDialog,
   WalletSingleAddressDetailsDialog,
 } from '@siafoundation/design-system'
-import { ControlledDialog } from '../dialogs/ControlledDialog'
+// import { ControlledDialog } from '../dialogs/ControlledDialog'
 
 const DialogContext = createContext({} as State)
 export const useDialog = () => useContext(DialogContext)
@@ -41,9 +35,6 @@ type State = {
 }
 
 export function DialogProvider({ children }: Props) {
-  useEffect(() => {
-    console.log('Hello')
-  }, [])
   const [dialog, setDialog] = useState<DialogType>()
   const [id, setId] = useState<string>()
 
@@ -60,6 +51,15 @@ export function DialogProvider({ children }: Props) {
     setId(undefined)
   }, [setDialog, setId])
 
+  const onOpenChange = useCallback(
+    (open: boolean) => {
+      if (!open) {
+        closeDialog()
+      }
+    },
+    [closeDialog]
+  )
+
   const value: State = {
     dialog,
     id,
@@ -69,22 +69,27 @@ export function DialogProvider({ children }: Props) {
 
   return (
     <DialogContext.Provider value={value}>
-      <ControlledDialog dialog="settings">
-        <SettingsDialog />
-      </ControlledDialog>
-      <ControlledDialog dialog="transactionDetails">
-        <TransactionDetailsDialog id={id} />
-      </ControlledDialog>
+      <SettingsDialog
+        open={dialog === 'settings'}
+        onOpenChange={onOpenChange}
+      />
       <WalletSendSiacoinDialog
         open={dialog === 'sendSiacoin'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
-      <ControlledDialog dialog="addressDetails">
-        <WalletSingleAddressDetailsDialog />
-      </ControlledDialog>
-      <ControlledDialog dialog="connectPeer">
-        <SyncerConnectPeerDialog closeDialog={closeDialog} />
-      </ControlledDialog>
+      <WalletSingleAddressDetailsDialog
+        open={dialog === 'addressDetails'}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <TransactionDetailsDialog
+        id={id}
+        open={dialog === 'transactionDetails'}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <SyncerConnectPeerDialog
+        open={dialog === 'connectPeer'}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
       {children}
     </DialogContext.Provider>
   )

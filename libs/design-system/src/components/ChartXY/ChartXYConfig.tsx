@@ -24,7 +24,7 @@ ChartXYProps) {
   return (
     <Dialog
       trigger={
-        <div className="">
+        <div>
           <Tooltip content="Configure chart">
             <Button variant="gray" size="small">
               <Settings16 />
@@ -33,14 +33,17 @@ ChartXYProps) {
         </div>
       }
       title="Chart settings"
+      contentVariants={{
+        className: 'max-h-[70vh]',
+      }}
     >
       <div className="grid grid-cols-2 gap-x-6 gap-y-10 py-4">
         <div className="flex flex-col gap-4">
-          <Text weight="bold">Graph type</Text>
+          <Text weight="semibold">Graph type</Text>
           <RadioGroup
             value={chartType}
             onValueChange={(v) => setChartType(v as ChartType)}
-            className="flex flex-col gap-2"
+            className="flex flex-col gap-1"
           >
             <Radio value="areastack">Area Stack</Radio>
             <Radio value="barstack">Bar Stack</Radio>
@@ -48,12 +51,12 @@ ChartXYProps) {
             <Radio value="bargroup">Bar Group</Radio>
           </RadioGroup>
         </div>
-        <div className="flex flex-col gap-4">
-          <Text weight="bold">Stack series offset</Text>
+        <div className="flex flex-col gap-2">
+          <Text weight="semibold">Stack series offset</Text>
           <RadioGroup
             value={stackOffset}
             onValueChange={(v) => setStackOffset(v as StackOffset)}
-            className="flex flex-col gap-2"
+            className="flex flex-col gap-1"
           >
             <Radio disabled={!isStack} value="none">
               Auto
@@ -69,12 +72,12 @@ ChartXYProps) {
             </Radio>
           </RadioGroup>
         </div>
-        <div className="flex flex-col gap-4">
-          <Text weight="bold">Curve shape</Text>
+        <div className="flex flex-col gap-2">
+          <Text weight="semibold">Curve shape</Text>
           <RadioGroup
             value={curveType}
             onValueChange={(v) => setCurveType(v as CurveType)}
-            className="flex flex-col gap-2"
+            className="flex flex-col gap-1"
           >
             <Radio disabled={!isLine} value="linear">
               Linear
@@ -87,13 +90,13 @@ ChartXYProps) {
             </Radio>
           </RadioGroup>
         </div>
-        <div className="flex flex-col gap-4">
-          <Text weight="bold">Axes</Text>
+        <div className="flex flex-col gap-2">
+          <Text weight="semibold">Axes</Text>
           <div className="flex flex-col gap-6">
             <RadioGroup
               value={xAxisOrientation}
               onValueChange={(v) => setXAxisOrientation(v as 'bottom' | 'top')}
-              className="flex flex-col gap-2"
+              className="flex flex-col gap-1"
             >
               <Radio value="bottom">Bottom</Radio>
               <Radio value="top">Top</Radio>

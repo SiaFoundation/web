@@ -1,6 +1,6 @@
 import { createStitches } from '@stitches/react'
 import type * as Stitches from '@stitches/react'
-import { colors, colorsDark } from './colors'
+import { colors, colorsDark } from './old-colors'
 import { utils } from './utils'
 
 // Reference:

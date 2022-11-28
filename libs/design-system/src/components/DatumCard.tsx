@@ -38,7 +38,7 @@ export function DatumCard({
   sf,
   comment,
   commentTip,
-  scaleSize,
+  scaleSize = '40',
   onClick,
 }: Props) {
   const commentEl = (
@@ -90,7 +90,7 @@ export function DatumCard({
                   className="relative top-0.5"
                 />
               ) : (
-                <Text font="mono" weight="semibold" scaleSize={scaleSize}>
+                <Text font="mono" weight="medium" scaleSize={scaleSize}>
                   -
                 </Text>
               ))}
@@ -98,12 +98,7 @@ export function DatumCard({
               <ValueCopyable scaleSize={scaleSize} label="hash" value={hash} />
             )}
             {value !== undefined && (
-              <Text
-                font="mono"
-                weight="semibold"
-                scaleSize={scaleSize}
-                ellipsis
-              >
+              <Text font="mono" weight="medium" scaleSize={scaleSize} ellipsis>
                 {value}
               </Text>
             )}

@@ -147,6 +147,8 @@ export * from './lib/chartData'
 export * from './lib/chartStats'
 export * from './lib/ipRegex'
 
+export { colors } from './config/colors'
+
 export {
   styled,
   css,

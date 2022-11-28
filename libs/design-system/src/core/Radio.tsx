@@ -66,8 +66,9 @@ export const Radio = React.forwardRef<
       />
     </RadioGroupPrimitive.Item>
     <Text
+      size="14"
       className="relative top-px flex items-center"
-      color={props.disabled ? 'subtle' : 'contrast'}
+      color={props.disabled ? 'verySubtle' : 'subtle'}
     >
       {children}
     </Text>

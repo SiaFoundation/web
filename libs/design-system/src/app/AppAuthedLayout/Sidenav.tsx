@@ -29,27 +29,20 @@ export function Sidenav({ routes, openSettings, children }: Props) {
   const { setSettings } = useSettings()
   const router = useRouter()
   return (
-    <Panel
-      className="relative overflow-hidden z-10 h-full rounded-none border-y-0"
-      style={{
-        width: '75px',
-        flex: '0 0 auto',
-      }}
-    >
+    <Panel className="relative overflow-hidden z-10 h-full w-[75px] rounded-none border-y-0">
       <div className="flex flex-col items-center h-full">
         <div
           className="flex items-center justify-center"
           style={{
             height: `${navbarAppHeight}px`,
-            flex: '0 0 auto',
           }}
         >
           <Link href={routes.home} underline={false}>
             <Logo size={30} />
           </Link>
         </div>
-        <div className="flex flex-col gap-5 items-center pt-3 pb-5 h-full">
-          <div className="flex flex-col gap-5 items-center">{children}</div>
+        <div className="flex flex-col gap-6 items-center pt-4 pb-6 h-full">
+          <div className="flex flex-col gap-6 items-center">{children}</div>
           <div className="flex-1" />
           <Separator className="w-full" />
           <SidenavItemWallet routes={routes} />

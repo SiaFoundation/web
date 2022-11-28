@@ -5,7 +5,7 @@ export const panelStyles = cva(
   [
     'bg-white dark:bg-graydark-200',
     'transition-shadow ease-in-out duration-300',
-    'shadow-sm hover:shadow-md',
+    'shadow-sm hover:shadow',
     'rounded',
     'border',
   ],

@@ -5,7 +5,6 @@ import {
   DropdownMenu,
   TextField,
   Text,
-  Flex,
   ChevronRight16,
   ipRegex,
 } from '@siafoundation/design-system'
@@ -69,15 +68,15 @@ export function HostsFilterDropdownMenu() {
         type: 'contains',
         match: matchers.publicKey,
         display: () => (
-          <Flex gap="0-5" align="center">
+          <div className="flex gap-1 items-center">
             <Text color="subtle" noWrap>
               Public key
             </Text>
-            <Flex css={{ color: '$textSubtle' }}>
+            <Text className="flex gap-1" color="subtle">
               <ChevronRight16 />
-            </Flex>
+            </Text>
             <Text ellipsis>{value}</Text>
-          </Flex>
+          </div>
         ),
         filter: () =>
           setFilter({
@@ -91,13 +90,13 @@ export function HostsFilterDropdownMenu() {
         type: 'contains',
         match: matchers.address,
         display: () => (
-          <Flex gap="0-5" align="center">
+          <div className="flex gap-1 items-center">
             <Text color="subtle">IP</Text>
-            <Flex css={{ color: '$textSubtle' }}>
+            <Text className="flex gap-1" color="subtle">
               <ChevronRight16 />
-            </Flex>
+            </Text>
             <Text ellipsis>{value}</Text>
-          </Flex>
+          </div>
         ),
         filter: () =>
           setFilter({

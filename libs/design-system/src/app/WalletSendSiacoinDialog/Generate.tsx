@@ -78,6 +78,7 @@ export function useSendSiacoinGenerateForm({ fee, onComplete }: Props) {
     <div className="flex flex-col gap-4">
       <FormField
         formik={formik}
+        variants={{ size: 'medium' }}
         title="Address"
         name="address"
         placeholder={exampleAddr}

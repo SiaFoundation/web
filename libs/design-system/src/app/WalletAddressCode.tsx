@@ -18,8 +18,8 @@ export function WalletAddressCode({ title, description, address }: Props) {
         </Heading>
       )}
       {description && <Text>{description}</Text>}
-      <div className="flex relative p-[5px] bg-white h-[210px] w-[210px]">
-        <div className="flex absolute">
+      <div className="relative p-[5px] bg-white h-[210px] w-[210px]">
+        <div className="absolute">
           <QRCode size={200} value={address} />
         </div>
       </div>

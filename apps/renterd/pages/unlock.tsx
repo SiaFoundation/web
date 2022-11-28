@@ -1,5 +1,4 @@
 import {
-  Flex,
   Panel,
   Separator,
   Text,
@@ -11,30 +10,17 @@ import { routes } from '../config/routes'
 export default function Unlock() {
   return (
     <AppPublicLayout routes={routes}>
-      <Flex
-        direction="column"
-        align="center"
-        justify="center"
-        gap="3"
-        css={{ height: '100%' }}
-      >
-        <Panel
-          css={{
-            position: 'relative',
-            top: '-50px',
-            width: '300px',
-            p: '$2',
-          }}
-        >
-          <Flex direction="column" gap="2">
+      <div className="flex flex-col items-center justify-center gap-6 h-full">
+        <Panel className="relative top-[-50px] h-[120px] w-[300px] p-2.5">
+          <div className="flex flex-col justify-between h-full">
             <Text font="mono" weight="bold" size="20">
               renterd
             </Text>
             <Separator className="w-full" />
             <AppUnlockForm routes={routes} />
-          </Flex>
+          </div>
         </Panel>
-      </Flex>
+      </div>
     </AppPublicLayout>
   )
 }

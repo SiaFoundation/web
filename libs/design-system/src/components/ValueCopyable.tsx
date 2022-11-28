@@ -42,24 +42,31 @@ export function ValueCopyable({
   }`
 
   return (
-    <div className={cx('flex gap-1 items-center', className)}>
-      <Text size={size} scaleSize={scaleSize} weight="semibold" color={color}>
-        {href ? (
-          <Link href={href} underline={false}>
-            {text}
-          </Link>
-        ) : (
-          text
-        )}
-      </Text>
+    <div className={cx('flex items-center', className)}>
+      {href ? (
+        <Link
+          href={href}
+          underline={false}
+          size={size}
+          scaleSize={scaleSize}
+          color={color}
+        >
+          {text}
+        </Link>
+      ) : (
+        <Text size={size} scaleSize={scaleSize} color={color}>
+          {text}
+        </Text>
+      )}
       <Button
+        variant="ghost"
         size="small"
         onClick={(e) => {
           e.stopPropagation()
           copyToClipboard(cleanValue, label)
         }}
       >
-        {Number(size) <= 14 ? <Copy16 /> : <Copy20 />}
+        <Copy16 className="scale-90" />
       </Button>
     </div>
   )

@@ -92,7 +92,7 @@ export function FileExplorer() {
       label: 'Health',
       size: 2,
       render: ({ health }) => (
-        <Badge variant={health < 0.97 ? 'crimson' : 'green'}>
+        <Badge color={health < 0.97 ? 'red' : 'green'}>
           {(health * 100).toFixed(0)}%
         </Badge>
       ),

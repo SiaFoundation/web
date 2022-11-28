@@ -49,7 +49,7 @@ export function HostsViewDropdownMenu() {
                 e.stopPropagation()
               }}
               onChange={(e) => {
-                setSortBy(e.target.value as HostSortBy)
+                setSortBy(e.currentTarget.value as HostSortBy)
               }}
             >
               {Object.entries(sortOptions).map(([category, options]) => (
@@ -73,7 +73,7 @@ export function HostsViewDropdownMenu() {
                 e.stopPropagation()
               }}
               onChange={(e) => {
-                setSortDir(e.target.value as 'asc' | 'desc')
+                setSortDir(e.currentTarget.value as 'asc' | 'desc')
               }}
             >
               <option key="desc" value="desc">

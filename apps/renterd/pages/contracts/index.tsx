@@ -1,11 +1,4 @@
-import {
-  Button,
-  ControlGroup,
-  Box,
-  Flex,
-  Button,
-  Close16,
-} from '@siafoundation/design-system'
+import { ControlGroup, Button, Close16 } from '@siafoundation/design-system'
 import { RenterSidenav } from '../../components/RenterSidenav'
 import { routes } from '../../config/routes'
 import { Text, Table } from '@siafoundation/design-system'
@@ -26,7 +19,7 @@ export default function ContractsPage() {
       sidenav={<RenterSidenav />}
       openSettings={() => openDialog('settings')}
       filters={
-        <Flex gap="1" css={{ flex: 1 }}>
+        <div className="flex gap-2 flex-1">
           {Object.entries(filters).map(([key, filter]) => (
             <ControlGroup key={key}>
               <Button disabled>
@@ -47,29 +40,28 @@ export default function ContractsPage() {
                   </Text>
                 )}
               </Button>
-              <Button variant="gray" size="1" onClick={() => removeFilter(key)}>
+              <Button
+                variant="gray"
+                size="small"
+                onClick={() => removeFilter(key)}
+              >
                 <Close16 />
               </Button>
             </ControlGroup>
           ))}
           <ContractsFilterDropdownMenu />
-        </Flex>
+        </div>
       }
-      size="flush"
+      size="full"
       actions={
-        <Flex gap="1">
+        <div className="flex gap-2">
           <ContractsViewDropdownMenu />
-        </Flex>
+        </div>
       }
     >
-      <Box
-        css={{
-          minWidth: 'fit-content',
-          padding: '$3-5',
-        }}
-      >
+      <div className="p-7 min-w-fit">
         <Table data={contracts} columns={columns} summary />
-      </Box>
+      </div>
     </RenterdAuthedLayout>
   )
 }
