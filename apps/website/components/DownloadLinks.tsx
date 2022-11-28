@@ -18,7 +18,7 @@ export function DownloadLinks({ links = [] }: Props) {
           key={link.title + link.link}
           color="contrast"
           href={link.link}
-          underline={false}
+          underline="none"
           target={link.newTab ? '_blank' : undefined}
         >
           {link.title}

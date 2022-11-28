@@ -1,8 +1,6 @@
 import {
   Badge,
-  Box,
   ChartXY,
-  Flex,
   Text,
   ValueNum,
   ValueSc,
@@ -235,31 +233,31 @@ export function useContracts() {
             const { id, renewed } = row
             const { label, color } = getStatus(row)
             return (
-              <Flex direction="column" gap="1" css={{ width: '100%' }}>
+              <div className="flex flex-col gap-2 w-full">
                 <Text font="mono" ellipsis>
                   {id}
                 </Text>
-                <Flex gap="1" align="center">
-                  <Badge variant={color}>{label}</Badge>
-                  {renewed && <Badge variant="gray">Renewed</Badge>}
-                </Flex>
-              </Flex>
+                <div className="flex gap-2 items-center">
+                  <Badge color={color}>{label}</Badge>
+                  {renewed && <Badge color="gray">Renewed</Badge>}
+                </div>
+              </div>
             )
           },
           summary: () => {
             const counts = countBy(filteredContracts, 'status')
             return (
-              <Flex direction="row" gap="1" css={{ width: '100%' }}>
-                <Text size="12" css={{ color: '$amber9' }}>
+              <div className="flex gap-2 w-full">
+                <Text size="12" color="amber">
                   {counts.active || 0} active
                 </Text>
-                <Text size="12" css={{ color: '$green9' }}>
+                <Text size="12" color="green">
                   {counts.successful || 0} successful
                 </Text>
-                <Text size="12" css={{ color: '$red11' }}>
+                <Text size="12" color="red">
                   {counts.failed || 0} failed
                 </Text>
-              </Flex>
+              </div>
             )
           },
         },
@@ -281,7 +279,7 @@ export function useContracts() {
             )
           },
           summary: () => (
-            <Box css={{ width: '100%', p: '0 $3' }}>
+            <div className="w-full px-6">
               <ChartXY
                 variant="ghost"
                 id="contracts"
@@ -290,7 +288,7 @@ export function useContracts() {
                 chartType="barstack"
                 height={80}
               />
-            </Box>
+            </div>
           ),
         },
         {
@@ -302,9 +300,7 @@ export function useContracts() {
               {humanDate(startDate)}
             </Text>
           ),
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
         },
         {
           key: 'expirationDate',
@@ -315,9 +311,7 @@ export function useContracts() {
               {humanDate(expirationDate)}
             </Text>
           ),
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
         },
         {
           key: 'payoutDate',
@@ -328,16 +322,12 @@ export function useContracts() {
               {humanDate(payoutDate)}
             </Text>
           ),
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
         },
         {
           key: 'estDataSize',
           label: 'Est. data size',
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
           sortable: 'data',
           render: ({ estDataSize }) => (
             <ValueNum
@@ -356,9 +346,7 @@ export function useContracts() {
           key: 'lockedCollateral',
           label: 'Locked collateral',
           sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
           render: ({ lockedCollateral }) => (
             <ValueSc value={lockedCollateral} />
           ),
@@ -367,9 +355,7 @@ export function useContracts() {
           key: 'riskedCollateral',
           label: 'Risked collateral',
           sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
           render: ({ riskedCollateral }) => (
             <ValueSc value={riskedCollateral} />
           ),
@@ -378,9 +364,7 @@ export function useContracts() {
           key: 'returnedCollateral',
           label: 'Returned collateral',
           sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
           render: ({ returnedCollateral }) => (
             <ValueSc value={returnedCollateral} />
           ),
@@ -389,36 +373,28 @@ export function useContracts() {
           key: 'lostCollateral',
           label: 'Lost collateral',
           sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
           render: ({ lostCollateral }) => <ValueSc value={lostCollateral} />,
         },
         {
           key: 'contractFee',
           label: 'Contract fee',
           sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
           render: ({ contractFee }) => <ValueSc value={contractFee} />,
         },
         {
           key: 'accountFunding',
           label: 'Account funding',
           sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
           render: ({ accountFunding }) => <ValueSc value={accountFunding} />,
         },
         {
           key: 'estStorageRevenue',
           label: 'Est. storage revenue',
           sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
           render: ({ estStorageRevenue }) => (
             <ValueSc value={estStorageRevenue} />
           ),
@@ -427,9 +403,7 @@ export function useContracts() {
           key: 'estIngressRevenue',
           label: 'Est. ingress revenue',
           sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
           render: ({ estIngressRevenue }) => (
             <ValueSc value={estIngressRevenue} />
           ),
@@ -438,9 +412,7 @@ export function useContracts() {
           key: 'estEgressRevenue',
           label: 'Est. egress revenue',
           sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
           render: ({ estEgressRevenue }) => (
             <ValueSc value={estEgressRevenue} />
           ),
@@ -449,9 +421,7 @@ export function useContracts() {
           key: 'potentialRevenue',
           label: 'Potential revenue',
           sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
           render: ({ potentialRevenue }) => (
             <ValueSc value={potentialRevenue} />
           ),
@@ -460,27 +430,21 @@ export function useContracts() {
           key: 'earnedRevenue',
           label: 'Earned revenue',
           sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
           render: ({ earnedRevenue }) => <ValueSc value={earnedRevenue} />,
         },
         {
           key: 'lostRevenue',
           label: 'Lost revenue',
           sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
           render: ({ lostRevenue }) => <ValueSc value={lostRevenue} />,
         },
         {
           key: 'contractPayout',
           label: 'Contract Payout',
           sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
           render: ({ contractPayout }) => <ValueSc value={contractPayout} />,
           summary: () => <ValueSc value={toHastings(5e9)} />,
         },
@@ -488,9 +452,7 @@ export function useContracts() {
           key: 'revenue',
           label: 'Revenue',
           sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
           render: ({ revenue }) => <ValueSc value={revenue} />,
           summary: () => <ValueSc value={toHastings(5e9)} />,
         },
@@ -498,9 +460,7 @@ export function useContracts() {
           key: 'costBasis',
           label: 'Cost Basis',
           sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
           render: ({ costBasis }) => <ValueSc value={costBasis} />,
           summary: () => <ValueSc value={toHastings(5e9)} />,
         },
@@ -508,9 +468,7 @@ export function useContracts() {
           key: 'gainLoss',
           label: 'Gain / Loss',
           sortable: 'financial',
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
           render: ({ gainLoss }) => (
             <Text font="mono" ellipsis>
               {gainLoss.toFixed(2)}%
@@ -525,9 +483,7 @@ export function useContracts() {
         {
           key: 'baseExchangeRate',
           label: 'Base exchange rate',
-          props: {
-            justify: 'end',
-          },
+          className: 'justify-end',
           render: ({ baseExchangeRate }) => (
             <ValueSc value={baseExchangeRate} />
           ),

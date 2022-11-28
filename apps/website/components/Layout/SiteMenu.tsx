@@ -27,7 +27,6 @@ export function SiteMenu({ menuSections }: Props) {
         open={open}
         onOpenChange={setOpen}
         dynamicHeight={false}
-        maxHeight="screen"
         containerVariants={{
           variant: 'fullscreen',
         }}

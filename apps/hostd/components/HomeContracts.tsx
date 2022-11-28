@@ -1,9 +1,7 @@
 import {
   ChartXY,
-  Flex,
   Text,
   Heading,
-  Box,
   DatumCardConfigurable,
   DatumScrollArea,
 } from '@siafoundation/design-system'
@@ -13,7 +11,7 @@ export function HomeContracts() {
   const { collateral, contracts } = useData()
 
   return (
-    <Flex direction="column" gap="3-5">
+    <div className="flex flex-col gap-7">
       <Heading>Contracts</Heading>
       <DatumScrollArea bleed>
         <DatumCardConfigurable
@@ -35,8 +33,8 @@ export function HomeContracts() {
           enabledModes={['latest', 'average']}
         />
       </DatumScrollArea>
-      <Flex gap="2">
-        <Box css={{ flex: 1, overflow: 'hidden' }}>
+      <div className="flex gap-4">
+        <div className="flex-1 overflow-hidden">
           <ChartXY
             id="contracts"
             actionsLeft={
@@ -50,8 +48,8 @@ export function HomeContracts() {
             config={contracts.config}
             height={300}
           />
-        </Box>
-        <Box css={{ flex: 1, overflow: 'hidden' }}>
+        </div>
+        <div className="flex-1 overflow-hidden">
           <ChartXY
             id="collateral"
             height={300}
@@ -66,8 +64,8 @@ export function HomeContracts() {
               </>
             }
           />
-        </Box>
-      </Flex>
-    </Flex>
+        </div>
+      </div>
+    </div>
   )
 }

@@ -1,7 +1,6 @@
 import {
   AnimatedPanel,
   Container,
-  Flex,
   Skeleton,
   DatumSkeleton,
 } from '@siafoundation/design-system'
@@ -11,28 +10,21 @@ export function OutputEntitySkeleton() {
   return (
     <>
       <Container>
-        <Flex direction="column" gap="6">
-          <AnimatedPanel
-            variant="subtle"
-            startTime={0}
-            css={{
-              padding: '$3',
-              borderRadius: '$2',
-            }}
-          >
-            <Flex direction="column" gap="5">
-              <Flex gap="1" justify="between" wrap="wrap">
-                <Skeleton css={{ height: '30px', width: '450px' }} />
-                <Skeleton css={{ height: '30px', width: '100px' }} />
-              </Flex>
-              <Flex direction="column" gapY="2-5">
+        <div className="flex flex-col gap-12">
+          <AnimatedPanel variant="subtle" startTime={0} className="p-6 rounded">
+            <div className="flex flex-col gap-10">
+              <div className="flex flex-wrap gap-2 justify-between">
+                <Skeleton className="h-[30px] w-[450px]" />
+                <Skeleton className="h-[30px] w-[100px]" />
+              </div>
+              <div className="flex flex-col gap-y-5">
                 {times(4, (i) => (
                   <DatumSkeleton key={i} />
                 ))}
-              </Flex>
-            </Flex>
+              </div>
+            </div>
           </AnimatedPanel>
-        </Flex>
+        </div>
       </Container>
     </>
   )

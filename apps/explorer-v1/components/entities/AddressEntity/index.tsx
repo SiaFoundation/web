@@ -2,7 +2,6 @@ import {
   AnimatedPanel,
   Badge,
   Container,
-  Flex,
   Tabs,
   TabsContent,
   TabsList,
@@ -55,7 +54,7 @@ export function AddressEntity({ entity }: Props) {
         label: 'Confirmed SC',
         sc: new BigNumber(data[1].balanceSc),
         comment: (
-          <Flex gap="1" wrap="wrap">
+          <div className="flex flex-wrap gap-2">
             <ValueSc
               tooltip="Received"
               value={new BigNumber(data[1].receivedSc)}
@@ -68,7 +67,7 @@ export function AddressEntity({ entity }: Props) {
               variant="change"
               size="10"
             />
-          </Flex>
+          </div>
         ),
       },
       {
@@ -120,24 +119,17 @@ export function AddressEntity({ entity }: Props) {
   return (
     <>
       <Container>
-        <Flex direction="column" gap="6">
-          <AnimatedPanel
-            variant="subtle"
-            startTime={0}
-            css={{
-              padding: '$3',
-              borderRadius: '$2',
-            }}
-          >
-            <Flex direction="column" gap="5">
-              <Flex justify="between" align="center" wrap="wrap" gapY="1">
+        <div className="flex flex-col gap-12">
+          <AnimatedPanel variant="subtle" startTime={0} className="p-6 rounded">
+            <div className="flex flex-col gap-10">
+              <div className="flex flex-wrap gap-y-2 justify-between items-center">
                 <EntityHeading
                   label="address"
                   type="address"
                   value={address}
                   href={routes.address.view.replace('[id]', address)}
                 />
-                <Flex gap="1" align="center">
+                <div className="flex gap-2 items-center">
                   <Tooltip
                     content={`First seen ${humanNumber(
                       firstSeenAgo
@@ -156,16 +148,16 @@ export function AddressEntity({ entity }: Props) {
                       {`${humanNumber(data[1].TotalTxCount)}`} transactions
                     </Badge>
                   </Tooltip>
-                </Flex>
-              </Flex>
-              <Flex direction="column" gapY="3">
+                </div>
+              </div>
+              <div className="flex flex-col gap-y-6">
                 {values.map((item) => (
                   <NvgDatum key={item.label} {...item} />
                 ))}
-              </Flex>
-            </Flex>
+              </div>
+            </div>
           </AnimatedPanel>
-        </Flex>
+        </div>
       </Container>
       <Container>
         <Tabs

@@ -1,11 +1,9 @@
 import {
-  Flex,
   Paragraph,
   Button,
-  Box,
-  DialogContent,
   FormField,
   FieldGroup,
+  Dialog,
 } from '@siafoundation/design-system'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -39,25 +37,23 @@ export function NewWallet() {
   })
 
   return (
-    <DialogContent
+    <Dialog
       title="Create a new wallet"
-      css={{
-        width: 'inherit',
-        maxWidth: '1200px',
-        overflow: 'hidden',
+      contentVariants={{
+        className: 'max-w-[1200px]',
       }}
       controls={
-        <Flex gap="1">
-          <Button size="2" onClick={() => setStep('start')}>
+        <div className="flex gap-2">
+          <Button size="medium" onClick={() => setStep('start')}>
             back
           </Button>
-          <Box css={{ flex: 1 }} />
-          <Button size="2" onClick={() => null}>
+          <div className="flex-1" />
+          <Button size="medium" onClick={() => null}>
             cancel
           </Button>
           {step === 'start' && (
             <Button
-              size="2"
+              size="medium"
               variant="accent"
               onClick={() => setStep('confirm')}
             >
@@ -66,7 +62,7 @@ export function NewWallet() {
           )}
           {step === 'confirm' && (
             <Button
-              size="2"
+              size="medium"
               variant="accent"
               type="submit"
               disabled={!valid}
@@ -75,11 +71,11 @@ export function NewWallet() {
               Add wallet
             </Button>
           )}
-        </Flex>
+        </div>
       }
     >
       <form onSubmit={formik.handleSubmit}>
-        <Flex direction="column" gap="2" css={{ marginBottom: '$1' }}>
+        <div className="flex flex-col gap-4 mb-2">
           <Paragraph size="14" color="subtle">
             Generates a brand new seed and adds it as a hot wallet. The hot
             wallet will automatically sign transactions.
@@ -90,7 +86,7 @@ export function NewWallet() {
             name="name"
             placeholder="Give your wallet a name"
           />
-        </Flex>
+        </div>
       </form>
       <FieldGroup title="Seed" name="seed" formik={formik}>
         {step === 'start' && <GenerateSeed seed={seed} onChange={() => null} />}
@@ -98,6 +94,6 @@ export function NewWallet() {
           <VerifySeed seed={seed || ''} onChange={(valid) => setValid(valid)} />
         )}
       </FieldGroup>
-    </DialogContent>
+    </Dialog>
   )
 }

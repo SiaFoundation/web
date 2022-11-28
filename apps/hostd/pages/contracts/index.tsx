@@ -1,9 +1,6 @@
 import {
   Close16,
   Text,
-  Flex,
-  Box,
-  Button,
   Button,
   ControlGroup,
   Table,
@@ -20,7 +17,7 @@ export default function ContractsPage() {
     <HostdAuthedLayout
       title="Contracts"
       filters={
-        <Flex gap="1" css={{ flex: 1 }}>
+        <div className="flex gap-2 flex-1">
           {Object.entries(filters).map(([key, filter]) => (
             <ControlGroup key={key}>
               <Button disabled>
@@ -41,29 +38,28 @@ export default function ContractsPage() {
                   </Text>
                 )}
               </Button>
-              <Button variant="gray" size="1" onClick={() => removeFilter(key)}>
+              <Button
+                variant="gray"
+                size="small"
+                onClick={() => removeFilter(key)}
+              >
                 <Close16 />
               </Button>
             </ControlGroup>
           ))}
           <ContractsFilterDropdownMenu />
-        </Flex>
+        </div>
       }
-      size="flush"
+      size="4"
       actions={
-        <Flex gap="1">
+        <div className="flex gap-2">
           <ContractsViewDropdownMenu />
-        </Flex>
+        </div>
       }
     >
-      <Box
-        css={{
-          minWidth: 'fit-content',
-          padding: '$3-5',
-        }}
-      >
+      <div className="min-w-fit p-7">
         <Table data={contracts} columns={columns} summary />
-      </Box>
+      </div>
     </HostdAuthedLayout>
   )
 }

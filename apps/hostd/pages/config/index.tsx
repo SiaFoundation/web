@@ -1,7 +1,5 @@
 import {
-  Box,
   Button,
-  Flex,
   Heading,
   Panel,
   Paragraph,
@@ -115,16 +113,16 @@ export default function ConfigPage() {
     <HostdAuthedLayout
       title="Configuration"
       actions={
-        <Flex gap="2" wrap="wrap">
-          <Switch size="1">Accept contracts</Switch>
+        <div className="flex flex-wrap gap-4">
+          <Switch size="small">Accept contracts</Switch>
           <Button onClick={() => openDialog('hostAnnounce')}>
             <Bullhorn16 />
             Announce
           </Button>
-        </Flex>
+        </div>
       }
     >
-      <Flex gap="7" direction="column" css={{ maxWidth: '1200px' }}>
+      <div className="flex flex-col gap-14 max-w-screen-xl">
         <Section title="Bandwidth">
           <Setting
             title="Ingress price"
@@ -191,7 +189,7 @@ export default function ConfigPage() {
                 value={registryPath}
                 placeholder="/path/to/registry_data"
                 onChange={(e) => setRegistryPath(e.target.value)}
-                css={{ width: '220px' }}
+                className="w-[220px]"
               />
             }
           />
@@ -351,7 +349,7 @@ export default function ConfigPage() {
             }
           />
         </Section>
-      </Flex>
+      </div>
     </HostdAuthedLayout>
   )
 }
@@ -365,16 +363,16 @@ type SettingProps = {
 
 function Setting({ title, description, suggestion, control }: SettingProps) {
   return (
-    <Flex justify="between">
-      <Flex gap="1" direction="column" css={{ maxWidth: '700px' }}>
+    <div className="flex gap-1 justify-between">
+      <div className="flex flex-col gap-2 max-w-[700px]">
         <Text size="20" weight="semibold">
           {title}
         </Text>
         <Paragraph size="14">{description}</Paragraph>
         {suggestion && <Text color="accent">Suggestion: {suggestion}</Text>}
-      </Flex>
-      <Box>{control}</Box>
-    </Flex>
+      </div>
+      <div className="">{control}</div>
+    </div>
   )
 }
 
@@ -385,13 +383,11 @@ type SectionProps = {
 
 function Section({ title, children }: SectionProps) {
   return (
-    <Flex gap="3" direction="column">
+    <div className="flex flex-col gap-6">
       <Heading size="24">{title}</Heading>
-      <Panel css={{ p: '$3' }}>
-        <Flex gap="3" direction="column">
-          {children}
-        </Flex>
+      <Panel className="p-6">
+        <div className="flex flex-col gap-6">{children}</div>
       </Panel>
-    </Flex>
+    </div>
   )
 }

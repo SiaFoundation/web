@@ -1,6 +1,4 @@
 import {
-  Box,
-  Flex,
   Text,
   ValueSf,
   ValueSc,
@@ -39,37 +37,13 @@ export function NvgDatum({
   comment,
 }: DatumProps) {
   return (
-    <Flex
-      gapX="6"
-      gapY="2"
-      wrap="wrap"
-      align="center"
-      css={{ overflow: 'hidden' }}
-    >
-      <Box css={{ flex: 1 }}>
-        <Text
-          color="subtle"
-          size={{
-            '@initial': '12',
-            '@bp1': '14',
-          }}
-        >
+    <div className="flex flex-wrap gap-x-12 gap-y-4 items-center overflow-hidden">
+      <div className="flex-1">
+        <Text color="subtle" scaleSize="14">
           {upperFirst(label)}
         </Text>
-      </Box>
-      <Flex
-        direction="column"
-        align={{
-          '@initial': 'end',
-          '@bp2': 'start',
-        }}
-        gap="1"
-        css={{
-          '@bp2': {
-            flex: 2,
-          },
-        }}
-      >
+      </div>
+      <div className="flex flex-col gap-2 items-end md:items-start md:flex-2">
         {sc !== undefined && <ValueSc size={size} variant="value" value={sc} />}
         {sf !== undefined && <ValueSf size={size} variant="value" value={sf} />}
         {entityType &&
@@ -84,10 +58,7 @@ export function NvgDatum({
                   ? Number(entityValue).toLocaleString()
                   : entityValue
               }
-              css={{
-                position: 'relative',
-                top: '2px',
-              }}
+              className="relative top-0.5"
             />
           ) : (
             <Text font="mono" weight="semibold" size={size}>
@@ -105,7 +76,7 @@ export function NvgDatum({
             {comment}
           </Text>
         )}
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   )
 }

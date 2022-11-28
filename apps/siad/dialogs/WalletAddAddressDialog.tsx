@@ -1,11 +1,9 @@
 import {
-  Flex,
   Paragraph,
-  TextField,
   Button,
-  Label,
   Text,
-  DialogContent,
+  FormField,
+  Dialog,
 } from '@siafoundation/design-system'
 import { useWalletAddressCreate } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
@@ -27,7 +25,13 @@ const validationSchema = Yup.object().shape({
   index: Yup.number().integer().required('Required'),
 })
 
-export function WalletAddAddressDialog() {
+type Props = {
+  trigger?: React.ReactNode
+  open: boolean
+  onOpenChange: (val: boolean) => void
+}
+
+export function WalletAddAddressDialog({ trigger, open, onOpenChange }: Props) {
   const { closeDialog } = useDialog()
   const addAddress = useWalletAddressCreate()
 
@@ -52,19 +56,20 @@ export function WalletAddAddressDialog() {
   })
 
   return (
-    <DialogContent
-      title="Add Address"
-      css={{
-        width: 'inherit',
-        maxWidth: '1000px',
-        overflow: 'hidden',
+    <Dialog
+      title="Add address"
+      trigger={trigger}
+      open={open}
+      onOpenChange={onOpenChange}
+      contentVariants={{
+        className: 'max-w-[1000px]',
       }}
     >
-      <Flex direction="column" gap="2">
+      <div className="flex flex-col gap-4">
         <Paragraph size="14">Add an address to cold storage wallet.</Paragraph>
         <form onSubmit={formik.handleSubmit}>
-          <Flex direction="column" gap="2">
-            <Field
+          <div className="flex flex-col gap-4">
+            <FormField
               formik={formik}
               title="Address"
               name="address"
@@ -72,7 +77,7 @@ export function WalletAddAddressDialog() {
               autoComplete="off"
               type="text"
             />
-            <Field
+            <FormField
               formik={formik}
               title="Description"
               name="description"
@@ -80,7 +85,7 @@ export function WalletAddAddressDialog() {
               autoComplete="off"
               type="text"
             />
-            <Field
+            <FormField
               formik={formik}
               title="Index"
               name="index"
@@ -88,56 +93,14 @@ export function WalletAddAddressDialog() {
               type="number"
             />
             {formik.status?.error && (
-              <Text css={{ color: '$red11' }}>{formik.status.error}</Text>
+              <Text color="red">{formik.status.error}</Text>
             )}
-            <Button size="2" variant="accent" type="submit">
+            <Button size="medium" variant="accent" type="submit">
               Add
             </Button>
-          </Flex>
+          </div>
         </form>
-      </Flex>
-    </DialogContent>
-  )
-}
-
-type FieldProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  formik: any
-  title: string
-  name: string
-  placeholder: string
-  autoComplete?: string
-  type?: string
-}
-
-function Field({
-  formik,
-  title,
-  name,
-  placeholder,
-  autoComplete,
-  type,
-}: FieldProps) {
-  return (
-    <Flex direction="column" gap="1">
-      <Flex justify="between">
-        <Label htmlFor={name} css={{ color: '$gray9' }}>
-          {title}
-        </Label>
-        {formik.errors[name] && formik.touched[name] && (
-          <Text css={{ color: '$red11' }}>{formik.errors[name]}</Text>
-        )}
-      </Flex>
-      <TextField
-        id={name}
-        name={name}
-        autoComplete={autoComplete}
-        placeholder={placeholder}
-        type={type}
-        onChange={formik.handleChange}
-        value={formik.values[name]}
-        size="2"
-      />
-    </Flex>
+      </div>
+    </Dialog>
   )
 }

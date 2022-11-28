@@ -1,8 +1,6 @@
 import {
-  Box,
   Button,
   copyToClipboard,
-  Flex,
   Panel,
   Paragraph,
 } from '@siafoundation/design-system'
@@ -21,19 +19,19 @@ export function SeedLayout({ children, icon, description, seed }: Props) {
   }, [seed])
 
   return (
-    <Box>
-      <Panel css={{ mb: '$3' }}>
-        <Flex align="center" gap="3" css={{ p: '$2 $4' }}>
-          <Box>{icon}</Box>
-          <Flex direction="column" gap="1">
+    <div className="">
+      <Panel className="mb-6">
+        <div className="flex gap-6 items-center py-4 px-8">
+          <div className="">{icon}</div>
+          <div className="flex flex-col gap-2">
             <Paragraph size="14">{description}</Paragraph>
-            <Box>
+            <div className="">
               <Button onClick={copySeed}>Copy Seed to Clipboard</Button>
-            </Box>
-          </Flex>
-        </Flex>
+            </div>
+          </div>
+        </div>
       </Panel>
       {children}
-    </Box>
+    </div>
   )
 }

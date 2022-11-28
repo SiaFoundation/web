@@ -1,6 +1,5 @@
 import {
   DatumCard,
-  Flex,
   Heading,
   DatumScrollArea,
 } from '@siafoundation/design-system'
@@ -9,7 +8,7 @@ import { toHastings } from '@siafoundation/sia-js'
 
 export function HomeOverview() {
   return (
-    <Flex direction="column" gap="3-5">
+    <div className="flex flex-col gap-7">
       <Heading>Overview</Heading>
       <DatumScrollArea>
         <DatumCard
@@ -27,6 +26,6 @@ export function HomeOverview() {
         />
         <DatumCard label="Uptime" value="48hrs" />
       </DatumScrollArea>
-    </Flex>
+    </div>
   )
 }

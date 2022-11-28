@@ -114,7 +114,7 @@ export function EntityList({ title, actions, entities, emptyMessage }: Props) {
                     <div className="flex gap-2 items-center">
                       {entity.height && entity.blockHref && (
                         <Text color="subtle" weight="semibold">
-                          <Link href={entity.blockHref} underline={false}>
+                          <Link href={entity.blockHref} underline="none">
                             {humanNumber(entity.height)}
                           </Link>
                         </Text>

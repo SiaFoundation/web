@@ -7,8 +7,6 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  Flex,
-  Grid,
   Heading,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
@@ -45,35 +43,28 @@ export function ContractConditionsSection({ entity }: Props) {
   return (
     <Accordion type="single">
       <AccordionItem value="details" variant="ghost">
-        <AccordionTrigger variant="ghost">
+        <AccordionTrigger>
           <Heading size="20">Conditions</Heading>
         </AccordionTrigger>
         <AccordionContent>
-          <Grid
-            columns={{
-              '@initial': 1,
-              '@bp2': 2,
-            }}
-            gap="3"
-            css={{ padding: '$2 0' }}
-          >
-            <Flex direction="column" gap="3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
+            <div className="flex flex-col gap-6">
               <Heading size="20">Success</Heading>
-              <Flex direction="column" gap="3">
+              <div className="flex flex-col gap-6">
                 {success.map((item) => (
                   <NvgDatum key={item.label} {...item} />
                 ))}
-              </Flex>
-            </Flex>
-            <Flex direction="column" gap="3">
+              </div>
+            </div>
+            <div className="flex flex-col gap-6">
               <Heading size="20">Failure</Heading>
-              <Flex direction="column" gap="3">
+              <div className="flex flex-col gap-6">
                 {failure.map((item) => (
                   <NvgDatum key={item.label} {...item} />
                 ))}
-              </Flex>
-            </Flex>
-          </Grid>
+              </div>
+            </div>
+          </div>
         </AccordionContent>
       </AccordionItem>
     </Accordion>

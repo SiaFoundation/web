@@ -1,8 +1,6 @@
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
   Button,
   Settings20,
 } from '@siafoundation/design-system'
@@ -15,20 +13,22 @@ type Props = {
 export function StorageFolderDropdownMenu({ id }: Props) {
   const { openDialog } = useDialog()
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <DropdownMenu
+      trigger={
         <Button>
           <Settings20 />
         </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => openDialog('storageFolderResize', id)}>
-          Resize
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => openDialog('storageFolderRemove', id)}>
-          Delete
-        </DropdownMenuItem>
-      </DropdownMenuContent>
+      }
+      contentProps={{
+        align: 'end',
+      }}
+    >
+      <DropdownMenuItem onClick={() => openDialog('storageFolderResize', id)}>
+        Resize
+      </DropdownMenuItem>
+      <DropdownMenuItem onClick={() => openDialog('storageFolderRemove', id)}>
+        Delete
+      </DropdownMenuItem>
     </DropdownMenu>
   )
 }

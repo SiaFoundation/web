@@ -10,12 +10,16 @@ const linkVariants = cva([], {
       true: 'opacity-50',
     },
     underline: {
-      true: 'underline underline-offset-2 decoration-gray-1100 dark:decoration-gray-500',
+      default:
+        'underline underline-offset-2 decoration-gray-1100 dark:decoration-gray-500',
+      hover:
+        'hover:underline underline-offset-2 decoration-gray-1100 dark:decoration-gray-500',
+      none: '',
     },
   },
   defaultVariants: {
     disabled: false,
-    underline: true,
+    underline: 'default',
   },
 })
 

@@ -37,7 +37,7 @@ export function Sidenav({ routes, openSettings, children }: Props) {
             height: `${navbarAppHeight}px`,
           }}
         >
-          <Link href={routes.home} underline={false}>
+          <Link href={routes.home} underline="none">
             <Logo size={30} />
           </Link>
         </div>

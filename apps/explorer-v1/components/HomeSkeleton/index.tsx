@@ -1,8 +1,6 @@
 import {
   AnimatedPanel,
   Container,
-  Flex,
-  Grid,
   Skeleton,
   EntityList,
   BlockList,
@@ -12,40 +10,26 @@ export function HomeSkeleton() {
   return (
     <>
       <Container>
-        <Flex direction="column" gap="8">
-          <AnimatedPanel
-            variant="subtle"
-            startTime={0}
-            css={{
-              padding: '$3',
-              borderRadius: '$2',
-            }}
-          >
-            <Grid columns="3" gap="6">
-              <Skeleton css={{ width: '180px', height: '62px' }} />
-              <Skeleton css={{ width: '180px', height: '62px' }} />
-              <Skeleton css={{ width: '180px', height: '62px' }} />
-              <Skeleton css={{ width: '180px', height: '62px' }} />
-              <Skeleton css={{ width: '180px', height: '62px' }} />
-              <Skeleton css={{ width: '180px', height: '62px' }} />
-            </Grid>
+        <div className="flex flex-col gap-16">
+          <AnimatedPanel variant="subtle" startTime={0} className="p-6 rounded">
+            <div className="grid grid-cols-3 gap-12">
+              <Skeleton className="w-[180px] h-[62px]" />
+              <Skeleton className="w-[180px] h-[62px]" />
+              <Skeleton className="w-[180px] h-[62px]" />
+              <Skeleton className="w-[180px] h-[62px]" />
+              <Skeleton className="w-[180px] h-[62px]" />
+              <Skeleton className="w-[180px] h-[62px]" />
+            </div>
           </AnimatedPanel>
-        </Flex>
+        </div>
       </Container>
       <Container size="4">
-        <Grid
-          columns={{
-            '@initial': 1,
-            '@bp2': 2,
-            '@bp4': 4,
-          }}
-          gap="3"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <BlockList title="Latest blocks" />
           <EntityList title="Latest siacoin transactions" />
           <EntityList title="Latest contract transactions" />
           <EntityList title="Latest other transactions" />
-        </Grid>
+        </div>
       </Container>
     </>
   )

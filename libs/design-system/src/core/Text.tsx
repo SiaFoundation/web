@@ -18,6 +18,7 @@ export const textStyles = cva(['inline-block', 'font-sans'], {
       accent: 'text-accent-1100 dark:text-accentdark-1100',
       red: 'text-red-700 dark:text-red-500',
       green: 'text-green-700 dark:text-green-500',
+      amber: 'text-amber-600 dark:text-amber-500',
       none: '',
     },
     weight: {

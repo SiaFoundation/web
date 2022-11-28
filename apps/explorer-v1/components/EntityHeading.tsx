@@ -1,11 +1,10 @@
 import {
   Copy24,
   copyToClipboard,
-  Flex,
   Heading,
   humanId,
   Button,
-  NextLink,
+  Link,
 } from '@siafoundation/design-system'
 import { NvgEntityType, getNvgEntityTypeLabel } from '../config/navigatorTypes'
 import { upperFirst } from 'lodash'
@@ -19,20 +18,20 @@ type Props = {
 
 export function EntityHeading({ label, type, value, href }: Props) {
   return (
-    <Flex gap="0-5" align="center" css={{ overflow: 'hidden' }}>
-      <Heading css={{ display: 'inline' }} ellipsis>
+    <div className="flex gap-1 items-center overflow-hidden">
+      <Heading className="inline" ellipsis>
         {upperFirst(label)}{' '}
-        <NextLink href={href} underline="hover">
+        <Link href={href} underline="hover">
           {type === 'block' && Number(value).toLocaleString()}
           {type !== 'block' && humanId(value, 15)}
-        </NextLink>
+        </Link>
       </Heading>
       <Button
-        size="0"
+        size="small"
         onClick={() => copyToClipboard(value, getNvgEntityTypeLabel(type))}
       >
         <Copy24 />
       </Button>
-    </Flex>
+    </div>
   )
 }

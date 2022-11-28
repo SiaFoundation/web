@@ -1,7 +1,6 @@
 import {
   AnimatedPanel,
   Container,
-  Flex,
   Skeleton,
   Tabs,
   TabsContent,
@@ -16,25 +15,18 @@ export function AddressEntitySkeleton() {
   return (
     <>
       <Container>
-        <Flex direction="column" gap="6">
-          <AnimatedPanel
-            variant="subtle"
-            startTime={0}
-            css={{
-              padding: '$3',
-              borderRadius: '$2',
-            }}
-          >
-            <Flex direction="column" gap="5">
-              <Skeleton css={{ height: '32px', width: '70%' }} />
-              <Flex direction="column" gapY="3">
+        <div className="flex flex-col gap-12">
+          <AnimatedPanel variant="subtle" startTime={0} className="p-6 rounded">
+            <div className="flex flex-col gap-10">
+              <Skeleton className="h-[32px] w-[70%]" />
+              <div className="flex flex-col gap-y-6">
                 {times(4, (i) => (
                   <DatumSkeleton key={i} />
                 ))}
-              </Flex>
-            </Flex>
+              </div>
+            </div>
           </AnimatedPanel>
-        </Flex>
+        </div>
       </Container>
       <Container>
         <Tabs value="transactions">

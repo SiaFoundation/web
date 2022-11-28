@@ -42,7 +42,7 @@ export function BlockList({ title, blocks }: Props) {
               <div className="flex flex-col gap-2 justify-center">
                 <Text color="subtle">
                   <Text weight="bold">
-                    <Link href={block.href} underline={false}>
+                    <Link href={block.href} underline="none">
                       {humanNumber(block.height)}
                     </Link>
                   </Text>{' '}

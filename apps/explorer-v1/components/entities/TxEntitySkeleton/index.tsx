@@ -1,9 +1,6 @@
 import {
   AnimatedPanel,
-  Box,
   Container,
-  Flex,
-  Grid,
   Skeleton,
   EntityList,
   DatumSkeleton,
@@ -14,38 +11,31 @@ export function TxEntitySkeleton() {
   return (
     <>
       <Container>
-        <Flex direction="column" gap="6">
-          <AnimatedPanel
-            variant="subtle"
-            startTime={0}
-            css={{
-              padding: '$3',
-              borderRadius: '$2',
-            }}
-          >
-            <Flex direction="column" gap="5">
-              <Flex gap="3" justify="between" wrap="wrap">
-                <Skeleton css={{ height: '40px', width: '450px' }} />
-                <Skeleton css={{ height: '40px', width: '200px' }} />
-              </Flex>
-              <Flex direction="column" gapY="3">
+        <div className="flex flex-col gap-12">
+          <AnimatedPanel variant="subtle" startTime={0} className="p-6 rounded">
+            <div className="flex flex-col gap-10">
+              <div className="flex flex-wrap gap-6 justify-between">
+                <Skeleton className="h-[40px] w-[450px]" />
+                <Skeleton className="h-[40px] w-[200px]" />
+              </div>
+              <div className="flex flex-col gap-y-6">
                 {times(3, (i) => (
                   <DatumSkeleton key={i} />
                 ))}
-              </Flex>
-            </Flex>
+              </div>
+            </div>
           </AnimatedPanel>
-        </Flex>
+        </div>
       </Container>
       <Container>
-        <Grid columns="2" gap="2">
-          <Box>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
             <EntityList title={`Inputs`} entities={undefined} />
-          </Box>
-          <Box>
+          </div>
+          <div>
             <EntityList title={`Outputs`} entities={undefined} />
-          </Box>
-        </Grid>
+          </div>
+        </div>
       </Container>
     </>
   )

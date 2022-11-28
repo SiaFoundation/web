@@ -1,6 +1,5 @@
 import {
   ChartXY,
-  Flex,
   Text,
   Heading,
   DatumCardConfigurable,
@@ -13,7 +12,7 @@ export function HomeRevenue() {
   const { revenue } = useData()
 
   return (
-    <Flex direction="column" gap="3-5">
+    <div className="flex flex-col gap-7">
       <Heading>Revenue</Heading>
       <DatumScrollArea bleed>
         <DatumCardConfigurable
@@ -71,6 +70,6 @@ export function HomeRevenue() {
           </>
         }
       />
-    </Flex>
+    </div>
   )
 }
