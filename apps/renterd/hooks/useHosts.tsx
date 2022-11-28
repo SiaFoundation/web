@@ -2,7 +2,6 @@ import {
   Text,
   ValueNum,
   TableColumn,
-  Flex,
   ValueCopyable,
   CheckmarkFilled16,
   ValueSc,
@@ -150,7 +149,7 @@ export function useHosts() {
         label: 'Public key',
         size: 3,
         render: ({ host }) => (
-          <Flex direction="column" gap="1">
+          <div className="flex flex-col gap-2">
             <ValueCopyable
               value={host.PublicKey}
               maxLength={30}
@@ -164,7 +163,7 @@ export function useHosts() {
                 size="12"
               />
             )}
-          </Flex>
+          </div>
         ),
       },
       {
@@ -180,7 +179,7 @@ export function useHosts() {
           }
 
           return (
-            <Flex direction="column" gap="0-5">
+            <div className="flex flex-col gap-1">
               <Text>
                 {formatDistance(
                   new Date(Announcements[Announcements.length - 1].Timestamp),
@@ -194,7 +193,7 @@ export function useHosts() {
                   new Date()
                 )}
               </Text>
-            </Flex>
+            </div>
           )
         },
       },
@@ -211,7 +210,7 @@ export function useHosts() {
           }
 
           return (
-            <Flex direction="column" gap="0-5">
+            <div className="flex flex-col gap-1">
               <Text>
                 {formatDistance(
                   new Date(),
@@ -225,7 +224,7 @@ export function useHosts() {
                   new Date()
                 )}
               </Text>
-            </Flex>
+            </div>
           )
         },
       },
@@ -234,9 +233,7 @@ export function useHosts() {
         label: 'Version',
         size: 1,
         sortable: 'quality',
-        props: {
-          justify: 'center',
-        },
+        className: 'justify-center',
         render: ({ host }) => {
           return <Text>1.5.9</Text>
         },
@@ -246,9 +243,7 @@ export function useHosts() {
         label: 'Collateral',
         size: 1,
         sortable: 'quality',
-        props: {
-          justify: 'center',
-        },
+        className: 'justify-center',
         render: ({ host }) => {
           return <ValueSc variant="value" value={toHastings(1_040)} />
         },
@@ -258,9 +253,7 @@ export function useHosts() {
         label: 'Max collateral',
         size: 1,
         sortable: 'quality',
-        props: {
-          justify: 'center',
-        },
+        className: 'justify-center',
         render: ({ host }) => {
           return <ValueSc variant="value" value={toHastings(1_040)} />
         },
@@ -270,12 +263,7 @@ export function useHosts() {
         label: 'Successful Interactions',
         size: 1,
         sortable: 'quality',
-        props: {
-          justify: 'center',
-        },
-        css: {
-          backgroundColor: '$subtleLoContrastMask',
-        },
+        className: 'justify-center bg-accent-200/20',
         render: ({ host }) => {
           let val = new BigNumber(0)
           if (host.Interactions) {
@@ -309,12 +297,7 @@ export function useHosts() {
         label: 'Uptime',
         size: 1,
         sortable: 'quality',
-        props: {
-          justify: 'center',
-        },
-        css: {
-          backgroundColor: '$subtleLoContrastMask',
-        },
+        className: 'justify-center bg-accent-200/20',
         render: ({ host }) => {
           return (
             <ValueNum
@@ -331,16 +314,11 @@ export function useHosts() {
         label: 'Whitelist',
         size: 1,
         group: 'autopilot',
-        props: {
-          justify: 'center',
-        },
-        css: {
-          backgroundColor: '$subtleLoContrastMask',
-        },
+        className: 'justify-center bg-accent-200/20',
         render: (row) => (
-          <Flex css={{ color: '$green9' }}>
+          <div className="flex gap-1" color="green">
             <CheckmarkFilled16 />
-          </Flex>
+          </div>
         ),
       },
       {
@@ -348,16 +326,11 @@ export function useHosts() {
         label: 'Blacklist',
         size: 1,
         group: 'autopilot',
-        props: {
-          justify: 'center',
-        },
-        css: {
-          backgroundColor: '$subtleLoContrastMask',
-        },
+        className: 'justify-center bg-accent-200/20',
         render: (row) => (
-          <Flex css={{ color: '$red9' }}>
+          <div className="flex gap-1" color="red">
             <CheckmarkFilled16 />
-          </Flex>
+          </div>
         ),
       },
       {
@@ -366,12 +339,7 @@ export function useHosts() {
         size: 1,
         sortable: 'quality',
         group: 'autopilot',
-        props: {
-          justify: 'center',
-        },
-        css: {
-          backgroundColor: '$subtleLoContrastMask',
-        },
+        className: 'justify-center bg-accent-200/20',
         render: (row) => (
           <ValueNum
             value={new BigNumber(row.host.Score)}
@@ -386,9 +354,7 @@ export function useHosts() {
       //   label: '',
       //   size: 0.5,
       //   type: 'fixed',
-      //   props: {
-      //     justify: 'end',
-      //   },
+      //   className: 'justify-end',
       //   render: (row) => <HostDropdownMenu id={row.host.PublicKey} />,
       // },
     ],

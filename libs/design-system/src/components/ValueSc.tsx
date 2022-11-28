@@ -38,7 +38,7 @@ export function ValueSc({
     <Text
       size={size}
       scaleSize={scaleSize}
-      weight="semibold"
+      weight="medium"
       font="mono"
       ellipsis
       color={color}

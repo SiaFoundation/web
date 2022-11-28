@@ -51,6 +51,13 @@ export const textStyles = cva(['inline-block', 'font-sans'], {
       '16': 'text-sm md:text-base',
       '18': 'text-base md:text-lg',
       '20': 'text-base md:text-xl',
+      '24': 'text-xl md:text-2xl',
+      '30': 'text-2xl md:text-3xl',
+      '36': 'text-3xl md:text-4xl',
+      '40': 'text-4xl md:text-5xl', // 48
+      '48': 'text-4xl md:text-5xl',
+      '60': 'text-5xl md:text-6xl',
+      '64': 'text-5xl md:text-6xl', // 60
     },
     noWrap: {
       true: 'whitespace-nowrap',

@@ -18,9 +18,9 @@ export function SidenavItem({ title, children, route, onClick }: Props) {
     return (
       <Tooltip
         side="right"
-        align="end"
+        align="center"
+        delayDuration={0}
         sideOffset={5}
-        alignOffset={7}
         content={title}
       >
         <Button
@@ -38,12 +38,13 @@ export function SidenavItem({ title, children, route, onClick }: Props) {
     <Link href={route} className="no-underline">
       <Tooltip
         side="right"
-        align="end"
+        align="center"
+        delayDuration={0}
         sideOffset={5}
-        alignOffset={7}
         content={title}
       >
         <Button
+          size="none"
           variant="state"
           data-state={state ? 'open' : 'closed'}
           onClick={onClick}

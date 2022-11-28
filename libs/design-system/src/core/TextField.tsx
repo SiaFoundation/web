@@ -9,8 +9,6 @@ export const textFieldStyles = cva(
     'disabled:pointer-events-none',
     'tabular-nums',
     'rounded',
-    'focus:ring ring-blue-500 dark:ring-blue-200',
-    'focus:z-10',
     'text-gray-1100 dark:text-white',
     'placeholder:text-gray-600 placeholder:dark:text-graydark-500',
     'disabled:text-gray-400 disabled:dark:text-graydark-400',
@@ -38,6 +36,10 @@ export const textFieldStyles = cva(
         invalid: ['border-red-500 dark:border-red-400'],
         valid: ['border-green-500 dark:border-green-400'],
       },
+      focus: {
+        default: ['focus:ring ring-blue-500 dark:ring-blue-200', 'focus:z-10'],
+        none: '',
+      },
       cursor: {
         default: '',
         text: 'cursor-text',
@@ -48,6 +50,7 @@ export const textFieldStyles = cva(
     },
     defaultVariants: {
       size: 'small',
+      focus: 'default',
       variant: 'default',
       cursor: 'default',
       state: 'default',
@@ -58,7 +61,7 @@ export const textFieldStyles = cva(
 export const TextField = React.forwardRef<
   HTMLInputElement,
   VariantProps<typeof textFieldStyles> &
-    Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>
+    Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'className'>
 >(({ variant, size, state, noSpin, cursor, className, ...props }, ref) => {
   return (
     <input

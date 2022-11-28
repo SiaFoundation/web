@@ -10,7 +10,7 @@ export const navbarAppHeight = 60
 
 export function AppNavbar({ title, filters, actions }: Props) {
   return (
-    <div className="flex items-center gap-4 px-6 z-10 bg-white dark:bg-graydark-50 border-b border-gray-500 dark:border-graydark-500">
+    <div className="flex items-center gap-4 px-6 h-14 z-10 bg-white dark:bg-graydark-50 border-b border-gray-500 dark:border-graydark-500">
       {title && (
         <Text font="mono" size="18" weight="bold" className="hidden lg:block">
           {title}

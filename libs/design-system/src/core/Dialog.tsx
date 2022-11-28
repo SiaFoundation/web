@@ -24,9 +24,7 @@ const containerStyles = cva(['z-20', 'overflow-hidden'], {
 
 const animationVariants = {
   show: {
-    opacity: [0, 1],
     scale: [0.95, 1],
-    // translateX: [-50, -50],
     transition: { duration: 0.1, ease: 'easeOut' },
   },
   exit: {
@@ -40,7 +38,7 @@ export const Dialog = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   {
     rootProps?: React.ComponentProps<typeof DialogPrimitive.Root>
-    trigger: React.ReactNode
+    trigger?: React.ReactNode
     open?: boolean
     onOpenChange?: (open: boolean) => void
     containerVariants?: VariantProps<typeof containerStyles>
@@ -59,9 +57,8 @@ export const Dialog = React.forwardRef<
       contentVariants,
       controls,
       children,
-      dynamicHeight = false,
-      maxHeight = 'default',
       closeClassName,
+      dynamicHeight = true,
     },
     ref
   ) => {
@@ -76,7 +73,9 @@ export const Dialog = React.forwardRef<
         onOpenChange={onOpenChange}
         {...rootProps}
       >
-        <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
+        {trigger && (
+          <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
+        )}
         <AnimatePresence>
           {open ? (
             <DialogPrimitive.Portal forceMount>
@@ -84,7 +83,7 @@ export const Dialog = React.forwardRef<
                 <div className="fixed w-full h-full top-0 left-0 z-20">
                   <DialogPrimitive.Overlay
                     onClick={() => onOpenChange(false)}
-                    className="fixed z-20 top-0 right-0 bottom-0 left-0 inset-0 transition-opacity opacity-0 open:opacity-20 bg-black"
+                    className="fixed z-10 top-0 right-0 bottom-0 left-0 inset-0 transition-opacity opacity-0 open:opacity-10 dark:open:opacity-20 bg-black"
                   />
                   <motion.div
                     variants={animationVariants}
@@ -100,9 +99,8 @@ export const Dialog = React.forwardRef<
                       contentVariants={contentVariants}
                       onSubmit={onSubmit}
                       controls={controls}
-                      dynamicHeight={dynamicHeight}
-                      maxHeight={maxHeight}
                       closeClassName={closeClassName}
+                      dynamicHeight={dynamicHeight}
                     >
                       {children}
                     </Content>
@@ -117,10 +115,10 @@ export const Dialog = React.forwardRef<
   }
 )
 
-const contentStyles = cva(['relative', 'z-40'], {
+const contentStyles = cva(['relative', 'z-40', 'overflow-hidden'], {
   variants: {
     variant: {
-      default: [panelStyles(), 'max-w-[500px]'],
+      default: [panelStyles()],
       ghost: '',
     },
   },
@@ -135,11 +133,9 @@ type ContentProps = {
   description?: React.ReactNode
   controls?: React.ReactNode
   children?: React.ReactNode
-  dynamicHeight?: boolean
-  maxHeight?: 'default' | 'screen'
-  className?: string
   contentVariants?: VariantProps<typeof contentStyles>
   closeClassName?: string
+  dynamicHeight?: boolean
 }
 
 const Content = React.forwardRef<HTMLDivElement, ContentProps>(
@@ -150,10 +146,9 @@ const Content = React.forwardRef<HTMLDivElement, ContentProps>(
       title,
       description,
       controls,
-      maxHeight = 'default',
-      dynamicHeight = true,
       contentVariants,
       closeClassName,
+      dynamicHeight = true,
     },
     ref
   ) => {
@@ -181,26 +176,23 @@ const Content = React.forwardRef<HTMLDivElement, ContentProps>(
             {title}
           </DialogPrimitive.Title>
         )}
-        <div
-          className={cx(
-            'overflow-hidden',
-            dynamicHeight ? `h-[${height}px]` : '',
-            maxHeight === 'default' ? 'h-[70vh]' : 'h-screen'
-          )}
+        <ScrollArea
+          style={{
+            height: dynamicHeight ? `${height}px` : undefined,
+            maxHeight: dynamicHeight ? '70vh' : undefined,
+          }}
         >
-          <ScrollArea>
-            <div ref={heightRef} className="p-4">
-              {description && (
-                <DialogPrimitive.Description
-                  className={dialogDescriptionStyles()}
-                >
-                  {description}
-                </DialogPrimitive.Description>
-              )}
-              {children}
-            </div>
-          </ScrollArea>
-        </div>
+          <div ref={heightRef} className="p-4">
+            {description && (
+              <DialogPrimitive.Description
+                className={dialogDescriptionStyles()}
+              >
+                {description}
+              </DialogPrimitive.Description>
+            )}
+            {children}
+          </div>
+        </ScrollArea>
         {controls && (
           <DialogControls separator={showSeparator}>{controls}</DialogControls>
         )}
@@ -208,7 +200,7 @@ const Content = React.forwardRef<HTMLDivElement, ContentProps>(
           <div
             className={cx(
               'appearance-none',
-              closeClassName || 'absolute top-5 right-2'
+              closeClassName || 'absolute top-3.5 right-2'
             )}
           >
             <Button size="small" variant="ghost">
@@ -245,7 +237,7 @@ function useHeight(deps: unknown[] = []) {
 
 export const dialogTitleStyles = cva(
   [
-    'pt-5 pb-2 mx-4',
+    'pt-4 pb-2 mx-4',
     textStyles({
       size: '20',
       weight: 'semibold',

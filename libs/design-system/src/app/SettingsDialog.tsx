@@ -15,13 +15,23 @@ import {
 import { ThemeRadio } from '../components/ThemeRadio'
 import { webLinks } from '../data/webLinks'
 import { CurrencyId, useSettings } from '@siafoundation/react-core'
+import { Dialog } from '../core/Dialog'
 
-export function SettingsDialog() {
+type Props = {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}
+
+export function SettingsDialog({ open, onOpenChange }: Props) {
   const { settings, setSettings, setCurrency, currencyOptions } = useSettings()
 
   return (
-    <div className="max-w-[500px] mb-6">
-      <div className="flex flex-col gap-6">
+    <Dialog
+      open={open}
+      onOpenChange={onOpenChange}
+      contentVariants={{ className: 'w-[450px]' }}
+    >
+      <div className="flex flex-col gap-6 mb-2">
         <div className="flex flex-col gap-4">
           <Text size="16" weight="bold">
             General
@@ -118,50 +128,42 @@ export function SettingsDialog() {
               community for discussion and help troubleshooting issues.
             </Paragraph>
             <div className="flex gap-4">
-              <Text>
-                <Link
-                  href={webLinks.website}
-                  target="_blank"
-                  className="flex gap-1"
-                >
-                  <Globe16 />
-                  Website
-                </Link>
-              </Text>
-              <Text>
-                <Link
-                  href={webLinks.docs.index}
-                  target="_blank"
-                  className="flex gap-1"
-                >
-                  <Information16 />
-                  Docs
-                </Link>
-              </Text>
-              <Text>
-                <Link
-                  href={webLinks.github.index}
-                  target="_blank"
-                  className="flex gap-1"
-                >
-                  <LogoGithub16 />
-                  About
-                </Link>
-              </Text>
-              <Text>
-                <Link
-                  href={webLinks.discord}
-                  target="_blank"
-                  className="flex gap-1"
-                >
-                  <LogoDiscord16 />
-                  Discord
-                </Link>
-              </Text>
+              <Link
+                href={webLinks.website}
+                target="_blank"
+                className="flex items-center gap-1"
+              >
+                <Globe16 />
+                Website
+              </Link>
+              <Link
+                href={webLinks.docs.index}
+                target="_blank"
+                className="flex items-center gap-1"
+              >
+                <Information16 />
+                Docs
+              </Link>
+              <Link
+                href={webLinks.github.index}
+                target="_blank"
+                className="flex items-center gap-1"
+              >
+                <LogoGithub16 />
+                About
+              </Link>
+              <Link
+                href={webLinks.discord}
+                target="_blank"
+                className="flex items-center gap-1"
+              >
+                <LogoDiscord16 />
+                Discord
+              </Link>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Dialog>
   )
 }

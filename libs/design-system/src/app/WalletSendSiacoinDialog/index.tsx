@@ -27,7 +27,7 @@ const emptyFormData = {
 }
 
 type Props = {
-  trigger: React.ReactNode
+  trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
 }
@@ -88,7 +88,6 @@ export function WalletSendSiacoinDialog({
         onOpenChange(val)
       }}
       title="Send siacoin"
-      className="max-w-md"
       onSubmit={
         controls
           ? (controls.formik
@@ -104,6 +103,9 @@ export function WalletSendSiacoinDialog({
           </div>
         )
       }
+      contentVariants={{
+        className: 'w-[400px]',
+      }}
     >
       <div className="flex flex-col gap-4">
         <ProgressSteps

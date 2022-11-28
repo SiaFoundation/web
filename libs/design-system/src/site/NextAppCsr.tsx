@@ -24,12 +24,13 @@ export function NextAppCsr({
   pageProps,
 }: AppProps<{
   fallback?: Record<string, unknown>
+  api?: string
 }>) {
   return (
     <ClientSide>
       <SWRConfig value={{ fallback: pageProps?.fallback || {} }}>
         <ThemeProvider>
-          <SettingsProvider>
+          <SettingsProvider api={pageProps?.api}>
             <Toaster />
             <Component {...pageProps} />
           </SettingsProvider>

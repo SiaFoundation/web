@@ -1,10 +1,4 @@
-import {
-  DatumCard,
-  Flex,
-  TxPoolList,
-  PeerList,
-  Box,
-} from '@siafoundation/design-system'
+import { DatumCard, TxPoolList, PeerList } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import {
   useConsensusTip,
@@ -34,7 +28,7 @@ export default function NodePage() {
       openSettings={() => openDialog('settings')}
       title="Node"
     >
-      <Flex gap="3-5" wrap="wrap">
+      <div className="flex flex-wrap gap-7">
         <DatumCard
           label="Height"
           value={
@@ -51,15 +45,15 @@ export default function NodePage() {
           label="Consensus tip"
           hash={tip.data?.ID.replace('bid:', '')}
         /> */}
-      </Flex>
-      <Flex gap="3-5" wrap="wrap">
-        <Box css={{ flex: 1 }}>
+      </div>
+      <div className="flex flex-wrap gap-7">
+        <div className="flex-1">
           <PeerList connectPeer={() => openDialog('connectPeer')} />
-        </Box>
-        <Box css={{ flex: 1 }}>
+        </div>
+        <div className="flex-1">
           <TxPoolList />
-        </Box>
-      </Flex>
+        </div>
+      </div>
     </RenterdAuthedLayout>
   )
 }

@@ -1,7 +1,6 @@
 import {
   EntityList,
   EntityListItemProps,
-  Flex,
   WalletSparkline,
   WalletLayoutActions,
   getTransactionTypes,
@@ -50,9 +49,9 @@ export default function WalletView() {
       }
     >
       <WalletSparkline />
-      <Flex direction="column" gap="1">
+      <div className="flex flex-col gap-2">
         <EntityList title="Transactions" entities={entities} />
-      </Flex>
+      </div>
     </RenterdAuthedLayout>
   )
 }

@@ -26,7 +26,7 @@ export function ValueSf({
       <Text
         size={size}
         scaleSize={scaleSize}
-        weight="semibold"
+        weight="medium"
         font="mono"
         color={
           variant === 'change'

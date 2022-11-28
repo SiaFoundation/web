@@ -11,12 +11,10 @@ export function WalletBalance() {
   }
 
   return (
-    <Panel className="hidden sm:block">
-      <div className="flex items-center h-7 px-4">
-        <Text size="12" weight="semibold">
-          {humanSiacoin(siacoin)}
-        </Text>
-      </div>
+    <Panel className="hidden sm:block h-7 px-4">
+      <Text size="12" weight="semibold">
+        {humanSiacoin(siacoin)}
+      </Text>
     </Panel>
   )
 }

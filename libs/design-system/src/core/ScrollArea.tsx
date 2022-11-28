@@ -5,21 +5,23 @@ import { cx } from 'class-variance-authority'
 type Props = {
   id?: string
   children: React.ReactNode
+  className?: string
+  style?: React.CSSProperties
 }
 
 export const ScrollArea = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Viewport>,
   Props
->(({ id, children }, ref) => (
-  <ScrollAreaPrimitive.Root className="w-full h-full overflow-hidden">
+>(({ id, className, style, children }, ref) => (
+  <ScrollAreaPrimitive.Root
+    className={cx('w-full h-full overflow-hidden', className)}
+    style={style}
+  >
     <ScrollAreaPrimitive.Viewport
       id={id}
       ref={ref}
       // Temporary fix until removed upstream: https://github.com/radix-ui/primitives/issues/926
-      // '> div[style]': {
-      //   display: 'block !important',
-      // },
-      className="w-full h-full [&>div[style]]:block"
+      className="w-full h-full [&>div]:!block"
     >
       {children}
     </ScrollAreaPrimitive.Viewport>

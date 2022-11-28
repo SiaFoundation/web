@@ -77,7 +77,7 @@ export function ProgressSteps({ activeStep, steps, onChange }: Props) {
               )}
             />
             {isActive && (
-              <div className="absolute left-0 top-0 h-full w-full rounded-lg bg-accent-800 dark:bg-accentdark-800 animate-ping" />
+              <div className="absolute left-0 top-0 h-full w-full rounded-lg bg-accent-800 dark:bg-accentdark-800 animate-pingslow" />
             )}
           </div>
         )

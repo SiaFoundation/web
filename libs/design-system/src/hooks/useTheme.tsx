@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from 'react'
 import { useCallback, useEffect } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 import { Provider as TooltipProvider } from '@radix-ui/react-tooltip'
+import { Toaster } from '../lib/toast'
 
 const darkThemeClass = 'dark'
 
@@ -125,6 +126,7 @@ export function ThemeProvider({ children, ssr }: Props) {
 
   return (
     <ThemeContext.Provider value={value}>
+      <Toaster />
       <TooltipProvider>{children}</TooltipProvider>
     </ThemeContext.Provider>
   )

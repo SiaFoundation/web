@@ -7,6 +7,8 @@ import { useSyncerConnect } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { hostnameOrIpRegex } from '../lib/ipRegex'
+import { Dialog } from '../core/Dialog'
+import { AccumulationSnow16 } from '@carbon/icons-react'
 
 const initialValues = {
   port: 9981,
@@ -26,10 +28,16 @@ const validationSchema = Yup.object().shape({
 })
 
 type Props = {
-  closeDialog: () => void
+  trigger?: React.ReactNode
+  open: boolean
+  onOpenChange: (val: boolean) => void
 }
 
-export function SyncerConnectPeerDialog({ closeDialog }: Props) {
+export function SyncerConnectPeerDialog({
+  trigger,
+  open,
+  onOpenChange,
+}: Props) {
   const connect = useSyncerConnect()
 
   const formik = useFormik({
@@ -49,47 +57,68 @@ export function SyncerConnectPeerDialog({ closeDialog }: Props) {
       } else {
         triggerToast('Connected to peer')
         actions.resetForm()
-        closeDialog()
+        onOpenChange(false)
       }
     },
   })
 
   return (
-    <div className="flex flex-col gap-4">
-      <Paragraph size="14">Connect to a peer by IP address.</Paragraph>
-      <form onSubmit={formik.handleSubmit}>
-        <div className="flex flex-col gap-4">
-          <FormField
-            formik={formik}
-            title="Address"
-            name="ip"
-            placeholder="host.acme.com or 127.0.0.1"
-            autoComplete="off"
-            type="text"
-          />
-          <FormField
-            formik={formik}
-            title="Port"
-            name="port"
-            disableGroupSeparators
-            placeholder="9981"
-            autoComplete="off"
-            type="number"
-          />
-          {formik.status?.error && (
-            <Text color="red">{formik.status.error}</Text>
-          )}
-          <Button
-            size="medium"
-            disabled={formik.isSubmitting || !formik.isValid}
-            variant="accent"
-            state={formik.isSubmitting ? 'waiting' : undefined}
-            type="submit"
-          >
-            Connect
-          </Button>
-        </div>
-      </form>
-    </div>
+    <Dialog
+      trigger={trigger}
+      title="Connect peer"
+      open={open}
+      onOpenChange={(open) => {
+        if (!open) {
+          formik.resetForm()
+        }
+        onOpenChange(open)
+      }}
+      contentVariants={{
+        className: 'w-[400px]',
+      }}
+    >
+      <div className="flex flex-col gap-4">
+        <Paragraph size="14">Connect to a peer by IP address.</Paragraph>
+        <form onSubmit={formik.handleSubmit}>
+          <div className="flex flex-col gap-4">
+            <FormField
+              formik={formik}
+              title="Address"
+              name="ip"
+              placeholder="host.acme.com or 127.0.0.1"
+              autoComplete="off"
+              type="text"
+              variants={{
+                size: 'medium',
+              }}
+            />
+            <FormField
+              formik={formik}
+              title="Port"
+              name="port"
+              disableGroupSeparators
+              placeholder="9981"
+              autoComplete="off"
+              type="number"
+              variants={{
+                size: 'medium',
+              }}
+            />
+            {formik.status?.error && (
+              <Text color="red">{formik.status.error}</Text>
+            )}
+            <Button
+              size="medium"
+              disabled={formik.isSubmitting || !formik.isValid}
+              variant="accent"
+              state={formik.isSubmitting ? 'waiting' : undefined}
+              type="submit"
+            >
+              Connect
+            </Button>
+          </div>
+        </form>
+      </div>
+    </Dialog>
   )
 }

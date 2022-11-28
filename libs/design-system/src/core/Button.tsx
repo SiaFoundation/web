@@ -4,7 +4,7 @@ import React from 'react'
 const variants = cva(
   [
     'inline-flex',
-    'gap-1.5',
+    'gap-1',
     'shrink-0',
     'items-center',
     'justify-center',
@@ -20,7 +20,7 @@ const variants = cva(
     'outline-none',
     'focus:ring ring-blue-500 dark:ring-blue-200',
     'transition-colors duration-75',
-    '[&>svg]:opacity-50',
+    // '[&>svg]:-mx-0.5',
   ],
   {
     variants: {
@@ -39,16 +39,19 @@ const variants = cva(
       },
       variant: {
         accent: [
+          '[&>svg]:opacity-50',
           'bg-accent-800 dark:bg-accent-800',
           'enabled:hover:bg-accent-900 dark:enabled:hover:bg-accent-900',
           'disabled:bg-accent-800/70 disabled:dark:bg-accent-800/70',
+          'disabled:border-accent-700/70 disabled:dark:border-accent-800/70',
           'border',
-          'border-accent-800 dark:border-accent-800',
+          'enabled:border-accent-800 dark:enabled:border-accent-800',
           'enabled:hover:border-accent-800 enabled:hover:dark:border-accent-800',
           'text-white dark:text-white',
-          'disabled:text-accent-1100/50 disabled:dark:text-white/50',
+          'disabled:text-white/50 disabled:dark:text-white/50',
         ],
         red: [
+          '[&>svg]:opacity-50',
           'bg-red-800 dark:bg-red-800',
           'enabled:hover:bg-red-900 dark:enabled:hover:bg-red-900',
           'disabled:bg-red-800/70 disabled:dark:bg-red-800/70',
@@ -59,6 +62,7 @@ const variants = cva(
           'disabled:text-white/50 disabled:dark:text-white/50',
         ],
         gray: [
+          '[&>svg]:opacity-50',
           'bg-white dark:bg-graydark-200',
           'enabled:hover:bg-gray-50 dark:enabled:hover:bg-graydark-300',
           'disabled:bg-gray-200 disabled:dark:bg-graydark-200',
@@ -75,7 +79,8 @@ const variants = cva(
         ],
         state: [
           'open:text-gray-1100 open:dark:text-white',
-          'text-gray-600 dark:text-graydark-700',
+          'hover:text-gray-1000 hover:dark:text-graydark-1000',
+          'text-gray-700 dark:text-graydark-800',
         ],
       },
     },

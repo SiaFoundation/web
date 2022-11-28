@@ -99,8 +99,6 @@ export function SiacoinField({
     [fiat, decimalsLimitFiat]
   )
 
-  const size2 = String(size) === '2'
-
   return (
     <div
       className={cx(
@@ -108,13 +106,15 @@ export function SiacoinField({
         'focus-within:ring ring-blue-500 dark:ring-blue-200',
         'border border-gray-200 dark:border-graydark-200',
         'rounded',
-        size2 ? 'gap-2 py-2' : 'py-1'
+        'px-3',
+        'py-0.5'
       )}
     >
       <NumberField
         {...props}
         size={size}
         variant="ghost"
+        focus="none"
         placeholder={placeholder.toFixed(decimalsLimitSc)}
         units="SC"
         value={formattedSc}
@@ -125,13 +125,13 @@ export function SiacoinField({
           const sc = new BigNumber(value || 0)
           setScAndTriggerChange(sc)
         }}
-        className="h-6"
       />
       {settings.siaCentral && (
         <NumberField
           {...props}
           size={size}
           variant="ghost"
+          focus="none"
           value={formattedFiat}
           units={settings.currency.label}
           decimalsLimit={decimalsLimitFiat}
@@ -146,7 +146,6 @@ export function SiacoinField({
             const fiat = new BigNumber(value || 0)
             setFiat(fiat)
           }}
-          className="h-6"
         />
       )}
     </div>

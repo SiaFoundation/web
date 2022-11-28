@@ -66,7 +66,9 @@ export function AppUnlockForm({ routes }: Props) {
       <FieldGroup name="password" formik={formik}>
         <div className="flex gap-2">
           <FormTextField
-            size="small"
+            variants={{
+              size: 'small',
+            }}
             formik={formik}
             name="password"
             placeholder="Enter password"
