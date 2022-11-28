@@ -1,8 +1,6 @@
 import {
   ContentItem,
   ContentGallery,
-  Flex,
-  Grid,
   Section,
   SiteHeading,
   Callout,
@@ -18,7 +16,7 @@ export function Sites() {
     <>
       <Section className="pt-20">
         <DSSectionHeading>SiteHeading</DSSectionHeading>
-        <div className="flex flex-col" gap="9">
+        <div className="flex flex-col gap-16">
           <SiteHeading
             size="20"
             title="Size 20"
@@ -97,15 +95,7 @@ export function Sites() {
       </Section>
       <Section className="pt-20">
         <DSSectionHeading>ContentItem</DSSectionHeading>
-        <div
-          className="grid"
-          gap="5"
-          columns={{
-            '@initial': 1,
-            '@bp1': 2,
-            '@bp3': 3,
-          }}
-        >
+        <div className="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           <ContentItem
             title="Content Item"
             subtitle={`
@@ -144,15 +134,7 @@ export function Sites() {
       </Section>
       <Section className="pt-20">
         <DSSectionHeading>ContentProject</DSSectionHeading>
-        <div
-          className="grid"
-          gap="5"
-          columns={{
-            '@initial': 1,
-            '@bp1': 2,
-            '@bp3': 3,
-          }}
-        >
+        <div className="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           <ContentProject
             title="Filebase"
             logo="filebase"
@@ -185,9 +167,7 @@ export function Sites() {
       <Section className="pt-20">
         <SubsectionHeading>columns 1</SubsectionHeading>
         <ContentGallery
-          columns={{
-            '@inital': '1',
-          }}
+          columnClassName="grid-cols-1"
           items={times(6, (i) => ({
             title: `Lorem ipsum dolor, sit amet consectetur elit. ${i + 1}`,
             tags: [`group_${(i % 3) + 1}`],
@@ -200,11 +180,7 @@ export function Sites() {
         <SubsectionHeading>variant filterable / columns 3</SubsectionHeading>
         <ContentGallery
           filterable="filterable"
-          columns={{
-            '@initial': '1',
-            '@bp1': '2',
-            '@bp3': '3',
-          }}
+          columnClassName="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
           items={times(6, (i) => ({
             title: `Title ${i + 1}`,
             subtitle: 'Subtitle',
@@ -220,7 +196,7 @@ export function Sites() {
       <Section className="pt-24">
         <DSSectionHeading>WavesBackdrop</DSSectionHeading>
       </Section>
-      <Section css={{ position: 'relative' }}>
+      <Section className="relative">
         <WavesBackdrop />
       </Section>
       <Section className="pt-24">
@@ -228,14 +204,7 @@ export function Sites() {
       </Section>
       <Section className="pt-20">
         <SubsectionHeading>size 1</SubsectionHeading>
-        <div
-          className="grid"
-          columns={{
-            '@initial': '1',
-            '@bp2': '2',
-          }}
-          gap="5"
-        >
+        <div className="grid gap-10 grid-cols-1 md:grid-cols-2">
           <Callout
             title="Title"
             description={`

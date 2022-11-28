@@ -15,7 +15,7 @@ export function FileNav() {
               </Text>
             )}
             <Text size="16" color="subtle" className="flex items-center">
-              <Link href="/" underline={false}>
+              <Link href="/" underline="none">
                 {part}
               </Link>
             </Text>

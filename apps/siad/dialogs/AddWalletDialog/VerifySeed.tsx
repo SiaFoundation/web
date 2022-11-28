@@ -1,11 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import {
-  Box,
-  ComboBox,
-  Grid,
-  mnemonics,
-  Text,
-} from '@siafoundation/design-system'
+import { ComboBox, mnemonics, Text } from '@siafoundation/design-system'
 import { useEffect, useMemo, useState } from 'react'
 import { SeedLayout } from './SeedLayout'
 
@@ -108,7 +102,7 @@ export function VerifySeed({ seed, onChange }: Props) {
         </>
       }
     >
-      <Grid columns="5" gap={3}>
+      <div className="grid grid-cols-5 gap-6">
         {seedList.map((v, i) => {
           const hideWord = hideSeedIndicies.includes(i)
           const seedInput = seedInputs[i]
@@ -119,10 +113,10 @@ export function VerifySeed({ seed, onChange }: Props) {
               }
             : undefined
           return (
-            <Box key={v}>
+            <div className="" key={v}>
               {hideWord ? (
                 <ComboBox
-                  size="1"
+                  size="small"
                   state={!validation[i] ? 'invalid' : 'valid'}
                   options={mnemonicsOptions}
                   indicators={false}
@@ -138,7 +132,7 @@ export function VerifySeed({ seed, onChange }: Props) {
                 />
               ) : (
                 <ComboBox
-                  size="1"
+                  size="small"
                   options={[]}
                   indicators={false}
                   disabled
@@ -153,10 +147,10 @@ export function VerifySeed({ seed, onChange }: Props) {
                   }
                 />
               )}
-            </Box>
+            </div>
           )
         })}
-      </Grid>
+      </div>
     </SeedLayout>
   )
 }

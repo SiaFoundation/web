@@ -5,13 +5,5 @@ type Props = {
 }
 
 export function SmallSection({ children }: Props) {
-  return (
-    <Text
-      css={{
-        color: '$gray11',
-      }}
-    >
-      {children}
-    </Text>
-  )
+  return <Text>{children}</Text>
 }

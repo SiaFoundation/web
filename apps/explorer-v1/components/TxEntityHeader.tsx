@@ -1,4 +1,4 @@
-import { Badge, Box, Flex, Text, Tooltip } from '@siafoundation/design-system'
+import { Badge, Text, Tooltip } from '@siafoundation/design-system'
 import { humanDate, humanNumber } from '@siafoundation/sia-js'
 import { useStatus } from '../hooks/useStatus'
 import { NvgEntityTx, getNvgEntityTypeLabel } from '../config/navigatorTypes'
@@ -18,31 +18,31 @@ export function TxEntityHeader({ entity }: Props) {
   const timestamp = humanDate(data[1].Timestamp * 1000, { time: true })
 
   return (
-    <Flex justify="between" align="center" wrap="wrap" gapY="2">
+    <div className="flex flex-wrap gap-y-4 items-center justify-between">
       <EntityHeading
         label={getNvgEntityTypeLabel(entity.type)}
         type={entity.type}
         value={txHash}
         href={routes.tx.view.replace('[id]', txHash)}
       />
-      <Flex gap="2" align="center" css={{ overflow: 'hidden' }}>
+      <div className="flex gap-4 items-center overflow-hidden">
         <Tooltip content={timestamp}>
           <Text font="mono" color="subtle" ellipsis>
             {timestamp}
           </Text>
         </Tooltip>
         <Badge variant="accent">
-          <Flex gap="1">
+          <div className="flex gap-2">
             <Tooltip content="Block height">
-              <Box>{height}</Box>
+              <div className="">{height}</div>
             </Tooltip>
-            <Box>|</Box>
-            <Box>
+            <div className="">|</div>
+            <div className="">
               {confirmations === 72 ? '72+' : confirmations} confirmations
-            </Box>
-          </Flex>
+            </div>
+          </div>
         </Badge>
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   )
 }

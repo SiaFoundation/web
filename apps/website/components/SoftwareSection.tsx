@@ -48,7 +48,7 @@ export function SoftwareSection({
               font="mono"
               href={sourceLink}
               target="_blank"
-              underline={false}
+              underline="none"
             >
               Source
             </Link>
@@ -60,7 +60,7 @@ export function SoftwareSection({
               font="mono"
               href={docsLink}
               target="_blank"
-              underline={false}
+              underline="none"
             >
               Documentation
             </Link>

@@ -1,9 +1,6 @@
 import {
   AnimatedPanel,
-  Box,
   Container,
-  Flex,
-  Grid,
   EntityList,
   EntityListItemProps,
 } from '@siafoundation/design-system'
@@ -31,55 +28,41 @@ export function TxEntityLayout({
   return (
     <>
       <Container>
-        <AnimatedPanel
-          variant="subtle"
-          startTime={0}
-          css={{
-            padding: '$3',
-            borderRadius: '$2',
-          }}
-        >
-          <Flex direction="column" gap="8">
+        <AnimatedPanel variant="subtle" startTime={0} className="p-6 rounded">
+          <div className="flex flex-col gap-16">
             <TxEntityHeader entity={entity} />
-            <Flex direction="column" gapY="3">
+            <div className="flex flex-col gap-y-6">
               {values.map((item) => (
                 <NvgDatum key={item.label} {...item} />
               ))}
-            </Flex>
+            </div>
             {details}
-          </Flex>
+          </div>
         </AnimatedPanel>
       </Container>
       <Container>
-        <Flex direction="column" gap="5">
-          <Grid
-            columns={{
-              '@initial': 1,
-              '@bp2': 2,
-            }}
-            gap="2"
-            gapY="4"
-          >
-            <Box>
+        <div className="flex flex-col gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-8">
+            <div>
               <EntityList
                 title={`Inputs (${inputs.length})`}
                 entities={inputs}
               />
-            </Box>
-            <Box>
+            </div>
+            <div>
               <EntityList
                 title={`Outputs (${outputs.length})`}
                 entities={outputs}
               />
-            </Box>
-          </Grid>
+            </div>
+          </div>
           {!!relatedOperations?.length && (
             <EntityList
               title={`Related operations (${relatedOperations.length})`}
               entities={relatedOperations}
             />
           )}
-        </Flex>
+        </div>
       </Container>
     </>
   )

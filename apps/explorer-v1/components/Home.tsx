@@ -1,8 +1,6 @@
 import {
   AnimatedPanel,
   Container,
-  Flex,
-  Grid,
   Text,
   EntityList,
   BlockList,
@@ -100,69 +98,28 @@ export function Home() {
   return (
     <>
       <Container>
-        <Flex direction="column" gap="8">
-          <AnimatedPanel
-            variant="subtle"
-            startTime={0}
-            css={{
-              padding: '$3',
-              borderRadius: '$2',
-            }}
-          >
-            <Grid
-              columns={{
-                '@initial': 2,
-                '@bp2': 3,
-              }}
-              gap={{
-                '@initial': 3,
-                '@bp2': 6,
-              }}
-              gapY="6"
-            >
+        <div className="flex flex-col gap-16">
+          <AnimatedPanel variant="subtle" startTime={0} className="p-6 rounded">
+            <div className="grid grid-cols-2 gap-x-6 md:grid-cols-3 md:gap-x-12 gap-y-12">
               {values.map(({ label, value }) => (
-                <Flex
+                <div
+                  className="flex flex-col gap-6 items-start overflow-hidden"
                   key={label}
-                  direction="column"
-                  gap="3"
-                  align="start"
-                  css={{ overflow: 'hidden' }}
                 >
-                  <Text
-                    color="subtle"
-                    size={{
-                      '@initial': 12,
-                      '@bp1': 14,
-                    }}
-                  >
+                  <Text color="subtle" scaleSize="14">
                     {label}
                   </Text>
-                  <Text
-                    font="mono"
-                    weight="semibold"
-                    size={{
-                      '@initial': 24,
-                      '@bp1': 32,
-                    }}
-                    ellipsis
-                  >
+                  <Text font="mono" weight="semibold" scaleSize="30" ellipsis>
                     {value}
                   </Text>
-                </Flex>
+                </div>
               ))}
-            </Grid>
+            </div>
           </AnimatedPanel>
-        </Flex>
+        </div>
       </Container>
       <Container size="4">
-        <Grid
-          columns={{
-            '@initial': 1,
-            '@bp2': 2,
-            '@bp4': 4,
-          }}
-          gap="3"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <BlockList
             title="Latest blocks"
             blocks={landing.data?.last10Blocks?.map((block) => ({
@@ -205,7 +162,7 @@ export function Home() {
               avatarShape: 'circle',
             }))}
           />
-        </Grid>
+        </div>
       </Container>
     </>
   )

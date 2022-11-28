@@ -95,10 +95,8 @@ export function Table<R extends Row>({
             >
               {/* {toPairs(groupBy(columns, 'group')).map(
                 ([name, groupColumns]) => (
-                  <div className="flex"
+                  <div className="flex gap-7 items-center"
                     key={name}
-                    gap="3-5"
-                    align="center"
                     className={
                       {
                         // padding: rowSize === 'dense' ? '$1 $3' : '$3 $3',

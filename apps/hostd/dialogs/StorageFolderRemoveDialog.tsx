@@ -1,19 +1,28 @@
 import {
-  Flex,
   Text,
-  DialogContent,
   Paragraph,
   Switch,
   InfoTip,
   FormField,
   FormSubmitButton,
+  Dialog,
 } from '@siafoundation/design-system'
 import { humanBytes } from '@siafoundation/sia-js'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useDialog } from '../contexts/dialog'
 
-export function StorageFolderRemoveDialog() {
+type Props = {
+  trigger?: React.ReactNode
+  open: boolean
+  onOpenChange: (val: boolean) => void
+}
+
+export function StorageFolderRemoveDialog({
+  trigger,
+  open,
+  onOpenChange,
+}: Props) {
   const { closeDialog } = useDialog()
 
   // TODO: fetch current size
@@ -36,15 +45,17 @@ export function StorageFolderRemoveDialog() {
   })
 
   return (
-    <DialogContent
+    <Dialog
       title="Delete Folder"
-      css={{
-        maxWidth: '400px',
-        overflow: 'hidden',
+      trigger={trigger}
+      open={open}
+      onOpenChange={onOpenChange}
+      contentVariants={{
+        className: 'max-w-[400px]',
       }}
     >
       <form onSubmit={formik.handleSubmit}>
-        <Flex direction="column" gap="2">
+        <div className="flex flex-col gap-4">
           <Paragraph size="14">
             Are you sure you would like to remove the folder? hostd will lose{' '}
             <Text weight="semibold">{humanBytes(size)}</Text> of storage
@@ -61,22 +72,22 @@ export function StorageFolderRemoveDialog() {
             name="path"
             placeholder={path}
           />
-          <Flex>
-            <Switch size="2">Force</Switch>
+          <div className="flex gap-1">
+            <Switch size="medium">Force</Switch>
             <InfoTip>
-              <Flex css={{ maxWidth: '200px' }}>
+              <div className="flex gap-1 max-w-[200px]">
                 <Paragraph size="14">
                   Force deleting a folder will remove the folder even if the
                   data can not be relocated - this will result in severe data
                   loss and contract failure. Be extremely careful using this
                   option.
                 </Paragraph>
-              </Flex>
+              </div>
             </InfoTip>
-          </Flex>
+          </div>
           <FormSubmitButton formik={formik}>Delete</FormSubmitButton>
-        </Flex>
+        </div>
       </form>
-    </DialogContent>
+    </Dialog>
   )
 }

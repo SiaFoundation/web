@@ -46,7 +46,7 @@ export function ValueCopyable({
       {href ? (
         <Link
           href={href}
-          underline={false}
+          underline="none"
           size={size}
           scaleSize={scaleSize}
           color={color}

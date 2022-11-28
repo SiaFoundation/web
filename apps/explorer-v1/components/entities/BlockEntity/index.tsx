@@ -6,7 +6,6 @@ import {
   AnimatedPanel,
   Badge,
   Container,
-  Flex,
   Heading,
   Tooltip,
   EntityList,
@@ -130,24 +129,17 @@ export function BlockEntity({ entity }: Props) {
   return (
     <>
       <Container>
-        <Flex direction="column" gap="6">
-          <AnimatedPanel
-            variant="subtle"
-            startTime={0}
-            css={{
-              padding: '$3',
-              borderRadius: '$2',
-            }}
-          >
-            <Flex direction="column" gap="5">
-              <Flex justify="between" align="center" wrap="wrap" gapY="1">
+        <div className="flex flex-col gap-12">
+          <AnimatedPanel variant="subtle" startTime={0} className="p-6 rounded">
+            <div className="flex flex-col gap-10">
+              <div className="flex flex-wrap gap-y-2 items-center justify-between">
                 <EntityHeading
                   label="block"
                   type="block"
                   value={block}
                   href={routes.block.view.replace('[id]', block)}
                 />
-                <Flex gap="1" align="center">
+                <div className="flex gap-2 items-center">
                   <Tooltip
                     content={`${humanNumber(
                       data[1].NewContracts
@@ -164,55 +156,55 @@ export function BlockEntity({ entity }: Props) {
                       {`${humanNumber(data[1].NewTx)}`} transactions
                     </Badge>
                   </Tooltip>
-                </Flex>
-              </Flex>
-              <Flex direction="column" gapY="3">
+                </div>
+              </div>
+              <div className="flex flex-col gap-y-6">
                 {values.map((item) => (
                   <NvgDatum key={item.label} {...item} />
                 ))}
-              </Flex>
+              </div>
               <Accordion type="single">
                 <AccordionItem value="contracts" variant="ghost">
-                  <AccordionTrigger variant="ghost">
+                  <AccordionTrigger>
                     <Heading size="20">Contracts</Heading>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <Flex direction="column" gap="5" css={{ padding: '$3 0' }}>
-                      <Flex direction="column" gap="3">
+                    <div className="flex flex-col gap-10 py-6">
+                      <div className="flex flex-col gap-6">
                         <Heading size="20">Active</Heading>
-                        <Flex direction="column" gap="3">
+                        <div className="flex flex-col gap-6">
                           {active.map((item) => (
                             <NvgDatum key={item.label} {...item} />
                           ))}
-                        </Flex>
-                      </Flex>
-                      <Flex direction="column" gap="3">
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-6">
                         <Heading size="20">Historic</Heading>
-                        <Flex direction="column" gap="3">
+                        <div className="flex flex-col gap-6">
                           {historic.map((item) => (
                             <NvgDatum key={item.label} {...item} />
                           ))}
-                        </Flex>
-                      </Flex>
-                    </Flex>
+                        </div>
+                      </div>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="other" variant="ghost">
-                  <AccordionTrigger variant="ghost">
+                  <AccordionTrigger>
                     <Heading size="20">Other</Heading>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <Flex direction="column" gap="3" css={{ padding: '$3 0' }}>
+                    <div className="flex flex-col gap-6 py-6">
                       {other.map((item) => (
                         <NvgDatum key={item.label} {...item} />
                       ))}
-                    </Flex>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
-            </Flex>
+            </div>
           </AnimatedPanel>
-        </Flex>
+        </div>
       </Container>
       <Container>
         <EntityList

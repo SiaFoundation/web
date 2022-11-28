@@ -2,4 +2,4 @@
 '@siafoundation/renterd': patch
 ---
 
-Spike on the hosts feature
+Adjust renterd to interact with bus, spike on the hosts feature.

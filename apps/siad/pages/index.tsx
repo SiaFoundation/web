@@ -1,8 +1,6 @@
 import {
   Button,
   Container,
-  Flex,
-  Grid,
   Heading,
   Panel,
   Text,
@@ -24,7 +22,7 @@ export default function HomePage() {
       title="siad"
       actions={
         <Button
-          size="2"
+          size="medium"
           variant="accent"
           onClick={() => openDialog('addWallet')}
         >
@@ -32,29 +30,29 @@ export default function HomePage() {
         </Button>
       }
     >
-      <Container size="4" css={{ padding: '$3-5' }}>
-        <Flex direction="column" gap="6">
-          <Flex direction="column" gap="2">
+      <Container size="4" className="p-7">
+        <div className="flex flex-col gap-12">
+          <div className="flex flex-col gap-4">
             <Heading font="mono">Wallets</Heading>
-            <Grid columns="2" gap="3-5">
+            <div className="grid grid-cols-2 gap-7">
               {wallets.data?.map((wallet) => (
                 <Panel
                   key={wallet.id}
-                  css={{ padding: '$3', height: '200px', cursor: 'pointer' }}
+                  className="p-6 h-[200px] cursor-pointer"
                   onClick={() =>
                     router.push(routes.wallet.view.replace('[id]', wallet.id))
                   }
                 >
-                  <Flex direction="column">
+                  <div className="flex flex-col gap-1">
                     <Heading>{wallet.name}</Heading>
                     <Text>{wallet.type}</Text>
                     {/* <WalletBalance wallet={wallet} /> */}
-                  </Flex>
+                  </div>
                 </Panel>
               ))}
-            </Grid>
-          </Flex>
-        </Flex>
+            </div>
+          </div>
+        </div>
       </Container>
     </AppAuthedLayout>
   )

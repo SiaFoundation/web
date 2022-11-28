@@ -1,7 +1,6 @@
 import {
   AnimatedPanel,
   Container,
-  Flex,
   Skeleton,
   EntityList,
   DatumSkeleton,
@@ -12,32 +11,25 @@ export function BlockEntitySkeleton() {
   return (
     <>
       <Container>
-        <Flex direction="column" gap="6">
-          <AnimatedPanel
-            variant="subtle"
-            startTime={0}
-            css={{
-              padding: '$3',
-              borderRadius: '$2',
-            }}
-          >
-            <Flex direction="column" gap="5">
-              <Flex gap="3" justify="between" wrap="wrap">
-                <Skeleton css={{ height: '40px', width: '250px' }} />
-                <Skeleton css={{ height: '40px', width: '200px' }} />
-              </Flex>
-              <Flex direction="column" gap="4">
-                <Flex direction="column" gapY="3">
+        <div className="flex flex-col gap-12">
+          <AnimatedPanel variant="subtle" startTime={0} className="p-6 rounded">
+            <div className="flex flex-col gap-10">
+              <div className="flex flex-wrap gap-6 justify-between">
+                <Skeleton className="h=[40px] w-[250px]" />
+                <Skeleton className="h=[40px] w-[200px]" />
+              </div>
+              <div className="flex flex-col gap-8">
+                <div className="flex flex-col gap-y-6">
                   {times(5, (i) => (
                     <DatumSkeleton key={i} />
                   ))}
-                </Flex>
-                <Skeleton css={{ width: '100px', height: '24px' }} />
-                <Skeleton css={{ width: '80px', height: '24px' }} />
-              </Flex>
-            </Flex>
+                </div>
+                <Skeleton className="w-[100px] h-6" />
+                <Skeleton className="w-[80px] h-6" />
+              </div>
+            </div>
           </AnimatedPanel>
-        </Flex>
+        </div>
       </Container>
       <Container>
         <EntityList title="Transactions" entities={undefined} />

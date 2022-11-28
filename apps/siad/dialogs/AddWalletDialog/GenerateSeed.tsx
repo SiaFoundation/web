@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { ComboBox, Grid, Text } from '@siafoundation/design-system'
+import { ComboBox, Text } from '@siafoundation/design-system'
 import { useEffect, useMemo } from 'react'
 import { SeedLayout } from './SeedLayout'
 
@@ -21,7 +21,7 @@ export function GenerateSeed({ seed, onChange }: Props) {
       seedList.map((v, i) => (
         <ComboBox
           key={v}
-          size="1"
+          size="small"
           options={[]}
           disabled
           value={{
@@ -50,9 +50,7 @@ export function GenerateSeed({ seed, onChange }: Props) {
         </>
       }
     >
-      <Grid columns="5" gap="3">
-        {comboBoxes}
-      </Grid>
+      <div className="grid grid-cols-5 gap-6">{comboBoxes}</div>
     </SeedLayout>
   )
 }

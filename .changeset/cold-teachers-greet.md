@@ -2,4 +2,4 @@
 '@siafoundation/website': minor
 ---
 
-Updated the software sections across the website to reflect and advertise next-gen software, and restructure for more items.
+Software sections across the website now reflect and advertise next-gen software, restructured for more items.
