@@ -10,7 +10,7 @@ export const textFieldStyles = cva(
     'tabular-nums',
     'rounded',
     'text-gray-1100 dark:text-white',
-    'placeholder:text-gray-600 placeholder:dark:text-graydark-500',
+    'placeholder:text-gray-700 placeholder:dark:text-graydark-700',
     'disabled:text-gray-400 disabled:dark:text-graydark-400',
   ],
   {

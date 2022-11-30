@@ -96,7 +96,7 @@ export function WalletSparkline() {
         formatTimestamp: timeRangeNoRollup.label,
       },
     }
-  }, [scData, timeRange])
+  }, [scData, timeRange, chartConfigs])
 
   return (
     <div className="relative">

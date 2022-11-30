@@ -24,31 +24,15 @@ import { AreaChart } from './AreaChart'
 import { Reset16 } from '../../icons/carbon'
 import { Panel } from '../../core/Panel'
 import { getPointTime, getPointValue, Point } from './utils'
+import { useTheme } from '../../hooks/useTheme'
+import { colors } from '../../config/colors'
 
 export type { Point }
-
-const background = 'var(--colors-panel)'
-// export const background = 'transparent'
-const background2 = 'var(--colors-panel)'
-const accentColor = 'var(--colors-accent9)'
-const lineColor = 'var(--colors-hiContrast)'
-const borderColor = 'var(--colors-gray4)'
-const tooltipStyles = {
-  ...defaultStyles,
-  background: 'var(--colors-panel)',
-  boxShadow: 'var(--colors-borderActive)',
-  fontFamily: 'var(--fonts-sans)',
-  color: 'var(--colors-hiContrast)',
-}
 
 const brushMargin = { top: 10, bottom: 15, left: 10, right: 10 }
 const chartSeparation = 30
 const PATTERN_ID = 'brush_pattern'
 const GRADIENT_ID = 'brush_gradient'
-const selectedBrushStyle = {
-  fill: `url(#${PATTERN_ID})`,
-  stroke: 'var(--colors-hiContrast)',
-}
 
 const throttled = throttle((func: () => void) => func(), 15)
 
@@ -87,6 +71,73 @@ const Chart = withTooltip<ChartProps, TooltipData>(
     tooltipTop = 0,
     tooltipLeft = 0,
   }: ChartProps & WithTooltipProvidedProps<TooltipData>) => {
+    const { activeTheme } = useTheme()
+    const {
+      accentColor,
+      background,
+      background2,
+      lineColor,
+      borderColor,
+      tooltipStyles,
+      selectedBrushStyle,
+    } = useMemo(() => {
+      if (activeTheme === 'light') {
+        const background = colors.white
+        // export const background = 'transparent'
+        const background2 = colors.white
+        const accentColor = colors.accent[800]
+        const lineColor = colors.gray[1100]
+        const borderColor = colors.gray[300]
+        const tooltipStyles = {
+          ...defaultStyles,
+          background,
+          border: `1px solid ${borderColor}`,
+          boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+          fontFamily: 'PlexSans',
+          color: colors.gray[1100],
+        }
+        const selectedBrushStyle = {
+          fill: `url(#${PATTERN_ID})`,
+          stroke: colors.gray[1100],
+        }
+        return {
+          accentColor,
+          background,
+          background2,
+          lineColor,
+          borderColor,
+          tooltipStyles,
+          selectedBrushStyle,
+        }
+      }
+      const background = colors.graydark[50]
+      const background2 = colors.graydark[50]
+      const accentColor = colors.accentdark[800]
+      const lineColor = colors.white
+      const borderColor = colors.graydark[300]
+      const tooltipStyles = {
+        ...defaultStyles,
+        background,
+        border: `1px solid ${borderColor}`,
+        boxShadow: '0 1px 2px 0 rgb(255 255 255 / 0.05)',
+        fontFamily: 'PlexSans',
+        color: colors.white,
+      }
+      const selectedBrushStyle = {
+        fill: `url(#${PATTERN_ID})`,
+        stroke: colors.white,
+      }
+      return {
+        accentColor,
+        background,
+        background2,
+        lineColor,
+        borderColor,
+        tooltipStyles,
+        selectedBrushStyle,
+      }
+    }, [activeTheme])
+
     const [selectedDatasetName, setSelectedDatasetName] = useState<string>(
       datasets[0]?.name
     )

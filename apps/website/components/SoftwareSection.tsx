@@ -32,7 +32,7 @@ export function SoftwareSection({
       name={title}
       description={description}
       startTime={startTime}
-      variant="verySubtle"
+      variant="subtle"
     >
       <div className="flex flex-col">
         <Text size="14" weight="bold" className="mt-4 mb-4">

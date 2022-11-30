@@ -1,6 +1,7 @@
 import {
   Button,
-  Search24,
+  ControlGroup,
+  Search16,
   TextField,
   triggerToast,
 } from '@siafoundation/design-system'
@@ -43,20 +44,21 @@ export function Search() {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onSubmit={formik.handleSubmit as any}
       >
-        <TextField
-          size="medium"
-          placeholder="Search an address, block, transaction, contract ID..."
-          name="query"
-          spellCheck="false"
-          autoComplete="off"
-          value={formik.values.query}
-          onChange={formik.handleChange}
-          state={formik.errors.query ? 'invalid' : undefined}
-          className="flex-1 md:max-w-[700px]"
-        />
-        <Button size="medium" variant="gray" type="submit">
-          <Search24 />
-        </Button>
+        <ControlGroup className="flex-1 md:max-w-[700px]">
+          <TextField
+            size="medium"
+            placeholder="Search an address, block, transaction, contract ID..."
+            name="query"
+            spellCheck="false"
+            autoComplete="off"
+            value={formik.values.query}
+            onChange={formik.handleChange}
+            state={formik.errors.query ? 'invalid' : undefined}
+          />
+          <Button size="medium" variant="gray" type="submit">
+            <Search16 />
+          </Button>
+        </ControlGroup>
       </form>
     </div>
   )

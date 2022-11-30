@@ -88,7 +88,7 @@ export default function StoragePage() {
       key: 'status',
       label: 'Status',
       size: 1,
-      render: ({ status }) => <Badge color="green">{status}</Badge>,
+      render: ({ status }) => <Badge variant="green">{status}</Badge>,
     },
     {
       key: 'errors',

@@ -1,7 +1,5 @@
 import {
-  AnimatedPanel,
   Badge,
-  Container,
   Tabs,
   TabsContent,
   TabsList,
@@ -27,6 +25,7 @@ import { EntityHeading } from '../../EntityHeading'
 import { useUtxos } from '../../../hooks/useUtxos'
 import { getHrefForType } from '../../../lib/utils'
 import BigNumber from 'bignumber.js'
+import { ContentLayout } from '../../ContentLayout'
 
 type Tab = 'transactions' | 'evolution' | 'utxos'
 
@@ -117,95 +116,86 @@ export function AddressEntity({ entity }: Props) {
   // const qrCode = `${apiBase}/navigator-api/qr/${address}.svg`
 
   return (
-    <>
-      <Container>
-        <div className="flex flex-col gap-12">
-          <AnimatedPanel variant="subtle" startTime={0} className="p-6 rounded">
-            <div className="flex flex-col gap-10">
-              <div className="flex flex-wrap gap-y-2 justify-between items-center">
-                <EntityHeading
-                  label="address"
-                  type="address"
-                  value={address}
-                  href={routes.address.view.replace('[id]', address)}
-                />
-                <div className="flex gap-2 items-center">
-                  <Tooltip
-                    content={`First seen ${humanNumber(
-                      firstSeenAgo
-                    )} blocks ago, at block ${humanNumber(firstSeen)}`}
-                  >
-                    <Badge variant="simple">{`${humanNumber(
-                      firstSeen
-                    )}`}</Badge>
-                  </Tooltip>
-                  <Tooltip
-                    content={`${humanNumber(
-                      data[1].TotalTxCount
-                    )} total transactions`}
-                  >
-                    <Badge variant="accent">
-                      {`${humanNumber(data[1].TotalTxCount)}`} transactions
-                    </Badge>
-                  </Tooltip>
-                </div>
-              </div>
-              <div className="flex flex-col gap-y-6">
-                {values.map((item) => (
-                  <NvgDatum key={item.label} {...item} />
-                ))}
-              </div>
+    <ContentLayout
+      panel={
+        <div className="flex flex-col gap-10">
+          <div className="flex flex-wrap gap-y-2 justify-between items-center">
+            <EntityHeading
+              label="address"
+              type="address"
+              value={address}
+              href={routes.address.view.replace('[id]', address)}
+            />
+            <div className="flex gap-2 items-center">
+              <Tooltip
+                content={`First seen ${humanNumber(
+                  firstSeenAgo
+                )} blocks ago, at block ${humanNumber(firstSeen)}`}
+              >
+                <Badge variant="simple">{`${humanNumber(firstSeen)}`}</Badge>
+              </Tooltip>
+              <Tooltip
+                content={`${humanNumber(
+                  data[1].TotalTxCount
+                )} total transactions`}
+              >
+                <Badge variant="accent">
+                  {`${humanNumber(data[1].TotalTxCount)}`} transactions
+                </Badge>
+              </Tooltip>
             </div>
-          </AnimatedPanel>
+          </div>
+          <div className="flex flex-col gap-y-2 md:gap-y-4">
+            {values.map((item) => (
+              <NvgDatum key={item.label} {...item} />
+            ))}
+          </div>
         </div>
-      </Container>
-      <Container>
-        <Tabs
-          defaultValue={tab}
-          value={tab}
-          onValueChange={(val) => setTab(val as Tab)}
-        >
-          <TabsList aria-label="Address tabs">
-            <TabsTrigger value="transactions">
-              Last 100 transactions
-            </TabsTrigger>
-            <TabsTrigger value="evolution">Balance evolution</TabsTrigger>
-            <TabsTrigger value="utxos">Unspent outputs</TabsTrigger>
-          </TabsList>
-          <TabsContent value="transactions">
-            <EntityList entities={transactions} />
-          </TabsContent>
-          <TabsContent value="evolution">
-            <ChartTimeValue
-              datasets={[
-                {
-                  name: 'SC',
-                  dataset: balanceHistory.data?.scJson || [],
-                  formatValue: (v) => humanSiacoin(v),
-                },
-                {
-                  name: 'SF',
-                  dataset: balanceHistory.data?.sfJson || [],
-                  formatValue: (v) => humanNumber(v, { units: 'SF' }),
-                },
-              ]}
-              height={300}
-            />
-          </TabsContent>
-          <TabsContent value="utxos">
-            <EntityList
-              entities={utxos.data?.map((output) => ({
-                sc: new BigNumber(output.hastings || '0'),
-                sf: output.sf,
-                hash: output.output,
-                label: getNvgEntityTypeLabel('output'),
-                initials: getNvgEntityTypeInitials('output'),
-                href: getHrefForType('output', output.output),
-              }))}
-            />
-          </TabsContent>
-        </Tabs>
-      </Container>
-    </>
+      }
+    >
+      <Tabs
+        defaultValue={tab}
+        value={tab}
+        onValueChange={(val) => setTab(val as Tab)}
+      >
+        <TabsList aria-label="Address tabs">
+          <TabsTrigger value="transactions">Last 100 transactions</TabsTrigger>
+          <TabsTrigger value="evolution">Balance evolution</TabsTrigger>
+          <TabsTrigger value="utxos">Unspent outputs</TabsTrigger>
+        </TabsList>
+        <TabsContent value="transactions">
+          <EntityList entities={transactions} />
+        </TabsContent>
+        <TabsContent value="evolution">
+          <ChartTimeValue
+            datasets={[
+              {
+                name: 'SC',
+                dataset: balanceHistory.data?.scJson || [],
+                formatValue: (v) => humanSiacoin(v),
+              },
+              {
+                name: 'SF',
+                dataset: balanceHistory.data?.sfJson || [],
+                formatValue: (v) => humanNumber(v, { units: 'SF' }),
+              },
+            ]}
+            height={300}
+          />
+        </TabsContent>
+        <TabsContent value="utxos">
+          <EntityList
+            entities={utxos.data?.map((output) => ({
+              sc: new BigNumber(output.hastings || '0'),
+              sf: output.sf,
+              hash: output.output,
+              label: getNvgEntityTypeLabel('output'),
+              initials: getNvgEntityTypeInitials('output'),
+              href: getHrefForType('output', output.output),
+            }))}
+          />
+        </TabsContent>
+      </Tabs>
+    </ContentLayout>
   )
 }

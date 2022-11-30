@@ -9,7 +9,11 @@ export function Entity404({ message }: Props) {
     <>
       <Container>
         <div className="flex flex-col gap-12">
-          <AnimatedPanel variant="subtle" startTime={0} className="p-6 rounded">
+          <AnimatedPanel
+            variant="verySubtle"
+            startTime={0}
+            className="p-6 rounded"
+          >
             <div className="flex flex-col gap-10 items-center">
               <Text size="64" font="mono" weight="semibold">
                 404
