@@ -28,11 +28,12 @@ export function SiteMenu({ menuSections }: Props) {
         onOpenChange={setOpen}
         dynamicHeight={false}
         containerVariants={{
-          variant: 'fullscreen',
+          variant: 'none',
+          className: ['m-auto', 'h-full', 'max-w-[1560px]'],
         }}
         contentVariants={{
-          variant: 'ghost',
-          className: 'bg-black',
+          variant: 'none',
+          className: 'bg-black h-full',
         }}
         closeClassName="dark absolute right-10 top-8"
         trigger={

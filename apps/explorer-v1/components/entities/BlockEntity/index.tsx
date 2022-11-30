@@ -4,9 +4,9 @@ import {
   AccordionItem,
   AccordionTrigger,
   Badge,
-  Heading,
   Tooltip,
   EntityList,
+  Text,
 } from '@siafoundation/design-system'
 import {
   humanBytes,
@@ -158,24 +158,30 @@ export function BlockEntity({ entity }: Props) {
               <NvgDatum key={item.label} {...item} />
             ))}
           </div>
-          <Accordion type="single">
+          <Accordion type="single" className="flex flex-col gap-6">
             <AccordionItem value="contracts" variant="ghost">
               <AccordionTrigger>
-                <Heading size="20">Contracts</Heading>
+                <Text size="20" weight="medium">
+                  Contracts
+                </Text>
               </AccordionTrigger>
               <AccordionContent>
-                <div className="flex flex-col gap-10 py-6">
-                  <div className="flex flex-col gap-6">
-                    <Heading size="20">Active</Heading>
-                    <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-6 pt-8">
+                  <div className="flex flex-col gap-3">
+                    <Text size="16" weight="medium">
+                      Active
+                    </Text>
+                    <div className="flex flex-col gap-y-2 md:gap-y-4 mb-6">
                       {active.map((item) => (
                         <NvgDatum key={item.label} {...item} />
                       ))}
                     </div>
                   </div>
-                  <div className="flex flex-col gap-6">
-                    <Heading size="20">Historic</Heading>
-                    <div className="flex flex-col gap-6">
+                  <div className="flex flex-col gap-y-2 md:gap-y-4">
+                    <Text size="16" weight="medium">
+                      Historic
+                    </Text>
+                    <div className="flex flex-col gap-y-2 md:gap-y-4 mb-6">
                       {historic.map((item) => (
                         <NvgDatum key={item.label} {...item} />
                       ))}
@@ -186,10 +192,12 @@ export function BlockEntity({ entity }: Props) {
             </AccordionItem>
             <AccordionItem value="other" variant="ghost">
               <AccordionTrigger>
-                <Heading size="20">Other</Heading>
+                <Text size="20" weight="medium">
+                  Other
+                </Text>
               </AccordionTrigger>
               <AccordionContent>
-                <div className="flex flex-col gap-6 py-6">
+                <div className="flex flex-col gap-y-2 md:gap-y-4 pt-8">
                   {other.map((item) => (
                     <NvgDatum key={item.label} {...item} />
                   ))}

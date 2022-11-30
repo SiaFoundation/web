@@ -6,7 +6,6 @@ import {
   TransactionDetailsDialog,
   WalletSingleAddressDetailsDialog,
 } from '@siafoundation/design-system'
-// import { ControlledDialog } from '../dialogs/ControlledDialog'
 
 const DialogContext = createContext({} as State)
 export const useDialog = () => useContext(DialogContext)

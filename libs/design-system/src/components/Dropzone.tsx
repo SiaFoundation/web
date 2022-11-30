@@ -27,10 +27,10 @@ export function Dropzone({ title, onFiles }: Props) {
         'p-4',
         'flex justify-center items-center text-center',
         'border-2 border-dashed',
-        'border-green-600 dark:border-accentdark-500',
-        'hover:border-green-700 hover:dark:border-accentdark-600',
+        'border-green-600 dark:border-green-500',
+        'hover:border-green-700 hover:dark:border-green-500',
         isDragActive
-          ? 'border-green-700 dark:border-accentdark-600 bg-green-100 dark:bg-green-100/20'
+          ? 'border-green-700 dark:border-green-500 bg-green-100 dark:bg-green-100/20'
           : ''
       )}
       {...getRootProps()}

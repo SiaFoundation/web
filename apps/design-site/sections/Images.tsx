@@ -21,10 +21,10 @@ export function Images() {
       <Section>
         <SubsectionHeading>Image - responsive</SubsectionHeading>
         <div className="flex justify-start gap-4">
-          <div className="relative h-[250px] w-[250px]">
+          <div className="relative overflow-hidden h-[250px] w-[250px]">
             <Image {...bellLabs} alt="bell labs" layout="responsive" />
           </div>
-          <div className="relative h-[350px] w-[250px]">
+          <div className="relative overflow-hidden h-[250px] w-[250px]">
             <Image {...macTeam} alt="mac team" layout="responsive" />
           </div>
         </div>
@@ -54,7 +54,7 @@ export function Images() {
       </Section>
       <Section>
         <SubsectionHeading>Avatar</SubsectionHeading>
-        <div className="grid grid-cols-1 md:grid-cols-2 justify-start gap-6">
+        <div className="flex flex-wrap justify-start gap-6">
           <div className="flex gap-4 items-center justify-start">
             <Avatar size="1" src={avatar1.src} interactive />
             <Avatar size="2" src={avatar2.src} interactive />
@@ -63,6 +63,7 @@ export function Images() {
           <div className="flex gap-4 items-center justify-start">
             <Avatar size="1" fallback="RH" interactive />
             <Avatar size="2" fallback="RH" interactive />
+            <Avatar shape="square" size="2" fallback="RH" interactive />
             <Avatar size="3" fallback="RH" interactive />
           </div>
           <div className="flex gap-4 items-center justify-start">
