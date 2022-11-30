@@ -3,7 +3,6 @@ import { useTheme } from '../hooks/useTheme'
 import { useCallback } from 'react'
 import { Asleep16, Awake16, Screen16 } from '../icons/carbon'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
-import { Text } from '../core/Text'
 import { Tooltip } from '../core/Tooltip'
 import { cx } from 'class-variance-authority'
 

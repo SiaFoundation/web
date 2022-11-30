@@ -238,8 +238,8 @@ export function useContracts() {
                   {id}
                 </Text>
                 <div className="flex gap-2 items-center">
-                  <Badge color={color}>{label}</Badge>
-                  {renewed && <Badge color="gray">Renewed</Badge>}
+                  <Badge variant={color}>{label}</Badge>
+                  {renewed && <Badge variant="gray">Renewed</Badge>}
                 </div>
               </div>
             )

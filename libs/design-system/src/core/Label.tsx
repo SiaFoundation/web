@@ -13,7 +13,7 @@ export const Label = React.forwardRef<
       size,
       scaleSize,
       weight,
-      color,
+      color = 'subtle',
       noWrap,
       ellipsis,
       className,

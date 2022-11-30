@@ -18,7 +18,7 @@ const styles = cva(
         inactive: 'bg-gray-300 dark:bg-gray-800 text-gray-900 dark:text-white',
         active: 'bg-gray-800 dark:bg-gray-800 text-white dark:text-white',
         simple: 'bg-gray-300 dark:bg-gray-800 text-gray-900 dark:text-white',
-        accent: 'bg-accent-800 dark:bg-accent-800 text-white',
+        accent: 'bg-emerald-600 dark:bg-emerald-500 text-white',
       },
       interactive: {
         true: 'cursor-pointer',

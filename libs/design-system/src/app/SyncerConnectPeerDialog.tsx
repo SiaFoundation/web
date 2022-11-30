@@ -8,7 +8,6 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { hostnameOrIpRegex } from '../lib/ipRegex'
 import { Dialog } from '../core/Dialog'
-import { AccumulationSnow16 } from '@carbon/icons-react'
 
 const initialValues = {
   port: 9981,

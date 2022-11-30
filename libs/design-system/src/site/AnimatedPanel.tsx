@@ -41,8 +41,8 @@ export function AnimatedPanel({
             variant === 'default'
               ? 'opacity-70'
               : variant === 'subtle'
-              ? 'opacity-60'
-              : 'opacity-50'
+              ? 'opacity-50'
+              : 'opacity-20'
           }
         >
           <LocalBackdrop startTime={startTime} />

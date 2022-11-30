@@ -108,12 +108,12 @@ export function Layout({ title, description, path, children }: Props) {
                     </div>
                   </div>
                   <div className="flex gap-12">
-                    <div className="flex flex-col gap-6">
+                    <div className="flex flex-col gap-4">
                       <Text
                         font="mono"
                         weight="bold"
-                        size="14"
-                        className="mb-2"
+                        size="16"
+                        className="mb-3"
                         color="subtle"
                       >
                         Ecosystem

@@ -20,6 +20,7 @@ import { upperFirst } from 'lodash'
 import { EntityAvatar } from './EntityAvatar'
 import React from 'react'
 import BigNumber from 'bignumber.js'
+import { cx } from 'class-variance-authority'
 
 export type EntityListItemProps = {
   label?: string
@@ -46,13 +47,14 @@ type Props = {
 }
 
 export function EntityList({ title, actions, entities, emptyMessage }: Props) {
+  const showHeading = title || actions
   return (
     <Panel>
       <div className="flex flex-col rounded overflow-hidden">
-        {(title || actions) && (
-          <div className="flex items-center p-4">
+        {showHeading && (
+          <div className="flex items-center p-4 border-b border-gray-200 dark:border-graydark-300">
             {title && (
-              <Heading size="20" font="mono">
+              <Heading size="20" font="mono" ellipsis>
                 {title}
               </Heading>
             )}
@@ -62,7 +64,12 @@ export function EntityList({ title, actions, entities, emptyMessage }: Props) {
         )}
         <div className="flex flex-col rounded overflow-hidden">
           {entities?.length === 0 && (
-            <div className="flex items-center justify-center h-[100px] border border-gray-200 dark:border-graydark-200">
+            <div
+              className={cx(
+                'flex items-center justify-center h-[100px]',
+                itemBorderStyles()
+              )}
+            >
               <Text size="18" color="subtle">
                 {emptyMessage || 'No results'}
               </Text>
@@ -96,7 +103,7 @@ export function EntityList({ title, actions, entities, emptyMessage }: Props) {
             const title = upperFirst(label)
             return (
               <div
-                className="flex gap-4 p-4 border-t border-gray-200 dark:border-graydark-200"
+                className={cx('flex gap-4 p-4', itemBorderStyles())}
                 key={entity.hash || entity.label || i}
                 onClick={entity.onClick}
               >
@@ -157,15 +164,22 @@ export function EntityListSkeleton() {
       {times(10, (i) => (
         <div
           key={i}
-          className="relative flex gap-4 p-3.5 border-t border-gray-200 dark:border-graydark-200"
+          className={cx('relative flex gap-4 p-3.5', itemBorderStyles())}
         >
-          <Skeleton className="w-[60px] h-[50px] rounded" />
+          <Skeleton className="w-[60px] h-[50px]" />
           <div className="flex flex-col gap-2 w-full">
-            <Skeleton className="w-[90%] h-[20px] rounded" />
-            <Skeleton className="w-[140px] h-[14px] rounded" />
+            <Skeleton className="w-[90%] h-[20px]" />
+            <Skeleton className="w-[140px] h-[14px]" />
           </div>
         </div>
       ))}
     </>
+  )
+}
+
+export function itemBorderStyles() {
+  return cx(
+    'border-t border-gray-200 dark:border-graydark-300',
+    'first:border-none'
   )
 }

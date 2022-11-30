@@ -1,8 +1,13 @@
 import React from 'react'
-import { DropdownMenu, DropdownMenuSeparator } from '../core/DropdownMenu'
-import { OverflowMenuHorizontal20 } from '../icons/carbon'
-import { ThemeMenu } from './ThemeMenu'
+import {
+  DropdownMenu,
+  DropdownMenuGroup,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from '../core/DropdownMenu'
+import { OverflowMenuHorizontal24 } from '../icons/carbon'
 import { Button } from '../core/Button'
+import { ThemeRadio } from './ThemeRadio'
 
 type Props = React.ComponentProps<typeof Button> & {
   trigger?: React.ReactNode
@@ -14,8 +19,8 @@ export function UserDropdownMenu({ trigger, children, ...props }: Props) {
     <DropdownMenu
       trigger={
         trigger || (
-          <Button size="small" {...props} className="scale-150">
-            <OverflowMenuHorizontal20 />
+          <Button size="medium" {...props}>
+            <OverflowMenuHorizontal24 />
           </Button>
         )
       }
@@ -23,7 +28,12 @@ export function UserDropdownMenu({ trigger, children, ...props }: Props) {
     >
       {children}
       {children && <DropdownMenuSeparator />}
-      <ThemeMenu />
+      <DropdownMenuGroup>
+        <DropdownMenuLabel>Theme</DropdownMenuLabel>
+        <div className="pt-1 pb-3 px-2">
+          <ThemeRadio className="justify-between" />
+        </div>
+      </DropdownMenuGroup>
     </DropdownMenu>
   )
 }

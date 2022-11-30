@@ -3,9 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  AnimatedPanel,
   Badge,
-  Container,
   Heading,
   Tooltip,
   EntityList,
@@ -27,6 +25,7 @@ import { routes } from '../../../config/routes'
 import { EntityHeading } from '../../EntityHeading'
 import { getHrefForType } from '../../../lib/utils'
 import BigNumber from 'bignumber.js'
+import { ContentLayout } from '../../ContentLayout'
 
 type Props = {
   entity: NvgBlockEntity
@@ -127,98 +126,91 @@ export function BlockEntity({ entity }: Props) {
   const block = data[0].MasterHash
 
   return (
-    <>
-      <Container>
-        <div className="flex flex-col gap-12">
-          <AnimatedPanel variant="subtle" startTime={0} className="p-6 rounded">
-            <div className="flex flex-col gap-10">
-              <div className="flex flex-wrap gap-y-2 items-center justify-between">
-                <EntityHeading
-                  label="block"
-                  type="block"
-                  value={block}
-                  href={routes.block.view.replace('[id]', block)}
-                />
-                <div className="flex gap-2 items-center">
-                  <Tooltip
-                    content={`${humanNumber(
-                      data[1].NewContracts
-                    )} total contracts`}
-                  >
-                    <Badge variant="accent">
-                      {`${humanNumber(data[1].NewContracts)}`} contracts
-                    </Badge>
-                  </Tooltip>
-                  <Tooltip
-                    content={`${humanNumber(data[1].NewTx)} total transactions`}
-                  >
-                    <Badge variant="accent">
-                      {`${humanNumber(data[1].NewTx)}`} transactions
-                    </Badge>
-                  </Tooltip>
-                </div>
-              </div>
-              <div className="flex flex-col gap-y-6">
-                {values.map((item) => (
-                  <NvgDatum key={item.label} {...item} />
-                ))}
-              </div>
-              <Accordion type="single">
-                <AccordionItem value="contracts" variant="ghost">
-                  <AccordionTrigger>
-                    <Heading size="20">Contracts</Heading>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="flex flex-col gap-10 py-6">
-                      <div className="flex flex-col gap-6">
-                        <Heading size="20">Active</Heading>
-                        <div className="flex flex-col gap-6">
-                          {active.map((item) => (
-                            <NvgDatum key={item.label} {...item} />
-                          ))}
-                        </div>
-                      </div>
-                      <div className="flex flex-col gap-6">
-                        <Heading size="20">Historic</Heading>
-                        <div className="flex flex-col gap-6">
-                          {historic.map((item) => (
-                            <NvgDatum key={item.label} {...item} />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="other" variant="ghost">
-                  <AccordionTrigger>
-                    <Heading size="20">Other</Heading>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="flex flex-col gap-6 py-6">
-                      {other.map((item) => (
+    <ContentLayout
+      panel={
+        <div className="flex flex-col gap-10">
+          <div className="flex flex-wrap gap-y-2 items-center justify-between">
+            <EntityHeading
+              label="block"
+              type="block"
+              value={block}
+              href={routes.block.view.replace('[id]', block)}
+            />
+            <div className="flex gap-2 items-center">
+              <Tooltip
+                content={`${humanNumber(data[1].NewContracts)} total contracts`}
+              >
+                <Badge variant="accent">
+                  {`${humanNumber(data[1].NewContracts)}`} contracts
+                </Badge>
+              </Tooltip>
+              <Tooltip
+                content={`${humanNumber(data[1].NewTx)} total transactions`}
+              >
+                <Badge variant="accent">
+                  {`${humanNumber(data[1].NewTx)}`} transactions
+                </Badge>
+              </Tooltip>
+            </div>
+          </div>
+          <div className="flex flex-col gap-y-2 md:gap-y-4">
+            {values.map((item) => (
+              <NvgDatum key={item.label} {...item} />
+            ))}
+          </div>
+          <Accordion type="single">
+            <AccordionItem value="contracts" variant="ghost">
+              <AccordionTrigger>
+                <Heading size="20">Contracts</Heading>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="flex flex-col gap-10 py-6">
+                  <div className="flex flex-col gap-6">
+                    <Heading size="20">Active</Heading>
+                    <div className="flex flex-col gap-6">
+                      {active.map((item) => (
                         <NvgDatum key={item.label} {...item} />
                       ))}
                     </div>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </div>
-          </AnimatedPanel>
+                  </div>
+                  <div className="flex flex-col gap-6">
+                    <Heading size="20">Historic</Heading>
+                    <div className="flex flex-col gap-6">
+                      {historic.map((item) => (
+                        <NvgDatum key={item.label} {...item} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="other" variant="ghost">
+              <AccordionTrigger>
+                <Heading size="20">Other</Heading>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="flex flex-col gap-6 py-6">
+                  {other.map((item) => (
+                    <NvgDatum key={item.label} {...item} />
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
-      </Container>
-      <Container>
-        <EntityList
-          title={`Transactions (${data[2].transactions.length})`}
-          entities={data[2].transactions.map((tx) => ({
-            hash: tx.TxHash,
-            label: getNvgEntityTypeLabel(tx.TxType),
-            initials: getNvgEntityTypeInitials(tx.TxType),
-            href: getHrefForType(tx.TxType, tx.TxHash),
-            sc: new BigNumber(tx.TotalAmountSc),
-            sf: tx.TotalAmountSf,
-          }))}
-        />
-      </Container>
-    </>
+      }
+    >
+      <EntityList
+        title={`Transactions (${data[2].transactions.length})`}
+        entities={data[2].transactions.map((tx) => ({
+          hash: tx.TxHash,
+          label: getNvgEntityTypeLabel(tx.TxType),
+          initials: getNvgEntityTypeInitials(tx.TxType),
+          href: getHrefForType(tx.TxType, tx.TxHash),
+          sc: new BigNumber(tx.TotalAmountSc),
+          sf: tx.TotalAmountSf,
+        }))}
+      />
+    </ContentLayout>
   )
 }

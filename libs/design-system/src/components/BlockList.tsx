@@ -6,7 +6,8 @@ import { getEntityTypeInitials, getEntityTypeLabel } from '../lib/entityTypes'
 import { humanNumber } from '@siafoundation/sia-js'
 import { formatDistance } from 'date-fns'
 import { EntityAvatar } from './EntityAvatar'
-import { EntityListSkeleton } from './EntityList'
+import { EntityListSkeleton, itemBorderStyles } from './EntityList'
+import { cx } from 'class-variance-authority'
 
 type BlockListItemProps = {
   miningPool: string
@@ -27,10 +28,10 @@ export function BlockList({ title, blocks }: Props) {
         <Heading size="20" font="mono" className="p-4">
           {title}
         </Heading>
-        <div className="flex flex-col">
+        <div className="flex flex-col border-t border-gray-200 dark:border-graydark-300">
           {blocks?.map((block, i) => (
             <div
-              className="flex gap-4 p-4 border border-gray-200 dark:border-graydark-200"
+              className={cx('flex gap-4 p-4', itemBorderStyles())}
               key={block.height}
             >
               <EntityAvatar
@@ -39,7 +40,7 @@ export function BlockList({ title, blocks }: Props) {
                 href={block.href}
                 shape="square"
               />
-              <div className="flex flex-col gap-2 justify-center">
+              <div className="flex flex-col gap-1 justify-center">
                 <Text color="subtle">
                   <Text weight="bold">
                     <Link href={block.href} underline="none">

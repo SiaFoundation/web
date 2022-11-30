@@ -1,7 +1,7 @@
 import { Text } from '../core/Text'
 import { Button } from '../core/Button'
 import { Link } from '../core/Link'
-import { Copy16, Copy20 } from '../icons/carbon'
+import { Copy16 } from '../icons/carbon'
 import { copyToClipboard } from '../lib/clipboard'
 import { stripPrefix } from '../lib/utils'
 import { EntityType, getEntityTypeLabel } from '../lib/entityTypes'
@@ -46,7 +46,7 @@ export function ValueCopyable({
       {href ? (
         <Link
           href={href}
-          underline="none"
+          underline="hover"
           size={size}
           scaleSize={scaleSize}
           color={color}
@@ -60,7 +60,8 @@ export function ValueCopyable({
       )}
       <Button
         variant="ghost"
-        size="small"
+        size="none"
+        className="m-1"
         onClick={(e) => {
           e.stopPropagation()
           copyToClipboard(cleanValue, label)

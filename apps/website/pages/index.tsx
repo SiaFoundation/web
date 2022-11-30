@@ -145,7 +145,7 @@ export default function Home({
           <CalloutSoftware
             name="renterd"
             startTime={30}
-            variant="verySubtle"
+            variant="subtle"
             description={
               'A next-generation Sia renter, developed by the Sia Foundation. Smart defaults and a highly extensible API.'
             }
@@ -154,7 +154,7 @@ export default function Home({
           />
           <CalloutSoftware
             name="hostd"
-            variant="verySubtle"
+            variant="subtle"
             startTime={40}
             description={
               'A next-generation Sia host, developed by the Sia Foundation. Built for performance and reliability.'

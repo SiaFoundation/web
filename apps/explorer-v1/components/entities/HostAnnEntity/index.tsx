@@ -26,10 +26,7 @@ export function HostAnnEntity({ entity }: Props) {
         label: 'Announced IP',
         value: (
           <ValueCopyable
-            size={{
-              '@initial': '16',
-              '@bp1': '18',
-            }}
+            scaleSize="18"
             label="IP"
             value={data[1].IP}
             maxLength={100}
