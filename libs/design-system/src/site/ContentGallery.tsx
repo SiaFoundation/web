@@ -85,7 +85,7 @@ export function ContentGallery({
             <Badge
               key="all"
               interactive
-              variant={!activeFilter ? 'accent' : 'simple'}
+              variant={!activeFilter ? 'accent' : 'inactive'}
               onClick={() => changeFilter(undefined)}
               rounded={false}
             >
@@ -95,7 +95,7 @@ export function ContentGallery({
               <Badge
                 key={filter}
                 interactive
-                variant={activeFilter === filter ? 'accent' : 'simple'}
+                variant={activeFilter === filter ? 'accent' : 'inactive'}
                 onClick={() => changeFilter(filter)}
                 rounded={false}
               >

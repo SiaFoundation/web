@@ -6,7 +6,6 @@ import {
   SyncerConnectPeerDialog,
   SettingsDialog,
 } from '@siafoundation/design-system'
-import { ControlledDialog } from '../dialogs/ControlledDialog'
 import { StorageFolderAddDialog } from '../dialogs/StorageFolderAddDialog'
 import { StorageFolderResizeDialog } from '../dialogs/StorageFolderResizeDialog'
 import { StorageFolderRemoveDialog } from '../dialogs/StorageFolderRemoveDialog'
@@ -55,6 +54,15 @@ export function DialogProvider({ children }: Props) {
     setId(undefined)
   }, [setDialog, setId])
 
+  const onOpenChange = useCallback(
+    (open: boolean) => {
+      if (!open) {
+        closeDialog()
+      }
+    },
+    [closeDialog]
+  )
+
   const value: State = {
     dialog,
     id,
@@ -64,34 +72,43 @@ export function DialogProvider({ children }: Props) {
 
   return (
     <DialogContext.Provider value={value}>
-      <ControlledDialog dialog="settings">
-        <SettingsDialog />
-      </ControlledDialog>
-      <ControlledDialog dialog="transactionDetails">
-        <TransactionDetailsDialog id={id} />
-      </ControlledDialog>
+      <SettingsDialog
+        open={dialog === 'settings'}
+        onOpenChange={onOpenChange}
+      />
       <WalletSendSiacoinDialog
         open={dialog === 'sendSiacoin'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
-      <ControlledDialog dialog="addressDetails">
-        <WalletSingleAddressDetailsDialog />
-      </ControlledDialog>
-      <ControlledDialog dialog="connectPeer">
-        <SyncerConnectPeerDialog closeDialog={closeDialog} />
-      </ControlledDialog>
-      <ControlledDialog dialog="storageFolderAdd">
-        <StorageFolderAddDialog />
-      </ControlledDialog>
-      <ControlledDialog dialog="storageFolderResize">
-        <StorageFolderResizeDialog />
-      </ControlledDialog>
-      <ControlledDialog dialog="storageFolderRemove">
-        <StorageFolderRemoveDialog />
-      </ControlledDialog>
-      <ControlledDialog dialog="hostAnnounce">
-        <HostAnnounceDialog />
-      </ControlledDialog>
+      <WalletSingleAddressDetailsDialog
+        open={dialog === 'addressDetails'}
+        onOpenChange={onOpenChange}
+      />
+      <TransactionDetailsDialog
+        id={id}
+        open={dialog === 'transactionDetails'}
+        onOpenChange={onOpenChange}
+      />
+      <SyncerConnectPeerDialog
+        open={dialog === 'connectPeer'}
+        onOpenChange={onOpenChange}
+      />
+      <StorageFolderAddDialog
+        open={dialog === 'storageFolderAdd'}
+        onOpenChange={onOpenChange}
+      />
+      <StorageFolderResizeDialog
+        open={dialog === 'storageFolderResize'}
+        onOpenChange={onOpenChange}
+      />
+      <StorageFolderRemoveDialog
+        open={dialog === 'storageFolderRemove'}
+        onOpenChange={onOpenChange}
+      />
+      <HostAnnounceDialog
+        open={dialog === 'hostAnnounce'}
+        onOpenChange={onOpenChange}
+      />
       {children}
     </DialogContext.Provider>
   )

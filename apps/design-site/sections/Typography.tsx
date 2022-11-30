@@ -46,9 +46,10 @@ export function Typography() {
             Brain-computer interface - 24 italic
           </Text>
           <Text size="30">Human test subjects - 30</Text>
-          <Text size="40">Text size 40</Text>
-          <Text size="64" color="subtle">
-            Text size 64 - subtle
+          <Text size="36">Human test subjects - 36</Text>
+          <Text size="48">Text size 48</Text>
+          <Text size="60" color="subtle">
+            Text size 60 - subtle
           </Text>
         </div>
       </Section>
@@ -61,12 +62,21 @@ export function Typography() {
           <Link size="14" href={randomLink} target="_blank" color="contrast">
             Contrast link
           </Link>
+          <Link
+            size="14"
+            href={randomLink}
+            target="_blank"
+            color="contrast"
+            underline="hover"
+          >
+            Hover underline
+          </Link>
           <Link size="14" href={randomLink} target="_blank" color="accent">
             Accent link
           </Link>
           <Text size="24">
             <Link href={randomLink} target="_blank">
-              Link inside Text size 5
+              Link inside Text size 24
             </Link>
           </Text>
         </div>

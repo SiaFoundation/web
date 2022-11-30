@@ -28,7 +28,7 @@ export function EntityHeading({ label, type, value, href }: Props) {
       </Heading>
       <Button
         variant="ghost"
-        size="small"
+        size="none"
         onClick={() => copyToClipboard(value, getNvgEntityTypeLabel(type))}
       >
         <Copy16 />

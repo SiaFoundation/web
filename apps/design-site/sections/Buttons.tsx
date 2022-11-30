@@ -3,6 +3,7 @@ import {
   Section,
   Search16,
   Filter16,
+  LinkButton,
 } from '@siafoundation/design-system'
 import { SectionHeading } from '../components/SectionHeading'
 import { SubsectionHeading } from '../components/SubsectionHeading'
@@ -12,7 +13,8 @@ export function Buttons() {
     <>
       <Section>
         <SectionHeading>Buttons</SectionHeading>
-        <div className="flex flex-col gap-4">
+        <SubsectionHeading>Button</SubsectionHeading>
+        <div className="flex flex-col gap-6">
           <div className="flex gap-2">
             <Button size="small" variant="accent">
               <Filter16 />
@@ -28,6 +30,9 @@ export function Buttons() {
             <Button size="small" variant="ghost">
               Ghost
             </Button>
+            <LinkButton size="small" variant="gray">
+              Link
+            </LinkButton>
           </div>
           <div className="flex gap-2">
             <Button size="medium" variant="accent">
@@ -115,7 +120,7 @@ export function Buttons() {
           </div>
         </div>
       </Section>
-      <Section className="pt-20">
+      <Section>
         <SubsectionHeading>Buttons - Icon</SubsectionHeading>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="flex gap-2">

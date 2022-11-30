@@ -20,8 +20,11 @@ export function AnimatedPanel({
 
   return (
     <Panel
-      border="contrast"
-      className={cx('rounded-none relative', className)}
+      className={cx(
+        'rounded-none relative',
+        '!border-black dark:!border-graydark-1100',
+        className
+      )}
       style={{
         borderWidth: '3px',
       }}

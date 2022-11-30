@@ -8,7 +8,7 @@ const styles = cva(['relative h-1 w-full overflow-hidden rounded-lg'], {
   variants: {
     variant: {
       gray: 'bg-gray-700 dark:bg-graydark-700',
-      accent: 'bg-accent-800 dark:bg-accentdark-800',
+      accent: 'bg-green-600 dark:bg-green-500',
     },
   },
   defaultVariants: {

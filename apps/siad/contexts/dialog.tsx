@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useCallback, useState } from 'react'
-import { WalletAddAddressDialog } from '../dialogs/WalletAddAddressDialog'
-import { AddWalletDialog } from '../dialogs/AddWalletDialog'
-import { ControlledDialog } from '../dialogs/ControlledDialog'
+// import { WalletAddAddressDialog } from '../dialogs/WalletAddAddressDialog'
+// import { AddWalletDialog } from '../dialogs/AddWalletDialog'
 
 const DialogContext = createContext({} as State)
 export const useDialog = () => useContext(DialogContext)
@@ -45,24 +44,12 @@ export function DialogProvider({ children }: Props) {
 
   return (
     <DialogContext.Provider value={value}>
-      {/* <ControlledDialog dialog="privacy">
-        <PrivacyDialog />
-      </ControlledDialog> */}
-      {/* <ControlledDialog dialog="transactionDetails">
-        <TransactionDetailsDialog />
-      </ControlledDialog> */}
-      <ControlledDialog dialog="addWallet">
-        <AddWalletDialog />
-      </ControlledDialog>
-      <ControlledDialog dialog="addAddress">
-        <WalletAddAddressDialog />
-      </ControlledDialog>
-      {/* <ControlledDialog dialog="addressDetails">
-        <AddressDetailsDialog />
-      </ControlledDialog>
-      <ControlledDialog dialog="connectPeer">
-        <SyncerConnectPeerDialog />
-      </ControlledDialog> */}
+      {/* <PrivacyDialog />
+      <TransactionDetailsDialog />
+      <AddWalletDialog />
+      <WalletAddAddressDialog />
+      <AddressDetailsDialog />
+      <SyncerConnectPeerDialog /> */}
       {children}
     </DialogContext.Provider>
   )

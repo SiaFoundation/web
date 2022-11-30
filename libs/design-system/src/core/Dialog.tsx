@@ -14,7 +14,7 @@ const containerStyles = cva(['z-20', 'overflow-hidden'], {
   variants: {
     variant: {
       default: 'flex items-center justify-center w-full h-full',
-      fullscreen: ['m-auto', 'max-w-[1560px]'],
+      none: '',
     },
   },
   defaultVariants: {
@@ -119,7 +119,7 @@ const contentStyles = cva(['relative', 'z-40', 'overflow-hidden'], {
   variants: {
     variant: {
       default: [panelStyles()],
-      ghost: '',
+      none: '',
     },
   },
   defaultVariants: {

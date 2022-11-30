@@ -36,22 +36,12 @@ export function Indicators() {
         <div className="flex flex-col gap-6">
           <div className="flex flex-wrap gap-2">
             <Badge variant="accent">Accent</Badge>
-            <Badge variant="simple">Simple</Badge>
-            <Badge variant="inactive">Inactive</Badge>
-            <Badge variant="active">Active</Badge>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <Badge rounded={false} variant="accent">
-              Accent
-            </Badge>
-            <Badge rounded={false} variant="simple">
-              Simple
-            </Badge>
-            <Badge rounded={false} variant="inactive">
-              Inactive
-            </Badge>
-            <Badge rounded={false} variant="active">
-              Active
+            <Badge variant="green">Green</Badge>
+            <Badge variant="red">Red</Badge>
+            <Badge variant="gray">Gray</Badge>
+            <Badge variant="inactive">default</Badge>
+            <Badge variant="accent" rounded={false}>
+              No rounding
             </Badge>
           </div>
         </div>

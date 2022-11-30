@@ -108,13 +108,12 @@ export function Layout({ title, description, path, children }: Props) {
                     </div>
                   </div>
                   <div className="flex gap-12">
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-3">
                       <Text
-                        font="mono"
-                        weight="bold"
-                        size="16"
+                        size="14"
                         className="mb-3"
                         color="subtle"
+                        weight="medium"
                       >
                         Ecosystem
                       </Text>
@@ -153,10 +152,14 @@ type LinkProps = {
 
 function BottomLink({ children, href, target }: LinkProps) {
   return (
-    <Text weight="semibold" size="14">
-      <Link underline="hover" href={href} target={target}>
-        {children}
-      </Link>
-    </Text>
+    <Link
+      underline="hover"
+      href={href}
+      target={target}
+      weight="medium"
+      size="14"
+    >
+      {children}
+    </Link>
   )
 }

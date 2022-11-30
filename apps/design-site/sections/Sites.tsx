@@ -5,18 +5,18 @@ import {
   SiteHeading,
   Callout,
   ContentProject,
-  WavesBackdrop,
 } from '@siafoundation/design-system'
 import { times } from 'lodash'
-import { SectionHeading as DSSectionHeading } from '../components/SectionHeading'
+import { SectionHeading } from '../components/SectionHeading'
 import { SubsectionHeading } from '../components/SubsectionHeading'
 
 export function Sites() {
   return (
     <>
-      <Section className="pt-20">
-        <DSSectionHeading>SiteHeading</DSSectionHeading>
-        <div className="flex flex-col gap-16">
+      <Section>
+        <SectionHeading>Headings</SectionHeading>
+        <SubsectionHeading>SiteHeading</SubsectionHeading>
+        <div className="flex flex-col gap-6">
           <SiteHeading
             size="20"
             title="Size 20"
@@ -93,8 +93,9 @@ export function Sites() {
           />
         </div>
       </Section>
-      <Section className="pt-20">
-        <DSSectionHeading>ContentItem</DSSectionHeading>
+      <Section>
+        <SectionHeading>Content</SectionHeading>
+        <SubsectionHeading>ContentItem</SubsectionHeading>
         <div className="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           <ContentItem
             title="Content Item"
@@ -131,9 +132,7 @@ export function Sites() {
             newTab
           />
         </div>
-      </Section>
-      <Section className="pt-20">
-        <DSSectionHeading>ContentProject</DSSectionHeading>
+        <SubsectionHeading>ContentProject</SubsectionHeading>
         <div className="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           <ContentProject
             title="Filebase"
@@ -147,10 +146,8 @@ export function Sites() {
           />
         </div>
       </Section>
-      <Section className="pt-24">
-        <DSSectionHeading>ContentGallery</DSSectionHeading>
-      </Section>
-      <Section className="pt-20">
+      <Section>
+        <SectionHeading>ContentGallery</SectionHeading>
         <SubsectionHeading>default</SubsectionHeading>
         <ContentGallery
           items={times(6, (i) => ({
@@ -163,8 +160,6 @@ export function Sites() {
             newTab: true,
           }))}
         />
-      </Section>
-      <Section className="pt-20">
         <SubsectionHeading>columns 1</SubsectionHeading>
         <ContentGallery
           columnClassName="grid-cols-1"
@@ -175,8 +170,6 @@ export function Sites() {
             newTab: true,
           }))}
         />
-      </Section>
-      <Section className="pt-20">
         <SubsectionHeading>variant filterable / columns 3</SubsectionHeading>
         <ContentGallery
           filterable="filterable"
@@ -193,16 +186,8 @@ export function Sites() {
           }))}
         />
       </Section>
-      <Section className="pt-24">
-        <DSSectionHeading>WavesBackdrop</DSSectionHeading>
-      </Section>
-      <Section className="relative">
-        <WavesBackdrop />
-      </Section>
-      <Section className="pt-24">
-        <DSSectionHeading>Callout</DSSectionHeading>
-      </Section>
-      <Section className="pt-20">
+      <Section>
+        <SectionHeading>Callout</SectionHeading>
         <SubsectionHeading>size 1</SubsectionHeading>
         <div className="grid gap-10 grid-cols-1 md:grid-cols-2">
           <Callout
@@ -226,8 +211,6 @@ export function Sites() {
             actionNewTab
           />
         </div>
-      </Section>
-      <Section className="pt-20">
         <SubsectionHeading>size 2</SubsectionHeading>
         <Callout
           title="Title"

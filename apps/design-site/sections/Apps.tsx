@@ -3,23 +3,19 @@ import {
   ThemeRadio,
   UserDropdownMenu,
 } from '@siafoundation/design-system'
-import { SectionHeading as DSSectionHeading } from '../components/SectionHeading'
+import { SectionHeading } from '../components/SectionHeading'
+import { SubsectionHeading } from '../components/SubsectionHeading'
 
 export function Apps() {
   return (
-    <>
-      <Section className="pt-20">
-        <DSSectionHeading>ThemeRadio</DSSectionHeading>
-        <div className="flex flex-col gap-6">
-          <ThemeRadio />
-        </div>
-      </Section>
-      <Section className="pt-20">
-        <DSSectionHeading>UserDropdownMenu</DSSectionHeading>
-        <div className="flex flex-col gap-6">
-          <UserDropdownMenu />
-        </div>
-      </Section>
-    </>
+    <Section>
+      <SectionHeading>Controls</SectionHeading>
+      <SubsectionHeading>ThemeRadio</SubsectionHeading>
+      <ThemeRadio />
+      <SubsectionHeading>UserDropdownMenu</SubsectionHeading>
+      <div>
+        <UserDropdownMenu />
+      </div>
+    </Section>
   )
 }
