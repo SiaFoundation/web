@@ -1,6 +1,6 @@
 import { addNewTab } from '../lib/utils'
 import { getMinutesInSeconds } from '../lib/time'
-import { readCacheJsonFile } from '../lib/cache'
+import { readContentDirCachedJsonFile } from '../lib/cache'
 
 type Tutorial = {
   title: string
@@ -11,7 +11,7 @@ type Tutorial = {
 const maxAge = getMinutesInSeconds(5)
 
 export async function getCacheTutorials(limit?: number) {
-  const tutorials = await readCacheJsonFile<Tutorial[]>(
+  const tutorials = await readContentDirCachedJsonFile<Tutorial[]>(
     'tutorials.json',
     [],
     maxAge

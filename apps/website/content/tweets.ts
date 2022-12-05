@@ -1,4 +1,4 @@
-import { readCacheJsonFile } from '../lib/cache'
+import { readContentDirCachedJsonFile } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
 
 type Tweet = {
@@ -8,5 +8,5 @@ type Tweet = {
 const maxAge = getMinutesInSeconds(5)
 
 export async function getCacheTweets() {
-  return readCacheJsonFile<Tweet[]>('tweets.json', [], maxAge)
+  return readContentDirCachedJsonFile<Tweet[]>('tweets.json', [], maxAge)
 }

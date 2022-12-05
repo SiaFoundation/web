@@ -322,7 +322,7 @@ export default function Home({
 
 export async function getServerSideProps({ req }) {
   const seenLetter: boolean = req.cookies['seen-letter'] || false
-  const featured = await getCacheArticles(['sia-featured'], 5)
+  const featured = await getCacheArticles(['sia-all'], 5)
   const tutorials = await getCacheTutorials()
   const services = await getCacheSoftware('storage_services', 5)
 
