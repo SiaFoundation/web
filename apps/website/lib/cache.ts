@@ -1,4 +1,4 @@
-import { readJsonFile } from '@siafoundation/env'
+import { readContentDirJsonFile } from '@siafoundation/env'
 import { formatDistance } from 'date-fns'
 
 type Seconds = number
@@ -55,14 +55,14 @@ export async function getCacheValue<T>(
   return currentItem.value
 }
 
-export async function readCacheJsonFile<T>(
+export async function readContentDirCachedJsonFile<T>(
   filePath: string,
   defaultValue: T,
   maxAge: number
 ): Promise<T> {
   return getCacheValue(
     filePath,
-    async () => readJsonFile(filePath, defaultValue),
+    async () => readContentDirJsonFile(filePath, defaultValue),
     maxAge
   )
 }

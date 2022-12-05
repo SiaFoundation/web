@@ -9,7 +9,10 @@ export function getContentDirectory() {
   return process.env.CONTENT || './'
 }
 
-export function readJsonFile<T>(filePath: string, defaultValue: T): T {
+export function readContentDirJsonFile<T>(
+  filePath: string,
+  defaultValue: T
+): T {
   try {
     const data = fs.readFileSync(getContentPath(filePath), 'utf-8')
     const json = JSON.parse(data)

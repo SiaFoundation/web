@@ -1,7 +1,7 @@
 import { ContentItemProps } from '@siafoundation/design-system'
 import { addNewTab } from '../lib/utils'
 import { getMinutesInSeconds } from '../lib/time'
-import { readCacheJsonFile } from '../lib/cache'
+import { readContentDirCachedJsonFile } from '../lib/cache'
 
 type Software = ContentItemProps & {
   logo: string
@@ -13,7 +13,7 @@ export async function getCacheSoftware(
   tag: string | null,
   limit?: number
 ): Promise<Software[]> {
-  const software = await readCacheJsonFile<Software[]>(
+  const software = await readContentDirCachedJsonFile<Software[]>(
     'software.json',
     [],
     maxAge

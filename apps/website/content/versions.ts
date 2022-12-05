@@ -1,4 +1,4 @@
-import { readCacheJsonFile } from '../lib/cache'
+import { readContentDirCachedJsonFile } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
 
 export type Versions = {
@@ -13,7 +13,7 @@ export type Versions = {
 const maxAge = getMinutesInSeconds(5)
 
 export async function getCacheVersions(): Promise<Versions> {
-  return readCacheJsonFile(
+  return readContentDirCachedJsonFile(
     'versions.json',
     {
       sia: {
