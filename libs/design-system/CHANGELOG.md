@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.39.0
+
+### Minor Changes
+
+- 35e3da8: Streamline popper and modal component APIs.
+- 35e3da8: Design system and general styling migrated to tailwind.
+
 ## [0.38.1](https://github.com/SiaFoundation/web/compare/design-system-0.38.0...design-system-0.38.1) (2022-10-25)
 
 ### Bug Fixes

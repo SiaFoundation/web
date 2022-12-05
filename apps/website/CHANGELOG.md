@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.30.0
+
+### Minor Changes
+
+- 921adeb: Updated grants copy from announcing the new program to something evergreen.
+- 56f9a3f: Sia website now more optimized for mobile devices.
+- d347443: Software sections across the website now reflect and advertise next-gen software, restructured for more items.
+- 921adeb: Added a www to apex redirect for website.
+- 35e3da8: Design system and general styling migrated to tailwind.
+- 921adeb: Added a redirect from /discord to discord.gg/sia.
+- 22b3df3: Updates from the Sia blog and other ecosystem sources will now automatically show on the website.
+
 ## 0.29.2
 
 ### Patch Changes
