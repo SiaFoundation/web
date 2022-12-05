@@ -54,7 +54,7 @@ export async function syncRssFeeds() {
       const feedFile = path.join(feedFilesDirectory, feed.name)
       const fileData = await downloadXmlFile(feed.link)
       // try to parse to check if it's valid rss xml
-      const parsedData = await parseFeedFile(feedFile)
+      const parsedData = await parseFeed(feedFile, fileData)
       if (fileData && parsedData) {
         fs.writeFileSync(feedFile, fileData)
       }
