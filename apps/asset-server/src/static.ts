@@ -2,7 +2,7 @@ import { readdirSync } from 'fs'
 import * as express from 'express'
 import * as vhost from 'vhost'
 import { counterMiddleware } from '@siafoundation/data-sources'
-import { getContentPath, readJsonFile } from '@siafoundation/env'
+import { getContentPath, readContentDirJsonFile } from '@siafoundation/env'
 import { getHostnames } from './env'
 
 export function setupStatic(server) {
@@ -72,7 +72,7 @@ type Versions = {
 }
 
 function getVersions(): Versions {
-  return readJsonFile('versions.json', {
+  return readContentDirJsonFile('versions.json', {
     sia: {
       latest: '1.5.9',
       rc: '1.5.9',
