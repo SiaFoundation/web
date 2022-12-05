@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-pascal-case */
-import { Flex } from './Flex'
 import { Text } from './Text'
 import {
   DotMark16,
@@ -11,29 +10,41 @@ import {
   Number_632,
   Number_732,
 } from '../icons/carbon'
-import React, { useMemo } from 'react'
-import { CSS } from '../config/theme'
+import React from 'react'
 import { Paragraph } from './Paragraph'
-import { Box } from './Box'
+import { cx } from 'class-variance-authority'
 
 type Props = {
   children: React.ReactNode
-  gap?: React.ComponentProps<typeof Flex>['gap']
-  css?: CSS
+  className?: string
+  gapClassName?: string
 }
 
-export function Ol({ children, gap = '2', css }: Props) {
+export function Ol({ children, className, gapClassName }: Props) {
   return (
-    <Flex as="ol" direction="column" gap={gap} css={{ padding: 0, ...css }}>
+    <ol
+      className={cx(
+        'flex flex-col p-0',
+        gapClassName || 'gap-2 md:gap-4',
+        className
+      )}
+    >
       {children}
-    </Flex>
+    </ol>
   )
 }
-export function Ul({ children, gap = '2', css }: Props) {
+
+export function Ul({ children, className, gapClassName }: Props) {
   return (
-    <Flex as="ul" direction="column" gap={gap} css={{ padding: 0, ...css }}>
+    <ul
+      className={cx(
+        'flex flex-col p-0',
+        gapClassName || 'gap-2 md:gap-4',
+        className
+      )}
+    >
       {children}
-    </Flex>
+    </ul>
   )
 }
 
@@ -50,7 +61,7 @@ const numMap: Record<number, React.ReactNode> = {
 type LiProps = {
   children: React.ReactNode
   subList?: React.ReactNode
-  css?: CSS
+  className?: string
   index?: number
   size?: React.ComponentProps<typeof Paragraph>['size']
 }
@@ -60,61 +71,34 @@ export function Li({
   index = 0,
   size = '18',
   subList,
-  css,
+  className,
 }: LiProps) {
   const numEl = numMap[index]
 
-  const posCss: CSS = useMemo(
-    () =>
-      numEl
-        ? ({
-            // Mobile paragraph scaling
-            top: Number(size) < 18 ? '-5px' : '-3px',
-            // Full paragraph scaling
-            '@bp2': {
-              top: Number(size) < 18 ? '-3px' : '0px',
-            },
-          } as CSS)
-        : ({
-            // Mobile paragraph scaling
-            top: Number(size) < 18 ? '-4px' : '-2px',
-            // Full paragraph scaling
-            '@bp2': {
-              top: Number(size) < 18 ? '-2px' : '0px',
-            },
-          } as CSS),
-    [numEl, size]
-  )
-
   return (
-    <Flex as="li" align="start" gap="1" css={{ ...css }}>
-      <Flex
-        css={{
-          position: 'relative',
-          ...posCss,
-          width: '24px',
-          height: '32px',
-        }}
+    <li className={cx('flex items-start gap-2', className)}>
+      <div
+        className={cx(
+          'flex relative w-6 h-8',
+          numEl
+            ? Number(size) < 18
+              ? 'top-[-5px] md:top[-3px]'
+              : 'top[-3px] md:top-0'
+            : Number(size) < 18
+            ? 'top-[-4px] md:top-[-2px]'
+            : 'top-[-2px] md:top-0'
+        )}
       >
-        <Flex
-          css={{
-            display: 'flex',
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-          }}
-          align="center"
-          justify="center"
-        >
+        <div className="flex absolute w-full h-full items-center justify-center">
           <Text color="contrast">{numEl || <DotMark16 />}</Text>
-        </Flex>
-      </Flex>
-      <Box css={{ flex: 1 }}>
+        </div>
+      </div>
+      <div className="flex-1">
         <Paragraph color="contrast" size={size}>
           {children}
         </Paragraph>
         {subList}
-      </Box>
-    </Flex>
+      </div>
+    </li>
   )
 }

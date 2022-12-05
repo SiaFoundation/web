@@ -1,9 +1,4 @@
-import {
-  AnimatedPanel,
-  Container,
-  Flex,
-  Text,
-} from '@siafoundation/design-system'
+import { AnimatedPanel, Container, Text } from '@siafoundation/design-system'
 
 type Props = {
   message: string
@@ -13,28 +8,25 @@ export function Entity404({ message }: Props) {
   return (
     <>
       <Container>
-        <Flex direction="column" gap="6">
+        <div className="flex flex-col gap-12">
           <AnimatedPanel
-            variant="subtle"
+            variant="verySubtle"
             startTime={0}
-            css={{
-              padding: '$3',
-              borderRadius: '$2',
-            }}
+            className="p-6 rounded"
           >
-            <Flex direction="column" align="center" gap="5">
+            <div className="flex flex-col gap-10 items-center">
               <Text size="64" font="mono" weight="semibold">
                 404
               </Text>
-              <Text size="24" font="mono" css={{ textAlign: 'center' }}>
+              <Text size="24" font="mono" className="text-center">
                 beep boop
               </Text>
-              <Text size="24" font="mono" css={{ textAlign: 'center' }}>
+              <Text size="24" font="mono" className="text-center">
                 {message}
               </Text>
-            </Flex>
+            </div>
           </AnimatedPanel>
-        </Flex>
+        </div>
       </Container>
     </>
   )

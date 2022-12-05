@@ -1,8 +1,6 @@
 import {
   EntityList,
   EntityListItemProps,
-  Flex,
-  AppAuthedLayout,
   WalletSparkline,
   WalletLayoutActions,
   getTransactionTypes,
@@ -13,6 +11,7 @@ import { useDialog } from '../../contexts/dialog'
 import { routes } from '../../config/routes'
 import BigNumber from 'bignumber.js'
 import { RenterSidenav } from '../../components/RenterSidenav'
+import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
 
 export default function WalletView() {
   const transactions = useWalletTransactions()
@@ -37,7 +36,7 @@ export default function WalletView() {
   )
 
   return (
-    <AppAuthedLayout
+    <RenterdAuthedLayout
       routes={routes}
       sidenav={<RenterSidenav />}
       openSettings={() => openDialog('settings')}
@@ -50,9 +49,9 @@ export default function WalletView() {
       }
     >
       <WalletSparkline />
-      <Flex direction="column" gap="1">
+      <div className="flex flex-col gap-2">
         <EntityList title="Transactions" entities={entities} />
-      </Flex>
-    </AppAuthedLayout>
+      </div>
+    </RenterdAuthedLayout>
   )
 }

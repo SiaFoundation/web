@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js'
 
 type Props = {
   size?: React.ComponentProps<typeof Text>['size']
+  scaleSize?: React.ComponentProps<typeof Text>['scaleSize']
   value: BigNumber
   variant?: 'change' | 'value'
   tooltip?: string
@@ -15,7 +16,8 @@ type Props = {
 
 export function ValueSc({
   value,
-  size = '14',
+  size,
+  scaleSize,
   tooltip = '',
   variant = 'change',
   fixed = 3,
@@ -26,21 +28,20 @@ export function ValueSc({
   const color =
     variant === 'change'
       ? value.isGreaterThan(0)
-        ? '$green11'
+        ? 'green'
         : value.isLessThan(0)
-        ? '$red11'
-        : '$gray7'
-      : '$textContrast'
+        ? 'red'
+        : 'subtle'
+      : 'contrast'
 
   const el = (
     <Text
       size={size}
-      weight="semibold"
+      scaleSize={scaleSize}
+      weight="medium"
       font="mono"
       ellipsis
-      css={{
-        color,
-      }}
+      color={color}
     >
       {variant === 'change'
         ? `${sign}${humanSiacoin(value.absoluteValue(), {

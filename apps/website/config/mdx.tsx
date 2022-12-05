@@ -1,7 +1,7 @@
 import {
   Heading,
   Li,
-  NextLink,
+  Link,
   Ol,
   Paragraph,
   Ul,
@@ -10,24 +10,22 @@ import {
 // Components used in mardown rendering
 export const components = {
   h1: ({ children }) => (
-    <Heading size="64" css={{ display: 'block', margin: '$4 0' }}>
+    <Heading size="64" className="block pb-5 pt-10">
       {children}
     </Heading>
   ),
   h2: ({ children }) => (
-    <Heading size="32" css={{ display: 'block', margin: '$4 0' }}>
+    <Heading size="32" className="block pb-5 pt-10">
       {children}
     </Heading>
   ),
   h3: ({ children }) => (
-    <Heading size="24" css={{ display: 'block', margin: '$4 0' }}>
+    <Heading size="24" className="block pb-5 pt-10">
       {children}
     </Heading>
   ),
-  p: ({ children }) => (
-    <Paragraph css={{ display: 'block', margin: '$2 0' }}>{children}</Paragraph>
-  ),
-  a: (props) => <NextLink {...props} target="_blank" />,
+  p: ({ children }) => <Paragraph className="block py-4">{children}</Paragraph>,
+  a: (props) => <Link {...props} target="_blank" />,
   ol: Ol,
   ul: Ul,
   li: Li,

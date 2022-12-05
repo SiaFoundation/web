@@ -1,6 +1,5 @@
 import {
   Button,
-  AppAuthedLayout,
   CloudUpload16,
   FolderAdd16,
 } from '@siafoundation/design-system'
@@ -9,12 +8,13 @@ import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { FileExplorer } from '../../components/FileExplorer'
 import { FileNav } from '../../components/FileNav'
+import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
 
 export default function FilesPage() {
   const { openDialog } = useDialog()
 
   return (
-    <AppAuthedLayout
+    <RenterdAuthedLayout
       routes={routes}
       sidenav={<RenterSidenav />}
       filters={
@@ -37,6 +37,6 @@ export default function FilesPage() {
       openSettings={() => openDialog('settings')}
     >
       <FileExplorer />
-    </AppAuthedLayout>
+    </RenterdAuthedLayout>
   )
 }

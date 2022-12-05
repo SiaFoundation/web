@@ -9,7 +9,7 @@ import { routes } from '../../config/routes'
 import { getCacheStats } from '../../content/stats'
 import backgroundImage from '../../assets/backgrounds/steps.png'
 import previewImage from '../../assets/previews/steps.png'
-import { generateRssNewsFeed } from '../../content/rss'
+import { generateRssNewsFeed } from '../../content/rssGenerateFeed'
 import useSWR from 'swr'
 import { useRouter } from 'next/router'
 import { getCacheFeed } from '../../content/feed'
@@ -37,14 +37,14 @@ function Newsroom() {
       description={description}
       path={routes.newsroom.index}
       heading={
-        <SectionSimple css={{ py: '$max' }}>
+        <SectionSimple className="pt-24 md:pt-40 pb-6 md:pb-20">
           <SiteHeading
             size="64"
             title={title}
             description={description}
             links={[
               {
-                title: 'press releases RSS',
+                title: 'Press releases RSS',
                 link: routes.newsroom.feed.rss,
                 newTab: true,
               },
@@ -55,12 +55,12 @@ function Newsroom() {
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <SectionSimple css={{ pt: '$12', pb: '$max' }}>
+      <SectionSimple className="pt-8 md:pt-12 xl:pt-20 pb-24 md:pb-40">
         <ContentGallery
           filterMode="external"
           filters={['press', 'ecosystem']}
           filterable="news"
-          columns="1"
+          columnClassName="grid-cols-1"
           items={posts.data || []}
         />
       </SectionSimple>

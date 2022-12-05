@@ -1,52 +1,39 @@
+import '../config/style.css'
 import {
-  Box,
   getImageProps,
-  SiteLayout,
-  ThemeProvider,
+  NextAppSsr,
+  PageHead,
+  ScrollArea,
+  webLinks,
 } from '@siafoundation/design-system'
-import { AppProps } from 'next/app'
-import Head from 'next/head'
-import background from '../assets/jungle.png'
+import preview from '../assets/jungle-preview.png'
 import { Heading } from '../components/Heading'
 
-const backgroundImage = getImageProps(background)
+const previewImage = getImageProps(preview)
 
-function App({ Component, pageProps }: AppProps) {
-  return (
-    <ThemeProvider ssr>
-      <Head>
-        <title>Sia - Design system</title>
-      </Head>
-      <SiteLayout
-        menuSections={[
-          {
-            title: 'Sections',
-            links: [
-              {
-                link: '/',
-                title: 'Core',
-              },
-              {
-                link: '/sites',
-                title: 'Sites',
-              },
-              {
-                link: '/apps',
-                title: 'Apps',
-              },
-            ],
-          },
-        ]}
-        navbar={<Box />}
-        heading={<Heading />}
-        backgroundImage={backgroundImage}
-      >
-        <Box css={{ backgroundColor: '$loContrast', pb: '$max' }}>
-          <Component {...pageProps} />
-        </Box>
-      </SiteLayout>
-    </ThemeProvider>
-  )
+type Props = React.ComponentProps<typeof NextAppSsr>
+
+export default function App(props: Props) {
+  return <NextAppSsr {...props} Layout={Layout} />
 }
 
-export default App
+function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="bg-white dark:bg-graydark-50 h-full">
+      <PageHead
+        appLink={webLinks.design}
+        appName="Sia"
+        title="Design System"
+        description="A playground for the Sia design system."
+        image={previewImage.src}
+        path="/"
+      />
+      <ScrollArea>
+        <div className="pt-24 pb-40">
+          <Heading />
+          {children}
+        </div>
+      </ScrollArea>
+    </div>
+  )
+}

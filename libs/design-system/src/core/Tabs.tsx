@@ -1,50 +1,71 @@
-import { styled } from '../config/theme'
+import { cx, VariantProps } from 'class-variance-authority'
+import React from 'react'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
+import { textStyles } from './Text'
 
-const StyledTabs = styled(TabsPrimitive.Root, {
-  display: 'flex',
-  flexDirection: 'column',
+export const Tabs = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Root>,
+  TabsPrimitive.TabsProps
+>(({ className, ...props }, ref) => {
+  return (
+    <TabsPrimitive.Root
+      ref={ref}
+      className={cx('flex flex-col', className)}
+      {...props}
+    />
+  )
 })
 
-const StyledList = styled(TabsPrimitive.List, {
-  flexShrink: 0,
-  display: 'flex',
-  borderBottom: `1px solid $gray6`,
+export const TabsList = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.List>,
+  TabsPrimitive.TabsListProps
+>(({ className, ...props }, ref) => {
+  return (
+    <TabsPrimitive.List
+      ref={ref}
+      className={cx(
+        'flex flex-shrink-0 border-b border-gray-500 dark:border-graydark-500',
+        className
+      )}
+      {...props}
+    />
+  )
 })
 
-const StyledTrigger = styled(TabsPrimitive.Trigger, {
-  all: 'unset',
-  fontFamily: '$sans',
-  padding: '0 $5',
-  height: '$7',
-  flex: 1,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  fontSize: '$16',
-  fontWeight: '500',
-  lineHeight: 1,
-  color: '$textSubtle',
-  userSelect: 'none',
-  cursor: 'pointer',
-  '&:first-child': { borderTopLeftRadius: 6 },
-  '&:last-child': { borderTopRightRadius: 6 },
-  '&:hover': { color: '$textSubtleHover' },
-  '&[data-state="active"]': {
-    color: '$accent10',
-    boxShadow: 'inset 0 -1px 0 0 $colors$accent9, 0 1px 0 0 $colors$accent9',
-  },
+export const TabsTrigger = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Trigger>,
+  VariantProps<typeof textStyles> & TabsPrimitive.TabsTriggerProps
+>(({ font, size = '16', weight = 'medium', className, ...props }, ref) => {
+  return (
+    <TabsPrimitive.Trigger
+      ref={ref}
+      className={cx(
+        'px-10 h-12',
+        'flex-1 flex items-center justify-center',
+        'select-none cursor-pointer',
+        'border-b-3',
+        'text-gray-1000 dark:text-graydark-1000',
+        'hover:text-gray-1100 hover:dark:text-white',
+        'border-transparent',
+        'data-[state=active]:text-accent-1100 data-[state=active]:dark:text-accentdark-1100',
+        'data-[state=active]:border-green-600 data-[state=active]:dark:border-green-500',
+        textStyles({ font, size, weight }),
+        className
+      )}
+      {...props}
+    />
+  )
 })
 
-const StyledContent = styled(TabsPrimitive.Content, {
-  flexGrow: 1,
-  paddingTop: '$3',
-  borderBottomLeftRadius: 6,
-  borderBottomRightRadius: 6,
-  outline: 'none',
+export const TabsContent = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Content>,
+  VariantProps<typeof textStyles> & TabsPrimitive.TabsContentProps
+>(({ className, ...props }, ref) => {
+  return (
+    <TabsPrimitive.Content
+      ref={ref}
+      className={cx('flex-grow-1 pt-6 outline-none', className)}
+      {...props}
+    />
+  )
 })
-
-export const Tabs = StyledTabs
-export const TabsList = StyledList
-export const TabsTrigger = StyledTrigger
-export const TabsContent = StyledContent

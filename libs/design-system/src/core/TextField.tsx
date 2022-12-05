@@ -1,211 +1,80 @@
-import { styled } from '../config/theme'
+import { cva } from 'class-variance-authority'
+import React from 'react'
+import { VariantProps } from '../types'
 
-export const TextField = styled('input', {
-  appearance: 'none',
-  borderWidth: '0',
-  boxSizing: 'border-box',
-  fontFamily: '$sans',
-  '&[type=number]': {
-    fontFamily: '$mono',
-  },
-  margin: '0',
-  outline: 'none',
-  padding: '0',
-  width: '100%',
-  WebkitTapHighlightColor: 'rgba(0,0,0,0)',
-  '&::before': {
-    boxSizing: 'border-box',
-  },
-  '&::after': {
-    boxSizing: 'border-box',
-  },
-
-  // Custom
-  backgroundColor: '$loContrast',
-  boxShadow: '$colors$border, $colors$shadow',
-  color: '$hiContrast',
-  fontVariantNumeric: 'tabular-nums',
-  lineHeight: '1',
-
-  '@hover': {
-    '&:hover': {
-      boxShadow: '$colors$borderInputHover, $colors$shadow',
-    },
-  },
-
-  '&:focus': {
-    boxShadow:
-      '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive',
-  },
-  '&::placeholder': {
-    color: '$gray9',
-  },
-  '&:disabled': {
-    pointerEvents: 'none',
-    backgroundColor: '$gray2',
-    color: '$gray8',
-    cursor: 'not-allowed',
-    '&::placeholder': {
-      color: '$gray7',
-    },
-  },
-  '&:read-only': {
-    backgroundColor: '$gray2',
-    boxShadow: '$colors$borderInput, $colors$shadow',
-    '&:focus': {
-      boxShadow: '$colors$borderInputActive, $colors$shadowActive',
-    },
-  },
-
-  '&:-webkit-autofill': {
-    boxShadow:
-      '$colors$border, $colors$shadow, 0 0 0px 1000px $colors$loContrast inset',
-    transition: 'background-color 5000s ease-in-out 0s',
-  },
-  '&:-webkit-autofill:hover': {
-    boxShadow:
-      '$colors$borderInputHover, $colors$shadow, 0 0 0px 1000px $colors$loContrast inset',
-    transition: 'background-color 5000s ease-in-out 0s',
-  },
-  '&:-webkit-autofill:focus': {
-    boxShadow:
-      '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive, 0 0 0px 1000px $colors$loContrast inset',
-    transition: 'background-color 5000s ease-in-out 0s',
-  },
-
-  '&:-webkit-autofill::first-line': {
-    color: '$hiContrast',
-  },
-
-  variants: {
-    size: {
-      '1': {
-        borderRadius: '$1',
-        height: '$3-5',
-        fontSize: '$12',
-        padding: '0 $1',
-        '&:-webkit-autofill::first-line': {
-          fontSize: '$12',
-        },
-        '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-          position: 'relative',
-          right: '-7px',
-        },
+export const textFieldStyles = cva(
+  [
+    'font-sans [type=number]:font-mono',
+    'outline-none m-0 p-0 w-full',
+    'disabled:pointer-events-none',
+    'tabular-nums',
+    'rounded',
+    'text-gray-1100 dark:text-white',
+    'placeholder:text-gray-700 placeholder:dark:text-graydark-700',
+    'disabled:text-gray-400 disabled:dark:text-graydark-400',
+  ],
+  {
+    variants: {
+      size: {
+        small: 'h-7 text-sm px-2',
+        medium: 'h-10 text-base px-3',
+        large: 'h-12 text-lg px-3',
       },
-      '2': {
-        borderRadius: '$1',
-        height: '$5',
-        fontSize: '$16',
-        padding: '0 $1-5',
-        '&:-webkit-autofill::first-line': {
-          fontSize: '$16',
-        },
-        '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-          position: 'relative',
-          right: '-13px',
-        },
+      variant: {
+        default: [
+          'border',
+          'bg-white dark:bg-graydark-50',
+          'autofill:bg-blue-100 autofill:dark:bg-blue-800',
+        ],
+        ghost: 'bg-transparent',
       },
-      '3': {
-        borderRadius: '$1',
-        height: '$6',
-        fontSize: '$24',
-        padding: '0 $1-5',
-        '&:-webkit-autofill::first-line': {
-          fontSize: '$24',
-        },
-        '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-          position: 'relative',
-          right: '-13px',
-        },
+      state: {
+        default: [
+          'border-gray-400 dark:border-graydark-400',
+          'enabled:hover:border-gray-500 enabled:hover:dark:border-graydark-500',
+        ],
+        invalid: ['border-red-500 dark:border-red-400'],
+        valid: ['border-green-500 dark:border-green-400'],
+      },
+      focus: {
+        default: ['focus:ring ring-blue-500 dark:ring-blue-200', 'focus:z-10'],
+        none: '',
+      },
+      cursor: {
+        default: '',
+        text: 'cursor-text',
+      },
+      noSpin: {
+        true: '[&::-webkit-outer-spin-button, &::-webkit-inner-spin-button]:appearance-none',
       },
     },
-    noSpin: {
-      true: {
-        '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-          '-webkit-appearance': 'none',
-        },
+    defaultVariants: {
+      size: 'small',
+      focus: 'default',
+      variant: 'default',
+      cursor: 'default',
+      state: 'default',
+    },
+  }
+)
 
-        '&[type=number]': {
-          '-moz-appearance': 'textfield',
-        },
-      },
-    },
-    variant: {
-      totalGhost: {
-        boxShadow: 'none',
-        backgroundColor: 'transparent',
-        '@hover': {
-          '&:hover': {
-            boxShadow: 'none',
-          },
-        },
-        '&:focus': {
-          backgroundColor: 'none',
-          boxShadow: 'none',
-        },
-        '&:disabled': {
-          backgroundColor: 'transparent',
-          boxShadow: 'none',
-        },
-        '&:read-only': {
-          backgroundColor: 'transparent',
-          boxShadow: 'none',
-        },
-        '&:read-only:focus': {
-          backgroundColor: 'transparent',
-          boxShadow: 'none',
-        },
-      },
-      ghost: {
-        boxShadow: 'none',
-        backgroundColor: 'transparent',
-        '&:disabled': {
-          backgroundColor: 'transparent',
-        },
-        '&:read-only': {
-          backgroundColor: 'transparent',
-        },
-      },
-    },
-    state: {
-      invalid: {
-        boxShadow: '$colors$borderRed, $colors$shadow',
-        '@hover': {
-          '&:hover': {
-            boxShadow: '$colors$borderRedHover, $colors$shadow',
-          },
-        },
-        '&:focus': {
-          boxShadow:
-            '$colors$borderFocus, $colors$borderRedActive, $colors$shadowActive',
-        },
-      },
-      valid: {
-        boxShadow: '$colors$borderGreen, $colors$shadow',
-        '@hover': {
-          '&:hover': {
-            boxShadow: '$colors$borderGreenHover, $colors$shadow',
-          },
-        },
-        '&:focus': {
-          boxShadow:
-            '$colors$borderFocus, $colors$borderGreenActive, $colors$shadowActive',
-        },
-      },
-    },
-    cursor: {
-      default: {
-        cursor: 'default',
-        '&:focus': {
-          cursor: 'text',
-        },
-      },
-      text: {
-        cursor: 'text',
-      },
-    },
-  },
-  defaultVariants: {
-    size: '1',
-  },
+export const TextField = React.forwardRef<
+  HTMLInputElement,
+  VariantProps<typeof textFieldStyles> &
+    Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'className'>
+>(({ variant, size, state, noSpin, cursor, className, ...props }, ref) => {
+  return (
+    <input
+      ref={ref}
+      className={textFieldStyles({
+        variant,
+        size,
+        state,
+        noSpin,
+        cursor,
+        className,
+      })}
+      {...props}
+    />
+  )
 })

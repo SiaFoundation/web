@@ -1,11 +1,27 @@
-import { NextApp } from '@siafoundation/design-system'
+import '../config/style.css'
+import { ClientSide, ThemeProvider } from '@siafoundation/design-system'
 import { AppProps } from 'next/app'
+import { SWRConfig } from 'swr'
+import { SettingsProvider } from '@siafoundation/react-core'
 import { Providers } from '../config/providers'
 
-export default function App(props: AppProps) {
+export default function App({
+  Component,
+  pageProps,
+}: AppProps<{
+  fallback?: Record<string, unknown>
+}>) {
   return (
-    <Providers>
-      <NextApp {...props} />
-    </Providers>
+    <ClientSide>
+      <SWRConfig value={{ fallback: pageProps?.fallback || {} }}>
+        <ThemeProvider>
+          <SettingsProvider api="api/store">
+            <Providers>
+              <Component {...pageProps} />
+            </Providers>
+          </SettingsProvider>
+        </ThemeProvider>
+      </SWRConfig>
+    </ClientSide>
   )
 }

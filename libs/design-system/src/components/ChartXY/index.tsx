@@ -1,5 +1,4 @@
 import ParentSize from '@visx/responsive/lib/components/ParentSize'
-import { Box } from '../../core/Box'
 import { Panel } from '../../core/Panel'
 import { ChartXYGraph } from './ChartXYGraph'
 import {
@@ -11,7 +10,6 @@ import {
   CurveType,
   StackOffset,
 } from './useChartXY'
-import { Flex } from '../../core/Flex'
 import { ChartXYConfig } from './ChartXYConfig'
 
 export type { ChartPoint, ChartData, ChartConfig }
@@ -45,13 +43,11 @@ export function ChartXY({
 
   const body = (
     <>
-      <Flex gap="1" css={{ position: 'absolute', top: '$1-5', right: '$2' }}>
+      <div className="flex gap-2 absolute top-3 right-4">
         {actionsRight}
         {variant === 'panel' && <ChartXYConfig {...props} />}
-      </Flex>
-      <Flex gap="1" css={{ position: 'absolute', top: '$1-5', left: '$2' }}>
-        {actionsLeft}
-      </Flex>
+      </div>
+      <div className="flex gap-2 absolute top-3 left-4">{actionsLeft}</div>
       <ParentSize>
         {({ width, height }) => (
           <ChartXYGraph {...props} width={width} height={height} />
@@ -62,13 +58,15 @@ export function ChartXY({
 
   if (variant === 'panel') {
     return (
-      <Panel css={{ position: 'relative', height, padding: '1px' }}>
+      <Panel className="relative p-px" style={{ height }}>
         {body}
       </Panel>
     )
   }
 
   return (
-    <Box css={{ position: 'relative', height, padding: '1px' }}>{body}</Box>
+    <div className="relative p-px" style={{ height }}>
+      {body}
+    </div>
   )
 }

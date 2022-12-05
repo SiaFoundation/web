@@ -1,28 +1,14 @@
-import { Box } from '../core/Box'
-import { Flex } from '../core/Flex'
 import { Skeleton } from '../core/Skeleton'
 
 export function DatumSkeleton() {
   return (
-    <Flex gap="6" wrap="wrap" align="center" css={{ overflow: 'hidden' }}>
-      <Box css={{ flex: 1 }}>
-        <Skeleton css={{ width: '100px', height: '24px' }} />
-      </Box>
-      <Flex
-        direction="column"
-        align={{
-          '@initial': 'end',
-          '@bp2': 'start',
-        }}
-        gap="1"
-        css={{
-          '@bp2': {
-            flex: 2,
-          },
-        }}
-      >
-        <Skeleton css={{ width: '200px', height: '24px' }} />
-      </Flex>
-    </Flex>
+    <div className="flex gap-x-12 gap-y-4 flex-wrap items-center overflow-hidden">
+      <div className="flex-1">
+        <Skeleton className="w-[100px] h-10" />
+      </div>
+      <div className="flex flex-col items-end md:items-start gap-2 md:flex-2">
+        <Skeleton className="w-[200px] h-10" />
+      </div>
+    </div>
   )
 }

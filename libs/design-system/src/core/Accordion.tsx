@@ -1,121 +1,65 @@
 import React from 'react'
-import { styled, CSS } from '../config/theme'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { ChevronDown16 } from '../icons/carbon'
-
-const StyledAccordion = styled(AccordionPrimitive.Root, {})
-
-type AccordionPrimitiveProps = React.ComponentProps<
-  typeof AccordionPrimitive.Root
->
-type AccordionProps = AccordionPrimitiveProps & { css?: CSS }
+import { cva } from 'class-variance-authority'
+import { VariantProps } from '../types'
+import { Button } from './Button'
 
 export const Accordion = React.forwardRef<
-  React.ElementRef<typeof StyledAccordion>,
-  AccordionProps
->(({ children, ...props }, forwardedRef) => (
-  <StyledAccordion
-    ref={forwardedRef}
+  React.ElementRef<typeof AccordionPrimitive.Root>,
+  React.ComponentProps<typeof AccordionPrimitive.Root>
+>(({ children, ...props }, ref) => (
+  <AccordionPrimitive.Root
+    ref={ref}
     {...props}
     {...(props.type === 'single' ? { collapsible: true } : {})}
   >
     {children}
-  </StyledAccordion>
+  </AccordionPrimitive.Root>
 ))
-
-const StyledContent = styled(AccordionPrimitive.Content, {
-  // p: '$2',
-})
-
-const StyledItem = styled(AccordionPrimitive.Item, {
-  variants: {
-    variant: {
-      default: {
-        borderTop: '1px solid $colors$slate6',
-
-        '&:last-of-type': {
-          borderBottom: '1px solid $colors$slate6',
-        },
-        [`${StyledContent} > ${StyledContent} > &:last-of-type`]: {
-          borderBottom: 'none',
-        },
-      },
-      ghost: {},
-    },
-  },
-  defaultVariants: {
-    variant: 'default',
-  },
-})
-
-const StyledHeader = styled(AccordionPrimitive.Header, {
-  all: 'unset',
-})
-
-const StyledTrigger = styled(AccordionPrimitive.Trigger, {
-  all: 'unset',
-  boxSizing: 'border-box',
-  userSelect: 'none',
-  '&::before': {
-    boxSizing: 'border-box',
-  },
-  '&::after': {
-    boxSizing: 'border-box',
-  },
-
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  color: '$hiContrast',
-  width: '100%',
-  cursor: 'pointer',
-
-  '&:focus': {
-    outline: 'none',
-    // boxShadow: 'inset 0 0 0 1px $colors$accentActive, 0 0 0 1px $colors$accentActive',
-  },
-
-  svg: {
-    transition: 'transform 175ms cubic-bezier(0.65, 0, 0.35, 1)',
-  },
-
-  '&[data-state="open"]': {
-    svg: {
-      transform: 'rotate(180deg)',
-    },
-  },
-
-  variants: {
-    variant: {
-      default: {
-        p: '$1-5',
-        '@hover': {
-          '&:hover': {
-            backgroundColor: '$slate2',
-          },
-        },
-      },
-      ghost: {
-        py: '$1-5',
-      },
-    },
-  },
-  defaultVariants: {
-    variant: 'default',
-  },
-})
 
 export const AccordionTrigger = React.forwardRef<
-  React.ElementRef<typeof StyledTrigger>,
-  React.ComponentProps<typeof StyledTrigger>
->(({ children, ...props }, forwardedRef) => (
-  <StyledHeader>
-    <StyledTrigger {...props} ref={forwardedRef}>
-      {children}
-      <ChevronDown16 />
-    </StyledTrigger>
-  </StyledHeader>
+  React.ElementRef<typeof AccordionPrimitive.Trigger>,
+  AccordionPrimitive.AccordionTriggerProps
+>(({ children, ...props }, ref) => (
+  <AccordionPrimitive.Header>
+    <AccordionPrimitive.Trigger {...props} asChild ref={ref}>
+      <Button
+        variant="ghost"
+        size="none"
+        className="w-full flex gap-2 justify-between"
+      >
+        <span className="flex-1 text-left">{children}</span>
+        <span className="pr-3">
+          <ChevronDown16 />
+        </span>
+      </Button>
+    </AccordionPrimitive.Trigger>
+  </AccordionPrimitive.Header>
 ))
 
-export const AccordionItem = StyledItem
-export const AccordionContent = StyledContent
+const itemStyles = cva([], {
+  variants: {
+    variant: {
+      default:
+        'border-t border-gray-500 dark:border-graydark-500 last-of-type:border-b',
+      ghost: '',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+})
+
+export const AccordionItem = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Content>,
+  VariantProps<typeof itemStyles> & AccordionPrimitive.AccordionItemProps
+>(({ variant, className, ...props }, ref) => (
+  <AccordionPrimitive.Item
+    {...props}
+    className={itemStyles({ variant, className })}
+    ref={ref}
+  />
+))
+
+export const AccordionContent = AccordionPrimitive.Content

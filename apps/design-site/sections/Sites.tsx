@@ -1,24 +1,22 @@
 import {
   ContentItem,
   ContentGallery,
-  Flex,
-  Grid,
   Section,
   SiteHeading,
   Callout,
   ContentProject,
-  WavesBackdrop,
 } from '@siafoundation/design-system'
 import { times } from 'lodash'
-import { SectionHeading as DSSectionHeading } from '../components/SectionHeading'
+import { SectionHeading } from '../components/SectionHeading'
 import { SubsectionHeading } from '../components/SubsectionHeading'
 
 export function Sites() {
   return (
     <>
-      <Section css={{ pt: '$9' }}>
-        <DSSectionHeading>SiteHeading</DSSectionHeading>
-        <Flex direction="column" gap="9">
+      <Section>
+        <SectionHeading>Headings</SectionHeading>
+        <SubsectionHeading>SiteHeading</SubsectionHeading>
+        <div className="flex flex-col gap-6">
           <SiteHeading
             size="20"
             title="Size 20"
@@ -93,18 +91,12 @@ export function Sites() {
               },
             ]}
           />
-        </Flex>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
-        <DSSectionHeading>ContentItem</DSSectionHeading>
-        <Grid
-          gap="5"
-          columns={{
-            '@initial': 1,
-            '@bp1': 2,
-            '@bp3': 3,
-          }}
-        >
+      <Section>
+        <SectionHeading>Content</SectionHeading>
+        <SubsectionHeading>ContentItem</SubsectionHeading>
+        <div className="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           <ContentItem
             title="Content Item"
             subtitle={`
@@ -139,18 +131,9 @@ export function Sites() {
             link={'https://urbit.org'}
             newTab
           />
-        </Grid>
-      </Section>
-      <Section css={{ pt: '$9' }}>
-        <DSSectionHeading>ContentProject</DSSectionHeading>
-        <Grid
-          gap="5"
-          columns={{
-            '@initial': 1,
-            '@bp1': 2,
-            '@bp3': 3,
-          }}
-        >
+        </div>
+        <SubsectionHeading>ContentProject</SubsectionHeading>
+        <div className="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           <ContentProject
             title="Filebase"
             logo="filebase"
@@ -161,12 +144,10 @@ export function Sites() {
             link={'https://filebase.com'}
             newTab
           />
-        </Grid>
+        </div>
       </Section>
-      <Section css={{ pt: '$12' }}>
-        <DSSectionHeading>ContentGallery</DSSectionHeading>
-      </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section>
+        <SectionHeading>ContentGallery</SectionHeading>
         <SubsectionHeading>default</SubsectionHeading>
         <ContentGallery
           items={times(6, (i) => ({
@@ -179,13 +160,9 @@ export function Sites() {
             newTab: true,
           }))}
         />
-      </Section>
-      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>columns 1</SubsectionHeading>
         <ContentGallery
-          columns={{
-            '@inital': '1',
-          }}
+          columnClassName="grid-cols-1"
           items={times(6, (i) => ({
             title: `Lorem ipsum dolor, sit amet consectetur elit. ${i + 1}`,
             tags: [`group_${(i % 3) + 1}`],
@@ -193,16 +170,10 @@ export function Sites() {
             newTab: true,
           }))}
         />
-      </Section>
-      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>variant filterable / columns 3</SubsectionHeading>
         <ContentGallery
           filterable="filterable"
-          columns={{
-            '@initial': '1',
-            '@bp1': '2',
-            '@bp3': '3',
-          }}
+          columnClassName="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
           items={times(6, (i) => ({
             title: `Title ${i + 1}`,
             subtitle: 'Subtitle',
@@ -215,24 +186,10 @@ export function Sites() {
           }))}
         />
       </Section>
-      <Section css={{ pt: '$12' }}>
-        <DSSectionHeading>WavesBackdrop</DSSectionHeading>
-      </Section>
-      <Section css={{ position: 'relative' }}>
-        <WavesBackdrop />
-      </Section>
-      <Section css={{ pt: '$12' }}>
-        <DSSectionHeading>Callout</DSSectionHeading>
-      </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section>
+        <SectionHeading>Callout</SectionHeading>
         <SubsectionHeading>size 1</SubsectionHeading>
-        <Grid
-          columns={{
-            '@initial': '1',
-            '@bp2': '2',
-          }}
-          gap="5"
-        >
+        <div className="grid gap-10 grid-cols-1 md:grid-cols-2">
           <Callout
             title="Title"
             description={`
@@ -253,9 +210,7 @@ export function Sites() {
             actionLink="https://urbit.org"
             actionNewTab
           />
-        </Grid>
-      </Section>
-      <Section css={{ pt: '$9' }}>
+        </div>
         <SubsectionHeading>size 2</SubsectionHeading>
         <Callout
           title="Title"

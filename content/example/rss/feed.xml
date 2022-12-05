@@ -4,7 +4,7 @@
         <title>Sia Foundation</title>
         <link>https://sia.tech</link>
         <description></description>
-        <lastBuildDate>Fri, 28 Oct 2022 20:05:21 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 05 Dec 2022 15:10:16 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Feed for Node.js</generator>
         <image>
@@ -25,9 +25,9 @@
 <p>David Vorick, CEO of Skynet Labs (formerly Nebulous), says this will enable Skynet Labs to capitalize on the platform&#x27;s recent growth. “There has always been a tension in the Sia ecosystem between what the community needs and what the for-profit entity needs. Now that there is a nonprofit foundation that is solely accountable to the community, everyone will be better positioned to thrive.”</p>
 <p>The Sia Foundation is funded by a subsidy of Siacoins, added to the blockchain by a &quot;hardfork&quot; software update that activated last night. The update was adopted by a majority of the network&#x27;s users, many of whom expressed public support for the move. According to community member and contributor, SiaStats, the Sia Foundation “adds value and benefits every actor on the network. It safeguards the mission of Sia and enables grants, new developers, marketing, and growth actions.”</p>
 <p>In keeping with its commitment to improving the Sia network, in 2021 the Foundation plans to undertake a substantial overhaul of the Sia consensus algorithm, allowing the software to be used on smartphones and other low-power devices and enabling more users to fully validate the Sia blockchain. As for Skynet Labs, the company aims to replace modern web infrastructure with a decentralized upgrade which allows users to have control over their data and allows developers to innovate more rapidly.</p>
-<h3>About the Sia Foundation</h3>
+<span as="h3">About the Sia Foundation</span>
 <p>The Sia Foundation is a non-profit corporation that maintains, improves, and promotes the <a target="_blank" href="https://sia.tech">Sia</a> distributed storage network. It was founded in 2020 and is funded by a perpetual subsidy built into the Sia protocol. All code, research, educational materials, and other products of the Foundation&#x27;s work will be made available to the public free of charge and under open-source licenses.</p>
-<h3>About Skynet Labs</h3>
+<span as="h3">About Skynet Labs</span>
 <p><a target="_blank" href="https://siasky.net">Skynet Labs</a>, formerly known as Nebulous, builds uncompromising software infrastructure for the decentralized internet and is the team responsible for Skynet. Skynet is an application development and hosting platform and storage on Skynet is provided by Sia, the leading decentralized cloud storage network.</p>
 <p>Skynet Labs defines uncompromising infrastructure as scalable, trustless, secure, and – most importantly – fully decentralized. In a blockchain industry filled with hype but lacking substance, Skynet Labs stands out as one of the few deeply technical teams that consistently delivers real products with significant potential.</p>
 <p>Nebulous, Inc. was founded in 2014 and is funded by Paradigm, Bain Capital Ventures, A.Capital, Bessemer Venture Partners, First Star Ventures, and other notable investors.</p>]]></content:encoded>

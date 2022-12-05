@@ -1,12 +1,4 @@
-import {
-  AppAuthedLayout,
-  Button,
-  ControlGroup,
-  Box,
-  Flex,
-  IconButton,
-  Close16,
-} from '@siafoundation/design-system'
+import { ControlGroup, Button, Close16 } from '@siafoundation/design-system'
 import { RenterSidenav } from '../../components/RenterSidenav'
 import { routes } from '../../config/routes'
 import { Text, Table } from '@siafoundation/design-system'
@@ -14,19 +6,20 @@ import { useDialog } from '../../contexts/dialog'
 import { useContracts } from '../../hooks/useContracts'
 import { ContractsFilterDropdownMenu } from '../../components/ContractsFilterDropdownMenu'
 import { ContractsViewDropdownMenu } from '../../components/ContractsViewDropdownMenu'
+import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
 
 export default function ContractsPage() {
   const { openDialog } = useDialog()
   const { columns, filters, removeFilter, contracts } = useContracts()
 
   return (
-    <AppAuthedLayout
+    <RenterdAuthedLayout
       title="Contracts"
       routes={routes}
       sidenav={<RenterSidenav />}
       openSettings={() => openDialog('settings')}
       filters={
-        <Flex gap="1" css={{ flex: 1 }}>
+        <div className="flex gap-2 flex-1">
           {Object.entries(filters).map(([key, filter]) => (
             <ControlGroup key={key}>
               <Button disabled>
@@ -47,33 +40,28 @@ export default function ContractsPage() {
                   </Text>
                 )}
               </Button>
-              <IconButton
+              <Button
                 variant="gray"
-                size="1"
+                size="small"
                 onClick={() => removeFilter(key)}
               >
                 <Close16 />
-              </IconButton>
+              </Button>
             </ControlGroup>
           ))}
           <ContractsFilterDropdownMenu />
-        </Flex>
+        </div>
       }
-      size="flush"
+      size="full"
       actions={
-        <Flex gap="1">
+        <div className="flex gap-2">
           <ContractsViewDropdownMenu />
-        </Flex>
+        </div>
       }
     >
-      <Box
-        css={{
-          minWidth: 'fit-content',
-          padding: '$3-5',
-        }}
-      >
+      <div className="p-7 min-w-fit">
         <Table data={contracts} columns={columns} summary />
-      </Box>
-    </AppAuthedLayout>
+      </div>
+    </RenterdAuthedLayout>
   )
 }

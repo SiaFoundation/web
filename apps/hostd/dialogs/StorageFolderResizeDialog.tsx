@@ -1,20 +1,29 @@
 import {
-  Flex,
-  DialogContent,
   Paragraph,
-  Box,
   Text,
   FormField,
   FormSubmitButton,
+  Dialog,
 } from '@siafoundation/design-system'
 import { humanBytes } from '@siafoundation/sia-js'
+import { cx } from 'class-variance-authority'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useDialog } from '../contexts/dialog'
 
 const gb = 1_000_000_000
 
-export function StorageFolderResizeDialog() {
+type Props = {
+  trigger?: React.ReactNode
+  open: boolean
+  onOpenChange: (val: boolean) => void
+}
+
+export function StorageFolderResizeDialog({
+  trigger,
+  open,
+  onOpenChange,
+}: Props) {
   const { id, closeDialog } = useDialog()
 
   // TODO: fetch current size
@@ -45,15 +54,17 @@ export function StorageFolderResizeDialog() {
   const newSize = Number(formik.values.size || 0)
 
   return (
-    <DialogContent
-      title={'Resize Folder'}
-      css={{
-        maxWidth: '400px',
-        overflow: 'hidden',
+    <Dialog
+      title="Resize Folder"
+      trigger={trigger}
+      open={open}
+      onOpenChange={onOpenChange}
+      contentVariants={{
+        className: 'max-w-[400px]',
       }}
     >
       <form onSubmit={formik.handleSubmit}>
-        <Flex direction="column" gap="2">
+        <div className="flex flex-col gap-4">
           <Paragraph size="14">
             Grow or shrink the storage folder. When growing a folder, make sure
             to check that there is enough space on-disk. When shrinking a
@@ -78,45 +89,40 @@ export function StorageFolderResizeDialog() {
             units="GB"
             placeholder="1,000"
           />
-          <Box
-            css={{
-              position: 'relative',
-              width: '100%',
-              height: '$0-5',
-              borderRadius: '$pill',
-              backgroundColor: '$slate4',
-              overflow: 'hidden',
-            }}
-          >
-            <Box
-              css={{
-                zIndex: currentSize < newSize ? 1 : 0,
-                position: 'absolute',
+          <div className="relative w-full h-1 rounded-lg bg-gray-300 dark:bg-graydark-300 overflow-hidden">
+            <div
+              className={cx(
+                'absolute h-1 rounded-tl-lg rounded-bl-lg',
+                currentSize > newSize
+                  ? 'bg-red-800 dark:bg-red-700'
+                  : 'bg-gray-800 dark:bg-graydark-800',
+                currentSize < newSize ? 'z-10' : 'z-0'
+              )}
+              style={{
                 width: `${(currentSize / maxSize) * 100}%`,
-                height: '$0-5',
-                borderRadius: '$pill 0 0 $pill',
-                backgroundColor: currentSize > newSize ? '$red9' : '$gray9',
               }}
             />
-            <Box
-              css={{
-                zIndex: currentSize > newSize ? 1 : 0,
-                position: 'absolute',
+            <div
+              className={cx(
+                'absolute h-1 rounded-tl-lg rounded-bl-lg',
+                currentSize < newSize
+                  ? 'bg-green-800 dark:bg-green-700'
+                  : 'bg-gray-800 dark:bg-graydark-800',
+                currentSize > newSize ? 'z-10' : 'z-0'
+              )}
+              style={{
                 width: `${(Number(newSize || 0) / maxSize) * 100}%`,
-                height: '$0-5',
-                borderRadius: '$pill 0 0 $pill',
-                backgroundColor: currentSize < newSize ? '$green9' : '$gray9',
               }}
             />
-          </Box>
+          </div>
           <Text>
             {currentSize < newSize
               ? `Increase by ${humanBytes((newSize - currentSize) * gb)}`
               : `Decrease by ${humanBytes((currentSize - newSize) * gb)}`}
           </Text>
           <FormSubmitButton formik={formik}>Resize</FormSubmitButton>
-        </Flex>
+        </div>
       </form>
-    </DialogContent>
+    </Dialog>
   )
 }

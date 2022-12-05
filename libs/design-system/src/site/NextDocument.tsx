@@ -4,7 +4,7 @@ import DefaultNextDocument, {
   Main,
   NextScript,
 } from 'next/document'
-import { getCssText } from '../config/theme'
+import { getCssText } from '../config/old-theme'
 
 export class NextDocument extends DefaultNextDocument {
   override render() {

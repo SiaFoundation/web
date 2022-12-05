@@ -1,7 +1,5 @@
-import { Box } from '../core/Box'
-import { Flex } from '../core/Flex'
 import { Heading } from '../core/Heading'
-import { NextLink } from '../core/Link'
+import { Link } from '../core/Link'
 import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
 import { Skeleton } from '../core/Skeleton'
@@ -22,6 +20,7 @@ import { upperFirst } from 'lodash'
 import { EntityAvatar } from './EntityAvatar'
 import React from 'react'
 import BigNumber from 'bignumber.js'
+import { cx } from 'class-variance-authority'
 
 export type EntityListItemProps = {
   label?: string
@@ -48,51 +47,39 @@ type Props = {
 }
 
 export function EntityList({ title, actions, entities, emptyMessage }: Props) {
+  const showHeading = title || actions
   return (
     <Panel>
-      <Flex
-        direction="column"
-        css={{
-          borderRadius: '$1',
-          overflow: 'hidden',
-        }}
-      >
-        {(title || actions) && (
-          <Flex
-            align="center"
-            css={{
-              padding: '$2 $2',
-            }}
-          >
+      <div className="flex flex-col rounded overflow-hidden">
+        {showHeading && (
+          <div className="flex items-center p-4 border-b border-gray-200 dark:border-graydark-300">
             {title && (
-              <Heading size="20" font="mono">
+              <Heading size="20" font="mono" ellipsis>
                 {title}
               </Heading>
             )}
-            <Box css={{ flex: 1 }} />
+            <div className="flex-1" />
             {actions}
-          </Flex>
+          </div>
         )}
-        <Flex
-          direction="column"
-          css={{ borderRadius: '$1', overflow: 'hidden' }}
-        >
+        <div className="flex flex-col rounded overflow-hidden">
           {entities?.length === 0 && (
-            <Flex
-              align="center"
-              justify="center"
-              css={{ height: '100px', borderTop: '1px solid $gray3' }}
+            <div
+              className={cx(
+                'flex items-center justify-center h-[100px]',
+                itemBorderStyles()
+              )}
             >
               <Text size="18" color="subtle">
                 {emptyMessage || 'No results'}
               </Text>
-            </Flex>
+            </div>
           )}
           {entities?.map((entity, i) => {
             const sc = entity.sc
             const sf = entity.sf
             const truncHashEl = entity.unconfirmed ? (
-              <Text color="accent" weight="semibold">
+              <Text color="accent" weight="medium">
                 Unconfirmed
               </Text>
             ) : (
@@ -115,14 +102,10 @@ export function EntityList({ title, actions, entities, emptyMessage }: Props) {
 
             const title = upperFirst(label)
             return (
-              <Flex
-                gap="2"
+              <div
+                className={cx('flex gap-4 p-4', itemBorderStyles())}
                 key={entity.hash || entity.label || i}
                 onClick={entity.onClick}
-                css={{
-                  padding: '$2 $2',
-                  borderTop: '1px solid $gray3',
-                }}
               >
                 <EntityAvatar
                   label={label}
@@ -133,33 +116,25 @@ export function EntityList({ title, actions, entities, emptyMessage }: Props) {
                   }
                   href={entity.href}
                 />
-                <Flex
-                  direction="column"
-                  gap="1"
-                  justify="center"
-                  css={{ width: '100%' }}
-                >
-                  <Flex gap="1" align="center">
-                    <Flex gap="1" align="center">
+                <div className="flex flex-col items-center gap-1 w-full">
+                  <div className="flex gap-2 items-center w-full">
+                    <div className="flex gap-2 items-center">
                       {entity.height && entity.blockHref && (
                         <Text color="subtle" weight="semibold">
-                          <NextLink
-                            href={entity.blockHref}
-                            css={{ textDecoration: 'none' }}
-                          >
+                          <Link href={entity.blockHref} underline="none">
                             {humanNumber(entity.height)}
-                          </NextLink>
+                          </Link>
                         </Text>
                       )}
-                      <Text weight="bold">{title || truncHashEl}</Text>
-                    </Flex>
-                    <Box css={{ flex: 1 }} />
+                      <Text weight="medium">{title || truncHashEl}</Text>
+                    </div>
+                    <div className="flex-1" />
                     {!!sc && <ValueSc value={sc} />}
                     {!!sf && <ValueSf value={sf} />}
-                  </Flex>
-                  <Flex justify="between">
-                    <Flex gap="1">{!!title && truncHashEl}</Flex>
-                    <Flex gap="1">
+                  </div>
+                  <div className="flex justify-between w-full">
+                    <div className="flex gap-1">{!!title && truncHashEl}</div>
+                    <div className="flex gap-1">
                       {entity.timestamp && (
                         <Text color="subtle">
                           {formatDistance(
@@ -171,14 +146,14 @@ export function EntityList({ title, actions, entities, emptyMessage }: Props) {
                           )}
                         </Text>
                       )}
-                    </Flex>
-                  </Flex>
-                </Flex>
-              </Flex>
+                    </div>
+                  </div>
+                </div>
+              </div>
             )
           }) || <EntityListSkeleton />}
-        </Flex>
-      </Flex>
+        </div>
+      </div>
     </Panel>
   )
 }
@@ -187,18 +162,24 @@ export function EntityListSkeleton() {
   return (
     <>
       {times(10, (i) => (
-        <Flex
+        <div
           key={i}
-          css={{ padding: '$2 $2', borderTop: '1px solid $gray3' }}
-          gap="2"
+          className={cx('relative flex gap-4 p-3.5', itemBorderStyles())}
         >
-          <Skeleton css={{ width: '60px', height: '50px' }} />
-          <Flex direction="column" gap="1" css={{ width: '100%' }}>
-            <Skeleton css={{ width: '90%', height: '20px' }} />
-            <Skeleton css={{ width: '140px', height: '14px' }} />
-          </Flex>
-        </Flex>
+          <Skeleton className="w-[60px] h-[50px]" />
+          <div className="flex flex-col gap-2 w-full">
+            <Skeleton className="w-[90%] h-[20px]" />
+            <Skeleton className="w-[140px] h-[14px]" />
+          </div>
+        </div>
       ))}
     </>
+  )
+}
+
+export function itemBorderStyles() {
+  return cx(
+    'border-t border-gray-200 dark:border-graydark-300',
+    'first:border-none'
   )
 }

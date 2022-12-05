@@ -16,9 +16,7 @@ import { LinearGradient } from '@visx/gradient'
 import { max, extent, bisector, min } from 'd3-array'
 import { timeFormat } from 'd3-time-format'
 import ParentSize from '@visx/responsive/lib/components/ParentSize'
-import { Box } from '../../core/Box'
 import { Button } from '../../core/Button'
-import { Flex } from '../../core/Flex'
 import { Text } from '../../core/Text'
 import { Tooltip as DsTooltip } from '../../core/Tooltip'
 import { throttle } from 'lodash'
@@ -26,31 +24,15 @@ import { AreaChart } from './AreaChart'
 import { Reset16 } from '../../icons/carbon'
 import { Panel } from '../../core/Panel'
 import { getPointTime, getPointValue, Point } from './utils'
+import { useTheme } from '../../hooks/useTheme'
+import { colors } from '../../config/colors'
 
 export type { Point }
-
-const background = 'var(--colors-panel)'
-// export const background = 'transparent'
-const background2 = 'var(--colors-panel)'
-const accentColor = 'var(--colors-accent9)'
-const lineColor = 'var(--colors-hiContrast)'
-const borderColor = 'var(--colors-gray4)'
-const tooltipStyles = {
-  ...defaultStyles,
-  background: 'var(--colors-panel)',
-  boxShadow: 'var(--colors-borderActive)',
-  fontFamily: 'var(--fonts-sans)',
-  color: 'var(--colors-hiContrast)',
-}
 
 const brushMargin = { top: 10, bottom: 15, left: 10, right: 10 }
 const chartSeparation = 30
 const PATTERN_ID = 'brush_pattern'
 const GRADIENT_ID = 'brush_gradient'
-const selectedBrushStyle = {
-  fill: `url(#${PATTERN_ID})`,
-  stroke: 'var(--colors-hiContrast)',
-}
 
 const throttled = throttle((func: () => void) => func(), 15)
 
@@ -89,6 +71,73 @@ const Chart = withTooltip<ChartProps, TooltipData>(
     tooltipTop = 0,
     tooltipLeft = 0,
   }: ChartProps & WithTooltipProvidedProps<TooltipData>) => {
+    const { activeTheme } = useTheme()
+    const {
+      accentColor,
+      background,
+      background2,
+      lineColor,
+      borderColor,
+      tooltipStyles,
+      selectedBrushStyle,
+    } = useMemo(() => {
+      if (activeTheme === 'light') {
+        const background = colors.white
+        // export const background = 'transparent'
+        const background2 = colors.white
+        const accentColor = colors.accent[800]
+        const lineColor = colors.gray[1100]
+        const borderColor = colors.gray[300]
+        const tooltipStyles = {
+          ...defaultStyles,
+          background,
+          border: `1px solid ${borderColor}`,
+          boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+          fontFamily: 'PlexSans',
+          color: colors.gray[1100],
+        }
+        const selectedBrushStyle = {
+          fill: `url(#${PATTERN_ID})`,
+          stroke: colors.gray[1100],
+        }
+        return {
+          accentColor,
+          background,
+          background2,
+          lineColor,
+          borderColor,
+          tooltipStyles,
+          selectedBrushStyle,
+        }
+      }
+      const background = colors.graydark[50]
+      const background2 = colors.graydark[50]
+      const accentColor = colors.accentdark[800]
+      const lineColor = colors.white
+      const borderColor = colors.graydark[300]
+      const tooltipStyles = {
+        ...defaultStyles,
+        background,
+        border: `1px solid ${borderColor}`,
+        boxShadow: '0 1px 2px 0 rgb(255 255 255 / 0.05)',
+        fontFamily: 'PlexSans',
+        color: colors.white,
+      }
+      const selectedBrushStyle = {
+        fill: `url(#${PATTERN_ID})`,
+        stroke: colors.white,
+      }
+      return {
+        accentColor,
+        background,
+        background2,
+        lineColor,
+        borderColor,
+        tooltipStyles,
+        selectedBrushStyle,
+      }
+    }, [activeTheme])
+
     const [selectedDatasetName, setSelectedDatasetName] = useState<string>(
       datasets[0]?.name
     )
@@ -277,7 +326,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
     if (width < 10) return null
 
     return (
-      <Box>
+      <div className="">
         <svg width={width} height={height}>
           <LinearGradient
             id={GRADIENT_ID}
@@ -413,28 +462,25 @@ const Chart = withTooltip<ChartProps, TooltipData>(
           )}
         </svg>
         {tooltipData && (
-          <Box>
+          <div className="">
             <TooltipWithBounds
               key={Math.random()}
               top={tooltipTop - 12}
               left={tooltipLeft + 12}
               style={tooltipStyles}
             >
-              <Flex direction="column" gap="0-5" align="end">
+              <div className="flex flex-col gap-1 items-end">
                 <Text color="subtle" size="10">
                   {formatDate(getPointTime(tooltipData))}
                 </Text>
                 <Text font="mono">
                   {selectedDataset?.formatValue(getPointValue(tooltipData))}
                 </Text>
-              </Flex>
+              </div>
             </TooltipWithBounds>
-          </Box>
+          </div>
         )}
-        <Flex
-          gap="1"
-          css={{ position: 'absolute', top: '$1-5', right: '$1-5' }}
-        >
+        <div className="flex absolute gap-2 top-3 right-3">
           {datasets.map(({ name }) => (
             <DsTooltip key={name} content={`Select ${name} dataset`}>
               <Button
@@ -452,8 +498,8 @@ const Chart = withTooltip<ChartProps, TooltipData>(
               </Button>
             </DsTooltip>
           )}
-        </Flex>
-      </Box>
+        </div>
+      </div>
     )
   }
 )
@@ -478,7 +524,7 @@ export function ChartTimeValue({
   curve,
 }: Props) {
   return (
-    <Panel css={{ height, padding: '1px' }}>
+    <Panel className="p-px" style={{ height }}>
       <ParentSize>
         {({ width, height }) => (
           <Chart

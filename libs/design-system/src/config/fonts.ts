@@ -1,4 +1,4 @@
-import { globalCss } from './theme'
+import { globalCss } from './old-theme'
 
 export const fontStyles = globalCss({
   '@font-face': [

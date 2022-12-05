@@ -2,7 +2,6 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import BigNumber from 'bignumber.js'
 import { toHastings } from '@siafoundation/sia-js'
-import { Flex } from '../../core/Flex'
 import { Text } from '../../core/Text'
 import { InfoTip } from '../../core/InfoTip'
 import { Switch } from '../../core/Switch'
@@ -76,9 +75,10 @@ export function useSendSiacoinGenerateForm({ fee, onComplete }: Props) {
   const sc = toHastings(formik.values.siacoin)
 
   const form = (
-    <Flex direction="column" gap="2">
+    <div className="flex flex-col gap-4">
       <FormField
         formik={formik}
+        variants={{ size: 'medium' }}
         title="Address"
         name="address"
         placeholder={exampleAddr}
@@ -92,7 +92,7 @@ export function useSendSiacoinGenerateForm({ fee, onComplete }: Props) {
         placeholder="100"
         type="siacoin"
       />
-      <Flex align="center">
+      <div className="flex items-center">
         <Switch
           name="includeFee"
           onCheckedChange={(val) => formik.setFieldValue('includeFee', val)}
@@ -102,34 +102,35 @@ export function useSendSiacoinGenerateForm({ fee, onComplete }: Props) {
         <InfoTip>
           Include or exclude the network fee from the above transaction value.
         </InfoTip>
-        <Flex css={{ flex: 1 }} />
-      </Flex>
-      <Flex direction="column" gap="1" css={{ margin: '$0-5 0' }}>
-        <Flex gap="1" justify="between" align="center">
+        <div className="flex flex-1" />
+      </div>
+      <div className="flex flex-col gap-2 my-1">
+        <div className="flex gap-2 justify-between items-center">
           <Text color="verySubtle">Network fee</Text>
-          <Flex css={{ position: 'relative', top: '-0.5px' }}>
+          <div className="flex relative top-[-0.5px]">
             <ValueSc
               size="14"
               value={fee}
               variant="value"
               dynamicUnits={false}
             />
-          </Flex>
-        </Flex>
-        <Flex justify="between" gap="1" align="center">
+          </div>
+        </div>
+        <div className="flex justify-between gap-2 items-center">
           <Text color="verySubtle">Total</Text>
-          <Flex css={{ position: 'relative', top: '-0.5px' }}>
+          <div className="flex relative top-[-0.5px]">
             <ValueSc
               size="14"
               value={formik.values.includeFee ? sc : sc.plus(fee)}
               variant="value"
               dynamicUnits={false}
             />
-          </Flex>
-        </Flex>
-      </Flex>
-    </Flex>
+          </div>
+        </div>
+      </div>
+    </div>
   )
+
   return {
     formik,
     form,

@@ -1,4 +1,3 @@
-import { Flex } from '../core/Flex'
 import { Select } from '../core/Select'
 import { Text } from '../core/Text'
 import { DatumCard } from '../components/DatumCard'
@@ -55,7 +54,7 @@ export function DatumCardConfigurable({
       label={<DataLabel label={label} color={color} />}
       actions={
         <Select
-          onChange={(e) => setMode(e.target.value as Mode)}
+          onChange={(e) => setMode(e.currentTarget.value as Mode)}
           defaultValue={mode}
         >
           {enabledModes.map((m) => (
@@ -71,8 +70,8 @@ export function DatumCardConfigurable({
       // incorrectly by stitches in generated css classes
       comment={
         sc ? (
-          <Flex>
-            <Flex gap="2">
+          <div className="flex">
+            <div className="flex gap-4">
               <ValueSc
                 tooltip="Change over period"
                 value={new BigNumber(sc.diff)}
@@ -83,19 +82,17 @@ export function DatumCardConfigurable({
                   weight="semibold"
                   font="mono"
                   ellipsis
-                  css={{
-                    color: '$gray9',
-                  }}
+                  color="verySubtle"
                 >
                   {sc.change.toFixed(2)}%
                 </Text>
               )}
-            </Flex>
-          </Flex>
+            </div>
+          </div>
         ) : (
           value && (
-            <Flex>
-              <Flex gap="2">
+            <div className="flex">
+              <div className="flex gap-4">
                 <ValueNum
                   tooltip="Change over period"
                   format={(val) => format(val.toNumber())}
@@ -107,15 +104,13 @@ export function DatumCardConfigurable({
                     weight="semibold"
                     font="mono"
                     ellipsis
-                    css={{
-                      color: '$gray9',
-                    }}
+                    color="verySubtle"
                   >
                     {value.change.toFixed(2)}%
                   </Text>
                 )}
-              </Flex>
-            </Flex>
+              </div>
+            </div>
           )
         )
       }

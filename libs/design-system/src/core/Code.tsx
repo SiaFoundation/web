@@ -1,33 +1,27 @@
-import { styled } from '../config/theme'
-import { Text } from './Text'
+import React from 'react'
+import { cva, VariantProps } from 'class-variance-authority'
 
-export const Code = styled('code', {
-  fontFamily: '$mono',
-  whiteSpace: 'nowrap',
-  padding: '2px 2px',
-  borderRadius: '$1',
-
-  fontSize: '$12',
-
-  [`${Text} &`]: {
-    paddingTop: 'inherit',
-    paddingBottom: 'inherit',
-    fontSize: 'inherit',
-  },
-
+const styles = cva(['font-mono', 'whitespace-nowrap', 'rounded'], {
   variants: {
-    variant: {
-      gray: {
-        backgroundColor: '$gray3',
-        color: '$gray12',
-      },
-      accent: {
-        backgroundColor: '$accent3',
-        color: '$accent12',
-      },
+    color: {
+      gray: [
+        'bg-gray-200 dark:bg-graydark-200',
+        'text-gray-1100 dark:text-graydark-1100',
+      ],
+      accent: [
+        'bg-accent-200 dark:bg-accentdark-200',
+        'text-accent-1100 dark:text-accentdark-1100',
+      ],
     },
   },
   defaultVariants: {
-    variant: 'accent',
+    color: 'accent',
   },
 })
+
+export const Code = React.forwardRef<
+  HTMLElement,
+  React.HTMLAttributes<HTMLElement> & VariantProps<typeof styles>
+>(({ color, className, ...props }, ref) => (
+  <code {...props} className={styles({ color, className })} ref={ref} />
+))

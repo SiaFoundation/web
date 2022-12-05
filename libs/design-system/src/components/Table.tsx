@@ -1,10 +1,9 @@
-import { Flex } from '../core/Flex'
 import { InfoTip } from '../core/InfoTip'
 import { Tooltip } from '../core/Tooltip'
 import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
-import { CSS } from '../config/theme'
 import { useMemo } from 'react'
+import { cx } from 'class-variance-authority'
 
 export type Row = {
   key: string
@@ -15,8 +14,7 @@ export type TableColumn<R> = {
   label: string
   tip?: string
   size?: number
-  props?: React.ComponentProps<typeof Flex>
-  css?: CSS
+  className?: string
   render: (row: R) => React.ReactNode
   summary?: () => React.ReactNode
   type?: 'fixed'
@@ -42,7 +40,7 @@ export function Table<R extends Row>({
         const size = column.size || 1
         return {
           ...column,
-          tableCss: {
+          style: {
             minWidth: `${size * 50}px`,
             flex: size,
           },
@@ -53,93 +51,75 @@ export function Table<R extends Row>({
 
   return (
     <Panel>
-      <Flex direction="column">
-        <Flex
-          gap="3-5"
-          css={{
-            padding: '$1-5 $3',
-            borderBottom: '1px solid $slate3',
-          }}
-        >
-          {columns.map(({ key, label, tip, props, tableCss }) => (
-            <Flex
+      <div className="flex flex-col">
+        <div className="flex border-b border-gray-400 dark:border-graydark-400">
+          {columns.map(({ key, label, tip, style, className }) => (
+            <div
+              className={cx('flex py-3 px-6 overflow-hidden', className)}
+              style={style}
               key={key}
-              {...props}
-              css={{ ...tableCss, overflow: 'hidden' }}
             >
               <Tooltip content={label}>
                 <Text
                   weight="semibold"
                   color="subtle"
                   size="12"
-                  css={{ position: 'relative', top: '1px' }}
+                  className="relative top-px"
                   ellipsis
                 >
                   {label}
                 </Text>
               </Tooltip>
               {tip && <InfoTip>{tip}</InfoTip>}
-            </Flex>
+            </div>
           ))}
-        </Flex>
+        </div>
         {summary && (
-          <Flex
-            gap="3-5"
-            align="center"
-            css={{
-              padding: '$1 $3',
-              background: '$slate1',
-              borderLeft: '1px solid $slate3',
-              borderRight: '1px solid $slate3',
-              borderBottom: '1px solid $slate3',
-            }}
-          >
-            {columns.map(({ key, summary, props, tableCss, css }) => (
-              <Flex
+          <div className="flex items-center py-2 bg-gray-50 dark:bg-graydark-50 border-l border-r border-b border-gray-200 dark:border-graydark-200">
+            {columns.map(({ key, summary, style, className }) => (
+              <div
                 key={key}
-                {...props}
-                css={{
-                  ...tableCss,
-                  overflow: 'hidden',
-                  ...css,
-                }}
+                className={cx('flex px-6 overflow-hidden', className)}
+                style={style}
               >
                 {summary && summary()}
-              </Flex>
+              </div>
             ))}
-          </Flex>
+          </div>
         )}
-        <Flex direction="column">
+        <div className="flex flex-col">
           {data.map((row) => (
-            <Flex
+            <div
+              className="flex items-center border-b border-gray-300 dark:border-graydark-300 last-of-type:border-b-none overflow-hidden"
               key={row.key}
-              gap="3-5"
-              align="center"
-              css={{
-                padding: rowSize === 'dense' ? '$1 $3' : '$3 $3',
-                borderBottom: '1px solid $slate3',
-                '&:last-of-type': {
-                  borderBottom: 'none',
-                },
-              }}
             >
-              {columns.map(({ key, render, props, tableCss, css }, i) => (
-                <Flex
+              {/* {toPairs(groupBy(columns, 'group')).map(
+                ([name, groupColumns]) => (
+                  <div className="flex gap-7 items-center"
+                    key={name}
+                    className={
+                      {
+                        // padding: rowSize === 'dense' ? '$1 $3' : '$3 $3',
+                      }
+                    }
+                  > */}
+              {columns.map(({ key, render, style, className }, i) => (
+                <div
                   key={row.key + key}
-                  {...props}
-                  css={{
-                    ...tableCss,
-                    overflow: 'hidden',
-                    ...css,
-                  }}
+                  className={cx(
+                    'flex items-center px-6 overflow-hidden',
+                    rowSize === 'dense' ? 'height-[50px]' : 'height-[100px]',
+                    className
+                  )}
+                  style={style}
                 >
                   {render(row)}
-                </Flex>
+                </div>
               ))}
-            </Flex>
+            </div>
           ))}
-        </Flex>
-      </Flex>
+        </div>
+      </div>
     </Panel>
   )
 }

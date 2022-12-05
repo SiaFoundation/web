@@ -23,11 +23,8 @@ import {
   EventsAlt24,
 } from '../icons/carbon'
 import { TestToolIcon } from '../icons/TestToolIcon'
-import { Box } from '../core/Box'
-import { Flex } from '../core/Flex'
-import { NextLink } from '../core/Link'
+import { Link } from '../core/Link'
 import { Text } from '../core/Text'
-import { CSS } from '../config/theme'
 import { Paragraph } from '../core/Paragraph'
 import { WebDomain } from './WebDomain'
 import React from 'react'
@@ -44,7 +41,7 @@ export type ContentItemProps = {
   tags?: string[]
   sections?: string[]
   newTab?: boolean
-  css?: CSS
+  className?: string
 }
 
 // Icon selection is mapped from strings so that component prop data is serializable
@@ -81,33 +78,34 @@ export function ContentItem({
   link,
   children,
   newTab,
-  css,
+  className,
 }: ContentItemProps) {
   const externalLink = link && link.startsWith('http')
   const iconEl = icon && icons[icon]
   return (
-    <Flex gap="2" align="start">
-      {iconEl && (
-        <Box css={{ paddingTop: '$1', color: '$textContrast' }}>{iconEl}</Box>
-      )}
-      <Box key={link} css={css}>
-        <Flex direction="column" gap="1">
-          <Flex direction="column" gap="1">
-            <Text size="20" font="mono" css={{ lineHeight: '150%' }}>
-              {link ? (
-                <NextLink
-                  href={link}
-                  target={newTab ? '_blank' : undefined}
-                  variant="contrast"
-                >
-                  {title}
-                </NextLink>
-              ) : (
-                title
-              )}
-            </Text>
+    <div className="flex gap-4 items-start">
+      {iconEl && <Text className="pt-1">{iconEl}</Text>}
+      <div key={link} className={className}>
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2">
+            {link ? (
+              <Link
+                scaleSize="20"
+                font="mono"
+                href={link}
+                target={newTab ? '_blank' : undefined}
+                color="contrast"
+                className="text-base md:text-xl"
+              >
+                {title}
+              </Link>
+            ) : (
+              <Text scaleSize="20" font="mono" className="text-base md:text-xl">
+                {title}
+              </Text>
+            )}
             {(date || externalLink) && (
-              <Flex gap="1" align="center">
+              <div className="flex gap-1 items-center">
                 {date && (
                   <Text size="12" color="subtle">
                     {format(new Date(date), 'PP')}
@@ -119,13 +117,13 @@ export function ContentItem({
                   </Text>
                 )}
                 {externalLink && <WebDomain link={link} />}
-              </Flex>
+              </div>
             )}
-          </Flex>
+          </div>
           {subtitle && <Paragraph size="14">{subtitle}</Paragraph>}
           {children}
-        </Flex>
-      </Box>
-    </Flex>
+        </div>
+      </div>
+    </div>
   )
 }

@@ -1,43 +1,50 @@
 import {
-  Badge,
   Text,
   ValueNum,
-  getMonthsInMs,
-  getNowInMs,
-  getWeeksInMs,
-  getYearsInMs,
-  getDaysInMs,
   TableColumn,
+  ValueCopyable,
+  CheckmarkFilled16,
+  ValueSc,
 } from '@siafoundation/design-system'
-import { useCallback, useMemo } from 'react'
+import {
+  Host,
+  HostSortBy,
+  HostSortDir,
+  ListMetaResponse,
+  useHosts as useHostsGET,
+} from '@siafoundation/react-core'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import groupBy from 'lodash/groupBy'
 import filter from 'lodash/filter'
 import useLocalStorageState from 'use-local-storage-state'
-import { humanNumber } from '@siafoundation/sia-js'
-import { HostDropdownMenu } from '../components/HostDropdownMenu'
+import { humanNumber, toHastings } from '@siafoundation/sia-js'
+import { formatDistance, formatRelative } from 'date-fns'
+import { useRouter } from 'next/router'
 
-export type HostColumn = 'publicKey' | 'announcement' | 'score' | 'status'
+export type HostColumn =
+  | 'publicKey'
+  | 'lastSeen'
+  | 'firstSeen'
+  | 'autopilotScore'
+  | 'status'
 
-export type Row = {
+export type HostRow = {
   key: string
-  publicKey: string
-  score: number
-  announcement: string
-  status: 'active' | 'blocked'
+  host: Host
 }
 
-export type ContractFilter = {
+export type HostFilter = {
   key: string
-  timeRange?: [number, number]
-  values?: string[]
-  value?: string
+  type: 'contains' | 'bool'
+  value: string | boolean
 }
 
 const defaultColumns: HostColumn[] = [
   'publicKey',
-  'announcement',
-  'score',
+  'firstSeen',
+  'lastSeen',
+  'autopilotScore',
   'status',
 ]
 
@@ -49,18 +56,19 @@ export function useHosts() {
     }
   )
 
-  const [sortColumn, setSortColumn] = useLocalStorageState<HostColumn>(
-    'renterd/v0/hosts/sortColumn',
+  const [sortBy, setSortBy] = useLocalStorageState<HostSortBy>(
+    'renterd/v0/hosts/sortBy',
     {
-      defaultValue: 'publicKey',
+      defaultValue: 'lastSeen',
     }
   )
 
-  const [sortDirection, setSortDirection] = useLocalStorageState<
-    'desc' | 'asc'
-  >('renterd/v0/hosts/sortDirection', {
-    defaultValue: 'desc',
-  })
+  const [sortDir, setSortDir] = useLocalStorageState<HostSortDir>(
+    'renterd/v0/hosts/sortDir',
+    {
+      defaultValue: 'desc',
+    }
+  )
 
   const toggleColumn = useCallback(
     (column: string) => {
@@ -79,16 +87,16 @@ export function useHosts() {
   }, [setEnabledColumns])
 
   const [filters, _setFilters] = useLocalStorageState<
-    Record<string, ContractFilter>
+    Record<string, HostFilter>
   >('renterd/v0/hosts/filters', {
     defaultValue: {},
   })
 
   const setFilter = useCallback(
-    (value: ContractFilter) => {
+    (filter: HostFilter) => {
       _setFilters((filters) => ({
         ...filters,
-        [value.key]: value,
+        [filter.key]: filter,
       }))
     },
     [_setFilters]
@@ -104,118 +112,251 @@ export function useHosts() {
     [_setFilters]
   )
 
-  const data: Row[] = useMemo(
-    () => [
-      {
-        key: 'ed25519:3fb9dfa29ec4263b436ecbc13d69451a84bc9ca7d46ee0d1db0a03be043ccda3',
-        publicKey:
-          'ed25519:3fb9dfa29ec4263b436ecbc13d69451a84bc9ca7d46ee0d1db0a03be043ccda3',
-        score: 44,
-        announcement: '192.0.0.23',
-        status: 'active',
-      },
-      {
-        key: 'ed25519:90730bbc9edc3fab5f9276bc5c0de9e5f5ac329c9f1ac5d16b4c8d709ade23b1',
-        publicKey:
-          'ed25519:90730bbc9edc3fab5f9276bc5c0de9e5f5ac329c9f1ac5d16b4c8d709ade23b1',
-        score: 131,
-        announcement: 'host.freedns.com',
-        status: 'blocked',
-      },
-      {
-        key: 'ed25519:b893195b5306acb0917f5a36a628fc94a89cdc7046ce8cea65b85b8a841104e2',
-        publicKey:
-          'ed25519:b893195b5306acb0917f5a36a628fc94a89cdc7046ce8cea65b85b8a841104e2',
-        score: 128,
-        announcement: 'host-329fu32.spam.com',
-        status: 'blocked',
-      },
-    ],
-    []
+  const router = useRouter()
+  const limit = Number(router.query.limit || 20)
+  const skip = Number(router.query.skip || 0)
+
+  const response = useHostsGET({
+    limit,
+    skip,
+    sortBy,
+    sortDir: sortDir,
+  })
+
+  const hosts: HostRow[] = useMemo(
+    () =>
+      response.data?.hosts.slice(0, 20).map((host) => ({
+        key: host.PublicKey,
+        host,
+      })) || [],
+    [response.data]
   )
 
-  const filteredHosts = useMemo(() => {
-    const filterList = Object.entries(filters).filter(([_, val]) => val)
-    const filtered = filterList.length
-      ? data.filter((contract) => {
-          for (const [key, filter] of Object.entries(filters)) {
-            const value = contract[key]
-            if (key === 'expirationDate') {
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              const range = getTimeRange(filter.value as any)
-              if (!range) {
-                return false
-              }
-              console.log(filter, range)
-              return value >= range[0] && value <= range[1]
-            }
-            if (key === 'status') {
-              return filter.values?.includes(value)
-            }
-          }
-          return false
-        })
-      : data
-    const sorted = filtered.sort((a, b) => {
-      if (sortDirection === 'desc') {
-        return a[sortColumn] < b[sortColumn] ? 1 : -1
-      }
-      return a[sortColumn] > b[sortColumn] ? 1 : -1
-    })
-    return sorted
-  }, [data, filters, sortColumn, sortDirection])
+  const [meta, setMeta] = useState<ListMetaResponse>({
+    total: 0,
+    totalFiltered: 0,
+  })
+  useEffect(() => {
+    if (response.data) {
+      setMeta(response.data.meta)
+    }
+  }, [response.data])
 
-  const columns = useMemo<TableColumn<Row>[]>(
+  const columns = useMemo<TableColumn<HostRow>[]>(
     () => [
       {
         key: 'publicKey',
         label: 'Public key',
-        size: 5,
-        render: ({ publicKey }) => (
-          <Text ellipsis weight="semibold">
-            {publicKey}
-          </Text>
+        size: 3,
+        render: ({ host }) => (
+          <div className="flex flex-col gap-2">
+            <ValueCopyable
+              value={host.PublicKey}
+              maxLength={30}
+              label="host public key"
+            />
+            {host.Announcements && (
+              <ValueCopyable
+                value={host.Announcements[0].NetAddress}
+                type="ip"
+                color="subtle"
+                size="12"
+              />
+            )}
+          </div>
         ),
       },
       {
-        key: 'announcement',
-        label: 'Last announcement',
-        size: 2,
-        render: ({ announcement }) => <Text>{announcement}</Text>,
+        key: 'lastSeen',
+        label: 'Last seen',
+        size: 1.5,
+        sortable: 'time',
+        render: ({ host }) => {
+          const { Announcements } = host
+
+          if (!Announcements) {
+            return <Text>-</Text>
+          }
+
+          return (
+            <div className="flex flex-col gap-1">
+              <Text>
+                {formatDistance(
+                  new Date(Announcements[Announcements.length - 1].Timestamp),
+                  new Date(),
+                  { addSuffix: true }
+                )}
+              </Text>
+              <Text color="subtle" size="12">
+                {formatRelative(
+                  new Date(Announcements[Announcements.length - 1].Timestamp),
+                  new Date()
+                )}
+              </Text>
+            </div>
+          )
+        },
+      },
+      {
+        key: 'age',
+        label: 'Age',
+        size: 1.5,
+        sortable: 'time',
+        render: ({ host }) => {
+          const { Announcements } = host
+
+          if (!Announcements) {
+            return <Text>-</Text>
+          }
+
+          return (
+            <div className="flex flex-col gap-1">
+              <Text>
+                {formatDistance(
+                  new Date(),
+                  new Date(Announcements[0].Timestamp)
+                )}{' '}
+                old
+              </Text>
+              <Text color="subtle" size="12">
+                {formatRelative(
+                  new Date(Announcements[0].Timestamp),
+                  new Date()
+                )}
+              </Text>
+            </div>
+          )
+        },
+      },
+      {
+        key: 'version',
+        label: 'Version',
+        size: 1,
+        sortable: 'quality',
+        className: 'justify-center',
+        render: ({ host }) => {
+          return <Text>1.5.9</Text>
+        },
+      },
+      {
+        key: 'collateral',
+        label: 'Collateral',
+        size: 1,
+        sortable: 'quality',
+        className: 'justify-center',
+        render: ({ host }) => {
+          return <ValueSc variant="value" value={toHastings(1_040)} />
+        },
+      },
+      {
+        key: 'maxCollateral',
+        label: 'Max collateral',
+        size: 1,
+        sortable: 'quality',
+        className: 'justify-center',
+        render: ({ host }) => {
+          return <ValueSc variant="value" value={toHastings(1_040)} />
+        },
+      },
+      {
+        key: 'interactions',
+        label: 'Successful Interactions',
+        size: 1,
+        sortable: 'quality',
+        className: 'justify-center bg-accent-200/20',
+        render: ({ host }) => {
+          let val = new BigNumber(0)
+          if (host.Interactions) {
+            const result = host.Interactions?.reduce(
+              (acc, i) => ({
+                success: i.Result ? acc.success + 1 : acc.success,
+                fail: !i.Result ? acc.fail + 1 : acc.fail,
+              }),
+              {
+                success: 0,
+                fail: 0,
+              }
+            ) || {
+              success: 0,
+              fail: 0,
+            }
+            val = new BigNumber(result.fail).div(result.success + result.fail)
+          }
+          return (
+            <ValueNum
+              value={val}
+              variant="value"
+              // color="$gray9"
+              format={(v) => `${v.times(100)}%`}
+            />
+          )
+        },
+      },
+      {
+        key: 'uptime',
+        label: 'Uptime',
+        size: 1,
+        sortable: 'quality',
+        className: 'justify-center bg-accent-200/20',
+        render: ({ host }) => {
+          return (
+            <ValueNum
+              value={new BigNumber(0.998)}
+              variant="value"
+              // color="$gray9"
+              format={(v) => `${v.times(100)}%`}
+            />
+          )
+        },
+      },
+      {
+        key: 'whitelist',
+        label: 'Whitelist',
+        size: 1,
+        group: 'autopilot',
+        className: 'justify-center bg-accent-200/20',
+        render: (row) => (
+          <div className="flex gap-1" color="green">
+            <CheckmarkFilled16 />
+          </div>
+        ),
+      },
+      {
+        key: 'blacklist',
+        label: 'Blacklist',
+        size: 1,
+        group: 'autopilot',
+        className: 'justify-center bg-accent-200/20',
+        render: (row) => (
+          <div className="flex gap-1" color="red">
+            <CheckmarkFilled16 />
+          </div>
+        ),
       },
       {
         key: 'score',
         label: 'Score',
-        size: 2,
-        render: ({ score }) => (
+        size: 1,
+        sortable: 'quality',
+        group: 'autopilot',
+        className: 'justify-center bg-accent-200/20',
+        render: (row) => (
           <ValueNum
-            value={new BigNumber(score)}
+            value={new BigNumber(row.host.Score)}
             variant="value"
             // color="$gray9"
             format={(v) => humanNumber(v.toNumber())}
           />
         ),
       },
-      {
-        key: 'status',
-        label: 'Status',
-        size: 2,
-        render: ({ status }) => (
-          <Badge variant={status === 'blocked' ? 'red' : 'gray'}>
-            {status}
-          </Badge>
-        ),
-      },
-      {
-        key: 'actions',
-        label: '',
-        size: 0.5,
-        type: 'fixed',
-        props: {
-          justify: 'end',
-        },
-        render: ({ publicKey }) => <HostDropdownMenu id={publicKey} />,
-      },
+      // {
+      //   key: 'actions',
+      //   label: '',
+      //   size: 0.5,
+      //   type: 'fixed',
+      //   className: 'justify-end',
+      //   render: (row) => <HostDropdownMenu id={row.host.PublicKey} />,
+      // },
     ],
     []
   )
@@ -241,34 +382,21 @@ export function useHosts() {
 
   return {
     columns: filteredColumns,
-    hosts: filteredHosts,
+    hosts,
     configurableColumns,
     enabledColumns,
     toggleColumn,
-    setSortDirection,
-    setSortColumn,
-    sortColumn,
+    skip,
+    limit,
+    meta,
     filters,
     setFilter,
     removeFilter,
-    sortDirection,
     sortOptions,
+    setSortDir,
+    setSortBy,
+    sortBy,
+    sortDir,
     resetDefaultColumns,
-  }
-}
-
-function getTimeRange(range: 'day' | 'week' | 'month' | 'year') {
-  const now = getNowInMs()
-  if (range === 'month') {
-    return [now - getMonthsInMs(1), now]
-  }
-  if (range === 'week') {
-    return [now - getWeeksInMs(1), now]
-  }
-  if (range === 'year') {
-    return [now - getYearsInMs(1), now]
-  }
-  if (range === 'day') {
-    return [now - getDaysInMs(1), now]
   }
 }

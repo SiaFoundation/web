@@ -1,6 +1,5 @@
 import { useFormik } from 'formik'
 import BigNumber from 'bignumber.js'
-import { Flex } from '../../core/Flex'
 import { WalletSendSiacoinReceipt } from './Receipt'
 import {
   useWalletSign,
@@ -80,14 +79,14 @@ export function useSendSiacoinConfirmForm({ formData, fee, onConfirm }: Props) {
   })
 
   const form = (
-    <Flex direction="column" gap="2">
+    <div className="flex flex-col gap-4">
       <WalletSendSiacoinReceipt
         address={address}
         siacoin={siacoin}
         fee={fee}
         includeFee={includeFee}
       />
-    </Flex>
+    </div>
   )
 
   return {

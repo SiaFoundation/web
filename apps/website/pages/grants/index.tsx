@@ -6,12 +6,12 @@ import {
   getImageProps,
   webLinks,
   ContentProject,
-  NextLink,
+  Link,
   Ol,
   Li,
   Code,
   Text,
-  Flex,
+  Paragraph,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
@@ -33,11 +33,11 @@ const previewImageProps = getImageProps(previewImage)
 const title = 'Grants'
 const description = (
   <>
-    We’re excited to announce the launch of the Sia Foundation’s Grants Program!
-    We welcome and support contributors from all over the world to come and
-    build on Sia. Our goal for this program is to fund research, development,
-    developer tools, and anything else that will support and further our mission
-    of user-owned data while enriching the Sia ecosystem.
+    The Sia Foundation welcomes contributors from all over the world to come and
+    build on Sia through our Grants program. Our goal for this program is to
+    fund research, development, developer tools, and anything else that will
+    support and further our mission of user-owned data while enriching the Sia
+    ecosystem.
   </>
 )
 
@@ -50,7 +50,7 @@ export default function Grants({ services, grantCommittee }: Props) {
       description={textContent(description)}
       path={routes.community.index}
       heading={
-        <SectionSimple css={{ py: '$max' }}>
+        <SectionSimple className="pt-24 md:pt-40 pb-6 md:pb-20">
           <SiteHeading
             title={title}
             description={description}
@@ -73,11 +73,11 @@ export default function Grants({ services, grantCommittee }: Props) {
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <SectionWaves css={{ pt: '$12', pb: '$12' }}>
-        <Flex direction="column" css={{ maxWidth: '800px' }}>
+      <SectionWaves className="pt-6 md:pt-20 pb-16 md:pb-32">
+        <div className="flex flex-col max-w-3xl overflow-hidden">
           <SiteHeading
             size="32"
-            css={{ mb: '$12' }}
+            className="pb-16 md:pb-20"
             title="The Grant Process"
             description={
               <>
@@ -88,14 +88,14 @@ export default function Grants({ services, grantCommittee }: Props) {
             }
           />
           <ContentGallery
-            columns="1"
-            gap="7"
+            columnClassName="grid-cols-1"
+            gapClassName="gap-y-12 md:gap-y-20"
             items={[
               {
                 title: 'Proposal requirements',
                 icon: 'ListChecked',
                 children: (
-                  <Ol>
+                  <Ol className="mt-5 -ml-10 md:ml-0">
                     <Li size="14" index={1}>
                       Name of organization or individual and project name.
                     </Li>
@@ -127,15 +127,15 @@ export default function Grants({ services, grantCommittee }: Props) {
                 title: 'Proposal process',
                 icon: 'MailAll',
                 children: (
-                  <Ol>
+                  <Ol className="mt-5 -ml-10 md:ml-0">
                     <Li size="14" index={1}>
                       Create a proposal with the above requirements in mind.
                     </Li>
                     <Li size="14" index={2}>
                       Submit your proposal at{' '}
-                      <NextLink href={webLinks.forumGrants} target="_blank">
+                      <Link href={webLinks.forumGrants} target="_blank">
                         {webLinks.forumGrants}
-                      </NextLink>
+                      </Link>
                       .
                     </Li>
                     <Li size="14" index={3}>
@@ -146,7 +146,7 @@ export default function Grants({ services, grantCommittee }: Props) {
                       size="14"
                       index={4}
                       subList={
-                        <Ol css={{ marginTop: '$3' }}>
+                        <Ol className="mt-3" gapClassName="gap-1">
                           <Li size="14">
                             New proposals, to accept, reject, or request more
                             info.
@@ -170,7 +170,7 @@ export default function Grants({ services, grantCommittee }: Props) {
                 title: 'Grant committee',
                 icon: 'EventsAlt',
                 children: (
-                  <Ol>
+                  <Ol className="mt-5 -ml-10 md:ml-0">
                     {grantCommittee.map(({ name }) => (
                       <Li key={name} size="14">
                         {name}
@@ -182,64 +182,64 @@ export default function Grants({ services, grantCommittee }: Props) {
               {
                 title: 'Scoring rubric',
                 icon: 'TestTool',
-                subtitle: (
-                  <>
-                    All proposals are reviewed by the Grant Committee. When
-                    evaluating a grant proposal, the Committee considers the
-                    following factors while utilizing a scoring matrix to ensure
-                    a thorough vetting process.
-                  </>
-                ),
                 children: (
-                  <Ol css={{ marginTop: '$4' }}>
-                    <Li size="14" index={1}>
-                      <Text weight="semibold">
-                        In line with Foundation’s mission:
-                      </Text>{' '}
-                      Does the proposal address a recognized need in the
-                      decentralized cloud storage community? Is the need
-                      consistent with The Sia Foundation’s mission of user-owned
-                      data?
-                    </Li>
-                    <Li size="14" index={2}>
-                      <Text weight="semibold">Community Impact:</Text> Will the
-                      project provide a meaningful volume of services and/or
-                      people served in the decentralized cloud storage community
-                      (in particular the Sia community)?
-                    </Li>
-                    <Li size="14" index={3}>
-                      <Text weight="semibold">
-                        Goals, Objectives & Outcome:
-                      </Text>{' '}
-                      Are there clear goals and objectives written? Are
-                      measurable outcomes evident?
-                    </Li>
-                    <Li size="14" index={4}>
-                      <Text weight="semibold">Deliverable:</Text> How well does
-                      the individual/organization demonstrate the ability to
-                      deliver and measure proposed outcomes?
-                    </Li>
-                    <Li size="14" index={5}>
-                      <Text weight="semibold">Risks:</Text> Is the risk
-                      reasonable for the timeline provided? Please be thoughtful
-                      if the risk is high enough to impact the outcome of the
-                      project.
-                    </Li>
-                    <Li size="14" index={6}>
-                      <Text weight="semibold">Budget Justification:</Text> How
-                      well does the applicant justify the budget?
-                    </Li>
-                  </Ol>
+                  <div className="mt-3 -ml-10 md:ml-0">
+                    <Paragraph size="14">
+                      All proposals are reviewed by the Grant Committee. When
+                      evaluating a grant proposal, the Committee considers the
+                      following factors while utilizing a scoring matrix to
+                      ensure a thorough vetting process.
+                    </Paragraph>
+                    <Ol className="mt-6">
+                      <Li size="14" index={1}>
+                        <Text weight="semibold">
+                          In line with Foundation’s mission:
+                        </Text>{' '}
+                        Does the proposal address a recognized need in the
+                        decentralized cloud storage community? Is the need
+                        consistent with The Sia Foundation’s mission of
+                        user-owned data?
+                      </Li>
+                      <Li size="14" index={2}>
+                        <Text weight="semibold">Community Impact:</Text> Will
+                        the project provide a meaningful volume of services
+                        and/or people served in the decentralized cloud storage
+                        community (in particular the Sia community)?
+                      </Li>
+                      <Li size="14" index={3}>
+                        <Text weight="semibold">
+                          Goals, Objectives & Outcome:
+                        </Text>{' '}
+                        Are there clear goals and objectives written? Are
+                        measurable outcomes evident?
+                      </Li>
+                      <Li size="14" index={4}>
+                        <Text weight="semibold">Deliverable:</Text> How well
+                        does the individual/organization demonstrate the ability
+                        to deliver and measure proposed outcomes?
+                      </Li>
+                      <Li size="14" index={5}>
+                        <Text weight="semibold">Risks:</Text> Is the risk
+                        reasonable for the timeline provided? Please be
+                        thoughtful if the risk is high enough to impact the
+                        outcome of the project.
+                      </Li>
+                      <Li size="14" index={6}>
+                        <Text weight="semibold">Budget Justification:</Text> How
+                        well does the applicant justify the budget?
+                      </Li>
+                    </Ol>
+                  </div>
                 ),
               },
             ]}
           />
-        </Flex>
+        </div>
       </SectionWaves>
-      <SectionGradient css={{ py: '$9' }}>
+      <SectionGradient>
         <SiteHeading
           size="32"
-          css={{ mt: '$9' }}
+          className="pt-20 md:pt-40 pb-24 md:pb-32"
           title="Interested in a grant but have questions?"
           description={
             <>
@@ -261,7 +261,7 @@ export default function Grants({ services, grantCommittee }: Props) {
         />
         <SiteHeading
           size="32"
-          css={{ mt: '$15' }}
+          className="pt-16 md:pt-40 pb-10 md:pb-20"
           title="Check out what people are building on Sia"
           description={
             <>
@@ -283,14 +283,9 @@ export default function Grants({ services, grantCommittee }: Props) {
             newTab: true,
           }))}
           component={ContentProject}
-          columns={{
-            '@initial': 1,
-            '@bp2': 2,
-            '@bp4': 3,
-          }}
         />
         <Callout
-          css={{ my: '$12' }}
+          className="mt-20 md:mt-40 mb-24 md:mb-32"
           title="Get started on your grant proposal"
           size="2"
           description={

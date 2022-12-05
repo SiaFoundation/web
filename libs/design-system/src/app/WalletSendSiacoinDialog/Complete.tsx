@@ -1,5 +1,4 @@
 import BigNumber from 'bignumber.js'
-import { Flex } from '../../core/Flex'
 import { Text } from '../../core/Text'
 import { CheckmarkFilled32 } from '../../icons/carbon'
 import { WalletSendSiacoinReceipt } from './Receipt'
@@ -20,7 +19,7 @@ export function WalletSendSiacoinComplete({
   transactionId,
 }: Props) {
   return (
-    <Flex direction="column" gap="2">
+    <div className="flex flex-col gap-4">
       <WalletSendSiacoinReceipt
         address={address}
         siacoin={siacoin}
@@ -28,16 +27,10 @@ export function WalletSendSiacoinComplete({
         includeFee={includeFee}
         transactionId={transactionId}
       />
-      <Flex
-        direction="column"
-        align="center"
-        justify="center"
-        gap="1"
-        css={{ margin: '$2 0' }}
-      >
+      <div className="flex flex-col items-center justify-center gap-2 my-4">
         <CheckmarkFilled32 />
         <Text>Transaction successfully broadcasted.</Text>
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   )
 }

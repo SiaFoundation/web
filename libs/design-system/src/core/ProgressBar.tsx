@@ -1,65 +1,14 @@
 import React from 'react'
-import { styled, keyframes, CSS, VariantProps } from '../config/theme'
 import * as ProgressPrimitive from '@radix-ui/react-progress'
-import { Flex } from './Flex'
 import { Text } from './Text'
+import { cva } from 'class-variance-authority'
+import { VariantProps } from '../types'
 
-const indeterminateProgress = keyframes({
-  '0%': {
-    transform: 'scaleX(1) translateX(-100%)',
-    transformOrigin: 'left',
-  },
-  '50%': {
-    transform: 'scaleX(1) translateX(1000%)',
-    transformOrigin: 'left',
-  },
-  '100%': {
-    transform: 'scaleX(1) translateX(2000%)',
-    transformOrigin: 'left',
-  },
-})
-
-const StyledProgressBar = styled(ProgressPrimitive.Root, {
-  boxSizing: 'border-box',
-  position: 'relative',
-  height: '$0-5',
-  width: '100%',
-  overflow: 'hidden',
-  borderRadius: '$pill',
-
-  '&[data-state="indeterminate"]': {
-    backgroundColor: '$gray4',
-    '&::after': {
-      animationName: indeterminateProgress,
-      animationDuration: '1500ms',
-      animationIterationCount: 'infinite',
-      animationTimingFunction: 'cubic-bezier(0.65, 0, 0.35, 1)',
-      backgroundColor: '$gray7',
-      boxSizing: 'border-box',
-      borderRadius: '$pill',
-      content: '""',
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      left: 0,
-      width: '5%',
-    },
-  },
-
+const styles = cva(['relative h-1 w-full overflow-hidden rounded-lg'], {
   variants: {
     variant: {
-      gray: {
-        background: '$gray8',
-      },
-      accent: {
-        backgroundColor: '$accent9',
-      },
-      gradient: {
-        // backgroundImage:
-        //   'linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%)',
-        backgroundImage:
-          'linear-gradient(90deg, rgba(131,58,180,1) 0%, $accent9 50%, rgba(252,176,69,1) 100%)',
-      },
+      gray: 'bg-gray-700 dark:bg-graydark-700',
+      accent: 'bg-green-600 dark:bg-green-500',
     },
   },
   defaultVariants: {
@@ -67,43 +16,32 @@ const StyledProgressBar = styled(ProgressPrimitive.Root, {
   },
 })
 
-const ProgressBarIndicator = styled(ProgressPrimitive.Indicator, {
-  boxSizing: 'border-box',
-  position: 'absolute',
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0,
-  width: '100%',
-  backgroundColor: '$gray4',
-  transition: 'transform 150ms cubic-bezier(0.65, 0, 0.35, 1)',
-})
-
-type ProgressBarVariants = VariantProps<typeof StyledProgressBar>
-type ProgressBarPrimitiveProps = React.ComponentProps<
-  typeof ProgressPrimitive.Root
->
-type ProgressBarProps = ProgressBarPrimitiveProps &
-  ProgressBarVariants & { css?: CSS; label?: string }
-
 export const ProgressBar = React.forwardRef<
-  React.ElementRef<typeof StyledProgressBar>,
-  ProgressBarProps
->(({ label, value, max = 100, ...props }, forwardedRef) => {
+  React.ElementRef<typeof ProgressPrimitive.Root>,
+  VariantProps<typeof styles> &
+    ProgressPrimitive.ProgressProps & { label?: string }
+>(({ label, variant, className, value, max = 100, ...props }, forwardedRef) => {
   const percentage = value != null ? Math.round((value / max) * 100) : null
 
   return (
-    <Flex direction="column" gap="0-5" css={{ width: '100%' }}>
-      <StyledProgressBar {...props} ref={forwardedRef} value={value} max={max}>
-        <ProgressBarIndicator
+    <div className="flex flex-col gap-1 w-full">
+      <ProgressPrimitive.Root
+        {...props}
+        ref={forwardedRef}
+        value={value}
+        max={max}
+        className={styles({ variant, className })}
+      >
+        <ProgressPrimitive.Indicator
+          className="absolute top-0 right-0 left-0 bottom-0 w-full bg-gray-300 dark:bg-graydark-300 transition-transform"
           style={{ transform: `translateX(${percentage}%)` }}
         />
-      </StyledProgressBar>
+      </ProgressPrimitive.Root>
       {label && (
         <Text color="subtle" size="12" ellipsis>
           {label}
         </Text>
       )}
-    </Flex>
+    </div>
   )
 })

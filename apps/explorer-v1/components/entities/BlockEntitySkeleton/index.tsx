@@ -1,47 +1,33 @@
 import {
-  AnimatedPanel,
-  Container,
-  Flex,
   Skeleton,
   EntityList,
   DatumSkeleton,
 } from '@siafoundation/design-system'
 import { times } from 'lodash'
+import { ContentLayout } from '../../ContentLayout'
 
 export function BlockEntitySkeleton() {
   return (
-    <>
-      <Container>
-        <Flex direction="column" gap="6">
-          <AnimatedPanel
-            variant="subtle"
-            startTime={0}
-            css={{
-              padding: '$3',
-              borderRadius: '$2',
-            }}
-          >
-            <Flex direction="column" gap="5">
-              <Flex gap="3" justify="between" wrap="wrap">
-                <Skeleton css={{ height: '40px', width: '250px' }} />
-                <Skeleton css={{ height: '40px', width: '200px' }} />
-              </Flex>
-              <Flex direction="column" gap="4">
-                <Flex direction="column" gapY="3">
-                  {times(5, (i) => (
-                    <DatumSkeleton key={i} />
-                  ))}
-                </Flex>
-                <Skeleton css={{ width: '100px', height: '24px' }} />
-                <Skeleton css={{ width: '80px', height: '24px' }} />
-              </Flex>
-            </Flex>
-          </AnimatedPanel>
-        </Flex>
-      </Container>
-      <Container>
-        <EntityList title="Transactions" entities={undefined} />
-      </Container>
-    </>
+    <ContentLayout
+      panel={
+        <div className="flex flex-col gap-16">
+          <div className="flex flex-wrap gap-6 justify-between">
+            <Skeleton className="h=[40px] w-[250px]" />
+            <Skeleton className="h=[40px] w-[200px]" />
+          </div>
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-y-6">
+              {times(5, (i) => (
+                <DatumSkeleton key={i} />
+              ))}
+            </div>
+            <Skeleton className="w-[100px] h-6" />
+            <Skeleton className="w-[80px] h-6" />
+          </div>
+        </div>
+      }
+    >
+      <EntityList title="Transactions" entities={undefined} />
+    </ContentLayout>
   )
 }

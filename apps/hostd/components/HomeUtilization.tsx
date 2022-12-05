@@ -1,6 +1,5 @@
 import {
   ChartXY,
-  Flex,
   Text,
   Heading,
   DatumCardConfigurable,
@@ -13,8 +12,8 @@ import { useData } from '../contexts/data'
 export function HomeUtilization() {
   const { storage, bandwidth } = useData()
   return (
-    <Flex gap="3-5">
-      <Flex direction="column" gap="3-5" css={{ flex: 1, overflow: 'hidden' }}>
+    <div className="flex gap-7">
+      <div className="flex flex-col gap-7 flex-1 overflow-hidden">
         <Heading>Storage</Heading>
         <DatumScrollArea>
           <DatumCardConfigurable
@@ -48,8 +47,8 @@ export function HomeUtilization() {
             </>
           }
         />
-      </Flex>
-      <Flex direction="column" gap="3-5" css={{ flex: 1, overflow: 'hidden' }}>
+      </div>
+      <div className="flex flex-col gap-7 flex-1 overflow-hidden">
         <Heading>Bandwidth</Heading>
         <DatumScrollArea>
           <DatumCardConfigurable
@@ -81,7 +80,7 @@ export function HomeUtilization() {
             </>
           }
         />
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   )
 }

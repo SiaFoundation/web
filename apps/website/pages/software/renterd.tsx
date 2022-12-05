@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
-  Flex,
   ContentGallery,
   Callout,
   Code,
@@ -8,7 +7,7 @@ import {
   SiteHeading,
   getImageProps,
   webLinks,
-  NextLink,
+  Link,
   Text,
   LogoGithub24,
 } from '@siafoundation/design-system'
@@ -47,30 +46,19 @@ type Props = AsyncReturnType<typeof getStaticProps>['props']
 
 export default function Renterd({ technical, tutorials, services }: Props) {
   const downloadEl = (
-    <Flex
-      direction={{
-        '@initial': 'column',
-        '@bp2': 'row',
-      }}
-      align={{
-        '@initial': 'start',
-        '@bp2': 'center',
-      }}
-      gap="1"
-    >
-      <Text weight="bold">
-        <NextLink
-          href="https://github.com/SiaFoundation/renterd"
-          target="_blank"
-        >
-          <Flex align="center" gap="1">
-            <LogoGithub24 />
-            Pre-release source code.
-          </Flex>
-        </NextLink>
-      </Text>
+    <div className="flex flex-row flex-wrap items-center gap-x-2 gap-y-3">
+      <Link
+        weight="bold"
+        href="https://github.com/SiaFoundation/renterd"
+        target="_blank"
+      >
+        <div className="flex items-center gap-2">
+          <LogoGithub24 />
+          Pre-release source code.
+        </div>
+      </Link>
       <Text color="subtle">The first official release is coming soon.</Text>
-    </Flex>
+    </div>
   )
 
   return (
@@ -79,37 +67,20 @@ export default function Renterd({ technical, tutorials, services }: Props) {
       description={textContent(description)}
       path={routes.getStarted.index}
       heading={
-        <SectionSimple
-          css={{
-            pt: '$max',
-            pb: '$3',
-            '@bp2': {
-              pb: 0,
-            },
-          }}
-        >
-          <SiteHeading size="64" title={title} description={description}>
-            <Flex direction="column" gap="2" css={{ pt: '200px' }}>
-              {downloadEl}
-            </Flex>
-          </SiteHeading>
+        <SectionSimple className="pt-24 pb-0 md:pt-32 md:pb-0">
+          <SiteHeading size="64" title={title} description={description} />
+          <div className="block xl:hidden pt-32 pb-4">{downloadEl}</div>
         </SectionSimple>
       }
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <SectionGradient
-        css={{
-          pt: '$3',
-          '@bp2': {
-            pt: '$1',
-          },
-          pb: '$12',
-        }}
-      >
+      <SectionGradient className="pt-8 xl:pt-6 pb:30">
+        <div className="hidden xl:block pt-52">{downloadEl}</div>
         <RenterdUICarousel />
         <SiteHeading
           size="24"
+          className="mt-16 mb-16 md:mb-24"
           eyebrow="Coming soon"
           title="Manage your storage with a powerful user interface"
           description={
@@ -121,17 +92,10 @@ export default function Renterd({ technical, tutorials, services }: Props) {
           }
         />
       </SectionGradient>
-      <SectionWaves css={{ py: '$12' }}>
-        <Flex
-          gap="9"
-          direction={{
-            '@initial': 'column',
-            '@bp3': 'row',
-          }}
-          css={{ width: '100%', overflow: 'hidden' }}
-        >
+      <SectionWaves>
+        <div className="flex flex-col lg:flex-row gap-x-16 gap-y-0 lg:justify-between lg:items-center w-full overflow-hidden pb-16 pt-6 md:pt-16">
           <SiteHeading
-            css={{ marginTop: '30px', flex: 1 }}
+            className="flex-1"
             title="Smart defaults for the everyday user"
             description={
               <>
@@ -144,14 +108,6 @@ export default function Renterd({ technical, tutorials, services }: Props) {
             }
           />
           <Terminal
-            css={{
-              '@initial': {
-                width: '100%',
-              },
-              '@bp2': {
-                width: '500px',
-              },
-            }}
             sequences={[
               [
                 {
@@ -187,18 +143,12 @@ export default function Renterd({ technical, tutorials, services }: Props) {
               ],
             ]}
           />
-        </Flex>
+        </div>
       </SectionWaves>
-      <SectionGradient
-        css={{
-          pt: '$15',
-          pb: '$12',
-          background:
-            'linear-gradient(177deg, $colors$loContrast 5%, $colors$slate2 25%, $colors$loContrast 45%)',
-        }}
-      >
+      <SectionGradient>
         <SiteHeading
           title="Modular APIs that give developers more control"
+          className="pt-20 md:pt-32"
           description={
             <>
               We've designed a brand-new API for renting that offers both power
@@ -210,152 +160,113 @@ export default function Renterd({ technical, tutorials, services }: Props) {
               perfect for massive renting operations.
             </>
           }
-        >
-          <Flex
-            direction={{
-              '@initial': 'column',
-              '@bp2': 'row',
-            }}
-            gap="3"
-            css={{ width: '100%', pb: '$6' }}
-          >
-            <Flex
-              direction="column"
-              gap="1"
-              css={{ flex: 1, overflow: 'hidden' }}
-            >
-              <Text css={{ marginTop: '$3' }}>
-                <Text weight="bold">Example:</Text> Build a contract formation
-                transaction.
-              </Text>
-              <Terminal
-                css={{
-                  '@bp3': {
-                    width: '500px',
+        />
+        <div className="flex flex-row flex-wrap justify-between gap-6 w-full pb-12">
+          <div className="flex flex-col gap-2 overflow-hidden">
+            <Text className="mt-6">
+              <Text weight="bold">Example:</Text> Build a contract formation
+              transaction.
+            </Text>
+            <Terminal
+              sequences={[
+                [
+                  {
+                    command: [
+                      'curl -X POST http://localhost:9980/api/wallet/prepare/form --json \\',
+                      "'" +
+                        JSON.stringify(
+                          {
+                            hostKey:
+                              'ed25519:15433dcd697167a6b40f2434aaf462badc9b9cbc5894726644d3221a6a196c2f',
+                            renterFunds: '1000000000000000',
+                            endHeight: '400000',
+                          },
+                          null,
+                          2
+                        ) +
+                        "'",
+                    ],
+                    result: ['[{ file contract transaction }]'],
                   },
-                }}
-                sequences={[
-                  [
-                    {
-                      command: [
-                        'curl -X POST http://localhost:9980/api/wallet/prepare/form --json \\',
-                        "'" +
-                          JSON.stringify(
-                            {
-                              hostKey:
-                                'ed25519:15433dcd697167a6b40f2434aaf462badc9b9cbc5894726644d3221a6a196c2f',
-                              renterFunds: '1000000000000000',
-                              endHeight: '400000',
-                            },
-                            null,
-                            2
-                          ) +
-                          "'",
-                      ],
-                      result: ['[{ file contract transaction }]'],
-                    },
-                    {
-                      command: [
-                        'curl -X POST http://localhost:9980/api/wallet/sign --json \\',
-                        "'{ file contract transaction }'",
-                      ],
-                      result: ['{ signed transaction }'],
-                    },
-                    {
-                      command: [
-                        'curl -X POST http://localhost:9980/api/rhp/form --json \\',
-                        "'" +
-                          `{
+                  {
+                    command: [
+                      'curl -X POST http://localhost:9980/api/wallet/sign --json \\',
+                      "'{ file contract transaction }'",
+                    ],
+                    result: ['{ signed transaction }'],
+                  },
+                  {
+                    command: [
+                      'curl -X POST http://localhost:9980/api/rhp/form --json \\',
+                      "'" +
+                        `{
   "hostKey": "ed25519:15433dcd697167a6b40f2434aaf462badc9b9cbc5894726644d3221a6a196c2f",
   "hostIP": "161.88.0.733:9982",
   "transactionSet": [{ signed transaction }]
 }'`,
-                      ],
-                      result: [
-                        JSON.stringify(
-                          {
-                            contractID:
-                              'f68272bad8ae85a075158e8065ce67823a311be4416c02ad993cc29777a6694a',
-                          },
-                          null,
-                          2
-                        ),
-                      ],
-                    },
-                  ],
-                ]}
-              />
-            </Flex>
-            <Flex
-              direction="column"
-              gap="1"
-              css={{ flex: 1, overflow: 'hidden' }}
-            >
-              <Text css={{ marginTop: '$3' }}>
-                <Text weight="bold">Example:</Text> Upload a file.
-              </Text>
-              <Terminal
-                css={{
-                  '@bp3': {
-                    width: '500px',
+                    ],
+                    result: [
+                      JSON.stringify(
+                        {
+                          contractID:
+                            'f68272bad8ae85a075158e8065ce67823a311be4416c02ad993cc29777a6694a',
+                        },
+                        null,
+                        2
+                      ),
+                    ],
                   },
-                }}
-                sequences={[
-                  [
-                    {
-                      command: [
-                        'curl http://localhost:9980/api/slabs/upload \\',
-                        `  -F meta='{
+                ],
+              ]}
+            />
+          </div>
+          <div className="flex flex-col gap-2 overflow-hidden">
+            <Text className="mt-6">
+              <Text weight="bold">Example:</Text> Upload a file.
+            </Text>
+            <Terminal
+              sequences={[
+                [
+                  {
+                    command: [
+                      'curl http://localhost:9980/api/slabs/upload \\',
+                      `  -F meta='{
   "minShards": 3,
   "totalShards": 10,
   "contracts": [ file contracts ]
 }' \\`,
-                        '-F data=@movie.mp4',
-                      ],
-                      result: [
-                        JSON.stringify(
-                          [
-                            {
-                              key: 'key:35d3ee7e94f74c671cbb754ce7b2568a740874b2921e370d6444b356752f23e8',
-                              minShards: 3,
-                              shards: [
-                                {
-                                  host: 'ed25519:15433dcd697167a6b40f2434aaf462badc9b9cbc5894726644d3221a6a196c2f',
-                                  root: 'a0e70901fb4753db933a27b5cc9dd77c5dcbf55b879ece34555a3928d4178b83',
-                                },
-                              ],
-                            },
-                          ],
-                          null,
-                          2
-                        ),
-                      ],
-                    },
-                  ],
-                ]}
-              />
-            </Flex>
-          </Flex>
-        </SiteHeading>
-        <Flex
-          gapX="6"
-          gapY="15"
-          justify="between"
-          wrap="wrap"
-          css={{ '@bp1': { mt: '$12' } }}
-        >
-          <SiteHeading
-            css={{
-              '@bp2': {
-                mt: '$12',
-              },
-            }}
-            title="Download renterd"
-          >
-            <Flex css={{ m: '$5 0' }}>{downloadEl}</Flex>
+                      '-F data=@movie.mp4',
+                    ],
+                    result: [
+                      JSON.stringify(
+                        [
+                          {
+                            key: 'key:35d3ee7e94f74c671cbb754ce7b2568a740874b2921e370d6444b356752f23e8',
+                            minShards: 3,
+                            shards: [
+                              {
+                                host: 'ed25519:15433dcd697167a6b40f2434aaf462badc9b9cbc5894726644d3221a6a196c2f',
+                                root: 'a0e70901fb4753db933a27b5cc9dd77c5dcbf55b879ece34555a3928d4178b83',
+                              },
+                            ],
+                          },
+                        ],
+                        null,
+                        2
+                      ),
+                    ],
+                  },
+                ],
+              ]}
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-30 items-center justify-between mt-12 md:mt-40">
+          <SiteHeading title="Download renterd">
+            <div className="mt-2">{downloadEl}</div>
           </SiteHeading>
           <Callout
-            css={{ maxWidth: '500px' }}
+            className="w-full md:max-w-lg md:h-[500px]"
             title="Learn more about renterd"
             description={
               <>
@@ -367,10 +278,10 @@ export default function Renterd({ technical, tutorials, services }: Props) {
             actionTitle="Join the Discord"
             actionLink={webLinks.discord}
           />
-        </Flex>
+        </div>
         <SiteHeading
           size="32"
-          css={{ mt: '$max' }}
+          className="mt-32 md:mt-40 pb-12 md:pb-20"
           title="Companies and projects building on Sia"
           description={
             <>
@@ -387,18 +298,14 @@ export default function Renterd({ technical, tutorials, services }: Props) {
         />
         <ContentGallery
           component={ContentProject}
-          columns={{
-            '@initial': 1,
-            '@bp2': 2,
-            '@bp4': 3,
-          }}
           items={services}
+          className="mb-24"
         />
       </SectionGradient>
       <SectionGradient>
         <SiteHeading
           size="32"
-          css={{ mt: '$12' }}
+          className="mt-12 md:mt-24 pb-12 md:pb-20"
           title="Tutorials for developers new to Sia"
           description={
             <>Technical tutorials for new developers looking to build on Sia.</>
@@ -407,7 +314,7 @@ export default function Renterd({ technical, tutorials, services }: Props) {
         <ContentGallery items={tutorials} />
         <SiteHeading
           size="32"
-          css={{ mt: '$12' }}
+          className="mt-32 md:mt-60"
           title="Learn about the technology behind Sia"
           description={
             <>
@@ -416,9 +323,9 @@ export default function Renterd({ technical, tutorials, services }: Props) {
             </>
           }
         />
-        <ContentGallery columns="1" items={technical} />
+        <ContentGallery columnClassName="grid-cols-1" items={technical} />
         <Callout
-          css={{ mt: '$12', mb: '$max' }}
+          className="mt-24 md:mt-40 mb-24 md:mb-40"
           title="Sia 101"
           size="2"
           description={

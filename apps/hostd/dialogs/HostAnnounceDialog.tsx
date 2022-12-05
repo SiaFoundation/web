@@ -1,13 +1,12 @@
 import {
-  Flex,
   Paragraph,
   Button,
   Text,
   Bullhorn20,
-  DialogContent,
   triggerToast,
   hostnameOrIpRegex,
   FormField,
+  Dialog,
 } from '@siafoundation/design-system'
 import { useSyncerConnect } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
@@ -31,7 +30,13 @@ const validationSchema = Yup.object().shape({
     ),
 })
 
-export function HostAnnounceDialog() {
+type Props = {
+  trigger?: React.ReactNode
+  open: boolean
+  onOpenChange: (val: boolean) => void
+}
+
+export function HostAnnounceDialog({ trigger, open, onOpenChange }: Props) {
   const { closeDialog } = useDialog()
   const connect = useSyncerConnect()
 
@@ -58,17 +63,19 @@ export function HostAnnounceDialog() {
   })
 
   return (
-    <DialogContent
+    <Dialog
       title="Announce host"
-      css={{
-        maxWidth: '400px',
-        overflow: 'hidden',
+      trigger={trigger}
+      open={open}
+      onOpenChange={onOpenChange}
+      contentVariants={{
+        className: 'max-w-[400px]',
       }}
     >
-      <Flex direction="column" gap="2">
+      <div className="flex flex-col gap-4">
         <Paragraph size="14">Announce this host to the network.</Paragraph>
         <form onSubmit={formik.handleSubmit}>
-          <Flex direction="column" gap="2">
+          <div className="flex flex-col gap-4">
             <FormField
               formik={formik}
               title="Address"
@@ -86,10 +93,10 @@ export function HostAnnounceDialog() {
               type="number"
             />
             {formik.status?.error && (
-              <Text css={{ color: '$red11' }}>{formik.status.error}</Text>
+              <Text color="red">{formik.status.error}</Text>
             )}
             <Button
-              size="2"
+              size="medium"
               disabled={formik.isSubmitting || !formik.isValid}
               variant="accent"
               state={formik.isSubmitting ? 'waiting' : undefined}
@@ -98,9 +105,9 @@ export function HostAnnounceDialog() {
               <Bullhorn20 />
               Announce
             </Button>
-          </Flex>
+          </div>
         </form>
-      </Flex>
-    </DialogContent>
+      </div>
+    </Dialog>
   )
 }

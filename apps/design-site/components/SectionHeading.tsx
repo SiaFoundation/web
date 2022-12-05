@@ -1,58 +1,18 @@
-import {
-  Box,
-  Heading,
-  NextLink,
-  Link20,
-  Flex,
-} from '@siafoundation/design-system'
+import { Heading, Link, Link20 } from '@siafoundation/design-system'
 
 type Props = {
   id?: string
   children: string
-  hideSeparator?: boolean
 }
 
-export function SectionHeading({ id, children, hideSeparator }: Props) {
+export function SectionHeading({ id, children }: Props) {
   const cId = id || children.toLowerCase()
   return (
-    <Flex
-      direction="column"
-      gap="3"
-      align="start"
-      css={{
-        pt: '$3',
-        pb: '$2',
-      }}
-    >
-      <NextLink
-        href={`#${cId}`}
-        id={cId}
-        css={{
-          color: '$slate11',
-          position: 'relative',
-          display: 'inline-block',
-          '&:hover, &:hover > *': {
-            color: '$slate12',
-          },
-        }}
-      >
-        <Box
-          css={{
-            transition: 'color 0.1s linear',
-            position: 'absolute',
-            top: '$1',
-            left: '-22px',
-            color: '$slate7',
-            display: 'none',
-            '@bp2': {
-              display: 'block',
-            },
-          }}
-        >
-          <Link20 />
-        </Box>
+    <div className="flex flex-col gap-6 items-start pt-40">
+      <Link href={`#${cId}`} id={cId} className="relative">
+        <Link20 className="absolute top-1 -left-7 hidden md:block" />
         <Heading size="32">{children}</Heading>
-      </NextLink>
-    </Flex>
+      </Link>
+    </div>
   )
 }

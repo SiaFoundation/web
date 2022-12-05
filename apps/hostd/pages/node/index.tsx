@@ -1,9 +1,4 @@
-import {
-  DatumCard,
-  Flex,
-  PeerList,
-  TxPoolList,
-} from '@siafoundation/design-system'
+import { DatumCard, PeerList, TxPoolList } from '@siafoundation/design-system'
 import {
   useConsensusTip,
   useSyncerPeers,
@@ -27,7 +22,7 @@ export default function NodePage() {
 
   return (
     <HostdAuthedLayout title="Node">
-      <Flex gap="3-5" wrap="wrap">
+      <div className="flex flex-wrap gap-7">
         <DatumCard
           label="Connected peers"
           value={peers.data?.length}
@@ -35,7 +30,7 @@ export default function NodePage() {
         />
         <DatumCard label="Transactions in pool" value={txPool.data?.length} />
         <DatumCard label="Consensus tip" hash={tip.data?.ID} />
-      </Flex>
+      </div>
       <PeerList connectPeer={() => openDialog('connectPeer')} />
       <TxPoolList />
     </HostdAuthedLayout>

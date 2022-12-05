@@ -82,7 +82,7 @@ export function FileExplorer() {
           size="12"
           value={new BigNumber(size)}
           variant="value"
-          color="$gray9"
+          color="subtle"
           format={(v) => humanBytes(v.toNumber())}
         />
       ),
@@ -92,7 +92,7 @@ export function FileExplorer() {
       label: 'Health',
       size: 2,
       render: ({ health }) => (
-        <Badge variant={health < 0.97 ? 'crimson' : 'green'}>
+        <Badge variant={health < 0.97 ? 'red' : 'green'}>
           {(health * 100).toFixed(0)}%
         </Badge>
       ),
@@ -101,9 +101,7 @@ export function FileExplorer() {
       key: 'actions',
       label: '',
       size: 0.5,
-      props: {
-        justify: 'end',
-      },
+      className: 'justify-end',
       render: ({ path }) => <ObjectDropdownMenu id={path} />,
     },
   ]

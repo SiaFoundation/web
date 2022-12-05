@@ -1,6 +1,5 @@
 import React from 'react'
 import { Container } from '../../core/Container'
-import { Flex } from '../../core/Flex'
 import { ScrollArea } from '../../core/ScrollArea'
 import { AppBackdrop } from '../AppBackdrop'
 import { Sidenav } from './Sidenav'
@@ -40,24 +39,19 @@ export function AppAuthedLayout({
   return (
     <AppRootLayout routes={routes}>
       <AppBackdrop />
-      <Flex css={{ height: '100%', width: '100%' }}>
+      <div className="flex h-full w-full">
         <Sidenav routes={routes} openSettings={openSettings}>
           {sidenav}
         </Sidenav>
-        <Flex direction="column" css={{ flex: 1, overflow: 'hidden' }}>
+        <div className="flex flex-col flex-1 overflow-hidden">
           <AppNavbar title={title} filters={filters} actions={actions} />
           <ScrollArea>
-            <Container
-              size={size}
-              css={{ padding: size !== 'flush' ? '$3-5' : undefined }}
-            >
-              <Flex direction="column" gap="3-5">
-                {children}
-              </Flex>
+            <Container size={size} pad={false} className="p-5">
+              <div className="flex flex-col gap-5">{children}</div>
             </Container>
           </ScrollArea>
-        </Flex>
-      </Flex>
+        </div>
+      </div>
     </AppRootLayout>
   )
 }

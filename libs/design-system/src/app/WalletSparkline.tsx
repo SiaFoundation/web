@@ -1,5 +1,4 @@
 import { useMemo } from 'react'
-import { Box } from '../core/Box'
 import {
   ChartXY,
   ChartPoint,
@@ -13,17 +12,32 @@ import { formatChartData, timeRangeNoRollup } from '../lib/chartData'
 import { ChartStats, computeChartStats } from '../lib/chartStats'
 import { useWalletTransactions } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
-
-const chartConfigs = {
-  sc: {
-    color: 'var(--colors-accent9)',
-  },
-  sf: {
-    color: 'var(--colors-yellow9)',
-  },
-}
+import { useTheme } from '../hooks/useTheme'
+import { colors } from '../config/colors'
 
 export function WalletSparkline() {
+  const { activeTheme } = useTheme()
+  const chartConfigs = useMemo(
+    () =>
+      activeTheme === 'light'
+        ? {
+            sc: {
+              color: colors.accent[800],
+            },
+            sf: {
+              color: colors.yellow[800],
+            },
+          }
+        : {
+            sc: {
+              color: colors.accentdark[800],
+            },
+            sf: {
+              color: colors.yellow[700],
+            },
+          },
+    [activeTheme]
+  )
   const transactions = useWalletTransactions()
 
   const scData = useMemo(() => {
@@ -82,16 +96,16 @@ export function WalletSparkline() {
         formatTimestamp: timeRangeNoRollup.label,
       },
     }
-  }, [scData, timeRange])
+  }, [scData, timeRange, chartConfigs])
 
   return (
-    <Box css={{ position: 'relative' }}>
+    <div className="relative">
       <ChartXY
         id="balance"
         height={200}
         data={scChart.data}
         config={scChart.config}
       />
-    </Box>
+    </div>
   )
 }

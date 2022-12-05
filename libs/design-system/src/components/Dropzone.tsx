@@ -1,6 +1,6 @@
+import { cx } from 'class-variance-authority'
 import { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { Box } from '../core/Box'
 import { Paragraph } from '../core/Paragraph'
 
 type Props = {
@@ -19,31 +19,26 @@ export function Dropzone({ title, onFiles }: Props) {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
-    <Box
+    <div
+      className={cx(
+        'w-full',
+        'h-[100px]',
+        'rounded',
+        'p-4',
+        'flex justify-center items-center text-center',
+        'border-2 border-dashed',
+        'border-green-600 dark:border-green-500',
+        'hover:border-green-700 hover:dark:border-green-500',
+        isDragActive
+          ? 'border-green-700 dark:border-green-500 bg-green-100 dark:bg-green-100/20'
+          : ''
+      )}
       {...getRootProps()}
-      css={{
-        border: '3px dashed $accent9',
-        width: '100%',
-        height: '100px',
-        borderRadius: '$2',
-        padding: '$2',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        textAlign: 'center',
-        '&:hover': {
-          border: '3px dashed $accent10',
-        },
-        ...(isDragActive && {
-          border: '3px dashed $accent10',
-          backgroundColor: '$accent2',
-        }),
-      }}
     >
       <input {...getInputProps()} />
       <Paragraph size="14">
         {title || 'Drop your files here or click to to open the file picker.'}
       </Paragraph>
-    </Box>
+    </div>
   )
 }

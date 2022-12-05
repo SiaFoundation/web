@@ -1,72 +1,17 @@
-import { styled } from '../config/theme'
-import { Button } from './Button'
-import { TextField } from './TextField'
-import { Select } from './Select'
-import { IconButton } from './IconButton'
+import React from 'react'
+import { cva } from 'class-variance-authority'
+import { VariantProps } from '../types'
 
-export const ControlGroup = styled('div', {
-  display: 'flex',
+const styles = cva([
+  'flex',
+  'relative',
+  '[&>*]:rounded-none [&>*:last-child]:rounded-r [&>*:first-child]:rounded-l',
+  '[&>*]:border-r-0 [&>*]:border-l [&>*:first-child]:border-l [&>*:last-child]:border-r',
+])
 
-  // Make sure ControlGroup and its children don't affect normal stacking order
-  position: 'relative',
-  zIndex: 0,
-
-  [`& ${Button}`]: {
-    marginLeft: '1px',
-    borderRadius: 0,
-    '&:focus': {
-      zIndex: 1,
-    },
-    '&:first-child': {
-      marginLeft: 0,
-      borderTopLeftRadius: '$1',
-      borderBottomLeftRadius: '$1',
-    },
-    '&:last-child': {
-      borderTopRightRadius: '$1',
-      borderBottomRightRadius: '$1',
-    },
-  },
-  [`& ${IconButton}`]: {
-    marginLeft: '1px',
-    borderRadius: 0,
-    '&:first-child': {
-      marginLeft: 0,
-      borderTopLeftRadius: '$1',
-      borderBottomLeftRadius: '$1',
-    },
-    '&:last-child': {
-      borderTopRightRadius: '$1',
-      borderBottomRightRadius: '$1',
-    },
-  },
-  [`& ${TextField}`]: {
-    borderRadius: 0,
-    marginLeft: '1px',
-    '&:focus': {
-      zIndex: 1,
-    },
-    '&:first-child': {
-      marginLeft: 0,
-      borderTopLeftRadius: '$1',
-      borderBottomLeftRadius: '$1',
-    },
-    '&:last-child': {
-      borderTopRightRadius: '$1',
-      borderBottomRightRadius: '$1',
-    },
-  },
-  [`& ${Select}`]: {
-    borderRadius: 0,
-    marginLeft: '1px',
-    '&:first-child': {
-      marginLeft: 0,
-      borderTopLeftRadius: '$1',
-      borderBottomLeftRadius: '$1',
-    },
-    '&:last-child': {
-      borderTopRightRadius: '$1',
-      borderBottomRightRadius: '$1',
-    },
-  },
+export const ControlGroup = React.forwardRef<
+  HTMLDivElement,
+  VariantProps<typeof styles> & React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => {
+  return <div ref={ref} className={styles({ className })} {...props} />
 })

@@ -1,40 +1,22 @@
-import { styled } from '../config/theme'
+import { cva, VariantProps } from 'class-variance-authority'
+import React from 'react'
 
-export const Status = styled('div', {
-  borderRadius: '50%',
-  flexShrink: 0,
-
+const styles = cva(['rounded-full flex-shrink-0'], {
   variants: {
     size: {
-      '1': {
-        width: 5,
-        height: 5,
-      },
-      '2': {
-        width: 9,
-        height: 9,
-      },
-    },
-    variant: {
-      gray: {
-        backgroundColor: '$slate7',
-      },
-      blue: {
-        backgroundColor: '$blue9',
-      },
-      green: {
-        backgroundColor: '$green9',
-      },
-      yellow: {
-        backgroundColor: '$yellow9',
-      },
-      red: {
-        backgroundColor: '$red9',
-      },
+      small: 'w-2 h-2',
+      medium: 'w-4 h-4',
     },
   },
   defaultVariants: {
-    size: '2',
-    variant: 'gray',
+    size: 'small',
   },
 })
+
+type Props = React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof styles>
+
+export const Status = React.forwardRef<HTMLDivElement, Props>(
+  ({ size, className, ...props }, ref) => {
+    return <div ref={ref} className={styles({ size, className })} {...props} />
+  }
+)

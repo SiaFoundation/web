@@ -1,11 +1,4 @@
-import {
-  DatumCard,
-  Flex,
-  AppAuthedLayout,
-  TxPoolList,
-  PeerList,
-  Box,
-} from '@siafoundation/design-system'
+import { DatumCard, TxPoolList, PeerList } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import {
   useConsensusTip,
@@ -15,6 +8,7 @@ import {
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { RenterSidenav } from '../../components/RenterSidenav'
+import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
 
 export default function NodePage() {
   const peers = useSyncerPeers()
@@ -28,13 +22,13 @@ export default function NodePage() {
   const { openDialog } = useDialog()
 
   return (
-    <AppAuthedLayout
+    <RenterdAuthedLayout
       routes={routes}
       sidenav={<RenterSidenav />}
       openSettings={() => openDialog('settings')}
       title="Node"
     >
-      <Flex gap="3-5" wrap="wrap">
+      <div className="flex flex-wrap gap-7">
         <DatumCard
           label="Height"
           value={
@@ -51,15 +45,15 @@ export default function NodePage() {
           label="Consensus tip"
           hash={tip.data?.ID.replace('bid:', '')}
         /> */}
-      </Flex>
-      <Flex gap="3-5" wrap="wrap">
-        <Box css={{ flex: 1 }}>
+      </div>
+      <div className="flex flex-wrap gap-7">
+        <div className="flex-1">
           <PeerList connectPeer={() => openDialog('connectPeer')} />
-        </Box>
-        <Box css={{ flex: 1 }}>
+        </div>
+        <div className="flex-1">
           <TxPoolList />
-        </Box>
-      </Flex>
-    </AppAuthedLayout>
+        </div>
+      </div>
+    </RenterdAuthedLayout>
   )
 }

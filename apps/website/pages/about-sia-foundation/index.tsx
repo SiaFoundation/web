@@ -1,27 +1,24 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Fragment } from 'react'
 import {
-  Flex,
-  Grid,
-  NextLink,
+  Link,
   Text,
   ContentGallery,
-  LogoGithub24,
-  LogoLinkedin24,
-  LogoTwitter32,
   Separator,
   SiteHeading,
   getImageProps,
   Paragraph,
   webLinks,
   Callout,
+  LogoTwitter24,
+  LogoGithub16,
+  LogoLinkedin16,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
 import { getMinutesInSeconds } from '../../lib/time'
 import { AsyncReturnType } from '../../lib/types'
 import { getCacheReports } from '../../content/reports'
-import { getCacheNewsPostsList } from '../../content/news'
 import { getCacheStats } from '../../content/stats'
 import { getCacheTeam } from '../../content/team'
 import backgroundImage from '../../assets/backgrounds/tree.png'
@@ -29,6 +26,7 @@ import previewImage from '../../assets/previews/tree.png'
 import { SectionSimple } from '../../components/SectionSimple'
 import { SectionGradient } from '../../components/SectionGradient'
 import { SectionWaves } from '../../components/SectionWaves'
+import { getCacheArticles } from '../../content/articles'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -39,24 +37,24 @@ const description =
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-function Foundation({ team, newsPosts, reports }: Props) {
+function Foundation({ team, featured, reports }: Props) {
   return (
     <Layout
       title={title}
       description={description}
       path={routes.foundation.index}
       heading={
-        <SectionSimple css={{ py: '$max' }}>
+        <SectionSimple className="pt-24 md:pt-40 pb-6 md:pb-20">
           <SiteHeading size="64" title={title} description={description} />
         </SectionSimple>
       }
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <SectionGradient css={{ pt: '$6', pb: '$12' }}>
-        <Flex direction="column" gap="9">
-          <Flex direction="column" gap="2">
-            <SiteHeading size="32" title="Vision" />
+      <SectionGradient className="pt-6 md:pt-12 lg:pt-18 pb-16 md:pb-24 lg:pb-40">
+        <div className="flex flex-col">
+          <SiteHeading size="32" title="Vision" />
+          <div className="flex flex-col gap-6">
             <Paragraph>
               Sia began its life as a startup, which means it has always been
               subjected to two competing forces: the ideals of its founders, and
@@ -79,134 +77,102 @@ function Foundation({ team, newsPosts, reports }: Props) {
               cheap, ubiquitous, and accessible to all, without compromising
               privacy or performance.
             </Paragraph>
-          </Flex>
-          <Flex direction="column" gap="4">
-            <SiteHeading size="24" title="Contact" />
-            <Flex direction="column" gap="3">
+          </div>
+          <div className="flex flex-col">
+            <SiteHeading
+              size="24"
+              title="Contact"
+              className="mt-12 md:mt-24 mb-5"
+            />
+            <div className="flex flex-col gap-8">
               <Paragraph color="subtle" size="18">
                 For developer support please see{' '}
-                <NextLink href={webLinks.docs.index} target="_blank">
+                <Link href={webLinks.docs.index} target="_blank">
                   our documentation
-                </NextLink>
+                </Link>
                 . For general inquiries email{' '}
-                <NextLink href={`mailto:${webLinks.email}`}>
-                  info@sia.tech
-                </NextLink>
-                .
-              </Paragraph>
-              <Paragraph color="subtle" size="18">
-                If you are interested in a career at The Sia Foundation please
-                see our{' '}
-                <NextLink href={webLinks.jobs} target="_blank">
+                <Link href={`mailto:${webLinks.email}`}>info@sia.tech</Link>. If
+                you are interested in a career at The Sia Foundation please see
+                our{' '}
+                <Link href={webLinks.jobs} target="_blank">
                   openings
-                </NextLink>
+                </Link>
                 .
               </Paragraph>
-            </Flex>
-          </Flex>
-        </Flex>
+            </div>
+          </div>
+        </div>
       </SectionGradient>
-      <SectionWaves css={{ pt: '$12', pb: '$12' }}>
-        <SiteHeading size="32" title="The Sia team" />
-        <Grid
-          columns={{
-            '@initial': '1',
-            '@bp1': '2',
-            '@bp2': '3',
-          }}
-          gapX="3"
-          gapY="6"
-        >
+      <SectionWaves className="pt-8 md:pt-16 pb-16 md:pb-32">
+        <SiteHeading
+          className="pb-10 md:pb-20"
+          size="32"
+          title="The Sia team"
+        />
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-20">
           {team.map((member) => (
-            <Flex key={member.name} direction="column" gap="1">
-              <Text css={{ fontWeight: '600' }}>{member.name}</Text>
+            <div className="flex flex-col gap-1.5" key={member.name}>
+              <Text weight="semibold">{member.name}</Text>
               <Text color="subtle">{member.title}</Text>
-              <Flex gap="1" align="center">
+              <div className="flex gap-2 items-center">
                 {member.twitter && (
-                  <NextLink
+                  <Link
                     href={`https://twitter.com/${member.twitter}`}
                     target="_blank"
-                    variant="subtle"
                     aria-label="Twitter"
                   >
-                    <LogoTwitter32 />
-                  </NextLink>
+                    <LogoTwitter24 className="scale-90" />
+                  </Link>
                 )}
                 {member.github && (
-                  <NextLink
+                  <Link
                     href={`https://github.com/${member.github}`}
                     target="_blank"
-                    variant="subtle"
                     aria-label="GitHub"
                   >
-                    <LogoGithub24 />
-                  </NextLink>
+                    <LogoGithub16 />
+                  </Link>
                 )}
                 {member.linkedin && (
-                  <NextLink
+                  <Link
                     href={`https://www.linkedin.com/in/${member.linkedin}`}
                     target="_blank"
-                    variant="subtle"
                     aria-label="LinkedIn"
                   >
-                    <LogoLinkedin24 />
-                  </NextLink>
+                    <LogoLinkedin16 />
+                  </Link>
                 )}
-              </Flex>
-            </Flex>
+              </div>
+            </div>
           ))}
-        </Grid>
+        </div>
       </SectionWaves>
-      <SectionGradient css={{ py: '$12' }}>
+      <SectionGradient className="pt-12 md:pt-32 pb-12 md:pb-40">
         <SiteHeading size="32" title="Quarterly reports" />
-        <Flex direction="column" gap="6">
+        <div className="flex flex-col gap-12">
           {reports.map(([year, yearReports]) => (
-            <Flex key={year} direction="column" gap="2">
+            <div className="flex flex-col gap-4" key={year}>
               <Text weight="bold" size="16">
                 {year}
               </Text>
-              <Flex gap="2" align="center">
+              <div className="flex gap-4 items-center">
                 {yearReports.map((report, i) => (
                   <Fragment key={report.link}>
                     {i > 0 && i < yearReports.length && (
                       <Separator orientation="vertical" />
                     )}
-                    <Text size="16">
-                      <NextLink
-                        href={report.link}
-                        target="_blank"
-                        variant="subtle"
-                      >
-                        {report.quarter}
-                      </NextLink>
-                    </Text>
+                    <Link href={report.link} target="_blank" size="16">
+                      {report.quarter}
+                    </Link>
                   </Fragment>
                 ))}
-              </Flex>
-            </Flex>
+              </div>
+            </div>
           ))}
-        </Flex>
-        <SiteHeading
-          size="32"
-          css={{ mt: '$12' }}
-          title="Recent news"
-          description={
-            <>
-              Browse the newsroom for recent press releases and updates from the
-              ecosystem.
-            </>
-          }
-          links={[
-            {
-              title: 'Explore the newsroom',
-              link: routes.newsroom.index,
-            },
-          ]}
-        />
-        <ContentGallery columns="1" items={newsPosts} />
+        </div>
         <Callout
           title="Work at the Sia Foundation"
-          css={{ mt: '$12', mb: '$6' }}
+          className="mt-40 md:mt-60"
           size="2"
           description={
             <>
@@ -218,6 +184,28 @@ function Foundation({ team, newsPosts, reports }: Props) {
           actionLink={webLinks.jobs}
           actionNewTab
         />
+        <SiteHeading
+          size="32"
+          className="pt-20 md:pt-40 pb-16 md:pb-20"
+          title="Read the latest updates"
+          description={
+            <>
+              Read the latest from the core team and the ecosystem of developers
+              building technology on top of Sia.
+            </>
+          }
+          links={[
+            {
+              title: 'Explore ecosystem news',
+              link: routes.newsroom.index,
+            },
+          ]}
+        />
+        <ContentGallery
+          className="mb-16"
+          items={featured}
+          columnClassName="grid-cols-1"
+        />
       </SectionGradient>
     </Layout>
   )
@@ -225,14 +213,14 @@ function Foundation({ team, newsPosts, reports }: Props) {
 
 export async function getStaticProps() {
   const stats = await getCacheStats()
-  const newsPosts = await getCacheNewsPostsList(3)
+  const featured = await getCacheArticles(['sia-all', 'featured'], 5)
   const reports = await getCacheReports()
   const team = await getCacheTeam()
 
   return {
     props: {
       team,
-      newsPosts,
+      featured,
       reports,
       fallback: {
         '/api/stats': stats,

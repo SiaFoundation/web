@@ -1,7 +1,6 @@
 import {
   Button,
   ControlGroup,
-  Flex,
   Text,
   SwitchMulti,
 } from '@siafoundation/design-system'
@@ -44,7 +43,7 @@ export default function HomePage() {
     <HostdAuthedLayout
       title="Overview"
       filters={
-        <Flex gap="1" css={{ flex: 1 }}>
+        <div className="flex gap-2 flex-1">
           <ControlGroup>
             <Button disabled>
               <Text size="12">{format(timeRange.start, 'PP')}</Text>
@@ -58,7 +57,7 @@ export default function HomePage() {
               <Text size="12">{format(timeRange.end, 'PP')}</Text>
             </Button>
           </ControlGroup>
-        </Flex>
+        </div>
       }
       actions={
         <>
@@ -72,13 +71,13 @@ export default function HomePage() {
         </>
       }
     >
-      <Flex direction="column" gap="7">
+      <div className="flex flex-col gap-14">
         {/* <HomeOverview /> */}
         <HomeRevenue />
         <HomeUtilization />
         <HomeContracts />
         <HomePricing />
-      </Flex>
+      </div>
     </HostdAuthedLayout>
   )
 }

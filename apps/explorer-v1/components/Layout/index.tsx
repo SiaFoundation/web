@@ -1,12 +1,9 @@
 import {
   NavbarSite,
-  Box,
   Container,
-  Flex,
   getImageProps,
   Heading,
   Link,
-  NextLink,
   ScrollArea,
   Separator,
   SimpleLogoIcon,
@@ -37,14 +34,7 @@ type Props = {
 
 export function Layout({ title, description, path, children }: Props) {
   return (
-    <Box
-      css={{
-        position: 'relative',
-        height: '100%',
-        background: '$loContrast',
-        overflow: 'hidden',
-      }}
-    >
+    <div className="relative h-full bg-white dark:bg-graydark-50 overflow-hidden">
       <PageHead
         appLink={webLinks.explore}
         appName={appName}
@@ -54,78 +44,37 @@ export function Layout({ title, description, path, children }: Props) {
         image={previewImageProps.src}
       />
       <ScrollArea id="main-scroll">
-        <Box
-          css={{
-            position: 'relative',
-            zIndex: 1,
-            overflow: 'hidden',
-          }}
-        >
+        <div className="relative z-10 overflow-hidden">
           <NavbarSite appName="explorer" homeHref={routes.home.index}>
             <Search />
             <UserDropdownMenu />
           </NavbarSite>
-          <Flex direction="column" gap="8" css={{ width: '100%' }}>
-            <Flex direction="column">
-              <Flex
-                css={{
-                  position: 'relative',
-                  width: '100%',
-                  height: '300px',
-                  overflow: 'hidden',
-                  borderTop: '2px solid $gray3',
-                  borderBottom: '2px solid $gray3',
-                  zIndex: 0,
-                }}
-                align="center"
-              >
-                <Box
-                  css={{
-                    zIndex: 0,
-                    position: 'relative',
-                    width: '100%',
-                    height: '100%',
+          <div className="flex flex-col gap-16 w-full">
+            <div className="flex flex-col gap-1">
+              <div className="z-0 relative flex items-center gap-1 w-full h-[300px] overflow-hidden border-t border-b border-gray-200 dark:border-graydark-200">
+                <div
+                  className="z-0 relative w-full h-full"
+                  style={{
                     background: `url(${backgroundImageProps.src})`,
                     backgroundSize: 'cover',
                   }}
                 />
-                <Box
-                  css={{
-                    position: 'absolute',
-                    width: '100%',
-                    height: '100%',
-                    mixBlendMode: 'darken',
-                    zIndex: 1,
-                    backgroundColor: '$subtleAccentMask',
-                  }}
-                />
-              </Flex>
-              <Flex
-                direction="column"
-                gap="8"
-                css={{
-                  position: 'relative',
-                  top: '-180px',
-                }}
-              >
+                <div className="absolute h-full w-full mix-blend-darken z-10 bg-mask" />
+              </div>
+              <div className="flex flex-col gap-16 relative top-[-180px]">
                 {children}
-              </Flex>
-              <Container css={{ paddingTop: '$11' }}>
-                <Separator size="100" />
-                <Flex
-                  justify="between"
-                  wrap="wrap"
-                  gapY="6"
-                  css={{ padding: '$5 0' }}
-                >
-                  <Flex direction="column" gap="2">
-                    <Flex align="center" gap="2">
-                      <Box css={{ color: '$hiContrast' }}>
+              </div>
+              <Container className="pt-20">
+                <Separator className="w-full" />
+                <div className="flex flex-wrap gap-1 justify-between gap-y-12 py-10">
+                  <div className="flex flex-col gap-4">
+                    <div className="flex gap-4 items-center">
+                      <Text>
                         <SimpleLogoIcon size={100} />
-                      </Box>
-                      <Flex direction="column" gap="2" justify="center">
+                      </Text>
+                      <div className="flex flex-col gap-4 justify-center">
                         <Heading font="mono">explorer</Heading>
-                        <Flex gap="1" justify="center">
+                        <div className="flex gap-2 justify-center">
                           <Text color="subtle">
                             <Link href="https://keops.cc" target="_blank">
                               Keops
@@ -137,8 +86,8 @@ export function Layout({ title, description, path, children }: Props) {
                               The Sia Foundation
                             </Link>
                           </Text>
-                        </Flex>
-                        <Flex gap="1">
+                        </div>
+                        <div className="flex gap-2">
                           <BottomLink href={webLinks.discord} target="_blank">
                             <LogoDiscord24 />
                           </BottomLink>
@@ -154,17 +103,17 @@ export function Layout({ title, description, path, children }: Props) {
                           <BottomLink href={webLinks.twitter} target="_blank">
                             <LogoTwitter24 />
                           </BottomLink>
-                        </Flex>
-                      </Flex>
-                    </Flex>
-                  </Flex>
-                  <Flex gap="6">
-                    <Flex direction="column" gap="3">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex gap-12">
+                    <div className="flex flex-col gap-3">
                       <Text
-                        font="mono"
-                        weight="bold"
                         size="14"
-                        css={{ marginBottom: '$1', color: '$gray9' }}
+                        className="mb-3"
+                        color="subtle"
+                        weight="medium"
                       >
                         Ecosystem
                       </Text>
@@ -183,15 +132,15 @@ export function Layout({ title, description, path, children }: Props) {
                       <BottomLink href={webLinks.coinmarketcap} target="_blank">
                         Coinmarketcap
                       </BottomLink>
-                    </Flex>
-                  </Flex>
-                </Flex>
+                    </div>
+                  </div>
+                </div>
               </Container>
-            </Flex>
-          </Flex>
-        </Box>
+            </div>
+          </div>
+        </div>
       </ScrollArea>
-    </Box>
+    </div>
   )
 }
 
@@ -203,10 +152,14 @@ type LinkProps = {
 
 function BottomLink({ children, href, target }: LinkProps) {
   return (
-    <Text weight="semibold" size="14">
-      <NextLink css={{ textDecoration: 'none' }} href={href} target={target}>
-        {children}
-      </NextLink>
-    </Text>
+    <Link
+      underline="hover"
+      href={href}
+      target={target}
+      weight="medium"
+      size="14"
+    >
+      {children}
+    </Link>
   )
 }

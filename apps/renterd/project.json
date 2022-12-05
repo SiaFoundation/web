@@ -10,6 +10,7 @@
       "options": {
         "root": "apps/renterd",
         "outputPath": "dist/apps/renterd",
+        "postcssConfig": "apps/renterd/postcss.config.js",
         "assets": [
           {
             "glob": "**/*",

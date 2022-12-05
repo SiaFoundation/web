@@ -1,39 +1,23 @@
-import {
-  AnimatedPanel,
-  Container,
-  Flex,
-  Skeleton,
-  DatumSkeleton,
-} from '@siafoundation/design-system'
+import { Skeleton, DatumSkeleton } from '@siafoundation/design-system'
 import { times } from 'lodash'
+import { ContentLayout } from '../../ContentLayout'
 
 export function OutputEntitySkeleton() {
   return (
-    <>
-      <Container>
-        <Flex direction="column" gap="6">
-          <AnimatedPanel
-            variant="subtle"
-            startTime={0}
-            css={{
-              padding: '$3',
-              borderRadius: '$2',
-            }}
-          >
-            <Flex direction="column" gap="5">
-              <Flex gap="1" justify="between" wrap="wrap">
-                <Skeleton css={{ height: '30px', width: '450px' }} />
-                <Skeleton css={{ height: '30px', width: '100px' }} />
-              </Flex>
-              <Flex direction="column" gapY="2-5">
-                {times(4, (i) => (
-                  <DatumSkeleton key={i} />
-                ))}
-              </Flex>
-            </Flex>
-          </AnimatedPanel>
-        </Flex>
-      </Container>
-    </>
+    <ContentLayout
+      panel={
+        <div className="flex flex-col gap-16">
+          <div className="flex flex-wrap gap-2 justify-between">
+            <Skeleton className="h-[30px] w-[450px]" />
+            <Skeleton className="h-[30px] w-[100px]" />
+          </div>
+          <div className="flex flex-col gap-y-4">
+            {times(4, (i) => (
+              <DatumSkeleton key={i} />
+            ))}
+          </div>
+        </div>
+      }
+    />
   )
 }

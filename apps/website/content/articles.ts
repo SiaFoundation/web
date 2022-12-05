@@ -1,8 +1,15 @@
-import { readCacheJsonFile } from '../lib/cache'
+import { readContentDirJsonFile } from '@siafoundation/env'
+import { getCacheValue } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
 import { addNewTab } from '../lib/utils'
+import { syncRssFeeds } from './rssSyncFeeds'
 
-type Tag = 'sia-featured' | 'ecosystem-featured' | 'ecosystem-all' | 'technical'
+type Tag =
+  | 'sia-all'
+  | 'featured'
+  | 'ecosystem-featured'
+  | 'ecosystem-all'
+  | 'technical'
 
 type Article = {
   title: string
@@ -18,7 +25,7 @@ export async function getCacheArticles(
   tags: Tag[],
   limit?: number
 ): Promise<Article[]> {
-  const articles = await readCacheJsonFile('articles.json', [], maxAge)
+  const articles = await readCacheActicles()
   return articles
     .sort((a, b) => (new Date(a.date) < new Date(b.date) ? 1 : -1))
     .filter((a) =>
@@ -26,4 +33,15 @@ export async function getCacheArticles(
     )
     .slice(0, limit)
     .map(addNewTab) as Article[]
+}
+
+async function readCacheActicles() {
+  return getCacheValue(
+    'articles.json',
+    async () => {
+      await syncRssFeeds()
+      return readContentDirJsonFile('articles.json', [])
+    },
+    maxAge
+  )
 }

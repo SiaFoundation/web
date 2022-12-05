@@ -1,6 +1,5 @@
 import { useWalletBalance } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
-import { Flex } from '../../core/Flex'
 import { WalletIcon } from '../../icons/WalletIcon'
 import { WalletBalanceMini } from '../WalletBalanceMini'
 import { SidenavItem } from './SidenavItem'
@@ -19,17 +18,16 @@ export function SidenavItemWallet({ routes }: Props) {
   const balance = useWalletBalance()
   return (
     <SidenavItem title="Wallet" route={routes.wallet.view}>
-      <Flex direction="column" gap="1-5" align="center">
+      <div className="flex flex-col gap-3 items-center">
         <WalletIcon />
         {balance.data && (
           <WalletBalanceMini
-            size="10"
             wallet={{
               sc: new BigNumber(balance.data),
             }}
           />
         )}
-      </Flex>
+      </div>
     </SidenavItem>
   )
 }

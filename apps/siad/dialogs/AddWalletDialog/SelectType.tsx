@@ -1,11 +1,9 @@
 import {
-  Flex,
   Paragraph,
-  Grid,
   RadioCardGroup,
   RadioCard,
   Heading,
-  DialogContent,
+  Dialog,
 } from '@siafoundation/design-system'
 
 type WalletType = 'create' | 'restore' | 'cold' | 'ledger'
@@ -16,17 +14,15 @@ type Props = {
 
 export function SelectType({ onSelect }: Props) {
   return (
-    <DialogContent
+    <Dialog
       title="Add Wallet"
-      css={{
-        width: 'inherit',
-        maxWidth: '1200px',
-        overflow: 'hidden',
+      contentVariants={{
+        className: 'max-w-[1200px]',
       }}
     >
-      <Flex direction="column" gap="2">
+      <div className="flex flex-col gap-4">
         <RadioCardGroup onValueChange={(val) => onSelect(val as WalletType)}>
-          <Grid columns="2" gap="1">
+          <div className="grid grid-cols-2 gap-2">
             <WalletRadio
               value="create"
               title="Create a wallet"
@@ -69,10 +65,10 @@ export function SelectType({ onSelect }: Props) {
                 </>
               }
             />
-          </Grid>
+          </div>
         </RadioCardGroup>
-      </Flex>
-    </DialogContent>
+      </div>
+    </Dialog>
   )
 }
 
@@ -91,12 +87,12 @@ function WalletRadio({
 }: WalletRadioProps) {
   return (
     <RadioCard indicator={false} value={value} disabled={disabled}>
-      <Flex direction="column" gap="1">
+      <div className="flex flex-col gap-2">
         <Heading size="20">{title}</Heading>
         <Paragraph size="14" color="subtle">
           {description}
         </Paragraph>
-      </Flex>
+      </div>
     </RadioCard>
   )
 }

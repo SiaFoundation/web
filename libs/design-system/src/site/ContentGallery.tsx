@@ -1,10 +1,8 @@
+import { cx } from 'class-variance-authority'
 import { uniq } from 'lodash'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
-import { CSS } from '../config/theme'
 import { Badge } from '../core/Badge'
-import { Flex } from '../core/Flex'
-import { Grid } from '../core/Grid'
 import { Text } from '../core/Text'
 import { ContentItemProps, ContentItem } from '../site/ContentItem'
 
@@ -14,10 +12,10 @@ type Props = {
   filterable?: string
   filters?: string[]
   eyebrow?: string
-  columns?: React.ComponentProps<typeof Grid>['columns']
-  gap?: React.ComponentProps<typeof Grid>['gap']
   component?: (props: ContentItemProps) => JSX.Element | null
-  css?: CSS
+  className?: string
+  gapClassName?: string
+  columnClassName?: string
 }
 
 export function ContentGallery({
@@ -25,11 +23,11 @@ export function ContentGallery({
   filterMode = 'internal',
   filters: customFilters = [],
   eyebrow,
-  columns,
-  gap = '5',
   component,
   items,
-  css,
+  className,
+  gapClassName,
+  columnClassName,
 }: Props) {
   const router = useRouter()
   const activeFilter = (filterable ? router.query[filterable] : undefined) as
@@ -75,28 +73,21 @@ export function ContentGallery({
   const ContentComponent = component || ContentItem
 
   return (
-    <Flex direction="column" gap="5" css={css}>
+    <div className={cx('flex flex-col gap-10', className)}>
       {filterable && (
-        <Flex direction="column" gap="2">
+        <div className="flex flex-col gap-4">
           {eyebrow && (
-            <Text
-              size="12"
-              css={{
-                fontFamily: '$mono',
-                textTransform: 'uppercase',
-                color: '$slate12',
-              }}
-            >
+            <Text size="12" font="mono" className="uppercase">
               {eyebrow}
             </Text>
           )}
-          <Flex gap="1" wrap="wrap">
+          <div className="flex gap-2 flex-wrap">
             <Badge
               key="all"
               interactive
-              variant={!activeFilter ? 'accent' : 'simple'}
+              variant={!activeFilter ? 'accent' : 'inactive'}
               onClick={() => changeFilter(undefined)}
-              site
+              rounded={false}
             >
               All
             </Badge>
@@ -104,33 +95,27 @@ export function ContentGallery({
               <Badge
                 key={filter}
                 interactive
-                variant={activeFilter === filter ? 'accent' : 'simple'}
+                variant={activeFilter === filter ? 'accent' : 'inactive'}
                 onClick={() => changeFilter(filter)}
-                site
+                rounded={false}
               >
                 {filter.replace(/_/g, ' ')}
               </Badge>
             ))}
-          </Flex>
-        </Flex>
+          </div>
+        </div>
       )}
-      <Grid
-        gap={gap}
-        columns={
-          columns || {
-            '@inital': '1',
-            '@bp2': '2',
-            // '@bp3': '3',
-          }
-        }
-        css={{
-          overflow: 'hidden',
-        }}
+      <div
+        className={cx(
+          'grid overflow-hidden',
+          gapClassName ? gapClassName : 'gap-x-6 gap-y-10 md:gap-y-14',
+          columnClassName ? columnClassName : 'grid-cols-1 sm:grid-cols-2'
+        )}
       >
         {filteredItems.map((item) => (
           <ContentComponent key={item.title + item.link} {...item} />
         ))}
-      </Grid>
-    </Flex>
+      </div>
+    </div>
   )
 }

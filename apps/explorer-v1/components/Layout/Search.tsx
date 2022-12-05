@@ -1,7 +1,7 @@
 import {
-  Flex,
-  IconButton,
-  Search24,
+  Button,
+  ControlGroup,
+  Search16,
   TextField,
   triggerToast,
 } from '@siafoundation/design-system'
@@ -38,43 +38,28 @@ export function Search() {
   })
 
   return (
-    <Flex
-      justify="center"
-      css={{
-        flex: 1,
-      }}
-    >
-      <Flex
-        as="form"
+    <div className="flex gap-1 justify-center flex-1">
+      <form
+        className="flex gap-2 items-center justify-end w-full"
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onSubmit={formik.handleSubmit as any}
-        align="center"
-        justify="end"
-        gap="1"
-        css={{
-          width: '100%',
-        }}
       >
-        <TextField
-          size="2"
-          placeholder="Search an address, block, transaction, contract ID..."
-          name="query"
-          spellCheck="false"
-          autoComplete="off"
-          value={formik.values.query}
-          onChange={formik.handleChange}
-          state={formik.errors.query ? 'invalid' : undefined}
-          css={{
-            flex: 1,
-            '@bp2': {
-              maxWidth: '700px',
-            },
-          }}
-        />
-        <IconButton size="2" variant="gray" type="submit">
-          <Search24 />
-        </IconButton>
-      </Flex>
-    </Flex>
+        <ControlGroup className="flex-1 md:max-w-[700px]">
+          <TextField
+            size="medium"
+            placeholder="Search an address, block, transaction, contract ID..."
+            name="query"
+            spellCheck="false"
+            autoComplete="off"
+            value={formik.values.query}
+            onChange={formik.handleChange}
+            state={formik.errors.query ? 'invalid' : undefined}
+          />
+          <Button size="medium" variant="gray" type="submit">
+            <Search16 />
+          </Button>
+        </ControlGroup>
+      </form>
+    </div>
   )
 }

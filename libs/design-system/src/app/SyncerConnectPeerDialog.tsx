@@ -1,14 +1,13 @@
-import { Flex } from '../core/Flex'
 import { Paragraph } from '../core/Paragraph'
 import { Button } from '../core/Button'
 import { Text } from '../core/Text'
-import { DialogContent } from '../core/Dialog'
 import { triggerToast } from '../lib/toast'
 import { FormField } from '../components/Form'
 import { useSyncerConnect } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { hostnameOrIpRegex } from '../lib/ipRegex'
+import { Dialog } from '../core/Dialog'
 
 const initialValues = {
   port: 9981,
@@ -28,10 +27,16 @@ const validationSchema = Yup.object().shape({
 })
 
 type Props = {
-  closeDialog: () => void
+  trigger?: React.ReactNode
+  open: boolean
+  onOpenChange: (val: boolean) => void
 }
 
-export function SyncerConnectPeerDialog({ closeDialog }: Props) {
+export function SyncerConnectPeerDialog({
+  trigger,
+  open,
+  onOpenChange,
+}: Props) {
   const connect = useSyncerConnect()
 
   const formik = useFormik({
@@ -51,23 +56,30 @@ export function SyncerConnectPeerDialog({ closeDialog }: Props) {
       } else {
         triggerToast('Connected to peer')
         actions.resetForm()
-        closeDialog()
+        onOpenChange(false)
       }
     },
   })
 
   return (
-    <DialogContent
-      title="Connect Peer"
-      css={{
-        maxWidth: '400px',
-        overflow: 'hidden',
+    <Dialog
+      trigger={trigger}
+      title="Connect peer"
+      open={open}
+      onOpenChange={(open) => {
+        if (!open) {
+          formik.resetForm()
+        }
+        onOpenChange(open)
+      }}
+      contentVariants={{
+        className: 'w-[400px]',
       }}
     >
-      <Flex direction="column" gap="2">
+      <div className="flex flex-col gap-4">
         <Paragraph size="14">Connect to a peer by IP address.</Paragraph>
         <form onSubmit={formik.handleSubmit}>
-          <Flex direction="column" gap="2">
+          <div className="flex flex-col gap-4">
             <FormField
               formik={formik}
               title="Address"
@@ -75,6 +87,9 @@ export function SyncerConnectPeerDialog({ closeDialog }: Props) {
               placeholder="host.acme.com or 127.0.0.1"
               autoComplete="off"
               type="text"
+              variants={{
+                size: 'medium',
+              }}
             />
             <FormField
               formik={formik}
@@ -84,12 +99,15 @@ export function SyncerConnectPeerDialog({ closeDialog }: Props) {
               placeholder="9981"
               autoComplete="off"
               type="number"
+              variants={{
+                size: 'medium',
+              }}
             />
             {formik.status?.error && (
-              <Text css={{ color: '$red11' }}>{formik.status.error}</Text>
+              <Text color="red">{formik.status.error}</Text>
             )}
             <Button
-              size="2"
+              size="medium"
               disabled={formik.isSubmitting || !formik.isValid}
               variant="accent"
               state={formik.isSubmitting ? 'waiting' : undefined}
@@ -97,9 +115,9 @@ export function SyncerConnectPeerDialog({ closeDialog }: Props) {
             >
               Connect
             </Button>
-          </Flex>
+          </div>
         </form>
-      </Flex>
-    </DialogContent>
+      </div>
+    </Dialog>
   )
 }

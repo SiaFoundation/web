@@ -1,11 +1,8 @@
 import {
   Code,
   Codeblock,
-  Flex,
-  Grid,
   Heading,
-  Kbd,
-  NextLink,
+  Link,
   Paragraph,
   Section,
   Text,
@@ -25,21 +22,19 @@ const exampleCode = `func Fibonacci(n int) int {
 export function Typography() {
   return (
     <>
-      <Section css={{ pt: '$12' }}>
+      <Section>
         <SectionHeading>Typography</SectionHeading>
-      </Section>
-      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Headings</SubsectionHeading>
-        <Flex direction="column" gap="2">
+        <div className="flex flex-col gap-4">
           <Heading size="20">Heading 20</Heading>
           <Heading size="24">Heading 24</Heading>
           <Heading size="32">Heading 32</Heading>
           <Heading size="64">Heading 64</Heading>
-        </Flex>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section>
         <SubsectionHeading>Text</SubsectionHeading>
-        <Flex direction="column" gap="2">
+        <div className="flex flex-col gap-4">
           <Text size="10">Tiny processors 10</Text>
           <Text size="12">Tiny processors 12</Text>
           <Text size="14">Tools for thought 14</Text>
@@ -47,57 +42,62 @@ export function Typography() {
           <Text size="20" color="subtle">
             A computer that fits in your pocket - 20 subtle
           </Text>
-          <Text size="24" css={{ fontStyle: 'italic' }}>
+          <Text size="24" className="italic">
             Brain-computer interface - 24 italic
           </Text>
-          <Text size="32">Human test subjects - 32</Text>
-          <Text size="40">Text size 40</Text>
-          <Text size="64" color="subtle">
-            Text size 64 - subtle
+          <Text size="30">Human test subjects - 30</Text>
+          <Text size="36">Human test subjects - 36</Text>
+          <Text size="48">Text size 48</Text>
+          <Text size="60" color="subtle">
+            Text size 60 - subtle
           </Text>
-        </Flex>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section>
         <SubsectionHeading>Link</SubsectionHeading>
-        <Flex direction="column" gap="2" align="start">
-          <NextLink href={randomLink} target="_blank" variant="subtle">
+        <div className="flex flex-col gap-4 items-start">
+          <Link size="14" href={randomLink} target="_blank" color="subtle">
             Subtle link
-          </NextLink>
-          <NextLink href={randomLink} target="_blank" variant="contrast">
+          </Link>
+          <Link size="14" href={randomLink} target="_blank" color="contrast">
             Contrast link
-          </NextLink>
-          <NextLink href={randomLink} target="_blank" variant="accent">
+          </Link>
+          <Link
+            size="14"
+            href={randomLink}
+            target="_blank"
+            color="contrast"
+            underline="hover"
+          >
+            Hover underline
+          </Link>
+          <Link size="14" href={randomLink} target="_blank" color="accent">
             Accent link
-          </NextLink>
+          </Link>
           <Text size="24">
-            <NextLink href={randomLink} target="_blank">
-              Link inside Text size 5
-            </NextLink>
+            <Link href={randomLink} target="_blank">
+              Link inside Text size 24
+            </Link>
           </Text>
-        </Flex>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section>
         <SubsectionHeading>Code</SubsectionHeading>
-        <Flex direction="column" gap="2" align="start">
-          <Code variant="gray">{'fmt.Println("variant=gray")'}</Code>
-          <Code variant="accent">{'fmt.Println("variant=accent")'}</Code>
-        </Flex>
+        <div className="flex flex-col gap-4 items-start">
+          <Paragraph size="14">
+            <Code color="gray">{'fmt.Println("color=gray")'}</Code>{' '}
+            <Code color="accent">{'fmt.Println("color=accent")'}</Code>
+          </Paragraph>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section>
         <SubsectionHeading>Codeblock</SubsectionHeading>
         <Codeblock>{exampleCode}</Codeblock>
-        <Flex direction="column" gap="2" align="start"></Flex>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section>
         <SubsectionHeading>Paragraph</SubsectionHeading>
-        <Flex direction="column" gap="5">
-          <Grid
-            columns={{
-              '@bp1': 1,
-              '@bp2': 2,
-            }}
-            gap="2"
-          >
+        <div className="flex flex-col gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Paragraph size="14">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt <Code>{'fmt.Println("pizza")'}</Code> ut
@@ -105,16 +105,16 @@ export function Typography() {
               <Code>{'fmt.Println("pizza")'}</Code> ut nostrud exercitation
               ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
               irure{' '}
-              <NextLink variant="subtle" href={randomLink} target="_blank">
+              <Link color="subtle" href={randomLink} target="_blank">
                 example of an inline link
-              </NextLink>{' '}
+              </Link>{' '}
               dolor in reprehenderit in voluptate velit esse cillum dolore eu
               fugiat nulla pariatur.{' '}
-              <NextLink variant="contrast" href={randomLink} target="_blank">
+              <Link color="contrast" href={randomLink} target="_blank">
                 Example of an inline link
-              </NextLink>{' '}
-              <Code variant="gray">{'fmt.Println("pasta")'}</Code>. Excepteur
-              sint occaecat cupidatat non proident, sunt in culpa qui officia
+              </Link>{' '}
+              <Code color="gray">{'fmt.Println("pasta")'}</Code>. Excepteur sint
+              occaecat cupidatat non proident, sunt in culpa qui officia
               deserunt mollit anim id est laborum.
             </Paragraph>
             <Paragraph size="18">
@@ -123,53 +123,38 @@ export function Typography() {
               labore et dolore magna aliqua. Ut enim ad minim veniam, quis
               nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
               consequat. Duis aute irure{' '}
-              <NextLink variant="subtle" href={randomLink} target="_blank">
+              <Link color="subtle" href={randomLink} target="_blank">
                 example of an inline link
-              </NextLink>{' '}
+              </Link>{' '}
               dolor in reprehenderit in voluptate velit esse cillum dolore eu
               fugiat nulla pariatur.{' '}
-              <NextLink variant="contrast" href={randomLink} target="_blank">
+              <Link color="contrast" href={randomLink} target="_blank">
                 Example of an inline link
-              </NextLink>{' '}
-              <Code variant="gray">{'fmt.Println("pasta")'}</Code>. Excepteur
-              sint occaecat cupidatat non proident, sunt in culpa qui officia
+              </Link>{' '}
+              <Code color="gray">{'fmt.Println("pasta")'}</Code>. Excepteur sint
+              occaecat cupidatat non proident, sunt in culpa qui officia
               deserunt mollit anim id est laborum.
             </Paragraph>
-          </Grid>
+          </div>
           <Paragraph size="20">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt <Code>{'fmt.Println("pizza")'}</Code> ut
             labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
             exercitation ullamco laboris nisi ut aliquip ex ea commodo
             consequat. Duis aute irure{' '}
-            <NextLink variant="subtle" href={randomLink} target="_blank">
+            <Link color="subtle" href={randomLink} target="_blank">
               example of an inline link
-            </NextLink>{' '}
+            </Link>{' '}
             dolor in reprehenderit in voluptate velit esse cillum dolore eu
             fugiat nulla pariatur.{' '}
-            <NextLink variant="contrast" href={randomLink} target="_blank">
+            <Link color="contrast" href={randomLink} target="_blank">
               Example of an inline link
-            </NextLink>{' '}
-            <Code variant="gray">{'fmt.Println("pasta")'}</Code>. Excepteur sint
+            </Link>{' '}
+            <Code color="gray">{'fmt.Println("pasta")'}</Code>. Excepteur sint
             occaecat cupidatat non proident, sunt in culpa qui officia deserunt
             mollit anim id est laborum.
           </Paragraph>
-        </Flex>
-      </Section>
-      <Section css={{ pt: '$9' }}>
-        <SubsectionHeading>Keyboard</SubsectionHeading>
-        <Flex direction="column" gap="3">
-          <Flex direction="row" gap="1" wrap="wrap">
-            <Kbd>⌘</Kbd>
-            <Kbd>⌥</Kbd>
-            <Kbd>Tab</Kbd>
-            <Kbd>⇧</Kbd>
-            <Kbd>⌘</Kbd>
-            <Kbd>4</Kbd>
-            <Kbd>Q</Kbd>
-            <Kbd>Space</Kbd>
-          </Flex>
-        </Flex>
+        </div>
       </Section>
     </>
   )

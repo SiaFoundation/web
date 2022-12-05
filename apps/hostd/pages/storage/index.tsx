@@ -3,7 +3,6 @@ import {
   Button,
   Add20,
   DatumCard,
-  Flex,
   ProgressBar,
   Text,
   Table,
@@ -73,13 +72,7 @@ export default function StoragePage() {
       label: 'Storage',
       size: 3,
       render: ({ storageUsed, storageCapacity }) => (
-        <Flex
-          css={{
-            width: '100%',
-            maxWidth: '200px',
-            paddingTop: '10px',
-          }}
-        >
+        <div className="flex gap-1 w-full max-w-[200px] pt-[10px]">
           <ProgressBar
             variant="accent"
             value={storageUsed}
@@ -88,7 +81,7 @@ export default function StoragePage() {
               storageCapacity
             )}`}
           />
-        </Flex>
+        </div>
       ),
     },
     {
@@ -112,9 +105,7 @@ export default function StoragePage() {
       key: 'actions',
       label: '',
       size: 1,
-      props: {
-        justify: 'end',
-      },
+      className: 'justify-end',
       render: ({ path }) => <StorageFolderDropdownMenu id={path} />,
     },
   ]
@@ -135,12 +126,12 @@ export default function StoragePage() {
         </>
       }
     >
-      <Flex gap="2">
+      <div className="flex gap-4">
         <DatumCard label="Free storage" value={humanBytes(free)} />
         <DatumCard label="Total storage" value={humanBytes(total)} />
         <DatumCard label="Read failure rate" value={'4%'} />
         <DatumCard label="Write failure rate" value={'1%'} />
-      </Flex>
+      </div>
       <Table data={data} columns={columns} />
     </HostdAuthedLayout>
   )

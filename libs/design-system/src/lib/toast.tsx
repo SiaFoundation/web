@@ -4,6 +4,8 @@ import toast, {
   Toaster as RToaster,
   ToastOptions,
 } from 'react-hot-toast'
+import { cx } from 'class-variance-authority'
+import { panelStyles } from '../core/Panel'
 
 export type { ToastOptions }
 
@@ -22,37 +24,20 @@ export const triggerErrorToast = (text: string, options: ToastOptions = {}) => {
   toast.error(text, options)
 }
 
-const defaultStyles = {
-  fontFamily: 'var(--fonts-sans)',
-  fontWeight: 'semibold',
-  backgroundColor: 'var(--colors-loContrast)',
-  color: 'var(--colors-hiContrast)',
-  borderRadius: 'var(--radii-2)',
-  boxShadow:
-    'inset 0 0 0 1px var(--colors-slate7), 0 0 0 1px var(--colors-slate7)',
-}
-
-const successStyles = {
-  boxShadow:
-    'inset 0 0 0 1px var(--colors-primary10), 0 0 0 1px var(--colors-primary10)',
-}
-
-const errorStyles = {
-  boxShadow: 'inset 0 0 0 1px var(--colors-red8), 0 0 0 1px var(--colors-red8)',
-}
-
 const defaultOptions: DefaultToastOptions = {
   // position: 'bottom-right',
   position: 'top-center',
   duration: 4_000,
-  style: defaultStyles,
+  className: cx(
+    panelStyles(),
+    'font-sans font-normal',
+    'text-gray-1100 dark:text-white'
+  ),
   success: {
-    style: successStyles,
-    icon: <CheckmarkOutline16 />,
+    icon: <CheckmarkOutline16 className="text-green-600" />,
   },
   error: {
-    style: errorStyles,
-    icon: <CloseOutline16 />,
+    icon: <CloseOutline16 className="text-red-600" />,
   },
 }
 

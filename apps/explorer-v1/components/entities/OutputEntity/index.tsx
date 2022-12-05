@@ -1,15 +1,11 @@
 import { useMemo } from 'react'
 import { NvgOutputEntity } from '../../../config/navigatorTypes'
-import {
-  AnimatedPanel,
-  Badge,
-  Container,
-  Flex,
-} from '@siafoundation/design-system'
+import { Badge } from '@siafoundation/design-system'
 import { NvgDatum, DatumProps } from '../../NvgDatum'
 import { EntityHeading } from '../../EntityHeading'
 import { routes } from '../../../config/routes'
 import BigNumber from 'bignumber.js'
+import { ContentLayout } from '../../ContentLayout'
 
 type Props = {
   entity: NvgOutputEntity
@@ -59,38 +55,29 @@ export function OutputEntity({ entity }: Props) {
   const output = data[0].MasterHash
 
   return (
-    <Container>
-      <Flex direction="column" gap="8">
-        <AnimatedPanel
-          variant="subtle"
-          startTime={0}
-          css={{
-            padding: '$3',
-            borderRadius: '$2',
-          }}
-        >
-          <Flex direction="column" gap="5">
-            <Flex justify="between" align="center" wrap="wrap" gapY="1">
-              <EntityHeading
-                label="transaction output"
-                type="output"
-                value={output}
-                href={routes.output.view.replace('[id]', output)}
-              />
-              <Flex gap="1" align="center">
-                <Badge variant={data[1].Spent ? 'accent' : 'simple'}>
-                  {data[1].Spent ? 'Spent' : 'Unspent'}
-                </Badge>
-              </Flex>
-            </Flex>
-            <Flex direction="column" gapY="3">
-              {values.map((item) => (
-                <NvgDatum key={item.label} {...item} />
-              ))}
-            </Flex>
-          </Flex>
-        </AnimatedPanel>
-      </Flex>
-    </Container>
+    <ContentLayout
+      panel={
+        <div className="flex flex-col gap-10">
+          <div className="flex flex-wrap gap-y-2 justify-between items-center">
+            <EntityHeading
+              label="transaction output"
+              type="output"
+              value={output}
+              href={routes.output.view.replace('[id]', output)}
+            />
+            <div className="flex gap-2 items-center">
+              <Badge variant={data[1].Spent ? 'accent' : 'simple'}>
+                {data[1].Spent ? 'Spent' : 'Unspent'}
+              </Badge>
+            </div>
+          </div>
+          <div className="flex flex-col gap-y-2 md:gap-y-4">
+            {values.map((item) => (
+              <NvgDatum key={item.label} {...item} />
+            ))}
+          </div>
+        </div>
+      }
+    />
   )
 }

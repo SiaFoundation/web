@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Flex, Box, Text, Paragraph } from '@siafoundation/design-system'
+import { Text, Paragraph } from '@siafoundation/design-system'
 import { useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
 import Italic from './Italic'
@@ -21,28 +21,9 @@ export default function Letter({ onDone }: Props) {
   }, [inView])
 
   return (
-    <SectionGradient
-      css={{ py: '$12' }}
-      gradientCss={{
-        height: '200px',
-        background:
-          'linear-gradient(177deg, $colors$loContrast 20%, $colors$slate7 58%, $colors$loContrast 79%)',
-      }}
-    >
-      <Flex
-        direction="column"
-        gap="2"
-        css={{
-          zIndex: 1,
-          maxWidth: '800px',
-          margin: '0 auto',
-        }}
-      >
-        <Text
-          size="32"
-          weight="bold"
-          css={{ fontStyle: 'italic', margin: '$3 0' }}
-        >
+    <SectionGradient className="pt-16 pb-24">
+      <div className="flex flex-col gap-4 z-10 max-w-[800px] mx-auto">
+        <Text size="30" weight="bold" className="italic my-6">
           the future is making a comeback
         </Text>
         <Paragraph>
@@ -126,15 +107,15 @@ export default function Letter({ onDone }: Props) {
           gardens; it's a return to the Internet we once knew. The future is
           making a comeback.
         </Paragraph>
-        <Box css={{ marginTop: '$3' }}>
+        <div className="mt-6">
           <JiggleArrow
             title="Scroll to continue"
             direction="down"
             onClick={onDone}
           />
-        </Box>
-      </Flex>
-      <Box ref={ref} css={{ marginTop: '50vh' }} />
+        </div>
+      </div>
+      <div ref={ref} className="mt-[50vh]" />
     </SectionGradient>
   )
 }

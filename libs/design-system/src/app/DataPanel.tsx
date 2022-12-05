@@ -1,12 +1,6 @@
 import { Button } from '../core/Button'
 import { Codeblock } from '../core/Codeblock'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '../core/DropdownMenu'
-import { Flex } from '../core/Flex'
+import { DropdownMenu, DropdownMenuItem } from '../core/DropdownMenu'
 import { Heading } from '../core/Heading'
 import { Panel } from '../core/Panel'
 import { OverflowMenuHorizontal16 } from '../icons/carbon'
@@ -25,31 +19,33 @@ type Props = {
 
 export function DataPanel({ title, data, actions }: Props) {
   return (
-    <Panel css={{ padding: '$3' }}>
-      <Flex direction="column" gap="3">
-        <Flex gap="3" justify="between" align="center">
+    <Panel className="p-6">
+      <div className="flex flex-col gap-6">
+        <div className="flex gap-6 items-center justify-between">
           <Heading size="20" font="mono">
             {title}
           </Heading>
           {actions && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+            <DropdownMenu
+              trigger={
                 <Button>
                   <OverflowMenuHorizontal16 />
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {actions.map(({ title, onClick }) => (
-                  <DropdownMenuItem key={title} onSelect={onClick}>
-                    {title}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
+              }
+              contentProps={{
+                align: 'end',
+              }}
+            >
+              {actions.map(({ title, onClick }) => (
+                <DropdownMenuItem key={title} onSelect={onClick}>
+                  {title}
+                </DropdownMenuItem>
+              ))}
             </DropdownMenu>
           )}
-        </Flex>
+        </div>
         <Codeblock>{JSON.stringify(data, null, ' ')}</Codeblock>
-      </Flex>
+      </div>
     </Panel>
   )
 }

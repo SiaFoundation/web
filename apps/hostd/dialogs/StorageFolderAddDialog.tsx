@@ -1,9 +1,8 @@
 import {
-  Flex,
-  DialogContent,
   Paragraph,
   FormField,
   FormSubmitButton,
+  Dialog,
 } from '@siafoundation/design-system'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -22,7 +21,13 @@ const validationSchema = Yup.object().shape({
     .min(100, '100KB min'),
 })
 
-export function StorageFolderAddDialog() {
+type Props = {
+  trigger?: React.ReactNode
+  open: boolean
+  onOpenChange: (val: boolean) => void
+}
+
+export function StorageFolderAddDialog({ trigger, open, onOpenChange }: Props) {
   const { closeDialog } = useDialog()
   const formik = useFormik({
     initialValues,
@@ -35,15 +40,17 @@ export function StorageFolderAddDialog() {
   })
 
   return (
-    <DialogContent
+    <Dialog
       title="Add Folder"
-      css={{
-        maxWidth: '400px',
-        overflow: 'hidden',
+      trigger={trigger}
+      open={open}
+      onOpenChange={onOpenChange}
+      contentVariants={{
+        className: 'max-w-[400px]',
       }}
     >
       <form onSubmit={formik.handleSubmit}>
-        <Flex direction="column" gap="2">
+        <div className="flex flex-col gap-4">
           <Paragraph size="14">Add a data storage location.</Paragraph>
           <FormField
             formik={formik}
@@ -60,8 +67,8 @@ export function StorageFolderAddDialog() {
             placeholder="1,000"
           />
           <FormSubmitButton formik={formik}>Add</FormSubmitButton>
-        </Flex>
+        </div>
       </form>
-    </DialogContent>
+    </Dialog>
   )
 }

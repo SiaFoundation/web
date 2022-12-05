@@ -1,9 +1,7 @@
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
-  IconButton,
+  Button,
   Settings20,
 } from '@siafoundation/design-system'
 import { useDialog } from '../contexts/dialog'
@@ -15,20 +13,20 @@ type Props = {
 export function ObjectDropdownMenu({ id }: Props) {
   const { openDialog } = useDialog()
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <IconButton>
+    <DropdownMenu
+      trigger={
+        <Button>
           <Settings20 />
-        </IconButton>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => openDialog('objectDownload', id)}>
-          Download
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => openDialog('objectDelete', id)}>
-          Delete
-        </DropdownMenuItem>
-      </DropdownMenuContent>
+        </Button>
+      }
+      contentProps={{ align: 'end' }}
+    >
+      <DropdownMenuItem onClick={() => openDialog('objectDownload', id)}>
+        Download
+      </DropdownMenuItem>
+      <DropdownMenuItem onClick={() => openDialog('objectDelete', id)}>
+        Delete
+      </DropdownMenuItem>
     </DropdownMenu>
   )
 }

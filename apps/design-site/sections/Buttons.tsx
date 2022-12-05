@@ -1,172 +1,162 @@
 import {
   Button,
-  Flex,
-  Grid,
-  IconButton,
   Section,
   Search16,
+  Filter16,
+  LinkButton,
 } from '@siafoundation/design-system'
 import { SectionHeading } from '../components/SectionHeading'
-import { SmallSection } from '../components/SmallSection'
 import { SubsectionHeading } from '../components/SubsectionHeading'
 
 export function Buttons() {
   return (
     <>
-      <Section css={{ py: '$3', backgroundColor: '$loContrast' }}>
+      <Section>
         <SectionHeading>Buttons</SectionHeading>
+        <SubsectionHeading>Button</SubsectionHeading>
+        <div className="flex flex-col gap-6">
+          <div className="flex gap-2">
+            <Button size="small" variant="accent">
+              <Filter16 />
+              Accent
+              <Filter16 />
+            </Button>
+            <Button size="small" variant="gray">
+              Gray
+            </Button>
+            <Button size="small" variant="red">
+              Red
+            </Button>
+            <Button size="small" variant="ghost">
+              Ghost
+            </Button>
+            <LinkButton size="small" variant="gray">
+              Link
+            </LinkButton>
+          </div>
+          <div className="flex gap-2">
+            <Button size="medium" variant="accent">
+              Accent
+            </Button>
+            <Button size="medium" variant="gray">
+              Gray
+            </Button>
+            <Button size="medium" variant="red">
+              Red
+            </Button>
+            <Button size="medium" variant="ghost">
+              Ghost
+            </Button>
+          </div>
+          <div className="flex gap-2">
+            <Button size="large" variant="accent">
+              Accent
+            </Button>
+            <Button size="large" variant="gray">
+              Gray
+            </Button>
+            <Button size="large" variant="red">
+              Red
+            </Button>
+            <Button size="large" variant="ghost">
+              Ghost
+            </Button>
+          </div>
+          <div className="flex gap-2">
+            <Button rounded={false} size="large" variant="accent">
+              Accent
+            </Button>
+            <Button rounded={false} size="large" variant="gray">
+              Gray
+            </Button>
+            <Button rounded={false} size="large" variant="red">
+              Red
+            </Button>
+            <Button rounded={false} size="large" variant="ghost">
+              Ghost
+            </Button>
+          </div>
+          <div className="flex gap-2">
+            <Button disabled size="small" variant="accent">
+              Accent
+            </Button>
+            <Button disabled size="small" variant="gray">
+              Gray
+            </Button>
+            <Button disabled size="small" variant="red">
+              Red
+            </Button>
+            <Button disabled size="small" variant="ghost">
+              Ghost
+            </Button>
+          </div>
+          <div className="flex gap-2">
+            <Button disabled size="medium" variant="accent">
+              Accent
+            </Button>
+            <Button disabled size="medium" variant="gray">
+              Gray
+            </Button>
+            <Button disabled size="medium" variant="red">
+              Red
+            </Button>
+            <Button disabled size="medium" variant="ghost">
+              Ghost
+            </Button>
+          </div>
+          <div className="flex gap-2">
+            <Button disabled size="large" variant="accent">
+              Accent
+            </Button>
+            <Button disabled size="large" variant="gray">
+              Gray
+            </Button>
+            <Button disabled size="large" variant="red">
+              Red
+            </Button>
+            <Button disabled size="large" variant="ghost">
+              Ghost
+            </Button>
+          </div>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
-        <SubsectionHeading>Button - sizes</SubsectionHeading>
-        <Flex direction="column" gap="2">
-          <Flex direction="row" gap="1">
-            <Button variant="accent">Green</Button>
-            <Button variant="gray">Gray</Button>
-            <Button variant="red">Red</Button>
-            <Button ghost variant="accent">
-              Green
-            </Button>
-            <Button ghost variant="gray">
-              Gray
-            </Button>
-            <Button ghost variant="red">
-              Red
-            </Button>
-          </Flex>
-          <Flex direction="row" gap="1">
-            <Button size="2" variant="accent">
-              Green
-            </Button>
-            <Button size="2" variant="gray">
-              Gray
-            </Button>
-            <Button size="2" variant="red">
-              Red
-            </Button>
-          </Flex>
-          <Flex direction="row" gap="1">
-            <Button size="3" variant="accent">
-              Green
-            </Button>
-            <Button size="3" variant="gray">
-              Gray
-            </Button>
-            <Button size="3" variant="red">
-              Red
-            </Button>
-          </Flex>
-          <Flex direction="row" gap="1">
-            <Button size="2" site variant="accent">
-              Green
-            </Button>
-            <Button size="2" site variant="gray">
-              Gray
-            </Button>
-            <Button size="2" site variant="red">
-              Red
-            </Button>
-          </Flex>
-        </Flex>
-      </Section>
-      <Section css={{ pt: '$9' }}>
-        <SubsectionHeading>Button - states</SubsectionHeading>
-        <Flex direction="column" gap="3">
-          <SmallSection>default</SmallSection>
-          <Flex direction="row" gap="1">
-            <Button variant="accent">Green</Button>
-            <Button variant="gray">Gray</Button>
-            <Button variant="red">Red</Button>
-            <Button ghost variant="accent">
-              Green
-            </Button>
-            <Button ghost variant="gray">
-              Gray
-            </Button>
-            <Button ghost variant="red">
-              Red
-            </Button>
-          </Flex>
-          <SmallSection>waiting</SmallSection>
-          <Flex direction="row" gap="1">
-            <Button state="waiting" variant="accent">
-              Green
-            </Button>
-            <Button state="waiting" variant="gray">
-              Gray
-            </Button>
-            <Button state="waiting" variant="red">
-              Red
-            </Button>
-            <Button state="waiting" ghost variant="accent">
-              Green
-            </Button>
-            <Button state="waiting" ghost variant="gray">
-              Gray
-            </Button>
-            <Button state="waiting" ghost variant="red">
-              Red
-            </Button>
-          </Flex>
-          <SmallSection>disabled</SmallSection>
-          <Flex direction="row" gap="1">
-            <Button disabled state="waiting" variant="accent">
-              Green
-            </Button>
-            <Button disabled state="waiting" variant="gray">
-              Gray
-            </Button>
-            <Button disabled state="waiting" variant="red">
-              Red
-            </Button>
-            <Button disabled state="waiting" ghost variant="accent">
-              Green
-            </Button>
-            <Button disabled state="waiting" ghost variant="gray">
-              Gray
-            </Button>
-            <Button disabled state="waiting" ghost variant="red">
-              Red
-            </Button>
-          </Flex>
-        </Flex>
-      </Section>
-      <Section css={{ pt: '$9' }}>
-        <SubsectionHeading>IconButton</SubsectionHeading>
-        <Grid columns={{ '@initial': 1, '@bp1': 2 }} gap="2">
-          <Flex direction="row" gap="1">
-            <IconButton size="1">
+      <Section>
+        <SubsectionHeading>Buttons - Icon</SubsectionHeading>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="flex gap-2">
+            <Button size="small">
               <Search16 />
-            </IconButton>
-            <IconButton size="2">
+            </Button>
+            <Button size="medium">
               <Search16 />
-            </IconButton>
-            <IconButton size="3" disabled>
+            </Button>
+            <Button size="large" disabled>
               <Search16 />
-            </IconButton>
-          </Flex>
-          <Flex direction="row" gap="1">
-            <IconButton variant="gray" size="1">
+            </Button>
+          </div>
+          <div className="flex gap-2">
+            <Button variant="gray" size="small">
               <Search16 />
-            </IconButton>
-            <IconButton variant="gray" size="2">
+            </Button>
+            <Button variant="gray" size="medium">
               <Search16 />
-            </IconButton>
-            <IconButton variant="gray" size="3" disabled>
+            </Button>
+            <Button variant="gray" size="large" disabled>
               <Search16 />
-            </IconButton>
-          </Flex>
-          <Flex direction="row" gap="1">
-            <IconButton variant="state" size="1">
+            </Button>
+          </div>
+          <div className="flex gap-2">
+            <Button state="waiting" size="small">
               <Search16 />
-            </IconButton>
-            <IconButton variant="state" size="2">
+            </Button>
+            <Button state="waiting" size="medium">
               <Search16 />
-            </IconButton>
-            <IconButton variant="state" size="3" disabled>
+            </Button>
+            <Button state="waiting" size="large" disabled>
               <Search16 />
-            </IconButton>
-          </Flex>
-        </Grid>
+            </Button>
+          </div>
+        </div>
       </Section>
     </>
   )

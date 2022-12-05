@@ -1,11 +1,11 @@
-import { Flex } from '../core/Flex'
 import { Button } from '../core/Button'
-import { TextField } from '../core/TextField'
+import { TextField, textFieldStyles } from '../core/TextField'
 import { Label } from '../core/Label'
 import { Text } from '../core/Text'
 import { NumberField } from '../core/NumberField'
 import { SiacoinField } from '../core/SiacoinField'
 import BigNumber from 'bignumber.js'
+import { VariantProps } from '../types'
 
 type FormFieldProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,7 +24,7 @@ type FormFieldProps = {
   decimalsLimitSc?: number
   disableGroupSeparators?: boolean
   type?: string
-  size?: React.ComponentProps<typeof TextField>['size']
+  variants?: VariantProps<typeof textFieldStyles>
 }
 
 export function FormField({
@@ -43,7 +43,7 @@ export function FormField({
   disableGroupSeparators = false,
   units,
   type,
-  size = 2,
+  variants,
 }: FormFieldProps) {
   return (
     <FieldGroup formik={formik} title={title} name={name}>
@@ -58,7 +58,7 @@ export function FormField({
           allowDecimals={allowDecimals}
           disableGroupSeparators={disableGroupSeparators}
           placeholder={placeholder}
-          size={size}
+          variants={variants}
         />
       ) : type === 'siacoin' ? (
         <FormSiacoinField
@@ -68,9 +68,9 @@ export function FormField({
           readOnly={readOnly}
           placeholder={placeholder}
           tabIndex={tabIndex}
-          size={size}
           decimalsLimitFiat={decimalsLimitFiat}
           decimalsLimitSc={decimalsLimitSc}
+          variants={variants}
         />
       ) : (
         <FormTextField
@@ -83,7 +83,7 @@ export function FormField({
           tabIndex={tabIndex}
           spellCheck={spellCheck}
           type={type}
-          size={size}
+          variants={variants}
         />
       )}
     </FieldGroup>
@@ -101,7 +101,7 @@ type FormTextFieldProps = {
   tabIndex?: number
   spellCheck?: boolean
   type?: string
-  size?: React.ComponentProps<typeof TextField>['size']
+  variants?: VariantProps<typeof textFieldStyles>
 }
 
 export function FormTextField({
@@ -114,7 +114,7 @@ export function FormTextField({
   tabIndex,
   spellCheck = false,
   type,
-  size = 2,
+  variants,
 }: FormTextFieldProps) {
   return (
     <TextField
@@ -130,7 +130,7 @@ export function FormTextField({
       onBlur={formik.handleBlur}
       onChange={formik.handleChange}
       value={formik.values[name] || ''}
-      size={size}
+      {...variants}
     />
   )
 }
@@ -146,7 +146,7 @@ type FormNumberFieldProps = {
   placeholder: string
   allowDecimals?: boolean
   disableGroupSeparators?: boolean
-  size?: React.ComponentProps<typeof TextField>['size']
+  variants?: VariantProps<typeof textFieldStyles>
 }
 
 export function FormNumberField({
@@ -159,7 +159,7 @@ export function FormNumberField({
   placeholder,
   allowDecimals = false,
   disableGroupSeparators = false,
-  size = 2,
+  variants,
 }: FormNumberFieldProps) {
   return (
     <NumberField
@@ -175,7 +175,7 @@ export function FormNumberField({
       onBlur={formik.handleBlur}
       onValueChange={(value, name) => formik.setFieldValue(name, value)}
       value={formik.values[name]}
-      size={size}
+      {...variants}
     />
   )
 }
@@ -190,7 +190,7 @@ type FormSiacoinFieldProps = {
   placeholder: string
   decimalsLimitFiat?: number
   decimalsLimitSc?: number
-  size?: React.ComponentProps<typeof TextField>['size']
+  variants?: VariantProps<typeof textFieldStyles>
 }
 
 export function FormSiacoinField({
@@ -202,7 +202,7 @@ export function FormSiacoinField({
   placeholder,
   decimalsLimitFiat = 3,
   decimalsLimitSc = 3,
-  size = 2,
+  variants,
 }: FormSiacoinFieldProps) {
   return (
     <SiacoinField
@@ -214,10 +214,10 @@ export function FormSiacoinField({
       readOnly={readOnly || formik.isSubmitting}
       tabIndex={tabIndex}
       onBlur={formik.handleBlur}
-      size={size}
       sc={new BigNumber(formik.values[name])}
       placeholder={new BigNumber(placeholder)}
       onChange={(val) => formik.setFieldValue(name, val?.toString())}
+      {...variants}
     />
   )
 }
@@ -233,21 +233,26 @@ type FieldGroupProps = {
 export function FieldGroup({ formik, title, name, children }: FieldGroupProps) {
   const showError = formik.errors[name] && formik.touched[name]
   return (
-    <Flex direction="column" gap="1">
+    <div className="flex flex-col gap-2">
       {(title || showError) && (
-        <Flex justify="between" gap="2">
+        <div className="flex justify-between gap-4">
           {title && (
-            <Label htmlFor={name} css={{ color: '$gray9' }}>
+            <Label
+              htmlFor={name}
+              className="text-gray-800 dark:text-graydark-800"
+            >
               {title}
             </Label>
           )}
           {showError && (
-            <Text css={{ color: '$red11' }}>{formik.errors[name]}</Text>
+            <Text size="14" color="red">
+              {formik.errors[name]}
+            </Text>
           )}
-        </Flex>
+        </div>
       )}
       {children}
-    </Flex>
+    </div>
   )
 }
 
@@ -260,14 +265,12 @@ type FormSubmitProps = {
 
 export function FormSubmitButton({
   formik,
-  size = 2,
+  size = 'medium',
   children,
 }: FormSubmitProps) {
   return (
     <>
-      {formik.status?.error && (
-        <Text css={{ color: '$red11' }}>{formik.status.error}</Text>
-      )}
+      {formik.status?.error && <Text color="red">{formik.status.error}</Text>}
       <Button
         size={size}
         disabled={formik.isSubmitting || !formik.isValid}

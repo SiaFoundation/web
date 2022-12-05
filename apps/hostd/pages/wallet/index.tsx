@@ -1,7 +1,6 @@
 import {
   EntityList,
   EntityListItemProps,
-  Flex,
   Text,
   Tooltip,
   WalletSparkline,
@@ -45,30 +44,30 @@ export default function WalletView() {
       }
     >
       <WalletSparkline />
-      <Flex direction="column" gap="1">
+      <div className="flex flex-col gap-2">
         <EntityList
           title="Transactions"
           actions={
-            <Flex gap="3" align="center">
-              <Flex>
+            <div className="flex gap-6 items-center">
+              <div className="flex gap-1">
                 <Tooltip content="Coming soon">
                   <Text weight="semibold" color="subtle">
                     Filters
                   </Text>
                 </Tooltip>
-              </Flex>
-              <Flex>
+              </div>
+              <div className="flex gap-1">
                 <Tooltip content="Coming soon">
                   <Text weight="semibold" color="subtle">
                     Sort by
                   </Text>
                 </Tooltip>
-              </Flex>
-            </Flex>
+              </div>
+            </div>
           }
           entities={entities}
         />
-      </Flex>
+      </div>
     </HostdAuthedLayout>
   )
 }

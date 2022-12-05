@@ -1,4 +1,4 @@
-import { Flex, NextLink, Text, LinkData } from '@siafoundation/design-system'
+import { Link, LinkData } from '@siafoundation/design-system'
 
 type Props = {
   links?: LinkData[]
@@ -10,19 +10,20 @@ export function DownloadLinks({ links = [] }: Props) {
   }
 
   return (
-    <Flex gap="2" wrap="wrap">
+    <div className="flex gap-4 flex-wrap">
       {links.map((link) => (
-        <Text size="14" font="mono" key={link.title + link.link}>
-          <NextLink
-            variant="contrast"
-            href={link.link}
-            underline="hover"
-            target={link.newTab ? '_blank' : undefined}
-          >
-            {link.title}
-          </NextLink>
-        </Text>
+        <Link
+          size="14"
+          font="mono"
+          key={link.title + link.link}
+          color="contrast"
+          href={link.link}
+          underline="none"
+          target={link.newTab ? '_blank' : undefined}
+        >
+          {link.title}
+        </Link>
       ))}
-    </Flex>
+    </div>
   )
 }

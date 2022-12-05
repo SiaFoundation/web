@@ -3,13 +3,10 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  AnimatedPanel,
   Badge,
-  Container,
-  Flex,
-  Heading,
   Tooltip,
   EntityList,
+  Text,
 } from '@siafoundation/design-system'
 import {
   humanBytes,
@@ -28,6 +25,7 @@ import { routes } from '../../../config/routes'
 import { EntityHeading } from '../../EntityHeading'
 import { getHrefForType } from '../../../lib/utils'
 import BigNumber from 'bignumber.js'
+import { ContentLayout } from '../../ContentLayout'
 
 type Props = {
   entity: NvgBlockEntity
@@ -128,105 +126,99 @@ export function BlockEntity({ entity }: Props) {
   const block = data[0].MasterHash
 
   return (
-    <>
-      <Container>
-        <Flex direction="column" gap="6">
-          <AnimatedPanel
-            variant="subtle"
-            startTime={0}
-            css={{
-              padding: '$3',
-              borderRadius: '$2',
-            }}
-          >
-            <Flex direction="column" gap="5">
-              <Flex justify="between" align="center" wrap="wrap" gapY="1">
-                <EntityHeading
-                  label="block"
-                  type="block"
-                  value={block}
-                  href={routes.block.view.replace('[id]', block)}
-                />
-                <Flex gap="1" align="center">
-                  <Tooltip
-                    content={`${humanNumber(
-                      data[1].NewContracts
-                    )} total contracts`}
-                  >
-                    <Badge variant="accent">
-                      {`${humanNumber(data[1].NewContracts)}`} contracts
-                    </Badge>
-                  </Tooltip>
-                  <Tooltip
-                    content={`${humanNumber(data[1].NewTx)} total transactions`}
-                  >
-                    <Badge variant="accent">
-                      {`${humanNumber(data[1].NewTx)}`} transactions
-                    </Badge>
-                  </Tooltip>
-                </Flex>
-              </Flex>
-              <Flex direction="column" gapY="3">
-                {values.map((item) => (
-                  <NvgDatum key={item.label} {...item} />
-                ))}
-              </Flex>
-              <Accordion type="single">
-                <AccordionItem value="contracts" variant="ghost">
-                  <AccordionTrigger variant="ghost">
-                    <Heading size="20">Contracts</Heading>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <Flex direction="column" gap="5" css={{ padding: '$3 0' }}>
-                      <Flex direction="column" gap="3">
-                        <Heading size="20">Active</Heading>
-                        <Flex direction="column" gap="3">
-                          {active.map((item) => (
-                            <NvgDatum key={item.label} {...item} />
-                          ))}
-                        </Flex>
-                      </Flex>
-                      <Flex direction="column" gap="3">
-                        <Heading size="20">Historic</Heading>
-                        <Flex direction="column" gap="3">
-                          {historic.map((item) => (
-                            <NvgDatum key={item.label} {...item} />
-                          ))}
-                        </Flex>
-                      </Flex>
-                    </Flex>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="other" variant="ghost">
-                  <AccordionTrigger variant="ghost">
-                    <Heading size="20">Other</Heading>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <Flex direction="column" gap="3" css={{ padding: '$3 0' }}>
-                      {other.map((item) => (
+    <ContentLayout
+      panel={
+        <div className="flex flex-col gap-10">
+          <div className="flex flex-wrap gap-y-2 items-center justify-between">
+            <EntityHeading
+              label="block"
+              type="block"
+              value={block}
+              href={routes.block.view.replace('[id]', block)}
+            />
+            <div className="flex gap-2 items-center">
+              <Tooltip
+                content={`${humanNumber(data[1].NewContracts)} total contracts`}
+              >
+                <Badge variant="accent">
+                  {`${humanNumber(data[1].NewContracts)}`} contracts
+                </Badge>
+              </Tooltip>
+              <Tooltip
+                content={`${humanNumber(data[1].NewTx)} total transactions`}
+              >
+                <Badge variant="accent">
+                  {`${humanNumber(data[1].NewTx)}`} transactions
+                </Badge>
+              </Tooltip>
+            </div>
+          </div>
+          <div className="flex flex-col gap-y-2 md:gap-y-4">
+            {values.map((item) => (
+              <NvgDatum key={item.label} {...item} />
+            ))}
+          </div>
+          <Accordion type="single" className="flex flex-col gap-6">
+            <AccordionItem value="contracts" variant="ghost">
+              <AccordionTrigger>
+                <Text size="20" weight="medium">
+                  Contracts
+                </Text>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="flex flex-col gap-6 pt-8">
+                  <div className="flex flex-col gap-3">
+                    <Text size="16" weight="medium">
+                      Active
+                    </Text>
+                    <div className="flex flex-col gap-y-2 md:gap-y-4 mb-6">
+                      {active.map((item) => (
                         <NvgDatum key={item.label} {...item} />
                       ))}
-                    </Flex>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </Flex>
-          </AnimatedPanel>
-        </Flex>
-      </Container>
-      <Container>
-        <EntityList
-          title={`Transactions (${data[2].transactions.length})`}
-          entities={data[2].transactions.map((tx) => ({
-            hash: tx.TxHash,
-            label: getNvgEntityTypeLabel(tx.TxType),
-            initials: getNvgEntityTypeInitials(tx.TxType),
-            href: getHrefForType(tx.TxType, tx.TxHash),
-            sc: new BigNumber(tx.TotalAmountSc),
-            sf: tx.TotalAmountSf,
-          }))}
-        />
-      </Container>
-    </>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-y-2 md:gap-y-4">
+                    <Text size="16" weight="medium">
+                      Historic
+                    </Text>
+                    <div className="flex flex-col gap-y-2 md:gap-y-4 mb-6">
+                      {historic.map((item) => (
+                        <NvgDatum key={item.label} {...item} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="other" variant="ghost">
+              <AccordionTrigger>
+                <Text size="20" weight="medium">
+                  Other
+                </Text>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="flex flex-col gap-y-2 md:gap-y-4 pt-8">
+                  {other.map((item) => (
+                    <NvgDatum key={item.label} {...item} />
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+      }
+    >
+      <EntityList
+        title={`Transactions (${data[2].transactions.length})`}
+        entities={data[2].transactions.map((tx) => ({
+          hash: tx.TxHash,
+          label: getNvgEntityTypeLabel(tx.TxType),
+          initials: getNvgEntityTypeInitials(tx.TxType),
+          href: getHrefForType(tx.TxType, tx.TxHash),
+          sc: new BigNumber(tx.TotalAmountSc),
+          sf: tx.TotalAmountSf,
+        }))}
+      />
+    </ContentLayout>
   )
 }

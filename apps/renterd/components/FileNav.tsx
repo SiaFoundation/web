@@ -1,40 +1,27 @@
 import { Fragment } from 'react'
-import {
-  Flex,
-  Text,
-  NextLink,
-  ChevronRight16,
-} from '@siafoundation/design-system'
+import { Text, Link, ChevronRight16 } from '@siafoundation/design-system'
 
 export function FileNav() {
   const parts = ['files', 'backups', 'random']
 
   return (
-    <Flex gap="0-5" align="center">
+    <div className="flex gap-1 items-center">
       {parts.map((part, i) => {
         return (
           <Fragment key={part + i}>
             {i > 0 && (
-              <Text
-                size="16"
-                color="verySubtle"
-                css={{ display: 'flex', alignItems: 'center' }}
-              >
+              <Text size="16" color="verySubtle" className="flex items-center">
                 <ChevronRight16 />
               </Text>
             )}
-            <Text
-              size="16"
-              color="subtle"
-              css={{ display: 'flex', alignItems: 'center' }}
-            >
-              <NextLink href="/" underline="none">
+            <Text size="16" color="subtle" className="flex items-center">
+              <Link href="/" underline="none">
                 {part}
-              </NextLink>
+              </Link>
             </Text>
           </Fragment>
         )
       })}
-    </Flex>
+    </div>
   )
 }

@@ -1,6 +1,4 @@
 import { Launch16 } from '../icons/carbon'
-import { Box } from '../core/Box'
-import { Flex } from '../core/Flex'
 import { Text } from '../core/Text'
 import { useIsExternalDomain } from '../hooks/useIsExternalDomain'
 
@@ -13,27 +11,15 @@ export function WebDomain({ link }: Props) {
   const url = new URL(link)
 
   return (
-    <Flex gap="0" align="center">
-      <Text
-        size="12"
-        color="subtle"
-        font="sans"
-        css={{ textDecoration: 'none' }}
-      >
+    <div className="flex gap-0 items-center">
+      <Text size="12" color="subtle" font="sans">
         {url.host}
       </Text>
       {isExternal && (
-        <Box
-          css={{
-            transform: 'scale(0.75)',
-            top: '1px',
-            position: 'relative',
-            color: '$textSubtle',
-          }}
-        >
+        <Text color="subtle" className="scale-75 top-px relative">
           <Launch16 />
-        </Box>
+        </Text>
       )}
-    </Flex>
+    </div>
   )
 }

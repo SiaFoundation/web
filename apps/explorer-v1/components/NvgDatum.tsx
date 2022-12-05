@@ -1,6 +1,4 @@
 import {
-  Box,
-  Flex,
   Text,
   ValueSf,
   ValueSc,
@@ -23,11 +21,6 @@ export type DatumProps = {
   comment?: React.ReactNode
 }
 
-const size: React.ComponentProps<typeof Text>['size'] = {
-  '@initial': '16',
-  '@bp1': '18',
-}
-
 export function NvgDatum({
   label,
   entityType,
@@ -39,43 +32,23 @@ export function NvgDatum({
   comment,
 }: DatumProps) {
   return (
-    <Flex
-      gapX="6"
-      gapY="2"
-      wrap="wrap"
-      align="center"
-      css={{ overflow: 'hidden' }}
-    >
-      <Box css={{ flex: 1 }}>
-        <Text
-          color="subtle"
-          size={{
-            '@initial': '12',
-            '@bp1': '14',
-          }}
-        >
+    <div className="flex flex-wrap gap-x-12 gap-y-4 items-baseline py-1.5 overflow-hidden">
+      <div className="flex-1">
+        <Text color="subtle" scaleSize="14">
           {upperFirst(label)}
         </Text>
-      </Box>
-      <Flex
-        direction="column"
-        align={{
-          '@initial': 'end',
-          '@bp2': 'start',
-        }}
-        gap="1"
-        css={{
-          '@bp2': {
-            flex: 2,
-          },
-        }}
-      >
-        {sc !== undefined && <ValueSc size={size} variant="value" value={sc} />}
-        {sf !== undefined && <ValueSf size={size} variant="value" value={sf} />}
+      </div>
+      <div className="flex flex-col gap-2 items-end md:items-start md:flex-[2]">
+        {sc !== undefined && (
+          <ValueSc scaleSize="18" variant="value" value={sc} />
+        )}
+        {sf !== undefined && (
+          <ValueSf scaleSize="18" variant="value" value={sf} />
+        )}
         {entityType &&
           (entityValue ? (
             <ValueCopyable
-              size={size}
+              scaleSize="18"
               label={getNvgEntityTypeLabel(entityType)}
               href={getHrefForType(entityType, entityValue)}
               value={entityValue}
@@ -84,19 +57,16 @@ export function NvgDatum({
                   ? Number(entityValue).toLocaleString()
                   : entityValue
               }
-              css={{
-                position: 'relative',
-                top: '2px',
-              }}
+              // className="relative top-0.5"
             />
           ) : (
-            <Text font="mono" weight="semibold" size={size}>
+            <Text font="mono" weight="semibold" scaleSize="18">
               -
             </Text>
           ))}
-        {hash && <ValueCopyable size={size} label="hash" value={hash} />}
+        {hash && <ValueCopyable scaleSize="18" label="hash" value={hash} />}
         {value !== undefined && (
-          <Text font="mono" weight="semibold" size={size} ellipsis>
+          <Text font="mono" weight="semibold" scaleSize="18" ellipsis>
             {value}
           </Text>
         )}
@@ -105,7 +75,7 @@ export function NvgDatum({
             {comment}
           </Text>
         )}
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   )
 }

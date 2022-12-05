@@ -1,6 +1,5 @@
 import {
   Badge,
-  Flex,
   Text,
   ValueNum,
   ValueSc,
@@ -69,11 +68,11 @@ const defaultColumns: ContractColumn[] = [
 
 function getStatus({ status }: Row): {
   label: string
-  color: 'red' | 'yellow' | 'green'
+  color: 'red' | 'amber' | 'green'
 } {
   const label = upperFirst(status)
   const color =
-    status === 'active' ? 'yellow' : status === 'successful' ? 'green' : 'red'
+    status === 'active' ? 'amber' : status === 'successful' ? 'green' : 'red'
 
   return {
     label,
@@ -187,31 +186,31 @@ export function useContracts() {
             const { id, renewed } = row
             const { label, color } = getStatus(row)
             return (
-              <Flex direction="column" gap="1" css={{ width: '100%' }}>
+              <div className="flex flex-col gap-2 w-full">
                 <Text font="mono" ellipsis>
                   {id}
                 </Text>
-                <Flex gap="1" align="center">
+                <div className="flex items-center gap-2">
                   <Badge variant={color}>{label}</Badge>
                   {renewed && <Badge variant="gray">Renewed</Badge>}
-                </Flex>
-              </Flex>
+                </div>
+              </div>
             )
           },
           summary: () => {
             const counts = countBy(filteredContracts, 'status')
             return (
-              <Flex direction="row" gap="1" css={{ width: '100%' }}>
-                <Text size="12" css={{ color: '$amber9' }}>
+              <div className="flex gap-2 w-full">
+                <Text size="12" color="none" className="text-amber-500">
                   {counts.active || 0} active
                 </Text>
-                <Text size="12" css={{ color: '$green9' }}>
+                <Text size="12" color="green">
                   {counts.successful || 0} successful
                 </Text>
-                <Text size="12" css={{ color: '$red11' }}>
+                <Text size="12" color="red">
                   {counts.failed || 0} failed
                 </Text>
-              </Flex>
+              </div>
             )
           },
         },

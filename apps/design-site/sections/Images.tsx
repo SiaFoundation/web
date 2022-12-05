@@ -1,13 +1,4 @@
-import {
-  Avatar,
-  AvatarGroup,
-  Box,
-  Button,
-  Flex,
-  Grid,
-  NextImage,
-  Section,
-} from '@siafoundation/design-system'
+import { Avatar, Image, Section } from '@siafoundation/design-system'
 import { SectionHeading } from '../components/SectionHeading'
 import { SubsectionHeading } from '../components/SubsectionHeading'
 import bellLabs from '../assets/bell-labs.jpeg'
@@ -19,248 +10,68 @@ import avatar3 from '../assets/avatar3.png'
 export function Images() {
   return (
     <>
-      <Section css={{ pt: '$12' }}>
+      <Section>
         <SectionHeading>Images</SectionHeading>
-      </Section>
-      <Section css={{ pt: '$9' }}>
         <SubsectionHeading>Image</SubsectionHeading>
-        <Grid
-          columns={{
-            '@initial': '1',
-            '@bp2': '2',
-          }}
-          gap="2"
-        >
-          <Box>
-            <Box css={{ position: 'relative ' }}>
-              <NextImage {...bellLabs} alt="bell labs" />
-              <Button
-                size="1"
-                variant="transparentWhite"
-                css={{
-                  position: 'absolute',
-                  bottom: '$1',
-                  right: '$1',
-                }}
-              >
-                Bell Labs
-              </Button>
-            </Box>
-          </Box>
-          <Box>
-            <Box css={{ position: 'relative ' }}>
-              <NextImage {...macTeam} alt="mac team" radius="3" />
-              <Button
-                variant="transparentWhite"
-                css={{
-                  position: 'absolute',
-                  bottom: '$1',
-                  right: '$1',
-                }}
-              >
-                Apple
-              </Button>
-            </Box>
-          </Box>
-        </Grid>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Image {...bellLabs} alt="bell labs" />
+          <Image {...macTeam} alt="mac team" />
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
-        <SubsectionHeading>NextImage - responsive</SubsectionHeading>
-        <Flex gap="2" justify="start">
-          <Box
-            css={{
-              position: 'relative',
-              height: '250px',
-              width: '250px',
-            }}
-            debug
-          >
-            <Box
-              css={{
-                position: 'relative',
-              }}
-              debug
-            >
-              <NextImage {...bellLabs} alt="bell labs" layout="responsive" />
-              <Button
-                size="1"
-                variant="transparentWhite"
-                css={{
-                  position: 'absolute',
-                  bottom: '$1',
-                  right: '$1',
-                }}
-              >
-                Bell Labs
-              </Button>
-            </Box>
-          </Box>
-          <Box
-            css={{
-              position: 'relative',
-              height: '350px',
-              width: '250px',
-            }}
-            debug
-          >
-            <Box
-              css={{
-                position: 'relative',
-              }}
-              debug
-            >
-              <NextImage {...macTeam} alt="mac team" layout="responsive" />
-              <Button
-                size="1"
-                variant="transparentWhite"
-                css={{
-                  position: 'absolute',
-                  bottom: '$1',
-                  right: '$1',
-                }}
-              >
-                Apple
-              </Button>
-            </Box>
-          </Box>
-        </Flex>
+      <Section>
+        <SubsectionHeading>Image - responsive</SubsectionHeading>
+        <div className="flex justify-start gap-4">
+          <div className="relative overflow-hidden h-[250px] w-[250px]">
+            <Image {...bellLabs} alt="bell labs" layout="responsive" />
+          </div>
+          <div className="relative overflow-hidden h-[250px] w-[250px]">
+            <Image {...macTeam} alt="mac team" layout="responsive" />
+          </div>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
-        <SubsectionHeading>NextImage - fill & cover</SubsectionHeading>
-        <Flex gap="2" justify="start">
-          <Box
-            css={{
-              position: 'relative',
-              height: '250px',
-              width: '250px',
-            }}
-            debug
-          >
-            <NextImage
+      <Section>
+        <SubsectionHeading>Image - fill & cover</SubsectionHeading>
+        <div className="flex gap-4 justify-start">
+          <div className="relative h-[250px] w-[250px]">
+            <Image
               src={bellLabs.src}
               blurDataURL={bellLabs.blurDataURL}
               alt="bell labs"
               layout="fill"
               objectFit="cover"
             />
-            <Button
-              size="1"
-              variant="transparentWhite"
-              css={{
-                position: 'absolute',
-                bottom: '$1',
-                right: '$1',
-              }}
-            >
-              Bell Labs
-            </Button>
-          </Box>
-          <Box
-            css={{
-              position: 'relative',
-              height: '350px',
-              width: '250px',
-            }}
-            debug
-          >
-            <NextImage
+          </div>
+          <div className="relative h-[250px] w-[250px]">
+            <Image
               src={macTeam.src}
               blurDataURL={macTeam.blurDataURL}
               alt="mac team"
               layout="fill"
               objectFit="cover"
             />
-            <Button
-              variant="transparentWhite"
-              css={{
-                position: 'absolute',
-                bottom: '$1',
-                right: '$1',
-              }}
-            >
-              Apple
-            </Button>
-          </Box>
-        </Flex>
+          </div>
+        </div>
       </Section>
-      <Section css={{ pt: '$9' }}>
+      <Section>
         <SubsectionHeading>Avatar</SubsectionHeading>
-        <Grid columns={{ '@initial': 1, '@bp2': 2 }} justify="start" gap="3">
-          <Flex gap="2" align="center" justify="start">
+        <div className="flex flex-wrap justify-start gap-6">
+          <div className="flex gap-4 items-center justify-start">
             <Avatar size="1" src={avatar1.src} interactive />
             <Avatar size="2" src={avatar2.src} interactive />
             <Avatar size="3" src={avatar3.src} interactive />
-          </Flex>
-          <Flex gap="2" align="center" justify="start">
+          </div>
+          <div className="flex gap-4 items-center justify-start">
             <Avatar size="1" fallback="RH" interactive />
             <Avatar size="2" fallback="RH" interactive />
+            <Avatar shape="square" size="2" fallback="RH" interactive />
             <Avatar size="3" fallback="RH" interactive />
-          </Flex>
-          <Flex gap="2" align="center" justify="start">
+          </div>
+          <div className="flex gap-4 items-center justify-start">
             <Avatar shape="square" size="1" src={avatar1.src} />
             <Avatar shape="square" size="2" src={avatar2.src} />
             <Avatar shape="square" size="3" src={avatar3.src} />
-          </Flex>
-        </Grid>
-      </Section>
-      <Section css={{ pt: '$9' }}>
-        <SubsectionHeading>AvatarGroup</SubsectionHeading>
-        <Grid columns={{ '@initial': 1, '@bp2': 2 }} justify="start" gap="3">
-          <Flex gap="2" align="center" justify="start">
-            <AvatarGroup>
-              <Avatar size="2" status="green" src={avatar1.src} interactive />
-              <Avatar size="2" status="green" src={avatar2.src} interactive />
-              <Avatar size="2" status="green" src={avatar3.src} inactive />
-              <Avatar size="2" status="yellow" src={avatar3.src} interactive />
-              <Avatar
-                size="2"
-                status="yellow"
-                alt="A"
-                fallback="A"
-                interactive
-              />
-            </AvatarGroup>
-          </Flex>
-          <Flex gap="2" align="center" justify="start">
-            <AvatarGroup>
-              <Avatar
-                shape="square"
-                size="2"
-                status="green"
-                src={avatar1.src}
-                interactive
-              />
-              <Avatar
-                shape="square"
-                size="2"
-                status="green"
-                src={avatar2.src}
-                interactive
-              />
-              <Avatar
-                shape="square"
-                size="2"
-                status="green"
-                src={avatar3.src}
-                inactive
-              />
-              <Avatar
-                shape="square"
-                size="2"
-                status="yellow"
-                src={avatar3.src}
-                interactive
-              />
-              <Avatar
-                shape="square"
-                size="2"
-                status="yellow"
-                alt="A"
-                fallback="A"
-              />
-            </AvatarGroup>
-          </Flex>
-        </Grid>
+          </div>
+        </div>
       </Section>
     </>
   )

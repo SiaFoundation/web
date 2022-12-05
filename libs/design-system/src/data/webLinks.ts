@@ -12,9 +12,11 @@ export const webLinks = {
     renterd: 'https://github.com/SiaFoundation/renterd',
     hostd: 'https://github.com/SiaFoundation/hostd',
     siaui: 'https://docs.sia.tech/your-sia-wallet/sia-ui-faqs',
+    brand: 'https://docs.sia.tech/sia-integrations/sia-brand-guidelines',
   },
   website: 'https://sia.tech',
   explore: 'https://explore.sia.tech',
+  design: 'https://design.sia.tech',
   apiDocs: 'https://api.sia.tech',
   // forum: 'https://forum.sia.tech',
   github: {

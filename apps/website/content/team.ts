@@ -1,4 +1,4 @@
-import { readCacheJsonFile } from '../lib/cache'
+import { readContentDirCachedJsonFile } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
 
 type Member = {
@@ -14,5 +14,5 @@ type Member = {
 const maxAge = getMinutesInSeconds(5)
 
 export async function getCacheTeam(): Promise<Member[]> {
-  return readCacheJsonFile('team.json', [], maxAge)
+  return readContentDirCachedJsonFile('team.json', [], maxAge)
 }

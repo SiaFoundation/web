@@ -1,6 +1,4 @@
 import {
-  Box,
-  Flex,
   Heading,
   Panel,
   Paragraph,
@@ -11,10 +9,10 @@ import {
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { useEffect, useState } from 'react'
-import { AppAuthedLayout } from '@siafoundation/design-system'
 import { RenterSidenav } from '../../components/RenterSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
+import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
 
 export default function ConfigPage() {
   const { openDialog } = useDialog()
@@ -54,13 +52,13 @@ export default function ConfigPage() {
   }, [targetPrice, expectedStorage, period])
 
   return (
-    <AppAuthedLayout
+    <RenterdAuthedLayout
       title="Configuration"
       routes={routes}
       sidenav={<RenterSidenav />}
       openSettings={() => openDialog('settings')}
     >
-      <Flex gap="7" direction="column" css={{ maxWidth: '1200px' }}>
+      <div className="flex flex-col gap-16 max-w-screen-xl">
         <Section title="Basic">
           <Setting
             title="Target price"
@@ -74,7 +72,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Expected storage"
             description={
@@ -88,7 +86,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Expected upload"
             description={
@@ -104,7 +102,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Expected download"
             description={
@@ -139,7 +137,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Period"
             description={<>The length of the storage contracts.</>}
@@ -153,7 +151,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Renew window"
             description={
@@ -172,7 +170,7 @@ export default function ConfigPage() {
               />
             }
           />
-          <Separator size="100" />
+          <Separator className="w-full" />
           <Setting
             title="Hosts"
             description={<>The number of hosts to create contracts with.</>}
@@ -187,8 +185,8 @@ export default function ConfigPage() {
             }
           />
         </Section>
-      </Flex>
-    </AppAuthedLayout>
+      </div>
+    </RenterdAuthedLayout>
   )
 }
 
@@ -201,16 +199,16 @@ type SettingProps = {
 
 function Setting({ title, description, suggestion, control }: SettingProps) {
   return (
-    <Flex justify="between">
-      <Flex gap="1" direction="column" css={{ maxWidth: '700px' }}>
+    <div className="flex justify-between">
+      <div className="flex flex-col gap-2 max-w-screen-md">
         <Text size="20" weight="semibold">
           {title}
         </Text>
         <Paragraph size="14">{description}</Paragraph>
         {suggestion && <Text color="accent">Suggestion: {suggestion}</Text>}
-      </Flex>
-      <Box>{control}</Box>
-    </Flex>
+      </div>
+      <div className="">{control}</div>
+    </div>
   )
 }
 
@@ -221,13 +219,11 @@ type SectionProps = {
 
 function Section({ title, children }: SectionProps) {
   return (
-    <Flex gap="3" direction="column">
+    <div className="flex flex-col gap-6">
       <Heading size="24">{title}</Heading>
-      <Panel css={{ p: '$3' }}>
-        <Flex gap="3" direction="column">
-          {children}
-        </Flex>
+      <Panel className="p-6">
+        <div className="flex flex-col gap-6">{children}</div>
       </Panel>
-    </Flex>
+    </div>
   )
 }

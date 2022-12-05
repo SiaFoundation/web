@@ -1,26 +1,21 @@
 import {
-  Flex,
   Section,
   ThemeRadio,
   UserDropdownMenu,
 } from '@siafoundation/design-system'
-import { SectionHeading as DSSectionHeading } from '../components/SectionHeading'
+import { SectionHeading } from '../components/SectionHeading'
+import { SubsectionHeading } from '../components/SubsectionHeading'
 
 export function Apps() {
   return (
-    <>
-      <Section css={{ pt: '$9' }}>
-        <DSSectionHeading>ThemeRadio</DSSectionHeading>
-        <Flex direction="column" gap="3">
-          <ThemeRadio />
-        </Flex>
-      </Section>
-      <Section css={{ pt: '$9' }}>
-        <DSSectionHeading>UserDropdownMenu</DSSectionHeading>
-        <Flex direction="column" gap="3">
-          <UserDropdownMenu />
-        </Flex>
-      </Section>
-    </>
+    <Section>
+      <SectionHeading>Controls</SectionHeading>
+      <SubsectionHeading>ThemeRadio</SubsectionHeading>
+      <ThemeRadio />
+      <SubsectionHeading>UserDropdownMenu</SubsectionHeading>
+      <div>
+        <UserDropdownMenu />
+      </div>
+    </Section>
   )
 }

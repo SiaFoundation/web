@@ -1,4 +1,3 @@
-import { Flex } from '../core/Flex'
 import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
 import { useWalletBalance } from '@siafoundation/react-core'
@@ -12,19 +11,10 @@ export function WalletBalance() {
   }
 
   return (
-    <Panel
-      css={{
-        display: 'none',
-        '@bp1': {
-          display: 'block',
-        },
-      }}
-    >
-      <Flex align="center" css={{ height: '28px', padding: '0 $2' }}>
-        <Text size="12" weight="semibold">
-          {humanSiacoin(siacoin)}
-        </Text>
-      </Flex>
+    <Panel className="hidden sm:block h-7 px-4">
+      <Text size="12" weight="semibold">
+        {humanSiacoin(siacoin)}
+      </Text>
     </Panel>
   )
 }
@@ -38,26 +28,21 @@ export function WalletBalance() {
 
 //   return (
 //     <Panel
-//       css={{
-//         display: 'none',
-//         '@bp1': {
-//           display: 'block',
-//         },
-//       }}
+//       className="hidden sm:block"
 //     >
-//       <Flex align="center" css={{ height: '28px', padding: '0 $2' }}>
+//       <div className="flex items-center h-7 px-4">
 //         <Text size="12" weight="semibold">
 //           {humanSiacoin(wallet.siacoins)}
 //         </Text>
 //         {!!wallet.siafunds && (
 //           <>
-//             <Separator orientation="vertical" pad="1-5" size="1" />
+//             <Separator orientation="vertical" className="h-full" />
 //             <Text size="12" weight="semibold">
 //               {humanSiafund(wallet.siafunds)}
 //             </Text>
 //           </>
 //         )}
-//       </Flex>
+//       </div>
 //     </Panel>
 //   )
 // }
