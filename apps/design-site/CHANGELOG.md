@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.0
+
+### Minor Changes
+
+- 35e3da8: Design system and general styling migrated to tailwind.
+
 ## [0.22.1](https://github.com/SiaFoundation/web/compare/design-site-0.22.0...design-site-0.22.1) (2022-10-25)
 
 ### Bug Fixes
