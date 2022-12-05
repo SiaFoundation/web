@@ -4,7 +4,12 @@ import { getMinutesInSeconds } from '../lib/time'
 import { addNewTab } from '../lib/utils'
 import { syncRssFeeds } from './rssSyncFeeds'
 
-type Tag = 'sia-all' | 'ecosystem-featured' | 'ecosystem-all' | 'technical'
+type Tag =
+  | 'sia-all'
+  | 'featured'
+  | 'ecosystem-featured'
+  | 'ecosystem-all'
+  | 'technical'
 
 type Article = {
   title: string

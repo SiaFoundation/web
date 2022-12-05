@@ -213,7 +213,7 @@ function Foundation({ team, featured, reports }: Props) {
 
 export async function getStaticProps() {
   const stats = await getCacheStats()
-  const featured = await getCacheArticles(['sia-all'], 5)
+  const featured = await getCacheArticles(['sia-all', 'featured'], 5)
   const reports = await getCacheReports()
   const team = await getCacheTeam()
 
