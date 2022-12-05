@@ -33,11 +33,11 @@ const previewImageProps = getImageProps(previewImage)
 const title = 'Grants'
 const description = (
   <>
-    We’re excited to announce the launch of the Sia Foundation’s Grants Program!
-    We welcome and support contributors from all over the world to come and
-    build on Sia. Our goal for this program is to fund research, development,
-    developer tools, and anything else that will support and further our mission
-    of user-owned data while enriching the Sia ecosystem.
+    The Sia Foundation welcomes contributors from all over the world to come and
+    build on Sia through our Grants program. Our goal for this program is to
+    fund research, development, developer tools, and anything else that will
+    support and further our mission of user-owned data while enriching the Sia
+    ecosystem.
   </>
 )
 
