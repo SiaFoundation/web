@@ -42,6 +42,15 @@ const styles = cva(
           'hover:border-red-800/50 hover:dark:border-red-600',
           'text-white dark:text-white',
         ],
+        amber: [
+          'border',
+          '[&>svg]:opacity-50',
+          'bg-amber-700 dark:bg-amber-700',
+          'border-amber-800/30 dark:border-amber-600/70',
+          'hover:bg-amber-800/90 dark:hover:bg-amber-700/90',
+          'hover:border-amber-800/50 hover:dark:border-amber-600',
+          'text-white dark:text-white',
+        ],
         gray: [
           'border',
           '[&>svg]:opacity-50',

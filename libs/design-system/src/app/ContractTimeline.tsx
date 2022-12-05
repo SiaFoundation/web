@@ -1,7 +1,8 @@
 import { Text } from '../core/Text'
 import { format } from 'date-fns'
+import { cx } from 'class-variance-authority'
 
-type Color = 'red' | 'green' | 'yellow'
+type Color = 'red' | 'green' | 'amber'
 
 type Props = {
   start: number
@@ -15,9 +16,9 @@ type Props = {
 }
 
 const colorMap: Record<Color, string> = {
-  red: '$red9',
-  green: '$green9',
-  yellow: '$amber9',
+  red: 'bg-red-700',
+  green: 'bg-green-700',
+  amber: 'bg-amber-700',
 }
 
 export function ContractTimeline({ start, end, payout, range, color }: Props) {
@@ -40,11 +41,13 @@ export function ContractTimeline({ start, end, payout, range, color }: Props) {
         </div>
         <div className="absolute h-full w-full bg-gray-300 dark:bg-graydark-300" />
         <div
-          className="flex justify-between gap-2 absolute h-full rounded-lg bg-gray-900 dark:bg-graydark-900"
+          className={cx(
+            'flex justify-between gap-2 absolute h-full rounded-lg bg-gray-900 dark:bg-graydark-900',
+            color ? colorMap[color] : ''
+          )}
           style={{
             left: toPercent(startPos),
             width: toPercent(endPos - startPos),
-            background: color ? colorMap[color] : undefined,
           }}
         >
           <DateLabel date={start} align="start" variant="primary" />

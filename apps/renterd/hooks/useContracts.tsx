@@ -68,11 +68,11 @@ const defaultColumns: ContractColumn[] = [
 
 function getStatus({ status }: Row): {
   label: string
-  color: 'red' | 'yellow' | 'green'
+  color: 'red' | 'amber' | 'green'
 } {
   const label = upperFirst(status)
   const color =
-    status === 'active' ? 'yellow' : status === 'successful' ? 'green' : 'red'
+    status === 'active' ? 'amber' : status === 'successful' ? 'green' : 'red'
 
   return {
     label,
