@@ -1,13 +1,13 @@
 import { getGitHubToken } from '@siafoundation/env'
 import Axios from 'axios'
-import { errorResponse500 } from './error'
+import { buildErrorResponse500 } from './error'
 import { AsyncDataSourceResponse } from './types'
 
 const githubToken = getGitHubToken()
 
 const axios = Axios.create({
   headers: {
-    authorization: githubToken ? `Bearer ${githubToken}` : undefined,
+    authorization: githubToken ? `Bearer ${githubToken}` : '',
   },
 })
 
@@ -15,12 +15,12 @@ async function getCommitCount() {
   const contributors = await axios.get(
     'https://api.github.com/repos/SiaFoundation/siad/commits?per_page=1'
   )
-  const link = contributors.headers.link
+  const link = contributors.headers['link']
 
   // Get commit count by parsing last page number from `link` header
   const regex = /rel="next", .*&page=(\d+)>;/g
   const res = regex.exec(link)
-  const commitCount = Number(res[1])
+  const commitCount = Number(res ? res[1] : 0)
 
   return commitCount
 }
@@ -101,6 +101,6 @@ export async function getGitHub(): AsyncDataSourceResponse<GitHub> {
     }
   } catch (e) {
     console.log(e)
-    return errorResponse500
+    return buildErrorResponse500()
   }
 }

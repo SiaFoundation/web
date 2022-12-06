@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { errorResponse500 } from '../error'
+import { buildErrorResponse500 } from '../error'
 import { AsyncDataSourceResponse } from '../types'
 
 export async function getSiaStatsStorage(): AsyncDataSourceResponse<
@@ -16,6 +16,6 @@ export async function getSiaStatsStorage(): AsyncDataSourceResponse<
     }
   } catch (e) {
     console.log(e)
-    return errorResponse500
+    return buildErrorResponse500()
   }
 }

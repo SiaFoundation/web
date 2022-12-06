@@ -1,7 +1,9 @@
 import { DataSourceResponse } from './types'
 
-export const errorResponse500: DataSourceResponse<undefined> = {
-  status: 500,
-  error: 'Request to data source failed',
-  data: undefined,
+export function buildErrorResponse500<T>(): DataSourceResponse<T> {
+  return {
+    status: 500,
+    error: 'Request to data source failed',
+    data: undefined,
+  }
 }
