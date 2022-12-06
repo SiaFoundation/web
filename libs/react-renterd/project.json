@@ -1,18 +1,23 @@
 {
+  "name": "react-renterd",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/react-renterd/src",
   "projectType": "library",
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nrwl/rollup:rollup",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/libs/react-renterd",
         "tsConfig": "libs/react-renterd/tsconfig.lib.json",
         "project": "libs/react-renterd/package.json",
         "entryFile": "libs/react-renterd/src/index.ts",
-        "external": ["react/jsx-runtime"],
+        "external": [
+          "react/jsx-runtime"
+        ],
         "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
         "compiler": "swc",
         "assets": [
@@ -31,14 +36,20 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["libs/react-renterd/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": [
+          "libs/react-renterd/**/*.{ts,tsx,js,jsx}"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/react-renterd"],
+      "outputs": [
+        "{workspaceRoot}/coverage/libs/react-renterd"
+      ],
       "options": {
         "jestConfig": "libs/react-renterd/jest.config.ts",
         "passWithNoTests": true

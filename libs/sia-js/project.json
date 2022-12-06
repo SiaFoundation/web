@@ -1,4 +1,5 @@
 {
+  "name": "sia-js",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/sia-js/src",
   "projectType": "library",
@@ -12,7 +13,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/sia-js"],
+      "outputs": ["{workspaceRoot}/coverage/libs/sia-js"],
       "options": {
         "jestConfig": "libs/sia-js/jest.config.ts",
         "passWithNoTests": true

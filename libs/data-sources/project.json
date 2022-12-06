@@ -1,4 +1,5 @@
 {
+  "name": "data-sources",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/data-sources/src",
   "projectType": "library",
@@ -12,7 +13,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/data-sources"],
+      "outputs": ["{workspaceRoot}/coverage/libs/data-sources"],
       "options": {
         "jestConfig": "libs/data-sources/jest.config.ts",
         "passWithNoTests": true

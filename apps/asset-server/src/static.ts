@@ -1,8 +1,8 @@
 import { readdirSync } from 'fs'
 import * as express from 'express'
 import * as vhost from 'vhost'
-import { counterMiddleware } from './counter'
-import { getContentPath, readContentDirJsonFile } from './content'
+import { counterMiddleware } from '@siafoundation/data-sources'
+import { getContentPath, readContentDirJsonFile } from '@siafoundation/env'
 import { getHostnames } from './env'
 
 export function setupStatic(server) {

@@ -1,18 +1,23 @@
 {
+  "name": "sia-react",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/sia-react/src",
   "projectType": "library",
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nrwl/rollup:rollup",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/libs/sia-react",
         "tsConfig": "libs/sia-react/tsconfig.lib.json",
         "project": "libs/sia-react/package.json",
         "entryFile": "libs/sia-react/src/index.ts",
-        "external": ["react/jsx-runtime"],
+        "external": [
+          "react/jsx-runtime"
+        ],
         "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
         "compiler": "swc",
         "assets": [
@@ -31,14 +36,20 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["libs/sia-react/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": [
+          "libs/sia-react/**/*.{ts,tsx,js,jsx}"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/sia-react"],
+      "outputs": [
+        "{workspaceRoot}/coverage/libs/sia-react"
+      ],
       "options": {
         "jestConfig": "libs/sia-react/jest.config.ts",
         "passWithNoTests": true

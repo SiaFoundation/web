@@ -1,4 +1,5 @@
 {
+  "name": "hostd",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/hostd",
   "projectType": "application",
@@ -52,7 +53,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/hostd"],
+      "outputs": ["{workspaceRoot}/coverage/apps/hostd"],
       "options": {
         "jestConfig": "apps/hostd/jest.config.ts",
         "passWithNoTests": true

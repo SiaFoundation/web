@@ -1,4 +1,5 @@
 {
+  "name": "design-site",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/design-site",
   "projectType": "application",
@@ -53,7 +54,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/design-site"],
+      "outputs": ["{workspaceRoot}/coverage/apps/design-site"],
       "options": {
         "jestConfig": "apps/design-site/jest.config.ts",
         "passWithNoTests": true
