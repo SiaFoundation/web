@@ -1,4 +1,5 @@
 {
+  "name": "explorer-v1",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/explorer-v1",
   "projectType": "application",
@@ -52,7 +53,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/explorer-v1"],
+      "outputs": ["{workspaceRoot}/coverage/apps/explorer-v1"],
       "options": {
         "jestConfig": "apps/explorer-v1/jest.config.ts",
         "passWithNoTests": true

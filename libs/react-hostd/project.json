@@ -1,18 +1,23 @@
 {
+  "name": "react-hostd",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/react-hostd/src",
   "projectType": "library",
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nrwl/rollup:rollup",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/libs/react-hostd",
         "tsConfig": "libs/react-hostd/tsconfig.lib.json",
         "project": "libs/react-hostd/package.json",
         "entryFile": "libs/react-hostd/src/index.ts",
-        "external": ["react/jsx-runtime"],
+        "external": [
+          "react/jsx-runtime"
+        ],
         "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
         "compiler": "swc",
         "assets": [
@@ -31,14 +36,20 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["libs/react-hostd/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": [
+          "libs/react-hostd/**/*.{ts,tsx,js,jsx}"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/react-hostd"],
+      "outputs": [
+        "{workspaceRoot}/coverage/libs/react-hostd"
+      ],
       "options": {
         "jestConfig": "libs/react-hostd/jest.config.ts",
         "passWithNoTests": true
