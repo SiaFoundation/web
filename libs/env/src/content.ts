@@ -6,7 +6,7 @@ export function getContentPath(filePath: string) {
 }
 
 export function getContentDirectory() {
-  return process.env.CONTENT || './'
+  return process.env['CONTENT'] || './'
 }
 
 export function readContentDirJsonFile<T>(

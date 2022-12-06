@@ -1,5 +1,5 @@
 export function getGitHubToken() {
-  return process.env.GITHUB_TOKEN
+  return process.env['GITHUB_TOKEN']
 }
 
 export * from './content'

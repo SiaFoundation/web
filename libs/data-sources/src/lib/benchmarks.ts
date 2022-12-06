@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { errorResponse500 } from './error'
+import { buildErrorResponse500 } from './error'
 import { AsyncDataSourceResponse } from './types'
 
 type BenchmarkResult = {
@@ -41,6 +41,6 @@ export async function getBenchmarks(): AsyncDataSourceResponse<
     }
   } catch (e) {
     console.log(e)
-    return errorResponse500
+    return buildErrorResponse500()
   }
 }

@@ -8,33 +8,40 @@
       "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "target": "node",
+        "compiler": "tsc",
         "outputPath": "dist/apps/asset-server",
         "main": "apps/asset-server/src/main.ts",
-        "tsConfig": "apps/asset-server/tsconfig.app.json",
-        "target": "node",
-        "compiler": "swc"
+        "tsConfig": "apps/asset-server/tsconfig.app.json"
       },
       "configurations": {
-        "development": {},
         "production": {
           "optimization": true,
           "extractLicenses": true,
-          "inspect": false
+          "sourceMap": false,
+          "externalDependencies": "none"
         },
         "ci": {
+          "outputPath": "apps/asset-server/dist",
           "optimization": true,
           "extractLicenses": true,
-          "inspect": false,
-          "outputPath": "apps/asset-server/dist"
+          "sourceMap": false,
+          "externalDependencies": "none"
         }
       }
     },
     "serve": {
-      "executor": "@nrwl/node:node",
+      "executor": "@nrwl/js:node",
       "options": {
+        "inspect": "inspect",
         "buildTarget": "asset-server:build"
       },
-      "configurations": {}
+      "configurations": {
+        "production": {
+          "inspect": false,
+          "buildTarget": "asset-server:build:production"
+        }
+      }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",

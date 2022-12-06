@@ -1,5 +1,7 @@
+import { Low } from 'lowdb'
 import { join } from 'path'
-import { errorResponse500 } from './error'
+import { RequestHandler } from 'express'
+import { buildErrorResponse500 } from './error'
 import { AsyncDataSourceResponse } from './types'
 
 const ui = 939_111
@@ -11,13 +13,20 @@ const defaultCounts = {
   total: ui + daemon,
 }
 
-let _db = null
+type DB = {
+  ui: number
+  daemon: number
+  total: number
+  [key: string]: number
+}
 
-async function initDb() {
+let _db: Low<DB> | null = null
+
+async function initDb(): Promise<Low<DB>> {
   const { Low, JSONFile } = await import('lowdb')
   const file = join('persist', 'counters.json')
-  const adapter = new JSONFile(file)
-  return new Low(adapter)
+  const adapter = new JSONFile<DB>(file)
+  return new Low<DB>(adapter)
 }
 
 async function getDb() {
@@ -27,9 +36,7 @@ async function getDb() {
   return _db
 }
 
-export async function getCounts(): AsyncDataSourceResponse<
-  Record<string, number>
-> {
+export async function getCounts(): AsyncDataSourceResponse<DB> {
   try {
     const db = await getDb()
     await db.read()
@@ -38,11 +45,11 @@ export async function getCounts(): AsyncDataSourceResponse<
       data: db.data || defaultCounts,
     }
   } catch (e) {
-    return errorResponse500
+    return buildErrorResponse500()
   }
 }
 
-export async function counterMiddleware(req, res, next) {
+export const counterMiddleware: RequestHandler = async (req, res, next) => {
   const key = req.url.replace('/', '')
   let db = null
 
