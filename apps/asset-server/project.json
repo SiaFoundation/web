@@ -12,7 +12,7 @@
         "main": "apps/asset-server/src/main.ts",
         "tsConfig": "apps/asset-server/tsconfig.app.json",
         "target": "node",
-        "compiler": "tsc"
+        "compiler": "swc"
       },
       "configurations": {
         "development": {},
