@@ -148,15 +148,3 @@ export * from './lib/chartStats'
 export * from './lib/ipRegex'
 
 export { colors } from './config/colors'
-
-export {
-  styled,
-  css,
-  theme,
-  createTheme,
-  getCssText,
-  globalCss,
-  keyframes,
-  config,
-} from './config/old-theme'
-export type { CSS, VariantProps } from './config/old-theme'

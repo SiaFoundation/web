@@ -6,7 +6,6 @@ import {
   SingleValue,
 } from 'react-select'
 import Select from 'react-select/async'
-import { globalCss } from '../config/old-theme'
 import { cx } from 'class-variance-authority'
 
 type Option = {
@@ -99,115 +98,115 @@ export function ComboBox({
   )
 }
 
-export const comboBoxGlobalCss = globalCss({
-  '.react-select__control': {
-    width: '100% !important',
-    backgroundColor: '$panel !important',
-    fontFamily: '$sans !important',
-    color: '$hiContrast !important',
-    border: 'none !important',
+// export const comboBoxGlobalCss = globalCss({
+//   '.react-select__control': {
+//     width: '100% !important',
+//     backgroundColor: '$panel !important',
+//     fontFamily: '$sans !important',
+//     color: '$hiContrast !important',
+//     border: 'none !important',
 
-    '@hover': {
-      '&:hover': {
-        boxShadow: '$colors$borderInputHover, $colors$shadow',
-      },
-    },
+//     '@hover': {
+//       '&:hover': {
+//         boxShadow: '$colors$borderInputHover, $colors$shadow',
+//       },
+//     },
 
-    boxShadow: '$colors$border, $colors$shadow',
-    '&:focus': {
-      boxShadow:
-        '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive',
-      '&:-webkit-autofill': {
-        boxShadow:
-          '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive, inset 0 0 0 100px $colors$accent4',
-      },
-    },
-  },
-  '.react-select__single-value': {
-    color: '$hiContrast !important',
-  },
-  '.react-select__input': {
-    color: '$hiContrast !important',
-  },
-  '.react-select__placeholder': {
-    color: '$gray9',
-  },
-  '.react-select__menu': {
-    backgroundColor: '$panel !important',
-    borderRadius: '$2',
-    color: '$hiContrast !important',
-    fontFamily: '$sans !important',
-  },
-  '.react-select__option--is-focused': {
-    backgroundColor: '$blue9 !important',
-    color: '$loContrast !important',
-  },
+//     boxShadow: '$colors$border, $colors$shadow',
+//     '&:focus': {
+//       boxShadow:
+//         '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive',
+//       '&:-webkit-autofill': {
+//         boxShadow:
+//           '$colors$borderFocus, $colors$borderInputActive, $colors$shadowActive, inset 0 0 0 100px $colors$accent4',
+//       },
+//     },
+//   },
+//   '.react-select__single-value': {
+//     color: '$hiContrast !important',
+//   },
+//   '.react-select__input': {
+//     color: '$hiContrast !important',
+//   },
+//   '.react-select__placeholder': {
+//     color: '$gray9',
+//   },
+//   '.react-select__menu': {
+//     backgroundColor: '$panel !important',
+//     borderRadius: '$2',
+//     color: '$hiContrast !important',
+//     fontFamily: '$sans !important',
+//   },
+//   '.react-select__option--is-focused': {
+//     backgroundColor: '$blue9 !important',
+//     color: '$loContrast !important',
+//   },
 
-  // variant size
-  '.react-select-size-small': {
-    '.react-select__control': {
-      borderRadius: '$1',
-      height: '$3-5',
-      minHeight: '$3-5',
-      fontSize: '$12',
-      padding: '0 $1',
-    },
-    '.react-select__indicators': {
-      height: '$3-5',
-    },
-  },
-  '.react-select-size-medium': {
-    '.react-select__control': {
-      borderRadius: '$1',
-      height: '$5',
-      minHeight: '$5',
-      fontSize: '$16',
-      padding: '0 $1-5',
-    },
-    '.react-select__indicators': {
-      height: '$5',
-    },
-  },
-  '.react-select-size-large': {
-    '.react-select__control': {
-      borderRadius: '$1',
-      height: '$6',
-      minHeight: '$6',
-      fontSize: '$24',
-      padding: '0 $1-5',
-    },
-    '.react-select__indicators': {
-      height: '$6',
-    },
-  },
+//   // variant size
+//   '.react-select-size-small': {
+//     '.react-select__control': {
+//       borderRadius: '$1',
+//       height: '$3-5',
+//       minHeight: '$3-5',
+//       fontSize: '$12',
+//       padding: '0 $1',
+//     },
+//     '.react-select__indicators': {
+//       height: '$3-5',
+//     },
+//   },
+//   '.react-select-size-medium': {
+//     '.react-select__control': {
+//       borderRadius: '$1',
+//       height: '$5',
+//       minHeight: '$5',
+//       fontSize: '$16',
+//       padding: '0 $1-5',
+//     },
+//     '.react-select__indicators': {
+//       height: '$5',
+//     },
+//   },
+//   '.react-select-size-large': {
+//     '.react-select__control': {
+//       borderRadius: '$1',
+//       height: '$6',
+//       minHeight: '$6',
+//       fontSize: '$24',
+//       padding: '0 $1-5',
+//     },
+//     '.react-select__indicators': {
+//       height: '$6',
+//     },
+//   },
 
-  // variant state
-  '.react-select-state-invalid': {
-    '.react-select__control': {
-      boxShadow: '$colors$borderRed, $colors$shadow',
-      '@hover': {
-        '&:hover': {
-          boxShadow: '$colors$borderRedHover, $colors$shadow',
-        },
-      },
-      '&:focus': {
-        boxShadow:
-          '$colors$borderFocus, $colors$borderRedActive, $colors$shadowActive',
-      },
-    },
-  },
-  '.react-select-state-valid': {
-    '.react-select__control': {
-      boxShadow: '$colors$borderGreen, $colors$shadow',
-      '@hover': {
-        '&:hover': {
-          boxShadow: '$colors$borderGreenHover, $colors$shadow',
-        },
-      },
-      '&:focus': {
-        boxShadow:
-          '$colors$borderFocus, $colors$borderGreenActive, $colors$shadowActive',
-      },
-    },
-  },
-})
+//   // variant state
+//   '.react-select-state-invalid': {
+//     '.react-select__control': {
+//       boxShadow: '$colors$borderRed, $colors$shadow',
+//       '@hover': {
+//         '&:hover': {
+//           boxShadow: '$colors$borderRedHover, $colors$shadow',
+//         },
+//       },
+//       '&:focus': {
+//         boxShadow:
+//           '$colors$borderFocus, $colors$borderRedActive, $colors$shadowActive',
+//       },
+//     },
+//   },
+//   '.react-select-state-valid': {
+//     '.react-select__control': {
+//       boxShadow: '$colors$borderGreen, $colors$shadow',
+//       '@hover': {
+//         '&:hover': {
+//           boxShadow: '$colors$borderGreenHover, $colors$shadow',
+//         },
+//       },
+//       '&:focus': {
+//         boxShadow:
+//           '$colors$borderFocus, $colors$borderGreenActive, $colors$shadowActive',
+//       },
+//     },
+//   },
+// })

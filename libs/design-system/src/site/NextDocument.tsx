@@ -4,18 +4,12 @@ import DefaultNextDocument, {
   Main,
   NextScript,
 } from 'next/document'
-import { getCssText } from '../config/old-theme'
 
 export class NextDocument extends DefaultNextDocument {
   override render() {
     return (
       <Html lang="en">
-        <Head>
-          <style
-            id="stitches"
-            dangerouslySetInnerHTML={{ __html: getCssText() }}
-          />
-        </Head>
+        <Head />
         <body>
           <Main />
           <NextScript />

@@ -1,8 +1,9 @@
-import { cva, cx, VariantProps } from 'class-variance-authority'
+import { cva, cx } from 'class-variance-authority'
 import BaseNextLink from 'next/link'
 import React from 'react'
 import { textStyles } from './Text'
 import { Button, ButtonLink } from './Button'
+import { VariantProps } from '../types'
 
 const linkVariants = cva([], {
   variants: {
@@ -23,10 +24,9 @@ const linkVariants = cva([], {
   },
 })
 
-type Variants = VariantProps<typeof linkVariants> &
-  VariantProps<typeof textStyles> & {
-    className?: string
-  }
+type Variants = VariantProps<typeof textStyles> &
+  VariantProps<typeof linkVariants>
+
 const variants = ({
   font,
   size,
@@ -67,25 +67,24 @@ export const Link = React.forwardRef<HTMLAnchorElement, Props>(
     ref
   ) => {
     return (
-      <BaseNextLink href={href} passHref>
-        <a
-          ref={ref}
-          className={variants({
-            font,
-            scaleSize,
-            size,
-            color,
-            weight,
-            noWrap,
-            ellipsis,
-            underline,
-            disabled,
-            className,
-          })}
-          {...props}
-        >
-          {children}
-        </a>
+      <BaseNextLink
+        href={href}
+        ref={ref}
+        className={variants({
+          font,
+          scaleSize,
+          size,
+          color,
+          weight,
+          noWrap,
+          ellipsis,
+          underline,
+          disabled,
+          className,
+        })}
+        {...props}
+      >
+        {children}
       </BaseNextLink>
     )
   }
