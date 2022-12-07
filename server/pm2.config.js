@@ -8,7 +8,9 @@ module.exports = {
     },
     {
       name: 'sia-assets',
-      script: 'dist/apps/asset-server/main.js',
+      interpreter: 'nx',
+      script: 'run',
+      args: 'asset-server:serve:production',
     },
     {
       name: 'sia-explorer-v1',
