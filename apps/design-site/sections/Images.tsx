@@ -13,43 +13,39 @@ export function Images() {
       <Section>
         <SectionHeading>Images</SectionHeading>
         <SubsectionHeading>Image</SubsectionHeading>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Image {...bellLabs} alt="bell labs" />
-          <Image {...macTeam} alt="mac team" />
+        <div className="flex flex-wrap justify-start gap-4 max-w-[500px]">
+          <Image src={bellLabs} alt="bell labs" />
+          <Image src={macTeam} alt="mac team" />
         </div>
       </Section>
       <Section>
-        <SubsectionHeading>Image - responsive</SubsectionHeading>
-        <div className="flex justify-start gap-4">
-          <div className="relative overflow-hidden h-[250px] w-[250px]">
-            <Image {...bellLabs} alt="bell labs" layout="responsive" />
-          </div>
-          <div className="relative overflow-hidden h-[250px] w-[250px]">
-            <Image {...macTeam} alt="mac team" layout="responsive" />
-          </div>
+        <SubsectionHeading>Image - contain</SubsectionHeading>
+        <div className="flex flex-wrap justify-start gap-4">
+          <Image
+            src={bellLabs}
+            alt="bell labs"
+            className="object-contain w-[250px]"
+          />
+          <Image
+            src={macTeam}
+            alt="mac team"
+            className="object-contain w-[250px]"
+          />
         </div>
       </Section>
       <Section>
-        <SubsectionHeading>Image - fill & cover</SubsectionHeading>
-        <div className="flex gap-4 justify-start">
-          <div className="relative h-[250px] w-[250px]">
-            <Image
-              src={bellLabs.src}
-              blurDataURL={bellLabs.blurDataURL}
-              alt="bell labs"
-              layout="fill"
-              objectFit="cover"
-            />
-          </div>
-          <div className="relative h-[250px] w-[250px]">
-            <Image
-              src={macTeam.src}
-              blurDataURL={macTeam.blurDataURL}
-              alt="mac team"
-              layout="fill"
-              objectFit="cover"
-            />
-          </div>
+        <SubsectionHeading>Image - cover</SubsectionHeading>
+        <div className="flex flex-wrap gap-4 justify-start">
+          <Image
+            src={bellLabs}
+            alt="bell labs"
+            className="object-cover h-[250px] w-[250px]"
+          />
+          <Image
+            src={macTeam}
+            alt="mac team"
+            className="object-cover h-[250px] w-[250px]"
+          />
         </div>
       </Section>
       <Section>

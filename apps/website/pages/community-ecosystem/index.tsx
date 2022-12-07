@@ -97,8 +97,8 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
               src={'/built-with-sia.png'}
               alt="Built with Sia"
               loading="lazy"
-              height="130px"
-              width="140px"
+              height={130}
+              width={140}
               style={{
                 filter: 'grayscale(1)',
               }}
