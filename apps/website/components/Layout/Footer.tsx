@@ -7,7 +7,7 @@ import { SectionWaves } from '../SectionWaves'
 export function Footer() {
   return (
     <div className="flex flex-col">
-      <SectionWaves className="pt-10 pb-12 md:pt-12 md:pb-20">
+      <SectionWaves className="pt-10 pb-12 md:pt-14 md:pb-20">
         <SiteMap menuSections={menuSections} />
       </SectionWaves>
       <SectionGradient className="py-16 md:py-20 opacity-[.99]">
