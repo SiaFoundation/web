@@ -23,7 +23,6 @@ export function SiteMap({ menuSections, onClick }: Props) {
     <div className="flex flex-col py-5 gap-8 items-start">
       <Text className="flex pb-2 sm:pb-6">
         <Logo size={50} />
-        {/* <Image src="/logo-green.png" width={50} height={50} /> */}
       </Text>
       <div className="grid gap-x-6 gap-y-12 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {menuSections.map(({ title, links }) => (
