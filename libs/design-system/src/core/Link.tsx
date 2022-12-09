@@ -2,10 +2,10 @@ import { cva, cx } from 'class-variance-authority'
 import BaseNextLink from 'next/link'
 import React from 'react'
 import { textStyles } from './Text'
-import { Button, ButtonLink } from './Button'
+import { buttonStyles } from './Button'
 import { VariantProps } from '../types'
 
-const linkVariants = cva([], {
+const linkStyles = cva(['cursor-pointer'], {
   variants: {
     disabled: {
       true: 'opacity-50',
@@ -24,10 +24,10 @@ const linkVariants = cva([], {
   },
 })
 
-type Variants = VariantProps<typeof textStyles> &
-  VariantProps<typeof linkVariants>
+type LinkVariants = VariantProps<typeof textStyles> &
+  VariantProps<typeof linkStyles>
 
-const variants = ({
+const styles = ({
   font,
   size,
   scaleSize,
@@ -38,16 +38,17 @@ const variants = ({
   underline,
   disabled,
   className,
-}: Variants) =>
+}: LinkVariants) =>
   cx(
     textStyles({ scaleSize, size, font, color, weight, noWrap, ellipsis }),
-    linkVariants({ disabled, underline }),
+    linkStyles({ disabled, underline }),
     className
   )
 
-type Props = React.ComponentProps<typeof BaseNextLink> & Variants
-
-export const Link = React.forwardRef<HTMLAnchorElement, Props>(
+export const Link = React.forwardRef<
+  HTMLAnchorElement,
+  React.ComponentProps<typeof BaseNextLink> & LinkVariants
+>(
   (
     {
       href,
@@ -59,18 +60,17 @@ export const Link = React.forwardRef<HTMLAnchorElement, Props>(
       noWrap,
       ellipsis,
       underline,
-      className,
-      children,
       disabled,
+      className,
       ...props
     },
     ref
   ) => {
     return (
       <BaseNextLink
-        href={href}
+        href={href || '#'}
         ref={ref}
-        className={variants({
+        className={styles({
           font,
           scaleSize,
           size,
@@ -83,35 +83,33 @@ export const Link = React.forwardRef<HTMLAnchorElement, Props>(
           className,
         })}
         {...props}
-      >
-        {children}
-      </BaseNextLink>
+      />
     )
   }
 )
 
-type NextLinkButtonProps = React.ComponentProps<typeof Button> & {
-  id?: string
-  href?: string
-  disabled?: boolean
-  target?: string
-}
-
-// Next link
-export function LinkButton({
-  id,
-  href,
-  target,
-  disabled,
-  ...props
-}: NextLinkButtonProps) {
-  if (!href || disabled) {
-    return <Button id={id} {...props} disabled={disabled} />
+export const LinkButton = React.forwardRef<
+  HTMLAnchorElement,
+  React.ComponentProps<typeof BaseNextLink> & VariantProps<typeof buttonStyles>
+>(
+  (
+    { href, disabled, variant, size, state, rounded, className, ...props },
+    ref
+  ) => {
+    return (
+      <BaseNextLink
+        href={href || '#'}
+        ref={ref}
+        className={buttonStyles({
+          variant,
+          size,
+          state,
+          rounded,
+          disabled,
+          className,
+        })}
+        {...props}
+      />
+    )
   }
-  return (
-    <BaseNextLink href={href} passHref>
-      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-      <ButtonLink id={id} target={target} {...(props as any)} />
-    </BaseNextLink>
-  )
-}
+)

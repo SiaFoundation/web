@@ -9,12 +9,10 @@ import { Indicators } from '../sections/Indicators'
 import { Popups } from '../sections/Popups'
 import { Skeletons } from '../sections/Skeletons'
 import { Dialogs } from '../sections/Dialogs'
-import { Section } from '@siafoundation/design-system'
 
 export function IndexPage() {
   return (
     <>
-      <Section></Section>
       <Typography />
       <Images />
       <Layout />

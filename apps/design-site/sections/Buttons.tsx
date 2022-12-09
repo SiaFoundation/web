@@ -30,7 +30,7 @@ export function Buttons() {
             <Button size="small" variant="ghost">
               Ghost
             </Button>
-            <LinkButton size="small" variant="gray">
+            <LinkButton href="#" size="small" variant="gray">
               Link
             </LinkButton>
           </div>
