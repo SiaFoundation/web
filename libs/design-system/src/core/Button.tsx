@@ -1,7 +1,7 @@
 import { cva, VariantProps } from 'class-variance-authority'
 import React from 'react'
 
-const variants = cva(
+export const buttonStyles = cva(
   [
     'inline-flex',
     'gap-1',
@@ -18,6 +18,7 @@ const variants = cva(
     'hover:z-10',
     // 'ml-px',
     'disabled:cursor-auto',
+    'disabled:pointer-events-none',
     'outline-none',
     'focus:ring ring-blue-500 dark:ring-blue-200',
     'transition-colors duration-75',
@@ -33,6 +34,9 @@ const variants = cva(
       },
       state: {
         waiting: ['pointer-events-none'],
+      },
+      disabled: {
+        true: 'cursor-auto pointer-events-none',
       },
       rounded: {
         true: 'rounded',
@@ -99,28 +103,21 @@ const variants = cva(
 
 export const Button = React.forwardRef<
   HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<typeof variants>
->(({ variant, size, state, rounded, className, ...props }, ref) => {
+  React.ButtonHTMLAttributes<HTMLButtonElement> &
+    VariantProps<typeof buttonStyles>
+>(({ variant, size, state, rounded, disabled, className, ...props }, ref) => {
   return (
     <button
       ref={ref}
-      className={variants({ variant, size, state, rounded, className })}
+      className={buttonStyles({
+        variant,
+        size,
+        state,
+        rounded,
+        disabled,
+        className,
+      })}
       {...props}
     />
-  )
-})
-
-export const ButtonLink = React.forwardRef<
-  HTMLAnchorElement,
-  React.AnchorHTMLAttributes<HTMLAnchorElement> & VariantProps<typeof variants>
->(({ variant, size, state, rounded, className, children, ...props }, ref) => {
-  return (
-    <a
-      ref={ref}
-      className={variants({ variant, size, state, rounded, className })}
-      {...props}
-    >
-      {children}
-    </a>
   )
 })
