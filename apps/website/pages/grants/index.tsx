@@ -92,7 +92,7 @@ export default function Grants({ services, grantCommittee }: Props) {
             gapClassName="gap-y-12 md:gap-y-20"
             items={[
               {
-                title: 'Proposal requirements',
+                title: 'Proposal Requirements',
                 icon: 'ListChecked',
                 children: (
                   <Ol className="mt-5 -ml-10 md:ml-0">
@@ -124,7 +124,7 @@ export default function Grants({ services, grantCommittee }: Props) {
                 ),
               },
               {
-                title: 'Proposal process',
+                title: 'Proposal Process',
                 icon: 'MailAll',
                 children: (
                   <Ol className="mt-5 -ml-10 md:ml-0">
@@ -167,20 +167,7 @@ export default function Grants({ services, grantCommittee }: Props) {
                 ),
               },
               {
-                title: 'Grant committee',
-                icon: 'EventsAlt',
-                children: (
-                  <Ol className="mt-5 -ml-10 md:ml-0">
-                    {grantCommittee.map(({ name }) => (
-                      <Li key={name} size="14">
-                        {name}
-                      </Li>
-                    ))}
-                  </Ol>
-                ),
-              },
-              {
-                title: 'Scoring rubric',
+                title: 'Scoring Rubric',
                 icon: 'TestTool',
                 children: (
                   <div className="mt-3 -ml-10 md:ml-0">
@@ -219,9 +206,11 @@ export default function Grants({ services, grantCommittee }: Props) {
                         to deliver and measure proposed outcomes?
                       </Li>
                       <Li size="14" index={5}>
-                        <Text weight="semibold">Risks:</Text> Is the risk
-                        reasonable for the timeline provided? Please be
-                        thoughtful if the risk is high enough to impact the
+                        <Text weight="semibold">
+                          Risks and Technical Feasibility:
+                        </Text>{' '}
+                        Is the risk reasonable for the timeline provided? Please
+                        be thoughtful if the risk is high enough to impact the
                         outcome of the project.
                       </Li>
                       <Li size="14" index={6}>
@@ -230,6 +219,19 @@ export default function Grants({ services, grantCommittee }: Props) {
                       </Li>
                     </Ol>
                   </div>
+                ),
+              },
+              {
+                title: 'Grant Committee',
+                icon: 'EventsAlt',
+                children: (
+                  <Ol className="mt-5 -ml-10 md:ml-0">
+                    {grantCommittee.map(({ name }) => (
+                      <Li key={name} size="14">
+                        {name}
+                      </Li>
+                    ))}
+                  </Ol>
                 ),
               },
             ]}
