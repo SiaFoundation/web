@@ -1,4 +1,4 @@
-import { Heading, Link, Link20 } from '@siafoundation/design-system'
+import { SectionHeading } from '@siafoundation/design-system'
 import { cx } from 'class-variance-authority'
 
 type Props = {
@@ -8,13 +8,9 @@ type Props = {
 }
 
 export function SubsectionHeading({ id, className, children }: Props) {
-  const cId = id || encodeURI(children.toLowerCase())
   return (
-    <div className={cx('pt-16 pb-8', className)}>
-      <Link href={`#${cId}`} id={cId} className="relative">
-        <Link20 className="absolute top-1 -left-7 hidden md:block" />
-        <Heading size="24">{children}</Heading>
-      </Link>
-    </div>
+    <SectionHeading id={id} size="24" className={cx('pt-16 pb-8', className)}>
+      {children}
+    </SectionHeading>
   )
 }

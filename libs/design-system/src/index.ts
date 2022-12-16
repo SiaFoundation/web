@@ -64,6 +64,7 @@ export * from './components/DatumSkeleton'
 export * from './components/Form'
 export * from './components/Table'
 export * from './components/SwitchMulti'
+export * from './components/SectionHeading'
 
 // app
 export * from './app/AppPublicLayout'
