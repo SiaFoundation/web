@@ -94,6 +94,10 @@ export const menuSections = [
         link: routes.newsroom.index,
         title: 'Newsroom',
       },
+      {
+        link: routes.hostingBestPractices.index,
+        title: 'Host Best Practices',
+      },
     ],
   },
   {

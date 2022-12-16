@@ -1,28 +1,28 @@
 import {
-  Heading,
   Li,
   Link,
   Ol,
   Paragraph,
+  SectionHeading,
   Ul,
 } from '@siafoundation/design-system'
 
 // Components used in mardown rendering
 export const components = {
   h1: ({ children }) => (
-    <Heading size="64" className="block pb-5 pt-10">
+    <SectionHeading size="32" className="pb-6 pt-20">
       {children}
-    </Heading>
+    </SectionHeading>
   ),
   h2: ({ children }) => (
-    <Heading size="32" className="block pb-5 pt-10">
+    <SectionHeading size="24" className="pb-3 pt-12">
       {children}
-    </Heading>
+    </SectionHeading>
   ),
   h3: ({ children }) => (
-    <Heading size="24" className="block pb-5 pt-10">
+    <SectionHeading size="20" className="pb-3 pt-10">
       {children}
-    </Heading>
+    </SectionHeading>
   ),
   p: ({ children }) => <Paragraph className="block py-4">{children}</Paragraph>,
   a: (props) => <Link {...props} target="_blank" />,
