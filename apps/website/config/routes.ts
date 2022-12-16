@@ -23,6 +23,9 @@ export const routes = {
   grants: {
     index: '/grants',
   },
+  hostingBestPractices: {
+    index: '/hosting-best-practices',
+  },
   software: {
     renterd: '/software/renterd',
   },
