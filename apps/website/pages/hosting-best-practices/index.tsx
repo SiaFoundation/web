@@ -1,7 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 import fs from 'fs'
 import path from 'path'
-import { SiteHeading, getImageProps, Text } from '@siafoundation/design-system'
+import {
+  SiteHeading,
+  getImageProps,
+  Text,
+  webLinks,
+} from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
 import { getCacheStats } from '../../content/stats'
@@ -38,7 +43,23 @@ export default function HostBestPractices({ title, date, source }: Props) {
       path={routes.community.index}
       heading={
         <SectionSimple className="pt-24 md:pt-40 pb-6 md:pb-20">
-          <SiteHeading title={title} description={description} size="64" />
+          <SiteHeading
+            title={title}
+            description={description}
+            size="64"
+            links={[
+              {
+                title: 'Hosting Docs',
+                link: webLinks.docs.hosting,
+                newTab: true,
+              },
+              {
+                title: 'Join our Discord',
+                link: webLinks.discord,
+                newTab: true,
+              },
+            ]}
+          />
         </SectionSimple>
       }
       backgroundImage={backgroundImageProps}
