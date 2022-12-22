@@ -135,7 +135,7 @@ export function useHosts() {
     [response.data]
   )
 
-  const [meta, setMeta] = useState<ListMetaResponse>({
+  const [meta] = useState<ListMetaResponse>({
     total: 0,
     totalFiltered: 0,
   })

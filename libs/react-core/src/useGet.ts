@@ -5,6 +5,7 @@ import { useAppSettings } from './useAppSettings'
 import { getKey } from './utils'
 
 export function useGet<Result>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params: Record<string, any> | null,
   route: string | null,
   options?: SWROptions<Result>
