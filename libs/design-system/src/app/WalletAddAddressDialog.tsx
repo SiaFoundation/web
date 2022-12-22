@@ -3,7 +3,7 @@ import { TextField } from '../core/TextField'
 import { Button } from '../core/Button'
 import { Label } from '../core/Label'
 import { Text } from '../core/Text'
-import { useWalletAddressCreate } from '@siafoundation/react-core'
+// import { useWalletAddressCreate } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
@@ -27,25 +27,25 @@ type Props = {
 }
 
 export function WalletAddAddressDialog({ closeDialog }: Props) {
-  const addAddress = useWalletAddressCreate()
+  // const addAddress = useWalletAddressCreate()
 
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: async (values, actions) => {
-      const response = await addAddress.post({
-        param: values.address,
-        payload: {
-          index: values.index || 0,
-          description: values.description || '',
-        },
-      })
-      if (response.status !== 200) {
-        actions.setStatus(response)
-      } else {
-        actions.resetForm()
-        closeDialog()
-      }
+      // const response = await addAddress.post({
+      //   param: values.address,
+      //   payload: {
+      //     index: values.index || 0,
+      //     description: values.description || '',
+      //   },
+      // })
+      // if (response.status !== 200) {
+      //   actions.setStatus(response)
+      // } else {
+      //   actions.resetForm()
+      //   closeDialog()
+      // }
     },
   })
 

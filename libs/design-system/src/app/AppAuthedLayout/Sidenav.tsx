@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useSettings } from '@siafoundation/react-core'
+import { useAppSettings } from '@siafoundation/react-core'
 import { LockIcon } from '../../icons/LockIcon'
 import { DiceIcon } from '../../icons/DiceIcon'
 import { GearIcon } from '../../icons/GearIcon'
@@ -26,7 +26,7 @@ type Props = {
 }
 
 export function Sidenav({ routes, openSettings, children }: Props) {
-  const { setSettings } = useSettings()
+  const { setSettings } = useAppSettings()
   const router = useRouter()
   return (
     <Panel className="relative overflow-hidden z-10 h-full w-[75px] rounded-none border-y-0">

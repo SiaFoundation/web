@@ -3,7 +3,7 @@ import { mutate } from 'swr'
 import { useAppSettings } from './useAppSettings'
 import { getKey } from './utils'
 
-type Post<Params extends Record<string, string> | undefined, Payload> = {
+type Put<Params extends Record<string, string> | undefined, Payload> = {
   payload?: Payload
   params?: Params
 }
@@ -14,22 +14,22 @@ type Response<T> = {
   error?: string
 }
 
-type UsePost<
+type UsePut<
   Params extends Record<string, string> | undefined,
   Payload,
   Result
 > = {
-  post: (payload: Post<Params, Payload>) => Promise<Response<Result>>
+  put: (payload: Put<Params, Payload>) => Promise<Response<Result>>
 }
 
-export function usePost<
+export function usePut<
   Params extends Record<string, string> | undefined,
   Payload,
   Result
->(route: string, deps?: string[]): UsePost<Params, Payload, Result> {
+>(route: string, deps?: string[]): UsePut<Params, Payload, Result> {
   const { settings, api } = useAppSettings()
   return {
-    post: async ({ payload, params }: Post<Params, Payload>) => {
+    put: async ({ payload, params }: Put<Params, Payload>) => {
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
       }
@@ -43,7 +43,7 @@ export function usePost<
             route = route.replace(`:${key}`, params[key])
           }
         }
-        const response = await axios.post<Result>(`${api}/${route}`, payload, {
+        const response = await axios.put<Result>(`${api}/${route}`, payload, {
           headers,
         })
         deps?.forEach((dep) => mutate(getKey(dep)))

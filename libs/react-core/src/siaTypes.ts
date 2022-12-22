@@ -5,93 +5,38 @@ export type Currency = string
 export type Hash = string
 export type OutputID = string
 export type EncryptionKey = string
+export type FileContractID = string
+export type PublicKey = string
 
 // structs
-
-// structs
-// struct2ts:go.sia.tech/renterd/internal/consensus.ChainIndex
-export interface ChainIndex {
-  Height: number
-  ID: string
+// struct2ts:go.sia.tech/renterd/bus.ConsensusState
+export interface ConsensusState {
+  BlockHeight: number
+  Synced: boolean
 }
 
-// struct2ts:go.sia.tech/renterd/hostdb.Announcement
-export interface Announcement {
-  Index: ChainIndex
-  Timestamp: string
-  NetAddress: string
-}
-
-// struct2ts:go.sia.tech/renterd/hostdb.Interaction
-export interface Interaction {
-  Timestamp: string
-  Type: string
-  Result?: string
-}
-
-// struct2ts:go.sia.tech/renterd/hostdb.Host
-export interface Host {
-  PublicKey: string
-  Score: number
-  Announcements?: Announcement[]
-  Interactions?: Interaction[]
-}
-
-// struct2ts:go.sia.tech/renterd/wallet.SiacoinElement
-export interface SiacoinElement {
-  value: Currency
-  unlockhash: string
-  ID: string
-  MaturityHeight: number
-}
-
-// Renamed WalletTransaction, collision with siad Transaction
-// struct2ts:go.sia.tech/renterd/wallet.Transaction
-export interface WalletTransaction {
-  Raw: Transaction
-  Index: ChainIndex
-  ID: string
-  Inflow: Currency
-  Outflow: Currency
-  Timestamp: string
+// struct2ts:go.sia.tech/renterd/bus.ContractAcquireRequest
+export interface ContractAcquireRequest {
+  Duration: number
 }
 
 // struct2ts:go.sia.tech/siad/types.SiaPublicKey
 export interface SiaPublicKey {
   algorithm: string
-  key: string | null
+  key?: string
 }
 
 // struct2ts:go.sia.tech/siad/types.UnlockConditions
 export interface UnlockConditions {
   timelock: number
-  publickeys: SiaPublicKey[] | null
+  publickeys?: SiaPublicKey[]
   signaturesrequired: number
-}
-
-// struct2ts:go.sia.tech/siad/types.SiacoinInput
-export interface SiacoinInput {
-  parentid: string
-  unlockconditions: UnlockConditions
 }
 
 // struct2ts:go.sia.tech/siad/types.SiacoinOutput
 export interface SiacoinOutput {
   value: Currency
   unlockhash: string
-}
-
-// struct2ts:go.sia.tech/siad/types.FileContract
-export interface FileContract {
-  filesize: number
-  filemerkleroot: string
-  windowstart: number
-  windowend: number
-  payout: Currency
-  validproofoutputs: SiacoinOutput[] | null
-  missedproofoutputs: SiacoinOutput[] | null
-  unlockhash: string
-  revisionnumber: number
 }
 
 // struct2ts:go.sia.tech/siad/types.FileContractRevision
@@ -103,30 +48,9 @@ export interface FileContractRevision {
   newfilemerkleroot: string
   newwindowstart: number
   newwindowend: number
-  newvalidproofoutputs: SiacoinOutput[] | null
-  newmissedproofoutputs: SiacoinOutput[] | null
+  newvalidproofoutputs?: SiacoinOutput[]
+  newmissedproofoutputs?: SiacoinOutput[]
   newunlockhash: string
-}
-
-// struct2ts:go.sia.tech/siad/types.StorageProof
-export interface StorageProof {
-  parentid: string
-  segment: string
-  hashset: Hash[] | null
-}
-
-// struct2ts:go.sia.tech/siad/types.SiafundInput
-export interface SiafundInput {
-  parentid: string
-  unlockconditions: UnlockConditions
-  claimunlockhash: string
-}
-
-// struct2ts:go.sia.tech/siad/types.SiafundOutput
-export interface SiafundOutput {
-  value: Currency
-  unlockhash: string
-  claimstart: Currency
 }
 
 // struct2ts:go.sia.tech/siad/types.CoveredFields
@@ -150,7 +74,73 @@ export interface TransactionSignature {
   publickeyindex: number
   timelock: number
   coveredfields: CoveredFields
-  signature: string | null
+  signature?: string
+}
+
+// struct2ts:go.sia.tech/renterd/rhp/v2.ContractRevision
+export interface ContractRevision {
+  Revision: FileContractRevision
+  Signatures: TransactionSignature[]
+}
+
+// struct2ts:go.sia.tech/renterd/bus.ContractsIDAddRequest
+export interface ContractsIDAddRequest {
+  contract: ContractRevision
+  startHeight: number
+  totalCost: Currency
+}
+
+// struct2ts:go.sia.tech/renterd/bus.ContractsIDRenewedRequest
+export interface ContractsIDRenewedRequest {
+  contract: ContractRevision
+  renewedFrom: string
+  startHeight: number
+  totalCost: Currency
+}
+
+// struct2ts:go.sia.tech/renterd/bus.ContractAcquireResponse
+export interface ContractAcquireResponse {
+  locked: boolean
+}
+
+// struct2ts:go.sia.tech/siad/types.SiacoinInput
+export interface SiacoinInput {
+  parentid: string
+  unlockconditions: UnlockConditions
+}
+
+// struct2ts:go.sia.tech/siad/types.FileContract
+export interface FileContract {
+  filesize: number
+  filemerkleroot: string
+  windowstart: number
+  windowend: number
+  payout: Currency
+  validproofoutputs?: SiacoinOutput[]
+  missedproofoutputs?: SiacoinOutput[]
+  unlockhash: string
+  revisionnumber: number
+}
+
+// struct2ts:go.sia.tech/siad/types.StorageProof
+export interface StorageProof {
+  parentid: string
+  segment: string
+  hashset?: Hash[]
+}
+
+// struct2ts:go.sia.tech/siad/types.SiafundInput
+export interface SiafundInput {
+  parentid: string
+  unlockconditions: UnlockConditions
+  claimunlockhash: string
+}
+
+// struct2ts:go.sia.tech/siad/types.SiafundOutput
+export interface SiafundOutput {
+  value: Currency
+  unlockhash: string
+  claimstart: Currency
 }
 
 // struct2ts:go.sia.tech/siad/types.Transaction
@@ -167,24 +157,30 @@ export interface Transaction {
   transactionsignatures?: TransactionSignature[]
 }
 
-// struct2ts:go.sia.tech/renterd/api.WalletFundRequest
+// struct2ts:go.sia.tech/renterd/bus.WalletFundRequest
 export interface WalletFundRequest {
   transaction: Transaction
   amount: Currency
 }
 
-// struct2ts:go.sia.tech/renterd/api.WalletFundResponse
+// struct2ts:go.sia.tech/renterd/bus.WalletFundResponse
 export interface WalletFundResponse {
   transaction: Transaction
-  toSign: OutputID[] | null
-  dependsOn: Transaction[] | null
+  toSign?: OutputID[]
+  dependsOn?: Transaction[]
 }
 
-// struct2ts:go.sia.tech/renterd/api.WalletSignRequest
+// struct2ts:go.sia.tech/renterd/bus.WalletSignRequest
 export interface WalletSignRequest {
   transaction: Transaction
-  toSign: OutputID[] | null
+  toSign?: OutputID[]
   coveredFields: CoveredFields
+}
+
+// struct2ts:go.sia.tech/renterd/bus.WalletRedistributeRequest
+export interface WalletRedistributeRequest {
+  amount: Currency
+  outputs: number
 }
 
 // struct2ts:go.sia.tech/renterd/rhp/v2.HostSettings
@@ -214,9 +210,9 @@ export interface HostSettings {
   siamuxport: string
 }
 
-// struct2ts:go.sia.tech/renterd/api.WalletPrepareFormRequest
+// struct2ts:go.sia.tech/renterd/bus.WalletPrepareFormRequest
 export interface WalletPrepareFormRequest {
-  renterKey: string | null
+  renterKey?: string
   hostKey: string
   renterFunds: Currency
   renterAddress: string
@@ -225,240 +221,196 @@ export interface WalletPrepareFormRequest {
   hostSettings: HostSettings
 }
 
-// struct2ts:go.sia.tech/renterd/api.WalletPrepareRenewRequest
+// struct2ts:go.sia.tech/renterd/bus.WalletPrepareRenewRequest
 export interface WalletPrepareRenewRequest {
   contract: FileContractRevision
-  renterKey: string | null
+  renterKey?: string
   hostKey: string
   renterFunds: Currency
   renterAddress: string
-  hostCollateral: Currency
   endHeight: number
   hostSettings: HostSettings
 }
 
-// struct2ts:go.sia.tech/renterd/api.WalletPrepareRenewResponse
+// struct2ts:go.sia.tech/renterd/bus.WalletPrepareRenewResponse
 export interface WalletPrepareRenewResponse {
-  transactionSet: Transaction[] | null
+  transactionSet?: Transaction[]
   finalPayment: Currency
 }
 
-// struct2ts:go.sia.tech/renterd/api.RHPScanRequest
-export interface RHPScanRequest {
-  hostKey: string
-  hostIP: string
-}
-
-// struct2ts:go.sia.tech/renterd/api.RHPPrepareFormRequest
-export interface RHPPrepareFormRequest {
-  renterKey: string | null
-  hostKey: string
-  renterFunds: Currency
-  renterAddress: string
-  hostCollateral: Currency
-  endHeight: number
-  hostSettings: HostSettings
-}
-
-// struct2ts:go.sia.tech/renterd/api.RHPPrepareFormResponse
-export interface RHPPrepareFormResponse {
-  contract: FileContract
-  cost: Currency
-}
-
-// struct2ts:go.sia.tech/renterd/api.RHPFormRequest
-export interface RHPFormRequest {
-  renterKey: string | null
-  hostKey: string
-  hostIP: string
-  transactionSet: Transaction[] | null
-}
-
-// struct2ts:go.sia.tech/renterd/rhp/v2.Contract
-export interface Contract {
-  Revision: FileContractRevision
-  Signatures: TransactionSignature[]
-}
-
-// struct2ts:go.sia.tech/renterd/api.RHPFormResponse
-export interface RHPFormResponse {
-  contractID: string
-  contract: Contract
-  transactionSet: Transaction[] | null
-}
-
-// struct2ts:go.sia.tech/renterd/api.RHPPrepareRenewRequest
-export interface RHPPrepareRenewRequest {
-  contract: FileContractRevision
-  renterKey: string | null
-  hostKey: string
-  renterFunds: Currency
-  renterAddress: string
-  hostCollateral: Currency
-  endHeight: number
-  hostSettings: HostSettings
-}
-
-// struct2ts:go.sia.tech/renterd/api.RHPPrepareRenewResponse
-export interface RHPPrepareRenewResponse {
-  contract: FileContract
-  cost: Currency
-  finalPayment: Currency
-}
-
-// struct2ts:go.sia.tech/renterd/api.RHPRenewRequest
-export interface RHPRenewRequest {
-  renterKey: string | null
-  hostKey: string
-  hostIP: string
-  contractID: string
-  transactionSet: Transaction[] | null
-  finalPayment: Currency
-}
-
-// struct2ts:go.sia.tech/renterd/api.RHPRenewResponse
-export interface RHPRenewResponse {
-  contractID: string
-  contract: Contract
-  transactionSet: Transaction[] | null
-}
-
-// struct2ts:go.sia.tech/renterd/api.RHPFundRequest
-export interface RHPFundRequest {
-  contract: FileContractRevision
-  renterKey: string | null
-  hostKey: string
-  hostIP: string
-  account: string
-  amount: Currency
-}
-
-// struct2ts:go.sia.tech/renterd/api.RHPPreparePaymentRequest
-export interface RHPPreparePaymentRequest {
-  account: string
-  amount: Currency
-  expiry: number
-  accountKey: string | null
-}
-
-// struct2ts:go.sia.tech/renterd/rhp/v3.RegistryKey
-export interface RegistryKey {
-  PublicKey: string
-  Tweak: string
-}
-
-// struct2ts:go.sia.tech/renterd/rhp/v3.PayByEphemeralAccountRequest
-export interface PayByEphemeralAccountRequest {
-  Account: string
-  Expiry: number
-  Amount: Currency
-  Nonce: string
-  Signature: string
-  Priority: number
-}
-
-// struct2ts:go.sia.tech/renterd/api.RHPRegistryReadRequest
-export interface RHPRegistryReadRequest {
-  hostKey: string
-  hostIP: string
-  registryKey: RegistryKey
-  payment: PayByEphemeralAccountRequest
-}
-
-// struct2ts:go.sia.tech/renterd/rhp/v3.RegistryValue
-export interface RegistryValue {
-  Data: string | null
-  Revision: number
-  Type: number
-  Signature: string
-}
-
-// struct2ts:go.sia.tech/renterd/api.RHPRegistryUpdateRequest
-export interface RHPRegistryUpdateRequest {
-  hostKey: string
-  hostIP: string
-  registryKey: RegistryKey
-  registryValue: RegistryValue
-  payment: PayByEphemeralAccountRequest
-}
-
-// struct2ts:go.sia.tech/renterd/api.Contract
-export interface Contract {
-  hostKey: string
-  hostIP: string
-  id: string
-  renterKey: string | null
-}
-
-// struct2ts:go.sia.tech/renterd/api.SlabsUploadRequest
-export interface SlabsUploadRequest {
-  minShards: number
-  totalShards: number
-  contracts: Contract[] | null
-  currentHeight: number
-}
-
-// struct2ts:go.sia.tech/renterd/slab.Sector
+// struct2ts:go.sia.tech/renterd/object.Sector
 export interface Sector {
   Host: string
   Root: string
 }
 
-// struct2ts:go.sia.tech/renterd/slab.Slice
-export interface Slice {
+// struct2ts:go.sia.tech/renterd/object.SlabSlice
+export interface SlabSlice {
   Key: EncryptionKey
   MinShards: number
-  Shards: Sector[] | null
-  Offset: number
-  Length: number
-}
-
-// struct2ts:go.sia.tech/renterd/api.SlabsDownloadRequest
-export interface SlabsDownloadRequest {
-  slabs: Slice[] | null
-  offset: number
-  length: number
-  contracts: Contract[] | null
-}
-
-// struct2ts:go.sia.tech/renterd/slab.Slab
-export interface Slab {
-  Key: EncryptionKey
-  MinShards: number
-  Shards: Sector[] | null
-}
-
-// struct2ts:go.sia.tech/renterd/api.SlabsDeleteRequest
-export interface SlabsDeleteRequest {
-  slabs: Slab[] | null
-  contracts: Contract[] | null
-}
-
-// struct2ts:go.sia.tech/renterd/api.SlabsMigrateRequest
-export interface SlabsMigrateRequest {
-  slabs: Slab[] | null
-  from: Contract[] | null
-  to: Contract[] | null
-  currentHeight: number
-}
-
-// struct2ts:go.sia.tech/renterd/slab.Sector
-export interface Sector {
-  Host: string
-  Root: string
-}
-
-// struct2ts:go.sia.tech/renterd/slab.Slice
-export interface Slice {
-  Key: EncryptionKey
-  MinShards: number
-  Shards: Sector[] | null
+  Shards?: Sector[]
   Offset: number
   Length: number
 }
 
 // struct2ts:go.sia.tech/renterd/object.Object
-export interface Object {
+export interface Obj {
   Key: EncryptionKey
-  Slabs: Slice[] | null
+  Slabs?: SlabSlice[]
+}
+
+// struct2ts:go.sia.tech/renterd/bus.ObjectsResponse
+export interface ObjectsResponse {
+  entries?: string[]
+  object?: Obj
+}
+
+// struct2ts:go.sia.tech/renterd/bus.AddObjectRequest
+export interface AddObjectRequest {
+  object: Obj
+  usedContracts: { [key: PublicKey]: FileContractID }
+}
+
+// struct2ts:go.sia.tech/renterd/bus.DownloadParams
+export interface DownloadParams {
+  ContractSet: string
+}
+
+// struct2ts:go.sia.tech/renterd/bus.UploadParams
+export interface UploadParams {
+  CurrentHeight: number
+  MinShards: number
+  TotalShards: number
+  ContractSet: string
+}
+
+// struct2ts:go.sia.tech/renterd/bus.MigrateParams
+export interface MigrateParams {
+  CurrentHeight: number
+  FromContracts: string
+  ToContracts: string
+}
+
+// struct2ts:go.sia.tech/renterd/bus.GougingSettings
+export interface GougingSettings {
+  MaxRPCPrice: Currency
+  MaxContractPrice: Currency
+  MaxDownloadPrice: Currency
+  MaxUploadPrice: Currency
+}
+
+// struct2ts:go.sia.tech/renterd/bus.RedundancySettings
+export interface RedundancySettings {
+  MinShards: number
+  TotalShards: number
+}
+
+// struct2ts:go.sia.tech/renterd/bus.ContractSpending
+export interface ContractSpending {
+  uploads: Currency
+  downloads: Currency
+  fundAccount: Currency
+}
+
+// struct2ts:go.sia.tech/renterd/bus.Contract
+export interface Contract {
+  ID: string
+  hostIP: string
+  HostKey: string
+  startHeight: number
+  renewedFrom: string
+  spending: ContractSpending
+  totalCost: Currency
+}
+
+// struct2ts:go.sia.tech/siad/types.Block
+export interface Block {
+  parentid: string
+  nonce: string
+  timestamp: number
+  minerpayouts?: SiacoinOutput[]
+  transactions?: Transaction[]
+}
+
+// struct2ts:go.sia.tech/renterd/internal/consensus.ChainIndex
+export interface ChainIndex {
+  Height: number
+  ID: string
+}
+
+// struct2ts:go.sia.tech/renterd/hostdb.Announcement
+export interface Announcement {
+  Index: ChainIndex
+  Timestamp: Date
+  NetAddress: string
+}
+
+// struct2ts:go.sia.tech/renterd/hostdb.Interaction
+export interface Interaction {
+  Timestamp: Date
+  Type: string
+  Result?: string
+}
+
+// struct2ts:go.sia.tech/renterd/hostdb.Host
+export interface Host {
+  PublicKey: string
+  Announcements?: Announcement[]
+  Interactions?: Interaction[]
+}
+
+// struct2ts:go.sia.tech/renterd/wallet.Transaction
+export interface WalletTransaction {
+  Raw: Transaction
+  Index: ChainIndex
+  ID: string
+  Inflow: Currency
+  Outflow: Currency
+  Timestamp: Date
+}
+
+// struct2ts:go.sia.tech/renterd/wallet.SiacoinElement
+export interface SiacoinElement {
+  value: Currency
+  unlockhash: string
+  ID: string
+  MaturityHeight: number
+}
+
+// struct2ts:go.sia.tech/renterd/autopilot.Action
+export interface Action {
+  Timestamp: Date
+  Type: string
+  Action: any
+}
+
+// struct2ts:go.sia.tech/renterd/autopilot.WalletConfig
+export interface WalletConfig {
+  DefragThreshold: number
+}
+
+// struct2ts:go.sia.tech/renterd/autopilot.HostsConfig
+export interface HostsConfig {
+  Blacklist?: string[]
+  IgnoreRedundantIPs: boolean
+  ScoreOverrides: { [key: PublicKey]: number }
+  Whitelist?: string[]
+}
+
+// struct2ts:go.sia.tech/renterd/autopilot.ContractsConfig
+export interface ContractsConfig {
+  Allowance: Currency
+  Hosts: number
+  Period: number
+  RenewWindow: number
+  Download: number
+  Upload: number
+  Storage: number
+}
+
+// struct2ts:go.sia.tech/renterd/autopilot.Config
+export interface Config {
+  Wallet: WalletConfig
+  Hosts: HostsConfig
+  Contracts: ContractsConfig
 }

@@ -38,7 +38,10 @@ export function WalletSparkline() {
           },
     [activeTheme]
   )
-  const transactions = useWalletTransactions()
+  const transactions = useWalletTransactions({
+    since: undefined,
+    max: undefined,
+  })
 
   const scData = useMemo(() => {
     if (!transactions.data || !transactions.data.length) {

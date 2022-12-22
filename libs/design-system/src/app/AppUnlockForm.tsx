@@ -1,4 +1,4 @@
-import { useSettings } from '@siafoundation/react-core'
+import { useAppSettings } from '@siafoundation/react-core'
 import { useRouter } from 'next/router'
 import { useFormik } from 'formik'
 import { FieldGroup, FormSubmitButton, FormTextField } from '../components/Form'
@@ -39,7 +39,7 @@ type Props = {
 
 export function AppUnlockForm({ routes }: Props) {
   const router = useRouter()
-  const { setSettings, api } = useSettings()
+  const { setSettings, api } = useAppSettings()
 
   const formik = useFormik({
     initialValues: {

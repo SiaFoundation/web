@@ -1,7 +1,7 @@
-import { useWalletBalance } from '@siafoundation/react-core'
+import { useConsensusState } from '@siafoundation/react-core'
 
 export function useConnectivity() {
-  const w = useWalletBalance()
+  const w = useConsensusState()
 
   const connError = w.error
 

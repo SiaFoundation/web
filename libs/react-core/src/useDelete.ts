@@ -3,33 +3,23 @@ import { mutate } from 'swr'
 import { useAppSettings } from './useAppSettings'
 import { getKey } from './utils'
 
-type Post<Params extends Record<string, string> | undefined, Payload> = {
-  payload?: Payload
-  params?: Params
-}
-
 type Response<T> = {
   status: number
   data?: T
   error?: string
 }
 
-type UsePost<
-  Params extends Record<string, string> | undefined,
-  Payload,
-  Result
-> = {
-  post: (payload: Post<Params, Payload>) => Promise<Response<Result>>
+type UseDelete<Params> = {
+  delete: (p: Params) => Promise<Response<never>>
 }
 
-export function usePost<
-  Params extends Record<string, string> | undefined,
-  Payload,
-  Result
->(route: string, deps?: string[]): UsePost<Params, Payload, Result> {
+export function useDelete<Params extends Record<string, string> | undefined>(
+  route: string,
+  deps?: string[]
+): UseDelete<Params> {
   const { settings, api } = useAppSettings()
   return {
-    post: async ({ payload, params }: Post<Params, Payload>) => {
+    delete: async (params?: Params) => {
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
       }
@@ -43,7 +33,7 @@ export function usePost<
             route = route.replace(`:${key}`, params[key])
           }
         }
-        const response = await axios.post<Result>(`${api}/${route}`, payload, {
+        const response = await axios.delete(`${api}/${route}`, {
           headers,
         })
         deps?.forEach((dep) => mutate(getKey(dep)))
@@ -56,7 +46,7 @@ export function usePost<
         return {
           status: e.response.status,
           error: e.response.data,
-        } as Response<Result>
+        } as Response<never>
       }
     },
   }

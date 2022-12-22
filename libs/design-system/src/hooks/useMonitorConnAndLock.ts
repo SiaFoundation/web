@@ -1,4 +1,4 @@
-// import { useSettings } from '@siafoundation/react-core'
+// import { useAppSettings } from '@siafoundation/react-core'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useConnectivity } from './useConnectivity'
@@ -9,7 +9,7 @@ type Routes = {
 
 export function useMonitorConnAndLock(routes: Routes) {
   const { daemon, wallet } = useConnectivity()
-  // const { setSettings } = useSettings()
+  // const { setSettings } = useAppSettings()
   const router = useRouter()
 
   useEffect(() => {

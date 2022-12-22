@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { useSettings } from '@siafoundation/react-core'
+import { useAppSettings } from '@siafoundation/react-core'
 import { Container } from '../../core/Container'
 import { AppNavbar } from '../AppNavbar'
 import { AppBackdrop } from '../AppBackdrop'
@@ -26,7 +26,7 @@ export function AppPublicLayout({
   actions,
 }: Props) {
   const router = useRouter()
-  const { settings } = useSettings()
+  const { settings } = useAppSettings()
 
   useEffect(() => {
     if (router.pathname !== routes.unlock && !settings.password) {

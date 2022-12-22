@@ -1,6 +1,6 @@
 import { NumberField } from './NumberField'
 import {
-  useSettings,
+  useAppSettings,
   useSiaCentralMarketExchangeRate,
 } from '@siafoundation/react-core'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -29,7 +29,7 @@ export function SiacoinField({
   size = 'medium',
   ...props
 }: Props) {
-  const { settings } = useSettings()
+  const { settings } = useAppSettings()
   const rates = useSiaCentralMarketExchangeRate()
   const rate = useMemo(() => {
     if (!settings.siaCentral || !rates.data) {

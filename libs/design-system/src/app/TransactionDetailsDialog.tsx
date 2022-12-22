@@ -21,7 +21,10 @@ export function TransactionDetailsDialog({
   onOpenChange,
 }: Props) {
   // TODO: add transaction endpoint
-  const transactions = useWalletTransactions()
+  const transactions = useWalletTransactions({
+    since: undefined,
+    max: undefined,
+  })
   const transaction = transactions.data?.find((t) => t.ID === id)
 
   return (
