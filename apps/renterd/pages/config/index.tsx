@@ -13,9 +13,14 @@ import { RenterSidenav } from '../../components/RenterSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
+// import { useAutopilotConfig, useSetting } from '@siafoundation/react-core'
 
 export default function ConfigPage() {
   const { openDialog } = useDialog()
+  // const gouging = useSetting({ key: 'gouging' })
+  // const redundancy = useSetting({ key: 'redundancy' })
+  // const config = useAutopilotConfig()
+  // console.log(config.data, gouging.data, redundancy.data)
 
   const [targetPrice, setTargetPrice] = useState<BigNumber | undefined>(
     new BigNumber(0)

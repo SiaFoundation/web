@@ -15,7 +15,7 @@ export default function App({
     <ClientSide>
       <SWRConfig value={{ fallback: pageProps?.fallback || {} }}>
         <ThemeProvider>
-          <AppSettingsProvider api="api/bus">
+          <AppSettingsProvider api="api">
             <DialogProvider>
               <Component {...pageProps} />
             </DialogProvider>

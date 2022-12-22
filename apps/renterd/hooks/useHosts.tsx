@@ -13,7 +13,7 @@ import {
   ListMetaResponse,
   useHosts as useHostsGET,
 } from '@siafoundation/react-core'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import groupBy from 'lodash/groupBy'
 import filter from 'lodash/filter'
@@ -117,15 +117,18 @@ export function useHosts() {
   const skip = Number(router.query.skip || 0)
 
   const response = useHostsGET({
-    limit,
-    skip,
-    sortBy,
-    sortDir: sortDir,
+    max: limit,
+    // limit,
+    // skip,
+    // sortBy,
+    // sortDir: sortDir,
   })
 
   const hosts: HostRow[] = useMemo(
     () =>
-      response.data?.hosts.slice(0, 20).map((host) => ({
+      // TODO: add structure to response
+      // response.data?.hosts.slice(0, 20).map((host) => ({
+      response.data?.slice(0, 20).map((host) => ({
         key: host.PublicKey,
         host,
       })) || [],
@@ -136,11 +139,12 @@ export function useHosts() {
     total: 0,
     totalFiltered: 0,
   })
-  useEffect(() => {
-    if (response.data) {
-      setMeta(response.data.meta)
-    }
-  }, [response.data])
+  // TODO: add meta to response
+  // useEffect(() => {
+  //   if (response.data) {
+  //     setMeta(response.data.meta)
+  //   }
+  // }, [response.data])
 
   const columns = useMemo<TableColumn<HostRow>[]>(
     () => [
@@ -342,7 +346,9 @@ export function useHosts() {
         className: 'justify-center bg-accent-200/20',
         render: (row) => (
           <ValueNum
-            value={new BigNumber(row.host.Score)}
+            value={new BigNumber(0)}
+            // TODO: add score
+            // value={new BigNumber(row.host.Score)}
             variant="value"
             // color="$gray9"
             format={(v) => humanNumber(v.toNumber())}

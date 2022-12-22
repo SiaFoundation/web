@@ -7,6 +7,7 @@ import {
   useWalletFund,
   useTxPoolBroadcast,
 } from '@siafoundation/react-core'
+import { mutate } from 'swr'
 
 type Props = {
   formData: {
@@ -75,6 +76,9 @@ export function useSendSiacoinConfirmForm({ formData, fee, onConfirm }: Props) {
       onConfirm({
         transaction: signResponse.data,
       })
+      setTimeout(() => {
+        mutate('/bus/wallet/pending')
+      }, 2000)
     },
   })
 

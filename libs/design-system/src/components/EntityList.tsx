@@ -79,9 +79,7 @@ export function EntityList({ title, actions, entities, emptyMessage }: Props) {
             const sc = entity.sc
             const sf = entity.sf
             const truncHashEl = entity.unconfirmed ? (
-              <Text color="accent" weight="medium">
-                Unconfirmed
-              </Text>
+              <Text color="verySubtle">Unconfirmed</Text>
             ) : (
               entity.hash && (
                 <ValueCopyable
