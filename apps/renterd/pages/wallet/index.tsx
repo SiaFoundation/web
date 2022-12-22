@@ -4,8 +4,12 @@ import {
   WalletSparkline,
   WalletLayoutActions,
   getTransactionTypes,
+  getTransactionTotals,
 } from '@siafoundation/design-system'
-import { useWalletTransactions } from '@siafoundation/react-core'
+import {
+  useWalletPending,
+  useWalletTransactions,
+} from '@siafoundation/react-core'
 import { useMemo } from 'react'
 import { useDialog } from '../../contexts/dialog'
 import { routes } from '../../config/routes'
@@ -18,13 +22,26 @@ export default function WalletView() {
     since: undefined,
     max: undefined,
   })
+  const pending = useWalletPending()
 
   const { openDialog } = useDialog()
 
   const entities: EntityListItemProps[] = useMemo(
-    () =>
-      transactions.data
-        ?.map((t): EntityListItemProps => {
+    () => [
+      ...(pending.data || []).map((t): EntityListItemProps => {
+        const totals = getTransactionTotals(t)
+        return {
+          type: 'transaction',
+          txType: getTransactionTypes(t),
+          // hash: t.ID,
+          // timestamp: new Date(t.Timestamp).getTime(),
+          // onClick: () => openDialog('transactionDetails', t.ID),
+          sc: totals.sc,
+          unconfirmed: true,
+        }
+      }),
+      ...(transactions.data || [])
+        .map((t): EntityListItemProps => {
           return {
             type: 'transaction',
             txType: getTransactionTypes(t.Raw),
@@ -34,8 +51,9 @@ export default function WalletView() {
             sc: new BigNumber(t.Inflow).minus(t.Outflow),
           }
         })
-        .sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1)) || [],
-    [transactions, openDialog]
+        .sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1)),
+    ],
+    [pending, transactions, openDialog]
   )
 
   return (

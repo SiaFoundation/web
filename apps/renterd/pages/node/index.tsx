@@ -1,7 +1,7 @@
 import { DatumCard, TxPoolList, PeerList } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import {
-  useConsensusTip,
+  useConsensusState,
   useSyncerPeers,
   useTxPoolTransactions,
 } from '@siafoundation/react-core'
@@ -15,7 +15,7 @@ export default function NodePage() {
   const txPool = useTxPoolTransactions({
     refreshInterval: 30_000,
   })
-  const tip = useConsensusTip({
+  const state = useConsensusState({
     refreshInterval: 30_000,
   })
   const router = useRouter()
@@ -32,7 +32,9 @@ export default function NodePage() {
         <DatumCard
           label="Height"
           value={
-            tip.data ? Number(tip.data.Height).toLocaleString() : undefined
+            state.data
+              ? Number(state.data.BlockHeight).toLocaleString()
+              : undefined
           }
         />
         <DatumCard
@@ -41,10 +43,6 @@ export default function NodePage() {
           onClick={() => router.push(routes.node.peers)}
         />
         <DatumCard label="Transactions in pool" value={txPool.data?.length} />
-        {/* <DatumCard
-          label="Consensus tip"
-          hash={tip.data?.ID.replace('bid:', '')}
-        /> */}
       </div>
       <div className="flex flex-wrap gap-7">
         <div className="flex-1">
