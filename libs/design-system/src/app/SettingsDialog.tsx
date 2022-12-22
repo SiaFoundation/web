@@ -14,7 +14,7 @@ import {
 } from '../icons/carbon'
 import { ThemeRadio } from '../components/ThemeRadio'
 import { webLinks } from '../data/webLinks'
-import { CurrencyId, useSettings } from '@siafoundation/react-core'
+import { CurrencyId, useAppSettings } from '@siafoundation/react-core'
 import { Dialog } from '../core/Dialog'
 
 type Props = {
@@ -23,7 +23,8 @@ type Props = {
 }
 
 export function SettingsDialog({ open, onOpenChange }: Props) {
-  const { settings, setSettings, setCurrency, currencyOptions } = useSettings()
+  const { settings, setSettings, setCurrency, currencyOptions } =
+    useAppSettings()
 
   return (
     <Dialog

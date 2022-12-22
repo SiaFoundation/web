@@ -2,7 +2,7 @@ import '../config/style.css'
 import { ClientSide, ThemeProvider } from '@siafoundation/design-system'
 import { AppProps } from 'next/app'
 import { SWRConfig } from 'swr'
-import { SettingsProvider } from '@siafoundation/react-core'
+import { AppSettingsProvider } from '@siafoundation/react-core'
 import { Providers } from '../config/providers'
 
 export default function App({
@@ -15,11 +15,11 @@ export default function App({
     <ClientSide>
       <SWRConfig value={{ fallback: pageProps?.fallback || {} }}>
         <ThemeProvider>
-          <SettingsProvider api="api/store">
+          <AppSettingsProvider api="api">
             <Providers>
               <Component {...pageProps} />
             </Providers>
-          </SettingsProvider>
+          </AppSettingsProvider>
         </ThemeProvider>
       </SWRConfig>
     </ClientSide>

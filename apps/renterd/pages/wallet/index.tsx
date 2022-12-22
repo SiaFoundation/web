@@ -14,7 +14,10 @@ import { RenterSidenav } from '../../components/RenterSidenav'
 import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
 
 export default function WalletView() {
-  const transactions = useWalletTransactions()
+  const transactions = useWalletTransactions({
+    since: undefined,
+    max: undefined,
+  })
 
   const { openDialog } = useDialog()
 

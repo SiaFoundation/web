@@ -3,7 +3,7 @@ import { SWRConfig } from 'swr'
 import { ThemeProvider } from '../hooks/useTheme'
 import { Toaster } from '../lib/toast'
 import { AppProps } from 'next/app'
-import { SettingsProvider } from '@siafoundation/react-core'
+import { AppSettingsProvider } from '@siafoundation/react-core'
 
 type Props = {
   children: React.ReactNode
@@ -30,10 +30,10 @@ export function NextAppCsr({
     <ClientSide>
       <SWRConfig value={{ fallback: pageProps?.fallback || {} }}>
         <ThemeProvider>
-          <SettingsProvider api={pageProps?.api}>
+          <AppSettingsProvider api={pageProps?.api}>
             <Toaster />
             <Component {...pageProps} />
-          </SettingsProvider>
+          </AppSettingsProvider>
         </ThemeProvider>
       </SWRConfig>
     </ClientSide>

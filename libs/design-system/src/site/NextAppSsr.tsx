@@ -2,7 +2,7 @@ import { SWRConfig } from 'swr'
 import { ThemeProvider } from '../hooks/useTheme'
 import { Toaster } from '../lib/toast'
 import { AppProps } from 'next/app'
-import { SettingsProvider } from '@siafoundation/react-core'
+import { AppSettingsProvider } from '@siafoundation/react-core'
 
 export function NextAppSsr({
   Component,
@@ -15,12 +15,12 @@ export function NextAppSsr({
     return (
       <SWRConfig value={{ fallback: pageProps?.fallback || {} }}>
         <ThemeProvider ssr>
-          <SettingsProvider>
+          <AppSettingsProvider>
             <Toaster />
             <Layout>
               <Component {...pageProps} />
             </Layout>
-          </SettingsProvider>
+          </AppSettingsProvider>
         </ThemeProvider>
       </SWRConfig>
     )
@@ -28,10 +28,10 @@ export function NextAppSsr({
   return (
     <SWRConfig value={{ fallback: pageProps?.fallback || {} }}>
       <ThemeProvider ssr>
-        <SettingsProvider>
+        <AppSettingsProvider>
           <Toaster />
           <Component {...pageProps} />
-        </SettingsProvider>
+        </AppSettingsProvider>
       </ThemeProvider>
     </SWRConfig>
   )

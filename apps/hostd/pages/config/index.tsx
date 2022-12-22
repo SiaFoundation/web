@@ -17,13 +17,13 @@ import BigNumber from 'bignumber.js'
 import { useState } from 'react'
 import { HostdAuthedLayout } from '../../components/HostdAuthedLayout'
 import { useDialog } from '../../contexts/dialog'
-import { useSettings } from '@siafoundation/react-core'
+import { useAppSettings } from '@siafoundation/react-core'
 
 export default function ConfigPage() {
   const { openDialog } = useDialog()
   const {
     settings: { siaCentral },
-  } = useSettings()
+  } = useAppSettings()
   const networkAverages = useSiaCentralHostsNetworkAverages()
 
   const [ingressPrice, setIngressPrice] = useState<BigNumber | undefined>(

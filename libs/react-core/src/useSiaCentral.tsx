@@ -1,6 +1,6 @@
 import { useGetExternal } from './useGet'
 import { SWROptions } from './types'
-import { useSettings } from './useSettings'
+import { useAppSettings } from './useAppSettings'
 
 type SiaCentralExchangeRateGET = {
   message: string
@@ -30,7 +30,7 @@ const api = 'https://api.siacentral.com/v2'
 export function useSiaCentralMarketExchangeRate(
   options?: SWROptions<SiaCentralExchangeRateGET>
 ) {
-  const { settings } = useSettings()
+  const { settings } = useAppSettings()
   return useGetExternal(api + '/market/exchange-rate?currencies=sc', {
     ...options,
     disabled: options?.disabled || !settings.siaCentral,
@@ -110,7 +110,7 @@ type SiaCentralNetworkAveragesGET = {
 export function useSiaCentralHostsNetworkAverages(
   options?: SWROptions<SiaCentralNetworkAveragesGET>
 ) {
-  const { settings } = useSettings()
+  const { settings } = useAppSettings()
   return useGetExternal(api + '/hosts/network/averages', {
     ...options,
     disabled: options?.disabled || !settings.siaCentral,
