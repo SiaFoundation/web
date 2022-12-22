@@ -6,6 +6,8 @@ import {
   Text,
   ConfigurationSiacoin,
   ConfigurationNumber,
+  Button,
+  triggerSuccessToast,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { useEffect, useState } from 'react'
@@ -13,54 +15,163 @@ import { RenterSidenav } from '../../components/RenterSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
-// import { useAutopilotConfig, useSetting } from '@siafoundation/react-core'
+import {
+  useAutopilotConfig,
+  useAutopilotConfigUpdate,
+  useSetting,
+} from '@siafoundation/react-core'
+import { useFormik } from 'formik'
+
+export const BLOCKS_PER_HOUR = 6
+
+function hoursToBlocks(hours: number) {
+  return BLOCKS_PER_HOUR * hours
+}
+
+function daysToBlocks(days: number) {
+  return BLOCKS_PER_HOUR * 24 * days
+}
+
+function weeksToBlocks(weeks: number) {
+  return BLOCKS_PER_HOUR * 24 * 7 * weeks
+}
+
+function monthsToBlocks(months: number) {
+  return BLOCKS_PER_HOUR * 24 * 30 * months
+}
+
+function blocksToHours(blocks: number) {
+  return blocks / BLOCKS_PER_HOUR
+}
+
+function blocksToDays(blocks: number) {
+  return blocks / (BLOCKS_PER_HOUR * 24)
+}
+
+function blocksToWeeks(blocks: number) {
+  return blocks / (BLOCKS_PER_HOUR * 24 * 7)
+}
+
+function blocksToMonths(blocks: number) {
+  return blocks / (BLOCKS_PER_HOUR * 24 * 30)
+}
 
 export default function ConfigPage() {
   const { openDialog } = useDialog()
-  // const gouging = useSetting({ key: 'gouging' })
-  // const redundancy = useSetting({ key: 'redundancy' })
-  // const config = useAutopilotConfig()
-  // console.log(config.data, gouging.data, redundancy.data)
+  const gouging = useSetting({ key: 'gouging' })
+  const redundancy = useSetting({ key: 'redundancy' })
+  const configUpdate = useAutopilotConfigUpdate()
+  const config = useAutopilotConfig({
+    revalidateOnFocus: false,
+  })
+
+  console.log(config.data, gouging.data, redundancy.data)
+
+  const formik = useFormik({
+    initialValues: {
+      allowance: new BigNumber(0),
+      period: new BigNumber(3),
+      hosts: new BigNumber(50),
+      renewWindow: new BigNumber(3),
+      download: new BigNumber(0),
+      upload: new BigNumber(0),
+      storage: new BigNumber(0),
+    },
+    onSubmit: async (values, actions) => {
+      if (!config.data) {
+        return
+      }
+      try {
+        await configUpdate.put({
+          payload: {
+            contracts: {
+              allowance: values.allowance.toString(),
+              hosts: values.hosts.toNumber(),
+              period: monthsToBlocks(values.period.toNumber()),
+              renewWindow: monthsToBlocks(values.renewWindow.toNumber()),
+              download: values.download.toNumber(),
+              upload: values.upload.toNumber(),
+              storage: values.storage.toNumber(),
+            },
+            hosts: config.data.hosts,
+            wallet: config.data.wallet,
+          },
+        })
+        triggerSuccessToast('Configuration has been saved.')
+        console.log('success')
+        config.mutate()
+      } catch (e) {
+        formik.setErrors(e)
+      }
+    },
+  })
 
   const [targetPrice, setTargetPrice] = useState<BigNumber | undefined>(
     new BigNumber(0)
   )
 
-  const [allowance, setAllowance] = useState<BigNumber | undefined>(
-    new BigNumber(0)
-  )
   const [allowanceSuggestion, setAllowanceSuggestion] = useState<BigNumber>(
     new BigNumber(0)
   )
 
-  const [expectedStorage, setExpectedStorage] = useState<BigNumber | undefined>(
-    new BigNumber(0)
-  )
+  useEffect(() => {
+    const func = async () => {
+      if (!config.data) {
+        return
+      }
+      console.log('reset values', config.data.contracts)
+      try {
+        await formik.resetForm({
+          values: {
+            allowance: new BigNumber(config.data?.contracts.allowance),
+            hosts: new BigNumber(config.data?.contracts.hosts),
+            period: new BigNumber(
+              blocksToMonths(config.data?.contracts.period)
+            ),
+            renewWindow: new BigNumber(
+              blocksToMonths(config.data?.contracts.renewWindow)
+            ),
+            download: new BigNumber(config.data?.contracts.download),
+            upload: new BigNumber(config.data?.contracts.upload),
+            storage: new BigNumber(config.data?.contracts.storage),
+          },
+        })
+      } catch (e) {
+        console.log(e)
+      }
+      console.log(
+        formik.values.allowance.toString(),
+        formik.values.storage.toString(),
+        formik.values.period.toString()
+      )
 
-  const [period, setPeriod] = useState<BigNumber | undefined>(new BigNumber(3))
+      if (formik.values.storage.isZero() || formik.values.period.isZero()) {
+        return
+      }
 
-  const [hosts, setHosts] = useState<BigNumber | undefined>(new BigNumber(50))
-
-  const [renewWindow, setRenewWindow] = useState<BigNumber | undefined>(
-    new BigNumber(3)
-  )
-
-  const [expectedDownload, setExpectedDownload] = useState<
-    BigNumber | undefined
-  >(new BigNumber(0))
-  const [expectedUpload, setExpectedUpload] = useState<BigNumber | undefined>(
-    new BigNumber(0)
-  )
+      setTargetPrice(
+        formik.values.allowance.div(
+          formik.values.storage.times(formik.values.period)
+        )
+      )
+    }
+    func()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [config.data])
 
   useEffect(() => {
-    setAllowanceSuggestion(expectedStorage.times(targetPrice).times(period))
-  }, [targetPrice, expectedStorage, period])
+    console.log('ere')
+    setAllowanceSuggestion(
+      formik.values.storage.times(targetPrice).times(formik.values.period)
+    )
+  }, [formik.values.storage, formik.values.period, targetPrice])
 
   return (
     <RenterdAuthedLayout
       title="Configuration"
       routes={routes}
       sidenav={<RenterSidenav />}
+      actions={<Button onClick={() => formik.submitForm()}>Save</Button>}
       openSettings={() => openDialog('settings')}
     >
       <div className="flex flex-col gap-16 max-w-screen-xl">
@@ -86,8 +197,8 @@ export default function ConfigPage() {
             control={
               <ConfigurationNumber
                 units="TB"
-                value={expectedStorage}
-                onChange={setExpectedStorage}
+                value={formik.values.storage}
+                onChange={(value) => formik.setFieldValue('storage', value)}
               />
             }
           />
@@ -102,8 +213,8 @@ export default function ConfigPage() {
             control={
               <ConfigurationNumber
                 units="TB"
-                value={expectedUpload}
-                onChange={setExpectedUpload}
+                value={formik.values.upload}
+                onChange={(value) => formik.setFieldValue('upload', value)}
               />
             }
           />
@@ -119,8 +230,8 @@ export default function ConfigPage() {
             control={
               <ConfigurationNumber
                 units="TB"
-                value={expectedDownload}
-                onChange={setExpectedDownload}
+                value={formik.values.download}
+                onChange={(value) => formik.setFieldValue('download', value)}
               />
             }
           />
@@ -133,8 +244,8 @@ export default function ConfigPage() {
             }
             control={
               <ConfigurationSiacoin
-                value={allowance}
-                onChange={setAllowance}
+                value={formik.values.allowance}
+                onChange={(value) => formik.setFieldValue('allowance', value)}
                 suggestion={allowanceSuggestion}
                 suggestionTip={
                   'Suggested allowance based on your target price, expected usage, and period.'
@@ -149,10 +260,10 @@ export default function ConfigPage() {
             control={
               <ConfigurationNumber
                 units="months"
-                value={period}
+                value={formik.values.period}
+                onChange={(value) => formik.setFieldValue('period', value)}
                 suggestion={new BigNumber(3)}
                 suggestionTip={'Typically 3 months.'}
-                onChange={setPeriod}
               />
             }
           />
@@ -168,10 +279,10 @@ export default function ConfigPage() {
             control={
               <ConfigurationNumber
                 units="months"
-                value={renewWindow}
+                value={formik.values.renewWindow}
+                onChange={(value) => formik.setFieldValue('renewWindow', value)}
                 suggestion={new BigNumber(1)}
                 suggestionTip={'Typically 1 month.'}
-                onChange={setRenewWindow}
               />
             }
           />
@@ -182,10 +293,10 @@ export default function ConfigPage() {
             control={
               <ConfigurationNumber
                 units="hosts"
-                value={hosts}
+                value={formik.values.hosts}
+                onChange={(value) => formik.setFieldValue('hosts', value)}
                 suggestion={new BigNumber(50)}
                 suggestionTip={'Typically 50 hosts.'}
-                onChange={setHosts}
               />
             }
           />

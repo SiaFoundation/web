@@ -400,18 +400,18 @@ export interface HostsConfig {
 
 // struct2ts:go.sia.tech/renterd/autopilot.ContractsConfig
 export interface ContractsConfig {
-  Allowance: Currency
-  Hosts: number
-  Period: number
-  RenewWindow: number
-  Download: number
-  Upload: number
-  Storage: number
+  allowance: Currency
+  hosts: number
+  period: number
+  renewWindow: number
+  download: number
+  upload: number
+  storage: number
 }
 
 // struct2ts:go.sia.tech/renterd/autopilot.Config
 export interface Config {
-  Wallet: WalletConfig
-  Hosts: HostsConfig
-  Contracts: ContractsConfig
+  wallet: WalletConfig
+  hosts: HostsConfig
+  contracts: ContractsConfig
 }

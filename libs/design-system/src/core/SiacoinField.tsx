@@ -106,7 +106,6 @@ export function SiacoinField({
         'focus-within:ring ring-blue-500 dark:ring-blue-200',
         'border border-gray-200 dark:border-graydark-200',
         'rounded',
-        'px-3',
         'py-0.5'
       )}
     >

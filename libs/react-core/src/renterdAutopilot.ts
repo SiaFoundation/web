@@ -1,6 +1,6 @@
 import { useGet } from './useGet'
 import { SWROptions } from './types'
-import { Action, Block, Config } from './siaTypes'
+import { Action, Config } from './siaTypes'
 import { usePut } from './usePut'
 
 export function useAutopilotConfig(options?: SWROptions<Config>) {
@@ -8,7 +8,7 @@ export function useAutopilotConfig(options?: SWROptions<Config>) {
 }
 
 export function useAutopilotConfigUpdate() {
-  return usePut<undefined, Block, never>('autopilot/config', [
+  return usePut<undefined, Config, never>('autopilot/config', [
     'autopilot/config',
   ])
 }
