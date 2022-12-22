@@ -135,6 +135,7 @@ export * from './hooks/useIsExternalDomain'
 export * from './data/webLinks'
 
 // lib
+export * from './lib/blockTime'
 export * from './lib/toast'
 export * from './lib/clipboard'
 export * from './lib/image'
