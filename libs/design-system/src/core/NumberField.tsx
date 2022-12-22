@@ -36,17 +36,21 @@ export function NumberField({
             cursor,
             className,
           }),
-          units ? 'pl-9' : ''
+          units ? 'pr-9' : ''
         )}
       />
       {units && (
         <div
           className={cx(
             'flex items-center absolute top-0 h-full',
-            size === 'small' ? 'r-2' : 'r-3'
+            size === 'small' ? 'right-2' : 'right-2'
           )}
         >
-          <Text size={size === 'small' ? '12' : '14'} weight="semibold">
+          <Text
+            size={size === 'small' ? '12' : '12'}
+            weight="medium"
+            color="subtle"
+          >
             {units}
           </Text>
         </div>
