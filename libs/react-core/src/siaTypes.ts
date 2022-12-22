@@ -381,6 +381,7 @@ export interface SiacoinElement {
 export interface Action {
   Timestamp: Date
   Type: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Action: any
 }
 
