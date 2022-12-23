@@ -10,7 +10,6 @@ import {
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
 import { getCacheStats } from '../../content/stats'
-import { textContent } from '../../lib/utils'
 import backgroundImage from '../../assets/backgrounds/nate-bridge.png'
 import previewImage from '../../assets/previews/nate-bridge.png'
 import { AsyncReturnType } from '../../lib/types'
@@ -26,20 +25,18 @@ import { components } from '../../config/mdx'
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
 
-const description = (
-  <>
-    The following document outlines a set of best practices for Sia Network
-    Hosts to follow.
-  </>
-)
-
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-export default function HostBestPractices({ title, date, source }: Props) {
+export default function HostBestPractices({
+  title,
+  date,
+  description,
+  source,
+}: Props) {
   return (
     <Layout
       title={title}
-      description={textContent(description)}
+      description={description}
       path={routes.community.index}
       heading={
         <SectionSimple className="pt-24 md:pt-40 pb-6 md:pb-20">
@@ -79,7 +76,7 @@ export async function getStaticProps() {
   const stats = await getCacheStats()
 
   const markdownWithMeta = fs.readFileSync(
-    path.join(getContentDirectory(), 'pages/host-best-practices.mdx'),
+    path.join(getContentDirectory(), 'pages/hosting-best-practices.mdx'),
     'utf-8'
   )
 
@@ -91,6 +88,7 @@ export async function getStaticProps() {
     props: {
       title: data.title as string,
       date: data.date as string,
+      description: data.description as string,
       source,
       fallback: {
         '/api/stats': stats,
