@@ -5,9 +5,9 @@ import {
   FormField,
   Dialog,
 } from '@siafoundation/design-system'
-import { useWalletAddressCreate } from '@siafoundation/react-core'
+// import { useWalletAddressCreate } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
-import { useDialog } from '../contexts/dialog'
+// import { useDialog } from '../contexts/dialog'
 import * as Yup from 'yup'
 
 const exampleAddr =
@@ -32,26 +32,26 @@ type Props = {
 }
 
 export function WalletAddAddressDialog({ trigger, open, onOpenChange }: Props) {
-  const { closeDialog } = useDialog()
-  const addAddress = useWalletAddressCreate()
+  // const { closeDialog } = useDialog()
+  // const addAddress = useWalletAddressCreate()
 
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: async (values, actions) => {
-      const response = await addAddress.post({
-        param: values.address,
-        payload: {
-          index: values.index || 0,
-          description: values.description || '',
-        },
-      })
-      if (response.status !== 200) {
-        actions.setStatus(response)
-      } else {
-        actions.resetForm()
-        closeDialog()
-      }
+      // const response = await addAddress.post({
+      //   param: values.address,
+      //   payload: {
+      //     index: values.index || 0,
+      //     description: values.description || '',
+      //   },
+      // })
+      // if (response.status !== 200) {
+      //   actions.setStatus(response)
+      // } else {
+      //   actions.resetForm()
+      //   closeDialog()
+      // }
     },
   })
 

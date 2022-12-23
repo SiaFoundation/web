@@ -1,6 +1,6 @@
 import { DatumCard, PeerList, TxPoolList } from '@siafoundation/design-system'
 import {
-  useConsensusTip,
+  useConsensusState,
   useSyncerPeers,
   useTxPoolTransactions,
 } from '@siafoundation/react-core'
@@ -14,7 +14,7 @@ export default function NodePage() {
   const txPool = useTxPoolTransactions({
     refreshInterval: 30_000,
   })
-  const tip = useConsensusTip({
+  const state = useConsensusState({
     refreshInterval: 30_000,
   })
   const router = useRouter()
@@ -29,7 +29,7 @@ export default function NodePage() {
           onClick={() => router.push(routes.node.peers)}
         />
         <DatumCard label="Transactions in pool" value={txPool.data?.length} />
-        <DatumCard label="Consensus tip" hash={tip.data?.ID} />
+        <DatumCard label="Block height" value={state.data?.BlockHeight} />
       </div>
       <PeerList connectPeer={() => openDialog('connectPeer')} />
       <TxPoolList />
