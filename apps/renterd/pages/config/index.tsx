@@ -8,6 +8,8 @@ import {
   ConfigurationNumber,
   Button,
   triggerSuccessToast,
+  monthsToBlocks,
+  blocksToMonths,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { useEffect, useState } from 'react'
@@ -21,40 +23,6 @@ import {
   useSetting,
 } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
-
-export const BLOCKS_PER_HOUR = 6
-
-function hoursToBlocks(hours: number) {
-  return BLOCKS_PER_HOUR * hours
-}
-
-function daysToBlocks(days: number) {
-  return BLOCKS_PER_HOUR * 24 * days
-}
-
-function weeksToBlocks(weeks: number) {
-  return BLOCKS_PER_HOUR * 24 * 7 * weeks
-}
-
-function monthsToBlocks(months: number) {
-  return BLOCKS_PER_HOUR * 24 * 30 * months
-}
-
-function blocksToHours(blocks: number) {
-  return blocks / BLOCKS_PER_HOUR
-}
-
-function blocksToDays(blocks: number) {
-  return blocks / (BLOCKS_PER_HOUR * 24)
-}
-
-function blocksToWeeks(blocks: number) {
-  return blocks / (BLOCKS_PER_HOUR * 24 * 7)
-}
-
-function blocksToMonths(blocks: number) {
-  return blocks / (BLOCKS_PER_HOUR * 24 * 30)
-}
 
 export default function ConfigPage() {
   const { openDialog } = useDialog()
@@ -119,48 +87,44 @@ export default function ConfigPage() {
       if (!config.data) {
         return
       }
-      console.log('reset values', config.data.contracts)
+      const allowance = new BigNumber(config.data?.contracts.allowance)
+      const hosts = new BigNumber(config.data?.contracts.hosts)
+      const period = new BigNumber(
+        blocksToMonths(config.data?.contracts.period)
+      )
+      const renewWindow = new BigNumber(
+        blocksToMonths(config.data?.contracts.renewWindow)
+      )
+      const download = new BigNumber(config.data?.contracts.download)
+      const upload = new BigNumber(config.data?.contracts.upload)
+      const storage = new BigNumber(config.data?.contracts.storage)
       try {
         await formik.resetForm({
           values: {
-            allowance: new BigNumber(config.data?.contracts.allowance),
-            hosts: new BigNumber(config.data?.contracts.hosts),
-            period: new BigNumber(
-              blocksToMonths(config.data?.contracts.period)
-            ),
-            renewWindow: new BigNumber(
-              blocksToMonths(config.data?.contracts.renewWindow)
-            ),
-            download: new BigNumber(config.data?.contracts.download),
-            upload: new BigNumber(config.data?.contracts.upload),
-            storage: new BigNumber(config.data?.contracts.storage),
+            allowance,
+            hosts,
+            period,
+            renewWindow,
+            download,
+            upload,
+            storage,
           },
         })
       } catch (e) {
         console.log(e)
       }
-      console.log(
-        formik.values.allowance.toString(),
-        formik.values.storage.toString(),
-        formik.values.period.toString()
-      )
 
-      if (formik.values.storage.isZero() || formik.values.period.isZero()) {
+      if (storage.isZero() || period.isZero()) {
         return
       }
 
-      setTargetPrice(
-        formik.values.allowance.div(
-          formik.values.storage.times(formik.values.period)
-        )
-      )
+      setTargetPrice(allowance.div(storage.times(period)))
     }
     func()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config.data])
 
   useEffect(() => {
-    console.log('ere')
     setAllowanceSuggestion(
       formik.values.storage.times(targetPrice).times(formik.values.period)
     )

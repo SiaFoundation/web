@@ -39,7 +39,6 @@ export function useDelete<Params extends Record<string, string> | undefined>(
         deps?.forEach((dep) => mutate(getKey(dep)))
         return {
           status: response.status,
-          data: response.data,
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
