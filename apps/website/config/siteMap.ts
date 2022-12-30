@@ -96,7 +96,7 @@ export const menuSections = [
       },
       {
         link: routes.hostingBestPractices.index,
-        title: 'Host Best Practices',
+        title: 'Hosting Best Practices',
       },
     ],
   },
