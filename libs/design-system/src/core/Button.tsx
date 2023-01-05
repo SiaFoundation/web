@@ -109,6 +109,7 @@ export const Button = React.forwardRef<
   return (
     <button
       ref={ref}
+      disabled={disabled}
       className={buttonStyles({
         variant,
         size,

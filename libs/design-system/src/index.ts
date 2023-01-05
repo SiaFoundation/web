@@ -123,6 +123,7 @@ export * from './icons/GearIcon'
 export * from './icons/DatabaseIcon'
 export * from './icons/FolderIcon'
 export * from './icons/TestToolIcon'
+export * from './icons/PlaneIcon'
 
 // hooks
 export * from './hooks/useTheme'

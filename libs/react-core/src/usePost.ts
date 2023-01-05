@@ -37,15 +37,20 @@ export function usePost<
         headers['Authorization'] = 'Basic ' + btoa(`:${settings.password}`)
       }
       try {
+        let paramRoute = route
         if (params) {
           const paramKeys = Object.keys(params)
           for (const key of paramKeys) {
-            route = route.replace(`:${key}`, params[key])
+            paramRoute = paramRoute.replace(`:${key}`, params[key])
           }
         }
-        const response = await axios.post<Result>(`${api}/${route}`, payload, {
-          headers,
-        })
+        const response = await axios.post<Result>(
+          `${api}/${paramRoute}`,
+          payload,
+          {
+            headers,
+          }
+        )
         deps?.forEach((dep) => mutate(getKey(dep)))
         return {
           status: response.status,

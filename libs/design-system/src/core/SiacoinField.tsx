@@ -16,6 +16,7 @@ type Props = Omit<
   decimalsLimitSc?: number
   decimalsLimitFiat?: number
   placeholder?: BigNumber
+  changed?: boolean
 }
 
 const zero = new BigNumber(0)
@@ -27,6 +28,7 @@ export function SiacoinField({
   decimalsLimitSc = 3,
   onChange,
   size = 'medium',
+  changed,
   ...props
 }: Props) {
   const { settings } = useAppSettings()
@@ -104,7 +106,10 @@ export function SiacoinField({
       className={cx(
         'flex flex-col bg-white dark:bg-graydark-50',
         'focus-within:ring ring-blue-500 dark:ring-blue-200',
-        'border border-gray-200 dark:border-graydark-200',
+        'border',
+        changed
+          ? 'border-green-500 dark:border-green-400'
+          : 'border-gray-200 dark:border-graydark-200',
         'rounded',
         'py-0.5'
       )}

@@ -7,10 +7,11 @@ type Props = {
   average?: BigNumber
   suggestion?: BigNumber
   suggestionTip?: string
-  units: string
+  units?: string
   value: BigNumber
   onChange: (value: BigNumber) => void
   decimalsLimit?: number
+  changed?: boolean
 }
 
 export function ConfigurationNumber({
@@ -21,6 +22,7 @@ export function ConfigurationNumber({
   units,
   value,
   onChange,
+  changed,
 }: Props) {
   return (
     <div className="flex flex-col gap-3 w-[220px]">
@@ -28,6 +30,7 @@ export function ConfigurationNumber({
         value={value ? toFixedMax(value, decimalsLimit) : ''}
         units={units}
         decimalsLimit={decimalsLimit}
+        state={changed ? 'valid' : 'default'}
         onValueChange={(val) => {
           onChange(new BigNumber(val || 0))
         }}

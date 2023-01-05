@@ -3,7 +3,7 @@ import { cva, VariantProps } from 'class-variance-authority'
 import * as SeparatorPrimitive from '@radix-ui/react-separator'
 
 const styles = cva([
-  'border-none m-0 flex-shrink-0 bg-gray-300 dark:bg-graydark-300 cursor-default',
+  'border-b m-0 flex-shrink-0 border-gray-300 dark:border-graydark-300 cursor-default',
 ])
 
 export const Separator = React.forwardRef<
