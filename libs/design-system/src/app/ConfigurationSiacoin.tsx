@@ -11,6 +11,7 @@ type Props = {
   onChange: (value: BigNumber) => void
   decimalsLimitSc?: number
   decimalsLimitFiat?: number
+  changed?: boolean
 }
 
 export function ConfigurationSiacoin({
@@ -21,6 +22,7 @@ export function ConfigurationSiacoin({
   decimalsLimitFiat = 3,
   value,
   onChange,
+  changed,
 }: Props) {
   return (
     <div className="flex flex-col gap-3 w-[220px]">
@@ -29,6 +31,7 @@ export function ConfigurationSiacoin({
         sc={toSiacoins(value)}
         decimalsLimitSc={decimalsLimitSc}
         decimalsLimitFiat={decimalsLimitFiat}
+        changed={changed}
         placeholder={
           suggestion
             ? toSiacoins(suggestion)

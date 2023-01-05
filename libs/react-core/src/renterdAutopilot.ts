@@ -14,10 +14,10 @@ export function useAutopilotConfigUpdate() {
 }
 
 export function useAutopilotActions(
-  params: { since: Date; max: number },
+  params: { since?: Date; max?: number },
   options?: SWROptions<Action[]>
 ) {
-  return useGet<Action[]>(params, 'autopilot/status', options)
+  return useGet<Action[]>(params, 'autopilot/actions', options)
 }
 
 export function useAutopilotStatus(

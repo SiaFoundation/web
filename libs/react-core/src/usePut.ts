@@ -37,15 +37,20 @@ export function usePut<
         headers['Authorization'] = 'Basic ' + btoa(`:${settings.password}`)
       }
       try {
+        let paramRoute = route
         if (params) {
           const paramKeys = Object.keys(params)
           for (const key of paramKeys) {
-            route = route.replace(`:${key}`, params[key])
+            paramRoute = paramRoute.replace(`:${key}`, params[key])
           }
         }
-        const response = await axios.put<Result>(`${api}/${route}`, payload, {
-          headers,
-        })
+        const response = await axios.put<Result>(
+          `${api}/${paramRoute}`,
+          payload,
+          {
+            headers,
+          }
+        )
         deps?.forEach((dep) => mutate(getKey(dep)))
         return {
           status: response.status,

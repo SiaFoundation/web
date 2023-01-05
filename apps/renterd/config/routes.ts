@@ -3,6 +3,9 @@ export const routes = {
   files: {
     index: '/files',
   },
+  autopilot: {
+    index: '/autopilot',
+  },
   config: {
     index: '/config',
   },
