@@ -233,9 +233,9 @@ type FieldGroupProps = {
 export function FieldGroup({ formik, title, name, children }: FieldGroupProps) {
   const showError = formik.errors[name] && formik.touched[name]
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-1">
       {(title || showError) && (
-        <div className="flex justify-between gap-4">
+        <div className="flex justify-between items-center gap-4">
           {title && (
             <Label
               htmlFor={name}

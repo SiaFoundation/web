@@ -126,9 +126,7 @@ export function WalletSendSiacoinDialog({
             },
           ]}
         />
-        <div className="mt-4">
-          <Separator className="w-full" />
-        </div>
+        <Separator className="w-full mt-4" />
         {step === 'setup' && generate.form}
         {step === 'confirm' && confirm.form}
         {step === 'done' && (

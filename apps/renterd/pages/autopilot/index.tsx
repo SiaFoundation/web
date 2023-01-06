@@ -223,7 +223,7 @@ export default function AutopilotPage() {
             }
           />
         </MenuSection>
-        <MenuSection title="Configuration">
+        <MenuSection title="Settings">
           <Setting
             title="Allowance"
             description={

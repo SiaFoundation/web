@@ -1,6 +1,8 @@
 import React from 'react'
 import { Text } from './Text'
 import { cx, VariantProps } from 'class-variance-authority'
+import Link from 'next/link'
+import { Link20 } from '../icons/carbon'
 
 const DEFAULT_TAG = 'h1'
 
@@ -27,27 +29,65 @@ type HeadingVariants = { size?: HeadingSizeVariants } & Omit<
   'size'
 >
 type HeadingProps = React.ComponentProps<typeof DEFAULT_TAG> &
-  HeadingVariants & { className?: string; as?: string }
+  HeadingVariants & { className?: string; as?: string; showAnchor?: boolean }
 
 export const Heading = React.forwardRef<
   React.ElementRef<typeof DEFAULT_TAG>,
   HeadingProps
 >((props, forwardedRef) => {
-  const { size = '24', className, ...textProps } = props
+  const {
+    size = '24',
+    className,
+    id,
+    children,
+    showAnchor,
+    ...textProps
+  } = props
 
   const tag = textTag[size]
 
+  const cId =
+    id ||
+    (typeof children === 'string'
+      ? encodeURI(children.toLowerCase().replace(' ', '-'))
+      : '')
+
   return (
-    <Text
-      as={tag}
-      {...textProps}
-      ref={forwardedRef}
-      weight="none"
-      className={cx(
-        'proportional-nums inline-block',
-        textStyles[size],
-        className
-      )}
-    />
+    <div className={cx('flex flex-col gap-6 items-start', className)}>
+      <Link href={`#${cId}`} id={cId} className="relative group">
+        {showAnchor && (
+          <Text className="hidden group-hover:block">
+            <Link20 className="absolute top-1 -left-7 hidden md:block" />
+          </Text>
+        )}
+        <Text
+          as={tag}
+          {...textProps}
+          ref={forwardedRef}
+          weight="none"
+          className={cx(
+            'proportional-nums inline-block',
+            textStyles[size],
+            className
+          )}
+        >
+          {children}
+        </Text>
+      </Link>
+    </div>
   )
+
+  // return (
+  //   <Text
+  //     as={tag}
+  //     {...textProps}
+  //     ref={forwardedRef}
+  //     weight="none"
+  //     className={cx(
+  //       'proportional-nums inline-block',
+  //       textStyles[size],
+  //       className
+  //     )}
+  //   />
+  // )
 })

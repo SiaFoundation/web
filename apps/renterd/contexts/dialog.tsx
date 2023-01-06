@@ -6,6 +6,7 @@ import {
   TransactionDetailsDialog,
   WalletSingleAddressDetailsDialog,
 } from '@siafoundation/design-system'
+import { CommandKDialog } from '../components/CommandKDialog'
 
 const DialogContext = createContext({} as State)
 export const useDialog = () => useContext(DialogContext)
@@ -15,6 +16,7 @@ type Props = {
 }
 
 export type DialogType =
+  | 'cmdk'
   | 'settings'
   | 'sendSiacoin'
   | 'transactionDetails'
@@ -68,6 +70,11 @@ export function DialogProvider({ children }: Props) {
 
   return (
     <DialogContext.Provider value={value}>
+      <CommandKDialog
+        open={dialog === 'cmdk'}
+        onOpenChange={onOpenChange}
+        setOpen={() => openDialog('cmdk')}
+      />
       <SettingsDialog
         open={dialog === 'settings'}
         onOpenChange={onOpenChange}

@@ -5,9 +5,13 @@ export const routes = {
   },
   autopilot: {
     index: '/autopilot',
+    estimates: '/autopilot#estimates',
+    settings: '/autopilot#settings',
   },
   config: {
     index: '/config',
+    gouging: '/config#gouging',
+    redundancy: '/config#redundancy',
   },
   contracts: {
     index: '/contracts',

@@ -1,10 +1,16 @@
-import { cva, cx } from 'class-variance-authority'
+import { cx } from 'class-variance-authority'
 import { VariantProps } from '../types'
 import { textStyles } from './Text'
 
 export const baseItemStyles = ({
   className,
-  ...props
+  font,
+  color,
+  weight,
+  size = '14',
+  scaleSize,
+  noWrap,
+  ellipsis,
 }: VariantProps<typeof textStyles> = {}) =>
   cx(
     [
@@ -19,34 +25,50 @@ export const baseItemStyles = ({
       'px-1.5',
       'py-1.5',
     ],
-    textStyles({ size: '14', ...props }),
+    textStyles({ font, color, weight, size, scaleSize, noWrap, ellipsis }),
     className
   )
 
 export const itemStyles = (className?: string) =>
   cx(
     baseItemStyles(),
-    cva([
+    [
       'relative',
       'rounded-sm',
       'focus:outline-none',
       // 'focus:ring ring-blue-500 dark:ring-blue-200',
       'focus:text-gray-900',
       'dark:focus:text-white',
+      'active:bg-gray-300',
+      'dark:active:bg-graydark-300',
+      'aria-selected:bg-gray-400',
+      'aria-selected:dark:bg-graydark-500',
       'data-[disabled]:text-gray-500',
       'dark:data-[disabled]:text-gray-100',
-    ])({
-      className,
-    })
+    ],
+    className
   )
 
-export const labelStyles = (className?: string) =>
-  cx(
-    baseItemStyles({ color: 'subtle' }),
-    cva(['font-medium', 'text-gray-700', 'dark:text-gray-100'])({
-      className,
-    })
-  )
+export const labelStyles = ({
+  className,
+  font,
+  color = 'subtle',
+  weight = 'medium',
+  size = '14',
+  scaleSize,
+  noWrap,
+  ellipsis,
+}: VariantProps<typeof textStyles>) =>
+  textStyles({
+    font,
+    color,
+    weight,
+    size,
+    scaleSize,
+    noWrap,
+    ellipsis,
+    className,
+  })
 
 export const separatorStyles = (className?: string) =>
-  cx(['h-px', 'my-1', 'bg-gray-200', 'dark:bg-gray-700', className])
+  cx(['h-px', 'my-1', 'bg-gray-200', 'dark:bg-graydark-400', className])

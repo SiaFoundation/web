@@ -57,6 +57,7 @@ export const Dialog = React.forwardRef<
       contentVariants,
       controls,
       children,
+      bodyClassName,
       closeClassName,
       dynamicHeight = true,
     },
@@ -99,6 +100,7 @@ export const Dialog = React.forwardRef<
                       contentVariants={contentVariants}
                       onSubmit={onSubmit}
                       controls={controls}
+                      bodyClassName={bodyClassName}
                       closeClassName={closeClassName}
                       dynamicHeight={dynamicHeight}
                     >
@@ -135,6 +137,7 @@ type ContentProps = {
   children?: React.ReactNode
   contentVariants?: VariantProps<typeof contentStyles>
   closeClassName?: string
+  bodyClassName?: string
   dynamicHeight?: boolean
 }
 
@@ -148,6 +151,7 @@ const Content = React.forwardRef<HTMLDivElement, ContentProps>(
       controls,
       contentVariants,
       closeClassName,
+      bodyClassName,
       dynamicHeight = true,
     },
     ref
@@ -182,7 +186,7 @@ const Content = React.forwardRef<HTMLDivElement, ContentProps>(
             maxHeight: dynamicHeight ? '70vh' : undefined,
           }}
         >
-          <div ref={heightRef} className="p-4">
+          <div ref={heightRef} className={cx('p-4', bodyClassName)}>
             {description && (
               <DialogPrimitive.Description
                 className={dialogDescriptionStyles()}
@@ -224,8 +228,12 @@ function useHeight(deps: unknown[] = []) {
     const update = () => setHeight(node.clientHeight)
     update()
     ref.current.addEventListener('resize', update)
+    const resizeOb = new ResizeObserver(update)
+    resizeOb.observe(node)
+
     return () => {
       node.removeEventListener('resize', update)
+      resizeOb.unobserve(node)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps)
@@ -271,8 +279,8 @@ function DialogControls({ children, separator = true }: DialogControlsProps) {
   return (
     <div
       className={cx(
-        'py-2 mx-3 border-t',
-        separator ? 'border-gray-200 dark:border-graydark-200' : ''
+        'py-2 mx-3',
+        separator ? 'border-t border-gray-200 dark:border-graydark-200' : ''
       )}
     >
       {children}
