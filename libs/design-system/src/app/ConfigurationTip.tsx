@@ -32,9 +32,9 @@ export function ConfigurationTip({
     <div className="flex justify-between items-center">
       <Tooltip align="start" content={tip}>
         <div className="flex gap-1 items-center relative top-px">
-          <div className="flex relative -top-px">
+          <Text className="flex relative -top-px">
             <Information16 />
-          </div>
+          </Text>
           <Text size="12">
             {link ? (
               <Link href={link} target="_blank">

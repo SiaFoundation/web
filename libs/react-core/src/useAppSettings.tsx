@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect } from 'react'
+import React, { createContext, useContext, useEffect, useMemo } from 'react'
 import { useCallback } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 
@@ -63,6 +63,8 @@ type State = {
   api: string
   setCurrency: (id: CurrencyId) => void
   setSettings: (settings: Partial<Settings>) => void
+  lock: () => void
+  isUnlocked: boolean
 }
 
 const SettingsContext = createContext({} as State)
@@ -97,6 +99,7 @@ export function AppSettingsProvider({ children, api }: Props) {
     },
     [_setSettings]
   )
+
   const setCurrency = useCallback(
     (id: CurrencyId) => {
       const currency = currencyOptions.find((i) => i.id === id)
@@ -109,12 +112,20 @@ export function AppSettingsProvider({ children, api }: Props) {
     [setSettings]
   )
 
+  const lock = useCallback(() => {
+    setSettings({ password: '' })
+  }, [setSettings])
+
+  const isUnlocked = useMemo(() => !!settings.password, [settings])
+
   const value = {
     settings,
     api: typeof api === 'string' ? api : '/api',
     setSettings,
     setCurrency,
     currencyOptions,
+    lock,
+    isUnlocked,
   } as State
 
   return (
