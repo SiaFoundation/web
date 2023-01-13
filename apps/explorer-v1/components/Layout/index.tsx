@@ -8,7 +8,6 @@ import {
   Separator,
   SimpleLogoIcon,
   Text,
-  UserDropdownMenu,
   webLinks,
   RedditIcon,
   LogoDiscord24,
@@ -21,6 +20,7 @@ import backgroundImage from '../../assets/leaves-background.png'
 import previewImage from '../../assets/leaves-preview.png'
 import { Search } from './Search'
 import { appName } from '../../config'
+import { NavDropdownMenu } from './NavDropdownMenu'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -47,7 +47,7 @@ export function Layout({ title, description, path, children }: Props) {
         <div className="relative z-10 overflow-hidden">
           <NavbarSite appName="explorer" homeHref={routes.home.index}>
             <Search />
-            <UserDropdownMenu />
+            <NavDropdownMenu />
           </NavbarSite>
           <div className="flex flex-col gap-16 w-full">
             <div className="flex flex-col gap-1">
