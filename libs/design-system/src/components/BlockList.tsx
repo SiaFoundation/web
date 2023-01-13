@@ -25,10 +25,25 @@ export function BlockList({ title, blocks }: Props) {
   return (
     <Panel>
       <div className="flex flex-col rounded overflow-hidden">
-        <Heading size="20" font="mono" className="p-4">
-          {title}
-        </Heading>
+        <div className="flex items-center p-4 border-b border-gray-200 dark:border-graydark-300">
+          <Heading size="20" font="mono" ellipsis>
+            {title}
+          </Heading>
+          <div className="flex-1" />
+        </div>
         <div className="flex flex-col border-t border-gray-200 dark:border-graydark-300">
+          {blocks?.length === 0 && (
+            <div
+              className={cx(
+                'flex items-center justify-center h-[100px]',
+                itemBorderStyles()
+              )}
+            >
+              <Text size="18" color="subtle">
+                {'No results'}
+              </Text>
+            </div>
+          )}
           {blocks?.map((block, i) => (
             <div
               className={cx('flex gap-4 p-4', itemBorderStyles())}

@@ -21,7 +21,25 @@
       },
       "configurations": {
         "development": {},
+        "development-testnet": {
+          "outputPath": "dist/apps/explorer-v1-testnet",
+          "fileReplacements": [
+            {
+              "replace": "apps/explorer-v1/config/index.ts",
+              "with": "apps/explorer-v1/config/testnet.ts"
+            }
+          ]
+        },
         "production": {},
+        "production-testnet": {
+          "outputPath": "dist/apps/explorer-v1-testnet",
+          "fileReplacements": [
+            {
+              "replace": "apps/explorer-v1/config/index.ts",
+              "with": "apps/explorer-v1/config/testnet.ts"
+            }
+          ]
+        },
         "ci": {
           "outputPath": "apps/explorer-v1/dist"
         }
@@ -39,12 +57,17 @@
           "buildTarget": "explorer-v1:build:development",
           "dev": true
         },
+        "development-testnet": {
+          "buildTarget": "explorer-v1:build:development-testnet",
+          "dev": true,
+          "port": 3005
+        },
         "production": {
           "buildTarget": "explorer-v1:build:production",
           "dev": false
         },
         "production-testnet": {
-          "buildTarget": "explorer-v1:build:production",
+          "buildTarget": "explorer-v1:build:production-testnet",
           "dev": false,
           "port": 3005
         }

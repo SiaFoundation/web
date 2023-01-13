@@ -47,11 +47,11 @@ export function Home() {
       },
       {
         label: 'Difficulty',
-        value: humanDifficulty(block.data?.data[1].Difficulty),
+        value: humanDifficulty(block.data?.data[1]?.Difficulty),
       },
       {
         label: 'Hash rate',
-        value: humanHashrate(block.data?.data[1].Hashrate),
+        value: humanHashrate(block.data?.data[1]?.Hashrate),
       },
       {
         label: 'Blockchain transactions',
