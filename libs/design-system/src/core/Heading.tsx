@@ -29,7 +29,12 @@ type HeadingVariants = { size?: HeadingSizeVariants } & Omit<
   'size'
 >
 type HeadingProps = React.ComponentProps<typeof DEFAULT_TAG> &
-  HeadingVariants & { className?: string; as?: string; showAnchor?: boolean }
+  HeadingVariants & {
+    className?: string
+    as?: string
+    link?: boolean
+    showAnchor?: boolean
+  }
 
 export const Heading = React.forwardRef<
   React.ElementRef<typeof DEFAULT_TAG>,
@@ -40,54 +45,61 @@ export const Heading = React.forwardRef<
     className,
     id,
     children,
+    link,
     showAnchor,
     ...textProps
   } = props
 
   const tag = textTag[size]
 
-  const cId =
-    id ||
-    (typeof children === 'string'
-      ? encodeURI(children.toLowerCase().replace(' ', '-'))
-      : '')
+  if (link) {
+    const cId =
+      id ||
+      (typeof children === 'string'
+        ? encodeURI(children.toLowerCase().replace(' ', '-'))
+        : '')
+
+    return (
+      <div className={cx('flex flex-col gap-6 items-start', className)}>
+        <Link href={`#${cId}`} id={cId} className="relative group">
+          {showAnchor && (
+            <Text className="hidden group-hover:block">
+              <Link20 className="absolute top-1 -left-7 hidden md:block" />
+            </Text>
+          )}
+          <Text
+            as={tag}
+            {...textProps}
+            ref={forwardedRef}
+            weight="none"
+            className={cx(
+              'proportional-nums inline-block',
+              textStyles[size],
+              className
+            )}
+          >
+            {children}
+          </Text>
+        </Link>
+      </div>
+    )
+  }
 
   return (
     <div className={cx('flex flex-col gap-6 items-start', className)}>
-      <Link href={`#${cId}`} id={cId} className="relative group">
-        {showAnchor && (
-          <Text className="hidden group-hover:block">
-            <Link20 className="absolute top-1 -left-7 hidden md:block" />
-          </Text>
+      <Text
+        as={tag}
+        {...textProps}
+        ref={forwardedRef}
+        weight="none"
+        className={cx(
+          'proportional-nums inline-block',
+          textStyles[size],
+          className
         )}
-        <Text
-          as={tag}
-          {...textProps}
-          ref={forwardedRef}
-          weight="none"
-          className={cx(
-            'proportional-nums inline-block',
-            textStyles[size],
-            className
-          )}
-        >
-          {children}
-        </Text>
-      </Link>
+      >
+        {children}
+      </Text>
     </div>
   )
-
-  // return (
-  //   <Text
-  //     as={tag}
-  //     {...textProps}
-  //     ref={forwardedRef}
-  //     weight="none"
-  //     className={cx(
-  //       'proportional-nums inline-block',
-  //       textStyles[size],
-  //       className
-  //     )}
-  //   />
-  // )
 })

@@ -17,22 +17,12 @@ module.exports = {
       interpreter: 'nx',
       script: 'run',
       args: 'explorer-v1:serve:production',
-      env: {
-        EXPLORER_NETWORK: 'Sia Mainnet',
-        EXPLORER_NAME: 'Explorer',
-        NAVIGATOR_API: 'https://navigator.sia.tech',
-      },
     },
     {
       name: 'sia-explorer-v1-testnet',
       interpreter: 'nx',
       script: 'run',
-      args: 'explorer-v1:serve:production',
-      env: {
-        EXPLORER_NETWORK: 'Zen Testnet',
-        EXPLORER_NAME: 'Zen Testnet',
-        NAVIGATOR_API: 'https://navigator-zen.sia.tech',
-      },
+      args: 'explorer-v1:serve:production-testnet',
     },
     {
       name: 'sia-design',
