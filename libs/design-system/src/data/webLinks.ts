@@ -16,6 +16,7 @@ export const webLinks = {
   },
   website: 'https://sia.tech',
   explore: 'https://explore.sia.tech',
+  exploreTestnet: 'https://zen.sia.tech',
   design: 'https://design.sia.tech',
   apiDocs: 'https://api.sia.tech',
   // forum: 'https://forum.sia.tech',

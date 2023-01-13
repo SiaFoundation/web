@@ -73,11 +73,12 @@ export const useAppSettings = () => useContext(SettingsContext)
 type Props = {
   children: React.ReactNode
   api?: string
+  ssr?: boolean
 }
 
-export function AppSettingsProvider({ children, api }: Props) {
+export function AppSettingsProvider({ children, api, ssr }: Props) {
   const [settings, _setSettings] = useLocalStorageState('v0/settings', {
-    ssr: false,
+    ssr,
     defaultValue: defaultSettings,
   })
 

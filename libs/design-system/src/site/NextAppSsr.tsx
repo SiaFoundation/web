@@ -15,7 +15,7 @@ export function NextAppSsr({
     return (
       <SWRConfig value={{ fallback: pageProps?.fallback || {} }}>
         <ThemeProvider ssr>
-          <AppSettingsProvider>
+          <AppSettingsProvider ssr>
             <Toaster />
             <Layout>
               <Component {...pageProps} />
