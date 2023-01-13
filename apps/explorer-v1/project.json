@@ -42,6 +42,11 @@
         "production": {
           "buildTarget": "explorer-v1:build:production",
           "dev": false
+        },
+        "production-testnet": {
+          "buildTarget": "explorer-v1:build:production",
+          "dev": false,
+          "port": 3005
         }
       }
     },
