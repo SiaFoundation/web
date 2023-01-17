@@ -31,15 +31,14 @@ export function useSiaCentralMarketExchangeRate(
   options?: SWROptions<SiaCentralExchangeRateGET>
 ) {
   const { settings } = useAppSettings()
-  return useGetExternal(api + '/market/exchange-rate?currencies=sc', {
+  return useGetExternal('/market/exchange-rate?currencies=sc', {
     ...options,
+    api: options?.api || api,
     disabled: options?.disabled || !settings.siaCentral,
   })
 }
 
-type SiaCentralNetworkAveragesGET = {
-  message: string
-  type: string
+type SiaCentralNetworkStats = {
   settings: {
     max_download_batch_size: number
     max_duration: number
@@ -99,7 +98,7 @@ type SiaCentralNetworkAveragesGET = {
     download_time: number
     data_size: number
   }
-  benchmarks_rhp2: {
+  benchmarks_rhp2?: {
     contract_time: number
     upload_time: number
     download_time: number
@@ -107,12 +106,45 @@ type SiaCentralNetworkAveragesGET = {
   }
 }
 
+type SiaCentralNetworkAveragesGET = {
+  message: string
+  type: string
+} & SiaCentralNetworkStats
+
 export function useSiaCentralHostsNetworkAverages(
   options?: SWROptions<SiaCentralNetworkAveragesGET>
 ) {
   const { settings } = useAppSettings()
-  return useGetExternal(api + '/hosts/network/averages', {
+  return useGetExternal('/hosts/network/averages', {
     ...options,
+    api: options?.api || api,
+    disabled: options?.disabled || !settings.siaCentral,
+  })
+}
+
+type SiaCentralNetworkMetricsGET = {
+  message: string
+  type: string
+  average: SiaCentralNetworkStats
+  top: SiaCentralNetworkStats
+  bottom: SiaCentralNetworkStats
+  totals: {
+    remaining_registry_entries: number
+    total_registry_entries: number
+    remaining_storage: number
+    total_storage: number
+    active_hosts: number
+    total_hosts: number
+  }
+}
+
+export function useSiaCentralHostsNetworkMetrics(
+  options?: SWROptions<SiaCentralNetworkMetricsGET>
+) {
+  const { settings } = useAppSettings()
+  return useGetExternal('/hosts/network/metrics', {
+    ...options,
+    api: options?.api || api,
     disabled: options?.disabled || !settings.siaCentral,
   })
 }

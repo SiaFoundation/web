@@ -40,7 +40,7 @@ export function humanBytes(b: number): string {
 
   const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB'],
     digits = Math.floor(Math.log10(b) / Math.log10(1000)),
-    d = Math.floor((b / Math.pow(1000, digits)) * 100) / 100
+    d = b / Math.pow(1000, digits)
 
   return d.toFixed(2) + ' ' + units[digits]
 }
@@ -59,15 +59,31 @@ export function humanTime(ns: number): string {
 
 type HumanNumberOptions = {
   fixed?: number
+  abbreviated?: boolean
   units?: string
 }
 
 export function humanNumber(
-  num: BigNumber | string | number | undefined,
+  numb: BigNumber | string | number | undefined,
   options?: HumanNumberOptions
 ) {
-  const { fixed = 0, units = '' } = options || {}
-  return `${new BigNumber(num || 0).toFormat(fixed)}${units ? ` ${units}` : ''}`
+  const { fixed = 0, units = '', abbreviated = false } = options || {}
+  const num = new BigNumber(numb || 0)
+
+  if (abbreviated) {
+    const n = num.toNumber()
+    if (n < 1000) return num.toString()
+
+    const numberUnits = ['', 'K', 'M', 'B', 't', 'q', 'Q'],
+      digits = Math.floor(Math.log10(n) / Math.log10(1000)),
+      d = n / Math.pow(1000, digits)
+
+    return `${d.toFixed(fixed)}${
+      numberUnits[digits] ? ` ${numberUnits[digits]}` : ''
+    }${units ? ` ${units}` : ''}`
+  }
+
+  return `${num.toFormat(fixed)}${units ? ` ${units}` : ''}`
 }
 
 export function humanDate(

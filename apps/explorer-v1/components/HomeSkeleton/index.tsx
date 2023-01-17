@@ -6,13 +6,16 @@ export function HomeSkeleton() {
     <ContentLayout
       className="!max-w-[2000px]"
       panel={
-        <div className="grid grid-cols-3 gap-12">
-          <Skeleton className="w-[180px] h-[62px]" />
-          <Skeleton className="w-[180px] h-[62px]" />
-          <Skeleton className="w-[180px] h-[62px]" />
-          <Skeleton className="w-[180px] h-[62px]" />
-          <Skeleton className="w-[180px] h-[62px]" />
-          <Skeleton className="w-[180px] h-[62px]" />
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-12">
+          <Skeleton className="w-full h-[85px] sm:w-[180px] sm:h-[62px]" />
+          <Skeleton className="w-full h-[85px] sm:w-[180px] sm:h-[62px]" />
+          <Skeleton className="w-full h-[85px] sm:w-[180px] sm:h-[62px]" />
+          <Skeleton className="w-full h-[85px] sm:w-[180px] sm:h-[62px]" />
+          <Skeleton className="w-full h-[85px] sm:w-[180px] sm:h-[62px]" />
+          <Skeleton className="w-full h-[85px] sm:w-[180px] sm:h-[62px]" />
+          <Skeleton className="w-full h-[85px] sm:w-[180px] sm:h-[62px]" />
+          <Skeleton className="w-full h-[85px] sm:w-[180px] sm:h-[62px]" />
+          <Skeleton className="w-full h-[85px] sm:w-[180px] sm:h-[62px]" />
         </div>
       }
     >
