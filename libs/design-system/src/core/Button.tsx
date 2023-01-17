@@ -46,15 +46,18 @@ export const buttonStyles = cva(
         accent: [
           'border',
           '[&>svg]:opacity-50',
+          // enabled
+          'text-white dark:text-white',
           'enabled:bg-green-700 enabled:dark:bg-green-700',
-          'enabled:border-green-800/30 dark:enabled:border-green-600/70',
+          'enabled:border-green-800/30 enabled:dark:border-green-600/70',
           'enabled:hover:bg-green-800/90 dark:enabled:hover:bg-green-700/90',
           'enabled:hover:border-green-800/50 enabled:hover:dark:border-green-600',
+          // disabled
+          'disabled:text-white/50 disabled:dark:text-white/50',
           'disabled:bg-green-700/70 disabled:dark:bg-green-600/70',
           'disabled:border-green-600/50 disabled:dark:border-green-500/30',
-          'text-white dark:text-white',
-          'disabled:text-white/50 disabled:dark:text-white/50',
           // the enabled class does not work for buttons that are links (<a />)
+          '[&[href]]:bg-green-700 [&[href]]:dark:bg-green-700',
           '[&[href]]:border-green-800/30 [&[href]]:dark:border-green-600/70',
           '[&[href]]:hover:bg-green-800/90 dark:[&[href]]:hover:bg-green-700/90',
           '[&[href]]:hover:border-green-800/50 [href]]:hover:dark:border-green-600',
@@ -62,8 +65,8 @@ export const buttonStyles = cva(
         red: [
           'border',
           '[&>svg]:opacity-50',
-          'enabled:bg-red-700 enabled:dark:bg-red-700',
-          'enabled:border-red-800/30 dark:enabled:border-red-600/70',
+          'bg-red-700 dark:bg-red-700',
+          'border-red-800/30 dark:border-red-600/70',
           'enabled:hover:bg-red-800/90 dark:enabled:hover:bg-red-700/90',
           'enabled:hover:border-red-800/50 enabled:hover:dark:border-red-600',
           'disabled:bg-red-700/70 disabled:dark:bg-red-600/70',
