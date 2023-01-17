@@ -61,7 +61,7 @@ export function ValueCopyable({
       <Button
         variant="ghost"
         size="none"
-        className="m-1"
+        className="ml-1"
         onClick={(e) => {
           e.stopPropagation()
           copyToClipboard(cleanValue, label)

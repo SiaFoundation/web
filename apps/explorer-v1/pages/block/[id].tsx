@@ -13,7 +13,11 @@ export default function ViewBlock() {
   const id = (router.query.id || '') as string
   const entity = useEntity(id)
 
-  const block = id && humanNumber(id)
+  let block = id
+  if (!isNaN(Number(id))) {
+    block = humanNumber(id)
+  }
+
   const title = getTitleId('Block', block)
   const description = getTitleId('View details for block', block)
   const path = routes.block.view.replace('[id]', id)

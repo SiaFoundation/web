@@ -1,4 +1,4 @@
-import { useGetExternal } from './useGet'
+import { useGet } from './useGet'
 import { SWROptions } from './types'
 import { useAppSettings } from './useAppSettings'
 
@@ -31,7 +31,7 @@ export function useSiaCentralMarketExchangeRate(
   options?: SWROptions<SiaCentralExchangeRateGET>
 ) {
   const { settings } = useAppSettings()
-  return useGetExternal('/market/exchange-rate?currencies=sc', {
+  return useGet(null, '/market/exchange-rate?currencies=sc', {
     ...options,
     api: options?.api || api,
     disabled: options?.disabled || !settings.siaCentral,
@@ -115,7 +115,7 @@ export function useSiaCentralHostsNetworkAverages(
   options?: SWROptions<SiaCentralNetworkAveragesGET>
 ) {
   const { settings } = useAppSettings()
-  return useGetExternal('/hosts/network/averages', {
+  return useGet(null, '/hosts/network/averages', {
     ...options,
     api: options?.api || api,
     disabled: options?.disabled || !settings.siaCentral,
@@ -142,7 +142,7 @@ export function useSiaCentralHostsNetworkMetrics(
   options?: SWROptions<SiaCentralNetworkMetricsGET>
 ) {
   const { settings } = useAppSettings()
-  return useGetExternal('/hosts/network/metrics', {
+  return useGet(null, '/hosts/network/metrics', {
     ...options,
     api: options?.api || api,
     disabled: options?.disabled || !settings.siaCentral,

@@ -66,6 +66,7 @@ export * from './components/Form'
 export * from './components/Table'
 export * from './components/SwitchMulti'
 export * from './components/SectionHeading'
+export * from './components/LoadingDots'
 
 // app
 export * from './app/AppPublicLayout'
@@ -91,6 +92,7 @@ export * from './app/DatumScrollArea'
 export * from './app/ConfigurationSiacoin'
 export * from './app/ConfigurationNumber'
 export * from './app/ContractTimeline'
+export * from './app/ProgressSteps'
 
 // site
 export * from './site/SiteHeading'
@@ -125,6 +127,7 @@ export * from './icons/DatabaseIcon'
 export * from './icons/FolderIcon'
 export * from './icons/TestToolIcon'
 export * from './icons/PlaneIcon'
+export * from './icons/FaucetIcon'
 
 // hooks
 export * from './hooks/useTheme'

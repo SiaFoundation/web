@@ -22,6 +22,7 @@ type FormFieldProps = {
   allowDecimals?: boolean
   decimalsLimitFiat?: number
   decimalsLimitSc?: number
+  showFiat?: boolean
   disableGroupSeparators?: boolean
   type?: string
   variants?: VariantProps<typeof textFieldStyles>
@@ -41,6 +42,7 @@ export function FormField({
   decimalsLimitFiat = 3,
   decimalsLimitSc = 3,
   disableGroupSeparators = false,
+  showFiat = true,
   units,
   type,
   variants,
@@ -68,6 +70,7 @@ export function FormField({
           readOnly={readOnly}
           placeholder={placeholder}
           tabIndex={tabIndex}
+          showFiat={showFiat}
           decimalsLimitFiat={decimalsLimitFiat}
           decimalsLimitSc={decimalsLimitSc}
           variants={variants}
@@ -186,6 +189,7 @@ type FormSiacoinFieldProps = {
   name: string
   disabled?: boolean
   readOnly?: boolean
+  showFiat?: boolean
   tabIndex?: number
   placeholder: string
   decimalsLimitFiat?: number
@@ -200,6 +204,7 @@ export function FormSiacoinField({
   readOnly,
   tabIndex,
   placeholder,
+  showFiat,
   decimalsLimitFiat = 3,
   decimalsLimitSc = 3,
   variants,
@@ -209,6 +214,7 @@ export function FormSiacoinField({
       id={name}
       name={name}
       disabled={disabled}
+      showFiat={showFiat}
       decimalsLimitFiat={decimalsLimitFiat}
       decimalsLimitSc={decimalsLimitSc}
       readOnly={readOnly || formik.isSubmitting}
@@ -236,14 +242,7 @@ export function FieldGroup({ formik, title, name, children }: FieldGroupProps) {
     <div className="flex flex-col gap-1">
       {(title || showError) && (
         <div className="flex justify-between items-center gap-4">
-          {title && (
-            <Label
-              htmlFor={name}
-              className="text-gray-800 dark:text-graydark-800"
-            >
-              {title}
-            </Label>
-          )}
+          {title && <Label htmlFor={name}>{title}</Label>}
           {showError && (
             <Text size="14" color="red">
               {formik.errors[name]}

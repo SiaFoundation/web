@@ -1,9 +1,10 @@
 import useSWR from 'swr'
 import { SWROptions } from './types'
 import { useAppSettings } from './useAppSettings'
+import { useGet } from './useGet'
 import { getKey } from './utils'
 
-const api = 'https://siastats.info/'
+const api = 'https://siastats.info'
 
 type SiaStatsNetworkStatusGET = {
   active_contracts: number
@@ -28,18 +29,10 @@ type SiaStatsNetworkStatusGET = {
   used_storage_TB: number
 }
 
-const path = api + 'dbs/network_status.json'
+const path = api + '/dbs/network_status.json'
 
 export function useSiaStatsNetworkStatus(
   options?: SWROptions<SiaStatsNetworkStatusGET>
 ) {
-  const { settings } = useAppSettings()
-  return useSWR<SiaStatsNetworkStatusGET>(
-    getKey(path, !settings.siaStats),
-    async () => {
-      const r = await fetch(path)
-      return r.json()
-    },
-    options
-  )
+  return useGet(null, api + path, options)
 }

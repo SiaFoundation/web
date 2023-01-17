@@ -74,7 +74,14 @@ export function Tooltip({
                   'data-[side=right]:origin-left'
                 )}
               >
-                <div className={cx('py-1 px-2', 'max-w-xs', panelStyles())}>
+                <div
+                  className={cx(
+                    'py-1 px-2',
+                    'max-w-xs',
+                    'overflow-hidden',
+                    panelStyles()
+                  )}
+                >
                   <Paragraph size="12">{content}</Paragraph>
                 </div>
               </motion.div>

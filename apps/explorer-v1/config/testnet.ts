@@ -1,4 +1,8 @@
+import { webLinks } from '@siafoundation/design-system'
+
 export const networkName = 'Zen Testnet'
 export const appName = 'Zen Testnet'
-const api = 'https://navigator-zen.sia.tech'
-export const apiBase = `${api}/navigator-api`
+export const appLink = webLinks.explore.testnet
+export const apiBase = 'https://navigator-zen.sia.tech'
+export const isMainnet = false
+export const api = `${apiBase}/navigator-api`

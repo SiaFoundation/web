@@ -74,7 +74,7 @@ const styles = cva(
         true: 'cursor-pointer',
       },
       rounded: {
-        true: 'rounded-sm',
+        true: 'rounded-lg',
         false: '',
       },
     },

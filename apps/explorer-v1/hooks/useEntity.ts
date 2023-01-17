@@ -1,8 +1,8 @@
 import useSWR from 'swr'
-import { apiBase } from '../config'
+import { api } from '../config'
 import { Entity } from '../config/navigatorTypes'
 
-const url = `${apiBase}/hash/`
+const url = `${api}/hash/`
 
 export function getEntityKey(hash: string) {
   return url + hash

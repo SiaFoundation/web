@@ -31,12 +31,12 @@ export function NavDropdownMenu({ trigger, children, ...props }: Props) {
       <DropdownMenuGroup className="py-1">
         <DropdownMenuLabel className="px-1">Network</DropdownMenuLabel>
         <DropdownMenuItem className="p-1">
-          <Link href={webLinks.explore} underline="hover">
+          <Link href={webLinks.explore.mainnet} underline="hover">
             Sia Mainnet
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem className="p-1">
-          <Link href={webLinks.exploreTestnet} underline="hover">
+          <Link href={webLinks.explore.testnet} underline="hover">
             Zen Testnet
           </Link>
         </DropdownMenuItem>
