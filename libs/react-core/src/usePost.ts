@@ -45,7 +45,7 @@ export function usePost<
           }
         }
         const response = await axios.post<Result>(
-          `${api}/${paramRoute}`,
+          paramRoute.startsWith('http') ? paramRoute : `${api}/${paramRoute}`,
           payload,
           {
             headers,

@@ -1,4 +1,4 @@
-import { Text } from '../../core/Text'
+import { Text } from '../core/Text'
 import BigNumber from 'bignumber.js'
 import { cx } from 'class-variance-authority'
 

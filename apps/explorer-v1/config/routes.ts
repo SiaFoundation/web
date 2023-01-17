@@ -17,6 +17,9 @@ export const routes = {
   output: {
     view: '/output/[id]',
   },
+  faucet: {
+    index: '/faucet',
+  },
 }
 
 export function getRouteHref(viewRoute: string, id: string) {

@@ -30,6 +30,7 @@ module.exports = {
       animation: {
         jiggle: 'jiggle 3s infinite',
         pingslow: 'pingslow 3s infinite',
+        pulselight: 'pulselight 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
         scalein: {
@@ -49,6 +50,11 @@ module.exports = {
           '35%': { top: '5px' },
           '40%': { top: '0' },
           '100%': { top: '0' },
+        },
+        pulselight: {
+          '30%': { opacity: 1 },
+          '50%': { opacity: 0.2 },
+          '70%': { opacity: 1 },
         },
         pingslow: {
           '0%': {
@@ -76,5 +82,6 @@ module.exports = {
       addVariant('open', '&[data-state="open"]')
     }),
     require('tailwind-scrollbar'),
+    require('../plugins/animation-delay'),
   ],
 }

@@ -14,12 +14,15 @@ import {
   LogoTwitter24,
   LogoGithub24,
   PageHead,
+  FaucetIcon,
+  LinkButton,
+  Tooltip,
 } from '@siafoundation/design-system'
 import { routes } from '../../config/routes'
 import backgroundImage from '../../assets/leaves-background.png'
 import previewImage from '../../assets/leaves-preview.png'
 import { Search } from './Search'
-import { appName } from '../../config'
+import { appLink, appName, isMainnet, networkName } from '../../config'
 import { NavDropdownMenu } from './NavDropdownMenu'
 
 const backgroundImageProps = getImageProps(backgroundImage)
@@ -36,7 +39,7 @@ export function Layout({ title, description, path, children }: Props) {
   return (
     <div className="relative h-full bg-white dark:bg-graydark-50 overflow-hidden">
       <PageHead
-        appLink={webLinks.explore}
+        appLink={appLink}
         appName={appName}
         title={title}
         description={description}
@@ -47,6 +50,13 @@ export function Layout({ title, description, path, children }: Props) {
         <div className="relative z-10 overflow-hidden">
           <NavbarSite appName="explorer" homeHref={routes.home.index}>
             <Search />
+            {!isMainnet && (
+              <Tooltip content={`${networkName} Faucet`}>
+                <LinkButton size="medium" href={routes.faucet.index}>
+                  <FaucetIcon />
+                </LinkButton>
+              </Tooltip>
+            )}
             <NavDropdownMenu />
           </NavbarSite>
           <div className="flex flex-col gap-16 w-full">

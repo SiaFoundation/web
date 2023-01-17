@@ -1,8 +1,8 @@
 import useSWR from 'swr'
 import axios from 'axios'
-import { apiBase } from '../config'
+import { api } from '../config'
 
-const url = `${apiBase}/balance-track`
+const url = `${api}/balance-track`
 
 function getBalanceHistoryKey(address?: string) {
   return address ? `${url}/${address}` : null

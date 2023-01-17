@@ -45,7 +45,7 @@ export function usePut<
           }
         }
         const response = await axios.put<Result>(
-          `${api}/${paramRoute}`,
+          paramRoute.startsWith('http') ? paramRoute : `${api}/${paramRoute}`,
           payload,
           {
             headers,

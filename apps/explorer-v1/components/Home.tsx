@@ -28,7 +28,9 @@ import { useSiaCentralHostsNetworkMetrics } from '@siafoundation/react-core'
 export function Home() {
   const status = useStatus()
   const landing = useLanding()
-  const metrics = useSiaCentralHostsNetworkMetrics()
+  const metrics = useSiaCentralHostsNetworkMetrics({
+    api: 'https://api.siacentral.com/v2/zen',
+  })
   const height = status.data?.lastblock
   const block = useEntity(
     height ? String(height) : null

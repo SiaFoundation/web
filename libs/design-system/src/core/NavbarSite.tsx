@@ -16,7 +16,7 @@ export function NavbarSite({ appName, homeHref, children }: Props) {
         <div className="flex items-center justify-between gap-2">
           <div className="relative z-10 hidden sm:flex">
             <Link href={homeHref} underline="none">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 mr-2">
                 <Logo size={40} />
                 {appName && (
                   <Heading

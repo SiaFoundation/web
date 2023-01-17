@@ -16,6 +16,7 @@ type Props = Omit<
   decimalsLimitSc?: number
   decimalsLimitFiat?: number
   placeholder?: BigNumber
+  showFiat?: boolean
   changed?: boolean
 }
 
@@ -28,6 +29,7 @@ export function SiacoinField({
   decimalsLimitSc = 3,
   onChange,
   size = 'medium',
+  showFiat = true,
   changed,
   ...props
 }: Props) {
@@ -110,8 +112,8 @@ export function SiacoinField({
         changed
           ? 'border-green-500 dark:border-green-400'
           : 'border-gray-200 dark:border-graydark-200',
-        'rounded',
-        'py-0.5'
+        'rounded'
+        // 'py-0.5'
       )}
     >
       <NumberField
@@ -130,7 +132,7 @@ export function SiacoinField({
           setScAndTriggerChange(sc)
         }}
       />
-      {settings.siaCentral && (
+      {showFiat && settings.siaCentral && (
         <NumberField
           {...props}
           size={size}

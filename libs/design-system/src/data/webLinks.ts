@@ -15,8 +15,11 @@ export const webLinks = {
     brand: 'https://docs.sia.tech/sia-integrations/sia-brand-guidelines',
   },
   website: 'https://sia.tech',
-  explore: 'https://explore.sia.tech',
-  exploreTestnet: 'https://zen.sia.tech',
+  explore: {
+    mainnet: 'https://explore.sia.tech',
+    testnet: 'https://zen.sia.tech',
+    testnetFaucet: 'https://zen.sia.tech/faucet',
+  },
   design: 'https://design.sia.tech',
   apiDocs: 'https://api.sia.tech',
   // forum: 'https://forum.sia.tech',
