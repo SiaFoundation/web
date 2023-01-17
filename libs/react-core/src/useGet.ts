@@ -49,18 +49,19 @@ export function useGetExternal<T>(
   route: string | null,
   options?: SWROptions<T>
 ) {
+  const fullRoute = route ? (options?.api || '') + route : null
   return useSWR<T, SWRError>(
-    getKey(route ? route : null, options?.disabled),
+    getKey(fullRoute, options?.disabled),
     async () => {
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
       }
 
-      if (!route) {
+      if (!fullRoute) {
         throw Error('no route')
       }
 
-      const r = await fetch(route, {
+      const r = await fetch(fullRoute, {
         headers,
       })
       return handleResponse(r)
