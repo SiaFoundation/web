@@ -19,9 +19,10 @@ import backgroundImage from '../../assets/backgrounds/leaves.png'
 import previewImage from '../../assets/previews/leaves.png'
 import { SectionGradient } from '../../components/SectionGradient'
 import { SectionSimple } from '../../components/SectionSimple'
-import { NextGenSoftware } from '../../components/NextGenSoftware'
-import { CurrentGenSoftware } from '../../components/CurrentGenSoftware'
+import { SoftwareSectionNextGen } from '../../components/SoftwareSectionNextGen'
+import { SoftwareSectionCurrentGen } from '../../components/SoftwareSectionCurrentGen'
 import { SoftwareSignAccordion } from '../../components/SoftwareSignAccordion'
+import { SoftwareSectionTestnet } from '../../components/SoftwareSectionTestnet'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -59,7 +60,7 @@ export default function GetStarted({
             description="Binary downloads, documentation, and source code for the latest Sia software."
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <CurrentGenSoftware versions={versions} />
+            <SoftwareSectionCurrentGen versions={versions} />
           </div>
           <div className="mt-12">
             <SoftwareSignAccordion versions={versions} />
@@ -71,7 +72,16 @@ export default function GetStarted({
             className="mt-12 md:mt-24"
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <NextGenSoftware />
+            <SoftwareSectionNextGen />
+          </div>
+          <SiteHeading
+            size="32"
+            title="Testnet Software"
+            description="Sia software built for the Zen Testnet."
+            className="mt-12 md:mt-24"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <SoftwareSectionTestnet versions={versions} />
           </div>
         </div>
       </SectionGradient>
