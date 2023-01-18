@@ -7,7 +7,7 @@ import { CalloutSoftware } from './CalloutSoftware'
 const renterdImageProps = getImageProps(renterdImage)
 const hostdImageProps = getImageProps(hostdImage)
 
-export function NextGenSoftware() {
+export function SoftwareSectionNextGen() {
   return (
     <>
       <CalloutSoftware

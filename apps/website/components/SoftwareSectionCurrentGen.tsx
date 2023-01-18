@@ -7,7 +7,7 @@ type Props = {
   versions: Versions
 }
 
-export function CurrentGenSoftware({ versions }: Props) {
+export function SoftwareSectionCurrentGen({ versions }: Props) {
   return (
     <>
       <SoftwareSection
