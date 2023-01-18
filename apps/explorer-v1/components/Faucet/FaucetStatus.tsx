@@ -11,7 +11,6 @@ import {
   ValueCopyable,
   ValueSc,
 } from '@siafoundation/design-system'
-import { toHastings } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
 import { useEffect, useState } from 'react'
 import { useFaucetStatus } from '../../hooks/useFaucetStatus'
@@ -97,7 +96,7 @@ export function FaucetStatus({ id: _id, setId }: Props) {
             <div className="flex relative top-[-0.5px]">
               <ValueSc
                 size="14"
-                value={new BigNumber(toHastings(status.data?.amount))}
+                value={new BigNumber(status.data?.amount)}
                 variant="value"
                 fixed={0}
               />

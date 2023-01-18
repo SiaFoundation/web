@@ -4,6 +4,7 @@ import {
   Paragraph,
   triggerToast,
 } from '@siafoundation/design-system'
+import { toHastings } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -43,7 +44,7 @@ export function FaucetFundForm({ onDone }: Props) {
       const response = await fund.post({
         payload: {
           unlockHash: values.address,
-          amount: values.amount.toString(),
+          amount: toHastings(values.amount).toString(),
         },
       })
       if (response.error) {

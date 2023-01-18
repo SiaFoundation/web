@@ -5,16 +5,18 @@ export const faucetKey = `${faucetApi}/request`
 
 export type FaucetRequestStatus = 'pending' | 'broadcast' | 'confirmed'
 
+export type Hastings = string
+
 type FaucetFundPayload = {
   unlockHash: string
-  amount: string
+  amount: Hastings
 }
 
 type FaucetFundResponse = {
   id: string
   ipAddress: string
   unlockHash: string
-  amount: string
+  amount: Hastings
   blockID: string
   transactionID: string
   status: FaucetRequestStatus
