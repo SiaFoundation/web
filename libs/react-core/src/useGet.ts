@@ -33,7 +33,7 @@ export function useGet<Result>(
     : null
   return useSWR<Result, SWRError>(
     getKey(
-      fullRoute ? `${fullRoute}/${settings?.password || ''}` : null,
+      fullRoute ? `${fullRoute}${settings?.password || ''}` : null,
       options?.disabled
     ),
     async () => {
