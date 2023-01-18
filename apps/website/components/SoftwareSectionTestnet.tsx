@@ -53,6 +53,11 @@ export function SoftwareSectionTestnet({ versions }: Props) {
             link: `${webLinks.website}/releases/siad/Sia-v${versions.sia.testnet}-Testnet-linux-arm64.zip`,
             newTab: true,
           },
+          {
+            title: 'Docker',
+            link: 'https://github.com/SiaFoundation/siad/pkgs/container/siad',
+            newTab: true,
+          },
         ]}
       />
     </>
