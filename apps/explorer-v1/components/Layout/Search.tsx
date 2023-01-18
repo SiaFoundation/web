@@ -8,7 +8,7 @@ import {
 import React from 'react'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
-import { api } from '../../config'
+import { navigatorApi } from '../../config'
 import { getHrefForType } from '../../lib/utils'
 import { NvgEntityType, NvgEntityTypeInfo } from '../../config/navigatorTypes'
 
@@ -20,7 +20,7 @@ export function Search() {
       query: '',
     },
     onSubmit: async (values, actions) => {
-      const response = await fetch(`${api}/hash/${values.query}`)
+      const response = await fetch(`${navigatorApi}/hash/${values.query}`)
       const data: [NvgEntityTypeInfo<NvgEntityType>] = await response.json()
 
       if (!data?.length) {

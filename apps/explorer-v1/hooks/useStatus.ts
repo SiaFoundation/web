@@ -1,7 +1,7 @@
 import useSWR from 'swr'
-import { api } from '../config'
+import { navigatorApi } from '../config'
 
-export const statusKey = `${api}/status`
+export const statusKey = `${navigatorApi}/status`
 
 type NavigatorStatus = {
   coinsupply: number

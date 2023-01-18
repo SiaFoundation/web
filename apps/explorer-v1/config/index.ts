@@ -3,6 +3,9 @@ import { webLinks } from '@siafoundation/design-system'
 export const networkName = 'Sia Mainnet'
 export const appName = 'Explorer'
 export const appLink = webLinks.explore.mainnet
-export const apiBase = 'https://navigator.sia.tech'
 export const isMainnet = true
-export const api = `${apiBase}/navigator-api`
+
+// APIs
+export const navigatorApi = 'https://navigator.sia.tech/navigator-api'
+export const faucetApi = 'https://navigator.sia.tech/faucet/api'
+export const siaCentralApi = 'https://api.siacentral.com/v2'

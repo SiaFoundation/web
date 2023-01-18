@@ -1,8 +1,8 @@
 import { SWROptions, useGet } from '@siafoundation/react-core'
-import { apiBase } from '../config'
+import { faucetApi } from '../config'
 import { FaucetRequestStatus } from './useFaucetFund'
 
-export const faucetKey = `${apiBase}/faucet/api/request/:id`
+export const faucetKey = `${faucetApi}/request/:id`
 
 type FaucetStatusResponse = {
   id: string

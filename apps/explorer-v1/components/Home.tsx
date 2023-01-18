@@ -24,12 +24,13 @@ import { useStatus } from '../hooks/useStatus'
 import { routes } from '../config/routes'
 import { ContentLayout } from './ContentLayout'
 import { useSiaCentralHostsNetworkMetrics } from '@siafoundation/react-core'
+import { siaCentralApi } from '../config'
 
 export function Home() {
   const status = useStatus()
   const landing = useLanding()
   const metrics = useSiaCentralHostsNetworkMetrics({
-    api: 'https://api.siacentral.com/v2/zen',
+    api: siaCentralApi,
   })
   const height = status.data?.lastblock
   const block = useEntity(
