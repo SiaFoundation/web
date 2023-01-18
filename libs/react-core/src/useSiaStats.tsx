@@ -1,8 +1,5 @@
-import useSWR from 'swr'
 import { SWROptions } from './types'
-import { useAppSettings } from './useAppSettings'
 import { useGet } from './useGet'
-import { getKey } from './utils'
 
 const api = 'https://siastats.info'
 
