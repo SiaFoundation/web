@@ -1,8 +1,8 @@
 import useSWR from 'swr'
-import { api } from '../config'
+import { navigatorApi } from '../config'
 import { NvgBlockInfo, BlockTransaction } from '../config/navigatorTypes'
 
-export const landingKey = `${api}/landing`
+export const landingKey = `${navigatorApi}/landing`
 
 type NavigatorLanding = {
   last10ScTx: Pick<BlockTransaction, 'Height' | 'TxHash'>[]

@@ -1,7 +1,7 @@
 import { usePost } from '@siafoundation/react-core'
-import { apiBase } from '../config'
+import { faucetApi } from '../config'
 
-export const faucetKey = `${apiBase}/faucet/api/request`
+export const faucetKey = `${faucetApi}/request`
 
 export type FaucetRequestStatus = 'pending' | 'broadcast' | 'confirmed'
 

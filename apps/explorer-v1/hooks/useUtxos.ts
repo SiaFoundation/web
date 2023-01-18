@@ -1,9 +1,9 @@
 import useSWR from 'swr'
-import { api } from '../config'
+import { navigatorApi } from '../config'
 import { NvgAddressUtxos } from '../config/navigatorTypes'
 
 function getUtxosKey(address?: string) {
-  return address ? `${api}/unspent_outputs/${address}` : null
+  return address ? `${navigatorApi}/unspent_outputs/${address}` : null
 }
 
 async function fetchUtxos(address: string) {

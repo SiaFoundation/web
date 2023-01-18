@@ -113,8 +113,6 @@ export function AddressEntity({ entity }: Props) {
     return list
   }, [data])
 
-  // const qrCode = `${apiBase}/navigator-api/qr/${address}.svg`
-
   return (
     <ContentLayout
       panel={
