@@ -29,7 +29,7 @@ export function useGet<Result>(
   const fullRoute = paramRoute
     ? paramRoute.startsWith('http')
       ? paramRoute
-      : `${options?.api || api}/${paramRoute}`
+      : `${options?.api || api}${paramRoute}`
     : null
   return useSWR<Result, SWRError>(
     getKey(
