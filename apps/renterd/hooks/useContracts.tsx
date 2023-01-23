@@ -12,6 +12,7 @@ import {
   ContractTimeline,
 } from '@siafoundation/design-system'
 import { humanBytes, humanDate } from '@siafoundation/sia-js'
+import { useContracts as useContractsData } from '@siafoundation/react-core'
 import { countBy, upperFirst } from 'lodash'
 import { useCallback, useMemo } from 'react'
 import { contractsData, contractsTimeRange } from './mockContracts'
@@ -142,6 +143,9 @@ export function useContracts() {
     },
     [_setFilters]
   )
+
+  const c = useContractsData()
+  console.log(c.data)
 
   const filteredContracts = useMemo(() => {
     const filterList = Object.entries(filters).filter(([_, val]) => val)

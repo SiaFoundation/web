@@ -108,7 +108,7 @@ export function Table<R extends Row>({
                   key={row.key + key}
                   className={cx(
                     'flex items-center px-6 overflow-hidden',
-                    rowSize === 'dense' ? 'height-[50px]' : 'height-[100px]',
+                    rowSize === 'dense' ? 'h-[50px]' : 'h-[100px]',
                     className
                   )}
                   style={style}

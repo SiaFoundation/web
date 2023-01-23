@@ -1,8 +1,7 @@
 import { Paragraph } from '../core/Paragraph'
-import { Button } from '../core/Button'
 import { Text } from '../core/Text'
 import { triggerToast } from '../lib/toast'
-import { FormField } from '../components/Form'
+import { FormField, FormSubmitButton } from '../components/Form'
 import { useSyncerConnect } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -106,15 +105,9 @@ export function SyncerConnectPeerDialog({
             {formik.status?.error && (
               <Text color="red">{formik.status.error}</Text>
             )}
-            <Button
-              size="medium"
-              disabled={formik.isSubmitting || !formik.isValid}
-              variant="accent"
-              state={formik.isSubmitting ? 'waiting' : undefined}
-              type="submit"
-            >
+            <FormSubmitButton formik={formik} size="medium">
               Connect
-            </Button>
+            </FormSubmitButton>
           </div>
         </form>
       </div>

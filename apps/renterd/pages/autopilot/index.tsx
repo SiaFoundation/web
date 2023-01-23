@@ -53,9 +53,9 @@ export default function AutopilotPage() {
               hosts: values.hosts.toNumber(),
               period: weeksToBlocks(values.period.toNumber()),
               renewWindow: weeksToBlocks(values.renewWindow.toNumber()),
-              download: values.download.toNumber(),
-              upload: values.upload.toNumber(),
-              storage: values.storage.toNumber(),
+              download: TiBToBytes(values.download).toNumber(),
+              upload: TiBToBytes(values.upload).toNumber(),
+              storage: TiBToBytes(values.storage).toNumber(),
             },
             hosts: config.data.hosts,
             wallet: config.data.wallet,
@@ -88,9 +88,11 @@ export default function AutopilotPage() {
       const renewWindow = new BigNumber(
         blocksToWeeks(config.data?.contracts.renewWindow)
       )
-      const download = new BigNumber(config.data?.contracts.download)
-      const upload = new BigNumber(config.data?.contracts.upload)
-      const storage = new BigNumber(config.data?.contracts.storage)
+      const download = bytesToTiB(
+        new BigNumber(config.data?.contracts.download)
+      )
+      const upload = bytesToTiB(new BigNumber(config.data?.contracts.upload))
+      const storage = bytesToTiB(new BigNumber(config.data?.contracts.storage))
       try {
         // When new config is fetched, reset the form with the initial values
         await autopilotForm.resetForm({
@@ -304,4 +306,14 @@ export default function AutopilotPage() {
       </div>
     </RenterdAuthedLayout>
   )
+}
+
+// function converts bytes to TiB
+function bytesToTiB(bytes: BigNumber): BigNumber {
+  return bytes.div(1024).div(1024).div(1024).div(1024)
+}
+
+// function converts TiB to bytes
+function TiBToBytes(TiB: BigNumber): BigNumber {
+  return TiB.times(1024).times(1024).times(1024).times(1024)
 }

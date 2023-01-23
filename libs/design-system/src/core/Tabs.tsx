@@ -1,7 +1,8 @@
-import { cx, VariantProps } from 'class-variance-authority'
+import { cx } from 'class-variance-authority'
 import React from 'react'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { textStyles } from './Text'
+import { VariantProps } from '../types'
 
 export const Tabs = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Root>,
