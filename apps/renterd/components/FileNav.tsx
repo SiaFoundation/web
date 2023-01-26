@@ -14,11 +14,15 @@ export function FileNav() {
                 <ChevronRight16 />
               </Text>
             )}
-            <Text size="16" color="subtle" className="flex items-center">
-              <Link href="/" underline="none">
-                {part}
-              </Link>
-            </Text>
+            <Link
+              href="/"
+              underline="none"
+              size="18"
+              weight="semibold"
+              className="flex items-center"
+            >
+              {part}
+            </Link>
           </Fragment>
         )
       })}
