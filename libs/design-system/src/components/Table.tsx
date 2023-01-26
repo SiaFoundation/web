@@ -15,7 +15,7 @@ export type TableColumn<R> = {
   tip?: string
   size?: number
   className?: string
-  render: (row: R) => React.ReactNode
+  render: React.FC<R>
   summary?: () => React.ReactNode
   type?: 'fixed'
   sortable?: string
@@ -103,7 +103,7 @@ export function Table<R extends Row>({
                       }
                     }
                   > */}
-              {columns.map(({ key, render, style, className }, i) => (
+              {columns.map(({ key, render: Render, style, className }, i) => (
                 <div
                   key={row.key + key}
                   className={cx(
@@ -113,7 +113,7 @@ export function Table<R extends Row>({
                   )}
                   style={style}
                 >
-                  {render(row)}
+                  <Render {...row} />
                 </div>
               ))}
             </div>

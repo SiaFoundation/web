@@ -137,7 +137,7 @@ export function Inputs() {
       </Section>
       <Section>
         <SubsectionHeading>Dropzone</SubsectionHeading>
-        <Dropzone onFiles={() => null} />
+        <Dropzone message onDrop={() => null} />
       </Section>
       <Section>
         <SubsectionHeading>TextArea</SubsectionHeading>

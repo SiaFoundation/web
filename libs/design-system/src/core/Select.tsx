@@ -52,7 +52,7 @@ export const Select = React.forwardRef<
     <select
       ref={ref}
       {...props}
-      className="appearance-none flex-1 bg-transparent outline-none w-full h-full pl-2 pr-2"
+      className="appearance-none flex-1 bg-transparent outline-none w-full h-full pl-1 pr-1"
     />
     <CaretSort16 className="pointer-events-none scale-75" />
   </div>
