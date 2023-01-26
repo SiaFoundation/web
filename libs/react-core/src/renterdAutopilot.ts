@@ -1,27 +1,35 @@
 import { useGet } from './useGet'
-import { SWROptions } from './types'
 import { Action, Config } from './siaTypes'
 import { usePut } from './usePut'
+import { HookArgsSwr, HookArgsCallback } from './request'
 
-export function useAutopilotConfig(options?: SWROptions<Config>) {
-  return useGet<Config>(null, '/autopilot/config', options)
+export function useAutopilotConfig(args?: HookArgsSwr<void, Config>) {
+  return useGet({
+    ...args,
+    route: '/autopilot/config',
+  })
 }
 
-export function useAutopilotConfigUpdate() {
-  return usePut<undefined, Config, never>('/autopilot/config', [
-    '/autopilot/config',
-  ])
+export function useAutopilotConfigUpdate(
+  args?: HookArgsCallback<void, Config, void>
+) {
+  return usePut({ ...args, route: '/autopilot/config' }, ['/autopilot/config'])
 }
 
 export function useAutopilotActions(
-  params: { since?: Date; max?: number },
-  options?: SWROptions<Action[]>
+  args?: HookArgsSwr<{ since?: number; max?: number }, Action[]>
 ) {
-  return useGet<Action[]>(params, '/autopilot/actions', options)
+  return useGet({
+    ...args,
+    route: '/autopilot/actions',
+  })
 }
 
 export function useAutopilotStatus(
-  options?: SWROptions<{ currentPeriod: number }>
+  args?: HookArgsSwr<void, { currentPeriod: number }>
 ) {
-  return useGet<{ currentPeriod: number }>(null, '/autopilot/status', options)
+  return useGet({
+    ...args,
+    route: '/autopilot/status',
+  })
 }

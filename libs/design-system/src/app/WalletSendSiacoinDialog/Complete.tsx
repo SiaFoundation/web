@@ -28,7 +28,9 @@ export function WalletSendSiacoinComplete({
         transactionId={transactionId}
       />
       <div className="flex flex-col items-center justify-center gap-2 my-4">
-        <CheckmarkFilled32 />
+        <Text>
+          <CheckmarkFilled32 />
+        </Text>
         <Text>Transaction successfully broadcasted.</Text>
       </div>
     </div>

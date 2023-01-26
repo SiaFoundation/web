@@ -28,7 +28,11 @@ export default function AutopilotPage() {
   const configUpdate = useAutopilotConfigUpdate()
   const config = useAutopilotConfig({
     // Do not automatically refetch
-    revalidateOnFocus: false,
+    config: {
+      swr: {
+        revalidateOnFocus: false,
+      },
+    },
   })
 
   const autopilotForm = useFormik({

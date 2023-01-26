@@ -137,7 +137,13 @@ export function Inputs() {
       </Section>
       <Section>
         <SubsectionHeading>Dropzone</SubsectionHeading>
-        <Dropzone message onDrop={() => null} />
+        <div className="relative w-full h-[200px]">
+          <Dropzone
+            showBorderInactive
+            message={false}
+            onDrop={(files) => alert(files)}
+          />
+        </div>
       </Section>
       <Section>
         <SubsectionHeading>TextArea</SubsectionHeading>

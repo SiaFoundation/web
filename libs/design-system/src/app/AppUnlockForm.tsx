@@ -4,12 +4,10 @@ import { useFormik } from 'formik'
 import { FieldGroup, FormSubmitButton, FormTextField } from '../components/Form'
 import axios, { AxiosError } from 'axios'
 import { Button } from '../core/Button'
-import { Edit16, RecentlyViewed16 } from '../icons/carbon'
+import { RecentlyViewed16 } from '../icons/carbon'
 import { ControlGroup } from '../core/ControlGroup'
-import { Select } from '../core/Select'
 import { DropdownMenu, DropdownMenuItem } from '../core/DropdownMenu'
 import { sortBy } from 'lodash'
-import { Tooltip } from '../core/Tooltip'
 
 async function checkPassword(api: string, password: string) {
   try {

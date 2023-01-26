@@ -5,7 +5,7 @@ import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { separatorStyles, itemStyles, labelStyles } from './Menu'
 import { panelStyles } from './Panel'
 import { useOpen } from '../hooks/useOpen'
-import { ArrowRight16 } from '@carbon/icons-react'
+import { ArrowRight16 } from '../icons/carbon'
 
 const contentContainerStyles = cva([
   'relative',

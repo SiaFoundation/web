@@ -31,6 +31,8 @@ export function Tooltip({
   defaultOpen,
   open: _open,
   onOpenChange: _onOpenChange,
+  delayDuration = 300,
+  disableHoverableContent,
   ...props
 }: TooltipProps) {
   const { open, onOpenChange } = useOpen({
@@ -40,7 +42,8 @@ export function Tooltip({
   return (
     <TooltipPrimitive.Root
       open={open}
-      delayDuration={300}
+      delayDuration={delayDuration}
+      disableHoverableContent={disableHoverableContent}
       defaultOpen={defaultOpen}
       onOpenChange={onOpenChange}
     >

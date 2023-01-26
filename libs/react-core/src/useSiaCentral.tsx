@@ -1,6 +1,6 @@
 import { useGet } from './useGet'
-import { SWROptions } from './types'
 import { useAppSettings } from './useAppSettings'
+import { HookArgsSwr } from './request'
 
 type SiaCentralExchangeRateGET = {
   message: string
@@ -28,13 +28,14 @@ type SiaCentralExchangeRateGET = {
 const api = 'https://api.siacentral.com/v2'
 
 export function useSiaCentralMarketExchangeRate(
-  options?: SWROptions<SiaCentralExchangeRateGET>
+  args?: HookArgsSwr<void, SiaCentralExchangeRateGET>
 ) {
   const { settings } = useAppSettings()
-  return useGet(null, '/market/exchange-rate?currencies=sc', {
-    ...options,
-    api: options?.api || api,
-    disabled: options?.disabled || !settings.siaCentral,
+  return useGet({
+    api,
+    ...args,
+    route: '/market/exchange-rate?currencies=sc',
+    disabled: args?.disabled || !settings.siaCentral,
   })
 }
 
@@ -112,13 +113,14 @@ type SiaCentralNetworkAveragesGET = {
 } & SiaCentralNetworkStats
 
 export function useSiaCentralHostsNetworkAverages(
-  options?: SWROptions<SiaCentralNetworkAveragesGET>
+  args?: HookArgsSwr<void, SiaCentralNetworkAveragesGET>
 ) {
   const { settings } = useAppSettings()
-  return useGet(null, '/hosts/network/averages', {
-    ...options,
-    api: options?.api || api,
-    disabled: options?.disabled || !settings.siaCentral,
+  return useGet({
+    api,
+    ...args,
+    route: '/hosts/network/averages',
+    disabled: args?.disabled || !settings.siaCentral,
   })
 }
 
@@ -139,12 +141,13 @@ type SiaCentralNetworkMetricsGET = {
 }
 
 export function useSiaCentralHostsNetworkMetrics(
-  options?: SWROptions<SiaCentralNetworkMetricsGET>
+  args?: HookArgsSwr<void, SiaCentralNetworkMetricsGET>
 ) {
   const { settings } = useAppSettings()
-  return useGet(null, '/hosts/network/metrics', {
-    ...options,
-    api: options?.api || api,
-    disabled: options?.disabled || !settings.siaCentral,
+  return useGet({
+    api,
+    ...args,
+    route: '/hosts/network/metrics',
+    disabled: args?.disabled || !settings.siaCentral,
   })
 }

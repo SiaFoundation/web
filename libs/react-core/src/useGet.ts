@@ -1,87 +1,87 @@
+import axios from 'axios'
 import useSWR from 'swr'
-import { handleResponse } from './handleResponse'
-import { SWRError, SWROptions } from './types'
+import {
+  buildAxiosConfig,
+  buildRoute,
+  InternalCallbackArgs,
+  mergeInternalCallbackArgs,
+  RequestParams,
+  Response,
+  mergeInternalHookArgsCallback,
+  InternalHookArgsSwr,
+  mergeInternalHookArgsSwr,
+  InternalHookArgsCallback,
+} from './request'
+import { SWRError } from './types'
 import { useAppSettings } from './useAppSettings'
 import { getKey } from './utils'
 
-export function useGet<Result>(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  params: Record<string, any> | null,
-  route: string | null,
-  options?: SWROptions<Result>
+export function useGet<Params extends RequestParams, Result>(
+  args: InternalHookArgsSwr<Params, Result>
 ) {
-  const { settings, api } = useAppSettings()
-  let paramRoute = route
-  if (paramRoute && params) {
-    const paramKeys = Object.keys(params)
-    for (const key of paramKeys) {
-      if (paramRoute.includes(`:${key}`)) {
-        paramRoute = paramRoute.replace(`:${key}`, params[key])
-      } else {
-        if (!paramRoute.includes('?')) {
-          paramRoute += `?${key}=${encodeURIComponent(params[key])}`
-        } else {
-          paramRoute += `&${key}=${encodeURIComponent(params[key])}`
-        }
-      }
-    }
-  }
-  const fullRoute = paramRoute
-    ? paramRoute.startsWith('http')
-      ? paramRoute
-      : `${options?.api || api}${paramRoute}`
-    : null
+  const hookArgs = mergeInternalHookArgsSwr(args)
+  const { settings } = useAppSettings()
+  const reqRoute = buildRoute(settings, hookArgs.route, hookArgs, undefined)
   return useSWR<Result, SWRError>(
+    // TODO: add a config to app settings to set password protected app or not,
+    // renterd etc require password, explorer do not, disable hook fetching if
+    // password protected and password is missing.
     getKey(
-      fullRoute ? `${fullRoute}${settings?.password || ''}` : null,
-      options?.disabled
+      reqRoute ? `${reqRoute}${settings.password || ''}` : null,
+      hookArgs.disabled
     ),
     async () => {
-      const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
+      if (!hookArgs.route) {
+        throw Error('No route')
       }
-
-      if (!fullRoute) {
-        throw Error('no route')
+      const reqConfig = buildAxiosConfig(settings, hookArgs, undefined)
+      if (!reqRoute) {
+        throw Error('No route')
       }
-
-      // If it starts with http its not a request to the local app backend
-      // so the password should not be sent.
-      if (!fullRoute.startsWith('http') && settings.password) {
-        headers['Authorization'] = 'Basic ' + btoa(`:${settings.password}`)
-      }
-
-      const r = await fetch(fullRoute, {
-        headers,
-      })
-      return handleResponse(r)
+      const response = await axios.get<Result>(reqRoute, reqConfig)
+      return response.data
     },
-    options
+    hookArgs.config?.swr
   )
 }
 
-export function useGetExternal<T>(
-  route: string | null,
-  options?: SWROptions<T>
-) {
-  // const fullRoute = route ? (options?.api || '') + route : null
-  const fullRoute = route ? route : null
-  return useSWR<T, SWRError>(
-    getKey(fullRoute, options?.disabled),
-    async () => {
-      const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
-      }
+type GetFunc<Params extends RequestParams, Result> = {
+  get: (
+    args: InternalCallbackArgs<Params, void, Result>
+  ) => Promise<Response<Result>>
+}
 
-      if (!fullRoute) {
-        throw Error('no route')
+export function useGetFunc<Params extends RequestParams, Result>(
+  args: InternalHookArgsCallback<Params, void, Result>
+): GetFunc<Params, Result> {
+  const { settings } = useAppSettings()
+  const hookArgs = mergeInternalHookArgsCallback(args)
+  return {
+    get: async (args: InternalCallbackArgs<Params, void, Result>) => {
+      const callArgs = mergeInternalCallbackArgs(args)
+      try {
+        const reqConfig = buildAxiosConfig(settings, hookArgs, callArgs)
+        const reqRoute = buildRoute(
+          settings,
+          hookArgs.route,
+          hookArgs,
+          callArgs
+        )
+        if (!reqRoute) {
+          throw Error('No route')
+        }
+        const response = await axios.get<Result>(reqRoute, reqConfig)
+        return {
+          status: response.status,
+          data: response.data,
+        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
+        return {
+          status: e.response.status,
+          error: e.response.data,
+        } as Response<Result>
       }
-
-      const r = await fetch(fullRoute, {
-        headers,
-      })
-      return handleResponse(r)
     },
-    options
-  )
+  }
 }

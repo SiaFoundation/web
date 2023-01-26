@@ -1,8 +1,6 @@
 import { usePost } from '@siafoundation/react-core'
 import { faucetApi } from '../config'
 
-export const faucetKey = `${faucetApi}/request`
-
 export type FaucetRequestStatus = 'pending' | 'broadcast' | 'confirmed'
 
 export type Hastings = string
@@ -24,5 +22,11 @@ type FaucetFundResponse = {
 }
 
 export function useFaucetFund() {
-  return usePost<undefined, FaucetFundPayload, FaucetFundResponse>(faucetKey)
+  return usePost<undefined, FaucetFundPayload, FaucetFundResponse>(
+    {
+      api: faucetApi,
+      route: '/request',
+    },
+    []
+  )
 }

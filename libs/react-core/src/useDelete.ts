@@ -1,55 +1,55 @@
 import axios from 'axios'
-import { mutate } from 'swr'
+import {
+  buildAxiosConfig,
+  buildRoute,
+  InternalCallbackArgs,
+  mergeInternalCallbackArgs,
+  RequestParams,
+  Response,
+  triggerDeps,
+  InternalHookArgsCallback,
+  mergeInternalHookArgsCallback,
+} from './request'
 import { useAppSettings } from './useAppSettings'
-import { getKey } from './utils'
 
-type Response<T> = {
-  status: number
-  data?: T
-  error?: string
+type Delete<Params extends RequestParams, Result> = {
+  delete: (
+    args: InternalCallbackArgs<Params, undefined, Result>
+  ) => Promise<Response<Result>>
 }
 
-type UseDelete<Params> = {
-  delete: (p: Params) => Promise<Response<never>>
-}
-
-export function useDelete<Params extends Record<string, string> | undefined>(
-  route: string,
-  deps?: string[]
-): UseDelete<Params> {
-  const { settings, api } = useAppSettings()
+export function useDelete<Params extends RequestParams, Result>(
+  args: InternalHookArgsCallback<Params, void, Result>,
+  deps: string[]
+): Delete<Params, Result> {
+  const { settings } = useAppSettings()
+  const hookArgs = mergeInternalHookArgsCallback(args)
   return {
-    delete: async (params?: Params) => {
-      const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
-      }
-      if (settings.password) {
-        headers['Authorization'] = 'Basic ' + btoa(`:${settings.password}`)
-      }
+    delete: async (args: InternalCallbackArgs<Params, void, Result>) => {
+      const callArgs = mergeInternalCallbackArgs(args)
       try {
-        let paramRoute = route
-        if (params) {
-          const paramKeys = Object.keys(params)
-          for (const key of paramKeys) {
-            paramRoute = paramRoute.replace(`:${key}`, params[key])
-          }
-        }
-        const response = await axios.delete(
-          paramRoute.startsWith('http') ? paramRoute : `${api}${paramRoute}`,
-          {
-            headers,
-          }
+        const reqConfig = buildAxiosConfig(settings, hookArgs, callArgs)
+        const reqRoute = buildRoute(
+          settings,
+          hookArgs.route,
+          hookArgs,
+          callArgs
         )
-        deps?.forEach((dep) => mutate(getKey(dep)))
+        if (!reqRoute) {
+          throw Error('No route')
+        }
+        const response = await axios.delete<Result>(reqRoute, reqConfig)
+        triggerDeps(deps, settings, hookArgs, callArgs)
         return {
           status: response.status,
+          data: response.data,
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         return {
           status: e.response.status,
           error: e.response.data,
-        } as Response<never>
+        } as Response<Result>
       }
     },
   }

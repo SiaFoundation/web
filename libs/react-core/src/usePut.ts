@@ -1,57 +1,49 @@
 import axios from 'axios'
-import { mutate } from 'swr'
+import {
+  buildAxiosConfig,
+  buildRoute,
+  InternalCallbackArgs,
+  InternalHookArgsCallback,
+  mergeInternalCallbackArgs,
+  RequestParams,
+  Response,
+  triggerDeps,
+  mergeInternalHookArgsCallback,
+} from './request'
 import { useAppSettings } from './useAppSettings'
-import { getKey } from './utils'
 
-type Put<Params extends Record<string, string> | undefined, Payload> = {
-  payload?: Payload
-  params?: Params
+type Put<Params extends RequestParams, Payload, Result> = {
+  put: (
+    args: InternalCallbackArgs<Params, Payload, Result>
+  ) => Promise<Response<Result>>
 }
 
-type Response<T> = {
-  status: number
-  data?: T
-  error?: string
-}
-
-type UsePut<
-  Params extends Record<string, string> | undefined,
-  Payload,
-  Result
-> = {
-  put: (payload: Put<Params, Payload>) => Promise<Response<Result>>
-}
-
-export function usePut<
-  Params extends Record<string, string> | undefined,
-  Payload,
-  Result
->(route: string, deps?: string[]): UsePut<Params, Payload, Result> {
-  const { settings, api } = useAppSettings()
+export function usePut<Params extends RequestParams, Payload, Result>(
+  args: InternalHookArgsCallback<Params, Payload, Result>,
+  deps: string[]
+): Put<Params, Payload, Result> {
+  const { settings } = useAppSettings()
+  const hookArgs = mergeInternalHookArgsCallback(args)
   return {
-    put: async ({ payload, params }: Put<Params, Payload>) => {
-      const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
-      }
-      if (settings.password) {
-        headers['Authorization'] = 'Basic ' + btoa(`:${settings.password}`)
-      }
+    put: async (args: InternalCallbackArgs<Params, Payload, Result>) => {
+      const callArgs = mergeInternalCallbackArgs(args)
       try {
-        let paramRoute = route
-        if (params) {
-          const paramKeys = Object.keys(params)
-          for (const key of paramKeys) {
-            paramRoute = paramRoute.replace(`:${key}`, params[key])
-          }
-        }
-        const response = await axios.put<Result>(
-          paramRoute.startsWith('http') ? paramRoute : `${api}${paramRoute}`,
-          payload,
-          {
-            headers,
-          }
+        const reqConfig = buildAxiosConfig(settings, hookArgs, callArgs)
+        const reqRoute = buildRoute(
+          settings,
+          hookArgs.route,
+          hookArgs,
+          callArgs
         )
-        deps?.forEach((dep) => mutate(getKey(dep)))
+        if (!reqRoute) {
+          throw Error('No route')
+        }
+        let payload: Payload | undefined = undefined
+        if ('payload' in callArgs) {
+          payload = callArgs.payload
+        }
+        const response = await axios.put<Result>(reqRoute, payload, reqConfig)
+        triggerDeps(deps, settings, hookArgs, callArgs)
         return {
           status: response.status,
           data: response.data,
