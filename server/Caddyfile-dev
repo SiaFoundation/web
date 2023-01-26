@@ -1,0 +1,67 @@
+# /etc/hosts
+# 127.0.0.1 site.local
+# 127.0.0.1 api.local
+# 127.0.0.1 explore.local
+# 127.0.0.1 design.local
+# 127.0.0.1 zen.local
+# 127.0.0.1 host.local
+# 127.0.0.1 renter.local
+# 127.0.0.1 renterd.local
+
+(cors) {
+  @cors_preflight method OPTIONS
+  @cors header Origin *
+
+  handle @cors_preflight {
+    header Access-Control-Allow-Origin *
+    header Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE"
+    header Access-Control-Allow-Headers "Content-Type, Authorization"
+    header Access-Control-Max-Age "3600"
+    respond "" 204
+  }
+
+  handle @cors {
+    header Access-Control-Allow-Origin *
+    header Access-Control-Expose-Headers "Link"
+  }
+}
+
+site.local {
+  import cors
+  reverse_proxy localhost:3001
+}
+
+api.local {
+  import cors
+  reverse_proxy localhost:3002
+}
+
+explore.local {
+  import cors
+  reverse_proxy localhost:3003
+}
+
+design.local {
+  import cors
+  reverse_proxy localhost:3004
+}
+
+zen.local {
+  import cors
+  reverse_proxy localhost:3005
+}
+
+host.local {
+  import cors
+  reverse_proxy localhost:3006
+}
+
+renter.local {
+  import cors
+  reverse_proxy localhost:3007
+}
+
+renterd.local {
+  import cors
+  reverse_proxy localhost:9980
+}

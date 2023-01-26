@@ -2,7 +2,7 @@ import React from 'react'
 import { useMonitorConnAndLock } from '../../hooks/useMonitorConnAndLock'
 
 type Routes = {
-  unlock: string
+  lockscreen: string
 }
 
 type Props = {

@@ -4,6 +4,7 @@ import { AppProps } from 'next/app'
 import { SWRConfig } from 'swr'
 import { AppSettingsProvider } from '@siafoundation/react-core'
 import { DialogProvider } from '../contexts/dialog'
+import { UploadsProvider } from '../contexts/uploads'
 
 export default function App({
   Component,
@@ -17,7 +18,9 @@ export default function App({
         <ThemeProvider>
           <AppSettingsProvider api="api">
             <DialogProvider>
-              <Component {...pageProps} />
+              <UploadsProvider>
+                <Component {...pageProps} />
+              </UploadsProvider>
             </DialogProvider>
           </AppSettingsProvider>
         </ThemeProvider>

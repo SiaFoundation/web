@@ -2,22 +2,32 @@ import { useAppSettings } from '@siafoundation/react-core'
 import { useRouter } from 'next/router'
 import { useFormik } from 'formik'
 import { FieldGroup, FormSubmitButton, FormTextField } from '../components/Form'
+import axios, { AxiosError } from 'axios'
+import { Button } from '../core/Button'
+import { Edit16, RecentlyViewed16 } from '../icons/carbon'
+import { ControlGroup } from '../core/ControlGroup'
+import { Select } from '../core/Select'
+import { DropdownMenu, DropdownMenuItem } from '../core/DropdownMenu'
+import { sortBy } from 'lodash'
+import { Tooltip } from '../core/Tooltip'
 
 async function checkPassword(api: string, password: string) {
-  const resp = await fetch(`${api}/wallet/balance`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Basic ' + btoa(`:${password}`),
-    },
-  })
-  if (resp.status === 504) {
-    return 'Error, check that daemon is running'
-  }
-  if (resp.status === 401) {
-    return 'Error, wrong password'
-  }
-  if (resp.status !== 200) {
+  try {
+    await axios.get(`${api}/api/bus/wallet/balance`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Basic ' + btoa(`:${password}`),
+      },
+    })
+  } catch (e: unknown) {
+    const resp = (e as AxiosError).response
+    if (resp?.status === 504) {
+      return 'Error, check that daemon is running'
+    }
+    if (resp?.status === 401) {
+      return 'Error, wrong password'
+    }
     return 'Error, something went wrong'
   }
   return null
@@ -39,16 +49,24 @@ type Props = {
 
 export function AppUnlockForm({ routes }: Props) {
   const router = useRouter()
-  const { setSettings, api } = useAppSettings()
+  const { settings, setSettings } = useAppSettings()
 
   const formik = useFormik({
     initialValues: {
+      api: settings.api,
       password: '',
     },
     onSubmit: async (values, actions) => {
-      const err = await checkPassword(api, values.password)
+      const err = await checkPassword(values.api, values.password)
       if (!err) {
-        setSettings({ password: values.password })
+        setSettings({
+          api: values.api,
+          password: values.password,
+          recentApis: {
+            ...settings.recentApis,
+            [values.api]: { lastUsed: new Date().getTime() },
+          },
+        })
         // allow password to propagate to swr hooks
         await wait(500)
         actions.resetForm()
@@ -61,10 +79,42 @@ export function AppUnlockForm({ routes }: Props) {
     },
   })
 
+  const recentApis = sortBy(
+    Object.entries(settings.recentApis),
+    ([_, { lastUsed }]) => -lastUsed
+  ).map(([api]) => api)
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <FieldGroup name="password" formik={formik}>
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-1.5">
+          <ControlGroup>
+            <FormTextField
+              variants={{
+                size: 'small',
+              }}
+              formik={formik}
+              name="api"
+              placeholder="http://123.4.5.6:9980"
+            />
+            {recentApis.length > 1 && (
+              <DropdownMenu
+                trigger={
+                  <Button type="button">
+                    <RecentlyViewed16 />
+                  </Button>
+                }
+              >
+                {recentApis.map((api) => (
+                  <DropdownMenuItem
+                    onClick={() => formik.setFieldValue('api', api)}
+                  >
+                    {api}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenu>
+            )}
+          </ControlGroup>
           <FormTextField
             variants={{
               size: 'small',

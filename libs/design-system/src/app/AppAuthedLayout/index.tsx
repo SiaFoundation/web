@@ -14,8 +14,8 @@ type Props = {
   sidenav?: React.ReactNode
   children: React.ReactNode
   routes: {
+    lockscreen: string
     home: string
-    unlock: string
     node: {
       index: string
     }

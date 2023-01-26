@@ -43,26 +43,33 @@ const currencyOptions: CurrencyOption[] = [
   },
 ]
 
-type Settings = {
+export type AppSettings = {
   siaStats: boolean
   siaCentral: boolean
+  api: string
   password?: string
   currency: CurrencyOption
+  recentApis: {
+    [api: string]: {
+      lastUsed: number
+    }
+  }
 }
 
-const defaultSettings: Settings = {
+const defaultSettings: AppSettings = {
+  api: '',
   siaStats: true,
   siaCentral: true,
   password: undefined,
   currency: currencyOptions[0],
+  recentApis: {},
 }
 
 type State = {
-  settings: Settings
+  settings: AppSettings
   currencyOptions: CurrencyOption[]
-  api: string
   setCurrency: (id: CurrencyId) => void
-  setSettings: (settings: Partial<Settings>) => void
+  setSettings: (settings: Partial<AppSettings>) => void
   lock: () => void
   isUnlocked: boolean
 }
@@ -72,11 +79,10 @@ export const useAppSettings = () => useContext(SettingsContext)
 
 type Props = {
   children: React.ReactNode
-  api?: string
   ssr?: boolean
 }
 
-export function AppSettingsProvider({ children, api, ssr }: Props) {
+export function AppSettingsProvider({ children, ssr }: Props) {
   const [settings, _setSettings] = useLocalStorageState('v0/settings', {
     ssr,
     defaultValue: defaultSettings,
@@ -92,7 +98,7 @@ export function AppSettingsProvider({ children, api, ssr }: Props) {
   }, [])
 
   const setSettings = useCallback(
-    (values: Partial<Settings>) => {
+    (values: Partial<AppSettings>) => {
       _setSettings((s) => ({
         ...s,
         ...values,
@@ -121,7 +127,6 @@ export function AppSettingsProvider({ children, api, ssr }: Props) {
 
   const value = {
     settings,
-    api: typeof api === 'string' ? api : '/api',
     setSettings,
     setCurrency,
     currencyOptions,

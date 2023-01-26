@@ -13,6 +13,7 @@ import { SidenavItem } from './SidenavItem'
 
 type Props = {
   routes: {
+    lockscreen: string
     home: string
     node: {
       index: string
@@ -56,7 +57,7 @@ export function Sidenav({ routes, openSettings, children }: Props) {
             title="Lock app"
             onClick={() => {
               setSettings({ password: '' })
-              router.replace(routes.home)
+              router.replace(routes.lockscreen)
             }}
           >
             <LockIcon />

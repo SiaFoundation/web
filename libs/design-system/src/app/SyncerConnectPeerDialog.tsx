@@ -102,9 +102,6 @@ export function SyncerConnectPeerDialog({
                 size: 'medium',
               }}
             />
-            {formik.status?.error && (
-              <Text color="red">{formik.status.error}</Text>
-            )}
             <FormSubmitButton formik={formik} size="medium">
               Connect
             </FormSubmitButton>

@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react'
-import { useRouter } from 'next/router'
-import { useAppSettings } from '@siafoundation/react-core'
+import React from 'react'
 import { Container } from '../../core/Container'
 import { AppNavbar } from '../AppNavbar'
 import { AppBackdrop } from '../AppBackdrop'
 import { AppRootLayout } from '../AppRootLayout'
 
 type Routes = {
-  unlock: string
+  lockscreen: string
 }
 
 type Props = {
@@ -25,15 +23,6 @@ export function AppPublicLayout({
   filters,
   actions,
 }: Props) {
-  const router = useRouter()
-  const { settings } = useAppSettings()
-
-  useEffect(() => {
-    if (router.pathname !== routes.unlock && !settings.password) {
-      router.replace(routes.unlock)
-    }
-  }, [router, settings, routes])
-
   return (
     <AppRootLayout routes={routes}>
       <AppBackdrop />
