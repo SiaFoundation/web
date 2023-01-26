@@ -61,7 +61,7 @@ export function ComboBox({
       Control: ({ children, ...props }) => {
         return (
           <components.Control {...props}>
-            {prefix && <div className="">{prefix}</div>}
+            {prefix && <div className="pl-1">{prefix}</div>}
             {children}
           </components.Control>
         )

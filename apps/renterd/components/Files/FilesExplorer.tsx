@@ -22,7 +22,11 @@ type Data = {
 
 export function FilesExplorer() {
   const { onDrop, uploadsList } = useUploads()
-  const objects = useObjectDirectory({ key: encodeURIComponent('/') })
+  const objects = useObjectDirectory({
+    params: {
+      key: encodeURIComponent('/'),
+    },
+  })
 
   const data: Data[] = useMemo(() => {
     const dataMap: Record<string, Data> = {}
@@ -63,12 +67,16 @@ export function FilesExplorer() {
       label: 'Size',
       size: 2,
       render: function SizeColumn({ path }: Data) {
-        const obj = useObject(
-          { key: encodeURIComponent(path.slice(1)) },
-          {
-            dedupingInterval: 5000,
-          }
-        )
+        const obj = useObject({
+          params: {
+            key: encodeURIComponent(path.slice(1)),
+          },
+          config: {
+            swr: {
+              dedupingInterval: 5000,
+            },
+          },
+        })
         if (obj.error) {
           return <LoadingDots />
         }
@@ -91,12 +99,16 @@ export function FilesExplorer() {
       label: 'Slabs',
       size: 2,
       render: function SlabsColumn({ path }: Data) {
-        const obj = useObject(
-          { key: encodeURIComponent(path.slice(1)) },
-          {
-            dedupingInterval: 5000,
-          }
-        )
+        const obj = useObject({
+          params: {
+            key: encodeURIComponent(path.slice(1)),
+          },
+          config: {
+            swr: {
+              dedupingInterval: 5000,
+            },
+          },
+        })
         if (obj.error) {
           return <LoadingDots />
         }

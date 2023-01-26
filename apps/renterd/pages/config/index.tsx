@@ -32,20 +32,24 @@ type RedundancyData = {
 
 export default function ConfigPage() {
   const { openDialog } = useDialog()
-  const gouging = useSetting(
-    { key: 'gouging' },
-    {
-      // Do not automatically refetch
-      revalidateOnFocus: false,
-    }
-  )
-  const redundancy = useSetting(
-    { key: 'redundancy' },
-    {
-      // Do not automatically refetch
-      revalidateOnFocus: false,
-    }
-  )
+  const gouging = useSetting({
+    params: { key: 'gouging' },
+    config: {
+      swr: {
+        // Do not automatically refetch
+        revalidateOnFocus: false,
+      },
+    },
+  })
+  const redundancy = useSetting({
+    params: { key: 'redundancy' },
+    config: {
+      swr: {
+        // Do not automatically refetch
+        revalidateOnFocus: false,
+      },
+    },
+  })
 
   const settingsUpdate = useSettingUpdate()
 

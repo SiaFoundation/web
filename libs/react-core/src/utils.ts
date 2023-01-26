@@ -3,5 +3,5 @@ export function getKey(name: string | null, disabled?: boolean) {
     return null
   }
 
-  return `sia/${name}`
+  return name
 }

@@ -1,6 +1,9 @@
 import { SWRError } from './types'
 
-export async function handleResponse(response: Response | undefined) {
+export async function handleResponse(
+  response: Response | undefined,
+  type: 'json' | 'blob' = 'json'
+) {
   // If the status code is not in the range 200-299,
   // we still try to parse and throw it.
   if (!response || !response.ok) {
@@ -12,6 +15,9 @@ export async function handleResponse(response: Response | undefined) {
     error.status = response?.status || 500
     throw error
   } else {
+    if (type === 'blob') {
+      return response.blob()
+    }
     return response.json()
   }
 }

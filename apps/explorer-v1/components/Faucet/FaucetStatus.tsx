@@ -25,9 +25,16 @@ type Props = {
 export function FaucetStatus({ id: _id, setId }: Props) {
   const [id] = useDebounce(_id, 1000)
   const [success, setSuccess] = useState(false)
-  const status = useFaucetStatus(id, {
-    revalidateOnFocus: !success,
-    refreshInterval: !success ? 30_000 : undefined,
+  const status = useFaucetStatus({
+    params: {
+      id,
+    },
+    config: {
+      swr: {
+        revalidateOnFocus: !success,
+        refreshInterval: !success ? 30_000 : undefined,
+      },
+    },
   })
 
   useEffect(() => {

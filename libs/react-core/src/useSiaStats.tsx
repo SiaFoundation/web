@@ -1,4 +1,4 @@
-import { SWROptions } from './types'
+import { HookArgsSwr } from './request'
 import { useGet } from './useGet'
 
 const api = 'https://siastats.info'
@@ -26,10 +26,12 @@ type SiaStatsNetworkStatusGET = {
   used_storage_TB: number
 }
 
-const path = api + '/dbs/network_status.json'
-
 export function useSiaStatsNetworkStatus(
-  options?: SWROptions<SiaStatsNetworkStatusGET>
+  args?: HookArgsSwr<void, SiaStatsNetworkStatusGET>
 ) {
-  return useGet(null, api + path, options)
+  return useGet({
+    api,
+    ...args,
+    route: '/dbs/network_status.json',
+  })
 }

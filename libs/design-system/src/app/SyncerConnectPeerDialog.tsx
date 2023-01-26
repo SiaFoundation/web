@@ -1,5 +1,4 @@
 import { Paragraph } from '../core/Paragraph'
-import { Text } from '../core/Text'
 import { triggerToast } from '../lib/toast'
 import { FormField, FormSubmitButton } from '../components/Form'
 import { useSyncerConnect } from '@siafoundation/react-core'
