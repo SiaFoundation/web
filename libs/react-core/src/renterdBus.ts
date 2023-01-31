@@ -54,7 +54,7 @@ export function useSyncerPeers(args?: HookArgsSwr<void, string[]>) {
   })
 }
 
-export function useSyncerConnect(args: HookArgsCallback<void, string, never>) {
+export function useSyncerConnect(args?: HookArgsCallback<void, string, never>) {
   return usePost(
     {
       ...args,
