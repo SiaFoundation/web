@@ -13,7 +13,9 @@ import { useDialog } from '../../contexts/dialog'
 import BigNumber from 'bignumber.js'
 
 export default function WalletView() {
-  const transactions = useWalletTransactions({})
+  const transactions = useWalletTransactions({
+    params: {},
+  })
 
   const { openDialog } = useDialog()
 

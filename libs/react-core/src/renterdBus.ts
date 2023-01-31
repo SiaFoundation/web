@@ -283,7 +283,7 @@ export function useObjectAdd(
 }
 
 export function useObjectDelete(
-  args: HookArgsCallback<{ key: string }, void, never>
+  args?: HookArgsCallback<{ key: string }, void, never>
 ) {
   return useDelete({ ...args, route: '/bus/objects/:key' }, [])
 }

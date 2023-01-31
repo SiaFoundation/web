@@ -81,7 +81,9 @@ export function UploadsProvider({ children }: Props) {
         },
         payload: file,
         config: {
-          onUploadProgress,
+          axios: {
+            onUploadProgress,
+          },
         },
       })
       if (response.error) {

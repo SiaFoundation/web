@@ -16,12 +16,16 @@ type Props = {
 }
 
 export function ObjectDropdownMenu({ path }: Props) {
-  const obj = useObject(
-    { key: encodeURIComponent(path.slice(1)) },
-    {
-      dedupingInterval: 5000,
-    }
-  )
+  const obj = useObject({
+    params: {
+      key: encodeURIComponent(path.slice(1)),
+    },
+    config: {
+      swr: {
+        dedupingInterval: 5000,
+      },
+    },
+  })
   const download = useObjectDownloadFunc()
 
   const deleteObject = useObjectDelete()

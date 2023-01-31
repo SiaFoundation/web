@@ -19,8 +19,10 @@ import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
 
 export default function WalletView() {
   const transactions = useWalletTransactions({
-    since: undefined,
-    max: undefined,
+    params: {
+      since: undefined,
+      max: undefined,
+    },
   })
   const pending = useWalletPending()
 

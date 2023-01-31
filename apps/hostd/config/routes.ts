@@ -17,5 +17,5 @@ export const routes = {
     txPool: '/node/txpool',
     peers: '/node/peers',
   },
-  unlock: '/unlock',
+  lockscreen: '/unlock',
 }
