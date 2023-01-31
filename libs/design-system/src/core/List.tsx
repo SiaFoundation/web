@@ -69,26 +69,15 @@ type LiProps = {
 export function Li({
   children,
   index = 0,
-  size = '18',
+  size = '16',
   subList,
   className,
 }: LiProps) {
   const numEl = numMap[index]
 
   return (
-    <li className={cx('flex items-start gap-2', className)}>
-      <div
-        className={cx(
-          'flex relative w-6 h-8',
-          numEl
-            ? Number(size) < 18
-              ? 'top-[-5px] md:top[-3px]'
-              : 'top[-3px] md:top-0'
-            : Number(size) < 18
-            ? 'top-[-4px] md:top-[-2px]'
-            : 'top-[-2px] md:top-0'
-        )}
-      >
+    <li className={cx('flex items-start gap-1', className)}>
+      <div className="flex relative w-6 h-8 top-[-4px]">
         <div className="flex absolute w-full h-full items-center justify-center">
           <Text color="contrast">{numEl || <DotMark16 />}</Text>
         </div>

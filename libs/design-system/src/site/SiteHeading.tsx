@@ -1,6 +1,6 @@
 import { cx } from 'class-variance-authority'
 import React from 'react'
-import { Heading } from '../core/Heading'
+import { SectionHeading } from '../components/SectionHeading'
 import { Paragraph } from '../core/Paragraph'
 import { Text } from '../core/Text'
 import { LinkData } from '../lib/links'
@@ -94,9 +94,9 @@ export function SiteHeading({
           {eyebrow}
         </Text>
       )}
-      <Heading size={size} className="pb-2">
+      <SectionHeading id={id} size={size} className="pb-2">
         {title}
-      </Heading>
+      </SectionHeading>
       {description && (
         <Paragraph size={sizeToParagraph[size]}>{description}</Paragraph>
       )}

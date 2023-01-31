@@ -26,6 +26,13 @@ import { getCacheGrantCommittee } from '../../content/grantCommittee'
 import { SectionSimple } from '../../components/SectionSimple'
 import { SectionWaves } from '../../components/SectionWaves'
 import { SectionGradient } from '../../components/SectionGradient'
+import { MDXRemote } from 'next-mdx-remote'
+import path from 'path'
+import fs from 'fs'
+import { getContentDirectory } from '@siafoundation/env'
+import matter from 'gray-matter'
+import { serialize } from 'next-mdx-remote/serialize'
+import { components } from '../../config/mdx'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -43,7 +50,12 @@ const description = (
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-export default function Grants({ services, grantCommittee }: Props) {
+export default function Grants({
+  services,
+  grantCommittee,
+  grantApplicantFaqSource,
+  grantGranteeFaqSource,
+}: Props) {
   return (
     <Layout
       title={title}
@@ -96,27 +108,23 @@ export default function Grants({ services, grantCommittee }: Props) {
                 icon: 'ListChecked',
                 children: (
                   <Ol className="mt-5 -ml-10 md:ml-0">
-                    <Li size="14" index={1}>
+                    <Li index={1}>
                       Name of organization or individual and project name.
                     </Li>
-                    <Li size="14" index={2}>
+                    <Li index={2}>
                       Purpose of the grant: who benefits and how the project
                       will serve the Foundation’s mission of user-owned data.
                     </Li>
-                    <Li size="14" index={3}>
-                      Code contributions must be open source.
-                    </Li>
-                    <Li size="14" index={4}>
+                    <Li index={3}>Code contributions must be open source.</Li>
+                    <Li index={4}>
                       Timeline with measurable objectives and goals.
                     </Li>
-                    <Li size="14" index={5}>
+                    <Li index={5}>
                       Any potential risks that will affect the outcome of the
                       project.
                     </Li>
-                    <Li size="14" index={6}>
-                      Budget and justification.
-                    </Li>
-                    <Li size="14" index={7}>
+                    <Li index={6}>Budget and justification.</Li>
+                    <Li index={7}>
                       Reporting requirements: Progress reports to the
                       foundation/committee and to the community.
                     </Li>
@@ -128,33 +136,30 @@ export default function Grants({ services, grantCommittee }: Props) {
                 icon: 'MailAll',
                 children: (
                   <Ol className="mt-5 -ml-10 md:ml-0">
-                    <Li size="14" index={1}>
+                    <Li index={1}>
                       Create a proposal with the above requirements in mind.
                     </Li>
-                    <Li size="14" index={2}>
+                    <Li index={2}>
                       Submit your proposal at{' '}
                       <Link href={webLinks.forumGrants} target="_blank">
                         {webLinks.forumGrants}
                       </Link>
                       .
                     </Li>
-                    <Li size="14" index={3}>
+                    <Li index={3}>
                       Open discussion will ensue in the comment section from the
                       community.
                     </Li>
                     <Li
-                      size="14"
                       index={4}
                       subList={
                         <Ol className="mt-3" gapClassName="gap-1">
-                          <Li size="14">
+                          <Li>
                             New proposals, to accept, reject, or request more
                             info.
                           </Li>
-                          <Li size="14">
-                            Existing grants, to assess their progress.
-                          </Li>
-                          <Li size="14">
+                          <Li>Existing grants, to assess their progress.</Li>
+                          <Li>
                             Newly completed grants, to review their outcomes.
                           </Li>
                         </Ol>
@@ -171,14 +176,14 @@ export default function Grants({ services, grantCommittee }: Props) {
                 icon: 'TestTool',
                 children: (
                   <div className="mt-3 -ml-10 md:ml-0">
-                    <Paragraph size="14">
+                    <Paragraph size="16">
                       All proposals are reviewed by the Grant Committee. When
                       evaluating a grant proposal, the Committee considers the
                       following factors while utilizing a scoring matrix to
                       ensure a thorough vetting process.
                     </Paragraph>
                     <Ol className="mt-6">
-                      <Li size="14" index={1}>
+                      <Li index={1}>
                         <Text weight="semibold">
                           In line with Foundation’s mission:
                         </Text>{' '}
@@ -187,25 +192,25 @@ export default function Grants({ services, grantCommittee }: Props) {
                         consistent with The Sia Foundation’s mission of
                         user-owned data?
                       </Li>
-                      <Li size="14" index={2}>
+                      <Li index={2}>
                         <Text weight="semibold">Community Impact:</Text> Will
                         the project provide a meaningful volume of services
                         and/or people served in the decentralized cloud storage
                         community (in particular the Sia community)?
                       </Li>
-                      <Li size="14" index={3}>
+                      <Li index={3}>
                         <Text weight="semibold">
                           Goals, Objectives & Outcome:
                         </Text>{' '}
                         Are there clear goals and objectives written? Are
                         measurable outcomes evident?
                       </Li>
-                      <Li size="14" index={4}>
+                      <Li index={4}>
                         <Text weight="semibold">Deliverable:</Text> How well
                         does the individual/organization demonstrate the ability
                         to deliver and measure proposed outcomes?
                       </Li>
-                      <Li size="14" index={5}>
+                      <Li index={5}>
                         <Text weight="semibold">
                           Risks and Technical Feasibility:
                         </Text>{' '}
@@ -213,7 +218,7 @@ export default function Grants({ services, grantCommittee }: Props) {
                         be thoughtful if the risk is high enough to impact the
                         outcome of the project.
                       </Li>
-                      <Li size="14" index={6}>
+                      <Li index={6}>
                         <Text weight="semibold">Budget Justification:</Text> How
                         well does the applicant justify the budget?
                       </Li>
@@ -227,9 +232,7 @@ export default function Grants({ services, grantCommittee }: Props) {
                 children: (
                   <Ol className="mt-5 -ml-10 md:ml-0">
                     {grantCommittee.map(({ name }) => (
-                      <Li key={name} size="14">
-                        {name}
-                      </Li>
+                      <Li key={name}>{name}</Li>
                     ))}
                   </Ol>
                 ),
@@ -239,28 +242,6 @@ export default function Grants({ services, grantCommittee }: Props) {
         </div>
       </SectionWaves>
       <SectionGradient>
-        <SiteHeading
-          size="32"
-          className="pt-20 md:pt-40 pb-24 md:pb-32"
-          title="Interested in a grant but have questions?"
-          description={
-            <>
-              If you’re interested but have questions or need help submitting
-              your grant feel free to join the discord server and hop in the{' '}
-              <Code>#grants-program</Code> channel to chat with Kino, Frances,
-              and the committee members. This channel provides a space to ask
-              questions, discuss the grant program, share ideas, provide
-              feedback, and collaborate with community members.
-            </>
-          }
-          links={[
-            {
-              title: 'Join the Discord',
-              link: webLinks.discord,
-              newTab: true,
-            },
-          ]}
-        />
         <SiteHeading
           size="32"
           className="pt-16 md:pt-40 pb-10 md:pb-20"
@@ -287,7 +268,7 @@ export default function Grants({ services, grantCommittee }: Props) {
           component={ContentProject}
         />
         <Callout
-          className="mt-20 md:mt-40 mb-24 md:mb-32"
+          className="mt-20 md:mt-48 mb-16 md:mb-24"
           title="Get started on your grant proposal"
           size="2"
           description={
@@ -301,6 +282,34 @@ export default function Grants({ services, grantCommittee }: Props) {
           actionNewTab
         />
       </SectionGradient>
+      <SectionGradient>
+        <div className="mb-20 md:mb-32">
+          <MDXRemote {...grantApplicantFaqSource} components={components} />
+        </div>
+        <MDXRemote {...grantGranteeFaqSource} components={components} />
+        <SiteHeading
+          size="32"
+          className="pt-32 md:pt-60 mb-32 md:pb-32"
+          title="Interested, but have more questions?"
+          description={
+            <>
+              If you’re interested but have questions or need help submitting
+              your grant feel free to join the discord server and hop in the{' '}
+              <Code>#grants-program</Code> channel to chat with Kino, Frances,
+              and the committee members. This channel provides a space to ask
+              questions, discuss the grant program, share ideas, provide
+              feedback, and collaborate with community members.
+            </>
+          }
+          links={[
+            {
+              title: 'Join the Discord',
+              link: webLinks.discord,
+              newTab: true,
+            },
+          ]}
+        />
+      </SectionGradient>
     </Layout>
   )
 }
@@ -309,10 +318,31 @@ export async function getStaticProps() {
   const stats = await getCacheStats()
   const services = await getCacheSoftware('open_source_software', 6)
   const grantCommittee = await getCacheGrantCommittee()
+
+  const grantApplicantFaqSource = await serialize(
+    matter(
+      fs.readFileSync(
+        path.join(getContentDirectory(), 'pages/grant-applicant-faq.mdx'),
+        'utf-8'
+      )
+    ).content
+  )
+
+  const grantGranteeFaqSource = await serialize(
+    matter(
+      fs.readFileSync(
+        path.join(getContentDirectory(), 'pages/grant-grantee-faq.mdx'),
+        'utf-8'
+      )
+    ).content
+  )
+
   return {
     props: {
       services,
       grantCommittee,
+      grantApplicantFaqSource,
+      grantGranteeFaqSource,
       fallback: {
         '/api/stats': stats,
       },
