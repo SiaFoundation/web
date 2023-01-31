@@ -11,4 +11,4 @@ export * from './renterdAutopilot'
 export * from './renterdBus'
 export * from './renterdWorker'
 
-export { HookArgsCallback, HookArgsSwr } from './request'
+export type { HookArgsCallback, HookArgsSwr } from './request'

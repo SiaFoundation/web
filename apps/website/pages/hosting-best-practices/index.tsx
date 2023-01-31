@@ -75,12 +75,12 @@ export default function HostBestPractices({
 export async function getStaticProps() {
   const stats = await getCacheStats()
 
-  const markdownWithMeta = fs.readFileSync(
-    path.join(getContentDirectory(), 'pages/hosting-best-practices.mdx'),
-    'utf-8'
+  const { data, content } = matter(
+    fs.readFileSync(
+      path.join(getContentDirectory(), 'pages/hosting-best-practices.mdx'),
+      'utf-8'
+    )
   )
-
-  const { data, content } = matter(markdownWithMeta)
 
   const source = await serialize(content)
 

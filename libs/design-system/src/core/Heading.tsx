@@ -56,27 +56,21 @@ export const Heading = React.forwardRef<
     const cId =
       id ||
       (typeof children === 'string'
-        ? encodeURI(children.toLowerCase().replace(' ', '-'))
+        ? encodeURI(children.toLowerCase().replace(/ /g, '-'))
         : '')
 
     return (
       <div className={cx('flex flex-col gap-6 items-start', className)}>
         <Link href={`#${cId}`} id={cId} className="relative group">
-          {showAnchor && (
-            <Text className="hidden group-hover:block">
-              <Link20 className="absolute top-1 -left-7 hidden md:block" />
-            </Text>
-          )}
+          <Text className="hidden group-hover:block">
+            <Link20 className="absolute top-1 -left-7 hidden md:block" />
+          </Text>
           <Text
             as={tag}
             {...textProps}
             ref={forwardedRef}
             weight="none"
-            className={cx(
-              'proportional-nums inline-block',
-              textStyles[size],
-              className
-            )}
+            className={cx('proportional-nums inline-block', textStyles[size])}
           >
             {children}
           </Text>

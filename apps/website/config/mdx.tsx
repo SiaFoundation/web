@@ -10,7 +10,7 @@ import {
 // Components used in mardown rendering
 export const components = {
   h1: ({ children }) => (
-    <SectionHeading size="32" className="pb-6 pt-20">
+    <SectionHeading size="40" className="pb-6 pt-20">
       {children}
     </SectionHeading>
   ),
@@ -24,7 +24,11 @@ export const components = {
       {children}
     </SectionHeading>
   ),
-  p: ({ children }) => <Paragraph className="block py-4">{children}</Paragraph>,
+  p: ({ children }) => (
+    <Paragraph size="16" className="block py-2">
+      {children}
+    </Paragraph>
+  ),
   a: (props) => <Link {...props} target="_blank" />,
   ol: Ol,
   ul: Ul,

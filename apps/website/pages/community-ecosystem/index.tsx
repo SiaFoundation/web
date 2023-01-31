@@ -125,7 +125,7 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
           items={software}
         />
         <Callout
-          className="mt-20 md:mt-40 mb-24"
+          className="mt-20 md:mt-40 mb-24 md:mb-40"
           title="Sia grants"
           size="2"
           description={
