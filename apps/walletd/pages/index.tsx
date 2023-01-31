@@ -19,7 +19,7 @@ export default function HomePage() {
     <AppAuthedLayout
       routes={routes}
       openSettings={() => openDialog('privacy')}
-      title="siad"
+      title="walletd"
       actions={
         <Button
           size="medium"

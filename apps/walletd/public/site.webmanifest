@@ -1,6 +1,6 @@
 {
-  "name": "siad",
-  "short_name": "siad",
+  "name": "walletd",
+  "short_name": "walletd",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
