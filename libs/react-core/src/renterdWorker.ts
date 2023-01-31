@@ -1,15 +1,15 @@
-import { HookArgsSwr, HookArgsCallback } from './request'
-import { useGetDownload } from './useGetDownload'
+import { HookArgsCallback } from './request'
+import { useGetDownloadFunc } from './useGetDownload'
 import { usePut } from './usePut'
 
 export function useObjectDownloadFunc(
-  args: HookArgsSwr<{ key: string }, Blob>
+  args?: HookArgsCallback<{ key: string }, void, Blob>
 ) {
-  return useGetDownload({ ...args, route: '/worker/objects/:key' })
+  return useGetDownloadFunc({ ...args, route: '/worker/objects/:key' })
 }
 
 export function useObjectUpload(
-  args: HookArgsCallback<{ key: string }, File, void>
+  args?: HookArgsCallback<{ key: string }, File, void>
 ) {
   return usePut(
     {

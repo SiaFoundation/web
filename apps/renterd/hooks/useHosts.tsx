@@ -117,7 +117,9 @@ export function useHosts() {
   const skip = Number(router.query.skip || 0)
 
   const response = useHostsGET({
-    max: limit,
+    params: {
+      max: limit,
+    },
     // limit,
     // skip,
     // sortBy,

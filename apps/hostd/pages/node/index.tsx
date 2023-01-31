@@ -12,10 +12,18 @@ import { useDialog } from '../../contexts/dialog'
 export default function NodePage() {
   const peers = useSyncerPeers()
   const txPool = useTxPoolTransactions({
-    refreshInterval: 30_000,
+    config: {
+      swr: {
+        refreshInterval: 30_000,
+      },
+    },
   })
   const state = useConsensusState({
-    refreshInterval: 30_000,
+    config: {
+      swr: {
+        refreshInterval: 30_000,
+      },
+    },
   })
   const router = useRouter()
   const { openDialog } = useDialog()

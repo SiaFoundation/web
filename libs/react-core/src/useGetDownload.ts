@@ -1,9 +1,9 @@
-import { InternalHookArgs } from './request'
+import { InternalHookArgsCallback } from './request'
 import { useGetFunc } from './useGet'
 
-export function useGetDownload<
+export function useGetDownloadFunc<
   Params extends Record<string, string> | undefined
->(args: InternalHookArgs<Params, Blob>) {
+>(args: InternalHookArgsCallback<Params, void, Blob>) {
   const { get } = useGetFunc<Params, Blob>({
     ...args,
     config: {
