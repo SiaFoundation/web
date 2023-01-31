@@ -1,7 +1,7 @@
 {
-  "name": "siad",
+  "name": "walletd",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/siad",
+  "sourceRoot": "apps/walletd",
   "projectType": "application",
   "targets": {
     "build": {
@@ -9,8 +9,8 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "root": "apps/siad",
-        "outputPath": "dist/apps/siad",
+        "root": "apps/walletd",
+        "outputPath": "dist/apps/walletd",
         "assets": [
           {
             "glob": "**/*",
@@ -23,7 +23,7 @@
         "development": {},
         "production": {},
         "ci": {
-          "outputPath": "apps/siad/dist"
+          "outputPath": "apps/walletd/dist"
         }
       }
     },
@@ -31,16 +31,16 @@
       "executor": "@nrwl/next:server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "siad:build",
+        "buildTarget": "walletd:build",
         "port": 3005
       },
       "configurations": {
         "development": {
-          "buildTarget": "siad:build:development",
+          "buildTarget": "walletd:build:development",
           "dev": true
         },
         "production": {
-          "buildTarget": "siad:build:production",
+          "buildTarget": "walletd:build:production",
           "dev": false
         }
       }
@@ -48,14 +48,14 @@
     "export": {
       "executor": "@nrwl/next:export",
       "options": {
-        "buildTarget": "siad:build:production"
+        "buildTarget": "walletd:build:production"
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/apps/siad"],
+      "outputs": ["{workspaceRoot}/coverage/apps/walletd"],
       "options": {
-        "jestConfig": "apps/siad/jest.config.ts",
+        "jestConfig": "apps/walletd/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -63,7 +63,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/siad/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["apps/walletd/**/*.{ts,tsx,js,jsx}"]
       }
     }
   },

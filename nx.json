@@ -44,7 +44,7 @@
       "unitTestRunner": "jest"
     }
   },
-  "defaultProject": "siad",
+  "defaultProject": "walletd",
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "targetDefaults": {
     "build": {

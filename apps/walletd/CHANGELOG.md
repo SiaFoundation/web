@@ -1,4 +1,4 @@
-# @siafoundation/siad
+# @siafoundation/walletd
 
 ## 0.1.0
 
