@@ -29,7 +29,6 @@ import { siaCentralApi } from '../config'
 export function Home() {
   const status = useStatus()
   const landing = useLanding()
-  console.log(siaCentralApi)
   const metrics = useSiaCentralHostsNetworkMetrics({
     api: siaCentralApi,
   })
