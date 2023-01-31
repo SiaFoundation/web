@@ -6,7 +6,7 @@ Web packages for the Sia project and ecosystem.
 
 ## Apps
 
-User interfaces for the Sia software. The latest Sia software takes a modular approach, with separate daemons and user interfaces for renting, hosting, explorer, and advanced wallet functionality.
+User interfaces for the Sia software. The latest Sia software takes a modular approach, with separate daemons and user interfaces for renting, hosting, the explorer, and advanced wallet functionality.
 
 ### [renterd](apps/renterd)
 
