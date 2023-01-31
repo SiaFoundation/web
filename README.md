@@ -6,15 +6,39 @@ Web packages for the Sia project and ecosystem.
 
 ## Apps
 
-- [siad](apps/siad) - The `siad` user interface, includes a wallet with support for hot, cold, and hardware wallets.
-- [renterd](apps/renterd) - The `renterd` user interface, dedicated to renter related functionality.
-- [hostd](apps/hostd) - The `hostd` user interface, dedicated to hosting related functionality.
-- [explorer-v1](apps/explorer-v1) - The `explorer-v1` user interface, a Sia blockchain explorer interface for [Navigator](https://github.com/hakkane84/navigator-sia).
-- [website](apps/website) - The main [sia.tech](https://sia.tech) website with information on the Sia project and the Sia Foundation.
-- [asset-server](apps/asset-server) - Powers [api.sia.tech](https://api.sia.tech) and all downloadable assets on [sia.tech](https://sia.tech) such as the Sia software releases.
-- [design-site](apps/design-site) - The [design.sia.tech](https://design.sia.tech) website for exploring the design system used across Sia apps and websites.
+User interfaces for the Sia software. The latest Sia software takes a modular approach, with separate daemons and user interfaces for renting, hosting, explorer, and advanced wallet functionality.
+
+### [renterd](apps/renterd)
+
+![stability-experimental](https://img.shields.io/badge/stability-experimental-yellow.svg)
+
+The [renterd](https://github.com/siafoundation/renterd) user interface, focused on renting functionality.
+
+### [explorer-v1](apps/explorer-v1)
+
+![stability-mature](https://img.shields.io/badge/stability-mature-008000.svg)
+
+The `explorer-v1` user interface, a Sia blockchain explorer interface based on [Navigator](https://github.com/hakkane84/navigator-sia). Powers [explore.sia.tech](https://explore.sia.tech) and [zen.sia.tech](https://zen.sia.tech).
+
+### [hostd](apps/hostd)
+
+![stability-wip](https://img.shields.io/badge/stability-work_in_progress-orange.svg)
+
+The `hostd` user interface, focused on hosting functionality.
+
+### [walletd](apps/walletd)
+
+![stability-wip](https://img.shields.io/badge/stability-work_in_progress-orange.svg)
+
+The `walletd` user interface, includes a wallet with support for hot, cold, and hardware wallets.
 
 ## Libraries
+
+![stability-wip](https://img.shields.io/badge/stability-work_in_progress-orange.svg)
+
+> ⚠️ Please note that all libraries are currently unstable and subject to change or completely move. Do not depend on these libraries until version 1.0.0.
+
+The Sia web libraries provide developers with convenient TypeScript SDKs for using Sia core types, blockchain utilities, data fetching, daemon-specific React hooks, and components for common functionality such as Siacoin/fiat input fields, transaction lists, files, and more.
 
 - [@siafoundation/react-core](libs/react-core) - Core Sia types and library methods.
 - [@siafoundation/react-siad](libs/react-siad) - React hooks for interacting with `siad`.
@@ -25,6 +49,12 @@ Web packages for the Sia project and ecosystem.
 - [@siafoundation/design-system](libs/design-system) - React-based design system used across Sia apps and websites.
 - [@siafoundation/data-sources](libs/data-sources) - Data sources used for stats on the website.
 - [@siafoundation/env](libs/env) - Environment variables for use across projects.
+
+## Internal
+
+- [website](apps/website) - The main [sia.tech](https://sia.tech) website with information on the Sia project and the Sia Foundation.
+- [asset-server](apps/asset-server) - Powers [api.sia.tech](https://api.sia.tech) and all downloadable assets on [sia.tech](https://sia.tech) such as the Sia software releases.
+- [design-site](apps/design-site) - The [design.sia.tech](https://design.sia.tech) website for exploring the design system used across Sia apps and websites.
 
 ## Development
 
