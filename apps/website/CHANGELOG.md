@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.31.0
+
+### Minor Changes
+
+- 82c296d: The grants scoring rubric copy has been updated to be more specific.
+- 8a247f6: The Grants page now features FAQ sections for both applicants and grantees.
+- 8a247f6: All website page headings are now linkable.
+- b79f8b4: The website now includes a page featuring the Foundation's hosting best practices.
+- 76a49a7: The website now allows users to find and download Zen Testnet siad builds from the getting started page.
+- 8228e1c: The grants page now has a table of contents to improve navigation.
+
+### Patch Changes
+
+- bb44fb8: The website now features the full colored Sia logo in the site menus.
+
 ## 0.30.0
 
 ### Minor Changes
