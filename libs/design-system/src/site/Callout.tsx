@@ -6,6 +6,7 @@ import { Heading } from '../core/Heading'
 import { cx } from 'class-variance-authority'
 
 type Props = {
+  id?: string
   eyebrow?: string
   title: string
   description: React.ReactNode
@@ -18,6 +19,7 @@ type Props = {
 }
 
 export function Callout({
+  id,
   eyebrow,
   title,
   description,
@@ -29,7 +31,12 @@ export function Callout({
   className,
 }: Props) {
   return (
-    <AnimatedPanel startTime={startTime} className={className} variant="subtle">
+    <AnimatedPanel
+      id={id}
+      startTime={startTime}
+      className={className}
+      variant="subtle"
+    >
       <div
         className={cx(
           'flex flex-col items-start justify-end gap-4 relative h-full',

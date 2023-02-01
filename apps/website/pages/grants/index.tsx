@@ -12,6 +12,7 @@ import {
   Code,
   Text,
   Paragraph,
+  Heading,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
@@ -63,23 +64,20 @@ export default function Grants({
       path={routes.community.index}
       heading={
         <SectionSimple className="pt-24 md:pt-40 pb-6 md:pb-20">
-          <SiteHeading
-            title={title}
-            description={description}
-            size="64"
-            links={[
-              {
-                title: 'Join our Discord',
-                link: webLinks.discord,
-                newTab: true,
-              },
-              {
-                title: 'Browse Proposals',
-                link: webLinks.forumGrants,
-                newTab: true,
-              },
-            ]}
-          />
+          <SiteHeading title={title} description={description} size="64">
+            <div className="flex flex-col gap-3 mt-10">
+              <Heading className="mb-1">Table of contents</Heading>
+              <Link href="#the-grant-process">The Grant process</Link>
+              <Link href="#example-projects">Browse example projects</Link>
+              <Link href={webLinks.forumGrants} target="_blank">
+                Browse current proposals
+              </Link>
+              <Link href="#create-a-proposal">Create a proposal</Link>
+              <Link href="#grant-applicant-faq">Grant applicant FAQ</Link>
+              <Link href="#approved-grantee-faq">Approved grantee FAQ</Link>
+              <Link href="#more-questions">More questions?</Link>
+            </div>
+          </SiteHeading>
         </SectionSimple>
       }
       backgroundImage={backgroundImageProps}
@@ -243,6 +241,7 @@ export default function Grants({
       </SectionWaves>
       <SectionGradient>
         <SiteHeading
+          id="example-projects"
           size="32"
           className="pt-16 md:pt-40 pb-10 md:pb-20"
           title="Check out what people are building on Sia"
@@ -267,6 +266,7 @@ export default function Grants({
           }))}
           component={ContentProject}
         />
+        <Anchor id="create-a-proposal" />
         <Callout
           className="mt-20 md:mt-48 mb-16 md:mb-24"
           title="Get started on your grant proposal"
@@ -288,6 +288,7 @@ export default function Grants({
         </div>
         <MDXRemote {...grantGranteeFaqSource} components={components} />
         <SiteHeading
+          id="more-questions"
           size="32"
           className="pt-32 md:pt-60 mb-32 md:pb-32"
           title="Interested, but have more questions?"
@@ -349,4 +350,12 @@ export async function getStaticProps() {
     },
     revalidate: getMinutesInSeconds(5),
   }
+}
+
+function Anchor({ id }: { id: string }) {
+  return (
+    <div className="relative">
+      <div id={id} className="absolute -top-[50px]" />
+    </div>
+  )
 }

@@ -4,6 +4,7 @@ import { useTheme } from '../hooks/useTheme'
 import { cx } from 'class-variance-authority'
 
 type Props = {
+  id?: string
   variant?: 'default' | 'subtle' | 'verySubtle'
   children: React.ReactNode
   startTime?: number
@@ -11,6 +12,7 @@ type Props = {
 }
 
 export function AnimatedPanel({
+  id,
   variant = 'default',
   children,
   startTime,
@@ -20,6 +22,7 @@ export function AnimatedPanel({
 
   return (
     <Panel
+      id={id}
       className={cx(
         'rounded-none relative',
         '!border-black dark:!border-graydark-1100',
