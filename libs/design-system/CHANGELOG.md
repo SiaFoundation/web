@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.40.0
+
+### Minor Changes
+
+- ff5abd5: Moved the ProgressSteps component to the design-system.
+- ff5abd5: Adjusted the rounding on Badges, adjusted margins in ValueCopyable.
+- f56a9a4: Add SectionHeading, a heading with with automatic anchoring.
+- f96683e: Siacoin form inputs now have an option to disable the associated fiat currency input.
+- ff5abd5: The tailwind config now supports an animation-delay property.
+- 21cc882: Added helpers for converting between blocks and time.
+
+### Patch Changes
+
+- 2959676: Fix issues with the Link component due to new next/link behaviour, and align a discrepancy in LinkButton Safari styling.
+
 ## 0.39.0
 
 ### Minor Changes
