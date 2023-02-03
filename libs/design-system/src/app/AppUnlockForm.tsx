@@ -105,6 +105,7 @@ export function AppUnlockForm({ routes }: Props) {
               >
                 {recentApis.map((api) => (
                   <DropdownMenuItem
+                    key={api}
                     onClick={() => formik.setFieldValue('api', api)}
                   >
                     {api}

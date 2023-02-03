@@ -8,13 +8,18 @@ const styles = cva(
     'font-sans font-regular text-sm',
     'justify-center align-middle outline-none p-0 decoration-none select-none',
     'disabled:pointer-events-none',
-    'py-0.5 px-3',
+    'py-0.5 px-2',
   ],
   {
     variants: {
       variant: {
-        active: 'bg-gray-800 dark:bg-gray-800 text-white dark:text-white',
-        simple: 'bg-gray-300 dark:bg-gray-800 text-gray-900 dark:text-white',
+        active: [
+          'border',
+          'bg-gray-800 text-gray-900 border-gray-900',
+          'dark:bg-transparent dark:text-white dark:border-white/10',
+        ],
+        simple:
+          'bg-gray-300 dark:bg-graydark-800 text-gray-900 dark:text-white',
         green: [
           'border',
           '[&>svg]:opacity-50',
@@ -63,7 +68,7 @@ const styles = cva(
         inactive: [
           'border',
           '[&>svg]:opacity-50',
-          'bg-white dark:bg-graydark-50',
+          'bg-white dark:bg-transparent',
           'border-gray-400 dark:border-graydark-400',
           'hover:border-gray-500 hover:dark:border-graydark-500',
           'text-gray-1100/30 dark:text-white/30',
@@ -74,7 +79,7 @@ const styles = cva(
         true: 'cursor-pointer',
       },
       rounded: {
-        true: 'rounded-lg',
+        true: 'rounded',
         false: '',
       },
     },

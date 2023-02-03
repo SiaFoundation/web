@@ -22,10 +22,7 @@ export function TransactionDetailsDialog({
 }: Props) {
   // TODO: add transaction endpoint
   const transactions = useWalletTransactions({
-    params: {
-      since: undefined,
-      max: undefined,
-    },
+    params: {},
   })
   const transaction = transactions.data?.find((t) => t.ID === id)
 

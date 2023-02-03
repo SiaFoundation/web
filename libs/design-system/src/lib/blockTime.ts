@@ -20,6 +20,18 @@ export function blocksToHours(blocks: number) {
   return blocks / BLOCKS_PER_HOUR
 }
 
+export function blocksToMinutes(blocks: number) {
+  return blocks / (BLOCKS_PER_HOUR / 60)
+}
+
+export function blocksToSeconds(blocks: number) {
+  return blocks / (BLOCKS_PER_HOUR / 60 / 60)
+}
+
+export function blocksToMilliseconds(blocks: number) {
+  return blocks / (BLOCKS_PER_HOUR / 60 / 60 / 1000)
+}
+
 export function blocksToDays(blocks: number) {
   return blocks / (BLOCKS_PER_HOUR * 24)
 }
@@ -30,4 +42,8 @@ export function blocksToWeeks(blocks: number) {
 
 export function blocksToMonths(blocks: number) {
   return blocks / (BLOCKS_PER_HOUR * 24 * 30)
+}
+
+export function blockHeightToTime(currentHeight: number, height: number) {
+  return new Date().getTime() + blocksToMilliseconds(height - currentHeight)
 }

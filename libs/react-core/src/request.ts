@@ -223,7 +223,16 @@ export function buildRoute<Params extends RequestParams, Payload, Result>(
   if (!route) {
     return null
   }
-  route = parameterizeRoute(route, hookArgs?.params)
+  let params = hookArgs?.params || {}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  if (callArgs && (callArgs as any).params) {
+    params = {
+      ...params,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ...(callArgs as any).params,
+    }
+  }
+  route = parameterizeRoute(route, params)
   if (!route) {
     return null
   }

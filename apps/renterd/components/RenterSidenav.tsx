@@ -1,6 +1,5 @@
 import {
   SidenavItem,
-  HouseIcon,
   DatabaseIcon,
   FolderIcon,
   FileContractIcon,
@@ -12,10 +11,10 @@ import { routes } from '../config/routes'
 export function RenterSidenav() {
   return (
     <>
-      <SidenavItem title="Dashboard" route={routes.home}>
+      {/* <SidenavItem title="Dashboard" route={routes.home}>
         <HouseIcon />
-      </SidenavItem>
-      <SidenavItem title="Files" route={routes.files.index}>
+      </SidenavItem> */}
+      <SidenavItem title="Files" route={routes.home}>
         <FolderIcon />
       </SidenavItem>
       <SidenavItem title="Autopilot" route={routes.autopilot.index}>

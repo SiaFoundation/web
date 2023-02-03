@@ -46,7 +46,7 @@ export function AppAuthedLayout({
         <div className="flex flex-col flex-1 overflow-hidden">
           <AppNavbar title={title} filters={filters} actions={actions} />
           <ScrollArea>
-            <Container size={size} pad={false} className="p-5">
+            <Container size={size} pad={false}>
               <div className="flex flex-col gap-5">{children}</div>
             </Container>
           </ScrollArea>

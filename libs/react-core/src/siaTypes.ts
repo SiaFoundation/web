@@ -314,9 +314,9 @@ export interface ContractSpending {
 
 // struct2ts:go.sia.tech/renterd/bus.Contract
 export interface Contract {
-  ID: string
+  id: string
   hostIP: string
-  HostKey: string
+  hostKey: string
   startHeight: number
   renewedFrom: string
   spending: ContractSpending
@@ -400,8 +400,9 @@ export interface HostsConfig {
 
 // struct2ts:go.sia.tech/renterd/autopilot.ContractsConfig
 export interface ContractsConfig {
+  set: string
+  amount: number
   allowance: Currency
-  hosts: number
   period: number
   renewWindow: number
   download: number

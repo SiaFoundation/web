@@ -91,6 +91,7 @@ export * from './app/DatumCardConfigurable'
 export * from './app/DatumScrollArea'
 export * from './app/ConfigurationSiacoin'
 export * from './app/ConfigurationNumber'
+export * from './app/ConfigurationText'
 export * from './app/ContractTimeline'
 export * from './app/ProgressSteps'
 

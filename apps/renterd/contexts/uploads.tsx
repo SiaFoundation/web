@@ -64,7 +64,6 @@ export function UploadsProvider({ children }: Props) {
   )
 
   const onDrop = async (droppedFiles: File[]) => {
-    console.log(droppedFiles)
     // handleUploads(ref, directoryPath, droppedFiles)
     droppedFiles.forEach(async (file) => {
       const onUploadProgress = throttle(
@@ -88,6 +87,7 @@ export function UploadsProvider({ children }: Props) {
       })
       if (response.error) {
         triggerErrorToast(response.error)
+        removeUpload(file.name)
       } else {
         removeUpload(file.name)
         triggerToast(`Upload complete: ${file.name}`)

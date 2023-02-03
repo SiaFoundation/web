@@ -1,8 +1,8 @@
 export const routes = {
   home: '/',
-  files: {
-    index: '/files',
-  },
+  // files: {
+  //   index: '/files',
+  // },
   autopilot: {
     index: '/autopilot',
     estimates: '/autopilot#estimates',
@@ -24,8 +24,6 @@ export const routes = {
   },
   node: {
     index: '/node',
-    txPool: '/node/txpool',
-    peers: '/node/peers',
   },
-  lockscreen: '/unlock',
+  lockscreen: '/login',
 }

@@ -34,10 +34,10 @@ const defaultOptions: DefaultToastOptions = {
     'text-gray-1100 dark:text-white'
   ),
   success: {
-    icon: <CheckmarkOutline16 className="text-green-600" />,
+    icon: <CheckmarkOutline16 className="w-3 text-green-600" />,
   },
   error: {
-    icon: <CloseOutline16 className="text-red-600" />,
+    icon: <CloseOutline16 className="w-3 text-red-600" />,
   },
 }
 
