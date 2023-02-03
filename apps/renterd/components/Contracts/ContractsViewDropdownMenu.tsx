@@ -10,13 +10,14 @@ import {
   DropdownMenuSeparator,
   ComboPool,
 } from '@siafoundation/design-system'
-import { useContracts, ContractColumn } from '../hooks/useContracts'
+import { TableColumnId } from '../../hooks/useContracts/types'
+import { useContracts } from '../../hooks/useContracts'
 
 export function ContractsViewDropdownMenu() {
   const {
     configurableColumns,
-    toggleColumn,
-    resetDefaultColumns,
+    toggleColumnVisibility,
+    resetDefaultColumnVisibility,
     sortOptions,
     sortColumn,
     setSortColumn,
@@ -48,13 +49,13 @@ export function ContractsViewDropdownMenu() {
                 e.stopPropagation()
               }}
               onChange={(e) => {
-                setSortColumn(e.currentTarget.value as ContractColumn)
+                setSortColumn(e.currentTarget.value as TableColumnId)
               }}
             >
               {Object.entries(sortOptions).map(([category, options]) => (
                 <optgroup key={category} label={category}>
                   {options.map((column) => (
-                    <option key={column.key} value={column.key}>
+                    <option key={column.id} value={column.id}>
                       {column.label}
                     </option>
                   ))}
@@ -92,7 +93,7 @@ export function ContractsViewDropdownMenu() {
           <Button
             onClick={(e) => {
               e.stopPropagation()
-              resetDefaultColumns()
+              resetDefaultColumnVisibility()
             }}
           >
             Reset default
@@ -103,10 +104,10 @@ export function ContractsViewDropdownMenu() {
         <ComboPool
           options={configurableColumns.map((column) => ({
             label: column.label,
-            value: column.key,
+            value: column.id,
           }))}
           values={enabledColumns}
-          onChange={(value) => toggleColumn(value)}
+          onChange={(value) => toggleColumnVisibility(value)}
         />
       </div>
     </DropdownMenu>

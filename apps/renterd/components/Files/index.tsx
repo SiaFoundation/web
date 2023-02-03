@@ -2,7 +2,7 @@ import { RenterSidenav } from '../RenterSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { FilesExplorer } from './FilesExplorer'
-import { FileNav } from '../FileNav'
+import { FileNav } from './FileNav'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 import { FilesActions } from './FilesActions'
 
@@ -21,7 +21,9 @@ export function Files() {
       actions={<FilesActions />}
       openSettings={() => openDialog('settings')}
     >
-      <FilesExplorer />
+      <div className="p-5">
+        <FilesExplorer />
+      </div>
     </RenterdAuthedLayout>
   )
 }

@@ -13,9 +13,12 @@ import { useObject, useObjectDirectory } from '@siafoundation/react-core'
 import { useUploads } from '../../contexts/uploads'
 import { useMemo } from 'react'
 import { sortBy, toPairs } from 'lodash'
+import { EmptyState } from './EmptyState'
+
+type ColumnIds = 'name' | 'size' | 'slabs' | 'actions'
 
 type Data = {
-  key: string
+  id: string
   path: string
   isUploading?: boolean
 }
@@ -33,13 +36,13 @@ export function FilesExplorer() {
 
     objects.data?.entries?.forEach((o) => {
       dataMap[o] = {
-        key: o,
+        id: o,
         path: o,
       }
     })
     uploadsList.forEach(({ path }) => {
       dataMap[path] = {
-        key: path,
+        id: path,
         path: `//${path}`,
         isUploading: true,
       }
@@ -51,9 +54,9 @@ export function FilesExplorer() {
     return all
   }, [objects, uploadsList])
 
-  const columns: TableColumn<Data>[] = [
+  const columns: TableColumn<ColumnIds, Data>[] = [
     {
-      key: 'name',
+      id: 'name',
       label: 'Name',
       size: 5,
       render: ({ path }) => (
@@ -63,7 +66,7 @@ export function FilesExplorer() {
       ),
     },
     {
-      key: 'size',
+      id: 'size',
       label: 'Size',
       size: 2,
       render: function SizeColumn({ path }: Data) {
@@ -95,7 +98,7 @@ export function FilesExplorer() {
       },
     },
     {
-      key: 'slabs',
+      id: 'slabs',
       label: 'Slabs',
       size: 2,
       render: function SlabsColumn({ path }: Data) {
@@ -123,7 +126,7 @@ export function FilesExplorer() {
       },
     },
     {
-      key: 'actions',
+      id: 'actions',
       label: '',
       size: 0.5,
       className: 'justify-end',
@@ -134,8 +137,13 @@ export function FilesExplorer() {
 
   return (
     <div className="relative">
-      <Dropzone onDrop={onDrop} noClick={true}>
-        <Table data={data} columns={columns} rowSize="dense" />
+      <Dropzone onDrop={onDrop} noClick={data.length > 0}>
+        <Table
+          data={data}
+          columns={columns}
+          rowSize="dense"
+          emptyState={<EmptyState />}
+        />
       </Dropzone>
     </div>
   )

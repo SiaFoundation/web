@@ -1,12 +1,12 @@
 import { SiacoinField } from '../core/SiacoinField'
 import { toHastings, toSiacoins } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
-import { ConfigurationTip } from './ConfigurationTip'
+import { ConfigurationTipNumber } from './ConfigurationTipNumber'
 
 type Props = {
   average?: BigNumber
   suggestion?: BigNumber
-  suggestionTip?: string
+  suggestionTip?: React.ReactNode
   value: BigNumber
   onChange: (value: BigNumber) => void
   decimalsLimitSc?: number
@@ -43,7 +43,7 @@ export function ConfigurationSiacoin({
       />
       <div className="flex flex-col gap-2">
         {average && (
-          <ConfigurationTip
+          <ConfigurationTipNumber
             type="siacoin"
             label="Network average"
             tip="Averages provided by Sia Central."
@@ -53,7 +53,7 @@ export function ConfigurationSiacoin({
           />
         )}
         {suggestion && suggestionTip && (
-          <ConfigurationTip
+          <ConfigurationTipNumber
             type="siacoin"
             label="Suggestion"
             tip={suggestionTip}

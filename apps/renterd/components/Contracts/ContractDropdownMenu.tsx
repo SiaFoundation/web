@@ -4,7 +4,7 @@ import {
   Button,
   Settings20,
 } from '@siafoundation/design-system'
-import { useDialog } from '../contexts/dialog'
+import { useDialog } from '../../contexts/dialog'
 
 type Props = {
   id: string

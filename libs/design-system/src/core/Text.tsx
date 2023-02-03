@@ -32,7 +32,7 @@ export const textStyles = cva(['inline-block', 'font-sans'], {
       none: '',
     },
     size: {
-      '10': 'text-2xs',
+      '10': 'text-xxs',
       '12': 'text-xs',
       '14': 'text-sm',
       '16': 'text-base',

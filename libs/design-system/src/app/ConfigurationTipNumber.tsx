@@ -11,14 +11,14 @@ type Props = {
   type: 'siacoin' | 'number'
   label: string
   link?: string
-  tip: string
+  tip: React.ReactNode
   value: BigNumber
   onChange: (value: BigNumber) => void
   decimalsLimit: number
   units?: string
 }
 
-export function ConfigurationTip({
+export function ConfigurationTipNumber({
   type,
   label,
   link,

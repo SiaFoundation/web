@@ -9,10 +9,10 @@ import {
   DropdownMenuLabel,
   ComboPool,
 } from '@siafoundation/design-system'
-import { useContracts } from '../hooks/useContracts'
+import { useContracts } from '../../hooks/useContracts'
 
 export function ContractsFilterDropdownMenu() {
-  const { filters, setFilter } = useContracts()
+  const { filters } = useContracts()
 
   const statusValues = filters['status']?.values || []
   const expirationDateValue = filters['expirationDate']?.value
@@ -51,17 +51,17 @@ export function ContractsFilterDropdownMenu() {
               ]}
               values={statusValues}
               onChange={(value) => {
-                if (statusValues.includes(value)) {
-                  setFilter({
-                    key: 'status',
-                    values: statusValues.filter((v) => v !== value),
-                  })
-                } else {
-                  setFilter({
-                    key: 'status',
-                    values: statusValues.concat(value),
-                  })
-                }
+                // if (statusValues.includes(value)) {
+                //   setFilter({
+                //     key: 'status',
+                //     values: statusValues.filter((v) => v !== value),
+                //   })
+                // } else {
+                //   setFilter({
+                //     key: 'status',
+                //     values: statusValues.concat(value),
+                //   })
+                // }
               }}
             />
           </div>
@@ -96,12 +96,12 @@ export function ContractsFilterDropdownMenu() {
                 // },
               ]}
               values={[expirationDateValue]}
-              onChange={(value) =>
-                setFilter({
-                  key: 'expirationDate',
-                  value,
-                })
-              }
+              onChange={(value) => {
+                // setFilter({
+                //   key: 'expirationDate',
+                //   value,
+                // })
+              }}
             />
           </div>
         </DropdownMenuItem>

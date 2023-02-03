@@ -1,12 +1,12 @@
 import { NumberField } from '../core/NumberField'
 import { toFixedMax } from '../lib/numbers'
 import BigNumber from 'bignumber.js'
-import { ConfigurationTip } from './ConfigurationTip'
+import { ConfigurationTipNumber } from './ConfigurationTipNumber'
 
 type Props = {
   average?: BigNumber
   suggestion?: BigNumber
-  suggestionTip?: string
+  suggestionTip?: React.ReactNode
   units?: string
   value: BigNumber
   onChange: (value: BigNumber) => void
@@ -37,7 +37,7 @@ export function ConfigurationNumber({
       />
       <div className="flex flex-col gap-2">
         {average && (
-          <ConfigurationTip
+          <ConfigurationTipNumber
             type="number"
             label="Network average"
             tip="Averages provided by Sia Central."
@@ -48,7 +48,7 @@ export function ConfigurationNumber({
           />
         )}
         {suggestion && suggestionTip && (
-          <ConfigurationTip
+          <ConfigurationTipNumber
             type="number"
             label="Suggestion"
             tip={suggestionTip}

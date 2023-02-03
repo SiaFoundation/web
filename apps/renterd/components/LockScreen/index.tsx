@@ -5,9 +5,9 @@ import {
   AppPublicLayout,
   AppUnlockForm,
 } from '@siafoundation/design-system'
-import { routes } from '../config/routes'
+import { routes } from '../../config/routes'
 
-export default function Unlock() {
+export function LockScreen() {
   return (
     <AppPublicLayout routes={routes}>
       <div className="flex flex-col items-center justify-center gap-6 h-full">

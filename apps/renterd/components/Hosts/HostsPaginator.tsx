@@ -8,7 +8,7 @@ import {
   Text,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
-import { useHosts } from '../hooks/useHosts'
+import { useHosts } from '../../hooks/useHosts'
 
 export function HostsPaginator() {
   const router = useRouter()

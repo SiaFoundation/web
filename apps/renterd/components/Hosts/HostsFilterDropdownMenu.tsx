@@ -9,7 +9,7 @@ import {
   ipRegex,
 } from '@siafoundation/design-system'
 import { useCallback, useMemo, useEffect, useRef, useState } from 'react'
-import { HostFilter, useHosts } from '../hooks/useHosts'
+import { HostFilter, useHosts } from '../../hooks/useHosts'
 import { cx } from 'class-variance-authority'
 
 export function HostsFilterDropdownMenu() {

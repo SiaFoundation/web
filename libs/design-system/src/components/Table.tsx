@@ -4,36 +4,44 @@ import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
 import { useMemo } from 'react'
 import { cx } from 'class-variance-authority'
+import { CaretDown16, CaretUp16 } from '@carbon/icons-react'
 
 export type Row = {
-  key: string
+  id: string
 }
 
-export type TableColumn<R> = {
-  key: string
+export type TableColumn<Columns, R> = {
+  id: Columns
   label: string
   tip?: string
   size?: number
   className?: string
   render: React.FC<R>
   summary?: () => React.ReactNode
-  type?: 'fixed'
   sortable?: string
 }
 
-type Props<R extends Row> = {
+type Props<Columns extends string, R extends Row> = {
   data: R[]
-  columns: TableColumn<R>[]
+  columns: TableColumn<Columns, R>[]
+  sortColumn?: Columns
+  sortDirection?: 'asc' | 'desc'
+  toggleSort?: (column: Columns) => void
   summary?: boolean
   rowSize?: 'dense' | 'default'
+  emptyState?: React.ReactNode
 }
 
-export function Table<R extends Row>({
+export function Table<Columns extends string, R extends Row>({
   columns: _columns,
   data,
+  sortColumn,
+  sortDirection,
+  toggleSort,
   summary,
   rowSize = 'default',
-}: Props<R>) {
+  emptyState,
+}: Props<Columns, R>) {
   const columns = useMemo(
     () =>
       _columns?.map((column) => {
@@ -53,32 +61,45 @@ export function Table<R extends Row>({
     <Panel>
       <div className="flex flex-col">
         <div className="flex border-b border-gray-400 dark:border-graydark-400">
-          {columns.map(({ key, label, tip, style, className }) => (
+          {columns.map(({ id, label, tip, style, className }) => (
             <div
+              key={id}
               className={cx('flex py-3 px-6 overflow-hidden', className)}
               style={style}
-              key={key}
             >
               <Tooltip content={label}>
                 <Text
+                  onClick={() => {
+                    if (toggleSort) {
+                      toggleSort(id)
+                    }
+                  }}
                   weight="semibold"
                   color="subtle"
                   size="12"
-                  className="relative top-px"
+                  className="relative top-px cursor-pointer"
                   ellipsis
                 >
                   {label}
                 </Text>
               </Tooltip>
+              <Text color="subtle">
+                {sortColumn === id &&
+                  (sortDirection === 'asc' ? (
+                    <CaretUp16 className="scale-75" />
+                  ) : (
+                    <CaretDown16 className="scale-75" />
+                  ))}
+              </Text>
               {tip && <InfoTip>{tip}</InfoTip>}
             </div>
           ))}
         </div>
         {summary && (
           <div className="flex items-center py-2 bg-gray-50 dark:bg-graydark-50 border-l border-r border-b border-gray-200 dark:border-graydark-200">
-            {columns.map(({ key, summary, style, className }) => (
+            {columns.map(({ id, summary, style, className }) => (
               <div
-                key={key}
+                key={id}
                 className={cx('flex px-6 overflow-hidden', className)}
                 style={style}
               >
@@ -88,12 +109,13 @@ export function Table<R extends Row>({
           </div>
         )}
         <div className="flex flex-col">
-          {data.map((row) => (
-            <div
-              className="flex items-center border-b border-gray-300 dark:border-graydark-300 last-of-type:border-b-none overflow-hidden"
-              key={row.key}
-            >
-              {/* {toPairs(groupBy(columns, 'group')).map(
+          {data.length
+            ? data.map((row) => (
+                <div
+                  key={row.id}
+                  className="flex items-center border-b border-gray-300 dark:border-graydark-300 last-of-type:border-b-none overflow-hidden"
+                >
+                  {/* {toPairs(groupBy(columns, 'group')).map(
                 ([name, groupColumns]) => (
                   <div className="flex gap-7 items-center"
                     key={name}
@@ -103,21 +125,24 @@ export function Table<R extends Row>({
                       }
                     }
                   > */}
-              {columns.map(({ key, render: Render, style, className }, i) => (
-                <div
-                  key={row.key + key}
-                  className={cx(
-                    'flex items-center px-6 overflow-hidden',
-                    rowSize === 'dense' ? 'h-[50px]' : 'h-[100px]',
-                    className
+                  {columns.map(
+                    ({ id, render: Render, style, className }, i) => (
+                      <div
+                        key={`${id}/${row.id}`}
+                        className={cx(
+                          'flex items-center px-6 overflow-hidden',
+                          rowSize === 'dense' ? 'h-[50px]' : 'h-[100px]',
+                          className
+                        )}
+                        style={style}
+                      >
+                        <Render {...row} />
+                      </div>
+                    )
                   )}
-                  style={style}
-                >
-                  <Render {...row} />
                 </div>
-              ))}
-            </div>
-          ))}
+              ))
+            : emptyState}
         </div>
       </div>
     </Panel>
