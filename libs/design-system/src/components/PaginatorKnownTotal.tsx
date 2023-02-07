@@ -1,22 +1,28 @@
+import { Button } from '../core/Button'
+import { Text } from '../core/Text'
+import { ControlGroup } from '../core/ControlGroup'
 import {
-  Button,
-  ControlGroup,
   CaretLeft16,
   CaretRight16,
   PageFirst16,
   PageLast16,
-  Text,
-} from '@siafoundation/design-system'
+} from '../icons/carbon'
 import { useRouter } from 'next/router'
-import { useHosts } from '../../hooks/useHosts'
 
-export function HostsPaginator() {
+type Props = {
+  offset: number
+  limit: number
+  datasetTotal: number
+  pageTotal: number
+}
+
+export function PaginatorKnownTotal({ offset, limit, datasetTotal }: Props) {
   const router = useRouter()
-  const { skip, limit, meta } = useHosts()
   return (
     <ControlGroup>
       <Button
-        disabled={skip <= 0}
+        icon
+        disabled={offset <= 0}
         size="small"
         variant="gray"
         className="rounded-r-none"
@@ -24,7 +30,7 @@ export function HostsPaginator() {
           router.push({
             query: {
               ...router.query,
-              skip: 0,
+              offset: 0,
             },
           })
         }
@@ -34,7 +40,8 @@ export function HostsPaginator() {
         </div>
       </Button>
       <Button
-        disabled={skip <= 0}
+        icon
+        disabled={offset <= 0}
         size="small"
         variant="gray"
         className="rounded-none"
@@ -42,7 +49,7 @@ export function HostsPaginator() {
           router.push({
             query: {
               ...router.query,
-              skip: Math.max(skip - limit, 0),
+              offset: Math.max(offset - limit, 0),
             },
           })
         }
@@ -50,15 +57,15 @@ export function HostsPaginator() {
         <CaretLeft16 />
       </Button>
       <Button className="rounded-none px-3">
-        {skip + 1} - {Math.min(skip + limit, meta.totalFiltered)}
+        {offset + 1} - {Math.min(offset + limit, datasetTotal)}
         <Text size="12" color="subtle">
           {' '}
-          of{' '}
-          {meta.totalFiltered ? meta.totalFiltered.toLocaleString() : '68,590'}
+          of {datasetTotal ? datasetTotal.toLocaleString() : ''}
         </Text>
       </Button>
       <Button
-        disabled={skip + limit >= meta.totalFiltered}
+        icon
+        disabled={offset + limit >= datasetTotal}
         size="small"
         variant="gray"
         className="rounded-none"
@@ -66,7 +73,7 @@ export function HostsPaginator() {
           router.push({
             query: {
               ...router.query,
-              skip: Math.min(skip + limit, meta.totalFiltered),
+              offset: Math.min(offset + limit, datasetTotal),
             },
           })
         }
@@ -74,7 +81,8 @@ export function HostsPaginator() {
         <CaretRight16 />
       </Button>
       <Button
-        disabled={skip + limit >= meta.totalFiltered}
+        icon
+        disabled={offset + limit >= datasetTotal}
         size="small"
         variant="gray"
         className="rounded-l-none"
@@ -82,7 +90,7 @@ export function HostsPaginator() {
           router.push({
             query: {
               ...router.query,
-              skip: Math.round(meta.totalFiltered / limit) * limit,
+              offset: Math.round(datasetTotal / limit) * limit,
             },
           })
         }

@@ -72,7 +72,7 @@ export function UploadsProvider({ children }: Props) {
       )
       updateProgress(file.name, {
         loaded: 0,
-        total: 0,
+        total: 1,
       })
       const response = await upload.put({
         params: {

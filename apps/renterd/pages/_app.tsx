@@ -16,7 +16,7 @@ export default function App({
     <ClientSide>
       <SWRConfig value={{ fallback: pageProps?.fallback || {} }}>
         <ThemeProvider>
-          <AppSettingsProvider>
+          <AppSettingsProvider passwordProtectRequestHooks>
             <DialogProvider>
               <UploadsProvider>
                 <Component {...pageProps} />

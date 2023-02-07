@@ -354,9 +354,20 @@ export interface Interaction {
 
 // struct2ts:go.sia.tech/renterd/hostdb.Host
 export interface Host {
-  PublicKey: string
+  public_key: string
+  netAddress: string
+  knownSince: string
   Announcements?: Announcement[]
-  Interactions?: Interaction[]
+  interactions: {
+    Downtime: number
+    FailedInteractions: number
+    LastScan: string
+    LastScanSuccess: boolean
+    SecondToLastScanSuccess: boolean
+    SuccessfulInteractions: number
+    TotalScans: number
+    Uptime: number
+  }
 }
 
 // struct2ts:go.sia.tech/renterd/wallet.Transaction

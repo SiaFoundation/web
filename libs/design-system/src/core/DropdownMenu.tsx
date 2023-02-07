@@ -212,7 +212,7 @@ export const DropdownMenuLabel = React.forwardRef<
   return (
     <DropdownMenuPrimitive.Label
       ref={ref}
-      className={labelStyles({ className })}
+      className={cx('px-1.5', labelStyles({ className }))}
       {...props}
     />
   )

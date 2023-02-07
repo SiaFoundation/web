@@ -152,7 +152,7 @@ export function Config() {
       }
       openSettings={() => openDialog('settings')}
     >
-      <div className="flex flex-col gap-16 max-w-screen-xl">
+      <div className="p-5 flex flex-col gap-16 max-w-screen-xl">
         <MenuSection title="Gouging">
           <Setting
             title="Max RPC price"

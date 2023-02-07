@@ -45,7 +45,6 @@ export const buttonStyles = cva(
       variant: {
         accent: [
           'border',
-          '[&>svg]:opacity-50',
           // enabled
           'text-white dark:text-white',
           'enabled:bg-green-700 enabled:dark:bg-green-700',
@@ -64,7 +63,6 @@ export const buttonStyles = cva(
         ],
         red: [
           'border',
-          '[&>svg]:opacity-50',
           'bg-red-700 dark:bg-red-700',
           'border-red-800/30 dark:border-red-600/70',
           'enabled:hover:bg-red-800/90 dark:enabled:hover:bg-red-700/90',
@@ -76,7 +74,6 @@ export const buttonStyles = cva(
         ],
         gray: [
           'border',
-          '[&>svg]:opacity-50',
           'bg-white dark:bg-graydark-200',
           'enabled:hover:bg-gray-50 dark:enabled:hover:bg-graydark-300',
           'disabled:bg-gray-200 disabled:dark:bg-graydark-200',
@@ -96,11 +93,16 @@ export const buttonStyles = cva(
           'text-gray-700 dark:text-graydark-800',
         ],
       },
+      icon: {
+        true: '',
+        false: '[&>svg]:opacity-50',
+      },
     },
     defaultVariants: {
       variant: 'gray',
       size: 'small',
       rounded: true,
+      icon: false,
     },
   }
 )
@@ -109,20 +111,26 @@ export const Button = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement> &
     VariantProps<typeof buttonStyles>
->(({ variant, size, state, rounded, disabled, className, ...props }, ref) => {
-  return (
-    <button
-      ref={ref}
-      disabled={disabled}
-      className={buttonStyles({
-        variant,
-        size,
-        state,
-        rounded,
-        disabled,
-        className,
-      })}
-      {...props}
-    />
-  )
-})
+>(
+  (
+    { variant, size, state, rounded, disabled, icon, className, ...props },
+    ref
+  ) => {
+    return (
+      <button
+        ref={ref}
+        disabled={disabled}
+        className={buttonStyles({
+          variant,
+          size,
+          state,
+          rounded,
+          disabled,
+          icon,
+          className,
+        })}
+        {...props}
+      />
+    )
+  }
+)

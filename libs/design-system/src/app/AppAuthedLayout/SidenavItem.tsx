@@ -12,7 +12,7 @@ type Props = {
 
 export function SidenavItem({ title, children, route, onClick }: Props) {
   const router = useRouter()
-  const state = router.asPath === route
+  const state = router.pathname === route
 
   if (!route) {
     return (
@@ -44,6 +44,7 @@ export function SidenavItem({ title, children, route, onClick }: Props) {
         content={title}
       >
         <Button
+          icon
           size="none"
           variant="state"
           data-state={state ? 'open' : 'closed'}
