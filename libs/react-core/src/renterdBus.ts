@@ -169,21 +169,21 @@ export function useWalletPending(args?: HookArgsSwr<void, Transaction[]>) {
 // hosts
 
 type HostsParams = {
-  notSince?: number
-  max?: number
+  offset?: number
+  limit?: number
 }
 
 // TODO: ideally the API includes the following parameters
-export type HostSortBy = 'firstSeen' | 'lastSeen' | 'score'
-export type HostSortDir = 'asc' | 'desc'
-export type ListMetaResponse = {
-  total: number
-  totalFiltered: number
-}
-export type HostsResponse = {
-  hosts: Host[]
-  meta: ListMetaResponse
-}
+// export type HostSortBy = 'firstSeen' | 'lastSeen' | 'score'
+// export type HostSortDir = 'asc' | 'desc'
+// export type ListMetaResponse = {
+//   total: number
+//   totalFiltered: number
+// }
+// export type HostsResponse = {
+//   hosts: Host[]
+//   meta: ListMetaResponse
+// }
 
 export function useHosts(args: HookArgsSwr<HostsParams, Host[]>) {
   return useGet({

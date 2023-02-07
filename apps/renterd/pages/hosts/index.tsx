@@ -1,5 +1,10 @@
+import { HostsProvider } from '../../contexts/hosts'
 import { Hosts } from '../../components/Hosts'
 
 export default function HostsPage() {
-  return <Hosts />
+  return (
+    <HostsProvider>
+      <Hosts />
+    </HostsProvider>
+  )
 }

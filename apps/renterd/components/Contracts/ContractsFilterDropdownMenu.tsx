@@ -5,17 +5,84 @@ import {
   DropdownMenu,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuLabel,
   ComboPool,
+  getWeeksInMs,
+  getDaysInMs,
+  getMonthsInMs,
+  getYearsInMs,
 } from '@siafoundation/design-system'
-import { useContracts } from '../../hooks/useContracts'
+import { ContractData } from '../../contexts/contracts/types'
+import { useContracts } from '../../contexts/contracts'
+import { pick } from 'lodash'
+
+const options = [
+  {
+    id: 'expiry',
+    value: 'day',
+    label: 'Expires today',
+    fn: (d: ContractData) => {
+      const now = new Date().getTime()
+      const expiry = now + getDaysInMs(1)
+      return d.endTime < expiry && d.endTime > now
+    },
+  },
+  {
+    id: 'expiry',
+    value: 'week',
+    label: 'Expires this week',
+    fn: (d: ContractData) => {
+      const now = new Date().getTime()
+      const expiry = now + getWeeksInMs(1)
+      return d.endTime < expiry && d.endTime > now
+    },
+  },
+  {
+    id: 'expiry',
+    value: 'month',
+    label: 'Expires this month',
+    fn: (d: ContractData) => {
+      const now = new Date().getTime()
+      const expiry = now + getMonthsInMs(1)
+      return d.endTime < expiry && d.endTime > now
+    },
+  },
+  {
+    id: 'expiry',
+    value: 'nextMonth',
+    label: 'Expires next month',
+    fn: (d: ContractData) => {
+      const now = new Date().getTime()
+      const expiry = now + getMonthsInMs(2)
+      return d.endTime < expiry && d.endTime > now
+    },
+  },
+  {
+    id: 'expiry',
+    value: 'year',
+    label: 'Expires this year',
+    fn: (d: ContractData) => {
+      const now = new Date().getTime()
+      const expiry = now + getYearsInMs(1)
+      return d.endTime < expiry && d.endTime > now
+    },
+  },
+  {
+    id: 'expiry',
+    value: 'expired',
+    label: 'Expired',
+    fn: (d: ContractData) => {
+      const now = new Date().getTime()
+      return d.endTime < now
+    },
+  },
+]
 
 export function ContractsFilterDropdownMenu() {
-  const { filters } = useContracts()
+  const { setFilter, filters } = useContracts()
 
-  const statusValues = filters['status']?.values || []
-  const expirationDateValue = filters['expirationDate']?.value
+  const expirySelection = filters['expiry'] ? [filters['expiry'].value] : []
+
   return (
     <DropdownMenu
       trigger={
@@ -30,77 +97,16 @@ export function ContractsFilterDropdownMenu() {
         className: 'max-w-[300px]',
       }}
     >
-      <DropdownMenuGroup>
-        <DropdownMenuLabel>Status</DropdownMenuLabel>
-        <DropdownMenuItem>
-          <div className="py-2">
-            <ComboPool
-              options={[
-                {
-                  value: 'active',
-                  label: 'Active',
-                },
-                {
-                  value: 'successful',
-                  label: 'Successful',
-                },
-                {
-                  value: 'failed',
-                  label: 'Failed',
-                },
-              ]}
-              values={statusValues}
-              onChange={(value) => {
-                // if (statusValues.includes(value)) {
-                //   setFilter({
-                //     key: 'status',
-                //     values: statusValues.filter((v) => v !== value),
-                //   })
-                // } else {
-                //   setFilter({
-                //     key: 'status',
-                //     values: statusValues.concat(value),
-                //   })
-                // }
-              }}
-            />
-          </div>
-        </DropdownMenuItem>
-      </DropdownMenuGroup>
-      <DropdownMenuSeparator />
-      <DropdownMenuGroup>
+      <DropdownMenuGroup className="py-1">
         <DropdownMenuLabel>Expiration date</DropdownMenuLabel>
         <DropdownMenuItem>
-          <div className="py-2">
+          <div className="py-1">
             <ComboPool
-              options={[
-                {
-                  value: 'day',
-                  label: 'Today',
-                },
-                {
-                  value: 'week',
-                  label: 'This week',
-                },
-                {
-                  value: 'month',
-                  label: 'This month',
-                },
-                {
-                  value: 'year',
-                  label: 'This year',
-                },
-                // {
-                //   label: <Calendar16 />,
-                //   value: 'Custom range',
-                // },
-              ]}
-              values={[expirationDateValue]}
+              options={options.map((o) => pick(o, ['label', 'value']))}
+              values={expirySelection}
               onChange={(value) => {
-                // setFilter({
-                //   key: 'expirationDate',
-                //   value,
-                // })
+                const o = options.find((o) => o.value === value)
+                setFilter(o.id, o)
               }}
             />
           </div>

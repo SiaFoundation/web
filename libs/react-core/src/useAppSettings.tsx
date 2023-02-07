@@ -65,24 +65,13 @@ const defaultSettings: AppSettings = {
   recentApis: {},
 }
 
-type State = {
-  settings: AppSettings
-  currencyOptions: CurrencyOption[]
-  setCurrency: (id: CurrencyId) => void
-  setSettings: (settings: Partial<AppSettings>) => void
-  lock: () => void
-  isUnlocked: boolean
-}
-
-const SettingsContext = createContext({} as State)
-export const useAppSettings = () => useContext(SettingsContext)
-
 type Props = {
-  children: React.ReactNode
+  children?: React.ReactNode
   ssr?: boolean
+  passwordProtectRequestHooks?: boolean
 }
 
-export function AppSettingsProvider({ children, ssr }: Props) {
+function useAppSettingsMain({ ssr, passwordProtectRequestHooks }: Props) {
   const [settings, _setSettings] = useLocalStorageState('v0/settings', {
     ssr,
     defaultValue: defaultSettings,
@@ -125,17 +114,26 @@ export function AppSettingsProvider({ children, ssr }: Props) {
 
   const isUnlocked = useMemo(() => !!settings.password, [settings])
 
-  const value = {
+  return {
     settings,
     setSettings,
     setCurrency,
     currencyOptions,
     lock,
     isUnlocked,
-  } as State
+    passwordProtectRequestHooks,
+  }
+}
 
+type State = ReturnType<typeof useAppSettingsMain>
+
+const SettingsContext = createContext({} as State)
+export const useAppSettings = () => useContext(SettingsContext)
+
+export function AppSettingsProvider({ children, ...props }: Props) {
+  const state = useAppSettingsMain(props)
   return (
-    <SettingsContext.Provider value={value}>
+    <SettingsContext.Provider value={state}>
       {children}
     </SettingsContext.Provider>
   )

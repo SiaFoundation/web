@@ -3,26 +3,23 @@ import {
   CaretDown16,
   DropdownMenu,
   SettingsAdjust16,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  Select,
   DropdownMenuRightSlot,
-  DropdownMenuSeparator,
   ComboPool,
 } from '@siafoundation/design-system'
-import { HostSortBy } from '@siafoundation/react-core'
-import { useHosts } from '../hooks/useHosts'
+// import { HostSortBy } from '@siafoundation/react-core'
+import { useHosts } from '../../contexts/hosts'
 
 export function HostsViewDropdownMenu() {
   const {
     configurableColumns,
-    toggleColumn,
-    resetDefaultColumns,
-    sortOptions,
-    sortBy,
-    setSortBy,
-    sortDir,
-    setSortDir,
+    toggleColumnVisibility,
+    resetDefaultColumnVisibility,
+    // sortOptions,
+    // sortBy,
+    // setSortBy,
+    // sortDir,
+    // setSortDir,
     enabledColumns,
   } = useHosts()
   return (
@@ -39,7 +36,7 @@ export function HostsViewDropdownMenu() {
       }}
       className="max-w-xs"
     >
-      <DropdownMenuGroup>
+      {/* <DropdownMenuGroup>
         <DropdownMenuItem>
           Order by
           <DropdownMenuRightSlot>
@@ -55,7 +52,7 @@ export function HostsViewDropdownMenu() {
               {Object.entries(sortOptions).map(([category, options]) => (
                 <optgroup key={category} label={category}>
                   {options.map((column) => (
-                    <option key={column.key} value={column.key}>
+                    <option key={column.id} value={column.id}>
                       {column.label}
                     </option>
                   ))}
@@ -86,14 +83,14 @@ export function HostsViewDropdownMenu() {
           </DropdownMenuRightSlot>
         </DropdownMenuItem>
       </DropdownMenuGroup>
-      <DropdownMenuSeparator />
+      <DropdownMenuSeparator /> */}
       <DropdownMenuItem>
         Display properties
         <DropdownMenuRightSlot>
           <Button
             onClick={(e) => {
               e.stopPropagation()
-              resetDefaultColumns()
+              resetDefaultColumnVisibility()
             }}
           >
             Reset default
@@ -104,10 +101,10 @@ export function HostsViewDropdownMenu() {
         <ComboPool
           options={configurableColumns.map((column) => ({
             label: column.label,
-            value: column.key,
+            value: column.id,
           }))}
           values={enabledColumns}
-          onChange={(value) => toggleColumn(value)}
+          onChange={(value) => toggleColumnVisibility(value)}
         />
       </div>
     </DropdownMenu>

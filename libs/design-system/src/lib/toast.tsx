@@ -10,18 +10,18 @@ import { panelStyles } from '../core/Panel'
 export type { ToastOptions }
 
 export const triggerToast = (text: string, options: ToastOptions = {}) => {
-  toast(text, options)
+  toast(text.length > 50 ? `${text.slice(0, 50)}` : text, options)
 }
 
 export const triggerSuccessToast = (
   text: string,
   options: ToastOptions = {}
 ) => {
-  toast.success(text, options)
+  toast.success(text.length > 50 ? `${text.slice(0, 50)}` : text, options)
 }
 
 export const triggerErrorToast = (text: string, options: ToastOptions = {}) => {
-  toast.error(text, options)
+  toast.error(text.length > 50 ? `${text.slice(0, 50)}` : text, options)
 }
 
 const defaultOptions: DefaultToastOptions = {

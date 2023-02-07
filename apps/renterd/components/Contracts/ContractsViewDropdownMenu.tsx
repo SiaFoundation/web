@@ -10,8 +10,8 @@ import {
   DropdownMenuSeparator,
   ComboPool,
 } from '@siafoundation/design-system'
-import { TableColumnId } from '../../hooks/useContracts/types'
-import { useContracts } from '../../hooks/useContracts'
+import { TableColumnId } from '../../contexts/contracts/types'
+import { useContracts } from '../../contexts/contracts'
 
 export function ContractsViewDropdownMenu() {
   const {
@@ -35,7 +35,7 @@ export function ContractsViewDropdownMenu() {
         </Button>
       }
       contentProps={{
-        align: 'start',
+        align: 'end',
         className: 'max-w-[300px]',
       }}
     >

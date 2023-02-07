@@ -1,6 +1,4 @@
 import BigNumber from 'bignumber.js'
-import groupBy from 'lodash/groupBy'
-import filter from 'lodash/filter'
 
 export type ContractData = {
   id: string
@@ -38,7 +36,7 @@ export type TableColumnId =
 // | 'uploadPrice'
 // | 'downloadPrice'
 
-export const columnMetadata: Record<
+export const columnsMeta: Record<
   TableColumnId,
   { id: TableColumnId; label: string; sortable?: string }
 > = {
@@ -49,12 +47,12 @@ export const columnMetadata: Record<
   },
   hostIp: {
     id: 'hostIp',
-    label: 'Host IP',
+    label: 'Host address',
     sortable: 'ID',
   },
   hostKey: {
     id: 'hostKey',
-    label: 'Host key',
+    label: 'Host public key',
     sortable: 'ID',
   },
   timeline: {
@@ -94,12 +92,7 @@ export const columnMetadata: Record<
   },
 }
 
-export const sortOptions = groupBy(
-  filter(columnMetadata, 'sortable'),
-  'sortable'
-)
-
-export const defaultColumns: TableColumnId[] = [
+export const columnsDefaultVisible: TableColumnId[] = [
   'contractId',
   'hostIp',
   'timeline',
@@ -108,3 +101,5 @@ export const defaultColumns: TableColumnId[] = [
   'spendingDownloads',
   'spendingFundAccount',
 ]
+
+export const columnsDefaultSort = 'startTime'

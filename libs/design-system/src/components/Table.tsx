@@ -5,6 +5,7 @@ import { Text } from '../core/Text'
 import { useMemo } from 'react'
 import { cx } from 'class-variance-authority'
 import { CaretDown16, CaretUp16 } from '@carbon/icons-react'
+import { times } from 'lodash'
 
 export type Row = {
   id: string
@@ -29,6 +30,8 @@ type Props<Columns extends string, R extends Row> = {
   toggleSort?: (column: Columns) => void
   summary?: boolean
   rowSize?: 'dense' | 'default'
+  pageSize: number
+  isLoading: boolean
   emptyState?: React.ReactNode
 }
 
@@ -40,6 +43,8 @@ export function Table<Columns extends string, R extends Row>({
   toggleSort,
   summary,
   rowSize = 'default',
+  pageSize,
+  isLoading,
   emptyState,
 }: Props<Columns, R>) {
   const columns = useMemo(
@@ -115,16 +120,6 @@ export function Table<Columns extends string, R extends Row>({
                   key={row.id}
                   className="flex items-center border-b border-gray-300 dark:border-graydark-300 last-of-type:border-b-none overflow-hidden"
                 >
-                  {/* {toPairs(groupBy(columns, 'group')).map(
-                ([name, groupColumns]) => (
-                  <div className="flex gap-7 items-center"
-                    key={name}
-                    className={
-                      {
-                        // padding: rowSize === 'dense' ? '$1 $3' : '$3 $3',
-                      }
-                    }
-                  > */}
                   {columns.map(
                     ({ id, render: Render, style, className }, i) => (
                       <div
@@ -143,6 +138,28 @@ export function Table<Columns extends string, R extends Row>({
                 </div>
               ))
             : emptyState}
+          {isLoading &&
+            !data.length &&
+            times(pageSize).map((i) => (
+              <div
+                key={i}
+                className="flex items-center border-b border-gray-300 dark:border-graydark-300 last-of-type:border-b-none overflow-hidden"
+              >
+                {columns.map(({ id, render: Render, style, className }, i) => (
+                  <div
+                    key={`${i}/${id}`}
+                    className={cx(
+                      'flex items-center px-6 overflow-hidden',
+                      rowSize === 'dense' ? 'h-[50px]' : 'h-[100px]',
+                      className
+                    )}
+                    style={style}
+                  >
+                    {/* <Render {...row} /> */}
+                  </div>
+                ))}
+              </div>
+            ))}
         </div>
       </div>
     </Panel>

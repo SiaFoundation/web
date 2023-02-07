@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useMemo } from 'react'
 import useSWR from 'swr'
 import {
   buildAxiosConfig,
@@ -19,8 +20,8 @@ import { getKey } from './utils'
 export function useGet<Params extends RequestParams, Result>(
   args: InternalHookArgsSwr<Params, Result>
 ) {
-  const hookArgs = mergeInternalHookArgsSwr(args)
-  const { settings } = useAppSettings()
+  const hookArgs = useMemo(() => mergeInternalHookArgsSwr(args), [args])
+  const { settings, passwordProtectRequestHooks } = useAppSettings()
   const reqRoute = buildRoute(settings, hookArgs.route, hookArgs, undefined)
   return useSWR<Result, SWRError>(
     // TODO: add a config to app settings to set password protected app or not,
@@ -28,7 +29,7 @@ export function useGet<Params extends RequestParams, Result>(
     // password protected and password is missing.
     getKey(
       reqRoute ? `${reqRoute}${settings.password || ''}` : null,
-      hookArgs.disabled
+      hookArgs.disabled || (passwordProtectRequestHooks && !settings.password)
     ),
     async () => {
       if (!hookArgs.route) {

@@ -1,30 +1,32 @@
+import { filter, groupBy, values } from 'lodash'
 import { useCallback, useMemo } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
-import {
-  sortOptions,
-  TableColumnId,
-  defaultColumns,
-  columnMetadata,
-} from './types'
 
-export function useContractsSettings() {
+type ColumnMeta<ColumnId> = { id: ColumnId; label: string; sortable?: string }
+
+export function useTableState<ColumnId extends string>(
+  scope: string,
+  columnsMeta: Record<ColumnId, ColumnMeta<ColumnId>>,
+  columnsDefaultVisible: ColumnId[],
+  columnsDefaultSort: ColumnId
+) {
   const [enabledColumns, setEnabledColumns] = useLocalStorageState<string[]>(
-    'renterd/v0/contracts/enabledColumns',
+    `${scope}/enabledColumns`,
     {
-      defaultValue: defaultColumns,
+      defaultValue: columnsDefaultVisible,
     }
   )
 
-  const [sortColumn, setSortColumn] = useLocalStorageState<TableColumnId>(
-    'renterd/v0/contracts/sortColumn',
+  const [sortColumn, setSortColumn] = useLocalStorageState<ColumnId>(
+    `${scope}/sortColumn`,
     {
-      defaultValue: 'startTime',
+      defaultValue: columnsDefaultSort,
     }
   )
 
   const [sortDirection, setSortDirection] = useLocalStorageState<
     'desc' | 'asc'
-  >('renterd/v0/contracts/sortDirection', {
+  >(`${scope}/sortDirection`, {
     defaultValue: 'desc',
   })
 
@@ -41,11 +43,11 @@ export function useContractsSettings() {
   )
 
   const resetDefaultColumnVisibility = useCallback(() => {
-    setEnabledColumns(defaultColumns)
-  }, [setEnabledColumns])
+    setEnabledColumns(columnsDefaultVisible)
+  }, [setEnabledColumns, columnsDefaultVisible])
 
   const toggleSort = useCallback(
-    (column: TableColumnId) => {
+    (column: ColumnId) => {
       if (sortColumn !== column) {
         setSortColumn(column)
         setSortDirection('asc')
@@ -57,8 +59,13 @@ export function useContractsSettings() {
   )
 
   const configurableColumns = useMemo(
-    () => Object.entries(columnMetadata).map(([key, value]) => value),
-    []
+    () => values(columnsMeta) as ColumnMeta<ColumnId>[],
+    [columnsMeta]
+  )
+
+  const sortOptions = useMemo(
+    () => groupBy(filter(columnsMeta, 'sortable'), 'sortable'),
+    [columnsMeta]
   )
 
   return {

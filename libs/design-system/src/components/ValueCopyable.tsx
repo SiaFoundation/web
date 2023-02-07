@@ -67,7 +67,9 @@ export function ValueCopyable({
           copyToClipboard(cleanValue, label)
         }}
       >
-        <Copy16 className="scale-90" />
+        <Text color={color}>
+          <Copy16 className={size === '10' ? 'scale-75' : 'scale-90'} />
+        </Text>
       </Button>
     </div>
   )

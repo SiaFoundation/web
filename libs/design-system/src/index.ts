@@ -67,6 +67,8 @@ export * from './components/Table'
 export * from './components/SwitchMulti'
 export * from './components/SectionHeading'
 export * from './components/LoadingDots'
+export * from './components/PaginatorKnownTotal'
+export * from './components/PaginatorUnknownTotal'
 
 // app
 export * from './app/AppPublicLayout'
@@ -136,6 +138,7 @@ export * from './hooks/useConnectivity'
 export * from './hooks/useMonitorConnAndLock'
 export * from './hooks/userPrefersReducedMotion'
 export * from './hooks/useIsExternalDomain'
+export * from './hooks/useTableState'
 
 // data
 export * from './data/webLinks'
