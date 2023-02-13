@@ -43,6 +43,7 @@ export * from './core/Separator'
 export * from './core/Skeleton'
 export * from './core/Status'
 export * from './core/Switch'
+export * from './core/HoverCard'
 
 // components
 export * from './components/UserDropdownMenu'

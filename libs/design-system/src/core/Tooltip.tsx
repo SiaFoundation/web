@@ -49,7 +49,7 @@ export function Tooltip({
     >
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
       <AnimatePresence>
-        {open ? (
+        {content && open ? (
           <TooltipPrimitive.Portal forceMount>
             <TooltipPrimitive.Content
               forceMount

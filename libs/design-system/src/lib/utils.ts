@@ -9,7 +9,10 @@ export function truncate(id: string, limit?: number) {
 }
 
 export function stripPrefix(hash: string) {
-  return (hash || '').replace('addr:', '').replace('txid:', '')
+  return (hash || '')
+    .replace('addr:', '')
+    .replace('txid:', '')
+    .replace('fcid:', '')
 }
 
 export function getTitleId(title: string, id: string, limit?: number) {

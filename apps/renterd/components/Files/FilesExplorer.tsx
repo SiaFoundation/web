@@ -139,6 +139,8 @@ export function FilesExplorer() {
     <div className="relative">
       <Dropzone onDrop={onDrop} noClick={data.length > 0}>
         <Table
+          isLoading={objects.isValidating}
+          pageSize={10}
           data={data}
           columns={columns}
           rowSize="dense"

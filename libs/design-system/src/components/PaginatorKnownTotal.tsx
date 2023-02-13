@@ -1,5 +1,4 @@
 import { Button } from '../core/Button'
-import { Text } from '../core/Text'
 import { ControlGroup } from '../core/ControlGroup'
 import {
   CaretLeft16,
@@ -56,12 +55,12 @@ export function PaginatorKnownTotal({ offset, limit, datasetTotal }: Props) {
       >
         <CaretLeft16 />
       </Button>
-      <Button className="rounded-none px-3">
-        {offset + 1} - {Math.min(offset + limit, datasetTotal)}
-        <Text size="12" color="subtle">
-          {' '}
-          of {datasetTotal ? datasetTotal.toLocaleString() : ''}
-        </Text>
+      <Button state="waiting" className="rounded-none px-3">
+        {datasetTotal > 0
+          ? `${offset + 1} - ${Math.min(offset + limit, datasetTotal)} of ${
+              datasetTotal ? datasetTotal.toLocaleString() : ''
+            }`
+          : 'No results'}
       </Button>
       <Button
         icon

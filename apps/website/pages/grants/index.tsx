@@ -67,7 +67,7 @@ export default function Grants({
           <SiteHeading title={title} description={description} size="64">
             <div className="flex flex-col gap-3 mt-10">
               <Heading className="mb-1">Table of contents</Heading>
-              <Link href="#the-grant-process">The Grant process</Link>
+              <Link href="#the-grant-process">The grant process</Link>
               <Link href="#example-projects">Browse example projects</Link>
               <Link href={webLinks.forumGrants} target="_blank">
                 Browse current proposals

@@ -62,6 +62,16 @@ export function Table<Columns extends string, R extends Row>({
     [_columns]
   )
 
+  let show = 'emptyState'
+
+  if (isLoading && !data.length) {
+    show = 'skeleton'
+  }
+
+  if (data.length) {
+    show = 'currentData'
+  }
+
   return (
     <Panel>
       <div className="flex flex-col">
@@ -114,38 +124,35 @@ export function Table<Columns extends string, R extends Row>({
           </div>
         )}
         <div className="flex flex-col">
-          {data.length
-            ? data.map((row) => (
-                <div
-                  key={row.id}
-                  className="flex items-center border-b border-gray-300 dark:border-graydark-300 last-of-type:border-b-none overflow-hidden"
-                >
-                  {columns.map(
-                    ({ id, render: Render, style, className }, i) => (
-                      <div
-                        key={`${id}/${row.id}`}
-                        className={cx(
-                          'flex items-center px-6 overflow-hidden',
-                          rowSize === 'dense' ? 'h-[50px]' : 'h-[100px]',
-                          className
-                        )}
-                        style={style}
-                      >
-                        <Render {...row} />
-                      </div>
-                    )
-                  )}
-                </div>
-              ))
-            : emptyState}
-          {isLoading &&
-            !data.length &&
+          {show === 'currentData' &&
+            data.map((row) => (
+              <div
+                key={row.id}
+                className="flex items-center border-b border-gray-300 dark:border-graydark-300 last-of-type:border-b-none overflow-hidden"
+              >
+                {columns.map(({ id, render: Render, style, className }, i) => (
+                  <div
+                    key={`${id}/${row.id}`}
+                    className={cx(
+                      'flex items-center px-6 overflow-hidden',
+                      rowSize === 'dense' ? 'h-[50px]' : 'h-[100px]',
+                      className
+                    )}
+                    style={style}
+                  >
+                    <Render {...row} />
+                  </div>
+                ))}
+              </div>
+            ))}
+          {show === 'emptyState' && emptyState}
+          {show === 'skeleton' &&
             times(pageSize).map((i) => (
               <div
                 key={i}
                 className="flex items-center border-b border-gray-300 dark:border-graydark-300 last-of-type:border-b-none overflow-hidden"
               >
-                {columns.map(({ id, render: Render, style, className }, i) => (
+                {columns.map(({ id, style, className }, i) => (
                   <div
                     key={`${i}/${id}`}
                     className={cx(
@@ -154,9 +161,7 @@ export function Table<Columns extends string, R extends Row>({
                       className
                     )}
                     style={style}
-                  >
-                    {/* <Render {...row} /> */}
-                  </div>
+                  />
                 ))}
               </div>
             ))}

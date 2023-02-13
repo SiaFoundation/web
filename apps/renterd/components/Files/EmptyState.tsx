@@ -6,7 +6,7 @@ export function EmptyState() {
       <Text>
         <CloudUpload32 className="scale-[200%]" />
       </Text>
-      <Text color="subtle">
+      <Text color="subtle" className="text-center max-w-[500px]">
         No files, drag and drop files or click here to start uploading.
       </Text>
     </div>

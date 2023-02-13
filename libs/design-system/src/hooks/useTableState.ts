@@ -34,7 +34,7 @@ export function useTableState<ColumnId extends string>(
     (column: string) => {
       setEnabledColumns((columns) => {
         if (columns.includes(column)) {
-          return columns.filter((c) => c != column)
+          return columns.filter((c) => c !== column)
         }
         return columns.concat(column)
       })
