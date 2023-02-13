@@ -5,6 +5,7 @@ import {
   triggerSuccessToast,
   Separator,
   ConfigurationNumber,
+  triggerErrorToast,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { useEffect } from 'react'
@@ -12,17 +13,22 @@ import { RenterSidenav } from '../../components/RenterSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
-import { useSetting, useSettingUpdate } from '@siafoundation/react-core'
+import {
+  useSetting,
+  useSettingsUpdate,
+  useSettingUpdate,
+} from '@siafoundation/react-core'
 import { useFormik } from 'formik'
 import { useFormChanged } from '../../hooks/useFormChanged'
 import { Setting } from '../../components/Setting'
 import { MenuSection } from '../../components/MenuSection'
 
 type GougingData = {
-  MaxRPCPrice: string
-  MaxContractPrice: string
+  MaxStoragePrice: string
   MaxDownloadPrice: string
   MaxUploadPrice: string
+  MaxContractPrice: string
+  MaxRPCPrice: string
 }
 
 type RedundancyData = {
@@ -51,12 +57,13 @@ export function Config() {
     },
   })
 
-  const settingsUpdate = useSettingUpdate()
+  const settingsUpdate = useSettingsUpdate()
 
   const form = useFormik({
     initialValues: {
       // gouging
       maxRpcPrice: new BigNumber(0),
+      maxStoragePrice: new BigNumber(0),
       maxContractPrice: new BigNumber(0),
       maxDownloadPrice: new BigNumber(0),
       maxUploadPrice: new BigNumber(0),
@@ -64,36 +71,34 @@ export function Config() {
       minShards: new BigNumber(0),
       totalShards: new BigNumber(0),
     },
-    onSubmit: async (values, actions) => {
+    onSubmit: async (values) => {
       if (!gouging.data || !redundancy.data) {
         return
       }
       try {
-        await settingsUpdate.post({
-          params: {
-            key: 'gouging',
-            value: JSON.stringify({
+        const response = await settingsUpdate.put({
+          payload: {
+            gouging: JSON.stringify({
               MaxRPCPrice: values.maxRpcPrice.toString(),
+              MaxStoragePrice: values.maxStoragePrice.toString(),
               MaxContractPrice: values.maxContractPrice.toString(),
               MaxDownloadPrice: values.maxDownloadPrice.toString(),
               MaxUploadPrice: values.maxUploadPrice.toString(),
             }),
-          },
-        })
-        await settingsUpdate.post({
-          params: {
-            key: 'redundancy',
-            value: JSON.stringify({
+            redundancy: JSON.stringify({
               MinShards: values.minShards.toString(),
               TotalShards: values.totalShards.toString(),
             }),
           },
         })
+        if (response.error) {
+          throw Error(response.error)
+        }
         triggerSuccessToast('Configuration has been saved.')
         gouging.mutate()
         redundancy.mutate()
       } catch (e) {
-        form.setErrors(e)
+        triggerErrorToast((e as Error).message)
       }
     },
   })
@@ -110,10 +115,11 @@ export function Config() {
         await form.resetForm({
           values: {
             // gouging
-            maxRpcPrice: new BigNumber(gougingData.MaxRPCPrice),
-            maxContractPrice: new BigNumber(gougingData.MaxContractPrice),
+            maxStoragePrice: new BigNumber(gougingData.MaxStoragePrice),
             maxDownloadPrice: new BigNumber(gougingData.MaxDownloadPrice),
             maxUploadPrice: new BigNumber(gougingData.MaxUploadPrice),
+            maxContractPrice: new BigNumber(gougingData.MaxContractPrice),
+            maxRpcPrice: new BigNumber(gougingData.MaxRPCPrice),
             // redundancy
             minShards: new BigNumber(redundancyData.MinShards),
             totalShards: new BigNumber(redundancyData.TotalShards),
@@ -155,26 +161,14 @@ export function Config() {
       <div className="p-5 flex flex-col gap-16 max-w-screen-xl">
         <MenuSection title="Gouging">
           <Setting
-            title="Max RPC price"
-            description={<>The max allowed base price for RPCs.</>}
+            title="Max storage price"
+            description={<>The max allowed price to store one TiB.</>}
             control={
               <ConfigurationSiacoin
-                value={form.values.maxRpcPrice}
-                changed={changed.maxRpcPrice}
-                onChange={(value) => form.setFieldValue('maxRpcPrice', value)}
-              />
-            }
-          />
-          <Separator className="w-full my-3" />
-          <Setting
-            title="Max contract price"
-            description={<>The max allowed price to form a contract.</>}
-            control={
-              <ConfigurationSiacoin
-                value={form.values.maxContractPrice}
-                changed={changed.maxContractPrice}
+                value={form.values.maxStoragePrice}
+                changed={changed.maxStoragePrice}
                 onChange={(value) =>
-                  form.setFieldValue('maxContractPrice', value)
+                  form.setFieldValue('maxStoragePrice', value)
                 }
               />
             }
@@ -204,6 +198,32 @@ export function Config() {
                 onChange={(value) =>
                   form.setFieldValue('maxUploadPrice', value)
                 }
+              />
+            }
+          />
+          <Separator className="w-full my-3" />
+          <Setting
+            title="Max contract price"
+            description={<>The max allowed price to form a contract.</>}
+            control={
+              <ConfigurationSiacoin
+                value={form.values.maxContractPrice}
+                changed={changed.maxContractPrice}
+                onChange={(value) =>
+                  form.setFieldValue('maxContractPrice', value)
+                }
+              />
+            }
+          />
+          <Separator className="w-full my-3" />
+          <Setting
+            title="Max RPC price"
+            description={<>The max allowed base price for RPCs.</>}
+            control={
+              <ConfigurationSiacoin
+                value={form.values.maxRpcPrice}
+                changed={changed.maxRpcPrice}
+                onChange={(value) => form.setFieldValue('maxRpcPrice', value)}
               />
             }
           />

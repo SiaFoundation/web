@@ -304,12 +304,30 @@ export function useSettings(args?: HookArgsSwr<void, string[]>) {
   return useGet({ ...args, route: '/bus/settings' })
 }
 
+export function useSettingsUpdate(
+  args?: HookArgsCallback<void, Record<string, string>, void>
+) {
+  return usePut(
+    {
+      ...args,
+      route: '/bus/settings',
+    },
+    []
+  )
+}
+
 export function useSetting(args: HookArgsSwr<{ key: string }, string>) {
   return useGet({ ...args, route: '/bus/setting/:key' })
 }
 
 export function useSettingUpdate(
-  args?: HookArgsCallback<{ key: string; value: string }, void, void>
+  args?: HookArgsCallback<{ key: string }, string, void>
 ) {
-  return usePost({ ...args, route: '/bus/setting/:key/:value' }, [])
+  return usePut(
+    {
+      ...args,
+      route: '/bus/setting/:key',
+    },
+    []
+  )
 }

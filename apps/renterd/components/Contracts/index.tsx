@@ -38,6 +38,7 @@ export function Contracts() {
       actions={
         <div className="flex gap-2">
           <PaginatorKnownTotal
+            isLoading={isLoading}
             offset={offset}
             limit={limit}
             datasetTotal={datasetCount}
