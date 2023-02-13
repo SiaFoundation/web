@@ -6,6 +6,8 @@ import { useContracts } from '../../contexts/contracts'
 import { ContractsViewDropdownMenu } from './ContractsViewDropdownMenu'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 import { ContractsFilters } from './ContractsFilters'
+import { StateNoneMatching } from './StateNoneMatching'
+import { StateNoneYet } from './StateNoneYet'
 
 export function Contracts() {
   const { openDialog } = useDialog()
@@ -20,6 +22,9 @@ export function Contracts() {
     isLoading,
     datasetCount,
     pageCount,
+    stateNoneMatchingFilters,
+    stateNoneYet,
+    hasFetched,
   } = useContracts()
 
   return (
@@ -45,12 +50,20 @@ export function Contracts() {
       <div className="p-5 min-w-fit">
         <Table
           pageSize={limit}
-          isLoading={isLoading}
+          isLoading={!stateNoneYet && isLoading}
           data={contracts}
           columns={columns}
           sortDirection={sortDirection}
           sortColumn={sortColumn}
           toggleSort={toggleSort}
+          emptyState={
+            hasFetched &&
+            (stateNoneMatchingFilters ? (
+              <StateNoneMatching />
+            ) : (
+              <StateNoneYet />
+            ))
+          }
         />
       </div>
     </RenterdAuthedLayout>

@@ -90,5 +90,5 @@ export function humanDate(
   date: string | number | Date,
   options: { time: boolean } = { time: false }
 ) {
-  return format(new Date(date), options.time ? 'Pp' : 'PP')
+  return date ? format(new Date(date), options.time ? 'Pp' : 'PP') : ''
 }

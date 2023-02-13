@@ -8,17 +8,7 @@ import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 
 export function Hosts() {
   const { openDialog } = useDialog()
-  const {
-    hosts,
-    columns,
-    sortColumn,
-    sortDirection,
-    toggleSort,
-    offset,
-    limit,
-    isLoading,
-    pageCount,
-  } = useHosts()
+  const { hosts, columns, offset, limit, isLoading, pageCount } = useHosts()
 
   return (
     <RenterdAuthedLayout
@@ -45,9 +35,9 @@ export function Hosts() {
           data={hosts}
           columns={columns}
           rowSize="default"
-          sortColumn={sortColumn}
-          sortDirection={sortDirection}
-          toggleSort={toggleSort}
+          // sortColumn={sortColumn}
+          // sortDirection={sortDirection}
+          // toggleSort={toggleSort}
         />
       </div>
     </RenterdAuthedLayout>

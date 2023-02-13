@@ -8,13 +8,15 @@ import {
   ValueCopyable,
   ArrowUpLeft16,
   daysToBlocks,
+  stripPrefix,
+  useTableState,
 } from '@siafoundation/design-system'
 import { humanDate } from '@siafoundation/sia-js'
 import {
   useConsensusState,
   useContracts as useContractsData,
 } from '@siafoundation/react-core'
-import { createContext, useContext, useMemo } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { getContractsTimeRangeBlockHeight } from './utils'
 import BigNumber from 'bignumber.js'
 import {
@@ -25,12 +27,13 @@ import {
   columnsDefaultSort,
 } from './types'
 import { useClientFilters } from '../../hooks/useClientFilters'
-import { useTableState } from '../../../../libs/design-system/src/hooks/useTableState'
 import { useRouter } from 'next/router'
+
+const defaultLimit = 20
 
 function useContractsMain() {
   const router = useRouter()
-  const limit = Number(router.query.limit || 20)
+  const limit = Number(router.query.limit || defaultLimit)
   const offset = Number(router.query.offset || 0)
   const consensus = useConsensusState()
   const currentHeight = consensus.data?.BlockHeight
@@ -44,9 +47,8 @@ function useContractsMain() {
           'fcid:0000000000000000000000000000000000000000000000000000000000000000'
         const startTime = blockHeightToTime(currentHeight, c.startHeight)
         // TODO: get actual end / payout data
-        const endHeight = c.startHeight + weeksToBlocks(8) - daysToBlocks(1)
+        const endHeight = c.startHeight + weeksToBlocks(8)
         const endTime = blockHeightToTime(currentHeight, endHeight)
-        console.log(c.startHeight, startTime)
         return {
           id: c.id,
           contractId: c.id,
@@ -55,8 +57,10 @@ function useContractsMain() {
           timeline: startTime,
           startTime,
           endTime,
-          startHeight: c.startHeight,
-          endHeight,
+          startHeightContract: c.startHeight,
+          endHeightContract: endHeight,
+          startHeightProofWindow: endHeight,
+          endHeightProofWindow: endHeight + daysToBlocks(1),
           isRenewed,
           renewedFrom: c.renewedFrom,
           totalCost: new BigNumber(c.totalCost),
@@ -67,9 +71,6 @@ function useContractsMain() {
       }) || []
     return data
   }, [response.data, currentHeight])
-
-  console.log('')
-  dataset.map((d) => console.log(d.startHeight, d.startTime))
 
   const {
     configurableColumns,
@@ -93,7 +94,7 @@ function useContractsMain() {
 
   const datasetFiltered = useMemo(() => {
     const filterList = Object.entries(filters).map(([_, f]) => f)
-    const datasetFiltered = filterList.length
+    let data = filterList.length
       ? dataset.filter((datum) => {
           for (const filter of filterList) {
             if (!filter.fn(datum)) {
@@ -103,7 +104,7 @@ function useContractsMain() {
           return true
         })
       : dataset
-    return datasetFiltered.sort((a, b) => {
+    data = data.sort((a, b) => {
       const aVal = a[sortColumn]
       const bVal = b[sortColumn]
       if (sortDirection === 'desc') {
@@ -117,6 +118,7 @@ function useContractsMain() {
       }
       return aVal >= bVal ? 1 : -1
     })
+    return [...data]
   }, [dataset, filters, sortColumn, sortDirection])
 
   const datasetPage = useMemo(
@@ -139,24 +141,18 @@ function useContractsMain() {
           // const { label, color } = getStatus(row)
           return (
             <div className="flex flex-col gap-1 w-full">
-              <ValueCopyable
-                value={id.replace('fcid:', '')}
-                label="contract ID"
-              />
+              <ValueCopyable value={stripPrefix(id)} label="contract ID" />
               {isRenewed && (
                 <div className="flex items-center">
                   <Text color="subtle">
                     <ArrowUpLeft16 className="scale-75" />
                   </Text>
-                  {/* <Badge variant={color}>{label}</Badge> */}
-                  {isRenewed && (
-                    <ValueCopyable
-                      color="subtle"
-                      size="10"
-                      value={renewedFrom.replace('fcid:', '')}
-                      label="contract ID"
-                    />
-                  )}
+                  <ValueCopyable
+                    color="subtle"
+                    size="10"
+                    value={stripPrefix(renewedFrom)}
+                    label="contract ID"
+                  />
                 </div>
               )}
             </div>
@@ -183,12 +179,19 @@ function useContractsMain() {
         id: 'timeline',
         label: columnsMeta.timeline.label,
         size: 4,
-        render: ({ startHeight, endHeight }) => {
+        render: ({
+          startHeightContract,
+          endHeightContract,
+          startHeightProofWindow,
+          endHeightProofWindow,
+        }) => {
           return (
             <ContractTimeline
               currentHeight={currentHeight}
-              startHeight={startHeight}
-              endHeight={endHeight}
+              startHeightContract={startHeightContract}
+              endHeightContract={endHeightContract}
+              startHeightProofWindow={startHeightProofWindow}
+              endHeightProofWindow={endHeightProofWindow}
               color="green"
               range={contractsTimeRange}
             />
@@ -224,7 +227,9 @@ function useContractsMain() {
         id: 'totalCost',
         label: columnsMeta.totalCost.label,
         className: 'justify-end',
-        render: ({ totalCost }) => <ValueSc value={totalCost} />,
+        render: ({ totalCost }) => (
+          <ValueSc value={totalCost} variant="value" />
+        ),
       },
       {
         id: 'spendingUploads',
@@ -257,8 +262,31 @@ function useContractsMain() {
     [tableColumns, enabledColumns]
   )
 
+  const [hasFetched, setHasFetched] = useState(false)
+  useEffect(() => {
+    if (!hasFetched && response.data) {
+      setHasFetched(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [response.isValidating])
+
+  const stateNoneYet = useMemo(
+    () =>
+      hasFetched && !datasetPage.length && Object.entries(filters).length === 0,
+    [hasFetched, datasetPage, filters]
+  )
+
+  const stateNoneMatchingFilters = useMemo(
+    () =>
+      hasFetched && !datasetPage.length && Object.entries(filters).length > 0,
+    [hasFetched, datasetPage, filters]
+  )
+
   return {
     isLoading: response.isValidating,
+    hasFetched,
+    stateNoneYet,
+    stateNoneMatchingFilters,
     limit,
     offset,
     pageCount: datasetPage.length,

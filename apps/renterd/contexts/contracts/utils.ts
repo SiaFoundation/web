@@ -9,7 +9,7 @@ import {
 
 export function getContractsTimeRangeBlockHeight(
   currentHeight: number,
-  contracts: { startHeight: number; endHeight: number }[]
+  contracts: { startHeightContract: number; endHeightContract: number }[]
 ) {
   const range = contracts.reduce(
     (acc, item) => {
@@ -17,11 +17,11 @@ export function getContractsTimeRangeBlockHeight(
       let accEndHeight = acc.endHeight
       // let end = acc.end
 
-      if (item.startHeight < accStartHeight) {
-        accStartHeight = item.startHeight
+      if (item.startHeightContract < accStartHeight) {
+        accStartHeight = item.startHeightContract
       }
-      if (item.endHeight > accEndHeight) {
-        accEndHeight = item.endHeight
+      if (item.endHeightContract > accEndHeight) {
+        accEndHeight = item.endHeightContract
       }
       return {
         startHeight: accStartHeight,
@@ -34,6 +34,7 @@ export function getContractsTimeRangeBlockHeight(
     }
   )
 
+  // pad it out, also gives space for 1 day proof window
   range.endHeight = Math.max(range.endHeight, currentHeight) + daysToBlocks(5)
   range.startHeight = range.startHeight - daysToBlocks(5)
 

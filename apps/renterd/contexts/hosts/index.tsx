@@ -5,6 +5,7 @@ import {
   ValueNum,
   CheckmarkFilled16,
   Misuse16,
+  useTableState,
 } from '@siafoundation/design-system'
 import { humanNumber } from '@siafoundation/sia-js'
 import { useHosts as useHostsGET } from '@siafoundation/react-core'
@@ -17,7 +18,6 @@ import {
   columnsDefaultVisible,
   columnsDefaultSort,
 } from './types'
-import { useTableState } from '../../../../libs/design-system/src/hooks/useTableState'
 import { formatDistance, formatRelative } from 'date-fns'
 import { useRouter } from 'next/router'
 
