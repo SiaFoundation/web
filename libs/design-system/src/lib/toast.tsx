@@ -17,11 +17,11 @@ export const triggerSuccessToast = (
   text: string,
   options: ToastOptions = {}
 ) => {
-  toast.success(text.length > 50 ? `${text.slice(0, 50)}` : text, options)
+  toast.success(text.length > 200 ? `${text.slice(0, 200)}...` : text, options)
 }
 
 export const triggerErrorToast = (text: string, options: ToastOptions = {}) => {
-  toast.error(text.length > 50 ? `${text.slice(0, 50)}` : text, options)
+  toast.error(text.length > 200 ? `${text.slice(0, 200)}...` : text, options)
 }
 
 const defaultOptions: DefaultToastOptions = {
@@ -34,10 +34,18 @@ const defaultOptions: DefaultToastOptions = {
     'text-gray-1100 dark:text-white'
   ),
   success: {
-    icon: <CheckmarkOutline16 className="w-3 text-green-600" />,
+    icon: (
+      <div>
+        <CheckmarkOutline16 className="w-5 text-green-600" />
+      </div>
+    ),
   },
   error: {
-    icon: <CloseOutline16 className="w-3 text-red-600" />,
+    icon: (
+      <div>
+        <CloseOutline16 className="w-5 text-red-600" />
+      </div>
+    ),
   },
 }
 

@@ -7,15 +7,22 @@ import {
   PageLast16,
 } from '../icons/carbon'
 import { useRouter } from 'next/router'
+import { LoadingDots } from '..'
 
 type Props = {
   offset: number
   limit: number
+  isLoading: boolean
   datasetTotal: number
   pageTotal: number
 }
 
-export function PaginatorKnownTotal({ offset, limit, datasetTotal }: Props) {
+export function PaginatorKnownTotal({
+  offset,
+  limit,
+  datasetTotal,
+  isLoading,
+}: Props) {
   const router = useRouter()
   return (
     <ControlGroup>
@@ -56,11 +63,15 @@ export function PaginatorKnownTotal({ offset, limit, datasetTotal }: Props) {
         <CaretLeft16 />
       </Button>
       <Button state="waiting" className="rounded-none px-3">
-        {datasetTotal > 0
-          ? `${offset + 1} - ${Math.min(offset + limit, datasetTotal)} of ${
-              datasetTotal ? datasetTotal.toLocaleString() : ''
-            }`
-          : 'No results'}
+        {datasetTotal > 0 ? (
+          `${offset + 1} - ${Math.min(offset + limit, datasetTotal)} of ${
+            datasetTotal ? datasetTotal.toLocaleString() : ''
+          }`
+        ) : isLoading ? (
+          <LoadingDots className="px-2" />
+        ) : (
+          'No results'
+        )}
       </Button>
       <Button
         icon

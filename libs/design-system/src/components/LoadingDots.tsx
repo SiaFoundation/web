@@ -1,6 +1,8 @@
-export function LoadingDots() {
+import { cx } from 'class-variance-authority'
+
+export function LoadingDots({ className }: { className?: string }) {
   return (
-    <div className="flex gap-1">
+    <div className={cx('flex gap-1', className)}>
       <Dot />
       <Dot />
       <Dot />
