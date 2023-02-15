@@ -285,8 +285,8 @@ export default function Renterd({ technical, tutorials, services }: Props) {
           title="Companies and projects building on Sia"
           description={
             <>
-              Sia is a thriving ecosystem of open source software, layer 2
-              networks, and commercial data storage platforms.
+              Sia is a thriving ecosystem of data storage enthusiasts, open
+              source software, and commercial data storage platforms.
             </>
           }
           links={[

@@ -19,7 +19,7 @@ import backgroundImage from '../assets/backgrounds/mountain.png'
 import renterdImage from '../assets/renterd/renterd-peek.png'
 import hostdImage from '../assets/hostd/hostd-peek.png'
 import previewImage from '../assets/previews/mountain.png'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { textContent } from '../lib/utils'
 import Letter from '../components/Letter'
 import { JiggleArrow } from '../components/JiggleArrow'
@@ -28,22 +28,12 @@ import { SectionSimple } from '../components/SectionSimple'
 import { SectionWaves } from '../components/SectionWaves'
 import { CalloutSoftware } from '../components/CalloutSoftware'
 import { usePullTop } from '../hooks/usePullTop'
+import { cx } from 'class-variance-authority'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
 const renterdImageProps = getImageProps(renterdImage)
 const hostdImageProps = getImageProps(hostdImage)
-
-const description = (
-  <>
-    Cryptography has unleashed the latent power of the Internet by enabling
-    interactions between mutually-distrusting parties. Sia harnesses this power
-    to create a trustless cloud storage marketplace, allowing buyers and sellers
-    to transact directly. No intermediaries, no borders, no vendor lock-in, no
-    spying, no throttling, no walled gardens; it's a return to the Internet we
-    once knew. The future is making a comeback.
-  </>
-)
 
 const transitionWidthDuration = 300
 const transitionFadeDelay = 500
@@ -54,14 +44,15 @@ export default function Home({
   featured,
   tutorials,
   services,
-  seenLetter,
-}: Props) {
-  const [showLetter, setShowLetter] = useState<boolean>(!seenLetter)
+}: // seenLetter,
+Props) {
+  // const [showLetter, setShowLetter] = useState<boolean>(!seenLetter)
+  const [showLetter, setShowLetter] = useState<boolean>(false)
 
-  useEffect(() => {
-    document.cookie =
-      'seen-letter=true; max-age=2147483647; SameSite=None; Secure'
-  }, [])
+  // useEffect(() => {
+  //   document.cookie =
+  //     'seen-letter=true; max-age=2147483647; SameSite=None; Secure'
+  // }, [])
 
   const toggleLanding = useCallback(() => {
     setShowLetter((showLetter) => !showLetter)
@@ -78,6 +69,31 @@ export default function Home({
   const letterEl = useMemo(
     () => <Letter onDone={() => toggleLanding()} />,
     [toggleLanding]
+  )
+
+  const description = (
+    <>
+      Cryptography has unleashed the latent power of the Internet by enabling
+      interactions between mutually-distrusting parties. Sia harnesses this
+      power to create a trustless cloud storage marketplace, allowing buyers and
+      sellers to transact directly. No intermediaries, no borders, no vendor
+      lock-in, no spying, no throttling, no walled gardens; it's a return to the
+      Internet we once knew.{' '}
+      <Link
+        href="/"
+        color="subtle"
+        className={cx(
+          'transition-colors ease-in',
+          'underline underline-offset-4 decoration-dotted',
+          'decoration-gray-500/50 dark:decoration-gray-800/10',
+          'hover:decoration-gray-500/70 hover:dark:decoration-gray-800/20'
+        )}
+        underline="hover"
+        onClick={toggleLanding}
+      >
+        The future is making a comeback.
+      </Link>
+    </>
   )
 
   return (
@@ -105,9 +121,11 @@ export default function Home({
                 className="absolute -mt-3 md:-mt-6"
               />
             )}
-            <Link size="20" href={routes.getStarted.index}>
-              Download the software →
-            </Link>
+            {/* <div>
+              <Link size="20" href={routes.getStarted.index}>
+                Download the software →
+              </Link>
+            </div> */}
           </SiteHeading>
         </SectionSimple>
       }
@@ -142,6 +160,32 @@ export default function Home({
             actionTitle="Read more"
             actionLink={routes.learn.index}
           />
+          <Callout
+            size="0"
+            title="Grants"
+            startTime={20}
+            description={
+              <>
+                The Sia Foundation welcomes contributors from all over the world
+                to come and build on Sia through our Grants program.
+              </>
+            }
+            actionTitle="Apply for a grant"
+            actionLink={routes.grants.index}
+          />
+          <Callout
+            size="0"
+            title="Community"
+            startTime={20}
+            description={
+              <>
+                Sia is a vibrant community of contributors building open source
+                and commercial data storage software on the Sia network.
+              </>
+            }
+            actionTitle="Explore"
+            actionLink={routes.community.index}
+          />
           <CalloutSoftware
             name="renterd"
             startTime={30}
@@ -170,8 +214,8 @@ export default function Home({
           className="pb-12 md:pb-20"
           description={
             <>
-              Sia is a thriving ecosystem of open source software, layer 2
-              networks, and commercial data storage platforms.
+              Sia is a thriving ecosystem of data storage enthusiasts, open
+              source software, and commercial data storage platforms.
             </>
           }
           links={[
@@ -321,7 +365,7 @@ export default function Home({
 }
 
 export async function getServerSideProps({ req }) {
-  const seenLetter: boolean = req.cookies['seen-letter'] || false
+  // const seenLetter: boolean = req.cookies['seen-letter'] || false
   const featured = await getCacheArticles(['sia-all', 'featured'], 5)
   const tutorials = await getCacheTutorials()
   const services = await getCacheSoftware('storage_services', 5)
@@ -331,7 +375,7 @@ export async function getServerSideProps({ req }) {
       featured,
       tutorials,
       services,
-      seenLetter,
+      // seenLetter,
       // Because this page is SSR'd, do not block requests with slow stats query
       // fallback: {
       //   '/api/stats': stats,
