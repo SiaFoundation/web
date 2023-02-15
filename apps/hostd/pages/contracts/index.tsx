@@ -58,7 +58,13 @@ export default function ContractsPage() {
       }
     >
       <div className="min-w-fit p-7">
-        <Table data={contracts} columns={columns} summary />
+        <Table
+          isLoading={false}
+          pageSize={20}
+          data={contracts}
+          columns={columns}
+          summary
+        />
       </div>
     </HostdAuthedLayout>
   )

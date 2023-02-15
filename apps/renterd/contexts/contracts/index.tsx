@@ -10,6 +10,7 @@ import {
   daysToBlocks,
   stripPrefix,
   useTableState,
+  getContractsTimeRangeBlockHeight,
 } from '@siafoundation/design-system'
 import { humanDate } from '@siafoundation/sia-js'
 import {
@@ -17,7 +18,6 @@ import {
   useContracts as useContractsData,
 } from '@siafoundation/react-core'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { getContractsTimeRangeBlockHeight } from './utils'
 import BigNumber from 'bignumber.js'
 import {
   ContractData,

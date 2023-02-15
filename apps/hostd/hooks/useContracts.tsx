@@ -10,7 +10,6 @@ import {
   getYearsInMs,
   getDaysInMs,
   TableColumn,
-  ContractTimeline,
 } from '@siafoundation/design-system'
 import {
   humanBytes,
@@ -21,7 +20,7 @@ import {
 import { Chart } from '../contexts/data'
 import { countBy, upperFirst, values } from 'lodash'
 import { useCallback, useMemo } from 'react'
-import { allDatesMap, contractsData, contractsTimeRange } from './mockContracts'
+import { allDatesMap, contractsData } from './mockContracts'
 import BigNumber from 'bignumber.js'
 import groupBy from 'lodash/groupBy'
 import filter from 'lodash/filter'
@@ -225,7 +224,7 @@ export function useContracts() {
     () =>
       [
         {
-          key: 'overview',
+          id: 'overview',
           label: 'Overview',
           type: 'fixed',
           size: 2,
@@ -262,21 +261,21 @@ export function useContracts() {
           },
         },
         {
-          key: 'timeline',
+          id: 'timeline',
           label: 'Timeline',
           size: 4,
           render: (row) => {
-            const { startDate, expirationDate, payoutDate } = row
-            const { color } = getStatus(row)
-            return (
-              <ContractTimeline
-                start={startDate}
-                end={expirationDate}
-                payout={payoutDate}
-                color={color}
-                range={contractsTimeRange}
-              />
-            )
+            // const { startDate, expirationDate, payoutDate } = row
+            // const { color } = getStatus(row)
+            return null
+            // TODO: sync up to latest timeline API
+            // <ContractTimeline
+            //   start={startDate}
+            //   end={expirationDate}
+            //   payout={payoutDate}
+            //   color={color}
+            //   range={contractsTimeRange}
+            // />
           },
           summary: () => (
             <div className="w-full px-6">
@@ -292,7 +291,7 @@ export function useContracts() {
           ),
         },
         {
-          key: 'startDate',
+          id: 'startDate',
           label: 'Start date',
           sortable: 'time',
           render: ({ startDate }) => (
@@ -303,7 +302,7 @@ export function useContracts() {
           className: 'justify-end',
         },
         {
-          key: 'expirationDate',
+          id: 'expirationDate',
           label: 'Expiration date',
           sortable: 'time',
           render: ({ expirationDate }) => (
@@ -314,7 +313,7 @@ export function useContracts() {
           className: 'justify-end',
         },
         {
-          key: 'payoutDate',
+          id: 'payoutDate',
           label: 'Payout date',
           sortable: 'time',
           render: ({ payoutDate }) => (
@@ -325,7 +324,7 @@ export function useContracts() {
           className: 'justify-end',
         },
         {
-          key: 'estDataSize',
+          id: 'estDataSize',
           label: 'Est. data size',
           className: 'justify-end',
           sortable: 'data',
@@ -343,7 +342,7 @@ export function useContracts() {
           ),
         },
         {
-          key: 'lockedCollateral',
+          id: 'lockedCollateral',
           label: 'Locked collateral',
           sortable: 'financial',
           className: 'justify-end',
@@ -352,7 +351,7 @@ export function useContracts() {
           ),
         },
         {
-          key: 'riskedCollateral',
+          id: 'riskedCollateral',
           label: 'Risked collateral',
           sortable: 'financial',
           className: 'justify-end',
@@ -361,7 +360,7 @@ export function useContracts() {
           ),
         },
         {
-          key: 'returnedCollateral',
+          id: 'returnedCollateral',
           label: 'Returned collateral',
           sortable: 'financial',
           className: 'justify-end',
@@ -370,28 +369,28 @@ export function useContracts() {
           ),
         },
         {
-          key: 'lostCollateral',
+          id: 'lostCollateral',
           label: 'Lost collateral',
           sortable: 'financial',
           className: 'justify-end',
           render: ({ lostCollateral }) => <ValueSc value={lostCollateral} />,
         },
         {
-          key: 'contractFee',
+          id: 'contractFee',
           label: 'Contract fee',
           sortable: 'financial',
           className: 'justify-end',
           render: ({ contractFee }) => <ValueSc value={contractFee} />,
         },
         {
-          key: 'accountFunding',
+          id: 'accountFunding',
           label: 'Account funding',
           sortable: 'financial',
           className: 'justify-end',
           render: ({ accountFunding }) => <ValueSc value={accountFunding} />,
         },
         {
-          key: 'estStorageRevenue',
+          id: 'estStorageRevenue',
           label: 'Est. storage revenue',
           sortable: 'financial',
           className: 'justify-end',
@@ -400,7 +399,7 @@ export function useContracts() {
           ),
         },
         {
-          key: 'estIngressRevenue',
+          id: 'estIngressRevenue',
           label: 'Est. ingress revenue',
           sortable: 'financial',
           className: 'justify-end',
@@ -409,7 +408,7 @@ export function useContracts() {
           ),
         },
         {
-          key: 'estEgressRevenue',
+          id: 'estEgressRevenue',
           label: 'Est. egress revenue',
           sortable: 'financial',
           className: 'justify-end',
@@ -418,7 +417,7 @@ export function useContracts() {
           ),
         },
         {
-          key: 'potentialRevenue',
+          id: 'potentialRevenue',
           label: 'Potential revenue',
           sortable: 'financial',
           className: 'justify-end',
@@ -427,21 +426,21 @@ export function useContracts() {
           ),
         },
         {
-          key: 'earnedRevenue',
+          id: 'earnedRevenue',
           label: 'Earned revenue',
           sortable: 'financial',
           className: 'justify-end',
           render: ({ earnedRevenue }) => <ValueSc value={earnedRevenue} />,
         },
         {
-          key: 'lostRevenue',
+          id: 'lostRevenue',
           label: 'Lost revenue',
           sortable: 'financial',
           className: 'justify-end',
           render: ({ lostRevenue }) => <ValueSc value={lostRevenue} />,
         },
         {
-          key: 'contractPayout',
+          id: 'contractPayout',
           label: 'Contract Payout',
           sortable: 'financial',
           className: 'justify-end',
@@ -449,7 +448,7 @@ export function useContracts() {
           summary: () => <ValueSc value={toHastings(5e9)} />,
         },
         {
-          key: 'revenue',
+          id: 'revenue',
           label: 'Revenue',
           sortable: 'financial',
           className: 'justify-end',
@@ -457,7 +456,7 @@ export function useContracts() {
           summary: () => <ValueSc value={toHastings(5e9)} />,
         },
         {
-          key: 'costBasis',
+          id: 'costBasis',
           label: 'Cost Basis',
           sortable: 'financial',
           className: 'justify-end',
@@ -465,7 +464,7 @@ export function useContracts() {
           summary: () => <ValueSc value={toHastings(5e9)} />,
         },
         {
-          key: 'gainLoss',
+          id: 'gainLoss',
           label: 'Gain / Loss',
           sortable: 'financial',
           className: 'justify-end',
@@ -481,7 +480,7 @@ export function useContracts() {
           ),
         },
         {
-          key: 'baseExchangeRate',
+          id: 'baseExchangeRate',
           label: 'Base exchange rate',
           className: 'justify-end',
           render: ({ baseExchangeRate }) => (
@@ -489,21 +488,15 @@ export function useContracts() {
           ),
           sortable: 'financial',
         },
-      ] as TableColumn<Row>[],
+      ] as TableColumn<ContractColumn, Row>[],
     [contractsChart, filteredContracts]
   )
 
-  const configurableColumns = useMemo(
-    () => columns.filter((c) => c.type !== 'fixed'),
-    [columns]
-  )
+  // TODO: migrate to useTableState
+  const configurableColumns = useMemo(() => columns, [columns])
 
   const filteredColumns = useMemo(
-    () =>
-      columns.filter(
-        (column) =>
-          column.type === 'fixed' || enabledColumns.includes(column.key)
-      ),
+    () => columns.filter((column) => enabledColumns.includes(column.id)),
     [columns, enabledColumns]
   )
 
