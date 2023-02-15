@@ -27,9 +27,9 @@ const previewImageProps = getImageProps(previewImage)
 const title = 'Community & Ecosystem'
 const description = (
   <>
-    Sia is a thriving ecosystem of open source software, layer 2 networks, and
-    commercial data storage platforms - made possible by a vibrant community of
-    contributors.
+    Sia is a thriving ecosystem of data storage enthusiasts, open source
+    software, and commercial data storage platforms - made possible by a vibrant
+    community of contributors.
   </>
 )
 
@@ -111,8 +111,8 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
             title="A vibrant & active ecosystem"
             description={
               <>
-                Sia is a thriving ecosystem of open source software, layer 2
-                networks, and commercial data storage platforms.
+                Sia is a thriving ecosystem of data storage enthusiasts, open
+                source software, and commercial data storage platforms.
               </>
             }
           />

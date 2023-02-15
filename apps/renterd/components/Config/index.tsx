@@ -13,11 +13,7 @@ import { RenterSidenav } from '../../components/RenterSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
-import {
-  useSetting,
-  useSettingsUpdate,
-  useSettingUpdate,
-} from '@siafoundation/react-core'
+import { useSetting, useSettingsUpdate } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
 import { useFormChanged } from '../../hooks/useFormChanged'
 import { Setting } from '../../components/Setting'

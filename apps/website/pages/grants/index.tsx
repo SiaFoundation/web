@@ -247,9 +247,9 @@ export default function Grants({
           title="Check out what people are building on Sia"
           description={
             <>
-              Sia is a thriving ecosystem of open source software, layer 2
-              networks, and commercial data storage platforms. Apply for a Sia
-              grant and start contributing.
+              Sia is a thriving ecosystem of data storage enthusiasts, open
+              source software, and commercial data storage platforms. Apply for
+              a Sia grant and start contributing.
             </>
           }
           links={[
