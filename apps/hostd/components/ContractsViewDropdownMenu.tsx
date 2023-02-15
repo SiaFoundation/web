@@ -54,7 +54,7 @@ export function ContractsViewDropdownMenu() {
               {Object.entries(sortOptions).map(([category, options]) => (
                 <optgroup key={category} label={category}>
                   {options.map((column) => (
-                    <option key={column.key} value={column.key}>
+                    <option key={column.id} value={column.id}>
                       {column.label}
                     </option>
                   ))}
@@ -103,7 +103,7 @@ export function ContractsViewDropdownMenu() {
         <ComboPool
           options={configurableColumns.map((column) => ({
             label: column.label,
-            value: column.key,
+            value: column.id,
           }))}
           values={enabledColumns}
           onChange={(value) => toggleColumn(value)}

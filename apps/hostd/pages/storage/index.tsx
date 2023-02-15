@@ -13,8 +13,10 @@ import { StorageFolderDropdownMenu } from '../../components/StorageFolderDropdow
 import { HostdAuthedLayout } from '../../components/HostdAuthedLayout'
 import { useDialog } from '../../contexts/dialog'
 
+type Columns = 'path' | 'storage' | 'status' | 'errors' | 'actions'
+
 type Data = {
-  key: string
+  id: string
   path: string
   storageUsed: number
   storageCapacity: number
@@ -28,7 +30,7 @@ export default function StoragePage() {
 
   const data: Data[] = [
     {
-      key: '/Users/alex/data/sia/drive1',
+      id: '/Users/alex/data/sia/drive1',
       path: '/Users/alex/data/sia/drive1',
       storageUsed: 5_000_000_000,
       storageCapacity: 14_650_000_000,
@@ -37,7 +39,7 @@ export default function StoragePage() {
       readErrors: 34,
     },
     {
-      key: '/Users/alex/fast',
+      id: '/Users/alex/fast',
       path: '/Users/alex/fast',
       storageUsed: 400_000_000,
       storageCapacity: 913_280_000,
@@ -46,7 +48,7 @@ export default function StoragePage() {
       readErrors: 82,
     },
     {
-      key: '/Users/alex/nvme',
+      id: '/Users/alex/nvme',
       path: '/Users/alex/nvme',
       storageUsed: 309_000_000,
       storageCapacity: 313_280_000,
@@ -56,9 +58,9 @@ export default function StoragePage() {
     },
   ]
 
-  const columns: TableColumn<Data>[] = [
+  const columns: TableColumn<Columns, Data>[] = [
     {
-      key: 'path',
+      id: 'path',
       label: 'Path',
       size: 3,
       render: ({ path }) => (
@@ -68,7 +70,7 @@ export default function StoragePage() {
       ),
     },
     {
-      key: 'storage',
+      id: 'storage',
       label: 'Storage',
       size: 3,
       render: ({ storageUsed, storageCapacity }) => (
@@ -85,13 +87,13 @@ export default function StoragePage() {
       ),
     },
     {
-      key: 'status',
+      id: 'status',
       label: 'Status',
       size: 1,
       render: ({ status }) => <Badge variant="green">{status}</Badge>,
     },
     {
-      key: 'errors',
+      id: 'errors',
       label: 'Errors',
       tip: 'Read | write',
       size: 1,
@@ -102,7 +104,7 @@ export default function StoragePage() {
       ),
     },
     {
-      key: 'actions',
+      id: 'actions',
       label: '',
       size: 1,
       className: 'justify-end',
@@ -132,7 +134,7 @@ export default function StoragePage() {
         <DatumCard label="Read failure rate" value={'4%'} />
         <DatumCard label="Write failure rate" value={'1%'} />
       </div>
-      <Table data={data} columns={columns} />
+      <Table isLoading={false} pageSize={20} data={data} columns={columns} />
     </HostdAuthedLayout>
   )
 }

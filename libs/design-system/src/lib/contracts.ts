@@ -1,11 +1,11 @@
+import { daysToBlocks } from './blockTime'
 import {
-  daysToBlocks,
   getDaysInMs,
   getMonthsInMs,
   getNowInMs,
   getWeeksInMs,
   getYearsInMs,
-} from '@siafoundation/design-system'
+} from './time'
 
 export function getContractsTimeRangeBlockHeight(
   currentHeight: number,
@@ -74,7 +74,7 @@ export function getTimeRange(range: 'day' | 'week' | 'month' | 'year') {
   if (range === 'year') {
     return [now - getYearsInMs(1), now]
   }
-  if (range === 'day') {
-    return [now - getDaysInMs(1), now]
-  }
+  // if (range === 'day') {
+  return [now - getDaysInMs(1), now]
+  // }
 }
