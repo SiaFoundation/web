@@ -88,7 +88,7 @@ Props) {
           'decoration-gray-500/50 dark:decoration-gray-800/10',
           'hover:decoration-gray-500/70 hover:dark:decoration-gray-800/20'
         )}
-        underline="hover"
+        underline="none"
         onClick={toggleLanding}
       >
         The future is making a comeback.
