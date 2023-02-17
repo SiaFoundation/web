@@ -205,6 +205,22 @@ export const DropdownMenuItem = React.forwardRef<
   )
 })
 
+export const DropdownMenuItemAsChild = React.forwardRef<
+  HTMLDivElement,
+  DropdownMenuPrimitive.MenuItemProps
+>((props, ref) => {
+  return (
+    <DropdownMenuPrimitive.Item
+      ref={ref}
+      onSelect={(e) => {
+        e.preventDefault()
+      }}
+      asChild
+      {...props}
+    />
+  )
+})
+
 export const DropdownMenuLabel = React.forwardRef<
   HTMLDivElement,
   DropdownMenuPrimitive.MenuLabelProps

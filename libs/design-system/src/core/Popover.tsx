@@ -8,17 +8,17 @@ import { useOpen } from '../hooks/useOpen'
 const contentContainerStyles = cva([
   'relative',
   'z-10',
-  'data-[side=top]:bottom-5',
+  'data-[side=top]:bottom-1',
   'data-[side=top]:origin-bottom',
-  'data-[side=bottom]:top-5',
+  'data-[side=bottom]:top-1',
   'data-[side=bottom]:origin-top',
-  'data-[side=left]:right-5',
+  'data-[side=left]:right-1',
   'data-[side=left]:origin-right',
-  'data-[side=right]:left-5',
+  'data-[side=right]:left-1',
   'data-[side=right]:origin-left',
 ])
 
-const contentStyles = cx(panelStyles(), cva(['max-w-sm', 'py-0.5', 'px-1'])())
+const contentStyles = cx(panelStyles(), cva(['max-w-sm', 'py-1', 'px-1'])())
 
 export const PopoverClose = PopoverPrimitive.Close
 
@@ -57,7 +57,6 @@ export const Popover = React.forwardRef<
       {...rootProps}
     >
       <PopoverPrimitive.Trigger asChild>{trigger}</PopoverPrimitive.Trigger>
-      <PopoverPrimitive.Anchor />
       <AnimatePresence>
         {open ? (
           <PopoverPrimitive.Portal forceMount>

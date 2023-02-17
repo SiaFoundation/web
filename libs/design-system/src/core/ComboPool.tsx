@@ -1,4 +1,4 @@
-import { Badge } from './Badge'
+import { Button } from './Button'
 
 type Option = {
   value: string
@@ -16,16 +16,15 @@ export function ComboPool({ values, options, onChange }: Props) {
     <div className="flex flex-wrap gap-1">
       {options.map((option) => {
         return (
-          <Badge
+          <Button
             key={option.value}
-            interactive
             variant={values.includes(option.value) ? 'active' : 'inactive'}
             onClick={() => {
               onChange(option.value)
             }}
           >
             {option.label}
-          </Badge>
+          </Button>
         )
       })}
     </div>
