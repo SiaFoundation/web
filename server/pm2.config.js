@@ -30,5 +30,11 @@ module.exports = {
       script: 'run',
       args: 'design-site:serve:production',
     },
+    {
+      name: 'sia-renter',
+      interpreter: 'nx',
+      script: 'run',
+      args: 'renterd:serve:production',
+    },
   ],
 }
