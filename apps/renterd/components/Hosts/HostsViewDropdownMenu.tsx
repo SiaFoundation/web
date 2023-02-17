@@ -6,6 +6,9 @@ import {
   DropdownMenuItem,
   DropdownMenuRightSlot,
   ComboPool,
+  Popover,
+  BaseMenuItem,
+  MenuItemRightSlot,
 } from '@siafoundation/design-system'
 // import { HostSortBy } from '@siafoundation/react-core'
 import { useHosts } from '../../contexts/hosts'
@@ -23,7 +26,7 @@ export function HostsViewDropdownMenu() {
     enabledColumns,
   } = useHosts()
   return (
-    <DropdownMenu
+    <Popover
       trigger={
         <Button>
           <SettingsAdjust16 />
@@ -33,60 +36,12 @@ export function HostsViewDropdownMenu() {
       }
       contentProps={{
         align: 'end',
+        className: 'max-w-xs',
       }}
-      className="max-w-xs"
     >
-      {/* <DropdownMenuGroup>
-        <DropdownMenuItem>
-          Order by
-          <DropdownMenuRightSlot>
-            <Select
-              value={sortBy}
-              onClick={(e) => {
-                e.stopPropagation()
-              }}
-              onChange={(e) => {
-                setSortBy(e.currentTarget.value as HostSortBy)
-              }}
-            >
-              {Object.entries(sortOptions).map(([category, options]) => (
-                <optgroup key={category} label={category}>
-                  {options.map((column) => (
-                    <option key={column.id} value={column.id}>
-                      {column.label}
-                    </option>
-                  ))}
-                </optgroup>
-              ))}
-            </Select>
-          </DropdownMenuRightSlot>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          Direction
-          <DropdownMenuRightSlot>
-            <Select
-              value={sortDir}
-              onClick={(e) => {
-                e.stopPropagation()
-              }}
-              onChange={(e) => {
-                setSortDir(e.currentTarget.value as 'asc' | 'desc')
-              }}
-            >
-              <option key="desc" value="desc">
-                Descending
-              </option>
-              <option key="asc" value="asc">
-                Ascending
-              </option>
-            </Select>
-          </DropdownMenuRightSlot>
-        </DropdownMenuItem>
-      </DropdownMenuGroup>
-      <DropdownMenuSeparator /> */}
-      <DropdownMenuItem>
+      <BaseMenuItem>
         Display properties
-        <DropdownMenuRightSlot>
+        <MenuItemRightSlot>
           <Button
             onClick={(e) => {
               e.stopPropagation()
@@ -95,9 +50,9 @@ export function HostsViewDropdownMenu() {
           >
             Reset default
           </Button>
-        </DropdownMenuRightSlot>
-      </DropdownMenuItem>
-      <div className="p-2">
+        </MenuItemRightSlot>
+      </BaseMenuItem>
+      <BaseMenuItem>
         <ComboPool
           options={configurableColumns.map((column) => ({
             label: column.label,
@@ -106,7 +61,7 @@ export function HostsViewDropdownMenu() {
           values={enabledColumns}
           onChange={(value) => toggleColumnVisibility(value)}
         />
-      </div>
-    </DropdownMenu>
+      </BaseMenuItem>
+    </Popover>
   )
 }

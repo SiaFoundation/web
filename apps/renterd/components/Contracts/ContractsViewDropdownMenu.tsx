@@ -1,14 +1,14 @@
 import {
   Button,
   CaretDown16,
-  DropdownMenu,
   SettingsAdjust16,
-  DropdownMenuGroup,
-  DropdownMenuItem,
   Select,
-  DropdownMenuRightSlot,
-  DropdownMenuSeparator,
   ComboPool,
+  Label,
+  Popover,
+  MenuItemRightSlot,
+  BaseMenuItem,
+  MenuSeparator,
 } from '@siafoundation/design-system'
 import { TableColumnId } from '../../contexts/contracts/types'
 import { useContracts } from '../../contexts/contracts'
@@ -26,7 +26,7 @@ export function ContractsViewDropdownMenu() {
     enabledColumns,
   } = useContracts()
   return (
-    <DropdownMenu
+    <Popover
       trigger={
         <Button size="small">
           <SettingsAdjust16 />
@@ -39,57 +39,52 @@ export function ContractsViewDropdownMenu() {
         className: 'max-w-[300px]',
       }}
     >
-      <DropdownMenuGroup>
-        <DropdownMenuItem className="py-5 px-2">
-          Order by
-          <DropdownMenuRightSlot>
-            <Select
-              value={sortColumn}
-              onClick={(e) => {
-                e.stopPropagation()
-              }}
-              onChange={(e) => {
-                setSortColumn(e.currentTarget.value as TableColumnId)
-              }}
-            >
-              {Object.entries(sortOptions).map(([category, options]) => (
-                <optgroup key={category} label={category}>
-                  {options.map((column) => (
-                    <option key={column.id} value={column.id}>
-                      {column.label}
-                    </option>
-                  ))}
-                </optgroup>
-              ))}
-            </Select>
-          </DropdownMenuRightSlot>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="py-5 px-2">
-          Direction
-          <DropdownMenuRightSlot>
-            <Select
-              value={sortDirection}
-              onClick={(e) => {
-                e.stopPropagation()
-              }}
-              onChange={(e) => {
-                setSortDirection(e.currentTarget.value as 'asc' | 'desc')
-              }}
-            >
-              <option key="desc" value="desc">
-                Descending
-              </option>
-              <option key="asc" value="asc">
-                Ascending
-              </option>
-            </Select>
-          </DropdownMenuRightSlot>
-        </DropdownMenuItem>
-      </DropdownMenuGroup>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem className="py-5 px-2">
-        Display properties
-        <DropdownMenuRightSlot>
+      <BaseMenuItem>
+        <Label>Order by</Label>
+        <MenuItemRightSlot>
+          <Select
+            value={sortColumn}
+            onChange={(e) => {
+              setSortColumn(e.currentTarget.value as TableColumnId)
+            }}
+          >
+            {Object.entries(sortOptions).map(([category, options]) => (
+              <optgroup key={category} label={category}>
+                {options.map((column) => (
+                  <option key={column.id} value={column.id}>
+                    {column.label}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </Select>
+        </MenuItemRightSlot>
+      </BaseMenuItem>
+      <BaseMenuItem>
+        <Label>Direction</Label>
+        <MenuItemRightSlot>
+          <Select
+            value={sortDirection}
+            onClick={(e) => {
+              e.stopPropagation()
+            }}
+            onChange={(e) => {
+              setSortDirection(e.currentTarget.value as 'asc' | 'desc')
+            }}
+          >
+            <option key="desc" value="desc">
+              Descending
+            </option>
+            <option key="asc" value="asc">
+              Ascending
+            </option>
+          </Select>
+        </MenuItemRightSlot>
+      </BaseMenuItem>
+      <MenuSeparator />
+      <BaseMenuItem>
+        <Label>Display properties</Label>
+        <MenuItemRightSlot>
           <Button
             onClick={(e) => {
               e.stopPropagation()
@@ -98,9 +93,9 @@ export function ContractsViewDropdownMenu() {
           >
             Reset default
           </Button>
-        </DropdownMenuRightSlot>
-      </DropdownMenuItem>
-      <div className="p-2">
+        </MenuItemRightSlot>
+      </BaseMenuItem>
+      <BaseMenuItem>
         <ComboPool
           options={configurableColumns.map((column) => ({
             label: column.label,
@@ -109,7 +104,7 @@ export function ContractsViewDropdownMenu() {
           values={enabledColumns}
           onChange={(value) => toggleColumnVisibility(value)}
         />
-      </div>
-    </DropdownMenu>
+      </BaseMenuItem>
+    </Popover>
   )
 }
