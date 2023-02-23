@@ -12,7 +12,10 @@
         "compiler": "tsc",
         "outputPath": "dist/apps/asset-server",
         "main": "apps/asset-server/src/main.ts",
-        "tsConfig": "apps/asset-server/tsconfig.app.json"
+        "tsConfig": "apps/asset-server/tsconfig.app.json",
+        "webpackConfig": "apps/asset-server/webpack.config.js",
+        "isolatedConfig": true,
+        "babelUpwardRootMode": true
       },
       "configurations": {
         "production": {

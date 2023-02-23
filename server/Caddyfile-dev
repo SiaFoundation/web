@@ -27,8 +27,6 @@
 }
 
 site.local {
-  encode gzip
-
   handle /discord {
     redir https://discord.gg/sia permanent
   }
