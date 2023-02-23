@@ -5,9 +5,9 @@ import { useDialog } from '../../contexts/dialog'
 import { useContracts } from '../../contexts/contracts'
 import { ContractsViewDropdownMenu } from './ContractsViewDropdownMenu'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
-import { ContractsFilters } from './ContractsFilters'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
+import { ContractsFilterMenu } from './ContractFilterMenu'
 
 export function Contracts() {
   const { openDialog } = useDialog()
@@ -22,18 +22,18 @@ export function Contracts() {
     isLoading,
     datasetCount,
     pageCount,
-    stateNoneMatchingFilters,
-    stateNoneYet,
+    emptyNoneMatchingFilters,
+    emptyNoneYet,
     hasFetched,
   } = useContracts()
 
   return (
     <RenterdAuthedLayout
-      title="Contracts"
+      title="Active contracts"
       routes={routes}
       sidenav={<RenterSidenav />}
       openSettings={() => openDialog('settings')}
-      filters={<ContractsFilters />}
+      filters={<ContractsFilterMenu />}
       size="full"
       actions={
         <div className="flex gap-2">
@@ -50,21 +50,21 @@ export function Contracts() {
     >
       <div className="p-5 min-w-fit">
         <Table
-          pageSize={limit}
-          isLoading={!stateNoneYet && isLoading}
-          data={contracts}
-          columns={columns}
-          sortDirection={sortDirection}
-          sortColumn={sortColumn}
-          toggleSort={toggleSort}
+          isLoading={!emptyNoneYet && !emptyNoneMatchingFilters && isLoading}
           emptyState={
             hasFetched &&
-            (stateNoneMatchingFilters ? (
+            (emptyNoneMatchingFilters ? (
               <StateNoneMatching />
             ) : (
               <StateNoneYet />
             ))
           }
+          pageSize={limit}
+          data={contracts}
+          columns={columns}
+          sortDirection={sortDirection}
+          sortColumn={sortColumn}
+          toggleSort={toggleSort}
         />
       </div>
     </RenterdAuthedLayout>

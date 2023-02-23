@@ -82,6 +82,8 @@ module.exports = {
       addVariant('open', '&[data-state="open"]')
     }),
     require('tailwind-scrollbar'),
+    require('tailwindcss-text-fill'),
+    require('tailwindcss-shadow-fill'),
     require('../plugins/animation-delay'),
   ],
 }

@@ -20,6 +20,8 @@ import {
 } from './types'
 import { formatDistance, formatRelative } from 'date-fns'
 import { useRouter } from 'next/router'
+import { useHasFetched } from '../../hooks/useHasFetched'
+import { useEmptyStates } from '../../hooks/useEmptyStates'
 
 function useHostsMain() {
   const router = useRouter()
@@ -248,8 +250,18 @@ function useHostsMain() {
     [tableColumns, enabledColumns]
   )
 
+  const { isLoading, hasFetched } = useHasFetched(response)
+  const { emptyNoneYet, emptyNoneMatchingFilters } = useEmptyStates(
+    hasFetched,
+    dataset,
+    []
+  )
+
   return {
-    isLoading: response.isValidating,
+    isLoading,
+    hasFetched,
+    emptyNoneYet,
+    emptyNoneMatchingFilters,
     offset,
     limit,
     pageCount: dataset.length,

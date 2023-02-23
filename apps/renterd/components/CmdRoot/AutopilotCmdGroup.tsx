@@ -1,39 +1,41 @@
-import { Label } from '@siafoundation/design-system'
 import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
 import { useDialog } from '../../contexts/dialog'
-import {
-  CommandGroup,
-  CommandItemRootSearchAndPage,
-  CommandItemRootInitialOnly,
-} from './Item'
+import { CommandGroup, CommandItemNav, CommandItemSearch } from './Item'
+import { Page } from './types'
 
-const commandPage = 'Autopilot'
-
-type Props = {
-  page: string
-  pushPage: (page: string) => void
+const commandPage = {
+  namespace: 'autopilot',
+  label: 'Autopilot',
 }
 
-export function CommandKAutopilot({ page, pushPage }: Props) {
+type Props = {
+  currentPage: Page
+  parentPage?: Page
+  pushPage: (page: Page) => void
+}
+
+export function AutopilotCmdGroup({
+  parentPage,
+  currentPage,
+  pushPage,
+}: Props) {
   const router = useRouter()
   const { closeDialog } = useDialog()
   return (
-    <CommandGroup
-      currentPage={page}
-      commandPage={commandPage}
-      heading={<Label>Autopilot</Label>}
-    >
-      <CommandItemRootInitialOnly
-        currentPage={page}
+    <CommandGroup currentPage={currentPage} commandPage={commandPage}>
+      <CommandItemNav
+        currentPage={currentPage}
+        parentPage={parentPage}
+        commandPage={commandPage}
         onSelect={() => {
           pushPage(commandPage)
         }}
       >
         Autopilot
-      </CommandItemRootInitialOnly>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemNav>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           router.push(routes.autopilot.index)
@@ -41,9 +43,9 @@ export function CommandKAutopilot({ page, pushPage }: Props) {
         }}
       >
         Open autopilot
-      </CommandItemRootSearchAndPage>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           router.push(routes.autopilot.estimates)
@@ -51,9 +53,9 @@ export function CommandKAutopilot({ page, pushPage }: Props) {
         }}
       >
         Configure estimates
-      </CommandItemRootSearchAndPage>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           router.push(routes.autopilot.settings)
@@ -61,7 +63,7 @@ export function CommandKAutopilot({ page, pushPage }: Props) {
         }}
       >
         Configure settings
-      </CommandItemRootSearchAndPage>
+      </CommandItemSearch>
     </CommandGroup>
   )
 }

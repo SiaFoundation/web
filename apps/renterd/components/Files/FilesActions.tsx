@@ -3,11 +3,11 @@ import {
   CloudUpload16,
   // FolderAdd16,
 } from '@siafoundation/design-system'
+import { useFiles } from '../../contexts/files'
 import { useDropzone } from 'react-dropzone'
-import { useUploads } from '../../contexts/uploads'
 
 export function FilesActions() {
-  const { onDrop } = useUploads()
+  const { onDrop } = useFiles()
 
   const { getRootProps, getInputProps } = useDropzone({ noDrag: true, onDrop })
 

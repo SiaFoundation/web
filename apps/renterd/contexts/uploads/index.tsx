@@ -7,15 +7,8 @@ import React, {
 } from 'react'
 import { triggerErrorToast, triggerToast } from '@siafoundation/design-system'
 import { useObjectUpload } from '@siafoundation/react-core'
-import { UploadsBar } from '../components/UploadsBar'
+import { UploadsBar } from '../../components/UploadsBar'
 import { throttle } from 'lodash'
-
-const UploadsContext = createContext({} as State)
-export const useUploads = () => useContext(UploadsContext)
-
-type Props = {
-  children: React.ReactNode
-}
 
 type Upload = {
   path: string
@@ -25,15 +18,7 @@ type Upload = {
 
 type UploadsMap = Record<string, Upload>
 
-type UploadsList = Upload[]
-
-type State = {
-  uploadsMap: UploadsMap
-  uploadsList: UploadsList
-  onDrop: (files: File[]) => void
-}
-
-export function UploadsProvider({ children }: Props) {
+function useUploadsMain() {
   const upload = useObjectUpload()
   const [uploadsMap, setUploadsMap] = useState<UploadsMap>({})
 
@@ -100,10 +85,22 @@ export function UploadsProvider({ children }: Props) {
     [uploadsMap]
   )
 
-  const value: State = { uploadsMap, onDrop, uploadsList }
+  return { uploadsMap, onDrop, uploadsList }
+}
 
+type State = ReturnType<typeof useUploadsMain>
+
+const UploadsContext = createContext({} as State)
+export const useUploads = () => useContext(UploadsContext)
+
+type Props = {
+  children: React.ReactNode
+}
+
+export function UploadsProvider({ children }: Props) {
+  const state = useUploadsMain()
   return (
-    <UploadsContext.Provider value={value}>
+    <UploadsContext.Provider value={state}>
       {children}
       <UploadsBar />
     </UploadsContext.Provider>

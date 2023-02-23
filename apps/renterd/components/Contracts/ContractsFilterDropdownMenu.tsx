@@ -106,7 +106,7 @@ export function ContractsFilterDropdownMenu() {
               values={expirySelection}
               onChange={(value) => {
                 const o = options.find((o) => o.value === value)
-                setFilter(o.id, o)
+                setFilter(o)
               }}
             />
           </div>

@@ -12,12 +12,13 @@ import {
   useTableState,
   getContractsTimeRangeBlockHeight,
 } from '@siafoundation/design-system'
+import { useRouter } from 'next/router'
 import { humanDate } from '@siafoundation/sia-js'
 import {
   useConsensusState,
   useContracts as useContractsData,
 } from '@siafoundation/react-core'
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useContext, useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import {
   ContractData,
@@ -27,7 +28,8 @@ import {
   columnsDefaultSort,
 } from './types'
 import { useClientFilters } from '../../hooks/useClientFilters'
-import { useRouter } from 'next/router'
+import { useHasFetched } from '../../hooks/useHasFetched'
+import { useEmptyStates } from '../../hooks/useEmptyStates'
 
 const defaultLimit = 20
 
@@ -90,7 +92,8 @@ function useContractsMain() {
     columnsDefaultSort
   )
 
-  const { filters, setFilter, removeFilter } = useClientFilters<ContractData>()
+  const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
+    useClientFilters<ContractData>()
 
   const datasetFiltered = useMemo(() => {
     const filterList = Object.entries(filters).map(([_, f]) => f)
@@ -262,31 +265,18 @@ function useContractsMain() {
     [tableColumns, enabledColumns]
   )
 
-  const [hasFetched, setHasFetched] = useState(false)
-  useEffect(() => {
-    if (!hasFetched && response.data) {
-      setHasFetched(true)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response.isValidating])
-
-  const stateNoneYet = useMemo(
-    () =>
-      hasFetched && !datasetPage.length && Object.entries(filters).length === 0,
-    [hasFetched, datasetPage, filters]
-  )
-
-  const stateNoneMatchingFilters = useMemo(
-    () =>
-      hasFetched && !datasetPage.length && Object.entries(filters).length > 0,
-    [hasFetched, datasetPage, filters]
+  const { isLoading, hasFetched } = useHasFetched(response)
+  const { emptyNoneYet, emptyNoneMatchingFilters } = useEmptyStates(
+    hasFetched,
+    datasetPage,
+    filters
   )
 
   return {
-    isLoading: response.isValidating,
+    isLoading,
     hasFetched,
-    stateNoneYet,
-    stateNoneMatchingFilters,
+    emptyNoneYet,
+    emptyNoneMatchingFilters,
     limit,
     offset,
     pageCount: datasetPage.length,
@@ -303,6 +293,8 @@ function useContractsMain() {
     filters,
     setFilter,
     removeFilter,
+    removeLastFilter,
+    resetFilters,
     sortDirection,
     sortOptions,
     resetDefaultColumnVisibility,

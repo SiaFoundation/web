@@ -8,6 +8,7 @@ import { useOpen } from '../hooks/useOpen'
 const contentContainerStyles = cva([
   'relative',
   'z-10',
+  'outline-none',
   'data-[side=top]:bottom-1',
   'data-[side=top]:origin-bottom',
   'data-[side=bottom]:top-1',

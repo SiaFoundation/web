@@ -1,10 +1,7 @@
 import {
   Button,
   CaretDown16,
-  DropdownMenu,
   SettingsAdjust16,
-  DropdownMenuItem,
-  DropdownMenuRightSlot,
   ComboPool,
   Popover,
   BaseMenuItem,

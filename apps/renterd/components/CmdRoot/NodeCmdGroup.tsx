@@ -1,48 +1,46 @@
-import { Label } from '@siafoundation/design-system'
 import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
 import { useDialog } from '../../contexts/dialog'
-import {
-  CommandGroup,
-  CommandItemRootInitialOnly,
-  CommandItemRootSearchAndPage,
-} from './Item'
+import { CommandGroup, CommandItemNav, CommandItemSearch } from './Item'
+import { Page } from './types'
 
-const commandPage = 'Blockchain node'
-
-type Props = {
-  page: string
-  pushPage: (page: string) => void
+const commandPage = {
+  namespace: 'node',
+  label: 'Blockchain node',
 }
 
-export function CommandKNode({ page, pushPage }: Props) {
+type Props = {
+  currentPage: Page
+  parentPage?: Page
+  pushPage: (page: Page) => void
+}
+
+export function NodeCmdGroup({ currentPage, parentPage, pushPage }: Props) {
   const { openDialog, closeDialog } = useDialog()
   const router = useRouter()
   return (
-    <CommandGroup
-      currentPage={page}
-      commandPage={commandPage}
-      heading={<Label>Blockchain node</Label>}
-    >
-      <CommandItemRootInitialOnly
-        currentPage={page}
+    <CommandGroup currentPage={currentPage} commandPage={commandPage}>
+      <CommandItemNav
+        currentPage={currentPage}
+        parentPage={parentPage}
+        commandPage={commandPage}
         onSelect={() => {
           pushPage(commandPage)
         }}
       >
         Blockchain node
-      </CommandItemRootInitialOnly>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemNav>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           openDialog('connectPeer')
         }}
       >
         Connect to a peer
-      </CommandItemRootSearchAndPage>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           router.push(routes.node.index)
@@ -50,9 +48,9 @@ export function CommandKNode({ page, pushPage }: Props) {
         }}
       >
         View peers
-      </CommandItemRootSearchAndPage>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           router.push(routes.node.index)
@@ -60,7 +58,7 @@ export function CommandKNode({ page, pushPage }: Props) {
         }}
       >
         View transaction pool
-      </CommandItemRootSearchAndPage>
+      </CommandItemSearch>
     </CommandGroup>
   )
 }

@@ -1,41 +1,44 @@
-import { Label, useTheme } from '@siafoundation/design-system'
+import { useTheme } from '@siafoundation/design-system'
 import { useAppSettings } from '@siafoundation/react-core'
 import { useDialog } from '../../contexts/dialog'
 import {
   CommandGroup,
-  CommandItemRootAndPage,
-  CommandItemRootSearchAndPage,
+  CommandItemNav,
+  CommandItemRootAndSearch,
+  CommandItemSearch,
 } from './Item'
+import { Page } from './types'
 
-const commandPage = 'Settings'
-
-type Props = {
-  page: string
-  pushPage: (page: string) => void
+const commandPage = {
+  namespace: 'settings',
+  label: 'Settings',
 }
 
-export function CommandKApp({ page, pushPage }: Props) {
+type Props = {
+  currentPage: Page
+  parentPage?: Page
+  pushPage: (page: Page) => void
+}
+
+export function AppCmdGroup({ currentPage, parentPage }: Props) {
   const { openDialog, closeDialog } = useDialog()
   const { setMode, setTheme } = useTheme()
   const { settings, setSettings, lock, currencyOptions, setCurrency } =
     useAppSettings()
   return (
-    <CommandGroup
-      currentPage={page}
-      commandPage={commandPage}
-      heading={<Label>Application</Label>}
-    >
-      <CommandItemRootAndPage
-        currentPage={page}
+    <CommandGroup currentPage={currentPage} commandPage={commandPage}>
+      <CommandItemNav
+        currentPage={currentPage}
+        parentPage={parentPage}
         commandPage={commandPage}
         onSelect={() => {
           openDialog('settings')
         }}
       >
         Open settings
-      </CommandItemRootAndPage>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemNav>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           setSettings({ siaCentral: !settings.siaCentral })
@@ -43,9 +46,9 @@ export function CommandKApp({ page, pushPage }: Props) {
       >
         {(settings.siaCentral ? 'Disable' : 'Enable') +
           ' external API - Sia Central exchange rates'}
-      </CommandItemRootSearchAndPage>
-      <CommandItemRootAndPage
-        currentPage={page}
+      </CommandItemSearch>
+      <CommandItemRootAndSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           lock()
@@ -53,18 +56,18 @@ export function CommandKApp({ page, pushPage }: Props) {
         }}
       >
         Lock renterd
-      </CommandItemRootAndPage>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemRootAndSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           openDialog('settings')
         }}
       >
         Open interface theme menu
-      </CommandItemRootSearchAndPage>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           setMode('system')
@@ -72,9 +75,9 @@ export function CommandKApp({ page, pushPage }: Props) {
         }}
       >
         Set theme to system preference
-      </CommandItemRootSearchAndPage>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           setMode('user')
@@ -83,9 +86,9 @@ export function CommandKApp({ page, pushPage }: Props) {
         }}
       >
         Set theme to dark
-      </CommandItemRootSearchAndPage>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           setMode('user')
@@ -94,20 +97,20 @@ export function CommandKApp({ page, pushPage }: Props) {
         }}
       >
         Set theme to light
-      </CommandItemRootSearchAndPage>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           openDialog('settings')
         }}
       >
         Open currency settings menu
-      </CommandItemRootSearchAndPage>
+      </CommandItemSearch>
       {currencyOptions.map(({ id, label }) => (
-        <CommandItemRootSearchAndPage
+        <CommandItemSearch
           key={id}
-          currentPage={page}
+          currentPage={currentPage}
           commandPage={commandPage}
           onSelect={() => {
             setCurrency(id)
@@ -115,7 +118,7 @@ export function CommandKApp({ page, pushPage }: Props) {
           }}
         >
           {`Set currency to ${label}`}
-        </CommandItemRootSearchAndPage>
+        </CommandItemSearch>
       ))}
     </CommandGroup>
   )
