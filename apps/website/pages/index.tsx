@@ -8,6 +8,7 @@ import {
   webLinks,
   Link,
   Code,
+  Text,
 } from '@siafoundation/design-system'
 import { Layout } from '../components/Layout'
 import { routes } from '../config/routes'
@@ -74,11 +75,14 @@ Props) {
   const description = (
     <>
       Cryptography has unleashed the latent power of the Internet by enabling
-      interactions between mutually-distrusting parties. Sia harnesses this
-      power to create a trustless cloud storage marketplace, allowing buyers and
-      sellers to transact directly. No intermediaries, no borders, no vendor
-      lock-in, no spying, no throttling, no walled gardens; it's a return to the
-      Internet we once knew.{' '}
+      interactions between mutually-distrusting parties. Sia{' '}
+      <Text color="verySubtle" className="italic">
+        [sigh-uh]
+      </Text>{' '}
+      harnesses this power to create a trustless cloud storage marketplace,
+      allowing buyers and sellers to transact directly. No intermediaries, no
+      borders, no vendor lock-in, no spying, no throttling, no walled gardens;
+      it's a return to the Internet we once knew.{' '}
       <Link
         href="/"
         color="subtle"
