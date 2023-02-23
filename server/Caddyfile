@@ -1,5 +1,5 @@
 sia.tech {
-  encode zstd gzip
+  encode gzip
 
   handle /discord {
     redir https://discord.gg/sia permanent
@@ -27,40 +27,47 @@ sia.tech {
   redir /siafoundation /newsroom/2021-foundation permanent
 
   # Redirect deprecated news paths.
-  # Keeping for now but these can be removed.
-  redir /funding2016 /newsroom/2016-funding permanent
-  redir /2017grant /newsroom/2017-grant permanent
-  redir /funding2019 /newsroom/2019-funding permanent
-  redir /settlement2019 /newsroom/2019-settlement permanent
-  redir /funding2020 /newsroom/2020-funding permanent
-  redir /skydb2020 /newsroom/2020-skydb permanent
-  redir /skynet2020 /newsroom/2020-skynet permanent
+  # redir /funding2016 /newsroom/2016-funding permanent
+  # redir /2017grant /newsroom/2017-grant permanent
+  # redir /funding2019 /newsroom/2019-funding permanent
+  # redir /settlement2019 /newsroom/2019-settlement permanent
+  # redir /funding2020 /newsroom/2020-funding permanent
+  # redir /skydb2020 /newsroom/2020-skydb permanent
+  # redir /skynet2020 /newsroom/2020-skynet permanent
 
-  handle /releases {
-    reverse_proxy http://localhost:3002
+  handle /releases* {
+    reverse_proxy localhost:3002
   }
 
-  handle /transparency {
-    reverse_proxy http://localhost:3002
+  handle /transparency* {
+    reverse_proxy localhost:3002
   }
 
-  handle /rss {
-    reverse_proxy http://localhost:3002
+  handle /rss* {
+    reverse_proxy localhost:3002
   }
 
-  reverse_proxy http://localhost:3001
+  reverse_proxy localhost:3001
 }
 
 api.sia.tech {
-  reverse_proxy http://localhost:3002
+  encode gzip
+  reverse_proxy localhost:3002
 }
 
 explore.sia.tech {
-  reverse_proxy http://localhost:3004
+  encode gzip
+  reverse_proxy localhost:3004
 }
 
 zen.sia.tech {
+  encode gzip
   reverse_proxy localhost:3005
+}
+
+renter.sia.tech {
+  encode gzip
+  reverse_proxy localhost:3007
 }
 
 www.sia.tech {

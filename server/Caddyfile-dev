@@ -27,37 +27,79 @@
 }
 
 site.local {
-  import cors
+  encode gzip
+
+  handle /discord {
+    redir https://discord.gg/sia permanent
+  }
+
+  # Redirect old /docs routes to api subdomain
+  handle_path /docs* {
+    redir https://api.sia.tech{uri} permanent
+  }
+
+  # Redirect old paths
+  redir /jobs https://siafoundation.homerun.co permanent
+  redir /blog https://blog.sia.tech permanent
+  redir /whitepaper.pdf /sia.pdf permanent
+  redir /apps /get-started permanent
+  redir /download /get-started permanent
+  redir /downloads /get-started permanent
+  redir /developers /get-started permanent
+  redir /about /learn permanent
+  redir /img/svg/sia-wordmark.svg /wordmark.svg permanent
+  redir /img/svg/sia-green-logo.svg /logo-green.png permanent
+  redir /get-siacoin /community-ecosystem?software=exchanges#software permanent
+
+  # Redirect existing news paths.
+  redir /siafoundation /newsroom/2021-foundation permanent
+
+  # Redirect deprecated news paths.
+  # Keeping for now but these can be removed.
+  redir /funding2016 /newsroom/2016-funding permanent
+  redir /2017grant /newsroom/2017-grant permanent
+  redir /funding2019 /newsroom/2019-funding permanent
+  redir /settlement2019 /newsroom/2019-settlement permanent
+  redir /funding2020 /newsroom/2020-funding permanent
+  redir /skydb2020 /newsroom/2020-skydb permanent
+  redir /skynet2020 /newsroom/2020-skynet permanent
+
+  handle /releases* {
+    reverse_proxy localhost:3002
+  }
+
+  handle /transparency* {
+    reverse_proxy localhost:3002
+  }
+
+  handle /rss* {
+    reverse_proxy localhost:3002
+  }
+
   reverse_proxy localhost:3001
 }
 
 api.local {
-  import cors
   reverse_proxy localhost:3002
 }
 
 explore.local {
-  import cors
   reverse_proxy localhost:3003
 }
 
 design.local {
-  import cors
   reverse_proxy localhost:3004
 }
 
 zen.local {
-  import cors
   reverse_proxy localhost:3005
 }
 
 host.local {
-  import cors
   reverse_proxy localhost:3006
 }
 
 renter.local {
-  import cors
   reverse_proxy localhost:3007
 }
 
