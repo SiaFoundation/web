@@ -6,14 +6,7 @@ import {
   TransactionDetailsDialog,
   WalletSingleAddressDetailsDialog,
 } from '@siafoundation/design-system'
-import { CommandKDialog } from '../components/CommandKDialog'
-
-const DialogContext = createContext({} as State)
-export const useDialog = () => useContext(DialogContext)
-
-type Props = {
-  children: React.ReactNode
-}
+import { CmdKDialog } from '../components/CmdKDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -28,14 +21,7 @@ export type DialogType =
   | 'objectDownload'
   | 'objectDelete'
 
-type State = {
-  dialog?: DialogType
-  id?: string
-  openDialog: (dialog: DialogType, id?: string) => void
-  closeDialog: () => void
-}
-
-export function DialogProvider({ children }: Props) {
+function useDialogMain() {
   const [dialog, setDialog] = useState<DialogType>()
   const [id, setId] = useState<string>()
 
@@ -61,16 +47,36 @@ export function DialogProvider({ children }: Props) {
     [closeDialog]
   )
 
-  const value: State = {
+  return {
     dialog,
     id,
     openDialog,
     closeDialog,
+    onOpenChange,
   }
+}
 
+type State = ReturnType<typeof useDialogMain>
+
+const DialogContext = createContext({} as State)
+export const useDialog = () => useContext(DialogContext)
+
+type Props = {
+  children: React.ReactNode
+}
+
+export function DialogProvider({ children }: Props) {
+  const state = useDialogMain()
   return (
-    <DialogContext.Provider value={value}>
-      <CommandKDialog
+    <DialogContext.Provider value={state}>{children}</DialogContext.Provider>
+  )
+}
+
+export function Dialogs() {
+  const { id, dialog, openDialog, onOpenChange, closeDialog } = useDialog()
+  return (
+    <>
+      <CmdKDialog
         open={dialog === 'cmdk'}
         onOpenChange={onOpenChange}
         setOpen={() => openDialog('cmdk')}
@@ -96,7 +102,6 @@ export function DialogProvider({ children }: Props) {
         open={dialog === 'connectPeer'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
-      {children}
-    </DialogContext.Provider>
+    </>
   )
 }

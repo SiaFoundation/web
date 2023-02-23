@@ -145,7 +145,7 @@ export const DropdownMenuSub = React.forwardRef<
         {...subProps}
       >
         <DropdownMenuPrimitive.SubTrigger asChild>
-          <div className={itemStyles(className)}>
+          <div className={itemStyles({ className })}>
             {trigger}
             <DropdownMenuRightSlot>
               <ArrowRight16 />
@@ -199,23 +199,7 @@ export const DropdownMenuItem = React.forwardRef<
   return (
     <DropdownMenuPrimitive.Item
       ref={ref}
-      className={itemStyles(className)}
-      {...props}
-    />
-  )
-})
-
-export const DropdownMenuItemAsChild = React.forwardRef<
-  HTMLDivElement,
-  DropdownMenuPrimitive.MenuItemProps
->((props, ref) => {
-  return (
-    <DropdownMenuPrimitive.Item
-      ref={ref}
-      onSelect={(e) => {
-        e.preventDefault()
-      }}
-      asChild
+      className={itemStyles({ className })}
       {...props}
     />
   )

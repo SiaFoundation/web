@@ -5,10 +5,22 @@ import { useDialog } from '../../contexts/dialog'
 import { useHosts } from '../../contexts/hosts'
 import { HostsViewDropdownMenu } from './HostsViewDropdownMenu'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
+import { StateNoneMatching } from './StateNoneMatching'
+import { StateNoneYet } from './StateNoneYet'
 
 export function Hosts() {
   const { openDialog } = useDialog()
-  const { hosts, columns, offset, limit, isLoading, pageCount } = useHosts()
+  const {
+    hosts,
+    columns,
+    offset,
+    limit,
+    isLoading,
+    pageCount,
+    hasFetched,
+    emptyNoneMatchingFilters,
+    emptyNoneYet,
+  } = useHosts()
 
   return (
     <RenterdAuthedLayout
@@ -30,8 +42,16 @@ export function Hosts() {
     >
       <div className="p-5 min-w-fit">
         <Table
+          isLoading={!emptyNoneYet && !emptyNoneMatchingFilters && isLoading}
+          emptyState={
+            hasFetched &&
+            (emptyNoneMatchingFilters ? (
+              <StateNoneMatching />
+            ) : (
+              <StateNoneYet />
+            ))
+          }
           pageSize={limit}
-          isLoading={isLoading}
           data={hosts}
           columns={columns}
           rowSize="default"

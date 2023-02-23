@@ -1,39 +1,37 @@
-import { Label } from '@siafoundation/design-system'
 import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
 import { useDialog } from '../../contexts/dialog'
-import {
-  CommandGroup,
-  CommandItemRootSearchAndPage,
-  CommandItemRootInitialOnly,
-} from './Item'
+import { CommandGroup, CommandItemNav, CommandItemSearch } from './Item'
+import { Page } from './types'
 
-const commandPage = 'Configuration'
-
-type Props = {
-  page: string
-  pushPage: (page: string) => void
+const commandPage = {
+  namespace: 'configuration',
+  label: 'Configuration',
 }
 
-export function CommandKConfig({ page, pushPage }: Props) {
+type Props = {
+  currentPage: Page
+  parentPage?: Page
+  pushPage: (page: Page) => void
+}
+
+export function ConfigCmdGroup({ currentPage, parentPage, pushPage }: Props) {
   const router = useRouter()
   const { closeDialog } = useDialog()
   return (
-    <CommandGroup
-      currentPage={page}
-      commandPage={commandPage}
-      heading={<Label>Configuration</Label>}
-    >
-      <CommandItemRootInitialOnly
-        currentPage={page}
+    <CommandGroup currentPage={currentPage} commandPage={commandPage}>
+      <CommandItemNav
+        currentPage={currentPage}
+        parentPage={parentPage}
+        commandPage={commandPage}
         onSelect={() => {
           pushPage(commandPage)
         }}
       >
         Configuration
-      </CommandItemRootInitialOnly>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemNav>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           router.push(routes.config.index)
@@ -41,9 +39,9 @@ export function CommandKConfig({ page, pushPage }: Props) {
         }}
       >
         Open configuration
-      </CommandItemRootSearchAndPage>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           router.push(routes.config.gouging)
@@ -51,9 +49,9 @@ export function CommandKConfig({ page, pushPage }: Props) {
         }}
       >
         Configure gouging
-      </CommandItemRootSearchAndPage>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           router.push(routes.config.redundancy)
@@ -61,7 +59,7 @@ export function CommandKConfig({ page, pushPage }: Props) {
         }}
       >
         Configure redundancy
-      </CommandItemRootSearchAndPage>
+      </CommandItemSearch>
     </CommandGroup>
   )
 }

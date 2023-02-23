@@ -10,6 +10,8 @@ export const textFieldStyles = cva(
     'tabular-nums',
     'rounded',
     'text-gray-1100 dark:text-white',
+    'autofill:text-fill-gray-1100 autofill:dark:text-fill-white',
+    'autofill:placeholder:text-fill-gray-700 autofill:placeholder:dark:text-fill-graydark-700',
     'placeholder:text-gray-700 placeholder:dark:text-graydark-700',
     'disabled:text-gray-400 disabled:dark:text-graydark-400',
   ],
@@ -24,7 +26,8 @@ export const textFieldStyles = cva(
         default: [
           'border',
           'bg-white dark:bg-graydark-50',
-          'autofill:bg-blue-100 autofill:dark:bg-blue-800',
+          'autofill:bg-white autofill:dark:bg-graydark-50',
+          'autofill:shadow-fill-white autofill:dark:shadow-fill-graydark-50',
         ],
         ghost: 'bg-transparent',
       },

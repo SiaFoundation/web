@@ -1,41 +1,40 @@
-import { copyToClipboard, Label } from '@siafoundation/design-system'
+import { copyToClipboard } from '@siafoundation/design-system'
 import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
 import { useDialog } from '../../contexts/dialog'
-import {
-  CommandGroup,
-  CommandItemRootInitialOnly,
-  CommandItemRootSearchAndPage,
-} from './Item'
+import { CommandGroup, CommandItemNav, CommandItemSearch } from './Item'
 import { useWalletAddress } from '@siafoundation/react-core'
+import { Page } from './types'
 
-const commandPage = 'Wallet'
-
-type Props = {
-  page: string
-  pushPage: (page: string) => void
+const commandPage = {
+  namespace: 'wallet',
+  label: 'Wallet',
 }
 
-export function CommandKWallet({ page, pushPage }: Props) {
+type Props = {
+  currentPage: Page
+  parentPage?: Page
+  pushPage: (page: Page) => void
+}
+
+export function WalletCmdGroup({ currentPage, parentPage, pushPage }: Props) {
   const { openDialog, closeDialog } = useDialog()
   const router = useRouter()
   const address = useWalletAddress()
   return (
-    <CommandGroup
-      currentPage={page}
-      commandPage={commandPage}
-      heading={<Label>Wallet</Label>}
-    >
-      <CommandItemRootInitialOnly
-        currentPage={page}
+    <CommandGroup currentPage={currentPage} commandPage={commandPage}>
+      <CommandItemNav
+        currentPage={currentPage}
+        parentPage={parentPage}
+        commandPage={commandPage}
         onSelect={() => {
           pushPage(commandPage)
         }}
       >
         Wallet
-      </CommandItemRootInitialOnly>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemNav>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           router.push(routes.wallet.view)
@@ -43,36 +42,36 @@ export function CommandKWallet({ page, pushPage }: Props) {
         }}
       >
         View wallet transactions
-      </CommandItemRootSearchAndPage>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           openDialog('sendSiacoin')
         }}
       >
         Send siacoin
-      </CommandItemRootSearchAndPage>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           openDialog('addressDetails')
         }}
       >
         Receive siacoin
-      </CommandItemRootSearchAndPage>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           openDialog('addressDetails')
         }}
       >
         View wallet address
-      </CommandItemRootSearchAndPage>
-      <CommandItemRootSearchAndPage
-        currentPage={page}
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
           copyToClipboard(address.data, 'wallet address')
@@ -80,7 +79,7 @@ export function CommandKWallet({ page, pushPage }: Props) {
         }}
       >
         Copy wallet address to clipboard
-      </CommandItemRootSearchAndPage>
+      </CommandItemSearch>
     </CommandGroup>
   )
 }
