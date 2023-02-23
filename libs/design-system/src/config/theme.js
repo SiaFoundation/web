@@ -1,18 +1,13 @@
 const plugin = require('tailwindcss/plugin')
+const { fontFamily } = require('tailwindcss/defaultTheme')
 const { colors } = require('./colors')
 
 module.exports = {
   darkMode: 'class',
   theme: {
     fontFamily: {
-      sans: [
-        'PlexSans',
-        'Untitled Sans',
-        '-apple-system',
-        'system-ui',
-        'sans-serif',
-      ],
-      mono: ['PlexMono', 'menlo', 'monospace'],
+      sans: ['var(--font-sans)', ...fontFamily.sans],
+      mono: ['var(--font-mono)', ...fontFamily.mono],
     },
     extend: {
       fontSize: {
