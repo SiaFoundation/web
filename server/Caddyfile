@@ -57,6 +57,11 @@ api.sia.tech {
 
 explore.sia.tech {
   encode gzip
+  reverse_proxy localhost:3003
+}
+
+design.sia.tech {
+  encode gzip
   reverse_proxy localhost:3004
 }
 
