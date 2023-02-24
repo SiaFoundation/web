@@ -5,7 +5,7 @@ const withNx = require('@nrwl/next/plugins/with-nx')
  * @type {import('@nrwl/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
-  // Use nginx compression in production
+  // Use downstream webserver compression in production
   compress: process.env.NODE_ENV === 'development',
   nx: {
     // Set this to true if you would like to to use SVGR
