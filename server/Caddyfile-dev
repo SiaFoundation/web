@@ -49,18 +49,15 @@ site.local {
   redir /img/svg/sia-green-logo.svg /logo-green.png permanent
   redir /get-siacoin /community-ecosystem?software=exchanges#software permanent
 
-  # Redirect existing news paths.
+  # Redirect news paths
   redir /siafoundation /newsroom/2021-foundation permanent
-
-  # Redirect deprecated news paths.
-  # Keeping for now but these can be removed.
-  redir /funding2016 /newsroom/2016-funding permanent
-  redir /2017grant /newsroom/2017-grant permanent
-  redir /funding2019 /newsroom/2019-funding permanent
-  redir /settlement2019 /newsroom/2019-settlement permanent
-  redir /funding2020 /newsroom/2020-funding permanent
-  redir /skydb2020 /newsroom/2020-skydb permanent
-  redir /skynet2020 /newsroom/2020-skynet permanent
+  redir /funding2016 /newsroom/2021-foundation permanent
+  redir /2017grant /newsroom/2021-foundation permanent
+  redir /funding2019 /newsroom/2021-foundation permanent
+  redir /settlement2019 /newsroom/2021-foundation permanent
+  redir /funding2020 /newsroom/2021-foundation permanent
+  redir /skydb2020 /newsroom/2021-foundation permanent
+  redir /skynet2020 /newsroom/2021-foundation permanent
 
   handle /releases* {
     reverse_proxy localhost:3002
