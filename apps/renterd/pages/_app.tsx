@@ -1,8 +1,6 @@
 import '../config/style.css'
-import { ClientSide, ThemeProvider } from '@siafoundation/design-system'
+import { NextAppCsr } from '@siafoundation/design-system'
 import { AppProps } from 'next/app'
-import { SWRConfig } from 'swr'
-import { AppSettingsProvider } from '@siafoundation/react-core'
 import { DialogProvider, Dialogs } from '../contexts/dialog'
 import { UploadsProvider } from '../contexts/uploads'
 import { FilesProvider } from '../contexts/files'
@@ -16,25 +14,19 @@ export default function App({
   fallback?: Record<string, unknown>
 }>) {
   return (
-    <ClientSide>
-      <SWRConfig value={{ fallback: pageProps?.fallback || {} }}>
-        <ThemeProvider>
-          <AppSettingsProvider passwordProtectRequestHooks>
-            <DialogProvider>
-              <UploadsProvider>
-                <FilesProvider>
-                  <ContractsProvider>
-                    <HostsProvider>
-                      <Dialogs />
-                      <Component {...pageProps} />
-                    </HostsProvider>
-                  </ContractsProvider>
-                </FilesProvider>
-              </UploadsProvider>
-            </DialogProvider>
-          </AppSettingsProvider>
-        </ThemeProvider>
-      </SWRConfig>
-    </ClientSide>
+    <NextAppCsr fallback={pageProps.fallback} passwordProtectRequestHooks>
+      <DialogProvider>
+        <UploadsProvider>
+          <FilesProvider>
+            <ContractsProvider>
+              <HostsProvider>
+                <Dialogs />
+                <Component {...pageProps} />
+              </HostsProvider>
+            </ContractsProvider>
+          </FilesProvider>
+        </UploadsProvider>
+      </DialogProvider>
+    </NextAppCsr>
   )
 }

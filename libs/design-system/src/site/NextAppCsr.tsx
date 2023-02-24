@@ -1,15 +1,10 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SWRConfig } from 'swr'
 import { ThemeProvider } from '../hooks/useTheme'
-import { Toaster } from '../lib/toast'
-import { AppProps } from 'next/app'
 import { AppSettingsProvider } from '@siafoundation/react-core'
+import { rootClasses } from '../config/css'
 
-type Props = {
-  children: React.ReactNode
-}
-
-export function ClientSide({ children }: Props) {
+export function ClientSide({ children }: { children: React.ReactNode }) {
   const [csrReady, setCsrReady] = useState(false)
 
   useEffect(() => {
@@ -19,19 +14,28 @@ export function ClientSide({ children }: Props) {
   return <div>{csrReady ? children : null}</div>
 }
 
-export function NextAppCsr({
-  Component,
-  pageProps,
-}: AppProps<{
+type Props = {
+  passwordProtectRequestHooks?: boolean
   fallback?: Record<string, unknown>
-}>) {
+  children: React.ReactNode
+}
+
+export function NextAppCsr({
+  passwordProtectRequestHooks,
+  fallback,
+  children,
+}: Props) {
   return (
     <ClientSide>
-      <SWRConfig value={{ fallback: pageProps?.fallback || {} }}>
+      <SWRConfig value={{ fallback: fallback || {} }}>
         <ThemeProvider>
-          <AppSettingsProvider>
-            <Toaster />
-            <Component {...pageProps} />
+          <AppSettingsProvider
+            passwordProtectRequestHooks={passwordProtectRequestHooks}
+            ssr={false}
+          >
+            <div id="root" className={rootClasses}>
+              {children}
+            </div>
           </AppSettingsProvider>
         </ThemeProvider>
       </SWRConfig>
