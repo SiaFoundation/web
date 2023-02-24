@@ -113,6 +113,7 @@ Props) {
         <SectionSimple className="pt-24 md:pt-40 pb-6 md:pb-20">
           <SiteHeading
             size="64"
+            anchorLink={false}
             title="Decentralized data storage"
             description={description}
             className="relative"
