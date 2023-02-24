@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.32.0
+
+### Minor Changes
+
+- 50e80af: The website now loads fonts with zero layout shift, this optimization also applies to all other apps.
+- 73f81ae: The website now shows the correct pronounciation of Sia at top of the homepage.
+- 92b9403: Code and content changes were made to the homepage to improve SEO and new user experience - the Grants program is now prominently featured on the homepage.
+- 1175e04: Migrate from nginx to caddy for serving website and other apps.
+
 ## 0.31.0
 
 ### Minor Changes

@@ -1,5 +1,12 @@
 # @siafoundation/react-core
 
+## 0.5.0
+
+### Minor Changes
+
+- 6c6c058: AppSettings now has a password protected hooks mode.
+- ff1bbef: Add useSettingsUpdate hook for PUT /settings.
+
 ## 0.4.0
 
 ### Minor Changes
