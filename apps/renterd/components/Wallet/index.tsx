@@ -20,6 +20,12 @@ import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 export function Wallet() {
   const transactions = useWalletTransactions({
     params: {},
+    config: {
+      swr: {
+        revalidateOnFocus: false,
+        refreshInterval: 60_000,
+      },
+    },
   })
   const pending = useWalletPending()
 

@@ -23,6 +23,12 @@ export function TransactionDetailsDialog({
   // TODO: add transaction endpoint
   const transactions = useWalletTransactions({
     params: {},
+    config: {
+      swr: {
+        revalidateOnFocus: false,
+        refreshInterval: 60_000,
+      },
+    },
   })
   const transaction = transactions.data?.find((t) => t.ID === id)
 

@@ -40,6 +40,12 @@ export function WalletSparkline() {
   )
   const transactions = useWalletTransactions({
     params: {},
+    config: {
+      swr: {
+        revalidateOnFocus: false,
+        refreshInterval: 60_000,
+      },
+    },
   })
 
   const scData = useMemo(() => {
