@@ -20,11 +20,11 @@ import { Setting } from '../../components/Setting'
 import { MenuSection } from '../../components/MenuSection'
 
 type GougingData = {
-  MaxStoragePrice: string
-  MaxDownloadPrice: string
-  MaxUploadPrice: string
-  MaxContractPrice: string
-  MaxRPCPrice: string
+  maxStoragePrice: string
+  maxDownloadPrice: string
+  maxUploadPrice: string
+  maxContractPrice: string
+  maxRPCPrice: string
 }
 
 type RedundancyData = {
@@ -75,11 +75,11 @@ export function Config() {
         const response = await settingsUpdate.put({
           payload: {
             gouging: JSON.stringify({
-              MaxRPCPrice: values.maxRpcPrice.toString(),
-              MaxStoragePrice: values.maxStoragePrice.toString(),
-              MaxContractPrice: values.maxContractPrice.toString(),
-              MaxDownloadPrice: values.maxDownloadPrice.toString(),
-              MaxUploadPrice: values.maxUploadPrice.toString(),
+              maxRPCPrice: values.maxRpcPrice.toString(),
+              maxStoragePrice: values.maxStoragePrice.toString(),
+              maxContractPrice: values.maxContractPrice.toString(),
+              maxDownloadPrice: values.maxDownloadPrice.toString(),
+              maxUploadPrice: values.maxUploadPrice.toString(),
             }),
             redundancy: JSON.stringify({
               MinShards: values.minShards.toString(),
@@ -111,11 +111,11 @@ export function Config() {
         await form.resetForm({
           values: {
             // gouging
-            maxStoragePrice: new BigNumber(gougingData.MaxStoragePrice),
-            maxDownloadPrice: new BigNumber(gougingData.MaxDownloadPrice),
-            maxUploadPrice: new BigNumber(gougingData.MaxUploadPrice),
-            maxContractPrice: new BigNumber(gougingData.MaxContractPrice),
-            maxRpcPrice: new BigNumber(gougingData.MaxRPCPrice),
+            maxStoragePrice: new BigNumber(gougingData.maxStoragePrice),
+            maxDownloadPrice: new BigNumber(gougingData.maxDownloadPrice),
+            maxUploadPrice: new BigNumber(gougingData.maxUploadPrice),
+            maxContractPrice: new BigNumber(gougingData.maxContractPrice),
+            maxRpcPrice: new BigNumber(gougingData.maxRPCPrice),
             // redundancy
             minShards: new BigNumber(redundancyData.MinShards),
             totalShards: new BigNumber(redundancyData.TotalShards),

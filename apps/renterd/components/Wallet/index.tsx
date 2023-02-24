@@ -70,7 +70,7 @@ export function Wallet() {
     >
       <div className="p-5 flex flex-col gap-5">
         <WalletSparkline />
-        <EntityList title="Transactions" entities={entities} />
+        <EntityList title="Transactions" entities={entities.slice(0, 100)} />
       </div>
     </RenterdAuthedLayout>
   )

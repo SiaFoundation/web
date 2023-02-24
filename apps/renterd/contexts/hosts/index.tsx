@@ -38,7 +38,7 @@ function useHostsMain() {
     const dataset: HostData[] =
       response.data?.map((c) => {
         return {
-          id: c.netAddress,
+          id: c.public_key,
           netAddress: c.netAddress,
           publicKey: c.public_key,
           lastScanSuccess: c.interactions.LastScanSuccess,

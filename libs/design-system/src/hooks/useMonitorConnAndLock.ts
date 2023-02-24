@@ -8,15 +8,18 @@ type Routes = {
 }
 
 export function useMonitorConnAndLock(routes: Routes) {
-  const { daemon, wallet } = useConnectivity()
-  const { setSettings } = useAppSettings()
+  const isConnected = useConnectivity()
+  const { settings, setSettings } = useAppSettings()
   const router = useRouter()
 
   useEffect(() => {
-    if (router.pathname !== routes.lockscreen && (!daemon || !wallet)) {
+    if (
+      router.pathname !== routes.lockscreen &&
+      (!settings.password || !isConnected)
+    ) {
       setSettings({ password: '' })
       router.push(routes.lockscreen)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router, daemon, wallet])
+  }, [router, isConnected])
 }
