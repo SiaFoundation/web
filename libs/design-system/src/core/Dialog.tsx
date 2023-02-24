@@ -9,8 +9,9 @@ import { Button } from './Button'
 import { ScrollArea } from './ScrollArea'
 import { textStyles } from './Text'
 import { VariantProps } from '../types'
+import { rootClasses } from '../config/css'
 
-const containerStyles = cva(['z-20', 'overflow-hidden'], {
+const containerStyles = cva([rootClasses, 'z-20', 'overflow-hidden'], {
   variants: {
     variant: {
       default: 'flex items-center justify-center w-full h-full',

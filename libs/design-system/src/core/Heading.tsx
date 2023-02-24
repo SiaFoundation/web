@@ -32,7 +32,7 @@ type HeadingProps = React.ComponentProps<typeof DEFAULT_TAG> &
   HeadingVariants & {
     className?: string
     as?: string
-    link?: boolean
+    anchorLink?: boolean
     showAnchor?: boolean
   }
 
@@ -45,14 +45,14 @@ export const Heading = React.forwardRef<
     className,
     id,
     children,
-    link,
+    anchorLink,
     showAnchor,
     ...textProps
   } = props
 
   const tag = textTag[size]
 
-  if (link) {
+  if (anchorLink) {
     const cId =
       id ||
       (typeof children === 'string'

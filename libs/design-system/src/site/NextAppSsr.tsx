@@ -3,6 +3,7 @@ import { ThemeProvider } from '../hooks/useTheme'
 import { Toaster } from '../lib/toast'
 import { AppProps } from 'next/app'
 import { AppSettingsProvider } from '@siafoundation/react-core'
+import { rootClasses } from '../config/css'
 
 export function NextAppSsr({
   Component,
@@ -16,10 +17,12 @@ export function NextAppSsr({
       <SWRConfig value={{ fallback: pageProps?.fallback || {} }}>
         <ThemeProvider ssr>
           <AppSettingsProvider ssr>
-            <Toaster />
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+            <div id="root" className={rootClasses}>
+              <Toaster />
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </div>
           </AppSettingsProvider>
         </ThemeProvider>
       </SWRConfig>
@@ -29,8 +32,10 @@ export function NextAppSsr({
     <SWRConfig value={{ fallback: pageProps?.fallback || {} }}>
       <ThemeProvider ssr>
         <AppSettingsProvider>
-          <Toaster />
-          <Component {...pageProps} />
+          <div id="root" className={rootClasses}>
+            <Toaster />
+            <Component {...pageProps} />
+          </div>
         </AppSettingsProvider>
       </ThemeProvider>
     </SWRConfig>

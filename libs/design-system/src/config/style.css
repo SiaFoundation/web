@@ -4,7 +4,8 @@
 
 body,
 html,
-#__next {
+#__next,
+#root {
   height: 100vh;
   overflow: hidden;
 }

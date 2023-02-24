@@ -4,8 +4,10 @@ import * as HoverCardPrimitive from '@radix-ui/react-hover-card'
 import { panelStyles } from './Panel'
 import { cva, cx } from 'class-variance-authority'
 import { useOpen } from '../hooks/useOpen'
+import { rootClasses } from '../config/css'
 
 const contentContainerStyles = cva([
+  rootClasses,
   'relative',
   'z-10',
   'data-[side=top]:bottom-1',

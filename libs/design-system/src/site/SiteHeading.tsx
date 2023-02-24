@@ -12,6 +12,7 @@ type Props = {
   id?: string
   size?: Size
   eyebrow?: string
+  anchorLink?: boolean
   title: string
   description?: React.ReactNode
   links?: LinkData[]
@@ -70,6 +71,7 @@ export function SiteHeading({
   title,
   description,
   links,
+  anchorLink = true,
   size = '32',
   className,
   children,
@@ -94,7 +96,12 @@ export function SiteHeading({
           {eyebrow}
         </Text>
       )}
-      <SectionHeading id={id} size={size} className="pb-2">
+      <SectionHeading
+        id={id}
+        size={size}
+        anchorLink={anchorLink}
+        className="pb-2"
+      >
         {title}
       </SectionHeading>
       {description && (

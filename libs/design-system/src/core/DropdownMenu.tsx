@@ -6,8 +6,10 @@ import { separatorStyles, itemStyles, labelStyles } from './Menu'
 import { panelStyles } from './Panel'
 import { useOpen } from '../hooks/useOpen'
 import { ArrowRight16 } from '../icons/carbon'
+import { rootClasses } from '../config/css'
 
 const contentContainerStyles = cva([
+  rootClasses,
   'relative',
   'max-w-sm',
   'z-10',
