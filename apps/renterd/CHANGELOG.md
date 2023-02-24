@@ -1,5 +1,18 @@
 # @siafoundation/renterd
 
+## 0.3.0
+
+### Minor Changes
+
+- 1175e04: The contracts filtering options are now accessible through the global cmd+k menu.
+- 6c6c058: The contracts page now shows a timeline visualization for active contracts.
+- 6c6c058: The Files page now shows an onboarding/empty state when there are no files.
+- 6c6c058: The contracts page now shows and supports pagination and filtering active contracts by expiry date.
+- 1175e04: Contracts are now filterable by renewal date.
+- 6c6c058: The Hosts page now supports pagination and shows host info, scan, interaction, and uptime information.
+- ff1bbef: The configuration page now includes the max storage price gouging setting.
+- 6c6c058: The Autopilot settings were updated with the lastest options including contract set.
+
 ## 0.2.0
 
 ### Minor Changes

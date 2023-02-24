@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0
+
+### Minor Changes
+
+- 3aa9c2b: Added HoverCard.
+
 ## 0.1.0
 
 ### Minor Changes

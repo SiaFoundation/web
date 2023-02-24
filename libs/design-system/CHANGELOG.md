@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.41.0
+
+### Minor Changes
+
+- 0169246: ContractTimeline now shows the proof window.
+- 6c6c058: ContractTimeline component is now aware of both block height and time units.
+- 6c6c058: Added PaginatorKnownTotal and PagniatorUnknownTotal.
+- 6c6c058: Fixed xxs Text size.
+- 6c6c058: Added useClientFilters.
+- 1175e04: Button now has active and inactive variants.
+- 1175e04: The tailwind theme now supports text fill and shadow fill.
+- 6c6c058: Fixed Button svg coloring.
+- 6c6c058: Added useTableState.
+- 6c6c058: Table component now has configurable empty and loading states.
+- 1175e04: Add base MenuItem components.
+- 6c6c058: Added a max length of 200 characters to toast messages.
+- 6c6c058: Added more block time conversion functions.
+- 6c6c058: Added ConfigurationText, ConfigurationTipText.
+
+### Patch Changes
+
+- 1175e04: The TextField autofill coloring is now consistent across browsers.
+
 ## 0.40.0
 
 ### Minor Changes
