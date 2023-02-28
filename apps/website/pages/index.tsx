@@ -76,7 +76,7 @@ Props) {
     <>
       Cryptography has unleashed the latent power of the Internet by enabling
       interactions between mutually-distrusting parties. Sia{' '}
-      <Text color="verySubtle" className="italic">
+      <Text color="verySubtle" className="italic" noWrap>
         [sigh-uh]
       </Text>{' '}
       harnesses this power to create a trustless cloud storage marketplace,
@@ -159,7 +159,7 @@ Props) {
             description={
               <>
                 Learn all about how Sia works, why it was created, and the
-                foundation that maintains it.
+                non-profit foundation that maintains it.
               </>
             }
             actionTitle="Read more"
