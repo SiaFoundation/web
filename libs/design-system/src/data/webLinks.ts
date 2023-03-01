@@ -31,7 +31,7 @@ export const webLinks = {
     hostd: 'https://github.com/SiaFoundation/hostd',
     siaui: 'https://gitlab.com/NebulousLabs/Sia-UI',
   },
-  discord: 'https://discord.gg/sia',
+  discord: 'https://sia.tech/discord',
   twitter: 'https://twitter.com/sia__foundation',
   twitterHandle: '@sia__foundation',
   reddit: 'https://reddit.com/r/siacoin',
