@@ -18,22 +18,18 @@ export const menuSections = [
         title: 'Learn',
       },
       {
-        link: webLinks.apiDocs,
+        link: webLinks.docs.index,
         title: 'Documentation',
         newTab: true,
       },
       {
-        link: routes.community.index + '?software=exchanges#software',
-        title: 'Get Siacoin',
+        link: webLinks.apiDocs,
+        title: 'API Docs',
+        newTab: true,
       },
       {
         link: routes.whitepaper.pdf,
         title: 'Whitepaper',
-        newTab: true,
-      },
-      {
-        link: webLinks.docs.brand,
-        title: 'Brand guidelines',
         newTab: true,
       },
     ],
@@ -98,6 +94,11 @@ export const menuSections = [
         link: routes.hostingBestPractices.index,
         title: 'Hosting Best Practices',
       },
+      {
+        link: webLinks.docs.brand,
+        title: 'Brand guidelines',
+        newTab: true,
+      },
     ],
   },
   {
@@ -151,6 +152,10 @@ export const menuSections = [
         link: webLinks.hostTroubleshoot,
         title: 'Sia Central Host Troubleshooter',
         newTab: true,
+      },
+      {
+        link: routes.community.index + '?software=exchanges#software',
+        title: 'Get Siacoin',
       },
     ],
   },

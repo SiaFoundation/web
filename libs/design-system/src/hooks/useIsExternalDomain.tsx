@@ -1,4 +1,4 @@
-const localDomains = ['sia.tech', 'docs.sia.tech', 'blog.sia.tech']
+const localDomains = ['sia.tech']
 
 export function useIsExternalDomain(link: string) {
   if (!link.startsWith('http')) {
