@@ -20,8 +20,7 @@ import {
 } from './types'
 import { formatDistance, formatRelative } from 'date-fns'
 import { useRouter } from 'next/router'
-import { useHasFetched } from '../../hooks/useHasFetched'
-import { useEmptyStates } from '../../hooks/useEmptyStates'
+import { useDataState } from '../../hooks/useDataState'
 
 function useHostsMain() {
   const router = useRouter()
@@ -29,12 +28,14 @@ function useHostsMain() {
   const offset = Number(router.query.offset || 0)
   const response = useHostsGET({
     params: {
-      limit: limit,
-      offset: offset,
+      limit,
+      offset,
     },
   })
-
-  const dataset = useMemo(() => {
+  const dataset = useMemo<HostData[] | null>(() => {
+    if (!response.data) {
+      return null
+    }
     const dataset: HostData[] =
       response.data?.map((c) => {
         return {
@@ -250,23 +251,15 @@ function useHostsMain() {
     [tableColumns, enabledColumns]
   )
 
-  const { isLoading, hasFetched } = useHasFetched(response)
-  const { emptyNoneYet, emptyNoneMatchingFilters } = useEmptyStates(
-    hasFetched,
-    dataset,
-    []
-  )
+  const dataState = useDataState(dataset, [])
 
   return {
-    isLoading,
-    hasFetched,
-    emptyNoneYet,
-    emptyNoneMatchingFilters,
+    dataState,
     offset,
     limit,
-    pageCount: dataset.length,
+    pageCount: dataset?.length || 0,
     columns: filteredTableColumns,
-    hosts: dataset,
+    dataset,
     configurableColumns,
     enabledColumns,
     toggleColumnVisibility,

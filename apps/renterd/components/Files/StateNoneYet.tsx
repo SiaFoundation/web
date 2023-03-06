@@ -1,6 +1,6 @@
 import { CloudUpload32, Text } from '@siafoundation/design-system'
 
-export function EmptyState() {
+export function StateNoneYet() {
   return (
     <div className="flex flex-col gap-10 justify-center items-center h-[400px] cursor-pointer">
       <Text>

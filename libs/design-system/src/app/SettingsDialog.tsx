@@ -41,9 +41,9 @@ export function SettingsDialog({ open, onOpenChange }: Props) {
             <Alert>
               <div className="flex flex-col gap-4">
                 <div className="flex gap-2 items-center">
-                  <div>
+                  <Text>
                     <Information16 />
-                  </div>
+                  </Text>
                   <Heading size="20" className="flex-1">
                     Currency
                   </Heading>
@@ -69,9 +69,9 @@ export function SettingsDialog({ open, onOpenChange }: Props) {
             <Alert>
               <div className="flex flex-col gap-4">
                 <div className="flex gap-2 items-center">
-                  <div>
+                  <Text>
                     <Information16 />
-                  </div>
+                  </Text>
                   <Heading size="20" className="flex-1">
                     Theme
                   </Heading>
@@ -97,9 +97,9 @@ export function SettingsDialog({ open, onOpenChange }: Props) {
             <Alert>
               <div className="flex flex-col gap-4">
                 <div className="flex gap-2 items-center">
-                  <div>
+                  <Text>
                     <Information16 />
-                  </div>
+                  </Text>
                   <Heading size="20" className="flex-1">
                     Sia Central
                   </Heading>

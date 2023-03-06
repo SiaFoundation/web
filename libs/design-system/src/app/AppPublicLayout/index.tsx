@@ -28,7 +28,7 @@ export function AppPublicLayout({
       <AppBackdrop />
       <div className="flex h-full">
         <div className="flex flex-col flex-1">
-          <AppNavbar title={title} filters={filters} actions={actions} />
+          <AppNavbar title={title} nav={filters} actions={actions} />
           <div className="flex-1">
             <Container className="h-full">{children}</Container>
           </div>

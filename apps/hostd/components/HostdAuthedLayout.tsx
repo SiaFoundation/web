@@ -13,16 +13,16 @@ import { Providers } from '../config/providers'
 type Props = {
   title: string
   children: React.ReactNode
+  nav?: React.ReactNode
   actions?: React.ReactNode
-  filters?: React.ReactNode
   size?: React.ComponentProps<typeof AppAuthedLayout>['size']
 }
 
 export function HostdAuthedLayout({
   children,
   title,
+  nav,
   actions,
-  filters,
   size,
 }: Props) {
   const { openDialog } = useDialog()
@@ -50,7 +50,7 @@ export function HostdAuthedLayout({
         }
         title={title}
         actions={actions}
-        filters={filters}
+        nav={nav}
         size={size}
       >
         {children}

@@ -54,7 +54,7 @@ export function ValueCopyable({
           {text}
         </Link>
       ) : (
-        <Text size={size} scaleSize={scaleSize} color={color}>
+        <Text size={size} scaleSize={scaleSize} color={color} ellipsis>
           {text}
         </Text>
       )}

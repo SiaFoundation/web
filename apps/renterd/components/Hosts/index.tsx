@@ -10,17 +10,7 @@ import { StateNoneYet } from './StateNoneYet'
 
 export function Hosts() {
   const { openDialog } = useDialog()
-  const {
-    hosts,
-    columns,
-    offset,
-    limit,
-    isLoading,
-    pageCount,
-    hasFetched,
-    emptyNoneMatchingFilters,
-    emptyNoneYet,
-  } = useHosts()
+  const { dataset, columns, offset, limit, pageCount, dataState } = useHosts()
 
   return (
     <RenterdAuthedLayout
@@ -42,17 +32,16 @@ export function Hosts() {
     >
       <div className="p-5 min-w-fit">
         <Table
-          isLoading={!emptyNoneYet && !emptyNoneMatchingFilters && isLoading}
+          isLoading={dataState === 'loading'}
           emptyState={
-            hasFetched &&
-            (emptyNoneMatchingFilters ? (
+            dataState === 'noneMatchingFilters' ? (
               <StateNoneMatching />
-            ) : (
+            ) : dataState === 'noneYet' ? (
               <StateNoneYet />
-            ))
+            ) : null
           }
           pageSize={limit}
-          data={hosts}
+          data={dataset}
           columns={columns}
           rowSize="default"
           // sortColumn={sortColumn}

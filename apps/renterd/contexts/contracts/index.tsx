@@ -28,8 +28,8 @@ import {
   columnsDefaultSort,
 } from './types'
 import { useClientFilters } from '../../hooks/useClientFilters'
-import { useHasFetched } from '../../hooks/useHasFetched'
-import { useEmptyStates } from '../../hooks/useEmptyStates'
+import { useDataState } from '../../hooks/useDataState'
+import { useClientFilterData } from '../../hooks/useClientFilterData'
 
 const defaultLimit = 20
 
@@ -41,7 +41,10 @@ function useContractsMain() {
   const currentHeight = consensus.data?.BlockHeight
   const response = useContractsData()
 
-  const dataset = useMemo(() => {
+  const dataset = useMemo<ContractData[] | null>(() => {
+    if (!response.data) {
+      return null
+    }
     const data: ContractData[] =
       response.data?.map((c) => {
         const isRenewed =
@@ -95,42 +98,22 @@ function useContractsMain() {
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useClientFilters<ContractData>()
 
-  const datasetFiltered = useMemo(() => {
-    const filterList = Object.entries(filters).map(([_, f]) => f)
-    let data = filterList.length
-      ? dataset.filter((datum) => {
-          for (const filter of filterList) {
-            if (!filter.fn(datum)) {
-              return false
-            }
-          }
-          return true
-        })
-      : dataset
-    data = data.sort((a, b) => {
-      const aVal = a[sortColumn]
-      const bVal = b[sortColumn]
-      if (sortDirection === 'desc') {
-        if (aVal instanceof BigNumber && bVal instanceof BigNumber) {
-          return aVal.lte(bVal) ? 1 : -1
-        }
-        return aVal <= bVal ? 1 : -1
-      }
-      if (aVal instanceof BigNumber && bVal instanceof BigNumber) {
-        return aVal.gte(bVal) ? 1 : -1
-      }
-      return aVal >= bVal ? 1 : -1
-    })
-    return [...data]
-  }, [dataset, filters, sortColumn, sortDirection])
+  const datasetFiltered = useClientFilterData({
+    dataset,
+    filters,
+    sortColumn,
+    sortDirection,
+  })
 
-  const datasetPage = useMemo(
-    () => datasetFiltered.slice(offset, offset + limit),
-    [datasetFiltered, offset, limit]
-  )
+  const datasetPage = useMemo<ContractData[] | null>(() => {
+    if (!datasetFiltered) {
+      return null
+    }
+    return datasetFiltered.slice(offset, offset + limit)
+  }, [datasetFiltered, offset, limit])
 
   const { range: contractsTimeRange } = useMemo(
-    () => getContractsTimeRangeBlockHeight(currentHeight, datasetPage),
+    () => getContractsTimeRangeBlockHeight(currentHeight, datasetPage || []),
     [currentHeight, datasetPage]
   )
 
@@ -204,7 +187,6 @@ function useContractsMain() {
       {
         id: 'startTime',
         label: columnsMeta.startTime.label,
-        sortable: 'time',
         render: ({ startTime }) => {
           return (
             <Text font="mono" ellipsis>
@@ -265,24 +247,16 @@ function useContractsMain() {
     [tableColumns, enabledColumns]
   )
 
-  const { isLoading, hasFetched } = useHasFetched(response)
-  const { emptyNoneYet, emptyNoneMatchingFilters } = useEmptyStates(
-    hasFetched,
-    datasetPage,
-    filters
-  )
+  const dataState = useDataState(datasetFiltered, filters)
 
   return {
-    isLoading,
-    hasFetched,
-    emptyNoneYet,
-    emptyNoneMatchingFilters,
+    dataState,
     limit,
     offset,
-    pageCount: datasetPage.length,
-    datasetCount: datasetFiltered.length,
+    pageCount: datasetPage?.length || 0,
+    datasetCount: datasetFiltered?.length || 0,
     columns: filteredTableColumns,
-    contracts: datasetPage,
+    datasetPage,
     configurableColumns,
     enabledColumns,
     toggleColumnVisibility,

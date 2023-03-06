@@ -21,7 +21,7 @@ export const ScrollArea = React.forwardRef<
       id={id}
       ref={ref}
       // Temporary fix until removed upstream: https://github.com/radix-ui/primitives/issues/926
-      className="w-full h-full [&>div]:!block"
+      className="w-full h-full [&>div]:!block [&>div]:!h-full"
     >
       {children}
     </ScrollAreaPrimitive.Viewport>

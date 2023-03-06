@@ -8,14 +8,14 @@ import {
   Text,
 } from '@siafoundation/design-system'
 import { useState } from 'react'
-import { useUploads } from '../contexts/uploads'
+import { useFiles } from '../contexts/files'
 
-function getProgress(upload: { loaded: number; total: number }) {
-  return upload.loaded / upload.total
+function getProgress(upload: { loaded?: number; total?: number }) {
+  return upload.loaded ? upload.loaded / upload.total : 1
 }
 
 export function UploadsBar() {
-  const { uploadsList } = useUploads()
+  const { uploadsList } = useFiles()
   const [maximized, setMaximized] = useState<boolean>(true)
 
   const uploadCount = uploadsList.length
@@ -45,7 +45,7 @@ export function UploadsBar() {
                   className="flex flex-col gap-1 border-t first:border-t-0 border-gray-200 dark:border-graydark-300 px-3 py-2"
                 >
                   <Text ellipsis size="14" className="">
-                    {upload.path}
+                    {upload.path.slice(1)}
                   </Text>
                   <ProgressBar
                     variant="accent"

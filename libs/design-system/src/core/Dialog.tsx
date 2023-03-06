@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { cva, cx } from 'class-variance-authority'
 import { panelStyles } from './Panel'
 import { useOpen } from '../hooks/useOpen'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { Close24 } from '../icons/carbon'
 import { Button } from './Button'
@@ -221,7 +221,7 @@ const Content = React.forwardRef<HTMLDivElement, ContentProps>(
 function useHeight(deps: unknown[] = []) {
   const [height, setHeight] = useState<number>(0)
   const ref = useRef<HTMLDivElement>(null)
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!ref.current) {
       return
     }

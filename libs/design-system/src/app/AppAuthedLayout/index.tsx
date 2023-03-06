@@ -9,7 +9,7 @@ import { AppNavbar } from '../AppNavbar'
 type Props = {
   title?: string
   size?: React.ComponentProps<typeof Container>['size']
-  filters?: React.ReactNode
+  nav?: React.ReactNode
   actions?: React.ReactNode
   sidenav?: React.ReactNode
   children: React.ReactNode
@@ -29,7 +29,7 @@ type Props = {
 export function AppAuthedLayout({
   title,
   size = '4',
-  filters,
+  nav,
   actions,
   children,
   sidenav,
@@ -44,7 +44,7 @@ export function AppAuthedLayout({
           {sidenav}
         </Sidenav>
         <div className="flex flex-col flex-1 overflow-hidden">
-          <AppNavbar title={title} filters={filters} actions={actions} />
+          <AppNavbar title={title} nav={nav} actions={actions} />
           <ScrollArea>
             <Container size={size} pad={false}>
               <div className="flex flex-col gap-5">{children}</div>

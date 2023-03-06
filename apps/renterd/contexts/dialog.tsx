@@ -7,6 +7,7 @@ import {
   WalletSingleAddressDetailsDialog,
 } from '@siafoundation/design-system'
 import { CmdKDialog } from '../components/CmdKDialog'
+import { FilesCreateDirectoryDialog } from '../components/Files/FilesCreateDirectoryDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -20,6 +21,7 @@ export type DialogType =
   | 'hostBlocklistRemove'
   | 'objectDownload'
   | 'objectDelete'
+  | 'objectCreateDirectory'
 
 function useDialogMain() {
   const [dialog, setDialog] = useState<DialogType>()
@@ -100,6 +102,10 @@ export function Dialogs() {
       />
       <SyncerConnectPeerDialog
         open={dialog === 'connectPeer'}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <FilesCreateDirectoryDialog
+        open={dialog === 'objectCreateDirectory'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
     </>

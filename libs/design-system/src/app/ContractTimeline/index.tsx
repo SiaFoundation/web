@@ -88,11 +88,7 @@ export function ContractTimeline({
                 align="start"
                 variant="primary"
               />
-              <DateLabel
-                date={startPosContract}
-                align="end"
-                variant="primary"
-              />
+              <DateLabel date={endTimeContract} align="end" variant="primary" />
             </div>
             <div className="hidden group-hover/contract:flex absolute w-full justify-between gap-2">
               <BlockLabel
