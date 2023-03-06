@@ -14,7 +14,7 @@ export function RenterSidenav() {
       {/* <SidenavItem title="Dashboard" route={routes.home}>
         <HouseIcon />
       </SidenavItem> */}
-      <SidenavItem title="Files" route={routes.home}>
+      <SidenavItem title="Files" route={routes.files.index}>
         <FolderIcon />
       </SidenavItem>
       <SidenavItem title="Autopilot" route={routes.autopilot.index}>

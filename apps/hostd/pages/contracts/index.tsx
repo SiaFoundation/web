@@ -16,7 +16,7 @@ export default function ContractsPage() {
   return (
     <HostdAuthedLayout
       title="Contracts"
-      filters={
+      nav={
         <div className="flex gap-2 flex-1">
           {Object.entries(filters).map(([key, filter]) => (
             <ControlGroup key={key}>

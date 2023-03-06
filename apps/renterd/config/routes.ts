@@ -1,8 +1,8 @@
 export const routes = {
   home: '/',
-  // files: {
-  //   index: '/files',
-  // },
+  files: {
+    index: '/files',
+  },
   autopilot: {
     index: '/autopilot',
     estimates: '/autopilot#estimates',

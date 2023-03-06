@@ -21,7 +21,7 @@ export function Dropzone({
   const { getRootProps, getInputProps, isDragActive } = useDropzone(props)
 
   return (
-    <div {...getRootProps()}>
+    <div {...getRootProps()} className="outline-none">
       <div
         className={cx(
           isDragActive ? 'z-20' : '',

@@ -7,7 +7,9 @@ export function useGetDownloadFunc<
   const { get } = useGetFunc<Params, Blob>({
     ...args,
     config: {
+      ...args.config,
       axios: {
+        ...args.config?.axios,
         responseType: 'blob',
       },
     },
@@ -29,7 +31,7 @@ export function saveBlobToMachine(name: string, blob: Blob) {
   link.download = name
   document.body.appendChild(link)
   link.click()
-  setTimeout(function () {
+  setTimeout(() => {
     // For Firefox it is necessary to delay revoking the ObjectURL
     document.body.removeChild(link)
     URL.revokeObjectURL(href)

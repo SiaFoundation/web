@@ -42,7 +42,7 @@ export default function HomePage() {
   return (
     <HostdAuthedLayout
       title="Overview"
-      filters={
+      nav={
         <div className="flex gap-2 flex-1">
           <ControlGroup>
             <Button disabled>

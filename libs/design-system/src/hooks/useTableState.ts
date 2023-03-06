@@ -2,7 +2,12 @@ import { filter, groupBy, values } from 'lodash'
 import { useCallback, useMemo } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 
-type ColumnMeta<ColumnId> = { id: ColumnId; label: string; sortable?: string }
+type ColumnMeta<ColumnId> = {
+  id: ColumnId
+  label: string
+  sortable?: string
+  fixed?: boolean
+}
 
 export function useTableState<ColumnId extends string>(
   scope: string,
@@ -59,7 +64,8 @@ export function useTableState<ColumnId extends string>(
   )
 
   const configurableColumns = useMemo(
-    () => values(columnsMeta) as ColumnMeta<ColumnId>[],
+    () =>
+      (values(columnsMeta) as ColumnMeta<ColumnId>[]).filter((i) => !i.fixed),
     [columnsMeta]
   )
 

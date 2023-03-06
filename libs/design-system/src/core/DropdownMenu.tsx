@@ -230,3 +230,10 @@ export const DropdownMenuRightSlot = React.forwardRef<
     <div ref={ref} className={cx(['ml-auto', 'pl-5', className])} {...props} />
   )
 })
+
+export const DropdownMenuLeftSlot = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => {
+  return <div ref={ref} className={cx(['pr-2', className])} {...props} />
+})

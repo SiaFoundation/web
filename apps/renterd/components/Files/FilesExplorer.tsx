@@ -1,29 +1,37 @@
 import { Table, Dropzone } from '@siafoundation/design-system'
-import { EmptyState } from './EmptyState'
 import { useFiles } from '../../contexts/files'
+import { StateNoneMatching } from './StateNoneMatching'
+import { StateNoneYet } from './StateNoneYet'
 
 export function FilesExplorer() {
   const {
     onDrop,
-    emptyNoneMatchingFilters,
-    emptyNoneYet,
-    hasFetched,
     datasetPage,
+    pageCount,
+    dataState,
     columns,
-    isLoading,
+    sortColumn,
+    sortDirection,
+    toggleSort,
   } = useFiles()
   return (
     <div className="relative">
-      <Dropzone onDrop={onDrop} noClick={datasetPage.length > 0}>
+      <Dropzone onDrop={onDrop} noClick={pageCount > 0}>
         <Table
-          isLoading={!emptyNoneYet && !emptyNoneMatchingFilters && isLoading}
+          isLoading={dataState === 'loading'}
           emptyState={
-            hasFetched &&
-            (emptyNoneMatchingFilters ? <EmptyState /> : <EmptyState />)
+            dataState === 'noneMatchingFilters' ? (
+              <StateNoneMatching />
+            ) : dataState === 'noneYet' ? (
+              <StateNoneYet />
+            ) : null
           }
           pageSize={10}
           data={datasetPage}
           columns={columns}
+          sortColumn={sortColumn}
+          sortDirection={sortDirection}
+          toggleSort={toggleSort}
           rowSize="dense"
         />
       </Dropzone>

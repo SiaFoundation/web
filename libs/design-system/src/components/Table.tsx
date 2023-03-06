@@ -15,15 +15,15 @@ export type TableColumn<Columns, R> = {
   id: Columns
   label: string
   tip?: string
-  size?: number
+  sortable?: string
+  size?: number | string
   className?: string
   render: React.FC<R>
   summary?: () => React.ReactNode
-  sortable?: string
 }
 
 type Props<Columns extends string, R extends Row> = {
-  data: R[]
+  data?: R[]
   columns: TableColumn<Columns, R>[]
   sortColumn?: Columns
   sortDirection?: 'asc' | 'desc'
@@ -54,7 +54,6 @@ export function Table<Columns extends string, R extends Row>({
         return {
           ...column,
           style: {
-            minWidth: `${size * 50}px`,
             flex: size,
           },
         }
@@ -64,11 +63,11 @@ export function Table<Columns extends string, R extends Row>({
 
   let show = 'emptyState'
 
-  if (isLoading && !data.length) {
+  if (isLoading && !data?.length) {
     show = 'skeleton'
   }
 
-  if (data.length) {
+  if (data?.length) {
     show = 'currentData'
   }
 
@@ -76,7 +75,7 @@ export function Table<Columns extends string, R extends Row>({
     <Panel>
       <div className="flex flex-col">
         <div className="flex border-b border-gray-400 dark:border-graydark-400">
-          {columns.map(({ id, label, tip, style, className }) => (
+          {columns.map(({ id, label, tip, sortable, style, className }) => (
             <div
               key={id}
               className={cx('flex py-3 px-6 overflow-hidden', className)}
@@ -85,14 +84,17 @@ export function Table<Columns extends string, R extends Row>({
               <Tooltip content={label}>
                 <Text
                   onClick={() => {
-                    if (toggleSort) {
+                    if (sortable && toggleSort) {
                       toggleSort(id)
                     }
                   }}
                   weight="semibold"
                   color="subtle"
                   size="12"
-                  className="relative top-px cursor-pointer"
+                  className={cx(
+                    'relative top-px',
+                    sortable ? 'cursor-pointer' : ''
+                  )}
                   ellipsis
                 >
                   {label}
@@ -125,7 +127,7 @@ export function Table<Columns extends string, R extends Row>({
         )}
         <div className="flex flex-col">
           {show === 'currentData' &&
-            data.map((row) => (
+            data?.map((row) => (
               <div
                 key={row.id}
                 className="flex items-center border-b border-gray-300 dark:border-graydark-300 last-of-type:border-b-none overflow-hidden"

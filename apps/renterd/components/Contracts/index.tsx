@@ -13,18 +13,15 @@ export function Contracts() {
   const { openDialog } = useDialog()
   const {
     columns,
-    contracts,
+    datasetPage,
     sortColumn,
     sortDirection,
     toggleSort,
     limit,
     offset,
-    isLoading,
     datasetCount,
     pageCount,
-    emptyNoneMatchingFilters,
-    emptyNoneYet,
-    hasFetched,
+    dataState,
   } = useContracts()
 
   return (
@@ -33,12 +30,12 @@ export function Contracts() {
       routes={routes}
       sidenav={<RenterSidenav />}
       openSettings={() => openDialog('settings')}
-      filters={<ContractsFilterMenu />}
+      nav={<ContractsFilterMenu />}
       size="full"
       actions={
         <div className="flex gap-2">
           <PaginatorKnownTotal
-            isLoading={isLoading}
+            isLoading={dataState === 'loading'}
             offset={offset}
             limit={limit}
             datasetTotal={datasetCount}
@@ -50,17 +47,16 @@ export function Contracts() {
     >
       <div className="p-5 min-w-fit">
         <Table
-          isLoading={!emptyNoneYet && !emptyNoneMatchingFilters && isLoading}
+          isLoading={dataState === 'loading'}
           emptyState={
-            hasFetched &&
-            (emptyNoneMatchingFilters ? (
+            dataState === 'noneMatchingFilters' ? (
               <StateNoneMatching />
-            ) : (
+            ) : dataState === 'noneYet' ? (
               <StateNoneYet />
-            ))
+            ) : null
           }
           pageSize={limit}
-          data={contracts}
+          data={datasetPage}
           columns={columns}
           sortDirection={sortDirection}
           sortColumn={sortColumn}

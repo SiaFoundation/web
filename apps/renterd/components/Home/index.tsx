@@ -1,14 +1,21 @@
-import { Heading, DatumCard } from '@siafoundation/design-system'
-import { useAutopilotStatus } from '@siafoundation/react-core'
-import { humanBytes } from '@siafoundation/sia-js'
+// import { Heading, DatumCard } from '@siafoundation/design-system'
+// import { useAutopilotStatus } from '@siafoundation/react-core'
+// import { humanBytes } from '@siafoundation/sia-js'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 import { RenterSidenav } from '../RenterSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 export function Home() {
+  const router = useRouter()
   const { openDialog } = useDialog()
-  const status = useAutopilotStatus({})
+  // const status = useAutopilotStatus({})
+
+  useEffect(() => {
+    router.replace(routes.files.index)
+  }, [router])
 
   return (
     <RenterdAuthedLayout
@@ -17,7 +24,7 @@ export function Home() {
       sidenav={<RenterSidenav />}
       openSettings={() => openDialog('settings')}
     >
-      <Heading>Activity</Heading>
+      {/* <Heading>Activity</Heading>
       <div className="flex flex-wrap gap-7">
         <DatumCard label="Files stored" value={54} />
         <DatumCard label="Storage usage" value={humanBytes(403204020032)} />
@@ -32,7 +39,7 @@ export function Home() {
         <DatumCard label="Total allocated" value={54} />
         <DatumCard label="Total spent" value={54} />
         <DatumCard label="Storage spending" value={54} />
-      </div>
+      </div> */}
     </RenterdAuthedLayout>
   )
 }

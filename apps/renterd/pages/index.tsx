@@ -1,5 +1,5 @@
-import { Files } from '../components/Files'
+import { Home } from '../components/Home'
 
-export default function FilesPage() {
-  return <Files />
+export default function HomePage() {
+  return <Home />
 }
