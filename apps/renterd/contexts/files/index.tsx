@@ -168,7 +168,7 @@ function useFilesMain() {
       dataMap[path] = {
         id: path,
         path,
-        name: getFilename(activeDirectoryPath, path),
+        name: getFilename(path),
         isDirectory: isDirectory(path),
       }
     })
@@ -266,9 +266,9 @@ function useFilesMain() {
         label: columnsMeta.size.label,
         sortable: columnsMeta.size.sortable,
         size: 2,
-        render: function SizeColumn({ path, isUploading }) {
+        render: function SizeColumn({ path, isUploading, isDirectory }) {
           const obj = useObject({
-            disabled: isUploading,
+            disabled: isUploading || isDirectory,
             params: {
               key: encodeURIComponent(path.slice(1)),
             },
@@ -304,9 +304,9 @@ function useFilesMain() {
         label: columnsMeta.slabs.label,
         sortable: columnsMeta.slabs.sortable,
         size: 2,
-        render: function SlabsColumn({ path, isUploading }) {
+        render: function SlabsColumn({ path, isUploading, isDirectory }) {
           const obj = useObject({
-            disabled: isUploading,
+            disabled: isUploading || isDirectory,
             params: {
               key: encodeURIComponent(path.slice(1)),
             },
@@ -415,8 +415,12 @@ function getFullPath(dirPathStr: string, name: string) {
   return dirPathStr + name
 }
 
-function getFilename(dirPathStr: string, filePath: string) {
-  return filePath.replace(dirPathStr, '')
+function getFilename(filePath: string) {
+  const parts = filePath.split('/')
+  if (filePath.endsWith('/')) {
+    return `${parts[parts.length - 2]}/`
+  }
+  return parts[parts.length - 1]
 }
 
 function isDirectory(path: string) {
