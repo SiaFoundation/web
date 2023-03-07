@@ -218,7 +218,27 @@ function useFilesMain() {
     sortDirection,
   })
 
-  const datasetPage = useMemo(() => datasetFiltered, [datasetFiltered])
+  const pageCount = datasetFiltered?.length || 0
+  const datasetPage = useMemo(() => {
+    if (!datasetFiltered) {
+      return null
+    }
+    if (activeDirectory.length > 0) {
+      return [
+        {
+          id: '..',
+          name: '..',
+          path: '..',
+          isDirectory: true,
+        },
+        ...datasetFiltered,
+      ]
+    }
+    return datasetFiltered
+    // Purposely do not include activeDirectory - we only want to update
+    // when new data fetching is complete.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [datasetFiltered])
 
   const tableColumns = useMemo(() => {
     const columns: TableColumn<TableColumnId, ObjectData>[] = [
@@ -228,10 +248,10 @@ function useFilesMain() {
         sortable: columnsMeta.type.sortable,
         size: '0 0 35px',
         className: '!pl-4 !pr-0',
-        render: ({ path }) => {
+        render: ({ isDirectory }) => {
           return (
             <Text color="subtle">
-              {path.endsWith('/') ? <FolderIcon size={16} /> : <Document16 />}
+              {isDirectory ? <FolderIcon size={16} /> : <Document16 />}
             </Text>
           )
         },
@@ -242,8 +262,23 @@ function useFilesMain() {
         sortable: columnsMeta.name.sortable,
         size: 5,
         className: '!pl-4',
-        render: ({ name }) => {
-          if (name.endsWith('/')) {
+        render: ({ name, isDirectory }) => {
+          if (isDirectory) {
+            if (name === '..') {
+              return (
+                <Text
+                  ellipsis
+                  color="accent"
+                  weight="semibold"
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setActiveDirectory((p) => p.slice(0, -1))
+                  }}
+                >
+                  {name}
+                </Text>
+              )
+            }
             return (
               <Text
                 ellipsis
@@ -359,7 +394,11 @@ function useFilesMain() {
   }, [setActiveDirectory])
 
   const filteredTableColumns = useMemo(
-    () => tableColumns.filter((column) => enabledColumns.includes(column.id)),
+    () =>
+      tableColumns.filter(
+        (column) =>
+          columnsMeta[column.id].fixed || enabledColumns.includes(column.id)
+      ),
     [tableColumns, enabledColumns]
   )
 
@@ -376,10 +415,10 @@ function useFilesMain() {
     dataState,
     limit,
     offset,
-    pageCount: datasetPage?.length || 0,
+    datasetPage,
+    pageCount,
     datasetCount: datasetFiltered?.length || 0,
     columns: filteredTableColumns,
-    datasetPage,
     onDrop,
     uploadsList,
     configurableColumns,
