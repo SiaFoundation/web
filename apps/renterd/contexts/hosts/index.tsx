@@ -251,7 +251,7 @@ function useHostsMain() {
     [tableColumns, enabledColumns]
   )
 
-  const dataState = useDataState(dataset, [])
+  const dataState = useDataState(dataset, response.isValidating, [])
 
   return {
     dataState,

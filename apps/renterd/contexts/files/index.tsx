@@ -153,7 +153,7 @@ function useFilesMain() {
     },
   })
 
-  const dataset: ObjectData[] | null = useMemo(() => {
+  const dataset = useMemo<ObjectData[] | null>(() => {
     if (!response.data) {
       return null
     }
@@ -161,7 +161,7 @@ function useFilesMain() {
     const dataMap: Record<string, ObjectData> = {}
 
     response.data.entries?.forEach((path) => {
-      // if there is a directory file skip it
+      // If there is a directory stub file filter it out.
       if (path === activeDirectoryPath) {
         return
       }
@@ -184,7 +184,11 @@ function useFilesMain() {
       'path'
     )
     return all
-  }, [response, uploadsList, activeDirectoryPath])
+    // Purposely do not include activeDirectoryPath - we only want to update
+    // when new data fetching is complete. Leaving it in wipes makes the
+    // directory stub path matching logic temporarily invalid.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [response.data, uploadsList])
 
   const {
     configurableColumns,
@@ -359,7 +363,11 @@ function useFilesMain() {
     [tableColumns, enabledColumns]
   )
 
-  const dataState = useDataState(datasetFiltered, filters)
+  const dataState = useDataState(
+    datasetFiltered,
+    response.isValidating,
+    filters
+  )
 
   return {
     activeDirectory,

@@ -5,14 +5,16 @@ type EmptyState = 'loading' | 'noneYet' | 'noneMatchingFilters'
 
 export function useDataState<Datum>(
   dataset: unknown[] | undefined,
+  isFetching: boolean,
   filters: FilterItem<Datum>[]
 ): EmptyState {
   const [lastDatasetSize, setLastDatasetSize] = useState<number>()
   useEffect(() => {
-    if (dataset) {
+    // Update last dataset size every time refetching completes
+    if (!isFetching && dataset) {
       setLastDatasetSize(dataset.length)
     }
-  }, [dataset, setLastDatasetSize])
+  }, [isFetching, dataset, setLastDatasetSize])
 
   return useMemo(() => {
     // No previous dataset, initialize in loading state.
