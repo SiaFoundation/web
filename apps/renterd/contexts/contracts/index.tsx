@@ -247,7 +247,11 @@ function useContractsMain() {
     [tableColumns, enabledColumns]
   )
 
-  const dataState = useDataState(datasetFiltered, filters)
+  const dataState = useDataState(
+    datasetFiltered,
+    response.isValidating,
+    filters
+  )
 
   return {
     dataState,
