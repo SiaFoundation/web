@@ -122,6 +122,7 @@ function useContractsMain() {
       {
         id: 'contractId',
         label: columnsMeta.contractId.label,
+        sortable: columnsMeta.contractId.sortable,
         size: 2,
         render: ({ id, isRenewed, renewedFrom }) => {
           // const { label, color } = getStatus(row)
@@ -148,6 +149,7 @@ function useContractsMain() {
       {
         id: 'hostIp',
         label: columnsMeta.hostIp.label,
+        sortable: columnsMeta.hostIp.sortable,
         size: 2,
         render: ({ hostIp }) => {
           return <ValueCopyable value={hostIp} type="ip" label="host address" />
@@ -156,6 +158,7 @@ function useContractsMain() {
       {
         id: 'hostKey',
         label: columnsMeta.hostKey.label,
+        sortable: columnsMeta.hostKey.sortable,
         size: 2,
         render: ({ hostKey }) => {
           return <ValueCopyable value={hostKey} label="host public key" />
@@ -164,6 +167,7 @@ function useContractsMain() {
       {
         id: 'timeline',
         label: columnsMeta.timeline.label,
+        sortable: columnsMeta.timeline.sortable,
         size: 4,
         render: ({
           startHeightContract,
@@ -187,6 +191,7 @@ function useContractsMain() {
       {
         id: 'startTime',
         label: columnsMeta.startTime.label,
+        sortable: columnsMeta.startTime.sortable,
         render: ({ startTime }) => {
           return (
             <Text font="mono" ellipsis>
@@ -199,6 +204,7 @@ function useContractsMain() {
       {
         id: 'endTime',
         label: columnsMeta.endTime.label,
+        sortable: columnsMeta.endTime.sortable,
         render: ({ endTime }) => {
           return (
             <Text font="mono" ellipsis>
@@ -211,31 +217,35 @@ function useContractsMain() {
       {
         id: 'totalCost',
         label: columnsMeta.totalCost.label,
+        sortable: columnsMeta.totalCost.sortable,
         className: 'justify-end',
-        render: ({ totalCost }) => (
-          <ValueSc value={totalCost} variant="value" />
-        ),
+        render: ({ totalCost }) => <ValueSc value={totalCost.negated()} />,
       },
       {
         id: 'spendingUploads',
         label: columnsMeta.spendingUploads.label,
+        sortable: columnsMeta.spendingUploads.sortable,
         className: 'justify-end',
-        render: ({ spendingUploads }) => <ValueSc value={spendingUploads} />,
+        render: ({ spendingUploads }) => (
+          <ValueSc value={spendingUploads.negated()} />
+        ),
       },
       {
         id: 'spendingDownloads',
         label: columnsMeta.spendingDownloads.label,
+        sortable: columnsMeta.spendingDownloads.sortable,
         className: 'justify-end',
         render: ({ spendingDownloads }) => (
-          <ValueSc value={spendingDownloads} />
+          <ValueSc value={spendingDownloads.negated()} />
         ),
       },
       {
         id: 'spendingFundAccount',
         label: columnsMeta.spendingFundAccount.label,
+        sortable: columnsMeta.spendingFundAccount.sortable,
         className: 'justify-end',
         render: ({ spendingFundAccount }) => (
-          <ValueSc value={spendingFundAccount} />
+          <ValueSc value={spendingFundAccount.negated()} />
         ),
       },
     ]
