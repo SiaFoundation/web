@@ -43,6 +43,7 @@ export function Node() {
                 ? Number(state.data.BlockHeight).toLocaleString()
                 : undefined
             }
+            comment={!state.data?.Synced ? 'Syncing' : undefined}
           />
           <DatumCard label="Connected peers" value={peers.data?.length} />
           <DatumCard label="Transactions in pool" value={txPool.data?.length} />

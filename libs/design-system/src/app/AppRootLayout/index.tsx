@@ -3,6 +3,7 @@ import { useMonitorConnAndLock } from '../../hooks/useMonitorConnAndLock'
 
 type Routes = {
   lockscreen: string
+  syncscreen: string
 }
 
 type Props = {
