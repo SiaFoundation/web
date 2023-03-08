@@ -26,4 +26,5 @@ export const routes = {
     index: '/node',
   },
   lockscreen: '/login',
+  syncscreen: '/sync',
 }

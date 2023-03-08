@@ -6,6 +6,7 @@ import { AppRootLayout } from '../AppRootLayout'
 
 type Routes = {
   lockscreen: string
+  syncscreen: string
 }
 
 type Props = {

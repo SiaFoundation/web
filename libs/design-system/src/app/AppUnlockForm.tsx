@@ -8,6 +8,7 @@ import { RecentlyViewed16 } from '../icons/carbon'
 import { ControlGroup } from '../core/ControlGroup'
 import { DropdownMenu, DropdownMenuItem } from '../core/DropdownMenu'
 import { sortBy } from 'lodash'
+import { useConnectivity } from '../hooks/useConnectivity'
 
 async function checkPassword(api: string, password: string) {
   try {
@@ -42,12 +43,14 @@ function wait(ms: number) {
 type Props = {
   routes: {
     home: string
+    syncscreen: string
   }
 }
 
 export function AppUnlockForm({ routes }: Props) {
   const router = useRouter()
   const { settings, setSettings } = useAppSettings()
+  const { isSynced } = useConnectivity()
 
   const formik = useFormik({
     initialValues: {
@@ -68,7 +71,11 @@ export function AppUnlockForm({ routes }: Props) {
         // allow password to propagate to swr hooks
         await wait(500)
         actions.resetForm()
-        router.push(routes.home)
+        if (isSynced) {
+          router.push(routes.home)
+        } else {
+          router.push(routes.syncscreen)
+        }
       } else {
         actions.setErrors({
           password: err,

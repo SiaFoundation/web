@@ -10,4 +10,5 @@ export const routes = {
     peers: '/node/peers',
   },
   lockscreen: '/unlock',
+  syncscreen: '/sync',
 }

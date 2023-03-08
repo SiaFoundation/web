@@ -1,4 +1,4 @@
-import { Dialog } from '@siafoundation/design-system'
+import { Dialog, useConnectivity } from '@siafoundation/design-system'
 import { useAppSettings } from '@siafoundation/react-core'
 import { useEffect } from 'react'
 import { CmdRoot } from '../CmdRoot'
@@ -11,9 +11,10 @@ type Props = {
 
 export function CmdKDialog({ open, onOpenChange, setOpen }: Props) {
   const { isUnlocked } = useAppSettings()
+  const { isConnected, isSynced } = useConnectivity()
   // Toggle the menu when ⌘K is pressed
   useEffect(() => {
-    if (!isUnlocked) {
+    if (!isUnlocked || !isConnected || !isSynced) {
       return
     }
     const down = (e: KeyboardEvent) => {
@@ -24,7 +25,7 @@ export function CmdKDialog({ open, onOpenChange, setOpen }: Props) {
 
     document.addEventListener('keydown', down)
     return () => document.removeEventListener('keydown', down)
-  }, [isUnlocked, setOpen])
+  }, [isUnlocked, isConnected, isSynced, setOpen])
 
   return (
     <>
