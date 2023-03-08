@@ -75,11 +75,11 @@ export function Config() {
         const response = await settingsUpdate.put({
           payload: {
             gouging: JSON.stringify({
-              maxRPCPrice: values.maxRpcPrice.toString(),
-              maxStoragePrice: values.maxStoragePrice.toString(),
-              maxContractPrice: values.maxContractPrice.toString(),
-              maxDownloadPrice: values.maxDownloadPrice.toString(),
-              maxUploadPrice: values.maxUploadPrice.toString(),
+              maxRPCPrice: values.maxRpcPrice.toFixed(0).toString(),
+              maxStoragePrice: values.maxStoragePrice.toFixed(0).toString(),
+              maxContractPrice: values.maxContractPrice.toFixed(0).toString(),
+              maxDownloadPrice: values.maxDownloadPrice.toFixed(0).toString(),
+              maxUploadPrice: values.maxUploadPrice.toFixed(0).toString(),
             }),
             redundancy: JSON.stringify({
               MinShards: values.minShards.toString(),

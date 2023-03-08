@@ -58,7 +58,7 @@ export function Autopilot() {
             contracts: {
               set: values.set,
               amount: values.amount.toNumber(),
-              allowance: values.allowance.toString(),
+              allowance: values.allowance.toFixed(0).toString(),
               period: weeksToBlocks(values.period.toNumber()),
               renewWindow: weeksToBlocks(values.renewWindow.toNumber()),
               download: TiBToBytes(values.download).toNumber(),
