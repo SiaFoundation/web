@@ -129,10 +129,10 @@ function useFilesMain() {
       })
       if (response.error) {
         triggerErrorToast(response.error)
-        removeUpload(file.name)
+        removeUpload(path)
       } else {
-        removeUpload(file.name)
-        triggerToast(`Upload complete: ${file.name}`)
+        removeUpload(path)
+        triggerToast(`Upload complete: ${name}`)
       }
     })
   }

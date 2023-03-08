@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {
   buildAxiosConfig,
-  buildRoute,
+  buildRouteWithParams,
   InternalCallbackArgs,
   InternalHookArgsCallback,
   mergeInternalCallbackArgs,
@@ -9,6 +9,7 @@ import {
   Response,
   triggerDeps,
   mergeInternalHookArgsCallback,
+  DepFn,
 } from './request'
 import { useAppSettings } from './useAppSettings'
 
@@ -20,7 +21,7 @@ type Put<Params extends RequestParams, Payload, Result> = {
 
 export function usePut<Params extends RequestParams, Payload, Result>(
   args: InternalHookArgsCallback<Params, Payload, Result>,
-  deps: string[]
+  deps: DepFn[]
 ): Put<Params, Payload, Result> {
   const { settings } = useAppSettings()
   const hookArgs = mergeInternalHookArgsCallback(args)
@@ -29,7 +30,7 @@ export function usePut<Params extends RequestParams, Payload, Result>(
       const callArgs = mergeInternalCallbackArgs(args)
       try {
         const reqConfig = buildAxiosConfig(settings, hookArgs, callArgs)
-        const reqRoute = buildRoute(
+        const reqRoute = buildRouteWithParams(
           settings,
           hookArgs.route,
           hookArgs,
