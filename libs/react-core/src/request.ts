@@ -209,7 +209,11 @@ function parameterizeRoute(
   return route
 }
 
-export function buildRoute<Params extends RequestParams, Payload, Result>(
+export function buildRouteWithParams<
+  Params extends RequestParams,
+  Payload,
+  Result
+>(
   settings: AppSettings,
   route: string | null,
   hookArgs:
@@ -243,13 +247,44 @@ export function buildRoute<Params extends RequestParams, Payload, Result>(
   return `${api}${route}`
 }
 
+export function stripApiFromKey<Params extends RequestParams, Payload, Result>(
+  settings: AppSettings,
+  route: string,
+  hookArgs:
+    | {
+        api?: string
+        params?: Params
+      }
+    | undefined,
+  callArgs: InternalCallbackArgs<Params, Payload, Result> | undefined
+): string {
+  const api = getApi(settings, hookArgs, callArgs)
+  if (api === settings.api) {
+    return route.replace(`${api}/api`, '')
+  }
+  return route.replace(api, '')
+}
+
+export type DepFn = (key: string) => boolean
+
 export function triggerDeps<Params extends RequestParams, Payload, Result>(
-  deps: string[],
+  depFns: DepFn[],
   settings: AppSettings,
   configArgs: InternalHookArgsCallback<Params, Payload, Result>,
   callArgs: InternalCallbackArgs<Params, Payload, Result> | undefined
 ) {
-  deps?.forEach((dep) =>
-    mutate(buildRoute(settings, dep, configArgs, callArgs))
+  depFns?.forEach((depFn) =>
+    mutate((key) => {
+      // assumes the dependency key uses the same API settings as the caller
+      const route = stripApiFromKey(
+        settings,
+        key as string,
+        configArgs,
+        callArgs
+      )
+      // run the depfn with the stripped route so that API prefixing can be
+      // ignored in the matching logic.
+      return depFn(route)
+    })
   )
 }

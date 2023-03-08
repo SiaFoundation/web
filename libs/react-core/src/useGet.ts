@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import useSWR from 'swr'
 import {
   buildAxiosConfig,
-  buildRoute,
+  buildRouteWithParams,
   InternalCallbackArgs,
   mergeInternalCallbackArgs,
   RequestParams,
@@ -22,7 +22,12 @@ export function useGet<Params extends RequestParams, Result>(
 ) {
   const hookArgs = useMemo(() => mergeInternalHookArgsSwr(args), [args])
   const { settings, passwordProtectRequestHooks } = useAppSettings()
-  const reqRoute = buildRoute(settings, hookArgs.route, hookArgs, undefined)
+  const reqRoute = buildRouteWithParams(
+    settings,
+    hookArgs.route,
+    hookArgs,
+    undefined
+  )
   return useSWR<Result, SWRError>(
     // TODO: add a config to app settings to set password protected app or not,
     // renterd etc require password, explorer do not, disable hook fetching if
@@ -62,7 +67,7 @@ export function useGetFunc<Params extends RequestParams, Result>(
       const callArgs = mergeInternalCallbackArgs(args)
       try {
         const reqConfig = buildAxiosConfig(settings, hookArgs, callArgs)
-        const reqRoute = buildRoute(
+        const reqRoute = buildRouteWithParams(
           settings,
           hookArgs.route,
           hookArgs,

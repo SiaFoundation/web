@@ -60,7 +60,7 @@ export function useSyncerConnect(args?: HookArgsCallback<void, string, never>) {
       ...args,
       route: '/bus/syncer/connect',
     },
-    [syncerPeers]
+    [(key) => key === syncerPeers]
   )
 }
 
@@ -86,7 +86,7 @@ export function useTxPoolBroadcast(
       ...args,
       route: '/bus/txpool/broadcast',
     },
-    ['/bus/txpool/transactions', '/bus/wallet/pending']
+    [(key) => ['/bus/txpool/transactions', '/bus/wallet/pending'].includes(key)]
   )
 }
 

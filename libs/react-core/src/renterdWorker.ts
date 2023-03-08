@@ -25,6 +25,10 @@ export function useObjectUpload(
       },
       route: '/worker/objects/:key',
     },
-    []
+    [
+      (key) => {
+        return key.startsWith('/bus/objects')
+      },
+    ]
   )
 }
