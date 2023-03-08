@@ -82,8 +82,8 @@ export function Config() {
               maxUploadPrice: values.maxUploadPrice.toFixed(0).toString(),
             }),
             redundancy: JSON.stringify({
-              MinShards: values.minShards.toString(),
-              TotalShards: values.totalShards.toString(),
+              MinShards: values.minShards.toNumber(),
+              TotalShards: values.totalShards.toNumber(),
             }),
           },
         })
