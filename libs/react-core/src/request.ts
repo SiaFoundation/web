@@ -34,6 +34,47 @@ export type InternalHookArgsSwr<
   config?: RequestConfig<void, Result>
 }
 
+export type HookArgsWithPayloadSwr<
+  Params extends RequestParams,
+  Payload,
+  Result
+> = Params extends void
+  ? Payload extends void
+    ? {
+        api?: string
+        config?: RequestConfig<void, Result>
+        disabled?: boolean
+      }
+    : {
+        api?: string
+        payload: Payload
+        config?: RequestConfig<void, Result>
+        disabled?: boolean
+      }
+  : Payload extends void
+  ? {
+      params: Params
+      api?: string
+      config?: RequestConfig<void, Result>
+      disabled?: boolean
+    }
+  : {
+      params: Params
+      payload: Payload
+      api?: string
+      config?: RequestConfig<void, Result>
+      disabled?: boolean
+    }
+
+export type InternalHookArgsWithPayloadSwr<
+  Params extends RequestParams,
+  Payload,
+  Result
+> = HookArgsWithPayloadSwr<Params, Payload, Result> & {
+  route: string
+  config?: RequestConfig<void, Result>
+}
+
 export type HookArgsCallback<Params extends RequestParams, Payload, Result> = {
   api?: string
   config?: RequestConfig<Payload, Result>

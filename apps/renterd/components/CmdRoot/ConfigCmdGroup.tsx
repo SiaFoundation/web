@@ -28,7 +28,7 @@ export function ConfigCmdGroup({ currentPage, parentPage, pushPage }: Props) {
           pushPage(commandPage)
         }}
       >
-        Configuration
+        {commandPage.label}
       </CommandItemNav>
       <CommandItemSearch
         currentPage={currentPage}

@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuLabel,
-  ComboPool,
+  PoolCombo,
 } from '@siafoundation/design-system'
 import { useContracts } from '../hooks/useContracts'
 
@@ -34,7 +34,7 @@ export function ContractsFilterDropdownMenu() {
         <DropdownMenuLabel>Status</DropdownMenuLabel>
         <DropdownMenuItem>
           <div className="py-2">
-            <ComboPool
+            <PoolCombo
               options={[
                 {
                   value: 'active',
@@ -72,7 +72,7 @@ export function ContractsFilterDropdownMenu() {
         <DropdownMenuLabel>Expiration date</DropdownMenuLabel>
         <DropdownMenuItem>
           <div className="py-2">
-            <ComboPool
+            <PoolCombo
               options={[
                 {
                   value: 'day',

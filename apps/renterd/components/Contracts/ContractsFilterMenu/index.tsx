@@ -11,7 +11,7 @@ import { Command } from 'cmdk'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useContracts } from '../../../contexts/contracts'
 import { Page } from '../../CmdRoot/types'
-import { ContractFilterCmd } from '../ContractCmd/ContractFilterCmd'
+import { ContractsFilterCmd } from '../ContractsCmd/ContractsFilterCmd'
 
 export function ContractsFilterMenu() {
   const { filters, removeFilter, removeLastFilter } = useContracts()
@@ -112,7 +112,7 @@ export function ContractsFilterMenu() {
                   <Command.Separator className={separatorStyles('my-2')} />
                 )} */}
               <Command.List>
-                <ContractFilterCmd
+                <ContractsFilterCmd
                   currentPage={currentPage}
                   beforeSelect={beforeSelect}
                   afterSelect={afterSelect}

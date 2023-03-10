@@ -30,10 +30,18 @@ export function SyncScreen() {
   const peers = useSyncerPeers()
   const status = useSiaStatsNetworkStatus()
 
+  const currentBlockHeight = state.data?.BlockHeight || 0
+  const networkBlockHeight = status.data?.block_height || 0
+
   const percent =
-    isUnlocked && state.data?.BlockHeight && status.data?.block_height
-      ? ((state.data?.BlockHeight / status.data?.block_height) * 100).toFixed(0)
+    isUnlocked && currentBlockHeight && networkBlockHeight
+      ? ((currentBlockHeight / networkBlockHeight) * 100).toFixed(1)
       : 0
+
+  const moreThan1BlockToSync =
+    currentBlockHeight && networkBlockHeight
+      ? networkBlockHeight - currentBlockHeight > 1
+      : false
 
   return (
     <AppPublicLayout routes={routes}>
@@ -100,7 +108,7 @@ export function SyncScreen() {
               )}
               <div className="flex justify-between mt-1.5">
                 <Text color="verySubtle" size="10">
-                  Block
+                  Syncing...
                 </Text>
                 {isUnlocked && settings.siaStats ? (
                   <Text color="verySubtle" size="10">
@@ -113,10 +121,12 @@ export function SyncScreen() {
                 )}
               </div>
             </>
-            <Text color="subtle" size="14" className="mt-2">
-              Welcome to Sia! The blockchain is syncing to the current network
-              height. Depending on your system this process may take a while.
-            </Text>
+            {(!settings.siaStats || moreThan1BlockToSync) && (
+              <Text color="subtle" size="14" className="mt-2">
+                Welcome to Sia! The blockchain is syncing to the current network
+                height. Depending on your system this process may take a while.
+              </Text>
+            )}
           </div>
         </Panel>
       </div>

@@ -13,16 +13,16 @@ import {
 } from './request'
 import { useAppSettings } from './useAppSettings'
 
-type Delete<Params extends RequestParams, Result> = {
+type DeleteFunc<Params extends RequestParams, Result> = {
   delete: (
     args: InternalCallbackArgs<Params, undefined, Result>
   ) => Promise<Response<Result>>
 }
 
-export function useDelete<Params extends RequestParams, Result>(
+export function useDeleteFunc<Params extends RequestParams, Result>(
   args: InternalHookArgsCallback<Params, void, Result>,
   deps: DepFn[]
-): Delete<Params, Result> {
+): DeleteFunc<Params, Result> {
   const { settings } = useAppSettings()
   const hookArgs = mergeInternalHookArgsCallback(args)
   return {

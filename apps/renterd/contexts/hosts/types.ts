@@ -2,6 +2,9 @@ import BigNumber from 'bignumber.js'
 
 export type HostData = {
   id: string
+  isOnAllowlist: boolean
+  isOnBlocklist: boolean
+  isBlocked: boolean
   netAddress: string
   publicKey: string
   lastScanSuccess: boolean
@@ -16,6 +19,8 @@ export type HostData = {
 }
 
 export type TableColumnId =
+  | 'actions'
+  | 'status'
   | 'netAddress'
   | 'publicKey'
   | 'lastScan'
@@ -29,8 +34,17 @@ export type TableColumnId =
 
 export const columnsMeta: Record<
   TableColumnId,
-  { id: TableColumnId; label: string; sortable?: string }
+  { id: TableColumnId; label: string; sortable?: string; fixed?: boolean }
 > = {
+  actions: {
+    id: 'actions',
+    label: '',
+    fixed: true,
+  },
+  status: {
+    id: 'status',
+    label: 'Status',
+  },
   netAddress: {
     id: 'netAddress',
     label: 'Address',
@@ -84,16 +98,13 @@ export const columnsMeta: Record<
 }
 
 export const columnsDefaultVisible: TableColumnId[] = [
+  'status',
   'netAddress',
   'publicKey',
   'lastScan',
-  'totalScans',
   'knownSince',
+  'totalScans',
   'uptime',
-  'downtime',
-  'successfulInteractions',
-  'failedInteractions',
-  'totalInteractions',
 ]
 
 export const columnsDefaultSort = 'lastScan'

@@ -3,7 +3,7 @@ import {
   CaretDown16,
   SettingsAdjust16,
   Select,
-  ComboPool,
+  PoolCombo,
   Label,
   Popover,
   MenuItemRightSlot,
@@ -96,7 +96,7 @@ export function FilesViewDropdownMenu() {
         </MenuItemRightSlot>
       </BaseMenuItem>
       <BaseMenuItem>
-        <ComboPool
+        <PoolCombo
           options={configurableColumns.map((column) => ({
             label: column.label,
             value: column.id,

@@ -1,12 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
-import { FilterItem } from './useClientFilters'
 
 type EmptyState = 'loading' | 'noneYet' | 'noneMatchingFilters'
 
-export function useDataState<Datum>(
+export function useDataState(
   dataset: unknown[] | undefined,
   isFetching: boolean,
-  filters: FilterItem<Datum>[]
+  filters: unknown[]
 ): EmptyState {
   const [lastDatasetSize, setLastDatasetSize] = useState<number>()
   useEffect(() => {

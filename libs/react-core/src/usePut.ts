@@ -13,16 +13,16 @@ import {
 } from './request'
 import { useAppSettings } from './useAppSettings'
 
-type Put<Params extends RequestParams, Payload, Result> = {
+type PutFunc<Params extends RequestParams, Payload, Result> = {
   put: (
     args: InternalCallbackArgs<Params, Payload, Result>
   ) => Promise<Response<Result>>
 }
 
-export function usePut<Params extends RequestParams, Payload, Result>(
+export function usePutFunc<Params extends RequestParams, Payload, Result>(
   args: InternalHookArgsCallback<Params, Payload, Result>,
   deps: DepFn[]
-): Put<Params, Payload, Result> {
+): PutFunc<Params, Payload, Result> {
   const { settings } = useAppSettings()
   const hookArgs = mergeInternalHookArgsCallback(args)
   return {

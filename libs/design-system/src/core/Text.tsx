@@ -63,6 +63,12 @@ export const textStyles = cva(['inline-block', 'font-sans'], {
     noWrap: {
       true: 'whitespace-nowrap',
     },
+    underline: {
+      show: 'underline underline-offset-2 decoration-gray-1100 dark:decoration-gray-500',
+      hover:
+        'hover:underline underline-offset-2 decoration-gray-1100 dark:decoration-gray-500',
+      none: '',
+    },
     ellipsis: {
       true: 'overflow-hidden text-ellipsis whitespace-nowrap',
     },
@@ -71,6 +77,7 @@ export const textStyles = cva(['inline-block', 'font-sans'], {
     weight: 'regular',
     font: 'sans',
     color: 'contrast',
+    underline: 'none',
   },
 })
 
@@ -90,6 +97,7 @@ export const Text = React.forwardRef<
       size,
       scaleSize,
       noWrap,
+      underline,
       ellipsis,
       ...props
     },
@@ -108,6 +116,7 @@ export const Text = React.forwardRef<
             weight,
             size,
             scaleSize,
+            underline,
             noWrap,
             ellipsis,
           })

@@ -1,4 +1,4 @@
-import { useGet } from './useGet'
+import { useGetSwr } from './useGet'
 import { useAppSettings } from './useAppSettings'
 import { HookArgsSwr } from './request'
 
@@ -31,7 +31,7 @@ export function useSiaCentralMarketExchangeRate(
   args?: HookArgsSwr<void, SiaCentralExchangeRateGET>
 ) {
   const { settings } = useAppSettings()
-  return useGet({
+  return useGetSwr({
     api,
     ...args,
     route: '/market/exchange-rate?currencies=sc',
@@ -116,7 +116,7 @@ export function useSiaCentralHostsNetworkAverages(
   args?: HookArgsSwr<void, SiaCentralNetworkAveragesGET>
 ) {
   const { settings } = useAppSettings()
-  return useGet({
+  return useGetSwr({
     api,
     ...args,
     route: '/hosts/network/averages',
@@ -144,7 +144,7 @@ export function useSiaCentralHostsNetworkMetrics(
   args?: HookArgsSwr<void, SiaCentralNetworkMetricsGET>
 ) {
   const { settings } = useAppSettings()
-  return useGet({
+  return useGetSwr({
     api,
     ...args,
     route: '/hosts/network/metrics',

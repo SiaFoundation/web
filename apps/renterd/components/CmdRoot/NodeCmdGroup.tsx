@@ -28,7 +28,7 @@ export function NodeCmdGroup({ currentPage, parentPage, pushPage }: Props) {
           pushPage(commandPage)
         }}
       >
-        Blockchain node
+        {commandPage.label}
       </CommandItemNav>
       <CommandItemSearch
         currentPage={currentPage}

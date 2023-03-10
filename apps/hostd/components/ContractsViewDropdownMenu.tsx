@@ -8,7 +8,7 @@ import {
   Select,
   DropdownMenuRightSlot,
   DropdownMenuSeparator,
-  ComboPool,
+  PoolCombo,
 } from '@siafoundation/design-system'
 import { useContracts, ContractColumn } from '../hooks/useContracts'
 
@@ -100,7 +100,7 @@ export function ContractsViewDropdownMenu() {
         </DropdownMenuRightSlot>
       </DropdownMenuItem>
       <div className="p-2">
-        <ComboPool
+        <PoolCombo
           options={configurableColumns.map((column) => ({
             label: column.label,
             value: column.id,

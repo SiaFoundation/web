@@ -2,7 +2,7 @@ import {
   Button,
   CaretDown16,
   SettingsAdjust16,
-  ComboPool,
+  PoolCombo,
   Popover,
   BaseMenuItem,
   MenuItemRightSlot,
@@ -50,7 +50,7 @@ export function HostsViewDropdownMenu() {
         </MenuItemRightSlot>
       </BaseMenuItem>
       <BaseMenuItem>
-        <ComboPool
+        <PoolCombo
           options={configurableColumns.map((column) => ({
             label: column.label,
             value: column.id,

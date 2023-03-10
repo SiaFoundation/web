@@ -1,11 +1,11 @@
-import { useGet } from './useGet'
+import { useGetSwr } from './useGet'
 import { Action, Config } from './siaTypes'
-import { usePut } from './usePut'
+import { usePutFunc } from './usePut'
 import { HookArgsSwr, HookArgsCallback } from './request'
 
 const autopilotConfigKey = '/autopilot/config'
 export function useAutopilotConfig(args?: HookArgsSwr<void, Config>) {
-  return useGet({
+  return useGetSwr({
     ...args,
     route: autopilotConfigKey,
   })
@@ -14,7 +14,7 @@ export function useAutopilotConfig(args?: HookArgsSwr<void, Config>) {
 export function useAutopilotConfigUpdate(
   args?: HookArgsCallback<void, Config, void>
 ) {
-  return usePut({ ...args, route: autopilotConfigKey }, [
+  return usePutFunc({ ...args, route: autopilotConfigKey }, [
     (key) => key === autopilotConfigKey,
   ])
 }
@@ -22,7 +22,7 @@ export function useAutopilotConfigUpdate(
 export function useAutopilotActions(
   args?: HookArgsSwr<{ since?: number; max?: number }, Action[]>
 ) {
-  return useGet({
+  return useGetSwr({
     ...args,
     route: '/autopilot/actions',
   })
@@ -31,7 +31,7 @@ export function useAutopilotActions(
 export function useAutopilotStatus(
   args?: HookArgsSwr<void, { currentPeriod: number }>
 ) {
-  return useGet({
+  return useGetSwr({
     ...args,
     route: '/autopilot/status',
   })

@@ -1,13 +1,16 @@
-import { CommandItemNav } from '../../CmdRoot/Item'
-import { ContractFilterCmd } from './ContractFilterCmd'
+import { CommandItemNav, CommandItemSearch } from '../../CmdRoot/Item'
+import { ContractsFilterCmd } from './ContractsFilterCmd'
 import { Page } from '../../CmdRoot/types'
+import { useRouter } from 'next/router'
+import { useDialog } from '../../../contexts/dialog'
+import { routes } from '../../../config/routes'
 
 export const commandPage = {
   namespace: 'contracts',
   label: 'Contracts',
 }
 
-export function ContractCmd({
+export function ContractsCmd({
   currentPage,
   parentPage,
   pushPage,
@@ -20,6 +23,8 @@ export function ContractCmd({
   afterSelect?: () => void
   pushPage: (page: Page) => void
 }) {
+  const router = useRouter()
+  const { closeDialog } = useDialog()
   return (
     <>
       <CommandItemNav
@@ -32,7 +37,17 @@ export function ContractCmd({
       >
         {commandPage.label}
       </CommandItemNav>
-      <ContractFilterCmd
+      <CommandItemSearch
+        currentPage={currentPage}
+        commandPage={commandPage}
+        onSelect={() => {
+          router.push(routes.contracts.index)
+          closeDialog()
+        }}
+      >
+        View contracts
+      </CommandItemSearch>
+      <ContractsFilterCmd
         parentPage={commandPage}
         currentPage={currentPage}
         beforeSelect={beforeSelect}

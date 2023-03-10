@@ -25,11 +25,12 @@ type GougingData = {
   maxUploadPrice: string
   maxContractPrice: string
   maxRPCPrice: string
+  hostBlockHeightLeeway: number
 }
 
 type RedundancyData = {
-  MinShards: number
-  TotalShards: number
+  minShards: number
+  totalShards: number
 }
 
 export function Config() {
@@ -63,6 +64,7 @@ export function Config() {
       maxContractPrice: new BigNumber(0),
       maxDownloadPrice: new BigNumber(0),
       maxUploadPrice: new BigNumber(0),
+      hostBlockHeightLeeway: new BigNumber(0),
       // redundancy
       minShards: new BigNumber(0),
       totalShards: new BigNumber(0),
@@ -80,10 +82,11 @@ export function Config() {
               maxContractPrice: values.maxContractPrice.toFixed(0).toString(),
               maxDownloadPrice: values.maxDownloadPrice.toFixed(0).toString(),
               maxUploadPrice: values.maxUploadPrice.toFixed(0).toString(),
+              hostBlockHeightLeeway: values.hostBlockHeightLeeway.toNumber(),
             }),
             redundancy: JSON.stringify({
-              MinShards: values.minShards.toNumber(),
-              TotalShards: values.totalShards.toNumber(),
+              minShards: values.minShards.toNumber(),
+              totalShards: values.totalShards.toNumber(),
             }),
           },
         })
@@ -116,9 +119,12 @@ export function Config() {
             maxUploadPrice: new BigNumber(gougingData.maxUploadPrice),
             maxContractPrice: new BigNumber(gougingData.maxContractPrice),
             maxRpcPrice: new BigNumber(gougingData.maxRPCPrice),
+            hostBlockHeightLeeway: new BigNumber(
+              gougingData.hostBlockHeightLeeway
+            ),
             // redundancy
-            minShards: new BigNumber(redundancyData.MinShards),
-            totalShards: new BigNumber(redundancyData.TotalShards),
+            minShards: new BigNumber(redundancyData.minShards),
+            totalShards: new BigNumber(redundancyData.totalShards),
           },
         })
       } catch (e) {
@@ -220,6 +226,23 @@ export function Config() {
                 value={form.values.maxRpcPrice}
                 changed={changed.maxRpcPrice}
                 onChange={(value) => form.setFieldValue('maxRpcPrice', value)}
+              />
+            }
+          />
+          <Separator className="w-full my-3" />
+          <Setting
+            title="Block height leeway"
+            description={<>The amount of blocks of leeway given to hosts.</>}
+            control={
+              <ConfigurationNumber
+                units="blocks"
+                value={form.values.hostBlockHeightLeeway}
+                changed={changed.hostBlockHeightLeeway}
+                suggestion={new BigNumber(3)}
+                suggestionTip="The recommended value is 3 blocks."
+                onChange={(value) =>
+                  form.setFieldValue('hostBlockHeightLeeway', value)
+                }
               />
             }
           />

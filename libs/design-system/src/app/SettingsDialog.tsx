@@ -29,14 +29,12 @@ export function SettingsDialog({ open, onOpenChange }: Props) {
   return (
     <Dialog
       open={open}
+      title="General"
       onOpenChange={onOpenChange}
       contentVariants={{ className: 'w-[450px]' }}
     >
       <div className="flex flex-col gap-6 mb-2">
         <div className="flex flex-col gap-4">
-          <Text size="16" weight="bold">
-            General
-          </Text>
           <div className="flex flex-col gap-4">
             <Alert>
               <div className="flex flex-col gap-4">
