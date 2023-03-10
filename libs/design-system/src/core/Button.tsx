@@ -73,6 +73,17 @@ export const buttonStyles = cva(
           'text-white dark:text-white',
           'disabled:text-white/50 disabled:dark:text-white/50',
         ],
+        amber: [
+          'border',
+          'bg-amber-700 dark:bg-amber-700',
+          'border-amber-800/30 dark:border-amber-600/70',
+          'enabled:hover:bg-amber-800/90 dark:enabled:hover:bg-amber-700/90',
+          'enabled:hover:border-amber-800/50 enabled:hover:dark:border-amber-600',
+          'disabled:bg-amber-700/70 disabled:dark:bg-amber-600/70',
+          'disabled:border-amber-600/50 disabled:dark:border-amber-500/30',
+          'text-white dark:text-white',
+          'disabled:text-white/50 disabled:dark:text-white/50',
+        ],
         gray: [
           'border',
           'bg-white dark:bg-graydark-200',

@@ -32,7 +32,7 @@ export function AutopilotCmdGroup({
           pushPage(commandPage)
         }}
       >
-        Autopilot
+        {commandPage.label}
       </CommandItemNav>
       <CommandItemSearch
         currentPage={currentPage}

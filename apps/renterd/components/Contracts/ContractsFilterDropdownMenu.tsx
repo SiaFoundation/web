@@ -6,7 +6,7 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  ComboPool,
+  PoolCombo,
   getWeeksInMs,
   getDaysInMs,
   getMonthsInMs,
@@ -101,7 +101,7 @@ export function ContractsFilterDropdownMenu() {
         <DropdownMenuLabel>Expiration date</DropdownMenuLabel>
         <DropdownMenuItem>
           <div className="py-1">
-            <ComboPool
+            <PoolCombo
               options={options.map((o) => pick(o, ['label', 'value']))}
               values={expirySelection}
               onChange={(value) => {

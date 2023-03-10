@@ -1,4 +1,6 @@
 import axios from 'axios'
+import useSWR from 'swr'
+import { useMemo } from 'react'
 import {
   buildAxiosConfig,
   buildRouteWithParams,
@@ -10,19 +12,67 @@ import {
   InternalHookArgsCallback,
   mergeInternalHookArgsCallback,
   DepFn,
+  mergeInternalHookArgsSwr,
+  InternalHookArgsWithPayloadSwr,
 } from './request'
+import { SWRError } from './types'
 import { useAppSettings } from './useAppSettings'
+import { getKey } from './utils'
 
-type Post<Params extends RequestParams, Payload, Result> = {
+export function usePostSwr<Params extends RequestParams, Payload, Result>(
+  args: InternalHookArgsWithPayloadSwr<Params, Payload, Result>
+) {
+  const hookArgs = useMemo(() => mergeInternalHookArgsSwr(args), [args])
+  const { settings, passwordProtectRequestHooks } = useAppSettings()
+  const reqRoute = buildRouteWithParams(
+    settings,
+    hookArgs.route,
+    hookArgs,
+    undefined
+  )
+  return useSWR<Result, SWRError>(
+    // TODO: add a config to app settings to set password protected app or not,
+    // renterd etc require password, explorer do not, disable hook fetching if
+    // password protected and password is missing.
+    getKey(
+      reqRoute
+        ? `${reqRoute}${settings.password || ''}${JSON.stringify(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (args as any).payload !== undefined ? (args as any).payload : ''
+          )}`
+        : null,
+      hookArgs.disabled || (passwordProtectRequestHooks && !settings.password)
+    ),
+    async () => {
+      if (!hookArgs.route) {
+        throw Error('No route')
+      }
+      const reqConfig = buildAxiosConfig(settings, hookArgs, undefined)
+      if (!reqRoute) {
+        throw Error('No route')
+      }
+      const response = await axios.post<Result>(
+        reqRoute,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (args as any).payload,
+        reqConfig
+      )
+      return response.data
+    },
+    hookArgs.config?.swr
+  )
+}
+
+type PostFunc<Params extends RequestParams, Payload, Result> = {
   post: (
     args: InternalCallbackArgs<Params, Payload, Result>
   ) => Promise<Response<Result>>
 }
 
-export function usePost<Params extends RequestParams, Payload, Result>(
+export function usePostFunc<Params extends RequestParams, Payload, Result>(
   args: InternalHookArgsCallback<Params, Payload, Result>,
   deps: DepFn[]
-): Post<Params, Payload, Result> {
+): PostFunc<Params, Payload, Result> {
   const { settings } = useAppSettings()
   const hookArgs = mergeInternalHookArgsCallback(args)
   return {

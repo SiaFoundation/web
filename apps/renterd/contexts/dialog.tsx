@@ -8,6 +8,8 @@ import {
 } from '@siafoundation/design-system'
 import { CmdKDialog } from '../components/CmdKDialog'
 import { FilesCreateDirectoryDialog } from '../components/Files/FilesCreateDirectoryDialog'
+import { HostsAllowBlockDialog } from '../components/Hosts/HostsAllowBlockDialog'
+import { HostsFilterAddressDialog } from '../components/Hosts/HostsFilterAddressDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -17,8 +19,10 @@ export type DialogType =
   | 'addressDetails'
   | 'connectPeer'
   | 'hostScoreSet'
+  | 'hostsManageAllowBlock'
   | 'hostBlocklistAdd'
   | 'hostBlocklistRemove'
+  | 'hostsFilterAddress'
   | 'objectDownload'
   | 'objectDelete'
   | 'objectCreateDirectory'
@@ -106,6 +110,14 @@ export function Dialogs() {
       />
       <FilesCreateDirectoryDialog
         open={dialog === 'objectCreateDirectory'}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <HostsAllowBlockDialog
+        open={dialog === 'hostsManageAllowBlock'}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <HostsFilterAddressDialog
+        open={dialog === 'hostsFilterAddress'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
     </>

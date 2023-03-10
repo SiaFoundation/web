@@ -6,9 +6,15 @@ import {
   CheckmarkFilled16,
   Misuse16,
   useTableState,
+  Tooltip,
 } from '@siafoundation/design-system'
 import { humanNumber } from '@siafoundation/sia-js'
-import { useHosts as useHostsGET } from '@siafoundation/react-core'
+import {
+  HostsSearchFilterMode,
+  useHostsAllowlist,
+  useHostsBlocklist,
+  useHostsSearch,
+} from '@siafoundation/react-core'
 import { createContext, useContext, useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import {
@@ -21,25 +27,44 @@ import {
 import { formatDistance, formatRelative } from 'date-fns'
 import { useRouter } from 'next/router'
 import { useDataState } from '../../hooks/useDataState'
+import { useServerFilters } from '../../hooks/useServerFilters'
+import { HostDropdownMenu } from '../../components/Hosts/HostDropdownMenu'
 
 function useHostsMain() {
   const router = useRouter()
   const limit = Number(router.query.limit || 20)
   const offset = Number(router.query.offset || 0)
-  const response = useHostsGET({
-    params: {
+  const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
+    useServerFilters()
+  const response = useHostsSearch({
+    payload: {
       limit,
       offset,
+      filterMode: (filters.find((f) => f.id === 'filterMode')?.value ||
+        'all') as HostsSearchFilterMode,
+      addressContains: filters.find((f) => f.id === 'addressContains')?.value,
+      keyIn: filters.find((f) => f.id === 'keyIn')?.values,
     },
   })
+  const allowlist = useHostsAllowlist()
+  const blocklist = useHostsBlocklist()
+  const isAllowlistActive = !!allowlist.data?.length
+
   const dataset = useMemo<HostData[] | null>(() => {
     if (!response.data) {
       return null
     }
     const dataset: HostData[] =
       response.data?.map((c) => {
+        const isOnAllowlist = !!allowlist.data?.find((a) => a === c.public_key)
+        const allowed = !isAllowlistActive || isOnAllowlist
+        const isOnBlocklist = !!blocklist.data?.find((b) => b === c.netAddress)
+        const isBlocked = isOnBlocklist || !allowed
         return {
           id: c.public_key,
+          isOnAllowlist,
+          isOnBlocklist,
+          isBlocked,
           netAddress: c.netAddress,
           publicKey: c.public_key,
           lastScanSuccess: c.interactions.LastScanSuccess,
@@ -61,7 +86,7 @@ function useHostsMain() {
         }
       }) || []
     return dataset
-  }, [response.data])
+  }, [response.data, allowlist.data, blocklist.data, isAllowlistActive])
 
   const {
     configurableColumns,
@@ -84,9 +109,56 @@ function useHostsMain() {
   const tableColumns = useMemo(() => {
     const columns: TableColumn<TableColumnId, HostData>[] = [
       {
+        id: 'actions',
+        label: columnsMeta.actions.label,
+        size: '50px 0 0',
+        className: '!pl-2 !pr-0',
+        render: (host) => (
+          <HostDropdownMenu
+            address={host.netAddress}
+            publicKey={host.publicKey}
+          />
+        ),
+      },
+      {
+        id: 'status',
+        label: columnsMeta.status.label,
+        size: '80px 0 0',
+        className: '!pl-2 justify-center',
+        render: (host) => (
+          <Tooltip
+            side="right"
+            content={
+              (isAllowlistActive
+                ? `Allowlist ${
+                    host.isOnAllowlist
+                      ? 'allows this host.'
+                      : 'does not allow this host.'
+                  }`
+                : `Allowlist is inactive.`) +
+              ` Blocklist ${
+                host.isOnBlocklist
+                  ? 'blocks this host.'
+                  : 'does not block this host.'
+              }`
+            }
+          >
+            <div className="flex gap-1 items-center">
+              <Text color={host.isBlocked ? 'red' : 'green'}>
+                {host.isBlocked ? <Misuse16 /> : <CheckmarkFilled16 />}
+              </Text>
+              {/* <Text color={host.isBlocked ? 'red' : 'green'}>
+              {host.isBlocked ? 'blocked' : 'allowed'}
+            </Text> */}
+            </div>
+          </Tooltip>
+        ),
+      },
+      {
         id: 'netAddress',
         label: columnsMeta.netAddress.label,
         size: 2,
+        className: '!pl-2',
         render: (host) => (
           <ValueCopyable
             value={host.netAddress}
@@ -109,9 +181,9 @@ function useHostsMain() {
         size: 2,
         render: (host) => {
           return (
-            <div className="flex gap-1 overflow-hidden">
+            <div className="flex gap-2 overflow-hidden">
               <div>
-                <Text className="mt-[3px]">
+                <Text className="mt-[5px]">
                   {host.lastScanSuccess ? <CheckmarkFilled16 /> : <Misuse16 />}
                 </Text>
               </div>
@@ -244,14 +316,18 @@ function useHostsMain() {
       },
     ]
     return columns
-  }, [])
+  }, [isAllowlistActive])
 
   const filteredTableColumns = useMemo(
-    () => tableColumns.filter((column) => enabledColumns.includes(column.id)),
+    () =>
+      tableColumns.filter(
+        (column) =>
+          columnsMeta[column.id].fixed || enabledColumns.includes(column.id)
+      ),
     [tableColumns, enabledColumns]
   )
 
-  const dataState = useDataState(dataset, response.isValidating, [])
+  const dataState = useDataState(dataset, response.isValidating, filters)
 
   return {
     dataState,
@@ -270,6 +346,11 @@ function useHostsMain() {
     sortDirection,
     sortOptions,
     resetDefaultColumnVisibility,
+    filters,
+    setFilter,
+    removeFilter,
+    removeLastFilter,
+    resetFilters,
   }
 }
 

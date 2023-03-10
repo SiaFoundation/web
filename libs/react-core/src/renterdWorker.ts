@@ -1,6 +1,6 @@
 import { HookArgsCallback } from './request'
 import { useGetDownloadFunc } from './useGetDownload'
-import { usePut } from './usePut'
+import { usePutFunc } from './usePut'
 
 export function useObjectDownloadFunc(
   args?: HookArgsCallback<{ key: string }, void, Blob>
@@ -11,7 +11,7 @@ export function useObjectDownloadFunc(
 export function useObjectUpload(
   args?: HookArgsCallback<{ key: string }, File, void>
 ) {
-  return usePut(
+  return usePutFunc(
     {
       ...args,
       config: {

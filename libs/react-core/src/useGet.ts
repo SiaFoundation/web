@@ -17,7 +17,7 @@ import { SWRError } from './types'
 import { useAppSettings } from './useAppSettings'
 import { getKey } from './utils'
 
-export function useGet<Params extends RequestParams, Result>(
+export function useGetSwr<Params extends RequestParams, Result>(
   args: InternalHookArgsSwr<Params, Result>
 ) {
   const hookArgs = useMemo(() => mergeInternalHookArgsSwr(args), [args])

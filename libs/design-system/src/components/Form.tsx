@@ -234,10 +234,21 @@ type FieldGroupProps = {
   title?: string
   name: string
   children: React.ReactNode
+  withStatusError?: boolean
 }
 
-export function FieldGroup({ formik, title, name, children }: FieldGroupProps) {
-  const showError = formik.errors[name] && formik.touched[name]
+export function FieldGroup({
+  formik,
+  title,
+  name,
+  withStatusError = false,
+  children,
+}: FieldGroupProps) {
+  const showError =
+    (formik.errors[name] && formik.touched[name]) ||
+    (withStatusError && formik.status?.error)
+  const errorMessage =
+    formik.errors[name] || (withStatusError && formik.status?.error)
   return (
     <div className="flex flex-col gap-1">
       {(title || showError) && (
@@ -245,7 +256,7 @@ export function FieldGroup({ formik, title, name, children }: FieldGroupProps) {
           {title && <Label htmlFor={name}>{title}</Label>}
           {showError && (
             <Text size="14" color="red">
-              {formik.errors[name]}
+              {errorMessage}
             </Text>
           )}
         </div>
@@ -259,21 +270,27 @@ type FormSubmitProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formik: any
   size?: React.ComponentProps<typeof Button>['size']
+  variant?: React.ComponentProps<typeof Button>['variant']
   children: React.ReactNode
+  withStatusError?: boolean
 }
 
 export function FormSubmitButton({
   formik,
   size = 'medium',
+  variant = 'accent',
+  withStatusError = true,
   children,
 }: FormSubmitProps) {
   return (
     <>
-      {formik.status?.error && <Text color="red">{formik.status.error}</Text>}
+      {withStatusError && formik.status?.error && (
+        <Text color="red">{formik.status.error}</Text>
+      )}
       <Button
         size={size}
         disabled={formik.isSubmitting || !formik.isValid}
-        variant="accent"
+        variant={variant}
         state={formik.isSubmitting ? 'waiting' : undefined}
         type="submit"
       >

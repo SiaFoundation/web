@@ -1,5 +1,5 @@
 import { HookArgsSwr } from './request'
-import { useGet } from './useGet'
+import { useGetSwr } from './useGet'
 
 const api = 'https://siastats.info'
 
@@ -29,7 +29,7 @@ type SiaStatsNetworkStatusGET = {
 export function useSiaStatsNetworkStatus(
   args?: HookArgsSwr<void, SiaStatsNetworkStatusGET>
 ) {
-  return useGet({
+  return useGetSwr({
     api,
     ...args,
     route: '/dbs/network_status.json',

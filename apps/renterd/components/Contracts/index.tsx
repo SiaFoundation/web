@@ -7,7 +7,7 @@ import { ContractsViewDropdownMenu } from './ContractsViewDropdownMenu'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
-import { ContractsFilterMenu } from './ContractFilterMenu'
+import { ContractsFilterMenu } from './ContractsFilterMenu'
 
 export function Contracts() {
   const { openDialog } = useDialog()

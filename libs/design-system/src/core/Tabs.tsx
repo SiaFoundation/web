@@ -43,6 +43,7 @@ export const TabsTrigger = React.forwardRef<
       className={cx(
         'px-10 h-12',
         'flex-1 flex items-center justify-center',
+        'outline-none',
         'select-none cursor-pointer',
         'border-b-3',
         'text-gray-1000 dark:text-graydark-1000',

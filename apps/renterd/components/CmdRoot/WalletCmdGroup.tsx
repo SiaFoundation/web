@@ -31,7 +31,7 @@ export function WalletCmdGroup({ currentPage, parentPage, pushPage }: Props) {
           pushPage(commandPage)
         }}
       >
-        Wallet
+        {commandPage.label}
       </CommandItemNav>
       <CommandItemSearch
         currentPage={currentPage}

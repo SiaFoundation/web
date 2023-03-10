@@ -1,5 +1,5 @@
-import { ContractFilterCmdGroups } from './ContractFilterCmdGroups'
-import { ContractFilterNav } from './ContractFilterNav'
+import { ContractFilterCmdGroups } from './HostsFilterCmdGroups'
+import { HostsFilterNav } from './HostsFilterNav'
 import { Page } from '../../../CmdRoot/types'
 
 export function ContractFilterCmd({
@@ -17,7 +17,7 @@ export function ContractFilterCmd({
 }) {
   return (
     <>
-      <ContractFilterNav
+      <HostsFilterNav
         parentPage={parentPage}
         currentPage={currentPage}
         pushPage={pushPage}

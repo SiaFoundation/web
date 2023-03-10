@@ -50,6 +50,7 @@ export function ValueCopyable({
           size={size}
           scaleSize={scaleSize}
           color={color}
+          ellipsis
         >
           {text}
         </Link>

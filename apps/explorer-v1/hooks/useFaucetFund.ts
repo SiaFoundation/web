@@ -1,4 +1,4 @@
-import { usePost } from '@siafoundation/react-core'
+import { usePostFunc } from '@siafoundation/react-core'
 import { faucetApi } from '../config'
 
 export type FaucetRequestStatus = 'pending' | 'broadcast' | 'confirmed'
@@ -22,7 +22,7 @@ type FaucetFundResponse = {
 }
 
 export function useFaucetFund() {
-  return usePost<undefined, FaucetFundPayload, FaucetFundResponse>(
+  return usePostFunc<undefined, FaucetFundPayload, FaucetFundResponse>(
     {
       api: faucetApi,
       route: '/request',

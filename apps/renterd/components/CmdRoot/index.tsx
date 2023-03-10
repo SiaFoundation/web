@@ -15,9 +15,10 @@ import { ConfigCmdGroup } from './ConfigCmdGroup'
 import { useDialog } from '../../contexts/dialog'
 import { useRouter } from 'next/router'
 import { routes } from '../../config/routes'
-import { ContractCmd } from '../Contracts/ContractCmd'
+import { ContractsCmd } from '../Contracts/ContractsCmd'
 import { Page } from './types'
 import { useContracts } from '../../contexts/contracts'
+import { HostsCmd } from '../Hosts/HostsCmd'
 
 type Props = {
   panel?: boolean
@@ -75,7 +76,7 @@ export function CmdRoot({ panel }: Props) {
         <AppCmdGroup currentPage={page} pushPage={pushPage} />
         <AutopilotCmdGroup currentPage={page} pushPage={pushPage} />
         <WalletCmdGroup currentPage={page} pushPage={pushPage} />
-        <ContractCmd
+        <ContractsCmd
           currentPage={page}
           pushPage={pushPage}
           beforeSelect={() => {
@@ -85,6 +86,19 @@ export function CmdRoot({ panel }: Props) {
           afterSelect={() => {
             if (!router.pathname.startsWith(routes.contracts.index)) {
               router.push(routes.contracts.index)
+            }
+          }}
+        />
+        <HostsCmd
+          currentPage={page}
+          pushPage={pushPage}
+          beforeSelect={() => {
+            beforeSelect()
+            resetFilters()
+          }}
+          afterSelect={() => {
+            if (!router.pathname.startsWith(routes.hosts.index)) {
+              router.push(routes.hosts.index)
             }
           }}
         />

@@ -270,6 +270,7 @@ function useContractsMain() {
     pageCount: datasetPage?.length || 0,
     datasetCount: datasetFiltered?.length || 0,
     columns: filteredTableColumns,
+    dataset,
     datasetPage,
     configurableColumns,
     enabledColumns,

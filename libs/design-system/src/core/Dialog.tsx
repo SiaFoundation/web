@@ -246,7 +246,7 @@ function useHeight(deps: unknown[] = []) {
 
 export const dialogTitleStyles = cva(
   [
-    'pt-4 pb-2 mx-4',
+    'pt-4 pb-2 px-4 w-full',
     textStyles({
       size: '20',
       weight: 'semibold',

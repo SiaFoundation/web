@@ -11,7 +11,7 @@ type Props = {
   onChange: (value: string) => void
 }
 
-export function ComboPool({ values, options, onChange }: Props) {
+export function PoolCombo({ values, options, onChange }: Props) {
   return (
     <div className="flex flex-wrap gap-1">
       {options.map((option) => {
