@@ -1,7 +1,8 @@
 import { CommandItemNav } from '../../../../CmdRoot/Item'
-import { contractFilterAddressPage } from '../HostsFilterCmdGroups/Address'
+import { AddressCmdNav } from '../HostsFilterCmdGroups/Address'
 import { Page } from '../../../../CmdRoot/types'
 import { contractFilterAllowBlockPage } from '../HostsFilterCmdGroups/AllowBlock'
+import { ServerFilterItem } from '@siafoundation/design-system'
 
 export const commandPage = {
   namespace: 'hosts',
@@ -12,21 +13,23 @@ type Props = {
   currentPage: Page
   parentPage?: Page
   pushPage: (page: Page) => void
+  select: (filter?: ServerFilterItem) => void
 }
 
-export function HostsFilterNav({ currentPage, parentPage, pushPage }: Props) {
+export function HostsFilterNav({
+  currentPage,
+  parentPage,
+  pushPage,
+  select,
+}: Props) {
   return (
     <>
-      <CommandItemNav
+      <AddressCmdNav
         currentPage={currentPage}
         parentPage={parentPage}
         commandPage={commandPage}
-        onSelect={() => {
-          pushPage(contractFilterAddressPage)
-        }}
-      >
-        {contractFilterAddressPage.label}
-      </CommandItemNav>
+        select={select}
+      />
       <CommandItemNav
         currentPage={currentPage}
         parentPage={parentPage}

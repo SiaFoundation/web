@@ -1,4 +1,4 @@
-import { useGet } from '@siafoundation/react-core'
+import { useGetSwr } from '@siafoundation/react-core'
 import { HookArgsSwr } from '@siafoundation/react-core'
 import { faucetApi } from '../config'
 import { FaucetRequestStatus, Hastings } from './useFaucetFund'
@@ -17,7 +17,7 @@ type FaucetStatusResponse = {
 export function useFaucetStatus(
   args: HookArgsSwr<{ id: string }, FaucetStatusResponse>
 ) {
-  return useGet({
+  return useGetSwr({
     api: faucetApi,
     ...args,
     route: '/request/:id',

@@ -2,26 +2,31 @@ import {
   Dialog,
   FormField,
   FormSubmitButton,
+  truncate,
 } from '@siafoundation/design-system'
-import { useHosts } from '../../contexts/hosts'
+import { useContracts } from '../../contexts/contracts'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useDialog } from '../../contexts/dialog'
+import { ContractData } from '../../contexts/contracts/types'
 
-export function filterAddressContains(address: string) {
+export function publicKeyContainsFilter(publicKey: string) {
   return {
-    id: 'addressContains',
-    value: address,
-    label: `address contains ${address}`,
+    id: 'publicKeyContains',
+    value: publicKey,
+    label: `public key contains ${truncate(publicKey, 20)}`,
+    fn: (d: ContractData) => {
+      return d.hostKey.includes(publicKey)
+    },
   }
 }
 
 const initialValues = {
-  address: '',
+  publicKey: '',
 }
 
 const validationSchema = Yup.object().shape({
-  address: Yup.string().required('Required'),
+  publicKey: Yup.string().required('Required'),
 })
 
 type Props = {
@@ -30,18 +35,18 @@ type Props = {
   onOpenChange: (val: boolean) => void
 }
 
-export function HostsFilterAddressDialog({
+export function ContractsFilterPublicKeyDialog({
   trigger,
   open,
   onOpenChange,
 }: Props) {
   const { closeDialog } = useDialog()
-  const { setFilter } = useHosts()
+  const { setFilter } = useContracts()
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: (values) => {
-      setFilter(filterAddressContains(values.address))
+      setFilter(publicKeyContainsFilter(values.publicKey))
       formik.resetForm()
       closeDialog()
     },
@@ -50,7 +55,7 @@ export function HostsFilterAddressDialog({
   return (
     <Dialog
       trigger={trigger}
-      title="Filter by address"
+      title="Filter by public key"
       open={open}
       onOpenChange={(open) => {
         if (!open) {
@@ -67,9 +72,9 @@ export function HostsFilterAddressDialog({
         <div className="flex flex-col gap-4">
           <FormField
             formik={formik}
-            title="Address"
-            name="address"
-            placeholder="Partial match against domain or IP"
+            title="Public key"
+            name="publicKey"
+            placeholder="ed25519:02aabd26e627fd..."
             autoComplete="off"
             type="text"
             variants={{

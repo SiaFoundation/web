@@ -5,33 +5,33 @@ import {
 } from '../../../../CmdRoot/Item'
 import { Page } from '../../../../CmdRoot/types'
 import { useDialog } from '../../../../../contexts/dialog'
-import { filterAddressContains } from '../../../HostsFilterAddressDialog'
+import { publicKeyContainsFilter } from '../../../ContractsFilterPublicKeyDialog'
 
-export const hostsFilterAddressPage = {
-  namespace: 'hosts/filterAddress',
-  label: 'Hosts filter by address',
+export const contractsFilterPublicKeyPage = {
+  namespace: 'contracts/filterPublicKey',
+  label: 'Contracts filter by public key',
 }
 
-export function AddressCmdGroup({
+export function PublicKeyCmdGroup({
   select,
   currentPage,
 }: {
   currentPage: Page
   select: () => void
 }) {
+  const filter = publicKeyContainsFilter('')
   const { openDialog } = useDialog()
-  const filter = filterAddressContains('')
   return (
     <CommandGroup
       currentPage={currentPage}
-      commandPage={hostsFilterAddressPage}
+      commandPage={contractsFilterPublicKeyPage}
     >
       <CommandItemSearch
         currentPage={currentPage}
-        commandPage={hostsFilterAddressPage}
+        commandPage={contractsFilterPublicKeyPage}
         onSelect={() => {
           select()
-          openDialog('hostsFilterAddress')
+          openDialog('contractsFilterPublicKey')
         }}
       >
         {filter.label}
@@ -40,7 +40,7 @@ export function AddressCmdGroup({
   )
 }
 
-export function AddressCmdNav({
+export function PublicKeyCmdNav({
   select,
   currentPage,
   parentPage,
@@ -59,10 +59,10 @@ export function AddressCmdNav({
       commandPage={commandPage}
       onSelect={() => {
         select()
-        openDialog('hostsFilterAddress')
+        openDialog('contractsFilterPublicKey')
       }}
     >
-      {hostsFilterAddressPage.label}
+      {contractsFilterPublicKeyPage.label}
     </CommandItemNav>
   )
 }

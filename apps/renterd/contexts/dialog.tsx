@@ -10,6 +10,8 @@ import { CmdKDialog } from '../components/CmdKDialog'
 import { FilesCreateDirectoryDialog } from '../components/Files/FilesCreateDirectoryDialog'
 import { HostsAllowBlockDialog } from '../components/Hosts/HostsAllowBlockDialog'
 import { HostsFilterAddressDialog } from '../components/Hosts/HostsFilterAddressDialog'
+import { ContractsFilterAddressDialog } from '../components/Contracts/ContractsFilterAddressDialog'
+import { ContractsFilterPublicKeyDialog } from '../components/Contracts/ContractsFilterPublicKeyDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -23,6 +25,8 @@ export type DialogType =
   | 'hostBlocklistAdd'
   | 'hostBlocklistRemove'
   | 'hostsFilterAddress'
+  | 'contractsFilterAddress'
+  | 'contractsFilterPublicKey'
   | 'objectDownload'
   | 'objectDelete'
   | 'objectCreateDirectory'
@@ -118,6 +122,14 @@ export function Dialogs() {
       />
       <HostsFilterAddressDialog
         open={dialog === 'hostsFilterAddress'}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <ContractsFilterAddressDialog
+        open={dialog === 'contractsFilterAddress'}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <ContractsFilterPublicKeyDialog
+        open={dialog === 'contractsFilterPublicKey'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
     </>

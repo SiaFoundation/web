@@ -5,11 +5,11 @@ import {
 } from '../../../../CmdRoot/Item'
 import { Page } from '../../../../CmdRoot/types'
 import { useDialog } from '../../../../../contexts/dialog'
-import { filterAddressContains } from '../../../HostsFilterAddressDialog'
+import { addressContainsFilter } from '../../../ContractsFilterAddressDialog'
 
-export const hostsFilterAddressPage = {
-  namespace: 'hosts/filterAddress',
-  label: 'Hosts filter by address',
+export const contractsFilterAddressPage = {
+  namespace: 'contracts/filterAddress',
+  label: 'Contracts filter by address',
 }
 
 export function AddressCmdGroup({
@@ -20,18 +20,18 @@ export function AddressCmdGroup({
   select: () => void
 }) {
   const { openDialog } = useDialog()
-  const filter = filterAddressContains('')
+  const filter = addressContainsFilter('')
   return (
     <CommandGroup
       currentPage={currentPage}
-      commandPage={hostsFilterAddressPage}
+      commandPage={contractsFilterAddressPage}
     >
       <CommandItemSearch
         currentPage={currentPage}
-        commandPage={hostsFilterAddressPage}
+        commandPage={contractsFilterAddressPage}
         onSelect={() => {
           select()
-          openDialog('hostsFilterAddress')
+          openDialog('contractsFilterAddress')
         }}
       >
         {filter.label}
@@ -59,10 +59,10 @@ export function AddressCmdNav({
       commandPage={commandPage}
       onSelect={() => {
         select()
-        openDialog('hostsFilterAddress')
+        openDialog('contractsFilterAddress')
       }}
     >
-      {hostsFilterAddressPage.label}
+      {contractsFilterAddressPage.label}
     </CommandItemNav>
   )
 }

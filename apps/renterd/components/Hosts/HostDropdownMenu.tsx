@@ -9,8 +9,14 @@ import {
   DropdownMenuLabel,
 } from '@siafoundation/design-system'
 import { useHostsAllowlist, useHostsBlocklist } from '@siafoundation/react-core'
+import { routes } from '../../config/routes'
+import { useRouter } from 'next/router'
+import { useContracts } from '../../contexts/contracts'
+import { useHosts } from '../../contexts/hosts'
 import { useAllowlistUpdate } from '../../hooks/useAllowlistUpdate'
 import { useBlocklistUpdate } from '../../hooks/useBlocklistUpdate'
+import { addressContainsFilter } from '../Contracts/ContractsFilterAddressDialog'
+import { publicKeyContainsFilter } from '../Contracts/ContractsFilterPublicKeyDialog'
 
 type Props = {
   address: string
@@ -18,6 +24,11 @@ type Props = {
 }
 
 export function HostDropdownMenu({ address, publicKey }: Props) {
+  const router = useRouter()
+  const { setFilter: setHostsFilter, resetFilters: resetHostsFilters } =
+    useHosts()
+  const { setFilter: setContractsFilter, resetFilters: resetContractsFilters } =
+    useContracts()
   const blocklist = useHostsBlocklist()
   const allowlist = useHostsAllowlist()
   const blocklistUpdate = useBlocklistUpdate()
@@ -32,19 +43,40 @@ export function HostDropdownMenu({ address, publicKey }: Props) {
       contentProps={{ align: 'start' }}
     >
       <DropdownMenuLabel>Filters</DropdownMenuLabel>
-      <DropdownMenuItem>
+      <DropdownMenuItem
+        onSelect={() => {
+          resetHostsFilters()
+          setHostsFilter({
+            id: 'addressContains',
+            value: address,
+            label: `Address contains ${address}`,
+          })
+        }}
+      >
         <DropdownMenuLeftSlot>
           <Filter16 />
         </DropdownMenuLeftSlot>
         Filter hosts by address
       </DropdownMenuItem>
-      <DropdownMenuItem>
+      <DropdownMenuItem
+        onSelect={() => {
+          resetContractsFilters()
+          setContractsFilter(addressContainsFilter(address))
+          router.push(routes.contracts.index)
+        }}
+      >
         <DropdownMenuLeftSlot>
           <Filter16 />
         </DropdownMenuLeftSlot>
         Filter contracts by address
       </DropdownMenuItem>
-      <DropdownMenuItem>
+      <DropdownMenuItem
+        onSelect={() => {
+          resetContractsFilters()
+          setContractsFilter(publicKeyContainsFilter(publicKey))
+          router.push(routes.contracts.index)
+        }}
+      >
         <DropdownMenuLeftSlot>
           <Filter16 />
         </DropdownMenuLeftSlot>

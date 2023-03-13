@@ -6,6 +6,7 @@ import {
   Popover,
   BaseMenuItem,
   MenuItemRightSlot,
+  Label,
 } from '@siafoundation/design-system'
 // import { HostSortBy } from '@siafoundation/react-core'
 import { useHosts } from '../../contexts/hosts'
@@ -37,7 +38,7 @@ export function HostsViewDropdownMenu() {
       }}
     >
       <BaseMenuItem>
-        Display properties
+        <Label>Display properties</Label>
         <MenuItemRightSlot>
           <Button
             onClick={(e) => {
