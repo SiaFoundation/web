@@ -1,43 +1,19 @@
-import { useCallback } from 'react'
 import { AddressCmdGroup } from './Address'
 import { Page } from '../../../../CmdRoot/types'
-import { useHosts } from '../../../../../contexts/hosts'
 import { AllowBlockCmdGroup } from './AllowBlock'
 import { ServerFilterItem } from '@siafoundation/design-system'
 
 type Props = {
   currentPage: Page
   pushPage: (page: Page) => void
-  beforeSelect?: () => void
-  afterSelect?: () => void
+  select: (filter?: ServerFilterItem) => void
 }
 
-export function ContractFilterCmdGroups({
-  currentPage,
-  beforeSelect,
-  afterSelect,
-}: Props) {
-  const { setFilter } = useHosts()
-
-  const selectCommand = useCallback(
-    (filter?: ServerFilterItem) => {
-      if (beforeSelect) {
-        beforeSelect()
-      }
-      if (filter) {
-        setFilter(filter)
-      }
-      if (afterSelect) {
-        afterSelect()
-      }
-    },
-    [setFilter, beforeSelect, afterSelect]
-  )
-
+export function ContractFilterCmdGroups({ currentPage, select }: Props) {
   return (
     <>
-      <AddressCmdGroup currentPage={currentPage} select={selectCommand} />
-      <AllowBlockCmdGroup currentPage={currentPage} select={selectCommand} />
+      <AddressCmdGroup currentPage={currentPage} select={select} />
+      <AllowBlockCmdGroup currentPage={currentPage} select={select} />
     </>
   )
 }

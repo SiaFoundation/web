@@ -77,7 +77,7 @@ export const itemStyles = ({
 export const labelStyles = ({
   className,
   font,
-  color = 'subtle',
+  color = 'verySubtle',
   weight = 'medium',
   size = '14',
   scaleSize,

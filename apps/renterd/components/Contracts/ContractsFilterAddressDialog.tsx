@@ -3,16 +3,20 @@ import {
   FormField,
   FormSubmitButton,
 } from '@siafoundation/design-system'
-import { useHosts } from '../../contexts/hosts'
+import { useContracts } from '../../contexts/contracts'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useDialog } from '../../contexts/dialog'
+import { ContractData } from '../../contexts/contracts/types'
 
-export function filterAddressContains(address: string) {
+export function addressContainsFilter(address: string) {
   return {
     id: 'addressContains',
     value: address,
     label: `address contains ${address}`,
+    fn: (d: ContractData) => {
+      return d.hostIp.includes(address)
+    },
   }
 }
 
@@ -30,18 +34,18 @@ type Props = {
   onOpenChange: (val: boolean) => void
 }
 
-export function HostsFilterAddressDialog({
+export function ContractsFilterAddressDialog({
   trigger,
   open,
   onOpenChange,
 }: Props) {
   const { closeDialog } = useDialog()
-  const { setFilter } = useHosts()
+  const { setFilter } = useContracts()
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: (values) => {
-      setFilter(filterAddressContains(values.address))
+      setFilter(addressContainsFilter(values.address))
       formik.resetForm()
       closeDialog()
     },
