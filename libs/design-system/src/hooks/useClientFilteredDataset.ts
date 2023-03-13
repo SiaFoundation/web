@@ -1,20 +1,19 @@
 import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
-import { FilterItem } from './useClientFilters'
+import { ClientFilterItem } from './useClientFilters'
 
-type Props<Datum> = {
+type Props<
+  Datum extends Record<string, BigNumber | string | boolean | number>
+> = {
   dataset: Datum[] | null
-  filters: FilterItem<Datum>[]
+  filters: ClientFilterItem<Datum>[]
   sortColumn: string
   sortDirection: 'asc' | 'desc'
 }
 
-export function useClientFilterData<Datum>({
-  dataset,
-  filters,
-  sortColumn,
-  sortDirection,
-}: Props<Datum>) {
+export function useClientFilteredDataset<
+  Datum extends Record<string, BigNumber | string | boolean | number>
+>({ dataset, filters, sortColumn, sortDirection }: Props<Datum>) {
   return useMemo<Datum[] | null>(() => {
     if (!dataset) {
       return null

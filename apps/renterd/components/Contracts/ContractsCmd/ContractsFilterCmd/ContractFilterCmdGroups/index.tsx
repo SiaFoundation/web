@@ -1,11 +1,11 @@
 import { useCallback } from 'react'
 import { ExpiryCmdGroup } from './Expiry'
 import { useContracts } from '../../../../../contexts/contracts'
-import { FilterItem } from '../../../../../hooks/useClientFilters'
 import { ContractData } from '../../../../../contexts/contracts/types'
 import { FormationCmdGroup } from './Formation'
 import { RenewCmdGroup } from './Renew'
 import { Page } from '../../../../CmdRoot/types'
+import { ClientFilterItem } from '@siafoundation/design-system'
 
 type Props = {
   currentPage: Page
@@ -22,7 +22,7 @@ export function ContractFilterCmdGroups({
   const { setFilter } = useContracts()
 
   const selectCommand = useCallback(
-    (filter: FilterItem<ContractData>) => {
+    (filter: ClientFilterItem<ContractData>) => {
       if (beforeSelect) {
         beforeSelect()
       }

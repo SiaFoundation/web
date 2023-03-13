@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
 import { AddressCmdGroup } from './Address'
-import { FilterItem } from '../../../../../hooks/useServerFilters'
 import { Page } from '../../../../CmdRoot/types'
 import { useHosts } from '../../../../../contexts/hosts'
 import { AllowBlockCmdGroup } from './AllowBlock'
+import { ServerFilterItem } from '@siafoundation/design-system'
 
 type Props = {
   currentPage: Page
@@ -20,7 +20,7 @@ export function ContractFilterCmdGroups({
   const { setFilter } = useHosts()
 
   const selectCommand = useCallback(
-    (filter?: FilterItem) => {
+    (filter?: ServerFilterItem) => {
       if (beforeSelect) {
         beforeSelect()
       }

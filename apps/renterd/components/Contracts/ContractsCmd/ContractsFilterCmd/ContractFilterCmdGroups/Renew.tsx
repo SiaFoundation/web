@@ -3,8 +3,8 @@ import {
   getWeeksInMs,
   getMonthsInMs,
   getYearsInMs,
+  ClientFilterItem,
 } from '@siafoundation/design-system'
-import { FilterItem } from '../../../../../hooks/useClientFilters'
 import { ContractData } from '../../../../../contexts/contracts/types'
 import { CommandGroup, CommandItemSearch } from '../../../../CmdRoot/Item'
 import { Page } from '../../../../CmdRoot/types'
@@ -82,7 +82,7 @@ export function RenewCmdGroup({
   select,
 }: {
   currentPage: Page
-  select: (filter: FilterItem<ContractData>) => void
+  select: (filter: ClientFilterItem<ContractData>) => void
 }) {
   return (
     <CommandGroup

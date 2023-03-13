@@ -141,6 +141,11 @@ export * from './hooks/useMonitorConnAndLock'
 export * from './hooks/userPrefersReducedMotion'
 export * from './hooks/useIsExternalDomain'
 export * from './hooks/useTableState'
+export * from './hooks/useClientFilters'
+export * from './hooks/useClientFilteredDataset'
+export * from './hooks/useServerFilters'
+export * from './hooks/useFormChanged'
+export * from './hooks/useDatasetEmptyState'
 
 // data
 export * from './data/webLinks'

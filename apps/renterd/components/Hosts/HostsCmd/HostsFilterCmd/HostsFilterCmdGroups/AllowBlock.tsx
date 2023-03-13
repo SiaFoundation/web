@@ -1,4 +1,4 @@
-import { FilterItem } from '../../../../../hooks/useServerFilters'
+import { ServerFilterItem } from '@siafoundation/design-system'
 import { CommandGroup, CommandItemSearch } from '../../../../CmdRoot/Item'
 import { Page } from '../../../../CmdRoot/types'
 
@@ -25,7 +25,7 @@ export function AllowBlockCmdGroup({
   currentPage,
 }: {
   currentPage: Page
-  select: (filter: FilterItem) => void
+  select: (filter: ServerFilterItem) => void
 }) {
   return (
     <CommandGroup

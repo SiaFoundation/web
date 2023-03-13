@@ -1,20 +1,19 @@
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 
-export type FilterItem = {
+export type ClientFilterItem<Datum> = {
   id: string
+  value: string
   label: string
-  value?: string
-  values?: string[]
-  bool?: boolean
+  fn: (datum: Datum) => boolean
 }
 
-export function useServerFilters() {
+export function useClientFilters<Datum>() {
   const router = useRouter()
-  const [filters, _setFilters] = useState<FilterItem[]>([])
+  const [filters, _setFilters] = useState<ClientFilterItem<Datum>[]>([])
 
   const setFilter = useCallback(
-    (item: FilterItem) => {
+    (item: ClientFilterItem<Datum>) => {
       _setFilters((filters) => {
         const nextFilters = filters.filter((f) => f.id !== item.id)
         return nextFilters.concat(item)

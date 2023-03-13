@@ -11,6 +11,9 @@ import {
   stripPrefix,
   useTableState,
   getContractsTimeRangeBlockHeight,
+  useDatasetEmptyState,
+  useClientFilters,
+  useClientFilteredDataset,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import { humanDate } from '@siafoundation/sia-js'
@@ -27,9 +30,6 @@ import {
   columnsDefaultVisible,
   columnsDefaultSort,
 } from './types'
-import { useClientFilters } from '../../hooks/useClientFilters'
-import { useDataState } from '../../hooks/useDataState'
-import { useClientFilterData } from '../../hooks/useClientFilterData'
 
 const defaultLimit = 20
 
@@ -98,7 +98,7 @@ function useContractsMain() {
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useClientFilters<ContractData>()
 
-  const datasetFiltered = useClientFilterData({
+  const datasetFiltered = useClientFilteredDataset({
     dataset,
     filters,
     sortColumn,
@@ -257,7 +257,7 @@ function useContractsMain() {
     [tableColumns, enabledColumns]
   )
 
-  const dataState = useDataState(
+  const dataState = useDatasetEmptyState(
     datasetFiltered,
     response.isValidating,
     filters
