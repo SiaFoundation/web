@@ -8,6 +8,9 @@ import {
   useTableState,
   triggerErrorToast,
   triggerToast,
+  useDatasetEmptyState,
+  useClientFilters,
+  useClientFilteredDataset,
 } from '@siafoundation/design-system'
 import { humanBytes, humanNumber } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
@@ -25,7 +28,6 @@ import {
 } from 'react'
 import { sortBy, throttle, toPairs } from 'lodash'
 import { FileActionsDropdownMenu } from '../../components/Files/FileActionsDropdownMenu'
-import { useDataState } from '../../hooks/useDataState'
 import {
   columnsDefaultSort,
   columnsDefaultVisible,
@@ -33,10 +35,8 @@ import {
   ObjectData,
   TableColumnId,
 } from './types'
-import { useClientFilters } from '../../hooks/useClientFilters'
 import { useRouter } from 'next/router'
 import { UploadsBar } from '../../components/UploadsBar'
-import { useClientFilterData } from '../../hooks/useClientFilterData'
 
 type UploadsMap = Record<string, ObjectData>
 
@@ -211,7 +211,7 @@ function useFilesMain() {
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useClientFilters<ObjectData>()
 
-  const datasetFiltered = useClientFilterData({
+  const datasetFiltered = useClientFilteredDataset({
     dataset,
     filters,
     sortColumn,
@@ -402,7 +402,7 @@ function useFilesMain() {
     [tableColumns, enabledColumns]
   )
 
-  const dataState = useDataState(
+  const dataState = useDatasetEmptyState(
     datasetFiltered,
     response.isValidating,
     filters

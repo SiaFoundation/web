@@ -9,6 +9,7 @@ import {
   blocksToWeeks,
   ConfigurationText,
   Code,
+  useFormChanged,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { useEffect, useState } from 'react'
@@ -21,7 +22,6 @@ import {
   useAutopilotConfigUpdate,
 } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
-import { useFormChanged } from '../../hooks/useFormChanged'
 import { Setting } from '../Setting'
 import { MenuSection } from '../MenuSection'
 

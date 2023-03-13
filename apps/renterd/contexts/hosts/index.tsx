@@ -7,6 +7,8 @@ import {
   Misuse16,
   useTableState,
   Tooltip,
+  useDatasetEmptyState,
+  useServerFilters,
 } from '@siafoundation/design-system'
 import { humanNumber } from '@siafoundation/sia-js'
 import {
@@ -26,8 +28,6 @@ import {
 } from './types'
 import { formatDistance, formatRelative } from 'date-fns'
 import { useRouter } from 'next/router'
-import { useDataState } from '../../hooks/useDataState'
-import { useServerFilters } from '../../hooks/useServerFilters'
 import { HostDropdownMenu } from '../../components/Hosts/HostDropdownMenu'
 
 function useHostsMain() {
@@ -327,7 +327,11 @@ function useHostsMain() {
     [tableColumns, enabledColumns]
   )
 
-  const dataState = useDataState(dataset, response.isValidating, filters)
+  const dataState = useDatasetEmptyState(
+    dataset,
+    response.isValidating,
+    filters
+  )
 
   return {
     dataState,

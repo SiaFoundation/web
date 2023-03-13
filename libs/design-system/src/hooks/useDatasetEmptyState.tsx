@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 
-type EmptyState = 'loading' | 'noneYet' | 'noneMatchingFilters'
+type EmptyState = 'loading' | 'noneYet' | 'noneMatchingFilters' | undefined
 
-export function useDataState(
+export function useDatasetEmptyState(
   dataset: unknown[] | undefined,
   isFetching: boolean,
   filters: unknown[]

@@ -6,6 +6,7 @@ import {
   Separator,
   ConfigurationNumber,
   triggerErrorToast,
+  useFormChanged,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { useEffect } from 'react'
@@ -15,7 +16,6 @@ import { useDialog } from '../../contexts/dialog'
 import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
 import { useSetting, useSettingsUpdate } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
-import { useFormChanged } from '../../hooks/useFormChanged'
 import { Setting } from '../../components/Setting'
 import { MenuSection } from '../../components/MenuSection'
 
