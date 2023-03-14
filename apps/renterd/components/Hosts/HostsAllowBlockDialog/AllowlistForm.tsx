@@ -103,9 +103,9 @@ export function AllowlistForm() {
           allowlist - all other existing contracts will immediately abort.
         </Paragraph>
       </Panel>
-      <div className="flex-1">
+      <div className="flex-1 overflow-hidden !-m-2">
         {filtered.length ? (
-          <ScrollArea className="!-m-2">
+          <ScrollArea>
             <div className="p-2">
               <PoolSelected
                 options={

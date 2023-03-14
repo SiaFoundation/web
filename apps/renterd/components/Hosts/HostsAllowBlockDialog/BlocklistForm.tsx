@@ -119,8 +119,8 @@ export function BlocklistForm() {
           </FormSubmitButton>
         </div>
       </FieldGroup>
-      <div className="flex-1">
-        <ScrollArea className="!-m-2">
+      <div className="flex-1 overflow-hidden !-m-2">
+        <ScrollArea>
           <div className="p-2">
             {!!suggestionsNotOnList.length && (
               <>
