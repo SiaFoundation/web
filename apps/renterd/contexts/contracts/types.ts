@@ -20,6 +20,7 @@ export type ContractData = {
 }
 
 export type TableColumnId =
+  | 'actions'
   | 'contractId'
   | 'hostIp'
   | 'hostKey'
@@ -40,8 +41,13 @@ export type TableColumnId =
 
 export const columnsMeta: Record<
   TableColumnId,
-  { id: TableColumnId; label: string; sortable?: string }
+  { id: TableColumnId; label: string; sortable?: string; fixed?: boolean }
 > = {
+  actions: {
+    id: 'actions',
+    label: '',
+    fixed: true,
+  },
   contractId: {
     id: 'contractId',
     label: 'Contract ID',

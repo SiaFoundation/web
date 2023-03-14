@@ -15,7 +15,7 @@ export function PaginatorUnknownTotal({ offset, limit, pageTotal }: Props) {
   return (
     <ControlGroup>
       <Button
-        icon
+        icon="contrast"
         disabled={offset <= 0}
         size="small"
         variant="gray"
@@ -34,7 +34,7 @@ export function PaginatorUnknownTotal({ offset, limit, pageTotal }: Props) {
         </div>
       </Button>
       <Button
-        icon
+        icon="contrast"
         disabled={offset <= 0}
         size="small"
         variant="gray"
@@ -54,7 +54,7 @@ export function PaginatorUnknownTotal({ offset, limit, pageTotal }: Props) {
         {offset + 1} - {offset + limit}
       </Button>
       <Button
-        icon
+        icon="contrast"
         disabled={!isMore}
         size="small"
         variant="gray"

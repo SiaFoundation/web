@@ -27,7 +27,7 @@ export function PaginatorKnownTotal({
   return (
     <ControlGroup>
       <Button
-        icon
+        icon="contrast"
         disabled={offset <= 0}
         size="small"
         variant="gray"
@@ -46,7 +46,7 @@ export function PaginatorKnownTotal({
         </div>
       </Button>
       <Button
-        icon
+        icon="contrast"
         disabled={offset <= 0}
         size="small"
         variant="gray"
@@ -74,7 +74,7 @@ export function PaginatorKnownTotal({
         )}
       </Button>
       <Button
-        icon
+        icon="contrast"
         disabled={offset + limit >= datasetTotal}
         size="small"
         variant="gray"
@@ -91,7 +91,7 @@ export function PaginatorKnownTotal({
         <CaretRight16 />
       </Button>
       <Button
-        icon
+        icon="contrast"
         disabled={offset + limit >= datasetTotal}
         size="small"
         variant="gray"
