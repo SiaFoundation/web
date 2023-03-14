@@ -3,11 +3,12 @@ import {
   DropdownMenuItem,
   Button,
   copyToClipboard,
-  OverflowMenuHorizontal16,
   Download16,
   DropdownMenuLeftSlot,
   Copy16,
   Delete16,
+  Document16,
+  DropdownMenuLabel,
 } from '@siafoundation/design-system'
 import {
   useObject,
@@ -18,10 +19,9 @@ import {
 type Props = {
   name: string
   path: string
-  className?: string
 }
 
-export function FileActionsDropdownMenu({ name, path, className }: Props) {
+export function FileDropdownMenu({ name, path }: Props) {
   const obj = useObject({
     params: {
       key: encodeURIComponent(path.slice(1)),
@@ -39,14 +39,15 @@ export function FileActionsDropdownMenu({ name, path, className }: Props) {
   return (
     <DropdownMenu
       trigger={
-        <Button variant="ghost" className={className}>
-          <OverflowMenuHorizontal16 />
+        <Button variant="ghost" icon="hover">
+          <Document16 />
         </Button>
       }
-      contentProps={{ align: 'end' }}
+      contentProps={{ align: 'start' }}
     >
+      <DropdownMenuLabel>File actions</DropdownMenuLabel>
       <DropdownMenuItem
-        onClick={async () => {
+        onSelect={async () => {
           download.get(name, {
             params: { key: encodeURIComponent(path.slice(1)) },
           })
@@ -58,7 +59,7 @@ export function FileActionsDropdownMenu({ name, path, className }: Props) {
         Download file
       </DropdownMenuItem>
       <DropdownMenuItem
-        onClick={() =>
+        onSelect={() =>
           deleteObject.delete({
             params: { key: encodeURIComponent(path.slice(1)) },
           })
@@ -70,7 +71,7 @@ export function FileActionsDropdownMenu({ name, path, className }: Props) {
         Delete file
       </DropdownMenuItem>
       <DropdownMenuItem
-        onClick={() =>
+        onSelect={() =>
           copyToClipboard(JSON.stringify(obj.data, null, 2), 'object metadata')
         }
       >

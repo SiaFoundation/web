@@ -11,6 +11,7 @@ import {
   useDatasetEmptyState,
   useClientFilters,
   useClientFilteredDataset,
+  Button,
 } from '@siafoundation/design-system'
 import { humanBytes, humanNumber } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
@@ -27,7 +28,7 @@ import {
   useState,
 } from 'react'
 import { sortBy, throttle, toPairs } from 'lodash'
-import { FileActionsDropdownMenu } from '../../components/Files/FileActionsDropdownMenu'
+import { FileDropdownMenu } from '../../components/Files/FileDropdownMenu'
 import {
   columnsDefaultSort,
   columnsDefaultVisible,
@@ -246,13 +247,24 @@ function useFilesMain() {
         id: 'type',
         label: columnsMeta.type.label,
         sortable: columnsMeta.type.sortable,
-        size: '0 0 35px',
-        className: '!pl-4 !pr-0',
-        render: ({ isDirectory }) => {
-          return (
-            <Text color="subtle">
-              {isDirectory ? <FolderIcon size={16} /> : <Document16 />}
-            </Text>
+        size: '0 0 50px',
+        className: '!pl-2 !pr-0',
+        render: ({ isUploading, isDirectory, name, path }) => {
+          if (isUploading) {
+            return (
+              <Button variant="ghost" state="waiting">
+                <Document16 />
+              </Button>
+            )
+          }
+          return isDirectory ? (
+            // TODO: renable once actual child file deletion is implemented
+            // <DirectoryDropdownMenu name={name} path={path} />
+            <Button variant="ghost" state="waiting">
+              <FolderIcon size={16} />
+            </Button>
+          ) : (
+            <FileDropdownMenu name={name} path={path} />
           )
         },
       },
@@ -261,7 +273,7 @@ function useFilesMain() {
         label: columnsMeta.name.label,
         sortable: columnsMeta.name.sortable,
         size: 5,
-        className: '!pl-4',
+        className: '!pl-0',
         render: ({ name, isDirectory }) => {
           if (isDirectory) {
             if (name === '..') {
@@ -271,7 +283,8 @@ function useFilesMain() {
                   color="accent"
                   weight="semibold"
                   className="cursor-pointer"
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation()
                     setActiveDirectory((p) => p.slice(0, -1))
                   }}
                 >
@@ -285,7 +298,8 @@ function useFilesMain() {
                 color="accent"
                 weight="semibold"
                 className="cursor-pointer"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation()
                   setActiveDirectory((p) => p.concat(name.slice(0, -1)))
                 }}
               >
@@ -370,23 +384,6 @@ function useFilesMain() {
             )
           }
           return null
-        },
-      },
-      {
-        id: 'actions',
-        label: columnsMeta.actions.label,
-        sortable: columnsMeta.actions.sortable,
-        size: 0.5,
-        className: 'justify-end',
-        render: ({ name, path, isUploading, isDirectory }) => {
-          if (isUploading || isDirectory) {
-            return null
-          }
-          return (
-            <div className="relative">
-              <FileActionsDropdownMenu name={name} path={path} />
-            </div>
-          )
         },
       },
     ]

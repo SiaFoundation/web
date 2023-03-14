@@ -36,13 +36,13 @@ export function HostDropdownMenu({ address, publicKey }: Props) {
   return (
     <DropdownMenu
       trigger={
-        <Button variant="ghost">
+        <Button variant="ghost" icon="hover">
           <Draggable16 />
         </Button>
       }
       contentProps={{ align: 'start' }}
     >
-      <DropdownMenuLabel>Filters</DropdownMenuLabel>
+      <DropdownMenuLabel>Host filters</DropdownMenuLabel>
       <DropdownMenuItem
         onSelect={() => {
           resetHostsFilters()
@@ -51,6 +51,7 @@ export function HostDropdownMenu({ address, publicKey }: Props) {
             value: address,
             label: `Address contains ${address}`,
           })
+          router.push(routes.hosts.index)
         }}
       >
         <DropdownMenuLeftSlot>
@@ -82,7 +83,7 @@ export function HostDropdownMenu({ address, publicKey }: Props) {
         </DropdownMenuLeftSlot>
         Filter contracts by public key
       </DropdownMenuItem>
-      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+      <DropdownMenuLabel>Host actions</DropdownMenuLabel>
       {blocklist.data?.find((l) => l === address) ? (
         <DropdownMenuItem onSelect={() => blocklistUpdate([], [address])}>
           <DropdownMenuLeftSlot>

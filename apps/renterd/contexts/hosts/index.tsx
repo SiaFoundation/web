@@ -124,7 +124,7 @@ function useHostsMain() {
         id: 'status',
         label: columnsMeta.status.label,
         size: '80px 0 0',
-        className: '!pl-2 justify-center',
+        className: '!pl-0 justify-center',
         render: (host) => (
           <Tooltip
             side="right"

@@ -127,15 +127,17 @@ export const buttonStyles = cva(
         ],
       },
       icon: {
-        true: '',
-        false: '[&>svg]:opacity-50',
+        contrast: '',
+        hover:
+          '[&>svg]:opacity-50 hover:[&>svg]:opacity-100 transition-opacity',
+        subtle: '[&>svg]:opacity-50',
       },
     },
     defaultVariants: {
       variant: 'gray',
       size: 'small',
       rounded: true,
-      icon: false,
+      icon: 'subtle',
     },
   }
 )

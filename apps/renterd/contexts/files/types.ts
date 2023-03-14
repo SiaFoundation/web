@@ -8,12 +8,23 @@ export type ObjectData = {
   total?: number
 }
 
-export type TableColumnId = 'type' | 'name' | 'size' | 'slabs' | 'actions'
+export type TableColumnId =
+  | 'actions'
+  | 'type'
+  | 'name'
+  | 'size'
+  | 'slabs'
+  | 'actions'
 
 export const columnsMeta: Record<
   TableColumnId,
   { id: TableColumnId; label: string; sortable?: string; fixed?: boolean }
 > = {
+  actions: {
+    id: 'actions',
+    label: '',
+    fixed: true,
+  },
   type: {
     id: 'type',
     label: '',
@@ -33,11 +44,6 @@ export const columnsMeta: Record<
     id: 'slabs',
     label: 'Slabs',
     // sortable: 'Order by',
-  },
-  actions: {
-    id: 'actions',
-    label: '',
-    fixed: true,
   },
 }
 

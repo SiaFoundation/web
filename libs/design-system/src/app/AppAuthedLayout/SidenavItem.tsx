@@ -44,7 +44,7 @@ export function SidenavItem({ title, children, route, onClick }: Props) {
         content={title}
       >
         <Button
-          icon
+          icon="contrast"
           size="none"
           variant="state"
           data-state={state ? 'open' : 'closed'}

@@ -30,6 +30,7 @@ import {
   columnsDefaultVisible,
   columnsDefaultSort,
 } from './types'
+import { ContractDropdownMenu } from '../../components/Contracts/ContractDropdownMenu'
 
 const defaultLimit = 20
 
@@ -120,10 +121,20 @@ function useContractsMain() {
   const tableColumns = useMemo(() => {
     const columns: TableColumn<TableColumnId, ContractData>[] = [
       {
+        id: 'actions',
+        label: columnsMeta.actions.label,
+        size: '50px 0 0',
+        className: '!pl-2 !pr-0',
+        render: ({ hostIp, hostKey }) => (
+          <ContractDropdownMenu address={hostIp} publicKey={hostKey} />
+        ),
+      },
+      {
         id: 'contractId',
         label: columnsMeta.contractId.label,
         sortable: columnsMeta.contractId.sortable,
         size: 2,
+        className: '!pl-0',
         render: ({ id, isRenewed, renewedFrom }) => {
           // const { label, color } = getStatus(row)
           return (
@@ -253,7 +264,11 @@ function useContractsMain() {
   }, [currentHeight, contractsTimeRange])
 
   const filteredTableColumns = useMemo(
-    () => tableColumns.filter((column) => enabledColumns.includes(column.id)),
+    () =>
+      tableColumns.filter(
+        (column) =>
+          columnsMeta[column.id].fixed || enabledColumns.includes(column.id)
+      ),
     [tableColumns, enabledColumns]
   )
 
