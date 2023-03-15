@@ -10,10 +10,12 @@ import { Logo } from '../../core/Logo'
 import { navbarAppHeight } from '../AppNavbar'
 import { SidenavItemWallet } from './SidenavItemWallet'
 import { SidenavItem } from './SidenavItem'
+import { getRouteToSaveAsPrev } from '../../hooks/useMonitorConnAndLock'
 
 type Props = {
   routes: {
     lockscreen: string
+    syncscreen: string
     home: string
     node: {
       index: string
@@ -57,7 +59,7 @@ export function Sidenav({ routes, openSettings, children }: Props) {
             title="Lock app"
             onClick={() => {
               setSettings({ password: '' })
-              router.replace(routes.lockscreen)
+              router.replace(getRouteToSaveAsPrev(router, routes))
             }}
           >
             <LockIcon />

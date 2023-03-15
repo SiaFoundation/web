@@ -2,6 +2,7 @@ import React from 'react'
 import { useMonitorConnAndLock } from '../../hooks/useMonitorConnAndLock'
 
 type Routes = {
+  home: string
   lockscreen: string
   syncscreen: string
 }

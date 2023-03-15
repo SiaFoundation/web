@@ -94,8 +94,12 @@ export function SyncScreen() {
               {settings.siaStats ? (
                 <ProgressBar
                   variant="accent"
-                  value={state.data?.BlockHeight}
-                  max={status.data?.block_height}
+                  value={
+                    currentBlockHeight && networkBlockHeight
+                      ? currentBlockHeight
+                      : 0
+                  }
+                  max={networkBlockHeight || 1}
                   className=""
                 />
               ) : (
@@ -111,14 +115,16 @@ export function SyncScreen() {
                   Syncing...
                 </Text>
                 {isUnlocked && settings.siaStats ? (
+                  currentBlockHeight && networkBlockHeight ? (
+                    <Text color="verySubtle" size="10">
+                      {`${currentBlockHeight.toLocaleString()} / ${networkBlockHeight.toLocaleString()} (${percent}%)`}
+                    </Text>
+                  ) : null
+                ) : currentBlockHeight ? (
                   <Text color="verySubtle" size="10">
-                    {`${state.data?.BlockHeight.toLocaleString()} / ${status.data?.block_height.toLocaleString()} (${percent}%)`}
+                    {currentBlockHeight.toLocaleString()}
                   </Text>
-                ) : (
-                  <Text color="verySubtle" size="10">
-                    {state.data?.BlockHeight.toLocaleString()}
-                  </Text>
-                )}
+                ) : null}
               </div>
             </>
             {(!settings.siaStats || moreThan1BlockToSync) && (

@@ -5,6 +5,7 @@ import { AppBackdrop } from '../AppBackdrop'
 import { AppRootLayout } from '../AppRootLayout'
 
 type Routes = {
+  home: string
   lockscreen: string
   syncscreen: string
 }

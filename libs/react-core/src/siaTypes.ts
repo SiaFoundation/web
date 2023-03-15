@@ -317,7 +317,12 @@ export interface Contract {
   id: string
   hostIP: string
   hostKey: string
+  proofHeight: number
+  revisionHeight: number
+  revisionNumber: number
   startHeight: number
+  windowStart: number
+  windowEnd: number
   renewedFrom: string
   spending: ContractSpending
   totalCost: Currency
