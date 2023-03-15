@@ -4,10 +4,8 @@ import {
   TableColumn,
   ContractTimeline,
   blockHeightToTime,
-  weeksToBlocks,
   ValueCopyable,
   ArrowUpLeft16,
-  daysToBlocks,
   stripPrefix,
   useTableState,
   getContractsTimeRangeBlockHeight,
@@ -52,8 +50,7 @@ function useContractsMain() {
           c.renewedFrom !==
           'fcid:0000000000000000000000000000000000000000000000000000000000000000'
         const startTime = blockHeightToTime(currentHeight, c.startHeight)
-        // TODO: get actual end / payout data
-        const endHeight = c.startHeight + weeksToBlocks(8)
+        const endHeight = c.windowStart
         const endTime = blockHeightToTime(currentHeight, endHeight)
         return {
           id: c.id,
@@ -63,10 +60,12 @@ function useContractsMain() {
           timeline: startTime,
           startTime,
           endTime,
-          startHeightContract: c.startHeight,
-          endHeightContract: endHeight,
-          startHeightProofWindow: endHeight,
-          endHeightProofWindow: endHeight + daysToBlocks(1),
+          contractHeightStart: c.startHeight,
+          contractHeightEnd: endHeight,
+          proofWindowHeightStart: c.windowStart,
+          proofWindowHeightEnd: c.windowEnd,
+          proofHeight: c.proofHeight,
+          revisionHeight: c.revisionHeight,
           isRenewed,
           renewedFrom: c.renewedFrom,
           totalCost: new BigNumber(c.totalCost),
@@ -181,19 +180,22 @@ function useContractsMain() {
         sortable: columnsMeta.timeline.sortable,
         size: 4,
         render: ({
-          startHeightContract,
-          endHeightContract,
-          startHeightProofWindow,
-          endHeightProofWindow,
+          contractHeightStart,
+          contractHeightEnd,
+          proofWindowHeightStart,
+          proofWindowHeightEnd,
+          revisionHeight,
+          proofHeight,
         }) => {
           return (
             <ContractTimeline
               currentHeight={currentHeight}
-              startHeightContract={startHeightContract}
-              endHeightContract={endHeightContract}
-              startHeightProofWindow={startHeightProofWindow}
-              endHeightProofWindow={endHeightProofWindow}
-              color="green"
+              contractHeightStart={contractHeightStart}
+              contractHeightEnd={contractHeightEnd}
+              proofWindowHeightStart={proofWindowHeightStart}
+              proofWindowHeightEnd={proofWindowHeightEnd}
+              proofHeight={proofHeight}
+              revisionHeight={revisionHeight}
               range={contractsTimeRange}
             />
           )

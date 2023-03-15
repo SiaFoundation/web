@@ -16,8 +16,7 @@ export function RelativeLabel({
     <div
       className="relative"
       style={{
-        top: variant === 'primary' ? '-18px' : undefined,
-        bottom: variant === 'secondary' ? '-5px' : undefined,
+        top: variant === 'primary' ? '6px' : undefined,
         left: align === 'start' ? '0px' : undefined,
         right: align === 'end' ? '0px' : undefined,
       }}
@@ -44,9 +43,7 @@ type DateLabelProps = {
 export function DateLabel({ date, align, variant }: DateLabelProps) {
   return date ? (
     <RelativeLabel variant={variant} align={align}>
-      {variant === 'primary'
-        ? format(date, 'MMM d')
-        : format(date, 'MMM d, yy')}
+      {variant === 'primary' ? format(date, 'MMM d') : format(date, 'MMM d')}
     </RelativeLabel>
   ) : null
 }

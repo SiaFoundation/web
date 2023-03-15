@@ -1,4 +1,4 @@
-import { useAppSettings } from '@siafoundation/react-core'
+import { ConsensusState, useAppSettings } from '@siafoundation/react-core'
 import { useRouter } from 'next/router'
 import { useFormik } from 'formik'
 import { FieldGroup, FormSubmitButton, FormTextField } from '../components/Form'
@@ -8,41 +8,48 @@ import { RecentlyViewed16 } from '../icons/carbon'
 import { ControlGroup } from '../core/ControlGroup'
 import { DropdownMenu, DropdownMenuItem } from '../core/DropdownMenu'
 import { sortBy } from 'lodash'
-import { useConnectivity } from '../hooks/useConnectivity'
+import { getRedirectRouteFromQuery } from '../hooks/useMonitorConnAndLock'
 
-async function checkPassword(api: string, password: string) {
+async function checkPassword(
+  api: string,
+  password: string
+): Promise<{ isSynced?: boolean; error?: string }> {
   try {
-    await axios.get(`${api}/api/bus/wallet/balance`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Basic ' + btoa(`:${password}`),
-      },
-    })
+    const response = await axios.get<ConsensusState>(
+      `${api}/api/bus/consensus/state`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Basic ' + btoa(`:${password}`),
+        },
+      }
+    )
+    return {
+      isSynced: response.data.Synced,
+    }
   } catch (e: unknown) {
     const resp = (e as AxiosError).response
     if (resp?.status === 504) {
-      return 'Error, check that daemon is running'
+      return {
+        error: 'Error, check that daemon is running',
+      }
     }
     if (resp?.status === 401) {
-      return 'Error, wrong password'
+      return {
+        error: 'Error, wrong password',
+      }
     }
-    return 'Error, something went wrong'
+    return {
+      error: 'Error, something went wrong',
+    }
   }
-  return null
-}
-
-function wait(ms: number) {
-  return new Promise<void>((res) => {
-    setTimeout(() => {
-      res()
-    }, ms)
-  })
 }
 
 type Props = {
   routes: {
     home: string
+    lockscreen: string
     syncscreen: string
   }
 }
@@ -50,7 +57,6 @@ type Props = {
 export function AppUnlockForm({ routes }: Props) {
   const router = useRouter()
   const { settings, setSettings } = useAppSettings()
-  const { isSynced } = useConnectivity()
 
   const formik = useFormik({
     initialValues: {
@@ -58,8 +64,11 @@ export function AppUnlockForm({ routes }: Props) {
       password: '',
     },
     onSubmit: async (values, actions) => {
-      const err = await checkPassword(values.api, values.password)
-      if (!err) {
+      const { isSynced, error } = await checkPassword(
+        values.api,
+        values.password
+      )
+      if (!error) {
         setSettings({
           api: values.api,
           password: values.password,
@@ -68,17 +77,15 @@ export function AppUnlockForm({ routes }: Props) {
             [values.api]: { lastUsed: new Date().getTime() },
           },
         })
-        // allow password to propagate to swr hooks
-        await wait(500)
         actions.resetForm()
         if (isSynced) {
-          router.push(routes.home)
+          router.push(getRedirectRouteFromQuery(router, routes))
         } else {
           router.push(routes.syncscreen)
         }
       } else {
         actions.setErrors({
-          password: err,
+          password: error,
         })
       }
     },

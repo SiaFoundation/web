@@ -9,10 +9,12 @@ export type ContractData = {
   timeline: number
   startTime: number
   endTime: number
-  startHeightContract: number
-  endHeightContract: number
-  startHeightProofWindow: number
-  endHeightProofWindow: number
+  contractHeightStart: number
+  contractHeightEnd: number
+  proofWindowHeightStart: number
+  proofWindowHeightEnd: number
+  proofHeight: number
+  revisionHeight: number
   totalCost: BigNumber
   spendingUploads: BigNumber
   spendingDownloads: BigNumber

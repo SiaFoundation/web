@@ -4,7 +4,7 @@ export function useConnectivity() {
   const w = useConsensusState({
     config: {
       swr: {
-        refreshInterval: (data) => (data?.Synced ? 30_000 : 3_000),
+        refreshInterval: (data) => (data?.Synced ? 30_000 : 1_000),
       },
     },
   })

@@ -9,7 +9,7 @@ import {
 
 export function getContractsTimeRangeBlockHeight(
   currentHeight: number,
-  contracts: { startHeightContract: number; endHeightContract: number }[]
+  contracts: { contractHeightStart: number; contractHeightEnd: number }[]
 ) {
   const range = contracts.reduce(
     (acc, item) => {
@@ -17,11 +17,11 @@ export function getContractsTimeRangeBlockHeight(
       let accEndHeight = acc.endHeight
       // let end = acc.end
 
-      if (item.startHeightContract < accStartHeight) {
-        accStartHeight = item.startHeightContract
+      if (item.contractHeightStart < accStartHeight) {
+        accStartHeight = item.contractHeightStart
       }
-      if (item.endHeightContract > accEndHeight) {
-        accEndHeight = item.endHeightContract
+      if (item.contractHeightEnd > accEndHeight) {
+        accEndHeight = item.contractHeightEnd
       }
       return {
         startHeight: accStartHeight,
