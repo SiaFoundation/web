@@ -55,6 +55,7 @@ export function ContractTimeline({
           />
           <Point
             label="contract formation"
+            bottomLabel={unconfirmed ? 'unconfirmed' : ''}
             currentHeight={currentHeight}
             eventHeight={contractHeightStart}
             range={range}

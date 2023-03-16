@@ -179,6 +179,7 @@ function useContractsMain() {
         label: columnsMeta.timeline.label,
         sortable: columnsMeta.timeline.sortable,
         size: 4,
+        className: '!overflow-visible',
         render: ({
           contractHeightStart,
           contractHeightEnd,
