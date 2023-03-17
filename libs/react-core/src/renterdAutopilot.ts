@@ -1,7 +1,13 @@
 import { useGetSwr } from './useGet'
 import { Action, Config } from './siaTypes'
 import { usePutFunc } from './usePut'
-import { HookArgsSwr, HookArgsCallback } from './request'
+import {
+  HookArgsSwr,
+  HookArgsCallback,
+  HookArgsWithPayloadSwr,
+} from './request'
+import { usePostSwr } from './usePost'
+import { HostsSearchPayload } from './renterdBus'
 
 const autopilotConfigKey = '/autopilot/config'
 export function useAutopilotConfig(args?: HookArgsSwr<void, Config>) {
@@ -34,5 +40,18 @@ export function useAutopilotStatus(
   return useGetSwr({
     ...args,
     route: '/autopilot/status',
+  })
+}
+
+export function useAutopilotHostsSearch(
+  args?: HookArgsWithPayloadSwr<
+    void,
+    HostsSearchPayload,
+    { currentPeriod: number }
+  >
+) {
+  return usePostSwr({
+    ...args,
+    route: '/autopilot/hosts',
   })
 }

@@ -12,6 +12,7 @@ import { HostsAllowBlockDialog } from '../components/Hosts/HostsAllowBlockDialog
 import { HostsFilterAddressDialog } from '../components/Hosts/HostsFilterAddressDialog'
 import { ContractsFilterAddressDialog } from '../components/Contracts/ContractsFilterAddressDialog'
 import { ContractsFilterPublicKeyDialog } from '../components/Contracts/ContractsFilterPublicKeyDialog'
+import { FilesSearchDialog } from '../components/Files/FilesSearchDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -27,9 +28,8 @@ export type DialogType =
   | 'hostsFilterAddress'
   | 'contractsFilterAddress'
   | 'contractsFilterPublicKey'
-  | 'objectDownload'
-  | 'objectDelete'
-  | 'objectCreateDirectory'
+  | 'filesCreateDirectory'
+  | 'filesSearch'
 
 function useDialogMain() {
   const [dialog, setDialog] = useState<DialogType>()
@@ -113,7 +113,11 @@ export function Dialogs() {
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <FilesCreateDirectoryDialog
-        open={dialog === 'objectCreateDirectory'}
+        open={dialog === 'filesCreateDirectory'}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <FilesSearchDialog
+        open={dialog === 'filesSearch'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <HostsAllowBlockDialog

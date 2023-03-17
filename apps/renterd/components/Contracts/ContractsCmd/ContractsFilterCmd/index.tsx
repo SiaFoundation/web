@@ -44,11 +44,7 @@ export function ContractsFilterCmd({
         pushPage={pushPage}
         select={select}
       />
-      <ContractFilterCmdGroups
-        currentPage={currentPage}
-        select={select}
-        pushPage={pushPage}
-      />
+      <ContractFilterCmdGroups currentPage={currentPage} select={select} />
     </>
   )
 }

@@ -3,24 +3,28 @@ import {
   CommandItemNav,
   CommandItemSearch,
 } from '../../CmdRoot/Item'
-import { ContractFilterCmd } from './HostsFilterCmd'
+import { FilesSearchCmd, filesSearchPage } from './FilesSearchCmd'
 import { Page } from '../../CmdRoot/types'
 import { useRouter } from 'next/router'
 import { useDialog } from '../../../contexts/dialog'
 import { routes } from '../../../config/routes'
 
 export const commandPage = {
-  namespace: 'hosts',
-  label: 'Hosts',
+  namespace: 'files',
+  label: 'Files',
 }
 
-export function HostsCmd({
+export function FilesCmd({
+  search,
+  debouncedSearch,
   currentPage,
   parentPage,
   pushPage,
   beforeSelect,
   afterSelect,
 }: {
+  search: string
+  debouncedSearch: string
   currentPage: Page
   parentPage?: Page
   beforeSelect?: () => void
@@ -28,7 +32,7 @@ export function HostsCmd({
   pushPage: (page: Page) => void
 }) {
   const router = useRouter()
-  const { closeDialog, openDialog } = useDialog()
+  const { closeDialog } = useDialog()
   return (
     <>
       <CommandItemNav
@@ -46,28 +50,32 @@ export function HostsCmd({
           currentPage={currentPage}
           commandPage={commandPage}
           onSelect={() => {
-            router.push(routes.hosts.index)
+            if (!router.pathname.startsWith(routes.files.index)) {
+              router.push(routes.files.index)
+            }
             closeDialog()
+            afterSelect()
           }}
         >
-          View hosts
+          View files
+        </CommandItemSearch>
+        <CommandItemSearch
+          currentPage={currentPage}
+          commandPage={commandPage}
+          onSelect={() => {
+            pushPage(filesSearchPage)
+            afterSelect()
+          }}
+        >
+          Search files
         </CommandItemSearch>
       </CommandGroup>
-      <CommandItemSearch
-        currentPage={currentPage}
-        commandPage={commandPage}
-        onSelect={() => {
-          openDialog('hostsManageAllowBlock')
-        }}
-      >
-        Manage filter lists: allowlist + blocklist
-      </CommandItemSearch>
-      <ContractFilterCmd
-        parentPage={commandPage}
+      <FilesSearchCmd
+        debouncedSearch={debouncedSearch}
+        search={search}
         currentPage={currentPage}
         beforeSelect={beforeSelect}
         afterSelect={afterSelect}
-        pushPage={pushPage}
       />
     </>
   )

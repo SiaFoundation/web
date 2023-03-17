@@ -9,7 +9,6 @@ import { PublicKeyCmdGroup } from './PublicKey'
 
 type Props = {
   currentPage: Page
-  pushPage: (page: Page) => void
   select?: (filter?: ClientFilterItem<ContractData>) => void
 }
 
