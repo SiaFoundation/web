@@ -10,10 +10,10 @@ type Routes = {
 }
 
 export function getRouteToSaveAsPrev(router: NextRouter, routes: Routes) {
-  if ([routes.syncscreen, routes.lockscreen].includes(router.asPath)) {
+  if ([routes.syncscreen, routes.lockscreen].includes(router.pathname)) {
     return routes.home
   }
-  return router.asPath
+  return router.pathname
 }
 
 export function getRedirectRouteFromQuery(router: NextRouter, routes: Routes) {

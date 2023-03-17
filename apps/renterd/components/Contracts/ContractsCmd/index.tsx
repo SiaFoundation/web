@@ -1,4 +1,8 @@
-import { CommandItemNav, CommandItemSearch } from '../../CmdRoot/Item'
+import {
+  CommandGroup,
+  CommandItemNav,
+  CommandItemSearch,
+} from '../../CmdRoot/Item'
 import { ContractsFilterCmd } from './ContractsFilterCmd'
 import { Page } from '../../CmdRoot/types'
 import { useRouter } from 'next/router'
@@ -37,16 +41,18 @@ export function ContractsCmd({
       >
         {commandPage.label}
       </CommandItemNav>
-      <CommandItemSearch
-        currentPage={currentPage}
-        commandPage={commandPage}
-        onSelect={() => {
-          router.push(routes.contracts.index)
-          closeDialog()
-        }}
-      >
-        View contracts
-      </CommandItemSearch>
+      <CommandGroup currentPage={currentPage} commandPage={commandPage}>
+        <CommandItemSearch
+          currentPage={currentPage}
+          commandPage={commandPage}
+          onSelect={() => {
+            router.push(routes.contracts.index)
+            closeDialog()
+          }}
+        >
+          View contracts
+        </CommandItemSearch>
+      </CommandGroup>
       <ContractsFilterCmd
         parentPage={commandPage}
         currentPage={currentPage}

@@ -344,6 +344,8 @@ export function useContractsetUpdate(
   return usePutFunc({ ...args, route: '/bus/contractsets/:name' }, [])
 }
 
+// objects
+
 export function useObjectDirectory(
   args: HookArgsSwr<{ key: string }, { entries: string[] }>
 ) {
@@ -352,6 +354,12 @@ export function useObjectDirectory(
 
 export function useObject(args: HookArgsSwr<{ key: string }, { object: Obj }>) {
   return useGetSwr({ ...args, route: '/bus/objects/:key' })
+}
+
+export function useObjectSearch(
+  args: HookArgsSwr<{ key: string; skip: number; limit: number }, string[]>
+) {
+  return useGetSwr({ ...args, route: '/bus/search/objects' })
 }
 
 export function useObjectAdd(

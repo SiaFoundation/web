@@ -19,18 +19,24 @@ import { ContractsCmd } from '../Contracts/ContractsCmd'
 import { Page } from './types'
 import { useContracts } from '../../contexts/contracts'
 import { HostsCmd } from '../Hosts/HostsCmd'
+import { FilesCmd } from '../Files/FilesCmd'
+import { useHosts } from '../../contexts/hosts'
+import { useDebounce } from 'use-debounce'
+import { CmdEmptyDefault } from './CmdEmpty'
 
 type Props = {
   panel?: boolean
 }
 
 export function CmdRoot({ panel }: Props) {
-  const { resetFilters } = useContracts()
+  const { resetFilters: resetContractsFilters } = useContracts()
+  const { resetFilters: resetHostsFilters } = useHosts()
   const { closeDialog } = useDialog()
   const router = useRouter()
   const [search, setSearch] = useState('')
+  const [debouncedSearch] = useDebounce(search, 500)
   const [pages, setPages] = useState<Page[]>([])
-  const page = pages[pages.length - 1]
+  const page: Page | undefined = pages[pages.length - 1]
   const rootPage = pages.length === 0
 
   const pushPage = useCallback(
@@ -44,9 +50,16 @@ export function CmdRoot({ panel }: Props) {
     closeDialog()
   }, [closeDialog])
 
+  const afterSelect = useCallback(() => {
+    setSearch('')
+  }, [setSearch])
+
+  const Empty = page?.empty || CmdEmptyDefault
+
   return (
     <Command
       label="Command Menu"
+      loop
       className={cx(panel && panelStyles())}
       onKeyDown={(e) => {
         // Escape goes to previous page
@@ -66,14 +79,30 @@ export function CmdRoot({ panel }: Props) {
         onValueChange={setSearch}
         className={textFieldStyles({ variant: 'ghost', focus: 'none' })}
         placeholder={
-          rootPage
+          page?.prompt ||
+          (rootPage
             ? 'Search for commands, eg: theme, redundancy'
-            : `Search commands`
+            : `Search commands`)
         }
       />
       <Separator className="my-2" />
       <Command.List>
+        <Command.Empty>
+          <Empty search={search} debouncedSearch={debouncedSearch} />
+        </Command.Empty>
         <AppCmdGroup currentPage={page} pushPage={pushPage} />
+        <FilesCmd
+          debouncedSearch={debouncedSearch}
+          search={search}
+          currentPage={page}
+          pushPage={pushPage}
+          beforeSelect={() => {
+            beforeSelect()
+          }}
+          afterSelect={() => {
+            afterSelect()
+          }}
+        />
         <AutopilotCmdGroup currentPage={page} pushPage={pushPage} />
         <WalletCmdGroup currentPage={page} pushPage={pushPage} />
         <ContractsCmd
@@ -81,12 +110,13 @@ export function CmdRoot({ panel }: Props) {
           pushPage={pushPage}
           beforeSelect={() => {
             beforeSelect()
-            resetFilters()
+            resetContractsFilters()
           }}
           afterSelect={() => {
             if (!router.pathname.startsWith(routes.contracts.index)) {
               router.push(routes.contracts.index)
             }
+            afterSelect()
           }}
         />
         <HostsCmd
@@ -94,12 +124,13 @@ export function CmdRoot({ panel }: Props) {
           pushPage={pushPage}
           beforeSelect={() => {
             beforeSelect()
-            resetFilters()
+            resetHostsFilters()
           }}
           afterSelect={() => {
             if (!router.pathname.startsWith(routes.hosts.index)) {
               router.push(routes.hosts.index)
             }
+            afterSelect()
           }}
         />
         <ConfigCmdGroup currentPage={page} pushPage={pushPage} />

@@ -3,6 +3,7 @@ import {
   CloudUpload16,
   FolderAdd16,
   PaginatorKnownTotal,
+  Search16,
 } from '@siafoundation/design-system'
 import { useFiles } from '../../contexts/files'
 import { useDropzone } from 'react-dropzone'
@@ -25,11 +26,14 @@ export function FilesActionsMenu() {
         datasetTotal={datasetCount}
         pageTotal={pageCount}
       />
+      <Button onClick={() => openDialog('filesSearch')}>
+        <Search16 />
+      </Button>
       <Button {...getRootProps()}>
         <input {...getInputProps()} />
         <CloudUpload16 />
       </Button>
-      <Button onClick={() => openDialog('objectCreateDirectory')}>
+      <Button onClick={() => openDialog('filesCreateDirectory')}>
         <FolderAdd16 />
       </Button>
       <FilesViewDropdownMenu />

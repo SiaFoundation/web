@@ -20,7 +20,7 @@ export function CommandItemNav({
   if (parentPage?.namespace === currentPage?.namespace && !search)
     return (
       <Command.Item
-        className={cx(itemStyles(), className)}
+        className={cx(itemStyles(), 'group', className)}
         value={`${commandPage?.label} ${props.children.toString()}`}
         {...props}
       />
@@ -33,7 +33,7 @@ export function CommandItemSearch({
   className,
   ...props
 }: React.ComponentProps<typeof Command.Item> & {
-  currentPage?: Page
+  currentPage: Page | undefined
   commandPage: Page
 }) {
   const search = useCommandState((state) => state.search)
@@ -47,7 +47,7 @@ export function CommandItemSearch({
   )
     return (
       <Command.Item
-        className={cx(itemStyles(), className)}
+        className={cx(itemStyles(), 'group', className)}
         value={`${commandPage.label} ${props.children.toString()}`}
         {...props}
       />
@@ -75,7 +75,7 @@ export function CommandItemRootAndSearch({
   )
     return (
       <Command.Item
-        className={cx(itemStyles(), className)}
+        className={cx(itemStyles(), 'group', className)}
         value={`${commandPage.label} ${props.children.toString()}`}
         {...props}
       />

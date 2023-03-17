@@ -46,7 +46,7 @@ export function AppAuthedLayout({
         </Sidenav>
         <div className="flex flex-col flex-1 overflow-hidden">
           <AppNavbar title={title} nav={nav} actions={actions} />
-          <ScrollArea>
+          <ScrollArea className="z-0">
             <Container size={size} pad={false}>
               <div className="flex flex-col gap-5">{children}</div>
             </Container>

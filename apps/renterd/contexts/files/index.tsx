@@ -46,16 +46,16 @@ function useFilesMain() {
   const limit = Number(router.query.limit || 20)
   const offset = Number(router.query.offset || 0)
 
-  const activeDirectoryRawPath = ((router.query.path as string[]) || []).join(
-    '/'
-  )
-  const activeDirectoryPath = useMemo(() => {
-    return activeDirectoryRawPath ? `/${activeDirectoryRawPath}/` : '/'
-  }, [activeDirectoryRawPath])
+  // activeDirectory is the path split into an array of parts, stored in the router path
   const activeDirectory = useMemo(
-    () => (activeDirectoryRawPath ? activeDirectoryRawPath.split('/') : []),
-    [activeDirectoryRawPath]
+    () => (router.query.path as string[]) || [],
+    [router.query.path]
   )
+  // activeDirectoryPath is the path string, formatted in the way renterd expects
+  const activeDirectoryPath = useMemo(() => {
+    return activeDirectory.length ? `/${activeDirectory.join('/')}/` : '/'
+  }, [activeDirectory])
+
   const setActiveDirectory = useCallback(
     (fn: (activeDirectory: string[]) => string[]) => {
       const nextActiveDirectory = fn(activeDirectory)
@@ -467,6 +467,13 @@ function getFilename(filePath: string) {
   return parts[parts.length - 1]
 }
 
-function isDirectory(path: string) {
+export function isDirectory(path: string) {
   return path.endsWith('/')
+}
+
+export function getDirectoryFromPath(path: string) {
+  if (isDirectory(path)) {
+    return path.slice(1).slice(0, -1).split('/')
+  }
+  return path.slice(1).split('/').slice(0, -1)
 }
