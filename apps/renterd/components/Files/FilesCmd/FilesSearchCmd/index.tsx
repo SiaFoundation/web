@@ -30,8 +30,9 @@ export function FilesSearchCmd({
   afterSelect?: () => void
 }) {
   const { setActiveDirectory } = useFiles()
+  const onSearchPage = currentPage?.namespace === filesSearchPage.namespace
   const results = useObjectSearch({
-    disabled: currentPage?.namespace !== filesSearchPage.namespace,
+    disabled: !onSearchPage,
     params: {
       key: debouncedSearch,
       skip: 0,
@@ -43,9 +44,11 @@ export function FilesSearchCmd({
       },
     },
   })
-  if (!results.data) {
+
+  if (!onSearchPage || !results.data) {
     return null
   }
+
   return (
     <CommandGroup currentPage={currentPage} commandPage={filesSearchPage}>
       {results.data.map((path) => {
