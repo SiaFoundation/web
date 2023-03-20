@@ -2,7 +2,6 @@ import {
   Button,
   ListChecked16,
   PaginatorUnknownTotal,
-  Tooltip,
 } from '@siafoundation/design-system'
 import { HostsViewDropdownMenu } from './HostsViewDropdownMenu'
 import { useDialog } from '../../contexts/dialog'
@@ -18,12 +17,14 @@ export function HostsActionsMenu() {
         limit={limit}
         pageTotal={pageCount}
       />
+      <Button
+        onClick={() => openDialog('hostsManageAllowBlock')}
+        tip="Manage host blocklist and allowlist"
+        tipAlign="end"
+      >
+        <ListChecked16 />
+      </Button>
       <HostsViewDropdownMenu />
-      <Tooltip content="Manage host blocklist and allowlist" align="end">
-        <Button onClick={() => openDialog('hostsManageAllowBlock')}>
-          <ListChecked16 />
-        </Button>
-      </Tooltip>
     </div>
   )
 }

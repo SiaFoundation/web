@@ -1,13 +1,13 @@
 import { RenterSidenav } from '../RenterSidenav'
 import { routes } from '../../config/routes'
-import { PaginatorKnownTotal, Table } from '@siafoundation/design-system'
+import { Table } from '@siafoundation/design-system'
 import { useDialog } from '../../contexts/dialog'
 import { useContracts } from '../../contexts/contracts'
-import { ContractsViewDropdownMenu } from './ContractsViewDropdownMenu'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
 import { ContractsFilterMenu } from './ContractsFilterMenu'
+import { ContractsActionsMenu } from './ContractsActionsMenu'
 
 export function Contracts() {
   const { openDialog } = useDialog()
@@ -18,9 +18,6 @@ export function Contracts() {
     sortDirection,
     toggleSort,
     limit,
-    offset,
-    datasetCount,
-    pageCount,
     dataState,
   } = useContracts()
 
@@ -32,18 +29,7 @@ export function Contracts() {
       openSettings={() => openDialog('settings')}
       nav={<ContractsFilterMenu />}
       size="full"
-      actions={
-        <div className="flex gap-2">
-          <PaginatorKnownTotal
-            isLoading={dataState === 'loading'}
-            offset={offset}
-            limit={limit}
-            datasetTotal={datasetCount}
-            pageTotal={pageCount}
-          />
-          <ContractsViewDropdownMenu />
-        </div>
-      }
+      actions={<ContractsActionsMenu />}
     >
       <div className="p-5 min-w-fit">
         <Table

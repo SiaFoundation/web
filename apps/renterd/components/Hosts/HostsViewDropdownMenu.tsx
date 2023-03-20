@@ -26,7 +26,7 @@ export function HostsViewDropdownMenu() {
   return (
     <Popover
       trigger={
-        <Button>
+        <Button tip="Configure view" tipAlign="end">
           <SettingsAdjust16 />
           View
           <CaretDown16 />

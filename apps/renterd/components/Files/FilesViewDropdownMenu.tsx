@@ -28,7 +28,7 @@ export function FilesViewDropdownMenu() {
   return (
     <Popover
       trigger={
-        <Button size="small">
+        <Button size="small" tip="Configure view" tipAlign="end">
           <SettingsAdjust16 />
           View
           <CaretDown16 />
