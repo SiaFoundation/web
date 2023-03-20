@@ -2,6 +2,7 @@ export type ObjectData = {
   id: string
   path: string
   name: string
+  health?: number
   isDirectory?: boolean
   isUploading?: boolean
   loaded?: number
@@ -13,8 +14,9 @@ export type TableColumnId =
   | 'type'
   | 'name'
   | 'size'
+  | 'health'
   | 'slabs'
-  | 'actions'
+  | 'shards'
 
 export const columnsMeta: Record<
   TableColumnId,
@@ -40,13 +42,27 @@ export const columnsMeta: Record<
     label: 'Size',
     // sortable: 'Order by',
   },
+  health: {
+    id: 'health',
+    label: 'Health',
+  },
   slabs: {
     id: 'slabs',
     label: 'Slabs',
     // sortable: 'Order by',
   },
+  shards: {
+    id: 'shards',
+    label: 'Shards',
+    // sortable: 'Order by',
+  },
 }
 
-export const columnsDefaultVisible: TableColumnId[] = ['type', 'name', 'size']
+export const columnsDefaultVisible: TableColumnId[] = [
+  'type',
+  'name',
+  'size',
+  'health',
+]
 
 export const columnsDefaultSort = 'type'

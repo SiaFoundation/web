@@ -15,14 +15,14 @@ export default function App({
   return (
     <NextAppCsr fallback={pageProps.fallback} passwordProtectRequestHooks>
       <DialogProvider>
-        <FilesProvider>
-          <ContractsProvider>
-            <HostsProvider>
+        <ContractsProvider>
+          <HostsProvider>
+            <FilesProvider>
               <Dialogs />
               <Component {...pageProps} />
-            </HostsProvider>
-          </ContractsProvider>
-        </FilesProvider>
+            </FilesProvider>
+          </HostsProvider>
+        </ContractsProvider>
       </DialogProvider>
     </NextAppCsr>
   )

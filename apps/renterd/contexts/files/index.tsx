@@ -12,10 +12,15 @@ import {
   useClientFilters,
   useClientFilteredDataset,
   Button,
+  CheckmarkFilled16,
+  WarningFilled16,
+  Misuse16,
+  Tooltip,
 } from '@siafoundation/design-system'
 import { humanBytes, humanNumber } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
 import {
+  Obj,
   useObject,
   useObjectDirectory,
   useObjectUpload,
@@ -38,6 +43,9 @@ import {
 } from './types'
 import { useRouter } from 'next/router'
 import { UploadsBar } from '../../components/UploadsBar'
+import { useContracts } from '../contracts'
+import { ContractData } from '../contracts/types'
+import { useRedundancySettings } from '../../hooks/useRedundancySettings'
 
 type UploadsMap = Record<string, ObjectData>
 
@@ -154,6 +162,8 @@ function useFilesMain() {
     },
   })
 
+  const { dataset: allContracts } = useContracts()
+
   const dataset = useMemo<ObjectData[] | null>(() => {
     if (!response.data) {
       return null
@@ -189,7 +199,7 @@ function useFilesMain() {
     // when new data fetching is complete. Leaving it in wipes makes the
     // directory stub path matching logic temporarily invalid.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response.data, uploadsList])
+  }, [response.data, uploadsList, allContracts])
 
   const {
     configurableColumns,
@@ -241,6 +251,8 @@ function useFilesMain() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [datasetFiltered])
 
+  const redundancySettings = useRedundancySettings()
+
   const tableColumns = useMemo(() => {
     const columns: TableColumn<TableColumnId, ObjectData>[] = [
       {
@@ -272,8 +284,8 @@ function useFilesMain() {
         id: 'name',
         label: columnsMeta.name.label,
         sortable: columnsMeta.name.sortable,
-        size: 5,
-        className: '!pl-0',
+        size: '10',
+        className: '!pl-0 min-w-[200px] max-w-[800px]',
         render: ({ name, isDirectory }) => {
           if (isDirectory) {
             if (name === '..') {
@@ -318,7 +330,8 @@ function useFilesMain() {
         id: 'size',
         label: columnsMeta.size.label,
         sortable: columnsMeta.size.sortable,
-        size: 2,
+        size: '1 1 150px',
+        className: 'justify-end',
         render: function SizeColumn({ path, isUploading, isDirectory }) {
           const obj = useObject({
             disabled: isUploading || isDirectory,
@@ -353,10 +366,70 @@ function useFilesMain() {
         },
       },
       {
+        id: 'health',
+        label: columnsMeta.health.label,
+        sortable: columnsMeta.health.sortable,
+        size: '1 1 150px',
+        className: 'justify-center',
+        render: function SizeColumn({ path, isUploading, isDirectory }) {
+          const obj = useObject({
+            disabled: isUploading || isDirectory,
+            params: {
+              key: encodeURIComponent(path.slice(1)),
+            },
+            config: {
+              swr: {
+                dedupingInterval: 5000,
+              },
+            },
+          })
+          if (isUploading) {
+            return <LoadingDots />
+          }
+
+          if (obj.data?.object && allContracts) {
+            const { totalCount, contractCount } = getObjectHealth(
+              obj.data.object,
+              allContracts
+            )
+
+            const minShards = redundancySettings?.minShards || 10
+
+            let health = 'excellent'
+            let color: React.ComponentProps<typeof Text>['color'] = 'green'
+            let icon = <CheckmarkFilled16 />
+            if (contractCount < totalCount) {
+              health = 'good'
+              color = 'green'
+              icon = <CheckmarkFilled16 />
+            }
+            if (contractCount < (totalCount - minShards) / 2 + minShards) {
+              health = 'poor'
+              color = 'amber'
+              icon = <WarningFilled16 />
+            }
+            if (contractCount < minShards) {
+              health = 'bad'
+              color = 'red'
+              icon = <Misuse16 />
+            }
+            return (
+              <Tooltip content={`${health} ${contractCount}/${totalCount}`}>
+                <Text color={color} className="flex">
+                  {icon}
+                </Text>
+              </Tooltip>
+            )
+          }
+          return null
+        },
+      },
+      {
         id: 'slabs',
         label: columnsMeta.slabs.label,
         sortable: columnsMeta.slabs.sortable,
-        size: 2,
+        size: '1 1 150px',
+        className: 'justify-center',
         render: function SlabsColumn({ path, isUploading, isDirectory }) {
           const obj = useObject({
             disabled: isUploading || isDirectory,
@@ -386,9 +459,51 @@ function useFilesMain() {
           return null
         },
       },
+      {
+        id: 'shards',
+        label: columnsMeta.shards.label,
+        sortable: columnsMeta.shards.sortable,
+        size: '1 1 150px',
+        className: 'justify-center',
+        render: function SlabsColumn({ path, isUploading, isDirectory }) {
+          const obj = useObject({
+            disabled: isUploading || isDirectory,
+            params: {
+              key: encodeURIComponent(path.slice(1)),
+            },
+            config: {
+              swr: {
+                dedupingInterval: 5000,
+              },
+            },
+          })
+          if (isUploading) {
+            return <LoadingDots />
+          }
+          if (obj.data?.object) {
+            return (
+              <ValueNum
+                size="12"
+                value={
+                  new BigNumber(
+                    obj.data?.object.Slabs?.reduce(
+                      (acc, slab) => acc + slab.Shards?.length,
+                      0
+                    ) || 0
+                  )
+                }
+                variant="value"
+                color="subtle"
+                format={(v) => humanNumber(v)}
+              />
+            )
+          }
+          return null
+        },
+      },
     ]
     return columns
-  }, [setActiveDirectory])
+  }, [setActiveDirectory, allContracts, redundancySettings])
 
   const filteredTableColumns = useMemo(
     () =>
@@ -476,4 +591,28 @@ export function getDirectoryFromPath(path: string) {
     return path.slice(1).slice(0, -1).split('/')
   }
   return path.slice(1).split('/').slice(0, -1)
+}
+
+function getObjectHealth(
+  obj: Obj,
+  contracts: ContractData[]
+): {
+  totalCount: number
+  contractCount: number
+  shards: number
+  slabs: number
+} {
+  const shardContractStatus = []
+  obj.Slabs?.forEach((sl) => {
+    sl.Shards?.forEach((sh) => {
+      shardContractStatus.push(!!contracts.find((c) => c.hostKey === sh.Host))
+    })
+  })
+  const shardsWithContracts = shardContractStatus.filter((s) => s).length
+  return {
+    slabs: obj.Slabs?.length || 0,
+    shards: obj.Slabs?.reduce((acc, slab) => acc + slab.Shards?.length, 0) || 0,
+    totalCount: shardContractStatus.length,
+    contractCount: shardsWithContracts,
+  }
 }

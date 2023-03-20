@@ -5,6 +5,7 @@ import { Paragraph } from '../core/Paragraph'
 type Props = {
   title?: React.ReactNode
   children?: React.ReactNode
+  rootClassName?: string
   className?: string
   message?: boolean
   showBorderInactive?: boolean
@@ -13,6 +14,7 @@ type Props = {
 export function Dropzone({
   title,
   children,
+  rootClassName,
   className,
   message,
   showBorderInactive,
@@ -21,7 +23,7 @@ export function Dropzone({
   const { getRootProps, getInputProps, isDragActive } = useDropzone(props)
 
   return (
-    <div {...getRootProps()} className="outline-none">
+    <div {...getRootProps()} className={cx('outline-none', rootClassName)}>
       <div
         className={cx(
           isDragActive ? 'z-20' : '',

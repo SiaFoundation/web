@@ -17,7 +17,7 @@ export function Files() {
       actions={<FilesActionsMenu />}
       openSettings={() => openDialog('settings')}
     >
-      <div className="p-5">
+      <div className="p-5 min-w-fit">
         <FilesExplorer />
       </div>
     </RenterdAuthedLayout>
