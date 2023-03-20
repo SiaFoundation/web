@@ -1,5 +1,6 @@
 import { cva, VariantProps } from 'class-variance-authority'
 import React from 'react'
+import { Tooltip } from './Tooltip'
 
 export const buttonStyles = cva(
   [
@@ -145,12 +146,48 @@ export const buttonStyles = cva(
 export const Button = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement> &
-    VariantProps<typeof buttonStyles>
+    VariantProps<typeof buttonStyles> & {
+      tip?: string
+      tipAlign?: React.ComponentProps<typeof Tooltip>['align']
+      tipSide?: React.ComponentProps<typeof Tooltip>['side']
+    }
 >(
   (
-    { variant, size, state, rounded, disabled, icon, className, ...props },
+    {
+      variant,
+      size,
+      state,
+      rounded,
+      disabled,
+      icon,
+      tip,
+      tipAlign,
+      tipSide,
+      className,
+      ...props
+    },
     ref
   ) => {
+    if (tip) {
+      return (
+        <Tooltip content={tip} align={tipAlign} side={tipSide}>
+          <button
+            ref={ref}
+            disabled={disabled}
+            className={buttonStyles({
+              variant,
+              size,
+              state,
+              rounded,
+              disabled,
+              icon,
+              className,
+            })}
+            {...props}
+          />
+        </Tooltip>
+      )
+    }
     return (
       <button
         ref={ref}

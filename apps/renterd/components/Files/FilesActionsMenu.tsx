@@ -26,14 +26,17 @@ export function FilesActionsMenu() {
         datasetTotal={datasetCount}
         pageTotal={pageCount}
       />
-      <Button onClick={() => openDialog('filesSearch')}>
+      <Button onClick={() => openDialog('filesSearch')} tip="Search files">
         <Search16 />
       </Button>
-      <Button {...getRootProps()}>
+      <Button {...getRootProps()} tip="Upload files">
         <input {...getInputProps()} />
         <CloudUpload16 />
       </Button>
-      <Button onClick={() => openDialog('filesCreateDirectory')}>
+      <Button
+        onClick={() => openDialog('filesCreateDirectory')}
+        tip="Create directory"
+      >
         <FolderAdd16 />
       </Button>
       <FilesViewDropdownMenu />
