@@ -91,12 +91,12 @@ export function DataProvider({ children }: Props) {
   }, [timeSpan])
 
   const formatTimestamp = useCallback(
-    (v: number) => getTimeRangeRollup(timeRange).label(v),
+    (v: number) => getTimeRangeRollup(timeRange, 'auto').label(v),
     [timeRange]
   )
 
   const revenue = useMemo<Chart>(() => {
-    const data = formatChartData(mockData.revenue, timeRange, 'total')
+    const data = formatChartData(mockData.revenue, timeRange, 'auto', 'total')
     const stats = computeChartStats(mockData.revenue, timeRange, ['potential'])
     return {
       data,
@@ -118,7 +118,7 @@ export function DataProvider({ children }: Props) {
   }, [timeRange, formatTimestamp])
 
   const pricing = useMemo<Chart>(() => {
-    const data = formatChartData(mockData.pricing, timeRange, 'average')
+    const data = formatChartData(mockData.pricing, timeRange, 'auto', 'average')
     const stats = computeChartStats(mockData.pricing, timeRange)
     return {
       data,
@@ -137,7 +137,12 @@ export function DataProvider({ children }: Props) {
   }, [timeRange, formatTimestamp])
 
   const collateral = useMemo<Chart>(() => {
-    const data = formatChartData(mockData.collateral, timeRange, 'average')
+    const data = formatChartData(
+      mockData.collateral,
+      timeRange,
+      'auto',
+      'average'
+    )
     const stats = computeChartStats(mockData.collateral, timeRange)
     return {
       data,
@@ -155,7 +160,12 @@ export function DataProvider({ children }: Props) {
   }, [timeRange, formatTimestamp])
 
   const contracts = useMemo<Chart>(() => {
-    const data = formatChartData(mockData.contracts, timeRange, 'average')
+    const data = formatChartData(
+      mockData.contracts,
+      timeRange,
+      'auto',
+      'average'
+    )
     const stats = computeChartStats(mockData.contracts, timeRange)
     return {
       data,
@@ -178,7 +188,7 @@ export function DataProvider({ children }: Props) {
   }, [timeRange, formatTimestamp])
 
   const storage = useMemo<Chart>(() => {
-    const data = formatChartData(mockData.storage, timeRange, 'average')
+    const data = formatChartData(mockData.storage, timeRange, 'auto', 'average')
     const stats = computeChartStats(mockData.storage, timeRange)
     return {
       data,
@@ -195,7 +205,7 @@ export function DataProvider({ children }: Props) {
   }, [timeRange, formatTimestamp])
 
   const bandwidth = useMemo<Chart>(() => {
-    const data = formatChartData(mockData.bandwidth, timeRange, 'total')
+    const data = formatChartData(mockData.bandwidth, timeRange, 'auto', 'total')
     const stats = computeChartStats(mockData.bandwidth, timeRange)
     return {
       data,
