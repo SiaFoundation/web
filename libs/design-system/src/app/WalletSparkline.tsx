@@ -24,17 +24,17 @@ export function WalletSparkline() {
             sc: {
               color: colors.accent[800],
             },
-            sf: {
-              color: colors.yellow[800],
-            },
+            // sf: {
+            //   color: colors.yellow[800],
+            // },
           }
         : {
             sc: {
               color: colors.accentdark[800],
             },
-            sf: {
-              color: colors.yellow[700],
-            },
+            // sf: {
+            //   color: colors.yellow[700],
+            // },
           },
     [activeTheme]
   )
@@ -53,7 +53,7 @@ export function WalletSparkline() {
       return []
     }
     let points = transactions.data.reduce((acc, t, i) => {
-      const lastValue = acc[i - 1]
+      const lastValue: ChartPoint = acc[i - 1]
       const lastSc = lastValue ? lastValue['sc'] : 0
       return acc.concat({
         sc: new BigNumber(lastSc).plus(t.Inflow).minus(t.Outflow).toNumber(),
@@ -91,7 +91,7 @@ export function WalletSparkline() {
     stats: ChartStats
     config: ChartConfig
   }>(() => {
-    const data = formatChartData(scData, timeRange, 'none', 0)
+    const data = formatChartData(scData, timeRange, 'none', 'average', 0)
     const stats = computeChartStats(scData, timeRange)
     return {
       data,

@@ -4,7 +4,7 @@ import {
   WalletSparkline,
   WalletLayoutActions,
   getTransactionTypes,
-  getTransactionTotals,
+  // getTransactionTotals,
 } from '@siafoundation/design-system'
 import {
   useWalletPending,
@@ -34,14 +34,14 @@ export function Wallet() {
   const entities: EntityListItemProps[] = useMemo(
     () => [
       ...(pending.data || []).map((t): EntityListItemProps => {
-        const totals = getTransactionTotals(t)
+        // const totals = getTransactionTotals(t)
         return {
           type: 'transaction',
           txType: getTransactionTypes(t),
           // hash: t.ID,
           // timestamp: new Date(t.Timestamp).getTime(),
           // onClick: () => openDialog('transactionDetails', t.ID),
-          sc: totals.sc,
+          // sc: totals.sc,
           unconfirmed: true,
         }
       }),

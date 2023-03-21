@@ -3,6 +3,7 @@ import { ChartPoint } from '../components/ChartXY'
 import { getDaysInMs } from './time'
 import { format, startOfMonth, startOfWeek } from 'date-fns'
 
+type RollupMode = 'auto' | 90 | 30 | 'none'
 type AggregationMode = 'total' | 'average' | 'none'
 
 type TimeRange = {
@@ -13,7 +14,8 @@ type TimeRange = {
 export function formatChartData(
   data: ChartPoint[],
   timeRange: TimeRange,
-  mode: AggregationMode,
+  rollupMode: RollupMode,
+  aggregationMode: AggregationMode,
   futureSpan = 90
 ) {
   const { start, end } = timeRange
@@ -22,17 +24,18 @@ export function formatChartData(
   // prep
   data.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1))
 
-  // aggregate
-  const { normalize } =
-    mode !== 'none'
-      ? getTimeRangeRollup(timeRange, futureSpan)
-      : timeRangeNoRollup
-  const grouped = groupBy(data, (point) => {
-    const normalizedTimestamp = normalize(point.timestamp)
-    return normalizedTimestamp
-  })
-  const aggregated = Object.entries(grouped).reduce(
-    (acc, [timestamp, group]) => {
+  // TODO: explore filling in missing data points
+  let aggregated: ChartPoint[] = []
+  if (aggregationMode === 'none') {
+    aggregated = data
+  } else {
+    // aggregate
+    const { normalize } = getTimeRangeRollup(timeRange, rollupMode, futureSpan)
+    const grouped = groupBy(data, (point) => {
+      const normalizedTimestamp = normalize(point.timestamp)
+      return normalizedTimestamp
+    })
+    aggregated = Object.entries(grouped).reduce((acc, [timestamp, group]) => {
       const aggregatedPoint: ChartPoint = {
         timestamp: Number(timestamp),
       }
@@ -42,16 +45,15 @@ export function formatChartData(
           aggregatedPoint[key] = val + (group[i][key] || 0)
         }
       })
-      if (mode === 'average') {
+      if (aggregationMode === 'average') {
         keys.forEach((key) => {
           const val = aggregatedPoint[key]
           aggregatedPoint[key] = val / group.length
         })
       }
       return acc.concat(aggregatedPoint)
-    },
-    [] as ChartPoint[]
-  )
+    }, [] as ChartPoint[])
+  }
 
   // filter
   return aggregated.filter(
@@ -59,11 +61,39 @@ export function formatChartData(
   )
 }
 
-export function getTimeRangeRollup(timeRange: TimeRange, futureSpan = 90) {
+export function getTimeRangeRollup(
+  timeRange: TimeRange,
+  rollupMode: RollupMode,
+  futureSpan = 90
+) {
   const { start, end } = timeRange
   const range = end - start
 
-  return range > getDaysInMs(90 + futureSpan)
+  if (rollupMode === 'auto') {
+    return range > getDaysInMs(90 + futureSpan)
+      ? {
+          normalize: (timestamp: number) => startOfMonth(timestamp).getTime(),
+          label: (timestamp: number) => {
+            const ts = startOfMonth(timestamp).getTime()
+            return `Month starting ${format(ts, 'PP')}`
+          },
+        }
+      : range > getDaysInMs(30 + futureSpan)
+      ? {
+          normalize: (timestamp: number) => startOfWeek(timestamp).getTime(),
+          label: (timestamp: number) => {
+            const ts = startOfWeek(timestamp).getTime()
+            return `Week starting ${format(ts, 'PP')}`
+          },
+        }
+      : {
+          normalize: (timestamp: number) => timestamp,
+          label: (timestamp: number) => {
+            return `Day of ${format(timestamp, 'PP')}`
+          },
+        }
+  }
+  return rollupMode === 90
     ? {
         normalize: (timestamp: number) => startOfMonth(timestamp).getTime(),
         label: (timestamp: number) => {
@@ -71,7 +101,7 @@ export function getTimeRangeRollup(timeRange: TimeRange, futureSpan = 90) {
           return `Month starting ${format(ts, 'PP')}`
         },
       }
-    : range > getDaysInMs(30 + futureSpan)
+    : rollupMode === 30
     ? {
         normalize: (timestamp: number) => startOfWeek(timestamp).getTime(),
         label: (timestamp: number) => {
