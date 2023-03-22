@@ -1,9 +1,19 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect, useRef } from 'react'
 import { Text, ChevronRight16, ScrollArea } from '@siafoundation/design-system'
 import { useFiles } from '../../contexts/files'
 
 export function FilesBreadcrumbMenu() {
   const { activeDirectory, setActiveDirectory } = useFiles()
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      ref.current?.scrollIntoView({ behavior: 'smooth' })
+    }, 100)
+    return () => {
+      clearTimeout(t)
+    }
+  }, [activeDirectory])
 
   return (
     <ScrollArea>
@@ -48,6 +58,7 @@ export function FilesBreadcrumbMenu() {
             </Fragment>
           )
         })}
+        <div ref={ref} />
       </div>
     </ScrollArea>
   )
