@@ -15,12 +15,15 @@ import {
   CheckmarkFilled16,
   WarningFilled16,
   Misuse16,
-  Tooltip,
+  HoverCard,
+  Separator,
+  ScrollArea,
 } from '@siafoundation/design-system'
 import { humanBytes, humanNumber } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
 import {
   Obj,
+  SlabSlice,
   useObject,
   useObjectDirectory,
   useObjectUpload,
@@ -32,7 +35,7 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { sortBy, throttle, toPairs } from 'lodash'
+import { min, sortBy, throttle, toPairs } from 'lodash'
 import { FileDropdownMenu } from '../../components/Files/FileDropdownMenu'
 import {
   columnsDefaultSort,
@@ -45,7 +48,6 @@ import { useRouter } from 'next/router'
 import { UploadsBar } from '../../components/UploadsBar'
 import { useContracts } from '../contracts'
 import { ContractData } from '../contracts/types'
-import { useRedundancySettings } from '../../hooks/useRedundancySettings'
 
 type UploadsMap = Record<string, ObjectData>
 
@@ -251,8 +253,6 @@ function useFilesMain() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [datasetFiltered])
 
-  const redundancySettings = useRedundancySettings()
-
   const tableColumns = useMemo(() => {
     const columns: TableColumn<TableColumnId, ObjectData>[] = [
       {
@@ -388,37 +388,83 @@ function useFilesMain() {
           }
 
           if (obj.data?.object && allContracts) {
-            const { totalCount, contractCount } = getObjectHealth(
+            const { health, slabs } = getObjectHealth(
               obj.data.object,
               allContracts
             )
 
-            const minShards = redundancySettings?.minShards || 10
-
-            let health = 'excellent'
+            let label = 'excellent'
             let color: React.ComponentProps<typeof Text>['color'] = 'green'
             let icon = <CheckmarkFilled16 />
-            if (contractCount < totalCount) {
-              health = 'good'
+            if (health < 1) {
+              label = 'good'
               color = 'green'
               icon = <CheckmarkFilled16 />
             }
-            if (contractCount < (totalCount - minShards) / 2 + minShards) {
-              health = 'poor'
+            if (health < 0.5) {
+              label = 'poor'
               color = 'amber'
               icon = <WarningFilled16 />
             }
-            if (contractCount < minShards) {
-              health = 'bad'
+            if (health < 0) {
+              label = 'bad'
               color = 'red'
               icon = <Misuse16 />
             }
             return (
-              <Tooltip content={`${health} ${contractCount}/${totalCount}`}>
-                <Text color={color} className="flex">
-                  {icon}
-                </Text>
-              </Tooltip>
+              <HoverCard
+                rootProps={{
+                  openDelay: 100,
+                }}
+                trigger={
+                  <Text color={color} className="flex cursor-pointer">
+                    {icon}
+                  </Text>
+                }
+              >
+                <div
+                  className="z-10 flex flex-col pb-1 -mx-1 overflow-hidden"
+                  style={{
+                    height: slabs.length > 15 ? '300px' : undefined,
+                  }}
+                >
+                  <div className="px-2">
+                    <Text size="12">{`${label} health (${(health * 100).toFixed(
+                      0
+                    )}%)`}</Text>
+                  </div>
+                  <div className="px-2">
+                    <Separator className="w-full mt-0.5 mb-1.5" />
+                  </div>
+                  <div className="flex-1 overflow-hidden">
+                    <ScrollArea>
+                      <div className="px-2">
+                        {sortBy(slabs, 'contractShards').map((slab) => (
+                          <div
+                            key={slab.index}
+                            className="flex justify-between"
+                          >
+                            <Text
+                              size="12"
+                              color="subtle"
+                              className="flex items-center"
+                            >
+                              Slab {slab.index}:
+                            </Text>
+                            <Text
+                              size="12"
+                              color="subtle"
+                              className="flex items-center"
+                            >
+                              {slab.contractShards}/{slab.totalShards}
+                            </Text>
+                          </div>
+                        ))}
+                      </div>
+                    </ScrollArea>
+                  </div>
+                </div>
+              </HoverCard>
             )
           }
           return null
@@ -503,7 +549,7 @@ function useFilesMain() {
       },
     ]
     return columns
-  }, [setActiveDirectory, allContracts, redundancySettings])
+  }, [setActiveDirectory, allContracts])
 
   const filteredTableColumns = useMemo(
     () =>
@@ -597,22 +643,60 @@ function getObjectHealth(
   obj: Obj,
   contracts: ContractData[]
 ): {
-  totalCount: number
-  contractCount: number
-  shards: number
-  slabs: number
+  slabs: SlabHealthStats[]
+  health: number
 } {
+  const slabHealths = []
+  obj.Slabs?.forEach((sl, index) => {
+    slabHealths.push(getSlabHealthStats(sl, contracts, String(index)))
+  })
+  const health = min(slabHealths.map((s) => s.health))
+  return {
+    health,
+    slabs: slabHealths,
+  }
+}
+
+type SlabHealthStats = {
+  index: string
+  health: number
+  contractShards: number
+  totalShards: number
+  minShards: number
+}
+
+function getSlabHealthStats(
+  slab: SlabSlice,
+  contracts: ContractData[],
+  index: string
+): SlabHealthStats {
   const shardContractStatus = []
-  obj.Slabs?.forEach((sl) => {
-    sl.Shards?.forEach((sh) => {
-      shardContractStatus.push(!!contracts.find((c) => c.hostKey === sh.Host))
-    })
+  slab.Shards?.forEach((sh) => {
+    shardContractStatus.push(!!contracts.find((c) => c.hostKey === sh.Host))
   })
   const shardsWithContracts = shardContractStatus.filter((s) => s).length
+  const minShards = slab.MinShards
+  const totalShards = slab.Shards?.length || 0
   return {
-    slabs: obj.Slabs?.length || 0,
-    shards: obj.Slabs?.reduce((acc, slab) => acc + slab.Shards?.length, 0) || 0,
-    totalCount: shardContractStatus.length,
-    contractCount: shardsWithContracts,
+    index,
+    health: computeSlabHealth(totalShards, minShards, shardsWithContracts),
+    minShards: slab.MinShards,
+    totalShards: slab.Shards?.length || 0,
+    contractShards: shardsWithContracts,
   }
+}
+
+export function computeSlabHealth(
+  totalShards: number,
+  minShards: number,
+  contractShards: number
+) {
+  if (contractShards >= totalShards) {
+    return 1
+  }
+
+  const adjustedShards = contractShards - minShards
+  const adjustedTotalShards = totalShards - minShards
+
+  return adjustedShards / adjustedTotalShards
 }

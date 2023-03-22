@@ -12,7 +12,7 @@ type Props = {
 
 export function SidenavItem({ title, children, route, onClick }: Props) {
   const router = useRouter()
-  const state = router.pathname === route
+  const state = route && router.pathname.startsWith(route)
 
   if (!route) {
     return (
