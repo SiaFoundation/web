@@ -20,7 +20,6 @@ export function HostsActionsMenu() {
       <Button
         onClick={() => openDialog('hostsManageAllowBlock')}
         tip="Manage host blocklist and allowlist"
-        tipAlign="end"
       >
         <ListChecked16 />
       </Button>
