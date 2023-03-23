@@ -111,8 +111,7 @@ function useHostsMain() {
       {
         id: 'actions',
         label: columnsMeta.actions.label,
-        size: '50px 0 0',
-        className: '!pl-2 !pr-0',
+        cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
         render: (host) => (
           <HostDropdownMenu
             address={host.netAddress}
@@ -121,10 +120,9 @@ function useHostsMain() {
         ),
       },
       {
-        id: 'status',
-        label: columnsMeta.status.label,
-        size: '80px 0 0',
-        className: '!pl-0 justify-center',
+        id: 'allow',
+        label: columnsMeta.allow.label,
+        contentClassName: 'justify-center',
         render: (host) => (
           <Tooltip
             side="right"
@@ -157,8 +155,6 @@ function useHostsMain() {
       {
         id: 'netAddress',
         label: columnsMeta.netAddress.label,
-        size: 2,
-        className: '!pl-2',
         render: (host) => (
           <ValueCopyable
             value={host.netAddress}
@@ -170,7 +166,6 @@ function useHostsMain() {
       {
         id: 'publicKey',
         label: columnsMeta.publicKey.label,
-        size: 2,
         render: (host) => (
           <ValueCopyable value={host.publicKey} label="host public key" />
         ),
@@ -178,12 +173,14 @@ function useHostsMain() {
       {
         id: 'lastScan',
         label: columnsMeta.lastScan.label,
-        size: 2,
         render: (host) => {
           return (
             <div className="flex gap-2 overflow-hidden">
               <div>
-                <Text className="mt-[5px]">
+                <Text
+                  className="mt-[5px]"
+                  color={host.lastScanSuccess ? 'green' : 'red'}
+                >
                   {host.lastScanSuccess ? <CheckmarkFilled16 /> : <Misuse16 />}
                 </Text>
               </div>
@@ -204,7 +201,6 @@ function useHostsMain() {
       {
         id: 'knownSince',
         label: columnsMeta.knownSince.label,
-        size: 1.5,
         render: (host) => {
           return (
             <div className="flex flex-col gap-1 overflow-hidden">
@@ -221,8 +217,7 @@ function useHostsMain() {
       {
         id: 'totalScans',
         label: columnsMeta.totalScans.label,
-        size: 1,
-        className: 'justify-center',
+        contentClassName: 'justify-end',
         render: (host) => (
           <ValueNum
             value={host.totalScans}
@@ -234,8 +229,7 @@ function useHostsMain() {
       {
         id: 'uptime',
         label: columnsMeta.uptime.label,
-        size: 1,
-        className: 'justify-center',
+        contentClassName: 'justify-end',
         render: (host) => {
           return (
             <ValueNum
@@ -255,8 +249,7 @@ function useHostsMain() {
       {
         id: 'downtime',
         label: columnsMeta.downtime.label,
-        size: 1,
-        className: 'justify-center',
+        contentClassName: 'justify-end',
         render: (host) => {
           return (
             <ValueNum
@@ -276,8 +269,7 @@ function useHostsMain() {
       {
         id: 'totalInteractions',
         label: columnsMeta.totalInteractions.label,
-        size: 1,
-        className: 'justify-center',
+        contentClassName: 'justify-end',
         render: (host) => {
           return (
             <ValueNum
@@ -291,8 +283,7 @@ function useHostsMain() {
       {
         id: 'successfulInteractions',
         label: columnsMeta.successfulInteractions.label,
-        size: 1,
-        className: 'justify-center',
+        contentClassName: 'justify-end',
         render: (host) => (
           <ValueNum
             value={host.successfulInteractions}
@@ -304,8 +295,7 @@ function useHostsMain() {
       {
         id: 'failedInteractions',
         label: columnsMeta.failedInteractions.label,
-        size: 1,
-        className: 'justify-center',
+        contentClassName: 'justify-end',
         render: (host) => (
           <ValueNum
             value={host.failedInteractions}

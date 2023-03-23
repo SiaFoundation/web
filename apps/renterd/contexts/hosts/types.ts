@@ -20,7 +20,7 @@ export type HostData = {
 
 export type TableColumnId =
   | 'actions'
-  | 'status'
+  | 'allow'
   | 'netAddress'
   | 'publicKey'
   | 'lastScan'
@@ -41,9 +41,9 @@ export const columnsMeta: Record<
     label: '',
     fixed: true,
   },
-  status: {
-    id: 'status',
-    label: 'Status',
+  allow: {
+    id: 'allow',
+    label: 'Allow',
   },
   netAddress: {
     id: 'netAddress',
@@ -98,7 +98,7 @@ export const columnsMeta: Record<
 }
 
 export const columnsDefaultVisible: TableColumnId[] = [
-  'status',
+  'allow',
   'netAddress',
   'publicKey',
   'lastScan',
