@@ -138,7 +138,6 @@ export function Table<Columns extends string, R extends Row>({
               )}
             </tr>
           )}
-          {/* <tr className="flex flex-col"> */}
           {show === 'currentData' &&
             data?.map((row) => (
               <tr
@@ -172,7 +171,6 @@ export function Table<Columns extends string, R extends Row>({
                 )}
               </tr>
             ))}
-          {show === 'emptyState' && emptyState}
           {show === 'skeleton' &&
             times(pageSize).map((i) => (
               <tr
@@ -194,9 +192,9 @@ export function Table<Columns extends string, R extends Row>({
                 ))}
               </tr>
             ))}
-          {/* </tr> */}
         </tbody>
       </table>
+      {show === 'emptyState' && emptyState}
     </Panel>
   )
 }
