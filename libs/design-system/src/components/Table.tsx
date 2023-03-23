@@ -2,7 +2,7 @@ import { InfoTip } from '../core/InfoTip'
 import { Tooltip } from '../core/Tooltip'
 import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
-import { useMemo } from 'react'
+import { useCallback } from 'react'
 import { cx } from 'class-variance-authority'
 import { CaretDown16, CaretUp16 } from '@carbon/icons-react'
 import { times } from 'lodash'
@@ -17,7 +17,8 @@ export type TableColumn<Columns, R> = {
   tip?: string
   sortable?: string
   size?: number | string
-  className?: string
+  cellClassName?: string
+  contentClassName?: string
   render: React.FC<R>
   summary?: () => React.ReactNode
 }
@@ -36,7 +37,7 @@ type Props<Columns extends string, R extends Row> = {
 }
 
 export function Table<Columns extends string, R extends Row>({
-  columns: _columns,
+  columns,
   data,
   sortColumn,
   sortDirection,
@@ -47,20 +48,6 @@ export function Table<Columns extends string, R extends Row>({
   isLoading,
   emptyState,
 }: Props<Columns, R>) {
-  const columns = useMemo(
-    () =>
-      _columns?.map((column) => {
-        const size = column.size || 1
-        return {
-          ...column,
-          style: {
-            flex: size,
-          },
-        }
-      }, []) || [],
-    [_columns]
-  )
-
   let show = 'emptyState'
 
   if (isLoading && !data?.length) {
@@ -71,104 +58,145 @@ export function Table<Columns extends string, R extends Row>({
     show = 'currentData'
   }
 
+  const getCellClassNames = useCallback(
+    (i: number, className?: string) =>
+      cx(
+        i === columns.length - 1 ? 'pr-6' : 'pr-4',
+        i === 0 ? 'pl-6' : 'pl-4',
+        className
+      ),
+    [columns]
+  )
+
+  const getContentClassNames = useCallback(
+    (i: number, className?: string) => cx('flex items-center', className),
+    []
+  )
+
   return (
     <Panel>
-      <div className="flex flex-col">
-        <div className="flex border-b border-gray-400 dark:border-graydark-400">
-          {columns.map(({ id, label, tip, sortable, style, className }) => (
-            <div
-              key={id}
-              className={cx('flex py-3 px-6 overflow-hidden', className)}
-              style={style}
-            >
-              <Tooltip content={label}>
-                <Text
-                  onClick={() => {
-                    if (sortable && toggleSort) {
-                      toggleSort(id)
-                    }
-                  }}
-                  weight="semibold"
-                  color="subtle"
-                  size="12"
-                  className={cx(
-                    'relative top-px',
-                    sortable ? 'cursor-pointer' : ''
-                  )}
-                  ellipsis
-                >
-                  {label}
-                </Text>
-              </Tooltip>
-              <Text color="subtle">
-                {sortColumn === id &&
-                  (sortDirection === 'asc' ? (
-                    <CaretUp16 className="scale-75" />
-                  ) : (
-                    <CaretDown16 className="scale-75" />
-                  ))}
-              </Text>
-              {tip && <InfoTip>{tip}</InfoTip>}
-            </div>
-          ))}
-        </div>
-        {summary && (
-          <div className="flex items-center py-2 bg-gray-50 dark:bg-graydark-50 border-l border-r border-b border-gray-200 dark:border-graydark-200">
-            {columns.map(({ id, summary, style, className }) => (
-              <div
-                key={id}
-                className={cx('flex px-6 overflow-hidden', className)}
-                style={style}
-              >
-                {summary && summary()}
-              </div>
-            ))}
-          </div>
-        )}
-        <div className="flex flex-col">
+      <table className="table-auto border-collapse w-full">
+        <thead className="border-b border-gray-400 dark:border-graydark-400">
+          <tr>
+            {columns.map(
+              (
+                { id, label, tip, sortable, cellClassName, contentClassName },
+                i
+              ) => (
+                <th key={id} className={getCellClassNames(i, cellClassName)}>
+                  <div
+                    className={cx(
+                      getContentClassNames(i, contentClassName),
+                      'py-3'
+                    )}
+                  >
+                    <Tooltip content={label}>
+                      <Text
+                        onClick={() => {
+                          if (sortable && toggleSort) {
+                            toggleSort(id)
+                          }
+                        }}
+                        weight="semibold"
+                        color="subtle"
+                        size="12"
+                        className={cx(
+                          'relative top-px',
+                          sortable ? 'cursor-pointer' : ''
+                        )}
+                        ellipsis
+                      >
+                        {label}
+                      </Text>
+                    </Tooltip>
+                    <Text color="subtle">
+                      {sortColumn === id &&
+                        (sortDirection === 'asc' ? (
+                          <CaretUp16 className="scale-75" />
+                        ) : (
+                          <CaretDown16 className="scale-75" />
+                        ))}
+                    </Text>
+                    {tip && <InfoTip>{tip}</InfoTip>}
+                  </div>
+                </th>
+              )
+            )}
+          </tr>
+        </thead>
+        <tbody>
+          {summary && (
+            <tr className="bg-gray-50 dark:bg-graydark-50 border-l border-r border-b border-gray-200 dark:border-graydark-200">
+              {columns.map(
+                ({ id, summary, contentClassName, cellClassName }, i) => (
+                  <td key={id} className={getCellClassNames(i, cellClassName)}>
+                    <div className={getContentClassNames(i, contentClassName)}>
+                      {summary && summary()}
+                    </div>
+                  </td>
+                )
+              )}
+            </tr>
+          )}
+          {/* <tr className="flex flex-col"> */}
           {show === 'currentData' &&
             data?.map((row) => (
-              <div
+              <tr
                 key={row.id}
-                className="flex items-center border-b border-gray-300 dark:border-graydark-300 last-of-type:border-b-none overflow-hidden"
+                className="border-b border-gray-300 dark:border-graydark-300"
               >
-                {columns.map(({ id, render: Render, style, className }, i) => (
-                  <div
-                    key={`${id}/${row.id}`}
-                    className={cx(
-                      'flex items-center px-6 overflow-hidden',
-                      rowSize === 'dense' ? 'h-[50px]' : 'h-[100px]',
-                      className
-                    )}
-                    style={style}
-                  >
-                    <Render {...row} />
-                  </div>
-                ))}
-              </div>
+                {columns.map(
+                  (
+                    {
+                      id,
+                      render: Render,
+                      contentClassName: className,
+                      cellClassName,
+                    },
+                    i
+                  ) => (
+                    <td
+                      key={`${id}/${row.id}`}
+                      className={getCellClassNames(i, cellClassName)}
+                    >
+                      <div
+                        className={cx(
+                          getContentClassNames(i, className),
+                          rowSize === 'dense' ? 'h-[50px]' : 'h-[100px]'
+                        )}
+                      >
+                        <Render {...row} />
+                      </div>
+                    </td>
+                  )
+                )}
+              </tr>
             ))}
           {show === 'emptyState' && emptyState}
           {show === 'skeleton' &&
             times(pageSize).map((i) => (
-              <div
+              <tr
                 key={i}
-                className="flex items-center border-b border-gray-300 dark:border-graydark-300 last-of-type:border-b-none overflow-hidden"
+                className="border-b border-gray-300 dark:border-graydark-300"
               >
-                {columns.map(({ id, style, className }, i) => (
-                  <div
+                {columns.map(({ id, contentClassName, cellClassName }, i) => (
+                  <td
                     key={`${i}/${id}`}
-                    className={cx(
-                      'flex items-center px-6 overflow-hidden',
-                      rowSize === 'dense' ? 'h-[50px]' : 'h-[100px]',
-                      className
-                    )}
-                    style={style}
-                  />
+                    className={getCellClassNames(i, cellClassName)}
+                  >
+                    <div
+                      className={cx(
+                        getContentClassNames(i, contentClassName),
+                        rowSize === 'dense' ? 'h-[50px]' : 'h-[100px]'
+                      )}
+                    />
+                  </td>
                 ))}
-              </div>
+              </tr>
             ))}
-        </div>
-      </div>
+          {/* </tr> */}
+        </tbody>
+      </table>
     </Panel>
   )
 }

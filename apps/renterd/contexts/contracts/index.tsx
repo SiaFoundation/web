@@ -12,6 +12,7 @@ import {
   useDatasetEmptyState,
   useClientFilters,
   useClientFilteredDataset,
+  Tooltip,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import { humanDate } from '@siafoundation/sia-js'
@@ -122,8 +123,7 @@ function useContractsMain() {
       {
         id: 'actions',
         label: columnsMeta.actions.label,
-        size: '50px 0 0',
-        className: '!pl-2 !pr-0',
+        cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
         render: ({ hostIp, hostKey }) => (
           <ContractDropdownMenu address={hostIp} publicKey={hostKey} />
         ),
@@ -132,25 +132,25 @@ function useContractsMain() {
         id: 'contractId',
         label: columnsMeta.contractId.label,
         sortable: columnsMeta.contractId.sortable,
-        size: 2,
-        className: '!pl-0',
         render: ({ id, isRenewed, renewedFrom }) => {
           // const { label, color } = getStatus(row)
           return (
             <div className="flex flex-col gap-1 w-full">
               <ValueCopyable value={stripPrefix(id)} label="contract ID" />
               {isRenewed && (
-                <div className="flex items-center">
-                  <Text color="subtle">
-                    <ArrowUpLeft16 className="scale-75" />
-                  </Text>
-                  <ValueCopyable
-                    color="subtle"
-                    size="10"
-                    value={stripPrefix(renewedFrom)}
-                    label="contract ID"
-                  />
-                </div>
+                <Tooltip content="Renewed from" align="start">
+                  <div className="flex items-center">
+                    <Text color="subtle">
+                      <ArrowUpLeft16 className="scale-75" />
+                    </Text>
+                    <ValueCopyable
+                      color="subtle"
+                      size="10"
+                      value={stripPrefix(renewedFrom)}
+                      label="contract ID"
+                    />
+                  </div>
+                </Tooltip>
               )}
             </div>
           )
@@ -160,7 +160,6 @@ function useContractsMain() {
         id: 'hostIp',
         label: columnsMeta.hostIp.label,
         sortable: columnsMeta.hostIp.sortable,
-        size: 2,
         render: ({ hostIp }) => {
           return <ValueCopyable value={hostIp} type="ip" label="host address" />
         },
@@ -169,7 +168,6 @@ function useContractsMain() {
         id: 'hostKey',
         label: columnsMeta.hostKey.label,
         sortable: columnsMeta.hostKey.sortable,
-        size: 2,
         render: ({ hostKey }) => {
           return <ValueCopyable value={hostKey} label="host public key" />
         },
@@ -178,8 +176,6 @@ function useContractsMain() {
         id: 'timeline',
         label: columnsMeta.timeline.label,
         sortable: columnsMeta.timeline.sortable,
-        size: 4,
-        className: '!overflow-visible',
         render: ({
           contractHeightStart,
           contractHeightEnd,
@@ -189,16 +185,18 @@ function useContractsMain() {
           proofHeight,
         }) => {
           return (
-            <ContractTimeline
-              currentHeight={currentHeight}
-              contractHeightStart={contractHeightStart}
-              contractHeightEnd={contractHeightEnd}
-              proofWindowHeightStart={proofWindowHeightStart}
-              proofWindowHeightEnd={proofWindowHeightEnd}
-              proofHeight={proofHeight}
-              revisionHeight={revisionHeight}
-              range={contractsTimeRange}
-            />
+            <div className="w-[400px]">
+              <ContractTimeline
+                currentHeight={currentHeight}
+                contractHeightStart={contractHeightStart}
+                contractHeightEnd={contractHeightEnd}
+                proofWindowHeightStart={proofWindowHeightStart}
+                proofWindowHeightEnd={proofWindowHeightEnd}
+                proofHeight={proofHeight}
+                revisionHeight={revisionHeight}
+                range={contractsTimeRange}
+              />
+            </div>
           )
         },
       },
@@ -213,7 +211,7 @@ function useContractsMain() {
             </Text>
           )
         },
-        className: 'justify-end',
+        contentClassName: 'justify-end',
       },
       {
         id: 'endTime',
@@ -226,20 +224,20 @@ function useContractsMain() {
             </Text>
           )
         },
-        className: 'justify-end',
+        contentClassName: 'justify-end',
       },
       {
         id: 'totalCost',
         label: columnsMeta.totalCost.label,
         sortable: columnsMeta.totalCost.sortable,
-        className: 'justify-end',
+        contentClassName: 'justify-end',
         render: ({ totalCost }) => <ValueSc value={totalCost.negated()} />,
       },
       {
         id: 'spendingUploads',
         label: columnsMeta.spendingUploads.label,
         sortable: columnsMeta.spendingUploads.sortable,
-        className: 'justify-end',
+        contentClassName: 'justify-end',
         render: ({ spendingUploads }) => (
           <ValueSc value={spendingUploads.negated()} />
         ),
@@ -248,7 +246,7 @@ function useContractsMain() {
         id: 'spendingDownloads',
         label: columnsMeta.spendingDownloads.label,
         sortable: columnsMeta.spendingDownloads.sortable,
-        className: 'justify-end',
+        contentClassName: 'justify-end',
         render: ({ spendingDownloads }) => (
           <ValueSc value={spendingDownloads.negated()} />
         ),
@@ -257,7 +255,7 @@ function useContractsMain() {
         id: 'spendingFundAccount',
         label: columnsMeta.spendingFundAccount.label,
         sortable: columnsMeta.spendingFundAccount.sortable,
-        className: 'justify-end',
+        contentClassName: 'justify-end',
         render: ({ spendingFundAccount }) => (
           <ValueSc value={spendingFundAccount.negated()} />
         ),

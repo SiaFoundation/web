@@ -259,8 +259,7 @@ function useFilesMain() {
         id: 'type',
         label: columnsMeta.type.label,
         sortable: columnsMeta.type.sortable,
-        size: '0 0 50px',
-        className: '!pl-2 !pr-0',
+        cellClassName: 'w-[50px] !pl-2 !pr-2 [&+*]:!pl-0',
         render: ({ isUploading, isDirectory, name, path }) => {
           if (isUploading) {
             return (
@@ -284,8 +283,7 @@ function useFilesMain() {
         id: 'name',
         label: columnsMeta.name.label,
         sortable: columnsMeta.name.sortable,
-        size: '10',
-        className: '!pl-0 min-w-[200px] max-w-[800px]',
+        contentClassName: 'max-w-[600px]',
         render: ({ name, isDirectory }) => {
           if (isDirectory) {
             if (name === '..') {
@@ -327,50 +325,10 @@ function useFilesMain() {
         },
       },
       {
-        id: 'size',
-        label: columnsMeta.size.label,
-        sortable: columnsMeta.size.sortable,
-        size: '1 1 150px',
-        className: 'justify-end',
-        render: function SizeColumn({ path, isUploading, isDirectory }) {
-          const obj = useObject({
-            disabled: isUploading || isDirectory,
-            params: {
-              key: encodeURIComponent(path.slice(1)),
-            },
-            config: {
-              swr: {
-                dedupingInterval: 5000,
-              },
-            },
-          })
-          if (isUploading) {
-            return <LoadingDots />
-          }
-
-          if (obj.data?.object) {
-            return (
-              <ValueNum
-                size="12"
-                value={(obj.data?.object.Slabs || []).reduce(
-                  (acc, s) => acc.plus(s.Length - s.Offset),
-                  new BigNumber(0)
-                )}
-                variant="value"
-                color="subtle"
-                format={(v) => humanBytes(v.toNumber())}
-              />
-            )
-          }
-          return null
-        },
-      },
-      {
         id: 'health',
         label: columnsMeta.health.label,
         sortable: columnsMeta.health.sortable,
-        size: '1 1 150px',
-        className: 'justify-center',
+        contentClassName: 'justify-center',
         render: function SizeColumn({ path, isUploading, isDirectory }) {
           const obj = useObject({
             disabled: isUploading || isDirectory,
@@ -471,11 +429,48 @@ function useFilesMain() {
         },
       },
       {
+        id: 'size',
+        label: columnsMeta.size.label,
+        sortable: columnsMeta.size.sortable,
+        contentClassName: 'justify-end',
+        render: function SizeColumn({ path, isUploading, isDirectory }) {
+          const obj = useObject({
+            disabled: isUploading || isDirectory,
+            params: {
+              key: encodeURIComponent(path.slice(1)),
+            },
+            config: {
+              swr: {
+                dedupingInterval: 5000,
+              },
+            },
+          })
+          if (isUploading) {
+            return <LoadingDots />
+          }
+
+          if (obj.data?.object) {
+            return (
+              <ValueNum
+                size="12"
+                value={(obj.data?.object.Slabs || []).reduce(
+                  (acc, s) => acc.plus(s.Length - s.Offset),
+                  new BigNumber(0)
+                )}
+                variant="value"
+                color="subtle"
+                format={(v) => humanBytes(v.toNumber())}
+              />
+            )
+          }
+          return null
+        },
+      },
+      {
         id: 'slabs',
         label: columnsMeta.slabs.label,
         sortable: columnsMeta.slabs.sortable,
-        size: '1 1 150px',
-        className: 'justify-center',
+        contentClassName: 'justify-end',
         render: function SlabsColumn({ path, isUploading, isDirectory }) {
           const obj = useObject({
             disabled: isUploading || isDirectory,
@@ -509,8 +504,7 @@ function useFilesMain() {
         id: 'shards',
         label: columnsMeta.shards.label,
         sortable: columnsMeta.shards.sortable,
-        size: '1 1 150px',
-        className: 'justify-center',
+        contentClassName: 'justify-end',
         render: function SlabsColumn({ path, isUploading, isDirectory }) {
           const obj = useObject({
             disabled: isUploading || isDirectory,
