@@ -12,6 +12,8 @@ type Props = {
 export function PaginatorUnknownTotal({ offset, limit, pageTotal }: Props) {
   const router = useRouter()
   const isMore = pageTotal === limit
+  const from = offset + 1
+  const to = Math.min(offset + limit, offset + pageTotal)
   return (
     <ControlGroup>
       <Button
@@ -50,8 +52,8 @@ export function PaginatorUnknownTotal({ offset, limit, pageTotal }: Props) {
       >
         <CaretLeft16 />
       </Button>
-      <Button className="rounded-none px-3">
-        {offset + 1} - {offset + limit}
+      <Button className="rounded-none px-3" state="waiting">
+        {from} - {to}
       </Button>
       <Button
         icon="contrast"
