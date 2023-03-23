@@ -62,7 +62,6 @@ export default function StoragePage() {
     {
       id: 'path',
       label: 'Path',
-      size: 3,
       render: ({ path }) => (
         <Text font="mono" ellipsis>
           {path}
@@ -72,7 +71,6 @@ export default function StoragePage() {
     {
       id: 'storage',
       label: 'Storage',
-      size: 3,
       render: ({ storageUsed, storageCapacity }) => (
         <div className="flex gap-1 w-full max-w-[200px] pt-[10px]">
           <ProgressBar
@@ -89,14 +87,12 @@ export default function StoragePage() {
     {
       id: 'status',
       label: 'Status',
-      size: 1,
       render: ({ status }) => <Badge variant="green">{status}</Badge>,
     },
     {
       id: 'errors',
       label: 'Errors',
       tip: 'Read | write',
-      size: 1,
       render: ({ readErrors, writeErrors }) => (
         <Text font="mono">
           {readErrors}|{writeErrors}
@@ -106,8 +102,7 @@ export default function StoragePage() {
     {
       id: 'actions',
       label: '',
-      size: 1,
-      className: 'justify-end',
+      contentClassName: 'justify-end',
       render: ({ path }) => <StorageFolderDropdownMenu id={path} />,
     },
   ]

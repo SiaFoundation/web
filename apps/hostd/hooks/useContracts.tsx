@@ -227,7 +227,6 @@ export function useContracts() {
           id: 'overview',
           label: 'Overview',
           type: 'fixed',
-          size: 2,
           render: (row) => {
             const { id, renewed } = row
             const { label, color } = getStatus(row)
@@ -263,7 +262,6 @@ export function useContracts() {
         {
           id: 'timeline',
           label: 'Timeline',
-          size: 4,
           render: (row) => {
             // const { startDate, expirationDate, payoutDate } = row
             // const { color } = getStatus(row)
@@ -299,7 +297,7 @@ export function useContracts() {
               {humanDate(startDate)}
             </Text>
           ),
-          className: 'justify-end',
+          contentClassName: 'justify-end',
         },
         {
           id: 'expirationDate',
@@ -310,7 +308,7 @@ export function useContracts() {
               {humanDate(expirationDate)}
             </Text>
           ),
-          className: 'justify-end',
+          contentClassName: 'justify-end',
         },
         {
           id: 'payoutDate',
@@ -321,12 +319,12 @@ export function useContracts() {
               {humanDate(payoutDate)}
             </Text>
           ),
-          className: 'justify-end',
+          contentClassName: 'justify-end',
         },
         {
           id: 'estDataSize',
           label: 'Est. data size',
-          className: 'justify-end',
+          contentClassName: 'justify-end',
           sortable: 'data',
           render: ({ estDataSize }) => (
             <ValueNum
@@ -345,7 +343,7 @@ export function useContracts() {
           id: 'lockedCollateral',
           label: 'Locked collateral',
           sortable: 'financial',
-          className: 'justify-end',
+          contentClassName: 'justify-end',
           render: ({ lockedCollateral }) => (
             <ValueSc value={lockedCollateral} />
           ),
@@ -354,7 +352,7 @@ export function useContracts() {
           id: 'riskedCollateral',
           label: 'Risked collateral',
           sortable: 'financial',
-          className: 'justify-end',
+          contentClassName: 'justify-end',
           render: ({ riskedCollateral }) => (
             <ValueSc value={riskedCollateral} />
           ),
@@ -363,7 +361,7 @@ export function useContracts() {
           id: 'returnedCollateral',
           label: 'Returned collateral',
           sortable: 'financial',
-          className: 'justify-end',
+          contentClassName: 'justify-end',
           render: ({ returnedCollateral }) => (
             <ValueSc value={returnedCollateral} />
           ),
@@ -372,28 +370,28 @@ export function useContracts() {
           id: 'lostCollateral',
           label: 'Lost collateral',
           sortable: 'financial',
-          className: 'justify-end',
+          contentClassName: 'justify-end',
           render: ({ lostCollateral }) => <ValueSc value={lostCollateral} />,
         },
         {
           id: 'contractFee',
           label: 'Contract fee',
           sortable: 'financial',
-          className: 'justify-end',
+          contentClassName: 'justify-end',
           render: ({ contractFee }) => <ValueSc value={contractFee} />,
         },
         {
           id: 'accountFunding',
           label: 'Account funding',
           sortable: 'financial',
-          className: 'justify-end',
+          contentClassName: 'justify-end',
           render: ({ accountFunding }) => <ValueSc value={accountFunding} />,
         },
         {
           id: 'estStorageRevenue',
           label: 'Est. storage revenue',
           sortable: 'financial',
-          className: 'justify-end',
+          contentClassName: 'justify-end',
           render: ({ estStorageRevenue }) => (
             <ValueSc value={estStorageRevenue} />
           ),
@@ -402,7 +400,7 @@ export function useContracts() {
           id: 'estIngressRevenue',
           label: 'Est. ingress revenue',
           sortable: 'financial',
-          className: 'justify-end',
+          contentClassName: 'justify-end',
           render: ({ estIngressRevenue }) => (
             <ValueSc value={estIngressRevenue} />
           ),
@@ -411,7 +409,7 @@ export function useContracts() {
           id: 'estEgressRevenue',
           label: 'Est. egress revenue',
           sortable: 'financial',
-          className: 'justify-end',
+          contentClassName: 'justify-end',
           render: ({ estEgressRevenue }) => (
             <ValueSc value={estEgressRevenue} />
           ),
@@ -420,7 +418,7 @@ export function useContracts() {
           id: 'potentialRevenue',
           label: 'Potential revenue',
           sortable: 'financial',
-          className: 'justify-end',
+          contentClassName: 'justify-end',
           render: ({ potentialRevenue }) => (
             <ValueSc value={potentialRevenue} />
           ),
@@ -429,21 +427,21 @@ export function useContracts() {
           id: 'earnedRevenue',
           label: 'Earned revenue',
           sortable: 'financial',
-          className: 'justify-end',
+          contentClassName: 'justify-end',
           render: ({ earnedRevenue }) => <ValueSc value={earnedRevenue} />,
         },
         {
           id: 'lostRevenue',
           label: 'Lost revenue',
           sortable: 'financial',
-          className: 'justify-end',
+          contentClassName: 'justify-end',
           render: ({ lostRevenue }) => <ValueSc value={lostRevenue} />,
         },
         {
           id: 'contractPayout',
           label: 'Contract Payout',
           sortable: 'financial',
-          className: 'justify-end',
+          contentClassName: 'justify-end',
           render: ({ contractPayout }) => <ValueSc value={contractPayout} />,
           summary: () => <ValueSc value={toHastings(5e9)} />,
         },
@@ -451,7 +449,7 @@ export function useContracts() {
           id: 'revenue',
           label: 'Revenue',
           sortable: 'financial',
-          className: 'justify-end',
+          contentClassName: 'justify-end',
           render: ({ revenue }) => <ValueSc value={revenue} />,
           summary: () => <ValueSc value={toHastings(5e9)} />,
         },
@@ -459,7 +457,7 @@ export function useContracts() {
           id: 'costBasis',
           label: 'Cost Basis',
           sortable: 'financial',
-          className: 'justify-end',
+          contentClassName: 'justify-end',
           render: ({ costBasis }) => <ValueSc value={costBasis} />,
           summary: () => <ValueSc value={toHastings(5e9)} />,
         },
@@ -467,7 +465,7 @@ export function useContracts() {
           id: 'gainLoss',
           label: 'Gain / Loss',
           sortable: 'financial',
-          className: 'justify-end',
+          contentClassName: 'justify-end',
           render: ({ gainLoss }) => (
             <Text font="mono" ellipsis>
               {gainLoss.toFixed(2)}%
@@ -482,7 +480,7 @@ export function useContracts() {
         {
           id: 'baseExchangeRate',
           label: 'Base exchange rate',
-          className: 'justify-end',
+          contentClassName: 'justify-end',
           render: ({ baseExchangeRate }) => (
             <ValueSc value={baseExchangeRate} />
           ),
