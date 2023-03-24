@@ -1,5 +1,5 @@
 import { useGetSwr } from './useGet'
-import { Action, Config } from './siaTypes'
+import { Action, Config, Host } from './siaTypes'
 import { usePutFunc } from './usePut'
 import {
   HookArgsSwr,
@@ -43,12 +43,24 @@ export function useAutopilotStatus(
   })
 }
 
+export type AutopilotHost = {
+  host: Host
+  score: number
+  scoreBreakdown: {
+    age: number
+    collateral: number
+    interactions: number
+    storageRemaining: number
+    prices: number
+    uptime: number
+    version: number
+  }
+  unusableReasons: string[]
+  usable: boolean
+}
+
 export function useAutopilotHostsSearch(
-  args?: HookArgsWithPayloadSwr<
-    void,
-    HostsSearchPayload,
-    { currentPeriod: number }
-  >
+  args?: HookArgsWithPayloadSwr<void, HostsSearchPayload, AutopilotHost[]>
 ) {
   return usePostSwr({
     ...args,

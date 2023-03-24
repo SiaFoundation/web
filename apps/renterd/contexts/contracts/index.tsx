@@ -136,7 +136,11 @@ function useContractsMain() {
           // const { label, color } = getStatus(row)
           return (
             <div className="flex flex-col gap-1 w-full">
-              <ValueCopyable value={stripPrefix(id)} label="contract ID" />
+              <ValueCopyable
+                size="12"
+                value={stripPrefix(id)}
+                label="contract ID"
+              />
               {isRenewed && (
                 <Tooltip content="Renewed from" align="start">
                   <div className="flex items-center">
@@ -161,7 +165,14 @@ function useContractsMain() {
         label: columnsMeta.hostIp.label,
         sortable: columnsMeta.hostIp.sortable,
         render: ({ hostIp }) => {
-          return <ValueCopyable value={hostIp} type="ip" label="host address" />
+          return (
+            <ValueCopyable
+              size="12"
+              value={hostIp}
+              type="ip"
+              label="host address"
+            />
+          )
         },
       },
       {
@@ -169,7 +180,9 @@ function useContractsMain() {
         label: columnsMeta.hostKey.label,
         sortable: columnsMeta.hostKey.sortable,
         render: ({ hostKey }) => {
-          return <ValueCopyable value={hostKey} label="host public key" />
+          return (
+            <ValueCopyable size="12" value={hostKey} label="host public key" />
+          )
         },
       },
       {
@@ -206,7 +219,7 @@ function useContractsMain() {
         sortable: columnsMeta.startTime.sortable,
         render: ({ startTime }) => {
           return (
-            <Text font="mono" ellipsis>
+            <Text size="12" font="mono" ellipsis>
               {humanDate(startTime)}
             </Text>
           )
@@ -219,7 +232,7 @@ function useContractsMain() {
         sortable: columnsMeta.endTime.sortable,
         render: ({ endTime }) => {
           return (
-            <Text font="mono" ellipsis>
+            <Text size="12" font="mono" ellipsis>
               {humanDate(endTime)}
             </Text>
           )
@@ -230,34 +243,36 @@ function useContractsMain() {
         id: 'totalCost',
         label: columnsMeta.totalCost.label,
         sortable: columnsMeta.totalCost.sortable,
-        contentClassName: 'justify-end',
-        render: ({ totalCost }) => <ValueSc value={totalCost.negated()} />,
+        contentClassName: 'w-[120px] justify-end',
+        render: ({ totalCost }) => (
+          <ValueSc size="12" value={totalCost.negated()} />
+        ),
       },
       {
         id: 'spendingUploads',
         label: columnsMeta.spendingUploads.label,
         sortable: columnsMeta.spendingUploads.sortable,
-        contentClassName: 'justify-end',
+        contentClassName: 'w-[120px] justify-end',
         render: ({ spendingUploads }) => (
-          <ValueSc value={spendingUploads.negated()} />
+          <ValueSc size="12" value={spendingUploads.negated()} />
         ),
       },
       {
         id: 'spendingDownloads',
         label: columnsMeta.spendingDownloads.label,
         sortable: columnsMeta.spendingDownloads.sortable,
-        contentClassName: 'justify-end',
+        contentClassName: 'w-[120px] justify-end',
         render: ({ spendingDownloads }) => (
-          <ValueSc value={spendingDownloads.negated()} />
+          <ValueSc size="12" value={spendingDownloads.negated()} />
         ),
       },
       {
         id: 'spendingFundAccount',
         label: columnsMeta.spendingFundAccount.label,
         sortable: columnsMeta.spendingFundAccount.sortable,
-        contentClassName: 'justify-end',
+        contentClassName: 'w-[120px] justify-end',
         render: ({ spendingFundAccount }) => (
-          <ValueSc value={spendingFundAccount.negated()} />
+          <ValueSc size="12" value={spendingFundAccount.negated()} />
         ),
       },
     ]

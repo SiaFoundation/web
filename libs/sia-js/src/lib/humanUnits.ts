@@ -74,7 +74,22 @@ export function humanNumber(
     const n = num.toNumber()
     if (n < 1000) return num.toString()
 
-    const numberUnits = ['', 'K', 'M', 'B', 't', 'q', 'Q'],
+    const numberUnits = [
+        '',
+        'K',
+        'M',
+        'B',
+        't',
+        'q',
+        'Q',
+        's',
+        'S',
+        'o',
+        'n',
+        'd',
+        'U',
+        'D',
+      ],
       digits = Math.floor(Math.log10(n) / Math.log10(1000)),
       d = n / Math.pow(1000, digits)
 

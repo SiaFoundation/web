@@ -5,7 +5,7 @@ import { useHosts } from '../../../../contexts/hosts'
 import { useCallback } from 'react'
 import { ServerFilterItem } from '@siafoundation/design-system'
 
-export function ContractFilterCmd({
+export function HostsFilterCmd({
   currentPage,
   parentPage,
   pushPage,

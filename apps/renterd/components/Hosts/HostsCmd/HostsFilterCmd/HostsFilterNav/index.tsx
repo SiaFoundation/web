@@ -1,8 +1,9 @@
 import { CommandItemNav } from '../../../../CmdRoot/Item'
 import { AddressCmdNav } from '../HostsFilterCmdGroups/Address'
 import { Page } from '../../../../CmdRoot/types'
-import { contractFilterAllowBlockPage } from '../HostsFilterCmdGroups/AllowBlock'
+import { hostsFilterAllowBlockPage } from '../HostsFilterCmdGroups/AllowBlock'
 import { ServerFilterItem } from '@siafoundation/design-system'
+import { hostsFilterContractsPage } from '../HostsFilterCmdGroups/Contracts'
 
 export const commandPage = {
   namespace: 'hosts',
@@ -35,10 +36,20 @@ export function HostsFilterNav({
         parentPage={parentPage}
         commandPage={commandPage}
         onSelect={() => {
-          pushPage(contractFilterAllowBlockPage)
+          pushPage(hostsFilterContractsPage)
         }}
       >
-        {contractFilterAllowBlockPage.label}
+        {hostsFilterContractsPage.label}
+      </CommandItemNav>
+      <CommandItemNav
+        currentPage={currentPage}
+        parentPage={parentPage}
+        commandPage={commandPage}
+        onSelect={() => {
+          pushPage(hostsFilterAllowBlockPage)
+        }}
+      >
+        {hostsFilterAllowBlockPage.label}
       </CommandItemNav>
     </>
   )
