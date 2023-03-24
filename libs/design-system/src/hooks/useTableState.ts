@@ -7,15 +7,17 @@ type ColumnMeta<ColumnId> = {
   label: string
   sortable?: string
   fixed?: boolean
+  category?: string
 }
 
 export function useTableState<ColumnId extends string>(
   scope: string,
   columnsMeta: Record<ColumnId, ColumnMeta<ColumnId>>,
   columnsDefaultVisible: ColumnId[],
-  columnsDefaultSort: ColumnId
+  columnsDefaultSort: ColumnId,
+  disabledCategories?: string[]
 ) {
-  const [enabledColumns, setEnabledColumns] = useLocalStorageState<string[]>(
+  const [_enabledColumns, setEnabledColumns] = useLocalStorageState<string[]>(
     `${scope}/enabledColumns`,
     {
       defaultValue: columnsDefaultVisible,
@@ -65,8 +67,28 @@ export function useTableState<ColumnId extends string>(
 
   const configurableColumns = useMemo(
     () =>
-      (values(columnsMeta) as ColumnMeta<ColumnId>[]).filter((i) => !i.fixed),
-    [columnsMeta]
+      (values(columnsMeta) as ColumnMeta<ColumnId>[]).filter((column) => {
+        const columnExplicitlyDisabled = disabledCategories?.includes(
+          columnsMeta[column.id].category || ''
+        )
+        return !column.fixed && !columnExplicitlyDisabled
+      }),
+    [columnsMeta, disabledCategories]
+  )
+
+  const enabledColumns = useMemo(
+    () =>
+      (values(columnsMeta) as ColumnMeta<ColumnId>[])
+        .filter((column) => {
+          const columnIsLogicallyEnabled =
+            column.fixed || _enabledColumns.includes(column.id)
+          const columnExplicitlyDisabled = disabledCategories?.includes(
+            columnsMeta[column.id].category || ''
+          )
+          return columnIsLogicallyEnabled && !columnExplicitlyDisabled
+        })
+        .map((column) => column.id),
+    [columnsMeta, _enabledColumns, disabledCategories]
   )
 
   const sortOptions = useMemo(

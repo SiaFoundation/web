@@ -12,7 +12,7 @@ import { ContractData } from '../contracts/types'
 import { useAutopilot } from '../../hooks/useAutopilot'
 
 export function useDataset({
-  isAutopilotEnabled,
+  autopilotMode,
   regularResponse,
   autopilotResponse,
   allContracts,
@@ -20,7 +20,7 @@ export function useDataset({
   blocklist,
   isAllowlistActive,
 }: {
-  isAutopilotEnabled: ReturnType<typeof useAutopilot>['isAutopilotEnabled']
+  autopilotMode: ReturnType<typeof useAutopilot>['autopilotMode']
   regularResponse: ReturnType<typeof useHostsSearch>
   autopilotResponse: ReturnType<typeof useAutopilotHostsSearch>
   allContracts: ContractData[]
@@ -29,11 +29,8 @@ export function useDataset({
   isAllowlistActive: boolean
 }) {
   return useMemo<HostData[] | null>(() => {
-    if (!isAutopilotEnabled) {
-      if (!regularResponse.data) {
-        return null
-      }
-      const dataset: HostData[] =
+    if (autopilotMode === 'off') {
+      return (
         regularResponse.data?.map((host) => {
           return {
             ...getHostFields(host, allContracts),
@@ -45,13 +42,10 @@ export function useDataset({
             }),
             ...getAutopilotFields(),
           }
-        }) || []
-      return dataset
-    } else if (isAutopilotEnabled) {
-      if (!autopilotResponse.data) {
-        return null
-      }
-      const dataset: HostData[] =
+        }) || null
+      )
+    } else if (autopilotMode === 'on') {
+      return (
         autopilotResponse.data?.map((ah) => {
           return {
             ...getHostFields(ah.host, allContracts),
@@ -63,12 +57,12 @@ export function useDataset({
             }),
             ...getAutopilotFields(ah),
           }
-        }) || []
-      return dataset
+        }) || null
+      )
     }
-    return []
+    return null
   }, [
-    isAutopilotEnabled,
+    autopilotMode,
     regularResponse.data,
     autopilotResponse.data,
     allContracts,
