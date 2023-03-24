@@ -2,8 +2,8 @@ import { ServerFilterItem } from '@siafoundation/design-system'
 import { CommandGroup, CommandItemSearch } from '../../../../CmdRoot/Item'
 import { Page } from '../../../../CmdRoot/types'
 
-export const contractFilterAllowBlockPage = {
-  namespace: 'contracts/filterAllowBlock',
+export const hostsFilterAllowBlockPage = {
+  namespace: 'hosts/filterAllowBlock',
   label: 'Hosts filter by allow/block status',
 }
 
@@ -30,13 +30,13 @@ export function AllowBlockCmdGroup({
   return (
     <CommandGroup
       currentPage={currentPage}
-      commandPage={contractFilterAllowBlockPage}
+      commandPage={hostsFilterAllowBlockPage}
     >
       {options.map((o) => (
         <CommandItemSearch
           key={o.id + o.value}
           currentPage={currentPage}
-          commandPage={contractFilterAllowBlockPage}
+          commandPage={hostsFilterAllowBlockPage}
           onSelect={() => {
             select(o)
           }}

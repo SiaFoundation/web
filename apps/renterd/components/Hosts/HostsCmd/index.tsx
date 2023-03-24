@@ -3,7 +3,7 @@ import {
   CommandItemNav,
   CommandItemSearch,
 } from '../../CmdRoot/Item'
-import { ContractFilterCmd } from './HostsFilterCmd'
+import { HostsFilterCmd } from './HostsFilterCmd'
 import { Page } from '../../CmdRoot/types'
 import { useRouter } from 'next/router'
 import { useDialog } from '../../../contexts/dialog'
@@ -62,7 +62,7 @@ export function HostsCmd({
       >
         Manage filter lists: allowlist + blocklist
       </CommandItemSearch>
-      <ContractFilterCmd
+      <HostsFilterCmd
         parentPage={commandPage}
         currentPage={currentPage}
         beforeSelect={beforeSelect}

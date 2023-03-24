@@ -10,12 +10,26 @@ export type HostData = {
   lastScanSuccess: boolean
   lastScan: string
   knownSince: string
-  uptime: number
-  downtime: number
+  uptime: BigNumber
+  downtime: BigNumber
   successfulInteractions: BigNumber
   failedInteractions: BigNumber
   totalInteractions: BigNumber
   totalScans: BigNumber
+  // autopilot
+  score: BigNumber
+  scoreBreakdown: {
+    age: BigNumber
+    collateral: BigNumber
+    interactions: BigNumber
+    storageRemaining: BigNumber
+    prices: BigNumber
+    uptime: BigNumber
+    version: BigNumber
+  }
+  unusableReasons: string[]
+  usable: boolean
+  activeContracts: BigNumber
 }
 
 export type TableColumnId =
@@ -31,6 +45,16 @@ export type TableColumnId =
   | 'successfulInteractions'
   | 'failedInteractions'
   | 'totalInteractions'
+  | 'activeContracts'
+  | 'usable'
+  | 'scoreOverall'
+  | 'scoreAge'
+  | 'scoreCollateral'
+  | 'scoreInteractions'
+  | 'scorePrices'
+  | 'scoreStorageRemaining'
+  | 'scoreUptime'
+  | 'scoreVersion'
 
 export const columnsMeta: Record<
   TableColumnId,
@@ -43,7 +67,7 @@ export const columnsMeta: Record<
   },
   allow: {
     id: 'allow',
-    label: 'Allow',
+    label: 'Allowed',
   },
   netAddress: {
     id: 'netAddress',
@@ -54,6 +78,46 @@ export const columnsMeta: Record<
     id: 'publicKey',
     label: 'Public key',
     sortable: 'ID',
+  },
+  usable: {
+    id: 'usable',
+    label: 'Usable',
+  },
+  activeContracts: {
+    id: 'activeContracts',
+    label: 'Active contracts',
+  },
+  scoreOverall: {
+    id: 'scoreOverall',
+    label: 'Score: overall',
+  },
+  scoreAge: {
+    id: 'scoreAge',
+    label: 'Score: age',
+  },
+  scoreCollateral: {
+    id: 'scoreCollateral',
+    label: 'Score: collateral',
+  },
+  scoreInteractions: {
+    id: 'scoreInteractions',
+    label: 'Score: interactions',
+  },
+  scorePrices: {
+    id: 'scorePrices',
+    label: 'Score: prices',
+  },
+  scoreStorageRemaining: {
+    id: 'scoreStorageRemaining',
+    label: 'Score: storage remaining',
+  },
+  scoreUptime: {
+    id: 'scoreUptime',
+    label: 'Score: uptime',
+  },
+  scoreVersion: {
+    id: 'scoreVersion',
+    label: 'Score: version',
   },
   lastScan: {
     id: 'lastScan',

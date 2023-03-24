@@ -11,7 +11,7 @@ import { useHosts } from '../../../contexts/hosts'
 import { Command } from 'cmdk'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Page } from '../../CmdRoot/types'
-import { ContractFilterCmd } from '../HostsCmd/HostsFilterCmd'
+import { HostsFilterCmd } from '../HostsCmd/HostsFilterCmd'
 
 export function HostsFilterMenu() {
   const { filters, removeFilter, removeLastFilter } = useHosts()
@@ -111,7 +111,7 @@ export function HostsFilterMenu() {
                   <Command.Separator className={separatorStyles('my-2')} />
                 )} */}
               <Command.List>
-                <ContractFilterCmd
+                <HostsFilterCmd
                   currentPage={currentPage}
                   beforeSelect={beforeSelect}
                   afterSelect={afterSelect}
