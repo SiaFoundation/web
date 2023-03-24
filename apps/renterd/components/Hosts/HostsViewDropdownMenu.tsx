@@ -23,6 +23,19 @@ export function HostsViewDropdownMenu() {
     // setSortDir,
     enabledColumns,
   } = useHosts()
+
+  const generalColumns = configurableColumns
+    .filter((c) => c.category !== 'autopilot')
+    .map((column) => ({
+      label: column.label,
+      value: column.id,
+    }))
+  const autopilotColumns = configurableColumns
+    .filter((c) => c.category === 'autopilot')
+    .map((column) => ({
+      label: column.label,
+      value: column.id,
+    }))
   return (
     <Popover
       trigger={
@@ -50,16 +63,26 @@ export function HostsViewDropdownMenu() {
           </Button>
         </MenuItemRightSlot>
       </BaseMenuItem>
+      {autopilotColumns.length ? <Label className="px-2">General</Label> : null}
       <BaseMenuItem>
         <PoolCombo
-          options={configurableColumns.map((column) => ({
-            label: column.label,
-            value: column.id,
-          }))}
+          options={generalColumns}
           values={enabledColumns}
           onChange={(value) => toggleColumnVisibility(value)}
         />
       </BaseMenuItem>
+      {autopilotColumns.length ? (
+        <>
+          <Label className="px-2">Autopilot</Label>
+          <BaseMenuItem>
+            <PoolCombo
+              options={autopilotColumns}
+              values={enabledColumns}
+              onChange={(value) => toggleColumnVisibility(value)}
+            />
+          </BaseMenuItem>
+        </>
+      ) : null}
     </Popover>
   )
 }

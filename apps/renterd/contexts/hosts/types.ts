@@ -58,7 +58,13 @@ export type TableColumnId =
 
 export const columnsMeta: Record<
   TableColumnId,
-  { id: TableColumnId; label: string; sortable?: string; fixed?: boolean }
+  {
+    id: TableColumnId
+    label: string
+    sortable?: string
+    fixed?: boolean
+    category?: string
+  }
 > = {
   actions: {
     id: 'actions',
@@ -82,6 +88,7 @@ export const columnsMeta: Record<
   usable: {
     id: 'usable',
     label: 'Usable',
+    category: 'autopilot',
   },
   activeContracts: {
     id: 'activeContracts',
@@ -90,34 +97,42 @@ export const columnsMeta: Record<
   scoreOverall: {
     id: 'scoreOverall',
     label: 'Score: overall',
+    category: 'autopilot',
   },
   scoreAge: {
     id: 'scoreAge',
     label: 'Score: age',
+    category: 'autopilot',
   },
   scoreCollateral: {
     id: 'scoreCollateral',
     label: 'Score: collateral',
+    category: 'autopilot',
   },
   scoreInteractions: {
     id: 'scoreInteractions',
     label: 'Score: interactions',
+    category: 'autopilot',
   },
   scorePrices: {
     id: 'scorePrices',
     label: 'Score: prices',
+    category: 'autopilot',
   },
   scoreStorageRemaining: {
     id: 'scoreStorageRemaining',
     label: 'Score: storage remaining',
+    category: 'autopilot',
   },
   scoreUptime: {
     id: 'scoreUptime',
     label: 'Score: uptime',
+    category: 'autopilot',
   },
   scoreVersion: {
     id: 'scoreVersion',
     label: 'Score: version',
+    category: 'autopilot',
   },
   lastScan: {
     id: 'lastScan',
@@ -169,6 +184,9 @@ export const columnsDefaultVisible: TableColumnId[] = [
   'knownSince',
   'totalScans',
   'uptime',
+  'activeContracts',
+  'usable',
+  'scoreOverall',
 ]
 
 export const columnsDefaultSort = 'lastScan'

@@ -11,9 +11,7 @@ import {
   useHostsSearch,
 } from '@siafoundation/react-core'
 import { createContext, useContext, useMemo } from 'react'
-import BigNumber from 'bignumber.js'
 import {
-  HostData,
   TableColumnId,
   columnsMeta,
   columnsDefaultVisible,
@@ -33,10 +31,10 @@ function useHostsMain() {
     useServerFilters()
 
   const { dataset: allContracts } = useContracts()
-  const { isAutopilotEnabled } = useAutopilot()
+  const { autopilotMode } = useAutopilot()
 
   const autopilotResponse = useAutopilotHostsSearch({
-    disabled: isAutopilotEnabled !== 'on',
+    disabled: autopilotMode !== 'on',
     payload: {
       limit,
       offset,
@@ -51,7 +49,7 @@ function useHostsMain() {
   })
 
   const regularResponse = useHostsSearch({
-    disabled: isAutopilotEnabled !== 'off',
+    disabled: autopilotMode !== 'off',
     payload: {
       limit,
       offset,
@@ -64,7 +62,7 @@ function useHostsMain() {
           : undefined,
     },
   })
-  const isValidating = isAutopilotEnabled
+  const isValidating = autopilotMode
     ? autopilotResponse.isValidating
     : regularResponse.isValidating
 
@@ -73,7 +71,7 @@ function useHostsMain() {
   const isAllowlistActive = !!allowlist.data?.length
 
   const dataset = useDataset({
-    isAutopilotEnabled,
+    autopilotMode,
     autopilotResponse,
     regularResponse,
     allContracts,
@@ -81,6 +79,11 @@ function useHostsMain() {
     blocklist,
     isAllowlistActive,
   })
+
+  const disabledCategories = useMemo(
+    () => (autopilotMode === 'off' ? ['autopilot'] : []),
+    [autopilotMode]
+  )
 
   const {
     configurableColumns,
@@ -97,17 +100,14 @@ function useHostsMain() {
     'renterd/v0/hosts',
     columnsMeta,
     columnsDefaultVisible,
-    columnsDefaultSort
+    columnsDefaultSort,
+    disabledCategories
   )
 
   const tableColumns = useColumns({ isAllowlistActive })
 
   const filteredTableColumns = useMemo(
-    () =>
-      tableColumns.filter(
-        (column) =>
-          columnsMeta[column.id].fixed || enabledColumns.includes(column.id)
-      ),
+    () => tableColumns.filter((column) => enabledColumns.includes(column.id)),
     [tableColumns, enabledColumns]
   )
 

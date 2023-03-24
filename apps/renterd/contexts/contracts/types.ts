@@ -33,13 +33,6 @@ export type TableColumnId =
   | 'spendingUploads'
   | 'spendingDownloads'
   | 'spendingFundAccount'
-// | 'proofWindowDate'
-// | 'expirationDate'
-// | 'dataSize'
-// | 'contractFee'
-// | 'storagePrice'
-// | 'uploadPrice'
-// | 'downloadPrice'
 
 export const columnsMeta: Record<
   TableColumnId,
@@ -105,6 +98,7 @@ export const columnsMeta: Record<
 export const columnsDefaultVisible: TableColumnId[] = [
   'contractId',
   'hostIp',
+  'hostKey',
   'timeline',
   'totalCost',
   'spendingUploads',
