@@ -27,7 +27,11 @@ export function NextAppCsr({
 }: Props) {
   return (
     <ClientSide>
-      <SWRConfig value={{ fallback: fallback || {} }}>
+      <SWRConfig
+        value={{
+          fallback: fallback || {},
+        }}
+      >
         <ThemeProvider>
           <AppSettingsProvider
             passwordProtectRequestHooks={passwordProtectRequestHooks}

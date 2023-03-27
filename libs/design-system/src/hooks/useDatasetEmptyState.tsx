@@ -1,10 +1,16 @@
 import { useEffect, useMemo, useState } from 'react'
 
-type EmptyState = 'loading' | 'noneYet' | 'noneMatchingFilters' | undefined
+type EmptyState =
+  | 'loading'
+  | 'noneYet'
+  | 'noneMatchingFilters'
+  | 'error'
+  | undefined
 
 export function useDatasetEmptyState(
   dataset: unknown[] | undefined,
   isFetching: boolean,
+  error: Error | undefined,
   filters: unknown[]
 ): EmptyState {
   const [lastDatasetSize, setLastDatasetSize] = useState<number>()
@@ -16,6 +22,9 @@ export function useDatasetEmptyState(
   }, [isFetching, dataset, setLastDatasetSize])
 
   return useMemo(() => {
+    if (error) {
+      return 'error'
+    }
     // No previous dataset, initialize in loading state.
     if (lastDatasetSize === undefined) {
       return 'loading'
@@ -33,5 +42,5 @@ export function useDatasetEmptyState(
       return filters.length === 0 ? 'noneYet' : 'noneMatchingFilters'
     }
     return undefined
-  }, [dataset, lastDatasetSize, filters])
+  }, [dataset, lastDatasetSize, error, filters])
 }

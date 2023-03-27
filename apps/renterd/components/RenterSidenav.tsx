@@ -7,8 +7,10 @@ import {
   PlaneIcon,
 } from '@siafoundation/design-system'
 import { routes } from '../config/routes'
+import { useAutopilot } from '../hooks/useAutopilot'
 
 export function RenterSidenav() {
+  const { autopilotMode } = useAutopilot()
   return (
     <>
       {/* <SidenavItem title="Dashboard" route={routes.home}>
@@ -17,9 +19,11 @@ export function RenterSidenav() {
       <SidenavItem title="Files" route={routes.files.index}>
         <FolderIcon />
       </SidenavItem>
-      <SidenavItem title="Autopilot" route={routes.autopilot.index}>
-        <PlaneIcon />
-      </SidenavItem>
+      {autopilotMode === 'on' && (
+        <SidenavItem title="Autopilot" route={routes.autopilot.index}>
+          <PlaneIcon />
+        </SidenavItem>
+      )}
       <SidenavItem title="Contracts" route={routes.contracts.index}>
         <FileContractIcon />
       </SidenavItem>

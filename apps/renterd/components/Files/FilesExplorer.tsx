@@ -1,5 +1,6 @@
 import { Table, Dropzone } from '@siafoundation/design-system'
 import { useFiles } from '../../contexts/files'
+import { StateError } from './StateError'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
 
@@ -24,6 +25,8 @@ export function FilesExplorer() {
               <StateNoneMatching />
             ) : dataState === 'noneYet' ? (
               <StateNoneYet />
+            ) : dataState === 'error' ? (
+              <StateError />
             ) : null
           }
           pageSize={10}

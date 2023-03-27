@@ -2,7 +2,7 @@ import { useAutopilotHostsSearch } from '@siafoundation/react-core'
 import { useEffect, useState } from 'react'
 
 export function useAutopilot() {
-  const autopilotResponse = useAutopilotHostsSearch({
+  const apr = useAutopilotHostsSearch({
     payload: {
       limit: 1,
       offset: 0,
@@ -10,6 +10,7 @@ export function useAutopilot() {
     },
     config: {
       swr: {
+        dedupingInterval: 60_000,
         revalidateOnFocus: false,
         refreshInterval: 60_000,
       },
@@ -21,13 +22,16 @@ export function useAutopilot() {
   )
 
   useEffect(() => {
-    if (autopilotMode === 'init' && autopilotResponse.data) {
+    if (autopilotMode === 'init' && (apr.data || apr.error)) {
+      if (apr.error) {
+        setAutopilotMode('off')
+      }
       // This check is required because the API currently returns html when the endpoint does not exist
-      const validResponse = typeof autopilotResponse.data === 'object'
+      const validResponse = typeof apr.data === 'object'
       setAutopilotMode(validResponse ? 'on' : 'off')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autopilotResponse])
+  }, [apr])
 
   return {
     autopilotMode,

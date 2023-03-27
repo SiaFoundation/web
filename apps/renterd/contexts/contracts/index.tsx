@@ -291,6 +291,7 @@ function useContractsMain() {
   const dataState = useDatasetEmptyState(
     datasetFiltered,
     response.isValidating,
+    response.error,
     filters
   )
 

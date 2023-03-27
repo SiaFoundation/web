@@ -23,6 +23,7 @@ import { FilesCmd } from '../Files/FilesCmd'
 import { useHosts } from '../../contexts/hosts'
 import { useDebounce } from 'use-debounce'
 import { CmdEmptyDefault } from './CmdEmpty'
+import { useAutopilot } from '../../hooks/useAutopilot'
 
 type Props = {
   panel?: boolean
@@ -31,6 +32,7 @@ type Props = {
 export function CmdRoot({ panel }: Props) {
   const { resetFilters: resetContractsFilters } = useContracts()
   const { resetFilters: resetHostsFilters } = useHosts()
+  const { autopilotMode } = useAutopilot()
   const { closeDialog } = useDialog()
   const router = useRouter()
   const [search, setSearch] = useState('')
@@ -103,7 +105,9 @@ export function CmdRoot({ panel }: Props) {
             afterSelect()
           }}
         />
-        <AutopilotCmdGroup currentPage={page} pushPage={pushPage} />
+        {autopilotMode === 'on' && (
+          <AutopilotCmdGroup currentPage={page} pushPage={pushPage} />
+        )}
         <WalletCmdGroup currentPage={page} pushPage={pushPage} />
         <ContractsCmd
           currentPage={page}
