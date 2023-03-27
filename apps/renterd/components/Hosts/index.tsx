@@ -8,6 +8,7 @@ import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
 import { HostsActionsMenu } from './HostsActionsMenu'
 import { HostsFilterMenu } from './HostsFilterMenu'
+import { StateError } from './StateError'
 
 export function Hosts() {
   const { openDialog } = useDialog()
@@ -31,6 +32,8 @@ export function Hosts() {
               <StateNoneMatching />
             ) : dataState === 'noneYet' ? (
               <StateNoneYet />
+            ) : dataState === 'error' ? (
+              <StateError />
             ) : null
           }
           pageSize={limit}

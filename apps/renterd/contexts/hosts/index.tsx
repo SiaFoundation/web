@@ -62,9 +62,6 @@ function useHostsMain() {
           : undefined,
     },
   })
-  const isValidating = autopilotMode
-    ? autopilotResponse.isValidating
-    : regularResponse.isValidating
 
   const allowlist = useHostsAllowlist()
   const blocklist = useHostsBlocklist()
@@ -111,7 +108,13 @@ function useHostsMain() {
     [tableColumns, enabledColumns]
   )
 
-  const dataState = useDatasetEmptyState(dataset, isValidating, filters)
+  const isValidating =
+    autopilotMode === 'on'
+      ? autopilotResponse.isValidating
+      : regularResponse.isValidating
+  const error =
+    autopilotMode === 'on' ? autopilotResponse.error : regularResponse.error
+  const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
   return {
     dataState,

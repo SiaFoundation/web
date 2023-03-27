@@ -8,6 +8,7 @@ import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
 import { ContractsFilterMenu } from './ContractsFilterMenu'
 import { ContractsActionsMenu } from './ContractsActionsMenu'
+import { StateError } from './StateError'
 
 export function Contracts() {
   const { openDialog } = useDialog()
@@ -39,6 +40,8 @@ export function Contracts() {
               <StateNoneMatching />
             ) : dataState === 'noneYet' ? (
               <StateNoneYet />
+            ) : dataState === 'error' ? (
+              <StateError />
             ) : null
           }
           pageSize={limit}
