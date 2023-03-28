@@ -25,6 +25,7 @@ type GougingData = {
   maxUploadPrice: string
   maxContractPrice: string
   maxRPCPrice: string
+  minMaxCollateral: string
   hostBlockHeightLeeway: number
 }
 
@@ -64,6 +65,7 @@ export function Config() {
       maxContractPrice: new BigNumber(0),
       maxDownloadPrice: new BigNumber(0),
       maxUploadPrice: new BigNumber(0),
+      minMaxCollateral: new BigNumber(0),
       hostBlockHeightLeeway: new BigNumber(0),
       // redundancy
       minShards: new BigNumber(0),
@@ -82,6 +84,7 @@ export function Config() {
               maxContractPrice: values.maxContractPrice.toFixed(0).toString(),
               maxDownloadPrice: values.maxDownloadPrice.toFixed(0).toString(),
               maxUploadPrice: values.maxUploadPrice.toFixed(0).toString(),
+              minMaxCollateral: values.minMaxCollateral.toFixed(0).toString(),
               hostBlockHeightLeeway: values.hostBlockHeightLeeway.toNumber(),
             }),
             redundancy: JSON.stringify({
@@ -119,6 +122,7 @@ export function Config() {
             maxUploadPrice: new BigNumber(gougingData.maxUploadPrice),
             maxContractPrice: new BigNumber(gougingData.maxContractPrice),
             maxRpcPrice: new BigNumber(gougingData.maxRPCPrice),
+            minMaxCollateral: new BigNumber(gougingData.minMaxCollateral),
             hostBlockHeightLeeway: new BigNumber(
               gougingData.hostBlockHeightLeeway
             ),
@@ -226,6 +230,24 @@ export function Config() {
                 value={form.values.maxRpcPrice}
                 changed={changed.maxRpcPrice}
                 onChange={(value) => form.setFieldValue('maxRpcPrice', value)}
+              />
+            }
+          />
+          <Separator className="w-full my-3" />
+          <Setting
+            title="Min max collateral"
+            description={
+              <>
+                {`The minimum value for max collateral in the host's price settings.`}
+              </>
+            }
+            control={
+              <ConfigurationSiacoin
+                value={form.values.minMaxCollateral}
+                changed={changed.minMaxCollateral}
+                onChange={(value) =>
+                  form.setFieldValue('minMaxCollateral', value)
+                }
               />
             }
           />
