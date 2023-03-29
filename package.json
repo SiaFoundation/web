@@ -10,7 +10,7 @@
     "build": "nx build",
     "test": "nx test",
     "release": "changeset publish",
-    "types:sia-js": "go run libs/sia-js/src/types/gen.go",
+    "types:sia-js": "go run libs/sia-js/gen.go",
     "types:react-core": "go run libs/react-core/gen.go",
     "feeds": "node apps/website/scripts/syncFeeds.js"
   },

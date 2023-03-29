@@ -1,4 +1,4 @@
-package reacthostd
+package main
 
 import (
 	"os"

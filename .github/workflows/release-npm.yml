@@ -1,4 +1,4 @@
-name: Release or Publish
+name: Release Versions or Publish NPM
 on:
   push:
     branches:
@@ -9,7 +9,7 @@ on:
 env:
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+concurrency: commits-to-main
 
 jobs:
   main:

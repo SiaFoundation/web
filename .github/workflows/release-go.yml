@@ -1,0 +1,65 @@
+name: Release Go modules
+on:
+  create:
+    tags:
+      - '@siafoundation/(renterd|hostd|walletd)@*.*.*'
+
+env:
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+concurrency: commits-to-main
+
+jobs:
+  release-go:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout all commits
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          node_version: 16
+      - name: Set variables
+        shell: bash
+        run: |
+          NAME=$(echo "${{ github.ref }}" | sed -E 's/^refs\/tags\/@siafoundation\/(.*)@.*$/\1/')
+          VERSION=$(echo "${{ github.ref }}" | sed -E 's/^refs\/tags\/@siafoundation\/.*@(.*)$/\1/')
+          TAG="${NAME}/${VERSION}"
+          echo "NAME=${NAME}" >> $GITHUB_ENV
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+          echo "TAG=${TAG}" >> $GITHUB_ENV
+      - name: Next export
+        shell: bash
+        run: |
+          npx nx export $NAME
+      - name: Copy files
+        run: |
+          mkdir -p ${NAME}/ui/assets
+          rm -rf ${NAME}/ui/assets/*
+          cp -R dist/apps/${NAME}/exported/* ${NAME}/ui/assets/
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "chore: export ${TAG}"
+      - name: Create tag
+        run: |
+          git tag -a ${TAG} -m "Go module ${TAG}"
+      - name: Push changes
+        run: |
+          # check out the TAG commit as a new branch
+          git checkout -b release ${TAG}
+          # sync up the main branch in case something has been merged
+          # since the action started
+          git fetch origin main
+          git rebase origin/main
+          # checkout the main branch and merge in the release branch
+          # this will be a fast forward merge unless something went wrong
+          git checkout main
+          git merge release
+          # push the main branch
+          git push origin main
+          git push origin ${TAG}
+          # cleanup
+          git branch -D release
