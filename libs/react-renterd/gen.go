@@ -1,4 +1,4 @@
-package reactrenterd
+package main
 
 import (
 	"os"

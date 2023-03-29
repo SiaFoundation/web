@@ -1,4 +1,4 @@
-package reactsiad
+package main
 
 import (
 	"os"
