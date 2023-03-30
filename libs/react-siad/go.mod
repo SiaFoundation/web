@@ -1,4 +1,4 @@
-module go.sia.tech/SiaFoundation/web/react_siad
+module go.sia.tech/web/react_siad
 
 go 1.18
 
