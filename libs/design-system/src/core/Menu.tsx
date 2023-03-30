@@ -2,7 +2,7 @@ import { cx } from 'class-variance-authority'
 import * as SeparatorPrimitive from '@radix-ui/react-separator'
 import React from 'react'
 import { VariantProps } from '../types'
-import { Separator } from './Separator'
+import { Separator, SeparatorProps } from './Separator'
 import { textStyles } from './Text'
 
 export const baseItemStyles = ({
@@ -96,12 +96,12 @@ export const labelStyles = ({
   })
 
 export const separatorStyles = (className?: string) =>
-  cx(['h-px', 'my-1', 'bg-gray-200', 'dark:bg-graydark-400', className])
+  cx(['h-px', 'my-2', 'mx-1.5', className])
 
 export const MenuSeparator = React.forwardRef<
   React.ElementRef<typeof SeparatorPrimitive.Root>,
-  SeparatorPrimitive.SeparatorProps
->(({ className, ...props }, ref) => {
+  SeparatorProps
+>(({ className, color, ...props }, ref) => {
   return (
     <Separator ref={ref} className={separatorStyles(className)} {...props} />
   )
