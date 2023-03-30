@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.33.0
+
+### Minor Changes
+
+- eca423e: The website now featurees a feed of GitHub development activity.
+- eca423e: The website now features the Sia Foundation's new roadmap.
+- 5797df6: Added docs.sia.tech to the site map and adjusted categorization.
+
 ## 0.32.0
 
 ### Minor Changes
