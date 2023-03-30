@@ -47,6 +47,7 @@ async function checkPassword(
 }
 
 type Props = {
+  buildModeEmbed: boolean
   routes: {
     home: string
     lockscreen: string
@@ -54,7 +55,7 @@ type Props = {
   }
 }
 
-export function AppUnlockForm({ routes }: Props) {
+export function AppUnlockForm({ buildModeEmbed, routes }: Props) {
   const router = useRouter()
   const { settings, setSettings } = useAppSettings()
 
@@ -64,17 +65,15 @@ export function AppUnlockForm({ routes }: Props) {
       password: '',
     },
     onSubmit: async (values, actions) => {
-      const { isSynced, error } = await checkPassword(
-        values.api,
-        values.password
-      )
+      const api = buildModeEmbed ? '' : values.api
+      const { isSynced, error } = await checkPassword(api, values.password)
       if (!error) {
         setSettings({
-          api: values.api,
+          api,
           password: values.password,
           recentApis: {
             ...settings.recentApis,
-            [values.api]: { lastUsed: new Date().getTime() },
+            [api]: { lastUsed: new Date().getTime() },
           },
         })
         actions.resetForm()
@@ -100,34 +99,36 @@ export function AppUnlockForm({ routes }: Props) {
     <form onSubmit={formik.handleSubmit}>
       <FieldGroup name="password" formik={formik}>
         <div className="flex flex-col gap-1.5">
-          <ControlGroup>
-            <FormTextField
-              variants={{
-                size: 'small',
-              }}
-              formik={formik}
-              name="api"
-              placeholder="http://123.4.5.6:9980"
-            />
-            {recentApis.length > 1 && (
-              <DropdownMenu
-                trigger={
-                  <Button type="button">
-                    <RecentlyViewed16 />
-                  </Button>
-                }
-              >
-                {recentApis.map((api) => (
-                  <DropdownMenuItem
-                    key={api}
-                    onClick={() => formik.setFieldValue('api', api)}
-                  >
-                    {api}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenu>
-            )}
-          </ControlGroup>
+          {buildModeEmbed ? null : (
+            <ControlGroup>
+              <FormTextField
+                variants={{
+                  size: 'small',
+                }}
+                formik={formik}
+                name="api"
+                placeholder="http://123.4.5.6:9980"
+              />
+              {recentApis.length > 1 && (
+                <DropdownMenu
+                  trigger={
+                    <Button type="button">
+                      <RecentlyViewed16 />
+                    </Button>
+                  }
+                >
+                  {recentApis.map((api) => (
+                    <DropdownMenuItem
+                      key={api}
+                      onClick={() => formik.setFieldValue('api', api)}
+                    >
+                      {api}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenu>
+              )}
+            </ControlGroup>
+          )}
           <FormTextField
             variants={{
               size: 'small',

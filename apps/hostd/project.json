@@ -24,6 +24,15 @@
         "production": {},
         "ci": {
           "outputPath": "apps/hostd/dist"
+        },
+        "embed": {
+          "outputPath": "dist/apps/hostd-embed",
+          "fileReplacements": [
+            {
+              "replace": "apps/hostd/config/buildMode.ts",
+              "with": "apps/hostd/config/buildModeEmbed.ts"
+            }
+          ]
         }
       }
     },
@@ -37,6 +46,10 @@
       "configurations": {
         "development": {
           "buildTarget": "hostd:build:development",
+          "dev": true
+        },
+        "embed": {
+          "buildTarget": "hostd:build:embed",
           "dev": true
         },
         "production": {

@@ -25,6 +25,15 @@
         "production": {},
         "ci": {
           "outputPath": "apps/renterd/dist"
+        },
+        "embed": {
+          "outputPath": "dist/apps/renterd-embed",
+          "fileReplacements": [
+            {
+              "replace": "apps/renterd/config/buildMode.ts",
+              "with": "apps/renterd/config/buildModeEmbed.ts"
+            }
+          ]
         }
       }
     },
@@ -40,6 +49,10 @@
           "buildTarget": "renterd:build:development",
           "dev": true
         },
+        "embed": {
+          "buildTarget": "renterd:build:embed",
+          "dev": true
+        },
         "production": {
           "buildTarget": "renterd:build:production",
           "dev": false
@@ -49,7 +62,7 @@
     "export": {
       "executor": "@nrwl/next:export",
       "options": {
-        "buildTarget": "renterd:build:production"
+        "buildTarget": "renterd:build:embed"
       }
     },
     "test": {

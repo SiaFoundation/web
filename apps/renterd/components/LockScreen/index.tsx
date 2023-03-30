@@ -5,6 +5,7 @@ import {
   AppPublicLayout,
   AppUnlockForm,
 } from '@siafoundation/design-system'
+import { buildModeEmbed } from '../../config/buildMode'
 import { routes } from '../../config/routes'
 
 export function LockScreen() {
@@ -17,7 +18,7 @@ export function LockScreen() {
               renterd
             </Text>
             <Separator className="w-full mt-2 mb-3" />
-            <AppUnlockForm routes={routes} />
+            <AppUnlockForm buildModeEmbed={buildModeEmbed} routes={routes} />
           </div>
         </Panel>
       </div>

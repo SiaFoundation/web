@@ -24,6 +24,15 @@
         "production": {},
         "ci": {
           "outputPath": "apps/walletd/dist"
+        },
+        "embed": {
+          "outputPath": "dist/apps/walletd-embed",
+          "fileReplacements": [
+            {
+              "replace": "apps/walletd/config/buildMode.ts",
+              "with": "apps/walletd/config/buildModeEmbed.ts"
+            }
+          ]
         }
       }
     },
@@ -37,6 +46,10 @@
       "configurations": {
         "development": {
           "buildTarget": "walletd:build:development",
+          "dev": true
+        },
+        "embed": {
+          "buildTarget": "walletd:build:embed",
           "dev": true
         },
         "production": {
