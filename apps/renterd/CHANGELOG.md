@@ -1,5 +1,11 @@
 # @siafoundation/renterd
 
+## 0.5.0
+
+### Minor Changes
+
+- 6296e23: All app Go modules are now under the go.sia.tech domain.
+
 ## 0.4.0
 
 ### Minor Changes
