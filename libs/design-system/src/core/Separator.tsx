@@ -14,9 +14,12 @@ const styles = cva(['border-b m-0 flex-shrink-0 cursor-default'], {
   },
 })
 
+export type SeparatorProps = SeparatorPrimitive.SeparatorProps &
+  VariantProps<typeof styles>
+
 export const Separator = React.forwardRef<
   React.ElementRef<typeof SeparatorPrimitive.Root>,
-  VariantProps<typeof styles> & SeparatorPrimitive.SeparatorProps
+  SeparatorProps
 >(({ color, className, ...props }, ref) => {
   return (
     <SeparatorPrimitive.Root
