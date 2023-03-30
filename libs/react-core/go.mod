@@ -1,4 +1,4 @@
-module github.com/SiaFoundation/web/react_core
+module go.sia.tech/SiaFoundation/web/react_core
 
 go 1.18
 

@@ -1,3 +1,3 @@
-module github.com/SiaFoundation/web/renterd
+module go.sia.tech/SiaFoundation/web/renterd
 
 go 1.18

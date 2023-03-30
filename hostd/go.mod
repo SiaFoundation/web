@@ -1,3 +1,3 @@
-module github.com/SiaFoundation/web/hostd
+module go.sia.tech/SiaFoundation/web/hostd
 
 go 1.18

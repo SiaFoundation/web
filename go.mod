@@ -1,3 +1,3 @@
-module github.com/SiaFoundation/web
+module go.sia.tech/SiaFoundation/web
 
 go 1.17
