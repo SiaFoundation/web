@@ -31,7 +31,7 @@ type ThemeConfig = {
 }
 
 const defaultConfig: ThemeConfig = {
-  theme: 'light',
+  theme: 'dark',
   mode: 'system',
 }
 
