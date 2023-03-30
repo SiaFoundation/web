@@ -1,6 +1,6 @@
 import { getGitHubToken } from '@siafoundation/env'
 import Axios from 'axios'
-import { sortBy } from 'lodash'
+import { orderBy } from 'lodash'
 import { buildErrorResponse500 } from './error'
 import { AsyncDataSourceResponse } from './types'
 
@@ -70,12 +70,14 @@ export async function getGitHubClosedPRs(): Promise<GitHubPR[]> {
     const response = await axios.get(
       'https://api.github.com/repos/SiaFoundation/web/pulls?state=closed&per_page=30'
     )
-    prs.push(...response.data)
+    prs.push(
+      ...response.data.filter((d: GitHubPR) => d.title !== 'Version Packages')
+    )
   } catch (e) {
     console.log(e)
   }
 
-  prs = sortBy(prs, '-closed_at')
+  prs = orderBy(prs, ['closed_at'], ['desc'])
   return prs
 }
 
