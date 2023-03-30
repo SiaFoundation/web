@@ -1,8 +1,6 @@
 name: Release Go modules
 on:
   push:
-    branches:
-      - main
     tags:
       - '@siafoundation/(renterd|hostd|walletd)@*.*.*'
 
