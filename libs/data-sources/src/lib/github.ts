@@ -1,5 +1,6 @@
 import { getGitHubToken } from '@siafoundation/env'
 import Axios from 'axios'
+import { sortBy } from 'lodash'
 import { buildErrorResponse500 } from './error'
 import { AsyncDataSourceResponse } from './types'
 
@@ -23,6 +24,59 @@ async function getCommitCount() {
   const commitCount = Number(res ? res[1] : 0)
 
   return commitCount
+}
+
+export type GitHubPR = {
+  html_url: string
+  number: number
+  title: string
+  body: string
+  closed_at: string
+  base: {
+    repo: {
+      html_url: string
+      full_name: string
+    }
+  }
+}
+
+export async function getGitHubClosedPRs(): Promise<GitHubPR[]> {
+  let prs = []
+  try {
+    const response = await axios.get(
+      'https://api.github.com/repos/SiaFoundation/renterd/pulls?state=closed&per_page=30'
+    )
+    prs.push(...response.data)
+  } catch (e) {
+    console.log(e)
+  }
+  try {
+    const response = await axios.get(
+      'https://api.github.com/repos/SiaFoundation/walletd/pulls?state=closed&per_page=30'
+    )
+    prs.push(...response.data)
+  } catch (e) {
+    console.log(e)
+  }
+  try {
+    const response = await axios.get(
+      'https://api.github.com/repos/SiaFoundation/hostd/pulls?state=closed&per_page=30'
+    )
+    prs.push(...response.data)
+  } catch (e) {
+    console.log(e)
+  }
+  try {
+    const response = await axios.get(
+      'https://api.github.com/repos/SiaFoundation/web/pulls?state=closed&per_page=30'
+    )
+    prs.push(...response.data)
+  } catch (e) {
+    console.log(e)
+  }
+
+  prs = sortBy(prs, '-closed_at')
+  return prs
 }
 
 async function getContributorCount() {

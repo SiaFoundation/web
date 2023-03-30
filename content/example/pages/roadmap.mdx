@@ -1,0 +1,33 @@
+---
+title: The Sia Foundation Roadmap
+description: This Sia roadmap provides mid to high level insight into core Sia development. It will be updated once a quarter at minimum, and will show an outline of what we’re currently working on, why we’re working on it, and what we have in mind after that’s done.
+date: 03/30/2023
+---
+
+# Current
+
+We’re focusing on updated versions of all the core components of the Sia network - renting, hosting, and hodling. These updates will bring significant improvements to scaling, performance, and modular internal architecture to meet the needs of individuals, enterprise users, and exchange partners. Furthermore, each component will be paired with a powerful new user interface, all with the overarching goal of making core Sia software more “legible” to end users. “Legible” is the antonym of “black-box:” in a legible system, the user can easily discern why any particular decision was made, and can override those decisions as they see fit. This goal follows naturally from the Foundation’s mission of empowering users.
+
+## renterd
+
+The new Sia renter, replacing the current `siad` renter module. Drawing on what we’ve learned from `siad`, `skyd`, and `us`, we designed `renterd` from the ground up to be modular and horizontally scalable. Although the average user likely won’t notice, a `renterd` deployment is actually a set of interconnected services. As such, it can distribute workloads in parallel across multiple machines, and can be configured to store its metadata in any SQL backend. This flexibilty makes `renterd` easier to integrate with other Sia ecosystem software, such as Sia Satellite and S5, and addresses the scalability barriers that have historically hampered enterprise solutions like Filebase.
+
+## hostd
+
+The new Sia host, replacing the current `siad` host module. The host module has been chronically neglected for years, and suffers from poor upload performance, data integrity issues, and a general lack of user-friendliness. `hostd` is our greenfield reimagining of the Sia hosting experience, bringing a sorely-needed refresh to our host community. Aside from addressing performance bottlenecks, `hostd` also offers superior metrics and monitoring tools, including streaming metadata to the industry-standard ELK stack, which will allow users to make informed decisions about storage allocations, contract parameters, pricing, and quality of service.
+
+## walletd
+
+The new Sia wallet, replacing the current `siad` wallet module. `walletd` aims to be the go-to option for exchanges, miners, or the average hodler who needs a secure place to store their SC. Accordingly, it supports both hot and cold setups, including multi-sig schemes and hardware wallet integration. And like `renterd` and `hostd`, `walletd` comes packaged with a sleek, yet powerful UI, which can be securely accessed from any device.
+
+_Note: you don’t need `walletd` to be a renter or a host; `renterd` and `hostd` include their own built-in hot wallets._
+
+# Future
+
+## utreexo
+
+“Utreexo” is an umbrella term that refers to an upcoming radical overhaul of Sia’s consensus code. The primary change is the transition from a large, unwieldy database of UTXOs to a compact cryptographic accumulator, bringing myriad benefits to performance, scalability, and functionality. This is a big deal: it requires changing the block and transaction formats, which have been untouched since Sia’s mainnet launch back in 2014. As such, we are taking this opportunity to clean up a few other warts in Sia’s consensus code, giving the project a solid foundation for many years to come. For a more technical dive on how Utreexo works, check out Luke’s blog post [here](https://lukechampine.com/utreexo.html) and MIT Bitcoin talk [here](https://lukechampine.com/utreexo-talk.html).
+
+## explored
+
+The new Sia explorer, replacing and going far beyond the current `siad` explorer capabilities. `explored` will serve as both a standalone blockchain explorer with a web interface, and as a library providing powerful indexing and searching capabilities to third-party explorers (e.g. SiaStats) and “lite-client” systems like [`narwal`](https://narwal.lukechampine.com). `explored` will be developed and launched alongside the Utreexo overhaul, making it one of the world’s first Utreexo-native block explorers.

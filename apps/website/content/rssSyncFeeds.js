@@ -15,7 +15,7 @@ async function parseFeed(feedFile, data) {
     const feed = await parser.parseString(data)
     return feed
   } catch (e) {
-    console.log('error parsing', feedFile)
+    console.log('error parsing', feedFile, e)
     return null
   }
 }
@@ -93,7 +93,7 @@ export async function syncRssFeeds() {
         const link = url.origin + url.pathname
         // use the clean link to check if the article is new
         if (!articles.find((a) => a.link === link)) {
-          console.log('not found ', link)
+          console.log('new article', link)
           const tags = ['ecosystem-all']
           if (url.origin === 'https://blog.sia.tech') {
             tags.push('sia-all')

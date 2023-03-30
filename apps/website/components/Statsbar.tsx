@@ -1,5 +1,6 @@
 import { Link, Paragraph, Text, webLinks } from '@siafoundation/design-system'
 import useSWR from 'swr'
+import { routes } from '../config/routes'
 import { Stats } from '../content/stats'
 
 export function Statsbar() {
@@ -32,6 +33,7 @@ export function Statsbar() {
         <StatSection
           title="Network"
           link={webLinks.siaStats}
+          target="_blank"
           stats={[
             {
               value: blockHeight,
@@ -50,6 +52,7 @@ export function Statsbar() {
         <StatSection
           title="Storage"
           link={webLinks.storageStats}
+          target="_blank"
           stats={[
             {
               value: totalStorage,
@@ -72,6 +75,7 @@ export function Statsbar() {
         {/* <StatSection
         title="Benchmarks"
         link={webLinks.benchmarks}
+        target="_blank"
         stats={[
           {
             value: downloadSpeed,
@@ -93,7 +97,7 @@ export function Statsbar() {
       /> */}
         <StatSection
           title="Development"
-          link={webLinks.github.index}
+          link={routes.activity.index}
           stats={[
             {
               value: commits,
@@ -146,10 +150,11 @@ type Stat = {
 type StatSectionProps = {
   title: string
   link: string
+  target?: string
   stats: Stat[]
 }
 
-function StatSection({ title, link, stats }: StatSectionProps) {
+function StatSection({ title, link, target, stats }: StatSectionProps) {
   return (
     <div className="flex flex-col gap-6">
       <Link
@@ -158,7 +163,7 @@ function StatSection({ title, link, stats }: StatSectionProps) {
         color="accent"
         weight="extrabold"
         href={link}
-        target="_blank"
+        target={target}
         className="no-underline hover:underline"
       >
         {title}

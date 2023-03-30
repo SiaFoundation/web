@@ -32,6 +32,10 @@ export const menuSections = [
         title: 'Whitepaper',
         newTab: true,
       },
+      {
+        link: routes.activity.index,
+        title: 'Activity',
+      },
     ],
   },
   {
@@ -82,21 +86,25 @@ export const menuSections = [
         title: 'Grants',
       },
       {
-        link: webLinks.jobs,
-        title: 'Careers',
-        newTab: true,
-      },
-      {
-        link: routes.newsroom.index,
-        title: 'Newsroom',
+        link: routes.roadmap.index,
+        title: 'Roadmap',
       },
       {
         link: routes.hostingBestPractices.index,
         title: 'Hosting Best Practices',
       },
       {
+        link: routes.newsroom.index,
+        title: 'Newsroom',
+      },
+      {
         link: webLinks.docs.brand,
         title: 'Brand guidelines',
+        newTab: true,
+      },
+      {
+        link: webLinks.jobs,
+        title: 'Careers',
         newTab: true,
       },
     ],

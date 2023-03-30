@@ -12,7 +12,6 @@ import {
   Code,
   Text,
   Paragraph,
-  Heading,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
@@ -34,6 +33,7 @@ import { getContentDirectory } from '@siafoundation/env'
 import matter from 'gray-matter'
 import { serialize } from 'next-mdx-remote/serialize'
 import { components } from '../../config/mdx'
+import { TableOfContents } from '../../components/TableOfContents'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -65,18 +65,41 @@ export default function Grants({
       heading={
         <SectionSimple className="pt-24 md:pt-40 pb-6 md:pb-20">
           <SiteHeading title={title} description={description} size="64">
-            <div className="flex flex-col gap-3 mt-10">
-              <Heading className="mb-1">Table of contents</Heading>
-              <Link href="#the-grant-process">The grant process</Link>
-              <Link href="#example-projects">Browse example projects</Link>
-              <Link href={webLinks.forumGrants} target="_blank">
-                Browse current proposals
-              </Link>
-              <Link href="#create-a-proposal">Create a proposal</Link>
-              <Link href="#grant-applicant-faq">Grant applicant FAQ</Link>
-              <Link href="#approved-grantee-faq">Approved grantee FAQ</Link>
-              <Link href="#more-questions">More questions?</Link>
-            </div>
+            <TableOfContents
+              items={[
+                {
+                  href: '#the-grant-process',
+                  title: 'The grant process',
+                },
+                {
+                  href: '#example-projects',
+                  title: 'Browse example projects',
+                },
+                {
+                  href: webLinks.forumGrants,
+                  target: '_blank',
+                  title: 'Browse current proposals',
+                },
+                {
+                  href: '#create-a-proposal',
+                  title: 'Create a proposal',
+                },
+                {
+                  href: '#grant-applicant-faq',
+                  title: 'Grant applicant FAQ',
+                },
+                {
+                  href: '#approved-grantee-faq',
+                  title: 'Approved grantee FAQ',
+                },
+                {
+                  href: '#more-questions',
+                  title: 'More questions?',
+                },
+              ]}
+              className="mt-10"
+            />
+            <div className="flex flex-col gap-3 mt-10"></div>
           </SiteHeading>
         </SectionSimple>
       }
@@ -99,13 +122,13 @@ export default function Grants({
           />
           <ContentGallery
             columnClassName="grid-cols-1"
-            gapClassName="gap-y-12 md:gap-y-20"
+            className="gap-y-12 md:gap-y-20"
             items={[
               {
                 title: 'Proposal Requirements',
                 icon: 'ListChecked',
                 children: (
-                  <Ol className="mt-5 -ml-10 md:ml-0">
+                  <Ol className="mt-5 -ml-10 md:ml-0 gap-2">
                     <Li index={1}>
                       Name of organization or individual and project name.
                     </Li>
@@ -133,7 +156,7 @@ export default function Grants({
                 title: 'Proposal Process',
                 icon: 'MailAll',
                 children: (
-                  <Ol className="mt-5 -ml-10 md:ml-0">
+                  <Ol className="mt-5 -ml-10 md:ml-0 gap-2">
                     <Li index={1}>
                       Create a proposal with the above requirements in mind.
                     </Li>
@@ -151,7 +174,7 @@ export default function Grants({
                     <Li
                       index={4}
                       subList={
-                        <Ol className="mt-3" gapClassName="gap-1">
+                        <Ol className="mt-3 gap-1">
                           <Li>
                             New proposals, to accept, reject, or request more
                             info.
@@ -180,7 +203,7 @@ export default function Grants({
                       following factors while utilizing a scoring matrix to
                       ensure a thorough vetting process.
                     </Paragraph>
-                    <Ol className="mt-6">
+                    <Ol className="mt-6 gap-2">
                       <Li index={1}>
                         <Text weight="semibold">
                           In line with Foundation’s mission:
@@ -228,7 +251,7 @@ export default function Grants({
                 title: 'Grant Committee',
                 icon: 'EventsAlt',
                 children: (
-                  <Ol className="mt-5 -ml-10 md:ml-0">
+                  <Ol className="mt-5 -ml-10 md:ml-0 gap-2">
                     {grantCommittee.map(({ name }) => (
                       <Li key={name}>{name}</Li>
                     ))}

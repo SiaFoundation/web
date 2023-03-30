@@ -10,7 +10,7 @@ User interfaces for the Sia software. The latest Sia software takes a modular ap
 
 ### [renterd](apps/renterd)
 
-![stability-experimental](https://img.shields.io/badge/stability-experimental-yellow.svg)
+![stability-beta](https://img.shields.io/badge/stability-beta-yellow.svg)
 
 The [renterd](https://github.com/siafoundation/renterd) user interface, focused on renting functionality.
 
