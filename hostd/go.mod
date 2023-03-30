@@ -1,3 +1,3 @@
-module go.sia.tech/SiaFoundation/web/hostd
+module go.sia.tech/web/hostd
 
 go 1.18

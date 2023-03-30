@@ -1,4 +1,4 @@
-module go.sia.tech/SiaFoundation/web/react_core
+module go.sia.tech/web/react_core
 
 go 1.18
 

@@ -1,3 +1,3 @@
-module go.sia.tech/SiaFoundation/web
+module go.sia.tech/web
 
 go 1.17
