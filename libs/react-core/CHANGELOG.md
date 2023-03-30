@@ -1,5 +1,13 @@
 # @siafoundation/react-core
 
+## 0.6.0
+
+### Minor Changes
+
+- ceb56a8: Add usePostSwr post-based swr hook, align naming convention.
+- ceb56a8: Add useHostsSearch, useHostsBlocklist, useHostsAllowlist, useHostsBlocklistUpdate, useHostsAllowlistUpdate API hooks.
+- fec2c6d: Add useAutopilotHostsSearch and useObjectSearch renterd hooks.
+
 ## 0.5.0
 
 ### Minor Changes

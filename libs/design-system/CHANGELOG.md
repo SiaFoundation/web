@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.42.0
+
+### Minor Changes
+
+- b5881e6: Add useClientFilters, useServerFilters, useFormChanged, useClientFilteredDataset, useDatasetEmptyState.
+- c0ce109: The contract timeline now shows points for contract revisions and proofs.
+- 38c9ef4: Fix a z-index Safari bug that would clip the action dropdown in the AppLayout.
+- ceb56a8: Add underline variants to Text.
+- 7c911cd: Upgrade visx to latest v2.X.X.
+- ceb56a8: Add configurable error display to form components.
+- ceb56a8: Add PoolSelected component, rename PoolCombo.
+- b165079: Mutate dependencies now support filter matching keys.
+- 2e5dec6: The swr data fetching library updated to 2.0.
+- f83ea6e: PaginatorUnknownTotal now displays correct last page values.
+- 3f1b38f: The Table components column sizing has been improved.
+- 7c911cd: Add option to manually configure data rollup mode for getTimeRangeRollup chart data function.
+- ceb56a8: Add amber color variant to Button.
+- c0ce109: Lock and sync screens now remember and redirect back to the previous page.
+- 39326a2: Button now includes embedded tooltip props.
+
 ## 0.41.0
 
 ### Minor Changes

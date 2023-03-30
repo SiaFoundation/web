@@ -1,5 +1,39 @@
 # @siafoundation/renterd
 
+## 0.4.0
+
+### Minor Changes
+
+- ceb56a8: The configuration settings now include host block height leeway.
+- 6300a71: renterd now has a syncing flow that shows blockchain sync progress and allows the user to manually connect more peers and manage settings.
+- 895270e: The Files breadcrumb nav now scrolls to show the working directory when necessary.
+- ceb56a8: Host explorer now includes a block status column and the hover tooltip explains how each list contributed to being blocked or not.
+- e51b4d3: Apps now have embed specific build flags, embedded apps do not show a server field at login.
+- ceb56a8: The host explorer now supports filtering hosts by block status and address.
+- fec2c6d: The global command menu now has empty states.
+- a882c48: Contract spending is now displayed as a negative value.
+- 60e52c7: The file health indicator now shows a breakdown of shards per slab on hover.
+- 2e5dec6: Data loading and filtering states have been refined across all features.
+- d12a8b7: The file explorer now lists parent directory for traversing up a level.
+- ceb56a8: The host explorer now features quick filters and actions for each host row.
+- 2b73731: Contracts, hosts, and files tables now include an error state.
+- 8e2713c: Files now show their current health based on how many data shards have active contracts.
+- 43aba6d: The contracts explorer now supports filtering by address and public key.
+- fec2c6d: renterd now supports searching for files, access the feature from the Files actions menu or through the global command menu.
+- 2e5dec6: The files explorer now supports navigation, directory creation, file deletion, and more.
+- 2e5dec6: File paths are now linkable and reflected in the app URL.
+- ceb56a8: The blocklist manager now suggests adding well-known spam addresses to blocklist and shows whether renterd has any active contracts with hosts matching these addresses.
+- ea616f1: The hosts feature now shows autopilot score and score breakdown columns.
+- 9fe33cb: The gouging config now includes min max collateral.
+- 2e5dec6: The files feature now has a view configuration menu.
+- 82832d9: The apps are now built into Go modules exposing static assets as an embed.FS.
+- ea616f1: The hosts feature now shows whether autopilot considers the host usable based on the scoring criteria. If the host is unusable, the reasons are listed.
+- 27c4248: Fixed an issue where siacoin config values were being sent as decimal strings.
+- 81a5af6: Host, contract, and file explorer action menus are now all accessed via an icon on the far left of each row.
+- ea616f1: The hosts feature now allows filtering to hosts with active contracts.
+- ceb56a8: renterd now supports allowlist and blocklist management, accessible from the global command menu or the hosts page.
+- ea616f1: All autopilot features are now disabled and hidden if renterd is running with autopilot disabled.
+
 ## 0.3.0
 
 ### Minor Changes
