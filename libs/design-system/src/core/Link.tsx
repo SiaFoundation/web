@@ -11,10 +11,8 @@ const linkStyles = cva(['cursor-pointer'], {
       true: 'opacity-50',
     },
     underline: {
-      default:
-        'underline underline-offset-2 decoration-gray-1100 dark:decoration-gray-500',
-      hover:
-        'hover:underline underline-offset-2 decoration-gray-1100 dark:decoration-gray-500',
+      default: 'underline underline-offset-2',
+      hover: 'hover:underline underline-offset-2',
       none: '',
     },
   },

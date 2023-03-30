@@ -23,6 +23,12 @@ export const routes = {
   grants: {
     index: '/grants',
   },
+  roadmap: {
+    index: '/roadmap',
+  },
+  activity: {
+    index: '/activity',
+  },
   hostingBestPractices: {
     index: '/hosting-best-practices',
   },

@@ -1,4 +1,5 @@
 import {
+  Code,
   Li,
   Link,
   Ol,
@@ -30,6 +31,7 @@ export const components = {
     </Paragraph>
   ),
   a: (props) => <Link {...props} target="_blank" />,
+  code: (props) => <Code {...props} />,
   ol: Ol,
   ul: Ul,
   li: Li,

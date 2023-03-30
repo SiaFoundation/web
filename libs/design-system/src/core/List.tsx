@@ -17,35 +17,14 @@ import { cx } from 'class-variance-authority'
 type Props = {
   children: React.ReactNode
   className?: string
-  gapClassName?: string
 }
 
-export function Ol({ children, className, gapClassName }: Props) {
-  return (
-    <ol
-      className={cx(
-        'flex flex-col p-0',
-        gapClassName || 'gap-2 md:gap-4',
-        className
-      )}
-    >
-      {children}
-    </ol>
-  )
+export function Ol({ children, className }: Props) {
+  return <ol className={cx('flex flex-col p-0', className)}>{children}</ol>
 }
 
-export function Ul({ children, className, gapClassName }: Props) {
-  return (
-    <ul
-      className={cx(
-        'flex flex-col p-0',
-        gapClassName || 'gap-2 md:gap-4',
-        className
-      )}
-    >
-      {children}
-    </ul>
-  )
+export function Ul({ children, className }: Props) {
+  return <ul className={cx('flex flex-col p-0', className)}>{children}</ul>
 }
 
 const numMap: Record<number, React.ReactNode> = {
@@ -64,6 +43,7 @@ type LiProps = {
   className?: string
   index?: number
   size?: React.ComponentProps<typeof Paragraph>['size']
+  color?: React.ComponentProps<typeof Paragraph>['color']
 }
 
 export function Li({
@@ -72,18 +52,21 @@ export function Li({
   size = '16',
   subList,
   className,
+  color = 'contrast',
 }: LiProps) {
   const numEl = numMap[index]
 
   return (
     <li className={cx('flex items-start gap-1', className)}>
-      <div className="flex relative w-6 h-8 top-[-4px]">
+      <div className="flex relative w-6 h-8 top-[-4px] md:top-[-2px]">
         <div className="flex absolute w-full h-full items-center justify-center">
-          <Text color="contrast">{numEl || <DotMark16 />}</Text>
+          <Text color={color}>
+            {numEl || <DotMark16 className="scale-50" />}
+          </Text>
         </div>
       </div>
       <div className="flex-1">
-        <Paragraph color="contrast" size={size}>
+        <Paragraph color={color} size={size}>
           {children}
         </Paragraph>
         {subList}
