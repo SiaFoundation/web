@@ -1,8 +1,6 @@
 name: Release Go modules
 on:
   create:
-    tags:
-      - '@siafoundation/(renterd|hostd|walletd)@*.*.*'
 
 env:
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -11,6 +9,7 @@ concurrency: commits-to-main
 
 jobs:
   release-go:
+    if: ${{ startsWith(github.ref, 'refs/tags/@siafoundation') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout all commits

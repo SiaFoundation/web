@@ -1,4 +1,4 @@
-module github.com/SiaFoundation/web/react_renterd
+module go.sia.tech/SiaFoundation/web/react_renterd
 
 go 1.18
 

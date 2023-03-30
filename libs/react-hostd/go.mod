@@ -1,4 +1,4 @@
-module github.com/SiaFoundation/web/react_hostd
+module go.sia.tech/SiaFoundation/web/react_hostd
 
 go 1.18
 

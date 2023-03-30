@@ -1,4 +1,4 @@
-module github.com/SiaFoundation/web/sia_js
+module go.sia.tech/SiaFoundation/web/sia_js
 
 go 1.18
 
