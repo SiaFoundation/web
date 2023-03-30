@@ -1,5 +1,11 @@
 # @siafoundation/hostd
 
+## 0.4.0
+
+### Minor Changes
+
+- 5959f7c: All app paths were slightly incorrect, they are now go.sia.tech/web/\*.
+
 ## 0.3.0
 
 ### Minor Changes
