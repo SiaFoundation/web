@@ -32,7 +32,7 @@ export default function Activity({ prs }: Props) {
       backgroundImage={backgroundImageProps}
       previewImage={previewImageProps}
     >
-      <SectionSimple className="md:pt-20 pb-24 md:pb-40">
+      <SectionSimple className="pt-12 md:pt-20 pb-24 md:pb-40">
         <GitHubActivity prs={prs} />
       </SectionSimple>
     </Layout>
