@@ -1,5 +1,11 @@
 # @siafoundation/hostd
 
+## 0.3.0
+
+### Minor Changes
+
+- 6296e23: All app Go modules are now under the go.sia.tech domain.
+
 ## 0.2.0
 
 ### Minor Changes
