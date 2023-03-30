@@ -1,5 +1,11 @@
 # @siafoundation/renterd
 
+## 0.7.0
+
+### Minor Changes
+
+- c069789: Apps now build Go release on GitHub push tag event.
+
 ## 0.6.0
 
 ### Minor Changes

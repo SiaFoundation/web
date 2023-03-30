@@ -1,5 +1,11 @@
 # @siafoundation/walletd
 
+## 0.5.0
+
+### Minor Changes
+
+- c069789: Apps now build Go release on GitHub push tag event.
+
 ## 0.4.0
 
 ### Minor Changes
