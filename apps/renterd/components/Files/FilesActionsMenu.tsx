@@ -12,10 +12,13 @@ import { useDialog } from '../../contexts/dialog'
 
 export function FilesActionsMenu() {
   const { openDialog } = useDialog()
-  const { onDrop, dataState, offset, limit, datasetCount, pageCount } =
+  const { uploadFiles, dataState, offset, limit, datasetCount, pageCount } =
     useFiles()
 
-  const { getRootProps, getInputProps } = useDropzone({ noDrag: true, onDrop })
+  const { getRootProps, getInputProps } = useDropzone({
+    noDrag: true,
+    onDrop: uploadFiles,
+  })
 
   return (
     <div className="flex gap-2">

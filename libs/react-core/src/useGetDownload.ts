@@ -20,6 +20,7 @@ export function useGetDownloadFunc<
       if (response.data) {
         saveBlobToMachine(name, response.data)
       }
+      return response
     },
   }
 }

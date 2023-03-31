@@ -10,11 +10,8 @@ import {
   Document16,
   DropdownMenuLabel,
 } from '@siafoundation/design-system'
-import {
-  useObject,
-  useObjectDelete,
-  useObjectDownloadFunc,
-} from '@siafoundation/react-core'
+import { useObject, useObjectDelete } from '@siafoundation/react-core'
+import { useFiles } from '../../contexts/files'
 
 type Props = {
   name: string
@@ -22,6 +19,7 @@ type Props = {
 }
 
 export function FileDropdownMenu({ name, path }: Props) {
+  const { downloadFiles } = useFiles()
   const obj = useObject({
     params: {
       key: encodeURIComponent(path.slice(1)),
@@ -32,8 +30,6 @@ export function FileDropdownMenu({ name, path }: Props) {
       },
     },
   })
-  const download = useObjectDownloadFunc()
-
   const deleteObject = useObjectDelete()
 
   return (
@@ -48,9 +44,7 @@ export function FileDropdownMenu({ name, path }: Props) {
       <DropdownMenuLabel>File actions</DropdownMenuLabel>
       <DropdownMenuItem
         onSelect={async () => {
-          download.get(name, {
-            params: { key: encodeURIComponent(path.slice(1)) },
-          })
+          downloadFiles([name])
         }}
       >
         <DropdownMenuLeftSlot>

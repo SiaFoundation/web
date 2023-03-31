@@ -28,7 +28,8 @@ export function useMonitorConnAndLock(routes: Routes) {
   const router = useRouter()
 
   useEffect(() => {
-    const isProtectedPath = router.pathname !== routes.lockscreen
+    const isProtectedPath = !router.pathname.startsWith(routes.lockscreen)
+    const isOnSyncscreen = router.pathname.startsWith(routes.syncscreen)
     const noPasswordOrDisconnected = !settings.password || !isConnected
     if (isProtectedPath && noPasswordOrDisconnected) {
       setSettings({ password: '' })
@@ -40,7 +41,7 @@ export function useMonitorConnAndLock(routes: Routes) {
       })
       return
     }
-    if (isProtectedPath && !isSynced) {
+    if (!isOnSyncscreen && isProtectedPath && !isSynced) {
       router.push({
         pathname: routes.syncscreen,
         query: {
@@ -48,7 +49,6 @@ export function useMonitorConnAndLock(routes: Routes) {
         },
       })
     }
-    const isOnSyncscreen = router.pathname === routes.syncscreen
     if (isOnSyncscreen && isSynced) {
       router.push(getRedirectRouteFromQuery(router, routes))
     }

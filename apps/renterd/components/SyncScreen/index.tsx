@@ -53,7 +53,7 @@ export function SyncScreen() {
                 renterd
               </Text>
               <div className="flex items-center">
-                {peers.data?.length && (
+                {peers.data?.length ? (
                   <Tooltip content={`${peers.data?.length} connected peers`}>
                     <Button
                       variant="ghost"
@@ -63,7 +63,7 @@ export function SyncScreen() {
                       <Network_416 />
                     </Button>
                   </Tooltip>
-                )}
+                ) : null}
                 <DropdownMenu
                   contentProps={{
                     align: 'end',

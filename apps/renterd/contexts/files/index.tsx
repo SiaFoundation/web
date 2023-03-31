@@ -26,6 +26,7 @@ import {
   SlabSlice,
   useObject,
   useObjectDirectory,
+  useObjectDownloadFunc,
   useObjectUpload,
 } from '@siafoundation/react-core'
 import {
@@ -45,7 +46,7 @@ import {
   TableColumnId,
 } from './types'
 import { useRouter } from 'next/router'
-import { UploadsBar } from '../../components/UploadsBar'
+import { TransfersBar } from '../../components/TransfersBar'
 import { useContracts } from '../contracts'
 import { ContractData } from '../contracts/types'
 
@@ -77,7 +78,7 @@ function useFilesMain() {
   const upload = useObjectUpload()
   const [uploadsMap, setUploadsMap] = useState<UploadsMap>({})
 
-  const updateProgress = useCallback(
+  const updateUploadProgress = useCallback(
     (obj: { path: string; name: string; loaded: number; total: number }) => {
       setUploadsMap((uploads) => ({
         ...uploads,
@@ -107,13 +108,13 @@ function useFilesMain() {
     [setUploadsMap]
   )
 
-  const onDrop = async (droppedFiles: File[]) => {
-    droppedFiles.forEach(async (file) => {
+  const uploadFiles = async (files: File[]) => {
+    files.forEach(async (file) => {
       const name = file.name
       const path = getFullPath(activeDirectoryPath, name)
       const onUploadProgress = throttle(
         (e) =>
-          updateProgress({
+          updateUploadProgress({
             name,
             path,
             loaded: e.loaded,
@@ -121,7 +122,7 @@ function useFilesMain() {
           }),
         2000
       )
-      updateProgress({
+      updateUploadProgress({
         name,
         path,
         loaded: 0,
@@ -151,6 +152,86 @@ function useFilesMain() {
   const uploadsList = useMemo(
     () => Object.entries(uploadsMap).map((u) => u[1]),
     [uploadsMap]
+  )
+
+  const download = useObjectDownloadFunc()
+  const [downloadsMap, setDownloadsMap] = useState<UploadsMap>({})
+
+  const updateDownloadProgress = useCallback(
+    (obj: { path: string; name: string; loaded: number; total: number }) => {
+      setDownloadsMap((download) => ({
+        ...download,
+        [obj.path]: {
+          id: obj.path,
+          path: obj.path,
+          name: obj.name,
+          total: obj.total,
+          loaded: obj.loaded,
+          isUploading: false,
+          isDirectory: false,
+        },
+      }))
+    },
+    [setDownloadsMap]
+  )
+
+  const removeDownload = useCallback(
+    (path: string) => {
+      setDownloadsMap((downloads) => {
+        delete downloads[path]
+        return {
+          ...downloads,
+        }
+      })
+    },
+    [setDownloadsMap]
+  )
+
+  const downloadFiles = async (files: string[]) => {
+    files.forEach(async (name) => {
+      const path = getFullPath(activeDirectoryPath, name)
+      let isDone = false
+      const onDownloadProgress = throttle((e) => {
+        if (isDone) {
+          return
+        }
+        updateDownloadProgress({
+          name,
+          path,
+          loaded: e.loaded,
+          total: e.total,
+        })
+      }, 2000)
+      updateDownloadProgress({
+        name,
+        path,
+        loaded: 0,
+        total: 1,
+      })
+      const response = await download.get(name, {
+        params: {
+          key: encodeURIComponent(path.slice(1)),
+        },
+        config: {
+          axios: {
+            onDownloadProgress,
+          },
+        },
+      })
+      isDone = true
+      if (response.error) {
+        triggerErrorToast(response.error)
+        removeDownload(path)
+      } else {
+        removeDownload(path)
+        // triggerToast(`Download complete: ${name}`)
+      }
+    })
+  }
+
+  const downloadsList = useMemo(
+    () => Object.entries(downloadsMap).map((d) => d[1]),
+    [downloadsMap]
   )
 
   const response = useObjectDirectory({
@@ -572,8 +653,10 @@ function useFilesMain() {
     pageCount,
     datasetCount: datasetFiltered?.length || 0,
     columns: filteredTableColumns,
-    onDrop,
+    uploadFiles,
     uploadsList,
+    downloadFiles,
+    downloadsList,
     configurableColumns,
     enabledColumns,
     toggleColumnVisibility,
@@ -606,7 +689,7 @@ export function FilesProvider({ children }: Props) {
   return (
     <FilesContext.Provider value={state}>
       {children}
-      <UploadsBar />
+      <TransfersBar />
     </FilesContext.Provider>
   )
 }
