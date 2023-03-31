@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.43.0
+
+### Minor Changes
+
+- 0d09171: Fixed an issue where the browser were route infinitely on the sync screen.
+
 ## 0.42.0
 
 ### Minor Changes

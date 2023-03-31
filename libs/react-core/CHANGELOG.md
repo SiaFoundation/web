@@ -1,5 +1,11 @@
 # @siafoundation/react-core
 
+## 0.7.0
+
+### Minor Changes
+
+- d2a06af: Remove useSettingsUpdate because PUT /settings has been removed.
+
 ## 0.6.0
 
 ### Minor Changes

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.34.0
+
+### Minor Changes
+
+- 51681b9: The roadmap now shows the last time it was updated.
+- df09c45: The GitHub PR data and website activity feed are now in the expected reverse-chronological ordering.
+
 ## 0.33.0
 
 ### Minor Changes

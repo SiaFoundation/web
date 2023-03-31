@@ -1,5 +1,14 @@
 # @siafoundation/renterd
 
+## 0.8.0
+
+### Minor Changes
+
+- 0d09171: Fixed an issue where the browser were route infinitely on the sync screen.
+- d2a06af: The config settings code has been updated to use the new JSON format.
+- 0d09171: File downloads now show their progress in the transfers bar along side uploads.
+- 0d09171: Deleting a file now refreshes the current working directory.
+
 ## 0.7.0
 
 ### Minor Changes

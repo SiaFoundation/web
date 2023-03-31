@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.0
+
+### Minor Changes
+
+- df09c45: The GitHub PR data and website activity feed are now in the expected reverse-chronological ordering.
+
 ## [0.3.2](https://github.com/SiaFoundation/web/compare/data-sources-0.3.1...data-sources-0.3.2) (2022-10-13)
 
 ## [0.3.1](https://github.com/SiaFoundation/web/compare/data-sources-0.3.0...data-sources-0.3.1) (2022-06-29)
