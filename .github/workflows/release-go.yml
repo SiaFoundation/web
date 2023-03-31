@@ -2,7 +2,9 @@ name: Release Go modules
 on:
   push:
     tags:
-      - '@siafoundation/(renterd|hostd|walletd)@*.*.*'
+      - '@siafoundation/renterd@*'
+      - '@siafoundation/hostd@*'
+      - '@siafoundation/walletd@*'
 
 env:
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
