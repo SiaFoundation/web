@@ -386,28 +386,18 @@ export function useObjectDelete(
 //   return useGet({ ...args, route: '/bus/migration/slabs' })
 // }
 
+type Setting = Record<string, unknown> | string
+
 export function useSettings(args?: HookArgsSwr<void, string[]>) {
   return useGetSwr({ ...args, route: '/bus/settings' })
 }
 
-export function useSettingsUpdate(
-  args?: HookArgsCallback<void, Record<string, string>, void>
-) {
-  return usePutFunc(
-    {
-      ...args,
-      route: '/bus/settings',
-    },
-    []
-  )
-}
-
-export function useSetting(args: HookArgsSwr<{ key: string }, string>) {
+export function useSetting(args: HookArgsSwr<{ key: string }, Setting>) {
   return useGetSwr({ ...args, route: '/bus/setting/:key' })
 }
 
 export function useSettingUpdate(
-  args?: HookArgsCallback<{ key: string }, string, void>
+  args?: HookArgsCallback<{ key: string }, Setting, void>
 ) {
   return usePutFunc(
     {
