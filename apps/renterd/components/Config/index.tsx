@@ -14,7 +14,7 @@ import { RenterSidenav } from '../../components/RenterSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
-import { useSetting, useSettingsUpdate } from '@siafoundation/react-core'
+import { useSetting, useSettingUpdate } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
 import { Setting } from '../../components/Setting'
 import { MenuSection } from '../../components/MenuSection'
@@ -55,7 +55,7 @@ export function Config() {
     },
   })
 
-  const settingsUpdate = useSettingsUpdate()
+  const settingUpdate = useSettingUpdate()
 
   const form = useFormik({
     initialValues: {
@@ -76,25 +76,34 @@ export function Config() {
         return
       }
       try {
-        const response = await settingsUpdate.put({
+        const gougingResponse = await settingUpdate.put({
+          params: {
+            key: 'gouging',
+          },
           payload: {
-            gouging: JSON.stringify({
-              maxRPCPrice: values.maxRpcPrice.toFixed(0).toString(),
-              maxStoragePrice: values.maxStoragePrice.toFixed(0).toString(),
-              maxContractPrice: values.maxContractPrice.toFixed(0).toString(),
-              maxDownloadPrice: values.maxDownloadPrice.toFixed(0).toString(),
-              maxUploadPrice: values.maxUploadPrice.toFixed(0).toString(),
-              minMaxCollateral: values.minMaxCollateral.toFixed(0).toString(),
-              hostBlockHeightLeeway: values.hostBlockHeightLeeway.toNumber(),
-            }),
-            redundancy: JSON.stringify({
-              minShards: values.minShards.toNumber(),
-              totalShards: values.totalShards.toNumber(),
-            }),
+            maxRPCPrice: values.maxRpcPrice.toFixed(0).toString(),
+            maxStoragePrice: values.maxStoragePrice.toFixed(0).toString(),
+            maxContractPrice: values.maxContractPrice.toFixed(0).toString(),
+            maxDownloadPrice: values.maxDownloadPrice.toFixed(0).toString(),
+            maxUploadPrice: values.maxUploadPrice.toFixed(0).toString(),
+            minMaxCollateral: values.minMaxCollateral.toFixed(0).toString(),
+            hostBlockHeightLeeway: values.hostBlockHeightLeeway.toNumber(),
           },
         })
-        if (response.error) {
-          throw Error(response.error)
+        const redundancyResponse = await settingUpdate.put({
+          params: {
+            key: 'redundancy',
+          },
+          payload: {
+            minShards: values.minShards.toNumber(),
+            totalShards: values.totalShards.toNumber(),
+          },
+        })
+        if (gougingResponse.error) {
+          throw Error(gougingResponse.error)
+        }
+        if (redundancyResponse.error) {
+          throw Error(redundancyResponse.error)
         }
         triggerSuccessToast('Configuration has been saved.')
         gouging.mutate()
@@ -111,8 +120,8 @@ export function Config() {
         return
       }
       try {
-        const gougingData: GougingData = JSON.parse(gouging.data)
-        const redundancyData: RedundancyData = JSON.parse(redundancy.data)
+        const gougingData = gouging.data as GougingData
+        const redundancyData = redundancy.data as RedundancyData
         // When new config is fetched, reset the form with the initial values
         await form.resetForm({
           values: {
