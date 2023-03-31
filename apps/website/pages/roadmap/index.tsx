@@ -6,6 +6,7 @@ import {
   Heading,
   Link,
   Separator,
+  Text,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
@@ -23,13 +24,20 @@ import { components } from '../../config/mdx'
 import { TableOfContents } from '../../components/TableOfContents'
 import { getCachePrs } from '../../content/prs'
 import { GitHubActivity } from '../../components/GitHubActivity'
+import { format } from 'date-fns'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-export default function Roadmap({ title, description, source, prs }: Props) {
+export default function Roadmap({
+  title,
+  date,
+  description,
+  source,
+  prs,
+}: Props) {
   return (
     <Layout
       title={title}
@@ -37,12 +45,7 @@ export default function Roadmap({ title, description, source, prs }: Props) {
       path={routes.community.index}
       heading={
         <SectionSimple className="pt-24 md:pt-40 pb-6">
-          <SiteHeading
-            // eyebrow={`Document version date: ${format(new Date(date), 'PP')}`}
-            title={title}
-            description={description}
-            size="64"
-          >
+          <SiteHeading title={title} description={description} size="64">
             <TableOfContents
               className="mt-10"
               items={[
@@ -68,8 +71,11 @@ export default function Roadmap({ title, description, source, prs }: Props) {
     >
       <SectionSimple className="pb-24 md:pb-40">
         <MDXRemote {...source} components={components} />
-      </SectionSimple>
-      <SectionSimple className="md:pt-20 pb-24 md:pb-40">
+        <Text
+          className="mt-24 md:mt-32"
+          color="verySubtle"
+        >{`Document version date: ${format(new Date(date), 'PP')}`}</Text>
+        <Separator className="mb-32 md:mb-40 mt-24" />
         <Heading size="40" className="mb-12" anchorLink>
           Activity
         </Heading>

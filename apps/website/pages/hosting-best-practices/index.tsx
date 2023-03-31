@@ -4,6 +4,7 @@ import {
   SiteHeading,
   getImageProps,
   webLinks,
+  Text,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
@@ -39,7 +40,6 @@ export default function HostBestPractices({
       heading={
         <SectionSimple className="pt-24 md:pt-40 pb-6 md:pb-20">
           <SiteHeading
-            eyebrow={`Document version date: ${format(new Date(date), 'PP')}`}
             title={title}
             description={description}
             size="64"
@@ -63,6 +63,10 @@ export default function HostBestPractices({
     >
       <SectionSimple className="md:pt-20 pb-24 md:pb-40">
         <MDXRemote {...source} components={components} />
+        <Text
+          className="mt-24 md:mt-32 mb-24"
+          color="verySubtle"
+        >{`Document version date: ${format(new Date(date), 'PP')}`}</Text>
       </SectionSimple>
     </Layout>
   )
