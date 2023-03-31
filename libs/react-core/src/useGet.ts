@@ -83,9 +83,13 @@ export function useGetFunc<Params extends RequestParams, Result>(
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
+        const error =
+          e.response.data instanceof Blob
+            ? await e.response.data.text()
+            : e.response.data
         return {
           status: e.response.status,
-          error: e.response.data,
+          error,
         } as Response<Result>
       }
     },

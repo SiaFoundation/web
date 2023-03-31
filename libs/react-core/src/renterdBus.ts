@@ -371,7 +371,9 @@ export function useObjectAdd(
 export function useObjectDelete(
   args?: HookArgsCallback<{ key: string }, void, never>
 ) {
-  return useDeleteFunc({ ...args, route: '/bus/objects/:key' }, [])
+  return useDeleteFunc({ ...args, route: '/bus/objects/:key' }, [
+    (key) => key.startsWith('/bus/objects/'),
+  ])
 }
 
 // type ObjectsMigrateParams = {

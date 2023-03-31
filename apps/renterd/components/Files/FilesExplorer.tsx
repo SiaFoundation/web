@@ -6,7 +6,7 @@ import { StateNoneYet } from './StateNoneYet'
 
 export function FilesExplorer() {
   const {
-    onDrop,
+    uploadFiles,
     datasetPage,
     pageCount,
     dataState,
@@ -17,7 +17,7 @@ export function FilesExplorer() {
   } = useFiles()
   return (
     <div className="relative">
-      <Dropzone onDrop={onDrop} noClick={pageCount > 0}>
+      <Dropzone onDrop={uploadFiles} noClick={pageCount > 0}>
         <Table
           isLoading={dataState === 'loading'}
           emptyState={
