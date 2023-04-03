@@ -15,7 +15,7 @@ import {
 } from './request'
 import { SWRError } from './types'
 import { useAppSettings } from './useAppSettings'
-import { getKey } from './utils'
+import { keyOrNull } from './utils'
 
 export function useGetSwr<Params extends RequestParams, Result>(
   args: InternalHookArgsSwr<Params, Result>
@@ -32,7 +32,7 @@ export function useGetSwr<Params extends RequestParams, Result>(
     // TODO: add a config to app settings to set password protected app or not,
     // renterd etc require password, explorer do not, disable hook fetching if
     // password protected and password is missing.
-    getKey(
+    keyOrNull(
       reqRoute ? `${reqRoute}${settings.password || ''}` : null,
       hookArgs.disabled || (passwordProtectRequestHooks && !settings.password)
     ),

@@ -45,7 +45,7 @@ export function useConsensusState(args?: HookArgsSwr<void, ConsensusState>) {
 export function useConsensusAcceptBlock(
   args?: HookArgsCallback<void, Block, void>
 ) {
-  return usePostFunc({ ...args, route: '/bus/consensus/acceptblock' }, [])
+  return usePostFunc({ ...args, route: '/bus/consensus/acceptblock' })
 }
 
 // syncer
@@ -65,7 +65,9 @@ export function useSyncerConnect(args?: HookArgsCallback<void, string, never>) {
       ...args,
       route: '/bus/syncer/connect',
     },
-    [(key) => key === syncerPeers]
+    (mutate) => {
+      mutate((key) => key === syncerPeers)
+    }
   )
 }
 
@@ -91,7 +93,11 @@ export function useTxPoolBroadcast(
       ...args,
       route: '/bus/txpool/broadcast',
     },
-    [(key) => ['/bus/txpool/transactions', '/bus/wallet/pending'].includes(key)]
+    (mutate) => {
+      mutate((key) =>
+        ['/bus/txpool/transactions', '/bus/wallet/pending'].includes(key)
+      )
+    }
   )
 }
 
@@ -130,31 +136,31 @@ export function useWalletUtxos(args?: HookArgsSwr<void, SiacoinElement[]>) {
 export function useWalletFund(
   args?: HookArgsCallback<void, WalletFundRequest, WalletFundResponse>
 ) {
-  return usePostFunc({ ...args, route: '/bus/wallet/fund' }, [])
+  return usePostFunc({ ...args, route: '/bus/wallet/fund' })
 }
 
 export function useWalletSign(
   args?: HookArgsCallback<void, WalletSignRequest, Transaction>
 ) {
-  return usePostFunc({ ...args, route: '/bus/wallet/sign' }, [])
+  return usePostFunc({ ...args, route: '/bus/wallet/sign' })
 }
 
 export function useWalletRedistribute(
   args?: HookArgsCallback<void, WalletRedistributeRequest, Transaction>
 ) {
-  return usePostFunc({ ...args, route: '/bus/wallet/redistribute' }, [])
+  return usePostFunc({ ...args, route: '/bus/wallet/redistribute' })
 }
 
 export function useWalletDiscard(
   args: HookArgsCallback<void, Transaction, never>
 ) {
-  return usePostFunc({ ...args, route: '/bus/wallet/discard' }, [])
+  return usePostFunc({ ...args, route: '/bus/wallet/discard' })
 }
 
 export function useWalletPrepareForm(
   args: HookArgsCallback<void, WalletPrepareFormRequest, Transaction[]>
 ) {
-  return usePostFunc({ ...args, route: '/bus/wallet/prepare/form' }, [])
+  return usePostFunc({ ...args, route: '/bus/wallet/prepare/form' })
 }
 
 export function useWalletPrepareRenew(
@@ -164,7 +170,7 @@ export function useWalletPrepareRenew(
     WalletPrepareRenewResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/bus/wallet/prepare/form' }, [])
+  return usePostFunc({ ...args, route: '/bus/wallet/prepare/form' })
 }
 
 export function useWalletPending(args?: HookArgsSwr<void, Transaction[]>) {
@@ -223,13 +229,10 @@ export function useHostsPubkey(args: HookArgsSwr<{ hostKey: string }, Host>) {
 export function useHostsPubkeyInteractionAdd(
   args: HookArgsCallback<{ hostKey: string }, Interaction, never>
 ) {
-  return usePostFunc(
-    {
-      ...args,
-      route: '/bus/hosts/:hostKey',
-    },
-    []
-  )
+  return usePostFunc({
+    ...args,
+    route: '/bus/hosts/:hostKey',
+  })
 }
 const hostsBlocklistRoute = '/bus/hosts/blocklist'
 export function useHostsBlocklist(args?: HookArgsSwr<void, string[]>) {
@@ -251,16 +254,16 @@ export function useHostsAllowlistUpdate(
     void
   >
 ) {
-  return usePutFunc({ ...args, route: '/bus/hosts/allowlist' }, [
-    (key) => {
+  return usePutFunc({ ...args, route: '/bus/hosts/allowlist' }, (mutate) => {
+    mutate((key) => {
       const matches = [
         hostsSearchRoute,
         hostsAllowlistRoute,
         contractsActiveRoute,
       ]
       return !!matches.find((match) => key.startsWith(match))
-    },
-  ])
+    })
+  })
 }
 
 export function useHostsBlocklistUpdate(
@@ -273,16 +276,16 @@ export function useHostsBlocklistUpdate(
     void
   >
 ) {
-  return usePutFunc({ ...args, route: '/bus/hosts/blocklist' }, [
-    (key) => {
+  return usePutFunc({ ...args, route: '/bus/hosts/blocklist' }, (mutate) => {
+    mutate((key) => {
       const matches = [
         hostsSearchRoute,
         hostsBlocklistRoute,
         contractsActiveRoute,
       ]
       return !!matches.find((match) => key.startsWith(match))
-    },
-  ])
+    })
+  })
 }
 
 // contracts
@@ -299,13 +302,13 @@ export function useContractsAcquire(
     ContractAcquireResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/bus/contracts/:id/acquire' }, [])
+  return usePostFunc({ ...args, route: '/bus/contracts/:id/acquire' })
 }
 
 export function useContractsRelease(
   args: HookArgsCallback<{ id: string }, void, never>
 ) {
-  return usePostFunc({ ...args, route: '/bus/contracts/:id/release' }, [])
+  return usePostFunc({ ...args, route: '/bus/contracts/:id/release' })
 }
 
 export function useContract(args: HookArgsSwr<{ id: string }, Contract>) {
@@ -315,19 +318,19 @@ export function useContract(args: HookArgsSwr<{ id: string }, Contract>) {
 export function useContractCreate(
   args: HookArgsCallback<{ id: string }, ContractsIDAddRequest, Contract>
 ) {
-  return usePostFunc({ ...args, route: '/bus/contracts/:id/new' }, [])
+  return usePostFunc({ ...args, route: '/bus/contracts/:id/new' })
 }
 
 export function useContractRenew(
   args: HookArgsCallback<{ id: string }, ContractsIDRenewedRequest, Contract>
 ) {
-  return usePostFunc({ ...args, route: '/bus/contracts/:id/renewed' }, [])
+  return usePostFunc({ ...args, route: '/bus/contracts/:id/renewed' })
 }
 
 export function useContractDelete(
   args: HookArgsCallback<{ id: string }, void, never>
 ) {
-  return useDeleteFunc({ ...args, route: '/bus/contracts/:id/delete' }, [])
+  return useDeleteFunc({ ...args, route: '/bus/contracts/:id/delete' })
 }
 
 export function useContractsets(args?: HookArgsSwr<void, string[][]>) {
@@ -341,7 +344,7 @@ export function useContractset(args: HookArgsSwr<{ name: string }, string[]>) {
 export function useContractsetUpdate(
   args: HookArgsCallback<{ name: string }, string[], never>
 ) {
-  return usePutFunc({ ...args, route: '/bus/contractsets/:name' }, [])
+  return usePutFunc({ ...args, route: '/bus/contractsets/:name' })
 }
 
 // objects
@@ -365,15 +368,15 @@ export function useObjectSearch(
 export function useObjectAdd(
   args: HookArgsCallback<{ key: string }, AddObjectRequest, never>
 ) {
-  return usePutFunc({ ...args, route: '/bus/objects/:key' }, [])
+  return usePutFunc({ ...args, route: '/bus/objects/:key' })
 }
 
 export function useObjectDelete(
   args?: HookArgsCallback<{ key: string }, void, never>
 ) {
-  return useDeleteFunc({ ...args, route: '/bus/objects/:key' }, [
-    (key) => key.startsWith('/bus/objects/'),
-  ])
+  return useDeleteFunc({ ...args, route: '/bus/objects/:key' }, (mutate) => {
+    mutate((key) => key.startsWith('/bus/objects/'))
+  })
 }
 
 // type ObjectsMigrateParams = {
@@ -401,11 +404,8 @@ export function useSetting(args: HookArgsSwr<{ key: string }, Setting>) {
 export function useSettingUpdate(
   args?: HookArgsCallback<{ key: string }, Setting, void>
 ) {
-  return usePutFunc(
-    {
-      ...args,
-      route: '/bus/setting/:key',
-    },
-    []
-  )
+  return usePutFunc({
+    ...args,
+    route: '/bus/setting/:key',
+  })
 }
