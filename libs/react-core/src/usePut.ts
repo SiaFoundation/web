@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
+import { useSWRConfig } from 'swr'
 import {
   buildAxiosConfig,
   buildRouteWithParams,
@@ -7,9 +8,9 @@ import {
   mergeInternalCallbackArgs,
   RequestParams,
   Response,
-  triggerDeps,
   mergeInternalHookArgsCallback,
-  DepFn,
+  getPathFromKey,
+  After,
 } from './request'
 import { useAppSettings } from './useAppSettings'
 
@@ -21,8 +22,9 @@ type PutFunc<Params extends RequestParams, Payload, Result> = {
 
 export function usePutFunc<Params extends RequestParams, Payload, Result>(
   args: InternalHookArgsCallback<Params, Payload, Result>,
-  deps: DepFn[]
+  after?: After<Params, Payload, Result>
 ): PutFunc<Params, Payload, Result> {
+  const { mutate } = useSWRConfig()
   const { settings } = useAppSettings()
   const hookArgs = mergeInternalHookArgsCallback(args)
   return {
@@ -44,7 +46,30 @@ export function usePutFunc<Params extends RequestParams, Payload, Result>(
           payload = callArgs.payload
         }
         const response = await axios.put<Result>(reqRoute, payload, reqConfig)
-        triggerDeps(deps, settings, hookArgs, callArgs)
+        if (after) {
+          after(
+            (matcher, data, opts) =>
+              mutate(
+                (key) => {
+                  if (typeof key !== 'string') {
+                    return false
+                  }
+                  const route = getPathFromKey(
+                    settings,
+                    key,
+                    args,
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    callArgs as any
+                  )
+                  return matcher(route)
+                },
+                data,
+                opts
+              ),
+            callArgs,
+            response
+          )
+        }
         return {
           status: response.status,
           data: response.data,

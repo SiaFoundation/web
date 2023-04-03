@@ -1,5 +1,5 @@
-import axios from 'axios'
-import useSWR from 'swr'
+import axios, { AxiosResponse } from 'axios'
+import useSWR, { MutatorCallback, MutatorOptions, useSWRConfig } from 'swr'
 import { useMemo } from 'react'
 import {
   buildAxiosConfig,
@@ -8,16 +8,16 @@ import {
   mergeInternalCallbackArgs,
   RequestParams,
   Response,
-  triggerDeps,
   InternalHookArgsCallback,
   mergeInternalHookArgsCallback,
-  DepFn,
   mergeInternalHookArgsSwr,
   InternalHookArgsWithPayloadSwr,
+  getPathFromKey,
+  After,
 } from './request'
 import { SWRError } from './types'
 import { useAppSettings } from './useAppSettings'
-import { getKey } from './utils'
+import { keyOrNull } from './utils'
 
 export function usePostSwr<Params extends RequestParams, Payload, Result>(
   args: InternalHookArgsWithPayloadSwr<Params, Payload, Result>
@@ -34,12 +34,12 @@ export function usePostSwr<Params extends RequestParams, Payload, Result>(
     // TODO: add a config to app settings to set password protected app or not,
     // renterd etc require password, explorer do not, disable hook fetching if
     // password protected and password is missing.
-    getKey(
+    keyOrNull(
       reqRoute
         ? `${reqRoute}${settings.password || ''}${JSON.stringify(
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (args as any).payload !== undefined ? (args as any).payload : ''
-          )}`
+          ).slice(0, 50)}`
         : null,
       hookArgs.disabled || (passwordProtectRequestHooks && !settings.password)
     ),
@@ -71,8 +71,9 @@ type PostFunc<Params extends RequestParams, Payload, Result> = {
 
 export function usePostFunc<Params extends RequestParams, Payload, Result>(
   args: InternalHookArgsCallback<Params, Payload, Result>,
-  deps: DepFn[]
+  after?: After<Params, Payload, Result>
 ): PostFunc<Params, Payload, Result> {
+  const { mutate } = useSWRConfig()
   const { settings } = useAppSettings()
   const hookArgs = mergeInternalHookArgsCallback(args)
   return {
@@ -94,7 +95,30 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
           payload = callArgs.payload
         }
         const response = await axios.post<Result>(reqRoute, payload, reqConfig)
-        triggerDeps(deps, settings, hookArgs, callArgs)
+        if (after) {
+          after(
+            (matcher, data, opts) =>
+              mutate(
+                (key) => {
+                  if (typeof key !== 'string') {
+                    return false
+                  }
+                  const route = getPathFromKey(
+                    settings,
+                    key,
+                    args,
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    callArgs as any
+                  )
+                  return matcher(route)
+                },
+                data,
+                opts
+              ),
+            callArgs,
+            response
+          )
+        }
         return {
           status: response.status,
           data: response.data,

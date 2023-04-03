@@ -3,12 +3,17 @@ import {
   DropdownMenuItem,
   Button,
   Draggable16,
+  DataView16,
   ListChecked16,
   DropdownMenuLeftSlot,
   Filter16,
   DropdownMenuLabel,
 } from '@siafoundation/design-system'
-import { useHostsAllowlist, useHostsBlocklist } from '@siafoundation/react-core'
+import {
+  useHostsAllowlist,
+  useHostsBlocklist,
+  useRhpScan,
+} from '@siafoundation/react-core'
 import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
 import { useContracts } from '../../contexts/contracts'
@@ -33,6 +38,7 @@ export function HostDropdownMenu({ address, publicKey }: Props) {
   const allowlist = useHostsAllowlist()
   const blocklistUpdate = useBlocklistUpdate()
   const allowlistUpdate = useAllowlistUpdate()
+  const rescan = useRhpScan()
   return (
     <DropdownMenu
       trigger={
@@ -84,6 +90,22 @@ export function HostDropdownMenu({ address, publicKey }: Props) {
         Filter contracts by public key
       </DropdownMenuItem>
       <DropdownMenuLabel>Host actions</DropdownMenuLabel>
+      <DropdownMenuItem
+        onSelect={() =>
+          rescan.post({
+            payload: {
+              hostKey: publicKey,
+              hostIP: address,
+              timeout: 30000000000,
+            },
+          })
+        }
+      >
+        <DropdownMenuLeftSlot>
+          <DataView16 />
+        </DropdownMenuLeftSlot>
+        Rescan host
+      </DropdownMenuItem>
       {blocklist.data?.find((l) => l === address) ? (
         <DropdownMenuItem onSelect={() => blocklistUpdate([], [address])}>
           <DropdownMenuLeftSlot>

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useSWRConfig } from 'swr'
 import {
   buildAxiosConfig,
   buildRouteWithParams,
@@ -6,10 +7,10 @@ import {
   mergeInternalCallbackArgs,
   RequestParams,
   Response,
-  triggerDeps,
   InternalHookArgsCallback,
   mergeInternalHookArgsCallback,
-  DepFn,
+  After,
+  getPathFromKey,
 } from './request'
 import { useAppSettings } from './useAppSettings'
 
@@ -21,8 +22,9 @@ type DeleteFunc<Params extends RequestParams, Result> = {
 
 export function useDeleteFunc<Params extends RequestParams, Result>(
   args: InternalHookArgsCallback<Params, void, Result>,
-  deps: DepFn[]
+  after?: After<Params, void, Result>
 ): DeleteFunc<Params, Result> {
+  const { mutate } = useSWRConfig()
   const { settings } = useAppSettings()
   const hookArgs = mergeInternalHookArgsCallback(args)
   return {
@@ -40,7 +42,30 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
           throw Error('No route')
         }
         const response = await axios.delete<Result>(reqRoute, reqConfig)
-        triggerDeps(deps, settings, hookArgs, callArgs)
+        if (after) {
+          after(
+            (matcher, data, opts) =>
+              mutate(
+                (key) => {
+                  if (typeof key !== 'string') {
+                    return false
+                  }
+                  const route = getPathFromKey(
+                    settings,
+                    key,
+                    args,
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    callArgs as any
+                  )
+                  return matcher(route)
+                },
+                data,
+                opts
+              ),
+            callArgs,
+            response
+          )
+        }
         return {
           status: response.status,
           data: response.data,

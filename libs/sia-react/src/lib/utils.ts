@@ -1,6 +1,6 @@
 import { SWROptions } from './types'
 
-export function getKey<T>(name: string, options?: SWROptions<T>) {
+export function keyOrNull<T>(name: string, options?: SWROptions<T>) {
   if (options?.disabled) {
     return null
   }

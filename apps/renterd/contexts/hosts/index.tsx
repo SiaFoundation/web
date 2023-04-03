@@ -9,8 +9,9 @@ import {
   useHostsAllowlist,
   useHostsBlocklist,
   useHostsSearch,
+  useRhpScan,
 } from '@siafoundation/react-core'
-import { createContext, useContext, useMemo } from 'react'
+import { createContext, useCallback, useContext, useMemo } from 'react'
 import {
   TableColumnId,
   columnsMeta,
@@ -34,7 +35,10 @@ function useHostsMain() {
   const { autopilotMode } = useAutopilot()
 
   const autopilotResponse = useAutopilotHostsSearch({
-    disabled: autopilotMode !== 'on',
+    disabled:
+      // prevents an extra fetch when allContracts is null
+      (filters.find((f) => f.id === 'activeContracts') && !allContracts) ||
+      autopilotMode !== 'on',
     payload: {
       limit,
       offset,

@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 import { SWROptions } from './types'
-import { getKey } from './utils'
+import { keyOrNull } from './utils'
 
 type SiaStatsNetworkStatusGET = {
   active_contracts: number
@@ -33,7 +33,7 @@ export function useSiaStatsNetworkStatus(
   options?: SWROptions<SiaStatsNetworkStatusGET>
 ) {
   return useSWR<SiaStatsNetworkStatusGET>(
-    getKey(path, options),
+    keyOrNull(path, options),
     async () => {
       const r = await fetch(path)
       return r.json()

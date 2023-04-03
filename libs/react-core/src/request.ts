@@ -1,7 +1,8 @@
-import { AxiosRequestConfig } from 'axios'
-import { mutate } from 'swr'
+import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { MutatorCallback, MutatorOptions } from 'swr'
 import { SWROptions } from './types'
 import { AppSettings } from './useAppSettings'
+import { delay } from './utils'
 
 export type RequestParams = Record<string, string | string[] | number> | void
 
@@ -288,7 +289,7 @@ export function buildRouteWithParams<
   return `${api}${route}`
 }
 
-export function stripApiFromKey<Params extends RequestParams, Payload, Result>(
+export function getPathFromKey<Params extends RequestParams, Payload, Result>(
   settings: AppSettings,
   route: string,
   hookArgs:
@@ -306,26 +307,12 @@ export function stripApiFromKey<Params extends RequestParams, Payload, Result>(
   return route.replace(api, '')
 }
 
-export type DepFn = (key: string) => boolean
-
-export function triggerDeps<Params extends RequestParams, Payload, Result>(
-  depFns: DepFn[],
-  settings: AppSettings,
-  configArgs: InternalHookArgsCallback<Params, Payload, Result>,
-  callArgs: InternalCallbackArgs<Params, Payload, Result> | undefined
-) {
-  depFns?.forEach((depFn) =>
-    mutate((key) => {
-      // assumes the dependency key uses the same API settings as the caller
-      const route = stripApiFromKey(
-        settings,
-        key as string,
-        configArgs,
-        callArgs
-      )
-      // run the depfn with the stripped route so that API prefixing can be
-      // ignored in the matching logic.
-      return depFn(route)
-    })
-  )
-}
+export type After<Params extends RequestParams, Payload, Result> = (
+  mutate: <T>(
+    matcher: (key: string) => boolean,
+    data?: T | Promise<T> | MutatorCallback<T>,
+    opts?: boolean | MutatorOptions<T>
+  ) => Promise<(T | undefined)[]>,
+  args: InternalCallbackArgs<Params, Payload, Result>,
+  response: AxiosResponse<Result, void>
+) => void
