@@ -2,9 +2,9 @@ name: Release Go modules
 on:
   push:
     tags:
-      - '@siafoundation/renterd@*'
-      - '@siafoundation/hostd@*'
-      - '@siafoundation/walletd@*'
+      - '\@siafoundation/renterd\@*'
+      - '\@siafoundation/hostd\@*'
+      - '\@siafoundation/walletd\@*'
 
 env:
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -55,7 +55,6 @@ jobs:
           # sync up the main branch in case something has been merged
           # since the action started
           git fetch origin main
-          git rebase origin/main
           # checkout the main branch and merge in the release branch
           # this will be a fast forward merge unless something went wrong
           git checkout main
