@@ -1,5 +1,6 @@
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import { useSWRConfig } from 'swr'
+import { WorkflowPayload, useWorkflows } from './workflows'
 import {
   buildAxiosConfig,
   buildRouteWithParams,
@@ -26,6 +27,7 @@ export function usePutFunc<Params extends RequestParams, Payload, Result>(
 ): PutFunc<Params, Payload, Result> {
   const { mutate } = useSWRConfig()
   const { settings } = useAppSettings()
+  const { setWorkflow, removeWorkflow } = useWorkflows()
   const hookArgs = mergeInternalHookArgsCallback(args)
   return {
     put: async (args: InternalCallbackArgs<Params, Payload, Result>) => {
@@ -45,6 +47,23 @@ export function usePutFunc<Params extends RequestParams, Payload, Result>(
         if ('payload' in callArgs) {
           payload = callArgs.payload
         }
+
+        const key = `${reqRoute}${settings.password || ''}${JSON.stringify(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (args as any).payload !== undefined ? (args as any).payload : ''
+        )}`
+
+        const path = getPathFromKey(
+          settings,
+          reqRoute,
+          args,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          callArgs as any
+        )
+        setWorkflow(key, {
+          path,
+          payload,
+        })
         const response = await axios.put<Result>(reqRoute, payload, reqConfig)
         if (after) {
           after(
@@ -70,6 +89,7 @@ export function usePutFunc<Params extends RequestParams, Payload, Result>(
             response
           )
         }
+        removeWorkflow(key)
         return {
           status: response.status,
           data: response.data,

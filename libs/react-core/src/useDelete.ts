@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useSWRConfig } from 'swr'
+import { useWorkflows } from './workflows'
 import {
   buildAxiosConfig,
   buildRouteWithParams,
@@ -26,6 +27,7 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
 ): DeleteFunc<Params, Result> {
   const { mutate } = useSWRConfig()
   const { settings } = useAppSettings()
+  const { setWorkflow, removeWorkflow } = useWorkflows()
   const hookArgs = mergeInternalHookArgsCallback(args)
   return {
     delete: async (args: InternalCallbackArgs<Params, void, Result>) => {
@@ -41,6 +43,16 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
         if (!reqRoute) {
           throw Error('No route')
         }
+        const path = getPathFromKey(
+          settings,
+          reqRoute,
+          args,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          callArgs as any
+        )
+        setWorkflow(reqRoute, {
+          path,
+        })
         const response = await axios.delete<Result>(reqRoute, reqConfig)
         if (after) {
           after(
@@ -66,6 +78,7 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
             response
           )
         }
+        removeWorkflow(reqRoute)
         return {
           status: response.status,
           data: response.data,
