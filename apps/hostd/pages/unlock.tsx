@@ -10,7 +10,7 @@ import { routes } from '../config/routes'
 
 export default function Unlock() {
   return (
-    <AppPublicLayout routes={routes}>
+    <AppPublicLayout appName="hostd" routes={routes}>
       <div className="flex flex-col items-center justify-center gap-6 h-full">
         <Panel className="relative top-[-50px] w-[300px] p-4">
           <div className="flex flex-col gap-4">

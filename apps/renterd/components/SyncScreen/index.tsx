@@ -2,7 +2,6 @@ import {
   Panel,
   Separator,
   Text,
-  AppPublicLayout,
   ProgressBar,
   Button,
   Network_416,
@@ -22,6 +21,7 @@ import {
 } from '@siafoundation/react-core'
 import { useDialog } from '../../contexts/dialog'
 import { routes } from '../../config/routes'
+import { RenterdPublicLayout } from '../RenterdPublicLayout'
 
 export function SyncScreen() {
   const { settings, lock, isUnlocked } = useAppSettings()
@@ -44,7 +44,7 @@ export function SyncScreen() {
       : false
 
   return (
-    <AppPublicLayout routes={routes}>
+    <RenterdPublicLayout title="Syncing" routes={routes}>
       <div className="flex flex-col items-center justify-center gap-6 h-full">
         <Panel className="relative top-[-50px] w-[300px] p-2.5">
           <div className="flex flex-col justify-between h-full">
@@ -136,6 +136,6 @@ export function SyncScreen() {
           </div>
         </Panel>
       </div>
-    </AppPublicLayout>
+    </RenterdPublicLayout>
   )
 }

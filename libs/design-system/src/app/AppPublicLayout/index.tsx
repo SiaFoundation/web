@@ -13,24 +13,26 @@ type Routes = {
 type Props = {
   children: React.ReactNode
   routes: Routes
+  appName: string
   title?: string
   filters?: React.ReactNode
   actions?: React.ReactNode
 }
 
 export function AppPublicLayout({
+  appName,
+  title,
   children,
   routes,
-  title,
   filters,
   actions,
 }: Props) {
   return (
-    <AppRootLayout routes={routes}>
+    <AppRootLayout appName={appName} title={title} routes={routes}>
       <AppBackdrop />
       <div className="flex h-full">
         <div className="flex flex-col flex-1">
-          <AppNavbar title={title} nav={filters} actions={actions} />
+          <AppNavbar nav={filters} actions={actions} />
           <div className="flex-1">
             <Container className="h-full">{children}</Container>
           </div>

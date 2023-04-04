@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useSWRConfig } from 'swr'
-import { WorkflowPayload, useWorkflows } from './workflows'
+import { useWorkflows } from './workflows'
 import {
   buildAxiosConfig,
   buildRouteWithParams,
