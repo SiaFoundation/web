@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from 'axios'
-import useSWR, { MutatorCallback, MutatorOptions, useSWRConfig } from 'swr'
+import axios from 'axios'
+import useSWR, { useSWRConfig } from 'swr'
 import { useMemo } from 'react'
 import {
   buildAxiosConfig,
@@ -18,6 +18,7 @@ import {
 import { SWRError } from './types'
 import { useAppSettings } from './useAppSettings'
 import { keyOrNull } from './utils'
+import { useWorkflows } from './workflows'
 
 export function usePostSwr<Params extends RequestParams, Payload, Result>(
   args: InternalHookArgsWithPayloadSwr<Params, Payload, Result>
@@ -30,19 +31,21 @@ export function usePostSwr<Params extends RequestParams, Payload, Result>(
     hookArgs,
     undefined
   )
+  const key = useMemo(
+    () =>
+      keyOrNull(
+        reqRoute
+          ? `${reqRoute}${settings.password || ''}${JSON.stringify(
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (args as any).payload !== undefined ? (args as any).payload : ''
+            )}`
+          : null,
+        hookArgs.disabled || (passwordProtectRequestHooks && !settings.password)
+      ),
+    [reqRoute, args, hookArgs, passwordProtectRequestHooks, settings]
+  )
   return useSWR<Result, SWRError>(
-    // TODO: add a config to app settings to set password protected app or not,
-    // renterd etc require password, explorer do not, disable hook fetching if
-    // password protected and password is missing.
-    keyOrNull(
-      reqRoute
-        ? `${reqRoute}${settings.password || ''}${JSON.stringify(
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (args as any).payload !== undefined ? (args as any).payload : ''
-          ).slice(0, 50)}`
-        : null,
-      hookArgs.disabled || (passwordProtectRequestHooks && !settings.password)
-    ),
+    key,
     async () => {
       if (!hookArgs.route) {
         throw Error('No route')
@@ -73,6 +76,7 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
   args: InternalHookArgsCallback<Params, Payload, Result>,
   after?: After<Params, Payload, Result>
 ): PostFunc<Params, Payload, Result> {
+  const { setWorkflow, removeWorkflow } = useWorkflows()
   const { mutate } = useSWRConfig()
   const { settings } = useAppSettings()
   const hookArgs = mergeInternalHookArgsCallback(args)
@@ -94,6 +98,24 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
         if ('payload' in callArgs) {
           payload = callArgs.payload
         }
+
+        const key = `${reqRoute}${settings.password || ''}${JSON.stringify(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (args as any).payload !== undefined ? (args as any).payload : ''
+        )}`
+
+        const path = getPathFromKey(
+          settings,
+          reqRoute,
+          args,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          callArgs as any
+        )
+
+        setWorkflow(key, {
+          path,
+          payload,
+        })
         const response = await axios.post<Result>(reqRoute, payload, reqConfig)
         if (after) {
           after(
@@ -119,6 +141,7 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
             response
           )
         }
+        removeWorkflow(key)
         return {
           status: response.status,
           data: response.data,

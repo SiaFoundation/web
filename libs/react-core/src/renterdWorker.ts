@@ -5,7 +5,6 @@ import { Host, HostSettings } from './siaTypes'
 import { useGetDownloadFunc } from './useGetDownload'
 import { usePostFunc } from './usePost'
 import { usePutFunc } from './usePut'
-import { delay } from './utils'
 
 export function useObjectDownloadFunc(
   args?: HookArgsCallback<{ key: string }, void, Blob>
@@ -36,7 +35,7 @@ export function useObjectUpload(
   )
 }
 
-type RhpScanRequest = {
+export type RhpScanRequest = {
   hostKey: string
   hostIP: string
   timeout: number
@@ -50,11 +49,12 @@ type RhpScanResponse = {
 
 const debouncedListRevalidate = debounce((func: () => void) => func(), 5_000)
 
+export const workerRhpScanRoute = '/worker/rhp/scan'
 export function useRhpScan(
   args?: HookArgsCallback<void, RhpScanRequest, RhpScanResponse>
 ) {
   return usePostFunc(
-    { ...args, route: '/worker/rhp/scan' },
+    { ...args, route: workerRhpScanRoute },
     async (mutate, { payload: { hostKey } }, response) => {
       // Fetching immediately after the response returns stale data so
       // we optimistically update without triggering revalidation,
@@ -74,6 +74,7 @@ export function useRhpScan(
                   interactions: {
                     ...aph.host.interactions,
                     LastScan: new Date().toISOString(),
+                    LastScanSuccess: !response.data.scanError,
                   },
                   settings: response.data.settings,
                 },
@@ -93,6 +94,7 @@ export function useRhpScan(
                 interactions: {
                   ...host.interactions,
                   LastScan: new Date().toISOString(),
+                  LastScanSuccess: !response.data.scanError,
                 },
                 settings: response.data.settings,
               }

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { SWRConfig } from 'swr'
 import { ThemeProvider } from '../hooks/useTheme'
-import { AppSettingsProvider } from '@siafoundation/react-core'
+import { AppSettingsProvider, CoreProvider } from '@siafoundation/react-core'
 import { rootClasses } from '../config/css'
 
 export function ClientSide({ children }: { children: React.ReactNode }) {
@@ -27,11 +26,7 @@ export function NextAppCsr({
 }: Props) {
   return (
     <ClientSide>
-      <SWRConfig
-        value={{
-          fallback: fallback || {},
-        }}
-      >
+      <CoreProvider fallback={fallback}>
         <ThemeProvider>
           <AppSettingsProvider
             passwordProtectRequestHooks={passwordProtectRequestHooks}
@@ -42,7 +37,7 @@ export function NextAppCsr({
             </div>
           </AppSettingsProvider>
         </ThemeProvider>
-      </SWRConfig>
+      </CoreProvider>
     </ClientSide>
   )
 }

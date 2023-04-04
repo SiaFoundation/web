@@ -2,7 +2,6 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { MutatorCallback, MutatorOptions } from 'swr'
 import { SWROptions } from './types'
 import { AppSettings } from './useAppSettings'
-import { delay } from './utils'
 
 export type RequestParams = Record<string, string | string[] | number> | void
 

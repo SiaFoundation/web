@@ -1,8 +1,7 @@
-import { SWRConfig } from 'swr'
 import { ThemeProvider } from '../hooks/useTheme'
 import { Toaster } from '../lib/toast'
 import { AppProps } from 'next/app'
-import { AppSettingsProvider } from '@siafoundation/react-core'
+import { AppSettingsProvider, CoreProvider } from '@siafoundation/react-core'
 import { rootClasses } from '../config/css'
 
 export function NextAppSsr({
@@ -14,7 +13,7 @@ export function NextAppSsr({
 }> & { Layout?: React.FC<{ children: React.ReactNode }> }) {
   if (Layout) {
     return (
-      <SWRConfig value={{ fallback: pageProps?.fallback || {} }}>
+      <CoreProvider fallback={pageProps.fallback}>
         <ThemeProvider ssr>
           <AppSettingsProvider ssr>
             <div id="root" className={rootClasses}>
@@ -25,11 +24,11 @@ export function NextAppSsr({
             </div>
           </AppSettingsProvider>
         </ThemeProvider>
-      </SWRConfig>
+      </CoreProvider>
     )
   }
   return (
-    <SWRConfig value={{ fallback: pageProps?.fallback || {} }}>
+    <CoreProvider fallback={pageProps.fallback}>
       <ThemeProvider ssr>
         <AppSettingsProvider>
           <div id="root" className={rootClasses}>
@@ -38,6 +37,6 @@ export function NextAppSsr({
           </div>
         </AppSettingsProvider>
       </ThemeProvider>
-    </SWRConfig>
+    </CoreProvider>
   )
 }

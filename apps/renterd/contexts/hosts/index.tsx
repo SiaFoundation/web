@@ -9,9 +9,8 @@ import {
   useHostsAllowlist,
   useHostsBlocklist,
   useHostsSearch,
-  useRhpScan,
 } from '@siafoundation/react-core'
-import { createContext, useCallback, useContext, useMemo } from 'react'
+import { createContext, useContext, useMemo } from 'react'
 import {
   TableColumnId,
   columnsMeta,

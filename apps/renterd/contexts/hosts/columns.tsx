@@ -6,12 +6,18 @@ import {
   CheckmarkFilled16,
   Misuse16,
   Tooltip,
+  LoadingDots,
 } from '@siafoundation/design-system'
 import { humanNumber } from '@siafoundation/sia-js'
 import { useMemo } from 'react'
 import { HostData, TableColumnId, columnsMeta } from './types'
 import { format, formatDistance, formatRelative } from 'date-fns'
 import { HostDropdownMenu } from '../../components/Hosts/HostDropdownMenu'
+import {
+  RhpScanRequest,
+  useWorkflows,
+  workerRhpScanRoute,
+} from '@siafoundation/react-core'
 
 export function useColumns({
   isAllowlistActive,
@@ -113,7 +119,16 @@ export function useColumns({
       {
         id: 'lastScan',
         label: columnsMeta.lastScan.label,
-        render: (host) => {
+        render: function LastScan(host) {
+          const { workflows } = useWorkflows()
+          const isPending = workflows.find(
+            (wf: { path?: string; payload?: RhpScanRequest }) =>
+              wf.path.startsWith(workerRhpScanRoute) &&
+              wf.payload?.hostKey === host.publicKey
+          )
+          if (isPending) {
+            return <LoadingDots />
+          }
           return (
             <Tooltip
               side="right"
