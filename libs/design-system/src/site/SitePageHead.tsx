@@ -14,7 +14,7 @@ type Props = {
   children?: React.ReactNode
 }
 
-export function PageHead({
+export function SitePageHead({
   appName,
   appLink,
   title,

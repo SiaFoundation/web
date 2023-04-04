@@ -1,4 +1,4 @@
-import { PageHead as DsPageHead, webLinks } from '@siafoundation/design-system'
+import { SitePageHead, webLinks } from '@siafoundation/design-system'
 import { appName, newsFeedName } from '../config/app'
 import { routes } from '../config/routes'
 
@@ -14,7 +14,7 @@ type Props = {
 
 export function PageHead({ title, description, image, date, path }: Props) {
   return (
-    <DsPageHead
+    <SitePageHead
       appLink={webLinks.website}
       appName={appName}
       title={title}
@@ -42,6 +42,6 @@ export function PageHead({ title, description, image, date, path }: Props) {
         href={routes.newsroom.feed.json}
         title={newsFeedName}
       />
-    </DsPageHead>
+    </SitePageHead>
   )
 }

@@ -2,7 +2,7 @@ import '../config/style.css'
 import {
   getImageProps,
   NextAppSsr,
-  PageHead,
+  SitePageHead,
   ScrollArea,
   webLinks,
 } from '@siafoundation/design-system'
@@ -20,7 +20,7 @@ export default function App(props: Props) {
 function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="bg-white dark:bg-graydark-50 h-full">
-      <PageHead
+      <SitePageHead
         appLink={webLinks.design}
         appName="Sia"
         title="Design System"

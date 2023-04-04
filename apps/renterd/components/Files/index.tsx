@@ -11,6 +11,7 @@ export function Files() {
 
   return (
     <RenterdAuthedLayout
+      title="Files"
       routes={routes}
       sidenav={<RenterSidenav />}
       nav={<FilesBreadcrumbMenu />}

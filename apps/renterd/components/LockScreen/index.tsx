@@ -2,15 +2,15 @@ import {
   Panel,
   Separator,
   Text,
-  AppPublicLayout,
   AppUnlockForm,
 } from '@siafoundation/design-system'
 import { buildModeEmbed } from '../../config/buildMode'
 import { routes } from '../../config/routes'
+import { RenterdPublicLayout } from '../RenterdPublicLayout'
 
 export function LockScreen() {
   return (
-    <AppPublicLayout routes={routes}>
+    <RenterdPublicLayout routes={routes}>
       <div className="flex flex-col items-center justify-center gap-6 h-full">
         <Panel className="relative top-[-50px] w-[300px] p-2.5">
           <div className="flex flex-col justify-between h-full">
@@ -22,6 +22,6 @@ export function LockScreen() {
           </div>
         </Panel>
       </div>
-    </AppPublicLayout>
+    </RenterdPublicLayout>
   )
 }

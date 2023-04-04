@@ -1,5 +1,6 @@
 import React from 'react'
 import { useMonitorConnAndLock } from '../../hooks/useMonitorConnAndLock'
+import { AppPageHead } from '../AppPageHead'
 
 type Routes = {
   home: string
@@ -10,10 +11,17 @@ type Routes = {
 type Props = {
   children: React.ReactNode
   routes: Routes
+  appName: string
+  title?: string
 }
 
-export function AppRootLayout({ children, routes }: Props) {
+export function AppRootLayout({ appName, title, children, routes }: Props) {
   useMonitorConnAndLock(routes)
 
-  return <div className="h-screen">{children}</div>
+  return (
+    <div className="h-screen">
+      <AppPageHead appName={appName} title={title} />
+      {children}
+    </div>
+  )
 }

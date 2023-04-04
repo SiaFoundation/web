@@ -13,7 +13,7 @@ import {
   LogoDiscord24,
   LogoTwitter24,
   LogoGithub24,
-  PageHead,
+  SitePageHead,
   FaucetIcon,
   LinkButton,
   Tooltip,
@@ -38,7 +38,7 @@ type Props = {
 export function Layout({ title, description, path, children }: Props) {
   return (
     <div className="relative h-full bg-white dark:bg-graydark-50 overflow-hidden">
-      <PageHead
+      <SitePageHead
         appLink={appLink}
         appName={appName}
         title={title}

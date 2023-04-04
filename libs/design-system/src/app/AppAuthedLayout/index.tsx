@@ -7,6 +7,7 @@ import { AppRootLayout } from '../AppRootLayout'
 import { AppNavbar } from '../AppNavbar'
 
 type Props = {
+  appName: string
   title?: string
   size?: React.ComponentProps<typeof Container>['size']
   nav?: React.ReactNode
@@ -28,6 +29,7 @@ type Props = {
 }
 
 export function AppAuthedLayout({
+  appName,
   title,
   size = '4',
   nav,
@@ -38,7 +40,7 @@ export function AppAuthedLayout({
   openSettings,
 }: Props) {
   return (
-    <AppRootLayout routes={routes}>
+    <AppRootLayout appName={appName} title={title} routes={routes}>
       <AppBackdrop />
       <div className="flex h-full w-full">
         <Sidenav routes={routes} openSettings={openSettings}>

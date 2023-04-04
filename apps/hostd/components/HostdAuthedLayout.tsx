@@ -30,6 +30,8 @@ export function HostdAuthedLayout({
   return (
     <Providers>
       <AppAuthedLayout
+        appName="hostd"
+        title={title}
         openSettings={() => openDialog('settings')}
         routes={routes}
         sidenav={
@@ -48,7 +50,6 @@ export function HostdAuthedLayout({
             </SidenavItem>
           </>
         }
-        title={title}
         actions={actions}
         nav={nav}
         size={size}
