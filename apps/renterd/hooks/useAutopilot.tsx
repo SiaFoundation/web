@@ -1,5 +1,5 @@
 import { useAutopilotStatus } from '@siafoundation/react-core'
-import { useEffect, useState } from 'react'
+import useSWR from 'swr'
 
 export function useAutopilot() {
   const aps = useAutopilotStatus({
@@ -8,27 +8,31 @@ export function useAutopilot() {
         dedupingInterval: 60_000,
         revalidateOnFocus: false,
         refreshInterval: 60_000,
+        keepPreviousData: true,
       },
     },
   })
 
-  const [autopilotMode, setAutopilotMode] = useState<'on' | 'off' | 'init'>(
-    'init'
+  const apm = useSWR<'on' | 'off' | 'init'>(
+    [aps.data, aps.error],
+    () => {
+      if (aps.data || aps.error) {
+        if (aps.error) {
+          return 'off'
+        }
+        // This check is required because the API currently returns html when the endpoint does not exist
+        const validResponse = typeof aps.data === 'object'
+        return validResponse ? 'on' : 'off'
+      }
+      return 'init'
+    },
+    {
+      keepPreviousData: true,
+      fallbackData: 'init',
+    }
   )
 
-  useEffect(() => {
-    if (autopilotMode === 'init' && (aps.data || aps.error)) {
-      if (aps.error) {
-        setAutopilotMode('off')
-      }
-      // This check is required because the API currently returns html when the endpoint does not exist
-      const validResponse = typeof aps.data === 'object'
-      setAutopilotMode(validResponse ? 'on' : 'off')
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [aps])
-
   return {
-    autopilotMode,
+    autopilotMode: apm.data,
   }
 }
