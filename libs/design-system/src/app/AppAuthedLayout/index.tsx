@@ -10,6 +10,7 @@ type Props = {
   appName: string
   title?: string
   size?: React.ComponentProps<typeof Container>['size']
+  navTitle?: string
   nav?: React.ReactNode
   actions?: React.ReactNode
   sidenav?: React.ReactNode
@@ -31,6 +32,7 @@ type Props = {
 export function AppAuthedLayout({
   appName,
   title,
+  navTitle,
   size = '4',
   nav,
   actions,
@@ -47,7 +49,11 @@ export function AppAuthedLayout({
           {sidenav}
         </Sidenav>
         <div className="flex flex-col flex-1 overflow-hidden">
-          <AppNavbar title={title} nav={nav} actions={actions} />
+          <AppNavbar
+            title={navTitle === undefined ? title : navTitle}
+            nav={nav}
+            actions={actions}
+          />
           <ScrollArea className="z-0">
             <Container size={size} pad={false}>
               <div className="flex flex-col gap-5">{children}</div>

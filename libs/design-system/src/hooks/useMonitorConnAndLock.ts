@@ -1,6 +1,7 @@
 import { useAppSettings } from '@siafoundation/react-core'
 import { NextRouter, useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { mutate } from 'swr'
 import { useConnectivity } from './useConnectivity'
 
 type Routes = {
@@ -33,6 +34,7 @@ export function useMonitorConnAndLock(routes: Routes) {
     const noPasswordOrDisconnected = !settings.password || !isConnected
     if (isProtectedPath && noPasswordOrDisconnected) {
       setSettings({ password: '' })
+      clearAllSwrKeys()
       router.push({
         pathname: routes.lockscreen,
         query: {
@@ -54,4 +56,8 @@ export function useMonitorConnAndLock(routes: Routes) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router, isConnected, isSynced])
+}
+
+function clearAllSwrKeys() {
+  mutate(() => true, undefined, { revalidate: false })
 }
