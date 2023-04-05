@@ -48,7 +48,7 @@ export function usePutFunc<Params extends RequestParams, Payload, Result>(
           payload = callArgs.payload
         }
 
-        const key = `${reqRoute}${settings.password || ''}${JSON.stringify(
+        const key = `${reqRoute}${JSON.stringify(
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (args as any).payload !== undefined ? (args as any).payload : ''
         )}`

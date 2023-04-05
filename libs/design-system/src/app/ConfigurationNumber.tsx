@@ -44,7 +44,7 @@ export function ConfigurationNumber({
             decimalsLimit={decimalsLimit}
             value={average}
             units={units}
-            onChange={onChange}
+            onClick={onChange}
           />
         )}
         {suggestion && suggestionTip && (
@@ -55,7 +55,7 @@ export function ConfigurationNumber({
             decimalsLimit={decimalsLimit}
             value={suggestion}
             units={units}
-            onChange={onChange}
+            onClick={onChange}
           />
         )}
       </div>

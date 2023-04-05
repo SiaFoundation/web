@@ -404,8 +404,13 @@ export function useSetting(args: HookArgsSwr<{ key: string }, Setting>) {
 export function useSettingUpdate(
   args?: HookArgsCallback<{ key: string }, Setting, void>
 ) {
-  return usePutFunc({
-    ...args,
-    route: '/bus/setting/:key',
-  })
+  return usePutFunc(
+    {
+      ...args,
+      route: '/bus/setting/:key',
+    },
+    (mutate, args) => {
+      mutate((key) => key.startsWith(`/bus/setting/${args.params.key}`))
+    }
+  )
 }

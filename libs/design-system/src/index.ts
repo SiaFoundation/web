@@ -151,6 +151,7 @@ export * from './hooks/useDatasetEmptyState'
 export * from './data/webLinks'
 
 // lib
+export * from './lib/bytes'
 export * from './lib/blockTime'
 export * from './lib/toast'
 export * from './lib/clipboard'

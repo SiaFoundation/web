@@ -1,4 +1,4 @@
-import { useAppSettings } from '@siafoundation/react-core'
+import { useAppSettings, useWorkflows } from '@siafoundation/react-core'
 import { NextRouter, useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { mutate } from 'swr'
@@ -26,6 +26,7 @@ export function getRedirectRouteFromQuery(router: NextRouter, routes: Routes) {
 export function useMonitorConnAndLock(routes: Routes) {
   const { isConnected, isSynced } = useConnectivity()
   const { settings, setSettings } = useAppSettings()
+  const { resetWorkflows } = useWorkflows()
   const router = useRouter()
 
   useEffect(() => {
@@ -34,6 +35,7 @@ export function useMonitorConnAndLock(routes: Routes) {
     const noPasswordOrDisconnected = !settings.password || !isConnected
     if (isProtectedPath && noPasswordOrDisconnected) {
       setSettings({ password: '' })
+      resetWorkflows()
       clearAllSwrKeys()
       router.push({
         pathname: routes.lockscreen,

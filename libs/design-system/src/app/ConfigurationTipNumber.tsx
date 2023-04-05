@@ -12,8 +12,8 @@ type Props = {
   label: string
   link?: string
   tip: React.ReactNode
-  value: BigNumber
-  onChange: (value: BigNumber) => void
+  value: BigNumber // number | hastings
+  onClick: (value: BigNumber) => void
   decimalsLimit: number
   units?: string
 }
@@ -24,7 +24,7 @@ export function ConfigurationTipNumber({
   link,
   tip,
   value,
-  onChange,
+  onClick,
   decimalsLimit,
   units,
 }: Props) {
@@ -46,7 +46,7 @@ export function ConfigurationTipNumber({
           </Text>
         </div>
       </Tooltip>
-      <div className="flex cursor-pointer" onClick={() => onChange(value)}>
+      <div className="flex cursor-pointer" onClick={() => onClick(value)}>
         {type === 'siacoin' ? (
           <ValueSc
             value={value}

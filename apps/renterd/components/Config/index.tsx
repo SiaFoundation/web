@@ -7,9 +7,12 @@ import {
   ConfigurationNumber,
   triggerErrorToast,
   useFormChanged,
+  monthsToBlocks,
+  Reset16,
+  TiBToBytes,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { RenterSidenav } from '../../components/RenterSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
@@ -18,6 +21,7 @@ import { useSetting, useSettingUpdate } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
 import { Setting } from '../../components/Setting'
 import { MenuSection } from '../../components/MenuSection'
+import { toHastings, toSiacoins } from '@siafoundation/sia-js'
 
 type GougingData = {
   maxStoragePrice: string
@@ -33,6 +37,8 @@ type RedundancyData = {
   minShards: number
   totalShards: number
 }
+
+const scDecimalPlaces = 6
 
 export function Config() {
   const { openDialog } = useDialog()
@@ -81,12 +87,16 @@ export function Config() {
             key: 'gouging',
           },
           payload: {
-            maxRPCPrice: values.maxRpcPrice.toFixed(0).toString(),
-            maxStoragePrice: values.maxStoragePrice.toFixed(0).toString(),
-            maxContractPrice: values.maxContractPrice.toFixed(0).toString(),
-            maxDownloadPrice: values.maxDownloadPrice.toFixed(0).toString(),
-            maxUploadPrice: values.maxUploadPrice.toFixed(0).toString(),
-            minMaxCollateral: values.minMaxCollateral.toFixed(0).toString(),
+            maxRPCPrice: toHastings(values.maxRpcPrice).toString(),
+            maxStoragePrice: toHastings(
+              values.maxStoragePrice // TiB/month
+                .div(monthsToBlocks(1)) // TiB/block
+                .div(TiBToBytes(1)) // bytes/block
+            ).toString(),
+            maxContractPrice: toHastings(values.maxContractPrice).toString(),
+            maxDownloadPrice: toHastings(values.maxDownloadPrice).toString(),
+            maxUploadPrice: toHastings(values.maxUploadPrice).toString(),
+            minMaxCollateral: toHastings(values.minMaxCollateral).toString(),
             hostBlockHeightLeeway: values.hostBlockHeightLeeway.toNumber(),
           },
         })
@@ -106,13 +116,17 @@ export function Config() {
           throw Error(redundancyResponse.error)
         }
         triggerSuccessToast('Configuration has been saved.')
-        gouging.mutate()
-        redundancy.mutate()
       } catch (e) {
         triggerErrorToast((e as Error).message)
       }
     },
   })
+
+  const resetFormAndData = useCallback(() => {
+    form.resetForm()
+    gouging.mutate()
+    redundancy.mutate()
+  }, [form, gouging, redundancy])
 
   useEffect(() => {
     const func = async () => {
@@ -126,12 +140,29 @@ export function Config() {
         await form.resetForm({
           values: {
             // gouging
-            maxStoragePrice: new BigNumber(gougingData.maxStoragePrice),
-            maxDownloadPrice: new BigNumber(gougingData.maxDownloadPrice),
-            maxUploadPrice: new BigNumber(gougingData.maxUploadPrice),
-            maxContractPrice: new BigNumber(gougingData.maxContractPrice),
-            maxRpcPrice: new BigNumber(gougingData.maxRPCPrice),
-            minMaxCollateral: new BigNumber(gougingData.minMaxCollateral),
+            maxStoragePrice: toSiacoins(
+              new BigNumber(gougingData.maxStoragePrice) // bytes/block
+                .times(monthsToBlocks(1)) // bytes/month
+                .times(TiBToBytes(1)),
+              scDecimalPlaces
+            ), // TiB/month
+            maxDownloadPrice: toSiacoins(
+              gougingData.maxDownloadPrice,
+              scDecimalPlaces
+            ),
+            maxUploadPrice: toSiacoins(
+              gougingData.maxUploadPrice,
+              scDecimalPlaces
+            ),
+            maxContractPrice: toSiacoins(
+              gougingData.maxContractPrice,
+              scDecimalPlaces
+            ),
+            maxRpcPrice: toSiacoins(gougingData.maxRPCPrice, scDecimalPlaces),
+            minMaxCollateral: toSiacoins(
+              gougingData.minMaxCollateral,
+              scDecimalPlaces
+            ),
             hostBlockHeightLeeway: new BigNumber(
               gougingData.hostBlockHeightLeeway
             ),
@@ -163,6 +194,15 @@ export function Config() {
             </Text>
           )}
           <Button
+            tip="Reset all changes"
+            icon="contrast"
+            disabled={!changeCount}
+            onClick={() => resetFormAndData()}
+          >
+            <Reset16 />
+          </Button>
+          <Button
+            tip="Save all changes"
             variant="accent"
             disabled={!changeCount}
             onClick={() => form.submitForm()}
@@ -177,9 +217,10 @@ export function Config() {
         <MenuSection title="Gouging">
           <Setting
             title="Max storage price"
-            description={<>The max allowed price to store one TiB.</>}
+            description={<>The max allowed price to store 1 TiB per month.</>}
             control={
               <ConfigurationSiacoin
+                decimalsLimitSc={scDecimalPlaces}
                 value={form.values.maxStoragePrice}
                 changed={changed.maxStoragePrice}
                 onChange={(value) =>
@@ -191,9 +232,10 @@ export function Config() {
           <Separator className="w-full my-3" />
           <Setting
             title="Max download price"
-            description={<>The max allowed price to download one TiB.</>}
+            description={<>The max allowed price to download 1 TiB.</>}
             control={
               <ConfigurationSiacoin
+                decimalsLimitSc={scDecimalPlaces}
                 value={form.values.maxDownloadPrice}
                 changed={changed.maxDownloadPrice}
                 onChange={(value) =>
@@ -205,9 +247,10 @@ export function Config() {
           <Separator className="w-full my-3" />
           <Setting
             title="Max upload price"
-            description={<>The max allowed price to upload one TiB.</>}
+            description={<>The max allowed price to upload 1 TiB.</>}
             control={
               <ConfigurationSiacoin
+                decimalsLimitSc={scDecimalPlaces}
                 value={form.values.maxUploadPrice}
                 changed={changed.maxUploadPrice}
                 onChange={(value) =>
@@ -236,6 +279,7 @@ export function Config() {
             description={<>The max allowed base price for RPCs.</>}
             control={
               <ConfigurationSiacoin
+                decimalsLimitSc={scDecimalPlaces}
                 value={form.values.maxRpcPrice}
                 changed={changed.maxRpcPrice}
                 onChange={(value) => form.setFieldValue('maxRpcPrice', value)}
@@ -252,6 +296,7 @@ export function Config() {
             }
             control={
               <ConfigurationSiacoin
+                decimalsLimitSc={scDecimalPlaces}
                 value={form.values.minMaxCollateral}
                 changed={changed.minMaxCollateral}
                 onChange={(value) =>
@@ -263,7 +308,9 @@ export function Config() {
           <Separator className="w-full my-3" />
           <Setting
             title="Block height leeway"
-            description={<>The amount of blocks of leeway given to hosts.</>}
+            description={
+              <>{`The amount of blocks of leeway given to the host block height in the host's price table.`}</>
+            }
             control={
               <ConfigurationNumber
                 units="blocks"

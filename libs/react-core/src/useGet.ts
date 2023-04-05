@@ -33,7 +33,7 @@ export function useGetSwr<Params extends RequestParams, Result>(
     // renterd etc require password, explorer do not, disable hook fetching if
     // password protected and password is missing.
     keyOrNull(
-      reqRoute ? `${reqRoute}${settings.password || ''}` : null,
+      reqRoute,
       hookArgs.disabled || (passwordProtectRequestHooks && !settings.password)
     ),
     async () => {

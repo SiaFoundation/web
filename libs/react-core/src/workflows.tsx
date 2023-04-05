@@ -39,6 +39,10 @@ function useWorkflowsMain() {
     [setWorkflowsMap]
   )
 
+  const resetWorkflows = useCallback(() => {
+    setWorkflowsMap({})
+  }, [setWorkflowsMap])
+
   const workflows = useMemo(
     () => Object.entries(workflowsMap).map((i) => i[1]),
     [workflowsMap]
@@ -47,6 +51,7 @@ function useWorkflowsMain() {
   return {
     setWorkflow,
     removeWorkflow,
+    resetWorkflows,
     workflows,
   }
 }
