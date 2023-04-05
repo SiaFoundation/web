@@ -10,9 +10,12 @@ import {
   ConfigurationText,
   Code,
   useFormChanged,
+  Reset16,
+  TiBToBytes,
+  bytesToTiB,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { RenterSidenav } from '../RenterSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
@@ -24,6 +27,9 @@ import {
 import { useFormik } from 'formik'
 import { Setting } from '../Setting'
 import { MenuSection } from '../MenuSection'
+import { toHastings, toSiacoins } from '@siafoundation/sia-js'
+
+const scDecimalPlaces = 6
 
 export function Autopilot() {
   const { openDialog } = useDialog()
@@ -37,7 +43,7 @@ export function Autopilot() {
     },
   })
 
-  const autopilotForm = useFormik({
+  const form = useFormik({
     initialValues: {
       set: '',
       amount: new BigNumber(0),
@@ -58,7 +64,7 @@ export function Autopilot() {
             contracts: {
               set: values.set,
               amount: values.amount.toNumber(),
-              allowance: values.allowance.toFixed(0).toString(),
+              allowance: toHastings(values.allowance).toString(),
               period: weeksToBlocks(values.period.toNumber()),
               renewWindow: weeksToBlocks(values.renewWindow.toNumber()),
               download: TiBToBytes(values.download).toNumber(),
@@ -70,9 +76,8 @@ export function Autopilot() {
           },
         })
         triggerSuccessToast('Configuration has been saved.')
-        config.mutate()
       } catch (e) {
-        autopilotForm.setErrors(e)
+        form.setErrors(e)
       }
     },
   })
@@ -85,13 +90,21 @@ export function Autopilot() {
     new BigNumber(0)
   )
 
+  const resetFormAndData = useCallback(() => {
+    form.resetForm()
+    config.mutate()
+  }, [form, config])
+
   useEffect(() => {
     const func = async () => {
       if (!config.data) {
         return
       }
       const set = config.data?.contracts.set
-      const allowance = new BigNumber(config.data?.contracts.allowance)
+      const allowance = toSiacoins(
+        config.data?.contracts.allowance,
+        scDecimalPlaces
+      )
       const amount = new BigNumber(config.data?.contracts.amount)
       const period = new BigNumber(blocksToWeeks(config.data?.contracts.period))
       const renewWindow = new BigNumber(
@@ -104,7 +117,7 @@ export function Autopilot() {
       const storage = bytesToTiB(new BigNumber(config.data?.contracts.storage))
       try {
         // When new config is fetched, reset the form with the initial values
-        await autopilotForm.resetForm({
+        await form.resetForm({
           values: {
             set,
             allowance,
@@ -132,14 +145,14 @@ export function Autopilot() {
 
   useEffect(() => {
     setAllowanceSuggestion(
-      autopilotForm.values.storage
+      form.values.storage
         .times(targetPrice)
-        .times(autopilotForm.values.period)
+        .times(form.values.period)
         .integerValue()
     )
-  }, [autopilotForm.values.storage, autopilotForm.values.period, targetPrice])
+  }, [form.values.storage, form.values.period, targetPrice])
 
-  const { changed, changeCount } = useFormChanged(autopilotForm)
+  const { changed, changeCount } = useFormChanged(form)
 
   return (
     <RenterdAuthedLayout
@@ -154,9 +167,18 @@ export function Autopilot() {
             </Text>
           )}
           <Button
+            tip="Reset all changes"
+            icon="contrast"
+            disabled={!changeCount}
+            onClick={() => resetFormAndData()}
+          >
+            <Reset16 />
+          </Button>
+          <Button
+            tip="Save all changes"
             variant="accent"
             disabled={!changeCount}
-            onClick={() => autopilotForm.submitForm()}
+            onClick={() => form.submitForm()}
           >
             Save changes
           </Button>
@@ -171,7 +193,7 @@ export function Autopilot() {
             description={
               <>
                 The target price you would like to pay per month to to store 1
-                TB of data. This price and your expected utilization values are
+                TiB of data. This price and your expected utilization values are
                 used to calculate a suggested allowance. Suggested values are
                 shown below each input field.
               </>
@@ -188,16 +210,14 @@ export function Autopilot() {
           <Setting
             title="Expected storage"
             description={
-              <>The amount of storage you would like to rent in TB.</>
+              <>The amount of storage you would like to rent in TiB.</>
             }
             control={
               <ConfigurationNumber
-                units="TB"
-                value={autopilotForm.values.storage}
+                units="TiB"
+                value={form.values.storage}
                 changed={changed.storage}
-                onChange={(value) =>
-                  autopilotForm.setFieldValue('storage', value)
-                }
+                onChange={(value) => form.setFieldValue('storage', value)}
               />
             }
           />
@@ -206,17 +226,16 @@ export function Autopilot() {
             title="Expected upload"
             description={
               <>
-                The amount of upload bandwidth you plan to use each month in TB.
+                The amount of upload bandwidth you plan to use each month in
+                TiB.
               </>
             }
             control={
               <ConfigurationNumber
-                units="TB"
-                value={autopilotForm.values.upload}
+                units="TiB"
+                value={form.values.upload}
                 changed={changed.upload}
-                onChange={(value) =>
-                  autopilotForm.setFieldValue('upload', value)
-                }
+                onChange={(value) => form.setFieldValue('upload', value)}
               />
             }
           />
@@ -226,17 +245,15 @@ export function Autopilot() {
             description={
               <>
                 The amount of download bandwidth you plan to use each month in
-                TB.
+                TiB.
               </>
             }
             control={
               <ConfigurationNumber
-                units="TB"
+                units="TiB"
                 changed={changed.download}
-                value={autopilotForm.values.download}
-                onChange={(value) =>
-                  autopilotForm.setFieldValue('download', value)
-                }
+                value={form.values.download}
+                onChange={(value) => form.setFieldValue('download', value)}
               />
             }
           />
@@ -249,13 +266,11 @@ export function Autopilot() {
             }
             control={
               <ConfigurationSiacoin
-                value={autopilotForm.values.allowance}
+                value={form.values.allowance}
                 changed={changed.allowance}
-                onChange={(value) =>
-                  autopilotForm.setFieldValue('allowance', value)
-                }
+                onChange={(value) => form.setFieldValue('allowance', value)}
                 suggestion={allowanceSuggestion}
-                decimalsLimitSc={0}
+                // decimalsLimitSc={0}
                 suggestionTip={
                   'Suggested allowance based on your target price, expected usage, and period.'
                 }
@@ -269,11 +284,9 @@ export function Autopilot() {
             control={
               <ConfigurationNumber
                 units="weeks"
-                value={autopilotForm.values.period}
+                value={form.values.period}
                 changed={changed.period}
-                onChange={(value) =>
-                  autopilotForm.setFieldValue('period', value)
-                }
+                onChange={(value) => form.setFieldValue('period', value)}
                 suggestion={new BigNumber(6)}
                 suggestionTip={'Typically 6 weeks.'}
               />
@@ -291,11 +304,9 @@ export function Autopilot() {
             control={
               <ConfigurationNumber
                 units="weeks"
-                value={autopilotForm.values.renewWindow}
+                value={form.values.renewWindow}
                 changed={changed.renewWindow}
-                onChange={(value) =>
-                  autopilotForm.setFieldValue('renewWindow', value)
-                }
+                onChange={(value) => form.setFieldValue('renewWindow', value)}
                 suggestion={new BigNumber(2)}
                 suggestionTip={'Typically 2 weeks.'}
               />
@@ -309,10 +320,8 @@ export function Autopilot() {
               <ConfigurationNumber
                 units="hosts"
                 changed={changed.amount}
-                value={autopilotForm.values.amount}
-                onChange={(value) =>
-                  autopilotForm.setFieldValue('amount', value)
-                }
+                value={form.values.amount}
+                onChange={(value) => form.setFieldValue('amount', value)}
                 suggestion={new BigNumber(50)}
                 suggestionTip={'Typically 50 hosts.'}
               />
@@ -325,8 +334,8 @@ export function Autopilot() {
             control={
               <ConfigurationText
                 changed={changed.set}
-                value={autopilotForm.values.set}
-                onChange={(value) => autopilotForm.setFieldValue('set', value)}
+                value={form.values.set}
+                onChange={(value) => form.setFieldValue('set', value)}
                 suggestion="autopilot"
                 suggestionTip={
                   <>
@@ -341,14 +350,4 @@ export function Autopilot() {
       </div>
     </RenterdAuthedLayout>
   )
-}
-
-// function converts bytes to TiB
-function bytesToTiB(bytes: BigNumber): BigNumber {
-  return bytes.div(1024).div(1024).div(1024).div(1024)
-}
-
-// function converts TiB to bytes
-function TiBToBytes(TiB: BigNumber): BigNumber {
-  return TiB.times(1024).times(1024).times(1024).times(1024)
 }

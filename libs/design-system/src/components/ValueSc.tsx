@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js'
 type Props = {
   size?: React.ComponentProps<typeof Text>['size']
   scaleSize?: React.ComponentProps<typeof Text>['scaleSize']
-  value: BigNumber
+  value: BigNumber // hastings
   variant?: 'change' | 'value'
   tooltip?: string
   fixed?: number
