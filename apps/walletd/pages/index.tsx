@@ -17,6 +17,7 @@ export default function HomePage() {
   const router = useRouter()
   return (
     <AppAuthedLayout
+      appName="walletd"
       routes={routes}
       openSettings={() => openDialog('privacy')}
       title="walletd"
