@@ -12,7 +12,7 @@ type Props = VariantProps<typeof textFieldStyles> &
 export function NumberField({
   units,
   variant,
-  size,
+  size = 'small',
   state,
   noSpin,
   focus,
@@ -43,7 +43,9 @@ export function NumberField({
         <div
           className={cx(
             'flex items-center absolute top-0 h-full',
-            size === 'small' ? 'right-2' : 'right-2'
+            size === 'small' ? 'right-2' : '',
+            size === 'medium' ? 'right-3' : '',
+            size === 'large' ? 'right-3' : ''
           )}
         >
           <Text

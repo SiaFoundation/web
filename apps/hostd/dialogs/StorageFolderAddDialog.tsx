@@ -33,7 +33,6 @@ export function StorageFolderAddDialog({ trigger, open, onOpenChange }: Props) {
     initialValues,
     validationSchema,
     onSubmit: (values, actions) => {
-      console.log(values)
       actions.resetForm()
       closeDialog()
     },
