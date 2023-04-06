@@ -22,11 +22,8 @@ type FaucetFundResponse = {
 }
 
 export function useFaucetFund() {
-  return usePostFunc<undefined, FaucetFundPayload, FaucetFundResponse>(
-    {
-      api: faucetApi,
-      route: '/request',
-    },
-    []
-  )
+  return usePostFunc<undefined, FaucetFundPayload, FaucetFundResponse>({
+    api: faucetApi,
+    route: '/request',
+  })
 }

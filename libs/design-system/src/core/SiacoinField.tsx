@@ -17,22 +17,27 @@ type Props = Omit<
   decimalsLimitFiat?: number
   placeholder?: BigNumber
   showFiat?: boolean
+  error?: boolean
   changed?: boolean
 }
 
 const zero = new BigNumber(0)
 
 export function SiacoinField({
-  sc: externalSc,
+  sc: _externalSc,
   placeholder = new BigNumber(100),
   decimalsLimitFiat = 6,
   decimalsLimitSc = 6,
   onChange,
   size = 'medium',
   showFiat = true,
+  error,
   changed,
+  onBlur,
+  onFocus,
   ...props
 }: Props) {
+  const externalSc = useMemo(() => new BigNumber(_externalSc), [_externalSc])
   const { settings } = useAppSettings()
   const rates = useSiaCentralMarketExchangeRate()
   const rate = useMemo(() => {
@@ -42,13 +47,13 @@ export function SiacoinField({
     return new BigNumber(rates.data?.rates.sc[settings.currency.id] || zero)
   }, [rates.data, settings])
   const [active, setActive] = useState<'sc' | 'fiat'>()
-  const [sc, setSc] = useState<string>('0')
-  const [fiat, setFiat] = useState<string>('0')
+  const [sc, setSc] = useState<string>('')
+  const [fiat, setFiat] = useState<string>('')
 
   const updateExternalSc = useCallback(
     (sc: string) => {
       if (onChange) {
-        onChange(new BigNumber(sc))
+        onChange(sc && !isNaN(Number(sc)) ? new BigNumber(sc) : undefined)
       }
     },
     [onChange]
@@ -110,12 +115,13 @@ export function SiacoinField({
     [updateSc, rate]
   )
 
+  // sync externally controlled value
   useEffect(() => {
     if (!externalSc.isEqualTo(sc)) {
-      const esc = getSc(externalSc)
+      const fesc = getSc(externalSc)
       setActive(undefined)
-      setSc(esc)
-      syncFiatToSc(esc)
+      setSc(fesc)
+      syncFiatToSc(fesc)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [externalSc])
@@ -145,10 +151,11 @@ export function SiacoinField({
     updateExternalSc(sc)
   }, [sc, syncFiatToSc, updateExternalSc])
 
+  // Its more natural that focusing and blurring fiat without changing it
+  // does update the sc value.
   const onFiatBlur = useCallback(() => {
-    const sc = syncScToFiat(fiat)
     updateExternalSc(sc)
-  }, [fiat, syncScToFiat, updateExternalSc])
+  }, [sc, updateExternalSc])
 
   return (
     <div
@@ -156,7 +163,9 @@ export function SiacoinField({
         'flex flex-col bg-white dark:bg-graydark-50',
         'focus-within:ring ring-blue-500 dark:ring-blue-200',
         'border',
-        changed
+        error
+          ? 'border-red-500 dark:border-red-400'
+          : changed
           ? 'border-green-500 dark:border-green-400'
           : 'border-gray-200 dark:border-graydark-200',
         'rounded'
@@ -169,10 +178,20 @@ export function SiacoinField({
         focus="none"
         placeholder={placeholder.toFixed(decimalsLimitSc)}
         units="SC"
-        value={sc}
+        value={sc !== 'NaN' ? sc : ''}
         decimalsLimit={decimalsLimitSc}
-        onBlur={onScBlur}
-        onFocus={() => setActive('sc')}
+        onBlur={(e) => {
+          onScBlur()
+          if (onBlur) {
+            onBlur(e)
+          }
+        }}
+        onFocus={(e) => {
+          setActive('sc')
+          if (onFocus) {
+            onFocus(e)
+          }
+        }}
         onValueChange={(value) => setSc(value || '')}
       />
       {showFiat && settings.siaCentral && (
@@ -181,15 +200,25 @@ export function SiacoinField({
           size={size}
           variant="ghost"
           focus="none"
-          value={fiat}
+          value={fiat !== 'NaN' ? fiat : ''}
           units={settings.currency.label}
           decimalsLimit={decimalsLimitFiat}
           placeholder={`${settings.currency.prefix}${
             rate ? rate.times(placeholder).toFixed(decimalsLimitFiat) : '0.42'
           }`}
           prefix={settings.currency.prefix}
-          onFocus={() => setActive('fiat')}
-          onBlur={onFiatBlur}
+          onFocus={(e) => {
+            setActive('fiat')
+            if (onFocus) {
+              onFocus(e)
+            }
+          }}
+          onBlur={(e) => {
+            onFiatBlur()
+            if (onBlur) {
+              onBlur(e)
+            }
+          }}
           onValueChange={(value) => setFiat(value || '')}
         />
       )}

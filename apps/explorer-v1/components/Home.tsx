@@ -45,21 +45,38 @@ export function Home() {
       {
         label: 'Blockchain height',
         value: (
-          <>
-            {humanNumber(status.data?.consensusblock)}
+          <div className="flex flex-col sm:flex-row gap-1 items-baseline">
+            {humanNumber(status.data?.lastblock)}
             {status.data &&
               status.data.consensusblock !== status.data.lastblock && (
-                <Text size="16" font="mono" color="subtle">
-                  {humanNumber(status.data?.lastblock)} synced
-                </Text>
+                <>
+                  <Text
+                    scaleSize="20"
+                    color="subtle"
+                    className="hidden sm:block"
+                  >
+                    /
+                  </Text>
+                  <Tooltip
+                    content={`${humanNumber(
+                      status.data?.lastblock
+                    )} / ${humanNumber(
+                      status.data?.consensusblock
+                    )} of consensus height synced`}
+                  >
+                    <Text size="20" font="mono" color="subtle">
+                      {humanNumber(status.data?.consensusblock)}
+                    </Text>
+                  </Tooltip>
+                </>
               )}
-          </>
+          </div>
         ),
       },
       {
         label: 'Storage utilization',
         value: (
-          <div className="flex flex-col sm:flex-row gap-1 items-baseline ">
+          <div className="flex flex-col sm:flex-row gap-1 items-baseline">
             <Tooltip
               content={`${humanBytes(
                 metrics.data?.totals.total_storage -
@@ -95,7 +112,7 @@ export function Home() {
       {
         label: 'Registry utilization',
         value: (
-          <div className="flex flex-col sm:flex-row gap-1 items-baseline ">
+          <div className="flex flex-col sm:flex-row gap-1 items-baseline">
             <Tooltip
               content={`${humanNumber(
                 metrics.data?.totals.total_registry_entries -
@@ -135,7 +152,7 @@ export function Home() {
       {
         label: 'Active hosts',
         value: (
-          <div className="flex flex-col sm:flex-row gap-1 items-baseline ">
+          <div className="flex flex-col sm:flex-row gap-1 items-baseline">
             <Tooltip content="Active hosts">
               <Text
                 className="text-xl md:text-3xl"
@@ -159,7 +176,7 @@ export function Home() {
       {
         label: 'Transactions',
         value: (
-          <div className="flex flex-col sm:flex-row gap-1 items-baseline ">
+          <div className="flex flex-col sm:flex-row gap-1 items-baseline">
             <Tooltip
               content={`${humanNumber(
                 status.data?.mempool

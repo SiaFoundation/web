@@ -27,9 +27,36 @@ import {
 import { useFormik } from 'formik'
 import { Setting } from '../Setting'
 import { MenuSection } from '../MenuSection'
-import { toHastings, toSiacoins } from '@siafoundation/sia-js'
+import { toHastings, toScale, toSiacoins } from '@siafoundation/sia-js'
+import * as Yup from 'yup'
 
 const scDecimalPlaces = 6
+
+const validationSchema = Yup.object().shape({
+  targetPrice: Yup.mixed().optional(),
+  set: Yup.string().required('required'),
+  amount: Yup.mixed().required('required'),
+  allowance: Yup.mixed().required('required'),
+  period: Yup.mixed().required('required'),
+  renewWindow: Yup.mixed().required('required'),
+  download: Yup.mixed().required('required'),
+  upload: Yup.mixed().required('required'),
+  storage: Yup.number().required('required'),
+})
+
+const initialValues = {
+  targetPrice: undefined as BigNumber | undefined,
+  set: '',
+  amount: undefined as BigNumber | undefined,
+  allowance: undefined as BigNumber | undefined,
+  period: undefined as BigNumber | undefined,
+  renewWindow: undefined as BigNumber | undefined,
+  download: undefined as BigNumber | undefined,
+  upload: undefined as BigNumber | undefined,
+  storage: undefined as BigNumber | undefined,
+}
+
+const doNotIncludeInChanges = ['targetPrice']
 
 export function Autopilot() {
   const { openDialog } = useDialog()
@@ -44,17 +71,9 @@ export function Autopilot() {
   })
 
   const form = useFormik({
-    initialValues: {
-      set: '',
-      amount: new BigNumber(0),
-      allowance: new BigNumber(0),
-      period: new BigNumber(0),
-      renewWindow: new BigNumber(0),
-      download: new BigNumber(0),
-      upload: new BigNumber(0),
-      storage: new BigNumber(0),
-    },
-    onSubmit: async (values, actions) => {
+    initialValues,
+    validationSchema,
+    onSubmit: async (values) => {
       if (!config.data) {
         return
       }
@@ -81,10 +100,6 @@ export function Autopilot() {
       }
     },
   })
-
-  const [targetPrice, setTargetPrice] = useState<BigNumber | undefined>(
-    new BigNumber(0)
-  )
 
   const [allowanceSuggestion, setAllowanceSuggestion] = useState<BigNumber>(
     new BigNumber(0)
@@ -115,10 +130,17 @@ export function Autopilot() {
       )
       const upload = bytesToTiB(new BigNumber(config.data?.contracts.upload))
       const storage = bytesToTiB(new BigNumber(config.data?.contracts.storage))
+
+      let targetPrice = new BigNumber(0)
+      if (!storage.isZero() && !period.isZero()) {
+        targetPrice = toScale(allowance.div(storage.times(period)), 0)
+      }
+
       try {
         // When new config is fetched, reset the form with the initial values
         await form.resetForm({
           values: {
+            targetPrice,
             set,
             allowance,
             amount,
@@ -132,27 +154,30 @@ export function Autopilot() {
       } catch (e) {
         console.log(e)
       }
-
-      if (storage.isZero() || period.isZero()) {
-        return
-      }
-
-      setTargetPrice(allowance.div(storage.times(period)))
     }
     func()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config.data])
 
   useEffect(() => {
+    if (
+      !form.values.storage ||
+      !form.values.targetPrice ||
+      !form.values.period
+    ) {
+      return
+    }
     setAllowanceSuggestion(
-      form.values.storage
-        .times(targetPrice)
-        .times(form.values.period)
-        .integerValue()
+      toScale(
+        form.values.storage
+          .times(form.values.targetPrice)
+          .times(form.values.period),
+        0
+      )
     )
-  }, [form.values.storage, form.values.period, targetPrice])
+  }, [form.values.storage, form.values.period, form.values.targetPrice])
 
-  const { changed, changeCount } = useFormChanged(form)
+  const { changed, changeCount } = useFormChanged(form, doNotIncludeInChanges)
 
   return (
     <RenterdAuthedLayout
@@ -200,8 +225,10 @@ export function Autopilot() {
             }
             control={
               <ConfigurationSiacoin
-                value={targetPrice}
-                onChange={setTargetPrice}
+                formik={form}
+                changed={changed}
+                name="targetPrice"
+                decimalsLimitSc={scDecimalPlaces}
               />
             }
           />
@@ -214,10 +241,10 @@ export function Autopilot() {
             }
             control={
               <ConfigurationNumber
+                formik={form}
+                changed={changed}
+                name="storage"
                 units="TiB"
-                value={form.values.storage}
-                changed={changed.storage}
-                onChange={(value) => form.setFieldValue('storage', value)}
               />
             }
           />
@@ -232,10 +259,10 @@ export function Autopilot() {
             }
             control={
               <ConfigurationNumber
+                formik={form}
+                changed={changed}
+                name="upload"
                 units="TiB"
-                value={form.values.upload}
-                changed={changed.upload}
-                onChange={(value) => form.setFieldValue('upload', value)}
               />
             }
           />
@@ -250,10 +277,10 @@ export function Autopilot() {
             }
             control={
               <ConfigurationNumber
+                formik={form}
+                changed={changed}
+                name="download"
                 units="TiB"
-                changed={changed.download}
-                value={form.values.download}
-                onChange={(value) => form.setFieldValue('download', value)}
               />
             }
           />
@@ -266,11 +293,11 @@ export function Autopilot() {
             }
             control={
               <ConfigurationSiacoin
-                value={form.values.allowance}
-                changed={changed.allowance}
-                onChange={(value) => form.setFieldValue('allowance', value)}
+                formik={form}
+                changed={changed}
+                name="allowance"
+                decimalsLimitSc={scDecimalPlaces}
                 suggestion={allowanceSuggestion}
-                // decimalsLimitSc={0}
                 suggestionTip={
                   'Suggested allowance based on your target price, expected usage, and period.'
                 }
@@ -283,10 +310,10 @@ export function Autopilot() {
             description={<>The length of the storage contracts.</>}
             control={
               <ConfigurationNumber
+                formik={form}
+                changed={changed}
+                name="period"
                 units="weeks"
-                value={form.values.period}
-                changed={changed.period}
-                onChange={(value) => form.setFieldValue('period', value)}
                 suggestion={new BigNumber(6)}
                 suggestionTip={'Typically 6 weeks.'}
               />
@@ -303,10 +330,10 @@ export function Autopilot() {
             }
             control={
               <ConfigurationNumber
+                formik={form}
+                changed={changed}
+                name="renewWindow"
                 units="weeks"
-                value={form.values.renewWindow}
-                changed={changed.renewWindow}
-                onChange={(value) => form.setFieldValue('renewWindow', value)}
                 suggestion={new BigNumber(2)}
                 suggestionTip={'Typically 2 weeks.'}
               />
@@ -318,10 +345,10 @@ export function Autopilot() {
             description={<>The number of hosts to create contracts with.</>}
             control={
               <ConfigurationNumber
+                formik={form}
+                changed={changed}
+                name="amount"
                 units="hosts"
-                changed={changed.amount}
-                value={form.values.amount}
-                onChange={(value) => form.setFieldValue('amount', value)}
                 suggestion={new BigNumber(50)}
                 suggestionTip={'Typically 50 hosts.'}
               />
@@ -333,9 +360,10 @@ export function Autopilot() {
             description={<>The contract set that autopilot should use.</>}
             control={
               <ConfigurationText
-                changed={changed.set}
-                value={form.values.set}
-                onChange={(value) => form.setFieldValue('set', value)}
+                formik={form}
+                changed={changed}
+                name="set"
+                placeholder="autopilot"
                 suggestion="autopilot"
                 suggestionTip={
                   <>

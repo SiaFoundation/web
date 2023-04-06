@@ -13,7 +13,7 @@ import { useFaucetFund } from '../../hooks/useFaucetFund'
 
 const initialValues = {
   address: '',
-  amount: new BigNumber(0),
+  amount: undefined as BigNumber | undefined,
 }
 
 const validationSchema = Yup.object().shape({

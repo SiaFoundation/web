@@ -22,6 +22,7 @@ import { useFormik } from 'formik'
 import { Setting } from '../../components/Setting'
 import { MenuSection } from '../../components/MenuSection'
 import { toHastings, toSiacoins } from '@siafoundation/sia-js'
+import * as Yup from 'yup'
 
 type GougingData = {
   maxStoragePrice: string
@@ -39,6 +40,34 @@ type RedundancyData = {
 }
 
 const scDecimalPlaces = 6
+
+const validationSchema = Yup.object().shape({
+  // gouging
+  maxStoragePrice: Yup.mixed().required('required'),
+  maxDownloadPrice: Yup.mixed().required('required'),
+  maxUploadPrice: Yup.mixed().required('required'),
+  maxContractPrice: Yup.mixed().required('required'),
+  maxRpcPrice: Yup.mixed().required('required'),
+  minMaxCollateral: Yup.mixed().required('required'),
+  hostBlockHeightLeeway: Yup.number().required('required'),
+  // redundancy
+  minShards: Yup.mixed().required('required'),
+  totalShards: Yup.mixed().required('required'),
+})
+
+const initialValues = {
+  // gouging
+  maxRpcPrice: undefined as BigNumber | undefined,
+  maxStoragePrice: undefined as BigNumber | undefined,
+  maxContractPrice: undefined as BigNumber | undefined,
+  maxDownloadPrice: undefined as BigNumber | undefined,
+  maxUploadPrice: undefined as BigNumber | undefined,
+  minMaxCollateral: undefined as BigNumber | undefined,
+  hostBlockHeightLeeway: undefined as BigNumber | undefined,
+  // redundancy
+  minShards: undefined as BigNumber | undefined,
+  totalShards: undefined as BigNumber | undefined,
+}
 
 export function Config() {
   const { openDialog } = useDialog()
@@ -64,19 +93,8 @@ export function Config() {
   const settingUpdate = useSettingUpdate()
 
   const form = useFormik({
-    initialValues: {
-      // gouging
-      maxRpcPrice: new BigNumber(0),
-      maxStoragePrice: new BigNumber(0),
-      maxContractPrice: new BigNumber(0),
-      maxDownloadPrice: new BigNumber(0),
-      maxUploadPrice: new BigNumber(0),
-      minMaxCollateral: new BigNumber(0),
-      hostBlockHeightLeeway: new BigNumber(0),
-      // redundancy
-      minShards: new BigNumber(0),
-      totalShards: new BigNumber(0),
-    },
+    validationSchema,
+    initialValues,
     onSubmit: async (values) => {
       if (!gouging.data || !redundancy.data) {
         return
@@ -220,12 +238,10 @@ export function Config() {
             description={<>The max allowed price to store 1 TiB per month.</>}
             control={
               <ConfigurationSiacoin
+                formik={form}
+                changed={changed}
+                name="maxStoragePrice"
                 decimalsLimitSc={scDecimalPlaces}
-                value={form.values.maxStoragePrice}
-                changed={changed.maxStoragePrice}
-                onChange={(value) =>
-                  form.setFieldValue('maxStoragePrice', value)
-                }
               />
             }
           />
@@ -235,12 +251,10 @@ export function Config() {
             description={<>The max allowed price to download 1 TiB.</>}
             control={
               <ConfigurationSiacoin
+                formik={form}
+                changed={changed}
+                name="maxDownloadPrice"
                 decimalsLimitSc={scDecimalPlaces}
-                value={form.values.maxDownloadPrice}
-                changed={changed.maxDownloadPrice}
-                onChange={(value) =>
-                  form.setFieldValue('maxDownloadPrice', value)
-                }
               />
             }
           />
@@ -250,12 +264,10 @@ export function Config() {
             description={<>The max allowed price to upload 1 TiB.</>}
             control={
               <ConfigurationSiacoin
+                formik={form}
+                changed={changed}
+                name="maxUploadPrice"
                 decimalsLimitSc={scDecimalPlaces}
-                value={form.values.maxUploadPrice}
-                changed={changed.maxUploadPrice}
-                onChange={(value) =>
-                  form.setFieldValue('maxUploadPrice', value)
-                }
               />
             }
           />
@@ -265,11 +277,10 @@ export function Config() {
             description={<>The max allowed price to form a contract.</>}
             control={
               <ConfigurationSiacoin
-                value={form.values.maxContractPrice}
-                changed={changed.maxContractPrice}
-                onChange={(value) =>
-                  form.setFieldValue('maxContractPrice', value)
-                }
+                formik={form}
+                changed={changed}
+                name="maxContractPrice"
+                decimalsLimitSc={scDecimalPlaces}
               />
             }
           />
@@ -279,10 +290,10 @@ export function Config() {
             description={<>The max allowed base price for RPCs.</>}
             control={
               <ConfigurationSiacoin
+                formik={form}
+                changed={changed}
+                name="maxRpcPrice"
                 decimalsLimitSc={scDecimalPlaces}
-                value={form.values.maxRpcPrice}
-                changed={changed.maxRpcPrice}
-                onChange={(value) => form.setFieldValue('maxRpcPrice', value)}
               />
             }
           />
@@ -296,12 +307,10 @@ export function Config() {
             }
             control={
               <ConfigurationSiacoin
+                formik={form}
+                changed={changed}
+                name="minMaxCollateral"
                 decimalsLimitSc={scDecimalPlaces}
-                value={form.values.minMaxCollateral}
-                changed={changed.minMaxCollateral}
-                onChange={(value) =>
-                  form.setFieldValue('minMaxCollateral', value)
-                }
               />
             }
           />
@@ -313,14 +322,12 @@ export function Config() {
             }
             control={
               <ConfigurationNumber
+                formik={form}
+                changed={changed}
+                name="hostBlockHeightLeeway"
                 units="blocks"
-                value={form.values.hostBlockHeightLeeway}
-                changed={changed.hostBlockHeightLeeway}
-                suggestion={new BigNumber(3)}
-                suggestionTip="The recommended value is 3 blocks."
-                onChange={(value) =>
-                  form.setFieldValue('hostBlockHeightLeeway', value)
-                }
+                suggestion={new BigNumber(6)}
+                suggestionTip="The recommended value is 6 blocks."
               />
             }
           />
@@ -333,10 +340,10 @@ export function Config() {
             }
             control={
               <ConfigurationNumber
+                formik={form}
+                changed={changed}
+                name="minShards"
                 units="shards"
-                value={form.values.minShards}
-                changed={changed.minShards}
-                onChange={(value) => form.setFieldValue('minShards', value)}
               />
             }
           />
@@ -346,10 +353,10 @@ export function Config() {
             description={<>The total amount of shards for each slab.</>}
             control={
               <ConfigurationNumber
+                formik={form}
+                changed={changed}
+                name="totalShards"
                 units="shards"
-                value={form.values.totalShards}
-                changed={changed.totalShards}
-                onChange={(value) => form.setFieldValue('totalShards', value)}
               />
             }
           />

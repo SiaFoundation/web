@@ -28,6 +28,10 @@ export function toHastings(siacoins: BigNumber | number | string) {
   )
 }
 
+export function toScale(num: BigNumber | number | string, fixed: number) {
+  return new BigNumber(new BigNumber(num).toFixed(fixed))
+}
+
 type HumanSiacoinOptions = { fixed?: number; dynamicUnits?: boolean }
 const humanSiacoinOptionDefaults: HumanSiacoinOptions = {
   fixed: 3,

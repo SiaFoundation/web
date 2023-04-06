@@ -6,6 +6,7 @@ import { NumberField } from '../core/NumberField'
 import { SiacoinField } from '../core/SiacoinField'
 import BigNumber from 'bignumber.js'
 import { VariantProps } from '../types'
+import { cx } from 'class-variance-authority'
 
 type FormFieldProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -219,7 +220,7 @@ export function FormSiacoinField({
       decimalsLimitSc={decimalsLimitSc}
       readOnly={readOnly || formik.isSubmitting}
       tabIndex={tabIndex}
-      onBlur={formik.handleBlur}
+      onFocus={() => formik.setFieldTouched(name)}
       sc={new BigNumber(formik.values[name])}
       placeholder={new BigNumber(placeholder)}
       onChange={(val) => formik.setFieldValue(name, val?.toString())}
@@ -228,39 +229,49 @@ export function FormSiacoinField({
   )
 }
 
-type FieldGroupProps = {
+type FieldErrorProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formik: any
   title?: string
   name: string
-  children: React.ReactNode
   withStatusError?: boolean
+  className?: string
 }
 
-export function FieldGroup({
+export function FieldError({
   formik,
   title,
   name,
   withStatusError = false,
-  children,
-}: FieldGroupProps) {
+  className,
+}: FieldErrorProps) {
   const showError =
     (formik.errors[name] && formik.touched[name]) ||
     (withStatusError && formik.status?.error)
   const errorMessage =
     formik.errors[name] || (withStatusError && formik.status?.error)
   return (
+    (title || showError) && (
+      <div className={cx('flex justify-between items-center gap-4', className)}>
+        {title ? <Label htmlFor={name}>{title}</Label> : <div />}
+        {showError && (
+          <Text size="14" color="red">
+            {errorMessage}
+          </Text>
+        )}
+      </div>
+    )
+  )
+}
+
+type FieldGroupProps = FieldErrorProps & {
+  children: React.ReactNode
+}
+
+export function FieldGroup({ children, ...props }: FieldGroupProps) {
+  return (
     <div className="flex flex-col gap-1">
-      {(title || showError) && (
-        <div className="flex justify-between items-center gap-4">
-          {title && <Label htmlFor={name}>{title}</Label>}
-          {showError && (
-            <Text size="14" color="red">
-              {errorMessage}
-            </Text>
-          )}
-        </div>
-      )}
+      <FieldError {...props} />
       {children}
     </div>
   )
@@ -289,7 +300,6 @@ export function FormSubmitButton({
       )}
       <Button
         size={size}
-        disabled={formik.isSubmitting || !formik.isValid}
         variant={variant}
         state={formik.isSubmitting ? 'waiting' : undefined}
         type="submit"

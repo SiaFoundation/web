@@ -6,10 +6,12 @@ type Formik = {
   values: Record<string, string | BigNumber>
 }
 
-export function useFormChanged(form: Formik) {
+export function useFormChanged(form: Formik, skip: string[] = []) {
   type Changed = Record<keyof typeof form['initialValues'], boolean>
   const changed = useMemo(() => {
-    const keys = Object.keys(form.initialValues)
+    const keys = Object.keys(form.initialValues).filter(
+      (k) => !skip.includes(k)
+    )
     return keys.reduce((acc, key) => {
       const iv = form.initialValues[key]
       const v = form.values[key]
@@ -22,7 +24,7 @@ export function useFormChanged(form: Formik) {
         [key]: changed,
       }
     }, {}) as Changed
-  }, [form.values, form.initialValues])
+  }, [form.values, form.initialValues, skip])
 
   const changeCount = useMemo(() => {
     let count = 0
