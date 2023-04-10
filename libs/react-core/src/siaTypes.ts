@@ -373,6 +373,67 @@ export interface Host {
     TotalScans: number
     Uptime: number
   }
+  priceTable?: {
+    accountbalancecost: string
+    collateralcost: string
+    contractprice: string
+    downloadbandwidthcost: string
+    dropsectorsbasecost: string
+    dropsectorsunitcost: string
+    expiry: string // date
+    fundaccountcost: string
+    hassectorbasecost: string
+    hostblockheight: number
+    initbasecost: string
+    latestrevisioncost: string
+    maxcollateral: string
+    maxduration: number
+    memorytimecost: string
+    readbasecost: string
+    readlengthcost: string
+    registryentriesleft: number
+    registryentriestotal: number
+    renewcontractcost: string
+    revisionbasecost: string
+    subscriptionmemorycost: string
+    subscriptionnotificationcost: string
+    swapsectorcost: string
+    txnfeemaxrecommended: string
+    txnfeeminrecommended: string
+    uid: string
+    updatepricetablecost: string
+    uploadbandwidthcost: string
+    validity: number
+    windowsize: number
+    writebasecost: string
+    writelengthcost: string
+    writestorecost: string
+  }
+  settings?: {
+    acceptingcontracts: boolean
+    baserpcprice: string
+    collateral: string
+    contractprice: string
+    downloadbandwidthprice: string
+    ephemeralaccountexpiry: number
+    maxcollateral: string
+    maxdownloadbatchsize: number
+    maxduration: number
+    maxephemeralaccountbalance: string
+    maxrevisebatchsize: number
+    netaddress: string
+    remainingstorage: number
+    revisionnumber: number
+    sectoraccessprice: string
+    sectorsize: number
+    siamuxport: string
+    storageprice: string
+    totalstorage: number
+    unlockhash: string
+    uploadbandwidthprice: string
+    version: string
+    windowsize: number
+  }
 }
 
 // struct2ts:go.sia.tech/renterd/wallet.Transaction

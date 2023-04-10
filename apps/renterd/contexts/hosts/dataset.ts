@@ -96,6 +96,8 @@ function getHostFields(host: Host, allContracts: ContractData[]) {
     activeContracts: new BigNumber(
       allContracts?.filter((c) => c.hostKey === host.public_key).length || 0
     ),
+    priceTable: host.priceTable,
+    settings: host.settings,
   }
 }
 
@@ -133,6 +135,21 @@ function getAllowedFields({
 
 function getAutopilotFields(ah?: {
   score: number
+  gougingBreakdown: {
+    v2: {
+      contractErr: string
+      downloadErr: string
+      gougingErr: string
+      uploadErr: string
+    }
+    v3: {
+      contractErr: string
+      downloadErr: string
+      gougingErr: string
+      uploadErr: string
+    }
+  }
+  gouging: boolean
   scoreBreakdown: {
     age: number
     collateral: number
@@ -156,6 +173,11 @@ function getAutopilotFields(ah?: {
       uptime: new BigNumber(ah?.scoreBreakdown.uptime || 0),
       version: new BigNumber(ah?.scoreBreakdown.version || 0),
     },
+    gougingBreakdown: ah?.gougingBreakdown || {
+      v2: {},
+      v3: {},
+    },
+    gouging: ah?.gouging,
     unusableReasons: ah?.unusableReasons || [],
     usable: ah?.usable,
   }

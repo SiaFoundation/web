@@ -13,19 +13,20 @@ import {
 import { createContext, useContext, useMemo } from 'react'
 import {
   TableColumnId,
-  columnsMeta,
   columnsDefaultVisible,
   columnsDefaultSort,
 } from './types'
 import { useRouter } from 'next/router'
 import { useAutopilot } from '../../hooks/useAutopilot'
-import { useColumns } from './columns'
+import { columns } from './columns'
 import { useContracts } from '../contracts'
 import { useDataset } from './dataset'
 
+const defaultLimit = 50
+
 function useHostsMain() {
   const router = useRouter()
-  const limit = Number(router.query.limit || 20)
+  const limit = Number(router.query.limit || defaultLimit)
   const offset = Number(router.query.offset || 0)
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useServerFilters()
@@ -89,6 +90,8 @@ function useHostsMain() {
     configurableColumns,
     enabledColumns,
     toggleColumnVisibility,
+    setColumnsVisible,
+    setColumnsHidden,
     toggleSort,
     setSortDirection,
     setSortColumn,
@@ -98,17 +101,15 @@ function useHostsMain() {
     resetDefaultColumnVisibility,
   } = useTableState<TableColumnId>(
     'renterd/v0/hosts',
-    columnsMeta,
+    columns,
     columnsDefaultVisible,
     columnsDefaultSort,
     disabledCategories
   )
 
-  const tableColumns = useColumns({ isAllowlistActive })
-
   const filteredTableColumns = useMemo(
-    () => tableColumns.filter((column) => enabledColumns.includes(column.id)),
-    [tableColumns, enabledColumns]
+    () => columns.filter((column) => enabledColumns.includes(column.id)),
+    [enabledColumns]
   )
 
   const isValidating =
@@ -129,6 +130,8 @@ function useHostsMain() {
     configurableColumns,
     enabledColumns,
     toggleColumnVisibility,
+    setColumnsVisible,
+    setColumnsHidden,
     toggleSort,
     setSortDirection,
     setSortColumn,

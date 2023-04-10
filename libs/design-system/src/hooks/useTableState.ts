@@ -1,18 +1,18 @@
-import { filter, groupBy, values } from 'lodash'
+import { difference, filter, groupBy, uniq } from 'lodash'
 import { useCallback, useMemo } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 
-type ColumnMeta<ColumnId> = {
+type Column<ColumnId> = {
   id: ColumnId
   label: string
-  sortable?: string
+  sortable?: boolean
   fixed?: boolean
   category?: string
 }
 
 export function useTableState<ColumnId extends string>(
   scope: string,
-  columnsMeta: Record<ColumnId, ColumnMeta<ColumnId>>,
+  columns: Column<ColumnId>[],
   columnsDefaultVisible: ColumnId[],
   columnsDefaultSort: ColumnId,
   disabledCategories?: string[]
@@ -39,11 +39,29 @@ export function useTableState<ColumnId extends string>(
 
   const toggleColumnVisibility = useCallback(
     (column: string) => {
-      setEnabledColumns((columns) => {
-        if (columns.includes(column)) {
-          return columns.filter((c) => c !== column)
+      setEnabledColumns((enabled) => {
+        if (enabled.includes(column)) {
+          return enabled.filter((c) => c !== column)
         }
-        return columns.concat(column)
+        return enabled.concat(column)
+      })
+    },
+    [setEnabledColumns]
+  )
+
+  const setColumnsVisible = useCallback(
+    (columns: string[]) => {
+      setEnabledColumns((enabled) => {
+        return uniq([...enabled, ...columns])
+      })
+    },
+    [setEnabledColumns]
+  )
+
+  const setColumnsHidden = useCallback(
+    (columns: string[]) => {
+      setEnabledColumns((enabled) => {
+        return difference(enabled, columns)
       })
     },
     [setEnabledColumns]
@@ -67,33 +85,33 @@ export function useTableState<ColumnId extends string>(
 
   const configurableColumns = useMemo(
     () =>
-      (values(columnsMeta) as ColumnMeta<ColumnId>[]).filter((column) => {
+      columns.filter((column) => {
         const columnExplicitlyDisabled = disabledCategories?.includes(
-          columnsMeta[column.id].category || ''
+          column.category || ''
         )
         return !column.fixed && !columnExplicitlyDisabled
       }),
-    [columnsMeta, disabledCategories]
+    [columns, disabledCategories]
   )
 
   const enabledColumns = useMemo(
     () =>
-      (values(columnsMeta) as ColumnMeta<ColumnId>[])
+      columns
         .filter((column) => {
           const columnIsLogicallyEnabled =
             column.fixed || _enabledColumns.includes(column.id)
           const columnExplicitlyDisabled = disabledCategories?.includes(
-            columnsMeta[column.id].category || ''
+            column.category || ''
           )
           return columnIsLogicallyEnabled && !columnExplicitlyDisabled
         })
         .map((column) => column.id),
-    [columnsMeta, _enabledColumns, disabledCategories]
+    [columns, _enabledColumns, disabledCategories]
   )
 
   const sortOptions = useMemo(
-    () => groupBy(filter(columnsMeta, 'sortable'), 'sortable'),
-    [columnsMeta]
+    () => groupBy(filter(columns, 'sortable'), 'category'),
+    [columns]
   )
 
   return {
@@ -104,6 +122,8 @@ export function useTableState<ColumnId extends string>(
     setSortDirection,
     setSortColumn,
     sortColumn,
+    setColumnsVisible,
+    setColumnsHidden,
     sortDirection,
     sortOptions,
     resetDefaultColumnVisibility,

@@ -1,4 +1,3 @@
-import { InfoTip } from '../core/InfoTip'
 import { Tooltip } from '../core/Tooltip'
 import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
@@ -7,25 +6,32 @@ import { cx } from 'class-variance-authority'
 import { CaretDown16, CaretUp16 } from '@carbon/icons-react'
 import { times } from 'lodash'
 
-export type Row = {
+type Data = {
   id: string
 }
 
-export type TableColumn<Columns, R> = {
+export type Row<Data, Context> = {
+  data: Data
+  context?: Context
+}
+
+export type TableColumn<Columns, Data, Context> = {
   id: Columns
   label: string
+  icon?: React.ReactNode
   tip?: string
-  sortable?: string
+  sortable?: boolean
   size?: number | string
   cellClassName?: string
   contentClassName?: string
-  render: React.FC<R>
+  render: React.FC<Row<Data, Context>>
   summary?: () => React.ReactNode
 }
 
-type Props<Columns extends string, R extends Row> = {
-  data?: R[]
-  columns: TableColumn<Columns, R>[]
+type Props<Columns extends string, D extends Data, Context> = {
+  data?: D[]
+  context?: Context
+  columns: TableColumn<Columns, D, Context>[]
   sortColumn?: Columns
   sortDirection?: 'asc' | 'desc'
   toggleSort?: (column: Columns) => void
@@ -36,9 +42,10 @@ type Props<Columns extends string, R extends Row> = {
   emptyState?: React.ReactNode
 }
 
-export function Table<Columns extends string, R extends Row>({
+export function Table<Columns extends string, D extends Data, Context>({
   columns,
   data,
+  context,
   sortColumn,
   sortDirection,
   toggleSort,
@@ -47,7 +54,7 @@ export function Table<Columns extends string, R extends Row>({
   pageSize,
   isLoading,
   emptyState,
-}: Props<Columns, R>) {
+}: Props<Columns, D, Context>) {
   let show = 'emptyState'
 
   if (isLoading && !data?.length) {
@@ -80,44 +87,55 @@ export function Table<Columns extends string, R extends Row>({
           <tr>
             {columns.map(
               (
-                { id, label, tip, sortable, cellClassName, contentClassName },
+                {
+                  id,
+                  icon,
+                  label,
+                  tip,
+                  sortable,
+                  cellClassName,
+                  contentClassName,
+                },
                 i
               ) => (
                 <th key={id} className={getCellClassNames(i, cellClassName)}>
                   <div
                     className={cx(
                       getContentClassNames(i, contentClassName),
+                      'overflow-hidden',
                       'py-3'
                     )}
                   >
-                    <Tooltip content={label}>
+                    <Tooltip content={tip}>
                       <Text
                         onClick={() => {
                           if (sortable && toggleSort) {
                             toggleSort(id)
                           }
                         }}
-                        weight="semibold"
                         color="subtle"
-                        size="12"
                         className={cx(
-                          'relative top-px',
-                          sortable ? 'cursor-pointer' : ''
+                          'relative flex gap-1',
+                          sortable && toggleSort ? 'cursor-pointer' : ''
                         )}
                         ellipsis
                       >
-                        {label}
+                        {icon ? <div>{icon}</div> : null}
+                        <Text ellipsis size="12" weight="medium">
+                          {label}
+                        </Text>
                       </Text>
                     </Tooltip>
-                    <Text color="subtle">
-                      {sortColumn === id &&
-                        (sortDirection === 'asc' ? (
+                    {sortColumn === id ? (
+                      <Text color="subtle">
+                        {sortDirection === 'asc' ? (
                           <CaretUp16 className="scale-75" />
                         ) : (
                           <CaretDown16 className="scale-75" />
-                        ))}
-                    </Text>
-                    {tip && <InfoTip>{tip}</InfoTip>}
+                        )}
+                      </Text>
+                    ) : null}
+                    {/* {tip && <InfoTip>{tip}</InfoTip>} */}
                   </div>
                 </th>
               )
@@ -164,7 +182,7 @@ export function Table<Columns extends string, R extends Row>({
                           rowSize === 'dense' ? 'h-[50px]' : 'h-[100px]'
                         )}
                       >
-                        <Render {...row} />
+                        <Render data={row} context={context} />
                       </div>
                     </td>
                   )

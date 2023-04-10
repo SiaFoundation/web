@@ -7,31 +7,41 @@ import {
   BaseMenuItem,
   MenuItemRightSlot,
   Label,
+  Reset16,
+  MenuSectionLabelToggleAll,
 } from '@siafoundation/design-system'
-// import { HostSortBy } from '@siafoundation/react-core'
 import { useHosts } from '../../contexts/hosts'
 
 export function HostsViewDropdownMenu() {
   const {
     configurableColumns,
     toggleColumnVisibility,
+    setColumnsVisible,
+    setColumnsHidden,
     resetDefaultColumnVisibility,
-    // sortOptions,
-    // sortBy,
-    // setSortBy,
-    // sortDir,
-    // setSortDir,
     enabledColumns,
   } = useHosts()
 
   const generalColumns = configurableColumns
-    .filter((c) => c.category !== 'autopilot')
+    .filter((c) => c.category === 'general')
     .map((column) => ({
       label: column.label,
       value: column.id,
     }))
   const autopilotColumns = configurableColumns
     .filter((c) => c.category === 'autopilot')
+    .map((column) => ({
+      label: column.label,
+      value: column.id,
+    }))
+  const priceTableColumns = configurableColumns
+    .filter((c) => c.category === 'priceTable')
+    .map((column) => ({
+      label: column.label,
+      value: column.id,
+    }))
+  const settingsColumns = configurableColumns
+    .filter((c) => c.category === 'hostSettings')
     .map((column) => ({
       label: column.label,
       value: column.id,
@@ -47,23 +57,31 @@ export function HostsViewDropdownMenu() {
       }
       contentProps={{
         align: 'end',
-        className: 'max-w-xs',
+        className: '!max-w-md !h-[400px]',
       }}
     >
       <BaseMenuItem>
         <Label>Display properties</Label>
         <MenuItemRightSlot>
           <Button
+            tip="Reset all to defaults"
+            variant="ghost"
             onClick={(e) => {
               e.stopPropagation()
               resetDefaultColumnVisibility()
             }}
           >
-            Reset default
+            <Reset16 />
           </Button>
         </MenuItemRightSlot>
       </BaseMenuItem>
-      {autopilotColumns.length ? <Label className="px-2">General</Label> : null}
+      <MenuSectionLabelToggleAll
+        label="General"
+        columns={generalColumns.map((c) => c.value)}
+        enabled={enabledColumns}
+        setColumnsVisible={setColumnsVisible}
+        setColumnsHidden={setColumnsHidden}
+      />
       <BaseMenuItem>
         <PoolCombo
           options={generalColumns}
@@ -73,10 +91,52 @@ export function HostsViewDropdownMenu() {
       </BaseMenuItem>
       {autopilotColumns.length ? (
         <>
-          <Label className="px-2">Autopilot</Label>
+          <MenuSectionLabelToggleAll
+            label="Autopilot"
+            columns={autopilotColumns.map((c) => c.value)}
+            enabled={enabledColumns}
+            setColumnsVisible={setColumnsVisible}
+            setColumnsHidden={setColumnsHidden}
+          />
           <BaseMenuItem>
             <PoolCombo
               options={autopilotColumns}
+              values={enabledColumns}
+              onChange={(value) => toggleColumnVisibility(value)}
+            />
+          </BaseMenuItem>
+        </>
+      ) : null}
+      {priceTableColumns.length ? (
+        <>
+          <MenuSectionLabelToggleAll
+            label="Price table"
+            columns={priceTableColumns.map((c) => c.value)}
+            enabled={enabledColumns}
+            setColumnsVisible={setColumnsVisible}
+            setColumnsHidden={setColumnsHidden}
+          />
+          <BaseMenuItem>
+            <PoolCombo
+              options={priceTableColumns}
+              values={enabledColumns}
+              onChange={(value) => toggleColumnVisibility(value)}
+            />
+          </BaseMenuItem>
+        </>
+      ) : null}
+      {settingsColumns.length ? (
+        <>
+          <MenuSectionLabelToggleAll
+            label="Host settings"
+            columns={settingsColumns.map((c) => c.value)}
+            enabled={enabledColumns}
+            setColumnsVisible={setColumnsVisible}
+            setColumnsHidden={setColumnsHidden}
+          />
+          <BaseMenuItem>
+            <PoolCombo
+              options={settingsColumns}
               values={enabledColumns}
               onChange={(value) => toggleColumnVisibility(value)}
             />

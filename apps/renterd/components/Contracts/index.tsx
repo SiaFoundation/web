@@ -20,6 +20,7 @@ export function Contracts() {
     toggleSort,
     limit,
     dataState,
+    cellContext,
   } = useContracts()
 
   return (
@@ -34,6 +35,7 @@ export function Contracts() {
     >
       <div className="p-5 min-w-fit">
         <Table
+          context={cellContext}
           isLoading={dataState === 'loading'}
           emptyState={
             dataState === 'noneMatchingFilters' ? (

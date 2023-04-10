@@ -5,12 +5,14 @@ import { panelStyles } from './Panel'
 import { cva, cx } from 'class-variance-authority'
 import { useOpen } from '../hooks/useOpen'
 import { rootClasses } from '../config/css'
+import { ScrollArea } from './ScrollArea'
 
 const contentContainerStyles = cva([
   rootClasses,
   'relative',
   'z-10',
   'outline-none',
+  'max-w-sm',
   'data-[side=top]:bottom-1',
   'data-[side=top]:origin-bottom',
   'data-[side=bottom]:top-1',
@@ -21,7 +23,7 @@ const contentContainerStyles = cva([
   'data-[side=right]:origin-left',
 ])
 
-const contentStyles = cx(panelStyles(), cva(['max-w-sm', 'py-1', 'px-1'])())
+const contentStyles = cx(panelStyles(), cva(['py-1', 'px-1'])())
 
 export const PopoverClose = PopoverPrimitive.Close
 
@@ -76,7 +78,7 @@ export const Popover = React.forwardRef<
                 exit="exit"
                 className={contentContainerStyles()}
               >
-                <div className={contentStyles}>{children}</div>
+                <ScrollArea className={contentStyles}>{children}</ScrollArea>
               </motion.div>
             </PopoverPrimitive.Content>
           </PopoverPrimitive.Portal>

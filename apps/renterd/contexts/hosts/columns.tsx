@@ -7,53 +7,73 @@ import {
   Misuse16,
   Tooltip,
   LoadingDots,
+  ValueSc,
+  Plane16,
+  Settings16,
+  DataTable16,
 } from '@siafoundation/design-system'
-import { humanNumber } from '@siafoundation/sia-js'
-import { useMemo } from 'react'
-import { HostData, TableColumnId, columnsMeta } from './types'
+import { humanBytes, humanNumber } from '@siafoundation/sia-js'
+import { HostData, TableColumnId } from './types'
 import { format, formatDistance, formatRelative } from 'date-fns'
 import { HostDropdownMenu } from '../../components/Hosts/HostDropdownMenu'
 import {
+  AutopilotHost,
   RhpScanRequest,
+  useHostsAllowlist,
   useWorkflows,
   workerRhpScanRoute,
 } from '@siafoundation/react-core'
+import BigNumber from 'bignumber.js'
+import React from 'react'
 
-export function useColumns({
-  isAllowlistActive,
-}: {
-  isAllowlistActive: boolean
-}) {
-  return useMemo(() => {
-    const columns: TableColumn<TableColumnId, HostData>[] = [
-      {
-        id: 'actions',
-        label: columnsMeta.actions.label,
-        cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
-        render: (host) => (
-          <HostDropdownMenu
-            address={host.netAddress}
-            publicKey={host.publicKey}
-          />
-        ),
-      },
-      {
-        id: 'allow',
-        label: columnsMeta.allow.label,
-        contentClassName: 'justify-center',
-        render: (host) => (
+type HostsTableColumn = TableColumn<TableColumnId, HostData, void> & {
+  fixed?: boolean
+  category: string
+}
+
+export const columns: HostsTableColumn[] = (
+  [
+    // general
+    {
+      id: 'actions',
+      label: '',
+      fixed: true,
+      category: 'general',
+      cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
+      render: ({ data }) => (
+        <HostDropdownMenu
+          address={data.netAddress}
+          publicKey={data.publicKey}
+        />
+      ),
+    },
+    {
+      id: 'allow',
+      label: 'allowed',
+      category: 'general',
+      contentClassName: 'justify-center',
+      render: function AllowColumn({ data }) {
+        const allowlist = useHostsAllowlist({
+          config: {
+            swr: {
+              dedupingInterval: 5_000,
+            },
+          },
+        })
+        const isAllowlistActive = !!allowlist.data?.length
+        return (
           <Tooltip
             side="right"
             content={
               (isAllowlistActive
                 ? `Allowlist ${
-                    host.isOnAllowlist
+                    data.isOnAllowlist
                       ? 'allows this host.'
                       : 'does not allow this host.'
                   }`
                 : `Allowlist is inactive.`) +
               ` Blocklist ${
-                host.isOnBlocklist
+                data.isOnBlocklist
                   ? 'blocks this host.'
                   : 'does not block this host.'
               }`
@@ -61,14 +81,14 @@ export function useColumns({
           >
             <div className="flex gap-2 items-center">
               <div className="mt-[5px]">
-                <Text color={host.isBlocked ? 'red' : 'green'}>
-                  {host.isBlocked ? <Misuse16 /> : <CheckmarkFilled16 />}
+                <Text color={data.isBlocked ? 'red' : 'green'}>
+                  {data.isBlocked ? <Misuse16 /> : <CheckmarkFilled16 />}
                 </Text>
               </div>
               <div className="flex flex-col">
                 <Text
                   size="10"
-                  color={host.isOnBlocklist ? 'red' : 'verySubtle'}
+                  color={data.isOnBlocklist ? 'red' : 'verySubtle'}
                   noWrap
                 >
                   Blocklist
@@ -77,7 +97,7 @@ export function useColumns({
                   size="10"
                   color={
                     isAllowlistActive
-                      ? host.isOnAllowlist
+                      ? data.isOnAllowlist
                         ? 'green'
                         : 'red'
                       : 'verySubtle'
@@ -89,325 +109,927 @@ export function useColumns({
               </div>
             </div>
           </Tooltip>
-        ),
+        )
       },
-      {
-        id: 'usable',
-        label: columnsMeta.usable.label,
-        render: (host) => (
+    },
+    {
+      id: 'ap_usable',
+      label: 'usable',
+      category: 'autopilot',
+      render: ({ data }) => (
+        <Tooltip
+          side="right"
+          content={data.usable ? 'Host is usable' : 'Host is not usable'}
+        >
+          <div className="flex gap-2 items-center">
+            <div className="mt-[5px]">
+              <Text color={data.usable ? 'green' : 'red'}>
+                {data.usable ? <CheckmarkFilled16 /> : <Misuse16 />}
+              </Text>
+            </div>
+            <div className="flex flex-col">
+              {data.unusableReasons.map((reason) => (
+                <Text key={reason} size="10" noWrap>
+                  {reason}
+                </Text>
+              ))}
+            </div>
+          </div>
+        </Tooltip>
+      ),
+    },
+    {
+      id: 'ap_gouging',
+      label: 'gouging',
+      category: 'autopilot',
+      render: ({ data }) => (
+        <Tooltip
+          side="right"
+          content={
+            data.gouging ? 'Host is price gouging' : 'Host is not price gouging'
+          }
+        >
+          <div className="flex gap-2 items-center">
+            <div className="mt-[5px]">
+              <Text color={!data.gouging ? 'green' : 'red'}>
+                {!data.gouging ? <CheckmarkFilled16 /> : <Misuse16 />}
+              </Text>
+            </div>
+            <div className="flex flex-col">
+              {Object.entries(data.gougingBreakdown.v2).map(([key, reason]) => (
+                <Text key={'v2' + key} size="10" noWrap>
+                  {reason}
+                </Text>
+              ))}
+              {Object.entries(data.gougingBreakdown.v3).map(([key, reason]) => (
+                <Text key={'v3' + key} size="10" noWrap>
+                  {reason}
+                </Text>
+              ))}
+            </div>
+          </div>
+        </Tooltip>
+      ),
+    },
+    {
+      id: 'lastScan',
+      label: 'last scan',
+      category: 'general',
+      sortable: 'time',
+      render: function LastScan({ data }) {
+        const { workflows } = useWorkflows()
+        const isPending = workflows.find(
+          (wf: { path?: string; payload?: RhpScanRequest }) =>
+            wf.path.startsWith(workerRhpScanRoute) &&
+            wf.payload?.hostKey === data.publicKey
+        )
+        if (isPending) {
+          return <LoadingDots />
+        }
+        return (
           <Tooltip
             side="right"
-            content={host.usable ? 'Host is usable' : 'Host is not usable'}
+            content={`${
+              data.lastScanSuccess ? 'succeeded' : 'failed'
+            } ${formatDistance(new Date(data.lastScan), new Date(), {
+              addSuffix: true,
+            })}`}
           >
             <div className="flex gap-2 items-center">
               <div className="mt-[5px]">
-                <Text color={host.usable ? 'green' : 'red'}>
-                  {host.usable ? <CheckmarkFilled16 /> : <Misuse16 />}
+                <Text color={data.lastScanSuccess ? 'green' : 'red'}>
+                  {data.lastScanSuccess ? <CheckmarkFilled16 /> : <Misuse16 />}
                 </Text>
               </div>
               <div className="flex flex-col">
-                {host.unusableReasons.map((reason) => (
-                  <Text key={reason} size="10" noWrap>
-                    {reason}
-                  </Text>
-                ))}
+                <Text size="12" noWrap>
+                  {formatDistance(new Date(data.lastScan), new Date(), {
+                    addSuffix: true,
+                  })}
+                </Text>
+                <Text color="subtle" size="10" noWrap>
+                  {format(new Date(data.lastScan), 'Pp')}
+                </Text>
               </div>
             </div>
           </Tooltip>
-        ),
+        )
       },
-      {
-        id: 'lastScan',
-        label: columnsMeta.lastScan.label,
-        render: function LastScan(host) {
-          const { workflows } = useWorkflows()
-          const isPending = workflows.find(
-            (wf: { path?: string; payload?: RhpScanRequest }) =>
-              wf.path.startsWith(workerRhpScanRoute) &&
-              wf.payload?.hostKey === host.publicKey
-          )
-          if (isPending) {
-            return <LoadingDots />
-          }
-          return (
-            <Tooltip
-              side="right"
-              content={`${
-                host.lastScanSuccess ? 'succeeded' : 'failed'
-              } ${formatDistance(new Date(host.lastScan), new Date(), {
-                addSuffix: true,
-              })}`}
-            >
-              <div className="flex gap-2 items-center">
-                <div className="mt-[5px]">
-                  <Text color={host.lastScanSuccess ? 'green' : 'red'}>
-                    {host.lastScanSuccess ? (
-                      <CheckmarkFilled16 />
-                    ) : (
-                      <Misuse16 />
-                    )}
-                  </Text>
-                </div>
-                <div className="flex flex-col">
-                  <Text size="12" noWrap>
-                    {formatDistance(new Date(host.lastScan), new Date(), {
-                      addSuffix: true,
-                    })}
-                  </Text>
-                  <Text color="subtle" size="10" noWrap>
-                    {format(new Date(host.lastScan), 'Pp')}
-                  </Text>
-                </div>
-              </div>
-            </Tooltip>
-          )
-        },
-      },
-      {
-        id: 'netAddress',
-        label: columnsMeta.netAddress.label,
-        render: (host) => (
-          <ValueCopyable
-            value={host.netAddress}
-            type="ip"
-            size="12"
-            label="host address"
-          />
-        ),
-      },
-      {
-        id: 'publicKey',
-        label: columnsMeta.publicKey.label,
-        render: (host) => (
-          <ValueCopyable
-            value={host.publicKey}
-            size="12"
-            label="host public key"
-          />
-        ),
-      },
-      {
-        id: 'knownSince',
-        label: columnsMeta.knownSince.label,
-        render: (host) => {
-          return (
-            <div className="flex flex-col">
-              <Text size="12" noWrap>
-                {formatDistance(new Date(), new Date(host.knownSince))} old
-              </Text>
-              <Text color="subtle" size="10" noWrap>
-                {formatRelative(new Date(host.knownSince), new Date())}
+    },
+    {
+      id: 'hasContract',
+      label: 'active contract',
+      category: 'general',
+      contentClassName: 'w-[50px]',
+      render: ({ data }) => {
+        const hasContract = data.activeContracts.gt(0)
+        return (
+          <Tooltip
+            side="right"
+            content={
+              hasContract
+                ? 'Host has active contract'
+                : 'Host does not have an active contract'
+            }
+          >
+            <div className="mt-[5px]">
+              <Text color={hasContract ? 'green' : 'subtle'}>
+                {hasContract ? <CheckmarkFilled16 /> : <Misuse16 />}
               </Text>
             </div>
-          )
-        },
+          </Tooltip>
+        )
       },
-      {
-        id: 'totalScans',
-        label: columnsMeta.totalScans.label,
-        contentClassName: 'w-[120px] justify-end',
-        render: (host) => (
+    },
+    {
+      id: 'netAddress',
+      label: 'address',
+      category: 'general',
+      sortable: 'ID',
+      render: ({ data }) => (
+        <ValueCopyable
+          value={data.netAddress}
+          type="ip"
+          size="12"
+          label="host address"
+        />
+      ),
+    },
+    {
+      id: 'publicKey',
+      label: 'public key',
+      category: 'general',
+      sortable: 'ID',
+      render: ({ data }) => (
+        <ValueCopyable
+          value={data.publicKey}
+          size="12"
+          label="host public key"
+        />
+      ),
+    },
+    {
+      id: 'knownSince',
+      label: 'known since',
+      category: 'general',
+      sortable: 'time',
+      render: ({ data }) => {
+        return (
+          <div className="flex flex-col">
+            <Text size="12" noWrap>
+              {formatDistance(new Date(), new Date(data.knownSince))} old
+            </Text>
+            <Text color="subtle" size="10" noWrap>
+              {formatRelative(new Date(data.knownSince), new Date())}
+            </Text>
+          </div>
+        )
+      },
+    },
+    {
+      id: 'totalScans',
+      label: 'total scans',
+      category: 'general',
+      sortable: 'counts',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data }) => (
+        <ValueNum
+          size="12"
+          value={data.totalScans}
+          variant="value"
+          format={(v) => humanNumber(v.toNumber())}
+        />
+      ),
+    },
+    {
+      id: 'uptime',
+      label: 'uptime',
+      category: 'general',
+      sortable: 'counts',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data }) => {
+        return (
           <ValueNum
             size="12"
-            value={host.totalScans}
+            value={data.uptime.div(1e9).div(60).div(60).div(24)}
             variant="value"
-            format={(v) => humanNumber(v.toNumber())}
+            format={(v) =>
+              humanNumber(v, { fixed: v.isZero() ? 0 : 2, units: 'days' })
+            }
           />
-        ),
+        )
       },
-      {
-        id: 'uptime',
-        label: columnsMeta.uptime.label,
-        contentClassName: 'w-[120px] justify-end',
-        render: (host) => {
-          return (
-            <ValueNum
-              size="12"
-              value={host.uptime.div(1e9).div(60).div(60).div(24)}
-              variant="value"
-              format={(v) =>
-                humanNumber(v, { fixed: v.isZero() ? 0 : 2, units: 'days' })
-              }
-            />
-          )
-        },
-      },
-      {
-        id: 'downtime',
-        label: columnsMeta.downtime.label,
-        contentClassName: 'w-[120px] justify-end',
-        render: (host) => {
-          return (
-            <ValueNum
-              size="12"
-              value={host.downtime.div(1e9).div(60).div(60).div(24)}
-              variant="value"
-              format={(v) =>
-                humanNumber(v, { fixed: v.isZero() ? 0 : 2, units: 'days' })
-              }
-            />
-          )
-        },
-      },
-      {
-        id: 'totalInteractions',
-        label: columnsMeta.totalInteractions.label,
-        contentClassName: 'w-[120px] justify-end',
-        render: (host) => {
-          return (
-            <ValueNum
-              size="12"
-              value={host.totalInteractions}
-              variant="value"
-              format={(v) => humanNumber(v)}
-            />
-          )
-        },
-      },
-      {
-        id: 'successfulInteractions',
-        label: columnsMeta.successfulInteractions.label,
-        contentClassName: 'w-[120px] justify-end',
-        render: (host) => (
+    },
+    {
+      id: 'downtime',
+      label: 'downtime',
+      category: 'general',
+      sortable: 'counts',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data }) => {
+        return (
           <ValueNum
             size="12"
-            value={host.successfulInteractions}
+            value={data.downtime.div(1e9).div(60).div(60).div(24)}
             variant="value"
-            format={(v) => humanNumber(v.toNumber())}
+            format={(v) =>
+              humanNumber(v, { fixed: v.isZero() ? 0 : 2, units: 'days' })
+            }
           />
-        ),
+        )
       },
-      {
-        id: 'failedInteractions',
-        label: columnsMeta.failedInteractions.label,
-        contentClassName: 'w-[120px] justify-end',
-        render: (host) => (
+    },
+    {
+      id: 'totalInteractions',
+      label: 'total interactions',
+      category: 'general',
+      sortable: 'counts',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data }) => {
+        return (
           <ValueNum
             size="12"
-            value={host.failedInteractions}
+            value={data.totalInteractions}
             variant="value"
-            format={(v) => humanNumber(v.toNumber())}
+            format={(v) => humanNumber(v)}
           />
-        ),
+        )
       },
-      {
-        id: 'activeContracts',
-        label: columnsMeta.activeContracts.label,
-        contentClassName: 'w-[120px] justify-end',
-        render: (host) => (
-          <ValueNum
-            size="12"
-            value={host.activeContracts}
-            variant="value"
-            format={(v) => humanNumber(v.toNumber())}
-          />
-        ),
-      },
-      {
-        id: 'scoreOverall',
-        label: columnsMeta.scoreOverall.label,
-        contentClassName: 'w-[120px] justify-end',
-        render: (host) => (
-          <ValueNum
-            size="12"
-            value={host.score}
-            variant="value"
-            format={(v) => v.toPrecision(2)}
-          />
-        ),
-      },
-      {
-        id: 'scoreAge',
-        label: columnsMeta.scoreAge.label,
-        contentClassName: 'w-[120px] justify-end',
-        render: (host) => (
-          <ValueNum
-            size="12"
-            value={host.scoreBreakdown.age}
-            variant="value"
-            format={(v) => v.toPrecision(2)}
-          />
-        ),
-      },
-      {
-        id: 'scoreCollateral',
-        label: columnsMeta.scoreCollateral.label,
-        contentClassName: 'w-[120px] justify-end',
-        render: (host) => (
-          <ValueNum
-            size="12"
-            value={host.scoreBreakdown.collateral}
-            variant="value"
-            format={(v) => v.toPrecision(2)}
-          />
-        ),
-      },
-      {
-        id: 'scoreInteractions',
-        label: columnsMeta.scoreInteractions.label,
-        contentClassName: 'w-[120px] justify-end',
-        render: (host) => (
-          <ValueNum
-            size="12"
-            value={host.scoreBreakdown.interactions}
-            variant="value"
-            format={(v) => v.toPrecision(2)}
-          />
-        ),
-      },
-      {
-        id: 'scorePrices',
-        label: columnsMeta.scorePrices.label,
-        contentClassName: 'w-[120px] justify-end',
-        render: (host) => (
-          <ValueNum
-            size="12"
-            value={host.scoreBreakdown.prices}
-            variant="value"
-            format={(v) => v.toPrecision(2)}
-          />
-        ),
-      },
-      {
-        id: 'scoreStorageRemaining',
-        label: columnsMeta.scoreStorageRemaining.label,
-        contentClassName: 'w-[120px] justify-end',
-        render: (host) => (
-          <ValueNum
-            size="12"
-            value={host.scoreBreakdown.storageRemaining}
-            variant="value"
-            format={(v) => v.toPrecision(2)}
-          />
-        ),
-      },
-      {
-        id: 'scoreUptime',
-        label: columnsMeta.scoreUptime.label,
-        contentClassName: 'w-[120px] justify-end',
-        render: (host) => (
-          <ValueNum
-            size="12"
-            value={host.scoreBreakdown.uptime}
-            variant="value"
-            format={(v) => v.toPrecision(2)}
-          />
-        ),
-      },
-      {
-        id: 'scoreVersion',
-        label: columnsMeta.scoreVersion.label,
-        contentClassName: 'w-[120px] justify-end',
-        render: (host) => (
-          <ValueNum
-            size="12"
-            value={host.scoreBreakdown.version}
-            variant="value"
-            format={(v) => v.toPrecision(2)}
-          />
-        ),
-      },
-    ]
-    return columns
-  }, [isAllowlistActive])
+    },
+    {
+      id: 'successfulInteractions',
+      label: 'successful interactions',
+      category: 'general',
+      sortable: 'counts',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data }) => (
+        <ValueNum
+          size="12"
+          value={data.successfulInteractions}
+          variant="value"
+          format={(v) => humanNumber(v.toNumber())}
+        />
+      ),
+    },
+    {
+      id: 'failedInteractions',
+      label: 'failed interactions',
+      category: 'general',
+      sortable: 'counts',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data }) => (
+        <ValueNum
+          size="12"
+          value={data.failedInteractions}
+          variant="value"
+          format={(v) => humanNumber(v.toNumber())}
+        />
+      ),
+    },
+    {
+      id: 'contractCount',
+      label: 'contract count',
+      category: 'general',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data }) => (
+        <ValueNum
+          size="12"
+          value={data.activeContracts}
+          variant="value"
+          format={(v) => humanNumber(v.toNumber())}
+        />
+      ),
+    },
+    {
+      id: 'ap_scoreOverall',
+      label: 'overall score',
+      category: 'autopilot',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data }) => (
+        <ValueNum
+          size="12"
+          value={data.score}
+          variant="value"
+          format={(v) => v.toPrecision(2)}
+        />
+      ),
+    },
+    {
+      id: 'ap_scoreAge',
+      label: 'age score',
+      category: 'autopilot',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data }) => (
+        <ValueNum
+          size="12"
+          value={data.scoreBreakdown.age}
+          variant="value"
+          format={(v) => v.toPrecision(2)}
+        />
+      ),
+    },
+    {
+      id: 'ap_scoreCollateral',
+      label: 'collateral score',
+      category: 'autopilot',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data }) => (
+        <ValueNum
+          size="12"
+          value={data.scoreBreakdown.collateral}
+          variant="value"
+          format={(v) => v.toPrecision(2)}
+        />
+      ),
+    },
+    {
+      id: 'ap_scoreInteractions',
+      label: 'interactions score',
+      category: 'autopilot',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data }) => (
+        <ValueNum
+          size="12"
+          value={data.scoreBreakdown.interactions}
+          variant="value"
+          format={(v) => v.toPrecision(2)}
+        />
+      ),
+    },
+    {
+      id: 'ap_scorePrices',
+      label: 'prices score',
+      category: 'autopilot',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data }) => (
+        <ValueNum
+          size="12"
+          value={data.scoreBreakdown.prices}
+          variant="value"
+          format={(v) => v.toPrecision(2)}
+        />
+      ),
+    },
+    {
+      id: 'ap_scoreStorageRemaining',
+      label: 'storage remaining score',
+      category: 'autopilot',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data }) => (
+        <ValueNum
+          size="12"
+          value={data.scoreBreakdown.storageRemaining}
+          variant="value"
+          format={(v) => v.toPrecision(2)}
+        />
+      ),
+    },
+    {
+      id: 'ap_scoreUptime',
+      label: 'uptime score',
+      category: 'autopilot',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data }) => (
+        <ValueNum
+          size="12"
+          value={data.scoreBreakdown.uptime}
+          variant="value"
+          format={(v) => v.toPrecision(2)}
+        />
+      ),
+    },
+    {
+      id: 'ap_scoreVersion',
+      label: 'version score',
+      category: 'autopilot',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data }) => (
+        <ValueNum
+          size="12"
+          value={data.scoreBreakdown.version}
+          variant="value"
+          format={(v) => v.toPrecision(2)}
+        />
+      ),
+    },
+    // price table
+    {
+      id: 'hpt_accountbalancecost',
+      label: 'account balance cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'accountbalancecost'),
+    },
+    {
+      id: 'hpt_collateralcost',
+      label: 'collateral cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'collateralcost'),
+    },
+    {
+      id: 'hpt_contractprice',
+      label: 'contract price',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'contractprice'),
+    },
+    {
+      id: 'hpt_downloadbandwidthcost',
+      label: 'download bandwidth cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'downloadbandwidthcost'),
+    },
+    {
+      id: 'hpt_dropsectorsbasecost',
+      label: 'drop sectors base cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'dropsectorsbasecost'),
+    },
+    {
+      id: 'hpt_dropsectorsunitcost',
+      label: 'drop sectors unit cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'dropsectorsunitcost'),
+    },
+    {
+      id: 'hpt_expiry',
+      label: 'expiry',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderNumber('priceTable', 'dropsectorsunitcost'),
+    },
+    {
+      id: 'hpt_fundaccountcost',
+      label: 'fund account cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'fundaccountcost'),
+    },
+    {
+      id: 'hpt_hassectorbasecost',
+      label: 'has sector cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'hassectorbasecost'),
+    },
+    {
+      id: 'hpt_hostblockheight',
+      label: 'host block height',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderNumber('priceTable', 'hostblockheight'),
+    },
+    {
+      id: 'hpt_initbasecost',
+      label: 'init base cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'initbasecost'),
+    },
+    {
+      id: 'hpt_latestrevisioncost',
+      label: 'latest revision cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'latestrevisioncost'),
+    },
+    {
+      id: 'hpt_maxcollateral',
+      label: 'max collateral',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'maxcollateral'),
+    },
+    {
+      id: 'hpt_maxduration',
+      label: 'max duration',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderNumber('priceTable', 'maxduration'),
+    },
+    {
+      id: 'hpt_memorytimecost',
+      label: 'memory time cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'memorytimecost'),
+    },
+    {
+      id: 'hpt_readbasecost',
+      label: 'read base cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'readbasecost'),
+    },
+    {
+      id: 'hpt_readlengthcost',
+      label: 'read length cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'readlengthcost'),
+    },
+    {
+      id: 'hpt_registryentriesleft',
+      label: 'registry entries left',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderNumber('priceTable', 'registryentriesleft'),
+    },
+    {
+      id: 'hpt_registryentriestotal',
+      label: 'registry entries total',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderNumber('priceTable', 'registryentriestotal'),
+    },
+    {
+      id: 'hpt_renewcontractcost',
+      label: 'renew contract cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'renewcontractcost'),
+    },
+    {
+      id: 'hpt_revisionbasecost',
+      label: 'revision base cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'renewcontractcost'),
+    },
+    {
+      id: 'hpt_subscriptionmemorycost',
+      label: 'subscription memory cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'subscriptionmemorycost'),
+    },
+    {
+      id: 'hpt_subscriptionnotificationcost',
+      label: 'subscription notification cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'subscriptionnotificationcost'),
+    },
+    {
+      id: 'hpt_swapsectorcost',
+      label: 'swap sector cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'swapsectorcost'),
+    },
+    {
+      id: 'hpt_txnfeemaxrecommended',
+      label: 'txn fee max recommended',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'txnfeemaxrecommended'),
+    },
+    {
+      id: 'hpt_txnfeeminrecommended',
+      label: 'txn fee min recommended',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'txnfeeminrecommended'),
+    },
+    {
+      id: 'hpt_uid',
+      label: 'UID',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderString('priceTable', 'uid'),
+    },
+    {
+      id: 'hpt_updatepricetablecost',
+      label: 'update price table cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'updatepricetablecost'),
+    },
+    {
+      id: 'hpt_uploadbandwidthcost',
+      label: 'upload bandwidth cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'uploadbandwidthcost'),
+    },
+    {
+      id: 'hpt_validity',
+      label: 'validity',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderNumber('priceTable', 'validity'),
+    },
+    {
+      id: 'hpt_windowsize',
+      label: 'window size',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderNumber('priceTable', 'windowsize'),
+    },
+    {
+      id: 'hpt_writebasecost',
+      label: 'write base cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'writebasecost'),
+    },
+    {
+      id: 'hpt_writelengthcost',
+      label: 'write length cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'writelengthcost'),
+    },
+    {
+      id: 'hpt_writestorecost',
+      label: 'write store cost',
+      category: 'priceTable',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('priceTable', 'writestorecost'),
+    },
+    // host settings
+    {
+      id: 'hs_acceptingcontracts',
+      label: 'accepting contracts',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderBool('settings', 'acceptingcontracts'),
+    },
+    {
+      id: 'hs_baserpcprice',
+      label: 'base RPC price',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('settings', 'baserpcprice'),
+    },
+    {
+      id: 'hs_collateral',
+      label: 'collateral',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('settings', 'collateral'),
+    },
+    {
+      id: 'hs_contractprice',
+      label: 'contract price',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('settings', 'contractprice'),
+    },
+    {
+      id: 'hs_downloadbandwidthprice',
+      label: 'download bandwidth price',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('settings', 'downloadbandwidthprice'),
+    },
+    {
+      id: 'hs_ephemeralaccountexpiry',
+      label: 'ephemeral account expiry',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderNumber('settings', 'ephemeralaccountexpiry'),
+    },
+    {
+      id: 'hs_maxcollateral',
+      label: 'max collateral',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('settings', 'maxcollateral'),
+    },
+    {
+      id: 'hs_maxdownloadbatchsize',
+      label: 'max download batch size',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderBytes('settings', 'maxdownloadbatchsize'),
+    },
+    {
+      id: 'hs_maxduration',
+      label: 'max duration',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderNumber('settings', 'maxduration'),
+    },
+    {
+      id: 'hs_maxephemeralaccountbalance',
+      label: 'max ephemeral account balance',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('settings', 'maxephemeralaccountbalance'),
+    },
+    {
+      id: 'hs_maxrevisebatchsize',
+      label: 'max revise batch size',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderBytes('settings', 'maxrevisebatchsize'),
+    },
+    {
+      id: 'hs_netaddress',
+      label: 'net address',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderString('settings', 'netaddress'),
+    },
+    {
+      id: 'hs_remainingstorage',
+      label: 'remaining storage',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderBytes('settings', 'remainingstorage'),
+    },
+    {
+      id: 'hs_revisionnumber',
+      label: 'revision number',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderNumber('settings', 'revisionnumber'),
+    },
+    {
+      id: 'hs_sectoraccessprice',
+      label: 'sector access price',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('settings', 'sectoraccessprice'),
+    },
+    {
+      id: 'hs_sectorsize',
+      label: 'sector size',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderBytes('settings', 'sectorsize'),
+    },
+    {
+      id: 'hs_siamuxport',
+      label: 'siamux port',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderNumber('settings', 'siamuxport'),
+    },
+    {
+      id: 'hs_storageprice',
+      label: 'storage price',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('settings', 'storageprice'),
+    },
+    {
+      id: 'hs_totalstorage',
+      label: 'total storage',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderBytes('settings', 'totalstorage'),
+    },
+    {
+      id: 'hs_unlockhash',
+      label: 'unlock hash',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderString('settings', 'unlockhash'),
+    },
+    {
+      id: 'hs_uploadbandwidthprice',
+      label: 'upload bandwidth price',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderSc('settings', 'uploadbandwidthprice'),
+    },
+    {
+      id: 'hs_version',
+      label: 'verison',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderString('settings', 'version'),
+    },
+    {
+      id: 'hs_windowsize',
+      label: 'window size',
+      category: 'hostSettings',
+      contentClassName: 'w-[120px] justify-end',
+      render: makeRenderNumber('settings', 'windowsize'),
+    },
+  ] as HostsTableColumn[]
+).map(
+  (col): HostsTableColumn => ({
+    ...col,
+    ...getFullLabelAndTip(col),
+  })
+)
+
+function getFullLabelAndTip(col: HostsTableColumn): {
+  icon?: React.ReactNode
+  label: string
+  tip: string
+} {
+  if (col.category === 'autopilot') {
+    return {
+      icon: <Plane16 className="relative opacity-50 scale-75" />,
+      label: col.label,
+      tip: `autopilot: ${col.label}`,
+    }
+  }
+  if (col.category === 'hostSettings') {
+    return {
+      icon: <Settings16 className="relative top-px opacity-50 scale-75" />,
+      label: col.label,
+      tip: `host settings: ${col.label}`,
+    }
+  }
+  if (col.category === 'priceTable') {
+    return {
+      icon: <DataTable16 className="relative top-px opacity-50 scale-75" />,
+      label: col.label,
+      tip: `price table: ${col.label}`,
+    }
+  }
+  return {
+    label: col.label,
+    tip: col.label,
+  }
+}
+
+type Key =
+  | keyof AutopilotHost['host']['priceTable']
+  | keyof AutopilotHost['host']['settings']
+
+function makeRenderSc(section: 'priceTable' | 'settings', name: Key) {
+  return function RenderPriceTableNumber({ data }: { data: HostData }) {
+    console.log(data, data[section])
+    if (!data[section]) {
+      return null
+    }
+    return (
+      <ValueSc
+        size="12"
+        value={new BigNumber(data[section][name] || 0)}
+        variant="value"
+      />
+    )
+  }
+}
+
+function makeRenderNumber(
+  section: 'priceTable' | 'settings',
+  name: Key,
+  abbreviated?: boolean
+) {
+  return function RenderNumberColumn({ data }: { data: HostData }) {
+    if (!data[section]) {
+      return null
+    }
+    return (
+      <ValueNum
+        size="12"
+        value={new BigNumber(data[section][name] || 0)}
+        variant="value"
+        format={(v) =>
+          humanNumber(v, {
+            abbreviated,
+          })
+        }
+      />
+    )
+  }
+}
+
+function makeRenderString(section: 'priceTable' | 'settings', name: Key) {
+  return function RenderStringColumn({ data }: { data: HostData }) {
+    if (!data[section]) {
+      return null
+    }
+    return <ValueCopyable value={data[section][name]} size="12" />
+  }
+}
+
+function makeRenderBytes(section: 'priceTable' | 'settings', name: Key) {
+  return function RenderBytesColumn({ data }: { data: HostData }) {
+    if (!data[section]) {
+      return null
+    }
+    return (
+      <Text size="12" weight="semibold" ellipsis>
+        {humanBytes(data[section][name])}
+      </Text>
+    )
+  }
+}
+
+function makeRenderBool(section: 'priceTable' | 'settings', name: Key) {
+  return function RenderBoolColumn({ data }: { data: HostData }) {
+    if (!data[section]) {
+      return null
+    }
+    return (
+      <div className="mt-[5px]">
+        <Text color={data[section][name] ? 'green' : 'red'}>
+          {data[section][name] ? <CheckmarkFilled16 /> : <Misuse16 />}
+        </Text>
+      </div>
+    )
+  }
 }
