@@ -1,30 +1,12 @@
 import {
-  Text,
-  ValueNum,
-  TableColumn,
-  LoadingDots,
-  FolderIcon,
-  Document16,
   useTableState,
   triggerErrorToast,
   triggerToast,
   useDatasetEmptyState,
   useClientFilters,
   useClientFilteredDataset,
-  Button,
-  CheckmarkFilled16,
-  WarningFilled16,
-  Misuse16,
-  HoverCard,
-  Separator,
-  ScrollArea,
 } from '@siafoundation/design-system'
-import { humanBytes, humanNumber } from '@siafoundation/sia-js'
-import BigNumber from 'bignumber.js'
 import {
-  Obj,
-  SlabSlice,
-  useObject,
   useObjectDirectory,
   useObjectDownloadFunc,
   useObjectUpload,
@@ -36,19 +18,13 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { min, sortBy, throttle, toPairs } from 'lodash'
-import { FileDropdownMenu } from '../../components/Files/FileDropdownMenu'
-import {
-  columnsDefaultSort,
-  columnsDefaultVisible,
-  columnsMeta,
-  ObjectData,
-  TableColumnId,
-} from './types'
+import { sortBy, throttle, toPairs } from 'lodash'
+import { columnsDefaultSort, columnsDefaultVisible, ObjectData } from './types'
 import { useRouter } from 'next/router'
 import { TransfersBar } from '../../components/TransfersBar'
 import { useContracts } from '../contracts'
-import { ContractData } from '../contracts/types'
+import { columns } from './columns'
+import { getFilename, getFullPath, isDirectory } from './utils'
 
 type UploadsMap = Record<string, ObjectData>
 
@@ -288,6 +264,8 @@ function useFilesMain() {
     configurableColumns,
     enabledColumns,
     toggleColumnVisibility,
+    setColumnsVisible,
+    setColumnsHidden,
     toggleSort,
     setSortDirection,
     setSortColumn,
@@ -297,7 +275,7 @@ function useFilesMain() {
     resetDefaultColumnVisibility,
   } = useTableState(
     'renterd/v0/objects',
-    columnsMeta,
+    columns,
     columnsDefaultVisible,
     columnsDefaultSort
   )
@@ -334,305 +312,12 @@ function useFilesMain() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [datasetFiltered])
 
-  const tableColumns = useMemo(() => {
-    const columns: TableColumn<TableColumnId, ObjectData>[] = [
-      {
-        id: 'type',
-        label: columnsMeta.type.label,
-        sortable: columnsMeta.type.sortable,
-        cellClassName: 'w-[50px] !pl-2 !pr-2 [&+*]:!pl-0',
-        render: ({ isUploading, isDirectory, name, path }) => {
-          if (isUploading) {
-            return (
-              <Button variant="ghost" state="waiting">
-                <Document16 />
-              </Button>
-            )
-          }
-          return isDirectory ? (
-            // TODO: renable once actual child file deletion is implemented
-            // <DirectoryDropdownMenu name={name} path={path} />
-            <Button variant="ghost" state="waiting">
-              <FolderIcon size={16} />
-            </Button>
-          ) : (
-            <FileDropdownMenu name={name} path={path} />
-          )
-        },
-      },
-      {
-        id: 'name',
-        label: columnsMeta.name.label,
-        sortable: columnsMeta.name.sortable,
-        contentClassName: 'max-w-[600px]',
-        render: ({ name, isDirectory }) => {
-          if (isDirectory) {
-            if (name === '..') {
-              return (
-                <Text
-                  ellipsis
-                  color="accent"
-                  weight="semibold"
-                  className="cursor-pointer"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    setActiveDirectory((p) => p.slice(0, -1))
-                  }}
-                >
-                  {name}
-                </Text>
-              )
-            }
-            return (
-              <Text
-                ellipsis
-                color="accent"
-                weight="semibold"
-                className="cursor-pointer"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setActiveDirectory((p) => p.concat(name.slice(0, -1)))
-                }}
-              >
-                {name}
-              </Text>
-            )
-          }
-          return (
-            <Text ellipsis weight="semibold">
-              {name}
-            </Text>
-          )
-        },
-      },
-      {
-        id: 'health',
-        label: columnsMeta.health.label,
-        sortable: columnsMeta.health.sortable,
-        contentClassName: 'justify-center',
-        render: function SizeColumn({ path, isUploading, isDirectory }) {
-          const obj = useObject({
-            disabled: isUploading || isDirectory,
-            params: {
-              key: encodeURIComponent(path.slice(1)),
-            },
-            config: {
-              swr: {
-                dedupingInterval: 5000,
-              },
-            },
-          })
-          if (isUploading) {
-            return <LoadingDots />
-          }
-
-          if (obj.data?.object && allContracts) {
-            const { health, slabs } = getObjectHealth(
-              obj.data.object,
-              allContracts
-            )
-
-            let label = 'excellent'
-            let color: React.ComponentProps<typeof Text>['color'] = 'green'
-            let icon = <CheckmarkFilled16 />
-            if (health < 1) {
-              label = 'good'
-              color = 'green'
-              icon = <CheckmarkFilled16 />
-            }
-            if (health < 0.5) {
-              label = 'poor'
-              color = 'amber'
-              icon = <WarningFilled16 />
-            }
-            if (health < 0) {
-              label = 'bad'
-              color = 'red'
-              icon = <Misuse16 />
-            }
-            return (
-              <HoverCard
-                rootProps={{
-                  openDelay: 100,
-                }}
-                trigger={
-                  <Text color={color} className="flex cursor-pointer">
-                    {icon}
-                  </Text>
-                }
-              >
-                <div
-                  className="z-10 flex flex-col pb-1 -mx-1 overflow-hidden"
-                  style={{
-                    height: slabs.length > 15 ? '300px' : undefined,
-                  }}
-                >
-                  <div className="px-2">
-                    <Text size="12">{`${label} health (${(health * 100).toFixed(
-                      0
-                    )}%)`}</Text>
-                  </div>
-                  <div className="px-2">
-                    <Separator className="w-full mt-0.5 mb-1.5" />
-                  </div>
-                  <div className="flex-1 overflow-hidden">
-                    <ScrollArea>
-                      <div className="px-2">
-                        {sortBy(slabs, 'contractShards').map((slab) => (
-                          <div
-                            key={slab.index}
-                            className="flex justify-between"
-                          >
-                            <Text
-                              size="12"
-                              color="subtle"
-                              className="flex items-center"
-                            >
-                              Slab {slab.index}:
-                            </Text>
-                            <Text
-                              size="12"
-                              color="subtle"
-                              className="flex items-center"
-                            >
-                              {slab.contractShards}/{slab.totalShards}
-                            </Text>
-                          </div>
-                        ))}
-                      </div>
-                    </ScrollArea>
-                  </div>
-                </div>
-              </HoverCard>
-            )
-          }
-          return null
-        },
-      },
-      {
-        id: 'size',
-        label: columnsMeta.size.label,
-        sortable: columnsMeta.size.sortable,
-        contentClassName: 'justify-end',
-        render: function SizeColumn({ path, isUploading, isDirectory }) {
-          const obj = useObject({
-            disabled: isUploading || isDirectory,
-            params: {
-              key: encodeURIComponent(path.slice(1)),
-            },
-            config: {
-              swr: {
-                dedupingInterval: 5000,
-              },
-            },
-          })
-          if (isUploading) {
-            return <LoadingDots />
-          }
-
-          if (obj.data?.object) {
-            return (
-              <ValueNum
-                size="12"
-                value={(obj.data?.object.Slabs || []).reduce(
-                  (acc, s) => acc.plus(s.Length - s.Offset),
-                  new BigNumber(0)
-                )}
-                variant="value"
-                color="subtle"
-                format={(v) => humanBytes(v.toNumber())}
-              />
-            )
-          }
-          return null
-        },
-      },
-      {
-        id: 'slabs',
-        label: columnsMeta.slabs.label,
-        sortable: columnsMeta.slabs.sortable,
-        contentClassName: 'justify-end',
-        render: function SlabsColumn({ path, isUploading, isDirectory }) {
-          const obj = useObject({
-            disabled: isUploading || isDirectory,
-            params: {
-              key: encodeURIComponent(path.slice(1)),
-            },
-            config: {
-              swr: {
-                dedupingInterval: 5000,
-              },
-            },
-          })
-          if (isUploading) {
-            return <LoadingDots />
-          }
-          if (obj.data?.object) {
-            return (
-              <ValueNum
-                size="12"
-                value={new BigNumber(obj.data?.object.Slabs.length || 0)}
-                variant="value"
-                color="subtle"
-                format={(v) => humanNumber(v)}
-              />
-            )
-          }
-          return null
-        },
-      },
-      {
-        id: 'shards',
-        label: columnsMeta.shards.label,
-        sortable: columnsMeta.shards.sortable,
-        contentClassName: 'justify-end',
-        render: function SlabsColumn({ path, isUploading, isDirectory }) {
-          const obj = useObject({
-            disabled: isUploading || isDirectory,
-            params: {
-              key: encodeURIComponent(path.slice(1)),
-            },
-            config: {
-              swr: {
-                dedupingInterval: 5000,
-              },
-            },
-          })
-          if (isUploading) {
-            return <LoadingDots />
-          }
-          if (obj.data?.object) {
-            return (
-              <ValueNum
-                size="12"
-                value={
-                  new BigNumber(
-                    obj.data?.object.Slabs?.reduce(
-                      (acc, slab) => acc + slab.Shards?.length,
-                      0
-                    ) || 0
-                  )
-                }
-                variant="value"
-                color="subtle"
-                format={(v) => humanNumber(v)}
-              />
-            )
-          }
-          return null
-        },
-      },
-    ]
-    return columns
-  }, [setActiveDirectory, allContracts])
-
   const filteredTableColumns = useMemo(
     () =>
-      tableColumns.filter(
-        (column) =>
-          columnsMeta[column.id].fixed || enabledColumns.includes(column.id)
+      columns.filter(
+        (column) => column.fixed || enabledColumns.includes(column.id)
       ),
-    [tableColumns, enabledColumns]
+    [enabledColumns]
   )
 
   const dataState = useDatasetEmptyState(
@@ -660,6 +345,8 @@ function useFilesMain() {
     configurableColumns,
     enabledColumns,
     toggleColumnVisibility,
+    setColumnsVisible,
+    setColumnsHidden,
     toggleSort,
     setSortDirection,
     setSortColumn,
@@ -692,89 +379,4 @@ export function FilesProvider({ children }: Props) {
       <TransfersBar />
     </FilesContext.Provider>
   )
-}
-
-function getFullPath(dirPathStr: string, name: string) {
-  return dirPathStr + name
-}
-
-function getFilename(filePath: string) {
-  const parts = filePath.split('/')
-  if (filePath.endsWith('/')) {
-    return `${parts[parts.length - 2]}/`
-  }
-  return parts[parts.length - 1]
-}
-
-export function isDirectory(path: string) {
-  return path.endsWith('/')
-}
-
-export function getDirectoryFromPath(path: string) {
-  if (isDirectory(path)) {
-    return path.slice(1).slice(0, -1).split('/')
-  }
-  return path.slice(1).split('/').slice(0, -1)
-}
-
-function getObjectHealth(
-  obj: Obj,
-  contracts: ContractData[]
-): {
-  slabs: SlabHealthStats[]
-  health: number
-} {
-  const slabHealths = []
-  obj.Slabs?.forEach((sl, index) => {
-    slabHealths.push(getSlabHealthStats(sl, contracts, String(index)))
-  })
-  const health = min(slabHealths.map((s) => s.health))
-  return {
-    health,
-    slabs: slabHealths,
-  }
-}
-
-type SlabHealthStats = {
-  index: string
-  health: number
-  contractShards: number
-  totalShards: number
-  minShards: number
-}
-
-function getSlabHealthStats(
-  slab: SlabSlice,
-  contracts: ContractData[],
-  index: string
-): SlabHealthStats {
-  const shardContractStatus = []
-  slab.Shards?.forEach((sh) => {
-    shardContractStatus.push(!!contracts.find((c) => c.hostKey === sh.Host))
-  })
-  const shardsWithContracts = shardContractStatus.filter((s) => s).length
-  const minShards = slab.MinShards
-  const totalShards = slab.Shards?.length || 0
-  return {
-    index,
-    health: computeSlabHealth(totalShards, minShards, shardsWithContracts),
-    minShards: slab.MinShards,
-    totalShards: slab.Shards?.length || 0,
-    contractShards: shardsWithContracts,
-  }
-}
-
-export function computeSlabHealth(
-  totalShards: number,
-  minShards: number,
-  contractShards: number
-) {
-  if (contractShards >= totalShards) {
-    return 1
-  }
-
-  const adjustedShards = contractShards - minShards
-  const adjustedTotalShards = totalShards - minShards
-
-  return adjustedShards / adjustedTotalShards
 }

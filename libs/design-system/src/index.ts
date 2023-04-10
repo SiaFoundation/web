@@ -98,6 +98,7 @@ export * from './app/ConfigurationNumber'
 export * from './app/ConfigurationText'
 export * from './app/ContractTimeline'
 export * from './app/ProgressSteps'
+export * from './app/MenuSectionLabelToggleAll'
 
 // site
 export * from './site/SiteHeading'

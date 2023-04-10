@@ -34,67 +34,6 @@ export type TableColumnId =
   | 'spendingDownloads'
   | 'spendingFundAccount'
 
-export const columnsMeta: Record<
-  TableColumnId,
-  { id: TableColumnId; label: string; sortable?: string; fixed?: boolean }
-> = {
-  actions: {
-    id: 'actions',
-    label: '',
-    fixed: true,
-  },
-  contractId: {
-    id: 'contractId',
-    label: 'Contract ID',
-    sortable: 'ID',
-  },
-  hostIp: {
-    id: 'hostIp',
-    label: 'Host address',
-    sortable: 'ID',
-  },
-  hostKey: {
-    id: 'hostKey',
-    label: 'Host public key',
-    sortable: 'ID',
-  },
-  timeline: {
-    id: 'timeline',
-    label: 'Timeline',
-    sortable: 'time',
-  },
-  startTime: {
-    id: 'startTime',
-    label: 'Start date',
-    sortable: 'time',
-  },
-  endTime: {
-    id: 'endTime',
-    label: 'End date',
-    sortable: 'time',
-  },
-  totalCost: {
-    id: 'totalCost',
-    label: 'Total cost',
-    sortable: 'financial',
-  },
-  spendingUploads: {
-    id: 'spendingUploads',
-    label: 'Spending: uploads',
-    sortable: 'financial',
-  },
-  spendingDownloads: {
-    id: 'spendingDownloads',
-    label: 'Spending: downloads',
-    sortable: 'financial',
-  },
-  spendingFundAccount: {
-    id: 'spendingFundAccount',
-    label: 'Spending: fund account',
-    sortable: 'financial',
-  },
-}
-
 export const columnsDefaultVisible: TableColumnId[] = [
   'contractId',
   'hostIp',

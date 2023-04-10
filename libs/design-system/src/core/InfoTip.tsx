@@ -9,9 +9,11 @@ type Props = {
 export function InfoTip({ children }: Props) {
   return (
     <Tooltip content={children}>
-      <Text className="inline mx-1 relative scale-75" color="subtle">
-        <Information16 />
-      </Text>
+      <div className="relative flex items-center inline mx-1">
+        <Text color="subtle">
+          <Information16 className="scale-75" />
+        </Text>
+      </div>
     </Tooltip>
   )
 }
