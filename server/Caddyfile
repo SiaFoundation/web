@@ -57,6 +57,16 @@ beta.sia.tech {
 }
 
 api.sia.tech {
+  handle /renterd {
+    rewrite * /view/23671177/2s93RUsqo6
+    reverse_proxy https://documenter.getpostman.com
+  }
+  handle /view* {
+    reverse_proxy https://documenter.getpostman.com
+  }
+  handle /api* {
+    reverse_proxy https://documenter.getpostman.com
+  }
   encode gzip
   reverse_proxy localhost:3002
 }
@@ -93,3 +103,4 @@ www.sia.tech {
 support.sia.tech {
   redir https://docs.sia.tech{uri} permanent
 }
+
