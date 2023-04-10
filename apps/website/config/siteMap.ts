@@ -147,6 +147,11 @@ export const menuSections = [
     title: 'Tools',
     links: [
       {
+        link: webLinks.explore.mainnet,
+        title: 'Sia Foundation Explorer',
+        newTab: true,
+      },
+      {
         link: webLinks.siaStats,
         title: 'SiaStats Explorer',
         newTab: true,
@@ -159,6 +164,11 @@ export const menuSections = [
       {
         link: webLinks.hostTroubleshoot,
         title: 'Sia Central Host Troubleshooter',
+        newTab: true,
+      },
+      {
+        link: webLinks.explore.testnet,
+        title: 'Zen Testnet Explorer',
         newTab: true,
       },
       {
