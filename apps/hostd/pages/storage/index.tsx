@@ -58,11 +58,11 @@ export default function StoragePage() {
     },
   ]
 
-  const columns: TableColumn<Columns, Data>[] = [
+  const columns: TableColumn<Columns, Data, void>[] = [
     {
       id: 'path',
       label: 'Path',
-      render: ({ path }) => (
+      render: ({ data: { path } }) => (
         <Text font="mono" ellipsis>
           {path}
         </Text>
@@ -71,7 +71,7 @@ export default function StoragePage() {
     {
       id: 'storage',
       label: 'Storage',
-      render: ({ storageUsed, storageCapacity }) => (
+      render: ({ data: { storageUsed, storageCapacity } }) => (
         <div className="flex gap-1 w-full max-w-[200px] pt-[10px]">
           <ProgressBar
             variant="accent"
@@ -87,13 +87,13 @@ export default function StoragePage() {
     {
       id: 'status',
       label: 'Status',
-      render: ({ status }) => <Badge variant="green">{status}</Badge>,
+      render: ({ data: { status } }) => <Badge variant="green">{status}</Badge>,
     },
     {
       id: 'errors',
       label: 'Errors',
       tip: 'Read | write',
-      render: ({ readErrors, writeErrors }) => (
+      render: ({ data: { readErrors, writeErrors } }) => (
         <Text font="mono">
           {readErrors}|{writeErrors}
         </Text>
@@ -103,7 +103,7 @@ export default function StoragePage() {
       id: 'actions',
       label: '',
       contentClassName: 'justify-end',
-      render: ({ path }) => <StorageFolderDropdownMenu id={path} />,
+      render: ({ data: { path } }) => <StorageFolderDropdownMenu id={path} />,
     },
   ]
 

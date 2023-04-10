@@ -1,6 +1,5 @@
 import {
   Badge,
-  ChartXY,
   Text,
   ValueNum,
   ValueSc,
@@ -14,13 +13,13 @@ import {
 import {
   humanBytes,
   toHastings,
-  humanSiacoin,
+  // humanSiacoin,
   humanDate,
 } from '@siafoundation/sia-js'
-import { Chart } from '../contexts/data'
-import { countBy, upperFirst, values } from 'lodash'
+// import { Chart } from '../contexts/data'
+import { upperFirst } from 'lodash'
 import { useCallback, useMemo } from 'react'
-import { allDatesMap, contractsData } from './mockContracts'
+import { contractsData } from './mockContracts'
 import BigNumber from 'bignumber.js'
 import groupBy from 'lodash/groupBy'
 import filter from 'lodash/filter'
@@ -103,29 +102,29 @@ function getStatus({ status }: Row): {
 }
 
 export function useContracts() {
-  const contractsChart = useMemo<Chart>(
-    () => ({
-      data: values(
-        contractsData.reduce((acc, row) => {
-          const accDate = acc[row.payoutDate]
-          return {
-            ...acc,
-            [row.payoutDate]: {
-              ...accDate,
-              total: (accDate.total || 0) + row.contractPayout.toNumber(),
-            },
-          }
-        }, allDatesMap)
-      ),
-      stats: {},
-      config: {
-        data: {},
-        format: (v) => humanSiacoin(v),
-        disableAnimations: true,
-      },
-    }),
-    []
-  )
+  // const contractsChart = useMemo<Chart>(
+  //   () => ({
+  //     data: values(
+  //       contractsData.reduce((acc, row) => {
+  //         const accDate = acc[row.payoutDate]
+  //         return {
+  //           ...acc,
+  //           [row.payoutDate]: {
+  //             ...accDate,
+  //             total: (accDate.total || 0) + row.contractPayout.toNumber(),
+  //           },
+  //         }
+  //       }, allDatesMap)
+  //     ),
+  //     stats: {},
+  //     config: {
+  //       data: {},
+  //       format: (v) => humanSiacoin(v),
+  //       disableAnimations: true,
+  //     },
+  //   }),
+  //   []
+  // )
 
   const [enabledColumns, setEnabledColumns] = useLocalStorageState<string[]>(
     'v0/contracts/enabledColumns',
@@ -227,9 +226,9 @@ export function useContracts() {
           id: 'overview',
           label: 'Overview',
           type: 'fixed',
-          render: (row) => {
-            const { id, renewed } = row
-            const { label, color } = getStatus(row)
+          render: ({ data }) => {
+            const { id, renewed } = data
+            const { label, color } = getStatus(data)
             return (
               <div className="flex flex-col gap-2 w-full">
                 <Text font="mono" ellipsis>
@@ -242,27 +241,27 @@ export function useContracts() {
               </div>
             )
           },
-          summary: () => {
-            const counts = countBy(filteredContracts, 'status')
-            return (
-              <div className="flex gap-2 w-full">
-                <Text size="12" color="amber">
-                  {counts.active || 0} active
-                </Text>
-                <Text size="12" color="green">
-                  {counts.successful || 0} successful
-                </Text>
-                <Text size="12" color="red">
-                  {counts.failed || 0} failed
-                </Text>
-              </div>
-            )
-          },
+          // summary: () => {
+          //   const counts = countBy(filteredContracts, 'status')
+          //   return (
+          //     <div className="flex gap-2 w-full">
+          //       <Text size="12" color="amber">
+          //         {counts.active || 0} active
+          //       </Text>
+          //       <Text size="12" color="green">
+          //         {counts.successful || 0} successful
+          //       </Text>
+          //       <Text size="12" color="red">
+          //         {counts.failed || 0} failed
+          //       </Text>
+          //     </div>
+          //   )
+          // },
         },
         {
           id: 'timeline',
           label: 'Timeline',
-          render: (row) => {
+          render: () => {
             // const { startDate, expirationDate, payoutDate } = row
             // const { color } = getStatus(row)
             return null
@@ -275,24 +274,24 @@ export function useContracts() {
             //   range={contractsTimeRange}
             // />
           },
-          summary: () => (
-            <div className="w-full px-6">
-              <ChartXY
-                variant="ghost"
-                id="contracts"
-                data={contractsChart.data}
-                config={contractsChart.config}
-                chartType="barstack"
-                height={80}
-              />
-            </div>
-          ),
+          // summary: () => (
+          //   <div className="w-full px-6">
+          //     <ChartXY
+          //       variant="ghost"
+          //       id="contracts"
+          //       data={contractsChart.data}
+          //       config={contractsChart.config}
+          //       chartType="barstack"
+          //       height={80}
+          //     />
+          //   </div>
+          // ),
         },
         {
           id: 'startDate',
           label: 'Start date',
           sortable: 'time',
-          render: ({ startDate }) => (
+          render: ({ data: { startDate } }) => (
             <Text font="mono" ellipsis>
               {humanDate(startDate)}
             </Text>
@@ -303,7 +302,7 @@ export function useContracts() {
           id: 'expirationDate',
           label: 'Expiration date',
           sortable: 'time',
-          render: ({ expirationDate }) => (
+          render: ({ data: { expirationDate } }) => (
             <Text font="mono" ellipsis>
               {humanDate(expirationDate)}
             </Text>
@@ -314,7 +313,7 @@ export function useContracts() {
           id: 'payoutDate',
           label: 'Payout date',
           sortable: 'time',
-          render: ({ payoutDate }) => (
+          render: ({ data: { payoutDate } }) => (
             <Text font="mono" ellipsis>
               {humanDate(payoutDate)}
             </Text>
@@ -326,7 +325,7 @@ export function useContracts() {
           label: 'Est. data size',
           contentClassName: 'justify-end',
           sortable: 'data',
-          render: ({ estDataSize }) => (
+          render: ({ data: { estDataSize } }) => (
             <ValueNum
               value={new BigNumber(estDataSize)}
               format={(val) => humanBytes(val.toNumber())}
@@ -344,7 +343,7 @@ export function useContracts() {
           label: 'Locked collateral',
           sortable: 'financial',
           contentClassName: 'justify-end',
-          render: ({ lockedCollateral }) => (
+          render: ({ data: { lockedCollateral } }) => (
             <ValueSc value={lockedCollateral} />
           ),
         },
@@ -353,7 +352,7 @@ export function useContracts() {
           label: 'Risked collateral',
           sortable: 'financial',
           contentClassName: 'justify-end',
-          render: ({ riskedCollateral }) => (
+          render: ({ data: { riskedCollateral } }) => (
             <ValueSc value={riskedCollateral} />
           ),
         },
@@ -362,7 +361,7 @@ export function useContracts() {
           label: 'Returned collateral',
           sortable: 'financial',
           contentClassName: 'justify-end',
-          render: ({ returnedCollateral }) => (
+          render: ({ data: { returnedCollateral } }) => (
             <ValueSc value={returnedCollateral} />
           ),
         },
@@ -371,28 +370,34 @@ export function useContracts() {
           label: 'Lost collateral',
           sortable: 'financial',
           contentClassName: 'justify-end',
-          render: ({ lostCollateral }) => <ValueSc value={lostCollateral} />,
+          render: ({ data: { lostCollateral } }) => (
+            <ValueSc value={lostCollateral} />
+          ),
         },
         {
           id: 'contractFee',
           label: 'Contract fee',
           sortable: 'financial',
           contentClassName: 'justify-end',
-          render: ({ contractFee }) => <ValueSc value={contractFee} />,
+          render: ({ data: { contractFee } }) => (
+            <ValueSc value={contractFee} />
+          ),
         },
         {
           id: 'accountFunding',
           label: 'Account funding',
           sortable: 'financial',
           contentClassName: 'justify-end',
-          render: ({ accountFunding }) => <ValueSc value={accountFunding} />,
+          render: ({ data: { accountFunding } }) => (
+            <ValueSc value={accountFunding} />
+          ),
         },
         {
           id: 'estStorageRevenue',
           label: 'Est. storage revenue',
           sortable: 'financial',
           contentClassName: 'justify-end',
-          render: ({ estStorageRevenue }) => (
+          render: ({ data: { estStorageRevenue } }) => (
             <ValueSc value={estStorageRevenue} />
           ),
         },
@@ -401,7 +406,7 @@ export function useContracts() {
           label: 'Est. ingress revenue',
           sortable: 'financial',
           contentClassName: 'justify-end',
-          render: ({ estIngressRevenue }) => (
+          render: ({ data: { estIngressRevenue } }) => (
             <ValueSc value={estIngressRevenue} />
           ),
         },
@@ -410,7 +415,7 @@ export function useContracts() {
           label: 'Est. egress revenue',
           sortable: 'financial',
           contentClassName: 'justify-end',
-          render: ({ estEgressRevenue }) => (
+          render: ({ data: { estEgressRevenue } }) => (
             <ValueSc value={estEgressRevenue} />
           ),
         },
@@ -419,7 +424,7 @@ export function useContracts() {
           label: 'Potential revenue',
           sortable: 'financial',
           contentClassName: 'justify-end',
-          render: ({ potentialRevenue }) => (
+          render: ({ data: { potentialRevenue } }) => (
             <ValueSc value={potentialRevenue} />
           ),
         },
@@ -428,21 +433,27 @@ export function useContracts() {
           label: 'Earned revenue',
           sortable: 'financial',
           contentClassName: 'justify-end',
-          render: ({ earnedRevenue }) => <ValueSc value={earnedRevenue} />,
+          render: ({ data: { earnedRevenue } }) => (
+            <ValueSc value={earnedRevenue} />
+          ),
         },
         {
           id: 'lostRevenue',
           label: 'Lost revenue',
           sortable: 'financial',
           contentClassName: 'justify-end',
-          render: ({ lostRevenue }) => <ValueSc value={lostRevenue} />,
+          render: ({ data: { lostRevenue } }) => (
+            <ValueSc value={lostRevenue} />
+          ),
         },
         {
           id: 'contractPayout',
           label: 'Contract Payout',
           sortable: 'financial',
           contentClassName: 'justify-end',
-          render: ({ contractPayout }) => <ValueSc value={contractPayout} />,
+          render: ({ data: { contractPayout } }) => (
+            <ValueSc value={contractPayout} />
+          ),
           summary: () => <ValueSc value={toHastings(5e9)} />,
         },
         {
@@ -450,7 +461,7 @@ export function useContracts() {
           label: 'Revenue',
           sortable: 'financial',
           contentClassName: 'justify-end',
-          render: ({ revenue }) => <ValueSc value={revenue} />,
+          render: ({ data: { revenue } }) => <ValueSc value={revenue} />,
           summary: () => <ValueSc value={toHastings(5e9)} />,
         },
         {
@@ -458,7 +469,7 @@ export function useContracts() {
           label: 'Cost Basis',
           sortable: 'financial',
           contentClassName: 'justify-end',
-          render: ({ costBasis }) => <ValueSc value={costBasis} />,
+          render: ({ data: { costBasis } }) => <ValueSc value={costBasis} />,
           summary: () => <ValueSc value={toHastings(5e9)} />,
         },
         {
@@ -466,7 +477,7 @@ export function useContracts() {
           label: 'Gain / Loss',
           sortable: 'financial',
           contentClassName: 'justify-end',
-          render: ({ gainLoss }) => (
+          render: ({ data: { gainLoss } }) => (
             <Text font="mono" ellipsis>
               {gainLoss.toFixed(2)}%
             </Text>
@@ -481,13 +492,13 @@ export function useContracts() {
           id: 'baseExchangeRate',
           label: 'Base exchange rate',
           contentClassName: 'justify-end',
-          render: ({ baseExchangeRate }) => (
+          render: ({ data: { baseExchangeRate } }) => (
             <ValueSc value={baseExchangeRate} />
           ),
           sortable: 'financial',
         },
-      ] as TableColumn<ContractColumn, Row>[],
-    [contractsChart, filteredContracts]
+      ] as TableColumn<ContractColumn, Row, void>[],
+    []
   )
 
   // TODO: migrate to useTableState

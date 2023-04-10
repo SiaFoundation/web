@@ -33,6 +33,7 @@ type Context = {
 
 type FilesTableColumn = TableColumn<TableColumnId, ObjectData, Context> & {
   fixed?: boolean
+  category?: string
 }
 
 export const columns: FilesTableColumn[] = [
@@ -63,7 +64,8 @@ export const columns: FilesTableColumn[] = [
   {
     id: 'name',
     label: 'name',
-    sortable: 'Order by',
+    sortable: true,
+    category: 'general',
     contentClassName: 'max-w-[600px]',
     render: function NameColumn({ data: { name, isDirectory } }) {
       const { setActiveDirectory } = useFiles()

@@ -4,8 +4,8 @@ import { useObjectSearch } from '@siafoundation/react-core'
 import {
   getDirectoryFromPath,
   isDirectory,
-  useFiles,
-} from '../../../../contexts/files'
+} from '../../../../contexts/files/utils'
+import { useFiles } from '../../../../contexts/files'
 import { Document16, FolderIcon, Text } from '@siafoundation/design-system'
 import { FileSearchEmpty } from './FileSearchEmpty'
 
