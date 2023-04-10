@@ -1,4 +1,4 @@
-import { computeSlabHealth } from '.'
+import { computeSlabHealth } from './health'
 
 describe('slab health', () => {
   it('should be correct', () => {
