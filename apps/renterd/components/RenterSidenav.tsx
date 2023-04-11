@@ -9,7 +9,7 @@ import {
 import { routes } from '../config/routes'
 import { useAutopilot } from '../hooks/useAutopilot'
 
-export function RenterSidenav() {
+export function RenterdSidenav() {
   const { autopilotMode } = useAutopilot()
   return (
     <>

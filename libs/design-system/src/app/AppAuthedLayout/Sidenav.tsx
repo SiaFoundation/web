@@ -11,6 +11,7 @@ import { navbarAppHeight } from '../AppNavbar'
 import { SidenavItemWallet } from './SidenavItemWallet'
 import { SidenavItem } from './SidenavItem'
 import { getRouteToSaveAsPrev } from '../../hooks/useMonitorConnAndLock'
+import BigNumber from 'bignumber.js'
 
 type Props = {
   routes: {
@@ -24,12 +25,18 @@ type Props = {
       view: string
     }
   }
+  walletBalance?: BigNumber
   openSettings: () => void
   children: React.ReactNode
 }
 
-export function Sidenav({ routes, openSettings, children }: Props) {
-  const { setSettings } = useAppSettings()
+export function Sidenav({
+  routes,
+  walletBalance,
+  openSettings,
+  children,
+}: Props) {
+  const { lock } = useAppSettings()
   const router = useRouter()
   return (
     <Panel className="relative overflow-hidden z-10 h-full w-[75px] rounded-none border-y-0">
@@ -48,7 +55,7 @@ export function Sidenav({ routes, openSettings, children }: Props) {
           <div className="flex flex-col gap-6 items-center">{children}</div>
           <div className="flex-1" />
           <Separator className="w-full" />
-          <SidenavItemWallet routes={routes} />
+          <SidenavItemWallet routes={routes} walletBalance={walletBalance} />
           <SidenavItem title="Blockchain node" route={routes.node.index}>
             <DiceIcon />
           </SidenavItem>
@@ -58,7 +65,7 @@ export function Sidenav({ routes, openSettings, children }: Props) {
           <SidenavItem
             title="Lock app"
             onClick={() => {
-              setSettings({ password: '' })
+              lock()
               router.replace(getRouteToSaveAsPrev(router, routes))
             }}
           >

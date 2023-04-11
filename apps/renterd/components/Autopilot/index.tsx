@@ -16,7 +16,7 @@ import {
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { useCallback, useEffect, useState } from 'react'
-import { RenterSidenav } from '../RenterSidenav'
+import { RenterdSidenav } from '../RenterSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
@@ -183,7 +183,7 @@ export function Autopilot() {
     <RenterdAuthedLayout
       title="Autopilot"
       routes={routes}
-      sidenav={<RenterSidenav />}
+      sidenav={<RenterdSidenav />}
       actions={
         <div className="flex items-center gap-2">
           {!!changeCount && (

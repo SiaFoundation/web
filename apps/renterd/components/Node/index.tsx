@@ -6,7 +6,7 @@ import {
 } from '@siafoundation/react-core'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
-import { RenterSidenav } from '../RenterSidenav'
+import { RenterdSidenav } from '../RenterSidenav'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 
 export function Node() {
@@ -30,7 +30,7 @@ export function Node() {
   return (
     <RenterdAuthedLayout
       routes={routes}
-      sidenav={<RenterSidenav />}
+      sidenav={<RenterdSidenav />}
       openSettings={() => openDialog('settings')}
       title="Node"
     >
@@ -50,10 +50,13 @@ export function Node() {
         </div>
         <div className="flex flex-wrap gap-7">
           <div className="flex-1">
-            <PeerList connectPeer={() => openDialog('connectPeer')} />
+            <PeerList
+              peers={peers.data}
+              connectPeer={() => openDialog('connectPeer')}
+            />
           </div>
           <div className="flex-1">
-            <TxPoolList />
+            <TxPoolList transactions={txPool.data} />
           </div>
         </div>
       </div>

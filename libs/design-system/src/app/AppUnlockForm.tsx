@@ -1,4 +1,4 @@
-import { ConsensusState, useAppSettings } from '@siafoundation/react-core'
+import { useAppSettings } from '@siafoundation/react-core'
 import { useRouter } from 'next/router'
 import { useFormik } from 'formik'
 import { FieldGroup, FormSubmitButton, FormTextField } from '../components/Form'
@@ -10,21 +10,23 @@ import { DropdownMenu, DropdownMenuItem } from '../core/DropdownMenu'
 import { sortBy } from 'lodash'
 import { getRedirectRouteFromQuery } from '../hooks/useMonitorConnAndLock'
 
-async function checkPassword(
-  api: string,
+async function checkPassword<Response extends { Synced: boolean }>({
+  api,
+  endpoint,
+  password,
+}: {
+  api: string
+  endpoint: string
   password: string
-): Promise<{ isSynced?: boolean; error?: string }> {
+}): Promise<{ isSynced?: boolean; error?: string }> {
   try {
-    const response = await axios.get<ConsensusState>(
-      `${api}/api/bus/consensus/state`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Basic ' + btoa(`:${password}`),
-        },
-      }
-    )
+    const response = await axios.get<Response>(`${api}/api${endpoint}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Basic ' + btoa(`:${password}`),
+      },
+    })
     return {
       isSynced: response.data.Synced,
     }
@@ -47,6 +49,7 @@ async function checkPassword(
 }
 
 type Props = {
+  endpoint: string
   buildModeEmbed: boolean
   routes: {
     home: string
@@ -55,7 +58,11 @@ type Props = {
   }
 }
 
-export function AppUnlockForm({ buildModeEmbed, routes }: Props) {
+export function AppUnlockForm<Response extends { Synced: boolean }>({
+  endpoint,
+  buildModeEmbed,
+  routes,
+}: Props) {
   const router = useRouter()
   const { settings, setSettings } = useAppSettings()
 
@@ -66,7 +73,11 @@ export function AppUnlockForm({ buildModeEmbed, routes }: Props) {
     },
     onSubmit: async (values, actions) => {
       const api = buildModeEmbed ? '' : values.api
-      const { isSynced, error } = await checkPassword(api, values.password)
+      const { isSynced, error } = await checkPassword<Response>({
+        api,
+        endpoint,
+        password: values.password,
+      })
       if (!error) {
         setSettings({
           api,

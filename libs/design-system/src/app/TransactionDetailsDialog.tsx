@@ -1,14 +1,15 @@
 import { Codeblock } from '../core/Codeblock'
 import { Text } from '../core/Text'
 import { ValueSc } from '../components/ValueSc'
-import { useWalletTransactions } from '@siafoundation/react-core'
 import { humanDate } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
 import { Dialog } from '../core/Dialog'
 import { getTitleId } from '../lib/utils'
+import { WalletTransaction } from '@siafoundation/react-core'
 
 type Props = {
   id: string
+  transaction?: WalletTransaction
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
@@ -16,22 +17,11 @@ type Props = {
 
 export function TransactionDetailsDialog({
   id,
+  transaction,
   trigger,
   open,
   onOpenChange,
 }: Props) {
-  // TODO: add transaction endpoint
-  const transactions = useWalletTransactions({
-    params: {},
-    config: {
-      swr: {
-        revalidateOnFocus: false,
-        refreshInterval: 60_000,
-      },
-    },
-  })
-  const transaction = transactions.data?.find((t) => t.ID === id)
-
   return (
     <Dialog
       title={getTitleId('Transaction', id, 16)}
@@ -42,7 +32,7 @@ export function TransactionDetailsDialog({
         className: 'w-[800px]',
       }}
     >
-      {transactions.data && transaction ? (
+      {transaction ? (
         <div className="flex flex-col gap-4 pb-10 w-full overflow-hidden">
           <div className="flex flex-wrap gap-4">
             <div className="flex items-baseline gap-2">

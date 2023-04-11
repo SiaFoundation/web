@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useMemo } from 'react'
 import { useCallback } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
+import { clearAllSwrKeys } from './utils'
+import { useWorkflows } from './workflows'
 
 export type CurrencyId = 'usd' | 'eur' | 'gbp' | 'jpy' | 'btc' | 'eth'
 
@@ -76,6 +78,7 @@ function useAppSettingsMain({ ssr, passwordProtectRequestHooks }: Props) {
     ssr,
     defaultValue: defaultSettings,
   })
+  const { resetWorkflows } = useWorkflows()
 
   // Merge in defaults incase new settings have been introduced
   useEffect(() => {
@@ -110,7 +113,9 @@ function useAppSettingsMain({ ssr, passwordProtectRequestHooks }: Props) {
 
   const lock = useCallback(() => {
     setSettings({ password: '' })
-  }, [setSettings])
+    resetWorkflows()
+    clearAllSwrKeys()
+  }, [setSettings, resetWorkflows])
 
   const isUnlocked = useMemo(() => !!settings.password, [settings])
 

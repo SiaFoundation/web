@@ -1,4 +1,4 @@
-import { RenterSidenav } from '../RenterSidenav'
+import { RenterdSidenav } from '../RenterSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { FilesExplorer } from './FilesExplorer'
@@ -14,7 +14,7 @@ export function Files() {
       title="Files"
       navTitle={null}
       routes={routes}
-      sidenav={<RenterSidenav />}
+      sidenav={<RenterdSidenav />}
       nav={<FilesBreadcrumbMenu />}
       actions={<FilesActionsMenu />}
       openSettings={() => openDialog('settings')}

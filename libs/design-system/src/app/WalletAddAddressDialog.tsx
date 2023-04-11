@@ -3,7 +3,6 @@ import { TextField } from '../core/TextField'
 import { Button } from '../core/Button'
 import { Label } from '../core/Label'
 import { Text } from '../core/Text'
-// import { useWalletAddressCreate } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 

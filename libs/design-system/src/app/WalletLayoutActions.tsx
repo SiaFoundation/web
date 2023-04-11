@@ -1,16 +1,22 @@
+import BigNumber from 'bignumber.js'
 import { Button } from '../core/Button'
 import { ArrowUpRight16, ArrowDownLeft16 } from '../icons/carbon'
 import { WalletBalance } from './WalletBalance'
 
 type Props = {
+  sc?: BigNumber
   receiveSiacoin: () => void
   sendSiacoin: () => void
 }
 
-export function WalletLayoutActions({ sendSiacoin, receiveSiacoin }: Props) {
+export function WalletLayoutActions({
+  sc,
+  sendSiacoin,
+  receiveSiacoin,
+}: Props) {
   return (
     <>
-      <WalletBalance />
+      <WalletBalance sc={sc} />
       <Button size="small" onClick={receiveSiacoin}>
         <ArrowDownLeft16 />
         Receive
