@@ -13,4 +13,4 @@ export * from './renterdWorker'
 
 export * from './workflows'
 export * from './coreProvider'
-export type { HookArgsCallback, HookArgsSwr } from './request'
+export type { HookArgsCallback, HookArgsSwr, Response } from './request'

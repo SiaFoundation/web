@@ -1,19 +1,17 @@
 import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
-import { useWalletBalance } from '@siafoundation/react-core'
 import { humanSiacoin } from '@siafoundation/sia-js'
+import BigNumber from 'bignumber.js'
 
-export function WalletBalance() {
-  const { data: siacoin } = useWalletBalance()
-
-  if (!siacoin) {
+export function WalletBalance({ sc }: { sc?: BigNumber }) {
+  if (!sc) {
     return null
   }
 
   return (
     <Panel className="hidden sm:block h-7 px-4">
       <Text size="12" weight="semibold">
-        {humanSiacoin(siacoin)}
+        {humanSiacoin(sc)}
       </Text>
     </Panel>
   )

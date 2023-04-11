@@ -1,15 +1,17 @@
 import { EntityList } from '../components/EntityList'
 import { getTransactionTotals, getTransactionTypes } from '../lib/entityTypes'
-import { useTxPoolTransactions } from '@siafoundation/react-core'
+import { Transaction } from '@siafoundation/react-core'
 
-export function TxPoolList() {
-  const txPool = useTxPoolTransactions()
+type Props = {
+  transactions?: Transaction[]
+}
 
+export function TxPoolList({ transactions }: Props) {
   return (
     <EntityList
       title="Transaction pool"
       emptyMessage="No transactions in pool"
-      entities={txPool.data?.map((t) => ({
+      entities={transactions?.map((t) => ({
         type: 'transaction',
         txType: getTransactionTypes(t),
         sc: getTransactionTotals(t).sc,

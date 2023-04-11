@@ -1,7 +1,14 @@
-import { useConsensusState } from '@siafoundation/react-core'
+import { useGetSwr } from '@siafoundation/react-core'
 
-export function useConnectivity() {
-  const w = useConsensusState({
+type Props = {
+  route: string
+}
+
+export function useConnectivity<Response extends { Synced: boolean }>({
+  route,
+}: Props) {
+  const w = useGetSwr<void, Response>({
+    route,
     config: {
       swr: {
         refreshInterval: (data) => (data?.Synced ? 30_000 : 1_000),

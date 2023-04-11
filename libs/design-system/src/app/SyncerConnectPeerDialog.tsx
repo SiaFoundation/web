@@ -1,7 +1,7 @@
 import { Paragraph } from '../core/Paragraph'
 import { triggerToast } from '../lib/toast'
 import { FormField, FormSubmitButton } from '../components/Form'
-import { useSyncerConnect } from '@siafoundation/react-core'
+import { Response } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { hostnameOrIpRegex } from '../lib/ipRegex'
@@ -27,24 +27,22 @@ const validationSchema = Yup.object().shape({
 type Props = {
   trigger?: React.ReactNode
   open: boolean
+  connect: (address: string) => Promise<Response<void>>
   onOpenChange: (val: boolean) => void
 }
 
 export function SyncerConnectPeerDialog({
   trigger,
   open,
+  connect,
   onOpenChange,
 }: Props) {
-  const connect = useSyncerConnect()
-
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: async (values, actions) => {
       const netAddress = `${values.ip}:${values.port}`
-      const response = await connect.post({
-        payload: netAddress,
-      })
+      const response = await connect(netAddress)
       if (response.error) {
         const formattedError = response.error.replace(
           `invalid peer address: address ${netAddress}:`,

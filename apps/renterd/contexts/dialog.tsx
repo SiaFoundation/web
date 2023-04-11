@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useCallback, useState } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useCallback,
+  useState,
+  useMemo,
+} from 'react'
 import {
   WalletSendSiacoinDialog,
   SettingsDialog,
@@ -13,6 +19,11 @@ import { HostsFilterAddressDialog } from '../components/Hosts/HostsFilterAddress
 import { ContractsFilterAddressDialog } from '../components/Contracts/ContractsFilterAddressDialog'
 import { ContractsFilterPublicKeyDialog } from '../components/Contracts/ContractsFilterPublicKeyDialog'
 import { FilesSearchDialog } from '../components/Files/FilesSearchDialog'
+import {
+  useSyncerConnect,
+  useWalletAddress,
+  useWalletTransactions,
+} from '@siafoundation/react-core'
 
 export type DialogType =
   | 'cmdk'
@@ -84,6 +95,24 @@ export function DialogProvider({ children }: Props) {
 
 export function Dialogs() {
   const { id, dialog, openDialog, onOpenChange, closeDialog } = useDialog()
+  const connect = useSyncerConnect()
+
+  // TODO: add transaction endpoint
+  const transactions = useWalletTransactions({
+    params: {},
+    config: {
+      swr: {
+        revalidateOnFocus: false,
+        refreshInterval: 60_000,
+      },
+    },
+    disabled: id !== 'transactionDetails',
+  })
+  const transaction = useMemo(
+    () => transactions.data?.find((t) => t.ID === id),
+    [transactions, id]
+  )
+  const address = useWalletAddress()
   return (
     <>
       <CmdKDialog
@@ -100,16 +129,23 @@ export function Dialogs() {
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <WalletSingleAddressDetailsDialog
+        address={address}
         open={dialog === 'addressDetails'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <TransactionDetailsDialog
         id={id}
+        transaction={transaction}
         open={dialog === 'transactionDetails'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <SyncerConnectPeerDialog
         open={dialog === 'connectPeer'}
+        connect={(address: string) =>
+          connect.post({
+            payload: address,
+          })
+        }
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <FilesCreateDirectoryDialog

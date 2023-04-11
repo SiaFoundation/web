@@ -11,7 +11,9 @@ type Props = {
 
 export function CmdKDialog({ open, onOpenChange, setOpen }: Props) {
   const { isUnlocked } = useAppSettings()
-  const { isConnected, isSynced } = useConnectivity()
+  const { isConnected, isSynced } = useConnectivity({
+    route: '/bus/consensus/state',
+  })
   // Toggle the menu when ⌘K is pressed
   useEffect(() => {
     if (!isUnlocked || !isConnected || !isSynced) {

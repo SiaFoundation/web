@@ -7,6 +7,7 @@ import {
   // getTransactionTotals,
 } from '@siafoundation/design-system'
 import {
+  useWalletBalance,
   useWalletPending,
   useWalletTransactions,
 } from '@siafoundation/react-core'
@@ -14,7 +15,7 @@ import { useMemo } from 'react'
 import { useDialog } from '../../contexts/dialog'
 import { routes } from '../../config/routes'
 import BigNumber from 'bignumber.js'
-import { RenterSidenav } from '../RenterSidenav'
+import { RenterdSidenav } from '../RenterSidenav'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 
 export function Wallet() {
@@ -31,8 +32,11 @@ export function Wallet() {
 
   const { openDialog } = useDialog()
 
-  const entities: EntityListItemProps[] = useMemo(
-    () => [
+  const entities: EntityListItemProps[] | null = useMemo(() => {
+    if (!pending.data || !transactions.data) {
+      return null
+    }
+    return [
       ...(pending.data || []).map((t): EntityListItemProps => {
         // const totals = getTransactionTotals(t)
         return {
@@ -57,18 +61,20 @@ export function Wallet() {
           }
         })
         .sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1)),
-    ],
-    [pending, transactions, openDialog]
-  )
+    ]
+  }, [pending, transactions, openDialog])
+
+  const balance = useWalletBalance()
 
   return (
     <RenterdAuthedLayout
       routes={routes}
-      sidenav={<RenterSidenav />}
+      sidenav={<RenterdSidenav />}
       openSettings={() => openDialog('settings')}
       title="Wallet"
       actions={
         <WalletLayoutActions
+          sc={balance.data ? new BigNumber(balance.data) : undefined}
           receiveSiacoin={() => openDialog('addressDetails')}
           sendSiacoin={() => openDialog('sendSiacoin')}
         />
@@ -76,7 +82,7 @@ export function Wallet() {
     >
       <div className="p-5 flex flex-col gap-5">
         <WalletSparkline />
-        <EntityList title="Transactions" entities={entities.slice(0, 100)} />
+        <EntityList title="Transactions" entities={entities?.slice(0, 100)} />
       </div>
     </RenterdAuthedLayout>
   )

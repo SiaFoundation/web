@@ -1,4 +1,3 @@
-import { useWalletBalance } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 import { WalletIcon } from '../../icons/WalletIcon'
 import { WalletBalanceMini } from '../WalletBalanceMini'
@@ -11,19 +10,19 @@ type Routes = {
 }
 
 type Props = {
+  walletBalance?: BigNumber
   routes: Routes
 }
 
-export function SidenavItemWallet({ routes }: Props) {
-  const balance = useWalletBalance()
+export function SidenavItemWallet({ walletBalance, routes }: Props) {
   return (
     <SidenavItem title="Wallet" route={routes.wallet.view}>
       <div className="flex flex-col gap-3 items-center">
         <WalletIcon />
-        {balance.data && (
+        {walletBalance && (
           <WalletBalanceMini
             wallet={{
-              sc: new BigNumber(balance.data),
+              sc: walletBalance,
             }}
           />
         )}

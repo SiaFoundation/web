@@ -5,9 +5,9 @@ export function useAutopilot() {
   const aps = useAutopilotStatus({
     config: {
       swr: {
-        dedupingInterval: 60_000,
+        dedupingInterval: 5_000,
         revalidateOnFocus: false,
-        refreshInterval: 60_000,
+        refreshInterval: (data) => (!data ? 1_000 : 60_000),
         keepPreviousData: true,
       },
     },
@@ -31,6 +31,7 @@ export function useAutopilot() {
       fallbackData: 'init',
     }
   )
+  console.log(aps.data, aps.error, apm.data)
 
   return {
     autopilotMode: apm.data,

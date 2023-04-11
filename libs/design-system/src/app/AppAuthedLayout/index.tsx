@@ -5,6 +5,7 @@ import { AppBackdrop } from '../AppBackdrop'
 import { Sidenav } from './Sidenav'
 import { AppRootLayout } from '../AppRootLayout'
 import { AppNavbar } from '../AppNavbar'
+import BigNumber from 'bignumber.js'
 
 type Props = {
   appName: string
@@ -15,6 +16,7 @@ type Props = {
   actions?: React.ReactNode
   sidenav?: React.ReactNode
   children: React.ReactNode
+  walletBalance?: BigNumber
   routes: {
     lockscreen: string
     syncscreen: string
@@ -38,6 +40,7 @@ export function AppAuthedLayout({
   actions,
   children,
   sidenav,
+  walletBalance,
   routes,
   openSettings,
 }: Props) {
@@ -45,7 +48,11 @@ export function AppAuthedLayout({
     <AppRootLayout appName={appName} title={title} routes={routes}>
       <AppBackdrop />
       <div className="flex h-full w-full">
-        <Sidenav routes={routes} openSettings={openSettings}>
+        <Sidenav
+          routes={routes}
+          openSettings={openSettings}
+          walletBalance={walletBalance}
+        >
           {sidenav}
         </Sidenav>
         <div className="flex flex-col flex-1 overflow-hidden">

@@ -1,7 +1,6 @@
-import { useAppSettings, useWorkflows } from '@siafoundation/react-core'
+import { useAppSettings } from '@siafoundation/react-core'
 import { NextRouter, useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { mutate } from 'swr'
 import { useConnectivity } from './useConnectivity'
 
 type Routes = {
@@ -24,9 +23,10 @@ export function getRedirectRouteFromQuery(router: NextRouter, routes: Routes) {
 }
 
 export function useMonitorConnAndLock(routes: Routes) {
-  const { isConnected, isSynced } = useConnectivity()
-  const { settings, setSettings } = useAppSettings()
-  const { resetWorkflows } = useWorkflows()
+  const { isConnected, isSynced } = useConnectivity({
+    route: '/bus/consensus/state',
+  })
+  const { lock, settings } = useAppSettings()
   const router = useRouter()
 
   useEffect(() => {
@@ -34,9 +34,7 @@ export function useMonitorConnAndLock(routes: Routes) {
     const isOnSyncscreen = router.pathname.startsWith(routes.syncscreen)
     const noPasswordOrDisconnected = !settings.password || !isConnected
     if (isProtectedPath && noPasswordOrDisconnected) {
-      setSettings({ password: '' })
-      resetWorkflows()
-      clearAllSwrKeys()
+      lock()
       router.push({
         pathname: routes.lockscreen,
         query: {
@@ -58,8 +56,4 @@ export function useMonitorConnAndLock(routes: Routes) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router, isConnected, isSynced])
-}
-
-function clearAllSwrKeys() {
-  mutate(() => true, undefined, { revalidate: false })
 }

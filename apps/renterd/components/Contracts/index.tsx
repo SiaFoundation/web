@@ -1,4 +1,4 @@
-import { RenterSidenav } from '../RenterSidenav'
+import { RenterdSidenav } from '../RenterSidenav'
 import { routes } from '../../config/routes'
 import { Table } from '@siafoundation/design-system'
 import { useDialog } from '../../contexts/dialog'
@@ -27,7 +27,7 @@ export function Contracts() {
     <RenterdAuthedLayout
       title="Active contracts"
       routes={routes}
-      sidenav={<RenterSidenav />}
+      sidenav={<RenterdSidenav />}
       openSettings={() => openDialog('settings')}
       nav={<ContractsFilterMenu />}
       size="full"

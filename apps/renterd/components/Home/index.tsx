@@ -2,7 +2,7 @@
 // import { useAutopilotStatus } from '@siafoundation/react-core'
 // import { humanBytes } from '@siafoundation/sia-js'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
-import { RenterSidenav } from '../RenterSidenav'
+import { RenterdSidenav } from '../RenterSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { useEffect } from 'react'
@@ -21,7 +21,7 @@ export function Home() {
     <RenterdAuthedLayout
       title="Dashboard"
       routes={routes}
-      sidenav={<RenterSidenav />}
+      sidenav={<RenterdSidenav />}
       openSettings={() => openDialog('settings')}
     >
       {/* <Heading>Activity</Heading>
