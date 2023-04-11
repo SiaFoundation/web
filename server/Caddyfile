@@ -61,6 +61,10 @@ api.sia.tech {
     rewrite * /view/23671177/2s93RUsqo6
     reverse_proxy https://documenter.getpostman.com
   }
+  handle /hostd {
+    rewrite * /view/737767/2s93Xu2koJ
+    reverse_proxy https://documenter.getpostman.com
+  }
   handle /view* {
     reverse_proxy https://documenter.getpostman.com
   }
