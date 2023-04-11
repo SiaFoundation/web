@@ -13,7 +13,7 @@ import {
   useHostsAllowlist,
   useHostsBlocklist,
   useRhpScan,
-} from '@siafoundation/react-core'
+} from '@siafoundation/react-renterd'
 import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
 import { useContracts } from '../../contexts/contracts'

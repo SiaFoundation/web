@@ -10,7 +10,7 @@ type Props = {
     includeFee: boolean
   }
   fee: BigNumber
-  transactionId: string
+  transactionId?: string
 }
 
 export function WalletSendSiacoinComplete({

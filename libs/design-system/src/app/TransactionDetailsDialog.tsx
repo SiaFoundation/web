@@ -5,11 +5,16 @@ import { humanDate } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
 import { Dialog } from '../core/Dialog'
 import { getTitleId } from '../lib/utils'
-import { WalletTransaction } from '@siafoundation/react-core'
+import { Transaction } from '@siafoundation/react-core'
 
 type Props = {
   id: string
-  transaction?: WalletTransaction
+  transaction?: {
+    Inflow: string
+    Outflow: string
+    Timestamp: string
+    Raw: Transaction
+  }
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void

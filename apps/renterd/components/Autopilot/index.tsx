@@ -23,7 +23,7 @@ import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 import {
   useAutopilotConfig,
   useAutopilotConfigUpdate,
-} from '@siafoundation/react-core'
+} from '@siafoundation/react-renterd'
 import { useFormik } from 'formik'
 import { Setting } from '../Setting'
 import { MenuSection } from '../MenuSection'

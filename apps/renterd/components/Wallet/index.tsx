@@ -10,7 +10,7 @@ import {
   useWalletBalance,
   useWalletPending,
   useWalletTransactions,
-} from '@siafoundation/react-core'
+} from '@siafoundation/react-renterd'
 import { useMemo } from 'react'
 import { useDialog } from '../../contexts/dialog'
 import { routes } from '../../config/routes'
@@ -28,6 +28,7 @@ export function Wallet() {
       },
     },
   })
+
   const pending = useWalletPending()
 
   const { openDialog } = useDialog()
@@ -81,7 +82,7 @@ export function Wallet() {
       }
     >
       <div className="p-5 flex flex-col gap-5">
-        <WalletSparkline />
+        <WalletSparkline transactions={transactions.data} />
         <EntityList title="Transactions" entities={entities?.slice(0, 100)} />
       </div>
     </RenterdAuthedLayout>

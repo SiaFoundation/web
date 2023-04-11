@@ -13,7 +13,7 @@ import {
   ValueNum,
   WarningFilled16,
 } from '@siafoundation/design-system'
-import { useObject } from '@siafoundation/react-core'
+import { useObject } from '@siafoundation/react-renterd'
 import { humanBytes, humanNumber } from '@siafoundation/sia-js'
 import { FileDropdownMenu } from '../../components/Files/FileDropdownMenu'
 import BigNumber from 'bignumber.js'

@@ -7,7 +7,6 @@ import { InfoTip } from '../../core/InfoTip'
 import { Switch } from '../../core/Switch'
 import { ValueSc } from '../../components/ValueSc'
 import { FormField } from '../../components/Form'
-import { useWalletBalance } from '@siafoundation/react-core'
 
 const exampleAddr =
   'e3b1050aef388438668b52983cf78f40925af8f0aa8b9de80c18eadcefce8388d168a313e3f2'
@@ -38,10 +37,14 @@ type FormData = {
 type Props = {
   fee: BigNumber
   onComplete: (data: FormData) => void
+  balance?: BigNumber
 }
 
-export function useSendSiacoinGenerateForm({ fee, onComplete }: Props) {
-  const balance = useWalletBalance()
+export function useSendSiacoinGenerateForm({
+  balance,
+  fee,
+  onComplete,
+}: Props) {
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -50,15 +53,11 @@ export function useSendSiacoinGenerateForm({ fee, onComplete }: Props) {
         ? toHastings(values.siacoin).minus(fee)
         : toHastings(values.siacoin)
 
-      if (!balance.data) {
+      if (!balance) {
         return
       }
 
-      if (
-        new BigNumber(balance.data).isLessThan(
-          toHastings(values.siacoin).plus(fee)
-        )
-      ) {
+      if (balance.isLessThan(toHastings(values.siacoin).plus(fee))) {
         formik.setStatus({ error: 'Not enough funds in wallet.' })
         return
       }

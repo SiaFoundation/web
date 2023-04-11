@@ -1,13 +1,13 @@
-import { useGetSwr } from './useGet'
 import { Action, Config, Host } from './siaTypes'
-import { usePutFunc } from './usePut'
+import { HostsSearchPayload } from './bus'
 import {
+  useGetSwr,
+  usePostSwr,
+  usePutFunc,
   HookArgsSwr,
   HookArgsCallback,
   HookArgsWithPayloadSwr,
-} from './request'
-import { usePostSwr } from './usePost'
-import { HostsSearchPayload } from './renterdBus'
+} from '@siafoundation/react-core'
 
 const autopilotConfigKey = '/autopilot/config'
 export function useAutopilotConfig(args?: HookArgsSwr<void, Config>) {

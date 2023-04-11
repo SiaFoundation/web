@@ -3,7 +3,7 @@ import {
   triggerToast,
   truncate,
 } from '@siafoundation/design-system'
-import { useHostsAllowlistUpdate } from '@siafoundation/react-core'
+import { useHostsAllowlistUpdate } from '@siafoundation/react-renterd'
 import { useCallback } from 'react'
 
 export function useAllowlistUpdate() {

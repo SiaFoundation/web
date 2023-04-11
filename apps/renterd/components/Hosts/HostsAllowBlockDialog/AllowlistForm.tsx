@@ -12,7 +12,7 @@ import {
   FormTextField,
   FieldGroup,
 } from '@siafoundation/design-system'
-import { useHostsAllowlist } from '@siafoundation/react-core'
+import { useHostsAllowlist } from '@siafoundation/react-renterd'
 import { useAllowlistUpdate } from '../../../hooks/useAllowlistUpdate'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'

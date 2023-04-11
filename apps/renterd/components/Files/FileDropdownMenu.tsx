@@ -10,7 +10,7 @@ import {
   Document16,
   DropdownMenuLabel,
 } from '@siafoundation/design-system'
-import { useObject, useObjectDelete } from '@siafoundation/react-core'
+import { useObject, useObjectDelete } from '@siafoundation/react-renterd'
 import { useFiles } from '../../contexts/files'
 
 type Props = {

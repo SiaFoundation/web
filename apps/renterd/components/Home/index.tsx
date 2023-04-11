@@ -1,6 +1,3 @@
-// import { Heading, DatumCard } from '@siafoundation/design-system'
-// import { useAutopilotStatus } from '@siafoundation/react-core'
-// import { humanBytes } from '@siafoundation/sia-js'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 import { RenterdSidenav } from '../RenterSidenav'
 import { routes } from '../../config/routes'
@@ -11,7 +8,6 @@ import { useRouter } from 'next/router'
 export function Home() {
   const router = useRouter()
   const { openDialog } = useDialog()
-  // const status = useAutopilotStatus({})
 
   useEffect(() => {
     router.replace(routes.files.index)

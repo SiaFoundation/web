@@ -7,10 +7,10 @@ import {
   PlaneIcon,
 } from '@siafoundation/design-system'
 import { routes } from '../config/routes'
-import { useAutopilot } from '../hooks/useAutopilot'
+import { useRenterd } from '../contexts/renterd'
 
 export function RenterdSidenav() {
-  const { autopilotMode } = useAutopilot()
+  const { autopilotMode } = useRenterd()
   return (
     <>
       {/* <SidenavItem title="Dashboard" route={routes.home}>

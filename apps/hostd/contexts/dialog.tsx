@@ -71,14 +71,11 @@ type Props = {
 export function DialogProvider({ children }: Props) {
   const state = useDialogMain()
   return (
-    <DialogContext.Provider value={state}>
-      <Dialogs />
-      {children}
-    </DialogContext.Provider>
+    <DialogContext.Provider value={state}>{children}</DialogContext.Provider>
   )
 }
 
-function Dialogs() {
+export function Dialogs() {
   const { id, dialog, openDialog, onOpenChange, closeDialog } = useDialog()
   return (
     <>

@@ -1,10 +1,12 @@
 import { debounce } from 'lodash'
-import { AutopilotHost } from './renterdAutopilot'
-import { HookArgsCallback } from './request'
+import { AutopilotHost } from './autopilot'
 import { Host, HostSettings } from './siaTypes'
-import { useGetDownloadFunc } from './useGetDownload'
-import { usePostFunc } from './usePost'
-import { usePutFunc } from './usePut'
+import {
+  useGetDownloadFunc,
+  usePutFunc,
+  usePostFunc,
+  HookArgsCallback,
+} from '@siafoundation/react-core'
 
 export function useObjectDownloadFunc(
   args?: HookArgsCallback<{ key: string }, void, Blob>

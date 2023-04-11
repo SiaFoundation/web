@@ -5,7 +5,7 @@ import {
   triggerErrorToast,
   triggerToast,
 } from '@siafoundation/design-system'
-import { useObjectUpload } from '@siafoundation/react-core'
+import { useObjectUpload } from '@siafoundation/react-renterd'
 import { useFiles } from '../../contexts/files'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'

@@ -8,7 +8,10 @@ import {
   Filter16,
   DropdownMenuLabel,
 } from '@siafoundation/design-system'
-import { useHostsAllowlist, useHostsBlocklist } from '@siafoundation/react-core'
+import {
+  useHostsAllowlist,
+  useHostsBlocklist,
+} from '@siafoundation/react-renterd'
 import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
 import { useContracts } from '../../contexts/contracts'

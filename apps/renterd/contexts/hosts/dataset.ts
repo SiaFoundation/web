@@ -7,7 +7,7 @@ import {
   useHostsAllowlist,
   useHostsBlocklist,
   useHostsSearch,
-} from '@siafoundation/react-core'
+} from '@siafoundation/react-renterd'
 import { ContractData } from '../contracts/types'
 import { useAutopilot } from '../../hooks/useAutopilot'
 

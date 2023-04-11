@@ -8,7 +8,10 @@ import {
   DropdownMenuLabel,
   FolderIcon,
 } from '@siafoundation/design-system'
-import { useObjectDelete, useObjectDirectory } from '@siafoundation/react-core'
+import {
+  useObjectDelete,
+  useObjectDirectory,
+} from '@siafoundation/react-renterd'
 
 type Props = {
   name: string

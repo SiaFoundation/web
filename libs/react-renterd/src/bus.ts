@@ -1,5 +1,13 @@
-import { useGetSwr } from './useGet'
-import { usePostFunc, usePostSwr } from './usePost'
+import {
+  useDeleteFunc,
+  useGetSwr,
+  usePostSwr,
+  usePutFunc,
+  usePostFunc,
+  HookArgsSwr,
+  HookArgsCallback,
+  HookArgsWithPayloadSwr,
+} from '@siafoundation/react-core'
 import {
   AddObjectRequest,
   Block,
@@ -25,13 +33,6 @@ import {
   WalletSignRequest,
   WalletTransaction,
 } from './siaTypes'
-import { usePutFunc } from './usePut'
-import { useDeleteFunc } from './useDelete'
-import {
-  HookArgsSwr,
-  HookArgsCallback,
-  HookArgsWithPayloadSwr,
-} from './request'
 
 // consensus
 
