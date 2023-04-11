@@ -30,12 +30,19 @@ type Props = {
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
+  balance?: BigNumber
+  send: (params: {
+    address: string
+    sc: BigNumber
+  }) => Promise<{ transaction?: Transaction; error?: string }>
 }
 
 export function WalletSendSiacoinDialog({
   trigger,
   open,
   onOpenChange,
+  balance,
+  send,
 }: Props) {
   const [step, setStep] = useState<Step>('setup')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -44,6 +51,7 @@ export function WalletSendSiacoinDialog({
 
   // Form for each step
   const generate = useSendSiacoinGenerateForm({
+    balance,
     fee,
     onComplete: (data) => {
       setFormData(data)
@@ -53,6 +61,7 @@ export function WalletSendSiacoinDialog({
   const confirm = useSendSiacoinConfirmForm({
     fee,
     formData,
+    send,
     onConfirm: ({ transaction }) => {
       setSignedTxn(transaction)
       setStep('done')
@@ -133,7 +142,7 @@ export function WalletSendSiacoinDialog({
           <WalletSendSiacoinComplete
             formData={formData}
             fee={fee}
-            transactionId={'TODO'}
+            // transactionId={'TODO'}
           />
         )}
       </div>

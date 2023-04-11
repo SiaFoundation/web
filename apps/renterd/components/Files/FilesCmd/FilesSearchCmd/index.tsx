@@ -1,6 +1,6 @@
 import { CommandGroup, CommandItemSearch } from '../../../CmdRoot/Item'
 import { Page } from '../../../CmdRoot/types'
-import { useObjectSearch } from '@siafoundation/react-core'
+import { useObjectSearch } from '@siafoundation/react-renterd'
 import {
   getDirectoryFromPath,
   isDirectory,

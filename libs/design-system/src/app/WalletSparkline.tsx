@@ -10,12 +10,21 @@ import { sortBy } from 'lodash'
 import { humanSiacoin } from '@siafoundation/sia-js'
 import { formatChartData, timeRangeNoRollup } from '../lib/chartData'
 import { ChartStats, computeChartStats } from '../lib/chartStats'
-import { useWalletTransactions } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 import { useTheme } from '../hooks/useTheme'
 import { colors } from '../config/colors'
 
-export function WalletSparkline() {
+type Transaction = {
+  Inflow: string
+  Outflow: string
+  Timestamp: string
+}
+
+type Props = {
+  transactions?: Transaction[]
+}
+
+export function WalletSparkline({ transactions }: Props) {
   const { activeTheme } = useTheme()
   const chartConfigs = useMemo(
     () =>
@@ -38,21 +47,11 @@ export function WalletSparkline() {
           },
     [activeTheme]
   )
-  const transactions = useWalletTransactions({
-    params: {},
-    config: {
-      swr: {
-        revalidateOnFocus: false,
-        refreshInterval: 60_000,
-      },
-    },
-  })
-
   const scData = useMemo(() => {
-    if (!transactions.data || !transactions.data.length) {
+    if (!transactions || !transactions.length) {
       return []
     }
-    let points = transactions.data.reduce((acc, t, i) => {
+    let points = transactions.reduce((acc, t, i) => {
       const lastValue: ChartPoint = acc[i - 1]
       const lastSc = lastValue ? lastValue['sc'] : 0
       return acc.concat({

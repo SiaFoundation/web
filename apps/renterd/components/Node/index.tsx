@@ -3,7 +3,7 @@ import {
   useConsensusState,
   useSyncerPeers,
   useTxPoolTransactions,
-} from '@siafoundation/react-core'
+} from '@siafoundation/react-renterd'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { RenterdSidenav } from '../RenterSidenav'

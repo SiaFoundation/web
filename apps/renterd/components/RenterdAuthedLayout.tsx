@@ -1,5 +1,5 @@
 import { AppAuthedLayout } from '@siafoundation/design-system'
-import { useWalletBalance } from '@siafoundation/react-core'
+import { useWalletBalance } from '@siafoundation/react-renterd'
 import BigNumber from 'bignumber.js'
 
 type Props = React.ComponentProps<typeof AppAuthedLayout>

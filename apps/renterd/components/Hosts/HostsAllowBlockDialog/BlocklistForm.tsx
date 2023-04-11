@@ -12,7 +12,7 @@ import {
   FormTextField,
   FieldGroup,
 } from '@siafoundation/design-system'
-import { useHostsBlocklist } from '@siafoundation/react-core'
+import { useHostsBlocklist } from '@siafoundation/react-renterd'
 import { useContracts } from '../../../contexts/contracts'
 import { useFormik } from 'formik'
 import { useEffect, useMemo } from 'react'

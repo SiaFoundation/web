@@ -6,7 +6,6 @@ import React, {
   useMemo,
 } from 'react'
 import {
-  WalletSendSiacoinDialog,
   SettingsDialog,
   SyncerConnectPeerDialog,
   TransactionDetailsDialog,
@@ -23,7 +22,8 @@ import {
   useSyncerConnect,
   useWalletAddress,
   useWalletTransactions,
-} from '@siafoundation/react-core'
+} from '@siafoundation/react-renterd'
+import { RenterdSendSiacoinDialog } from '../dialogs/SendSiacoinDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -113,6 +113,7 @@ export function Dialogs() {
     [transactions, id]
   )
   const address = useWalletAddress()
+
   return (
     <>
       <CmdKDialog
@@ -124,10 +125,7 @@ export function Dialogs() {
         open={dialog === 'settings'}
         onOpenChange={onOpenChange}
       />
-      <WalletSendSiacoinDialog
-        open={dialog === 'sendSiacoin'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
-      />
+      <RenterdSendSiacoinDialog />
       <WalletSingleAddressDetailsDialog
         address={address}
         open={dialog === 'addressDetails'}

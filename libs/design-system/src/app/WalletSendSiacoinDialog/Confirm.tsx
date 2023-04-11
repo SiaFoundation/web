@@ -1,15 +1,13 @@
 import { useFormik } from 'formik'
 import BigNumber from 'bignumber.js'
 import { WalletSendSiacoinReceipt } from './Receipt'
-import {
-  useWalletSign,
-  Transaction,
-  useWalletFund,
-  useTxPoolBroadcast,
-} from '@siafoundation/react-core'
-import { mutate } from 'swr'
+import { Transaction } from '@siafoundation/react-core'
 
 type Props = {
+  send: (params: {
+    address: string
+    sc: BigNumber
+  }) => Promise<{ transaction?: Transaction; error?: string }>
   formData: {
     address: string
     siacoin: BigNumber
@@ -19,66 +17,40 @@ type Props = {
   onConfirm: (params: { transaction: Transaction }) => void
 }
 
-export function useSendSiacoinConfirmForm({ formData, fee, onConfirm }: Props) {
+export function useSendSiacoinConfirmForm({
+  send,
+  formData,
+  fee,
+  onConfirm,
+}: Props) {
   const { address, siacoin, includeFee } = formData || {}
-  const fund = useWalletFund()
-  const sign = useWalletSign()
-  const broadcast = useTxPoolBroadcast()
   const formik = useFormik({
     initialValues: {},
     onSubmit: async () => {
       const finalSiacoin = includeFee ? siacoin.minus(fee) : siacoin
 
-      const fundResponse = await fund.post({
-        payload: {
-          amount: finalSiacoin.toString(),
-          transaction: {
-            siacoinoutputs: [
-              {
-                unlockhash: address,
-                value: finalSiacoin.toString(),
-              },
-            ],
-          },
-        },
+      const { transaction, error } = await send({
+        address,
+        sc: finalSiacoin,
       })
-      if (!fundResponse.data) {
+
+      if (error) {
         formik.setStatus({
-          error: fundResponse.error,
+          error,
         })
         return
       }
-      const signResponse = await sign.post({
-        payload: {
-          transaction: fundResponse.data.transaction,
-          toSign: fundResponse.data.toSign,
-          coveredFields: {
-            wholetransaction: true,
-          },
-        },
-      })
-      if (!signResponse.data) {
+
+      if (!transaction) {
         formik.setStatus({
-          error: signResponse.error,
-        })
-        return
-      }
-      const broadcastResponse = await broadcast.post({
-        payload: [signResponse.data],
-      })
-      if (broadcastResponse.error) {
-        formik.setStatus({
-          error: broadcastResponse.error,
+          error: 'Transaction error.',
         })
         return
       }
 
       onConfirm({
-        transaction: signResponse.data,
+        transaction,
       })
-      setTimeout(() => {
-        mutate('/bus/wallet/pending')
-      }, 2000)
     },
   })
 

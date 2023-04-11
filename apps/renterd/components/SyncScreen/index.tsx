@@ -13,12 +13,9 @@ import {
   DropdownMenuItem,
   DropdownMenuLeftSlot,
 } from '@siafoundation/design-system'
-import {
-  useAppSettings,
-  useConsensusState,
-  useSiaStatsNetworkStatus,
-  useSyncerPeers,
-} from '@siafoundation/react-core'
+import { useAppSettings } from '@siafoundation/react-core'
+import { useConsensusState, useSyncerPeers } from '@siafoundation/react-renterd'
+import { useSiaStatsNetworkStatus } from '@siafoundation/react-core'
 import { useDialog } from '../../contexts/dialog'
 import { routes } from '../../config/routes'
 import { RenterdPublicLayout } from '../RenterdPublicLayout'

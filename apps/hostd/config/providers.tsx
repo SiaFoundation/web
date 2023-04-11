@@ -1,5 +1,5 @@
 import { DataProvider } from '../contexts/data'
-import { DialogProvider } from '../contexts/dialog'
+import { DialogProvider, Dialogs } from '../contexts/dialog'
 
 type Props = {
   children: React.ReactNode
@@ -8,7 +8,12 @@ type Props = {
 export function Providers({ children }: Props) {
   return (
     <DialogProvider>
-      <DataProvider>{children}</DataProvider>
+      <DataProvider>
+        {/* this is here so that dialogs can use all the other providers,
+            and the other providers can trigger dialogs */}
+        <Dialogs />
+        {children}
+      </DataProvider>
     </DialogProvider>
   )
 }

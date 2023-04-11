@@ -16,13 +16,13 @@ import { humanBytes, humanNumber } from '@siafoundation/sia-js'
 import { HostData, TableColumnId } from './types'
 import { format, formatDistance, formatRelative } from 'date-fns'
 import { HostDropdownMenu } from '../../components/Hosts/HostDropdownMenu'
+import { useWorkflows } from '@siafoundation/react-core'
 import {
   AutopilotHost,
   RhpScanRequest,
   useHostsAllowlist,
-  useWorkflows,
   workerRhpScanRoute,
-} from '@siafoundation/react-core'
+} from '@siafoundation/react-renterd'
 import BigNumber from 'bignumber.js'
 import React from 'react'
 
@@ -959,7 +959,6 @@ type Key =
 
 function makeRenderSc(section: 'priceTable' | 'settings', name: Key) {
   return function RenderPriceTableNumber({ data }: { data: HostData }) {
-    console.log(data, data[section])
     if (!data[section]) {
       return null
     }

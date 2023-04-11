@@ -3,7 +3,7 @@ import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
 import { useDialog } from '../../contexts/dialog'
 import { CommandGroup, CommandItemNav, CommandItemSearch } from './Item'
-import { useWalletAddress } from '@siafoundation/react-core'
+import { useWalletAddress } from '@siafoundation/react-renterd'
 import { Page } from './types'
 
 const commandPage = {

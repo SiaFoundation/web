@@ -1,4 +1,4 @@
-import { AutopilotHost } from '@siafoundation/react-core'
+import { AutopilotHost } from '@siafoundation/react-renterd'
 import BigNumber from 'bignumber.js'
 
 export type HostData = {

@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 import {
   useConsensusState,
   useContracts as useContractsData,
-} from '@siafoundation/react-core'
+} from '@siafoundation/react-renterd'
 import { createContext, useContext, useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import {

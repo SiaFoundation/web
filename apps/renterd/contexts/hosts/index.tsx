@@ -9,7 +9,7 @@ import {
   useHostsAllowlist,
   useHostsBlocklist,
   useHostsSearch,
-} from '@siafoundation/react-core'
+} from '@siafoundation/react-renterd'
 import { createContext, useContext, useMemo } from 'react'
 import {
   TableColumnId,
@@ -17,10 +17,10 @@ import {
   columnsDefaultSort,
 } from './types'
 import { useRouter } from 'next/router'
-import { useAutopilot } from '../../hooks/useAutopilot'
 import { columns } from './columns'
 import { useContracts } from '../contracts'
 import { useDataset } from './dataset'
+import { useRenterd } from '../renterd'
 
 const defaultLimit = 50
 
@@ -32,7 +32,7 @@ function useHostsMain() {
     useServerFilters()
 
   const { dataset: allContracts } = useContracts()
-  const { autopilotMode } = useAutopilot()
+  const { autopilotMode } = useRenterd()
 
   const autopilotResponse = useAutopilotHostsSearch({
     disabled:

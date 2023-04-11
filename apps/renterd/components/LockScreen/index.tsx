@@ -4,7 +4,7 @@ import {
   Text,
   AppUnlockForm,
 } from '@siafoundation/design-system'
-import { ConsensusState } from '@siafoundation/react-core'
+import { ConsensusState } from '@siafoundation/react-renterd'
 import { buildModeEmbed } from '../../config/buildMode'
 import { routes } from '../../config/routes'
 import { RenterdPublicLayout } from '../RenterdPublicLayout'

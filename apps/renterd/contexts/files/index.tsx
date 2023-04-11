@@ -10,7 +10,7 @@ import {
   useObjectDirectory,
   useObjectDownloadFunc,
   useObjectUpload,
-} from '@siafoundation/react-core'
+} from '@siafoundation/react-renterd'
 import {
   createContext,
   useCallback,
