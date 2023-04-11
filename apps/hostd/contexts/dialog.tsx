@@ -1,24 +1,18 @@
 import React, { createContext, useContext, useCallback, useState } from 'react'
 import {
   WalletSendSiacoinDialog,
-  WalletSingleAddressDetailsDialog,
-  TransactionDetailsDialog,
-  SyncerConnectPeerDialog,
   SettingsDialog,
+  SyncerConnectPeerDialog,
+  TransactionDetailsDialog,
+  WalletSingleAddressDetailsDialog,
 } from '@siafoundation/design-system'
 import { StorageFolderAddDialog } from '../dialogs/StorageFolderAddDialog'
 import { StorageFolderResizeDialog } from '../dialogs/StorageFolderResizeDialog'
 import { StorageFolderRemoveDialog } from '../dialogs/StorageFolderRemoveDialog'
 import { HostAnnounceDialog } from '../dialogs/HostAnnounceDialog'
 
-const DialogContext = createContext({} as State)
-export const useDialog = () => useContext(DialogContext)
-
-type Props = {
-  children: React.ReactNode
-}
-
 export type DialogType =
+  // | 'cmdk'
   | 'settings'
   | 'sendSiacoin'
   | 'addWallet'
@@ -30,14 +24,7 @@ export type DialogType =
   | 'storageFolderRemove'
   | 'hostAnnounce'
 
-type State = {
-  dialog?: DialogType
-  id?: string
-  openDialog: (dialog: DialogType, id?: string) => void
-  closeDialog: () => void
-}
-
-export function DialogProvider({ children }: Props) {
+function useDialogMain() {
   const [dialog, setDialog] = useState<DialogType>()
   const [id, setId] = useState<string>()
 
@@ -63,53 +50,80 @@ export function DialogProvider({ children }: Props) {
     [closeDialog]
   )
 
-  const value: State = {
+  return {
     dialog,
     id,
     openDialog,
     closeDialog,
+    onOpenChange,
   }
+}
 
+type State = ReturnType<typeof useDialogMain>
+
+const DialogContext = createContext({} as State)
+export const useDialog = () => useContext(DialogContext)
+
+type Props = {
+  children: React.ReactNode
+}
+
+export function DialogProvider({ children }: Props) {
+  const state = useDialogMain()
   return (
-    <DialogContext.Provider value={value}>
+    <DialogContext.Provider value={state}>
+      <Dialogs />
+      {children}
+    </DialogContext.Provider>
+  )
+}
+
+function Dialogs() {
+  const { id, dialog, openDialog, onOpenChange, closeDialog } = useDialog()
+  return (
+    <>
+      {/* <CmdKDialog
+        open={dialog === 'cmdk'}
+        onOpenChange={onOpenChange}
+        setOpen={() => openDialog('cmdk')}
+      /> */}
       <SettingsDialog
         open={dialog === 'settings'}
         onOpenChange={onOpenChange}
       />
       <WalletSendSiacoinDialog
         open={dialog === 'sendSiacoin'}
-        onOpenChange={onOpenChange}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <WalletSingleAddressDetailsDialog
         open={dialog === 'addressDetails'}
-        onOpenChange={onOpenChange}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <TransactionDetailsDialog
         id={id}
         open={dialog === 'transactionDetails'}
-        onOpenChange={onOpenChange}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <SyncerConnectPeerDialog
         open={dialog === 'connectPeer'}
-        onOpenChange={onOpenChange}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <StorageFolderAddDialog
         open={dialog === 'storageFolderAdd'}
-        onOpenChange={onOpenChange}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <StorageFolderResizeDialog
         open={dialog === 'storageFolderResize'}
-        onOpenChange={onOpenChange}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <StorageFolderRemoveDialog
         open={dialog === 'storageFolderRemove'}
-        onOpenChange={onOpenChange}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <HostAnnounceDialog
         open={dialog === 'hostAnnounce'}
-        onOpenChange={onOpenChange}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
-      {children}
-    </DialogContext.Provider>
+    </>
   )
 }

@@ -1,7 +1,7 @@
 import '../config/style.css'
+import { NextAppCsr } from '@siafoundation/design-system'
 import { AppProps } from 'next/app'
 import { Providers } from '../config/providers'
-import { NextAppCsr } from '@siafoundation/design-system'
 
 export default function App({
   Component,

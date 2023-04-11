@@ -18,7 +18,11 @@ export default function Unlock() {
               hostd
             </Text>
             <Separator className="w-full" />
-            <AppUnlockForm buildModeEmbed={buildModeEmbed} routes={routes} />
+            <AppUnlockForm
+              endpoint="/state"
+              buildModeEmbed={buildModeEmbed}
+              routes={routes}
+            />
           </div>
         </Panel>
       </div>

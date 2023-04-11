@@ -9,7 +9,7 @@ import {
   DropdownMenuLabel,
   PoolCombo,
 } from '@siafoundation/design-system'
-import { useContracts } from '../hooks/useContracts'
+import { useContracts } from '../../hooks/useContracts'
 
 export function ContractsFilterDropdownMenu() {
   const { filters, setFilter } = useContracts()

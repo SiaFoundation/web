@@ -5,7 +5,7 @@ import {
   DatumCardConfigurable,
   DatumScrollArea,
 } from '@siafoundation/design-system'
-import { useData } from '../contexts/data'
+import { useData } from '../../contexts/data'
 
 export function HomeContracts() {
   const { collateral, contracts } = useData()
