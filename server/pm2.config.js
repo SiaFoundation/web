@@ -30,5 +30,10 @@ module.exports = {
       script: 'nx',
       args: 'run renterd:serve:production',
     },
+    {
+      name: 'sia-host',
+      script: 'nx',
+      args: 'run hostd:serve:production',
+    },
   ],
 }
