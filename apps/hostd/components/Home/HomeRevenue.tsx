@@ -5,8 +5,8 @@ import {
   DatumCardConfigurable,
   DatumScrollArea,
 } from '@siafoundation/design-system'
-import { useData } from '../contexts/data'
-import { chartConfigs } from '../config/charts'
+import { useData } from '../../contexts/data'
+import { chartConfigs } from '../../config/charts'
 
 export function HomeRevenue() {
   const { revenue } = useData()
