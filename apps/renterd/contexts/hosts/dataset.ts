@@ -9,7 +9,7 @@ import {
   useHostsSearch,
 } from '@siafoundation/react-renterd'
 import { ContractData } from '../contracts/types'
-import { useAutopilot } from '../../hooks/useAutopilot'
+import { useRenterd } from '../renterd'
 
 export function useDataset({
   autopilotMode,
@@ -20,7 +20,7 @@ export function useDataset({
   blocklist,
   isAllowlistActive,
 }: {
-  autopilotMode: ReturnType<typeof useAutopilot>['autopilotMode']
+  autopilotMode: ReturnType<typeof useRenterd>['autopilotMode']
   regularResponse: ReturnType<typeof useHostsSearch>
   autopilotResponse: ReturnType<typeof useAutopilotHostsSearch>
   allContracts: ContractData[]
@@ -74,9 +74,9 @@ export function useDataset({
 
 function getHostFields(host: Host, allContracts: ContractData[]) {
   return {
-    id: host.public_key,
+    id: host.publicKey,
     netAddress: host.netAddress,
-    publicKey: host.public_key,
+    publicKey: host.publicKey,
     lastScanSuccess: host.interactions.LastScanSuccess,
     lastScan: host.interactions.LastScan,
     knownSince: host.knownSince,
@@ -94,7 +94,7 @@ function getHostFields(host: Host, allContracts: ContractData[]) {
     ),
     totalScans: new BigNumber(host.interactions.TotalScans || 0),
     activeContracts: new BigNumber(
-      allContracts?.filter((c) => c.hostKey === host.public_key).length || 0
+      allContracts?.filter((c) => c.hostKey === host.publicKey).length || 0
     ),
     priceTable: host.priceTable,
     settings: host.settings,
@@ -112,7 +112,7 @@ function getAllowedFields({
   blocklist: string[]
   isAllowlistActive: boolean
 }) {
-  const isOnAllowlist = !!allowlist?.find((a) => a === host.public_key)
+  const isOnAllowlist = !!allowlist?.find((a) => a === host.publicKey)
   const allowed = !isAllowlistActive || isOnAllowlist
   const isOnBlocklist = !!blocklist?.find((b) => {
     if (b === host.netAddress) {

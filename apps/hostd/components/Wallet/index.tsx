@@ -9,7 +9,7 @@ import {
 import {
   useWalletPending,
   useWalletTransactions,
-} from '@siafoundation/react-core'
+} from '@siafoundation/react-hostd'
 import { useMemo } from 'react'
 import { useDialog } from '../../contexts/dialog'
 import { routes } from '../../config/routes'
@@ -19,7 +19,6 @@ import { HostdAuthedLayout } from '../HostdAuthedLayout'
 
 export function Wallet() {
   const transactions = useWalletTransactions({
-    params: {},
     config: {
       swr: {
         revalidateOnFocus: false,
@@ -49,17 +48,32 @@ export function Wallet() {
         .map((t): EntityListItemProps => {
           return {
             type: 'transaction',
-            txType: getTransactionTypes(t.Raw),
-            hash: t.ID,
-            timestamp: new Date(t.Timestamp).getTime(),
-            onClick: () => openDialog('transactionDetails', t.ID),
-            sc: new BigNumber(t.Inflow).minus(t.Outflow),
+            txType: getTransactionTypes(t.transaction),
+            hash: t.id,
+            timestamp: new Date(t.timestamp).getTime(),
+            onClick: () => openDialog('transactionDetails', t.id),
+            sc: new BigNumber(t.inflow).minus(t.outflow),
           }
         })
         .sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1)),
     ],
     [pending, transactions, openDialog]
   )
+
+  const txns: { inflow: string; outflow: string; timestamp: string }[] =
+    useMemo(
+      () =>
+        (transactions.data || [])
+          .map((t) => {
+            return {
+              inflow: t.inflow,
+              outflow: t.outflow,
+              timestamp: t.timestamp,
+            }
+          })
+          .sort((a, b) => (a.timestamp >= b.timestamp ? 1 : -1)),
+      [transactions]
+    )
 
   return (
     <HostdAuthedLayout
@@ -75,7 +89,7 @@ export function Wallet() {
       }
     >
       <div className="p-5 flex flex-col gap-5">
-        <WalletSparkline />
+        <WalletSparkline transactions={txns} />
         <EntityList title="Transactions" entities={entities.slice(0, 100)} />
       </div>
     </HostdAuthedLayout>

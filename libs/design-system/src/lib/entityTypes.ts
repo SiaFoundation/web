@@ -14,12 +14,12 @@ export type TxType =
   | 'setup'
 
 export function getTransactionTotals(txn: Transaction) {
-  const sc = (txn.siacoinoutputs || []).reduce(
-    (acc, i) => acc.plus(String(i.value)),
+  const sc = (txn.SiacoinOutputs || []).reduce(
+    (acc, i) => acc.plus(i.Value),
     new BigNumber(0)
   )
-  const sf = (txn.siafundoutputs || []).reduce(
-    (acc, i) => acc.plus(String(i.value)),
+  const sf = (txn.SiafundOutputs || []).reduce(
+    (acc, i) => acc.plus(i.Value),
     new BigNumber(0)
   )
 
@@ -32,13 +32,13 @@ export function getTransactionTotals(txn: Transaction) {
 export function getTransactionTypes(txn: Transaction): TxType | undefined {
   const { sc: totalSiacoin, sf: totalSiafund } = getTransactionTotals(txn)
 
-  if (txn.filecontracts && txn.filecontracts.length > 0) {
+  if (txn.FileContracts && txn.FileContracts.length > 0) {
     return 'contract'
   }
-  if (txn.filecontractrevisions && txn.filecontractrevisions.length > 0) {
+  if (txn.FileContractRevisions && txn.FileContractRevisions.length > 0) {
     return 'revision'
   }
-  if (txn.storageproofs && txn.storageproofs.length > 0) {
+  if (txn.StorageProofs && txn.StorageProofs.length > 0) {
     return 'proof'
   }
 
@@ -55,15 +55,15 @@ export function getTransactionTypes(txn: Transaction): TxType | undefined {
   // }
 
   if (
-    txn.siacoinoutputs &&
-    txn.siacoininputs?.length === 0 &&
-    txn.siafundinputs?.length === 0
+    txn.SiacoinOutputs &&
+    txn.SiacoinInputs?.length === 0 &&
+    txn.SiafundInputs?.length === 0
   ) {
     return 'block'
   }
   if (
-    (txn.siacoininputs?.length || 0) >= 20 &&
-    txn.siacoinoutputs?.length === 1
+    (txn.SiacoinInputs?.length || 0) >= 20 &&
+    txn.SiacoinOutputs?.length === 1
   ) {
     return 'defrag'
   }

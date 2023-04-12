@@ -6,7 +6,7 @@ import {
 } from '@siafoundation/react-renterd'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
-import { RenterdSidenav } from '../RenterSidenav'
+import { RenterdSidenav } from '../RenterdSidenav'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 
 export function Node() {

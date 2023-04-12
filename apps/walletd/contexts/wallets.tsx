@@ -1,4 +1,3 @@
-import { useWalletBalance } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 import React, {
   createContext,
@@ -60,20 +59,21 @@ type State = {
 
 export function WalletsProvider({ children }: Props) {
   // TODO: add multiwallet support
-  const wallet = useWalletBalance()
-  const wallets = useSWR(['wallets', wallet], () =>
-    wallet.data
-      ? [
-          {
-            id: 'default',
-            name: 'Default',
-            sc: new BigNumber(wallet.data),
-            sf: 0,
-            type: 'hot' as WalletType,
-          },
-        ]
-      : []
-  )
+  // const wallet = useWalletBalance()
+  // const wallets = useSWR(['wallets', wallet], () =>
+  //   wallet.data
+  //     ? [
+  //         {
+  //           id: 'default',
+  //           name: 'Default',
+  //           sc: new BigNumber(wallet.data),
+  //           sf: 0,
+  //           type: 'hot' as WalletType,
+  //         },
+  //       ]
+  //     : []
+  // )
+  const wallets = useSWR(['wallets'], () => [])
 
   const [activeWalletId, setActiveWallet] = useState<WalletId>()
 

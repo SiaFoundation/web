@@ -23,7 +23,7 @@ import { FilesCmd } from '../Files/FilesCmd'
 import { useHosts } from '../../contexts/hosts'
 import { useDebounce } from 'use-debounce'
 import { CmdEmptyDefault } from './CmdEmpty'
-import { useAutopilot } from '../../hooks/useAutopilot'
+import { useRenterd } from '../../contexts/renterd'
 
 type Props = {
   panel?: boolean
@@ -32,7 +32,7 @@ type Props = {
 export function CmdRoot({ panel }: Props) {
   const { resetFilters: resetContractsFilters } = useContracts()
   const { resetFilters: resetHostsFilters } = useHosts()
-  const { autopilotMode } = useAutopilot()
+  const { autopilotMode } = useRenterd()
   const { closeDialog } = useDialog()
   const router = useRouter()
   const [search, setSearch] = useState('')

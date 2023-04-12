@@ -1,22 +1,27 @@
 import {
   Button,
   CaretDown16,
-  DropdownMenu,
   SettingsAdjust16,
-  DropdownMenuGroup,
-  DropdownMenuItem,
   Select,
-  DropdownMenuRightSlot,
-  DropdownMenuSeparator,
   PoolCombo,
+  Label,
+  Popover,
+  MenuItemRightSlot,
+  BaseMenuItem,
+  MenuSeparator,
+  Reset16,
+  MenuSectionLabelToggleAll,
 } from '@siafoundation/design-system'
-import { useContracts, ContractColumn } from '../hooks/useContracts'
+import { TableColumnId } from '../../contexts/contracts/types'
+import { useContracts } from '../../contexts/contracts'
 
 export function ContractsViewDropdownMenu() {
   const {
     configurableColumns,
-    toggleColumn,
-    resetDefaultColumns,
+    toggleColumnVisibility,
+    resetDefaultColumnVisibility,
+    setColumnsVisible,
+    setColumnsHidden,
     sortOptions,
     sortColumn,
     setSortColumn,
@@ -24,10 +29,29 @@ export function ContractsViewDropdownMenu() {
     setSortDirection,
     enabledColumns,
   } = useContracts()
+
+  const generalColumns = configurableColumns
+    .filter((c) => c.category === 'general')
+    .map((column) => ({
+      label: column.label,
+      value: column.id,
+    }))
+  const timeColumns = configurableColumns
+    .filter((c) => c.category === 'time')
+    .map((column) => ({
+      label: column.label,
+      value: column.id,
+    }))
+  const spendingColumns = configurableColumns
+    .filter((c) => c.category === 'financial')
+    .map((column) => ({
+      label: column.label,
+      value: column.id,
+    }))
   return (
-    <DropdownMenu
+    <Popover
       trigger={
-        <Button size="small">
+        <Button size="small" tip="Configure view" tipAlign="end">
           <SettingsAdjust16 />
           View
           <CaretDown16 />
@@ -38,77 +62,106 @@ export function ContractsViewDropdownMenu() {
         className: 'max-w-[300px]',
       }}
     >
-      <DropdownMenuGroup>
-        <DropdownMenuItem className="py-5 px-2">
-          Order by
-          <DropdownMenuRightSlot>
-            <Select
-              value={sortColumn}
-              onClick={(e) => {
-                e.stopPropagation()
-              }}
-              onChange={(e) => {
-                setSortColumn(e.currentTarget.value as ContractColumn)
-              }}
-            >
-              {Object.entries(sortOptions).map(([category, options]) => (
-                <optgroup key={category} label={category}>
-                  {options.map((column) => (
-                    <option key={column.id} value={column.id}>
-                      {column.label}
-                    </option>
-                  ))}
-                </optgroup>
-              ))}
-            </Select>
-          </DropdownMenuRightSlot>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="py-5 px-2">
-          Direction
-          <DropdownMenuRightSlot>
-            <Select
-              value={sortDirection}
-              onClick={(e) => {
-                e.stopPropagation()
-              }}
-              onChange={(e) => {
-                setSortDirection(e.currentTarget.value as 'asc' | 'desc')
-              }}
-            >
-              <option key="desc" value="desc">
-                Descending
-              </option>
-              <option key="asc" value="asc">
-                Ascending
-              </option>
-            </Select>
-          </DropdownMenuRightSlot>
-        </DropdownMenuItem>
-      </DropdownMenuGroup>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem className="py-5 px-2">
-        Display properties
-        <DropdownMenuRightSlot>
-          <Button
-            onClick={(e) => {
-              e.stopPropagation()
-              resetDefaultColumns()
+      <BaseMenuItem>
+        <Label>Order by</Label>
+        <MenuItemRightSlot>
+          <Select
+            value={sortColumn}
+            onChange={(e) => {
+              setSortColumn(e.currentTarget.value as TableColumnId)
             }}
           >
-            Reset default
+            {Object.entries(sortOptions).map(([category, options]) => (
+              <optgroup key={category} label={category}>
+                {options.map((column) => (
+                  <option key={column.id} value={column.id}>
+                    {column.label}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </Select>
+        </MenuItemRightSlot>
+      </BaseMenuItem>
+      <BaseMenuItem>
+        <Label>Direction</Label>
+        <MenuItemRightSlot>
+          <Select
+            value={sortDirection}
+            onClick={(e) => {
+              e.stopPropagation()
+            }}
+            onChange={(e) => {
+              setSortDirection(e.currentTarget.value as 'asc' | 'desc')
+            }}
+          >
+            <option key="desc" value="desc">
+              Descending
+            </option>
+            <option key="asc" value="asc">
+              Ascending
+            </option>
+          </Select>
+        </MenuItemRightSlot>
+      </BaseMenuItem>
+      <MenuSeparator />
+      <BaseMenuItem>
+        <Label>Display properties</Label>
+        <MenuItemRightSlot>
+          <Button
+            tip="Reset all to defaults"
+            variant="ghost"
+            onClick={(e) => {
+              e.stopPropagation()
+              resetDefaultColumnVisibility()
+            }}
+          >
+            <Reset16 />
           </Button>
-        </DropdownMenuRightSlot>
-      </DropdownMenuItem>
-      <div className="p-2">
+        </MenuItemRightSlot>
+      </BaseMenuItem>
+      <MenuSectionLabelToggleAll
+        label="General"
+        columns={generalColumns.map((c) => c.value)}
+        enabled={enabledColumns}
+        setColumnsVisible={setColumnsVisible}
+        setColumnsHidden={setColumnsHidden}
+      />
+      <BaseMenuItem>
         <PoolCombo
-          options={configurableColumns.map((column) => ({
-            label: column.label,
-            value: column.id,
-          }))}
+          options={generalColumns}
           values={enabledColumns}
-          onChange={(value) => toggleColumn(value)}
+          onChange={(value) => toggleColumnVisibility(value)}
         />
-      </div>
-    </DropdownMenu>
+      </BaseMenuItem>
+      <MenuSectionLabelToggleAll
+        label="Time"
+        columns={timeColumns.map((c) => c.value)}
+        enabled={enabledColumns}
+        setColumnsVisible={setColumnsVisible}
+        setColumnsHidden={setColumnsHidden}
+      />
+      <BaseMenuItem>
+        <PoolCombo
+          options={timeColumns}
+          values={enabledColumns}
+          onChange={(value) => toggleColumnVisibility(value)}
+        />
+      </BaseMenuItem>
+      <MenuSectionLabelToggleAll
+        label="Financial"
+        columns={spendingColumns.map((c) => c.value)}
+        enabled={enabledColumns}
+        setColumnsVisible={setColumnsVisible}
+        setColumnsHidden={setColumnsHidden}
+      />
+      <BaseMenuItem>
+        <PoolCombo
+          options={spendingColumns}
+          values={enabledColumns}
+          onChange={(value) => toggleColumnVisibility(value)}
+        />
+      </BaseMenuItem>
+    </Popover>
   )
 }

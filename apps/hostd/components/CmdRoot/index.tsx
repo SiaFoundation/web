@@ -10,31 +10,19 @@ import { WalletCmdGroup } from './WalletCmdGroup'
 import { AppCmdGroup } from './AppCmdGroup'
 import { useCallback, useState } from 'react'
 import { NodeCmdGroup } from './NodeCmdGroup'
-import { AutopilotCmdGroup } from './AutopilotCmdGroup'
 import { ConfigCmdGroup } from './ConfigCmdGroup'
-import { useDialog } from '../../contexts/dialog'
-import { useRouter } from 'next/router'
-import { routes } from '../../config/routes'
-import { ContractsCmd } from '../Contracts/ContractsCmd'
+// import { ContractsCmd } from '../Contracts/ContractsCmd'
 import { Page } from './types'
-import { useContracts } from '../../contexts/contracts'
-import { HostsCmd } from '../Hosts/HostsCmd'
-import { FilesCmd } from '../Files/FilesCmd'
-import { useHosts } from '../../contexts/hosts'
+// import { useContracts } from '../../contexts/contracts'
 import { useDebounce } from 'use-debounce'
 import { CmdEmptyDefault } from './CmdEmpty'
-import { useAutopilot } from '../../hooks/useAutopilot'
 
 type Props = {
   panel?: boolean
 }
 
 export function CmdRoot({ panel }: Props) {
-  const { resetFilters: resetContractsFilters } = useContracts()
-  const { resetFilters: resetHostsFilters } = useHosts()
-  const { autopilotMode } = useAutopilot()
-  const { closeDialog } = useDialog()
-  const router = useRouter()
+  // const { resetFilters: resetContractsFilters } = useContracts()
   const [search, setSearch] = useState('')
   const [debouncedSearch] = useDebounce(search, 500)
   const [pages, setPages] = useState<Page[]>([])
@@ -48,13 +36,13 @@ export function CmdRoot({ panel }: Props) {
     [setPages]
   )
 
-  const beforeSelect = useCallback(() => {
-    closeDialog()
-  }, [closeDialog])
+  // const beforeSelect = useCallback(() => {
+  //   closeDialog()
+  // }, [closeDialog])
 
-  const afterSelect = useCallback(() => {
-    setSearch('')
-  }, [setSearch])
+  // const afterSelect = useCallback(() => {
+  //   setSearch('')
+  // }, [setSearch])
 
   const Empty = page?.empty || CmdEmptyDefault
 
@@ -93,23 +81,8 @@ export function CmdRoot({ panel }: Props) {
           <Empty search={search} debouncedSearch={debouncedSearch} />
         </Command.Empty>
         <AppCmdGroup currentPage={page} pushPage={pushPage} />
-        <FilesCmd
-          debouncedSearch={debouncedSearch}
-          search={search}
-          currentPage={page}
-          pushPage={pushPage}
-          beforeSelect={() => {
-            beforeSelect()
-          }}
-          afterSelect={() => {
-            afterSelect()
-          }}
-        />
-        {autopilotMode === 'on' && (
-          <AutopilotCmdGroup currentPage={page} pushPage={pushPage} />
-        )}
         <WalletCmdGroup currentPage={page} pushPage={pushPage} />
-        <ContractsCmd
+        {/* <ContractsCmd
           currentPage={page}
           pushPage={pushPage}
           beforeSelect={() => {
@@ -122,21 +95,7 @@ export function CmdRoot({ panel }: Props) {
             }
             afterSelect()
           }}
-        />
-        <HostsCmd
-          currentPage={page}
-          pushPage={pushPage}
-          beforeSelect={() => {
-            beforeSelect()
-            resetHostsFilters()
-          }}
-          afterSelect={() => {
-            if (!router.pathname.startsWith(routes.hosts.index)) {
-              router.push(routes.hosts.index)
-            }
-            afterSelect()
-          }}
-        />
+        /> */}
         <ConfigCmdGroup currentPage={page} pushPage={pushPage} />
         <NodeCmdGroup currentPage={page} pushPage={pushPage} />
       </Command.List>

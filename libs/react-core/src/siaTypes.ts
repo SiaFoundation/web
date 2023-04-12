@@ -8,122 +8,124 @@ export type EncryptionKey = string
 export type FileContractID = string
 export type PublicKey = string
 
-// struct2ts:go.sia.tech/siad/types.SiaPublicKey
 export interface SiaPublicKey {
-  algorithm: string
-  key?: string
+  Algorithm: string
+  Key?: string
 }
 
-// struct2ts:go.sia.tech/siad/types.UnlockConditions
 export interface UnlockConditions {
-  timelock: number
-  publickeys?: SiaPublicKey[]
-  signaturesrequired: number
+  Timelock: number
+  PublicKeys?: SiaPublicKey[]
+  SignaturesRequired: number
 }
 
-// struct2ts:go.sia.tech/siad/types.SiacoinOutput
-export interface SiacoinOutput {
-  value: Currency
-  unlockhash: string
-}
-
-// struct2ts:go.sia.tech/siad/types.FileContractRevision
 export interface FileContractRevision {
-  parentid: string
-  unlockconditions: UnlockConditions
-  newrevisionnumber: number
-  newfilesize: number
-  newfilemerkleroot: string
-  newwindowstart: number
-  newwindowend: number
-  newvalidproofoutputs?: SiacoinOutput[]
-  newmissedproofoutputs?: SiacoinOutput[]
-  newunlockhash: string
+  ParentID: string
+  UnlockConditions: UnlockConditions
+  RevisionNumber: number
+  Filesize: number
+  FileMerkleRoot: string
+  WindowStart: number
+  WindowEnd: number
+  ValidProofOutputs?: SiacoinOutput[]
+  MissedProofOutputs?: SiacoinOutput[]
+  UnlockHash: string
 }
 
-// struct2ts:go.sia.tech/siad/types.CoveredFields
 export interface CoveredFields {
-  wholetransaction: boolean
-  siacoininputs?: string
-  siacoinoutputs?: string
-  filecontracts?: string
-  filecontractrevisions?: string
-  storageproofs?: string
-  siafundinputs?: string
-  siafundoutputs?: string
-  minerfees?: string
-  arbitrarydata?: string
-  transactionsignatures?: string
+  WholeTransaction: boolean
+  SiacoinInputs?: number[]
+  SiacoinOutputs?: number[]
+  FileContracts?: number[]
+  FileContractRevisions?: number[]
+  StorageProofs?: number[]
+  SiafundInputs?: number[]
+  SiafundOutputs?: number[]
+  MinerFees?: number[]
+  ArbitraryData?: number[]
+  Signatures?: number[]
 }
 
-// struct2ts:go.sia.tech/siad/types.TransactionSignature
 export interface TransactionSignature {
-  parentid: string
-  publickeyindex: number
-  timelock: number
-  coveredfields: CoveredFields
-  signature?: string
+  ParentID: string
+  PublicKeyIndex: number
+  Timelock: number
+  CoveredFields: CoveredFields
+  Signature?: string
 }
 
-// struct2ts:go.sia.tech/siad/types.SiacoinInput
 export interface SiacoinInput {
-  parentid: string
-  unlockconditions: UnlockConditions
+  ParentID: string
+  UnlockConditions: UnlockConditions
 }
 
-// struct2ts:go.sia.tech/siad/types.FileContract
+export type SiacoinOutput = {
+  Value: Currency
+  Address: string
+}
+
 export interface FileContract {
-  filesize: number
-  filemerkleroot: string
-  windowstart: number
-  windowend: number
-  payout: Currency
-  validproofoutputs?: SiacoinOutput[]
-  missedproofoutputs?: SiacoinOutput[]
-  unlockhash: string
-  revisionnumber: number
+  Filesize: number
+  FileMerkleRoot: string
+  WindowStart: number
+  WindowEnd: number
+  Payout: Currency
+  ValidProofOutputs?: SiacoinOutput[]
+  MissedProofOutputs?: SiacoinOutput[]
+  UnlockHash: string
+  RevisionNumber: number
 }
 
-// struct2ts:go.sia.tech/siad/types.StorageProof
 export interface StorageProof {
-  parentid: string
-  segment: string
-  hashset?: Hash[]
+  ParentID: string
+  Segment: string
+  Hashset?: Hash[]
 }
 
-// struct2ts:go.sia.tech/siad/types.SiafundInput
 export interface SiafundInput {
-  parentid: string
-  unlockconditions: UnlockConditions
-  claimunlockhash: string
+  ParentID: string
+  UnlockConditions: UnlockConditions
+  ClaimUnlockHash: string
 }
 
-// struct2ts:go.sia.tech/siad/types.SiafundOutput
 export interface SiafundOutput {
-  value: Currency
-  unlockhash: string
-  claimstart: Currency
+  Value: number
+  Address: string
 }
 
-// struct2ts:go.sia.tech/siad/types.Transaction
 export interface Transaction {
-  siacoininputs?: SiacoinInput[]
-  siacoinoutputs?: SiacoinOutput[]
-  filecontracts?: FileContract[]
-  filecontractrevisions?: FileContractRevision[]
-  storageproofs?: StorageProof[]
-  siafundinputs?: SiafundInput[]
-  siafundoutputs?: SiafundOutput[]
-  minerfees?: Currency[]
-  arbitrarydata?: string[]
-  transactionsignatures?: TransactionSignature[]
+  SiacoinInputs?: SiacoinInput[]
+  SiacoinOutputs?: SiacoinOutput[]
+  FileContracts?: FileContract[]
+  FileContractRevisions?: FileContractRevision[]
+  StorageProofs?: StorageProof[]
+  SiafundInputs?: SiafundInput[]
+  SiafundOutputs?: SiafundOutput[]
+  MinerFees?: Currency[]
+  ArbitraryData?: string[]
+  TransactionSignatures?: TransactionSignature[]
 }
 
-// struct2ts:go.sia.tech/siad/types.Block
 export interface Block {
-  parentid: string
-  nonce: string
-  timestamp: number
-  minerpayouts?: SiacoinOutput[]
-  transactions?: Transaction[]
+  ParentID: string
+  Nonce: string
+  Timestamp: number
+  MinerPayouts?: SiacoinOutput[]
+  Transactions?: Transaction[]
+}
+
+export interface ChainIndex {
+  Height: number
+  ID: string
+}
+
+export interface SiaPublicKey {
+  Algorithm: string
+  Key?: string
+}
+
+export interface UnlockConditions {
+  Timelock: number
+  PublicKeys?: SiaPublicKey[]
+  SignaturesRequired: number
 }

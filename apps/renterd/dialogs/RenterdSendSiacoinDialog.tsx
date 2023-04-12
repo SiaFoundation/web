@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 import { WalletSendSiacoinDialog } from '@siafoundation/design-system'
 import {
   useTxPoolBroadcast,
@@ -24,10 +24,10 @@ export function RenterdSendSiacoinDialog() {
           payload: {
             amount: sc.toString(),
             transaction: {
-              siacoinoutputs: [
+              SiacoinOutputs: [
                 {
-                  unlockhash: address,
-                  value: sc.toString(),
+                  Address: address,
+                  Value: sc.toString(),
                 },
               ],
             },
@@ -43,7 +43,7 @@ export function RenterdSendSiacoinDialog() {
             transaction: fundResponse.data.transaction,
             toSign: fundResponse.data.toSign,
             coveredFields: {
-              wholetransaction: true,
+              WholeTransaction: true,
             },
           },
         })

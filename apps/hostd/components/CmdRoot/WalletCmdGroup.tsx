@@ -3,7 +3,7 @@ import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
 import { useDialog } from '../../contexts/dialog'
 import { CommandGroup, CommandItemNav, CommandItemSearch } from './Item'
-import { useWalletAddress } from '@siafoundation/react-core'
+import { useHostState } from '@siafoundation/react-hostd'
 import { Page } from './types'
 
 const commandPage = {
@@ -20,7 +20,7 @@ type Props = {
 export function WalletCmdGroup({ currentPage, parentPage, pushPage }: Props) {
   const { openDialog, closeDialog } = useDialog()
   const router = useRouter()
-  const address = useWalletAddress()
+  const state = useHostState()
   return (
     <CommandGroup currentPage={currentPage} commandPage={commandPage}>
       <CommandItemNav
@@ -74,7 +74,7 @@ export function WalletCmdGroup({ currentPage, parentPage, pushPage }: Props) {
         currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
-          copyToClipboard(address.data, 'wallet address')
+          copyToClipboard(state.data?.walletAddress, 'wallet address')
           closeDialog()
         }}
       >

@@ -1,4 +1,4 @@
-import { useAppSettings } from '@siafoundation/react-core'
+import { Either, useAppSettings } from '@siafoundation/react-core'
 import { useRouter } from 'next/router'
 import { useFormik } from 'formik'
 import { FieldGroup, FormSubmitButton, FormTextField } from '../components/Form'
@@ -10,17 +10,26 @@ import { DropdownMenu, DropdownMenuItem } from '../core/DropdownMenu'
 import { sortBy } from 'lodash'
 import { getRedirectRouteFromQuery } from '../hooks/useMonitorConnAndLock'
 
-async function checkPassword<Response extends { Synced: boolean }>({
+type ResponseWithSynced = Either<
+  {
+    Synced: boolean
+  },
+  {
+    synced: boolean
+  }
+>
+
+async function checkPassword<Response extends ResponseWithSynced>({
   api,
-  endpoint,
+  route,
   password,
 }: {
   api: string
-  endpoint: string
+  route: string
   password: string
 }): Promise<{ isSynced?: boolean; error?: string }> {
   try {
-    const response = await axios.get<Response>(`${api}/api${endpoint}`, {
+    const response = await axios.get<Response>(`${api}/api${route}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -28,7 +37,7 @@ async function checkPassword<Response extends { Synced: boolean }>({
       },
     })
     return {
-      isSynced: response.data.Synced,
+      isSynced: response.data.Synced || response.data.synced,
     }
   } catch (e: unknown) {
     const resp = (e as AxiosError).response
@@ -49,7 +58,7 @@ async function checkPassword<Response extends { Synced: boolean }>({
 }
 
 type Props = {
-  endpoint: string
+  route: string
   buildModeEmbed: boolean
   routes: {
     home: string
@@ -58,8 +67,8 @@ type Props = {
   }
 }
 
-export function AppUnlockForm<Response extends { Synced: boolean }>({
-  endpoint,
+export function AppUnlockForm<Response extends ResponseWithSynced>({
+  route,
   buildModeEmbed,
   routes,
 }: Props) {
@@ -75,7 +84,7 @@ export function AppUnlockForm<Response extends { Synced: boolean }>({
       const api = buildModeEmbed ? '' : values.api
       const { isSynced, error } = await checkPassword<Response>({
         api,
-        endpoint,
+        route,
         password: values.password,
       })
       if (!error) {

@@ -20,7 +20,7 @@ export function LockScreen() {
             </Text>
             <Separator className="w-full mt-2 mb-3" />
             <AppUnlockForm<ConsensusState>
-              endpoint="/bus/consensus/state"
+              route="/bus/consensus/state"
               buildModeEmbed={buildModeEmbed}
               routes={routes}
             />

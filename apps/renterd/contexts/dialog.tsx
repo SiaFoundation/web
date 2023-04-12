@@ -1,14 +1,7 @@
-import React, {
-  createContext,
-  useContext,
-  useCallback,
-  useState,
-  useMemo,
-} from 'react'
+import React, { createContext, useContext, useCallback, useState } from 'react'
 import {
   SettingsDialog,
   SyncerConnectPeerDialog,
-  TransactionDetailsDialog,
   WalletSingleAddressDetailsDialog,
 } from '@siafoundation/design-system'
 import { CmdKDialog } from '../components/CmdKDialog'
@@ -21,9 +14,9 @@ import { FilesSearchDialog } from '../components/Files/FilesSearchDialog'
 import {
   useSyncerConnect,
   useWalletAddress,
-  useWalletTransactions,
 } from '@siafoundation/react-renterd'
-import { RenterdSendSiacoinDialog } from '../dialogs/SendSiacoinDialog'
+import { RenterdSendSiacoinDialog } from '../dialogs/RenterdSendSiacoinDialog'
+import { RenterdTransactionDetailsDialog } from '../dialogs/RenterdTransactionDetailsDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -94,24 +87,8 @@ export function DialogProvider({ children }: Props) {
 }
 
 export function Dialogs() {
-  const { id, dialog, openDialog, onOpenChange, closeDialog } = useDialog()
+  const { dialog, openDialog, onOpenChange, closeDialog } = useDialog()
   const connect = useSyncerConnect()
-
-  // TODO: add transaction endpoint
-  const transactions = useWalletTransactions({
-    params: {},
-    config: {
-      swr: {
-        revalidateOnFocus: false,
-        refreshInterval: 60_000,
-      },
-    },
-    disabled: id !== 'transactionDetails',
-  })
-  const transaction = useMemo(
-    () => transactions.data?.find((t) => t.ID === id),
-    [transactions, id]
-  )
   const address = useWalletAddress()
 
   return (
@@ -127,16 +104,12 @@ export function Dialogs() {
       />
       <RenterdSendSiacoinDialog />
       <WalletSingleAddressDetailsDialog
-        address={address}
+        address={address.data}
+        isValidating={address.isValidating}
         open={dialog === 'addressDetails'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
-      <TransactionDetailsDialog
-        id={id}
-        transaction={transaction}
-        open={dialog === 'transactionDetails'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
-      />
+      <RenterdTransactionDetailsDialog />
       <SyncerConnectPeerDialog
         open={dialog === 'connectPeer'}
         connect={(address: string) =>

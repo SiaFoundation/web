@@ -19,6 +19,7 @@ export default function HomePage() {
     <AppAuthedLayout
       appName="walletd"
       routes={routes}
+      connectivityRoute="/consensus/state"
       openSettings={() => openDialog('privacy')}
       title="walletd"
       actions={

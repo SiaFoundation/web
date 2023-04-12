@@ -16,6 +16,7 @@ type Props = {
   actions?: React.ReactNode
   sidenav?: React.ReactNode
   children: React.ReactNode
+  connectivityRoute: string
   walletBalance?: BigNumber
   routes: {
     lockscreen: string
@@ -40,12 +41,18 @@ export function AppAuthedLayout({
   actions,
   children,
   sidenav,
+  connectivityRoute,
   walletBalance,
   routes,
   openSettings,
 }: Props) {
   return (
-    <AppRootLayout appName={appName} title={title} routes={routes}>
+    <AppRootLayout
+      appName={appName}
+      title={title}
+      connectivityRoute={connectivityRoute}
+      routes={routes}
+    >
       <AppBackdrop />
       <div className="flex h-full w-full">
         <Sidenav

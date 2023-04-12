@@ -1,24 +1,26 @@
-import { DatumCard, TxPoolList, PeerList } from '@siafoundation/design-system'
+import { DatumCard, PeerList } from '@siafoundation/design-system'
 import {
-  useConsensusState,
+  useHostState,
   useSyncerPeers,
-  useTxPoolTransactions,
-} from '@siafoundation/react-core'
+  // useTxPoolTransactions,
+} from '@siafoundation/react-hostd'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { HostdSidenav } from '../HostdSidenav'
 import { HostdAuthedLayout } from '../HostdAuthedLayout'
+import { useMemo } from 'react'
+import { orderBy } from 'lodash'
 
 export function Node() {
   const peers = useSyncerPeers()
-  const txPool = useTxPoolTransactions({
-    config: {
-      swr: {
-        refreshInterval: 30_000,
-      },
-    },
-  })
-  const state = useConsensusState({
+  // const txPool = useTxPoolTransactions({
+  //   config: {
+  //     swr: {
+  //       refreshInterval: 30_000,
+  //     },
+  //   },
+  // })
+  const state = useHostState({
     config: {
       swr: {
         refreshInterval: 30_000,
@@ -26,6 +28,13 @@ export function Node() {
     },
   })
   const { openDialog } = useDialog()
+
+  const peerList = useMemo(() => {
+    if (!peers.data) {
+      return null
+    }
+    return orderBy(peers.data, ['address']).map((p) => p.address)
+  }, [peers.data])
 
   return (
     <HostdAuthedLayout
@@ -40,21 +49,24 @@ export function Node() {
             label="Height"
             value={
               state.data
-                ? Number(state.data.BlockHeight).toLocaleString()
+                ? state.data.chainIndex.Height.toLocaleString()
                 : undefined
             }
-            comment={!state.data?.Synced ? 'Syncing' : undefined}
+            comment={!state.data?.synced ? 'Syncing' : undefined}
           />
           <DatumCard label="Connected peers" value={peers.data?.length} />
-          <DatumCard label="Transactions in pool" value={txPool.data?.length} />
+          {/* <DatumCard label="Transactions in pool" value={txPool.data?.length} /> */}
         </div>
         <div className="flex flex-wrap gap-7">
           <div className="flex-1">
-            <PeerList connectPeer={() => openDialog('connectPeer')} />
+            <PeerList
+              peers={peerList}
+              connectPeer={() => openDialog('connectPeer')}
+            />
           </div>
-          <div className="flex-1">
+          {/* <div className="flex-1">
             <TxPoolList />
-          </div>
+          </div> */}
         </div>
       </div>
     </HostdAuthedLayout>

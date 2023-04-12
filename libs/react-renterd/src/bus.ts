@@ -7,6 +7,9 @@ import {
   HookArgsSwr,
   HookArgsCallback,
   HookArgsWithPayloadSwr,
+  Currency,
+  PublicKey,
+  Transaction,
 } from '@siafoundation/react-core'
 import {
   AddObjectRequest,
@@ -17,13 +20,10 @@ import {
   ContractAcquireResponse,
   ContractsIDAddRequest,
   ContractsIDRenewedRequest,
-  Currency,
   Host,
   Interaction,
   Obj,
-  PublicKey,
   SiacoinElement,
-  Transaction,
   WalletFundRequest,
   WalletFundResponse,
   WalletPrepareFormRequest,
@@ -82,8 +82,9 @@ export function useTxPoolFee(args?: HookArgsSwr<void, Currency>) {
   return useGetSwr({ ...args, route: '/bus/txpool/fee' })
 }
 
+const txPoolTransactionsRoute = '/bus/txpool/transactions'
 export function useTxPoolTransactions(args?: HookArgsSwr<void, Transaction[]>) {
-  return useGetSwr({ ...args, route: '/bus/txpool/transactions' })
+  return useGetSwr({ ...args, route: txPoolTransactionsRoute })
 }
 
 export function useTxPoolBroadcast(
@@ -95,9 +96,12 @@ export function useTxPoolBroadcast(
       route: '/bus/txpool/broadcast',
     },
     (mutate) => {
-      mutate((key) =>
-        ['/bus/txpool/transactions', '/bus/wallet/pending'].includes(key)
-      )
+      mutate((key) => {
+        return (
+          key.startsWith(txPoolTransactionsRoute) ||
+          key.startsWith(walletPendingRoute)
+        )
+      })
     }
   )
 }
@@ -174,8 +178,9 @@ export function useWalletPrepareRenew(
   return usePostFunc({ ...args, route: '/bus/wallet/prepare/form' })
 }
 
+const walletPendingRoute = '/bus/wallet/pending'
 export function useWalletPending(args?: HookArgsSwr<void, Transaction[]>) {
-  return useGetSwr({ ...args, route: '/bus/wallet/pending' })
+  return useGetSwr({ ...args, route: walletPendingRoute })
 }
 
 // hosts

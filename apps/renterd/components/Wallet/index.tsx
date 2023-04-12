@@ -15,7 +15,7 @@ import { useMemo } from 'react'
 import { useDialog } from '../../contexts/dialog'
 import { routes } from '../../config/routes'
 import BigNumber from 'bignumber.js'
-import { RenterdSidenav } from '../RenterSidenav'
+import { RenterdSidenav } from '../RenterdSidenav'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 
 export function Wallet() {
@@ -65,6 +65,19 @@ export function Wallet() {
     ]
   }, [pending, transactions, openDialog])
 
+  const txns: { inflow: string; outflow: string; timestamp: string }[] =
+    useMemo(
+      () =>
+        transactions.data
+          ?.map((t) => ({
+            inflow: t.Inflow,
+            outflow: t.Outflow,
+            timestamp: t.Timestamp,
+          }))
+          .sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1)),
+      [transactions.data]
+    )
+
   const balance = useWalletBalance()
 
   return (
@@ -82,7 +95,7 @@ export function Wallet() {
       }
     >
       <div className="p-5 flex flex-col gap-5">
-        <WalletSparkline transactions={transactions.data} />
+        <WalletSparkline transactions={txns} />
         <EntityList title="Transactions" entities={entities?.slice(0, 100)} />
       </div>
     </RenterdAuthedLayout>

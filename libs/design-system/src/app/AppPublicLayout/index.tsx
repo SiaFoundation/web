@@ -15,6 +15,7 @@ type Props = {
   routes: Routes
   appName: string
   title?: string
+  connectivityRoute: string
   filters?: React.ReactNode
   actions?: React.ReactNode
 }
@@ -22,13 +23,19 @@ type Props = {
 export function AppPublicLayout({
   appName,
   title,
+  connectivityRoute,
   children,
   routes,
   filters,
   actions,
 }: Props) {
   return (
-    <AppRootLayout appName={appName} title={title} routes={routes}>
+    <AppRootLayout
+      appName={appName}
+      title={title}
+      connectivityRoute={connectivityRoute}
+      routes={routes}
+    >
       <AppBackdrop />
       <div className="flex h-full">
         <div className="flex flex-col flex-1">

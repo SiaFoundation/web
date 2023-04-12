@@ -8,7 +8,7 @@ import {
   FormField,
   Dialog,
 } from '@siafoundation/design-system'
-import { useSyncerConnect } from '@siafoundation/react-core'
+import { useSyncerConnect } from '@siafoundation/react-hostd'
 import { useFormik } from 'formik'
 import { useDialog } from '../contexts/dialog'
 import * as Yup from 'yup'
@@ -44,13 +44,15 @@ export function HostAnnounceDialog({ trigger, open, onOpenChange }: Props) {
     initialValues,
     validationSchema,
     onSubmit: async (values, actions) => {
-      const netAddress = `${values.ip}:${values.port}`
-      const response = await connect.post({
-        payload: netAddress,
+      const address = `${values.ip}:${values.port}`
+      const response = await connect.put({
+        payload: {
+          address,
+        },
       })
       if (response.error) {
         const formattedError = response.error.replace(
-          `invalid peer address: address ${netAddress}:`,
+          `invalid peer address: address ${address}:`,
           ''
         )
         actions.setStatus({ error: formattedError })

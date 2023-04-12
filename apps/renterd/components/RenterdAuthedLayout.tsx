@@ -4,11 +4,14 @@ import BigNumber from 'bignumber.js'
 
 type Props = React.ComponentProps<typeof AppAuthedLayout>
 
-export function RenterdAuthedLayout(props: Omit<Props, 'appName'>) {
+export function RenterdAuthedLayout(
+  props: Omit<Props, 'appName' | 'connectivityRoute'>
+) {
   const balance = useWalletBalance()
   return (
     <AppAuthedLayout
       appName="renterd"
+      connectivityRoute="/bus/consensus/state"
       walletBalance={balance.data ? new BigNumber(balance.data) : undefined}
       {...props}
     />

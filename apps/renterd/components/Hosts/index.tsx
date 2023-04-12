@@ -1,4 +1,4 @@
-import { RenterdSidenav } from '../RenterSidenav'
+import { RenterdSidenav } from '../RenterdSidenav'
 import { routes } from '../../config/routes'
 import { Table } from '@siafoundation/design-system'
 import { useDialog } from '../../contexts/dialog'
