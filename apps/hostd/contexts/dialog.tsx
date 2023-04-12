@@ -1,15 +1,16 @@
 import React, { createContext, useContext, useCallback, useState } from 'react'
 import {
-  WalletSendSiacoinDialog,
   SettingsDialog,
   SyncerConnectPeerDialog,
-  TransactionDetailsDialog,
   WalletSingleAddressDetailsDialog,
 } from '@siafoundation/design-system'
 import { StorageFolderAddDialog } from '../dialogs/StorageFolderAddDialog'
 import { StorageFolderResizeDialog } from '../dialogs/StorageFolderResizeDialog'
 import { StorageFolderRemoveDialog } from '../dialogs/StorageFolderRemoveDialog'
 import { HostAnnounceDialog } from '../dialogs/HostAnnounceDialog'
+import { useSyncerConnect, useWallet } from '@siafoundation/react-hostd'
+import { HostdSendSiacoinDialog } from '../dialogs/HostdSendSiacoinDialog'
+import { HostdTransactionDetailsDialog } from '../dialogs/HostdTransactionDetailsDialog'
 
 export type DialogType =
   // | 'cmdk'
@@ -76,7 +77,9 @@ export function DialogProvider({ children }: Props) {
 }
 
 export function Dialogs() {
-  const { id, dialog, openDialog, onOpenChange, closeDialog } = useDialog()
+  const { dialog, openDialog, onOpenChange, closeDialog } = useDialog()
+  const connect = useSyncerConnect()
+  const wallet = useWallet()
   return (
     <>
       {/* <CmdKDialog
@@ -88,20 +91,22 @@ export function Dialogs() {
         open={dialog === 'settings'}
         onOpenChange={onOpenChange}
       />
-      <WalletSendSiacoinDialog
-        open={dialog === 'sendSiacoin'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
-      />
+      <HostdSendSiacoinDialog />
       <WalletSingleAddressDetailsDialog
         open={dialog === 'addressDetails'}
+        address={wallet.data?.address}
+        isValidating={wallet.isValidating}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
-      <TransactionDetailsDialog
-        id={id}
-        open={dialog === 'transactionDetails'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
-      />
+      <HostdTransactionDetailsDialog />
       <SyncerConnectPeerDialog
+        connect={(address: string) =>
+          connect.put({
+            payload: {
+              address,
+            },
+          })
+        }
         open={dialog === 'connectPeer'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />

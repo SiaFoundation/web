@@ -10,12 +10,14 @@ type Column<ColumnId> = {
   category?: string
 }
 
+const defaultCategories: string[] = []
+
 export function useTableState<ColumnId extends string>(
   scope: string,
   columns: Column<ColumnId>[],
   columnsDefaultVisible: ColumnId[],
   columnsDefaultSort: ColumnId,
-  disabledCategories?: string[]
+  disabledCategories: string[] = defaultCategories
 ) {
   const [_enabledColumns, setEnabledColumns] = useLocalStorageState<string[]>(
     `${scope}/enabledColumns`,

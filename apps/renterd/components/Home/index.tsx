@@ -1,5 +1,5 @@
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
-import { RenterdSidenav } from '../RenterSidenav'
+import { RenterdSidenav } from '../RenterdSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { useEffect } from 'react'

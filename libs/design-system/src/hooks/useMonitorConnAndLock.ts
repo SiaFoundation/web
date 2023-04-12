@@ -22,9 +22,15 @@ export function getRedirectRouteFromQuery(router: NextRouter, routes: Routes) {
     : routes.home
 }
 
-export function useMonitorConnAndLock(routes: Routes) {
+export function useMonitorConnAndLock({
+  route,
+  routes,
+}: {
+  route: string
+  routes: Routes
+}) {
   const { isConnected, isSynced } = useConnectivity({
-    route: '/bus/consensus/state',
+    route,
   })
   const { lock, settings } = useAppSettings()
   const router = useRouter()

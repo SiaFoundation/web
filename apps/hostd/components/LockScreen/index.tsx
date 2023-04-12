@@ -4,6 +4,7 @@ import {
   Text,
   AppUnlockForm,
 } from '@siafoundation/design-system'
+import { HostState } from '@siafoundation/react-hostd'
 import { buildModeEmbed } from '../../config/buildMode'
 import { routes } from '../../config/routes'
 import { HostdPublicLayout } from '../HostdPublicLayout'
@@ -18,7 +19,11 @@ export function LockScreen() {
               hostd
             </Text>
             <Separator className="w-full mt-2 mb-3" />
-            <AppUnlockForm buildModeEmbed={buildModeEmbed} routes={routes} />
+            <AppUnlockForm<HostState>
+              route="/state"
+              buildModeEmbed={buildModeEmbed}
+              routes={routes}
+            />
           </div>
         </Panel>
       </div>

@@ -10,10 +10,10 @@ import { Transaction } from '@siafoundation/react-core'
 type Props = {
   id: string
   transaction?: {
-    Inflow: string
-    Outflow: string
-    Timestamp: string
-    Raw: Transaction
+    inflow: string
+    outflow: string
+    timestamp: string
+    raw: Transaction
   }
   trigger?: React.ReactNode
   open: boolean
@@ -42,12 +42,12 @@ export function TransactionDetailsDialog({
           <div className="flex flex-wrap gap-4">
             <div className="flex items-baseline gap-2">
               <Text>Inflow</Text>
-              <ValueSc value={new BigNumber(transaction?.Inflow || 0)} />
+              <ValueSc value={new BigNumber(transaction?.inflow || 0)} />
             </div>
             <div className="flex items-baseline gap-2">
               <Text>Outflow</Text>
               <ValueSc
-                value={new BigNumber(transaction?.Outflow || 0).negated()}
+                value={new BigNumber(transaction?.outflow || 0).negated()}
               />
             </div>
             <div className="flex items-baseline gap-2">
@@ -55,7 +55,7 @@ export function TransactionDetailsDialog({
               <ValueSc
                 value={
                   new BigNumber(
-                    transaction?.Raw.minerfees?.reduce(
+                    transaction?.raw.MinerFees?.reduce(
                       (acc, val) => acc.plus(val),
                       new BigNumber(0)
                     ) || 0
@@ -67,11 +67,11 @@ export function TransactionDetailsDialog({
             <div className="flex items-baseline gap-2">
               <Text>Timestamp</Text>
               <Text>
-                {humanDate(transaction?.Timestamp || 0, { time: true })}
+                {humanDate(transaction?.timestamp || 0, { time: true })}
               </Text>
             </div>
           </div>
-          <Codeblock>{JSON.stringify(transaction?.Raw, null, 2)}</Codeblock>
+          <Codeblock>{JSON.stringify(transaction?.raw, null, 2)}</Codeblock>
         </div>
       ) : (
         <Text>Could not find transaction in wallet</Text>

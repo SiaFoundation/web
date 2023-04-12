@@ -9,14 +9,24 @@ type Routes = {
 }
 
 type Props = {
+  connectivityRoute: string
   children: React.ReactNode
   routes: Routes
   appName: string
   title?: string
 }
 
-export function AppRootLayout({ appName, title, children, routes }: Props) {
-  useMonitorConnAndLock(routes)
+export function AppRootLayout({
+  appName,
+  title,
+  connectivityRoute,
+  children,
+  routes,
+}: Props) {
+  useMonitorConnAndLock({
+    route: connectivityRoute,
+    routes,
+  })
 
   return (
     <div className="h-screen">

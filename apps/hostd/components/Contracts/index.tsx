@@ -1,76 +1,56 @@
-import {
-  Close16,
-  Text,
-  Button,
-  ControlGroup,
-  Table,
-} from '@siafoundation/design-system'
-import { ContractsViewDropdownMenu } from './ContractsViewDropdownMenu'
-import { ContractsFilterDropdownMenu } from './ContractsFilterDropdownMenu'
-import { useContracts } from '../../hooks/useContracts'
-import { HostdAuthedLayout } from '../../components/HostdAuthedLayout'
 import { HostdSidenav } from '../HostdSidenav'
-import { useDialog } from '../../contexts/dialog'
 import { routes } from '../../config/routes'
+import { Table } from '@siafoundation/design-system'
+import { useDialog } from '../../contexts/dialog'
+import { useContracts } from '../../contexts/contracts'
+import { HostdAuthedLayout } from '../HostdAuthedLayout'
+import { StateNoneMatching } from './StateNoneMatching'
+import { StateNoneYet } from './StateNoneYet'
+// import { ContractsFilterMenu } from './ContractsFilterMenu'
+// import { ContractsActionsMenu } from './ContractsActionsMenu'
+import { StateError } from './StateError'
 
 export function Contracts() {
   const { openDialog } = useDialog()
-  const { columns, filters, removeFilter, contracts } = useContracts()
+  const {
+    columns,
+    dataset,
+    sortColumn,
+    sortDirection,
+    toggleSort,
+    limit,
+    dataState,
+    // cellContext,
+  } = useContracts()
 
   return (
     <HostdAuthedLayout
-      title="Contracts"
+      title="Active contracts"
       routes={routes}
       sidenav={<HostdSidenav />}
       openSettings={() => openDialog('settings')}
-      nav={
-        <div className="flex gap-2 flex-1">
-          {Object.entries(filters).map(([key, filter]) => (
-            <ControlGroup key={key}>
-              <Button disabled>
-                <Text size="12">{key}</Text>
-              </Button>
-              <Button disabled>
-                <Text size="12" color="subtle">
-                  is
-                </Text>
-              </Button>
-              <Button disabled>
-                {filter.value && <Text size="12">{filter.value}</Text>}
-                {filter.values && (
-                  <Text size="12">
-                    {filter.values.reduce((acc, val) =>
-                      acc.concat(` or ${val}`)
-                    )}
-                  </Text>
-                )}
-              </Button>
-              <Button
-                variant="gray"
-                size="small"
-                onClick={() => removeFilter(key)}
-              >
-                <Close16 />
-              </Button>
-            </ControlGroup>
-          ))}
-          <ContractsFilterDropdownMenu />
-        </div>
-      }
-      size="4"
-      actions={
-        <div className="flex gap-2">
-          <ContractsViewDropdownMenu />
-        </div>
-      }
+      // nav={<ContractsFilterMenu />}
+      size="full"
+      // actions={<ContractsActionsMenu />}
     >
-      <div className="min-w-fit p-7">
+      <div className="p-5 min-w-fit">
         <Table
-          isLoading={false}
-          pageSize={20}
-          data={contracts}
+          isLoading={dataState === 'loading'}
+          emptyState={
+            dataState === 'noneMatchingFilters' ? (
+              <StateNoneMatching />
+            ) : dataState === 'noneYet' ? (
+              <StateNoneYet />
+            ) : dataState === 'error' ? (
+              <StateError />
+            ) : null
+          }
+          pageSize={limit}
+          data={dataset}
           columns={columns}
-          summary
+          sortDirection={sortDirection}
+          sortColumn={sortColumn}
+          toggleSort={toggleSort}
         />
       </div>
     </HostdAuthedLayout>

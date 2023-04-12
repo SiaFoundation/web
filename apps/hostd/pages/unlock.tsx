@@ -10,7 +10,7 @@ import { routes } from '../config/routes'
 
 export default function Unlock() {
   return (
-    <AppPublicLayout appName="hostd" routes={routes}>
+    <AppPublicLayout appName="hostd" connectivityRoute="/state" routes={routes}>
       <div className="flex flex-col items-center justify-center gap-6 h-full">
         <Panel className="relative top-[-50px] w-[300px] p-4">
           <div className="flex flex-col gap-4">
@@ -19,7 +19,7 @@ export default function Unlock() {
             </Text>
             <Separator className="w-full" />
             <AppUnlockForm
-              endpoint="/state"
+              route="/state"
               buildModeEmbed={buildModeEmbed}
               routes={routes}
             />

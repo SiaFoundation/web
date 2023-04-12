@@ -15,9 +15,9 @@ import { useTheme } from '../hooks/useTheme'
 import { colors } from '../config/colors'
 
 type Transaction = {
-  Inflow: string
-  Outflow: string
-  Timestamp: string
+  inflow: string
+  outflow: string
+  timestamp: string
 }
 
 type Props = {
@@ -55,8 +55,8 @@ export function WalletSparkline({ transactions }: Props) {
       const lastValue: ChartPoint = acc[i - 1]
       const lastSc = lastValue ? lastValue['sc'] : 0
       return acc.concat({
-        sc: new BigNumber(lastSc).plus(t.Inflow).minus(t.Outflow).toNumber(),
-        timestamp: new Date(t.Timestamp).getTime(),
+        sc: new BigNumber(lastSc).plus(t.inflow).minus(t.outflow).toNumber(),
+        timestamp: new Date(t.timestamp).getTime(),
       })
     }, [] as ChartPoint[])
     points = sortBy(points, 'timestamp')

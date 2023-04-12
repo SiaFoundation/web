@@ -68,7 +68,7 @@ export function useRhpScan(
         (key) => key.startsWith('/autopilot/hosts'),
         (data) =>
           data?.map((aph) => {
-            if (aph.host.public_key === hostKey) {
+            if (aph.host.publicKey === hostKey) {
               return {
                 ...aph,
                 host: {
@@ -90,7 +90,7 @@ export function useRhpScan(
         (key) => key.startsWith('/bus/search/hosts'),
         (data) =>
           data?.map((host) => {
-            if (host.public_key === hostKey) {
+            if (host.publicKey === hostKey) {
               return {
                 ...host,
                 interactions: {

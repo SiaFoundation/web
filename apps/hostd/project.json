@@ -11,6 +11,7 @@
       "options": {
         "root": "apps/hostd",
         "outputPath": "dist/apps/hostd",
+        "postcssConfig": "apps/hostd/postcss.config.js",
         "assets": [
           {
             "glob": "**/*",
