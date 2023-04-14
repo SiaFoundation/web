@@ -1,7 +1,0 @@
-{
-  "name": "@siafoundation/react-siad",
-  "description": " React hooks for interacting with `siad`.",
-  "version": "0.0.1",
-  "private": true,
-  "license": "MIT"
-}
