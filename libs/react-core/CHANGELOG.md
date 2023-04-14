@@ -1,5 +1,14 @@
 # @siafoundation/react-core
 
+## 0.8.0
+
+### Minor Changes
+
+- 30493f4: useSettingUpdate now automatically revalidates any corresponding useSetting hooks.
+- 2a0a714: The revalidation dependencies have been refactored into a more extensible after function.
+- 2a0a714: Add generic workflow tracking provider.
+- 67d0113: The renterd React API now lives in react-renterd.
+
 ## 0.7.0
 
 ### Minor Changes

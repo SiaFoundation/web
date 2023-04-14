@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.35.0
+
+### Minor Changes
+
+- 77da743: The site menu "Tools" section now includes links to the mainnet and testnet explorers.
+
 ## 0.34.0
 
 ### Minor Changes

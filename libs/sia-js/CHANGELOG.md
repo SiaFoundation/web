@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.0
+
+### Minor Changes
+
+- 30493f4: toSiacoins now has an option to specify decimal scale.
+- 30493f4: Add a toScale function.
+- 13a9882: Consolidated bytes/TiB conversion functions.
+
 ## [0.7.1](https://github.com/SiaFoundation/web/compare/sia-js-0.7.0...sia-js-0.7.1) (2022-10-13)
 
 # [0.7.0](https://github.com/SiaFoundation/web/compare/sia-js-0.6.0...sia-js-0.7.0) (2022-09-29)
