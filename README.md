@@ -41,7 +41,6 @@ The `walletd` user interface, includes a wallet with support for hot, cold, and 
 The Sia web libraries provide developers with convenient TypeScript SDKs for using Sia core types, blockchain utilities, data fetching, daemon-specific React hooks, and components for common functionality such as Siacoin/fiat input fields, transaction lists, files, and more.
 
 - [@siafoundation/react-core](libs/react-core) - Core Sia types and library methods.
-- [@siafoundation/react-siad](libs/react-siad) - React hooks for interacting with `siad`.
 - [@siafoundation/react-renterd](libs/react-renterd) - React hooks for interacting with `renterd`.
 - [@siafoundation/react-hostd](libs/react-hostd) - React hooks for interacting with `hostd`.
 - [@siafoundation/sia-js](libs/sia-js) - Core Sia types and library methods for v1 `siad`.
