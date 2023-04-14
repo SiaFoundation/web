@@ -1,5 +1,26 @@
 # @siafoundation/renterd
 
+## 0.10.0
+
+### Minor Changes
+
+- 13a9882: The autopilot target price default value calculation has been corrected.
+- 13a9882: Siacoin inputs are now easier to use, especially when entering and editing decimal values.
+- 842ffbe: The txpool and wallet transaction lists now show the specific type of transaction.
+- 842ffbe: Fixed a bug in the send siacoin transaction flow.
+- 72ab6fe: Host and contract explorer view menus now allow toggling column visibility by group.
+- 72ab6fe: The host explorer view menu now allows toggling column visibility by group.
+- 30493f4: Autopilot estimates are now accurately labeled with TiB units.
+- 8510fc8: renterd now has proper page titles.
+- 2a0a714: The host menu now provides an option to trigger a manual rescan.
+- 30493f4: Autopilot and config features now show any input errors.
+- 72ab6fe: Host and contract tables now show 50 items per page.
+- 242937b: The renterd sidenav no longer flickers when changing tabs.
+- 13a9882: The autopilot and configuration features now have an option to reset all changes.
+- 13a9882: The gouging max storage price setting is now entered as a value per TiB per month, and properly stored a value per byte per block.
+- 72ab6fe: The host explorer table now includes columns for the host price table and host settings.
+- 3abd60c: Autopilot feature is now enabled properly.
+
 ## 0.8.0
 
 ### Minor Changes

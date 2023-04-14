@@ -1,5 +1,11 @@
 # @siafoundation/hostd
 
+## 0.6.0
+
+### Minor Changes
+
+- 842ffbe: The txpool and wallet transaction lists now show the specific type of transaction.
+
 ## 0.5.0
 
 ### Minor Changes

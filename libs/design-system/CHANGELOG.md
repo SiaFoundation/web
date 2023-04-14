@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.44.0
+
+### Minor Changes
+
+- 30493f4: All configuration fields are now directly form driven.
+- 13a9882: Siacoin inputs are now easier to use, especially when entering and editing decimal values.
+- 72ab6fe: Streamlined Table API, separated out cell context data, non-stateful column definitions.
+- 30493f4: Fixed an issue with form submit button disabled states.
+- 13a9882: Consolidated bytes/TiB conversion functions.
+
 ## 0.43.0
 
 ### Minor Changes

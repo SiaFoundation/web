@@ -1,5 +1,11 @@
 # @siafoundation/explorer-v1
 
+## 0.3.0
+
+### Minor Changes
+
+- 30493f4: The synced and consensus block heights are now displayed correctly and include a tooltip.
+
 ## 0.2.0
 
 ### Minor Changes
