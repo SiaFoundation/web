@@ -1,5 +1,5 @@
 {
-  "name": "@siafoundation/renterd",
+  "name": "renterd",
   "description": "The `renterd` user interface, dedicated to renter related functionality.",
   "version": "0.11.0",
   "private": true,

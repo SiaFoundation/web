@@ -1,4 +1,4 @@
-# @siafoundation/explorer-v1
+# explorer-v1
 
 ## 0.3.0
 

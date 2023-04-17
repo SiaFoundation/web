@@ -1,5 +1,5 @@
 {
-  "name": "@siafoundation/website",
+  "name": "website",
   "description": "The main sia.tech website with information on the Sia project and the Sia Foundation.",
   "version": "0.35.0",
   "private": true,

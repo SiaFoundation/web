@@ -1,4 +1,4 @@
-# @siafoundation/hostd
+# hostd
 
 ## 0.6.0
 

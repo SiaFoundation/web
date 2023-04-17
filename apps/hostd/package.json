@@ -1,5 +1,5 @@
 {
-  "name": "@siafoundation/hostd",
+  "name": "hostd",
   "description": "The `hostd` user interface, dedicated to hosting related functionality.",
   "version": "0.6.0",
   "private": true,
