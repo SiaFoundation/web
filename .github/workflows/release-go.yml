@@ -2,9 +2,9 @@ name: Release Go modules
 on:
   push:
     tags:
-      - '\@siafoundation/renterd\@*'
-      - '\@siafoundation/hostd\@*'
-      - '\@siafoundation/walletd\@*'
+      - 'renterd\@*'
+      - 'hostd\@*'
+      - 'walletd\@*'
 
 env:
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          ssh-key: '${{ secrets.COMMIT_KEY }}'
+          token: ${{ secrets.COMMIT_PAT }}
       - name: Setup
         uses: ./.github/actions/setup
         with:
@@ -27,8 +27,8 @@ jobs:
       - name: Set variables
         shell: bash
         run: |
-          NAME=$(echo "${{ github.ref }}" | sed -E 's/^refs\/tags\/@siafoundation\/(.*)@.*$/\1/')
-          VERSION=$(echo "${{ github.ref }}" | sed -E 's/^refs\/tags\/@siafoundation\/.*@(.*)$/\1/')
+          NAME=$(echo "${{ github.ref }}" | sed -E 's/^refs\/tags\/(.*)@.*$/\1/')
+          VERSION=$(echo "${{ github.ref }}" | sed -E 's/^refs\/tags\/.*@(.*)$/\1/')
           TAG="${NAME}/${VERSION}"
           echo "NAME=${NAME}" >> $GITHUB_ENV
           echo "VERSION=${VERSION}" >> $GITHUB_ENV
