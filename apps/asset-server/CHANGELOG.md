@@ -1,4 +1,4 @@
-# Changelog
+# asset-server
 
 # [0.1.0](https://github.com/SiaFoundation/web/compare/asset-server-0.0.7...asset-server-0.1.0) (2022-10-13)
 

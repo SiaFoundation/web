@@ -1,5 +1,5 @@
 {
-  "name": "@siafoundation/explorer-v1",
+  "name": "explorer-v1",
   "description": "The `explorer-v1` user interface, a Sia blockchain explorer interface for Navigator.",
   "version": "0.3.0",
   "private": true,

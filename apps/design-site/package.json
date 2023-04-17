@@ -1,5 +1,5 @@
 {
-  "name": "@siafoundation/design-site",
+  "name": "design-site",
   "description": "The design.sia.tech website for exploring the design system used across Sia apps and websites.",
   "version": "0.2.0",
   "private": true,

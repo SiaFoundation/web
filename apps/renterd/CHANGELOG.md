@@ -1,4 +1,4 @@
-# @siafoundation/renterd
+# renterd
 
 ## 0.10.0
 
