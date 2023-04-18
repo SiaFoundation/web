@@ -11,9 +11,11 @@ import { HostAnnounceDialog } from '../dialogs/HostAnnounceDialog'
 import { useSyncerConnect, useWallet } from '@siafoundation/react-hostd'
 import { HostdSendSiacoinDialog } from '../dialogs/HostdSendSiacoinDialog'
 import { HostdTransactionDetailsDialog } from '../dialogs/HostdTransactionDetailsDialog'
+import { ContractsFilterContractIdDialog } from '../dialogs/ContractsFilterContractIdDialog'
+import { CmdKDialog } from '../components/CmdKDialog'
 
 export type DialogType =
-  // | 'cmdk'
+  | 'cmdk'
   | 'settings'
   | 'sendSiacoin'
   | 'addWallet'
@@ -24,6 +26,7 @@ export type DialogType =
   | 'storageFolderResize'
   | 'storageFolderRemove'
   | 'hostAnnounce'
+  | 'contractsFilterContractId'
 
 function useDialogMain() {
   const [dialog, setDialog] = useState<DialogType>()
@@ -82,11 +85,11 @@ export function Dialogs() {
   const wallet = useWallet()
   return (
     <>
-      {/* <CmdKDialog
+      <CmdKDialog
         open={dialog === 'cmdk'}
         onOpenChange={onOpenChange}
         setOpen={() => openDialog('cmdk')}
-      /> */}
+      />
       <SettingsDialog
         open={dialog === 'settings'}
         onOpenChange={onOpenChange}
@@ -124,6 +127,10 @@ export function Dialogs() {
       />
       <HostAnnounceDialog
         open={dialog === 'hostAnnounce'}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <ContractsFilterContractIdDialog
+        open={dialog === 'contractsFilterContractId'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
     </>

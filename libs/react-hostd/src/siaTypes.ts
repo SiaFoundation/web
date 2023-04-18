@@ -27,17 +27,26 @@ export type ContractStatus =
 
 export type Contract = {
   revision: {
-    ParentID: FileContractID
-    UnlockConditions: UnlockConditions
-    Filesize: number
-    FileMerkleRoot: Hash256
-    WindowStart: number
-    WindowEnd: number
-    Payout: Currency
-    ValidProofOutputs: SiacoinOutput[]
-    MissedProofOutputs: SiacoinOutput[]
-    UnlockHash: Hash256
-    RevisionNumber: number
+    parentID: FileContractID
+    unlockConditions: UnlockConditions
+    filesize: number
+    fileMerkleRoot: Hash256
+    windowStart: number
+    windowEnd: number
+    payout: Currency
+    validProofOutputs: SiacoinOutput[]
+    missedProofOutputs: SiacoinOutput[]
+    unlockHash: Hash256
+    revisionNumber: number
+  }
+
+  usage: {
+    accountFunding: string
+    egress: string
+    ingress: string
+    riskedCollateral: string
+    rpc: string
+    storage: string
   }
 
   hostSignature: Signature
@@ -45,22 +54,10 @@ export type Contract = {
 
   status: ContractStatus
   lockedCollateral: Currency
-  usage: number
-  // NegotiationHeight is the height the contract was negotiated at.
   negotiationHeight: number
-  // FormationConfirmed is true if the contract formation transaction
-  // has been confirmed on the blockchain.
   formationConfirmed: boolean
-  // RevisionConfirmed is true if the contract revision transaction has
-  // been confirmed on the blockchain.
   revisionConfirmed: boolean
-  // ResolutionConfirmed is true if the contract's resolution has been
-  // confirmed on the blockchain.
-  resolutionConfirmed: boolean
-  // RenewedTo is the ID of the contract that renewed this contract. If
-  // this contract was not renewed, this field is the zero value.
+  resolutionHeight: number
   renewedTo: FileContractID
-  // RenewedFrom is the ID of the contract that this contract renewed. If
-  // this contract is not a renewal, the field is the zero value.
   renewedFrom: FileContractID
 }

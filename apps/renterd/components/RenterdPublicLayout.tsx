@@ -1,4 +1,5 @@
 import { AppPublicLayout } from '@siafoundation/design-system'
+import { connectivityRoute } from '../config/routes'
 
 type Props = React.ComponentProps<typeof AppPublicLayout>
 
@@ -8,7 +9,7 @@ export function RenterdPublicLayout(
   return (
     <AppPublicLayout
       appName="renterd"
-      connectivityRoute="/bus/consensus/state"
+      connectivityRoute={connectivityRoute}
       {...props}
     />
   )

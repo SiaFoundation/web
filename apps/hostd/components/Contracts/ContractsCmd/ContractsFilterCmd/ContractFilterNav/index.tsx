@@ -1,4 +1,7 @@
+import { CommandItemNav } from '../../../../CmdRoot/Item'
 import { Page } from '../../../../CmdRoot/types'
+import { ContractIdCmdNav } from '../ContractFilterCmdGroups/ContractId'
+import { contractsFilterStatusPage } from '../ContractFilterCmdGroups/Status'
 
 export const commandPage = {
   namespace: 'contracts',
@@ -18,5 +21,24 @@ export function ContractFilterNav({
   pushPage,
   select,
 }: Props) {
-  return null
+  return (
+    <>
+      <CommandItemNav
+        currentPage={currentPage}
+        parentPage={parentPage}
+        commandPage={commandPage}
+        onSelect={() => {
+          pushPage(contractsFilterStatusPage)
+        }}
+      >
+        {contractsFilterStatusPage.label}
+      </CommandItemNav>
+      <ContractIdCmdNav
+        currentPage={currentPage}
+        parentPage={parentPage}
+        commandPage={commandPage}
+        select={select}
+      />
+    </>
+  )
 }

@@ -30,6 +30,10 @@ export function Segment({
   rounded,
   className,
 }: Props) {
+  if (!startHeight || !endHeight) {
+    return null
+  }
+
   const spanHeight = range.endHeight - range.startHeight
   const spanTime = blocksToMilliseconds(spanHeight)
 

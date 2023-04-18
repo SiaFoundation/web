@@ -13,7 +13,7 @@ export type ContractData = {
   revision: {
     parentID: FileContractID
     unlockConditions: UnlockConditions
-    filesize: number
+    filesize: BigNumber
     fileMerkleRoot: Hash256
     windowStart: number
     windowEnd: number
@@ -23,37 +23,45 @@ export type ContractData = {
     unlockHash: Hash256
     revisionNumber: number
   }
+  usage: {
+    total: BigNumber
+    accountFunding: BigNumber
+    egress: BigNumber
+    ingress: BigNumber
+    riskedCollateral: BigNumber
+    rpc: BigNumber
+    storage: BigNumber
+  }
 
   hostSignature: Signature
   renterSignature: Signature
 
   status: ContractStatus
   lockedCollateral: BigNumber
-  usage: BigNumber
-  // NegotiationHeight is the height the contract was negotiated at.
   negotiationHeight: number
-  // FormationConfirmed is true if the contract formation transaction
-  // has been confirmed on the blockchain.
   formationConfirmed: boolean
-  // RevisionConfirmed is true if the contract revision transaction has
-  // been confirmed on the blockchain.
   revisionConfirmed: boolean
-  // ResolutionConfirmed is true if the contract's resolution has been
-  // confirmed on the blockchain.
-  resolutionConfirmed: boolean
-  // RenewedTo is the ID of the contract that renewed this contract. If
-  // this contract was not renewed, this field is the zero value.
+  payoutHeight: number
+  contractHeightStart: number
+  contractHeightEnd: number
+  resolutionHeight: number
   renewedTo: FileContractID
-  // RenewedFrom is the ID of the contract that this contract renewed. If
-  // this contract is not a renewal, the field is the zero value.
   renewedFrom: FileContractID
+  isRenewedTo: boolean
+  isRenewedFrom: boolean
 }
 
 export type TableColumnId =
   | 'actions'
   | 'contractId'
   | 'status'
-  | 'usage'
+  | 'usageTotal'
+  | 'usageAccountFunding'
+  | 'usageEgress'
+  | 'usageIngress'
+  | 'usageRiskedCollateral'
+  | 'usageRpc'
+  | 'usageStorage'
   | 'lockedCollateral'
   | 'timeline'
   | 'negotiationHeight'
@@ -66,7 +74,7 @@ export type TableColumnId =
 export const columnsDefaultVisible: TableColumnId[] = [
   'contractId',
   'status',
-  'usage',
+  'usageTotal',
   'lockedCollateral',
   'timeline',
   'negotiationHeight',

@@ -10,24 +10,38 @@ import {
   FileContractID,
   PublicKey,
 } from '@siafoundation/react-core'
-import { Contract, WalletTransaction } from './siaTypes'
+import { Contract, ContractStatus, WalletTransaction } from './siaTypes'
 
-export type HostState = {
+export type StateHost = {
   publicKey: string
   walletAddress: string
+  buildState: {
+    network: string
+    version: string
+    commit: string
+    buildTime: string
+  }
+}
+
+export function useStateHost(args?: HookArgsSwr<void, StateHost>) {
+  return useGetSwr({
+    ...args,
+    route: '/state/host',
+  })
+}
+
+export type StateConsensus = {
   chainIndex: {
-    Height: number
+    height: number
     ID: string
   }
   synced: boolean
-  storedSectors: number
-  totalSectors: number
 }
 
-export function useHostState(args?: HookArgsSwr<void, HostState>) {
+export function useStateConsensus(args?: HookArgsSwr<void, StateConsensus>) {
   return useGetSwr({
     ...args,
-    route: '/state',
+    route: '/state/consensus',
   })
 }
 
@@ -117,7 +131,7 @@ export function useWalletSend(
 
 export type ContractFilterRequest = {
   // filters
-  statuses?: number[]
+  statuses?: ContractStatus[]
   contractIDs?: FileContractID[]
   renewedFrom?: FileContractID[]
   renewedTo?: FileContractID[]
@@ -134,13 +148,22 @@ export type ContractFilterRequest = {
   offset?: number
 
   // sorting
-  sortField?: string
+  sortField?: 'status' | 'negotiationHeight' | 'expirationHeight'
   sortDesc?: boolean
+}
+
+export type ContractFilterResponse = {
+  contracts: Contract[]
+  count: number
 }
 
 const contractsRoute = '/contracts'
 export function useContracts(
-  args: HookArgsWithPayloadSwr<void, ContractFilterRequest, Contract[]>
+  args: HookArgsWithPayloadSwr<
+    void,
+    ContractFilterRequest,
+    ContractFilterResponse
+  >
 ) {
   return usePostSwr({
     ...args,

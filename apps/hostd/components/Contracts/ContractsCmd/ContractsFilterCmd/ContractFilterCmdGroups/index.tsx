@@ -1,6 +1,8 @@
 import { ContractData } from '../../../../../contexts/contracts/types'
 import { Page } from '../../../../CmdRoot/types'
 import { ClientFilterItem } from '@siafoundation/design-system'
+import { StatusCmdGroup } from './Status'
+import { ContractIdCmdGroup } from './ContractId'
 
 type Props = {
   currentPage: Page
@@ -8,5 +10,10 @@ type Props = {
 }
 
 export function ContractFilterCmdGroups({ currentPage, select }: Props) {
-  return null
+  return (
+    <>
+      <StatusCmdGroup currentPage={currentPage} select={select} />
+      <ContractIdCmdGroup currentPage={currentPage} select={select} />
+    </>
+  )
 }

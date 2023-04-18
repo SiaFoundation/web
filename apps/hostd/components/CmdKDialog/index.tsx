@@ -1,5 +1,6 @@
 import { Dialog, useConnectivity } from '@siafoundation/design-system'
 import { useAppSettings } from '@siafoundation/react-core'
+import { connectivityRoute } from '../../config/routes'
 import { useEffect } from 'react'
 import { CmdRoot } from '../CmdRoot'
 
@@ -11,7 +12,9 @@ type Props = {
 
 export function CmdKDialog({ open, onOpenChange, setOpen }: Props) {
   const { isUnlocked } = useAppSettings()
-  const { isConnected, isSynced } = useConnectivity({ route: '/state' })
+  const { isConnected, isSynced } = useConnectivity({
+    route: connectivityRoute,
+  })
   // Toggle the menu when ⌘K is pressed
   useEffect(() => {
     if (!isUnlocked || !isConnected || !isSynced) {

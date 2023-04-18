@@ -2,9 +2,14 @@ import {
   useTableState,
   useDatasetEmptyState,
   useServerFilters,
+  getContractsTimeRangeBlockHeight,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
-import { useContracts as useContractsData } from '@siafoundation/react-hostd'
+import {
+  ContractStatus,
+  useContracts as useContractsData,
+  useStateConsensus,
+} from '@siafoundation/react-hostd'
 import { createContext, useContext, useMemo } from 'react'
 import {
   columnsDefaultVisible,
@@ -16,30 +21,17 @@ import { useDataset } from './dataset'
 
 const defaultLimit = 50
 
+const sortFieldMap = {
+  timeline: 'negotiationHeight',
+  status: 'status',
+}
+
 function useContractsMain() {
   const router = useRouter()
   const limit = Number(router.query.limit || defaultLimit)
   const offset = Number(router.query.offset || 0)
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useServerFilters()
-
-  const response = useContractsData({
-    payload: {
-      limit,
-      offset,
-      // filterMode: (filters.find((f) => f.id === 'filterMode')?.value ||
-      //   'all') as HostsSearchFilterMode,
-      // addressContains: filters.find((f) => f.id === 'addressContains')?.value,
-      // keyIn:
-      //   filters.find((f) => f.id === 'activeContracts') && allContracts
-      //     ? allContracts.map((c) => c.hostKey)
-      //     : undefined,
-    },
-  })
-
-  const dataset = useDataset({
-    response,
-  })
 
   const {
     configurableColumns,
@@ -61,6 +53,25 @@ function useContractsMain() {
     columnsDefaultSort
   )
 
+  const response = useContractsData({
+    payload: {
+      limit,
+      offset,
+      sortField: sortFieldMap[sortColumn],
+      sortDesc: sortDirection === 'desc',
+      contractIDs: filters
+        .filter((f) => f.id === 'filterContractId')
+        .map((f) => f.value),
+      statuses: filters
+        .filter((f) => f.id.startsWith('filterStatus'))
+        .map((f) => f.value) as ContractStatus[],
+    },
+  })
+
+  const dataset = useDataset({
+    response,
+  })
+
   const filteredTableColumns = useMemo(
     () => columns.filter((column) => enabledColumns.includes(column.id)),
     [enabledColumns]
@@ -70,11 +81,24 @@ function useContractsMain() {
   const error = response.error
   const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
+  const state = useStateConsensus()
+  const currentHeight = state.data?.chainIndex.height
+  const { range: contractsTimeRange } = useMemo(
+    () => getContractsTimeRangeBlockHeight(currentHeight, dataset || []),
+    [currentHeight, dataset]
+  )
+
   return {
     dataState,
     offset,
     limit,
+    cellContext: {
+      contractsTimeRange,
+      currentHeight,
+    },
     pageCount: dataset?.length || 0,
+    totalCount: response.data?.count,
+    isLoading: response.isValidating,
     columns: filteredTableColumns,
     dataset,
     configurableColumns,

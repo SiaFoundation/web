@@ -49,7 +49,7 @@ export function NodeCmdGroup({ currentPage, parentPage, pushPage }: Props) {
       >
         View peers
       </CommandItemSearch>
-      <CommandItemSearch
+      {/* <CommandItemSearch
         currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
@@ -58,7 +58,7 @@ export function NodeCmdGroup({ currentPage, parentPage, pushPage }: Props) {
         }}
       >
         View transaction pool
-      </CommandItemSearch>
+      </CommandItemSearch> */}
     </CommandGroup>
   )
 }

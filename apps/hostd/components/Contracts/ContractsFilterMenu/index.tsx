@@ -6,6 +6,7 @@ import {
   ScrollArea,
   ControlGroup,
   Close16,
+  truncate,
 } from '@siafoundation/design-system'
 import { Command } from 'cmdk'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -60,7 +61,7 @@ export function ContractsFilterMenu() {
       {filters.map((filter) => (
         <ControlGroup key={filter.id}>
           <Button variant="active" state="waiting">
-            {filter.label}
+            {truncate(filter.label, 30)}
           </Button>
           <Button
             variant="active"

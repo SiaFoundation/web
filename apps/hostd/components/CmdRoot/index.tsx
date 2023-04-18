@@ -11,18 +11,23 @@ import { AppCmdGroup } from './AppCmdGroup'
 import { useCallback, useState } from 'react'
 import { NodeCmdGroup } from './NodeCmdGroup'
 import { ConfigCmdGroup } from './ConfigCmdGroup'
-// import { ContractsCmd } from '../Contracts/ContractsCmd'
 import { Page } from './types'
-// import { useContracts } from '../../contexts/contracts'
+import { useContracts } from '../../contexts/contracts'
 import { useDebounce } from 'use-debounce'
 import { CmdEmptyDefault } from './CmdEmpty'
+import { ContractsCmd } from '../Contracts/ContractsCmd'
+import { useDialog } from '../../contexts/dialog'
+import { useRouter } from 'next/router'
+import { routes } from '../../config/routes'
 
 type Props = {
   panel?: boolean
 }
 
 export function CmdRoot({ panel }: Props) {
-  // const { resetFilters: resetContractsFilters } = useContracts()
+  const router = useRouter()
+  const { resetFilters: resetContractsFilters } = useContracts()
+  const { closeDialog } = useDialog()
   const [search, setSearch] = useState('')
   const [debouncedSearch] = useDebounce(search, 500)
   const [pages, setPages] = useState<Page[]>([])
@@ -36,13 +41,13 @@ export function CmdRoot({ panel }: Props) {
     [setPages]
   )
 
-  // const beforeSelect = useCallback(() => {
-  //   closeDialog()
-  // }, [closeDialog])
+  const beforeSelect = useCallback(() => {
+    closeDialog()
+  }, [closeDialog])
 
-  // const afterSelect = useCallback(() => {
-  //   setSearch('')
-  // }, [setSearch])
+  const afterSelect = useCallback(() => {
+    setSearch('')
+  }, [setSearch])
 
   const Empty = page?.empty || CmdEmptyDefault
 
@@ -82,7 +87,7 @@ export function CmdRoot({ panel }: Props) {
         </Command.Empty>
         <AppCmdGroup currentPage={page} pushPage={pushPage} />
         <WalletCmdGroup currentPage={page} pushPage={pushPage} />
-        {/* <ContractsCmd
+        <ContractsCmd
           currentPage={page}
           pushPage={pushPage}
           beforeSelect={() => {
@@ -95,7 +100,7 @@ export function CmdRoot({ panel }: Props) {
             }
             afterSelect()
           }}
-        /> */}
+        />
         <ConfigCmdGroup currentPage={page} pushPage={pushPage} />
         <NodeCmdGroup currentPage={page} pushPage={pushPage} />
       </Command.List>

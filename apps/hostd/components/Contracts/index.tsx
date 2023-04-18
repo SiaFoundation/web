@@ -6,9 +6,9 @@ import { useContracts } from '../../contexts/contracts'
 import { HostdAuthedLayout } from '../HostdAuthedLayout'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
-// import { ContractsFilterMenu } from './ContractsFilterMenu'
-// import { ContractsActionsMenu } from './ContractsActionsMenu'
 import { StateError } from './StateError'
+import { ContractsActionsMenu } from './ContractsActionsMenu'
+import { ContractsFilterMenu } from './ContractsFilterMenu'
 
 export function Contracts() {
   const { openDialog } = useDialog()
@@ -20,21 +20,22 @@ export function Contracts() {
     toggleSort,
     limit,
     dataState,
-    // cellContext,
+    cellContext,
   } = useContracts()
 
   return (
     <HostdAuthedLayout
-      title="Active contracts"
+      title="Contracts"
       routes={routes}
       sidenav={<HostdSidenav />}
       openSettings={() => openDialog('settings')}
-      // nav={<ContractsFilterMenu />}
+      nav={<ContractsFilterMenu />}
       size="full"
-      // actions={<ContractsActionsMenu />}
+      actions={<ContractsActionsMenu />}
     >
       <div className="p-5 min-w-fit">
         <Table
+          context={cellContext}
           isLoading={dataState === 'loading'}
           emptyState={
             dataState === 'noneMatchingFilters' ? (
