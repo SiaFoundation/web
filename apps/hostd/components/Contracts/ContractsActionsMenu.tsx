@@ -1,15 +1,17 @@
-import { PaginatorUnknownTotal } from '@siafoundation/design-system'
+import { PaginatorKnownTotal } from '@siafoundation/design-system'
 import { ContractsViewDropdownMenu } from './ContractsViewDropdownMenu'
 import { useContracts } from '../../contexts/contracts'
 
 export function ContractsActionsMenu() {
-  const { offset, limit, pageCount } = useContracts()
+  const { offset, limit, totalCount, pageCount, isLoading } = useContracts()
 
   return (
     <div className="flex gap-2">
-      <PaginatorUnknownTotal
+      <PaginatorKnownTotal
         offset={offset}
         limit={limit}
+        isLoading={isLoading}
+        datasetTotal={totalCount}
         pageTotal={pageCount}
       />
       <ContractsViewDropdownMenu />

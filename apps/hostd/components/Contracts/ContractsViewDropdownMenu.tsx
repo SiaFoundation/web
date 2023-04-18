@@ -36,13 +36,7 @@ export function ContractsViewDropdownMenu() {
       label: column.label,
       value: column.id,
     }))
-  const timeColumns = configurableColumns
-    .filter((c) => c.category === 'time')
-    .map((column) => ({
-      label: column.label,
-      value: column.id,
-    }))
-  const spendingColumns = configurableColumns
+  const financialColumns = configurableColumns
     .filter((c) => c.category === 'financial')
     .map((column) => ({
       label: column.label,
@@ -135,29 +129,15 @@ export function ContractsViewDropdownMenu() {
         />
       </BaseMenuItem>
       <MenuSectionLabelToggleAll
-        label="Time"
-        columns={timeColumns.map((c) => c.value)}
+        label="Usage"
+        columns={financialColumns.map((c) => c.value)}
         enabled={enabledColumns}
         setColumnsVisible={setColumnsVisible}
         setColumnsHidden={setColumnsHidden}
       />
       <BaseMenuItem>
         <PoolCombo
-          options={timeColumns}
-          values={enabledColumns}
-          onChange={(value) => toggleColumnVisibility(value)}
-        />
-      </BaseMenuItem>
-      <MenuSectionLabelToggleAll
-        label="Financial"
-        columns={spendingColumns.map((c) => c.value)}
-        enabled={enabledColumns}
-        setColumnsVisible={setColumnsVisible}
-        setColumnsHidden={setColumnsHidden}
-      />
-      <BaseMenuItem>
-        <PoolCombo
-          options={spendingColumns}
+          options={financialColumns}
           values={enabledColumns}
           onChange={(value) => toggleColumnVisibility(value)}
         />

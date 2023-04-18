@@ -20,3 +20,5 @@ export const routes = {
   lockscreen: '/unlock',
   syncscreen: '/sync',
 }
+
+export const connectivityRoute = '/state/consensus'

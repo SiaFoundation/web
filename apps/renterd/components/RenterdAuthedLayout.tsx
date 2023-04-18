@@ -1,6 +1,7 @@
 import { AppAuthedLayout } from '@siafoundation/design-system'
 import { useWalletBalance } from '@siafoundation/react-renterd'
 import BigNumber from 'bignumber.js'
+import { connectivityRoute } from '../config/routes'
 
 type Props = React.ComponentProps<typeof AppAuthedLayout>
 
@@ -11,7 +12,7 @@ export function RenterdAuthedLayout(
   return (
     <AppAuthedLayout
       appName="renterd"
-      connectivityRoute="/bus/consensus/state"
+      connectivityRoute={connectivityRoute}
       walletBalance={balance.data ? new BigNumber(balance.data) : undefined}
       {...props}
     />

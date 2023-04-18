@@ -17,7 +17,7 @@ import {
   useAppSettings,
   useSiaStatsNetworkStatus,
 } from '@siafoundation/react-core'
-import { useHostState, useSyncerPeers } from '@siafoundation/react-hostd'
+import { useStateConsensus, useSyncerPeers } from '@siafoundation/react-hostd'
 import { useDialog } from '../../contexts/dialog'
 import { routes } from '../../config/routes'
 import { HostdPublicLayout } from '../HostdPublicLayout'
@@ -25,11 +25,11 @@ import { HostdPublicLayout } from '../HostdPublicLayout'
 export function SyncScreen() {
   const { settings, lock, isUnlocked } = useAppSettings()
   const { openDialog } = useDialog()
-  const state = useHostState()
+  const state = useStateConsensus()
   const peers = useSyncerPeers()
   const status = useSiaStatsNetworkStatus()
 
-  const currentBlockHeight = state.data ? state.data?.chainIndex.Height : 0
+  const currentBlockHeight = state.data ? state.data?.chainIndex.height : 0
   const networkBlockHeight = status.data?.block_height || 0
 
   const percent =

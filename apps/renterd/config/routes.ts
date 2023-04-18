@@ -28,3 +28,5 @@ export const routes = {
   lockscreen: '/login',
   syncscreen: '/sync',
 }
+
+export const connectivityRoute = '/bus/consensus/state'

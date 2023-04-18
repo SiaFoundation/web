@@ -1,6 +1,6 @@
 import { DatumCard, PeerList } from '@siafoundation/design-system'
 import {
-  useHostState,
+  useStateConsensus,
   useSyncerPeers,
   // useTxPoolTransactions,
 } from '@siafoundation/react-hostd'
@@ -20,7 +20,7 @@ export function Node() {
   //     },
   //   },
   // })
-  const state = useHostState({
+  const state = useStateConsensus({
     config: {
       swr: {
         refreshInterval: 30_000,
@@ -49,7 +49,7 @@ export function Node() {
             label="Height"
             value={
               state.data
-                ? state.data.chainIndex.Height.toLocaleString()
+                ? state.data.chainIndex.height.toLocaleString()
                 : undefined
             }
             comment={!state.data?.synced ? 'Syncing' : undefined}

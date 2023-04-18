@@ -3,7 +3,7 @@ import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
 import { useDialog } from '../../contexts/dialog'
 import { CommandGroup, CommandItemNav, CommandItemSearch } from './Item'
-import { useHostState } from '@siafoundation/react-hostd'
+import { useStateHost } from '@siafoundation/react-hostd'
 import { Page } from './types'
 
 const commandPage = {
@@ -20,7 +20,7 @@ type Props = {
 export function WalletCmdGroup({ currentPage, parentPage, pushPage }: Props) {
   const { openDialog, closeDialog } = useDialog()
   const router = useRouter()
-  const state = useHostState()
+  const state = useStateHost()
   return (
     <CommandGroup currentPage={currentPage} commandPage={commandPage}>
       <CommandItemNav
