@@ -17,8 +17,6 @@ import { getCacheArticles } from '../content/articles'
 import { getCacheSoftware } from '../content/software'
 import { getCacheTutorials } from '../content/tutorials'
 import backgroundImage from '../assets/backgrounds/mountain.png'
-import renterdImage from '../assets/renterd/renterd-peek.png'
-import hostdImage from '../assets/hostd/hostd-peek.png'
 import previewImage from '../assets/previews/mountain.png'
 import { useCallback, useMemo, useState } from 'react'
 import { textContent } from '../lib/utils'
@@ -27,14 +25,12 @@ import { JiggleArrow } from '../components/JiggleArrow'
 import { SectionGradient } from '../components/SectionGradient'
 import { SectionSimple } from '../components/SectionSimple'
 import { SectionWaves } from '../components/SectionWaves'
-import { CalloutSoftware } from '../components/CalloutSoftware'
 import { usePullTop } from '../hooks/usePullTop'
 import { cx } from 'class-variance-authority'
+import { SoftwareSectionNextGen } from '../components/SoftwareSectionNextGen'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
-const renterdImageProps = getImageProps(renterdImage)
-const hostdImageProps = getImageProps(hostdImage)
 
 const transitionWidthDuration = 300
 const transitionFadeDelay = 500
@@ -191,25 +187,7 @@ Props) {
             actionTitle="Explore"
             actionLink={routes.community.index}
           />
-          <CalloutSoftware
-            name="renterd"
-            startTime={30}
-            variant="subtle"
-            description={
-              'A next-generation Sia renter, developed by the Sia Foundation. Smart defaults and a highly extensible API.'
-            }
-            href={routes.software.renterd}
-            imageProps={renterdImageProps}
-          />
-          <CalloutSoftware
-            name="hostd"
-            variant="subtle"
-            startTime={40}
-            description={
-              'A next-generation Sia host, developed by the Sia Foundation. Built for performance and reliability.'
-            }
-            imageProps={hostdImageProps}
-          />
+          <SoftwareSectionNextGen />
         </div>
       </SectionSimple>
       <SectionGradient className="md:pt-16 pb-20 md:pb-40">

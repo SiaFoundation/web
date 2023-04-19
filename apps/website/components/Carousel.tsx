@@ -62,7 +62,7 @@ export function CarouselTags({
   items,
 }: CarouselTagsProps) {
   return (
-    <div className="flex flex-wrap gap-x-4 md:gap-x-10 gap-y-2 md:gap-y-10 items-center justify-center">
+    <div className="flex flex-wrap gap-x-4 md:gap-x-10 gap-y-3 md:gap-y-6 items-center justify-center">
       {items.map((item) => (
         <Text
           key={item.key}

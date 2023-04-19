@@ -23,7 +23,7 @@ export const menuSections = [
         newTab: true,
       },
       {
-        link: webLinks.apiDocs,
+        link: webLinks.apiDocs.siad,
         title: 'API Docs',
         newTab: true,
       },

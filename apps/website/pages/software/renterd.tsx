@@ -3,13 +3,18 @@ import {
   ContentGallery,
   Callout,
   Code,
-  ContentProject,
   SiteHeading,
   getImageProps,
   webLinks,
   Link,
   Text,
   LogoGithub24,
+  Book24,
+  Select,
+  ControlGroup,
+  Download16,
+  LinkButton,
+  Button,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { RenterdUICarousel } from '../../components/RenterdUICarousel'
@@ -27,6 +32,10 @@ import { Terminal } from '../../components/Terminal'
 import { SectionGradient } from '../../components/SectionGradient'
 import { SectionWaves } from '../../components/SectionWaves'
 import { SectionSimple } from '../../components/SectionSimple'
+import { useState } from 'react'
+import { useInView } from 'react-intersection-observer'
+import { cx } from 'class-variance-authority'
+import { getCacheRenterdLatestRelease } from '../../content/releases'
 
 const backgroundImageProps = getImageProps(backgroundImage)
 const previewImageProps = getImageProps(previewImage)
@@ -44,22 +53,72 @@ const description = (
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-export default function Renterd({ technical, tutorials, services }: Props) {
+export default function Renterd({ version, technical, tutorials }: Props) {
+  const downloadLinks = getLinks(version)
+  const [download, setDownload] = useState(downloadLinks[0])
   const downloadEl = (
-    <div className="flex flex-row flex-wrap items-center gap-x-2 gap-y-3">
-      <Link
-        weight="bold"
-        href="https://github.com/SiaFoundation/renterd"
-        target="_blank"
-      >
-        <div className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+      <div className="flex items-center gap-x-4 gap-y-3">
+        <Link
+          weight="bold"
+          href={webLinks.github.renterd}
+          target="_blank"
+          size="14"
+          underline="hover"
+          className="flex items-center gap-1"
+        >
           <LogoGithub24 />
-          Pre-release source code.
-        </div>
-      </Link>
-      <Text color="subtle">The first official release is coming soon.</Text>
+          <span>Source code</span>
+        </Link>
+        <Link
+          weight="bold"
+          href={webLinks.apiDocs.renterd}
+          target="_blank"
+          size="14"
+          underline="hover"
+          className="flex items-center gap-1"
+        >
+          <Book24 />
+          <span>API Docs</span>
+        </Link>
+      </div>
+      <div className="flex-1" />
+      <ControlGroup>
+        <Button state="waiting">{version}</Button>
+        <Select
+          value={download.link}
+          onChange={(e) =>
+            setDownload(
+              downloadLinks.find((i) => i.link === e.currentTarget.value)
+            )
+          }
+        >
+          <optgroup label="mainnet">
+            {getLinks(version)
+              .filter((i) => i.group === 'mainnet')
+              .map((i) => (
+                <option key={i.link} value={i.link}>
+                  {i.title}
+                </option>
+              ))}
+          </optgroup>
+          <optgroup label="testnet">
+            {getLinks(version)
+              .filter((i) => i.group === 'testnet')
+              .map((i) => (
+                <option key={i.link} value={i.link}>
+                  {i.title}
+                </option>
+              ))}
+          </optgroup>
+        </Select>
+        <LinkButton href={download.link} tip="Download binary" icon="contrast">
+          <Download16 />
+        </LinkButton>
+      </ControlGroup>
     </div>
   )
+  const { ref: appRef, inView: appInView } = useInView()
 
   return (
     <Layout
@@ -76,16 +135,25 @@ export default function Renterd({ technical, tutorials, services }: Props) {
       previewImage={previewImageProps}
     >
       <SectionGradient className="pt-8 xl:pt-6 pb:30">
-        <div className="hidden xl:block pt-52">{downloadEl}</div>
-        <RenterdUICarousel />
+        <div className="relative">
+          <div ref={appRef} className="absolute top-[70%]" />
+          <div
+            className={cx(
+              'relative transition-transform',
+              appInView ? 'scale-[1.03]' : ''
+            )}
+          >
+            <div className="hidden xl:block pt-52 pb-2">{downloadEl}</div>
+            <RenterdUICarousel />
+          </div>
+        </div>
         <SiteHeading
           size="24"
-          className="mt-16 mb-16 md:mb-24"
-          eyebrow="Coming soon"
+          className="mt-24 mb-24 md:mb-32"
           title="Manage your storage with a powerful user interface"
           description={
             <>
-              Manage your files, contracts, hosts, and blockchain node with an
+              Manage your files, contracts, wallet, settings, and more with an
               intuitive interface. The embedded interface can be accessed with
               your web browser.
             </>
@@ -102,8 +170,9 @@ export default function Renterd({ technical, tutorials, services }: Props) {
                 <Code>renterd</Code> comes with a built-in "autopilot" that
                 handles host selection, contract management, and file repair.
                 Want more control? Just disable it with{' '}
-                <Code>--autopilot=false</Code>, and use the renterd HTTP API to
-                implement custom maintenance logic in your favorite language.
+                <Code>-autopilot.enabled=false</Code>, and use the renterd HTTP
+                API to implement custom maintenance logic in your favorite
+                language.
               </>
             }
           />
@@ -113,31 +182,26 @@ export default function Renterd({ technical, tutorials, services }: Props) {
                 {
                   command: ['renterd'],
                   result: [
-                    'renterd v0.1.0',
-                    'Starting renterd in autopilot mode...',
-                    'p2p: Listening on 127.0.0.1:56700',
+                    'renterd v0.2.0',
+                    'Network Mainnet',
                     'api: Listening on 127.0.0.1:9980',
+                    'bus: Listening on 127.0.0.1:9981',
+                    'autopilot: fetched 273 active contracts, took 3m42.415321208s',
+                    'autopilot: looking for 100 candidate hosts',
+                    'autopilot: selected 228 candidate hosts out of 20731     {"excluded": 0, "unscanned": 20503}',
+                    'autopilot: scored 13 candidate hosts out of 228, took 22.02253025s       {"zeroscore": 0, "unusable": 215}',
+                    '...',
                   ],
                 },
               ],
               [
                 {
-                  command: ['renterd --autopilot=false'],
+                  command: ['renterd -autopilot.enabled=false'],
                   result: [
-                    'renterd v0.1.0',
-                    'Starting renterd in manual mode...',
-                    'p2p: Listening on 127.0.0.1:56700',
+                    'renterd v0.2.0',
+                    'Network Mainnet',
                     'api: Listening on 127.0.0.1:9980',
-                  ],
-                },
-              ],
-              [
-                {
-                  command: ['renterd --stateless'],
-                  result: [
-                    'renterd v0.1.0',
-                    'Starting renterd in stateless mode...',
-                    'api: Listening on 127.0.0.1:9980',
+                    'bus: Listening on 127.0.0.1:9981',
                   ],
                 },
               ],
@@ -155,61 +219,79 @@ export default function Renterd({ technical, tutorials, services }: Props) {
               and performance. Form contracts, transfer data, and manage your
               files with clean and consistent JSON-speaking endpoints.{' '}
               <Code>renterd</Code> can even scale horizontally: in{' '}
-              <Code>--stateless</Code> mode, it provides raw access to the Sia
+              <Code>worker</Code> mode, it provides raw access to the Sia
               renter-host protocol, with no UI, no blockchain, and no disk I/O —
               perfect for massive renting operations.
             </>
           }
+          links={[
+            {
+              title: 'View API docs',
+              link: webLinks.apiDocs.renterd,
+              newTab: true,
+            },
+          ]}
         />
         <div className="flex flex-row flex-wrap justify-between gap-6 w-full pb-12">
           <div className="flex flex-col gap-2 overflow-hidden">
             <Text className="mt-6">
-              <Text weight="bold">Example:</Text> Build a contract formation
-              transaction.
+              <Text weight="bold">Example:</Text> Form a contract with a host.
             </Text>
             <Terminal
               sequences={[
                 [
                   {
                     command: [
-                      'curl -X POST http://localhost:9980/api/wallet/prepare/form --json \\',
+                      'curl -X POST http://localhost:9980/api/worker/rhp/form --json \\',
                       "'" +
                         JSON.stringify(
                           {
                             hostKey:
-                              'ed25519:15433dcd697167a6b40f2434aaf462badc9b9cbc5894726644d3221a6a196c2f',
-                            renterFunds: '1000000000000000',
-                            endHeight: '400000',
+                              'ed25519:878d7d27e75691aa8f554ecb4c3e0c371a2a2a3d0901fe77727b6df6c6a11a6a',
+                            hostIP: '127.0.0.1:59868',
+                            hostCollateral: '191285052982572071957200',
+                            renterFunds: '16666666666666666666666666',
+                            renterAddress:
+                              'addr:861c1574947689c04df41a987b3a6a0a44eef27bb4511f3d64d1531913ca26288a12efc3f227',
+                            endHeight: 126,
                           },
                           null,
                           2
                         ) +
                         "'",
                     ],
-                    result: ['[{ file contract transaction }]'],
+                    result: ['{ file contract transaction }'],
                   },
+                ],
+              ]}
+            />
+          </div>
+          <div className="flex flex-col gap-2 overflow-hidden">
+            <Text className="mt-6">
+              <Text weight="bold">Example:</Text> Upload a file and fetch the
+              metadata.
+            </Text>
+            <Terminal
+              sequences={[
+                [
                   {
                     command: [
-                      'curl -X POST http://localhost:9980/api/wallet/sign --json \\',
-                      "'{ file contract transaction }'",
+                      'curl -X PUT http://localhost:9980/api/worker/objects/movies/movie.mp4 \\',
+                      '--data @movie.mp4',
                     ],
-                    result: ['{ signed transaction }'],
+                    result: ['{ file upload successful 200 }'],
                   },
                   {
                     command: [
-                      'curl -X POST http://localhost:9980/api/rhp/form --json \\',
-                      "'" +
-                        `{
-  "hostKey": "ed25519:15433dcd697167a6b40f2434aaf462badc9b9cbc5894726644d3221a6a196c2f",
-  "hostIP": "161.88.0.733:9982",
-  "transactionSet": [{ signed transaction }]
-}'`,
+                      'curl -X GET http://localhost:9980/api/bus/objects/movies/movie.mp4',
                     ],
                     result: [
                       JSON.stringify(
                         {
-                          contractID:
-                            'f68272bad8ae85a075158e8065ce67823a311be4416c02ad993cc29777a6694a',
+                          object: {
+                            key: 'key:35d3ee7e94f74c671cbb754ce7b2568a740874b2921e370d6444b356752f23e8',
+                            slabs: '{ slabs of data }',
+                          },
                         },
                         null,
                         2
@@ -220,87 +302,7 @@ export default function Renterd({ technical, tutorials, services }: Props) {
               ]}
             />
           </div>
-          <div className="flex flex-col gap-2 overflow-hidden">
-            <Text className="mt-6">
-              <Text weight="bold">Example:</Text> Upload a file.
-            </Text>
-            <Terminal
-              sequences={[
-                [
-                  {
-                    command: [
-                      'curl http://localhost:9980/api/slabs/upload \\',
-                      `  -F meta='{
-  "minShards": 3,
-  "totalShards": 10,
-  "contracts": [ file contracts ]
-}' \\`,
-                      '-F data=@movie.mp4',
-                    ],
-                    result: [
-                      JSON.stringify(
-                        [
-                          {
-                            key: 'key:35d3ee7e94f74c671cbb754ce7b2568a740874b2921e370d6444b356752f23e8',
-                            minShards: 3,
-                            shards: [
-                              {
-                                host: 'ed25519:15433dcd697167a6b40f2434aaf462badc9b9cbc5894726644d3221a6a196c2f',
-                                root: 'a0e70901fb4753db933a27b5cc9dd77c5dcbf55b879ece34555a3928d4178b83',
-                              },
-                            ],
-                          },
-                        ],
-                        null,
-                        2
-                      ),
-                    ],
-                  },
-                ],
-              ]}
-            />
-          </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-30 items-center justify-between mt-12 md:mt-40">
-          <SiteHeading title="Download renterd">
-            <div className="mt-2">{downloadEl}</div>
-          </SiteHeading>
-          <Callout
-            className="w-full md:max-w-lg md:h-[500px]"
-            title="Learn more about renterd"
-            description={
-              <>
-                Join the Sia Discord to chat with the team and community about{' '}
-                <Code>renterd</Code> development, features, use-cases, bugs, and
-                more.
-              </>
-            }
-            actionTitle="Join the Discord"
-            actionLink={webLinks.discord}
-          />
-        </div>
-        <SiteHeading
-          size="32"
-          className="mt-32 md:mt-40 pb-12 md:pb-20"
-          title="Companies and projects building on Sia"
-          description={
-            <>
-              Sia is a thriving ecosystem of data storage enthusiasts, open
-              source software, and commercial data storage platforms.
-            </>
-          }
-          links={[
-            {
-              title: 'Learn about the ecosystem',
-              link: routes.community.index,
-            },
-          ]}
-        />
-        <ContentGallery
-          component={ContentProject}
-          items={services}
-          className="mb-24"
-        />
       </SectionGradient>
       <SectionGradient>
         <SiteHeading
@@ -325,17 +327,18 @@ export default function Renterd({ technical, tutorials, services }: Props) {
         />
         <ContentGallery columnClassName="grid-cols-1" items={technical} />
         <Callout
-          className="mt-24 md:mt-40 mb-24 md:mb-40"
-          title="Sia 101"
+          title="Learn more about renterd"
+          className="mt-24 md:mt-40 mb-24 md:mb-48"
           size="2"
           description={
             <>
-              Learn how the Sia protocol works to power redundant,
-              decentralized, data storage.
+              Join the Sia Discord to chat with the team and community about{' '}
+              <Code>renterd</Code> development, features, use-cases, bugs, and
+              more.
             </>
           }
-          actionTitle="Learn more"
-          actionLink={routes.learn.index}
+          actionTitle="Join the Discord"
+          actionLink={webLinks.discord}
         />
       </SectionGradient>
     </Layout>
@@ -346,12 +349,14 @@ export async function getStaticProps() {
   const stats = await getCacheStats()
   const technical = await getCacheArticles(['technical'], 8)
   const tutorials = await getCacheTutorials()
+  const release = await getCacheRenterdLatestRelease()
   const services = await getCacheSoftware('storage_services', 5)
 
   const props = {
     technical,
     tutorials,
     services,
+    version: release?.tag_name,
     fallback: {
       '/api/stats': stats,
     },
@@ -361,4 +366,62 @@ export async function getStaticProps() {
     props,
     revalidate: getMinutesInSeconds(5),
   }
+}
+
+function getLinks(version: string) {
+  if (!version) {
+    return []
+  }
+  return [
+    {
+      title: 'Windows AMD64',
+      link: `${webLinks.github.renterd}/releases/download/${version}/renterd_windows_amd64.zip`,
+      group: 'mainnet',
+    },
+    {
+      title: 'MacOS AMD64',
+      link: `${webLinks.github.renterd}/releases/download/${version}/renterd_darwin_amd64.zip`,
+      group: 'mainnet',
+    },
+    {
+      title: 'MacOS ARM64',
+      link: `${webLinks.github.renterd}/releases/download/${version}/renterd_darwin_arm64.zip`,
+      group: 'mainnet',
+    },
+    {
+      title: 'Linux AMD64',
+      link: `${webLinks.github.renterd}/releases/download/${version}/renterd_linux_amd64.zip`,
+      group: 'mainnet',
+    },
+    {
+      title: 'Linux ARM64',
+      link: `${webLinks.github.renterd}/releases/download/${version}/renterd_linux_arm64.zip`,
+      group: 'mainnet',
+    },
+    {
+      title: 'testnet - Windows AMD64',
+      link: `${webLinks.github.renterd}/releases/download/${version}/renterd_zen_windows_amd64.zip`,
+      group: 'testnet',
+    },
+    {
+      title: 'testnet - MacOS AMD64',
+      link: `${webLinks.github.renterd}/releases/download/${version}/renterd_zen_darwin_amd64.zip`,
+      group: 'testnet',
+    },
+    {
+      title: 'testnet - MacOS ARM64',
+      link: `${webLinks.github.renterd}/releases/download/${version}/renterd_zen_darwin_arm64.zip`,
+      group: 'testnet',
+    },
+    {
+      title: 'testnet - Linux AMD64',
+      link: `${webLinks.github.renterd}/releases/download/${version}/renterd_zen_linux_amd64.zip`,
+      group: 'testnet',
+    },
+    {
+      title: 'testnet - Linux ARM64',
+      link: `${webLinks.github.renterd}/releases/download/${version}/renterd_zen_linux_arm64.zip`,
+      group: 'testnet',
+    },
+  ]
 }

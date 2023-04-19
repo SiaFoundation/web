@@ -39,7 +39,7 @@ export function CalloutSoftware({
         <Paragraph>{description}</Paragraph>
         {!children && (
           <Link href={href || '#'} disabled={!href} size="16">
-            {href ? 'Learn more' : 'Coming soon'}
+            {href ? 'Get started' : 'Coming soon'}
           </Link>
         )}
         {imageProps && (

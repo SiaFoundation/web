@@ -3,7 +3,6 @@ import { Text } from '../../core/Text'
 import { ChartType, ChartXYProps, CurveType, StackOffset } from './useChartXY'
 import { InfoTip } from '../../core/InfoTip'
 import { Dialog } from '../../core/Dialog'
-import { Tooltip } from '../../core/Tooltip'
 import { Settings16 } from '../../icons/carbon'
 import { Button } from '../../core/Button'
 
@@ -24,13 +23,9 @@ ChartXYProps) {
   return (
     <Dialog
       trigger={
-        <div>
-          <Tooltip content="Configure chart">
-            <Button variant="gray" size="small">
-              <Settings16 />
-            </Button>
-          </Tooltip>
-        </div>
+        <Button tip="Configure chart" variant="gray" size="small">
+          <Settings16 />
+        </Button>
       }
       title="Chart settings"
       contentVariants={{

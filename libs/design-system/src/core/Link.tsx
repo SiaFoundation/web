@@ -4,6 +4,7 @@ import React from 'react'
 import { textStyles } from './Text'
 import { buttonStyles } from './Button'
 import { VariantProps } from '../types'
+import { Tooltip } from './Tooltip'
 
 const linkStyles = cva(['cursor-pointer'], {
   variants: {
@@ -88,12 +89,46 @@ export const Link = React.forwardRef<
 
 export const LinkButton = React.forwardRef<
   HTMLAnchorElement,
-  React.ComponentProps<typeof BaseNextLink> & VariantProps<typeof buttonStyles>
+  React.ComponentProps<typeof BaseNextLink> &
+    VariantProps<typeof buttonStyles> & {
+      tip?: React.ReactNode
+    }
 >(
   (
-    { href, disabled, variant, size, state, rounded, className, ...props },
+    {
+      href,
+      disabled,
+      variant,
+      size,
+      state,
+      rounded,
+      icon,
+      className,
+      tip,
+      ...props
+    },
     ref
   ) => {
+    if (tip) {
+      return (
+        <Tooltip content={tip}>
+          <BaseNextLink
+            href={href || '#'}
+            ref={ref}
+            className={buttonStyles({
+              variant,
+              size,
+              state,
+              rounded,
+              disabled,
+              icon,
+              className,
+            })}
+            {...props}
+          />
+        </Tooltip>
+      )
+    }
     return (
       <BaseNextLink
         href={href || '#'}
@@ -104,6 +139,7 @@ export const LinkButton = React.forwardRef<
           state,
           rounded,
           disabled,
+          icon,
           className,
         })}
         {...props}

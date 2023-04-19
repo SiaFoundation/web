@@ -21,7 +21,11 @@ export const webLinks = {
     testnetFaucet: 'https://zen.sia.tech/faucet',
   },
   design: 'https://design.sia.tech',
-  apiDocs: 'https://api.sia.tech',
+  apiDocs: {
+    siad: 'https://api.sia.tech',
+    renterd: 'https://api.sia.tech/renterd',
+    hostd: 'https://api.sia.tech/hostd',
+  },
   // forum: 'https://forum.sia.tech',
   github: {
     index: 'https://github.com/SiaFoundation',
