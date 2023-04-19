@@ -68,6 +68,14 @@ export async function getGitHubClosedPRs(): Promise<GitHubPR[]> {
   }
   try {
     const response = await axios.get(
+      'https://api.github.com/repos/SiaFoundation/core/pulls?state=closed&per_page=30'
+    )
+    prs.push(...response.data)
+  } catch (e) {
+    console.log(e)
+  }
+  try {
+    const response = await axios.get(
       'https://api.github.com/repos/SiaFoundation/web/pulls?state=closed&per_page=30'
     )
     prs.push(
@@ -158,5 +166,21 @@ export async function getGitHub(): AsyncDataSourceResponse<GitHub> {
   } catch (e) {
     console.log(e)
     return buildErrorResponse500()
+  }
+}
+
+export type GitHubRelease = {
+  tag_name: string
+}
+
+export async function getGitHubRenterdLatestRelease(): Promise<GitHubRelease | null> {
+  try {
+    const response = await axios.get(
+      'https://api.github.com/repos/SiaFoundation/renterd/releases?per_page=1'
+    )
+    return response.data[0]
+  } catch (e) {
+    console.log(e)
+    return null
   }
 }

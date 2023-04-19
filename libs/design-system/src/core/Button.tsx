@@ -17,7 +17,7 @@ export const buttonStyles = cva(
     'cursor-pointer',
     'overflow-hidden',
     'focus:z-10',
-    'hover:z-10',
+    // 'hover:z-10',
     // 'ml-px',
     'disabled:cursor-auto',
     'disabled:pointer-events-none',
