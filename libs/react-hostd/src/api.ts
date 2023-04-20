@@ -9,7 +9,10 @@ import {
   HookArgsWithPayloadSwr,
   FileContractID,
   PublicKey,
+  getTestnetZenBlockHeight,
+  getMainnetBlockHeight,
 } from '@siafoundation/react-core'
+import useSWR from 'swr'
 import { Contract, ContractStatus, WalletTransaction } from './siaTypes'
 
 export type StateHost = {
@@ -43,6 +46,24 @@ export function useStateConsensus(args?: HookArgsSwr<void, StateConsensus>) {
     ...args,
     route: '/state/consensus',
   })
+}
+
+export function useNetworkBlockHeight(): number {
+  const state = useStateHost()
+  const res = useSWR(
+    state,
+    () => {
+      if (state.data?.buildState.network === 'zen') {
+        return getTestnetZenBlockHeight()
+      }
+      return getMainnetBlockHeight()
+    },
+    {
+      refreshInterval: 5_000,
+      keepPreviousData: true,
+    }
+  )
+  return res.data || 0
 }
 
 // syncer

@@ -13,33 +13,33 @@ import {
   DropdownMenuItem,
   DropdownMenuLeftSlot,
 } from '@siafoundation/design-system'
+import { useAppSettings } from '@siafoundation/react-core'
 import {
-  useAppSettings,
-  useSiaStatsNetworkStatus,
-} from '@siafoundation/react-core'
-import { useStateConsensus, useSyncerPeers } from '@siafoundation/react-hostd'
+  useNetworkBlockHeight,
+  useStateConsensus,
+  useSyncerPeers,
+} from '@siafoundation/react-hostd'
 import { useDialog } from '../../contexts/dialog'
 import { routes } from '../../config/routes'
 import { HostdPublicLayout } from '../HostdPublicLayout'
 
 export function SyncScreen() {
-  const { settings, lock, isUnlocked } = useAppSettings()
+  const { lock, isUnlocked } = useAppSettings()
   const { openDialog } = useDialog()
   const state = useStateConsensus()
   const peers = useSyncerPeers()
-  const status = useSiaStatsNetworkStatus()
 
   const currentBlockHeight = state.data ? state.data?.chainIndex.height : 0
-  const networkBlockHeight = status.data?.block_height || 0
+  const networkBlockHeight = useNetworkBlockHeight()
 
   const percent =
     isUnlocked && currentBlockHeight && networkBlockHeight
-      ? ((currentBlockHeight / networkBlockHeight) * 100).toFixed(1)
+      ? (Math.min(currentBlockHeight / networkBlockHeight, 1) * 100).toFixed(1)
       : 0
 
-  const moreThan1BlockToSync =
+  const moreThan10BlockToSync =
     currentBlockHeight && networkBlockHeight
-      ? networkBlockHeight - currentBlockHeight > 1
+      ? networkBlockHeight - currentBlockHeight > 10
       : false
 
   return (
@@ -90,43 +90,34 @@ export function SyncScreen() {
             </div>
             <Separator className="w-full mb-3" />
             <>
-              {settings.siaStats ? (
-                <ProgressBar
-                  variant="accent"
-                  value={
-                    currentBlockHeight && networkBlockHeight
-                      ? currentBlockHeight
-                      : 0
-                  }
-                  max={networkBlockHeight || 1}
-                  className=""
-                />
-              ) : (
-                <ProgressBar
-                  variant="accent"
-                  value={1}
-                  max={1}
-                  className="animate-pulse"
-                />
-              )}
+              <ProgressBar
+                variant="accent"
+                value={
+                  currentBlockHeight && networkBlockHeight
+                    ? currentBlockHeight
+                    : 0
+                }
+                max={networkBlockHeight || 1}
+                className=""
+              />
               <div className="flex justify-between mt-1.5">
                 <Text color="verySubtle" size="10">
                   Syncing...
                 </Text>
-                {isUnlocked && settings.siaStats ? (
-                  currentBlockHeight && networkBlockHeight ? (
+                {isUnlocked && currentBlockHeight && networkBlockHeight ? (
+                  currentBlockHeight > networkBlockHeight ? (
+                    <Text color="verySubtle" size="10">
+                      {`(${percent}%)`}
+                    </Text>
+                  ) : (
                     <Text color="verySubtle" size="10">
                       {`${currentBlockHeight.toLocaleString()} / ${networkBlockHeight.toLocaleString()} (${percent}%)`}
                     </Text>
-                  ) : null
-                ) : currentBlockHeight ? (
-                  <Text color="verySubtle" size="10">
-                    {currentBlockHeight.toLocaleString()}
-                  </Text>
+                  )
                 ) : null}
               </div>
             </>
-            {(!settings.siaStats || moreThan1BlockToSync) && (
+            {moreThan10BlockToSync && (
               <Text color="subtle" size="14" className="mt-2">
                 Welcome to Sia! The blockchain is syncing to the current network
                 height. Depending on your system this process may take a while.
