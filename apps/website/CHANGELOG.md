@@ -1,5 +1,12 @@
 # website
 
+## 0.36.0
+
+### Minor Changes
+
+- d136e4f: The activity feed now includes SiaFoundation/core.
+- d136e4f: The renterd landing page has been updated with current screenshots, the latest binary downloads, and more.
+
 ## 0.35.0
 
 ### Minor Changes
