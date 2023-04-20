@@ -83,6 +83,9 @@ export default function Renterd({ version, technical, tutorials }: Props) {
         </Link>
       </div>
       <div className="flex-1" />
+      <Text className="hidden md:block" size="14" weight="bold">
+        Downloads
+      </Text>
       <ControlGroup>
         <Button state="waiting">{version}</Button>
         <Select

@@ -87,7 +87,7 @@ function getHostFields(host: Host, allContracts: ContractData[]) {
     ),
     totalInteractions: new BigNumber(
       host.interactions.SuccessfulInteractions +
-        host.interactions.FailedInteractions || 0
+      host.interactions.FailedInteractions || 0
     ),
     failedInteractions: new BigNumber(
       host.interactions.FailedInteractions || 0
@@ -137,16 +137,16 @@ function getAutopilotFields(ah?: {
   score: number
   gougingBreakdown: {
     v2: {
-      contractErr: string
-      downloadErr: string
-      gougingErr: string
-      uploadErr: string
+      contractErr?: string
+      downloadErr?: string
+      gougingErr?: string
+      uploadErr?: string
     }
     v3: {
-      contractErr: string
-      downloadErr: string
-      gougingErr: string
-      uploadErr: string
+      contractErr?: string
+      downloadErr?: string
+      gougingErr?: string
+      uploadErr?: string
     }
   }
   gouging: boolean
