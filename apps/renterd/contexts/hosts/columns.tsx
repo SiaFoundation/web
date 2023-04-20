@@ -3,14 +3,15 @@ import {
   TableColumn,
   ValueCopyable,
   ValueNum,
-  CheckmarkFilled16,
-  Misuse16,
+  WarningSquareFilled16,
   Tooltip,
   LoadingDots,
   ValueSc,
   Plane16,
   Settings16,
   DataTable16,
+  UndefinedFilled16,
+  CheckboxCheckedFilled16,
 } from '@siafoundation/design-system'
 import { humanBytes, humanNumber } from '@siafoundation/sia-js'
 import { HostData, TableColumnId } from './types'
@@ -66,23 +67,25 @@ export const columns: HostsTableColumn[] = (
             side="right"
             content={
               (isAllowlistActive
-                ? `Allowlist ${
-                    data.isOnAllowlist
-                      ? 'allows this host.'
-                      : 'does not allow this host.'
-                  }`
+                ? `Allowlist ${data.isOnAllowlist
+                  ? 'allows this host.'
+                  : 'does not allow this host.'
+                }`
                 : `Allowlist is inactive.`) +
-              ` Blocklist ${
-                data.isOnBlocklist
-                  ? 'blocks this host.'
-                  : 'does not block this host.'
+              ` Blocklist ${data.isOnBlocklist
+                ? 'blocks this host.'
+                : 'does not block this host.'
               }`
             }
           >
             <div className="flex gap-2 items-center">
               <div className="mt-[5px]">
                 <Text color={data.isBlocked ? 'red' : 'green'}>
-                  {data.isBlocked ? <Misuse16 /> : <CheckmarkFilled16 />}
+                  {data.isBlocked ? (
+                    <WarningSquareFilled16 />
+                  ) : (
+                    <CheckboxCheckedFilled16 />
+                  )}
                 </Text>
               </div>
               <div className="flex flex-col">
@@ -124,7 +127,11 @@ export const columns: HostsTableColumn[] = (
           <div className="flex gap-2 items-center">
             <div className="mt-[5px]">
               <Text color={data.usable ? 'green' : 'red'}>
-                {data.usable ? <CheckmarkFilled16 /> : <Misuse16 />}
+                {data.usable ? (
+                  <CheckboxCheckedFilled16 />
+                ) : (
+                  <WarningSquareFilled16 />
+                )}
               </Text>
             </div>
             <div className="flex flex-col">
@@ -142,34 +149,46 @@ export const columns: HostsTableColumn[] = (
       id: 'ap_gouging',
       label: 'gouging',
       category: 'autopilot',
-      render: ({ data }) => (
-        <Tooltip
-          side="right"
-          content={
-            data.gouging ? 'Host is price gouging' : 'Host is not price gouging'
-          }
-        >
-          <div className="flex gap-2 items-center">
-            <div className="mt-[5px]">
-              <Text color={!data.gouging ? 'green' : 'red'}>
-                {!data.gouging ? <CheckmarkFilled16 /> : <Misuse16 />}
-              </Text>
-            </div>
-            <div className="flex flex-col">
-              {Object.entries(data.gougingBreakdown.v2).map(([key, reason]) => (
-                <Text key={'v2' + key} size="10" noWrap>
-                  {reason}
+      render: ({ data }) => {
+        return (
+          <Tooltip
+            side="right"
+            content={
+              data.gouging
+                ? 'Host is price gouging'
+                : 'Host is not price gouging'
+            }
+          >
+            <div className="flex gap-2 items-center">
+              <div className="mt-[5px]">
+                <Text color={!data.gouging ? 'subtle' : 'red'}>
+                  {!data.gouging ? (
+                    <UndefinedFilled16 />
+                  ) : (
+                    <WarningSquareFilled16 />
+                  )}
                 </Text>
-              ))}
-              {Object.entries(data.gougingBreakdown.v3).map(([key, reason]) => (
-                <Text key={'v3' + key} size="10" noWrap>
-                  {reason}
-                </Text>
-              ))}
+              </div>
+              <div className="flex flex-col">
+                {Object.entries(data.gougingBreakdown.v2).filter(([_, reason]) => reason && typeof reason === 'string').map(
+                  ([key, reason]) => (
+                    <Text key={'v2' + key} size="10" noWrap>
+                      {reason}
+                    </Text>
+                  )
+                )}
+                {Object.entries(data.gougingBreakdown.v3).filter(([_, reason]) => reason && typeof reason === 'string').map(
+                  ([key, reason]) => (
+                    <Text key={'v3' + key} size="10" noWrap>
+                      {reason}
+                    </Text>
+                  )
+                )}
+              </div>
             </div>
-          </div>
-        </Tooltip>
-      ),
+          </Tooltip>
+        )
+      },
     },
     {
       id: 'lastScan',
@@ -186,26 +205,42 @@ export const columns: HostsTableColumn[] = (
         if (isPending) {
           return <LoadingDots />
         }
+        const ago = formatDistance(new Date(data.lastScan), new Date(), {
+          addSuffix: true,
+        })
+        let message = ''
+        let icon = null
+        let color: React.ComponentProps<typeof Text>['color'] = 'subtle'
+        if (!data.lastScan) {
+          message = 'host has not been scanned'
+          icon = <UndefinedFilled16 />
+          color = 'subtle'
+        }
+
+        if (data.lastScan && !data.lastScanSuccess) {
+          message = `host scan failed ${ago}`
+          icon = <WarningSquareFilled16 />
+          color = 'red'
+        }
+        if (data.lastScan && data.lastScanSuccess) {
+          message = `host scan succeeded ${ago}`
+          icon = <CheckboxCheckedFilled16 />
+          color = 'green'
+        }
         return (
           <Tooltip
             side="right"
-            content={`${
-              data.lastScanSuccess ? 'succeeded' : 'failed'
-            } ${formatDistance(new Date(data.lastScan), new Date(), {
-              addSuffix: true,
-            })}`}
+            content={message}
           >
             <div className="flex gap-2 items-center">
               <div className="mt-[5px]">
-                <Text color={data.lastScanSuccess ? 'green' : 'red'}>
-                  {data.lastScanSuccess ? <CheckmarkFilled16 /> : <Misuse16 />}
+                <Text color={color}>
+                  {icon}
                 </Text>
               </div>
               <div className="flex flex-col">
                 <Text size="12" noWrap>
-                  {formatDistance(new Date(data.lastScan), new Date(), {
-                    addSuffix: true,
-                  })}
+                  {ago}
                 </Text>
                 <Text color="subtle" size="10" noWrap>
                   {format(new Date(data.lastScan), 'Pp')}
@@ -234,7 +269,11 @@ export const columns: HostsTableColumn[] = (
           >
             <div className="mt-[5px]">
               <Text color={hasContract ? 'green' : 'subtle'}>
-                {hasContract ? <CheckmarkFilled16 /> : <Misuse16 />}
+                {hasContract ? (
+                  <CheckboxCheckedFilled16 />
+                ) : (
+                  <UndefinedFilled16 />
+                )}
               </Text>
             </div>
           </Tooltip>
@@ -1026,7 +1065,11 @@ function makeRenderBool(section: 'priceTable' | 'settings', name: Key) {
     return (
       <div className="mt-[5px]">
         <Text color={data[section][name] ? 'green' : 'red'}>
-          {data[section][name] ? <CheckmarkFilled16 /> : <Misuse16 />}
+          {data[section][name] ? (
+            <CheckboxCheckedFilled16 />
+          ) : (
+            <WarningSquareFilled16 />
+          )}
         </Text>
       </div>
     )

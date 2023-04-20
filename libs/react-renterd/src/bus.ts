@@ -355,8 +355,13 @@ export function useContractsetUpdate(
 
 // objects
 
+export type ObjEntry = {
+  name: string
+  size: number
+}
+
 export function useObjectDirectory(
-  args: HookArgsSwr<{ key: string }, { entries: string[] }>
+  args: HookArgsSwr<{ key: string }, { entries: ObjEntry[] }>
 ) {
   return useGetSwr({ ...args, route: '/bus/objects/:key' })
 }

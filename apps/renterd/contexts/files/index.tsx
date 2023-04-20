@@ -1,29 +1,25 @@
 import {
-  useTableState,
   triggerErrorToast,
-  triggerToast,
-  useDatasetEmptyState,
-  useClientFilters,
-  useClientFilteredDataset,
+  triggerToast, useClientFilteredDataset, useClientFilters, useDatasetEmptyState, useTableState
 } from '@siafoundation/design-system'
 import {
   useObjectDirectory,
   useObjectDownloadFunc,
-  useObjectUpload,
+  useObjectUpload
 } from '@siafoundation/react-renterd'
+import { sortBy, throttle, toPairs } from 'lodash'
+import { useRouter } from 'next/router'
 import {
   createContext,
   useCallback,
   useContext,
   useMemo,
-  useState,
+  useState
 } from 'react'
-import { sortBy, throttle, toPairs } from 'lodash'
-import { columnsDefaultSort, columnsDefaultVisible, ObjectData } from './types'
-import { useRouter } from 'next/router'
 import { TransfersBar } from '../../components/TransfersBar'
 import { useContracts } from '../contracts'
 import { columns } from './columns'
+import { columnsDefaultSort, columnsDefaultVisible, ObjectData } from './types'
 import { getFilename, getFullPath, isDirectory } from './utils'
 
 type UploadsMap = Record<string, ObjectData>
@@ -230,7 +226,7 @@ function useFilesMain() {
 
     const dataMap: Record<string, ObjectData> = {}
 
-    response.data.entries?.forEach((path) => {
+    response.data.entries?.forEach(({ name: path }) => {
       // If there is a directory stub file filter it out.
       if (path === activeDirectoryPath) {
         return
