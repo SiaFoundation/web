@@ -1,3 +1,4 @@
+import useSWR from 'swr'
 import {
   useDeleteFunc,
   useGetSwr,
@@ -10,6 +11,8 @@ import {
   Currency,
   PublicKey,
   Transaction,
+  getMainnetBlockHeight,
+  getTestnetZenBlockHeight,
 } from '@siafoundation/react-core'
 import {
   AddObjectRequest,
@@ -41,6 +44,37 @@ export function useConsensusState(args?: HookArgsSwr<void, ConsensusState>) {
     ...args,
     route: '/bus/consensus/state',
   })
+}
+
+export type ConsensusNetwork = {
+  Name: string
+}
+
+export function useConsensusNetwork(
+  args?: HookArgsSwr<void, ConsensusNetwork>
+) {
+  return useGetSwr({
+    ...args,
+    route: '/bus/consensus/network',
+  })
+}
+
+export function useNetworkBlockHeight(): number {
+  const network = useConsensusNetwork()
+  const res = useSWR(
+    ['renterd/blockHeight', network],
+    () => {
+      if (network.data?.Name === 'zen') {
+        return getTestnetZenBlockHeight()
+      }
+      return getMainnetBlockHeight()
+    },
+    {
+      refreshInterval: 5_000,
+      keepPreviousData: true,
+    }
+  )
+  return res.data || 0
 }
 
 export function useConsensusAcceptBlock(

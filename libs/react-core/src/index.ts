@@ -9,6 +9,7 @@ export * from './useGetDownload'
 export * from './useSiaStats'
 export * from './useSiaCentral'
 export * from './useAppSettings'
+export * from './blockHeight'
 
 export * from './workflows'
 export * from './coreProvider'

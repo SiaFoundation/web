@@ -42,7 +42,7 @@ export function DirectoryDropdownMenu({ path }: Props) {
       contentProps={{ align: 'start' }}
     >
       <DropdownMenuLabel>Directory actions</DropdownMenuLabel>
-      {obj.data?.entries.find((e) => e === path) ? (
+      {obj.data?.entries.find((e) => e.name === path) ? (
         <DropdownMenuItem
           onSelect={() =>
             deleteObject.delete({

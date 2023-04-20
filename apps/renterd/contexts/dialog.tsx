@@ -101,6 +101,7 @@ export function Dialogs() {
       <SettingsDialog
         open={dialog === 'settings'}
         onOpenChange={onOpenChange}
+        showSiaStats={false}
       />
       <RenterdSendSiacoinDialog />
       <WalletSingleAddressDetailsDialog

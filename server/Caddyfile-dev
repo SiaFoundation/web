@@ -7,6 +7,7 @@
 # 127.0.0.1 host.local
 # 127.0.0.1 renter.local
 # 127.0.0.1 renterd.local
+# 127.0.0.1 renterd.zen.local
 
 (cors) {
   @cors_preflight method OPTIONS
@@ -101,4 +102,9 @@ renter.local {
 renterd.local {
   import cors
   reverse_proxy localhost:9980
+}
+
+renterd.zen.local {
+  import cors
+  reverse_proxy localhost:9880
 }
