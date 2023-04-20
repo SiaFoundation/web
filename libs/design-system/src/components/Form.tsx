@@ -7,6 +7,7 @@ import { SiacoinField } from '../core/SiacoinField'
 import BigNumber from 'bignumber.js'
 import { VariantProps } from '../types'
 import { cx } from 'class-variance-authority'
+import { LoadingDots } from './LoadingDots'
 
 type FormFieldProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -304,7 +305,7 @@ export function FormSubmitButton({
         state={formik.isSubmitting ? 'waiting' : undefined}
         type="submit"
       >
-        {children}
+        {formik.isSubmitting ? <LoadingDots /> : children}
       </Button>
     </>
   )

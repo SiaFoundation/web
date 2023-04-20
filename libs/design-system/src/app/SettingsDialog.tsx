@@ -20,9 +20,14 @@ import { Dialog } from '../core/Dialog'
 type Props = {
   open: boolean
   onOpenChange: (open: boolean) => void
+  showSiaStats?: boolean
 }
 
-export function SettingsDialog({ open, onOpenChange }: Props) {
+export function SettingsDialog({
+  open,
+  onOpenChange,
+  showSiaStats = true,
+}: Props) {
   const { settings, setSettings, setCurrency, currencyOptions } =
     useAppSettings()
 
@@ -113,27 +118,29 @@ export function SettingsDialog({ open, onOpenChange }: Props) {
                 </Paragraph>
               </div>
             </Alert>
-            <Alert>
-              <div className="flex flex-col gap-4">
-                <div className="flex gap-2 items-center">
-                  <Text>
-                    <Information16 />
-                  </Text>
-                  <Heading size="20" className="flex-1">
-                    SiaStats
-                  </Heading>
-                  <Switch
-                    size="medium"
-                    checked={settings.siaStats}
-                    onCheckedChange={(val) => setSettings({ siaStats: val })}
-                  />
+            {showSiaStats ? (
+              <Alert>
+                <div className="flex flex-col gap-4">
+                  <div className="flex gap-2 items-center">
+                    <Text>
+                      <Information16 />
+                    </Text>
+                    <Heading size="20" className="flex-1">
+                      SiaStats
+                    </Heading>
+                    <Switch
+                      size="medium"
+                      checked={settings.siaStats}
+                      onCheckedChange={(val) => setSettings({ siaStats: val })}
+                    />
+                  </div>
+                  <Paragraph size="14">
+                    The app fetches the network block height from the SiaStats
+                    API. This data is used to calculate sync progress.
+                  </Paragraph>
                 </div>
-                <Paragraph size="14">
-                  The app fetches the network block height from the SiaStats
-                  API. This data is used to calculate sync progress.
-                </Paragraph>
-              </div>
-            </Alert>
+              </Alert>
+            ) : null}
           </div>
         </div>
         <Separator className="w-full" />

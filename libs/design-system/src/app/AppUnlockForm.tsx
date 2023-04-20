@@ -35,11 +35,13 @@ async function checkPassword<Response extends ResponseWithSynced>({
         'Content-Type': 'application/json',
         Authorization: 'Basic ' + btoa(`:${password}`),
       },
+      timeout: 5_000,
     })
     return {
       isSynced: response.data.Synced || response.data.synced,
     }
   } catch (e: unknown) {
+    const code = (e as AxiosError).code
     const resp = (e as AxiosError).response
     if (resp?.status === 504) {
       return {
@@ -49,6 +51,11 @@ async function checkPassword<Response extends ResponseWithSynced>({
     if (resp?.status === 401) {
       return {
         error: 'Error, wrong password',
+      }
+    }
+    if (code === 'ECONNABORTED') {
+      return {
+        error: 'Error, daemon did not respond',
       }
     }
     return {
