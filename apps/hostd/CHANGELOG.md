@@ -1,5 +1,14 @@
 # hostd
 
+## 0.7.0
+
+### Minor Changes
+
+- 12d206f: The contracts explorer now allows filtering on status and contract ID, these are also accessible via the global ⌘K palette.
+- d746281: The unlock form now times out after 5s and shows a new 'Error, daemon did not respond' error - this occurs when the wallet is re-indexing.
+- 12d206f: The contracts explorer now features columns for a contract timeline, siacoin usage by type, data size, and more.
+- 12d206f: The contracts explorer now supports view column configuration and sorting by status and timeline.
+
 ## 0.6.0
 
 ### Minor Changes

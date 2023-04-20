@@ -1,5 +1,14 @@
 # renterd
 
+## 0.12.0
+
+### Minor Changes
+
+- d746281: The sync screen now shows the correct network block height when using the Zen testnet.
+- d746281: The unlock form now times out after 5s and shows a new 'Error, daemon did not respond' error - this occurs when the wallet is re-indexing.
+- 5059a85: The hosts explorer column state icons are now more clear, some columns now use a gray negative or non-initialized state.
+- d746281: The network block height is now estimated. renterd no longer uses SiaStats for anything so the 3rd party data privacy toggle has also been removed.
+
 ## 0.10.0
 
 ### Minor Changes

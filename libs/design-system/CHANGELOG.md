@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.45.0
+
+### Minor Changes
+
+- d136e4f: Fix focus outline clipping issue when hovering adjacent control.
+- d746281: FormSubmitButton now shows animated dots when loading.
+- d746281: The unlock form now times out after 5s and shows a new 'Error, daemon did not respond' error - this occurs when the wallet is re-indexing.
+- d136e4f: Add tip to LinkButton.
+
 ## 0.44.0
 
 ### Minor Changes
