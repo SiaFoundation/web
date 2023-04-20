@@ -62,7 +62,7 @@ export function useConsensusNetwork(
 export function useNetworkBlockHeight(): number {
   const network = useConsensusNetwork()
   const res = useSWR(
-    ['renterd/blockHeight', network],
+    network,
     () => {
       if (network.data?.Name === 'zen') {
         return getTestnetZenBlockHeight()
