@@ -191,3 +191,92 @@ export function useContracts(
     route: contractsRoute,
   })
 }
+
+// metrics
+
+// Revenue is a collection of metrics related to revenue.
+type Revenue = {
+  rpc: string
+  storage: string
+  ingress: string
+  egress: string
+  registryRead: string
+  registryWrite: string
+}
+
+// Data is a collection of metrics related to data usage.
+type Data = {
+  // Ingress returns the number of bytes received by the host.
+  ingress: number
+  // Egress returns the number of bytes sent by the host.
+  egress: number
+}
+
+// Contracts is a collection of metrics related to contracts.
+type Contracts = {
+  pending: number
+  active: number
+  rejected: number
+  failed: number
+  successful: number
+}
+
+// Pricing is a collection of metrics related to the host's pricing settings.
+type Pricing = {
+  contractPrice: string
+  ingressPrice: string
+  egressPrice: string
+  baseRPCPrice: string
+  sectorAccessPrice: string
+  storagePrice: string
+  collateral: string
+}
+
+// Storage is a collection of metrics related to storage.
+type Storage = {
+  totalSectors: number
+  physicalSectors: number
+  contractSectors: number
+  tempSectors: number
+  registryEntries: number
+}
+
+// RevenueMetrics is a collection of metrics related to revenue.
+type RevenueMetrics = {
+  potential: Revenue
+  earned: Revenue
+}
+
+// DataMetrics is a collection of metrics related to data usage.
+type DataMetrics = {
+  rhp2: Data
+  rhp3: Data
+}
+
+type Metrics = {
+  revenue: RevenueMetrics
+  pricing: Pricing
+  contracts: Contracts
+  storage: Storage
+  data: DataMetrics
+  balance: string
+  timestamp: string
+}
+
+const metricsRoute = '/metrics'
+export function useMetrics(args?: HookArgsSwr<{ timestamp: number }, Metrics>) {
+  return useGetSwr({
+    ...args,
+    route: metricsRoute,
+  })
+}
+
+const metricsPeriodRoute = '/metrics/:period'
+export function useMetricsPeriod(
+  args?: HookArgsSwr<{ period: number; start: number; end: number }, Metrics>
+) {
+  return useGetSwr({
+    ...args,
+    route: metricsPeriodRoute,
+  })
+}
