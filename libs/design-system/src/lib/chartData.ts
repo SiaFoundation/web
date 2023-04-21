@@ -120,6 +120,6 @@ export function getTimeRangeRollup(
 export const timeRangeNoRollup = {
   normalize: (timestamp: number) => timestamp,
   label: (timestamp: number) => {
-    return `${format(timestamp, 'Pp')}`
+    return `${format(timestamp, 'P')}`
   },
 }

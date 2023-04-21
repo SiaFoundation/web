@@ -51,7 +51,7 @@ export function DatumCard({
     <Panel>
       <div
         className={cx(
-          'flex items-center py-4 px-6 h-full min-w-[200px]',
+          'flex items-center py-3 px-4 h-full min-w-[200px]',
           onClick ? 'cursor-pointer' : ''
         )}
         onClick={onClick}

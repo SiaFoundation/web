@@ -6,11 +6,11 @@ import {
   DatumScrollArea,
 } from '@siafoundation/design-system'
 import { humanBytes } from '@siafoundation/sia-js'
-import { useData } from '../../contexts/data'
+import { useMetrics } from '../../contexts/metrics'
 import { chartConfigs } from '../../config/charts'
 
 export function HomeUtilization() {
-  const { storage, bandwidth } = useData()
+  const { storage, bandwidth } = useMetrics()
   return (
     <div className="flex gap-7">
       <div className="flex flex-col gap-7 flex-1 overflow-hidden">
@@ -19,7 +19,7 @@ export function HomeUtilization() {
           <DatumCardConfigurable
             label="storage"
             color={chartConfigs.storage.color}
-            value={storage.stats['storage']}
+            value={storage.stats['totalSectors']}
             defaultMode="latest"
             enabledModes={['latest', 'average']}
             format={humanBytes}
@@ -27,7 +27,7 @@ export function HomeUtilization() {
           <DatumCardConfigurable
             label="registry"
             color={chartConfigs.registry.color}
-            value={storage.stats['registry']}
+            value={storage.stats['registryEntries']}
             defaultMode="latest"
             enabledModes={['latest', 'average']}
             format={humanBytes}

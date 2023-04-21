@@ -9,15 +9,13 @@ type Props = {
 export function DatumScrollArea({ children, bleed }: Props) {
   return (
     <div
-      className={cx('overflow-hidden', bleed ? '-mx-8' : '')}
+      className={cx('', bleed ? '-mx-5 px-5' : '')}
       style={{
         width: bleed ? 'calc(100% + $3-5 * 2)' : undefined,
       }}
     >
       <ScrollArea>
-        <div className={cx('flex gap-4', bleed ? 'px-8 w-fit' : '')}>
-          {children}
-        </div>
+        <div className={cx('flex gap-4', bleed ? 'w-fit' : '')}>{children}</div>
       </ScrollArea>
     </div>
   )

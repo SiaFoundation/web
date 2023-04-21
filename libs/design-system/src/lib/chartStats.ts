@@ -92,7 +92,7 @@ function calcStats({
   return {
     total,
     diff,
-    change: (diff / start) * 100,
+    change: start === 0 ? undefined : (diff / start) * 100,
     latest: end,
     average: total / count,
   }

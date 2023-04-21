@@ -264,16 +264,18 @@ type Metrics = {
 }
 
 const metricsRoute = '/metrics'
-export function useMetrics(args?: HookArgsSwr<{ timestamp: number }, Metrics>) {
+export function useMetrics(args?: HookArgsSwr<{ timestamp: string }, Metrics>) {
   return useGetSwr({
     ...args,
     route: metricsRoute,
   })
 }
 
+type Period = '15m' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly'
+
 const metricsPeriodRoute = '/metrics/:period'
 export function useMetricsPeriod(
-  args?: HookArgsSwr<{ period: number; start: number; end: number }, Metrics>
+  args?: HookArgsSwr<{ period: Period; start: string; end: string }, Metrics[]>
 ) {
   return useGetSwr({
     ...args,

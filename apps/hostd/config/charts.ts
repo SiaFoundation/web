@@ -1,55 +1,104 @@
+import { colors } from '@siafoundation/design-system'
+
 export const chartConfigs = {
   // states
   successful: {
-    color: 'var(--colors-grass9)',
+    color: colors.green[600],
   },
-  expiring: {
-    color: 'var(--colors-yellow9)',
+  active: {
+    color: colors.amber[600],
+    // pattern: true,
+  },
+  pending: {
+    color: colors.amber[600],
     pattern: true,
+  },
+  rejected: {
+    color: colors.graydark[500],
+    // pattern: true,
   },
   failed: {
-    color: 'var(--colors-red9)',
+    color: colors.red[600],
   },
-  potential: {
-    color: 'var(--colors-yellow9)',
-    pattern: true,
-  },
+  // potential: {
+  //   color: colors.amber[600],
+  //   pattern: true,
+  // },
 
   // types
   storage: {
-    color: 'var(--colors-teal9)',
+    label: 'storage',
+    color: colors.teal[600],
   },
   ingress: {
-    color: 'var(--colors-blue9)',
+    label: 'ingress',
+    color: colors.blue[600],
   },
   egress: {
-    color: 'var(--colors-pink9)',
+    label: 'egress',
+    color: colors.pink[600],
   },
   registry: {
-    color: 'var(--colors-purple9)',
+    label: 'registry',
+    color: colors.purple[600],
   },
+  registryRead: {
+    label: 'registry read',
+    color: colors.purple[600],
+  },
+  registryWrite: {
+    label: 'registry write',
+    color: colors.fuchsia[600],
+  },
+  rpc: {
+    label: 'RPC',
+    color: colors.emerald[600],
+  },
+
+  //
   contract: {
-    color: 'var(--colors-gray9)',
+    color: colors.green[600],
   },
+  collateral: {
+    color: colors.rose[600],
+  },
+  sectorAccess: {
+    label: 'sector access',
+    color: colors.blue[600],
+  },
+  sectorsPhysical: {
+    label: 'physical sectors',
+    color: colors.red[600],
+  },
+  sectorsTemp: {
+    label: 'temp sectors',
+    color: colors.amber[600],
+  },
+  sectorsContract: {
+    label: 'contract sectors',
+    color: colors.green[600],
+  },
+  // other: {
+  //   color: colors.gray[600],
+  // },
+
+  // general
   sc: {
-    color: 'var(--colors-accent9)',
+    color: colors.green[600],
   },
   sf: {
-    color: 'var(--colors-yellow9)',
-  },
-  other: {
-    color: 'var(--colors-gray9)',
+    color: colors.amber[600],
   },
 
   // collateral
   locked: {
-    color: 'var(--colors-slate9)',
+    color: colors.slate[600],
     pattern: true,
   },
   risked: {
-    color: 'var(--colors-yellow9)',
+    color: colors.amber[900],
   },
   burnt: {
-    color: 'var(--colors-red9)',
+    color: colors.red[600],
   },
 }

@@ -4,7 +4,7 @@ import {
   Text,
   SwitchMulti,
 } from '@siafoundation/design-system'
-import { TimeSpan, useData } from '../../contexts/data'
+import { TimeSpan, useMetrics } from '../../contexts/metrics'
 import { format } from 'date-fns'
 import { HomeRevenue } from './HomeRevenue'
 // import { HomeOverview } from './HomeOverview'
@@ -41,7 +41,7 @@ const options = [
 
 export function Home() {
   const { openDialog } = useDialog()
-  const { timeRange, timeSpan, setTimeSpan } = useData()
+  const { timeRange, timeSpan, setTimeSpan, interval } = useMetrics()
 
   return (
     <HostdAuthedLayout
@@ -49,9 +49,9 @@ export function Home() {
       routes={routes}
       sidenav={<HostdSidenav />}
       openSettings={() => openDialog('settings')}
-      size="full"
       nav={
         <div className="flex gap-2 flex-1">
+          <Text>{interval}</Text>
           <ControlGroup>
             <Button disabled>
               <Text size="12">{format(timeRange.start, 'PP')}</Text>
@@ -67,6 +67,7 @@ export function Home() {
           </ControlGroup>
         </div>
       }
+      size="full"
       actions={
         <>
           <SwitchMulti
@@ -79,7 +80,7 @@ export function Home() {
         </>
       }
     >
-      <div className="flex flex-col gap-14">
+      <div className="p-5 flex flex-col gap-14">
         {/* <HomeOverview /> */}
         <HomeRevenue />
         <HomeUtilization />
