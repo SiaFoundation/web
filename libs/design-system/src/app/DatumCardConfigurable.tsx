@@ -6,6 +6,7 @@ import { ValueSc } from '../components/ValueSc'
 import { DataLabel } from './DataLabel'
 import BigNumber from 'bignumber.js'
 import { useState } from 'react'
+import { ChangeCatalog16 } from '@carbon/icons-react'
 
 type Mode = 'total' | 'average' | 'latest'
 
@@ -66,17 +67,34 @@ export function DatumCardConfigurable({
       }
       sc={sc ? new BigNumber(sc[mode]) : undefined}
       value={value && format ? format(value[mode]) : undefined}
-      // double wrapped flex fixes really weird glitch with colors being applied
-      // incorrectly by stitches in generated css classes
       comment={
         sc ? (
-          <div className="flex">
-            <div className="flex gap-4">
-              <ValueSc
+          <div className="flex items-center gap-4">
+            <ValueSc
+              tooltip="Change over period"
+              value={new BigNumber(sc.diff)}
+            />
+            {showChange && sc.change !== undefined && (
+              <Text
+                size="14"
+                weight="semibold"
+                font="mono"
+                ellipsis
+                color="verySubtle"
+              >
+                {sc.change.toFixed(2)}%
+              </Text>
+            )}
+          </div>
+        ) : (
+          value && (
+            <div className="flex items-center gap-4">
+              <ValueNum
                 tooltip="Change over period"
-                value={new BigNumber(sc.diff)}
+                format={(val) => format(val.toNumber())}
+                value={new BigNumber(value.diff)}
               />
-              {showChange && (
+              {showChange && value.change !== undefined && (
                 <Text
                   size="14"
                   weight="semibold"
@@ -84,32 +102,9 @@ export function DatumCardConfigurable({
                   ellipsis
                   color="verySubtle"
                 >
-                  {sc.change.toFixed(2)}%
+                  {value.change.toFixed(2)}%
                 </Text>
               )}
-            </div>
-          </div>
-        ) : (
-          value && (
-            <div className="flex">
-              <div className="flex gap-4">
-                <ValueNum
-                  tooltip="Change over period"
-                  format={(val) => format(val.toNumber())}
-                  value={new BigNumber(value.diff)}
-                />
-                {showChange && (
-                  <Text
-                    size="14"
-                    weight="semibold"
-                    font="mono"
-                    ellipsis
-                    color="verySubtle"
-                  >
-                    {value.change.toFixed(2)}%
-                  </Text>
-                )}
-              </div>
             </div>
           )
         )

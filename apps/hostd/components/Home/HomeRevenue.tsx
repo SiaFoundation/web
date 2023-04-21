@@ -5,11 +5,11 @@ import {
   DatumCardConfigurable,
   DatumScrollArea,
 } from '@siafoundation/design-system'
-import { useData } from '../../contexts/data'
+import { useMetrics } from '../../contexts/metrics'
 import { chartConfigs } from '../../config/charts'
 
 export function HomeRevenue() {
-  const { revenue } = useData()
+  const { revenue } = useMetrics()
 
   return (
     <div className="flex flex-col gap-7">
@@ -33,12 +33,6 @@ export function HomeRevenue() {
           defaultMode="total"
         />
         <DatumCardConfigurable
-          label="registry"
-          color={chartConfigs.registry.color}
-          sc={revenue.stats['registry']}
-          defaultMode="total"
-        />
-        <DatumCardConfigurable
           label="egress"
           color={chartConfigs.egress.color}
           sc={revenue.stats['egress']}
@@ -51,11 +45,23 @@ export function HomeRevenue() {
           defaultMode="total"
         />
         <DatumCardConfigurable
+          label="registry read"
+          color={chartConfigs.registry.color}
+          sc={revenue.stats['registryRead']}
+          defaultMode="total"
+        />
+        <DatumCardConfigurable
+          label="registry write"
+          color={chartConfigs.registry.color}
+          sc={revenue.stats['registryWrite']}
+          defaultMode="total"
+        />
+        {/* <DatumCardConfigurable
           label="other"
           color={chartConfigs.other.color}
           sc={revenue.stats['other']}
           defaultMode="total"
-        />
+        /> */}
       </DatumScrollArea>
       <ChartXY
         id="revenue"

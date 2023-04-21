@@ -18,6 +18,7 @@ export type ChartConfig = {
   }
   data: {
     [name: string]: {
+      label?: string
       color: string
       pattern?: boolean
       fromOpacity?: number

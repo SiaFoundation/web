@@ -5,6 +5,7 @@ import { Text } from '../../core/Text'
 import { ChartConfig, ChartPoint, ChartXYProps } from './useChartXY'
 import { Separator } from '../../core/Separator'
 import { PatternLines } from '@visx/pattern'
+import { cx } from 'class-variance-authority'
 
 export function ChartXYGraph({
   id,
@@ -242,9 +243,9 @@ export function ChartXYGraph({
                 }, 0)
               : 0
 
-            if (total === 0) {
-              return null
-            }
+            // if (total === 0) {
+            //   return null
+            // }
 
             const formatTimestamp =
               config.formatTimestamp || ((v) => format(v, 'Pp'))
@@ -268,17 +269,17 @@ export function ChartXYGraph({
                           color="accent"
                           style={{
                             color: config.data?.[key]?.color,
-                            opacity: nearestKey === key ? 1 : 0.3,
                           }}
+                          className={cx(nearestKey === key ? 'underline' : '')}
                         >
-                          {key}
+                          {config.data?.[key]?.label || key}
                         </Text>
                         <Text
                           size="12"
                           style={{
                             textAlign: 'end',
-                            opacity: nearestKey === key ? 1 : 0.3,
                           }}
+                          className={cx(nearestKey === key ? 'underline' : '')}
                         >
                           {val == null || Number.isNaN(val)
                             ? '–'

@@ -5,11 +5,11 @@ import {
   DatumCardConfigurable,
   DatumScrollArea,
 } from '@siafoundation/design-system'
-import { useData } from '../../contexts/data'
+import { useMetrics } from '../../contexts/metrics'
 import { chartConfigs } from '../../config/charts'
 
 export function HomePricing() {
-  const { pricing } = useData()
+  const { pricing } = useMetrics()
 
   return (
     <div className="flex flex-col gap-7">
@@ -30,13 +30,6 @@ export function HomePricing() {
           enabledModes={['latest', 'average']}
         />
         <DatumCardConfigurable
-          label="registry"
-          color={chartConfigs.registry.color}
-          sc={pricing.stats['registry']}
-          defaultMode="latest"
-          enabledModes={['latest', 'average']}
-        />
-        <DatumCardConfigurable
           label="ingress"
           color={chartConfigs.ingress.color}
           sc={pricing.stats['ingress']}
@@ -47,6 +40,27 @@ export function HomePricing() {
           label="egress"
           color={chartConfigs.egress.color}
           sc={pricing.stats['egress']}
+          defaultMode="latest"
+          enabledModes={['latest', 'average']}
+        />
+        <DatumCardConfigurable
+          label="collateral"
+          color={chartConfigs.collateral.color}
+          sc={pricing.stats['collateral']}
+          defaultMode="latest"
+          enabledModes={['latest', 'average']}
+        />
+        <DatumCardConfigurable
+          label="base RPC"
+          color={chartConfigs.rpc.color}
+          sc={pricing.stats['baseRPC']}
+          defaultMode="latest"
+          enabledModes={['latest', 'average']}
+        />
+        <DatumCardConfigurable
+          label="sector access"
+          color={chartConfigs.sectorAccess.color}
+          sc={pricing.stats['sectorAccess']}
           defaultMode="latest"
           enabledModes={['latest', 'average']}
         />

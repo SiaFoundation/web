@@ -20,7 +20,7 @@ export function DataLabel({ label, enabled = true, onChange, color }: Props) {
       )}
       onClick={() => onChange && onChange(!enabled)}
     >
-      {color && <Status size="medium" style={{ backgroundColor: color }} />}
+      {color && <Status style={{ backgroundColor: color }} />}
       <Text>{label}</Text>
     </div>
   )

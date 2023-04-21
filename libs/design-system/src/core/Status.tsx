@@ -4,12 +4,11 @@ import React from 'react'
 const styles = cva(['rounded-full flex-shrink-0'], {
   variants: {
     size: {
-      small: 'w-2 h-2',
-      medium: 'w-4 h-4',
+      default: 'w-2 h-2',
     },
   },
   defaultVariants: {
-    size: 'small',
+    size: 'default',
   },
 })
 

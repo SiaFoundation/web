@@ -236,6 +236,7 @@ export interface Host {
     TotalScans: number
     Uptime: number
   }
+  scanned: boolean
   priceTable?: {
     accountbalancecost: string
     collateralcost: string
