@@ -62,7 +62,7 @@
     "export": {
       "executor": "@nrwl/next:export",
       "options": {
-        "buildTarget": "hostd:build:production"
+        "buildTarget": "hostd:build:embed"
       }
     },
     "test": {

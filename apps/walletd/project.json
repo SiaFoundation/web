@@ -61,7 +61,7 @@
     "export": {
       "executor": "@nrwl/next:export",
       "options": {
-        "buildTarget": "walletd:build:production"
+        "buildTarget": "walletd:build:embed"
       }
     },
     "test": {
