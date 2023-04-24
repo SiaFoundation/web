@@ -1,15 +1,13 @@
 name: Release Go modules
-on:
-  push:
-    tags:
-      - 'renterd\@*'
-      - 'hostd\@*'
-      - 'walletd\@*'
-
-env:
-  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 concurrency: commits-to-main
+
+on:
+  # daily at midnight
+  schedule:
+    - cron: 0 0 * * *
+  # enable manual trigger
+  workflow_dispatch:
 
 jobs:
   release-go:
@@ -19,40 +17,17 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          token: ${{ secrets.COMMIT_PAT }}
       - name: Setup
         uses: ./.github/actions/setup
         with:
           node_version: 16
-      - name: Set variables
+      - name: Release
+        run: ./scripts/release-go.sh
+      - name: Commit
         shell: bash
         run: |
-          NAME=$(echo "${{ github.ref }}" | sed -E 's/^refs\/tags\/(.*)@.*$/\1/')
-          VERSION=$(echo "${{ github.ref }}" | sed -E 's/^refs\/tags\/.*@(.*)$/\1/')
-          TAG="${NAME}/${VERSION}"
-          echo "NAME=${NAME}" >> $GITHUB_ENV
-          echo "VERSION=${VERSION}" >> $GITHUB_ENV
-          echo "TAG=${TAG}" >> $GITHUB_ENV
-      - name: Next export
-        shell: bash
-        run: |
-          npx nx export $NAME
-      - name: Copy files
-        run: |
-          mkdir -p ${NAME}/ui/assets
-          rm -rf ${NAME}/ui/assets/*
-          cp -R dist/apps/${NAME}-embed/exported/* ${NAME}/ui/assets/
-      - name: Commit changes
-        run: |
-          git add .
-          git commit -m "chore: export ${TAG}"
-      - name: Create tag
-        run: |
-          git tag -a ${TAG} -m "Go module ${TAG}"
-      - name: Push changes
-        run: |
-          # check out the TAG commit as a new branch
-          git checkout -b release ${TAG}
+          # check out the commit as a new branch
+          git checkout -b release
           # sync up the main branch in case something has been merged
           # since the action started
           git fetch origin main
@@ -61,7 +36,6 @@ jobs:
           git checkout main
           git merge release
           # push the main branch
-          git push origin main
-          git push origin ${TAG}
+          git push origin main --tags
           # cleanup
           git branch -D release
