@@ -112,30 +112,16 @@ export const columns: FilesTableColumn[] = [
     id: 'size',
     label: 'size',
     contentClassName: 'justify-end',
-    render: function SizeColumn({ data: { path, isUploading, isDirectory } }) {
-      const obj = useObject({
-        disabled: isUploading || isDirectory,
-        params: {
-          key: encodeURIComponent(path.slice(1)),
-        },
-        config: {
-          swr: {
-            dedupingInterval: 5000,
-          },
-        },
-      })
+    render: function SizeColumn({ data: { size, isUploading } }) {
       if (isUploading) {
         return <LoadingDots />
       }
 
-      if (obj.data?.object) {
+      if (size) {
         return (
           <ValueNum
             size="12"
-            value={(obj.data?.object.Slabs || []).reduce(
-              (acc, s) => acc.plus(s.Length - s.Offset),
-              new BigNumber(0)
-            )}
+            value={new BigNumber(size)}
             variant="value"
             color="subtle"
             format={(v) => humanBytes(v.toNumber())}
@@ -154,7 +140,7 @@ export const columns: FilesTableColumn[] = [
       const obj = useObject({
         disabled: isUploading || isDirectory,
         params: {
-          key: encodeURIComponent(path.slice(1)),
+          key: path.slice(1),
         },
         config: {
           swr: {
@@ -251,7 +237,7 @@ export const columns: FilesTableColumn[] = [
       const obj = useObject({
         disabled: isUploading || isDirectory,
         params: {
-          key: encodeURIComponent(path.slice(1)),
+          key: path.slice(1),
         },
         config: {
           swr: {
@@ -285,7 +271,7 @@ export const columns: FilesTableColumn[] = [
       const obj = useObject({
         disabled: isUploading || isDirectory,
         params: {
-          key: encodeURIComponent(path.slice(1)),
+          key: path.slice(1),
         },
         config: {
           swr: {

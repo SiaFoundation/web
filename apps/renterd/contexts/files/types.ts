@@ -3,10 +3,10 @@ export type ObjectData = {
   path: string
   name: string
   health?: number
+  size: number
   isDirectory?: boolean
   isUploading?: boolean
   loaded?: number
-  total?: number
 }
 
 export type TableColumnId =

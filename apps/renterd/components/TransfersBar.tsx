@@ -12,8 +12,8 @@ import {
 import { useState } from 'react'
 import { useFiles } from '../contexts/files'
 
-function getProgress(upload: { loaded?: number; total?: number }) {
-  return upload.loaded ? upload.loaded / upload.total : 1
+function getProgress(upload: { loaded?: number; size?: number }) {
+  return upload.loaded ? upload.loaded / upload.size : 1
 }
 
 export function TransfersBar() {
@@ -55,7 +55,7 @@ export function TransfersBar() {
                       <ProgressBar
                         variant="accent"
                         value={upload.loaded}
-                        max={upload.total}
+                        max={upload.size}
                         className={progress === 1 ? 'animate-pulse' : ''}
                       />
                       <div className="flex justify-between mt-1">
@@ -96,7 +96,7 @@ export function TransfersBar() {
                       <ProgressBar
                         variant="accent"
                         value={download.loaded}
-                        max={download.total}
+                        max={download.size}
                         className={progress === 1 ? 'animate-pulse' : ''}
                       />
                       <div className="flex justify-between mt-1">
