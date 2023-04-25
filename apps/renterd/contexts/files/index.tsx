@@ -1,12 +1,17 @@
 import {
   triggerErrorToast,
-  triggerToast, useClientFilteredDataset, useClientFilters, useDatasetEmptyState, useTableState
+  triggerToast,
+  useClientFilteredDataset,
+  useClientFilters,
+  useDatasetEmptyState,
+  useTableState,
 } from '@siafoundation/design-system'
 import {
   useObjectDirectory,
   useObjectDownloadFunc,
-  useObjectUpload
+  useObjectUpload,
 } from '@siafoundation/react-renterd'
+import BigNumber from 'bignumber.js'
 import { sortBy, throttle, toPairs } from 'lodash'
 import { useRouter } from 'next/router'
 import {
@@ -14,7 +19,7 @@ import {
   useCallback,
   useContext,
   useMemo,
-  useState
+  useState,
 } from 'react'
 import { TransfersBar } from '../../components/TransfersBar'
 import { useContracts } from '../contracts'
@@ -51,14 +56,14 @@ function useFilesMain() {
   const [uploadsMap, setUploadsMap] = useState<UploadsMap>({})
 
   const updateUploadProgress = useCallback(
-    (obj: { path: string; name: string; loaded: number; total: number }) => {
+    (obj: { path: string; name: string; loaded: number; size: number }) => {
       setUploadsMap((uploads) => ({
         ...uploads,
         [obj.path]: {
           id: obj.path,
           path: obj.path,
           name: obj.name,
-          total: obj.total,
+          size: obj.size,
           loaded: obj.loaded,
           isUploading: true,
           isDirectory: false,
@@ -90,7 +95,7 @@ function useFilesMain() {
             name,
             path,
             loaded: e.loaded,
-            total: e.total,
+            size: e.total,
           }),
         2000
       )
@@ -98,11 +103,11 @@ function useFilesMain() {
         name,
         path,
         loaded: 0,
-        total: 1,
+        size: 1,
       })
       const response = await upload.put({
         params: {
-          key: encodeURIComponent(path.slice(1)),
+          key: path.slice(1),
         },
         payload: file,
         config: {
@@ -130,14 +135,14 @@ function useFilesMain() {
   const [downloadsMap, setDownloadsMap] = useState<UploadsMap>({})
 
   const updateDownloadProgress = useCallback(
-    (obj: { path: string; name: string; loaded: number; total: number }) => {
+    (obj: { path: string; name: string; loaded: number; size: number }) => {
       setDownloadsMap((download) => ({
         ...download,
         [obj.path]: {
           id: obj.path,
           path: obj.path,
           name: obj.name,
-          total: obj.total,
+          size: obj.size,
           loaded: obj.loaded,
           isUploading: false,
           isDirectory: false,
@@ -171,18 +176,18 @@ function useFilesMain() {
           name,
           path,
           loaded: e.loaded,
-          total: e.total,
+          size: e.total,
         })
       }, 2000)
       updateDownloadProgress({
         name,
         path,
         loaded: 0,
-        total: 1,
+        size: 1,
       })
       const response = await download.get(name, {
         params: {
-          key: encodeURIComponent(path.slice(1)),
+          key: path.slice(1),
         },
         config: {
           axios: {
@@ -208,7 +213,7 @@ function useFilesMain() {
 
   const response = useObjectDirectory({
     params: {
-      key: encodeURIComponent(activeDirectoryPath.slice(1)),
+      key: activeDirectoryPath.slice(1),
       // limit: limit,
       // offset: offset,
     },
@@ -226,7 +231,7 @@ function useFilesMain() {
 
     const dataMap: Record<string, ObjectData> = {}
 
-    response.data.entries?.forEach(({ name: path }) => {
+    response.data.entries?.forEach(({ name: path, size }) => {
       // If there is a directory stub file filter it out.
       if (path === activeDirectoryPath) {
         return
@@ -234,6 +239,7 @@ function useFilesMain() {
       dataMap[path] = {
         id: path,
         path,
+        size: size,
         name: getFilename(path),
         isDirectory: isDirectory(path),
       }
