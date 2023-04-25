@@ -8,7 +8,10 @@ import {
 import { getDaysInMs } from '../lib/time'
 import { sortBy } from 'lodash'
 import { humanSiacoin } from '@siafoundation/sia-js'
-import { formatChartData, timeRangeNoRollup } from '../lib/chartData'
+import {
+  formatChartData,
+  getDataIntervalLabelFormatter,
+} from '../lib/chartData'
 import { ChartStats, computeChartStats } from '../lib/chartStats'
 import BigNumber from 'bignumber.js'
 import { useTheme } from '../hooks/useTheme'
@@ -100,7 +103,7 @@ export function WalletSparkline({ transactions }: Props) {
           sc: chartConfigs.sc,
         },
         format: (v) => humanSiacoin(v),
-        formatTimestamp: timeRangeNoRollup.label,
+        formatTimestamp: getDataIntervalLabelFormatter('default'),
       },
     }
   }, [scData, timeRange, chartConfigs])

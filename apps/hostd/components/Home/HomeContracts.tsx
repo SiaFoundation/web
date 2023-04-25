@@ -11,7 +11,7 @@ export function HomeContracts() {
   const { contracts } = useMetrics()
 
   return (
-    <div className="flex flex-col gap-7">
+    <div className="flex flex-col gap-3">
       <Heading>Contracts</Heading>
       <DatumScrollArea bleed>
         <DatumCardConfigurable

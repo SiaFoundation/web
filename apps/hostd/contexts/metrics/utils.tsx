@@ -1,40 +1,27 @@
-import {
-  ChartConfig,
-  ChartData,
-  ChartStats,
-} from '@siafoundation/design-system'
 import { getDaysInMs } from '@siafoundation/design-system'
+import { DataTimeSpan, TimeRange } from './types'
 
-export type Chart = {
-  data: ChartData
-  stats: ChartStats
-  config: ChartConfig
-}
-
-type TimeRange = {
-  start: number
-  end: number
-}
-
-export type TimeSpan = 7 | 30 | 90 | 365 | 'all'
-
-export function getTimeRange(span: TimeSpan, futureSpan: number): TimeRange {
+export function getTimeRange(
+  span: DataTimeSpan,
+  futureSpan: number
+): TimeRange {
   const now = new Date().getTime()
   if (span === 'all') {
     return {
-      start: 0,
+      start: new Date(2022, 1, 1).getTime(),
       end: now,
     }
   }
   return {
-    start: now - getDaysInMs(span),
+    start: now - getDaysInMs(Number(span)),
     end: now + getDaysInMs(futureSpan),
   }
 }
 
-export function potentialConfig(config: { color: string }) {
+export function potentialConfig(config: { label: string; color: string }) {
   return {
     ...config,
+    label: `${config.label} - potential`,
     pattern: true,
   }
 }

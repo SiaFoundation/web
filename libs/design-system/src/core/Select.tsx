@@ -44,11 +44,13 @@ export const Select = React.forwardRef<
   HTMLSelectElement,
   VariantProps<typeof containerStyles> &
     React.HTMLAttributes<HTMLSelectElement> & {
+      icon?: React.ReactNode
       value?: string
       disabled?: boolean
     }
->(({ size, className, ...props }, ref) => (
+>(({ size, icon, className, ...props }, ref) => (
   <div className={containerStyles({ size, className })}>
+    {icon}
     <select
       ref={ref}
       {...props}

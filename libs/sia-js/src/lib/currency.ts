@@ -32,10 +32,18 @@ export function toScale(num: BigNumber | number | string, fixed: number) {
   return new BigNumber(new BigNumber(num).toFixed(fixed))
 }
 
-type HumanSiacoinOptions = { fixed?: number; dynamicUnits?: boolean }
+type HumanSiacoinOptions = {
+  fixed?: number
+  dynamicUnits?: boolean
+  hastingUnits?: boolean
+}
 const humanSiacoinOptionDefaults: HumanSiacoinOptions = {
+  // number of decimal places
   fixed: 3,
+  // whether on not to use units like KS or to display as 5000 SC
   dynamicUnits: true,
+  // whether on not to include H units or display 0 SC
+  hastingUnits: false,
 }
 /**
  * Converts hastings amount into human readable format.
@@ -46,7 +54,7 @@ export function humanSiacoin(
   hastings: BigNumber | number | string,
   options?: HumanSiacoinOptions
 ): string {
-  const { fixed, dynamicUnits } = {
+  const { fixed, dynamicUnits, hastingUnits } = {
     ...humanSiacoinOptionDefaults,
     ...options,
   }
@@ -61,7 +69,10 @@ export function humanSiacoin(
   }
 
   if (amount.dividedBy(pico).isLessThan(1)) {
-    return `${sign}${amount} H`
+    if (hastingUnits) {
+      return `${sign}${amount} H`
+    }
+    return `${sign}0 SC`
   }
 
   const suffixes = ['pS', 'nS', 'uS', 'mS', 'SC', 'KS', 'MS', 'GS', 'TS']

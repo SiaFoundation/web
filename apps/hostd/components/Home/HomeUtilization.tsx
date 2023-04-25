@@ -12,8 +12,8 @@ import { chartConfigs } from '../../config/charts'
 export function HomeUtilization() {
   const { storage, bandwidth } = useMetrics()
   return (
-    <div className="flex gap-7">
-      <div className="flex flex-col gap-7 flex-1 overflow-hidden">
+    <div className="flex gap-3">
+      <div className="flex flex-col gap-3 flex-1 overflow-hidden">
         <Heading>Storage</Heading>
         <DatumScrollArea>
           <DatumCardConfigurable
@@ -48,7 +48,7 @@ export function HomeUtilization() {
           }
         />
       </div>
-      <div className="flex flex-col gap-7 flex-1 overflow-hidden">
+      <div className="flex flex-col gap-3 flex-1 overflow-hidden">
         <Heading>Bandwidth</Heading>
         <DatumScrollArea>
           <DatumCardConfigurable

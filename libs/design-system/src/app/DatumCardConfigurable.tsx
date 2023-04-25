@@ -6,7 +6,6 @@ import { ValueSc } from '../components/ValueSc'
 import { DataLabel } from './DataLabel'
 import BigNumber from 'bignumber.js'
 import { useState } from 'react'
-import { ChangeCatalog16 } from '@carbon/icons-react'
 
 type Mode = 'total' | 'average' | 'latest'
 
