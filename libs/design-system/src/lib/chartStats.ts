@@ -3,7 +3,7 @@ import { omit } from 'lodash'
 
 type KeyStats = {
   average: number
-  change: number
+  change: number | undefined
   diff: number
   total: number
   latest: number
@@ -51,8 +51,8 @@ export function computeChartStats(
 }
 
 function getStatsForKey(key: string, data: ChartPoint[]) {
-  const start = data[0][key] || 0
-  const end = data[data.length - 1][key] || 0
+  const start = data[0]?.[key] || 0
+  const end = data[data.length - 1]?.[key] || 0
   const total = data.reduce((acc, point) => acc + (point[key] || 0), 0)
   return calcStats({
     total,
@@ -98,8 +98,8 @@ function calcStats({
   }
 }
 
-function getTotalForPoint(keys: string[], point: ChartPoint) {
-  return keys.reduce((acc, key) => acc + (point[key] || 0), 0)
+function getTotalForPoint(keys: string[], point?: ChartPoint) {
+  return keys.reduce((acc, key) => acc + (point?.[key] || 0), 0)
 }
 
 function filterOutFuture(data: ChartPoint[]) {

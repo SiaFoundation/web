@@ -133,12 +133,25 @@ export const buttonStyles = cva(
           '[&>svg]:opacity-50 hover:[&>svg]:opacity-100 transition-opacity',
         subtle: '[&>svg]:opacity-50',
       },
+      // for overriding the text color, not used often
+      color: {
+        verySubtle: '!text-gray-700 dark:!text-graydark-700',
+        subtle: '!text-gray-1000 dark:!text-graydark-1000',
+        contrast: '!text-gray-1100 dark:!text-white',
+        lo: '!text-white dark:!text-graydark-50',
+        accent: '!text-accent-1100 dark:!text-accentdark-1100',
+        red: '!text-red-700 dark:!text-red-400',
+        green: '!text-emerald-700 dark:!text-emerald-500',
+        amber: '!text-amber-600 dark:!text-amber-500',
+        none: '',
+      },
     },
     defaultVariants: {
       variant: 'gray',
       size: 'small',
       rounded: true,
       icon: 'subtle',
+      color: 'none',
     },
   }
 )
@@ -160,6 +173,7 @@ export const Button = React.forwardRef<
       rounded,
       disabled,
       icon,
+      color,
       tip,
       tipAlign,
       tipSide,
@@ -181,6 +195,7 @@ export const Button = React.forwardRef<
               rounded,
               disabled,
               icon,
+              color,
               className,
             })}
             {...props}
@@ -199,6 +214,7 @@ export const Button = React.forwardRef<
           rounded,
           disabled,
           icon,
+          color,
           className,
         })}
         {...props}

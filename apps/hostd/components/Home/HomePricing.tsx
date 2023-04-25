@@ -12,7 +12,7 @@ export function HomePricing() {
   const { pricing } = useMetrics()
 
   return (
-    <div className="flex flex-col gap-7">
+    <div className="flex flex-col gap-3">
       <Heading>Pricing</Heading>
       <DatumScrollArea bleed>
         <DatumCardConfigurable

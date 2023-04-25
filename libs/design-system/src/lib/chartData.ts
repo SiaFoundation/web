@@ -117,9 +117,46 @@ export function getTimeRangeRollup(
       }
 }
 
-export const timeRangeNoRollup = {
-  normalize: (timestamp: number) => timestamp,
-  label: (timestamp: number) => {
+const dataIntervalLabelFormatters: Record<
+  DataInterval | 'default',
+  (timestamp: number) => string
+> = {
+  '15m': (timestamp: number) => {
+    return `15m window ending at ${format(timestamp, 'Pp')}`
+  },
+  hourly: (timestamp: number) => {
+    return `Hour ending at ${format(timestamp, 'Pp')}`
+  },
+  daily: (timestamp: number) => {
+    return `Day ending on ${format(timestamp, 'P')}`
+  },
+  weekly: (timestamp: number) => {
+    return `Week ending on ${format(timestamp, 'P')}`
+  },
+  monthly: (timestamp: number) => {
+    return `Month ending on ${format(timestamp, 'P')}`
+  },
+  yearly: (timestamp: number) => {
+    return `Year ending on ${format(timestamp, 'P')}`
+  },
+  default: (timestamp: number) => {
     return `${format(timestamp, 'P')}`
   },
+} as const
+
+export type DataInterval =
+  | '15m'
+  | 'hourly'
+  | 'daily'
+  | 'weekly'
+  | 'monthly'
+  | 'yearly'
+
+export function getDataIntervalLabelFormatter(
+  dataInterval: DataInterval | 'default'
+) {
+  return (
+    dataIntervalLabelFormatters[dataInterval] ||
+    dataIntervalLabelFormatters['default']
+  )
 }

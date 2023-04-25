@@ -11,7 +11,6 @@ import {
   useObjectDownloadFunc,
   useObjectUpload,
 } from '@siafoundation/react-renterd'
-import BigNumber from 'bignumber.js'
 import { sortBy, throttle, toPairs } from 'lodash'
 import { useRouter } from 'next/router'
 import {
@@ -239,7 +238,7 @@ function useFilesMain() {
       dataMap[path] = {
         id: path,
         path,
-        size: size,
+        size,
         name: getFilename(path),
         isDirectory: isDirectory(path),
       }

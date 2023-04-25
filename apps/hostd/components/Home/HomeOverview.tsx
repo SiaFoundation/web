@@ -8,7 +8,7 @@ import { toHastings } from '@siafoundation/sia-js'
 
 export function HomeOverview() {
   return (
-    <div className="flex flex-col gap-7">
+    <div className="flex flex-col gap-3">
       <Heading>Overview</Heading>
       <DatumScrollArea>
         <DatumCard

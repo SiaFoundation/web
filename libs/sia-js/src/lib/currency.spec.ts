@@ -23,9 +23,14 @@ describe('currency', () => {
   })
 
   it('converts hastings to human readable representation', () => {
-    expect(humanSiacoin('1')).toBe('1 H')
-    expect(humanSiacoin('1000')).toBe('1000 H')
-    expect(humanSiacoin('100000000000')).toBe('100000000000 H')
+    expect(humanSiacoin('1', { hastingUnits: true })).toBe('1 H')
+    expect(humanSiacoin('1000', { hastingUnits: true })).toBe('1000 H')
+    expect(humanSiacoin('100000000000', { hastingUnits: true })).toBe(
+      '100000000000 H'
+    )
+    expect(humanSiacoin('1')).toBe('0 SC')
+    expect(humanSiacoin('1000')).toBe('0 SC')
+    expect(humanSiacoin('100000000000')).toBe('0 SC')
     expect(humanSiacoin('1000000000000')).toBe('1.000 pS')
     expect(humanSiacoin('1234560000000')).toBe('1.235 pS')
     expect(humanSiacoin('12345600000000')).toBe('12.346 pS')

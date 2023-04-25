@@ -4,17 +4,18 @@ import {
   ChartData,
   ChartStats,
   computeChartStats,
+  getDataIntervalLabelFormatter,
   monthsToBlocks,
   TiBToBytes,
-  timeRangeNoRollup,
 } from '@siafoundation/design-system'
 import { humanBytes, humanSiacoin } from '@siafoundation/sia-js'
 import { throttle } from 'lodash'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { chartConfigs } from '../../config/charts'
 import { useMetricsPeriod } from '@siafoundation/react-hostd'
-import { getTimeRange } from './utils'
+import { getTimeRange, potentialConfig } from './utils'
 import BigNumber from 'bignumber.js'
+import { DataInterval, DataTimeSpan, dataTimeSpanOptions } from './types'
 
 const debounced = throttle((func: () => void) => func(), 100, {
   trailing: true,
@@ -31,18 +32,29 @@ type TimeRange = {
   end: number
 }
 
-export type TimeSpan = 7 | 30 | 90 | 365 | 'all'
-
 // export const futureSpan = 0
 export const futureSpan = 10
 
-const defaultTimeSpan: TimeSpan = 90
+const defaultTimeSpan: DataTimeSpan = '90'
+const defaultInterval: DataInterval = 'weekly'
 
 function useMetricsMain() {
-  const [timeSpan, setTimeSpan] = useState<TimeSpan>(defaultTimeSpan)
+  const [dataTimeSpan, _setDataTimeSpan] =
+    useState<DataTimeSpan>(defaultTimeSpan)
+  const [dataInterval, setDataInterval] =
+    useState<DataInterval>(defaultInterval)
 
   const [timeRange, _setTimeRange] = useState<TimeRange>(
     getTimeRange(defaultTimeSpan, futureSpan)
+  )
+
+  const setDataTimeSpan = useCallback(
+    (span: DataTimeSpan) => {
+      const option = dataTimeSpanOptions.find((o) => o.value === span)
+      setDataInterval(option.interval)
+      _setDataTimeSpan(option.value)
+    },
+    [_setDataTimeSpan, setDataInterval]
   )
 
   const setTimeRange = useCallback(
@@ -50,36 +62,37 @@ function useMetricsMain() {
       if (range.start === 0 && range.end === 0) {
         return
       }
-      debounced(() => _setTimeRange(range))
+      debounced(() => {
+        _setTimeRange(range)
+      })
     },
     [_setTimeRange]
   )
 
   useEffect(() => {
-    setTimeRange(getTimeRange(timeSpan, futureSpan))
+    setTimeRange(getTimeRange(dataTimeSpan, futureSpan))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeSpan])
+  }, [dataTimeSpan])
 
-  const formatTimestamp = useCallback(
-    (v: number) => timeRangeNoRollup.label(v),
-    []
+  const formatTimestamp = useMemo(
+    () => getDataIntervalLabelFormatter(dataInterval),
+    [dataInterval]
   )
-  const interval = 'daily'
   const metricsPeriod = useMetricsPeriod({
     params: {
-      period: interval,
+      period: dataInterval,
       start: new Date(timeRange.start).toISOString(),
       end: new Date(timeRange.end).toISOString(),
     },
     config: {
       swr: {
         keepPreviousData: true,
+        revalidateOnFocus: false,
       },
     },
   })
 
   const revenue = useMemo<Chart>(() => {
-    // const data = formatChartData(mockData.revenue, timeRange, 'auto', 'total')
     const data =
       metricsPeriod.data?.map((m) => ({
         storagePotential: Number(m.revenue.potential.storage),
@@ -139,10 +152,8 @@ function useMetricsMain() {
   }, [timeRange, metricsPeriod, formatTimestamp])
 
   const pricing = useMemo<Chart>(() => {
-    // const data = formatChartData(mockData.pricing, timeRange, 'auto', 'average')
     const data =
       metricsPeriod.data?.map((m) => ({
-        // TODO: potential revenue
         baseRPC: Number(m.pricing.baseRPCPrice),
         collateral: Number(m.pricing.collateral),
         contract: Number(m.pricing.contractPrice),
@@ -176,12 +187,6 @@ function useMetricsMain() {
   }, [timeRange, metricsPeriod, formatTimestamp])
 
   const contracts = useMemo<Chart>(() => {
-    // const data = formatChartData(
-    //   mockData.contracts,
-    //   timeRange,
-    //   'auto',
-    //   'average'
-    // )
     const data =
       metricsPeriod.data?.map((m) => ({
         active: m.contracts.active,
@@ -217,7 +222,6 @@ function useMetricsMain() {
   }, [timeRange, metricsPeriod, formatTimestamp])
 
   const storage = useMemo<Chart>(() => {
-    // const data = formatChartData(mockData.storage, timeRange, 'auto', 'average')
     const data =
       metricsPeriod.data?.map((m) => ({
         totalSectors: m.storage.totalSectors,
@@ -246,7 +250,6 @@ function useMetricsMain() {
   }, [timeRange, metricsPeriod, formatTimestamp])
 
   const bandwidth = useMemo<Chart>(() => {
-    // const data = formatChartData(mockData.bandwidth, timeRange, 'auto', 'total')
     const data =
       metricsPeriod.data?.map((m) => ({
         egressRHP3: m.data.rhp3.egress,
@@ -289,16 +292,17 @@ function useMetricsMain() {
   }, [timeRange, metricsPeriod, formatTimestamp])
 
   return {
-    timeSpan,
-    setTimeSpan,
+    dataTimeSpan,
+    setDataTimeSpan,
     timeRange,
     setTimeRange,
+    dataInterval,
+    setDataInterval,
     revenue,
     contracts,
     storage,
     pricing,
     bandwidth,
-    interval,
   }
 }
 
@@ -316,22 +320,4 @@ export function MetricsProvider({ children }: Props) {
   return (
     <MetricsContext.Provider value={state}>{children}</MetricsContext.Provider>
   )
-}
-
-function potentialConfig(config: { label: string; color: string }) {
-  return {
-    ...config,
-    label: `${config.label} - potential`,
-    pattern: true,
-  }
-}
-
-function modifyConfigLabel(
-  config: { label: string; color: string },
-  text: string
-) {
-  return {
-    ...config,
-    label: `${config.label} - ${text}`,
-  }
 }
