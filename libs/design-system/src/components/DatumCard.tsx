@@ -51,7 +51,7 @@ export function DatumCard({
     <Panel>
       <div
         className={cx(
-          'flex items-center py-3 px-4 h-full min-w-[200px]',
+          'flex items-center py-2 px-4 h-full min-w-[200px]',
           onClick ? 'cursor-pointer' : ''
         )}
         onClick={onClick}
@@ -102,11 +102,15 @@ export function DatumCard({
                 {value}
               </Text>
             )}
-            {commentEl && commentTip ? (
-              <Tooltip content={commentTip}>{commentEl}</Tooltip>
-            ) : (
-              commentEl
-            )}
+            {commentEl ? (
+              <div className="mt-1">
+                {commentTip ? (
+                  <Tooltip content={commentTip}>{commentEl}</Tooltip>
+                ) : (
+                  commentEl
+                )}
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

@@ -18,10 +18,26 @@ export function getTimeRange(
   }
 }
 
-export function potentialConfig(config: { label: string; color: string }) {
+export function configCategoryPattern(
+  config: { label: string; color: string },
+  category: string,
+  pattern?: boolean
+) {
   return {
     ...config,
-    label: `${config.label} - potential`,
-    pattern: true,
+    category,
+    pattern,
+  }
+}
+
+export function configCategoryLabel(
+  config: { label: string; color: string },
+  category: string,
+  label?: string
+) {
+  return {
+    ...config,
+    category,
+    label,
   }
 }

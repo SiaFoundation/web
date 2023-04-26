@@ -1,5 +1,4 @@
 import { useCallback, useMemo, useState } from 'react'
-import { XYChartTheme } from '@visx/xychart'
 import { AnimationTrajectory } from '@visx/react-spring/lib/types'
 import { GlyphCross, GlyphDot, GlyphStar } from '@visx/glyph'
 import { curveLinear, curveStep, curveCardinal } from '@visx/curve'
@@ -18,6 +17,7 @@ export type ChartConfig = {
   }
   data: {
     [name: string]: {
+      category?: string
       label?: string
       color: string
       pattern?: boolean
@@ -72,10 +72,10 @@ export function useChartXY(
   }, [data])
 
   const [useAnimatedComponents, setUseAnimatedComponents] = useState(
-    config.disableAnimations || !userPrefersReducedMotion()
+    !userPrefersReducedMotion() && !config.disableAnimations
   )
   const { activeTheme } = useTheme()
-  const theme = useMemo<XYChartTheme>(
+  const theme = useMemo(
     () => (activeTheme === 'dark' ? darkTheme : lightTheme),
     [activeTheme]
   )
@@ -100,7 +100,7 @@ export function useChartXY(
   const [curveType, setCurveType] = useState<CurveType>(initialCurveType)
   const [stackOffset, setStackOffset] =
     useState<StackOffset>(initialStackOffset)
-  const glyphOutline = theme.gridStyles.stroke
+  const glyphOutline = theme.xyChartTheme.gridStyles.stroke
   const [enableTooltipGlyph, setEnableTooltipGlyph] = useState(false)
   const [tooltipGlyphComponent, setTooltipGlyphComponent] = useState<
     'star' | 'cross' | 'circle' | '🍍'

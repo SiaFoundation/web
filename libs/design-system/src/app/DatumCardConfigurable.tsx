@@ -6,6 +6,7 @@ import { ValueSc } from '../components/ValueSc'
 import { DataLabel } from './DataLabel'
 import BigNumber from 'bignumber.js'
 import { useState } from 'react'
+import { Tooltip } from '../core/Tooltip'
 
 type Mode = 'total' | 'average' | 'latest'
 
@@ -70,30 +71,11 @@ export function DatumCardConfigurable({
         sc ? (
           <div className="flex items-center gap-4">
             <ValueSc
-              tooltip="Change over period"
+              tooltip="Net change over time range:"
               value={new BigNumber(sc.diff)}
             />
             {showChange && sc.change !== undefined && (
-              <Text
-                size="14"
-                weight="semibold"
-                font="mono"
-                ellipsis
-                color="verySubtle"
-              >
-                {sc.change.toFixed(2)}%
-              </Text>
-            )}
-          </div>
-        ) : (
-          value && (
-            <div className="flex items-center gap-4">
-              <ValueNum
-                tooltip="Change over period"
-                format={(val) => format(val.toNumber())}
-                value={new BigNumber(value.diff)}
-              />
-              {showChange && value.change !== undefined && (
+              <Tooltip content="Percent change over time range">
                 <Text
                   size="14"
                   weight="semibold"
@@ -101,8 +83,31 @@ export function DatumCardConfigurable({
                   ellipsis
                   color="verySubtle"
                 >
-                  {value.change.toFixed(2)}%
+                  {sc.change.toFixed(2)}%
                 </Text>
+              </Tooltip>
+            )}
+          </div>
+        ) : (
+          value && (
+            <div className="flex items-center gap-4">
+              <ValueNum
+                tooltip="Net change over time range:"
+                format={(val) => format(val.toNumber())}
+                value={new BigNumber(value.diff)}
+              />
+              {showChange && value.change !== undefined && (
+                <Tooltip content="Percent change over time range">
+                  <Text
+                    size="14"
+                    weight="semibold"
+                    font="mono"
+                    ellipsis
+                    color="verySubtle"
+                  >
+                    {value.change.toFixed(2)}%
+                  </Text>
+                </Tooltip>
               )}
             </div>
           )
