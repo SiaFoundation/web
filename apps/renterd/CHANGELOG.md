@@ -1,5 +1,15 @@
 # renterd
 
+## 0.13.0
+
+### Minor Changes
+
+- ad4f096: The files explorer now shows the total size of directories.
+- 879ee13: The file menu now provides "Copy URL", and "Copy authenticated URL" functions.
+- 879ee13: The files copy metadata option is now disabled in the data is unavailable or fetching.
+- 879ee13: The wallet sparklines have been temporarily hidden until we have support for all inflow/outflow events such as returned allowance.
+- ad4f096: The files feature now supports UTF-8 directory and file names.
+
 ## 0.12.0
 
 ### Minor Changes

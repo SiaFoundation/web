@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.46.0
+
+### Minor Changes
+
+- 7b0a75c: Button now has a text color override prop.
+- 879ee13: Charts now supports grouping stats by category, such as hostd earned and potential revenue.
+- 7b0a75c: ChartXY now shows the tooltip for zero values.
+- 879ee13: Menu item disabled states have been improved.
+- 7b0a75c: ChartXY now supports custom data labels.
+- 7b0a75c: Select now supports a custom icon.
+- 879ee13: The toast API has been extended to support generic React components.
+- 879ee13: Charts now have loading states.
+- 879ee13: Toasts now use proper default styling when used in apps.
+
 ## 0.45.0
 
 ### Minor Changes

@@ -1,5 +1,16 @@
 # hostd
 
+## 0.8.0
+
+### Minor Changes
+
+- 7b0a75c: The home dashboard now shows a variety of metrics and allows changing the data time range.
+- 879ee13: Charts now supports grouping stats by category, such as hostd earned and potential revenue.
+- ddebbb1: The network block height is now estimated. renterd no longer uses SiaStats for anything so the 3rd party data privacy toggle has also been removed.
+- ddebbb1: The sync screen now shows the correct network block height when using the Zen testnet.
+- 879ee13: Charts now have loading states.
+- 879ee13: The wallet sparklines have been temporarily hidden until we have support for all inflow/outflow events such as returned allowance.
+
 ## 0.7.0
 
 ### Minor Changes
