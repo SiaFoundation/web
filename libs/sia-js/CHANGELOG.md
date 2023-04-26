@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.0
+
+### Minor Changes
+
+- 7b0a75c: humanSiacoin with dynamic units now renders values less than 1e-12 as 0 SC.
+
 ## 0.8.0
 
 ### Minor Changes
