@@ -19,11 +19,13 @@ export function HomeRevenue() {
           label="earned revenue"
           sc={revenue.stats['total']}
           defaultMode="total"
+          isLoading={revenue.isLoading}
         />
         <DatumCardConfigurable
           label="potential revenue"
           sc={revenue.stats['potential']}
           defaultMode="total"
+          isLoading={revenue.isLoading}
           showChange={false}
         />
         <DatumCardConfigurable
@@ -31,36 +33,42 @@ export function HomeRevenue() {
           color={chartConfigs.storage.color}
           sc={revenue.stats['storage']}
           defaultMode="total"
+          isLoading={revenue.isLoading}
         />
         <DatumCardConfigurable
           label="egress"
           color={chartConfigs.egress.color}
           sc={revenue.stats['egress']}
           defaultMode="total"
+          isLoading={revenue.isLoading}
         />
         <DatumCardConfigurable
           label="ingress"
           color={chartConfigs.ingress.color}
           sc={revenue.stats['ingress']}
           defaultMode="total"
+          isLoading={revenue.isLoading}
         />
         <DatumCardConfigurable
           label="registry read"
           color={chartConfigs.registry.color}
           sc={revenue.stats['registryRead']}
           defaultMode="total"
+          isLoading={revenue.isLoading}
         />
         <DatumCardConfigurable
           label="registry write"
           color={chartConfigs.registry.color}
           sc={revenue.stats['registryWrite']}
           defaultMode="total"
+          isLoading={revenue.isLoading}
         />
         {/* <DatumCardConfigurable
           label="other"
           color={chartConfigs.other.color}
           sc={revenue.stats['other']}
           defaultMode="total"
+          isLoading={revenue.isLoading}
         /> */}
       </DatumScrollArea>
       <ChartXY
@@ -68,6 +76,7 @@ export function HomeRevenue() {
         height={300}
         data={revenue.data}
         config={revenue.config}
+        isLoading={revenue.isLoading}
         actionsLeft={
           <>
             <Text font="mono" weight="semibold">

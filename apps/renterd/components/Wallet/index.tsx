@@ -1,10 +1,8 @@
 import {
   EntityList,
   EntityListItemProps,
-  WalletSparkline,
   WalletLayoutActions,
   getTransactionTypes,
-  // getTransactionTotals,
 } from '@siafoundation/design-system'
 import {
   useWalletBalance,
@@ -65,18 +63,18 @@ export function Wallet() {
     ]
   }, [pending, transactions, openDialog])
 
-  const txns: { inflow: string; outflow: string; timestamp: string }[] =
-    useMemo(
-      () =>
-        transactions.data
-          ?.map((t) => ({
-            inflow: t.Inflow,
-            outflow: t.Outflow,
-            timestamp: t.Timestamp,
-          }))
-          .sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1)),
-      [transactions.data]
-    )
+  // const txns: { inflow: string; outflow: string; timestamp: string }[] =
+  //   useMemo(
+  //     () =>
+  //       transactions.data
+  //         ?.map((t) => ({
+  //           inflow: t.Inflow,
+  //           outflow: t.Outflow,
+  //           timestamp: t.Timestamp,
+  //         }))
+  //         .sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1)),
+  //     [transactions.data]
+  //   )
 
   const balance = useWalletBalance()
 
@@ -95,7 +93,7 @@ export function Wallet() {
       }
     >
       <div className="p-5 flex flex-col gap-5">
-        <WalletSparkline transactions={txns} />
+        {/* <WalletSparkline transactions={txns} /> */}
         <EntityList title="Transactions" entities={entities?.slice(0, 100)} />
       </div>
     </RenterdAuthedLayout>

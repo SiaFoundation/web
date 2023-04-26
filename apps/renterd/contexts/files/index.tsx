@@ -6,6 +6,7 @@ import {
   useDatasetEmptyState,
   useTableState,
 } from '@siafoundation/design-system'
+import { useAppSettings } from '@siafoundation/react-core'
 import {
   useObjectDirectory,
   useObjectDownloadFunc,
@@ -161,6 +162,21 @@ function useFilesMain() {
       })
     },
     [setDownloadsMap]
+  )
+
+  const { settings } = useAppSettings()
+  const getFileUrl = useCallback(
+    (name: string, authenticated: boolean) => {
+      const path = `/worker/objects${name}`
+      // Parse settings.api rather than URL because the UI could be pointing at a different API
+      const scheme = settings.api.startsWith('https') ? 'https' : 'http'
+      const host = settings.api.replace('https://', '').replace('http://', '')
+      if (authenticated) {
+        return `${scheme}://:${settings.password}@${host}/api${path}`
+      }
+      return `${scheme}://${host}/api${path}`
+    },
+    [settings]
   )
 
   const downloadFiles = async (files: string[]) => {
@@ -360,6 +376,7 @@ function useFilesMain() {
     sortDirection,
     sortOptions,
     resetDefaultColumnVisibility,
+    getFileUrl,
   }
 }
 

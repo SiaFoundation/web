@@ -31,6 +31,7 @@ type Props = {
   defaultMode: Mode
   enabledModes?: Mode[]
   showChange?: boolean
+  isLoading: boolean
 }
 
 const modeMap = {
@@ -47,11 +48,13 @@ export function DatumCardConfigurable({
   format = (val) => val.toFixed(2),
   defaultMode,
   enabledModes = ['total', 'average', 'latest'],
+  isLoading,
   showChange = true,
 }: Props) {
   const [mode, setMode] = useState<Mode>(defaultMode)
   return (
     <DatumCard
+      isLoading={isLoading}
       label={<DataLabel label={label} color={color} />}
       actions={
         <Select
@@ -65,8 +68,10 @@ export function DatumCardConfigurable({
           ))}
         </Select>
       }
-      sc={sc ? new BigNumber(sc[mode]) : undefined}
-      value={value && format ? format(value[mode]) : undefined}
+      sc={sc?.[mode] !== undefined ? new BigNumber(sc[mode]) : undefined}
+      value={
+        value?.[mode] !== undefined && format ? format(value[mode]) : undefined
+      }
       comment={
         sc ? (
           <div className="flex items-center gap-4">

@@ -69,8 +69,9 @@ export const itemStyles = ({
       'dark:focus:bg-graydark-300',
       'aria-selected:bg-gray-400',
       'aria-selected:dark:bg-graydark-500',
-      'data-[disabled]:text-gray-500',
-      'dark:data-[disabled]:text-gray-100',
+      'data-[disabled]:pointer-events-none',
+      'data-[disabled]:text-gray-700',
+      'dark:data-[disabled]:text-graydark-700',
     ]
   )
 

@@ -20,6 +20,7 @@ export function HomePricing() {
           color={chartConfigs.contract.color}
           sc={pricing.stats['contract']}
           defaultMode="latest"
+          isLoading={pricing.isLoading}
           enabledModes={['latest', 'average']}
         />
         <DatumCardConfigurable
@@ -27,6 +28,7 @@ export function HomePricing() {
           color={chartConfigs.storage.color}
           sc={pricing.stats['storage']}
           defaultMode="latest"
+          isLoading={pricing.isLoading}
           enabledModes={['latest', 'average']}
         />
         <DatumCardConfigurable
@@ -34,6 +36,7 @@ export function HomePricing() {
           color={chartConfigs.ingress.color}
           sc={pricing.stats['ingress']}
           defaultMode="latest"
+          isLoading={pricing.isLoading}
           enabledModes={['latest', 'average']}
         />
         <DatumCardConfigurable
@@ -41,6 +44,7 @@ export function HomePricing() {
           color={chartConfigs.egress.color}
           sc={pricing.stats['egress']}
           defaultMode="latest"
+          isLoading={pricing.isLoading}
           enabledModes={['latest', 'average']}
         />
         <DatumCardConfigurable
@@ -48,6 +52,7 @@ export function HomePricing() {
           color={chartConfigs.collateral.color}
           sc={pricing.stats['collateral']}
           defaultMode="latest"
+          isLoading={pricing.isLoading}
           enabledModes={['latest', 'average']}
         />
         <DatumCardConfigurable
@@ -55,6 +60,7 @@ export function HomePricing() {
           color={chartConfigs.rpc.color}
           sc={pricing.stats['baseRPC']}
           defaultMode="latest"
+          isLoading={pricing.isLoading}
           enabledModes={['latest', 'average']}
         />
         <DatumCardConfigurable
@@ -62,6 +68,7 @@ export function HomePricing() {
           color={chartConfigs.sectorAccess.color}
           sc={pricing.stats['sectorAccess']}
           defaultMode="latest"
+          isLoading={pricing.isLoading}
           enabledModes={['latest', 'average']}
         />
       </DatumScrollArea>
@@ -70,6 +77,7 @@ export function HomePricing() {
         height={300}
         data={pricing.data}
         config={pricing.config}
+        isLoading={pricing.isLoading}
         chartType="line"
         actionsLeft={
           <>

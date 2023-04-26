@@ -11,6 +11,7 @@ import {
   StackOffset,
 } from './useChartXY'
 import { ChartXYConfig } from './ChartXYConfig'
+import { LoadingDots } from '../LoadingDots'
 
 export type { ChartPoint, ChartData, ChartConfig }
 
@@ -18,6 +19,7 @@ type Props = {
   id: string
   height: number
   data: ChartData
+  isLoading?: boolean
   config: ChartConfig
   chartType?: ChartType
   curveType?: CurveType
@@ -33,6 +35,7 @@ export function ChartXY({
   data,
   config,
   actionsLeft,
+  isLoading,
   actionsRight,
   chartType = 'areastack',
   curveType = 'linear',
@@ -49,9 +52,15 @@ export function ChartXY({
       </div>
       <div className="flex gap-2 absolute top-3 left-4">{actionsLeft}</div>
       <ParentSize>
-        {({ width, height }) => (
-          <ChartXYGraph {...props} width={width} height={height} />
-        )}
+        {({ width, height }) =>
+          isLoading ? (
+            <div className="flex items-center justify-center h-full">
+              <LoadingDots className="scale-150" />
+            </div>
+          ) : (
+            <ChartXYGraph {...props} width={width} height={height} />
+          )
+        }
       </ParentSize>
     </>
   )

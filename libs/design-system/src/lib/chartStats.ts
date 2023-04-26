@@ -22,7 +22,7 @@ export function computeChartStats(
   data: ChartPoint[],
   timeRange: TimeRange,
   futureKeys: string[] = []
-) {
+): Record<string, KeyStats> {
   const { start, end } = timeRange
   const keys = Object.keys(omit(data[0], 'timestamp'))
 

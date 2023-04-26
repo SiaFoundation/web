@@ -21,7 +21,7 @@ type Props = {
 export function DirectoryDropdownMenu({ path }: Props) {
   const obj = useObjectDirectory({
     params: {
-      key: encodeURIComponent(path.slice(1)),
+      key: path.slice(1),
     },
     config: {
       swr: {
@@ -46,7 +46,7 @@ export function DirectoryDropdownMenu({ path }: Props) {
         <DropdownMenuItem
           onSelect={() =>
             deleteObject.delete({
-              params: { key: encodeURIComponent(path.slice(1)) },
+              params: { key: path.slice(1) },
             })
           }
         >

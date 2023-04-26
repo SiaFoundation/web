@@ -24,6 +24,7 @@ export type Chart = {
   data: ChartData
   stats: ChartStats
   config: ChartConfig
+  isLoading: boolean
 }
 
 type TimeRange = {
@@ -71,7 +72,6 @@ function useMetricsMain() {
     },
     config: {
       swr: {
-        keepPreviousData: true,
         revalidateOnFocus: false,
       },
     },
@@ -93,12 +93,43 @@ function useMetricsMain() {
         registryWrite: Number(m.revenue.earned.registryWrite),
         rpc: Number(m.revenue.earned.rpc),
         timestamp: new Date(m.timestamp).getTime(),
+        // not enabled on graph, but used for stats
+        potential: new BigNumber(m.revenue.potential.storage)
+          .plus(m.revenue.potential.ingress)
+          .plus(m.revenue.potential.egress)
+          .plus(m.revenue.potential.registryRead)
+          .plus(m.revenue.potential.registryWrite)
+          .plus(m.revenue.potential.rpc)
+          .toNumber(),
+        earned: new BigNumber(m.revenue.earned.storage)
+          .plus(m.revenue.earned.ingress)
+          .plus(m.revenue.earned.egress)
+          .plus(m.revenue.earned.registryRead)
+          .plus(m.revenue.earned.registryWrite)
+          .plus(m.revenue.earned.rpc)
+          .toNumber(),
       })) || []
-    const stats = computeChartStats(data, timeRange, ['potential'])
+    const stats = metricsPeriod.data
+      ? computeChartStats(data, timeRange, ['potential'])
+      : {}
     return {
       data,
       stats,
       config: {
+        enabled: {
+          storagePotential: true,
+          ingressPotential: true,
+          egressPotential: true,
+          registryReadPotential: true,
+          registryWritePotential: true,
+          rpcPotential: true,
+          storage: true,
+          ingress: true,
+          egress: true,
+          registryRead: true,
+          registryWrite: true,
+          rpc: true,
+        },
         data: {
           storagePotential: configCategoryPattern(
             chartConfigs.storage,
@@ -150,6 +181,7 @@ function useMetricsMain() {
         formatTimestamp,
         disableAnimations,
       },
+      isLoading: metricsPeriod.isValidating,
     }
   }, [timeRange, metricsPeriod, formatTimestamp])
 
@@ -186,6 +218,7 @@ function useMetricsMain() {
         formatTimestamp,
         disableAnimations,
       },
+      isLoading: metricsPeriod.isValidating,
     }
   }, [timeRange, metricsPeriod, formatTimestamp])
 
@@ -222,6 +255,7 @@ function useMetricsMain() {
         formatTimestamp,
         disableAnimations,
       },
+      isLoading: metricsPeriod.isValidating,
     }
   }, [timeRange, metricsPeriod, formatTimestamp])
 
@@ -251,6 +285,7 @@ function useMetricsMain() {
         formatTimestamp,
         disableAnimations,
       },
+      isLoading: metricsPeriod.isValidating,
     }
   }, [timeRange, metricsPeriod, formatTimestamp])
 
@@ -302,6 +337,7 @@ function useMetricsMain() {
         formatTimestamp,
         disableAnimations,
       },
+      isLoading: metricsPeriod.isValidating,
     }
   }, [timeRange, metricsPeriod, formatTimestamp])
 

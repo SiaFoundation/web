@@ -21,6 +21,7 @@ export function HomeUtilization() {
             color={chartConfigs.storage.color}
             value={storage.stats['totalSectors']}
             defaultMode="latest"
+            isLoading={storage.isLoading}
             enabledModes={['latest', 'average']}
             format={humanBytes}
           />
@@ -29,6 +30,7 @@ export function HomeUtilization() {
             color={chartConfigs.registry.color}
             value={storage.stats['registryEntries']}
             defaultMode="latest"
+            isLoading={storage.isLoading}
             enabledModes={['latest', 'average']}
             format={humanBytes}
           />
@@ -38,6 +40,7 @@ export function HomeUtilization() {
           height={300}
           data={storage.data}
           config={storage.config}
+          isLoading={storage.isLoading}
           // chartType="line"
           actionsLeft={
             <>
@@ -56,6 +59,7 @@ export function HomeUtilization() {
             color={chartConfigs.ingress.color}
             value={bandwidth.stats['ingress']}
             defaultMode="total"
+            isLoading={bandwidth.isLoading}
             format={humanBytes}
           />
           <DatumCardConfigurable
@@ -63,6 +67,7 @@ export function HomeUtilization() {
             color={chartConfigs.egress.color}
             value={bandwidth.stats['egress']}
             defaultMode="total"
+            isLoading={bandwidth.isLoading}
             format={humanBytes}
           />
         </DatumScrollArea>
@@ -71,6 +76,7 @@ export function HomeUtilization() {
           height={300}
           data={bandwidth.data}
           config={bandwidth.config}
+          isLoading={bandwidth.isLoading}
           chartType="line"
           actionsLeft={
             <>

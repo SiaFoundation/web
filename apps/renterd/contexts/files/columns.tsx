@@ -112,23 +112,24 @@ export const columns: FilesTableColumn[] = [
     id: 'size',
     label: 'size',
     contentClassName: 'justify-end',
-    render: function SizeColumn({ data: { size, isUploading } }) {
+    render: function SizeColumn({ data: { name, size, isUploading } }) {
       if (isUploading) {
         return <LoadingDots />
       }
 
-      if (size) {
-        return (
-          <ValueNum
-            size="12"
-            value={new BigNumber(size)}
-            variant="value"
-            color="subtle"
-            format={(v) => humanBytes(v.toNumber())}
-          />
-        )
+      if (name === '..') {
+        return null
       }
-      return null
+
+      return (
+        <ValueNum
+          size="12"
+          value={new BigNumber(size)}
+          variant="value"
+          color="subtle"
+          format={(v) => humanBytes(v.toNumber())}
+        />
+      )
     },
   },
   {
