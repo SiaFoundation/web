@@ -9,17 +9,16 @@ import {
   TiBToBytes,
 } from '@siafoundation/design-system'
 import { humanBytes, humanSiacoin } from '@siafoundation/sia-js'
-import { throttle } from 'lodash'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { chartConfigs } from '../../config/charts'
 import { useMetricsPeriod } from '@siafoundation/react-hostd'
-import { getTimeRange, potentialConfig } from './utils'
+import {
+  getTimeRange,
+  configCategoryPattern,
+  configCategoryLabel,
+} from './utils'
 import BigNumber from 'bignumber.js'
 import { DataInterval, DataTimeSpan, dataTimeSpanOptions } from './types'
-
-const debounced = throttle((func: () => void) => func(), 100, {
-  trailing: true,
-})
 
 export type Chart = {
   data: ChartData
@@ -37,6 +36,7 @@ export const futureSpan = 10
 
 const defaultTimeSpan: DataTimeSpan = '90'
 const defaultInterval: DataInterval = 'weekly'
+const disableAnimations = true
 
 function useMetricsMain() {
   const [dataTimeSpan, _setDataTimeSpan] =
@@ -44,7 +44,7 @@ function useMetricsMain() {
   const [dataInterval, setDataInterval] =
     useState<DataInterval>(defaultInterval)
 
-  const [timeRange, _setTimeRange] = useState<TimeRange>(
+  const [timeRange, setTimeRange] = useState<TimeRange>(
     getTimeRange(defaultTimeSpan, futureSpan)
   )
 
@@ -53,31 +53,16 @@ function useMetricsMain() {
       const option = dataTimeSpanOptions.find((o) => o.value === span)
       setDataInterval(option.interval)
       _setDataTimeSpan(option.value)
+      setTimeRange(getTimeRange(option.value, futureSpan))
     },
-    [_setDataTimeSpan, setDataInterval]
+    [_setDataTimeSpan, setDataInterval, setTimeRange]
   )
-
-  const setTimeRange = useCallback(
-    (range: TimeRange) => {
-      if (range.start === 0 && range.end === 0) {
-        return
-      }
-      debounced(() => {
-        _setTimeRange(range)
-      })
-    },
-    [_setTimeRange]
-  )
-
-  useEffect(() => {
-    setTimeRange(getTimeRange(dataTimeSpan, futureSpan))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataTimeSpan])
 
   const formatTimestamp = useMemo(
     () => getDataIntervalLabelFormatter(dataInterval),
     [dataInterval]
   )
+
   const metricsPeriod = useMetricsPeriod({
     params: {
       period: dataInterval,
@@ -101,26 +86,12 @@ function useMetricsMain() {
         registryReadPotential: Number(m.revenue.potential.registryRead),
         registryWritePotential: Number(m.revenue.potential.registryWrite),
         rpcPotential: Number(m.revenue.potential.rpc),
-        potential: new BigNumber(m.revenue.potential.storage)
-          .plus(m.revenue.potential.ingress)
-          .plus(m.revenue.potential.egress)
-          .plus(m.revenue.potential.registryRead)
-          .plus(m.revenue.potential.registryWrite)
-          .plus(m.revenue.potential.rpc)
-          .toNumber(),
         storage: Number(m.revenue.earned.storage),
         ingress: Number(m.revenue.earned.ingress),
         egress: Number(m.revenue.earned.egress),
         registryRead: Number(m.revenue.earned.registryRead),
         registryWrite: Number(m.revenue.earned.registryWrite),
         rpc: Number(m.revenue.earned.rpc),
-        earned: new BigNumber(m.revenue.earned.storage)
-          .plus(m.revenue.earned.ingress)
-          .plus(m.revenue.earned.egress)
-          .plus(m.revenue.earned.registryRead)
-          .plus(m.revenue.earned.registryWrite)
-          .plus(m.revenue.earned.rpc)
-          .toNumber(),
         timestamp: new Date(m.timestamp).getTime(),
       })) || []
     const stats = computeChartStats(data, timeRange, ['potential'])
@@ -129,24 +100,55 @@ function useMetricsMain() {
       stats,
       config: {
         data: {
-          storagePotential: potentialConfig(chartConfigs.storage),
-          ingressPotential: potentialConfig(chartConfigs.ingress),
-          egressPotential: potentialConfig(chartConfigs.egress),
-          registryReadPotential: potentialConfig(chartConfigs.registryRead),
-          registryWritePotential: potentialConfig(chartConfigs.registryWrite),
-          rpcPotential: potentialConfig(chartConfigs.rpc),
+          storagePotential: configCategoryPattern(
+            chartConfigs.storage,
+            'potential',
+            true
+          ),
+          ingressPotential: configCategoryPattern(
+            chartConfigs.ingress,
+            'potential',
+            true
+          ),
+          egressPotential: configCategoryPattern(
+            chartConfigs.egress,
+            'potential',
+            true
+          ),
+          registryReadPotential: configCategoryPattern(
+            chartConfigs.registryRead,
+            'potential',
+            true
+          ),
+          registryWritePotential: configCategoryPattern(
+            chartConfigs.registryWrite,
+            'potential',
+            true
+          ),
+          rpcPotential: configCategoryPattern(
+            chartConfigs.rpc,
+            'potential',
+            true
+          ),
 
-          storage: chartConfigs.storage,
-          ingress: chartConfigs.ingress,
-          egress: chartConfigs.egress,
-          registryRead: chartConfigs.registryRead,
-          registryWrite: chartConfigs.registryWrite,
-          rpc: chartConfigs.rpc,
+          storage: configCategoryPattern(chartConfigs.storage, 'earned'),
+          ingress: configCategoryPattern(chartConfigs.ingress, 'earned'),
+          egress: configCategoryPattern(chartConfigs.egress, 'earned'),
+          registryRead: configCategoryPattern(
+            chartConfigs.registryRead,
+            'earned'
+          ),
+          registryWrite: configCategoryPattern(
+            chartConfigs.registryWrite,
+            'earned'
+          ),
+          rpc: configCategoryPattern(chartConfigs.rpc, 'earned'),
           // potential: chartConfigs.potential,
           // lost: chartConfigs.failed,
         },
         format: (v) => humanSiacoin(v),
         formatTimestamp,
+        disableAnimations,
       },
     }
   }, [timeRange, metricsPeriod, formatTimestamp])
@@ -182,6 +184,7 @@ function useMetricsMain() {
         },
         format: (v) => humanSiacoin(v),
         formatTimestamp,
+        disableAnimations,
       },
     }
   }, [timeRange, metricsPeriod, formatTimestamp])
@@ -217,6 +220,7 @@ function useMetricsMain() {
         },
         format: (v) => `${v} contracts`,
         formatTimestamp,
+        disableAnimations,
       },
     }
   }, [timeRange, metricsPeriod, formatTimestamp])
@@ -237,7 +241,7 @@ function useMetricsMain() {
       stats,
       config: {
         data: {
-          totalSectors: chartConfigs.sectorAccess,
+          totalSectors: chartConfigs.sectorsTotal,
           physicalSectors: chartConfigs.sectorsPhysical,
           registryEntries: chartConfigs.registry,
           tempSectors: chartConfigs.sectorsTemp,
@@ -245,6 +249,7 @@ function useMetricsMain() {
         },
         format: (v) => humanBytes(v),
         formatTimestamp,
+        disableAnimations,
       },
     }
   }, [timeRange, metricsPeriod, formatTimestamp])
@@ -266,27 +271,36 @@ function useMetricsMain() {
       stats,
       config: {
         data: {
-          ingress: chartConfigs.ingress,
-          ingressRHP2: {
-            ...chartConfigs.ingress,
-            label: 'ingress RHP2',
-          },
-          ingressRHP3: {
-            ...chartConfigs.ingress,
-            label: 'ingress RHP3',
-          },
-          egress: chartConfigs.egress,
-          egressRHP2: {
-            ...chartConfigs.egress,
-            label: 'egress RHP2',
-          },
-          egressRHP3: {
-            ...chartConfigs.egress,
-            label: 'egress RHP3',
-          },
+          ingress: configCategoryLabel(
+            chartConfigs.ingress,
+            'ingress',
+            'ingress total'
+          ),
+          ingressRHP2: configCategoryLabel(
+            chartConfigs.ingress,
+            'ingress',
+            'RHP2'
+          ),
+          ingressRHP3: configCategoryLabel(
+            chartConfigs.ingress,
+            'ingress',
+            'RHP3'
+          ),
+          egress: configCategoryLabel(chartConfigs.egress, 'egress', 'total'),
+          egressRHP2: configCategoryLabel(
+            chartConfigs.egress,
+            'egress',
+            'RHP2'
+          ),
+          egressRHP3: configCategoryLabel(
+            chartConfigs.egress,
+            'egress',
+            'RHP3'
+          ),
         },
         format: (v) => humanBytes(v),
         formatTimestamp,
+        disableAnimations,
       },
     }
   }, [timeRange, metricsPeriod, formatTimestamp])
@@ -295,7 +309,6 @@ function useMetricsMain() {
     dataTimeSpan,
     setDataTimeSpan,
     timeRange,
-    setTimeRange,
     dataInterval,
     setDataInterval,
     revenue,

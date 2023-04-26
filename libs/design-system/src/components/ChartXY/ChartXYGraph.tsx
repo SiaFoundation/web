@@ -6,6 +6,8 @@ import { ChartConfig, ChartPoint, ChartXYProps } from './useChartXY'
 import { Separator } from '../../core/Separator'
 import { PatternLines } from '@visx/pattern'
 import { cx } from 'class-variance-authority'
+import { rootClasses } from '../../config/css'
+import { groupBy } from 'lodash'
 
 export function ChartXYGraph({
   id,
@@ -52,7 +54,7 @@ export function ChartXYGraph({
 }: ChartXYProps & { width: number; height: number }) {
   return (
     <XYChart
-      theme={theme}
+      theme={theme.xyChartTheme}
       xScale={scales.x}
       yScale={scales.y}
       height={Math.min(400, height)}
@@ -191,8 +193,9 @@ export function ChartXYGraph({
         tickLength={12}
         tickLabelProps={(p) => ({
           ...p,
-          fill: 'var(--colors-textSubtle)',
-          fontFamily: 'var(--fonts-sans)',
+          fill: theme.labels.color,
+          fontFamily: theme.labels.fontFamily,
+          y: '14px',
           fontWeight: '500',
           fontSize: '8',
         })}
@@ -233,69 +236,105 @@ export function ChartXYGraph({
             const nearestDatum = tooltipData?.nearestDatum?.datum
             const nearestKey = tooltipData?.nearestDatum?.key
 
-            const total = nearestDatum
-              ? keys.reduce((acc, key) => {
-                  const val = accessors['y'][key](nearestDatum)
-                  if (val == null || Number.isNaN(val)) {
-                    return acc
-                  }
-                  return acc + val
-                }, 0)
-              : 0
-
-            // if (total === 0) {
-            //   return null
-            // }
-
             const formatTimestamp =
               config.formatTimestamp || ((v) => format(v, 'Pp'))
 
+            const keyGroups = Object.entries(
+              groupBy(
+                keys.reverse().map((key) => ({
+                  key,
+                  category: config.data?.[key]?.category || '',
+                })),
+                'category'
+              )
+            )
+
             return (
-              <div className="flex flex-col gap-2 py-1">
-                <Text size="12" color="subtle" className="text-end">
+              <div className={cx(rootClasses, 'flex flex-col gap-2 py-1')}>
+                <Text
+                  font="mono"
+                  size="12"
+                  color="contrast"
+                  className="text-end"
+                >
                   {nearestDatum
                     ? formatTimestamp(accessors.date(nearestDatum))
                     : 'No date'}
                 </Text>
-                <Separator className="w-full" />
-                <div className="grid grid-cols-2 gap-x-4 gap-y-1 items-center">
-                  {keys.reverse().map((key) => {
-                    const val =
-                      nearestDatum && accessors['y'][key](nearestDatum)
+                <Separator color="panel" className="w-full" />
+                <div
+                  className={cx(
+                    'grid gap-x-6 gap-y-4',
+                    keyGroups.length > 1 ? 'grid-cols-2' : 'grid-cols-1'
+                  )}
+                >
+                  {keyGroups.map(([group, keys]) => {
+                    const total = nearestDatum
+                      ? keys.reduce((acc, { key }) => {
+                          const val = accessors['y'][key](nearestDatum)
+                          if (val == null || Number.isNaN(val)) {
+                            return acc
+                          }
+                          return acc + val
+                        }, 0)
+                      : 0
 
                     return (
-                      <Fragment key={key}>
-                        <Text
-                          color="accent"
-                          style={{
-                            color: config.data?.[key]?.color,
-                          }}
-                          className={cx(nearestKey === key ? 'underline' : '')}
-                        >
-                          {config.data?.[key]?.label || key}
-                        </Text>
-                        <Text
-                          size="12"
-                          style={{
-                            textAlign: 'end',
-                          }}
-                          className={cx(nearestKey === key ? 'underline' : '')}
-                        >
-                          {val == null || Number.isNaN(val)
-                            ? '–'
-                            : config.format(val)}
-                        </Text>
-                      </Fragment>
+                      <div
+                        key={group}
+                        className="flex flex-col gap-2 w-[250px]"
+                      >
+                        {group && <Text weight="semibold">{group}</Text>}
+                        <div className="grid grid-cols-2 gap-x-2 gap-y-1 items-center">
+                          {keys.map(({ key }) => {
+                            const val =
+                              nearestDatum && accessors['y'][key](nearestDatum)
+
+                            return (
+                              <Fragment key={key}>
+                                <Text
+                                  color="accent"
+                                  style={{
+                                    color: config.data?.[key]?.color,
+                                  }}
+                                  className={cx(
+                                    nearestKey === key ? 'underline' : ''
+                                  )}
+                                >
+                                  {config.data?.[key]?.label || key}
+                                </Text>
+                                <Text
+                                  size="12"
+                                  style={{
+                                    textAlign: 'end',
+                                  }}
+                                  className={cx(
+                                    nearestKey === key ? 'underline' : ''
+                                  )}
+                                >
+                                  {val == null || Number.isNaN(val)
+                                    ? '–'
+                                    : config.format(val)}
+                                </Text>
+                              </Fragment>
+                            )
+                          })}
+                          {keys.length > 1 && isStack && (
+                            <>
+                              <Text className="pt-2">total</Text>
+                              <Text
+                                size="12"
+                                weight="bold"
+                                className="pt-2 text-end"
+                              >
+                                {config.format(total)}
+                              </Text>
+                            </>
+                          )}
+                        </div>
+                      </div>
                     )
                   })}
-                  {keys.length > 1 && isStack && (
-                    <>
-                      <Text className="pt-2">total</Text>
-                      <Text size="12" weight="bold" className="pt-2 text-end">
-                        {config.format(total)}
-                      </Text>
-                    </>
-                  )}
                 </div>
               </div>
             )

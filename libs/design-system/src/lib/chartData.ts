@@ -122,10 +122,10 @@ const dataIntervalLabelFormatters: Record<
   (timestamp: number) => string
 > = {
   '15m': (timestamp: number) => {
-    return `15m window ending at ${format(timestamp, 'Pp')}`
+    return `15m window ending at ${format(timestamp, 'P kk:mm')}`
   },
   hourly: (timestamp: number) => {
-    return `Hour ending at ${format(timestamp, 'Pp')}`
+    return `Hour ending at ${format(timestamp, 'P kk:mm')}`
   },
   daily: (timestamp: number) => {
     return `Day ending on ${format(timestamp, 'P')}`

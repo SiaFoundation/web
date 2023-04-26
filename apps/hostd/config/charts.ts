@@ -62,9 +62,9 @@ export const chartConfigs = {
   collateral: {
     color: colors.rose[600],
   },
-  sectorAccess: {
-    label: 'sector access',
-    color: colors.blue[600],
+  sectorsTotal: {
+    label: 'total sectors',
+    color: colors.teal[600],
   },
   sectorsPhysical: {
     label: 'physical sectors',
@@ -78,9 +78,10 @@ export const chartConfigs = {
     label: 'contract sectors',
     color: colors.green[600],
   },
-  // other: {
-  //   color: colors.gray[600],
-  // },
+  sectorAccess: {
+    label: 'sector access',
+    color: colors.blue[600],
+  },
 
   // general
   sc: {

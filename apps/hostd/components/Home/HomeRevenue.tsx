@@ -16,12 +16,12 @@ export function HomeRevenue() {
       <Heading>Revenue</Heading>
       <DatumScrollArea bleed>
         <DatumCardConfigurable
-          label="Earned revenue"
+          label="earned revenue"
           sc={revenue.stats['total']}
           defaultMode="total"
         />
         <DatumCardConfigurable
-          label="Potential revenue"
+          label="potential revenue"
           sc={revenue.stats['potential']}
           defaultMode="total"
           showChange={false}

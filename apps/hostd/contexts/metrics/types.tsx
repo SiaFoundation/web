@@ -59,27 +59,27 @@ export const dataTimeSpanOptions: {
 }[] = [
   {
     label: '7D',
-    interval: 'hourly',
+    interval: '15m',
     value: '7',
   },
   {
     label: '1M',
-    interval: 'daily',
+    interval: 'hourly',
     value: '30',
   },
   {
     label: '3M',
-    interval: 'weekly',
+    interval: 'daily',
     value: '90',
   },
   {
     label: '1Y',
-    interval: 'weekly',
+    interval: 'daily',
     value: '365',
   },
   {
     label: 'ALL',
-    interval: 'monthly',
+    interval: 'weekly',
     value: 'all',
   },
 ]
