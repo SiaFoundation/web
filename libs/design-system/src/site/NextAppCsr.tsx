@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { ThemeProvider } from '../hooks/useTheme'
 import { AppSettingsProvider, CoreProvider } from '@siafoundation/react-core'
 import { rootClasses } from '../config/css'
+import { Toaster } from '../lib/toast'
 
 export function ClientSide({ children }: { children: React.ReactNode }) {
   const [csrReady, setCsrReady] = useState(false)
@@ -33,6 +34,7 @@ export function NextAppCsr({
             ssr={false}
           >
             <div id="root" className={rootClasses}>
+              <Toaster />
               {children}
             </div>
           </AppSettingsProvider>

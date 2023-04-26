@@ -8,6 +8,7 @@ import { upperFirst } from 'lodash'
 import { Panel } from '../core/Panel'
 import { EntityType, getEntityTypeLabel } from '../lib/entityTypes'
 import { cx } from 'class-variance-authority'
+import { Skeleton } from '../core/Skeleton'
 
 // entityType&entityValue | value | values | sc | sf
 type Props = {
@@ -23,6 +24,7 @@ type Props = {
   comment?: React.ReactNode
   commentTip?: React.ReactNode
   actions?: React.ReactNode
+  isLoading?: boolean
   onClick?: () => void
 }
 
@@ -39,6 +41,7 @@ export function DatumCard({
   comment,
   commentTip,
   scaleSize = '40',
+  isLoading,
   onClick,
 }: Props) {
   const commentEl = (
@@ -51,12 +54,12 @@ export function DatumCard({
     <Panel>
       <div
         className={cx(
-          'flex items-center py-2 px-4 h-full min-w-[200px]',
+          'flex items-center py-2 px-4 h-full min-w-[250px]',
           onClick ? 'cursor-pointer' : ''
         )}
         onClick={onClick}
       >
-        <div className="flex flex-col gap-4 flex-wrap items-start">
+        <div className="flex flex-col gap-4 flex-wrap items-start w-full">
           <div className="flex relative top-px flex-1 w-full gap-6 items-center justify-between">
             <Text color="subtle" ellipsis scaleSize="14">
               {typeof label === 'string' ? upperFirst(label) : label}
@@ -64,50 +67,71 @@ export function DatumCard({
             {actions}
           </div>
           <div className="flex flex-col items-end md:items-start gap-2 md:flex-2">
-            {sc !== undefined && (
-              <ValueSc
-                scaleSize={scaleSize}
-                variant="value"
-                value={sc}
-                fixed={0}
-              />
-            )}
-            {sf !== undefined && (
-              <ValueSf scaleSize={scaleSize} variant="value" value={sf} />
-            )}
-            {entityType &&
-              (entityValue ? (
-                <ValueCopyable
-                  scaleSize={scaleSize}
-                  label={getEntityTypeLabel(entityType)}
-                  href={href}
-                  value={entityValue}
-                  displayValue={
-                    entityType === 'block' && entityValue
-                      ? Number(entityValue).toLocaleString()
-                      : entityValue
-                  }
-                  className="relative top-0.5"
-                />
-              ) : (
-                <Text font="mono" weight="medium" scaleSize={scaleSize}>
-                  -
-                </Text>
-              ))}
-            {hash && (
-              <ValueCopyable scaleSize={scaleSize} label="hash" value={hash} />
-            )}
-            {value !== undefined && (
-              <Text font="mono" weight="medium" scaleSize={scaleSize} ellipsis>
-                {value}
-              </Text>
+            {!isLoading ? (
+              <>
+                {sc !== undefined && (
+                  <ValueSc
+                    scaleSize={scaleSize}
+                    variant="value"
+                    value={sc}
+                    fixed={0}
+                  />
+                )}
+                {sf !== undefined && (
+                  <ValueSf scaleSize={scaleSize} variant="value" value={sf} />
+                )}
+                {entityType &&
+                  (entityValue ? (
+                    <ValueCopyable
+                      scaleSize={scaleSize}
+                      label={getEntityTypeLabel(entityType)}
+                      href={href}
+                      value={entityValue}
+                      displayValue={
+                        entityType === 'block' && entityValue
+                          ? Number(entityValue).toLocaleString()
+                          : entityValue
+                      }
+                      className="relative top-0.5"
+                    />
+                  ) : (
+                    <Text font="mono" weight="medium" scaleSize={scaleSize}>
+                      -
+                    </Text>
+                  ))}
+                {hash && (
+                  <ValueCopyable
+                    scaleSize={scaleSize}
+                    label="hash"
+                    value={hash}
+                  />
+                )}
+                {value !== undefined && (
+                  <Text
+                    font="mono"
+                    weight="medium"
+                    scaleSize={scaleSize}
+                    ellipsis
+                  >
+                    {value}
+                  </Text>
+                )}
+              </>
+            ) : (
+              <Skeleton className="h-12 w-[150px]" />
             )}
             {commentEl ? (
               <div className="mt-1">
-                {commentTip ? (
-                  <Tooltip content={commentTip}>{commentEl}</Tooltip>
+                {!isLoading ? (
+                  commentTip ? (
+                    <Tooltip content={commentTip}>{commentEl}</Tooltip>
+                  ) : (
+                    commentEl
+                  )
                 ) : (
-                  commentEl
+                  <div className="mt-1 h-6 justify-center">
+                    <Skeleton className="h-4 w-[100px]" />
+                  </div>
                 )}
               </div>
             ) : null}

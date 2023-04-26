@@ -9,7 +9,6 @@ import {
 import { useMetrics } from '../../contexts/metrics'
 import { format } from 'date-fns'
 import { HomeRevenue } from './HomeRevenue'
-// import { HomeOverview } from './HomeOverview'
 import { HomeUtilization } from './HomeUtilization'
 import { HomeContracts } from './HomeContracts'
 import { HomePricing } from './HomePricing'
@@ -93,7 +92,6 @@ export function Home() {
       }
     >
       <div className="p-5 flex flex-col gap-14">
-        {/* <HomeOverview /> */}
         <HomeRevenue />
         <HomeUtilization />
         <HomeContracts />

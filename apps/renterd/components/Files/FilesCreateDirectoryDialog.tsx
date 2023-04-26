@@ -38,9 +38,7 @@ export function FilesCreateDirectoryDialog({
     onSubmit: async (values, actions) => {
       const response = await upload.put({
         params: {
-          key: encodeURIComponent(
-            activeDirectoryPath.slice(1) + values.name + '/'
-          ),
+          key: activeDirectoryPath.slice(1) + values.name + '/',
         },
         payload: null,
       })

@@ -104,6 +104,7 @@ export function WalletSparkline({ transactions }: Props) {
         },
         format: (v) => humanSiacoin(v),
         formatTimestamp: getDataIntervalLabelFormatter('default'),
+        disableAnimations: true,
       },
     }
   }, [scData, timeRange, chartConfigs])

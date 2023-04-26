@@ -19,6 +19,7 @@ export function HomeContracts() {
           value={contracts.stats['active']}
           format={(v) => v.toFixed(0)}
           defaultMode="latest"
+          isLoading={contracts.isLoading}
           enabledModes={['latest', 'average']}
         />
       </DatumScrollArea>
@@ -33,6 +34,7 @@ export function HomeContracts() {
         }
         data={contracts.data}
         config={contracts.config}
+        isLoading={contracts.isLoading}
         height={300}
       />
     </div>

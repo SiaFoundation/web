@@ -1,7 +1,6 @@
 import {
   EntityList,
   EntityListItemProps,
-  WalletSparkline,
   WalletLayoutActions,
   getTransactionTypes,
   // getTransactionTotals,
@@ -60,20 +59,20 @@ export function Wallet() {
     [pending, transactions, openDialog]
   )
 
-  const txns: { inflow: string; outflow: string; timestamp: string }[] =
-    useMemo(
-      () =>
-        (transactions.data || [])
-          .map((t) => {
-            return {
-              inflow: t.inflow,
-              outflow: t.outflow,
-              timestamp: t.timestamp,
-            }
-          })
-          .sort((a, b) => (a.timestamp >= b.timestamp ? 1 : -1)),
-      [transactions]
-    )
+  // const txns: { inflow: string; outflow: string; timestamp: string }[] =
+  //   useMemo(
+  //     () =>
+  //       (transactions.data || [])
+  //         .map((t) => {
+  //           return {
+  //             inflow: t.inflow,
+  //             outflow: t.outflow,
+  //             timestamp: t.timestamp,
+  //           }
+  //         })
+  //         .sort((a, b) => (a.timestamp >= b.timestamp ? 1 : -1)),
+  //     [transactions]
+  //   )
 
   return (
     <HostdAuthedLayout
@@ -89,7 +88,7 @@ export function Wallet() {
       }
     >
       <div className="p-5 flex flex-col gap-5">
-        <WalletSparkline transactions={txns} />
+        {/* <WalletSparkline transactions={txns} /> */}
         <EntityList title="Transactions" entities={entities.slice(0, 100)} />
       </div>
     </HostdAuthedLayout>
