@@ -42,7 +42,10 @@ export const triggerErrorToast = (text: string, options: ToastOptions = {}) => {
   )
 }
 
-export function buildToastOptions(options?: ToastOptions): ToastOptions {
+export function buildToastOptions({
+  className,
+  ...options
+}: ToastOptions = {}): ToastOptions {
   return {
     position: 'top-center',
     duration: 5_000,
@@ -52,7 +55,7 @@ export function buildToastOptions(options?: ToastOptions): ToastOptions {
       'font-sans font-normal',
       'text-gray-1100 dark:text-white',
       'max-w-[800px]',
-      options?.className
+      className
     ),
     success: {
       icon: (
