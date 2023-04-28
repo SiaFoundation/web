@@ -6,7 +6,7 @@ import { Dialog } from '../../core/Dialog'
 import { Settings16 } from '../../icons/carbon'
 import { Button } from '../../core/Button'
 
-export function ChartXYConfig({
+export function ChartXYConfig<Key extends string, Cat extends string>({
   chartType,
   setChartType,
   curveType,
@@ -19,7 +19,7 @@ export function ChartXYConfig({
   setXAxisOrientation,
 }: // yAxisOrientation,
 // setYAxisOrientation,
-ChartXYProps) {
+ChartXYProps<Key, Cat>) {
   return (
     <Dialog
       trigger={

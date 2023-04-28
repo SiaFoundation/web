@@ -8,6 +8,7 @@ export function HostdTransactionDetailsDialog() {
 
   // TODO: add transaction endpoint
   const transactions = useWalletTransactions({
+    params: {},
     config: {
       swr: {
         revalidateOnFocus: false,

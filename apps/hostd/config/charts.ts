@@ -14,7 +14,7 @@ export const chartConfigs = {
     pattern: true,
   },
   rejected: {
-    color: colors.graydark[500],
+    color: colors.red[600],
     // pattern: true,
   },
   failed: {
@@ -28,7 +28,10 @@ export const chartConfigs = {
   // types
   storage: {
     label: 'storage',
-    color: colors.teal[600],
+    color: colors.emerald[600],
+  },
+  storagePhysical: {
+    color: colors.indigo[600],
   },
   ingress: {
     label: 'ingress',
@@ -52,23 +55,19 @@ export const chartConfigs = {
   },
   rpc: {
     label: 'RPC',
-    color: colors.emerald[600],
+    color: colors.slate[500],
+  },
+  capacity: {
+    label: 'capacity',
+    color: colors.neutral[500],
   },
 
   //
   contract: {
-    color: colors.green[600],
+    color: colors.red[800],
   },
   collateral: {
-    color: colors.rose[600],
-  },
-  sectorsTotal: {
-    label: 'total sectors',
-    color: colors.teal[600],
-  },
-  sectorsPhysical: {
-    label: 'physical sectors',
-    color: colors.red[600],
+    color: colors.amber[600],
   },
   sectorsTemp: {
     label: 'temp sectors',

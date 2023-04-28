@@ -1,7 +1,3 @@
-import { NumberField } from '../core/NumberField'
-import { toFixedMax } from '../lib/numbers'
-import BigNumber from 'bignumber.js'
-import { ConfigurationTipNumber } from './ConfigurationTipNumber'
 import { useCallback } from 'react'
 import { FieldError } from '../components/Form'
 import { Switch } from '../core/Switch'

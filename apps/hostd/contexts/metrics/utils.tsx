@@ -18,9 +18,9 @@ export function getTimeRange(
   }
 }
 
-export function configCategoryPattern(
+export function configCategoryPattern<Cat extends string>(
   config: { label: string; color: string },
-  category: string,
+  category: Cat,
   pattern?: boolean
 ) {
   return {
@@ -30,9 +30,9 @@ export function configCategoryPattern(
   }
 }
 
-export function configCategoryLabel(
-  config: { label: string; color: string },
-  category: string,
+export function configCategoryLabel<Cat extends string>(
+  config: { label?: string; color?: string },
+  category: Cat,
   label?: string
 ) {
   return {

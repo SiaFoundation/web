@@ -2,7 +2,6 @@ import {
   Button,
   CloudUpload16,
   FolderAdd16,
-  PaginatorKnownTotal,
   Search16,
 } from '@siafoundation/design-system'
 import { useFiles } from '../../contexts/files'
@@ -12,8 +11,7 @@ import { useDialog } from '../../contexts/dialog'
 
 export function FilesActionsMenu() {
   const { openDialog } = useDialog()
-  const { uploadFiles, dataState, offset, limit, datasetCount, pageCount } =
-    useFiles()
+  const { uploadFiles } = useFiles()
 
   const { getRootProps, getInputProps } = useDropzone({
     noDrag: true,

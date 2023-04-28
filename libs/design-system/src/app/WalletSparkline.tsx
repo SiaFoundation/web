@@ -27,6 +27,8 @@ type Props = {
   transactions?: Transaction[]
 }
 
+type Key = 'sc'
+
 export function WalletSparkline({ transactions }: Props) {
   const { activeTheme } = useTheme()
   const chartConfigs = useMemo(
@@ -55,13 +57,13 @@ export function WalletSparkline({ transactions }: Props) {
       return []
     }
     let points = transactions.reduce((acc, t, i) => {
-      const lastValue: ChartPoint = acc[i - 1]
+      const lastValue: ChartPoint<Key> = acc[i - 1]
       const lastSc = lastValue ? lastValue['sc'] : 0
       return acc.concat({
         sc: new BigNumber(lastSc).plus(t.inflow).minus(t.outflow).toNumber(),
         timestamp: new Date(t.timestamp).getTime(),
       })
-    }, [] as ChartPoint[])
+    }, [] as ChartPoint<Key>[])
     points = sortBy(points, 'timestamp')
 
     // Pad the back with a few points so the intial transaction shows as a jump up from zero.
@@ -89,9 +91,9 @@ export function WalletSparkline({ transactions }: Props) {
   )
 
   const scChart = useMemo<{
-    data: ChartData
+    data: ChartData<Key>
     stats: ChartStats
-    config: ChartConfig
+    config: ChartConfig<Key, never>
   }>(() => {
     const data = formatChartData(scData, timeRange, 'none', 'average', 0)
     const stats = computeChartStats(scData, timeRange)

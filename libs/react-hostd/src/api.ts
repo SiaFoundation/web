@@ -114,7 +114,7 @@ export function useWallet(args?: HookArgsSwr<void, WalletResponse>) {
 }
 
 export function useWalletTransactions(
-  args?: HookArgsSwr<void, WalletTransaction[]>
+  args?: HookArgsSwr<{ limit?: number; offset?: number }, WalletTransaction[]>
 ) {
   return useGetSwr({
     ...args,

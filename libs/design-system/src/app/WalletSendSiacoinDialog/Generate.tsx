@@ -13,7 +13,7 @@ const exampleAddr =
 
 const initialValues = {
   address: '',
-  siacoin: 0,
+  siacoin: undefined,
   includeFee: false,
 }
 
@@ -49,6 +49,9 @@ export function useSendSiacoinGenerateForm({
     initialValues,
     validationSchema,
     onSubmit: async (values) => {
+      if (!values.siacoin) {
+        return
+      }
       const siacoin = values.includeFee
         ? toHastings(values.siacoin).minus(fee)
         : toHastings(values.siacoin)
@@ -71,7 +74,7 @@ export function useSendSiacoinGenerateForm({
     },
   })
 
-  const sc = toHastings(formik.values.siacoin)
+  const sc = toHastings(formik.values.siacoin || 0)
 
   const form = (
     <div className="flex flex-col gap-4">

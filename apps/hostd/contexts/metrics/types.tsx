@@ -4,10 +4,63 @@ import {
   ChartStats,
 } from '@siafoundation/design-system'
 
-export type Chart = {
-  data: ChartData
+export type RevenueKeys =
+  | 'potential'
+  | 'earned'
+  | 'rpcPotential'
+  | 'rpc'
+  | 'registryWritePotential'
+  | 'registryWrite'
+  | 'registryReadPotential'
+  | 'registryRead'
+  | 'egressPotential'
+  | 'egress'
+  | 'ingressPotential'
+  | 'ingress'
+  | 'storagePotential'
+  | 'storage'
+
+export type RevenueCategories = 'earned' | 'potential'
+
+export type PricingKeys =
+  | 'baseRPC'
+  | 'sectorAccess'
+  | 'contract'
+  | 'collateral'
+  | 'egress'
+  | 'ingress'
+  | 'storage'
+
+export type ContractsKeys =
+  | 'failed'
+  | 'rejected'
+  | 'pending'
+  | 'active'
+  | 'successful'
+
+export type StorageKeys =
+  | 'totalSectors'
+  | 'physicalSectors'
+  | 'registryEntries'
+  | 'tempSectors'
+  | 'contractSectors'
+
+export type StorageCategories = 'storage used' | 'storage capacity'
+
+export type BandwidthKeys =
+  | 'ingress'
+  | 'ingressRHP2'
+  | 'ingressRHP3'
+  | 'egress'
+  | 'egressRHP2'
+  | 'egressRHP3'
+
+export type BandwidthCategories = 'ingress' | 'egress'
+
+export type Chart<Key extends string, Cat extends string> = {
+  data: ChartData<Key>
   stats: ChartStats
-  config: ChartConfig
+  config: ChartConfig<Key, Cat>
 }
 
 export type TimeRange = {

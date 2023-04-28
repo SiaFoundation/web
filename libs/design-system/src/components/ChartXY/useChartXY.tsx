@@ -11,31 +11,29 @@ import { omit } from 'lodash'
 
 const numTicks = 4
 
-export type ChartConfig = {
-  enabled?: {
-    [name: string]: boolean
-  }
-  data: {
-    [name: string]: {
-      category?: string
+export type ChartConfig<Key extends string, Cat extends string> = {
+  enabledGraph?: Key[]
+  enabledTip?: Key[]
+  categories?: Cat[]
+  data: Record<
+    Key,
+    {
+      category?: Cat
       label?: string
-      color: string
+      color?: string
       pattern?: boolean
       fromOpacity?: number
       toOpacity?: number
     }
-  }
+  >
   format: (v: number) => string
   formatTimestamp?: (v: number) => string
   disableAnimations?: boolean
 }
 
-export type ChartPoint = {
-  timestamp: number
-  [datum: string]: number
-}
+export type ChartPoint<T extends string> = Record<T | 'timestamp', number>
 
-export type ChartData = ChartPoint[]
+export type ChartData<T extends string> = ChartPoint<T>[]
 
 export type ChartType = 'barstack' | 'bargroup' | 'line' | 'area' | 'areastack'
 export type CurveType = 'linear' | 'cardinal' | 'step'
@@ -48,10 +46,10 @@ export type StackOffset =
 
 type SimpleScaleConfig = { type: 'band' | 'linear'; paddingInner?: number }
 
-export function useChartXY(
+export function useChartXY<Key extends string, Cat extends string>(
   id: string,
-  chartData: ChartData,
-  config: ChartConfig,
+  chartData: ChartData<Key>,
+  config: ChartConfig<Key, Cat>,
   initialChartType: ChartType,
   initialCurveType: CurveType,
   initialStackOffset: StackOffset
@@ -115,7 +113,7 @@ export function useChartXY(
       onPointerOut,
       onPointerUp,
       isNearestDatum,
-    }: RenderTooltipGlyphProps<ChartPoint>) => {
+    }: RenderTooltipGlyphProps<ChartPoint<Key>>) => {
       const handlers = { onPointerMove, onPointerOut, onPointerUp }
       if (tooltipGlyphComponent === 'star') {
         return (
@@ -163,17 +161,16 @@ export function useChartXY(
   )
 
   const keys = useMemo(
-    () => Object.keys(omit(chartData[0], 'timestamp')),
+    () => Object.keys(omit(chartData[0], 'timestamp')) as Key[],
     [chartData]
   )
 
-  const enabled = useMemo(() => {
-    if (config.enabled) {
-      return Object.entries(config.enabled)
-        .filter(([_, val]) => val)
-        .map(([key]) => key)
-    }
-    return keys
+  const enabledGraph = useMemo(() => {
+    return config.enabledGraph || keys
+  }, [keys, config])
+
+  const enabledTip = useMemo(() => {
+    return config.enabledTip || keys
   }, [keys, config])
 
   const accessors = useMemo(
@@ -181,18 +178,18 @@ export function useChartXY(
       x: keys.reduce(
         (acc, key) => ({
           ...acc,
-          [key]: (d: ChartPoint) => d.timestamp,
+          [key]: (d: ChartPoint<Key>) => d.timestamp,
         }),
-        {} as Record<string, (d: ChartPoint) => number>
+        {} as Record<string, (d: ChartPoint<Key>) => number>
       ),
       y: keys.reduce(
         (acc, key) => ({
           ...acc,
-          [key]: (d: ChartPoint) => d[key],
+          [key]: (d: ChartPoint<Key>) => d[key],
         }),
-        {} as Record<string, (d: ChartPoint) => number>
+        {} as Record<string, (d: ChartPoint<Key>) => number>
       ),
-      date: (d: ChartPoint) => d.timestamp,
+      date: (d: ChartPoint<Key>) => d.timestamp,
     }),
     [keys]
   )
@@ -245,7 +242,8 @@ export function useChartXY(
     chartType,
     curveType,
     keys,
-    enabled,
+    enabledGraph,
+    enabledTip,
     renderBarGroup: chartType === 'bargroup',
     renderBarStack: chartType === 'barstack',
     enableTooltipGlyph,
@@ -284,4 +282,6 @@ export function useChartXY(
   }
 }
 
-export type ChartXYProps = ReturnType<typeof useChartXY>
+export type ChartXYProps<Key extends string, Cat extends string> = ReturnType<
+  typeof useChartXY<Key, Cat>
+>

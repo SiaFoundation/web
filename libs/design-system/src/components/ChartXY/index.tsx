@@ -13,14 +13,14 @@ import {
 import { ChartXYConfig } from './ChartXYConfig'
 import { LoadingDots } from '../LoadingDots'
 
-export type { ChartPoint, ChartData, ChartConfig }
+export type { ChartPoint, ChartData, ChartConfig, ChartType }
 
-type Props = {
+type Props<Key extends string, Cat extends string> = {
   id: string
   height: number
-  data: ChartData
+  data: ChartData<Key>
   isLoading?: boolean
-  config: ChartConfig
+  config: ChartConfig<Key, Cat>
   chartType?: ChartType
   curveType?: CurveType
   stackOffset?: StackOffset
@@ -29,7 +29,7 @@ type Props = {
   variant?: 'panel' | 'ghost'
 }
 
-export function ChartXY({
+export function ChartXY<Key extends string, Cat extends string>({
   id,
   height,
   data,
@@ -41,8 +41,15 @@ export function ChartXY({
   curveType = 'linear',
   stackOffset = 'none',
   variant = 'panel',
-}: Props) {
-  const props = useChartXY(id, data, config, chartType, curveType, stackOffset)
+}: Props<Key, Cat>) {
+  const props = useChartXY<Key, Cat>(
+    id,
+    data,
+    config,
+    chartType,
+    curveType,
+    stackOffset
+  )
 
   const body = (
     <>
