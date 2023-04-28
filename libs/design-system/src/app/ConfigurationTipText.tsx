@@ -9,7 +9,7 @@ type Props = {
   link?: string
   tip: React.ReactNode
   value: string
-  onChange: (value: string) => void
+  onClick: () => void
 }
 
 export function ConfigurationTipText({
@@ -17,7 +17,7 @@ export function ConfigurationTipText({
   link,
   tip,
   value,
-  onChange,
+  onClick,
 }: Props) {
   return (
     <div className="flex justify-between items-center">
@@ -37,7 +37,7 @@ export function ConfigurationTipText({
           </Text>
         </div>
       </Tooltip>
-      <div className="flex cursor-pointer" onClick={() => onChange(value)}>
+      <div className="flex cursor-pointer" onClick={onClick}>
         <Text size="12">
           <Code>{value}</Code>
         </Text>

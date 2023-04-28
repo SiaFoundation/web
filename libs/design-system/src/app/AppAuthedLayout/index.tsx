@@ -15,6 +15,7 @@ type Props = {
   nav?: React.ReactNode
   actions?: React.ReactNode
   sidenav?: React.ReactNode
+  stats?: React.ReactNode
   children: React.ReactNode
   connectivityRoute: string
   walletBalance?: BigNumber
@@ -39,6 +40,7 @@ export function AppAuthedLayout({
   size = '4',
   nav,
   actions,
+  stats,
   children,
   sidenav,
   connectivityRoute,
@@ -67,6 +69,7 @@ export function AppAuthedLayout({
             title={navTitle === undefined ? title : navTitle}
             nav={nav}
             actions={actions}
+            stats={stats}
           />
           <ScrollArea className="z-0">
             <Container size={size} pad={false}>

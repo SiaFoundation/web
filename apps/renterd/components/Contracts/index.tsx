@@ -6,9 +6,9 @@ import { useContracts } from '../../contexts/contracts'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
-import { ContractsFilterMenu } from './ContractsFilterMenu'
 import { ContractsActionsMenu } from './ContractsActionsMenu'
 import { StateError } from './StateError'
+import { ContractsFilterBar } from './ContractsFilterBar'
 
 export function Contracts() {
   const { openDialog } = useDialog()
@@ -29,11 +29,11 @@ export function Contracts() {
       routes={routes}
       sidenav={<RenterdSidenav />}
       openSettings={() => openDialog('settings')}
-      nav={<ContractsFilterMenu />}
+      stats={<ContractsFilterBar />}
       size="full"
       actions={<ContractsActionsMenu />}
     >
-      <div className="p-5 min-w-fit">
+      <div className="p-6 min-w-fit">
         <Table
           context={cellContext}
           isLoading={dataState === 'loading'}

@@ -11,11 +11,15 @@ import {
   Code,
   useFormChanged,
   Reset16,
-  TiBToBytes,
-  bytesToTiB,
+  TBToBytes,
+  ConfigurationSwitch,
+  ValueSc,
+  useSiacoinFiat,
+  ValueNum,
+  bytesToTB,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { RenterdSidenav } from '../RenterdSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
@@ -27,13 +31,19 @@ import {
 import { useFormik } from 'formik'
 import { Setting } from '../Setting'
 import { MenuSection } from '../MenuSection'
-import { toHastings, toScale, toSiacoins } from '@siafoundation/sia-js'
+import {
+  humanBytes,
+  toHastings,
+  toScale,
+  toSiacoins,
+} from '@siafoundation/sia-js'
 import * as Yup from 'yup'
 
 const scDecimalPlaces = 6
 
 const validationSchema = Yup.object().shape({
-  targetPrice: Yup.mixed().optional(),
+  // targetPrice: Yup.mixed().optional(),
+  // contracts
   set: Yup.string().required('required'),
   amount: Yup.mixed().required('required'),
   allowance: Yup.mixed().required('required'),
@@ -42,10 +52,15 @@ const validationSchema = Yup.object().shape({
   download: Yup.mixed().required('required'),
   upload: Yup.mixed().required('required'),
   storage: Yup.number().required('required'),
+  // hosts
+  allowRedundantIPs: Yup.bool().required('required'),
+  maxDowntimeHours: Yup.number().required('required'),
+  // wallet
+  defragThreshold: Yup.number().required('required'),
 })
 
 const initialValues = {
-  targetPrice: undefined as BigNumber | undefined,
+  // contracts
   set: '',
   amount: undefined as BigNumber | undefined,
   allowance: undefined as BigNumber | undefined,
@@ -54,6 +69,11 @@ const initialValues = {
   download: undefined as BigNumber | undefined,
   upload: undefined as BigNumber | undefined,
   storage: undefined as BigNumber | undefined,
+  // hosts
+  allowRedundantIPs: false,
+  maxDowntimeHours: undefined as BigNumber | undefined,
+  // wallet
+  defragThreshold: undefined as BigNumber | undefined,
 }
 
 const doNotIncludeInChanges = ['targetPrice']
@@ -86,12 +106,18 @@ export function Autopilot() {
               allowance: toHastings(values.allowance).toString(),
               period: weeksToBlocks(values.period.toNumber()),
               renewWindow: weeksToBlocks(values.renewWindow.toNumber()),
-              download: TiBToBytes(values.download).toNumber(),
-              upload: TiBToBytes(values.upload).toNumber(),
-              storage: TiBToBytes(values.storage).toNumber(),
+              download: TBToBytes(values.download).toNumber(),
+              upload: TBToBytes(values.upload).toNumber(),
+              storage: TBToBytes(values.storage).toNumber(),
             },
-            hosts: config.data.hosts,
-            wallet: config.data.wallet,
+            hosts: {
+              maxDowntimeHours: values.maxDowntimeHours.toNumber(),
+              allowRedundantIPs: values.allowRedundantIPs,
+              scoreOverrides: config.data.hosts.scoreOverrides,
+            },
+            wallet: {
+              defragThreshold: values.defragThreshold.toNumber(),
+            },
           },
         })
         triggerSuccessToast('Configuration has been saved.')
@@ -100,10 +126,6 @@ export function Autopilot() {
       }
     },
   })
-
-  const [allowanceSuggestion, setAllowanceSuggestion] = useState<BigNumber>(
-    new BigNumber(0)
-  )
 
   const resetFormAndData = useCallback(() => {
     form.resetForm()
@@ -125,22 +147,16 @@ export function Autopilot() {
       const renewWindow = new BigNumber(
         blocksToWeeks(config.data?.contracts.renewWindow)
       )
-      const download = bytesToTiB(
-        new BigNumber(config.data?.contracts.download)
-      )
-      const upload = bytesToTiB(new BigNumber(config.data?.contracts.upload))
-      const storage = bytesToTiB(new BigNumber(config.data?.contracts.storage))
-
-      let targetPrice = new BigNumber(0)
-      if (!storage.isZero() && !period.isZero()) {
-        targetPrice = toScale(allowance.div(storage.times(period)), 0)
-      }
+      const download = bytesToTB(new BigNumber(config.data?.contracts.download))
+      const upload = bytesToTB(new BigNumber(config.data?.contracts.upload))
+      const storage = bytesToTB(new BigNumber(config.data?.contracts.storage))
 
       try {
         // When new config is fetched, reset the form with the initial values
         await form.resetForm({
           values: {
-            targetPrice,
+            // targetPrice,
+            // contracts
             set,
             allowance,
             amount,
@@ -149,6 +165,11 @@ export function Autopilot() {
             download,
             upload,
             storage,
+            // hosts
+            allowRedundantIPs: config.data.hosts.allowRedundantIPs,
+            maxDowntimeHours: new BigNumber(config.data.hosts.maxDowntimeHours),
+            // wallet
+            defragThreshold: new BigNumber(config.data.wallet.defragThreshold),
           },
         })
       } catch (e) {
@@ -159,31 +180,81 @@ export function Autopilot() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config.data])
 
-  useEffect(() => {
-    if (
+  const canEstimate = useMemo(() => {
+    return !(
       !form.values.storage ||
-      !form.values.targetPrice ||
-      !form.values.period
-    ) {
-      return
-    }
-    setAllowanceSuggestion(
-      toScale(
-        form.values.storage
-          .times(form.values.targetPrice)
-          .times(form.values.period),
-        0
-      )
+      !form.values.period ||
+      !form.values.allowance ||
+      form.values.storage.isZero() ||
+      form.values.period.isZero() ||
+      form.values.allowance.isZero()
     )
-  }, [form.values.storage, form.values.period, form.values.targetPrice])
+  }, [form.values.storage, form.values.period, form.values.allowance])
+
+  const targetPrice = useMemo(() => {
+    if (!canEstimate) {
+      return new BigNumber(0)
+    }
+    const {
+      period, // in weeks
+      allowance, // per period
+    } = form.values
+    const estimatePerPeriod = allowance
+    const estimatePerWeek = estimatePerPeriod.div(period)
+    const estimatePerMonth = estimatePerWeek.div(7).times(30)
+    return toScale(estimatePerMonth, 0)
+  }, [canEstimate, form.values])
 
   const { changed, changeCount } = useFormChanged(form, doNotIncludeInChanges)
+
+  const { fiat, currency } = useSiacoinFiat({ sc: targetPrice })
 
   return (
     <RenterdAuthedLayout
       title="Autopilot"
       routes={routes}
       sidenav={<RenterdSidenav />}
+      stats={
+        !canEstimate ? (
+          <Text size="12" font="mono" weight="medium">
+            Enter expected storage, period, and allowance values to estimate
+            monthly spending.
+          </Text>
+        ) : (
+          <div className="flex gap-3">
+            <Text size="12" font="mono" weight="medium">
+              Estimate:
+            </Text>
+            <div className="flex gap-1">
+              <ValueSc
+                size="12"
+                value={toHastings(targetPrice)}
+                dynamicUnits={false}
+                fixed={0}
+                variant="value"
+              />
+              {fiat && (
+                <div className="flex">
+                  <ValueNum
+                    size="12"
+                    weight="medium"
+                    value={fiat}
+                    color="subtle"
+                    variant="value"
+                    format={(v) =>
+                      `(${currency.prefix}${v.toFixed(currency.fixed)})`
+                    }
+                  />
+                </div>
+              )}
+              <Text size="12" font="mono" weight="medium">
+                per month to store{' '}
+                {humanBytes(TBToBytes(form.values.storage).toNumber())}
+              </Text>
+            </div>
+          </div>
+        )
+      }
       actions={
         <div className="flex items-center gap-2">
           {!!changeCount && (
@@ -211,40 +282,19 @@ export function Autopilot() {
       }
       openSettings={() => openDialog('settings')}
     >
-      <div className="p-5 flex flex-col gap-16 max-w-screen-xl">
-        <MenuSection title="">
-          <Setting
-            title="Target price"
-            description={
-              <>
-                The target price you would like to pay per month to to store 1
-                TiB of data. This price and your expected utilization values are
-                used to calculate a suggested allowance. Suggested values are
-                shown below each input field.
-              </>
-            }
-            control={
-              <ConfigurationSiacoin
-                formik={form}
-                changed={changed}
-                name="targetPrice"
-                decimalsLimitSc={scDecimalPlaces}
-              />
-            }
-          />
-        </MenuSection>
-        <MenuSection title="Estimates">
+      <div className="px-5 py-6 flex flex-col gap-16 max-w-screen-xl">
+        <MenuSection title="Contracts">
           <Setting
             title="Expected storage"
             description={
-              <>The amount of storage you would like to rent in TiB.</>
+              <>The amount of storage you would like to rent in TB.</>
             }
             control={
               <ConfigurationNumber
                 formik={form}
                 changed={changed}
                 name="storage"
-                units="TiB"
+                units="TB"
               />
             }
           />
@@ -253,8 +303,8 @@ export function Autopilot() {
             title="Expected upload"
             description={
               <>
-                The amount of upload bandwidth you plan to use each month in
-                TiB.
+                The amount of upload bandwidth you plan to use each period in
+                TB.
               </>
             }
             control={
@@ -262,7 +312,7 @@ export function Autopilot() {
                 formik={form}
                 changed={changed}
                 name="upload"
-                units="TiB"
+                units="TB"
               />
             }
           />
@@ -271,8 +321,8 @@ export function Autopilot() {
             title="Expected download"
             description={
               <>
-                The amount of download bandwidth you plan to use each month in
-                TiB.
+                The amount of download bandwidth you plan to use each period in
+                TB.
               </>
             }
             control={
@@ -280,12 +330,11 @@ export function Autopilot() {
                 formik={form}
                 changed={changed}
                 name="download"
-                units="TiB"
+                units="TB"
               />
             }
           />
-        </MenuSection>
-        <MenuSection title="Settings">
+          <Separator className="w-full my-3" />
           <Setting
             title="Allowance"
             description={
@@ -297,10 +346,6 @@ export function Autopilot() {
                 changed={changed}
                 name="allowance"
                 decimalsLimitSc={scDecimalPlaces}
-                suggestion={allowanceSuggestion}
-                suggestionTip={
-                  'Suggested allowance based on your target price, expected usage, and period.'
-                }
               />
             }
           />
@@ -371,6 +416,65 @@ export function Autopilot() {
                     change this if you understand the implications.
                   </>
                 }
+              />
+            }
+          />
+        </MenuSection>
+        <MenuSection title="Hosts">
+          <Setting
+            title="Redundant IPs"
+            description={
+              <>
+                Whether or not to allow forming contracts with multiple hosts in
+                the same IP subnet. The subnets used are /16 for IPv4, and /64
+                for IPv6.
+              </>
+            }
+            control={
+              <ConfigurationSwitch
+                formik={form}
+                changed={changed}
+                name="allowRedundantIPs"
+                suggestion={false}
+                suggestionTip={'Defaults to off.'}
+              />
+            }
+          />
+          <Separator className="w-full my-3" />
+          <Setting
+            title="Max downtime"
+            description={
+              <>
+                The maximum amount of host downtime that autopilot will tolerate
+                in hours.
+              </>
+            }
+            control={
+              <ConfigurationNumber
+                formik={form}
+                changed={changed}
+                name="maxDowntimeHours"
+                units="hours"
+                suggestion={new BigNumber(1440)}
+                suggestionTip={'Defaults to 1,440 which is 60 days.'}
+              />
+            }
+          />
+        </MenuSection>
+        <MenuSection title="Wallet">
+          <Setting
+            title="Defrag threshold"
+            description={
+              <>The threshold after which autopilot will defrag outputs.</>
+            }
+            control={
+              <ConfigurationNumber
+                formik={form}
+                changed={changed}
+                name="defragThreshold"
+                units="outputs"
+                suggestion={new BigNumber(1000)}
+                suggestionTip={'Defaults to 1,000.'}
               />
             }
           />

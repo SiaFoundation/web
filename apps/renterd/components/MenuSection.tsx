@@ -8,7 +8,11 @@ type Props = {
 export function MenuSection({ title, children }: Props) {
   return (
     <div className="flex flex-col gap-6">
-      {title && <Heading size="24">{title}</Heading>}
+      {title && (
+        <Heading anchorLink size="24">
+          {title}
+        </Heading>
+      )}
       <Panel className="p-6">
         <div className="flex flex-col gap-6">{children}</div>
       </Panel>

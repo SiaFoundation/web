@@ -5,8 +5,9 @@ export const routes = {
   },
   autopilot: {
     index: '/autopilot',
-    estimates: '/autopilot#estimates',
-    settings: '/autopilot#settings',
+    contracts: '/autopilot#contracts',
+    hosts: '/autopilot#hosts',
+    wallet: '/autopilot#wallet',
   },
   config: {
     index: '/config',

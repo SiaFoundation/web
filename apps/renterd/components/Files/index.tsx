@@ -5,6 +5,7 @@ import { FilesExplorer } from './FilesExplorer'
 import { FilesBreadcrumbMenu } from './FilesBreadcrumbMenu'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 import { FilesActionsMenu } from './FilesActionsMenu'
+import { FilesStatsMenu } from './FilesStatsMenu'
 
 export function Files() {
   const { openDialog } = useDialog()
@@ -16,10 +17,11 @@ export function Files() {
       routes={routes}
       sidenav={<RenterdSidenav />}
       nav={<FilesBreadcrumbMenu />}
+      stats={<FilesStatsMenu />}
       actions={<FilesActionsMenu />}
       openSettings={() => openDialog('settings')}
     >
-      <div className="p-5 min-w-fit">
+      <div className="p-6 min-w-fit">
         <FilesExplorer />
       </div>
     </RenterdAuthedLayout>

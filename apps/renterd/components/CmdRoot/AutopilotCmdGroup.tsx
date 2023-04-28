@@ -48,21 +48,31 @@ export function AutopilotCmdGroup({
         currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
-          router.push(routes.autopilot.estimates)
+          router.push(routes.autopilot.contracts)
           closeDialog()
         }}
       >
-        Configure estimates
+        Configure contracts
       </CommandItemSearch>
       <CommandItemSearch
         currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
-          router.push(routes.autopilot.settings)
+          router.push(routes.autopilot.hosts)
           closeDialog()
         }}
       >
-        Configure settings
+        Configure hosts
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
+        commandPage={commandPage}
+        onSelect={() => {
+          router.push(routes.autopilot.wallet)
+          closeDialog()
+        }}
+      >
+        Configure wallet
       </CommandItemSearch>
     </CommandGroup>
   )

@@ -9,7 +9,7 @@ import {
   useFormChanged,
   monthsToBlocks,
   Reset16,
-  TiBToBytes,
+  TBToBytes,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { useCallback, useEffect } from 'react'
@@ -107,9 +107,9 @@ export function Config() {
           payload: {
             maxRPCPrice: toHastings(values.maxRpcPrice).toString(),
             maxStoragePrice: toHastings(
-              values.maxStoragePrice // TiB/month
-                .div(monthsToBlocks(1)) // TiB/block
-                .div(TiBToBytes(1)) // bytes/block
+              values.maxStoragePrice // TB/month
+                .div(monthsToBlocks(1)) // TB/block
+                .div(TBToBytes(1)) // bytes/block
             ).toString(),
             maxContractPrice: toHastings(values.maxContractPrice).toString(),
             maxDownloadPrice: toHastings(values.maxDownloadPrice).toString(),
@@ -161,9 +161,9 @@ export function Config() {
             maxStoragePrice: toSiacoins(
               new BigNumber(gougingData.maxStoragePrice) // bytes/block
                 .times(monthsToBlocks(1)) // bytes/month
-                .times(TiBToBytes(1)),
+                .times(TBToBytes(1)),
               scDecimalPlaces
-            ), // TiB/month
+            ), // TB/month
             maxDownloadPrice: toSiacoins(
               gougingData.maxDownloadPrice,
               scDecimalPlaces
@@ -231,11 +231,11 @@ export function Config() {
       }
       openSettings={() => openDialog('settings')}
     >
-      <div className="p-5 flex flex-col gap-16 max-w-screen-xl">
+      <div className="p-6 flex flex-col gap-16 max-w-screen-xl">
         <MenuSection title="Gouging">
           <Setting
             title="Max storage price"
-            description={<>The max allowed price to store 1 TiB per month.</>}
+            description={<>The max allowed price to store 1 TB per month.</>}
             control={
               <ConfigurationSiacoin
                 formik={form}
@@ -248,7 +248,7 @@ export function Config() {
           <Separator className="w-full my-3" />
           <Setting
             title="Max download price"
-            description={<>The max allowed price to download 1 TiB.</>}
+            description={<>The max allowed price to download 1 TB.</>}
             control={
               <ConfigurationSiacoin
                 formik={form}
@@ -261,7 +261,7 @@ export function Config() {
           <Separator className="w-full my-3" />
           <Setting
             title="Max upload price"
-            description={<>The max allowed price to upload 1 TiB.</>}
+            description={<>The max allowed price to upload 1 TB.</>}
             control={
               <ConfigurationSiacoin
                 formik={form}

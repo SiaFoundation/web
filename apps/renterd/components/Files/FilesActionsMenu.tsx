@@ -22,13 +22,6 @@ export function FilesActionsMenu() {
 
   return (
     <div className="flex gap-2">
-      <PaginatorKnownTotal
-        isLoading={dataState === 'loading'}
-        offset={offset}
-        limit={limit}
-        datasetTotal={datasetCount}
-        pageTotal={pageCount}
-      />
       <Button onClick={() => openDialog('filesSearch')} tip="Search files">
         <Search16 />
       </Button>

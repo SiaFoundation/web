@@ -91,7 +91,7 @@ export function Home() {
         </>
       }
     >
-      <div className="p-5 flex flex-col gap-14">
+      <div className="p-6 flex flex-col gap-14">
         <HomeRevenue />
         <HomeUtilization />
         <HomeContracts />

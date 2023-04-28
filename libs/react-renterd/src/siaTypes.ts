@@ -315,14 +315,13 @@ export interface Action {
 }
 
 export interface WalletConfig {
-  DefragThreshold: number
+  defragThreshold: number
 }
 
 export interface HostsConfig {
-  Blacklist?: string[]
-  IgnoreRedundantIPs: boolean
-  ScoreOverrides: { [key: PublicKey]: number }
-  Whitelist?: string[]
+  allowRedundantIPs: boolean
+  scoreOverrides: { [key: PublicKey]: number }
+  maxDowntimeHours: number
 }
 
 export interface ContractsConfig {

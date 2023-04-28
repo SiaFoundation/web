@@ -424,6 +424,17 @@ export function useObjectDelete(
   })
 }
 
+type ObjectsStats = {
+  numObjects: number // number of objects
+  totalObjectsSize: number // size of all objects
+  totalSectorsSize: number // uploaded size of all objects
+  totalUploadedSize: number // uploaded size of all objects including redundant sectors
+}
+
+export function useObjectStats(args?: HookArgsSwr<void, ObjectsStats>) {
+  return useGetSwr({ ...args, route: '/bus/stats/objects' })
+}
+
 // type ObjectsMigrateParams = {
 //   cutoff?: number
 //   limit?: number

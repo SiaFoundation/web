@@ -6,10 +6,11 @@ import { useWorkflows } from './workflows'
 
 export type CurrencyId = 'usd' | 'eur' | 'gbp' | 'jpy' | 'btc' | 'eth'
 
-type CurrencyOption = {
+export type CurrencyOption = {
   id: CurrencyId
   label: string
   prefix: string
+  fixed: number
 }
 
 const currencyOptions: CurrencyOption[] = [
@@ -17,31 +18,37 @@ const currencyOptions: CurrencyOption[] = [
     id: 'usd',
     label: 'USD',
     prefix: '$',
+    fixed: 2,
   },
   {
     id: 'eur',
     label: 'EUR',
     prefix: '€',
+    fixed: 2,
   },
   {
     id: 'gbp',
     label: 'GBP',
     prefix: '£',
+    fixed: 2,
   },
   {
     id: 'jpy',
     label: 'JPY',
     prefix: '¥',
+    fixed: 2,
   },
   {
     id: 'btc',
     label: 'BTC',
     prefix: '₿',
+    fixed: 6,
   },
   {
     id: 'eth',
     label: 'ETH',
     prefix: 'Ξ',
+    fixed: 6,
   },
 ]
 
