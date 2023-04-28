@@ -2,8 +2,12 @@ import React from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
 import * as SeparatorPrimitive from '@radix-ui/react-separator'
 
-const styles = cva(['border-b m-0 flex-shrink-0 cursor-default'], {
+const styles = cva(['m-0 flex-shrink-0 cursor-default'], {
   variants: {
+    variant: {
+      vertical: 'border-r',
+      horizontal: 'border-b',
+    },
     color: {
       subtle: 'border-gray-300 dark:border-graydark-300',
       verySubtle: 'border-gray-100 dark:border-graydark-100',
@@ -11,6 +15,7 @@ const styles = cva(['border-b m-0 flex-shrink-0 cursor-default'], {
     },
   },
   defaultVariants: {
+    variant: 'horizontal',
     color: 'subtle',
   },
 })
@@ -21,11 +26,12 @@ export type SeparatorProps = SeparatorPrimitive.SeparatorProps &
 export const Separator = React.forwardRef<
   React.ElementRef<typeof SeparatorPrimitive.Root>,
   SeparatorProps
->(({ color, className, ...props }, ref) => {
+>(({ variant, color, className, ...props }, ref) => {
   return (
     <SeparatorPrimitive.Root
       ref={ref}
       className={styles({
+        variant,
         color,
         className,
       })}

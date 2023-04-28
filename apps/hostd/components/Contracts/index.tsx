@@ -33,7 +33,7 @@ export function Contracts() {
       size="full"
       actions={<ContractsActionsMenu />}
     >
-      <div className="p-5 min-w-fit">
+      <div className="p-6 min-w-fit">
         <Table
           context={cellContext}
           isLoading={dataState === 'loading'}

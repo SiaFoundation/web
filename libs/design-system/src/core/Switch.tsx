@@ -54,9 +54,18 @@ const styles = cva(
         small: 'w-6 h-4',
         medium: 'w-11 h-6',
       },
+      state: {
+        default: [
+          'border-gray-400 dark:border-graydark-400',
+          'enabled:hover:border-gray-500 enabled:hover:dark:border-graydark-500',
+        ],
+        invalid: ['border-red-500 dark:border-red-400'],
+        valid: ['border-green-500 dark:border-green-400'],
+      },
     },
     defaultVariants: {
       size: 'small',
+      state: 'default',
     },
   }
 )
@@ -64,10 +73,10 @@ const styles = cva(
 export const Switch = React.forwardRef<
   React.ElementRef<typeof SwitchPrimitive.Root>,
   VariantProps<typeof styles> & SwitchPrimitive.SwitchProps
->(({ size, className, children, ...props }, ref) => (
+>(({ size, state, className, children, ...props }, ref) => (
   <div className="flex gap-2 items-center">
     <SwitchPrimitive.Root
-      className={styles({ size, className })}
+      className={styles({ size, state, className })}
       {...props}
       ref={ref}
     >

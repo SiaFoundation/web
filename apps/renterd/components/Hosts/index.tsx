@@ -7,8 +7,8 @@ import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
 import { HostsActionsMenu } from './HostsActionsMenu'
-import { HostsFilterMenu } from './HostsFilterMenu'
 import { StateError } from './StateError'
+import { HostsFilterBar } from './HostsFilterBar'
 
 export function Hosts() {
   const { openDialog } = useDialog()
@@ -21,10 +21,10 @@ export function Hosts() {
       sidenav={<RenterdSidenav />}
       openSettings={() => openDialog('settings')}
       size="full"
-      nav={<HostsFilterMenu />}
       actions={<HostsActionsMenu />}
+      stats={<HostsFilterBar />}
     >
-      <div className="p-5 min-w-fit">
+      <div className="p-6 min-w-fit">
         <Table
           isLoading={dataState === 'loading'}
           emptyState={

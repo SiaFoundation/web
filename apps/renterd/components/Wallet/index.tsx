@@ -92,7 +92,7 @@ export function Wallet() {
         />
       }
     >
-      <div className="p-5 flex flex-col gap-5">
+      <div className="p-6 flex flex-col gap-5">
         {/* <WalletSparkline transactions={txns} /> */}
         <EntityList title="Transactions" entities={entities?.slice(0, 100)} />
       </div>

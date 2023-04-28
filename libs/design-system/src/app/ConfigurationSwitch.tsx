@@ -1,28 +1,30 @@
+import { NumberField } from '../core/NumberField'
+import { toFixedMax } from '../lib/numbers'
+import BigNumber from 'bignumber.js'
+import { ConfigurationTipNumber } from './ConfigurationTipNumber'
 import { useCallback } from 'react'
 import { FieldError } from '../components/Form'
-import { TextField } from '../core/TextField'
+import { Switch } from '../core/Switch'
 import { ConfigurationTipText } from './ConfigurationTipText'
 
 type Props = {
   name: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formik: any
-  suggestion?: string
+  suggestion?: boolean
   suggestionTip?: React.ReactNode
-  placeholder?: string
   changed?: Record<string, boolean>
 }
 
-export function ConfigurationText({
+export function ConfigurationSwitch({
   name,
   formik,
-  placeholder,
   suggestion,
   suggestionTip,
   changed,
 }: Props) {
   const onChange = useCallback(
-    (value?: string) => {
+    (value: boolean) => {
       const func = async () => {
         await formik.setFieldValue(name, value)
         // For some reason when setFieldValue is called with an undefined value,
@@ -36,26 +38,28 @@ export function ConfigurationText({
   )
   const value = formik.values[name]
   const error = formik.touched[name] && formik.errors[name]
-  const placeholderStr = formik.initialValues[name] || placeholder
+
   return (
     <div className="flex flex-col gap-3 w-[220px]">
-      <TextField
-        placeholder={placeholderStr}
-        value={value}
-        state={
-          error ? 'invalid' : changed && changed[name] ? 'valid' : 'default'
-        }
-        onChange={(e) => onChange(e.currentTarget.value)}
-        onBlur={() => {
-          formik.setFieldTouched(name)
-        }}
-      />
+      <div className="flex justify-end w-full">
+        <Switch
+          size="medium"
+          checked={value}
+          state={
+            error ? 'invalid' : changed && changed[name] ? 'valid' : 'default'
+          }
+          onCheckedChange={onChange}
+          onBlur={() => {
+            formik.setFieldTouched(name)
+          }}
+        />
+      </div>
       <div className="flex flex-col gap-2">
-        {suggestion && suggestionTip && (
+        {suggestion !== undefined && suggestionTip && (
           <ConfigurationTipText
             label="Suggestion"
             tip={suggestionTip}
-            value={suggestion}
+            value={suggestion ? 'on' : 'off'}
             onClick={() => {
               onChange(suggestion)
               formik.setFieldTouched(name)

@@ -1,9 +1,11 @@
 import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
 
+type Value = string | BigNumber | boolean
+
 type Formik = {
-  initialValues: Record<string, string | BigNumber>
-  values: Record<string, string | BigNumber>
+  initialValues: Record<string, Value>
+  values: Record<string, Value>
 }
 
 export function useFormChanged(form: Formik, skip: string[] = []) {
