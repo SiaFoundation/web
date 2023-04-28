@@ -18,13 +18,13 @@ type TimeRange = {
   end: number
 }
 
-export function computeChartStats(
-  data: ChartPoint[],
+export function computeChartStats<Key extends string>(
+  data: ChartPoint<Key>[],
   timeRange: TimeRange,
   futureKeys: string[] = []
 ): Record<string, KeyStats> {
   const { start, end } = timeRange
-  const keys = Object.keys(omit(data[0], 'timestamp'))
+  const keys = Object.keys(omit(data[0], 'timestamp')) as Key[]
 
   // prep
   data.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1))
@@ -50,7 +50,7 @@ export function computeChartStats(
   }
 }
 
-function getStatsForKey(key: string, data: ChartPoint[]) {
+function getStatsForKey<Key extends string>(key: Key, data: ChartPoint<Key>[]) {
   const start = data[0]?.[key] || 0
   const end = data[data.length - 1]?.[key] || 0
   const total = data.reduce((acc, point) => acc + (point[key] || 0), 0)
@@ -62,7 +62,10 @@ function getStatsForKey(key: string, data: ChartPoint[]) {
   })
 }
 
-function getStatsTotal(keys: string[], data: ChartPoint[]) {
+function getStatsTotal<Key extends string>(
+  keys: Key[],
+  data: ChartPoint<Key>[]
+) {
   const start = getTotalForPoint(keys, data[0])
   const end = getTotalForPoint(keys, data[data.length - 1])
   const total = data.reduce(
@@ -98,11 +101,14 @@ function calcStats({
   }
 }
 
-function getTotalForPoint(keys: string[], point?: ChartPoint) {
+function getTotalForPoint<Key extends string>(
+  keys: Key[],
+  point?: ChartPoint<Key>
+) {
   return keys.reduce((acc, key) => acc + (point?.[key] || 0), 0)
 }
 
-function filterOutFuture(data: ChartPoint[]) {
+function filterOutFuture<Key extends string>(data: ChartPoint<Key>[]) {
   const now = new Date().getTime()
-  return data.filter((d) => d.timestamp < now)
+  return data.filter((d) => d['timestamp'] < now)
 }

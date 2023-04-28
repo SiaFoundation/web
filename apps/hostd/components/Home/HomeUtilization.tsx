@@ -7,7 +7,6 @@ import {
 } from '@siafoundation/design-system'
 import { humanBytes } from '@siafoundation/sia-js'
 import { useMetrics } from '../../contexts/metrics'
-import { chartConfigs } from '../../config/charts'
 
 export function HomeUtilization() {
   const { storage, bandwidth } = useMetrics()
@@ -18,8 +17,8 @@ export function HomeUtilization() {
         <DatumScrollArea>
           <DatumCardConfigurable
             label="storage"
-            color={chartConfigs.storage.color}
-            value={storage.stats['totalSectors']}
+            color={storage.config.data['contractSectors'].color}
+            value={storage.stats['contractSectors']}
             defaultMode="latest"
             isLoading={storage.isLoading}
             enabledModes={['latest', 'average']}
@@ -27,7 +26,7 @@ export function HomeUtilization() {
           />
           <DatumCardConfigurable
             label="registry"
-            color={chartConfigs.registry.color}
+            color={storage.config.data['registryEntries'].color}
             value={storage.stats['registryEntries']}
             defaultMode="latest"
             isLoading={storage.isLoading}
@@ -41,7 +40,7 @@ export function HomeUtilization() {
           data={storage.data}
           config={storage.config}
           isLoading={storage.isLoading}
-          // chartType="line"
+          chartType={storage.chartType}
           actionsLeft={
             <>
               <Text font="mono" weight="semibold">
@@ -56,7 +55,7 @@ export function HomeUtilization() {
         <DatumScrollArea>
           <DatumCardConfigurable
             label="ingress"
-            color={chartConfigs.ingress.color}
+            color={bandwidth.config.data['ingress'].color}
             value={bandwidth.stats['ingress']}
             defaultMode="total"
             isLoading={bandwidth.isLoading}
@@ -64,7 +63,7 @@ export function HomeUtilization() {
           />
           <DatumCardConfigurable
             label="egress"
-            color={chartConfigs.egress.color}
+            color={bandwidth.config.data['egress'].color}
             value={bandwidth.stats['egress']}
             defaultMode="total"
             isLoading={bandwidth.isLoading}
@@ -77,7 +76,7 @@ export function HomeUtilization() {
           data={bandwidth.data}
           config={bandwidth.config}
           isLoading={bandwidth.isLoading}
-          chartType="line"
+          chartType={bandwidth.chartType}
           actionsLeft={
             <>
               <Text font="mono" weight="semibold">

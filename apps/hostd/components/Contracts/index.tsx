@@ -8,7 +8,7 @@ import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
 import { StateError } from './StateError'
 import { ContractsActionsMenu } from './ContractsActionsMenu'
-import { ContractsFilterMenu } from './ContractsFilterMenu'
+import { ContractsFiltersBar } from './ContractsFiltersBar'
 
 export function Contracts() {
   const { openDialog } = useDialog()
@@ -29,9 +29,9 @@ export function Contracts() {
       routes={routes}
       sidenav={<HostdSidenav />}
       openSettings={() => openDialog('settings')}
-      nav={<ContractsFilterMenu />}
-      size="full"
       actions={<ContractsActionsMenu />}
+      stats={<ContractsFiltersBar />}
+      size="full"
     >
       <div className="p-6 min-w-fit">
         <Table

@@ -11,21 +11,21 @@ type TimeRange = {
   end: number
 }
 
-export function formatChartData(
-  data: ChartPoint[],
+export function formatChartData<Key extends string>(
+  data: ChartPoint<Key>[],
   timeRange: TimeRange,
   rollupMode: RollupMode,
   aggregationMode: AggregationMode,
   futureSpan = 90
 ) {
   const { start, end } = timeRange
-  const keys = Object.keys(omit(data[0], 'timestamp'))
+  const keys = Object.keys(omit(data[0], 'timestamp')) as Key[]
 
   // prep
   data.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1))
 
   // TODO: explore filling in missing data points
-  let aggregated: ChartPoint[] = []
+  let aggregated: ChartPoint<Key>[] = []
   if (aggregationMode === 'none') {
     aggregated = data
   } else {
@@ -36,9 +36,9 @@ export function formatChartData(
       return normalizedTimestamp
     })
     aggregated = Object.entries(grouped).reduce((acc, [timestamp, group]) => {
-      const aggregatedPoint: ChartPoint = {
+      const aggregatedPoint = {
         timestamp: Number(timestamp),
-      }
+      } as ChartPoint<Key>
       keys.forEach((key) => {
         for (let i = 0; i < group.length; i++) {
           const val = aggregatedPoint[key] || 0
@@ -52,7 +52,7 @@ export function formatChartData(
         })
       }
       return acc.concat(aggregatedPoint)
-    }, [] as ChartPoint[])
+    }, [] as ChartPoint<Key>[])
   }
 
   // filter

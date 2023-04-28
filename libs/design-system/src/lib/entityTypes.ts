@@ -6,20 +6,25 @@ export type EntityType = 'transaction' | 'block' | 'output' | 'address' | 'ip'
 export type TxType =
   | 'siacoin'
   | 'siafund'
-  | 'contract'
-  | 'proof'
-  | 'revision'
-  | 'block'
-  | 'defrag'
-  | 'setup'
+  | 'storageProof'
+  | 'contractFormation'
+  | 'contractRevision'
+  | 'contractRenewal'
+  | 'contractPayout'
+  | 'minerPayout'
+  | 'siafundClaim'
+  | 'foundationSubsidy'
+// | 'block'
+// | 'defrag'
+// | 'setup'
 
 export function getTransactionTotals(txn: Transaction) {
-  const sc = (txn.SiacoinOutputs || []).reduce(
-    (acc, i) => acc.plus(i.Value),
+  const sc = (txn.siacoinOutputs || []).reduce(
+    (acc, i) => acc.plus(i.value),
     new BigNumber(0)
   )
-  const sf = (txn.SiafundOutputs || []).reduce(
-    (acc, i) => acc.plus(i.Value),
+  const sf = (txn.siafundOutputs || []).reduce(
+    (acc, i) => acc.plus(i.value),
     new BigNumber(0)
   )
 
@@ -29,46 +34,63 @@ export function getTransactionTotals(txn: Transaction) {
   }
 }
 
-export function getTransactionTypes(txn: Transaction): TxType | undefined {
-  const { sc: totalSiacoin, sf: totalSiafund } = getTransactionTotals(txn)
-
-  if (txn.FileContracts && txn.FileContracts.length > 0) {
-    return 'contract'
+export function getTransactionTypes(
+  txn: Transaction,
+  source?: string
+): TxType | undefined {
+  if (source === 'miner') {
+    return 'minerPayout'
   }
-  if (txn.FileContractRevisions && txn.FileContractRevisions.length > 0) {
-    return 'revision'
+  if (source === 'siafundClaim') {
+    return 'siafundClaim'
   }
-  if (txn.StorageProofs && txn.StorageProofs.length > 0) {
-    return 'proof'
+  if (source === 'contract') {
+    return 'contractPayout'
   }
-
-  if (totalSiafund !== 0) {
+  if (source === 'foundation') {
+    return 'foundationSubsidy'
+  }
+  if (txn.storageProofs && txn.storageProofs.length > 0) {
+    return 'storageProof'
+  }
+  if (
+    txn.fileContracts &&
+    txn.fileContracts.length > 0 &&
+    txn.fileContractRevisions &&
+    txn.fileContractRevisions.length > 0
+  ) {
+    return 'contractRenewal'
+  }
+  if (txn.fileContractRevisions && txn.fileContractRevisions.length > 0) {
+    return 'contractRevision'
+  }
+  if (txn.fileContracts && txn.fileContracts.length > 0) {
+    return 'contractFormation'
+  }
+  if (txn.siafundOutputs && txn.siafundOutputs.length > 0) {
     return 'siafund'
   }
-  if (!totalSiacoin.isZero()) {
+  if (txn.siacoinOutputs && txn.siacoinOutputs.length > 0) {
     return 'siacoin'
   }
 
-  // https://gitlab.com/NebulousLabs/Sia-UI/-/blob/master/app/utils/index.ts
-  // if (isSetupTransaction(txn)) {
-  //   txTypes.push(TransactionTypes.setup)
+  return undefined
+
+  // if (
+  //   txn.siacoinOutputs &&
+  //   txn.siacoinInputs?.length === 0 &&
+  //   txn.siafundInputs?.length === 0
+  // ) {
+  //   return 'block'
+  // }
+  // if (
+  //   (txn.siacoinInputs?.length || 0) >= 20 &&
+  //   txn.siacoinOutputs?.length === 1
+  // ) {
+  //   return 'defrag'
   // }
 
-  if (
-    txn.SiacoinOutputs &&
-    txn.SiacoinInputs?.length === 0 &&
-    txn.SiafundInputs?.length === 0
-  ) {
-    return 'block'
-  }
-  if (
-    (txn.SiacoinInputs?.length || 0) >= 20 &&
-    txn.SiacoinOutputs?.length === 1
-  ) {
-    return 'defrag'
-  }
-
-  return undefined
+  // return undefined
 }
 
 const entityTypeMap: Record<EntityType, string> = {
@@ -82,12 +104,17 @@ const entityTypeMap: Record<EntityType, string> = {
 const txTypeMap: Record<TxType, string> = {
   siacoin: 'siacoin transfer',
   siafund: 'siafund transfer',
-  contract: 'contract formation',
-  proof: 'storage proof',
-  revision: 'contract revision',
-  block: 'block',
-  defrag: 'defrag',
-  setup: 'setup',
+  contractFormation: 'contract formation',
+  contractRenewal: 'contract renewal',
+  contractRevision: 'contract revision',
+  contractPayout: 'contract payout',
+  storageProof: 'storage proof',
+  minerPayout: 'miner payout',
+  siafundClaim: 'siafund claim',
+  foundationSubsidy: 'foundation subsidy',
+  // block: 'block',
+  // defrag: 'defrag',
+  // setup: 'setup',
 }
 
 const entityTypeInitialsMap: Record<EntityType, string> = {

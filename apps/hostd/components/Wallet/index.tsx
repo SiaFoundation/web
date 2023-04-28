@@ -3,9 +3,9 @@ import {
   EntityListItemProps,
   WalletLayoutActions,
   getTransactionTypes,
-  // getTransactionTotals,
 } from '@siafoundation/design-system'
 import {
+  useWallet,
   useWalletPending,
   useWalletTransactions,
 } from '@siafoundation/react-hostd'
@@ -18,21 +18,20 @@ import { HostdAuthedLayout } from '../HostdAuthedLayout'
 
 export function Wallet() {
   const transactions = useWalletTransactions({
-    config: {
-      swr: {
-        revalidateOnFocus: false,
-        refreshInterval: 60_000,
-      },
+    params: {
+      limit: 50,
+      offset: 0,
     },
   })
   const pending = useWalletPending()
 
   const { openDialog } = useDialog()
 
+  const wallet = useWallet()
+
   const entities: EntityListItemProps[] = useMemo(
     () => [
       ...(pending.data || []).map((t): EntityListItemProps => {
-        // const totals = getTransactionTotals(t)
         return {
           type: 'transaction',
           txType: getTransactionTypes(t),
@@ -47,7 +46,7 @@ export function Wallet() {
         .map((t): EntityListItemProps => {
           return {
             type: 'transaction',
-            txType: getTransactionTypes(t.transaction),
+            txType: getTransactionTypes(t.transaction, t.source),
             hash: t.id,
             timestamp: new Date(t.timestamp).getTime(),
             onClick: () => openDialog('transactionDetails', t.id),
@@ -82,6 +81,7 @@ export function Wallet() {
       title="Wallet"
       actions={
         <WalletLayoutActions
+          sc={wallet.data ? new BigNumber(wallet.data.spendable) : undefined}
           receiveSiacoin={() => openDialog('addressDetails')}
           sendSiacoin={() => openDialog('sendSiacoin')}
         />

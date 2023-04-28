@@ -19,6 +19,8 @@
 // import { useDialog } from '../../contexts/dialog'
 // import { useAppSettings } from '@siafoundation/react-core'
 
+import Config from '../../components/Config'
+
 // export default function ConfigPage() {
 //   const { openDialog } = useDialog()
 //   const {
@@ -393,5 +395,5 @@
 // }
 
 export default function ConfigPage() {
-  return 'hello'
+  return <Config />
 }

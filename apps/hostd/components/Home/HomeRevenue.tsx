@@ -6,7 +6,6 @@ import {
   DatumScrollArea,
 } from '@siafoundation/design-system'
 import { useMetrics } from '../../contexts/metrics'
-import { chartConfigs } from '../../config/charts'
 
 export function HomeRevenue() {
   const { revenue } = useMetrics()
@@ -17,12 +16,14 @@ export function HomeRevenue() {
       <DatumScrollArea bleed>
         <DatumCardConfigurable
           label="earned revenue"
-          sc={revenue.stats['total']}
+          color={revenue.config.data['earned'].color}
+          sc={revenue.stats['earned']}
           defaultMode="total"
           isLoading={revenue.isLoading}
         />
         <DatumCardConfigurable
           label="potential revenue"
+          color={revenue.config.data['potential'].color}
           sc={revenue.stats['potential']}
           defaultMode="total"
           isLoading={revenue.isLoading}
@@ -30,46 +31,39 @@ export function HomeRevenue() {
         />
         <DatumCardConfigurable
           label="storage"
-          color={chartConfigs.storage.color}
+          color={revenue.config.data['storage'].color}
           sc={revenue.stats['storage']}
           defaultMode="total"
           isLoading={revenue.isLoading}
         />
         <DatumCardConfigurable
           label="egress"
-          color={chartConfigs.egress.color}
+          color={revenue.config.data['egress'].color}
           sc={revenue.stats['egress']}
           defaultMode="total"
           isLoading={revenue.isLoading}
         />
         <DatumCardConfigurable
           label="ingress"
-          color={chartConfigs.ingress.color}
+          color={revenue.config.data['ingress'].color}
           sc={revenue.stats['ingress']}
           defaultMode="total"
           isLoading={revenue.isLoading}
         />
         <DatumCardConfigurable
           label="registry read"
-          color={chartConfigs.registry.color}
+          color={revenue.config.data['registryRead'].color}
           sc={revenue.stats['registryRead']}
           defaultMode="total"
           isLoading={revenue.isLoading}
         />
         <DatumCardConfigurable
           label="registry write"
-          color={chartConfigs.registry.color}
+          color={revenue.config.data['registryWrite'].color}
           sc={revenue.stats['registryWrite']}
           defaultMode="total"
           isLoading={revenue.isLoading}
         />
-        {/* <DatumCardConfigurable
-          label="other"
-          color={chartConfigs.other.color}
-          sc={revenue.stats['other']}
-          defaultMode="total"
-          isLoading={revenue.isLoading}
-        /> */}
       </DatumScrollArea>
       <ChartXY
         id="revenue"
@@ -77,6 +71,7 @@ export function HomeRevenue() {
         data={revenue.data}
         config={revenue.config}
         isLoading={revenue.isLoading}
+        chartType={revenue.chartType}
         actionsLeft={
           <>
             <Text font="mono" weight="semibold">

@@ -6,7 +6,6 @@ import {
   DatumScrollArea,
 } from '@siafoundation/design-system'
 import { useMetrics } from '../../contexts/metrics'
-import { chartConfigs } from '../../config/charts'
 
 export function HomePricing() {
   const { pricing } = useMetrics()
@@ -16,16 +15,8 @@ export function HomePricing() {
       <Heading>Pricing</Heading>
       <DatumScrollArea bleed>
         <DatumCardConfigurable
-          label="contract"
-          color={chartConfigs.contract.color}
-          sc={pricing.stats['contract']}
-          defaultMode="latest"
-          isLoading={pricing.isLoading}
-          enabledModes={['latest', 'average']}
-        />
-        <DatumCardConfigurable
           label="storage"
-          color={chartConfigs.storage.color}
+          color={pricing.config.data['storage'].color}
           sc={pricing.stats['storage']}
           defaultMode="latest"
           isLoading={pricing.isLoading}
@@ -33,7 +24,7 @@ export function HomePricing() {
         />
         <DatumCardConfigurable
           label="ingress"
-          color={chartConfigs.ingress.color}
+          color={pricing.config.data['ingress'].color}
           sc={pricing.stats['ingress']}
           defaultMode="latest"
           isLoading={pricing.isLoading}
@@ -41,7 +32,7 @@ export function HomePricing() {
         />
         <DatumCardConfigurable
           label="egress"
-          color={chartConfigs.egress.color}
+          color={pricing.config.data['egress'].color}
           sc={pricing.stats['egress']}
           defaultMode="latest"
           isLoading={pricing.isLoading}
@@ -49,24 +40,32 @@ export function HomePricing() {
         />
         <DatumCardConfigurable
           label="collateral"
-          color={chartConfigs.collateral.color}
+          color={pricing.config.data['collateral'].color}
           sc={pricing.stats['collateral']}
           defaultMode="latest"
           isLoading={pricing.isLoading}
           enabledModes={['latest', 'average']}
         />
         <DatumCardConfigurable
-          label="base RPC"
-          color={chartConfigs.rpc.color}
-          sc={pricing.stats['baseRPC']}
+          label="contract"
+          color={pricing.config.data['contract'].color}
+          sc={pricing.stats['contract']}
           defaultMode="latest"
           isLoading={pricing.isLoading}
           enabledModes={['latest', 'average']}
         />
         <DatumCardConfigurable
           label="sector access"
-          color={chartConfigs.sectorAccess.color}
+          color={pricing.config.data['sectorAccess'].color}
           sc={pricing.stats['sectorAccess']}
+          defaultMode="latest"
+          isLoading={pricing.isLoading}
+          enabledModes={['latest', 'average']}
+        />
+        <DatumCardConfigurable
+          label="base RPC"
+          color={pricing.config.data['baseRPC'].color}
+          sc={pricing.stats['baseRPC']}
           defaultMode="latest"
           isLoading={pricing.isLoading}
           enabledModes={['latest', 'average']}
@@ -78,7 +77,7 @@ export function HomePricing() {
         data={pricing.data}
         config={pricing.config}
         isLoading={pricing.isLoading}
-        chartType="line"
+        chartType={pricing.chartType}
         actionsLeft={
           <>
             <Text font="mono" weight="semibold">

@@ -55,13 +55,13 @@ export interface TransactionSignature {
 }
 
 export interface SiacoinInput {
-  ParentID: string
-  UnlockConditions: UnlockConditions
+  parentID: string
+  unlockConditions: UnlockConditions
 }
 
 export type SiacoinOutput = {
-  Value: Currency
-  Address: string
+  value: Currency
+  address: string
 }
 
 export interface FileContract {
@@ -83,27 +83,27 @@ export interface StorageProof {
 }
 
 export interface SiafundInput {
-  ParentID: string
-  UnlockConditions: UnlockConditions
-  ClaimUnlockHash: string
+  parentID: string
+  unlockConditions: UnlockConditions
+  claimUnlockHash: string
 }
 
 export interface SiafundOutput {
-  Value: number
-  Address: string
+  value: number
+  address: string
 }
 
 export interface Transaction {
-  SiacoinInputs?: SiacoinInput[]
-  SiacoinOutputs?: SiacoinOutput[]
-  FileContracts?: FileContract[]
-  FileContractRevisions?: FileContractRevision[]
-  StorageProofs?: StorageProof[]
-  SiafundInputs?: SiafundInput[]
-  SiafundOutputs?: SiafundOutput[]
-  MinerFees?: Currency[]
-  ArbitraryData?: string[]
-  TransactionSignatures?: TransactionSignature[]
+  siacoinInputs?: SiacoinInput[]
+  siacoinOutputs?: SiacoinOutput[]
+  fileContracts?: FileContract[]
+  fileContractRevisions?: FileContractRevision[]
+  storageProofs?: StorageProof[]
+  siafundInputs?: SiafundInput[]
+  siafundOutputs?: SiafundOutput[]
+  minerFees?: Currency[]
+  arbitraryData?: string[]
+  transactionSignatures?: TransactionSignature[]
 }
 
 export interface Block {

@@ -24,10 +24,10 @@ export function RenterdSendSiacoinDialog() {
           payload: {
             amount: sc.toString(),
             transaction: {
-              SiacoinOutputs: [
+              siacoinOutputs: [
                 {
-                  Address: address,
-                  Value: sc.toString(),
+                  address: address,
+                  value: sc.toString(),
                 },
               ],
             },

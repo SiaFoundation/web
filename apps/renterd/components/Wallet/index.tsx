@@ -18,11 +18,14 @@ import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 
 export function Wallet() {
   const transactions = useWalletTransactions({
-    params: {},
+    params: {
+      // Endpoint currently returns wrong end of txn list
+      // max: 50,
+    },
     config: {
       swr: {
-        revalidateOnFocus: false,
         refreshInterval: 60_000,
+        revalidateOnFocus: false,
       },
     },
   })
@@ -37,7 +40,6 @@ export function Wallet() {
     }
     return [
       ...(pending.data || []).map((t): EntityListItemProps => {
-        // const totals = getTransactionTotals(t)
         return {
           type: 'transaction',
           txType: getTransactionTypes(t),
@@ -61,7 +63,7 @@ export function Wallet() {
         })
         .sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1)),
     ]
-  }, [pending, transactions, openDialog])
+  }, [pending.data, transactions.data, openDialog])
 
   // const txns: { inflow: string; outflow: string; timestamp: string }[] =
   //   useMemo(

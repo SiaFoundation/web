@@ -16,7 +16,26 @@ export function HomeContracts() {
       <DatumScrollArea bleed>
         <DatumCardConfigurable
           label="Active contracts"
+          color={contracts.config.data['active'].color}
           value={contracts.stats['active']}
+          format={(v) => v.toFixed(0)}
+          defaultMode="latest"
+          isLoading={contracts.isLoading}
+          enabledModes={['latest', 'average']}
+        />
+        <DatumCardConfigurable
+          label="Successful contracts"
+          color={contracts.config.data['successful'].color}
+          value={contracts.stats['successful']}
+          format={(v) => v.toFixed(0)}
+          defaultMode="latest"
+          isLoading={contracts.isLoading}
+          enabledModes={['latest', 'average']}
+        />
+        <DatumCardConfigurable
+          label="Failed contracts"
+          color={contracts.config.data['failed'].color}
+          value={contracts.stats['failed']}
           format={(v) => v.toFixed(0)}
           defaultMode="latest"
           isLoading={contracts.isLoading}
@@ -35,6 +54,7 @@ export function HomeContracts() {
         data={contracts.data}
         config={contracts.config}
         isLoading={contracts.isLoading}
+        chartType={contracts.chartType}
         height={300}
       />
     </div>

@@ -128,13 +128,15 @@ export default function Storage() {
         </>
       }
     >
-      <div className="flex gap-4">
-        <DatumCard label="Free storage" value={humanBytes(free)} />
-        <DatumCard label="Total storage" value={humanBytes(total)} />
-        <DatumCard label="Read failure rate" value={'4%'} />
-        <DatumCard label="Write failure rate" value={'1%'} />
+      <div className="p-6 flex flex-col gap-4">
+        <div className="flex gap-4">
+          <DatumCard label="Free storage" value={humanBytes(free)} />
+          <DatumCard label="Total storage" value={humanBytes(total)} />
+          <DatumCard label="Read failure rate" value={'4%'} />
+          <DatumCard label="Write failure rate" value={'1%'} />
+        </div>
+        <Table isLoading={false} pageSize={20} data={data} columns={columns} />
       </div>
-      <Table isLoading={false} pageSize={20} data={data} columns={columns} />
     </HostdAuthedLayout>
   )
 }

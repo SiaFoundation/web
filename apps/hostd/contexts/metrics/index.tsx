@@ -3,8 +3,10 @@ import {
   ChartConfig,
   ChartData,
   ChartStats,
+  ChartType,
   computeChartStats,
   getDataIntervalLabelFormatter,
+  MiBToBytes,
   monthsToBlocks,
   TiBToBytes,
 } from '@siafoundation/design-system'
@@ -18,12 +20,25 @@ import {
   configCategoryLabel,
 } from './utils'
 import BigNumber from 'bignumber.js'
-import { DataInterval, DataTimeSpan, dataTimeSpanOptions } from './types'
+import {
+  DataInterval,
+  DataTimeSpan,
+  dataTimeSpanOptions,
+  BandwidthKeys,
+  ContractsKeys,
+  PricingKeys,
+  RevenueKeys,
+  StorageKeys,
+  BandwidthCategories,
+  StorageCategories,
+  RevenueCategories,
+} from './types'
 
-export type Chart = {
-  data: ChartData
+export type Chart<Key extends string, Cat extends string> = {
+  data: ChartData<Key>
   stats: ChartStats
-  config: ChartConfig
+  config: ChartConfig<Key, Cat>
+  chartType: ChartType
   isLoading: boolean
 }
 
@@ -77,7 +92,7 @@ function useMetricsMain() {
     },
   })
 
-  const revenue = useMemo<Chart>(() => {
+  const revenue = useMemo<Chart<RevenueKeys, RevenueCategories>>(() => {
     const data =
       metricsPeriod.data?.map((m) => ({
         storagePotential: Number(m.revenue.potential.storage),
@@ -116,76 +131,112 @@ function useMetricsMain() {
       data,
       stats,
       config: {
-        enabled: {
-          storagePotential: true,
-          ingressPotential: true,
-          egressPotential: true,
-          registryReadPotential: true,
-          registryWritePotential: true,
-          rpcPotential: true,
-          storage: true,
-          ingress: true,
-          egress: true,
-          registryRead: true,
-          registryWrite: true,
-          rpc: true,
-        },
+        enabledGraph: [
+          'storage',
+          'storagePotential',
+          'ingress',
+          'ingressPotential',
+          'egress',
+          'egressPotential',
+          'registryRead',
+          'registryReadPotential',
+          'registryWrite',
+          'registryWritePotential',
+          'rpc',
+          'rpcPotential',
+        ],
+        enabledTip: [
+          // include the totals in the tip
+          'potential',
+          'earned',
+
+          'storage',
+          'storagePotential',
+          'ingress',
+          'ingressPotential',
+          'egress',
+          'egressPotential',
+          'registryRead',
+          'registryReadPotential',
+          'registryWrite',
+          'registryWritePotential',
+          'rpc',
+          'rpcPotential',
+        ],
+        categories: ['earned', 'potential'],
         data: {
-          storagePotential: configCategoryPattern(
+          storagePotential: configCategoryPattern<RevenueCategories>(
             chartConfigs.storage,
             'potential',
             true
           ),
-          ingressPotential: configCategoryPattern(
+          ingressPotential: configCategoryPattern<RevenueCategories>(
             chartConfigs.ingress,
             'potential',
             true
           ),
-          egressPotential: configCategoryPattern(
+          egressPotential: configCategoryPattern<RevenueCategories>(
             chartConfigs.egress,
             'potential',
             true
           ),
-          registryReadPotential: configCategoryPattern(
+          registryReadPotential: configCategoryPattern<RevenueCategories>(
             chartConfigs.registryRead,
             'potential',
             true
           ),
-          registryWritePotential: configCategoryPattern(
+          registryWritePotential: configCategoryPattern<RevenueCategories>(
             chartConfigs.registryWrite,
             'potential',
             true
           ),
-          rpcPotential: configCategoryPattern(
+          rpcPotential: configCategoryPattern<RevenueCategories>(
             chartConfigs.rpc,
             'potential',
             true
           ),
 
-          storage: configCategoryPattern(chartConfigs.storage, 'earned'),
-          ingress: configCategoryPattern(chartConfigs.ingress, 'earned'),
-          egress: configCategoryPattern(chartConfigs.egress, 'earned'),
-          registryRead: configCategoryPattern(
+          storage: configCategoryPattern<RevenueCategories>(
+            chartConfigs.storage,
+            'earned'
+          ),
+          ingress: configCategoryPattern<RevenueCategories>(
+            chartConfigs.ingress,
+            'earned'
+          ),
+          egress: configCategoryPattern<RevenueCategories>(
+            chartConfigs.egress,
+            'earned'
+          ),
+          registryRead: configCategoryPattern<RevenueCategories>(
             chartConfigs.registryRead,
             'earned'
           ),
-          registryWrite: configCategoryPattern(
+          registryWrite: configCategoryPattern<RevenueCategories>(
             chartConfigs.registryWrite,
             'earned'
           ),
-          rpc: configCategoryPattern(chartConfigs.rpc, 'earned'),
-          // potential: chartConfigs.potential,
-          // lost: chartConfigs.failed,
+          rpc: configCategoryPattern<RevenueCategories>(
+            chartConfigs.rpc,
+            'earned'
+          ),
+          earned: configCategoryLabel<RevenueCategories>({}, 'earned', 'total'),
+          potential: configCategoryLabel<RevenueCategories>(
+            {},
+            'potential',
+            'total'
+          ),
         },
         format: (v) => humanSiacoin(v),
         formatTimestamp,
         disableAnimations,
       },
+      chartType: 'line',
       isLoading: metricsPeriod.isValidating,
     }
   }, [timeRange, metricsPeriod, formatTimestamp])
 
-  const pricing = useMemo<Chart>(() => {
+  const pricing = useMemo<Chart<PricingKeys, never>>(() => {
     const data =
       metricsPeriod.data?.map((m) => ({
         baseRPC: Number(m.pricing.baseRPCPrice),
@@ -205,24 +256,43 @@ function useMetricsMain() {
       data,
       stats,
       config: {
+        enabledGraph: [
+          'storage',
+          'ingress',
+          'egress',
+          'collateral',
+          'contract',
+          'sectorAccess',
+          'baseRPC',
+        ],
+        enabledTip: [
+          'storage',
+          'ingress',
+          'egress',
+          'collateral',
+          'contract',
+          'sectorAccess',
+          'baseRPC',
+        ],
         data: {
           baseRPC: chartConfigs.rpc,
-          collateral: chartConfigs.collateral,
+          sectorAccess: chartConfigs.sectorAccess,
           contract: chartConfigs.contract,
+          collateral: chartConfigs.collateral,
           egress: chartConfigs.egress,
           ingress: chartConfigs.ingress,
-          sectorAccess: chartConfigs.sectorAccess,
           storage: chartConfigs.storage,
         },
         format: (v) => humanSiacoin(v),
         formatTimestamp,
         disableAnimations,
       },
+      chartType: 'line',
       isLoading: metricsPeriod.isValidating,
     }
   }, [timeRange, metricsPeriod, formatTimestamp])
 
-  const contracts = useMemo<Chart>(() => {
+  const contracts = useMemo<Chart<ContractsKeys, never>>(() => {
     const data =
       metricsPeriod.data?.map((m) => ({
         active: m.contracts.active,
@@ -237,13 +307,8 @@ function useMetricsMain() {
       data,
       stats,
       config: {
-        enabled: {
-          active: true,
-          failed: true,
-          pending: true,
-          rejected: true,
-          successful: true,
-        },
+        enabledGraph: ['successful', 'active', 'pending', 'rejected', 'failed'],
+        enabledTip: ['successful', 'active', 'pending', 'rejected', 'failed'],
         data: {
           active: chartConfigs.active,
           failed: chartConfigs.failed,
@@ -255,18 +320,23 @@ function useMetricsMain() {
         formatTimestamp,
         disableAnimations,
       },
+      chartType: 'areastack',
       isLoading: metricsPeriod.isValidating,
     }
   }, [timeRange, metricsPeriod, formatTimestamp])
 
-  const storage = useMemo<Chart>(() => {
+  const storage = useMemo<Chart<StorageKeys, StorageCategories>>(() => {
     const data =
       metricsPeriod.data?.map((m) => ({
-        totalSectors: m.storage.totalSectors,
-        physicalSectors: m.storage.physicalSectors,
-        registryEntries: m.storage.registryEntries,
-        tempSectors: m.storage.tempSectors,
-        contractSectors: m.storage.contractSectors,
+        totalSectors: MiBToBytes(m.storage.totalSectors).times(4).toNumber(),
+        registryEntries: m.storage.registryEntries * 113,
+        tempSectors: MiBToBytes(m.storage.tempSectors).times(4).toNumber(),
+        physicalSectors: MiBToBytes(m.storage.physicalSectors)
+          .times(4)
+          .toNumber(),
+        contractSectors: MiBToBytes(m.storage.contractSectors)
+          .times(4)
+          .toNumber(),
         timestamp: new Date(m.timestamp).getTime(),
       })) || []
     const stats = computeChartStats(data, timeRange)
@@ -274,22 +344,58 @@ function useMetricsMain() {
       data,
       stats,
       config: {
+        enabledGraph: [
+          'contractSectors',
+          'physicalSectors',
+          'tempSectors',
+          'registryEntries',
+          'totalSectors',
+        ],
+        enabledTip: [
+          'contractSectors',
+          'physicalSectors',
+          'tempSectors',
+          'registryEntries',
+          'totalSectors',
+        ],
+        categories: ['storage used', 'storage capacity'],
         data: {
-          totalSectors: chartConfigs.sectorsTotal,
-          physicalSectors: chartConfigs.sectorsPhysical,
-          registryEntries: chartConfigs.registry,
-          tempSectors: chartConfigs.sectorsTemp,
-          contractSectors: chartConfigs.sectorsContract,
+          totalSectors: configCategoryLabel<StorageCategories>(
+            chartConfigs.capacity,
+            'storage capacity',
+            'total'
+          ),
+          physicalSectors: configCategoryLabel<StorageCategories>(
+            chartConfigs.storagePhysical,
+            'storage used',
+            'physical'
+          ),
+          registryEntries: configCategoryLabel<StorageCategories>(
+            chartConfigs.registry,
+            'storage used',
+            'registry (max)'
+          ),
+          tempSectors: configCategoryLabel<StorageCategories>(
+            chartConfigs.sectorsTemp,
+            'storage used',
+            'temp'
+          ),
+          contractSectors: configCategoryLabel<StorageCategories>(
+            chartConfigs.storage,
+            'storage used',
+            'contract'
+          ),
         },
         format: (v) => humanBytes(v),
         formatTimestamp,
         disableAnimations,
       },
+      chartType: 'line',
       isLoading: metricsPeriod.isValidating,
     }
   }, [timeRange, metricsPeriod, formatTimestamp])
 
-  const bandwidth = useMemo<Chart>(() => {
+  const bandwidth = useMemo<Chart<BandwidthKeys, BandwidthCategories>>(() => {
     const data =
       metricsPeriod.data?.map((m) => ({
         egressRHP3: m.data.rhp3.egress,
@@ -305,29 +411,50 @@ function useMetricsMain() {
       data,
       stats,
       config: {
+        enabledGraph: [
+          'ingress',
+          'ingressRHP2',
+          'ingressRHP3',
+          'egress',
+          'egressRHP2',
+          'egressRHP3',
+        ],
+        enabledTip: [
+          'ingress',
+          'ingressRHP2',
+          'ingressRHP3',
+          'egress',
+          'egressRHP2',
+          'egressRHP3',
+        ],
+        categories: ['ingress', 'egress'],
         data: {
-          ingress: configCategoryLabel(
+          ingress: configCategoryLabel<BandwidthCategories>(
             chartConfigs.ingress,
             'ingress',
-            'ingress total'
+            'total'
           ),
-          ingressRHP2: configCategoryLabel(
+          ingressRHP2: configCategoryLabel<BandwidthCategories>(
             chartConfigs.ingress,
             'ingress',
             'RHP2'
           ),
-          ingressRHP3: configCategoryLabel(
+          ingressRHP3: configCategoryLabel<BandwidthCategories>(
             chartConfigs.ingress,
             'ingress',
             'RHP3'
           ),
-          egress: configCategoryLabel(chartConfigs.egress, 'egress', 'total'),
-          egressRHP2: configCategoryLabel(
+          egress: configCategoryLabel<BandwidthCategories>(
+            chartConfigs.egress,
+            'egress',
+            'total'
+          ),
+          egressRHP2: configCategoryLabel<BandwidthCategories>(
             chartConfigs.egress,
             'egress',
             'RHP2'
           ),
-          egressRHP3: configCategoryLabel(
+          egressRHP3: configCategoryLabel<BandwidthCategories>(
             chartConfigs.egress,
             'egress',
             'RHP3'
@@ -337,6 +464,7 @@ function useMetricsMain() {
         formatTimestamp,
         disableAnimations,
       },
+      chartType: 'line',
       isLoading: metricsPeriod.isValidating,
     }
   }, [timeRange, metricsPeriod, formatTimestamp])
