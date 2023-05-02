@@ -10,6 +10,8 @@ import {
   monthsToBlocks,
   Reset16,
   TBToBytes,
+  PanelMenuSetting,
+  PanelMenuSection,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { useCallback, useEffect } from 'react'
@@ -19,8 +21,6 @@ import { useDialog } from '../../contexts/dialog'
 import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
 import { useSetting, useSettingUpdate } from '@siafoundation/react-renterd'
 import { useFormik } from 'formik'
-import { Setting } from '../../components/Setting'
-import { MenuSection } from '../../components/MenuSection'
 import { toHastings, toSiacoins } from '@siafoundation/sia-js'
 import * as Yup from 'yup'
 
@@ -232,8 +232,8 @@ export function Config() {
       openSettings={() => openDialog('settings')}
     >
       <div className="p-6 flex flex-col gap-16 max-w-screen-xl">
-        <MenuSection title="Gouging">
-          <Setting
+        <PanelMenuSection title="Gouging">
+          <PanelMenuSetting
             title="Max storage price"
             description={<>The max allowed price to store 1 TB per month.</>}
             control={
@@ -246,7 +246,7 @@ export function Config() {
             }
           />
           <Separator className="w-full my-3" />
-          <Setting
+          <PanelMenuSetting
             title="Max download price"
             description={<>The max allowed price to download 1 TB.</>}
             control={
@@ -259,7 +259,7 @@ export function Config() {
             }
           />
           <Separator className="w-full my-3" />
-          <Setting
+          <PanelMenuSetting
             title="Max upload price"
             description={<>The max allowed price to upload 1 TB.</>}
             control={
@@ -272,7 +272,7 @@ export function Config() {
             }
           />
           <Separator className="w-full my-3" />
-          <Setting
+          <PanelMenuSetting
             title="Max contract price"
             description={<>The max allowed price to form a contract.</>}
             control={
@@ -285,7 +285,7 @@ export function Config() {
             }
           />
           <Separator className="w-full my-3" />
-          <Setting
+          <PanelMenuSetting
             title="Max RPC price"
             description={<>The max allowed base price for RPCs.</>}
             control={
@@ -298,7 +298,7 @@ export function Config() {
             }
           />
           <Separator className="w-full my-3" />
-          <Setting
+          <PanelMenuSetting
             title="Min max collateral"
             description={
               <>
@@ -315,7 +315,7 @@ export function Config() {
             }
           />
           <Separator className="w-full my-3" />
-          <Setting
+          <PanelMenuSetting
             title="Block height leeway"
             description={
               <>{`The amount of blocks of leeway given to the host block height in the host's price table.`}</>
@@ -331,9 +331,9 @@ export function Config() {
               />
             }
           />
-        </MenuSection>
-        <MenuSection title="Redundancy">
-          <Setting
+        </PanelMenuSection>
+        <PanelMenuSection title="Redundancy">
+          <PanelMenuSetting
             title="Min shards"
             description={
               <>The minimum amount of shards needed to reconstruct a slab.</>
@@ -348,7 +348,7 @@ export function Config() {
             }
           />
           <Separator className="w-full my-3" />
-          <Setting
+          <PanelMenuSetting
             title="Total shards"
             description={<>The total amount of shards for each slab.</>}
             control={
@@ -360,7 +360,7 @@ export function Config() {
               />
             }
           />
-        </MenuSection>
+        </PanelMenuSection>
       </div>
     </RenterdAuthedLayout>
   )

@@ -1,4 +1,4 @@
-import { NumberField } from './NumberField'
+import { BaseNumberField } from './BaseNumberField'
 import {
   useAppSettings,
   useSiaCentralMarketExchangeRate,
@@ -6,13 +6,15 @@ import {
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import { cx } from 'class-variance-authority'
+import { toFixedMax } from '../lib/numbers'
 
 type Props = Omit<
-  React.ComponentProps<typeof NumberField>,
+  React.ComponentProps<typeof BaseNumberField>,
   'onChange' | 'placeholder'
 > & {
   sc: BigNumber
   onChange?: (sc?: BigNumber) => void
+  units?: string
   decimalsLimitSc?: number
   decimalsLimitFiat?: number
   placeholder?: BigNumber
@@ -30,6 +32,7 @@ export function SiacoinField({
   decimalsLimitSc = 6,
   onChange,
   size = 'medium',
+  units = 'SC',
   showFiat = true,
   error,
   changed,
@@ -61,22 +64,14 @@ export function SiacoinField({
 
   const getFiat = useCallback(
     (fiat: BigNumber) => {
-      const formattedFiat =
-        fiat.decimalPlaces() > decimalsLimitFiat
-          ? fiat.toFixed(decimalsLimitFiat)
-          : fiat.toString()
-      return formattedFiat
+      return toFixedMax(fiat, decimalsLimitFiat)
     },
     [decimalsLimitFiat]
   )
 
   const getSc = useCallback(
     (sc: BigNumber) => {
-      const formattedSc =
-        sc.decimalPlaces() > decimalsLimitSc
-          ? sc.toFixed(decimalsLimitSc)
-          : sc.toString()
-      return formattedSc
+      return toFixedMax(sc, decimalsLimitSc)
     },
     [decimalsLimitSc]
   )
@@ -171,13 +166,13 @@ export function SiacoinField({
         'rounded'
       )}
     >
-      <NumberField
+      <BaseNumberField
         {...props}
         size={size}
         variant="ghost"
         focus="none"
         placeholder={placeholder.toFixed(decimalsLimitSc)}
-        units="SC"
+        units={units}
         value={sc !== 'NaN' ? sc : ''}
         decimalsLimit={decimalsLimitSc}
         onBlur={(e) => {
@@ -195,7 +190,7 @@ export function SiacoinField({
         onValueChange={(value) => setSc(value || '')}
       />
       {showFiat && settings.siaCentral && (
-        <NumberField
+        <BaseNumberField
           {...props}
           size={size}
           variant="ghost"

@@ -11,6 +11,7 @@ type Props = {
   formik: any
   average?: BigNumber
   suggestion?: BigNumber
+  units?: string
   suggestionTip?: React.ReactNode
   decimalsLimitSc?: number
   decimalsLimitFiat?: number
@@ -23,6 +24,7 @@ export function ConfigurationSiacoin({
   formik,
   average,
   suggestion,
+  units,
   suggestionTip,
   decimalsLimitSc = 6,
   decimalsLimitFiat = 6,
@@ -48,6 +50,7 @@ export function ConfigurationSiacoin({
         name={name}
         size="small"
         sc={formik.values[name]}
+        units={units}
         decimalsLimitSc={decimalsLimitSc}
         decimalsLimitFiat={decimalsLimitFiat}
         error={formik.touched[name] && formik.errors[name]}

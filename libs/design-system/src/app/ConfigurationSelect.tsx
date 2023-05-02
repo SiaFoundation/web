@@ -1,28 +1,33 @@
 import { useCallback } from 'react'
 import { FieldError } from '../components/Form'
-import { Switch } from '../core/Switch'
+import { Select } from '../core/Select'
 import { ConfigurationTipText } from './ConfigurationTipText'
+
+type Option = {
+  value: string
+  label: string
+}
 
 type Props = {
   name: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formik: any
-  suggestion?: boolean
+  suggestion?: string
   suggestionTip?: React.ReactNode
   changed?: Record<string, boolean>
-  disabled?: boolean
+  options: Option[]
 }
 
-export function ConfigurationSwitch({
+export function ConfigurationSelect({
   name,
   formik,
+  options,
   suggestion,
   suggestionTip,
-  disabled,
   changed,
 }: Props) {
   const onChange = useCallback(
-    (value: boolean) => {
+    (value: string) => {
       const func = async () => {
         await formik.setFieldValue(name, value)
         // For some reason when setFieldValue is called with an undefined value,
@@ -40,21 +45,26 @@ export function ConfigurationSwitch({
   return (
     <div className="flex flex-col gap-3 w-[220px]">
       <div className="flex justify-end w-full">
-        <Switch
-          size="medium"
-          checked={value}
-          disabled={disabled}
+        <Select
+          size="small"
+          value={value}
           state={
             error ? 'invalid' : changed && changed[name] ? 'valid' : 'default'
           }
-          onCheckedChange={onChange}
+          onChange={(e) => onChange(e.currentTarget.value)}
           onBlur={() => {
             formik.setFieldTouched(name)
           }}
-        />
+        >
+          {options.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </Select>
       </div>
       <div className="flex flex-col gap-2">
-        {suggestion !== undefined && suggestionTip && !disabled && (
+        {suggestion !== undefined && suggestionTip && (
           <ConfigurationTipText
             label="Suggestion"
             tip={suggestionTip}

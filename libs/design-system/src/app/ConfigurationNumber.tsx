@@ -1,5 +1,4 @@
 import { NumberField } from '../core/NumberField'
-import { toFixedMax } from '../lib/numbers'
 import BigNumber from 'bignumber.js'
 import { ConfigurationTipNumber } from './ConfigurationTipNumber'
 import { useCallback } from 'react'
@@ -21,7 +20,7 @@ type Props = {
 export function ConfigurationNumber({
   name,
   formik,
-  placeholder,
+  placeholder: _placeholder,
   average,
   suggestion,
   suggestionTip,
@@ -45,22 +44,18 @@ export function ConfigurationNumber({
   const value = formik.values[name]
   const error = formik.touched[name] && formik.errors[name]
 
-  const placeholderStr = (
-    formik.initialValues[name] ||
-    placeholder ||
-    0
-  ).toString()
+  const placeholder = formik.initialValues[name] || _placeholder
   return (
     <div className="flex flex-col gap-3 w-[220px]">
       <NumberField
-        value={value ? toFixedMax(value, decimalsLimit) : ''}
+        value={value}
         units={units}
         decimalsLimit={decimalsLimit}
-        placeholder={placeholderStr}
+        placeholder={placeholder}
         state={
           error ? 'invalid' : changed && changed[name] ? 'valid' : 'default'
         }
-        onValueChange={(val) => {
+        onChange={(val) => {
           onChange(val !== undefined ? new BigNumber(val) : undefined)
         }}
         onBlur={() => {

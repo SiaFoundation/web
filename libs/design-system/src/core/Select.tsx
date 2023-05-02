@@ -17,8 +17,6 @@ const containerStyles = cva(
     'disabled:bg-gray-200 disabled:dark:bg-graydark-200',
     'autofill:bg-blue-100 autofill:dark:bg-blue-800',
     'border',
-    'border-gray-400 dark:border-graydark-400',
-    'hover:border-gray-500 hover:dark:border-graydark-500',
     'focus-within:z-10',
     'focus-within:ring ring-blue-500 dark:ring-blue-200',
     'text-gray-1100 dark:text-white',
@@ -31,8 +29,17 @@ const containerStyles = cva(
         medium: 'h-10 text-base px-3',
         large: 'h-12 text-lg px-3',
       },
+      state: {
+        default: [
+          'border-gray-400 dark:border-graydark-400',
+          'enabled:hover:border-gray-500 enabled:hover:dark:border-graydark-500',
+        ],
+        invalid: ['border-red-500 dark:border-red-400'],
+        valid: ['border-green-500 dark:border-green-400'],
+      },
     },
     defaultVariants: {
+      state: 'default',
       size: 'small',
     },
   }
@@ -48,8 +55,8 @@ export const Select = React.forwardRef<
       value?: string
       disabled?: boolean
     }
->(({ size, icon, className, ...props }, ref) => (
-  <div className={containerStyles({ size, className })}>
+>(({ size, state, icon, className, ...props }, ref) => (
+  <div className={containerStyles({ size, state, className })}>
     {icon}
     <select
       ref={ref}

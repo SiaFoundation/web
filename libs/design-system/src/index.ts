@@ -96,9 +96,12 @@ export * from './app/ConfigurationSiacoin'
 export * from './app/ConfigurationNumber'
 export * from './app/ConfigurationText'
 export * from './app/ConfigurationSwitch'
+export * from './app/ConfigurationSelect'
 export * from './app/ContractTimeline'
 export * from './app/ProgressSteps'
 export * from './app/MenuSectionLabelToggleAll'
+export * from './app/PanelMenuSection'
+export * from './app/PanelMenuSetting'
 
 // site
 export * from './site/SiteHeading'

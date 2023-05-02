@@ -11,6 +11,8 @@ import {
   PublicKey,
   getTestnetZenBlockHeight,
   getMainnetBlockHeight,
+  Currency,
+  usePutSwr,
 } from '@siafoundation/react-core'
 import useSWR from 'swr'
 import { Contract, ContractStatus, WalletTransaction } from './siaTypes'
@@ -281,4 +283,86 @@ export function useMetricsPeriod(
     ...args,
     route: metricsPeriodRoute,
   })
+}
+
+// settings
+
+type DNSSettings = {
+  provider: string
+  ipv4: boolean
+  ipv6: boolean
+  options: Record<string, unknown>
+}
+
+export type HostSettings = {
+  // Host settings
+  acceptingContracts: boolean
+  netAddress: string
+  maxContractDuration: number
+  windowSize: number
+
+  // Pricing
+  contractPrice: Currency
+  baseRPCPrice: Currency
+  sectorAccessPrice: Currency
+
+  collateral: Currency
+  maxCollateral: Currency
+
+  minStoragePrice: Currency
+  minEgressPrice: Currency
+  minIngressPrice: Currency
+
+  priceTableValidity: number
+
+  // Registry settings
+  maxRegistryEntries: number
+
+  // RHP3 settings
+  accountExpiry: number
+  maxAccountBalance: Currency
+
+  // Bandwidth limiter settings
+  ingressLimit: number
+  egressLimit: number
+
+  // DNS settings
+  dynDNS: DNSSettings
+
+  revision: number
+}
+
+const settingsRoute = '/settings'
+export function useSettings(args?: HookArgsSwr<void, HostSettings>) {
+  return useGetSwr({
+    ...args,
+    route: settingsRoute,
+  })
+}
+
+// Merges updates into existing settings
+export function useSettingsUpdate(
+  args?: HookArgsCallback<void, Partial<HostSettings>, HostSettings>
+) {
+  return usePostFunc({ ...args, route: '/settings' }, (mutate) => {
+    mutate((key) => {
+      return key.startsWith(settingsRoute)
+    })
+  })
+}
+
+export function useSettingsAnnounce(args?: HookArgsCallback<void, void, void>) {
+  return usePostFunc({ ...args, route: '/settings/announce' })
+}
+
+export function useSettingsDynDNSUpdate(
+  args?: HookArgsCallback<void, void, void>
+) {
+  return usePutFunc({ ...args, route: '/settings/dyndns/update' })
+}
+
+export function useSettingsDynDNS(
+  args?: HookArgsWithPayloadSwr<void, void, void>
+) {
+  return usePutSwr({ ...args, payload: {}, route: '/settings/dyndns/update' })
 }

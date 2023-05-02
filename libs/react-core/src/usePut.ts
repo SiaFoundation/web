@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useSWRConfig } from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
 import { useWorkflows } from './workflows'
 import {
   buildAxiosConfig,
@@ -12,8 +12,59 @@ import {
   mergeInternalHookArgsCallback,
   getPathFromKey,
   After,
+  InternalHookArgsWithPayloadSwr,
+  mergeInternalHookArgsSwr,
 } from './request'
 import { useAppSettings } from './useAppSettings'
+import { useMemo } from 'react'
+import { keyOrNull } from './utils'
+import { SWRError } from './types'
+
+export function usePutSwr<Params extends RequestParams, Payload, Result>(
+  args: InternalHookArgsWithPayloadSwr<Params, Payload, Result>
+) {
+  const hookArgs = useMemo(() => mergeInternalHookArgsSwr(args), [args])
+  const { settings, passwordProtectRequestHooks } = useAppSettings()
+  const reqRoute = buildRouteWithParams(
+    settings,
+    hookArgs.route,
+    hookArgs,
+    undefined
+  )
+  const key = useMemo(
+    () =>
+      keyOrNull(
+        reqRoute
+          ? `${reqRoute}${JSON.stringify(
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (args as any).payload !== undefined ? (args as any).payload : ''
+            )}`
+          : null,
+        hookArgs.disabled || (passwordProtectRequestHooks && !settings.password)
+      ),
+    [reqRoute, args, hookArgs, passwordProtectRequestHooks, settings]
+  )
+  return useSWR<Result, SWRError>(
+    key,
+    async () => {
+      if (!hookArgs.route) {
+        throw Error('No route')
+      }
+      const reqConfig = buildAxiosConfig(settings, hookArgs, undefined)
+      if (!reqRoute) {
+        throw Error('No route')
+      }
+      const response = await axios.put<Result>(
+        reqRoute,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (args as any).payload,
+        reqConfig
+      )
+      return response.data
+    },
+    hookArgs.config?.swr
+  )
+}
 
 type PutFunc<Params extends RequestParams, Payload, Result> = {
   put: (
