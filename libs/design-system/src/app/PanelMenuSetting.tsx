@@ -1,4 +1,6 @@
-import { Heading, Paragraph, Text } from '@siafoundation/design-system'
+import { Heading } from '../core/Heading'
+import { Paragraph } from '../core/Paragraph'
+import { Text } from '../core/Text'
 
 type Props = {
   title: string
@@ -7,7 +9,12 @@ type Props = {
   control?: React.ReactNode
 }
 
-export function Setting({ title, description, suggestion, control }: Props) {
+export function PanelMenuSetting({
+  title,
+  description,
+  suggestion,
+  control,
+}: Props) {
   return (
     <div className="flex gap-10 justify-between">
       <div className="flex flex-col gap-2 max-w-[600px]">

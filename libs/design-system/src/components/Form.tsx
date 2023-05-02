@@ -171,14 +171,14 @@ export function FormNumberField({
       id={name}
       units={units}
       name={name}
-      placeholder={placeholder}
+      placeholder={new BigNumber(placeholder)}
       disabled={disabled}
       allowDecimals={allowDecimals}
       disableGroupSeparators={disableGroupSeparators}
       readOnly={readOnly || formik.isSubmitting}
       tabIndex={tabIndex}
       onBlur={formik.handleBlur}
-      onValueChange={(value, name) => formik.setFieldValue(name, value)}
+      onChange={(value) => formik.setFieldValue(name, value)}
       value={formik.values[name]}
       {...variants}
     />

@@ -1,11 +1,12 @@
-import { Heading, Panel } from '@siafoundation/design-system'
+import { Heading } from '../core/Heading'
+import { Panel } from '../core/Panel'
 
 type Props = {
   title?: string
   children: React.ReactNode
 }
 
-export function MenuSection({ title, children }: Props) {
+export function PanelMenuSection({ title, children }: Props) {
   return (
     <div className="flex flex-col gap-6">
       {title && (

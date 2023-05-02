@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
 
-type Value = string | BigNumber | boolean
+type Value = string | BigNumber | number | boolean | Record<string, unknown>
 
 type Formik = {
   initialValues: Record<string, Value>
@@ -20,6 +20,8 @@ export function useFormChanged(form: Formik, skip: string[] = []) {
       let changed = iv !== v
       if (iv instanceof BigNumber && v instanceof BigNumber) {
         changed = !iv.eq(v)
+      } else if (typeof iv === 'object' && typeof v === 'object') {
+        changed = JSON.stringify(iv) !== JSON.stringify(v)
       }
       return {
         ...acc,

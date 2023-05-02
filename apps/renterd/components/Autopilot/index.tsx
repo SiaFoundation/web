@@ -17,6 +17,8 @@ import {
   useSiacoinFiat,
   ValueNum,
   bytesToTB,
+  PanelMenuSetting,
+  PanelMenuSection,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { useCallback, useEffect, useMemo } from 'react'
@@ -29,8 +31,6 @@ import {
   useAutopilotConfigUpdate,
 } from '@siafoundation/react-renterd'
 import { useFormik } from 'formik'
-import { Setting } from '../Setting'
-import { MenuSection } from '../MenuSection'
 import {
   humanBytes,
   toHastings,
@@ -283,8 +283,8 @@ export function Autopilot() {
       openSettings={() => openDialog('settings')}
     >
       <div className="px-5 py-6 flex flex-col gap-16 max-w-screen-xl">
-        <MenuSection title="Contracts">
-          <Setting
+        <PanelMenuSection title="Contracts">
+          <PanelMenuSetting
             title="Expected storage"
             description={
               <>The amount of storage you would like to rent in TB.</>
@@ -299,7 +299,7 @@ export function Autopilot() {
             }
           />
           <Separator className="w-full my-3" />
-          <Setting
+          <PanelMenuSetting
             title="Expected upload"
             description={
               <>
@@ -317,7 +317,7 @@ export function Autopilot() {
             }
           />
           <Separator className="w-full my-3" />
-          <Setting
+          <PanelMenuSetting
             title="Expected download"
             description={
               <>
@@ -335,7 +335,7 @@ export function Autopilot() {
             }
           />
           <Separator className="w-full my-3" />
-          <Setting
+          <PanelMenuSetting
             title="Allowance"
             description={
               <>The amount of Siacoin you would like to spend for the period.</>
@@ -350,7 +350,7 @@ export function Autopilot() {
             }
           />
           <Separator className="w-full my-3" />
-          <Setting
+          <PanelMenuSetting
             title="Period"
             description={<>The length of the storage contracts.</>}
             control={
@@ -365,7 +365,7 @@ export function Autopilot() {
             }
           />
           <Separator className="w-full my-3" />
-          <Setting
+          <PanelMenuSetting
             title="Renew window"
             description={
               <>
@@ -385,7 +385,7 @@ export function Autopilot() {
             }
           />
           <Separator className="w-full my-3" />
-          <Setting
+          <PanelMenuSetting
             title="Hosts"
             description={<>The number of hosts to create contracts with.</>}
             control={
@@ -400,7 +400,7 @@ export function Autopilot() {
             }
           />
           <Separator className="w-full my-3" />
-          <Setting
+          <PanelMenuSetting
             title="Contract set"
             description={<>The contract set that autopilot should use.</>}
             control={
@@ -419,9 +419,9 @@ export function Autopilot() {
               />
             }
           />
-        </MenuSection>
-        <MenuSection title="Hosts">
-          <Setting
+        </PanelMenuSection>
+        <PanelMenuSection title="Hosts">
+          <PanelMenuSetting
             title="Redundant IPs"
             description={
               <>
@@ -441,7 +441,7 @@ export function Autopilot() {
             }
           />
           <Separator className="w-full my-3" />
-          <Setting
+          <PanelMenuSetting
             title="Max downtime"
             description={
               <>
@@ -460,9 +460,9 @@ export function Autopilot() {
               />
             }
           />
-        </MenuSection>
-        <MenuSection title="Wallet">
-          <Setting
+        </PanelMenuSection>
+        <PanelMenuSection title="Wallet">
+          <PanelMenuSetting
             title="Defrag threshold"
             description={
               <>The threshold after which autopilot will defrag outputs.</>
@@ -478,7 +478,7 @@ export function Autopilot() {
               />
             }
           />
-        </MenuSection>
+        </PanelMenuSection>
       </div>
     </RenterdAuthedLayout>
   )
