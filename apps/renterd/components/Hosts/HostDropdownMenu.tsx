@@ -48,7 +48,7 @@ export function HostDropdownMenu({ address, publicKey }: Props) {
       }
       contentProps={{ align: 'start' }}
     >
-      <DropdownMenuLabel>Host filters</DropdownMenuLabel>
+      <DropdownMenuLabel>Filters</DropdownMenuLabel>
       <DropdownMenuItem
         onSelect={() => {
           resetHostsFilters()
@@ -89,7 +89,7 @@ export function HostDropdownMenu({ address, publicKey }: Props) {
         </DropdownMenuLeftSlot>
         Filter contracts by public key
       </DropdownMenuItem>
-      <DropdownMenuLabel>Host actions</DropdownMenuLabel>
+      <DropdownMenuLabel>Actions</DropdownMenuLabel>
       <DropdownMenuItem
         onSelect={() =>
           rescan.post({

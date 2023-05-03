@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { FieldError } from '../components/Form'
+import { FieldLabelAndError } from '../components/Form'
 import { TextField } from '../core/TextField'
 import { ConfigurationTipText } from './ConfigurationTipText'
 
@@ -64,7 +64,7 @@ export function ConfigurationText({
         )}
       </div>
       <div className="h-[20px]">
-        <FieldError formik={formik} name={name} />
+        <FieldLabelAndError formik={formik} name={name} />
       </div>
     </div>
   )

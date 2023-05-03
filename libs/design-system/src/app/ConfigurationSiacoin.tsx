@@ -2,7 +2,7 @@ import { SiacoinField } from '../core/SiacoinField'
 import BigNumber from 'bignumber.js'
 import { ConfigurationTipNumber } from './ConfigurationTipNumber'
 import { toHastings } from '@siafoundation/sia-js'
-import { FieldError } from '../components/Form'
+import { FieldLabelAndError } from '../components/Form'
 import { useCallback } from 'react'
 
 type Props = {
@@ -88,7 +88,7 @@ export function ConfigurationSiacoin({
         />
       )}
       <div className="h-[20px]">
-        <FieldError formik={formik} name={name} />
+        <FieldLabelAndError formik={formik} name={name} />
       </div>
     </div>
   )

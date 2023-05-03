@@ -34,7 +34,21 @@ export function humanDifficulty(hash: number): string {
   return d + ' ' + units[digits]
 }
 
-export function humanBytes(b: number): string {
+type HumanBytesOptions = {
+  fixed?: number
+}
+
+export function humanBytes(
+  bytes: number | BigNumber | string,
+  options?: HumanBytesOptions
+): string {
+  const b =
+    typeof bytes === 'number'
+      ? bytes
+      : bytes instanceof BigNumber
+      ? bytes.toNumber()
+      : Number(bytes)
+  const { fixed = 2 } = options || {}
   if (!b) return '0 B'
   else if (b < 1000) return `${b} B`
 
@@ -42,7 +56,7 @@ export function humanBytes(b: number): string {
     digits = Math.floor(Math.log10(b) / Math.log10(1000)),
     d = b / Math.pow(1000, digits)
 
-  return d.toFixed(2) + ' ' + units[digits]
+  return d.toFixed(fixed) + ' ' + units[digits]
 }
 
 export function humanTime(ns: number): string {

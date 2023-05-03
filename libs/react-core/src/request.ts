@@ -3,7 +3,10 @@ import { MutatorCallback, MutatorOptions } from 'swr'
 import { SWROptions } from './types'
 import { AppSettings } from './useAppSettings'
 
-export type RequestParams = Record<string, string | string[] | number> | void
+export type RequestParams = Record<
+  string,
+  string | string[] | number | boolean
+> | void
 
 export type RequestConfig<Payload, Result> = {
   swr?: SWROptions<Result>

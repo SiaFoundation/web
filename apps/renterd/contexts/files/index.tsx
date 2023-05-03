@@ -168,9 +168,10 @@ function useFilesMain() {
   const getFileUrl = useCallback(
     (name: string, authenticated: boolean) => {
       const path = `/worker/objects${name}`
-      // Parse settings.api rather than URL because the UI could be pointing at a different API
-      const scheme = settings.api.startsWith('https') ? 'https' : 'http'
-      const host = settings.api.replace('https://', '').replace('http://', '')
+      // Parse settings.api if its set otherwise URL
+      const origin = settings.api || location.origin
+      const scheme = origin.startsWith('https') ? 'https' : 'http'
+      const host = origin.replace('https://', '').replace('http://', '')
       if (authenticated) {
         return `${scheme}://:${settings.password}@${host}/api${path}`
       }

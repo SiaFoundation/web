@@ -20,8 +20,8 @@ export function ContractDropdownMenu({ address, publicKey }: Props) {
       }
       contentProps={{ align: 'start' }}
     >
-      <DropdownMenuLabel>Contract filters</DropdownMenuLabel>
-      <DropdownMenuLabel>Contract actions</DropdownMenuLabel>
+      <DropdownMenuLabel>Filters</DropdownMenuLabel>
+      <DropdownMenuLabel>Actions</DropdownMenuLabel>
     </DropdownMenu>
   )
 }

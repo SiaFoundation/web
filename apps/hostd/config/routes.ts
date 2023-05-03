@@ -1,7 +1,7 @@
 export const routes = {
   home: '/',
-  storage: {
-    index: '/storage',
+  volumes: {
+    index: '/volumes',
   },
   contracts: {
     index: '/contracts',

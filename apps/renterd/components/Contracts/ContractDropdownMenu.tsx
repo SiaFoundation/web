@@ -45,7 +45,7 @@ export function ContractDropdownMenu({ address, publicKey }: Props) {
       }
       contentProps={{ align: 'start' }}
     >
-      <DropdownMenuLabel>Contract filters</DropdownMenuLabel>
+      <DropdownMenuLabel>Filters</DropdownMenuLabel>
       <DropdownMenuItem
         onSelect={() => {
           resetHostsFilters()
@@ -86,7 +86,7 @@ export function ContractDropdownMenu({ address, publicKey }: Props) {
         </DropdownMenuLeftSlot>
         Filter contracts by public key
       </DropdownMenuItem>
-      <DropdownMenuLabel>Contract actions</DropdownMenuLabel>
+      <DropdownMenuLabel>Actions</DropdownMenuLabel>
       {blocklist.data?.find((l) => l === address) ? (
         <DropdownMenuItem onSelect={() => blocklistUpdate([], [address])}>
           <DropdownMenuLeftSlot>

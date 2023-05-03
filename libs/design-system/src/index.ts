@@ -157,6 +157,7 @@ export * from './data/webLinks'
 
 // lib
 export * from './lib/bytes'
+export * from './lib/sectors'
 export * from './lib/blockTime'
 export * from './lib/toast'
 export * from './lib/clipboard'
