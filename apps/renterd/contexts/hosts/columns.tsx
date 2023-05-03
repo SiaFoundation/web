@@ -67,14 +67,16 @@ export const columns: HostsTableColumn[] = (
             side="right"
             content={
               (isAllowlistActive
-                ? `Allowlist ${data.isOnAllowlist
-                  ? 'allows this host.'
-                  : 'does not allow this host.'
-                }`
+                ? `Allowlist ${
+                    data.isOnAllowlist
+                      ? 'allows this host.'
+                      : 'does not allow this host.'
+                  }`
                 : `Allowlist is inactive.`) +
-              ` Blocklist ${data.isOnBlocklist
-                ? 'blocks this host.'
-                : 'does not block this host.'
+              ` Blocklist ${
+                data.isOnBlocklist
+                  ? 'blocks this host.'
+                  : 'does not block this host.'
               }`
             }
           >
@@ -170,20 +172,20 @@ export const columns: HostsTableColumn[] = (
                 </Text>
               </div>
               <div className="flex flex-col">
-                {Object.entries(data.gougingBreakdown.v2).filter(([_, reason]) => reason && typeof reason === 'string').map(
-                  ([key, reason]) => (
+                {Object.entries(data.gougingBreakdown.v2)
+                  .filter(([_, reason]) => reason && typeof reason === 'string')
+                  .map(([key, reason]) => (
                     <Text key={'v2' + key} size="10" noWrap>
                       {reason}
                     </Text>
-                  )
-                )}
-                {Object.entries(data.gougingBreakdown.v3).filter(([_, reason]) => reason && typeof reason === 'string').map(
-                  ([key, reason]) => (
+                  ))}
+                {Object.entries(data.gougingBreakdown.v3)
+                  .filter(([_, reason]) => reason && typeof reason === 'string')
+                  .map(([key, reason]) => (
                     <Text key={'v3' + key} size="10" noWrap>
                       {reason}
                     </Text>
-                  )
-                )}
+                  ))}
               </div>
             </div>
           </Tooltip>
@@ -228,15 +230,10 @@ export const columns: HostsTableColumn[] = (
           color = 'green'
         }
         return (
-          <Tooltip
-            side="right"
-            content={message}
-          >
+          <Tooltip side="right" content={message}>
             <div className="flex gap-2 items-center">
               <div className="mt-[5px]">
-                <Text color={color}>
-                  {icon}
-                </Text>
+                <Text color={color}>{icon}</Text>
               </div>
               <div className="flex flex-col">
                 <Text size="12" noWrap>
@@ -976,14 +973,14 @@ function getFullLabelAndTip(col: HostsTableColumn): {
     return {
       icon: <Settings16 className="relative top-px opacity-50 scale-75" />,
       label: col.label,
-      tip: `host settings: ${col.label}`,
+      tip: `host settings (RHPv2): ${col.label}`,
     }
   }
   if (col.category === 'priceTable') {
     return {
       icon: <DataTable16 className="relative top-px opacity-50 scale-75" />,
       label: col.label,
-      tip: `price table: ${col.label}`,
+      tip: `price table (RHPv3): ${col.label}`,
     }
   }
   return {

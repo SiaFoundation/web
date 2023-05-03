@@ -110,7 +110,7 @@ export function HostsViewDropdownMenu() {
       {priceTableColumns.length ? (
         <>
           <MenuSectionLabelToggleAll
-            label="Price table"
+            label="Price table (RHPv3)"
             columns={priceTableColumns.map((c) => c.value)}
             enabled={enabledColumns}
             setColumnsVisible={setColumnsVisible}
@@ -128,7 +128,7 @@ export function HostsViewDropdownMenu() {
       {settingsColumns.length ? (
         <>
           <MenuSectionLabelToggleAll
-            label="Host settings"
+            label="Host settings (RHPv2)"
             columns={settingsColumns.map((c) => c.value)}
             enabled={enabledColumns}
             setColumnsVisible={setColumnsVisible}

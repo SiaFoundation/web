@@ -71,7 +71,6 @@ export function Config() {
       if (!settings.data) {
         return
       }
-
       try {
         const response = await settingsUpdate.post({
           payload: transformUp(values),
@@ -89,6 +88,7 @@ export function Config() {
         } else {
           triggerSuccessToast('Settings have been saved.')
         }
+        dynDNSCheck.mutate()
       } catch (e) {
         triggerErrorToast((e as Error).message)
       }

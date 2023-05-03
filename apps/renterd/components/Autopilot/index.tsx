@@ -19,6 +19,7 @@ import {
   bytesToTB,
   PanelMenuSetting,
   PanelMenuSection,
+  Save16,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { useCallback, useEffect, useMemo } from 'react'
@@ -276,6 +277,7 @@ export function Autopilot() {
             disabled={!changeCount}
             onClick={() => form.submitForm()}
           >
+            <Save16 />
             Save changes
           </Button>
         </div>

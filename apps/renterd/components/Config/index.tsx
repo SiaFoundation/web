@@ -12,6 +12,7 @@ import {
   TBToBytes,
   PanelMenuSetting,
   PanelMenuSection,
+  Save16,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { useCallback, useEffect } from 'react'
@@ -225,6 +226,7 @@ export function Config() {
             disabled={!changeCount}
             onClick={() => form.submitForm()}
           >
+            <Save16 />
             Save changes
           </Button>
         </div>

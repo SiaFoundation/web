@@ -41,7 +41,7 @@ export function DirectoryDropdownMenu({ path }: Props) {
       }
       contentProps={{ align: 'start' }}
     >
-      <DropdownMenuLabel>Directory actions</DropdownMenuLabel>
+      <DropdownMenuLabel>Actions</DropdownMenuLabel>
       {obj.data?.entries.find((e) => e.name === path) ? (
         <DropdownMenuItem
           onSelect={() =>

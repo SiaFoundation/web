@@ -37,9 +37,10 @@ export function NumberField({
   )
   const [value, setValue] = useState<string>('')
 
-  const updateExternalValue = useCallback(
+  const updateValue = useCallback(
     (value: string) => {
       if (onChange) {
+        setValue(value)
         onChange(
           value && !isNaN(Number(value)) ? new BigNumber(value) : undefined
         )
@@ -64,20 +65,17 @@ export function NumberField({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [externalValue])
 
-  const internalOnBlur = useCallback(() => {
-    updateExternalValue(value)
-  }, [value, updateExternalValue])
-
   return (
     <BaseNumberField
       {...props}
       size={size}
-      placeholder={placeholder.toFixed(decimalsLimit)}
+      placeholder={
+        placeholder.isNaN() ? '' : placeholder.toFixed(decimalsLimit)
+      }
       units={units}
       value={value !== 'NaN' ? value : ''}
       decimalsLimit={decimalsLimit}
       onBlur={(e) => {
-        internalOnBlur()
         if (onBlur) {
           onBlur(e)
         }
@@ -87,7 +85,7 @@ export function NumberField({
           onFocus(e)
         }
       }}
-      onValueChange={(value) => setValue(value || '')}
+      onValueChange={(value) => updateValue(value || '')}
     />
   )
 }

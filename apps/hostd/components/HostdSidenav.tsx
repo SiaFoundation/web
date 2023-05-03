@@ -13,7 +13,7 @@ export function HostdSidenav() {
       <SidenavItem title="Dashboard" route={routes.home}>
         <HouseIcon />
       </SidenavItem>
-      <SidenavItem title="Storage" route={routes.storage.index}>
+      <SidenavItem title="Volumes" route={routes.volumes.index}>
         <HardDriveIcon />
       </SidenavItem>
       <SidenavItem title="Contracts" route={routes.contracts.index}>

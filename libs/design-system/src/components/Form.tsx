@@ -24,6 +24,7 @@ type FormFieldProps = {
   allowDecimals?: boolean
   decimalsLimitFiat?: number
   decimalsLimitSc?: number
+  decimalsLimit?: number
   showFiat?: boolean
   disableGroupSeparators?: boolean
   type?: string
@@ -43,6 +44,7 @@ export function FormField({
   allowDecimals = false,
   decimalsLimitFiat = 3,
   decimalsLimitSc = 3,
+  decimalsLimit = 2,
   disableGroupSeparators = false,
   showFiat = true,
   units,
@@ -59,6 +61,7 @@ export function FormField({
           disabled={disabled}
           readOnly={readOnly}
           tabIndex={tabIndex}
+          decimalsLimit={decimalsLimit}
           allowDecimals={allowDecimals}
           disableGroupSeparators={disableGroupSeparators}
           placeholder={placeholder}
@@ -150,6 +153,7 @@ type FormNumberFieldProps = {
   tabIndex?: number
   placeholder: string
   allowDecimals?: boolean
+  decimalsLimit?: number
   disableGroupSeparators?: boolean
   variants?: VariantProps<typeof textFieldStyles>
 }
@@ -162,6 +166,7 @@ export function FormNumberField({
   readOnly,
   tabIndex,
   placeholder,
+  decimalsLimit,
   allowDecimals = false,
   disableGroupSeparators = false,
   variants,
@@ -174,6 +179,7 @@ export function FormNumberField({
       placeholder={new BigNumber(placeholder)}
       disabled={disabled}
       allowDecimals={allowDecimals}
+      decimalsLimit={decimalsLimit}
       disableGroupSeparators={disableGroupSeparators}
       readOnly={readOnly || formik.isSubmitting}
       tabIndex={tabIndex}
@@ -239,7 +245,7 @@ type FieldErrorProps = {
   className?: string
 }
 
-export function FieldError({
+export function FieldLabelAndError({
   formik,
   title,
   name,
@@ -272,7 +278,7 @@ type FieldGroupProps = FieldErrorProps & {
 export function FieldGroup({ children, ...props }: FieldGroupProps) {
   return (
     <div className="flex flex-col gap-1">
-      <FieldError {...props} />
+      <FieldLabelAndError {...props} />
       {children}
     </div>
   )

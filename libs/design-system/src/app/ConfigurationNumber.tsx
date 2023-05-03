@@ -2,7 +2,7 @@ import { NumberField } from '../core/NumberField'
 import BigNumber from 'bignumber.js'
 import { ConfigurationTipNumber } from './ConfigurationTipNumber'
 import { useCallback } from 'react'
-import { FieldError } from '../components/Form'
+import { FieldLabelAndError } from '../components/Form'
 
 type Props = {
   name: string
@@ -93,7 +93,7 @@ export function ConfigurationNumber({
         )}
       </div>
       <div className="h-[20px]">
-        <FieldError formik={formik} name={name} />
+        <FieldLabelAndError formik={formik} name={name} />
       </div>
     </div>
   )

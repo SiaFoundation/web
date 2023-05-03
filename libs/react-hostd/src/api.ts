@@ -13,6 +13,8 @@ import {
   getMainnetBlockHeight,
   Currency,
   usePutSwr,
+  useDeleteFunc,
+  delay,
 } from '@siafoundation/react-core'
 import useSWR from 'swr'
 import { Contract, ContractStatus, WalletTransaction } from './siaTypes'
@@ -365,4 +367,96 @@ export function useSettingsDynDNS(
   args?: HookArgsWithPayloadSwr<void, void, void>
 ) {
   return usePutSwr({ ...args, payload: {}, route: '/settings/dyndns/update' })
+}
+
+// volumes
+
+export type Volume = {
+  ID: number
+  localPath: string
+  usedSectors: number
+  totalSectors: number
+  readOnly: boolean
+  available: boolean
+}
+
+export type VolumeStats = {
+  failedReads: number
+  failedWrites: number
+  successfulReads: number
+  successfulWrites: number
+  errors: string[]
+}
+
+export type VolumeMeta = Volume & VolumeStats
+
+export function useVolumes(args?: HookArgsSwr<void, VolumeMeta[]>) {
+  return useGetSwr({ ...args, route: '/volumes' })
+}
+
+export function useVolume(args?: HookArgsSwr<{ id: string }, VolumeMeta>) {
+  return useGetSwr({ ...args, route: '/volumes/:id' })
+}
+
+const volumesRoute = '/volumes'
+export function useVolumeCreate(
+  args?: HookArgsCallback<
+    void,
+    { localPath: string; maxSectors: number },
+    Volume
+  >
+) {
+  return usePostFunc({ ...args, route: volumesRoute }, (mutate) => {
+    // await delay(10_000)
+    mutate((key) => {
+      return key.startsWith(volumesRoute)
+    })
+  })
+}
+
+export function useVolumeUpdate(
+  args?: HookArgsCallback<{ id: number }, { readOnly: boolean }, void>
+) {
+  return usePutFunc({ ...args, route: '/volumes/:id' }, (mutate) => {
+    mutate((key) => {
+      return key.startsWith(volumesRoute)
+    })
+  })
+}
+
+export function useVolumeDelete(
+  args?: HookArgsCallback<{ id: number; force?: boolean }, void, void>
+) {
+  return useDeleteFunc({ ...args, route: '/volumes/:id' }, (mutate) => {
+    mutate((key) => {
+      return key.startsWith(volumesRoute)
+    })
+  })
+}
+
+export function useVolumeResize(
+  args?: HookArgsCallback<{ id: number }, { maxSectors: number }, void>
+) {
+  return usePutFunc(
+    { ...args, route: '/volumes/:id/resize' },
+    async (mutate) => {
+      await delay(10_000)
+      mutate((key) => {
+        return key.startsWith(volumesRoute)
+      })
+    }
+  )
+}
+
+type SystemDirResponse = {
+  path: string
+  totalBytes: number
+  freeBytes: number
+  directories: string[]
+}
+
+export function useSystemDirectory(
+  args: HookArgsSwr<{ path: string }, SystemDirResponse>
+) {
+  return useGetSwr({ ...args, route: '/system/dir/:path' })
 }

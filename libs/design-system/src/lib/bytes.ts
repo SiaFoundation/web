@@ -43,3 +43,23 @@ export function bytesToTB(bytes: BigNumber | string | number): BigNumber {
 export function TBToBytes(TiB: BigNumber | string | number): BigNumber {
   return new BigNumber(TiB).times(1000).times(1000).times(1000).times(1000)
 }
+
+// function converts bytes to GB
+export function bytesToGB(bytes: BigNumber | string | number): BigNumber {
+  return new BigNumber(bytes).div(1000).div(1000).div(1000)
+}
+
+// function converts GB to bytes
+export function GBToBytes(GB: BigNumber | string | number): BigNumber {
+  return new BigNumber(GB).times(1000).times(1000).times(1000)
+}
+
+// function converts MB to GB
+export function MBToGB(mb: BigNumber | string | number): BigNumber {
+  return new BigNumber(mb).div(1000)
+}
+
+// function converts GB to MB
+export function GBToMB(GB: BigNumber | string | number): BigNumber {
+  return new BigNumber(GB).times(1000)
+}

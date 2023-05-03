@@ -4,10 +4,9 @@ import {
   SyncerConnectPeerDialog,
   WalletSingleAddressDetailsDialog,
 } from '@siafoundation/design-system'
-import { StorageFolderAddDialog } from '../dialogs/StorageFolderAddDialog'
-import { StorageFolderResizeDialog } from '../dialogs/StorageFolderResizeDialog'
-import { StorageFolderRemoveDialog } from '../dialogs/StorageFolderRemoveDialog'
-import { HostAnnounceDialog } from '../dialogs/HostAnnounceDialog'
+import { VolumeAddDialog } from '../dialogs/VolumeAddDialog'
+import { VolumeResizeDialog } from '../dialogs/VolumeResizeDialog'
+import { VolumeDeleteDialog } from '../dialogs/VolumeDeleteDialog'
 import { useSyncerConnect, useWallet } from '@siafoundation/react-hostd'
 import { HostdSendSiacoinDialog } from '../dialogs/HostdSendSiacoinDialog'
 import { HostdTransactionDetailsDialog } from '../dialogs/HostdTransactionDetailsDialog'
@@ -22,10 +21,9 @@ export type DialogType =
   | 'transactionDetails'
   | 'addressDetails'
   | 'connectPeer'
-  | 'storageFolderAdd'
-  | 'storageFolderResize'
-  | 'storageFolderRemove'
-  | 'hostAnnounce'
+  | 'volumeCreate'
+  | 'volumeResize'
+  | 'volumeDelete'
   | 'contractsFilterContractId'
 
 function useDialogMain() {
@@ -114,20 +112,16 @@ export function Dialogs() {
         open={dialog === 'connectPeer'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
-      <StorageFolderAddDialog
-        open={dialog === 'storageFolderAdd'}
+      <VolumeAddDialog
+        open={dialog === 'volumeCreate'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
-      <StorageFolderResizeDialog
-        open={dialog === 'storageFolderResize'}
+      <VolumeResizeDialog
+        open={dialog === 'volumeResize'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
-      <StorageFolderRemoveDialog
-        open={dialog === 'storageFolderRemove'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
-      />
-      <HostAnnounceDialog
-        open={dialog === 'hostAnnounce'}
+      <VolumeDeleteDialog
+        open={dialog === 'volumeDelete'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <ContractsFilterContractIdDialog
