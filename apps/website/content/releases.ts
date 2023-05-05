@@ -1,4 +1,7 @@
-import { getGitHubRenterdLatestRelease } from '@siafoundation/data-sources'
+import {
+  getGitHubHostdLatestRelease,
+  getGitHubRenterdLatestRelease,
+} from '@siafoundation/data-sources'
 import { getCacheValue } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
 
@@ -9,6 +12,16 @@ export async function getCacheRenterdLatestRelease() {
     'releases/renterd',
     () => {
       return getGitHubRenterdLatestRelease()
+    },
+    maxAge
+  )
+}
+
+export async function getCacheHostdLatestRelease() {
+  return getCacheValue(
+    'releases/hostd',
+    () => {
+      return getGitHubHostdLatestRelease()
     },
     maxAge
   )

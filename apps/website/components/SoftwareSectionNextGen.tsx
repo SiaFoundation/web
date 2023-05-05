@@ -1,7 +1,7 @@
 import { getImageProps } from '@siafoundation/design-system'
 import { routes } from '../config/routes'
 import renterdImage from '../assets/renterd/renterd-peek.png'
-import hostdImage from '../assets/hostd/hostd-peek.png'
+import hostdImage from '../assets/hostd/peek.png'
 import { CalloutSoftware } from './CalloutSoftware'
 
 const renterdImageProps = getImageProps(renterdImage)
@@ -27,6 +27,7 @@ export function SoftwareSectionNextGen() {
         description={
           'A next-generation Sia host, developed by the Sia Foundation. Built for performance and reliability.'
         }
+        href={routes.software.hostd}
         imageProps={hostdImageProps}
       />
     </>

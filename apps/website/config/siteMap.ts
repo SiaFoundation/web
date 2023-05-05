@@ -58,9 +58,8 @@ export const menuSections = [
         title: 'renterd',
       },
       {
-        link: routes.getStarted.index,
+        link: routes.software.hostd,
         title: 'hostd',
-        disabled: true,
       },
       {
         link: routes.getStarted.index,

@@ -178,7 +178,27 @@ export async function getGitHubRenterdLatestRelease(): Promise<GitHubRelease | n
     const response = await axios.get(
       'https://api.github.com/repos/SiaFoundation/renterd/releases?per_page=1'
     )
-    return response.data[0]
+    if (response.data.length) {
+      return response.data[0]
+    } else {
+      return null
+    }
+  } catch (e) {
+    console.log(e)
+    return null
+  }
+}
+
+export async function getGitHubHostdLatestRelease(): Promise<GitHubRelease | null> {
+  try {
+    const response = await axios.get(
+      'https://api.github.com/repos/SiaFoundation/hostd/releases?per_page=1'
+    )
+    if (response.data.length) {
+      return response.data[0]
+    } else {
+      return null
+    }
   } catch (e) {
     console.log(e)
     return null
