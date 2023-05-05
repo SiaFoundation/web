@@ -1,3 +1,4 @@
+import { VolumeStatus } from '@siafoundation/react-hostd'
 import BigNumber from 'bignumber.js'
 
 export type VolumeData = {
@@ -10,6 +11,7 @@ export type VolumeData = {
   totalBytes: number
   readOnly: boolean
   available: boolean
+  status: VolumeStatus
   failedReads: BigNumber
   failedWrites: BigNumber
   successfulReads: BigNumber

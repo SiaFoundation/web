@@ -1,3 +1,11 @@
+export function getMinutesInMs(minutes: number) {
+  return 1000 * 60 * minutes
+}
+
+export function getHoursInMs(hours: number) {
+  return 1000 * 60 * 60 * hours
+}
+
 export function getDaysInMs(days: number) {
   return 1000 * 60 * 60 * 24 * days
 }

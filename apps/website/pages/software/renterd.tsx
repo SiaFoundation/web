@@ -15,6 +15,7 @@ import {
   Download16,
   LinkButton,
   Button,
+  Option,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { RenterdUICarousel } from '../../components/RenterdUICarousel'
@@ -100,18 +101,18 @@ export default function Renterd({ version, technical, tutorials }: Props) {
             {getLinks(version)
               .filter((i) => i.group === 'mainnet')
               .map((i) => (
-                <option key={i.link} value={i.link}>
+                <Option key={i.link} value={i.link}>
                   {i.title}
-                </option>
+                </Option>
               ))}
           </optgroup>
           <optgroup label="testnet">
             {getLinks(version)
               .filter((i) => i.group === 'testnet')
               .map((i) => (
-                <option key={i.link} value={i.link}>
+                <Option key={i.link} value={i.link}>
                   {i.title}
-                </option>
+                </Option>
               ))}
           </optgroup>
         </Select>

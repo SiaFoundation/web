@@ -1,10 +1,7 @@
 import { getDaysInMs } from '@siafoundation/design-system'
 import { DataTimeSpan, TimeRange } from './types'
 
-export function getTimeRange(
-  span: DataTimeSpan,
-  futureSpan: number
-): TimeRange {
+export function getTimeRange(span: DataTimeSpan): TimeRange {
   const now = new Date().getTime()
   if (span === 'all') {
     return {
@@ -14,7 +11,7 @@ export function getTimeRange(
   }
   return {
     start: now - getDaysInMs(Number(span)),
-    end: now + getDaysInMs(futureSpan),
+    end: now,
   }
 }
 

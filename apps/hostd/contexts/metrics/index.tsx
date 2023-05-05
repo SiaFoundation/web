@@ -1,16 +1,14 @@
 import React, { createContext, useContext } from 'react'
 import {
-  ChartConfig,
-  ChartData,
-  ChartStats,
-  ChartType,
+  Chart,
   computeChartStats,
+  formatChartData,
   getDataIntervalLabelFormatter,
   MiBToBytes,
   monthsToBlocks,
   TiBToBytes,
 } from '@siafoundation/design-system'
-import { humanBytes, humanSiacoin } from '@siafoundation/sia-js'
+import { humanBytes, humanNumber, humanSiacoin } from '@siafoundation/sia-js'
 import { useCallback, useMemo, useState } from 'react'
 import { chartConfigs } from '../../config/charts'
 import { useMetricsPeriod } from '@siafoundation/react-hostd'
@@ -32,36 +30,36 @@ import {
   BandwidthCategories,
   StorageCategories,
   RevenueCategories,
+  getDataIntervalInMs,
+  OperationsKeys,
 } from './types'
-
-export type Chart<Key extends string, Cat extends string> = {
-  data: ChartData<Key>
-  stats: ChartStats
-  config: ChartConfig<Key, Cat>
-  chartType: ChartType
-  isLoading: boolean
-}
 
 type TimeRange = {
   start: number
   end: number
 }
 
-// export const futureSpan = 0
-export const futureSpan = 10
-
-const defaultTimeSpan: DataTimeSpan = '90'
-const defaultInterval: DataInterval = 'weekly'
+const defaultTimeSpan = dataTimeSpanOptions.find((o) => o.value === '7')
 const disableAnimations = true
 
+function getPeriods(timeRange: TimeRange, dataInterval: DataInterval) {
+  const intervalMs = getDataIntervalInMs(dataInterval)
+  if (!intervalMs) {
+    return 0
+  }
+  return Math.round((timeRange.end - timeRange.start) / intervalMs)
+}
+
 function useMetricsMain() {
-  const [dataTimeSpan, _setDataTimeSpan] =
-    useState<DataTimeSpan>(defaultTimeSpan)
-  const [dataInterval, setDataInterval] =
-    useState<DataInterval>(defaultInterval)
+  const [dataTimeSpan, _setDataTimeSpan] = useState<DataTimeSpan>(
+    defaultTimeSpan.value
+  )
+  const [dataInterval, setDataInterval] = useState<DataInterval>(
+    defaultTimeSpan.interval
+  )
 
   const [timeRange, setTimeRange] = useState<TimeRange>(
-    getTimeRange(defaultTimeSpan, futureSpan)
+    getTimeRange(defaultTimeSpan.value)
   )
 
   const setDataTimeSpan = useCallback(
@@ -69,7 +67,7 @@ function useMetricsMain() {
       const option = dataTimeSpanOptions.find((o) => o.value === span)
       setDataInterval(option.interval)
       _setDataTimeSpan(option.value)
-      setTimeRange(getTimeRange(option.value, futureSpan))
+      setTimeRange(getTimeRange(option.value))
     },
     [_setDataTimeSpan, setDataInterval, setTimeRange]
   )
@@ -83,7 +81,7 @@ function useMetricsMain() {
     params: {
       period: dataInterval,
       start: new Date(timeRange.start).toISOString(),
-      end: new Date(timeRange.end).toISOString(),
+      periods: getPeriods(timeRange, dataInterval),
     },
     config: {
       swr: {
@@ -93,7 +91,7 @@ function useMetricsMain() {
   })
 
   const revenue = useMemo<Chart<RevenueKeys, RevenueCategories>>(() => {
-    const data =
+    const data = formatChartData(
       metricsPeriod.data?.map((m) => ({
         storagePotential: Number(m.revenue.potential.storage),
         ingressPotential: Number(m.revenue.potential.ingress),
@@ -123,10 +121,10 @@ function useMetricsMain() {
           .plus(m.revenue.earned.registryWrite)
           .plus(m.revenue.earned.rpc)
           .toNumber(),
-      })) || []
-    const stats = metricsPeriod.data
-      ? computeChartStats(data, timeRange, ['potential'])
-      : {}
+      })),
+      'diff'
+    )
+    const stats = computeChartStats(data)
     return {
       data,
       stats,
@@ -181,12 +179,12 @@ function useMetricsMain() {
             true
           ),
           registryReadPotential: configCategoryPattern<RevenueCategories>(
-            chartConfigs.registryRead,
+            chartConfigs.registryReads,
             'potential',
             true
           ),
           registryWritePotential: configCategoryPattern<RevenueCategories>(
-            chartConfigs.registryWrite,
+            chartConfigs.registryWrites,
             'potential',
             true
           ),
@@ -209,11 +207,11 @@ function useMetricsMain() {
             'earned'
           ),
           registryRead: configCategoryPattern<RevenueCategories>(
-            chartConfigs.registryRead,
+            chartConfigs.registryReads,
             'earned'
           ),
           registryWrite: configCategoryPattern<RevenueCategories>(
-            chartConfigs.registryWrite,
+            chartConfigs.registryWrites,
             'earned'
           ),
           rpc: configCategoryPattern<RevenueCategories>(
@@ -234,10 +232,10 @@ function useMetricsMain() {
       chartType: 'line',
       isLoading: metricsPeriod.isValidating,
     }
-  }, [timeRange, metricsPeriod, formatTimestamp])
+  }, [metricsPeriod, formatTimestamp])
 
   const pricing = useMemo<Chart<PricingKeys, never>>(() => {
-    const data =
+    const data = formatChartData(
       metricsPeriod.data?.map((m) => ({
         baseRPC: Number(m.pricing.baseRPCPrice),
         collateral: Number(m.pricing.collateral),
@@ -250,8 +248,10 @@ function useMetricsMain() {
           .times(TiBToBytes(1))
           .toNumber(),
         timestamp: new Date(m.timestamp).getTime(),
-      })) || []
-    const stats = computeChartStats(data, timeRange)
+      })),
+      'none'
+    )
+    const stats = computeChartStats(data)
     return {
       data,
       stats,
@@ -290,10 +290,10 @@ function useMetricsMain() {
       chartType: 'line',
       isLoading: metricsPeriod.isValidating,
     }
-  }, [timeRange, metricsPeriod, formatTimestamp])
+  }, [metricsPeriod, formatTimestamp])
 
   const contracts = useMemo<Chart<ContractsKeys, never>>(() => {
-    const data =
+    const data = formatChartData(
       metricsPeriod.data?.map((m) => ({
         active: m.contracts.active,
         failed: m.contracts.failed,
@@ -301,8 +301,10 @@ function useMetricsMain() {
         rejected: m.contracts.rejected,
         successful: m.contracts.successful,
         timestamp: new Date(m.timestamp).getTime(),
-      })) || []
-    const stats = computeChartStats(data, timeRange)
+      })),
+      'none'
+    )
+    const stats = computeChartStats(data)
     return {
       data,
       stats,
@@ -323,13 +325,14 @@ function useMetricsMain() {
       chartType: 'areastack',
       isLoading: metricsPeriod.isValidating,
     }
-  }, [timeRange, metricsPeriod, formatTimestamp])
+  }, [metricsPeriod, formatTimestamp])
 
   const storage = useMemo<Chart<StorageKeys, StorageCategories>>(() => {
-    const data =
+    const data = formatChartData(
       metricsPeriod.data?.map((m) => ({
-        totalSectors: MiBToBytes(m.storage.totalSectors).times(4).toNumber(),
-        registryEntries: m.storage.registryEntries * 113,
+        maxSectors: MiBToBytes(m.storage.totalSectors).times(4).toNumber(),
+        registryEntries: m.registry.entries * 113,
+        maxRegistryEntries: m.registry.maxEntries * 113,
         tempSectors: MiBToBytes(m.storage.tempSectors).times(4).toNumber(),
         physicalSectors: MiBToBytes(m.storage.physicalSectors)
           .times(4)
@@ -338,8 +341,10 @@ function useMetricsMain() {
           .times(4)
           .toNumber(),
         timestamp: new Date(m.timestamp).getTime(),
-      })) || []
-    const stats = computeChartStats(data, timeRange)
+      })),
+      'none'
+    )
+    const stats = computeChartStats(data)
     return {
       data,
       stats,
@@ -349,26 +354,33 @@ function useMetricsMain() {
           'physicalSectors',
           'tempSectors',
           'registryEntries',
-          'totalSectors',
+          'maxSectors',
+          'maxRegistryEntries',
         ],
         enabledTip: [
           'contractSectors',
           'physicalSectors',
           'tempSectors',
           'registryEntries',
-          'totalSectors',
+          'maxSectors',
+          'maxRegistryEntries',
         ],
         categories: ['storage used', 'storage capacity'],
         data: {
-          totalSectors: configCategoryLabel<StorageCategories>(
-            chartConfigs.capacity,
+          maxSectors: configCategoryLabel<StorageCategories>(
+            chartConfigs.capacityStorage,
             'storage capacity',
-            'total'
+            'sectors'
+          ),
+          maxRegistryEntries: configCategoryLabel<StorageCategories>(
+            chartConfigs.capacityRegistry,
+            'storage capacity',
+            'registry'
           ),
           physicalSectors: configCategoryLabel<StorageCategories>(
             chartConfigs.storagePhysical,
             'storage used',
-            'physical'
+            'sectors physical'
           ),
           registryEntries: configCategoryLabel<StorageCategories>(
             chartConfigs.registry,
@@ -378,12 +390,12 @@ function useMetricsMain() {
           tempSectors: configCategoryLabel<StorageCategories>(
             chartConfigs.sectorsTemp,
             'storage used',
-            'temp'
+            'sectors temp'
           ),
           contractSectors: configCategoryLabel<StorageCategories>(
             chartConfigs.storage,
             'storage used',
-            'contract'
+            'sectors contract'
           ),
         },
         format: (v) => humanBytes(v),
@@ -393,10 +405,53 @@ function useMetricsMain() {
       chartType: 'line',
       isLoading: metricsPeriod.isValidating,
     }
-  }, [timeRange, metricsPeriod, formatTimestamp])
+  }, [metricsPeriod, formatTimestamp])
+
+  const operations = useMemo<Chart<OperationsKeys, never>>(() => {
+    const data = formatChartData(
+      metricsPeriod.data?.map((m) => ({
+        storageReads: m.storage.reads,
+        storageWrites: m.storage.writes,
+        registryReads: m.registry.reads,
+        registryWrites: m.registry.writes,
+        timestamp: new Date(m.timestamp).getTime(),
+      })),
+      'diff'
+    )
+    const stats = computeChartStats(data)
+    return {
+      data,
+      stats,
+      config: {
+        enabledGraph: [
+          'storageReads',
+          'storageWrites',
+          'registryReads',
+          'registryWrites',
+        ],
+        enabledTip: [
+          'storageReads',
+          'storageWrites',
+          'registryReads',
+          'registryWrites',
+        ],
+        data: {
+          registryReads: chartConfigs.registryReads,
+          registryWrites: chartConfigs.registryWrites,
+          storageReads: chartConfigs.storageReads,
+          storageWrites: chartConfigs.storageWrites,
+        },
+        format: (v) => humanNumber(v),
+        formatTimestamp,
+        disableAnimations,
+      },
+      chartType: 'line',
+      isLoading: metricsPeriod.isValidating,
+    }
+  }, [metricsPeriod, formatTimestamp])
 
   const bandwidth = useMemo<Chart<BandwidthKeys, BandwidthCategories>>(() => {
-    const data =
+    const data = formatChartData(
       metricsPeriod.data?.map((m) => ({
         egressRHP3: m.data.rhp3.egress,
         egressRHP2: m.data.rhp2.egress,
@@ -405,8 +460,10 @@ function useMetricsMain() {
         ingressRHP2: m.data.rhp2.ingress,
         ingress: m.data.rhp3.ingress + m.data.rhp2.ingress,
         timestamp: new Date(m.timestamp).getTime(),
-      })) || []
-    const stats = computeChartStats(data, timeRange)
+      })),
+      'diff'
+    )
+    const stats = computeChartStats(data)
     return {
       data,
       stats,
@@ -467,7 +524,7 @@ function useMetricsMain() {
       chartType: 'line',
       isLoading: metricsPeriod.isValidating,
     }
-  }, [timeRange, metricsPeriod, formatTimestamp])
+  }, [metricsPeriod, formatTimestamp])
 
   return {
     dataTimeSpan,
@@ -475,6 +532,7 @@ function useMetricsMain() {
     timeRange,
     dataInterval,
     setDataInterval,
+    operations,
     revenue,
     contracts,
     storage,

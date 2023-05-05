@@ -2,18 +2,20 @@ import ParentSize from '@visx/responsive/lib/components/ParentSize'
 import { Panel } from '../../core/Panel'
 import { ChartXYGraph } from './ChartXYGraph'
 import {
+  Chart,
   ChartPoint,
   ChartData,
-  useChartXY,
+  ChartStats,
   ChartConfig,
   ChartType,
   CurveType,
   StackOffset,
-} from './useChartXY'
+} from './types'
+import { useChartXY } from './useChartXY'
 import { ChartXYConfig } from './ChartXYConfig'
 import { LoadingDots } from '../LoadingDots'
 
-export type { ChartPoint, ChartData, ChartConfig, ChartType }
+export type { Chart, ChartPoint, ChartData, ChartStats, ChartConfig, ChartType }
 
 type Props<Key extends string, Cat extends string> = {
   id: string

@@ -1,7 +1,7 @@
 import {
-  ChartConfig,
-  ChartData,
-  ChartStats,
+  getDaysInMs,
+  getHoursInMs,
+  getMinutesInMs,
 } from '@siafoundation/design-system'
 
 export type RevenueKeys =
@@ -39,11 +39,12 @@ export type ContractsKeys =
   | 'successful'
 
 export type StorageKeys =
-  | 'totalSectors'
+  | 'maxSectors'
   | 'physicalSectors'
-  | 'registryEntries'
   | 'tempSectors'
   | 'contractSectors'
+  | 'registryEntries'
+  | 'maxRegistryEntries'
 
 export type StorageCategories = 'storage used' | 'storage capacity'
 
@@ -55,13 +56,13 @@ export type BandwidthKeys =
   | 'egressRHP2'
   | 'egressRHP3'
 
-export type BandwidthCategories = 'ingress' | 'egress'
+export type OperationsKeys =
+  | 'storageReads'
+  | 'storageWrites'
+  | 'registryReads'
+  | 'registryWrites'
 
-export type Chart<Key extends string, Cat extends string> = {
-  data: ChartData<Key>
-  stats: ChartStats
-  config: ChartConfig<Key, Cat>
-}
+export type BandwidthCategories = 'ingress' | 'egress'
 
 export type TimeRange = {
   start: number
@@ -136,3 +137,25 @@ export const dataTimeSpanOptions: {
     value: 'all',
   },
 ]
+
+export function getDataIntervalInMs(dataInterval: DataInterval): number {
+  if (dataInterval === '15m') {
+    return getMinutesInMs(15)
+  }
+  if (dataInterval === 'hourly') {
+    return getHoursInMs(1)
+  }
+  if (dataInterval === 'daily') {
+    return getDaysInMs(1)
+  }
+  if (dataInterval === 'weekly') {
+    return getDaysInMs(7)
+  }
+  if (dataInterval === 'monthly') {
+    return getDaysInMs(30)
+  }
+  if (dataInterval === 'yearly') {
+    return getDaysInMs(30)
+  }
+  return 0
+}

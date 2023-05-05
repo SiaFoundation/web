@@ -54,13 +54,21 @@ export function usePostSwr<Params extends RequestParams, Payload, Result>(
       if (!reqRoute) {
         throw Error('No route')
       }
-      const response = await axios.post<Result>(
-        reqRoute,
+      try {
+        const response = await axios.post<Result>(
+          reqRoute,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (args as any).payload,
+          reqConfig
+        )
+        return response.data
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (args as any).payload,
-        reqConfig
-      )
-      return response.data
+      } catch (e: any) {
+        const error: SWRError = new Error(e.response.data)
+        // Attach extra info to the error object.
+        error.status = e.response.status || 500
+        throw error
+      }
     },
     hookArgs.config?.swr
   )
@@ -119,7 +127,7 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
         const response = await axios.post<Result>(reqRoute, payload, reqConfig)
         if (after) {
           after(
-            (matcher, data, opts) =>
+            (matcher, data = (d) => d, opts) =>
               mutate(
                 (key) => {
                   if (typeof key !== 'string') {
@@ -148,6 +156,7 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
+        console.log(e.response)
         return {
           status: e.response.status,
           error: e.response.data,

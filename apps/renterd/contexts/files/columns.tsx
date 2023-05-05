@@ -253,7 +253,7 @@ export const columns: FilesTableColumn[] = [
         return (
           <ValueNum
             size="12"
-            value={new BigNumber(obj.data?.object.Slabs.length || 0)}
+            value={new BigNumber(obj.data?.object.slabs.length || 0)}
             variant="value"
             color="subtle"
             format={(v) => humanNumber(v)}
@@ -289,8 +289,8 @@ export const columns: FilesTableColumn[] = [
             size="12"
             value={
               new BigNumber(
-                obj.data?.object.Slabs?.reduce(
-                  (acc, slab) => acc + slab.Shards?.length,
+                obj.data?.object.slabs?.reduce(
+                  (acc, slab) => acc + slab.shards?.length,
                   0
                 ) || 0
               )

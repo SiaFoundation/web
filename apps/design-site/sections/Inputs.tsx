@@ -11,6 +11,7 @@ import {
   TextField,
   RadioCard,
   RadioCardGroup,
+  Option,
 } from '@siafoundation/design-system'
 import { SectionHeading } from '../components/SectionHeading'
 import { SubsectionHeading } from '../components/SubsectionHeading'
@@ -287,44 +288,44 @@ export function Inputs() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div className="flex gap-2">
             <Select>
-              <option>Option A</option>
-              <option>Option B</option>
-              <option>Option C</option>
-              <option>Option D</option>
+              <Option>Option A</Option>
+              <Option>Option B</Option>
+              <Option>Option C</Option>
+              <Option>Option D</Option>
             </Select>
             <Select disabled>
-              <option>Option A</option>
-              <option>Option B</option>
-              <option>Option C</option>
-              <option>Option D</option>
+              <Option>Option A</Option>
+              <Option>Option B</Option>
+              <Option>Option C</Option>
+              <Option>Option D</Option>
             </Select>
           </div>
           <div className="flex gap-2">
             <Select size="medium">
-              <option>Option A</option>
-              <option>Option B</option>
-              <option>Option C</option>
-              <option>Option D</option>
+              <Option>Option A</Option>
+              <Option>Option B</Option>
+              <Option>Option C</Option>
+              <Option>Option D</Option>
             </Select>
             <Select disabled size="medium">
-              <option>Option A</option>
-              <option>Option B</option>
-              <option>Option C</option>
-              <option>Option D</option>
+              <Option>Option A</Option>
+              <Option>Option B</Option>
+              <Option>Option C</Option>
+              <Option>Option D</Option>
             </Select>
           </div>
           <div className="flex gap-2">
             <Select size="large">
-              <option>Option A</option>
-              <option>Option B</option>
-              <option>Option C</option>
-              <option>Option D</option>
+              <Option>Option A</Option>
+              <Option>Option B</Option>
+              <Option>Option C</Option>
+              <Option>Option D</Option>
             </Select>
             <Select disabled size="large">
-              <option>Option A</option>
-              <option>Option B</option>
-              <option>Option C</option>
-              <option>Option D</option>
+              <Option>Option A</Option>
+              <Option>Option B</Option>
+              <Option>Option C</Option>
+              <Option>Option D</Option>
             </Select>
           </div>
         </div>

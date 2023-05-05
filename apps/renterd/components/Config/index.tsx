@@ -243,6 +243,7 @@ export function Config() {
                 formik={form}
                 changed={changed}
                 name="maxStoragePrice"
+                units="SC/TB/month"
                 decimalsLimitSc={scDecimalPlaces}
               />
             }
@@ -256,6 +257,7 @@ export function Config() {
                 formik={form}
                 changed={changed}
                 name="maxDownloadPrice"
+                units="SC/TB/month"
                 decimalsLimitSc={scDecimalPlaces}
               />
             }
@@ -269,6 +271,7 @@ export function Config() {
                 formik={form}
                 changed={changed}
                 name="maxUploadPrice"
+                units="SC/TB/month"
                 decimalsLimitSc={scDecimalPlaces}
               />
             }

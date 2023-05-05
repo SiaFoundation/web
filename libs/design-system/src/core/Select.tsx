@@ -1,4 +1,4 @@
-import { cva } from 'class-variance-authority'
+import { cva, cx } from 'class-variance-authority'
 import React from 'react'
 import { CaretSort16 } from '../icons/carbon'
 import { VariantProps } from '../types'
@@ -65,4 +65,19 @@ export const Select = React.forwardRef<
     />
     <CaretSort16 className="pointer-events-none scale-75" />
   </div>
+))
+
+export const Option = React.forwardRef<
+  HTMLOptionElement,
+  React.HTMLProps<HTMLOptionElement>
+>(({ className, ...props }, ref) => (
+  <option
+    ref={ref}
+    {...props}
+    className={cx(
+      'bg-white dark:bg-graydark-200',
+      'text-gray-1100 dark:text-white',
+      className
+    )}
+  />
 ))

@@ -30,6 +30,7 @@ function getFields(c: VolumeMeta): VolumeData {
     usedBytes: new BigNumber(c.usedSectors).times(MiBToBytes(4)).toNumber(),
     totalBytes: new BigNumber(c.totalSectors).times(MiBToBytes(4)).toNumber(),
     totalSectors: c.totalSectors,
+    status: c.status,
     readOnly: c.readOnly,
     available: c.available,
     failedReads: new BigNumber(c.failedReads),

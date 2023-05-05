@@ -5,9 +5,9 @@ import {
   ValueNum,
   Locked16,
   CheckboxCheckedFilled16,
-  UndefinedFilled16,
   Tooltip,
   Edit16,
+  WarningSquareFilled16,
 } from '@siafoundation/design-system'
 import { humanBytes } from '@siafoundation/sia-js'
 import { VolumeDropdownMenu } from '../../components/Volumes/VolumeDropdownMenu'
@@ -43,10 +43,37 @@ export const columns: VolumesTableColumn[] = [
     label: 'status',
     category: 'general',
     render: ({ data }) => (
-      <Tooltip content={data.available ? 'available' : 'unavailable'}>
-        <Text color={data.available ? 'green' : 'amber'}>
-          {data.available ? <CheckboxCheckedFilled16 /> : <UndefinedFilled16 />}
-        </Text>
+      <Tooltip
+        side="right"
+        content={
+          data.available ? (
+            'available'
+          ) : (
+            <>
+              <Text>unavailable</Text>
+              <div className="flex flex-col">
+                {data.errors?.map((reason) => (
+                  <Text key={reason} size="10" noWrap>
+                    {reason}
+                  </Text>
+                ))}
+              </div>
+            </>
+          )
+        }
+      >
+        <div className="flex gap-2 items-center">
+          <Text color={data.available ? 'green' : 'amber'}>
+            {data.available ? (
+              <CheckboxCheckedFilled16 />
+            ) : (
+              <WarningSquareFilled16 />
+            )}
+          </Text>
+          <Text size="12" className="relative -top-px">
+            {data.status}
+          </Text>
+        </div>
       </Tooltip>
     ),
   },

@@ -3,8 +3,11 @@ import {
   EntityListItemProps,
   WalletLayoutActions,
   getTransactionTypes,
+  BalanceEvolution,
+  getDaysInMs,
 } from '@siafoundation/design-system'
 import {
+  useMetricsPeriod,
   useWallet,
   useWalletPending,
   useWalletTransactions,
@@ -37,8 +40,6 @@ export function Wallet() {
           txType: getTransactionTypes(t),
           // hash: t.ID,
           // timestamp: new Date(t.Timestamp).getTime(),
-          // onClick: () => openDialog('transactionDetails', t.ID),
-          // sc: totals.sc,
           unconfirmed: true,
         }
       }),
@@ -58,20 +59,33 @@ export function Wallet() {
     [pending, transactions, openDialog]
   )
 
-  // const txns: { inflow: string; outflow: string; timestamp: string }[] =
-  //   useMemo(
-  //     () =>
-  //       (transactions.data || [])
-  //         .map((t) => {
-  //           return {
-  //             inflow: t.inflow,
-  //             outflow: t.outflow,
-  //             timestamp: t.timestamp,
-  //           }
-  //         })
-  //         .sort((a, b) => (a.timestamp >= b.timestamp ? 1 : -1)),
-  //     [transactions]
-  //   )
+  const dayPeriods = 30
+  const start = useMemo(() => {
+    const today = new Date().getTime()
+    const periodsInMs = getDaysInMs(dayPeriods)
+    const periodsAgo = today - periodsInMs
+    return new Date(periodsAgo).toISOString()
+  }, [])
+
+  const metrics = useMetricsPeriod({
+    params: {
+      period: 'daily',
+      start,
+      periods: dayPeriods,
+    },
+  })
+  const balances = useMemo(
+    () =>
+      (metrics.data || [])
+        .map((t) => {
+          return {
+            sc: Number(t.balance),
+            timestamp: new Date(t.timestamp).getTime(),
+          }
+        })
+        .sort((a, b) => (a.timestamp >= b.timestamp ? 1 : -1)),
+    [metrics.data]
+  )
 
   return (
     <HostdAuthedLayout
@@ -88,7 +102,10 @@ export function Wallet() {
       }
     >
       <div className="p-6 flex flex-col gap-5">
-        {/* <WalletSparkline transactions={txns} /> */}
+        <BalanceEvolution
+          balances={balances}
+          isLoading={metrics.isValidating}
+        />
         <EntityList title="Transactions" entities={entities.slice(0, 100)} />
       </div>
     </HostdAuthedLayout>
