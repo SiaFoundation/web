@@ -34,6 +34,7 @@ export const routes = {
   },
   software: {
     renterd: '/software/renterd',
+    hostd: '/software/hostd',
   },
   newsroom: {
     index: '/newsroom',
