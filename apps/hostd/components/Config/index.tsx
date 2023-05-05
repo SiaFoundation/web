@@ -245,74 +245,6 @@ export function Config() {
         </PanelMenuSection>
         <PanelMenuSection title="Pricing">
           <PanelMenuSetting
-            title="Contract price"
-            description={descriptions.contractPrice}
-            control={
-              <ConfigurationSiacoin
-                formik={form}
-                changed={changed}
-                name="contractPrice"
-                decimalsLimitSc={scDecimalPlaces}
-              />
-            }
-          />
-          <Separator className="w-full my-3" />
-          <PanelMenuSetting
-            title="Base RPC price"
-            description={descriptions.baseRPCPrice}
-            control={
-              <ConfigurationSiacoin
-                formik={form}
-                changed={changed}
-                units="SC/million"
-                name="baseRPCPrice"
-                decimalsLimitSc={scDecimalPlaces}
-              />
-            }
-          />
-          <Separator className="w-full my-3" />
-          <PanelMenuSetting
-            title="Sector access price"
-            description={descriptions.sectorAccessPrice}
-            control={
-              <ConfigurationSiacoin
-                formik={form}
-                changed={changed}
-                units="SC/million"
-                name="sectorAccessPrice"
-                decimalsLimitSc={scDecimalPlaces}
-              />
-            }
-          />
-          <Separator className="w-full my-3" />
-          <PanelMenuSetting
-            title="Collateral"
-            description={descriptions.collateral}
-            control={
-              <ConfigurationSiacoin
-                formik={form}
-                changed={changed}
-                name="collateral"
-                units="SC/month"
-                decimalsLimitSc={scDecimalPlaces}
-              />
-            }
-          />
-          <Separator className="w-full my-3" />
-          <PanelMenuSetting
-            title="Maximum collateral"
-            description={descriptions.maxCollateral}
-            control={
-              <ConfigurationSiacoin
-                formik={form}
-                changed={changed}
-                name="maxCollateral"
-                decimalsLimitSc={scDecimalPlaces}
-              />
-            }
-          />
-          <Separator className="w-full my-3" />
-          <PanelMenuSetting
             title="Minimum storage price"
             description={descriptions.minStoragePrice}
             control={
@@ -349,6 +281,74 @@ export function Config() {
                 changed={changed}
                 units="SC/TB"
                 name="minIngressPrice"
+                decimalsLimitSc={scDecimalPlaces}
+              />
+            }
+          />
+          <Separator className="w-full my-3" />
+          <PanelMenuSetting
+            title="Collateral"
+            description={descriptions.collateral}
+            control={
+              <ConfigurationSiacoin
+                formik={form}
+                changed={changed}
+                name="collateral"
+                units="SC/month"
+                decimalsLimitSc={scDecimalPlaces}
+              />
+            }
+          />
+          <Separator className="w-full my-3" />
+          <PanelMenuSetting
+            title="Maximum collateral"
+            description={descriptions.maxCollateral}
+            control={
+              <ConfigurationSiacoin
+                formik={form}
+                changed={changed}
+                name="maxCollateral"
+                decimalsLimitSc={scDecimalPlaces}
+              />
+            }
+          />
+          <Separator className="w-full my-3" />
+          <PanelMenuSetting
+            title="Contract price"
+            description={descriptions.contractPrice}
+            control={
+              <ConfigurationSiacoin
+                formik={form}
+                changed={changed}
+                name="contractPrice"
+                decimalsLimitSc={scDecimalPlaces}
+              />
+            }
+          />
+          <Separator className="w-full my-3" />
+          <PanelMenuSetting
+            title="Base RPC price"
+            description={descriptions.baseRPCPrice}
+            control={
+              <ConfigurationSiacoin
+                formik={form}
+                changed={changed}
+                units="SC/million"
+                name="baseRPCPrice"
+                decimalsLimitSc={scDecimalPlaces}
+              />
+            }
+          />
+          <Separator className="w-full my-3" />
+          <PanelMenuSetting
+            title="Sector access price"
+            description={descriptions.sectorAccessPrice}
+            control={
+              <ConfigurationSiacoin
+                formik={form}
+                changed={changed}
+                units="SC/million"
+                name="sectorAccessPrice"
                 decimalsLimitSc={scDecimalPlaces}
               />
             }

@@ -1,4 +1,4 @@
-import { Select } from '../core/Select'
+import { Option, Select } from '../core/Select'
 import { Text } from '../core/Text'
 import { DatumCard } from '../components/DatumCard'
 import { ValueNum } from '../components/ValueNum'
@@ -62,9 +62,9 @@ export function DatumCardConfigurable({
           defaultValue={mode}
         >
           {enabledModes.map((m) => (
-            <option key={m} value={m}>
+            <Option key={m} value={m}>
               {modeMap[m]}
-            </option>
+            </Option>
           ))}
         </Select>
       }

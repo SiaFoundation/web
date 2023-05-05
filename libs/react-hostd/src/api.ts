@@ -236,13 +236,23 @@ type Pricing = {
   collateral: string
 }
 
+// Registry is a collection of metrics related to the host's registry.
+type Registry = {
+  entries: number
+  maxEntries: number
+
+  reads: number
+  writes: number
+}
+
 // Storage is a collection of metrics related to storage.
 type Storage = {
   totalSectors: number
   physicalSectors: number
   contractSectors: number
   tempSectors: number
-  registryEntries: number
+  reads: number
+  writes: number
 }
 
 // RevenueMetrics is a collection of metrics related to revenue.
@@ -262,6 +272,7 @@ type Metrics = {
   pricing: Pricing
   contracts: Contracts
   storage: Storage
+  registry: Registry
   data: DataMetrics
   balance: string
   timestamp: string
@@ -279,7 +290,10 @@ type Period = '15m' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly'
 
 const metricsPeriodRoute = '/metrics/:period'
 export function useMetricsPeriod(
-  args?: HookArgsSwr<{ period: Period; start: string; end: string }, Metrics[]>
+  args?: HookArgsSwr<
+    { period: Period; start: string; periods: number },
+    Metrics[]
+  >
 ) {
   return useGetSwr({
     ...args,
@@ -380,11 +394,19 @@ export type Volume = {
   available: boolean
 }
 
+export type VolumeStatus =
+  | 'unavailable'
+  | 'creating'
+  | 'resizing'
+  | 'removing'
+  | 'ready'
+
 export type VolumeStats = {
   failedReads: number
   failedWrites: number
   successfulReads: number
   successfulWrites: number
+  status: VolumeStatus
   errors: string[]
 }
 
@@ -407,7 +429,6 @@ export function useVolumeCreate(
   >
 ) {
   return usePostFunc({ ...args, route: volumesRoute }, (mutate) => {
-    // await delay(10_000)
     mutate((key) => {
       return key.startsWith(volumesRoute)
     })

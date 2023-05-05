@@ -1,7 +1,7 @@
 import { Alert } from '../core/Alert'
 import { Heading } from '../core/Heading'
 import { Paragraph } from '../core/Paragraph'
-import { Select } from '../core/Select'
+import { Option, Select } from '../core/Select'
 import { Switch } from '../core/Switch'
 import { Text } from '../core/Text'
 import { Separator } from '../core/Separator'
@@ -57,9 +57,9 @@ export function SettingsDialog({
                     }
                   >
                     {currencyOptions.map(({ id, label }) => (
-                      <option key={id} value={id}>
+                      <Option key={id} value={id}>
                         {label}
-                      </option>
+                      </Option>
                     ))}
                   </Select>
                 </div>

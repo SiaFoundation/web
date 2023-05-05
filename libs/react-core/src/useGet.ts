@@ -44,8 +44,16 @@ export function useGetSwr<Params extends RequestParams, Result>(
       if (!reqRoute) {
         throw Error('No route')
       }
-      const response = await axios.get<Result>(reqRoute, reqConfig)
-      return response.data
+      try {
+        const response = await axios.get<Result>(reqRoute, reqConfig)
+        return response.data
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
+        const error: SWRError = new Error(e.response.data)
+        // Attach extra info to the error object.
+        error.status = e.response.status || 500
+        throw error
+      }
     },
     hookArgs.config?.swr
   )

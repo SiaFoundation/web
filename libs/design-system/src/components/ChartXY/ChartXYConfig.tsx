@@ -1,6 +1,7 @@
 import { Radio, RadioGroup } from '../../core/Radio'
 import { Text } from '../../core/Text'
-import { ChartType, ChartXYProps, CurveType, StackOffset } from './useChartXY'
+import { ChartXYProps } from './useChartXY'
+import { ChartType, CurveType, StackOffset } from './types'
 import { InfoTip } from '../../core/InfoTip'
 import { Dialog } from '../../core/Dialog'
 import { Settings16 } from '../../icons/carbon'

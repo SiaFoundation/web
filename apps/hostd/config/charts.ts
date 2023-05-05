@@ -45,19 +45,31 @@ export const chartConfigs = {
     label: 'registry',
     color: colors.purple[600],
   },
-  registryRead: {
-    label: 'registry read',
-    color: colors.purple[600],
+  storageReads: {
+    label: 'storage read',
+    color: colors.emerald[700],
   },
-  registryWrite: {
-    label: 'registry write',
-    color: colors.fuchsia[600],
+  storageWrites: {
+    label: 'storage write',
+    color: colors.emerald[400],
+  },
+  registryReads: {
+    label: 'registry reads',
+    color: colors.purple[700],
+  },
+  registryWrites: {
+    label: 'registry writes',
+    color: colors.fuchsia[400],
   },
   rpc: {
     label: 'RPC',
     color: colors.slate[500],
   },
-  capacity: {
+  capacityStorage: {
+    label: 'capacity',
+    color: colors.neutral[500],
+  },
+  capacityRegistry: {
     label: 'capacity',
     color: colors.neutral[500],
   },

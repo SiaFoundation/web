@@ -10,7 +10,7 @@ export function getObjectHealth(
   health: number
 } {
   const slabHealths = []
-  obj.Slabs?.forEach((sl, index) => {
+  obj.slabs?.forEach((sl, index) => {
     slabHealths.push(getSlabHealthStats(sl, contracts, String(index)))
   })
   const health = min(slabHealths.map((s) => s.health))
@@ -34,17 +34,17 @@ function getSlabHealthStats(
   index: string
 ): SlabHealthStats {
   const shardContractStatus = []
-  slab.Shards?.forEach((sh) => {
-    shardContractStatus.push(!!contracts.find((c) => c.hostKey === sh.Host))
+  slab.shards?.forEach((sh) => {
+    shardContractStatus.push(!!contracts.find((c) => c.hostKey === sh.host))
   })
   const shardsWithContracts = shardContractStatus.filter((s) => s).length
-  const minShards = slab.MinShards
-  const totalShards = slab.Shards?.length || 0
+  const minShards = slab.minShards
+  const totalShards = slab.shards?.length || 0
   return {
     index,
     health: computeSlabHealth(totalShards, minShards, shardsWithContracts),
-    minShards: slab.MinShards,
-    totalShards: slab.Shards?.length || 0,
+    minShards: slab.minShards,
+    totalShards: slab.shards?.length || 0,
     contractShards: shardsWithContracts,
   }
 }

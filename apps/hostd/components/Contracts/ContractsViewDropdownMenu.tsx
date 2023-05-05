@@ -11,6 +11,7 @@ import {
   MenuSeparator,
   Reset16,
   MenuSectionLabelToggleAll,
+  Option,
 } from '@siafoundation/design-system'
 import { TableColumnId } from '../../contexts/contracts/types'
 import { useContracts } from '../../contexts/contracts'
@@ -68,9 +69,9 @@ export function ContractsViewDropdownMenu() {
             {Object.entries(sortOptions).map(([category, options]) => (
               <optgroup key={category} label={category}>
                 {options.map((column) => (
-                  <option key={column.id} value={column.id}>
+                  <Option key={column.id} value={column.id}>
                     {column.label}
-                  </option>
+                  </Option>
                 ))}
               </optgroup>
             ))}
@@ -89,12 +90,12 @@ export function ContractsViewDropdownMenu() {
               setSortDirection(e.currentTarget.value as 'asc' | 'desc')
             }}
           >
-            <option key="desc" value="desc">
+            <Option key="desc" value="desc">
               Descending
-            </option>
-            <option key="asc" value="asc">
+            </Option>
+            <Option key="asc" value="asc">
               Ascending
-            </option>
+            </Option>
           </Select>
         </MenuItemRightSlot>
       </BaseMenuItem>

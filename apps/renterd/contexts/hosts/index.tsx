@@ -121,6 +121,8 @@ function useHostsMain() {
   const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
   return {
+    autopilotMode,
+    error,
     dataState,
     offset,
     limit,

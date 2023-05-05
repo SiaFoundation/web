@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { FieldLabelAndError } from '../components/Form'
-import { Select } from '../core/Select'
+import { Option, Select } from '../core/Select'
 import { ConfigurationTipText } from './ConfigurationTipText'
 
 type Option = {
@@ -57,9 +57,9 @@ export function ConfigurationSelect({
           }}
         >
           {options.map((o) => (
-            <option key={o.value} value={o.value}>
+            <Option key={o.value} value={o.value}>
               {o.label}
-            </option>
+            </Option>
           ))}
         </Select>
       </div>

@@ -6,6 +6,7 @@ import {
   TextField,
   Search16,
   OverflowMenuHorizontal16,
+  Option,
 } from '@siafoundation/design-system'
 import { ExampleMenu } from '../components/ExampleMenu'
 import { SectionHeading } from '../components/SectionHeading'
@@ -58,11 +59,11 @@ export function ControlGroups() {
               </Button>
               <TextField size="small" />
               <Select size="small">
-                <option>Option A</option>
-                <option>Option B</option>
-                <option>Option C</option>
-                <option>Option D</option>
-                <option>Option Elephant</option>
+                <Option>Option A</Option>
+                <Option>Option B</Option>
+                <Option>Option C</Option>
+                <Option>Option D</Option>
+                <Option>Option Elephant</Option>
               </Select>
               <ExampleMenu>
                 <Button size="small">
@@ -78,11 +79,11 @@ export function ControlGroups() {
               </Button>
               <TextField size="medium" />
               <Select size="medium">
-                <option>Option A</option>
-                <option>Option B</option>
-                <option>Option C</option>
-                <option>Option D</option>
-                <option>Option Elephant</option>
+                <Option>Option A</Option>
+                <Option>Option B</Option>
+                <Option>Option C</Option>
+                <Option>Option D</Option>
+                <Option>Option Elephant</Option>
               </Select>
               <ExampleMenu>
                 <Button size="medium">

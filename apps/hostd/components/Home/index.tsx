@@ -5,11 +5,13 @@ import {
   CalendarHeatMap16,
   Tooltip,
   Select,
+  Ruler16,
+  Option,
 } from '@siafoundation/design-system'
 import { useMetrics } from '../../contexts/metrics'
 import { format } from 'date-fns'
 import { HomeRevenue } from './HomeRevenue'
-import { HomeUtilization } from './HomeUtilization'
+import { HomeStorage } from './HomeStorage'
 import { HomeContracts } from './HomeContracts'
 import { HomePricing } from './HomePricing'
 import { HostdAuthedLayout } from '../HostdAuthedLayout'
@@ -17,10 +19,13 @@ import { routes } from '../../config/routes'
 import { HostdSidenav } from '../HostdSidenav'
 import { useDialog } from '../../contexts/dialog'
 import { DataTimeSpan, dataTimeSpanOptions } from '../../contexts/metrics/types'
+import { HomeOperations } from './HomeOperations'
+import { HomeBandwidth } from './HomeBandwidth'
 
 export function Home() {
   const { openDialog } = useDialog()
-  const { timeRange, dataTimeSpan, setDataTimeSpan } = useMetrics()
+  const { timeRange, dataTimeSpan, setDataTimeSpan, dataInterval } =
+    useMetrics()
 
   return (
     <HostdAuthedLayout
@@ -49,6 +54,7 @@ export function Home() {
       actions={
         <>
           {/* <Select
+            disabled
             value={String(dataInterval)}
             onChange={(e) => {
               const v = e.currentTarget.value
@@ -63,11 +69,19 @@ export function Home() {
             }
           >
             {dataItervalOptions.map((o) => (
-              <option key={o.value} value={o.value}>
+              <Option key={o.value} value={o.value}>
                 {o.label}
-              </option>
+              </Option>
             ))}
           </Select> */}
+          <Tooltip content={`Data interval: ${dataInterval}`}>
+            <div>
+              <Button variant="ghost" state="waiting">
+                <Ruler16 />
+                {dataInterval}
+              </Button>
+            </div>
+          </Tooltip>
           <Select
             value={String(dataTimeSpan)}
             onChange={(e) => {
@@ -83,9 +97,9 @@ export function Home() {
             }
           >
             {dataTimeSpanOptions.map((o) => (
-              <option key={o.value} value={o.value}>
+              <Option key={o.value} value={o.value}>
                 {o.label}
-              </option>
+              </Option>
             ))}
           </Select>
         </>
@@ -93,7 +107,9 @@ export function Home() {
     >
       <div className="p-6 flex flex-col gap-14">
         <HomeRevenue />
-        <HomeUtilization />
+        <HomeStorage />
+        <HomeBandwidth />
+        <HomeOperations />
         <HomeContracts />
         <HomePricing />
       </div>

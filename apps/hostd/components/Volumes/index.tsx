@@ -12,6 +12,7 @@ import { HostdSidenav } from '../HostdSidenav'
 import { routes } from '../../config/routes'
 import { useVolumes } from '../../contexts/volumes'
 import { VolumesViewDropdownMenu } from './VolumesViewDropdownMenu'
+import { StateNoneYet } from './StateNoneYet'
 
 export function Volumes() {
   const { openDialog } = useDialog()
@@ -59,6 +60,7 @@ export function Volumes() {
           pageSize={20}
           data={dataset}
           columns={columns}
+          emptyState={<StateNoneYet />}
         />
       </div>
     </HostdAuthedLayout>

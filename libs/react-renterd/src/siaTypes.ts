@@ -124,26 +124,21 @@ export interface WalletPrepareRenewResponse {
 }
 
 export interface Sector {
-  Host: string
-  Root: string
+  host: string
+  root: string
 }
 
 export interface SlabSlice {
-  Key: EncryptionKey
-  MinShards: number
-  Shards?: Sector[]
-  Offset: number
-  Length: number
+  key: EncryptionKey
+  minShards: number
+  shards?: Sector[]
+  offset: number
+  length: number
 }
 
 export interface Obj {
-  Key: EncryptionKey
-  Slabs?: SlabSlice[]
-}
-
-export interface ObjectsResponse {
-  entries?: string[]
-  object?: Obj
+  key: EncryptionKey
+  slabs?: SlabSlice[]
 }
 
 export interface AddObjectRequest {

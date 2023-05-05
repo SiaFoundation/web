@@ -55,7 +55,7 @@ function buildValidationSchema(maxSizeGB: number) {
 }
 
 export function VolumeAddDialog({ trigger, open, onOpenChange }: Props) {
-  const { id, closeDialog } = useDialog()
+  const { closeDialog } = useDialog()
   const volumeAdd = useVolumeCreate()
 
   const form = useFormik({

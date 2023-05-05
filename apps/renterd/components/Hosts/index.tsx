@@ -12,7 +12,8 @@ import { HostsFilterBar } from './HostsFilterBar'
 
 export function Hosts() {
   const { openDialog } = useDialog()
-  const { dataset, columns, limit, dataState } = useHosts()
+  const { dataset, columns, limit, dataState, autopilotMode, error } =
+    useHosts()
 
   return (
     <RenterdAuthedLayout
@@ -33,7 +34,7 @@ export function Hosts() {
             ) : dataState === 'noneYet' ? (
               <StateNoneYet />
             ) : dataState === 'error' ? (
-              <StateError />
+              <StateError autopilotMode={autopilotMode} error={error} />
             ) : null
           }
           pageSize={limit}

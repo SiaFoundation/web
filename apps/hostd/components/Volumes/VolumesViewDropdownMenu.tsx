@@ -2,17 +2,14 @@ import {
   Button,
   CaretDown16,
   SettingsAdjust16,
-  Select,
   PoolCombo,
   Label,
   Popover,
   MenuItemRightSlot,
   BaseMenuItem,
-  MenuSeparator,
   Reset16,
   MenuSectionLabelToggleAll,
 } from '@siafoundation/design-system'
-import { TableColumnId } from '../../contexts/volumes/types'
 import { useVolumes } from '../../contexts/volumes'
 
 export function VolumesViewDropdownMenu() {
@@ -22,11 +19,6 @@ export function VolumesViewDropdownMenu() {
     resetDefaultColumnVisibility,
     setColumnsVisible,
     setColumnsHidden,
-    sortOptions,
-    sortColumn,
-    setSortColumn,
-    sortDirection,
-    setSortDirection,
     enabledColumns,
   } = useVolumes()
 

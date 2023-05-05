@@ -2,12 +2,13 @@ import { Fragment } from 'react'
 import { LinearGradient } from '@visx/gradient'
 import { format } from 'date-fns'
 import { Text } from '../../core/Text'
-import { ChartConfig, ChartPoint, ChartXYProps } from './useChartXY'
+import { ChartXYProps } from './useChartXY'
 import { Separator } from '../../core/Separator'
 import { PatternLines } from '@visx/pattern'
 import { cx } from 'class-variance-authority'
 import { rootClasses } from '../../config/css'
 import { groupBy } from 'lodash'
+import { ChartConfig, ChartPoint } from './types'
 
 export function ChartXYGraph<Key extends string, Cat extends string>({
   id,
