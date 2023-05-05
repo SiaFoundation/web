@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.47.0
+
+### Minor Changes
+
+- cb359ad: The AppNavbar now has two levels, one for global controls and one for filters and stats.
+- b6faf57: ChartXY now supports more fine grained key and category ordering options.
+- 4719bc1: FormField now includes a decimalLimit for the number type.
+- 4585fb0: Added ConfigurationSelect.
+- fa57fe6: Refactor and rename WalletSparkline to WalletBalanceEvolution.
+- 4585fb0: PanelMenuSection and PanelMenuSetting moved from renterd to system.
+- fa57fe6: Add Select Option component with background and text colors.
+- cb359ad: Add ConfigurationSwitch, useSiacoinFiat, and vertical Separator variant.
+- cb359ad: Corrected a styling issue for custom toast notification such as in the copy authenticated URL files feature.
+- 4585fb0: ConfigurationSiacoin now supports custom units such as SC/TB.
+- 4585fb0: Fixed decimal handling NumberField, extracted a new BaseNumberField.
+- 4719bc1: Added functions for converting between sectors and different byte/binary units.
+
 ## 0.46.0
 
 ### Minor Changes

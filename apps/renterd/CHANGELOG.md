@@ -1,5 +1,20 @@
 # renterd
 
+## 0.14.0
+
+### Minor Changes
+
+- cb359ad: The files stats bar now displays the total number and size of files.
+- cb359ad: The AppNavbar now has two levels, one for global controls and one for filters and stats.
+- cb359ad: The autopilot configuration now includes host settings for "redundant IPs" and "max downtime", and a wallet setting for "defrag threshold".
+- 4719bc1: The hosts explorer table now shows that price table columns are associated with RHPv3 and host settings RHPv2.
+- cb359ad: All data values are now TBs rather than TiBs.
+- fa57fe6: The hosts explorer now explains that autopilot must be configured before using the hosts explorer.
+- cb359ad: Corrected a styling issue for custom toast notification such as in the copy authenticated URL files feature.
+- b6faf57: Transaction types are properly displayed again.
+- cb359ad: The autopilot configuration now shows a monthly spending estimate for the configured storage in the stats bar.
+- 4719bc1: The "copy authenticated URL" feature now properly includes the host when on localhost:port.
+
 ## 0.13.0
 
 ### Minor Changes

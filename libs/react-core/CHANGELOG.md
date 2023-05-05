@@ -1,5 +1,13 @@
 # @siafoundation/react-core
 
+## 0.9.0
+
+### Minor Changes
+
+- fa57fe6: All swr hooks now properly bubble up detailed error messages.
+- fa57fe6: The mutation after callback now has a default cache data update function.
+- 4585fb0: Added usePutSwr.
+
 ## 0.8.0
 
 ### Minor Changes

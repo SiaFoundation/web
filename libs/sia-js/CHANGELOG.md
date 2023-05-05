@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.0
+
+### Minor Changes
+
+- 4719bc1: humanBytes now supports a fixed option.
+
 ## 0.9.0
 
 ### Minor Changes
