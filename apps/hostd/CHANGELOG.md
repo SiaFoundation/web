@@ -1,5 +1,21 @@
 # hostd
 
+## 0.9.0
+
+### Minor Changes
+
+- cb359ad: The AppNavbar now has two levels, one for global controls and one for filters and stats.
+- 4585fb0: The Configuration page now has a button for triggering a host announcement.
+- 4585fb0: The Configuration page now supports all hostd settings.
+- cb359ad: All data values are now TBs rather than TiBs.
+- 4719bc1: Storage volumes can now be created, resized, deleted, and toggled between read-only and write modes.
+- fa57fe6: Metrics now include storage and registry operations.
+- 4585fb0: Configure dynamic DNS with Route 53, No-IP, or Duck DNS right from the UI.
+- fa57fe6: The wallet now has a balance evolution graph.
+- b6faf57: Transaction types are properly displayed again.
+- 4585fb0: The Configuration page now automatically updates and shows whether dynamic DNS is working.
+- 4719bc1: The volumes list now shows statuses, size, usage, and counts for successful and failed reads and writes.
+
 ## 0.8.0
 
 ### Minor Changes
