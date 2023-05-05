@@ -28,17 +28,12 @@ import { getCacheTutorials } from '../../content/tutorials'
 import backgroundImage from '../../assets/backgrounds/waterfall.png'
 import previewImage from '../../assets/previews/hostd.png'
 import { textContent } from '../../lib/utils'
-import { Terminal } from '../../components/Terminal'
 import { SectionGradient } from '../../components/SectionGradient'
-import { SectionWaves } from '../../components/SectionWaves'
 import { SectionSimple } from '../../components/SectionSimple'
 import { useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { cx } from 'class-variance-authority'
-import {
-  getCacheHostdLatestRelease,
-  getCacheRenterdLatestRelease,
-} from '../../content/releases'
+import { getCacheHostdLatestRelease } from '../../content/releases'
 import { HostdUICarousel } from '../../components/HostdUICarousel'
 
 const backgroundImageProps = getImageProps(backgroundImage)
@@ -47,7 +42,7 @@ const previewImageProps = getImageProps(previewImage)
 const title = 'hostd'
 const description = (
   <>
-    <Code>hostd</Code> hostd is an advanced Sia host solution created by the Sia
+    <Code>hostd</Code> is an advanced Sia host solution created by the Sia
     Foundation, designed to enhance the experience for storage providers within
     the Sia network. Tailored for both individual and large-scale storage
     providers, hostd boasts a user-friendly interface and a robust API,
