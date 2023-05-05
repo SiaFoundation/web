@@ -1,14 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import { getImageProps } from '@siafoundation/design-system'
 import { useCarousel, CarouselTags } from './Carousel'
-import imageFiles from '../assets/renterd/renterd-files.png'
-import imageContracts from '../assets/renterd/renterd-contracts.png'
-import imageHosts from '../assets/renterd/renterd-hosts.png'
-import imageAutopilot from '../assets/renterd/renterd-autopilot.png'
-import imageConfig from '../assets/renterd/renterd-config.png'
-import imageWallet from '../assets/renterd/renterd-wallet.png'
-import imageNode from '../assets/renterd/renterd-node.png'
-import imageSettings from '../assets/renterd/renterd-settings.png'
+import imageFiles from '../assets/renterd/files.png'
+import imageContracts from '../assets/renterd/contracts.png'
+import imageHosts from '../assets/renterd/hosts.png'
+import imageAutopilot from '../assets/renterd/autopilot.png'
+import imageConfig from '../assets/renterd/config.png'
+import imageWallet from '../assets/renterd/wallet.png'
+import imageNode from '../assets/renterd/node.png'
+import imageSettings from '../assets/renterd/settings.png'
 import { cx } from 'class-variance-authority'
 
 const filesProps = getImageProps(imageFiles)

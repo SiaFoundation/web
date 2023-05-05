@@ -1,6 +1,6 @@
 import { getImageProps } from '@siafoundation/design-system'
 import { routes } from '../config/routes'
-import renterdImage from '../assets/renterd/renterd-peek.png'
+import renterdImage from '../assets/renterd/peek.png'
 import hostdImage from '../assets/hostd/peek.png'
 import { CalloutSoftware } from './CalloutSoftware'
 
