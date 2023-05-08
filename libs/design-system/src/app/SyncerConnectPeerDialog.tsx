@@ -1,6 +1,9 @@
 import { Paragraph } from '../core/Paragraph'
 import { triggerToast } from '../lib/toast'
-import { FormField, FormSubmitButton } from '../components/Form'
+import {
+  FormFieldFormik,
+  FormSubmitButtonFormik,
+} from '../components/FormFormik'
 import { Response } from '@siafoundation/react-core'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -76,7 +79,7 @@ export function SyncerConnectPeerDialog({
         <Paragraph size="14">Connect to a peer by IP address.</Paragraph>
         <form onSubmit={formik.handleSubmit}>
           <div className="flex flex-col gap-4">
-            <FormField
+            <FormFieldFormik
               formik={formik}
               title="Address"
               name="ip"
@@ -87,7 +90,7 @@ export function SyncerConnectPeerDialog({
                 size: 'medium',
               }}
             />
-            <FormField
+            <FormFieldFormik
               formik={formik}
               title="Port"
               name="port"
@@ -99,9 +102,9 @@ export function SyncerConnectPeerDialog({
                 size: 'medium',
               }}
             />
-            <FormSubmitButton formik={formik} size="medium">
+            <FormSubmitButtonFormik formik={formik} size="medium">
               Connect
-            </FormSubmitButton>
+            </FormSubmitButtonFormik>
           </div>
         </form>
       </div>

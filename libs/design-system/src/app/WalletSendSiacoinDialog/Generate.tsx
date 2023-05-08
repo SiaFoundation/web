@@ -6,7 +6,7 @@ import { Text } from '../../core/Text'
 import { InfoTip } from '../../core/InfoTip'
 import { Switch } from '../../core/Switch'
 import { ValueSc } from '../../components/ValueSc'
-import { FormField } from '../../components/Form'
+import { FormFieldFormik } from '../../components/FormFormik'
 
 const exampleAddr =
   'e3b1050aef388438668b52983cf78f40925af8f0aa8b9de80c18eadcefce8388d168a313e3f2'
@@ -78,7 +78,7 @@ export function useSendSiacoinGenerateForm({
 
   const form = (
     <div className="flex flex-col gap-4">
-      <FormField
+      <FormFieldFormik
         formik={formik}
         variants={{ size: 'medium' }}
         title="Address"
@@ -87,7 +87,7 @@ export function useSendSiacoinGenerateForm({
         autoComplete="off"
         type="text"
       />
-      <FormField
+      <FormFieldFormik
         formik={formik}
         title="Siacoin"
         name="siacoin"

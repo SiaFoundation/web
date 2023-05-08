@@ -3,8 +3,8 @@ import {
   Paragraph,
   Switch,
   InfoTip,
-  FormField,
-  FormSubmitButton,
+  FormFieldFormik,
+  FormSubmitButtonFormik,
   Dialog,
   Code,
   sectorsToBytes,
@@ -99,7 +99,7 @@ export function VolumeDeleteDialog({ trigger, open, onOpenChange }: Props) {
           <Paragraph size="14">
             Enter the volume path to confirm the removal.
           </Paragraph>
-          <FormField
+          <FormFieldFormik
             formik={form}
             title="Path"
             name="path"
@@ -124,9 +124,9 @@ export function VolumeDeleteDialog({ trigger, open, onOpenChange }: Props) {
               </div>
             </InfoTip>
           </div>
-          <FormSubmitButton variant="red" formik={form}>
+          <FormSubmitButtonFormik variant="red" formik={form}>
             Delete
-          </FormSubmitButton>
+          </FormSubmitButtonFormik>
         </div>
       </form>
     </Dialog>

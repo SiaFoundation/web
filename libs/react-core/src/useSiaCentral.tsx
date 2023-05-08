@@ -2,7 +2,7 @@ import { useGetSwr } from './useGet'
 import { useAppSettings } from './useAppSettings'
 import { HookArgsSwr } from './request'
 
-type SiaCentralExchangeRateGET = {
+export type SiaCentralExchangeRateGET = {
   message: string
   type: string
   rates: {

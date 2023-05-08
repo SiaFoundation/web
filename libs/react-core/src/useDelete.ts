@@ -56,7 +56,7 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
         const response = await axios.delete<Result>(reqRoute, reqConfig)
         if (after) {
           after(
-            (matcher, data, opts) =>
+            (matcher, data = (d) => d, opts) =>
               mutate(
                 (key) => {
                   if (typeof key !== 'string') {

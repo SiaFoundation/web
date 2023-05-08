@@ -1,7 +1,11 @@
 import { Either, useAppSettings } from '@siafoundation/react-core'
 import { useRouter } from 'next/router'
 import { useFormik } from 'formik'
-import { FieldGroup, FormSubmitButton, FormTextField } from '../components/Form'
+import {
+  FieldGroupFormik,
+  FormSubmitButtonFormik,
+  FormTextField,
+} from '../components/FormFormik'
 import axios, { AxiosError } from 'axios'
 import { Button } from '../core/Button'
 import { RecentlyViewed16 } from '../icons/carbon'
@@ -124,7 +128,7 @@ export function AppUnlockForm<Response extends ResponseWithSynced>({
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <FieldGroup name="password" formik={formik}>
+      <FieldGroupFormik name="password" formik={formik}>
         <div className="flex flex-col gap-1.5">
           {buildModeEmbed ? null : (
             <ControlGroup>
@@ -165,11 +169,11 @@ export function AppUnlockForm<Response extends ResponseWithSynced>({
             placeholder="Enter password"
             type="password"
           />
-          <FormSubmitButton size="small" formik={formik}>
+          <FormSubmitButtonFormik size="small" formik={formik}>
             Unlock
-          </FormSubmitButton>
+          </FormSubmitButtonFormik>
         </div>
-      </FieldGroup>
+      </FieldGroupFormik>
     </form>
   )
 }

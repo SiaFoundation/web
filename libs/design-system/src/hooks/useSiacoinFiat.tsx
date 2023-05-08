@@ -17,7 +17,13 @@ export function useSiacoinFiat({ sc }: Props): {
   currency?: CurrencyOption
 } {
   const { settings } = useAppSettings()
-  const rates = useSiaCentralMarketExchangeRate()
+  const rates = useSiaCentralMarketExchangeRate({
+    config: {
+      swr: {
+        revalidateOnFocus: false,
+      },
+    },
+  })
   const rate = useMemo(() => {
     if (!settings.siaCentral || !rates.data) {
       return zero

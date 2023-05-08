@@ -1,74 +1,31 @@
 import {
   Text,
-  ConfigurationSiacoin,
   Button,
   triggerSuccessToast,
-  Separator,
-  ConfigurationNumber,
   triggerErrorToast,
-  useFormChanged,
-  monthsToBlocks,
   Reset16,
-  TBToBytes,
-  PanelMenuSetting,
-  PanelMenuSection,
   Save16,
+  ConfigurationPanel,
 } from '@siafoundation/design-system'
-import BigNumber from 'bignumber.js'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { RenterdSidenav } from '../RenterdSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
-import { useSetting, useSettingUpdate } from '@siafoundation/react-renterd'
-import { useFormik } from 'formik'
-import { toHastings, toSiacoins } from '@siafoundation/sia-js'
-import * as Yup from 'yup'
-
-type GougingData = {
-  maxStoragePrice: string
-  maxDownloadPrice: string
-  maxUploadPrice: string
-  maxContractPrice: string
-  maxRPCPrice: string
-  minMaxCollateral: string
-  hostBlockHeightLeeway: number
-}
-
-type RedundancyData = {
-  minShards: number
-  totalShards: number
-}
-
-const scDecimalPlaces = 6
-
-const validationSchema = Yup.object().shape({
-  // gouging
-  maxStoragePrice: Yup.mixed().required('required'),
-  maxDownloadPrice: Yup.mixed().required('required'),
-  maxUploadPrice: Yup.mixed().required('required'),
-  maxContractPrice: Yup.mixed().required('required'),
-  maxRpcPrice: Yup.mixed().required('required'),
-  minMaxCollateral: Yup.mixed().required('required'),
-  hostBlockHeightLeeway: Yup.number().required('required'),
-  // redundancy
-  minShards: Yup.mixed().required('required'),
-  totalShards: Yup.mixed().required('required'),
-})
-
-const initialValues = {
-  // gouging
-  maxRpcPrice: undefined as BigNumber | undefined,
-  maxStoragePrice: undefined as BigNumber | undefined,
-  maxContractPrice: undefined as BigNumber | undefined,
-  maxDownloadPrice: undefined as BigNumber | undefined,
-  maxUploadPrice: undefined as BigNumber | undefined,
-  minMaxCollateral: undefined as BigNumber | undefined,
-  hostBlockHeightLeeway: undefined as BigNumber | undefined,
-  // redundancy
-  minShards: undefined as BigNumber | undefined,
-  totalShards: undefined as BigNumber | undefined,
-}
+import {
+  GougingSettings,
+  RedundancySettings,
+  useSetting,
+  useSettingUpdate,
+} from '@siafoundation/react-renterd'
+import { initialValues, fields } from './fields'
+import {
+  transformDown,
+  transformUpGouging,
+  transformUpRedundancy,
+} from './transform'
+import { FieldErrors, useForm } from 'react-hook-form'
+import { entries } from 'lodash'
 
 export function Config() {
   const { openDialog } = useDialog()
@@ -93,10 +50,13 @@ export function Config() {
 
   const settingUpdate = useSettingUpdate()
 
-  const form = useFormik({
-    validationSchema,
-    initialValues,
-    onSubmit: async (values) => {
+  const form = useForm({
+    mode: 'all',
+    defaultValues: initialValues,
+  })
+
+  const onValid = useCallback(
+    async (values: typeof initialValues) => {
       if (!gouging.data || !redundancy.data) {
         return
       }
@@ -105,28 +65,19 @@ export function Config() {
           params: {
             key: 'gouging',
           },
-          payload: {
-            maxRPCPrice: toHastings(values.maxRpcPrice).toString(),
-            maxStoragePrice: toHastings(
-              values.maxStoragePrice // TB/month
-                .div(monthsToBlocks(1)) // TB/block
-                .div(TBToBytes(1)) // bytes/block
-            ).toString(),
-            maxContractPrice: toHastings(values.maxContractPrice).toString(),
-            maxDownloadPrice: toHastings(values.maxDownloadPrice).toString(),
-            maxUploadPrice: toHastings(values.maxUploadPrice).toString(),
-            minMaxCollateral: toHastings(values.minMaxCollateral).toString(),
-            hostBlockHeightLeeway: values.hostBlockHeightLeeway.toNumber(),
-          },
+          payload: transformUpGouging(
+            values,
+            gouging.data as Record<string, unknown>
+          ),
         })
         const redundancyResponse = await settingUpdate.put({
           params: {
             key: 'redundancy',
           },
-          payload: {
-            minShards: values.minShards.toNumber(),
-            totalShards: values.totalShards.toNumber(),
-          },
+          payload: transformUpRedundancy(
+            values,
+            redundancy.data as Record<string, unknown>
+          ),
         })
         if (gougingResponse.error) {
           throw Error(gougingResponse.error)
@@ -137,68 +88,52 @@ export function Config() {
         triggerSuccessToast('Configuration has been saved.')
       } catch (e) {
         triggerErrorToast((e as Error).message)
-      }
-    },
-  })
-
-  const resetFormAndData = useCallback(() => {
-    form.resetForm()
-    gouging.mutate()
-    redundancy.mutate()
-  }, [form, gouging, redundancy])
-
-  useEffect(() => {
-    const func = async () => {
-      if (!gouging.data || !redundancy.data) {
-        return
-      }
-      try {
-        const gougingData = gouging.data as GougingData
-        const redundancyData = redundancy.data as RedundancyData
-        // When new config is fetched, reset the form with the initial values
-        await form.resetForm({
-          values: {
-            // gouging
-            maxStoragePrice: toSiacoins(
-              new BigNumber(gougingData.maxStoragePrice) // bytes/block
-                .times(monthsToBlocks(1)) // bytes/month
-                .times(TBToBytes(1)),
-              scDecimalPlaces
-            ), // TB/month
-            maxDownloadPrice: toSiacoins(
-              gougingData.maxDownloadPrice,
-              scDecimalPlaces
-            ),
-            maxUploadPrice: toSiacoins(
-              gougingData.maxUploadPrice,
-              scDecimalPlaces
-            ),
-            maxContractPrice: toSiacoins(
-              gougingData.maxContractPrice,
-              scDecimalPlaces
-            ),
-            maxRpcPrice: toSiacoins(gougingData.maxRPCPrice, scDecimalPlaces),
-            minMaxCollateral: toSiacoins(
-              gougingData.minMaxCollateral,
-              scDecimalPlaces
-            ),
-            hostBlockHeightLeeway: new BigNumber(
-              gougingData.hostBlockHeightLeeway
-            ),
-            // redundancy
-            minShards: new BigNumber(redundancyData.minShards),
-            totalShards: new BigNumber(redundancyData.totalShards),
-          },
-        })
-      } catch (e) {
         console.log(e)
       }
+    },
+    [settingUpdate, redundancy, gouging]
+  )
+
+  const onInvalid = useCallback((errors: FieldErrors<typeof initialValues>) => {
+    triggerErrorToast(
+      entries(errors)
+        .map(([key, e]) => `${fields[key].title}: ${e.message}`)
+        .join(', ')
+    )
+  }, [])
+
+  const onSubmit = useMemo(
+    () => form.handleSubmit(onValid, onInvalid),
+    [form, onValid, onInvalid]
+  )
+
+  const changeCount = Object.entries(form.formState.dirtyFields).filter(
+    ([_, val]) => !!val
+  ).length
+
+  const resetFormData = useCallback(() => {
+    if (!gouging.data || !redundancy.data) {
+      return
     }
-    func()
+    const gougingData = gouging.data as GougingSettings
+    const redundancyData = redundancy.data as RedundancySettings
+    form.reset(transformDown(gougingData, redundancyData))
+  }, [form, gouging.data, redundancy.data])
+
+  const revalidateAndResetFormData = useCallback(async () => {
+    await gouging.mutate()
+    await redundancy.mutate()
+    // Theoretically mutate should trigger the init effect,
+    // but for some reason it does not (maybe when the response is cached?)
+    // therefore we manually call form.reset.
+    resetFormData()
+  }, [resetFormData, gouging, redundancy])
+
+  // init - when new config is fetched, reset the form
+  useEffect(() => {
+    resetFormData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gouging.data, redundancy.data])
-
-  const { changed, changeCount } = useFormChanged(form)
 
   return (
     <RenterdAuthedLayout
@@ -216,15 +151,15 @@ export function Config() {
             tip="Reset all changes"
             icon="contrast"
             disabled={!changeCount}
-            onClick={() => resetFormAndData()}
+            onClick={() => revalidateAndResetFormData()}
           >
             <Reset16 />
           </Button>
           <Button
             tip="Save all changes"
             variant="accent"
-            disabled={!changeCount}
-            onClick={() => form.submitForm()}
+            disabled={!form.formState.isDirty || form.formState.isSubmitting}
+            onClick={onSubmit}
           >
             <Save16 />
             Save changes
@@ -234,138 +169,18 @@ export function Config() {
       openSettings={() => openDialog('settings')}
     >
       <div className="p-6 flex flex-col gap-16 max-w-screen-xl">
-        <PanelMenuSection title="Gouging">
-          <PanelMenuSetting
-            title="Max storage price"
-            description={<>The max allowed price to store 1 TB per month.</>}
-            control={
-              <ConfigurationSiacoin
-                formik={form}
-                changed={changed}
-                name="maxStoragePrice"
-                units="SC/TB/month"
-                decimalsLimitSc={scDecimalPlaces}
-              />
-            }
-          />
-          <Separator className="w-full my-3" />
-          <PanelMenuSetting
-            title="Max download price"
-            description={<>The max allowed price to download 1 TB.</>}
-            control={
-              <ConfigurationSiacoin
-                formik={form}
-                changed={changed}
-                name="maxDownloadPrice"
-                units="SC/TB/month"
-                decimalsLimitSc={scDecimalPlaces}
-              />
-            }
-          />
-          <Separator className="w-full my-3" />
-          <PanelMenuSetting
-            title="Max upload price"
-            description={<>The max allowed price to upload 1 TB.</>}
-            control={
-              <ConfigurationSiacoin
-                formik={form}
-                changed={changed}
-                name="maxUploadPrice"
-                units="SC/TB/month"
-                decimalsLimitSc={scDecimalPlaces}
-              />
-            }
-          />
-          <Separator className="w-full my-3" />
-          <PanelMenuSetting
-            title="Max contract price"
-            description={<>The max allowed price to form a contract.</>}
-            control={
-              <ConfigurationSiacoin
-                formik={form}
-                changed={changed}
-                name="maxContractPrice"
-                decimalsLimitSc={scDecimalPlaces}
-              />
-            }
-          />
-          <Separator className="w-full my-3" />
-          <PanelMenuSetting
-            title="Max RPC price"
-            description={<>The max allowed base price for RPCs.</>}
-            control={
-              <ConfigurationSiacoin
-                formik={form}
-                changed={changed}
-                name="maxRpcPrice"
-                decimalsLimitSc={scDecimalPlaces}
-              />
-            }
-          />
-          <Separator className="w-full my-3" />
-          <PanelMenuSetting
-            title="Min max collateral"
-            description={
-              <>
-                {`The minimum value for max collateral in the host's price settings.`}
-              </>
-            }
-            control={
-              <ConfigurationSiacoin
-                formik={form}
-                changed={changed}
-                name="minMaxCollateral"
-                decimalsLimitSc={scDecimalPlaces}
-              />
-            }
-          />
-          <Separator className="w-full my-3" />
-          <PanelMenuSetting
-            title="Block height leeway"
-            description={
-              <>{`The amount of blocks of leeway given to the host block height in the host's price table.`}</>
-            }
-            control={
-              <ConfigurationNumber
-                formik={form}
-                changed={changed}
-                name="hostBlockHeightLeeway"
-                units="blocks"
-                suggestion={new BigNumber(6)}
-                suggestionTip="The recommended value is 6 blocks."
-              />
-            }
-          />
-        </PanelMenuSection>
-        <PanelMenuSection title="Redundancy">
-          <PanelMenuSetting
-            title="Min shards"
-            description={
-              <>The minimum amount of shards needed to reconstruct a slab.</>
-            }
-            control={
-              <ConfigurationNumber
-                formik={form}
-                changed={changed}
-                name="minShards"
-                units="shards"
-              />
-            }
-          />
-          <Separator className="w-full my-3" />
-          <PanelMenuSetting
-            title="Total shards"
-            description={<>The total amount of shards for each slab.</>}
-            control={
-              <ConfigurationNumber
-                formik={form}
-                changed={changed}
-                name="totalShards"
-                units="shards"
-              />
-            }
-          />
-        </PanelMenuSection>
+        <ConfigurationPanel
+          title="Gouging"
+          category="gouging"
+          fields={fields}
+          form={form}
+        />
+        <ConfigurationPanel
+          title="Redundancy"
+          category="redundancy"
+          fields={fields}
+          form={form}
+        />
       </div>
     </RenterdAuthedLayout>
   )

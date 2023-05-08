@@ -1,8 +1,8 @@
 import {
   Paragraph,
   Text,
-  FormField,
-  FormSubmitButton,
+  FormFieldFormik,
+  FormSubmitButtonFormik,
   Dialog,
   Code,
   bytesToGB,
@@ -152,7 +152,7 @@ export function VolumeResizeDialog({ trigger, open, onOpenChange }: Props) {
               {volume.data?.localPath}
             </Text>
           </div>
-          <FormField
+          <FormFieldFormik
             formik={form}
             title="New size"
             name="size"
@@ -183,7 +183,7 @@ export function VolumeResizeDialog({ trigger, open, onOpenChange }: Props) {
               )
             }
           />
-          <FormSubmitButton formik={form}>Resize</FormSubmitButton>
+          <FormSubmitButtonFormik formik={form}>Resize</FormSubmitButtonFormik>
         </div>
       </form>
     </Dialog>

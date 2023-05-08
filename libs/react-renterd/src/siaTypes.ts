@@ -163,16 +163,22 @@ export interface MigrateParams {
   ToContracts: string
 }
 
-export interface GougingSettings {
-  MaxRPCPrice: Currency
-  MaxContractPrice: Currency
-  MaxDownloadPrice: Currency
-  MaxUploadPrice: Currency
+export type GougingSettings = {
+  maxStoragePrice: string
+  maxDownloadPrice: string
+  maxUploadPrice: string
+  maxContractPrice: string
+  maxRPCPrice: string
+  minMaxCollateral: string
+  hostBlockHeightLeeway: number
+  minPriceTableValidity: number
+  minAccountExpiry: number
+  minMaxEphemeralAccountBalance: string
 }
 
-export interface RedundancySettings {
-  MinShards: number
-  TotalShards: number
+export type RedundancySettings = {
+  minShards: number
+  totalShards: number
 }
 
 export interface ContractSpending {
@@ -309,17 +315,17 @@ export interface Action {
   Action: any
 }
 
-export interface WalletConfig {
+export interface AutopilotWalletConfig {
   defragThreshold: number
 }
 
-export interface HostsConfig {
+export interface AutopilotHostsConfig {
   allowRedundantIPs: boolean
   scoreOverrides: { [key: PublicKey]: number }
   maxDowntimeHours: number
 }
 
-export interface ContractsConfig {
+export interface AutopilotContractsConfig {
   set: string
   amount: number
   allowance: Currency
@@ -330,10 +336,10 @@ export interface ContractsConfig {
   storage: number
 }
 
-export interface Config {
-  wallet: WalletConfig
-  hosts: HostsConfig
-  contracts: ContractsConfig
+export interface AutopilotConfig {
+  wallet: AutopilotWalletConfig
+  hosts: AutopilotHostsConfig
+  contracts: AutopilotContractsConfig
 }
 
 export interface WalletTransaction {

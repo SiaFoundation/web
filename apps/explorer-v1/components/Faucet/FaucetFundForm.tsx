@@ -1,6 +1,6 @@
 import {
-  FormField,
-  FormSubmitButton,
+  FormFieldFormik,
+  FormSubmitButtonFormik,
   Paragraph,
   triggerToast,
 } from '@siafoundation/design-system'
@@ -64,7 +64,7 @@ export function FaucetFundForm({ onDone }: Props) {
       </Paragraph>
       <form onSubmit={formik.handleSubmit}>
         <div className="flex flex-col gap-4">
-          <FormField
+          <FormFieldFormik
             formik={formik}
             title="Address"
             name="address"
@@ -75,7 +75,7 @@ export function FaucetFundForm({ onDone }: Props) {
               size: 'medium',
             }}
           />
-          <FormField
+          <FormFieldFormik
             formik={formik}
             title="Amount"
             name="amount"
@@ -83,9 +83,9 @@ export function FaucetFundForm({ onDone }: Props) {
             type="siacoin"
             showFiat={false}
           />
-          <FormSubmitButton formik={formik} size="medium">
+          <FormSubmitButtonFormik formik={formik} size="medium">
             Fund wallet
-          </FormSubmitButton>
+          </FormSubmitButtonFormik>
         </div>
       </form>
     </div>

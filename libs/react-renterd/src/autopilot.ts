@@ -1,4 +1,4 @@
-import { Action, Config, Host } from './siaTypes'
+import { Action, AutopilotConfig, Host } from './siaTypes'
 import { HostsSearchPayload } from './bus'
 import {
   useGetSwr,
@@ -10,7 +10,7 @@ import {
 } from '@siafoundation/react-core'
 
 const autopilotConfigKey = '/autopilot/config'
-export function useAutopilotConfig(args?: HookArgsSwr<void, Config>) {
+export function useAutopilotConfig(args?: HookArgsSwr<void, AutopilotConfig>) {
   return useGetSwr({
     ...args,
     route: autopilotConfigKey,
@@ -18,7 +18,7 @@ export function useAutopilotConfig(args?: HookArgsSwr<void, Config>) {
 }
 
 export function useAutopilotConfigUpdate(
-  args?: HookArgsCallback<void, Config, void>
+  args?: HookArgsCallback<void, AutopilotConfig, void>
 ) {
   return usePutFunc({ ...args, route: autopilotConfigKey }, (mutate) => {
     mutate((key) => key === autopilotConfigKey)

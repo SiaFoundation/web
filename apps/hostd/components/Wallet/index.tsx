@@ -4,7 +4,7 @@ import {
   WalletLayoutActions,
   getTransactionTypes,
   BalanceEvolution,
-  getDaysInMs,
+  daysInMilliseconds,
 } from '@siafoundation/design-system'
 import {
   useMetricsPeriod,
@@ -62,7 +62,7 @@ export function Wallet() {
   const dayPeriods = 30
   const start = useMemo(() => {
     const today = new Date().getTime()
-    const periodsInMs = getDaysInMs(dayPeriods)
+    const periodsInMs = daysInMilliseconds(dayPeriods)
     const periodsAgo = today - periodsInMs
     return new Date(periodsAgo).toISOString()
   }, [])

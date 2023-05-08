@@ -63,3 +63,13 @@ export function MBToGB(mb: BigNumber | string | number): BigNumber {
 export function GBToMB(GB: BigNumber | string | number): BigNumber {
   return new BigNumber(GB).times(1000)
 }
+
+// function converts bytes to MB
+export function bytesToMB(bytes: BigNumber | string | number): BigNumber {
+  return new BigNumber(bytes).div(1000).div(1000)
+}
+
+// function converts MB to bytes
+export function MBToBytes(MB: BigNumber | string | number): BigNumber {
+  return new BigNumber(MB).times(1000).times(1000)
+}

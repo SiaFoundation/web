@@ -1,8 +1,8 @@
 import {
-  getDaysInMs,
-  getWeeksInMs,
-  getMonthsInMs,
-  getYearsInMs,
+  daysInMilliseconds,
+  weeksInMilliseconds,
+  monthsInMilliseconds,
+  yearsInMilliseconds,
   ClientFilterItem,
 } from '@siafoundation/design-system'
 import { ContractData } from '../../../../../contexts/contracts/types'
@@ -21,7 +21,7 @@ const options = [
     label: 'expires today',
     fn: (d: ContractData) => {
       const now = new Date().getTime()
-      const expiry = now + getDaysInMs(1)
+      const expiry = now + daysInMilliseconds(1)
       return d.endTime < expiry && d.endTime > now
     },
   },
@@ -31,7 +31,7 @@ const options = [
     label: 'expires this week',
     fn: (d: ContractData) => {
       const now = new Date().getTime()
-      const expiry = now + getWeeksInMs(1)
+      const expiry = now + weeksInMilliseconds(1)
       return d.endTime < expiry && d.endTime > now
     },
   },
@@ -41,7 +41,7 @@ const options = [
     label: 'expires this month',
     fn: (d: ContractData) => {
       const now = new Date().getTime()
-      const expiry = now + getMonthsInMs(1)
+      const expiry = now + monthsInMilliseconds(1)
       return d.endTime < expiry && d.endTime > now
     },
   },
@@ -51,7 +51,7 @@ const options = [
     label: 'expires next month',
     fn: (d: ContractData) => {
       const now = new Date().getTime()
-      const expiry = now + getMonthsInMs(2)
+      const expiry = now + monthsInMilliseconds(2)
       return d.endTime < expiry && d.endTime > now
     },
   },
@@ -61,7 +61,7 @@ const options = [
     label: 'expires this year',
     fn: (d: ContractData) => {
       const now = new Date().getTime()
-      const expiry = now + getYearsInMs(1)
+      const expiry = now + yearsInMilliseconds(1)
       return d.endTime < expiry && d.endTime > now
     },
   },

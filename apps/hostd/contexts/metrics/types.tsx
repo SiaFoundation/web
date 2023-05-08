@@ -1,7 +1,7 @@
 import {
-  getDaysInMs,
-  getHoursInMs,
-  getMinutesInMs,
+  daysInMilliseconds,
+  hoursInMilliseconds,
+  minutesInMilliseconds,
 } from '@siafoundation/design-system'
 
 export type RevenueKeys =
@@ -140,22 +140,22 @@ export const dataTimeSpanOptions: {
 
 export function getDataIntervalInMs(dataInterval: DataInterval): number {
   if (dataInterval === '15m') {
-    return getMinutesInMs(15)
+    return minutesInMilliseconds(15)
   }
   if (dataInterval === 'hourly') {
-    return getHoursInMs(1)
+    return hoursInMilliseconds(1)
   }
   if (dataInterval === 'daily') {
-    return getDaysInMs(1)
+    return daysInMilliseconds(1)
   }
   if (dataInterval === 'weekly') {
-    return getDaysInMs(7)
+    return daysInMilliseconds(7)
   }
   if (dataInterval === 'monthly') {
-    return getDaysInMs(30)
+    return daysInMilliseconds(30)
   }
   if (dataInterval === 'yearly') {
-    return getDaysInMs(30)
+    return daysInMilliseconds(30)
   }
   return 0
 }

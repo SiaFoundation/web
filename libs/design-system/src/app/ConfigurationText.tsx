@@ -1,70 +1,74 @@
 import { useCallback } from 'react'
+import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
 import { FieldLabelAndError } from '../components/Form'
 import { TextField } from '../core/TextField'
 import { ConfigurationTipText } from './ConfigurationTipText'
+import { ConfigField } from './configurationFields'
 
-type Props = {
-  name: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  formik: any
-  suggestion?: string
-  suggestionTip?: React.ReactNode
-  placeholder?: string
-  changed?: Record<string, boolean>
+type Props<Values extends FieldValues, Categories extends string> = {
+  name: Path<Values>
+  form: UseFormReturn<Values>
+  field: ConfigField<Values, Categories>
+  type?: 'password'
 }
 
-export function ConfigurationText({
-  name,
-  formik,
-  placeholder,
-  suggestion,
-  suggestionTip,
-  changed,
-}: Props) {
+export function ConfigurationText<
+  Values extends FieldValues,
+  Categories extends string
+>({ name, form, field, type }: Props<Values, Categories>) {
+  const { placeholder, suggestion, suggestionTip } = field
+  const value = form.getValues(name)
+  const error =
+    form.formState.touchedFields[name] && !!form.formState.errors[name]
+  const { onBlur } = form.register(name, field.validation)
   const onChange = useCallback(
-    (value?: string) => {
-      const func = async () => {
-        await formik.setFieldValue(name, value)
-        // For some reason when setFieldValue is called with an undefined value,
-        // formik validates the value twice the second time with the initialValue.
-        // Force revalidating the field again fixes this.
-        await formik.validateField(name)
-      }
-      func()
+    (val: PathValue<Values, Path<Values>>) => {
+      form.setValue(name, val, {
+        shouldValidate: true,
+        shouldDirty: true,
+        shouldTouch: true,
+      })
+      field.trigger?.forEach((t) => form.trigger(t))
     },
-    [formik, name]
+    [name, form, field]
   )
-  const value = formik.values[name]
-  const error = formik.touched[name] && formik.errors[name]
-  const placeholderStr = formik.initialValues[name] || placeholder
   return (
-    <div className="flex flex-col gap-3 w-[220px]">
-      <TextField
-        placeholder={placeholderStr}
-        value={value}
-        state={
-          error ? 'invalid' : changed && changed[name] ? 'valid' : 'default'
-        }
-        onChange={(e) => onChange(e.currentTarget.value)}
-        onBlur={() => {
-          formik.setFieldTouched(name)
-        }}
-      />
-      <div className="flex flex-col gap-2">
-        {suggestion && suggestionTip && (
-          <ConfigurationTipText
-            label="Suggestion"
-            tip={suggestionTip}
-            value={suggestion}
-            onClick={() => {
-              onChange(suggestion)
-              formik.setFieldTouched(name)
-            }}
-          />
-        )}
+    <div className="flex flex-col gap-3 items-end">
+      <div className="flex flex-col gap-3 w-[220px]">
+        <TextField
+          placeholder={placeholder}
+          value={value}
+          type={type}
+          state={
+            error
+              ? 'invalid'
+              : form.formState.dirtyFields[name]
+              ? 'valid'
+              : 'default'
+          }
+          onChange={(e) => {
+            onChange(e.currentTarget.value as PathValue<Values, Path<Values>>)
+          }}
+          onBlur={(e) => {
+            onBlur(e)
+            onChange(value)
+          }}
+        />
+        <div className="flex flex-col gap-2">
+          {suggestion && suggestionTip && (
+            <ConfigurationTipText
+              label="Suggestion"
+              tip={suggestionTip}
+              value={suggestion as string}
+              onClick={() => {
+                onChange(suggestion as PathValue<Values, Path<Values>>)
+              }}
+            />
+          )}
+        </div>
       </div>
       <div className="h-[20px]">
-        <FieldLabelAndError formik={formik} name={name} />
+        <FieldLabelAndError form={form} name={name} />
       </div>
     </div>
   )

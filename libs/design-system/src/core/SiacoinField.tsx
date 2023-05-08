@@ -12,7 +12,7 @@ type Props = Omit<
   React.ComponentProps<typeof BaseNumberField>,
   'onChange' | 'placeholder'
 > & {
-  sc: BigNumber
+  sc?: BigNumber
   onChange?: (sc?: BigNumber) => void
   units?: string
   decimalsLimitSc?: number
@@ -40,9 +40,18 @@ export function SiacoinField({
   onFocus,
   ...props
 }: Props) {
-  const externalSc = useMemo(() => new BigNumber(_externalSc), [_externalSc])
+  const externalSc = useMemo(
+    () => new BigNumber(_externalSc === undefined ? NaN : _externalSc),
+    [_externalSc]
+  )
   const { settings } = useAppSettings()
-  const rates = useSiaCentralMarketExchangeRate()
+  const rates = useSiaCentralMarketExchangeRate({
+    config: {
+      swr: {
+        revalidateOnFocus: false,
+      },
+    },
+  })
   const rate = useMemo(() => {
     if (!settings.siaCentral || !rates.data) {
       return zero
@@ -50,8 +59,8 @@ export function SiacoinField({
     return new BigNumber(rates.data?.rates.sc[settings.currency.id] || zero)
   }, [rates.data, settings])
   const [active, setActive] = useState<'sc' | 'fiat'>()
-  const [sc, setSc] = useState<string>('')
-  const [fiat, setFiat] = useState<string>('')
+  const [sc, setLocalSc] = useState<string>('')
+  const [fiat, setLocalFiat] = useState<string>('')
 
   const updateExternalSc = useCallback(
     (sc: string) => {
@@ -62,42 +71,36 @@ export function SiacoinField({
     [onChange]
   )
 
-  const getFiat = useCallback(
-    (fiat: BigNumber) => {
-      return toFixedMax(fiat, decimalsLimitFiat)
-    },
-    [decimalsLimitFiat]
-  )
-
-  const getSc = useCallback(
-    (sc: BigNumber) => {
-      return toFixedMax(sc, decimalsLimitSc)
-    },
-    [decimalsLimitSc]
-  )
-
   const updateFiat = useCallback(
     (fiat: BigNumber) => {
-      const uf = getFiat(fiat)
-      setFiat(uf)
-      return uf
+      const uf = toFixedMax(fiat, decimalsLimitFiat)
+      setLocalFiat(uf)
     },
-    [setFiat, getFiat]
+    [setLocalFiat, decimalsLimitFiat]
   )
 
   const updateSc = useCallback(
     (sc: BigNumber) => {
-      const usc = getSc(sc)
-      setSc(usc)
+      const usc = toFixedMax(sc, decimalsLimitSc)
+      setLocalSc(usc)
+      updateExternalSc(usc)
       return usc
     },
-    [setSc, getSc]
+    [setLocalSc, decimalsLimitSc, updateExternalSc]
+  )
+
+  const onScChange = useCallback(
+    (sc: string) => {
+      setLocalSc(sc)
+      updateExternalSc(sc)
+    },
+    [setLocalSc, updateExternalSc]
   )
 
   const syncFiatToSc = useCallback(
     (sc: string) => {
       const fiat = new BigNumber(sc).times(rate)
-      return updateFiat(fiat)
+      updateFiat(fiat)
     },
     [updateFiat, rate]
   )
@@ -105,7 +108,7 @@ export function SiacoinField({
   const syncScToFiat = useCallback(
     (fiat: string) => {
       const sc = new BigNumber(fiat).dividedBy(rate)
-      return updateSc(sc)
+      updateSc(sc)
     },
     [updateSc, rate]
   )
@@ -113,10 +116,13 @@ export function SiacoinField({
   // sync externally controlled value
   useEffect(() => {
     if (!externalSc.isEqualTo(sc)) {
-      const fesc = getSc(externalSc)
-      setActive(undefined)
-      setSc(fesc)
-      syncFiatToSc(fesc)
+      const fesc = toFixedMax(externalSc, decimalsLimitSc)
+      setLocalSc(fesc)
+      // sync fiat if its not active, syncing it when it is being changed
+      // may change the decmials as the user is typing.
+      if (active !== 'fiat') {
+        syncFiatToSc(fesc)
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [externalSc])
@@ -141,17 +147,6 @@ export function SiacoinField({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fiat])
 
-  const onScBlur = useCallback(() => {
-    syncFiatToSc(sc)
-    updateExternalSc(sc)
-  }, [sc, syncFiatToSc, updateExternalSc])
-
-  // Its more natural that focusing and blurring fiat without changing it
-  // does update the sc value.
-  const onFiatBlur = useCallback(() => {
-    updateExternalSc(sc)
-  }, [sc, updateExternalSc])
-
   return (
     <div
       className={cx(
@@ -168,6 +163,7 @@ export function SiacoinField({
     >
       <BaseNumberField
         {...props}
+        data-testid="scInput"
         size={size}
         variant="ghost"
         focus="none"
@@ -175,8 +171,8 @@ export function SiacoinField({
         units={units}
         value={sc !== 'NaN' ? sc : ''}
         decimalsLimit={decimalsLimitSc}
+        allowNegativeValue={false}
         onBlur={(e) => {
-          onScBlur()
           if (onBlur) {
             onBlur(e)
           }
@@ -187,17 +183,21 @@ export function SiacoinField({
             onFocus(e)
           }
         }}
-        onValueChange={(value) => setSc(value || '')}
+        onValueChange={(value) => {
+          onScChange(value || '')
+        }}
       />
       {showFiat && settings.siaCentral && (
         <BaseNumberField
           {...props}
+          data-testid="fiatInput"
           size={size}
           variant="ghost"
           focus="none"
           value={fiat !== 'NaN' ? fiat : ''}
           units={settings.currency.label}
           decimalsLimit={decimalsLimitFiat}
+          allowNegativeValue={false}
           placeholder={`${settings.currency.prefix}${
             rate ? rate.times(placeholder).toFixed(decimalsLimitFiat) : '0.42'
           }`}
@@ -209,12 +209,13 @@ export function SiacoinField({
             }
           }}
           onBlur={(e) => {
-            onFiatBlur()
             if (onBlur) {
               onBlur(e)
             }
           }}
-          onValueChange={(value) => setFiat(value || '')}
+          onValueChange={(value) => {
+            setLocalFiat(value || '')
+          }}
         />
       )}
     </div>

@@ -8,7 +8,7 @@ import { useSendSiacoinConfirmForm } from './Confirm'
 import { ProgressSteps } from '../ProgressSteps'
 import { WalletSendSiacoinComplete } from './Complete'
 import { Transaction } from '@siafoundation/react-core'
-import { FormSubmitButton } from '../../components/Form'
+import { FormSubmitButtonFormik } from '../../components/FormFormik'
 
 export type SendSiacoinFormData = {
   address: string
@@ -106,9 +106,9 @@ export function WalletSendSiacoinDialog({
       controls={
         controls && (
           <div className="flex flex-col gap-1">
-            <FormSubmitButton formik={controls.formik}>
+            <FormSubmitButtonFormik formik={controls.formik}>
               {controls.submitLabel}
-            </FormSubmitButton>
+            </FormSubmitButtonFormik>
           </div>
         )
       }

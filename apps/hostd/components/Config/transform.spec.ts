@@ -8,7 +8,6 @@ describe('data transforms', () => {
         acceptingContracts: true,
         netAddress: 'tabo.zen.sia.tech:9882',
         maxContractDuration: 25920,
-        windowSize: 144,
         contractPrice: '200000000000000000000000',
         baseRPCPrice: '100000000000000000',
         sectorAccessPrice: '100000000000000000',
@@ -24,10 +23,14 @@ describe('data transforms', () => {
         ingressLimit: 0,
         egressLimit: 0,
         dynDNS: {
-          provider: '',
+          provider: 'route53',
           ipv4: false,
           ipv6: false,
-          options: null,
+          options: {
+            ID: 'ID',
+            secret: 'secret',
+            zoneID: 'zone',
+          },
         },
         revision: 0,
       })
@@ -35,7 +38,6 @@ describe('data transforms', () => {
       acceptingContracts: true,
       netAddress: 'tabo.zen.sia.tech:9882',
       maxContractDuration: new BigNumber('6'),
-      windowSize: new BigNumber('1'),
       contractPrice: new BigNumber('0.2'),
       baseRPCPrice: new BigNumber('1'),
       sectorAccessPrice: new BigNumber('1'),
@@ -50,44 +52,63 @@ describe('data transforms', () => {
       maxAccountBalance: new BigNumber('10'),
       ingressLimit: new BigNumber('0'),
       egressLimit: new BigNumber('0'),
-      dnsProvider: '',
+      dnsProvider: 'route53',
       dnsIpv4: false,
       dnsIpv6: false,
-      dnsOptions: null,
+      dnsAwsId: 'ID',
+      dnsAwsSecret: 'secret',
+      dnsAwsZoneId: 'zone',
     })
   })
 
   it('up', () => {
     expect(
-      transformUp({
-        acceptingContracts: true,
-        netAddress: 'tabo.zen.sia.tech:9882',
-        maxContractDuration: new BigNumber('6'),
-        windowSize: new BigNumber('1'),
-        contractPrice: new BigNumber('0.2'),
-        baseRPCPrice: new BigNumber('1'),
-        sectorAccessPrice: new BigNumber('1'),
-        collateral: new BigNumber('100'),
-        maxCollateral: new BigNumber('1000'),
-        minStoragePrice: new BigNumber('50'),
-        minEgressPrice: new BigNumber('250'),
-        minIngressPrice: new BigNumber('10'),
-        priceTableValidity: new BigNumber('30'),
-        maxRegistryEntries: new BigNumber('100000'),
-        accountExpiry: new BigNumber('30'),
-        maxAccountBalance: new BigNumber('10'),
-        ingressLimit: new BigNumber('0'),
-        egressLimit: new BigNumber('0'),
-        dnsProvider: '',
-        dnsIpv4: false,
-        dnsIpv6: false,
-        dnsOptions: null,
-      })
+      transformUp(
+        {
+          acceptingContracts: true,
+          netAddress: 'tabo.zen.sia.tech:9882',
+          maxContractDuration: new BigNumber('6'),
+          contractPrice: new BigNumber('0.2'),
+          baseRPCPrice: new BigNumber('1'),
+          sectorAccessPrice: new BigNumber('1'),
+          collateral: new BigNumber('100'),
+          maxCollateral: new BigNumber('1000'),
+          minStoragePrice: new BigNumber('50'),
+          minEgressPrice: new BigNumber('250'),
+          minIngressPrice: new BigNumber('10'),
+          priceTableValidity: new BigNumber('30'),
+          maxRegistryEntries: new BigNumber('100000'),
+          accountExpiry: new BigNumber('30'),
+          maxAccountBalance: new BigNumber('10'),
+          ingressLimit: new BigNumber('0'),
+          egressLimit: new BigNumber('0'),
+          dnsProvider: 'route53',
+          dnsIpv4: false,
+          dnsIpv6: false,
+
+          // DNS DuckDNS
+          dnsDuckDnsToken: '',
+
+          // DNS No-IP
+          dnsNoIpEmail: '',
+          dnsNoIpPassword: '',
+
+          // DNS AWS
+          dnsAwsId: 'ID',
+          dnsAwsSecret: 'secret',
+          dnsAwsZoneId: 'zone',
+
+          // DNS Cloudflare
+          dnsCloudflareToken: '',
+          dnsCloudflareZoneId: '',
+        },
+        { dynDNS: { provider: 'invalid' }, foobar: 'foobar' }
+      )
     ).toEqual({
+      foobar: 'foobar',
       acceptingContracts: true,
       netAddress: 'tabo.zen.sia.tech:9882',
       maxContractDuration: 25920,
-      windowSize: 144,
       contractPrice: '200000000000000000000000',
       baseRPCPrice: '100000000000000000',
       sectorAccessPrice: '100000000000000000',
@@ -103,10 +124,14 @@ describe('data transforms', () => {
       ingressLimit: 0,
       egressLimit: 0,
       dynDNS: {
-        provider: '',
+        provider: 'route53',
         ipv4: false,
         ipv6: false,
-        options: null,
+        options: {
+          ID: 'ID',
+          secret: 'secret',
+          zoneID: 'zone',
+        },
       },
     })
   })

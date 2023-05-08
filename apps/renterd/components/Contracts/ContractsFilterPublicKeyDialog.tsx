@@ -1,7 +1,7 @@
 import {
   Dialog,
-  FormField,
-  FormSubmitButton,
+  FormFieldFormik,
+  FormSubmitButtonFormik,
   truncate,
 } from '@siafoundation/design-system'
 import { useContracts } from '../../contexts/contracts'
@@ -70,7 +70,7 @@ export function ContractsFilterPublicKeyDialog({
     >
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-4">
-          <FormField
+          <FormFieldFormik
             formik={formik}
             title="Public key"
             name="publicKey"
@@ -81,9 +81,9 @@ export function ContractsFilterPublicKeyDialog({
               size: 'medium',
             }}
           />
-          <FormSubmitButton formik={formik} size="medium">
+          <FormSubmitButtonFormik formik={formik} size="medium">
             Filter
-          </FormSubmitButton>
+          </FormSubmitButtonFormik>
         </div>
       </div>
     </Dialog>

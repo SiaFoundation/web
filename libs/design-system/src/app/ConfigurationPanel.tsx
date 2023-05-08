@@ -1,0 +1,63 @@
+import { Separator } from '../core/Separator'
+import { ConfigurationSiacoin } from './ConfigurationSiacoin'
+import { ConfigurationNumber } from './ConfigurationNumber'
+import { ConfigurationText } from './ConfigurationText'
+import { ConfigurationSwitch } from './ConfigurationSwitch'
+import { PanelMenuSetting } from './PanelMenuSetting'
+import { PanelMenuSection } from './PanelMenuSection'
+import { Fragment } from 'react'
+import { ConfigurationSelect } from './ConfigurationSelect'
+import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
+import { ConfigField, ConfigFields } from './configurationFields'
+
+type Props<Values extends FieldValues, Categories extends string> = {
+  title: string
+  category: string
+  form: UseFormReturn<Values>
+  fields: ConfigFields<Values, Categories>
+}
+
+export function ConfigurationPanel<
+  Values extends FieldValues,
+  Categories extends string
+>({ title, category, form, fields }: Props<Values, Categories>) {
+  const list = (
+    Object.entries(fields) as [Path<Values>, ConfigField<Values, Categories>][]
+  ).filter(
+    ([_, val]) =>
+      val.category === category && (!val.show || val.show(form.getValues()))
+  )
+  return (
+    <PanelMenuSection title={title}>
+      {list.map(([key, val], i) => (
+        <Fragment key={key}>
+          <PanelMenuSetting
+            title={val.title}
+            description={val.description}
+            control={
+              val.type === 'number' ? (
+                <ConfigurationNumber form={form} name={key} field={val} />
+              ) : val.type === 'siacoin' ? (
+                <ConfigurationSiacoin form={form} name={key} field={val} />
+              ) : val.type === 'text' ? (
+                <ConfigurationText form={form} name={key} field={val} />
+              ) : val.type === 'secret' ? (
+                <ConfigurationText
+                  form={form}
+                  type="password"
+                  field={val}
+                  name={key}
+                />
+              ) : val.type === 'boolean' ? (
+                <ConfigurationSwitch form={form} name={key} field={val} />
+              ) : val.type === 'select' ? (
+                <ConfigurationSelect form={form} name={key} field={val} />
+              ) : null
+            }
+          />
+          {i < list.length - 1 && <Separator className="w-full my-3" />}
+        </Fragment>
+      ))}
+    </PanelMenuSection>
+  )
+}
