@@ -1,7 +1,7 @@
 import {
   Dialog,
-  FormField,
-  FormSubmitButton,
+  FormFieldFormik,
+  FormSubmitButtonFormik,
 } from '@siafoundation/design-system'
 import { useContracts } from '../contexts/contracts'
 import { useFormik } from 'formik'
@@ -65,7 +65,7 @@ export function ContractsFilterContractIdDialog({
     >
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-4">
-          <FormField
+          <FormFieldFormik
             formik={formik}
             title="Contract ID"
             name="contractId"
@@ -76,9 +76,9 @@ export function ContractsFilterContractIdDialog({
               size: 'medium',
             }}
           />
-          <FormSubmitButton formik={formik} size="medium">
+          <FormSubmitButtonFormik formik={formik} size="medium">
             Filter
-          </FormSubmitButton>
+          </FormSubmitButtonFormik>
         </div>
       </div>
     </Dialog>

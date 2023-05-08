@@ -1,281 +1,47 @@
 import { Button } from '../core/Button'
-import { TextField, textFieldStyles } from '../core/TextField'
 import { Label } from '../core/Label'
 import { Text } from '../core/Text'
-import { NumberField } from '../core/NumberField'
-import { SiacoinField } from '../core/SiacoinField'
-import BigNumber from 'bignumber.js'
-import { VariantProps } from '../types'
 import { cx } from 'class-variance-authority'
 import { LoadingDots } from './LoadingDots'
+import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
 
-type FormFieldProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  formik: any
+type FieldErrorProps<Values extends FieldValues> = {
+  form: UseFormReturn<Values>
   title?: string
-  name: string
-  placeholder: string
-  disabled?: boolean
-  readOnly?: boolean
-  units?: string
-  autoComplete?: string
-  spellCheck?: boolean
-  tabIndex?: number
-  allowDecimals?: boolean
-  decimalsLimitFiat?: number
-  decimalsLimitSc?: number
-  decimalsLimit?: number
-  showFiat?: boolean
-  disableGroupSeparators?: boolean
-  type?: string
-  variants?: VariantProps<typeof textFieldStyles>
-}
-
-export function FormField({
-  formik,
-  title,
-  name,
-  placeholder,
-  disabled,
-  readOnly,
-  autoComplete = 'off',
-  spellCheck = false,
-  tabIndex,
-  allowDecimals = false,
-  decimalsLimitFiat = 3,
-  decimalsLimitSc = 3,
-  decimalsLimit = 2,
-  disableGroupSeparators = false,
-  showFiat = true,
-  units,
-  type,
-  variants,
-}: FormFieldProps) {
-  return (
-    <FieldGroup formik={formik} title={title} name={name}>
-      {type === 'number' ? (
-        <FormNumberField
-          formik={formik}
-          name={name}
-          units={units}
-          disabled={disabled}
-          readOnly={readOnly}
-          tabIndex={tabIndex}
-          decimalsLimit={decimalsLimit}
-          allowDecimals={allowDecimals}
-          disableGroupSeparators={disableGroupSeparators}
-          placeholder={placeholder}
-          variants={variants}
-        />
-      ) : type === 'siacoin' ? (
-        <FormSiacoinField
-          formik={formik}
-          name={name}
-          disabled={disabled}
-          readOnly={readOnly}
-          placeholder={placeholder}
-          tabIndex={tabIndex}
-          showFiat={showFiat}
-          decimalsLimitFiat={decimalsLimitFiat}
-          decimalsLimitSc={decimalsLimitSc}
-          variants={variants}
-        />
-      ) : (
-        <FormTextField
-          formik={formik}
-          name={name}
-          autoComplete={autoComplete}
-          disabled={disabled}
-          readOnly={readOnly}
-          placeholder={placeholder}
-          tabIndex={tabIndex}
-          spellCheck={spellCheck}
-          type={type}
-          variants={variants}
-        />
-      )}
-    </FieldGroup>
-  )
-}
-
-type FormTextFieldProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  formik: any
-  name: string
-  placeholder: string
-  autoComplete?: string
-  disabled?: boolean
-  readOnly?: boolean
-  tabIndex?: number
-  spellCheck?: boolean
-  type?: string
-  variants?: VariantProps<typeof textFieldStyles>
-}
-
-export function FormTextField({
-  formik,
-  name,
-  placeholder,
-  autoComplete = 'off',
-  disabled,
-  readOnly,
-  tabIndex,
-  spellCheck = false,
-  type,
-  variants,
-}: FormTextFieldProps) {
-  return (
-    <TextField
-      id={name}
-      name={name}
-      autoComplete={autoComplete}
-      disabled={disabled}
-      spellCheck={spellCheck}
-      placeholder={placeholder}
-      tabIndex={tabIndex}
-      readOnly={readOnly || formik.isSubmitting}
-      type={type}
-      onBlur={formik.handleBlur}
-      onChange={formik.handleChange}
-      value={formik.values[name] || ''}
-      {...variants}
-    />
-  )
-}
-
-type FormNumberFieldProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  formik: any
-  name: string
-  units?: string
-  disabled?: boolean
-  readOnly?: boolean
-  tabIndex?: number
-  placeholder: string
-  allowDecimals?: boolean
-  decimalsLimit?: number
-  disableGroupSeparators?: boolean
-  variants?: VariantProps<typeof textFieldStyles>
-}
-
-export function FormNumberField({
-  formik,
-  name,
-  units,
-  disabled,
-  readOnly,
-  tabIndex,
-  placeholder,
-  decimalsLimit,
-  allowDecimals = false,
-  disableGroupSeparators = false,
-  variants,
-}: FormNumberFieldProps) {
-  return (
-    <NumberField
-      id={name}
-      units={units}
-      name={name}
-      placeholder={new BigNumber(placeholder)}
-      disabled={disabled}
-      allowDecimals={allowDecimals}
-      decimalsLimit={decimalsLimit}
-      disableGroupSeparators={disableGroupSeparators}
-      readOnly={readOnly || formik.isSubmitting}
-      tabIndex={tabIndex}
-      onBlur={formik.handleBlur}
-      onChange={(value) => formik.setFieldValue(name, value)}
-      value={formik.values[name]}
-      {...variants}
-    />
-  )
-}
-
-type FormSiacoinFieldProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  formik: any
-  name: string
-  disabled?: boolean
-  readOnly?: boolean
-  showFiat?: boolean
-  tabIndex?: number
-  placeholder: string
-  decimalsLimitFiat?: number
-  decimalsLimitSc?: number
-  variants?: VariantProps<typeof textFieldStyles>
-}
-
-export function FormSiacoinField({
-  formik,
-  name,
-  disabled,
-  readOnly,
-  tabIndex,
-  placeholder,
-  showFiat,
-  decimalsLimitFiat = 3,
-  decimalsLimitSc = 3,
-  variants,
-}: FormSiacoinFieldProps) {
-  return (
-    <SiacoinField
-      id={name}
-      name={name}
-      disabled={disabled}
-      showFiat={showFiat}
-      decimalsLimitFiat={decimalsLimitFiat}
-      decimalsLimitSc={decimalsLimitSc}
-      readOnly={readOnly || formik.isSubmitting}
-      tabIndex={tabIndex}
-      onFocus={() => formik.setFieldTouched(name)}
-      sc={new BigNumber(formik.values[name])}
-      placeholder={new BigNumber(placeholder)}
-      onChange={(val) => formik.setFieldValue(name, val?.toString())}
-      {...variants}
-    />
-  )
-}
-
-type FieldErrorProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  formik: any
-  title?: string
-  name: string
+  name: Path<Values>
   withStatusError?: boolean
   className?: string
 }
 
-export function FieldLabelAndError({
-  formik,
+export function FieldLabelAndError<Values extends FieldValues>({
+  form,
   title,
   name,
-  withStatusError = false,
   className,
-}: FieldErrorProps) {
-  const showError =
-    (formik.errors[name] && formik.touched[name]) ||
-    (withStatusError && formik.status?.error)
-  const errorMessage =
-    formik.errors[name] || (withStatusError && formik.status?.error)
-  return (
-    (title || showError) && (
-      <div className={cx('flex justify-between items-center gap-4', className)}>
-        {title ? <Label htmlFor={name}>{title}</Label> : <div />}
-        {showError && (
-          <Text size="14" color="red">
-            {errorMessage}
-          </Text>
-        )}
-      </div>
-    )
-  )
+}: FieldErrorProps<Values>) {
+  const showError = form.formState.errors[name] // && form.formState.touchedFields[name]
+  const errorMessage = form.formState.errors[name]?.message as string
+
+  return title || showError ? (
+    <div className={cx('flex justify-between items-center gap-4', className)}>
+      {title ? <Label htmlFor={name}>{title}</Label> : <div />}
+      {showError && (
+        <Text size="14" color="red">
+          {errorMessage}
+        </Text>
+      )}
+    </div>
+  ) : null
 }
 
-type FieldGroupProps = FieldErrorProps & {
+type FieldGroupProps<Values extends FieldValues> = FieldErrorProps<Values> & {
   children: React.ReactNode
 }
 
-export function FieldGroup({ children, ...props }: FieldGroupProps) {
+export function FieldGroup<Values extends FieldValues>({
+  children,
+  ...props
+}: FieldGroupProps<Values>) {
   return (
     <div className="flex flex-col gap-1">
       <FieldLabelAndError {...props} />
@@ -284,34 +50,32 @@ export function FieldGroup({ children, ...props }: FieldGroupProps) {
   )
 }
 
-type FormSubmitProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  formik: any
+type FormSubmitProps<Values extends FieldValues> = {
+  form: UseFormReturn<Values>
   size?: React.ComponentProps<typeof Button>['size']
   variant?: React.ComponentProps<typeof Button>['variant']
   children: React.ReactNode
   withStatusError?: boolean
 }
 
-export function FormSubmitButton({
-  formik,
+export function FormSubmitButton<Values extends FieldValues>({
+  form,
   size = 'medium',
   variant = 'accent',
-  withStatusError = true,
   children,
-}: FormSubmitProps) {
+}: FormSubmitProps<Values>) {
   return (
     <>
-      {withStatusError && formik.status?.error && (
+      {/* {withStatusError && formik.status?.error && (
         <Text color="red">{formik.status.error}</Text>
-      )}
+      )} */}
       <Button
         size={size}
         variant={variant}
-        state={formik.isSubmitting ? 'waiting' : undefined}
+        state={form.formState.isSubmitting ? 'waiting' : undefined}
         type="submit"
       >
-        {formik.isSubmitting ? <LoadingDots /> : children}
+        {form.formState.isSubmitting ? <LoadingDots /> : children}
       </Button>
     </>
   )

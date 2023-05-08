@@ -7,7 +7,7 @@ import BaseBrush from '@visx/brush/lib/BaseBrush'
 import ParentSize from '@visx/responsive/lib/components/ParentSize'
 import { AreaChart } from '../ChartTimeValue/AreaChart'
 import { Panel } from '../../core/Panel'
-import { getDaysInMs } from '../../lib/time'
+import { daysInMilliseconds } from '../../lib/time'
 
 const accentColor = 'var(--colors-accent9)'
 const patternColor = 'var(--colors-accent9)'
@@ -59,7 +59,7 @@ function Chart({
 
   const brushTimeScale = useMemo(() => {
     const now = new Date().getTime()
-    const span = Math.max(end - start, getDaysInMs(7))
+    const span = Math.max(end - start, daysInMilliseconds(7))
     const domainEnd = Math.min(end + span, now)
     const domainStart = end - span
     return scaleTime<number>({

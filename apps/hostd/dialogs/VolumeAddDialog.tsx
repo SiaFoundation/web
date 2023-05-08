@@ -1,8 +1,8 @@
 import {
   Paragraph,
   Text,
-  FormField,
-  FormSubmitButton,
+  FormFieldFormik,
+  FormSubmitButtonFormik,
   Dialog,
   bytesToGB,
   GBToBytes,
@@ -10,7 +10,7 @@ import {
   triggerErrorToast,
   triggerSuccessToast,
   Tooltip,
-  FieldLabelAndError,
+  FieldLabelAndErrorFormik,
 } from '@siafoundation/design-system'
 import { useSystemDirectory, useVolumeCreate } from '@siafoundation/react-hostd'
 import { humanBytes } from '@siafoundation/sia-js'
@@ -112,7 +112,7 @@ export function VolumeAddDialog({ trigger, open, onOpenChange }: Props) {
             Create a new volume. Select a system directory and specific the size
             of the volume.
           </Paragraph>
-          <FormField
+          <FormFieldFormik
             formik={form}
             title="Name"
             name="name"
@@ -120,7 +120,11 @@ export function VolumeAddDialog({ trigger, open, onOpenChange }: Props) {
           />
           <div className="flex flex-col gap-3">
             <div className="flex flex-col gap-1">
-              <FieldLabelAndError formik={form} title="Location" name="path" />
+              <FieldLabelAndErrorFormik
+                formik={form}
+                title="Location"
+                name="path"
+              />
               <div className="flex justify-between gap-1">
                 {form.values.path ? (
                   <Text size="14" font="mono" ellipsis>
@@ -142,7 +146,7 @@ export function VolumeAddDialog({ trigger, open, onOpenChange }: Props) {
               onChange={(path) => form.setFieldValue('path', path)}
             />
           </div>
-          <FormField
+          <FormFieldFormik
             formik={form}
             title="Size"
             name="size"
@@ -156,7 +160,7 @@ export function VolumeAddDialog({ trigger, open, onOpenChange }: Props) {
             currentSizeGB={0}
             maxSizeGB={freeSizeGB}
           />
-          <FormSubmitButton formik={form}>Create</FormSubmitButton>
+          <FormSubmitButtonFormik formik={form}>Create</FormSubmitButtonFormik>
         </div>
       </form>
     </Dialog>

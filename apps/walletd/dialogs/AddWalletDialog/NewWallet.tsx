@@ -1,8 +1,8 @@
 import {
   Paragraph,
   Button,
-  FormField,
-  FieldGroup,
+  FormFieldFormik,
+  FieldGroupFormik,
   Dialog,
 } from '@siafoundation/design-system'
 import { useFormik } from 'formik'
@@ -80,7 +80,7 @@ export function NewWallet() {
             Generates a brand new seed and adds it as a hot wallet. The hot
             wallet will automatically sign transactions.
           </Paragraph>
-          <FormField
+          <FormFieldFormik
             formik={formik}
             title="Name"
             name="name"
@@ -88,12 +88,12 @@ export function NewWallet() {
           />
         </div>
       </form>
-      <FieldGroup title="Seed" name="seed" formik={formik}>
+      <FieldGroupFormik title="Seed" name="seed" formik={formik}>
         {step === 'start' && <GenerateSeed seed={seed} onChange={() => null} />}
         {step === 'confirm' && (
           <VerifySeed seed={seed || ''} onChange={(valid) => setValid(valid)} />
         )}
-      </FieldGroup>
+      </FieldGroupFormik>
     </Dialog>
   )
 }

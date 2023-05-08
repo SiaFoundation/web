@@ -156,7 +156,6 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
-        console.log(e.response)
         return {
           status: e.response.status,
           error: e.response.data,

@@ -1,8 +1,8 @@
 import {
-  getDaysInMs,
-  getWeeksInMs,
-  getMonthsInMs,
-  getYearsInMs,
+  daysInMilliseconds,
+  weeksInMilliseconds,
+  monthsInMilliseconds,
+  yearsInMilliseconds,
   ClientFilterItem,
 } from '@siafoundation/design-system'
 import { ContractData } from '../../../../../contexts/contracts/types'
@@ -21,7 +21,7 @@ const options = [
     label: 'formed in the last day',
     fn: (d: ContractData) => {
       const now = new Date().getTime()
-      const formationDate = now - getDaysInMs(1)
+      const formationDate = now - daysInMilliseconds(1)
       return d.startTime >= formationDate
     },
   },
@@ -31,7 +31,7 @@ const options = [
     label: 'formed in the last week',
     fn: (d: ContractData) => {
       const now = new Date().getTime()
-      const formationDate = now - getWeeksInMs(1)
+      const formationDate = now - weeksInMilliseconds(1)
       return d.startTime >= formationDate
     },
   },
@@ -41,7 +41,7 @@ const options = [
     label: 'formed in the last two weeks',
     fn: (d: ContractData) => {
       const now = new Date().getTime()
-      const formationDate = now - getWeeksInMs(2)
+      const formationDate = now - weeksInMilliseconds(2)
       return d.startTime >= formationDate
     },
   },
@@ -51,7 +51,7 @@ const options = [
     label: 'formed in the last month',
     fn: (d: ContractData) => {
       const now = new Date().getTime()
-      const formationDate = now - getMonthsInMs(1)
+      const formationDate = now - monthsInMilliseconds(1)
       return d.startTime >= formationDate
     },
   },
@@ -61,7 +61,7 @@ const options = [
     label: 'formed in the last two months',
     fn: (d: ContractData) => {
       const now = new Date().getTime()
-      const formationDate = now - getMonthsInMs(2)
+      const formationDate = now - monthsInMilliseconds(2)
       return d.startTime >= formationDate
     },
   },
@@ -71,7 +71,7 @@ const options = [
     label: 'formed in the last year',
     fn: (d: ContractData) => {
       const now = new Date().getTime()
-      const formationDate = now - getYearsInMs(1)
+      const formationDate = now - yearsInMilliseconds(1)
       return d.startTime >= formationDate
     },
   },

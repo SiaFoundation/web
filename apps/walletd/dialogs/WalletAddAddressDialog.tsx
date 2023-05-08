@@ -2,7 +2,7 @@ import {
   Paragraph,
   Button,
   Text,
-  FormField,
+  FormFieldFormik,
   Dialog,
 } from '@siafoundation/design-system'
 // import { useWalletAddressCreate } from '@siafoundation/react-core'
@@ -69,7 +69,7 @@ export function WalletAddAddressDialog({ trigger, open, onOpenChange }: Props) {
         <Paragraph size="14">Add an address to cold storage wallet.</Paragraph>
         <form onSubmit={formik.handleSubmit}>
           <div className="flex flex-col gap-4">
-            <FormField
+            <FormFieldFormik
               formik={formik}
               title="Address"
               name="address"
@@ -77,7 +77,7 @@ export function WalletAddAddressDialog({ trigger, open, onOpenChange }: Props) {
               autoComplete="off"
               type="text"
             />
-            <FormField
+            <FormFieldFormik
               formik={formik}
               title="Description"
               name="description"
@@ -85,7 +85,7 @@ export function WalletAddAddressDialog({ trigger, open, onOpenChange }: Props) {
               autoComplete="off"
               type="text"
             />
-            <FormField
+            <FormFieldFormik
               formik={formik}
               title="Index"
               name="index"

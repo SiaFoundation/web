@@ -1,7 +1,7 @@
 import {
   Dialog,
-  FormField,
-  FormSubmitButton,
+  FormFieldFormik,
+  FormSubmitButtonFormik,
   triggerErrorToast,
   triggerToast,
 } from '@siafoundation/design-system'
@@ -70,7 +70,7 @@ export function FilesCreateDirectoryDialog({
       <div className="flex flex-col gap-4">
         <form onSubmit={formik.handleSubmit}>
           <div className="flex flex-col gap-4">
-            <FormField
+            <FormFieldFormik
               formik={formik}
               title="Name"
               name="name"
@@ -81,9 +81,9 @@ export function FilesCreateDirectoryDialog({
                 size: 'medium',
               }}
             />
-            <FormSubmitButton formik={formik} size="medium">
+            <FormSubmitButtonFormik formik={formik} size="medium">
               Create
-            </FormSubmitButton>
+            </FormSubmitButtonFormik>
           </div>
         </form>
       </div>

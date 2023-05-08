@@ -1,4 +1,4 @@
-import { getDaysInMs } from '@siafoundation/design-system'
+import { daysInMilliseconds } from '@siafoundation/design-system'
 import { DataTimeSpan, TimeRange } from './types'
 
 export function getTimeRange(span: DataTimeSpan): TimeRange {
@@ -10,7 +10,7 @@ export function getTimeRange(span: DataTimeSpan): TimeRange {
     }
   }
   return {
-    start: now - getDaysInMs(Number(span)),
+    start: now - daysInMilliseconds(Number(span)),
     end: now,
   }
 }

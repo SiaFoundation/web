@@ -126,7 +126,7 @@ export function usePutFunc<Params extends RequestParams, Payload, Result>(
         const response = await axios.put<Result>(reqRoute, payload, reqConfig)
         if (after) {
           after(
-            (matcher, data, opts) =>
+            (matcher, data = (d) => d, opts) =>
               mutate(
                 (key) => {
                   if (typeof key !== 'string') {

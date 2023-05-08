@@ -303,11 +303,41 @@ export function useMetricsPeriod(
 
 // settings
 
+// DuckDNS
+export type DNSDuckDNSOptions = {
+  token: string
+}
+
+// No-IP
+export type DNSNoIPOptions = {
+  email: string
+  password: string
+}
+
+// AWS
+export type DNSAWSOptions = {
+  ID: string
+  secret: string
+  zoneID: string
+}
+
+// Cloudflare
+export type DNSCloudflareOptions = {
+  token: string
+  zoneID: string
+}
+
+export type DNSProvider = '' | 'route53' | 'noip' | 'duckdns' | 'cloudflare'
+
 type DNSSettings = {
-  provider: string
+  provider: DNSProvider
   ipv4: boolean
   ipv6: boolean
-  options: Record<string, unknown>
+  options:
+    | DNSDuckDNSOptions
+    | DNSNoIPOptions
+    | DNSAWSOptions
+    | DNSCloudflareOptions
 }
 
 export type HostSettings = {
@@ -315,7 +345,6 @@ export type HostSettings = {
   acceptingContracts: boolean
   netAddress: string
   maxContractDuration: number
-  windowSize: number
 
   // Pricing
   contractPrice: Currency

@@ -1,8 +1,8 @@
 import {
-  getDaysInMs,
-  getWeeksInMs,
-  getMonthsInMs,
-  getYearsInMs,
+  daysInMilliseconds,
+  weeksInMilliseconds,
+  monthsInMilliseconds,
+  yearsInMilliseconds,
   ClientFilterItem,
 } from '@siafoundation/design-system'
 import { ContractData } from '../../../../../contexts/contracts/types'
@@ -21,7 +21,7 @@ const options = [
     label: 'renewed in the last day',
     fn: (d: ContractData) => {
       const now = new Date().getTime()
-      const ago = now - getDaysInMs(1)
+      const ago = now - daysInMilliseconds(1)
       return d.isRenewed && d.startTime >= ago
     },
   },
@@ -31,7 +31,7 @@ const options = [
     label: 'renewed in the last week',
     fn: (d: ContractData) => {
       const now = new Date().getTime()
-      const ago = now - getWeeksInMs(1)
+      const ago = now - weeksInMilliseconds(1)
       return d.isRenewed && d.startTime >= ago
     },
   },
@@ -41,7 +41,7 @@ const options = [
     label: 'renewed in the last two weeks',
     fn: (d: ContractData) => {
       const now = new Date().getTime()
-      const ago = now - getWeeksInMs(2)
+      const ago = now - weeksInMilliseconds(2)
       return d.isRenewed && d.startTime >= ago
     },
   },
@@ -51,7 +51,7 @@ const options = [
     label: 'renewed in the last month',
     fn: (d: ContractData) => {
       const now = new Date().getTime()
-      const ago = now - getMonthsInMs(1)
+      const ago = now - monthsInMilliseconds(1)
       return d.isRenewed && d.startTime >= ago
     },
   },
@@ -61,7 +61,7 @@ const options = [
     label: 'renewed in the last two months',
     fn: (d: ContractData) => {
       const now = new Date().getTime()
-      const ago = now - getMonthsInMs(2)
+      const ago = now - monthsInMilliseconds(2)
       return d.isRenewed && d.startTime >= ago
     },
   },
@@ -71,7 +71,7 @@ const options = [
     label: 'renewed in the last year',
     fn: (d: ContractData) => {
       const now = new Date().getTime()
-      const ago = now - getYearsInMs(1)
+      const ago = now - yearsInMilliseconds(1)
       return d.isRenewed && d.startTime >= ago
     },
   },

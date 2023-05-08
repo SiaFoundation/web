@@ -1,10 +1,10 @@
 import { daysToBlocks } from './blockTime'
 import {
-  getDaysInMs,
-  getMonthsInMs,
-  getNowInMs,
-  getWeeksInMs,
-  getYearsInMs,
+  daysInMilliseconds,
+  monthsInMilliseconds,
+  nowInMilliseconds,
+  weeksInMilliseconds,
+  yearsInMilliseconds,
 } from './time'
 
 export function getContractsTimeRangeBlockHeight(
@@ -44,7 +44,7 @@ export function getContractsTimeRangeBlockHeight(
   let current = range.startHeight
   while (current <= range.endHeight) {
     allDates.push(current)
-    current += getDaysInMs(1)
+    current += daysInMilliseconds(1)
   }
   const allDatesMap = allDates.reduce(
     (acc, date) => ({
@@ -64,17 +64,17 @@ export function getContractsTimeRangeBlockHeight(
 }
 
 export function getTimeRange(range: 'day' | 'week' | 'month' | 'year') {
-  const now = getNowInMs()
+  const now = nowInMilliseconds()
   if (range === 'month') {
-    return [now - getMonthsInMs(1), now]
+    return [now - monthsInMilliseconds(1), now]
   }
   if (range === 'week') {
-    return [now - getWeeksInMs(1), now]
+    return [now - weeksInMilliseconds(1), now]
   }
   if (range === 'year') {
-    return [now - getYearsInMs(1), now]
+    return [now - yearsInMilliseconds(1), now]
   }
   // if (range === 'day') {
-  return [now - getDaysInMs(1), now]
+  return [now - daysInMilliseconds(1), now]
   // }
 }
