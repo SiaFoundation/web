@@ -330,7 +330,7 @@ export function useHostsBlocklistUpdate(
 
 // contracts
 
-const contractsActiveRoute = '/bus/contracts/active'
+const contractsActiveRoute = '/bus/contracts'
 export function useContracts(args?: HookArgsSwr<void, Contract[]>) {
   return useGetSwr({ ...args, route: contractsActiveRoute })
 }
