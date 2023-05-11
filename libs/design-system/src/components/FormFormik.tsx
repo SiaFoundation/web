@@ -81,7 +81,7 @@ export function FormFieldFormik({
           variants={variants}
         />
       ) : (
-        <FormTextField
+        <FormTextFieldFormik
           formik={formik}
           name={name}
           autoComplete={autoComplete}
@@ -98,7 +98,7 @@ export function FormFieldFormik({
   )
 }
 
-type FormTextFieldProps = {
+type FormTextFieldFormikProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formik: any
   name: string
@@ -112,7 +112,7 @@ type FormTextFieldProps = {
   variants?: VariantProps<typeof textFieldStyles>
 }
 
-export function FormTextField({
+export function FormTextFieldFormik({
   formik,
   name,
   placeholder,
@@ -123,7 +123,7 @@ export function FormTextField({
   spellCheck = false,
   type,
   variants,
-}: FormTextFieldProps) {
+}: FormTextFieldFormikProps) {
   return (
     <TextField
       id={name}
@@ -158,7 +158,7 @@ type FormNumberFieldFormikProps = {
   variants?: VariantProps<typeof textFieldStyles>
 }
 
-export function FormNumberFieldFormik({
+function FormNumberFieldFormik({
   formik,
   name,
   units,
@@ -205,7 +205,7 @@ type FormSiacoinFieldFormikProps = {
   variants?: VariantProps<typeof textFieldStyles>
 }
 
-export function FormSiacoinFieldFormik({
+function FormSiacoinFieldFormik({
   formik,
   name,
   disabled,

@@ -1,5 +1,4 @@
 import {
-  FormSubmitButton,
   PoolSelected,
   copyToClipboard,
   ScrollArea,
@@ -9,8 +8,9 @@ import {
   Panel,
   Warning16,
   Paragraph,
-  FormTextField,
-  FieldGroup,
+  FormTextFieldFormik,
+  FieldGroupFormik,
+  FormSubmitButtonFormik,
 } from '@siafoundation/design-system'
 import { useHostsAllowlist } from '@siafoundation/react-renterd'
 import { useAllowlistUpdate } from '../../../hooks/useAllowlistUpdate'
@@ -65,14 +65,14 @@ export function AllowlistForm() {
       onSubmit={formik.handleSubmit}
       className="flex flex-col gap-2 h-[400px]"
     >
-      <FieldGroup
+      <FieldGroupFormik
         title="Public key"
         name="publicKey"
         formik={formik}
         withStatusError
       >
         <div className="flex gap-1">
-          <FormTextField
+          <FormTextFieldFormik
             name="publicKey"
             formik={formik}
             placeholder="ed25519:02aabd26e627fd..."
@@ -82,16 +82,16 @@ export function AllowlistForm() {
               // className: 'flex-1'
             }}
           />
-          <FormSubmitButton
+          <FormSubmitButtonFormik
             formik={formik}
             size="small"
             variant="amber"
             withStatusError={false}
           >
             Allow public key
-          </FormSubmitButton>
+          </FormSubmitButtonFormik>
         </div>
-      </FieldGroup>
+      </FieldGroupFormik>
       <Panel className="p-2 flex gap-2 items-center">
         <Text>
           <Warning16 />

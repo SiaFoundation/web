@@ -61,7 +61,7 @@ describe('data transforms', () => {
         },
         {
           maxStoragePrice: '77777777777',
-          foobar1: 'value',
+          foobar: 'value',
         }
       )
     ).toEqual({
@@ -88,11 +88,11 @@ describe('data transforms', () => {
         },
         {
           minShards: 77,
-          foobar2: 'value',
+          foobar: 'value',
         }
       )
     ).toEqual({
-      foobar2: 'value',
+      foobar: 'value',
       minShards: 10,
       totalShards: 30,
     })

@@ -4,7 +4,7 @@ import { useFormik } from 'formik'
 import {
   FieldGroupFormik,
   FormSubmitButtonFormik,
-  FormTextField,
+  FormTextFieldFormik,
 } from '../components/FormFormik'
 import axios, { AxiosError } from 'axios'
 import { Button } from '../core/Button'
@@ -132,7 +132,7 @@ export function AppUnlockForm<Response extends ResponseWithSynced>({
         <div className="flex flex-col gap-1.5">
           {buildModeEmbed ? null : (
             <ControlGroup>
-              <FormTextField
+              <FormTextFieldFormik
                 variants={{
                   size: 'small',
                 }}
@@ -160,7 +160,7 @@ export function AppUnlockForm<Response extends ResponseWithSynced>({
               )}
             </ControlGroup>
           )}
-          <FormTextField
+          <FormTextFieldFormik
             variants={{
               size: 'small',
             }}
