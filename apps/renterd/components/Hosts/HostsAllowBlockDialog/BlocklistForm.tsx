@@ -1,5 +1,5 @@
 import {
-  FormSubmitButton,
+  FormSubmitButtonFormik,
   PoolSelected,
   copyToClipboard,
   ScrollArea,
@@ -9,8 +9,8 @@ import {
   Filter32,
   Tooltip,
   hostnameOrIpRegex,
-  FormTextField,
-  FieldGroup,
+  FormTextFieldFormik,
+  FieldGroupFormik,
 } from '@siafoundation/design-system'
 import { useHostsBlocklist } from '@siafoundation/react-renterd'
 import { useContracts } from '../../../contexts/contracts'
@@ -92,14 +92,14 @@ export function BlocklistForm() {
       onSubmit={formik.handleSubmit}
       className="flex flex-col gap-2 h-[400px]"
     >
-      <FieldGroup
+      <FieldGroupFormik
         title="Address"
         name="address"
         formik={formik}
         withStatusError
       >
         <div className="flex gap-1">
-          <FormTextField
+          <FormTextFieldFormik
             name="address"
             formik={formik}
             placeholder="eg: 51.258.128.144 or spam.ddnsfree.com"
@@ -109,16 +109,16 @@ export function BlocklistForm() {
               // className: 'flex-1'
             }}
           />
-          <FormSubmitButton
+          <FormSubmitButtonFormik
             formik={formik}
             size="small"
             variant="red"
             withStatusError={false}
           >
             Block address
-          </FormSubmitButton>
+          </FormSubmitButtonFormik>
         </div>
-      </FieldGroup>
+      </FieldGroupFormik>
       <div className="flex-1 overflow-hidden !-m-2">
         <ScrollArea>
           <div className="p-2">
