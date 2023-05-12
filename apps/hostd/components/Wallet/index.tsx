@@ -37,9 +37,10 @@ export function Wallet() {
       ...(pending.data || []).map((t): EntityListItemProps => {
         return {
           type: 'transaction',
-          txType: getTransactionTypes(t),
-          // hash: t.ID,
-          // timestamp: new Date(t.Timestamp).getTime(),
+          txType: getTransactionTypes(t.transaction, t.source),
+          hash: t.ID,
+          timestamp: new Date(t.timestamp).getTime(),
+          sc: new BigNumber(t.inflow).minus(t.outflow),
           unconfirmed: true,
         }
       }),
@@ -48,9 +49,9 @@ export function Wallet() {
           return {
             type: 'transaction',
             txType: getTransactionTypes(t.transaction, t.source),
-            hash: t.id,
+            hash: t.ID,
             timestamp: new Date(t.timestamp).getTime(),
-            onClick: () => openDialog('transactionDetails', t.id),
+            onClick: () => openDialog('transactionDetails', t.ID),
             sc: new BigNumber(t.inflow).minus(t.outflow),
           }
         })

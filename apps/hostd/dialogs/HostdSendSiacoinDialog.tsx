@@ -2,7 +2,6 @@ import { useCallback } from 'react'
 import { WalletSendSiacoinDialog } from '@siafoundation/design-system'
 import { useWallet, useWalletSend } from '@siafoundation/react-hostd'
 import { useDialog } from '../contexts/dialog'
-import { mutate } from 'swr'
 import BigNumber from 'bignumber.js'
 
 export function HostdSendSiacoinDialog() {
@@ -11,25 +10,19 @@ export function HostdSendSiacoinDialog() {
   const walletSend = useWalletSend()
 
   const send = useCallback(
-    ({ sc, address }: { sc: BigNumber; address: string }) => {
-      const func = async () => {
-        const fundResponse = await walletSend.post({
-          payload: {
-            address,
-            amount: sc.toString(),
-          },
-        })
-        if (fundResponse.error) {
-          return {
-            error: fundResponse.error,
-          }
+    async ({ sc, address }: { sc: BigNumber; address: string }) => {
+      const fundResponse = await walletSend.post({
+        payload: {
+          address,
+          amount: sc.toString(),
+        },
+      })
+      if (fundResponse.error) {
+        return {
+          error: fundResponse.error,
         }
-        setTimeout(() => {
-          mutate('/wallet/pending')
-        }, 2000)
-        return {}
       }
-      return func()
+      return { transactionId: fundResponse.data }
     },
     [walletSend]
   )

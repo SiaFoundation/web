@@ -13,6 +13,7 @@ import {
   Transaction,
   getMainnetBlockHeight,
   getTestnetZenBlockHeight,
+  delay,
 } from '@siafoundation/react-core'
 import {
   AddObjectRequest,
@@ -129,7 +130,8 @@ export function useTxPoolBroadcast(
       ...args,
       route: '/bus/txpool/broadcast',
     },
-    (mutate) => {
+    async (mutate) => {
+      await delay(2_000)
       mutate((key) => {
         return (
           key.startsWith(txPoolTransactionsRoute) ||

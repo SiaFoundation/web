@@ -7,6 +7,7 @@ export type OutputID = string
 export type EncryptionKey = string
 export type FileContractID = string
 export type PublicKey = string
+export type TransactionID = string
 
 export interface SiaPublicKey {
   Algorithm: string
