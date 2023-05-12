@@ -22,8 +22,8 @@ export function ConfigurationTipText({
   return (
     <div className="flex justify-between items-center">
       <Tooltip align="start" content={tip}>
-        <div className="flex gap-1 items-center relative top-px">
-          <Text className="flex relative -top-px">
+        <div className="flex gap-1 items-center relative overflow-hidden">
+          <Text className="flex relative">
             <Information16 />
           </Text>
           <Text size="12">
@@ -37,7 +37,7 @@ export function ConfigurationTipText({
           </Text>
         </div>
       </Tooltip>
-      <div className="flex cursor-pointer" onClick={onClick}>
+      <div className="flex cursor-pointer items-center" onClick={onClick}>
         <Text size="12">
           <Code>{value}</Code>
         </Text>

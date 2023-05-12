@@ -19,6 +19,7 @@ export function ConfigurationNumber<
   const {
     placeholder,
     average,
+    averageTip,
     suggestion,
     suggestionTip,
     decimalsLimit = 2,
@@ -68,7 +69,7 @@ export function ConfigurationNumber<
             <ConfigurationTipNumber
               type="number"
               label="Network average"
-              tip="Averages provided by Sia Central."
+              tip={averageTip || 'Averages provided by Sia Central.'}
               decimalsLimit={decimalsLimit}
               value={average as BigNumber}
               units={units}
