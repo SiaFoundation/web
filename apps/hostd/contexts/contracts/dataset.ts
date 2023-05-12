@@ -48,7 +48,11 @@ function getContractFields(c: Contract): ContractData {
       fileMerkleRoot: c.revision.fileMerkleRoot,
       windowStart: c.revision.windowStart,
       windowEnd: c.revision.windowEnd,
-      payout: new BigNumber(c.revision.payout || 0),
+      payout: new BigNumber(
+        c.status == 'active' || c.resolutionHeight > 0
+          ? c.revision.validProofOutputs[1].value
+          : c.revision.missedProofOutputs[1].value
+      ),
       validProofOutputs: c.revision.validProofOutputs,
       missedProofOutputs: c.revision.missedProofOutputs,
       unlockHash: c.revision.unlockHash,
