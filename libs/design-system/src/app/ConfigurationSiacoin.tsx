@@ -22,6 +22,7 @@ export function ConfigurationSiacoin<
     suggestion,
     units,
     suggestionTip,
+    averageTip,
     decimalsLimitSc = 6,
     decimalsLimitFiat = 6,
     tipsDecimalsLimitSc = 0,
@@ -66,7 +67,7 @@ export function ConfigurationSiacoin<
           <ConfigurationTipNumber
             type="siacoin"
             label="Network average"
-            tip="Averages provided by Sia Central."
+            tip={averageTip || 'Averages provided by Sia Central.'}
             decimalsLimit={tipsDecimalsLimitSc}
             value={toHastings(average as BigNumber)}
             onClick={() => {

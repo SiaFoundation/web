@@ -31,11 +31,11 @@ export function ConfigurationTipNumber({
   return (
     <div className="flex justify-between items-center">
       <Tooltip align="start" content={tip}>
-        <div className="flex gap-1 items-center relative top-px">
-          <Text className="flex relative -top-px">
+        <div className="flex gap-1 items-center relative overflow-hidden">
+          <Text className="flex relative">
             <Information16 />
           </Text>
-          <Text size="12">
+          <Text size="12" ellipsis>
             {link ? (
               <Link href={link} target="_blank">
                 {label}
@@ -46,7 +46,10 @@ export function ConfigurationTipNumber({
           </Text>
         </div>
       </Tooltip>
-      <div className="flex cursor-pointer" onClick={() => onClick(value)}>
+      <div
+        className="flex cursor-pointer items-center"
+        onClick={() => onClick(value)}
+      >
         {type === 'siacoin' ? (
           <ValueSc
             value={value}

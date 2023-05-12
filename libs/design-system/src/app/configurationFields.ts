@@ -14,6 +14,7 @@ export type ConfigField<
   suggestionTip?: React.ReactNode
   suggestion?: BigNumber | string | boolean
   average?: BigNumber | string | boolean
+  averageTip?: React.ReactNode
   // number
   decimalsLimit?: number
   // sc

@@ -2,7 +2,6 @@ import React, { createContext, useContext } from 'react'
 import {
   Chart,
   computeChartStats,
-  daysInMilliseconds,
   formatChartData,
   getDataIntervalLabelFormatter,
   MiBToBytes,

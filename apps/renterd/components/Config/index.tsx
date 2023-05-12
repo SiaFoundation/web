@@ -6,6 +6,8 @@ import {
   Reset16,
   Save16,
   ConfigurationPanel,
+  TBToBytes,
+  monthsToBlocks,
 } from '@siafoundation/design-system'
 import { useCallback, useEffect, useMemo } from 'react'
 import { RenterdSidenav } from '../RenterdSidenav'
@@ -18,7 +20,7 @@ import {
   useSetting,
   useSettingUpdate,
 } from '@siafoundation/react-renterd'
-import { initialValues, fields } from './fields'
+import { initialValues, getFields } from './fields'
 import {
   transformDown,
   transformUpGouging,
@@ -26,6 +28,8 @@ import {
 } from './transform'
 import { FieldErrors, useForm } from 'react-hook-form'
 import { entries } from 'lodash'
+import { useSiaCentralHostsNetworkAverages } from '@siafoundation/react-core'
+import { toSiacoins } from '@siafoundation/sia-js'
 
 export function Config() {
   const { openDialog } = useDialog()
@@ -50,10 +54,48 @@ export function Config() {
 
   const settingUpdate = useSettingUpdate()
 
+  const averages = useSiaCentralHostsNetworkAverages({
+    config: {
+      swr: {
+        revalidateOnFocus: false,
+      },
+    },
+  })
+
   const form = useForm({
     mode: 'all',
     defaultValues: initialValues,
   })
+
+  const minShards = form.watch('minShards')
+  const totalShards = form.watch('totalShards')
+
+  const fields = useMemo(() => {
+    if (
+      averages.data &&
+      minShards &&
+      totalShards &&
+      !minShards.isZero() &&
+      !totalShards.isZero() &&
+      totalShards.gte(minShards)
+    ) {
+      const redundancy = totalShards.div(minShards)
+      return getFields({
+        storageAverage: toSiacoins(averages.data.settings.storage_price) // bytes/block
+          .times(monthsToBlocks(1)) // bytes/month
+          .times(TBToBytes(1)) // TB/month
+          .times(redundancy), // adjust for redundancy
+        downloadAverage: toSiacoins(averages.data.settings.download_price) // bytes
+          .times(TBToBytes(1)) // TB
+          .times(redundancy), // adjust for redundancy
+        uploadAverage: toSiacoins(averages.data.settings.upload_price) // bytes
+          .times(TBToBytes(1)) // TB
+          .times(redundancy), // adjust for redundancy
+        contractAverage: toSiacoins(averages.data.settings.contract_price),
+      })
+    }
+    return getFields({})
+  }, [averages.data, minShards, totalShards])
 
   const onValid = useCallback(
     async (values: typeof initialValues) => {
@@ -94,13 +136,16 @@ export function Config() {
     [settingUpdate, redundancy, gouging]
   )
 
-  const onInvalid = useCallback((errors: FieldErrors<typeof initialValues>) => {
-    triggerErrorToast(
-      entries(errors)
-        .map(([key, e]) => `${fields[key].title}: ${e.message}`)
-        .join(', ')
-    )
-  }, [])
+  const onInvalid = useCallback(
+    (errors: FieldErrors<typeof initialValues>) => {
+      triggerErrorToast(
+        entries(errors)
+          .map(([key, e]) => `${fields[key].title}: ${e.message}`)
+          .join(', ')
+      )
+    },
+    [fields]
+  )
 
   const onSubmit = useMemo(
     () => form.handleSubmit(onValid, onInvalid),
