@@ -2,6 +2,7 @@ import React, { createContext, useContext } from 'react'
 import {
   Chart,
   computeChartStats,
+  daysInMilliseconds,
   formatChartData,
   getDataIntervalLabelFormatter,
   MiBToBytes,
@@ -33,6 +34,7 @@ import {
   getDataIntervalInMs,
   OperationsKeys,
 } from './types'
+import { formatISO } from 'date-fns'
 
 type TimeRange = {
   start: number
@@ -80,7 +82,7 @@ function useMetricsMain() {
   const metricsPeriod = useMetricsPeriod({
     params: {
       period: dataInterval,
-      start: new Date(timeRange.start).toISOString(),
+      start: formatISO(new Date(timeRange.start)),
       periods: getPeriods(timeRange, dataInterval),
     },
     config: {
@@ -105,7 +107,6 @@ function useMetricsMain() {
         registryRead: Number(m.revenue.earned.registryRead),
         registryWrite: Number(m.revenue.earned.registryWrite),
         rpc: Number(m.revenue.earned.rpc),
-        timestamp: new Date(m.timestamp).getTime(),
         // not enabled on graph, but used for stats
         potential: new BigNumber(m.revenue.potential.storage)
           .plus(m.revenue.potential.ingress)
@@ -121,6 +122,7 @@ function useMetricsMain() {
           .plus(m.revenue.earned.registryWrite)
           .plus(m.revenue.earned.rpc)
           .toNumber(),
+        timestamp: new Date(m.timestamp).getTime(),
       })),
       'diff'
     )

@@ -72,6 +72,9 @@ export const textStyles = cva(['inline-block'], {
     ellipsis: {
       true: 'overflow-hidden text-ellipsis whitespace-nowrap',
     },
+    wrapEllipsis: {
+      true: 'overflow-hidden text-ellipsis',
+    },
   },
   defaultVariants: {
     weight: 'regular',
@@ -99,6 +102,7 @@ export const Text = React.forwardRef<
       noWrap,
       underline,
       ellipsis,
+      wrapEllipsis,
       ...props
     },
     ref
@@ -119,6 +123,7 @@ export const Text = React.forwardRef<
             underline,
             noWrap,
             ellipsis,
+            wrapEllipsis,
           })
         )}
         {...props}

@@ -8,12 +8,15 @@ import { cx } from 'class-variance-authority'
 import { panelStyles } from '../core/Panel'
 import { rootClasses } from '../config/css'
 import React from 'react'
+import { Text } from '../core/Text'
 
 export type { ToastOptions }
 
 export const triggerToast = (text: string, options: ToastOptions = {}) => {
   toast(
-    text.length > 200 ? `${text.slice(0, 200)}` : text,
+    <Text wrapEllipsis>
+      {text.length > 200 ? `${text.slice(0, 200)}` : text}
+    </Text>,
     buildToastOptions(options)
   )
 }
@@ -30,14 +33,18 @@ export const triggerSuccessToast = (
   options: ToastOptions = {}
 ) => {
   toast.success(
-    text.length > 200 ? `${text.slice(0, 200)}...` : text,
+    <Text wrapEllipsis>
+      {text.length > 200 ? `${text.slice(0, 200)}...` : text}
+    </Text>,
     buildToastOptions(options)
   )
 }
 
 export const triggerErrorToast = (text: string, options: ToastOptions = {}) => {
   toast.error(
-    text.length > 200 ? `${text.slice(0, 200)}...` : text,
+    <Text wrapEllipsis>
+      {text.length > 200 ? `${text.slice(0, 200)}...` : text}
+    </Text>,
     buildToastOptions(options)
   )
 }
@@ -48,13 +55,14 @@ export function buildToastOptions({
 }: ToastOptions = {}): ToastOptions {
   return {
     position: 'top-center',
-    duration: 5_000,
+    duration: 50_000,
     className: cx(
       rootClasses,
       panelStyles(),
       'font-sans font-normal',
       'text-gray-1100 dark:text-white',
-      'max-w-[800px]',
+      'max-w-[800px] overflow-hidden text-ellipsis',
+      '[&>div]:overflow-hidden',
       className
     ),
     success: {

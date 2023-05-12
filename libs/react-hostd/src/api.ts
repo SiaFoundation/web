@@ -19,6 +19,8 @@ import {
 import useSWR from 'swr'
 import { Contract, ContractStatus, WalletTransaction } from './siaTypes'
 
+// state
+
 export type StateHost = {
   publicKey: string
   walletAddress: string
@@ -152,6 +154,15 @@ export function useWalletSend(
         key.startsWith(walletPendingRoute)
       )
     })
+  })
+}
+
+// txpool
+
+export function useTxPoolFee(args?: HookArgsSwr<void, Currency>) {
+  return useGetSwr({
+    ...args,
+    route: '/tpool/fee',
   })
 }
 
