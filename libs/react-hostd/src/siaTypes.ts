@@ -9,7 +9,7 @@ import {
 } from '@siafoundation/react-core'
 
 export interface WalletTransaction {
-  id: string
+  ID: string
   index: string // ChainIndex
   inflow: Currency
   outflow: Currency

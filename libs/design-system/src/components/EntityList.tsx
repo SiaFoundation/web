@@ -21,6 +21,7 @@ import { EntityAvatar } from './EntityAvatar'
 import React from 'react'
 import BigNumber from 'bignumber.js'
 import { cx } from 'class-variance-authority'
+import { DotMark16 } from '@carbon/icons-react'
 
 export type EntityListItemProps = {
   label?: string
@@ -78,18 +79,14 @@ export function EntityList({ title, actions, entities, emptyMessage }: Props) {
           {entities?.map((entity, i) => {
             const sc = entity.sc
             const sf = entity.sf
-            const truncHashEl = entity.unconfirmed ? (
-              <Text color="verySubtle">Unconfirmed</Text>
-            ) : (
-              entity.hash && (
-                <ValueCopyable
-                  value={entity.hash}
-                  type={entity.type}
-                  label={entity.label}
-                  href={entity.href}
-                  color="subtle"
-                />
-              )
+            const truncHashEl = entity.hash && (
+              <ValueCopyable
+                value={entity.hash}
+                type={entity.type}
+                label={entity.label}
+                href={entity.href}
+                color="subtle"
+              />
             )
             const label =
               entity.label ||
@@ -132,7 +129,17 @@ export function EntityList({ title, actions, entities, emptyMessage }: Props) {
                   </div>
                   <div className="flex justify-between w-full">
                     <div className="flex gap-1">{!!title && truncHashEl}</div>
-                    <div className="flex gap-1">
+                    <div className="flex gap-1 items-center">
+                      {entity.unconfirmed ? (
+                        <>
+                          <Text color="verySubtle">unconfirmed</Text>
+                          {entity.timestamp ? (
+                            <Text color="verySubtle">
+                              <DotMark16 className="scale-50" />
+                            </Text>
+                          ) : null}
+                        </>
+                      ) : null}
                       {entity.timestamp && (
                         <Text color="subtle">
                           {formatDistance(

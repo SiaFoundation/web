@@ -7,7 +7,6 @@ import {
   useWalletSign,
 } from '@siafoundation/react-renterd'
 import { useDialog } from '../contexts/dialog'
-import { mutate } from 'swr'
 import BigNumber from 'bignumber.js'
 
 export function RenterdSendSiacoinDialog() {
@@ -18,56 +17,51 @@ export function RenterdSendSiacoinDialog() {
   const sign = useWalletSign()
   const broadcast = useTxPoolBroadcast()
   const send = useCallback(
-    ({ sc, address }: { sc: BigNumber; address: string }) => {
-      const func = async () => {
-        const fundResponse = await fund.post({
-          payload: {
-            amount: sc.toString(),
-            transaction: {
-              siacoinOutputs: [
-                {
-                  address: address,
-                  value: sc.toString(),
-                },
-              ],
-            },
+    async ({ sc, address }: { sc: BigNumber; address: string }) => {
+      const fundResponse = await fund.post({
+        payload: {
+          amount: sc.toString(),
+          transaction: {
+            siacoinOutputs: [
+              {
+                address: address,
+                value: sc.toString(),
+              },
+            ],
           },
-        })
-        if (!fundResponse.data) {
-          return {
-            error: fundResponse.error,
-          }
-        }
-        const signResponse = await sign.post({
-          payload: {
-            transaction: fundResponse.data.transaction,
-            toSign: fundResponse.data.toSign,
-            coveredFields: {
-              WholeTransaction: true,
-            },
-          },
-        })
-        if (!signResponse.data) {
-          return {
-            error: signResponse.error,
-          }
-        }
-        const broadcastResponse = await broadcast.post({
-          payload: [signResponse.data],
-        })
-        if (broadcastResponse.error) {
-          return {
-            error: broadcastResponse.error,
-          }
-        }
-        setTimeout(() => {
-          mutate('/bus/wallet/pending')
-        }, 2000)
+        },
+      })
+      if (!fundResponse.data) {
         return {
-          transaction: signResponse.data,
+          error: fundResponse.error,
         }
       }
-      return func()
+      const signResponse = await sign.post({
+        payload: {
+          transaction: fundResponse.data.transaction,
+          toSign: fundResponse.data.toSign,
+          coveredFields: {
+            WholeTransaction: true,
+          },
+        },
+      })
+      if (!signResponse.data) {
+        return {
+          error: signResponse.error,
+        }
+      }
+      const broadcastResponse = await broadcast.post({
+        payload: [signResponse.data],
+      })
+      if (broadcastResponse.error) {
+        return {
+          error: broadcastResponse.error,
+        }
+      }
+      return {
+        // Need transaction ID, but its not part of transaction object
+        // transactionId: signResponse.data.??,
+      }
     },
     [fund, sign, broadcast]
   )

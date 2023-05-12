@@ -5,7 +5,6 @@ import {
   usePostSwr,
   HookArgsSwr,
   HookArgsCallback,
-  Transaction,
   HookArgsWithPayloadSwr,
   FileContractID,
   PublicKey,
@@ -15,6 +14,7 @@ import {
   usePutSwr,
   useDeleteFunc,
   delay,
+  TransactionID,
 } from '@siafoundation/react-core'
 import useSWR from 'swr'
 import { Contract, ContractStatus, WalletTransaction } from './siaTypes'
@@ -127,7 +127,9 @@ export function useWalletTransactions(
 }
 
 const walletPendingRoute = '/wallet/pending'
-export function useWalletPending(args?: HookArgsSwr<void, Transaction[]>) {
+export function useWalletPending(
+  args?: HookArgsSwr<void, WalletTransaction[]>
+) {
   return useGetSwr({
     ...args,
     route: walletPendingRoute,
@@ -140,9 +142,10 @@ type WalletSendRequest = {
 }
 
 export function useWalletSend(
-  args?: HookArgsCallback<void, WalletSendRequest, void>
+  args?: HookArgsCallback<void, WalletSendRequest, TransactionID>
 ) {
-  return usePostFunc({ ...args, route: '/wallet/send' }, (mutate) => {
+  return usePostFunc({ ...args, route: '/wallet/send' }, async (mutate) => {
+    await delay(2_000)
     mutate((key) => {
       return (
         // key.startsWith(txPoolTransactionsRoute) ||
