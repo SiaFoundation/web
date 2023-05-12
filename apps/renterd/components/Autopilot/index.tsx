@@ -191,7 +191,7 @@ export function Autopilot() {
           <Button
             tip="Save all changes"
             variant="accent"
-            // disabled={!form.formState.isDirty || form.formState.isSubmitting}
+            disabled={!form.formState.isDirty || form.formState.isSubmitting}
             onClick={onSubmit}
           >
             <Save16 />
