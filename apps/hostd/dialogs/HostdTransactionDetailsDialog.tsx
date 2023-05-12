@@ -18,7 +18,7 @@ export function HostdTransactionDetailsDialog() {
     disabled: dialog !== 'transactionDetails',
   })
   const transaction = useMemo(() => {
-    const txn = transactions.data?.find((t) => t.id === id)
+    const txn = transactions.data?.find((t) => t.ID === id)
     if (!txn) {
       return null
     }
