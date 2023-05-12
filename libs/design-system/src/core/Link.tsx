@@ -61,10 +61,13 @@ export const Link = React.forwardRef<
       underline,
       disabled,
       className,
+      rel: _rel,
+      target,
       ...props
     },
     ref
   ) => {
+    const rel = _rel || (target === '_blank' ? 'noopener' : undefined)
     return (
       <BaseNextLink
         href={href || '#'}
@@ -82,6 +85,8 @@ export const Link = React.forwardRef<
           className,
         })}
         {...props}
+        rel={rel}
+        target={target}
       />
     )
   }
@@ -105,10 +110,13 @@ export const LinkButton = React.forwardRef<
       icon,
       className,
       tip,
+      rel: _rel,
+      target,
       ...props
     },
     ref
   ) => {
+    const rel = _rel || (target === '_blank' ? 'noopener' : undefined)
     if (tip) {
       return (
         <Tooltip content={tip}>
@@ -125,6 +133,8 @@ export const LinkButton = React.forwardRef<
               className,
             })}
             {...props}
+            rel={rel}
+            target={target}
           />
         </Tooltip>
       )
@@ -143,6 +153,8 @@ export const LinkButton = React.forwardRef<
           className,
         })}
         {...props}
+        rel={rel}
+        target={target}
       />
     )
   }
