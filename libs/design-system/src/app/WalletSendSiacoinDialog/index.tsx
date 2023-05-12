@@ -7,7 +7,6 @@ import { useSendSiacoinGenerateForm } from './Generate'
 import { useSendSiacoinConfirmForm } from './Confirm'
 import { ProgressSteps } from '../ProgressSteps'
 import { WalletSendSiacoinComplete } from './Complete'
-import { Transaction } from '@siafoundation/react-core'
 import { FormSubmitButtonFormik } from '../../components/FormFormik'
 
 export type SendSiacoinFormData = {

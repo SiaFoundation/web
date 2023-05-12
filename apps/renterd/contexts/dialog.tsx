@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useCallback, useState } from 'react'
 import {
+  ConfirmDialog,
   SettingsDialog,
   SyncerConnectPeerDialog,
   WalletSingleAddressDetailsDialog,
@@ -34,6 +35,15 @@ export type DialogType =
   | 'contractsFilterPublicKey'
   | 'filesCreateDirectory'
   | 'filesSearch'
+  | 'confirm'
+
+type ConfirmProps = {
+  title: React.ReactNode
+  action: React.ReactNode
+  variant: 'red' | 'accent'
+  body: React.ReactNode
+  onConfirm: () => void
+}
 
 function useDialogMain() {
   const [dialog, setDialog] = useState<DialogType>()
@@ -47,10 +57,20 @@ function useDialogMain() {
     [setDialog, setId]
   )
 
+  const [confirm, setConfirm] = useState<ConfirmProps>()
+  const openConfirmDialog = useCallback(
+    (confirm: ConfirmProps) => {
+      setDialog('confirm')
+      setConfirm(confirm)
+    },
+    [setDialog, setConfirm]
+  )
+
   const closeDialog = useCallback(() => {
     setDialog(undefined)
     setId(undefined)
-  }, [setDialog, setId])
+    setConfirm(undefined)
+  }, [setDialog, setId, setConfirm])
 
   const onOpenChange = useCallback(
     (open: boolean) => {
@@ -65,6 +85,8 @@ function useDialogMain() {
     dialog,
     id,
     openDialog,
+    confirm,
+    openConfirmDialog,
     closeDialog,
     onOpenChange,
   }
@@ -87,7 +109,14 @@ export function DialogProvider({ children }: Props) {
 }
 
 export function Dialogs() {
-  const { dialog, openDialog, onOpenChange, closeDialog } = useDialog()
+  const {
+    dialog,
+    openDialog,
+    onOpenChange,
+    closeDialog,
+    confirm,
+    openConfirmDialog,
+  } = useDialog()
   const connect = useSyncerConnect()
   const address = useWalletAddress()
 
@@ -143,6 +172,17 @@ export function Dialogs() {
       <ContractsFilterPublicKeyDialog
         open={dialog === 'contractsFilterPublicKey'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <ConfirmDialog
+        open={dialog === 'confirm'}
+        title={confirm?.title}
+        action={confirm?.action}
+        body={confirm?.body}
+        variant={confirm?.variant}
+        onConfirm={confirm?.onConfirm}
+        onOpenChange={(val) =>
+          val ? openConfirmDialog(confirm) : closeDialog()
+        }
       />
     </>
   )

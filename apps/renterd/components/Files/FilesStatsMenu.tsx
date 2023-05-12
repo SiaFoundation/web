@@ -40,20 +40,22 @@ export function FilesStatsMenu() {
             </Text>
           </Tooltip>
         </div>
-        <Separator variant="vertical" className="h-full" />
         {stats.data && (
-          <div className="flex gap-2">
-            <Tooltip content="Global statistics">
-              <Text size="12" color="verySubtle">
-                <Earth16 />
-              </Text>
-            </Tooltip>
-            <Tooltip content="Size of all files">
-              <Text size="12" font="mono">
-                {humanBytes(stats.data?.totalUploadedSize)}
-              </Text>
-            </Tooltip>
-          </div>
+          <>
+            <Separator variant="vertical" className="h-full" />
+            <div className="flex gap-2">
+              <Tooltip content="Global statistics">
+                <Text size="12" color="verySubtle">
+                  <Earth16 />
+                </Text>
+              </Tooltip>
+              <Tooltip content="Size of all files">
+                <Text size="12" font="mono">
+                  {humanBytes(stats.data?.totalUploadedSize)}
+                </Text>
+              </Tooltip>
+            </div>
+          </>
         )}
       </div>
     </div>

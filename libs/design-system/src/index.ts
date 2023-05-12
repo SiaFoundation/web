@@ -105,6 +105,7 @@ export * from './app/PanelMenuSection'
 export * from './app/PanelMenuSetting'
 export * from './app/ConfigurationPanel'
 export * from './app/configurationFields'
+export * from './app/ConfirmDialog'
 
 // site
 export * from './site/SiteHeading'

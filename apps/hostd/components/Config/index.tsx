@@ -4,7 +4,6 @@ import {
   triggerSuccessToast,
   triggerErrorToast,
   Reset16,
-  Bullhorn16,
   Save16,
   Warning16,
   CheckmarkFilled16,
@@ -18,7 +17,6 @@ import { HostdAuthedLayout } from '../../components/HostdAuthedLayout'
 import {} from '@siafoundation/design-system'
 import {
   useSettings,
-  useSettingsAnnounce,
   useSettingsDynDNS,
   useSettingsUpdate,
 } from '@siafoundation/react-hostd'
@@ -26,6 +24,7 @@ import { fields, initialValues } from './fields'
 import { transformDown, transformUp } from './transform'
 import { FieldErrors, useForm } from 'react-hook-form'
 import { entries } from 'lodash'
+import { AnnounceButton } from './AnnounceButton'
 
 export function Config() {
   const { openDialog } = useDialog()
@@ -38,7 +37,6 @@ export function Config() {
     },
   })
   const settingsUpdate = useSettingsUpdate()
-  const settingsAnnounce = useSettingsAnnounce()
   const dynDNSCheck = useSettingsDynDNS({
     disabled: !settings.data || !settings.data.dynDNS.provider,
     config: {
@@ -175,14 +173,7 @@ export function Config() {
             <Save16 />
             Save changes
           </Button>
-          <Button
-            variant="accent"
-            tip="Announce host address"
-            onClick={() => settingsAnnounce.post({})}
-          >
-            <Bullhorn16 />
-            Announce
-          </Button>
+          <AnnounceButton />
         </div>
       }
       openSettings={() => openDialog('settings')}

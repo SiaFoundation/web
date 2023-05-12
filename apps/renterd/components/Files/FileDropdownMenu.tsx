@@ -14,8 +14,9 @@ import {
   Warning16,
   Code,
 } from '@siafoundation/design-system'
-import { useObject, useObjectDelete } from '@siafoundation/react-renterd'
+import { useObject } from '@siafoundation/react-renterd'
 import { useFiles } from '../../contexts/files'
+import { useFileDelete } from './useFileDelete'
 
 type Props = {
   name: string
@@ -35,7 +36,7 @@ export function FileDropdownMenu({ name, path }: Props) {
     },
   })
 
-  const deleteObject = useObjectDelete()
+  const deleteFile = useFileDelete()
 
   return (
     <DropdownMenu
@@ -57,13 +58,7 @@ export function FileDropdownMenu({ name, path }: Props) {
         </DropdownMenuLeftSlot>
         Download file
       </DropdownMenuItem>
-      <DropdownMenuItem
-        onSelect={() =>
-          deleteObject.delete({
-            params: { key: path.slice(1) },
-          })
-        }
-      >
+      <DropdownMenuItem onSelect={() => deleteFile(path)}>
         <DropdownMenuLeftSlot>
           <Delete16 />
         </DropdownMenuLeftSlot>

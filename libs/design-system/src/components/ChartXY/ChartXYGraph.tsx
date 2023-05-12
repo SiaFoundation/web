@@ -219,7 +219,8 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
         rangePadding={0}
         animationTrajectory={animationTrajectory}
         // values don't make sense in stream graph
-        tickFormat={stackOffset === 'wiggle' ? () => '' : undefined}
+        // tickFormat={stackOffset === 'wiggle' ? () => '' : undefined}
+        tickFormat={() => ''}
       />
       {showTooltip && (
         <Tooltip<ChartPoint<Key>>
