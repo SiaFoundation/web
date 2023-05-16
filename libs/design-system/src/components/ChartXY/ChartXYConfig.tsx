@@ -8,6 +8,7 @@ import { Settings16 } from '../../icons/carbon'
 import { Button } from '../../core/Button'
 
 export function ChartXYConfig<Key extends string, Cat extends string>({
+  initialChartType,
   chartType,
   setChartType,
   curveType,
@@ -18,9 +19,7 @@ export function ChartXYConfig<Key extends string, Cat extends string>({
   setStackOffset,
   xAxisOrientation,
   setXAxisOrientation,
-}: // yAxisOrientation,
-// setYAxisOrientation,
-ChartXYProps<Key, Cat>) {
+}: ChartXYProps<Key, Cat>) {
   return (
     <Dialog
       trigger={
@@ -41,10 +40,19 @@ ChartXYProps<Key, Cat>) {
             onValueChange={(v) => setChartType(v as ChartType)}
             className="flex flex-col gap-1"
           >
-            <Radio value="areastack">Area Stack</Radio>
-            <Radio value="barstack">Bar Stack</Radio>
-            <Radio value="area">Area</Radio>
-            <Radio value="bargroup">Bar Group</Radio>
+            <Radio value="line">Line</Radio>
+            <Radio disabled={initialChartType === 'line'} value="areastack">
+              Area Stack
+            </Radio>
+            <Radio disabled={initialChartType === 'line'} value="barstack">
+              Bar Stack
+            </Radio>
+            <Radio disabled={initialChartType === 'line'} value="area">
+              Area
+            </Radio>
+            <Radio disabled={initialChartType === 'line'} value="bargroup">
+              Bar Group
+            </Radio>
           </RadioGroup>
         </div>
         <div className="flex flex-col gap-2">

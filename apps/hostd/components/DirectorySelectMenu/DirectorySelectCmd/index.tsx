@@ -33,6 +33,7 @@ export function DirectorySelectCmd({
     },
     config: {
       swr: {
+        revalidateOnFocus: false,
         keepPreviousData: true,
       },
     },

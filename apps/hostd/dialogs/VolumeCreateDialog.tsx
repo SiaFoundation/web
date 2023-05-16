@@ -120,6 +120,7 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
   )
 
   const selectedDir = useSystemDirectory({
+    disabled: !open,
     params: {
       path,
     },

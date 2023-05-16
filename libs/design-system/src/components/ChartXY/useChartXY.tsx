@@ -214,6 +214,7 @@ export function useChartXY<Key extends string, Cat extends string>(
     isLine,
     isStack,
     todayOffset,
+    initialChartType,
     chartType,
     curveType,
     keys,
