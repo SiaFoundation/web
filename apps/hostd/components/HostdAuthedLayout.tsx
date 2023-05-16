@@ -14,7 +14,9 @@ export function HostdAuthedLayout(
       appName="hostd"
       connectivityRoute={connectivityRoute}
       walletBalance={
-        wallet.data ? new BigNumber(wallet.data.spendable) : undefined
+        wallet.data
+          ? new BigNumber(wallet.data.spendable).plus(wallet.data.unconfirmed)
+          : undefined
       }
       {...props}
     />
