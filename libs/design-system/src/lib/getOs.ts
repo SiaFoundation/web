@@ -1,5 +1,7 @@
-export function getOs() {
-  let os = 'unknown'
+export type OS = 'unknown' | 'windows' | 'apple' | 'linux' | 'unix'
+
+export function getOs(): OS {
+  let os: OS = 'unknown'
   const navApp = navigator.userAgent.toLowerCase()
   switch (true) {
     case navApp.indexOf('win') !== -1:

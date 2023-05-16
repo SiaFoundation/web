@@ -8,6 +8,7 @@ import {
   ConfigurationPanel,
   TBToBytes,
   monthsToBlocks,
+  useOnInvalid,
 } from '@siafoundation/design-system'
 import { useCallback, useEffect, useMemo } from 'react'
 import { RenterdSidenav } from '../RenterdSidenav'
@@ -26,8 +27,7 @@ import {
   transformUpGouging,
   transformUpRedundancy,
 } from './transform'
-import { FieldErrors, useForm } from 'react-hook-form'
-import { entries } from 'lodash'
+import { useForm } from 'react-hook-form'
 import { useSiaCentralHostsNetworkAverages } from '@siafoundation/react-core'
 import { toSiacoins } from '@siafoundation/sia-js'
 
@@ -136,16 +136,7 @@ export function Config() {
     [settingUpdate, redundancy, gouging]
   )
 
-  const onInvalid = useCallback(
-    (errors: FieldErrors<typeof initialValues>) => {
-      triggerErrorToast(
-        entries(errors)
-          .map(([key, e]) => `${fields[key].title}: ${e.message}`)
-          .join(', ')
-      )
-    },
-    [fields]
-  )
+  const onInvalid = useOnInvalid(fields)
 
   const onSubmit = useMemo(
     () => form.handleSubmit(onValid, onInvalid),

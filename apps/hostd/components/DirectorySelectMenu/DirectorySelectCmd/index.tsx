@@ -3,6 +3,9 @@ import { Page } from '../../CmdRoot/types'
 import { FolderIcon, Text } from '@siafoundation/design-system'
 import { DirectorySelectEmpty } from './DirectorySelectEmpty'
 import { useSystemDirectory } from '@siafoundation/react-hostd'
+import { useHostOSPathSeparator } from '../../../hooks/useHostOSPathSeparator'
+import { getChildDirectoryPath, getParentDir } from '../../../lib/system'
+import { DirectorySelectError } from './DirectorySelectError'
 
 export const volumesDirectorySelectPage = {
   namespace: 'volumes/directorySelect',
@@ -23,9 +26,10 @@ export function DirectorySelectCmd({
   beforeSelect?: () => void
   afterSelect?: () => void
 }) {
+  const separator = useHostOSPathSeparator()
   const dir = useSystemDirectory({
     params: {
-      path: path || '/',
+      path,
     },
     config: {
       swr: {
@@ -43,17 +47,19 @@ export function DirectorySelectCmd({
       currentPage={currentPage}
       commandPage={volumesDirectorySelectPage}
     >
-      {dir.data.path !== '/' ? (
+      {dir.data.path !== separator ? (
         <CommandItemSearch
           commandPage={volumesDirectorySelectPage}
           currentPage={currentPage}
           key=".."
           onSelect={() => {
+            if (!dir.data.path) {
+              return
+            }
             if (beforeSelect) {
               beforeSelect()
             }
-            const pd = `${dir.data.path.split('/').slice(0, -1).join('/')}`
-            setPath(pd)
+            setPath(getParentDir(dir.data.path, separator))
             if (afterSelect) {
               afterSelect()
             }
@@ -71,36 +77,42 @@ export function DirectorySelectCmd({
           </div>
         </CommandItemSearch>
       ) : null}
-      {dir.data.directories?.map((path) => {
-        return (
-          <CommandItemSearch
-            commandPage={volumesDirectorySelectPage}
-            currentPage={currentPage}
-            key={path}
-            onSelect={() => {
-              if (beforeSelect) {
-                beforeSelect()
-              }
-              const cwd = dir.data.path === '/' ? '/' : `${dir.data.path}/`
-              setPath(`${cwd}${path}`)
-              if (afterSelect) {
-                afterSelect()
-              }
-            }}
-            value={path}
-          >
-            <div className="flex items-center gap-2 overflow-hidden">
-              <Text
-                color="verySubtle"
-                className="group-data-[selected=true]:text-gray-1000 dark:group-data-[selected=true]:text-graydark-1000"
-              >
-                <FolderIcon size={16} />
-              </Text>
-              <Text ellipsis>{path}</Text>
-            </div>
-          </CommandItemSearch>
-        )
-      })}
+      {!!dir.error && <DirectorySelectError />}
+      {!dir.error &&
+        dir.data.directories?.map((childDirectoryPath) => {
+          return (
+            <CommandItemSearch
+              commandPage={volumesDirectorySelectPage}
+              currentPage={currentPage}
+              key={childDirectoryPath}
+              onSelect={() => {
+                if (beforeSelect) {
+                  beforeSelect()
+                }
+                const path = getChildDirectoryPath({
+                  currentPath: dir.data.path,
+                  childPath: childDirectoryPath,
+                  separator,
+                })
+                setPath(path)
+                if (afterSelect) {
+                  afterSelect()
+                }
+              }}
+              value={childDirectoryPath}
+            >
+              <div className="flex items-center gap-2 overflow-hidden">
+                <Text
+                  color="verySubtle"
+                  className="group-data-[selected=true]:text-gray-1000 dark:group-data-[selected=true]:text-graydark-1000"
+                >
+                  <FolderIcon size={16} />
+                </Text>
+                <Text ellipsis>{childDirectoryPath}</Text>
+              </div>
+            </CommandItemSearch>
+          )
+        })}
     </CommandGroup>
   )
 }

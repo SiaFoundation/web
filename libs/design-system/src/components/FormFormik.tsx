@@ -257,9 +257,6 @@ export function FieldLabelAndErrorFormik({
     (withStatusError && formik.status?.error)
   const errorMessage =
     formik.errors[name] || (withStatusError && formik.status?.error)
-  if (formik.errors[name]) {
-    console.log(formik.errors[name], formik.touched[name])
-  }
   return (
     (title || showError) && (
       <div className={cx('flex justify-between items-center gap-4', className)}>

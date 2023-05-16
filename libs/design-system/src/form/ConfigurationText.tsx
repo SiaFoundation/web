@@ -1,9 +1,8 @@
-import { useCallback } from 'react'
 import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
 import { FieldLabelAndError } from '../components/Form'
 import { TextField } from '../core/TextField'
 import { ConfigurationTipText } from './ConfigurationTipText'
-import { ConfigField } from './configurationFields'
+import { ConfigField, useRegisterForm } from './configurationFields'
 
 type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
@@ -17,21 +16,11 @@ export function ConfigurationText<
   Categories extends string
 >({ name, form, field, type }: Props<Values, Categories>) {
   const { placeholder, suggestion, suggestionTip } = field
-  const value = form.getValues(name)
-  const error =
-    form.formState.touchedFields[name] && !!form.formState.errors[name]
-  const { onBlur } = form.register(name, field.validation)
-  const onChange = useCallback(
-    (val: PathValue<Values, Path<Values>>) => {
-      form.setValue(name, val, {
-        shouldValidate: true,
-        shouldDirty: true,
-        shouldTouch: true,
-      })
-      field.trigger?.forEach((t) => form.trigger(t))
-    },
-    [name, form, field]
-  )
+  const { onChange, onBlur, value, error } = useRegisterForm({
+    name,
+    form,
+    field,
+  })
   return (
     <div className="flex flex-col gap-3 items-end">
       <div className="flex flex-col gap-3 w-[220px]">

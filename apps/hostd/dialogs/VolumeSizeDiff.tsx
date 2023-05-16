@@ -11,7 +11,7 @@ type Props = {
 
 export function VolumeSizeDiff({
   label,
-  newSizeGB = 0,
+  newSizeGB,
   currentSizeGB = 0,
   maxSizeGB = 0,
 }: Props) {
@@ -25,7 +25,7 @@ export function VolumeSizeDiff({
         <div
           className={cx(
             'absolute h-1 rounded-tl-lg rounded-bl-lg',
-            isNewSizeSmaller
+            newSizeGB !== undefined && isNewSizeSmaller
               ? 'bg-red-500 dark:bg-red-500'
               : 'bg-gray-700 dark:bg-graydark-800',
             isNewSizeBigger ? 'z-10' : 'z-0'
@@ -39,7 +39,7 @@ export function VolumeSizeDiff({
             'absolute h-1 rounded-tl-lg rounded-bl-lg',
             notEnoughSpace
               ? 'bg-amber-500 dark:bg-amber-500'
-              : isNewSizeBigger
+              : newSizeGB !== undefined && isNewSizeBigger
               ? 'bg-green-500 dark:bg-green-500'
               : 'bg-gray-700 dark:bg-graydark-800',
             isNewSizeSmaller ? 'z-10' : 'z-0'
@@ -51,7 +51,7 @@ export function VolumeSizeDiff({
       </div>
       <div className="h-4 flex justify-between">
         {label || <div />}
-        {maxSizeGB ? (
+        {newSizeGB !== undefined && maxSizeGB ? (
           <Text size="12" color="subtle">{`${(
             (newSizeGB / maxSizeGB) *
             100

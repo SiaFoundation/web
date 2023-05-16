@@ -5,7 +5,7 @@ import {
   SyncerConnectPeerDialog,
   WalletSingleAddressDetailsDialog,
 } from '@siafoundation/design-system'
-import { VolumeAddDialog } from '../dialogs/VolumeAddDialog'
+import { VolumeCreateDialog } from '../dialogs/VolumeCreateDialog'
 import { VolumeResizeDialog } from '../dialogs/VolumeResizeDialog'
 import { VolumeDeleteDialog } from '../dialogs/VolumeDeleteDialog'
 import { useSyncerConnect, useWallet } from '@siafoundation/react-hostd'
@@ -141,7 +141,7 @@ export function Dialogs() {
         open={dialog === 'connectPeer'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
-      <VolumeAddDialog
+      <VolumeCreateDialog
         open={dialog === 'volumeCreate'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />

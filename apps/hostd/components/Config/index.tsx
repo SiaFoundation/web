@@ -8,6 +8,7 @@ import {
   Warning16,
   CheckmarkFilled16,
   ConfigurationPanel,
+  useOnInvalid,
 } from '@siafoundation/design-system'
 import { useCallback, useEffect, useMemo } from 'react'
 import { HostdSidenav } from '../HostdSidenav'
@@ -22,8 +23,7 @@ import {
 } from '@siafoundation/react-hostd'
 import { fields, initialValues } from './fields'
 import { transformDown, transformUp } from './transform'
-import { FieldErrors, useForm } from 'react-hook-form'
-import { entries } from 'lodash'
+import { useForm } from 'react-hook-form'
 import { AnnounceButton } from './AnnounceButton'
 
 export function Config() {
@@ -83,13 +83,7 @@ export function Config() {
     [form, settings, settingsUpdate, dynDNSCheck]
   )
 
-  const onInvalid = useCallback((errors: FieldErrors<typeof initialValues>) => {
-    triggerErrorToast(
-      entries(errors)
-        .map(([key, e]) => `${fields[key].title}: ${e.message}`)
-        .join(', ')
-    )
-  }, [])
+  const onInvalid = useOnInvalid(fields)
 
   const onSubmit = useMemo(
     () => form.handleSubmit(onValid, onInvalid),

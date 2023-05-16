@@ -8,11 +8,12 @@ import {
 import { DirectorySelectEmpty } from './DirectorySelectCmd/DirectorySelectEmpty'
 
 type Props = {
+  defaultPath: string
   onChange: (path: string) => void
 }
 
-export function DirectorySelectMenu({ onChange }: Props) {
-  const [path, setPath] = useState('')
+export function DirectorySelectMenu({ defaultPath, onChange }: Props) {
+  const [path, setPath] = useState(defaultPath)
 
   useEffect(() => {
     onChange(path)
@@ -22,7 +23,8 @@ export function DirectorySelectMenu({ onChange }: Props) {
   return (
     <Command label="Select volume" shouldFilter={false}>
       <Panel className="h-[200px] p-1 overflow-hidden">
-        <ScrollArea>
+        {/* key added because scroll bar height was glitching when number of results changed */}
+        <ScrollArea keyToResetScrollbars={path}>
           <Command.List>
             <Command.Empty>
               <DirectorySelectEmpty search={path} />
