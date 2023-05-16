@@ -96,7 +96,13 @@ export function Wallet() {
       title="Wallet"
       actions={
         <WalletLayoutActions
-          sc={wallet.data ? new BigNumber(wallet.data.spendable) : undefined}
+          sc={
+            wallet.data
+              ? new BigNumber(wallet.data.spendable).plus(
+                  wallet.data.unconfirmed
+                )
+              : undefined
+          }
           receiveSiacoin={() => openDialog('addressDetails')}
           sendSiacoin={() => openDialog('sendSiacoin')}
         />
