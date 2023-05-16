@@ -22,7 +22,7 @@ export function useFileDelete() {
             Delete
           </>
         ),
-        variant: 'accent',
+        variant: 'red',
         body: (
           <div className="flex flex-col">
             <Paragraph size="14">

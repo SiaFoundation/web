@@ -201,14 +201,14 @@ const Content = React.forwardRef<HTMLDivElement, ContentProps>(
         {controls && (
           <DialogControls separator={showSeparator}>{controls}</DialogControls>
         )}
-        <DialogPrimitive.Close asChild>
+        <DialogPrimitive.Close asChild type="button">
           <div
             className={cx(
               'appearance-none',
               closeClassName || 'absolute top-3.5 right-2'
             )}
           >
-            <Button size="small" variant="ghost">
+            <Button size="small" variant="ghost" type="button">
               <Close24 />
             </Button>
           </div>
