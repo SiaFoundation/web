@@ -24,12 +24,11 @@ import { Contract, ContractStatus, WalletTransaction } from './siaTypes'
 export type StateHost = {
   publicKey: string
   walletAddress: string
-  buildState: {
-    network: string
-    version: string
-    commit: string
-    buildTime: string
-  }
+  network: string
+  version: string
+  commit: string
+  OS: string
+  buildTime: string
 }
 
 export function useStateHost(args?: HookArgsSwr<void, StateHost>) {
@@ -59,7 +58,7 @@ export function useNetworkBlockHeight(): number {
   const res = useSWR(
     state,
     () => {
-      if (state.data?.buildState.network === 'zen') {
+      if (state.data?.network === 'zen') {
         return getTestnetZenBlockHeight()
       }
       return getMainnetBlockHeight()

@@ -253,7 +253,7 @@ export const fields: ConfigFields<typeof initialValues, Categories> = {
 
   // RHP3 settings
   accountExpiry: {
-    title: 'Account expiry',
+    title: 'Expiry',
     type: 'number',
     category: 'RHP3',
     units: 'days',
@@ -269,7 +269,7 @@ export const fields: ConfigFields<typeof initialValues, Categories> = {
     },
   },
   maxAccountBalance: {
-    title: 'Maximum account balance',
+    title: 'Maximum balance',
     type: 'siacoin',
     category: 'RHP3',
     description: (

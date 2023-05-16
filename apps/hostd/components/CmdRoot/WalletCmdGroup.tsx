@@ -20,7 +20,14 @@ type Props = {
 export function WalletCmdGroup({ currentPage, parentPage, pushPage }: Props) {
   const { openDialog, closeDialog } = useDialog()
   const router = useRouter()
-  const state = useStateHost()
+  const state = useStateHost({
+    config: {
+      swr: {
+        revalidateOnFocus: false,
+        keepPreviousData: true,
+      },
+    },
+  })
   return (
     <CommandGroup currentPage={currentPage} commandPage={commandPage}>
       <CommandItemNav

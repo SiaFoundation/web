@@ -1,10 +1,7 @@
-import { useSystemDirectory } from '@siafoundation/react-hostd'
+import { useStateHost } from '@siafoundation/react-hostd'
 
 export function useHostOSPathSeparator() {
-  const root = useSystemDirectory({
-    params: {
-      path: '~',
-    },
+  const state = useStateHost({
     config: {
       swr: {
         revalidateOnFocus: false,
@@ -12,5 +9,5 @@ export function useHostOSPathSeparator() {
       },
     },
   })
-  return root.data?.path.includes(':\\') ? '\\' : '/'
+  return state.data?.OS === 'windows' ? '\\' : '/'
 }
