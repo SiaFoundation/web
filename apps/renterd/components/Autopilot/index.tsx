@@ -10,6 +10,7 @@ import {
   Save16,
   ConfigurationPanel,
   triggerErrorToast,
+  useOnInvalid,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { useCallback, useEffect, useMemo } from 'react'
@@ -24,8 +25,7 @@ import {
 import { humanBytes, toHastings, toScale } from '@siafoundation/sia-js'
 import { initialValues, fields } from './fields'
 import { transformDown, transformUp } from './transform'
-import { FieldErrors, useForm } from 'react-hook-form'
-import { entries } from 'lodash'
+import { useForm } from 'react-hook-form'
 
 export function Autopilot() {
   const { openDialog } = useDialog()
@@ -62,13 +62,7 @@ export function Autopilot() {
     [config.data, configUpdate]
   )
 
-  const onInvalid = useCallback((errors: FieldErrors<typeof initialValues>) => {
-    triggerErrorToast(
-      entries(errors)
-        .map(([key, e]) => `${fields[key].title}: ${e.message}`)
-        .join(', ')
-    )
-  }, [])
+  const onInvalid = useOnInvalid(fields)
 
   const onSubmit = useMemo(
     () => form.handleSubmit(onValid, onInvalid),

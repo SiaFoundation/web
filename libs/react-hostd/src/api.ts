@@ -522,5 +522,5 @@ type SystemDirResponse = {
 export function useSystemDirectory(
   args: HookArgsSwr<{ path: string }, SystemDirResponse>
 ) {
-  return useGetSwr({ ...args, route: '/system/dir/:path' })
+  return useGetSwr({ ...args, route: '/system/dir' })
 }

@@ -1,14 +1,8 @@
-import { useCallback } from 'react'
 import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
 import { FieldLabelAndError } from '../components/Form'
-import { Option, Select } from '../core/Select'
+import { Switch } from '../core/Switch'
 import { ConfigurationTipText } from './ConfigurationTipText'
-import { ConfigField } from './configurationFields'
-
-type Option = {
-  value: string
-  label: string
-}
+import { ConfigField, useRegisterForm } from './configurationFields'
 
 type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
@@ -16,33 +10,23 @@ type Props<Values extends FieldValues, Categories extends string> = {
   field: ConfigField<Values, Categories>
 }
 
-export function ConfigurationSelect<
+export function ConfigurationSwitch<
   Values extends FieldValues,
   Categories extends string
 >({ name, form, field }: Props<Values, Categories>) {
-  const { options, suggestion, suggestionTip } = field
-  const value = form.getValues(name)
-  const error =
-    form.formState.touchedFields[name] && !!form.formState.errors[name]
-  const { onBlur } = form.register(name, field.validation)
-  const onChange = useCallback(
-    (val: PathValue<Values, Path<Values>>) => {
-      form.setValue(name, val, {
-        shouldValidate: true,
-        shouldDirty: true,
-        shouldTouch: true,
-      })
-      field.trigger?.forEach((t) => form.trigger(t))
-    },
-    [name, form, field]
-  )
+  const { suggestion, suggestionTip } = field
+  const { onChange, onBlur, value, error } = useRegisterForm({
+    name,
+    field,
+    form,
+  })
   return (
     <div className="flex flex-col gap-3 items-end">
       <div className="flex flex-col gap-3 w-[220px]">
         <div className="flex justify-end w-full">
-          <Select
-            size="small"
-            value={value}
+          <Switch
+            size="medium"
+            checked={value}
             state={
               error
                 ? 'invalid'
@@ -50,20 +34,14 @@ export function ConfigurationSelect<
                 ? 'valid'
                 : 'default'
             }
-            onChange={(e) => {
-              onChange(e.currentTarget.value as PathValue<Values, Path<Values>>)
+            onCheckedChange={(val) => {
+              onChange(val as PathValue<Values, Path<Values>>)
             }}
             onBlur={(e) => {
               onBlur(e)
               onChange(value)
             }}
-          >
-            {options?.map((o) => (
-              <Option key={o.value} value={o.value}>
-                {o.label}
-              </Option>
-            ))}
-          </Select>
+          />
         </div>
         <div className="flex flex-col gap-2">
           {suggestion !== undefined && suggestionTip && (

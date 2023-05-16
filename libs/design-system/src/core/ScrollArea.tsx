@@ -7,12 +7,13 @@ type Props = {
   children: React.ReactNode
   className?: string
   style?: React.CSSProperties
+  keyToResetScrollbars?: string
 }
 
 export const ScrollArea = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Viewport>,
   Props
->(({ id, className, style, children }, ref) => (
+>(({ id, className, style, children, keyToResetScrollbars }, ref) => (
   <ScrollAreaPrimitive.Root
     className={cx('w-full h-full overflow-hidden', className)}
     style={style}
@@ -26,6 +27,7 @@ export const ScrollArea = React.forwardRef<
       {children}
     </ScrollAreaPrimitive.Viewport>
     <ScrollAreaPrimitive.Scrollbar
+      key={keyToResetScrollbars ? `v-${keyToResetScrollbars}` : undefined}
       orientation="vertical"
       className="z-10 flex select-none touch-none transition-colors hover:bg-black/20 w-1.5 m-px"
     >
@@ -37,6 +39,7 @@ export const ScrollArea = React.forwardRef<
       />
     </ScrollAreaPrimitive.Scrollbar>
     <ScrollAreaPrimitive.Scrollbar
+      key={keyToResetScrollbars ? `h-${keyToResetScrollbars}` : undefined}
       orientation="horizontal"
       className="z-10 flex flex-col select-none touch-none transition-colors duration-1000 hover:bg-black/20 h-1.5 m-px"
     >
