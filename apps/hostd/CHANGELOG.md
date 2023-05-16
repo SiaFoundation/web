@@ -1,5 +1,21 @@
 # hostd
 
+## 0.10.0
+
+### Minor Changes
+
+- ec02c30: Create and resize volume features now support Windows file paths.
+- fef9e82: Dynamic DNS configuration now supports the required provider specific options.
+- d1561e0: Wallet send siacoin feature now correctly reports successful transactions.
+- 7e096cb: The configuration RHP3 section is now called Accounts.
+- e80345c: Contracts explorer payout column values are now accurate.
+- ec02c30: The create volume directory selection now reports the correct free space.
+- fef9e82: Configuration tabs now include more specific validation errors and feedback.
+- d1561e0: Wallet transaction list now shows siacoin value for pending transactions.
+- fef9e82: Dynamic DNS now supports cloudflare.
+- c7d2288: Broadcasting host announcement now requires confirmation and shows the siacoin transaction cost.
+- fef9e82: Configuration no longer includes a window size setting.
+
 ## 0.9.0
 
 ### Minor Changes

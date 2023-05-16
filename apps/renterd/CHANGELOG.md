@@ -1,5 +1,14 @@
 # renterd
 
+## 0.15.0
+
+### Minor Changes
+
+- c7d2288: Deleting a file now requires confirmation.
+- fef9e82: Configuration tabs now include more specific validation errors and feedback.
+- 017c754: Configuration now shows average network prices based off Sia Central data.
+- eef3a74: The contracts feature has been updated to use the new endpoint.
+
 ## 0.14.0
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # @siafoundation/react-hostd
 
+## 0.4.0
+
+### Minor Changes
+
+- ec02c30: useSystemDirectory path parameter is now a the query params.
+- c7d2288: Added useTxPoolFee.
+- 7e096cb: useStateHost response structure is now correct and includes OS.
+
 ## 0.3.0
 
 ### Minor Changes

@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.48.0
+
+### Minor Changes
+
+- c7d2288: Add wrapEllipsis prop to Text.
+- d1561e0: Modified how the EntityList displays the unconfirmed transaction status.
+- fef9e82: SiacoinField inputs now pass updated values immediately on change.
+- b9b5484: Link and LinkButton set rel to noopener when target is \_blank.
+- fef9e82: Configuration field components are now fully config driven and based on react-hook-form.
+- ec02c30: Configuration and form system now has Field components.
+- c7d2288: Refine toast text overflow and wrap behaviour.
+- c7d2288: Added a generic ConfirmDialog.
+- fef9e82: SiacoinField now does not revalidate exchange rates on focus.
+- fef9e82: Naming of time utility functions has been cleaned up.
+
 ## 0.47.0
 
 ### Minor Changes
