@@ -76,7 +76,7 @@ export function VolumeResizeDialog({ trigger, open, onOpenChange }: Props) {
     },
   })
   const dir = useSystemDirectory({
-    disabled: !volume.data,
+    disabled: !open || !volume.data,
     params: {
       path: volume.data?.localPath
         .split(separator)

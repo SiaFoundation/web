@@ -23,7 +23,7 @@ export function DirectorySelectMenu({ defaultPath, onChange }: Props) {
   return (
     <Command label="Select volume" shouldFilter={false}>
       <Panel className="h-[200px] p-1 overflow-hidden">
-        {/* key added because scroll bar height was glitching when number of results changed */}
+        {/* key added because scroll bar height was glitching when number of results changed on windows */}
         <ScrollArea keyToResetScrollbars={path}>
           <Command.List>
             <Command.Empty>
