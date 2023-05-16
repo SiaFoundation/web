@@ -204,7 +204,7 @@ export function Config() {
           form={form}
         />
         <ConfigurationPanel
-          title="RHP3"
+          title="Accounts"
           category="RHP3"
           fields={fields}
           form={form}
