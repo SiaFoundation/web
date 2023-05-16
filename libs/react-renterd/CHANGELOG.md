@@ -1,5 +1,11 @@
 # @siafoundation/react-renterd
 
+## 0.3.0
+
+### Minor Changes
+
+- eef3a74: useContracts updated to use the /bus/contracts endpoint.
+
 ## 0.2.0
 
 ### Minor Changes

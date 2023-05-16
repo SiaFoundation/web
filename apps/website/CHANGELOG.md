@@ -1,5 +1,11 @@
 # website
 
+## 0.37.0
+
+### Minor Changes
+
+- 1410196: The website now has a hostd landing page.
+
 ## 0.36.0
 
 ### Minor Changes

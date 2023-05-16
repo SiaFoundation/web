@@ -1,5 +1,11 @@
 # @siafoundation/react-core
 
+## 0.10.0
+
+### Minor Changes
+
+- fef9e82: usePut and useDelete now include default data transform in after mutators.
+
 ## 0.9.0
 
 ### Minor Changes
