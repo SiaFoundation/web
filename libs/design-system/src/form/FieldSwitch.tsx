@@ -7,12 +7,13 @@ type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
   form: UseFormReturn<Values>
   field: ConfigField<Values, Categories>
+  size?: React.ComponentProps<typeof Switch>['size']
 }
 
 export function FieldSwitch<
   Values extends FieldValues,
   Categories extends string
->({ name, form, field }: Props<Values, Categories>) {
+>({ name, form, field, size = 'medium' }: Props<Values, Categories>) {
   const { onChange, onBlur, value, error } = useRegisterForm({
     name,
     field,
@@ -21,7 +22,7 @@ export function FieldSwitch<
   return (
     <FieldGroup title={field.title} name={name} form={form}>
       <Switch
-        size="medium"
+        size={size}
         checked={value}
         state={
           error

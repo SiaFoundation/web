@@ -63,18 +63,19 @@ export function buildToastOptions({
       'text-gray-1100 dark:text-white',
       'max-w-[800px] overflow-hidden text-ellipsis',
       '[&>div]:overflow-hidden',
+      '[&>div]:flex-1',
       className
     ),
     success: {
       icon: (
-        <div>
+        <div className="!flex-none w-[20px]">
           <CheckmarkOutline16 className="w-5 text-green-600" />
         </div>
       ),
     },
     error: {
       icon: (
-        <div>
+        <div className="!flex-none w-[20px]">
           <CloseOutline16 className="w-5 text-red-600" />
         </div>
       ),
