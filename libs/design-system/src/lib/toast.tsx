@@ -68,14 +68,14 @@ export function buildToastOptions({
     ),
     success: {
       icon: (
-        <div className="!flex-none w-[20px]">
+        <div className="!flex-none w-5">
           <CheckmarkOutline16 className="w-5 text-green-600" />
         </div>
       ),
     },
     error: {
       icon: (
-        <div className="!flex-none w-[20px]">
+        <div className="!flex-none w-5">
           <CloseOutline16 className="w-5 text-red-600" />
         </div>
       ),

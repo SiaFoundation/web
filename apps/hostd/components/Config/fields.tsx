@@ -380,7 +380,7 @@ export const fields: ConfigFields<typeof initialValues, Categories> = {
   },
   dnsNoIpPassword: {
     type: 'text',
-    title: 'password',
+    title: 'Password',
     category: 'DNS',
     description: <>No-IP password.</>,
     show: (values) => values.dnsProvider === 'noip',

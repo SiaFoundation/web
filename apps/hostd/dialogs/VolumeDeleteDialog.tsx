@@ -71,7 +71,6 @@ export function VolumeDeleteDialog({ trigger, open, onOpenChange }: Props) {
 
   const onSubmit = useCallback(
     async (values: typeof defaultValues) => {
-      console.log('hello')
       const response = await volumeDelete.delete({
         params: {
           id: volume.data?.ID,
