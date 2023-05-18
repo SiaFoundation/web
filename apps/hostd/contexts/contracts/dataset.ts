@@ -30,7 +30,6 @@ function getContractFields(c: Contract): ContractData {
   const total = accountFunding
     .plus(egress)
     .plus(ingress)
-    .plus(riskedCollateral)
     .plus(rpc)
     .plus(storage)
 

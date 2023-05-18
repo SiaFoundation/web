@@ -177,6 +177,15 @@ export const columns: ContractsTableColumn[] = (
       ),
     },
     {
+      id: 'usageRiskedCollateral',
+      label: 'risked collateral',
+      category: 'financial',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data: { usage } }) => (
+        <ValueSc size="12" value={usage.riskedCollateral} />
+      ),
+    },
+    {
       id: 'usageTotal',
       label: 'total usage',
       category: 'financial',
@@ -218,15 +227,6 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { usage } }) => <ValueSc size="12" value={usage.rpc} />,
-    },
-    {
-      id: 'usageRiskedCollateral',
-      label: 'risked collateral usage',
-      category: 'financial',
-      contentClassName: 'w-[120px] justify-end',
-      render: ({ data: { usage } }) => (
-        <ValueSc size="12" value={usage.riskedCollateral} />
-      ),
     },
   ] as ContractsTableColumn[]
 ).map(
