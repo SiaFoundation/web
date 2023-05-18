@@ -6,11 +6,10 @@ import { useConnectivity } from './useConnectivity'
 type Routes = {
   home: string
   lockscreen: string
-  syncscreen: string
 }
 
 export function getRouteToSaveAsPrev(router: NextRouter, routes: Routes) {
-  if ([routes.syncscreen, routes.lockscreen].includes(router.pathname)) {
+  if ([routes.lockscreen].includes(router.pathname)) {
     return routes.home
   }
   return router.pathname

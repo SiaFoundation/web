@@ -39,58 +39,73 @@ export function Profile() {
       isSynced={syncStatus.isSynced}
       percent={syncStatus.percent}
       nodeBlockHeight={syncStatus.nodeBlockHeight}
-      networkBlockHeight={syncStatus.networkBlockHeight}
+      estimatedBlockHeight={syncStatus.estimatedBlockHeight}
       firstTimeSyncing={syncStatus.firstTimeSyncing}
       moreThan100BlocksToSync={syncStatus.moreThan100BlocksToSync}
     >
-      <div className="flex gap-1 justify-between items-center">
-        <Label size="14" color="subtle">
+      <div className="flex gap-4 justify-between items-center">
+        <Label size="14" color="subtle" noWrap className="w-[100px]">
           Net address
         </Label>
-        <ValueCopyable
-          size="14"
-          value={settings.data?.netAddress}
-          maxLength={50}
-          label="network address"
-        />
+        <div className="flex-1 flex justify-end overflow-hidden">
+          <ValueCopyable
+            className="overflow-hidden"
+            size="14"
+            value={settings.data?.netAddress}
+            maxLength={50}
+            label="network address"
+          />
+        </div>
       </div>
-      <div className="flex gap-1 justify-between items-center">
-        <Label size="14" color="subtle">
+      <div className="flex gap-4 justify-between items-center">
+        <Label size="14" color="subtle" noWrap className="w-[100px]">
           Public key
         </Label>
-        <ValueCopyable
-          size="14"
-          value={state.data?.publicKey}
-          label="public key"
-        />
+        <div className="flex-1 flex justify-end overflow-hidden">
+          <ValueCopyable
+            className="overflow-hidden"
+            size="14"
+            value={state.data?.publicKey}
+            maxLength={50}
+            label="public key"
+          />
+        </div>
       </div>
-      <div className="flex gap-2 justify-between items-center">
-        <Label size="14" color="subtle">
+      <div className="flex gap-4 justify-between items-center">
+        <Label size="14" color="subtle" noWrap className="w-[100px]">
           Wallet address
         </Label>
-        <ValueCopyable
-          size="14"
-          value={state.data?.walletAddress}
-          type="address"
-        />
+        <div className="flex-1 flex justify-end overflow-hidden">
+          <ValueCopyable
+            className="overflow-hidden"
+            size="14"
+            maxLength={50}
+            value={state.data?.walletAddress}
+            type="address"
+          />
+        </div>
       </div>
-      <div className="flex gap-2 justify-between items-center">
-        <Label size="14" color="subtle">
+      <div className="flex gap-4 justify-between items-center">
+        <Label size="14" color="subtle" noWrap className="w-[100px]">
           Network
         </Label>
-        <Text size="14">{state.data?.network}</Text>
+        <div className="flex-1 flex justify-end overflow-hidden">
+          <Text size="14">{state.data?.network}</Text>
+        </div>
       </div>
-      <div className="flex gap-2 justify-between items-center">
-        <Label size="14" color="subtle">
+      <div className="flex gap-4 justify-between items-center">
+        <Label size="14" color="subtle" noWrap className="w-[100px]">
           Version
         </Label>
-        <Link
-          size="14"
-          href={`https://github.com/SiaFoundation/hostd/tree/${state.data?.commit}`}
-          target="_blank"
-        >
-          {state.data?.version}
-        </Link>
+        <div className="flex-1 flex justify-end overflow-hidden">
+          <Link
+            size="14"
+            href={`https://github.com/SiaFoundation/hostd/tree/${state.data?.commit}`}
+            target="_blank"
+          >
+            {state.data?.version}
+          </Link>
+        </div>
       </div>
     </DaemonProfile>
   )

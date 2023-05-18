@@ -82,6 +82,7 @@ export function Wallet() {
   //   )
 
   const balance = useWalletBalance()
+  // TODO: add API to return scanHeight, move to isWalletSynced just like hostd
   const { isSynced } = useSyncStatus()
 
   return (

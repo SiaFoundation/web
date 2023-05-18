@@ -38,7 +38,7 @@ export function Profile() {
       isSynced={syncStatus.isSynced}
       percent={syncStatus.percent}
       nodeBlockHeight={syncStatus.nodeBlockHeight}
-      networkBlockHeight={syncStatus.networkBlockHeight}
+      estimatedBlockHeight={syncStatus.estimatedBlockHeight}
       firstTimeSyncing={syncStatus.firstTimeSyncing}
       moreThan100BlocksToSync={syncStatus.moreThan100BlocksToSync}
     >

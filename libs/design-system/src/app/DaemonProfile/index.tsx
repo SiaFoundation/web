@@ -12,7 +12,7 @@ type Props = {
   isSynced: boolean
   percent: number
   nodeBlockHeight: number
-  networkBlockHeight: number
+  estimatedBlockHeight: number
   firstTimeSyncing: boolean
   moreThan100BlocksToSync: boolean
   children?: React.ReactNode
@@ -25,7 +25,7 @@ export function DaemonProfile({
   isSynced,
   percent,
   nodeBlockHeight,
-  networkBlockHeight,
+  estimatedBlockHeight,
   firstTimeSyncing,
   moreThan100BlocksToSync,
   children,
@@ -43,7 +43,7 @@ export function DaemonProfile({
       }}
       trigger={
         <div className="relative hover:scale-105 transition-transform">
-          {isSynced || percent === 100 ? null : (
+          {isSynced || percent === 100 || percent === 0 ? null : (
             <div className="absolute -bottom-2.5 w-full flex justify-center">
               <Text
                 className="bg-amber-500 py-px px-1 rounded-sm scale-75"
@@ -58,14 +58,20 @@ export function DaemonProfile({
       }
     >
       <div className="flex flex-col gap-2 px-1 pt-1 pb-2 w-[300px]">
-        <Header name={name} peerCount={peerCount} connectPeer={connectPeer} />
+        <Header
+          nodeBlockHeight={nodeBlockHeight}
+          isSynced={isSynced}
+          name={name}
+          peerCount={peerCount}
+          connectPeer={connectPeer}
+        />
         {isSynced ? (
           <Separator className="w-full mb-0.5" />
         ) : (
           <SyncStatus
             percent={percent}
             nodeBlockHeight={nodeBlockHeight}
-            networkBlockHeight={networkBlockHeight}
+            networkBlockHeight={estimatedBlockHeight}
             moreThan100BlocksToSync={moreThan100BlocksToSync}
           />
         )}

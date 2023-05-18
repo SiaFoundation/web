@@ -3,4 +3,4 @@
 'renterd': minor
 ---
 
-Contract timelines now use estimated block height for current height.
+Contract timelines and other features based on block height now use estimated block height for current height until synced.

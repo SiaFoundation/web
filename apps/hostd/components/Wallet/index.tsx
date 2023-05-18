@@ -91,7 +91,7 @@ export function Wallet() {
     [metrics.data]
   )
 
-  const { isSynced } = useSyncStatus()
+  const { isWalletSynced } = useSyncStatus()
 
   return (
     <HostdAuthedLayout
@@ -101,7 +101,7 @@ export function Wallet() {
       title="Wallet"
       actions={
         <WalletLayoutActions
-          isSynced={isSynced}
+          isSynced={isWalletSynced}
           sc={
             wallet.data
               ? new BigNumber(wallet.data.spendable).plus(
@@ -114,7 +114,7 @@ export function Wallet() {
         />
       }
       stats={
-        !isSynced && (
+        !isWalletSynced && (
           <div className="flex gap-2 items-center">
             <Text color="amber">
               <Warning16 />

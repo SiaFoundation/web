@@ -53,7 +53,7 @@ export function useStateConsensus(args?: HookArgsSwr<void, StateConsensus>) {
   })
 }
 
-export function useNetworkBlockHeight(): number {
+export function useEstimatedNetworkBlockHeight(): number {
   const state = useStateHost({
     config: {
       swr: {

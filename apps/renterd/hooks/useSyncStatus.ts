@@ -1,7 +1,7 @@
 import { useAppSettings } from '@siafoundation/react-core'
 import {
   useConsensusState,
-  useNetworkBlockHeight,
+  useEstimatedNetworkBlockHeight,
 } from '@siafoundation/react-renterd'
 
 export function useSyncStatus() {
@@ -13,31 +13,31 @@ export function useSyncStatus() {
       },
     },
   })
-  const networkBlockHeight = useNetworkBlockHeight()
+  const estimatedBlockHeight = useEstimatedNetworkBlockHeight()
 
   const nodeBlockHeight = state.data ? state.data?.BlockHeight : 0
 
   const percent =
-    isUnlocked && nodeBlockHeight && networkBlockHeight
+    isUnlocked && nodeBlockHeight && estimatedBlockHeight
       ? Number(
-          (Math.min(nodeBlockHeight / networkBlockHeight, 1) * 100).toFixed(1)
+          (Math.min(nodeBlockHeight / estimatedBlockHeight, 1) * 100).toFixed(1)
         )
       : 0
 
   const moreThan100BlocksToSync =
-    nodeBlockHeight && networkBlockHeight
-      ? networkBlockHeight - nodeBlockHeight > 100
+    nodeBlockHeight && estimatedBlockHeight
+      ? estimatedBlockHeight - nodeBlockHeight > 100
       : false
 
   const firstTimeSyncing =
-    nodeBlockHeight && networkBlockHeight
-      ? networkBlockHeight - nodeBlockHeight > 50_000
+    nodeBlockHeight && estimatedBlockHeight
+      ? estimatedBlockHeight - nodeBlockHeight > 50_000
       : false
 
   return {
     isSynced: state.data?.Synced,
     nodeBlockHeight,
-    networkBlockHeight,
+    estimatedBlockHeight,
     percent,
     moreThan100BlocksToSync,
     firstTimeSyncing,
