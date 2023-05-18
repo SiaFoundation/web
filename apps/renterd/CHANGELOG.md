@@ -1,5 +1,14 @@
 # renterd
 
+## 0.16.0
+
+### Minor Changes
+
+- 1a482f2: Contract timelines and other features based on block height now use estimated block height for current height until synced.
+- 6d8bde8: The delete file confirmation now uses a red button.
+- 1a482f2: Core features are now immediately accessible without waiting for blockchain sync to complete.
+- 1a482f2: Hovering over the Sia logo now triggers a popover that shows daemon info and sync status.
+
 ## 0.15.0
 
 ### Minor Changes

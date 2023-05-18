@@ -1,5 +1,18 @@
 # hostd
 
+## 0.11.0
+
+### Minor Changes
+
+- 14fd2ef: Volumes view and create now available from the command palette.
+- 21b582c: Contract total usage sum now no longer includes risked collateral.
+- 1a482f2: Contract timelines and other features based on block height now use estimated block height for current height until synced.
+- 1a482f2: Core features are now immediately accessible without waiting for blockchain sync to complete.
+- 1a482f2: Hovering over the Sia logo now triggers a popover that shows daemon info and sync status.
+- eb0cd0d: The displayed wallet balance is now spendable+unconfirmed.
+- 6d8bde8: The volume delete dialog now resets when it is closed.
+- 21b582c: Risked collateral is now next to locked collateral in the contracts table.
+
 ## 0.10.0
 
 ### Minor Changes
