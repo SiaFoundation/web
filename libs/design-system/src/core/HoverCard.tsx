@@ -20,7 +20,7 @@ const contentContainerStyles = cva([
   'data-[side=right]:origin-left',
 ])
 
-const contentStyles = cx(panelStyles(), cva(['max-w-sm', 'py-0.5', 'px-1'])())
+const contentStyles = cx(panelStyles(), 'max-w-sm', 'py-0.5', 'px-1')
 
 type Props = {
   rootProps?: React.ComponentProps<typeof HoverCardPrimitive.Root>
@@ -45,7 +45,8 @@ const variants = {
 export const HoverCard = React.forwardRef<
   React.ElementRef<typeof HoverCardPrimitive.Content>,
   Props
->(({ trigger, children, rootProps, contentProps }, ref) => {
+>(({ trigger, children, rootProps, contentProps: _contentProps }, ref) => {
+  const { className: contentClassName, ...contentProps } = _contentProps || {}
   const { open, onOpenChange } = useOpen({
     open: rootProps?.open,
     onOpenChange: rootProps?.onOpenChange,
@@ -78,7 +79,9 @@ export const HoverCard = React.forwardRef<
                 exit="exit"
                 className={contentContainerStyles()}
               >
-                <div className={contentStyles}>{children}</div>
+                <div className={cx(contentStyles, contentClassName)}>
+                  {children}
+                </div>
               </motion.div>
             </HoverCardPrimitive.Content>
           </HoverCardPrimitive.Portal>

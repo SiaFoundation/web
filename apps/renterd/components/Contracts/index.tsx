@@ -21,6 +21,7 @@ export function Contracts() {
     limit,
     dataState,
     cellContext,
+    error,
   } = useContracts()
 
   return (
@@ -43,7 +44,7 @@ export function Contracts() {
             ) : dataState === 'noneYet' ? (
               <StateNoneYet />
             ) : dataState === 'error' ? (
-              <StateError />
+              <StateError error={error} />
             ) : null
           }
           pageSize={limit}

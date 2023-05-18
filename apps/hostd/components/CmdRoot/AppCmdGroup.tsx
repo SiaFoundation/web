@@ -42,6 +42,7 @@ export function AppCmdGroup({ currentPage, parentPage }: Props) {
         commandPage={commandPage}
         onSelect={() => {
           setSettings({ siaCentral: !settings.siaCentral })
+          closeDialog()
         }}
       >
         {(settings.siaCentral ? 'Disable' : 'Enable') +

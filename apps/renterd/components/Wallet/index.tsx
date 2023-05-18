@@ -3,6 +3,8 @@ import {
   EntityListItemProps,
   WalletLayoutActions,
   getTransactionTypes,
+  Text,
+  Warning16,
 } from '@siafoundation/design-system'
 import {
   useWalletBalance,
@@ -15,6 +17,7 @@ import { routes } from '../../config/routes'
 import BigNumber from 'bignumber.js'
 import { RenterdSidenav } from '../RenterdSidenav'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
 
 export function Wallet() {
   const transactions = useWalletTransactions({
@@ -79,6 +82,7 @@ export function Wallet() {
   //   )
 
   const balance = useWalletBalance()
+  const { isSynced } = useSyncStatus()
 
   return (
     <RenterdAuthedLayout
@@ -88,10 +92,23 @@ export function Wallet() {
       title="Wallet"
       actions={
         <WalletLayoutActions
+          isSynced={isSynced}
           sc={balance.data ? new BigNumber(balance.data) : undefined}
           receiveSiacoin={() => openDialog('addressDetails')}
           sendSiacoin={() => openDialog('sendSiacoin')}
         />
+      }
+      stats={
+        !isSynced && (
+          <div className="flex gap-2 items-center">
+            <Text color="amber">
+              <Warning16 />
+            </Text>
+            <Text size="14">
+              Blockchain is syncing, transaction data may be incomplete.
+            </Text>
+          </div>
+        )
       }
     >
       <div className="p-6 flex flex-col gap-5">

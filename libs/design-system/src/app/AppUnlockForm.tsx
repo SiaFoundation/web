@@ -31,9 +31,9 @@ async function checkPassword<Response extends ResponseWithSynced>({
   api: string
   route: string
   password: string
-}): Promise<{ isSynced?: boolean; error?: string }> {
+}): Promise<{ error?: string }> {
   try {
-    const response = await axios.get<Response>(`${api}/api${route}`, {
+    await axios.get<Response>(`${api}/api${route}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -41,9 +41,7 @@ async function checkPassword<Response extends ResponseWithSynced>({
       },
       timeout: 5_000,
     })
-    return {
-      isSynced: response.data.Synced || response.data.synced,
-    }
+    return {}
   } catch (e: unknown) {
     const code = (e as AxiosError).code
     const resp = (e as AxiosError).response
@@ -93,7 +91,7 @@ export function AppUnlockForm<Response extends ResponseWithSynced>({
     },
     onSubmit: async (values, actions) => {
       const api = buildModeEmbed ? '' : values.api
-      const { isSynced, error } = await checkPassword<Response>({
+      const { error } = await checkPassword<Response>({
         api,
         route,
         password: values.password,
@@ -108,11 +106,7 @@ export function AppUnlockForm<Response extends ResponseWithSynced>({
           },
         })
         actions.resetForm()
-        if (isSynced) {
-          router.push(getRedirectRouteFromQuery(router, routes))
-        } else {
-          router.push(routes.syncscreen)
-        }
+        router.push(getRedirectRouteFromQuery(router, routes))
       } else {
         actions.setErrors({
           password: error,

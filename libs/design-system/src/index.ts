@@ -99,6 +99,7 @@ export * from './app/MenuSectionLabelToggleAll'
 export * from './app/PanelMenuSection'
 export * from './app/PanelMenuSetting'
 export * from './app/ConfirmDialog'
+export * from './app/DaemonProfile'
 
 // form
 export * from './form/ConfigurationPanel'

@@ -29,17 +29,17 @@ export function SyncScreen() {
   const state = useConsensusState()
   const peers = useSyncerPeers()
 
-  const currentBlockHeight = state.data?.BlockHeight || 0
+  const nodeBlockHeight = state.data?.BlockHeight || 0
   const networkBlockHeight = useNetworkBlockHeight()
 
   const percent =
-    isUnlocked && currentBlockHeight && networkBlockHeight
-      ? (Math.min(currentBlockHeight / networkBlockHeight, 1) * 100).toFixed(1)
+    isUnlocked && nodeBlockHeight && networkBlockHeight
+      ? (Math.min(nodeBlockHeight / networkBlockHeight, 1) * 100).toFixed(1)
       : 0
 
   const moreThan10BlockToSync =
-    currentBlockHeight && networkBlockHeight
-      ? networkBlockHeight - currentBlockHeight > 10
+    nodeBlockHeight && networkBlockHeight
+      ? networkBlockHeight - nodeBlockHeight > 10
       : false
 
   return (
@@ -93,9 +93,7 @@ export function SyncScreen() {
               <ProgressBar
                 variant="accent"
                 value={
-                  currentBlockHeight && networkBlockHeight
-                    ? currentBlockHeight
-                    : 0
+                  nodeBlockHeight && networkBlockHeight ? nodeBlockHeight : 0
                 }
                 max={networkBlockHeight || 1}
                 className=""
@@ -104,14 +102,14 @@ export function SyncScreen() {
                 <Text color="verySubtle" size="10">
                   Syncing...
                 </Text>
-                {isUnlocked && currentBlockHeight && networkBlockHeight ? (
-                  currentBlockHeight > networkBlockHeight ? (
+                {isUnlocked && nodeBlockHeight && networkBlockHeight ? (
+                  nodeBlockHeight > networkBlockHeight ? (
                     <Text color="verySubtle" size="10">
                       {`(${percent}%)`}
                     </Text>
                   ) : (
                     <Text color="verySubtle" size="10">
-                      {`${currentBlockHeight.toLocaleString()} / ${networkBlockHeight.toLocaleString()} (${percent}%)`}
+                      {`${nodeBlockHeight.toLocaleString()} / ${networkBlockHeight.toLocaleString()} (${percent}%)`}
                     </Text>
                   )
                 ) : null}

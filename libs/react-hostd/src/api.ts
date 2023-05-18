@@ -54,17 +54,23 @@ export function useStateConsensus(args?: HookArgsSwr<void, StateConsensus>) {
 }
 
 export function useNetworkBlockHeight(): number {
-  const state = useStateHost()
+  const state = useStateHost({
+    config: {
+      swr: {
+        revalidateOnFocus: false,
+      },
+    },
+  })
   const res = useSWR(
     state,
     () => {
-      if (state.data?.network === 'zen') {
+      if (state.data?.network === 'Zen Testnet') {
         return getTestnetZenBlockHeight()
       }
       return getMainnetBlockHeight()
     },
     {
-      refreshInterval: 5_000,
+      refreshInterval: 60_000,
       keepPreviousData: true,
     }
   )

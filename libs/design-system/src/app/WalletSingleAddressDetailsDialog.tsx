@@ -1,6 +1,6 @@
 import { Text } from '../core/Text'
 import { WalletAddressCode } from './WalletAddressCode'
-import { getTitleId } from '../lib/utils'
+import { getTitleId, stripPrefix } from '../lib/utils'
 import { Dialog } from '../core/Dialog'
 
 type Props = {
@@ -20,7 +20,7 @@ export function WalletSingleAddressDetailsDialog({
 }: Props) {
   return (
     <Dialog
-      title={getTitleId('Address', address || '', 16)}
+      title={getTitleId('Address', stripPrefix(address) || '', 16)}
       trigger={trigger}
       open={open}
       onOpenChange={onOpenChange}

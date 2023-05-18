@@ -10,7 +10,7 @@ export function StateNoneYet() {
       <Text color="subtle" className="text-center max-w-[500px]">
         There are currently no hosts in the database. Make sure{' '}
         <Code>renterd</Code> can access the network and make sure{' '}
-        <Link href={routes.node.index}>peers are being discovered</Link> .
+        <Link href={routes.node.index}>peers are being discovered</Link>.
       </Text>
     </div>
   )
