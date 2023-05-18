@@ -5,7 +5,6 @@ import { AppPageHead } from '../AppPageHead'
 type Routes = {
   home: string
   lockscreen: string
-  syncscreen: string
 }
 
 type Props = {

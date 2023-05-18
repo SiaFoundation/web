@@ -60,7 +60,7 @@ export function useConsensusNetwork(
   })
 }
 
-export function useNetworkBlockHeight(): number {
+export function useEstimatedNetworkBlockHeight(): number {
   const network = useConsensusNetwork({
     config: {
       swr: {

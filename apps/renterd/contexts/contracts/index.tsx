@@ -8,8 +8,9 @@ import {
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import {
+  useConsensusState,
   useContracts as useContractsData,
-  useNetworkBlockHeight,
+  useEstimatedNetworkBlockHeight,
 } from '@siafoundation/react-renterd'
 import { createContext, useContext, useMemo } from 'react'
 import BigNumber from 'bignumber.js'
@@ -26,8 +27,19 @@ function useContractsMain() {
   const router = useRouter()
   const limit = Number(router.query.limit || defaultLimit)
   const offset = Number(router.query.offset || 0)
-  const currentHeight = useNetworkBlockHeight()
   const response = useContractsData()
+
+  const estimatedNetworkHeight = useEstimatedNetworkBlockHeight()
+  const network = useConsensusState({
+    config: {
+      swr: {
+        refreshInterval: 60_000,
+      },
+    },
+  })
+  const currentHeight = network.data?.Synced
+    ? network.data.BlockHeight
+    : estimatedNetworkHeight
 
   const dataset = useMemo<ContractData[] | null>(() => {
     if (!response.data) {
@@ -134,7 +146,7 @@ function useContractsMain() {
     dataset,
     datasetPage,
     cellContext: {
-      currentHeight,
+      currentHeight: estimatedNetworkHeight,
       contractsTimeRange,
     },
     configurableColumns,

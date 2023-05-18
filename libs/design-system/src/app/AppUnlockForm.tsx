@@ -72,7 +72,6 @@ type Props = {
   routes: {
     home: string
     lockscreen: string
-    syncscreen: string
   }
 }
 

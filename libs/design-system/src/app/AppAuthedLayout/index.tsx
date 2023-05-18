@@ -23,7 +23,6 @@ type Props = {
   walletBalance?: BigNumber
   routes: {
     lockscreen: string
-    syncscreen: string
     home: string
     node: {
       index: string

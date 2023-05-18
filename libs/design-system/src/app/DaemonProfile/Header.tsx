@@ -1,29 +1,53 @@
 /* eslint-disable react/jsx-pascal-case */
 import { Text } from '../../core/Text'
 import { Button } from '../../core/Button'
-import { Network_416 } from '../../icons/carbon'
+import { CheckmarkFilled16, Network_416 } from '../../icons/carbon'
 import { Tooltip } from '../../core/Tooltip'
 
 type Props = {
   name: string
+  isSynced: boolean
+  nodeBlockHeight: number
   peerCount: number
   connectPeer: () => void
 }
 
-export function Header({ name, peerCount, connectPeer }: Props) {
+export function Header({
+  name,
+  peerCount,
+  isSynced,
+  nodeBlockHeight,
+  connectPeer,
+}: Props) {
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between items-center">
       <Text font="mono" weight="bold" size="20">
         {name}
       </Text>
-      {peerCount ? (
-        <Tooltip content={`${peerCount} connected peers`}>
-          <Button variant="ghost" onClick={connectPeer}>
-            <Text color="subtle">{peerCount}</Text>
+      <div className="flex items-center">
+        {peerCount ? (
+          <Button
+            variant="ghost"
+            onClick={connectPeer}
+            tip={`${peerCount} connected peers`}
+          >
+            <Text color="subtle">{peerCount.toLocaleString()}</Text>
             <Network_416 />
           </Button>
-        </Tooltip>
-      ) : null}
+        ) : null}
+        {nodeBlockHeight && isSynced ? (
+          <Tooltip content="Blockchain is synced">
+            <div>
+              <Button variant="ghost" state="waiting">
+                <Text color="subtle">{nodeBlockHeight.toLocaleString()}</Text>
+                <Text color="green">
+                  <CheckmarkFilled16 />
+                </Text>
+              </Button>
+            </div>
+          </Tooltip>
+        ) : null}
+      </div>
     </div>
   )
 }
