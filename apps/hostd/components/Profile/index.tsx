@@ -31,6 +31,11 @@ export function Profile() {
   })
   const syncStatus = useSyncStatus()
   const peers = useSyncerPeers()
+
+  const version = state.data?.version
+  const versionUrl = version?.match(/^v\d+\.\d+\.\d+/)
+    ? `https://github.com/SiaFoundation/hostd/releases/${version}`
+    : `https://github.com/SiaFoundation/hostd/tree/${version}`
   return (
     <DaemonProfile
       name="hostd"
@@ -98,11 +103,7 @@ export function Profile() {
           Version
         </Label>
         <div className="flex-1 flex justify-end overflow-hidden">
-          <Link
-            size="14"
-            href={`https://github.com/SiaFoundation/hostd/tree/${state.data?.commit}`}
-            target="_blank"
-          >
+          <Link size="14" href={versionUrl} target="_blank">
             {state.data?.version}
           </Link>
         </div>
