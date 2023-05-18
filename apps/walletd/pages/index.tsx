@@ -21,6 +21,8 @@ export default function HomePage() {
       routes={routes}
       connectivityRoute="/consensus/state"
       openSettings={() => openDialog('privacy')}
+      isSynced
+      profile={<>hello</>}
       title="walletd"
       actions={
         <Button
