@@ -19,6 +19,7 @@ import { ContractsCmd } from '../Contracts/ContractsCmd'
 import { useDialog } from '../../contexts/dialog'
 import { useRouter } from 'next/router'
 import { routes } from '../../config/routes'
+import { VolumesCmd } from '../Volumes/VolumesCmd'
 
 type Props = {
   panel?: boolean
@@ -87,6 +88,7 @@ export function CmdRoot({ panel }: Props) {
         </Command.Empty>
         <AppCmdGroup currentPage={page} pushPage={pushPage} />
         <WalletCmdGroup currentPage={page} pushPage={pushPage} />
+        <VolumesCmd currentPage={page} pushPage={pushPage} />
         <ContractsCmd
           currentPage={page}
           pushPage={pushPage}
