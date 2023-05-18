@@ -74,10 +74,10 @@ export function FilesViewDropdownMenu() {
             }}
           >
             <Option key="desc" value="desc">
-              Descending
+              descending
             </Option>
             <Option key="asc" value="asc">
-              Ascending
+              ascending
             </Option>
           </Select>
         </MenuItemRightSlot>

@@ -8,8 +8,8 @@ import {
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import {
-  useConsensusState,
   useContracts as useContractsData,
+  useNetworkBlockHeight,
 } from '@siafoundation/react-renterd'
 import { createContext, useContext, useMemo } from 'react'
 import BigNumber from 'bignumber.js'
@@ -26,8 +26,7 @@ function useContractsMain() {
   const router = useRouter()
   const limit = Number(router.query.limit || defaultLimit)
   const offset = Number(router.query.offset || 0)
-  const consensus = useConsensusState()
-  const currentHeight = consensus.data?.BlockHeight
+  const currentHeight = useNetworkBlockHeight()
   const response = useContractsData()
 
   const dataset = useMemo<ContractData[] | null>(() => {
@@ -128,6 +127,7 @@ function useContractsMain() {
     dataState,
     limit,
     offset,
+    error: response.error,
     pageCount: datasetPage?.length || 0,
     datasetCount: datasetFiltered?.length || 0,
     columns: filteredTableColumns,

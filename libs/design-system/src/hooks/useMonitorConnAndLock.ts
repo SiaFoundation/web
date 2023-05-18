@@ -29,7 +29,7 @@ export function useMonitorConnAndLock({
   route: string
   routes: Routes
 }) {
-  const { isConnected, isSynced } = useConnectivity({
+  const { isConnected } = useConnectivity({
     route,
   })
   const { lock, settings } = useAppSettings()
@@ -37,7 +37,6 @@ export function useMonitorConnAndLock({
 
   useEffect(() => {
     const isProtectedPath = !router.pathname.startsWith(routes.lockscreen)
-    const isOnSyncscreen = router.pathname.startsWith(routes.syncscreen)
     const noPasswordOrDisconnected = !settings.password || !isConnected
     if (isProtectedPath && noPasswordOrDisconnected) {
       lock()
@@ -49,17 +48,6 @@ export function useMonitorConnAndLock({
       })
       return
     }
-    if (!isOnSyncscreen && isProtectedPath && !isSynced) {
-      router.push({
-        pathname: routes.syncscreen,
-        query: {
-          prev: getRouteToSaveAsPrev(router, routes),
-        },
-      })
-    }
-    if (isOnSyncscreen && isSynced) {
-      router.push(getRedirectRouteFromQuery(router, routes))
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router, isConnected, isSynced])
+  }, [router, isConnected])
 }

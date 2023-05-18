@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import {
   ContractStatus,
   useContracts as useContractsData,
-  useStateConsensus,
+  useNetworkBlockHeight,
 } from '@siafoundation/react-hostd'
 import { createContext, useContext, useMemo } from 'react'
 import {
@@ -81,8 +81,7 @@ function useContractsMain() {
   const error = response.error
   const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
-  const state = useStateConsensus()
-  const currentHeight = state.data?.chainIndex.height
+  const currentHeight = useNetworkBlockHeight()
   const { range: contractsTimeRange } = useMemo(
     () => getContractsTimeRangeBlockHeight(currentHeight, dataset || []),
     [currentHeight, dataset]

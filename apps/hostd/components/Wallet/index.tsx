@@ -5,6 +5,8 @@ import {
   getTransactionTypes,
   BalanceEvolution,
   daysInMilliseconds,
+  Text,
+  Warning16,
 } from '@siafoundation/design-system'
 import {
   useMetricsPeriod,
@@ -18,6 +20,7 @@ import { routes } from '../../config/routes'
 import BigNumber from 'bignumber.js'
 import { HostdSidenav } from '../HostdSidenav'
 import { HostdAuthedLayout } from '../HostdAuthedLayout'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
 
 export function Wallet() {
   const transactions = useWalletTransactions({
@@ -88,6 +91,8 @@ export function Wallet() {
     [metrics.data]
   )
 
+  const { isSynced } = useSyncStatus()
+
   return (
     <HostdAuthedLayout
       routes={routes}
@@ -96,6 +101,7 @@ export function Wallet() {
       title="Wallet"
       actions={
         <WalletLayoutActions
+          isSynced={isSynced}
           sc={
             wallet.data
               ? new BigNumber(wallet.data.spendable).plus(
@@ -106,6 +112,18 @@ export function Wallet() {
           receiveSiacoin={() => openDialog('addressDetails')}
           sendSiacoin={() => openDialog('sendSiacoin')}
         />
+      }
+      stats={
+        !isSynced && (
+          <div className="flex gap-2 items-center">
+            <Text color="amber">
+              <Warning16 />
+            </Text>
+            <Text size="14">
+              Blockchain is syncing, transaction data may be incomplete.
+            </Text>
+          </div>
+        )
       }
     >
       <div className="p-6 flex flex-col gap-5">

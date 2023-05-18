@@ -11,15 +11,16 @@ type Routes = {
 
 type Props = {
   walletBalance?: BigNumber
+  isSynced: boolean
   routes: Routes
 }
 
-export function SidenavItemWallet({ walletBalance, routes }: Props) {
+export function SidenavItemWallet({ walletBalance, isSynced, routes }: Props) {
   return (
     <SidenavItem title="Wallet" route={routes.wallet.view}>
       <div className="flex flex-col gap-3 items-center">
         <WalletIcon />
-        {walletBalance && (
+        {isSynced && walletBalance && (
           <WalletBalanceMini
             wallet={{
               sc: walletBalance,

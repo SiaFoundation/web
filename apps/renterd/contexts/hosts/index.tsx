@@ -50,6 +50,12 @@ function useHostsMain() {
           ? allContracts.map((c) => c.hostKey)
           : undefined,
     },
+    config: {
+      swr: {
+        // before autopilot is configured this will repeatedly 500
+        errorRetryInterval: 20_000,
+      },
+    },
   })
 
   const regularResponse = useHostsSearch({

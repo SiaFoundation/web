@@ -4,19 +4,21 @@ import { ArrowUpRight16, ArrowDownLeft16 } from '../icons/carbon'
 import { WalletBalance } from './WalletBalance'
 
 type Props = {
+  isSynced: boolean
   sc?: BigNumber
   receiveSiacoin: () => void
   sendSiacoin: () => void
 }
 
 export function WalletLayoutActions({
+  isSynced,
   sc,
   sendSiacoin,
   receiveSiacoin,
 }: Props) {
   return (
     <>
-      <WalletBalance sc={sc} />
+      <WalletBalance isSynced={isSynced} sc={sc} />
       <Button size="small" onClick={receiveSiacoin}>
         <ArrowDownLeft16 />
         Receive

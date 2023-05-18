@@ -5,8 +5,17 @@ const props = typeof logo === 'string' ? { src: logo } : logo
 
 type Props = {
   size?: number
+  className?: string
 }
 
-export function Logo({ size = 30 }: Props) {
-  return <Image src={props.src} alt="Logo" width={size} height={size} />
+export function Logo({ size = 30, className }: Props) {
+  return (
+    <Image
+      src={props.src}
+      alt="Logo"
+      width={size}
+      height={size}
+      className={className}
+    />
+  )
 }

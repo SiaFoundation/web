@@ -5,7 +5,6 @@ import { DiceIcon } from '../../icons/DiceIcon'
 import { GearIcon } from '../../icons/GearIcon'
 import { Panel } from '../../core/Panel'
 import { Separator } from '../../core/Separator'
-import { Link } from '../../core/Link'
 import { Logo } from '../../core/Logo'
 import { navbarAppHeight } from '../AppNavbar'
 import { SidenavItemWallet } from './SidenavItemWallet'
@@ -25,13 +24,17 @@ type Props = {
       view: string
     }
   }
+  profile: React.ReactNode
   walletBalance?: BigNumber
+  isSynced: boolean
   openSettings: () => void
   children: React.ReactNode
 }
 
 export function Sidenav({
   routes,
+  profile,
+  isSynced,
   walletBalance,
   openSettings,
   children,
@@ -47,15 +50,17 @@ export function Sidenav({
             height: `${navbarAppHeight}px`,
           }}
         >
-          <Link href={routes.home} underline="none">
-            <Logo size={30} />
-          </Link>
+          {profile || <Logo size={30} />}
         </div>
         <div className="flex flex-col gap-6 items-center pt-4 pb-6 h-full">
           <div className="flex flex-col gap-6 items-center">{children}</div>
           <div className="flex-1" />
           <Separator className="w-full" />
-          <SidenavItemWallet routes={routes} walletBalance={walletBalance} />
+          <SidenavItemWallet
+            routes={routes}
+            isSynced={isSynced}
+            walletBalance={walletBalance}
+          />
           <SidenavItem title="Blockchain node" route={routes.node.index}>
             <DiceIcon />
           </SidenavItem>
