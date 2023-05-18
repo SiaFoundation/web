@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.49.0
+
+### Minor Changes
+
+- 6d8bde8: Fixed an issue where closing a dialog would trigger the embedded form's onSubmit.
+- 21b582c: PaginatorKnownTotal skip to last page control now sets the correct offset.
+- 6d8bde8: Toasts now properly display and space their icons.
+
 ## 0.48.0
 
 ### Minor Changes
