@@ -27,6 +27,7 @@ export function Header({
       <div className="flex items-center">
         {peerCount ? (
           <Button
+            className="relative left-2 only:left-0"
             variant="ghost"
             onClick={connectPeer}
             tip={`${peerCount} connected peers`}
@@ -37,7 +38,7 @@ export function Header({
         ) : null}
         {nodeBlockHeight && isSynced ? (
           <Tooltip content="Blockchain is synced">
-            <div>
+            <div className="relative left-2">
               <Button variant="ghost" state="waiting">
                 <Text color="subtle">{nodeBlockHeight.toLocaleString()}</Text>
                 <Text color="green">

@@ -42,20 +42,26 @@ export function Profile() {
       firstTimeSyncing={syncStatus.firstTimeSyncing}
       moreThan100BlocksToSync={syncStatus.moreThan100BlocksToSync}
     >
-      <div className="flex gap-2 justify-between items-center">
-        <Label size="14" color="subtle">
+      <div className="flex gap-4 justify-between items-center">
+        <Label size="14" color="subtle" noWrap className="w-[100px]">
           Wallet address
         </Label>
-        <ValueCopyable size="14" value={address.data} type="address" />
+        <ValueCopyable
+          className="overflow-hidden"
+          size="14"
+          maxLength={50}
+          value={address.data}
+          type="address"
+        />
       </div>
-      <div className="flex gap-2 justify-between items-center">
-        <Label size="14" color="subtle">
+      <div className="flex gap-4 justify-between items-center">
+        <Label size="14" color="subtle" noWrap className="w-[100px]">
           Network
         </Label>
         <Text size="14">{network.data?.Name}</Text>
       </div>
-      {/* <div className="flex gap-2 justify-between items-center">
-          <Label size="14" color="subtle">
+      {/* <div className="flex gap-4 justify-between items-center">
+          <Label size="14" color="subtle" noWrap className="w-[100px]">
             Version
           </Label>
           <Link
