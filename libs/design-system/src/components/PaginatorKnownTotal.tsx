@@ -100,7 +100,7 @@ export function PaginatorKnownTotal({
           router.push({
             query: {
               ...router.query,
-              offset: Math.round(datasetTotal / limit) * limit,
+              offset: Math.floor(datasetTotal / limit) * limit,
             },
           })
         }
