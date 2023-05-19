@@ -127,39 +127,39 @@ export const fields: ConfigFields<typeof initialValues, Categories> = {
 
   // Pricing
   minStoragePrice: {
-    title: 'Minimum storage price',
+    title: 'Storage price',
     type: 'siacoin',
     category: 'pricing',
     units: 'SC/TB/month',
     decimalsLimitSc: scDecimalPlaces,
 
     description: (
-      <>{`The host's minimum storage price in siacoins per TB per month.`}</>
+      <>{`The host's storage price in siacoins per TB per month.`}</>
     ),
     validation: {
       required: 'required',
     },
   },
   minEgressPrice: {
-    title: 'Minimum egress price',
+    title: 'Egress price',
     type: 'siacoin',
     category: 'pricing',
     units: 'SC/TB',
     decimalsLimitSc: scDecimalPlaces,
 
-    description: <>{`The host's minimum egress price in siacoins per TB.`}</>,
+    description: <>{`The host's egress price in siacoins per TB.`}</>,
     validation: {
       required: 'required',
     },
   },
   minIngressPrice: {
-    title: 'Minimum ingress price',
+    title: 'Ingress price',
     type: 'siacoin',
     category: 'pricing',
     units: 'SC/TB',
     decimalsLimitSc: scDecimalPlaces,
 
-    description: <>{`The host's minimum ingress price in siacoins per TB.`}</>,
+    description: <>{`The host's ingress price in siacoins per TB.`}</>,
     validation: {
       required: 'required',
     },
