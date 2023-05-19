@@ -529,3 +529,9 @@ export function useSystemDirectory(
 ) {
   return useGetSwr({ ...args, route: '/system/dir' })
 }
+
+export function useSystemDirectoryCreate(
+  args?: HookArgsCallback<void, { path: string }, void>
+) {
+  return usePutFunc({ ...args, route: '/system/dir' })
+}
