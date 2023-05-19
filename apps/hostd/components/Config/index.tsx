@@ -131,7 +131,10 @@ export function Config() {
               <Text color="amber">
                 <Warning16 />
               </Text>
-              <Text>Error with dynamic DNS configuration</Text>
+              <Text size="14">
+                Error with dynamic DNS configuration:{' '}
+                {dynDNSCheck.error.message}
+              </Text>
             </>
           ) : (
             <>
