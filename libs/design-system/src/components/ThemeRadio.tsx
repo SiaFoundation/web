@@ -52,7 +52,7 @@ export function ThemeRadio({ className, tooltipClassName, tabIndex }: Props) {
     <RadioGroupPrimitive.Root
       value={active}
       tabIndex={tabIndex}
-      className={cx('flex gap-6', className)}
+      className={cx('flex gap-4', className)}
       onValueChange={(val) => onChange(val as Value)}
     >
       <RadioCard value="system">

@@ -61,7 +61,10 @@ export const Heading = React.forwardRef<
 
     return (
       <div className={cx('flex flex-col gap-6 items-start', className)}>
-        <Link href={`#${cId}`} id={cId} className="relative group">
+        <div className="relative">
+          <div id={cId} className="absolute -top-[100px]" />
+        </div>
+        <Link href={`#${cId}`} className="relative group">
           <Text className="hidden group-hover:block">
             <Link20 className="absolute top-1 -left-7 hidden md:block" />
           </Text>

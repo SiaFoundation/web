@@ -2,8 +2,20 @@ import axios from 'axios'
 import { buildErrorResponse500 } from '../error'
 import { AsyncDataSourceResponse } from '../types'
 
+export type SiaStatsHostCoordinate = {
+  active: boolean
+  country: string
+  firstseen: number
+  ip: string
+  key: string
+  lat: number
+  lon: number
+  totalstorage: number
+  usedstorage: number
+}
+
 export async function getSiaStatsHostsCoordinates(): AsyncDataSourceResponse<
-  Record<string, unknown>
+  SiaStatsHostCoordinate[]
 > {
   try {
     const { data } = await axios.get(

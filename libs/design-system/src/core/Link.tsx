@@ -10,11 +10,13 @@ import { UrlObject } from 'url'
 const linkStyles = cva(['cursor-pointer'], {
   variants: {
     disabled: {
-      true: 'opacity-50',
+      true: 'opacity-50 pointer-events-none',
     },
     underline: {
-      default: 'underline underline-offset-2',
-      hover: 'hover:underline underline-offset-2',
+      accent:
+        'underline underline-offset-4 decoration-2 decoration-accent-700 dark:decoration-accentdark-900',
+      default: 'underline underline-offset-4',
+      hover: 'hover:underline underline-offset-4',
       none: '',
     },
   },
@@ -40,7 +42,16 @@ const styles = ({
   className,
 }: LinkVariants) =>
   cx(
-    textStyles({ scaleSize, size, font, color, weight, noWrap, ellipsis }),
+    textStyles({
+      scaleSize,
+      size,
+      font,
+      color,
+      weight,
+      noWrap,
+      ellipsis,
+      underline,
+    }),
     linkStyles({ disabled, underline }),
     className
   )

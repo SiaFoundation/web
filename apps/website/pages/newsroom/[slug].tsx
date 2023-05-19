@@ -1,9 +1,4 @@
-import {
-  Text,
-  ContentItem,
-  getImageProps,
-  SiteHeading,
-} from '@siafoundation/design-system'
+import { Text, ContentItem, SiteHeading } from '@siafoundation/design-system'
 import fs from 'fs'
 import { MDXRemote } from 'next-mdx-remote'
 import { format } from 'date-fns'
@@ -12,14 +7,12 @@ import { GetNewsPost, getNewsPost, newsDirectory } from '../../content/news'
 import { getCacheStats } from '../../content/stats'
 import { routes } from '../../config/routes'
 import { textContent } from '../../lib/utils'
-import backgroundImage from '../../assets/backgrounds/nate-waterfall.png'
-import previewImage from '../../assets/previews/nate-waterfall.png'
 import { components } from '../../config/mdx'
 import { getMinutesInSeconds } from '../../lib/time'
-import { SectionSimple } from '../../components/SectionSimple'
-
-const backgroundImageProps = getImageProps(backgroundImage)
-const previewImageProps = getImageProps(previewImage)
+import { SectionSolid } from '../../components/SectionSolid'
+import { backgrounds } from '../../content/imageBackgrounds'
+import { previews } from '../../content/imagePreviews'
+import { SectionTransparent } from '../../components/SectionTransparent'
 
 type Props = GetNewsPost
 
@@ -35,14 +28,19 @@ function NewsroomPost({
       date={new Date(date).toISOString()}
       path={routes.newsroom.newsPost.replace('[slug]', slug)}
       heading={
-        <SectionSimple className="pt-24 md:pt-40 pb-6 md:pb-20">
-          <SiteHeading size="64" title={title} description={subtitle} />
-        </SectionSimple>
+        <SectionTransparent className="pt-24 md:pt-40 pb-6 md:pb-20">
+          <SiteHeading
+            size="64"
+            title={title}
+            description={subtitle}
+            anchorLink={false}
+          />
+        </SectionTransparent>
       }
-      backgroundImage={backgroundImageProps}
-      previewImage={previewImageProps}
+      backgroundImage={backgrounds.nateWaterfall}
+      previewImage={previews.nateWaterfall}
     >
-      <SectionSimple className="pt-12 xl:pt-20 pb-24 md:pb-40">
+      <SectionSolid className="pt-12 xl:pt-20 pb-24 md:pb-40">
         <div>
           <Text weight="bold" size="16" className="mb-5">
             {location} - {format(new Date(date), 'PP')}
@@ -55,7 +53,7 @@ function NewsroomPost({
             {next && <ContentItem {...next} />}
           </div>
         )}
-      </SectionSimple>
+      </SectionSolid>
     </Layout>
   )
 }

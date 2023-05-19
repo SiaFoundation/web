@@ -81,13 +81,12 @@ export function ContentGallery({
               {eyebrow}
             </Text>
           )}
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex gap-1.5 flex-wrap">
             <Badge
               key="all"
               interactive
               variant={!activeFilter ? 'accent' : 'inactive'}
               onClick={() => changeFilter(undefined)}
-              rounded={false}
             >
               All
             </Badge>
@@ -97,7 +96,6 @@ export function ContentGallery({
                 interactive
                 variant={activeFilter === filter ? 'accent' : 'inactive'}
                 onClick={() => changeFilter(filter)}
-                rounded={false}
               >
                 {filter.replace(/_/g, ' ')}
               </Badge>

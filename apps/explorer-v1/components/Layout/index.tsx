@@ -1,7 +1,6 @@
 import {
   NavbarSite,
   Container,
-  getImageProps,
   Heading,
   Link,
   ScrollArea,
@@ -25,9 +24,6 @@ import { Search } from './Search'
 import { appLink, appName, isMainnet, networkName } from '../../config'
 import { NavDropdownMenu } from './NavDropdownMenu'
 
-const backgroundImageProps = getImageProps(backgroundImage)
-const previewImageProps = getImageProps(previewImage)
-
 type Props = {
   title: string
   description: string
@@ -44,7 +40,7 @@ export function Layout({ title, description, path, children }: Props) {
         title={title}
         description={description}
         path={path}
-        image={previewImageProps.src}
+        image={previewImage.src}
       />
       <ScrollArea id="main-scroll">
         <div className="relative z-10 overflow-hidden">
@@ -65,7 +61,7 @@ export function Layout({ title, description, path, children }: Props) {
                 <div
                   className="z-0 relative w-full h-full"
                   style={{
-                    background: `url(${backgroundImageProps.src})`,
+                    background: `url(${backgroundImage.src})`,
                     backgroundSize: 'cover',
                   }}
                 />

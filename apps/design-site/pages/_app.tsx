@@ -1,15 +1,12 @@
 import '../config/style.css'
 import {
-  getImageProps,
   NextAppSsr,
   SitePageHead,
   ScrollArea,
   webLinks,
 } from '@siafoundation/design-system'
-import preview from '../assets/jungle-preview.png'
+import previewImage from '../assets/jungle-preview.png'
 import { Heading } from '../components/Heading'
-
-const previewImage = getImageProps(preview)
 
 type Props = React.ComponentProps<typeof NextAppSsr>
 

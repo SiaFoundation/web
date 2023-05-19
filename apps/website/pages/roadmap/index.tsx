@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import {
   SiteHeading,
-  getImageProps,
   Heading,
   Link,
   Separator,
@@ -11,11 +10,9 @@ import {
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
 import { getCacheStats } from '../../content/stats'
-import backgroundImage from '../../assets/backgrounds/nate-trickle.png'
-import previewImage from '../../assets/previews/nate-trickle.png'
 import { AsyncReturnType } from '../../lib/types'
 import { getMinutesInSeconds } from '../../lib/time'
-import { SectionSimple } from '../../components/SectionSimple'
+import { SectionSolid } from '../../components/SectionSolid'
 import { getContentDirectory } from '@siafoundation/env'
 import matter from 'gray-matter'
 import { serialize } from 'next-mdx-remote/serialize'
@@ -25,9 +22,9 @@ import { TableOfContents } from '../../components/TableOfContents'
 import { getCachePrs } from '../../content/prs'
 import { GitHubActivity } from '../../components/GitHubActivity'
 import { format } from 'date-fns'
-
-const backgroundImageProps = getImageProps(backgroundImage)
-const previewImageProps = getImageProps(previewImage)
+import { backgrounds } from '../../content/imageBackgrounds'
+import { previews } from '../../content/imagePreviews'
+import { SectionTransparent } from '../../components/SectionTransparent'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
@@ -44,8 +41,13 @@ export default function Roadmap({
       description={description}
       path={routes.community.index}
       heading={
-        <SectionSimple className="pt-24 md:pt-40 pb-6">
-          <SiteHeading title={title} description={description} size="64">
+        <SectionTransparent className="pt-24 md:pt-40 pb-6">
+          <SiteHeading
+            title={title}
+            description={description}
+            size="64"
+            anchorLink={false}
+          >
             <TableOfContents
               className="mt-10"
               items={[
@@ -64,12 +66,12 @@ export default function Roadmap({
               ]}
             />
           </SiteHeading>
-        </SectionSimple>
+        </SectionTransparent>
       }
-      backgroundImage={backgroundImageProps}
-      previewImage={previewImageProps}
+      backgroundImage={backgrounds.nateTrickle}
+      previewImage={previews.nateTrickle}
     >
-      <SectionSimple className="pb-24 md:pb-40">
+      <SectionSolid className="pb-24 md:pb-40">
         <MDXRemote {...source} components={components} />
         <Text
           className="mt-24 md:mt-32"
@@ -89,7 +91,7 @@ export default function Roadmap({
         >
           View full activity feed →
         </Link>
-      </SectionSimple>
+      </SectionSolid>
     </Layout>
   )
 }

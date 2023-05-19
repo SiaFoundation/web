@@ -2,9 +2,7 @@
 import {
   ContentGallery,
   Callout,
-  ContentProject,
   SiteHeading,
-  getImageProps,
   webLinks,
   Link,
   Code,
@@ -14,42 +12,31 @@ import { Layout } from '../components/Layout'
 import { routes } from '../config/routes'
 import { AsyncReturnType } from '../lib/types'
 import { getCacheArticles } from '../content/articles'
-import { getCacheSoftware } from '../content/software'
+import { getCacheProjects } from '../content/projects'
 import { getCacheTutorials } from '../content/tutorials'
-import backgroundImage from '../assets/backgrounds/mountain.png'
-import previewImage from '../assets/previews/mountain.png'
 import { useCallback, useMemo, useState } from 'react'
 import { textContent } from '../lib/utils'
 import Letter from '../components/Letter'
 import { JiggleArrow } from '../components/JiggleArrow'
 import { SectionGradient } from '../components/SectionGradient'
-import { SectionSimple } from '../components/SectionSimple'
-import { SectionWaves } from '../components/SectionWaves'
+import { SectionSolid } from '../components/SectionSolid'
+import { SectionTransparent } from '../components/SectionTransparent'
 import { usePullTop } from '../hooks/usePullTop'
 import { cx } from 'class-variance-authority'
-import { SoftwareSectionNextGen } from '../components/SoftwareSectionNextGen'
-
-const backgroundImageProps = getImageProps(backgroundImage)
-const previewImageProps = getImageProps(previewImage)
+import { backgrounds } from '../content/imageBackgrounds'
+import { previews } from '../content/imagePreviews'
+import { GlobeSection } from '../components/GlobeSection'
+import { CalloutProject } from '../components/CalloutProject'
+import { getCacheGeoHosts } from '../content/geoHosts'
 
 const transitionWidthDuration = 300
 const transitionFadeDelay = 500
 
 type Props = AsyncReturnType<typeof getServerSideProps>['props']
 
-export default function Home({
-  featured,
-  tutorials,
-  services,
-}: // seenLetter,
-Props) {
-  // const [showLetter, setShowLetter] = useState<boolean>(!seenLetter)
+export default function Home({ featured, tutorials, services, hosts }: Props) {
   const [showLetter, setShowLetter] = useState<boolean>(false)
-
-  // useEffect(() => {
-  //   document.cookie =
-  //     'seen-letter=true; max-age=2147483647; SameSite=None; Secure'
-  // }, [])
+  const [resetGlobe, setResetGlobe] = useState<string>(String(Math.random()))
 
   const toggleLanding = useCallback(() => {
     setShowLetter((showLetter) => !showLetter)
@@ -58,8 +45,9 @@ Props) {
       document.getElementById('main-scroll').scrollTo({
         top: 0,
       })
+      setResetGlobe(String(Math.random()))
     }, transitionWidthDuration)
-  }, [setShowLetter])
+  }, [setShowLetter, setResetGlobe])
 
   const pullPending = usePullTop('main-scroll', !showLetter, toggleLanding)
 
@@ -106,7 +94,10 @@ Props) {
       transitionWidthDuration={transitionWidthDuration}
       transitionFadeDelay={transitionFadeDelay}
       heading={
-        <SectionSimple className="pt-24 md:pt-40 pb-6 md:pb-20">
+        <SectionTransparent
+          className="pt-24 md:pt-52"
+          gradientClassName="via-white/[97%] dark:via-graydark-100/[98%]"
+        >
           <SiteHeading
             size="64"
             anchorLink={false}
@@ -122,36 +113,38 @@ Props) {
                 className="absolute -mt-3 md:-mt-6"
               />
             )}
-            {/* <div>
-              <Link size="20" href={routes.getStarted.index}>
-                Download the software →
-              </Link>
-            </div> */}
           </SiteHeading>
-        </SectionSimple>
+          <GlobeSection key={resetGlobe} hosts={hosts} />
+        </SectionTransparent>
       }
-      backgroundImage={backgroundImageProps}
-      previewImage={previewImageProps}
+      backgroundImage={backgrounds.mountain}
+      previewImage={previews.mountain}
     >
-      <SectionSimple className="pt-8 md:pt-12 pb-20">
+      <SectionSolid className="pt-6 xl:pt-4 pb-20">
+        {/* <StatsStrip /> */}
         <div className="grid gap-4 sm:gap-5 grid-cols-1 md:grid-cols-2">
           <Callout
             size="0"
-            title="Start"
-            startTime={0}
+            title="Rent"
+            background={backgrounds.leaves}
             description={
-              <>
-                Find software downloads, beginner tutorials, developer
-                resources, technical walkthroughs, and more.
-              </>
+              <>Rent space and store your data on the Sia network.</>
             }
-            actionTitle="Get started"
-            actionLink={routes.getStarted.index}
+            actionTitle="Rent storage"
+            actionLink={routes.rent.index}
+          />
+          <Callout
+            size="0"
+            title="Host"
+            background={backgrounds.jungle}
+            description={<>Offer your storage space on the Sia network.</>}
+            actionTitle="Start hosting"
+            actionLink={routes.host.index}
           />
           <Callout
             size="0"
             title="Learn"
-            startTime={20}
+            background={backgrounds.light}
             description={
               <>
                 Learn all about how Sia works, why it was created, and the
@@ -164,7 +157,7 @@ Props) {
           <Callout
             size="0"
             title="Grants"
-            startTime={20}
+            background={backgrounds.bamboo}
             description={
               <>
                 The Sia Foundation welcomes contributors from all over the world
@@ -174,22 +167,8 @@ Props) {
             actionTitle="Apply for a grant"
             actionLink={routes.grants.index}
           />
-          <Callout
-            size="0"
-            title="Community"
-            startTime={20}
-            description={
-              <>
-                Sia is a vibrant community of contributors building open source
-                and commercial data storage software on the Sia network.
-              </>
-            }
-            actionTitle="Explore"
-            actionLink={routes.community.index}
-          />
-          <SoftwareSectionNextGen />
         </div>
-      </SectionSimple>
+      </SectionSolid>
       <SectionGradient className="md:pt-16 pb-20 md:pb-40">
         <SiteHeading
           size="32"
@@ -211,13 +190,16 @@ Props) {
         <ContentGallery
           items={services.map((i) => ({
             ...i,
-            newTab: true,
           }))}
-          component={ContentProject}
-          columnClassName="grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+          component={CalloutProject}
+          columnClassName="grid-cols-1 md:grid-cols-2"
+          gapClassName="gap-4 sm:gap-5"
         />
       </SectionGradient>
-      <SectionWaves className="pt-7 md:pt-16 pb-14 md:pb-32">
+      <SectionTransparent
+        background={backgrounds.jungle}
+        className="pt-7 md:pt-16 pb-14 md:pb-32"
+      >
         <SiteHeading
           size="32"
           title="Why projects choose Sia"
@@ -300,7 +282,7 @@ Props) {
             },
           ]}
         />
-      </SectionWaves>
+      </SectionTransparent>
       <SectionGradient className="pt-12 md:pt-32 pb-8 md:pb-20">
         <SiteHeading
           size="32"
@@ -347,18 +329,18 @@ Props) {
   )
 }
 
-export async function getServerSideProps({ req }) {
-  // const seenLetter: boolean = req.cookies['seen-letter'] || false
+export async function getServerSideProps() {
   const featured = await getCacheArticles(['sia-all', 'featured'], 5)
   const tutorials = await getCacheTutorials()
-  const services = await getCacheSoftware('storage_services', 5)
+  const hosts = await getCacheGeoHosts()
+  const services = await getCacheProjects('featured', 5)
 
   return {
     props: {
       featured,
       tutorials,
+      hosts,
       services,
-      // seenLetter,
       // Because this page is SSR'd, do not block requests with slow stats query
       // fallback: {
       //   '/api/stats': stats,

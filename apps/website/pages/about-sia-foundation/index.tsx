@@ -6,7 +6,6 @@ import {
   ContentGallery,
   Separator,
   SiteHeading,
-  getImageProps,
   Paragraph,
   webLinks,
   Callout,
@@ -21,15 +20,11 @@ import { AsyncReturnType } from '../../lib/types'
 import { getCacheReports } from '../../content/reports'
 import { getCacheStats } from '../../content/stats'
 import { getCacheTeam } from '../../content/team'
-import backgroundImage from '../../assets/backgrounds/tree.png'
-import previewImage from '../../assets/previews/tree.png'
-import { SectionSimple } from '../../components/SectionSimple'
 import { SectionGradient } from '../../components/SectionGradient'
-import { SectionWaves } from '../../components/SectionWaves'
+import { SectionTransparent } from '../../components/SectionTransparent'
 import { getCacheArticles } from '../../content/articles'
-
-const backgroundImageProps = getImageProps(backgroundImage)
-const previewImageProps = getImageProps(previewImage)
+import { backgrounds } from '../../content/imageBackgrounds'
+import { previews } from '../../content/imagePreviews'
 
 const title = 'The Sia Foundation'
 const description =
@@ -44,12 +39,17 @@ function Foundation({ team, featured, reports }: Props) {
       description={description}
       path={routes.foundation.index}
       heading={
-        <SectionSimple className="pt-24 md:pt-40 pb-6 md:pb-20">
-          <SiteHeading size="64" title={title} description={description} />
-        </SectionSimple>
+        <SectionTransparent className="pt-24 md:pt-40 pb-6 md:pb-20">
+          <SiteHeading
+            anchorLink={false}
+            size="64"
+            title={title}
+            description={description}
+          />
+        </SectionTransparent>
       }
-      backgroundImage={backgroundImageProps}
-      previewImage={previewImageProps}
+      backgroundImage={backgrounds.tree}
+      previewImage={previews.tree}
     >
       <SectionGradient className="pt-6 md:pt-12 lg:pt-18 pb-16 md:pb-24 lg:pb-40">
         <div className="flex flex-col">
@@ -103,7 +103,7 @@ function Foundation({ team, featured, reports }: Props) {
           </div>
         </div>
       </SectionGradient>
-      <SectionWaves className="pt-8 md:pt-16 pb-16 md:pb-32">
+      <SectionTransparent className="pt-8 md:pt-16 pb-16 md:pb-32">
         <SiteHeading
           className="pb-10 md:pb-20"
           size="32"
@@ -146,7 +146,7 @@ function Foundation({ team, featured, reports }: Props) {
             </div>
           ))}
         </div>
-      </SectionWaves>
+      </SectionTransparent>
       <SectionGradient className="pt-12 md:pt-32 pb-12 md:pb-40">
         <SiteHeading size="32" title="Quarterly reports" />
         <div className="flex flex-col gap-12">
@@ -174,6 +174,7 @@ function Foundation({ team, featured, reports }: Props) {
           title="Work at the Sia Foundation"
           className="mt-40 md:mt-60"
           size="2"
+          background={backgrounds.leaves}
           description={
             <>
               If you are interested in a career at the Sia Foundation please see

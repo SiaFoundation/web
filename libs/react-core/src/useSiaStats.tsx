@@ -35,3 +35,27 @@ export function useSiaStatsNetworkStatus(
     route: '/dbs/network_status.json',
   })
 }
+
+export type SiaStatsHostCoordinate = {
+  active: boolean
+  country: string
+  firstseen: number
+  ip: string
+  key: string
+  lat: number
+  lon: number
+  totalstorage: number
+  usedstorage: number
+}
+
+type SiaStatsHostCoordinatesGET = SiaStatsHostCoordinate[]
+
+export function useSiaStatsHostCoordinates(
+  args?: HookArgsSwr<void, SiaStatsHostCoordinatesGET>
+) {
+  return useGetSwr({
+    api,
+    ...args,
+    route: '/dbs/hostscoordinates.json',
+  })
+}

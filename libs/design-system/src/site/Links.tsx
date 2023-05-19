@@ -1,4 +1,4 @@
-import { Link, LinkButton } from '../core/Link'
+import { Link } from '../core/Link'
 import { LinkData } from '../lib/links'
 import { cx } from 'class-variance-authority'
 
@@ -15,18 +15,18 @@ export function Links({ links = [], size = '1', className }: Props) {
 
   if (size === '3') {
     return (
-      <div className={cx('flex gap-2 flex-wrap', className)}>
+      <div className={cx('flex gap-4 flex-wrap', className)}>
         {links.map((link) => (
           <div key={link.title + link.link}>
-            <LinkButton
-              variant="accent"
-              size="medium"
+            <Link
+              underline="accent"
+              size="18"
               href={link.link}
               target={link.newTab ? '_blank' : undefined}
-              rounded={false}
+              // rounded={false}
             >
               {link.title}
-            </LinkButton>
+            </Link>
           </div>
         ))}
       </div>

@@ -1,23 +1,20 @@
 import {
   ContentGallery,
   ContentItemProps,
-  getImageProps,
   SiteHeading,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
 import { getCacheStats } from '../../content/stats'
-import backgroundImage from '../../assets/backgrounds/steps.png'
-import previewImage from '../../assets/previews/steps.png'
 import { generateRssNewsFeed } from '../../content/rssGenerateFeed'
 import useSWR from 'swr'
 import { useRouter } from 'next/router'
 import { getCacheFeed } from '../../content/feed'
 import { getMinutesInSeconds } from '../../lib/time'
-import { SectionSimple } from '../../components/SectionSimple'
-
-const backgroundImageProps = getImageProps(backgroundImage)
-const previewImageProps = getImageProps(previewImage)
+import { SectionSolid } from '../../components/SectionSolid'
+import { backgrounds } from '../../content/imageBackgrounds'
+import { previews } from '../../content/imagePreviews'
+import { SectionTransparent } from '../../components/SectionTransparent'
 
 const title = 'Newsroom'
 const description =
@@ -37,11 +34,12 @@ function Newsroom() {
       description={description}
       path={routes.newsroom.index}
       heading={
-        <SectionSimple className="pt-24 md:pt-40 pb-6 md:pb-20">
+        <SectionTransparent className="pt-24 md:pt-40 pb-6 md:pb-20">
           <SiteHeading
             size="64"
             title={title}
             description={description}
+            anchorLink={false}
             links={[
               {
                 title: 'Press releases RSS',
@@ -50,12 +48,12 @@ function Newsroom() {
               },
             ]}
           />
-        </SectionSimple>
+        </SectionTransparent>
       }
-      backgroundImage={backgroundImageProps}
-      previewImage={previewImageProps}
+      backgroundImage={backgrounds.steps}
+      previewImage={previews.steps}
     >
-      <SectionSimple className="pt-8 md:pt-12 xl:pt-20 pb-24 md:pb-40">
+      <SectionSolid className="pt-8 md:pt-12 xl:pt-20 pb-24 md:pb-40">
         <ContentGallery
           filterMode="external"
           filters={['press', 'ecosystem']}
@@ -63,7 +61,7 @@ function Newsroom() {
           columnClassName="grid-cols-1"
           items={posts.data || []}
         />
-      </SectionSimple>
+      </SectionSolid>
     </Layout>
   )
 }

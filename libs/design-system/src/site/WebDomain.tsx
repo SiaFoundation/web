@@ -10,10 +10,18 @@ export function WebDomain({ link }: Props) {
   const isExternal = useIsExternalDomain(link)
   const url = new URL(link)
 
+  let text = url.host
+  if (url.hostname === 'github.com') {
+    const parts = url.pathname.split('/')
+    if (parts.length >= 2) {
+      text = `${url.host}/${url.pathname.split('/')[1]}`
+    }
+  }
+
   return (
     <div className="flex gap-0 items-center">
       <Text size="12" color="subtle" font="sans">
-        {url.host}
+        {text}
       </Text>
       {isExternal && (
         <Text color="subtle" className="scale-75 top-px relative">

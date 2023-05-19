@@ -1,28 +1,22 @@
 import {
   ContentGallery,
   Callout,
-  ContentProject,
-  Image,
   SiteHeading,
-  getImageProps,
   webLinks,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
 import { getCacheArticles } from '../../content/articles'
-import { getCacheSoftware } from '../../content/software'
+import { getCacheProjects } from '../../content/projects'
 import { getCacheStats } from '../../content/stats'
 import { AsyncReturnType } from '../../lib/types'
 import { textContent } from '../../lib/utils'
-import backgroundImage from '../../assets/backgrounds/jungle.png'
-import previewImage from '../../assets/previews/jungle.png'
 import { getMinutesInSeconds } from '../../lib/time'
-import { SectionSimple } from '../../components/SectionSimple'
-import { SectionWaves } from '../../components/SectionWaves'
+import { SectionTransparent } from '../../components/SectionTransparent'
 import { SectionGradient } from '../../components/SectionGradient'
-
-const backgroundImageProps = getImageProps(backgroundImage)
-const previewImageProps = getImageProps(previewImage)
+import { backgrounds } from '../../content/imageBackgrounds'
+import { previews } from '../../content/imagePreviews'
+import { CalloutProject } from '../../components/CalloutProject'
 
 const title = 'Community & Ecosystem'
 const description = (
@@ -42,11 +36,12 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
       description={textContent(description)}
       path={routes.community.index}
       heading={
-        <SectionSimple className="pt-24 md:pt-40 pb-6 md:pb-20">
+        <SectionTransparent className="pt-24 md:pt-40 pb-6 md:pb-20">
           <SiteHeading
             title={title}
             description={description}
             size="64"
+            anchorLink={false}
             links={[
               {
                 title: 'Join our Discord',
@@ -60,15 +55,25 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
               },
             ]}
           />
-        </SectionSimple>
+        </SectionTransparent>
       }
-      backgroundImage={backgroundImageProps}
-      previewImage={previewImageProps}
+      backgroundImage={backgrounds.jungle}
+      previewImage={previews.jungle}
     >
-      <SectionWaves>
+      <SectionGradient className="pt-10">
+        <ContentGallery
+          eyebrow="Filter projects"
+          filterable="software"
+          columnClassName="grid-cols-1 md:grid-cols-2"
+          gapClassName="gap-4 sm:gap-5"
+          component={CalloutProject}
+          items={software}
+        />
+      </SectionGradient>
+      <SectionGradient>
         <SiteHeading
           size="32"
-          className="pt-16 md:pt-20 pb-12 md:pb-20"
+          className="pt-16 md:pt-52 pb-12 md:pb-20"
           title="Featured updates from the Sia community"
           description={
             <>
@@ -89,45 +94,12 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
           columnClassName="grid-cols-1"
           items={blogs}
         />
-      </SectionWaves>
-      <SectionGradient>
-        <div className="flex gap-10 items-start pt-8 md:pt-24">
-          <div className="hidden md:block">
-            <Image
-              src={'/built-with-sia.png'}
-              alt="Built with Sia"
-              loading="lazy"
-              height={130}
-              width={140}
-              style={{
-                filter: 'grayscale(1)',
-              }}
-            />
-          </div>
-          <SiteHeading
-            size="32"
-            id="software"
-            className="flex-1 pb-10 md:pb-20"
-            title="A vibrant & active ecosystem"
-            description={
-              <>
-                Sia is a thriving ecosystem of data storage enthusiasts, open
-                source software, and commercial data storage platforms.
-              </>
-            }
-          />
-        </div>
-        <ContentGallery
-          eyebrow="Filter projects"
-          filterable="software"
-          gapClassName="gap-y-8 md:gap-y-10"
-          component={ContentProject}
-          items={software}
-        />
+      </SectionGradient>
+      <SectionGradient className="pt-20 md:pt-40 pb-24 md:pb-44">
         <Callout
-          className="mt-20 md:mt-40 mb-24 md:mb-40"
           title="Sia grants"
           size="2"
+          background={backgrounds.nateSnow}
           description={
             <>
               The Sia Foundation welcomes and supports contributors from all
@@ -145,7 +117,7 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
 export async function getStaticProps() {
   const stats = await getCacheStats()
   const blogs = await getCacheArticles(['ecosystem-featured'], 4)
-  const software = await getCacheSoftware('')
+  const software = await getCacheProjects('')
 
   return {
     props: {

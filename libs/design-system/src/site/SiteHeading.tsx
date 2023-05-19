@@ -78,7 +78,6 @@ export function SiteHeading({
 }: Props) {
   return (
     <div
-      id={id}
       className={cx(
         'flex flex-col',
         sizeToGap[size],

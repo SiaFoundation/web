@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Text, Paragraph } from '@siafoundation/design-system'
+import { Text, Paragraph, Logo } from '@siafoundation/design-system'
 import { useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
 import Italic from './Italic'
@@ -21,8 +21,9 @@ export default function Letter({ onDone }: Props) {
   }, [inView])
 
   return (
-    <SectionGradient className="pt-16 pb-24">
+    <SectionGradient className="pt-16 md:pt-32 pb-24 border-gray-400 dark:border-graydark-400 border-2 rounded-lg">
       <div className="flex flex-col gap-4 z-10 max-w-[800px] mx-auto">
+        <Logo size={50} />
         <Text size="30" weight="bold" className="italic my-6">
           the future is making a comeback
         </Text>

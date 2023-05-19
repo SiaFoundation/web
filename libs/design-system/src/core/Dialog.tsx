@@ -118,6 +118,18 @@ export const Dialog = React.forwardRef<
   }
 )
 
+export function DialogClose({ className }: { className?: string }) {
+  return (
+    <DialogPrimitive.Close asChild type="button">
+      <div className={cx('appearance-none', className)}>
+        <Button size="small" variant="ghost" type="button">
+          <Close24 />
+        </Button>
+      </div>
+    </DialogPrimitive.Close>
+  )
+}
+
 const contentStyles = cva(['relative', 'z-40', 'overflow-hidden'], {
   variants: {
     variant: {
@@ -201,18 +213,7 @@ const Content = React.forwardRef<HTMLDivElement, ContentProps>(
         {controls && (
           <DialogControls separator={showSeparator}>{controls}</DialogControls>
         )}
-        <DialogPrimitive.Close asChild type="button">
-          <div
-            className={cx(
-              'appearance-none',
-              closeClassName || 'absolute top-3.5 right-2'
-            )}
-          >
-            <Button size="small" variant="ghost" type="button">
-              <Close24 />
-            </Button>
-          </div>
-        </DialogPrimitive.Close>
+        <DialogClose className={closeClassName || 'absolute top-3.5 right-2'} />
       </Tag>
     )
   }
@@ -288,5 +289,3 @@ function DialogControls({ children, separator = true }: DialogControlsProps) {
     </div>
   )
 }
-
-export const DialogClose = DialogPrimitive.Close

@@ -204,3 +204,19 @@ export async function getGitHubHostdLatestRelease(): Promise<GitHubRelease | nul
     return null
   }
 }
+
+export async function getGitHubWalletdLatestRelease(): Promise<GitHubRelease | null> {
+  try {
+    const response = await axios.get(
+      'https://api.github.com/repos/SiaFoundation/walletd/releases?per_page=1'
+    )
+    if (response.data.length) {
+      return response.data[0]
+    } else {
+      return null
+    }
+  } catch (e) {
+    console.log(e)
+    return null
+  }
+}

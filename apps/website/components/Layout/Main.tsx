@@ -1,8 +1,9 @@
 import React from 'react'
-import { ImageProps, Container } from '@siafoundation/design-system'
-import { MenuSection, SiteMenu } from './SiteMenu'
+import { ImageProps } from '@siafoundation/design-system'
+import { MenuSection } from './SiteMenu'
 import { Navbar } from './Navbar'
 import { Footer } from './Footer'
+import { cx } from 'class-variance-authority'
 
 type Props = {
   menuSections: MenuSection[]
@@ -13,42 +14,29 @@ type Props = {
   transitioning?: boolean
 }
 
-export function Main({
-  heading,
-  children,
-  focus,
-  backgroundImage,
-  menuSections,
-  transitioning,
-}: Props) {
+export function Main({ heading, children, focus, transitioning }: Props) {
   return (
     <>
-      <Container size="4" className="bg-white dark:bg-graydark-50 pt-10">
-        <div className="flex justify-between items-center">
-          <Navbar />
-          {!focus && <SiteMenu menuSections={menuSections} />}
-        </div>
-      </Container>
+      {!focus && <Navbar />}
       <main
-        className="flex flex-col gap-14 w-full"
-        style={{
-          opacity: transitioning ? 0 : 1,
-        }}
+        className={cx(
+          'flex flex-col gap-14 w-full',
+          focus ? 'bg-mask' : '',
+          transitioning ? 'opacity-0' : 'opacity-100'
+        )}
       >
         {focus}
         {!focus && (
           <div className="flex flex-col">
             <div>{heading}</div>
-            <div className="relative w-full h-96 overflow-hidden border-t-3 border-b-3 border-black dark:border-graydark-1100 xl:hidden">
-              <div className="absolute w-full h-full mix-blend-darken z-10 bg-mask" />
-              <div
-                className="relative w-full h-96"
-                style={{
-                  background: `url(${backgroundImage.src})`,
-                  backgroundSize: 'cover',
-                }}
-              />
-            </div>
+            <div
+              className={cx(
+                'relative w-full h-96 overflow-hidden xl:hidden',
+                'rounded',
+                'border',
+                'border-gray-400 dark:border-graydark-400'
+              )}
+            ></div>
             <div className="flex flex-col">{children}</div>
             <Footer />
           </div>

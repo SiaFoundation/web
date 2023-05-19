@@ -6,12 +6,6 @@ import { useCallback, useEffect, useState } from 'react'
 type ImageItem = {
   title: string
   key: string
-  props: {
-    src: string
-    height?: number
-    width?: number
-    blurDataURL?: string
-  }
 }
 
 export function useCarousel(items: ImageItem[]) {

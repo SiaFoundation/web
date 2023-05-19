@@ -1,17 +1,15 @@
-import { SiteHeading, getImageProps } from '@siafoundation/design-system'
+import { SiteHeading } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
 import { getCacheStats } from '../../content/stats'
-import backgroundImage from '../../assets/backgrounds/nate-trickle.png'
-import previewImage from '../../assets/previews/nate-trickle.png'
 import { AsyncReturnType } from '../../lib/types'
 import { getMinutesInSeconds } from '../../lib/time'
-import { SectionSimple } from '../../components/SectionSimple'
+import { SectionSolid } from '../../components/SectionSolid'
 import { getCachePrs } from '../../content/prs'
 import { GitHubActivity } from '../../components/GitHubActivity'
-
-const backgroundImageProps = getImageProps(backgroundImage)
-const previewImageProps = getImageProps(previewImage)
+import { backgrounds } from '../../content/imageBackgrounds'
+import { previews } from '../../content/imagePreviews'
+import { SectionTransparent } from '../../components/SectionTransparent'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 const title = 'Activity'
@@ -25,16 +23,21 @@ export default function Activity({ prs }: Props) {
       description={description}
       path={routes.community.index}
       heading={
-        <SectionSimple className="pt-24 md:pt-40 pb-6">
-          <SiteHeading title={title} description={description} size="64" />
-        </SectionSimple>
+        <SectionTransparent className="pt-24 md:pt-40 pb-6">
+          <SiteHeading
+            anchorLink={false}
+            title={title}
+            description={description}
+            size="64"
+          />
+        </SectionTransparent>
       }
-      backgroundImage={backgroundImageProps}
-      previewImage={previewImageProps}
+      backgroundImage={backgrounds.nateTrickle}
+      previewImage={previews.nateTrickle}
     >
-      <SectionSimple className="pt-12 md:pt-20 pb-24 md:pb-40">
+      <SectionSolid className="pt-12 md:pt-20 pb-24 md:pb-40">
         <GitHubActivity prs={prs} />
-      </SectionSimple>
+      </SectionSolid>
     </Layout>
   )
 }

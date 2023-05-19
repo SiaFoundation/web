@@ -1,0 +1,228 @@
+[
+  {
+    "title": "Filebase",
+    "link": "https://filebase.com",
+    "logo": "filebase",
+    "image": "filebase",
+    "background": "nateTrickle",
+    "tags": ["renting", "featured"],
+    "subtitle": "S3-compatible cloud object storage service powered by blockchain and the Sia network."
+  },
+  {
+    "title": "Vup",
+    "link": "https://vup.app",
+    "logo": "vup",
+    "image": "vup",
+    "background": "nateSnow",
+    "tags": ["renting", "featured", "grant_examples", "open_source_software"],
+    "subtitle": "Private and decentralized open-source cloud storage app with encrypted file sharing and media streaming support."
+  },
+  {
+    "title": "S5",
+    "link": "https://docs.sfive.net",
+    "logo": "s5",
+    "image": "s5",
+    "background": "natePath",
+    "tags": ["renting", "featured", "grant_examples", "open_source_software"],
+    "subtitle": "Content-addressed storage, but fast. Works with Sia and any S3-compatible storage provider, such as Filebase."
+  },
+  {
+    "title": "Pixeldrain",
+    "link": "https://pixeldrain.com",
+    "logo": "pixeldrain",
+    "image": "pixeldrain",
+    "background": "nateWaterfall",
+    "tags": ["renting", "featured"],
+    "subtitle": "File sharing site that uses the Sia network."
+  },
+  {
+    "title": "NextCloud",
+    "link": "https://nextcloud.com",
+    "logo": "nextcloud",
+    "image": "nextcloud",
+    "background": "nateTrickle",
+    "tags": ["renting", "grant_ideas", "open_source_software"],
+    "idea": true,
+    "subtitle": "Nextcloud is a suite of client-server software for creating and using file hosting services. Interested in building a NextCloud Sia integration? Apply for a Grant!"
+  },
+  {
+    "title": "renterd S3 Gateway",
+    "link": "https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html",
+    "logo": "",
+    "image": "s3gateway",
+    "background": "nateSnow",
+    "tags": ["renting", "grant_ideas", "open_source_software"],
+    "idea": true,
+    "subtitle": "S3 is a widely adopted object storage protocol created by AWS. Interested in building an S3 renterd gateway? Apply for a Grant!"
+  },
+  {
+    "title": "Host Browser",
+    "link": "https://hosts.siacentral.com/",
+    "logo": "siacentral",
+    "image": "siacentralHosts",
+    "background": "nateWaterfall",
+    "tags": ["hosting", "grant_examples", "network_stats"],
+    "subtitle": "The Sia Central Host Browser lets you explore and filter Sia hosts by a variety of criteria."
+  },
+  {
+    "title": "Lite Wallet",
+    "link": "https://wallet.siacentral.com/",
+    "logo": "siacentral",
+    "image": "siacentralWallet",
+    "background": "nateTrickle",
+    "tags": ["wallet"],
+    "subtitle": "The Sia Central Wallet is a web-wallet with support for seed, ledger, and watch modes."
+  },
+  {
+    "title": "Explorer",
+    "link": "https://explore.sia.tech",
+    "logo": "sia",
+    "image": "explore",
+    "tags": ["network_stats"],
+    "subtitle": "Blockchain explorer for the Sia network."
+  },
+  {
+    "title": "Siastats",
+    "link": "https://siastats.info",
+    "logo": "siastats",
+    "image": "siastats",
+    "background": "light",
+    "tags": ["open_source_software", "grant_examples", "network_stats"],
+    "subtitle": "Charts, metrics, and explorer for the Sia network."
+  },
+  {
+    "title": "Hosts Monitor",
+    "link": "https://siastats.info/hosts",
+    "logo": "siastats",
+    "image": "siastatsHosts2",
+    "tags": ["hosting", "network_stats"],
+    "subtitle": "SiaStats Hosts Mointor provides ranking and metrics for Sia hosts."
+  },
+  {
+    "title": "Host Troubleshoot Tool",
+    "link": "https://troubleshoot.siacentral.com/",
+    "logo": "siacentral",
+    "image": "siacentralTroubleshoot",
+    "tags": ["hosting", "network_stats"],
+    "subtitle": "The Sia Central Host Troubleshoot Tool lets you troubleshoot issues with your Sia host."
+  },
+  {
+    "title": "Foundation Tracker",
+    "link": "https://foundation-tracker.siacentral.com/",
+    "logo": "siacentral",
+    "image": "siacentralFoundationTracker",
+    "tags": ["network_stats"],
+    "subtitle": "The Sia Central Foundation Tracker track the Sia Foundation subsidy transactions from the blockchain."
+  },
+  {
+    "title": "Sia Ledger Sweep",
+    "link": "https://gist.github.com/lukechampine/e25330d7cc636cd37d4abe4211dedb40",
+    "image": "siaLedgerSweep",
+    "tags": ["wallet"],
+    "subtitle": "Tool for sweeping all of the SC stored on a Ledger into a new address. This is helpful if you lost (or broke) your Ledger, but still have the seed written down somewhere."
+  },
+  {
+    "title": "CoinMarketCap",
+    "logo": "coinmarketcap",
+    "image": "coinmarketcap",
+    "link": "https://coinmarketcap.com/currencies/siacoin/",
+    "tags": ["network_stats"],
+    "subtitle": "Basic information and financial charts for the Sia network."
+  },
+  {
+    "title": "Decentralizer",
+    "logo": "decentralizer",
+    "image": "decentralizer",
+    "link": "https://keops.cc/decentralizer",
+    "tags": ["open_source_software"],
+    "subtitle": "Sia companion app that provides renters with more granular controls over hosts and contracts."
+  },
+  {
+    "title": "TrySia",
+    "logo": "trysia",
+    "image": "trysia",
+    "link": "https://trysia.tech/",
+    "tags": ["open_source_software"],
+    "subtitle": "Give Sia a spin with this Docker image that includes a fully-synced node and ready-to-use file contracts."
+  },
+  {
+    "title": "Luxor",
+    "logo": "luxor",
+    "image": "luxor",
+    "link": "https://mining.luxor.tech/coins/siacoin",
+    "tags": ["mining_pools"],
+    "subtitle": "Mining pool for Siacoin."
+  },
+  {
+    "title": "SiaMining",
+    "logo": "siamining",
+    "image": "siamining",
+    "link": "https://siamining.com/",
+    "tags": ["mining_pools"],
+    "subtitle": "The first and largest mining pool for Siacoin."
+  },
+  {
+    "title": "DxPool",
+    "logo": "dxpool",
+    "image": "dxpool",
+    "link": "https://www.dxpool.com/pool/sc/info",
+    "tags": ["mining_pools"],
+    "subtitle": "Leading blockchain infrastructure service provider."
+  },
+  {
+    "title": "f2pool",
+    "logo": "f2pool",
+    "image": "f2pool",
+    "link": "https://www.f2pool.com/coin/siacoin?lang=en_US",
+    "tags": ["mining_pools"],
+    "subtitle": "Popular crypto mining pool provider."
+  },
+  {
+    "title": "Kraken",
+    "logo": "kraken",
+    "image": "kraken",
+    "link": "https://www.kraken.com/prices/sc-siacoin-price-chart/usd-us-dollar?interval=1m",
+    "tags": ["exchanges"],
+    "subtitle": "Based in the USA, Kraken is one of the largest and oldest Bitcoin exchanges in the world."
+  },
+  {
+    "title": "Poloniex",
+    "logo": "poloniex",
+    "image": "poloniex",
+    "link": "https://poloniex.com/exchange/BTC_SC",
+    "tags": ["exchanges"],
+    "subtitle": "Based in the USA and recently acquired by Circle, Poloniex is a popular crypto-to-crypto exchange."
+  },
+  {
+    "title": "Crypto.com",
+    "logo": "cryptocom",
+    "image": "cryptocom",
+    "link": "https://crypto.com/app",
+    "tags": ["exchanges"],
+    "subtitle": "Crypto.com is a popular crypto-to-crypto exchange. It is a trusted and secure platform for users to trade top cryptocurrencies with the lowest fees in the industry."
+  },
+  {
+    "title": "change now",
+    "logo": "changenow",
+    "image": "changenow",
+    "link": "https://changenow.io/?from=btc&to=sc",
+    "tags": ["exchanges"],
+    "subtitle": "ChangeNOW is a non-custodial service created for simple and fast cryptocurrency exchanges."
+  },
+  {
+    "title": "Upbit",
+    "logo": "upbit",
+    "image": "upbit",
+    "link": "https://upbit.com/home",
+    "tags": ["exchanges"],
+    "subtitle": "Based in South Korea and partnered with Bittrex, Upbit is a popular crypto-to-crypto exchange."
+  },
+  {
+    "title": "SevenB",
+    "logo": "sevenb",
+    "image": "sevenb",
+    "link": "https://sevenb.io/currencies/siacoin",
+    "tags": ["exchanges"],
+    "subtitle": "A simple & straightforward crypto broker, powered by Binance."
+  }
+]
