@@ -11,6 +11,7 @@ type Props = {
 export function Logo({ size = 30, className }: Props) {
   return (
     <Image
+      priority
       src={props.src}
       alt="Logo"
       width={size}
