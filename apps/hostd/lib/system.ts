@@ -3,11 +3,14 @@ import { trim, trimEnd } from 'lodash'
 type Separator = '\\' | '/'
 
 export function getParentDir(currentPath: string, separator: Separator) {
-  let parentDir = `${currentPath.split(separator).slice(0, -1).join(separator)}`
-  if (parentDir === '' || parentDir.endsWith(':')) {
-    parentDir = separator
+  const parentDir = `${currentPath
+    .split(separator)
+    .slice(0, -1)
+    .join(separator)}`
+  if (parentDir === '') {
+    return separator
   }
-  return parentDir
+  return parentDir + separator
 }
 
 export function getChildDirectoryPath({
@@ -24,7 +27,7 @@ export function getChildDirectoryPath({
     // if '\\' + 'C:' => 'C:\\' do not include the root `\\`
     fullPath = childPath + separator
   } else {
-    fullPath = joinPaths(currentPath, childPath, separator)
+    fullPath = joinPaths(currentPath, childPath, separator) + separator
   }
   return fullPath
 }
