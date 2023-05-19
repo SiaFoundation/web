@@ -1,0 +1,25 @@
+[
+  {
+    "title": "Learn how to rent storage space on the Sia network",
+    "link": "https://docs.sia.tech/renting/about-renting",
+    "image": "docsRenting"
+  },
+  {
+    "title": "Build a media streaming system with renterd and Plex",
+    "idea": true,
+    "link": "",
+    "image": "plex"
+  },
+  {
+    "title": "Build a media streaming system with renterd and Jellyfin",
+    "idea": true,
+    "link": "",
+    "image": "jellyfin"
+  },
+  {
+    "title": "Build a media streaming system with renterd and Vup",
+    "idea": true,
+    "link": "",
+    "image": "vup"
+  }
+]

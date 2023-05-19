@@ -64,6 +64,8 @@ export const textStyles = cva(['inline-block'], {
       true: 'whitespace-nowrap',
     },
     underline: {
+      accent:
+        'underline underline-offset-2 decoration-2 decoration-accent-900 dark:decoration-accentdark-900',
       show: 'underline underline-offset-2 decoration-gray-1100 dark:decoration-gray-500',
       hover:
         'hover:underline underline-offset-2 decoration-gray-1100 dark:decoration-gray-500',

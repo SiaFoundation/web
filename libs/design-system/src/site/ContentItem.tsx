@@ -35,10 +35,13 @@ export type ContentItemProps = {
   location?: string
   icon?: string
   logo?: string
+  image?: string
+  background?: string
   subtitle?: React.ReactNode
   children?: React.ReactNode
   link?: string
   tags?: string[]
+  idea?: boolean
   sections?: string[]
   newTab?: boolean
   className?: string
@@ -84,7 +87,11 @@ export function ContentItem({
   const iconEl = icon && icons[icon]
   return (
     <div className="flex gap-4 items-start">
-      {iconEl && <Text className="pt-1">{iconEl}</Text>}
+      {iconEl && (
+        <Text className="pt-1" color="accent">
+          {iconEl}
+        </Text>
+      )}
       <div key={link} className={className}>
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">

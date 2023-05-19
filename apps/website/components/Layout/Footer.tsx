@@ -1,21 +1,52 @@
-import { SiteMap, ThemeRadio } from '@siafoundation/design-system'
+import { Link, Logo, SiteMap, ThemeRadio } from '@siafoundation/design-system'
 import { menuSections } from '../../config/siteMap'
-import { SectionGradient } from '../SectionGradient'
 import { Statsbar } from '../Statsbar'
-import { SectionWaves } from '../SectionWaves'
+import { SectionTransparent } from '../SectionTransparent'
+import { SectionSolid } from '../SectionSolid'
+import { routes } from '../../config/routes'
 
 export function Footer() {
   return (
     <div className="flex flex-col">
-      <SectionWaves className="pt-10 pb-12 md:pt-14 md:pb-20">
+      <SectionTransparent className="pt-10 pb-12 md:pt-14 md:pb-20">
         <SiteMap menuSections={menuSections} />
-      </SectionWaves>
-      <SectionGradient className="py-16 md:py-20 opacity-[.99]">
+      </SectionTransparent>
+      <SectionSolid className="py-10 md:py-12 border-t border-gray-100 dark:border-graydark-100">
         <Statsbar />
-        <div className="pt-20 pb-20">
-          <ThemeRadio />
+      </SectionSolid>
+      <SectionSolid className="py-4 border-t border-gray-100 dark:border-graydark-100">
+        <div className="flex flex-wrap gap-4 items-center">
+          <div className="flex gap-2 items-center">
+            <Logo size={20} />
+            <Link
+              size="12"
+              color="contrast"
+              weight="medium"
+              underline="hover"
+              href={routes.foundation.index}
+              noWrap
+            >
+              The Sia Foundation © {new Date().getFullYear()}
+            </Link>
+          </div>
+          <div className="flex-1 flex items-center gap-4">
+            {/* <Link size="12" color="subtle" underline="hover" noWrap>
+              Privacy Policy
+            </Link> */}
+            <Link
+              href={routes.terms.index}
+              size="12"
+              color="subtle"
+              underline="hover"
+              noWrap
+            >
+              Terms of Service
+            </Link>
+            <div className="flex-1" />
+            <ThemeRadio className="hidden md:flex" />
+          </div>
         </div>
-      </SectionGradient>
+      </SectionSolid>
     </div>
   )
 }

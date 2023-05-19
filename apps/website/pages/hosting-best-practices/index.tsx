@@ -1,28 +1,21 @@
 import fs from 'fs'
 import path from 'path'
-import {
-  SiteHeading,
-  getImageProps,
-  webLinks,
-  Text,
-} from '@siafoundation/design-system'
+import { SiteHeading, webLinks, Text } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
 import { getCacheStats } from '../../content/stats'
-import backgroundImage from '../../assets/backgrounds/nate-bridge.png'
-import previewImage from '../../assets/previews/nate-bridge.png'
 import { AsyncReturnType } from '../../lib/types'
 import { getMinutesInSeconds } from '../../lib/time'
-import { SectionSimple } from '../../components/SectionSimple'
+import { SectionSolid } from '../../components/SectionSolid'
 import { getContentDirectory } from '@siafoundation/env'
 import matter from 'gray-matter'
 import { serialize } from 'next-mdx-remote/serialize'
 import { format } from 'date-fns'
 import { MDXRemote } from 'next-mdx-remote'
 import { components } from '../../config/mdx'
-
-const backgroundImageProps = getImageProps(backgroundImage)
-const previewImageProps = getImageProps(previewImage)
+import { backgrounds } from '../../content/imageBackgrounds'
+import { previews } from '../../content/imagePreviews'
+import { SectionTransparent } from '../../components/SectionTransparent'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
@@ -38,11 +31,12 @@ export default function HostBestPractices({
       description={description}
       path={routes.community.index}
       heading={
-        <SectionSimple className="pt-24 md:pt-40 pb-6 md:pb-20">
+        <SectionTransparent className="pt-24 md:pt-40 pb-6 md:pb-20">
           <SiteHeading
             title={title}
             description={description}
             size="64"
+            anchorLink={false}
             links={[
               {
                 title: 'Hosting Docs',
@@ -56,18 +50,18 @@ export default function HostBestPractices({
               },
             ]}
           />
-        </SectionSimple>
+        </SectionTransparent>
       }
-      backgroundImage={backgroundImageProps}
-      previewImage={previewImageProps}
+      backgroundImage={backgrounds.nateBridge}
+      previewImage={previews.nateBridge}
     >
-      <SectionSimple className="md:pt-20 pb-24 md:pb-40">
+      <SectionSolid className="md:pt-20 pb-24 md:pb-40">
         <MDXRemote {...source} components={components} />
         <Text
           className="mt-24 md:mt-32 mb-24"
           color="verySubtle"
         >{`Document version date: ${format(new Date(date), 'PP')}`}</Text>
-      </SectionSimple>
+      </SectionSolid>
     </Layout>
   )
 }

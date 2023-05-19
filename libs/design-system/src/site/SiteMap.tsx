@@ -4,9 +4,7 @@ import { Link } from '../core/Link'
 import { LinkData } from '../lib/links'
 import { Heading } from '../core/Heading'
 import { useIsExternalDomain } from '../hooks/useIsExternalDomain'
-import { Text } from '../core/Text'
 import { cx } from 'class-variance-authority'
-import { Logo } from '../core/Logo'
 
 export type MenuSection = {
   title: string
@@ -21,9 +19,6 @@ type Props = {
 export function SiteMap({ menuSections, onClick }: Props) {
   return (
     <div className="flex flex-col py-5 gap-8 items-start">
-      <Text className="flex pb-2 sm:pb-6">
-        <Logo size={50} />
-      </Text>
       <div className="grid gap-x-6 gap-y-12 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {menuSections.map(({ title, links }) => (
           <div className="flex" key={title}>

@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { webLinks } from '@siafoundation/design-system'
+import { backgrounds } from '../content/imageBackgrounds'
 import { Versions } from '../content/versions'
 import { SoftwareSection } from './SoftwareSection'
 
@@ -20,7 +21,7 @@ export function SoftwareSectionCurrentGen({ versions }: Props) {
         sourceLink={webLinks.github.siad}
         docsLink={webLinks.docs.siad}
         version={versions.sia.latest}
-        startTime={0}
+        background={backgrounds.light}
         links={[
           {
             title: 'Windows',
@@ -53,7 +54,7 @@ export function SoftwareSectionCurrentGen({ versions }: Props) {
         title="Sia UI"
         sourceLink={webLinks.github.siaui}
         docsLink={webLinks.docs.siaui}
-        startTime={15}
+        background={backgrounds.mountain}
         description={
           <>
             Built for users who prefer to work with a graphical user interface.
@@ -84,7 +85,7 @@ export function SoftwareSectionCurrentGen({ versions }: Props) {
         sourceLink={webLinks.github.embarcadero}
         docsLink={webLinks.docs.embarcadero}
         version={versions.embarcadero.latest}
-        startTime={30}
+        background={backgrounds.leaves}
         links={[
           {
             title: 'Linux AMD',

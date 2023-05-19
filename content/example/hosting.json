@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Learn how to host storage space on the Sia network",
+    "link": "https://docs.sia.tech/hosting/about-hosting-on-sia"
+  },
+  {
+    "title": "Setup a new host on Linux",
+    "link": "https://docs.sia.tech/hosting/hostd/setup-guides/linux"
+  },
+  {
+    "title": "Setup a new host on macOS",
+    "link": "https://docs.sia.tech/hosting/hostd/setup-guides/macos"
+  },
+  {
+    "title": "Setup a new host on Windows",
+    "link": "https://docs.sia.tech/hosting/hostd/setup-guides/windows"
+  }
+]

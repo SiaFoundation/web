@@ -6,7 +6,8 @@ import {
   Book16,
   LogoGithub16,
 } from '@siafoundation/design-system'
-import { CalloutSoftware } from './CalloutSoftware'
+import { StaticImageData } from 'next/image'
+import { CalloutCoreSoftware } from './CalloutCoreSoftware'
 
 type Props = {
   title: string
@@ -15,7 +16,7 @@ type Props = {
   sourceLink: string
   docsLink: string
   links: LinkData[]
-  startTime: number
+  background: StaticImageData
 }
 
 export function SoftwareSection({
@@ -25,13 +26,13 @@ export function SoftwareSection({
   sourceLink,
   docsLink,
   links,
-  startTime,
+  background,
 }: Props) {
   return (
-    <CalloutSoftware
+    <CalloutCoreSoftware
       name={title}
       description={description}
-      startTime={startTime}
+      background={background}
       variant="subtle"
     >
       <div className="flex flex-col">
@@ -67,6 +68,6 @@ export function SoftwareSection({
           </Text>
         </div>
       </div>
-    </CalloutSoftware>
+    </CalloutCoreSoftware>
   )
 }

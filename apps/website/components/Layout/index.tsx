@@ -1,11 +1,12 @@
-import { ImageProps, Container } from '@siafoundation/design-system'
+import { Container } from '@siafoundation/design-system'
 import { SiteMenu } from './SiteMenu'
 import React, { useEffect, useState } from 'react'
 import { cx } from 'class-variance-authority'
-import { BackgroundImage } from './BackgroundImage'
+import { Background } from './Background'
 import { Main } from './Main'
 import { PageHead } from '../PageHead'
 import { menuSections } from '../../config/siteMap'
+import { StaticImageData } from 'next/image'
 
 type Props = {
   title: string
@@ -15,8 +16,8 @@ type Props = {
   navbar?: React.ReactNode
   heading: React.ReactNode
   children: React.ReactNode
-  previewImage: ImageProps
-  backgroundImage: ImageProps
+  previewImage: StaticImageData
+  backgroundImage: StaticImageData
   focus?: React.ReactNode
   transitions?: boolean
   transitionWidthDuration?: number
@@ -82,14 +83,9 @@ export function Layout({
       />
       <div
         id="main-scroll"
-        className={cx(
-          'relative z-10 h-full overflow-y-auto',
-          focus ? 'p-0' : 'py-0 px-0 xl:px-12',
-          focus ? 'border border-black dark:border-graydark-1100' : ''
-        )}
+        className={cx('relative z-10 h-full overflow-y-auto')}
         style={{
           transition: 'margin 100ms ease-in',
-          borderWidth: focus ? '3px' : '0',
         }}
       >
         {/* show floating menu */}
@@ -103,10 +99,9 @@ export function Layout({
           pad={false}
           className={cx(
             'relative p-0 z-10',
-            focus
-              ? 'sm:border-r-black sm:dark:border-r-graydark-1100'
-              : 'border-black dark:border-graydark-1100',
-            focus ? 'sm:border-r-3' : 'border-3',
+            // 'rounded-xl',
+            focus ? '' : 'border-gray-400 dark:border-graydark-600',
+            focus ? '' : 'border-3',
             focus ? 'ml-0 max-w-full' : 'mx-auto max-w-screen-2xl',
             focus ? 'sm:w-[600px]' : '',
             transitioning ? 'bg-white dark:bg-graydark-50' : ''
@@ -125,10 +120,8 @@ export function Layout({
             {children}
           </Main>
         </Container>
-        {/* </div> */}
-        {/* </ScrollArea> */}
       </div>
-      <BackgroundImage focus={!!focus} backgroundImage={backgroundImage} />
+      <Background focus={!!focus} background={backgroundImage} />
     </div>
   )
 }

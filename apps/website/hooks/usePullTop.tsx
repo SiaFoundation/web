@@ -3,8 +3,8 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 
 const throttleDelay = 300
 
-const countThresholdTriggerStart = 3
-const countThresholdTriggerTransition = 10
+const countThresholdTriggerStart = 5
+const countThresholdTriggerTransition = 12
 
 const topMaximumTriggerValue = 60
 const topResetThreshold = 80

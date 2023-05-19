@@ -1,9 +1,11 @@
-import { Link, LinkButton } from '../core/Link'
+import { Link } from '../core/Link'
 import { Text } from '../core/Text'
 import { Paragraph } from '../core/Paragraph'
-import { AnimatedPanel } from './AnimatedPanel'
+import { PatternedPanel } from './PatternedPanel'
 import { Heading } from '../core/Heading'
 import { cx } from 'class-variance-authority'
+import { StaticImageData } from 'next/image'
+import { WebDomain } from './WebDomain'
 
 type Props = {
   id?: string
@@ -13,9 +15,9 @@ type Props = {
   actionTitle: string
   actionLink: string
   actionNewTab?: boolean
-  startTime?: number
   size?: '0' | '1' | '2'
   className?: string
+  background: StaticImageData
 }
 
 export function Callout({
@@ -26,17 +28,13 @@ export function Callout({
   actionTitle,
   actionLink,
   actionNewTab,
-  startTime,
   size = '1',
   className,
+  background,
 }: Props) {
+  const externalLink = actionLink && actionLink.startsWith('http')
   return (
-    <AnimatedPanel
-      id={id}
-      startTime={startTime}
-      className={className}
-      variant="subtle"
-    >
+    <PatternedPanel id={id} className={className} background={background}>
       <div
         className={cx(
           'flex flex-col items-start justify-end gap-4 relative h-full',
@@ -56,27 +54,34 @@ export function Callout({
           {title}
         </Heading>
         <Paragraph className="pb-3">{description}</Paragraph>
-        {size !== '2' ? (
-          <Link
-            href={actionLink}
-            size="16"
-            target={actionNewTab ? '_blank' : undefined}
-          >
-            {actionTitle}
-          </Link>
-        ) : (
-          <LinkButton
-            size="medium"
-            variant="accent"
-            rounded={false}
-            href={actionLink}
-            className="inline"
-            target={actionNewTab ? '_blank' : undefined}
-          >
-            {actionTitle}
-          </LinkButton>
-        )}
+        <div className="flex flex-col gap-2">
+          {size !== '2' ? (
+            <Link
+              href={actionLink}
+              size="16"
+              underline="accent"
+              target={actionNewTab ? '_blank' : undefined}
+            >
+              {actionTitle}
+            </Link>
+          ) : (
+            <Link
+              size="18"
+              underline="accent"
+              href={actionLink}
+              className="inline"
+              target={actionNewTab ? '_blank' : undefined}
+            >
+              {actionTitle}
+            </Link>
+          )}
+          {externalLink && (
+            <div className="flex gap-1 items-center">
+              <WebDomain link={actionLink} />
+            </div>
+          )}
+        </div>
       </div>
-    </AnimatedPanel>
+    </PatternedPanel>
   )
 }

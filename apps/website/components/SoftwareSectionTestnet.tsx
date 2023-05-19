@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { webLinks } from '@siafoundation/design-system'
+import { backgrounds } from '../content/imageBackgrounds'
 import { Versions } from '../content/versions'
 import { SoftwareSection } from './SoftwareSection'
 
@@ -21,7 +22,7 @@ export function SoftwareSectionTestnet({ versions }: Props) {
         sourceLink={webLinks.github.siad}
         docsLink={webLinks.docs.siad}
         version={versions.sia.testnet}
-        startTime={0}
+        background={backgrounds.natePath}
         links={[
           {
             title: 'Windows AMD',

@@ -3,9 +3,7 @@ import {
   ContentGallery,
   Callout,
   SiteHeading,
-  getImageProps,
   webLinks,
-  ContentProject,
   Link,
   Ol,
   Li,
@@ -15,16 +13,13 @@ import {
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
-import { getCacheSoftware } from '../../content/software'
+import { getCacheProjects } from '../../content/projects'
 import { getCacheStats } from '../../content/stats'
 import { textContent } from '../../lib/utils'
-import backgroundImage from '../../assets/backgrounds/nate-snow.png'
-import previewImage from '../../assets/previews/nate-snow.png'
 import { AsyncReturnType } from '../../lib/types'
 import { getMinutesInSeconds } from '../../lib/time'
 import { getCacheGrantCommittee } from '../../content/grantCommittee'
-import { SectionSimple } from '../../components/SectionSimple'
-import { SectionWaves } from '../../components/SectionWaves'
+import { SectionTransparent } from '../../components/SectionTransparent'
 import { SectionGradient } from '../../components/SectionGradient'
 import { MDXRemote } from 'next-mdx-remote'
 import path from 'path'
@@ -34,9 +29,9 @@ import matter from 'gray-matter'
 import { serialize } from 'next-mdx-remote/serialize'
 import { components } from '../../config/mdx'
 import { TableOfContents } from '../../components/TableOfContents'
-
-const backgroundImageProps = getImageProps(backgroundImage)
-const previewImageProps = getImageProps(previewImage)
+import { backgrounds } from '../../content/imageBackgrounds'
+import { previews } from '../../content/imagePreviews'
+import { CalloutProject } from '../../components/CalloutProject'
 
 const title = 'Grants'
 const description = (
@@ -52,7 +47,8 @@ const description = (
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
 export default function Grants({
-  services,
+  grantExamples,
+  grantIdeas,
   grantCommittee,
   grantApplicantFaqSource,
   grantGranteeFaqSource,
@@ -63,8 +59,13 @@ export default function Grants({
       description={textContent(description)}
       path={routes.community.index}
       heading={
-        <SectionSimple className="pt-24 md:pt-40 pb-6 md:pb-20">
-          <SiteHeading title={title} description={description} size="64">
+        <SectionTransparent className="pt-24 md:pt-40 pb-6 md:pb-20">
+          <SiteHeading
+            title={title}
+            description={description}
+            size="64"
+            anchorLink={false}
+          >
             <TableOfContents
               items={[
                 {
@@ -101,12 +102,12 @@ export default function Grants({
             />
             <div className="flex flex-col gap-3 mt-10"></div>
           </SiteHeading>
-        </SectionSimple>
+        </SectionTransparent>
       }
-      backgroundImage={backgroundImageProps}
-      previewImage={previewImageProps}
+      backgroundImage={backgrounds.nateSnow}
+      previewImage={previews.nateSnow}
     >
-      <SectionWaves className="pt-6 md:pt-20 pb-16 md:pb-32">
+      <SectionGradient className="pt-6 md:pt-20 pb-16 md:pb-32">
         <div className="flex flex-col max-w-3xl overflow-hidden">
           <SiteHeading
             size="32"
@@ -261,8 +262,30 @@ export default function Grants({
             ]}
           />
         </div>
-      </SectionWaves>
+      </SectionGradient>
       <SectionGradient>
+        <SiteHeading
+          id="ideas"
+          size="32"
+          className="pt-16 md:pt-40 pb-10 md:pb-20"
+          title="We would love to see the following ideas as Grant projects"
+          description={
+            <>
+              The Sia community would love to see the following projects built.
+              If you are interested in building one of these projects, please
+              reach out to the community on Discord to discuss your proposal.
+            </>
+          }
+        />
+        <ContentGallery
+          items={grantIdeas.map((i) => ({
+            ...i,
+            newTab: true,
+          }))}
+          component={CalloutProject}
+          columnClassName="grid-cols-1 md:grid-cols-2"
+          gapClassName="gap-4 sm:gap-5"
+        />
         <SiteHeading
           id="example-projects"
           size="32"
@@ -283,17 +306,20 @@ export default function Grants({
           ]}
         />
         <ContentGallery
-          items={services.map((i) => ({
+          items={grantExamples.map((i) => ({
             ...i,
             newTab: true,
           }))}
-          component={ContentProject}
+          component={CalloutProject}
+          columnClassName="grid-cols-1 md:grid-cols-2"
+          gapClassName="gap-4 sm:gap-5"
         />
-        <Anchor id="create-a-proposal" />
         <Callout
+          id="create-a-proposal"
           className="mt-20 md:mt-48 mb-16 md:mb-24"
           title="Get started on your grant proposal"
           size="2"
+          background={backgrounds.tree}
           description={
             <>
               The Sia Foundation looks forward to funding your open source
@@ -340,7 +366,8 @@ export default function Grants({
 
 export async function getStaticProps() {
   const stats = await getCacheStats()
-  const services = await getCacheSoftware('open_source_software', 6)
+  const grantIdeas = await getCacheProjects('grant_ideas', 6)
+  const grantExamples = await getCacheProjects('grant_examples', 6)
   const grantCommittee = await getCacheGrantCommittee()
 
   const grantApplicantFaqSource = await serialize(
@@ -363,7 +390,8 @@ export async function getStaticProps() {
 
   return {
     props: {
-      services,
+      grantExamples,
+      grantIdeas,
       grantCommittee,
       grantApplicantFaqSource,
       grantGranteeFaqSource,
@@ -373,12 +401,4 @@ export async function getStaticProps() {
     },
     revalidate: getMinutesInSeconds(5),
   }
-}
-
-function Anchor({ id }: { id: string }) {
-  return (
-    <div className="relative">
-      <div id={id} className="absolute -top-[50px]" />
-    </div>
-  )
 }
