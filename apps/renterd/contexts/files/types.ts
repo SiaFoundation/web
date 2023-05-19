@@ -25,4 +25,4 @@ export const columnsDefaultVisible: TableColumnId[] = [
   'health',
 ]
 
-export const columnsDefaultSort = 'type'
+export const columnsDefaultSort = 'name'
