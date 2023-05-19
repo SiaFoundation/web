@@ -3,13 +3,21 @@ import { trim, trimEnd } from 'lodash'
 type Separator = '\\' | '/'
 
 export function getParentDir(currentPath: string, separator: Separator) {
+  // currentPath is 'C:\\', return '\\'
+  if (currentPath.endsWith(':\\')) {
+    return separator
+  }
+
   const parentDir = `${currentPath
     .split(separator)
     .slice(0, -1)
     .join(separator)}`
+
+  // currentPath was '/foo', parentDir is now ''
   if (parentDir === '') {
     return separator
   }
+
   return parentDir + separator
 }
 

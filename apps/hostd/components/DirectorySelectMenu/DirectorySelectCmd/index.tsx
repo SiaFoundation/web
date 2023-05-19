@@ -44,6 +44,8 @@ export function DirectorySelectCmd({
     return null
   }
 
+  const isRootOnWindows = dir.data?.path === '\\'
+
   return (
     <CommandGroup
       currentPage={currentPage}
@@ -115,21 +117,23 @@ export function DirectorySelectCmd({
             </CommandItemSearch>
           )
         })}
-      <CommandItemSearch
-        commandPage={volumesDirectorySelectPage}
-        currentPage={currentPage}
-        value="create new directory"
-      >
-        <DirectoryCreate
-          path={dir.data?.path}
-          onCreate={(name) => {
-            dir.mutate((data) => ({
-              ...data,
-              directories: data.directories?.concat(name) || [name],
-            }))
-          }}
-        />
-      </CommandItemSearch>
+      {!isRootOnWindows && (
+        <CommandItemSearch
+          commandPage={volumesDirectorySelectPage}
+          currentPage={currentPage}
+          value="create new directory"
+        >
+          <DirectoryCreate
+            path={dir.data?.path}
+            onCreate={(name) => {
+              dir.mutate((data) => ({
+                ...data,
+                directories: data.directories?.concat(name) || [name],
+              }))
+            }}
+          />
+        </CommandItemSearch>
+      )}
     </CommandGroup>
   )
 }

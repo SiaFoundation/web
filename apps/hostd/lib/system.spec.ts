@@ -61,5 +61,6 @@ describe('paths', () => {
     expect(getParentDir('/Users', '/')).toBe('/')
     expect(getParentDir('C:\\Users\\User', '\\')).toBe('C:\\Users\\')
     expect(getParentDir('C:\\Users', '\\')).toBe('C:\\')
+    expect(getParentDir('C:\\', '\\')).toBe('\\')
   })
 })
