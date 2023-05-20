@@ -14,6 +14,7 @@ export type TxType =
   | 'minerPayout'
   | 'siafundClaim'
   | 'foundationSubsidy'
+  | 'hostAnnouncement'
 // | 'block'
 // | 'defrag'
 // | 'setup'
@@ -67,6 +68,13 @@ export function getTransactionTypes(
   if (txn.fileContracts && txn.fileContracts.length > 0) {
     return 'contractFormation'
   }
+  if (
+    txn.arbitraryData &&
+    txn.arbitraryData.length > 0 &&
+    atob(txn.arbitraryData[0]).indexOf('HostAnnouncement') === 0
+  ) {
+    return 'hostAnnouncement'
+  }
   if (txn.siafundOutputs && txn.siafundOutputs.length > 0) {
     return 'siafund'
   }
@@ -112,6 +120,7 @@ const txTypeMap: Record<TxType, string> = {
   minerPayout: 'miner payout',
   siafundClaim: 'siafund claim',
   foundationSubsidy: 'foundation subsidy',
+  hostAnnouncement: 'host announcement',
   // block: 'block',
   // defrag: 'defrag',
   // setup: 'setup',
