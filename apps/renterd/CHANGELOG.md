@@ -1,5 +1,11 @@
 # renterd
 
+## 0.17.0
+
+### Minor Changes
+
+- 44d74f3: The copy authenticated URL toast is now properly formatted.
+
 ## 0.16.0
 
 ### Minor Changes
