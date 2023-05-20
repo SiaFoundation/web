@@ -55,7 +55,7 @@ export function buildToastOptions({
 }: ToastOptions = {}): ToastOptions {
   return {
     position: 'top-center',
-    duration: 10_000,
+    duration: 6_000,
     className: cx(
       rootClasses,
       panelStyles(),

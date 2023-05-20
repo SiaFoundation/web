@@ -91,7 +91,7 @@ export function FileDropdownMenu({ name, path }: Props) {
               </div>,
               {
                 icon: (
-                  <div>
+                  <div className="!flex-none w-5">
                     <Warning16 className="w-5 text-amber-600" />
                   </div>
                 ),
