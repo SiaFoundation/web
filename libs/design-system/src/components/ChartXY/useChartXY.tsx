@@ -16,6 +16,7 @@ import {
   CurveType,
   StackOffset,
 } from './types'
+import { daysInMilliseconds } from '../../lib/time'
 
 const numTicks = 4
 
@@ -29,10 +30,23 @@ export function useChartXY<Key extends string, Cat extends string>(
   initialCurveType: CurveType,
   initialStackOffset: StackOffset
 ) {
-  const data = useMemo(
-    () => chartData.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1)),
-    [chartData]
-  )
+  const data = useMemo(() => {
+    chartData.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1))
+    if (chartData.length === 0) {
+      return []
+    }
+    const lastEl = chartData[chartData.length - 1]
+    // visx XYChart essentially clips the last datum. It seems like the tooltips
+    // nearestDatum calculation prioritizes the datum to the left and therefore
+    // never snaps to the final data point.
+    // This is an open issue: https://github.com/airbnb/visx/issues?q=is%3Aissue+nearestDatum
+    // To get around this, we simply add an extra point which makes the last real datum
+    // appear as the final visible/hoverable datum.
+    return [
+      ...chartData,
+      { ...lastEl, timestamp: lastEl.timestamp + daysInMilliseconds(1) },
+    ]
+  }, [chartData])
   const todayOffset = useMemo(() => {
     if (data.length < 2) {
       return 0
