@@ -1,5 +1,16 @@
 # hostd
 
+## 0.12.0
+
+### Minor Changes
+
+- d32ffbe: Directory navigation in the volume creation dialog now works properly when navigating up to the root drive.
+- 7900664: Metrics charts now properly show the final data point.
+- 2994f8f: New directories can now be created directly from the volume creation dialog directory selection tool.
+- 08e616b: Dynamic DNS configuration errors are now displayed in full.
+- 7299f00: Price settings are no longer described as "minimum".
+- 8bae495: Host announcement transactions now show up labeled as such in the transaction list.
+
 ## 0.11.0
 
 ### Minor Changes
