@@ -27,6 +27,7 @@ type Props = {
     diff: number
     change: number
   }
+  extendedSuffix?: string
   format?: (val: number) => string
   defaultMode: Mode
   enabledModes?: Mode[]
@@ -45,6 +46,7 @@ export function DatumCardConfigurable({
   color,
   sc,
   value,
+  extendedSuffix,
   format = (val) => val.toFixed(2),
   defaultMode,
   enabledModes = ['total', 'average', 'latest'],
@@ -69,6 +71,7 @@ export function DatumCardConfigurable({
         </Select>
       }
       sc={sc?.[mode] !== undefined ? new BigNumber(sc[mode]) : undefined}
+      extendedSuffix={extendedSuffix}
       value={
         value?.[mode] !== undefined && format ? format(value[mode]) : undefined
       }

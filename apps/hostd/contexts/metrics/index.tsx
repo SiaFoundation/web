@@ -5,8 +5,6 @@ import {
   formatChartData,
   getDataIntervalLabelFormatter,
   MiBToBytes,
-  monthsToBlocks,
-  TiBToBytes,
 } from '@siafoundation/design-system'
 import { humanBytes, humanNumber, humanSiacoin } from '@siafoundation/sia-js'
 import { useCallback, useMemo, useState } from 'react'
@@ -34,6 +32,14 @@ import {
   OperationsKeys,
 } from './types'
 import { formatISO } from 'date-fns'
+import {
+  humanBaseRpcPrice,
+  humanCollateralPrice,
+  humanEgressPrice,
+  humanIngressPrice,
+  humanSectorAccessPrice,
+  humanStoragePrice,
+} from '../../lib/humanUnits'
 
 type TimeRange = {
   start: number
@@ -238,16 +244,15 @@ function useMetricsMain() {
   const pricing = useMemo<Chart<PricingKeys, never>>(() => {
     const data = formatChartData(
       metricsPeriod.data?.map((m) => ({
-        baseRPC: Number(m.pricing.baseRPCPrice),
-        collateral: Number(m.pricing.collateral),
+        baseRPC: humanBaseRpcPrice(m.pricing.baseRPCPrice).toNumber(),
+        collateral: humanCollateralPrice(m.pricing.collateral).toNumber(),
         contract: Number(m.pricing.contractPrice),
-        egress: Number(m.pricing.egressPrice),
-        ingress: Number(m.pricing.ingressPrice),
-        sectorAccess: Number(m.pricing.sectorAccessPrice),
-        storage: new BigNumber(m.pricing.storagePrice) // bytes/block
-          .times(monthsToBlocks(1)) // bytes/month
-          .times(TiBToBytes(1))
-          .toNumber(),
+        egress: humanEgressPrice(m.pricing.egressPrice).toNumber(),
+        ingress: humanIngressPrice(m.pricing.ingressPrice).toNumber(),
+        sectorAccess: humanSectorAccessPrice(
+          m.pricing.sectorAccessPrice
+        ).toNumber(),
+        storage: humanStoragePrice(m.pricing.storagePrice).toNumber(),
         timestamp: new Date(m.timestamp).getTime(),
       })),
       'none'

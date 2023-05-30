@@ -11,6 +11,7 @@ type Props = {
   tooltip?: string
   fixed?: number
   dynamicUnits?: boolean
+  extendedSuffix?: string
   showTooltip?: boolean
 }
 
@@ -22,6 +23,7 @@ export function ValueSc({
   variant = 'change',
   fixed = 3,
   dynamicUnits = true,
+  extendedSuffix,
   showTooltip = true,
 }: Props) {
   const sign = value.isGreaterThan(0) ? '+' : value.isLessThan(0) ? '-' : ''
@@ -49,6 +51,9 @@ export function ValueSc({
             dynamicUnits,
           })}`
         : humanSiacoin(value, { fixed, dynamicUnits })}
+      <Text size="20" weight="medium" font="mono" ellipsis color="subtle">
+        {extendedSuffix ? `${extendedSuffix}` : ''}
+      </Text>
     </Text>
   )
 

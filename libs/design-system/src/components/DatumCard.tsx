@@ -26,6 +26,7 @@ type Props = {
   actions?: React.ReactNode
   isLoading?: boolean
   onClick?: () => void
+  extendedSuffix?: string
 }
 
 export function DatumCard({
@@ -35,6 +36,7 @@ export function DatumCard({
   actions,
   href,
   value,
+  extendedSuffix,
   hash,
   sc,
   sf,
@@ -71,6 +73,7 @@ export function DatumCard({
               <>
                 {sc !== undefined && (
                   <ValueSc
+                    extendedSuffix={extendedSuffix}
                     scaleSize={scaleSize}
                     variant="value"
                     value={sc}
