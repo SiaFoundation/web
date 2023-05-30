@@ -15,6 +15,7 @@ import {
   useDeleteFunc,
   delay,
   TransactionID,
+  usePatchFunc,
 } from '@siafoundation/react-core'
 import useSWR from 'swr'
 import { Contract, ContractStatus, WalletTransaction } from './siaTypes'
@@ -373,9 +374,9 @@ export type HostSettings = {
   collateral: Currency
   maxCollateral: Currency
 
-  minStoragePrice: Currency
-  minEgressPrice: Currency
-  minIngressPrice: Currency
+  storagePrice: Currency
+  egressPrice: Currency
+  ingressPrice: Currency
 
   priceTableValidity: number
 
@@ -391,7 +392,7 @@ export type HostSettings = {
   egressLimit: number
 
   // DNS settings
-  dynDNS: DNSSettings
+  ddns: DNSSettings
 
   revision: number
 }
@@ -404,11 +405,10 @@ export function useSettings(args?: HookArgsSwr<void, HostSettings>) {
   })
 }
 
-// Merges updates into existing settings
 export function useSettingsUpdate(
   args?: HookArgsCallback<void, Partial<HostSettings>, HostSettings>
 ) {
-  return usePostFunc({ ...args, route: '/settings' }, (mutate) => {
+  return usePatchFunc({ ...args, route: '/settings' }, (mutate) => {
     mutate((key) => {
       return key.startsWith(settingsRoute)
     })
@@ -419,16 +419,16 @@ export function useSettingsAnnounce(args?: HookArgsCallback<void, void, void>) {
   return usePostFunc({ ...args, route: '/settings/announce' })
 }
 
-export function useSettingsDynDNSUpdate(
+export function useSettingsDdnsUpdate(
   args?: HookArgsCallback<void, void, void>
 ) {
-  return usePutFunc({ ...args, route: '/settings/dyndns/update' })
+  return usePutFunc({ ...args, route: '/settings/ddns/update' })
 }
 
-export function useSettingsDynDNS(
+export function useSettingsDdns(
   args?: HookArgsWithPayloadSwr<void, void, void>
 ) {
-  return usePutSwr({ ...args, payload: {}, route: '/settings/dyndns/update' })
+  return usePutSwr({ ...args, payload: {}, route: '/settings/ddns/update' })
 }
 
 // volumes

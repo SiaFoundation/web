@@ -18,7 +18,7 @@ import { HostdAuthedLayout } from '../../components/HostdAuthedLayout'
 import {} from '@siafoundation/design-system'
 import {
   useSettings,
-  useSettingsDynDNS,
+  useSettingsDdns,
   useSettingsUpdate,
 } from '@siafoundation/react-hostd'
 import { fields, initialValues } from './fields'
@@ -37,8 +37,8 @@ export function Config() {
     },
   })
   const settingsUpdate = useSettingsUpdate()
-  const dynDNSCheck = useSettingsDynDNS({
-    disabled: !settings.data || !settings.data.dynDNS.provider,
+  const dynDNSCheck = useSettingsDdns({
+    disabled: !settings.data || !settings.data.ddns.provider,
     config: {
       swr: {
         revalidateOnFocus: false,
@@ -58,7 +58,7 @@ export function Config() {
         return
       }
       try {
-        const response = await settingsUpdate.post({
+        const response = await settingsUpdate.patch({
           payload: transformUp(values, settings.data),
         })
         if (response.error) {
@@ -125,7 +125,7 @@ export function Config() {
       routes={routes}
       sidenav={<HostdSidenav />}
       stats={
-        settings.data?.dynDNS.provider && !dynDNSCheck.isValidating ? (
+        settings.data?.ddns.provider && !dynDNSCheck.isValidating ? (
           dynDNSCheck.error ? (
             <>
               <Text color="amber">
