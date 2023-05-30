@@ -9,13 +9,13 @@ export function useSyncStatus() {
   const state = useConsensusState({
     config: {
       swr: {
-        refreshInterval: (data) => (data?.Synced ? 60_000 : 10_000),
+        refreshInterval: (data) => (data?.synced ? 60_000 : 10_000),
       },
     },
   })
   const estimatedBlockHeight = useEstimatedNetworkBlockHeight()
 
-  const nodeBlockHeight = state.data ? state.data?.BlockHeight : 0
+  const nodeBlockHeight = state.data ? state.data?.blockHeight : 0
 
   const percent =
     isUnlocked && nodeBlockHeight && estimatedBlockHeight
@@ -35,7 +35,7 @@ export function useSyncStatus() {
       : false
 
   return {
-    isSynced: state.data?.Synced,
+    isSynced: state.data?.synced,
     nodeBlockHeight,
     estimatedBlockHeight,
     percent,

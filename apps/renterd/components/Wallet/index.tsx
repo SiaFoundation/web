@@ -2,9 +2,10 @@ import {
   EntityList,
   EntityListItemProps,
   WalletLayoutActions,
-  getTransactionTypes,
+  getTransactionType,
   Text,
   Warning16,
+  BalanceEvolution,
 } from '@siafoundation/design-system'
 import {
   useWalletBalance,
@@ -45,7 +46,7 @@ export function Wallet() {
       ...(pending.data || []).map((t): EntityListItemProps => {
         return {
           type: 'transaction',
-          txType: getTransactionTypes(t),
+          txType: getTransactionType(t),
           // hash: t.ID,
           // timestamp: new Date(t.Timestamp).getTime(),
           // onClick: () => openDialog('transactionDetails', t.ID),
@@ -57,29 +58,44 @@ export function Wallet() {
         .map((t): EntityListItemProps => {
           return {
             type: 'transaction',
-            txType: getTransactionTypes(t.Raw),
-            hash: t.ID,
-            timestamp: new Date(t.Timestamp).getTime(),
-            onClick: () => openDialog('transactionDetails', t.ID),
-            sc: new BigNumber(t.Inflow).minus(t.Outflow),
+            txType: getTransactionType(t.raw),
+            hash: t.id,
+            timestamp: new Date(t.timestamp).getTime(),
+            onClick: () => openDialog('transactionDetails', t.id),
+            sc: new BigNumber(t.inflow).minus(t.outflow),
           }
         })
         .sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1)),
     ]
   }, [pending.data, transactions.data, openDialog])
 
-  // const txns: { inflow: string; outflow: string; timestamp: string }[] =
-  //   useMemo(
-  //     () =>
-  //       transactions.data
-  //         ?.map((t) => ({
-  //           inflow: t.Inflow,
-  //           outflow: t.Outflow,
-  //           timestamp: t.Timestamp,
-  //         }))
-  //         .sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1)),
-  //     [transactions.data]
-  //   )
+  // This now works but the visx chart has an issue where the tooltip does not
+  // find the correct nearest datum when the data is not at a consistent
+  // interval due to axis scale issues. renterd needs to return clean data
+  // like hostd or we need to wait for this issue to be fixed:
+  // https://github.com/airbnb/visx/issues/1533
+  // until then renterd will use a line graph which does not have the issue.
+  const balances = useMemo(
+    () =>
+      transactions.data
+        ?.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1))
+        .reduce((acc, t, i) => {
+          if (i === 0) {
+            return acc.concat({
+              sc: new BigNumber(t.inflow).minus(t.outflow).toNumber(),
+              timestamp: new Date(t.timestamp).getTime(),
+            })
+          }
+          return acc.concat({
+            sc: new BigNumber(acc[i - 1].sc)
+              .plus(t.inflow)
+              .minus(t.outflow)
+              .toNumber(),
+            timestamp: new Date(t.timestamp).getTime(),
+          })
+        }, []),
+    [transactions.data]
+  )
 
   const balance = useWalletBalance()
   // TODO: add API to return scanHeight, move to isWalletSynced just like hostd
@@ -113,7 +129,12 @@ export function Wallet() {
       }
     >
       <div className="p-6 flex flex-col gap-5">
-        {/* <WalletSparkline transactions={txns} /> */}
+        <BalanceEvolution
+          // see comment above
+          chartType="line"
+          balances={balances}
+          isLoading={transactions.isValidating}
+        />
         <EntityList title="Transactions" entities={entities?.slice(0, 100)} />
       </div>
     </RenterdAuthedLayout>

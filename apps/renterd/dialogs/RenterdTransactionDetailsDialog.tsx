@@ -1,5 +1,8 @@
 import { useMemo } from 'react'
-import { TransactionDetailsDialog } from '@siafoundation/design-system'
+import {
+  getTransactionType,
+  TransactionDetailsDialog,
+} from '@siafoundation/design-system'
 import { useWalletTransactions } from '@siafoundation/react-renterd'
 import { useDialog } from '../contexts/dialog'
 
@@ -18,15 +21,16 @@ export function RenterdTransactionDetailsDialog() {
     disabled: dialog !== 'transactionDetails',
   })
   const transaction = useMemo(() => {
-    const txn = transactions.data?.find((t) => t.ID === id)
+    const txn = transactions.data?.find((t) => t.id === id)
     if (!txn) {
       return null
     }
     return {
-      inflow: txn.Inflow,
-      outflow: txn.Outflow,
-      timestamp: txn.Timestamp,
-      raw: txn.Raw,
+      txType: getTransactionType(txn.raw),
+      inflow: txn.inflow,
+      outflow: txn.outflow,
+      timestamp: txn.timestamp,
+      raw: txn.raw,
     }
   }, [transactions, id])
 

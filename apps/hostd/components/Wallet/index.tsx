@@ -2,7 +2,7 @@ import {
   EntityList,
   EntityListItemProps,
   WalletLayoutActions,
-  getTransactionTypes,
+  getTransactionType,
   BalanceEvolution,
   daysInMilliseconds,
   Text,
@@ -40,7 +40,7 @@ export function Wallet() {
       ...(pending.data || []).map((t): EntityListItemProps => {
         return {
           type: 'transaction',
-          txType: getTransactionTypes(t.transaction, t.source),
+          txType: getTransactionType(t.transaction, t.source),
           hash: t.ID,
           timestamp: new Date(t.timestamp).getTime(),
           sc: new BigNumber(t.inflow).minus(t.outflow),
@@ -51,7 +51,7 @@ export function Wallet() {
         .map((t): EntityListItemProps => {
           return {
             type: 'transaction',
-            txType: getTransactionTypes(t.transaction, t.source),
+            txType: getTransactionType(t.transaction, t.source),
             hash: t.ID,
             timestamp: new Date(t.timestamp).getTime(),
             onClick: () => openDialog('transactionDetails', t.ID),

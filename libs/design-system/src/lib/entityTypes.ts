@@ -35,7 +35,7 @@ export function getTransactionTotals(txn: Transaction) {
   }
 }
 
-export function getTransactionTypes(
+export function getTransactionType(
   txn: Transaction,
   source?: string
 ): TxType | undefined {

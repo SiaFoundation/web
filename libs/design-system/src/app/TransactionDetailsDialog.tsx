@@ -6,10 +6,13 @@ import BigNumber from 'bignumber.js'
 import { Dialog } from '../core/Dialog'
 import { getTitleId } from '../lib/utils'
 import { Transaction } from '@siafoundation/react-core'
+import { getTxTypeLabel, TxType } from '../lib/entityTypes'
+import { upperFirst } from 'lodash'
 
 type Props = {
   id: string
   transaction?: {
+    txType: TxType
     inflow: string
     outflow: string
     timestamp: string
@@ -29,7 +32,13 @@ export function TransactionDetailsDialog({
 }: Props) {
   return (
     <Dialog
-      title={getTitleId('Transaction', id, 16)}
+      title={getTitleId(
+        transaction?.txType
+          ? upperFirst(getTxTypeLabel(transaction.txType))
+          : 'Transaction',
+        id,
+        16
+      )}
       trigger={trigger}
       open={open}
       onOpenChange={onOpenChange}

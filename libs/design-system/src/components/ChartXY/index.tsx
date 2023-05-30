@@ -28,6 +28,7 @@ type Props<Key extends string, Cat extends string> = {
   stackOffset?: StackOffset
   actionsRight?: React.ReactNode
   actionsLeft?: React.ReactNode
+  allowConfiguration?: boolean
   variant?: 'panel' | 'ghost'
 }
 
@@ -43,6 +44,7 @@ export function ChartXY<Key extends string, Cat extends string>({
   curveType = 'linear',
   stackOffset = 'none',
   variant = 'panel',
+  allowConfiguration = true,
 }: Props<Key, Cat>) {
   const props = useChartXY<Key, Cat>(
     id,
@@ -57,7 +59,9 @@ export function ChartXY<Key extends string, Cat extends string>({
     <>
       <div className="flex gap-2 absolute top-3 right-4">
         {actionsRight}
-        {variant === 'panel' && <ChartXYConfig {...props} />}
+        {variant === 'panel' && allowConfiguration && (
+          <ChartXYConfig {...props} />
+        )}
       </div>
       <div className="flex gap-2 absolute top-3 left-4">{actionsLeft}</div>
       <ParentSize>
