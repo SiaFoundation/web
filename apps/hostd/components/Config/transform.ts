@@ -72,15 +72,11 @@ export function transformUp(
     ).toString(),
     maxCollateral: toHastings(values.maxCollateral).toString(),
 
-    minStoragePrice: toHastings(
-      values.minStoragePrice.div(TBToBytes(1)).div(monthsToBlocks(1))
+    storagePrice: toHastings(
+      values.storagePrice.div(TBToBytes(1)).div(monthsToBlocks(1))
     ).toString(),
-    minEgressPrice: toHastings(
-      values.minEgressPrice.div(TBToBytes(1))
-    ).toString(),
-    minIngressPrice: toHastings(
-      values.minIngressPrice.div(TBToBytes(1))
-    ).toString(),
+    egressPrice: toHastings(values.egressPrice.div(TBToBytes(1))).toString(),
+    ingressPrice: toHastings(values.ingressPrice.div(TBToBytes(1))).toString(),
 
     priceTableValidity: Number(
       values.priceTableValidity
@@ -106,8 +102,8 @@ export function transformUp(
     egressLimit: Number(MBToBytes(values.egressLimit).toFixed(0)),
 
     // DNS settings
-    dynDNS: {
-      ...existingValues?.dynDNS,
+    ddns: {
+      ...existingValues?.ddns,
       provider: values.dnsProvider,
       ipv4: values.dnsIpv4,
       ipv6: values.dnsIpv6,
@@ -119,34 +115,34 @@ export function transformUp(
 export function transformDown(s: HostSettings): SettingsData {
   let dnsOptions = null
   // DNS DuckDNS
-  if (s.dynDNS.provider === 'duckdns') {
+  if (s.ddns.provider === 'duckdns') {
     dnsOptions = {
-      dnsDuckDnsToken: s.dynDNS.options['token'],
+      dnsDuckDnsToken: s.ddns.options['token'],
     }
   }
 
   // DNS No-IP
-  if (s.dynDNS.provider === 'noip') {
+  if (s.ddns.provider === 'noip') {
     dnsOptions = {
-      dnsNoIpEmail: s.dynDNS.options['email'],
-      dnsNoIpPassword: s.dynDNS.options['password'],
+      dnsNoIpEmail: s.ddns.options['email'],
+      dnsNoIpPassword: s.ddns.options['password'],
     }
   }
 
   // DNS AWS
-  if (s.dynDNS.provider === 'route53') {
+  if (s.ddns.provider === 'route53') {
     dnsOptions = {
-      dnsAwsId: s.dynDNS.options['ID'],
-      dnsAwsSecret: s.dynDNS.options['secret'],
-      dnsAwsZoneId: s.dynDNS.options['zoneID'],
+      dnsAwsId: s.ddns.options['ID'],
+      dnsAwsSecret: s.ddns.options['secret'],
+      dnsAwsZoneId: s.ddns.options['zoneID'],
     }
   }
 
   // DNS Cloudflare
-  if (s.dynDNS.provider === 'cloudflare') {
+  if (s.ddns.provider === 'cloudflare') {
     dnsOptions = {
-      dnsCloudflareToken: s.dynDNS.options['token'],
-      dnsCloudflareZoneId: s.dynDNS.options['zoneID'],
+      dnsCloudflareToken: s.ddns.options['token'],
+      dnsCloudflareZoneId: s.ddns.options['zoneID'],
     }
   }
 
@@ -175,18 +171,18 @@ export function transformDown(s: HostSettings): SettingsData {
     ),
     maxCollateral: toSiacoins(s.maxCollateral, scDecimalPlaces),
 
-    minStoragePrice: toSiacoins(
-      new BigNumber(s.minStoragePrice)
+    storagePrice: toSiacoins(
+      new BigNumber(s.storagePrice)
         .times(TBToBytes(1))
         .times(monthsToBlocks(1)),
       scDecimalPlaces
     ),
-    minEgressPrice: toSiacoins(
-      new BigNumber(s.minEgressPrice).times(TBToBytes(1)),
+    egressPrice: toSiacoins(
+      new BigNumber(s.egressPrice).times(TBToBytes(1)),
       scDecimalPlaces
     ),
-    minIngressPrice: toSiacoins(
-      new BigNumber(s.minIngressPrice).times(TBToBytes(1)),
+    ingressPrice: toSiacoins(
+      new BigNumber(s.ingressPrice).times(TBToBytes(1)),
       scDecimalPlaces
     ),
 
@@ -208,9 +204,9 @@ export function transformDown(s: HostSettings): SettingsData {
     egressLimit: bytesToMB(new BigNumber(s.egressLimit)),
 
     // DNS settings
-    dnsProvider: s.dynDNS.provider,
-    dnsIpv4: s.dynDNS.ipv4,
-    dnsIpv6: s.dynDNS.ipv6,
+    dnsProvider: s.ddns.provider,
+    dnsIpv4: s.ddns.ipv4,
+    dnsIpv6: s.ddns.ipv6,
 
     // DNS options
     ...dnsOptions,

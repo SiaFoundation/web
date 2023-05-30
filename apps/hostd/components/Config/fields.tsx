@@ -40,9 +40,9 @@ export const initialValues = {
   collateral: undefined as BigNumber | undefined,
   maxCollateral: undefined as BigNumber | undefined,
 
-  minStoragePrice: undefined as BigNumber | undefined,
-  minEgressPrice: undefined as BigNumber | undefined,
-  minIngressPrice: undefined as BigNumber | undefined,
+  storagePrice: undefined as BigNumber | undefined,
+  egressPrice: undefined as BigNumber | undefined,
+  ingressPrice: undefined as BigNumber | undefined,
 
   priceTableValidity: undefined as BigNumber | undefined,
 
@@ -126,7 +126,7 @@ export const fields: ConfigFields<typeof initialValues, Categories> = {
   },
 
   // Pricing
-  minStoragePrice: {
+  storagePrice: {
     title: 'Storage price',
     type: 'siacoin',
     category: 'pricing',
@@ -140,7 +140,7 @@ export const fields: ConfigFields<typeof initialValues, Categories> = {
       required: 'required',
     },
   },
-  minEgressPrice: {
+  egressPrice: {
     title: 'Egress price',
     type: 'siacoin',
     category: 'pricing',
@@ -152,7 +152,7 @@ export const fields: ConfigFields<typeof initialValues, Categories> = {
       required: 'required',
     },
   },
-  minIngressPrice: {
+  ingressPrice: {
     title: 'Ingress price',
     type: 'siacoin',
     category: 'pricing',
