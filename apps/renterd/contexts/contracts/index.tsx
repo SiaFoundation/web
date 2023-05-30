@@ -37,8 +37,8 @@ function useContractsMain() {
       },
     },
   })
-  const currentHeight = network.data?.Synced
-    ? network.data.BlockHeight
+  const currentHeight = network.data?.synced
+    ? network.data.blockHeight
     : estimatedNetworkHeight
 
   const dataset = useMemo<ContractData[] | null>(() => {

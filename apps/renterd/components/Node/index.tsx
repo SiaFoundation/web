@@ -40,10 +40,10 @@ export function Node() {
             label="Height"
             value={
               state.data
-                ? Number(state.data.BlockHeight).toLocaleString()
+                ? Number(state.data.blockHeight).toLocaleString()
                 : undefined
             }
-            comment={!state.data?.Synced ? 'Syncing' : undefined}
+            comment={!state.data?.synced ? 'Syncing' : undefined}
           />
           <DatumCard label="Connected peers" value={peers.data?.length} />
           <DatumCard label="Transactions in pool" value={txPool.data?.length} />

@@ -1,5 +1,8 @@
 import { useMemo } from 'react'
-import { TransactionDetailsDialog } from '@siafoundation/design-system'
+import {
+  getTransactionType,
+  TransactionDetailsDialog,
+} from '@siafoundation/design-system'
 import { useWalletTransactions } from '@siafoundation/react-hostd'
 import { useDialog } from '../contexts/dialog'
 
@@ -23,6 +26,7 @@ export function HostdTransactionDetailsDialog() {
       return null
     }
     return {
+      txType: getTransactionType(txn.transaction, txn.source),
       inflow: txn.inflow,
       outflow: txn.outflow,
       timestamp: txn.timestamp,

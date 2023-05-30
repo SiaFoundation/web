@@ -12,8 +12,9 @@ import {
 } from '@siafoundation/react-core'
 
 export interface ConsensusState {
-  BlockHeight: number
-  Synced: boolean
+  blockHeight: number
+  synced: boolean
+  lastBlockTime: string
 }
 
 export interface ContractAcquireRequest {
@@ -343,10 +344,10 @@ export interface AutopilotConfig {
 }
 
 export interface WalletTransaction {
-  Raw: Transaction
-  Index: ChainIndex
-  ID: string
-  Inflow: Currency
-  Outflow: Currency
-  Timestamp: string
+  raw: Transaction
+  index: ChainIndex
+  id: string
+  inflow: Currency
+  outflow: Currency
+  timestamp: string
 }

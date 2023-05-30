@@ -17,11 +17,16 @@ type BalanceEvolution = {
 type Props = {
   balances?: BalanceEvolution[]
   isLoading: boolean
+  chartType?: 'area' | 'line'
 }
 
 type Key = 'sc'
 
-export function BalanceEvolution({ balances, isLoading }: Props) {
+export function BalanceEvolution({
+  balances,
+  isLoading,
+  chartType = 'area',
+}: Props) {
   const { activeTheme } = useTheme()
   const chartConfigs = useMemo(
     () =>
@@ -57,18 +62,20 @@ export function BalanceEvolution({ balances, isLoading }: Props) {
         formatTimestamp: getDataIntervalLabelFormatter('default'),
         disableAnimations: true,
       },
-      chartType: 'area',
+      chartType,
       isLoading,
     }
-  }, [balances, isLoading, chartConfigs])
+  }, [balances, isLoading, chartConfigs, chartType])
 
   return (
     <div className="relative">
       <ChartXY
         id="balance"
         height={200}
+        allowConfiguration={false}
         data={chart.data}
         config={chart.config}
+        chartType={chart.chartType}
       />
     </div>
   )
