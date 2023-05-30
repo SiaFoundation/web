@@ -12,6 +12,14 @@ import {
   HostSettings,
 } from '@siafoundation/react-hostd'
 import { toHastings, toSiacoins } from '@siafoundation/sia-js'
+import {
+  humanBaseRpcPrice,
+  humanCollateralPrice,
+  humanEgressPrice,
+  humanIngressPrice,
+  humanSectorAccessPrice,
+  humanStoragePrice,
+} from '../../lib/humanUnits'
 import BigNumber from 'bignumber.js'
 import { scDecimalPlaces, SettingsData } from './fields'
 
@@ -64,19 +72,17 @@ export function transformUp(
 
     // Pricing
     contractPrice: toHastings(values.contractPrice).toString(),
-    baseRPCPrice: toHastings(values.baseRPCPrice).div(1e7).toString(),
-    sectorAccessPrice: toHastings(values.sectorAccessPrice).div(1e7).toString(),
+    baseRPCPrice: values.baseRPCPrice.div(humanBaseRpcPrice(1)).toFixed(0),
+    sectorAccessPrice: values.sectorAccessPrice
+      .div(humanSectorAccessPrice(1))
+      .toFixed(0),
 
-    collateral: toHastings(
-      values.collateral.div(TBToBytes(1)).div(monthsToBlocks(1))
-    ).toString(),
+    collateral: values.collateral.div(humanCollateralPrice(1)).toFixed(0),
     maxCollateral: toHastings(values.maxCollateral).toString(),
 
-    storagePrice: toHastings(
-      values.storagePrice.div(TBToBytes(1)).div(monthsToBlocks(1))
-    ).toString(),
-    egressPrice: toHastings(values.egressPrice.div(TBToBytes(1))).toString(),
-    ingressPrice: toHastings(values.ingressPrice.div(TBToBytes(1))).toString(),
+    storagePrice: values.storagePrice.div(humanStoragePrice(1)).toFixed(0),
+    egressPrice: values.egressPrice.div(humanEgressPrice(1)).toFixed(0),
+    ingressPrice: values.ingressPrice.div(humanIngressPrice(1)).toFixed(0),
 
     priceTableValidity: Number(
       values.priceTableValidity
@@ -156,35 +162,18 @@ export function transformDown(s: HostSettings): SettingsData {
 
     // Pricing
     contractPrice: toSiacoins(s.contractPrice, scDecimalPlaces),
-    baseRPCPrice: toSiacoins(
-      new BigNumber(s.baseRPCPrice).times(1e7), // per PRC to per million RPCs
-      scDecimalPlaces
-    ),
-    sectorAccessPrice: toSiacoins(
-      new BigNumber(s.sectorAccessPrice).times(1e7), // per 1 access to per million access
+    baseRPCPrice: humanBaseRpcPrice(s.baseRPCPrice, scDecimalPlaces),
+    sectorAccessPrice: humanSectorAccessPrice(
+      s.sectorAccessPrice,
       scDecimalPlaces
     ),
 
-    collateral: toSiacoins(
-      new BigNumber(s.collateral).times(TBToBytes(1)).times(monthsToBlocks(1)),
-      scDecimalPlaces
-    ),
+    collateral: humanCollateralPrice(s.collateral, scDecimalPlaces),
     maxCollateral: toSiacoins(s.maxCollateral, scDecimalPlaces),
 
-    storagePrice: toSiacoins(
-      new BigNumber(s.storagePrice)
-        .times(TBToBytes(1))
-        .times(monthsToBlocks(1)),
-      scDecimalPlaces
-    ),
-    egressPrice: toSiacoins(
-      new BigNumber(s.egressPrice).times(TBToBytes(1)),
-      scDecimalPlaces
-    ),
-    ingressPrice: toSiacoins(
-      new BigNumber(s.ingressPrice).times(TBToBytes(1)),
-      scDecimalPlaces
-    ),
+    storagePrice: humanStoragePrice(s.storagePrice, scDecimalPlaces),
+    egressPrice: humanEgressPrice(s.egressPrice, scDecimalPlaces),
+    ingressPrice: humanIngressPrice(s.ingressPrice, scDecimalPlaces),
 
     priceTableValidity: new BigNumber(s.priceTableValidity)
       .div(1_000_000_000) // nanoseconds to seconds

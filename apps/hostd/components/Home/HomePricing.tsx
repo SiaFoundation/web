@@ -5,6 +5,14 @@ import {
   DatumCardConfigurable,
   DatumScrollArea,
 } from '@siafoundation/design-system'
+import {
+  humanBaseRpcPriceSuffix,
+  humanCollateralPriceSuffix,
+  humanEgressPriceSuffix,
+  humanIngressPriceSuffix,
+  humanSectorAccessPriceSuffix,
+  humanStoragePriceSuffix,
+} from '../../lib/humanUnits'
 import { useMetrics } from '../../contexts/metrics'
 
 export function HomePricing() {
@@ -18,6 +26,7 @@ export function HomePricing() {
           label="storage"
           color={pricing.config.data['storage'].color}
           sc={pricing.stats['storage']}
+          extendedSuffix={humanStoragePriceSuffix}
           defaultMode="latest"
           isLoading={pricing.isLoading}
           enabledModes={['latest', 'average']}
@@ -27,6 +36,7 @@ export function HomePricing() {
           color={pricing.config.data['ingress'].color}
           sc={pricing.stats['ingress']}
           defaultMode="latest"
+          extendedSuffix={humanIngressPriceSuffix}
           isLoading={pricing.isLoading}
           enabledModes={['latest', 'average']}
         />
@@ -35,6 +45,7 @@ export function HomePricing() {
           color={pricing.config.data['egress'].color}
           sc={pricing.stats['egress']}
           defaultMode="latest"
+          extendedSuffix={humanEgressPriceSuffix}
           isLoading={pricing.isLoading}
           enabledModes={['latest', 'average']}
         />
@@ -43,6 +54,7 @@ export function HomePricing() {
           color={pricing.config.data['collateral'].color}
           sc={pricing.stats['collateral']}
           defaultMode="latest"
+          extendedSuffix={humanCollateralPriceSuffix}
           isLoading={pricing.isLoading}
           enabledModes={['latest', 'average']}
         />
@@ -58,6 +70,7 @@ export function HomePricing() {
           label="sector access"
           color={pricing.config.data['sectorAccess'].color}
           sc={pricing.stats['sectorAccess']}
+          extendedSuffix={humanSectorAccessPriceSuffix}
           defaultMode="latest"
           isLoading={pricing.isLoading}
           enabledModes={['latest', 'average']}
@@ -66,6 +79,7 @@ export function HomePricing() {
           label="base RPC"
           color={pricing.config.data['baseRPC'].color}
           sc={pricing.stats['baseRPC']}
+          extendedSuffix={humanBaseRpcPriceSuffix}
           defaultMode="latest"
           isLoading={pricing.isLoading}
           enabledModes={['latest', 'average']}
