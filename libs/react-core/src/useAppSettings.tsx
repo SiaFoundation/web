@@ -4,7 +4,17 @@ import useLocalStorageState from 'use-local-storage-state'
 import { clearAllSwrKeys } from './utils'
 import { useWorkflows } from './workflows'
 
-export type CurrencyId = 'usd' | 'eur' | 'gbp' | 'jpy' | 'btc' | 'eth'
+export type CurrencyId =
+  | 'usd'
+  | 'cad'
+  | 'eur'
+  | 'gbp'
+  | 'jpy'
+  | 'aus'
+  | 'cny'
+  | 'rub'
+  | 'btc'
+  | 'eth'
 
 export type CurrencyOption = {
   id: CurrencyId
@@ -17,6 +27,12 @@ const currencyOptions: CurrencyOption[] = [
   {
     id: 'usd',
     label: 'USD',
+    prefix: '$',
+    fixed: 2,
+  },
+  {
+    id: 'cad',
+    label: 'CAD',
     prefix: '$',
     fixed: 2,
   },
@@ -35,6 +51,24 @@ const currencyOptions: CurrencyOption[] = [
   {
     id: 'jpy',
     label: 'JPY',
+    prefix: '¥',
+    fixed: 2,
+  },
+  {
+    id: 'aus',
+    label: 'AUS',
+    prefix: '$',
+    fixed: 2,
+  },
+  {
+    id: 'rub',
+    label: 'RUB',
+    prefix: '₽',
+    fixed: 2,
+  },
+  {
+    id: 'cny',
+    label: 'CNY',
     prefix: '¥',
     fixed: 2,
   },
