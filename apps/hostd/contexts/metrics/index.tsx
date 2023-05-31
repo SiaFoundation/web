@@ -40,6 +40,7 @@ import {
   humanSectorAccessPrice,
   humanStoragePrice,
 } from '../../lib/humanUnits'
+import useLocalStorageState from 'use-local-storage-state'
 
 type TimeRange = {
   start: number
@@ -58,15 +59,24 @@ function getPeriods(timeRange: TimeRange, dataInterval: DataInterval) {
 }
 
 function useMetricsMain() {
-  const [dataTimeSpan, _setDataTimeSpan] = useState<DataTimeSpan>(
-    defaultTimeSpan.value
+  const [dataTimeSpan, _setDataTimeSpan] = useLocalStorageState<DataTimeSpan>(
+    'v0/metrics/dataTimeSpan',
+    {
+      defaultValue: defaultTimeSpan.value,
+    }
   )
-  const [dataInterval, setDataInterval] = useState<DataInterval>(
-    defaultTimeSpan.interval
+  const [dataInterval, setDataInterval] = useLocalStorageState<DataInterval>(
+    'v0/metrics/dataInterval',
+    {
+      defaultValue: defaultTimeSpan.interval,
+    }
   )
 
-  const [timeRange, setTimeRange] = useState<TimeRange>(
-    getTimeRange(defaultTimeSpan.value)
+  const [timeRange, setTimeRange] = useLocalStorageState<TimeRange>(
+    'v0/metrics/timeRange',
+    {
+      defaultValue: getTimeRange(dataTimeSpan),
+    }
   )
 
   const setDataTimeSpan = useCallback(

@@ -33,7 +33,7 @@ export function BaseNumberField({
     // const onLanguageChange = () => {
     //   setLocale(navigator.language)
     // }
-    //   setLocale(navigator.language)
+    // setLocale(navigator.language)
     // window.addEventListener('languagechange', onLanguageChange)
     // return () => {
     //   window.removeEventListener('languagechange', onLanguageChange)
