@@ -3,6 +3,7 @@ import { textFieldStyles } from './TextField'
 import { Text } from './Text'
 import { cx } from 'class-variance-authority'
 import { VariantProps } from '../types'
+import { useEffect, useState } from 'react'
 
 type Props = VariantProps<typeof textFieldStyles> &
   Omit<React.ComponentProps<typeof CurrencyInput>, 'size' | 'className'> & {
@@ -19,8 +20,25 @@ export function BaseNumberField({
   cursor,
   className,
   decimalsLimit,
+  onValueChange,
   ...props
 }: Props) {
+  // Locale is set in useEffect so that this component is SSR-safe.
+  // navigator is not defined on the server.
+  const [locale, setLocale] = useState<string>()
+  useEffect(() => {
+    setLocale(navigator.language)
+    // Below code allows for dynamically changing language without refresh.
+    // Seems like it can cause NaN in the CurrencyInput so disabled for now.
+    // const onLanguageChange = () => {
+    //   setLocale(navigator.language)
+    // }
+    //   setLocale(navigator.language)
+    // window.addEventListener('languagechange', onLanguageChange)
+    // return () => {
+    //   window.removeEventListener('languagechange', onLanguageChange)
+    // }
+  }, [])
   return (
     <div className="relative">
       <CurrencyInput
@@ -28,9 +46,18 @@ export function BaseNumberField({
         decimalsLimit={decimalsLimit}
         // For some reason decimalsLimit=0 is ignored and defaults to 2.
         // Adding allowDecimals=false fixes that issue.
+        intlConfig={
+          // locale: navigator.language,
+          locale
+            ? {
+                locale,
+              }
+            : undefined
+        }
         allowDecimals={!!decimalsLimit}
         autoComplete="off"
         spellCheck={false}
+        onValueChange={onValueChange}
         className={cx(
           textFieldStyles({
             variant,

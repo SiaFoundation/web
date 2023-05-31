@@ -116,8 +116,12 @@ export function humanNumber(
 }
 
 export function humanDate(
-  date: string | number | Date,
-  options: { time: boolean } = { time: false }
+  t: Date | string | number,
+  options?: Intl.DateTimeFormatOptions
 ) {
-  return date ? format(new Date(date), options.time ? 'Pp' : 'PP') : ''
+  const langCode = document.documentElement.lang || navigator.language
+  return new Intl.DateTimeFormat(langCode, {
+    dateStyle: 'short',
+    ...options,
+  }).format(new Date(t))
 }

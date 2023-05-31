@@ -14,7 +14,6 @@ import { WithTooltipProvidedProps } from '@visx/tooltip/lib/enhancers/withToolti
 import { localPoint } from '@visx/event'
 import { LinearGradient } from '@visx/gradient'
 import { max, extent, bisector, min } from 'd3-array'
-import { timeFormat } from 'd3-time-format'
 import ParentSize from '@visx/responsive/lib/components/ParentSize'
 import { Button } from '../../core/Button'
 import { Text } from '../../core/Text'
@@ -26,6 +25,7 @@ import { Panel } from '../../core/Panel'
 import { getPointTime, getPointValue, Point } from './utils'
 import { useTheme } from '../../hooks/useTheme'
 import { colors } from '../../config/colors'
+import { humanDate } from '@siafoundation/sia-js'
 
 export type { Point }
 
@@ -35,9 +35,6 @@ const PATTERN_ID = 'brush_pattern'
 const GRADIENT_ID = 'brush_gradient'
 
 const throttled = throttle((func: () => void) => func(), 15)
-
-// util
-const formatDate = timeFormat('%x %X')
 
 // accessors
 export const bisectDate = bisector<Point, Date>(
@@ -471,7 +468,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
             >
               <div className="flex flex-col gap-1 items-end">
                 <Text color="subtle" size="10">
-                  {formatDate(getPointTime(tooltipData))}
+                  {humanDate(getPointTime(tooltipData))}
                 </Text>
                 <Text font="mono">
                   {selectedDataset?.formatValue(getPointValue(tooltipData))}

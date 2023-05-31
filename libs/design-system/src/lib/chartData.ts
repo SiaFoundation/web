@@ -1,6 +1,6 @@
+import { humanDate } from '@siafoundation/sia-js'
 import { omit } from 'lodash'
 import { ChartPoint } from '../components/ChartXY'
-import { format } from 'date-fns'
 
 type TransformMode = 'diff' | 'none'
 
@@ -46,25 +46,25 @@ const dataIntervalLabelFormatters: Record<
   (timestamp: number) => string
 > = {
   '15m': (timestamp: number) => {
-    return `15m window ending at ${format(timestamp, 'P kk:mm')}`
+    return `15m window ending at ${humanDate(timestamp)}`
   },
   hourly: (timestamp: number) => {
-    return `Hour ending at ${format(timestamp, 'P kk:mm')}`
+    return `Hour ending at ${humanDate(timestamp)}`
   },
   daily: (timestamp: number) => {
-    return `Day ending on ${format(timestamp, 'P')}`
+    return `Day ending on ${humanDate(timestamp, { timeStyle: 'short' })}`
   },
   weekly: (timestamp: number) => {
-    return `Week ending on ${format(timestamp, 'P')}`
+    return `Week ending on ${humanDate(timestamp, { timeStyle: 'short' })}`
   },
   monthly: (timestamp: number) => {
-    return `Month ending on ${format(timestamp, 'P')}`
+    return `Month ending on ${humanDate(timestamp, { timeStyle: 'short' })}`
   },
   yearly: (timestamp: number) => {
-    return `Year ending on ${format(timestamp, 'P')}`
+    return `Year ending on ${humanDate(timestamp, { timeStyle: 'short' })}`
   },
   default: (timestamp: number) => {
-    return `${format(timestamp, 'P')}`
+    return `${humanDate(timestamp, { timeStyle: 'short' })}`
   },
 } as const
 

@@ -36,6 +36,7 @@ export function SiacoinField({
   showFiat = true,
   error,
   changed,
+  prefix,
   onBlur,
   onFocus,
   ...props
@@ -59,12 +60,15 @@ export function SiacoinField({
     return new BigNumber(rates.data?.rates.sc[settings.currency.id] || zero)
   }, [rates.data, settings])
   const [active, setActive] = useState<'sc' | 'fiat'>()
-  const [sc, setLocalSc] = useState<string>('')
-  const [fiat, setLocalFiat] = useState<string>('')
+  const [localSc, setLocalSc] = useState<string>('')
+  const [localFiat, setLocalFiat] = useState<string>('')
+  const sc = useMemo(() => normalizedNumberString(localSc), [localSc])
+  const fiat = useMemo(() => normalizedNumberString(localFiat), [localFiat])
 
   const updateExternalSc = useCallback(
     (sc: string) => {
       if (onChange) {
+        sc = normalizedNumberString(sc)
         onChange(sc && !isNaN(Number(sc)) ? new BigNumber(sc) : undefined)
       }
     },
@@ -169,7 +173,7 @@ export function SiacoinField({
         focus="none"
         placeholder={placeholder.toFixed(decimalsLimitSc)}
         units={units}
-        value={sc !== 'NaN' ? sc : ''}
+        value={localSc !== 'NaN' ? localSc : ''}
         decimalsLimit={decimalsLimitSc}
         allowNegativeValue={false}
         onBlur={(e) => {
@@ -194,14 +198,14 @@ export function SiacoinField({
           size={size}
           variant="ghost"
           focus="none"
-          value={fiat !== 'NaN' ? fiat : ''}
+          value={localFiat !== 'NaN' ? localFiat : ''}
           units={settings.currency.label}
           decimalsLimit={decimalsLimitFiat}
           allowNegativeValue={false}
           placeholder={`${settings.currency.prefix}${
             rate ? rate.times(placeholder).toFixed(decimalsLimitFiat) : '0.42'
           }`}
-          prefix={settings.currency.prefix}
+          prefix={prefix || settings.currency.prefix}
           onFocus={(e) => {
             setActive('fiat')
             if (onFocus) {
@@ -220,4 +224,9 @@ export function SiacoinField({
       )}
     </div>
   )
+}
+
+function normalizedNumberString(v: string): string {
+  // normalize separators
+  return v?.replace(/,/g, '.') || ''
 }

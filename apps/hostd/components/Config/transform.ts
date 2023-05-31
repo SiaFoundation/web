@@ -2,7 +2,6 @@ import {
   bytesToMB,
   MBToBytes,
   monthsToBlocks,
-  TBToBytes,
 } from '@siafoundation/design-system'
 import {
   DNSAWSOptions,

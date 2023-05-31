@@ -46,6 +46,119 @@ describe('SiacoinField', () => {
     expectOnChangeValues([undefined, '4', '44', '44', '444', '444'], onChange)
   })
 
+  it('works with alternate locale: DE', async () => {
+    siaCentralExchangeRateEndpoint('1')
+    const user = userEvent.setup()
+    const onChange = jest.fn()
+    const { scInput, fiatInput } = await renderNode({
+      sc: new BigNumber(3333),
+      locale: 'de-DE',
+      onChange,
+    })
+
+    expect(scInput.value).toBe('3.333')
+    expect(fiatInput.value).toBe('$3.333')
+    await user.click(scInput)
+    await user.clear(scInput)
+    await user.type(scInput, '4444')
+    await user.type(scInput, '.5')
+    expect(scInput.value).toBe('44.445')
+    expect(fiatInput.value).toBe('$44.445')
+    await user.type(scInput, ',5')
+    expect(scInput.value).toBe('44.445,5')
+    expect(fiatInput.value).toBe('$44.445,5')
+    expectOnChangeValues(
+      [
+        undefined,
+        '4',
+        '44',
+        '444',
+        '4444',
+        '4444',
+        '44445',
+        '44445',
+        '44445.5',
+      ],
+      onChange
+    )
+  })
+
+  it('works with alternate locale: DE and alternate currency', async () => {
+    siaCentralExchangeRateEndpoint('1')
+    const user = userEvent.setup()
+    const onChange = jest.fn()
+    const { scInput, fiatInput } = await renderNode({
+      sc: new BigNumber(3333),
+      locale: 'de-DE',
+      prefix: '₽',
+      onChange,
+    })
+
+    expect(scInput.value).toBe('3.333')
+    expect(fiatInput.value).toBe('₽3.333')
+    await user.click(scInput)
+    await user.clear(scInput)
+    await user.type(scInput, '4444')
+    await user.type(scInput, '.5')
+    expect(scInput.value).toBe('44.445')
+    expect(fiatInput.value).toBe('₽44.445')
+    await user.type(scInput, ',5')
+    expect(scInput.value).toBe('44.445,5')
+    expect(fiatInput.value).toBe('₽44.445,5')
+    expectOnChangeValues(
+      [
+        undefined,
+        '4',
+        '44',
+        '444',
+        '4444',
+        '4444',
+        '44445',
+        '44445',
+        '44445.5',
+      ],
+      onChange
+    )
+  })
+
+  it('works with alternate locale: ES', async () => {
+    siaCentralExchangeRateEndpoint('1')
+    const user = userEvent.setup()
+    const onChange = jest.fn()
+    const { scInput, fiatInput } = await renderNode({
+      sc: new BigNumber(3333),
+      locale: 'es-ES',
+      prefix: '₽',
+      onChange,
+    })
+
+    expect(scInput.value).toBe('3333')
+    expect(fiatInput.value).toBe('₽3333')
+    await user.click(scInput)
+    await user.clear(scInput)
+    await user.type(scInput, '4444')
+    await user.type(scInput, '.5')
+    expect(scInput.value).toBe('44445')
+    expect(fiatInput.value).toBe('₽44445')
+    await user.type(scInput, ',5')
+    expect(scInput.value).toBe('44445,5')
+    expect(fiatInput.value).toBe('₽44445,5')
+    expectOnChangeValues(
+      [
+        undefined,
+        '4',
+        '44',
+        '444',
+        '4444',
+        '4444',
+        '44445',
+        '44445',
+        '44445.5',
+      ],
+      onChange
+    )
+  })
+
   it('rounds to 6 decimal places', async () => {
     siaCentralExchangeRateEndpoint('1')
     const user = userEvent.setup()
@@ -188,8 +301,13 @@ function Component({
 
 async function renderNode({
   sc,
+  locale = 'en',
   ...props
-}: { sc: BigNumber } & Partial<React.ComponentProps<typeof SiacoinField>>) {
+}: { sc: BigNumber; locale?: 'en' | 'de-DE' | 'es-ES' } & Partial<
+  React.ComponentProps<typeof SiacoinField>
+>) {
+  jest.spyOn(window.navigator, 'language', 'get').mockReturnValue(locale)
+
   const node = render(
     <CoreProvider cacheProvider={() => new Map()}>
       <AppSettingsProvider>
@@ -197,6 +315,7 @@ async function renderNode({
       </AppSettingsProvider>
     </CoreProvider>
   )
+
   const scInput = node.getByTestId('scInput') as HTMLInputElement
   const fiatInput = node.getByTestId('fiatInput') as HTMLInputElement
   await waitFor(() => expect(fiatInput.value).toBeTruthy())
