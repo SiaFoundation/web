@@ -15,7 +15,7 @@ export function TxEntityHeader({ entity }: Props) {
   const txHash = data[0].MasterHash
   const confirmations = Math.min(72, status.data?.lastblock - data[1].Height)
   const height = humanNumber(data[1].Height)
-  const timestamp = humanDate(data[1].Timestamp * 1000, { time: true })
+  const timestamp = humanDate(data[1].Timestamp * 1000, { timeStyle: 'short' })
 
   return (
     <div className="flex flex-wrap gap-y-4 items-center justify-between">

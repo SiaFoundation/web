@@ -76,7 +76,9 @@ export function TransactionDetailsDialog({
             <div className="flex items-baseline gap-2">
               <Text>Timestamp</Text>
               <Text>
-                {humanDate(transaction?.timestamp || 0, { time: true })}
+                {humanDate(transaction?.timestamp || 0, {
+                  timeStyle: 'short',
+                })}
               </Text>
             </div>
           </div>

@@ -13,6 +13,7 @@ export type SiaCentralExchangeRateGET = {
       cny: string
       eth: string
       eur: string
+      aus: string
       gbp: string
       jpy: string
       ltc: string

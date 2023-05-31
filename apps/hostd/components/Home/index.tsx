@@ -9,7 +9,6 @@ import {
   Option,
 } from '@siafoundation/design-system'
 import { useMetrics } from '../../contexts/metrics'
-import { format } from 'date-fns'
 import { HomeRevenue } from './HomeRevenue'
 import { HomeStorage } from './HomeStorage'
 import { HomeContracts } from './HomeContracts'
@@ -21,6 +20,7 @@ import { useDialog } from '../../contexts/dialog'
 import { DataTimeSpan, dataTimeSpanOptions } from '../../contexts/metrics/types'
 import { HomeOperations } from './HomeOperations'
 import { HomeBandwidth } from './HomeBandwidth'
+import { humanDate } from '@siafoundation/sia-js'
 
 export function Home() {
   const { openDialog } = useDialog()
@@ -37,7 +37,9 @@ export function Home() {
         <div className="flex gap-2 flex-1">
           <ControlGroup>
             <Button state="waiting">
-              <Text size="12">{format(timeRange.start, 'PP')}</Text>
+              <Text size="12">
+                {humanDate(timeRange.start, { dateStyle: 'long' })}
+              </Text>
             </Button>
             <Button state="waiting">
               <Text size="12" color="subtle">
@@ -45,7 +47,9 @@ export function Home() {
               </Text>
             </Button>
             <Button state="waiting">
-              <Text size="12">{format(timeRange.end, 'PP')}</Text>
+              <Text size="12">
+                {humanDate(timeRange.end, { dateStyle: 'long' })}
+              </Text>
             </Button>
           </ControlGroup>
         </div>

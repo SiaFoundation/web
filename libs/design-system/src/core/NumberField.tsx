@@ -5,7 +5,7 @@ import { toFixedMax } from '../lib/numbers'
 
 type Props = Omit<
   React.ComponentProps<typeof BaseNumberField>,
-  'onChange' | 'placeholder'
+  'onChange' | 'placeholder' | 'value'
 > & {
   value: BigNumber
   onChange?: (val?: BigNumber) => void
@@ -35,12 +35,13 @@ export function NumberField({
     () => new BigNumber(_externalValue),
     [_externalValue]
   )
-  const [value, setValue] = useState<string>('')
+  const [localValue, setLocalValue] = useState<string>('')
+  const value = useMemo(() => normalizedNumberString(localValue), [localValue])
 
-  const updateValue = useCallback(
+  const updateExternalValue = useCallback(
     (value: string) => {
       if (onChange) {
-        setValue(value)
+        value = normalizedNumberString(value)
         onChange(
           value && !isNaN(Number(value)) ? new BigNumber(value) : undefined
         )
@@ -49,18 +50,19 @@ export function NumberField({
     [onChange]
   )
 
-  const getValue = useCallback(
-    (value: BigNumber) => {
-      return toFixedMax(value, decimalsLimit)
+  const onValueChange = useCallback(
+    (value: string) => {
+      setLocalValue(value)
+      updateExternalValue(value)
     },
-    [decimalsLimit]
+    [setLocalValue, updateExternalValue]
   )
 
   // sync externally controlled value
   useEffect(() => {
     if (!externalValue.isEqualTo(value)) {
-      const fesc = getValue(externalValue)
-      setValue(fesc)
+      const fesc = toFixedMax(externalValue, decimalsLimit)
+      setLocalValue(fesc)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [externalValue])
@@ -68,12 +70,13 @@ export function NumberField({
   return (
     <BaseNumberField
       {...props}
+      data-testid="numberfield"
       size={size}
       placeholder={
         placeholder.isNaN() ? '' : placeholder.toFixed(decimalsLimit)
       }
       units={units}
-      value={value !== 'NaN' ? value : ''}
+      value={localValue !== 'NaN' ? localValue : ''}
       decimalsLimit={decimalsLimit}
       onBlur={(e) => {
         if (onBlur) {
@@ -85,7 +88,12 @@ export function NumberField({
           onFocus(e)
         }
       }}
-      onValueChange={(value) => updateValue(value || '')}
+      onValueChange={(value) => onValueChange(value || '')}
     />
   )
+}
+
+function normalizedNumberString(v: string): string {
+  // normalize separators
+  return v?.replace(/,/g, '.') || ''
 }
