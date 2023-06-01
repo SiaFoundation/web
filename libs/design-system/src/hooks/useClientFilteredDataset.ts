@@ -7,13 +7,13 @@ type Props<
 > = {
   dataset: Datum[] | null
   filters: ClientFilterItem<Datum>[]
-  sortColumn: string
+  sortField: string
   sortDirection: 'asc' | 'desc'
 }
 
 export function useClientFilteredDataset<
   Datum extends Record<string, BigNumber | string | boolean | number>
->({ dataset, filters, sortColumn, sortDirection }: Props<Datum>) {
+>({ dataset, filters, sortField, sortDirection }: Props<Datum>) {
   return useMemo<Datum[] | null>(() => {
     if (!dataset) {
       return null
@@ -30,8 +30,8 @@ export function useClientFilteredDataset<
         })
       : dataset
     data = data.sort((a, b) => {
-      const aVal = a[sortColumn]
-      const bVal = b[sortColumn]
+      const aVal = a[sortField]
+      const bVal = b[sortField]
       if (sortDirection === 'desc') {
         if (aVal instanceof BigNumber && bVal instanceof BigNumber) {
           return aVal.lte(bVal) ? 1 : -1
@@ -44,5 +44,5 @@ export function useClientFilteredDataset<
       return aVal >= bVal ? 1 : -1
     })
     return [...data]
-  }, [dataset, filters, sortColumn, sortDirection])
+  }, [dataset, filters, sortField, sortDirection])
 }

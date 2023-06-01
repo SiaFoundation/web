@@ -15,8 +15,9 @@ export function Contracts() {
   const {
     columns,
     datasetPage,
-    sortColumn,
+    sortField,
     sortDirection,
+    sortableColumns,
     toggleSort,
     limit,
     dataState,
@@ -47,11 +48,12 @@ export function Contracts() {
               <StateError error={error} />
             ) : null
           }
+          sortableColumns={sortableColumns}
           pageSize={limit}
           data={datasetPage}
           columns={columns}
           sortDirection={sortDirection}
-          sortColumn={sortColumn}
+          sortField={sortField}
           toggleSort={toggleSort}
         />
       </div>

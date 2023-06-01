@@ -30,6 +30,10 @@ export function nanosecondsInMinutes(ns: number) {
   return ns / 1000 / 1000 / 1000 / 60
 }
 
+export function millisecondsInHours(ms: number) {
+  return ms / 1000 / 1000 / 60 / 60
+}
+
 export function millisecondsInMinutes(ns: number) {
   return ns / 1000 / 60
 }

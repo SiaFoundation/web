@@ -41,5 +41,3 @@ export const columnsDefaultVisible: TableColumnId[] = [
   'failedReads',
   'failedWrites',
 ]
-
-export const columnsDefaultSort = 'path'

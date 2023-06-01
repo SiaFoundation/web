@@ -4,17 +4,14 @@ import {
   computeChartStats,
   formatChartData,
   getDataIntervalLabelFormatter,
+  getTimeRange,
   MiBToBytes,
 } from '@siafoundation/design-system'
 import { humanBytes, humanNumber, humanSiacoin } from '@siafoundation/sia-js'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo } from 'react'
 import { chartConfigs } from '../../config/charts'
 import { useMetricsPeriod } from '@siafoundation/react-hostd'
-import {
-  getTimeRange,
-  configCategoryPattern,
-  configCategoryLabel,
-} from './utils'
+import { configCategoryPattern, configCategoryLabel } from './utils'
 import BigNumber from 'bignumber.js'
 import {
   DataInterval,
@@ -28,7 +25,6 @@ import {
   BandwidthCategories,
   StorageCategories,
   RevenueCategories,
-  getDataIntervalInMs,
   OperationsKeys,
 } from './types'
 import { formatISO } from 'date-fns'
@@ -50,13 +46,13 @@ type TimeRange = {
 const defaultTimeSpan = dataTimeSpanOptions.find((o) => o.value === '7')
 const disableAnimations = true
 
-function getPeriods(timeRange: TimeRange, dataInterval: DataInterval) {
-  const intervalMs = getDataIntervalInMs(dataInterval)
-  if (!intervalMs) {
-    return 0
-  }
-  return Math.round((timeRange.end - timeRange.start) / intervalMs)
-}
+// function getPeriods(timeRange: TimeRange, dataInterval: DataInterval) {
+//   const intervalMs = getDataIntervalInMs(dataInterval)
+//   if (!intervalMs) {
+//     return 0
+//   }
+//   return Math.ceil((timeRange.end - timeRange.start) / intervalMs) + 1
+// }
 
 function useMetricsMain() {
   const [dataTimeSpan, _setDataTimeSpan] = useLocalStorageState<DataTimeSpan>(
@@ -79,6 +75,8 @@ function useMetricsMain() {
     }
   )
 
+  console.log('start', new Date(timeRange.start))
+  console.log('end', new Date(timeRange.end))
   const setDataTimeSpan = useCallback(
     (span: DataTimeSpan) => {
       const option = dataTimeSpanOptions.find((o) => o.value === span)
@@ -96,9 +94,9 @@ function useMetricsMain() {
 
   const metricsPeriod = useMetricsPeriod({
     params: {
-      period: dataInterval,
+      interval: dataInterval,
       start: formatISO(new Date(timeRange.start)),
-      periods: getPeriods(timeRange, dataInterval),
+      // periods: getPeriods(timeRange, dataInterval),
     },
     config: {
       swr: {

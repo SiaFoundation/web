@@ -196,7 +196,6 @@ export const columns: HostsTableColumn[] = (
       id: 'lastScan',
       label: 'last scan',
       category: 'general',
-      sortable: 'time',
       render: function LastScan({ data }) {
         const { workflows } = useWorkflows()
         const isPending = workflows.find(
@@ -281,7 +280,6 @@ export const columns: HostsTableColumn[] = (
       id: 'netAddress',
       label: 'address',
       category: 'general',
-      sortable: 'ID',
       render: ({ data }) => (
         <ValueCopyable
           value={data.netAddress}
@@ -295,7 +293,6 @@ export const columns: HostsTableColumn[] = (
       id: 'publicKey',
       label: 'public key',
       category: 'general',
-      sortable: 'ID',
       render: ({ data }) => (
         <ValueCopyable
           value={data.publicKey}
@@ -308,7 +305,6 @@ export const columns: HostsTableColumn[] = (
       id: 'knownSince',
       label: 'known since',
       category: 'general',
-      sortable: 'time',
       render: ({ data }) => {
         return (
           <div className="flex flex-col">
@@ -326,7 +322,6 @@ export const columns: HostsTableColumn[] = (
       id: 'totalScans',
       label: 'total scans',
       category: 'general',
-      sortable: 'counts',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data }) => (
         <ValueNum
@@ -341,7 +336,6 @@ export const columns: HostsTableColumn[] = (
       id: 'uptime',
       label: 'uptime',
       category: 'general',
-      sortable: 'counts',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data }) => {
         return (
@@ -360,7 +354,6 @@ export const columns: HostsTableColumn[] = (
       id: 'downtime',
       label: 'downtime',
       category: 'general',
-      sortable: 'counts',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data }) => {
         return (
@@ -379,7 +372,6 @@ export const columns: HostsTableColumn[] = (
       id: 'totalInteractions',
       label: 'total interactions',
       category: 'general',
-      sortable: 'counts',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data }) => {
         return (
@@ -396,7 +388,6 @@ export const columns: HostsTableColumn[] = (
       id: 'successfulInteractions',
       label: 'successful interactions',
       category: 'general',
-      sortable: 'counts',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data }) => (
         <ValueNum
@@ -411,7 +402,6 @@ export const columns: HostsTableColumn[] = (
       id: 'failedInteractions',
       label: 'failed interactions',
       category: 'general',
-      sortable: 'counts',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data }) => (
         <ValueNum

@@ -11,17 +11,17 @@ import {
   MenuSeparator,
   Option,
 } from '@siafoundation/design-system'
-import { TableColumnId } from '../../contexts/files/types'
+import { sortOptions, SortField } from '../../contexts/files/types'
 import { useFiles } from '../../contexts/files'
+import { groupBy } from 'lodash'
 
 export function FilesViewDropdownMenu() {
   const {
     configurableColumns,
     toggleColumnVisibility,
     resetDefaultColumnVisibility,
-    sortOptions,
-    sortColumn,
-    setSortColumn,
+    sortField,
+    setSortField,
     sortDirection,
     setSortDirection,
     enabledColumns,
@@ -44,20 +44,22 @@ export function FilesViewDropdownMenu() {
         <Label>Order by</Label>
         <MenuItemRightSlot>
           <Select
-            value={sortColumn}
+            value={sortField}
             onChange={(e) => {
-              setSortColumn(e.currentTarget.value as TableColumnId)
+              setSortField(e.currentTarget.value as SortField)
             }}
           >
-            {Object.entries(sortOptions).map(([category, options]) => (
-              <optgroup key={category} label={category}>
-                {options.map((column) => (
-                  <Option key={column.id} value={column.id}>
-                    {column.label}
-                  </Option>
-                ))}
-              </optgroup>
-            ))}
+            {Object.entries(groupBy(sortOptions, 'category')).map(
+              ([category, options]) => (
+                <optgroup key={category} label={category}>
+                  {options.map((column) => (
+                    <Option key={column.id} value={column.id}>
+                      {column.label}
+                    </Option>
+                  ))}
+                </optgroup>
+              )
+            )}
           </Select>
         </MenuItemRightSlot>
       </BaseMenuItem>

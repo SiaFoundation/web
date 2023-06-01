@@ -24,7 +24,12 @@ import {
 import { TransfersBar } from '../../components/TransfersBar'
 import { useContracts } from '../contracts'
 import { columns } from './columns'
-import { columnsDefaultSort, columnsDefaultVisible, ObjectData } from './types'
+import {
+  defaultSortField,
+  columnsDefaultVisible,
+  ObjectData,
+  sortOptions,
+} from './types'
 import { getFilename, getFullPath, isDirectory } from './utils'
 
 type UploadsMap = Record<string, ObjectData>
@@ -281,22 +286,22 @@ function useFilesMain() {
   const {
     configurableColumns,
     enabledColumns,
+    sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,
     setColumnsHidden,
     toggleSort,
     setSortDirection,
-    setSortColumn,
-    sortColumn,
+    setSortField,
+    sortField,
     sortDirection,
-    sortOptions,
     resetDefaultColumnVisibility,
-  } = useTableState(
-    'renterd/v0/objects',
+  } = useTableState('renterd/v0/objects', {
     columns,
     columnsDefaultVisible,
-    columnsDefaultSort
-  )
+    sortOptions,
+    defaultSortField,
+  })
 
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useClientFilters<ObjectData>()
@@ -304,7 +309,7 @@ function useFilesMain() {
   const datasetFiltered = useClientFilteredDataset({
     dataset,
     filters,
-    sortColumn,
+    sortField,
     sortDirection,
   })
 
@@ -362,20 +367,20 @@ function useFilesMain() {
     downloadsList,
     configurableColumns,
     enabledColumns,
+    sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,
     setColumnsHidden,
     toggleSort,
     setSortDirection,
-    setSortColumn,
-    sortColumn,
+    setSortField,
+    sortField,
     filters,
     setFilter,
     removeFilter,
     removeLastFilter,
     resetFilters,
     sortDirection,
-    sortOptions,
     resetDefaultColumnVisibility,
     getFileUrl,
   }

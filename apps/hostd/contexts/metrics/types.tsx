@@ -155,7 +155,7 @@ export function getDataIntervalInMs(dataInterval: DataInterval): number {
     return daysInMilliseconds(30)
   }
   if (dataInterval === 'yearly') {
-    return daysInMilliseconds(30)
+    return daysInMilliseconds(365)
   }
   return 0
 }

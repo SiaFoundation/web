@@ -73,9 +73,8 @@ export function Wallet() {
 
   const metrics = useMetricsPeriod({
     params: {
-      period: 'daily',
+      interval: 'daily',
       start,
-      periods: dayPeriods,
     },
   })
   const balances = useMemo(

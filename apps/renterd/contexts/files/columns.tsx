@@ -64,7 +64,6 @@ export const columns: FilesTableColumn[] = [
   {
     id: 'name',
     label: 'name',
-    sortable: true,
     category: 'general',
     contentClassName: 'max-w-[600px]',
     render: function NameColumn({ data: { name, isDirectory } }) {
@@ -266,7 +265,6 @@ export const columns: FilesTableColumn[] = [
   {
     id: 'shards',
     label: 'shards',
-    // sortable: 'Order by',
     contentClassName: 'justify-end',
     render: function SlabsColumn({ data: { path, isUploading, isDirectory } }) {
       const obj = useObject({

@@ -11,8 +11,9 @@ export function FilesExplorer() {
     pageCount,
     dataState,
     columns,
-    sortColumn,
+    sortField,
     sortDirection,
+    sortableColumns,
     toggleSort,
   } = useFiles()
   return (
@@ -32,7 +33,8 @@ export function FilesExplorer() {
           pageSize={10}
           data={datasetPage}
           columns={columns}
-          sortColumn={sortColumn}
+          sortableColumns={sortableColumns}
+          sortField={sortField}
           sortDirection={sortDirection}
           toggleSort={toggleSort}
           rowSize="dense"
