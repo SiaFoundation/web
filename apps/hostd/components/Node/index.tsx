@@ -10,6 +10,7 @@ import { HostdSidenav } from '../HostdSidenav'
 import { HostdAuthedLayout } from '../HostdAuthedLayout'
 import { useMemo } from 'react'
 import { orderBy } from 'lodash'
+import { Logs } from './Logs'
 
 export function Node() {
   const peers = useSyncerPeers()
@@ -64,9 +65,9 @@ export function Node() {
               connectPeer={() => openDialog('connectPeer')}
             />
           </div>
-          {/* <div className="flex-1">
-            <TxPoolList />
-          </div> */}
+          <div className="flex-1">
+            <Logs />
+          </div>
         </div>
       </div>
     </HostdAuthedLayout>
