@@ -17,7 +17,8 @@ import BigNumber from 'bignumber.js'
 import {
   ContractData,
   columnsDefaultVisible,
-  columnsDefaultSort,
+  defaultSortField,
+  sortOptions,
 } from './types'
 import { columns } from './columns'
 
@@ -84,27 +85,27 @@ function useContractsMain() {
   const {
     configurableColumns,
     enabledColumns,
+    sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,
     setColumnsHidden,
     toggleSort,
     setSortDirection,
-    setSortColumn,
-    sortColumn,
+    setSortField,
+    sortField,
     sortDirection,
-    sortOptions,
     resetDefaultColumnVisibility,
-  } = useTableState(
-    'renterd/v0/contracts',
+  } = useTableState('renterd/v0/contracts', {
     columns,
     columnsDefaultVisible,
-    columnsDefaultSort
-  )
+    sortOptions,
+    defaultSortField,
+  })
 
   const datasetFiltered = useClientFilteredDataset({
     dataset,
     filters,
-    sortColumn,
+    sortField,
     sortDirection,
   })
 
@@ -151,20 +152,20 @@ function useContractsMain() {
     },
     configurableColumns,
     enabledColumns,
+    sortableColumns,
     toggleColumnVisibility,
     setColumnsVisible,
     setColumnsHidden,
     toggleSort,
     setSortDirection,
-    setSortColumn,
-    sortColumn,
+    setSortField,
+    sortField,
     filters,
     setFilter,
     removeFilter,
     removeLastFilter,
     resetFilters,
     sortDirection,
-    sortOptions,
     resetDefaultColumnVisibility,
   }
 }

@@ -15,8 +15,9 @@ export function Contracts() {
   const {
     columns,
     dataset,
-    sortColumn,
+    sortField,
     sortDirection,
+    sortableColumns,
     toggleSort,
     limit,
     dataState,
@@ -49,8 +50,9 @@ export function Contracts() {
           pageSize={limit}
           data={dataset}
           columns={columns}
+          sortableColumns={sortableColumns}
           sortDirection={sortDirection}
-          sortColumn={sortColumn}
+          sortField={sortField}
           toggleSort={toggleSort}
         />
       </div>

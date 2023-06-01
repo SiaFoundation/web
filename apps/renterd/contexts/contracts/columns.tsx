@@ -43,7 +43,6 @@ export const columns: ContractsTableColumn[] = [
     id: 'contractId',
     label: 'contract ID',
     category: 'general',
-    sortable: true,
     render: ({ data: { id, isRenewed, renewedFrom } }) => {
       // const { label, color } = getStatus(row)
       return (
@@ -76,7 +75,6 @@ export const columns: ContractsTableColumn[] = [
     id: 'hostIp',
     label: 'host address',
     category: 'general',
-    sortable: true,
     render: ({ data: { hostIp } }) => {
       return (
         <ValueCopyable
@@ -92,7 +90,6 @@ export const columns: ContractsTableColumn[] = [
     id: 'hostKey',
     label: 'host public key',
     category: 'general',
-    sortable: true,
     render: ({ data: { hostKey } }) => {
       return <ValueCopyable size="12" value={hostKey} label="host public key" />
     },
@@ -101,7 +98,6 @@ export const columns: ContractsTableColumn[] = [
     id: 'timeline',
     label: 'timeline',
     category: 'time',
-    sortable: true,
     render: ({
       data: {
         contractHeightStart,
@@ -133,7 +129,6 @@ export const columns: ContractsTableColumn[] = [
     id: 'startTime',
     label: 'start date',
     category: 'time',
-    sortable: true,
     contentClassName: 'w-[120px] justify-end',
     render: ({ data: { startTime } }) => {
       return (
@@ -147,7 +142,6 @@ export const columns: ContractsTableColumn[] = [
     id: 'endTime',
     label: 'end date',
     category: 'time',
-    sortable: true,
     contentClassName: 'w-[120px] justify-end',
     render: ({ data: { endTime } }) => {
       return (
@@ -161,7 +155,6 @@ export const columns: ContractsTableColumn[] = [
     id: 'totalCost',
     label: 'total cost',
     category: 'financial',
-    sortable: true,
     contentClassName: 'w-[120px] justify-end',
     render: ({ data: { totalCost } }) => (
       <ValueSc size="12" value={totalCost.negated()} />
@@ -171,7 +164,6 @@ export const columns: ContractsTableColumn[] = [
     id: 'spendingUploads',
     label: 'uploads spending',
     category: 'financial',
-    sortable: true,
     contentClassName: 'w-[120px] justify-end',
     render: ({ data: { spendingUploads } }) => (
       <ValueSc size="12" value={spendingUploads.negated()} />
@@ -181,7 +173,6 @@ export const columns: ContractsTableColumn[] = [
     id: 'spendingDownloads',
     label: 'downloads spending',
     category: 'financial',
-    sortable: true,
     contentClassName: 'w-[120px] justify-end',
     render: ({ data: { spendingDownloads } }) => (
       <ValueSc size="12" value={spendingDownloads.negated()} />
@@ -191,7 +182,6 @@ export const columns: ContractsTableColumn[] = [
     id: 'spendingFundAccount',
     label: 'fund account spending',
     category: 'financial',
-    sortable: true,
     contentClassName: 'w-[120px] justify-end',
     render: ({ data: { spendingFundAccount } }) => (
       <ValueSc size="12" value={spendingFundAccount.negated()} />

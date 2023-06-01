@@ -41,7 +41,7 @@ export function Hosts() {
           data={dataset}
           columns={columns}
           rowSize="default"
-          // sortColumn={sortColumn}
+          // sortField={sortField}
           // sortDirection={sortDirection}
           // toggleSort={toggleSort}
         />

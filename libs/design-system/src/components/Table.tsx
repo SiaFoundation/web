@@ -20,7 +20,6 @@ export type TableColumn<Columns, Data, Context> = {
   label: string
   icon?: React.ReactNode
   tip?: string
-  sortable?: boolean
   size?: number | string
   cellClassName?: string
   contentClassName?: string
@@ -28,13 +27,19 @@ export type TableColumn<Columns, Data, Context> = {
   summary?: () => React.ReactNode
 }
 
-type Props<Columns extends string, D extends Data, Context> = {
+type Props<
+  Columns extends string,
+  SortField extends string,
+  D extends Data,
+  Context
+> = {
   data?: D[]
   context?: Context
   columns: TableColumn<Columns, D, Context>[]
-  sortColumn?: Columns
+  sortField?: SortField
   sortDirection?: 'asc' | 'desc'
-  toggleSort?: (column: Columns) => void
+  toggleSort?: (field: SortField) => void
+  sortableColumns?: SortField[]
   summary?: boolean
   rowSize?: 'dense' | 'default'
   pageSize: number
@@ -42,19 +47,25 @@ type Props<Columns extends string, D extends Data, Context> = {
   emptyState?: React.ReactNode
 }
 
-export function Table<Columns extends string, D extends Data, Context>({
+export function Table<
+  Columns extends string,
+  SortField extends string,
+  D extends Data,
+  Context
+>({
   columns,
   data,
   context,
-  sortColumn,
+  sortField,
   sortDirection,
+  sortableColumns,
   toggleSort,
   summary,
   rowSize = 'default',
   pageSize,
   isLoading,
   emptyState,
-}: Props<Columns, D, Context>) {
+}: Props<Columns, SortField, D, Context>) {
   let show = 'emptyState'
 
   if (isLoading && !data?.length) {
@@ -87,15 +98,7 @@ export function Table<Columns extends string, D extends Data, Context>({
           <tr>
             {columns.map(
               (
-                {
-                  id,
-                  icon,
-                  label,
-                  tip,
-                  sortable,
-                  cellClassName,
-                  contentClassName,
-                },
+                { id, icon, label, tip, cellClassName, contentClassName },
                 i
               ) => (
                 <th key={id} className={getCellClassNames(i, cellClassName)}>
@@ -109,14 +112,23 @@ export function Table<Columns extends string, D extends Data, Context>({
                     <Tooltip content={tip}>
                       <Text
                         onClick={() => {
-                          if (sortable && toggleSort) {
-                            toggleSort(id)
+                          if (
+                            sortableColumns?.includes(
+                              id as unknown as SortField
+                            ) &&
+                            toggleSort
+                          ) {
+                            toggleSort(id as unknown as SortField)
                           }
                         }}
                         color="subtle"
                         className={cx(
                           'relative flex gap-1',
-                          sortable && toggleSort ? 'cursor-pointer' : ''
+                          sortableColumns?.includes(
+                            id as unknown as SortField
+                          ) && toggleSort
+                            ? 'cursor-pointer'
+                            : ''
                         )}
                         ellipsis
                       >
@@ -126,7 +138,7 @@ export function Table<Columns extends string, D extends Data, Context>({
                         </Text>
                       </Text>
                     </Tooltip>
-                    {sortColumn === id ? (
+                    {(sortField as string) === id ? (
                       <Text color="subtle">
                         {sortDirection === 'asc' ? (
                           <CaretUp16 className="scale-75" />

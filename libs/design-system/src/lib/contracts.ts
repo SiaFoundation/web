@@ -63,7 +63,9 @@ export function getContractsTimeRangeBlockHeight(
   }
 }
 
-export function getTimeRange(range: 'day' | 'week' | 'month' | 'year') {
+export function getContractTimeRange(
+  range: 'day' | 'week' | 'month' | 'year'
+): [number, number] {
   const now = nowInMilliseconds()
   if (range === 'month') {
     return [now - monthsInMilliseconds(1), now]

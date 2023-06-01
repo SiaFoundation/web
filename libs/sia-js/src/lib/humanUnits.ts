@@ -1,5 +1,4 @@
 import BigNumber from 'bignumber.js'
-import { format } from 'date-fns'
 
 export function humanSpeed(bps: number): string {
   if (!bps) return '0 bps'

@@ -4,11 +4,7 @@ import {
 } from '@siafoundation/design-system'
 import { useVolumes as useVolumesData } from '@siafoundation/react-hostd'
 import { createContext, useContext, useMemo } from 'react'
-import {
-  columnsDefaultVisible,
-  columnsDefaultSort,
-  TableColumnId,
-} from './types'
+import { columnsDefaultVisible, TableColumnId } from './types'
 import { columns } from './columns'
 import { useDataset } from './dataset'
 
@@ -21,17 +17,14 @@ function useVolumesMain() {
     setColumnsHidden,
     toggleSort,
     setSortDirection,
-    setSortColumn,
-    sortColumn,
+    setSortField,
+    sortField,
     sortDirection,
-    sortOptions,
     resetDefaultColumnVisibility,
-  } = useTableState<TableColumnId>(
-    'hostd/v0/volumes',
+  } = useTableState<TableColumnId, never>('hostd/v0/volumes', {
     columns,
     columnsDefaultVisible,
-    columnsDefaultSort
-  )
+  })
 
   const response = useVolumesData()
 
@@ -61,10 +54,9 @@ function useVolumesMain() {
     setColumnsHidden,
     toggleSort,
     setSortDirection,
-    setSortColumn,
-    sortColumn,
+    setSortField,
+    sortField,
     sortDirection,
-    sortOptions,
     resetDefaultColumnVisibility,
   }
 }

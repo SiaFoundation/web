@@ -9,7 +9,9 @@ assignees: ''
 ## Describe the bug
 
 A clear and concise description of what the bug is.
-If your bug is related to `renterd`, `hostd`, or `walletd` functionality (UI or daemon) please report the bug in the corresponding repository's issue tracker:
+
+If your bug is related to `renterd`, `hostd`, or `walletd` functionality (UI or daemon) do not report the bug here.
+Please report the bug in the software's main repository:
 
 - `renterd`: https://github.com/SiaFoundation/renterd/issues
 - `hostd`: https://github.com/SiaFoundation/hostd/issues

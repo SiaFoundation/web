@@ -25,4 +25,15 @@ export const columnsDefaultVisible: TableColumnId[] = [
   'health',
 ]
 
-export const columnsDefaultSort = 'name'
+export type SortField = 'name'
+
+export const defaultSortField: SortField = 'name'
+
+export const sortOptions: { id: SortField; label: string; category: string }[] =
+  [
+    {
+      id: 'name',
+      label: 'name',
+      category: 'general',
+    },
+  ]

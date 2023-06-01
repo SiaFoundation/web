@@ -1,4 +1,4 @@
-import { difference, filter, groupBy, uniq } from 'lodash'
+import { difference, intersection, uniq } from 'lodash'
 import { useCallback, useMemo } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 
@@ -10,15 +10,31 @@ type Column<ColumnId> = {
   category?: string
 }
 
-const defaultCategories: string[] = []
+const defaultDisabledCategories: string[] = []
 
-export function useTableState<ColumnId extends string>(
-  scope: string,
-  columns: Column<ColumnId>[],
-  columnsDefaultVisible: ColumnId[],
-  columnsDefaultSort: ColumnId,
-  disabledCategories: string[] = defaultCategories
-) {
+type Params<ColumnId extends string, SortField extends string> = {
+  columns: Column<ColumnId>[]
+  columnsDefaultVisible: ColumnId[]
+  defaultSortField?: SortField
+  sortOptions?: { id: SortField }[]
+  disabledCategories?: string[]
+}
+
+export function useTableState<
+  ColumnId extends string,
+  SortField extends string
+>(scope: string, params: Params<ColumnId, SortField>) {
+  const {
+    columns,
+    columnsDefaultVisible,
+    defaultSortField,
+    sortOptions,
+    disabledCategories,
+  } = {
+    disabledCategories: defaultDisabledCategories,
+    ...params,
+  }
+
   const [_enabledColumns, setEnabledColumns] = useLocalStorageState<string[]>(
     `${scope}/enabledColumns`,
     {
@@ -26,10 +42,10 @@ export function useTableState<ColumnId extends string>(
     }
   )
 
-  const [sortColumn, setSortColumn] = useLocalStorageState<ColumnId>(
-    `${scope}/sortColumn`,
+  const [sortField, setSortField] = useLocalStorageState<SortField>(
+    `${scope}/sortField`,
     {
-      defaultValue: columnsDefaultSort,
+      defaultValue: defaultSortField,
     }
   )
 
@@ -74,15 +90,15 @@ export function useTableState<ColumnId extends string>(
   }, [setEnabledColumns, columnsDefaultVisible])
 
   const toggleSort = useCallback(
-    (column: ColumnId) => {
-      if (sortColumn !== column) {
-        setSortColumn(column)
+    (field: SortField) => {
+      if (sortField !== field) {
+        setSortField(field)
         setSortDirection('asc')
         return
       }
       setSortDirection((dir) => (dir === 'desc' ? 'asc' : 'desc'))
     },
-    [sortColumn, setSortColumn, setSortDirection]
+    [sortField, setSortField, setSortDirection]
   )
 
   const configurableColumns = useMemo(
@@ -111,10 +127,13 @@ export function useTableState<ColumnId extends string>(
     [columns, _enabledColumns, disabledCategories]
   )
 
-  const sortOptions = useMemo(
-    () => groupBy(filter(columns, 'sortable'), 'category'),
-    [columns]
-  )
+  const sortableColumns = useMemo(() => {
+    if (!sortOptions) {
+      return []
+    }
+    const sortFieldIds = sortOptions.map((o) => o.id)
+    return intersection(sortFieldIds, enabledColumns as string[]) as SortField[]
+  }, [sortOptions, enabledColumns])
 
   return {
     configurableColumns,
@@ -122,12 +141,12 @@ export function useTableState<ColumnId extends string>(
     toggleColumnVisibility,
     toggleSort,
     setSortDirection,
-    setSortColumn,
-    sortColumn,
+    setSortField,
+    sortableColumns,
+    sortField,
     setColumnsVisible,
     setColumnsHidden,
     sortDirection,
-    sortOptions,
     resetDefaultColumnVisibility,
   }
 }

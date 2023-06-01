@@ -5,7 +5,10 @@ import {
   UnlockConditions,
   SiacoinOutput,
 } from '@siafoundation/react-core'
-import { ContractStatus } from '@siafoundation/react-hostd'
+import {
+  ContractFilterSortField,
+  ContractStatus,
+} from '@siafoundation/react-hostd'
 import BigNumber from 'bignumber.js'
 
 export type ContractData = {
@@ -85,4 +88,38 @@ export const columnsDefaultVisible: TableColumnId[] = [
   'renewedFrom',
 ]
 
-export const columnsDefaultSort = 'contractId'
+export type SortField = ContractFilterSortField | 'timeline'
+
+export const sortOptions: {
+  id: SortField
+  value: ContractFilterSortField
+  label: string
+  category: string
+}[] = [
+  {
+    id: 'status',
+    value: 'status',
+    label: 'status',
+    category: 'general',
+  },
+  {
+    id: 'timeline',
+    value: 'negotiationHeight',
+    label: 'timeline',
+    category: 'time',
+  },
+  {
+    id: 'negotiationHeight',
+    value: 'negotiationHeight',
+    label: 'negotiation height',
+    category: 'time',
+  },
+  {
+    id: 'expirationHeight',
+    value: 'expirationHeight',
+    label: 'expiration height',
+    category: 'time',
+  },
+]
+
+export const defaultSortField: SortField = 'timeline'

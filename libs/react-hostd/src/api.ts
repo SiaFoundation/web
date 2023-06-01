@@ -174,6 +174,11 @@ export function useTxPoolFee(args?: HookArgsSwr<void, Currency>) {
 
 // contracts
 
+export type ContractFilterSortField =
+  | 'status'
+  | 'negotiationHeight'
+  | 'expirationHeight'
+
 export type ContractFilterRequest = {
   // filters
   statuses?: ContractStatus[]
@@ -193,7 +198,7 @@ export type ContractFilterRequest = {
   offset?: number
 
   // sorting
-  sortField?: 'status' | 'negotiationHeight' | 'expirationHeight'
+  sortField?: ContractFilterSortField
   sortDesc?: boolean
 }
 
@@ -306,12 +311,12 @@ export function useMetrics(args?: HookArgsSwr<{ timestamp: string }, Metrics>) {
   })
 }
 
-type Period = '15m' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly'
+type Interval = '15m' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly'
 
-const metricsPeriodRoute = '/metrics/:period'
+const metricsPeriodRoute = '/metrics/:interval'
 export function useMetricsPeriod(
   args?: HookArgsSwr<
-    { period: Period; start: string; periods: number },
+    { interval: Interval; start: string; periods?: number },
     Metrics[]
   >
 ) {

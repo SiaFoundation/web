@@ -167,4 +167,9 @@ export const columnsDefaultVisible: TableColumnId[] = [
   'ap_scoreOverall',
 ]
 
-export const columnsDefaultSort = 'lastScan'
+// export type SortField = never
+
+// export const defaultSortField: SortField = undefined
+
+// export const sortOptions: { id: SortField; label: string; category: string }[] =
+//   []

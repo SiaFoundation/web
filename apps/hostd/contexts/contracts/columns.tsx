@@ -96,7 +96,6 @@ export const columns: ContractsTableColumn[] = (
       id: 'status',
       label: 'status',
       category: 'general',
-      sortable: true,
       render: ({ data: { status } }) => {
         return <Badge variant={getStatusColor(status)}>{status}</Badge>
       },
@@ -105,7 +104,6 @@ export const columns: ContractsTableColumn[] = (
       id: 'timeline',
       label: 'timeline',
       category: 'general',
-      sortable: true,
       render: ({ data, context: { currentHeight, contractsTimeRange } }) => {
         const { contractHeightStart, contractHeightEnd, revision, status } =
           data
