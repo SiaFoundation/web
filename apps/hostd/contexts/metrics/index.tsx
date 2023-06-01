@@ -46,6 +46,7 @@ type TimeRange = {
 const defaultTimeSpan = dataTimeSpanOptions.find((o) => o.value === '7')
 const disableAnimations = true
 
+// TODO: does not reach current time
 // function getPeriods(timeRange: TimeRange, dataInterval: DataInterval) {
 //   const intervalMs = getDataIntervalInMs(dataInterval)
 //   if (!intervalMs) {
@@ -75,8 +76,6 @@ function useMetricsMain() {
     }
   )
 
-  console.log('start', new Date(timeRange.start))
-  console.log('end', new Date(timeRange.end))
   const setDataTimeSpan = useCallback(
     (span: DataTimeSpan) => {
       const option = dataTimeSpanOptions.find((o) => o.value === span)

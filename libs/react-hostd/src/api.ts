@@ -540,3 +540,32 @@ export function useSystemDirectoryCreate(
 ) {
   return usePutFunc({ ...args, route: '/system/dir' })
 }
+
+// logs
+
+type LogEntry = {
+  timestamp: string
+  level: string
+  name: string
+  caller: string
+  message: string
+  fields: Record<string, unknown>
+}
+
+export function useLogsSearch(
+  args: HookArgsWithPayloadSwr<
+    void,
+    {
+      names?: string[]
+      callers?: string[]
+      levels?: string[]
+      before?: string
+      after?: string
+      limit?: number
+      offset?: number
+    },
+    { count: number; entries: LogEntry[] }
+  >
+) {
+  return usePostSwr({ ...args, route: '/log/entries' })
+}
