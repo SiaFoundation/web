@@ -71,17 +71,27 @@ export function transformUp(
 
     // Pricing
     contractPrice: toHastings(values.contractPrice).toString(),
-    baseRPCPrice: values.baseRPCPrice.div(humanBaseRpcPrice(1)).toFixed(0),
+    baseRPCPrice: values.baseRPCPrice
+      .div(toSiacoins(humanBaseRpcPrice(1)))
+      .toFixed(0),
     sectorAccessPrice: values.sectorAccessPrice
-      .div(humanSectorAccessPrice(1))
+      .div(toSiacoins(humanSectorAccessPrice(1)))
       .toFixed(0),
 
-    collateral: values.collateral.div(humanCollateralPrice(1)).toFixed(0),
+    collateral: values.collateral
+      .div(toSiacoins(humanCollateralPrice(1)))
+      .toFixed(0),
     maxCollateral: toHastings(values.maxCollateral).toString(),
 
-    storagePrice: values.storagePrice.div(humanStoragePrice(1)).toFixed(0),
-    egressPrice: values.egressPrice.div(humanEgressPrice(1)).toFixed(0),
-    ingressPrice: values.ingressPrice.div(humanIngressPrice(1)).toFixed(0),
+    storagePrice: values.storagePrice
+      .div(toSiacoins(humanStoragePrice(1)))
+      .toFixed(0),
+    egressPrice: values.egressPrice
+      .div(toSiacoins(humanEgressPrice(1)))
+      .toFixed(0),
+    ingressPrice: values.ingressPrice
+      .div(toSiacoins(humanIngressPrice(1)))
+      .toFixed(0),
 
     priceTableValidity: Number(
       values.priceTableValidity
@@ -161,18 +171,27 @@ export function transformDown(s: HostSettings): SettingsData {
 
     // Pricing
     contractPrice: toSiacoins(s.contractPrice, scDecimalPlaces),
-    baseRPCPrice: humanBaseRpcPrice(s.baseRPCPrice, scDecimalPlaces),
-    sectorAccessPrice: humanSectorAccessPrice(
-      s.sectorAccessPrice,
+    baseRPCPrice: toSiacoins(
+      humanBaseRpcPrice(s.baseRPCPrice),
+      scDecimalPlaces
+    ),
+    sectorAccessPrice: toSiacoins(
+      humanSectorAccessPrice(s.sectorAccessPrice),
       scDecimalPlaces
     ),
 
-    collateral: humanCollateralPrice(s.collateral, scDecimalPlaces),
+    collateral: toSiacoins(humanCollateralPrice(s.collateral), scDecimalPlaces),
     maxCollateral: toSiacoins(s.maxCollateral, scDecimalPlaces),
 
-    storagePrice: humanStoragePrice(s.storagePrice, scDecimalPlaces),
-    egressPrice: humanEgressPrice(s.egressPrice, scDecimalPlaces),
-    ingressPrice: humanIngressPrice(s.ingressPrice, scDecimalPlaces),
+    storagePrice: toSiacoins(
+      humanStoragePrice(s.storagePrice),
+      scDecimalPlaces
+    ),
+    egressPrice: toSiacoins(humanEgressPrice(s.egressPrice), scDecimalPlaces),
+    ingressPrice: toSiacoins(
+      humanIngressPrice(s.ingressPrice),
+      scDecimalPlaces
+    ),
 
     priceTableValidity: new BigNumber(s.priceTableValidity)
       .div(1_000_000_000) // nanoseconds to seconds
