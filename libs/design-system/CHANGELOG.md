@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.51.0
+
+### Minor Changes
+
+- 2e1e6662: Fixed an issue where flat lines were not showing up on graphs.
+
 ## 0.50.0
 
 ### Minor Changes
