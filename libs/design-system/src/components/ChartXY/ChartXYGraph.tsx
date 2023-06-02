@@ -75,9 +75,9 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
       </g>
       <LinearGradient
         id={'gradient-default'}
-        from={'var(--colors-accent9)'}
+        from={'gray'}
         fromOpacity={1}
-        to={'var(--colors-accent9)'}
+        to={'gray'}
         toOpacity={0.4}
       />
       {Object.entries(config.data).map(([key, val]) => {
@@ -182,7 +182,7 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
               data={data}
               xAccessor={accessors.x[key]}
               yAccessor={accessors.y[key]}
-              stroke={getColor(id, key, config)}
+              stroke={config.data?.[key]?.color || 'gray'}
               curve={curve}
             />
           ))}
