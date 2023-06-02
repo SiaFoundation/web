@@ -18,7 +18,12 @@ export function getParentDir(currentPath: string, separator: Separator) {
     return separator
   }
 
-  return parentDir + separator
+  // currentPath was 'C:\Users', parentDir is now 'C:', needs to be 'C:\
+  if (parentDir.endsWith(':')) {
+    return parentDir + separator
+  }
+
+  return parentDir
 }
 
 export function getChildDirectoryPath({
@@ -35,7 +40,7 @@ export function getChildDirectoryPath({
     // if '\\' + 'C:' => 'C:\\' do not include the root `\\`
     fullPath = childPath + separator
   } else {
-    fullPath = joinPaths(currentPath, childPath, separator) + separator
+    fullPath = joinPaths(currentPath, childPath, separator)
   }
   return fullPath
 }
@@ -43,14 +48,19 @@ export function getChildDirectoryPath({
 export function joinPaths(a: string, b: string, separator: Separator) {
   a = a === separator ? a : trimEnd(a, separator)
   b = trim(b, separator)
+  let res = ''
   if (!a.length) {
-    return b
+    res = b
+  } else if (!b.length || b === separator) {
+    res = a
+  } else if (a === separator) {
+    res = separator + b
+  } else {
+    res = a + separator + b
   }
-  if (!b.length || b === separator) {
-    return a
+  if (res.endsWith(':')) {
+    return res + separator
+  } else {
+    return res
   }
-  if (a === separator) {
-    return separator + b
-  }
-  return a + separator + b
 }

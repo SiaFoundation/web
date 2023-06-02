@@ -522,7 +522,7 @@ export function useVolumeResize(
   )
 }
 
-type SystemDirResponse = {
+export type SystemDirResponse = {
   path: string
   totalBytes: number
   freeBytes: number
