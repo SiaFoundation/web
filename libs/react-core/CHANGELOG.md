@@ -1,5 +1,12 @@
 # @siafoundation/react-core
 
+## 0.11.0
+
+### Minor Changes
+
+- 000db6a6: Currency options now include CAD, AUS, RUB, and CNY.
+- 1a75c14b: Added usePatch request APIs.
+
 ## 0.10.0
 
 ### Minor Changes

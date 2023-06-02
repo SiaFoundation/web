@@ -1,5 +1,20 @@
 # hostd
 
+## 0.13.0
+
+### Minor Changes
+
+- 06e7e1c5: Numbers are now displayed and entered in localized format.
+- 000db6a6: Currency options now include CAD, AUS, RUB, and CNY.
+- 06e7e1c5: Dates and times are now displayed in a localized format.
+- cad2fa5a: The volume creation dialog now allows selecting the location via text input.
+- 46372064: Pricing metrics are now in the same units as their corresponding configuration values.
+- 198df6a6: Contracts can now be sorted by expiration height.
+- 32f69b4f: The metrics page now remembers selected data time span, interval, and date range.
+- ae32be10: The Node overview now features a logs panel that shows the last 100 actions.
+- 33cd3b54: The transaction details dialog title is now based on the specific type.
+- 198df6a6: Metrics now show the correct interval with start and end date time details.
+
 ## 0.12.0
 
 ### Minor Changes

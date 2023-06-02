@@ -1,5 +1,12 @@
 # @siafoundation/react-hostd
 
+## 0.6.0
+
+### Minor Changes
+
+- 1a75c14b: Hooks updated to use latest API changes around settings and ddns.
+- ae32be10: Added useLogSearch.
+
 ## 0.5.0
 
 ### Minor Changes

@@ -1,5 +1,15 @@
 # renterd
 
+## 0.18.0
+
+### Minor Changes
+
+- 06e7e1c5: Numbers are now displayed and entered in localized format.
+- 000db6a6: Currency options now include CAD, AUS, RUB, and CNY.
+- 06e7e1c5: Dates and times are now displayed in a localized format.
+- 33cd3b54: The wallet now shows a balance evolution graph.
+- 33cd3b54: The transaction details dialog title is now based on the specific type.
+
 ## 0.17.0
 
 ### Minor Changes

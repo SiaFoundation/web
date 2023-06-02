@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.50.0
+
+### Minor Changes
+
+- 198df6a6: Sorting fields no longer have to be table columns.
+- 33cd3b54: BalanceEvolution now has chartType and allowConfiguration props.
+- 06e7e1c5: NumberField and SiacoinField now intl/localize formatting.
+
 ## 0.49.0
 
 ### Minor Changes
