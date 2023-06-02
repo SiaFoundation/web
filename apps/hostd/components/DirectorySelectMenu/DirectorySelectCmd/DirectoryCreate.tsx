@@ -7,7 +7,7 @@ import {
 import { useSystemDirectoryCreate } from '@siafoundation/react-hostd'
 import { useHostOSPathSeparator } from '../../../hooks/useHostOSPathSeparator'
 import { getChildDirectoryPath } from '../../../lib/system'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 export function DirectoryCreate({
   path,
@@ -19,6 +19,23 @@ export function DirectoryCreate({
   const separator = useHostOSPathSeparator()
   const dirCreate = useSystemDirectoryCreate()
   const [newDirName, setNewDirName] = useState('')
+  const createDirectory = useCallback(async () => {
+    const response = await dirCreate.put({
+      payload: {
+        path: getChildDirectoryPath({
+          currentPath: path,
+          childPath: newDirName,
+          separator,
+        }),
+      },
+    })
+    if (response.error) {
+      triggerErrorToast(`Error creating directory: ${response.error}`)
+    } else {
+      onCreate(newDirName)
+      setNewDirName('')
+    }
+  }, [dirCreate, newDirName, onCreate, path, separator])
 
   return (
     <div className="flex items-center gap-2 overflow-hidden w-full">
@@ -33,27 +50,15 @@ export function DirectoryCreate({
           focus="none"
           variant="ghost"
           placeholder="type new directory name"
-          className="!pl-0 font-normal"
+          className="!pl-0 font-normal h-5"
           value={newDirName}
-          onChange={(e) => setNewDirName(e.currentTarget.value)}
-          onKeyUp={async (e) => {
+          onChange={(e) => {
+            setNewDirName(e.currentTarget.value)
+          }}
+          onKeyUp={(e) => {
+            e.stopPropagation()
             if (e.key === 'Enter') {
-              e.stopPropagation()
-              const response = await dirCreate.put({
-                payload: {
-                  path: getChildDirectoryPath({
-                    currentPath: path,
-                    childPath: newDirName,
-                    separator,
-                  }),
-                },
-              })
-              if (response.error) {
-                triggerErrorToast(`Error creating directory: ${response.error}`)
-              } else {
-                onCreate(newDirName)
-                setNewDirName('')
-              }
+              createDirectory()
             }
           }}
           size="small"

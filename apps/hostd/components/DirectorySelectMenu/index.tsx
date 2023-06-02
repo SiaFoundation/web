@@ -1,37 +1,30 @@
 import { Panel, ScrollArea } from '@siafoundation/design-system'
+import { SWRError } from '@siafoundation/react-core'
+import { SystemDirResponse } from '@siafoundation/react-hostd'
 import { Command } from 'cmdk'
-import { useEffect, useState } from 'react'
+import { SWRResponse } from 'swr'
 import {
   DirectorySelectCmd,
   volumesDirectorySelectPage,
 } from './DirectorySelectCmd'
-import { DirectorySelectEmpty } from './DirectorySelectCmd/DirectorySelectEmpty'
 
 type Props = {
-  defaultPath: string
+  path: string
+  dir: SWRResponse<SystemDirResponse, SWRError>
   onChange: (path: string) => void
 }
 
-export function DirectorySelectMenu({ defaultPath, onChange }: Props) {
-  const [path, setPath] = useState(defaultPath)
-
-  useEffect(() => {
-    onChange(path)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [path])
-
+export function DirectorySelectMenu({ path, dir, onChange }: Props) {
   return (
     <Command label="Select volume" shouldFilter={false}>
       <Panel className="h-[200px] p-1 overflow-hidden">
         {/* key added because scroll bar height was glitching when number of results changed on windows */}
         <ScrollArea keyToResetScrollbars={path}>
           <Command.List>
-            <Command.Empty>
-              <DirectorySelectEmpty search={path} />
-            </Command.Empty>
             <DirectorySelectCmd
               path={path}
-              setPath={setPath}
+              dir={dir}
+              setPath={onChange}
               currentPage={volumesDirectorySelectPage}
             />
           </Command.List>

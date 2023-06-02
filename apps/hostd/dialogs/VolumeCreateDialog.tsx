@@ -1,14 +1,11 @@
 import {
   Paragraph,
-  Text,
   Dialog,
   bytesToGB,
   GBToBytes,
   GBToSectors,
   triggerErrorToast,
   triggerSuccessToast,
-  Tooltip,
-  FieldLabelAndError,
   FieldNumber,
   FieldText,
   FormSubmitButton,
@@ -20,6 +17,7 @@ import { humanBytes } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
+import { useDebouncedCallback } from 'use-debounce'
 import { DirectorySelectMenu } from '../components/DirectorySelectMenu'
 import { useDialog } from '../contexts/dialog'
 import { useHostOSPathSeparator } from '../hooks/useHostOSPathSeparator'
@@ -38,6 +36,7 @@ const defaultValues = {
   size: undefined as BigNumber | undefined,
   name: '',
   path: '~',
+  immediatePath: '~',
 }
 
 function getFields(
@@ -51,6 +50,16 @@ function getFields(
       placeholder: 'data.dat',
       validation: {
         required: 'required',
+      },
+    },
+    immediatePath: {
+      type: 'text',
+      title: 'Location',
+      validation: {
+        required: 'required',
+        validate: {
+          req: (value) => value !== '\\' || 'directory within a drive required',
+        },
       },
     },
     path: {
@@ -97,8 +106,29 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
   })
 
   const path = form.watch('path')
+  const immediatePath = form.watch('immediatePath')
   const name = form.watch('name')
   const size = form.watch('size')
+
+  // after typing stops update path to immediate path value
+  const syncPath = useDebouncedCallback(() => {
+    if (path !== immediatePath) {
+      form.setValue('path', immediatePath)
+    }
+  }, 500)
+
+  useEffect(() => {
+    syncPath()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [immediatePath])
+
+  // when path changes instantly update immediate path
+  useEffect(() => {
+    if (path !== immediatePath) {
+      form.setValue('immediatePath', path)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [path])
 
   const onSubmit = useCallback(
     async (values) => {
@@ -122,9 +152,24 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
   const selectedDir = useSystemDirectory({
     disabled: !open,
     params: {
-      path,
+      path: path === '' ? separator : path,
+    },
+    config: {
+      swr: {
+        // do not retry because 404 simply means directory does not exist
+        shouldRetryOnError: false,
+      },
     },
   })
+
+  useEffect(() => {
+    if (selectedDir.error) {
+      form.setError('immediatePath', {
+        message: 'Directory does not exist',
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDir.error])
 
   // Redirect ~ to the absolute path
   useEffect(() => {
@@ -147,8 +192,6 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
   const fields = useMemo(() => getFields(minSizeGB, maxSizeGB), [maxSizeGB])
 
   const onInvalid = useOnInvalid(fields)
-
-  const filePath = joinPaths(path, name, separator)
 
   form.register('path', fields.path.validation)
 
@@ -181,26 +224,23 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
         <FieldText name="name" form={form} field={fields.name} />
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1">
-            <FieldLabelAndError form={form} title="Location" name="path" />
-            <div className="flex justify-between gap-1">
-              {path ? (
-                <Text size="14" font="mono" ellipsis>
-                  {filePath}
-                </Text>
-              ) : (
-                <Text size="14" color="verySubtle" ellipsis>
-                  Select a directory below
-                </Text>
-              )}
-              <Tooltip content="Available space">
-                <Text size="14" color="verySubtle" noWrap>
-                  {humanBytes(GBToBytes(freeSizeGB))}
-                </Text>
-              </Tooltip>
-            </div>
+            <FieldText
+              name="immediatePath"
+              form={form}
+              field={{
+                type: 'text',
+                title: 'Location',
+                placeholder: 'Enter a directory or select one below',
+                validation: {
+                  required: 'required',
+                  validate: {},
+                },
+              }}
+            />
           </div>
           <DirectorySelectMenu
-            defaultPath={path}
+            path={path}
+            dir={selectedDir}
             onChange={(path) =>
               form.setValue('path', path, {
                 shouldDirty: true,

@@ -2,48 +2,38 @@ import { CommandGroup, CommandItemSearch } from '../../CmdRoot/Item'
 import { Page } from '../../CmdRoot/types'
 import { FolderIcon, Text } from '@siafoundation/design-system'
 import { DirectorySelectEmpty } from './DirectorySelectEmpty'
-import { useSystemDirectory } from '@siafoundation/react-hostd'
+import { SystemDirResponse } from '@siafoundation/react-hostd'
 import { useHostOSPathSeparator } from '../../../hooks/useHostOSPathSeparator'
-import { getChildDirectoryPath, getParentDir } from '../../../lib/system'
+import { getChildDirectoryPath } from '../../../lib/system'
 import { DirectorySelectError } from './DirectorySelectError'
 import { DirectoryCreate } from './DirectoryCreate'
+import { Command } from 'cmdk'
+import { DirectoryParentItem } from './DirectoryParentItem'
+import { SWRResponse } from 'swr'
+import { SWRError } from '@siafoundation/react-core'
 
 export const volumesDirectorySelectPage = {
   namespace: 'volumes/directorySelect',
   label: 'Directory select',
-  empty: DirectorySelectEmpty,
 }
 
 export function DirectorySelectCmd({
   path,
+  dir,
   setPath,
   currentPage,
   beforeSelect,
   afterSelect,
 }: {
   path: string
+  dir: SWRResponse<SystemDirResponse, SWRError>
   setPath: (path: string) => void
   currentPage?: Page
   beforeSelect?: () => void
   afterSelect?: () => void
 }) {
   const separator = useHostOSPathSeparator()
-  const dir = useSystemDirectory({
-    params: {
-      path,
-    },
-    config: {
-      swr: {
-        revalidateOnFocus: false,
-        keepPreviousData: true,
-      },
-    },
-  })
-
-  if (!dir.data) {
-    return null
-  }
-
+  const isRoot = dir.data?.path === separator
   const isRootOnWindows = dir.data?.path === '\\'
 
   return (
@@ -51,73 +41,61 @@ export function DirectorySelectCmd({
       currentPage={currentPage}
       commandPage={volumesDirectorySelectPage}
     >
-      {dir.data.path !== separator ? (
-        <CommandItemSearch
-          commandPage={volumesDirectorySelectPage}
-          currentPage={currentPage}
-          key=".."
-          onSelect={() => {
-            if (!dir.data.path) {
-              return
-            }
-            if (beforeSelect) {
-              beforeSelect()
-            }
-            setPath(getParentDir(dir.data.path, separator))
-            if (afterSelect) {
-              afterSelect()
-            }
-          }}
-          value=".."
-        >
-          <div className="flex items-center gap-2 overflow-hidden">
-            <Text
-              color="verySubtle"
-              className="group-data-[selected=true]:text-gray-1000 dark:group-data-[selected=true]:text-graydark-1000"
-            >
-              <FolderIcon size={16} />
-            </Text>
-            <Text ellipsis>..</Text>
-          </div>
-        </CommandItemSearch>
+      {!dir.isValidating && dir.data && !dir.error ? (
+        !isRoot ? (
+          <DirectoryParentItem
+            path={dir.data.path}
+            setPath={setPath}
+            currentPage={currentPage}
+            commandPage={volumesDirectorySelectPage}
+            afterSelect={afterSelect}
+            beforeSelect={beforeSelect}
+          />
+        ) : null
       ) : null}
-      {!!dir.error && <DirectorySelectError />}
-      {!dir.error &&
-        dir.data.directories?.map((childDirectoryPath) => {
-          return (
-            <CommandItemSearch
-              commandPage={volumesDirectorySelectPage}
-              currentPage={currentPage}
-              key={childDirectoryPath}
-              onSelect={() => {
-                if (beforeSelect) {
-                  beforeSelect()
-                }
-                const path = getChildDirectoryPath({
-                  currentPath: dir.data.path,
-                  childPath: childDirectoryPath,
-                  separator,
-                })
-                setPath(path)
-                if (afterSelect) {
-                  afterSelect()
-                }
-              }}
-              value={childDirectoryPath}
-            >
-              <div className="flex items-center gap-2 overflow-hidden">
-                <Text
-                  color="verySubtle"
-                  className="group-data-[selected=true]:text-gray-1000 dark:group-data-[selected=true]:text-graydark-1000"
-                >
-                  <FolderIcon size={16} />
-                </Text>
-                <Text ellipsis>{childDirectoryPath}</Text>
-              </div>
-            </CommandItemSearch>
-          )
-        })}
-      {!isRootOnWindows && (
+      <Command.Empty>
+        {!dir.isValidating && dir.error ? <DirectorySelectError /> : null}
+        {!dir.isValidating && !dir.error && !dir.data?.directories?.length ? (
+          <DirectorySelectEmpty search={path} />
+        ) : null}
+      </Command.Empty>
+      {!dir.isValidating && !dir.error && dir.data?.directories?.length
+        ? dir.data.directories.map((childDirectoryPath) => {
+            return (
+              <CommandItemSearch
+                commandPage={volumesDirectorySelectPage}
+                currentPage={currentPage}
+                key={childDirectoryPath}
+                onSelect={() => {
+                  if (beforeSelect) {
+                    beforeSelect()
+                  }
+                  const path = getChildDirectoryPath({
+                    currentPath: dir.data.path,
+                    childPath: childDirectoryPath,
+                    separator,
+                  })
+                  setPath(path)
+                  if (afterSelect) {
+                    afterSelect()
+                  }
+                }}
+                value={childDirectoryPath}
+              >
+                <div className="flex items-center gap-2 overflow-hidden">
+                  <Text
+                    color="verySubtle"
+                    className="group-data-[selected=true]:text-gray-1000 dark:group-data-[selected=true]:text-graydark-1000"
+                  >
+                    <FolderIcon size={16} />
+                  </Text>
+                  <Text ellipsis>{childDirectoryPath}</Text>
+                </div>
+              </CommandItemSearch>
+            )
+          })
+        : null}
+      {!isRootOnWindows && !dir.isValidating && !dir.error && (
         <CommandItemSearch
           commandPage={volumesDirectorySelectPage}
           currentPage={currentPage}
@@ -128,7 +106,7 @@ export function DirectorySelectCmd({
             onCreate={(name) => {
               dir.mutate((data) => ({
                 ...data,
-                directories: data.directories?.concat(name) || [name],
+                directories: data?.directories?.concat(name) || [name],
               }))
             }}
           />
