@@ -1,5 +1,12 @@
 # hostd
 
+## 0.14.0
+
+### Minor Changes
+
+- 2e1e6662: Fixed an issue where flat lines were not showing up on graphs.
+- d9112931: Pricing metrics now show proper values.
+
 ## 0.13.0
 
 ### Minor Changes
