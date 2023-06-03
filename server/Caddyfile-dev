@@ -8,6 +8,7 @@
 # 127.0.0.1 renter.local
 # 127.0.0.1 renterd.local
 # 127.0.0.1 renterd.zen.local
+# 127.0.0.1 wallet.local
 
 (cors) {
   @cors_preflight method OPTIONS
@@ -97,6 +98,10 @@ host.local {
 
 renter.local {
   reverse_proxy localhost:3007
+}
+
+wallet.local {
+  reverse_proxy localhost:3008
 }
 
 renterd.local {

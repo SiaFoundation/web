@@ -100,6 +100,11 @@ renter.sia.tech {
   reverse_proxy localhost:3007
 }
 
+wallet.sia.tech {
+  encode gzip
+  reverse_proxy localhost:3008
+}
+
 www.sia.tech {
   redir https://sia.tech{uri} permanent
 }
