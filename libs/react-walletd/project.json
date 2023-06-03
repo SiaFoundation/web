@@ -1,0 +1,49 @@
+{
+  "name": "react-walletd",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/react-walletd/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/react-walletd",
+        "tsConfig": "libs/react-walletd/tsconfig.lib.json",
+        "project": "libs/react-walletd/package.json",
+        "entryFile": "libs/react-walletd/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "compiler": "swc",
+        "assets": [
+          {
+            "glob": "libs/react-walletd/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      },
+      "configurations": {
+        "ci": {
+          "outputPath": "libs/react-walletd/dist"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/react-walletd/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/react-walletd"],
+      "options": {
+        "jestConfig": "libs/react-walletd/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

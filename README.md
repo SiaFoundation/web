@@ -43,6 +43,7 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 - [@siafoundation/react-core](libs/react-core) - Core Sia types and library methods.
 - [@siafoundation/react-renterd](libs/react-renterd) - React hooks for interacting with `renterd`.
 - [@siafoundation/react-hostd](libs/react-hostd) - React hooks for interacting with `hostd`.
+- [@siafoundation/react-walletd](libs/react-walletd) - React hooks for interacting with `walletd`.
 - [@siafoundation/sia-js](libs/sia-js) - Core Sia types and library methods for v1 `siad`.
 - [@siafoundation/sia-nodejs](libs/sia-nodejs) - Sia NodeJS client for controlling a v1 `siad`.
 - [@siafoundation/design-system](libs/design-system) - React-based design system used across Sia apps and websites.
