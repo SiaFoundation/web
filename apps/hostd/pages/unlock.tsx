@@ -5,7 +5,6 @@ import {
   AppPublicLayout,
   AppUnlockForm,
 } from '@siafoundation/design-system'
-import { StateConsensus } from '@siafoundation/react-hostd'
 import { buildModeEmbed } from '../config/buildMode'
 import { connectivityRoute, routes } from '../config/routes'
 
@@ -23,7 +22,7 @@ export default function Unlock() {
               hostd
             </Text>
             <Separator className="w-full" />
-            <AppUnlockForm<StateConsensus>
+            <AppUnlockForm
               route={connectivityRoute}
               buildModeEmbed={buildModeEmbed}
               routes={routes}

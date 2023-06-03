@@ -6,42 +6,46 @@ import {
   HookArgsCallback,
   delay,
   Transaction,
+  getMainnetBlockHeight,
 } from '@siafoundation/react-core'
 import { ChainIndex, SiacoinElement, SiafundElement } from './siaTypes'
 
 // consensus
 
-export function useConsensusTip(args?: HookArgsSwr<void, ChainIndex>) {
+export type ConsensusTip = ChainIndex
+
+export function useConsensusTip(args?: HookArgsSwr<void, ConsensusTip>) {
   return useGetSwr({
     ...args,
     route: '/consensus/tip',
   })
 }
 
-// TODO:
-// export function useEstimatedNetworkBlockHeight(): number {
-//   const state = useWalletd({
-//     config: {
-//       swr: {
-//         revalidateOnFocus: false,
-//       },
-//     },
-//   })
-//   const res = useSWR(
-//     state,
-//     () => {
-//       if (state.data?.network === 'Zen Testnet') {
-//         return getTestnetZenBlockHeight()
-//       }
-//       return getMainnetBlockHeight()
-//     },
-//     {
-//       refreshInterval: 60_000,
-//       keepPreviousData: true,
-//     }
-//   )
-//   return res.data || 0
-// }
+// TODO
+export function useEstimatedNetworkBlockHeight(): number {
+  // const state = useWalletd({
+  //   config: {
+  //     swr: {
+  //       revalidateOnFocus: false,
+  //     },
+  //   },
+  // })
+  // const res = useSWR(
+  //   state,
+  //   () => {
+  //     if (state.data?.network === 'Zen Testnet') {
+  //       return getTestnetZenBlockHeight()
+  //     }
+  //     return getMainnetBlockHeight()
+  //   },
+  //   {
+  //     refreshInterval: 60_000,
+  //     keepPreviousData: true,
+  //   }
+  // )
+  // return res.data || 0
+  return getMainnetBlockHeight()
+}
 
 // syncer
 
@@ -65,10 +69,8 @@ export function useSyncerPeers(args?: HookArgsSwr<void, GatewayPeer[]>) {
   })
 }
 
-export function useSyncerConnect(
-  args?: HookArgsCallback<void, { address: string }, never>
-) {
-  return usePutFunc(
+export function useSyncerConnect(args?: HookArgsCallback<void, string, never>) {
+  return usePostFunc(
     {
       ...args,
       route: '/syncer/connect',

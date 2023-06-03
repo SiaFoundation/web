@@ -1,24 +1,31 @@
 import React, { createContext, useContext, useCallback, useState } from 'react'
-// import { WalletAddAddressDialog } from '../dialogs/WalletAddAddressDialog'
-// import { AddWalletDialog } from '../dialogs/AddWalletDialog'
+import {
+  ConfirmDialog,
+  SettingsDialog,
+  SyncerConnectPeerDialog,
+} from '@siafoundation/design-system'
+import { useSyncerConnect } from '@siafoundation/react-walletd'
+// import { CmdKDialog } from '../components/CmdKDialog'
+// import { WalletdTransactionDetailsDialog } from '../dialogs/WalletdTransactionDetailsDialog'
 
-const DialogContext = createContext({} as State)
-export const useDialog = () => useContext(DialogContext)
+export type DialogType =
+  // | 'cmdk'
+  | 'settings'
+  | 'sendSiacoin'
+  | 'transactionDetails'
+  | 'addressDetails'
+  | 'connectPeer'
+  | 'confirm'
 
-type Props = {
-  children: React.ReactNode
+type ConfirmProps = {
+  title: React.ReactNode
+  action: React.ReactNode
+  variant: 'red' | 'accent'
+  body: React.ReactNode
+  onConfirm: () => void
 }
 
-export type DialogType = 'privacy' | 'addAddress' | 'addWallet'
-
-type State = {
-  dialog?: DialogType
-  id?: string
-  openDialog: (dialog: DialogType, id?: string) => void
-  closeDialog: () => void
-}
-
-export function DialogProvider({ children }: Props) {
+function useDialogMain() {
   const [dialog, setDialog] = useState<DialogType>()
   const [id, setId] = useState<string>()
 
@@ -30,27 +37,101 @@ export function DialogProvider({ children }: Props) {
     [setDialog, setId]
   )
 
+  const [confirm, setConfirm] = useState<ConfirmProps>()
+  const openConfirmDialog = useCallback(
+    (confirm: ConfirmProps) => {
+      setDialog('confirm')
+      setConfirm(confirm)
+    },
+    [setDialog, setConfirm]
+  )
+
   const closeDialog = useCallback(() => {
     setDialog(undefined)
     setId(undefined)
-  }, [setDialog, setId])
+    setConfirm(undefined)
+  }, [setDialog, setId, setConfirm])
 
-  const value: State = {
+  const onOpenChange = useCallback(
+    (open: boolean) => {
+      if (!open) {
+        closeDialog()
+      }
+    },
+    [closeDialog]
+  )
+
+  return {
     dialog,
     id,
     openDialog,
+    confirm,
+    openConfirmDialog,
     closeDialog,
+    onOpenChange,
   }
+}
+
+type State = ReturnType<typeof useDialogMain>
+
+const DialogContext = createContext({} as State)
+export const useDialog = () => useContext(DialogContext)
+
+type Props = {
+  children: React.ReactNode
+}
+
+export function DialogProvider({ children }: Props) {
+  const state = useDialogMain()
+  return (
+    <DialogContext.Provider value={state}>{children}</DialogContext.Provider>
+  )
+}
+
+export function Dialogs() {
+  const {
+    dialog,
+    openDialog,
+    onOpenChange,
+    closeDialog,
+    confirm,
+    openConfirmDialog,
+  } = useDialog()
+  const connect = useSyncerConnect()
 
   return (
-    <DialogContext.Provider value={value}>
-      {/* <PrivacyDialog />
-      <TransactionDetailsDialog />
-      <AddWalletDialog />
-      <WalletAddAddressDialog />
-      <AddressDetailsDialog />
-      <SyncerConnectPeerDialog /> */}
-      {children}
-    </DialogContext.Provider>
+    <>
+      {/* <CmdKDialog
+        open={dialog === 'cmdk'}
+        onOpenChange={onOpenChange}
+        setOpen={() => openDialog('cmdk')}
+      /> */}
+      <SettingsDialog
+        open={dialog === 'settings'}
+        onOpenChange={onOpenChange}
+        showSiaStats={false}
+      />
+      {/* <WalletdTransactionDetailsDialog /> */}
+      <SyncerConnectPeerDialog
+        open={dialog === 'connectPeer'}
+        connect={(address: string) =>
+          connect.post({
+            payload: address,
+          })
+        }
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <ConfirmDialog
+        open={dialog === 'confirm'}
+        title={confirm?.title}
+        action={confirm?.action}
+        body={confirm?.body}
+        variant={confirm?.variant}
+        onConfirm={confirm?.onConfirm}
+        onOpenChange={(val) =>
+          val ? openConfirmDialog(confirm) : closeDialog()
+        }
+      />
+    </>
   )
 }

@@ -4,7 +4,6 @@ import {
   Text,
   AppUnlockForm,
 } from '@siafoundation/design-system'
-import { ConsensusState } from '@siafoundation/react-renterd'
 import { buildModeEmbed } from '../../config/buildMode'
 import { connectivityRoute, routes } from '../../config/routes'
 import { RenterdPublicLayout } from '../RenterdPublicLayout'
@@ -19,7 +18,7 @@ export function LockScreen() {
               renterd
             </Text>
             <Separator className="w-full mt-2 mb-3" />
-            <AppUnlockForm<ConsensusState>
+            <AppUnlockForm
               route={connectivityRoute}
               buildModeEmbed={buildModeEmbed}
               routes={routes}
