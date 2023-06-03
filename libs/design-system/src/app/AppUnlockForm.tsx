@@ -1,4 +1,4 @@
-import { Either, useAppSettings } from '@siafoundation/react-core'
+import { useAppSettings } from '@siafoundation/react-core'
 import { useRouter } from 'next/router'
 import { useFormik } from 'formik'
 import {
@@ -14,16 +14,7 @@ import { DropdownMenu, DropdownMenuItem } from '../core/DropdownMenu'
 import { sortBy } from 'lodash'
 import { getRedirectRouteFromQuery } from '../hooks/useMonitorConnAndLock'
 
-type ResponseWithSynced = Either<
-  {
-    Synced: boolean
-  },
-  {
-    synced: boolean
-  }
->
-
-async function checkPassword<Response extends ResponseWithSynced>({
+async function checkPassword({
   api,
   route,
   password,
@@ -75,11 +66,7 @@ type Props = {
   }
 }
 
-export function AppUnlockForm<Response extends ResponseWithSynced>({
-  route,
-  buildModeEmbed,
-  routes,
-}: Props) {
+export function AppUnlockForm({ route, buildModeEmbed, routes }: Props) {
   const router = useRouter()
   const { settings, setSettings } = useAppSettings()
 
@@ -90,7 +77,7 @@ export function AppUnlockForm<Response extends ResponseWithSynced>({
     },
     onSubmit: async (values, actions) => {
       const api = buildModeEmbed ? '' : values.api
-      const { error } = await checkPassword<Response>({
+      const { error } = await checkPassword({
         api,
         route,
         password: values.password,

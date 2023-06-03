@@ -20,6 +20,7 @@ type Props = {
   children: React.ReactNode
   connectivityRoute: string
   isSynced: boolean
+  showWallet?: boolean
   walletBalance?: BigNumber
   routes: {
     lockscreen: string
@@ -47,6 +48,7 @@ export function AppAuthedLayout({
   sidenav,
   connectivityRoute,
   isSynced,
+  showWallet,
   walletBalance,
   routes,
   openSettings,
@@ -64,6 +66,7 @@ export function AppAuthedLayout({
           routes={routes}
           profile={profile}
           openSettings={openSettings}
+          showWallet={showWallet}
           walletBalance={walletBalance}
           isSynced={isSynced}
         >

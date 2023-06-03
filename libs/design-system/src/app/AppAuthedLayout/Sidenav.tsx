@@ -24,6 +24,7 @@ type Props = {
     }
   }
   profile: React.ReactNode
+  showWallet?: boolean
   walletBalance?: BigNumber
   isSynced: boolean
   openSettings: () => void
@@ -34,6 +35,7 @@ export function Sidenav({
   routes,
   profile,
   isSynced,
+  showWallet = true,
   walletBalance,
   openSettings,
   children,
@@ -55,11 +57,13 @@ export function Sidenav({
           <div className="flex flex-col gap-6 items-center">{children}</div>
           <div className="flex-1" />
           <Separator className="w-full" />
-          <SidenavItemWallet
-            routes={routes}
-            isSynced={isSynced}
-            walletBalance={walletBalance}
-          />
+          {showWallet && (
+            <SidenavItemWallet
+              routes={routes}
+              isSynced={isSynced}
+              walletBalance={walletBalance}
+            />
+          )}
           <SidenavItem title="Blockchain node" route={routes.node.index}>
             <DiceIcon />
           </SidenavItem>

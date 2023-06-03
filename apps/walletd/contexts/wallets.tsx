@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useMemo,
 } from 'react'
-import useSWR, { SWRResponse } from 'swr'
+import useSWR from 'swr'
 
 type WalletType = 'hot' | 'cold' | 'hw'
 type WalletId = string
@@ -43,21 +43,7 @@ export type Wallet = {
 //   },
 // ]
 
-const WalletsContext = createContext({} as State)
-export const useWallets = () => useContext(WalletsContext)
-
-type Props = {
-  children: React.ReactNode
-}
-
-type State = {
-  wallets: SWRResponse<Wallet[], string>
-  activeWalletId?: WalletId
-  activeWallet?: Wallet
-  setActiveWallet: (walletId: WalletId) => void
-}
-
-export function WalletsProvider({ children }: Props) {
+function useWalletsMain() {
   // TODO: add multiwallet support
   // const wallet = useWalletBalance()
   // const wallets = useSWR(['wallets', wallet], () =>
@@ -89,14 +75,26 @@ export function WalletsProvider({ children }: Props) {
     [wallets, activeWalletId]
   )
 
-  const value: State = {
+  return {
     wallets,
     activeWalletId,
     activeWallet,
     setActiveWallet,
   }
+}
 
+type State = ReturnType<typeof useWalletsMain>
+
+const WalletsContext = createContext({} as State)
+export const useWallets = () => useContext(WalletsContext)
+
+type Props = {
+  children: React.ReactNode
+}
+
+export function WalletsProvider({ children }: Props) {
+  const state = useWalletsMain()
   return (
-    <WalletsContext.Provider value={value}>{children}</WalletsContext.Provider>
+    <WalletsContext.Provider value={state}>{children}</WalletsContext.Provider>
   )
 }
