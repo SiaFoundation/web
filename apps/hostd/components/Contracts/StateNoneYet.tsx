@@ -7,8 +7,8 @@ export function StateNoneYet() {
         <FileContractIcon className="scale-[200%]" />
       </Text>
       <Text color="subtle" className="text-center max-w-[500px]">
-        There are currently no active contracts. Configure autopilot or manually
-        form contracts to get started.
+        There are currently no active contracts. Configure and announce host to
+        start forming contracts.
       </Text>
     </div>
   )
