@@ -252,8 +252,10 @@ export function useHosts(args: HookArgsSwr<HostsParams, Host[]>) {
 }
 
 export type HostsSearchFilterMode = 'all' | 'allowed' | 'blocked'
+export type HostsUsabilityMode = 'all' | 'usable' | 'unusable'
 export type HostsSearchPayload = {
   filterMode: HostsSearchFilterMode
+  usabilityMode?: HostsUsabilityMode
   addressContains?: string
   keyIn?: string[]
   offset?: number
