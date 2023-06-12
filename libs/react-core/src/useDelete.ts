@@ -85,9 +85,11 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
+        // If the network is disconnected then response.status will be 0 and
+        // data undefined, so return axios e.message error.
         return {
           status: e.response.status,
-          error: e.response.data,
+          error: e.response.data || e.message,
         } as Response<Result>
       }
     },
