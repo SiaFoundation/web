@@ -1,6 +1,9 @@
 import {
+  AppConnectivity16,
   Earth16,
   Filter16,
+  Folders16,
+  Globe16,
   Separator,
   Text,
   Tooltip,
@@ -26,7 +29,7 @@ export function FilesStatsMenu() {
     <div className="flex gap-2 justify-end w-full">
       <div className="flex gap-4">
         <div className="flex gap-2">
-          <Tooltip content="Filtered statistics">
+          <Tooltip side="bottom" content="Filtered statistics">
             <Text size="12" color="verySubtle">
               <Filter16 />
             </Text>
@@ -43,16 +46,55 @@ export function FilesStatsMenu() {
         {stats.data && (
           <>
             <Separator variant="vertical" className="h-full" />
-            <div className="flex gap-2">
-              <Tooltip content="Global statistics">
-                <Text size="12" color="verySubtle">
-                  <Earth16 />
-                </Text>
+            <div className="flex gap-4">
+              <Tooltip
+                side="bottom"
+                content={
+                  <div className="flex flex-col gap-1">
+                    <Text size="12" color="subtle">
+                      Size of all files
+                    </Text>
+                    <Text size="12" color="subtle">
+                      {humanBytes(stats.data?.totalObjectsSize)}
+                    </Text>
+                  </div>
+                }
+              >
+                <div className="flex gap-2">
+                  <Text size="12" color="verySubtle">
+                    <Folders16 />
+                  </Text>
+                  <Text size="12" font="mono">
+                    {humanBytes(stats.data?.totalObjectsSize)}
+                  </Text>
+                </div>
               </Tooltip>
-              <Tooltip content="Size of all files">
-                <Text size="12" font="mono">
-                  {humanBytes(stats.data?.totalUploadedSize)}
-                </Text>
+              <Tooltip
+                align="end"
+                side="bottom"
+                content={
+                  <div className="flex flex-col gap-1">
+                    <Text size="12" color="subtle">
+                      Size of all files
+                    </Text>
+                    <Text size="12" color="subtle">
+                      {humanBytes(stats.data?.totalSectorsSize)} with redundancy
+                    </Text>
+                    <Text size="12" color="subtle">
+                      {humanBytes(stats.data?.totalUploadedSize)} with
+                      redundancy and repairs
+                    </Text>
+                  </div>
+                }
+              >
+                <div className="flex gap-2">
+                  <Text size="12" color="verySubtle">
+                    <Earth16 />
+                  </Text>
+                  <Text size="12" font="mono">
+                    {humanBytes(stats.data?.totalSectorsSize)}
+                  </Text>
+                </div>
               </Tooltip>
             </div>
           </>
