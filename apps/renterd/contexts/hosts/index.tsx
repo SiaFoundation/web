@@ -5,6 +5,7 @@ import {
 } from '@siafoundation/design-system'
 import {
   HostsSearchFilterMode,
+  HostsUsabilityMode,
   useAutopilotHostsSearch,
   useHostsAllowlist,
   useHostsBlocklist,
@@ -38,6 +39,8 @@ function useHostsMain() {
     payload: {
       limit,
       offset,
+      usabilityMode: (filters.find((f) => f.id === 'usabilityMode')?.value ||
+        'all') as HostsUsabilityMode,
       filterMode: (filters.find((f) => f.id === 'filterMode')?.value ||
         'all') as HostsSearchFilterMode,
       addressContains: filters.find((f) => f.id === 'addressContains')?.value,

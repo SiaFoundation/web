@@ -2,25 +2,25 @@ import { ServerFilterItem } from '@siafoundation/design-system'
 import { CommandGroup, CommandItemSearch } from '../../../../CmdRoot/Item'
 import { Page } from '../../../../CmdRoot/types'
 
-export const hostsFilterAllowBlockPage = {
-  namespace: 'hosts/filterAllowBlock',
-  label: 'Hosts filter by allow/block status',
+export const hostsFilterUsablePage = {
+  namespace: 'hosts/filterUsable',
+  label: 'Hosts filter by usable',
 }
 
 const options = [
   {
-    id: 'filterMode',
-    value: 'allowed',
-    label: 'allowed',
+    id: 'usabilityMode',
+    value: 'usable',
+    label: 'usable',
   },
   {
-    id: 'filterMode',
-    value: 'blocked',
-    label: 'blocked',
+    id: 'usabilityMode',
+    value: 'unusable',
+    label: 'unusable',
   },
 ]
 
-export function AllowBlockCmdGroup({
+export function UsableCmdGroup({
   select,
   currentPage,
 }: {
@@ -28,15 +28,12 @@ export function AllowBlockCmdGroup({
   select: (filter: ServerFilterItem) => void
 }) {
   return (
-    <CommandGroup
-      currentPage={currentPage}
-      commandPage={hostsFilterAllowBlockPage}
-    >
+    <CommandGroup currentPage={currentPage} commandPage={hostsFilterUsablePage}>
       {options.map((o) => (
         <CommandItemSearch
           key={o.id + o.value}
           currentPage={currentPage}
-          commandPage={hostsFilterAllowBlockPage}
+          commandPage={hostsFilterUsablePage}
           onSelect={() => {
             select(o)
           }}
