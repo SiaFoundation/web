@@ -1,9 +1,7 @@
 import {
-  AppConnectivity16,
   Earth16,
   Filter16,
   Folders16,
-  Globe16,
   Separator,
   Text,
   Tooltip,
