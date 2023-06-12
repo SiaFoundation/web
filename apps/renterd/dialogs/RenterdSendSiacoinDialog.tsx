@@ -3,6 +3,7 @@ import { WalletSendSiacoinDialog } from '@siafoundation/design-system'
 import {
   useTxPoolBroadcast,
   useWalletBalance,
+  useWalletDiscard,
   useWalletFund,
   useWalletSign,
 } from '@siafoundation/react-renterd'
@@ -16,6 +17,7 @@ export function RenterdSendSiacoinDialog() {
   const fund = useWalletFund()
   const sign = useWalletSign()
   const broadcast = useTxPoolBroadcast()
+  const discard = useWalletDiscard()
   const send = useCallback(
     async ({ sc, address }: { sc: BigNumber; address: string }) => {
       const fundResponse = await fund.post({
@@ -31,7 +33,7 @@ export function RenterdSendSiacoinDialog() {
           },
         },
       })
-      if (!fundResponse.data) {
+      if (fundResponse.error) {
         return {
           error: fundResponse.error,
         }
@@ -45,7 +47,10 @@ export function RenterdSendSiacoinDialog() {
           },
         },
       })
-      if (!signResponse.data) {
+      if (signResponse.error) {
+        discard.post({
+          payload: fundResponse.data.transaction,
+        })
         return {
           error: signResponse.error,
         }
@@ -54,6 +59,9 @@ export function RenterdSendSiacoinDialog() {
         payload: [signResponse.data],
       })
       if (broadcastResponse.error) {
+        discard.post({
+          payload: signResponse.data,
+        })
         return {
           error: broadcastResponse.error,
         }
@@ -63,7 +71,7 @@ export function RenterdSendSiacoinDialog() {
         // transactionId: signResponse.data.??,
       }
     },
-    [fund, sign, broadcast]
+    [fund, sign, broadcast, discard]
   )
 
   return (

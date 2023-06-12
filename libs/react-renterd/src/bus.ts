@@ -199,19 +199,19 @@ export function useWalletRedistribute(
 }
 
 export function useWalletDiscard(
-  args: HookArgsCallback<void, Transaction, never>
+  args?: HookArgsCallback<void, Transaction, never>
 ) {
   return usePostFunc({ ...args, route: '/bus/wallet/discard' })
 }
 
 export function useWalletPrepareForm(
-  args: HookArgsCallback<void, WalletPrepareFormRequest, Transaction[]>
+  args?: HookArgsCallback<void, WalletPrepareFormRequest, Transaction[]>
 ) {
   return usePostFunc({ ...args, route: '/bus/wallet/prepare/form' })
 }
 
 export function useWalletPrepareRenew(
-  args: HookArgsCallback<
+  args?: HookArgsCallback<
     void,
     WalletPrepareRenewRequest,
     WalletPrepareRenewResponse
