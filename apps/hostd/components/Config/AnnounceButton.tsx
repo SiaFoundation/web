@@ -9,6 +9,7 @@ import { useDialog } from '../../contexts/dialog'
 import { useSettingsAnnounce, useTxPoolFee } from '@siafoundation/react-hostd'
 import { humanSiacoin } from '@siafoundation/sia-js'
 import { useCallback } from 'react'
+import BigNumber from 'bignumber.js'
 
 export function AnnounceButton() {
   const { openConfirmDialog } = useDialog()
@@ -33,7 +34,8 @@ export function AnnounceButton() {
             </Paragraph>
             {txpoolFee.data && (
               <Paragraph size="14">
-                Announcing will cost {humanSiacoin(txpoolFee.data)}.
+                Announcing will cost{' '}
+                {humanSiacoin(new BigNumber(txpoolFee.data).times(1000))}.
               </Paragraph>
             )}
           </div>
