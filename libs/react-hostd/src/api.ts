@@ -569,3 +569,34 @@ export function useLogsSearch(
 ) {
   return usePostSwr({ ...args, route: '/log/entries' })
 }
+
+// alerts
+
+type Alert = {
+  id: string
+  severity: string
+  message: string
+  data:
+    | Record<string, unknown>
+    | {
+        elapsed: number
+        volumeID: number
+      }
+  timestamp: string
+}
+
+const alertsRoute = '/alerts'
+
+export function useAlerts(args?: HookArgsSwr<void, Alert[]>) {
+  return useGetSwr({ ...args, route: alertsRoute })
+}
+
+export function useAlertsDismiss(
+  args?: HookArgsCallback<{ alertIDs: string[] }, void, void>
+) {
+  return useDeleteFunc({ ...args, route: alertsRoute }, (mutate) => {
+    mutate((key) => {
+      return key.startsWith(alertsRoute)
+    })
+  })
+}
