@@ -572,16 +572,37 @@ export function useLogsSearch(
 
 // alerts
 
+type AlertSeverity = 'info' | 'warning' | 'error' | 'critical'
+
 type Alert = {
   id: string
-  severity: string
+  severity: AlertSeverity
   message: string
-  data:
-    | Record<string, unknown>
-    | {
-        elapsed: number
-        volumeID: number
-      }
+  data: {
+    contractID?: number
+    blockHeight?: number
+    resolution?: string
+    volume?: string
+    volumeID?: number
+
+    elapsed?: number
+    error?: string
+
+    checked?: number
+    missing?: number
+    corrupt?: number
+    total?: number
+
+    oldSectors?: number
+    currentSectors?: number
+    targetSectors?: number
+    migratedSectors?: number
+
+    migrated?: number
+    target?: number
+
+    force?: boolean
+  }
   timestamp: string
 }
 
@@ -592,9 +613,9 @@ export function useAlerts(args?: HookArgsSwr<void, Alert[]>) {
 }
 
 export function useAlertsDismiss(
-  args?: HookArgsCallback<{ alertIDs: string[] }, void, void>
+  args?: HookArgsCallback<void, { alertIDs: string[] }, void>
 ) {
-  return useDeleteFunc({ ...args, route: alertsRoute }, (mutate) => {
+  return usePostFunc({ ...args, route: '/alerts/dismiss' }, (mutate) => {
     mutate((key) => {
       return key.startsWith(alertsRoute)
     })
