@@ -149,6 +149,7 @@ export * from './icons/FolderIcon'
 export * from './icons/TestToolIcon'
 export * from './icons/PlaneIcon'
 export * from './icons/FaucetIcon'
+export * from './icons/BellIcon'
 
 // hooks
 export * from './hooks/useTheme'

@@ -13,6 +13,7 @@ import { HostdSendSiacoinDialog } from '../dialogs/HostdSendSiacoinDialog'
 import { HostdTransactionDetailsDialog } from '../dialogs/HostdTransactionDetailsDialog'
 import { ContractsFilterContractIdDialog } from '../dialogs/ContractsFilterContractIdDialog'
 import { CmdKDialog } from '../components/CmdKDialog'
+import { AlertsDialog } from '../dialogs/AlertsDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -27,6 +28,7 @@ export type DialogType =
   | 'volumeDelete'
   | 'contractsFilterContractId'
   | 'confirm'
+  | 'alerts'
 
 type ConfirmProps = {
   title: React.ReactNode
@@ -122,6 +124,7 @@ export function Dialogs() {
         onOpenChange={onOpenChange}
         showSiaStats={false}
       />
+      <AlertsDialog open={dialog === 'alerts'} onOpenChange={onOpenChange} />
       <HostdSendSiacoinDialog />
       <WalletSingleAddressDetailsDialog
         open={dialog === 'addressDetails'}
