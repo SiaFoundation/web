@@ -16,9 +16,9 @@ do
     then
       echo "Tag $go_release does not exists, exporting app"
       npx nx export $app
-      mkdir -p $app/ui/assets
-      rm -rf $app/ui/assets/*
-      cp -R dist/apps/$app-embed/exported/* $app/ui/assets/
+      mkdir -p $app/assets
+      rm -rf $app/assets/*
+      cp -R dist/apps/$app-embed/exported/* $app/assets/
       go_releases+=("$go_release")
     else
       echo "Tag $go_release exists"
