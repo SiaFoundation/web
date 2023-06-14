@@ -1,3 +1,3 @@
 module go.sia.tech/web
 
-go 1.18
+go 1.20
