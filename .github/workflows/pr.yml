@@ -25,9 +25,17 @@ jobs:
       - name: Lint
         shell: bash
         run: npx nx affected --target=lint --parallel=5
+      - name: Lint Go
+        uses: golangci/golangci-lint-action@v3
+        with:
+          skip-cache: true
       - name: Test
         shell: bash
         run: npx nx affected --target=test --parallel=5
+      - name: Test Go
+        uses: n8maninger/action-golang-test@v1
+        with:
+          args: "-race"
       - name: Build
         shell: bash
         run: npx nx affected --target=build --configuration=ci --parallel=5
