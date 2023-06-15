@@ -1,7 +1,6 @@
 import {
   Button,
   Checkmark16,
-  Close16,
   Dialog,
   Heading,
   Skeleton,

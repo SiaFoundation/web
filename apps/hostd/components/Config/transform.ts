@@ -13,7 +13,6 @@ import {
 import { toHastings, toSiacoins } from '@siafoundation/sia-js'
 import {
   humanBaseRpcPrice,
-  humanCollateralPrice,
   humanEgressPrice,
   humanIngressPrice,
   humanSectorAccessPrice,
@@ -78,9 +77,7 @@ export function transformUp(
       .div(toSiacoins(humanSectorAccessPrice(1)))
       .toFixed(0),
 
-    collateral: values.collateral
-      .div(toSiacoins(humanCollateralPrice(1)))
-      .toFixed(0),
+    collateralMultiplier: values.collateralMultiplier.toNumber(),
     maxCollateral: toHastings(values.maxCollateral).toString(),
 
     storagePrice: values.storagePrice
@@ -180,7 +177,7 @@ export function transformDown(s: HostSettings): SettingsData {
       scDecimalPlaces
     ),
 
-    collateral: toSiacoins(humanCollateralPrice(s.collateral), scDecimalPlaces),
+    collateralMultiplier: s.collateralMultiplier,
     maxCollateral: toSiacoins(s.maxCollateral, scDecimalPlaces),
 
     storagePrice: toSiacoins(

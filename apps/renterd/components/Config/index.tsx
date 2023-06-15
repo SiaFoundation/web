@@ -10,7 +10,7 @@ import {
   monthsToBlocks,
   useOnInvalid,
 } from '@siafoundation/design-system'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { RenterdSidenav } from '../RenterdSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
@@ -66,6 +66,34 @@ export function Config() {
     mode: 'all',
     defaultValues: initialValues,
   })
+
+  const resetFormData = useCallback(() => {
+    if (!gouging.data || !redundancy.data) {
+      return
+    }
+    const gougingData = gouging.data as GougingSettings
+    const redundancyData = redundancy.data as RedundancySettings
+    form.reset(transformDown(gougingData, redundancyData))
+  }, [form, gouging.data, redundancy.data])
+
+  const revalidateAndResetFormData = useCallback(async () => {
+    await gouging.mutate()
+    await redundancy.mutate()
+    // Theoretically mutate should trigger the init effect,
+    // but for some reason it does not (maybe when the response is cached?)
+    // therefore we manually call form.reset.
+    resetFormData()
+  }, [resetFormData, gouging, redundancy])
+
+  // init - when new config is fetched, set the form
+  const [hasInit, setHasInit] = useState(false)
+  useEffect(() => {
+    if (gouging.data && redundancy.data && !hasInit) {
+      resetFormData()
+      setHasInit(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gouging.data, redundancy.data])
 
   const minShards = form.watch('minShards')
   const totalShards = form.watch('totalShards')
@@ -128,12 +156,13 @@ export function Config() {
           throw Error(redundancyResponse.error)
         }
         triggerSuccessToast('Configuration has been saved.')
+        revalidateAndResetFormData()
       } catch (e) {
         triggerErrorToast((e as Error).message)
         console.log(e)
       }
     },
-    [settingUpdate, redundancy, gouging]
+    [settingUpdate, redundancy, gouging, revalidateAndResetFormData]
   )
 
   const onInvalid = useOnInvalid(fields)
@@ -146,30 +175,6 @@ export function Config() {
   const changeCount = Object.entries(form.formState.dirtyFields).filter(
     ([_, val]) => !!val
   ).length
-
-  const resetFormData = useCallback(() => {
-    if (!gouging.data || !redundancy.data) {
-      return
-    }
-    const gougingData = gouging.data as GougingSettings
-    const redundancyData = redundancy.data as RedundancySettings
-    form.reset(transformDown(gougingData, redundancyData))
-  }, [form, gouging.data, redundancy.data])
-
-  const revalidateAndResetFormData = useCallback(async () => {
-    await gouging.mutate()
-    await redundancy.mutate()
-    // Theoretically mutate should trigger the init effect,
-    // but for some reason it does not (maybe when the response is cached?)
-    // therefore we manually call form.reset.
-    resetFormData()
-  }, [resetFormData, gouging, redundancy])
-
-  // init - when new config is fetched, reset the form
-  useEffect(() => {
-    resetFormData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gouging.data, redundancy.data])
 
   return (
     <RenterdAuthedLayout

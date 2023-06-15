@@ -376,7 +376,7 @@ export type HostSettings = {
   baseRPCPrice: Currency
   sectorAccessPrice: Currency
 
-  collateral: Currency
+  collateralMultiplier: number
   maxCollateral: Currency
 
   storagePrice: Currency

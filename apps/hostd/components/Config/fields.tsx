@@ -37,7 +37,7 @@ export const initialValues = {
   baseRPCPrice: undefined as BigNumber | undefined,
   sectorAccessPrice: undefined as BigNumber | undefined,
 
-  collateral: undefined as BigNumber | undefined,
+  collateralMultiplier: undefined as BigNumber | undefined,
   maxCollateral: undefined as BigNumber | undefined,
 
   storagePrice: undefined as BigNumber | undefined,
@@ -164,13 +164,18 @@ export const fields: ConfigFields<typeof initialValues, Categories> = {
       required: 'required',
     },
   },
-  collateral: {
-    title: 'Collateral',
-    type: 'siacoin',
+  collateralMultiplier: {
+    title: 'Collateral multiplier',
+    type: 'number',
     category: 'pricing',
-    units: 'SC/month',
-    decimalsLimitSc: scDecimalPlaces,
-    description: <>{`The host's target collateral in siacoins per month.`}</>,
+    units: '* storage price',
+    placeholder: '2',
+    decimalsLimit: 1,
+    description: (
+      <>{`The host's target collateral as a multiple of storage price.`}</>
+    ),
+    suggestion: new BigNumber(2),
+    suggestionTip: 'The default multiplier is 2x the storage price.',
     validation: {
       required: 'required',
     },
