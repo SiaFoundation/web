@@ -31,7 +31,7 @@ export function useObjectUpload(
       },
       route: '/worker/objects/:key',
     },
-    (mutate) => {
+    async (mutate) => {
       mutate((key) => key.startsWith('/bus/objects'))
     }
   )

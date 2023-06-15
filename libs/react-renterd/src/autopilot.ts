@@ -20,7 +20,7 @@ export function useAutopilotConfig(args?: HookArgsSwr<void, AutopilotConfig>) {
 export function useAutopilotConfigUpdate(
   args?: HookArgsCallback<void, AutopilotConfig, void>
 ) {
-  return usePutFunc({ ...args, route: autopilotConfigKey }, (mutate) => {
+  return usePutFunc({ ...args, route: autopilotConfigKey }, async (mutate) => {
     mutate((key) => key === autopilotConfigKey)
   })
 }

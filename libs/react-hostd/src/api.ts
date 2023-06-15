@@ -102,7 +102,7 @@ export function useSyncerConnect(
       ...args,
       route: '/syncer/peers',
     },
-    (mutate) => {
+    async (mutate) => {
       mutate((key) => key === syncerPeers)
     }
   )
@@ -413,8 +413,8 @@ export function useSettings(args?: HookArgsSwr<void, HostSettings>) {
 export function useSettingsUpdate(
   args?: HookArgsCallback<void, Partial<HostSettings>, HostSettings>
 ) {
-  return usePatchFunc({ ...args, route: '/settings' }, (mutate) => {
-    mutate((key) => {
+  return usePatchFunc({ ...args, route: '/settings' }, async (mutate) => {
+    await mutate((key) => {
       return key.startsWith(settingsRoute)
     })
   })
@@ -481,7 +481,7 @@ export function useVolumeCreate(
     Volume
   >
 ) {
-  return usePostFunc({ ...args, route: volumesRoute }, (mutate) => {
+  return usePostFunc({ ...args, route: volumesRoute }, async (mutate) => {
     mutate((key) => {
       return key.startsWith(volumesRoute)
     })
@@ -491,7 +491,7 @@ export function useVolumeCreate(
 export function useVolumeUpdate(
   args?: HookArgsCallback<{ id: number }, { readOnly: boolean }, void>
 ) {
-  return usePutFunc({ ...args, route: '/volumes/:id' }, (mutate) => {
+  return usePutFunc({ ...args, route: '/volumes/:id' }, async (mutate) => {
     mutate((key) => {
       return key.startsWith(volumesRoute)
     })
@@ -501,7 +501,7 @@ export function useVolumeUpdate(
 export function useVolumeDelete(
   args?: HookArgsCallback<{ id: number; force?: boolean }, void, void>
 ) {
-  return useDeleteFunc({ ...args, route: '/volumes/:id' }, (mutate) => {
+  return useDeleteFunc({ ...args, route: '/volumes/:id' }, async (mutate) => {
     mutate((key) => {
       return key.startsWith(volumesRoute)
     })
@@ -615,7 +615,7 @@ export function useAlerts(args?: HookArgsSwr<void, Alert[]>) {
 export function useAlertsDismiss(
   args?: HookArgsCallback<void, string[], void>
 ) {
-  return usePostFunc({ ...args, route: '/alerts/dismiss' }, (mutate) => {
+  return usePostFunc({ ...args, route: '/alerts/dismiss' }, async (mutate) => {
     mutate((key) => {
       return key.startsWith(alertsRoute)
     })

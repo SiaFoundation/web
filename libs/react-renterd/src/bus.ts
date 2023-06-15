@@ -107,7 +107,7 @@ export function useSyncerConnect(args?: HookArgsCallback<void, string, never>) {
       ...args,
       route: '/bus/syncer/connect',
     },
-    (mutate) => {
+    async (mutate) => {
       mutate((key) => key === syncerPeers)
     }
   )
@@ -304,16 +304,19 @@ export function useHostsAllowlistUpdate(
     void
   >
 ) {
-  return usePutFunc({ ...args, route: '/bus/hosts/allowlist' }, (mutate) => {
-    mutate((key) => {
-      const matches = [
-        hostsSearchRoute,
-        hostsAllowlistRoute,
-        contractsActiveRoute,
-      ]
-      return !!matches.find((match) => key.startsWith(match))
-    })
-  })
+  return usePutFunc(
+    { ...args, route: '/bus/hosts/allowlist' },
+    async (mutate) => {
+      mutate((key) => {
+        const matches = [
+          hostsSearchRoute,
+          hostsAllowlistRoute,
+          contractsActiveRoute,
+        ]
+        return !!matches.find((match) => key.startsWith(match))
+      })
+    }
+  )
 }
 
 export function useHostsBlocklistUpdate(
@@ -326,16 +329,19 @@ export function useHostsBlocklistUpdate(
     void
   >
 ) {
-  return usePutFunc({ ...args, route: '/bus/hosts/blocklist' }, (mutate) => {
-    mutate((key) => {
-      const matches = [
-        hostsSearchRoute,
-        hostsBlocklistRoute,
-        contractsActiveRoute,
-      ]
-      return !!matches.find((match) => key.startsWith(match))
-    })
-  })
+  return usePutFunc(
+    { ...args, route: '/bus/hosts/blocklist' },
+    async (mutate) => {
+      mutate((key) => {
+        const matches = [
+          hostsSearchRoute,
+          hostsBlocklistRoute,
+          contractsActiveRoute,
+        ]
+        return !!matches.find((match) => key.startsWith(match))
+      })
+    }
+  )
 }
 
 // contracts
@@ -429,9 +435,12 @@ export function useObjectAdd(
 export function useObjectDelete(
   args?: HookArgsCallback<{ key: string }, void, never>
 ) {
-  return useDeleteFunc({ ...args, route: '/bus/objects/:key' }, (mutate) => {
-    mutate((key) => key.startsWith('/bus/objects/'))
-  })
+  return useDeleteFunc(
+    { ...args, route: '/bus/objects/:key' },
+    async (mutate) => {
+      mutate((key) => key.startsWith('/bus/objects/'))
+    }
+  )
 }
 
 type ObjectsStats = {
@@ -475,7 +484,7 @@ export function useSettingUpdate(
       ...args,
       route: '/bus/setting/:key',
     },
-    (mutate, args) => {
+    async (mutate, args) => {
       mutate((key) => key.startsWith(`/bus/setting/${args.params.key}`))
     }
   )

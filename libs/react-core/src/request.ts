@@ -317,4 +317,4 @@ export type After<Params extends RequestParams, Payload, Result> = (
   ) => Promise<(T | undefined)[]>,
   args: InternalCallbackArgs<Params, Payload, Result>,
   response: AxiosResponse<Result, void>
-) => void
+) => Promise<void>

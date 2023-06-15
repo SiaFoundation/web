@@ -67,33 +67,38 @@ export function Config() {
     defaultValues: initialValues,
   })
 
-  const resetFormData = useCallback(() => {
-    if (!gouging.data || !redundancy.data) {
-      return
-    }
-    const gougingData = gouging.data as GougingSettings
-    const redundancyData = redundancy.data as RedundancySettings
-    form.reset(transformDown(gougingData, redundancyData))
-  }, [form, gouging.data, redundancy.data])
-
-  const revalidateAndResetFormData = useCallback(async () => {
-    await gouging.mutate()
-    await redundancy.mutate()
-    // Theoretically mutate should trigger the init effect,
-    // but for some reason it does not (maybe when the response is cached?)
-    // therefore we manually call form.reset.
-    resetFormData()
-  }, [resetFormData, gouging, redundancy])
+  const resetFormData = useCallback(
+    (gougingData: GougingSettings, redundancyData: RedundancySettings) => {
+      form.reset(transformDown(gougingData, redundancyData))
+    },
+    [form]
+  )
 
   // init - when new config is fetched, set the form
   const [hasInit, setHasInit] = useState(false)
   useEffect(() => {
     if (gouging.data && redundancy.data && !hasInit) {
-      resetFormData()
+      resetFormData(
+        gouging.data as GougingSettings,
+        redundancy.data as RedundancySettings
+      )
       setHasInit(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gouging.data, redundancy.data])
+
+  const reset = useCallback(async () => {
+    const gougingData = await gouging.mutate()
+    const redundancyData = await redundancy.mutate()
+    if (!gougingData || !redundancyData) {
+      triggerErrorToast('Error fetching settings.')
+    } else {
+      resetFormData(
+        gougingData as GougingSettings,
+        redundancyData as RedundancySettings
+      )
+    }
+  }, [gouging, redundancy, resetFormData])
 
   const minShards = form.watch('minShards')
   const totalShards = form.watch('totalShards')
@@ -156,13 +161,13 @@ export function Config() {
           throw Error(redundancyResponse.error)
         }
         triggerSuccessToast('Configuration has been saved.')
-        revalidateAndResetFormData()
+        reset()
       } catch (e) {
         triggerErrorToast((e as Error).message)
         console.log(e)
       }
     },
-    [settingUpdate, redundancy, gouging, revalidateAndResetFormData]
+    [settingUpdate, redundancy, gouging, reset]
   )
 
   const onInvalid = useOnInvalid(fields)
@@ -192,7 +197,7 @@ export function Config() {
             tip="Reset all changes"
             icon="contrast"
             disabled={!changeCount}
-            onClick={() => revalidateAndResetFormData()}
+            onClick={reset}
           >
             <Reset16 />
           </Button>

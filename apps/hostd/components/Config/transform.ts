@@ -177,7 +177,7 @@ export function transformDown(s: HostSettings): SettingsData {
       scDecimalPlaces
     ),
 
-    collateralMultiplier: s.collateralMultiplier,
+    collateralMultiplier: new BigNumber(s.collateralMultiplier),
     maxCollateral: toSiacoins(s.maxCollateral, scDecimalPlaces),
 
     storagePrice: toSiacoins(
