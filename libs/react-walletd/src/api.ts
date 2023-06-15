@@ -73,7 +73,7 @@ export function useSyncerConnect(
       ...args,
       route: '/syncer/connect',
     },
-    (mutate) => {
+    async (mutate) => {
       mutate((key) => key === syncerPeers)
     }
   )

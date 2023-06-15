@@ -126,7 +126,7 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
         })
         const response = await axios.post<Result>(reqRoute, payload, reqConfig)
         if (after) {
-          after(
+          await after(
             (matcher, data = (d) => d, opts) =>
               mutate(
                 (key) => {

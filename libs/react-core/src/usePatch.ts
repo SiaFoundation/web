@@ -125,7 +125,7 @@ export function usePatchFunc<Params extends RequestParams, Payload, Result>(
         })
         const response = await axios.patch<Result>(reqRoute, payload, reqConfig)
         if (after) {
-          after(
+          await after(
             (matcher, data = (d) => d, opts) =>
               mutate(
                 (key) => {

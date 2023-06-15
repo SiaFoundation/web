@@ -19,6 +19,7 @@ import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 import {
+  AutopilotConfig,
   useAutopilotConfig,
   useAutopilotConfigUpdate,
 } from '@siafoundation/react-renterd'
@@ -44,28 +45,31 @@ export function Autopilot() {
     defaultValues: initialValues,
   })
 
-  const resetFormData = useCallback(() => {
-    if (!config.data) {
-      return
-    }
-    form.reset(transformDown(config.data))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form, config])
-
-  const revalidateAndResetFormData = useCallback(async () => {
-    await config.mutate()
-    resetFormData()
-  }, [resetFormData, config])
+  const resetFormData = useCallback(
+    (data: AutopilotConfig) => {
+      form.reset(transformDown(data))
+    },
+    [form]
+  )
 
   // init - when new config is fetched, set the form
   const [hasInit, setHasInit] = useState(false)
   useEffect(() => {
     if (config.data && !hasInit) {
-      resetFormData()
+      resetFormData(config.data)
       setHasInit(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config.data])
+
+  const reset = useCallback(async () => {
+    const data = await config.mutate()
+    if (!data) {
+      triggerErrorToast('Error fetching config.')
+    } else {
+      resetFormData(data)
+    }
+  }, [config, resetFormData])
 
   const onValid = useCallback(
     async (values: typeof initialValues) => {
@@ -77,13 +81,13 @@ export function Autopilot() {
           payload: transformUp(values, config.data),
         })
         triggerSuccessToast('Configuration has been saved.')
-        revalidateAndResetFormData()
+        reset()
       } catch (e) {
         triggerErrorToast((e as Error).message)
         console.log(e)
       }
     },
-    [config.data, configUpdate, revalidateAndResetFormData]
+    [config.data, configUpdate, reset]
   )
 
   const onInvalid = useOnInvalid(fields)
@@ -180,7 +184,7 @@ export function Autopilot() {
             tip="Reset all changes"
             icon="contrast"
             disabled={!changeCount}
-            onClick={() => revalidateAndResetFormData()}
+            onClick={reset}
           >
             <Reset16 />
           </Button>
