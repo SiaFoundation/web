@@ -16,8 +16,8 @@ export function HomeStorage() {
       <DatumScrollArea>
         <DatumCardConfigurable
           label="storage"
-          color={storage.config.data['contractSectors'].color}
-          value={storage.stats['contractSectors']}
+          color={storage.config.data['physicalSectors'].color}
+          value={storage.stats['physicalSectors']}
           defaultMode="latest"
           isLoading={storage.isLoading}
           enabledModes={['latest', 'average', 'total']}
