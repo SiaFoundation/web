@@ -10,7 +10,7 @@ import {
   ConfigurationPanel,
   useOnInvalid,
 } from '@siafoundation/design-system'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { HostdSidenav } from '../HostdSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
@@ -52,6 +52,31 @@ export function Config() {
     defaultValues: initialValues,
   })
 
+  const resetFormData = useCallback(() => {
+    if (!settings.data) {
+      return
+    }
+    const s = settings.data
+    form.reset(transformDown(s))
+  }, [form, settings])
+
+  const revalidateAndResetFormData = useCallback(async () => {
+    await settings.mutate()
+    resetFormData()
+    // also recheck dynamic dns
+    await dynDNSCheck.mutate()
+  }, [resetFormData, settings, dynDNSCheck])
+
+  // init - when new config is fetched, set the form
+  const [hasInit, setHasInit] = useState(false)
+  useEffect(() => {
+    if (settings.data && !hasInit) {
+      resetFormData()
+      setHasInit(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [settings.data])
+
   const onValid = useCallback(
     async (values: typeof initialValues) => {
       if (!settings.data) {
@@ -74,13 +99,13 @@ export function Config() {
         } else {
           triggerSuccessToast('Settings have been saved.')
         }
-        dynDNSCheck.mutate()
+        revalidateAndResetFormData()
       } catch (e) {
         triggerErrorToast((e as Error).message)
         console.log(e)
       }
     },
-    [form, settings, settingsUpdate, dynDNSCheck]
+    [form, settings, settingsUpdate, revalidateAndResetFormData]
   )
 
   const onInvalid = useOnInvalid(fields)
@@ -93,31 +118,6 @@ export function Config() {
   const changeCount = Object.entries(form.formState.dirtyFields).filter(
     ([_, val]) => !!val
   ).length
-
-  const resetFormData = useCallback(() => {
-    if (!settings.data) {
-      return
-    }
-    const s = settings.data
-    form.reset(transformDown(s))
-  }, [form, settings])
-
-  const revalidateAndResetFormData = useCallback(async () => {
-    await settings.mutate()
-    // Theoretically mutate should trigger the init effect,
-    // but for some reason it does not (maybe when the response is cached?)
-    // therefore we manually call form.reset.
-    resetFormData()
-
-    // also recheck dynamic dns
-    await dynDNSCheck.mutate()
-  }, [resetFormData, settings, dynDNSCheck])
-
-  // init - when new config is fetched, reset the form
-  useEffect(() => {
-    resetFormData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [settings.data])
 
   return (
     <HostdAuthedLayout

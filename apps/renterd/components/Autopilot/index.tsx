@@ -13,7 +13,7 @@ import {
   useOnInvalid,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { RenterdSidenav } from '../RenterdSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
@@ -44,31 +44,6 @@ export function Autopilot() {
     defaultValues: initialValues,
   })
 
-  const onValid = useCallback(
-    async (values: typeof initialValues) => {
-      if (!config.data) {
-        return
-      }
-      try {
-        await configUpdate.put({
-          payload: transformUp(values, config.data),
-        })
-        triggerSuccessToast('Configuration has been saved.')
-      } catch (e) {
-        triggerErrorToast((e as Error).message)
-        console.log(e)
-      }
-    },
-    [config.data, configUpdate]
-  )
-
-  const onInvalid = useOnInvalid(fields)
-
-  const onSubmit = useMemo(
-    () => form.handleSubmit(onValid, onInvalid),
-    [form, onValid, onInvalid]
-  )
-
   const resetFormData = useCallback(() => {
     if (!config.data) {
       return
@@ -79,17 +54,44 @@ export function Autopilot() {
 
   const revalidateAndResetFormData = useCallback(async () => {
     await config.mutate()
-    // Theoretically mutate should trigger the init effect,
-    // but for some reason it does not (maybe when the response is cached?)
-    // therefore we manually call form.reset.
     resetFormData()
   }, [resetFormData, config])
 
-  // init - when new config is fetched, reset the form with the values
+  // init - when new config is fetched, set the form
+  const [hasInit, setHasInit] = useState(false)
   useEffect(() => {
-    resetFormData()
+    if (config.data && !hasInit) {
+      resetFormData()
+      setHasInit(true)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config.data])
+
+  const onValid = useCallback(
+    async (values: typeof initialValues) => {
+      if (!config.data) {
+        return
+      }
+      try {
+        await configUpdate.put({
+          payload: transformUp(values, config.data),
+        })
+        triggerSuccessToast('Configuration has been saved.')
+        revalidateAndResetFormData()
+      } catch (e) {
+        triggerErrorToast((e as Error).message)
+        console.log(e)
+      }
+    },
+    [config.data, configUpdate, revalidateAndResetFormData]
+  )
+
+  const onInvalid = useOnInvalid(fields)
+
+  const onSubmit = useMemo(
+    () => form.handleSubmit(onValid, onInvalid),
+    [form, onValid, onInvalid]
+  )
 
   const storage = form.watch('storage')
   const period = form.watch('period')
