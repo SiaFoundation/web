@@ -613,7 +613,7 @@ export function useAlerts(args?: HookArgsSwr<void, Alert[]>) {
 }
 
 export function useAlertsDismiss(
-  args?: HookArgsCallback<void, { alertIDs: string[] }, void>
+  args?: HookArgsCallback<void, string[], void>
 ) {
   return usePostFunc({ ...args, route: '/alerts/dismiss' }, (mutate) => {
     mutate((key) => {

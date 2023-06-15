@@ -37,9 +37,7 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
   const dismissOne = useCallback(
     async (id: string) => {
       const response = await dismiss.post({
-        payload: {
-          alertIDs: [id],
-        },
+        payload: [id],
       })
       if (response.error) {
         triggerErrorToast('Error dismissing alert.')
@@ -55,9 +53,7 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
       return
     }
     const response = await dismiss.post({
-      payload: {
-        alertIDs: alerts.data.map((a) => a.id),
-      },
+      payload: alerts.data.map((a) => a.id),
     })
     if (response.error) {
       triggerErrorToast('Error dismissing all alerts.')
