@@ -1,7 +1,7 @@
 {
   "name": "@siafoundation/react-walletd",
   "description": " React hooks for interacting with `walletd`.",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "license": "MIT"
 }

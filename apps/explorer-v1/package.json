@@ -1,7 +1,7 @@
 {
   "name": "explorer-v1",
   "description": "The `explorer-v1` user interface, a Sia blockchain explorer interface for Navigator.",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "license": "MIT"
 }

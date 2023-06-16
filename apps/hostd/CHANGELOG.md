@@ -1,5 +1,15 @@
 # hostd
 
+## 0.15.0
+
+### Minor Changes
+
+- 09072b7c: Home page storage metric card now shows physical sectors instead of contract sectors.
+- 867763b2: hostd now features alerts. Alerts notify the user to important contract and storage events.
+- f8723a70: Collateral configuration setting is now a multiple of storage price.
+- b4e6d67c: The contracts page now properly instructs the user to configure and announce the host when there are no contracts.
+- e76398fb: The host announcement dialog now shows the correct fee amount.
+
 ## 0.14.0
 
 ### Minor Changes
