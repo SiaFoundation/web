@@ -1,5 +1,13 @@
 # renterd
 
+## 0.19.0
+
+### Minor Changes
+
+- 54b1b445: Wallet send flow now properly discards transaction if an error occurs during signing or broadcasting.
+- 04c8cd01: Files stats now show a breakdown of file size with and without redundancy and also with repairs.
+- 8c2a95da: The hosts explorer now supports filtering by usable and unusable.
+
 ## 0.18.0
 
 ### Minor Changes

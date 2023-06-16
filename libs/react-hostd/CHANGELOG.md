@@ -1,5 +1,11 @@
 # @siafoundation/react-hostd
 
+## 0.7.0
+
+### Minor Changes
+
+- 024ff2cf: Add useAlerts and useAlertsDismiss APIs.
+
 ## 0.6.0
 
 ### Minor Changes

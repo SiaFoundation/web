@@ -1,5 +1,11 @@
 # explorer-v1
 
+## 0.4.0
+
+### Minor Changes
+
+- 21e7a98c: Transaction and contract pages now successfully load as expected.
+
 ## 0.3.0
 
 ### Minor Changes
