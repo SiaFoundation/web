@@ -421,7 +421,7 @@ export function useObject(args: HookArgsSwr<{ key: string }, { object: Obj }>) {
 }
 
 export function useObjectSearch(
-  args: HookArgsSwr<{ key: string; skip: number; limit: number }, string[]>
+  args: HookArgsSwr<{ key: string; skip: number; limit: number }, ObjEntry[]>
 ) {
   return useGetSwr({ ...args, route: '/bus/search/objects' })
 }
