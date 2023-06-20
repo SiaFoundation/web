@@ -88,8 +88,8 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
         // If the network is disconnected then response.status will be 0 and
         // data undefined, so return axios e.message error.
         return {
-          status: e.response.status,
-          error: e.response.data || e.message,
+          status: e.response?.status,
+          error: e.response?.data || e.message,
         } as Response<Result>
       }
     },
