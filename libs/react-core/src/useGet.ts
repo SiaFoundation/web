@@ -94,11 +94,11 @@ export function useGetFunc<Params extends RequestParams, Result>(
         // If the network is disconnected then response.status will be 0 and
         // data undefined, so return axios e.message error.
         const error =
-          e.response.data instanceof Blob
-            ? await e.response.data.text()
-            : e.response.data || e.message
+          e.response?.data instanceof Blob
+            ? await e.response?.data.text()
+            : e.response?.data || e.message
         return {
-          status: e.response.status,
+          status: e.response?.status,
           error,
         } as Response<Result>
       }

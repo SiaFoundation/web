@@ -159,8 +159,8 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
         // If the network is disconnected then response.status will be 0 and
         // data undefined, so return axios e.message error.
         return {
-          status: e.response.status,
-          error: e.response.data || e.message,
+          status: e.response?.status,
+          error: e.response?.data || e.message,
         } as Response<Result>
       }
     },
