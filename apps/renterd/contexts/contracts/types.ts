@@ -19,6 +19,7 @@ export type ContractData = {
   spendingUploads: BigNumber
   spendingDownloads: BigNumber
   spendingFundAccount: BigNumber
+  size: BigNumber
 }
 
 export type TableColumnId =
@@ -29,6 +30,7 @@ export type TableColumnId =
   | 'timeline'
   | 'startTime'
   | 'endTime'
+  | 'size'
   | 'totalCost'
   | 'spendingUploads'
   | 'spendingDownloads'
@@ -39,6 +41,7 @@ export const columnsDefaultVisible: TableColumnId[] = [
   'hostIp',
   'hostKey',
   'timeline',
+  'size',
   'totalCost',
   'spendingUploads',
   'spendingDownloads',
@@ -52,6 +55,7 @@ export type SortField =
   | 'timeline'
   | 'startTime'
   | 'endTime'
+  | 'size'
   | 'totalCost'
   | 'spendingUploads'
   | 'spendingDownloads'
@@ -93,6 +97,11 @@ export const sortOptions: {
     id: 'endTime',
     label: 'end date',
     category: 'time',
+  },
+  {
+    id: 'size',
+    label: 'size',
+    category: 'general',
   },
   {
     id: 'totalCost',

@@ -74,6 +74,7 @@ function useContractsMain() {
           spendingUploads: new BigNumber(c.spending.uploads),
           spendingDownloads: new BigNumber(c.spending.downloads),
           spendingFundAccount: new BigNumber(c.spending.fundAccount),
+          size: new BigNumber(c.size),
         }
       }) || []
     return data

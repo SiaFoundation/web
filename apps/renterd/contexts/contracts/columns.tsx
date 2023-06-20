@@ -7,8 +7,9 @@ import {
   ArrowUpLeft16,
   stripPrefix,
   Tooltip,
+  ValueNum,
 } from '@siafoundation/design-system'
-import { humanDate } from '@siafoundation/sia-js'
+import { humanBytes, humanDate } from '@siafoundation/sia-js'
 import { ContractData, TableColumnId } from './types'
 import { ContractDropdownMenu } from '../../components/Contracts/ContractDropdownMenu'
 
@@ -150,6 +151,20 @@ export const columns: ContractsTableColumn[] = [
         </Text>
       )
     },
+  },
+  {
+    id: 'size',
+    label: 'size',
+    category: 'general',
+    contentClassName: 'w-[120px] justify-end',
+    render: ({ data: { size } }) => (
+      <ValueNum
+        size="12"
+        value={size}
+        variant="value"
+        format={(d) => humanBytes(d)}
+      />
+    ),
   },
   {
     id: 'totalCost',
