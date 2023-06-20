@@ -201,6 +201,7 @@ export interface Contract {
   renewedFrom: string
   spending: ContractSpending
   totalCost: Currency
+  size: number
 }
 
 export interface Block {

@@ -32,7 +32,7 @@ export function FilesStatsMenu() {
               <Filter16 />
             </Text>
           </Tooltip>
-          <Tooltip content="Number of files in current directory">
+          <Tooltip side="bottom" content="Number of files in current directory">
             <Text size="12" font="mono">
               {pageCount.toLocaleString()}
               {stats.data
@@ -48,14 +48,14 @@ export function FilesStatsMenu() {
               <Tooltip
                 side="bottom"
                 content={
-                  <div className="flex flex-col gap-1">
+                  <Text className="flex flex-col gap-1">
                     <Text size="12" color="subtle">
                       Size of all files
                     </Text>
                     <Text size="12" color="subtle">
                       {humanBytes(stats.data?.totalObjectsSize)}
                     </Text>
-                  </div>
+                  </Text>
                 }
               >
                 <div className="flex gap-2">
@@ -71,7 +71,7 @@ export function FilesStatsMenu() {
                 align="end"
                 side="bottom"
                 content={
-                  <div className="flex flex-col gap-1">
+                  <Text className="flex flex-col gap-1">
                     <Text size="12" color="subtle">
                       Size of all files
                     </Text>
@@ -82,7 +82,7 @@ export function FilesStatsMenu() {
                       {humanBytes(stats.data?.totalUploadedSize)} with
                       redundancy and repairs
                     </Text>
-                  </div>
+                  </Text>
                 }
               >
                 <div className="flex gap-2">
