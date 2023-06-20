@@ -51,7 +51,7 @@ export function FilesSearchCmd({
 
   return (
     <CommandGroup currentPage={currentPage} commandPage={filesSearchPage}>
-      {results.data.map((path) => {
+      {results.data.map(({ name: path }) => {
         const compressedPath = compressPath(path, search, 55)
         const { startIndex, endIndex } = findLastMatch(compressedPath, search)
 
