@@ -178,6 +178,7 @@ export const Button = React.forwardRef<
       tipAlign,
       tipSide,
       className,
+      type = 'button',
       ...props
     },
     ref
@@ -187,6 +188,7 @@ export const Button = React.forwardRef<
         <Tooltip content={tip} align={tipAlign} side={tipSide}>
           <button
             ref={ref}
+            type={type}
             disabled={disabled}
             className={buttonStyles({
               variant,
@@ -207,6 +209,7 @@ export const Button = React.forwardRef<
       <button
         ref={ref}
         disabled={disabled}
+        type={type}
         className={buttonStyles({
           variant,
           size,

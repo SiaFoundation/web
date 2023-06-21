@@ -10,6 +10,7 @@
     "build": "nx build",
     "test": "nx test",
     "release": "changeset publish",
+    "build:wasm": "GOOS=js GOARCH=wasm go build -o  apps/walletd/public/walletd.wasm ./walletd-wasm",
     "feeds": "node apps/website/scripts/syncFeeds.js"
   },
   "private": true,
@@ -61,6 +62,7 @@
     "@visx/xychart": "^2.18.0",
     "axios": "^0.27.2",
     "bignumber.js": "^9.0.2",
+    "bip39": "^3.1.0",
     "blakejs": "^1.2.1",
     "class-variance-authority": "^0.3.0",
     "clipboard-polyfill": "^3.0.3",

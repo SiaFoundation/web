@@ -35,5 +35,10 @@ module.exports = {
       script: 'nx',
       args: 'run hostd:serve:production',
     },
+    {
+      name: 'sia-wallet',
+      script: 'nx',
+      args: 'run walletd:serve:production',
+    },
   ],
 }

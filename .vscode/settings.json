@@ -3,5 +3,8 @@
   "editor.formatOnSave": true,
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
-  ]
+  ],
+  "[go]": {
+    "editor.defaultFormatter": "golang.go"
+  }
 }

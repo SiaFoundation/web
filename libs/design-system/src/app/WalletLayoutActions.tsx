@@ -6,7 +6,7 @@ import { WalletBalance } from './WalletBalance'
 type Props = {
   isSynced: boolean
   sc?: BigNumber
-  receiveSiacoin: () => void
+  receiveSiacoin?: () => void
   sendSiacoin: () => void
 }
 
@@ -19,10 +19,12 @@ export function WalletLayoutActions({
   return (
     <>
       <WalletBalance isSynced={isSynced} sc={sc} />
-      <Button size="small" onClick={receiveSiacoin}>
-        <ArrowDownLeft16 />
-        Receive
-      </Button>
+      {receiveSiacoin && (
+        <Button size="small" onClick={receiveSiacoin}>
+          <ArrowDownLeft16 />
+          Receive
+        </Button>
+      )}
       <Button size="small" variant="accent" onClick={sendSiacoin}>
         <ArrowUpRight16 />
         Send

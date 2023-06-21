@@ -1,5 +1,5 @@
-import { Home } from '../components/Home'
+import { WalletsList } from '../components/WalletsList'
 
 export default function HomePage() {
-  return <Home />
+  return <WalletsList />
 }
