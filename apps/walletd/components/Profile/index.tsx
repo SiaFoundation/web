@@ -1,12 +1,16 @@
-import { DaemonProfile } from '@siafoundation/design-system'
+import { DaemonProfile, Label, Text } from '@siafoundation/design-system'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
-import { useSyncerPeers } from '@siafoundation/react-walletd'
+import {
+  useConsensusNetwork,
+  useSyncerPeers,
+} from '@siafoundation/react-walletd'
 import { useDialog } from '../../contexts/dialog'
 
 export function Profile() {
   const { openDialog } = useDialog()
   const peers = useSyncerPeers()
   const syncStatus = useSyncStatus()
+  const network = useConsensusNetwork()
   return (
     <DaemonProfile
       name="walletd"
@@ -19,12 +23,14 @@ export function Profile() {
       firstTimeSyncing={syncStatus.firstTimeSyncing}
       moreThan100BlocksToSync={syncStatus.moreThan100BlocksToSync}
     >
-      {/* <div className="flex gap-4 justify-between items-center">
-        <Label size="14" color="subtle" noWrap className="w-[100px]">
-          Network
-        </Label>
-        <Text size="14">{network.data?.Name}</Text>
-      </div> */}
+      {network.data && (
+        <div className="flex gap-4 justify-between items-center">
+          <Label size="14" color="subtle" noWrap className="w-[100px]">
+            Network
+          </Label>
+          <Text size="14">{network.data.name}</Text>
+        </div>
+      )}
       {/* <div className="flex gap-4 justify-between items-center">
           <Label size="14" color="subtle" noWrap className="w-[100px]">
             Version

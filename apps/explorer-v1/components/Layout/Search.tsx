@@ -27,7 +27,7 @@ export function Search() {
         actions.setErrors({
           query: 'Invalid hash',
         })
-        triggerToast('Invalid hash')
+        triggerToast('Invalid hash.')
         return
       }
       actions.resetForm()

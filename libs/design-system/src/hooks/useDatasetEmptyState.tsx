@@ -32,6 +32,7 @@ export function useDatasetEmptyState(
     // Previous dataset not empty and loading.
     // If a loading state between dataset is not desired, turn on
     // swr keepPreviousData on the dataset.
+    // Note that dataset will be defined if revalidating same key.
     if (lastDatasetSize > 0 && !dataset) {
       return 'loading'
     }

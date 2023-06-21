@@ -8,6 +8,7 @@ import { times } from 'lodash'
 
 type Data = {
   id: string
+  onClick?: () => void
 }
 
 export type Row<Data, Context> = {
@@ -172,7 +173,11 @@ export function Table<
             data?.map((row) => (
               <tr
                 key={row.id}
-                className="border-b border-gray-300 dark:border-graydark-300"
+                onClick={row.onClick}
+                className={cx(
+                  'border-b border-gray-300 dark:border-graydark-300',
+                  row.onClick ? 'cursor-pointer' : ''
+                )}
               >
                 {columns.map(
                   (

@@ -1,3 +1,4 @@
+import useSWR from 'swr'
 import {
   useGetSwr,
   usePostFunc,
@@ -7,8 +8,17 @@ import {
   delay,
   Transaction,
   getMainnetBlockHeight,
+  getTestnetZenBlockHeight,
 } from '@siafoundation/react-core'
-import { ChainIndex, SiacoinElement, SiafundElement } from './siaTypes'
+import {
+  BlockHeight,
+  ChainIndex,
+  ConsensusState,
+  PoolTransaction,
+  SiacoinElement,
+  SiafundElement,
+  WalletEvent,
+} from './siaTypes'
 
 // consensus
 
@@ -21,30 +31,36 @@ export function useConsensusTip(args?: HookArgsSwr<void, ConsensusTip>) {
   })
 }
 
+export function useConsensusNetwork(args?: HookArgsSwr<void, ConsensusState>) {
+  return useGetSwr({
+    ...args,
+    route: '/consensus/network',
+  })
+}
+
 // TODO
 export function useEstimatedNetworkBlockHeight(): number {
-  // const state = useWalletd({
-  //   config: {
-  //     swr: {
-  //       revalidateOnFocus: false,
-  //     },
-  //   },
-  // })
-  // const res = useSWR(
-  //   state,
-  //   () => {
-  //     if (state.data?.network === 'Zen Testnet') {
-  //       return getTestnetZenBlockHeight()
-  //     }
-  //     return getMainnetBlockHeight()
-  //   },
-  //   {
-  //     refreshInterval: 60_000,
-  //     keepPreviousData: true,
-  //   }
-  // )
-  // return res.data || 0
-  return getMainnetBlockHeight()
+  const network = useConsensusNetwork({
+    config: {
+      swr: {
+        revalidateOnFocus: false,
+      },
+    },
+  })
+  const res = useSWR(
+    network,
+    () => {
+      if (network.data?.name === 'zen') {
+        return getTestnetZenBlockHeight()
+      }
+      return getMainnetBlockHeight()
+    },
+    {
+      refreshInterval: 60_000,
+      keepPreviousData: true,
+    }
+  )
+  return res.data || 0
 }
 
 // syncer
@@ -99,9 +115,11 @@ export function useTxPoolBroadcast(
     async (mutate) => {
       await delay(2_000)
       mutate((key) => {
-        return key.startsWith(txPoolTransactionsRoute)
-        // ||
-        // key.startsWith(walletPendingRoute)
+        return (
+          key.startsWith(txPoolTransactionsRoute) ||
+          // Most importantly to trigger /wallets/:name/txpool
+          key.startsWith('/wallets')
+        )
       })
     }
   )
@@ -110,25 +128,33 @@ export function useTxPoolBroadcast(
 // wallet
 
 type Wallet = Record<string, unknown>
+type Wallets = Record<string, Wallet>
 
-export function useWallets(args?: HookArgsSwr<void, Wallet[]>) {
+const walletsRoute = '/wallets'
+
+export function useWallets(args?: HookArgsSwr<void, Wallets>) {
   return useGetSwr({
     ...args,
-    route: '/wallets',
+    route: walletsRoute,
   })
 }
 
 export function useWalletAdd(
   args?: HookArgsCallback<{ name: string }, Wallet, void>
 ) {
-  return usePutFunc({
-    ...args,
-    route: '/wallets/:name',
-  })
+  return usePutFunc(
+    {
+      ...args,
+      route: '/wallets/:name',
+    },
+    async (mutate) => {
+      mutate((key) => key.startsWith(walletsRoute))
+    }
+  )
 }
 
 export function useWalletSubscribe(
-  args?: HookArgsCallback<{ name: string }, { height: number }, void>
+  args?: HookArgsCallback<{ name: string }, BlockHeight, void>
 ) {
   return usePostFunc({
     ...args,
@@ -137,29 +163,36 @@ export function useWalletSubscribe(
 }
 
 type Address = Record<string, unknown>
+type Addresses = Record<string, Address>
+
+const walletAddressesRoute = '/wallets/:name/addresses'
+export function useWalletAddresses(
+  args: HookArgsSwr<{ name: string }, Addresses>
+) {
+  return useGetSwr({
+    ...args,
+    route: walletAddressesRoute,
+  })
+}
 
 export function useWalletAddressAdd(
   args?: HookArgsCallback<{ name: string; addr: string }, Address, void>
 ) {
-  return usePutFunc({
-    ...args,
-    route: '/wallets/:name/addresses/:addr',
-  })
-}
-
-type Addresses = Record<string, Address>
-
-export function useWalletAddresses(
-  args?: HookArgsSwr<{ name: string }, Addresses>
-) {
-  return useGetSwr({
-    ...args,
-    route: '/wallets/:name/addresses',
-  })
+  return usePutFunc(
+    {
+      ...args,
+      route: '/wallets/:name/addresses/:addr',
+    },
+    async (mutate, data) => {
+      mutate((key) =>
+        key.startsWith(walletAddressesRoute.replace(':name', data.params.name))
+      )
+    }
+  )
 }
 
 export function useWalletBalance(
-  args?: HookArgsSwr<{ name: string }, { siacoins: string; siafunds: number }>
+  args: HookArgsSwr<{ name: string }, { siacoins: string; siafunds: number }>
 ) {
   return useGetSwr({
     ...args,
@@ -167,10 +200,23 @@ export function useWalletBalance(
   })
 }
 
-export function useWalletEvents(args?: HookArgsSwr<{ name: string }, Event>) {
+export function useWalletEvents(
+  args: HookArgsSwr<{ name: string }, WalletEvent[]>
+) {
   return useGetSwr({
     ...args,
     route: '/wallets/:name/events',
+  })
+}
+
+const walletTxPoolRoute = '/wallets/:name/txpool'
+
+export function useWalletTxPool(
+  args: HookArgsSwr<{ name: string }, PoolTransaction[]>
+) {
+  return useGetSwr({
+    ...args,
+    route: walletTxPoolRoute,
   })
 }
 
@@ -180,7 +226,7 @@ type WalletOutputsResponse = {
 }
 
 export function useWalletOutputs(
-  args?: HookArgsSwr<{ name: string }, WalletOutputsResponse>
+  args: HookArgsSwr<{ name: string }, WalletOutputsResponse>
 ) {
   return useGetSwr({
     ...args,
@@ -195,19 +241,9 @@ type WalletReserveRequest = {
 }
 
 export function useWalletReserve(
-  args?: HookArgsCallback<void, WalletReserveRequest, void>
+  args?: HookArgsCallback<{ name: string }, WalletReserveRequest, void>
 ) {
-  return usePostFunc(
-    { ...args, route: '/wallet/:name/reserve' },
-    async (mutate) => {
-      await delay(2_000)
-      mutate((key) => {
-        return key.startsWith(txPoolTransactionsRoute)
-        // ||
-        // key.startsWith(walletPendingRoute)
-      })
-    }
-  )
+  return usePostFunc({ ...args, route: '/wallet/:name/reserve' })
 }
 
 type WalletReleaseRequest = {
@@ -216,17 +252,7 @@ type WalletReleaseRequest = {
 }
 
 export function useWalletRelease(
-  args?: HookArgsCallback<void, WalletReleaseRequest, void>
+  args?: HookArgsCallback<{ name: string }, WalletReleaseRequest, void>
 ) {
-  return usePostFunc(
-    { ...args, route: '/wallet/:name/release' },
-    async (mutate) => {
-      await delay(2_000)
-      mutate((key) => {
-        return key.startsWith(txPoolTransactionsRoute)
-        // ||
-        // key.startsWith(walletPendingRoute)
-      })
-    }
-  )
+  return usePostFunc({ ...args, route: '/wallet/:name/release' })
 }

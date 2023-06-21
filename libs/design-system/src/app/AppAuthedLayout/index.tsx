@@ -11,7 +11,7 @@ type Props = {
   appName: string
   title?: string
   size?: React.ComponentProps<typeof Container>['size']
-  navTitle?: string
+  navTitle?: React.ReactNode
   profile: React.ReactNode
   nav?: React.ReactNode
   actions?: React.ReactNode
