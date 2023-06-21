@@ -1,5 +1,12 @@
 # renterd
 
+## 0.20.0
+
+### Minor Changes
+
+- 40d856d6: The contracts table now includes a data size column.
+- dfc1129c: Fixed an issue where opening the file search feature would crash the UI.
+
 ## 0.19.0
 
 ### Minor Changes
