@@ -34,15 +34,6 @@ export function useAutopilotActions(
   })
 }
 
-export function useAutopilotStatus(
-  args?: HookArgsSwr<void, { currentPeriod: number }>
-) {
-  return useGetSwr({
-    ...args,
-    route: '/autopilot/status',
-  })
-}
-
 export type AutopilotHost = {
   host: Host
   score: number
