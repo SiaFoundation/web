@@ -55,7 +55,8 @@ export const styles = cva(
 
 export const TextArea = React.forwardRef<
   HTMLTextAreaElement,
-  VariantProps<typeof styles> & React.InputHTMLAttributes<HTMLTextAreaElement>
+  VariantProps<typeof styles> &
+    Omit<React.InputHTMLAttributes<HTMLTextAreaElement>, 'size'>
 >(({ size, variant, state, cursor, className, ...props }, ref) => {
   return (
     <textarea

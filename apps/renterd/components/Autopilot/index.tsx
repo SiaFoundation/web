@@ -24,7 +24,7 @@ import {
   useAutopilotConfigUpdate,
 } from '@siafoundation/react-renterd'
 import { humanBytes, toHastings, toScale } from '@siafoundation/sia-js'
-import { initialValues, fields } from './fields'
+import { defaultValues, fields } from './fields'
 import { transformDown, transformUp } from './transform'
 import { useForm } from 'react-hook-form'
 
@@ -42,7 +42,7 @@ export function Autopilot() {
 
   const form = useForm({
     mode: 'all',
-    defaultValues: initialValues,
+    defaultValues,
   })
 
   const resetFormData = useCallback(
@@ -58,9 +58,15 @@ export function Autopilot() {
     if (config.data && !hasInit) {
       resetFormData(config.data)
       setHasInit(true)
+      return
+    }
+    if (config.error?.status === 404 && !hasInit) {
+      form.reset(defaultValues)
+      setHasInit(true)
+      return
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [config.data])
+  }, [config.data, config.error])
 
   const reset = useCallback(async () => {
     const data = await config.mutate()
@@ -72,10 +78,7 @@ export function Autopilot() {
   }, [config, resetFormData])
 
   const onValid = useCallback(
-    async (values: typeof initialValues) => {
-      if (!config.data) {
-        return
-      }
+    async (values: typeof defaultValues) => {
       try {
         await configUpdate.put({
           payload: transformUp(values, config.data),

@@ -19,7 +19,7 @@ const defaultValues = {
 type Props = {
   id: string
   params?: {
-    seed: string
+    mnemonic: string
   }
   trigger?: React.ReactNode
   open: boolean
@@ -33,7 +33,7 @@ export function WalletCopySeedDialog({
   open,
   onOpenChange,
 }: Props) {
-  const { seed } = params || {}
+  const { mnemonic } = params || {}
   const form = useForm({
     mode: 'all',
     defaultValues,
@@ -52,18 +52,18 @@ export function WalletCopySeedDialog({
   })
 
   const copySeed = useCallback(() => {
-    copyToClipboard(seed, 'seed')
+    copyToClipboard(mnemonic, 'seed')
     form.setValue('hasCopied', true)
-  }, [seed, form])
+  }, [mnemonic, form])
 
   const { openDialog } = useDialog()
   const onSubmit = useCallback(() => {
     openDialog('walletGenerateAddresses', {
       id,
-      params: { seed },
+      params: { mnemonic },
     })
     reset()
-  }, [openDialog, id, seed, reset])
+  }, [openDialog, id, mnemonic, reset])
 
   return (
     <Dialog
@@ -97,7 +97,7 @@ export function WalletCopySeedDialog({
         <div className="py-2">
           <FieldGroup form={form} title="Seed" name="hasCopied">
             <TextArea
-              value={seed}
+              value={mnemonic}
               readOnly
               onClick={(e) => {
                 e.currentTarget.select()

@@ -39,21 +39,12 @@ function getFields(): ConfigFields<typeof defaultValues, never> {
 }
 
 type Props = {
-  title: React.ReactNode
-  description: React.ReactNode
-  onCreate: (name: string) => void
-
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
 }
 
-export function WalletUpdateDialog({
-  onCreate,
-  trigger,
-  open,
-  onOpenChange,
-}: Props) {
+export function WalletUpdateDialog({ trigger, open, onOpenChange }: Props) {
   const { id } = useDialog()
   const { dataset } = useWallets()
   const wallet = dataset?.find((d) => d.id === id)
@@ -89,11 +80,10 @@ export function WalletUpdateDialog({
       if (response.error) {
         triggerErrorToast(response.error)
       } else {
-        onCreate(values.name)
         form.reset(defaultValues)
       }
     },
-    [id, form, walletAdd, onCreate, wallet]
+    [id, form, walletAdd, wallet]
   )
 
   return (
