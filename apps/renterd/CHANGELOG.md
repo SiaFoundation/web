@@ -1,5 +1,12 @@
 # renterd
 
+## 0.21.0
+
+### Minor Changes
+
+- dc23d8c0: The autopilot config no longer defaults, it now must be configured by the user.
+- 234a40a8: The autopilot status endpoint has been removed.
+
 ## 0.20.0
 
 ### Minor Changes
