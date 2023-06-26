@@ -9,6 +9,20 @@ import {
   HookArgsWithPayloadSwr,
 } from '@siafoundation/react-core'
 
+type AutopilotStatus = {
+  configured: boolean
+  migrating: boolean
+  scanning: boolean
+  uptime: string
+}
+
+export function useAutopilotStatus(args?: HookArgsSwr<void, AutopilotStatus>) {
+  return useGetSwr({
+    ...args,
+    route: '/autopilot/status',
+  })
+}
+
 const autopilotConfigKey = '/autopilot/config'
 export function useAutopilotConfig(args?: HookArgsSwr<void, AutopilotConfig>) {
   return useGetSwr({
