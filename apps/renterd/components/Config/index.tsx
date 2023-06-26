@@ -21,7 +21,7 @@ import {
   useSetting,
   useSettingUpdate,
 } from '@siafoundation/react-renterd'
-import { initialValues, getFields } from './fields'
+import { defaultValues, getFields } from './fields'
 import {
   transformDown,
   transformUpGouging,
@@ -64,7 +64,7 @@ export function Config() {
 
   const form = useForm({
     mode: 'all',
-    defaultValues: initialValues,
+    defaultValues,
   })
 
   const resetFormData = useCallback(
@@ -131,7 +131,7 @@ export function Config() {
   }, [averages.data, minShards, totalShards])
 
   const onValid = useCallback(
-    async (values: typeof initialValues) => {
+    async (values: typeof defaultValues) => {
       if (!gouging.data || !redundancy.data) {
         return
       }

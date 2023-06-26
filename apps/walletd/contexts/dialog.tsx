@@ -149,13 +149,13 @@ export function Dialogs() {
       <WalletAddNewDialog />
       <WalletCopySeedDialog
         id={id}
-        params={params as { seed: string }}
+        params={params as { mnemonic: string }}
         open={dialog === 'walletAddNewCopySeed'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <WalletGenerateAddressesDialog
         id={id}
-        params={params as { seed: string }}
+        params={params as { mnemonic: string }}
         open={dialog === 'walletGenerateAddresses'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />

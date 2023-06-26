@@ -30,9 +30,6 @@ function getFields(): ConfigFields<typeof defaultValues, never> {
 }
 
 type Props = {
-  title: React.ReactNode
-  description: React.ReactNode
-
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void

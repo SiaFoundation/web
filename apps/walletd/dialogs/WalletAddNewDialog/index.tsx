@@ -9,12 +9,12 @@ export function WalletAddNewDialog() {
   const onCreate = useCallback(
     (name: string) => {
       // generate seed
-      const seed = bip39.generateMnemonic()
+      const mnemonic = bip39.generateMnemonic()
       // navigate to copy seed
       openDialog('walletAddNewCopySeed', {
         id: name,
         params: {
-          seed,
+          mnemonic,
         },
       })
     },

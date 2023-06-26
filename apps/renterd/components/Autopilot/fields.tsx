@@ -5,7 +5,7 @@ import React from 'react'
 
 export const scDecimalPlaces = 6
 
-export const initialValues = {
+export const defaultValues = {
   // contracts
   set: '',
   amount: undefined as BigNumber | undefined,
@@ -22,10 +22,10 @@ export const initialValues = {
   defragThreshold: undefined as BigNumber | undefined,
 }
 
-export type SettingsData = typeof initialValues
+export type SettingsData = typeof defaultValues
 
 export const fields: ConfigFields<
-  typeof initialValues,
+  typeof defaultValues,
   'contracts' | 'hosts' | 'wallet'
 > = {
   // contracts

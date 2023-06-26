@@ -9,7 +9,7 @@ import React from 'react'
 
 export const scDecimalPlaces = 6
 
-export const initialValues = {
+export const defaultValues = {
   // gouging
   maxRpcPrice: undefined as BigNumber | undefined,
   maxStoragePrice: undefined as BigNumber | undefined,
@@ -26,7 +26,7 @@ export const initialValues = {
   totalShards: undefined as BigNumber | undefined,
 }
 
-export type SettingsData = typeof initialValues
+export type SettingsData = typeof defaultValues
 
 type Categories = 'gouging' | 'redundancy'
 
@@ -42,7 +42,7 @@ export function getFields({
   uploadAverage,
   downloadAverage,
   contractAverage,
-}: GetFields): ConfigFields<typeof initialValues, Categories> {
+}: GetFields): ConfigFields<typeof defaultValues, Categories> {
   return {
     // gouging
     maxStoragePrice: {
