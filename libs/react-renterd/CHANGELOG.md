@@ -1,5 +1,11 @@
 # @siafoundation/react-renterd
 
+## 0.4.0
+
+### Minor Changes
+
+- 234a40a8: The autopilot status endpoint has been removed.
+
 ## 0.3.0
 
 ### Minor Changes
