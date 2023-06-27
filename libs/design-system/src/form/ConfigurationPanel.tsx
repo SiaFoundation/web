@@ -41,7 +41,7 @@ export function ConfigurationPanel<
                 <ConfigurationSiacoin form={form} name={key} field={val} />
               ) : val.type === 'text' ? (
                 <ConfigurationText form={form} name={key} field={val} />
-              ) : val.type === 'secret' ? (
+              ) : val.type === 'password' ? (
                 <ConfigurationText
                   form={form}
                   type="password"

@@ -10,6 +10,7 @@ type Props = {
 export function SeedLayout({ copySeed, children, icon, description }: Props) {
   return (
     <div className="">
+      {children}
       <Panel className="mb-6">
         <div className="flex gap-6 items-center py-4 px-4">
           <div className="flex">{icon}</div>
@@ -21,7 +22,6 @@ export function SeedLayout({ copySeed, children, icon, description }: Props) {
           </div>
         </div>
       </Panel>
-      {children}
     </div>
   )
 }

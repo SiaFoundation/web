@@ -1,13 +1,16 @@
 import { Dialog } from '@siafoundation/design-system'
 import { WalletAddSelectType } from '../components/WalletAddSelectType'
 
+export type WalletAddTypeDialogParams = void
+
 type Props = {
-  trigger?: React.ReactNode
   open: boolean
+  trigger?: React.ReactNode
   onOpenChange: (val: boolean) => void
+  params?: WalletAddTypeDialogParams
 }
 
-export function WalletAddTypeDialog({ trigger, open, onOpenChange }: Props) {
+export function WalletAddTypeDialog({ open, trigger, onOpenChange }: Props) {
   return (
     <Dialog
       title="Add Wallet"

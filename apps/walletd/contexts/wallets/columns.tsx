@@ -5,6 +5,7 @@ import {
   Paragraph,
   Tooltip,
 } from '@siafoundation/design-system'
+import { walletTypes } from '../../config/walletTypes'
 import { WalletData, TableColumnId } from './types'
 
 type WalletsTableColumn = TableColumn<TableColumnId, WalletData, never> & {
@@ -25,19 +26,21 @@ export const columns: WalletsTableColumn[] = [
     label: 'name',
     category: 'general',
     fixed: true,
-    render: ({ data: { name, description } }) => {
+    render: ({ data: { id, name, description } }) => {
       return (
         <div className="flex flex-col gap-2">
-          <Text>{name}</Text>
-          <Tooltip
-            content={
-              <pre>
-                <Paragraph size="12">{description}</Paragraph>
-              </pre>
-            }
-          >
-            <Paragraph size="12">{description.split('\n')[0]}</Paragraph>
-          </Tooltip>
+          <Text>{name || id}</Text>
+          {description && (
+            <Tooltip
+              content={
+                <pre>
+                  <Paragraph size="12">{description}</Paragraph>
+                </pre>
+              }
+            >
+              <Paragraph size="12">{description.split('\n')[0]}</Paragraph>
+            </Tooltip>
+          )}
         </div>
       )
     },
@@ -47,7 +50,11 @@ export const columns: WalletsTableColumn[] = [
     label: 'type',
     category: 'general',
     render: ({ data: { type } }) => {
-      return <Badge>{type}</Badge>
+      return (
+        <Tooltip content={walletTypes[type]?.title}>
+          <Badge interactive={false}>{type}</Badge>
+        </Tooltip>
+      )
     },
   },
 ]

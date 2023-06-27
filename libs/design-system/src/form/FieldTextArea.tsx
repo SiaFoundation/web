@@ -25,10 +25,17 @@ export function FieldTextArea<
     setLocalValue(value)
   }, [value])
   return (
-    <FieldGroup title={field.title} name={name} form={form}>
+    <FieldGroup
+      title={field.title}
+      actions={field.actions}
+      name={name}
+      form={form}
+    >
       <TextArea
         placeholder={placeholder}
         value={localValue}
+        readOnly={field.readOnly}
+        onClick={field.onClick}
         state={
           error
             ? 'invalid'

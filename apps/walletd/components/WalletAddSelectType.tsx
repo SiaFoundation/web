@@ -13,13 +13,11 @@ export function WalletAddSelectType() {
       />
       <WalletSelectCard
         title={walletAddTypes.walletAddRecover.title}
-        disabled
         description={walletAddTypes.walletAddRecover.description}
         onSelect={() => openDialog('walletAddRecover')}
       />
       <WalletSelectCard
         title={walletAddTypes.walletAddWatch.title}
-        disabled
         description={walletAddTypes.walletAddWatch.description}
         onSelect={() => openDialog('walletAddWatch')}
       />
@@ -48,9 +46,9 @@ function WalletSelectCard({
 }: WalletSelectCardProps) {
   return (
     <SelectCard onClick={onSelect} disabled={disabled}>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 text-start">
         <Heading size="20">{title}</Heading>
-        <Paragraph size="14" color="subtle" className="text-start">
+        <Paragraph size="14" color="subtle">
           {description}
         </Paragraph>
       </div>

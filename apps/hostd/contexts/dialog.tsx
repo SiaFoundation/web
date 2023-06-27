@@ -162,11 +162,7 @@ export function Dialogs() {
       />
       <ConfirmDialog
         open={dialog === 'confirm'}
-        title={confirm?.title}
-        action={confirm?.action}
-        body={confirm?.body}
-        variant={confirm?.variant}
-        onConfirm={confirm?.onConfirm}
+        params={confirm}
         onOpenChange={(val) =>
           val ? openConfirmDialog(confirm) : closeDialog()
         }

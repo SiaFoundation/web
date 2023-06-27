@@ -8,6 +8,7 @@ import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
 type FieldErrorProps<Values extends FieldValues> = {
   form: UseFormReturn<Values>
   title?: string
+  actions?: React.ReactNode
   name: Path<Values>
   withStatusError?: boolean
   className?: string
@@ -16,6 +17,7 @@ type FieldErrorProps<Values extends FieldValues> = {
 export function FieldLabelAndError<Values extends FieldValues>({
   form,
   title,
+  actions,
   name,
   className,
 }: FieldErrorProps<Values>) {
@@ -24,7 +26,10 @@ export function FieldLabelAndError<Values extends FieldValues>({
 
   return title || showError ? (
     <div className={cx('flex justify-between items-center gap-4', className)}>
-      {title ? <Label htmlFor={name}>{title}</Label> : <div />}
+      <div className="flex gap-0.5 items-center">
+        {title ? <Label htmlFor={name}>{title}</Label> : null}
+        {actions}
+      </div>
       {showError && (
         <Text size="14" color="red">
           {errorMessage}

@@ -1,15 +1,18 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
+  Button,
   ConfigFields,
   Dialog,
   FieldNumber,
-  FieldTextArea,
+  FieldText,
   FormSubmitButton,
   triggerErrorToast,
   triggerSuccessToast,
+  View16,
+  ViewOff16,
 } from '@siafoundation/design-system'
 import { useWalletAddressAdd } from '@siafoundation/react-walletd'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAddresses } from '../contexts/addresses'
 import { useDialogFormHelpers } from '../hooks/useDialogFormHelpers'
@@ -19,9 +22,14 @@ import * as bip39 from 'bip39'
 import { useWallets } from '../contexts/wallets'
 import { blake2bHex } from 'blakejs'
 import BigNumber from 'bignumber.js'
+import { VerifyIcon } from './VerifyIcon'
+
+export type WalletAddressesGenerateDialogParams = {
+  walletId: string
+}
 
 type Props = {
-  id: string
+  params?: WalletAddressesGenerateDialogParams
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
@@ -35,16 +43,38 @@ function getDefaultValues(lastIndex: number) {
   }
 }
 
+type MnemonicType = 'text' | 'password'
+
 function getFields({
   seedHash,
+  mnemonicType,
+  setMnemonicType,
 }: {
   seedHash?: string
+  mnemonicType: MnemonicType
+  setMnemonicType: (type: MnemonicType) => void
 }): ConfigFields<ReturnType<typeof getDefaultValues>, never> {
   return {
     mnemonic: {
-      type: 'text',
+      type: mnemonicType,
       title: 'Seed',
-      placeholder: '',
+      actions: (
+        <div className="flex gap-1">
+          <Button
+            tip={mnemonicType === 'password' ? 'Show seed' : 'Hide seed'}
+            tabIndex={-1}
+            variant="ghost"
+            icon="hover"
+            onClick={() =>
+              setMnemonicType(mnemonicType === 'password' ? 'text' : 'password')
+            }
+          >
+            {mnemonicType === 'password' ? <ViewOff16 /> : <View16 />}
+          </Button>
+        </div>
+      ),
+      placeholder:
+        'island submit vague scrub exhibit cherry front spoon crop debate filter virus',
       validation: {
         required: 'required',
         validate: {
@@ -84,17 +114,21 @@ function getFields({
   }
 }
 
-export function WalletGenerateAddressesDialog({
-  id,
+export function WalletAddressesGenerateDialog({
+  params,
   trigger,
   open,
   onOpenChange,
 }: Props) {
+  const { walletId } = params || {}
   const { lastIndex } = useAddresses()
   const { dataset } = useWallets()
-  const wallet = dataset?.find((w) => w.id === id)
+  const wallet = dataset?.find((w) => w.id === walletId)
   const nextIndex = lastIndex + 1
   const defaultValues = getDefaultValues(nextIndex)
+  const [mnemonicType, setMnemonicType] = useState<'password' | 'text'>(
+    'password'
+  )
   const form = useForm({
     mode: 'all',
     defaultValues,
@@ -118,14 +152,16 @@ export function WalletGenerateAddressesDialog({
   const index = form.watch('index')
   const count = form.watch('count')
 
-  const fields = getFields({ seedHash: wallet?.seedHash })
+  const fields = getFields({
+    seedHash: wallet?.seedHash,
+    mnemonicType,
+    setMnemonicType,
+  })
 
   const addressAdd = useWalletAddressAdd()
   const generateAddresses = useCallback(
     async (mnemonic: string, index: number, count: number) => {
-      console.log('start', index, count)
       for (let i = index; i < index + count; i++) {
-        console.log('iteration', i)
         const seed = bip39.mnemonicToSeedSync(mnemonic).toString('hex')
         const addrRes = getWalletdWasm().addressFromSeed(seed, i)
         if (addrRes.error) {
@@ -134,7 +170,7 @@ export function WalletGenerateAddressesDialog({
         }
         const response = await addressAdd.put({
           params: {
-            id,
+            id: walletId,
             addr: addrRes.address,
           },
           payload: {
@@ -161,7 +197,7 @@ export function WalletGenerateAddressesDialog({
       }
       closeAndReset()
     },
-    [id, addressAdd, closeAndReset]
+    [walletId, addressAdd, closeAndReset]
   )
 
   const onSubmit = useCallback(() => {
@@ -191,7 +227,7 @@ export function WalletGenerateAddressesDialog({
         description={<>Enter your seed mnemonic to generate addresses.</>}
       >
         <div className="flex flex-col gap-2 py-2">
-          <FieldTextArea form={form} field={fields.mnemonic} name="mnemonic" />
+          <FieldText form={form} field={fields.mnemonic} name="mnemonic" />
           <div className="flex gap-2 w-full">
             <div className="flex-1">
               <FieldNumber form={form} field={fields.index} name="index" />
@@ -203,24 +239,5 @@ export function WalletGenerateAddressesDialog({
         </div>
       </SeedLayout>
     </Dialog>
-  )
-}
-
-function VerifyIcon() {
-  return (
-    <svg
-      height={50}
-      width={50}
-      viewBox="0 0 32 32"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g fill="#32d66a" stroke="none">
-        <path d="M14,19H2a1,1,0,0,0,0,2H14a1,1,0,0,0,0-2Z" fill="#32d66a" />
-        <path d="M14,27H2a1,1,0,0,0,0,2H14a1,1,0,0,0,0-2Z" fill="#32d66a" />
-        <path d="M30,11H2a1,1,0,0,0,0,2H30a1,1,0,0,0,0-2Z" fill="#32d66a" />
-        <path d="M2,5H30a1,1,0,0,0,0-2H2A1,1,0,0,0,2,5Z" fill="#32d66a" />
-        <path d="M25,17a7,7,0,1,0,7,7A7.008,7.008,0,0,0,25,17Zm-.293,9.707a1,1,0,0,1-1.414,0L20.586,24,22,22.586l2,2,4-4L29.414,22Z" />
-      </g>
-    </svg>
   )
 }

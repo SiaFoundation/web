@@ -1,8 +1,8 @@
 export type AddressData = {
   id: string
-  description: string
-  index: number
   address: string
+  description?: string
+  index?: number
 }
 
 export type TableColumnId = 'actions' | 'address' | 'index'

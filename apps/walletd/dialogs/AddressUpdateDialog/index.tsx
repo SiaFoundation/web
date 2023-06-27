@@ -5,6 +5,7 @@ import {
   FormSubmitButton,
   FieldTextArea,
   truncate,
+  WalletAddressCode,
 } from '@siafoundation/design-system'
 import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
@@ -30,15 +31,15 @@ function getFields(): ConfigFields<typeof defaultValues, never> {
 }
 
 export type AddressUpdateDialogParams = {
-  type: 'addressUpdate'
+  walletId: string
   address: string
 }
 
 type Props = {
+  params?: AddressUpdateDialogParams
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
-  params: DialogParams
 }
 
 export function AddressUpdateDialog({
@@ -47,9 +48,10 @@ export function AddressUpdateDialog({
   onOpenChange,
   params,
 }: Props) {
-  const { id, closeDialog } = useDialog()
+  const { walletId, address: addr } = params || {}
+  const { closeDialog } = useDialog()
   const { dataset } = useAddresses()
-  const address = dataset?.find((d) => d.id === params?.address)
+  const address = dataset?.find((d) => d.id === addr)
   const addressAdd = useWalletAddressAdd()
   const form = useForm({
     mode: 'all',
@@ -64,15 +66,15 @@ export function AddressUpdateDialog({
         : defaultValues
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id])
+  }, [params])
 
   const fields = getFields()
   const onSubmit = useCallback(
     async (values) => {
       const response = await addressAdd.put({
         params: {
-          id,
-          addr: params.address as string,
+          id: walletId,
+          addr,
         },
         payload: {
           ...address,
@@ -86,12 +88,12 @@ export function AddressUpdateDialog({
         form.reset(defaultValues)
       }
     },
-    [id, params, form, addressAdd, address, closeDialog]
+    [walletId, addr, form, addressAdd, address, closeDialog]
   )
 
   return (
     <Dialog
-      title={truncate(params?.address as string, 20)}
+      title={truncate(addr, 20)}
       trigger={trigger}
       open={open}
       onOpenChange={onOpenChange}
@@ -102,13 +104,14 @@ export function AddressUpdateDialog({
       controls={
         <div className="flex gap-2 px-1">
           <div className="flex-1" />
-          <FormSubmitButton size="medium" form={form}>
+          <FormSubmitButton size="small" form={form}>
             Save changes
           </FormSubmitButton>
         </div>
       }
     >
-      <div className="flex flex-col gap-4 mb-2">
+      <div className="flex flex-col gap-4">
+        <WalletAddressCode address={address?.address || ''} />
         <FieldTextArea
           name="description"
           form={form}
