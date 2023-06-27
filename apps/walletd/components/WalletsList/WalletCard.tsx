@@ -36,7 +36,7 @@ export function WalletCard({ name, meta }: Props) {
   return (
     <Panel
       className="p-6 h-[200px] cursor-pointer"
-      // onClick={() => router.push(routes.wallet.view.replace(':name', name))}
+      // onClick={() => router.push(routes.wallet.view.replace(':id', name))}
     >
       <div className="flex flex-col gap-1">
         <div className="flex justify-between">

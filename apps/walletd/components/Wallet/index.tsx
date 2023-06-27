@@ -3,17 +3,17 @@ import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { WalletdAuthedLayout } from '../WalletdAuthedLayout'
 import { WalletdSidenav } from '../WalletdSidenav'
-import { WalletsActionsMenu } from './WalletsActionsMenu'
-import { useRouter } from 'next/router'
+import { WalletActionsMenu } from './WalletActionsMenu'
 import { useEvents } from '../../contexts/events'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
 import { StateError } from './StateError'
+import { useWallets } from '../../contexts/wallets'
+import { WalletNavMenu } from './WalletNavMenu'
 
 export function Wallet() {
-  const router = useRouter()
-  const name = router.query.name as string
   const { openDialog } = useDialog()
+  const { wallet } = useWallets()
   const {
     dataset,
     dataState,
@@ -29,10 +29,9 @@ export function Wallet() {
       routes={routes}
       sidenav={<WalletdSidenav />}
       openSettings={() => openDialog('settings')}
-      title={`${name}`}
-      // nav={<WalletsNavMenu />}
-      actions={<WalletsActionsMenu />}
-      // stats={<WalletsFiltersBar />}
+      title={wallet?.name}
+      nav={<WalletNavMenu />}
+      actions={<WalletActionsMenu />}
       size="3"
     >
       <div className="px-6 py-7">

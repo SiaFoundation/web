@@ -10,12 +10,12 @@ import { EventsViewDropdownMenu } from './EventsViewDropdownMenu'
 import { useWalletBalance } from '@siafoundation/react-walletd'
 import { useRouter } from 'next/router'
 
-export function WalletsActionsMenu() {
+export function WalletActionsMenu() {
   const status = useSyncStatus()
   const router = useRouter()
   const balance = useWalletBalance({
     params: {
-      name: router.query.name as string,
+      id: router.query.id as string,
     },
   })
   return (

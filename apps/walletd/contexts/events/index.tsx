@@ -28,17 +28,17 @@ import BigNumber from 'bignumber.js'
 
 export function useEventsMain() {
   const router = useRouter()
-  const walletName = router.query.name as string
+  const id = router.query.id as string
   const responseTxPool = useWalletTxPool({
-    disabled: !walletName,
+    disabled: !id,
     params: {
-      name: walletName,
+      id,
     },
   })
   const responseEvents = useWalletEvents({
-    disabled: !walletName,
+    disabled: !id,
     params: {
-      name: walletName,
+      id,
     },
   })
 
@@ -48,19 +48,19 @@ export function useEventsMain() {
     // already being subscribed returns a 500.
     walletSub.post({
       params: {
-        name: walletName,
+        id,
       },
       payload: 0,
     })
-  }, [walletSub, walletName])
+  }, [walletSub, id])
 
   // Make sure the wallet is subscribed
   useEffect(() => {
-    if (walletName) {
+    if (id) {
       subscribe()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [walletName])
+  }, [id])
 
   const dataset = useMemo<EventData[] | null>(() => {
     if (!responseEvents.data || !responseTxPool.data) {
@@ -73,7 +73,7 @@ export function useEventsMain() {
       blockHeight: 0,
       type: e.Type,
       amount: new BigNumber(e.Received).minus(e.Sent),
-      // onClick: () => router.push(routes.wallet.view.replace(':name', name)),
+      // onClick: () => router.push(routes.wallet.view.replace(':id', name)),
     }))
     const dataEvents: EventData[] = responseEvents.data.map((e) => {
       let amount = new BigNumber(0)
@@ -99,7 +99,7 @@ export function useEventsMain() {
         pending: false,
         amount,
         type: e.Type,
-        // onClick: () => router.push(routes.wallet.view.replace(':name', name)),
+        // onClick: () => router.push(routes.wallet.view.replace(':id', name)),
       }
     })
     return [...dataTxPool, ...dataEvents]

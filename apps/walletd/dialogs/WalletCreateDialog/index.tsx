@@ -12,19 +12,30 @@ import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { useWalletAdd } from '@siafoundation/react-walletd'
 import { useDialog } from '../../contexts/dialog'
+import { useWallets } from '../../contexts/wallets'
+import { v4 as uuidv4 } from 'uuid'
+import { Response, SWRError } from '@siafoundation/react-core'
 
 const defaultValues = {
   name: '',
   description: '',
 }
 
-function getFields(): ConfigFields<typeof defaultValues, never> {
+function getFields({
+  walletNames,
+}: {
+  walletNames: string[]
+}): ConfigFields<typeof defaultValues, never> {
   return {
     name: {
       type: 'text',
       title: 'Name',
       placeholder: 'name',
       validation: {
+        validate: {
+          unique: (value) =>
+            !walletNames.includes(value) || 'name is already in use',
+        },
         required: 'required',
         maxLength: 30,
       },
@@ -43,8 +54,8 @@ function getFields(): ConfigFields<typeof defaultValues, never> {
 type Props = {
   title: React.ReactNode
   description: React.ReactNode
-  onCreate: (name: string) => void
-
+  create: (id: string, values: typeof defaultValues) => Promise<Response<void>>
+  onCreateSuccess: (id: string, values: typeof defaultValues) => void
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
@@ -53,37 +64,32 @@ type Props = {
 export function WalletCreateDialog({
   title,
   description,
-  onCreate,
+  create,
+  onCreateSuccess,
   trigger,
   open,
   onOpenChange,
 }: Props) {
   const { openDialog } = useDialog()
-  const walletAdd = useWalletAdd()
   const form = useForm({
     mode: 'all',
     defaultValues,
   })
-  const fields = getFields()
+  const { dataset } = useWallets()
+  const walletNames = dataset?.map((w) => w.name) || []
+  const fields = getFields({ walletNames })
   const onSubmit = useCallback(
     async (values) => {
-      const response = await walletAdd.put({
-        params: {
-          name: values.name,
-        },
-        payload: {
-          type: 'seed',
-          description: values.description,
-        },
-      })
+      const id = uuidv4()
+      const response = await create(id, values)
       if (response.error) {
         triggerErrorToast(response.error)
       } else {
-        onCreate(values.name)
+        onCreateSuccess(id, values)
         form.reset(defaultValues)
       }
     },
-    [form, walletAdd, onCreate]
+    [form, create, onCreateSuccess]
   )
 
   return (

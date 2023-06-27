@@ -28,15 +28,17 @@ export const columns: AddressesTableColumn[] = [
       return (
         <div className="flex flex-col gap-2">
           <ValueCopyable maxLength={40} value={address} type="address" />
-          <Tooltip
-            content={
-              <pre>
-                <Text color="subtle">{description}</Text>
-              </pre>
-            }
-          >
-            <Text color="subtle">{description.split('\n')[0]}</Text>
-          </Tooltip>
+          {description && (
+            <Tooltip
+              content={
+                <pre>
+                  <Text color="subtle">{description}</Text>
+                </pre>
+              }
+            >
+              <Text color="subtle">{description.split('\n')[0]}</Text>
+            </Tooltip>
+          )}
         </div>
       )
     },

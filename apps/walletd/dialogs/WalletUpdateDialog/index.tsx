@@ -4,12 +4,14 @@ import {
   triggerErrorToast,
   FormSubmitButton,
   FieldTextArea,
+  FieldText,
 } from '@siafoundation/design-system'
 import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useWalletAdd } from '@siafoundation/react-walletd'
 import { useDialog } from '../../contexts/dialog'
 import { useWallets } from '../../contexts/wallets'
+import { useDialogFormHelpers } from '../../hooks/useDialogFormHelpers'
 
 const defaultValues = {
   name: '',
@@ -53,6 +55,11 @@ export function WalletUpdateDialog({ trigger, open, onOpenChange }: Props) {
     mode: 'all',
     defaultValues,
   })
+  const { closeAndReset } = useDialogFormHelpers({
+    form,
+    onOpenChange,
+    defaultValues,
+  })
   useEffect(() => {
     form.reset(
       wallet
@@ -70,7 +77,7 @@ export function WalletUpdateDialog({ trigger, open, onOpenChange }: Props) {
     async (values) => {
       const response = await walletAdd.put({
         params: {
-          name: id,
+          id,
         },
         payload: {
           ...wallet,
@@ -80,10 +87,10 @@ export function WalletUpdateDialog({ trigger, open, onOpenChange }: Props) {
       if (response.error) {
         triggerErrorToast(response.error)
       } else {
-        form.reset(defaultValues)
+        closeAndReset()
       }
     },
-    [id, form, walletAdd, wallet]
+    [id, walletAdd, wallet, closeAndReset]
   )
 
   return (
@@ -106,7 +113,7 @@ export function WalletUpdateDialog({ trigger, open, onOpenChange }: Props) {
       }
     >
       <div className="flex flex-col gap-4 mb-2">
-        {/* <FieldText name="name" form={form} field={fields.name} /> */}
+        <FieldText name="name" form={form} field={fields.name} />
         <FieldTextArea
           name="description"
           form={form}

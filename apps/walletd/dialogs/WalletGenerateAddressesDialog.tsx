@@ -16,12 +16,12 @@ import { useDialogFormHelpers } from '../hooks/useDialogFormHelpers'
 import { getWalletdWasm } from '../lib/wasm'
 import { SeedLayout } from './SeedLayout'
 import * as bip39 from 'bip39'
+import { useWallets } from '../contexts/wallets'
+import { blake2bHex } from 'blakejs'
+import BigNumber from 'bignumber.js'
 
 type Props = {
   id: string
-  params?: {
-    mnemonic: string
-  }
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
@@ -30,14 +30,16 @@ type Props = {
 function getDefaultValues(lastIndex: number) {
   return {
     mnemonic: '',
-    index: lastIndex,
-    count: 1,
+    index: new BigNumber(lastIndex),
+    count: new BigNumber(1),
   }
 }
 
-function getFields(
-  compareSeed?: string
-): ConfigFields<ReturnType<typeof getDefaultValues>, never> {
+function getFields({
+  seedHash,
+}: {
+  seedHash?: string
+}): ConfigFields<ReturnType<typeof getDefaultValues>, never> {
   return {
     mnemonic: {
       type: 'text',
@@ -49,8 +51,14 @@ function getFields(
           valid: (value: string) =>
             bip39.validateMnemonic(value) ||
             'seed should be 12 word BIP39 mnemonic',
-          match: (value) =>
-            !compareSeed || value === compareSeed || 'seed does not match',
+          match: (mnemonic: string) => {
+            const seed = bip39.mnemonicToSeedSync(mnemonic)
+            return (
+              !seedHash ||
+              blake2bHex(seed) === seedHash ||
+              'seed does not match'
+            )
+          },
         },
       },
     },
@@ -77,14 +85,14 @@ function getFields(
 }
 
 export function WalletGenerateAddressesDialog({
-  id: walletName,
-  params,
+  id,
   trigger,
   open,
   onOpenChange,
 }: Props) {
-  const { mnemonic: compareSeed } = params || {}
   const { lastIndex } = useAddresses()
+  const { dataset } = useWallets()
+  const wallet = dataset?.find((w) => w.id === id)
   const nextIndex = lastIndex + 1
   const defaultValues = getDefaultValues(nextIndex)
   const form = useForm({
@@ -93,11 +101,14 @@ export function WalletGenerateAddressesDialog({
   })
 
   useEffect(() => {
-    form.setValue('index', nextIndex)
+    if (form.formState.isSubmitting) {
+      return
+    }
+    form.setValue('index', new BigNumber(nextIndex))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nextIndex])
 
-  const { handleOpenChange, resetAndClose } = useDialogFormHelpers({
+  const { handleOpenChange, closeAndReset } = useDialogFormHelpers({
     form,
     onOpenChange,
     defaultValues,
@@ -107,55 +118,59 @@ export function WalletGenerateAddressesDialog({
   const index = form.watch('index')
   const count = form.watch('count')
 
-  const fields = getFields(compareSeed)
+  const fields = getFields({ seedHash: wallet?.seedHash })
 
   const addressAdd = useWalletAddressAdd()
-  const generateAddresses = useCallback(async () => {
-    console.log(index, count)
-    for (let i = index; i < index + count; i++) {
-      const seed = bip39.mnemonicToSeedSync(mnemonic).toString('hex')
-      const addrRes = getWalletdWasm().addressFromSeed(seed, i)
-      if (addrRes.error) {
-        triggerErrorToast('Error generating addresses.')
-        return
-      }
-      const response = await addressAdd.put({
-        params: {
-          name: walletName,
-          addr: addrRes.address,
-        },
-        payload: {
-          index: i,
-        },
-      })
-      if (response.error) {
-        if (count === 1) {
-          triggerErrorToast('Error saving address.')
-        } else {
-          triggerErrorToast(
-            `Error saving addresses. ${
-              i > 0 ? 'Not all addresses were saved.' : ''
-            }`
-          )
+  const generateAddresses = useCallback(
+    async (mnemonic: string, index: number, count: number) => {
+      console.log('start', index, count)
+      for (let i = index; i < index + count; i++) {
+        console.log('iteration', i)
+        const seed = bip39.mnemonicToSeedSync(mnemonic).toString('hex')
+        const addrRes = getWalletdWasm().addressFromSeed(seed, i)
+        if (addrRes.error) {
+          triggerErrorToast('Error generating addresses.')
+          return
         }
-        return
+        const response = await addressAdd.put({
+          params: {
+            id,
+            addr: addrRes.address,
+          },
+          payload: {
+            index: i,
+          },
+        })
+        if (response.error) {
+          if (count === 1) {
+            triggerErrorToast('Error saving address.')
+          } else {
+            triggerErrorToast(
+              `Error saving addresses. ${
+                i > 0 ? 'Not all addresses were saved.' : ''
+              }`
+            )
+          }
+          return
+        }
       }
-    }
-    if (count === 1) {
-      triggerSuccessToast('Successfully generated 1 address.')
-    } else {
-      triggerSuccessToast(`Successfully generated ${count} addresses.`)
-    }
-    resetAndClose()
-  }, [walletName, mnemonic, index, count, addressAdd, resetAndClose])
+      if (count === 1) {
+        triggerSuccessToast('Successfully generated 1 address.')
+      } else {
+        triggerSuccessToast(`Successfully generated ${count} addresses.`)
+      }
+      closeAndReset()
+    },
+    [id, addressAdd, closeAndReset]
+  )
 
-  const onSubmit = useCallback(async () => {
-    await generateAddresses()
-  }, [generateAddresses])
+  const onSubmit = useCallback(() => {
+    return generateAddresses(mnemonic, index.toNumber(), count.toNumber())
+  }, [generateAddresses, mnemonic, index, count])
 
   return (
     <Dialog
-      title={`Wallet ${walletName}: generate addresses`}
+      title={`Wallet ${wallet?.name}: generate addresses`}
       trigger={trigger}
       open={open}
       onOpenChange={handleOpenChange}
@@ -199,7 +214,6 @@ function VerifyIcon() {
       viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>filter check</title>
       <g fill="#32d66a" stroke="none">
         <path d="M14,19H2a1,1,0,0,0,0,2H14a1,1,0,0,0,0-2Z" fill="#32d66a" />
         <path d="M14,27H2a1,1,0,0,0,0,2H14a1,1,0,0,0,0-2Z" fill="#32d66a" />

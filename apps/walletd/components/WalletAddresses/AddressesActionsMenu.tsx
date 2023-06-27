@@ -6,12 +6,12 @@ import { AddressesViewDropdownMenu } from './AddressesViewDropdownMenu'
 export function AddressesActionsMenu() {
   const { openDialog } = useDialog()
   const router = useRouter()
-  const name = router.query.name as string
+  const id = router.query.id as string
   return (
     <div className="flex gap-2">
       <Button
         variant="accent"
-        onClick={() => openDialog('walletGenerateAddresses', { id: name })}
+        onClick={() => openDialog('walletGenerateAddresses', { id })}
       >
         <Add16 />
         Add addresses
