@@ -2,9 +2,9 @@ export type WalletType = 'seed' | 'watch' | 'ledger'
 
 export type WalletData = {
   id: string
-  name: string
-  description: string
-  type: WalletType
+  name?: string
+  description?: string
+  type?: WalletType
   seedHash?: string
 }
 

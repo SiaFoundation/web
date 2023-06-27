@@ -384,7 +384,7 @@ export const fields: ConfigFields<typeof initialValues, Categories> = {
     },
   },
   dnsNoIpPassword: {
-    type: 'text',
+    type: 'password',
     title: 'Password',
     category: 'DNS',
     description: <>No-IP password.</>,
@@ -408,7 +408,7 @@ export const fields: ConfigFields<typeof initialValues, Categories> = {
     },
   },
   dnsAwsSecret: {
-    type: 'secret',
+    type: 'password',
     title: 'Secret',
     category: 'DNS',
     description: <>AWS Route53 secret.</>,

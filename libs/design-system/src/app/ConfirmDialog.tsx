@@ -3,31 +3,29 @@ import { FormSubmitButton } from '../components/Form'
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 
-type Props = {
-  trigger?: React.ReactNode
-  open: boolean
-  variant: 'red' | 'accent'
-  onOpenChange: (val: boolean) => void
+export type ConfirmDialogParams = {
   title: React.ReactNode
   action: React.ReactNode
+  variant: 'red' | 'accent'
   body: React.ReactNode
   onConfirm: () => void
 }
 
-export function ConfirmDialog({
-  trigger,
-  open,
-  body,
-  title,
-  variant,
-  action,
-  onConfirm,
-  onOpenChange,
-}: Props) {
+type Props = {
+  open: boolean
+  params?: ConfirmDialogParams
+  trigger?: React.ReactNode
+  onOpenChange: (val: boolean) => void
+}
+
+export function ConfirmDialog({ open, params, trigger, onOpenChange }: Props) {
+  const { body, title, variant, action, onConfirm } = params || {}
   const form = useForm()
 
   const onValid = useCallback(() => {
-    onConfirm()
+    if (onConfirm) {
+      onConfirm()
+    }
     onOpenChange(false)
   }, [onConfirm, onOpenChange])
 

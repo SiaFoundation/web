@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import {
   Paragraph,
   Button,
@@ -8,35 +7,29 @@ import {
   triggerErrorToast,
   FormSubmitButton,
   FieldTextArea,
-  Redo16,
-  copyToClipboard,
-  Copy16,
 } from '@siafoundation/design-system'
-import { MouseEvent, useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
-import { useWalletAdd } from '@siafoundation/react-walletd'
 import { useDialog } from '../../contexts/dialog'
 import { useWallets } from '../../contexts/wallets'
 import { v4 as uuidv4 } from 'uuid'
-import { walletAddTypes } from '../../config/walletTypes'
+import { useWalletAdd } from '@siafoundation/react-walletd'
 import * as bip39 from 'bip39'
 import { blake2bHex } from 'blakejs'
 import { SeedLayout } from '../SeedLayout'
 import { SeedIcon } from '../SeedIcon'
+import { walletAddTypes } from '../../config/walletTypes'
 
 const defaultValues = {
   name: '',
   description: '',
   mnemonic: '',
-  hasCopied: false,
 }
 
 function getFields({
   walletNames,
-  copySeed,
 }: {
   walletNames: string[]
-  copySeed: () => void
 }): ConfigFields<typeof defaultValues, never> {
   return {
     name: {
@@ -45,7 +38,7 @@ function getFields({
       placeholder: 'name',
       validation: {
         validate: {
-          unique: (value: string) =>
+          unique: (value) =>
             !walletNames.includes(value) || 'name is already in use',
         },
         required: 'required',
@@ -63,74 +56,40 @@ function getFields({
     mnemonic: {
       type: 'text',
       title: 'Seed',
-      onClick: (e) => {
-        ;(e as MouseEvent<HTMLTextAreaElement>).currentTarget.select()
-        copySeed()
-      },
-      readOnly: true,
-      placeholder: '',
+      placeholder:
+        'island submit vague scrub exhibit cherry front spoon crop debate filter virus',
       validation: {
         required: 'required',
         validate: {
           valid: (value: string) =>
             bip39.validateMnemonic(value) ||
             'seed should be 12 word BIP39 mnemonic',
-          copied: (_, values) => values.hasCopied || 'Copy seed to continue',
         },
       },
-    },
-    hasCopied: {
-      type: 'boolean',
-      title: '',
-      validation: {},
     },
   }
 }
 
-export type WalletAddNewDialogParams = void
+export type WalletAddRecoverDialogParams = void
 
 type Props = {
-  params?: WalletAddNewDialogParams
+  params?: WalletAddRecoverDialogParams
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
 }
 
-export function WalletAddNewDialog({ trigger, open, onOpenChange }: Props) {
+export function WalletAddRecoverDialog({ trigger, open, onOpenChange }: Props) {
   const { openDialog } = useDialog()
-  const walletAdd = useWalletAdd()
   const form = useForm({
     mode: 'all',
     defaultValues,
   })
-  const mnemonic = form.watch('mnemonic')
-
-  const copySeed = useCallback(() => {
-    copyToClipboard(mnemonic, 'seed')
-    form.setValue('hasCopied', true, {
-      shouldDirty: true,
-      shouldTouch: true,
-      shouldValidate: true,
-    })
-    form.clearErrors(['mnemonic'])
-  }, [mnemonic, form])
-
-  const regenerateMnemonic = useCallback(() => {
-    const m = bip39.generateMnemonic()
-    form.setValue('hasCopied', false)
-    form.setValue('mnemonic', m)
-    form.clearErrors(['hasCopied', 'mnemonic'])
-  }, [form])
-
-  useEffect(() => {
-    regenerateMnemonic()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open])
 
   const { dataset } = useWallets()
   const walletNames = dataset?.map((w) => w.name) || []
-
-  const fields = getFields({ walletNames, copySeed })
+  const fields = getFields({ walletNames })
+  const walletAdd = useWalletAdd()
 
   const onSubmit = useCallback(
     async (values) => {
@@ -162,7 +121,7 @@ export function WalletAddNewDialog({ trigger, open, onOpenChange }: Props) {
 
   return (
     <Dialog
-      title={walletAddTypes.walletAddNew.title}
+      title={walletAddTypes.walletAddRecover.title}
       trigger={trigger}
       open={open}
       onOpenChange={onOpenChange}
@@ -189,7 +148,7 @@ export function WalletAddNewDialog({ trigger, open, onOpenChange }: Props) {
     >
       <div className="flex flex-col gap-4 mb-2">
         <Paragraph size="14" color="subtle">
-          {walletAddTypes.walletAddNew.description}
+          {walletAddTypes.walletAddRecover.description}
         </Paragraph>
         <FieldText name="name" form={form} field={fields.name} />
         <FieldTextArea
@@ -200,10 +159,7 @@ export function WalletAddNewDialog({ trigger, open, onOpenChange }: Props) {
         <SeedLayout
           icon={<SeedIcon />}
           description={
-            <>
-              This is the wallet's seed mnemonic. Make sure to save it somewhere
-              secure.
-            </>
+            <>Enter the seed mnemonic for the wallet you are recovering.</>
           }
         >
           <div className="flex flex-col gap-2 py-2">
@@ -212,16 +168,6 @@ export function WalletAddNewDialog({ trigger, open, onOpenChange }: Props) {
               field={fields.mnemonic}
               name="mnemonic"
             />
-            <div className="flex gap-2">
-              <Button className="flex-1" onClick={regenerateMnemonic}>
-                <Redo16 />
-                Regenerate
-              </Button>
-              <Button className="flex-1" onClick={copySeed}>
-                <Copy16 />
-                Copy to clipboard
-              </Button>
-            </div>
           </div>
         </SeedLayout>
       </div>

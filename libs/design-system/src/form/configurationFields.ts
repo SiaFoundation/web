@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { entries } from 'lodash'
-import { useCallback } from 'react'
+import React, { MouseEvent, useCallback } from 'react'
 import {
   FieldErrors,
   FieldValues,
@@ -15,11 +15,14 @@ export type ConfigField<
   Values extends FieldValues,
   Categories extends string
 > = {
-  type: 'number' | 'siacoin' | 'text' | 'secret' | 'boolean' | 'select'
+  type: 'number' | 'siacoin' | 'text' | 'password' | 'boolean' | 'select'
   title: string
+  actions?: React.ReactNode
   category?: Categories
   description?: React.ReactNode
   units?: string
+  readOnly?: boolean
+  onClick?: <T>(e: MouseEvent<T>) => void
   placeholder?: string
   suggestionTip?: React.ReactNode
   suggestion?: BigNumber | string | boolean

@@ -11,6 +11,7 @@ import {
 import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../contexts/dialog'
+import { useWallets } from '../contexts/wallets'
 
 const defaultValues = {
   name: '',
@@ -32,14 +33,27 @@ function getFields(name: string): ConfigFields<typeof defaultValues, never> {
   }
 }
 
+export type WalletRemoveDialogParams = {
+  walletId: string
+}
+
 type Props = {
+  params?: WalletRemoveDialogParams
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
 }
 
-export function WalletRemoveDialog({ trigger, open, onOpenChange }: Props) {
-  const { id: name, closeDialog } = useDialog()
+export function WalletRemoveDialog({
+  params,
+  trigger,
+  open,
+  onOpenChange,
+}: Props) {
+  const { walletId } = params || {}
+  const { closeDialog } = useDialog()
+  const { dataset } = useWallets()
+  const wallet = dataset?.find((w) => w.id === walletId)
 
   // const volumeDelete = useVolumeDelete()
 
@@ -66,7 +80,7 @@ export function WalletRemoveDialog({ trigger, open, onOpenChange }: Props) {
     [form, closeDialog]
   )
 
-  const fields = useMemo(() => getFields(name), [name])
+  const fields = useMemo(() => getFields(wallet?.name), [wallet])
 
   const onInvalid = useOnInvalid(fields)
 
@@ -89,7 +103,7 @@ export function WalletRemoveDialog({ trigger, open, onOpenChange }: Props) {
       <div className="flex flex-col gap-4">
         <Paragraph size="14">
           Are you sure you would like to permanently remove the wallet{' '}
-          <Code>{name}</Code>?
+          <Code>{wallet?.name}</Code>?
         </Paragraph>
         <Paragraph size="14">
           Enter the wallet name to confirm the removal.

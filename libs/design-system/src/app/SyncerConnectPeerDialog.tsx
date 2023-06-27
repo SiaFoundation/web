@@ -27,7 +27,10 @@ const validationSchema = Yup.object().shape({
     ),
 })
 
+export type SyncerConnectPeerDialogParams = void
+
 type Props = {
+  params?: SyncerConnectPeerDialogParams
   trigger?: React.ReactNode
   open: boolean
   connect: (address: string) => Promise<Response<void>>

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import {
   Paragraph,
   Button,
@@ -14,7 +15,7 @@ import { useWalletAdd } from '@siafoundation/react-walletd'
 import { useDialog } from '../../contexts/dialog'
 import { useWallets } from '../../contexts/wallets'
 import { v4 as uuidv4 } from 'uuid'
-import { Response, SWRError } from '@siafoundation/react-core'
+import { walletAddTypes } from '../../config/walletTypes'
 
 const defaultValues = {
   name: '',
@@ -33,7 +34,7 @@ function getFields({
       placeholder: 'name',
       validation: {
         validate: {
-          unique: (value) =>
+          unique: (value: string) =>
             !walletNames.includes(value) || 'name is already in use',
         },
         required: 'required',
@@ -51,50 +52,56 @@ function getFields({
   }
 }
 
+export type WalletAddWatchDialogParams = void
+
 type Props = {
-  title: React.ReactNode
-  description: React.ReactNode
-  create: (id: string, values: typeof defaultValues) => Promise<Response<void>>
-  onCreateSuccess: (id: string, values: typeof defaultValues) => void
+  params?: WalletAddWatchDialogParams
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
 }
 
-export function WalletCreateDialog({
-  title,
-  description,
-  create,
-  onCreateSuccess,
-  trigger,
-  open,
-  onOpenChange,
-}: Props) {
+export function WalletAddWatchDialog({ trigger, open, onOpenChange }: Props) {
   const { openDialog } = useDialog()
+  const walletAdd = useWalletAdd()
   const form = useForm({
     mode: 'all',
     defaultValues,
   })
+
   const { dataset } = useWallets()
   const walletNames = dataset?.map((w) => w.name) || []
+
   const fields = getFields({ walletNames })
+
   const onSubmit = useCallback(
     async (values) => {
       const id = uuidv4()
-      const response = await create(id, values)
+      const response = await walletAdd.put({
+        params: {
+          id,
+        },
+        payload: {
+          type: 'watch',
+          name: values.name,
+          description: values.description,
+        },
+      })
       if (response.error) {
         triggerErrorToast(response.error)
       } else {
-        onCreateSuccess(id, values)
+        openDialog('walletAddressesAdd', {
+          walletId: id,
+        })
         form.reset(defaultValues)
       }
     },
-    [form, create, onCreateSuccess]
+    [form, openDialog, walletAdd]
   )
 
   return (
     <Dialog
-      title={title}
+      title={walletAddTypes.walletAddWatch.title}
       trigger={trigger}
       open={open}
       onOpenChange={onOpenChange}
@@ -121,7 +128,7 @@ export function WalletCreateDialog({
     >
       <div className="flex flex-col gap-4 mb-2">
         <Paragraph size="14" color="subtle">
-          {description}
+          {walletAddTypes.walletAddWatch.description}
         </Paragraph>
         <FieldText name="name" form={form} field={fields.name} />
         <FieldTextArea

@@ -34,15 +34,13 @@ export function useAddressesMain() {
     const data: AddressData[] = Object.entries(response.data || {}).map(
       ([address, meta]) => ({
         id: address,
+        address,
         description: meta.description as string,
         index: meta.index as number,
-        address,
         onClick: () =>
           openDialog('addressUpdate', {
-            id,
-            params: {
-              address,
-            },
+            walletId: id,
+            address,
           }),
       })
     )

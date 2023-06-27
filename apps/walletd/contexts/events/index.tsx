@@ -88,7 +88,7 @@ export function useEventsMain() {
             (acc, o) => acc.plus(o.value),
             new BigNumber(0)
           ) || new BigNumber(0)
-        amount = inputsTotal.minus(outputsTotal)
+        amount = outputsTotal.minus(inputsTotal)
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const id = (e.Val as any).TransactionID || (e.Val as any).OutputID

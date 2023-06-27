@@ -33,3 +33,15 @@ export const walletAddTypes = {
     ),
   },
 }
+
+export const walletTypes = {
+  seed: {
+    title: 'Seed-based wallet',
+  },
+  watch: {
+    title: 'Watch-only wallet',
+  },
+  ledger: {
+    title: 'Ledger hardware wallet',
+  },
+}

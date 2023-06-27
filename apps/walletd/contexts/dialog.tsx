@@ -1,84 +1,102 @@
 import React, { createContext, useContext, useCallback, useState } from 'react'
 import {
   ConfirmDialog,
+  ConfirmDialogParams,
   SettingsDialog,
   SyncerConnectPeerDialog,
+  SyncerConnectPeerDialogParams,
 } from '@siafoundation/design-system'
 import { useSyncerConnect } from '@siafoundation/react-walletd'
-import { WalletAddTypeDialog } from '../dialogs/WalletAddTypeDialog'
-import { WalletAddNewDialog } from '../dialogs/WalletAddNewDialog'
-import { WalletCopySeedDialog } from '../dialogs/WalletCopySeedDialog'
-import { WalletGenerateAddressesDialog } from '../dialogs/WalletGenerateAddressesDialog'
-import { WalletRemoveDialog } from '../dialogs/WalletRemoveDialog'
-import { AddressUpdateDialog } from '../dialogs/AddressUpdateDialog'
-import { WalletUpdateDialog } from '../dialogs/WalletUpdateDialog'
+import {
+  WalletAddTypeDialog,
+  WalletAddTypeDialogParams,
+} from '../dialogs/WalletAddTypeDialog'
+import {
+  WalletAddNewDialog,
+  WalletAddNewDialogParams,
+} from '../dialogs/WalletAddNewDialog'
+import {
+  WalletAddressesGenerateDialog,
+  WalletAddressesGenerateDialogParams,
+} from '../dialogs/WalletAddressesGenerateDialog'
+import {
+  WalletRemoveDialog,
+  WalletRemoveDialogParams,
+} from '../dialogs/WalletRemoveDialog'
+import {
+  AddressUpdateDialog,
+  AddressUpdateDialogParams,
+} from '../dialogs/AddressUpdateDialog'
+import {
+  WalletUpdateDialog,
+  WalletUpdateDialogParams,
+} from '../dialogs/WalletUpdateDialog'
+import {
+  WalletAddRecoverDialog,
+  WalletAddRecoverDialogParams,
+} from '../dialogs/WalletAddRecoverDialog'
+import {
+  WalletAddWatchDialog,
+  WalletAddWatchDialogParams,
+} from '../dialogs/WalletAddWatchDialog'
+import {
+  WalletAddressesAddDialog,
+  WalletAddressesAddDialogParams,
+} from '../dialogs/WalletAddressesAddDialog'
 // import { CmdKDialog } from '../components/CmdKDialog'
-// import { WalletdTransactionDetailsDialog } from '../dialogs/WalletdTransactionDetailsDialog'
 
-export type DialogType =
-  // | 'cmdk'
-  | 'settings'
-  | 'sendSiacoin'
-  | 'transactionDetails'
-  | 'addressDetails'
-  | 'addressUpdate'
-  | 'connectPeer'
-  | 'confirm'
-  | 'walletAddType'
-  | 'walletAddNew'
-  | 'walletAddRecover'
-  | 'walletAddWatch'
-  | 'walletAddLedger'
-  | 'walletAddNewCopySeed'
-  | 'walletGenerateAddresses'
-  | 'walletRemove'
-  | 'walletUpdate'
-
-type ConfirmProps = {
-  title: React.ReactNode
-  action: React.ReactNode
-  variant: 'red' | 'accent'
-  body: React.ReactNode
-  onConfirm: () => void
+type DialogParams = {
+  cmdk?: void
+  settings?: void
+  sendSiacoin?: void
+  transactionDetails?: void
+  addressUpdate?: AddressUpdateDialogParams
+  connectPeer?: SyncerConnectPeerDialogParams
+  confirm?: ConfirmDialogParams
+  walletAddType?: WalletAddTypeDialogParams
+  walletAddNew?: WalletAddNewDialogParams
+  walletAddRecover?: WalletAddRecoverDialogParams
+  walletAddWatch?: WalletAddWatchDialogParams
+  walletAddLedger?: void
+  walletAddressesGenerate?: WalletAddressesGenerateDialogParams
+  walletAddressesAdd?: WalletAddressesAddDialogParams
+  walletRemove?: WalletRemoveDialogParams
+  walletUpdate?: WalletUpdateDialogParams
 }
 
-type DialogParams = Record<string, unknown>
+type DialogType = keyof DialogParams
 
 function useDialogMain() {
   const [dialog, setDialog] = useState<DialogType>()
-  const [id, setId] = useState<string>()
-  const [params, setParams] = useState<DialogParams>()
+  const [params, setParams] = useState<DialogParams>({})
 
   const openDialog = useCallback(
-    (
-      dialog: DialogType,
-      args: {
-        id?: string
-        params?: DialogParams
-      } = {}
-    ) => {
-      setDialog(dialog)
-      setId(args.id)
-      setParams(args.params)
+    <D extends DialogType>(type: D, params?: DialogParams[D]) => {
+      setParams((p) => ({
+        ...p,
+        [type]: params,
+      }))
+      setDialog(type)
     },
-    [setDialog, setId, setParams]
+    [setParams, setDialog]
   )
 
-  const [confirm, setConfirm] = useState<ConfirmProps>()
-  const openConfirmDialog = useCallback(
-    (confirm: ConfirmProps) => {
-      setDialog('confirm')
-      setConfirm(confirm)
-    },
-    [setDialog, setConfirm]
-  )
+  // const [confirm, setConfirm] = useState<ConfirmProps>()
+  // const openConfirmDialog = useCallback(
+  //   (confirm: ConfirmProps) => {
+  //     setDialogParams('confirm')
+  //     setConfirm(confirm)
+  //   },
+  //   [setDialog, setConfirm]
+  // )
 
   const closeDialog = useCallback(() => {
+    setParams((p) => ({
+      ...p,
+      [dialog]: undefined,
+    }))
     setDialog(undefined)
-    setId(undefined)
-    setParams(undefined)
-    setConfirm(undefined)
-  }, [setDialog, setId, setConfirm, setParams])
+  }, [setDialog, setParams, dialog])
 
   const onOpenChange = useCallback(
     (open: boolean) => {
@@ -91,11 +109,9 @@ function useDialogMain() {
 
   return {
     dialog,
-    id,
     params,
     openDialog,
     confirm,
-    openConfirmDialog,
     closeDialog,
     onOpenChange,
   }
@@ -118,16 +134,7 @@ export function DialogProvider({ children }: Props) {
 }
 
 export function Dialogs() {
-  const {
-    id,
-    params,
-    dialog,
-    openDialog,
-    onOpenChange,
-    closeDialog,
-    confirm,
-    openConfirmDialog,
-  } = useDialog()
+  const { openDialog, onOpenChange, closeDialog, dialog, params } = useDialog()
   const connect = useSyncerConnect()
 
   return (
@@ -144,41 +151,60 @@ export function Dialogs() {
       />
       <WalletAddTypeDialog
         open={dialog === 'walletAddType'}
+        params={params['walletAddType']}
+        onOpenChange={(val) =>
+          val ? openDialog(dialog, params['walletAddType']) : closeDialog()
+        }
+      />
+      <WalletAddNewDialog
+        open={dialog === 'walletAddNew'}
+        params={params['walletAddNew']}
+        onOpenChange={(val) =>
+          val ? openDialog(dialog, params['walletAddNew']) : closeDialog()
+        }
+      />
+      <WalletAddRecoverDialog
+        open={dialog === 'walletAddRecover'}
+        params={params['walletAddRecover']}
+        onOpenChange={(val) =>
+          val ? openDialog(dialog, params['walletAddRecover']) : closeDialog()
+        }
+      />
+      <WalletAddWatchDialog
+        open={dialog === 'walletAddWatch'}
+        params={params['walletAddWatch']}
+        onOpenChange={(val) =>
+          val ? openDialog(dialog, params['walletAddWatch']) : closeDialog()
+        }
+      />
+      <WalletAddressesGenerateDialog
+        open={dialog === 'walletAddressesGenerate'}
+        params={params['walletAddressesGenerate']}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
-      <WalletAddNewDialog />
-      <WalletCopySeedDialog
-        id={id}
-        open={dialog === 'walletAddNewCopySeed'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
-      />
-      <WalletGenerateAddressesDialog
-        id={id}
-        open={dialog === 'walletGenerateAddresses'}
+      <WalletAddressesAddDialog
+        open={dialog === 'walletAddressesAdd'}
+        params={params['walletAddressesAdd']}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <WalletRemoveDialog
         open={dialog === 'walletRemove'}
+        params={params['walletRemove']}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <WalletUpdateDialog
         open={dialog === 'walletUpdate'}
+        params={params['walletUpdate']}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <AddressUpdateDialog
         open={dialog === 'addressUpdate'}
+        params={params['addressUpdate']}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
-      {/* <WalletCreateDialog
-        title={walletAddTypes.walletAddRecover.title}
-        description={walletAddTypes.walletAddRecover.description}
-        onCreate={() => closeDialog()}
-        open={dialog === 'walletAddRecover'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
-      /> */}
-      {/* <WalletdTransactionDetailsDialog /> */}
       <SyncerConnectPeerDialog
         open={dialog === 'connectPeer'}
+        params={params['connectPeer']}
         connect={(address: string) =>
           connect.post({
             payload: address,
@@ -188,13 +214,9 @@ export function Dialogs() {
       />
       <ConfirmDialog
         open={dialog === 'confirm'}
-        title={confirm?.title}
-        action={confirm?.action}
-        body={confirm?.body}
-        variant={confirm?.variant}
-        onConfirm={confirm?.onConfirm}
+        params={params['confirm']}
         onOpenChange={(val) =>
-          val ? openConfirmDialog(confirm) : closeDialog()
+          val ? openDialog(dialog, params['confirm']) : closeDialog()
         }
       />
     </>

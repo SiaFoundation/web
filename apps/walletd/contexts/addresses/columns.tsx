@@ -3,6 +3,7 @@ import {
   TableColumn,
   ValueCopyable,
   Tooltip,
+  Paragraph,
 } from '@siafoundation/design-system'
 import { AddressData, TableColumnId } from './types'
 
@@ -32,11 +33,11 @@ export const columns: AddressesTableColumn[] = [
             <Tooltip
               content={
                 <pre>
-                  <Text color="subtle">{description}</Text>
+                  <Paragraph size="12">{description}</Paragraph>
                 </pre>
               }
             >
-              <Text color="subtle">{description.split('\n')[0]}</Text>
+              <Paragraph size="12">{description.split('\n')[0]}</Paragraph>
             </Tooltip>
           )}
         </div>

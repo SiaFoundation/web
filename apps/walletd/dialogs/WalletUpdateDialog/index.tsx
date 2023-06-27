@@ -5,11 +5,12 @@ import {
   FormSubmitButton,
   FieldTextArea,
   FieldText,
+  Badge,
+  Label,
 } from '@siafoundation/design-system'
 import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useWalletAdd } from '@siafoundation/react-walletd'
-import { useDialog } from '../../contexts/dialog'
 import { useWallets } from '../../contexts/wallets'
 import { useDialogFormHelpers } from '../../hooks/useDialogFormHelpers'
 
@@ -40,16 +41,26 @@ function getFields(): ConfigFields<typeof defaultValues, never> {
   }
 }
 
+export type WalletUpdateDialogParams = {
+  walletId: string
+}
+
 type Props = {
+  params?: WalletUpdateDialogParams
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
 }
 
-export function WalletUpdateDialog({ trigger, open, onOpenChange }: Props) {
-  const { id } = useDialog()
+export function WalletUpdateDialog({
+  params,
+  trigger,
+  open,
+  onOpenChange,
+}: Props) {
+  const { walletId } = params || {}
   const { dataset } = useWallets()
-  const wallet = dataset?.find((d) => d.id === id)
+  const wallet = dataset?.find((d) => d.id === walletId)
   const walletAdd = useWalletAdd()
   const form = useForm({
     mode: 'all',
@@ -70,17 +81,18 @@ export function WalletUpdateDialog({ trigger, open, onOpenChange }: Props) {
         : defaultValues
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id])
+  }, [walletId])
 
   const fields = getFields()
   const onSubmit = useCallback(
     async (values) => {
       const response = await walletAdd.put({
         params: {
-          id,
+          id: walletId,
         },
         payload: {
           ...wallet,
+          name: values.name,
           description: values.description,
         },
       })
@@ -90,7 +102,7 @@ export function WalletUpdateDialog({ trigger, open, onOpenChange }: Props) {
         closeAndReset()
       }
     },
-    [id, walletAdd, wallet, closeAndReset]
+    [walletId, walletAdd, wallet, closeAndReset]
   )
 
   return (
@@ -113,6 +125,12 @@ export function WalletUpdateDialog({ trigger, open, onOpenChange }: Props) {
       }
     >
       <div className="flex flex-col gap-4 mb-2">
+        <div className="flex flex-col gap-1">
+          <Label>Type</Label>
+          <div>
+            <Badge>{wallet?.type}</Badge>
+          </div>
+        </div>
         <FieldText name="name" form={form} field={fields.name} />
         <FieldTextArea
           name="description"
