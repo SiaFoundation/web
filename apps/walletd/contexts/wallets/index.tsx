@@ -26,16 +26,19 @@ function useWalletsMain() {
       return null
     }
     const data: WalletData[] = Object.entries(response.data || {}).map(
-      ([name, meta]) => ({
-        id: name,
-        name,
+      ([id, meta]) => ({
+        id,
+        name: meta.name as string,
+        seedHash: meta.seedHash as string,
         description: meta.description as string,
         type: meta.type as WalletType,
-        onClick: () => router.push(routes.wallet.view.replace(':name', name)),
+        onClick: () => router.push(routes.wallet.view.replace(':id', id)),
       })
     )
     return data
   }, [router, response.data])
+
+  const wallet = dataset?.find((w) => w.id === (router.query.id as string))
 
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useClientFilters<WalletData>()
@@ -88,6 +91,7 @@ function useWalletsMain() {
     datasetCount: datasetFiltered?.length || 0,
     columns: filteredTableColumns,
     dataset: datasetFiltered,
+    wallet,
     configurableColumns,
     enabledColumns,
     sortableColumns,

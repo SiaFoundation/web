@@ -117,7 +117,7 @@ export function useTxPoolBroadcast(
       mutate((key) => {
         return (
           key.startsWith(txPoolTransactionsRoute) ||
-          // Most importantly to trigger /wallets/:name/txpool
+          // Most importantly to trigger /wallets/:id/txpool
           key.startsWith('/wallets')
         )
       })
@@ -140,12 +140,12 @@ export function useWallets(args?: HookArgsSwr<void, Wallets>) {
 }
 
 export function useWalletAdd(
-  args?: HookArgsCallback<{ name: string }, Wallet, void>
+  args?: HookArgsCallback<{ id: string }, Wallet, void>
 ) {
   return usePutFunc(
     {
       ...args,
-      route: '/wallets/:name',
+      route: '/wallets/:id',
     },
     async (mutate) => {
       mutate((key) => key.startsWith(walletsRoute))
@@ -154,20 +154,20 @@ export function useWalletAdd(
 }
 
 export function useWalletSubscribe(
-  args?: HookArgsCallback<{ name: string }, BlockHeight, void>
+  args?: HookArgsCallback<{ id: string }, BlockHeight, void>
 ) {
   return usePostFunc({
     ...args,
-    route: '/wallets/:name/subscribe',
+    route: '/wallets/:id/subscribe',
   })
 }
 
 type Address = Record<string, unknown>
 type Addresses = Record<string, Address>
 
-const walletAddressesRoute = '/wallets/:name/addresses'
+const walletAddressesRoute = '/wallets/:id/addresses'
 export function useWalletAddresses(
-  args: HookArgsSwr<{ name: string }, Addresses>
+  args: HookArgsSwr<{ id: string }, Addresses>
 ) {
   return useGetSwr({
     ...args,
@@ -176,43 +176,43 @@ export function useWalletAddresses(
 }
 
 export function useWalletAddressAdd(
-  args?: HookArgsCallback<{ name: string; addr: string }, Address, void>
+  args?: HookArgsCallback<{ id: string; addr: string }, Address, void>
 ) {
   return usePutFunc(
     {
       ...args,
-      route: '/wallets/:name/addresses/:addr',
+      route: '/wallets/:id/addresses/:addr',
     },
     async (mutate, data) => {
       mutate((key) =>
-        key.startsWith(walletAddressesRoute.replace(':name', data.params.name))
+        key.startsWith(walletAddressesRoute.replace(':id', data.params.id))
       )
     }
   )
 }
 
 export function useWalletBalance(
-  args: HookArgsSwr<{ name: string }, { siacoins: string; siafunds: number }>
+  args: HookArgsSwr<{ id: string }, { siacoins: string; siafunds: number }>
 ) {
   return useGetSwr({
     ...args,
-    route: '/wallets/:name/balance',
+    route: '/wallets/:id/balance',
   })
 }
 
 export function useWalletEvents(
-  args: HookArgsSwr<{ name: string }, WalletEvent[]>
+  args: HookArgsSwr<{ id: string }, WalletEvent[]>
 ) {
   return useGetSwr({
     ...args,
-    route: '/wallets/:name/events',
+    route: '/wallets/:id/events',
   })
 }
 
-const walletTxPoolRoute = '/wallets/:name/txpool'
+const walletTxPoolRoute = '/wallets/:id/txpool'
 
 export function useWalletTxPool(
-  args: HookArgsSwr<{ name: string }, PoolTransaction[]>
+  args: HookArgsSwr<{ id: string }, PoolTransaction[]>
 ) {
   return useGetSwr({
     ...args,
@@ -226,11 +226,11 @@ type WalletOutputsResponse = {
 }
 
 export function useWalletOutputs(
-  args: HookArgsSwr<{ name: string }, WalletOutputsResponse>
+  args: HookArgsSwr<{ id: string }, WalletOutputsResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: '/wallets/:name/outputs',
+    route: '/wallets/:id/outputs',
   })
 }
 
@@ -241,9 +241,9 @@ type WalletReserveRequest = {
 }
 
 export function useWalletReserve(
-  args?: HookArgsCallback<{ name: string }, WalletReserveRequest, void>
+  args?: HookArgsCallback<{ id: string }, WalletReserveRequest, void>
 ) {
-  return usePostFunc({ ...args, route: '/wallet/:name/reserve' })
+  return usePostFunc({ ...args, route: '/wallet/:id/reserve' })
 }
 
 type WalletReleaseRequest = {
@@ -252,7 +252,7 @@ type WalletReleaseRequest = {
 }
 
 export function useWalletRelease(
-  args?: HookArgsCallback<{ name: string }, WalletReleaseRequest, void>
+  args?: HookArgsCallback<{ id: string }, WalletReleaseRequest, void>
 ) {
-  return usePostFunc({ ...args, route: '/wallet/:name/release' })
+  return usePostFunc({ ...args, route: '/wallet/:id/release' })
 }

@@ -9,11 +9,14 @@ import { useAddresses } from '../../contexts/addresses'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
 import { StateError } from './StateError'
+import { useWallets } from '../../contexts/wallets'
+import { AddressesFiltersBar } from './AddressesFilterBar'
 
 export function WalletAddresses() {
   const router = useRouter()
-  const name = router.query.name as string
+  const id = router.query.id as string
   const { openDialog } = useDialog()
+  const { wallet } = useWallets()
   const {
     dataset,
     dataState,
@@ -29,7 +32,7 @@ export function WalletAddresses() {
       routes={routes}
       sidenav={<WalletdSidenav />}
       openSettings={() => openDialog('settings')}
-      title={name}
+      title={wallet?.name}
       navTitle={
         <div className="flex gap-2 relative -top-px">
           <Link
@@ -37,9 +40,9 @@ export function WalletAddresses() {
             font="mono"
             size="18"
             weight="bold"
-            href={routes.wallet.view.replace(':name', name)}
+            href={routes.wallet.view.replace(':id', id)}
           >
-            {truncate(name, 20)}
+            {truncate(wallet?.name, 20)}
           </Link>
           <Text font="mono" size="18" weight="normal" color="verySubtle">
             /
@@ -50,6 +53,7 @@ export function WalletAddresses() {
         </div>
       }
       actions={<AddressesActionsMenu />}
+      stats={<AddressesFiltersBar />}
       size="3"
     >
       <div className="px-6 py-7">

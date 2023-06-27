@@ -4,9 +4,9 @@ import { useRouter } from 'next/router'
 
 export function AddressesButton() {
   const router = useRouter()
-  const name = router.query.name as string
+  const id = router.query.id as string
   return (
-    <LinkButton href={routes.wallet.addresses.replace(':name', name)}>
+    <LinkButton href={routes.wallet.addresses.replace(':id', id)}>
       <ArrowDownLeft16 />
       Addresses
     </LinkButton>

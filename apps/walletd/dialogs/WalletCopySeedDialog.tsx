@@ -9,6 +9,7 @@ import {
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../contexts/dialog'
+import { useWallets } from '../contexts/wallets'
 import { useDialogFormHelpers } from '../hooks/useDialogFormHelpers'
 import { SeedLayout } from './SeedLayout'
 
@@ -18,9 +19,6 @@ const defaultValues = {
 
 type Props = {
   id: string
-  params?: {
-    mnemonic: string
-  }
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
@@ -28,12 +26,14 @@ type Props = {
 
 export function WalletCopySeedDialog({
   id,
-  params,
   trigger,
   open,
   onOpenChange,
 }: Props) {
-  const { mnemonic } = params || {}
+  const { params, openDialog } = useDialog()
+  const { mnemonic } = (params || {}) as { mnemonic?: string }
+  const { dataset } = useWallets()
+  const wallet = dataset?.find((w) => w.id === id)
   const form = useForm({
     mode: 'all',
     defaultValues,
@@ -56,18 +56,16 @@ export function WalletCopySeedDialog({
     form.setValue('hasCopied', true)
   }, [mnemonic, form])
 
-  const { openDialog } = useDialog()
   const onSubmit = useCallback(() => {
     openDialog('walletGenerateAddresses', {
       id,
-      params: { mnemonic },
     })
     reset()
-  }, [openDialog, id, mnemonic, reset])
+  }, [openDialog, id, reset])
 
   return (
     <Dialog
-      title={`Wallet ${id}: copy seed`}
+      title={`Wallet ${wallet?.name}: copy seed`}
       trigger={trigger}
       open={open}
       onOpenChange={handleOpenChange}
@@ -119,7 +117,6 @@ function SeedIcon() {
       viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>key</title>
       <g fill="#32d66a" stroke="#32d66a" strokeLinecap="square" strokeWidth="2">
         <path
           d="M25,1,12.784,13.154a8.572,8.572,0,1,0,6.061,6.061L21,17V13h4V9h3l3-3V1Z"

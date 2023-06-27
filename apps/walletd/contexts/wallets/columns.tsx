@@ -31,12 +31,12 @@ export const columns: WalletsTableColumn[] = [
           <Text>{name}</Text>
           <Tooltip
             content={
-              <Paragraph className="">
-                <pre>{description}</pre>
-              </Paragraph>
+              <pre>
+                <Paragraph size="12">{description}</Paragraph>
+              </pre>
             }
           >
-            <Paragraph className="">{description.split('\n')[0]}</Paragraph>
+            <Paragraph size="12">{description.split('\n')[0]}</Paragraph>
           </Tooltip>
         </div>
       )

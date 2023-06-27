@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
 import { TextArea } from '../core/TextArea'
@@ -19,11 +20,15 @@ export function FieldTextArea<
     form,
     field,
   })
+  const [localValue, setLocalValue] = useState(value)
+  useEffect(() => {
+    setLocalValue(value)
+  }, [value])
   return (
     <FieldGroup title={field.title} name={name} form={form}>
       <TextArea
         placeholder={placeholder}
-        value={value}
+        value={localValue}
         state={
           error
             ? 'invalid'
@@ -32,7 +37,9 @@ export function FieldTextArea<
             : 'default'
         }
         onChange={(e) => {
-          onChange(e.currentTarget.value as PathValue<Values, Path<Values>>)
+          const v = e.currentTarget.value as PathValue<Values, Path<Values>>
+          setLocalValue(v)
+          onChange(v)
         }}
         onBlur={(e) => {
           onBlur(e)

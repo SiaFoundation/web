@@ -29,14 +29,25 @@ function getFields(): ConfigFields<typeof defaultValues, never> {
   }
 }
 
+export type AddressUpdateDialogParams = {
+  type: 'addressUpdate'
+  address: string
+}
+
 type Props = {
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
+  params: DialogParams
 }
 
-export function AddressUpdateDialog({ trigger, open, onOpenChange }: Props) {
-  const { id, params, closeDialog } = useDialog()
+export function AddressUpdateDialog({
+  trigger,
+  open,
+  onOpenChange,
+  params,
+}: Props) {
+  const { id, closeDialog } = useDialog()
   const { dataset } = useAddresses()
   const address = dataset?.find((d) => d.id === params?.address)
   const addressAdd = useWalletAddressAdd()
@@ -60,7 +71,7 @@ export function AddressUpdateDialog({ trigger, open, onOpenChange }: Props) {
     async (values) => {
       const response = await addressAdd.put({
         params: {
-          name: id,
+          id,
           addr: params.address as string,
         },
         payload: {

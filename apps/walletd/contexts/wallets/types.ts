@@ -5,6 +5,7 @@ export type WalletData = {
   name: string
   description: string
   type: WalletType
+  seedHash?: string
 }
 
 export type TableColumnId = 'actions' | 'id' | 'details' | 'type'

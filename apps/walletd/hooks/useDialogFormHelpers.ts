@@ -16,22 +16,22 @@ export function useDialogFormHelpers<Values>({
     form.reset(defaultValues)
   }, [form, defaultValues])
 
-  const resetAndClose = useCallback(() => {
-    form.reset(defaultValues)
+  const closeAndReset = useCallback(() => {
     onOpenChange(false)
+    form.reset(defaultValues)
   }, [form, onOpenChange, defaultValues])
 
   const handleOpenChange = useCallback(
     (open: boolean) => {
       if (!open) {
-        resetAndClose()
+        closeAndReset()
       }
     },
-    [resetAndClose]
+    [closeAndReset]
   )
   return {
     reset,
-    resetAndClose,
+    closeAndReset,
     handleOpenChange,
   }
 }

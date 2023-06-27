@@ -19,11 +19,11 @@ import { useDialog } from '../dialog'
 export function useAddressesMain() {
   const { openDialog } = useDialog()
   const router = useRouter()
-  const walletName = router.query.name as string
+  const id = router.query.id as string
   const response = useWalletAddresses({
-    disabled: !walletName,
+    disabled: !id,
     params: {
-      name: walletName,
+      id,
     },
   })
 
@@ -39,7 +39,7 @@ export function useAddressesMain() {
         address,
         onClick: () =>
           openDialog('addressUpdate', {
-            id: walletName,
+            id,
             params: {
               address,
             },
@@ -47,7 +47,7 @@ export function useAddressesMain() {
       })
     )
     return data
-  }, [response.data, openDialog, walletName])
+  }, [response.data, openDialog, id])
 
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useClientFilters<AddressData>()

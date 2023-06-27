@@ -106,6 +106,7 @@
     "typed.js": "^2.0.12",
     "use-debounce": "^9.0.3",
     "use-local-storage-state": "^17.0.1",
+    "uuid": "^9.0.0",
     "vhost": "^3.0.2",
     "yup": "^0.32.11"
   },
