@@ -9,6 +9,7 @@ import {
   Transaction,
   getMainnetBlockHeight,
   getTestnetZenBlockHeight,
+  useDeleteFunc,
 } from '@siafoundation/react-core'
 import {
   BlockHeight,
@@ -151,6 +152,12 @@ export function useWalletAdd(
       mutate((key) => key.startsWith(walletsRoute))
     }
   )
+}
+
+export function useWalletDelete(
+  args?: HookArgsCallback<{ id: string }, void, never>
+) {
+  return useDeleteFunc({ ...args, route: '/wallets/:id' })
 }
 
 export function useWalletSubscribe(
