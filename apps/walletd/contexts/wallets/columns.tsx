@@ -35,7 +35,9 @@ export const columns: WalletsTableColumn[] = [
             <Tooltip
               content={
                 <pre>
-                  <Paragraph size="12">{description}</Paragraph>
+                  <Paragraph size="12" className="w-full whitespace-pre-wrap">
+                    {description}
+                  </Paragraph>
                 </pre>
               }
             >
@@ -53,7 +55,12 @@ export const columns: WalletsTableColumn[] = [
     render: ({ data: { type } }) => {
       return (
         <Tooltip content={walletTypes[type]?.title}>
-          <Badge interactive={false}>{type}</Badge>
+          <Badge interactive={false} className="flex gap-0.5 items-center">
+            <Text color="subtle" className="scale-75 relative top-px">
+              {walletTypes[type]?.icon}
+            </Text>
+            {type}
+          </Badge>
         </Tooltip>
       )
     },
@@ -66,7 +73,9 @@ export const columns: WalletsTableColumn[] = [
       if (!createdAt) {
         return null
       }
-      return <Text>{humanDate(createdAt, { dateStyle: 'medium' })}</Text>
+      return (
+        <Text size="14">{humanDate(createdAt, { dateStyle: 'medium' })}</Text>
+      )
     },
   },
 ]

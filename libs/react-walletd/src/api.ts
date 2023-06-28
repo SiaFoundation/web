@@ -140,6 +140,19 @@ export function useWallets(args?: HookArgsSwr<void, Wallets>) {
   })
 }
 
+type Address = Record<string, unknown>
+type Addresses = Record<string, Address>
+
+const walletAddressesRoute = '/wallets/:id/addresses'
+export function useWalletAddresses(
+  args: HookArgsSwr<{ id: string }, Addresses>
+) {
+  return useGetSwr({
+    ...args,
+    route: walletAddressesRoute,
+  })
+}
+
 export function useWalletAdd(
   args?: HookArgsCallback<{ id: string }, Wallet, void>
 ) {
@@ -157,7 +170,14 @@ export function useWalletAdd(
 export function useWalletDelete(
   args?: HookArgsCallback<{ id: string }, void, never>
 ) {
-  return useDeleteFunc({ ...args, route: '/wallets/:id' })
+  return useDeleteFunc(
+    { ...args, route: '/wallets/:id' },
+    async (mutate, data) => {
+      mutate((key) =>
+        key.startsWith(walletAddressesRoute.replace(':id', data.params.id))
+      )
+    }
+  )
 }
 
 export function useWalletSubscribe(
@@ -166,19 +186,6 @@ export function useWalletSubscribe(
   return usePostFunc({
     ...args,
     route: '/wallets/:id/subscribe',
-  })
-}
-
-type Address = Record<string, unknown>
-type Addresses = Record<string, Address>
-
-const walletAddressesRoute = '/wallets/:id/addresses'
-export function useWalletAddresses(
-  args: HookArgsSwr<{ id: string }, Addresses>
-) {
-  return useGetSwr({
-    ...args,
-    route: walletAddressesRoute,
   })
 }
 

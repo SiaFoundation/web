@@ -40,7 +40,7 @@ export const sortOptions: {
   },
   {
     id: 'createdAt',
-    label: 'created at',
+    label: 'created on',
     category: 'general',
   },
 ]

@@ -1,4 +1,4 @@
-import { Button, Sprout16, Usb16, View16 } from '@siafoundation/design-system'
+import { Button } from '@siafoundation/design-system'
 import { useWallets } from '../../contexts/wallets'
 import { useDialog } from '../../contexts/dialog'
 import { walletTypes } from '../../config/walletTypes'
@@ -19,9 +19,7 @@ export function WalletNavMenu() {
         className="!p-0"
         tip={walletTypes[wallet?.type]?.title}
       >
-        {wallet?.type === 'seed' && <Sprout16 />}
-        {wallet?.type === 'watch' && <View16 />}
-        {wallet?.type === 'ledger' && <Usb16 />}
+        {walletTypes[wallet?.type].icon}
       </Button>
     </div>
   )

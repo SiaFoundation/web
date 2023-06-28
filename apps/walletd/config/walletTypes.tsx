@@ -1,17 +1,17 @@
-import { Code } from '@siafoundation/design-system'
+import { Code, Sprout16, Usb16, View16 } from '@siafoundation/design-system'
 
 export const walletAddTypes = {
   walletAddNew: {
     title: 'Create a wallet',
     description: (
       <>
-        Generates a new wallet seed. The seed will never be sent to{' '}
+        Generate a new wallet seed. The seed will never be sent to{' '}
         <Code>walletd</Code>, transactions are signed in the browser.
       </>
     ),
   },
   walletAddRecover: {
-    title: 'Recover from seed',
+    title: 'Recover a wallet',
     description: (
       <>
         Restore a wallet from seed. The seed will never be sent to{' '}
@@ -21,7 +21,9 @@ export const walletAddTypes = {
   },
   walletAddWatch: {
     title: 'Add a watch-only wallet',
-    description: <>Create a watch-only wallet from provided addresses.</>,
+    description: (
+      <>Create a watch-only wallet that tracks a set of addresses.</>
+    ),
   },
   walletAddLedger: {
     title: 'Add a Ledger hardware wallet',
@@ -37,11 +39,14 @@ export const walletAddTypes = {
 export const walletTypes = {
   seed: {
     title: 'Seed-based wallet',
+    icon: <Sprout16 />,
   },
   watch: {
     title: 'Watch-only wallet',
+    icon: <View16 />,
   },
   ledger: {
     title: 'Ledger hardware wallet',
+    icon: <Usb16 />,
   },
 }
