@@ -6,6 +6,7 @@ import {
   FieldTextArea,
   truncate,
   WalletAddressCode,
+  Button,
 } from '@siafoundation/design-system'
 import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
@@ -49,7 +50,7 @@ export function AddressUpdateDialog({
   params,
 }: Props) {
   const { walletId, address: addr } = params || {}
-  const { closeDialog } = useDialog()
+  const { openDialog, closeDialog } = useDialog()
   const { dataset } = useAddresses()
   const address = dataset?.find((d) => d.id === addr)
   const addressAdd = useWalletAddressAdd()
@@ -103,6 +104,16 @@ export function AddressUpdateDialog({
       onSubmit={form.handleSubmit(onSubmit)}
       controls={
         <div className="flex gap-2 px-1">
+          <Button
+            onClick={() =>
+              openDialog('addressRemove', {
+                walletId,
+                address: addr,
+              })
+            }
+          >
+            Remove address
+          </Button>
           <div className="flex-1" />
           <FormSubmitButton size="small" form={form}>
             Save changes

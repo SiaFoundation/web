@@ -3,7 +3,6 @@ import {
   TableColumn,
   ValueCopyable,
   ValueSc,
-  Badge,
   LoadingDots,
 } from '@siafoundation/design-system'
 import { humanDate } from '@siafoundation/sia-js'
@@ -39,7 +38,11 @@ export const columns: EventsTableColumn[] = [
     category: 'general',
     fixed: true,
     render: ({ data: { type } }) => {
-      return <Badge>{type}</Badge>
+      return (
+        <Text weight="medium" ellipsis>
+          {type}
+        </Text>
+      )
     },
   },
   {

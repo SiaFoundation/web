@@ -56,7 +56,7 @@ export function WalletAddresses() {
       stats={<AddressesFiltersBar />}
       size="3"
     >
-      <div className="px-6 py-7">
+      <div className="px-6 py-7 min-w-fit">
         <Table
           isLoading={dataState === 'loading'}
           emptyState={
