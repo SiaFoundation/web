@@ -31,6 +31,7 @@ function useWalletsMain() {
         name: meta.name as string,
         seedHash: meta.seedHash as string,
         description: meta.description as string,
+        createdAt: (meta.createdAt as number) || 0,
         type: meta.type as WalletType,
         onClick: () => router.push(routes.wallet.view.replace(':id', id)),
       })

@@ -145,6 +145,7 @@ export function WalletAddNewDialog({ trigger, open, onOpenChange }: Props) {
           type: 'seed',
           seedHash,
           name: values.name,
+          createdAt: new Date().getTime(),
           description: values.description,
         },
       })
