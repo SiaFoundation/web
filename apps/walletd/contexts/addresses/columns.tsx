@@ -33,7 +33,9 @@ export const columns: AddressesTableColumn[] = [
             <Tooltip
               content={
                 <pre>
-                  <Paragraph size="12">{description}</Paragraph>
+                  <Paragraph size="12" className="w-full whitespace-pre-wrap">
+                    {description}
+                  </Paragraph>
                 </pre>
               }
             >

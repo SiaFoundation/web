@@ -1,8 +1,6 @@
 import {
   useTableState,
   useDatasetEmptyState,
-  useClientFilters,
-  useClientFilteredDataset,
 } from '@siafoundation/design-system'
 import {
   useWalletEvents,
@@ -25,6 +23,8 @@ import {
 import { columns } from './columns'
 import { useRouter } from 'next/router'
 import BigNumber from 'bignumber.js'
+
+const filters = []
 
 export function useEventsMain() {
   const router = useRouter()
@@ -70,12 +70,10 @@ export function useEventsMain() {
       id: e.ID,
       timestamp: 0,
       pending: true,
-      blockHeight: 0,
       type: e.Type,
       amount: new BigNumber(e.Received).minus(e.Sent),
-      // onClick: () => router.push(routes.wallet.view.replace(':id', name)),
     }))
-    const dataEvents: EventData[] = responseEvents.data.map((e) => {
+    const dataEvents: EventData[] = responseEvents.data.map((e, index) => {
       let amount = new BigNumber(0)
       if (e.Type === 'siacoin transfer') {
         const inputsTotal =
@@ -90,23 +88,43 @@ export function useEventsMain() {
           ) || new BigNumber(0)
         amount = outputsTotal.minus(inputsTotal)
       }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const id = (e.Val as any).TransactionID || (e.Val as any).OutputID
-      return {
+
+      const id = String(index)
+      const res: EventData = {
         id,
+        type: e.Type,
         timestamp: new Date(e.Timestamp).getTime(),
-        blockHeight: e.Index.height,
+        height: e.Index.height,
         pending: false,
         amount,
-        type: e.Type,
-        // onClick: () => router.push(routes.wallet.view.replace(':id', name)),
       }
+      if ('MaturityHeight' in e.Val) {
+        res.maturityHeight = e.Val.MaturityHeight
+      }
+      if ('Fee' in e.Val) {
+        res.fee = new BigNumber(e.Val.Fee)
+      }
+      if ('ContractID' in e.Val) {
+        res.contractId = e.Val.ContractID
+      }
+      if ('TransactionID' in e.Val) {
+        res.id = e.Val.TransactionID
+        res.transactionId = e.Val.TransactionID
+      }
+      if ('OutputID' in e.Val) {
+        res.id = e.Val.OutputID
+        res.outputId = e.Val.OutputID
+      }
+      if ('NetAddress' in e.Val) {
+        res.netAddress = e.Val.NetAddress
+      }
+      if ('PublicKey' in e.Val) {
+        res.publicKey = e.Val.PublicKey
+      }
+      return res
     })
     return [...dataTxPool, ...dataEvents]
   }, [responseEvents.data, responseTxPool.data])
-
-  const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
-    useClientFilters<EventData>()
 
   const {
     configurableColumns,
@@ -128,13 +146,6 @@ export function useEventsMain() {
     defaultSortField,
   })
 
-  const datasetFiltered = useClientFilteredDataset({
-    dataset,
-    filters,
-    sortField,
-    sortDirection,
-  })
-
   const filteredTableColumns = useMemo(
     () =>
       columns.filter(
@@ -152,9 +163,9 @@ export function useEventsMain() {
   return {
     dataState,
     error: responseEvents.error,
-    datasetCount: datasetFiltered?.length || 0,
+    datasetCount: dataset?.length || 0,
     columns: filteredTableColumns,
-    dataset: datasetFiltered,
+    dataset,
     configurableColumns,
     enabledColumns,
     sortableColumns,
@@ -165,11 +176,6 @@ export function useEventsMain() {
     setSortDirection,
     setSortField,
     sortField,
-    filters,
-    setFilter,
-    removeFilter,
-    removeLastFilter,
-    resetFilters,
     sortDirection,
     resetDefaultColumnVisibility,
   }

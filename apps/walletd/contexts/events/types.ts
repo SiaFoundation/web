@@ -3,13 +3,33 @@ import BigNumber from 'bignumber.js'
 export type EventData = {
   id: string
   timestamp: number
-  blockHeight: number
+  height?: number
+  maturityHeight?: number
   pending: boolean
   type: string
-  amount: BigNumber
+  fee?: BigNumber
+  amount?: BigNumber
+  transactionId?: string
+  contractId?: string
+  outputId?: string
+  netAddress?: string
+  publicKey?: string
 }
 
-export type TableColumnId = 'actions' | 'id' | 'type' | 'timestamp' | 'amount'
+export type TableColumnId =
+  | 'actions'
+  | 'id'
+  | 'type'
+  | 'height'
+  | 'maturityHeight'
+  | 'timestamp'
+  | 'amount'
+  | 'fee'
+  | 'transactionId'
+  | 'contractId'
+  | 'outputId'
+  | 'netAddress'
+  | 'publicKey'
 
 export const columnsDefaultVisible: TableColumnId[] = [
   'actions',
@@ -17,6 +37,7 @@ export const columnsDefaultVisible: TableColumnId[] = [
   'type',
   'timestamp',
   'amount',
+  'fee',
 ]
 
 export type SortField = 'timestamp'
