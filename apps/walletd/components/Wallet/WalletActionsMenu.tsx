@@ -10,6 +10,7 @@ import { EventsViewDropdownMenu } from './EventsViewDropdownMenu'
 import { useWalletBalance } from '@siafoundation/react-walletd'
 import { useRouter } from 'next/router'
 import { useWallets } from '../../contexts/wallets'
+import { WalletActionsDropdownMenu } from './WalletActionsDropdownMenu'
 
 export function WalletActionsMenu() {
   const status = useSyncStatus()
@@ -34,6 +35,7 @@ export function WalletActionsMenu() {
         </Button>
       )}
       <EventsViewDropdownMenu />
+      <WalletActionsDropdownMenu />
     </div>
   )
 }

@@ -8,7 +8,7 @@ import {
   Badge,
   Label,
 } from '@siafoundation/design-system'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useWalletAdd } from '@siafoundation/react-walletd'
 import { useWallets } from '../../contexts/wallets'
@@ -19,13 +19,21 @@ const defaultValues = {
   description: '',
 }
 
-function getFields(): ConfigFields<typeof defaultValues, never> {
+function getFields({
+  walletNames,
+}: {
+  walletNames: string[]
+}): ConfigFields<typeof defaultValues, never> {
   return {
     name: {
       type: 'text',
       title: 'Name',
       placeholder: 'name',
       validation: {
+        validate: {
+          unique: (value: string) =>
+            !walletNames.includes(value) || 'name is already in use',
+        },
         required: 'required',
         maxLength: 30,
       },
@@ -72,18 +80,32 @@ export function WalletUpdateDialog({
     defaultValues,
   })
   useEffect(() => {
-    form.reset(
-      wallet
-        ? {
-            name: wallet.name,
-            description: wallet.description,
-          }
-        : defaultValues
-    )
+    // timeout 0 gets around a react-hook-form glitch where both fields
+    // do not get initialized.
+    setTimeout(() => {
+      form.reset(
+        wallet
+          ? {
+              name: wallet.name,
+              description: wallet.description,
+            }
+          : defaultValues
+      )
+    }, 0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [walletId])
 
-  const fields = getFields()
+  const walletNames = useMemo(
+    () =>
+      dataset?.reduce((acc, w) => {
+        if (w.name !== wallet?.name) {
+          return acc.concat(w.name)
+        }
+        return acc
+      }, []) || [],
+    [dataset, wallet]
+  )
+  const fields = getFields({ walletNames })
   const onSubmit = useCallback(
     async (values) => {
       const response = await walletAdd.put({
