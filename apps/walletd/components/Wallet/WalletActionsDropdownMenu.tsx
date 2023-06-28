@@ -36,7 +36,13 @@ export function WalletActionsDropdownMenu() {
         </DropdownMenuLeftSlot>
         Edit wallet
       </DropdownMenuItem>
-      <DropdownMenuItem>
+      <DropdownMenuItem
+        onSelect={() =>
+          openDialog('walletRemove', {
+            walletId: wallet?.id,
+          })
+        }
+      >
         <DropdownMenuLeftSlot>
           <Delete16 />
         </DropdownMenuLeftSlot>

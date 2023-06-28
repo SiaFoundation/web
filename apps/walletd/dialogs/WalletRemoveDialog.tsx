@@ -7,9 +7,13 @@ import {
   FormSubmitButton,
   FieldText,
   Code,
+  triggerErrorToast,
 } from '@siafoundation/design-system'
+import { useWalletDelete } from '@siafoundation/react-walletd'
+import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
+import { routes } from '../config/routes'
 import { useDialog } from '../contexts/dialog'
 import { useWallets } from '../contexts/wallets'
 
@@ -50,35 +54,33 @@ export function WalletRemoveDialog({
   open,
   onOpenChange,
 }: Props) {
+  const router = useRouter()
   const { walletId } = params || {}
   const { closeDialog } = useDialog()
   const { dataset } = useWallets()
   const wallet = dataset?.find((w) => w.id === walletId)
 
-  // const volumeDelete = useVolumeDelete()
+  const walletDelete = useWalletDelete()
 
   const form = useForm({
     defaultValues,
   })
 
-  const onSubmit = useCallback(
-    async (values: typeof defaultValues) => {
-      // const response = await volumeDelete.delete({
-      //   params: {
-      //     id: volume.data?.ID,
-      //     force: values.force,
-      //   },
-      // })
-      // if (response.error) {
-      //   triggerErrorToast(response.error)
-      // } else {
+  const onSubmit = useCallback(async () => {
+    const response = await walletDelete.delete({
+      params: {
+        id: walletId,
+      },
+    })
+    if (response.error) {
+      triggerErrorToast(response.error)
+    } else {
       triggerSuccessToast('Wallet permanently removed.')
       form.reset()
       closeDialog()
-      // }
-    },
-    [form, closeDialog]
-  )
+      router.push(routes.home)
+    }
+  }, [form, walletId, walletDelete, closeDialog, router])
 
   const fields = useMemo(() => getFields(wallet?.name), [wallet])
 
