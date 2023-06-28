@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: renterd issues
+    url: https://github.com/SiaFoundation/renterd/issues/new/choose
+    about: Please create renterd UI issues on the renterd repo.
+  - name: hostd issues
+    url: https://github.com/SiaFoundation/hostd/issues/new/choose
+    about: Please create hostd UI issues on the hostd repo.
+  - name: walletd issues
+    url: https://github.com/SiaFoundation/walletd/issues/new/choose
+    about: Please create walletd UI issues on the walletd repo.
+  - name: other issues
+    url: https://github.com/SiaFoundation/web/issues/new/choose
+    about: Create other issues on the web repo.
