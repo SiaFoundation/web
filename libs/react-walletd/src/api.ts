@@ -174,7 +174,7 @@ export function useWalletDelete(
     { ...args, route: '/wallets/:id' },
     async (mutate, data) => {
       mutate((key) =>
-        key.startsWith(walletAddressesRoute.replace(':id', data.params.id))
+        key.startsWith(walletsRoute.replace(':id', data.params.id))
       )
     }
   )
@@ -197,6 +197,19 @@ export function useWalletAddressAdd(
       ...args,
       route: '/wallets/:id/addresses/:addr',
     },
+    async (mutate, data) => {
+      mutate((key) =>
+        key.startsWith(walletAddressesRoute.replace(':id', data.params.id))
+      )
+    }
+  )
+}
+
+export function useWalletAddressDelete(
+  args?: HookArgsCallback<{ id: string; addr: string }, void, never>
+) {
+  return useDeleteFunc(
+    { ...args, route: '/wallets/:id/addresses/:addr' },
     async (mutate, data) => {
       mutate((key) =>
         key.startsWith(walletAddressesRoute.replace(':id', data.params.id))

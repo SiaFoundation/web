@@ -43,6 +43,10 @@ import {
   WalletAddressesAddDialog,
   WalletAddressesAddDialogParams,
 } from '../dialogs/WalletAddressesAddDialog'
+import {
+  AddressRemoveDialog,
+  AddressRemoveDialogParams,
+} from '../dialogs/AddressRemoveDialog'
 // import { CmdKDialog } from '../components/CmdKDialog'
 
 type DialogParams = {
@@ -51,6 +55,7 @@ type DialogParams = {
   sendSiacoin?: void
   transactionDetails?: void
   addressUpdate?: AddressUpdateDialogParams
+  addressRemove?: AddressRemoveDialogParams
   connectPeer?: SyncerConnectPeerDialogParams
   confirm?: ConfirmDialogParams
   walletAddType?: WalletAddTypeDialogParams
@@ -200,6 +205,11 @@ export function Dialogs() {
       <AddressUpdateDialog
         open={dialog === 'addressUpdate'}
         params={params['addressUpdate']}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <AddressRemoveDialog
+        open={dialog === 'addressRemove'}
+        params={params['addressRemove']}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <SyncerConnectPeerDialog

@@ -30,7 +30,9 @@ export const columns: WalletsTableColumn[] = [
     render: ({ data: { id, name, description } }) => {
       return (
         <div className="flex flex-col gap-2">
-          <Text weight="bold">{name || id}</Text>
+          <Text weight="bold" ellipsis>
+            {name || id}
+          </Text>
           {description && (
             <Tooltip
               content={
