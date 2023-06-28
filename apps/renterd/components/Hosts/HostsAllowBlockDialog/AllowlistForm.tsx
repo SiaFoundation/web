@@ -117,7 +117,7 @@ export function AllowlistForm() {
                 onClick={(value) =>
                   copyToClipboard(value, 'allowed public key')
                 }
-                onRemove={(value) => alert(value)}
+                onRemove={(value) => allowlistUpdate([], [value])}
               />
             </div>
           </ScrollArea>
