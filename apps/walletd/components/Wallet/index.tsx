@@ -10,6 +10,7 @@ import { StateNoneYet } from './StateNoneYet'
 import { StateError } from './StateError'
 import { useWallets } from '../../contexts/wallets'
 import { WalletNavMenu } from './WalletNavMenu'
+import { EventsFilterBar } from './EventsFilterBar'
 
 export function Wallet() {
   const { openDialog } = useDialog()
@@ -32,6 +33,7 @@ export function Wallet() {
       title={wallet?.name}
       nav={<WalletNavMenu />}
       actions={<WalletActionsMenu />}
+      stats={<EventsFilterBar />}
       size="full"
     >
       <div className="px-6 py-7 min-w-fit">

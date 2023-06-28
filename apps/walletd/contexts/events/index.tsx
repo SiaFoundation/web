@@ -1,6 +1,7 @@
 import {
   useTableState,
   useDatasetEmptyState,
+  useServerFilters,
 } from '@siafoundation/design-system'
 import {
   useWalletEvents,
@@ -24,11 +25,15 @@ import { columns } from './columns'
 import { useRouter } from 'next/router'
 import BigNumber from 'bignumber.js'
 
-const filters = []
+const defaultLimit = 100
 
 export function useEventsMain() {
   const router = useRouter()
   const id = router.query.id as string
+  const limit = Number(router.query.limit || defaultLimit)
+  const offset = Number(router.query.offset || 0)
+  const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
+    useServerFilters()
   const responseTxPool = useWalletTxPool({
     disabled: !id,
     params: {
@@ -38,6 +43,8 @@ export function useEventsMain() {
   const responseEvents = useWalletEvents({
     disabled: !id,
     params: {
+      limit,
+      offset,
       id,
     },
   })
@@ -163,7 +170,7 @@ export function useEventsMain() {
   return {
     dataState,
     error: responseEvents.error,
-    datasetCount: dataset?.length || 0,
+    pageCount: dataset?.length || 0,
     columns: filteredTableColumns,
     dataset,
     configurableColumns,
@@ -178,6 +185,13 @@ export function useEventsMain() {
     sortField,
     sortDirection,
     resetDefaultColumnVisibility,
+    filters,
+    setFilter,
+    removeFilter,
+    removeLastFilter,
+    resetFilters,
+    offset,
+    limit,
   }
 }
 

@@ -37,6 +37,7 @@ export const columns: EventsTableColumn[] = [
     id: 'type',
     label: 'type',
     category: 'general',
+    fixed: true,
     render: ({ data: { type } }) => {
       return <Badge>{type}</Badge>
     },
@@ -48,7 +49,7 @@ export const columns: EventsTableColumn[] = [
     render: ({ data: { height, pending } }) => {
       if (pending) {
         return (
-          <Text size="12">
+          <Text size="12" ellipsis>
             <LoadingDots />
           </Text>
         )
@@ -56,7 +57,11 @@ export const columns: EventsTableColumn[] = [
       if (!height) {
         return null
       }
-      return <Text size="12">{height.toLocaleString()}</Text>
+      return (
+        <Text size="12" ellipsis>
+          {height.toLocaleString()}
+        </Text>
+      )
     },
   },
   {
@@ -67,7 +72,11 @@ export const columns: EventsTableColumn[] = [
       if (!maturityHeight) {
         return null
       }
-      return <Text size="12">{maturityHeight.toLocaleString()}</Text>
+      return (
+        <Text size="12" ellipsis>
+          {maturityHeight.toLocaleString()}
+        </Text>
+      )
     },
   },
   {
@@ -77,13 +86,15 @@ export const columns: EventsTableColumn[] = [
     render: ({ data: { timestamp, pending } }) => {
       if (pending) {
         return (
-          <Text size="12">
+          <Text size="12" ellipsis>
             <LoadingDots />
           </Text>
         )
       }
       return (
-        <Text size="12">{humanDate(timestamp, { timeStyle: 'short' })}</Text>
+        <Text size="12" ellipsis>
+          {humanDate(timestamp, { timeStyle: 'short' })}
+        </Text>
       )
     },
   },
@@ -106,7 +117,7 @@ export const columns: EventsTableColumn[] = [
       if (!fee) {
         return null
       }
-      return <ValueSc size="12" value={fee} />
+      return <ValueSc size="12" variant="value" value={fee} />
     },
   },
   {
