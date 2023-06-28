@@ -85,6 +85,7 @@ export function WalletAddWatchDialog({ trigger, open, onOpenChange }: Props) {
           type: 'watch',
           name: values.name,
           description: values.description,
+          createdAt: new Date().getTime(),
         },
       })
       if (response.error) {

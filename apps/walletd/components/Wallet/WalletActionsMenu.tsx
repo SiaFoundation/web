@@ -9,6 +9,7 @@ import { AddressesButton } from './AddressesButton'
 import { EventsViewDropdownMenu } from './EventsViewDropdownMenu'
 import { useWalletBalance } from '@siafoundation/react-walletd'
 import { useRouter } from 'next/router'
+import { useWallets } from '../../contexts/wallets'
 
 export function WalletActionsMenu() {
   const status = useSyncStatus()
@@ -18,6 +19,7 @@ export function WalletActionsMenu() {
       id: router.query.id as string,
     },
   })
+  const { wallet } = useWallets()
   return (
     <div className="flex gap-2">
       <WalletBalance
@@ -25,10 +27,12 @@ export function WalletActionsMenu() {
         isSynced={status.isSynced}
       />
       <AddressesButton />
-      <Button size="small" variant="accent">
-        <ArrowUpRight16 />
-        Send
-      </Button>
+      {wallet?.type !== 'watch' && (
+        <Button size="small" variant="accent">
+          <ArrowUpRight16 />
+          Send
+        </Button>
+      )}
       <EventsViewDropdownMenu />
     </div>
   )

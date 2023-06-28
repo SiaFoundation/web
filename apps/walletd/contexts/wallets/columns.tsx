@@ -5,6 +5,7 @@ import {
   Paragraph,
   Tooltip,
 } from '@siafoundation/design-system'
+import { humanDate } from '@siafoundation/sia-js'
 import { walletTypes } from '../../config/walletTypes'
 import { WalletData, TableColumnId } from './types'
 
@@ -55,6 +56,17 @@ export const columns: WalletsTableColumn[] = [
           <Badge interactive={false}>{type}</Badge>
         </Tooltip>
       )
+    },
+  },
+  {
+    id: 'createdAt',
+    label: 'created on',
+    category: 'general',
+    render: ({ data: { createdAt } }) => {
+      if (!createdAt) {
+        return null
+      }
+      return <Text>{humanDate(createdAt, { dateStyle: 'medium' })}</Text>
     },
   },
 ]
