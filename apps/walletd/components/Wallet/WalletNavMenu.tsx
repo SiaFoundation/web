@@ -19,7 +19,7 @@ export function WalletNavMenu() {
         className="!p-0"
         tip={walletTypes[wallet?.type]?.title}
       >
-        {walletTypes[wallet?.type].icon}
+        {walletTypes[wallet?.type]?.icon}
       </Button>
     </div>
   )

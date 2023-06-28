@@ -17,8 +17,8 @@ export type EventData = {
 }
 
 export type TableColumnId =
-  | 'actions'
-  | 'id'
+  // | 'actions'
+  // | 'id'
   | 'type'
   | 'height'
   | 'maturityHeight'
@@ -32,17 +32,18 @@ export type TableColumnId =
   | 'publicKey'
 
 export const columnsDefaultVisible: TableColumnId[] = [
-  'actions',
-  'id',
+  // 'actions',
+  // 'id',
   'type',
+  'height',
   'timestamp',
   'amount',
   'fee',
 ]
 
-export type SortField = 'timestamp'
+export type SortField = 'id'
 
-export const defaultSortField: SortField = 'timestamp'
+export const defaultSortField: SortField = 'id'
 
 export const sortOptions: {
   id: SortField

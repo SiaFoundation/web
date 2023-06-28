@@ -215,7 +215,10 @@ export function useWalletBalance(
 }
 
 export function useWalletEvents(
-  args: HookArgsSwr<{ id: string }, WalletEvent[]>
+  args: HookArgsSwr<
+    { id: string; offset: number; limit: number },
+    WalletEvent[]
+  >
 ) {
   return useGetSwr({
     ...args,

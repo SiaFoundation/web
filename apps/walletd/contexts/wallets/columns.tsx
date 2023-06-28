@@ -30,7 +30,7 @@ export const columns: WalletsTableColumn[] = [
     render: ({ data: { id, name, description } }) => {
       return (
         <div className="flex flex-col gap-2">
-          <Text>{name || id}</Text>
+          <Text weight="bold">{name || id}</Text>
           {description && (
             <Tooltip
               content={
@@ -74,7 +74,7 @@ export const columns: WalletsTableColumn[] = [
         return null
       }
       return (
-        <Text size="14">{humanDate(createdAt, { dateStyle: 'medium' })}</Text>
+        <Text size="12">{humanDate(createdAt, { dateStyle: 'medium' })}</Text>
       )
     },
   },
