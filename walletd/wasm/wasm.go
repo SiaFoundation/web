@@ -10,7 +10,7 @@ import (
 
 	"go.sia.tech/core/consensus"
 	"go.sia.tech/core/types"
-	"go.sia.tech/web/walletd-wasm/core"
+	"go.sia.tech/web/walletd/wasm/core"
 )
 
 func main() {

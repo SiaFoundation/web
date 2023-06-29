@@ -10,7 +10,7 @@
     "build": "nx build",
     "test": "nx test",
     "release": "changeset publish",
-    "build:wasm": "GOOS=js GOARCH=wasm go build -o  apps/walletd/public/walletd.wasm ./walletd-wasm",
+    "build:wasm": "GOOS=js GOARCH=wasm go build -o  apps/walletd/public/walletd.wasm ./walletd/wasm",
     "feeds": "node apps/website/scripts/syncFeeds.js"
   },
   "private": true,
