@@ -5,5 +5,4 @@ use (
 	./hostd
 	./renterd
 	./walletd
-	./walletd-wasm
 )
