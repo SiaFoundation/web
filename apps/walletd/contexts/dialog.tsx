@@ -47,12 +47,13 @@ import {
   AddressRemoveDialog,
   AddressRemoveDialogParams,
 } from '../dialogs/AddressRemoveDialog'
+import { WalletSendSiacoinDialog } from '../dialogs/WalletSendSiacoinDialog'
 // import { CmdKDialog } from '../components/CmdKDialog'
 
 type DialogParams = {
   cmdk?: void
   settings?: void
-  sendSiacoin?: void
+  sendSiacoin?: WalletSendSiacoinDialog
   transactionDetails?: void
   addressUpdate?: AddressUpdateDialogParams
   addressRemove?: AddressRemoveDialogParams
@@ -221,6 +222,13 @@ export function Dialogs() {
           })
         }
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <WalletSendSiacoinDialog
+        open={dialog === 'sendSiacoin'}
+        params={params['sendSiacoin']}
+        onOpenChange={(val) =>
+          val ? openDialog(dialog, params['sendSiacoin']) : closeDialog()
+        }
       />
       <ConfirmDialog
         open={dialog === 'confirm'}

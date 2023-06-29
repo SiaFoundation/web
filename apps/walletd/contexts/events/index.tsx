@@ -115,11 +115,11 @@ export function useEventsMain() {
         res.contractId = e.Val.ContractID
       }
       if ('TransactionID' in e.Val) {
-        res.id = e.Val.TransactionID
+        res.id += e.Val.TransactionID
         res.transactionId = e.Val.TransactionID
       }
       if ('OutputID' in e.Val) {
-        res.id = e.Val.OutputID
+        res.id += e.Val.OutputID
         res.outputId = e.Val.OutputID
       }
       if ('NetAddress' in e.Val) {
@@ -130,7 +130,7 @@ export function useEventsMain() {
       }
       return res
     })
-    return [...dataTxPool, ...dataEvents]
+    return [...dataTxPool.reverse(), ...dataEvents]
   }, [responseEvents.data, responseTxPool.data])
 
   const {
