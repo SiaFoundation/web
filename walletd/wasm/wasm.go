@@ -4,99 +4,125 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"log"
-	"strings"
 	"syscall/js"
 
 	"go.sia.tech/core/consensus"
 	"go.sia.tech/core/types"
 	"go.sia.tech/web/walletd/wasm/core"
+	"go.sia.tech/web/walletd/wasm/utils"
 )
 
 func main() {
-	fmt.Println("walletd WASM: init")
-	js.Global().Set("walletdWasm", map[string]interface{}{
-		"signTransaction": js.FuncOf(signTransaction),
-		"keyFromSeed":     js.FuncOf(keyFromSeed),
-		"addressFromSeed": js.FuncOf(addressFromSeed),
+	fmt.Println("wallet WASM: init")
+	js.Global().Set("walletWasm", map[string]interface{}{
+		"newSeedPhrase":            js.FuncOf(newSeedPhrase),
+		"seedFromPhrase":           js.FuncOf(seedFromPhrase),
+		"privateKeyFromSeed":       js.FuncOf(privateKeyFromSeed),
+		"publicKeyFromSeed":        js.FuncOf(publicKeyFromSeed),
+		"unlockConditionsFromSeed": js.FuncOf(unlockConditionsFromSeed),
+		"addressFromSeed":          js.FuncOf(addressFromSeed),
+		"signTransaction":          js.FuncOf(signTransaction),
 	})
 	c := make(chan bool, 1)
 	<-c
 }
 
-func checkArgs(args []js.Value, argTypes ...js.Type) error {
-	if len(args) != len(argTypes) {
-		return fmt.Errorf("incorrect number of arguments - expected: %d, got: %d", len(argTypes), len(args))
-	}
-
-	for i, arg := range args {
-		if arg.Type() != argTypes[i] {
-			return fmt.Errorf("incorrect argument %d - expected: %s, got: %s", i, argTypes[i], arg.Type())
-		}
-	}
-
-	return nil
-}
-
-func hexStringToByte32Array(str string) [32]byte {
-	// The length of the hexString should be 64 to fit in [32]byte.
-	// If the hexString is shorter, you need to pad it with zeroes.
-
-	// You should ensure that hexString length is exactly 64 characters long.
-	// This step is necessary only if your hex string is shorter than expected.
-	if len(str) < 64 {
-		fmt.Println("WARNING: not 64 characters")
-		str = str + strings.Repeat("0", 64-len(str))
-	}
-
-	byteArray, err := hex.DecodeString(str)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var byte32Array [32]byte
-	copy(byte32Array[:], byteArray[:32])
-
-	return byte32Array
-}
-
-func hexStringToByteArray(str string) []byte {
-	// if len(str) < 64 {
-	// 	fmt.Println("WARNING: not 64 characters")
-	// 	str = str + strings.Repeat("0", 64-len(str))
-	// }
-
-	byteArray, err := hex.DecodeString(str)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return byteArray
-}
-
-func keyFromSeed(this js.Value, args []js.Value) interface{} {
-	if err := checkArgs(args, js.TypeString, js.TypeNumber); err != nil {
+func newSeedPhrase(this js.Value, args []js.Value) interface{} {
+	if err := utils.CheckArgs(args); err != nil {
 		return map[string]any{
 			"error": err.Error(),
 		}
 	}
 
-	seed := hexStringToByte32Array(args[0].String())
-	index := uint64(args[1].Int())
-	privateKey := core.KeyFromSeed(&seed, index)
 	return map[string]any{
-		"privateKey": privateKey,
+		"phrase": core.NewSeedPhrase(),
+		"error":  nil,
+	}
+}
+
+func seedFromPhrase(this js.Value, args []js.Value) interface{} {
+	if err := utils.CheckArgs(args, js.TypeString); err != nil {
+		return map[string]any{
+			"error": err.Error(),
+		}
+	}
+
+	phrase := args[0].String()
+	seed, err := core.SeedFromPhrase(phrase)
+
+	if err != nil {
+		return map[string]any{
+			"error": err.Error(),
+		}
+	}
+
+	seedHex := hex.EncodeToString(seed[:])
+	return map[string]any{
+		"seed":  seedHex,
+		"error": err,
+	}
+}
+
+func privateKeyFromSeed(this js.Value, args []js.Value) interface{} {
+	if err := utils.CheckArgs(args, js.TypeString, js.TypeNumber); err != nil {
+		return map[string]any{
+			"error": err.Error(),
+		}
+	}
+
+	seed := utils.HexStringToByte32Array(args[0].String())
+	index := uint64(args[1].Int())
+	privateKey := core.PrivateKeyFromSeed(&seed, index)
+	return map[string]any{
+		"privateKey": hex.EncodeToString(privateKey),
+	}
+}
+
+func publicKeyFromSeed(this js.Value, args []js.Value) interface{} {
+	if err := utils.CheckArgs(args, js.TypeString, js.TypeNumber); err != nil {
+		return map[string]any{
+			"error": err.Error(),
+		}
+	}
+
+	seed := utils.HexStringToByte32Array(args[0].String())
+	index := uint64(args[1].Int())
+	publicKey := core.PublicKeyFromSeed(&seed, index)
+	return map[string]any{
+		"publicKey": publicKey,
+	}
+}
+
+func unlockConditionsFromSeed(this js.Value, args []js.Value) interface{} {
+	if err := utils.CheckArgs(args, js.TypeString, js.TypeNumber); err != nil {
+		return map[string]any{
+			"error": err.Error(),
+		}
+	}
+
+	seed := utils.HexStringToByte32Array(args[0].String())
+	index := uint64(args[1].Int())
+	unlockConditions := core.UnlockConditionsFromSeed(&seed, index)
+
+	data, err := utils.InterfaceToJSON(unlockConditions)
+	if err != nil {
+		return map[string]any{
+			"error": err,
+		}
+	}
+	return map[string]any{
+		"unlockConditions": data,
 	}
 }
 
 func addressFromSeed(this js.Value, args []js.Value) interface{} {
-	if err := checkArgs(args, js.TypeString, js.TypeNumber); err != nil {
+	if err := utils.CheckArgs(args, js.TypeString, js.TypeNumber); err != nil {
 		return map[string]any{
 			"error": err.Error(),
 		}
 	}
 
-	seed := hexStringToByte32Array(args[0].String())
+	seed := utils.HexStringToByte32Array(args[0].String())
 	index := uint64(args[1].Int())
 	address := core.AddressFromSeed(&seed, index)
 	return map[string]any{
@@ -105,33 +131,48 @@ func addressFromSeed(this js.Value, args []js.Value) interface{} {
 }
 
 func signTransaction(this js.Value, args []js.Value) interface{} {
-	if err := checkArgs(args, js.TypeObject, js.TypeObject, js.TypeNumber, js.TypeString); err != nil {
+	if err := utils.CheckArgs(args, js.TypeString, js.TypeString, js.TypeString, js.TypeNumber, js.TypeString); err != nil {
 		return map[string]any{
 			"error": err.Error(),
 		}
 	}
 
 	jsonCs := args[0].String()
-	jsonTxn := args[1].String()
-	sigIndex := args[2].Int()
-	key := types.PrivateKey(hexStringToByteArray(args[3].String()))
+	jsonCn := args[1].String()
+	jsonTxn := args[2].String()
+	sigIndex := args[3].Int()
+	seed := utils.HexStringToByteArray(args[4].String())
 
-	cs := consensus.State{}
+	var cs consensus.State
 	if err := json.Unmarshal([]byte(jsonCs), &cs); err != nil {
 		return map[string]any{
 			"error": fmt.Sprintf("error decoding consensus state: %s", err),
 		}
 	}
 
-	txn := types.Transaction{}
+	var cn consensus.Network
+	if err := json.Unmarshal([]byte(jsonCn), &cn); err != nil {
+		return map[string]any{
+			"error": fmt.Sprintf("error decoding consensus network: %s", err),
+		}
+	}
+
+	var txn types.Transaction
 	if err := json.Unmarshal([]byte(jsonTxn), &txn); err != nil {
 		return map[string]any{
 			"error": fmt.Sprintf("error decoding transaction: %s", err),
 		}
 	}
+	cs.Network = &cn
 
-	signedTxn := core.SignTransaction(cs, txn, sigIndex, key)
+	signedTxn := core.SignTransaction(cs, txn, sigIndex, seed)
+	data, err := utils.InterfaceToJSON(signedTxn)
+	if err != nil {
+		return map[string]any{
+			"error": err,
+		}
+	}
 	return map[string]any{
-		"transaction": signedTxn,
+		"transaction": data,
 	}
 }

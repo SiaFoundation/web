@@ -8,14 +8,20 @@ type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
   form: UseFormReturn<Values>
   field: ConfigField<Values, Categories>
-  type?: 'password'
+  size?: React.ComponentProps<typeof TextField>['size']
+  autoComplete?: React.ComponentProps<typeof TextField>['autoComplete']
 }
 
 export function FieldText<
   Values extends FieldValues,
   Categories extends string
->({ name, form, field, type }: Props<Values, Categories>) {
-  const { placeholder } = field
+>({
+  name,
+  form,
+  field,
+  size = 'small',
+  autoComplete,
+}: Props<Values, Categories>) {
   const { onChange, onBlur, value, error } = useRegisterForm({
     name,
     form,
@@ -33,7 +39,9 @@ export function FieldText<
       form={form}
     >
       <TextField
-        placeholder={placeholder}
+        placeholder={field.placeholder}
+        size={size}
+        autoComplete={autoComplete}
         value={localValue}
         type={field.type}
         readOnly={field.readOnly}

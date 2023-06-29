@@ -8,12 +8,13 @@ type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
   form: UseFormReturn<Values>
   field: ConfigField<Values, Categories>
+  size?: React.ComponentProps<typeof SiacoinField>['size']
 }
 
 export function FieldSiacoin<
   Values extends FieldValues,
   Categories extends string
->({ name, form, field }: Props<Values, Categories>) {
+>({ name, form, field, size = 'small' }: Props<Values, Categories>) {
   const {
     average,
     suggestion,
@@ -30,7 +31,7 @@ export function FieldSiacoin<
     <FieldGroup title={field.title} name={name} form={form}>
       <SiacoinField
         name={name}
-        size="small"
+        size={size}
         sc={value}
         units={units}
         decimalsLimitSc={decimalsLimitSc}

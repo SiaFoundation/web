@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
-  Button,
   ConfigFields,
   Dialog,
   FieldNumber,
@@ -8,21 +7,18 @@ import {
   FormSubmitButton,
   triggerErrorToast,
   triggerSuccessToast,
-  View16,
-  ViewOff16,
 } from '@siafoundation/design-system'
 import { useWalletAddressAdd } from '@siafoundation/react-walletd'
 import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAddresses } from '../contexts/addresses'
 import { useDialogFormHelpers } from '../hooks/useDialogFormHelpers'
-import { getWalletdWasm } from '../lib/wasm'
+import { getWalletWasm } from '../lib/wasm'
 import { SeedLayout } from './SeedLayout'
-import * as bip39 from 'bip39'
 import { useWallets } from '../contexts/wallets'
-import { blake2bHex } from 'blakejs'
 import BigNumber from 'bignumber.js'
 import { VerifyIcon } from './VerifyIcon'
+import { getFieldMnemonic, MnemonicFieldType } from '../lib/fieldMnemonic'
 
 export type WalletAddressesGenerateDialogParams = {
   walletId: string
@@ -43,55 +39,21 @@ function getDefaultValues(lastIndex: number) {
   }
 }
 
-type MnemonicType = 'text' | 'password'
-
 function getFields({
   seedHash,
-  mnemonicType,
-  setMnemonicType,
+  mnemonicFieldType,
+  setMnemonicFieldType,
 }: {
   seedHash?: string
-  mnemonicType: MnemonicType
-  setMnemonicType: (type: MnemonicType) => void
+  mnemonicFieldType: MnemonicFieldType
+  setMnemonicFieldType: (type: MnemonicFieldType) => void
 }): ConfigFields<ReturnType<typeof getDefaultValues>, never> {
   return {
-    mnemonic: {
-      type: mnemonicType,
-      title: 'Seed',
-      actions: (
-        <div className="flex gap-1">
-          <Button
-            tip={mnemonicType === 'password' ? 'Show seed' : 'Hide seed'}
-            tabIndex={-1}
-            variant="ghost"
-            icon="hover"
-            onClick={() =>
-              setMnemonicType(mnemonicType === 'password' ? 'text' : 'password')
-            }
-          >
-            {mnemonicType === 'password' ? <ViewOff16 /> : <View16 />}
-          </Button>
-        </div>
-      ),
-      placeholder:
-        'island submit vague scrub exhibit cherry front spoon crop debate filter virus',
-      validation: {
-        required: 'required',
-        validate: {
-          valid: (value: string) =>
-            bip39.validateMnemonic(value) ||
-            'seed should be 12 word BIP39 mnemonic',
-          match: (mnemonic: string) => {
-            const seed = bip39.mnemonicToSeedSync(mnemonic)
-            return (
-              !seedHash ||
-              blake2bHex(seed) === seedHash ||
-              'seed does not match'
-            )
-          },
-        },
-      },
-    },
+    mnemonic: getFieldMnemonic({
+      seedHash,
+      setMnemonicFieldType,
+      mnemonicFieldType,
+    }),
     index: {
       type: 'number',
       title: 'Start index',
@@ -126,9 +88,8 @@ export function WalletAddressesGenerateDialog({
   const wallet = dataset?.find((w) => w.id === walletId)
   const nextIndex = lastIndex + 1
   const defaultValues = getDefaultValues(nextIndex)
-  const [mnemonicType, setMnemonicType] = useState<'password' | 'text'>(
-    'password'
-  )
+  const [mnemonicFieldType, setMnemonicFieldType] =
+    useState<MnemonicFieldType>('password')
   const form = useForm({
     mode: 'all',
     defaultValues,
@@ -154,16 +115,16 @@ export function WalletAddressesGenerateDialog({
 
   const fields = getFields({
     seedHash: wallet?.seedHash,
-    mnemonicType,
-    setMnemonicType,
+    mnemonicFieldType,
+    setMnemonicFieldType,
   })
 
   const addressAdd = useWalletAddressAdd()
   const generateAddresses = useCallback(
     async (mnemonic: string, index: number, count: number) => {
       for (let i = index; i < index + count; i++) {
-        const seed = bip39.mnemonicToSeedSync(mnemonic).toString('hex')
-        const addrRes = getWalletdWasm().addressFromSeed(seed, i)
+        const { seed } = getWalletWasm().seedFromPhrase(mnemonic)
+        const addrRes = getWalletWasm().addressFromSeed(seed, i)
         if (addrRes.error) {
           triggerErrorToast('Error generating addresses.')
           return

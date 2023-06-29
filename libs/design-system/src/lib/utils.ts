@@ -14,6 +14,7 @@ export function stripPrefix(hash: string) {
     .replace(/^txid:/, '')
     .replace(/^fcid:/, '')
     .replace(/^h:/, '')
+    .replace(/^scoid:/, '')
 }
 
 export function getTitleId(title: string, id: string, limit?: number) {

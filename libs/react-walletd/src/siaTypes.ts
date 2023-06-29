@@ -1,6 +1,8 @@
-import { Currency, Transaction } from '@siafoundation/react-core'
+import { Currency, Hash256 } from '@siafoundation/react-core'
 
 export type BlockHeight = number
+export type SiacoinOutputID = Hash256
+export type SiafundOutputID = Hash256
 
 // TODO: synchronize with other daemons and react-core
 
@@ -9,7 +11,7 @@ export type ChainIndex = {
   ID: string
 }
 
-export type ConsensusState = {
+export type ConsensusNetwork = {
   name: 'mainnet' | 'zen'
   initialCoinbase: Currency
   minimumCoinbase: Currency
@@ -42,13 +44,40 @@ export type ConsensusState = {
   }
 }
 
+export type ConsensusState = {
+  network: ConsensusNetwork
+
+  index: ChainIndex
+  prevTimestamps: string[]
+  depth: string
+  childTarget: number
+  siafundPool: string
+
+  // hardfork-related state
+  oakTime: number
+  oakTarget: number
+  foundationPrimaryAddress: string
+  foundationFailsafeAddress: string
+}
+
+export type UnlockConditions = {
+  timelock: number
+  publicKeys?: string[]
+  signaturesRequired: number
+}
+
+export type SiacoinInput = {
+  parentID: string
+  unlockConditions: UnlockConditions
+}
+
 export type SiacoinOutput = {
   value: string
   address: string
 }
 
 export type SiacoinElement = SiacoinOutput & {
-  ID: string
+  ID: SiacoinOutputID
 }
 
 export type SiafundOutput = {
@@ -57,7 +86,38 @@ export type SiafundOutput = {
 }
 
 export type SiafundElement = SiafundOutput & {
-  ID: string
+  ID: SiafundOutputID
+}
+
+export type TransactionSignature = {
+  parentID: string
+  publicKeyIndex: number
+  timelock: number
+  coveredFields: CoveredFields
+  signature?: string
+}
+
+export type CoveredFields = {
+  wholeTransaction: boolean
+  siacoinInputs?: number[]
+  siacoinOutputs?: number[]
+  fileContracts?: number[]
+  fileContractRevisions?: number[]
+  storageProofs?: number[]
+  siafundInputs?: number[]
+  siafundOutputs?: number[]
+  minerFees?: number[]
+  arbitraryData?: number[]
+  signatures?: number[]
+}
+
+export interface Transaction {
+  siacoinInputs?: SiacoinInput[]
+  siacoinOutputs?: SiacoinOutput[]
+  siafundOutputs?: SiafundOutput[]
+  minerFees?: Currency[]
+  arbitraryData?: string[]
+  signatures?: TransactionSignature[]
 }
 
 export type FileContract = {

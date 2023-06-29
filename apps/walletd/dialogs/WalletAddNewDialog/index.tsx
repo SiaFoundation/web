@@ -19,10 +19,10 @@ import { useDialog } from '../../contexts/dialog'
 import { useWallets } from '../../contexts/wallets'
 import { v4 as uuidv4 } from 'uuid'
 import { walletAddTypes } from '../../config/walletTypes'
-import * as bip39 from 'bip39'
 import { blake2bHex } from 'blakejs'
 import { SeedLayout } from '../SeedLayout'
 import { SeedIcon } from '../SeedIcon'
+import { getWalletWasm } from '../../lib/wasm'
 
 const defaultValues = {
   name: '',
@@ -72,9 +72,10 @@ function getFields({
       validation: {
         required: 'required',
         validate: {
-          valid: (value: string) =>
-            bip39.validateMnemonic(value) ||
-            'seed should be 12 word BIP39 mnemonic',
+          valid: (value: string) => {
+            const { error } = getWalletWasm().seedFromPhrase(value)
+            return !error || 'seed should be 12 word BIP39 mnemonic'
+          },
           copied: (_, values) => values.hasCopied || 'Copy seed to continue',
         },
       },
@@ -115,15 +116,17 @@ export function WalletAddNewDialog({ trigger, open, onOpenChange }: Props) {
     form.clearErrors(['mnemonic'])
   }, [mnemonic, form])
 
-  const regenerateMnemonic = useCallback(() => {
-    const m = bip39.generateMnemonic()
+  const regenerateMnemonic = useCallback(async () => {
+    const { phrase } = getWalletWasm().newSeedPhrase()
     form.setValue('hasCopied', false)
-    form.setValue('mnemonic', m)
+    form.setValue('mnemonic', phrase)
     form.clearErrors(['hasCopied', 'mnemonic'])
   }, [form])
 
   useEffect(() => {
-    regenerateMnemonic()
+    if (open) {
+      regenerateMnemonic()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
@@ -135,7 +138,7 @@ export function WalletAddNewDialog({ trigger, open, onOpenChange }: Props) {
   const onSubmit = useCallback(
     async (values) => {
       const id = uuidv4()
-      const seed = bip39.mnemonicToSeedSync(values.mnemonic)
+      const { seed } = getWalletWasm().seedFromPhrase(values.mnemonic)
       const seedHash = blake2bHex(seed)
       const response = await walletAdd.put({
         params: {

@@ -6,18 +6,22 @@ import {
   HookArgsSwr,
   HookArgsCallback,
   delay,
-  Transaction,
   getMainnetBlockHeight,
   getTestnetZenBlockHeight,
   useDeleteFunc,
+  Currency,
 } from '@siafoundation/react-core'
 import {
   BlockHeight,
   ChainIndex,
   ConsensusState,
+  ConsensusNetwork,
   PoolTransaction,
   SiacoinElement,
+  SiacoinOutputID,
   SiafundElement,
+  SiafundOutputID,
+  Transaction,
   WalletEvent,
 } from './siaTypes'
 
@@ -32,7 +36,16 @@ export function useConsensusTip(args?: HookArgsSwr<void, ConsensusTip>) {
   })
 }
 
-export function useConsensusNetwork(args?: HookArgsSwr<void, ConsensusState>) {
+export function useConsensusTipState(args?: HookArgsSwr<void, ConsensusState>) {
+  return useGetSwr({
+    ...args,
+    route: '/consensus/tipstate',
+  })
+}
+
+export function useConsensusNetwork(
+  args?: HookArgsSwr<void, ConsensusNetwork>
+) {
   return useGetSwr({
     ...args,
     route: '/consensus/network',
@@ -264,9 +277,27 @@ export function useWalletOutputs(
   })
 }
 
+type WalletFundRequest = {
+  transaction: Transaction
+  amount: Currency
+  changeAddress: string
+}
+
+export type WalletFundResponse = {
+  transaction: Transaction
+  toSign: string[]
+  dependsOn: Transaction[]
+}
+
+export function useWalletFund(
+  args?: HookArgsCallback<{ id: string }, WalletFundRequest, WalletFundResponse>
+) {
+  return usePostFunc({ ...args, route: '/wallets/:id/fund' })
+}
+
 type WalletReserveRequest = {
-  siacoinOutputs: SiacoinElement[]
-  siafundOutputs: SiafundElement[]
+  siacoinOutputs: SiacoinOutputID[]
+  siafundOutputs: SiafundOutputID[]
   duration: number
 }
 
@@ -277,8 +308,8 @@ export function useWalletReserve(
 }
 
 type WalletReleaseRequest = {
-  siacoinOutputs: SiacoinElement[]
-  siafundOutputs: SiafundElement[]
+  siacoinOutputs: SiacoinOutputID[]
+  siafundOutputs: SiafundOutputID[]
 }
 
 export function useWalletRelease(

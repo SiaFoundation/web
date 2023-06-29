@@ -11,13 +11,16 @@ import { useWalletBalance } from '@siafoundation/react-walletd'
 import { useRouter } from 'next/router'
 import { useWallets } from '../../contexts/wallets'
 import { WalletActionsDropdownMenu } from './WalletActionsDropdownMenu'
+import { useDialog } from '../../contexts/dialog'
 
 export function WalletActionsMenu() {
   const status = useSyncStatus()
   const router = useRouter()
+  const { openDialog } = useDialog()
+  const walletId = router.query.id as string
   const balance = useWalletBalance({
     params: {
-      id: router.query.id as string,
+      id: walletId,
     },
   })
   const { wallet } = useWallets()
@@ -29,7 +32,15 @@ export function WalletActionsMenu() {
       />
       <AddressesButton />
       {wallet?.type !== 'watch' && (
-        <Button size="small" variant="accent">
+        <Button
+          size="small"
+          variant="accent"
+          onClick={() =>
+            openDialog('sendSiacoin', {
+              walletId,
+            })
+          }
+        >
           <ArrowUpRight16 />
           Send
         </Button>
