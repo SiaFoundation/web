@@ -52,9 +52,15 @@ export function PaginatorUnknownTotal({ offset, limit, pageTotal }: Props) {
       >
         <CaretLeft16 />
       </Button>
-      <Button className="rounded-none px-3" state="waiting">
-        {from} - {to}
-      </Button>
+      {pageTotal ? (
+        <Button className="rounded-none px-3" state="waiting">
+          {from} - {to}
+        </Button>
+      ) : (
+        <Button className="rounded-none px-3" state="waiting" color="subtle">
+          none
+        </Button>
+      )}
       <Button
         icon="contrast"
         disabled={!isMore}
