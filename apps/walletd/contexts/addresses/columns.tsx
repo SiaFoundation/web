@@ -51,7 +51,7 @@ export const columns: AddressesTableColumn[] = [
     label: 'index',
     category: 'general',
     render: ({ data: { index } }) => {
-      if (!index) {
+      if (index === undefined) {
         return null
       }
       return (
