@@ -78,7 +78,24 @@ export function seedSignTransaction({
         wholeTransaction: true,
       },
     })
+  }
 
+  for (const [i, idPrefixed] of toSign.entries()) {
+    const id = stripPrefix(idPrefixed)
+
+    // for each toSign match parent id to element ID
+    const utxo = siacoinOutputs.find((sco) => stripPrefix(sco.ID) === id)
+    if (!utxo) {
+      return { error: 'Missing utxo' }
+    }
+
+    // for each compute public key using address and index
+    const addressData = addresses.find(
+      (a) => stripPrefix(a.address) === stripPrefix(utxo.address)
+    )
+    if (!addressData) {
+      return { error: 'Missing address' }
+    }
     const pkResponse = getWalletWasm().privateKeyFromSeed(
       seed,
       addressData.index
@@ -94,7 +111,7 @@ export function seedSignTransaction({
       JSON.stringify(cs),
       JSON.stringify(cn),
       JSON.stringify(transaction),
-      transaction.signatures.length - 1,
+      i,
       pkResponse.privateKey
     )
     if (error) {
