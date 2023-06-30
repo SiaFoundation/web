@@ -18,7 +18,6 @@ type SendData = {
   seedHash: string
   address: string
   siacoin: BigNumber
-  includeFee: boolean
 }
 
 type Props = {
@@ -56,7 +55,7 @@ export function useSendSiacoinConfirmForm({
   fee,
   onConfirm,
 }: Props) {
-  const { seedHash, address, siacoin, includeFee } = data || {}
+  const { seedHash, address, siacoin } = data || {}
   const form = useForm({
     mode: 'all',
     defaultValues,
@@ -100,12 +99,7 @@ export function useSendSiacoinConfirmForm({
   const el = (
     <div className="flex flex-col gap-4">
       <FieldText form={form} field={fields.mnemonic} name="mnemonic" />
-      <WalletSendSiacoinReceipt
-        address={address}
-        siacoin={siacoin}
-        fee={fee}
-        includeFee={includeFee}
-      />
+      <WalletSendSiacoinReceipt address={address} siacoin={siacoin} fee={fee} />
     </div>
   )
 
