@@ -1,4 +1,4 @@
-import { DatumCard, TxPoolList, PeerList } from '@siafoundation/design-system'
+import { DatumCard, PeerList } from '@siafoundation/design-system'
 import {
   useConsensusTip,
   useSyncerPeers,
