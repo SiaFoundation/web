@@ -55,9 +55,9 @@ export function Node() {
               connectPeer={() => openDialog('connectPeer')}
             />
           </div>
-          <div className="flex-1">
+          {/* <div className="flex-1">
             <TxPoolList transactions={txPool.data} />
-          </div>
+          </div> */}
         </div>
       </div>
     </WalletdAuthedLayout>
