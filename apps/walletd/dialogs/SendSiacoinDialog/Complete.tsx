@@ -3,17 +3,16 @@ import { Text, CheckmarkFilled32 } from '@siafoundation/design-system'
 import { WalletSendSiacoinReceipt } from './Receipt'
 
 type Props = {
-  formData: {
+  data: {
     address: string
     siacoin: BigNumber
-    includeFee: boolean
   }
   fee: BigNumber
   transactionId?: string
 }
 
 export function WalletSendSiacoinComplete({
-  formData: { address, siacoin, includeFee },
+  data: { address, siacoin },
   fee,
   transactionId,
 }: Props) {
@@ -23,7 +22,6 @@ export function WalletSendSiacoinComplete({
         address={address}
         siacoin={siacoin}
         fee={fee}
-        includeFee={includeFee}
         transactionId={transactionId}
       />
       <div className="flex flex-col items-center justify-center gap-2 my-4">

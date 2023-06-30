@@ -5,7 +5,6 @@ type Props = {
   address: string
   siacoin: BigNumber
   fee: BigNumber
-  includeFee: boolean
   transactionId?: string
 }
 
@@ -13,7 +12,6 @@ export function WalletSendSiacoinReceipt({
   address,
   siacoin,
   fee,
-  includeFee,
   transactionId,
 }: Props) {
   const totalSiacoin = siacoin.plus(fee)
