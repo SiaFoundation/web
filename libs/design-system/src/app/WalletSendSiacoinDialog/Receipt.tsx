@@ -7,7 +7,6 @@ type Props = {
   address: string
   siacoin: BigNumber
   fee: BigNumber
-  includeFee: boolean
   transactionId?: string
 }
 
@@ -15,9 +14,9 @@ export function WalletSendSiacoinReceipt({
   address,
   siacoin,
   fee,
-  includeFee,
   transactionId,
 }: Props) {
+  const totalSiacoin = siacoin.plus(fee)
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-6 justify-between items-center">
@@ -54,7 +53,7 @@ export function WalletSendSiacoinReceipt({
         <div className="flex relative top-[-0.5px]">
           <ValueSc
             size="14"
-            value={includeFee ? siacoin : siacoin.plus(fee)}
+            value={totalSiacoin}
             variant="value"
             dynamicUnits={false}
           />

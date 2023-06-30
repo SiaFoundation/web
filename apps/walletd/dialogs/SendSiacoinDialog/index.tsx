@@ -169,7 +169,7 @@ export function SendSiacoinDialog({
         {step === 'confirm' && confirm.el}
         {step === 'done' && (
           <WalletSendSiacoinComplete
-            formData={data}
+            data={data}
             fee={fee}
             transactionId={signedTxnId}
           />

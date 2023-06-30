@@ -26,11 +26,9 @@ export function useSendSiacoinConfirmForm({
   const formik = useFormik({
     initialValues: {},
     onSubmit: async () => {
-      const finalSiacoin = includeFee ? siacoin.minus(fee) : siacoin
-
       const { transactionId, error } = await send({
         address,
-        sc: finalSiacoin,
+        sc: siacoin,
       })
 
       if (error) {
