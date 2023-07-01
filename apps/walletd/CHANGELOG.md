@@ -1,5 +1,11 @@
 # walletd
 
+## 0.6.0
+
+### Minor Changes
+
+- f5bb6f00: Initial alpha release with support for seed-based and watch-only wallets.
+
 ## 0.5.0
 
 ### Minor Changes

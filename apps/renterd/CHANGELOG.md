@@ -1,5 +1,12 @@
 # renterd
 
+## 0.22.0
+
+### Minor Changes
+
+- 14554de8: Fixed an issue with the allowlist, removing public keys now works as expected.
+- 00c43ed3: The wallet now sends the correct amount when fee is included in amount.
+
 ## 0.21.0
 
 ### Minor Changes
