@@ -1,5 +1,12 @@
 # hostd
 
+## 0.16.0
+
+### Minor Changes
+
+- 00c43ed3: The wallet now sends the correct amount when fee is included in amount.
+- b1692517: Dynamic DNS secret and password settings are now hidden password fields.
+
 ## 0.15.0
 
 ### Minor Changes
