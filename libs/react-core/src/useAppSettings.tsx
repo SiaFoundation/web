@@ -87,25 +87,21 @@ const currencyOptions: CurrencyOption[] = [
 ]
 
 export type AppSettings = {
+  api: string
+  allowCustomApi: boolean
   siaStats: boolean
   siaCentral: boolean
-  api: string
   password?: string
   currency: CurrencyOption
-  recentApis: {
-    [api: string]: {
-      lastUsed: number
-    }
-  }
 }
 
 const defaultSettings: AppSettings = {
   api: '',
+  allowCustomApi: false,
   siaStats: true,
   siaCentral: true,
   password: undefined,
   currency: currencyOptions[0],
-  recentApis: {},
 }
 
 type Props = {

@@ -26,7 +26,7 @@ export const routes = {
   node: {
     index: '/node',
   },
-  lockscreen: '/login',
+  login: '/login',
 }
 
 export const connectivityRoute = '/bus/consensus/state'

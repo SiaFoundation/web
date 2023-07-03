@@ -6,7 +6,7 @@ import { AppRootLayout } from '../AppRootLayout'
 
 type Routes = {
   home: string
-  lockscreen: string
+  login: string
 }
 
 type Props = {

@@ -5,11 +5,11 @@ import { useConnectivity } from './useConnectivity'
 
 type Routes = {
   home: string
-  lockscreen: string
+  login: string
 }
 
 export function getRouteToSaveAsPrev(router: NextRouter, routes: Routes) {
-  if ([routes.lockscreen].includes(router.pathname)) {
+  if ([routes.login].includes(router.pathname)) {
     return routes.home
   }
   return router.pathname
@@ -35,12 +35,12 @@ export function useMonitorConnAndLock({
   const router = useRouter()
 
   useEffect(() => {
-    const isProtectedPath = !router.pathname.startsWith(routes.lockscreen)
+    const isProtectedPath = !router.pathname.startsWith(routes.login)
     const noPasswordOrDisconnected = !settings.password || !isConnected
     if (isProtectedPath && noPasswordOrDisconnected) {
       lock()
       router.push({
-        pathname: routes.lockscreen,
+        pathname: routes.login,
         query: {
           prev: getRouteToSaveAsPrev(router, routes),
         },

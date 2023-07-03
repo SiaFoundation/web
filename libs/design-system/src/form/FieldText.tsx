@@ -10,6 +10,7 @@ type Props<Values extends FieldValues, Categories extends string> = {
   field: ConfigField<Values, Categories>
   size?: React.ComponentProps<typeof TextField>['size']
   autoComplete?: React.ComponentProps<typeof TextField>['autoComplete']
+  group?: boolean
 }
 
 export function FieldText<
@@ -21,6 +22,7 @@ export function FieldText<
   field,
   size = 'small',
   autoComplete,
+  group = true,
 }: Props<Values, Categories>) {
   const { onChange, onBlur, value, error } = useRegisterForm({
     name,
@@ -31,38 +33,47 @@ export function FieldText<
   useEffect(() => {
     setLocalValue(value)
   }, [value])
-  return (
-    <FieldGroup
-      title={field.title}
-      actions={field.actions}
-      name={name}
-      form={form}
-    >
-      <TextField
-        placeholder={field.placeholder}
-        size={size}
-        autoComplete={autoComplete}
-        value={localValue}
-        type={field.type}
-        readOnly={field.readOnly}
-        onClick={field.onClick}
-        state={
-          error
-            ? 'invalid'
-            : form.formState.dirtyFields[name]
-            ? 'valid'
-            : 'default'
-        }
-        onChange={(e) => {
-          const v = e.currentTarget.value as PathValue<Values, Path<Values>>
-          setLocalValue(v)
-          onChange(v)
-        }}
-        onBlur={(e) => {
-          onBlur(e)
-          onChange(value)
-        }}
-      />
-    </FieldGroup>
+
+  const el = (
+    <TextField
+      placeholder={field.placeholder}
+      size={size}
+      autoComplete={autoComplete}
+      value={localValue}
+      type={field.type}
+      readOnly={field.readOnly}
+      onClick={field.onClick}
+      state={
+        error
+          ? 'invalid'
+          : form.formState.dirtyFields[name]
+          ? 'valid'
+          : 'default'
+      }
+      onChange={(e) => {
+        const v = e.currentTarget.value as PathValue<Values, Path<Values>>
+        setLocalValue(v)
+        onChange(v)
+      }}
+      onBlur={(e) => {
+        onBlur(e)
+        onChange(value)
+      }}
+    />
   )
+
+  if (group) {
+    return (
+      <FieldGroup
+        title={field.title}
+        actions={field.actions}
+        name={name}
+        form={form}
+      >
+        {el}
+      </FieldGroup>
+    )
+  } else {
+    return el
+  }
 }

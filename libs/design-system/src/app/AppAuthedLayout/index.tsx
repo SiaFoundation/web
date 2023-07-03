@@ -23,7 +23,7 @@ type Props = {
   showWallet?: boolean
   walletBalance?: BigNumber
   routes: {
-    lockscreen: string
+    login: string
     home: string
     node: {
       index: string
