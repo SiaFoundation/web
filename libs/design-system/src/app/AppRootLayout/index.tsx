@@ -4,7 +4,7 @@ import { AppPageHead } from '../AppPageHead'
 
 type Routes = {
   home: string
-  lockscreen: string
+  login: string
 }
 
 type Props = {

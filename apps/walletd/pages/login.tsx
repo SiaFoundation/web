@@ -1,5 +1,5 @@
-import { LockScreen } from '../components/LockScreen'
+import { Login } from '../components/Login'
 
-export default function LockScreenPage() {
-  return <LockScreen />
+export default function LoginPage() {
+  return <Login />
 }

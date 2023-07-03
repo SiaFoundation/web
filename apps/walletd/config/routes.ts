@@ -9,7 +9,7 @@ export const routes = {
     txPool: '/node/txpool',
     peers: '/node/peers',
   },
-  lockscreen: '/login',
+  login: '/login',
 }
 
 export const connectivityRoute = '/consensus/tip'

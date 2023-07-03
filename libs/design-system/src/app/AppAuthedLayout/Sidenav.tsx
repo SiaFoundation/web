@@ -14,7 +14,7 @@ import BigNumber from 'bignumber.js'
 
 type Props = {
   routes: {
-    lockscreen: string
+    login: string
     home: string
     node: {
       index: string
