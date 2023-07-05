@@ -16,25 +16,28 @@ import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { RenterdAuthedLayout } from '../../components/RenterdAuthedLayout'
 import {
+  ContractSetSettings,
   GougingSettings,
   RedundancySettings,
-  useSetting,
   useSettingUpdate,
 } from '@siafoundation/react-renterd'
 import { defaultValues, getFields } from './fields'
 import {
   transformDown,
+  transformUpContractSet,
   transformUpGouging,
   transformUpRedundancy,
 } from './transform'
 import { useForm } from 'react-hook-form'
 import { useSiaCentralHostsNetworkAverages } from '@siafoundation/react-core'
 import { toSiacoins } from '@siafoundation/sia-js'
+import { useContractSetSettings } from '../../hooks/useContractSetSettings'
+import { useGougingSettings } from '../../hooks/useGougingSettings'
+import { useRedundancySettings } from '../../hooks/useRedundancySettings'
 
 export function Config() {
   const { openDialog } = useDialog()
-  const gouging = useSetting({
-    params: { key: 'gouging' },
+  const contractSet = useContractSetSettings({
     config: {
       swr: {
         // Do not automatically refetch
@@ -42,8 +45,15 @@ export function Config() {
       },
     },
   })
-  const redundancy = useSetting({
-    params: { key: 'redundancy' },
+  const gouging = useGougingSettings({
+    config: {
+      swr: {
+        // Do not automatically refetch
+        revalidateOnFocus: false,
+      },
+    },
+  })
+  const redundancy = useRedundancySettings({
     config: {
       swr: {
         // Do not automatically refetch
@@ -68,8 +78,12 @@ export function Config() {
   })
 
   const resetFormData = useCallback(
-    (gougingData: GougingSettings, redundancyData: RedundancySettings) => {
-      form.reset(transformDown(gougingData, redundancyData))
+    (
+      contractSetData: ContractSetSettings,
+      gougingData: GougingSettings,
+      redundancyData: RedundancySettings
+    ) => {
+      form.reset(transformDown(contractSetData, gougingData, redundancyData))
     },
     [form]
   )
@@ -77,28 +91,23 @@ export function Config() {
   // init - when new config is fetched, set the form
   const [hasInit, setHasInit] = useState(false)
   useEffect(() => {
-    if (gouging.data && redundancy.data && !hasInit) {
-      resetFormData(
-        gouging.data as GougingSettings,
-        redundancy.data as RedundancySettings
-      )
+    if (contractSet.data && gouging.data && redundancy.data && !hasInit) {
+      resetFormData(contractSet.data, gouging.data, redundancy.data)
       setHasInit(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gouging.data, redundancy.data])
 
   const reset = useCallback(async () => {
+    const contractSetData = await contractSet.mutate()
     const gougingData = await gouging.mutate()
     const redundancyData = await redundancy.mutate()
     if (!gougingData || !redundancyData) {
       triggerErrorToast('Error fetching settings.')
     } else {
-      resetFormData(
-        gougingData as GougingSettings,
-        redundancyData as RedundancySettings
-      )
+      resetFormData(contractSetData, gougingData, redundancyData)
     }
-  }, [gouging, redundancy, resetFormData])
+  }, [contractSet, gouging, redundancy, resetFormData])
 
   const minShards = form.watch('minShards')
   const totalShards = form.watch('totalShards')
@@ -136,6 +145,15 @@ export function Config() {
         return
       }
       try {
+        const contractSetResponse = await settingUpdate.put({
+          params: {
+            key: 'contractset',
+          },
+          payload: transformUpContractSet(
+            values,
+            contractSet.data as Record<string, unknown>
+          ),
+        })
         const gougingResponse = await settingUpdate.put({
           params: {
             key: 'gouging',
@@ -154,6 +172,9 @@ export function Config() {
             redundancy.data as Record<string, unknown>
           ),
         })
+        if (contractSetResponse.error) {
+          throw Error(contractSetResponse.error)
+        }
         if (gougingResponse.error) {
           throw Error(gougingResponse.error)
         }
@@ -167,7 +188,7 @@ export function Config() {
         console.log(e)
       }
     },
-    [settingUpdate, redundancy, gouging, reset]
+    [settingUpdate, contractSet, redundancy, gouging, reset]
   )
 
   const onInvalid = useOnInvalid(fields)
@@ -215,6 +236,12 @@ export function Config() {
       openSettings={() => openDialog('settings')}
     >
       <div className="p-6 flex flex-col gap-16 max-w-screen-xl">
+        <ConfigurationPanel
+          title="Contracts"
+          category="contractset"
+          fields={fields}
+          form={form}
+        />
         <ConfigurationPanel
           title="Gouging"
           category="gouging"

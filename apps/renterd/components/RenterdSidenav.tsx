@@ -24,14 +24,14 @@ export function RenterdSidenav() {
           <PlaneIcon />
         </SidenavItem>
       )}
+      <SidenavItem title="Configuration" route={routes.config.index}>
+        <BarsProgressIcon />
+      </SidenavItem>
       <SidenavItem title="Contracts" route={routes.contracts.index}>
         <FileContractIcon />
       </SidenavItem>
       <SidenavItem title="Hosts" route={routes.hosts.index}>
         <DatabaseIcon />
-      </SidenavItem>
-      <SidenavItem title="Configuration" route={routes.config.index}>
-        <BarsProgressIcon />
       </SidenavItem>
     </>
   )

@@ -472,7 +472,9 @@ export function useSettings(args?: HookArgsSwr<void, string[]>) {
   return useGetSwr({ ...args, route: '/bus/settings' })
 }
 
-export function useSetting(args: HookArgsSwr<{ key: string }, Setting>) {
+export function useSetting<T extends Setting>(
+  args: HookArgsSwr<{ key: string }, T>
+) {
   return useGetSwr({ ...args, route: '/bus/setting/:key' })
 }
 

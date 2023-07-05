@@ -11,6 +11,12 @@ import {
   ConfigurationPanel,
   triggerErrorToast,
   useOnInvalid,
+  Switch,
+  ControlGroup,
+  Popover,
+  Label,
+  Paragraph,
+  Settings16,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -27,6 +33,7 @@ import { humanBytes, toHastings, toScale } from '@siafoundation/sia-js'
 import { defaultValues, fields } from './fields'
 import { transformDown, transformUp } from './transform'
 import { useForm } from 'react-hook-form'
+import { useSyncContractSet } from './useSyncContractSet'
 
 export function Autopilot() {
   const { openDialog } = useDialog()
@@ -39,6 +46,11 @@ export function Autopilot() {
       },
     },
   })
+  const {
+    shouldSyncDefaultContractSet,
+    setShouldSyncDefaultContractSet,
+    syncDefaultContractSet,
+  } = useSyncContractSet()
 
   const form = useForm({
     mode: 'all',
@@ -84,13 +96,14 @@ export function Autopilot() {
           payload: transformUp(values, config.data),
         })
         triggerSuccessToast('Configuration has been saved.')
+        syncDefaultContractSet(values.set)
         reset()
       } catch (e) {
         triggerErrorToast((e as Error).message)
         console.log(e)
       }
     },
-    [config.data, configUpdate, reset]
+    [config.data, configUpdate, reset, syncDefaultContractSet]
   )
 
   const onInvalid = useOnInvalid(fields)
@@ -191,15 +204,45 @@ export function Autopilot() {
           >
             <Reset16 />
           </Button>
-          <Button
-            tip="Save all changes"
-            variant="accent"
-            disabled={!form.formState.isDirty || form.formState.isSubmitting}
-            onClick={onSubmit}
-          >
-            <Save16 />
-            Save changes
-          </Button>
+          <ControlGroup>
+            <Button
+              tip="Save all changes"
+              variant="accent"
+              disabled={!form.formState.isDirty || form.formState.isSubmitting}
+              onClick={onSubmit}
+            >
+              <Save16 />
+              Save changes
+            </Button>
+            <Popover
+              contentProps={{
+                align: 'end',
+              }}
+              trigger={
+                <Button variant="accent" icon="hover">
+                  <Settings16 />
+                </Button>
+              }
+            >
+              <div className="px-1">
+                <Label>Options</Label>
+                <div>
+                  <Switch
+                    checked={shouldSyncDefaultContractSet}
+                    onCheckedChange={(val) =>
+                      setShouldSyncDefaultContractSet(val)
+                    }
+                  >
+                    sync default contract set
+                  </Switch>
+                  <Paragraph size="12">
+                    Automatically update the default contract set to be the same
+                    as the autopilot contract set when changes are saved.
+                  </Paragraph>
+                </div>
+              </div>
+            </Popover>
+          </ControlGroup>
         </div>
       }
       openSettings={() => openDialog('settings')}
