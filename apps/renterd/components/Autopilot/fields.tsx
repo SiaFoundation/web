@@ -122,13 +122,17 @@ export const fields: ConfigFields<
     type: 'text',
     category: 'contracts',
     title: 'Contract set',
-    description: <>The contract set that autopilot should use.</>,
+    description: (
+      <>
+        The contract set that autopilot should use. This should typically be the
+        same as the default contract set.
+      </>
+    ),
     placeholder: 'autopilot',
     suggestion: 'autopilot',
     suggestionTip: (
       <>
-        The default contract set is <Code>autopilot</Code>, only change this if
-        you understand the implications.
+        The default contract set is <Code>autopilot</Code>.
       </>
     ),
     validation: {

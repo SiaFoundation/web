@@ -164,6 +164,10 @@ export interface MigrateParams {
   ToContracts: string
 }
 
+export type ContractSetSettings = {
+  default: string
+}
+
 export type GougingSettings = {
   maxStoragePrice: string
   maxDownloadPrice: string

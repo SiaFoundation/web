@@ -12,10 +12,15 @@ import { Text } from '../core/Text'
 
 export type { ToastOptions }
 
-export const triggerToast = (text: string, options: ToastOptions = {}) => {
+export const triggerToast = (
+  text: React.ReactNode,
+  options: ToastOptions = {}
+) => {
   toast(
     <Text wrapEllipsis>
-      {text.length > 200 ? `${text.slice(0, 200)}` : text}
+      {typeof text === 'string' && text.length > 200
+        ? `${text.slice(0, 200)}`
+        : text}
     </Text>,
     buildToastOptions(options)
   )
@@ -29,21 +34,28 @@ export const triggerToastNode = (
 }
 
 export const triggerSuccessToast = (
-  text: string,
+  text: React.ReactNode,
   options: ToastOptions = {}
 ) => {
   toast.success(
     <Text wrapEllipsis>
-      {text.length > 200 ? `${text.slice(0, 200)}...` : text}
+      {typeof text === 'string' && text.length > 200
+        ? `${text.slice(0, 200)}...`
+        : text}
     </Text>,
     buildToastOptions(options)
   )
 }
 
-export const triggerErrorToast = (text: string, options: ToastOptions = {}) => {
+export const triggerErrorToast = (
+  text: React.ReactNode,
+  options: ToastOptions = {}
+) => {
   toast.error(
     <Text wrapEllipsis>
-      {text.length > 200 ? `${text.slice(0, 200)}...` : text}
+      {typeof text === 'string' && text.length > 200
+        ? `${text.slice(0, 200)}...`
+        : text}
     </Text>,
     buildToastOptions(options)
   )

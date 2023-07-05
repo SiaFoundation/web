@@ -10,6 +10,8 @@ import React from 'react'
 export const scDecimalPlaces = 6
 
 export const defaultValues = {
+  // contract set
+  contractSet: '',
   // gouging
   maxRpcPrice: undefined as BigNumber | undefined,
   maxStoragePrice: undefined as BigNumber | undefined,
@@ -28,7 +30,7 @@ export const defaultValues = {
 
 export type SettingsData = typeof defaultValues
 
-type Categories = 'gouging' | 'redundancy'
+type Categories = 'contractset' | 'gouging' | 'redundancy'
 
 type GetFields = {
   storageAverage?: BigNumber
@@ -44,6 +46,29 @@ export function getFields({
   contractAverage,
 }: GetFields): ConfigFields<typeof defaultValues, Categories> {
   return {
+    // contract
+    contractSet: {
+      category: 'contractset',
+      type: 'text',
+      title: 'Default contract set',
+      placeholder: 'autopilot',
+      suggestion: 'autopilot',
+      suggestionTip: (
+        <>
+          Autopilot users will typically want to keep this the same as the
+          autopilot contract set.
+        </>
+      ),
+      description: (
+        <>
+          The default contract set is where data is uploaded or migrated to by
+          default.
+        </>
+      ),
+      validation: {
+        required: 'required',
+      },
+    },
     // gouging
     maxStoragePrice: {
       category: 'gouging',

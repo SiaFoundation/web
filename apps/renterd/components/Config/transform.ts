@@ -7,12 +7,23 @@ import {
   TBToBytes,
 } from '@siafoundation/design-system'
 import {
+  ContractSetSettings,
   GougingSettings,
   RedundancySettings,
 } from '@siafoundation/react-renterd'
 import { toHastings, toSiacoins } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
 import { scDecimalPlaces, SettingsData } from './fields'
+
+export function transformUpContractSet(
+  values: { contractSet: string },
+  existingValues: Record<string, unknown>
+): ContractSetSettings {
+  return {
+    ...existingValues,
+    default: values.contractSet,
+  }
+}
 
 export function transformUpGouging(
   values: SettingsData,
@@ -55,10 +66,13 @@ export function transformUpRedundancy(
 }
 
 export function transformDown(
+  c: ContractSetSettings,
   g: GougingSettings,
   r: RedundancySettings
 ): SettingsData {
   return {
+    // contractset
+    contractSet: c.default,
     // gouging
     maxStoragePrice: toSiacoins(
       new BigNumber(g.maxStoragePrice) // bytes/block
