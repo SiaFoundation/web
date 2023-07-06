@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import * as SwitchPrimitive from '@radix-ui/react-switch'
 import { Text } from './Text'
 import { cva } from 'class-variance-authority'
@@ -70,7 +70,7 @@ const styles = cva(
   }
 )
 
-export const Switch = React.forwardRef<
+export const Switch = forwardRef<
   React.ElementRef<typeof SwitchPrimitive.Root>,
   VariantProps<typeof styles> & SwitchPrimitive.SwitchProps
 >(({ size, state, className, children, ...props }, ref) => (

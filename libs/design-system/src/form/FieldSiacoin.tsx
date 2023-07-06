@@ -22,7 +22,7 @@ export function FieldSiacoin<
     decimalsLimitSc = 6,
     decimalsLimitFiat = 6,
   } = field
-  const { onChange, onBlur, value, error } = useRegisterForm({
+  const { setValue, value, error } = useRegisterForm({
     name,
     field,
     form,
@@ -40,11 +40,10 @@ export function FieldSiacoin<
         changed={form.formState.dirtyFields[name]}
         placeholder={(suggestion as BigNumber) || (average as BigNumber)}
         onChange={(val) => {
-          onChange(val as PathValue<Values, Path<Values>>)
+          setValue(val as PathValue<Values, Path<Values>>, true)
         }}
-        onBlur={(e) => {
-          onBlur(e)
-          onChange(value)
+        onBlur={() => {
+          setValue(value, true)
         }}
       />
     </FieldGroup>

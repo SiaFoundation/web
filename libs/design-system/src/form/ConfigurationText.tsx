@@ -16,7 +16,7 @@ export function ConfigurationText<
   Categories extends string
 >({ name, form, field, type }: Props<Values, Categories>) {
   const { placeholder, suggestion, suggestionTip } = field
-  const { onChange, onBlur, value, error } = useRegisterForm({
+  const { ref, onChange, setValue, onBlur, error } = useRegisterForm({
     name,
     form,
     field,
@@ -25,8 +25,9 @@ export function ConfigurationText<
     <div className="flex flex-col gap-3 items-end">
       <div className="flex flex-col gap-3 w-[220px]">
         <TextField
+          ref={ref}
+          name={name}
           placeholder={placeholder}
-          value={value}
           type={type}
           state={
             error
@@ -35,13 +36,8 @@ export function ConfigurationText<
               ? 'valid'
               : 'default'
           }
-          onChange={(e) => {
-            onChange(e.currentTarget.value as PathValue<Values, Path<Values>>)
-          }}
-          onBlur={(e) => {
-            onBlur(e)
-            onChange(value)
-          }}
+          onChange={onChange}
+          onBlur={onBlur}
         />
         <div className="flex flex-col gap-2">
           {suggestion && suggestionTip && (
@@ -50,7 +46,7 @@ export function ConfigurationText<
               tip={suggestionTip}
               value={suggestion as string}
               onClick={() => {
-                onChange(suggestion as PathValue<Values, Path<Values>>)
+                setValue(suggestion as PathValue<Values, Path<Values>>, true)
               }}
             />
           )}

@@ -15,7 +15,7 @@ export function FieldSwitch<
   Values extends FieldValues,
   Categories extends string
 >({ name, form, field, size = 'medium', children }: Props<Values, Categories>) {
-  const { onChange, onBlur, value, error } = useRegisterForm({
+  const { ref, setValue, value, error } = useRegisterForm({
     name,
     field,
     form,
@@ -24,8 +24,9 @@ export function FieldSwitch<
     <FieldGroup title={field.title} name={name} form={form}>
       <div className="flex gap-1 items-center">
         <Switch
+          ref={ref}
+          name={name}
           size={size}
-          checked={value}
           state={
             error
               ? 'invalid'
@@ -34,11 +35,10 @@ export function FieldSwitch<
               : 'default'
           }
           onCheckedChange={(val) => {
-            onChange(val as PathValue<Values, Path<Values>>)
+            setValue(val as PathValue<Values, Path<Values>>, true)
           }}
-          onBlur={(e) => {
-            onBlur(e)
-            onChange(value)
+          onBlur={() => {
+            setValue(value, true)
           }}
         />
         {children}

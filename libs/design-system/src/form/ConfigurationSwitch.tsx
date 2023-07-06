@@ -15,7 +15,7 @@ export function ConfigurationSwitch<
   Categories extends string
 >({ name, form, field }: Props<Values, Categories>) {
   const { suggestion, suggestionTip } = field
-  const { onChange, onBlur, value, error } = useRegisterForm({
+  const { ref, setValue, value, error } = useRegisterForm({
     name,
     field,
     form,
@@ -25,6 +25,8 @@ export function ConfigurationSwitch<
       <div className="flex flex-col gap-3 w-[220px]">
         <div className="flex justify-end w-full">
           <Switch
+            ref={ref}
+            name={name}
             size="medium"
             checked={value}
             state={
@@ -35,11 +37,10 @@ export function ConfigurationSwitch<
                 : 'default'
             }
             onCheckedChange={(val) => {
-              onChange(val as PathValue<Values, Path<Values>>)
+              setValue(val as PathValue<Values, Path<Values>>, true)
             }}
-            onBlur={(e) => {
-              onBlur(e)
-              onChange(value)
+            onBlur={() => {
+              setValue(value, true)
             }}
           />
         </div>
@@ -50,7 +51,7 @@ export function ConfigurationSwitch<
               tip={suggestionTip}
               value={suggestion ? 'on' : 'off'}
               onClick={() => {
-                onChange(suggestion as PathValue<Values, Path<Values>>)
+                setValue(suggestion as PathValue<Values, Path<Values>>, true)
               }}
             />
           )}
