@@ -1,5 +1,12 @@
 # hostd
 
+## 0.17.0
+
+### Minor Changes
+
+- aa50389b: The login screen now has an option to show the custom API field.
+- aa50389b: The login screen timeout for an unresponsive daemon is now 10 seconds.
+
 ## 0.16.0
 
 ### Minor Changes

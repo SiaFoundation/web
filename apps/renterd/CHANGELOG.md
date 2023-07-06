@@ -1,5 +1,16 @@
 # renterd
 
+## 0.23.0
+
+### Minor Changes
+
+- be705b97: The files feature now prompts the user to configure the default contract set and autopilot before uploading.
+- be705b97: The autopilot settings feature now has an option to automatically sync the default contract set with changes to the autopilot contract set - this is enabled by default.
+- be705b97: The configuration settings now inlude a default contract set.
+- aa50389b: The login screen now has an option to show the custom API field.
+- be705b97: The files feature shows a warning if autopilot is enabled and the contract set does not match the default.
+- aa50389b: The login screen timeout for an unresponsive daemon is now 10 seconds.
+
 ## 0.22.0
 
 ### Minor Changes
