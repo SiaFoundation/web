@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.53.0
+
+### Minor Changes
+
+- be705b97: Toasts now accept a ReactNode but are still renterd inside Text.
+
 ## 0.52.0
 
 ### Minor Changes
