@@ -157,7 +157,7 @@ export * from './icons/BellIcon'
 // hooks
 export * from './hooks/useTheme'
 export * from './hooks/useConnectivity'
-export * from './hooks/useMonitorConnAndLock'
+export * from './app/AppAuthedLayout/useConnAndPassLock'
 export * from './hooks/userPrefersReducedMotion'
 export * from './hooks/useIsExternalDomain'
 export * from './hooks/useTableState'

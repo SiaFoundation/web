@@ -1,7 +1,7 @@
 import { useAppSettings } from '@siafoundation/react-core'
 import { useRouter } from 'next/router'
 import axios, { AxiosError } from 'axios'
-import { getRedirectRouteFromQuery } from '../hooks/useMonitorConnAndLock'
+import { getRedirectRouteFromQuery } from './AppAuthedLayout/useConnAndPassLock'
 import { useForm } from 'react-hook-form'
 import { useCallback, useEffect, useMemo } from 'react'
 import { ConfigFields, useOnInvalid } from '../form/configurationFields'
@@ -160,8 +160,8 @@ export function AppLogin({ appName, route, routes }: Props) {
             [api]: { lastUsed: new Date().getTime() },
           },
         })
-        form.reset(defaultValues)
         router.push(getRedirectRouteFromQuery(router, routes))
+        form.reset(defaultValues)
       } else {
         form.setError('password', {
           message: error,
@@ -190,8 +190,6 @@ export function AppLogin({ appName, route, routes }: Props) {
     ([_, { lastUsed }]) => -lastUsed
   ).map(([api]) => api)
 
-  const api = form.watch('api')
-  console.log(api)
   return (
     <div className="flex flex-col items-center justify-center gap-6 h-full">
       <Panel className="relative top-[-50px] w-[300px] p-2.5">

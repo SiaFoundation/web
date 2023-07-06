@@ -3,7 +3,6 @@ import {
   ConfigFields,
   Dialog,
   FieldNumber,
-  FieldText,
   FormSubmitButton,
   triggerErrorToast,
   triggerSuccessToast,
@@ -14,11 +13,11 @@ import { useForm } from 'react-hook-form'
 import { useAddresses } from '../contexts/addresses'
 import { useDialogFormHelpers } from '../hooks/useDialogFormHelpers'
 import { getWalletWasm } from '../lib/wasm'
-import { SeedLayout } from './SeedLayout'
 import { useWallets } from '../contexts/wallets'
 import BigNumber from 'bignumber.js'
-import { VerifyIcon } from './VerifyIcon'
 import { getFieldMnemonic, MnemonicFieldType } from '../lib/fieldMnemonic'
+import { FieldMnemonic } from './FieldMnemonic'
+import { useWalletCachedSeed } from '../hooks/useWalletCachedSeed'
 
 export type WalletAddressesGenerateDialogParams = {
   walletId: string
@@ -120,10 +119,16 @@ export function WalletAddressesGenerateDialog({
   })
 
   const addressAdd = useWalletAddressAdd()
+  const { getSeedFromCacheOrForm } = useWalletCachedSeed(walletId)
   const generateAddresses = useCallback(
     async (mnemonic: string, index: number, count: number) => {
+      const seedResponse = getSeedFromCacheOrForm({ mnemonic })
+      if (seedResponse.error) {
+        triggerErrorToast(seedResponse.error)
+        return
+      }
+      const { seed } = seedResponse
       for (let i = index; i < index + count; i++) {
-        const { seed } = getWalletWasm().seedFromPhrase(mnemonic)
         const addrRes = getWalletWasm().addressFromSeed(seed, i)
         if (addrRes.error) {
           triggerErrorToast('Error generating addresses.')
@@ -158,7 +163,7 @@ export function WalletAddressesGenerateDialog({
       }
       closeAndReset()
     },
-    [walletId, addressAdd, closeAndReset]
+    [getSeedFromCacheOrForm, closeAndReset, addressAdd, walletId]
   )
 
   const onSubmit = useCallback(() => {
@@ -183,22 +188,21 @@ export function WalletAddressesGenerateDialog({
         </div>
       }
     >
-      <SeedLayout
-        icon={<VerifyIcon />}
-        description={<>Enter your seed mnemonic to generate addresses.</>}
-      >
-        <div className="flex flex-col gap-2 py-2">
-          <FieldText form={form} field={fields.mnemonic} name="mnemonic" />
-          <div className="flex gap-2 w-full">
-            <div className="flex-1">
-              <FieldNumber form={form} field={fields.index} name="index" />
-            </div>
-            <div className="flex-1">
-              <FieldNumber form={form} field={fields.count} name="count" />
-            </div>
-          </div>
+      <FieldMnemonic
+        walletId={walletId}
+        name="mnemonic"
+        form={form}
+        field={fields.mnemonic}
+        actionText="generate addresses"
+      />
+      <div className="flex gap-2 w-full pt-3">
+        <div className="flex-1">
+          <FieldNumber form={form} field={fields.index} name="index" />
         </div>
-      </SeedLayout>
+        <div className="flex-1">
+          <FieldNumber form={form} field={fields.count} name="count" />
+        </div>
+      </div>
     </Dialog>
   )
 }

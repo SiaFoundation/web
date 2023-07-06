@@ -4,7 +4,7 @@ import { RenterdPublicLayout } from '../RenterdPublicLayout'
 
 export function Login() {
   return (
-    <RenterdPublicLayout routes={routes}>
+    <RenterdPublicLayout>
       <AppLogin appName="renterd" route={connectivityRoute} routes={routes} />
     </RenterdPublicLayout>
   )

@@ -4,24 +4,47 @@ import {
   Badge,
   Paragraph,
   Tooltip,
+  Locked16,
+  Unlocked16,
+  Button,
+  ValueSc,
+  Draggable16,
 } from '@siafoundation/design-system'
 import { humanDate } from '@siafoundation/sia-js'
+import { humanTimeAndUnits } from '../../lib/time'
 import { walletTypes } from '../../config/walletTypes'
 import { WalletData, TableColumnId } from './types'
+import { useWalletBalance } from '@siafoundation/react-walletd'
+import BigNumber from 'bignumber.js'
+import { WalletDropdownMenu } from '../../components/WalletDropdownMenu'
 
-type WalletsTableColumn = TableColumn<TableColumnId, WalletData, never> & {
+type WalletsTableColumn = TableColumn<
+  TableColumnId,
+  WalletData,
+  { walletAutoLockTimeout: number; walletAutoLockEnabled: boolean }
+> & {
   fixed?: boolean
   category?: string
 }
 
 export const columns: WalletsTableColumn[] = [
-  // {
-  //   id: 'actions',
-  //   label: '',
-  //   fixed: true,
-  //   cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
-  //   render: ({ data: { name } }) => null,
-  // },
+  {
+    id: 'actions',
+    label: '',
+    fixed: true,
+    cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
+    render: ({ data }) => (
+      <WalletDropdownMenu
+        trigger={
+          <Button variant="ghost" icon="hover">
+            <Draggable16 />
+          </Button>
+        }
+        contentProps={{ align: 'start' }}
+        wallet={data}
+      />
+    ),
+  },
   {
     id: 'details',
     label: 'name',
@@ -51,6 +74,28 @@ export const columns: WalletsTableColumn[] = [
     },
   },
   {
+    id: 'balance',
+    label: 'balance',
+    category: 'general',
+    render: function RenderBalance({ data: { id } }) {
+      const balance = useWalletBalance({
+        params: {
+          id,
+        },
+      })
+      if (!balance.data) {
+        return null
+      }
+      return (
+        <ValueSc
+          size="12"
+          variant="value"
+          value={new BigNumber(balance.data.siacoins)}
+        />
+      )
+    },
+  },
+  {
     id: 'type',
     label: 'type',
     category: 'general',
@@ -65,6 +110,51 @@ export const columns: WalletsTableColumn[] = [
           </Badge>
         </Tooltip>
       )
+    },
+  },
+  {
+    id: 'status',
+    label: 'status',
+    category: 'general',
+    render: ({
+      data: { type, status, activityAt, unlock, lock },
+      context: { walletAutoLockEnabled, walletAutoLockTimeout },
+    }) => {
+      if (type === 'seed') {
+        const sinceActivityMs = new Date().getTime() - activityAt
+        const remainingMs = Math.max(walletAutoLockTimeout - sinceActivityMs, 0)
+
+        const remaining = humanTimeAndUnits(remainingMs)
+
+        const tipUnlocked = walletAutoLockEnabled
+          ? `The wallet is currently unlocked. The wallet will stay unlocked until it is inactive for ${remaining.amount.toFixed(
+              0
+            )} more ${remaining.units}, manually locked, or the app is closed.`
+          : `The wallet is currently unlocked. The wallet will stay unlocked until it is manually locked or the app is closed.`
+        const tip =
+          status === 'unlocked'
+            ? tipUnlocked
+            : 'The wallet is currently locked.'
+        return (
+          <Button
+            tip={tip}
+            color={status === 'unlocked' ? 'contrast' : 'verySubtle'}
+            variant="ghost"
+            onClick={(e) => {
+              e.stopPropagation()
+              if (status === 'unlocked') {
+                lock()
+              } else {
+                unlock()
+              }
+            }}
+          >
+            {status === 'unlocked' ? <Unlocked16 /> : <Locked16 />}
+          </Button>
+        )
+      }
+
+      return null
     },
   },
   {

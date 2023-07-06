@@ -1,4 +1,5 @@
 import React from 'react'
+import { useAppSettings } from '@siafoundation/react-core'
 import { Container } from '../../core/Container'
 import { ScrollArea } from '../../core/ScrollArea'
 import { AppBackdrop } from '../AppBackdrop'
@@ -6,6 +7,8 @@ import { Sidenav } from './Sidenav'
 import { AppRootLayout } from '../AppRootLayout'
 import { AppNavbar } from '../AppNavbar'
 import BigNumber from 'bignumber.js'
+import { useAutoLock } from './useAutoLock'
+import { useConnAndPassLock } from './useConnAndPassLock'
 
 type Props = {
   appName: string
@@ -53,19 +56,29 @@ export function AppAuthedLayout({
   routes,
   openSettings,
 }: Props) {
+  const { lock, settings } = useAppSettings()
+
+  useConnAndPassLock({
+    lock,
+    route: connectivityRoute,
+    routes,
+  })
+
+  useAutoLock({
+    enabled: !!settings.autoLock,
+    lockTimeout: settings.autoLockTimeout,
+    lock,
+  })
+
   return (
-    <AppRootLayout
-      appName={appName}
-      title={title}
-      connectivityRoute={connectivityRoute}
-      routes={routes}
-    >
+    <AppRootLayout appName={appName} title={title}>
       <AppBackdrop />
       <div className="flex h-full w-full">
         <Sidenav
           routes={routes}
           profile={profile}
           openSettings={openSettings}
+          lock={lock}
           showWallet={showWallet}
           walletBalance={walletBalance}
           isSynced={isSynced}

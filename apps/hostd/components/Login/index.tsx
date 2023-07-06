@@ -4,7 +4,7 @@ import { HostdPublicLayout } from '../HostdPublicLayout'
 
 export function Login() {
   return (
-    <HostdPublicLayout routes={routes}>
+    <HostdPublicLayout>
       <AppLogin appName="hostd" route={connectivityRoute} routes={routes} />
     </HostdPublicLayout>
   )

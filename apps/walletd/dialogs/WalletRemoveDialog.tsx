@@ -63,6 +63,7 @@ export function WalletRemoveDialog({
   const walletDelete = useWalletDelete()
 
   const form = useForm({
+    mode: 'all',
     defaultValues,
   })
 

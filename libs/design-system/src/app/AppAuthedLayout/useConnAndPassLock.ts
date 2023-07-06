@@ -1,7 +1,7 @@
 import { useAppSettings } from '@siafoundation/react-core'
 import { NextRouter, useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { useConnectivity } from './useConnectivity'
+import { useConnectivity } from '../../hooks/useConnectivity'
 
 type Routes = {
   home: string
@@ -9,10 +9,10 @@ type Routes = {
 }
 
 export function getRouteToSaveAsPrev(router: NextRouter, routes: Routes) {
-  if ([routes.login].includes(router.pathname)) {
+  if ([routes.login].includes(router.asPath)) {
     return routes.home
   }
-  return router.pathname
+  return router.asPath
 }
 
 export function getRedirectRouteFromQuery(router: NextRouter, routes: Routes) {
@@ -21,32 +21,31 @@ export function getRedirectRouteFromQuery(router: NextRouter, routes: Routes) {
     : routes.home
 }
 
-export function useMonitorConnAndLock({
+export function useConnAndPassLock({
+  lock,
   route,
   routes,
 }: {
+  lock: () => void
   route: string
   routes: Routes
 }) {
-  const { isConnected } = useConnectivity({
+  const { isConnected, isValidating } = useConnectivity({
     route,
   })
-  const { lock, settings } = useAppSettings()
+  const { settings } = useAppSettings()
   const router = useRouter()
 
   useEffect(() => {
-    const isProtectedPath = !router.pathname.startsWith(routes.login)
+    if (isValidating) {
+      return
+    }
+    const isProtectedPath = !router.asPath.startsWith(routes.login)
     const noPasswordOrDisconnected = !settings.password || !isConnected
     if (isProtectedPath && noPasswordOrDisconnected) {
       lock()
-      router.push({
-        pathname: routes.login,
-        query: {
-          prev: getRouteToSaveAsPrev(router, routes),
-        },
-      })
       return
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router, isConnected])
+  }, [router, settings.password, isConnected, isValidating])
 }

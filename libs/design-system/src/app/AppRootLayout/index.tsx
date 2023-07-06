@@ -1,32 +1,13 @@
 import React from 'react'
-import { useMonitorConnAndLock } from '../../hooks/useMonitorConnAndLock'
 import { AppPageHead } from '../AppPageHead'
 
-type Routes = {
-  home: string
-  login: string
-}
-
 type Props = {
-  connectivityRoute: string
-  children: React.ReactNode
-  routes: Routes
   appName: string
   title?: string
+  children: React.ReactNode
 }
 
-export function AppRootLayout({
-  appName,
-  title,
-  connectivityRoute,
-  children,
-  routes,
-}: Props) {
-  useMonitorConnAndLock({
-    route: connectivityRoute,
-    routes,
-  })
-
+export function AppRootLayout({ appName, title, children }: Props) {
   return (
     <div className="h-screen">
       <AppPageHead appName={appName} title={title} />

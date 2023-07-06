@@ -6,7 +6,14 @@ export function AddressesButton() {
   const router = useRouter()
   const id = router.query.id as string
   return (
-    <LinkButton href={routes.wallet.addresses.replace(':id', id)}>
+    <LinkButton
+      href={{
+        pathname: routes.wallet.addresses,
+        query: {
+          id,
+        },
+      }}
+    >
       <ArrowDownLeft16 />
       Addresses
     </LinkButton>

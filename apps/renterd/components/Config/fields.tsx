@@ -60,10 +60,7 @@ export function getFields({
         </>
       ),
       description: (
-        <>
-          The default contract set is where data is uploaded or migrated to by
-          default.
-        </>
+        <>The default contract set is where data is uploaded to by default.</>
       ),
       validation: {
         required: 'required',

@@ -29,9 +29,6 @@ export function useGetSwr<Params extends RequestParams, Result>(
     undefined
   )
   return useSWR<Result, SWRError>(
-    // TODO: add a config to app settings to set password protected app or not,
-    // renterd etc require password, explorer do not, disable hook fetching if
-    // password protected and password is missing.
     keyOrNull(
       reqRoute,
       hookArgs.disabled || (passwordProtectRequestHooks && !settings.password)

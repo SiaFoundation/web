@@ -30,7 +30,7 @@ export function WalletSendSiacoinDialog({
   open,
   onOpenChange,
 }: Props) {
-  const { wallet } = useWallets()
+  const { wallet, saveWalletSeed } = useWallets()
   const walletId = wallet?.id
   const balance = useWalletBalance({
     disabled: !walletId,
@@ -52,7 +52,7 @@ export function WalletSendSiacoinDialog({
   const broadcast = useTxPoolBroadcast()
   // const release = useWalletRelease()
   const send = useCallback(
-    async ({ mnemonic, address, siacoin }: SendParams) => {
+    async ({ seed, address, siacoin }: SendParams) => {
       if (!addresses) {
         return
       }
@@ -82,7 +82,7 @@ export function WalletSendSiacoinDialog({
 
       // sign
       const signResponse = seedSignTransaction({
-        mnemonic,
+        seed,
         transaction: fundResponse.data?.transaction,
         toSign: fundResponse.data?.toSign,
         cs: cs.data,
@@ -95,6 +95,9 @@ export function WalletSendSiacoinDialog({
           error: signResponse.error,
         }
       }
+
+      // if successfully signed cache the seed
+      saveWalletSeed(walletId, seed)
 
       // return signResponse
       // broadcast
@@ -117,7 +120,16 @@ export function WalletSendSiacoinDialog({
         // transactionId: signResponse.data.??,
       }
     },
-    [walletId, fund, addresses, broadcast, cn.data, cs.data, outputs.data]
+    [
+      addresses,
+      fund,
+      walletId,
+      cs.data,
+      cn.data,
+      outputs.data?.siacoinOutputs,
+      saveWalletSeed,
+      broadcast,
+    ]
   )
 
   return (

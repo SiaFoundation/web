@@ -210,7 +210,7 @@ export function WalletAddNewDialog({ trigger, open, onOpenChange }: Props) {
             </>
           }
         >
-          <div className="flex flex-col gap-2 py-2">
+          <div className="flex flex-col gap-2">
             <FieldTextArea
               form={form}
               field={fields.mnemonic}

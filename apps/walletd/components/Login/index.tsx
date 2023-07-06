@@ -4,7 +4,7 @@ import { WalletdPublicLayout } from '../WalletdPublicLayout'
 
 export function Login() {
   return (
-    <WalletdPublicLayout routes={routes}>
+    <WalletdPublicLayout>
       <AppLogin appName="walletd" route={connectivityRoute} routes={routes} />
     </WalletdPublicLayout>
   )

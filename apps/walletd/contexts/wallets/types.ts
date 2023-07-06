@@ -5,21 +5,33 @@ export type WalletData = {
   name?: string
   description?: string
   type?: WalletType
+  seed?: string
+  activityAt?: number
+  status: 'unlocked' | 'locked'
   seedHash?: string
   createdAt?: number
+  unlock: () => void
+  lock: () => void
 }
 
-export type TableColumnId = 'actions' | 'id' | 'details' | 'type' | 'createdAt'
+export type TableColumnId =
+  | 'actions'
+  | 'details'
+  | 'balance'
+  | 'type'
+  | 'status'
+  | 'createdAt'
 
 export const columnsDefaultVisible: TableColumnId[] = [
   'actions',
-  'id',
   'details',
+  'balance',
   'type',
+  'status',
   'createdAt',
 ]
 
-export type SortField = 'name' | 'type' | 'createdAt'
+export type SortField = 'name' | 'type' | 'status' | 'createdAt'
 
 export const defaultSortField: SortField = 'name'
 
@@ -36,6 +48,11 @@ export const sortOptions: {
   {
     id: 'type',
     label: 'type',
+    category: 'general',
+  },
+  {
+    id: 'status',
+    label: 'status',
     category: 'general',
   },
   {

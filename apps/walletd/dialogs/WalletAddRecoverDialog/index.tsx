@@ -164,13 +164,7 @@ export function WalletAddRecoverDialog({ trigger, open, onOpenChange }: Props) {
             <>Enter the seed mnemonic for the wallet you are recovering.</>
           }
         >
-          <div className="flex flex-col gap-2 py-2">
-            <FieldTextArea
-              form={form}
-              field={fields.mnemonic}
-              name="mnemonic"
-            />
-          </div>
+          <FieldTextArea form={form} field={fields.mnemonic} name="mnemonic" />
         </SeedLayout>
       </div>
     </Dialog>
