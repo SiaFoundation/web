@@ -10,9 +10,11 @@ import { FormSubmitButton } from '../components/Form'
 import { Separator } from '../core/Separator'
 import { Text } from '../core/Text'
 import { DropdownMenu, DropdownMenuItem } from '../core/DropdownMenu'
-import { Settings16 } from '@carbon/icons-react'
+import { RecentlyViewed16, Settings16 } from '../icons/carbon'
 import { Button } from '../core/Button'
 import { Panel } from '../core/Panel'
+import { ControlGroup } from '../core/ControlGroup'
+import { sortBy } from 'lodash'
 
 function getDefaultValues(api: string) {
   return {
@@ -153,6 +155,10 @@ export function AppLogin({ appName, route, routes }: Props) {
         setSettings({
           api,
           password: values.password,
+          recentApis: {
+            ...settings.recentApis,
+            [api]: { lastUsed: new Date().getTime() },
+          },
         })
         form.reset(defaultValues)
         router.push(getRedirectRouteFromQuery(router, routes))
@@ -162,7 +168,16 @@ export function AppLogin({ appName, route, routes }: Props) {
         })
       }
     },
-    [allowCustomApi, form, router, routes, setSettings, defaultValues, route]
+    [
+      allowCustomApi,
+      form,
+      router,
+      routes,
+      settings,
+      setSettings,
+      defaultValues,
+      route,
+    ]
   )
 
   const fields = getFields({ allowCustomApi })
@@ -170,6 +185,13 @@ export function AppLogin({ appName, route, routes }: Props) {
 
   const error = form.formState.errors.api || form.formState.errors.password
 
+  const recentApis = sortBy(
+    Object.entries(settings.recentApis),
+    ([_, { lastUsed }]) => -lastUsed
+  ).map(([api]) => api)
+
+  const api = form.watch('api')
+  console.log(api)
   return (
     <div className="flex flex-col items-center justify-center gap-6 h-full">
       <Panel className="relative top-[-50px] w-[300px] p-2.5">
@@ -200,12 +222,32 @@ export function AppLogin({ appName, route, routes }: Props) {
           <form onSubmit={form.handleSubmit(onValid, onInvalid)}>
             <div className="flex flex-col gap-1.5">
               {allowCustomApi ? (
-                <FieldText
-                  name="api"
-                  form={form}
-                  field={fields.api}
-                  group={false}
-                />
+                <ControlGroup>
+                  <FieldText
+                    name="api"
+                    form={form}
+                    field={fields.api}
+                    group={false}
+                  />
+                  {recentApis.length > 1 && (
+                    <DropdownMenu
+                      trigger={
+                        <Button type="button">
+                          <RecentlyViewed16 />
+                        </Button>
+                      }
+                    >
+                      {recentApis.map((api) => (
+                        <DropdownMenuItem
+                          key={api}
+                          onSelect={() => form.setValue('api', api)}
+                        >
+                          {api}
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenu>
+                  )}
+                </ControlGroup>
               ) : null}
               <FieldText
                 name="password"
