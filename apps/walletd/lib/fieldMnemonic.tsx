@@ -53,6 +53,9 @@ export function getFieldMnemonic<
           const { seed } = getWalletWasm().seedFromPhrase(mnemonic)
           return (
             blake2bHex(seed) === seedHash || 'seed does not match'
+            // Maybe re-enabled this so that wallets added via daemon can pass
+            // validation. Would need to add seedHash to metadata afterwards.
+            // Potential issues if wrong valid seed is entered.
             // !seedHash || blake2bHex(seed) === seedHash || 'seed does not match'
           )
         },

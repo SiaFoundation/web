@@ -1,6 +1,7 @@
 import {
   ArrowUpRight16,
   Button,
+  Settings16,
   WalletBalance,
 } from '@siafoundation/design-system'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
@@ -10,8 +11,8 @@ import { EventsViewDropdownMenu } from './EventsViewDropdownMenu'
 import { useWalletBalance } from '@siafoundation/react-walletd'
 import { useRouter } from 'next/router'
 import { useWallets } from '../../contexts/wallets'
-import { WalletActionsDropdownMenu } from './WalletActionsDropdownMenu'
 import { useDialog } from '../../contexts/dialog'
+import { WalletDropdownMenu } from '../WalletDropdownMenu'
 
 export function WalletActionsMenu() {
   const status = useSyncStatus()
@@ -46,7 +47,19 @@ export function WalletActionsMenu() {
         </Button>
       )}
       <EventsViewDropdownMenu />
-      <WalletActionsDropdownMenu />
+      {wallet && (
+        <WalletDropdownMenu
+          wallet={wallet}
+          trigger={
+            <Button size="small" tip="Wallet settings" tipAlign="end">
+              <Settings16 />
+            </Button>
+          }
+          contentProps={{
+            align: 'end',
+          }}
+        />
+      )}
     </div>
   )
 }

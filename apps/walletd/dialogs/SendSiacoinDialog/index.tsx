@@ -28,7 +28,7 @@ export type SendData = {
 }
 
 export type SendParams = {
-  mnemonic: string
+  seed: string
   address: string
   siacoin: BigNumber
 }
@@ -88,6 +88,7 @@ export function SendSiacoinDialog({
     },
   })
   const confirm = useSendSiacoinConfirmForm({
+    walletId,
     fee,
     data,
     send,

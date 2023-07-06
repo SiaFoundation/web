@@ -5,6 +5,13 @@ import { fireEvent, render, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useState } from 'react'
 
+jest.mock('next/router', () => ({
+  useRouter: jest.fn().mockReturnValue({
+    query: {},
+    push: jest.fn(),
+  }),
+}))
+
 describe('NumberField', () => {
   it('updates external value immediately', async () => {
     const user = userEvent.setup()

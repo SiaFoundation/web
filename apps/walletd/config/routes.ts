@@ -1,8 +1,9 @@
 export const routes = {
   home: '/',
   wallet: {
-    view: '/wallets/:id',
-    addresses: '/wallets/:id/addresses',
+    base: '/wallets/',
+    view: '/wallets/[id]',
+    addresses: '/wallets/[id]/addresses',
   },
   node: {
     index: '/node',

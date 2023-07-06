@@ -2,7 +2,6 @@ import React, { createContext, useContext, useCallback, useState } from 'react'
 import {
   ConfirmDialog,
   ConfirmDialogParams,
-  SettingsDialog,
   SyncerConnectPeerDialog,
   SyncerConnectPeerDialogParams,
 } from '@siafoundation/design-system'
@@ -48,11 +47,19 @@ import {
   AddressRemoveDialogParams,
 } from '../dialogs/AddressRemoveDialog'
 import { WalletSendSiacoinDialog } from '../dialogs/WalletSendSiacoinDialog'
+import {
+  WalletUnlockDialog,
+  WalletUnlockDialogParams,
+} from '../dialogs/WalletUnlockDialog'
+import {
+  WalletdSettingsDialog,
+  WalletdSettingsDialogParams,
+} from '../dialogs/WalletdSettingsDialog'
 // import { CmdKDialog } from '../components/CmdKDialog'
 
 type DialogParams = {
   cmdk?: void
-  settings?: void
+  settings?: WalletdSettingsDialogParams
   sendSiacoin?: WalletSendSiacoinDialog
   transactionDetails?: void
   addressUpdate?: AddressUpdateDialogParams
@@ -68,6 +75,7 @@ type DialogParams = {
   walletAddressesAdd?: WalletAddressesAddDialogParams
   walletRemove?: WalletRemoveDialogParams
   walletUpdate?: WalletUpdateDialogParams
+  walletUnlock?: WalletUnlockDialogParams
 }
 
 type DialogType = keyof DialogParams
@@ -86,15 +94,6 @@ function useDialogMain() {
     },
     [setParams, setDialog]
   )
-
-  // const [confirm, setConfirm] = useState<ConfirmProps>()
-  // const openConfirmDialog = useCallback(
-  //   (confirm: ConfirmProps) => {
-  //     setDialogParams('confirm')
-  //     setConfirm(confirm)
-  //   },
-  //   [setDialog, setConfirm]
-  // )
 
   const closeDialog = useCallback(() => {
     setParams((p) => ({
@@ -150,10 +149,9 @@ export function Dialogs() {
         onOpenChange={onOpenChange}
         setOpen={() => openDialog('cmdk')}
       /> */}
-      <SettingsDialog
+      <WalletdSettingsDialog
         open={dialog === 'settings'}
         onOpenChange={onOpenChange}
-        showSiaStats={false}
       />
       <WalletAddTypeDialog
         open={dialog === 'walletAddType'}
@@ -201,6 +199,11 @@ export function Dialogs() {
       <WalletUpdateDialog
         open={dialog === 'walletUpdate'}
         params={params['walletUpdate']}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <WalletUnlockDialog
+        open={dialog === 'walletUnlock'}
+        params={params['walletUnlock']}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <AddressUpdateDialog

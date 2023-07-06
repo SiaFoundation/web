@@ -40,7 +40,12 @@ export function WalletAddresses() {
             font="mono"
             size="18"
             weight="bold"
-            href={routes.wallet.view.replace(':id', id)}
+            href={{
+              pathname: routes.wallet.view,
+              query: {
+                id,
+              },
+            }}
           >
             {truncate(wallet?.name, 20)}
           </Link>

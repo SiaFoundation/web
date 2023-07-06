@@ -15,6 +15,7 @@ export function WalletsList() {
   const {
     dataset,
     dataState,
+    context,
     columns,
     sortableColumns,
     sortDirection,
@@ -46,6 +47,7 @@ export function WalletsList() {
             }
             pageSize={6}
             data={dataset}
+            context={context}
             columns={columns}
             sortableColumns={sortableColumns}
             sortDirection={sortDirection}

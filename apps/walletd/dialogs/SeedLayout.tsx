@@ -1,7 +1,7 @@
 import { Button, Panel, Paragraph } from '@siafoundation/design-system'
 
 type Props = {
-  children: React.ReactNode
+  children?: React.ReactNode
   icon: React.ReactNode
   description: React.ReactNode
   copySeed?: () => void
@@ -11,7 +11,7 @@ export function SeedLayout({ copySeed, children, icon, description }: Props) {
   return (
     <div className="">
       {children}
-      <Panel className="mb-6">
+      <Panel className="mt-2">
         <div className="flex gap-6 items-center py-4 px-4">
           <div className="flex">{icon}</div>
           <div className="flex flex-col gap-2">

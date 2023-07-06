@@ -4,17 +4,10 @@ import { AppNavbar } from '../AppNavbar'
 import { AppBackdrop } from '../AppBackdrop'
 import { AppRootLayout } from '../AppRootLayout'
 
-type Routes = {
-  home: string
-  login: string
-}
-
 type Props = {
   children: React.ReactNode
-  routes: Routes
   appName: string
   title?: string
-  connectivityRoute: string
   filters?: React.ReactNode
   actions?: React.ReactNode
 }
@@ -22,19 +15,12 @@ type Props = {
 export function AppPublicLayout({
   appName,
   title,
-  connectivityRoute,
   children,
-  routes,
   filters,
   actions,
 }: Props) {
   return (
-    <AppRootLayout
-      appName={appName}
-      title={title}
-      connectivityRoute={connectivityRoute}
-      routes={routes}
-    >
+    <AppRootLayout appName={appName} title={title}>
       <AppBackdrop />
       <div className="flex h-full">
         <div className="flex flex-col flex-1">

@@ -11,6 +11,13 @@ import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { useState } from 'react'
 
+jest.mock('next/router', () => ({
+  useRouter: jest.fn().mockReturnValue({
+    query: {},
+    push: jest.fn(),
+  }),
+}))
+
 const server = setupServer()
 beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())

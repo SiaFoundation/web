@@ -15,5 +15,6 @@ export function useConnectivity({ route }: Props) {
   })
   return {
     isConnected: !w.error,
+    isValidating: w.isValidating,
   }
 }

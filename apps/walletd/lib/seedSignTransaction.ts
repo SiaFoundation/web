@@ -9,7 +9,7 @@ import { stripPrefix } from '@siafoundation/design-system'
 import { AddressData } from '../contexts/addresses/types'
 
 export function seedSignTransaction({
-  mnemonic,
+  seed,
   transaction,
   toSign,
   cs,
@@ -17,7 +17,7 @@ export function seedSignTransaction({
   addresses,
   siacoinOutputs,
 }: {
-  mnemonic: string
+  seed: string
   cs: ConsensusState
   cn: ConsensusNetwork
   transaction: Transaction
@@ -33,10 +33,6 @@ export function seedSignTransaction({
   }
   if (!siacoinOutputs) {
     return { error: 'No outputs' }
-  }
-  const { seed, error } = getWalletWasm().seedFromPhrase(mnemonic)
-  if (error) {
-    return { error }
   }
 
   for (const idPrefixed of toSign) {
