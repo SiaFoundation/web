@@ -66,6 +66,7 @@ export function VolumeDeleteDialog({ trigger, open, onOpenChange }: Props) {
   const path = volume.data?.localPath
 
   const form = useForm({
+    mode: 'all',
     defaultValues,
   })
 

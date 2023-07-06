@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js'
 import {
   transformDown,
+  transformUpContractSet,
   transformUpGouging,
   transformUpRedundancy,
 } from './transform'
@@ -9,6 +10,7 @@ describe('data transforms', () => {
   it('down', () => {
     expect(
       transformDown(
+        { default: 'myset' },
         {
           hostBlockHeightLeeway: 4,
           maxContractPrice: '20000000000000000000000000',
@@ -27,6 +29,7 @@ describe('data transforms', () => {
         }
       )
     ).toEqual({
+      contractSet: 'myset',
       hostBlockHeightLeeway: new BigNumber(4),
       maxContractPrice: new BigNumber('20'),
       maxDownloadPrice: new BigNumber('1004.31'),
@@ -42,10 +45,28 @@ describe('data transforms', () => {
     })
   })
 
+  it('up contractset', () => {
+    expect(
+      transformUpContractSet(
+        {
+          contractSet: 'myset',
+        },
+        {
+          default: '77777777777',
+          foobar: 'value',
+        }
+      )
+    ).toEqual({
+      default: 'myset',
+      foobar: 'value',
+    })
+  })
+
   it('up gouging', () => {
     expect(
       transformUpGouging(
         {
+          contractSet: 'myset',
           hostBlockHeightLeeway: new BigNumber(4),
           maxContractPrice: new BigNumber('20'),
           maxDownloadPrice: new BigNumber('1004.31'),

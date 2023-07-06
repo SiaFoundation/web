@@ -36,6 +36,8 @@ describe('SiacoinField', () => {
     expect(fiatInput.value).toBe('$44')
     expect(onChange.mock.calls.length).toBe(4)
     expect(Number(onChange.mock.calls[3][0])).toBe(44)
+    // for some reason after fireEvent.blur, user.click does not trigger a re-focus
+    fireEvent.focus(scInput)
     await user.click(scInput)
     await user.type(scInput, '4')
     fireEvent.blur(scInput)

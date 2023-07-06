@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
+import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
 import { TextField } from '../core/TextField'
 import { ConfigField, useRegisterForm } from './configurationFields'
@@ -24,22 +23,19 @@ export function FieldText<
   autoComplete,
   group = true,
 }: Props<Values, Categories>) {
-  const { onChange, onBlur, value, error } = useRegisterForm({
+  const { ref, onChange, onBlur, error } = useRegisterForm({
     name,
     form,
     field,
   })
-  const [localValue, setLocalValue] = useState(value)
-  useEffect(() => {
-    setLocalValue(value)
-  }, [value])
 
   const el = (
     <TextField
+      ref={ref}
+      name={name}
       placeholder={field.placeholder}
       size={size}
       autoComplete={autoComplete}
-      value={localValue}
       type={field.type}
       readOnly={field.readOnly}
       onClick={field.onClick}
@@ -50,15 +46,8 @@ export function FieldText<
           ? 'valid'
           : 'default'
       }
-      onChange={(e) => {
-        const v = e.currentTarget.value as PathValue<Values, Path<Values>>
-        setLocalValue(v)
-        onChange(v)
-      }}
-      onBlur={(e) => {
-        onBlur(e)
-        onChange(value)
-      }}
+      onChange={onChange}
+      onBlur={onBlur}
     />
   )
 

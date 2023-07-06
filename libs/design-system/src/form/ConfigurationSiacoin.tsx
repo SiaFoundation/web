@@ -26,7 +26,7 @@ export function ConfigurationSiacoin<
     decimalsLimitFiat = 6,
     tipsDecimalsLimitSc = 0,
   } = field
-  const { onChange, onBlur, value, error } = useRegisterForm({
+  const { setValue, value, error } = useRegisterForm({
     name,
     field,
     form,
@@ -45,11 +45,10 @@ export function ConfigurationSiacoin<
           changed={form.formState.dirtyFields[name]}
           placeholder={(suggestion as BigNumber) || (average as BigNumber)}
           onChange={(val) => {
-            onChange(val as PathValue<Values, Path<Values>>)
+            setValue(val as PathValue<Values, Path<Values>>, true)
           }}
-          onBlur={(e) => {
-            onBlur(e)
-            onChange(value)
+          onBlur={() => {
+            setValue(value, true)
           }}
         />
         {average && (
@@ -60,7 +59,7 @@ export function ConfigurationSiacoin<
             decimalsLimit={tipsDecimalsLimitSc}
             value={toHastings(average as BigNumber)}
             onClick={() => {
-              onChange(average as PathValue<Values, Path<Values>>)
+              setValue(average as PathValue<Values, Path<Values>>, true)
             }}
           />
         )}
@@ -72,7 +71,7 @@ export function ConfigurationSiacoin<
             decimalsLimit={tipsDecimalsLimitSc}
             value={toHastings(suggestion as BigNumber)}
             onClick={() => {
-              onChange(suggestion as PathValue<Values, Path<Values>>)
+              setValue(suggestion as PathValue<Values, Path<Values>>, true)
             }}
           />
         )}

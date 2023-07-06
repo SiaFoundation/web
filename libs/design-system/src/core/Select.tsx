@@ -50,7 +50,7 @@ const containerStyles = cva(
 export const Select = React.forwardRef<
   HTMLSelectElement,
   VariantProps<typeof containerStyles> &
-    React.HTMLAttributes<HTMLSelectElement> & {
+    Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'size'> & {
       icon?: React.ReactNode
       value?: string
       disabled?: boolean

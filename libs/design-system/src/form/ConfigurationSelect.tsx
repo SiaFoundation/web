@@ -20,7 +20,7 @@ export function ConfigurationSelect<
   Categories extends string
 >({ name, form, field }: Props<Values, Categories>) {
   const { options, suggestion, suggestionTip } = field
-  const { onChange, onBlur, value, error } = useRegisterForm({
+  const { ref, onChange, setValue, onBlur, value, error } = useRegisterForm({
     name,
     form,
     field,
@@ -30,6 +30,8 @@ export function ConfigurationSelect<
       <div className="flex flex-col gap-3 w-[220px]">
         <div className="flex justify-end w-full">
           <Select
+            ref={ref}
+            name={name}
             size="small"
             value={value}
             state={
@@ -39,13 +41,8 @@ export function ConfigurationSelect<
                 ? 'valid'
                 : 'default'
             }
-            onChange={(e) => {
-              onChange(e.currentTarget.value as PathValue<Values, Path<Values>>)
-            }}
-            onBlur={(e) => {
-              onBlur(e)
-              onChange(value)
-            }}
+            onChange={onChange}
+            onBlur={onBlur}
           >
             {options?.map((o) => (
               <Option key={o.value} value={o.value}>
@@ -61,7 +58,7 @@ export function ConfigurationSelect<
               tip={suggestionTip}
               value={suggestion ? 'on' : 'off'}
               onClick={() => {
-                onChange(suggestion as PathValue<Values, Path<Values>>)
+                setValue(suggestion as PathValue<Values, Path<Values>>, true)
               }}
             />
           )}

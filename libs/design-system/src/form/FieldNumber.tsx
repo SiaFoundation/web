@@ -15,7 +15,7 @@ export function FieldNumber<
   Categories extends string
 >({ name, form, field }: Props<Values, Categories>) {
   const { placeholder, decimalsLimit = 2, units } = field
-  const { onChange, onBlur, error, value } = useRegisterForm({
+  const { setValue, error, value } = useRegisterForm({
     form,
     field,
     name,
@@ -23,6 +23,7 @@ export function FieldNumber<
   return (
     <FieldGroup title={field.title} name={name} form={form}>
       <NumberField
+        name={name}
         value={value}
         units={units}
         decimalsLimit={decimalsLimit}
@@ -36,11 +37,10 @@ export function FieldNumber<
         }
         onChange={(val) => {
           const v = val !== undefined ? new BigNumber(val) : undefined
-          onChange(v as PathValue<Values, Path<Values>>)
+          setValue(v as PathValue<Values, Path<Values>>, true)
         }}
-        onBlur={(e) => {
-          onBlur(e)
-          onChange(value)
+        onBlur={() => {
+          setValue(value, true)
         }}
       />
     </FieldGroup>

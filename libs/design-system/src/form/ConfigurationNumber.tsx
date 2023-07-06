@@ -24,7 +24,7 @@ export function ConfigurationNumber<
     placeholder,
     units,
   } = field
-  const { value, error, onBlur, onChange } = useRegisterForm({
+  const { setValue, value, error } = useRegisterForm({
     form,
     field,
     name,
@@ -33,6 +33,7 @@ export function ConfigurationNumber<
     <div className="flex flex-col gap-3 items-end">
       <div className="flex flex-col gap-3 w-[220px]">
         <NumberField
+          name={name}
           value={value}
           units={units}
           decimalsLimit={decimalsLimit}
@@ -46,11 +47,10 @@ export function ConfigurationNumber<
           }
           onChange={(val) => {
             const v = val !== undefined ? new BigNumber(val) : undefined
-            onChange(v as PathValue<Values, Path<Values>>)
+            setValue(v as PathValue<Values, Path<Values>>, true)
           }}
-          onBlur={(e) => {
-            onBlur(e)
-            onChange(value)
+          onBlur={() => {
+            setValue(value, true)
           }}
         />
         <div className="flex flex-col gap-2">
@@ -63,7 +63,7 @@ export function ConfigurationNumber<
               value={average as BigNumber}
               units={units}
               onClick={() => {
-                onChange(average as PathValue<Values, Path<Values>>)
+                setValue(average as PathValue<Values, Path<Values>>, true)
               }}
             />
           )}
@@ -76,7 +76,7 @@ export function ConfigurationNumber<
               value={suggestion as BigNumber}
               units={units}
               onClick={() => {
-                onChange(suggestion as PathValue<Values, Path<Values>>)
+                setValue(suggestion as PathValue<Values, Path<Values>>, true)
               }}
             />
           )}

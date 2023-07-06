@@ -3,7 +3,14 @@ import {
   useAppSettings,
   useSiaCentralMarketExchangeRate,
 } from '@siafoundation/react-core'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  forwardRef,
+  Ref,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import BigNumber from 'bignumber.js'
 import { cx } from 'class-variance-authority'
 import { toFixedMax } from '../lib/numbers'
@@ -25,22 +32,25 @@ type Props = Omit<
 
 const zero = new BigNumber(0)
 
-export function SiacoinField({
-  sc: _externalSc,
-  placeholder = new BigNumber(100),
-  decimalsLimitFiat = 6,
-  decimalsLimitSc = 6,
-  onChange,
-  size = 'medium',
-  units = 'SC',
-  showFiat = true,
-  error,
-  changed,
-  prefix,
-  onBlur,
-  onFocus,
-  ...props
-}: Props) {
+export const SiacoinField = forwardRef(function SiacoinField(
+  {
+    sc: _externalSc,
+    placeholder = new BigNumber(100),
+    decimalsLimitFiat = 6,
+    decimalsLimitSc = 6,
+    onChange,
+    size = 'medium',
+    units = 'SC',
+    showFiat = true,
+    error,
+    changed,
+    prefix,
+    onBlur,
+    onFocus,
+    ...props
+  }: Props,
+  ref: Ref<HTMLDivElement>
+) {
   const externalSc = useMemo(
     () => new BigNumber(_externalSc === undefined ? NaN : _externalSc),
     [_externalSc]
@@ -153,6 +163,7 @@ export function SiacoinField({
 
   return (
     <div
+      ref={ref}
       className={cx(
         'flex flex-col bg-white dark:bg-graydark-50',
         'focus-within:ring ring-blue-500 dark:ring-blue-200',
@@ -177,6 +188,7 @@ export function SiacoinField({
         decimalsLimit={decimalsLimitSc}
         allowNegativeValue={false}
         onBlur={(e) => {
+          setActive(undefined)
           if (onBlur) {
             onBlur(e)
           }
@@ -213,6 +225,7 @@ export function SiacoinField({
             }
           }}
           onBlur={(e) => {
+            setActive(undefined)
             if (onBlur) {
               onBlur(e)
             }
@@ -224,7 +237,7 @@ export function SiacoinField({
       )}
     </div>
   )
-}
+})
 
 function normalizedNumberString(v: string): string {
   // normalize separators

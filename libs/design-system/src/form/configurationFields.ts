@@ -60,26 +60,57 @@ export function useRegisterForm<
   field: ConfigField<Values, Categories>
   name: Path<Values>
 }) {
-  const value = form.getValues(name)
+  const value = form.watch(name)
   const error =
     form.formState.touchedFields[name] && !!form.formState.errors[name]
-  const { onBlur } = form.register(name, field.validation)
+  const {
+    ref,
+    onChange: _onChange,
+    onBlur,
+  } = form.register(name, field.validation)
   const onChange = useCallback(
-    (val: PathValue<Values, Path<Values>>) => {
-      form.setValue(name, val, {
-        shouldValidate: true,
-        shouldDirty: true,
-        shouldTouch: true,
-      })
+    (e: { target: unknown; type: unknown }) => {
+      _onChange(e)
+      field.trigger?.forEach((t) => form.trigger(t))
+    },
+    [_onChange, form, field]
+  )
+  const setValue = useCallback(
+    (
+      val: PathValue<Values, Path<Values>>,
+      options?:
+        | boolean
+        | {
+            shouldValidate: boolean
+            shouldDirty: boolean
+            shouldTouch: boolean
+          }
+    ) => {
+      form.setValue(
+        name,
+        val,
+        typeof options === 'boolean'
+          ? options
+            ? {
+                shouldValidate: true,
+                shouldDirty: true,
+                shouldTouch: true,
+              }
+            : undefined
+          : options
+      )
       field.trigger?.forEach((t) => form.trigger(t))
     },
     [name, form, field]
   )
   return {
+    ref,
+    name,
     value,
     error,
     onBlur,
     onChange,
+    setValue,
   }
 }
 

@@ -1,5 +1,12 @@
 import { BaseNumberField } from './BaseNumberField'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  forwardRef,
+  Ref,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import BigNumber from 'bignumber.js'
 import { toFixedMax } from '../lib/numbers'
 
@@ -18,19 +25,22 @@ type Props = Omit<
   changed?: boolean
 }
 
-export function NumberField({
-  value: _externalValue,
-  placeholder = new BigNumber(100),
-  decimalsLimit = 6,
-  onChange,
-  size = 'small',
-  units,
-  error,
-  changed,
-  onBlur,
-  onFocus,
-  ...props
-}: Props) {
+export const NumberField = forwardRef(function NumberField(
+  {
+    value: _externalValue,
+    placeholder = new BigNumber(100),
+    decimalsLimit = 6,
+    onChange,
+    size = 'small',
+    units,
+    error,
+    changed,
+    onBlur,
+    onFocus,
+    ...props
+  }: Props,
+  ref: Ref<HTMLInputElement>
+) {
   const externalValue = useMemo(
     () => new BigNumber(_externalValue),
     [_externalValue]
@@ -69,6 +79,7 @@ export function NumberField({
 
   return (
     <BaseNumberField
+      ref={ref}
       {...props}
       data-testid="numberfield"
       size={size}
@@ -91,7 +102,7 @@ export function NumberField({
       onValueChange={(value) => onValueChange(value || '')}
     />
   )
-}
+})
 
 function normalizedNumberString(v: string): string {
   // normalize separators
