@@ -93,6 +93,11 @@ export type AppSettings = {
   siaCentral: boolean
   password?: string
   currency: CurrencyOption
+  recentApis: {
+    [api: string]: {
+      lastUsed: number
+    }
+  }
 }
 
 const defaultSettings: AppSettings = {
@@ -102,6 +107,7 @@ const defaultSettings: AppSettings = {
   siaCentral: true,
   password: undefined,
   currency: currencyOptions[0],
+  recentApis: {},
 }
 
 type Props = {
