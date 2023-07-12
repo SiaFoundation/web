@@ -1,6 +1,5 @@
 import { Fragment } from 'react'
 import { LinearGradient } from '@visx/gradient'
-import { format } from 'date-fns'
 import { Text } from '../../core/Text'
 import { ChartXYProps } from './useChartXY'
 import { Separator } from '../../core/Separator'
@@ -9,6 +8,7 @@ import { cx } from 'class-variance-authority'
 import { rootClasses } from '../../config/css'
 import { groupBy } from 'lodash'
 import { ChartConfig, ChartPoint } from './types'
+import { humanDate } from '@siafoundation/sia-js'
 
 export function ChartXYGraph<Key extends string, Cat extends string>({
   id,
@@ -193,7 +193,7 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
         orientation={xAxisOrientation}
         numTicks={numTicks}
         animationTrajectory={animationTrajectory}
-        tickFormat={(d) => format(d, 'P')}
+        tickFormat={(d) => humanDate(d)}
         tickLength={12}
         tickLabelProps={(p) => ({
           ...p,
@@ -239,7 +239,12 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
             ) as Key[]
 
             const formatTimestamp =
-              config.formatTimestamp || ((v) => format(v, 'Pp'))
+              config.formatTimestamp ||
+              ((v) =>
+                humanDate(v, {
+                  timeStyle: 'short',
+                  hour12: false,
+                }))
 
             type KeyOption = { key: Key; category: Cat }
             const options = keys.map(
