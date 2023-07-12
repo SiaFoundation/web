@@ -118,11 +118,11 @@ export function humanDate(
   t: Date | string | number,
   options?: Intl.DateTimeFormatOptions
 ) {
-  let langCode = undefined
+  let language = undefined
   if (typeof window !== 'undefined') {
-    langCode = document?.documentElement.lang || navigator.language
+    language = navigator.language
   }
-  return new Intl.DateTimeFormat(langCode, {
+  return new Intl.DateTimeFormat(language, {
     dateStyle: 'short',
     ...options,
   }).format(new Date(t))
