@@ -1,12 +1,12 @@
 import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
 import { TextField } from '../core/TextField'
-import { ConfigField, useRegisterForm } from './configurationFields'
+import { ConfigFields, useRegisterForm } from './configurationFields'
 
 type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
   form: UseFormReturn<Values>
-  field: ConfigField<Values, Categories>
+  fields: ConfigFields<Values, Categories>
   size?: React.ComponentProps<typeof TextField>['size']
   autoComplete?: React.ComponentProps<typeof TextField>['autoComplete']
   group?: boolean
@@ -18,17 +18,17 @@ export function FieldText<
 >({
   name,
   form,
-  field,
+  fields,
   size = 'small',
   autoComplete,
   group = true,
 }: Props<Values, Categories>) {
+  const field = fields[name]
   const { ref, onChange, onBlur, error } = useRegisterForm({
     name,
     form,
     field,
   })
-
   const el = (
     <TextField
       ref={ref}
@@ -50,7 +50,6 @@ export function FieldText<
       onBlur={onBlur}
     />
   )
-
   if (group) {
     return (
       <FieldGroup

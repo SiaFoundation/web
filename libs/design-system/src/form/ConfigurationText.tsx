@@ -2,19 +2,20 @@ import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
 import { FieldLabelAndError } from '../components/Form'
 import { TextField } from '../core/TextField'
 import { ConfigurationTipText } from './ConfigurationTipText'
-import { ConfigField, useRegisterForm } from './configurationFields'
+import { ConfigFields, useRegisterForm } from './configurationFields'
 
 type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
   form: UseFormReturn<Values>
-  field: ConfigField<Values, Categories>
+  fields: ConfigFields<Values, Categories>
   type?: 'password'
 }
 
 export function ConfigurationText<
   Values extends FieldValues,
   Categories extends string
->({ name, form, field, type }: Props<Values, Categories>) {
+>({ name, form, fields, type }: Props<Values, Categories>) {
+  const field = fields[name]
   const { placeholder, suggestion, suggestionTip } = field
   const { ref, onChange, setValue, onBlur, error } = useRegisterForm({
     name,

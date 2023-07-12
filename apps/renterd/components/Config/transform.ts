@@ -12,11 +12,23 @@ import {
   RedundancySettings,
 } from '@siafoundation/react-renterd'
 import { toHastings, toSiacoins } from '@siafoundation/sia-js'
+import { ConfigDisplayOptions } from '../../hooks/useConfigDisplayOptions'
 import BigNumber from 'bignumber.js'
-import { scDecimalPlaces, SettingsData } from './fields'
+import {
+  ConfigAppData,
+  ContractSetData,
+  defaultConfigApp,
+  defaultContractSet,
+  GougingData,
+  RedundancyData,
+  scDecimalPlaces,
+  SettingsData,
+} from './fields'
+
+// up
 
 export function transformUpContractSet(
-  values: { contractSet: string },
+  values: ContractSetData,
   existingValues: Record<string, unknown>
 ): ContractSetSettings {
   return {
@@ -35,11 +47,26 @@ export function transformUpGouging(
     maxStoragePrice: toHastings(
       values.maxStoragePrice // TB/month
         .div(monthsToBlocks(1)) // TB/block
-        .div(TBToBytes(1)) // bytes/block
+        .div(TBToBytes(1))
+        .div(
+          getRedundancyMultiplierIfIncluded(
+            values.minShards,
+            values.totalShards,
+            values.includeRedundancyMaxStoragePrice
+          )
+        ) // bytes/block
     ).toString(),
-    maxContractPrice: toHastings(values.maxContractPrice).toString(),
+    maxUploadPrice: toHastings(
+      values.maxUploadPrice.div(
+        getRedundancyMultiplierIfIncluded(
+          values.minShards,
+          values.totalShards,
+          values.includeRedundancyMaxUploadPrice
+        )
+      )
+    ).toString(),
     maxDownloadPrice: toHastings(values.maxDownloadPrice).toString(),
-    maxUploadPrice: toHastings(values.maxUploadPrice).toString(),
+    maxContractPrice: toHastings(values.maxContractPrice).toString(),
     minMaxCollateral: toHastings(values.minMaxCollateral).toString(),
     hostBlockHeightLeeway: Math.round(values.hostBlockHeightLeeway.toNumber()),
     minPriceTableValidity: Math.round(
@@ -55,7 +82,7 @@ export function transformUpGouging(
 }
 
 export function transformUpRedundancy(
-  values: Pick<SettingsData, 'minShards' | 'totalShards'>,
+  values: RedundancyData,
   existingValues: Record<string, unknown>
 ): RedundancySettings {
   return {
@@ -65,23 +92,72 @@ export function transformUpRedundancy(
   }
 }
 
-export function transformDown(
-  c: ContractSetSettings,
-  g: GougingSettings,
-  r: RedundancySettings
-): SettingsData {
+export function transformUpConfigApp(
+  values: ConfigAppData,
+  existingValues: Record<string, unknown>
+): ConfigDisplayOptions {
   return {
-    // contractset
+    ...existingValues,
+    includeRedundancyMaxStoragePrice: values.includeRedundancyMaxStoragePrice,
+    includeRedundancyMaxUploadPrice: values.includeRedundancyMaxUploadPrice,
+  }
+}
+
+// down
+
+export function transformDownContractSet(
+  c?: ContractSetSettings
+): ContractSetData {
+  if (!c) {
+    return defaultContractSet
+  }
+  return {
     contractSet: c.default,
-    // gouging
+  }
+}
+
+export function transformDownConfigApp(
+  ca?: ConfigDisplayOptions
+): ConfigAppData {
+  if (!ca) {
+    return defaultConfigApp
+  }
+  return {
+    includeRedundancyMaxStoragePrice: ca.includeRedundancyMaxStoragePrice,
+    includeRedundancyMaxUploadPrice: ca.includeRedundancyMaxUploadPrice,
+  }
+}
+
+export function transformDownGouging(
+  g: GougingSettings,
+  r: RedundancyData,
+  ca: ConfigAppData
+): GougingData {
+  return {
     maxStoragePrice: toSiacoins(
       new BigNumber(g.maxStoragePrice) // bytes/block
         .times(monthsToBlocks(1)) // bytes/month
-        .times(TBToBytes(1)),
+        .times(TBToBytes(1)) // tb/month
+        .times(
+          getRedundancyMultiplierIfIncluded(
+            r.minShards,
+            r.totalShards,
+            ca.includeRedundancyMaxStoragePrice
+          )
+        ),
       scDecimalPlaces
     ), // TB/month
+    maxUploadPrice: toSiacoins(
+      new BigNumber(g.maxUploadPrice).times(
+        getRedundancyMultiplierIfIncluded(
+          r.minShards,
+          r.totalShards,
+          ca.includeRedundancyMaxUploadPrice
+        )
+      ),
+      scDecimalPlaces
+    ),
     maxDownloadPrice: toSiacoins(g.maxDownloadPrice, scDecimalPlaces),
-    maxUploadPrice: toSiacoins(g.maxUploadPrice, scDecimalPlaces),
     maxContractPrice: toSiacoins(g.maxContractPrice, scDecimalPlaces),
     maxRpcPrice: toSiacoins(g.maxRPCPrice, scDecimalPlaces).times(1_000_000),
     minMaxCollateral: toSiacoins(g.minMaxCollateral, scDecimalPlaces),
@@ -94,9 +170,58 @@ export function transformDown(
       g.minMaxEphemeralAccountBalance,
       scDecimalPlaces
     ),
+  }
+}
 
-    // redundancy
+export function transformDownRedundancy(r: RedundancySettings): RedundancyData {
+  return {
     minShards: new BigNumber(r.minShards),
     totalShards: new BigNumber(r.totalShards),
   }
+}
+
+export function transformDown(
+  c: ContractSetSettings | undefined,
+  g: GougingSettings,
+  r: RedundancySettings,
+  ca: ConfigDisplayOptions | undefined
+): SettingsData {
+  const configApp = transformDownConfigApp(ca)
+  const redundancy = transformDownRedundancy(r)
+  return {
+    // contractset
+    ...transformDownContractSet(c),
+    // gouging
+    ...transformDownGouging(g, redundancy, configApp),
+    // redundancy
+    ...redundancy,
+    // config app
+    ...configApp,
+  }
+}
+
+export function getRedundancyMultiplier(
+  minShards: BigNumber,
+  totalShards: BigNumber
+): BigNumber {
+  let redundancyMult = new BigNumber(1)
+  const canCalcRedundancy =
+    minShards &&
+    totalShards &&
+    !minShards.isZero() &&
+    !totalShards.isZero() &&
+    totalShards.gte(minShards)
+  if (canCalcRedundancy) {
+    redundancyMult = totalShards.div(minShards)
+  }
+  return redundancyMult
+}
+
+export function getRedundancyMultiplierIfIncluded(
+  minShards: BigNumber,
+  totalShards: BigNumber,
+  includeRedundancy: boolean
+): BigNumber {
+  const redundancyMult = getRedundancyMultiplier(minShards, totalShards)
+  return includeRedundancy ? redundancyMult : new BigNumber(1)
 }

@@ -192,15 +192,15 @@ export function WalletAddressesGenerateDialog({
         walletId={walletId}
         name="mnemonic"
         form={form}
-        field={fields.mnemonic}
+        fields={fields}
         actionText="generate addresses"
       />
       <div className="flex gap-2 w-full pt-3">
         <div className="flex-1">
-          <FieldNumber form={form} field={fields.index} name="index" />
+          <FieldNumber form={form} fields={fields} name="index" />
         </div>
         <div className="flex-1">
-          <FieldNumber form={form} field={fields.count} name="count" />
+          <FieldNumber form={form} fields={fields} name="count" />
         </div>
       </div>
     </Dialog>

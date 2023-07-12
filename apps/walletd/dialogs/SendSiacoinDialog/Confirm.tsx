@@ -122,7 +122,7 @@ export function useSendSiacoinConfirmForm({
         walletId={walletId}
         name="mnemonic"
         form={form}
-        field={fields.mnemonic}
+        fields={fields}
         actionText="complete the transaction"
       />
       <WalletSendSiacoinReceipt address={address} siacoin={siacoin} fee={fee} />

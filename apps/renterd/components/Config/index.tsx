@@ -23,7 +23,10 @@ import {
 } from '@siafoundation/react-renterd'
 import { defaultValues, getFields } from './fields'
 import {
+  getRedundancyMultiplier,
+  getRedundancyMultiplierIfIncluded,
   transformDown,
+  transformUpConfigApp,
   transformUpContractSet,
   transformUpGouging,
   transformUpRedundancy,
@@ -34,6 +37,11 @@ import { toSiacoins } from '@siafoundation/sia-js'
 import { useContractSetSettings } from '../../hooks/useContractSetSettings'
 import { useGougingSettings } from '../../hooks/useGougingSettings'
 import { useRedundancySettings } from '../../hooks/useRedundancySettings'
+import {
+  ConfigDisplayOptions,
+  configDisplayOptionsKey,
+  useConfigDisplayOptions,
+} from '../../hooks/useConfigDisplayOptions'
 
 export function Config() {
   const { openDialog } = useDialog()
@@ -42,6 +50,7 @@ export function Config() {
       swr: {
         // Do not automatically refetch
         revalidateOnFocus: false,
+        errorRetryCount: 0,
       },
     },
   })
@@ -58,6 +67,15 @@ export function Config() {
       swr: {
         // Do not automatically refetch
         revalidateOnFocus: false,
+      },
+    },
+  })
+  const configApp = useConfigDisplayOptions({
+    config: {
+      swr: {
+        // Do not automatically refetch
+        revalidateOnFocus: false,
+        errorRetryCount: 0,
       },
     },
   })
@@ -79,11 +97,19 @@ export function Config() {
 
   const resetFormData = useCallback(
     (
-      contractSetData: ContractSetSettings,
+      contractSetData: ContractSetSettings | undefined,
       gougingData: GougingSettings,
-      redundancyData: RedundancySettings
+      redundancyData: RedundancySettings,
+      configAppData: ConfigDisplayOptions | undefined
     ) => {
-      form.reset(transformDown(contractSetData, gougingData, redundancyData))
+      form.reset(
+        transformDown(
+          contractSetData,
+          gougingData,
+          redundancyData,
+          configAppData
+        )
+      )
     },
     [form]
   )
@@ -91,53 +117,95 @@ export function Config() {
   // init - when new config is fetched, set the form
   const [hasInit, setHasInit] = useState(false)
   useEffect(() => {
-    if (contractSet.data && gouging.data && redundancy.data && !hasInit) {
-      resetFormData(contractSet.data, gouging.data, redundancy.data)
+    if (
+      gouging.data &&
+      redundancy.data &&
+      (contractSet.data || contractSet.error) &&
+      (configApp.data || configApp.error) &&
+      !hasInit
+    ) {
+      resetFormData(
+        contractSet.data,
+        gouging.data,
+        redundancy.data,
+        configApp.data
+      )
       setHasInit(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gouging.data, redundancy.data])
+  }, [
+    contractSet.data,
+    contractSet.error,
+    gouging.data,
+    redundancy.data,
+    configApp.data,
+    configApp.error,
+  ])
 
   const reset = useCallback(async () => {
     const contractSetData = await contractSet.mutate()
     const gougingData = await gouging.mutate()
     const redundancyData = await redundancy.mutate()
+    const configAppData = await configApp.mutate()
     if (!gougingData || !redundancyData) {
       triggerErrorToast('Error fetching settings.')
     } else {
-      resetFormData(contractSetData, gougingData, redundancyData)
+      resetFormData(contractSetData, gougingData, redundancyData, configAppData)
     }
-  }, [contractSet, gouging, redundancy, resetFormData])
+  }, [contractSet, gouging, redundancy, configApp, resetFormData])
 
   const minShards = form.watch('minShards')
   const totalShards = form.watch('totalShards')
+  const includeRedundancyMaxStoragePrice = form.watch(
+    'includeRedundancyMaxStoragePrice'
+  )
+  const includeRedundancyMaxUploadPrice = form.watch(
+    'includeRedundancyMaxUploadPrice'
+  )
 
   const fields = useMemo(() => {
-    if (
-      averages.data &&
-      minShards &&
-      totalShards &&
-      !minShards.isZero() &&
-      !totalShards.isZero() &&
-      totalShards.gte(minShards)
-    ) {
-      const redundancy = totalShards.div(minShards)
+    const redundancyMultiplier = getRedundancyMultiplier(minShards, totalShards)
+    if (averages.data) {
       return getFields({
+        redundancyMultiplier,
+        includeRedundancyMaxStoragePrice,
+        includeRedundancyMaxUploadPrice,
         storageAverage: toSiacoins(averages.data.settings.storage_price) // bytes/block
           .times(monthsToBlocks(1)) // bytes/month
           .times(TBToBytes(1)) // TB/month
-          .times(redundancy), // adjust for redundancy
-        downloadAverage: toSiacoins(averages.data.settings.download_price) // bytes
-          .times(TBToBytes(1)) // TB
-          .times(redundancy), // adjust for redundancy
+          .times(
+            getRedundancyMultiplierIfIncluded(
+              minShards,
+              totalShards,
+              includeRedundancyMaxStoragePrice
+            )
+          ), // redundancy
         uploadAverage: toSiacoins(averages.data.settings.upload_price) // bytes
           .times(TBToBytes(1)) // TB
-          .times(redundancy), // adjust for redundancy
+          .times(
+            getRedundancyMultiplierIfIncluded(
+              minShards,
+              totalShards,
+              includeRedundancyMaxUploadPrice
+            )
+          ), // redundancy
+        downloadAverage: toSiacoins(averages.data.settings.download_price) // bytes
+          .times(TBToBytes(1)), // TB
         contractAverage: toSiacoins(averages.data.settings.contract_price),
       })
     }
-    return getFields({})
-  }, [averages.data, minShards, totalShards])
+    return getFields({
+      redundancyMultiplier,
+      includeRedundancyMaxStoragePrice,
+      includeRedundancyMaxUploadPrice,
+    })
+  }, [
+    averages.data,
+    minShards,
+    totalShards,
+    includeRedundancyMaxStoragePrice,
+    includeRedundancyMaxUploadPrice,
+  ])
 
   const onValid = useCallback(
     async (values: typeof defaultValues) => {
@@ -172,6 +240,15 @@ export function Config() {
             redundancy.data as Record<string, unknown>
           ),
         })
+        const configAppResponse = await settingUpdate.put({
+          params: {
+            key: configDisplayOptionsKey,
+          },
+          payload: transformUpConfigApp(
+            values,
+            configApp.data as Record<string, unknown>
+          ),
+        })
         if (contractSetResponse.error) {
           throw Error(contractSetResponse.error)
         }
@@ -181,6 +258,9 @@ export function Config() {
         if (redundancyResponse.error) {
           throw Error(redundancyResponse.error)
         }
+        if (configAppResponse.error) {
+          throw Error(configAppResponse.error)
+        }
         triggerSuccessToast('Configuration has been saved.')
         reset()
       } catch (e) {
@@ -188,7 +268,7 @@ export function Config() {
         console.log(e)
       }
     },
-    [settingUpdate, contractSet, redundancy, gouging, reset]
+    [settingUpdate, contractSet, redundancy, gouging, configApp, reset]
   )
 
   const onInvalid = useOnInvalid(fields)

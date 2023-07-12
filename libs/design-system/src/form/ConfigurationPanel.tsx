@@ -36,22 +36,22 @@ export function ConfigurationPanel<
             description={val.description}
             control={
               val.type === 'number' ? (
-                <ConfigurationNumber form={form} name={key} field={val} />
+                <ConfigurationNumber form={form} name={key} fields={fields} />
               ) : val.type === 'siacoin' ? (
-                <ConfigurationSiacoin form={form} name={key} field={val} />
+                <ConfigurationSiacoin form={form} name={key} fields={fields} />
               ) : val.type === 'text' ? (
-                <ConfigurationText form={form} name={key} field={val} />
+                <ConfigurationText form={form} name={key} fields={fields} />
               ) : val.type === 'password' ? (
                 <ConfigurationText
                   form={form}
                   type="password"
-                  field={val}
+                  fields={fields}
                   name={key}
                 />
               ) : val.type === 'boolean' ? (
-                <ConfigurationSwitch form={form} name={key} field={val} />
+                <ConfigurationSwitch form={form} name={key} fields={fields} />
               ) : val.type === 'select' ? (
-                <ConfigurationSelect form={form} name={key} field={val} />
+                <ConfigurationSelect form={form} name={key} fields={fields} />
               ) : null
             }
           />

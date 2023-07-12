@@ -28,6 +28,11 @@ export type ConfigField<
   suggestion?: BigNumber | string | boolean
   average?: BigNumber | string | boolean
   averageTip?: React.ReactNode
+  after?: React.FC<{
+    name: Path<Values>
+    form: UseFormReturn<Values>
+    fields: ConfigFields<Values, Categories>
+  }>
   // number
   decimalsLimit?: number
   // sc
@@ -122,7 +127,7 @@ export function useOnInvalid<
     (errors: FieldErrors<Values>) => {
       triggerErrorToast(
         entries(errors)
-          .map(([key, e]) => `${fields[key].title}: ${e?.message}`)
+          .map(([key, e]) => `${fields[key].title || key}: ${e?.message}`)
           .join(', ')
       )
     },

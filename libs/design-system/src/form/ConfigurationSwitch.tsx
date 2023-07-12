@@ -2,20 +2,21 @@ import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
 import { FieldLabelAndError } from '../components/Form'
 import { Switch } from '../core/Switch'
 import { ConfigurationTipText } from './ConfigurationTipText'
-import { ConfigField, useRegisterForm } from './configurationFields'
+import { ConfigFields, useRegisterForm } from './configurationFields'
 
 type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
   form: UseFormReturn<Values>
-  field: ConfigField<Values, Categories>
+  fields: ConfigFields<Values, Categories>
 }
 
 export function ConfigurationSwitch<
   Values extends FieldValues,
   Categories extends string
->({ name, form, field }: Props<Values, Categories>) {
+>({ name, form, fields }: Props<Values, Categories>) {
+  const field = fields[name]
   const { suggestion, suggestionTip } = field
-  const { ref, setValue, value, error } = useRegisterForm({
+  const { setValue, value, error } = useRegisterForm({
     name,
     field,
     form,
@@ -25,7 +26,6 @@ export function ConfigurationSwitch<
       <div className="flex flex-col gap-3 w-[220px]">
         <div className="flex justify-end w-full">
           <Switch
-            ref={ref}
             name={name}
             size="medium"
             checked={value}

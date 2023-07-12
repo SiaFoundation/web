@@ -195,12 +195,8 @@ export function WalletAddNewDialog({ trigger, open, onOpenChange }: Props) {
         <Paragraph size="14" color="subtle">
           {walletAddTypes.walletAddNew.description}
         </Paragraph>
-        <FieldText name="name" form={form} field={fields.name} />
-        <FieldTextArea
-          name="description"
-          form={form}
-          field={fields.description}
-        />
+        <FieldText name="name" form={form} fields={fields} />
+        <FieldTextArea name="description" form={form} fields={fields} />
         <SeedLayout
           icon={<SeedIcon />}
           description={
@@ -211,11 +207,7 @@ export function WalletAddNewDialog({ trigger, open, onOpenChange }: Props) {
           }
         >
           <div className="flex flex-col gap-2">
-            <FieldTextArea
-              form={form}
-              field={fields.mnemonic}
-              name="mnemonic"
-            />
+            <FieldTextArea form={form} fields={fields} name="mnemonic" />
             <div className="flex gap-2">
               <Button className="flex-1" onClick={regenerateMnemonic}>
                 <Redo16 />

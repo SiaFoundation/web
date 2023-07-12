@@ -126,23 +126,13 @@ export function useSendSiacoinGenerateForm({
       <FieldText
         size="medium"
         form={form}
-        field={fields.address}
+        fields={fields}
         name="address"
         autoComplete="off"
       />
-      <FieldSiacoin
-        size="medium"
-        form={form}
-        field={fields.siacoin}
-        name="siacoin"
-      />
+      <FieldSiacoin size="medium" form={form} fields={fields} name="siacoin" />
       <div className="flex items-center">
-        <FieldSwitch
-          size="small"
-          form={form}
-          field={fields.includeFee}
-          name="includeFee"
-        >
+        <FieldSwitch size="small" form={form} fields={fields} name="includeFee">
           <Text>Include fee</Text>
           <InfoTip>
             Include or exclude the network fee from the above transaction value.

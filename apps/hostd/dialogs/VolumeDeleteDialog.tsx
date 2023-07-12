@@ -123,14 +123,9 @@ export function VolumeDeleteDialog({ trigger, open, onOpenChange }: Props) {
         <Paragraph size="14">
           Enter the volume path to confirm the removal.
         </Paragraph>
-        <FieldText name="path" form={form} field={fields.path} />
+        <FieldText name="path" form={form} fields={fields} />
         <div className="flex gap-1">
-          <FieldSwitch
-            name="force"
-            size="medium"
-            form={form}
-            field={fields.force}
-          />
+          <FieldSwitch name="force" size="medium" form={form} fields={fields} />
           <InfoTip>
             <div className="flex gap-1 max-w-[200px]">
               <Paragraph size="14">

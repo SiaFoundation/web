@@ -174,7 +174,7 @@ export function WalletAddressesAddDialog({
         <Paragraph size="14">
           Enter multiple addresses separated by spaces or commas.
         </Paragraph>
-        <FieldTextArea form={form} field={fields.addresses} name="addresses" />
+        <FieldTextArea form={form} fields={fields} name="addresses" />
       </div>
     </Dialog>
   )
