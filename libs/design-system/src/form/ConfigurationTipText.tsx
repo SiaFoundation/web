@@ -21,7 +21,7 @@ export function ConfigurationTipText({
 }: Props) {
   return (
     <div className="flex justify-between items-center">
-      <Tooltip align="start" content={tip}>
+      <Tooltip align="start" side="bottom" content={tip}>
         <div className="flex gap-1 items-center relative overflow-hidden">
           <Text className="flex relative">
             <Information16 />

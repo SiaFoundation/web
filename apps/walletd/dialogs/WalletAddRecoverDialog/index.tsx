@@ -152,19 +152,15 @@ export function WalletAddRecoverDialog({ trigger, open, onOpenChange }: Props) {
         <Paragraph size="14" color="subtle">
           {walletAddTypes.walletAddRecover.description}
         </Paragraph>
-        <FieldText name="name" form={form} field={fields.name} />
-        <FieldTextArea
-          name="description"
-          form={form}
-          field={fields.description}
-        />
+        <FieldText name="name" form={form} fields={fields} />
+        <FieldTextArea name="description" form={form} fields={fields} />
         <SeedLayout
           icon={<SeedIcon />}
           description={
             <>Enter the seed mnemonic for the wallet you are recovering.</>
           }
         >
-          <FieldTextArea form={form} field={fields.mnemonic} name="mnemonic" />
+          <FieldTextArea form={form} fields={fields} name="mnemonic" />
         </SeedLayout>
       </div>
     </Dialog>

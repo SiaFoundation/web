@@ -6,14 +6,16 @@ import { ValueNum } from '../components/ValueNum'
 import { Information16 } from '../icons/carbon'
 import { toFixedMax } from '../lib/numbers'
 import BigNumber from 'bignumber.js'
+import { cx } from 'class-variance-authority'
 
 type Props = {
   type: 'siacoin' | 'number'
   label: string
   link?: string
+  icon?: React.ReactNode
   tip: React.ReactNode
   value: BigNumber // number | hastings
-  onClick: (value: BigNumber) => void
+  onClick?: (value: BigNumber) => void
   decimalsLimit: number
   units?: string
 }
@@ -23,6 +25,7 @@ export function ConfigurationTipNumber({
   label,
   link,
   tip,
+  icon,
   value,
   onClick,
   decimalsLimit,
@@ -30,11 +33,9 @@ export function ConfigurationTipNumber({
 }: Props) {
   return (
     <div className="flex justify-between items-center">
-      <Tooltip align="start" content={tip}>
+      <Tooltip align="start" side="bottom" content={tip}>
         <div className="flex gap-1 items-center relative overflow-hidden">
-          <Text className="flex relative">
-            <Information16 />
-          </Text>
+          <Text className="flex relative">{icon || <Information16 />}</Text>
           <Text size="12" ellipsis>
             {link ? (
               <Link href={link} target="_blank">
@@ -47,8 +48,12 @@ export function ConfigurationTipNumber({
         </div>
       </Tooltip>
       <div
-        className="flex cursor-pointer items-center"
-        onClick={() => onClick(value)}
+        className={cx('flex items-center', onClick ? 'cursor-pointer' : '')}
+        onClick={() => {
+          if (onClick) {
+            onClick(value)
+          }
+        }}
       >
         {type === 'siacoin' ? (
           <ValueSc

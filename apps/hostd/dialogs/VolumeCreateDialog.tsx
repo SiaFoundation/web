@@ -55,11 +55,10 @@ function getFields(
     immediatePath: {
       type: 'text',
       title: 'Location',
+      placeholder: 'Enter a directory or select one below',
       validation: {
         required: 'required',
-        validate: {
-          req: (value) => value !== '\\' || 'directory within a drive required',
-        },
+        validate: {},
       },
     },
     path: {
@@ -221,22 +220,10 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
           Create a new volume. Select a system directory and specific the size
           of the volume.
         </Paragraph>
-        <FieldText name="name" form={form} field={fields.name} />
+        <FieldText name="name" form={form} fields={fields} />
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1">
-            <FieldText
-              name="immediatePath"
-              form={form}
-              field={{
-                type: 'text',
-                title: 'Location',
-                placeholder: 'Enter a directory or select one below',
-                validation: {
-                  required: 'required',
-                  validate: {},
-                },
-              }}
-            />
+            <FieldText name="immediatePath" form={form} fields={fields} />
           </div>
           <DirectorySelectMenu
             path={path}
@@ -250,30 +237,7 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
             }
           />
         </div>
-        <FieldNumber
-          name="size"
-          form={form}
-          field={{
-            type: 'number',
-            title: 'Size',
-            decimalsLimit: 0,
-            units: 'GB',
-            placeholder: '1,000',
-            validation: {
-              required: 'required',
-              validate: {
-                between: (value) => {
-                  const error = `Must be between ${humanBytes(
-                    GBToBytes(minSizeGB)
-                  )} and ${humanBytes(GBToBytes(maxSizeGB), { fixed: 3 })}`
-                  return (value <= maxSizeGB && value >= minSizeGB) || error
-                },
-                nospace: () =>
-                  maxSizeGB > minSizeGB || 'Not enough space in directory',
-              },
-            },
-          }}
-        />
+        <FieldNumber name="size" form={form} fields={fields} />
         <VolumeSizeDiff
           newSizeGB={newSizeGB}
           currentSizeGB={0}

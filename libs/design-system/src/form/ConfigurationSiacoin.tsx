@@ -3,25 +3,27 @@ import { ConfigurationTipNumber } from './ConfigurationTipNumber'
 import { toHastings } from '@siafoundation/sia-js'
 import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
 import { FieldLabelAndError } from '../components/Form'
-import { ConfigField, useRegisterForm } from './configurationFields'
+import { ConfigFields, useRegisterForm } from './configurationFields'
 import BigNumber from 'bignumber.js'
 
 type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
   form: UseFormReturn<Values>
-  field: ConfigField<Values, Categories>
+  fields: ConfigFields<Values, Categories>
 }
 
 export function ConfigurationSiacoin<
   Values extends FieldValues,
   Categories extends string
->({ name, form, field }: Props<Values, Categories>) {
+>({ name, form, fields }: Props<Values, Categories>) {
+  const field = fields[name]
   const {
     average,
     suggestion,
     units,
     suggestionTip,
     averageTip,
+    after,
     decimalsLimitSc = 6,
     decimalsLimitFiat = 6,
     tipsDecimalsLimitSc = 0,
@@ -31,6 +33,7 @@ export function ConfigurationSiacoin<
     field,
     form,
   })
+  const After = after || (() => null)
   return (
     <div className="flex flex-col gap-3 items-end">
       <div className="flex flex-col gap-3 w-[220px]">
@@ -51,6 +54,7 @@ export function ConfigurationSiacoin<
             setValue(value, true)
           }}
         />
+        <After name={name} form={form} fields={fields} />
         {average && (
           <ConfigurationTipNumber
             type="siacoin"

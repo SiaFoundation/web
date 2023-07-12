@@ -109,7 +109,7 @@ export function WalletUnlockDialog({
       <FieldMnemonic
         walletId={wallet?.id}
         form={form}
-        field={fields.mnemonic}
+        fields={fields}
         name="mnemonic"
       />
     </Dialog>

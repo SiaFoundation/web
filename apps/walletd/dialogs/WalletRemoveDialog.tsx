@@ -111,7 +111,7 @@ export function WalletRemoveDialog({
         <Paragraph size="14">
           Enter the wallet name to confirm the removal.
         </Paragraph>
-        <FieldText name="name" form={form} field={fields.name} />
+        <FieldText name="name" form={form} fields={fields} />
         <FormSubmitButton variant="red" form={form}>
           Remove
         </FormSubmitButton>

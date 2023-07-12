@@ -153,12 +153,8 @@ export function WalletUpdateDialog({
             <Badge>{wallet?.type}</Badge>
           </div>
         </div>
-        <FieldText name="name" form={form} field={fields.name} />
-        <FieldTextArea
-          name="description"
-          form={form}
-          field={fields.description}
-        />
+        <FieldText name="name" form={form} fields={fields} />
+        <FieldTextArea name="description" form={form} fields={fields} />
       </div>
     </Dialog>
   )

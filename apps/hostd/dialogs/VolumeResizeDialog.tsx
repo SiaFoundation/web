@@ -171,7 +171,7 @@ export function VolumeResizeDialog({ trigger, open, onOpenChange }: Props) {
             {volume.data?.localPath}
           </Text>
         </div>
-        <FieldNumber name="size" form={form} field={fields.size} />
+        <FieldNumber name="size" form={form} fields={fields} />
         <VolumeSizeDiff
           currentSizeGB={currentSizeGB}
           newSizeGB={newSizeGB}

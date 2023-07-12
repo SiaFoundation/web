@@ -1,20 +1,21 @@
 import BigNumber from 'bignumber.js'
 import { ConfigurationTipNumber } from './ConfigurationTipNumber'
 import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
-import { ConfigField, useRegisterForm } from './configurationFields'
+import { ConfigFields, useRegisterForm } from './configurationFields'
 import { NumberField } from '../core/NumberField'
 import { FieldLabelAndError } from '../components/Form'
 
 type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
   form: UseFormReturn<Values>
-  field: ConfigField<Values, Categories>
+  fields: ConfigFields<Values, Categories>
 }
 
 export function ConfigurationNumber<
   Values extends FieldValues,
   Categories extends string
->({ name, form, field }: Props<Values, Categories>) {
+>({ name, form, fields }: Props<Values, Categories>) {
+  const field = fields[name]
   const {
     average,
     averageTip,

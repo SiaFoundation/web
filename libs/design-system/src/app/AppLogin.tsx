@@ -224,7 +224,7 @@ export function AppLogin({ appName, route, routes }: Props) {
                   <FieldText
                     name="api"
                     form={form}
-                    field={fields.api}
+                    fields={fields}
                     group={false}
                   />
                   {recentApis.length > 1 && (
@@ -250,7 +250,7 @@ export function AppLogin({ appName, route, routes }: Props) {
               <FieldText
                 name="password"
                 form={form}
-                field={fields.password}
+                fields={fields}
                 group={false}
               />
               {error && (

@@ -108,7 +108,7 @@ export function AddressRemoveDialog({
         <Paragraph size="14">
           Enter the address name to confirm the removal.
         </Paragraph>
-        <FieldText name="address" form={form} field={fields.address} />
+        <FieldText name="address" form={form} fields={fields} />
         <FormSubmitButton variant="red" form={form}>
           Remove
         </FormSubmitButton>

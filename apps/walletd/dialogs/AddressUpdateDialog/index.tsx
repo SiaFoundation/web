@@ -123,11 +123,7 @@ export function AddressUpdateDialog({
     >
       <div className="flex flex-col gap-4">
         <WalletAddressCode address={address?.address || ''} />
-        <FieldTextArea
-          name="description"
-          form={form}
-          field={fields.description}
-        />
+        <FieldTextArea name="description" form={form} fields={fields} />
       </div>
     </Dialog>
   )

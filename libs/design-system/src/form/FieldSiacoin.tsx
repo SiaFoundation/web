@@ -1,20 +1,21 @@
 import { SiacoinField } from '../core/SiacoinField'
 import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
-import { ConfigField, useRegisterForm } from './configurationFields'
+import { ConfigFields, useRegisterForm } from './configurationFields'
 import BigNumber from 'bignumber.js'
 
 type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
   form: UseFormReturn<Values>
-  field: ConfigField<Values, Categories>
+  fields: ConfigFields<Values, Categories>
   size?: React.ComponentProps<typeof SiacoinField>['size']
 }
 
 export function FieldSiacoin<
   Values extends FieldValues,
   Categories extends string
->({ name, form, field, size = 'small' }: Props<Values, Categories>) {
+>({ name, form, fields, size = 'small' }: Props<Values, Categories>) {
+  const field = fields[name]
   const {
     average,
     suggestion,

@@ -1,18 +1,19 @@
 import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
 import { TextArea } from '../core/TextArea'
-import { ConfigField, useRegisterForm } from './configurationFields'
+import { ConfigFields, useRegisterForm } from './configurationFields'
 
 type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
   form: UseFormReturn<Values>
-  field: ConfigField<Values, Categories>
+  fields: ConfigFields<Values, Categories>
 }
 
 export function FieldTextArea<
   Values extends FieldValues,
   Categories extends string
->({ name, form, field }: Props<Values, Categories>) {
+>({ name, form, fields }: Props<Values, Categories>) {
+  const field = fields[name]
   const { placeholder } = field
   const { ref, onChange, onBlur, error } = useRegisterForm({
     name,
