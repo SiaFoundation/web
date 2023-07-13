@@ -91,9 +91,7 @@ export const fields: ConfigFields<typeof initialValues, Categories> = {
     category: 'host',
     title: 'Accepting contracts',
     description: <>Whether or not the host is accepting contracts.</>,
-    validation: {
-      required: 'required',
-    },
+    validation: {},
   },
   netAddress: {
     type: 'text',
