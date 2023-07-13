@@ -252,7 +252,11 @@ function useMetricsMain() {
     const data = formatChartData(
       metricsPeriod.data?.map((m) => ({
         baseRPC: humanBaseRpcPrice(m.pricing.baseRPCPrice).toNumber(),
-        collateral: humanCollateralPrice(m.pricing.collateral).toNumber(),
+        collateral: humanCollateralPrice(
+          new BigNumber(m.pricing.storagePrice).times(
+            m.pricing.collateralMultiplier
+          )
+        ).toNumber(),
         contract: Number(m.pricing.contractPrice),
         egress: humanEgressPrice(m.pricing.egressPrice).toNumber(),
         ingress: humanIngressPrice(m.pricing.ingressPrice).toNumber(),
