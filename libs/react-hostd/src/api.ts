@@ -221,6 +221,12 @@ export function useContracts(
   })
 }
 
+export function useContractsIntegrityCheck(
+  args?: HookArgsCallback<{ id: string }, void, void>
+) {
+  return usePutFunc({ ...args, route: '/contracts/:id/integrity' })
+}
+
 // metrics
 
 // Revenue is a collection of metrics related to revenue.
