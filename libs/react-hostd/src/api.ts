@@ -264,7 +264,7 @@ type Pricing = {
   baseRPCPrice: string
   sectorAccessPrice: string
   storagePrice: string
-  collateral: string
+  collateralMultiplier: number
 }
 
 // Registry is a collection of metrics related to the host's registry.
