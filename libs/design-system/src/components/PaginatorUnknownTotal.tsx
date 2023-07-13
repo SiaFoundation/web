@@ -2,14 +2,21 @@ import { Button } from '../core/Button'
 import { ControlGroup } from '../core/ControlGroup'
 import { CaretLeft16, CaretRight16, PageFirst16 } from '../icons/carbon'
 import { useRouter } from 'next/router'
+import { LoadingDots } from './LoadingDots'
 
 type Props = {
   offset: number
   limit: number
   pageTotal: number
+  isLoading: boolean
 }
 
-export function PaginatorUnknownTotal({ offset, limit, pageTotal }: Props) {
+export function PaginatorUnknownTotal({
+  offset,
+  limit,
+  pageTotal,
+  isLoading,
+}: Props) {
   const router = useRouter()
   const isMore = pageTotal === limit
   const from = offset + 1
@@ -52,7 +59,11 @@ export function PaginatorUnknownTotal({ offset, limit, pageTotal }: Props) {
       >
         <CaretLeft16 />
       </Button>
-      {pageTotal ? (
+      {isLoading ? (
+        <Button className="rounded-none px-3" state="waiting" color="subtle">
+          <LoadingDots className="px-2" />
+        </Button>
+      ) : pageTotal ? (
         <Button className="rounded-none px-3" state="waiting">
           {from} - {to}
         </Button>

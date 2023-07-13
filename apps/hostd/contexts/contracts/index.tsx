@@ -106,7 +106,6 @@ function useContractsMain() {
     },
     pageCount: dataset?.length || 0,
     totalCount: response.data?.count,
-    isLoading: response.isValidating,
     columns: filteredTableColumns,
     dataset,
     configurableColumns,
