@@ -76,9 +76,11 @@ function getContractFields(c: Contract): ContractData {
     negotiationHeight: c.negotiationHeight,
     formationConfirmed: c.formationConfirmed,
     revisionConfirmed: c.revisionConfirmed,
+    // the height the storage proof was confirmed
     resolutionHeight: c.resolutionHeight,
     payoutHeight,
     contractHeightStart: c.negotiationHeight,
+    // this is the same as expiration height
     contractHeightEnd: c.revision.windowStart,
     renewedTo: c.renewedTo,
     renewedFrom: c.renewedFrom,

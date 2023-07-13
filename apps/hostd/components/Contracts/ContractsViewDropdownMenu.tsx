@@ -37,6 +37,12 @@ export function ContractsViewDropdownMenu() {
       label: column.label,
       value: column.id,
     }))
+  const timeColumns = configurableColumns
+    .filter((c) => c.category === 'time')
+    .map((column) => ({
+      label: column.label,
+      value: column.id,
+    }))
   const financialColumns = configurableColumns
     .filter((c) => c.category === 'financial')
     .map((column) => ({
@@ -127,6 +133,20 @@ export function ContractsViewDropdownMenu() {
       <BaseMenuItem>
         <PoolCombo
           options={generalColumns}
+          values={enabledColumns}
+          onChange={(value) => toggleColumnVisibility(value)}
+        />
+      </BaseMenuItem>
+      <MenuSectionLabelToggleAll
+        label="Time"
+        columns={timeColumns.map((c) => c.value)}
+        enabled={enabledColumns}
+        setColumnsVisible={setColumnsVisible}
+        setColumnsHidden={setColumnsHidden}
+      />
+      <BaseMenuItem>
+        <PoolCombo
+          options={timeColumns}
           values={enabledColumns}
           onChange={(value) => toggleColumnVisibility(value)}
         />

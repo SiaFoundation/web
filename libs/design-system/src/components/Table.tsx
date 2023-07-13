@@ -101,57 +101,57 @@ export function Table<
               (
                 { id, icon, label, tip, cellClassName, contentClassName },
                 i
-              ) => (
-                <th key={id} className={getCellClassNames(i, cellClassName)}>
-                  <div
-                    className={cx(
-                      getContentClassNames(i, contentClassName),
-                      'overflow-hidden',
-                      'py-3'
-                    )}
-                  >
-                    <Tooltip content={tip}>
-                      <Text
+              ) => {
+                const isSortable =
+                  sortableColumns?.includes(id as unknown as SortField) &&
+                  !!toggleSort
+                const isSortActive = (sortField as string) === id
+                return (
+                  <th key={id} className={getCellClassNames(i, cellClassName)}>
+                    <div className={cx('overflow-hidden', 'py-3')}>
+                      <div
                         onClick={() => {
-                          if (
-                            sortableColumns?.includes(
-                              id as unknown as SortField
-                            ) &&
-                            toggleSort
-                          ) {
+                          if (isSortable) {
                             toggleSort(id as unknown as SortField)
                           }
                         }}
-                        color="subtle"
                         className={cx(
-                          'relative flex gap-1',
-                          sortableColumns?.includes(
-                            id as unknown as SortField
-                          ) && toggleSort
-                            ? 'cursor-pointer'
-                            : ''
+                          getContentClassNames(i, contentClassName),
+                          isSortable ? 'cursor-pointer' : ''
                         )}
-                        ellipsis
                       >
-                        {icon ? <div>{icon}</div> : null}
-                        <Text ellipsis size="12" weight="medium">
-                          {label}
-                        </Text>
-                      </Text>
-                    </Tooltip>
-                    {(sortField as string) === id ? (
-                      <Text color="subtle">
-                        {sortDirection === 'asc' ? (
-                          <CaretUp16 className="scale-75" />
-                        ) : (
-                          <CaretDown16 className="scale-75" />
+                        <Tooltip content={tip}>
+                          <Text
+                            color="subtle"
+                            className="relative flex gap-1"
+                            ellipsis
+                          >
+                            {icon ? <div>{icon}</div> : null}
+                            <Text ellipsis size="12" weight="medium">
+                              {label}
+                            </Text>
+                          </Text>
+                        </Tooltip>
+                        {isSortActive && (
+                          <Text color="contrast">
+                            {sortDirection === 'asc' ? (
+                              <CaretUp16 className="scale-75" />
+                            ) : (
+                              <CaretDown16 className="scale-75" />
+                            )}
+                          </Text>
                         )}
-                      </Text>
-                    ) : null}
-                    {/* {tip && <InfoTip>{tip}</InfoTip>} */}
-                  </div>
-                </th>
-              )
+                        {isSortable && !isSortActive && (
+                          <Text color="verySubtle">
+                            <CaretUp16 className="scale-75" />
+                          </Text>
+                        )}
+                        {/* {tip && <InfoTip>{tip}</InfoTip>} */}
+                      </div>
+                    </div>
+                  </th>
+                )
+              }
             )}
           </tr>
         </thead>

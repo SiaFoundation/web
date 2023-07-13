@@ -17,6 +17,7 @@ type Props = {
   align: 'center' | 'start' | 'end'
   rounded: 'all' | 'start' | 'end'
   className?: string
+  showDates?: boolean
 }
 
 export function Segment({
@@ -29,6 +30,7 @@ export function Segment({
   align,
   rounded,
   className,
+  showDates,
 }: Props) {
   if (!startHeight || !endHeight) {
     return null
@@ -128,6 +130,27 @@ export function Segment({
         <RelativeLabel variant="primary">{label}</RelativeLabel>
         <BlockLabel blockHeight={endHeight} align="end" variant="primary" />
       </div>
+      {showDates && (
+        <div
+          className="flex group-hover/segments:hidden absolute justify-between gap-2 top-[100%]"
+          style={
+            align === 'center'
+              ? {
+                  width: '100%',
+                }
+              : align === 'end'
+              ? {
+                  right: toPercent(1 - posEnd),
+                }
+              : {
+                  left: toPercent(posStart),
+                }
+          }
+        >
+          <DateLabel date={timeStart} align="start" variant="secondary" />
+          <DateLabel date={timeEnd} align="start" variant="secondary" />
+        </div>
+      )}
       <div
         className="hidden group-hover:flex absolute justify-between gap-2 top-[100%]"
         style={

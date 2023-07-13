@@ -67,12 +67,9 @@ export type TableColumnId =
   | 'usageStorage'
   | 'lockedCollateral'
   | 'timeline'
-  | 'negotiationHeight'
-  | 'formationConfirmed'
-  | 'revisionConfirmed'
-  | 'resolutionConfirmed'
-  | 'renewedTo'
-  | 'renewedFrom'
+  | 'contractHeightStart'
+  | 'contractHeightEnd'
+  | 'payoutHeight'
 
 export const columnsDefaultVisible: TableColumnId[] = [
   'contractId',
@@ -80,15 +77,13 @@ export const columnsDefaultVisible: TableColumnId[] = [
   'usageTotal',
   'lockedCollateral',
   'timeline',
-  'negotiationHeight',
-  'formationConfirmed',
-  'revisionConfirmed',
-  'resolutionConfirmed',
-  'renewedTo',
-  'renewedFrom',
 ]
 
-export type SortField = ContractFilterSortField | 'timeline'
+export type SortField =
+  | 'status'
+  | 'timeline'
+  | 'contractHeightStart'
+  | 'contractHeightEnd'
 
 export const sortOptions: {
   id: SortField
@@ -109,13 +104,13 @@ export const sortOptions: {
     category: 'time',
   },
   {
-    id: 'negotiationHeight',
+    id: 'contractHeightStart',
     value: 'negotiationHeight',
-    label: 'negotiation height',
+    label: 'start height',
     category: 'time',
   },
   {
-    id: 'expirationHeight',
+    id: 'contractHeightEnd',
     value: 'expirationHeight',
     label: 'expiration height',
     category: 'time',

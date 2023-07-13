@@ -1,5 +1,5 @@
 import { Text } from '../../core/Text'
-import { format } from 'date-fns'
+import { humanDate } from '@siafoundation/sia-js'
 
 type RelativeLabelProps = {
   children: React.ReactNode
@@ -43,7 +43,7 @@ type DateLabelProps = {
 export function DateLabel({ date, align, variant }: DateLabelProps) {
   return date ? (
     <RelativeLabel variant={variant} align={align}>
-      {variant === 'primary' ? format(date, 'MMM d') : format(date, 'MMM d')}
+      {variant === 'primary' ? humanDate(date) : humanDate(date)}
     </RelativeLabel>
   ) : null
 }
