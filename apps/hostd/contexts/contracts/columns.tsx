@@ -15,6 +15,7 @@ import {
 } from '@siafoundation/design-system'
 import { ContractStatus } from '@siafoundation/react-hostd'
 import { humanBytes, humanDate } from '@siafoundation/sia-js'
+import { ContractDropdownMenu } from '../../components/Contracts/ContractDropdownMenu'
 import { ContractData, TableColumnId } from './types'
 
 type Context = {
@@ -41,9 +42,9 @@ export const columns: ContractsTableColumn[] = (
       label: '',
       fixed: true,
       cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
-      render: () =>
-        // <ContractDropdownMenu address={hostIp} publicKey={hostKey} />
-        null,
+      render: ({ data: { id, status } }) => (
+        <ContractDropdownMenu id={id} status={status} />
+      ),
     },
     {
       id: 'contractId',
@@ -51,7 +52,6 @@ export const columns: ContractsTableColumn[] = (
       category: 'general',
       render: ({ data }) => {
         const { id, renewedFrom, isRenewedFrom, renewedTo, isRenewedTo } = data
-        // const { label, color } = getStatus(row)
         return (
           <div className="flex flex-col gap-1 w-full">
             <ValueCopyable
