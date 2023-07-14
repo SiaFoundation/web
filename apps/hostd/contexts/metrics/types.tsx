@@ -22,6 +22,10 @@ export type RevenueKeys =
 
 export type RevenueCategories = 'earned' | 'potential'
 
+export type CollateralKeys = 'locked' | 'risked'
+
+export type CollateralCategories = never
+
 export type PricingKeys =
   | 'baseRPC'
   | 'sectorAccess'

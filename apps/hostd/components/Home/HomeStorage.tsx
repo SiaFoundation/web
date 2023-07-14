@@ -15,7 +15,7 @@ export function HomeStorage() {
       <Heading>Storage</Heading>
       <DatumScrollArea>
         <DatumCardConfigurable
-          label="storage"
+          label="storage (physical)"
           color={storage.config.data['physicalSectors'].color}
           value={storage.stats['physicalSectors']}
           defaultMode="latest"
