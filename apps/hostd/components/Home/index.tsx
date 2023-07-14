@@ -21,6 +21,7 @@ import { DataTimeSpan, dataTimeSpanOptions } from '../../contexts/metrics/types'
 import { HomeOperations } from './HomeOperations'
 import { HomeBandwidth } from './HomeBandwidth'
 import { humanDate } from '@siafoundation/sia-js'
+import { HomeCollateral } from './HomeCollateral'
 
 export function Home() {
   const { openDialog } = useDialog()
@@ -111,6 +112,7 @@ export function Home() {
     >
       <div className="p-6 flex flex-col gap-14">
         <HomeRevenue />
+        <HomeCollateral />
         <HomeStorage />
         <HomeBandwidth />
         <HomeOperations />

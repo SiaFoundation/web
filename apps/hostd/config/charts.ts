@@ -35,31 +35,31 @@ export const chartConfigs = {
   },
   ingress: {
     label: 'ingress',
-    color: colors.blue[600],
+    color: colors.pink[600],
   },
   egress: {
     label: 'egress',
-    color: colors.pink[600],
+    color: colors.blue[600],
   },
   registry: {
     label: 'registry',
     color: colors.purple[600],
   },
-  storageReads: {
-    label: 'storage read',
-    color: colors.emerald[700],
-  },
   storageWrites: {
     label: 'storage write',
-    color: colors.emerald[400],
+    color: colors.pink[600],
+  },
+  storageReads: {
+    label: 'storage read',
+    color: colors.blue[600],
   },
   registryReads: {
     label: 'registry reads',
-    color: colors.purple[700],
+    color: colors.green[600],
   },
   registryWrites: {
     label: 'registry writes',
-    color: colors.fuchsia[400],
+    color: colors.yellow[600],
   },
   rpc: {
     label: 'RPC',
@@ -104,11 +104,10 @@ export const chartConfigs = {
 
   // collateral
   locked: {
-    color: colors.slate[600],
-    pattern: true,
+    color: colors.purple[600],
   },
   risked: {
-    color: colors.amber[900],
+    color: colors.amber[600],
   },
   burnt: {
     color: colors.red[600],

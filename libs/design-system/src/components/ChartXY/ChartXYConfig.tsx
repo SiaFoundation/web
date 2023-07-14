@@ -20,6 +20,8 @@ export function ChartXYConfig<Key extends string, Cat extends string>({
   xAxisOrientation,
   setXAxisOrientation,
 }: ChartXYProps<Key, Cat>) {
+  const shouldDisableAll = initialChartType === 'line'
+  const shouldDisableStack = initialChartType === 'area'
   return (
     <Dialog
       trigger={
@@ -41,16 +43,22 @@ export function ChartXYConfig<Key extends string, Cat extends string>({
             className="flex flex-col gap-1"
           >
             <Radio value="line">Line</Radio>
-            <Radio disabled={initialChartType === 'line'} value="areastack">
+            <Radio
+              disabled={shouldDisableAll || shouldDisableStack}
+              value="areastack"
+            >
               Area Stack
             </Radio>
-            <Radio disabled={initialChartType === 'line'} value="barstack">
+            <Radio
+              disabled={shouldDisableAll || shouldDisableStack}
+              value="barstack"
+            >
               Bar Stack
             </Radio>
-            <Radio disabled={initialChartType === 'line'} value="area">
+            <Radio disabled={shouldDisableAll} value="area">
               Area
             </Radio>
-            <Radio disabled={initialChartType === 'line'} value="bargroup">
+            <Radio disabled={shouldDisableAll} value="bargroup">
               Bar Group
             </Radio>
           </RadioGroup>

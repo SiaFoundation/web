@@ -254,6 +254,8 @@ type Contracts = {
   rejected: number
   failed: number
   successful: number
+  lockedCollateral: string
+  riskedCollateral: string
 }
 
 // Pricing is a collection of metrics related to the host's pricing settings.

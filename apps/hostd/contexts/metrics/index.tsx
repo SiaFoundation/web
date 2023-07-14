@@ -27,6 +27,8 @@ import {
   RevenueCategories,
   OperationsKeys,
   getDataIntervalInMs,
+  CollateralKeys,
+  CollateralCategories,
 } from './types'
 import { formatISO } from 'date-fns'
 import {
@@ -246,6 +248,37 @@ function useMetricsMain() {
         disableAnimations,
       },
       chartType: 'line',
+      isLoading: metricsPeriod.isValidating,
+    }
+  }, [metricsPeriod, formatTimestamp])
+
+  const collateral = useMemo<
+    Chart<CollateralKeys, CollateralCategories>
+  >(() => {
+    const data = formatChartData(
+      metricsPeriod.data?.map((m) => ({
+        locked: Number(m.contracts.lockedCollateral),
+        risked: Number(m.contracts.riskedCollateral),
+        timestamp: new Date(m.timestamp).getTime(),
+      })),
+      'none'
+    )
+    const stats = computeChartStats(data)
+    return {
+      data,
+      stats,
+      config: {
+        enabledGraph: ['locked', 'risked'],
+        enabledTip: ['locked', 'risked'],
+        data: {
+          locked: chartConfigs.locked,
+          risked: chartConfigs.risked,
+        },
+        format: (v) => humanSiacoin(v),
+        formatTimestamp,
+        disableAnimations,
+      },
+      chartType: 'area',
       isLoading: metricsPeriod.isValidating,
     }
   }, [metricsPeriod, formatTimestamp])
@@ -553,6 +586,7 @@ function useMetricsMain() {
     setDataInterval,
     operations,
     revenue,
+    collateral,
     contracts,
     storage,
     pricing,
