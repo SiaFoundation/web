@@ -1,5 +1,19 @@
 # walletd
 
+## 0.8.0
+
+### Minor Changes
+
+- e74d48cc: Currency options now include AUD.
+- e74d48cc: The wallet list now has a colum that shows the lock status. If the wallet is unlocked, the tooltip also shows the remaining time.
+- e74d48cc: The wallet list now has a siacoin balance column.
+- e74d48cc: Wallet dropdown now includes unlock, edit, and delete operations.
+- e74d48cc: Wallet auto-locking can be enabled or disabled from the App Preferences menu - the feature is enabled by default. The locking inactivity period can also be configured.
+- e74d48cc: Seed-based wallets can now be unlocked for a period of time. Each wallet will lock after a period of inactivity or if the app is closed.
+- e74d48cc: The Settings dialog is now called App preferences.
+- e74d48cc: Operations that require a seed, such as sending siacoin or generated addresses now use cached seed values when a wallet is already unlocked.
+- e74d48cc: The app now includes an auto-lock feature that can be enabled or disabled from the App Preferences menu. The locking inactivity period can also be configured.
+
 ## 0.7.0
 
 ### Minor Changes

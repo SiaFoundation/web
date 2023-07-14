@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.54.0
+
+### Minor Changes
+
+- 7bd49b6d: Contract timeline now always shows contract duration dates, on user interaction the specific labels will activate.
+- e74d48cc: The Settings dialog is now called App preferences.
+- 660de5a7: Dates are now properly localized based on the user's system.
+- 3bf6bbaf: Graph chart type config is now restricted based on the initial chart type.
+- 7bd49b6d: Contract timeline dates are now localized.
+- b33ecb82: Refactor and updates to field based form component API.
+- 7bd49b6d: Paginators now properly show loading state when fetching a new page or previous results when revalidating a cached page.
+- 7bd49b6d: Inactive sortable table columns now show a subtle caret to signify that they are sortable.
+
 ## 0.53.0
 
 ### Minor Changes
