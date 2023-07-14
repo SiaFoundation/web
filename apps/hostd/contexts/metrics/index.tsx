@@ -26,6 +26,7 @@ import {
   StorageCategories,
   RevenueCategories,
   OperationsKeys,
+  getDataIntervalInMs,
 } from './types'
 import { formatISO } from 'date-fns'
 import {
@@ -69,11 +70,9 @@ function useMetricsMain() {
     }
   )
 
-  const [timeRange, setTimeRange] = useLocalStorageState<TimeRange>(
-    'v0/metrics/timeRange',
-    {
-      defaultValue: getTimeRange(dataTimeSpan),
-    }
+  const timeRange = useMemo<TimeRange>(
+    () => getTimeRange(dataTimeSpan),
+    [dataTimeSpan]
   )
 
   const setDataTimeSpan = useCallback(
@@ -81,9 +80,8 @@ function useMetricsMain() {
       const option = dataTimeSpanOptions.find((o) => o.value === span)
       setDataInterval(option.interval)
       _setDataTimeSpan(option.value)
-      setTimeRange(getTimeRange(option.value))
     },
-    [_setDataTimeSpan, setDataInterval, setTimeRange]
+    [_setDataTimeSpan, setDataInterval]
   )
 
   const formatTimestamp = useMemo(
@@ -94,7 +92,11 @@ function useMetricsMain() {
   const metricsPeriod = useMetricsPeriod({
     params: {
       interval: dataInterval,
-      start: formatISO(new Date(timeRange.start)),
+      // subtract 1 data interval so that one previous datum is available for
+      // calculating the first delta
+      start: formatISO(
+        new Date(timeRange.start - getDataIntervalInMs(dataInterval))
+      ),
       // periods: getPeriods(timeRange, dataInterval),
     },
     config: {
@@ -136,7 +138,7 @@ function useMetricsMain() {
           .toNumber(),
         timestamp: new Date(m.timestamp).getTime(),
       })),
-      'diff'
+      'delta'
     )
     const stats = computeChartStats(data)
     return {
@@ -433,7 +435,7 @@ function useMetricsMain() {
         registryWrites: m.registry.writes,
         timestamp: new Date(m.timestamp).getTime(),
       })),
-      'diff'
+      'delta'
     )
     const stats = computeChartStats(data)
     return {
@@ -478,7 +480,7 @@ function useMetricsMain() {
         ingress: m.data.rhp3.ingress + m.data.rhp2.ingress,
         timestamp: new Date(m.timestamp).getTime(),
       })),
-      'diff'
+      'delta'
     )
     const stats = computeChartStats(data)
     return {
