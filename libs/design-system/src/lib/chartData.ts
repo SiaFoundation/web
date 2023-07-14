@@ -7,7 +7,7 @@ import {
   minutesInMilliseconds,
 } from './time'
 
-type TransformMode = 'diff' | 'none'
+type TransformMode = 'delta' | 'none'
 
 export function formatChartData<Key extends string>(
   dataset: ChartPoint<Key>[] | undefined,
@@ -23,25 +23,26 @@ export function formatChartData<Key extends string>(
 
   let result: ChartPoint<Key>[] = []
 
-  if (transformMode === 'diff') {
+  if (transformMode === 'delta') {
     dataset.forEach((datum, i) => {
       const point: ChartPoint<Key> = {
         ...datum,
       }
       if (i === 0) {
-        result.push(point)
+        // drop first datum, only use it for the delta from the second
         return
       }
       keys.forEach((key) => {
         const currVal = datum[key]
         const prevVal = dataset[i - 1][key]
-        const diff = currVal - prevVal
-        point[key] = diff
+        const delta = currVal - prevVal
+        point[key] = delta
       })
       result.push(point)
     })
   } else {
-    result = dataset
+    // if not delta mode, drop first datum as it was only fetched for delta mode
+    result = dataset.slice(1)
   }
   return result
 }
