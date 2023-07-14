@@ -1,5 +1,11 @@
 # @siafoundation/react-hostd
 
+## 0.8.0
+
+### Minor Changes
+
+- f388daa3: Add useContractsIntegrityCheck API.
+
 ## 0.7.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @siafoundation/react-core
 
+## 0.12.0
+
+### Minor Changes
+
+- e74d48cc: Currency options now include AUD.
+
 ## 0.11.0
 
 ### Minor Changes

@@ -1,5 +1,28 @@
 # hostd
 
+## 0.18.0
+
+### Minor Changes
+
+- e74d48cc: Currency options now include AUD.
+- 5f6e03fe: Accepting contracts option can be disabled.
+- 3bf6bbaf: Metrics now include locked and risked collateral.
+- b717b821: Contract data integrity checks can now be triggered from the contract action menu. Status updates are published to the alerts feeds.
+- 3bf6bbaf: Bandwidth and operation metric graph colors have been revised for clarity.
+- 7bd49b6d: Contract timeline now always shows contract duration dates, on user interaction the specific labels will activate.
+- 7bd49b6d: Contracts columns now have a time category.
+- c5404928: Fixed a metrics issue where the data time range would stay fixed between page loads until explicitly changed.
+- e74d48cc: The Settings dialog is now called App preferences.
+- 7bd49b6d: Contract columns now include start date, expiration date, and payout date - start and expiration are sortable.
+- 660de5a7: Dates are now properly localized based on the user's system.
+- c5404928: Fixed an issue where some metrics graphs and totals were including an incorrect large first datum.
+- 775930aa: Storage stat cards no longer include total as an option.
+- d91ebc7e: Collateral metric is now based on multiplier and properly shows in stats and on graph.
+- e74d48cc: The app now includes an auto-lock feature that can be enabled or disabled from the App Preferences menu. The locking inactivity period can also be configured.
+- 7bd49b6d: Contract timeline dates are now localized.
+- 7bd49b6d: Paginators now properly show loading state when fetching a new page or previous results when revalidating a cached page.
+- 7bd49b6d: Inactive sortable table columns now show a subtle caret to signify that they are sortable.
+
 ## 0.17.0
 
 ### Minor Changes
