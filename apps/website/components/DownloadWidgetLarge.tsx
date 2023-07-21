@@ -4,15 +4,8 @@ import {
   Text,
   LogoGithub24,
   Book24,
-  Select,
-  ControlGroup,
-  Download16,
-  LinkButton,
-  Button,
-  Option,
 } from '@siafoundation/design-system'
-import { useState } from 'react'
-import { getLinks, getLinksRuntimeNetwork } from '../content/downloads'
+import { DownloadWidgetSelect } from './DownloadWidgetSelect'
 
 type Daemon = 'renterd' | 'hostd' | 'walletd'
 type Props = {
@@ -21,17 +14,9 @@ type Props = {
 }
 
 export function DownloadWidgetLarge({ daemon, version }: Props) {
-  const downloadLinks =
-    daemon === 'walletd'
-      ? getLinksRuntimeNetwork(daemon, version)
-      : getLinks(daemon, version)
-  const [download, setDownload] = useState(downloadLinks[0])
   const githubUrl = webLinks.github[daemon]
   const docsUrl = webLinks.apiDocs[daemon]
 
-  const combined = downloadLinks.filter((i) => i.group === 'combined')
-  const mainnet = downloadLinks.filter((i) => i.group === 'mainnet')
-  const testnet = downloadLinks.filter((i) => i.group === 'testnet')
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
       <div className="flex items-center gap-x-4 gap-y-3">
@@ -68,49 +53,7 @@ export function DownloadWidgetLarge({ daemon, version }: Props) {
           <Text className="hidden md:block" size="14" weight="bold">
             Downloads
           </Text>
-          <ControlGroup>
-            <Button state="waiting">{version}</Button>
-            <Select
-              value={download.link}
-              onChange={(e) =>
-                setDownload(
-                  downloadLinks.find((i) => i.link === e.currentTarget.value)
-                )
-              }
-            >
-              {!!combined.length &&
-                combined.map((i) => (
-                  <Option key={i.link} value={i.link}>
-                    {i.title}
-                  </Option>
-                ))}
-              {!!mainnet.length && (
-                <optgroup label="mainnet">
-                  {mainnet.map((i) => (
-                    <Option key={i.link} value={i.link}>
-                      {i.title}
-                    </Option>
-                  ))}
-                </optgroup>
-              )}
-              {!!testnet.length && (
-                <optgroup label="testnet">
-                  {testnet.map((i) => (
-                    <Option key={i.link} value={i.link}>
-                      {i.title}
-                    </Option>
-                  ))}
-                </optgroup>
-              )}
-            </Select>
-            <LinkButton
-              href={download.link}
-              tip="Download binary"
-              icon="contrast"
-            >
-              <Download16 />
-            </LinkButton>
-          </ControlGroup>
+          <DownloadWidgetSelect daemon={daemon} version={version} />
         </>
       ) : null}
     </div>
