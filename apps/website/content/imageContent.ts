@@ -34,6 +34,7 @@ import poloniex from '../assets/content/poloniex.png'
 import siamining from '../assets/content/siamining.png'
 import upbit from '../assets/content/upbit.png'
 import grafana from '../assets/content/grafana.png'
+import githubstatus from '../assets/content/githubstatus.png'
 
 export const contentImages = {
   filebase,
@@ -72,4 +73,5 @@ export const contentImages = {
   siamining,
   upbit,
   grafana,
+  githubstatus,
 }
