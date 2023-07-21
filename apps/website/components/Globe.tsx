@@ -1,19 +1,22 @@
 import { SiaStatsHostCoordinate } from '@siafoundation/react-core'
-import createGlobe from 'cobe'
+import createGlobe, { Marker } from 'cobe'
 import { MutableRefObject, useEffect, useRef } from 'react'
 
 type Props = {
   activeHost?: SiaStatsHostCoordinate
-  markers: { location: number[]; size: number }[]
+  markers: Marker[]
   focus: MutableRefObject<[number, number]>
 }
 
 export function Globe({ focus, markers }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>()
+  const position = useRef<{
+    phi: number
+    theta: number
+  }>({ phi: 0, theta: 0.3 })
+
   useEffect(() => {
     let width = 0
-    let currentPhi = 0
-    let currentTheta = 0
     const doublePi = Math.PI * 2
     const onResize = () =>
       canvasRef.current && (width = canvasRef.current.offsetWidth)
@@ -23,8 +26,8 @@ export function Globe({ focus, markers }: Props) {
       devicePixelRatio: 2,
       width: width * 2,
       height: width * 2,
-      phi: 0,
-      theta: 0.3,
+      phi: position.current.phi,
+      theta: position.current.theta,
       dark: 1,
       diffuse: 3,
       mapSamples: 20_000,
@@ -32,29 +35,36 @@ export function Globe({ focus, markers }: Props) {
       baseColor: [0.7, 0.7, 0.7],
       markerColor: [20 / 255, 205 / 255, 1 / 255],
       glowColor: [0.1, 0.1, 0.1],
-      markers: [],
+      markers,
       // scale: 2.5,
       offset: [0, width * 2 * 0.4 * 0.6],
       onRender: (state) => {
-        state.phi = currentPhi
-        state.theta = currentTheta
+        state.phi = position.current.phi
+        state.theta = position.current.theta
         const [focusPhi, focusTheta] = focus.current || [0, 0]
-        const distPositive = (focusPhi - currentPhi + doublePi) % doublePi
-        const distNegative = (currentPhi - focusPhi + doublePi) % doublePi
+        const distPositive =
+          (focusPhi - position.current.phi + doublePi) % doublePi
+        const distNegative =
+          (position.current.phi - focusPhi + doublePi) % doublePi
         // Control the speed
         if (distPositive < distNegative) {
-          currentPhi += distPositive * 0.08
+          position.current.phi += distPositive * 0.08
         } else {
-          currentPhi -= distNegative * 0.08
+          position.current.phi -= distNegative * 0.08
         }
-        currentTheta = currentTheta * 0.92 + focusTheta * 0.08
+        position.current.theta =
+          position.current.theta * 0.92 + focusTheta * 0.08
         state.width = width * 2
         state.height = width * 2
-        state.markers = markers
       },
     })
     setTimeout(() => (canvasRef.current.style.opacity = '1'), 100)
-    return () => globe.destroy()
+    return () => {
+      window.removeEventListener('resize', onResize)
+      globe.destroy()
+    }
+    // remount when markers change so that active marker is updated
+    // animations look ok because the phi and theta are saved
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [markers])
 
