@@ -8,18 +8,21 @@ export const routes = {
     index: '/rent',
     coreSoftware: '/rent#core-software',
     thirdPartySoftware: '/rent#third-party-software',
+    ideas: '/rent#software-ideas',
     mediaStorage: '/rent#media-storage',
   },
   host: {
     index: '/host',
     coreSoftware: '/host#core-software',
     thirdPartySoftware: '/host#third-party-software',
+    ideas: '/host#software-ideas',
     guides: '/host#guides',
   },
   wallet: {
     index: '/wallet',
     coreSoftware: '/wallet#core-software',
     thirdPartySoftware: '/wallet#third-party-software',
+    ideas: '/wallet#software-ideas',
     guides: '/wallet#guides',
   },
   learn: {

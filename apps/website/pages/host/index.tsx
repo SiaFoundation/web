@@ -26,7 +26,12 @@ const description = 'Offer your storage space on the Sia network.'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-export default function Host({ technical, tutorials, thirdParty }: Props) {
+export default function Host({
+  technical,
+  tutorials,
+  thirdParty,
+  ideas,
+}: Props) {
   return (
     <Layout
       title={title}
@@ -77,6 +82,16 @@ export default function Host({ technical, tutorials, thirdParty }: Props) {
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <SectionProjects items={thirdParty} />
+          </div>
+          <SiteHeading
+            id="software-ideas"
+            size="32"
+            title="Hosting Software Ideas"
+            description="Third-party hosting software that the community wants to see built."
+            className="mt-12 md:mt-24"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <SectionProjects items={ideas} />
           </div>
         </div>
       </SectionGradient>
@@ -131,12 +146,15 @@ export async function getStaticProps() {
   const stats = await getCacheStats()
   const technical = await getCacheArticles(['technical'], 8)
   const tutorials = await getCacheHostingTutorials()
-  const thirdParty = await getCacheProjects('hosting')
+  const projects = await getCacheProjects('hosting')
+  const thirdParty = projects.filter((project) => !project.idea)
+  const ideas = projects.filter((project) => project.idea)
 
   const props = {
     technical,
     tutorials,
     thirdParty,
+    ideas,
     fallback: {
       '/api/stats': stats,
     },
