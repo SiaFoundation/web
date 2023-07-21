@@ -50,42 +50,46 @@ export function CalloutProject({
           {title}
         </Heading>
         <Paragraph>{subtitle}</Paragraph>
-        {idea ? (
-          router.asPath.startsWith(routes.grants.index) ? (
-            <Link
-              href={webLinks.forumGrants}
-              target="_blank"
-              underline="accent"
-              color="contrast"
-            >
-              Apply for a Grant
-            </Link>
+        <div>
+          {idea ? (
+            router.asPath.startsWith(routes.grants.index) ? (
+              <Link
+                href={webLinks.forumGrants}
+                target="_blank"
+                underline="accent"
+                color="contrast"
+              >
+                Apply for a Grant
+              </Link>
+            ) : (
+              <Link
+                href={routes.grants.index}
+                underline="accent"
+                color="contrast"
+              >
+                Apply for a Grant
+              </Link>
+            )
           ) : (
-            <Link
-              href={routes.grants.index}
-              underline="accent"
-              color="contrast"
-            >
-              Apply for a Grant
-            </Link>
-          )
-        ) : (
-          <div className="flex flex-col gap-2">
-            <Link
-              href={link}
-              underline="accent"
-              target={externalLink ? '_blank' : undefined}
-              color="contrast"
-            >
-              Learn more
-            </Link>
-            {externalLink && (
-              <div className="flex gap-1 items-center">
-                <WebDomain link={link} />
+            <div className="flex flex-col gap-2">
+              <div>
+                <Link
+                  href={link}
+                  underline="accent"
+                  target={externalLink ? '_blank' : undefined}
+                  color="contrast"
+                >
+                  Learn more
+                </Link>
               </div>
-            )}
-          </div>
-        )}
+              {externalLink && (
+                <div className="flex gap-1 items-center">
+                  <WebDomain link={link} />
+                </div>
+              )}
+            </div>
+          )}
+        </div>
         {image && (
           <div className="relative h-48 -ml-7 transition-transform md:hover:scale-105">
             <Image
