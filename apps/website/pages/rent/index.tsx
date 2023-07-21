@@ -84,7 +84,7 @@ export default function Rent({
             id="software-ideas"
             size="32"
             title="Renting Software Ideas"
-            description="Third-party renting software that the community wants to see built."
+            description="Third-party renting software that the Sia Foundation and community would love to see built."
             className="mt-12 md:mt-24"
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -87,7 +87,7 @@ export default function Host({
             id="software-ideas"
             size="32"
             title="Hosting Software Ideas"
-            description="Third-party hosting software that the community wants to see built."
+            description="Third-party hosting software that the Sia Foundation and community would love to see built."
             className="mt-12 md:mt-24"
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

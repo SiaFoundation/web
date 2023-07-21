@@ -66,6 +66,24 @@
     "subtitle": "Grafana is a widely adopted open source analytics & monitoring solution. Interested in building a Grafana exporter for hostd? Apply for a Grant!"
   },
   {
+    "title": "Benchmarking Tools",
+    "logo": "",
+    "image": "siastatsHosts2",
+    "background": "natePath",
+    "tags": ["hosting", "grant_ideas", "open_source_software"],
+    "idea": true,
+    "subtitle": "With the recent release of hostd, the Sia Foundation would like to see the community get creative and build new benchmarking and scoring tools. Interested in building a benchmarking tool for Sia? Apply for a Grant!"
+  },
+  {
+    "title": "Host Monitoring Tools",
+    "logo": "",
+    "image": "githubstatus",
+    "background": "natePath",
+    "tags": ["hosting", "grant_ideas", "open_source_software"],
+    "idea": true,
+    "subtitle": "Running a host requires good stability and uptime, it would be useful to have monitoring tools that track status and alerting tools that send email or SMS notifications when a node goes offline. Interested in building a monitoring tool for hostd? Apply for a Grant!"
+  },
+  {
     "title": "Host Browser",
     "link": "https://hosts.siacentral.com/",
     "logo": "siacentral",
