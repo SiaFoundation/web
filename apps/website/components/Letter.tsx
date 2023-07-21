@@ -21,7 +21,7 @@ export default function Letter({ onDone }: Props) {
   }, [inView])
 
   return (
-    <SectionGradient className="pt-16 md:pt-32 pb-24 border-gray-400 dark:border-graydark-400 border-2 rounded-lg">
+    <SectionGradient className="pt-16 md:pt-32 pb-24 border-gray-400 dark:border-graydark-400 border-2">
       <div className="flex flex-col gap-4 z-10 max-w-[800px] mx-auto">
         <Logo size={50} />
         <Text size="30" weight="bold" className="italic my-6">
