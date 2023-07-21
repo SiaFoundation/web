@@ -1,11 +1,11 @@
 import { SiteHeading } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
-import { getCacheStats } from '../../content/stats'
+import { getStats } from '../../content/stats'
 import { AsyncReturnType } from '../../lib/types'
 import { getMinutesInSeconds } from '../../lib/time'
 import { SectionSolid } from '../../components/SectionSolid'
-import { getCachePrs } from '../../content/prs'
+import { getPrs } from '../../content/prs'
 import { GitHubActivity } from '../../components/GitHubActivity'
 import { backgrounds } from '../../content/imageBackgrounds'
 import { previews } from '../../content/imagePreviews'
@@ -43,8 +43,8 @@ export default function Activity({ prs }: Props) {
 }
 
 export async function getStaticProps() {
-  const stats = await getCacheStats()
-  const prs = await getCachePrs()
+  const stats = await getStats()
+  const prs = await getPrs()
 
   return {
     props: {

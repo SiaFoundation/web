@@ -1,4 +1,3 @@
-import { readContentDirJsonFile } from '@siafoundation/env'
 import { formatDistance } from 'date-fns'
 
 type Seconds = number
@@ -53,16 +52,4 @@ export async function getCacheValue<T>(
   // Value stale, update the cache but immediately return stale value
   updateCache(currentItem.updatedAt)
   return currentItem.value
-}
-
-export async function readContentDirCachedJsonFile<T>(
-  filePath: string,
-  defaultValue: T,
-  maxAge: number
-): Promise<T> {
-  return getCacheValue(
-    filePath,
-    async () => readContentDirJsonFile(filePath, defaultValue),
-    maxAge
-  )
 }

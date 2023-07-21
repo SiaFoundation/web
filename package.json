@@ -27,6 +27,7 @@
     "@mdx-js/react": "^2.1.1",
     "@next/font": "13.1.1",
     "@next/mdx": "^12.1.6",
+    "@notionhq/client": "^2.2.8",
     "@nrwl/next": "15.7.2",
     "@radix-ui/react-accordion": "^1.0.0",
     "@radix-ui/react-alert-dialog": "^1.0.0",

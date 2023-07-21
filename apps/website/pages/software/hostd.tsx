@@ -9,16 +9,16 @@ import {
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
 import { getMinutesInSeconds } from '../../lib/time'
-import { getCacheArticles } from '../../content/articles'
+import { getFeedContent } from '../../content/feed'
 import { AsyncReturnType } from '../../lib/types'
-import { getCacheProjects } from '../../content/projects'
-import { getCacheStats } from '../../content/stats'
-import { getCacheTutorials } from '../../content/tutorials'
+import { getProjects } from '../../content/projects'
+import { getStats } from '../../content/stats'
+import { getTutorialArticles } from '../../content/articles'
 import { textContent } from '../../lib/utils'
 import { SectionGradient } from '../../components/SectionGradient'
 import { useInView } from 'react-intersection-observer'
 import { cx } from 'class-variance-authority'
-import { getCacheHostdLatestRelease } from '../../content/releases'
+import { getHostdLatestRelease } from '../../content/releases'
 import { CarouselHostd } from '../../components/CarouselHostd'
 import { DownloadWidgetLarge } from '../../components/DownloadWidgetLarge'
 import { backgrounds } from '../../content/imageBackgrounds'
@@ -122,11 +122,11 @@ export default function Hostd({ version, technical, tutorials }: Props) {
 }
 
 export async function getStaticProps() {
-  const stats = await getCacheStats()
-  const technical = await getCacheArticles(['technical'], 8)
-  const tutorials = await getCacheTutorials()
-  const release = await getCacheHostdLatestRelease()
-  const services = await getCacheProjects('storage_services', 5)
+  const stats = await getStats()
+  const technical = await getFeedContent(['technical'], 8)
+  const tutorials = await getTutorialArticles()
+  const release = await getHostdLatestRelease()
+  const services = await getProjects('storage_services', 5)
 
   const props = {
     technical,

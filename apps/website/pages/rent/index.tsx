@@ -8,11 +8,11 @@ import {
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
 import { getMinutesInSeconds } from '../../lib/time'
-import { getCacheArticles } from '../../content/articles'
+import { getFeedContent } from '../../content/feed'
 import { AsyncReturnType } from '../../lib/types'
-import { getCacheProjects } from '../../content/projects'
-import { getCacheStats } from '../../content/stats'
-import { getCacheRentingTutorials } from '../../content/tutorials'
+import { getProjects } from '../../content/projects'
+import { getStats } from '../../content/stats'
+import { getRentingArticles } from '../../content/articles'
 import { SectionGradient } from '../../components/SectionGradient'
 import { backgrounds } from '../../content/imageBackgrounds'
 import { previews } from '../../content/imagePreviews'
@@ -140,10 +140,10 @@ export default function Rent({
 }
 
 export async function getStaticProps() {
-  const stats = await getCacheStats()
-  const technical = await getCacheArticles(['technical'], 8)
-  const tutorials = await getCacheRentingTutorials()
-  const projects = await getCacheProjects('renting')
+  const stats = await getStats()
+  const technical = await getFeedContent(['technical'], 8)
+  const tutorials = await getRentingArticles()
+  const projects = await getProjects('renting')
   const thirdParty = projects.filter((project) => !project.idea)
   const ideas = projects.filter((project) => project.idea)
 

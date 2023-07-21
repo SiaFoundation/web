@@ -5,11 +5,11 @@ import {
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
-import { getCacheStats } from '../../content/stats'
-import { generateRssNewsFeed } from '../../content/rssGenerateFeed'
+import { getStats } from '../../content/stats'
+import { generateRssNewsFeed } from '../../content/newsGenerateFeed'
 import useSWR from 'swr'
 import { useRouter } from 'next/router'
-import { getCacheFeed } from '../../content/feed'
+import { getFeedAndNews } from '../../content/feed'
 import { getMinutesInSeconds } from '../../lib/time'
 import { SectionSolid } from '../../components/SectionSolid'
 import { backgrounds } from '../../content/imageBackgrounds'
@@ -68,8 +68,8 @@ function Newsroom() {
 
 export async function getStaticProps() {
   await generateRssNewsFeed()
-  const stats = await getCacheStats()
-  const posts = await getCacheFeed()
+  const stats = await getStats()
+  const posts = await getFeedAndNews()
 
   return {
     props: {

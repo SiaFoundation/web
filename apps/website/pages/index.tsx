@@ -11,9 +11,9 @@ import {
 import { Layout } from '../components/Layout'
 import { routes } from '../config/routes'
 import { AsyncReturnType } from '../lib/types'
-import { getCacheArticles } from '../content/articles'
-import { getCacheProjects } from '../content/projects'
-import { getCacheTutorials } from '../content/tutorials'
+import { getFeedContent, syncArticlesEvery5min } from '../content/feed'
+import { getProjects } from '../content/projects'
+import { getTutorialArticles } from '../content/articles'
 import { useCallback, useMemo, useState } from 'react'
 import { textContent } from '../lib/utils'
 import Letter from '../components/Letter'
@@ -27,7 +27,7 @@ import { backgrounds } from '../content/imageBackgrounds'
 import { previews } from '../content/imagePreviews'
 import { GlobeSection } from '../components/GlobeSection'
 import { CalloutProject } from '../components/CalloutProject'
-import { getCacheGeoHosts } from '../content/geoHosts'
+import { getGeoHosts } from '../content/geoHosts'
 
 const transitionWidthDuration = 300
 const transitionFadeDelay = 500
@@ -330,10 +330,13 @@ export default function Home({ featured, tutorials, services, hosts }: Props) {
 }
 
 export async function getServerSideProps() {
-  const featured = await getCacheArticles(['sia-all', 'featured'], 5)
-  const tutorials = await getCacheTutorials()
-  const hosts = await getCacheGeoHosts()
-  const services = await getCacheProjects('featured', 5)
+  // only run one sync instance on main page
+  syncArticlesEvery5min()
+
+  const featured = await getFeedContent(['sia-all', 'featured'], 5)
+  const tutorials = await getTutorialArticles()
+  const hosts = await getGeoHosts()
+  const services = await getProjects('featured', 5)
 
   return {
     props: {

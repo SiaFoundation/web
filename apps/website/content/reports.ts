@@ -14,11 +14,11 @@ type ReportPair = [string, Report[]]
 
 const maxAge = getMinutesInSeconds(5)
 
-export async function getCacheReports(): Promise<ReportPair[]> {
-  return getCacheValue('articles', async () => getReports(), maxAge)
+export async function getReports(): Promise<ReportPair[]> {
+  return getCacheValue('transparencyReports', async () => readReports(), maxAge)
 }
 
-function getReports(): ReportPair[] {
+function readReports(): ReportPair[] {
   let reports: Report[] = []
 
   try {

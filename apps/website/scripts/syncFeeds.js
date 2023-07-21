@@ -1,4 +1,4 @@
-import { syncRssFeeds } from '../content/rssSyncFeeds'
+const { syncFeeds } = require('../content/syncFeeds')
 
 // manually trigger an rss feed sync
-syncRssFeeds()
+syncFeeds()

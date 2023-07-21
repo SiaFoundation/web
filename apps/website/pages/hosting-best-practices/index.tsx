@@ -1,13 +1,10 @@
-import fs from 'fs'
-import path from 'path'
 import { SiteHeading, webLinks, Text } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
-import { getCacheStats } from '../../content/stats'
+import { getStats } from '../../content/stats'
 import { AsyncReturnType } from '../../lib/types'
 import { getMinutesInSeconds } from '../../lib/time'
 import { SectionSolid } from '../../components/SectionSolid'
-import { getContentDirectory } from '@siafoundation/env'
 import matter from 'gray-matter'
 import { serialize } from 'next-mdx-remote/serialize'
 import { format } from 'date-fns'
@@ -16,15 +13,16 @@ import { components } from '../../config/mdx'
 import { backgrounds } from '../../content/imageBackgrounds'
 import { previews } from '../../content/imagePreviews'
 import { SectionTransparent } from '../../components/SectionTransparent'
+import { Notion } from '../../content/notion'
+import { isFullPage } from '@notionhq/client'
+import { notionToMarkdown } from '../../lib/notion'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-export default function HostBestPractices({
-  title,
-  date,
-  description,
-  source,
-}: Props) {
+const title = 'Sia Network Hosting Best Practices'
+const description = 'High-level guidance for Hosts on the Sia network.'
+
+export default function HostBestPractices({ date, source }: Props) {
   return (
     <Layout
       title={title}
@@ -66,23 +64,19 @@ export default function HostBestPractices({
   )
 }
 
+const databaseId = 'a328ef7df2d84306b09dc64c65b25147'
+
 export async function getStaticProps() {
-  const stats = await getCacheStats()
+  const stats = await getStats()
 
-  const { data, content } = matter(
-    fs.readFileSync(
-      path.join(getContentDirectory(), 'pages/hosting-best-practices.mdx'),
-      'utf-8'
-    )
-  )
-
-  const source = await serialize(content)
+  const p = await Notion.pages.retrieve({ page_id: databaseId })
+  const date = isFullPage(p) ? p.last_edited_time : null
+  const markdown = await notionToMarkdown(databaseId)
+  const source = await serialize(matter(markdown).content)
 
   return {
     props: {
-      title: data.title as string,
-      date: data.date as string,
-      description: data.description as string,
+      date,
       source,
       fallback: {
         '/api/stats': stats,

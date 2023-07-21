@@ -9,7 +9,16 @@ import {
   Link,
   webLinks,
 } from '@siafoundation/design-system'
-import { Versions } from '../content/versions'
+
+type Versions = {
+  sia: {
+    latest: string
+    testnet: string
+  }
+  embarcadero: {
+    latest: string
+  }
+}
 
 type Props = {
   versions: Versions

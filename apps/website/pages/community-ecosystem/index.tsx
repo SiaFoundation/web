@@ -6,9 +6,9 @@ import {
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
-import { getCacheArticles } from '../../content/articles'
-import { getCacheProjects } from '../../content/projects'
-import { getCacheStats } from '../../content/stats'
+import { getFeedContent } from '../../content/feed'
+import { getProjects } from '../../content/projects'
+import { getStats } from '../../content/stats'
 import { AsyncReturnType } from '../../lib/types'
 import { textContent } from '../../lib/utils'
 import { getMinutesInSeconds } from '../../lib/time'
@@ -115,9 +115,9 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
 }
 
 export async function getStaticProps() {
-  const stats = await getCacheStats()
-  const blogs = await getCacheArticles(['ecosystem-featured'], 4)
-  const software = await getCacheProjects('')
+  const stats = await getStats()
+  const blogs = await getFeedContent(['ecosystem-featured'], 4)
+  const software = await getProjects('')
 
   return {
     props: {
