@@ -56,6 +56,16 @@
     "subtitle": "S3 is a widely adopted object storage protocol created by AWS. Interested in building an S3 renterd gateway? Apply for a Grant!"
   },
   {
+    "title": "Grafana Exporter",
+    "link": "https://grafana.com/",
+    "logo": "",
+    "image": "grafana",
+    "background": "natePath",
+    "tags": ["hosting", "grant_ideas", "open_source_software"],
+    "idea": true,
+    "subtitle": "Grafana is a widely adopted open source analytics & monitoring solution. Interested in building a Grafana exporter for hostd? Apply for a Grant!"
+  },
+  {
     "title": "Host Browser",
     "link": "https://hosts.siacentral.com/",
     "logo": "siacentral",

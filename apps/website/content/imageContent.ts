@@ -33,6 +33,7 @@ import luxor from '../assets/content/luxor.png'
 import poloniex from '../assets/content/poloniex.png'
 import siamining from '../assets/content/siamining.png'
 import upbit from '../assets/content/upbit.png'
+import grafana from '../assets/content/grafana.png'
 
 export const contentImages = {
   filebase,
@@ -70,4 +71,5 @@ export const contentImages = {
   poloniex,
   siamining,
   upbit,
+  grafana,
 }
