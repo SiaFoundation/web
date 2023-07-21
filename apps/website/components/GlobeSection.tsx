@@ -9,6 +9,7 @@ import { SiaStatsHostCoordinate } from '@siafoundation/data-sources'
 import axios from 'axios'
 import { Stats } from '../content/stats'
 import useSWR from 'swr'
+import { Marker } from 'cobe'
 
 type Props = {
   hosts: SiaStatsHostCoordinate[]
@@ -19,16 +20,7 @@ export function GlobeSection({ className, hosts }: Props) {
   const { data } = useSWR<Stats>('/api/stats', (key) =>
     axios.get(key).then((res) => res.data)
   )
-  const { onlineHosts, totalStorage } = data || {}
-
-  const markers = useMemo(
-    () =>
-      hosts.map((c) => ({
-        location: [c.lat, c.lon],
-        size: 0.03, // c.totalstorage / 1000000,
-      })),
-    [hosts]
-  )
+  const { activeHosts, totalStorage } = data || {}
 
   const scrollRef = useRef<HTMLDivElement>()
   const refs = useRef([]) // to store refs for all items
@@ -101,6 +93,15 @@ export function GlobeSection({ className, hosts }: Props) {
     return mt
   }, [width])
 
+  const markers: Marker[] = useMemo(
+    () =>
+      hosts.map((c) => ({
+        location: [c.lat, c.lon],
+        size: activeHost.ip === c.ip ? 0.05 : 0.02,
+      })),
+    [hosts, activeHost]
+  )
+
   return (
     <div ref={containerRef} className={className}>
       <div className="relative border-b border-gray-400 dark:border-graydark-400 pointer-events-none">
@@ -115,13 +116,13 @@ export function GlobeSection({ className, hosts }: Props) {
         </div>
       </div>
       <div className="flex gap-4 overflow-hidden">
-        {onlineHosts && (
+        {activeHosts && (
           <Tooltip
             align="start"
             content="The map features a random sample of active hosts."
           >
             <Text size="12" weight="medium" noWrap className="pt-2 pb-3">
-              {onlineHosts} hosts
+              {activeHosts} hosts
             </Text>
           </Tooltip>
         )}
