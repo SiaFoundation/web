@@ -21,11 +21,6 @@ module.exports = {
       args: 'run explorer-v1:serve:production-testnet',
     },
     {
-      name: 'sia-design',
-      script: 'nx',
-      args: 'run design-site:serve:production',
-    },
-    {
       name: 'sia-renter',
       script: 'nx',
       args: 'run renterd:serve:production',
