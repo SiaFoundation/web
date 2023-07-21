@@ -65,14 +65,16 @@ export function CalloutTutorial({
           </div>
         ) : (
           <div className="flex flex-col gap-2">
-            <Link
-              href={link}
-              underline="accent"
-              target={externalLink ? '_blank' : undefined}
-              color="contrast"
-            >
-              Read article
-            </Link>
+            <div>
+              <Link
+                href={link}
+                underline="accent"
+                target={externalLink ? '_blank' : undefined}
+                color="contrast"
+              >
+                Read article
+              </Link>
+            </div>
             {externalLink && (
               <div className="flex gap-1 items-center">
                 <WebDomain link={link} />
