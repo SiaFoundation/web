@@ -12,7 +12,7 @@ User interfaces for the Sia software. The latest Sia software takes a modular ap
 
 ![stability-beta](https://img.shields.io/badge/stability-beta-yellow.svg)
 
-The [renterd](https://github.com/siafoundation/renterd) user interface, focused on renting functionality.
+The [`renterd`](https://github.com/siafoundation/renterd) user interface, focused on renting functionality.
 
 ### [explorer-v1](apps/explorer-v1)
 
@@ -22,15 +22,15 @@ The `explorer-v1` user interface, a Sia blockchain explorer interface based on [
 
 ### [hostd](apps/hostd)
 
-![stability-wip](https://img.shields.io/badge/stability-work_in_progress-orange.svg)
+![stability-beta](https://img.shields.io/badge/stability-beta-yellow.svg)
 
-The `hostd` user interface, focused on hosting functionality.
+The [`hostd`](https://github.com/siafoundation/hostd) user interface, focused on hosting functionality.
 
 ### [walletd](apps/walletd)
 
-![stability-wip](https://img.shields.io/badge/stability-work_in_progress-orange.svg)
+![stability-alpha](https://img.shields.io/badge/stability-alpha-orange.svg)
 
-The `walletd` user interface, includes a wallet with support for hot, cold, and hardware wallets.
+The [`walletd`](https://github.com/siafoundation/walletd) user interface, includes a wallet with support for hot, cold, and hardware wallets.
 
 ## Libraries
 
