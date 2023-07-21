@@ -11,7 +11,6 @@ export function CalloutHostd({ version }: Props) {
   return (
     <CalloutCoreSoftware
       name="hostd"
-      variant="subtle"
       description={
         'A next-generation Sia host, developed by the Sia Foundation. Built for performance and reliability.'
       }
