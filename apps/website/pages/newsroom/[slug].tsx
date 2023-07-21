@@ -4,7 +4,7 @@ import { MDXRemote } from 'next-mdx-remote'
 import { format } from 'date-fns'
 import { Layout } from '../../components/Layout'
 import { GetNewsPost, getNewsPost, newsDirectory } from '../../content/news'
-import { getCacheStats } from '../../content/stats'
+import { getStats } from '../../content/stats'
 import { routes } from '../../config/routes'
 import { textContent } from '../../lib/utils'
 import { components } from '../../config/mdx'
@@ -74,7 +74,7 @@ async function getStaticPaths() {
 }
 
 async function getStaticProps({ params: { slug } }) {
-  const stats = await getCacheStats()
+  const stats = await getStats()
   const props = await getNewsPost(slug)
 
   return {

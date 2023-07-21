@@ -8,10 +8,10 @@ import {
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
-import { getCacheStats } from '../../content/stats'
+import { getStats } from '../../content/stats'
 import { getMinutesInSeconds } from '../../lib/time'
 import { textContent } from '../../lib/utils'
-import { getCacheTutorials } from '../../content/tutorials'
+import { getTutorialArticles } from '../../content/articles'
 import { AsyncReturnType } from '../../lib/types'
 import { SectionGradient } from '../../components/SectionGradient'
 import { SectionTransparent } from '../../components/SectionTransparent'
@@ -313,8 +313,8 @@ export default function Learn({ getStarted }: Props) {
 }
 
 export async function getStaticProps() {
-  const stats = await getCacheStats()
-  const getStarted = await getCacheTutorials()
+  const stats = await getStats()
+  const getStarted = await getTutorialArticles()
   return {
     props: {
       getStarted,

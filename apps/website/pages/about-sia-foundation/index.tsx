@@ -17,12 +17,12 @@ import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
 import { getMinutesInSeconds } from '../../lib/time'
 import { AsyncReturnType } from '../../lib/types'
-import { getCacheReports } from '../../content/reports'
-import { getCacheStats } from '../../content/stats'
-import { getCacheTeam } from '../../content/team'
+import { getReports } from '../../content/reports'
+import { getStats } from '../../content/stats'
+import { getTeam } from '../../content/team'
 import { SectionGradient } from '../../components/SectionGradient'
 import { SectionTransparent } from '../../components/SectionTransparent'
-import { getCacheArticles } from '../../content/articles'
+import { getFeedContent } from '../../content/feed'
 import { backgrounds } from '../../content/imageBackgrounds'
 import { previews } from '../../content/imagePreviews'
 
@@ -213,10 +213,10 @@ function Foundation({ team, featured, reports }: Props) {
 }
 
 export async function getStaticProps() {
-  const stats = await getCacheStats()
-  const featured = await getCacheArticles(['sia-all', 'featured'], 5)
-  const reports = await getCacheReports()
-  const team = await getCacheTeam()
+  const stats = await getStats()
+  const featured = await getFeedContent(['sia-all', 'featured'], 5)
+  const reports = await getReports()
+  const team = await getTeam()
 
   return {
     props: {

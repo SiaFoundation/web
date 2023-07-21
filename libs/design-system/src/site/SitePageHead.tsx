@@ -53,7 +53,7 @@ export function SitePageHead({
         <meta name="theme-color" content="#ffffff" />
         {children}
         <title>{fullTitle}</title>
-        <meta name="description" content={description}></meta>
+        {description && <meta name="description" content={description}></meta>}
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />

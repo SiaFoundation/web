@@ -3,11 +3,11 @@ import { Feed } from 'feed'
 import { webLinks } from '@siafoundation/design-system'
 import { routes } from '../config/routes'
 import { newsFeedName } from '../config/app'
-import { getNewsPostsWithHtml } from './news'
+import { readNewsPostsWithHtml } from './news'
 import { getContentPath } from '@siafoundation/env'
 
 export async function generateRssNewsFeed() {
-  const posts = await getNewsPostsWithHtml()
+  const posts = await readNewsPostsWithHtml()
   const siteUrl = webLinks.website
   const date = new Date()
   const author = {

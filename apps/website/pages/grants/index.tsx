@@ -13,18 +13,15 @@ import {
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
-import { getCacheProjects } from '../../content/projects'
-import { getCacheStats } from '../../content/stats'
+import { getProjects } from '../../content/projects'
+import { getStats } from '../../content/stats'
 import { textContent } from '../../lib/utils'
 import { AsyncReturnType } from '../../lib/types'
 import { getMinutesInSeconds } from '../../lib/time'
-import { getCacheGrantCommittee } from '../../content/grantCommittee'
+import { getGrantCommittee } from '../../content/grantCommittee'
 import { SectionTransparent } from '../../components/SectionTransparent'
 import { SectionGradient } from '../../components/SectionGradient'
 import { MDXRemote } from 'next-mdx-remote'
-import path from 'path'
-import fs from 'fs'
-import { getContentDirectory } from '@siafoundation/env'
 import matter from 'gray-matter'
 import { serialize } from 'next-mdx-remote/serialize'
 import { components } from '../../config/mdx'
@@ -32,6 +29,7 @@ import { TableOfContents } from '../../components/TableOfContents'
 import { backgrounds } from '../../content/imageBackgrounds'
 import { previews } from '../../content/imagePreviews'
 import { CalloutProject } from '../../components/CalloutProject'
+import { notionToMarkdown } from '../../lib/notion'
 
 const title = 'Grants'
 const description = (
@@ -71,6 +69,10 @@ export default function Grants({
                 {
                   href: '#the-grant-process',
                   title: 'The grant process',
+                },
+                {
+                  href: '#ideas',
+                  title: 'Browse grant ideas',
                 },
                 {
                   href: '#example-projects',
@@ -364,28 +366,23 @@ export default function Grants({
   )
 }
 
-export async function getStaticProps() {
-  const stats = await getCacheStats()
-  const grantIdeas = await getCacheProjects('grant_ideas', 6)
-  const grantExamples = await getCacheProjects('grant_examples', 6)
-  const grantCommittee = await getCacheGrantCommittee()
+const grantApplicantFaqId = 'f6971439deae401294d59f62046f88b8'
+const approvedGranteeFaqId = '89b7ca138da74872a20be9e533d272c7'
 
+export async function getStaticProps() {
+  const stats = await getStats()
+  const grantIdeas = await getProjects('grant_ideas', 6)
+  const grantExamples = await getProjects('grant_examples', 6)
+  const grantCommittee = await getGrantCommittee()
+
+  const grantApplicantMarkdown = await notionToMarkdown(grantApplicantFaqId)
   const grantApplicantFaqSource = await serialize(
-    matter(
-      fs.readFileSync(
-        path.join(getContentDirectory(), 'pages/grant-applicant-faq.mdx'),
-        'utf-8'
-      )
-    ).content
+    matter(grantApplicantMarkdown).content
   )
 
+  const grantGranteeMarkdown = await notionToMarkdown(approvedGranteeFaqId)
   const grantGranteeFaqSource = await serialize(
-    matter(
-      fs.readFileSync(
-        path.join(getContentDirectory(), 'pages/grant-grantee-faq.mdx'),
-        'utf-8'
-      )
-    ).content
+    matter(grantGranteeMarkdown).content
   )
 
   return {

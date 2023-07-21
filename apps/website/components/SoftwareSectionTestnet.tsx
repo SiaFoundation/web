@@ -1,8 +1,17 @@
 /* eslint-disable react/no-unescaped-entities */
 import { webLinks } from '@siafoundation/design-system'
 import { backgrounds } from '../content/imageBackgrounds'
-import { Versions } from '../content/versions'
 import { SoftwareSection } from './SoftwareSection'
+
+type Versions = {
+  sia: {
+    latest: string
+    testnet: string
+  }
+  embarcadero: {
+    latest: string
+  }
+}
 
 type Props = {
   versions: Versions

@@ -9,10 +9,10 @@ import { AsyncReturnType } from '../lib/types'
 import { format } from 'date-fns'
 import { MDXRemote } from 'next-mdx-remote'
 import { components } from '../config/mdx'
-import { getCachePrs } from '../content/prs'
+import { getPrs } from '../content/prs'
 
 type Props = {
-  prs: AsyncReturnType<typeof getCachePrs>
+  prs: AsyncReturnType<typeof getPrs>
 }
 
 export function GitHubActivity({ prs }: Props) {

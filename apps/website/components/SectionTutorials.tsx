@@ -10,7 +10,7 @@ export function SectionTutorials({ items }: Props) {
     <>
       {items.map((s) => (
         <CalloutTutorial
-          key={s.link}
+          key={s.title + s.link}
           title={s.title}
           subtitle={s.subtitle}
           link={s.link}

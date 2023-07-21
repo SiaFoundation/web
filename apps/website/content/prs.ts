@@ -5,7 +5,7 @@ import { getMinutesInSeconds } from '../lib/time'
 
 const maxAge = getMinutesInSeconds(5)
 
-export async function getCachePrs() {
+export async function getPrs() {
   return getCacheValue(
     'prs',
     async () => {
@@ -14,7 +14,8 @@ export async function getCachePrs() {
         prsData.map(async (pr) => {
           let source = null
           try {
-            source = await serialize(pr.body)
+            // as md, dont need the mdx components and allows <img> style tags, vs <img />
+            source = await serialize(pr.body, { mdxOptions: { format: 'md' } })
           } catch (e) {
             console.log(e)
           }

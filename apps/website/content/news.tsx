@@ -31,23 +31,23 @@ export type NewsPostSource = NewsPost & {
 const maxAge = getMinutesInSeconds(5)
 
 // Used in content lists
-export async function getCacheNewsPostsList(limit: number) {
+export async function getNewsPostsList(limit: number) {
   const posts = await getCacheValue(
     'newsPostsList',
-    () => getNewsPosts(),
+    () => readNewsPosts(),
     maxAge
   )
   return posts.slice(0, limit)
 }
 
 // Used to generate RSS feed
-export async function getNewsPostsWithHtml() {
-  return getNewsPosts({ includeHtml: true }) as Promise<NewsPostHtml[]>
+export async function readNewsPostsWithHtml() {
+  return readNewsPosts({ includeHtml: true }) as Promise<NewsPostHtml[]>
 }
 
 // Used to SSG individual news post pages
-async function getNewsPostsWithSource() {
-  return getNewsPosts({ includeSource: true }) as Promise<NewsPostSource[]>
+async function readNewsPostsWithSource() {
+  return readNewsPosts({ includeSource: true }) as Promise<NewsPostSource[]>
 }
 
 type Options = {
@@ -62,7 +62,7 @@ const defaultOptions: Options = {
   includeHtml: false,
 }
 
-export async function getNewsPosts(options: Options = {}): Promise<NewsPost[]> {
+async function readNewsPosts(options: Options = {}): Promise<NewsPost[]> {
   const { limit, includeHtml, includeSource } = {
     ...defaultOptions,
     ...options,
@@ -141,7 +141,7 @@ export type GetNewsPost = {
 }
 
 export async function getNewsPost(slug: string): Promise<GetNewsPost> {
-  const posts = await getNewsPostsWithSource()
+  const posts = await readNewsPostsWithSource()
 
   const post = posts.find((post) => post.slug === slug)
   const next = posts.find((_, i) => posts[i + 1]?.slug === slug)

@@ -8,11 +8,11 @@ import {
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
 import { getMinutesInSeconds } from '../../lib/time'
-import { getCacheArticles } from '../../content/articles'
+import { getFeedContent } from '../../content/feed'
 import { AsyncReturnType } from '../../lib/types'
-import { getCacheProjects } from '../../content/projects'
-import { getCacheStats } from '../../content/stats'
-import { getCacheWalletTutorials } from '../../content/tutorials'
+import { getProjects } from '../../content/projects'
+import { getStats } from '../../content/stats'
+import { getWalletArticles } from '../../content/articles'
 import { SectionGradient } from '../../components/SectionGradient'
 import { backgrounds } from '../../content/imageBackgrounds'
 import { previews } from '../../content/imagePreviews'
@@ -122,10 +122,10 @@ export default function Wallet({ technical, tutorials, thirdParty }: Props) {
 }
 
 export async function getStaticProps() {
-  const stats = await getCacheStats()
-  const technical = await getCacheArticles(['technical'], 8)
-  const tutorials = await getCacheWalletTutorials()
-  const thirdParty = await getCacheProjects('wallet')
+  const stats = await getStats()
+  const technical = await getFeedContent(['technical'], 8)
+  const tutorials = await getWalletArticles()
+  const thirdParty = await getProjects('wallet')
 
   const props = {
     technical,
