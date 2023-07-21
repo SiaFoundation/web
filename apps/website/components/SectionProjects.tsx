@@ -1,8 +1,8 @@
-import { Software } from '../content/projects'
+import { ContentItemProps } from '@siafoundation/design-system'
 import { CalloutProject } from './CalloutProject'
 
 type Props = {
-  items?: Software[]
+  items?: ContentItemProps[]
 }
 
 export function SectionProjects({ items }: Props) {
@@ -12,7 +12,6 @@ export function SectionProjects({ items }: Props) {
         <CalloutProject
           key={s.link}
           title={s.title}
-          variant="subtle"
           subtitle={s.subtitle}
           link={s.link}
           idea={s.idea}

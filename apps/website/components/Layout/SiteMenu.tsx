@@ -43,7 +43,7 @@ export function SiteMenu({ menuSections }: Props) {
         variant: 'none',
         className: 'bg-black h-full border-3 border-graydark-400/50',
       }}
-      closeClassName="dark absolute right-4 md:right-12 top-9"
+      closeClassName="hidden"
       trigger={
         <Button
           size="small"
