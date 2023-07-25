@@ -35,12 +35,13 @@ jobs:
       - name: Test Go
         uses: n8maninger/action-golang-test@v1
         with:
-          args: "-race"
+          args: '-race'
       - name: Build
         shell: bash
         run: npx nx affected --target=build --configuration=ci --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           CONTENT: ${{ github.workspace }}/content/example
       - name: Export
         shell: bash

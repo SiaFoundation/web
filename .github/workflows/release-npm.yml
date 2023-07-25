@@ -35,6 +35,7 @@ jobs:
         run: npx nx run-many --target=build --configuration=ci --all --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           CONTENT: ${{ github.workspace }}/content/example
       - name: Test
         shell: bash

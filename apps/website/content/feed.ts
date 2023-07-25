@@ -12,7 +12,7 @@ type Tag =
   | 'ecosystem-all'
   | 'technical'
 
-type Article = {
+type FeedItem = {
   title: string
   tags: Tag[]
   date: string
@@ -25,20 +25,20 @@ const maxAge = getMinutesInSeconds(5)
 export async function getFeedContent(
   tags: Tag[],
   limit?: number
-): Promise<Article[]> {
-  const articles = await readCacheActicles()
-  return articles
+): Promise<FeedItem[]> {
+  const items = await getFeedItems()
+  return items
     .sort((a, b) => (new Date(a.date) < new Date(b.date) ? 1 : -1))
     .filter((a) =>
       !tags.length ? true : tags.find((tag) => a.tags?.includes(tag))
     )
     .slice(0, limit)
-    .map(addNewTab) as Article[]
+    .map(addNewTab) as FeedItem[]
 }
 
-async function readCacheActicles() {
+async function getFeedItems() {
   return getCacheValue(
-    'feedArticles',
+    'feed/items',
     async () => {
       return fetchAllFeedItems()
     },
@@ -46,7 +46,7 @@ async function readCacheActicles() {
   )
 }
 
-export async function syncArticlesEvery5min() {
+export async function syncFeedsEvery5min() {
   return getCacheValue(
     'syncFeedsEvery5min',
     async () => {
