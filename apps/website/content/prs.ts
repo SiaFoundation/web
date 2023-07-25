@@ -1,4 +1,5 @@
 import { getGitHubClosedPRs } from '@siafoundation/data-sources'
+import { MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
 import { getCacheValue } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
@@ -12,7 +13,7 @@ export async function getPrs() {
       const prsData = await getGitHubClosedPRs()
       const prs = await Promise.all(
         prsData.map(async (pr) => {
-          let source = null
+          let source: MDXRemoteSerializeResult = null
           try {
             // as md, dont need the mdx components and allows <img> style tags, vs <img />
             source = await serialize(pr.body, { mdxOptions: { format: 'md' } })
@@ -21,7 +22,12 @@ export async function getPrs() {
           }
           return {
             source,
-            ...pr,
+            title: pr.title,
+            number: pr.number,
+            closed_at: pr.closed_at,
+            url: pr.html_url,
+            repoUrl: pr.base.repo.html_url,
+            repoFullName: pr.base.repo.full_name,
           }
         })
       )
