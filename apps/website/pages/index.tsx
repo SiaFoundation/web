@@ -11,7 +11,7 @@ import {
 import { Layout } from '../components/Layout'
 import { routes } from '../config/routes'
 import { AsyncReturnType } from '../lib/types'
-import { getFeedContent, syncArticlesEvery5min } from '../content/feed'
+import { getFeedContent, syncFeedsEvery5min } from '../content/feed'
 import { getProjects } from '../content/projects'
 import { getTutorialArticles } from '../content/articles'
 import { useCallback, useMemo, useState } from 'react'
@@ -28,12 +28,14 @@ import { previews } from '../content/imagePreviews'
 import { GlobeSection } from '../components/GlobeSection'
 import { CalloutProject } from '../components/CalloutProject'
 import { getGeoHosts } from '../content/geoHosts'
-import { getSiaCentralExchangeRates } from '@siafoundation/data-sources'
+import { getExchangeRates } from '../content/exchangeRates'
+import { getStats } from '../content/stats'
+import { getMinutesInSeconds } from '../lib/time'
 
 const transitionWidthDuration = 300
 const transitionFadeDelay = 500
 
-type Props = AsyncReturnType<typeof getServerSideProps>['props']
+type Props = AsyncReturnType<typeof getStaticProps>['props']
 
 export default function Home({
   featured,
@@ -336,27 +338,30 @@ export default function Home({
   )
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   // only run one sync instance on main page
-  syncArticlesEvery5min()
+  syncFeedsEvery5min()
 
   const featured = await getFeedContent(['sia-all', 'featured'], 5)
   const tutorials = await getTutorialArticles()
   const hosts = await getGeoHosts()
-  const rates = await getSiaCentralExchangeRates()
+  const rates = await getExchangeRates()
   const services = await getProjects('featured', 5)
+  const stats = await getStats()
+
+  const props = {
+    featured,
+    tutorials,
+    hosts,
+    rates: rates.data?.rates.sc,
+    services,
+    fallback: {
+      '/api/stats': stats,
+    },
+  }
 
   return {
-    props: {
-      featured,
-      tutorials,
-      hosts,
-      rates: rates.data?.rates.sc,
-      services,
-      // Because this page is SSR'd, do not block requests with slow stats query
-      // fallback: {
-      //   '/api/stats': stats,
-      // },
-    },
+    props,
+    revalidate: getMinutesInSeconds(5),
   }
 }
