@@ -28,13 +28,20 @@ import { previews } from '../content/imagePreviews'
 import { GlobeSection } from '../components/GlobeSection'
 import { CalloutProject } from '../components/CalloutProject'
 import { getGeoHosts } from '../content/geoHosts'
+import { getSiaCentralExchangeRates } from '@siafoundation/data-sources'
 
 const transitionWidthDuration = 300
 const transitionFadeDelay = 500
 
 type Props = AsyncReturnType<typeof getServerSideProps>['props']
 
-export default function Home({ featured, tutorials, services, hosts }: Props) {
+export default function Home({
+  featured,
+  tutorials,
+  services,
+  rates,
+  hosts,
+}: Props) {
   const [showLetter, setShowLetter] = useState<boolean>(false)
   const [resetGlobe, setResetGlobe] = useState<string>(String(Math.random()))
 
@@ -114,7 +121,7 @@ export default function Home({ featured, tutorials, services, hosts }: Props) {
               />
             )}
           </SiteHeading>
-          <GlobeSection key={resetGlobe} hosts={hosts} />
+          <GlobeSection key={resetGlobe} hosts={hosts} rates={rates} />
         </SectionTransparent>
       }
       backgroundImage={backgrounds.mountain}
@@ -336,6 +343,7 @@ export async function getServerSideProps() {
   const featured = await getFeedContent(['sia-all', 'featured'], 5)
   const tutorials = await getTutorialArticles()
   const hosts = await getGeoHosts()
+  const rates = await getSiaCentralExchangeRates()
   const services = await getProjects('featured', 5)
 
   return {
@@ -343,6 +351,7 @@ export async function getServerSideProps() {
       featured,
       tutorials,
       hosts,
+      rates: rates.data?.rates.sc,
       services,
       // Because this page is SSR'd, do not block requests with slow stats query
       // fallback: {

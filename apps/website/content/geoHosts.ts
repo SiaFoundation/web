@@ -1,7 +1,4 @@
-import {
-  getSiaStatsHostsCoordinates,
-  SiaStatsHostCoordinate,
-} from '@siafoundation/data-sources'
+import { getSiaCentralHosts, SiaCentralHost } from '@siafoundation/data-sources'
 import { uniqBy } from 'lodash'
 import { getCacheValue } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
@@ -12,31 +9,39 @@ export async function getGeoHosts() {
   return getCacheValue(
     'geoHosts',
     async () => {
-      const siaStatsHosts = await getSiaStatsHostsCoordinates()
+      const siaCentralHosts = await getSiaCentralHosts()
 
-      if (!siaStatsHosts.data) {
+      if (!siaCentralHosts.data) {
         return []
       }
-      let hosts = siaStatsHosts.data
+      let hosts = siaCentralHosts.data.hosts
 
-      hosts.sort((a, b) => (a.usedstorage < b.usedstorage ? 1 : -1))
+      hosts.sort((a, b) =>
+        a.settings.total_storage - a.settings.remaining_storage <
+        b.settings.total_storage - a.settings.remaining_storage
+          ? 1
+          : -1
+      )
 
       // filter hosts to only those with a country and coordinates
-      hosts = hosts.filter((h) => h.country)
+      hosts = hosts.filter((h) => h.country_code)
 
       // filter hosts to unique locations
-      const uniqueHosts = uniqBy(hosts, (h) => `${h.lat},${h.lon}`)
+      const uniqueHosts = uniqBy(
+        hosts,
+        (h) => `${h.location[0]},${h.location[1]}`
+      )
 
       const degrees = 5
       // to get a more even distribution, we want to select the top 64 hosts
       // where no two hosts are within n degrees of each other.
-      const hostsToDisplay: SiaStatsHostCoordinate[] = []
+      const hostsToDisplay: SiaCentralHost[] = []
       for (const host of uniqueHosts) {
         let unique = true
         for (const hostToDisplay of hostsToDisplay) {
           if (
-            Math.abs(hostToDisplay.lat - host.lat) < degrees &&
-            Math.abs(hostToDisplay.lon - host.lon) < degrees
+            Math.abs(hostToDisplay.location[0] - host.location[0]) < degrees &&
+            Math.abs(hostToDisplay.location[1] - host.location[1]) < degrees
           ) {
             unique = false
             break

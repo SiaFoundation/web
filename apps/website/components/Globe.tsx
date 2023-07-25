@@ -1,9 +1,7 @@
-import { SiaStatsHostCoordinate } from '@siafoundation/react-core'
 import createGlobe, { Marker } from 'cobe'
 import { MutableRefObject, useEffect, useRef } from 'react'
 
 type Props = {
-  activeHost?: SiaStatsHostCoordinate
   markers: Marker[]
   focus: MutableRefObject<[number, number]>
 }
