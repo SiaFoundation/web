@@ -36,6 +36,7 @@ import upbit from '../assets/content/upbit.png'
 import grafana from '../assets/content/grafana.png'
 import githubstatus from '../assets/content/githubstatus.png'
 import duplicati from '../assets/content/duplicati.png'
+import siasatellite from '../assets/content/siasatellite.png'
 import rclone from '../assets/content/rclone.png'
 
 export const contentImages = {
@@ -78,4 +79,5 @@ export const contentImages = {
   githubstatus,
   duplicati,
   rclone,
+  siasatellite,
 }
