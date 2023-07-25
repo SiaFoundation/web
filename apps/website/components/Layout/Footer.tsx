@@ -30,10 +30,7 @@ export function Footer() {
             </Link>
           </div>
           <div className="flex-1 flex items-center gap-4">
-            {/* <Link size="12" color="subtle" underline="hover" noWrap>
-              Privacy Policy
-            </Link> */}
-            <Link
+            {/* <Link
               href={routes.terms.index}
               size="12"
               color="subtle"
@@ -41,7 +38,10 @@ export function Footer() {
               noWrap
             >
               Terms of Service
-            </Link>
+            </Link> */}
+            {/* <Link size="12" color="subtle" underline="hover" noWrap>
+              Privacy Policy
+            </Link> */}
             <div className="flex-1" />
             <ThemeRadio className="hidden md:flex" />
           </div>

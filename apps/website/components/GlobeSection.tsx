@@ -1,22 +1,37 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { ScrollArea, Text, Tooltip } from '@siafoundation/design-system'
+import {
+  monthsToBlocks,
+  ScrollArea,
+  TBToBytes,
+  Text,
+  Tooltip,
+} from '@siafoundation/design-system'
 import { Globe } from './Globe'
-import { humanBytes } from '@siafoundation/sia-js'
+import {
+  humanBytes,
+  humanNumber,
+  humanSiacoin,
+  humanSpeed,
+} from '@siafoundation/sia-js'
 import countryCodeEmoji from '../lib/countryEmoji'
 import { cx } from 'class-variance-authority'
 import { useElementSize } from 'usehooks-ts'
-import { SiaStatsHostCoordinate } from '@siafoundation/data-sources'
+import { SiaCentralHost } from '@siafoundation/data-sources'
 import axios from 'axios'
 import { Stats } from '../content/stats'
 import useSWR from 'swr'
 import { Marker } from 'cobe'
+import BigNumber from 'bignumber.js'
 
 type Props = {
-  hosts: SiaStatsHostCoordinate[]
+  hosts: SiaCentralHost[]
+  rates: {
+    usd: string
+  }
   className?: string
 }
 
-export function GlobeSection({ className, hosts }: Props) {
+export function GlobeSection({ className, hosts, rates }: Props) {
   const { data } = useSWR<Stats>('/api/stats', (key) =>
     axios.get(key).then((res) => res.data)
   )
@@ -32,7 +47,7 @@ export function GlobeSection({ className, hosts }: Props) {
     (i: number) => {
       setActiveIndex(i)
       const h = hosts[i]
-      focus.current = locationToAngles(h.lat, h.lon)
+      focus.current = locationToAngles(h.location[0], h.location[1])
     },
     [focus, hosts, setActiveIndex]
   )
@@ -96,10 +111,58 @@ export function GlobeSection({ className, hosts }: Props) {
   const markers: Marker[] = useMemo(
     () =>
       hosts.map((c) => ({
-        location: [c.lat, c.lon],
-        size: activeHost.ip === c.ip ? 0.05 : 0.02,
+        location: [c.location[0], c.location[1]],
+        size: activeHost.public_key === c.public_key ? 0.05 : 0.02,
       })),
     [hosts, activeHost]
+  )
+
+  const getStorageCost = useCallback(
+    (h: SiaCentralHost) =>
+      rates
+        ? `$${new BigNumber(h.settings.storage_price)
+            .times(TBToBytes(1))
+            .times(monthsToBlocks(1))
+            .div(1e24)
+            .times(rates?.usd || 1)
+            .toFixed(2)}/TB`
+        : `${humanSiacoin(
+            new BigNumber(h.settings.storage_price)
+              .times(TBToBytes(1))
+              .times(monthsToBlocks(1)),
+            { fixed: 0 }
+          )}/TB`,
+    [rates]
+  )
+
+  const getDownloadCost = useCallback(
+    (h: SiaCentralHost) =>
+      rates
+        ? `$${new BigNumber(h.settings.download_price)
+            .times(TBToBytes(1))
+            .div(1e24)
+            .times(rates?.usd || 1)
+            .toFixed(2)}/TB`
+        : `${humanSiacoin(
+            new BigNumber(h.settings.download_price).times(TBToBytes(1)),
+            { fixed: 0 }
+          )}/TB`,
+    [rates]
+  )
+
+  const getUploadCost = useCallback(
+    (h: SiaCentralHost) =>
+      rates
+        ? `$${new BigNumber(h.settings.upload_price)
+            .times(TBToBytes(1))
+            .div(1e24)
+            .times(rates?.usd || 1)
+            .toFixed(2)}/TB`
+        : `${humanSiacoin(
+            new BigNumber(h.settings.upload_price).times(TBToBytes(1)),
+            { fixed: 0 }
+          )}/TB`,
+    [rates]
   )
 
   return (
@@ -112,7 +175,7 @@ export function GlobeSection({ className, hosts }: Props) {
             marginTop: mt,
           }}
         >
-          <Globe activeHost={activeHost} focus={focus} markers={markers} />
+          <Globe focus={focus} markers={markers} />
         </div>
       </div>
       <div className="flex gap-4 overflow-hidden">
@@ -128,34 +191,84 @@ export function GlobeSection({ className, hosts }: Props) {
         )}
         <ScrollArea ref={scrollRef}>
           <div className="flex-1 flex gap-4 pt-2 pb-3">
-            {hosts.map((c, i) => (
-              <div
-                key={c.key}
-                ref={(el) => (refs.current[i] = el)}
-                onClick={() => {
-                  selectActiveHostByIndex(i)
-                  setReset(String(Math.random()))
-                }}
-                className={cx(
-                  'flex gap-1',
-                  c.key === activeHost?.key ? 'opacity-100' : 'opacity-50',
-                  'hover:opacity-100',
-                  'cursor-pointer'
-                )}
+            {hosts.map((h, i) => (
+              <Tooltip
+                content={
+                  <div className="flex flex-col gap-1">
+                    <Text color="contrast" weight="bold">
+                      {countryCodeEmoji(h.country_code)} {h.country_code}
+                    </Text>
+                    <div className="flex gap-2">
+                      <div className="flex flex-col gap-1">
+                        <Text color="subtle">storage</Text>
+                        <Text color="subtle">download</Text>
+                        <Text color="subtle">upload</Text>
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <Text color="contrast">
+                          {humanBytes(h.settings.total_storage)}
+                        </Text>
+                        <Text color="contrast">
+                          {humanSpeed(
+                            (h.benchmark.data_size * 8) /
+                              (h.benchmark.download_time / 1000)
+                          )}{' '}
+                        </Text>
+                        <Text color="contrast">
+                          {humanSpeed(
+                            (h.benchmark.data_size * 8) /
+                              (h.benchmark.upload_time / 1000)
+                          )}{' '}
+                        </Text>
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <Text color="contrast">{getStorageCost(h)}</Text>
+                        <Text color="contrast">{getDownloadCost(h)}</Text>
+                        <Text color="contrast">{getUploadCost(h)}</Text>
+                      </div>
+                    </div>
+                  </div>
+                }
+                key={h.public_key}
               >
-                <Text size="12" noWrap>
-                  {countryCodeEmoji(c.country)}
-                </Text>
-                <Text
-                  color="contrast"
-                  size="12"
-                  className="text-white"
-                  noWrap
-                  weight={c.key === activeHost?.key ? 'semibold' : 'regular'}
+                <div
+                  ref={(el) => (refs.current[i] = el)}
+                  onClick={() => {
+                    selectActiveHostByIndex(i)
+                    setReset(String(Math.random()))
+                  }}
+                  className={cx(
+                    'flex gap-1',
+                    h.public_key === activeHost?.public_key
+                      ? 'opacity-100'
+                      : 'opacity-50',
+                    'hover:opacity-100',
+                    'cursor-pointer'
+                  )}
                 >
-                  {c.ip} · {humanBytes(c.totalstorage * Math.pow(1000, 3))}
-                </Text>
-              </div>
+                  <Text size="12" noWrap>
+                    {countryCodeEmoji(h.country_code)}
+                  </Text>
+                  <Text
+                    color="contrast"
+                    size="12"
+                    className="text-white"
+                    noWrap
+                    weight={
+                      h.public_key === activeHost?.public_key
+                        ? 'semibold'
+                        : 'regular'
+                    }
+                  >
+                    {humanBytes(h.settings.total_storage)} ·{' '}
+                    {humanSpeed(
+                      (h.benchmark.data_size * 8) /
+                        (h.benchmark.download_time / 1000)
+                    )}{' '}
+                    · {getStorageCost(h)}
+                  </Text>
+                </div>
+              </Tooltip>
             ))}
           </div>
         </ScrollArea>
