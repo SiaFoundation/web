@@ -9,8 +9,12 @@ import {
   Logo,
   Container,
   DialogClose,
+  Switch,
+  Wikis16,
+  Tooltip,
 } from '@siafoundation/design-system'
 import { cx } from 'class-variance-authority'
+import { useGlobeSettings } from '../../hooks/useGlobeSettings'
 
 export type MenuSection = {
   title: string
@@ -23,6 +27,7 @@ type Props = {
 
 export function SiteMenu({ menuSections }: Props) {
   const [open, setOpen] = useState<boolean>(false)
+  const { isEnabled, setIsEnabled, canRender } = useGlobeSettings()
 
   return (
     <Dialog
@@ -60,6 +65,27 @@ export function SiteMenu({ menuSections }: Props) {
           <Container size="4" className="flex gap-10 items-center h-full">
             <Logo size={35} />
             <div className="flex-1" />
+            <Tooltip
+              side="bottom"
+              content={
+                canRender
+                  ? isEnabled
+                    ? 'Interactive host map is currently enabled'
+                    : 'Interactive host map is currently disabled'
+                  : 'Browser does not support interactive host map'
+              }
+            >
+              <div>
+                <Switch
+                  tabIndex={-1}
+                  disabled={!canRender}
+                  checked={canRender && isEnabled}
+                  onCheckedChange={setIsEnabled}
+                >
+                  <Wikis16 />
+                </Switch>
+              </div>
+            </Tooltip>
             <ThemeRadio tooltipClassName="dark" tabIndex={-1} />
             <DialogClose className="relative top-[3px]" />
           </Container>

@@ -5,6 +5,7 @@ import {
   TBToBytes,
   Text,
   Tooltip,
+  userPrefersReducedMotion,
 } from '@siafoundation/design-system'
 import { Globe } from './Globe'
 import { humanBytes, humanSiacoin, humanSpeed } from '@siafoundation/sia-js'
@@ -17,6 +18,7 @@ import { Stats } from '../content/stats'
 import useSWR from 'swr'
 import { Marker } from 'cobe'
 import BigNumber from 'bignumber.js'
+import { useGlobeSettings } from '../hooks/useGlobeSettings'
 
 type Props = {
   hosts: SiaCentralHost[]
@@ -55,12 +57,22 @@ export function GlobeSection({ className, hosts, rates }: Props) {
   }, [selectActiveHostByIndex, activeIndex, hosts])
 
   const [reset, setReset] = useState<string>()
+
+  const [errorRendering, setErrorRendering] = useState(false)
+  const { shouldRender } = useGlobeSettings()
+
+  const isGlobeActive = shouldRender && !errorRendering
+
+  const reduceMotion = userPrefersReducedMotion()
   useEffect(() => {
+    if (reduceMotion && !isGlobeActive) {
+      return
+    }
     const i = setInterval(() => selectNextHost(), 6_000)
     return () => {
       clearInterval(i)
     }
-  }, [reset, selectNextHost])
+  }, [reset, selectNextHost, reduceMotion, isGlobeActive])
 
   useEffect(() => {
     if (hosts.length) {
@@ -162,24 +174,41 @@ export function GlobeSection({ className, hosts, rates }: Props) {
 
   return (
     <div ref={containerRef} className={className}>
-      <div className="relative border-b border-gray-400 dark:border-graydark-400 pointer-events-none">
-        <div
-          className="relative w-full overflow-hidden aspect-square"
-          style={{
-            height: `${width * 0.7}px`,
-            marginTop: mt,
-          }}
-        >
-          <Globe focus={focus} markers={markers} />
+      {isGlobeActive ? (
+        <div className="relative border-b border-gray-400 dark:border-graydark-400 pointer-events-none">
+          <div
+            className="relative w-full overflow-hidden aspect-square"
+            style={{
+              height: `${width * 0.7}px`,
+              marginTop: mt,
+            }}
+          >
+            <Globe
+              focus={focus}
+              markers={markers}
+              onError={() => setErrorRendering(true)}
+            />
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="h-[50px] md:h-[200px]" />
+      )}
       <div className="flex gap-4 overflow-hidden">
         {activeHosts && (
           <Tooltip
             align="start"
-            content="The map features a random sample of active hosts."
+            content={
+              isGlobeActive
+                ? 'The map features a random sample of active hosts.'
+                : 'The list is a random sample of active hosts.'
+            }
           >
-            <Text size="12" weight="medium" noWrap className="pt-2 pb-3">
+            <Text
+              size="12"
+              weight="medium"
+              noWrap
+              className="hidden md:flex pt-2 pb-3"
+            >
               {activeHosts} hosts
             </Text>
           </Tooltip>
@@ -272,7 +301,12 @@ export function GlobeSection({ className, hosts, rates }: Props) {
             align="end"
             content="The total amount of storage space available from hosts."
           >
-            <Text size="12" weight="medium" noWrap className="pt-2 pb-3">
+            <Text
+              size="12"
+              weight="medium"
+              noWrap
+              className="hidden md:flex pt-2 pb-3"
+            >
               {totalStorage}
             </Text>
           </Tooltip>
