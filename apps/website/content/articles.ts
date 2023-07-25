@@ -85,6 +85,7 @@ function transformResults(response: any): Article[] {
     return {
       title: page.properties.title.title[0].plain_text,
       icon: page.properties.icon?.rich_text[0]?.plain_text || null,
+      image: page.properties.image?.rich_text[0]?.plain_text || null,
       link: page.properties.link?.url || null,
       idea: page.properties.idea.checkbox,
     }

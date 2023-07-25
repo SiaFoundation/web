@@ -1,5 +1,6 @@
 import {
   Application16,
+  Cloud16,
   Idea16,
   Link,
   PlayOutline16,
@@ -64,7 +65,17 @@ export function RentNav() {
         underline="hover"
         weight="medium"
         size="14"
-        href={routes.rent.mediaStorage}
+        href={routes.rent.guides}
+        className="flex gap-2 items-center"
+      >
+        <Cloud16 />
+        Backups and cloud sync
+      </Link>
+      <Link
+        underline="hover"
+        weight="medium"
+        size="14"
+        href={routes.rent.guides}
         className="flex gap-2 items-center"
       >
         <PlayOutline16 />

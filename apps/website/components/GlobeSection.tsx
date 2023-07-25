@@ -7,12 +7,7 @@ import {
   Tooltip,
 } from '@siafoundation/design-system'
 import { Globe } from './Globe'
-import {
-  humanBytes,
-  humanNumber,
-  humanSiacoin,
-  humanSpeed,
-} from '@siafoundation/sia-js'
+import { humanBytes, humanSiacoin, humanSpeed } from '@siafoundation/sia-js'
 import countryCodeEmoji from '../lib/countryEmoji'
 import { cx } from 'class-variance-authority'
 import { useElementSize } from 'usehooks-ts'
