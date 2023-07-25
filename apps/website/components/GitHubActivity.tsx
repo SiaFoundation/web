@@ -5,14 +5,22 @@ import {
   LogoGithub16,
   ScrollArea,
 } from '@siafoundation/design-system'
-import { AsyncReturnType } from '../lib/types'
 import { format } from 'date-fns'
-import { MDXRemote } from 'next-mdx-remote'
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { components } from '../config/mdx'
-import { getPrs } from '../content/prs'
+
+type Pr = {
+  url: string
+  title: string
+  number: number
+  closed_at: string
+  repoUrl: string
+  repoFullName: string
+  source: MDXRemoteSerializeResult
+}
 
 type Props = {
-  prs: AsyncReturnType<typeof getPrs>
+  prs: Pr[]
 }
 
 export function GitHubActivity({ prs }: Props) {
@@ -27,7 +35,7 @@ export function GitHubActivity({ prs }: Props) {
             <div className="flex gap-2 items-center">
               <div className="flex gap-1 items-center">
                 <Link
-                  href={pr.base.repo.html_url}
+                  href={pr.repoUrl}
                   target="_blank"
                   size="14"
                   color="subtle"
@@ -37,20 +45,20 @@ export function GitHubActivity({ prs }: Props) {
                   <LogoGithub16 />
                 </Link>
                 <Link
-                  href={pr.base.repo.html_url}
+                  href={pr.repoUrl}
                   target="_blank"
                   size="14"
                   color="subtle"
                   weight="semibold"
                   underline="hover"
                 >
-                  {pr.base.repo.full_name}
+                  {pr.repoFullName}
                 </Link>
               </div>
             </div>
             <div className="flex gap-1 items-center">
               <Link
-                href={pr.html_url}
+                href={pr.url}
                 target="_blank"
                 size="20"
                 color="contrast"
