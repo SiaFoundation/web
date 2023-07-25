@@ -9,7 +9,8 @@ export const routes = {
     coreSoftware: '/rent#core-software',
     thirdPartySoftware: '/rent#third-party-software',
     ideas: '/rent#software-ideas',
-    mediaStorage: '/rent#media-storage',
+    sync: '/rent#sync',
+    guides: '/rent#guides',
   },
   host: {
     index: '/host',

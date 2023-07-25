@@ -35,6 +35,8 @@ import siamining from '../assets/content/siamining.png'
 import upbit from '../assets/content/upbit.png'
 import grafana from '../assets/content/grafana.png'
 import githubstatus from '../assets/content/githubstatus.png'
+import duplicati from '../assets/content/duplicati.png'
+import rclone from '../assets/content/rclone.png'
 
 export const contentImages = {
   filebase,
@@ -74,4 +76,6 @@ export const contentImages = {
   upbit,
   grafana,
   githubstatus,
+  duplicati,
+  rclone,
 }

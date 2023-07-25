@@ -94,7 +94,7 @@ export default function Rent({
       </SectionGradient>
       <SectionGradient className="pt-12 pb-20">
         <SiteHeading
-          id="media-storage"
+          id="guides"
           size="32"
           className="pt-0 md:pt-24 pb-10 md:pb-20"
           title="How to store data and media on Sia"
