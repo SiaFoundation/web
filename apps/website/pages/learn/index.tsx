@@ -15,8 +15,7 @@ import { getTutorialArticles } from '../../content/articles'
 import { AsyncReturnType } from '../../lib/types'
 import { SectionGradient } from '../../components/SectionGradient'
 import { SectionTransparent } from '../../components/SectionTransparent'
-import { backgrounds } from '../../content/imageBackgrounds'
-import { previews } from '../../content/imagePreviews'
+import { backgrounds, patterns, previews } from '../../content/assets'
 
 const title = 'Learn'
 const description =
@@ -291,7 +290,7 @@ export default function Learn({ getStarted }: Props) {
           <Callout
             size="0"
             title="Rent"
-            background={backgrounds.leaves}
+            background={patterns.leaves}
             description={
               <>Rent space and store your data on the Sia network.</>
             }
@@ -301,7 +300,7 @@ export default function Learn({ getStarted }: Props) {
           <Callout
             size="0"
             title="Host"
-            background={backgrounds.jungle}
+            background={patterns.jungle}
             description={<>Offer your storage space on the Sia network.</>}
             actionTitle="Start hosting"
             actionLink={routes.host.index}

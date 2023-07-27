@@ -1,7 +1,6 @@
 import { routes } from '../config/routes'
 import { CalloutCoreSoftware } from './CalloutCoreSoftware'
-import { backgrounds } from '../content/imageBackgrounds'
-import { contentImages } from '../content/imageContent'
+import { patterns, getAssetUrl } from '../content/assets'
 
 type Props = {
   version?: string
@@ -12,13 +11,14 @@ export function CalloutWalletd({ version }: Props) {
     <CalloutCoreSoftware
       name="walletd"
       description={
-        'walletd is a watch-only wallet server. It does not have access to any private keys, only addresses derived from those keys.'
+        'walletd is a watch-only wallet server. It does not have access to any private keys, only addresses derived from those keys. walletd is currently in alpha and only built for the Zen testnet.'
       }
+      status="alpha"
       daemon="walletd"
       version={version}
       href={routes.software.walletd}
-      image={contentImages.walletd}
-      background={backgrounds.nateTrickle}
+      image={getAssetUrl('assets/walletd/send.png')}
+      background={patterns.nateTrickle}
     />
   )
 }

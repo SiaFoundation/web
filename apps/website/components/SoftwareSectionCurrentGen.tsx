@@ -1,14 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 import { webLinks } from '@siafoundation/design-system'
-import { backgrounds } from '../content/imageBackgrounds'
+import { patterns } from '../content/assets'
 import { SoftwareSection } from './SoftwareSection'
 
 export type Versions = {
   sia: {
-    latest: string
-    testnet: string
-  }
-  embarcadero: {
     latest: string
   }
 }
@@ -22,6 +18,7 @@ export function SoftwareSectionCurrentGen({ versions }: Props) {
     <>
       <SoftwareSection
         title="siad"
+        status="deprecated"
         description={
           <>
             Built for technical users comfortable with command line interfaces.
@@ -30,7 +27,7 @@ export function SoftwareSectionCurrentGen({ versions }: Props) {
         sourceLink={webLinks.github.siad}
         docsLink={webLinks.docs.siad}
         version={versions.sia.latest}
-        background={backgrounds.light}
+        background={patterns.light}
         links={[
           {
             title: 'Windows',
@@ -61,9 +58,10 @@ export function SoftwareSectionCurrentGen({ versions }: Props) {
       />
       <SoftwareSection
         title="Sia UI"
+        status="deprecated"
         sourceLink={webLinks.github.siaui}
         docsLink={webLinks.docs.siaui}
-        background={backgrounds.mountain}
+        background={patterns.mountain}
         description={
           <>
             Built for users who prefer to work with a graphical user interface.
@@ -84,46 +82,6 @@ export function SoftwareSectionCurrentGen({ versions }: Props) {
           {
             title: 'Linux',
             link: `${webLinks.website}/releases/Sia-UI-v${versions.sia.latest}.AppImage`,
-            newTab: true,
-          },
-        ]}
-      />
-      <SoftwareSection
-        title="embarcadero"
-        description={'A tool for conducting escrowless SF<->SC swaps.'}
-        sourceLink={webLinks.github.embarcadero}
-        docsLink={webLinks.docs.embarcadero}
-        version={versions.embarcadero.latest}
-        background={backgrounds.leaves}
-        links={[
-          {
-            title: 'Linux AMD',
-            link: `https://github.com/SiaFoundation/embarcadero/releases/download/v${versions.embarcadero.latest}/embarcadero_v${versions.embarcadero.latest}_linux_amd64.zip`,
-            newTab: true,
-          },
-          {
-            title: 'Linux ARM',
-            link: `https://github.com/SiaFoundation/embarcadero/releases/download/v${versions.embarcadero.latest}/embarcadero_v${versions.embarcadero.latest}_linux_arm64.zip`,
-            newTab: true,
-          },
-          {
-            title: 'MacOS AMD',
-            link: `https://github.com/SiaFoundation/embarcadero/releases/download/v${versions.embarcadero.latest}/embarcadero_v${versions.embarcadero.latest}_darwin_amd64.zip`,
-            newTab: true,
-          },
-          {
-            title: 'MacOS ARM',
-            link: `https://github.com/SiaFoundation/embarcadero/releases/download/v${versions.embarcadero.latest}/embarcadero_v${versions.embarcadero.latest}_darwin_arm64.zip`,
-            newTab: true,
-          },
-          {
-            title: 'Windows AMD',
-            link: `https://github.com/SiaFoundation/embarcadero/releases/download/v${versions.embarcadero.latest}/embarcadero_v${versions.embarcadero.latest}_windows_amd64.zip`,
-            newTab: true,
-          },
-          {
-            title: 'Windows ARM',
-            link: `https://github.com/SiaFoundation/embarcadero/releases/download/v${versions.embarcadero.latest}/embarcadero_v${versions.embarcadero.latest}_windows_arm64.zip`,
             newTab: true,
           },
         ]}

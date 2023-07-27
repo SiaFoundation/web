@@ -1,10 +1,9 @@
-import { getGitHubToken } from '@siafoundation/env'
 import Axios from 'axios'
 import { orderBy } from 'lodash'
 import { buildErrorResponse500 } from './error'
 import { AsyncDataSourceResponse } from './types'
 
-const githubToken = getGitHubToken()
+const githubToken = process.env['GITHUB_TOKEN']
 
 const axios = Axios.create({
   headers: {

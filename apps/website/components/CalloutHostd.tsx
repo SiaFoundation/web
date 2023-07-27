@@ -1,7 +1,6 @@
 import { routes } from '../config/routes'
 import { CalloutCoreSoftware } from './CalloutCoreSoftware'
-import { backgrounds } from '../content/imageBackgrounds'
-import { contentImages } from '../content/imageContent'
+import { patterns, getAssetUrl } from '../content/assets'
 
 type Props = {
   version?: string
@@ -17,8 +16,8 @@ export function CalloutHostd({ version }: Props) {
       daemon="hostd"
       version={version}
       href={routes.software.hostd}
-      image={contentImages.hostd}
-      background={backgrounds.nateTrickle}
+      image={getAssetUrl('assets/hostd/metrics.png')}
+      background={patterns.nateTrickle}
     />
   )
 }

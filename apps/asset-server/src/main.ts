@@ -1,12 +1,14 @@
-import * as dotenv from 'dotenv'
-import * as express from 'express'
+import dotenv from 'dotenv'
+import express from 'express'
+import { startCron } from './cron'
 import { setupStatic } from './static'
 
 dotenv.config()
 
 const app = express()
-
 setupStatic(app)
+
+startCron()
 
 console.log(`Assets running in ${process.env.NODE_ENV}`)
 

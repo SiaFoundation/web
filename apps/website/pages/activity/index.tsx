@@ -7,8 +7,7 @@ import { getMinutesInSeconds } from '../../lib/time'
 import { SectionSolid } from '../../components/SectionSolid'
 import { getPrs } from '../../content/prs'
 import { GitHubActivity } from '../../components/GitHubActivity'
-import { backgrounds } from '../../content/imageBackgrounds'
-import { previews } from '../../content/imagePreviews'
+import { backgrounds, previews } from '../../content/assets'
 import { SectionTransparent } from '../../components/SectionTransparent'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']

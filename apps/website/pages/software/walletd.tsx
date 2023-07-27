@@ -20,8 +20,7 @@ import { useInView } from 'react-intersection-observer'
 import { cx } from 'class-variance-authority'
 import { getWalletdLatestRelease } from '../../content/releases'
 import { DownloadWidgetLarge } from '../../components/DownloadWidgetLarge'
-import { backgrounds } from '../../content/imageBackgrounds'
-import { previews } from '../../content/imagePreviews'
+import { backgrounds, previews } from '../../content/assets'
 import { SectionTransparent } from '../../components/SectionTransparent'
 import { CarouselWalletd } from '../../components/CarouselWalletd'
 
@@ -104,7 +103,7 @@ export default function Walletd({ version, technical, tutorials }: Props) {
           title="Learn more about walletd"
           className="mt-24 md:mt-40 mb-24 md:mb-48"
           size="2"
-          background={backgrounds.natePath}
+          background={previews.natePath}
           description={
             <>
               Join the Sia Discord to chat with the team and community about{' '}

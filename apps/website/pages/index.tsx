@@ -11,7 +11,7 @@ import {
 import { Layout } from '../components/Layout'
 import { routes } from '../config/routes'
 import { AsyncReturnType } from '../lib/types'
-import { getFeedContent, syncFeedsEvery5min } from '../content/feed'
+import { getFeedContent } from '../content/feed'
 import { getProjects } from '../content/projects'
 import { getTutorialArticles } from '../content/articles'
 import { useCallback, useMemo, useState } from 'react'
@@ -23,8 +23,7 @@ import { SectionSolid } from '../components/SectionSolid'
 import { SectionTransparent } from '../components/SectionTransparent'
 import { usePullTop } from '../hooks/usePullTop'
 import { cx } from 'class-variance-authority'
-import { backgrounds } from '../content/imageBackgrounds'
-import { previews } from '../content/imagePreviews'
+import { backgrounds, patterns, previews } from '../content/assets'
 import { GlobeSection } from '../components/GlobeSection'
 import { CalloutProject } from '../components/CalloutProject'
 import { getGeoHosts } from '../content/geoHosts'
@@ -135,7 +134,7 @@ export default function Home({
           <Callout
             size="0"
             title="Rent"
-            background={backgrounds.leaves}
+            background={patterns.leaves}
             description={
               <>Rent space and store your data on the Sia network.</>
             }
@@ -145,7 +144,7 @@ export default function Home({
           <Callout
             size="0"
             title="Host"
-            background={backgrounds.jungle}
+            background={patterns.jungle}
             description={<>Offer your storage space on the Sia network.</>}
             actionTitle="Start hosting"
             actionLink={routes.host.index}
@@ -153,7 +152,7 @@ export default function Home({
           <Callout
             size="0"
             title="Learn"
-            background={backgrounds.light}
+            background={patterns.light}
             description={
               <>
                 Learn all about how Sia works, why it was created, and the
@@ -166,7 +165,7 @@ export default function Home({
           <Callout
             size="0"
             title="Grants"
-            background={backgrounds.bamboo}
+            background={patterns.bamboo}
             description={
               <>
                 The Sia Foundation welcomes contributors from all over the world
@@ -205,10 +204,7 @@ export default function Home({
           gapClassName="gap-4 sm:gap-5"
         />
       </SectionGradient>
-      <SectionTransparent
-        background={backgrounds.jungle}
-        className="pt-7 md:pt-16 pb-14 md:pb-32"
-      >
+      <SectionTransparent className="pt-7 md:pt-16 pb-14 md:pb-32">
         <SiteHeading
           size="32"
           title="Why projects choose Sia"
@@ -339,9 +335,6 @@ export default function Home({
 }
 
 export async function getStaticProps() {
-  // only run one sync instance on main page
-  syncFeedsEvery5min()
-
   const featured = await getFeedContent(['sia-all', 'featured'], 5)
   const tutorials = await getTutorialArticles()
   const hosts = await getGeoHosts()

@@ -11,19 +11,14 @@ import { getStats } from '../../content/stats'
 import { AsyncReturnType } from '../../lib/types'
 import { getMinutesInSeconds } from '../../lib/time'
 import { SectionSolid } from '../../components/SectionSolid'
-import matter from 'gray-matter'
-import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote } from 'next-mdx-remote'
 import { components } from '../../config/mdx'
 import { TableOfContents } from '../../components/TableOfContents'
 import { getPrs } from '../../content/prs'
 import { GitHubActivity } from '../../components/GitHubActivity'
-import { backgrounds } from '../../content/imageBackgrounds'
-import { previews } from '../../content/imagePreviews'
+import { backgrounds, previews } from '../../content/assets'
 import { SectionTransparent } from '../../components/SectionTransparent'
-import { notionToMarkdown } from '../../lib/notion'
-import { Notion } from '../../content/notion'
-import { isFullPage } from '@notionhq/client'
+import { getNotionPage } from '../../lib/notion'
 import { format } from 'date-fns'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
@@ -99,10 +94,7 @@ const roadmapId = 'd74a8e95cb1e40f4bd0b12fdf4ad67a9'
 export async function getStaticProps() {
   const stats = await getStats()
 
-  const p = await Notion.pages.retrieve({ page_id: roadmapId })
-  const date = isFullPage(p) ? p.last_edited_time : null
-  const markdown = await notionToMarkdown(roadmapId)
-  const source = await serialize(matter(markdown).content)
+  const { date, source } = await getNotionPage(roadmapId)
 
   const prs = await getPrs()
 

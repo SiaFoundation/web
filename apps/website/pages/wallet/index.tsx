@@ -14,12 +14,12 @@ import { getProjects } from '../../content/projects'
 import { getStats } from '../../content/stats'
 import { getWalletArticles } from '../../content/articles'
 import { SectionGradient } from '../../components/SectionGradient'
-import { backgrounds } from '../../content/imageBackgrounds'
-import { previews } from '../../content/imagePreviews'
+import { backgrounds, patterns, previews } from '../../content/assets'
 import { SectionTransparent } from '../../components/SectionTransparent'
 import { SectionProjects } from '../../components/SectionProjects'
 import { SectionTutorials } from '../../components/SectionTutorials'
 import { CalloutWalletd } from '../../components/CalloutWalletd'
+import { SoftwareSectionCurrentGen } from '../../components/SoftwareSectionCurrentGen'
 
 const title = 'Wallet'
 const description = 'Manage your wallet on the Sia network.'
@@ -42,8 +42,8 @@ export default function Wallet({ technical, tutorials, thirdParty }: Props) {
           />
         </SectionTransparent>
       }
-      backgroundImage={backgrounds.leaves}
-      previewImage={previews.leaves}
+      backgroundImage={backgrounds.jungle}
+      previewImage={previews.jungle}
     >
       <SectionGradient className="pb-20">
         <div className="flex flex-col">
@@ -54,10 +54,17 @@ export default function Wallet({ technical, tutorials, thirdParty }: Props) {
             className="mt-12 md:mt-12"
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <SoftwareSectionCurrentGen
+              versions={{
+                sia: {
+                  latest: '1.5.9',
+                },
+              }}
+            />
             <CalloutWalletd />
             <Callout
               title="Learn how to create a Sia wallet"
-              background={backgrounds.nateSnow}
+              background={patterns.nateSnow}
               description={
                 <>
                   Learn how to create a Sia wallet and send and receive siacoin.
@@ -106,7 +113,7 @@ export default function Wallet({ technical, tutorials, thirdParty }: Props) {
           title="Sia 101"
           className="mt-20 md:mt-40 mb-10 md:mb-24"
           size="2"
-          background={backgrounds.bamboo}
+          background={previews.bamboo}
           description={
             <>
               Learn how the Sia protocol works to power redundant,

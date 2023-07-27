@@ -23,8 +23,7 @@ import { getTeam } from '../../content/team'
 import { SectionGradient } from '../../components/SectionGradient'
 import { SectionTransparent } from '../../components/SectionTransparent'
 import { getFeedContent } from '../../content/feed'
-import { backgrounds } from '../../content/imageBackgrounds'
-import { previews } from '../../content/imagePreviews'
+import { backgrounds, previews } from '../../content/assets'
 
 const title = 'The Sia Foundation'
 const description =
@@ -174,7 +173,7 @@ function Foundation({ team, featured, reports }: Props) {
           title="Work at the Sia Foundation"
           className="mt-40 md:mt-60"
           size="2"
-          background={backgrounds.leaves}
+          background={previews.leaves}
           description={
             <>
               If you are interested in a career at the Sia Foundation please see
@@ -198,7 +197,7 @@ function Foundation({ team, featured, reports }: Props) {
           links={[
             {
               title: 'Explore ecosystem news',
-              link: routes.newsroom.index,
+              link: routes.news.index,
             },
           ]}
         />

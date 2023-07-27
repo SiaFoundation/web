@@ -14,8 +14,7 @@ import { getProjects } from '../../content/projects'
 import { getStats } from '../../content/stats'
 import { getRentingArticles } from '../../content/articles'
 import { SectionGradient } from '../../components/SectionGradient'
-import { backgrounds } from '../../content/imageBackgrounds'
-import { previews } from '../../content/imagePreviews'
+import { backgrounds, patterns, previews } from '../../content/assets'
 import { SectionTransparent } from '../../components/SectionTransparent'
 import { CalloutRenterd } from '../../components/CalloutRenterd'
 import { SectionProjects } from '../../components/SectionProjects'
@@ -64,7 +63,7 @@ export default function Rent({
             <Callout
               size="1"
               title="Learn how renting works"
-              background={backgrounds.bamboo}
+              background={patterns.bamboo}
               description={<>Learn how to rent storage on the Sia network.</>}
               actionTitle="Learn more"
               actionLink={webLinks.docs.renting}
@@ -124,7 +123,7 @@ export default function Rent({
           title="Sia 101"
           className="mt-20 md:mt-40 mb-10 md:mb-24"
           size="2"
-          background={backgrounds.bamboo}
+          background={previews.bamboo}
           description={
             <>
               Learn how the Sia protocol works to power redundant,

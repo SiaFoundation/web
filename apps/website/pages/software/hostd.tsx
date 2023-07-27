@@ -21,8 +21,7 @@ import { cx } from 'class-variance-authority'
 import { getHostdLatestRelease } from '../../content/releases'
 import { CarouselHostd } from '../../components/CarouselHostd'
 import { DownloadWidgetLarge } from '../../components/DownloadWidgetLarge'
-import { backgrounds } from '../../content/imageBackgrounds'
-import { previews } from '../../content/imagePreviews'
+import { backgrounds, previews } from '../../content/assets'
 import { SectionTransparent } from '../../components/SectionTransparent'
 
 const title = 'hostd'
@@ -105,7 +104,7 @@ export default function Hostd({ version, technical, tutorials }: Props) {
           title="Learn more about hostd"
           className="mt-24 md:mt-40 mb-24 md:mb-48"
           size="2"
-          background={backgrounds.natePath}
+          background={previews.natePath}
           description={
             <>
               Join the Sia Discord to chat with the team and community about{' '}

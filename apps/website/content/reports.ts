@@ -3,7 +3,7 @@ import { toPairs } from 'lodash'
 import { webLinks } from '@siafoundation/design-system'
 import { getMinutesInSeconds } from '../lib/time'
 import { getCacheValue } from '../lib/cache'
-import { getContentPath } from '@siafoundation/env'
+import { getAssetPath } from '@siafoundation/data-sources'
 
 type Report = {
   year: string
@@ -23,7 +23,7 @@ function readReports(): ReportPair[] {
 
   try {
     reports = fs
-      .readdirSync(getContentPath('transparency'))
+      .readdirSync(getAssetPath('transparency'))
       .map((filename) => {
         const [name, ext] = filename.split('.')
         const [year, quarter] = name.split('-')

@@ -14,8 +14,7 @@ import { getProjects } from '../../content/projects'
 import { getStats } from '../../content/stats'
 import { getHostingArticles } from '../../content/articles'
 import { SectionGradient } from '../../components/SectionGradient'
-import { backgrounds } from '../../content/imageBackgrounds'
-import { previews } from '../../content/imagePreviews'
+import { backgrounds, patterns, previews } from '../../content/assets'
 import { SectionTransparent } from '../../components/SectionTransparent'
 import { SectionProjects } from '../../components/SectionProjects'
 import { CalloutHostd } from '../../components/CalloutHostd'
@@ -47,8 +46,8 @@ export default function Host({
           />
         </SectionTransparent>
       }
-      backgroundImage={backgrounds.leaves}
-      previewImage={previews.leaves}
+      backgroundImage={backgrounds.nateWaterfall}
+      previewImage={previews.nateWaterfall}
     >
       <SectionGradient className="pb-20">
         <div className="flex flex-col">
@@ -62,7 +61,7 @@ export default function Host({
             <CalloutHostd />
             <Callout
               title="Learn how hosting works"
-              background={backgrounds.bamboo}
+              background={patterns.bamboo}
               description={
                 <>
                   Learn how to become a host and offer storage on the Sia
@@ -127,7 +126,7 @@ export default function Host({
           title="Sia 101"
           className="mt-20 md:mt-40 mb-10 md:mb-24"
           size="2"
-          background={backgrounds.bamboo}
+          background={previews.bamboo}
           description={
             <>
               Learn how the Sia protocol works to power redundant,

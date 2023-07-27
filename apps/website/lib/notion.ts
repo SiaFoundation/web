@@ -1,5 +1,19 @@
-import { Notion } from '../content/notion'
-import { isFullBlock } from '@notionhq/client'
+import { isFullBlock, isFullPage } from '@notionhq/client'
+import { Notion } from '@siafoundation/data-sources'
+import matter from 'gray-matter'
+import { serialize } from 'next-mdx-remote/serialize'
+
+export async function getNotionPage(pageId: string) {
+  const p = await Notion.pages.retrieve({ page_id: pageId })
+  const date = isFullPage(p) ? p.last_edited_time : null
+  const markdown = await notionToMarkdown(pageId)
+  const source = await serialize(matter(markdown).content)
+
+  return {
+    date,
+    source,
+  }
+}
 
 // Function to convert Notion rich text to markdown
 function richTextToMarkdown(richText) {
@@ -23,7 +37,7 @@ function richTextToMarkdown(richText) {
 }
 
 // Function to convert Notion blocks to markdown
-export async function notionToMarkdown(pageId) {
+async function notionToMarkdown(pageId) {
   const response = await Notion.blocks.children.list({
     block_id: pageId,
     page_size: 50,

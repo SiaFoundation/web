@@ -17,7 +17,6 @@
     "paths": {
       "@siafoundation/data-sources": ["libs/data-sources/src/index.ts"],
       "@siafoundation/design-system": ["libs/design-system/src/index.ts"],
-      "@siafoundation/env": ["libs/env/src/index.ts"],
       "@siafoundation/react-core": ["libs/react-core/src/index.ts"],
       "@siafoundation/react-hostd": ["libs/react-hostd/src/index.ts"],
       "@siafoundation/react-renterd": ["libs/react-renterd/src/index.ts"],

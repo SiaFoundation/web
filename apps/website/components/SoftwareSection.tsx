@@ -6,21 +6,22 @@ import {
   Book16,
   LogoGithub16,
 } from '@siafoundation/design-system'
-import { StaticImageData } from 'next/image'
 import { CalloutCoreSoftware } from './CalloutCoreSoftware'
 
 type Props = {
   title: string
+  status?: string
   description: React.ReactNode
   version: string
   sourceLink: string
   docsLink: string
   links: LinkData[]
-  background: StaticImageData
+  background: string
 }
 
 export function SoftwareSection({
   title,
+  status,
   description,
   version,
   sourceLink,
@@ -31,6 +32,7 @@ export function SoftwareSection({
   return (
     <CalloutCoreSoftware
       name={title}
+      status={status}
       description={description}
       background={background}
     >

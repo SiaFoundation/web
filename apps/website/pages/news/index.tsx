@@ -6,21 +6,18 @@ import {
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
 import { getStats } from '../../content/stats'
-import { generateRssNewsFeed } from '../../content/newsGenerateFeed'
 import useSWR from 'swr'
 import { useRouter } from 'next/router'
-import { getFeedAndNews } from '../../content/feed'
+import { getNewsFeed } from '../../content/feed'
 import { getMinutesInSeconds } from '../../lib/time'
 import { SectionSolid } from '../../components/SectionSolid'
-import { backgrounds } from '../../content/imageBackgrounds'
-import { previews } from '../../content/imagePreviews'
+import { backgrounds, previews } from '../../content/assets'
 import { SectionTransparent } from '../../components/SectionTransparent'
 
-const title = 'Newsroom'
-const description =
-  'News from around the ecosystem and official Sia Foundation press releases.'
+const title = 'News'
+const description = 'Updates from the Sia Foundation and the Sia ecosystem.'
 
-function Newsroom() {
+function News() {
   const router = useRouter()
   const filter = router.query.news
   const route = filter ? `/api/news?news=${filter}` : '/api/news'
@@ -32,7 +29,7 @@ function Newsroom() {
     <Layout
       title={title}
       description={description}
-      path={routes.newsroom.index}
+      path={routes.news.index}
       heading={
         <SectionTransparent className="pt-24 md:pt-40 pb-6 md:pb-20">
           <SiteHeading
@@ -42,8 +39,8 @@ function Newsroom() {
             anchorLink={false}
             links={[
               {
-                title: 'Press releases RSS',
-                link: routes.newsroom.feed.rss,
+                title: 'Subscribe via RSS',
+                link: routes.news.feed.rss,
                 newTab: true,
               },
             ]}
@@ -56,7 +53,7 @@ function Newsroom() {
       <SectionSolid className="pt-8 md:pt-12 xl:pt-20 pb-24 md:pb-40">
         <ContentGallery
           filterMode="external"
-          filters={['press', 'ecosystem']}
+          filters={['foundation', 'ecosystem']}
           filterable="news"
           columnClassName="grid-cols-1"
           items={posts.data || []}
@@ -67,9 +64,8 @@ function Newsroom() {
 }
 
 export async function getStaticProps() {
-  await generateRssNewsFeed()
   const stats = await getStats()
-  const posts = await getFeedAndNews()
+  const posts = await getNewsFeed()
 
   return {
     props: {
@@ -82,4 +78,4 @@ export async function getStaticProps() {
   }
 }
 
-export default Newsroom
+export default News

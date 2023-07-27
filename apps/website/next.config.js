@@ -13,6 +13,20 @@ const nextConfig = {
   // Use downstream webserver compression in production
   compress: process.env.NODE_ENV === 'development',
   pageExtensions: ['tsx', 'ts', 'md', 'mdx'],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'beta.sia.tech',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'sia.tech',
+        pathname: '/**',
+      },
+    ],
+  },
   nx: {
     // Set this to true if you would like to to use SVGR
     // See: https://github.com/gregberge/svgr

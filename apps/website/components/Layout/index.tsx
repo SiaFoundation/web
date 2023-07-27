@@ -6,7 +6,6 @@ import { Background } from './Background'
 import { Main } from './Main'
 import { PageHead } from '../PageHead'
 import { menuSections } from '../../config/siteMap'
-import { StaticImageData } from 'next/image'
 
 type Props = {
   title: string
@@ -16,8 +15,8 @@ type Props = {
   navbar?: React.ReactNode
   heading: React.ReactNode
   children: React.ReactNode
-  previewImage: StaticImageData
-  backgroundImage: StaticImageData
+  previewImage: string
+  backgroundImage: string
   focus?: React.ReactNode
   transitions?: boolean
   transitionWidthDuration?: number
@@ -77,7 +76,7 @@ export function Layout({
       <PageHead
         title={title}
         description={description}
-        image={previewImage.src}
+        image={previewImage}
         date={date}
         path={path}
       />
@@ -113,7 +112,6 @@ export function Layout({
           <Main
             focus={focus}
             heading={heading}
-            backgroundImage={backgroundImage}
             transitioning={transitioning}
             menuSections={menuSections}
           >

@@ -1,49 +1,43 @@
 import { useCarousel, CarouselTags } from './Carousel'
-import imageMetrics from '../assets/hostd/metrics.png'
-import imageContracts from '../assets/hostd/contracts.png'
-import imageVolumes from '../assets/hostd/volumes-add.png'
-import imageConfig from '../assets/hostd/config.png'
-import imagePreferences from '../assets/hostd/preferences.png'
-import imageAlerts from '../assets/hostd/alerts.png'
-import imageWallet from '../assets/hostd/wallet.png'
 import { cx } from 'class-variance-authority'
 import { Image } from '@siafoundation/design-system'
+import { getAssetUrl } from '../content/assets'
 
 const images = [
   {
     title: 'Metrics',
     key: 'Metrics',
-    image: imageMetrics,
+    image: getAssetUrl('assets/hostd/metrics.png'),
   },
   {
     title: 'Contracts',
     key: 'Contracts',
-    image: imageContracts,
+    image: getAssetUrl('assets/hostd/contracts.png'),
   },
   {
     title: 'Volumes',
     key: 'Volumes',
-    image: imageVolumes,
+    image: getAssetUrl('assets/hostd/volumes-add.png'),
   },
   {
     title: 'Configuration',
     key: 'Configuration',
-    image: imageConfig,
+    image: getAssetUrl('assets/hostd/configuration.png'),
   },
   {
     title: 'Wallet',
     key: 'Wallet',
-    image: imageWallet,
+    image: getAssetUrl('assets/hostd/wallet.png'),
   },
   {
     title: 'Alerts',
     key: 'Alerts',
-    image: imageAlerts,
+    image: getAssetUrl('assets/hostd/alerts.png'),
   },
   {
     title: 'Preferences',
     key: 'Preferences',
-    image: imagePreferences,
+    image: getAssetUrl('assets/hostd/preferences.png'),
   },
 ]
 
@@ -63,7 +57,14 @@ export function CarouselHostd() {
               props.currentItem.key === item.key ? 'relative' : 'absolute'
             )}
           >
-            <Image priority={i === 0} src={item.image} alt={item.title} />
+            <Image
+              quality={100}
+              width={256 * 5}
+              height={160 * 5}
+              priority={i === 0}
+              src={item.image}
+              alt={item.title}
+            />
           </div>
         ))}
       </div>

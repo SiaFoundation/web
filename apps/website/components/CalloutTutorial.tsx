@@ -10,8 +10,7 @@ import { random } from 'lodash'
 import Image from 'next/image'
 import { useMemo } from 'react'
 import { routes } from '../config/routes'
-import { backgrounds } from '../content/imageBackgrounds'
-import { contentImages } from '../content/imageContent'
+import { patterns, getAssetUrl } from '../content/assets'
 
 type Props = {
   title: string
@@ -33,16 +32,15 @@ export function CalloutTutorial({
   children,
 }: Props) {
   const externalLink = link && link.startsWith('http')
-  const bg = useMemo(() => {
-    const bg = backgrounds[background]
-    if (bg) {
-      return bg
+  const backgroundPattern = useMemo(() => {
+    if (background) {
+      return getAssetUrl(`assets/patterns/${background}.png`)
     }
-    const bgList = Object.entries(backgrounds).map(([key, value]) => value)
+    const bgList = Object.entries(patterns).map(([key, value]) => value)
     return bgList[random(bgList.length - 1)]
   }, [background])
   return (
-    <PatternedPanel background={bg}>
+    <PatternedPanel background={backgroundPattern}>
       <div className="flex flex-col gap-4 pt-8 pb-5 px-6">
         <Heading size="24" font="mono" weight="semibold">
           {title}
@@ -85,7 +83,10 @@ export function CalloutTutorial({
         {image && (
           <div className="relative h-48 -ml-7 transition-transform md:hover:scale-105">
             <Image
-              src={contentImages[image]}
+              src={getAssetUrl(`assets/images/${image}.png`)}
+              quality={30}
+              width={256 * 3}
+              height={160 * 3}
               alt={`Screenshot of ${title}`}
               className="max-w-none select-none w-[150%]"
             />

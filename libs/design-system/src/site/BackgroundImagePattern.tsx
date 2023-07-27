@@ -1,9 +1,8 @@
 import { cx } from 'class-variance-authority'
-import { StaticImageData } from 'next/image'
 import { Image } from '../core/Image'
 
 type Props = {
-  background: StaticImageData
+  background: string
   className?: string
 }
 
@@ -16,8 +15,9 @@ export function BackgroundImagePattern({ background, className }: Props) {
           'absolute z-0 w-full h-full object-cover opacity-[10%] dark:opacity-10',
           className
         )}
-        width={200}
-        quality={10}
+        quality={1}
+        width={256 * 3}
+        height={160 * 3}
         alt="bg"
         src={background}
       />
