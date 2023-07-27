@@ -14,8 +14,7 @@ import { textContent } from '../../lib/utils'
 import { getMinutesInSeconds } from '../../lib/time'
 import { SectionTransparent } from '../../components/SectionTransparent'
 import { SectionGradient } from '../../components/SectionGradient'
-import { backgrounds } from '../../content/imageBackgrounds'
-import { previews } from '../../content/imagePreviews'
+import { backgrounds, previews } from '../../content/assets'
 import { CalloutProject } from '../../components/CalloutProject'
 
 const title = 'Community & Ecosystem'
@@ -99,7 +98,7 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
         <Callout
           title="Sia grants"
           size="2"
-          background={backgrounds.nateSnow}
+          background={previews.nateSnow}
           description={
             <>
               The Sia Foundation welcomes and supports contributors from all

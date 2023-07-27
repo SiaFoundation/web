@@ -1,37 +1,33 @@
 import { useCarousel, CarouselTags } from './Carousel'
-import imageList from '../assets/walletd/list.png'
-import imageAddWallet from '../assets/walletd/add-wallet.png'
-import imageSend from '../assets/walletd/send.png'
-import imageGenerateAddresses from '../assets/walletd/generate-addresses.png'
-import imageLocking from '../assets/walletd/locking.png'
 import { cx } from 'class-variance-authority'
 import { Image } from '@siafoundation/design-system'
+import { getAssetUrl } from '../content/assets'
 
 const images = [
   {
     title: 'Multi-wallet',
     key: 'Multi-wallet',
-    image: imageList,
+    image: getAssetUrl('assets/walletd/list.png'),
   },
   {
     title: 'Seed, watch, & ledger',
     key: 'types',
-    image: imageAddWallet,
+    image: getAssetUrl('assets/walletd/add-wallet.png'),
   },
   {
     title: 'Send & receive Siacoin',
     key: 'send',
-    image: imageSend,
+    image: getAssetUrl('assets/walletd/send.png'),
   },
   {
     title: 'Configuration',
     key: 'Configuration',
-    image: imageLocking,
+    image: getAssetUrl('assets/walletd/locking.png'),
   },
   {
     title: 'Generate addresses',
     key: 'generate',
-    image: imageGenerateAddresses,
+    image: getAssetUrl('assets/walletd/generate-addresses.png'),
   },
 ]
 
@@ -51,7 +47,14 @@ export function CarouselWalletd() {
               props.currentItem.key === item.key ? 'relative' : 'absolute'
             )}
           >
-            <Image priority={i === 0} src={item.image} alt={item.title} />
+            <Image
+              quality={100}
+              width={256 * 5}
+              height={160 * 5}
+              priority={i === 0}
+              src={item.image}
+              alt={item.title}
+            />
           </div>
         ))}
       </div>

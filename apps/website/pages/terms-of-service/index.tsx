@@ -5,17 +5,12 @@ import { getStats } from '../../content/stats'
 import { AsyncReturnType } from '../../lib/types'
 import { getMinutesInSeconds } from '../../lib/time'
 import { SectionSolid } from '../../components/SectionSolid'
-import matter from 'gray-matter'
-import { serialize } from 'next-mdx-remote/serialize'
 import { format } from 'date-fns'
 import { MDXRemote } from 'next-mdx-remote'
 import { components } from '../../config/mdx'
-import { backgrounds } from '../../content/imageBackgrounds'
-import { previews } from '../../content/imagePreviews'
+import { backgrounds, previews } from '../../content/assets'
 import { SectionTransparent } from '../../components/SectionTransparent'
-import { Notion } from '../../content/notion'
-import { isFullPage } from '@notionhq/client'
-import { notionToMarkdown } from '../../lib/notion'
+import { getNotionPage } from '../../lib/notion'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
@@ -57,10 +52,7 @@ const databaseId = 'ef6862a3f8274243be41077fac52b77d'
 export async function getStaticProps() {
   const stats = await getStats()
 
-  const p = await Notion.pages.retrieve({ page_id: databaseId })
-  const date = isFullPage(p) ? p.last_edited_time : null
-  const markdown = await notionToMarkdown(databaseId)
-  const source = await serialize(matter(markdown).content)
+  const { date, source } = await getNotionPage(databaseId)
 
   return {
     props: {

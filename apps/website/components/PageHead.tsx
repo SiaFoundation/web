@@ -27,19 +27,19 @@ export function PageHead({ title, description, image, date, path }: Props) {
       <link
         rel="alternate"
         type="application/rss+xml"
-        href={routes.newsroom.feed.rss}
+        href={routes.news.feed.rss}
         title={newsFeedName}
       />
       <link
         rel="alternate"
         type="application/atom+xml"
-        href={routes.newsroom.feed.atom}
+        href={routes.news.feed.atom}
         title={newsFeedName}
       />
       <link
         rel="alternate"
         type="application/json"
-        href={routes.newsroom.feed.json}
+        href={routes.news.feed.json}
         title={newsFeedName}
       />
     </SitePageHead>

@@ -4,7 +4,6 @@ import { Paragraph } from '../core/Paragraph'
 import { PatternedPanel } from './PatternedPanel'
 import { Heading } from '../core/Heading'
 import { cx } from 'class-variance-authority'
-import { StaticImageData } from 'next/image'
 import { WebDomain } from './WebDomain'
 
 type Props = {
@@ -17,7 +16,7 @@ type Props = {
   actionNewTab?: boolean
   size?: '0' | '1' | '2'
   className?: string
-  background: StaticImageData
+  background: string
 }
 
 export function Callout({

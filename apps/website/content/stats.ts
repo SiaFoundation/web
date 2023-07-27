@@ -1,6 +1,5 @@
 import {
   getBenchmarks,
-  getCounts,
   getNavigatorStatus,
   getGitHub,
   getSiaCentralHostsNetworkMetrics,
@@ -35,7 +34,6 @@ async function readStats() {
       contributors: '2,069',
       forks: '20,472',
       releases: '2,041',
-      downloads: '201,059,994',
       downloadSpeed: '201.44 Gbps',
       uploadSpeed: '2071.08 Mbps',
       cpuUsage: '20.147%',
@@ -43,14 +41,12 @@ async function readStats() {
     }
   }
 
-  const [hostsStats, navigator, downloadCounts, github, benchmarks] =
-    await Promise.all([
-      getSiaCentralHostsNetworkMetrics(),
-      getNavigatorStatus(),
-      getCounts(),
-      getGitHub(),
-      getBenchmarks(),
-    ])
+  const [hostsStats, navigator, github, benchmarks] = await Promise.all([
+    getSiaCentralHostsNetworkMetrics(),
+    getNavigatorStatus(),
+    getGitHub(),
+    getBenchmarks(),
+  ])
   const latestBenchmark = benchmarks.data[0]
 
   const stats = {
@@ -79,7 +75,6 @@ async function readStats() {
     contributors: humanNumber(github.data?.contributors),
     forks: humanNumber(github.data?.forks),
     releases: humanNumber(github.data?.releases),
-    downloads: humanNumber(downloadCounts.data?.total),
     // benchmarks
     downloadSpeed: humanSpeed(latestBenchmark?.downloadThroughput),
     uploadSpeed: humanSpeed(latestBenchmark?.uploadThroughput),

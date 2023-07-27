@@ -36,7 +36,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-          CONTENT: ${{ github.workspace }}/content/example
+          ASSETS: ${{ github.workspace }}/assets
       - name: Test
         shell: bash
         run: npx nx run-many --target=test --all --parallel=5

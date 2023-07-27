@@ -1,9 +1,7 @@
-import { ContentItemProps } from '@siafoundation/design-system'
-import { getNewsPostsList } from './news'
 import { getCacheValue } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
 import { addNewTab } from '../lib/utils'
-import { fetchAllFeedItems, syncFeeds } from './feedSync'
+import { fetchAllFeedItems } from '@siafoundation/data-sources'
 
 type Tag =
   | 'sia-all'
@@ -28,7 +26,6 @@ export async function getFeedContent(
 ): Promise<FeedItem[]> {
   const items = await getFeedItems()
   return items
-    .sort((a, b) => (new Date(a.date) < new Date(b.date) ? 1 : -1))
     .filter((a) =>
       !tags.length ? true : tags.find((tag) => a.tags?.includes(tag))
     )
@@ -40,46 +37,28 @@ async function getFeedItems() {
   return getCacheValue(
     'feed/items',
     async () => {
-      return fetchAllFeedItems()
+      return fetchAllFeedItems([])
     },
     maxAge
   )
 }
 
-export async function syncFeedsEvery5min() {
-  return getCacheValue(
-    'syncFeedsEvery5min',
-    async () => {
-      await syncFeeds()
-      return {
-        syncedAt: new Date(),
-      }
-    },
-    maxAge
-  )
-}
+const limit = 20
 
-const limit = 50
+type Filter = 'foundation' | 'ecosystem'
 
-type Filter = 'press' | 'ecosystem'
+export async function getNewsFeed(filter?: Filter) {
+  const items = await getFeedContent([])
 
-export async function getFeedAndNews(filter?: Filter) {
-  let posts = []
-
-  if ([undefined, 'press'].includes(filter)) {
-    const news = await getNewsPostsList(limit)
-    posts.push(...news)
+  if (filter === 'foundation') {
+    return items
+      .filter((i) => i.link.startsWith('https://blog.sia.tech'))
+      .slice(0, limit)
   }
-  if ([undefined, 'ecosystem'].includes(filter)) {
-    const articles = await getFeedContent([], limit)
-    posts.push(...articles)
+  if (filter === 'ecosystem') {
+    return items
+      .filter((i) => !i.link.startsWith('https://blog.sia.tech'))
+      .slice(0, limit)
   }
-
-  posts.sort((a, b) =>
-    new Date(a.date) < new Date(b.date) ? 1 : -1
-  ) as ContentItemProps[]
-
-  posts = posts.slice(0, limit)
-
-  return posts
+  return items.slice(0, limit)
 }

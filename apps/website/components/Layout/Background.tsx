@@ -1,8 +1,6 @@
-import { StaticImageData } from 'next/image'
-
 type Props = {
   focus?: boolean
-  background: StaticImageData
+  background: string
 }
 
 export function Background({ focus, background }: Props) {
@@ -17,9 +15,9 @@ export function Background({ focus, background }: Props) {
       <div className="relative w-full h-full">
         <div className="absolute w-full h-full mix-blend-darken z-10 bg-mask" />
         <div
-          className="z-0 relative w-ful h-full"
+          className="z-0 relative w-full h-full"
           style={{
-            background: `url(${background.src})`,
+            background: `url(${background})`,
             backgroundSize: 'cover',
           }}
         />

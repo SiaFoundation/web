@@ -42,7 +42,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-          CONTENT: ${{ github.workspace }}/content/example
+          ASSETS: ${{ github.workspace }}/assets
       - name: Export
         shell: bash
         run: npx nx affected --target=export --configuration=ci --parallel=5

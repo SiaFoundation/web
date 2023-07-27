@@ -1,13 +1,12 @@
 import { Panel } from '../core/Panel'
 import { cx } from 'class-variance-authority'
 import { BackgroundImagePattern } from './BackgroundImagePattern'
-import { StaticImageData } from 'next/image'
 
 type Props = {
   id?: string
   children: React.ReactNode
   className?: string
-  background: StaticImageData
+  background: string
 }
 
 export function PatternedPanel({ id, children, className, background }: Props) {

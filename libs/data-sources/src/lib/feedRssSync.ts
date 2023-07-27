@@ -1,19 +1,25 @@
-const Parser = require('rss-parser')
-const { Notion } = require('./notion')
-require('dotenv').config()
+import { Notion } from './notion/notion'
+import Parser from 'rss-parser'
 
-async function parseFeedFile(feedFile, data) {
+type RssPost = {
+  title: string
+  link: string
+  pubDate: string
+}
+
+async function parseFeedFile(feedFile: string, data: string | null) {
+  if (!data) return null
   try {
     const parser = new Parser()
     const feed = await parser.parseString(data)
     return feed
   } catch (e) {
-    console.log('error parsing', feedFile, e.message)
+    console.log('error parsing', feedFile, (e as Error).message)
     return null
   }
 }
 
-async function downloadRssFile(url) {
+async function downloadRssFile(url: string) {
   try {
     const response = await fetch(url)
     const data = await response.text()
@@ -24,8 +30,8 @@ async function downloadRssFile(url) {
   }
 }
 
-async function fetchRssFeedItems() {
-  const feedItems = []
+export async function fetchRssFeedItems() {
+  const feedItems: RssPost[] = []
   try {
     const feedList = await fetchFeedList()
     for (const feed of feedList) {
@@ -33,7 +39,7 @@ async function fetchRssFeedItems() {
       // try to parse to check if it's valid rss xml
       const parsedData = await parseFeedFile(feed.name, fileData)
       if (fileData && parsedData) {
-        feedItems.push(...parsedData.items)
+        feedItems.push(...(parsedData.items as RssPost[]))
       }
     }
   } catch (e) {
@@ -49,12 +55,9 @@ async function fetchFeedList() {
   const response = await Notion.databases.query({
     database_id: rssFeedsDatabaseId,
   })
-  return response.results.map((page) => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return response.results.map((page: any) => ({
     name: page.properties.name.title[0].plain_text,
     link: page.properties.link?.url || null,
   }))
-}
-
-module.exports = {
-  fetchRssFeedItems,
 }

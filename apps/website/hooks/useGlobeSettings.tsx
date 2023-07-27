@@ -36,10 +36,10 @@ export function useGlobeSettings() {
   )
 
   const checkGpu = useCallback(async () => {
-    const gpuTier = await getGPUTier()
-    const canRender = gpuTier.fps >= 15
+    const gpu = await getGPUTier()
+    const canRender = gpu.gpu?.startsWith('apple') || gpu.fps >= 15
     setCanRender(canRender)
-    console.log('GPU', gpuTier)
+    console.log('GPU', gpu)
   }, [setCanRender])
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-# [![Sia Web](https://sia.tech/banners/sia-banner-web.png)](http://sia.tech)
+# [![Sia Web](https://sia.tech/assets/banners/sia-banner-web.png)](http://sia.tech)
 
 # Web
 
@@ -48,7 +48,6 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 - [@siafoundation/sia-nodejs](libs/sia-nodejs) - Sia NodeJS client for controlling a v1 `siad`.
 - [@siafoundation/design-system](libs/design-system) - React-based design system used across Sia apps and websites.
 - [@siafoundation/data-sources](libs/data-sources) - Data sources used for stats on the website.
-- [@siafoundation/env](libs/env) - Environment variables for use across projects.
 
 ## Internal
 

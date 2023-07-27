@@ -20,7 +20,6 @@ export function Statsbar() {
     contributors,
     forks,
     releases,
-    downloads,
     // downloadSpeed,
     // uploadSpeed,
     // cpuUsage,
@@ -114,10 +113,6 @@ export function Statsbar() {
             {
               value: releases,
               label: 'releases',
-            },
-            {
-              value: downloads,
-              label: 'downloads',
             },
           ]}
         />

@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { webLinks } from '@siafoundation/design-system'
-import { backgrounds } from '../content/imageBackgrounds'
+import { backgrounds } from '../content/assets'
 import { SoftwareSection } from './SoftwareSection'
 
 type Versions = {

@@ -24,8 +24,7 @@ import { useInView } from 'react-intersection-observer'
 import { cx } from 'class-variance-authority'
 import { getRenterdLatestRelease } from '../../content/releases'
 import { DownloadWidgetLarge } from '../../components/DownloadWidgetLarge'
-import { backgrounds } from '../../content/imageBackgrounds'
-import { previews } from '../../content/imagePreviews'
+import { backgrounds, previews } from '../../content/assets'
 
 const title = 'renterd'
 const daemon = 'renterd'
@@ -260,7 +259,7 @@ export default function Renterd({ version, technical, tutorials }: Props) {
           title="Learn more about renterd"
           className="mt-24 md:mt-40 mb-24 md:mb-48"
           size="2"
-          background={backgrounds.nateSnow}
+          background={previews.nateSnow}
           description={
             <>
               Join the Sia Discord to chat with the team and community about{' '}

@@ -1,55 +1,48 @@
 import { useCarousel, CarouselTags } from './Carousel'
-import imageFiles from '../assets/renterd/files.png'
-import imageContracts from '../assets/renterd/contracts.png'
-import imageHosts from '../assets/renterd/hosts.png'
-import imageAutopilot from '../assets/renterd/autopilot.png'
-import imageConfig from '../assets/renterd/config.png'
-import imageWallet from '../assets/renterd/wallet.png'
-import imageNode from '../assets/renterd/node.png'
-import imagePreferences from '../assets/renterd/preferences.png'
 import { cx } from 'class-variance-authority'
 import { Image } from '@siafoundation/design-system'
+import { getAssetUrl } from '../content/assets'
 
 const images = [
   {
     title: 'Files',
     key: 'Files',
-    image: imageFiles,
+    image: getAssetUrl('assets/renterd/files.png'),
   },
   {
     title: 'Contracts',
     key: 'Contracts',
-    image: imageContracts,
+    image: getAssetUrl('assets/renterd/contracts.png'),
   },
   {
     title: 'Hosts',
     key: 'Hosts',
-    image: imageHosts,
+    image: getAssetUrl('assets/renterd/hosts.png'),
   },
   {
     title: 'Autopilot',
     key: 'Autopilot',
-    image: imageAutopilot,
+    image: getAssetUrl('assets/renterd/autopilot.png'),
   },
   {
     title: 'Configuration',
     key: 'Configuration',
-    image: imageConfig,
+    image: getAssetUrl('assets/renterd/config.png'),
   },
   {
     title: 'Wallet',
     key: 'Wallet',
-    image: imageWallet,
+    image: getAssetUrl('assets/renterd/wallet.png'),
   },
   {
     title: 'Node',
     key: 'Node',
-    image: imageNode,
+    image: getAssetUrl('assets/renterd/node.png'),
   },
   {
     title: 'Preferences',
     key: 'Preferences',
-    image: imagePreferences,
+    image: getAssetUrl('assets/renterd/preferences.png'),
   },
 ]
 
@@ -69,7 +62,14 @@ export function CarouselRenterd() {
               props.currentItem.key === item.key ? 'relative' : 'absolute'
             )}
           >
-            <Image priority={i === 0} src={item.image} alt={item.title} />
+            <Image
+              quality={100}
+              width={256 * 5}
+              height={160 * 5}
+              priority={i === 0}
+              src={item.image}
+              alt={item.title}
+            />
           </div>
         ))}
       </div>

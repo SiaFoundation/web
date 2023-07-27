@@ -1,5 +1,4 @@
 import React from 'react'
-import { ImageProps } from '@siafoundation/design-system'
 import { MenuSection } from './SiteMenu'
 import { Navbar } from './Navbar'
 import { Footer } from './Footer'
@@ -9,7 +8,6 @@ type Props = {
   menuSections: MenuSection[]
   heading: React.ReactNode
   children: React.ReactNode
-  backgroundImage: ImageProps
   focus?: React.ReactNode
   transitioning?: boolean
 }

@@ -22,14 +22,11 @@ import { getGrantCommittee } from '../../content/grantCommittee'
 import { SectionTransparent } from '../../components/SectionTransparent'
 import { SectionGradient } from '../../components/SectionGradient'
 import { MDXRemote } from 'next-mdx-remote'
-import matter from 'gray-matter'
-import { serialize } from 'next-mdx-remote/serialize'
 import { components } from '../../config/mdx'
 import { TableOfContents } from '../../components/TableOfContents'
-import { backgrounds } from '../../content/imageBackgrounds'
-import { previews } from '../../content/imagePreviews'
+import { backgrounds, previews } from '../../content/assets'
 import { CalloutProject } from '../../components/CalloutProject'
-import { notionToMarkdown } from '../../lib/notion'
+import { getNotionPage } from '../../lib/notion'
 
 const title = 'Grants'
 const description = (
@@ -321,7 +318,7 @@ export default function Grants({
           className="mt-20 md:mt-48 mb-16 md:mb-24"
           title="Get started on your grant proposal"
           size="2"
-          background={backgrounds.tree}
+          background={previews.tree}
           description={
             <>
               The Sia Foundation looks forward to funding your open source
@@ -375,14 +372,11 @@ export async function getStaticProps() {
   const grantExamples = await getProjects('grant_examples', 6)
   const grantCommittee = await getGrantCommittee()
 
-  const grantApplicantMarkdown = await notionToMarkdown(grantApplicantFaqId)
-  const grantApplicantFaqSource = await serialize(
-    matter(grantApplicantMarkdown).content
+  const { source: grantApplicantFaqSource } = await getNotionPage(
+    grantApplicantFaqId
   )
-
-  const grantGranteeMarkdown = await notionToMarkdown(approvedGranteeFaqId)
-  const grantGranteeFaqSource = await serialize(
-    matter(grantGranteeMarkdown).content
+  const { source: grantGranteeFaqSource } = await getNotionPage(
+    approvedGranteeFaqId
   )
 
   return {

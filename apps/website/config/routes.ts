@@ -61,9 +61,8 @@ export const routes = {
     walletd: '/software/walletd',
     explored: '/software/explored',
   },
-  newsroom: {
-    index: '/newsroom',
-    newsPost: '/newsroom/[slug]',
+  news: {
+    index: '/news',
     feed: {
       rss: '/rss/feed.xml',
       atom: '/rss/atom.xml',

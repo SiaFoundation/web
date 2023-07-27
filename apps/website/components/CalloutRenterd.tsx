@@ -1,7 +1,6 @@
 import { routes } from '../config/routes'
 import { CalloutCoreSoftware } from './CalloutCoreSoftware'
-import { backgrounds } from '../content/imageBackgrounds'
-import { contentImages } from '../content/imageContent'
+import { patterns, getAssetUrl } from '../content/assets'
 
 type Props = {
   version?: string
@@ -17,8 +16,8 @@ export function CalloutRenterd({ version }: Props) {
       daemon="renterd"
       version={version}
       href={routes.software.renterd}
-      image={contentImages.renterd}
-      background={backgrounds.natePath}
+      image={getAssetUrl('assets/renterd/files.png')}
+      background={patterns.natePath}
     />
   )
 }

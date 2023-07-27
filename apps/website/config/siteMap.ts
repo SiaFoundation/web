@@ -22,9 +22,8 @@ export const menuSections = [
         title: 'Host',
       },
       {
-        link: routes.whitepaper.pdf,
-        title: 'Whitepaper',
-        newTab: true,
+        link: routes.wallet.index,
+        title: 'Wallet',
       },
       {
         link: routes.activity.index,
@@ -57,6 +56,11 @@ export const menuSections = [
         title: 'Documentation',
         newTab: true,
       },
+      {
+        link: routes.whitepaper.pdf,
+        title: 'Whitepaper',
+        newTab: true,
+      },
     ],
   },
   {
@@ -79,8 +83,8 @@ export const menuSections = [
         title: 'Hosting Best Practices',
       },
       {
-        link: routes.newsroom.index,
-        title: 'Newsroom',
+        link: routes.news.index,
+        title: 'News',
       },
       {
         link: webLinks.docs.brand,

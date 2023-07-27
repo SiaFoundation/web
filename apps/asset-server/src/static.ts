@@ -1,86 +1,23 @@
 import { readdirSync } from 'fs'
-import * as express from 'express'
-import * as vhost from 'vhost'
-import { counterMiddleware } from '@siafoundation/data-sources'
-import { getContentPath, readContentDirJsonFile } from '@siafoundation/env'
-import { getHostnames } from './env'
+import express from 'express'
+import { getAssetPath } from '@siafoundation/data-sources'
 
-export function setupStatic(server) {
-  const hostnames = getHostnames()
-  const versions = getVersions()
-
-  // Serve api docs on the api domain
-  const apiApp = express()
-  const apiPath = getContentPath('docs')
-  const apiVersions = getDirectories(apiPath)
-  apiApp.use('/', express.static(`${apiPath}/${versions.sia.latest}`))
-  apiApp.use(
-    '/rc',
-    express.static(`${apiPath}/${versions.sia.rc || versions.sia.latest}`)
-  )
-  apiVersions.forEach((version) => {
-    apiApp.use(
-      `/v${version.split('.').join('')}`,
-      express.static(`${apiPath}/${version}`)
-    )
-  })
-  console.log('API versions')
-  console.log(`\tLatest: ${versions.sia.latest}`)
-  console.log(`\tRC: ${versions.sia.rc}`)
-  console.log(`\tHistoric: ${apiVersions}\n`)
-
-  server.use(vhost(hostnames.api, apiApp))
-
+export async function setupStatic(server) {
   // Rest of static assets on root domain
   const rootApp = express()
-  // Serve binaries
-  const releasesPath = getContentPath('releases')
-  rootApp.get('/releases', (req, res) => {
-    res.redirect('/')
+  // Serve  all content directories
+  const contentPath = getAssetPath('')
+  const contentDirs = getDirectories(contentPath)
+  contentDirs.forEach((dir) => {
+    console.log('Serving static content for', dir)
+    const contentPath = getAssetPath(dir)
+    rootApp.get(`/${dir}`, (req, res) => {
+      res.redirect('/')
+    })
+    rootApp.use(`/${dir}`, express.static(contentPath))
   })
-  rootApp.use('/releases', counterMiddleware, express.static(releasesPath))
 
-  // Serve transparency reports
-  const transparencyPath = getContentPath('transparency')
-  rootApp.get('/transparency', (req, res) => {
-    res.redirect('/')
-  })
-  rootApp.use(
-    '/transparency',
-    counterMiddleware,
-    express.static(transparencyPath)
-  )
-
-  // Serve rss feeds
-  const rssPath = getContentPath('rss')
-  rootApp.get('/rss', (req, res) => {
-    res.redirect('/')
-  })
-  rootApp.use('/rss', counterMiddleware, express.static(rssPath))
-
-  server.use(vhost(hostnames.app, rootApp))
-}
-
-type Versions = {
-  sia: {
-    latest: string
-    rc: string
-  }
-  embarcadero: {
-    latest: string
-  }
-}
-
-function getVersions(): Versions {
-  return readContentDirJsonFile('versions.json', {
-    sia: {
-      latest: '1.5.9',
-      rc: '1.5.9',
-    },
-    embarcadero: {
-      latest: '1.0.0',
-    },
-  })
+  server.use(rootApp)
 }
 
 function getDirectories(source) {

@@ -7,7 +7,7 @@
 
   # Redirect old /docs routes to api subdomain
   handle_path /docs* {
-    redir https://api.sia.tech{uri} permanent
+    redir https://api.sia.tech/renterd permanent
   }
 
   # Redirect old paths
@@ -20,6 +20,7 @@
   redir /downloads /rent permanent
   redir /developers /rent permanent
   redir /about /learn permanent
+  redir /newsroom /news permanent
   redir /img/svg/sia-wordmark.svg /wordmark.svg permanent
   redir /img/svg/sia-green-logo.svg /logo-green.png permanent
   redir /get-siacoin /community-ecosystem?software=exchanges#software permanent
@@ -43,6 +44,10 @@
   }
 
   handle /rss* {
+    reverse_proxy localhost:3002
+  }
+
+  handle /assets* {
     reverse_proxy localhost:3002
   }
 }
@@ -72,8 +77,9 @@ api.sia.tech {
   handle /api* {
     reverse_proxy https://documenter.getpostman.com
   }
-  encode gzip
-  reverse_proxy localhost:3002
+  handle /* {
+    redir /renterd permanent
+  }
 }
 
 explore.sia.tech {
