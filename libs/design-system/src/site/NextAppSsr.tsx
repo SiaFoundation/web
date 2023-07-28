@@ -14,8 +14,8 @@ export function NextAppSsr({
   if (Layout) {
     return (
       <CoreProvider fallback={pageProps.fallback}>
-        <ThemeProvider ssr>
-          <AppSettingsProvider ssr>
+        <ThemeProvider>
+          <AppSettingsProvider>
             <div id="root" className={rootClasses}>
               <Toaster />
               <Layout>
@@ -29,7 +29,7 @@ export function NextAppSsr({
   }
   return (
     <CoreProvider fallback={pageProps.fallback}>
-      <ThemeProvider ssr>
+      <ThemeProvider>
         <AppSettingsProvider>
           <div id="root" className={rootClasses}>
             <Toaster />

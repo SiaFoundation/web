@@ -29,6 +29,10 @@ export const menuSections = [
         link: routes.activity.index,
         title: 'Activity',
       },
+      {
+        link: routes.news.index,
+        title: 'News',
+      },
     ],
   },
   {
@@ -81,10 +85,6 @@ export const menuSections = [
       {
         link: routes.hostingBestPractices.index,
         title: 'Hosting Best Practices',
-      },
-      {
-        link: routes.news.index,
-        title: 'News',
       },
       {
         link: webLinks.docs.brand,

@@ -34,7 +34,7 @@ export function Main({ heading, children, focus, transitioning }: Props) {
                 'border',
                 'border-gray-400 dark:border-graydark-400'
               )}
-            ></div>
+            />
             <div className="flex flex-col">{children}</div>
             <Footer />
           </div>

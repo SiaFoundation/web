@@ -21,7 +21,6 @@ export const useTheme = () => useContext(ThemeContext)
 
 type Props = {
   children: React.ReactNode
-  ssr?: boolean
 }
 
 type ThemeConfig = {
@@ -34,9 +33,8 @@ const defaultConfig: ThemeConfig = {
   mode: 'system',
 }
 
-export function ThemeProvider({ children, ssr }: Props) {
+export function ThemeProvider({ children }: Props) {
   const [themeConfig, setThemeConfig] = useLocalStorageState('v0/themeConfig', {
-    ssr,
     defaultValue: defaultConfig,
   })
 

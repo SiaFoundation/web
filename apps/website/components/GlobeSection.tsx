@@ -5,7 +5,6 @@ import {
   TBToBytes,
   Text,
   Tooltip,
-  userPrefersReducedMotion,
 } from '@siafoundation/design-system'
 import { Globe } from './Globe'
 import { humanBytes, humanSiacoin, humanSpeed } from '@siafoundation/sia-js'
@@ -18,7 +17,10 @@ import { Stats } from '../content/stats'
 import useSWR from 'swr'
 import { Marker } from 'cobe'
 import BigNumber from 'bignumber.js'
-import { useGlobeSettings } from '../hooks/useGlobeSettings'
+import {
+  useAppSettings,
+  usePrefersReducedMotion,
+} from '@siafoundation/react-core'
 
 type Props = {
   hosts: SiaCentralHost[]
@@ -59,11 +61,11 @@ export function GlobeSection({ className, hosts, rates }: Props) {
   const [reset, setReset] = useState<string>()
 
   const [errorRendering, setErrorRendering] = useState(false)
-  const { shouldRender } = useGlobeSettings()
+  const { gpu } = useAppSettings()
 
-  const isGlobeActive = shouldRender && !errorRendering
+  const isGlobeActive = gpu.shouldRender && !errorRendering
 
-  const reduceMotion = userPrefersReducedMotion()
+  const reduceMotion = usePrefersReducedMotion()
   useEffect(() => {
     if (reduceMotion && !isGlobeActive) {
       return
@@ -101,8 +103,8 @@ export function GlobeSection({ className, hosts, rates }: Props) {
 
   const [containerRef, { width }] = useElementSize()
 
-  const mt = useMemo(() => {
-    let mt = '-100px'
+  const marginTop = useMemo(() => {
+    let mt = '-80px'
     if (width > 640) {
       mt = '-120px'
     }
@@ -180,7 +182,7 @@ export function GlobeSection({ className, hosts, rates }: Props) {
             className="relative w-full overflow-hidden aspect-square"
             style={{
               height: `${width * 0.7}px`,
-              marginTop: mt,
+              marginTop: marginTop,
             }}
           >
             <Globe
@@ -189,6 +191,16 @@ export function GlobeSection({ className, hosts, rates }: Props) {
               onError={() => setErrorRendering(true)}
             />
           </div>
+        </div>
+      ) : !gpu.hasCheckedGpu ? (
+        <div className="relative border-b border-gray-400 dark:border-graydark-400 pointer-events-none">
+          <div
+            className="relative w-full overflow-hidden aspect-square"
+            style={{
+              height: `${width * 0.7}px`,
+              marginTop: marginTop,
+            }}
+          />
         </div>
       ) : (
         <div className="h-[50px] md:h-[200px]" />

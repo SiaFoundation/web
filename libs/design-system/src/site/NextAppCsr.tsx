@@ -34,7 +34,6 @@ export function NextAppCsr({
           <AppSettingsProvider
             lockRoutes={lockRoutes}
             passwordProtectRequestHooks={passwordProtectRequestHooks}
-            ssr={false}
           >
             <div id="root" className={rootClasses}>
               <Toaster />

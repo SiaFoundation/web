@@ -1,72 +1,51 @@
 import {
   Application16,
-  Link,
   Schematics16,
   Stamp16,
   TestToolIcon,
 } from '@siafoundation/design-system'
 import { routes } from '../../../config/routes'
 import { useRouter } from 'next/router'
-import { NavbarHoverCard } from './NavbarHoverCard'
+import { NavItem } from './NavItem'
+import { NavbarLink } from './NavbarLink'
 
 export function GrantsNav() {
   const router = useRouter()
 
   return (
-    <NavbarHoverCard
+    <NavItem
       trigger={
-        <Link
-          weight="medium"
+        <NavbarLink
+          size="16"
           underline={
             router.asPath.startsWith(routes.grants.index) ? 'accent' : 'hover'
           }
           href={routes.grants.index}
-        >
-          Grants
-        </Link>
+          title="Grants"
+        />
       }
       title={'Learn about the Sia Grants program.'}
     >
-      <Link
-        underline="hover"
-        weight="medium"
-        size="14"
+      <NavbarLink
         href={routes.grants.process}
-        className="flex gap-2 items-center"
-      >
-        <Schematics16 />
-        The grant process
-      </Link>
-      <Link
-        underline="hover"
-        weight="medium"
-        size="14"
+        icon={<Schematics16 />}
+        title="The grant process"
+      />
+      <NavbarLink
         href={routes.grants.ideas}
-        className="flex gap-2 items-center"
-      >
-        <Application16 />
-        Grant ideas
-      </Link>
-      <Link
-        underline="hover"
-        weight="medium"
-        size="14"
+        icon={<Application16 />}
+        title="Grant ideas"
+      />
+      <NavbarLink
         href={routes.grants.applicantFaq}
-        className="flex gap-2 items-center"
-      >
-        <TestToolIcon size={16} />
-        Grant applicant FAQ
-      </Link>
-      <Link
-        underline="hover"
-        weight="medium"
-        size="14"
+        icon={<TestToolIcon size={16} />}
+        title="Grant applicant FAQ"
+      />
+      <NavbarLink
         href={routes.grants.approvedFaq}
-        className="flex gap-2 items-center"
-      >
-        <Stamp16 />
-        Approved grantee FAQ
-      </Link>
-    </NavbarHoverCard>
+        icon={<Stamp16 />}
+        title="Approved grantee FAQ"
+      />
+    </NavItem>
   )
 }

@@ -4,7 +4,6 @@ import { GlyphCross, GlyphDot, GlyphStar } from '@visx/glyph'
 import { curveLinear, curveStep, curveCardinal } from '@visx/curve'
 import { RenderTooltipGlyphProps } from '@visx/xychart/lib/components/Tooltip'
 import { lightTheme, darkTheme } from './customTheme'
-import { userPrefersReducedMotion } from '../../hooks/userPrefersReducedMotion'
 import { getChartComponents } from './getChartComponents'
 import { useTheme } from '../../hooks/useTheme'
 import { omit } from 'lodash'
@@ -17,6 +16,7 @@ import {
   StackOffset,
 } from './types'
 import { daysInMilliseconds } from '../../lib/time'
+import { usePrefersReducedMotion } from '@siafoundation/react-core'
 
 const numTicks = 4
 
@@ -59,7 +59,7 @@ export function useChartXY<Key extends string, Cat extends string>(
   }, [data])
 
   const [useAnimatedComponents, setUseAnimatedComponents] = useState(
-    !userPrefersReducedMotion() && !config.disableAnimations
+    !usePrefersReducedMotion() && !config.disableAnimations
   )
   const { activeTheme } = useTheme()
   const theme = useMemo(

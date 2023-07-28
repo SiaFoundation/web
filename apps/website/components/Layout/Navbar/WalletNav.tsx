@@ -1,64 +1,48 @@
 import {
   Application16,
-  Link,
   Terminal16,
   Text,
   Wallet16,
 } from '@siafoundation/design-system'
 import { routes } from '../../../config/routes'
 import { useRouter } from 'next/router'
-import { NavbarHoverCard } from './NavbarHoverCard'
+import { NavItem } from './NavItem'
+import { NavbarLink } from './NavbarLink'
 
 export function WalletNav() {
   const router = useRouter()
 
   return (
-    <NavbarHoverCard
+    <NavItem
       trigger={
-        <Link
-          weight="medium"
+        <NavbarLink
+          size="16"
           underline={
             router.asPath.startsWith(routes.wallet.index) ? 'accent' : 'hover'
           }
           href={routes.wallet.index}
-        >
-          Wallet
-        </Link>
+          title="Wallet"
+        />
       }
       title={'Manage your wallet on the Sia network.'}
     >
       <Text color="verySubtle">Software</Text>
-      <Link
-        underline="hover"
-        weight="medium"
-        size="14"
+      <NavbarLink
         href={routes.wallet.coreSoftware}
-        className="flex gap-2 items-center"
-      >
-        <Terminal16 />
-        Core software
-      </Link>
-      <Link
-        underline="hover"
-        weight="medium"
-        size="14"
+        icon={<Terminal16 />}
+        title="Core software"
+      />
+      <NavbarLink
         href={routes.wallet.thirdPartySoftware}
-        className="flex gap-2 items-center"
-      >
-        <Application16 />
-        Third-party software
-      </Link>
+        icon={<Application16 />}
+        title="Third-party software"
+      />
       <Text color="verySubtle">Guides</Text>
-      <Link
-        underline="hover"
-        weight="medium"
-        size="14"
+      <NavbarLink
         href={routes.wallet.guides}
-        className="flex gap-2 items-center"
-      >
-        <Wallet16 />
-        Setting up a Ledger hardware wallet
-      </Link>
-    </NavbarHoverCard>
+        icon={<Wallet16 />}
+        title="Setting up a Ledger hardware wallet"
+      />
+    </NavItem>
   )
 }

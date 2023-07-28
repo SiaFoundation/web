@@ -98,7 +98,6 @@ export function Layout({
           pad={false}
           className={cx(
             'relative p-0 z-10',
-            // 'rounded-xl',
             focus ? '' : 'border-gray-400 dark:border-graydark-600',
             focus ? '' : 'border-3',
             focus ? 'ml-0 max-w-full' : 'mx-auto max-w-screen-2xl',

@@ -31,7 +31,6 @@ async function downloadFileAndSaveToContentDirectory(nf: Asset) {
           {}
         )
       )
-      .on('finish', () => console.log('Download Finished'))
       .on('error', (e: Error) => console.log(e))
   } catch (e) {
     console.log(e)
