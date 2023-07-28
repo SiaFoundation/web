@@ -2,95 +2,59 @@ import {
   Application16,
   Cloud16,
   Idea16,
-  Link,
   PlayOutline16,
   Terminal16,
   Text,
 } from '@siafoundation/design-system'
 import { routes } from '../../../config/routes'
 import { useRouter } from 'next/router'
-import { NavbarHoverCard } from './NavbarHoverCard'
+import { NavItem } from './NavItem'
+import { NavbarLink } from './NavbarLink'
 
 export function RentNav() {
   const router = useRouter()
 
   return (
-    <NavbarHoverCard
+    <NavItem
       trigger={
-        <Link
-          weight="medium"
+        <NavbarLink
+          size="16"
           underline={
             router.asPath.startsWith(routes.rent.index) ? 'accent' : 'hover'
           }
           href={routes.rent.index}
-        >
-          Rent
-        </Link>
+          title="Rent"
+        />
       }
       title="Rent storage space on the Sia network."
     >
       <Text color="verySubtle">Software</Text>
-      <Link
-        underline="hover"
-        weight="medium"
-        size="14"
+      <NavbarLink
         href={routes.rent.coreSoftware}
-        className="flex gap-2 items-center"
-      >
-        <Terminal16 />
-        Core software
-      </Link>
-      <Link
-        underline="hover"
-        weight="medium"
-        size="14"
+        icon={<Terminal16 />}
+        title="Core software"
+      />
+      <NavbarLink
         href={routes.rent.thirdPartySoftware}
-        className="flex gap-2 items-center"
-      >
-        <Application16 />
-        Third-party software
-      </Link>
-      <Link
-        underline="hover"
-        weight="medium"
-        size="14"
+        icon={<Application16 />}
+        title="Third-party software"
+      />
+      <NavbarLink
         href={routes.rent.ideas}
-        className="flex gap-2 items-center"
-      >
-        <Idea16 />
-        Renting software ideas
-      </Link>
+        icon={<Idea16 />}
+        title="Renting software ideas"
+      />
       <Text color="verySubtle">Guides</Text>
-      <Link
-        underline="hover"
-        weight="medium"
-        size="14"
+      <NavbarLink
         href={routes.rent.guides}
-        className="flex gap-2 items-center"
-      >
-        <Cloud16 />
-        Backups and cloud sync
-      </Link>
-      <Link
-        underline="hover"
-        weight="medium"
-        size="14"
+        icon={<Cloud16 />}
+        title="Backups and cloud sync"
+      />
+      <NavbarLink
         href={routes.rent.guides}
-        className="flex gap-2 items-center"
-      >
-        <PlayOutline16 />
-        Media streaming and storage
-      </Link>
-      {/* <Link
-                underline="hover"
-                weight="medium"
-                size="14"
-                href={routes.rent.mediaStorage}
-                className="flex gap-2 items-center"
-              >
-                <Network_116 />
-                Enterprise object-storage
-              </Link> */}
-    </NavbarHoverCard>
+        icon={<PlayOutline16 />}
+        title="Media streaming and storage"
+      />
+    </NavItem>
   )
 }

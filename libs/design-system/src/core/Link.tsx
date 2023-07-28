@@ -7,7 +7,7 @@ import { VariantProps } from '../types'
 import { Tooltip } from './Tooltip'
 import { UrlObject } from 'url'
 
-const linkStyles = cva(['cursor-pointer'], {
+const linkVariants = cva(['cursor-pointer'], {
   variants: {
     disabled: {
       true: 'opacity-50 pointer-events-none',
@@ -26,10 +26,10 @@ const linkStyles = cva(['cursor-pointer'], {
   },
 })
 
-type LinkVariants = VariantProps<typeof textStyles> &
-  VariantProps<typeof linkStyles>
+export type LinkVariants = VariantProps<typeof textStyles> &
+  VariantProps<typeof linkVariants>
 
-const styles = ({
+export const linkStyles = ({
   font,
   size,
   scaleSize,
@@ -52,7 +52,7 @@ const styles = ({
       ellipsis,
       underline,
     }),
-    linkStyles({ disabled, underline }),
+    linkVariants({ disabled, underline }),
     className
   )
 
@@ -87,7 +87,7 @@ export const Link = React.forwardRef<
       <BaseNextLink
         href={href}
         ref={ref}
-        className={styles({
+        className={linkStyles({
           font,
           scaleSize,
           size,

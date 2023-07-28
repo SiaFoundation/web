@@ -14,7 +14,7 @@ import {
   Tooltip,
 } from '@siafoundation/design-system'
 import { cx } from 'class-variance-authority'
-import { useGlobeSettings } from '../../hooks/useGlobeSettings'
+import { useAppSettings } from '@siafoundation/react-core'
 
 export type MenuSection = {
   title: string
@@ -27,7 +27,7 @@ type Props = {
 
 export function SiteMenu({ menuSections }: Props) {
   const [open, setOpen] = useState<boolean>(false)
-  const { isEnabled, setIsEnabled, canRender } = useGlobeSettings()
+  const { gpu } = useAppSettings()
 
   return (
     <Dialog
@@ -62,14 +62,17 @@ export function SiteMenu({ menuSections }: Props) {
     >
       <div className="dark">
         <div className="absolute bg-black z-10 top-0 left-0 right-0 h-[100px] border-b-2 border-graydark-400/20">
-          <Container size="4" className="flex gap-10 items-center h-full">
+          <Container
+            size="4"
+            className="flex gap-6 md:gap-10 items-center h-full"
+          >
             <Logo size={35} />
             <div className="flex-1" />
             <Tooltip
               side="bottom"
               content={
-                canRender
-                  ? isEnabled
+                gpu.canGpuRender
+                  ? gpu.isGpuEnabled
                     ? 'Interactive host map is currently enabled'
                     : 'Interactive host map is currently disabled'
                   : 'Browser does not support interactive host map'
@@ -78,9 +81,9 @@ export function SiteMenu({ menuSections }: Props) {
               <div>
                 <Switch
                   tabIndex={-1}
-                  disabled={!canRender}
-                  checked={canRender && isEnabled}
-                  onCheckedChange={setIsEnabled}
+                  disabled={!gpu.canGpuRender}
+                  checked={gpu.canGpuRender && gpu.isGpuEnabled}
+                  onCheckedChange={gpu.setIsGpuEnabled}
                 >
                   <Wikis16 />
                 </Switch>

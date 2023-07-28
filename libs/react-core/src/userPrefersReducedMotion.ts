@@ -1,7 +1,7 @@
-export function userPrefersReducedMotion() {
+export function usePrefersReducedMotion() {
   const prefersReducedMotionQuery =
     typeof window === 'undefined'
       ? false
-      : window.matchMedia('(prefers-reduced-motion: reduce)')
+      : window.matchMedia?.('(prefers-reduced-motion: reduce)')
   return !prefersReducedMotionQuery || !!prefersReducedMotionQuery.matches
 }

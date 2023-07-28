@@ -2,8 +2,9 @@ import { NextRouter, useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { useCallback } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
-import { clearAllSwrKeys } from './utils'
-import { useWorkflows } from './workflows'
+import { useGpuFeatures } from './useGpuFeatures'
+import { clearAllSwrKeys } from '../utils'
+import { useWorkflows } from '../workflows'
 
 export type CurrencyId =
   | 'usd'
@@ -124,7 +125,6 @@ function getDefaultSettings(customDefaults?: Partial<AppSettings>) {
 
 type Props = {
   children?: React.ReactNode
-  ssr?: boolean
   passwordProtectRequestHooks?: boolean
   lockRoutes?: {
     home: string
@@ -134,7 +134,6 @@ type Props = {
 }
 
 function useAppSettingsMain({
-  ssr,
   passwordProtectRequestHooks,
   lockRoutes,
   defaultSettings: overrideDefaultSettings,
@@ -144,7 +143,6 @@ function useAppSettingsMain({
     [overrideDefaultSettings]
   )
   const [_settings, _setSettings] = useLocalStorageState('v0/settings', {
-    ssr,
     defaultValue: customDefaultSettings,
   })
   // Merge in defaults incase new settings have been introduced
@@ -223,11 +221,14 @@ function useAppSettingsMain({
 
   const isUnlocked = useMemo(() => !!settings.password, [settings])
 
+  const gpu = useGpuFeatures()
+
   return {
     settings,
     setSettings,
     setCurrency,
     currencyOptions,
+    gpu,
     lock,
     isUnlocked,
     passwordProtectRequestHooks,
