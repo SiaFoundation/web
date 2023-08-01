@@ -1,17 +1,10 @@
 type Props = {
-  focus?: boolean
   background: string
 }
 
-export function Background({ focus, background }: Props) {
+export function Background({ background }: Props) {
   return (
-    <div
-      className="absolute right-0 top-0 z-0 h-screen overflow-hidden bg-white select-none"
-      style={{
-        width: focus ? 'calc(100% - 600px)' : '100%',
-        left: focus ? '600px' : 0,
-      }}
-    >
+    <div className="absolute right-0 top-0 left-0 z-0 h-screen w-full overflow-hidden bg-white select-none">
       <div className="relative w-full h-full">
         <div className="absolute w-full h-full mix-blend-darken z-10 bg-mask" />
         <div

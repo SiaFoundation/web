@@ -87,13 +87,17 @@ export const menuSections = [
         title: 'Hosting Best Practices',
       },
       {
-        link: webLinks.docs.brand,
-        title: 'Brand guidelines',
-        newTab: true,
+        link: routes.letter.index,
+        title: 'Letter',
       },
       {
         link: webLinks.jobs,
         title: 'Careers',
+        newTab: true,
+      },
+      {
+        link: webLinks.docs.brand,
+        title: 'Brand guidelines',
         newTab: true,
       },
     ],
@@ -128,6 +132,11 @@ export const menuSections = [
       {
         link: webLinks.forum,
         title: 'Forum',
+        newTab: true,
+      },
+      {
+        link: webLinks.bluesky,
+        title: 'Bluesky',
         newTab: true,
       },
     ],

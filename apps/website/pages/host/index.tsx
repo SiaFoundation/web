@@ -142,10 +142,12 @@ export default function Host({
 }
 
 export async function getStaticProps() {
-  const stats = await getStats()
-  const technical = await getFeedContent(['technical'], 8)
-  const tutorials = await getHostingArticles()
-  const projects = await getProjects('hosting')
+  const [stats, technical, tutorials, projects] = await Promise.all([
+    getStats(),
+    getFeedContent(['technical'], 8),
+    getHostingArticles(),
+    getProjects('hosting'),
+  ])
   const thirdParty = projects.filter((project) => !project.idea)
   const ideas = projects.filter((project) => project.idea)
 

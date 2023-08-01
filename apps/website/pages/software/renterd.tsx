@@ -57,22 +57,21 @@ export default function Renterd({ version, technical, tutorials }: Props) {
             description={description}
             anchorLink={false}
           />
-          <div className="block xl:hidden pt-32 pb-4">{downloadEl}</div>
         </SectionTransparent>
       }
       backgroundImage={backgrounds.natePath}
       previewImage={previews.renterd}
     >
-      <SectionGradient className="pt-8 xl:pt-6 pb:30">
+      <SectionGradient className="pb:30">
         <div className="relative">
           <div ref={appRef} className="absolute top-[70%]" />
           <div
             className={cx(
               'relative transition-transform',
-              appInView ? 'scale-[1.03]' : ''
+              appInView ? 'md:scale-[1.03]' : ''
             )}
           >
-            <div className="hidden xl:block pt-52 pb-2">{downloadEl}</div>
+            <div className="pt-52">{downloadEl}</div>
             <CarouselRenterd />
           </div>
         </div>

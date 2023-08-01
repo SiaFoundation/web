@@ -13,12 +13,11 @@ import {
   useAppSettings,
   usePrefersReducedMotion,
 } from '@siafoundation/react-core'
-import { throttle } from 'lodash'
+import { random, throttle } from 'lodash'
 import { HostItem } from './HostItem'
 import { Globe } from './Globe'
 import { cx } from 'class-variance-authority'
 import { Host } from '../../content/geoHosts'
-import { useElementSize } from 'usehooks-ts'
 
 type Props = {
   hosts: Host[]
@@ -38,7 +37,9 @@ export function HostMap({ className, hosts, rates }: Props) {
   const scrollRef = useRef<HTMLDivElement>()
   const refs = useRef([]) // to store refs for all items
 
-  const [activeIndex, setActiveIndex] = useState<number>(0)
+  const [activeIndex, setActiveIndex] = useState<number>(
+    random(0, hosts.length - 1)
+  )
   const activeHost = useMemo(() => hosts[activeIndex], [hosts, activeIndex])
   const [reset, setReset] = useState<string>()
   const selectActiveHostByIndex = useCallback(
@@ -135,33 +136,32 @@ export function HostMap({ className, hosts, rates }: Props) {
       }, 1000),
     [setIsInteracting]
   )
-  const [containerRef, { width }] = useElementSize()
 
   return (
     <div className={className}>
       <div
-        ref={containerRef}
         onMouseMove={gpu.shouldRender ? onMouseMove : undefined}
         onMouseLeave={gpu.shouldRender ? onMouseLeave : undefined}
-        className="relative border-b border-gray-400 dark:border-graydark-400 -mx-[20px] md:mx-0"
+        className={cx(
+          'relative border-b border-gray-400 dark:border-graydark-400 -mx-[20px] md:mx-0 w-full',
+          gpu.hasCheckedGpu && !gpu.shouldRender
+            ? 'h-[50px] md:h-[200px]'
+            : 'aspect-[2/1]',
+          'transition-all duration-[400ms]'
+        )}
       >
         <div
           className={cx(
-            'relative w-full overflow-hidden',
+            'relative w-full h-full overflow-hidden',
             gpu.shouldRender || !gpu.hasCheckedGpu
               ? '-mt-[50px] md:-mt-[80px]'
-              : 'h-[50px] md:h-[200px]',
-            'transition-all duration-[400ms]',
-            gpu.hasCheckedGpu && gpu.shouldRender ? 'opacity-1' : 'opacity-0'
+              : '',
+            gpu.hasCheckedGpu && gpu.shouldRender ? 'opacity-1' : 'opacity-0',
+            'transition-opacity duration-[400ms]'
           )}
-          style={{
-            height:
-              gpu.shouldRender || !gpu.hasCheckedGpu ? `${width * 0.5}px` : '',
-          }}
         >
           {gpu.hasCheckedGpu && gpu.shouldRender && (
             <Globe
-              size={width}
               activeHost={activeHost}
               hosts={hosts}
               rates={rates}

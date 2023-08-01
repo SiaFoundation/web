@@ -20,7 +20,7 @@ type FeedItem = {
 
 const maxAge = getMinutesInSeconds(5)
 
-export async function getFeedContent(
+async function fetchFeedContent(
   tags: Tag[],
   limit?: number
 ): Promise<FeedItem[]> {
@@ -31,6 +31,16 @@ export async function getFeedContent(
     )
     .slice(0, limit)
     .map(addNewTab) as FeedItem[]
+}
+
+export async function getFeedContent(tags: Tag[], limit?: number) {
+  return getCacheValue(
+    'getFeedContent' + tags.join('') + limit,
+    async () => {
+      return fetchFeedContent(tags, limit)
+    },
+    maxAge
+  )
 }
 
 async function getFeedItems() {
