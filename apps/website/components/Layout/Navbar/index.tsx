@@ -63,7 +63,7 @@ export function Navbar() {
               <GrantsNav />
             </div>
             <NavMenuIndicator className="data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut top-full z-[1] flex h-[10px] items-end justify-center overflow-hidden transition-[width,transform_250ms_ease]">
-              <div className="relative top-[70%] h-[10px] w-[10px] rotate-[45deg] rounded-tl-[2px] bg-white" />
+              <div className="relative top-[70%] h-[10px] w-[10px] rotate-[45deg] rounded-tl-[2px] bg-gray-400 dark:bg-graydark-400" />
             </NavMenuIndicator>
           </NavMenuList>
           <div className="perspective-[2000px] absolute top-full left-0 flex w-full justify-center">

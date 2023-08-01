@@ -24,7 +24,7 @@ import { SectionTransparent } from '../components/SectionTransparent'
 import { usePullTop } from '../hooks/usePullTop'
 import { cx } from 'class-variance-authority'
 import { backgrounds, patterns, previews } from '../content/assets'
-import { GlobeSection } from '../components/GlobeSection'
+import { HostMap } from '../components/HostMap'
 import { CalloutProject } from '../components/CalloutProject'
 import { getGeoHosts } from '../content/geoHosts'
 import { getExchangeRates } from '../content/exchangeRates'
@@ -111,7 +111,7 @@ export default function Home({
             anchorLink={false}
             title="Decentralized data storage"
             description={description}
-            className="relative"
+            className="relative z-10"
           >
             {pullPending && (
               <JiggleArrow
@@ -122,7 +122,7 @@ export default function Home({
               />
             )}
           </SiteHeading>
-          <GlobeSection key={resetGlobe} hosts={hosts} rates={rates} />
+          <HostMap key={resetGlobe} hosts={hosts} rates={rates} />
         </SectionTransparent>
       }
       backgroundImage={backgrounds.mountain}

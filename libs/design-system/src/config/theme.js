@@ -122,6 +122,7 @@ module.exports = {
     require('tailwindcss-text-fill'),
     require('tailwindcss-shadow-fill'),
     require('../plugins/animation-delay'),
+    require('@tailwindcss/container-queries'),
     // navmenu
     plugin(({ matchUtilities }) => {
       matchUtilities({

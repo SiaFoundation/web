@@ -14,7 +14,7 @@ const linkVariants = cva(['cursor-pointer'], {
     },
     underline: {
       accent:
-        'underline underline-offset-4 decoration-2 decoration-accent-700 dark:decoration-accentdark-900',
+        'underline underline-offset-4 decoration-2 decoration-accentdark-900 dark:decoration-accentdark-900',
       default: 'underline underline-offset-4',
       hover: 'hover:underline underline-offset-4',
       none: '',

@@ -33,7 +33,8 @@ export function useGpuFeatures() {
     if (process.env['NODE_ENV'] !== 'test') {
       const gpu = await getGPUTier()
       console.log('GPU', gpu)
-      canRender = gpu.gpu?.startsWith('apple') || (gpu.fps || 0) >= 15
+      // canRender = gpu.gpu?.startsWith('apple') || (gpu.fps || 0) >= 15
+      canRender = gpu.tier > 0
     }
     setCanGpuRender(canRender)
     setHasCheckedGpu(true)

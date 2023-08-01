@@ -73,9 +73,9 @@ export function SiteMenu({ menuSections }: Props) {
               content={
                 gpu.canGpuRender
                   ? gpu.isGpuEnabled
-                    ? 'Interactive host map is currently enabled'
-                    : 'Interactive host map is currently disabled'
-                  : 'Browser does not support interactive host map'
+                    ? 'Interactive host map is currently enabled.'
+                    : 'Interactive host map is currently disabled.'
+                  : 'Browser does not support interactive host map.'
               }
             >
               <div>
