@@ -72,4 +72,7 @@ export const routes = {
   terms: {
     index: '/terms-of-service',
   },
+  letter: {
+    index: '/letter',
+  },
 }

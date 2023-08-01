@@ -26,7 +26,7 @@ const description = 'Manage your wallet on the Sia network.'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-export default function Wallet({ technical, tutorials, thirdParty }: Props) {
+export default function Wallet({ technical, tutorials, projects }: Props) {
   return (
     <Layout
       title={title}
@@ -82,7 +82,7 @@ export default function Wallet({ technical, tutorials, thirdParty }: Props) {
             className="mt-12 md:mt-24"
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <SectionProjects items={thirdParty} />
+            <SectionProjects items={projects} />
           </div>
         </div>
       </SectionGradient>
@@ -129,15 +129,17 @@ export default function Wallet({ technical, tutorials, thirdParty }: Props) {
 }
 
 export async function getStaticProps() {
-  const stats = await getStats()
-  const technical = await getFeedContent(['technical'], 8)
-  const tutorials = await getWalletArticles()
-  const thirdParty = await getProjects('wallet')
+  const [stats, technical, tutorials, projects] = await Promise.all([
+    getStats(),
+    getFeedContent(['technical'], 8),
+    getWalletArticles(),
+    getProjects('wallet'),
+  ])
 
   const props = {
     technical,
     tutorials,
-    thirdParty,
+    projects,
     fallback: {
       '/api/stats': stats,
     },

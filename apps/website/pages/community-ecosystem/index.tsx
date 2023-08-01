@@ -114,9 +114,11 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
 }
 
 export async function getStaticProps() {
-  const stats = await getStats()
-  const blogs = await getFeedContent(['ecosystem-featured'], 4)
-  const software = await getProjects('')
+  const [stats, blogs, software] = await Promise.all([
+    getStats(),
+    getFeedContent(['ecosystem-featured'], 4),
+    getProjects(''),
+  ])
 
   return {
     props: {

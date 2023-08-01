@@ -53,7 +53,7 @@ export function SiteMenu({ menuSections }: Props) {
         <Button
           size="small"
           variant="ghost"
-          className="relative"
+          className="relative !p-0"
           icon="contrast"
         >
           <MenuIcon />

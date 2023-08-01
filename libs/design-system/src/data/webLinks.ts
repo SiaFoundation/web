@@ -36,6 +36,7 @@ export const webLinks = {
   },
   discord: 'https://sia.tech/discord',
   twitter: 'https://twitter.com/sia__foundation',
+  bluesky: 'https://bsky.app/profile/sia.tech',
   twitterHandle: '@sia__foundation',
   reddit: 'https://reddit.com/r/siacoin',
   forum: 'https://forum.sia.tech/',

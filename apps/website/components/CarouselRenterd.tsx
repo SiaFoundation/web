@@ -51,7 +51,7 @@ export function CarouselRenterd() {
 
   return (
     <div className="flex flex-col">
-      <div className="relative lg:mx-2 xl:-mx-10">
+      <div className="relative -mx-6 md:-mx-8 lg:-mx-10">
         {images.map((item, i) => (
           <div
             key={item.key}

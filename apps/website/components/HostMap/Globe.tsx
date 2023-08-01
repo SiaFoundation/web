@@ -13,9 +13,10 @@ import { random, sortBy } from 'lodash'
 import { getHostLabel } from './utils'
 import { Host } from '../../content/geoHosts'
 import { getAssetUrl } from '../../content/assets'
+import { useTheme } from '@siafoundation/design-system'
+import { useElementSize } from 'usehooks-ts'
 
 type Props = {
-  size: number
   activeHost: Host
   selectActiveHost: (public_key: string) => void
   hosts: Host[]
@@ -41,13 +42,7 @@ const ReactGlobe = forwardRef(function ReactGlobe(
   return <GlobeGl {...props} forwardRef={ref} />
 })
 
-function GlobeComponent({
-  size,
-  activeHost,
-  hosts,
-  rates,
-  selectActiveHost,
-}: Props) {
+function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
   const globeEl = useRef<GlobeMethods>(null)
   const moveToHost = useCallback((host: Host) => {
     globeEl.current?.pointOfView(
@@ -137,59 +132,64 @@ function GlobeComponent({
     [backgroundRoutes, activeRoutes]
   )
 
+  const { activeTheme } = useTheme()
+  const [containerRef, { width: size }] = useElementSize()
+
   return (
-    <ReactGlobe
-      ref={globeEl}
-      width={size}
-      height={size}
-      backgroundColor="rgba(0,0,0,0)"
-      globeImageUrl={`/_next/image?url=${encodeURIComponent(
-        getAssetUrl('assets/map.png')
-      )}&w=2048&q=50`}
-      arcsData={routes}
-      atmosphereColor="rgba(30, 169,76, 1)"
-      atmosphereAltitude={0.05}
-      animateIn={false}
-      arcLabel={(r: Route) => getHostLabel({ host: r.dst, rates })}
-      arcStartLat={(r: Route) => +r.src.location[0]}
-      arcStartLng={(r: Route) => +r.src.location[1]}
-      arcEndLat={(r: Route) => +r.dst.location[0]}
-      arcEndLng={(r: Route) => +r.dst.location[1]}
-      arcDashLength={0.75}
-      arcAltitude={0}
-      arcDashGap={0.1}
-      arcDashInitialGap={() => Math.random()}
-      arcDashAnimateTime={5000}
-      // arcDashAnimateTime={(route: Route) =>
-      //   doesIncludeActiveHost(route, activeHost) ? 5000 : 0
-      // }
-      arcColor={(r: Route) =>
-        doesIncludeActiveHost(r, activeHost)
-          ? [`rgba(187, 229, 201, 0.25)`, `rgba(187, 229, 201, 0.25)`]
-          : [`rgba(187, 229, 201, 0.10)`, `rgba(187, 229, 201, 0.10)`]
-      }
-      onArcClick={(r: Route) => {
-        moveToHost(r.dst)
-      }}
-      arcsTransitionDuration={0}
-      pointsData={hosts}
-      pointLat={(h: Host) => h.location[0]}
-      pointLng={(h: Host) => h.location[1]}
-      pointLabel={(h: Host) => getHostLabel({ host: h, rates })}
-      pointAltitude={0}
-      pointColor={(h: Host) =>
-        h.public_key === activeHost.public_key
-          ? 'rgba(102, 255, 0, 1.0)'
-          : 'rgba(102, 255, 0, 0.4)'
-      }
-      pointRadius={(h: Host) =>
-        h.public_key === activeHost.public_key ? 0.6 : 0.2
-      }
-      onPointClick={(h: Host) => {
-        moveToHost(h)
-      }}
-      pointsMerge={false}
-    />
+    <div ref={containerRef}>
+      <ReactGlobe
+        ref={globeEl}
+        width={size}
+        height={size}
+        backgroundColor="rgba(0,0,0,0)"
+        globeImageUrl={`/_next/image?url=${encodeURIComponent(
+          getAssetUrl('assets/map.png')
+        )}&w=2048&q=50`}
+        arcsData={routes}
+        atmosphereColor="rgba(30, 169,76, 1)"
+        atmosphereAltitude={activeTheme === 'dark' ? 0.05 : 0.15}
+        animateIn={false}
+        arcLabel={(r: Route) => getHostLabel({ host: r.dst, rates })}
+        arcStartLat={(r: Route) => +r.src.location[0]}
+        arcStartLng={(r: Route) => +r.src.location[1]}
+        arcEndLat={(r: Route) => +r.dst.location[0]}
+        arcEndLng={(r: Route) => +r.dst.location[1]}
+        arcDashLength={0.75}
+        arcAltitude={0}
+        arcDashGap={0.1}
+        arcDashInitialGap={() => Math.random()}
+        arcDashAnimateTime={5000}
+        // arcDashAnimateTime={(route: Route) =>
+        //   doesIncludeActiveHost(route, activeHost) ? 5000 : 0
+        // }
+        arcColor={(r: Route) =>
+          doesIncludeActiveHost(r, activeHost)
+            ? [`rgba(187, 229, 201, 0.25)`, `rgba(187, 229, 201, 0.25)`]
+            : [`rgba(187, 229, 201, 0.10)`, `rgba(187, 229, 201, 0.10)`]
+        }
+        onArcClick={(r: Route) => {
+          selectActiveHost(r.dst.public_key)
+        }}
+        arcsTransitionDuration={0}
+        pointsData={hosts}
+        pointLat={(h: Host) => h.location[0]}
+        pointLng={(h: Host) => h.location[1]}
+        pointLabel={(h: Host) => getHostLabel({ host: h, rates })}
+        pointAltitude={0}
+        pointColor={(h: Host) =>
+          h.public_key === activeHost.public_key
+            ? 'rgba(102, 255, 0, 1.0)'
+            : 'rgba(102, 255, 0, 0.6)'
+        }
+        pointRadius={(h: Host) =>
+          h.public_key === activeHost.public_key ? 0.6 : 0.2
+        }
+        onPointClick={(h: Host) => {
+          selectActiveHost(h.public_key)
+        }}
+        pointsMerge={false}
+      />
+    </div>
   )
 }
 

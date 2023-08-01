@@ -212,10 +212,12 @@ function Foundation({ team, featured, reports }: Props) {
 }
 
 export async function getStaticProps() {
-  const stats = await getStats()
-  const featured = await getFeedContent(['sia-all', 'featured'], 5)
-  const reports = await getReports()
-  const team = await getTeam()
+  const [stats, featured, reports, team] = await Promise.all([
+    getStats(),
+    getFeedContent(['sia-all', 'featured'], 5),
+    getReports(),
+    getTeam(),
+  ])
 
   return {
     props: {

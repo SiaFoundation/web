@@ -99,14 +99,13 @@ export default function Grants({
               ]}
               className="mt-10"
             />
-            <div className="flex flex-col gap-3 mt-10"></div>
           </SiteHeading>
         </SectionTransparent>
       }
       backgroundImage={backgrounds.nateSnow}
       previewImage={previews.nateSnow}
     >
-      <SectionGradient className="pt-6 md:pt-20 pb-16 md:pb-32">
+      <SectionGradient className="pt-6 md:pt-10 pb-16 md:pb-32">
         <div className="flex flex-col max-w-3xl overflow-hidden">
           <SiteHeading
             size="32"

@@ -139,10 +139,12 @@ export default function Rent({
 }
 
 export async function getStaticProps() {
-  const stats = await getStats()
-  const technical = await getFeedContent(['technical'], 8)
-  const tutorials = await getRentingArticles()
-  const projects = await getProjects('renting')
+  const [stats, technical, tutorials, projects] = await Promise.all([
+    getStats(),
+    getFeedContent(['technical'], 8),
+    getRentingArticles(),
+    getProjects('renting'),
+  ])
   const thirdParty = projects.filter((project) => !project.idea)
   const ideas = projects.filter((project) => project.idea)
 
