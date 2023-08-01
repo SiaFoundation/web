@@ -9,7 +9,7 @@ type Props = {
 export function NavItem({ trigger, title, children }: Props) {
   return (
     <NavMenuItem trigger={trigger}>
-      <div className="flex flex-col gap-3 pt-2 p-3">
+      <div className="flex flex-col gap-3 pt-2 px-3 pb-3">
         <Text color="subtle" noWrap>
           {title}
         </Text>

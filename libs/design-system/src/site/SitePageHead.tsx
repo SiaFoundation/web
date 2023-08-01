@@ -61,7 +61,7 @@ export function SitePageHead({
 
         {/* Open Graph */}
         <meta property="og:url" content={`${appLink}${path}`} />
-        <meta property="og:image" content={`${appLink}${image}`} />
+        <meta property="og:image" content={image} />
         <meta property="og:site_name" content={appName} />
         <meta property="og:title" content={fullTitle} />
         <meta property="og:description" content={description} />
