@@ -1,4 +1,4 @@
-import { DatumCard, TxPoolList, PeerList } from '@siafoundation/design-system'
+import { DatumCard, PeerList } from '@siafoundation/design-system'
 import {
   useConsensusState,
   useSyncerPeers,
@@ -48,17 +48,10 @@ export function Node() {
           <DatumCard label="Connected peers" value={peers.data?.length} />
           <DatumCard label="Transactions in pool" value={txPool.data?.length} />
         </div>
-        <div className="flex flex-wrap gap-7">
-          <div className="flex-1">
-            <PeerList
-              peers={peers.data}
-              connectPeer={() => openDialog('connectPeer')}
-            />
-          </div>
-          <div className="flex-1">
-            <TxPoolList transactions={txPool.data} />
-          </div>
-        </div>
+        <PeerList
+          peers={peers.data}
+          connectPeer={() => openDialog('connectPeer')}
+        />
       </div>
     </RenterdAuthedLayout>
   )
