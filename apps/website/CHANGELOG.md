@@ -1,5 +1,22 @@
 # website
 
+## 0.38.0
+
+### Minor Changes
+
+- a019667c: Site now features dedicated sections for each use-case “rent”, “host”, “wallet”.
+- a019667c: New Wallet and walletd software pages.
+- a019667c: Added interactive host map to communicate network activity.
+- a019667c: Aesthetic has been evolved to look more consistent (with apps too), modern, and interactive.
+- a019667c: Content cards are now clearer with better contrast - clearer text heading instead of logo and screenshots to give the user an immediate idea.
+- a019667c: New software is now featured, site no longer pushes users to old software.
+- a019667c: Website’s content structure has been improved.
+- a019667c: renterd and host features and screenshots have been updated.
+- a019667c: Community and ecosystem page is streamlined with ecosystem project search front and center at the top of the page.
+- a019667c: Grants are front and center on the new nav, encouraging users to discover the program. Added a dedicated “Grant Ideas” sections.
+- a019667c: Added a new “coming soon” article content type for planned articles or ideas.
+- a019667c: Navbar now highlights and funnels users to the most important pages.
+
 ## 0.37.0
 
 ### Minor Changes
