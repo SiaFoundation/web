@@ -7,20 +7,22 @@ export function useGpuFeatures() {
   const reduceMotion = usePrefersReducedMotion()
   const [hasCheckedGpu, setHasCheckedGpu] = useState<boolean>(false)
   const [canGpuRender, setCanGpuRender] = useState<boolean>(false)
-  const [{ isGpuEnabled }, setSettings] = useLocalStorageState(
-    'v0/gpuFeatures',
+  const [{ isGpuEnabled, hasUserSet }, setSettings] = useLocalStorageState(
+    'v1/gpuFeatures',
     {
       defaultValue: {
         isGpuEnabled: !reduceMotion,
+        hasUserSet: false,
       },
     }
   )
 
   const setIsGpuEnabled = useCallback(
-    (isGpuEnabled: boolean) => {
+    (isGpuEnabled: boolean, byUser = true) => {
       setSettings((settings) => ({
         ...settings,
         isGpuEnabled,
+        hasUserSet: byUser,
       }))
     },
     [setSettings]
@@ -35,10 +37,14 @@ export function useGpuFeatures() {
       console.log('GPU', gpu)
       // canRender = gpu.gpu?.startsWith('apple') || (gpu.fps || 0) >= 15
       canRender = gpu.tier > 0
+      // if user has not made a selection yet, and gpu is not powerful, disable gpu
+      if (!hasUserSet && gpu.tier < 2) {
+        setIsGpuEnabled(false, false)
+      }
     }
     setCanGpuRender(canRender)
     setHasCheckedGpu(true)
-  }, [setCanGpuRender])
+  }, [setCanGpuRender, setIsGpuEnabled, hasUserSet])
 
   useEffect(() => {
     checkGpu()
