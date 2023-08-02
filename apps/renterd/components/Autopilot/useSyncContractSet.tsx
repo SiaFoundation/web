@@ -15,12 +15,18 @@ export function useSyncContractSet() {
     useLocalStorageState<boolean>('v0/autopilot/syncDefaultContractSet', {
       defaultValue: true,
     })
-  const contractSet = useContractSetSettings()
+  const contractSet = useContractSetSettings({
+    config: {
+      swr: {
+        errorRetryCount: 0,
+      },
+    },
+  })
   const settingUpdate = useSettingUpdate()
 
   const syncDefaultContractSet = useCallback(
     async (autopilotContractSet: string) => {
-      const csd = contractSet.data
+      const csd = contractSet.data || { default: '' }
       try {
         if (
           shouldSyncDefaultContractSet &&

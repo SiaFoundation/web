@@ -43,6 +43,7 @@ export function Autopilot() {
     config: {
       swr: {
         revalidateOnFocus: false,
+        errorRetryCount: 0,
       },
     },
   })
