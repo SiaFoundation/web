@@ -143,7 +143,7 @@ export function HostMap({ className, hosts, rates }: Props) {
         onMouseMove={gpu.shouldRender ? onMouseMove : undefined}
         onMouseLeave={gpu.shouldRender ? onMouseLeave : undefined}
         className={cx(
-          'relative border-b border-gray-400 dark:border-graydark-400 -mx-[20px] md:mx-0 w-full',
+          'relative border-b border-gray-400 dark:border-graydark-400 w-full',
           gpu.hasCheckedGpu && !gpu.shouldRender
             ? 'h-[50px] md:h-[200px]'
             : 'aspect-[2/1]',
