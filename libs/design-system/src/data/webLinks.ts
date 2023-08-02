@@ -20,9 +20,9 @@ export const webLinks = {
   },
   design: 'https://design.sia.tech',
   apiDocs: {
-    siad: 'https://api.sia.tech',
     renterd: 'https://api.sia.tech/renterd',
     hostd: 'https://api.sia.tech/hostd',
+    walletd: 'https://api.sia.tech/walletd',
   },
   // forum: 'https://forum.sia.tech',
   github: {
