@@ -81,7 +81,9 @@ api.sia.tech {
   handle /api* {
     reverse_proxy https://documenter.getpostman.com
   }
-  redir /renterd permanent
+  handle /* {
+    redir /renterd permanent
+  }
 }
 
 explore.sia.tech {
