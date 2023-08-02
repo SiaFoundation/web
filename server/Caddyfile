@@ -63,26 +63,26 @@ beta.sia.tech {
 }
 
 api.sia.tech {
-  handle /renterd {
-    rewrite * /view/23671177/2s93RUsqo6
-    reverse_proxy https://documenter.getpostman.com
-  }
-  handle /hostd {
-    rewrite * /view/737767/2s93Xu2koJ
-    reverse_proxy https://documenter.getpostman.com
-  }
-  handle /walletd {
-    rewrite * /view/737767/2s9XxtzGU4
-    reverse_proxy https://documenter.getpostman.com
-  }
-  handle /view* {
-    reverse_proxy https://documenter.getpostman.com
-  }
-  handle /api* {
-    reverse_proxy https://documenter.getpostman.com
-  }
-  handle /* {
-    redir /renterd permanent
+  route {
+    handle /renterd {
+      rewrite * /view/23671177/2s93RUsqo6
+      reverse_proxy https://documenter.getpostman.com
+    }
+    handle /hostd {
+      rewrite * /view/737767/2s93Xu2koJ
+      reverse_proxy https://documenter.getpostman.com
+    }
+    handle /walletd {
+      rewrite * /view/737767/2s9XxtzGU4
+      reverse_proxy https://documenter.getpostman.com
+    }
+    handle /view* {
+      reverse_proxy https://documenter.getpostman.com
+    }
+    handle /api* {
+      reverse_proxy https://documenter.getpostman.com
+    }
+    redir /* /renterd permanent
   }
 }
 
