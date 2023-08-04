@@ -5,6 +5,7 @@ import { ServerFilterItem } from '@siafoundation/design-system'
 import { ContractsCmdGroup } from './Contracts'
 import { UsableCmdGroup } from './Usable'
 import { useApp } from '../../../../../contexts/app'
+import { PublicKeyCmdGroup } from './PublicKey'
 
 type Props = {
   currentPage: Page
@@ -21,6 +22,7 @@ export function ContractFilterCmdGroups({ currentPage, select }: Props) {
       )}
       <ContractsCmdGroup currentPage={currentPage} select={select} />
       <AddressCmdGroup currentPage={currentPage} select={select} />
+      <PublicKeyCmdGroup currentPage={currentPage} select={select} />
       <AllowBlockCmdGroup currentPage={currentPage} select={select} />
     </>
   )

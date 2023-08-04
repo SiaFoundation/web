@@ -31,6 +31,17 @@ function useHostsMain() {
   const { dataset: allContracts } = useContracts()
   const { autopilot } = useApp()
 
+  const keyIn = useMemo(() => {
+    let keyIn: string[] = []
+    if (filters.find((f) => f.id === 'activeContracts') && allContracts) {
+      keyIn = allContracts.map((c) => c.hostKey)
+    }
+    if (filters.find((f) => f.id === 'publicKeyContains')) {
+      keyIn.push(filters.find((f) => f.id === 'publicKeyContains')?.value)
+    }
+    return keyIn.length ? keyIn : undefined
+  }, [filters, allContracts])
+
   const autopilotResponse = useAutopilotHostsSearch({
     disabled:
       // prevents an extra fetch when allContracts is null
@@ -44,10 +55,7 @@ function useHostsMain() {
       filterMode: (filters.find((f) => f.id === 'filterMode')?.value ||
         'all') as HostsSearchFilterMode,
       addressContains: filters.find((f) => f.id === 'addressContains')?.value,
-      keyIn:
-        filters.find((f) => f.id === 'activeContracts') && allContracts
-          ? allContracts.map((c) => c.hostKey)
-          : undefined,
+      keyIn,
     },
     config: {
       swr: {

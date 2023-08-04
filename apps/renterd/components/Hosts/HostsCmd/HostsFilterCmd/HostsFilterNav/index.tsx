@@ -5,6 +5,7 @@ import { hostsFilterAllowBlockPage } from '../HostsFilterCmdGroups/AllowBlock'
 import { ServerFilterItem } from '@siafoundation/design-system'
 import { hostsFilterContractsPage } from '../HostsFilterCmdGroups/Contracts'
 import { hostsFilterUsablePage } from '../HostsFilterCmdGroups/Usable'
+import { PublicKeyCmdNav } from '../HostsFilterCmdGroups/PublicKey'
 import { useApp } from '../../../../../contexts/app'
 
 export const commandPage = {
@@ -40,6 +41,12 @@ export function HostsFilterNav({
           {hostsFilterUsablePage.label}
         </CommandItemNav>
       )}
+      <PublicKeyCmdNav
+        currentPage={currentPage}
+        parentPage={parentPage}
+        commandPage={commandPage}
+        select={select}
+      />
       <AddressCmdNav
         currentPage={currentPage}
         parentPage={parentPage}

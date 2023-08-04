@@ -272,8 +272,8 @@ export function useHostsSearch(
   })
 }
 
-export function useHostsPubkey(args: HookArgsSwr<{ hostKey: string }, Host>) {
-  return useGetSwr({ ...args, route: '/bus/hosts/:hostKey' })
+export function useHost(args: HookArgsSwr<{ hostKey: string }, Host>) {
+  return useGetSwr({ ...args, route: '/bus/host/:hostKey' })
 }
 
 export function useHostsPubkeyInteractionAdd(
@@ -384,7 +384,7 @@ export function useContractRenew(
 }
 
 export function useContractDelete(
-  args: HookArgsCallback<{ id: string }, void, never>
+  args?: HookArgsCallback<{ id: string }, void, never>
 ) {
   return useDeleteFunc({ ...args, route: '/bus/contracts/:id/delete' })
 }
@@ -490,4 +490,21 @@ export function useSettingUpdate(
       mutate((key) => key.startsWith(`/bus/setting/${args.params.key}`))
     }
   )
+}
+
+type AlertSeverity = 'info' | 'warning' | 'error' | 'critical'
+
+type Alert = {
+  id: string
+  severity: AlertSeverity
+  message: string
+  timestamp: string
+  data: {
+    account?: string
+    host?: string
+  }
+}
+
+export function useAlerts(args?: HookArgsSwr<void, Alert[]>) {
+  return useGetSwr({ ...args, route: '/bus/alerts' })
 }

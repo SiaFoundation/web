@@ -41,7 +41,7 @@ export const baseItemStyles = ({
 export const itemStyles = ({
   className,
   font,
-  color = 'subtle',
+  color = 'contrast',
   weight = 'medium',
   size = '14',
   scaleSize,
@@ -60,6 +60,7 @@ export const itemStyles = ({
       className,
     }),
     [
+      'group',
       'cursor-pointer',
       'rounded-sm',
       'focus:outline-none',

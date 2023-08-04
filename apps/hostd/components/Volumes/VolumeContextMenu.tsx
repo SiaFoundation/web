@@ -11,15 +11,19 @@ import {
   Edit16,
   triggerErrorToast,
   triggerSuccessToast,
+  Text,
+  truncate,
 } from '@siafoundation/design-system'
 import { useVolume, useVolumeUpdate } from '@siafoundation/react-hostd'
 import { useDialog } from '../../contexts/dialog'
 
 type Props = {
   id: string
+  contentProps?: React.ComponentProps<typeof DropdownMenu>['contentProps']
+  buttonProps?: React.ComponentProps<typeof Button>
 }
 
-export function VolumeDropdownMenu({ id }: Props) {
+export function VolumeContextMenu({ id, contentProps, buttonProps }: Props) {
   const { openDialog } = useDialog()
   const volumeUpdate = useVolumeUpdate()
   const volume = useVolume({
@@ -30,12 +34,17 @@ export function VolumeDropdownMenu({ id }: Props) {
   return (
     <DropdownMenu
       trigger={
-        <Button variant="ghost" icon="hover">
+        <Button variant="ghost" icon="hover" {...buttonProps}>
           <Draggable16 />
         </Button>
       }
-      contentProps={{ align: 'start' }}
+      contentProps={{ align: 'start', ...contentProps }}
     >
+      <div className="px-1.5 py-1">
+        <Text size="14" weight="medium" color="subtle">
+          Volume {volume.data ? truncate(volume.data?.localPath, 24) : id}
+        </Text>
+      </div>
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
       {volume.data ? (
         <DropdownMenuItem

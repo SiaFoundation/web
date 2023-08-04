@@ -3,14 +3,17 @@ import {
   DropdownMenuItem,
   Button,
   Draggable16,
+  DataView16,
   ListChecked16,
   DropdownMenuLeftSlot,
   Filter16,
   DropdownMenuLabel,
+  Text,
 } from '@siafoundation/design-system'
 import {
   useHostsAllowlist,
   useHostsBlocklist,
+  useRhpScan,
 } from '@siafoundation/react-renterd'
 import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
@@ -24,9 +27,16 @@ import { publicKeyContainsFilter } from '../Contracts/ContractsFilterPublicKeyDi
 type Props = {
   address: string
   publicKey: string
+  contentProps?: React.ComponentProps<typeof DropdownMenu>['contentProps']
+  buttonProps?: React.ComponentProps<typeof Button>
 }
 
-export function ContractDropdownMenu({ address, publicKey }: Props) {
+export function HostContextMenu({
+  address,
+  publicKey,
+  contentProps,
+  buttonProps,
+}: Props) {
   const router = useRouter()
   const { setFilter: setHostsFilter, resetFilters: resetHostsFilters } =
     useHosts()
@@ -36,15 +46,21 @@ export function ContractDropdownMenu({ address, publicKey }: Props) {
   const allowlist = useHostsAllowlist()
   const blocklistUpdate = useBlocklistUpdate()
   const allowlistUpdate = useAllowlistUpdate()
+  const rescan = useRhpScan()
   return (
     <DropdownMenu
       trigger={
-        <Button variant="ghost" icon="hover">
+        <Button variant="ghost" icon="hover" {...buttonProps}>
           <Draggable16 />
         </Button>
       }
-      contentProps={{ align: 'start' }}
+      contentProps={{ align: 'start', ...contentProps }}
     >
+      <div className="px-1.5 py-1">
+        <Text size="14" weight="medium" color="subtle">
+          Host {publicKey.slice(0, 24)}...
+        </Text>
+      </div>
       <DropdownMenuLabel>Filters</DropdownMenuLabel>
       <DropdownMenuItem
         onSelect={() => {
@@ -72,7 +88,7 @@ export function ContractDropdownMenu({ address, publicKey }: Props) {
         <DropdownMenuLeftSlot>
           <Filter16 />
         </DropdownMenuLeftSlot>
-        Filter contracts by address
+        Filter contracts by host address
       </DropdownMenuItem>
       <DropdownMenuItem
         onSelect={() => {
@@ -84,9 +100,25 @@ export function ContractDropdownMenu({ address, publicKey }: Props) {
         <DropdownMenuLeftSlot>
           <Filter16 />
         </DropdownMenuLeftSlot>
-        Filter contracts by public key
+        Filter contracts by host public key
       </DropdownMenuItem>
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
+      <DropdownMenuItem
+        onSelect={() =>
+          rescan.post({
+            payload: {
+              hostKey: publicKey,
+              hostIP: address,
+              timeout: 30000000000,
+            },
+          })
+        }
+      >
+        <DropdownMenuLeftSlot>
+          <DataView16 />
+        </DropdownMenuLeftSlot>
+        Rescan host
+      </DropdownMenuItem>
       {blocklist.data?.find((l) => l === address) ? (
         <DropdownMenuItem onSelect={() => blocklistUpdate([], [address])}>
           <DropdownMenuLeftSlot>

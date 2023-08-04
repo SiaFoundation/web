@@ -15,7 +15,7 @@ import {
 } from '@siafoundation/design-system'
 import { ContractStatus } from '@siafoundation/react-hostd'
 import { humanBytes, humanDate } from '@siafoundation/sia-js'
-import { ContractDropdownMenu } from '../../components/Contracts/ContractDropdownMenu'
+import { ContractContextMenu } from '../../components/Contracts/ContractContextMenu'
 import { ContractData, TableColumnId } from './types'
 
 type Context = {
@@ -43,7 +43,7 @@ export const columns: ContractsTableColumn[] = (
       fixed: true,
       cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
       render: ({ data: { id, status } }) => (
-        <ContractDropdownMenu id={id} status={status} />
+        <ContractContextMenu id={id} status={status} />
       ),
     },
     {

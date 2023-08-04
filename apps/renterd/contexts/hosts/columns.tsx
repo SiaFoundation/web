@@ -16,7 +16,7 @@ import {
 import { humanBytes, humanNumber } from '@siafoundation/sia-js'
 import { HostData, TableColumnId } from './types'
 import { format, formatDistance, formatRelative } from 'date-fns'
-import { HostDropdownMenu } from '../../components/Hosts/HostDropdownMenu'
+import { HostContextMenu } from '../../components/Hosts/HostContextMenu'
 import { useWorkflows } from '@siafoundation/react-core'
 import {
   AutopilotHost,
@@ -42,10 +42,7 @@ export const columns: HostsTableColumn[] = (
       category: 'general',
       cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
       render: ({ data }) => (
-        <HostDropdownMenu
-          address={data.netAddress}
-          publicKey={data.publicKey}
-        />
+        <HostContextMenu address={data.netAddress} publicKey={data.publicKey} />
       ),
     },
     {
