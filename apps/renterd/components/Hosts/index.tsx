@@ -4,16 +4,13 @@ import { Table } from '@siafoundation/design-system'
 import { useDialog } from '../../contexts/dialog'
 import { useHosts } from '../../contexts/hosts'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
-import { StateNoneMatching } from './StateNoneMatching'
-import { StateNoneYet } from './StateNoneYet'
+import { StateEmpty } from './StateEmpty'
 import { HostsActionsMenu } from './HostsActionsMenu'
-import { StateError } from './StateError'
 import { HostsFilterBar } from './HostsFilterBar'
 
 export function Hosts() {
   const { openDialog } = useDialog()
-  const { dataset, columns, limit, dataState, autopilotMode, error } =
-    useHosts()
+  const { dataset, columns, limit, dataState } = useHosts()
 
   return (
     <RenterdAuthedLayout
@@ -28,15 +25,7 @@ export function Hosts() {
       <div className="p-6 min-w-fit">
         <Table
           isLoading={dataState === 'loading'}
-          emptyState={
-            dataState === 'noneMatchingFilters' ? (
-              <StateNoneMatching />
-            ) : dataState === 'noneYet' ? (
-              <StateNoneYet />
-            ) : dataState === 'error' ? (
-              <StateError autopilotMode={autopilotMode} error={error} />
-            ) : null
-          }
+          emptyState={<StateEmpty />}
           pageSize={limit}
           data={dataset}
           columns={columns}

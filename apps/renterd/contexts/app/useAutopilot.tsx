@@ -2,7 +2,7 @@ import { useAutopilotStatus } from '@siafoundation/react-renterd'
 import { useEffect, useState } from 'react'
 
 export function useAutopilot() {
-  const aps = useAutopilotStatus({
+  const status = useAutopilotStatus({
     config: {
       swr: {
         dedupingInterval: 5_000,
@@ -12,21 +12,24 @@ export function useAutopilot() {
     },
   })
 
-  const [mode, setMode] = useState<'on' | 'off' | 'init'>('init')
+  const [state, setState] = useState<'on' | 'off' | 'init'>('init')
 
   useEffect(() => {
-    if (aps.isLoading) {
-      setMode('init')
-    } else if (aps.isValidating) {
+    if (status.isLoading) {
+      setState('init')
+    } else if (status.isValidating) {
       return
-    } else if (aps.error) {
-      setMode('off')
-    } else if (aps.data) {
+    } else if (status.error) {
+      setState('off')
+    } else if (status.data) {
       // This check is required because the API currently returns html when the endpoint does not exist
-      const validResponse = typeof aps.data === 'object'
-      setMode(validResponse ? 'on' : 'off')
+      const validResponse = typeof status.data === 'object'
+      setState(validResponse ? 'on' : 'off')
     }
-  }, [aps])
+  }, [status])
 
-  return mode
+  return {
+    state,
+    status,
+  }
 }

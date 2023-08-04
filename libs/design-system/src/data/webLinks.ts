@@ -40,7 +40,7 @@ export const webLinks = {
   twitterHandle: '@sia__foundation',
   reddit: 'https://reddit.com/r/siacoin',
   forum: 'https://forum.sia.tech/',
-  forumGrants: 'https://forum.sia.tech/c/foundation/grants',
+  forumGrants: 'https://forum.sia.tech/c/grants/8',
   merch: 'https://siagear.tech/',
   email: 'hello@sia.tech',
   benchmarks: 'https://benchmarks.sia.tech',

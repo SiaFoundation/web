@@ -298,7 +298,7 @@ export default function Grants({
           }
           links={[
             {
-              title: 'Learn more about the ecosystem',
+              title: 'Browse all ecosystem projects',
               link: routes.community.index,
             },
           ]}

@@ -9,10 +9,10 @@ import {
   useHostsSearch,
 } from '@siafoundation/react-renterd'
 import { ContractData } from '../contracts/types'
-import { useRenterd } from '../renterd'
+import { useApp } from '../app'
 
 export function useDataset({
-  autopilotMode,
+  autopilotState,
   regularResponse,
   autopilotResponse,
   allContracts,
@@ -20,7 +20,7 @@ export function useDataset({
   blocklist,
   isAllowlistActive,
 }: {
-  autopilotMode: ReturnType<typeof useRenterd>['autopilotMode']
+  autopilotState: ReturnType<typeof useApp>['autopilot']['state']
   regularResponse: ReturnType<typeof useHostsSearch>
   autopilotResponse: ReturnType<typeof useAutopilotHostsSearch>
   allContracts: ContractData[]
@@ -29,7 +29,7 @@ export function useDataset({
   isAllowlistActive: boolean
 }) {
   return useMemo<HostData[] | null>(() => {
-    if (autopilotMode === 'off') {
+    if (autopilotState === 'off') {
       return (
         regularResponse.data?.map((host) => {
           return {
@@ -44,7 +44,7 @@ export function useDataset({
           }
         }) || null
       )
-    } else if (autopilotMode === 'on') {
+    } else if (autopilotState === 'on') {
       return (
         autopilotResponse.data?.map((ah) => {
           return {
@@ -62,7 +62,7 @@ export function useDataset({
     }
     return null
   }, [
-    autopilotMode,
+    autopilotState,
     regularResponse.data,
     autopilotResponse.data,
     allContracts,
@@ -87,7 +87,7 @@ function getHostFields(host: Host, allContracts: ContractData[]) {
     ),
     totalInteractions: new BigNumber(
       host.interactions.SuccessfulInteractions +
-      host.interactions.FailedInteractions || 0
+        host.interactions.FailedInteractions || 0
     ),
     failedInteractions: new BigNumber(
       host.interactions.FailedInteractions || 0

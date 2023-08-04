@@ -15,9 +15,9 @@ import {
 } from '@siafoundation/react-renterd'
 import { humanBytes } from '@siafoundation/sia-js'
 import { useIsApcsEqDcs } from '../../hooks/useIsApcsEqDcs'
-import { useAutopilot } from '../../hooks/useAutopilot'
 import { routes } from '../../config/routes'
 import { useContractSetSettings } from '../../hooks/useContractSetSettings'
+import { useApp } from '../../contexts/app'
 
 export function FilesStatsMenu() {
   const { pageCount } = useFiles()
@@ -31,7 +31,7 @@ export function FilesStatsMenu() {
       },
     },
   })
-  const ap = useAutopilot()
+  const { autopilot } = useApp()
   const apc = useAutopilotConfig({
     config: {
       swr: {
@@ -44,11 +44,15 @@ export function FilesStatsMenu() {
 
   let warning = 'none'
 
-  if (ap === 'on' && !isApcsEqDcs.isValidating && !isApcsEqDcs.data) {
+  if (
+    autopilot.state === 'on' &&
+    !isApcsEqDcs.isValidating &&
+    !isApcsEqDcs.data
+  ) {
     warning = 'contractSetMismatch'
   }
 
-  if (ap === 'on' && apc.error) {
+  if (autopilot.state === 'on' && apc.error) {
     warning = 'setupAutopilot'
   }
 

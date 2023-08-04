@@ -1,12 +1,12 @@
 import { useAutopilotConfig } from '@siafoundation/react-renterd'
-import { useAutopilot } from './useAutopilot'
+import { useApp } from '../contexts/app'
 import { useContractSetSettings } from './useContractSetSettings'
 
 // is the autopilot contract set the same as the default contract set
 export function useIsApcsEqDcs() {
-  const ap = useAutopilot()
+  const { autopilot } = useApp()
   const apc = useAutopilotConfig({
-    disabled: ap !== 'on',
+    disabled: autopilot.state !== 'on',
   })
   const css = useContractSetSettings()
 

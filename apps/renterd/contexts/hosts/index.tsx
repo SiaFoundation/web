@@ -17,7 +17,7 @@ import { useRouter } from 'next/router'
 import { columns } from './columns'
 import { useContracts } from '../contracts'
 import { useDataset } from './dataset'
-import { useRenterd } from '../renterd'
+import { useApp } from '../app'
 
 const defaultLimit = 50
 
@@ -29,13 +29,13 @@ function useHostsMain() {
     useServerFilters()
 
   const { dataset: allContracts } = useContracts()
-  const { autopilotMode } = useRenterd()
+  const { autopilot } = useApp()
 
   const autopilotResponse = useAutopilotHostsSearch({
     disabled:
       // prevents an extra fetch when allContracts is null
       (filters.find((f) => f.id === 'activeContracts') && !allContracts) ||
-      autopilotMode !== 'on',
+      autopilot.state !== 'on',
     payload: {
       limit,
       offset,
@@ -58,7 +58,7 @@ function useHostsMain() {
   })
 
   const regularResponse = useHostsSearch({
-    disabled: autopilotMode !== 'off',
+    disabled: autopilot.state !== 'off',
     payload: {
       limit,
       offset,
@@ -77,7 +77,7 @@ function useHostsMain() {
   const isAllowlistActive = !!allowlist.data?.length
 
   const dataset = useDataset({
-    autopilotMode,
+    autopilotState: autopilot.state,
     autopilotResponse,
     regularResponse,
     allContracts,
@@ -87,8 +87,8 @@ function useHostsMain() {
   })
 
   const disabledCategories = useMemo(
-    () => (autopilotMode === 'off' ? ['autopilot'] : []),
-    [autopilotMode]
+    () => (autopilot.state === 'off' ? ['autopilot'] : []),
+    [autopilot.state]
   )
 
   const {
@@ -115,15 +115,14 @@ function useHostsMain() {
   )
 
   const isValidating =
-    autopilotMode === 'on'
+    autopilot.state === 'on'
       ? autopilotResponse.isValidating
       : regularResponse.isValidating
   const error =
-    autopilotMode === 'on' ? autopilotResponse.error : regularResponse.error
+    autopilot.state === 'on' ? autopilotResponse.error : regularResponse.error
   const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
   return {
-    autopilotMode,
     error,
     dataState,
     offset,
