@@ -150,25 +150,24 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
                     {humanDate(a.timestamp, { timeStyle: 'medium' })}
                   </Text>
                 </div>
-                {dataFieldOrder
-                  .map((key) => [key, a.data[key]])
-                  .map(([key, value]) => {
-                    if (value === undefined) {
-                      return null
-                    }
-                    const label = dataFields[key]?.label || key
-                    const el = dataFields[key]?.render(value) || (
-                      <Text color="contrast">{value}</Text>
-                    )
-                    return (
-                      <div key={key} className="flex justify-between w-full">
-                        <Text color="subtle" ellipsis>
-                          {label}
-                        </Text>
-                        {el}
-                      </div>
-                    )
-                  })}
+                {getOrderedKeys(a.data).map((key) => {
+                  const value = a.data[key]
+                  if (value === undefined) {
+                    return null
+                  }
+                  const label = dataFields[key]?.label || key
+                  const el = dataFields[key]?.render(value) || (
+                    <Text color="contrast">{value}</Text>
+                  )
+                  return (
+                    <div key={key} className="flex justify-between w-full">
+                      <Text color="subtle" ellipsis>
+                        {label}
+                      </Text>
+                      {el}
+                    </div>
+                  )
+                })}
               </div>
             ))}
           </div>
@@ -198,6 +197,24 @@ const dataFieldOrder = [
   'target',
   'force',
 ]
+
+// Sort keys by dataFieldOrder, then alphabetically
+function getOrderedKeys(obj) {
+  return Object.keys(obj).sort((a, b) => {
+    const aIndex = dataFieldOrder.indexOf(a)
+    const bIndex = dataFieldOrder.indexOf(b)
+    if (aIndex === -1 && bIndex === -1) {
+      return 0
+    }
+    if (aIndex === -1) {
+      return 1
+    }
+    if (bIndex === -1) {
+      return -1
+    }
+    return aIndex - bIndex
+  })
+}
 
 const dataFields = {
   contractID: {

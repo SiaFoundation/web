@@ -12,7 +12,7 @@ const contentContainerStyles = cva([
   rootClasses,
   'relative',
   'max-w-sm',
-  'z-10',
+  'z-30',
   'py-1',
   'data-[side=top]:bottom-1',
   'data-[side=top]:origin-bottom',
@@ -227,7 +227,16 @@ export const DropdownMenuRightSlot = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
   return (
-    <div ref={ref} className={cx(['ml-auto', 'pl-5', className])} {...props} />
+    <div
+      ref={ref}
+      className={cx([
+        'ml-auto',
+        'pl-5',
+        'opacity-70 group-hover:opacity-100',
+        className,
+      ])}
+      {...props}
+    />
   )
 })
 
@@ -235,5 +244,11 @@ export const DropdownMenuLeftSlot = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  return <div ref={ref} className={cx(['pr-2', className])} {...props} />
+  return (
+    <div
+      ref={ref}
+      className={cx(['pr-2', 'opacity-70 group-hover:opacity-100', className])}
+      {...props}
+    />
+  )
 })

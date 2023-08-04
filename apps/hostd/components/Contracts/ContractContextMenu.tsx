@@ -11,6 +11,7 @@ import {
   DropdownMenuLeftSlot,
   DataCheck16,
   Tooltip,
+  Text,
 } from '@siafoundation/design-system'
 import {
   ContractStatus,
@@ -22,9 +23,16 @@ import { useCallback } from 'react'
 type Props = {
   id: string
   status: ContractStatus
+  contentProps?: React.ComponentProps<typeof DropdownMenu>['contentProps']
+  buttonProps?: React.ComponentProps<typeof Button>
 }
 
-export function ContractDropdownMenu({ id, status }: Props) {
+export function ContractContextMenu({
+  id,
+  status,
+  contentProps,
+  buttonProps,
+}: Props) {
   const integrityCheck = useContractsIntegrityCheck()
   const { openDialog } = useDialog()
   const runIntegrityCheck = useCallback(async () => {
@@ -54,13 +62,17 @@ export function ContractDropdownMenu({ id, status }: Props) {
   return (
     <DropdownMenu
       trigger={
-        <Button variant="ghost" icon="hover">
+        <Button variant="ghost" icon="hover" {...buttonProps}>
           <Draggable16 />
         </Button>
       }
-      contentProps={{ align: 'start' }}
+      contentProps={{ align: 'start', ...contentProps }}
     >
-      {/* <DropdownMenuLabel>Filters</DropdownMenuLabel> */}
+      <div className="px-1.5 py-1">
+        <Text size="14" weight="medium" color="subtle">
+          Contract {id.slice(0, 24)}...
+        </Text>
+      </div>
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
       <Tooltip
         content={

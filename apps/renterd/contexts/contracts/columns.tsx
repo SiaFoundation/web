@@ -11,7 +11,7 @@ import {
 } from '@siafoundation/design-system'
 import { humanBytes, humanDate } from '@siafoundation/sia-js'
 import { ContractData, TableColumnId } from './types'
-import { ContractDropdownMenu } from '../../components/Contracts/ContractDropdownMenu'
+import { ContractContextMenu } from '../../components/Contracts/ContractContextMenu'
 
 type Context = {
   currentHeight: number
@@ -36,8 +36,8 @@ export const columns: ContractsTableColumn[] = [
     label: '',
     fixed: true,
     cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
-    render: ({ data: { hostIp, hostKey } }) => (
-      <ContractDropdownMenu address={hostIp} publicKey={hostKey} />
+    render: ({ data: { id, hostIp, hostKey } }) => (
+      <ContractContextMenu id={id} address={hostIp} publicKey={hostKey} />
     ),
   },
   {

@@ -10,7 +10,7 @@ import {
   WarningSquareFilled16,
 } from '@siafoundation/design-system'
 import { humanBytes } from '@siafoundation/sia-js'
-import { VolumeDropdownMenu } from '../../components/Volumes/VolumeDropdownMenu'
+import { VolumeContextMenu } from '../../components/Volumes/VolumeContextMenu'
 import { VolumeData, TableColumnId } from './types'
 
 type Context = Record<string, never>
@@ -26,7 +26,7 @@ export const columns: VolumesTableColumn[] = [
     label: '',
     fixed: true,
     cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
-    render: ({ data }) => <VolumeDropdownMenu id={data.id} />,
+    render: ({ data }) => <VolumeContextMenu id={data.id} />,
   },
   {
     id: 'path',

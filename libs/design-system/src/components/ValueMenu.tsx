@@ -1,10 +1,7 @@
 import { Text } from '../core/Text'
-import { Button } from '../core/Button'
 import { Link } from '../core/Link'
-import { Copy16 } from '../icons/carbon'
-import { copyToClipboard } from '../lib/clipboard'
 import { stripPrefix } from '../lib/utils'
-import { EntityType, getEntityTypeLabel } from '../lib/entityTypes'
+import { EntityType } from '../lib/entityTypes'
 import { cx } from 'class-variance-authority'
 
 type Props = {
@@ -18,21 +15,21 @@ type Props = {
   maxLength?: number
   color?: React.ComponentProps<typeof Text>['color']
   className?: string
+  menu: React.ReactNode
 }
 
-export function ValueCopyable({
+export function ValueMenu({
   value,
   displayValue,
   type,
-  label: customLabel,
   href,
   maxLength: customMaxLength,
   size,
   scaleSize,
   color = 'contrast',
+  menu,
   className,
 }: Props) {
-  const label = customLabel || getEntityTypeLabel(type)
   const maxLength = customMaxLength || (type === 'ip' ? 20 : 12)
   const cleanValue = stripPrefix(value)
   const renderValue = displayValue || cleanValue
@@ -59,20 +56,7 @@ export function ValueCopyable({
           {text}
         </Text>
       )}
-      <div className="ml-1 flex items-center">
-        <Button
-          variant="ghost"
-          size="none"
-          onClick={(e) => {
-            e.stopPropagation()
-            copyToClipboard(cleanValue, label)
-          }}
-        >
-          <Text color={color}>
-            <Copy16 className={size === '10' ? 'scale-75' : 'scale-90'} />
-          </Text>
-        </Button>
-      </div>
+      <div className="ml-1 flex items-center">{menu}</div>
     </div>
   )
 }

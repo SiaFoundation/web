@@ -3,16 +3,18 @@ import {
   DropdownMenuItem,
   Button,
   Draggable16,
-  DataView16,
   ListChecked16,
   DropdownMenuLeftSlot,
   Filter16,
   DropdownMenuLabel,
+  Text,
+  copyToClipboard,
+  Copy16,
+  Delete16,
 } from '@siafoundation/design-system'
 import {
   useHostsAllowlist,
   useHostsBlocklist,
-  useRhpScan,
 } from '@siafoundation/react-renterd'
 import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
@@ -20,15 +22,25 @@ import { useContracts } from '../../contexts/contracts'
 import { useHosts } from '../../contexts/hosts'
 import { useAllowlistUpdate } from '../../hooks/useAllowlistUpdate'
 import { useBlocklistUpdate } from '../../hooks/useBlocklistUpdate'
-import { addressContainsFilter } from '../Contracts/ContractsFilterAddressDialog'
-import { publicKeyContainsFilter } from '../Contracts/ContractsFilterPublicKeyDialog'
+import { addressContainsFilter } from './ContractsFilterAddressDialog'
+import { publicKeyContainsFilter } from './ContractsFilterPublicKeyDialog'
+import { useContractConfirmDelete } from './useContractConfirmDelete'
 
 type Props = {
+  id: string
   address: string
   publicKey: string
+  contentProps?: React.ComponentProps<typeof DropdownMenu>['contentProps']
+  buttonProps?: React.ComponentProps<typeof Button>
 }
 
-export function HostDropdownMenu({ address, publicKey }: Props) {
+export function ContractContextMenu({
+  id,
+  address,
+  publicKey,
+  contentProps,
+  buttonProps,
+}: Props) {
   const router = useRouter()
   const { setFilter: setHostsFilter, resetFilters: resetHostsFilters } =
     useHosts()
@@ -38,16 +50,21 @@ export function HostDropdownMenu({ address, publicKey }: Props) {
   const allowlist = useHostsAllowlist()
   const blocklistUpdate = useBlocklistUpdate()
   const allowlistUpdate = useAllowlistUpdate()
-  const rescan = useRhpScan()
+  const contractConfirmDelete = useContractConfirmDelete()
   return (
     <DropdownMenu
       trigger={
-        <Button variant="ghost" icon="hover">
+        <Button variant="ghost" icon="hover" {...buttonProps}>
           <Draggable16 />
         </Button>
       }
-      contentProps={{ align: 'start' }}
+      contentProps={{ align: 'start', ...contentProps }}
     >
+      <div className="px-1.5 py-1">
+        <Text size="14" weight="medium" color="subtle">
+          Contract {publicKey.slice(0, 24)}...
+        </Text>
+      </div>
       <DropdownMenuLabel>Filters</DropdownMenuLabel>
       <DropdownMenuItem
         onSelect={() => {
@@ -63,7 +80,7 @@ export function HostDropdownMenu({ address, publicKey }: Props) {
         <DropdownMenuLeftSlot>
           <Filter16 />
         </DropdownMenuLeftSlot>
-        Filter hosts by address
+        Filter hosts by host address
       </DropdownMenuItem>
       <DropdownMenuItem
         onSelect={() => {
@@ -75,7 +92,7 @@ export function HostDropdownMenu({ address, publicKey }: Props) {
         <DropdownMenuLeftSlot>
           <Filter16 />
         </DropdownMenuLeftSlot>
-        Filter contracts by address
+        Filter contracts by host address
       </DropdownMenuItem>
       <DropdownMenuItem
         onSelect={() => {
@@ -87,38 +104,22 @@ export function HostDropdownMenu({ address, publicKey }: Props) {
         <DropdownMenuLeftSlot>
           <Filter16 />
         </DropdownMenuLeftSlot>
-        Filter contracts by public key
+        Filter contracts by host public key
       </DropdownMenuItem>
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
-      <DropdownMenuItem
-        onSelect={() =>
-          rescan.post({
-            payload: {
-              hostKey: publicKey,
-              hostIP: address,
-              timeout: 30000000000,
-            },
-          })
-        }
-      >
-        <DropdownMenuLeftSlot>
-          <DataView16 />
-        </DropdownMenuLeftSlot>
-        Rescan host
-      </DropdownMenuItem>
       {blocklist.data?.find((l) => l === address) ? (
         <DropdownMenuItem onSelect={() => blocklistUpdate([], [address])}>
           <DropdownMenuLeftSlot>
             <ListChecked16 />
           </DropdownMenuLeftSlot>
-          Remove address from blocklist
+          Remove host address from blocklist
         </DropdownMenuItem>
       ) : (
         <DropdownMenuItem onSelect={() => blocklistUpdate([address], [])}>
           <DropdownMenuLeftSlot>
             <ListChecked16 />
           </DropdownMenuLeftSlot>
-          Add address to blocklist
+          Add host address to blocklist
         </DropdownMenuItem>
       )}
       {allowlist.data?.find((l) => l === publicKey) ? (
@@ -126,16 +127,45 @@ export function HostDropdownMenu({ address, publicKey }: Props) {
           <DropdownMenuLeftSlot>
             <ListChecked16 />
           </DropdownMenuLeftSlot>
-          Remove public key from allowlist
+          Remove host public key from allowlist
         </DropdownMenuItem>
       ) : (
         <DropdownMenuItem onSelect={() => allowlistUpdate([publicKey], [])}>
           <DropdownMenuLeftSlot>
             <ListChecked16 />
           </DropdownMenuLeftSlot>
-          Add public key to allowlist
+          Add host public key to allowlist
         </DropdownMenuItem>
       )}
+      <DropdownMenuItem onSelect={() => contractConfirmDelete(id)}>
+        <DropdownMenuLeftSlot>
+          <Delete16 />
+        </DropdownMenuLeftSlot>
+        Delete contract
+      </DropdownMenuItem>
+      <DropdownMenuLabel>Copy</DropdownMenuLabel>
+      <DropdownMenuItem onSelect={() => copyToClipboard(id, 'contract ID')}>
+        <DropdownMenuLeftSlot>
+          <Copy16 />
+        </DropdownMenuLeftSlot>
+        Contract ID
+      </DropdownMenuItem>
+      <DropdownMenuItem
+        onSelect={() => copyToClipboard(publicKey, 'host public key')}
+      >
+        <DropdownMenuLeftSlot>
+          <Copy16 />
+        </DropdownMenuLeftSlot>
+        Host public key
+      </DropdownMenuItem>
+      <DropdownMenuItem
+        onSelect={() => copyToClipboard(address, 'host address')}
+      >
+        <DropdownMenuLeftSlot>
+          <Copy16 />
+        </DropdownMenuLeftSlot>
+        Host address
+      </DropdownMenuItem>
     </DropdownMenu>
   )
 }

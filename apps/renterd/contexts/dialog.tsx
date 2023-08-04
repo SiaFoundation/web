@@ -18,6 +18,8 @@ import {
 } from '@siafoundation/react-renterd'
 import { RenterdSendSiacoinDialog } from '../dialogs/RenterdSendSiacoinDialog'
 import { RenterdTransactionDetailsDialog } from '../dialogs/RenterdTransactionDetailsDialog'
+import { AlertsDialog } from '../dialogs/AlertsDialog'
+import { HostsFilterPublicKeyDialog } from '../components/Hosts/HostsFilterPublicKeyDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -31,10 +33,12 @@ export type DialogType =
   | 'hostBlocklistAdd'
   | 'hostBlocklistRemove'
   | 'hostsFilterAddress'
+  | 'hostsFilterPublicKey'
   | 'contractsFilterAddress'
   | 'contractsFilterPublicKey'
   | 'filesCreateDirectory'
   | 'filesSearch'
+  | 'alerts'
   | 'confirm'
 
 type ConfirmProps = {
@@ -165,12 +169,20 @@ export function Dialogs() {
         open={dialog === 'hostsFilterAddress'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
+      <HostsFilterPublicKeyDialog
+        open={dialog === 'hostsFilterPublicKey'}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
       <ContractsFilterAddressDialog
         open={dialog === 'contractsFilterAddress'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <ContractsFilterPublicKeyDialog
         open={dialog === 'contractsFilterPublicKey'}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <AlertsDialog
+        open={dialog === 'alerts'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <ConfirmDialog
