@@ -26,6 +26,7 @@ import { useDialog } from '../../contexts/dialog'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 import {
   AutopilotConfig,
+  autopilotHostsKey,
   useAutopilotConfig,
   useAutopilotConfigUpdate,
 } from '@siafoundation/react-renterd'
@@ -34,6 +35,7 @@ import { defaultValues, fields } from './fields'
 import { transformDown, transformUp } from './transform'
 import { useForm } from 'react-hook-form'
 import { useSyncContractSet } from './useSyncContractSet'
+import { delay, useMutate } from '@siafoundation/react-core'
 
 export function Autopilot() {
   const { openDialog } = useDialog()
@@ -90,21 +92,36 @@ export function Autopilot() {
     }
   }, [config, resetFormData])
 
+  const mutate = useMutate()
   const onValid = useCallback(
     async (values: typeof defaultValues) => {
       try {
+        const firstTimeSettingConfig = !config.data
         await configUpdate.put({
           payload: transformUp(values, config.data),
         })
         triggerSuccessToast('Configuration has been saved.')
         syncDefaultContractSet(values.set)
+
+        // if autopilot is being configured for the first time,
+        // revalidate the empty hosts list.
+        if (firstTimeSettingConfig) {
+          const refreshHostsAfterDelay = async () => {
+            await delay(5_000)
+            mutate((key) => key.startsWith(autopilotHostsKey))
+            await delay(5_000)
+            mutate((key) => key.startsWith(autopilotHostsKey))
+          }
+          refreshHostsAfterDelay()
+        }
+
         reset()
       } catch (e) {
         triggerErrorToast((e as Error).message)
         console.log(e)
       }
     },
-    [config.data, configUpdate, reset, syncDefaultContractSet]
+    [config.data, configUpdate, reset, syncDefaultContractSet, mutate]
   )
 
   const onInvalid = useOnInvalid(fields)

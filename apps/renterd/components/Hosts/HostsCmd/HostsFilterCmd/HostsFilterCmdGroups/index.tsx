@@ -4,7 +4,7 @@ import { AllowBlockCmdGroup } from './AllowBlock'
 import { ServerFilterItem } from '@siafoundation/design-system'
 import { ContractsCmdGroup } from './Contracts'
 import { UsableCmdGroup } from './Usable'
-import { useRenterd } from '../../../../../contexts/renterd'
+import { useApp } from '../../../../../contexts/app'
 
 type Props = {
   currentPage: Page
@@ -13,10 +13,10 @@ type Props = {
 }
 
 export function ContractFilterCmdGroups({ currentPage, select }: Props) {
-  const { autopilotMode } = useRenterd()
+  const { autopilot } = useApp()
   return (
     <>
-      {autopilotMode === 'on' && (
+      {autopilot.state === 'on' && (
         <UsableCmdGroup currentPage={currentPage} select={select} />
       )}
       <ContractsCmdGroup currentPage={currentPage} select={select} />

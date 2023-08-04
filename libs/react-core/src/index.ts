@@ -12,6 +12,7 @@ export * from './useSiaCentral'
 export * from './useAppSettings'
 export * from './blockHeight'
 export * from './userPrefersReducedMotion'
+export * from './mutate'
 
 export * from './workflows'
 export * from './coreProvider'

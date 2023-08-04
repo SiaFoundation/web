@@ -3,7 +3,7 @@ import { FilesProvider } from '../contexts/files'
 import { ContractsProvider } from '../contexts/contracts'
 import { HostsProvider } from '../contexts/hosts'
 import React from 'react'
-import { RenterdProvider } from '../contexts/renterd'
+import { AppProvider } from '../contexts/app'
 
 type Props = {
   children: React.ReactNode
@@ -11,7 +11,7 @@ type Props = {
 
 export function Providers({ children }: Props) {
   return (
-    <RenterdProvider>
+    <AppProvider>
       <DialogProvider>
         <ContractsProvider>
           <HostsProvider>
@@ -24,6 +24,6 @@ export function Providers({ children }: Props) {
           </HostsProvider>
         </ContractsProvider>
       </DialogProvider>
-    </RenterdProvider>
+    </AppProvider>
   )
 }

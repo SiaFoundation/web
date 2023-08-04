@@ -1,10 +1,12 @@
 type Props = {
   size?: number
+  className?: string
 }
 
-export function PlaneIcon({ size = 24 }: Props) {
+export function PlaneIcon({ size = 24, className }: Props) {
   return (
     <svg
+      className={className}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 576 512"
       width={size}
