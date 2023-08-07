@@ -288,7 +288,7 @@ export const columns: FilesTableColumn[] = [
             value={
               new BigNumber(
                 obj.data?.object.slabs?.reduce(
-                  (acc, slab) => acc + slab.shards?.length,
+                  (acc, slab) => acc + slab.slab.shards?.length,
                   0
                 ) || 0
               )

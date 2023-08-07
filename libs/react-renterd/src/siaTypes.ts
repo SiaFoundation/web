@@ -128,11 +128,15 @@ export interface Sector {
   host: string
   root: string
 }
-
-export interface SlabSlice {
+export interface Slab {
+  health: number
   key: EncryptionKey
   minShards: number
-  shards?: Sector[]
+  shards: Sector[]
+}
+
+export interface SlabSlice {
+  slab: Slab
   offset: number
   length: number
 }

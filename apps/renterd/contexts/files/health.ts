@@ -29,10 +29,11 @@ type SlabHealthStats = {
 }
 
 function getSlabHealthStats(
-  slab: SlabSlice,
+  slabSlice: SlabSlice,
   contracts: ContractData[],
   index: string
 ): SlabHealthStats {
+  const slab = slabSlice.slab
   const shardContractStatus = []
   slab.shards?.forEach((sh) => {
     shardContractStatus.push(!!contracts.find((c) => c.hostKey === sh.host))

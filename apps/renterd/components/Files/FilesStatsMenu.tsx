@@ -149,13 +149,51 @@ export function FilesStatsMenu() {
             <div className="flex gap-4">
               <Tooltip
                 side="bottom"
+                align="end"
                 content={
-                  <Text className="flex flex-col gap-1">
-                    <Text size="12" color="subtle">
-                      Size of all files
+                  <Text className="flex justify-between gap-6">
+                    <Text className="flex flex-col gap-1">
+                      <Text size="12" color="subtle">
+                        size of all files
+                      </Text>
+                      <Text size="12" color="subtle">
+                        with redundancy
+                      </Text>
+                      <Text size="12" color="subtle">
+                        average redundancy factor
+                      </Text>
+                      <Separator className="w-full my-1" />
+                      <Text size="12" color="subtle">
+                        reclaimable space
+                      </Text>
+                      <Text size="12" color="subtle">
+                        total storage utilization
+                      </Text>
                     </Text>
-                    <Text size="12" color="subtle">
-                      {humanBytes(stats.data?.totalObjectsSize)}
+                    <Text className="flex flex-col gap-1 items-end">
+                      <Text size="12">
+                        {humanBytes(stats.data.totalObjectsSize)}
+                      </Text>
+                      <Text size="12">
+                        {humanBytes(stats.data.totalSectorsSize)}
+                      </Text>
+                      <Text size="12" font="mono">
+                        {(
+                          stats.data.totalSectorsSize /
+                          stats.data.totalObjectsSize
+                        ).toFixed(1)}
+                        x
+                      </Text>
+                      <Separator className="w-full my-1" />
+                      <Text size="12">
+                        {humanBytes(
+                          stats.data.totalUploadedSize -
+                            stats.data.totalSectorsSize
+                        )}
+                      </Text>
+                      <Text size="12">
+                        {humanBytes(stats.data.totalUploadedSize)}
+                      </Text>
                     </Text>
                   </Text>
                 }
@@ -165,34 +203,11 @@ export function FilesStatsMenu() {
                     <Folders16 />
                   </Text>
                   <Text size="12" font="mono">
-                    {humanBytes(stats.data?.totalObjectsSize)}
-                  </Text>
-                </div>
-              </Tooltip>
-              <Tooltip
-                align="end"
-                side="bottom"
-                content={
-                  <Text className="flex flex-col gap-1">
-                    <Text size="12" color="subtle">
-                      Size of all files
-                    </Text>
-                    <Text size="12" color="subtle">
-                      {humanBytes(stats.data?.totalSectorsSize)} with redundancy
-                    </Text>
-                    <Text size="12" color="subtle">
-                      {humanBytes(stats.data?.totalUploadedSize)} with
-                      redundancy and repairs
-                    </Text>
-                  </Text>
-                }
-              >
-                <div className="flex gap-2">
-                  <Text size="12" color="verySubtle">
-                    <Earth16 />
-                  </Text>
-                  <Text size="12" font="mono">
-                    {humanBytes(stats.data?.totalSectorsSize)}
+                    {humanBytes(stats.data.totalObjectsSize)} @{' '}
+                    {(
+                      stats.data.totalSectorsSize / stats.data.totalObjectsSize
+                    ).toFixed(1)}
+                    x
                   </Text>
                 </div>
               </Tooltip>
