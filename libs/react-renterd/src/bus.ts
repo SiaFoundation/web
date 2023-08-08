@@ -150,12 +150,15 @@ export function useTxPoolBroadcast(
 
 // wallet
 
-export function useWalletBalance(args?: HookArgsSwr<void, string>) {
-  return useGetSwr({ ...args, route: '/bus/wallet/balance' })
+type WalletResponse = {
+  scanHeight: number
+  address: string
+  confirmed: string
+  spendable: string
 }
 
-export function useWalletAddress(args?: HookArgsSwr<void, string>) {
-  return useGetSwr({ ...args, route: '/bus/wallet/address' })
+export function useWallet(args?: HookArgsSwr<void, WalletResponse>) {
+  return useGetSwr({ ...args, route: '/bus/wallet' })
 }
 
 export function useWalletAddresses(args?: HookArgsSwr<void, string[]>) {

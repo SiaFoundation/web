@@ -14,22 +14,30 @@ export function useSyncStatus() {
       },
     },
   })
+  const estimatedBlockHeight = useEstimatedNetworkBlockHeight()
+  const nodeBlockHeight = state.data ? state.data?.chainIndex.height : 0
   const wallet = useWallet({
     config: {
       swr: {
         refreshInterval: (data) =>
-          data?.scanHeight >= nodeBlockHeight - 5 ? 60_000 : 10_000,
+          data?.scanHeight >= nodeBlockHeight ? 60_000 : 10_000,
       },
     },
   })
-  const estimatedBlockHeight = useEstimatedNetworkBlockHeight()
 
-  const nodeBlockHeight = state.data ? state.data?.chainIndex.height : 0
-
-  const percent =
+  const syncPercent =
     isUnlocked && nodeBlockHeight && estimatedBlockHeight
       ? Number(
           (Math.min(nodeBlockHeight / estimatedBlockHeight, 1) * 100).toFixed(1)
+        )
+      : 0
+
+  const walletScanPercent =
+    isUnlocked && nodeBlockHeight && wallet.data
+      ? Number(
+          (
+            Math.min(wallet.data.scanHeight / estimatedBlockHeight, 1) * 100
+          ).toFixed(1)
         )
       : 0
 
@@ -46,10 +54,11 @@ export function useSyncStatus() {
   return {
     isSynced: state.data?.synced,
     isWalletSynced:
-      state.data?.synced && wallet.data?.scanHeight >= nodeBlockHeight - 5,
+      state.data?.synced && wallet.data?.scanHeight >= nodeBlockHeight - 1,
     nodeBlockHeight,
     estimatedBlockHeight,
-    percent,
+    syncPercent,
+    walletScanPercent,
     moreThan100BlocksToSync,
     firstTimeSyncing,
   }

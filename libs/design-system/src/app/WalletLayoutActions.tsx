@@ -5,6 +5,9 @@ import { WalletBalance } from './WalletBalance'
 
 type Props = {
   isSynced: boolean
+  isWalletSynced: boolean
+  syncPercent: number
+  walletScanPercent: number
   sc?: BigNumber
   receiveSiacoin?: () => void
   sendSiacoin: () => void
@@ -12,13 +15,24 @@ type Props = {
 
 export function WalletLayoutActions({
   isSynced,
+  isWalletSynced,
+  syncPercent,
+  walletScanPercent,
   sc,
   sendSiacoin,
   receiveSiacoin,
 }: Props) {
   return (
     <>
-      <WalletBalance isSynced={isSynced} sc={sc} />
+      <WalletBalance
+        isSynced={isSynced && isWalletSynced}
+        syncingMessage={
+          !isSynced
+            ? `Blockchain is syncing (${syncPercent}%), balance may be incorrect.`
+            : `Wallet is scanning (${walletScanPercent}%), balance may be incorrect.`
+        }
+        sc={sc}
+      />
       {receiveSiacoin && (
         <Button size="small" onClick={receiveSiacoin}>
           <ArrowDownLeft16 />
