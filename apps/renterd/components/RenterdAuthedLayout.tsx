@@ -1,5 +1,5 @@
 import { AppAuthedLayout } from '@siafoundation/design-system'
-import { useWalletBalance } from '@siafoundation/react-renterd'
+import { useWallet } from '@siafoundation/react-renterd'
 import BigNumber from 'bignumber.js'
 import { connectivityRoute } from '../config/routes'
 import { useSyncStatus } from '../hooks/useSyncStatus'
@@ -13,7 +13,7 @@ export function RenterdAuthedLayout(
     'appName' | 'connectivityRoute' | 'walletBalance' | 'profile' | 'isSynced'
   >
 ) {
-  const balance = useWalletBalance()
+  const wallet = useWallet()
   const { isSynced } = useSyncStatus()
   return (
     <AppAuthedLayout
@@ -21,7 +21,9 @@ export function RenterdAuthedLayout(
       profile={<Profile />}
       connectivityRoute={connectivityRoute}
       isSynced={isSynced}
-      walletBalance={balance.data ? new BigNumber(balance.data) : undefined}
+      walletBalance={
+        wallet.data ? new BigNumber(wallet.data.confirmed) : undefined
+      }
       {...props}
     />
   )

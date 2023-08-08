@@ -3,12 +3,11 @@ import {
   EntityListItemProps,
   WalletLayoutActions,
   getTransactionType,
-  Text,
-  Warning16,
   BalanceEvolution,
+  WalletSyncWarning,
 } from '@siafoundation/design-system'
 import {
-  useWalletBalance,
+  useWallet,
   useWalletPending,
   useWalletTransactions,
 } from '@siafoundation/react-renterd'
@@ -97,9 +96,9 @@ export function Wallet() {
     [transactions.data]
   )
 
-  const balance = useWalletBalance()
-  // TODO: add API to return scanHeight, move to isWalletSynced just like hostd
-  const { isSynced } = useSyncStatus()
+  const wallet = useWallet()
+  const { isSynced, syncPercent, isWalletSynced, walletScanPercent } =
+    useSyncStatus()
 
   return (
     <RenterdAuthedLayout
@@ -110,22 +109,21 @@ export function Wallet() {
       actions={
         <WalletLayoutActions
           isSynced={isSynced}
-          sc={balance.data ? new BigNumber(balance.data) : undefined}
+          isWalletSynced={isWalletSynced}
+          syncPercent={syncPercent}
+          walletScanPercent={walletScanPercent}
+          sc={wallet.data ? new BigNumber(wallet.data.confirmed) : undefined}
           receiveSiacoin={() => openDialog('addressDetails')}
           sendSiacoin={() => openDialog('sendSiacoin')}
         />
       }
       stats={
-        !isSynced && (
-          <div className="flex gap-2 items-center">
-            <Text color="amber">
-              <Warning16 />
-            </Text>
-            <Text size="14">
-              Blockchain is syncing, transaction data may be incomplete.
-            </Text>
-          </div>
-        )
+        <WalletSyncWarning
+          isSynced={isSynced}
+          isWalletSynced={isWalletSynced}
+          syncPercent={syncPercent}
+          walletScanPercent={walletScanPercent}
+        />
       }
     >
       <div className="p-6 flex flex-col gap-5">

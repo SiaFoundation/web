@@ -8,7 +8,7 @@ import { useSyncStatus } from '../../hooks/useSyncStatus'
 import {
   useConsensusNetwork,
   useSyncerPeers,
-  useWalletAddress,
+  useWallet,
 } from '@siafoundation/react-renterd'
 import { useDialog } from '../../contexts/dialog'
 
@@ -21,7 +21,7 @@ export function Profile() {
       },
     },
   })
-  const address = useWalletAddress({
+  const wallet = useWallet({
     config: {
       swr: {
         revalidateOnFocus: false,
@@ -36,7 +36,7 @@ export function Profile() {
       peerCount={peers.data?.length}
       connectPeer={() => openDialog('connectPeer')}
       isSynced={syncStatus.isSynced}
-      percent={syncStatus.percent}
+      syncPercent={syncStatus.syncPercent}
       nodeBlockHeight={syncStatus.nodeBlockHeight}
       estimatedBlockHeight={syncStatus.estimatedBlockHeight}
       firstTimeSyncing={syncStatus.firstTimeSyncing}
@@ -50,7 +50,7 @@ export function Profile() {
           className="overflow-hidden"
           size="14"
           maxLength={50}
-          value={address.data}
+          value={wallet.data?.address}
           type="address"
         />
       </div>

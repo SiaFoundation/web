@@ -12,10 +12,7 @@ import { HostsFilterAddressDialog } from '../components/Hosts/HostsFilterAddress
 import { ContractsFilterAddressDialog } from '../components/Contracts/ContractsFilterAddressDialog'
 import { ContractsFilterPublicKeyDialog } from '../components/Contracts/ContractsFilterPublicKeyDialog'
 import { FilesSearchDialog } from '../components/Files/FilesSearchDialog'
-import {
-  useSyncerConnect,
-  useWalletAddress,
-} from '@siafoundation/react-renterd'
+import { useSyncerConnect, useWallet } from '@siafoundation/react-renterd'
 import { RenterdSendSiacoinDialog } from '../dialogs/RenterdSendSiacoinDialog'
 import { RenterdTransactionDetailsDialog } from '../dialogs/RenterdTransactionDetailsDialog'
 import { AlertsDialog } from '../dialogs/AlertsDialog'
@@ -122,7 +119,7 @@ export function Dialogs() {
     openConfirmDialog,
   } = useDialog()
   const connect = useSyncerConnect()
-  const address = useWalletAddress()
+  const wallet = useWallet()
 
   return (
     <>
@@ -138,8 +135,8 @@ export function Dialogs() {
       />
       <RenterdSendSiacoinDialog />
       <WalletSingleAddressDetailsDialog
-        address={address.data}
-        isValidating={address.isValidating}
+        address={wallet.data?.address}
+        isValidating={wallet.isValidating}
         open={dialog === 'addressDetails'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />

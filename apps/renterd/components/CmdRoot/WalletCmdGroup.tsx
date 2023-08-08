@@ -3,7 +3,7 @@ import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
 import { useDialog } from '../../contexts/dialog'
 import { CommandGroup, CommandItemNav, CommandItemSearch } from './Item'
-import { useWalletAddress } from '@siafoundation/react-renterd'
+import { useWallet } from '@siafoundation/react-renterd'
 import { Page } from './types'
 
 const commandPage = {
@@ -20,7 +20,7 @@ type Props = {
 export function WalletCmdGroup({ currentPage, parentPage, pushPage }: Props) {
   const { openDialog, closeDialog } = useDialog()
   const router = useRouter()
-  const address = useWalletAddress()
+  const wallet = useWallet()
   return (
     <CommandGroup currentPage={currentPage} commandPage={commandPage}>
       <CommandItemNav
@@ -73,9 +73,12 @@ export function WalletCmdGroup({ currentPage, parentPage, pushPage }: Props) {
       <CommandItemSearch
         currentPage={currentPage}
         commandPage={commandPage}
+        disabled={!wallet.data?.address}
         onSelect={() => {
-          copyToClipboard(address.data, 'wallet address')
-          closeDialog()
+          if (wallet.data?.address) {
+            copyToClipboard(wallet.data.address, 'wallet address')
+            closeDialog()
+          }
         }}
       >
         Copy wallet address to clipboard

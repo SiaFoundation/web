@@ -7,6 +7,7 @@ import {
   daysInMilliseconds,
   Text,
   Warning16,
+  WalletSyncWarning,
 } from '@siafoundation/design-system'
 import {
   useMetricsPeriod,
@@ -90,7 +91,8 @@ export function Wallet() {
     [metrics.data]
   )
 
-  const { isWalletSynced } = useSyncStatus()
+  const { isSynced, isWalletSynced, syncPercent, walletScanPercent } =
+    useSyncStatus()
 
   return (
     <HostdAuthedLayout
@@ -100,7 +102,10 @@ export function Wallet() {
       title="Wallet"
       actions={
         <WalletLayoutActions
-          isSynced={isWalletSynced}
+          isSynced={isSynced}
+          isWalletSynced={isWalletSynced}
+          syncPercent={syncPercent}
+          walletScanPercent={walletScanPercent}
           sc={
             wallet.data
               ? new BigNumber(wallet.data.spendable).plus(
@@ -113,16 +118,12 @@ export function Wallet() {
         />
       }
       stats={
-        !isWalletSynced && (
-          <div className="flex gap-2 items-center">
-            <Text color="amber">
-              <Warning16 />
-            </Text>
-            <Text size="14">
-              Blockchain is syncing, transaction data may be incomplete.
-            </Text>
-          </div>
-        )
+        <WalletSyncWarning
+          isSynced={isSynced}
+          isWalletSynced={isWalletSynced}
+          syncPercent={syncPercent}
+          walletScanPercent={walletScanPercent}
+        />
       }
     >
       <div className="p-6 flex flex-col gap-5">
