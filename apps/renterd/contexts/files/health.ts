@@ -34,11 +34,12 @@ function getSlabHealthStats(
   index: string
 ): SlabHealthStats {
   const slab = slabSlice.slab
-  const shardContractStatus = []
+  let shardsWithContracts = 0
   slab.shards?.forEach((sh) => {
-    shardContractStatus.push(!!contracts.find((c) => c.hostKey === sh.host))
+    if (contracts.find((c) => c.hostKey === sh.host)) {
+      shardsWithContracts++
+    }
   })
-  const shardsWithContracts = shardContractStatus.filter((s) => s).length
   const minShards = slab.minShards
   const totalShards = slab.shards?.length || 0
   return {
@@ -63,4 +64,27 @@ export function computeSlabHealth(
   const adjustedTotalShards = totalShards - minShards
 
   return adjustedShards / adjustedTotalShards
+}
+
+// calculate the number of contract set shards for a slab using the health percent
+// and the slabs total and min shards
+export function computeSlabContractSetShards({
+  totalShards,
+  minShards,
+  health,
+}: {
+  totalShards: number
+  minShards: number
+  health: number
+}) {
+  const adjustedTotalShards = totalShards - minShards
+  const adjustedShards = Math.ceil(health * adjustedTotalShards)
+  const contractSetShards = adjustedShards + minShards
+  if (contractSetShards <= 0) {
+    return 0
+  }
+  if (contractSetShards > totalShards) {
+    return totalShards
+  }
+  return contractSetShards
 }
