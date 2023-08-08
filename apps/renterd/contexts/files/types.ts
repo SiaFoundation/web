@@ -9,14 +9,7 @@ export type ObjectData = {
   loaded?: number
 }
 
-export type TableColumnId =
-  | 'actions'
-  | 'type'
-  | 'name'
-  | 'size'
-  | 'health'
-  | 'slabs'
-  | 'shards'
+export type TableColumnId = 'actions' | 'type' | 'name' | 'size' | 'health'
 
 export const columnsDefaultVisible: TableColumnId[] = [
   'type',

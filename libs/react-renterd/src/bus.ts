@@ -408,6 +408,7 @@ export function useContractsetUpdate(
 export type ObjEntry = {
   name: string
   size: number
+  health: number
 }
 
 export function useObjectDirectory(
@@ -433,7 +434,7 @@ export function useObjectAdd(
 }
 
 export function useObjectDelete(
-  args?: HookArgsCallback<{ key: string; batch: boolean }, void, never>
+  args?: HookArgsCallback<{ key: string; batch?: boolean }, void, never>
 ) {
   return useDeleteFunc(
     { ...args, route: '/bus/objects/:key' },

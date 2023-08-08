@@ -14,11 +14,11 @@
   redir /jobs https://siafoundation.homerun.co permanent
   redir /blog https://blog.sia.tech permanent
   redir /whitepaper.pdf /sia.pdf permanent
-  redir /get-started /rent permanent
-  redir /apps /rent permanent
-  redir /download /rent permanent
-  redir /downloads /rent permanent
-  redir /developers /rent permanent
+  redir /get-started / permanent
+  redir /apps / permanent
+  redir /download / permanent
+  redir /downloads / permanent
+  redir /developers / permanent
   redir /about /learn permanent
   redir /newsroom /news permanent
   redir /img/svg/sia-wordmark.svg /wordmark.svg permanent

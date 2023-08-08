@@ -252,7 +252,7 @@ function useFilesMain() {
 
     const dataMap: Record<string, ObjectData> = {}
 
-    response.data.entries?.forEach(({ name: path, size }) => {
+    response.data.entries?.forEach(({ name: path, size, health }) => {
       // If there is a directory stub file filter it out.
       if (path === activeDirectoryPath) {
         return
@@ -261,6 +261,7 @@ function useFilesMain() {
         id: path,
         path,
         size,
+        health,
         name: getFilename(path),
         isDirectory: isDirectory(path),
       }

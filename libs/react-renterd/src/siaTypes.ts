@@ -142,6 +142,9 @@ export interface SlabSlice {
 }
 
 export interface Obj {
+  name: string
+  size: number
+  health: number
   key: EncryptionKey
   slabs?: SlabSlice[]
 }
