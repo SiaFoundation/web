@@ -17,7 +17,7 @@ export function Profile() {
       peerCount={peers.data?.length}
       connectPeer={() => openDialog('connectPeer')}
       isSynced={syncStatus.isSynced}
-      syncPercent={syncStatus.percent}
+      syncPercent={syncStatus.syncPercent}
       nodeBlockHeight={syncStatus.nodeBlockHeight}
       estimatedBlockHeight={syncStatus.estimatedBlockHeight}
       firstTimeSyncing={syncStatus.firstTimeSyncing}

@@ -17,6 +17,7 @@ type Props = {
   navTitle?: React.ReactNode
   profile: React.ReactNode
   nav?: React.ReactNode
+  banner?: React.ReactNode
   actions?: React.ReactNode
   sidenav?: React.ReactNode
   stats?: React.ReactNode
@@ -44,6 +45,7 @@ export function AppAuthedLayout({
   navTitle,
   profile,
   size = '4',
+  banner,
   nav,
   actions,
   stats,
@@ -73,30 +75,33 @@ export function AppAuthedLayout({
   return (
     <AppRootLayout appName={appName} title={title}>
       <AppBackdrop />
-      <div className="flex h-full w-full">
-        <Sidenav
-          routes={routes}
-          profile={profile}
-          openSettings={openSettings}
-          lock={lock}
-          showWallet={showWallet}
-          walletBalance={walletBalance}
-          isSynced={isSynced}
-        >
-          {sidenav}
-        </Sidenav>
-        <div className="flex flex-col flex-1 overflow-hidden">
-          <AppNavbar
-            title={navTitle === undefined ? title : navTitle}
-            nav={nav}
-            actions={actions}
-            stats={stats}
-          />
-          <ScrollArea className="z-0">
-            <Container size={size} pad={false}>
-              <div className="flex flex-col gap-5">{children}</div>
-            </Container>
-          </ScrollArea>
+      <div className="flex flex-col h-full w-full">
+        {banner}
+        <div className="flex flex-1 w-full overflow-hidden">
+          <Sidenav
+            routes={routes}
+            profile={profile}
+            openSettings={openSettings}
+            lock={lock}
+            showWallet={showWallet}
+            walletBalance={walletBalance}
+            isSynced={isSynced}
+          >
+            {sidenav}
+          </Sidenav>
+          <div className="flex flex-col flex-1 overflow-hidden">
+            <AppNavbar
+              title={navTitle === undefined ? title : navTitle}
+              nav={nav}
+              actions={actions}
+              stats={stats}
+            />
+            <ScrollArea className="z-0">
+              <Container size={size} pad={false}>
+                <div className="flex flex-col gap-5">{children}</div>
+              </Container>
+            </ScrollArea>
+          </div>
         </div>
       </div>
     </AppRootLayout>

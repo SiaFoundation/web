@@ -1,6 +1,9 @@
+import { hoursInMilliseconds } from '@siafoundation/design-system'
 import { useAppSettings } from '@siafoundation/react-core'
 import {
+  ConsensusState,
   useConsensusTip,
+  useConsensusTipState,
   useEstimatedNetworkBlockHeight,
 } from '@siafoundation/react-walletd'
 
@@ -14,11 +17,18 @@ export function useSyncStatus() {
       },
     },
   })
+  const tipState = useConsensusTipState({
+    config: {
+      swr: {
+        refreshInterval: (data) => (getIsSynced(data) ? 60_000 : 10_000),
+      },
+    },
+  })
   const estimatedBlockHeight = useEstimatedNetworkBlockHeight()
 
   const nodeBlockHeight = state.data ? state.data?.height : 0
 
-  const percent =
+  const syncPercent =
     isUnlocked && nodeBlockHeight && estimatedBlockHeight
       ? Number(
           (Math.min(nodeBlockHeight / estimatedBlockHeight, 1) * 100).toFixed(1)
@@ -36,12 +46,23 @@ export function useSyncStatus() {
       : false
 
   return {
-    // isSynced: state.data?.synced,
-    isSynced: !moreThan100BlocksToSync,
+    isSynced: getIsSynced(tipState.data),
     nodeBlockHeight,
     estimatedBlockHeight,
-    percent,
+    syncPercent,
     moreThan100BlocksToSync,
     firstTimeSyncing,
   }
+}
+
+function getIsSynced(tipState?: ConsensusState) {
+  if (!tipState) return false
+  return lastBlockLessThan2HoursAgo(tipState.prevTimestamps)
+}
+
+function lastBlockLessThan2HoursAgo(prevTimestamps?: string[]) {
+  if (!prevTimestamps || !prevTimestamps.length) return false
+  const lastBlockTime = prevTimestamps[prevTimestamps.length - 1]
+  const twoHoursAgo = Date.now() - hoursInMilliseconds(2)
+  return new Date(lastBlockTime).getTime() > twoHoursAgo
 }

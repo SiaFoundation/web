@@ -25,7 +25,7 @@ import { Contract, ContractStatus, WalletTransaction } from './siaTypes'
 export type StateHost = {
   publicKey: string
   walletAddress: string
-  network: string
+  network: 'Mainnet' | 'Zen Testnet'
   version: string
   commit: string
   OS: string

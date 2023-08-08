@@ -4,6 +4,7 @@ import BigNumber from 'bignumber.js'
 import { connectivityRoute } from '../config/routes'
 import { useSyncStatus } from '../hooks/useSyncStatus'
 import { Profile } from './Profile'
+import { RenterdTestnetWarningBanner } from './RenterdTestnetWarningBanner'
 
 type Props = React.ComponentProps<typeof AppAuthedLayout>
 
@@ -19,6 +20,7 @@ export function RenterdAuthedLayout(
     <AppAuthedLayout
       appName="renterd"
       profile={<Profile />}
+      banner={<RenterdTestnetWarningBanner />}
       connectivityRoute={connectivityRoute}
       isSynced={isSynced}
       walletBalance={
