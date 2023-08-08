@@ -3,6 +3,7 @@ import { useWallet } from '@siafoundation/react-hostd'
 import BigNumber from 'bignumber.js'
 import { connectivityRoute } from '../config/routes'
 import { useSyncStatus } from '../hooks/useSyncStatus'
+import { HostdTestnetWarningBanner } from './HostdTestnetWarningBanner'
 import { Profile } from './Profile'
 
 type Props = React.ComponentProps<typeof AppAuthedLayout>
@@ -19,6 +20,7 @@ export function HostdAuthedLayout(
     <AppAuthedLayout
       appName="hostd"
       connectivityRoute={connectivityRoute}
+      banner={<HostdTestnetWarningBanner />}
       profile={<Profile />}
       isSynced={isSynced}
       walletBalance={

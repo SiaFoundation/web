@@ -5,8 +5,6 @@ import {
   getTransactionType,
   BalanceEvolution,
   daysInMilliseconds,
-  Text,
-  Warning16,
   WalletSyncWarning,
 } from '@siafoundation/design-system'
 import {

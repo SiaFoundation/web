@@ -23,16 +23,16 @@ export function SyncStatus({
         className=""
       />
       <div className="flex justify-between mt-1.5">
-        <Text color="verySubtle" size="10">
+        <Text color="subtle" size="10">
           Syncing...
         </Text>
         {nodeBlockHeight && networkBlockHeight ? (
           !moreThan100BlocksToSync ? (
-            <Text color="verySubtle" size="10">
+            <Text color="subtle" size="10">
               {`(${percent}%)`}
             </Text>
           ) : (
-            <Text color="verySubtle" size="10">
+            <Text color="subtle" size="10">
               {`${nodeBlockHeight.toLocaleString()} / ${networkBlockHeight.toLocaleString()} (${percent}%)`}
             </Text>
           )

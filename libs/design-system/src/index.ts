@@ -105,6 +105,7 @@ export * from './app/PanelMenuSection'
 export * from './app/PanelMenuSetting'
 export * from './app/ConfirmDialog'
 export * from './app/DaemonProfile'
+export * from './app/TestnetWarningBanner'
 
 // form
 export * from './form/ConfigurationPanel'

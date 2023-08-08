@@ -48,7 +48,7 @@ export function useConsensusState(args?: HookArgsSwr<void, ConsensusState>) {
 }
 
 export type ConsensusNetwork = {
-  Name: string
+  Name: 'mainnet' | 'zen'
 }
 
 export function useConsensusNetwork(
