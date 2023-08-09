@@ -54,8 +54,7 @@ type TimeRange = {
 
 type DataTimeSpan = '1' | '7' | '30' | '90' | '365' | 'all'
 
-export function getTimeRange(span: DataTimeSpan): TimeRange {
-  const now = new Date().getTime()
+export function getTimeRange(span: DataTimeSpan, now: number): TimeRange {
   if (span === 'all') {
     return {
       start: new Date(2022, 1, 1).getTime(),
