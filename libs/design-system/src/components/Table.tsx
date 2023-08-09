@@ -94,8 +94,14 @@ export function Table<
 
   return (
     <Panel>
-      <table className="table-auto border-collapse w-full">
-        <thead className="border-b border-gray-400 dark:border-graydark-400">
+      <table className="relative z-10 table-auto border-collapse w-full">
+        <thead
+          className={cx(
+            'sticky top-0 z-20 bg-white dark:bg-graydark-200',
+            'border-b border-gray-400 dark:border-graydark-400',
+            'shadow-border shadow-gray-400 dark:shadow-graydark-400'
+          )}
+        >
           <tr>
             {columns.map(
               (
