@@ -9,7 +9,8 @@ export const Notion = new Client({
 export async function fetchAllPages(
   params: Parameters<typeof Notion.databases.query>[0]
 ) {
-  const allPages = []
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const allPages: any[] = []
   let startCursor = undefined
   let more = true
   let response = null
@@ -26,5 +27,6 @@ export async function fetchAllPages(
     }
     startCursor = response.next_cursor || undefined
   }
-  return allPages
+  // filter out empty pages
+  return allPages.filter((page) => page.properties.title.title[0]?.plain_text)
 }
