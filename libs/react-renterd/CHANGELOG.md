@@ -1,5 +1,13 @@
 # @siafoundation/react-renterd
 
+## 0.5.0
+
+### Minor Changes
+
+- ce199e51: Added useAlerts, renamed useHostsPubkey to useHost.
+- c62ae09c: Add useWallet, remove useWalletBalance useWalletAddress.
+- 6e87f6d0: Added batch flag to useObjectDelete.
+
 ## 0.4.0
 
 ### Minor Changes

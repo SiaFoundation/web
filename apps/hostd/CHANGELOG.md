@@ -1,5 +1,20 @@
 # hostd
 
+## 0.19.0
+
+### Minor Changes
+
+- ce199e51: All dropdown menus now have higher contrast text.
+- 2242911d: The app now warns the user if it is running on the testnet with a prominent banner.
+- ce199e51: The logs view has been removed from the node tab.
+- cd941e4c: The metrics time range now automatically updates and refreshes the data at a rate equal to the selected data interval.
+- 16038776: Table headers now freeze in view when the table scrolls.
+- 45577c32: Metrics datum modes (average, latest, total) selected by the user are now remembered.
+- c62ae09c: Wallet now warns the user if the wallet is scanning and shows the percent progress.
+- 2242911d: The contrast was improved on the syncing progress text in the daemon profile.
+- 1901ff6d: Metrics now support a 1 day time range with 5 minute intervals.
+- ce199e51: Context menus now show the entity type and identifier for clarity.
+
 ## 0.18.0
 
 ### Minor Changes

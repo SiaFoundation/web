@@ -1,5 +1,11 @@
 # @siafoundation/react-core
 
+## 0.13.0
+
+### Minor Changes
+
+- 8cd442b4: Added a global swr mutate function.
+
 ## 0.12.0
 
 ### Minor Changes

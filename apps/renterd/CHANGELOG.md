@@ -1,5 +1,29 @@
 # renterd
 
+## 0.25.0
+
+### Minor Changes
+
+- ce199e51: All dropdown menus now have higher contrast text.
+- 2242911d: The app now warns the user if it is running on the testnet with a prominent banner.
+- ce199e51: Contracts can now be deleted from the contract context menu.
+- 534d3944: The files health feature has been refined to be more accurate and clear and now includes a global health value in the stats bar.
+- 8cd442b4: Host explorer empty states are now more clear.
+- ce199e51: Hosts can now be filtered by public key.
+- 16038776: Table headers now freeze in view when the table scrolls.
+- ce199e51: The contract context menu now includes a variety of copy to clipboard options.
+- 182de3af: Fixed an issue with automatically updating the default contract set when configuring autopilot before setting the default contract set.
+- 534d3944: Entire directories can now be deleted from the directory context menu.
+- 534d3944: The files explorer no longer makes a metadata request for every file in the list.
+- d4144a2b: The transaction pool list has been removed.
+- c62ae09c: Wallet now warns the user if the wallet is scanning and shows the percent progress.
+- 534d3944: File health is now based on the new health values returned by the API.
+- 2242911d: The contrast was improved on the syncing progress text in the daemon profile.
+- ce199e51: renterd now has alerts. Alerts can be accessed from the new alerts icon in the sidenav.
+- 4289306a: Improved the file data size statistic and the detailed breakdown in its tooltip.
+- 4289306a: Fixed an issue where the file health and slab health breakdown was incorrectly reporting everything as 0.
+- ce199e51: Context menus now show the entity type and identifier for clarity.
+
 ## 0.24.0
 
 ### Minor Changes
