@@ -57,7 +57,7 @@ async function fetchFeedList() {
   })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return response.results.map((page: any) => ({
-    name: page.properties.name.title[0].plain_text,
+    name: page.properties.name.title?.[0]?.plain_text,
     link: page.properties.link?.url || null,
   }))
 }

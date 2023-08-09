@@ -21,7 +21,7 @@ export async function fetchArticlesByTag(tag: string) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return response.results.map((page: any) => {
     return {
-      title: page.properties.title.title[0].plain_text,
+      title: page.properties.title.title?.[0]?.plain_text,
       icon: page.properties.icon?.rich_text[0]?.plain_text || null,
       image: page.properties.image?.rich_text[0]?.plain_text || null,
       link: page.properties.link?.url || null,

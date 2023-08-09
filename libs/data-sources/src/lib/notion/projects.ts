@@ -3,7 +3,7 @@ import { fetchAllPages } from './notion'
 const databaseId = '9e6e776b394642d8b7edfafe43f74867'
 
 export async function fetchProjects() {
-  const results = await fetchAllPages({
+  const results = await fetchAllPages('title', {
     database_id: databaseId,
     sorts: [
       {
