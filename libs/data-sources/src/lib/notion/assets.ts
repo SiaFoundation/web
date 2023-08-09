@@ -10,7 +10,9 @@ export type Asset = {
 }
 
 export async function fetchAllAssets() {
-  const allPages = await fetchAllPages({ database_id: assetsDatabaseId })
+  const allPages = await fetchAllPages('name', {
+    database_id: assetsDatabaseId,
+  })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return allPages.map((i: any): Asset => {
     return {

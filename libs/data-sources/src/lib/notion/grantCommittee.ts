@@ -7,7 +7,7 @@ type Member = {
 }
 
 export async function fetchGrantCommittee(): Promise<Member[]> {
-  const results = await fetchAllPages({
+  const results = await fetchAllPages('name', {
     database_id: databaseId,
     sorts: [
       {
@@ -18,6 +18,6 @@ export async function fetchGrantCommittee(): Promise<Member[]> {
   })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return results.map((member: any) => ({
-    name: member.properties.name.title[0].plain_text,
+    name: member.properties.name.title?.[0]?.plain_text,
   }))
 }

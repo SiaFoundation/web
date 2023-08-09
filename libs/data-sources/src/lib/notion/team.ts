@@ -11,7 +11,7 @@ type Member = {
 }
 
 export async function fetchTeam(): Promise<Member[]> {
-  const results = await fetchAllPages({
+  const results = await fetchAllPages('name', {
     database_id: databaseId,
     sorts: [
       {
@@ -22,7 +22,7 @@ export async function fetchTeam(): Promise<Member[]> {
   })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return results.map((member: any) => ({
-    name: member.properties.name.title[0].plain_text,
+    name: member.properties.name.title?.[0]?.plain_text,
     title: member.properties.title.rich_text[0]?.plain_text || null,
     github: member.properties.github.rich_text[0]?.plain_text || null,
     twitter: member.properties.twitter.rich_text[0]?.plain_text || null,

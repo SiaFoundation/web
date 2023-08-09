@@ -95,13 +95,13 @@ type Tag =
   | 'technical'
 
 export async function fetchAllFeedItems(tags: Tag[], limit?: number) {
-  const allPages = await fetchAllPages({
+  const allPages = await fetchAllPages('title', {
     database_id: feedDatabaseId,
   })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const items = allPages.map((page: any) => ({
     id: page.id,
-    title: page.properties.title.title[0].plain_text,
+    title: page.properties.title.title?.[0]?.plain_text,
     link: page.properties.link.url,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     tags: page.properties.tags.multi_select.map((tag: any) => tag.name),
