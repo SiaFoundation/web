@@ -40,6 +40,7 @@ import {
   humanStoragePrice,
 } from '../../lib/humanUnits'
 import useLocalStorageState from 'use-local-storage-state'
+import { useNowAtInterval } from './useNowAtInterval'
 
 type TimeRange = {
   start: number
@@ -72,9 +73,12 @@ function useMetricsMain() {
     }
   )
 
+  // reset the time range every interval to keep the graph up to date
+  const now = useNowAtInterval(dataInterval)
+
   const timeRange = useMemo<TimeRange>(
-    () => getTimeRange(dataTimeSpan),
-    [dataTimeSpan]
+    () => getTimeRange(dataTimeSpan, now),
+    [dataTimeSpan, now]
   )
 
   const setDataTimeSpan = useCallback(
