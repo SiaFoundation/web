@@ -15,6 +15,7 @@ export function HomeCollateral() {
       <Heading>Collateral</Heading>
       <DatumScrollArea bleed>
         <DatumCardConfigurable
+          category="collateral"
           label="Locked collateral"
           color={collateral.config.data['locked'].color}
           sc={collateral.stats['locked']}
@@ -23,6 +24,7 @@ export function HomeCollateral() {
           enabledModes={['latest', 'average']}
         />
         <DatumCardConfigurable
+          category="collateral"
           label="Risked collateral"
           color={collateral.config.data['risked'].color}
           sc={collateral.stats['risked']}

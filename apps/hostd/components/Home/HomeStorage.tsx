@@ -15,6 +15,7 @@ export function HomeStorage() {
       <Heading>Storage</Heading>
       <DatumScrollArea>
         <DatumCardConfigurable
+          category="storage"
           label="storage (physical)"
           color={storage.config.data['physicalSectors'].color}
           value={storage.stats['physicalSectors']}
@@ -24,6 +25,7 @@ export function HomeStorage() {
           format={humanBytes}
         />
         <DatumCardConfigurable
+          category="storage"
           label="registry"
           color={storage.config.data['registryEntries'].color}
           value={storage.stats['registryEntries']}

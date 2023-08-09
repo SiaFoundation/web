@@ -15,6 +15,7 @@ export function HomeBandwidth() {
       <Heading>Bandwidth</Heading>
       <DatumScrollArea>
         <DatumCardConfigurable
+          category="bandwidth"
           label="ingress"
           color={bandwidth.config.data['ingress'].color}
           value={bandwidth.stats['ingress']}
@@ -23,6 +24,7 @@ export function HomeBandwidth() {
           format={humanBytes}
         />
         <DatumCardConfigurable
+          category="bandwidth"
           label="egress"
           color={bandwidth.config.data['egress'].color}
           value={bandwidth.stats['egress']}

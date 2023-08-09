@@ -23,6 +23,7 @@ export function HomePricing() {
       <Heading>Pricing</Heading>
       <DatumScrollArea bleed>
         <DatumCardConfigurable
+          category="pricing"
           label="storage"
           color={pricing.config.data['storage'].color}
           sc={pricing.stats['storage']}
@@ -32,6 +33,7 @@ export function HomePricing() {
           enabledModes={['latest', 'average']}
         />
         <DatumCardConfigurable
+          category="pricing"
           label="ingress"
           color={pricing.config.data['ingress'].color}
           sc={pricing.stats['ingress']}
@@ -41,6 +43,7 @@ export function HomePricing() {
           enabledModes={['latest', 'average']}
         />
         <DatumCardConfigurable
+          category="pricing"
           label="egress"
           color={pricing.config.data['egress'].color}
           sc={pricing.stats['egress']}
@@ -50,6 +53,7 @@ export function HomePricing() {
           enabledModes={['latest', 'average']}
         />
         <DatumCardConfigurable
+          category="pricing"
           label="collateral"
           color={pricing.config.data['collateral'].color}
           sc={pricing.stats['collateral']}
@@ -59,6 +63,7 @@ export function HomePricing() {
           enabledModes={['latest', 'average']}
         />
         <DatumCardConfigurable
+          category="pricing"
           label="contract"
           color={pricing.config.data['contract'].color}
           sc={pricing.stats['contract']}
@@ -67,6 +72,7 @@ export function HomePricing() {
           enabledModes={['latest', 'average']}
         />
         <DatumCardConfigurable
+          category="pricing"
           label="sector access"
           color={pricing.config.data['sectorAccess'].color}
           sc={pricing.stats['sectorAccess']}
@@ -76,6 +82,7 @@ export function HomePricing() {
           enabledModes={['latest', 'average']}
         />
         <DatumCardConfigurable
+          category="pricing"
           label="base RPC"
           color={pricing.config.data['baseRPC'].color}
           sc={pricing.stats['baseRPC']}
