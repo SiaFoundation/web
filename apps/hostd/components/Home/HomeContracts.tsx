@@ -15,6 +15,7 @@ export function HomeContracts() {
       <Heading>Contracts</Heading>
       <DatumScrollArea bleed>
         <DatumCardConfigurable
+          category="contracts"
           label="Active contracts"
           color={contracts.config.data['active'].color}
           value={contracts.stats['active']}
@@ -24,6 +25,7 @@ export function HomeContracts() {
           enabledModes={['latest', 'average']}
         />
         <DatumCardConfigurable
+          category="contracts"
           label="Successful contracts"
           color={contracts.config.data['successful'].color}
           value={contracts.stats['successful']}
@@ -33,6 +35,7 @@ export function HomeContracts() {
           enabledModes={['latest', 'average']}
         />
         <DatumCardConfigurable
+          category="contracts"
           label="Failed contracts"
           color={contracts.config.data['failed'].color}
           value={contracts.stats['failed']}

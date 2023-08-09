@@ -16,6 +16,7 @@ export function HomeOperations() {
         <Heading>Operations</Heading>
         <DatumScrollArea>
           <DatumCardConfigurable
+            category="operations"
             label="storage reads"
             color={operations.config.data['storageReads'].color}
             value={operations.stats['storageReads']}
@@ -25,6 +26,7 @@ export function HomeOperations() {
             format={humanNumber}
           />
           <DatumCardConfigurable
+            category="operations"
             label="storage writes"
             color={operations.config.data['storageWrites'].color}
             value={operations.stats['storageWrites']}
@@ -34,6 +36,7 @@ export function HomeOperations() {
             format={humanNumber}
           />
           <DatumCardConfigurable
+            category="operations"
             label="registry reads"
             color={operations.config.data['registryReads'].color}
             value={operations.stats['registryReads']}
@@ -43,6 +46,7 @@ export function HomeOperations() {
             format={humanNumber}
           />
           <DatumCardConfigurable
+            category="operations"
             label="registry writes"
             color={operations.config.data['registryWrites'].color}
             value={operations.stats['registryWrites']}

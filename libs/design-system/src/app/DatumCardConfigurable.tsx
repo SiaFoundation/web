@@ -5,12 +5,13 @@ import { ValueNum } from '../components/ValueNum'
 import { ValueSc } from '../components/ValueSc'
 import { DataLabel } from './DataLabel'
 import BigNumber from 'bignumber.js'
-import { useState } from 'react'
 import { Tooltip } from '../core/Tooltip'
+import useLocalStorageState from 'use-local-storage-state'
 
 type Mode = 'total' | 'average' | 'latest'
 
 type Props = {
+  category: string
   label: string
   color?: string
   sc?: {
@@ -42,6 +43,7 @@ const modeMap = {
 }
 
 export function DatumCardConfigurable({
+  category,
   label,
   color,
   sc,
@@ -53,7 +55,12 @@ export function DatumCardConfigurable({
   isLoading,
   showChange = true,
 }: Props) {
-  const [mode, setMode] = useState<Mode>(defaultMode)
+  const [mode, setMode] = useLocalStorageState<Mode>(
+    `v0/datum/${category}/${label}`,
+    {
+      defaultValue: defaultMode,
+    }
+  )
   return (
     <DatumCard
       isLoading={isLoading}

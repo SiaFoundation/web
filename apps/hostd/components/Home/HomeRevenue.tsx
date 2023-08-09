@@ -15,6 +15,7 @@ export function HomeRevenue() {
       <Heading>Revenue</Heading>
       <DatumScrollArea bleed>
         <DatumCardConfigurable
+          category="revenue"
           label="earned revenue"
           color={revenue.config.data['earned'].color}
           sc={revenue.stats['earned']}
@@ -22,6 +23,7 @@ export function HomeRevenue() {
           isLoading={revenue.isLoading}
         />
         <DatumCardConfigurable
+          category="revenue"
           label="potential revenue"
           color={revenue.config.data['potential'].color}
           sc={revenue.stats['potential']}
@@ -30,6 +32,7 @@ export function HomeRevenue() {
           showChange={false}
         />
         <DatumCardConfigurable
+          category="revenue"
           label="storage"
           color={revenue.config.data['storage'].color}
           sc={revenue.stats['storage']}
@@ -37,6 +40,7 @@ export function HomeRevenue() {
           isLoading={revenue.isLoading}
         />
         <DatumCardConfigurable
+          category="revenue"
           label="egress"
           color={revenue.config.data['egress'].color}
           sc={revenue.stats['egress']}
@@ -44,6 +48,7 @@ export function HomeRevenue() {
           isLoading={revenue.isLoading}
         />
         <DatumCardConfigurable
+          category="revenue"
           label="ingress"
           color={revenue.config.data['ingress'].color}
           sc={revenue.stats['ingress']}
@@ -51,6 +56,7 @@ export function HomeRevenue() {
           isLoading={revenue.isLoading}
         />
         <DatumCardConfigurable
+          category="revenue"
           label="registry read"
           color={revenue.config.data['registryRead'].color}
           sc={revenue.stats['registryRead']}
@@ -58,6 +64,7 @@ export function HomeRevenue() {
           isLoading={revenue.isLoading}
         />
         <DatumCardConfigurable
+          category="revenue"
           label="registry write"
           color={revenue.config.data['registryWrite'].color}
           sc={revenue.stats['registryWrite']}
