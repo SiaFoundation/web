@@ -319,7 +319,14 @@ export function useMetrics(args?: HookArgsSwr<{ timestamp: string }, Metrics>) {
   })
 }
 
-type Interval = '15m' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly'
+type Interval =
+  | '5m'
+  | '15m'
+  | 'hourly'
+  | 'daily'
+  | 'weekly'
+  | 'monthly'
+  | 'yearly'
 
 const metricsPeriodRoute = '/metrics/:interval'
 export function useMetricsPeriod(

@@ -79,7 +79,7 @@ export function Home() {
               </Option>
             ))}
           </Select> */}
-          <Tooltip content={`Data interval: ${dataInterval}`}>
+          <Tooltip side="bottom" content={`Data interval: ${dataInterval}`}>
             <div>
               <Button variant="ghost" state="waiting">
                 <Ruler16 />
@@ -87,26 +87,28 @@ export function Home() {
               </Button>
             </div>
           </Tooltip>
-          <Select
-            value={String(dataTimeSpan)}
-            onChange={(e) => {
-              const v = e.currentTarget.value
-              setDataTimeSpan(v as DataTimeSpan)
-            }}
-            icon={
-              <Tooltip content="Data time range">
-                <Text className="pl-1 pr-2">
-                  <CalendarHeatMap16 />
-                </Text>
-              </Tooltip>
-            }
-          >
-            {dataTimeSpanOptions.map((o) => (
-              <Option key={o.value} value={o.value}>
-                {o.label}
-              </Option>
-            ))}
-          </Select>
+          <Tooltip content="Data time range" side="bottom">
+            <div>
+              <Select
+                value={String(dataTimeSpan)}
+                onChange={(e) => {
+                  const v = e.currentTarget.value
+                  setDataTimeSpan(v as DataTimeSpan)
+                }}
+                icon={
+                  <Text className="pl-1 pr-2">
+                    <CalendarHeatMap16 />
+                  </Text>
+                }
+              >
+                {dataTimeSpanOptions.map((o) => (
+                  <Option key={o.value} value={o.value}>
+                    {o.label}
+                  </Option>
+                ))}
+              </Select>
+            </div>
+          </Tooltip>
         </>
       }
     >
