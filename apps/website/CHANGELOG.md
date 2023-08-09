@@ -1,5 +1,12 @@
 # website
 
+## 0.39.0
+
+### Minor Changes
+
+- 8cd442b4: The forum links have been updated to work with the recent reorganization.
+- 534d3944: get-started and other legacy pages now redirect to the root path.
+
 ## 0.38.0
 
 ### Minor Changes
