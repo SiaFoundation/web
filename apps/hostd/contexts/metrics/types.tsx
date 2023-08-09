@@ -74,6 +74,7 @@ export type TimeRange = {
 }
 
 export type DataInterval =
+  | '5m'
   | '15m'
   | 'hourly'
   | 'daily'
@@ -82,6 +83,10 @@ export type DataInterval =
   | 'yearly'
 
 export const dataItervalOptions: { label: string; value: DataInterval }[] = [
+  {
+    label: '5m',
+    value: '5m',
+  },
   {
     label: '15m',
     value: '15m',
@@ -108,13 +113,18 @@ export const dataItervalOptions: { label: string; value: DataInterval }[] = [
   },
 ]
 
-export type DataTimeSpan = '7' | '30' | '90' | '365' | 'all'
+export type DataTimeSpan = '1' | '7' | '30' | '90' | '365' | 'all'
 
 export const dataTimeSpanOptions: {
   label: string
   value: DataTimeSpan
   interval: DataInterval
 }[] = [
+  {
+    label: '1D',
+    interval: '5m',
+    value: '1',
+  },
   {
     label: '7D',
     interval: '15m',
@@ -143,6 +153,9 @@ export const dataTimeSpanOptions: {
 ]
 
 export function getDataIntervalInMs(dataInterval: DataInterval): number {
+  if (dataInterval === '5m') {
+    return minutesInMilliseconds(5)
+  }
   if (dataInterval === '15m') {
     return minutesInMilliseconds(15)
   }
