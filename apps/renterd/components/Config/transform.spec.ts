@@ -11,6 +11,7 @@ describe('data transforms', () => {
     expect(
       transformDown(
         { default: 'myset' },
+        { enabled: true },
         {
           hostBlockHeightLeeway: 4,
           maxContractPrice: '20000000000000000000000000',
@@ -34,6 +35,7 @@ describe('data transforms', () => {
       )
     ).toEqual({
       contractSet: 'myset',
+      uploadPackingEnabled: true,
       hostBlockHeightLeeway: new BigNumber(4),
       maxContractPrice: new BigNumber('20'),
       maxDownloadPrice: new BigNumber('1004.31'),
@@ -55,6 +57,7 @@ describe('data transforms', () => {
     expect(
       transformDown(
         { default: 'myset' },
+        { enabled: true },
         {
           hostBlockHeightLeeway: 4,
           maxContractPrice: '20000000000000000000000000',
@@ -78,6 +81,7 @@ describe('data transforms', () => {
       )
     ).toEqual({
       contractSet: 'myset',
+      uploadPackingEnabled: true,
       hostBlockHeightLeeway: new BigNumber(4),
       maxContractPrice: new BigNumber('20'),
       maxDownloadPrice: new BigNumber('1004.31'),
@@ -117,6 +121,7 @@ describe('data transforms', () => {
       transformUpGouging(
         {
           contractSet: 'myset',
+          uploadPackingEnabled: false,
           hostBlockHeightLeeway: new BigNumber(4),
           maxContractPrice: new BigNumber('20'),
           maxDownloadPrice: new BigNumber('1004.31'),
@@ -157,6 +162,7 @@ describe('data transforms', () => {
       transformUpGouging(
         {
           contractSet: 'myset',
+          uploadPackingEnabled: false,
           hostBlockHeightLeeway: new BigNumber(4),
           maxContractPrice: new BigNumber('20'),
           maxDownloadPrice: new BigNumber('1004.31'),
