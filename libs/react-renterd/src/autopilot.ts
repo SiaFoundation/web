@@ -63,33 +63,35 @@ export function useAutopilotActions(
 
 export type AutopilotHost = {
   host: Host
-  score: number
-  scoreBreakdown: {
-    age: number
-    collateral: number
-    interactions: number
-    storageRemaining: number
-    prices: number
-    uptime: number
-    version: number
-  }
-  unusableReasons: string[]
-  gougingBreakdown: {
-    v2: {
-      contractErr?: string
-      downloadErr?: string
-      gougingErr?: string
-      uploadErr?: string
+  checks?: {
+    score: number
+    scoreBreakdown: {
+      age: number
+      collateral: number
+      interactions: number
+      storageRemaining: number
+      prices: number
+      uptime: number
+      version: number
     }
-    v3: {
-      contractErr?: string
-      downloadErr?: string
-      gougingErr?: string
-      uploadErr?: string
+    unusableReasons: string[]
+    gougingBreakdown: {
+      v2: {
+        contractErr?: string
+        downloadErr?: string
+        gougingErr?: string
+        uploadErr?: string
+      }
+      v3: {
+        contractErr?: string
+        downloadErr?: string
+        gougingErr?: string
+        uploadErr?: string
+      }
     }
+    gouging: boolean
+    usable: boolean
   }
-  gouging: boolean
-  usable: boolean
 }
 
 export const autopilotHostsKey = '/autopilot/hosts'

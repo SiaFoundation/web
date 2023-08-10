@@ -10,7 +10,7 @@ import { HostsFilterBar } from './HostsFilterBar'
 
 export function Hosts() {
   const { openDialog } = useDialog()
-  const { dataset, columns, limit, dataState } = useHosts()
+  const { dataset, columns, limit, dataState, tableContext } = useHosts()
 
   return (
     <RenterdAuthedLayout
@@ -26,6 +26,7 @@ export function Hosts() {
         <Table
           isLoading={dataState === 'loading'}
           emptyState={<StateEmpty />}
+          context={tableContext}
           pageSize={limit}
           data={dataset}
           columns={columns}

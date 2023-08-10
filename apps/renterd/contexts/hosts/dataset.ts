@@ -55,7 +55,7 @@ export function useDataset({
               blocklist: blocklist.data,
               isAllowlistActive,
             }),
-            ...getAutopilotFields(ah),
+            ...getAutopilotFields(ah.checks),
           }
         }) || null
       )
@@ -133,7 +133,7 @@ function getAllowedFields({
   }
 }
 
-function getAutopilotFields(ah?: {
+function getAutopilotFields(ahc?: {
   score: number
   gougingBreakdown: {
     v2: {
@@ -163,22 +163,24 @@ function getAutopilotFields(ah?: {
   usable: boolean
 }) {
   return {
-    score: new BigNumber(ah?.score || 0),
+    score: new BigNumber(ahc?.score || 0),
     scoreBreakdown: {
-      age: new BigNumber(ah?.scoreBreakdown.age || 0),
-      collateral: new BigNumber(ah?.scoreBreakdown.collateral || 0),
-      interactions: new BigNumber(ah?.scoreBreakdown.interactions || 0),
-      prices: new BigNumber(ah?.scoreBreakdown.prices || 0),
-      storageRemaining: new BigNumber(ah?.scoreBreakdown.storageRemaining || 0),
-      uptime: new BigNumber(ah?.scoreBreakdown.uptime || 0),
-      version: new BigNumber(ah?.scoreBreakdown.version || 0),
+      age: new BigNumber(ahc?.scoreBreakdown.age || 0),
+      collateral: new BigNumber(ahc?.scoreBreakdown.collateral || 0),
+      interactions: new BigNumber(ahc?.scoreBreakdown.interactions || 0),
+      prices: new BigNumber(ahc?.scoreBreakdown.prices || 0),
+      storageRemaining: new BigNumber(
+        ahc?.scoreBreakdown.storageRemaining || 0
+      ),
+      uptime: new BigNumber(ahc?.scoreBreakdown.uptime || 0),
+      version: new BigNumber(ahc?.scoreBreakdown.version || 0),
     },
-    gougingBreakdown: ah?.gougingBreakdown || {
+    gougingBreakdown: ahc?.gougingBreakdown || {
       v2: {},
       v3: {},
     },
-    gouging: ah?.gouging,
-    unusableReasons: ah?.unusableReasons || [],
-    usable: ah?.usable,
+    gouging: ahc?.gouging,
+    unusableReasons: ahc?.unusableReasons || [],
+    usable: ahc?.usable,
   }
 }
