@@ -4,10 +4,16 @@ import { Statsbar } from '../Statsbar'
 import { SectionTransparent } from '../SectionTransparent'
 import { SectionSolid } from '../SectionSolid'
 import { routes } from '../../config/routes'
+import { cx } from 'class-variance-authority'
 
 export function Footer() {
   return (
-    <div className="flex flex-col">
+    <div
+      className={cx(
+        'flex flex-col overflow-hidden'
+        // 'rounded-b-[5px]'
+      )}
+    >
       <SectionTransparent className="pt-10 pb-12 md:pt-14 md:pb-20">
         <SiteMap menuSections={menuSections} />
       </SectionTransparent>

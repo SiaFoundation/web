@@ -5,7 +5,7 @@ import { curveLinear, curveStep, curveCardinal } from '@visx/curve'
 import { RenderTooltipGlyphProps } from '@visx/xychart/lib/components/Tooltip'
 import { lightTheme, darkTheme } from './customTheme'
 import { getChartComponents } from './getChartComponents'
-import { useTheme } from '../../hooks/useTheme'
+import { useTheme } from 'next-themes'
 import { omit } from 'lodash'
 import {
   ChartConfig,
@@ -61,10 +61,10 @@ export function useChartXY<Key extends string, Cat extends string>(
   const [useAnimatedComponents, setUseAnimatedComponents] = useState(
     !usePrefersReducedMotion() && !config.disableAnimations
   )
-  const { activeTheme } = useTheme()
+  const { resolvedTheme } = useTheme()
   const theme = useMemo(
-    () => (activeTheme === 'dark' ? darkTheme : lightTheme),
-    [activeTheme]
+    () => (resolvedTheme === 'dark' ? darkTheme : lightTheme),
+    [resolvedTheme]
   )
   const [animationTrajectory, setAnimationTrajectory] = useState<
     AnimationTrajectory | undefined

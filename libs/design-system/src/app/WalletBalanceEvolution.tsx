@@ -6,7 +6,7 @@ import {
   getDataIntervalLabelFormatter,
 } from '../lib/chartData'
 import { computeChartStats } from '../lib/chartStats'
-import { useTheme } from '../hooks/useTheme'
+import { useTheme } from 'next-themes'
 import { colors } from '../config/colors'
 
 type BalanceEvolution = {
@@ -27,10 +27,10 @@ export function BalanceEvolution({
   isLoading,
   chartType = 'area',
 }: Props) {
-  const { activeTheme } = useTheme()
+  const { resolvedTheme } = useTheme()
   const chartConfigs = useMemo(
     () =>
-      activeTheme === 'light'
+      resolvedTheme === 'light'
         ? {
             sc: {
               label: 'siacoin',
@@ -43,7 +43,7 @@ export function BalanceEvolution({
               color: colors.accentdark[800],
             },
           },
-    [activeTheme]
+    [resolvedTheme]
   )
 
   const chart = useMemo<Chart<Key, never>>(() => {

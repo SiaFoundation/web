@@ -2,9 +2,10 @@ import { Container } from '@siafoundation/design-system'
 import React from 'react'
 import { cx } from 'class-variance-authority'
 import { Background } from './Background'
-import { Main } from './Main'
 import { PageHead } from '../PageHead'
-import { menuSections } from '../../config/siteMap'
+import { Navbar } from './Navbar'
+import { Footer } from './Footer'
+import { useScrollTop } from '../../hooks/useScrollTop'
 
 type Props = {
   title: string
@@ -28,6 +29,9 @@ export function Layout({
   previewImage,
   backgroundImage,
 }: Props) {
+  const { scrollTop } = useScrollTop()
+  const scrolledDown = scrollTop > 0
+
   return (
     <div className="relative h-full w-full overflow-hidden">
       <PageHead
@@ -43,14 +47,20 @@ export function Layout({
           pad={false}
           className={cx(
             'relative p-0 z-10',
-            'border-gray-400 dark:border-graydark-600',
-            'border-3',
-            'mx-auto max-w-screen-2xl'
+            'border-y-0',
+            'border-x-2',
+            'border-gray-400 dark:border-graydark-600'
+            // 'rounded-lg',
           )}
         >
-          <Main heading={heading} menuSections={menuSections}>
-            {children}
-          </Main>
+          <Navbar scrolledDown={scrolledDown} />
+          <main className="flex flex-col gap-14 w-full">
+            <div className="flex flex-col">
+              <div>{heading}</div>
+              <div className="flex flex-col">{children}</div>
+              <Footer />
+            </div>
+          </main>
         </Container>
       </div>
       <Background background={backgroundImage} />
