@@ -130,6 +130,14 @@ function useHostsMain() {
     autopilot.state === 'on' ? autopilotResponse.error : regularResponse.error
   const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
+  const isAutopilotConfigured = autopilot.status.data?.configured
+  const tableContext = useMemo(
+    () => ({
+      isAutopilotConfigured,
+    }),
+    [isAutopilotConfigured]
+  )
+
   return {
     error,
     dataState,
@@ -138,6 +146,7 @@ function useHostsMain() {
     pageCount: dataset?.length || 0,
     columns: filteredTableColumns,
     dataset,
+    tableContext,
     configurableColumns,
     enabledColumns,
     toggleColumnVisibility,

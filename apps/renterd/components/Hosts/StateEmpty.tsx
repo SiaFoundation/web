@@ -4,34 +4,13 @@ import {
   HardDriveIcon,
   LinkButton,
   MisuseOutline32,
-  PlaneIcon,
   Text,
 } from '@siafoundation/design-system'
-import { useApp } from '../../contexts/app'
 import { routes } from '../../config/routes'
 import { useHosts } from '../../contexts/hosts'
 
 export function StateEmpty() {
-  const { autopilot } = useApp()
   const { dataState } = useHosts()
-
-  if (autopilot.state === 'on' && !autopilot.status.data?.configured) {
-    return (
-      <div className="flex flex-col gap-10 justify-center items-center h-[400px]">
-        <Text>
-          <PlaneIcon className="scale-[200%]" />
-        </Text>
-        <div className="flex flex-col gap-3 items-center">
-          <Text color="subtle" className="text-center max-w-[500px]">
-            Autopilot must be configured before using the hosts explorer.
-          </Text>
-          <LinkButton href={routes.autopilot.index}>
-            Configure autopilot
-          </LinkButton>
-        </div>
-      </div>
-    )
-  }
 
   if (dataState === 'error') {
     return (
