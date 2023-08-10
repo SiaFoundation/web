@@ -188,6 +188,10 @@ export type GougingSettings = {
   minMaxEphemeralAccountBalance: string
 }
 
+export type UploadPackingSettings = {
+  enabled: boolean
+}
+
 export type RedundancySettings = {
   minShards: number
   totalShards: number

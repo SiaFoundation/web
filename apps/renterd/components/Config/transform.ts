@@ -10,6 +10,7 @@ import {
   ContractSetSettings,
   GougingSettings,
   RedundancySettings,
+  UploadPackingSettings,
 } from '@siafoundation/react-renterd'
 import { toHastings, toSiacoins } from '@siafoundation/sia-js'
 import { ConfigDisplayOptions } from '../../hooks/useConfigDisplayOptions'
@@ -23,6 +24,7 @@ import {
   RedundancyData,
   scDecimalPlaces,
   SettingsData,
+  UploadPackingData,
 } from './fields'
 
 // up
@@ -34,6 +36,16 @@ export function transformUpContractSet(
   return {
     ...existingValues,
     default: values.contractSet,
+  }
+}
+
+export function transformUpUploadPacking(
+  values: UploadPackingData,
+  existingValues: Record<string, unknown>
+): UploadPackingSettings {
+  return {
+    ...existingValues,
+    enabled: values.uploadPackingEnabled,
   }
 }
 
@@ -116,6 +128,14 @@ export function transformDownContractSet(
   }
 }
 
+export function transformDownUploadPacking(
+  u: UploadPackingSettings
+): UploadPackingData {
+  return {
+    uploadPackingEnabled: u.enabled,
+  }
+}
+
 export function transformDownConfigApp(
   ca?: ConfigDisplayOptions
 ): ConfigAppData {
@@ -182,6 +202,7 @@ export function transformDownRedundancy(r: RedundancySettings): RedundancyData {
 
 export function transformDown(
   c: ContractSetSettings | undefined,
+  u: UploadPackingSettings,
   g: GougingSettings,
   r: RedundancySettings,
   ca: ConfigDisplayOptions | undefined
@@ -191,6 +212,8 @@ export function transformDown(
   return {
     // contractset
     ...transformDownContractSet(c),
+    // uploadpacking
+    ...transformDownUploadPacking(u),
     // gouging
     ...transformDownGouging(g, redundancy, configApp),
     // redundancy
