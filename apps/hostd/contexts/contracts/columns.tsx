@@ -248,6 +248,15 @@ export const columns: ContractsTableColumn[] = (
       ),
     },
     {
+      id: 'usageEgress',
+      label: 'egress usage',
+      category: 'financial',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data: { usage } }) => (
+        <ValueSc size="12" value={usage.egress} />
+      ),
+    },
+    {
       id: 'usageAccountFunding',
       label: 'account funding usage',
       category: 'financial',
