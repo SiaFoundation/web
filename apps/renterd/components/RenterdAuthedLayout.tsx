@@ -24,7 +24,9 @@ export function RenterdAuthedLayout(
       connectivityRoute={connectivityRoute}
       isSynced={isSynced}
       walletBalance={
-        wallet.data ? new BigNumber(wallet.data.confirmed) : undefined
+        wallet.data
+          ? new BigNumber(wallet.data.spendable).plus(wallet.data.unconfirmed)
+          : undefined
       }
       {...props}
     />

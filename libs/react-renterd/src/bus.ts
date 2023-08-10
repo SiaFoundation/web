@@ -154,6 +154,7 @@ type WalletResponse = {
   scanHeight: number
   address: string
   confirmed: string
+  unconfirmed: string
   spendable: string
 }
 

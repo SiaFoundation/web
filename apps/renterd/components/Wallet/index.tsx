@@ -112,7 +112,13 @@ export function Wallet() {
           isWalletSynced={isWalletSynced}
           syncPercent={syncPercent}
           walletScanPercent={walletScanPercent}
-          sc={wallet.data ? new BigNumber(wallet.data.confirmed) : undefined}
+          sc={
+            wallet.data
+              ? new BigNumber(wallet.data.spendable).plus(
+                  wallet.data.unconfirmed
+                )
+              : undefined
+          }
           receiveSiacoin={() => openDialog('addressDetails')}
           sendSiacoin={() => openDialog('sendSiacoin')}
         />
