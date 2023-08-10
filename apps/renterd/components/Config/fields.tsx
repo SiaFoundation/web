@@ -17,6 +17,10 @@ export const defaultContractSet = {
   contractSet: '',
 }
 
+export const defaultUploadPacking = {
+  uploadPackingEnabled: false,
+}
+
 export const defaultConfigApp = {
   includeRedundancyMaxStoragePrice: true,
   includeRedundancyMaxUploadPrice: true,
@@ -43,6 +47,8 @@ export const defaultRedundancy = {
 export const defaultValues = {
   // contract set
   ...defaultContractSet,
+  // upload packing
+  ...defaultUploadPacking,
   // gouging
   ...defaultGouging,
   // redundancy
@@ -52,12 +58,13 @@ export const defaultValues = {
 }
 
 export type ContractSetData = typeof defaultContractSet
+export type UploadPackingData = typeof defaultUploadPacking
 export type ConfigAppData = typeof defaultConfigApp
 export type GougingData = typeof defaultGouging
 export type RedundancyData = typeof defaultRedundancy
 export type SettingsData = typeof defaultValues
 
-type Categories = 'contractset' | 'gouging' | 'redundancy'
+type Categories = 'contractset' | 'uploadpacking' | 'gouging' | 'redundancy'
 
 type GetFields = {
   redundancyMultiplier: BigNumber
@@ -98,6 +105,25 @@ export function getFields({
       validation: {
         required: 'required',
       },
+    },
+    uploadPackingEnabled: {
+      category: 'uploadpacking',
+      type: 'boolean',
+      title: 'Upload packing',
+      description: (
+        <>
+          Data on the Sia network is stored in 40MiB sectors so by default
+          uploaded files are divided and padded into these 40MiB peices. This
+          means that storage is wasted on padding but more importantly files
+          smaller than 40MiB still use 40MiB of space. Upload packing avoids
+          this waste by buffering files and packing them together before they
+          are uploaded to the network. This trades some performance for storage
+          efficiency. It is also important to note that because buffered files
+          are temporarily stored on disk they must be considered when backing up
+          your renterd data.
+        </>
+      ),
+      validation: {},
     },
     // gouging
     maxStoragePrice: {
@@ -348,6 +374,7 @@ export function getFields({
         },
       },
     },
+    // hidden fields used by other config options
     includeRedundancyMaxStoragePrice: {
       type: 'boolean',
       title: 'Include redundancy',

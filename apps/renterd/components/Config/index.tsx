@@ -19,6 +19,7 @@ import {
   ContractSetSettings,
   GougingSettings,
   RedundancySettings,
+  UploadPackingSettings,
   useSettingUpdate,
 } from '@siafoundation/react-renterd'
 import { defaultValues, getFields } from './fields'
@@ -30,6 +31,7 @@ import {
   transformUpContractSet,
   transformUpGouging,
   transformUpRedundancy,
+  transformUpUploadPacking,
 } from './transform'
 import { useForm } from 'react-hook-form'
 import { useSiaCentralHostsNetworkAverages } from '@siafoundation/react-core'
@@ -42,9 +44,11 @@ import {
   configDisplayOptionsKey,
   useConfigDisplayOptions,
 } from '../../hooks/useConfigDisplayOptions'
+import { useUploadPackingSettings } from '../../hooks/useUploadPackingSettings'
 
 export function Config() {
   const { openDialog } = useDialog()
+  // settings that 404 when empty
   const contractSet = useContractSetSettings({
     config: {
       swr: {
@@ -54,6 +58,16 @@ export function Config() {
       },
     },
   })
+  const configApp = useConfigDisplayOptions({
+    config: {
+      swr: {
+        // Do not automatically refetch
+        revalidateOnFocus: false,
+        errorRetryCount: 0,
+      },
+    },
+  })
+  // settings with initial defaults
   const gouging = useGougingSettings({
     config: {
       swr: {
@@ -70,12 +84,11 @@ export function Config() {
       },
     },
   })
-  const configApp = useConfigDisplayOptions({
+  const uploadPacking = useUploadPackingSettings({
     config: {
       swr: {
         // Do not automatically refetch
         revalidateOnFocus: false,
-        errorRetryCount: 0,
       },
     },
   })
@@ -98,6 +111,7 @@ export function Config() {
   const resetFormData = useCallback(
     (
       contractSetData: ContractSetSettings | undefined,
+      uploadPackingData: UploadPackingSettings,
       gougingData: GougingSettings,
       redundancyData: RedundancySettings,
       configAppData: ConfigDisplayOptions | undefined
@@ -105,6 +119,7 @@ export function Config() {
       form.reset(
         transformDown(
           contractSetData,
+          uploadPackingData,
           gougingData,
           redundancyData,
           configAppData
@@ -120,12 +135,14 @@ export function Config() {
     if (
       gouging.data &&
       redundancy.data &&
+      uploadPacking.data &&
       (contractSet.data || contractSet.error) &&
       (configApp.data || configApp.error) &&
       !hasInit
     ) {
       resetFormData(
         contractSet.data,
+        uploadPacking.data,
         gouging.data,
         redundancy.data,
         configApp.data
@@ -136,6 +153,7 @@ export function Config() {
   }, [
     contractSet.data,
     contractSet.error,
+    uploadPacking.data,
     gouging.data,
     redundancy.data,
     configApp.data,
@@ -146,13 +164,27 @@ export function Config() {
     const contractSetData = await contractSet.mutate()
     const gougingData = await gouging.mutate()
     const redundancyData = await redundancy.mutate()
+    const uploadPackingData = await uploadPacking.mutate()
     const configAppData = await configApp.mutate()
     if (!gougingData || !redundancyData) {
       triggerErrorToast('Error fetching settings.')
     } else {
-      resetFormData(contractSetData, gougingData, redundancyData, configAppData)
+      resetFormData(
+        contractSetData,
+        uploadPackingData,
+        gougingData,
+        redundancyData,
+        configAppData
+      )
     }
-  }, [contractSet, gouging, redundancy, configApp, resetFormData])
+  }, [
+    contractSet,
+    gouging,
+    uploadPacking,
+    redundancy,
+    configApp,
+    resetFormData,
+  ])
 
   const minShards = form.watch('minShards')
   const totalShards = form.watch('totalShards')
@@ -222,6 +254,15 @@ export function Config() {
             contractSet.data as Record<string, unknown>
           ),
         })
+        const uploadPackingResponse = await settingUpdate.put({
+          params: {
+            key: 'uploadpacking',
+          },
+          payload: transformUpUploadPacking(
+            values,
+            uploadPacking.data as Record<string, unknown>
+          ),
+        })
         const gougingResponse = await settingUpdate.put({
           params: {
             key: 'gouging',
@@ -252,6 +293,9 @@ export function Config() {
         if (contractSetResponse.error) {
           throw Error(contractSetResponse.error)
         }
+        if (uploadPackingResponse.error) {
+          throw Error(uploadPackingResponse.error)
+        }
         if (gougingResponse.error) {
           throw Error(gougingResponse.error)
         }
@@ -268,7 +312,15 @@ export function Config() {
         console.log(e)
       }
     },
-    [settingUpdate, contractSet, redundancy, gouging, configApp, reset]
+    [
+      settingUpdate,
+      contractSet,
+      uploadPacking,
+      redundancy,
+      gouging,
+      configApp,
+      reset,
+    ]
   )
 
   const onInvalid = useOnInvalid(fields)
@@ -319,6 +371,12 @@ export function Config() {
         <ConfigurationPanel
           title="Contracts"
           category="contractset"
+          fields={fields}
+          form={form}
+        />
+        <ConfigurationPanel
+          title="Uploads"
+          category="uploadpacking"
           fields={fields}
           form={form}
         />
