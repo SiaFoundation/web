@@ -1,5 +1,11 @@
 # hostd
 
+## 0.20.0
+
+### Minor Changes
+
+- 45a2d701: The contracts table now has an egress usage column.
+
 ## 0.19.0
 
 ### Minor Changes

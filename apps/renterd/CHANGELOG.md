@@ -1,5 +1,15 @@
 # renterd
 
+## 0.26.0
+
+### Minor Changes
+
+- abdb8613: The host explorer now works before autopilot is configured, the table shows the autopilot columns with empty values and tooltips explaining that autopilot is not configured.
+- b7d17609: Upload packing can now be enabled from the configuration tab.
+- c899a07b: The file stats do not show redundancy factor or health until there is at least 1 byte of data.
+- abdb8613: Fixed a crash issue when loading the hosts explorer.
+- 6ce5f426: Wallet balance is now more accurately calculated as spendable + unconfirmed.
+
 ## 0.25.0
 
 ### Minor Changes
