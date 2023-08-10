@@ -18,6 +18,10 @@ export function FilesStatsMenuSize() {
     return null
   }
 
+  const averageRedundancyFactor = stats.data.totalObjectsSize
+    ? stats.data.totalSectorsSize / stats.data.totalObjectsSize
+    : 0
+
   return (
     <Tooltip
       side="bottom"
@@ -30,9 +34,11 @@ export function FilesStatsMenuSize() {
             <Text size="12" color="subtle">
               with redundancy
             </Text>
-            <Text size="12" color="subtle">
-              average redundancy factor
-            </Text>
+            {!!averageRedundancyFactor && (
+              <Text size="12" color="subtle">
+                average redundancy factor
+              </Text>
+            )}
             <Separator className="w-full my-1" />
             <Text size="12" color="subtle">
               reclaimable space
@@ -44,12 +50,11 @@ export function FilesStatsMenuSize() {
           <Text className="flex flex-col gap-1 items-end">
             <Text size="12">{humanBytes(stats.data.totalObjectsSize)}</Text>
             <Text size="12">{humanBytes(stats.data.totalSectorsSize)}</Text>
-            <Text size="12" font="mono">
-              {(
-                stats.data.totalSectorsSize / stats.data.totalObjectsSize
-              ).toFixed(1)}
-              x
-            </Text>
+            {!!averageRedundancyFactor && (
+              <Text size="12" font="mono">
+                {averageRedundancyFactor.toFixed(1)}x
+              </Text>
+            )}
             <Separator className="w-full my-1" />
             <Text size="12">
               {humanBytes(
@@ -62,9 +67,11 @@ export function FilesStatsMenuSize() {
       }
     >
       <Text size="12" font="mono">
-        {humanBytes(stats.data.totalObjectsSize)} @{' '}
-        {(stats.data.totalSectorsSize / stats.data.totalObjectsSize).toFixed(1)}
-        x
+        {`${humanBytes(stats.data.totalObjectsSize)}${
+          averageRedundancyFactor
+            ? ` @ ${averageRedundancyFactor.toFixed(1)}x`
+            : ''
+        }`}
       </Text>
     </Tooltip>
   )

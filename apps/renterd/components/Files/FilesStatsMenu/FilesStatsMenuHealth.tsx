@@ -30,6 +30,10 @@ export function FilesStatsMenuHealth() {
     isDirectory: true,
   })
 
+  if (!obj.data?.entries || obj.data.entries.length === 0) {
+    return null
+  }
+
   return (
     <Tooltip
       align="end"

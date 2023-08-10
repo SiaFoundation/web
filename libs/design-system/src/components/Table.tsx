@@ -99,7 +99,7 @@ export function Table<
           className={cx(
             'sticky top-0 z-20 bg-white dark:bg-graydark-200',
             'border-b border-gray-400 dark:border-graydark-400',
-            'shadow-border shadow-gray-400 dark:shadow-graydark-400'
+            'shadow-border-b shadow-gray-400 dark:shadow-graydark-400'
           )}
         >
           <tr>
