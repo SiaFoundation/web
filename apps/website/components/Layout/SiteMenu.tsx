@@ -46,7 +46,7 @@ export function SiteMenu({ menuSections }: Props) {
       }}
       contentVariants={{
         variant: 'none',
-        className: 'bg-black h-full border-3 border-graydark-400/50',
+        className: 'bg-black h-full border-x-2 border-graydark-400/50',
       }}
       closeClassName="hidden"
       trigger={

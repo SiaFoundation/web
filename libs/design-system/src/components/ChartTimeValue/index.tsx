@@ -23,7 +23,7 @@ import { AreaChart } from './AreaChart'
 import { Reset16 } from '../../icons/carbon'
 import { Panel } from '../../core/Panel'
 import { getPointTime, getPointValue, Point } from './utils'
-import { useTheme } from '../../hooks/useTheme'
+import { useTheme } from 'next-themes'
 import { colors } from '../../config/colors'
 import { humanDate } from '@siafoundation/sia-js'
 
@@ -68,7 +68,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
     tooltipTop = 0,
     tooltipLeft = 0,
   }: ChartProps & WithTooltipProvidedProps<TooltipData>) => {
-    const { activeTheme } = useTheme()
+    const { resolvedTheme } = useTheme()
     const {
       accentColor,
       background,
@@ -78,7 +78,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
       tooltipStyles,
       selectedBrushStyle,
     } = useMemo(() => {
-      if (activeTheme === 'light') {
+      if (resolvedTheme === 'light') {
         const background = colors.white
         // export const background = 'transparent'
         const background2 = colors.white
@@ -133,7 +133,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
         tooltipStyles,
         selectedBrushStyle,
       }
-    }, [activeTheme])
+    }, [resolvedTheme])
 
     const [selectedDatasetName, setSelectedDatasetName] = useState<string>(
       datasets[0]?.name

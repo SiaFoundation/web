@@ -13,7 +13,7 @@ import { random, sortBy } from 'lodash'
 import { getHostLabel } from './utils'
 import { Host } from '../../content/geoHosts'
 import { getAssetUrl } from '../../content/assets'
-import { useTheme } from '@siafoundation/design-system'
+import { useTheme } from 'next-themes'
 import { useElementSize } from 'usehooks-ts'
 
 type Props = {
@@ -132,7 +132,7 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
     [backgroundRoutes, activeRoutes]
   )
 
-  const { activeTheme } = useTheme()
+  const { resolvedTheme } = useTheme()
   const [containerRef, { width: size }] = useElementSize()
 
   return (
@@ -147,7 +147,7 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
         )}&w=2048&q=50`}
         arcsData={routes}
         atmosphereColor="rgba(30, 169,76, 1)"
-        atmosphereAltitude={activeTheme === 'dark' ? 0.05 : 0.15}
+        atmosphereAltitude={resolvedTheme === 'dark' ? 0.05 : 0.15}
         animateIn={false}
         arcLabel={(r: Route) => getHostLabel({ host: r.dst, rates })}
         arcStartLat={(r: Route) => +r.src.location[0]}

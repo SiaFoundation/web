@@ -3,7 +3,7 @@ import { Text } from '../core/Text'
 import { Paragraph } from '../core/Paragraph'
 import { ContentItemProps } from './ContentItem'
 import { WebDomain } from './WebDomain'
-import { useTheme } from '../hooks/useTheme'
+import { useTheme } from 'next-themes'
 import { cx } from 'class-variance-authority'
 
 export type ContentProjectProps = ContentItemProps & {
@@ -21,7 +21,7 @@ export function ContentProject({
   newTab,
   className,
 }: ContentProjectProps) {
-  const { activeTheme } = useTheme()
+  const { resolvedTheme } = useTheme()
   return (
     <div className={cx('flex flex-col', className)}>
       <Link
@@ -33,7 +33,7 @@ export function ContentProject({
         <div
           className="relative"
           style={{
-            filter: `grayscale(1) invert(${activeTheme === 'dark' ? 1 : 0})`,
+            filter: `grayscale(1) invert(${resolvedTheme === 'dark' ? 1 : 0})`,
           }}
         >
           {/* NextImage was having issues loading the file */}

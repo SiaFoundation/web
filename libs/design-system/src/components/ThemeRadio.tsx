@@ -1,6 +1,5 @@
 import React from 'react'
-import { useTheme } from '../hooks/useTheme'
-import { useCallback } from 'react'
+import { useTheme } from 'next-themes'
 import { Asleep16, Awake16, Screen16 } from '../icons/carbon'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 import { Tooltip } from '../core/Tooltip'
@@ -23,8 +22,6 @@ const RadioCard = React.forwardRef<
   />
 ))
 
-type Value = 'light' | 'dark' | 'system'
-
 type Props = {
   tabIndex?: number
   className?: string
@@ -32,28 +29,13 @@ type Props = {
 }
 
 export function ThemeRadio({ className, tooltipClassName, tabIndex }: Props) {
-  const { activeTheme, activeMode, setTheme, setMode } = useTheme()
-
-  const active = activeMode === 'system' ? 'system' : activeTheme
-
-  const onChange = useCallback(
-    (val: Value) => {
-      if (val === 'system') {
-        setMode('system')
-      } else {
-        setMode('user')
-        setTheme(val as 'light' | 'dark')
-      }
-    },
-    [setMode, setTheme]
-  )
-
+  const { theme, setTheme } = useTheme()
   return (
     <RadioGroupPrimitive.Root
-      value={active}
+      value={theme}
       tabIndex={tabIndex}
       className={cx('flex gap-4', className)}
-      onValueChange={(val) => onChange(val as Value)}
+      onValueChange={(val) => setTheme(val)}
     >
       <RadioCard value="system">
         <Tooltip className={tooltipClassName} sideOffset={16} content="System">

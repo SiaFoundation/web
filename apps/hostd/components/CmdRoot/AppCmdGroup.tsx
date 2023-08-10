@@ -1,4 +1,4 @@
-import { useTheme } from '@siafoundation/design-system'
+import { useTheme } from 'next-themes'
 import { useAppSettings } from '@siafoundation/react-core'
 import { useDialog } from '../../contexts/dialog'
 import {
@@ -22,7 +22,7 @@ type Props = {
 
 export function AppCmdGroup({ currentPage, parentPage }: Props) {
   const { openDialog, closeDialog } = useDialog()
-  const { setMode, setTheme } = useTheme()
+  const { setTheme } = useTheme()
   const { settings, setSettings, lock, currencyOptions, setCurrency } =
     useAppSettings()
   return (
@@ -71,7 +71,7 @@ export function AppCmdGroup({ currentPage, parentPage }: Props) {
         currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
-          setMode('system')
+          setTheme('system')
           closeDialog()
         }}
       >
@@ -81,7 +81,6 @@ export function AppCmdGroup({ currentPage, parentPage }: Props) {
         currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
-          setMode('user')
           setTheme('dark')
           closeDialog()
         }}
@@ -92,7 +91,6 @@ export function AppCmdGroup({ currentPage, parentPage }: Props) {
         currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
-          setMode('user')
           setTheme('light')
           closeDialog()
         }}

@@ -162,7 +162,7 @@ export * from './icons/FaucetIcon'
 export * from './icons/BellIcon'
 
 // hooks
-export * from './hooks/useTheme'
+export * from './hooks/tooltip'
 export * from './hooks/useConnectivity'
 export * from './app/AppAuthedLayout/useConnAndPassLock'
 export * from './hooks/useIsExternalDomain'

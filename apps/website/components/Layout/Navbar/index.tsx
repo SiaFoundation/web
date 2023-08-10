@@ -8,22 +8,19 @@ import {
   Tooltip,
   webLinks,
 } from '@siafoundation/design-system'
-import { useScrollTop } from '../../../hooks/useScrollTop'
 import { cx } from 'class-variance-authority'
 import { menuSections } from '../../../config/siteMap'
 import { SiteMenu } from '../SiteMenu'
 import { NavMenu } from './NavMenu'
 
-export function Navbar() {
-  const { scrollTop } = useScrollTop()
-  const scrolledDown = scrollTop > 0
-
+export function Navbar({ scrolledDown }: { scrolledDown: boolean }) {
   return (
     <Container
       size="4"
       pad={false}
       className={cx(
         'relative',
+        // !scrolledDown ? 'rounded-t-[5px]' : '',
         'bg-white dark:bg-graydark-50',
         'sticky top-0 z-20',
         'h-[60px]'

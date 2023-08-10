@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { ThemeProvider } from '../hooks/useTheme'
+import { ThemeProvider } from 'next-themes'
+import { TooltipProvider } from '../hooks/tooltip'
 import { AppSettingsProvider, CoreProvider } from '@siafoundation/react-core'
 import { rootClasses } from '../config/css'
 import { Toaster } from '../lib/toast'
@@ -30,16 +31,18 @@ export function NextAppCsr({
   return (
     <ClientSide>
       <CoreProvider fallback={fallback}>
-        <ThemeProvider>
-          <AppSettingsProvider
-            lockRoutes={lockRoutes}
-            passwordProtectRequestHooks={passwordProtectRequestHooks}
-          >
-            <div id="root" className={rootClasses}>
-              <Toaster />
-              {children}
-            </div>
-          </AppSettingsProvider>
+        <ThemeProvider attribute="class">
+          <TooltipProvider>
+            <AppSettingsProvider
+              lockRoutes={lockRoutes}
+              passwordProtectRequestHooks={passwordProtectRequestHooks}
+            >
+              <div id="root" className={rootClasses}>
+                <Toaster />
+                {children}
+              </div>
+            </AppSettingsProvider>
+          </TooltipProvider>
         </ThemeProvider>
       </CoreProvider>
     </ClientSide>
