@@ -19,6 +19,7 @@ module.exports = {
       colors,
       boxShadow: {
         border: 'inset 0 0 0 1px rgba(0, 0, 0, 0.3)',
+        'border-b': '0 1px 0 rgba(0, 0, 0, 0.3)',
         active: '0 0 0 2px rgba(0, 0, 0, 0.3)',
         focus: '0 0 0 1px rgba(0, 0, 0, 0.3)',
       },
