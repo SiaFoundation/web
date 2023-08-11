@@ -35,7 +35,7 @@ export function AppNavbar({ title, nav, stats, actions }: Props) {
         </div>
       </div>
       {stats && (
-        <div className="flex items-center gap-2 px-6 py-3 z-10 bg-gray-50 dark:bg-graydark-50 border-b border-gray-500 dark:border-graydark-300">
+        <div className="flex items-center gap-2 px-6 py-3 z-10 bg-gray-50 dark:bg-graydark-50 border-b border-gray-300 dark:border-graydark-300">
           {stats}
         </div>
       )}

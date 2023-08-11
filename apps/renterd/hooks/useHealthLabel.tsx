@@ -45,6 +45,12 @@ export function useHealthLabel({
     icon = <CheckmarkFilled16 />
     displayHealth = 1
   }
+  if (health > 1) {
+    displayHealth = 1
+  }
+  if (health < 0) {
+    displayHealth = 0
+  }
   return {
     label: label + ' health',
     color,

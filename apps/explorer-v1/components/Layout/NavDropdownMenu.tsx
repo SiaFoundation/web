@@ -28,20 +28,20 @@ export function NavDropdownMenu({ trigger, children, ...props }: Props) {
       }
       contentProps={{ align: 'end' }}
     >
-      <DropdownMenuGroup className="py-1">
+      <DropdownMenuGroup className="py-1 px-1 w-[120px]">
         <DropdownMenuLabel className="px-1">Network</DropdownMenuLabel>
-        <DropdownMenuItem className="p-1">
+        <DropdownMenuItem className="p-2">
           <Link href={webLinks.explore.mainnet} underline="hover">
             Sia Mainnet
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem className="p-1">
+        <DropdownMenuItem className="p-2">
           <Link href={webLinks.explore.testnet} underline="hover">
             Zen Testnet
           </Link>
         </DropdownMenuItem>
       </DropdownMenuGroup>
-      <DropdownMenuGroup className="pt-1">
+      <DropdownMenuGroup className="pt-2">
         <DropdownMenuLabel className="px-1">Theme</DropdownMenuLabel>
         <ThemeRadio className="justify-between p-2" />
       </DropdownMenuGroup>

@@ -68,7 +68,7 @@ export function Tooltip({
                 className={cx(
                   rootClasses,
                   'relative',
-                  'z-20',
+                  'z-50',
                   'data-[side=top]:bottom-1',
                   'data-[side=top]:origin-bottom',
                   'data-[side=bottom]:top-1',
