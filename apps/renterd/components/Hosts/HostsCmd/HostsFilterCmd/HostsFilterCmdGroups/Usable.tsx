@@ -7,18 +7,18 @@ export const hostsFilterUsablePage = {
   label: 'Hosts filter by usable',
 }
 
-const options = [
-  {
-    id: 'usabilityMode',
-    value: 'usable',
-    label: 'usable',
-  },
-  {
-    id: 'usabilityMode',
-    value: 'unusable',
-    label: 'unusable',
-  },
-]
+export const hostsFilterByUsable = {
+  id: 'usabilityMode',
+  value: 'usable',
+  label: 'usable',
+}
+export const hostsFilterByUnusable = {
+  id: 'usabilityMode',
+  value: 'unusable',
+  label: 'unusable',
+}
+
+const options = [hostsFilterByUsable, hostsFilterByUnusable]
 
 export function UsableCmdGroup({
   select,

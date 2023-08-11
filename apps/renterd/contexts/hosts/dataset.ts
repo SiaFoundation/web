@@ -10,6 +10,7 @@ import {
 } from '@siafoundation/react-renterd'
 import { ContractData } from '../contracts/types'
 import { useApp } from '../app'
+import { SiaCentralHost } from '@siafoundation/react-core'
 
 export function useDataset({
   autopilotState,
@@ -19,6 +20,8 @@ export function useDataset({
   allowlist,
   blocklist,
   isAllowlistActive,
+  geoHosts,
+  onHostSelect,
 }: {
   autopilotState: ReturnType<typeof useApp>['autopilot']['state']
   regularResponse: ReturnType<typeof useHostsSearch>
@@ -27,12 +30,16 @@ export function useDataset({
   allowlist: ReturnType<typeof useHostsAllowlist>
   blocklist: ReturnType<typeof useHostsBlocklist>
   isAllowlistActive: boolean
+  geoHosts: SiaCentralHost[]
+  onHostSelect: (publicKey: string, location?: [number, number]) => void
 }) {
   return useMemo<HostData[] | null>(() => {
     if (autopilotState === 'off') {
       return (
         regularResponse.data?.map((host) => {
+          const sch = geoHosts.find((gh) => gh.public_key === host.publicKey)
           return {
+            onClick: () => onHostSelect(host.publicKey, sch?.location),
             ...getHostFields(host, allContracts),
             ...getAllowedFields({
               host,
@@ -41,13 +48,17 @@ export function useDataset({
               isAllowlistActive,
             }),
             ...getAutopilotFields(),
+            location: sch?.location,
+            countryCode: sch?.country_code,
           }
         }) || null
       )
     } else if (autopilotState === 'on') {
       return (
         autopilotResponse.data?.map((ah) => {
+          const sch = geoHosts.find((gh) => gh.public_key === ah.host.publicKey)
           return {
+            onClick: () => onHostSelect(ah.host.publicKey, sch?.location),
             ...getHostFields(ah.host, allContracts),
             ...getAllowedFields({
               host: ah.host,
@@ -56,12 +67,15 @@ export function useDataset({
               isAllowlistActive,
             }),
             ...getAutopilotFields(ah.checks),
+            location: sch?.location,
+            countryCode: sch?.country_code,
           }
         }) || null
       )
     }
     return null
   }, [
+    onHostSelect,
     autopilotState,
     regularResponse.data,
     autopilotResponse.data,
@@ -69,6 +83,7 @@ export function useDataset({
     allowlist.data,
     blocklist.data,
     isAllowlistActive,
+    geoHosts,
   ])
 }
 
@@ -93,9 +108,11 @@ function getHostFields(host: Host, allContracts: ContractData[]) {
       host.interactions.FailedInteractions || 0
     ),
     totalScans: new BigNumber(host.interactions.TotalScans || 0),
-    activeContracts: new BigNumber(
+    activeContractsCount: new BigNumber(
       allContracts?.filter((c) => c.hostKey === host.publicKey).length || 0
     ),
+    activeContracts:
+      allContracts?.filter((c) => c.hostKey === host.publicKey) || [],
     priceTable: host.priceTable,
     settings: host.settings,
   }

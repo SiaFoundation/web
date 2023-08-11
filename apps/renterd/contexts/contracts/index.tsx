@@ -13,6 +13,7 @@ import {
   useEstimatedNetworkBlockHeight,
 } from '@siafoundation/react-renterd'
 import { createContext, useContext, useMemo } from 'react'
+import { useSiaCentralHosts } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 import {
   ContractData,
@@ -29,6 +30,8 @@ function useContractsMain() {
   const limit = Number(router.query.limit || defaultLimit)
   const offset = Number(router.query.offset || 0)
   const response = useContractsData()
+  const geo = useSiaCentralHosts()
+  const geoHosts = useMemo(() => geo.data?.hosts || [], [geo.data])
 
   const estimatedNetworkHeight = useEstimatedNetworkBlockHeight()
   const network = useConsensusState({
@@ -59,6 +62,7 @@ function useContractsMain() {
           contractId: c.id,
           hostIp: c.hostIP,
           hostKey: c.hostKey,
+          location: geoHosts.find((h) => h.public_key === c.hostKey)?.location,
           timeline: startTime,
           startTime,
           endTime,
@@ -78,7 +82,7 @@ function useContractsMain() {
         }
       }) || []
     return data
-  }, [response.data, currentHeight])
+  }, [response.data, geoHosts, currentHeight])
 
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useClientFilters<ContractData>()

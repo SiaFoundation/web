@@ -10,7 +10,9 @@ import {
 import { humanBytes, humanSiacoin, humanSpeed } from '@siafoundation/sia-js'
 import { cx } from 'class-variance-authority'
 import BigNumber from 'bignumber.js'
-import { Host } from '../../content/geoHosts'
+import { SiaCentralHost } from '@siafoundation/react-core'
+
+type Host = SiaCentralHost
 
 type Props = {
   host: Host

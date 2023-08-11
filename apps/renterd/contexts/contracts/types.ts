@@ -4,6 +4,7 @@ export type ContractData = {
   id: string
   hostIp: string
   hostKey: string
+  location?: [number, number]
   isRenewed: boolean
   renewedFrom: string
   timeline: number

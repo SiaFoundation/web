@@ -196,5 +196,6 @@ export * from './lib/chartData'
 export * from './lib/chartStats'
 export * from './lib/ipRegex'
 export * from './lib/getOs'
+export * from './lib/countryEmoji'
 
 export { colors } from './config/colors'

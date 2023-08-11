@@ -1,5 +1,6 @@
 import { AutopilotHost } from '@siafoundation/react-renterd'
 import BigNumber from 'bignumber.js'
+import { ContractData } from '../contracts/types'
 
 export type HostData = {
   id: string
@@ -47,7 +48,12 @@ export type HostData = {
   settings?: AutopilotHost['host']['settings']
   gouging: boolean
   usable: boolean
-  activeContracts: BigNumber
+  activeContractsCount: BigNumber
+  activeContracts: ContractData[]
+  // merged in from sia central API
+
+  location?: [number, number]
+  countryCode?: string
 }
 
 const generalColumns = [
@@ -173,3 +179,9 @@ export const columnsDefaultVisible: TableColumnId[] = [
 
 // export const sortOptions: { id: SortField; label: string; category: string }[] =
 //   []
+
+export type ViewMode = 'list' | 'map'
+
+export type HostDataWithLocation = HostData & {
+  location: [number, number]
+}
