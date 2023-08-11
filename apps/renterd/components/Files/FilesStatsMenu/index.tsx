@@ -15,8 +15,8 @@ export function FilesStatsMenu() {
     <div className="flex gap-2 w-full">
       <FilesStatsMenuWarnings />
       <div className="flex-1" />
-      <div className="flex gap-4">
-        <div className="flex gap-2">
+      <div className="flex gap-3">
+        <div className="flex gap-3">
           <Tooltip side="bottom" content="Filtered statistics">
             <Text size="12" color="verySubtle">
               <Filter16 />
@@ -25,7 +25,7 @@ export function FilesStatsMenu() {
           <FilesStatsMenuCount />
         </div>
         <Separator variant="vertical" className="h-full" />
-        <div className="flex gap-4">
+        <div className="flex gap-3">
           <Tooltip side="bottom" content="Global statistics">
             <Text size="12" color="verySubtle">
               <Wikis16 />

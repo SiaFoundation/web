@@ -80,8 +80,10 @@ export function Table<
   const getCellClassNames = useCallback(
     (i: number, className?: string) =>
       cx(
-        i === columns.length - 1 ? 'pr-6' : 'pr-4',
         i === 0 ? 'pl-6' : 'pl-4',
+        i === columns.length - 1 ? 'pr-6' : 'pr-4',
+        i === 0 ? 'rounded-tl-lg' : '',
+        i === columns.length - 1 ? 'rounded-tr-lg' : '',
         className
       ),
     [columns]
@@ -98,11 +100,10 @@ export function Table<
         <thead
           className={cx(
             'sticky top-0 z-20 bg-white dark:bg-graydark-200',
-            'border-b border-gray-400 dark:border-graydark-400',
             'shadow-border-b shadow-gray-400 dark:shadow-graydark-400'
           )}
         >
-          <tr>
+          <tr className="rounded-lg">
             {columns.map(
               (
                 { id, icon, label, tip, cellClassName, contentClassName },
@@ -181,7 +182,7 @@ export function Table<
                 key={row.id}
                 onClick={row.onClick}
                 className={cx(
-                  'border-b border-gray-300 dark:border-graydark-300',
+                  'border-b border-gray-200/50 dark:border-graydark-300',
                   row.onClick ? 'cursor-pointer' : ''
                 )}
               >
@@ -216,7 +217,7 @@ export function Table<
             times(pageSize).map((i) => (
               <tr
                 key={i}
-                className="border-b border-gray-300 dark:border-graydark-300"
+                className="border-b border-gray-200/50 dark:border-graydark-300"
               >
                 {columns.map(({ id, contentClassName, cellClassName }, i) => (
                   <td
