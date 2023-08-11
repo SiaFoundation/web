@@ -278,7 +278,7 @@ export const columns: HostsTableColumn[] = (
       category: 'general',
       contentClassName: 'w-[50px]',
       render: ({ data }) => {
-        const hasContract = data.activeContracts.gt(0)
+        const hasContract = data.activeContractsCount.gt(0)
         return (
           <Tooltip
             side="right"
@@ -445,7 +445,7 @@ export const columns: HostsTableColumn[] = (
       render: ({ data }) => (
         <ValueNum
           size="12"
-          value={data.activeContracts}
+          value={data.activeContractsCount}
           variant="value"
           format={(v) => humanNumber(v.toNumber())}
         />

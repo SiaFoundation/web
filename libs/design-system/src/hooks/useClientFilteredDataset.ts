@@ -2,7 +2,13 @@ import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
 import { ClientFilterItem } from './useClientFilters'
 
-type DatumValue = BigNumber | string | boolean | number | (() => void)
+type DatumValue =
+  | BigNumber
+  | string
+  | boolean
+  | number
+  | (() => void)
+  | unknown[]
 
 type Props<Datum extends Record<string, DatumValue>> = {
   dataset: Datum[] | null

@@ -1,6 +1,9 @@
-import { monthsToBlocks, TBToBytes } from '@siafoundation/design-system'
+import {
+  monthsToBlocks,
+  TBToBytes,
+  countryCodeEmoji,
+} from '@siafoundation/design-system'
 import { humanBytes, humanSiacoin, humanSpeed } from '@siafoundation/sia-js'
-import countryCodeEmoji from '../../lib/countryEmoji'
 import BigNumber from 'bignumber.js'
 import { Host } from '../../content/geoHosts'
 

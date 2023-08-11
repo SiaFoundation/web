@@ -46,6 +46,8 @@ type Props<
   pageSize: number
   isLoading: boolean
   emptyState?: React.ReactNode
+  focusId?: string
+  focusColor?: 'green' | 'red' | 'blue' | 'default'
 }
 
 export function Table<
@@ -66,6 +68,8 @@ export function Table<
   pageSize,
   isLoading,
   emptyState,
+  focusId,
+  focusColor = 'default',
 }: Props<Columns, SortField, D, Context>) {
   let show = 'emptyState'
 
@@ -78,12 +82,16 @@ export function Table<
   }
 
   const getCellClassNames = useCallback(
-    (i: number, className?: string) =>
+    (i: number, className: string | undefined, rounded?: boolean) =>
       cx(
         i === 0 ? 'pl-6' : 'pl-4',
         i === columns.length - 1 ? 'pr-6' : 'pr-4',
-        i === 0 ? 'rounded-tl-lg' : '',
-        i === columns.length - 1 ? 'rounded-tr-lg' : '',
+        rounded
+          ? [
+              i === 0 ? 'rounded-tl-lg' : '',
+              i === columns.length - 1 ? 'rounded-tr-lg' : '',
+            ]
+          : '',
         className
       ),
     [columns]
@@ -99,11 +107,11 @@ export function Table<
       <table className="relative z-10 table-auto border-collapse w-full">
         <thead
           className={cx(
-            'sticky top-0 z-20 bg-white dark:bg-graydark-200',
-            'shadow-border-b shadow-gray-400 dark:shadow-graydark-400'
+            'sticky top-0 z-20 bg-white dark:bg-graydark-100',
+            'shadow-border-b shadow-gray-400 dark:shadow-graydark-300'
           )}
         >
-          <tr className="rounded-lg">
+          <tr>
             {columns.map(
               (
                 { id, icon, label, tip, cellClassName, contentClassName },
@@ -114,7 +122,13 @@ export function Table<
                   !!toggleSort
                 const isSortActive = (sortField as string) === id
                 return (
-                  <th key={id} className={getCellClassNames(i, cellClassName)}>
+                  <th
+                    key={id}
+                    className={cx(
+                      getCellClassNames(i, cellClassName, false),
+                      'border-b border-gray-400 dark:border-graydark-400'
+                    )}
+                  >
                     <div className={cx('overflow-hidden', 'py-3')}>
                       <div
                         onClick={() => {
@@ -162,12 +176,15 @@ export function Table<
             )}
           </tr>
         </thead>
-        <tbody>
+        <tbody className="bg-gray-50 dark:bg-graydark-50">
           {summary && (
             <tr className="bg-gray-50 dark:bg-graydark-50 border-l border-r border-b border-gray-200 dark:border-graydark-200">
               {columns.map(
                 ({ id, summary, contentClassName, cellClassName }, i) => (
-                  <td key={id} className={getCellClassNames(i, cellClassName)}>
+                  <td
+                    key={id}
+                    className={getCellClassNames(i, cellClassName, false)}
+                  >
                     <div className={getContentClassNames(i, contentClassName)}>
                       {summary && summary()}
                     </div>
@@ -180,9 +197,10 @@ export function Table<
             data?.map((row) => (
               <tr
                 key={row.id}
+                id={row.id}
                 onClick={row.onClick}
                 className={cx(
-                  'border-b border-gray-200/50 dark:border-graydark-300',
+                  'border-b border-gray-200/50 dark:border-graydark-100',
                   row.onClick ? 'cursor-pointer' : ''
                 )}
               >
@@ -198,7 +216,30 @@ export function Table<
                   ) => (
                     <td
                       key={`${id}/${row.id}`}
-                      className={getCellClassNames(i, cellClassName)}
+                      className={cx(
+                        getCellClassNames(i, cellClassName, false),
+                        // must use shadow based borders on the individual tds because a tailwind ring
+                        // on the tr does not show up correctly in Safari
+                        focusId === row.id
+                          ? [
+                              'shadow-border-y',
+                              'first:shadow-border-tlb',
+                              'last:shadow-border-trb',
+                            ]
+                          : '',
+                        focusColor === 'default'
+                          ? '!shadow-blue-900 dark:!shadow-blue-200'
+                          : '',
+                        focusColor === 'blue'
+                          ? '!shadow-blue-500 dark:!shadow-blue-400'
+                          : '',
+                        focusColor === 'red'
+                          ? '!shadow-red-500 dark:!shadow-red-400'
+                          : '',
+                        focusColor === 'green'
+                          ? '!shadow-green-500 dark:!shadow-green-400'
+                          : ''
+                      )}
                     >
                       <div
                         className={cx(
@@ -222,7 +263,7 @@ export function Table<
                 {columns.map(({ id, contentClassName, cellClassName }, i) => (
                   <td
                     key={`${i}/${id}`}
-                    className={getCellClassNames(i, cellClassName)}
+                    className={getCellClassNames(i, cellClassName, false)}
                   >
                     <div
                       className={cx(

@@ -19,7 +19,17 @@ module.exports = {
       colors,
       boxShadow: {
         border: 'inset 0 0 0 1px rgba(0, 0, 0, 0.3)',
-        'border-b': 'inset 0 -1px 0 rgba(0, 0, 0, 0.3)',
+        'border-2': 'inset 0 0 0 2px rgba(0, 0, 0, 0.3)',
+        'border-b': 'inset 0 -1px rgba(0, 0, 0, 0.3)',
+        'border-t': 'inset 0 1px rgba(0, 0, 0, 0.3)',
+        'border-l': 'inset 1px 0 rgba(0, 0, 0, 0.3)',
+        'border-r': 'inset -1px 0 rgba(0, 0, 0, 0.3)',
+        'border-tlb':
+          'inset 0 1px 0 0 rgba(0, 0, 0, 0.3), inset 1px 0 0 0 rgba(0, 0, 0, 0.3), inset 0 -1px 0 0 rgba(0, 0, 0, 0.3)',
+        'border-trb':
+          'inset 0 1px 0 0 rgba(0, 0, 0, 0.3), inset -1px 0 0 0 rgba(0, 0, 0, 0.3), inset 0 -1px 0 0 rgba(0, 0, 0, 0.3)',
+        'border-y':
+          'inset 0 1px 0 0 rgba(0, 0, 0, 0.3), inset 0 -1px 0 0 rgba(0, 0, 0, 0.3)',
         active: '0 0 0 2px rgba(0, 0, 0, 0.3)',
         focus: '0 0 0 1px rgba(0, 0, 0, 0.3)',
       },

@@ -7,8 +7,8 @@ export const hostsFilterContractsPage = {
   label: 'Hosts filter by contracts',
 }
 
-const o = {
-  id: 'activeContracts',
+export const hostsFilterByHasActiveContracts = {
+  id: 'hasActiveContracts',
   bool: true,
   label: 'has active contracts',
 }
@@ -29,10 +29,10 @@ export function ContractsCmdGroup({
         currentPage={currentPage}
         commandPage={hostsFilterContractsPage}
         onSelect={() => {
-          select(o)
+          select(hostsFilterByHasActiveContracts)
         }}
       >
-        {o.label}
+        {hostsFilterByHasActiveContracts.label}
       </CommandItemSearch>
     </CommandGroup>
   )

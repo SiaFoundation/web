@@ -26,6 +26,7 @@ type Props = {
   isSynced: boolean
   showWallet?: boolean
   walletBalance?: BigNumber
+  scroll?: boolean
   routes: {
     login: string
     home: string
@@ -56,6 +57,7 @@ export function AppAuthedLayout({
   showWallet,
   walletBalance,
   routes,
+  scroll = true,
   openSettings,
 }: Props) {
   const { lock, settings } = useAppSettings()
@@ -96,11 +98,21 @@ export function AppAuthedLayout({
               actions={actions}
               stats={stats}
             />
-            <ScrollArea className="z-0">
-              <Container size={size} pad={false}>
-                <div className="flex flex-col gap-5">{children}</div>
+            {scroll ? (
+              <ScrollArea className="z-0">
+                <Container size={size} pad={false}>
+                  <div className="flex flex-col gap-5">{children}</div>
+                </Container>
+              </ScrollArea>
+            ) : (
+              <Container
+                size={size}
+                pad={false}
+                className="flex-1 flex flex-col gap-5 overflow-hidden"
+              >
+                {children}
               </Container>
-            </ScrollArea>
+            )}
           </div>
         </div>
       </div>
