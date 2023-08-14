@@ -98,9 +98,9 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
       const addExtra = Math.random() < 0.1
       if (addExtra) {
         const randomDistantIndex = random(
-          // Math.round((hosts.length - 1) / 2),
+          // Math.round((hostRoutes.length - 1) / 2),
           0,
-          hosts.length - 1
+          hostRoutes.length - 1
         )
         const extra = hostRoutes[randomDistantIndex]
         routes.push(extra)
