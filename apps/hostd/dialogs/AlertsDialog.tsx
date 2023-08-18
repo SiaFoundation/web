@@ -3,6 +3,7 @@ import {
   Checkmark16,
   Dialog,
   Heading,
+  Separator,
   Skeleton,
   Text,
   triggerErrorToast,
@@ -13,7 +14,7 @@ import {
 import { useAlerts, useAlertsDismiss } from '@siafoundation/react-hostd'
 import { humanDate, humanTime } from '@siafoundation/sia-js'
 import { cx } from 'class-variance-authority'
-import { times } from 'lodash'
+import { difference, omit, times } from 'lodash'
 import { useCallback } from 'react'
 
 type Props = {
@@ -142,6 +143,11 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
                     <Checkmark16 />
                   </Button>
                 </div>
+                {!!a.data.error && (
+                  <Text color="contrast" className="mb-1">
+                    {a.data.error}
+                  </Text>
+                )}
                 <div className="flex justify-between w-full">
                   <Text color="subtle" ellipsis>
                     timestamp
@@ -150,7 +156,7 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
                     {humanDate(a.timestamp, { timeStyle: 'medium' })}
                   </Text>
                 </div>
-                {getOrderedKeys(a.data).map((key) => {
+                {getOrderedKeys(a.data, skipFields).map((key) => {
                   const value = a.data[key]
                   if (value === undefined) {
                     return null
@@ -177,6 +183,8 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
   )
 }
 
+const skipFields = ['error']
+
 const dataFieldOrder = [
   'contractID',
   'blockHeight',
@@ -199,8 +207,8 @@ const dataFieldOrder = [
 ]
 
 // Sort keys by dataFieldOrder, then alphabetically
-function getOrderedKeys(obj) {
-  return Object.keys(obj).sort((a, b) => {
+function getOrderedKeys(obj, skip: string[]) {
+  const keys = Object.keys(obj).sort((a, b) => {
     const aIndex = dataFieldOrder.indexOf(a)
     const bIndex = dataFieldOrder.indexOf(b)
     if (aIndex === -1 && bIndex === -1) {
@@ -214,6 +222,7 @@ function getOrderedKeys(obj) {
     }
     return aIndex - bIndex
   })
+  return difference(keys, skip)
 }
 
 const dataFields = {
