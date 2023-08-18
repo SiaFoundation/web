@@ -222,7 +222,7 @@ function useHostsMain() {
     autopilot.status === 'on' ? autopilotResponse.error : regularResponse.error
   const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
-  const isAutopilotConfigured = autopilot.status.data?.configured
+  const isAutopilotConfigured = autopilot.state.data?.configured
   const tableContext = useMemo(
     () => ({
       isAutopilotConfigured,

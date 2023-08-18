@@ -19,7 +19,7 @@ type WorkerState = StateResponse & {
 
 const workerStateKey = '/worker/state'
 
-export function useBusState(args?: HookArgsSwr<void, WorkerState>) {
+export function useWorkerState(args?: HookArgsSwr<void, WorkerState>) {
   return useGetSwr({
     ...args,
     route: workerStateKey,

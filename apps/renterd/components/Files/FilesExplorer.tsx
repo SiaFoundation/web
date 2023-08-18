@@ -1,8 +1,7 @@
 import { Table, Dropzone } from '@siafoundation/design-system'
 import { useFiles } from '../../contexts/files'
-import { StateError } from './StateError'
-import { StateNoneMatching } from './StateNoneMatching'
-import { StateNoneYet } from './StateNoneYet'
+import { EmptyState } from './EmptyState'
+import { useCanUpload } from './useCanUpload'
 
 export function FilesExplorer() {
   const {
@@ -16,20 +15,17 @@ export function FilesExplorer() {
     sortableColumns,
     toggleSort,
   } = useFiles()
+  const canUpload = useCanUpload()
   return (
     <div className="relative">
-      <Dropzone onDrop={uploadFiles} noClick={pageCount > 0}>
+      <Dropzone
+        onDrop={uploadFiles}
+        noClick={!canUpload || pageCount > 0}
+        noDrag={!canUpload}
+      >
         <Table
           isLoading={dataState === 'loading'}
-          emptyState={
-            dataState === 'noneMatchingFilters' ? (
-              <StateNoneMatching />
-            ) : dataState === 'noneYet' ? (
-              <StateNoneYet />
-            ) : dataState === 'error' ? (
-              <StateError />
-            ) : null
-          }
+          emptyState={<EmptyState />}
           pageSize={10}
           data={datasetPage}
           columns={columns}
