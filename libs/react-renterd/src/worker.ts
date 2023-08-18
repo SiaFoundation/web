@@ -6,7 +6,25 @@ import {
   usePutFunc,
   usePostFunc,
   HookArgsCallback,
+  HookArgsSwr,
+  useGetSwr,
 } from '@siafoundation/react-core'
+import { StateResponse } from './bus'
+
+// state
+
+type WorkerState = StateResponse & {
+  id: string
+}
+
+const workerStateKey = '/worker/state'
+
+export function useBusState(args?: HookArgsSwr<void, WorkerState>) {
+  return useGetSwr({
+    ...args,
+    route: workerStateKey,
+  })
+}
 
 export function useObjectDownloadFunc(
   args?: HookArgsCallback<{ key: string }, void, Blob>

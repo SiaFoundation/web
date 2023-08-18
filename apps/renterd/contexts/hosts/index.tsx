@@ -62,7 +62,7 @@ function useHostsMain() {
     disabled:
       // prevents an extra fetch when allContracts is null
       (filters.find((f) => f.id === 'hasActiveContracts') && !allContracts) ||
-      autopilot.state !== 'on',
+      autopilot.status !== 'on',
     payload: {
       limit,
       offset,
@@ -82,7 +82,7 @@ function useHostsMain() {
   })
 
   const regularResponse = useHostsSearch({
-    disabled: autopilot.state !== 'off',
+    disabled: autopilot.status !== 'off',
     payload: {
       limit,
       offset,
@@ -175,7 +175,7 @@ function useHostsMain() {
   )
 
   const dataset = useDataset({
-    autopilotState: autopilot.state,
+    autopilotStatus: autopilot.status,
     autopilotResponse,
     regularResponse,
     allContracts,
@@ -187,8 +187,8 @@ function useHostsMain() {
   })
 
   const disabledCategories = useMemo(
-    () => (autopilot.state === 'off' ? ['autopilot'] : []),
-    [autopilot.state]
+    () => (autopilot.status === 'off' ? ['autopilot'] : []),
+    [autopilot.status]
   )
 
   const {
@@ -215,11 +215,11 @@ function useHostsMain() {
   )
 
   const isValidating =
-    autopilot.state === 'on'
+    autopilot.status === 'on'
       ? autopilotResponse.isValidating
       : regularResponse.isValidating
   const error =
-    autopilot.state === 'on' ? autopilotResponse.error : regularResponse.error
+    autopilot.status === 'on' ? autopilotResponse.error : regularResponse.error
   const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
   const isAutopilotConfigured = autopilot.status.data?.configured

@@ -6,7 +6,7 @@ import { useContractSetSettings } from './useContractSetSettings'
 export function useIsApcsEqDcs() {
   const { autopilot } = useApp()
   const apc = useAutopilotConfig({
-    disabled: autopilot.state !== 'on',
+    disabled: autopilot.status !== 'on',
   })
   const css = useContractSetSettings()
 

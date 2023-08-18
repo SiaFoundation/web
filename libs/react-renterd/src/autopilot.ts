@@ -1,5 +1,5 @@
 import { Action, AutopilotConfig, Host } from './siaTypes'
-import { HostsSearchPayload } from './bus'
+import { HostsSearchPayload, StateResponse } from './bus'
 import {
   useGetSwr,
   usePostSwr,
@@ -20,12 +20,14 @@ type AutopilotStatus = {
   uptimeMS: string
 }
 
-const autopilotStatusKey = '/autopilot/status'
+type AutopilotState = AutopilotStatus & StateResponse
 
-export function useAutopilotStatus(args?: HookArgsSwr<void, AutopilotStatus>) {
+const autopilotStateKey = '/autopilot/state'
+
+export function useAutopilotState(args?: HookArgsSwr<void, AutopilotState>) {
   return useGetSwr({
     ...args,
-    route: autopilotStatusKey,
+    route: autopilotStateKey,
   })
 }
 
@@ -46,7 +48,7 @@ export function useAutopilotConfigUpdate(
     // or not autopilot is configured
     const func = async () => {
       await delay(1000)
-      mutate((key) => key === autopilotStatusKey)
+      mutate((key) => key === autopilotStateKey)
     }
     func()
   })

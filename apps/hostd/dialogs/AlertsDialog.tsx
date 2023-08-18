@@ -3,7 +3,6 @@ import {
   Checkmark16,
   Dialog,
   Heading,
-  Separator,
   Skeleton,
   Text,
   triggerErrorToast,
@@ -14,7 +13,7 @@ import {
 import { useAlerts, useAlertsDismiss } from '@siafoundation/react-hostd'
 import { humanDate, humanTime } from '@siafoundation/sia-js'
 import { cx } from 'class-variance-authority'
-import { difference, omit, times } from 'lodash'
+import { difference, times } from 'lodash'
 import { useCallback } from 'react'
 
 type Props = {

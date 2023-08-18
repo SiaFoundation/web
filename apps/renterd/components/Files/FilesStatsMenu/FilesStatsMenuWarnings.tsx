@@ -20,14 +20,14 @@ export function FilesStatsMenuWarnings() {
   let warning = 'none'
 
   if (
-    autopilot.state === 'on' &&
+    autopilot.status === 'on' &&
     !isApcsEqDcs.isValidating &&
     !isApcsEqDcs.data
   ) {
     warning = 'contractSetMismatch'
   }
 
-  if (autopilot.state === 'on' && apc.error) {
+  if (autopilot.status === 'on' && apc.error) {
     warning = 'setupAutopilot'
   }
 
