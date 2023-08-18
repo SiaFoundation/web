@@ -13,7 +13,7 @@ import { useApp } from '../app'
 import { SiaCentralHost } from '@siafoundation/react-core'
 
 export function useDataset({
-  autopilotState,
+  autopilotStatus,
   regularResponse,
   autopilotResponse,
   allContracts,
@@ -23,7 +23,7 @@ export function useDataset({
   geoHosts,
   onHostSelect,
 }: {
-  autopilotState: ReturnType<typeof useApp>['autopilot']['state']
+  autopilotStatus: ReturnType<typeof useApp>['autopilot']['status']
   regularResponse: ReturnType<typeof useHostsSearch>
   autopilotResponse: ReturnType<typeof useAutopilotHostsSearch>
   allContracts: ContractData[]
@@ -34,7 +34,7 @@ export function useDataset({
   onHostSelect: (publicKey: string, location?: [number, number]) => void
 }) {
   return useMemo<HostData[] | null>(() => {
-    if (autopilotState === 'off') {
+    if (autopilotStatus === 'off') {
       return (
         regularResponse.data?.map((host) => {
           const sch = geoHosts.find((gh) => gh.public_key === host.publicKey)
@@ -53,7 +53,7 @@ export function useDataset({
           }
         }) || null
       )
-    } else if (autopilotState === 'on') {
+    } else if (autopilotStatus === 'on') {
       return (
         autopilotResponse.data?.map((ah) => {
           const sch = geoHosts.find((gh) => gh.public_key === ah.host.publicKey)
@@ -76,7 +76,7 @@ export function useDataset({
     return null
   }, [
     onHostSelect,
-    autopilotState,
+    autopilotStatus,
     regularResponse.data,
     autopilotResponse.data,
     allContracts,

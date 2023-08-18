@@ -38,6 +38,29 @@ import {
   WalletTransaction,
 } from './siaTypes'
 
+// state
+
+type BuildState = {
+  network: 'Mainnet' | 'Zen Testnet'
+  version: string
+  commit: string
+  OS: string
+  buildTime: number
+}
+
+export type StateResponse = BuildState & {
+  startTime: number
+}
+
+const busStateKey = '/bus/state'
+
+export function useBusState(args?: HookArgsSwr<void, StateResponse>) {
+  return useGetSwr({
+    ...args,
+    route: busStateKey,
+  })
+}
+
 // consensus
 
 export function useConsensusState(args?: HookArgsSwr<void, ConsensusState>) {
@@ -47,21 +70,8 @@ export function useConsensusState(args?: HookArgsSwr<void, ConsensusState>) {
   })
 }
 
-export type ConsensusNetwork = {
-  Name: 'mainnet' | 'zen'
-}
-
-export function useConsensusNetwork(
-  args?: HookArgsSwr<void, ConsensusNetwork>
-) {
-  return useGetSwr({
-    ...args,
-    route: '/bus/consensus/network',
-  })
-}
-
 export function useEstimatedNetworkBlockHeight(): number {
-  const network = useConsensusNetwork({
+  const state = useBusState({
     config: {
       swr: {
         revalidateOnFocus: false,
@@ -69,9 +79,9 @@ export function useEstimatedNetworkBlockHeight(): number {
     },
   })
   const res = useSWR(
-    network,
+    state,
     () => {
-      if (network.data?.Name === 'zen') {
+      if (state.data?.network === 'Zen Testnet') {
         return getTestnetZenBlockHeight()
       }
       return getMainnetBlockHeight()

@@ -17,7 +17,7 @@ export function ContractFilterCmdGroups({ currentPage, select }: Props) {
   const { autopilot } = useApp()
   return (
     <>
-      {autopilot.state === 'on' && (
+      {autopilot.status === 'on' && (
         <UsableCmdGroup currentPage={currentPage} select={select} />
       )}
       <ContractsCmdGroup currentPage={currentPage} select={select} />

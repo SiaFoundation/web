@@ -1,8 +1,8 @@
 import { TestnetWarningBanner } from '@siafoundation/design-system'
-import { useConsensusNetwork } from '@siafoundation/react-renterd'
+import { useBusState } from '@siafoundation/react-renterd'
 
 export function RenterdTestnetWarningBanner() {
-  const network = useConsensusNetwork({
+  const state = useBusState({
     config: {
       swr: {
         revalidateOnFocus: false,
@@ -10,11 +10,9 @@ export function RenterdTestnetWarningBanner() {
     },
   })
 
-  if (!network.data || network.data.Name === 'mainnet') {
+  if (!state.data || state.data.network === 'Mainnet') {
     return null
   }
-  const testnetName =
-    network.data.Name === 'zen' ? 'Zen Testnet' : network.data.Name
 
-  return <TestnetWarningBanner testnetName={testnetName} />
+  return <TestnetWarningBanner testnetName={state.data.network} />
 }

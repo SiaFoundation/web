@@ -29,7 +29,7 @@ export function HostsFilterNav({
   const { autopilot } = useApp()
   return (
     <>
-      {autopilot.state === 'on' && (
+      {autopilot.status === 'on' && (
         <CommandItemNav
           currentPage={currentPage}
           parentPage={parentPage}

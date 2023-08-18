@@ -105,7 +105,7 @@ export function CmdRoot({ panel }: Props) {
             afterSelect()
           }}
         />
-        {autopilot.state === 'on' && (
+        {autopilot.status === 'on' && (
           <AutopilotCmdGroup currentPage={page} pushPage={pushPage} />
         )}
         <WalletCmdGroup currentPage={page} pushPage={pushPage} />
