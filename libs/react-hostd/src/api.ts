@@ -32,10 +32,12 @@ export type StateHost = {
   buildTime: string
 }
 
+export const stateHostKey = '/state/host'
+
 export function useStateHost(args?: HookArgsSwr<void, StateHost>) {
   return useGetSwr({
     ...args,
-    route: '/state/host',
+    route: stateHostKey,
   })
 }
 

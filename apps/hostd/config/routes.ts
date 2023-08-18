@@ -1,3 +1,5 @@
+import { stateHostKey } from '@siafoundation/react-hostd'
+
 export const routes = {
   home: '/',
   volumes: {
@@ -20,4 +22,4 @@ export const routes = {
   login: '/login',
 }
 
-export const connectivityRoute = '/state/consensus'
+export const connectivityRoute = stateHostKey

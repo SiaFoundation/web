@@ -1,3 +1,5 @@
+import { syncerPeersKey } from '@siafoundation/react-walletd'
+
 export const routes = {
   home: '/',
   wallet: {
@@ -13,4 +15,4 @@ export const routes = {
   login: '/login',
 }
 
-export const connectivityRoute = '/consensus/tip'
+export const connectivityRoute = syncerPeersKey

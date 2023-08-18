@@ -52,7 +52,7 @@ export type StateResponse = BuildState & {
   startTime: number
 }
 
-const busStateKey = '/bus/state'
+export const busStateKey = '/bus/state'
 
 export function useBusState(args?: HookArgsSwr<void, StateResponse>) {
   return useGetSwr({
