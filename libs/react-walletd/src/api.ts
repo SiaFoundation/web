@@ -52,7 +52,6 @@ export function useConsensusNetwork(
   })
 }
 
-// TODO
 export function useEstimatedNetworkBlockHeight(): number {
   const network = useConsensusNetwork({
     config: {
@@ -90,12 +89,12 @@ type GatewayPeer = {
   syncDuration: number
 }
 
-const syncerPeers = '/syncer/peers'
+export const syncerPeersKey = '/syncer/peers'
 
 export function useSyncerPeers(args?: HookArgsSwr<void, GatewayPeer[]>) {
   return useGetSwr({
     ...args,
-    route: syncerPeers,
+    route: syncerPeersKey,
   })
 }
 
@@ -106,7 +105,7 @@ export function useSyncerConnect(args?: HookArgsCallback<void, string, never>) {
       route: '/syncer/connect',
     },
     async (mutate) => {
-      mutate((key) => key === syncerPeers)
+      mutate((key) => key === syncerPeersKey)
     }
   )
 }
