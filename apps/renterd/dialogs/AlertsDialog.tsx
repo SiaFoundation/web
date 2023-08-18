@@ -1,19 +1,27 @@
 import {
   Dialog,
   Heading,
+  Link,
+  ScrollArea,
   Skeleton,
   Text,
   useDatasetEmptyState,
   ValueCopyable,
   ValueMenu,
 } from '@siafoundation/design-system'
-import { useAlerts, useHost } from '@siafoundation/react-renterd'
+import {
+  useAlerts,
+  useHost,
+  useSlabObjects,
+} from '@siafoundation/react-renterd'
 import { humanDate } from '@siafoundation/sia-js'
 import { cx } from 'class-variance-authority'
 import { times } from 'lodash'
 import { useMemo } from 'react'
-import { ContractContextMenuFromId } from '../components/Contracts/ContractContextMenuFromId'
 import { HostContextMenu } from '../components/Hosts/HostContextMenu'
+import { useDialog } from '../contexts/dialog'
+import { useFiles } from '../contexts/files'
+import { getDirectoryFromPath } from '../contexts/files/utils'
 
 type Props = {
   open: boolean
@@ -35,60 +43,87 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
   const dataFields = useMemo(
     () => ({
       hostKey: {
-        label: 'host key',
         render: function HostField({ value }: { value: string }) {
           const host = useHost({ params: { hostKey: value } })
           if (!host.data) {
             return null
           }
           return (
-            <div className="flex gap-1 items-center">
-              <ValueMenu
-                value={value}
-                menu={
-                  <HostContextMenu
-                    publicKey={host.data.publicKey}
-                    address={host.data.netAddress}
-                    contentProps={{
-                      align: 'end',
-                    }}
-                    buttonProps={{
-                      size: 'none',
-                    }}
-                  />
-                }
-              />
+            <div className="flex justify-between w-full">
+              <Text color="subtle" ellipsis>
+                host key
+              </Text>
+              <div className="flex gap-1 items-center">
+                <ValueMenu
+                  value={value}
+                  menu={
+                    <HostContextMenu
+                      publicKey={host.data.publicKey}
+                      address={host.data.netAddress}
+                      contentProps={{
+                        align: 'end',
+                      }}
+                      buttonProps={{
+                        size: 'none',
+                      }}
+                    />
+                  }
+                />
+              </div>
             </div>
           )
         },
       },
-      contractID: {
-        label: 'contract ID',
-        render: function ContractField({ value }: { value: string }) {
+      key: {
+        render: function SlabField({ value }: { value: string }) {
+          const { setActiveDirectory } = useFiles()
+          const { closeDialog } = useDialog()
+          const objects = useSlabObjects({
+            params: {
+              key: value,
+            },
+          })
           return (
-            <div className="flex gap-1 items-center">
-              <ValueMenu
-                value={value}
-                menu={
-                  <ContractContextMenuFromId
-                    id={value}
-                    contentProps={{
-                      align: 'end',
-                    }}
-                    buttonProps={{
-                      size: 'none',
-                    }}
-                  />
-                }
-              />
-            </div>
+            <>
+              <div className="flex justify-between w-full">
+                <Text color="subtle" ellipsis>
+                  key
+                </Text>
+                <ValueCopyable value={value} />
+              </div>
+              {objects.data && (
+                <ScrollArea>
+                  <div className="flex flex-col gap-2 mt-2 mb-2">
+                    {objects.data.map((o) => (
+                      <Link
+                        key={o.name}
+                        color="accent"
+                        underline="hover"
+                        size="12"
+                        noWrap
+                        onClick={() => {
+                          setActiveDirectory(() => getDirectoryFromPath(o.name))
+                          closeDialog()
+                        }}
+                      >
+                        {o.name}
+                      </Link>
+                    ))}
+                  </div>
+                </ScrollArea>
+              )}
+            </>
           )
         },
       },
       account: {
-        label: 'account',
         render: ({ value }: { value: string }) => (
-          <ValueCopyable value={value} />
+          <div className="flex justify-between w-full">
+            <Text color="subtle" ellipsis>
+              account
+            </Text>
+            <ValueCopyable value={value} />
+          </div>
         ),
       },
     }),
@@ -174,14 +209,7 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
                   }
                   const label = dataFields[key]?.label || key
                   const Component = dataFields[key]?.render || DefaultDisplay
-                  return (
-                    <div key={key} className="flex justify-between w-full">
-                      <Text color="subtle" ellipsis>
-                        {label}
-                      </Text>
-                      <Component value={value} />
-                    </div>
-                  )
+                  return <Component key={key} label={label} value={value} />
                 })}
               </div>
             ))}
@@ -192,11 +220,18 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
   )
 }
 
-function DefaultDisplay({ value }) {
-  return <Text color="contrast">{value}</Text>
+function DefaultDisplay({ label, value }) {
+  return (
+    <div className="flex justify-between w-full">
+      <Text color="subtle" ellipsis>
+        {label}
+      </Text>
+      <Text color="contrast">{value}</Text>
+    </div>
+  )
 }
 
-const dataFieldOrder = ['hostKey', 'contractID', 'account']
+const dataFieldOrder = ['hostKey', 'contractID', 'account', 'key']
 
 // Sort keys by dataFieldOrder, then alphabetically
 function getOrderedKeys(obj) {

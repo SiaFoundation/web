@@ -517,9 +517,16 @@ type Alert = {
   data: {
     account?: string
     host?: string
+    key?: string
   }
 }
 
 export function useAlerts(args?: HookArgsSwr<void, Alert[]>) {
   return useGetSwr({ ...args, route: '/bus/alerts' })
+}
+
+// slabs
+
+export function useSlabObjects(args: HookArgsSwr<{ key: string }, ObjEntry[]>) {
+  return useGetSwr({ ...args, route: '/bus/slab/:key/objects' })
 }

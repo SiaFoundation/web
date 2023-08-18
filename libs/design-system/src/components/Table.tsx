@@ -258,7 +258,7 @@ export function Table<
             times(pageSize).map((i) => (
               <tr
                 key={i}
-                className="border-b border-gray-200/50 dark:border-graydark-300"
+                className="border-b border-gray-200/50 dark:border-graydark-100"
               >
                 {columns.map(({ id, contentClassName, cellClassName }, i) => (
                   <td
