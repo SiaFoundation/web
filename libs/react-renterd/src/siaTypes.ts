@@ -147,6 +147,11 @@ export interface Obj {
   health: number
   key: EncryptionKey
   slabs?: SlabSlice[]
+  partialSlab?: {
+    minShards: number
+    totalShards: number
+    data?: string
+  }
 }
 
 export interface AddObjectRequest {

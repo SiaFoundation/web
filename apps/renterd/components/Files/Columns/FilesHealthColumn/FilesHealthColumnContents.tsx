@@ -66,27 +66,44 @@ export function FilesHealthColumnContents({
     'contractSetShards'
   )
 
+  const { partialSlab } = obj.data.object
+
   return (
     <Layout
       className={slabs.length > 15 ? 'h-[300px]' : ''}
       displayHealth={displayHealth}
       label={label}
+      minShards={partialSlab ? partialSlab.minShards : slabs[0]?.minShards}
+      totalShards={
+        partialSlab ? partialSlab.totalShards : slabs[0]?.shards.length
+      }
     >
-      {slabs.map((slab) => (
-        <div key={slab.key} className="flex justify-between gap-2">
-          <Text
-            size="12"
-            color="subtle"
-            className="flex items-center"
-            font="mono"
-          >
-            Slab {slab.key.replace('key:', '').slice(0, 4)}:
-          </Text>
-          <Text size="12" className="flex items-center">
-            {slab.contractSetShards}/{slab.shards.length}
-          </Text>
-        </div>
-      ))}
+      {partialSlab ? (
+        <Text
+          size="12"
+          color="verySubtle"
+          className="flex items-center justify-center my-2"
+          font="mono"
+        >
+          partial slab
+        </Text>
+      ) : (
+        slabs.map((slab) => (
+          <div key={slab.key} className="flex justify-between gap-2">
+            <Text
+              size="12"
+              color="subtle"
+              className="flex items-center"
+              font="mono"
+            >
+              Slab {slab.key.replace('key:', '').slice(0, 4)}:
+            </Text>
+            <Text size="12" className="flex items-center">
+              {slab.contractSetShards}/{slab.shards.length}
+            </Text>
+          </div>
+        ))
+      )}
     </Layout>
   )
 }
@@ -96,11 +113,15 @@ function Layout({
   displayHealth,
   label,
   children,
+  minShards,
+  totalShards,
 }: {
   className?: string
   children: React.ReactNode
   displayHealth: number
   label: string
+  minShards?: number
+  totalShards?: number
 }) {
   return (
     <div
@@ -110,6 +131,16 @@ function Layout({
         <Text size="12">{label}</Text>
         <Text size="12">{(displayHealth * 100).toFixed(0)}%</Text>
       </div>
+      {minShards && totalShards ? (
+        <div className="flex justify-between gap-2 pt-0.5 pb-px px-2">
+          <Text size="12" color="subtle">
+            redundancy
+          </Text>
+          <Text size="12" color="subtle">
+            {minShards} of {totalShards}
+          </Text>
+        </div>
+      ) : null}
       <div className="px-2">
         <Separator className="w-full my-1" />
       </div>
