@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.56.0
+
+### Minor Changes
+
+- d0ebd8a6: Migrated theming to next-themes.
+- c3d93283: Table now supports an active row with colored border.
+- c3d93283: AppAuthedLayout now has a scroll prop.
+- c3d93283: Fixed border issues with table.
+- c3d93283: Add box-shadow based border classes.
+
 ## 0.55.0
 
 ### Minor Changes

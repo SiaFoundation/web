@@ -1,5 +1,11 @@
 # walletd
 
+## 0.10.0
+
+### Minor Changes
+
+- 8da56663: The connectivity and login check no longer depends on consensus APIs which in some rare cases can be unresponsive.
+
 ## 0.9.0
 
 ### Minor Changes

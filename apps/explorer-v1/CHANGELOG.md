@@ -1,5 +1,12 @@
 # explorer-v1
 
+## 0.5.0
+
+### Minor Changes
+
+- d0ebd8a6: Fixed a z-index issue and styling in the nav dropdown menu.
+- d0ebd8a6: The site should no longer flicker when loading the page in dark mode.
+
 ## 0.4.0
 
 ### Minor Changes
