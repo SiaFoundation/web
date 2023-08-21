@@ -6,7 +6,7 @@ import { DataLabel } from '@siafoundation/design-system'
 import { hostColors } from '../../../contexts/hosts/status'
 
 export function HostMap() {
-  const { gpu } = useAppSettings()
+  const { gpu, settings } = useAppSettings()
   const {
     setCmd,
     activeHost,
@@ -15,7 +15,7 @@ export function HostMap() {
     hostsWithLocation,
   } = useHosts()
 
-  if (!gpu.shouldRender) {
+  if (settings.siaCentral && !gpu.shouldRender) {
     return null
   }
 

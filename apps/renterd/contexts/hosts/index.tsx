@@ -17,6 +17,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -32,13 +33,14 @@ import { columns } from './columns'
 import { useContracts } from '../contracts'
 import { useDataset } from './dataset'
 import { useApp } from '../app'
-import { useSiaCentralHosts } from '@siafoundation/react-core'
+import { useAppSettings, useSiaCentralHosts } from '@siafoundation/react-core'
 import { Commands, emptyCommands } from '../../components/Hosts/HostMap/Globe'
 
 const defaultLimit = 50
 
 function useHostsMain() {
   const router = useRouter()
+  const [viewMode, setViewMode] = useState<ViewMode>('list')
   const limit = Number(router.query.limit || defaultLimit)
   const offset = Number(router.query.offset || 0)
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
@@ -100,13 +102,22 @@ function useHostsMain() {
   const blocklist = useHostsBlocklist()
   const isAllowlistActive = !!allowlist.data?.length
 
+  const { settings } = useAppSettings()
   const geo = useSiaCentralHosts({
+    disabled: !settings.siaCentral,
     config: {
       swr: {
         revalidateOnFocus: false,
       },
     },
   })
+
+  useEffect(() => {
+    if (!settings.siaCentral) {
+      setViewMode('list')
+    }
+  }, [settings.siaCentral])
+
   const geoHosts = useMemo(() => geo.data?.hosts || [], [geo.data])
 
   const cmdRef = useRef<Commands>(emptyCommands)
@@ -132,8 +143,6 @@ function useHostsMain() {
       behavior: 'smooth',
     })
   }, [])
-
-  const [viewMode, setViewMode] = useState<ViewMode>('list')
 
   const onHostMapClick = useCallback(
     (publicKey: string, location?: [number, number]) => {

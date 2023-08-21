@@ -12,7 +12,7 @@ import { useAppSettings } from '@siafoundation/react-core'
 export function HostsActionsMenu() {
   const { openDialog } = useDialog()
   const { viewMode, setViewMode } = useHosts()
-  const { gpu } = useAppSettings()
+  const { settings, gpu } = useAppSettings()
   return (
     <div className="flex gap-2">
       <Button
@@ -24,7 +24,9 @@ export function HostsActionsMenu() {
       </Button>
       <Tooltip
         content={
-          gpu.canGpuRender && gpu.isGpuEnabled
+          !settings.siaCentral
+            ? 'Enable Sia Central to view interactive map'
+            : gpu.canGpuRender && gpu.isGpuEnabled
             ? 'Toggle interactive map'
             : 'Enable GPU to view interactive map'
         }
@@ -32,6 +34,10 @@ export function HostsActionsMenu() {
         <Button
           disabled={!gpu.canGpuRender}
           onClick={() => {
+            if (!settings.siaCentral) {
+              openDialog('settings')
+              return
+            }
             if (gpu.isGpuEnabled) {
               setViewMode(viewMode === 'map' ? 'list' : 'map')
             } else {
