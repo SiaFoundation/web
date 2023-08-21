@@ -8,6 +8,7 @@ import {
   useDatasetEmptyState,
   ValueCopyable,
   ValueMenu,
+  ValueSc,
 } from '@siafoundation/design-system'
 import {
   useAlerts,
@@ -15,6 +16,7 @@ import {
   useSlabObjects,
 } from '@siafoundation/react-renterd'
 import { humanDate } from '@siafoundation/sia-js'
+import BigNumber from 'bignumber.js'
 import { cx } from 'class-variance-authority'
 import { times } from 'lodash'
 import { useMemo } from 'react'
@@ -74,7 +76,7 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
           )
         },
       },
-      key: {
+      slabKey: {
         render: function SlabField({ value }: { value: string }) {
           const { setActiveDirectory } = useFiles()
           const { closeDialog } = useDialog()
@@ -115,6 +117,84 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
             </>
           )
         },
+      },
+      additions: {
+        render: function AdditionsField({ value }: { value: string[] }) {
+          return (
+            <>
+              <div className="flex justify-between w-full">
+                <Text color="subtle" ellipsis>
+                  additions
+                </Text>
+              </div>
+              {value && (
+                <ScrollArea>
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    {value.map((contractId) => (
+                      <div key={contractId}>
+                        <ValueCopyable value={contractId} label="contract ID" />
+                      </div>
+                    ))}
+                  </div>
+                </ScrollArea>
+              )}
+            </>
+          )
+        },
+      },
+      removals: {
+        render: function RemovalsField({
+          value,
+        }: {
+          value: Record<string, string>
+        }) {
+          return (
+            <>
+              <div className="flex justify-between w-full">
+                <Text color="subtle" ellipsis>
+                  removals
+                </Text>
+              </div>
+              {value && (
+                <ScrollArea>
+                  <div className="flex flex-col gap-2 mb-2">
+                    {Object.entries(value).map(([contractId, reason]) => (
+                      <div
+                        key={contractId}
+                        className="flex justify-between w-full"
+                      >
+                        <ValueCopyable value={contractId} label="contract ID" />
+                        <Text color="subtle" ellipsis>
+                          {reason}
+                        </Text>
+                      </div>
+                    ))}
+                  </div>
+                </ScrollArea>
+              )}
+            </>
+          )
+        },
+      },
+      balance: {
+        render: ({ value }: { value: string }) => (
+          <div className="flex justify-between w-full">
+            <Text color="subtle" ellipsis>
+              address
+            </Text>
+            <ValueSc variant="value" value={new BigNumber(value)} />
+          </div>
+        ),
+      },
+      address: {
+        render: ({ value }: { value: string }) => (
+          <div className="flex justify-between w-full">
+            <Text color="subtle" ellipsis>
+              address
+            </Text>
+            <ValueCopyable value={value} type="address" />
+          </div>
+        ),
       },
       account: {
         render: ({ value }: { value: string }) => (
@@ -204,7 +284,11 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
                 </div>
                 {getOrderedKeys(a.data).map((key) => {
                   const value = a.data[key]
-                  if (value === undefined) {
+                  if (
+                    value === undefined ||
+                    value === null ||
+                    (typeof value === 'object' && !Object.keys(value).length)
+                  ) {
                     return null
                   }
                   const label = dataFields[key]?.label || key
@@ -222,16 +306,24 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
 
 function DefaultDisplay({ label, value }) {
   return (
-    <div className="flex justify-between w-full">
-      <Text color="subtle" ellipsis>
-        {label}
+    <div className="flex gap-3 justify-between w-full">
+      <Text color="subtle">{label}</Text>
+      <Text color="contrast" ellipsis>
+        {String(value)}
       </Text>
-      <Text color="contrast">{value}</Text>
     </div>
   )
 }
 
-const dataFieldOrder = ['hostKey', 'contractID', 'account', 'key']
+const dataFieldOrder = [
+  'origin',
+  'hostKey',
+  'contractID',
+  'account',
+  'slabKey',
+  'additions',
+  'removals',
+]
 
 // Sort keys by dataFieldOrder, then alphabetically
 function getOrderedKeys(obj) {
