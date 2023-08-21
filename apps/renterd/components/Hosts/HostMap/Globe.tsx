@@ -166,11 +166,11 @@ export function Globe({
         }}
         pointsTransitionDuration={0}
         pointColor={(h: HostDataWithLocation) => {
-          const { color } = getHostStatus(h)
+          const { colorHex } = getHostStatus(h)
           if (!activeHost || h.publicKey === activeHost?.publicKey) {
-            return color
+            return colorHex
           }
-          return colorWithOpacity(color, 0.2)
+          return colorWithOpacity(colorHex, 0.2)
         }}
         pointRadius={(h: HostDataWithLocation) => {
           let radius = 0

@@ -47,7 +47,7 @@ type Props<
   isLoading: boolean
   emptyState?: React.ReactNode
   focusId?: string
-  focusColor?: 'green' | 'red' | 'blue' | 'default'
+  focusColor?: 'green' | 'red' | 'amber' | 'blue' | 'default'
 }
 
 export function Table<
@@ -235,6 +235,9 @@ export function Table<
                           : '',
                         focusColor === 'red'
                           ? '!shadow-red-500 dark:!shadow-red-400'
+                          : '',
+                        focusColor === 'amber'
+                          ? '!shadow-amber-500 dark:!shadow-amber-500'
                           : '',
                         focusColor === 'green'
                           ? '!shadow-green-500 dark:!shadow-green-400'

@@ -7,9 +7,16 @@ type Props = {
   enabled?: boolean
   onChange?: (val: boolean) => void
   color?: string
+  size?: React.ComponentProps<typeof Text>['size']
 }
 
-export function DataLabel({ label, enabled = true, onChange, color }: Props) {
+export function DataLabel({
+  size,
+  label,
+  enabled = true,
+  onChange,
+  color,
+}: Props) {
   return (
     <div
       className={cx(
@@ -25,7 +32,7 @@ export function DataLabel({ label, enabled = true, onChange, color }: Props) {
           <Status style={{ backgroundColor: color }} />
         </div>
       )}
-      <Text>{label}</Text>
+      <Text size={size}>{label}</Text>
     </div>
   )
 }

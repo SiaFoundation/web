@@ -1,25 +1,40 @@
 import { colors } from '@siafoundation/design-system'
 import { HostData } from './types'
 
+export const hostColors = {
+  activeAndUsable: {
+    colorHex: colors.green[600],
+    colorName: 'green',
+  },
+  activeAndUnusable: {
+    colorHex: colors.amber[600],
+    colorName: 'amber',
+  },
+  potentialHost: {
+    colorHex: colors.blue[600],
+    colorName: 'blue',
+  },
+} as const
+
 export function getHostStatus(h: HostData) {
   // red
   if (h.activeContractsCount.gt(0) && !h.usable) {
     return {
       status: 'activeAndUnusable',
-      color: colors.red[600],
+      ...hostColors.activeAndUnusable,
     }
   }
   // blue
   if (h.activeContractsCount.gt(0)) {
     return {
       status: 'activeAndUsable',
-      color: colors.blue[600],
+      ...hostColors.activeAndUsable,
     }
   }
   // green
   return {
     status: 'potentialHost',
-    color: colors.green[600],
+    ...hostColors.potentialHost,
   }
 }
 
