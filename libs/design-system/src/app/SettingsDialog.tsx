@@ -31,7 +31,7 @@ export function SettingsDialog({
   showSiaStats = true,
   securityEl,
 }: Props) {
-  const { settings, setSettings, setCurrency, currencyOptions } =
+  const { settings, setSettings, setCurrency, currencyOptions, gpu } =
     useAppSettings()
 
   return (
@@ -92,6 +92,30 @@ export function SettingsDialog({
                 </div>
                 <Paragraph size="14">
                   {`Switch between a dark or light mode, or follow your system's settings.`}
+                </Paragraph>
+              </div>
+            </Alert>
+            <Alert>
+              <div className="flex flex-col gap-4">
+                <div className="flex gap-2 items-center">
+                  <Text>
+                    <Information16 />
+                  </Text>
+                  <Heading size="20" className="flex-1">
+                    GPU
+                  </Heading>
+                  <Switch
+                    disabled={!gpu.canGpuRender}
+                    checked={gpu.canGpuRender && gpu.isGpuEnabled}
+                    onCheckedChange={gpu.setIsGpuEnabled}
+                    size="medium"
+                  />
+                </div>
+                <Paragraph size="14">
+                  Enable features that require a GPU.{' '}
+                  {!gpu.canGpuRender
+                    ? ''
+                    : 'This device does not support GPU rendering.'}
                 </Paragraph>
               </div>
             </Alert>

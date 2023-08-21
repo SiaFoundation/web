@@ -54,11 +54,16 @@ export function useGpuFeatures() {
   const shouldRender = canGpuRender && isGpuEnabled
 
   return {
+    // has the GPU been evaluated
     hasCheckedGpu,
+    // does the GPU have the ability to render at all
     canGpuRender,
+    // is the GPU currently enabled by default or the user
     isGpuEnabled,
+    // if the GPU has the ability and is currently enabled
+    shouldRender,
+
     setCanGpuRender,
     setIsGpuEnabled,
-    shouldRender,
   }
 }

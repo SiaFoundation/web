@@ -1,4 +1,9 @@
-import { Button, Earth16, ListChecked16 } from '@siafoundation/design-system'
+import {
+  Button,
+  Earth16,
+  ListChecked16,
+  Tooltip,
+} from '@siafoundation/design-system'
 import { HostsViewDropdownMenu } from './HostsViewDropdownMenu'
 import { useDialog } from '../../contexts/dialog'
 import { useHosts } from '../../contexts/hosts'
@@ -17,14 +22,26 @@ export function HostsActionsMenu() {
         <ListChecked16 />
         Manage lists
       </Button>
-      {gpu.canGpuRender && (
+      <Tooltip
+        content={
+          gpu.canGpuRender && gpu.isGpuEnabled
+            ? 'Toggle interactive map'
+            : 'Enable GPU to view interactive map'
+        }
+      >
         <Button
-          onClick={() => setViewMode(viewMode === 'map' ? 'list' : 'map')}
-          tip="Toggle interactive map"
+          disabled={!gpu.canGpuRender}
+          onClick={() => {
+            if (gpu.isGpuEnabled) {
+              setViewMode(viewMode === 'map' ? 'list' : 'map')
+            } else {
+              openDialog('settings')
+            }
+          }}
         >
           <Earth16 />
         </Button>
-      )}
+      </Tooltip>
       <HostsViewDropdownMenu />
     </div>
   )

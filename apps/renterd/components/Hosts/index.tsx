@@ -9,6 +9,7 @@ import { HostsActionsMenu } from './HostsActionsMenu'
 import { HostsFilterBar } from './HostsFilterBar'
 import { HostMap } from './HostMap'
 import { cx } from 'class-variance-authority'
+import { getHostStatus } from '../../contexts/hosts/status'
 
 export function Hosts() {
   const { openDialog } = useDialog()
@@ -69,11 +70,7 @@ export function Hosts() {
               <Table
                 focusId={activeHost?.publicKey}
                 focusColor={
-                  activeHost?.activeContractsCount.gt(0) && !activeHost?.usable
-                    ? 'red'
-                    : activeHost?.activeContractsCount.gt(0)
-                    ? 'blue'
-                    : 'green'
+                  activeHost ? getHostStatus(activeHost).colorName : undefined
                 }
                 isLoading={dataState === 'loading'}
                 emptyState={<StateEmpty />}
