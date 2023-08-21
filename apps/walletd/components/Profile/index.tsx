@@ -32,17 +32,19 @@ export function Profile() {
         </div>
       )}
       {/* <div className="flex gap-4 justify-between items-center">
-          <Label size="14" color="subtle" noWrap className="w-[100px]">
-            Version
-          </Label>
-          <Link
-            size="14"
-            href={`https://github.com/SiaFoundation/walletd/tree/${state.data?.commit}`}
-            target="_blank"
-          >
-            {state.data?.version}
-          </Link>
-        </div> */}
+        <Label size="14" color="subtle" noWrap className="w-[100px]">
+          Version
+        </Label>
+        <Link
+          size="14"
+          href={versionUrl}
+          underline="hover"
+          target="_blank"
+          ellipsis
+        >
+          {state.data?.version}
+        </Link>
+      </div> */}
     </DaemonProfile>
   )
 }
