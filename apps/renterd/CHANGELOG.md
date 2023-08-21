@@ -1,5 +1,19 @@
 # renterd
 
+## 0.27.0
+
+### Minor Changes
+
+- bcc14852: File upload and directory creation are now disabled until enough contracts are formed.
+- 8b69b770: The failed to migrate slab alert now lists the associated objects/files.
+- c3d93283: The host explorer now has an interactive map. Filtered hosts can be selected via the list or map, and hosts on the map are colored based on whether renterd is actively contracting with the host. For hosts with active contracts the size of the hosts on the map is based on renterd's used storage, for hosts without active contracts the size is based on the hosts remaining storage.
+- bcc14852: New users are now more clearly instructed to configure autopilot and to wait for enough contracts before files can be uploaded.
+- 1ed477f0: Node profile information now includes the build version.
+- 8da56663: The connectivity and login check no longer depends on consensus APIs which in some rare cases can be unresponsive.
+- 73e7297e: Alerts now show contract additions and removals, formatted address, balance, and more.
+- d0ebd8a6: Health percentage values are now clamped to a range of 0-100%.
+- 0ba92814: File health tooltip now includes redundancy info and supports partial slabs.
+
 ## 0.26.0
 
 ### Minor Changes

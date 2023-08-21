@@ -1,5 +1,13 @@
 # @siafoundation/react-renterd
 
+## 0.6.0
+
+### Minor Changes
+
+- 0ba92814: useObject now includes partialSlab.
+- 8b69b770: Add useSlabObjects.
+- 1ed477f0: Add useAutopilotState, useBusState, useWorkerState, remove useAutopilotStatus.
+
 ## 0.5.0
 
 ### Minor Changes

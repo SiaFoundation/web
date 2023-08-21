@@ -1,5 +1,12 @@
 # hostd
 
+## 0.21.0
+
+### Minor Changes
+
+- 2e77e9cf: Fixed an issue where alert error messages were being cut off. Full error messages are now displayed above all other fields.
+- 8da56663: The connectivity and login check no longer depends on consensus APIs which in some rare cases can be unresponsive.
+
 ## 0.20.0
 
 ### Minor Changes
