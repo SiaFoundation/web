@@ -113,7 +113,7 @@ export function SettingsDialog({
                 </div>
                 <Paragraph size="14">
                   Enable features that require a GPU.{' '}
-                  {!gpu.canGpuRender
+                  {gpu.canGpuRender
                     ? ''
                     : 'This device does not support GPU rendering.'}
                 </Paragraph>
