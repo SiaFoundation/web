@@ -23,7 +23,6 @@ export function WalletAddSelectType() {
       />
       <WalletSelectCard
         title={walletAddTypes.walletAddLedger.title}
-        disabled
         description={walletAddTypes.walletAddLedger.description}
         onSelect={() => openDialog('walletAddLedger')}
       />

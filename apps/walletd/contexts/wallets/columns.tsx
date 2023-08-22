@@ -16,7 +16,7 @@ import { walletTypes } from '../../config/walletTypes'
 import { WalletData, TableColumnId } from './types'
 import { useWalletBalance } from '@siafoundation/react-walletd'
 import BigNumber from 'bignumber.js'
-import { WalletDropdownMenu } from '../../components/WalletDropdownMenu'
+import { WalletContextMenu } from '../../components/WalletContextMenu'
 
 type WalletsTableColumn = TableColumn<
   TableColumnId,
@@ -34,7 +34,7 @@ export const columns: WalletsTableColumn[] = [
     fixed: true,
     cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
     render: ({ data }) => (
-      <WalletDropdownMenu
+      <WalletContextMenu
         trigger={
           <Button variant="ghost" icon="hover">
             <Draggable16 />

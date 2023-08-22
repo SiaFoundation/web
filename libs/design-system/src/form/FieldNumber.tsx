@@ -22,7 +22,7 @@ export function FieldNumber<
     name,
   })
   return (
-    <FieldGroup title={field.title} name={name} form={form}>
+    <FieldGroup title={field.title} name={name} form={form} wrap>
       <NumberField
         name={name}
         value={value}

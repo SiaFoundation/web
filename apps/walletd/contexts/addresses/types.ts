@@ -3,6 +3,7 @@ export type AddressData = {
   address: string
   description?: string
   index?: number
+  walletId: string
 }
 
 export type TableColumnId = 'actions' | 'address' | 'index'

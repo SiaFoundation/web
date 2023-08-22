@@ -94,7 +94,8 @@ export function ContractForEntity({ entity }: Props) {
       return (
         <div className="flex justify-center mb-2">
           <Text color="subtle" size="18">
-            Error, incomplete contract data
+            Error, the explorer ran into an issue collecting data about this
+            contract.
           </Text>
         </div>
       )

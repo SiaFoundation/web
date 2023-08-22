@@ -12,12 +12,13 @@ type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
   form: UseFormReturn<Values>
   fields: ConfigFields<Values, Categories>
+  group?: boolean
 }
 
 export function FieldSelect<
   Values extends FieldValues,
   Categories extends string
->({ name, form, fields }: Props<Values, Categories>) {
+>({ name, form, fields, group = true }: Props<Values, Categories>) {
   const field = fields[name]
   const { options } = field
   const { ref, onChange, onBlur, error } = useRegisterForm({
@@ -25,28 +26,37 @@ export function FieldSelect<
     form,
     field,
   })
-  return (
-    <FieldGroup title={field.title} name={name} form={form}>
-      <Select
-        ref={ref}
-        name={name}
-        size="small"
-        state={
-          error
-            ? 'invalid'
-            : form.formState.dirtyFields[name]
-            ? 'valid'
-            : 'default'
-        }
-        onChange={onChange}
-        onBlur={onBlur}
-      >
-        {options?.map((o) => (
-          <Option key={o.value} value={o.value}>
-            {o.label}
-          </Option>
-        ))}
-      </Select>
-    </FieldGroup>
+
+  const el = (
+    <Select
+      ref={ref}
+      name={name}
+      size="small"
+      state={
+        error
+          ? 'invalid'
+          : form.formState.dirtyFields[name]
+          ? 'valid'
+          : 'default'
+      }
+      onChange={onChange}
+      onBlur={onBlur}
+    >
+      {options?.map((o) => (
+        <Option key={o.value} value={o.value}>
+          {o.label}
+        </Option>
+      ))}
+    </Select>
   )
+
+  if (group) {
+    return (
+      <FieldGroup title={field.title} name={name} form={form}>
+        {el}
+      </FieldGroup>
+    )
+  }
+
+  return el
 }

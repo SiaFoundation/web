@@ -45,7 +45,6 @@ export function useSyncStatus() {
       ? estimatedBlockHeight - nodeBlockHeight > 50_000
       : false
 
-  console.log(tipState.data)
   return {
     isSynced: getIsSynced(tipState.data),
     nodeBlockHeight,

@@ -15,9 +15,9 @@ import {
   WalletAddNewDialogParams,
 } from '../dialogs/WalletAddNewDialog'
 import {
-  WalletAddressesGenerateDialog,
-  WalletAddressesGenerateDialogParams,
-} from '../dialogs/WalletAddressesGenerateDialog'
+  WalletAddressesGenerateSeedDialog,
+  WalletAddressesGenerateSeedDialogParams,
+} from '../dialogs/WalletAddressesGenerateSeedDialog'
 import {
   WalletRemoveDialog,
   WalletRemoveDialogParams,
@@ -30,6 +30,10 @@ import {
   WalletUpdateDialog,
   WalletUpdateDialogParams,
 } from '../dialogs/WalletUpdateDialog'
+import {
+  WalletAddLedgerDialog,
+  WalletAddLedgerDialogParams,
+} from '../dialogs/WalletAddLedgerDialog'
 import {
   WalletAddRecoverDialog,
   WalletAddRecoverDialogParams,
@@ -46,7 +50,10 @@ import {
   AddressRemoveDialog,
   AddressRemoveDialogParams,
 } from '../dialogs/AddressRemoveDialog'
-import { WalletSendSiacoinDialog } from '../dialogs/WalletSendSiacoinDialog'
+import {
+  WalletSendSiacoinDialog,
+  WalletSendSiacoinDialogParams,
+} from '../dialogs/WalletSendSiacoinDialog'
 import {
   WalletUnlockDialog,
   WalletUnlockDialogParams,
@@ -55,12 +62,16 @@ import {
   WalletdSettingsDialog,
   WalletdSettingsDialogParams,
 } from '../dialogs/WalletdSettingsDialog'
+import {
+  WalletAddressesGenerateLedgerDialog,
+  WalletAddressesGenerateLedgerDialogParams,
+} from '../dialogs/WalletAddressesGenerateLedgerDialog'
 // import { CmdKDialog } from '../components/CmdKDialog'
 
 type DialogParams = {
   cmdk?: void
   settings?: WalletdSettingsDialogParams
-  sendSiacoin?: WalletSendSiacoinDialog
+  sendSiacoin?: WalletSendSiacoinDialogParams
   transactionDetails?: void
   addressUpdate?: AddressUpdateDialogParams
   addressRemove?: AddressRemoveDialogParams
@@ -70,8 +81,9 @@ type DialogParams = {
   walletAddNew?: WalletAddNewDialogParams
   walletAddRecover?: WalletAddRecoverDialogParams
   walletAddWatch?: WalletAddWatchDialogParams
-  walletAddLedger?: void
-  walletAddressesGenerate?: WalletAddressesGenerateDialogParams
+  walletAddLedger?: WalletAddLedgerDialogParams
+  walletAddressesGenerate?: WalletAddressesGenerateSeedDialogParams
+  walletLedgerAddressGenerate?: WalletAddressesGenerateLedgerDialogParams
   walletAddressesAdd?: WalletAddressesAddDialogParams
   walletRemove?: WalletRemoveDialogParams
   walletUpdate?: WalletUpdateDialogParams
@@ -174,6 +186,13 @@ export function Dialogs() {
           val ? openDialog(dialog, params['walletAddRecover']) : closeDialog()
         }
       />
+      <WalletAddLedgerDialog
+        open={dialog === 'walletAddLedger'}
+        params={params['walletAddLedger']}
+        onOpenChange={(val) =>
+          val ? openDialog(dialog, params['walletAddLedger']) : closeDialog()
+        }
+      />
       <WalletAddWatchDialog
         open={dialog === 'walletAddWatch'}
         params={params['walletAddWatch']}
@@ -181,9 +200,14 @@ export function Dialogs() {
           val ? openDialog(dialog, params['walletAddWatch']) : closeDialog()
         }
       />
-      <WalletAddressesGenerateDialog
+      <WalletAddressesGenerateSeedDialog
         open={dialog === 'walletAddressesGenerate'}
         params={params['walletAddressesGenerate']}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <WalletAddressesGenerateLedgerDialog
+        open={dialog === 'walletLedgerAddressGenerate'}
+        params={params['walletLedgerAddressGenerate']}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <WalletAddressesAddDialog

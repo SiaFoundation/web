@@ -10,15 +10,15 @@ import { useWallets } from '../../contexts/wallets'
 import BigNumber from 'bignumber.js'
 import { SendParams, SendSiacoinDialog } from '../SendSiacoinDialog'
 import { useCallback } from 'react'
-import { useAddresses } from '../../contexts/addresses'
 import { seedSignTransaction } from '../../lib/seedSignTransaction'
+import { useWalletAddresses } from '../../hooks/useWalletAddresses'
 
-export type WalletSendSiacoinDialog = {
+export type WalletSendSiacoinDialogParams = {
   walletId: string
 }
 
 type Props = {
-  params?: WalletSendSiacoinDialog
+  params?: WalletSendSiacoinDialogParams
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
@@ -45,7 +45,7 @@ export function WalletSendSiacoinDialog({
       id: walletId,
     },
   })
-  const { dataset: addresses } = useAddresses()
+  const { dataset: addresses } = useWalletAddresses({ id: walletId })
   const cs = useConsensusTipState()
   const cn = useConsensusNetwork()
   const fund = useWalletFund()

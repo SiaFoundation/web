@@ -12,7 +12,7 @@ import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useWalletAddressAdd } from '@siafoundation/react-walletd'
 import { useDialog } from '../../contexts/dialog'
-import { useAddresses } from '../../contexts/addresses'
+import { useWalletAddresses } from '../../hooks/useWalletAddresses'
 
 const defaultValues = {
   description: '',
@@ -51,7 +51,7 @@ export function AddressUpdateDialog({
 }: Props) {
   const { walletId, address: addr } = params || {}
   const { openDialog, closeDialog } = useDialog()
-  const { dataset } = useAddresses()
+  const { dataset } = useWalletAddresses({ id: walletId })
   const address = dataset?.find((d) => d.id === addr)
   const addressAdd = useWalletAddressAdd()
   const form = useForm({

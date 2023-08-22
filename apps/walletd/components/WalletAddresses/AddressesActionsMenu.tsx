@@ -16,9 +16,15 @@ export function AddressesActionsMenu() {
         onClick={() => {
           if (wallet?.type === 'seed') {
             openDialog('walletAddressesGenerate', { walletId: id })
+            return
           }
           if (wallet?.type === 'watch') {
             openDialog('walletAddressesAdd', { walletId: id })
+            return
+          }
+          if (wallet?.type === 'ledger') {
+            openDialog('walletLedgerAddressGenerate', { walletId: id })
+            return
           }
         }}
       >

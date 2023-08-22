@@ -10,7 +10,6 @@ import {
 import { useWalletAddressAdd } from '@siafoundation/react-walletd'
 import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useAddresses } from '../contexts/addresses'
 import { useDialogFormHelpers } from '../hooks/useDialogFormHelpers'
 import { getWalletWasm } from '../lib/wasm'
 import { useWallets } from '../contexts/wallets'
@@ -18,13 +17,14 @@ import BigNumber from 'bignumber.js'
 import { getFieldMnemonic, MnemonicFieldType } from '../lib/fieldMnemonic'
 import { FieldMnemonic } from './FieldMnemonic'
 import { useWalletCachedSeed } from '../hooks/useWalletCachedSeed'
+import { useWalletAddresses } from '../hooks/useWalletAddresses'
 
-export type WalletAddressesGenerateDialogParams = {
+export type WalletAddressesGenerateSeedDialogParams = {
   walletId: string
 }
 
 type Props = {
-  params?: WalletAddressesGenerateDialogParams
+  params?: WalletAddressesGenerateSeedDialogParams
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
@@ -75,14 +75,14 @@ function getFields({
   }
 }
 
-export function WalletAddressesGenerateDialog({
+export function WalletAddressesGenerateSeedDialog({
   params,
   trigger,
   open,
   onOpenChange,
 }: Props) {
   const { walletId } = params || {}
-  const { lastIndex } = useAddresses()
+  const { lastIndex } = useWalletAddresses({ id: walletId })
   const { dataset } = useWallets()
   const wallet = dataset?.find((w) => w.id === walletId)
   const nextIndex = lastIndex + 1
