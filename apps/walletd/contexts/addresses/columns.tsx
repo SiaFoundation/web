@@ -4,7 +4,10 @@ import {
   ValueCopyable,
   Tooltip,
   Paragraph,
+  Button,
+  Draggable16,
 } from '@siafoundation/design-system'
+import { AddressContextMenu } from '../../components/WalletAddresses/AddressContextMenu'
 import { AddressData, TableColumnId } from './types'
 
 type AddressesTableColumn = TableColumn<TableColumnId, AddressData, never> & {
@@ -13,13 +16,23 @@ type AddressesTableColumn = TableColumn<TableColumnId, AddressData, never> & {
 }
 
 export const columns: AddressesTableColumn[] = [
-  // {
-  //   id: 'actions',
-  //   label: '',
-  //   fixed: true,
-  //   cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
-  //   render: ({ data: { name } }) => null,
-  // },
+  {
+    id: 'actions',
+    label: '',
+    fixed: true,
+    cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
+    render: ({ data }) => (
+      <AddressContextMenu
+        trigger={
+          <Button variant="ghost" icon="hover">
+            <Draggable16 />
+          </Button>
+        }
+        contentProps={{ align: 'start' }}
+        address={data}
+      />
+    ),
+  },
   {
     id: 'address',
     label: 'address',

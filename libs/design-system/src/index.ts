@@ -160,6 +160,8 @@ export * from './icons/TestToolIcon'
 export * from './icons/PlaneIcon'
 export * from './icons/FaucetIcon'
 export * from './icons/BellIcon'
+export * from './icons/UsbIcon'
+export * from './icons/HidIcon'
 
 // hooks
 export * from './hooks/tooltip'

@@ -155,7 +155,7 @@ export function useWallets(args?: HookArgsSwr<void, Wallets>) {
 type Address = Record<string, unknown>
 type Addresses = Record<string, Address>
 
-const walletAddressesRoute = '/wallets/:id/addresses'
+export const walletAddressesRoute = '/wallets/:id/addresses'
 export function useWalletAddresses(
   args: HookArgsSwr<{ id: string }, Addresses>
 ) {
@@ -211,7 +211,7 @@ export function useWalletAddressAdd(
     },
     async (mutate, data) => {
       mutate((key) =>
-        key.startsWith(walletAddressesRoute.replace(':id', data.params.id))
+        key.startsWith('/wallets/:id'.replace(':id', data.params.id))
       )
     }
   )
@@ -230,15 +230,17 @@ export function useWalletAddressDelete(
   )
 }
 
+const walletBalanceRoute = '/wallets/:id/balance'
 export function useWalletBalance(
   args: HookArgsSwr<{ id: string }, { siacoins: string; siafunds: number }>
 ) {
   return useGetSwr({
     ...args,
-    route: '/wallets/:id/balance',
+    route: walletBalanceRoute,
   })
 }
 
+const walletEventsRoute = '/wallets/:id/events'
 export function useWalletEvents(
   args: HookArgsSwr<
     { id: string; offset: number; limit: number },
@@ -247,7 +249,7 @@ export function useWalletEvents(
 ) {
   return useGetSwr({
     ...args,
-    route: '/wallets/:id/events',
+    route: walletEventsRoute,
   })
 }
 

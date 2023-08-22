@@ -15,7 +15,7 @@ type Props = {
   wallet: WalletData
 } & Omit<React.ComponentProps<typeof DropdownMenu>, 'children'>
 
-export function WalletDropdownMenu({
+export function WalletContextMenu({
   wallet: { id, type, status, lock, unlock },
   ...props
 }: Props) {

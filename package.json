@@ -22,6 +22,9 @@
   "dependencies": {
     "@carbon/icons-react": "^10.47.0",
     "@changesets/cli": "^2.25.0",
+    "@ledgerhq/hw-transport-web-ble": "^6.27.19",
+    "@ledgerhq/hw-transport-webhid": "^6.27.19",
+    "@ledgerhq/hw-transport-webusb": "^6.27.19",
     "@mdx-js/loader": "^2.1.1",
     "@mdx-js/react": "^2.1.1",
     "@next/font": "13.1.1",
@@ -48,6 +51,7 @@
     "@radix-ui/react-tabs": "^1.0.0",
     "@radix-ui/react-tooltip": "^1.0.0",
     "@radix-ui/react-use-layout-effect": "^1.0.0",
+    "@siacentral/ledgerjs-sia": "^1.1.0",
     "@tailwindcss/container-queries": "^0.1.1",
     "@visx/axis": "^2.18.0",
     "@visx/brush": "^2.18.0",
