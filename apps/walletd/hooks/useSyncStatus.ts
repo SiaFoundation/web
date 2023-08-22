@@ -45,6 +45,7 @@ export function useSyncStatus() {
       ? estimatedBlockHeight - nodeBlockHeight > 50_000
       : false
 
+  console.log(tipState.data)
   return {
     isSynced: getIsSynced(tipState.data),
     nodeBlockHeight,
@@ -62,7 +63,7 @@ function getIsSynced(tipState?: ConsensusState) {
 
 function lastBlockLessThan2HoursAgo(prevTimestamps?: string[]) {
   if (!prevTimestamps || !prevTimestamps.length) return false
-  const lastBlockTime = prevTimestamps[prevTimestamps.length - 1]
+  const lastBlockTime = prevTimestamps[0]
   const twoHoursAgo = Date.now() - hoursInMilliseconds(2)
   return new Date(lastBlockTime).getTime() > twoHoursAgo
 }
