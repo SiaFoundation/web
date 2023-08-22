@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { EntityListItemProps } from '@siafoundation/design-system'
+import { EntityListItemProps, Text } from '@siafoundation/design-system'
 import { humanBytes, humanNumber } from '@siafoundation/sia-js'
 import { useMemo } from 'react'
 import { DatumProps } from '../../NvgDatum'
@@ -17,7 +17,10 @@ type Props = {
 export function ContractForEntity({ entity }: Props) {
   const { data } = entity
 
+  const incompleteData = !Object.keys(data[1]).length
+
   const values = useMemo(() => {
+    if (incompleteData) return []
     const sfFees = new BigNumber(data[1].SfFees)
     const feesPercentage = sfFees
       .dividedBy(
@@ -74,7 +77,8 @@ export function ContractForEntity({ entity }: Props) {
       },
     ]
 
-    if (data[6].Height >= 0) {
+    console.log(data)
+    if (data[6]?.Height >= 0) {
       list.push({
         label: 'Renewed into Contract ID',
         entityType: 'contract',
@@ -83,13 +87,23 @@ export function ContractForEntity({ entity }: Props) {
     }
 
     return list
-  }, [entity, data])
+  }, [entity, data, incompleteData])
 
   const details = useMemo(() => {
+    if (incompleteData) {
+      return (
+        <div className="flex justify-center mb-2">
+          <Text color="subtle" size="18">
+            Error, incomplete contract data
+          </Text>
+        </div>
+      )
+    }
     return <ContractConditionsSection entity={entity} />
-  }, [entity])
+  }, [entity, incompleteData])
 
   const inputs = useMemo(() => {
+    if (incompleteData) return []
     const list: EntityListItemProps[] = [
       getNvgEntityItemProps('allowancePost', {
         // label: 'Renter: allowance posting hash',
@@ -129,9 +143,12 @@ export function ContractForEntity({ entity }: Props) {
     )
 
     return list
-  }, [data])
+  }, [data, incompleteData])
 
   const outputs = useMemo(() => {
+    if (incompleteData) {
+      return []
+    }
     const list: EntityListItemProps[] = [
       getNvgEntityItemProps('contract', {
         label: 'Formed contract ID',
@@ -141,7 +158,7 @@ export function ContractForEntity({ entity }: Props) {
     ]
 
     // Exceptional contracts where some amount returns to the renter address in the contract formation
-    if (data[5].transactions.length > 0) {
+    if (data[5]?.transactions.length > 0) {
       for (let i = 0; i < data[5].transactions.length; i++) {
         list.push(
           getNvgEntityItemProps('address', {
@@ -166,11 +183,14 @@ export function ContractForEntity({ entity }: Props) {
     })
 
     return list
-  }, [data])
+  }, [data, incompleteData])
 
   const operations = useMemo(() => {
+    if (incompleteData) {
+      return []
+    }
     const list: EntityListItemProps[] = []
-    if (data[2].Height >= 0) {
+    if (data[2]?.Height >= 0) {
       // Only if there is a Revision
       list.push(
         getNvgEntityItemProps('revision', {
@@ -180,7 +200,7 @@ export function ContractForEntity({ entity }: Props) {
         })
       )
     }
-    if (data[4].Height >= 0) {
+    if (data[4]?.Height >= 0) {
       // Only if there is an Storage Proof
       list.push(
         getNvgEntityItemProps('storageproof', {
@@ -190,7 +210,7 @@ export function ContractForEntity({ entity }: Props) {
         })
       )
     }
-    if (data[6].Height >= 0) {
+    if (data[6]?.Height >= 0) {
       // Only if there is an atomic renewal
       list.push(
         getNvgEntityItemProps('contractrenewal', {
@@ -200,7 +220,7 @@ export function ContractForEntity({ entity }: Props) {
         })
       )
     }
-    if (data[3].Height >= 0) {
+    if (data[3]?.Height >= 0) {
       // Only if there is a Resolution
       list.push(
         getNvgEntityItemProps('contractresol', {
@@ -211,7 +231,7 @@ export function ContractForEntity({ entity }: Props) {
       )
     }
     return list
-  }, [data])
+  }, [data, incompleteData])
 
   return (
     <TxEntityLayout

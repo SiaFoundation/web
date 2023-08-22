@@ -11,6 +11,7 @@ type Props = {
   inputs: EntityListItemProps[]
   outputs: EntityListItemProps[]
   relatedOperations?: EntityListItemProps[]
+  incompleteData?: boolean
 }
 
 export function TxEntityLayout({
@@ -20,17 +21,20 @@ export function TxEntityLayout({
   inputs,
   outputs,
   relatedOperations,
+  incompleteData,
 }: Props) {
   return (
     <ContentLayout
       panel={
         <div className="flex flex-col gap-16">
           <TxEntityHeader entity={entity} />
-          <div className="flex flex-col gap-y-4">
-            {values.map((item) => (
-              <NvgDatum key={item.label} {...item} />
-            ))}
-          </div>
+          {!!values?.length && (
+            <div className="flex flex-col gap-y-4">
+              {values.map((item) => (
+                <NvgDatum key={item.label} {...item} />
+              ))}
+            </div>
+          )}
           {details}
         </div>
       }
