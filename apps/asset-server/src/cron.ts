@@ -6,20 +6,28 @@ import {
 import cron from 'node-cron'
 export async function startCron() {
   console.log('Starting scheduled cron jobs')
-  sync()
+  runSyncAssets()
+  runSyncFeeds()
   // run every 5 minutes
   cron.schedule('*/5 * * * *', async () => {
-    sync()
+    runSyncAssets()
+  })
+  // run every 60 minutes
+  cron.schedule('0 * * * *', async () => {
+    runSyncFeeds()
   })
 }
 
-export async function sync() {
+export async function runSyncAssets() {
   try {
     console.log('Syncing assets from Notion')
     await syncAssets()
   } catch (e) {
     console.log(e)
   }
+}
+
+export async function runSyncFeeds() {
   try {
     console.log('Syncing rss feeds')
     await syncFeedsToNotion()

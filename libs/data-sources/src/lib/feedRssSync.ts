@@ -25,7 +25,7 @@ async function downloadRssFile(url: string) {
     const data = await response.text()
     return data
   } catch (e) {
-    console.log('error downloading', url)
+    console.log('error downloading', url, e)
     return null
   }
 }
