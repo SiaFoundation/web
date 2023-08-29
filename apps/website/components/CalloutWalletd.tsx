@@ -11,7 +11,7 @@ export function CalloutWalletd({ version }: Props) {
     <CalloutCoreSoftware
       name="walletd"
       description={
-        'walletd is a watch-only wallet server. It does not have access to any private keys, only addresses derived from those keys. walletd is currently in alpha and only built for the Zen testnet.'
+        'walletd is the flagship Sia wallet, suitable for miners, exchanges, and everyday hodlers. Its client-server architecture gives you the flexibility to access your funds from anywhere, on any device, without compromising the security of your private keys.'
       }
       status="alpha"
       daemon="walletd"

@@ -31,7 +31,12 @@ export function EventsViewDropdownMenu() {
   return (
     <Popover
       trigger={
-        <Button size="small" tip="Configure view" tipAlign="end">
+        <Button
+          size="small"
+          tip="Configure view"
+          tipAlign="end"
+          tipSide="bottom"
+        >
           <SettingsAdjust16 />
           View
           <CaretDown16 />

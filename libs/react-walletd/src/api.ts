@@ -297,24 +297,24 @@ export function useWalletFund(
 }
 
 type WalletReserveRequest = {
-  siacoinOutputs: SiacoinOutputID[]
-  siafundOutputs: SiafundOutputID[]
+  siacoinOutputs?: SiacoinOutputID[]
+  siafundOutputs?: SiafundOutputID[]
   duration: number
 }
 
 export function useWalletReserve(
   args?: HookArgsCallback<{ id: string }, WalletReserveRequest, void>
 ) {
-  return usePostFunc({ ...args, route: '/wallet/:id/reserve' })
+  return usePostFunc({ ...args, route: '/wallets/:id/reserve' })
 }
 
 type WalletReleaseRequest = {
-  siacoinOutputs: SiacoinOutputID[]
-  siafundOutputs: SiafundOutputID[]
+  siacoinOutputs?: SiacoinOutputID[]
+  siafundOutputs?: SiafundOutputID[]
 }
 
 export function useWalletRelease(
   args?: HookArgsCallback<{ id: string }, WalletReleaseRequest, void>
 ) {
-  return usePostFunc({ ...args, route: '/wallet/:id/release' })
+  return usePostFunc({ ...args, route: '/wallets/:id/release' })
 }

@@ -45,17 +45,15 @@ export type ConsensusNetwork = {
 }
 
 export type ConsensusState = {
-  network: ConsensusNetwork
-
   index: ChainIndex
   prevTimestamps: string[]
   depth: string
-  childTarget: number
+  childTarget: string
   siafundPool: string
 
   // hardfork-related state
   oakTime: number
-  oakTarget: number
+  oakTarget: string
   foundationPrimaryAddress: string
   foundationFailsafeAddress: string
 }

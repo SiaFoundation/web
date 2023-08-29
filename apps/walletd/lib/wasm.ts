@@ -1,5 +1,4 @@
 import { Transaction, UnlockConditions } from '@siafoundation/react-walletd'
-// import { ConsensusState } from '@siafoundation/react-walletd'
 import { initWasmGo } from './wasm_exec_mod'
 
 interface WalletWASM {

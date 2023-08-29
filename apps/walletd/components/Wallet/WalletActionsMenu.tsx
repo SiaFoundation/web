@@ -51,7 +51,12 @@ export function WalletActionsMenu() {
         <WalletContextMenu
           wallet={wallet}
           trigger={
-            <Button size="small" tip="Wallet settings" tipAlign="end">
+            <Button
+              size="small"
+              tip="Wallet settings"
+              tipAlign="end"
+              tipSide="bottom"
+            >
               <Settings16 />
             </Button>
           }

@@ -10,8 +10,11 @@ import {
 import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import useSWR from 'swr'
-import { useLedger, TransportType } from '../../contexts/ledger'
-import { getSupportedTransports } from '../../contexts/ledger/utils'
+import { useLedger } from '../../contexts/ledger'
+import {
+  getSupportedTransports,
+  TransportType,
+} from '../../contexts/ledger/types'
 import { LedgerLayout } from './LedgerLayout'
 
 const defaultValues = {
@@ -44,7 +47,7 @@ export function DeviceConnectForm({
 }: {
   shouldVerify?: boolean
 }) {
-  const { device, connect, verify } = useLedger()
+  const { device, connect, verify, waitingForUser } = useLedger()
   const form = useForm({
     mode: 'all',
     defaultValues,
@@ -121,7 +124,7 @@ export function DeviceConnectForm({
               </>
             }
             details={
-              device.waitingForUser ? (
+              waitingForUser ? (
                 <div className="flex flex-col gap-1">
                   <Text>Please confirm on device...</Text>
                   <Paragraph size="14" color="subtle">
@@ -157,10 +160,20 @@ export function DeviceConnectForm({
             </>
           }
           details={
-            <Paragraph size="14" color="subtle">
-              Connect your Ledger device. Make sure you unlock your Ledger and
-              open the Sia App before trying to connect.
-            </Paragraph>
+            waitingForUser ? (
+              <div className="flex flex-col gap-1">
+                <Text>Please confirm in browser and on device...</Text>
+                <Paragraph size="14" color="subtle">
+                  Connect your Ledger device. Make sure you unlock your Ledger
+                  and open the Sia App before trying to connect.
+                </Paragraph>
+              </div>
+            ) : (
+              <Paragraph size="14" color="subtle">
+                Connect your Ledger device. Make sure you unlock your Ledger and
+                open the Sia App before trying to connect.
+              </Paragraph>
+            )
           }
         />
       )}

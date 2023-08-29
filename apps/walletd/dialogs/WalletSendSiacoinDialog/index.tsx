@@ -5,6 +5,7 @@ import {
   useConsensusNetwork,
   useWalletOutputs,
   useConsensusTipState,
+  useWalletRelease,
 } from '@siafoundation/react-walletd'
 import { useWallets } from '../../contexts/wallets'
 import BigNumber from 'bignumber.js'
@@ -12,6 +13,7 @@ import { SendParams, SendSiacoinDialog } from '../SendSiacoinDialog'
 import { useCallback } from 'react'
 import { seedSignTransaction } from '../../lib/seedSignTransaction'
 import { useWalletAddresses } from '../../hooks/useWalletAddresses'
+import { triggerErrorToast } from '@siafoundation/design-system'
 
 export type WalletSendSiacoinDialogParams = {
   walletId: string
@@ -50,7 +52,25 @@ export function WalletSendSiacoinDialog({
   const cn = useConsensusNetwork()
   const fund = useWalletFund()
   const broadcast = useTxPoolBroadcast()
-  // const release = useWalletRelease()
+  const release = useWalletRelease()
+
+  const cancel = useCallback(
+    async (siacoinOutputIds: string[]) => {
+      const response = await release.post({
+        params: {
+          id: walletId,
+        },
+        payload: {
+          siacoinOutputs: siacoinOutputIds,
+        },
+      })
+      if (response.error) {
+        triggerErrorToast(response.error)
+      }
+    },
+    [walletId, release]
+  )
+
   const send = useCallback(
     async ({ seed, address, siacoin }: SendParams) => {
       if (!addresses) {
@@ -91,6 +111,9 @@ export function WalletSendSiacoinDialog({
         siacoinOutputs: outputs.data?.siacoinOutputs,
       })
       if (signResponse.error) {
+        cancel(
+          fundResponse.data.transaction.siacoinInputs.map((i) => i.parentID)
+        )
         return {
           error: signResponse.error,
         }
@@ -99,17 +122,14 @@ export function WalletSendSiacoinDialog({
       // if successfully signed cache the seed
       saveWalletSeed(walletId, seed)
 
-      // return signResponse
       // broadcast
       const broadcastResponse = await broadcast.post({
         payload: [signResponse.transaction],
       })
       if (broadcastResponse.error) {
-        // release.post({
-        //   payload: {
-        //     siacoinOutputs: signedTransaction.siacoinOutputs,
-        //   },
-        // })
+        cancel(
+          fundResponse.data.transaction.siacoinInputs.map((i) => i.parentID)
+        )
         return {
           error: broadcastResponse.error,
         }
@@ -121,6 +141,7 @@ export function WalletSendSiacoinDialog({
       }
     },
     [
+      cancel,
       addresses,
       fund,
       walletId,
