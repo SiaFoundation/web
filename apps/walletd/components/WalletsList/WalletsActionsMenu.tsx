@@ -9,7 +9,11 @@ export function WalletsActionsMenu() {
   return (
     <div className="flex gap-2">
       {!!unlockedCount && (
-        <Button tip="Lock all wallets" onClick={() => lockAllWallets()}>
+        <Button
+          tip="Lock all wallets"
+          tipSide="bottom"
+          onClick={() => lockAllWallets()}
+        >
           <Locked16 />
           Lock wallets
         </Button>

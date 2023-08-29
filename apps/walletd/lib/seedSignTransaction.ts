@@ -51,12 +51,16 @@ export function seedSignTransaction({
     if (!addressData) {
       return { error: 'Missing address' }
     }
+    if (!addressData.index) {
+      return { error: 'Missing address index' }
+    }
 
     const { unlockConditions } = getWalletWasm().unlockConditionsFromSeed(
       seed,
       addressData.index
     )
-    // for each  siacoin input add public key / unlock conditions
+
+    // for each siacoin input add public key / unlock conditions
     const sci = transaction.siacoinInputs.find(
       (sci) => stripPrefix(sci.parentID) === stripPrefix(utxo.ID)
     )

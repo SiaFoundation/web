@@ -9,16 +9,15 @@ import {
   useEffect,
   useState,
 } from 'react'
-
-export type TransportType = 'USB' | 'HID' | 'Bluetooth'
+import { TransportType } from './types'
 
 function useLedgerMain() {
+  const [waitingForUser, setWaitingForUser] = useState(false)
   const [device, setDevice] = useState<{
     type: TransportType
     sia: Sia
     publicKey0?: string
     address0?: string
-    waitingForUser: boolean
     transport: {
       forget: () => void
       deviceModel: {
@@ -45,6 +44,7 @@ function useLedgerMain() {
   const connect = useCallback(async (type: TransportType) => {
     let transport = null
 
+    setWaitingForUser(true)
     try {
       switch (type) {
         case 'HID':
@@ -72,11 +72,12 @@ function useLedgerMain() {
           type,
           sia,
           transport,
-          waitingForUser: false,
         })
+        setWaitingForUser(false)
       }
     } catch (e) {
       setError(e)
+      setWaitingForUser(false)
     }
   }, [])
 
@@ -85,10 +86,7 @@ function useLedgerMain() {
       setError(new Error('No device connected'))
       return
     }
-    setDevice((d) => ({
-      ...d,
-      waitingForUser: true,
-    }))
+    setWaitingForUser(true)
     try {
       const response = await device.sia.verifyPublicKey(0)
       setError(undefined)
@@ -96,14 +94,11 @@ function useLedgerMain() {
         ...d,
         publicKey0: response.publicKey,
         address0: response.address,
-        waitingForUser: false,
       }))
+      setWaitingForUser(false)
       return response
     } catch (e) {
-      setDevice((d) => ({
-        ...d,
-        waitingForUser: false,
-      }))
+      setWaitingForUser(false)
       setError(e)
     }
   }, [device])
@@ -120,8 +115,6 @@ function useLedgerMain() {
     return () => clearInterval(interval)
   }, [device?.transport])
 
-  console.log(device)
-
   return {
     connect,
     verify,
@@ -129,6 +122,7 @@ function useLedgerMain() {
     device,
     error,
     setError,
+    waitingForUser,
   }
 }
 

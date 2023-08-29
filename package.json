@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "engines": {
-    "node": ">=16.13.2"
+    "node": ">=19.5.0"
   },
   "scripts": {
     "start": "nx serve",
