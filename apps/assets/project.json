@@ -1,0 +1,66 @@
+{
+  "name": "assets",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/assets/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/assets",
+        "main": "apps/assets/src/main.ts",
+        "tsConfig": "apps/assets/tsconfig.app.json",
+        "webpackConfig": "apps/assets/webpack.config.js",
+        "isolatedConfig": true,
+        "babelUpwardRootMode": true
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "sourceMap": false,
+          "externalDependencies": "none"
+        },
+        "ci": {
+          "outputPath": "apps/assets/dist",
+          "optimization": true,
+          "extractLicenses": true,
+          "sourceMap": false,
+          "externalDependencies": "none"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/js:node",
+      "options": {
+        "inspect": "inspect",
+        "buildTarget": "assets:build"
+      },
+      "configurations": {
+        "production": {
+          "inspect": false,
+          "buildTarget": "assets:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/assets/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/assets"],
+      "options": {
+        "jestConfig": "apps/assets/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

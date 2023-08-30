@@ -8,7 +8,12 @@ module.exports = {
     {
       name: 'sia-assets',
       script: 'nx',
-      args: 'run asset-server:serve:production',
+      args: 'run assets:serve:production',
+    },
+    {
+      name: 'sia-crons',
+      script: 'nx',
+      args: 'run crons:serve:production',
     },
     {
       name: 'sia-explorer-v1',
