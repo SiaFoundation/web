@@ -1,24 +1,23 @@
 import BigNumber from 'bignumber.js'
 import { Text, CheckmarkFilled32 } from '@siafoundation/design-system'
-import { WalletSendSiacoinReceipt } from './Receipt'
+import { Receipt } from './Receipt'
 
 type Props = {
   data: {
     address: string
     siacoin: BigNumber
+    fee: BigNumber
   }
-  fee: BigNumber
   transactionId?: string
 }
 
-export function WalletSendSiacoinComplete({
-  data: { address, siacoin },
-  fee,
+export function Done({
+  data: { address, siacoin, fee },
   transactionId,
 }: Props) {
   return (
     <div className="flex flex-col gap-4">
-      <WalletSendSiacoinReceipt
+      <Receipt
         address={address}
         siacoin={siacoin}
         fee={fee}

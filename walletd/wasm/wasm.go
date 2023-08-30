@@ -15,13 +15,13 @@ import (
 func main() {
 	fmt.Println("wallet WASM: init")
 	js.Global().Set("walletWasm", map[string]interface{}{
-		"newSeedPhrase":            js.FuncOf(newSeedPhrase),
-		"seedFromPhrase":           js.FuncOf(seedFromPhrase),
-		"privateKeyFromSeed":       js.FuncOf(privateKeyFromSeed),
-		"publicKeyFromSeed":        js.FuncOf(publicKeyFromSeed),
-		"unlockConditionsFromSeed": js.FuncOf(unlockConditionsFromSeed),
-		"addressFromSeed":          js.FuncOf(addressFromSeed),
-		"signTransaction":          js.FuncOf(signTransaction),
+		"newSeedPhrase":               js.FuncOf(newSeedPhrase),
+		"seedFromPhrase":              js.FuncOf(seedFromPhrase),
+		"privateKeyFromSeed":          js.FuncOf(privateKeyFromSeed),
+		"unlockConditionsFromSeed":    js.FuncOf(unlockConditionsFromSeed),
+		"publicKeyAndAddressFromSeed": js.FuncOf(publicKeyAndAddressFromSeed),
+		"encodeTransaction":           js.FuncOf(encodeTransaction),
+		"signTransaction":             js.FuncOf(signTransaction),
 	})
 	c := make(chan bool, 1)
 	<-c
@@ -78,21 +78,6 @@ func privateKeyFromSeed(this js.Value, args []js.Value) interface{} {
 	}
 }
 
-func publicKeyFromSeed(this js.Value, args []js.Value) interface{} {
-	if err := utils.CheckArgs(args, js.TypeString, js.TypeNumber); err != nil {
-		return map[string]any{
-			"error": err.Error(),
-		}
-	}
-
-	seed := utils.HexStringToByte32Array(args[0].String())
-	index := uint64(args[1].Int())
-	publicKey := core.PublicKeyFromSeed(&seed, index)
-	return map[string]any{
-		"publicKey": publicKey,
-	}
-}
-
 func unlockConditionsFromSeed(this js.Value, args []js.Value) interface{} {
 	if err := utils.CheckArgs(args, js.TypeString, js.TypeNumber); err != nil {
 		return map[string]any{
@@ -115,7 +100,7 @@ func unlockConditionsFromSeed(this js.Value, args []js.Value) interface{} {
 	}
 }
 
-func addressFromSeed(this js.Value, args []js.Value) interface{} {
+func publicKeyAndAddressFromSeed(this js.Value, args []js.Value) interface{} {
 	if err := utils.CheckArgs(args, js.TypeString, js.TypeNumber); err != nil {
 		return map[string]any{
 			"error": err.Error(),
@@ -124,9 +109,34 @@ func addressFromSeed(this js.Value, args []js.Value) interface{} {
 
 	seed := utils.HexStringToByte32Array(args[0].String())
 	index := uint64(args[1].Int())
-	address := core.AddressFromSeed(&seed, index)
+	publicKey, address := core.PublicKeyAndAddressFromSeed(&seed, index)
 	return map[string]any{
-		"address": address,
+		"publicKey": publicKey,
+		"address":   address,
+	}
+}
+
+func encodeTransaction(this js.Value, args []js.Value) interface{} {
+	if err := utils.CheckArgs(args, js.TypeString); err != nil {
+		return map[string]any{
+			"error": err.Error(),
+		}
+	}
+
+	jsonTxn := args[0].String()
+
+	var txn types.Transaction
+
+	if err := json.Unmarshal([]byte(jsonTxn), &txn); err != nil {
+		return map[string]any{
+			"error": err.Error(),
+		}
+	}
+
+	encoded := core.EncodeTransaction(txn)
+
+	return map[string]any{
+		"encodedTransaction": utils.BytesToInterface(encoded),
 	}
 }
 

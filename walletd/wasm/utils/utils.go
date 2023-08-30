@@ -62,7 +62,7 @@ func HexStringToByteArray(str string) []byte {
 	return byteArray
 }
 
-func InterfaceToJSON(obj interface{}) (con map[string]interface{}, err error) {
+func InterfaceToJSON(obj interface{}) (con interface{}, err error) {
 	buf, err := json.Marshal(obj)
 
 	if err != nil {
@@ -72,6 +72,16 @@ func InterfaceToJSON(obj interface{}) (con map[string]interface{}, err error) {
 	err = json.Unmarshal(buf, &con)
 
 	return
+}
+
+func BytesToInterface(bytes []byte) []interface{} {
+	value := make([]interface{}, len(bytes))
+
+	for i, b := range bytes {
+		value[i] = b
+	}
+
+	return value
 }
 
 func EncodeJSON(w io.Writer, v interface{}) error {

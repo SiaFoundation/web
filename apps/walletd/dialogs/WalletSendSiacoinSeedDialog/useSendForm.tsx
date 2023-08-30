@@ -10,26 +10,20 @@ import {
 import { getFieldMnemonic, MnemonicFieldType } from '../../lib/fieldMnemonic'
 import { FieldMnemonic } from '../FieldMnemonic'
 import { useWalletCachedSeed } from '../../hooks/useWalletCachedSeed'
+import { useSend } from './useSend'
+import { useWallets } from '../../contexts/wallets'
 
 const defaultValues = {
   mnemonic: '',
 }
 
-type SendData = {
-  seedHash: string
-  address: string
-  siacoin: BigNumber
-}
-
 type Props = {
   walletId: string
-  send: (params: {
-    seed: string
+  data: {
     address: string
     siacoin: BigNumber
-  }) => Promise<{ transactionId?: string; error?: string }>
-  data: SendData
-  fee: BigNumber
+    fee: BigNumber
+  }
   onConfirm: (params: { transactionId?: string }) => void
 }
 
@@ -59,16 +53,14 @@ function getFields({
   }
 }
 
-export function useSendSiacoinConfirmForm({
-  walletId,
-  send,
-  data,
-  fee,
-  onConfirm,
-}: Props) {
+export function useSendForm({ walletId, data, onConfirm }: Props) {
+  const send = useSend()
   const { isSeedCached, getSeedFromCacheOrForm } = useWalletCachedSeed(walletId)
+  const { dataset } = useWallets()
+  const wallet = dataset?.find((w) => w.id === walletId)
+  const seedHash = wallet?.seedHash
 
-  const { seedHash, address, siacoin } = data || {}
+  const { address, siacoin, fee } = data || {}
   const form = useForm({
     mode: 'all',
     defaultValues,
@@ -76,12 +68,16 @@ export function useSendSiacoinConfirmForm({
 
   const [mnemonicFieldType, setMnemonicFieldType] =
     useState<MnemonicFieldType>('password')
-  const fields = getFields({
-    mnemonicFieldType,
-    setMnemonicFieldType,
-    seedHash,
-    isSeedCached,
-  })
+  const fields = useMemo(
+    () =>
+      getFields({
+        mnemonicFieldType,
+        setMnemonicFieldType,
+        seedHash,
+        isSeedCached,
+      }),
+    [mnemonicFieldType, setMnemonicFieldType, seedHash, isSeedCached]
+  )
 
   const onValid = useCallback(
     async (values: typeof defaultValues) => {
@@ -91,10 +87,11 @@ export function useSendSiacoinConfirmForm({
         return
       }
 
-      const { transactionId, error } = await send({
+      const { error } = await send({
         seed: seedResponse.seed,
         address,
         siacoin,
+        fee,
       })
 
       if (error) {
@@ -102,11 +99,9 @@ export function useSendSiacoinConfirmForm({
         return
       }
 
-      onConfirm({
-        transactionId,
-      })
+      onConfirm({})
     },
-    [getSeedFromCacheOrForm, send, address, siacoin, onConfirm]
+    [getSeedFromCacheOrForm, send, address, fee, siacoin, onConfirm]
   )
 
   const onInvalid = useOnInvalid(fields)

@@ -8,18 +8,13 @@ type Props = {
   transactionId?: string
 }
 
-export function WalletSendSiacoinReceipt({
-  address,
-  siacoin,
-  fee,
-  transactionId,
-}: Props) {
+export function Receipt({ address, siacoin, fee, transactionId }: Props) {
   const totalSiacoin = siacoin.plus(fee)
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-6 justify-between items-center">
         <Text color="verySubtle" noWrap>
-          Address
+          Destination
         </Text>
         <ValueCopyable value={address} type="address" />
       </div>

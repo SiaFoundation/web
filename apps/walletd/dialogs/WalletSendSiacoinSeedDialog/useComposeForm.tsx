@@ -15,6 +15,8 @@ import { useCallback, useMemo } from 'react'
 const exampleAddr =
   'e3b1050aef388438668b52983cf78f40925af8f0aa8b9de80c18eadcefce8388d168a313e3f2'
 
+const fee = toHastings(0.00393)
+
 const defaultValues = {
   address: '',
   siacoin: undefined as BigNumber,
@@ -63,23 +65,16 @@ function getFields({
   }
 }
 
-type FormData = {
-  address: string
-  siacoin: BigNumber
-  includeFee: boolean
-}
-
 type Props = {
-  fee: BigNumber
-  onComplete: (data: FormData) => void
+  onComplete: (data: {
+    address: string
+    siacoin: BigNumber
+    fee: BigNumber
+  }) => void
   balance?: BigNumber
 }
 
-export function useSendSiacoinGenerateForm({
-  balance,
-  fee,
-  onComplete,
-}: Props) {
+export function useComposeForm({ balance, onComplete }: Props) {
   const form = useForm({
     mode: 'all',
     defaultValues,
@@ -104,12 +99,12 @@ export function useSendSiacoinGenerateForm({
       }
 
       onComplete({
-        includeFee: values.includeFee,
         address: values.address,
-        siacoin: siacoin,
+        siacoin,
+        fee,
       })
     },
-    [onComplete, balance, fee]
+    [onComplete, balance]
   )
 
   const handleSubmit = useMemo(

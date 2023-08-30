@@ -19,13 +19,15 @@ export function LedgerAddress({
   index: number
   address: string
   isNew: boolean
-  setAddress: (index: number, address: string) => void
+  setAddress: (params: {
+    index: number
+    address: string
+    publicKey: string
+  }) => void
   remove: () => void
 }) {
   const { device, error, setError } = useLedger()
   const [waitingForUser, setWaitingForUser] = useState(false)
-
-  console.log(device)
 
   const generateAddresses = useCallback(async () => {
     if (!device) {
@@ -38,7 +40,11 @@ export function LedgerAddress({
     try {
       setWaitingForUser(true)
       const pkResponse = await device.sia.verifyStandardAddress(index)
-      setAddress(index, pkResponse.address)
+      setAddress({
+        index,
+        address: pkResponse.address,
+        publicKey: pkResponse.publicKey,
+      })
     } catch (e) {
       setError(e)
       console.log(e)

@@ -1,6 +1,8 @@
 package core
 
 import (
+	"bytes"
+
 	"go.sia.tech/core/consensus"
 	"go.sia.tech/core/types"
 	"go.sia.tech/core/wallet"
@@ -23,8 +25,23 @@ func PublicKeyFromSeed(seed *[32]byte, index uint64) string {
 	return wallet.KeyFromSeed(seed, index).PublicKey().String()
 }
 
-func AddressFromSeed(seed *[32]byte, index uint64) string {
-	return wallet.KeyFromSeed(seed, index).PublicKey().StandardUnlockConditions().UnlockHash().String()
+func PublicKeyAndAddressFromSeed(seed *[32]byte, index uint64) (string, string) {
+	pk := wallet.KeyFromSeed(seed, index).PublicKey()
+	publicKey := pk.String()
+	address := pk.StandardUnlockConditions().UnlockHash().String()
+	return publicKey, address
+}
+
+func encodeToBytes(v types.EncoderTo) []byte {
+	var buf bytes.Buffer
+	e := types.NewEncoder(&buf)
+	v.EncodeTo(e)
+	e.Flush()
+	return buf.Bytes()
+}
+
+func EncodeTransaction(txn types.Transaction) []byte {
+	return encodeToBytes(txn)
 }
 
 func SignTransaction(cs consensus.State, txn types.Transaction, sigIndex int, key types.PrivateKey) types.Transaction {

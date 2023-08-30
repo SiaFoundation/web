@@ -62,6 +62,7 @@ export function ProgressSteps({ activeStep, steps, onChange }: Props) {
                 isLast ? 'right-0' : '',
                 !isFirst && !isLast ? '-translate-x-1/2' : ''
               )}
+              noWrap
             >
               {label}
             </Text>

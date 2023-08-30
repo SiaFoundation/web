@@ -1,6 +1,21 @@
 import TransportWebBLE from '@ledgerhq/hw-transport-web-ble'
 import TransportWebHID from '@ledgerhq/hw-transport-webhid'
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
+import Sia from '@siacentral/ledgerjs-sia'
+
+export type LedgerDevice = {
+  type: TransportType
+  sia: Sia
+  publicKey0?: string
+  address0?: string
+  transport: {
+    forget: () => void
+    deviceModel: {
+      productName: string
+    }
+    _disconnectEmitted: boolean
+  }
+}
 
 export type TransportType = 'USB' | 'HID' | 'Bluetooth'
 

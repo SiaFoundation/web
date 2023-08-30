@@ -1,6 +1,5 @@
 import {
   useTxPoolBroadcast,
-  useWalletBalance,
   useWalletFund,
   useConsensusNetwork,
   useWalletOutputs,
@@ -8,38 +7,15 @@ import {
   useWalletRelease,
 } from '@siafoundation/react-walletd'
 import { useWallets } from '../../contexts/wallets'
-import BigNumber from 'bignumber.js'
-import { SendParams, SendSiacoinDialog } from '../SendSiacoinDialog'
 import { useCallback } from 'react'
-import { seedSignTransaction } from '../../lib/seedSignTransaction'
+import { signTransactionSeed } from '../../lib/signSeed'
 import { useWalletAddresses } from '../../hooks/useWalletAddresses'
 import { triggerErrorToast } from '@siafoundation/design-system'
+import BigNumber from 'bignumber.js'
 
-export type WalletSendSiacoinDialogParams = {
-  walletId: string
-}
-
-type Props = {
-  params?: WalletSendSiacoinDialogParams
-  trigger?: React.ReactNode
-  open: boolean
-  onOpenChange: (val: boolean) => void
-}
-
-export function WalletSendSiacoinDialog({
-  params,
-  trigger,
-  open,
-  onOpenChange,
-}: Props) {
+export function useSend() {
   const { wallet, saveWalletSeed } = useWallets()
   const walletId = wallet?.id
-  const balance = useWalletBalance({
-    disabled: !walletId,
-    params: {
-      id: walletId,
-    },
-  })
 
   const outputs = useWalletOutputs({
     disabled: !walletId,
@@ -72,7 +48,17 @@ export function WalletSendSiacoinDialog({
   )
 
   const send = useCallback(
-    async ({ seed, address, siacoin }: SendParams) => {
+    async ({
+      seed,
+      address,
+      siacoin,
+      fee,
+    }: {
+      seed: string
+      address: string
+      siacoin: BigNumber
+      fee: BigNumber
+    }) => {
       if (!addresses) {
         return
       }
@@ -82,9 +68,10 @@ export function WalletSendSiacoinDialog({
           id: walletId,
         },
         payload: {
-          amount: siacoin.toString(),
+          amount: siacoin.plus(fee).toString(),
           changeAddress: addresses[0].address,
           transaction: {
+            minerFees: [fee.toString()],
             siacoinOutputs: [
               {
                 value: siacoin.toString(),
@@ -101,7 +88,7 @@ export function WalletSendSiacoinDialog({
       }
 
       // sign
-      const signResponse = seedSignTransaction({
+      const signResponse = signTransactionSeed({
         seed,
         transaction: fundResponse.data?.transaction,
         toSign: fundResponse.data?.toSign,
@@ -153,14 +140,5 @@ export function WalletSendSiacoinDialog({
     ]
   )
 
-  return (
-    <SendSiacoinDialog
-      params={params}
-      trigger={trigger}
-      open={open}
-      onOpenChange={onOpenChange}
-      balance={new BigNumber(balance.data?.siacoins || 0)}
-      send={send}
-    />
-  )
+  return send
 }
