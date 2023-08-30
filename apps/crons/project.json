@@ -1,7 +1,7 @@
 {
-  "name": "asset-server",
+  "name": "crons",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/asset-server/src",
+  "sourceRoot": "apps/crons/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -10,10 +10,10 @@
       "options": {
         "target": "node",
         "compiler": "tsc",
-        "outputPath": "dist/apps/asset-server",
-        "main": "apps/asset-server/src/main.ts",
-        "tsConfig": "apps/asset-server/tsconfig.app.json",
-        "webpackConfig": "apps/asset-server/webpack.config.js",
+        "outputPath": "dist/apps/crons",
+        "main": "apps/crons/src/main.ts",
+        "tsConfig": "apps/crons/tsconfig.app.json",
+        "webpackConfig": "apps/crons/webpack.config.js",
         "isolatedConfig": true,
         "babelUpwardRootMode": true
       },
@@ -25,7 +25,7 @@
           "externalDependencies": "none"
         },
         "ci": {
-          "outputPath": "apps/asset-server/dist",
+          "outputPath": "apps/crons/dist",
           "optimization": true,
           "extractLicenses": true,
           "sourceMap": false,
@@ -37,12 +37,12 @@
       "executor": "@nrwl/js:node",
       "options": {
         "inspect": "inspect",
-        "buildTarget": "asset-server:build"
+        "buildTarget": "crons:build"
       },
       "configurations": {
         "production": {
           "inspect": false,
-          "buildTarget": "asset-server:build:production"
+          "buildTarget": "crons:build:production"
         }
       }
     },
@@ -50,14 +50,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/asset-server/**/*.ts"]
+        "lintFilePatterns": ["apps/crons/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/apps/asset-server"],
+      "outputs": ["{workspaceRoot}/coverage/apps/crons"],
       "options": {
-        "jestConfig": "apps/asset-server/jest.config.ts",
+        "jestConfig": "apps/crons/jest.config.ts",
         "passWithNoTests": true
       }
     }

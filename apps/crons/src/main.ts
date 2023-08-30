@@ -1,9 +1,13 @@
+import dotenv from 'dotenv'
 import {
   generateRssFeed,
   syncAssets,
   syncFeedsToNotion,
 } from '@siafoundation/data-sources'
 import cron from 'node-cron'
+
+dotenv.config()
+
 export async function startCron() {
   console.log('Starting scheduled cron jobs')
   runSyncAssets()
@@ -41,3 +45,7 @@ export async function runSyncFeeds() {
     console.log(e)
   }
 }
+
+startCron()
+
+console.log(`Crons running in ${process.env.NODE_ENV}`)

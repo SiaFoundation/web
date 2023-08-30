@@ -1,0 +1,7 @@
+{
+  "name": "crons",
+  "description": "Background tasks for api.sia.tech and sia.tech.",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT"
+}

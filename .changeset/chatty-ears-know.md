@@ -1,5 +1,5 @@
 ---
-'asset-server': minor
+'assets': minor
 ---
 
 Slow down feed crons, log feed fetching error.
