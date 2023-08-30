@@ -5,139 +5,7 @@ global.TextEncoder = TextEncoder
 global.TextDecoder = TextDecoder
 
 describe('seedSignTransaction', () => {
-  it('default', async () => {
-    await loadWASMTestEnv()
-    expect(
-      seedSignTransaction({
-        seed,
-        transaction: getTransaction(),
-        toSign: getToSign(),
-        cs: getConsensusState(),
-        cn: getConsensusNetwork(),
-        addresses: getAddresses(),
-        siacoinOutputs: getSiacoinOutputs(),
-      })
-    ).toEqual({
-      transaction: {
-        siacoinInputs: [
-          {
-            parentID:
-              'scoid:5ee74cab3a1f83c46f5ae76533662b2b9a63e5c58011dd663ab58b0ae42b0ff5',
-            unlockConditions: {
-              timelock: 0,
-              publicKeys: [
-                'ed25519:2b11e0b06fbb6e5d9c36c2cfa794ed2e761c97b98e344af3a09f75a0b732844b',
-              ],
-              signaturesRequired: 1,
-            },
-          },
-          {
-            parentID:
-              'scoid:1ee74cab3a1f83c46f5ae76533662b2b9a63e5c58011dd663ab58b0ae42b0ff1',
-            unlockConditions: {
-              publicKeys: [
-                'ed25519:2b11e0b06fbb6e5d9c36c2cfa794ed2e761c97b98e344af3a09f75a0b732844b',
-              ],
-              signaturesRequired: 1,
-              timelock: 0,
-            },
-          },
-        ],
-        siacoinOutputs: [
-          {
-            value: '1000000000000000000000000',
-            address:
-              'addr:eb2ee5169dd9aaab804b38f7e70043690ac21da1144990a4a28c1dcf66cd7ee9845aef03006f',
-          },
-          {
-            value: '38000000000000000000000000',
-            address:
-              'addr:2df9e973f87796a5f16c783d3ffd335b02424cadcfcaf114001c6d968468a325186575ab0461',
-          },
-        ],
-        signatures: [
-          {
-            signature:
-              '/NG3YBHZ/yqEhjntcbil78DV02nE+bQx20KXEzy8xKTWNnuBcbNFZmi89TPcxW1A4HizCYVgbxuuUSmKvCSMBQ==',
-            parentID:
-              'h:5ee74cab3a1f83c46f5ae76533662b2b9a63e5c58011dd663ab58b0ae42b0ff5',
-            publicKeyIndex: 0,
-            coveredFields: { wholeTransaction: true },
-          },
-          {
-            coveredFields: { wholeTransaction: true },
-            signature:
-              'cBXWoziWgmyiKVeKoW8pfAzDq53K4rs54N0beUIDC5ZM2ZN/3vvzVHftXoMLd6lILds26xXbKjlRNr6Ix0xpCQ==',
-            parentID:
-              'h:1ee74cab3a1f83c46f5ae76533662b2b9a63e5c58011dd663ab58b0ae42b0ff1',
-            publicKeyIndex: 0,
-          },
-        ],
-      },
-    })
-  })
-
-  it('matches parent id to element ID', async () => {
-    await loadWASMTestEnv()
-    expect(
-      seedSignTransaction({
-        seed,
-        transaction: getTransaction(),
-        toSign: ['not in siacoinOutputs'],
-        cs: getConsensusState(),
-        cn: getConsensusNetwork(),
-        addresses: getAddresses(),
-        siacoinOutputs: getSiacoinOutputs(),
-      })
-    ).toEqual({
-      error: 'Missing utxo',
-    })
-  })
-
-  it('compute public key using address and index', async () => {
-    await loadWASMTestEnv()
-    expect(
-      seedSignTransaction({
-        seed,
-        transaction: getTransaction(),
-        toSign: getToSign(),
-        cs: getConsensusState(),
-        cn: getConsensusNetwork(),
-        addresses: [
-          {
-            id: 'id',
-            walletId: 'id',
-            address: 'address not in addresses',
-            index: 5,
-          },
-        ],
-        siacoinOutputs: getSiacoinOutputs(),
-      })
-    ).toEqual({
-      error: 'Missing address',
-    })
-  })
-
-  it('compute public key using address and index', async () => {
-    await loadWASMTestEnv()
-    expect(
-      seedSignTransaction({
-        seed,
-        transaction: getTransaction(),
-        toSign: getToSign(),
-        cs: getConsensusState(),
-        cn: getConsensusNetwork(),
-        addresses: [
-          { id: 'id', walletId: 'id', address: getSiacoinOutputs()[0].address },
-        ],
-        siacoinOutputs: getSiacoinOutputs(),
-      })
-    ).toEqual({
-      error: 'Missing address index',
-    })
-  })
-
-  it('builds valid transaction for signing', async () => {
+  it('builds and signs valid transaction', async () => {
     await loadWASMTestEnv()
     const { transaction: signedTxn } = seedSignTransaction({
       seed,
@@ -172,6 +40,66 @@ describe('seedSignTransaction', () => {
             'cBXWoziWgmyiKVeKoW8pfAzDq53K4rs54N0beUIDC5ZM2ZN/3vvzVHftXoMLd6lILds26xXbKjlRNr6Ix0xpCQ==',
         },
       ],
+    })
+  })
+
+  it('errors when a toSign utxo is missing', async () => {
+    await loadWASMTestEnv()
+    expect(
+      seedSignTransaction({
+        seed,
+        transaction: getTransaction(),
+        toSign: ['not in siacoinOutputs'],
+        cs: getConsensusState(),
+        cn: getConsensusNetwork(),
+        addresses: getAddresses(),
+        siacoinOutputs: getSiacoinOutputs(),
+      })
+    ).toEqual({
+      error: 'Missing utxo',
+    })
+  })
+
+  it('errors when a public keys address is missing', async () => {
+    await loadWASMTestEnv()
+    expect(
+      seedSignTransaction({
+        seed,
+        transaction: getTransaction(),
+        toSign: getToSign(),
+        cs: getConsensusState(),
+        cn: getConsensusNetwork(),
+        addresses: [
+          {
+            id: 'id',
+            walletId: 'id',
+            address: 'address not in addresses',
+            index: 5,
+          },
+        ],
+        siacoinOutputs: getSiacoinOutputs(),
+      })
+    ).toEqual({
+      error: 'Missing address',
+    })
+  })
+
+  it('errors when an address is missing its index', async () => {
+    await loadWASMTestEnv()
+    expect(
+      seedSignTransaction({
+        seed,
+        transaction: getTransaction(),
+        toSign: getToSign(),
+        cs: getConsensusState(),
+        cn: getConsensusNetwork(),
+        addresses: [
+          { id: 'id', walletId: 'id', address: getSiacoinOutputs()[0].address },
+        ],
+        siacoinOutputs: getSiacoinOutputs(),
+      })
+    ).toEqual({
+      error: 'Missing address index',
     })
   })
 })
