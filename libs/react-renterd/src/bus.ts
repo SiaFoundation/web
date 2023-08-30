@@ -382,7 +382,7 @@ export function useContractsRelease(
 }
 
 export function useContract(args: HookArgsSwr<{ id: string }, Contract>) {
-  return useGetSwr({ ...args, route: '/bus/contracts/:id' })
+  return useGetSwr({ ...args, route: '/bus/contract/:id' })
 }
 
 export function useContractCreate(
@@ -521,8 +521,22 @@ type Alert = {
   }
 }
 
+const alertsRoute = '/bus/alerts'
 export function useAlerts(args?: HookArgsSwr<void, Alert[]>) {
-  return useGetSwr({ ...args, route: '/bus/alerts' })
+  return useGetSwr({ ...args, route: alertsRoute })
+}
+
+export function useAlertsDismiss(
+  args?: HookArgsCallback<void, string[], void>
+) {
+  return usePostFunc(
+    { ...args, route: '/bus/alerts/dismiss' },
+    async (mutate) => {
+      mutate((key) => {
+        return key.startsWith(alertsRoute)
+      })
+    }
+  )
 }
 
 // slabs

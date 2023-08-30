@@ -58,7 +58,13 @@ export function ContractContextMenu({
           <Draggable16 />
         </Button>
       }
-      contentProps={{ align: 'start', ...contentProps }}
+      contentProps={{
+        align: 'start',
+        ...contentProps,
+        onClick: (e) => {
+          e.stopPropagation()
+        },
+      }}
     >
       <div className="px-1.5 py-1">
         <Text size="14" weight="medium" color="subtle">

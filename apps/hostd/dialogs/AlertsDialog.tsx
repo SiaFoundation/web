@@ -157,21 +157,16 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
                 </div>
                 {getOrderedKeys(a.data, skipFields).map((key) => {
                   const value = a.data[key]
-                  if (value === undefined) {
+                  if (
+                    value === undefined ||
+                    value === null ||
+                    (typeof value === 'object' && !Object.keys(value).length)
+                  ) {
                     return null
                   }
                   const label = dataFields[key]?.label || key
-                  const el = dataFields[key]?.render(value) || (
-                    <Text color="contrast">{value}</Text>
-                  )
-                  return (
-                    <div key={key} className="flex justify-between w-full">
-                      <Text color="subtle" ellipsis>
-                        {label}
-                      </Text>
-                      {el}
-                    </div>
-                  )
+                  const Component = dataFields[key]?.render || DefaultDisplay
+                  return <Component key={key} label={label} value={value} />
                 })}
               </div>
             ))}
@@ -179,6 +174,17 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
         )}
       </div>
     </Dialog>
+  )
+}
+
+function DefaultDisplay({ label, value }) {
+  return (
+    <div className="flex gap-3 justify-between w-full">
+      <Text color="subtle">{label}</Text>
+      <Text color="contrast" ellipsis>
+        {String(value)}
+      </Text>
+    </div>
   )
 }
 
@@ -206,8 +212,8 @@ const dataFieldOrder = [
 ]
 
 // Sort keys by dataFieldOrder, then alphabetically
-function getOrderedKeys(obj, skip: string[]) {
-  const keys = Object.keys(obj).sort((a, b) => {
+function getOrderedKeys(obj, skip: string[] = []) {
+  const orderedKeys = Object.keys(obj).sort((a, b) => {
     const aIndex = dataFieldOrder.indexOf(a)
     const bIndex = dataFieldOrder.indexOf(b)
     if (aIndex === -1 && bIndex === -1) {
@@ -221,135 +227,202 @@ function getOrderedKeys(obj, skip: string[]) {
     }
     return aIndex - bIndex
   })
-  return difference(keys, skip)
+  return difference(orderedKeys, skip)
 }
 
 const dataFields = {
-  contractID: {
-    label: 'contract ID',
-    render: (value: number) => <ValueCopyable value={String(value)} />,
+  contractId: {
+    render: ({ value }: { value: string }) => (
+      <div className="flex justify-between w-full">
+        <Text color="subtle" ellipsis>
+          contract ID
+        </Text>
+        <ValueCopyable value={String(value)} />
+      </div>
+    ),
   },
   blockHeight: {
-    label: 'block height',
-    render: (value: number) => (
-      <ValueCopyable value={String(value)} type="block" />
+    render: ({ value }: { value: string }) => (
+      <div className="flex justify-between w-full">
+        <Text color="subtle" ellipsis>
+          block height
+        </Text>
+        <ValueCopyable value={String(value)} type="block" />
+      </div>
     ),
   },
   resolution: {
-    label: 'resolution',
-    render: (value: string) => <ValueCopyable value={value} />,
-  },
-  volume: {
-    label: 'volume',
-    render: (value: string) => <ValueCopyable value={value} />,
-  },
-  volumeID: {
-    label: 'volume ID',
-    render: (value: number) => <ValueCopyable value={String(value)} />,
-  },
-  elapsed: {
-    label: 'elapsed',
-    render: (value: number) => (
-      <Text color="contrast" ellipsis>
-        {humanTime(value)}
-      </Text>
+    render: ({ value }: { value: string }) => (
+      <div className="flex justify-between w-full">
+        <Text color="subtle" ellipsis>
+          resolution
+        </Text>
+        <ValueCopyable value={String(value)} />
+      </div>
     ),
   },
-  error: {
-    label: 'error',
-    render: (value: string) => (
-      <Text color="contrast" ellipsis>
-        {value}
-      </Text>
+  volume: {
+    render: ({ value }: { value: string }) => (
+      <div className="flex justify-between w-full">
+        <Text color="subtle" ellipsis>
+          volume
+        </Text>
+        <ValueCopyable value={String(value)} />
+      </div>
+    ),
+  },
+  volumeID: {
+    render: ({ value }: { value: string }) => (
+      <div className="flex justify-between w-full">
+        <Text color="subtle" ellipsis>
+          volume ID
+        </Text>
+        <ValueCopyable value={String(value)} />
+      </div>
+    ),
+  },
+  elapsed: {
+    render: ({ value }: { value: string }) => (
+      <div className="flex justify-between w-full">
+        <Text color="subtle" ellipsis>
+          elapsed
+        </Text>
+        <Text color="contrast" ellipsis>
+          {humanTime(Number(value))}
+        </Text>
+      </div>
     ),
   },
   checked: {
-    label: 'checked',
-    render: (value: number) => (
-      <Text color="contrast" ellipsis>
-        {value.toLocaleString()}
-      </Text>
+    render: ({ value }: { value: string }) => (
+      <div className="flex justify-between w-full">
+        <Text color="subtle" ellipsis>
+          checked
+        </Text>
+        <Text color="contrast" ellipsis>
+          {value.toLocaleString()}
+        </Text>
+      </div>
     ),
   },
   missing: {
-    label: 'missing',
-    render: (value: number) => (
-      <Text color="contrast" ellipsis>
-        {value.toLocaleString()}
-      </Text>
+    render: ({ value }: { value: string }) => (
+      <div className="flex justify-between w-full">
+        <Text color="subtle" ellipsis>
+          missing
+        </Text>
+        <Text color="contrast" ellipsis>
+          {value.toLocaleString()}
+        </Text>
+      </div>
     ),
   },
   corrupt: {
-    label: 'corrupt',
-    render: (value: number) => (
-      <Text color="contrast" ellipsis>
-        {value.toLocaleString()}
-      </Text>
+    render: ({ value }: { value: string }) => (
+      <div className="flex justify-between w-full">
+        <Text color="subtle" ellipsis>
+          corrupt
+        </Text>
+        <Text color="contrast" ellipsis>
+          {value.toLocaleString()}
+        </Text>
+      </div>
     ),
   },
   total: {
-    label: 'total',
-    render: (value: number) => (
-      <Text color="contrast" ellipsis>
-        {value.toLocaleString()}
-      </Text>
+    render: ({ value }: { value: string }) => (
+      <div className="flex justify-between w-full">
+        <Text color="subtle" ellipsis>
+          total
+        </Text>
+        <Text color="contrast" ellipsis>
+          {value.toLocaleString()}
+        </Text>
+      </div>
     ),
   },
   oldSectors: {
-    label: 'old sectors',
-    render: (value: number) => (
-      <Text color="contrast" ellipsis>
-        {value.toLocaleString()}
-      </Text>
+    render: ({ value }: { value: string }) => (
+      <div className="flex justify-between w-full">
+        <Text color="subtle" ellipsis>
+          old sectors
+        </Text>
+        <Text color="contrast" ellipsis>
+          {value.toLocaleString()}
+        </Text>
+      </div>
     ),
   },
   currentSectors: {
-    label: 'current sectors',
-    render: (value: number) => (
-      <Text color="contrast" ellipsis>
-        {value.toLocaleString()}
-      </Text>
+    render: ({ value }: { value: string }) => (
+      <div className="flex justify-between w-full">
+        <Text color="subtle" ellipsis>
+          current sectors
+        </Text>
+        <Text color="contrast" ellipsis>
+          {value.toLocaleString()}
+        </Text>
+      </div>
     ),
   },
   targetSectors: {
-    label: 'target sectors',
-    render: (value: number) => (
-      <Text color="contrast" ellipsis>
-        {value.toLocaleString()}
-      </Text>
+    render: ({ value }: { value: string }) => (
+      <div className="flex justify-between w-full">
+        <Text color="subtle" ellipsis>
+          target sectors
+        </Text>
+        <Text color="contrast" ellipsis>
+          {value.toLocaleString()}
+        </Text>
+      </div>
     ),
   },
   migratedSectors: {
-    label: 'migrated sectors',
-    render: (value: number) => (
-      <Text color="contrast" ellipsis>
-        {value.toLocaleString()}
-      </Text>
+    render: ({ value }: { value: string }) => (
+      <div className="flex justify-between w-full">
+        <Text color="subtle" ellipsis>
+          migrated sectors
+        </Text>
+        <Text color="contrast" ellipsis>
+          {value.toLocaleString()}
+        </Text>
+      </div>
     ),
   },
   migrated: {
-    label: 'migrated',
-    render: (value: number) => (
-      <Text color="contrast" ellipsis>
-        {value.toLocaleString()}
-      </Text>
+    render: ({ value }: { value: string }) => (
+      <div className="flex justify-between w-full">
+        <Text color="subtle" ellipsis>
+          migrated
+        </Text>
+        <Text color="contrast" ellipsis>
+          {value.toLocaleString()}
+        </Text>
+      </div>
     ),
   },
   target: {
-    label: 'target',
-    render: (value: number) => (
-      <Text color="contrast" ellipsis>
-        {value.toLocaleString()}
-      </Text>
+    render: ({ value }: { value: string }) => (
+      <div className="flex justify-between w-full">
+        <Text color="subtle" ellipsis>
+          target
+        </Text>
+        <Text color="contrast" ellipsis>
+          {value.toLocaleString()}
+        </Text>
+      </div>
     ),
   },
-
   force: {
-    label: 'force',
-    render: (value: boolean) => (
-      <Text color="contrast" ellipsis>
-        {value ? 'true' : 'false'}
-      </Text>
+    render: ({ value }: { value: string }) => (
+      <div className="flex justify-between w-full">
+        <Text color="subtle" ellipsis>
+          force
+        </Text>
+        <Text color="contrast" ellipsis>
+          {value ? 'true' : 'false'}
+        </Text>
+      </div>
     ),
   },
 }
