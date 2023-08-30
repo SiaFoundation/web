@@ -145,6 +145,9 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
         globeImageUrl={`/_next/image?url=${encodeURIComponent(
           getAssetUrl('assets/map.png')
         )}&w=2048&q=50`}
+        bumpImageUrl={`/_next/image?url=${encodeURIComponent(
+          getAssetUrl('assets/earth-topology.png')
+        )}&w=2048&q=70`}
         arcsData={routes}
         atmosphereColor="rgba(30, 169,76, 1)"
         atmosphereAltitude={resolvedTheme === 'dark' ? 0.05 : 0.15}
@@ -178,8 +181,8 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
         pointAltitude={0}
         pointColor={(h: Host) =>
           h.public_key === activeHost.public_key
-            ? 'rgba(102, 255, 0, 1.0)'
-            : 'rgba(102, 255, 0, 0.6)'
+            ? 'rgba(0,255,0,1)'
+            : 'rgba(0,255,0,1)'
         }
         pointRadius={(h: Host) =>
           h.public_key === activeHost.public_key ? 0.6 : 0.2
