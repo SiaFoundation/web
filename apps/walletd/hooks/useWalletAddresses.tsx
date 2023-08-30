@@ -5,8 +5,9 @@ import { useMemo } from 'react'
 type AddressData = {
   id: string
   address: string
-  description: string
-  index: number
+  description?: string
+  publicKey?: string
+  index?: number
   walletId: string
 }
 
@@ -32,6 +33,7 @@ export function useWalletAddresses({ id }: { id: string }) {
         id: address,
         address,
         description: meta.description as string,
+        publicKey: meta.publicKey as string,
         index: meta.index as number,
         walletId: id,
       })

@@ -1,97 +1,79 @@
 import BigNumber from 'bignumber.js'
-import { useEffect, useMemo, useState } from 'react'
-import { toHastings } from '@siafoundation/sia-js'
+import { useMemo, useState } from 'react'
 import {
   Separator,
   Dialog,
   ProgressSteps,
   FormSubmitButton,
 } from '@siafoundation/design-system'
-import { useSendSiacoinGenerateForm } from './Generate'
-import { useSendSiacoinConfirmForm } from './Confirm'
-import { WalletSendSiacoinComplete } from './Complete'
-import { useWallets } from '../../contexts/wallets'
+import { useComposeForm } from './useComposeForm'
+import { useSendForm } from './useSendForm'
+import { Done } from './Done'
+import { useWalletBalance } from '@siafoundation/react-walletd'
 
-export type SendSiacoinDialogParams = {
+export type WalletSendSiacoinLedgerDialogParams = {
   walletId: string
 }
 
-type Step = 'setup' | 'confirm' | 'done'
-
-const fee = toHastings(0.00393)
+type Step = 'compose' | 'send' | 'done'
 
 export type SendData = {
-  seedHash: string
   address: string
   siacoin: BigNumber
+  fee: BigNumber
   includeFee: boolean
 }
 
-export type SendParams = {
-  seed: string
-  address: string
-  siacoin: BigNumber
-}
-
 const emptySendData: SendData = {
-  seedHash: '',
   address: '',
   siacoin: new BigNumber(0),
+  fee: new BigNumber(0),
   includeFee: false,
 }
 
 type Props = {
-  params?: SendSiacoinDialogParams
+  params?: WalletSendSiacoinLedgerDialogParams
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
-  balance?: BigNumber
-  send: (
-    params: SendParams
-  ) => Promise<{ transactionId?: string; error?: string }>
 }
 
-export function SendSiacoinDialog({
+export function WalletSendSiacoinLedgerDialog({
   params,
   trigger,
   open,
   onOpenChange,
-  balance,
-  send,
 }: Props) {
   const { walletId } = params || {}
-  const { dataset } = useWallets()
-  const wallet = dataset?.find((w) => w.id === walletId)
-
-  const [step, setStep] = useState<Step>('setup')
+  const [step, setStep] = useState<Step>('compose')
   const [signedTxnId, setSignedTxnId] = useState<string>()
   const [data, setData] = useState<SendData>(emptySendData)
+  const balance = useWalletBalance({
+    disabled: !walletId,
+    params: {
+      id: walletId,
+    },
+  })
 
-  useEffect(() => {
-    setData((d) => ({
-      ...d,
-      seedHash: wallet?.seedHash,
-    }))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [walletId])
+  const siacoinBalance = useMemo(
+    () => new BigNumber(balance.data?.siacoins || 0),
+    [balance.data]
+  )
 
   // Form for each step
-  const generate = useSendSiacoinGenerateForm({
-    balance,
-    fee,
+  const compose = useComposeForm({
+    balance: siacoinBalance,
     onComplete: (data) => {
       setData((d) => ({
         ...d,
         ...data,
       }))
-      setStep('confirm')
+      setStep('send')
     },
   })
-  const confirm = useSendSiacoinConfirmForm({
+  const send = useSendForm({
     walletId,
-    fee,
     data,
-    send,
     onConfirm: ({ transactionId }) => {
       setSignedTxnId(transactionId)
       setStep('done')
@@ -99,24 +81,24 @@ export function SendSiacoinDialog({
   })
 
   const controls = useMemo(() => {
-    if (step === 'setup') {
+    if (step === 'compose') {
       return {
         submitLabel: 'Generate transaction',
-        form: generate.form,
-        handleSubmit: generate.handleSubmit,
-        reset: generate.reset,
+        form: compose.form,
+        handleSubmit: compose.handleSubmit,
+        reset: compose.reset,
       }
     }
-    if (step === 'confirm') {
+    if (step === 'send') {
       return {
         submitLabel: 'Sign and broadcast transaction',
-        form: confirm.form,
-        handleSubmit: confirm.handleSubmit,
-        reset: confirm.reset,
+        form: send.form,
+        handleSubmit: send.handleSubmit,
+        reset: send.reset,
       }
     }
     return undefined
-  }, [step, generate, confirm])
+  }, [step, compose, send])
 
   return (
     <Dialog
@@ -124,9 +106,10 @@ export function SendSiacoinDialog({
       open={open}
       onOpenChange={(val) => {
         if (!val) {
-          generate.reset()
-          confirm.reset()
-          setStep('setup')
+          compose.reset()
+          send.reset()
+          send.cancel()
+          setStep('compose')
         }
         onOpenChange(val)
       }}
@@ -152,12 +135,12 @@ export function SendSiacoinDialog({
           activeStep={step}
           steps={[
             {
-              id: 'setup',
-              label: 'Setup',
+              id: 'compose',
+              label: 'Compose',
             },
             {
-              id: 'confirm',
-              label: 'Confirm',
+              id: 'send',
+              label: 'Sign & Send',
             },
             {
               id: 'done',
@@ -166,15 +149,9 @@ export function SendSiacoinDialog({
           ]}
         />
         <Separator className="w-full mt-4" />
-        {step === 'setup' && generate.el}
-        {step === 'confirm' && confirm.el}
-        {step === 'done' && (
-          <WalletSendSiacoinComplete
-            data={data}
-            fee={fee}
-            transactionId={signedTxnId}
-          />
-        )}
+        {step === 'compose' && compose.el}
+        {step === 'send' && send.el}
+        {step === 'done' && <Done data={data} transactionId={signedTxnId} />}
       </div>
     </Dialog>
   )

@@ -17,13 +17,6 @@ interface WalletWASM {
     privateKey?: string
     error?: string
   }
-  publicKeyFromSeed: (
-    seed: string,
-    index: number
-  ) => {
-    publicKey?: string
-    error?: string
-  }
   unlockConditionsFromSeed: (
     seed: string,
     index: number
@@ -31,11 +24,18 @@ interface WalletWASM {
     unlockConditions?: UnlockConditions
     error?: string
   }
-  addressFromSeed: (
+  publicKeyAndAddressFromSeed: (
     seed: string,
     index: number
   ) => {
+    publicKey?: string
     address?: string
+    error?: string
+  }
+  encodeTransaction: (
+    txn: string // Transaction
+  ) => {
+    encodedTransaction?: string
     error?: string
   }
   signTransaction: (

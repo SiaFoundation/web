@@ -121,7 +121,10 @@ export function WalletAddLedgerDialog({ trigger, open, onOpenChange }: Props) {
   const addressAdd = useWalletAddressAdd()
 
   const addAddress0 = useCallback(
-    async (walletId: string, address: string) => {
+    async (
+      walletId: string,
+      { publicKey, address }: { publicKey: string; address: string }
+    ) => {
       const response = await addressAdd.put({
         params: {
           id: walletId,
@@ -129,6 +132,7 @@ export function WalletAddLedgerDialog({ trigger, open, onOpenChange }: Props) {
         },
         payload: {
           index: 0,
+          publicKey,
         },
       })
       if (response.error) {
@@ -164,7 +168,10 @@ export function WalletAddLedgerDialog({ trigger, open, onOpenChange }: Props) {
       if (response.error) {
         triggerErrorToast(response.error)
       } else {
-        addAddress0(id, device.address0)
+        addAddress0(id, {
+          publicKey: device.publicKey0,
+          address: device.address0,
+        })
         openDialog('walletLedgerAddressGenerate', {
           walletId: id,
           walletJustCreated: true,

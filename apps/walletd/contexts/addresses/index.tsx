@@ -38,6 +38,7 @@ export function useAddressesMain() {
         address,
         description: meta.description as string,
         index: meta.index as number,
+        publicKey: meta.publicKey as string,
         walletId,
         onClick: () =>
           openDialog('addressUpdate', {

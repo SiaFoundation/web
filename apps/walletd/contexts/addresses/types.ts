@@ -2,6 +2,7 @@ export type AddressData = {
   id: string
   address: string
   description?: string
+  publicKey?: string
   index?: number
   walletId: string
 }

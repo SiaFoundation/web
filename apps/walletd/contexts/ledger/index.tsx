@@ -9,23 +9,11 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { TransportType } from './types'
+import { LedgerDevice, TransportType } from './types'
 
 function useLedgerMain() {
   const [waitingForUser, setWaitingForUser] = useState(false)
-  const [device, setDevice] = useState<{
-    type: TransportType
-    sia: Sia
-    publicKey0?: string
-    address0?: string
-    transport: {
-      forget: () => void
-      deviceModel: {
-        productName: string
-      }
-      _disconnectEmitted: boolean
-    }
-  }>()
+  const [device, setDevice] = useState<LedgerDevice>()
   const [error, setError] = useState<Error>()
 
   const disconnect = useCallback(() => {

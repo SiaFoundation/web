@@ -10,14 +10,14 @@ import {
 import { useWalletAddressAdd } from '@siafoundation/react-walletd'
 import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useDialogFormHelpers } from '../hooks/useDialogFormHelpers'
-import { getWalletWasm } from '../lib/wasm'
-import { useWallets } from '../contexts/wallets'
+import { useDialogFormHelpers } from '../../hooks/useDialogFormHelpers'
+import { getWalletWasm } from '../../lib/wasm'
+import { useWallets } from '../../contexts/wallets'
 import BigNumber from 'bignumber.js'
-import { getFieldMnemonic, MnemonicFieldType } from '../lib/fieldMnemonic'
-import { FieldMnemonic } from './FieldMnemonic'
-import { useWalletCachedSeed } from '../hooks/useWalletCachedSeed'
-import { useWalletAddresses } from '../hooks/useWalletAddresses'
+import { getFieldMnemonic, MnemonicFieldType } from '../../lib/fieldMnemonic'
+import { FieldMnemonic } from '../FieldMnemonic'
+import { useWalletCachedSeed } from '../../hooks/useWalletCachedSeed'
+import { useWalletAddresses } from '../../hooks/useWalletAddresses'
 
 export type WalletAddressesGenerateSeedDialogParams = {
   walletId: string
@@ -83,7 +83,7 @@ export function WalletAddressesGenerateSeedDialog({
 }: Props) {
   const { walletId } = params || {}
   const { lastIndex } = useWalletAddresses({ id: walletId })
-  const { dataset } = useWallets()
+  const { dataset, saveWalletSeed } = useWallets()
   const wallet = dataset?.find((w) => w.id === walletId)
   const nextIndex = lastIndex + 1
   const defaultValues = getDefaultValues(nextIndex)
@@ -129,18 +129,19 @@ export function WalletAddressesGenerateSeedDialog({
       }
       const { seed } = seedResponse
       for (let i = index; i < index + count; i++) {
-        const addrRes = getWalletWasm().addressFromSeed(seed, i)
-        if (addrRes.error) {
+        const pkResponse = getWalletWasm().publicKeyAndAddressFromSeed(seed, i)
+        if (pkResponse.error) {
           triggerErrorToast('Error generating addresses.')
           return
         }
         const response = await addressAdd.put({
           params: {
             id: walletId,
-            addr: addrRes.address,
+            addr: pkResponse.address,
           },
           payload: {
             index: i,
+            publicKey: pkResponse.publicKey,
           },
         })
         if (response.error) {
@@ -161,9 +162,19 @@ export function WalletAddressesGenerateSeedDialog({
       } else {
         triggerSuccessToast(`Successfully generated ${count} addresses.`)
       }
+
+      // if successfully generated an address, cache the seed
+      saveWalletSeed(walletId, seed)
+
       closeAndReset()
     },
-    [getSeedFromCacheOrForm, closeAndReset, addressAdd, walletId]
+    [
+      getSeedFromCacheOrForm,
+      closeAndReset,
+      addressAdd,
+      walletId,
+      saveWalletSeed,
+    ]
   )
 
   const onSubmit = useCallback(() => {

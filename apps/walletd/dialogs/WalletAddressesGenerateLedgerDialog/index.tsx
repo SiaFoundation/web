@@ -75,6 +75,22 @@ function getFields(): ConfigFields<ReturnType<typeof getDefaultValues>, never> {
   }
 }
 
+type AddressMeta = {
+  isNew: boolean
+  address: string
+  publicKey: string
+  index: number
+}
+
+function emptyMeta(index: number) {
+  return {
+    isNew: true,
+    address: '',
+    publicKey: '',
+    index,
+  }
+}
+
 export function WalletAddressesGenerateLedgerDialog({
   params,
   trigger,
@@ -140,11 +156,13 @@ export function WalletAddressesGenerateLedgerDialog({
   }, [form, ledgerError])
 
   // index to address
-  const [indices, setIndicies] = useState<Record<string, string>>({})
+  const [indices, setIndicies] = useState<Record<string, AddressMeta>>({})
 
   useEffect(() => {
     if (open && walletJustCreated) {
-      setIndicies({ '0': '' })
+      setIndicies({
+        '0': emptyMeta(0),
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
@@ -161,7 +179,7 @@ export function WalletAddressesGenerateLedgerDialog({
     ) {
       const existing = newIndices[i]
       if (!existing) {
-        newIndices[i] = undefined
+        newIndices[i] = emptyMeta(i)
       }
     }
     setIndicies(newIndices)
@@ -176,10 +194,22 @@ export function WalletAddressesGenerateLedgerDialog({
   }, [])
 
   const setAddress = useCallback(
-    (index: number, address: string) => {
+    ({
+      index,
+      address,
+      publicKey,
+    }: {
+      index: number
+      address: string
+      publicKey: string
+    }) => {
       setIndicies((i) => {
         const newIndices = { ...i }
-        newIndices[index] = address
+        newIndices[index] = {
+          ...newIndices[index],
+          address,
+          publicKey,
+        }
         return newIndices
       })
     },
@@ -187,16 +217,14 @@ export function WalletAddressesGenerateLedgerDialog({
   )
 
   const indiciesWithAddresses = useMemo(() => {
-    const indiciesWithAddresses: Record<
-      string,
-      { isNew: boolean; address: string; index: number }
-    > = {}
-    for (const [index, address] of Object.entries(indices)) {
+    const indiciesWithAddresses: Record<string, AddressMeta> = {}
+    for (const [index, { address, publicKey }] of Object.entries(indices)) {
       const existing = existingAddresses?.find((a) => a.index === Number(index))
       indiciesWithAddresses[index] = {
         isNew: !existing,
         index: Number(index),
         address: existing?.address || address,
+        publicKey: existing?.publicKey || publicKey,
       }
     }
     return indiciesWithAddresses
@@ -212,7 +240,7 @@ export function WalletAddressesGenerateLedgerDialog({
 
   const saveAddresses = useCallback(async () => {
     const count = newAddresses.length
-    for (const [i, { address, index }] of newAddresses.entries()) {
+    for (const [i, { address, publicKey, index }] of newAddresses.entries()) {
       const response = await addressAdd.put({
         params: {
           id: walletId,
@@ -220,6 +248,7 @@ export function WalletAddressesGenerateLedgerDialog({
         },
         payload: {
           index,
+          publicKey,
         },
       })
       if (response.error) {

@@ -51,9 +51,13 @@ import {
   AddressRemoveDialogParams,
 } from '../dialogs/AddressRemoveDialog'
 import {
-  WalletSendSiacoinDialog,
-  WalletSendSiacoinDialogParams,
-} from '../dialogs/WalletSendSiacoinDialog'
+  WalletSendSiacoinSeedDialog,
+  WalletSendSiacoinSeedDialogParams,
+} from '../dialogs/WalletSendSiacoinSeedDialog'
+import {
+  WalletSendSiacoinLedgerDialog,
+  WalletSendSiacoinLedgerDialogParams,
+} from '../dialogs/WalletSendSiacoinLedgerDialog'
 import {
   WalletUnlockDialog,
   WalletUnlockDialogParams,
@@ -71,7 +75,8 @@ import {
 type DialogParams = {
   cmdk?: void
   settings?: WalletdSettingsDialogParams
-  sendSiacoin?: WalletSendSiacoinDialogParams
+  walletSendSiacoinSeed?: WalletSendSiacoinSeedDialogParams
+  walletSendSiacoinLedger?: WalletSendSiacoinLedgerDialogParams
   transactionDetails?: void
   addressUpdate?: AddressUpdateDialogParams
   addressRemove?: AddressRemoveDialogParams
@@ -250,11 +255,22 @@ export function Dialogs() {
         }
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
-      <WalletSendSiacoinDialog
-        open={dialog === 'sendSiacoin'}
-        params={params['sendSiacoin']}
+      <WalletSendSiacoinSeedDialog
+        open={dialog === 'walletSendSiacoinSeed'}
+        params={params['walletSendSiacoinSeed']}
         onOpenChange={(val) =>
-          val ? openDialog(dialog, params['sendSiacoin']) : closeDialog()
+          val
+            ? openDialog(dialog, params['walletSendSiacoinSeed'])
+            : closeDialog()
+        }
+      />
+      <WalletSendSiacoinLedgerDialog
+        open={dialog === 'walletSendSiacoinLedger'}
+        params={params['walletSendSiacoinLedger']}
+        onOpenChange={(val) =>
+          val
+            ? openDialog(dialog, params['walletSendSiacoinLedger'])
+            : closeDialog()
         }
       />
       <ConfirmDialog
