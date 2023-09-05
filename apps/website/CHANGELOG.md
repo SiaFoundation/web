@@ -1,5 +1,11 @@
 # website
 
+## 0.41.0
+
+### Minor Changes
+
+- fb86b11a: Added map topology and brighter points.
+
 ## 0.40.0
 
 ### Minor Changes

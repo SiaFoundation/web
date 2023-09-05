@@ -1,5 +1,20 @@
 # walletd
 
+## 0.11.0
+
+### Minor Changes
+
+- 0135354f: Wallet seeds now get cached after an address is successfully generated.
+- 0135354f: Ledger and seed wallets should now use the correct fee when sending transactions with or without the include fee option.
+- 46e8450b: walletd now supports Ledger-based wallets.
+- 46e8450b: Ledger wallets now support generating a specific address or a range of addresses via Ledger device.
+- af5b1890: Outputs are now properly released when a transaction fails during signing or broadcast.
+- 45714e2d: The GPU setting now displays the correct device support text.
+- d75e7e26: Fixed an issue with the syncing status staying at 99%.
+- 46e8450b: Addresses can now be deleted from the context menu.
+- 0135354f: Both ledger and seed wallets now save public keys in address metadata, this is especially important to streamline Ledger signing.
+- 46e8450b: Support for connecting Ledger devices over USB, HID or Bluetooth depending on browser support.
+
 ## 0.10.0
 
 ### Minor Changes
