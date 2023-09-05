@@ -135,11 +135,11 @@ export function WalletSendSiacoinSeedDialog({
           steps={[
             {
               id: 'compose',
-              label: 'Setup',
+              label: 'Compose',
             },
             {
               id: 'send',
-              label: 'Confirm',
+              label: 'Send',
             },
             {
               id: 'done',
