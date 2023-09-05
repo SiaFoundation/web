@@ -47,7 +47,7 @@ export function DeviceConnectForm({
 }: {
   shouldVerify?: boolean
 }) {
-  const { device, connect, verify, waitingForUser } = useLedger()
+  const { device, connect, verify, setError, waitingForUser } = useLedger()
   const form = useForm({
     mode: 'all',
     defaultValues,
@@ -63,9 +63,17 @@ export function DeviceConnectForm({
       revalidateOnFocus: false,
     }
   )
+
   useEffect(() => {
     if (supportedTransports.data) {
       form.setValue('transportType', supportedTransports.data[0])
+      if (supportedTransports.data.length === 0) {
+        setError(
+          new Error(
+            'This browser does not support connecting to Ledger devices, please use a different browser.'
+          )
+        )
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [supportedTransports.data])
@@ -147,17 +155,19 @@ export function DeviceConnectForm({
           shouldVerify={shouldVerify}
           title="Connect Ledger..."
           actions={
-            <>
-              <FieldSelect
-                name="transportType"
-                form={form}
-                fields={fields}
-                group={false}
-              />
-              <Button size="small" onClick={runConnect}>
-                Connect
-              </Button>
-            </>
+            supportedTransports.data?.length ? (
+              <>
+                <FieldSelect
+                  name="transportType"
+                  form={form}
+                  fields={fields}
+                  group={false}
+                />
+                <Button size="small" onClick={runConnect}>
+                  Connect
+                </Button>
+              </>
+            ) : null
           }
           details={
             waitingForUser ? (
