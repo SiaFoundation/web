@@ -122,7 +122,6 @@ export function Dialogs() {
       <SettingsDialog
         open={dialog === 'settings'}
         onOpenChange={onOpenChange}
-        showSiaStats={false}
       />
       <AlertsDialog open={dialog === 'alerts'} onOpenChange={onOpenChange} />
       <HostdSendSiacoinDialog />

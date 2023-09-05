@@ -32,7 +32,6 @@ export function WalletdSettingsDialog({ open, onOpenChange }: Props) {
     <SettingsDialog
       open={open}
       onOpenChange={onOpenChange}
-      showSiaStats={false}
       securityEl={
         <Alert>
           <div className="flex flex-col gap-4">

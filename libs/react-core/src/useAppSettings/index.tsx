@@ -91,7 +91,6 @@ const currencyOptions: CurrencyOption[] = [
 export type AppSettings = {
   api: string
   allowCustomApi: boolean
-  siaStats: boolean
   siaCentral: boolean
   password?: string
   currency: CurrencyOption
@@ -107,7 +106,6 @@ export type AppSettings = {
 const defaultSettings: AppSettings = {
   api: '',
   allowCustomApi: false,
-  siaStats: true,
   siaCentral: true,
   password: undefined,
   currency: currencyOptions[0],

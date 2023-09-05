@@ -31,7 +31,7 @@ export function Statsbar() {
       <div className="flex gap-x-20 gap-y-12 justify-start flex-wrap">
         <StatSection
           title="Network"
-          link={webLinks.siaStats}
+          link={webLinks.explore.mainnet}
           target="_blank"
           stats={[
             {

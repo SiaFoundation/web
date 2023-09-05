@@ -14,6 +14,7 @@ export type SiaStatsHostCoordinate = {
   usedstorage: number
 }
 
+/** @deprecated no longer depending on siastats */
 export async function getSiaStatsHostsCoordinates(): AsyncDataSourceResponse<
   SiaStatsHostCoordinate[]
 > {
