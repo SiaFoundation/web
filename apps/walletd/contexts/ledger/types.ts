@@ -1,6 +1,5 @@
 import TransportWebBLE from '@ledgerhq/hw-transport-web-ble'
 import TransportWebHID from '@ledgerhq/hw-transport-webhid'
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import Sia from '@siacentral/ledgerjs-sia'
 
 export type LedgerDevice = {
@@ -29,9 +28,13 @@ export async function getSupportedTransports() {
     TransportWebHID.isSupported().then((supported) =>
       supported ? 'HID' : null
     ),
-    TransportWebUSB.isSupported().then((supported) =>
-      supported ? 'USB' : null
-    ),
+    // USB is not supported by ledger or the sia app.
+    // Attempting to use this transports results in the following error:
+    // No WebUSB interface found for your Ledger device. Please upgrade
+    // firmware or contact techsupport.
+    // TransportWebUSB.isSupported().then((supported) =>
+    //   supported ? 'USB' : null
+    // ),
   ])
 
   return results.filter((t) => t)
