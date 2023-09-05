@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.57.0
+
+### Minor Changes
+
+- 46e8450b: Added FieldLabel and FieldError for custom groups.
+
 ## 0.56.0
 
 ### Minor Changes

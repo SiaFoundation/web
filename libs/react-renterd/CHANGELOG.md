@@ -1,5 +1,11 @@
 # @siafoundation/react-renterd
 
+## 0.7.0
+
+### Minor Changes
+
+- 95c09e0e: Added useAlertsDismiss.
+
 ## 0.6.0
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # renterd
 
+## 0.28.0
+
+### Minor Changes
+
+- 0da88700: Alerts now display a context menu for contract ID values.
+- 45714e2d: The GPU setting now displays the correct device support text.
+- 0da88700: Alerts can now be dismissed, all or one by one.
+
 ## 0.27.0
 
 ### Minor Changes

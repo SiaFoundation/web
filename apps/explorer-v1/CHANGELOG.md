@@ -1,5 +1,11 @@
 # explorer-v1
 
+## 0.6.0
+
+### Minor Changes
+
+- d514dba0: In cases where the navigator returns incomplete/corrupt contract data, the explorer now displays an error message instead of crashing.
+
 ## 0.5.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # hostd
 
+## 0.22.0
+
+### Minor Changes
+
+- 45714e2d: The GPU setting now displays the correct device support text.
+
 ## 0.21.0
 
 ### Minor Changes
