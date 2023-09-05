@@ -24,7 +24,6 @@
     "@changesets/cli": "^2.25.0",
     "@ledgerhq/hw-transport-web-ble": "^6.27.19",
     "@ledgerhq/hw-transport-webhid": "^6.27.19",
-    "@ledgerhq/hw-transport-webusb": "^6.27.19",
     "@mdx-js/loader": "^2.1.1",
     "@mdx-js/react": "^2.1.1",
     "@next/font": "13.1.1",

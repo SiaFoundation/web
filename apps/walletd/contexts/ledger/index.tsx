@@ -1,6 +1,5 @@
 import TransportWebBLE from '@ledgerhq/hw-transport-web-ble'
 import TransportWebHID from '@ledgerhq/hw-transport-webhid'
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import Sia from '@siacentral/ledgerjs-sia'
 import {
   createContext,
@@ -43,12 +42,6 @@ function useLedgerMain() {
           break
         case 'Bluetooth':
           transport = await TransportWebBLE.create()
-          break
-        case 'USB':
-          transport = await TransportWebUSB.openConnected()
-          if (!transport) {
-            transport = await TransportWebUSB.create()
-          }
           break
         default:
           throw new Error(`Unsupported transport method: ${type}`)
