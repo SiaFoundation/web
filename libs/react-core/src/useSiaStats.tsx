@@ -26,6 +26,7 @@ type SiaStatsNetworkStatusGET = {
   used_storage_TB: number
 }
 
+/** @deprecated no longer depending on siastats */
 export function useSiaStatsNetworkStatus(
   args?: HookArgsSwr<void, SiaStatsNetworkStatusGET>
 ) {
@@ -50,6 +51,7 @@ export type SiaStatsHostCoordinate = {
 
 type SiaStatsHostCoordinatesGET = SiaStatsHostCoordinate[]
 
+/** @deprecated no longer depending on siastats */
 export function useSiaStatsHostCoordinates(
   args?: HookArgsSwr<void, SiaStatsHostCoordinatesGET>
 ) {

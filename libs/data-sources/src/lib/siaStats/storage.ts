@@ -2,6 +2,7 @@ import axios from 'axios'
 import { buildErrorResponse500 } from '../error'
 import { AsyncDataSourceResponse } from '../types'
 
+/** @deprecated no longer depending on siastats */
 export async function getSiaStatsStorage(): AsyncDataSourceResponse<
   Record<string, unknown>
 > {

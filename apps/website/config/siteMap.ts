@@ -149,11 +149,11 @@ export const menuSections = [
         title: 'Sia Foundation Explorer',
         newTab: true,
       },
-      {
-        link: webLinks.siaStats,
-        title: 'SiaStats Explorer',
-        newTab: true,
-      },
+      // {
+      //   link: webLinks.siaStats,
+      //   title: 'SiaStats Explorer',
+      //   newTab: true,
+      // },
       {
         link: webLinks.storageStats,
         title: 'Sia Central Host Explorer',

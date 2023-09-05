@@ -13,6 +13,7 @@ type SiaStatsHostsStats = {
   skynetSize: number
 }
 
+/** @deprecated no longer depending on siastats */
 export async function getSiaStatsHostsStats(): AsyncDataSourceResponse<SiaStatsHostsStats> {
   try {
     const response = await axios.get(

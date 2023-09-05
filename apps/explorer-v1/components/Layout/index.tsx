@@ -123,9 +123,9 @@ export function Layout({ title, description, path, children }: Props) {
                       >
                         Ecosystem
                       </Text>
-                      <BottomLink href={webLinks.siaStats} target="_blank">
+                      {/* <BottomLink href={webLinks.siaStats} target="_blank">
                         SiaStats
-                      </BottomLink>
+                      </BottomLink> */}
                       <BottomLink href={webLinks.storageStats} target="_blank">
                         Sia Central Host Browser
                       </BottomLink>
