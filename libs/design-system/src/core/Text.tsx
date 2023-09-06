@@ -4,8 +4,12 @@ import { VariantProps } from '../types'
 
 // // avoid clipping decenders when overflow is hidden
 // padding: '0.14em 0',
-export const textStyles = cva(['inline-block'], {
+export const textStyles = cva([], {
   variants: {
+    display: {
+      default: 'inline-block',
+      none: '',
+    },
     font: {
       mono: 'font-mono',
       sans: 'font-sans',
@@ -79,6 +83,7 @@ export const textStyles = cva(['inline-block'], {
     },
   },
   defaultVariants: {
+    display: 'default',
     weight: 'regular',
     font: 'sans',
     color: 'contrast',

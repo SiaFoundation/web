@@ -16,7 +16,7 @@ type Props = AsyncReturnType<typeof getStaticProps>['props']
 
 const description = ''
 
-export default function TermsOfService({ title, date, source }: Props) {
+export default function PrivacyPolicy({ title, date, source }: Props) {
   return (
     <Layout
       title={title}
@@ -46,7 +46,7 @@ export default function TermsOfService({ title, date, source }: Props) {
   )
 }
 
-const databaseId = 'ef6862a3f8274243be41077fac52b77d'
+const databaseId = 'fad41ea72c9a41eb85564bbfa1c34c70'
 
 export async function getStaticProps() {
   const stats = await getStats()

@@ -3,6 +3,7 @@ import { MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
 import { getCacheValue } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
+import remarkGfm from 'remark-gfm'
 
 const maxAge = getMinutesInSeconds(5)
 
@@ -16,7 +17,11 @@ export async function getPrs() {
           let source: MDXRemoteSerializeResult = null
           try {
             // as md, dont need the mdx components and allows <img> style tags, vs <img />
-            source = await serialize(pr.body, { mdxOptions: { format: 'md' } })
+            source = await serialize(pr.body, {
+              mdxOptions: {
+                remarkPlugins: [remarkGfm],
+              },
+            })
           } catch (e) {
             console.log(e)
           }
