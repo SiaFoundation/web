@@ -72,6 +72,9 @@ export const routes = {
   terms: {
     index: '/terms-of-service',
   },
+  privacy: {
+    index: '/privacy-policy',
+  },
   letter: {
     index: '/letter',
   },

@@ -106,6 +106,7 @@
     "react-router-dom": "6.4.3",
     "react-select": "^5.3.2",
     "regenerator-runtime": "0.13.7",
+    "remark-gfm": "^3.0.1",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.9",
     "rss-parser": "^3.13.0",

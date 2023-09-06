@@ -127,24 +127,22 @@ export default function Grants({
                 title: 'Proposal Requirements',
                 icon: 'ListChecked',
                 children: (
-                  <Ol className="mt-5 -ml-10 md:ml-0 gap-2">
-                    <Li index={1}>
+                  <Ol className="mt-5 -ml-10 md:ml-0 !gap-2">
+                    <Li>
                       Name of organization or individual and project name.
                     </Li>
-                    <Li index={2}>
+                    <Li>
                       Purpose of the grant: who benefits and how the project
                       will serve the Foundation’s mission of user-owned data.
                     </Li>
-                    <Li index={3}>Code contributions must be open source.</Li>
-                    <Li index={4}>
-                      Timeline with measurable objectives and goals.
-                    </Li>
-                    <Li index={5}>
+                    <Li>Code contributions must be open source.</Li>
+                    <Li>Timeline with measurable objectives and goals.</Li>
+                    <Li>
                       Any potential risks that will affect the outcome of the
                       project.
                     </Li>
-                    <Li index={6}>Budget and justification.</Li>
-                    <Li index={7}>
+                    <Li>Budget and justification.</Li>
+                    <Li>
                       Reporting requirements: Progress reports to the
                       foundation/committee and to the community.
                     </Li>
@@ -155,38 +153,34 @@ export default function Grants({
                 title: 'Proposal Process',
                 icon: 'MailAll',
                 children: (
-                  <Ol className="mt-5 -ml-10 md:ml-0 gap-2">
-                    <Li index={1}>
+                  <Ol className="mt-5 -ml-10 md:ml-0 !gap-2">
+                    <Li>
                       Create a proposal with the above requirements in mind.
                     </Li>
-                    <Li index={2}>
+                    <Li>
                       Submit your proposal at{' '}
                       <Link href={webLinks.forumGrants} target="_blank">
                         {webLinks.forumGrants}
                       </Link>
                       .
                     </Li>
-                    <Li index={3}>
+                    <Li>
                       Open discussion will ensue in the comment section from the
                       community.
                     </Li>
-                    <Li
-                      index={4}
-                      subList={
-                        <Ol className="mt-3 gap-1">
-                          <Li>
-                            New proposals, to accept, reject, or request more
-                            info.
-                          </Li>
-                          <Li>Existing grants, to assess their progress.</Li>
-                          <Li>
-                            Newly completed grants, to review their outcomes.
-                          </Li>
-                        </Ol>
-                      }
-                    >
+                    <Li>
                       The Grant Committee convenes every two weeks to review the
                       following:
+                      <Ol className="mt-2 !gap-2">
+                        <Li>
+                          New proposals, to accept, reject, or request more
+                          info.
+                        </Li>
+                        <Li>Existing grants, to assess their progress.</Li>
+                        <Li>
+                          Newly completed grants, to review their outcomes.
+                        </Li>
+                      </Ol>
                     </Li>
                   </Ol>
                 ),
@@ -202,8 +196,8 @@ export default function Grants({
                       following factors while utilizing a scoring matrix to
                       ensure a thorough vetting process.
                     </Paragraph>
-                    <Ol className="mt-6 gap-2">
-                      <Li index={1}>
+                    <Ol className="mt-6 !gap-2">
+                      <Li>
                         <Text weight="semibold">
                           In line with Foundation’s mission:
                         </Text>{' '}
@@ -212,25 +206,25 @@ export default function Grants({
                         consistent with The Sia Foundation’s mission of
                         user-owned data?
                       </Li>
-                      <Li index={2}>
+                      <Li>
                         <Text weight="semibold">Community Impact:</Text> Will
                         the project provide a meaningful volume of services
                         and/or people served in the decentralized cloud storage
                         community (in particular the Sia community)?
                       </Li>
-                      <Li index={3}>
+                      <Li>
                         <Text weight="semibold">
                           Goals, Objectives & Outcome:
                         </Text>{' '}
                         Are there clear goals and objectives written? Are
                         measurable outcomes evident?
                       </Li>
-                      <Li index={4}>
+                      <Li>
                         <Text weight="semibold">Deliverable:</Text> How well
                         does the individual/organization demonstrate the ability
                         to deliver and measure proposed outcomes?
                       </Li>
-                      <Li index={5}>
+                      <Li>
                         <Text weight="semibold">
                           Risks and Technical Feasibility:
                         </Text>{' '}
@@ -238,7 +232,7 @@ export default function Grants({
                         be thoughtful if the risk is high enough to impact the
                         outcome of the project.
                       </Li>
-                      <Li index={6}>
+                      <Li>
                         <Text weight="semibold">Budget Justification:</Text> How
                         well does the applicant justify the budget?
                       </Li>
@@ -250,7 +244,7 @@ export default function Grants({
                 title: 'Grant Committee',
                 icon: 'EventsAlt',
                 children: (
-                  <Ol className="mt-5 -ml-10 md:ml-0 gap-2">
+                  <Ol className="mt-5 -ml-10 md:ml-0 !gap-2">
                     {grantCommittee.map(({ name }) => (
                       <Li key={name}>{name}</Li>
                     ))}

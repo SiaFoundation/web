@@ -1,17 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
-import { Text } from './Text'
-import {
-  DotMark16,
-  Number_132,
-  Number_232,
-  Number_332,
-  Number_432,
-  Number_532,
-  Number_632,
-  Number_732,
-} from '../icons/carbon'
+import { Text, textStyles } from './Text'
 import React from 'react'
-import { Paragraph } from './Paragraph'
 import { cx } from 'class-variance-authority'
 
 type Props = {
@@ -20,57 +9,56 @@ type Props = {
 }
 
 export function Ol({ children, className }: Props) {
-  return <ol className={cx('flex flex-col p-0', className)}>{children}</ol>
+  return (
+    <ol className={cx('list-decimal flex flex-col pl-4 py-1 gap-1', className)}>
+      {children}
+    </ol>
+  )
 }
 
 export function Ul({ children, className }: Props) {
-  return <ul className={cx('flex flex-col p-0', className)}>{children}</ul>
+  return (
+    <ul className={cx('list-disc flex flex-col pl-4 py-1 gap-1', className)}>
+      {children}
+    </ul>
+  )
 }
 
-const numMap: Record<number, React.ReactNode> = {
-  1: <Number_132 />,
-  2: <Number_232 />,
-  3: <Number_332 />,
-  4: <Number_432 />,
-  5: <Number_532 />,
-  6: <Number_632 />,
-  7: <Number_732 />,
-}
-
-type LiProps = {
-  children: React.ReactNode
-  subList?: React.ReactNode
-  className?: string
-  index?: number
-  size?: React.ComponentProps<typeof Paragraph>['size']
-  color?: React.ComponentProps<typeof Paragraph>['color']
-}
+type LiProps = React.ComponentProps<typeof Text>
 
 export function Li({
   children,
-  index = 0,
   size = '16',
-  subList,
   className,
-  color = 'contrast',
+  color = 'subtle',
+  scaleSize,
+  font,
+  weight,
+  noWrap,
+  ellipsis,
+  underline,
 }: LiProps) {
-  const numEl = numMap[index]
-
   return (
-    <li className={cx('flex items-start gap-1', className)}>
-      <div className="flex relative w-6 h-8 top-[-4px] md:top-[-2px]">
-        <div className="flex absolute w-full h-full items-center justify-center">
-          <Text color={color}>
-            {numEl || <DotMark16 className="scale-50" />}
-          </Text>
-        </div>
-      </div>
-      <div className="flex-1">
-        <Paragraph color={color} size={size}>
-          {children}
-        </Paragraph>
-        {subList}
-      </div>
+    <li
+      className={cx(
+        textStyles({
+          display: 'none',
+          scaleSize,
+          size,
+          font,
+          color,
+          weight,
+          noWrap,
+          ellipsis,
+          underline,
+        }),
+        // The className removes vertical padding from p tags, this was added
+        // because when Li is used in mdx rendering there is always a nested p tag
+        '[&>p]:!py-0',
+        className
+      )}
+    >
+      {children}
     </li>
   )
 }
