@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area'
 import { cx } from 'class-variance-authority'

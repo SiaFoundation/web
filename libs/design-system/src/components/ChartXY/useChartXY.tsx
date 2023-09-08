@@ -1,3 +1,5 @@
+'use client'
+
 import { useCallback, useMemo, useState } from 'react'
 import { AnimationTrajectory } from '@visx/react-spring/lib/types'
 import { GlyphCross, GlyphDot, GlyphStar } from '@visx/glyph'

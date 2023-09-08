@@ -17,12 +17,12 @@ export function NavbarSite({ appName, homeHref, children }: Props) {
           <div className="relative z-10 hidden sm:flex">
             <Link href={homeHref} underline="none">
               <div className="flex items-center gap-1.5 mr-2">
-                <Logo size={40} />
+                <Logo size={35} />
                 {appName && (
                   <Heading
                     font="mono"
                     size="20"
-                    className="hidden pl-0 md:block"
+                    className="hidden pl-0 md:block tracking-tight"
                   >
                     {appName}
                   </Heading>

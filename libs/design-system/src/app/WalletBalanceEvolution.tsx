@@ -1,3 +1,5 @@
+'use client'
+
 import { useMemo } from 'react'
 import { ChartXY, Chart } from '../components/ChartXY'
 import { humanSiacoin } from '@siafoundation/sia-js'

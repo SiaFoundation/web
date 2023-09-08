@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { AreaClosed } from '@visx/shape'
 import { Group } from '@visx/group'

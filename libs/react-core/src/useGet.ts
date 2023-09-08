@@ -1,3 +1,5 @@
+'use client'
+
 import axios from 'axios'
 import { useMemo } from 'react'
 import useSWR from 'swr'

@@ -1,3 +1,5 @@
+'use client'
+
 import { Text } from '../core/Text'
 import { Button } from '../core/Button'
 import { Link } from '../core/Link'
@@ -14,6 +16,7 @@ type Props = {
   label?: string
   href?: string
   size?: React.ComponentProps<typeof Text>['size']
+  weight?: React.ComponentProps<typeof Text>['weight']
   scaleSize?: React.ComponentProps<typeof Text>['scaleSize']
   maxLength?: number
   color?: React.ComponentProps<typeof Text>['color']
@@ -29,6 +32,7 @@ export function ValueCopyable({
   maxLength: customMaxLength,
   size,
   scaleSize,
+  weight,
   color = 'contrast',
   className,
 }: Props) {
@@ -50,12 +54,19 @@ export function ValueCopyable({
           size={size}
           scaleSize={scaleSize}
           color={color}
+          weight={weight}
           ellipsis
         >
           {text}
         </Link>
       ) : (
-        <Text size={size} scaleSize={scaleSize} color={color} ellipsis>
+        <Text
+          size={size}
+          scaleSize={scaleSize}
+          color={color}
+          weight={weight}
+          ellipsis
+        >
           {text}
         </Text>
       )}

@@ -1,3 +1,5 @@
+'use client'
+
 import { Text } from '../core/Text'
 import { Tooltip } from '../core/Tooltip'
 import { humanNumber } from '@siafoundation/sia-js'

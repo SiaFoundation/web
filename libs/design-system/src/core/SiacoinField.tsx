@@ -1,8 +1,7 @@
+'use client'
+
 import { BaseNumberField } from './BaseNumberField'
-import {
-  useAppSettings,
-  useSiaCentralMarketExchangeRate,
-} from '@siafoundation/react-core'
+import { useAppSettings } from '@siafoundation/react-core'
 import {
   forwardRef,
   Ref,
@@ -14,6 +13,7 @@ import {
 import BigNumber from 'bignumber.js'
 import { cx } from 'class-variance-authority'
 import { toFixedMax } from '../lib/numbers'
+import { useSiaCentralExchangeRates } from '@siafoundation/react-sia-central'
 
 type Props = Omit<
   React.ComponentProps<typeof BaseNumberField>,
@@ -56,7 +56,7 @@ export const SiacoinField = forwardRef(function SiacoinField(
     [_externalSc]
   )
   const { settings } = useAppSettings()
-  const rates = useSiaCentralMarketExchangeRate({
+  const rates = useSiaCentralExchangeRates({
     config: {
       swr: {
         revalidateOnFocus: false,

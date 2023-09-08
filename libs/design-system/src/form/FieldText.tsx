@@ -9,7 +9,9 @@ type Props<Values extends FieldValues, Categories extends string> = {
   fields: ConfigFields<Values, Categories>
   size?: React.ComponentProps<typeof TextField>['size']
   autoComplete?: React.ComponentProps<typeof TextField>['autoComplete']
+  spellCheck?: React.ComponentProps<typeof TextField>['spellCheck']
   group?: boolean
+  state?: boolean
 }
 
 export function FieldText<
@@ -21,6 +23,8 @@ export function FieldText<
   fields,
   size = 'small',
   autoComplete,
+  spellCheck,
+  state = true,
   group = true,
 }: Props<Values, Categories>) {
   const field = fields[name]
@@ -38,12 +42,15 @@ export function FieldText<
       autoComplete={autoComplete}
       type={field.type}
       readOnly={field.readOnly}
+      spellCheck={spellCheck}
       onClick={field.onClick}
       state={
-        error
-          ? 'invalid'
-          : form.formState.dirtyFields[name]
-          ? 'valid'
+        state
+          ? error
+            ? 'invalid'
+            : form.formState.dirtyFields[name]
+            ? 'valid'
+            : 'default'
           : 'default'
       }
       onChange={onChange}

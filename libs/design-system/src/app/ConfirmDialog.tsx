@@ -1,3 +1,5 @@
+'use client'
+
 import { Dialog } from '../core/Dialog'
 import { FormSubmitButton } from '../components/Form'
 import { useCallback } from 'react'

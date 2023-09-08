@@ -1,3 +1,5 @@
+'use client'
+
 import { Paragraph } from '../core/Paragraph'
 import { TextField } from '../core/TextField'
 import { Button } from '../core/Button'

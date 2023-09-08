@@ -1,5 +1,5 @@
 const Dotenv = require('dotenv-webpack')
-const withNx = require('@nrwl/next/plugins/with-nx')
+const { composePlugins, withNx } = require('@nx/next')
 
 // MDX support
 const withMDX = require('@next/mdx')({
@@ -7,7 +7,7 @@ const withMDX = require('@next/mdx')({
 })
 
 /**
- * @type {import('@nrwl/next/plugins/with-nx').WithNxOptions}
+ * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
   // Use downstream webserver compression in production
@@ -43,4 +43,6 @@ const nextConfig = {
   },
 }
 
-module.exports = withMDX(withNx(nextConfig))
+const plugins = [withMDX, withNx]
+
+module.exports = composePlugins(...plugins)(nextConfig)

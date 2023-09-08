@@ -1,3 +1,5 @@
+'use client'
+
 import { useMemo } from 'react'
 import { mutate as swrMutate, MutatorCallback, MutatorOptions } from 'swr'
 import { getPathFromKey } from './request'

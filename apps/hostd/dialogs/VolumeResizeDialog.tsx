@@ -54,7 +54,7 @@ function getFields(
       validation: {
         required: 'required',
         validate: {
-          between: (value) => {
+          between: (value: number) => {
             const error = `Must be between ${humanBytes(
               GBToBytes(minSizeGB)
             )} and ${humanBytes(GBToBytes(maxSizeGB), { fixed: 3 })}`

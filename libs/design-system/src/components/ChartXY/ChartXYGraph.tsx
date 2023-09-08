@@ -1,3 +1,5 @@
+'use client'
+
 import { Fragment } from 'react'
 import { LinearGradient } from '@visx/gradient'
 import { Text } from '../../core/Text'

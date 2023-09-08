@@ -1,3 +1,5 @@
+'use client'
+
 import { Cache, SWRConfig as BaseSWRConfig } from 'swr'
 import { WorkflowsProvider } from './workflows'
 

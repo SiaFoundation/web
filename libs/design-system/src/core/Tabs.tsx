@@ -1,3 +1,5 @@
+'use client'
+
 import { cx } from 'class-variance-authority'
 import React from 'react'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
@@ -40,6 +42,7 @@ export const TabsTrigger = React.forwardRef<
   return (
     <TabsPrimitive.Trigger
       ref={ref}
+      type="button"
       className={cx(
         'px-10 h-12',
         'flex-1 flex items-center justify-center',
@@ -51,7 +54,7 @@ export const TabsTrigger = React.forwardRef<
         'border-transparent',
         'data-[state=active]:text-accent-1100 data-[state=active]:dark:text-accentdark-1100',
         'data-[state=active]:border-green-600 data-[state=active]:dark:border-green-500',
-        textStyles({ font, size, weight }),
+        textStyles({ font, size, weight, ellipsis: true }),
         className
       )}
       {...props}

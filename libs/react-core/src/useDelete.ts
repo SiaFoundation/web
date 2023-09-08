@@ -1,3 +1,5 @@
+'use client'
+
 import axios from 'axios'
 import { useSWRConfig } from 'swr'
 import { useWorkflows } from './workflows'

@@ -34,7 +34,6 @@ import {
   transformUpUploadPacking,
 } from './transform'
 import { useForm } from 'react-hook-form'
-import { useSiaCentralHostsNetworkAverages } from '@siafoundation/react-core'
 import { toSiacoins } from '@siafoundation/sia-js'
 import { useContractSetSettings } from '../../hooks/useContractSetSettings'
 import { useGougingSettings } from '../../hooks/useGougingSettings'
@@ -45,6 +44,7 @@ import {
   useConfigDisplayOptions,
 } from '../../hooks/useConfigDisplayOptions'
 import { useUploadPackingSettings } from '../../hooks/useUploadPackingSettings'
+import { useSiaCentralHostsNetworkAverages } from '@siafoundation/react-sia-central'
 
 export function Config() {
   const { openDialog } = useDialog()

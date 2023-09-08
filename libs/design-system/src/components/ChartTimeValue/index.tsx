@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useMemo, useCallback, useState, useRef, useEffect } from 'react'
 import { Line, Bar } from '@visx/shape'
 import { GridColumns, GridRows } from '@visx/grid'
@@ -153,7 +155,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
       if (selectedDataset.dataset.length > 1) {
         return selectedDataset.dataset
       }
-      const paddedDataset = []
+      const paddedDataset: Point[] = []
       const startTime = selectedDataset.dataset.length
         ? selectedDataset.dataset[0].timestamp
         : new Date().getTime()

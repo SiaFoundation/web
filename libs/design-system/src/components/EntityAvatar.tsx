@@ -1,32 +1,43 @@
+'use client'
+
 import { Avatar } from '../core/Avatar'
 import { Link } from '../core/Link'
 import { Tooltip } from '../core/Tooltip'
-import {
-  EntityType,
-  getEntityTypeInitials,
-  getEntityTypeLabel,
-} from '../lib/entityTypes'
+import { EntityType, getEntityTypeLabel } from '../lib/entityTypes'
 
 type Props = {
   initials?: string
   type?: EntityType
   label?: string
   href?: string
+  src?: string
   shape?: 'square' | 'circle'
 }
 
-export function EntityAvatar({ type, label, initials, href, shape }: Props) {
+export function EntityAvatar({
+  type,
+  label,
+  initials,
+  href,
+  src,
+  shape,
+}: Props) {
   const avatarEl = (
     <Avatar
       interactive={!!href}
-      fallback={initials || (type && getEntityTypeInitials(type))}
+      fallback={initials || (type && initializeWords(type || label || ''))}
+      src={src}
       shape={
         shape ||
         (!type || type === 'address' || type === 'block' ? 'square' : 'circle')
       }
     />
   )
-  const linkEl = href && <Link href={href}>{avatarEl}</Link>
+  const linkEl = href && (
+    <Link href={href} underline="none">
+      {avatarEl}
+    </Link>
+  )
   const el = linkEl || avatarEl
 
   if (type) {
@@ -38,4 +49,11 @@ export function EntityAvatar({ type, label, initials, href, shape }: Props) {
   }
 
   return el
+}
+
+function initializeWords(str: string) {
+  return str
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase)
+    .join('')
 }

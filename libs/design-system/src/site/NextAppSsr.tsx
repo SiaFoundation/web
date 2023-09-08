@@ -1,3 +1,5 @@
+'use client'
+
 import { TooltipProvider } from '../hooks/tooltip'
 import { Toaster } from '../lib/toast'
 import { AppProps } from 'next/app'

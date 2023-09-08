@@ -1,6 +1,6 @@
 const plugin = require('tailwindcss/plugin')
 const { fontFamily } = require('tailwindcss/defaultTheme')
-const { colors } = require('./colors')
+const { colors } = require('./theme-colors')
 
 module.exports = {
   darkMode: 'class',

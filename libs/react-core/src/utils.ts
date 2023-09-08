@@ -1,3 +1,5 @@
+'use client'
+
 import { mutate } from 'swr'
 
 export function keyOrNull(name: string | null, disabled?: boolean) {

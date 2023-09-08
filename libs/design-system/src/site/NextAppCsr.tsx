@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useState } from 'react'
 import { ThemeProvider } from 'next-themes'
 import { TooltipProvider } from '../hooks/tooltip'

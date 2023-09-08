@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { Paragraph } from './Paragraph'
@@ -7,11 +9,14 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useOpen } from '../hooks/useOpen'
 import { rootClasses } from '../config/css'
 
-type TooltipProps = React.ComponentProps<typeof TooltipPrimitive.Root> &
-  React.ComponentProps<typeof TooltipPrimitive.Content> & {
-    children: React.ReactElement
-    content: React.ReactNode
-  } & React.ComponentProps<typeof TooltipPrimitive.Content>
+type TooltipProps = Omit<
+  React.ComponentProps<typeof TooltipPrimitive.Root> &
+    React.ComponentProps<typeof TooltipPrimitive.Content>,
+  'content'
+> & {
+  children: React.ReactElement
+  content: React.ReactNode
+}
 
 const variants = {
   show: {

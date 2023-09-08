@@ -2,16 +2,14 @@ import { useEffect, useRef, useCallback, useMemo } from 'react'
 import { GlobeMethods } from 'react-globe.gl'
 import { getHostLabel } from './utils'
 import { useElementSize } from 'usehooks-ts'
-import {
-  useSiaCentralMarketExchangeRate,
-  useTryUntil,
-} from '@siafoundation/react-core'
+import { useTryUntil } from '@siafoundation/react-core'
 import earthDarkContrast from '../../../assets/earth-dark-contrast.png'
 import earthTopology from '../../../assets/earth-topology.png'
 import { GlobeDyn } from './GlobeDyn'
 import { HostDataWithLocation } from '../../../contexts/hosts/types'
 import BigNumber from 'bignumber.js'
 import { getHostStatus } from '../../../contexts/hosts/status'
+import { useSiaCentralExchangeRates } from '@siafoundation/react-sia-central'
 
 export type Commands = {
   moveToLocation: (
@@ -45,7 +43,7 @@ export function Globe({
   onHostClick,
   onHostHover,
 }: Props) {
-  const rates = useSiaCentralMarketExchangeRate({
+  const rates = useSiaCentralExchangeRates({
     config: {
       swr: {
         revalidateOnFocus: false,

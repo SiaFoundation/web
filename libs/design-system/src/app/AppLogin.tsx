@@ -1,3 +1,5 @@
+'use client'
+
 import { useAppSettings } from '@siafoundation/react-core'
 import { useRouter } from 'next/router'
 import axios, { AxiosError } from 'axios'

@@ -1,3 +1,5 @@
+'use client'
+
 import { CheckmarkOutline16, CloseOutline16 } from '../icons/carbon'
 import toast, {
   Renderable,

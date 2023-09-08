@@ -1,7 +1,14 @@
 import { Transaction } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 
-export type EntityType = 'transaction' | 'block' | 'output' | 'address' | 'ip'
+export type EntityType =
+  | 'contract'
+  | 'transaction'
+  | 'block'
+  | 'output'
+  | 'address'
+  | 'ip'
+  | 'contract'
 
 export type TxType =
   | 'siacoin'
@@ -103,6 +110,7 @@ export function getTransactionType(
 
 const entityTypeMap: Record<EntityType, string> = {
   transaction: 'transaction',
+  contract: 'contract',
   block: 'block',
   output: 'output',
   address: 'address',
@@ -128,6 +136,7 @@ const txTypeMap: Record<TxType, string> = {
 
 const entityTypeInitialsMap: Record<EntityType, string> = {
   block: 'Bk',
+  contract: 'Ct',
   transaction: 'Tx',
   output: 'O',
   address: 'A',
@@ -140,8 +149,4 @@ export function getEntityTypeLabel(type?: EntityType): string | undefined {
 
 export function getTxTypeLabel(type?: TxType): string | undefined {
   return type ? txTypeMap[type] : undefined
-}
-
-export function getEntityTypeInitials(type?: EntityType): string | undefined {
-  return type ? entityTypeInitialsMap[type] : undefined
 }

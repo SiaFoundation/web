@@ -1,10 +1,7 @@
-import {
-  CurrencyOption,
-  useAppSettings,
-  useSiaCentralMarketExchangeRate,
-} from '@siafoundation/react-core'
+import { CurrencyOption, useAppSettings } from '@siafoundation/react-core'
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
+import { useSiaCentralExchangeRates } from '@siafoundation/react-sia-central'
 
 type Props = {
   sc: BigNumber
@@ -17,7 +14,7 @@ export function useSiacoinFiat({ sc }: Props): {
   currency?: CurrencyOption
 } {
   const { settings } = useAppSettings()
-  const rates = useSiaCentralMarketExchangeRate({
+  const rates = useSiaCentralExchangeRates({
     config: {
       swr: {
         revalidateOnFocus: false,
