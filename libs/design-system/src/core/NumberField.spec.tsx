@@ -5,6 +5,14 @@ import { fireEvent, render, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useState } from 'react'
 
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn().mockReturnValue({
+    query: {},
+    push: jest.fn(),
+  }),
+  usePathname: jest.fn().mockReturnValue('/some-route'),
+}))
+
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockReturnValue({
     query: {},

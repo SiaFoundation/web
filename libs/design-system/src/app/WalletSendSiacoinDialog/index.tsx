@@ -1,3 +1,5 @@
+'use client'
+
 import BigNumber from 'bignumber.js'
 import { useMemo, useState } from 'react'
 import { toHastings } from '@siafoundation/sia-js'

@@ -1,3 +1,5 @@
+'use client'
+
 import { Paragraph } from '../core/Paragraph'
 import { triggerToast } from '../lib/toast'
 import {

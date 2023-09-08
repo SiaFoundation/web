@@ -13,7 +13,6 @@ import {
   useEstimatedNetworkBlockHeight,
 } from '@siafoundation/react-renterd'
 import { createContext, useContext, useMemo } from 'react'
-import { useSiaCentralHosts } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 import {
   ContractData,
@@ -22,6 +21,7 @@ import {
   sortOptions,
 } from './types'
 import { columns } from './columns'
+import { useSiaCentralHosts } from '@siafoundation/react-sia-central'
 
 const defaultLimit = 50
 

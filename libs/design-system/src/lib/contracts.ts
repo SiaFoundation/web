@@ -39,7 +39,7 @@ export function getContractsTimeRangeBlockHeight(
   range.startHeight = range.startHeight - daysToBlocks(5)
 
   // calculate points with timestamps for graphing
-  const allDates = []
+  const allDates: number[] = []
 
   let current = range.startHeight
   while (current <= range.endHeight) {

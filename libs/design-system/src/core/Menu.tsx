@@ -1,3 +1,5 @@
+'use client'
+
 import { cx } from 'class-variance-authority'
 import * as SeparatorPrimitive from '@radix-ui/react-separator'
 import React from 'react'

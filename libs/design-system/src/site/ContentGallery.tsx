@@ -1,3 +1,5 @@
+'use client'
+
 import { cx } from 'class-variance-authority'
 import { uniq } from 'lodash'
 import { useRouter } from 'next/router'

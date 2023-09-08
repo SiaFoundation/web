@@ -14,12 +14,6 @@ User interfaces for the Sia software. The latest Sia software takes a modular ap
 
 The [`renterd`](https://github.com/siafoundation/renterd) user interface, focused on renting functionality.
 
-### [explorer-v1](apps/explorer-v1)
-
-![stability-mature](https://img.shields.io/badge/stability-mature-008000.svg)
-
-The `explorer-v1` user interface, a Sia blockchain explorer interface based on [Navigator](https://github.com/hakkane84/navigator-sia). Powers [explore.sia.tech](https://explore.sia.tech) and [zen.sia.tech](https://zen.sia.tech).
-
 ### [hostd](apps/hostd)
 
 ![stability-beta](https://img.shields.io/badge/stability-beta-yellow.svg)
@@ -31,6 +25,12 @@ The [`hostd`](https://github.com/siafoundation/hostd) user interface, focused on
 ![stability-alpha](https://img.shields.io/badge/stability-alpha-orange.svg)
 
 The [`walletd`](https://github.com/siafoundation/walletd) user interface, includes a wallet with support for hot, cold, and hardware wallets.
+
+### [explorer](apps/explorer)
+
+![stability-mature](https://img.shields.io/badge/stability-mature-008000.svg)
+
+The `explorer` user interface, a Sia blockchain explorer interface that powers [explore.sia.tech](https://explore.sia.tech) and [zen.sia.tech](https://zen.sia.tech).
 
 ## Libraries
 
@@ -44,6 +44,8 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 - [@siafoundation/react-renterd](libs/react-renterd) - React hooks for interacting with `renterd`.
 - [@siafoundation/react-hostd](libs/react-hostd) - React hooks for interacting with `hostd`.
 - [@siafoundation/react-walletd](libs/react-walletd) - React hooks for interacting with `walletd`.
+- [@siafoundation/react-sia-central](libs/react-sia-central) - React hooks for interacting with the Sia Central API.
+- [@siafoundation/sia-central](libs/sia-central) - Methods and types for interacting with the Sia Central API.
 - [@siafoundation/sia-js](libs/sia-js) - Core Sia types and library methods for v1 `siad`.
 - [@siafoundation/sia-nodejs](libs/sia-nodejs) - Sia NodeJS client for controlling a v1 `siad`.
 - [@siafoundation/design-system](libs/design-system) - React-based design system used across Sia apps and websites.

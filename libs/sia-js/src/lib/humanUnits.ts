@@ -118,7 +118,7 @@ export function humanDate(
   t: Date | string | number,
   options?: Intl.DateTimeFormatOptions
 ) {
-  let language = undefined
+  let language: string | undefined = undefined
   if (typeof window !== 'undefined') {
     language = navigator.language
   }

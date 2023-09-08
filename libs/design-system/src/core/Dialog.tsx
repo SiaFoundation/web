@@ -1,3 +1,5 @@
+'use client'
+
 import { AnimatePresence, motion } from 'framer-motion'
 import { cva, cx } from 'class-variance-authority'
 import { panelStyles } from './Panel'

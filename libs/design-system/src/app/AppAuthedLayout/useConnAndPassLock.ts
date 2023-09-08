@@ -1,3 +1,5 @@
+'use client'
+
 import { useAppSettings } from '@siafoundation/react-core'
 import { NextRouter, useRouter } from 'next/router'
 import { useEffect } from 'react'

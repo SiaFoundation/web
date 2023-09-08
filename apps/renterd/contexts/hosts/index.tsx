@@ -33,8 +33,9 @@ import { columns } from './columns'
 import { useContracts } from '../contracts'
 import { useDataset } from './dataset'
 import { useApp } from '../app'
-import { useAppSettings, useSiaCentralHosts } from '@siafoundation/react-core'
+import { useAppSettings } from '@siafoundation/react-core'
 import { Commands, emptyCommands } from '../../components/Hosts/HostMap/Globe'
+import { useSiaCentralHosts } from '@siafoundation/react-sia-central'
 
 const defaultLimit = 50
 

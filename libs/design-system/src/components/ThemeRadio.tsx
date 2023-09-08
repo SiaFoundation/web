@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { useTheme } from 'next-themes'
 import { Asleep16, Awake16, Screen16 } from '../icons/carbon'

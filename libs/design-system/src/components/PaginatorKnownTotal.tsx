@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from '../core/Button'
 import { ControlGroup } from '../core/ControlGroup'
 import {

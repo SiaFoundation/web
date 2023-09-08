@@ -1,4 +1,4 @@
-const { createGlobPatternsForDependencies } = require('@nrwl/react/tailwind')
+const { createGlobPatternsForDependencies } = require('@nx/react/tailwind')
 const { join } = require('path')
 
 // This file provides tailwind intellisense within design-system src files.

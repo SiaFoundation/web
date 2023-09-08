@@ -5,14 +5,14 @@
   "projectType": "library",
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/sia-nodejs/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/sia-nodejs"],
       "options": {
         "jestConfig": "libs/sia-nodejs/jest.config.ts",
@@ -20,14 +20,15 @@
       }
     },
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/sia-nodejs",
         "tsConfig": "libs/sia-nodejs/tsconfig.lib.json",
         "packageJson": "libs/sia-nodejs/package.json",
         "main": "libs/sia-nodejs/src/index.ts",
-        "assets": ["libs/sia-nodejs/*.md"]
+        "assets": ["libs/sia-nodejs/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true
       },
       "configurations": {
         "ci": {

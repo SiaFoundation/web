@@ -16,14 +16,14 @@ module.exports = {
       args: 'run crons:serve:production',
     },
     {
-      name: 'sia-explorer-v1',
+      name: 'sia-explorer',
       script: 'nx',
-      args: 'run explorer-v1:serve:production',
+      args: 'run explorer:serve:production',
     },
     {
-      name: 'sia-explorer-v1-testnet',
+      name: 'sia-explorer-testnet',
       script: 'nx',
-      args: 'run explorer-v1:serve:production-testnet',
+      args: 'run explorer:serve:production-testnet',
     },
     {
       name: 'sia-renter',

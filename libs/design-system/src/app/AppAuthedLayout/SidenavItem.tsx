@@ -1,7 +1,9 @@
+'use client'
+
 import { Button } from '../../core/Button'
 import { Link } from '../../core/Link'
 import { Tooltip } from '../../core/Tooltip'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 
 type Props = {
   title: string
@@ -11,12 +13,9 @@ type Props = {
 }
 
 export function SidenavItem({ title, children, route, onClick }: Props) {
-  const router = useRouter()
+  const pathname = usePathname()
   const state =
-    route &&
-    (route === '/'
-      ? router.pathname === route
-      : router.pathname.startsWith(route))
+    route && (route === '/' ? pathname === route : pathname.startsWith(route))
 
   if (!route) {
     return (

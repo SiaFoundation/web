@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useEffect } from 'react'
 
 export function useTryUntil(fn: () => boolean, interval = 1000) {

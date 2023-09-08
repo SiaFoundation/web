@@ -10,7 +10,7 @@ import {
 } from '@siafoundation/react-renterd'
 import { ContractData } from '../contracts/types'
 import { useApp } from '../app'
-import { SiaCentralHost } from '@siafoundation/react-core'
+import { SiaCentralHost } from '@siafoundation/sia-central'
 
 export function useDataset({
   autopilotStatus,

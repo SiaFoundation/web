@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
 import { cva, cx } from 'class-variance-authority'
@@ -8,6 +10,7 @@ const avatarStyles = cva(
     'items-center justify-center align-middle flex flex-shrink-0 relative',
     'overflow-hidden select-none outline-none',
     'font-sans font-medium text-sm',
+    'border',
   ],
   {
     variants: {
@@ -15,11 +18,18 @@ const avatarStyles = cva(
         '1': 'w-6 h-6',
         '2': 'w-12 h-12',
         '3': 'w-16 h-16',
+        '4': 'w-28 h-28',
       },
       variant: {
         filter: 'bg-transparent',
-        hiContrast: 'bg-gray-900 dark:bg-white text-white dark:text-gray-1100',
-        gray: 'bg-gray-500 dark:bg-gray-800 text-gray-1100 dark:text-white',
+        hiContrast: [
+          'bg-gray-900 dark:bg-white text-white dark:text-gray-1100',
+          'border-gray-900 dark:border-white text-white dark:text-gray-1100',
+        ],
+        gray: [
+          'bg-gray-500 dark:bg-gray-800 text-gray-1100 dark:text-white',
+          'border-gray-500 dark:border-gray-800 text-gray-1100 dark:text-white',
+        ],
       },
       shape: {
         square: 'rounded',
@@ -46,6 +56,7 @@ const fallbackStyles = cva('uppercase', {
       '1': 'text-sm',
       '2': 'text-base',
       '3': 'text-lg',
+      '4': 'text-lg',
     },
   },
   defaultVariants: {

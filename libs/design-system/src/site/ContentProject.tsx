@@ -1,3 +1,5 @@
+'use client'
+
 import { Link } from '../core/Link'
 import { Text } from '../core/Text'
 import { Paragraph } from '../core/Paragraph'

@@ -1,3 +1,5 @@
+'use client'
+
 import { Option, Select } from '../core/Select'
 import { Text } from '../core/Text'
 import { DatumCard } from '../components/DatumCard'

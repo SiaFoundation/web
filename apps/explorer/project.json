@@ -1,0 +1,93 @@
+{
+  "name": "explorer",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/explorer",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/explorer",
+        "postcssConfig": "apps/website/postcss.config.js",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "libs/design-system/src/public/",
+            "output": "/"
+          }
+        ]
+      },
+      "configurations": {
+        "development": {},
+        "development-testnet": {
+          "outputPath": "dist/apps/explorer-testnet",
+          "fileReplacements": [
+            {
+              "replace": "apps/explorer/config/index.ts",
+              "with": "apps/explorer/config/testnet.ts"
+            }
+          ]
+        },
+        "production": {},
+        "production-testnet": {
+          "outputPath": "dist/apps/explorer-testnet",
+          "fileReplacements": [
+            {
+              "replace": "apps/explorer/config/index.ts",
+              "with": "apps/explorer/config/testnet.ts"
+            }
+          ]
+        },
+        "ci": {
+          "outputPath": "apps/explorer/dist"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "explorer:build",
+        "port": 3003
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "explorer:build:development",
+          "dev": true
+        },
+        "development-testnet": {
+          "buildTarget": "explorer:build:development-testnet",
+          "dev": true,
+          "port": 3005
+        },
+        "production": {
+          "buildTarget": "explorer:build:production",
+          "dev": false
+        },
+        "production-testnet": {
+          "buildTarget": "explorer:build:production-testnet",
+          "dev": false,
+          "port": 3005
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/explorer"],
+      "options": {
+        "jestConfig": "apps/explorer/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/explorer/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": []
+}

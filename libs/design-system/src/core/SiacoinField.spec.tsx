@@ -1,8 +1,4 @@
-import {
-  AppSettingsProvider,
-  CoreProvider,
-  SiaCentralExchangeRateGET,
-} from '@siafoundation/react-core'
+import { AppSettingsProvider, CoreProvider } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 import { SiacoinField } from './SiacoinField'
 import { fireEvent, render, waitFor } from '@testing-library/react'
@@ -10,6 +6,15 @@ import userEvent from '@testing-library/user-event'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { useState } from 'react'
+import { SiaCentralExchangeRatesResponse } from '@siafoundation/sia-central'
+
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn().mockReturnValue({
+    query: {},
+    push: jest.fn(),
+  }),
+  usePathname: jest.fn().mockReturnValue('/some-route'),
+}))
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn().mockReturnValue({
@@ -358,7 +363,7 @@ function siaCentralExchangeRateEndpoint(rate = '1') {
               },
             },
             timestamp: new Date().toString(),
-          } as SiaCentralExchangeRateGET)
+          } as SiaCentralExchangeRatesResponse)
         )
       }
     )

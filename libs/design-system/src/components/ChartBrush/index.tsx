@@ -1,3 +1,5 @@
+'use client'
+
 import { MutableRefObject, useMemo } from 'react'
 import { scaleTime, scaleLinear } from '@visx/scale'
 import { PatternLines } from '@visx/pattern'

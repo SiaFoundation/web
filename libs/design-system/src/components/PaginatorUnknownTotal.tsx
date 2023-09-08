@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from '../core/Button'
 import { ControlGroup } from '../core/ControlGroup'
 import { CaretLeft16, CaretRight16, PageFirst16 } from '../icons/carbon'

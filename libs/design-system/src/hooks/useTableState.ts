@@ -1,3 +1,5 @@
+'use client'
+
 import { difference, intersection, uniq } from 'lodash'
 import { useCallback, useMemo } from 'react'
 import useLocalStorageState from 'use-local-storage-state'

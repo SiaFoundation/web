@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { useAppSettings } from '@siafoundation/react-core'
 import { Container } from '../../core/Container'

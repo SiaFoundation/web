@@ -1,3 +1,5 @@
+'use client'
+
 import { cva, cx } from 'class-variance-authority'
 import BaseNextLink from 'next/link'
 import React from 'react'
@@ -109,7 +111,7 @@ export const Link = React.forwardRef<
 
 export const LinkButton = React.forwardRef<
   HTMLAnchorElement,
-  Omit<React.ComponentProps<typeof BaseNextLink>, 'href'> &
+  Omit<React.ComponentProps<typeof BaseNextLink>, 'href' | 'tip'> &
     VariantProps<typeof buttonStyles> & {
       href?: string | UrlObject
       tip?: React.ReactNode

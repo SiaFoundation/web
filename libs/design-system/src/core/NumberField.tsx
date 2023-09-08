@@ -1,3 +1,5 @@
+'use client'
+
 import { BaseNumberField } from './BaseNumberField'
 import {
   forwardRef,
