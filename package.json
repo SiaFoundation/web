@@ -127,7 +127,7 @@
     "@commitlint/cli": "^16.2.4",
     "@commitlint/config-angular": "^16.2.4",
     "@commitlint/config-conventional": "^16.2.4",
-    "@nrwl/rollup": "16.8.1",
+    "@nx/rollup": "16.8.1",
     "@nx/cypress": "16.8.1",
     "@nx/eslint-plugin": "16.8.1",
     "@nx/express": "16.8.1",
