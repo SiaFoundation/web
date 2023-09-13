@@ -45,4 +45,5 @@ jobs:
           ASSETS: ${{ github.workspace }}/assets
       - name: Export
         shell: bash
-        run: npx nx affected --target=export --configuration=ci --parallel=5
+        # issue with parallelism
+        run: npx nx affected --target=export --configuration=ci --parallel=1

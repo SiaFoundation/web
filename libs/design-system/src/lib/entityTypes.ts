@@ -134,15 +134,6 @@ const txTypeMap: Record<TxType, string> = {
   // setup: 'setup',
 }
 
-const entityTypeInitialsMap: Record<EntityType, string> = {
-  block: 'Bk',
-  contract: 'Ct',
-  transaction: 'Tx',
-  output: 'O',
-  address: 'A',
-  ip: 'I',
-}
-
 export function getEntityTypeLabel(type?: EntityType): string | undefined {
   return type ? entityTypeMap[type] : undefined
 }
