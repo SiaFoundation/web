@@ -7,7 +7,11 @@ import {
   Download16,
 } from '@siafoundation/design-system'
 import { useState } from 'react'
-import { getLinks, getLinksRuntimeNetwork } from '../content/downloads'
+import {
+  getHostdDownloadLinks,
+  getRenterdDownloadLinks,
+  getWalletDownloadLinks,
+} from '../content/downloads'
 
 type Daemon = 'renterd' | 'hostd' | 'walletd'
 type Props = {
@@ -17,9 +21,12 @@ type Props = {
 
 export function DownloadWidgetSelect({ daemon, version }: Props) {
   const downloadLinks =
-    daemon === 'walletd'
-      ? getLinksRuntimeNetwork(daemon, version)
-      : getLinks(daemon, version)
+    daemon === 'renterd'
+      ? getRenterdDownloadLinks(version)
+      : daemon === 'hostd'
+      ? getHostdDownloadLinks(version)
+      : getWalletDownloadLinks(version)
+
   const [download, setDownload] = useState(downloadLinks[0])
 
   const combined = downloadLinks.filter((i) => i.group === 'combined')

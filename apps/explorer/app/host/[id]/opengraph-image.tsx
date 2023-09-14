@@ -41,15 +41,24 @@ export default async function Image({ params }) {
   const values = [
     {
       label: 'storage',
-      value: getStorageCost({ host: h.host, rates: r.rates }),
+      value: getStorageCost({
+        price: h.host.settings.storage_price,
+        rates: r.rates,
+      }),
     },
     {
       label: 'download',
-      value: getDownloadCost({ host: h.host, rates: r.rates }),
+      value: getDownloadCost({
+        price: h.host.settings.download_price,
+        rates: r.rates,
+      }),
     },
     {
       label: 'upload',
-      value: getUploadCost({ host: h.host, rates: r.rates }),
+      value: getUploadCost({
+        price: h.host.settings.upload_price,
+        rates: r.rates,
+      }),
     },
   ]
 

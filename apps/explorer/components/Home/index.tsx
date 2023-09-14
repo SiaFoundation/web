@@ -11,21 +11,25 @@ import { ContentLayout } from '../ContentLayout'
 import { reverse, sortBy } from 'lodash'
 import {
   SiaCentralBlock,
+  SiaCentralExchangeRates,
   SiaCentralHost,
   SiaCentralHostsNetworkMetricsResponse,
 } from '@siafoundation/sia-central'
 import { hashToAvatar } from '../../lib/avatar'
+import { getDownloadCost, getStorageCost, getUploadCost } from '../../lib/host'
 
 export function Home({
   metrics,
   blockHeight,
   blocks,
   hosts,
+  rates,
 }: {
   metrics: SiaCentralHostsNetworkMetricsResponse
   blockHeight: number
   blocks: SiaCentralBlock[]
   hosts: SiaCentralHost[]
+  rates: SiaCentralExchangeRates
 }) {
   const values = useMemo(() => {
     const list = [
@@ -120,9 +124,60 @@ export function Home({
           </div>
         ),
       },
+      {
+        label: 'Average storage price',
+        value: (
+          <Tooltip content="Average storage price per TB/month">
+            <Text
+              className="text-xl md:text-3xl"
+              weight="semibold"
+              color="contrast"
+            >
+              {getStorageCost({
+                price: metrics?.average.settings.storage_price,
+                rates,
+              })}
+            </Text>
+          </Tooltip>
+        ),
+      },
+      {
+        label: 'Average download price',
+        value: (
+          <Tooltip content="Average download price per TB">
+            <Text
+              className="text-xl md:text-3xl"
+              weight="semibold"
+              color="contrast"
+            >
+              {getDownloadCost({
+                price: metrics?.average.settings.download_price,
+                rates,
+              })}
+            </Text>
+          </Tooltip>
+        ),
+      },
+      {
+        label: 'Average upload price',
+        value: (
+          <Tooltip content="Average upload price per TB">
+            <Text
+              className="text-xl md:text-3xl"
+              weight="semibold"
+              color="contrast"
+            >
+              {getUploadCost({
+                price: metrics?.average.settings.upload_price,
+                rates,
+              })}
+            </Text>
+          </Tooltip>
+        ),
+      },
     ]
     return list
-  }, [metrics, blockHeight])
+  }, [metrics, blockHeight, rates])
 
   return (
     <ContentLayout

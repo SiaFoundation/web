@@ -169,6 +169,7 @@ export async function getGitHub(): AsyncDataSourceResponse<GitHub> {
 }
 
 export type GitHubRelease = {
+  name: string
   tag_name: string
 }
 
@@ -191,10 +192,10 @@ export async function getGitHubRenterdLatestRelease(): Promise<GitHubRelease | n
 export async function getGitHubHostdLatestRelease(): Promise<GitHubRelease | null> {
   try {
     const response = await axios.get(
-      'https://api.github.com/repos/SiaFoundation/hostd/releases?per_page=1'
+      'https://api.github.com/repos/SiaFoundation/hostd/releases/latest'
     )
-    if (response.data.length) {
-      return response.data[0]
+    if (response.data) {
+      return response.data
     } else {
       return null
     }

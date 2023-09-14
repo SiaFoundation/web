@@ -4,6 +4,7 @@ import { Home } from '../components/Home'
 import {
   getSiaCentralBlockLatest,
   getSiaCentralBlocks,
+  getSiaCentralExchangeRates,
   getSiaCentralHosts,
   getSiaCentralHostsNetworkMetrics,
 } from '@siafoundation/sia-central'
@@ -30,7 +31,7 @@ export function generateMetadata(): Metadata {
 export const revalidate = 60
 
 export default async function HomePage() {
-  const [metrics, lastestBlock] = await Promise.all([
+  const [m, lb, r, h] = await Promise.all([
     getSiaCentralHostsNetworkMetrics({
       config: {
         api: siaCentralApi,
@@ -41,9 +42,23 @@ export default async function HomePage() {
         api: siaCentralApi,
       },
     }),
+    getSiaCentralExchangeRates({
+      config: {
+        api: siaCentralApi,
+      },
+    }),
+    getSiaCentralHosts({
+      params: {
+        limit: 5,
+      },
+      config: {
+        api: siaCentralApi,
+      },
+    }),
   ])
-  const lastBlockHeight = lastestBlock?.block.height || 0
-  const blocks = await getSiaCentralBlocks({
+
+  const lastBlockHeight = lb?.block.height || 0
+  const bs = await getSiaCentralBlocks({
     payload: {
       heights: range(lastBlockHeight - 5, lastBlockHeight),
     },
@@ -51,20 +66,14 @@ export default async function HomePage() {
       api: siaCentralApi,
     },
   })
-  const hosts = await getSiaCentralHosts({
-    params: {
-      limit: 5,
-    },
-    config: {
-      api: siaCentralApi,
-    },
-  })
+
   return (
     <Home
-      metrics={metrics}
+      metrics={m}
       blockHeight={lastBlockHeight}
-      blocks={blocks.blocks}
-      hosts={hosts.hosts}
+      blocks={bs.blocks}
+      hosts={h.hosts}
+      rates={r.rates}
     />
   )
 }

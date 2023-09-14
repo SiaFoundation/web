@@ -10,7 +10,7 @@
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/explorer",
-        "postcssConfig": "apps/website/postcss.config.js",
+        "postcssConfig": "apps/explorer/postcss.config.js",
         "assets": [
           {
             "glob": "**/*",

@@ -1,10 +1,10 @@
-'use client'
-
-import { TooltipProvider } from '../hooks/tooltip'
-import { Toaster } from '../lib/toast'
+import {
+  TooltipProvider,
+  Toaster,
+  rootClasses,
+} from '@siafoundation/design-system'
 import { AppProps } from 'next/app'
 import { AppSettingsProvider, CoreProvider } from '@siafoundation/react-core'
-import { rootClasses } from '../config/css'
 import { ThemeProvider } from 'next-themes'
 
 export function NextAppSsr({
