@@ -20,17 +20,17 @@ type Props = {
 
 export function HostPricing({ host, rates }: Props) {
   const storageCost = useMemo(
-    () => getStorageCost({ host, rates }),
+    () => getStorageCost({ price: host.settings.storage_price, rates }),
     [rates, host]
   )
 
   const downloadCost = useMemo(
-    () => getDownloadCost({ host, rates }),
+    () => getDownloadCost({ price: host.settings.download_price, rates }),
     [rates, host]
   )
 
   const uploadCost = useMemo(
-    () => getUploadCost({ host, rates }),
+    () => getUploadCost({ price: host.settings.upload_price, rates }),
     [rates, host]
   )
 

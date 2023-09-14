@@ -141,7 +141,6 @@ export function HostItem({
         <Text
           color="contrast"
           size="12"
-          className="text-white"
           noWrap
           weight={
             host.public_key === activeHost?.public_key ? 'semibold' : 'regular'

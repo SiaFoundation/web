@@ -9,6 +9,9 @@ export function HomeSkeleton() {
           <Skeleton className="w-full h-[85px] sm:w-[180px] sm:h-[62px]" />
           <Skeleton className="w-full h-[85px] sm:w-[180px] sm:h-[62px]" />
           <Skeleton className="w-full h-[85px] sm:w-[180px] sm:h-[62px]" />
+          <Skeleton className="w-full h-[85px] sm:w-[180px] sm:h-[62px]" />
+          <Skeleton className="w-full h-[85px] sm:w-[180px] sm:h-[62px]" />
+          <Skeleton className="w-full h-[85px] sm:w-[180px] sm:h-[62px]" />
         </div>
       }
     >
