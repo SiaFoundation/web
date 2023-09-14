@@ -5,11 +5,12 @@ import { routes } from '../../../config/routes'
 import { buildMetadata } from '../../../lib/utils'
 import { siaCentralApi } from '../../../config'
 import { notFound } from 'next/navigation'
+import { truncate } from '@siafoundation/design-system'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
-  const title = `Address ${id}`
-  const description = `View details for address ${id}`
+  const title = `Address ${truncate(id, 30)}`
+  const description = 'View details for Sia address.'
   const url = routes.address.view.replace(':id', id)
   return buildMetadata({
     title,

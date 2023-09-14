@@ -92,7 +92,7 @@ export function HostPricing({ host, rates }: Props) {
         >
           <div className="flex justify-end">
             <Text color="subtle">
-              {humanBytes(host.settings.total_storage)}
+              {humanBytes(host.settings.remaining_storage)}
             </Text>
           </div>
         </Tooltip>

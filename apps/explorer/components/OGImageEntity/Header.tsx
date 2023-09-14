@@ -25,18 +25,18 @@ export function Header({
         <img
           src={hashToAvatar(avatar)}
           tw={cx(
-            'w-20 h-20 rounded border',
+            'w-24 h-24 rounded border',
             'bg-white text-black',
             'border-gray-500'
           )}
           alt={initials}
         />
       ) : (
-        <div tw="w-20 h-20 bg-white rounded text-2xl text-black items-center justify-center">
+        <div tw="w-24 h-24 bg-white rounded text-4xl text-black items-center justify-center">
           {initials}
         </div>
       )}
-      <div tw="flex flex-col gap-2">
+      <div tw="flex flex-1 flex-col gap-2">
         <span tw="text-4xl text-white">{title}</span>
         <span tw="text-2xl text-white/50">{subtitle}</span>
       </div>

@@ -12,7 +12,11 @@ type Props = {
   initials: string
   status?: string
   statusColor?: string
-  values?: { label?: string; value: string }[]
+  values?: {
+    label?: string
+    value: string
+    subvalue?: string
+  }[]
 }
 
 export function Preview({
@@ -28,13 +32,8 @@ export function Preview({
   return (
     <div tw="bg-black w-full h-full flex items-center justify-center">
       <Background />
-      <div
-        tw="flex flex-col justify-between absolute top-0 left-0 w-full h-full p-10"
-        style={{
-          gap: '20px',
-        }}
-      >
-        <div tw="flex items-center justify-between w-full">
+      <div tw="flex flex-col absolute top-0 left-0 w-full h-full">
+        <div tw="flex items-center justify-between w-full px-10 pt-10">
           <Header
             title={title}
             subtitle={subtitle}
@@ -54,26 +53,39 @@ export function Preview({
             </div>
           )}
         </div>
-        <div
-          tw="flex justify-between"
-          style={{
-            gap: '80px',
-          }}
-        >
-          {values?.map(({ label, value }) => (
-            <div
-              key={label + value}
-              tw="flex flex-col items-end"
-              style={{
-                gap: '5px',
-              }}
-            >
-              <span tw="text-white text-6xl">{value}</span>
-              {label && <span tw="text-white text-2xl">{label}</span>}
-            </div>
-          ))}
+        <div tw="flex flex-1" />
+        <div tw="flex justify-end px-10 pb-8">
+          <img
+            src="https://sia.tech/assets/Sia_Logo.svg"
+            height="50px"
+            width="50px"
+            alt="logo"
+          />
+        </div>
+        <div tw="flex bg-black/50 border-t-2 border-gray-400/10">
+          <div
+            tw="flex justify-between w-full pt-10 px-10 pb-14"
+            style={{
+              gap: '80px',
+            }}
+          >
+            {values?.map(({ label, value, subvalue }) => (
+              <div
+                key={label + value}
+                tw="flex flex-col items-end"
+                style={{
+                  gap: '5px',
+                }}
+              >
+                <span tw="text-white text-6xl">{value}</span>
+                {subvalue && <span tw="text-white text-2xl">{subvalue}</span>}
+                {label && <span tw="text-white/50 text-2xl">{label}</span>}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
+      <div tw="absolute bottom-0 left-0 right-0 h-4 bg-green-600" />
     </div>
   )
 }

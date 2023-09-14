@@ -7,13 +7,17 @@ module.exports = {
     },
     {
       name: 'sia-assets',
-      script: 'nx',
-      args: 'run assets:serve:production',
+      script: 'dist/apps/assets/main.js',
+      env: {
+        NODE_ENV: 'production',
+      },
     },
     {
       name: 'sia-crons',
-      script: 'nx',
-      args: 'run crons:serve:production',
+      script: 'dist/apps/crons/main.js',
+      env: {
+        NODE_ENV: 'production',
+      },
     },
     {
       name: 'sia-explorer',

@@ -11,8 +11,8 @@ export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
   const height = Number(id || 0) as number
   if (isNaN(height)) {
-    const title = getTitleId('Block', id)
-    const description = getTitleId('View details for block', id)
+    const title = getTitleId('Block', id, 30)
+    const description = 'View details for Sia block.'
     const url = routes.block.view.replace(':id', id)
     return buildMetadata({
       title,
@@ -21,7 +21,7 @@ export function generateMetadata({ params }): Metadata {
     })
   }
   const title = `Block ${height.toLocaleString()}`
-  const description = `View details for block ${height.toLocaleString()}`
+  const description = 'View details for Sia block.'
   const url = routes.block.view.replace(':id', id)
   return buildMetadata({
     title,

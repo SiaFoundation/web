@@ -8,7 +8,6 @@ export function Background() {
         alt="bg"
         src="https://sia.tech/assets/previews/leaves.png"
       />
-      <div tw="absolute bottom-0 left-0 right-0 h-1 bg-green-600" />
     </div>
   )
 }
