@@ -5,11 +5,12 @@ import { getSiaCentralTransaction } from '@siafoundation/sia-central'
 import { buildMetadata } from '../../../lib/utils'
 import { siaCentralApi } from '../../../config'
 import { notFound } from 'next/navigation'
+import { truncate } from '@siafoundation/design-system'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
-  const title = `Transaction ${id}`
-  const description = `View details for transaction ${id}`
+  const title = `Transaction ${truncate(id, 30)}`
+  const description = `View details for Sia transaction.`
   const url = routes.transaction.view.replace(':id', id)
   return buildMetadata({
     title,

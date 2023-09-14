@@ -38,6 +38,7 @@ export function Preview({ title, subtitle, values }: Props) {
           ))}
         </div>
       </div>
+      <div tw="absolute bottom-0 left-0 right-0 h-4 bg-green-600" />
     </div>
   )
 }

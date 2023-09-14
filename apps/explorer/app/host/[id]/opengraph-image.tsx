@@ -9,6 +9,8 @@ import {
   getStorageCost,
   getUploadCost,
 } from '../../../lib/host'
+import { humanBytes, humanSpeed } from '@siafoundation/sia-js'
+import { truncate } from '@siafoundation/design-system'
 
 export const revalidate = 60
 
@@ -45,6 +47,7 @@ export default async function Image({ params }) {
         price: h.host.settings.storage_price,
         rates: r.rates,
       }),
+      subvalue: humanBytes(h.host.settings.remaining_storage),
     },
     {
       label: 'download',
@@ -52,6 +55,10 @@ export default async function Image({ params }) {
         price: h.host.settings.download_price,
         rates: r.rates,
       }),
+      subvalue: humanSpeed(
+        (h.host.benchmark.data_size * 8) /
+          (h.host.benchmark.download_time / 1000)
+      ),
     },
     {
       label: 'upload',
@@ -59,6 +66,9 @@ export default async function Image({ params }) {
         price: h.host.settings.upload_price,
         rates: r.rates,
       }),
+      subvalue: humanSpeed(
+        (h.host.benchmark.data_size * 8) / (h.host.benchmark.upload_time / 1000)
+      ),
     },
   ]
 
@@ -66,7 +76,7 @@ export default async function Image({ params }) {
     {
       id: h.host.public_key,
       title: h.host.net_address,
-      subtitle: h.host.public_key,
+      subtitle: truncate(h.host.public_key, 30),
       initials: 'H',
       avatar: true,
       values,
