@@ -37,7 +37,7 @@ export function Header({
         </div>
       )}
       <div tw="flex flex-1 flex-col gap-2">
-        <span tw="text-4xl text-white">{title}</span>
+        <span tw="text-4xl text-white font-semibold">{title}</span>
         <span tw="text-2xl text-white/50">{subtitle}</span>
       </div>
     </div>

@@ -42,7 +42,7 @@ export default async function Image({ params }) {
   return getOGImage(
     {
       id,
-      title: truncate(id, 48),
+      title: truncate(id, 44),
       subtitle: 'address',
       initials: 'A',
       values,
