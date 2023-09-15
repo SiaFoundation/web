@@ -101,14 +101,12 @@ zen.sia.tech {
 }
 
 siascan.com {
-  tls internal
   import cloudflare
   encode gzip
   reverse_proxy localhost:3003
 }
 
 zen.siascan.com {
-  tls internal
   import cloudflare
   encode gzip
   reverse_proxy localhost:3005
