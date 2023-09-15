@@ -21,8 +21,8 @@ export function NavbarSite({ appName, homeHref, children }: Props) {
                 {appName && (
                   <Heading
                     font="mono"
-                    size="20"
-                    className="hidden pl-0 md:block tracking-tight"
+                    size="24"
+                    className="hidden pl-0 md:block tracking-tight relative -top-px"
                   >
                     {appName}
                   </Heading>

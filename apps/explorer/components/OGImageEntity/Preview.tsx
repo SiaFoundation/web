@@ -54,13 +54,21 @@ export function Preview({
           )}
         </div>
         <div tw="flex flex-1" />
-        <div tw="flex justify-end px-10 pb-8">
+        <div
+          tw="flex justify-start items-center px-10 pb-6"
+          style={{
+            gap: '7px',
+          }}
+        >
           <img
             src="https://sia.tech/assets/Sia_Logo.svg"
-            height="50px"
-            width="50px"
+            height="40px"
+            width="40px"
             alt="logo"
           />
+          <span tw="font-bold text-2xl relative -top-1 text-white tracking-tight">
+            siascan
+          </span>
         </div>
         <div tw="flex bg-black/50 border-t-2 border-gray-400/10">
           <div

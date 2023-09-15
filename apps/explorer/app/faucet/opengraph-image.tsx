@@ -11,7 +11,7 @@ export const contentType = 'image/png'
 export default async function Image() {
   return getOGImage(
     {
-      title: 'Zen Faucet',
+      title: 'Zen faucet',
       subtitle: 'Zen testnet siacoin faucet.',
     },
     size

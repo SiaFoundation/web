@@ -30,7 +30,7 @@ The [`walletd`](https://github.com/siafoundation/walletd) user interface, includ
 
 ![stability-mature](https://img.shields.io/badge/stability-mature-008000.svg)
 
-The `explorer` user interface, a Sia blockchain explorer interface that powers [explore.sia.tech](https://explore.sia.tech) and [zen.sia.tech](https://zen.sia.tech).
+The `explorer` user interface, a Sia blockchain explorer interface that powers [siascan.com](https://siascan.com) and [zen.siascan.com](https://zen.siascan.com).
 
 ## Libraries
 
