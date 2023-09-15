@@ -17,6 +17,7 @@ import {
 } from '@siafoundation/sia-central'
 import { hashToAvatar } from '../../lib/avatar'
 import { getDownloadCost, getStorageCost, getUploadCost } from '../../lib/host'
+import { HostListItem } from './HostListItem'
 
 export function Home({
   metrics,
@@ -216,16 +217,21 @@ export function Home({
           />
         </div>
         <div>
-          <EntityList
-            title="Top hosts"
-            entities={hosts.map((host) => ({
-              label: host.net_address,
-              initials: 'H',
-              avatar: hashToAvatar(host.public_key),
-              href: routes.host.view.replace(':id', host.public_key),
-              hash: host.public_key,
-            }))}
-          />
+          <EntityList title="Top hosts">
+            {hosts.map((host) => (
+              <HostListItem
+                key={host.public_key}
+                host={host}
+                rates={rates}
+                entity={{
+                  label: host.net_address,
+                  initials: 'H',
+                  avatar: hashToAvatar(host.public_key),
+                  href: routes.host.view.replace(':id', host.public_key),
+                }}
+              />
+            ))}
+          </EntityList>
         </div>
       </div>
     </ContentLayout>

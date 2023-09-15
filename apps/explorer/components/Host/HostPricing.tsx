@@ -10,8 +10,15 @@ import {
   SiaCentralHost,
 } from '@siafoundation/sia-central'
 import { useMemo } from 'react'
-import { humanBytes, humanSpeed } from '@siafoundation/sia-js'
-import { getDownloadCost, getStorageCost, getUploadCost } from '../../lib/host'
+import {
+  getDownloadCost,
+  getDownloadSpeed,
+  getRemainingOverTotalStorage,
+  getRemainingStorage,
+  getStorageCost,
+  getUploadCost,
+  getUploadSpeed,
+} from '../../lib/host'
 
 type Props = {
   host: SiaCentralHost
@@ -34,21 +41,16 @@ export function HostPricing({ host, rates }: Props) {
     [rates, host]
   )
 
-  const downloadSpeed = useMemo(
-    () =>
-      humanSpeed(
-        (host.benchmark.data_size * 8) / (host.benchmark.download_time / 1000)
-      ),
+  const downloadSpeed = useMemo(() => getDownloadSpeed(host), [host])
+
+  const uploadSpeed = useMemo(() => getUploadSpeed(host), [host])
+
+  const remainingOverTotalStorage = useMemo(
+    () => getRemainingOverTotalStorage(host),
     [host]
   )
 
-  const uploadSpeed = useMemo(
-    () =>
-      humanSpeed(
-        (host.benchmark.data_size * 8) / (host.benchmark.upload_time / 1000)
-      ),
-    [host]
-  )
+  const remainingStorage = useMemo(() => getRemainingStorage(host), [host])
 
   return (
     <div className="flex flex-col">
@@ -85,15 +87,9 @@ export function HostPricing({ host, rates }: Props) {
         </Tooltip>
       </div>
       <div className="grid grid-cols-3 gap-4">
-        <Tooltip
-          content={`${humanBytes(host.settings.remaining_storage)}/${humanBytes(
-            host.settings.total_storage
-          )} remaining`}
-        >
+        <Tooltip content={remainingOverTotalStorage}>
           <div className="flex justify-end">
-            <Text color="subtle">
-              {humanBytes(host.settings.remaining_storage)}
-            </Text>
+            <Text color="subtle">{remainingStorage}</Text>
           </div>
         </Tooltip>
         <Tooltip content={`Download speed benchmarked at ${downloadSpeed}`}>

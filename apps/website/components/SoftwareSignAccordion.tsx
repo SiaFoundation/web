@@ -38,7 +38,7 @@ export function SoftwareSignAccordion({ versions }: Props) {
                   e.stopPropagation()
                 }}
                 target="_blank"
-                href={`${webLinks.website}/releases/sia-signing-key.asc`}
+                href={`${webLinks.website.index}/releases/sia-signing-key.asc`}
               >
                 here
               </Link>
@@ -48,7 +48,7 @@ export function SoftwareSignAccordion({ versions }: Props) {
                   e.stopPropagation()
                 }}
                 target="_blank"
-                href={`${webLinks.website}/releases/siad/Sia-v${versions.sia.latest}-SHA256SUMS.txt.asc`}
+                href={`${webLinks.website.index}/releases/siad/Sia-v${versions.sia.latest}-SHA256SUMS.txt.asc`}
               >
                 here
               </Link>
@@ -69,7 +69,7 @@ export function SoftwareSignAccordion({ versions }: Props) {
               1. Download and import the Sia signing key.
             </Paragraph>
             <Codeblock size="14">
-              {`wget -c ${webLinks.website}/releases/sia-signing-key.asc
+              {`wget -c ${webLinks.website.index}/releases/sia-signing-key.asc
 gpg --import sia-signing-key.asc`}
             </Codeblock>
 
@@ -77,7 +77,7 @@ gpg --import sia-signing-key.asc`}
               2. Download the signed hash file, and verify the signature.
             </Paragraph>
             <Codeblock size="14">
-              {`wget -c ${webLinks.website}/releases/siad/Sia-v${versions.sia.latest}-SHA256SUMS.txt.asc
+              {`wget -c ${webLinks.website.index}/releases/siad/Sia-v${versions.sia.latest}-SHA256SUMS.txt.asc
 gpg --verify Sia-v${versions.sia.latest}-SHA256SUMS.txt.asc`}
             </Codeblock>
 

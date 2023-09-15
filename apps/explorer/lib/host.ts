@@ -1,7 +1,10 @@
 import { TBToBytes, monthsToBlocks } from '@siafoundation/design-system'
-import { SiaCentralExchangeRates } from '@siafoundation/sia-central'
+import {
+  SiaCentralExchangeRates,
+  SiaCentralHost,
+} from '@siafoundation/sia-central'
 import BigNumber from 'bignumber.js'
-import { humanSiacoin } from '@siafoundation/sia-js'
+import { humanBytes, humanSiacoin, humanSpeed } from '@siafoundation/sia-js'
 
 type Props = {
   price: string
@@ -44,4 +47,26 @@ export function getUploadCost({ price, rates }: Props) {
     : `${humanSiacoin(new BigNumber(price).times(TBToBytes(1)), {
         fixed: 0,
       })}/TB`
+}
+
+export function getDownloadSpeed(host: SiaCentralHost) {
+  return humanSpeed(
+    (host.benchmark.data_size * 8) / (host.benchmark.download_time / 1000)
+  )
+}
+
+export function getUploadSpeed(host: SiaCentralHost) {
+  return humanSpeed(
+    (host.benchmark.data_size * 8) / (host.benchmark.upload_time / 1000)
+  )
+}
+
+export function getRemainingOverTotalStorage(host: SiaCentralHost) {
+  return `${humanBytes(host.settings.remaining_storage)}/${humanBytes(
+    host.settings.total_storage
+  )} remaining`
+}
+
+export function getRemainingStorage(host: SiaCentralHost) {
+  return humanBytes(host.settings.remaining_storage)
 }

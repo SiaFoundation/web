@@ -35,32 +35,32 @@ export function SoftwareSectionTestnet({ versions }: Props) {
         links={[
           {
             title: 'Windows AMD',
-            link: `${webLinks.website}/releases/siad/Sia-v${versions.sia.testnet}-Testnet-windows-amd64.zip`,
+            link: `${webLinks.website.index}/releases/siad/Sia-v${versions.sia.testnet}-Testnet-windows-amd64.zip`,
             newTab: true,
           },
           {
             title: 'Windows ARM',
-            link: `${webLinks.website}/releases/siad/Sia-v${versions.sia.testnet}-Testnet-windows-arm64.zip`,
+            link: `${webLinks.website.index}/releases/siad/Sia-v${versions.sia.testnet}-Testnet-windows-arm64.zip`,
             newTab: true,
           },
           {
             title: 'MacOS AMD',
-            link: `${webLinks.website}/releases/siad/Sia-v${versions.sia.testnet}-Testnet-darwin-amd64.zip`,
+            link: `${webLinks.website.index}/releases/siad/Sia-v${versions.sia.testnet}-Testnet-darwin-amd64.zip`,
             newTab: true,
           },
           {
             title: 'MacOS ARM',
-            link: `${webLinks.website}/releases/siad/Sia-v${versions.sia.testnet}-Testnet-darwin-arm64.zip`,
+            link: `${webLinks.website.index}/releases/siad/Sia-v${versions.sia.testnet}-Testnet-darwin-arm64.zip`,
             newTab: true,
           },
           {
             title: 'Linux AMD',
-            link: `${webLinks.website}/releases/siad/Sia-v${versions.sia.testnet}-Testnet-linux-amd64.zip`,
+            link: `${webLinks.website.index}/releases/siad/Sia-v${versions.sia.testnet}-Testnet-linux-amd64.zip`,
             newTab: true,
           },
           {
             title: 'Linux ARM',
-            link: `${webLinks.website}/releases/siad/Sia-v${versions.sia.testnet}-Testnet-linux-arm64.zip`,
+            link: `${webLinks.website.index}/releases/siad/Sia-v${versions.sia.testnet}-Testnet-linux-arm64.zip`,
             newTab: true,
           },
           {

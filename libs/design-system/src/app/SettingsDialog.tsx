@@ -213,7 +213,7 @@ export function SettingsDialog({ open, onOpenChange, securityEl }: Props) {
             </Paragraph>
             <div className="flex gap-4">
               <Link
-                href={webLinks.website}
+                href={webLinks.website.index}
                 target="_blank"
                 className="flex items-center gap-1"
               >
