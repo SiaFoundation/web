@@ -87,6 +87,10 @@ api.sia.tech {
 }
 
 explore.sia.tech {
+  redir https://siascan.com{uri} permanent
+}
+
+siascan.com {
   encode gzip
   reverse_proxy localhost:3003
 }
@@ -97,6 +101,10 @@ design.sia.tech {
 }
 
 zen.sia.tech {
+  redir https://zen.siascan.com{uri} permanent
+}
+
+zen.siascan.com {
   encode gzip
   reverse_proxy localhost:3005
 }

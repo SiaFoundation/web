@@ -18,7 +18,7 @@ export function Header({
           gap: '20px',
         }}
       >
-        <span tw="text-8xl text-white">{title}</span>
+        <span tw="text-8xl font-bold text-white tracking-tight">{title}</span>
         {subtitle && <span tw="text-2xl text-white/50">{subtitle}</span>}
       </div>
     </div>

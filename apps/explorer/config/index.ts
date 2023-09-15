@@ -1,7 +1,7 @@
 import { webLinks } from '@siafoundation/design-system'
 
 export const networkName = 'Sia Mainnet'
-export const appName = 'Explorer'
+export const appName = 'siascan'
 export const appLink = webLinks.explore.mainnet
 export const isMainnet = true
 

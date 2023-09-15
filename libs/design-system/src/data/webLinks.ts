@@ -18,9 +18,9 @@ export const webLinks = {
     privacy: 'https://sia.tech/privacy-policy',
   },
   explore: {
-    mainnet: 'https://explore.sia.tech',
-    testnet: 'https://zen.sia.tech',
-    testnetFaucet: 'https://zen.sia.tech/faucet',
+    mainnet: 'https://siascan.com',
+    testnet: 'https://zen.siascan.com',
+    testnetFaucet: 'https://zen.siascan.com/faucet',
   },
   design: 'https://design.sia.tech',
   apiDocs: {

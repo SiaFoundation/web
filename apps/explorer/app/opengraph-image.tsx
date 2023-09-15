@@ -50,7 +50,7 @@ export default async function Image() {
 
   return getOGImage(
     {
-      title: networkName === 'Sia Mainnet' ? 'Sia explorer' : 'Zen explorer',
+      title: networkName === 'Sia Mainnet' ? 'siascan' : 'siascan',
       subtitle:
         networkName === 'Sia Mainnet'
           ? 'Sia blockchain and host explorer.'

@@ -18,7 +18,7 @@ export function Layout({ children }: Props) {
   return (
     <div className="relative h-full bg-gray-100 dark:bg-graydark-50 overflow-hidden">
       <div className="relative z-10 h-full overflow-y-auto">
-        <NavbarSite appName="explorer" homeHref={routes.home.index}>
+        <NavbarSite appName="siascan" homeHref={routes.home.index}>
           <Search />
           {!isMainnet && (
             <Tooltip content={`${networkName} Faucet`}>

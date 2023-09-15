@@ -11,7 +11,7 @@ import {
 import { range } from 'lodash'
 
 export function generateMetadata(): Metadata {
-  const title = networkName === 'Sia Mainnet' ? 'Sia explorer' : 'Zen explorer'
+  const title = networkName === 'Sia Mainnet' ? 'siascan' : 'siascan'
   const description =
     networkName === 'Sia Mainnet'
       ? 'Sia blockchain and host explorer.'
