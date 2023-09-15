@@ -40,7 +40,7 @@ export function Faucet() {
   return (
     <Container size="1">
       <div className="flex flex-col gap-12 min-h-[60vh]">
-        <Panel className="p-4 md:p-4 !rounded-lg !border-3 !border-gray-1100 dark:!border-graydark-500">
+        <Panel className="p-4 md:p-4 !rounded-lg !border-3">
           <div className="flex flex-col gap-2 items-center w-full">
             <Text>
               <FaucetIcon size={100} />

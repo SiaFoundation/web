@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { appLink, appName, networkName, siaCentralApi } from '../config'
+import { appLink, network, siaCentralApi } from '../config'
 import { Home } from '../components/Home'
 import {
   getSiaCentralBlockLatest,
@@ -9,23 +9,19 @@ import {
   getSiaCentralHostsNetworkMetrics,
 } from '@siafoundation/sia-central'
 import { range } from 'lodash'
+import { buildMetadata } from '../lib/utils'
 
 export function generateMetadata(): Metadata {
-  const title = networkName === 'Sia Mainnet' ? 'siascan' : 'siascan'
+  const title = 'siascan'
   const description =
-    networkName === 'Sia Mainnet'
+    network === 'mainnet'
       ? 'Sia blockchain and host explorer.'
       : 'Zen blockchain and host explorer.'
-  return {
+  return buildMetadata({
     title,
     description,
-    openGraph: {
-      title,
-      description,
-      url: appLink,
-      siteName: appName,
-    },
-  }
+    url: appLink,
+  })
 }
 
 export const revalidate = 60

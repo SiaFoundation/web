@@ -2,6 +2,7 @@
 import { Header } from './Header'
 import { Background } from './Background'
 import { cx } from 'class-variance-authority'
+import { network } from '../../config'
 
 type Props = {
   title: string
@@ -24,7 +25,7 @@ export function Preview({ title, subtitle, values }: Props) {
             values ? 'pb-6' : 'pb-10'
           )}
           style={{
-            gap: '7px',
+            gap: '8px',
           }}
         >
           <img
@@ -62,7 +63,12 @@ export function Preview({ title, subtitle, values }: Props) {
           </div>
         )}
       </div>
-      <div tw="absolute bottom-0 left-0 right-0 h-4 bg-green-600" />
+      <div
+        tw={cx(
+          'absolute bottom-0 left-0 right-0 h-4',
+          network !== 'mainnet' ? 'bg-amber-500' : 'bg-green-600'
+        )}
+      />
     </div>
   )
 }

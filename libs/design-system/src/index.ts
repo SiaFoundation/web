@@ -1,7 +1,6 @@
 // core
 export * from './core/Accordion'
 export * from './core/Alert'
-export * from './core/NavbarSite'
 export * from './core/Avatar'
 export * from './core/Badge'
 export * from './core/Button'

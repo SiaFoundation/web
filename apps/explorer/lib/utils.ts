@@ -1,7 +1,7 @@
 import { EntityType } from '@siafoundation/design-system'
 import { routes } from '../config/routes'
 import { Metadata } from 'next'
-import { appName } from '../config'
+import { siteName } from '../config'
 
 export function getHref(type: EntityType, value: string) {
   return routes[type].view.replace(':id', value)
@@ -23,7 +23,7 @@ export function buildMetadata({
       title,
       description,
       url,
-      siteName: appName,
+      siteName: siteName,
     },
   }
 }

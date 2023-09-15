@@ -7,8 +7,8 @@ import {
   Link,
   DropdownMenuGroup,
   DropdownMenuLabel,
+  Menu24,
 } from '@siafoundation/design-system'
-import { networkName } from '../../config'
 
 type Props = React.ComponentProps<typeof Button> & {
   trigger?: React.ReactNode
@@ -20,8 +20,8 @@ export function NavDropdownMenu({ trigger, children, ...props }: Props) {
     <DropdownMenu
       trigger={
         trigger || (
-          <Button size="medium" {...props}>
-            {networkName}
+          <Button variant="ghost" size="medium" {...props}>
+            <Menu24 />
           </Button>
         )
       }
@@ -30,13 +30,21 @@ export function NavDropdownMenu({ trigger, children, ...props }: Props) {
       <DropdownMenuGroup className="py-1 px-1 w-[120px]">
         <DropdownMenuLabel className="px-1">Network</DropdownMenuLabel>
         <DropdownMenuItem className="p-2">
-          <Link href={webLinks.explore.mainnet} underline="hover">
+          <Link href={webLinks.explore.mainnet} underline="none">
             Sia Mainnet
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem className="p-2">
-          <Link href={webLinks.explore.testnet} underline="hover">
+          <Link href={webLinks.explore.testnet} underline="none">
             Zen Testnet
+          </Link>
+        </DropdownMenuItem>
+      </DropdownMenuGroup>
+      <DropdownMenuGroup className="py-1 px-1 w-[120px]">
+        <DropdownMenuLabel className="px-1">Tools</DropdownMenuLabel>
+        <DropdownMenuItem className="p-2">
+          <Link href={webLinks.explore.testnetFaucet} underline="none">
+            Zen Faucet
           </Link>
         </DropdownMenuItem>
       </DropdownMenuGroup>

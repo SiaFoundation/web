@@ -3,6 +3,7 @@
 import { cx } from 'class-variance-authority'
 import { Background } from '../OGImage/Background'
 import { Header } from './Header'
+import { network } from '../../config'
 
 type Props = {
   id: string
@@ -57,7 +58,7 @@ export function Preview({
         <div
           tw="flex justify-start items-center px-10 pb-6"
           style={{
-            gap: '7px',
+            gap: '8px',
           }}
         >
           <img
@@ -93,7 +94,12 @@ export function Preview({
           </div>
         </div>
       </div>
-      <div tw="absolute bottom-0 left-0 right-0 h-4 bg-green-600" />
+      <div
+        tw={cx(
+          'absolute bottom-0 left-0 right-0 h-4',
+          network !== 'mainnet' ? 'bg-amber-500' : 'bg-green-600'
+        )}
+      />
     </div>
   )
 }
