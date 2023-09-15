@@ -24,40 +24,40 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
   const values = useMemo(() => {
     return [
       {
-        label: 'File Size',
+        label: 'file size',
         copyable: false,
         value: humanBytes(contract.file_size),
       },
       {
-        label: 'Payout',
+        label: 'payout',
         copyable: false,
         value: `${siacoinToDollars(contract.payout, rates)} (${humanSiacoin(
           contract.payout
         )})`,
       },
       {
-        label: 'Transaction ID',
+        label: 'transaction ID',
         entityType: 'transaction',
         entityValue: contract.transaction_id,
       },
       {
-        label: 'Merkle Root',
+        label: 'merkle root',
         value: contract.merkle_root,
       },
       {
-        label: 'Unlock Hash',
+        label: 'unlock hash',
         value: contract.unlock_hash,
       },
       {
-        label: 'Revision Number',
+        label: 'revision number',
         value: contract.revision_number.toLocaleString(),
       },
       {
-        label: 'Negotiation Height',
+        label: 'negotiation height',
         value: contract.negotiation_height?.toLocaleString() || '-',
       },
       {
-        label: 'Negotiation Time',
+        label: 'negotiation time',
         copyable: false,
         value:
           contract.negotiation_timestamp !== '0001-01-01T00:00:00Z'
@@ -68,11 +68,56 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
             : '-',
       },
       {
-        label: 'Payout Height',
+        label: 'expiration height',
+        value: contract.expiration_height?.toLocaleString() || '-',
+      },
+      {
+        label: 'expiration time',
+        copyable: false,
+        value:
+          contract.expiration_timestamp !== '0001-01-01T00:00:00Z'
+            ? humanDate(contract.expiration_timestamp, {
+                dateStyle: 'medium',
+                timeStyle: 'short',
+              })
+            : '-',
+      },
+      {
+        label: 'proof height',
+        value: contract.proof_height?.toLocaleString() || '-',
+      },
+      {
+        label: 'proof time',
+        copyable: false,
+        value:
+          contract.proof_timestamp !== '0001-01-01T00:00:00Z'
+            ? humanDate(contract.proof_timestamp, {
+                dateStyle: 'medium',
+                timeStyle: 'short',
+              })
+            : '-',
+      },
+      {
+        label: 'proof deadline height',
+        value: contract.proof_deadline?.toLocaleString() || '-',
+      },
+      {
+        label: 'proof deadline time',
+        copyable: false,
+        value:
+          contract.proof_deadline_timestamp !== '0001-01-01T00:00:00Z'
+            ? humanDate(contract.proof_deadline_timestamp, {
+                dateStyle: 'medium',
+                timeStyle: 'short',
+              })
+            : '-',
+      },
+      {
+        label: 'payout height',
         value: contract.payout_height?.toLocaleString() || '-',
       },
       {
-        label: 'Payout Time',
+        label: 'payout time',
         copyable: false,
         value:
           contract.payout_timestamp !== '0001-01-01T00:00:00Z'
@@ -83,11 +128,11 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
             : '-',
       },
       {
-        label: 'Proof Confirmed',
+        label: 'proof confirmed',
         value: String(contract.proof_confirmed),
       },
       {
-        label: 'Previous Revisions',
+        label: 'previous revisions',
         copyable: false,
         value: (contract.previous_revisions?.length || 0).toLocaleString(),
       },

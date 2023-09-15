@@ -17,7 +17,7 @@ export function ContractSkeleton() {
           </div>
           <Skeleton className="h-[40px] w-full" />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-4">
-            {times(12, (i) => (
+            {times(18, (i) => (
               <DatumSkeleton key={i} />
             ))}
           </div>
