@@ -12,7 +12,11 @@ export const webLinks = {
     siaui: 'https://docs.sia.tech/your-sia-wallet/sia-ui-faqs',
     brand: 'https://docs.sia.tech/sia-integrations/sia-brand-guidelines',
   },
-  website: 'https://sia.tech',
+  website: {
+    index: 'https://sia.tech',
+    tos: 'https://sia.tech/terms-of-service',
+    privacy: 'https://sia.tech/privacy-policy',
+  },
   explore: {
     mainnet: 'https://explore.sia.tech',
     testnet: 'https://zen.sia.tech',

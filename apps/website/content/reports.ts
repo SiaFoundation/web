@@ -35,7 +35,7 @@ function readReports(): ReportPair[] {
         return {
           year,
           quarter: quarter.toUpperCase(),
-          link: `${webLinks.website}/transparency/${filename}`,
+          link: `${webLinks.website.index}/transparency/${filename}`,
         }
       })
       .filter((i) => i)

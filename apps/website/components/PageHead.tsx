@@ -15,7 +15,7 @@ type Props = {
 export function PageHead({ title, description, image, date, path }: Props) {
   return (
     <SitePageHead
-      appLink={webLinks.website}
+      appLink={webLinks.website.index}
       appName={appName}
       title={title}
       description={description}

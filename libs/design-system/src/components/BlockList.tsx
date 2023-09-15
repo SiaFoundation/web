@@ -19,9 +19,10 @@ type BlockListItemProps = {
 type Props = {
   title: string
   blocks?: BlockListItemProps[]
+  skeletonCount?: number
 }
 
-export function BlockList({ title, blocks }: Props) {
+export function BlockList({ title, blocks, skeletonCount = 10 }: Props) {
   return (
     <Panel>
       <div className="flex flex-col rounded overflow-hidden">
@@ -83,7 +84,7 @@ export function BlockList({ title, blocks }: Props) {
                 </Text>
               </div>
             </div>
-          )) || <EntityListSkeleton />}
+          )) || <EntityListSkeleton skeletonCount={skeletonCount} />}
         </div>
       </div>
     </Panel>

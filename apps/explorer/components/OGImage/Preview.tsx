@@ -12,7 +12,7 @@ export function Preview({ title, subtitle, values }: Props) {
     <div tw="bg-black w-full h-full flex items-center justify-center">
       <Background />
       <div
-        tw="flex flex-col justify-between absolute top-0 left-0 w-full h-full p-10"
+        tw="flex flex-col justify-between absolute top-0 left-0 w-full h-full pt-10 px-10 pb-14"
         style={{
           gap: '40px',
         }}

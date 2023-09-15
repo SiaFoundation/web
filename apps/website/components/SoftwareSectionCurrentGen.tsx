@@ -31,22 +31,22 @@ export function SoftwareSectionCurrentGen({ versions }: Props) {
         links={[
           {
             title: 'Windows',
-            link: `${webLinks.website}/releases/siad/Sia-v${versions.sia.latest}-windows-amd64.zip`,
+            link: `${webLinks.website.index}/releases/siad/Sia-v${versions.sia.latest}-windows-amd64.zip`,
             newTab: true,
           },
           {
             title: 'MacOS',
-            link: `${webLinks.website}/releases/siad/Sia-v${versions.sia.latest}-darwin-amd64.zip`,
+            link: `${webLinks.website.index}/releases/siad/Sia-v${versions.sia.latest}-darwin-amd64.zip`,
             newTab: true,
           },
           {
             title: 'Linux',
-            link: `${webLinks.website}/releases/siad/Sia-v${versions.sia.latest}-linux-amd64.zip`,
+            link: `${webLinks.website.index}/releases/siad/Sia-v${versions.sia.latest}-linux-amd64.zip`,
             newTab: true,
           },
           {
             title: 'Raspberry Pi',
-            link: `${webLinks.website}/releases/siad/Sia-v${versions.sia.latest}-linux-arm64.zip`,
+            link: `${webLinks.website.index}/releases/siad/Sia-v${versions.sia.latest}-linux-arm64.zip`,
             newTab: true,
           },
           {
@@ -71,17 +71,17 @@ export function SoftwareSectionCurrentGen({ versions }: Props) {
         links={[
           {
             title: 'Windows',
-            link: `${webLinks.website}/releases/Sia-UI-v${versions.sia.latest}.exe`,
+            link: `${webLinks.website.index}/releases/Sia-UI-v${versions.sia.latest}.exe`,
             newTab: true,
           },
           {
             title: 'MacOS',
-            link: `${webLinks.website}/releases/Sia-UI-v${versions.sia.latest}.dmg`,
+            link: `${webLinks.website.index}/releases/Sia-UI-v${versions.sia.latest}.dmg`,
             newTab: true,
           },
           {
             title: 'Linux',
-            link: `${webLinks.website}/releases/Sia-UI-v${versions.sia.latest}.AppImage`,
+            link: `${webLinks.website.index}/releases/Sia-UI-v${versions.sia.latest}.AppImage`,
             newTab: true,
           },
         ]}

@@ -31,7 +31,7 @@ export const routes = {
   },
   whitepaper: {
     index: '/whitepaper',
-    pdf: `${webLinks.website}/sia.pdf`,
+    pdf: `${webLinks.website.index}/sia.pdf`,
   },
   community: {
     index: '/community-ecosystem',

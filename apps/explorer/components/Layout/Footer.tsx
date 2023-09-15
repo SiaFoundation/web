@@ -18,7 +18,7 @@ export function Footer() {
               color="contrast"
               weight="medium"
               underline="hover"
-              href={webLinks.website}
+              href={webLinks.website.index}
               noWrap
             >
               The Sia Foundation © {new Date().getFullYear()}
@@ -26,7 +26,7 @@ export function Footer() {
           </div>
           <div className="flex-1 flex items-center gap-4">
             <Link
-              href={webLinks.website}
+              href={webLinks.website.tos}
               size="12"
               color="subtle"
               underline="hover"
@@ -35,7 +35,7 @@ export function Footer() {
               Terms of Service
             </Link>
             <Link
-              href={webLinks.website}
+              href={webLinks.website.privacy}
               size="12"
               color="subtle"
               underline="hover"
