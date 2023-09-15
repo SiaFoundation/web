@@ -57,6 +57,12 @@ sia.tech {
   reverse_proxy localhost:3001
 }
 
+(cloudflare) {
+  tls {
+    dns cloudflare {$CADDY_CLOUDFLARE_TOKEN}
+  }
+}
+
 beta.sia.tech {
   import website
   reverse_proxy localhost:3009
@@ -90,21 +96,20 @@ explore.sia.tech {
   redir https://siascan.com{uri} permanent
 }
 
-siascan.com {
-  encode gzip
-  reverse_proxy localhost:3003
-}
-
-design.sia.tech {
-  encode gzip
-  reverse_proxy localhost:3004
-}
-
 zen.sia.tech {
   redir https://zen.siascan.com{uri} permanent
 }
 
+siascan.com {
+  tls internal
+  import cloudflare
+  encode gzip
+  reverse_proxy localhost:3003
+}
+
 zen.siascan.com {
+  tls internal
+  import cloudflare
   encode gzip
   reverse_proxy localhost:3005
 }

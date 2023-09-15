@@ -91,10 +91,6 @@ explore.local {
   reverse_proxy localhost:3003
 }
 
-design.local {
-  reverse_proxy localhost:3004
-}
-
 zen.local {
   reverse_proxy localhost:3005
 }
