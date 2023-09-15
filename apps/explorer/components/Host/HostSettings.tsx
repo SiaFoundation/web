@@ -1,97 +1,117 @@
 'use client'
 
 import { useMemo } from 'react'
-import { SiaCentralHost } from '@siafoundation/sia-central'
+import {
+  SiaCentralExchangeRates,
+  SiaCentralHost,
+} from '@siafoundation/sia-central'
 import { DatumProps, ExplorerDatum } from '../ExplorerDatum'
 import { Panel } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
-import { humanBytes } from '@siafoundation/sia-js'
+import { humanBytes, toSiacoins } from '@siafoundation/sia-js'
+import { getDownloadCost, getStorageCost, getUploadCost } from '../../lib/host'
 
 type Props = {
   host: SiaCentralHost
+  rates: SiaCentralExchangeRates
 }
 
-export function HostSettings({ host }: Props) {
+export function HostSettings({ host, rates }: Props) {
   const priceTableValues = useMemo(() => {
     return [
       {
-        label: 'base RPC price',
-        sc: new BigNumber(host.settings.base_rpc_price),
+        label: 'total storage',
+        copyable: false,
+        value: humanBytes(host.settings.total_storage),
       },
       {
-        label: 'collateral',
-        sc: new BigNumber(host.settings.collateral),
+        label: 'remaining storage',
+        copyable: false,
+        value: humanBytes(host.settings.remaining_storage),
       },
       {
-        label: 'contract price',
-        sc: new BigNumber(host.settings.contract_price),
+        label: 'storage price',
+        copyable: false,
+        value: `${getStorageCost({
+          price: host.settings.storage_price,
+          rates,
+        })}/month`,
       },
       {
         label: 'download price',
-        sc: new BigNumber(host.settings.download_price),
+        copyable: false,
+        value: getDownloadCost({ price: host.settings.download_price, rates }),
       },
       {
-        label: 'ephemeral account expiry',
-        value: host.settings.ephemeral_account_expiry,
+        label: 'upload price',
+        copyable: false,
+        value: getUploadCost({ price: host.settings.download_price, rates }),
+      },
+      {
+        label: 'collateral',
+        copyable: false,
+        value: `$${toSiacoins(host.settings.collateral)
+          .times(rates.sc.usd || 1)
+          .toFixed(2)}`,
       },
       {
         label: 'max collateral',
-        sc: new BigNumber(host.settings.max_collateral),
+        copyable: false,
+        value: `$${toSiacoins(host.settings.max_collateral)
+          .times(rates.sc.usd || 1)
+          .toFixed(2)}`,
       },
       {
-        label: 'max download batch size',
-        value: host.settings.max_download_batch_size,
+        label: 'contract price',
+        copyable: false,
+        sc: new BigNumber(host.settings.contract_price),
+      },
+      {
+        label: 'base RPC price',
+        copyable: false,
+        value: `${toSiacoins(host.settings.base_rpc_price)
+          .div(1e6)
+          .toExponential()} SC/million`,
+      },
+      {
+        label: 'sector access price',
+        copyable: false,
+        value: `${toSiacoins(host.settings.sector_access_price)
+          .div(1e6)
+          .toExponential()} SC/million`,
+      },
+      {
+        label: 'ephemeral account expiry',
+        copyable: false,
+        value: host.settings.ephemeral_account_expiry,
       },
       {
         label: 'max duration',
+        copyable: false,
         value: host.settings.max_duration,
       },
       {
         label: 'max ephemeral account balance',
+        copyable: false,
         sc: new BigNumber(host.settings.max_ephemeral_account_balance),
       },
       {
-        label: 'max revise batch size',
-        value: host.settings.max_revise_batch_size,
-      },
-      {
-        label: 'remaining storage',
-        value: humanBytes(host.settings.remaining_storage),
-      },
-      {
-        label: 'revision number',
-        value: host.settings.revision_number,
-      },
-      {
-        label: 'sector access price',
-        sc: new BigNumber(host.settings.sector_access_price),
-      },
-      {
         label: 'sector size',
+        copyable: false,
         value: humanBytes(host.settings.sector_size),
       },
       {
         label: 'sia mux port',
+        copyable: false,
         value: host.settings.sia_mux_port,
       },
       {
-        label: 'storage price',
-        sc: new BigNumber(host.settings.storage_price),
-      },
-      {
-        label: 'total storage',
-        value: humanBytes(host.settings.total_storage),
-      },
-      {
-        label: 'upload price',
-        sc: new BigNumber(host.settings.upload_price),
-      },
-      {
         label: 'window size',
-        value: host.settings.window_size,
+        copyable: false,
+        value: `${host.settings.window_size} blocks`,
       },
     ] as DatumProps[]
-  }, [host])
+  }, [host, rates])
 
   return (
     <Panel className="p-4">
