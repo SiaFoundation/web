@@ -3,7 +3,7 @@ import {
   getSiaCentralHostsNetworkMetrics,
 } from '@siafoundation/sia-central'
 import { getOGImage } from '../components/OGImage'
-import { networkName, siaCentralApi } from '../config'
+import { network, siaCentralApi } from '../config'
 import { humanBytes } from '@siafoundation/sia-js'
 
 export const revalidate = 60
@@ -50,9 +50,9 @@ export default async function Image() {
 
   return getOGImage(
     {
-      title: networkName === 'Sia Mainnet' ? 'siascan' : 'siascan',
+      title: 'siascan',
       subtitle:
-        networkName === 'Sia Mainnet'
+        network === 'mainnet'
           ? 'Sia blockchain and host explorer.'
           : 'Zen testnet blockchain and host explorer.',
       values,
