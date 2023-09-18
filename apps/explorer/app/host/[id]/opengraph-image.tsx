@@ -11,6 +11,7 @@ import {
 } from '../../../lib/host'
 import { humanBytes, humanSpeed } from '@siafoundation/sia-js'
 import { truncate } from '@siafoundation/design-system'
+import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
 
 export const revalidate = 60
 
@@ -19,6 +20,8 @@ export const size = {
   width: 1200,
   height: 630,
 }
+
+const currency = currencyOptions.find((c) => c.id === 'usd') as CurrencyOption
 
 export const contentType = 'image/png'
 
@@ -45,7 +48,10 @@ export default async function Image({ params }) {
       label: 'storage',
       value: getStorageCost({
         price: h.host.settings.storage_price,
-        rates: r.rates,
+        exchange: {
+          currency,
+          rate: r.rates.sc.usd,
+        },
       }),
       subvalue: humanBytes(h.host.settings.remaining_storage),
     },
@@ -53,7 +59,10 @@ export default async function Image({ params }) {
       label: 'download',
       value: getDownloadCost({
         price: h.host.settings.download_price,
-        rates: r.rates,
+        exchange: {
+          currency,
+          rate: r.rates.sc.usd,
+        },
       }),
       subvalue: humanSpeed(
         (h.host.benchmark.data_size * 8) /
@@ -64,7 +73,10 @@ export default async function Image({ params }) {
       label: 'upload',
       value: getUploadCost({
         price: h.host.settings.upload_price,
-        rates: r.rates,
+        exchange: {
+          currency,
+          rate: r.rates.sc.usd,
+        },
       }),
       subvalue: humanSpeed(
         (h.host.benchmark.data_size * 8) / (h.host.benchmark.upload_time / 1000)

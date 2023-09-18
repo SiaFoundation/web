@@ -10,7 +10,7 @@ import {
 
 export function HostHeaderSkeleton() {
   return (
-    <div className="flex flex-col gap-x-4 gap-y-4 pt-10 pb-4">
+    <div className="flex flex-col gap-x-4 gap-y-4">
       <div className="flex gap-x-4 gap-y-4 items-center">
         <Avatar shape="square" size="4" />
         <div className="flex flex-wrap gap-3 items-start justify-between w-full">
@@ -21,7 +21,8 @@ export function HostHeaderSkeleton() {
               className="w-full mt-0.5 !border-gray-200/70 dark:!border-graydark-100"
               color="verySubtle"
             />
-            <Skeleton className="h-4 w-[250px]" />
+            <Skeleton className="h-4 w-[150px]" />
+            <Skeleton className="h-4 w-[130px]" />
           </div>
           <div className="flex flex-col gap-2">
             <div className="grid grid-cols-3 gap-4">

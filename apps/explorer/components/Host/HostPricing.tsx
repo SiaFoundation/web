@@ -1,3 +1,5 @@
+'use client'
+
 import {
   CloudDownload16,
   CloudUpload16,
@@ -19,6 +21,7 @@ import {
   getUploadCost,
   getUploadSpeed,
 } from '../../lib/host'
+import { useExchangeRate } from '../../hooks/useExchangeRate'
 
 type Props = {
   host: SiaCentralHost
@@ -26,19 +29,20 @@ type Props = {
 }
 
 export function HostPricing({ host, rates }: Props) {
+  const exchange = useExchangeRate(rates)
   const storageCost = useMemo(
-    () => getStorageCost({ price: host.settings.storage_price, rates }),
-    [rates, host]
+    () => getStorageCost({ price: host.settings.storage_price, exchange }),
+    [exchange, host]
   )
 
   const downloadCost = useMemo(
-    () => getDownloadCost({ price: host.settings.download_price, rates }),
-    [rates, host]
+    () => getDownloadCost({ price: host.settings.download_price, exchange }),
+    [exchange, host]
   )
 
   const uploadCost = useMemo(
-    () => getUploadCost({ price: host.settings.upload_price, rates }),
-    [rates, host]
+    () => getUploadCost({ price: host.settings.upload_price, exchange }),
+    [exchange, host]
   )
 
   const downloadSpeed = useMemo(() => getDownloadSpeed(host), [host])
@@ -56,7 +60,7 @@ export function HostPricing({ host, rates }: Props) {
     <div className="flex flex-col">
       <div className="grid grid-cols-3 gap-4">
         <Tooltip content={`Storage cost ${storageCost}/month`}>
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center justify-end">
             <Text color="verySubtle" className="hidden sm:block">
               <VmdkDisk16 />
             </Text>
@@ -66,7 +70,7 @@ export function HostPricing({ host, rates }: Props) {
           </div>
         </Tooltip>
         <Tooltip content={`Download cost ${downloadCost}/month`}>
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center justify-end">
             <Text color="verySubtle" className="hidden sm:block">
               <CloudDownload16 />
             </Text>
@@ -76,7 +80,7 @@ export function HostPricing({ host, rates }: Props) {
           </div>
         </Tooltip>
         <Tooltip content={`Upload cost ${uploadCost}/month`}>
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center justify-end">
             <Text color="verySubtle" className="hidden sm:block">
               <CloudUpload16 />
             </Text>

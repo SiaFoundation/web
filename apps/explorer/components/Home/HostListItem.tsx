@@ -25,6 +25,7 @@ import {
 } from '../../lib/host'
 import { useMemo } from 'react'
 import { routes } from '../../config/routes'
+import { useExchangeRate } from '../../hooks/useExchangeRate'
 
 type Props = {
   host: SiaCentralHost
@@ -33,19 +34,20 @@ type Props = {
 }
 
 export function HostListItem({ host, rates, entity }: Props) {
+  const exchange = useExchangeRate(rates)
   const storageCost = useMemo(
-    () => getStorageCost({ price: host.settings.storage_price, rates }),
-    [rates, host]
+    () => getStorageCost({ price: host.settings.storage_price, exchange }),
+    [exchange, host]
   )
 
   const downloadCost = useMemo(
-    () => getDownloadCost({ price: host.settings.download_price, rates }),
-    [rates, host]
+    () => getDownloadCost({ price: host.settings.download_price, exchange }),
+    [exchange, host]
   )
 
   const uploadCost = useMemo(
-    () => getUploadCost({ price: host.settings.upload_price, rates }),
-    [rates, host]
+    () => getUploadCost({ price: host.settings.upload_price, exchange }),
+    [exchange, host]
   )
 
   const downloadSpeed = useMemo(() => getDownloadSpeed(host), [host])

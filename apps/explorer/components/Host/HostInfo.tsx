@@ -37,7 +37,7 @@ export function HostInfo({ host }: Props) {
         className="w-full mt-1 mb-1 !border-gray-200/70 dark:!border-graydark-100"
         color="verySubtle"
       />
-      <div className="flex flex-wrap gap-x-2 gap-y-1 items-center">
+      <div className="flex flex-wrap gap-x-2 gap-y-1 items-center pb-1">
         <Tooltip
           content={
             host.online
@@ -79,6 +79,8 @@ export function HostInfo({ host }: Props) {
               : 'Not accepting contracts'}
           </Text>
         </Tooltip>
+      </div>
+      <div className="flex flex-wrap gap-x-2 gap-y-1 items-center">
         <Tooltip content={`Host version ${host.version}`}>
           <Text size="14" color="subtle" className="flex gap-1 items-center">
             <Fork16 />

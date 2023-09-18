@@ -1,6 +1,15 @@
-import { SiaCentralExchangeRates } from '@siafoundation/sia-central'
+import { toFixedOrPrecision } from '@siafoundation/design-system'
+import { CurrencyOption } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 
-export function siacoinToDollars(sc: string, rates: SiaCentralExchangeRates) {
-  return `$${new BigNumber(sc).div(1e24).times(rates.sc.usd).toFixed(2)}`
+const digits = 2
+
+export function siacoinToFiat(
+  sc: string,
+  exchange?: { currency: CurrencyOption; rate: string }
+) {
+  const val = new BigNumber(sc).div(1e24).times(exchange?.rate || 1)
+  return `${exchange?.currency.prefix || ''}${toFixedOrPrecision(val, {
+    digits,
+  })}`
 }

@@ -8,6 +8,8 @@ import {
   DropdownMenuGroup,
   DropdownMenuLabel,
   Menu24,
+  CurrencySelector,
+  ThemeRadio,
 } from '@siafoundation/design-system'
 
 type Props = React.ComponentProps<typeof Button> & {
@@ -47,6 +49,15 @@ export function NavDropdownMenu({ trigger, children, ...props }: Props) {
             Zen Faucet
           </Link>
         </DropdownMenuItem>
+      </DropdownMenuGroup>
+      <DropdownMenuGroup className="py-1 px-1 w-[120px]">
+        <DropdownMenuLabel className="px-1">Settings</DropdownMenuLabel>
+        <div className="py-2 px-1">
+          <CurrencySelector />
+        </div>
+        <div className="py-2 px-2.5">
+          <ThemeRadio />
+        </div>
       </DropdownMenuGroup>
     </DropdownMenu>
   )

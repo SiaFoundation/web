@@ -419,6 +419,14 @@ export function useContractsetUpdate(
 
 // objects
 
+export type Bucket = {
+  name: string
+}
+
+export function useBuckets(args?: HookArgsSwr<{ key: string }, Bucket[]>) {
+  return useGetSwr({ ...args, route: '/bus/buckets' })
+}
+
 export type ObjEntry = {
   name: string
   size: number
