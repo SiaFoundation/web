@@ -6,10 +6,17 @@ import {
   SiaCentralHost,
 } from '@siafoundation/sia-central'
 import { DatumProps, ExplorerDatum } from '../ExplorerDatum'
-import { Panel } from '@siafoundation/design-system'
+import {
+  Panel,
+  blocksToDays,
+  blocksToMonths,
+  toFixedOrPrecision,
+} from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
-import { humanBytes, toSiacoins } from '@siafoundation/sia-js'
+import { humanBytes, humanSiacoin, toSiacoins } from '@siafoundation/sia-js'
 import { getDownloadCost, getStorageCost, getUploadCost } from '../../lib/host'
+import { useExchangeRate } from '../../hooks/useExchangeRate'
+import { siacoinToFiat } from '../../lib/currency'
 
 type Props = {
   host: SiaCentralHost
@@ -17,6 +24,7 @@ type Props = {
 }
 
 export function HostSettings({ host, rates }: Props) {
+  const exchange = useExchangeRate(rates)
   const priceTableValues = useMemo(() => {
     return [
       {
@@ -34,51 +42,70 @@ export function HostSettings({ host, rates }: Props) {
         copyable: false,
         value: `${getStorageCost({
           price: host.settings.storage_price,
-          rates,
+          exchange,
+        })}/month`,
+        comment: `${getStorageCost({
+          price: host.settings.storage_price,
         })}/month`,
       },
       {
         label: 'download price',
         copyable: false,
-        value: getDownloadCost({ price: host.settings.download_price, rates }),
+        value: getDownloadCost({
+          price: host.settings.download_price,
+          exchange,
+        }),
+        comment: getDownloadCost({ price: host.settings.download_price }),
       },
       {
         label: 'upload price',
         copyable: false,
-        value: getUploadCost({ price: host.settings.download_price, rates }),
+        value: getUploadCost({ price: host.settings.upload_price, exchange }),
+        comment: getUploadCost({ price: host.settings.upload_price }),
       },
       {
         label: 'collateral',
         copyable: false,
-        value: `$${toSiacoins(host.settings.collateral)
-          .times(rates.sc.usd || 1)
-          .toFixed(2)}`,
+        value: getStorageCost({ price: host.settings.collateral, exchange }),
+        comment: getStorageCost({ price: host.settings.collateral }),
       },
       {
         label: 'max collateral',
         copyable: false,
-        value: `$${toSiacoins(host.settings.max_collateral)
-          .times(rates.sc.usd || 1)
-          .toFixed(2)}`,
+        value: siacoinToFiat(host.settings.max_collateral, exchange),
+        comment: humanSiacoin(host.settings.max_collateral),
       },
       {
         label: 'contract price',
         copyable: false,
-        sc: new BigNumber(host.settings.contract_price),
+        value: siacoinToFiat(host.settings.contract_price, exchange),
+        comment: humanSiacoin(host.settings.contract_price),
       },
       {
         label: 'base RPC price',
         copyable: false,
-        value: `${toSiacoins(host.settings.base_rpc_price)
-          .div(1e6)
-          .toExponential()} SC/million`,
+        value: `${exchange?.currency.prefix || ''}${toSiacoins(
+          host.settings.base_rpc_price
+        )
+          .times(1e6)
+          .times(exchange?.rate || 1)
+          .precision(2)}/million`,
+        comment: `${toSiacoins(host.settings.base_rpc_price).times(
+          1e6
+        )} SC/million`,
       },
       {
         label: 'sector access price',
         copyable: false,
-        value: `${toSiacoins(host.settings.sector_access_price)
-          .div(1e6)
-          .toExponential()} SC/million`,
+        value: `${exchange?.currency.prefix || ''}${toSiacoins(
+          host.settings.sector_access_price
+        )
+          .times(1e6)
+          .times(exchange?.rate || 1)
+          .precision(2)} SC/million`,
+        comment: `${toSiacoins(host.settings.sector_access_price).times(
+          1e6
+        )} SC/million`,
       },
       {
         label: 'ephemeral account expiry',
@@ -88,7 +115,13 @@ export function HostSettings({ host, rates }: Props) {
       {
         label: 'max duration',
         copyable: false,
-        value: host.settings.max_duration,
+        value: `${toFixedOrPrecision(
+          blocksToMonths(host.settings.max_duration),
+          {
+            digits: 2,
+          }
+        )} months`,
+        comment: `${host.settings.max_duration} blocks`,
       },
       {
         label: 'max ephemeral account balance',
@@ -108,10 +141,13 @@ export function HostSettings({ host, rates }: Props) {
       {
         label: 'window size',
         copyable: false,
-        value: `${host.settings.window_size} blocks`,
+        value: `${toFixedOrPrecision(blocksToDays(host.settings.window_size), {
+          digits: 2,
+        })} days`,
+        comment: `${host.settings.window_size} blocks`,
       },
     ] as DatumProps[]
-  }, [host, rates])
+  }, [host, exchange])
 
   return (
     <Panel className="p-4">

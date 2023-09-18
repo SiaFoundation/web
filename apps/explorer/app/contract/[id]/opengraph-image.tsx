@@ -7,7 +7,8 @@ import { getOGImage } from '../../../components/OGImageEntity'
 import { siaCentralApi } from '../../../config'
 import { truncate } from '@siafoundation/design-system'
 import { lowerCase } from 'lodash'
-import { siacoinToDollars } from '../../../lib/currency'
+import { siacoinToFiat } from '../../../lib/currency'
+import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
 
 export const revalidate = 60
 
@@ -18,6 +19,8 @@ export const size = {
 }
 
 export const contentType = 'image/png'
+
+const currency = currencyOptions.find((c) => c.id === 'usd') as CurrencyOption
 
 export default async function Image({ params }) {
   const id = params?.id as string
@@ -52,7 +55,10 @@ export default async function Image({ params }) {
     },
     {
       label: 'payout',
-      value: siacoinToDollars(c.contract.payout, r.rates),
+      value: siacoinToFiat(c.contract.payout, {
+        currency,
+        rate: r.rates.sc.usd,
+      }),
     },
   ]
 

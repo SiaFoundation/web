@@ -33,10 +33,8 @@ export function Layout({ children }: Props) {
           )}
           <NavDropdownMenu />
         </Navbar>
-        <div className="flex flex-col gap-16">
-          <div className="flex flex-col gap-5 relative mt-5 min-h-[65vh]">
-            {children}
-          </div>
+        <div className="flex flex-col">
+          <div className="flex flex-col gap-5 pt-5">{children}</div>
           <Footer />
         </div>
       </div>

@@ -4,11 +4,12 @@ import {
   webLinks,
   Logo,
   ThemeRadio,
+  CurrencySelector,
 } from '@siafoundation/design-system'
 
 export function Footer() {
   return (
-    <Container className="mt-20">
+    <Container className="pt-16">
       <div className="py-4 border-t border-gray-200 dark:border-graydark-100">
         <div className="flex flex-wrap gap-4 items-center">
           <div className="flex gap-2 items-center">
@@ -43,7 +44,10 @@ export function Footer() {
             >
               Privacy Policy
             </Link>
-            <div className="flex-1" />
+          </div>
+          <div className="flex-1" />
+          <div className="flex-1 flex items-center justify-end gap-6">
+            <CurrencySelector />
             <ThemeRadio className="hidden md:flex" />
           </div>
         </div>

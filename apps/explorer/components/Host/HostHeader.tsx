@@ -14,7 +14,7 @@ type Props = {
 
 export function HostHeader({ host, rates }: Props) {
   return (
-    <div className="flex flex-col gap-x-4 gap-y-4 pt-5 sm:pt-10 pb-4">
+    <div className="flex flex-col gap-x-4 gap-y-4">
       <Avatar
         src={hashToAvatar(host.public_key)}
         shape="square"

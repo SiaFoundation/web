@@ -11,7 +11,8 @@ import { EntityList, EntityListItemProps } from '@siafoundation/design-system'
 import { DatumProps, ExplorerDatum } from '../ExplorerDatum'
 import { ContentLayout } from '../ContentLayout'
 import { ContractHeader } from './ContractHeader'
-import { siacoinToDollars } from '../../lib/currency'
+import { siacoinToFiat } from '../../lib/currency'
+import { useExchangeRate } from '../../hooks/useExchangeRate'
 
 type Props = {
   contract: SiaCentralContract
@@ -21,6 +22,7 @@ type Props = {
 }
 
 export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
+  const exchange = useExchangeRate(rates)
   const values = useMemo(() => {
     return [
       {
@@ -31,9 +33,8 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
       {
         label: 'payout',
         copyable: false,
-        value: `${siacoinToDollars(contract.payout, rates)} (${humanSiacoin(
-          contract.payout
-        )})`,
+        value: siacoinToFiat(contract.payout, exchange),
+        comment: humanSiacoin(contract.payout),
       },
       {
         label: 'transaction ID',
@@ -49,11 +50,13 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
         value: contract.unlock_hash,
       },
       {
-        label: 'revision number',
-        value: contract.revision_number.toLocaleString(),
+        label: 'proof confirmed',
+        copyable: false,
+        value: String(contract.proof_confirmed),
       },
       {
         label: 'negotiation height',
+        copyable: false,
         value: contract.negotiation_height?.toLocaleString() || '-',
       },
       {
@@ -69,6 +72,7 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
       },
       {
         label: 'expiration height',
+        copyable: false,
         value: contract.expiration_height?.toLocaleString() || '-',
       },
       {
@@ -84,7 +88,10 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
       },
       {
         label: 'proof height',
-        value: contract.proof_height?.toLocaleString() || '-',
+        copyable: false,
+        value: contract.proof_height
+          ? contract.proof_height.toLocaleString()
+          : '-',
       },
       {
         label: 'proof time',
@@ -99,6 +106,7 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
       },
       {
         label: 'proof deadline height',
+        copyable: false,
         value: contract.proof_deadline?.toLocaleString() || '-',
       },
       {
@@ -114,6 +122,7 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
       },
       {
         label: 'payout height',
+        copyable: false,
         value: contract.payout_height?.toLocaleString() || '-',
       },
       {
@@ -128,8 +137,8 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
             : '-',
       },
       {
-        label: 'proof confirmed',
-        value: String(contract.proof_confirmed),
+        label: 'revision number',
+        value: contract.revision_number.toLocaleString(),
       },
       {
         label: 'previous revisions',
@@ -137,7 +146,7 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
         value: (contract.previous_revisions?.length || 0).toLocaleString(),
       },
     ] as DatumProps[]
-  }, [contract, rates])
+  }, [contract, exchange])
 
   const missedProofOutputs = useMemo(() => {
     if (!contract) {

@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Text,
   BlockList,
@@ -18,6 +20,7 @@ import {
 import { hashToAvatar } from '../../lib/avatar'
 import { getDownloadCost, getStorageCost, getUploadCost } from '../../lib/host'
 import { HostListItem } from './HostListItem'
+import { useExchangeRate } from '../../hooks/useExchangeRate'
 
 export function Home({
   metrics,
@@ -32,6 +35,7 @@ export function Home({
   hosts: SiaCentralHost[]
   rates: SiaCentralExchangeRates
 }) {
+  const exchange = useExchangeRate()
   const values = useMemo(() => {
     const list = [
       {
@@ -136,7 +140,7 @@ export function Home({
             >
               {getStorageCost({
                 price: metrics?.average.settings.storage_price,
-                rates,
+                exchange,
               })}
             </Text>
           </Tooltip>
@@ -153,7 +157,7 @@ export function Home({
             >
               {getDownloadCost({
                 price: metrics?.average.settings.download_price,
-                rates,
+                exchange,
               })}
             </Text>
           </Tooltip>
@@ -170,7 +174,7 @@ export function Home({
             >
               {getUploadCost({
                 price: metrics?.average.settings.upload_price,
-                rates,
+                exchange,
               })}
             </Text>
           </Tooltip>
@@ -178,7 +182,7 @@ export function Home({
       },
     ]
     return list
-  }, [metrics, blockHeight, rates])
+  }, [metrics, blockHeight, exchange])
 
   return (
     <ContentLayout

@@ -47,7 +47,7 @@ export async function ContractHeader({
               href={routes.contract.view.replace(':id', renewedFromId)}
             >
               <ArrowLeft16 />
-              Renewed from
+              renewed from
             </LinkButton>
           )}
           <Badge
@@ -60,7 +60,7 @@ export async function ContractHeader({
           </Badge>
           {renewedToId && renewedToId !== id && (
             <LinkButton href={routes.contract.view.replace(':id', renewedToId)}>
-              Renewed to
+              renewed to
               <ArrowRight16 />
             </LinkButton>
           )}

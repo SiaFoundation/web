@@ -14,9 +14,10 @@ import {
 } from '../icons/carbon'
 import { ThemeRadio } from '../components/ThemeRadio'
 import { webLinks } from '../data/webLinks'
-import { CurrencyId, useAppSettings } from '@siafoundation/react-core'
+import { useAppSettings } from '@siafoundation/react-core'
 import { Dialog } from '../core/Dialog'
 import { minutesInMilliseconds } from '../lib/time'
+import { CurrencySelector } from './CurrencySelector'
 
 type Props = {
   open: boolean
@@ -25,8 +26,7 @@ type Props = {
 }
 
 export function SettingsDialog({ open, onOpenChange, securityEl }: Props) {
-  const { settings, setSettings, setCurrency, currencyOptions, gpu } =
-    useAppSettings()
+  const { settings, setSettings, gpu } = useAppSettings()
 
   return (
     <Dialog
@@ -53,19 +53,7 @@ export function SettingsDialog({ open, onOpenChange, securityEl }: Props) {
                   <Heading size="20" className="flex-1">
                     Currency
                   </Heading>
-                  <Select
-                    disabled={!settings.siaCentral}
-                    value={settings.currency.id}
-                    onChange={(e) =>
-                      setCurrency(e.currentTarget.value as CurrencyId)
-                    }
-                  >
-                    {currencyOptions.map(({ id, label }) => (
-                      <Option key={id} value={id}>
-                        {label}
-                      </Option>
-                    ))}
-                  </Select>
+                  <CurrencySelector />
                 </div>
                 <Paragraph size="14">
                   Select a currency for price conversions from Siacoin. Requires
