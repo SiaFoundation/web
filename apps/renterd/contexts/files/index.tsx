@@ -49,9 +49,7 @@ function useFilesMain() {
   )
 
   const { uploadFiles, uploadsList } = useUploads({ activeDirectoryPath })
-  const { downloadFiles, downloadsList, getFileUrl } = useDownloads({
-    activeDirectoryPath,
-  })
+  const { downloadFiles, downloadsList, getFileUrl } = useDownloads()
 
   const { response, dataset } = useDataset({
     activeDirectoryPath,

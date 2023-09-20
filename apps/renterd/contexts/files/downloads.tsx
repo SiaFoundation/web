@@ -13,11 +13,7 @@ import {
 
 type UploadsMap = Record<string, ObjectData>
 
-type Props = {
-  activeDirectoryPath: string
-}
-
-export function useDownloads({ activeDirectoryPath }: Props) {
+export function useDownloads() {
   const download = useObjectDownloadFunc()
   const [downloadsMap, setDownloadsMap] = useState<UploadsMap>({})
 
