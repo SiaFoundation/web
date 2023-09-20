@@ -27,13 +27,13 @@ export function useWorkerState(args?: HookArgsSwr<void, WorkerState>) {
 }
 
 export function useObjectDownloadFunc(
-  args?: HookArgsCallback<{ key: string }, void, Blob>
+  args?: HookArgsCallback<{ key: string; bucket: string }, void, Blob>
 ) {
   return useGetDownloadFunc({ ...args, route: '/worker/objects/:key' })
 }
 
 export function useObjectUpload(
-  args?: HookArgsCallback<{ key: string }, File, void>
+  args?: HookArgsCallback<{ key: string; bucket: string }, File, void>
 ) {
   return usePutFunc(
     {

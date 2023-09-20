@@ -50,7 +50,7 @@ export function TransfersBar() {
                       className="flex flex-col gap-1 border-t first:border-t-0 border-gray-200 dark:border-graydark-300 px-3 py-2"
                     >
                       <Text ellipsis size="14" className="">
-                        {upload.path.slice(1)}
+                        {upload.path}
                       </Text>
                       <ProgressBar
                         variant="accent"
@@ -91,7 +91,7 @@ export function TransfersBar() {
                       className="flex flex-col gap-1 border-t first:border-t-0 border-gray-200 dark:border-graydark-300 px-3 py-2"
                     >
                       <Text ellipsis size="14" className="">
-                        {download.path.slice(1)}
+                        {download.path}
                       </Text>
                       <ProgressBar
                         variant="accent"

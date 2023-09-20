@@ -7,6 +7,7 @@ import {
 import { useDialog } from '../../contexts/dialog'
 import { useCallback } from 'react'
 import { useObjectDelete } from '@siafoundation/react-renterd'
+import { bucketAndKeyParamsFromPath } from '../../contexts/files/paths'
 
 export function useFileDelete() {
   const { openConfirmDialog } = useDialog()
@@ -35,7 +36,7 @@ export function useFileDelete() {
         ),
         onConfirm: async () => {
           const response = await deleteObject.delete({
-            params: { key: path.slice(1) },
+            params: bucketAndKeyParamsFromPath(path),
           })
 
           if (response.error) {

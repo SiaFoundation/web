@@ -19,11 +19,10 @@ import { useFileDelete } from '../useFileDelete'
 import { CopyMetadataMenuItem } from './CopyMetadataMenuItem'
 
 type Props = {
-  name: string
   path: string
 }
 
-export function FileContextMenu({ name, path }: Props) {
+export function FileContextMenu({ path }: Props) {
   const { downloadFiles, getFileUrl } = useFiles()
   const deleteFile = useFileDelete()
 
@@ -39,7 +38,7 @@ export function FileContextMenu({ name, path }: Props) {
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
       <DropdownMenuItem
         onSelect={async () => {
-          downloadFiles([name])
+          downloadFiles([path])
         }}
       >
         <DropdownMenuLeftSlot>

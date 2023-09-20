@@ -19,7 +19,7 @@ export function getStorageCost({ price, exchange }: Props) {
         .times(monthsToBlocks(1))
         .div(1e24)
         .times(exchange.rate || 1)
-        .toFixed(2)}/TB`
+        .toFormat(2)}/TB`
     : `${humanSiacoin(
         new BigNumber(price).times(TBToBytes(1)).times(monthsToBlocks(1)),
         { fixed: 3 }
@@ -32,7 +32,7 @@ export function getDownloadCost({ price, exchange }: Props) {
         .times(TBToBytes(1))
         .div(1e24)
         .times(exchange.rate || 1)
-        .toFixed(2)}/TB`
+        .toFormat(2)}/TB`
     : `${humanSiacoin(new BigNumber(price).times(TBToBytes(1)), {
         fixed: 3,
       })}/TB`
@@ -44,7 +44,7 @@ export function getUploadCost({ price, exchange }: Props) {
         .times(TBToBytes(1))
         .div(1e24)
         .times(exchange.rate || 1)
-        .toFixed(2)}/TB`
+        .toFormat(2)}/TB`
     : `${humanSiacoin(new BigNumber(price).times(TBToBytes(1)), {
         fixed: 3,
       })}/TB`

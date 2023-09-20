@@ -10,19 +10,19 @@ import { sortBy } from 'lodash'
 import { computeSlabContractSetShards } from '../../../../contexts/files/health'
 import { ObjectData } from '../../../../contexts/files/types'
 import { useHealthLabel } from '../../../../hooks/useHealthLabel'
+import { bucketAndKeyParamsFromPath } from '../../../../contexts/files/paths'
 
 export function FilesHealthColumnContents({
   path,
   isUploading,
-  isDirectory,
+  type,
   health: _health,
   size,
 }: ObjectData) {
+  const isDirectory = type === 'directory'
   const obj = useObject({
     disabled: isUploading || isDirectory,
-    params: {
-      key: path.slice(1),
-    },
+    params: bucketAndKeyParamsFromPath(path),
     config: {
       swr: {
         dedupingInterval: 5000,

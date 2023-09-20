@@ -14,6 +14,7 @@ import BigNumber from 'bignumber.js'
 import { useFiles } from '.'
 import { ObjectData, TableColumnId } from './types'
 import { FilesHealthColumn } from '../../components/Files/Columns/FilesHealthColumn'
+import { BucketContextMenu } from '../../components/Files/BucketContextMenu'
 
 type Context = {
   currentHeight: number
@@ -35,7 +36,7 @@ export const columns: FilesTableColumn[] = [
     fixed: true,
     cellClassName: 'w-[50px] !pl-2 !pr-2 [&+*]:!pl-0',
     render: function TypeColumn({
-      data: { isUploading, isDirectory, name, path, size },
+      data: { isUploading, type, name, path, size },
     }) {
       const { setActiveDirectory } = useFiles()
       if (isUploading) {
@@ -59,10 +60,12 @@ export const columns: FilesTableColumn[] = [
           </Button>
         )
       }
-      return isDirectory ? (
+      return type === 'bucket' ? (
+        <BucketContextMenu name={name} />
+      ) : type === 'directory' ? (
         <DirectoryContextMenu path={path} size={size} />
       ) : (
-        <FileContextMenu name={name} path={path} />
+        <FileContextMenu path={path} />
       )
     },
   },
@@ -71,9 +74,25 @@ export const columns: FilesTableColumn[] = [
     label: 'name',
     category: 'general',
     contentClassName: 'max-w-[600px]',
-    render: function NameColumn({ data: { name, isDirectory } }) {
+    render: function NameColumn({ data: { name, type } }) {
       const { setActiveDirectory } = useFiles()
-      if (isDirectory) {
+      if (type === 'bucket') {
+        return (
+          <Text
+            ellipsis
+            color="accent"
+            weight="semibold"
+            className="cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation()
+              setActiveDirectory(() => [name])
+            }}
+          >
+            {name}
+          </Text>
+        )
+      }
+      if (type === 'directory') {
         if (name === '..') {
           return (
             <Text
@@ -116,7 +135,10 @@ export const columns: FilesTableColumn[] = [
     id: 'size',
     label: 'size',
     contentClassName: 'justify-end',
-    render: function SizeColumn({ data: { name, size, isUploading } }) {
+    render: function SizeColumn({ data: { type, name, size, isUploading } }) {
+      if (type === 'bucket') {
+        return null
+      }
       if (isUploading) {
         return <LoadingDots />
       }
@@ -141,6 +163,9 @@ export const columns: FilesTableColumn[] = [
     label: 'health',
     contentClassName: 'justify-center',
     render: function HealthColumn({ data }) {
+      if (data.type === 'bucket') {
+        return null
+      }
       return <FilesHealthColumn {...data} />
     },
   },

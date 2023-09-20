@@ -8,7 +8,6 @@ type Props = {
   image: string
   date?: string
   path: string
-  analytics?: boolean
   children?: React.ReactNode
 }
 

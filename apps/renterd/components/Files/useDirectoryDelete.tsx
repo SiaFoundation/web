@@ -8,6 +8,7 @@ import { useDialog } from '../../contexts/dialog'
 import { useCallback } from 'react'
 import { useObjectDelete } from '@siafoundation/react-renterd'
 import { humanBytes } from '@siafoundation/sia-js'
+import { bucketAndKeyParamsFromPath } from '../../contexts/files/paths'
 
 export function useDirectoryDelete() {
   const { openConfirmDialog } = useDialog()
@@ -37,7 +38,7 @@ export function useDirectoryDelete() {
         ),
         onConfirm: async () => {
           const response = await deleteObject.delete({
-            params: { key: path.slice(1), batch: true },
+            params: { ...bucketAndKeyParamsFromPath(path), batch: true },
           })
 
           if (response.error) {

@@ -1,10 +1,17 @@
+import { FullPath } from './paths'
+
+export type ObjectType = 'bucket' | 'directory' | 'file'
+
 export type ObjectData = {
-  id: string
-  path: string
+  id: FullPath
+  // path is exacty bucket + returned key
+  // eg: default + /path/to/file.txt = default/path/to/file.txt
+  path: FullPath
+  bucket: string
   name: string
   health?: number
   size: number
-  isDirectory?: boolean
+  type: ObjectType
   isUploading?: boolean
   loaded?: number
 }

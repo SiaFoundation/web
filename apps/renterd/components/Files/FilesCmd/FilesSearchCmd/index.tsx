@@ -2,9 +2,9 @@ import { CommandGroup, CommandItemSearch } from '../../../CmdRoot/Item'
 import { Page } from '../../../CmdRoot/types'
 import { useObjectSearch } from '@siafoundation/react-renterd'
 import {
-  getDirectoryFromPath,
+  getDirectorySegmentsFromPath,
   isDirectory,
-} from '../../../../contexts/files/utils'
+} from '../../../../contexts/files/paths'
 import { useFiles } from '../../../../contexts/files'
 import { Document16, FolderIcon, Text } from '@siafoundation/design-system'
 import { FileSearchEmpty } from './FileSearchEmpty'
@@ -29,11 +29,12 @@ export function FilesSearchCmd({
   beforeSelect?: () => void
   afterSelect?: () => void
 }) {
-  const { setActiveDirectory } = useFiles()
+  const { activeBucket, setActiveDirectory } = useFiles()
   const onSearchPage = currentPage?.namespace === filesSearchPage.namespace
   const results = useObjectSearch({
     disabled: !onSearchPage,
     params: {
+      bucket: activeBucket || 'default',
       key: debouncedSearch,
       skip: 0,
       limit: 10,
@@ -62,7 +63,7 @@ export function FilesSearchCmd({
             key={path}
             onSelect={() => {
               beforeSelect()
-              setActiveDirectory(() => getDirectoryFromPath(path))
+              setActiveDirectory(() => getDirectorySegmentsFromPath(path))
               afterSelect()
             }}
             value={path}

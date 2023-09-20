@@ -1,28 +1,12 @@
 import {
-  triggerErrorToast,
-  triggerToast,
   useClientFilteredDataset,
   useClientFilters,
   useDatasetEmptyState,
   useTableState,
 } from '@siafoundation/design-system'
-import { useAppSettings } from '@siafoundation/react-core'
-import {
-  useObjectDirectory,
-  useObjectDownloadFunc,
-  useObjectUpload,
-} from '@siafoundation/react-renterd'
-import { sortBy, throttle, toPairs } from 'lodash'
 import { useRouter } from 'next/router'
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react'
+import { createContext, useCallback, useContext, useMemo } from 'react'
 import { TransfersBar } from '../../components/TransfersBar'
-import { useContracts } from '../contracts'
 import { columns } from './columns'
 import {
   defaultSortField,
@@ -30,259 +14,49 @@ import {
   ObjectData,
   sortOptions,
 } from './types'
-import { getFilename, getFullPath, isDirectory } from './utils'
-
-type UploadsMap = Record<string, ObjectData>
+import { FullPath, FullPathSegments, pathSegmentsToPath } from './paths'
+import { useUploads } from './uploads'
+import { useDownloads } from './downloads'
+import { useDataset } from './dataset'
 
 function useFilesMain() {
   const router = useRouter()
   const limit = Number(router.query.limit || 20)
   const offset = Number(router.query.offset || 0)
 
-  // activeDirectory is the path split into an array of parts, stored in the router path
-  const activeDirectory = useMemo(
-    () => (router.query.path as string[]) || [],
+  // [bucket, key, directory]
+  const activeDirectory = useMemo<FullPathSegments>(
+    () => (router.query.path as FullPathSegments) || [],
     [router.query.path]
   )
-  // activeDirectoryPath is the path string, formatted in the way renterd expects
-  const activeDirectoryPath = useMemo(() => {
-    return activeDirectory.length ? `/${activeDirectory.join('/')}/` : '/'
+
+  // bucket
+  const activeBucket = useMemo(() => {
+    return activeDirectory[0]
+  }, [activeDirectory])
+
+  // bucket/key/directory/
+  const activeDirectoryPath = useMemo<FullPath>(() => {
+    return pathSegmentsToPath(activeDirectory) + '/'
   }, [activeDirectory])
 
   const setActiveDirectory = useCallback(
-    (fn: (activeDirectory: string[]) => string[]) => {
+    (fn: (activeDirectory: FullPathSegments) => FullPathSegments) => {
       const nextActiveDirectory = fn(activeDirectory)
       router.push('/files/' + nextActiveDirectory.join('/'))
     },
     [router, activeDirectory]
   )
 
-  const upload = useObjectUpload()
-  const [uploadsMap, setUploadsMap] = useState<UploadsMap>({})
-
-  const updateUploadProgress = useCallback(
-    (obj: { path: string; name: string; loaded: number; size: number }) => {
-      setUploadsMap((uploads) => ({
-        ...uploads,
-        [obj.path]: {
-          id: obj.path,
-          path: obj.path,
-          name: obj.name,
-          size: obj.size,
-          loaded: obj.loaded,
-          isUploading: true,
-          isDirectory: false,
-        },
-      }))
-    },
-    [setUploadsMap]
-  )
-
-  const removeUpload = useCallback(
-    (path: string) => {
-      setUploadsMap((uploads) => {
-        delete uploads[path]
-        return {
-          ...uploads,
-        }
-      })
-    },
-    [setUploadsMap]
-  )
-
-  const uploadFiles = async (files: File[]) => {
-    files.forEach(async (file) => {
-      const name = file.name
-      const path = getFullPath(activeDirectoryPath, name)
-      const onUploadProgress = throttle(
-        (e) =>
-          updateUploadProgress({
-            name,
-            path,
-            loaded: e.loaded,
-            size: e.total,
-          }),
-        2000
-      )
-      updateUploadProgress({
-        name,
-        path,
-        loaded: 0,
-        size: 1,
-      })
-      const response = await upload.put({
-        params: {
-          key: path.slice(1),
-        },
-        payload: file,
-        config: {
-          axios: {
-            onUploadProgress,
-          },
-        },
-      })
-      if (response.error) {
-        triggerErrorToast(response.error)
-        removeUpload(path)
-      } else {
-        removeUpload(path)
-        triggerToast(`Upload complete: ${name}`)
-      }
-    })
-  }
-
-  const uploadsList = useMemo(
-    () => Object.entries(uploadsMap).map((u) => u[1]),
-    [uploadsMap]
-  )
-
-  const download = useObjectDownloadFunc()
-  const [downloadsMap, setDownloadsMap] = useState<UploadsMap>({})
-
-  const updateDownloadProgress = useCallback(
-    (obj: { path: string; name: string; loaded: number; size: number }) => {
-      setDownloadsMap((download) => ({
-        ...download,
-        [obj.path]: {
-          id: obj.path,
-          path: obj.path,
-          name: obj.name,
-          size: obj.size,
-          loaded: obj.loaded,
-          isUploading: false,
-          isDirectory: false,
-        },
-      }))
-    },
-    [setDownloadsMap]
-  )
-
-  const removeDownload = useCallback(
-    (path: string) => {
-      setDownloadsMap((downloads) => {
-        delete downloads[path]
-        return {
-          ...downloads,
-        }
-      })
-    },
-    [setDownloadsMap]
-  )
-
-  const { settings } = useAppSettings()
-  const getFileUrl = useCallback(
-    (name: string, authenticated: boolean) => {
-      const path = `/worker/objects${name}`
-      // Parse settings.api if its set otherwise URL
-      const origin = settings.api || location.origin
-      const scheme = origin.startsWith('https') ? 'https' : 'http'
-      const host = origin.replace('https://', '').replace('http://', '')
-      if (authenticated) {
-        return `${scheme}://:${settings.password}@${host}/api${path}`
-      }
-      return `${scheme}://${host}/api${path}`
-    },
-    [settings]
-  )
-
-  const downloadFiles = async (files: string[]) => {
-    files.forEach(async (name) => {
-      const path = getFullPath(activeDirectoryPath, name)
-      let isDone = false
-      const onDownloadProgress = throttle((e) => {
-        if (isDone) {
-          return
-        }
-        updateDownloadProgress({
-          name,
-          path,
-          loaded: e.loaded,
-          size: e.total,
-        })
-      }, 2000)
-      updateDownloadProgress({
-        name,
-        path,
-        loaded: 0,
-        size: 1,
-      })
-      const response = await download.get(name, {
-        params: {
-          key: path.slice(1),
-        },
-        config: {
-          axios: {
-            onDownloadProgress,
-          },
-        },
-      })
-      isDone = true
-      if (response.error) {
-        triggerErrorToast(response.error)
-        removeDownload(path)
-      } else {
-        removeDownload(path)
-        // triggerToast(`Download complete: ${name}`)
-      }
-    })
-  }
-
-  const downloadsList = useMemo(
-    () => Object.entries(downloadsMap).map((d) => d[1]),
-    [downloadsMap]
-  )
-
-  const response = useObjectDirectory({
-    params: {
-      key: activeDirectoryPath.slice(1),
-      // limit: limit,
-      // offset: offset,
-    },
-    config: {
-      swr: { keepPreviousData: true },
-    },
+  const { uploadFiles, uploadsList } = useUploads({ activeDirectoryPath })
+  const { downloadFiles, downloadsList, getFileUrl } = useDownloads({
+    activeDirectoryPath,
   })
 
-  const { dataset: allContracts } = useContracts()
-
-  const dataset = useMemo<ObjectData[] | null>(() => {
-    if (!response.data) {
-      return null
-    }
-
-    const dataMap: Record<string, ObjectData> = {}
-
-    response.data.entries?.forEach(({ name: path, size, health }) => {
-      // If there is a directory stub file filter it out.
-      if (path === activeDirectoryPath) {
-        return
-      }
-      dataMap[path] = {
-        id: path,
-        path,
-        size,
-        health,
-        name: getFilename(path),
-        isDirectory: isDirectory(path),
-      }
-    })
-    uploadsList
-      .filter(
-        ({ path, name }) => path === getFullPath(activeDirectoryPath, name)
-      )
-      .forEach((upload) => {
-        dataMap[upload.path] = upload
-      })
-    const all = sortBy(
-      toPairs(dataMap).map((p) => p[1]),
-      'path'
-    )
-    return all
-    // Purposely do not include activeDirectoryPath - we only want to update
-    // when new data fetching is complete. Leaving it in wipes makes the
-    // directory stub path matching logic temporarily invalid.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response.data, uploadsList, allContracts])
+  const { response, dataset } = useDataset({
+    activeDirectoryPath,
+    uploadsList,
+  })
 
   const {
     configurableColumns,
@@ -319,13 +93,13 @@ function useFilesMain() {
     if (!datasetFiltered) {
       return null
     }
-    if (activeDirectory.length > 0) {
+    if (activeDirectory.length > 0 && datasetFiltered.length > 0) {
       return [
         {
           id: '..',
           name: '..',
           path: '..',
-          isDirectory: true,
+          type: 'directory',
         },
         ...datasetFiltered,
       ]
@@ -351,7 +125,15 @@ function useFilesMain() {
     filters
   )
 
+  const isViewingBuckets = activeDirectory.length === 0
+  const isViewingRootOfABucket = activeDirectory.length === 1
+  const isViewingABucket = activeDirectory.length > 0
+
   return {
+    isViewingBuckets,
+    isViewingABucket,
+    isViewingRootOfABucket,
+    activeBucket,
     activeDirectory,
     setActiveDirectory,
     activeDirectoryPath,

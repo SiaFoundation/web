@@ -5,6 +5,7 @@ import {
   Copy16,
 } from '@siafoundation/design-system'
 import { useObject } from '@siafoundation/react-renterd'
+import { bucketAndKeyParamsFromPath } from '../../../contexts/files/paths'
 
 type Props = {
   path: string
@@ -14,9 +15,7 @@ type Props = {
 // specific one when the user triggers the context menu.
 export function CopyMetadataMenuItem({ path }: Props) {
   const obj = useObject({
-    params: {
-      key: path.slice(1),
-    },
+    params: bucketAndKeyParamsFromPath(path),
     config: {
       swr: {
         dedupingInterval: 5000,

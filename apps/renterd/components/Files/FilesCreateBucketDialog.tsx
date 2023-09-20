@@ -5,11 +5,9 @@ import {
   triggerErrorToast,
   triggerToast,
 } from '@siafoundation/design-system'
-import { useObjectUpload } from '@siafoundation/react-renterd'
-import { useFiles } from '../../contexts/files'
+import { useBucketCreate } from '@siafoundation/react-renterd'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { bucketAndKeyParamsFromPath } from '../../contexts/files/paths'
 
 const initialValues = {
   name: '',
@@ -25,23 +23,21 @@ type Props = {
   onOpenChange: (val: boolean) => void
 }
 
-export function FilesCreateDirectoryDialog({
+export function FilesCreateBucketDialog({
   trigger,
   open,
   onOpenChange,
 }: Props) {
-  const { activeDirectoryPath } = useFiles()
-  const upload = useObjectUpload()
+  const bucketCreate = useBucketCreate()
 
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: async (values, actions) => {
-      const response = await upload.put({
-        params: bucketAndKeyParamsFromPath(
-          activeDirectoryPath + values.name + '/'
-        ),
-        payload: null,
+      const response = await bucketCreate.post({
+        payload: {
+          name: values.name,
+        },
       })
       if (response.error) {
         triggerErrorToast(response.error)
@@ -56,7 +52,7 @@ export function FilesCreateDirectoryDialog({
   return (
     <Dialog
       trigger={trigger}
-      title="New directory"
+      title="New bucket"
       open={open}
       onOpenChange={(open) => {
         if (!open) {

@@ -27,7 +27,7 @@ export function FilesBreadcrumbMenu() {
         >
           Files
         </Text>
-        {!!activeDirectory.length && (
+        {activeDirectory.length > 0 && (
           <Text size="16" color="verySubtle" className="flex items-center">
             <ChevronRight16 />
           </Text>
