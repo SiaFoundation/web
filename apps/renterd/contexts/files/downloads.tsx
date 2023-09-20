@@ -108,16 +108,17 @@ export function useDownloads({ activeDirectoryPath }: Props) {
 
   const { settings } = useAppSettings()
   const getFileUrl = useCallback(
-    (name: string, authenticated: boolean) => {
-      const path = `/worker/objects${name}`
+    (path: FullPath, authenticated: boolean) => {
+      const { bucket, key } = bucketAndKeyParamsFromPath(path)
+      const workerPath = `/worker/objects/${key}?bucket=${bucket}`
       // Parse settings.api if its set otherwise URL
       const origin = settings.api || location.origin
       const scheme = origin.startsWith('https') ? 'https' : 'http'
       const host = origin.replace('https://', '').replace('http://', '')
       if (authenticated) {
-        return `${scheme}://:${settings.password}@${host}/api${path}`
+        return `${scheme}://:${settings.password}@${host}/api${workerPath}`
       }
-      return `${scheme}://${host}/api${path}`
+      return `${scheme}://${host}/api${workerPath}`
     },
     [settings]
   )
