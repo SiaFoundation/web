@@ -203,6 +203,15 @@ export const columns: ContractsTableColumn[] = (
       ),
     },
     {
+      id: 'remainingRenterFunds',
+      label: 'remaining renter funds',
+      category: 'financial',
+      contentClassName: 'w-[120px] justify-end',
+      render: ({ data: { revision } }) => (
+        <ValueSc size="12" value={revision.remainingRenterFunds} />
+      ),
+    },
+    {
       id: 'lockedCollateral',
       label: 'locked collateral',
       category: 'financial',

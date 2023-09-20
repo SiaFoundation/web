@@ -21,6 +21,7 @@ export type ContractData = {
     windowStart: number
     windowEnd: number
     payout: BigNumber
+    remainingRenterFunds: BigNumber
     validProofOutputs: SiacoinOutput[]
     missedProofOutputs: SiacoinOutput[]
     unlockHash: Hash256

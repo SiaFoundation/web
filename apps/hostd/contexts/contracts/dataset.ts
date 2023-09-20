@@ -52,6 +52,9 @@ function getContractFields(c: Contract): ContractData {
           ? c.revision.validProofOutputs[1].value
           : c.revision.missedProofOutputs[1].value
       ),
+      remainingRenterFunds: new BigNumber(
+        c.revision.validProofOutputs?.[0].value || 0
+      ),
       validProofOutputs: c.revision.validProofOutputs,
       missedProofOutputs: c.revision.missedProofOutputs,
       unlockHash: c.revision.unlockHash,
