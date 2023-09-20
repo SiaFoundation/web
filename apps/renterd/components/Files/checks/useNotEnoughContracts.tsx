@@ -10,9 +10,12 @@ export function useNotEnoughContracts() {
       },
     },
   })
-  const { datasetCount } = useContracts()
+  const { datasetCount, isLoading: isContractsLoading } = useContracts()
 
-  const active = redundancy.data && datasetCount < redundancy.data.totalShards
+  const active =
+    redundancy.data &&
+    !isContractsLoading &&
+    datasetCount < redundancy.data.totalShards
 
   return {
     active,

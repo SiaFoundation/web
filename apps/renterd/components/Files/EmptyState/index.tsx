@@ -1,14 +1,14 @@
 import { CloudUpload32, LinkButton, Text } from '@siafoundation/design-system'
-import { routes } from '../../config/routes'
-import { useFiles } from '../../contexts/files'
-import { useAutopilotNotConfigured } from './checks/useAutopilotNotConfigured'
-import { useNotEnoughContracts } from './checks/useNotEnoughContracts'
+import { routes } from '../../../config/routes'
+import { useFiles } from '../../../contexts/files'
+import { useAutopilotNotConfigured } from '../checks/useAutopilotNotConfigured'
+import { useNotEnoughContracts } from '../checks/useNotEnoughContracts'
 import { StateError } from './StateError'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
 
 export function EmptyState() {
-  const { dataState, activeDirectoryPath } = useFiles()
+  const { dataState, isViewingRootOfABucket } = useFiles()
 
   const autopilotNotConfigured = useAutopilotNotConfigured()
   const notEnoughContracts = useNotEnoughContracts()
@@ -23,7 +23,7 @@ export function EmptyState() {
 
   // only show on root directory and when there are no files
   if (
-    activeDirectoryPath === '/' &&
+    isViewingRootOfABucket &&
     dataState === 'noneYet' &&
     autopilotNotConfigured.active
   ) {
@@ -48,7 +48,7 @@ export function EmptyState() {
 
   // only show on root directory and when there are no files
   if (
-    activeDirectoryPath === '/' &&
+    isViewingRootOfABucket &&
     dataState === 'noneYet' &&
     notEnoughContracts.active
   ) {

@@ -3,7 +3,7 @@ import { useFiles } from '../../../contexts/files'
 import { useObjectStats } from '@siafoundation/react-renterd'
 
 export function FilesStatsMenuCount() {
-  const { pageCount } = useFiles()
+  const { isViewingABucket, pageCount } = useFiles()
   const stats = useObjectStats({
     config: {
       swr: {
@@ -15,13 +15,22 @@ export function FilesStatsMenuCount() {
     },
   })
 
+  if (isViewingABucket) {
+    return (
+      <Tooltip side="bottom" content="Number of files in current directory">
+        <Text size="12" font="mono">
+          {pageCount.toLocaleString()}
+          {stats.data
+            ? ` of ${stats.data?.numObjects.toLocaleString()} files`
+            : ' files'}
+        </Text>
+      </Tooltip>
+    )
+  }
   return (
-    <Tooltip side="bottom" content="Number of files in current directory">
+    <Tooltip side="bottom" content="Number of files across all buckets">
       <Text size="12" font="mono">
-        {pageCount.toLocaleString()}
-        {stats.data
-          ? ` of ${stats.data?.numObjects.toLocaleString()} files`
-          : ' files'}
+        {stats.data ? `${stats.data?.numObjects.toLocaleString()} files` : ''}
       </Text>
     </Tooltip>
   )

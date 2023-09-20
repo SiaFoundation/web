@@ -145,6 +145,7 @@ function useContractsMain() {
     dataState,
     limit,
     offset,
+    isLoading: response.isLoading,
     error: response.error,
     pageCount: datasetPage?.length || 0,
     datasetCount: datasetFiltered?.length || 0,

@@ -1,4 +1,5 @@
 import {
+  Add16,
   Button,
   CloudUpload16,
   FolderAdd16,
@@ -12,7 +13,7 @@ import { useCanUpload } from './useCanUpload'
 
 export function FilesActionsMenu() {
   const { openDialog } = useDialog()
-  const { uploadFiles } = useFiles()
+  const { uploadFiles, isViewingBuckets } = useFiles()
 
   const canUpload = useCanUpload()
 
@@ -24,20 +25,33 @@ export function FilesActionsMenu() {
 
   return (
     <div className="flex gap-2">
-      <Button onClick={() => openDialog('filesSearch')} tip="Search files">
-        <Search16 />
-      </Button>
-      <Button {...getRootProps()} tip="Upload files" disabled={!canUpload}>
-        <input {...getInputProps()} />
-        <CloudUpload16 />
-      </Button>
-      <Button
-        disabled={!canUpload}
-        onClick={() => openDialog('filesCreateDirectory')}
-        tip="Create directory"
-      >
-        <FolderAdd16 />
-      </Button>
+      {isViewingBuckets ? (
+        <Button
+          disabled={!canUpload}
+          onClick={() => openDialog('filesCreateBucket')}
+          tip="Create bucket"
+        >
+          <Add16 />
+          Create bucket
+        </Button>
+      ) : (
+        <>
+          <Button onClick={() => openDialog('filesSearch')} tip="Search files">
+            <Search16 />
+          </Button>
+          <Button {...getRootProps()} tip="Upload files" disabled={!canUpload}>
+            <input {...getInputProps()} />
+            <CloudUpload16 />
+          </Button>
+          <Button
+            disabled={!canUpload}
+            onClick={() => openDialog('filesCreateDirectory')}
+            tip="Create directory"
+          >
+            <FolderAdd16 />
+          </Button>
+        </>
+      )}
       <FilesViewDropdownMenu />
     </div>
   )

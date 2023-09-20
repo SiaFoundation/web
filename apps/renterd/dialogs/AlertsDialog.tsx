@@ -29,7 +29,7 @@ import { ContractContextMenuFromId } from '../components/Contracts/ContractConte
 import { HostContextMenu } from '../components/Hosts/HostContextMenu'
 import { useDialog } from '../contexts/dialog'
 import { useFiles } from '../contexts/files'
-import { getDirectoryFromPath } from '../contexts/files/utils'
+import { getDirectorySegmentsFromPath } from '../contexts/files/paths'
 
 type Props = {
   open: boolean
@@ -323,7 +323,9 @@ const dataFields = {
                     size="12"
                     noWrap
                     onClick={() => {
-                      setActiveDirectory(() => getDirectoryFromPath(o.name))
+                      setActiveDirectory(() =>
+                        getDirectorySegmentsFromPath(o.name)
+                      )
                       closeDialog()
                     }}
                   >

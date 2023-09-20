@@ -2,11 +2,15 @@ import { Separator, Text, Tooltip } from '@siafoundation/design-system'
 import { useObjectDirectory } from '@siafoundation/react-renterd'
 import { useMemo } from 'react'
 import { healthThresholds, useHealthLabel } from '../../../hooks/useHealthLabel'
+import { useFiles } from '../../../contexts/files'
 
 export function FilesStatsMenuHealth() {
+  const { activeBucket } = useFiles()
   const obj = useObjectDirectory({
+    disabled: !activeBucket,
     params: {
       key: '',
+      bucket: activeBucket,
     },
     config: {
       swr: {
@@ -29,6 +33,10 @@ export function FilesStatsMenuHealth() {
     size: 1,
     isDirectory: true,
   })
+
+  if (!activeBucket) {
+    return null
+  }
 
   if (!obj.data?.entries || obj.data.entries.length === 0) {
     return null

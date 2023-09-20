@@ -17,6 +17,8 @@ import { RenterdSendSiacoinDialog } from '../dialogs/RenterdSendSiacoinDialog'
 import { RenterdTransactionDetailsDialog } from '../dialogs/RenterdTransactionDetailsDialog'
 import { AlertsDialog } from '../dialogs/AlertsDialog'
 import { HostsFilterPublicKeyDialog } from '../components/Hosts/HostsFilterPublicKeyDialog'
+import { FilesCreateBucketDialog } from '../components/Files/FilesCreateBucketDialog'
+import { FilesBucketDeleteDialog } from '../components/Files/FilesBucketDeleteDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -33,6 +35,8 @@ export type DialogType =
   | 'hostsFilterPublicKey'
   | 'contractsFilterAddress'
   | 'contractsFilterPublicKey'
+  | 'filesCreateBucket'
+  | 'filesDeleteBucket'
   | 'filesCreateDirectory'
   | 'filesSearch'
   | 'alerts'
@@ -147,6 +151,14 @@ export function Dialogs() {
             payload: address,
           })
         }
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <FilesCreateBucketDialog
+        open={dialog === 'filesCreateBucket'}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <FilesBucketDeleteDialog
+        open={dialog === 'filesDeleteBucket'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <FilesCreateDirectoryDialog

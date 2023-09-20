@@ -421,10 +421,30 @@ export function useContractsetUpdate(
 
 export type Bucket = {
   name: string
+  createdAt: string
 }
 
-export function useBuckets(args?: HookArgsSwr<{ key: string }, Bucket[]>) {
+export function useBuckets(args?: HookArgsSwr<void, Bucket[]>) {
   return useGetSwr({ ...args, route: '/bus/buckets' })
+}
+
+export function useBucketCreate(
+  args?: HookArgsCallback<void, { name: string }, never>
+) {
+  return usePostFunc({ ...args, route: '/bus/buckets' }, async (mutate) => {
+    mutate((key) => key.startsWith('/bus/buckets'))
+  })
+}
+
+export function useBucketDelete(
+  args?: HookArgsCallback<{ name: string }, void, never>
+) {
+  return useDeleteFunc(
+    { ...args, route: '/bus/buckets/:name' },
+    async (mutate) => {
+      mutate((key) => key.startsWith('/bus/buckets'))
+    }
+  )
 }
 
 export type ObjEntry = {
@@ -434,29 +454,42 @@ export type ObjEntry = {
 }
 
 export function useObjectDirectory(
-  args: HookArgsSwr<{ key: string }, { entries: ObjEntry[] }>
+  args: HookArgsSwr<{ key: string; bucket: string }, { entries: ObjEntry[] }>
 ) {
   return useGetSwr({ ...args, route: '/bus/objects/:key' })
 }
 
-export function useObject(args: HookArgsSwr<{ key: string }, { object: Obj }>) {
+export function useObject(
+  args: HookArgsSwr<{ key: string; bucket: string }, { object: Obj }>
+) {
   return useGetSwr({ ...args, route: '/bus/objects/:key' })
 }
 
 export function useObjectSearch(
-  args: HookArgsSwr<{ key: string; skip: number; limit: number }, ObjEntry[]>
+  args: HookArgsSwr<
+    { key: string; bucket: string; skip: number; limit: number },
+    ObjEntry[]
+  >
 ) {
   return useGetSwr({ ...args, route: '/bus/search/objects' })
 }
 
 export function useObjectAdd(
-  args: HookArgsCallback<{ key: string }, AddObjectRequest, never>
+  args: HookArgsCallback<
+    { key: string; bucket: string },
+    AddObjectRequest,
+    never
+  >
 ) {
   return usePutFunc({ ...args, route: '/bus/objects/:key' })
 }
 
 export function useObjectDelete(
-  args?: HookArgsCallback<{ key: string; batch?: boolean }, void, never>
+  args?: HookArgsCallback<
+    { key: string; bucket: string; batch?: boolean },
+    void,
+    never
+  >
 ) {
   return useDeleteFunc(
     { ...args, route: '/bus/objects/:key' },

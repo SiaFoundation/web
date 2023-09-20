@@ -35,38 +35,17 @@ export function Home({
   hosts: SiaCentralHost[]
   rates: SiaCentralExchangeRates
 }) {
-  const exchange = useExchangeRate()
+  const exchange = useExchangeRate(rates)
   const values = useMemo(() => {
     const list = [
       {
         label: 'Blockchain height',
         value: (
-          <div className="flex flex-col sm:flex-row gap-1 items-baseline">
-            {humanNumber(blockHeight)}
-            {/* {status.data &&
-              status.data.consensusblock !== status.data.lastblock && (
-                <>
-                  <Text
-                    scaleSize="20"
-                    color="subtle"
-                    className="hidden sm:block"
-                  >
-                    /
-                  </Text>
-                  <Tooltip
-                    content={`${humanNumber(
-                      status.data?.lastblock
-                    )} / ${humanNumber(
-                      status.data?.consensusblock
-                    )} of consensus height synced`}
-                  >
-                    <Text size="20" font="mono" color="subtle">
-                      {humanNumber(status.data?.consensusblock)}
-                    </Text>
-                  </Tooltip>
-                </>
-              )} */}
-          </div>
+          <Tooltip content="Block height">
+            <Text scaleSize="20" color="subtle">
+              {humanNumber(blockHeight)}
+            </Text>
+          </Tooltip>
         ),
       },
       {
@@ -133,16 +112,23 @@ export function Home({
         label: 'Average storage price',
         value: (
           <Tooltip content="Average storage price per TB/month">
-            <Text
-              className="text-xl md:text-3xl"
-              weight="semibold"
-              color="contrast"
-            >
-              {getStorageCost({
-                price: metrics?.average.settings.storage_price,
-                exchange,
-              })}
-            </Text>
+            <div className="flex flex-col gap-1">
+              <Text
+                className="text-xl md:text-3xl"
+                weight="semibold"
+                color="contrast"
+              >
+                {getStorageCost({
+                  price: metrics?.average.settings.storage_price,
+                  exchange,
+                })}
+              </Text>
+              <Text color="subtle" className="text-end">
+                {getStorageCost({
+                  price: metrics?.average.settings.storage_price,
+                })}
+              </Text>
+            </div>
           </Tooltip>
         ),
       },
@@ -150,16 +136,23 @@ export function Home({
         label: 'Average download price',
         value: (
           <Tooltip content="Average download price per TB">
-            <Text
-              className="text-xl md:text-3xl"
-              weight="semibold"
-              color="contrast"
-            >
-              {getDownloadCost({
-                price: metrics?.average.settings.download_price,
-                exchange,
-              })}
-            </Text>
+            <div className="flex flex-col gap-1">
+              <Text
+                className="text-xl md:text-3xl"
+                weight="semibold"
+                color="contrast"
+              >
+                {getDownloadCost({
+                  price: metrics?.average.settings.download_price,
+                  exchange,
+                })}
+              </Text>
+              <Text color="subtle" className="text-end">
+                {getDownloadCost({
+                  price: metrics?.average.settings.download_price,
+                })}
+              </Text>
+            </div>
           </Tooltip>
         ),
       },
@@ -167,16 +160,23 @@ export function Home({
         label: 'Average upload price',
         value: (
           <Tooltip content="Average upload price per TB">
-            <Text
-              className="text-xl md:text-3xl"
-              weight="semibold"
-              color="contrast"
-            >
-              {getUploadCost({
-                price: metrics?.average.settings.upload_price,
-                exchange,
-              })}
-            </Text>
+            <div className="flex flex-col gap-1">
+              <Text
+                className="text-xl md:text-3xl"
+                weight="semibold"
+                color="contrast"
+              >
+                {getUploadCost({
+                  price: metrics?.average.settings.upload_price,
+                  exchange,
+                })}
+              </Text>
+              <Text color="subtle" className="text-end">
+                {getUploadCost({
+                  price: metrics?.average.settings.upload_price,
+                })}
+              </Text>
+            </div>
           </Tooltip>
         ),
       },
@@ -187,7 +187,7 @@ export function Home({
   return (
     <ContentLayout
       panel={
-        <div className="grid grid-cols-3 gap-x-6 md:gap-x-12 gap-y-12">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 md:gap-x-12 gap-y-12">
           {values.map(({ label, value }) => (
             <div
               className="flex flex-col gap-6 items-start overflow-hidden"
@@ -196,14 +196,7 @@ export function Home({
               <Text color="subtle" scaleSize="14" className="w-full" ellipsis>
                 {label}
               </Text>
-              <Text
-                font="mono"
-                weight="semibold"
-                className="text-xl md:text-3xl"
-                ellipsis
-              >
-                {value}
-              </Text>
+              {value}
             </div>
           ))}
         </div>

@@ -4,7 +4,8 @@ import { useHealthLabel } from '../../../../hooks/useHealthLabel'
 import { FilesHealthColumnContents } from './FilesHealthColumnContents'
 
 export function FilesHealthColumn(props: ObjectData) {
-  const { name, isUploading, isDirectory, health: _health, size } = props
+  const { name, isUploading, type, health: _health, size } = props
+  const isDirectory = type === 'directory'
   const { displayHealth, label, color, icon } = useHealthLabel({
     health: _health,
     size,
