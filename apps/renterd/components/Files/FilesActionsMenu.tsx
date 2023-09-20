@@ -27,7 +27,6 @@ export function FilesActionsMenu() {
     <div className="flex gap-2">
       {isViewingBuckets ? (
         <Button
-          disabled={!canUpload}
           onClick={() => openDialog('filesCreateBucket')}
           tip="Create bucket"
         >
