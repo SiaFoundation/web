@@ -7,30 +7,24 @@ import {
   useOnInvalid,
   FormSubmitButton,
   FieldText,
-  Code,
 } from '@siafoundation/design-system'
 import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../../contexts/dialog'
-import { useBucketDelete } from '@siafoundation/react-renterd'
+import { useBucketCreate } from '@siafoundation/react-renterd'
 
 const defaultValues = {
   name: '',
 }
 
-function getFields(name: string): ConfigFields<typeof defaultValues, never> {
+function getFields(): ConfigFields<typeof defaultValues, never> {
   return {
     name: {
       type: 'text',
       title: 'Name',
-      placeholder: name,
+      placeholder: 'photos, backups, etc',
       validation: {
         required: 'required',
-        validate: {
-          notDefault: () =>
-            name !== 'default' || 'cannot delete default bucket',
-          equals: (value) => value === name || 'bucket name does not match',
-        },
       },
     },
   }
@@ -42,14 +36,14 @@ type Props = {
   onOpenChange: (val: boolean) => void
 }
 
-export function FilesBucketDeleteDialog({
+export function FilesBucketCreateDialog({
   trigger,
   open,
   onOpenChange,
 }: Props) {
-  const { id: name, closeDialog } = useDialog()
+  const { closeDialog } = useDialog()
 
-  const bucketDelete = useBucketDelete()
+  const bucketCreate = useBucketCreate()
   const form = useForm({
     mode: 'all',
     defaultValues,
@@ -57,29 +51,29 @@ export function FilesBucketDeleteDialog({
 
   const onSubmit = useCallback(
     async (values: typeof defaultValues) => {
-      const response = await bucketDelete.delete({
-        params: {
+      const response = await bucketCreate.post({
+        payload: {
           name: values.name,
         },
       })
       if (response.error) {
         triggerErrorToast(response.error)
       } else {
-        triggerSuccessToast('Bucket permanently deleted.')
+        triggerSuccessToast('Bucket created.')
         form.reset()
         closeDialog()
       }
     },
-    [form, bucketDelete, closeDialog]
+    [form, bucketCreate, closeDialog]
   )
 
-  const fields = useMemo(() => getFields(name), [name])
+  const fields = useMemo(() => getFields(), [])
 
   const onInvalid = useOnInvalid(fields)
 
   return (
     <Dialog
-      title="Delete Bucket"
+      title="Create Bucket"
       trigger={trigger}
       open={open}
       onOpenChange={(val) => {
@@ -95,16 +89,10 @@ export function FilesBucketDeleteDialog({
     >
       <div className="flex flex-col gap-4">
         <Paragraph size="14">
-          Before you delete a bucket you must ensure that it is empty. Re-enter
-          the bucket name to confirm the removal.
+          A bucket is an isolated collection of files.
         </Paragraph>
-        <div>
-          <Code color="gray">{name}</Code>
-        </div>
         <FieldText name="name" form={form} fields={fields} autoComplete="off" />
-        <FormSubmitButton variant="red" form={form}>
-          Delete
-        </FormSubmitButton>
+        <FormSubmitButton form={form}>Create bucket</FormSubmitButton>
       </div>
     </Dialog>
   )
