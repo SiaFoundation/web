@@ -1,21 +1,16 @@
 import { DatumCard, PeerList } from '@siafoundation/design-system'
-import { useStateConsensus, useSyncerPeers } from '@siafoundation/react-hostd'
+import { useSyncerPeers } from '@siafoundation/react-hostd'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { HostdSidenav } from '../HostdSidenav'
 import { HostdAuthedLayout } from '../HostdAuthedLayout'
 import { useMemo } from 'react'
 import { orderBy } from 'lodash'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
 
 export function Node() {
   const peers = useSyncerPeers()
-  const state = useStateConsensus({
-    config: {
-      swr: {
-        refreshInterval: 30_000,
-      },
-    },
-  })
+  const syncStatus = useSyncStatus()
   const { openDialog } = useDialog()
 
   const peerList = useMemo(() => {
@@ -37,11 +32,15 @@ export function Node() {
           <DatumCard
             label="Height"
             value={
-              state.data
-                ? state.data.chainIndex.height.toLocaleString()
+              syncStatus.nodeBlockHeight
+                ? syncStatus.nodeBlockHeight.toLocaleString()
                 : undefined
             }
-            comment={!state.data?.synced ? 'Syncing' : undefined}
+            comment={
+              !syncStatus.isSynced
+                ? `Syncing to ${syncStatus.estimatedBlockHeight.toLocaleString()}`
+                : undefined
+            }
           />
           <DatumCard label="Connected peers" value={peers.data?.length} />
         </div>
