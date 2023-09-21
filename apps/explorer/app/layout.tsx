@@ -4,6 +4,7 @@ import { NextAppSsrAppRouter } from '@siafoundation/design-system'
 import { appLink } from '../config'
 import { IBM_Plex_Sans, IBM_Plex_Mono } from '@next/font/google'
 import { cx } from 'class-variance-authority'
+import Script from 'next/script'
 
 const sans = IBM_Plex_Sans({
   weight: ['100', '200', '300', '400', '500', '600', '700'],
@@ -49,6 +50,12 @@ export default function RootLayout({
           <Layout>{children}</Layout>
         </NextAppSsrAppRouter>
       </body>
+      <Script
+        id="fathom"
+        strategy="afterInteractive"
+        src="https://cdn.usefathom.com/script.js"
+        data-site="LOLUTYWQ"
+      />
     </html>
   )
 }
