@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { useSiaCentralSearch } from '@siafoundation/react-sia-central'
 import { routes } from '../../config/routes'
+import { siaCentralApi } from '../../config'
 
 const defaultValues = {
   query: '',
@@ -36,7 +37,9 @@ export function Search() {
     defaultValues,
   })
 
-  const search = useSiaCentralSearch()
+  const search = useSiaCentralSearch({
+    api: siaCentralApi,
+  })
 
   const onSubmit = useCallback(
     async (values) => {
