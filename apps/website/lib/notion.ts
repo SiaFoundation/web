@@ -1,6 +1,6 @@
 import { isFullBlock, isFullPage } from '@notionhq/client'
 import { TableBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
-import { Notion } from '@siafoundation/data-sources'
+import { Notion, fetchAllChildrenBlocks } from '@siafoundation/data-sources'
 import matter from 'gray-matter'
 import { serialize } from 'next-mdx-remote/serialize'
 import remarkGfm from 'remark-gfm'
@@ -47,13 +47,12 @@ function richTextToMarkdown(richText) {
 }
 
 async function notionToMarkdown(pageId, indent = '') {
-  const response = await Notion.blocks.children.list({
+  const blocks = await fetchAllChildrenBlocks({
     block_id: pageId,
-    page_size: 50,
   })
 
   let markdown = ''
-  for (const block of response.results) {
+  for (const block of blocks) {
     if (!isFullBlock(block)) {
       continue
     }
