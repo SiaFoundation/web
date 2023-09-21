@@ -52,13 +52,7 @@ export type StorageKeys =
 
 export type StorageCategories = 'storage used' | 'storage capacity'
 
-export type BandwidthKeys =
-  | 'ingress'
-  | 'ingressRHP2'
-  | 'ingressRHP3'
-  | 'egress'
-  | 'egressRHP2'
-  | 'egressRHP3'
+export type BandwidthKeys = 'ingress' | 'egress'
 
 export type OperationsKeys =
   | 'storageReads'

@@ -509,11 +509,7 @@ function useMetricsMain() {
   const bandwidth = useMemo<Chart<BandwidthKeys, BandwidthCategories>>(() => {
     const data = formatChartData(
       metricsPeriod.data?.map((m) => ({
-        egressRHP3: m.data.rhp3.egress,
-        egressRHP2: m.data.rhp2.egress,
         egress: m.data.rhp3.egress + m.data.rhp2.egress,
-        ingressRHP3: m.data.rhp3.ingress,
-        ingressRHP2: m.data.rhp2.ingress,
         ingress: m.data.rhp3.ingress + m.data.rhp2.ingress,
         timestamp: new Date(m.timestamp).getTime(),
       })),
@@ -524,54 +520,11 @@ function useMetricsMain() {
       data,
       stats,
       config: {
-        enabledGraph: [
-          'ingress',
-          'ingressRHP2',
-          'ingressRHP3',
-          'egress',
-          'egressRHP2',
-          'egressRHP3',
-        ],
-        enabledTip: [
-          'ingress',
-          'ingressRHP2',
-          'ingressRHP3',
-          'egress',
-          'egressRHP2',
-          'egressRHP3',
-        ],
-        categories: ['ingress', 'egress'],
+        enabledGraph: ['ingress', 'egress'],
+        enabledTip: ['ingress', 'egress'],
         data: {
-          ingress: configCategoryLabel<BandwidthCategories>(
-            chartConfigs.ingress,
-            'ingress',
-            'total'
-          ),
-          ingressRHP2: configCategoryLabel<BandwidthCategories>(
-            chartConfigs.ingress,
-            'ingress',
-            'RHP2'
-          ),
-          ingressRHP3: configCategoryLabel<BandwidthCategories>(
-            chartConfigs.ingress,
-            'ingress',
-            'RHP3'
-          ),
-          egress: configCategoryLabel<BandwidthCategories>(
-            chartConfigs.egress,
-            'egress',
-            'total'
-          ),
-          egressRHP2: configCategoryLabel<BandwidthCategories>(
-            chartConfigs.egress,
-            'egress',
-            'RHP2'
-          ),
-          egressRHP3: configCategoryLabel<BandwidthCategories>(
-            chartConfigs.egress,
-            'egress',
-            'RHP3'
-          ),
+          ingress: chartConfigs.ingress,
+          egress: chartConfigs.egress,
         },
         format: (v) => humanBytes(v),
         formatTimestamp,
