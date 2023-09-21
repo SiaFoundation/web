@@ -8,6 +8,7 @@ import {
   Tooltip,
   Edit16,
   WarningSquareFilled16,
+  InProgress16,
 } from '@siafoundation/design-system'
 import { humanBytes } from '@siafoundation/sia-js'
 import { VolumeContextMenu } from '../../components/Volumes/VolumeContextMenu'
@@ -63,13 +64,21 @@ export const columns: VolumesTableColumn[] = [
         }
       >
         <div className="flex gap-2 items-center">
-          <Text color={data.available ? 'green' : 'amber'}>
-            {data.available ? (
+          {data.available && data.status === 'ready' && (
+            <Text color="green">
               <CheckboxCheckedFilled16 />
-            ) : (
+            </Text>
+          )}
+          {data.available && data.status !== 'ready' && (
+            <Text color="amber">
+              <InProgress16 />
+            </Text>
+          )}
+          {!data.available && (
+            <Text color="amber">
               <WarningSquareFilled16 />
-            )}
-          </Text>
+            </Text>
+          )}
           <Text size="12" className="relative -top-px">
             {data.status}
           </Text>

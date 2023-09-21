@@ -42,7 +42,11 @@ export function Home({
         label: 'Blockchain height',
         value: (
           <Tooltip content="Block height">
-            <Text scaleSize="20" color="subtle">
+            <Text
+              className="text-xl md:text-3xl"
+              weight="semibold"
+              color="contrast"
+            >
               {humanNumber(blockHeight)}
             </Text>
           </Tooltip>

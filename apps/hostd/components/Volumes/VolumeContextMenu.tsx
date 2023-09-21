@@ -13,8 +13,14 @@ import {
   triggerSuccessToast,
   Text,
   truncate,
+  Close16,
 } from '@siafoundation/design-system'
-import { useVolume, useVolumeUpdate } from '@siafoundation/react-hostd'
+import {
+  VolumeStatus,
+  useVolume,
+  useVolumeCancel,
+  useVolumeUpdate,
+} from '@siafoundation/react-hostd'
 import { useDialog } from '../../contexts/dialog'
 
 type Props = {
@@ -31,6 +37,9 @@ export function VolumeContextMenu({ id, contentProps, buttonProps }: Props) {
       id,
     },
   })
+  const volumeCancel = useVolumeCancel()
+  const operationInProgress =
+    volume.data && !['ready', 'unavailable'].includes(volume.data.status)
   return (
     <DropdownMenu
       trigger={
@@ -46,8 +55,37 @@ export function VolumeContextMenu({ id, contentProps, buttonProps }: Props) {
         </Text>
       </div>
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
+      {operationInProgress ? (
+        <DropdownMenuItem
+          onSelect={async () => {
+            const status = volume.data?.status
+            const response = await volumeCancel.delete({
+              params: {
+                id: Number(id),
+              },
+            })
+            if (response.error) {
+              triggerErrorToast(
+                `Error canceling volume ${getActiveOperationLabel(status)}.`
+              )
+            } else {
+              triggerSuccessToast(
+                `Successfully canceled volume ${getActiveOperationLabel(
+                  status
+                )}.`
+              )
+            }
+          }}
+        >
+          <DropdownMenuLeftSlot>
+            <Close16 />
+          </DropdownMenuLeftSlot>
+          {`Cancel ${getActiveOperationLabel(volume.data?.status)}`}
+        </DropdownMenuItem>
+      ) : null}
       {volume.data ? (
         <DropdownMenuItem
+          disabled={volume.data.status !== 'ready'}
           onSelect={async () => {
             const nextReadOnly = !volume.data.readOnly
             const response = await volumeUpdate.put({
@@ -79,13 +117,19 @@ export function VolumeContextMenu({ id, contentProps, buttonProps }: Props) {
           {volume.data.readOnly ? 'Set to read/write' : 'Set to read-only'}
         </DropdownMenuItem>
       ) : null}
-      <DropdownMenuItem onSelect={() => openDialog('volumeResize', id)}>
+      <DropdownMenuItem
+        disabled={volume.data?.status !== 'ready'}
+        onSelect={() => openDialog('volumeResize', id)}
+      >
         <DropdownMenuLeftSlot>
           <Ruler16 />
         </DropdownMenuLeftSlot>
         Resize
       </DropdownMenuItem>
-      <DropdownMenuItem onSelect={() => openDialog('volumeDelete', id)}>
+      <DropdownMenuItem
+        disabled={volume.data?.status !== 'ready'}
+        onSelect={() => openDialog('volumeDelete', id)}
+      >
         <DropdownMenuLeftSlot>
           <Delete16 />
         </DropdownMenuLeftSlot>
@@ -93,4 +137,17 @@ export function VolumeContextMenu({ id, contentProps, buttonProps }: Props) {
       </DropdownMenuItem>
     </DropdownMenu>
   )
+}
+
+function getActiveOperationLabel(status: VolumeStatus) {
+  if (status === 'resizing') {
+    return 'resize'
+  }
+  if (status === 'creating') {
+    return 'creation'
+  }
+  if (status === 'removing') {
+    return 'removal'
+  }
+  return 'operation'
 }

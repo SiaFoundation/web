@@ -539,6 +539,20 @@ export function useVolumeResize(
   )
 }
 
+export function useVolumeCancel(
+  args?: HookArgsCallback<{ id: number }, void, void>
+) {
+  return useDeleteFunc(
+    { ...args, route: '/volumes/:id/cancel' },
+    async (mutate) => {
+      await delay(3_000)
+      mutate((key) => {
+        return key.startsWith(volumesRoute)
+      })
+    }
+  )
+}
+
 export type SystemDirResponse = {
   path: string
   totalBytes: number
