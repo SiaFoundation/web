@@ -19,11 +19,11 @@ import {
 } from '@siafoundation/react-renterd'
 import BigNumber from 'bignumber.js'
 import { useCallback } from 'react'
-import { ContractContextMenuFromId } from '../../components/Contracts/ContractContextMenuFromId'
-import { HostContextMenu } from '../../components/Hosts/HostContextMenu'
-import { useDialog } from '../../contexts/dialog'
-import { useFiles } from '../../contexts/files'
-import { getDirectorySegmentsFromPath } from '../../contexts/files/paths'
+import { ContractContextMenuFromId } from '../components/Contracts/ContractContextMenuFromId'
+import { HostContextMenu } from '../components/Hosts/HostContextMenu'
+import { useDialog } from '../contexts/dialog'
+import { useFiles } from '../contexts/files'
+import { getDirectorySegmentsFromPath } from '../contexts/files/paths'
 
 type Props = {
   open: boolean
@@ -105,7 +105,7 @@ const dataFields: Record<
   contractID: {
     render: function ContractField({ value }: { value: string }) {
       return (
-        <div className="flex justify-between w-full">
+        <div className="flex justify-between w-full gap-2">
           <Text color="subtle" ellipsis>
             contract ID
           </Text>
@@ -130,7 +130,7 @@ const dataFields: Record<
   accountID: {
     render: function AccountField({ value }: { value: string }) {
       return (
-        <div className="flex justify-between w-full">
+        <div className="flex justify-between w-full gap-2">
           <Text color="subtle" ellipsis>
             account ID
           </Text>
@@ -146,7 +146,7 @@ const dataFields: Record<
         return null
       }
       return (
-        <div className="flex justify-between w-full">
+        <div className="flex justify-between w-full gap-2">
           <Text color="subtle" ellipsis>
             host key
           </Text>
@@ -180,7 +180,7 @@ const dataFields: Record<
       })
       return (
         <>
-          <div className="flex justify-between w-full">
+          <div className="flex justify-between w-full gap-2">
             <Text color="subtle" ellipsis>
               key
             </Text>
@@ -217,7 +217,7 @@ const dataFields: Record<
     render: function AdditionsField({ value }: { value: string[] }) {
       return (
         <>
-          <div className="flex justify-between w-full">
+          <div className="flex justify-between w-full gap-2">
             <Text color="subtle" ellipsis>
               additions
             </Text>
@@ -245,7 +245,7 @@ const dataFields: Record<
     }) {
       return (
         <>
-          <div className="flex justify-between w-full">
+          <div className="flex justify-between w-full gap-2">
             <Text color="subtle" ellipsis>
               removals
             </Text>
@@ -275,7 +275,7 @@ const dataFields: Record<
   },
   balance: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           balance
         </Text>
@@ -285,7 +285,7 @@ const dataFields: Record<
   },
   address: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           address
         </Text>
@@ -295,7 +295,7 @@ const dataFields: Record<
   },
   account: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           account
         </Text>

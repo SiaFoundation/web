@@ -104,7 +104,7 @@ const dataFields: Record<
 > = {
   error: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full mb-1">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           error
         </Text>
@@ -114,7 +114,7 @@ const dataFields: Record<
   },
   contractId: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           contract ID
         </Text>
@@ -124,7 +124,7 @@ const dataFields: Record<
   },
   blockHeight: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           block height
         </Text>
@@ -134,7 +134,7 @@ const dataFields: Record<
   },
   resolution: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           resolution
         </Text>
@@ -144,7 +144,7 @@ const dataFields: Record<
   },
   volume: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           volume
         </Text>
@@ -154,7 +154,7 @@ const dataFields: Record<
   },
   volumeID: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           volume ID
         </Text>
@@ -164,7 +164,7 @@ const dataFields: Record<
   },
   elapsed: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           elapsed
         </Text>
@@ -176,7 +176,7 @@ const dataFields: Record<
   },
   checked: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           checked
         </Text>
@@ -188,7 +188,7 @@ const dataFields: Record<
   },
   missing: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           missing
         </Text>
@@ -200,7 +200,7 @@ const dataFields: Record<
   },
   corrupt: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           corrupt
         </Text>
@@ -212,7 +212,7 @@ const dataFields: Record<
   },
   total: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           total
         </Text>
@@ -224,7 +224,7 @@ const dataFields: Record<
   },
   oldSectors: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           old sectors
         </Text>
@@ -236,7 +236,7 @@ const dataFields: Record<
   },
   currentSectors: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           current sectors
         </Text>
@@ -248,7 +248,7 @@ const dataFields: Record<
   },
   targetSectors: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           target sectors
         </Text>
@@ -260,7 +260,7 @@ const dataFields: Record<
   },
   migratedSectors: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           migrated sectors
         </Text>
@@ -272,7 +272,7 @@ const dataFields: Record<
   },
   migrated: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           migrated
         </Text>
@@ -284,7 +284,7 @@ const dataFields: Record<
   },
   target: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           target
         </Text>
@@ -296,7 +296,7 @@ const dataFields: Record<
   },
   force: {
     render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full gap-2">
         <Text color="subtle" ellipsis>
           force
         </Text>

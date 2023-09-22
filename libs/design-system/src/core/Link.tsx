@@ -2,7 +2,7 @@
 
 import { cva, cx } from 'class-variance-authority'
 import BaseNextLink from 'next/link'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { textStyles } from './Text'
 import { buttonStyles } from './Button'
 import { VariantProps } from '../types'
@@ -67,7 +67,7 @@ export const Link = React.forwardRef<
 >(
   (
     {
-      href = '#',
+      href,
       font,
       size,
       scaleSize,
@@ -80,14 +80,26 @@ export const Link = React.forwardRef<
       className,
       rel: _rel,
       target,
+      onClick,
       ...props
     },
     ref
   ) => {
     const rel = _rel || (target === '_blank' ? 'noopener' : undefined)
+    const handleClick = useCallback(
+      (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        if (onClick) {
+          if (!href) {
+            e.preventDefault()
+          }
+          onClick(e)
+        }
+      },
+      [onClick, href]
+    )
     return (
       <BaseNextLink
-        href={href}
+        href={href || '#'}
         ref={ref}
         className={linkStyles({
           font,
@@ -102,6 +114,7 @@ export const Link = React.forwardRef<
           className,
         })}
         {...props}
+        onClick={handleClick}
         rel={rel}
         target={target}
       />
@@ -119,7 +132,7 @@ export const LinkButton = React.forwardRef<
 >(
   (
     {
-      href = '#',
+      href,
       disabled,
       variant,
       size,
@@ -130,16 +143,28 @@ export const LinkButton = React.forwardRef<
       tip,
       rel: _rel,
       target,
+      onClick,
       ...props
     },
     ref
   ) => {
     const rel = _rel || (target === '_blank' ? 'noopener' : undefined)
+    const handleClick = useCallback(
+      (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        if (onClick) {
+          if (!href) {
+            e.preventDefault()
+          }
+          onClick(e)
+        }
+      },
+      [onClick, href]
+    )
     if (tip) {
       return (
         <Tooltip content={tip}>
           <BaseNextLink
-            href={href}
+            href={href || '#'}
             ref={ref}
             className={buttonStyles({
               variant,
@@ -150,6 +175,7 @@ export const LinkButton = React.forwardRef<
               icon,
               className,
             })}
+            onClick={handleClick}
             {...props}
             rel={rel}
             target={target}
@@ -159,7 +185,7 @@ export const LinkButton = React.forwardRef<
     }
     return (
       <BaseNextLink
-        href={href}
+        href={href || '#'}
         ref={ref}
         className={buttonStyles({
           variant,
@@ -170,6 +196,7 @@ export const LinkButton = React.forwardRef<
           icon,
           className,
         })}
+        onClick={handleClick}
         {...props}
         rel={rel}
         target={target}
