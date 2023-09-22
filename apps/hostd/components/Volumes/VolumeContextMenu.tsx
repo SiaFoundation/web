@@ -38,7 +38,8 @@ export function VolumeContextMenu({ id, contentProps, buttonProps }: Props) {
     },
   })
   const volumeCancel = useVolumeCancel()
-  const operationInProgress =
+  const isReady = volume.data && volume.data.status == 'ready'
+  const isOperationInProgress =
     volume.data && !['ready', 'unavailable'].includes(volume.data.status)
   return (
     <DropdownMenu
@@ -55,7 +56,7 @@ export function VolumeContextMenu({ id, contentProps, buttonProps }: Props) {
         </Text>
       </div>
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
-      {operationInProgress ? (
+      {isOperationInProgress ? (
         <DropdownMenuItem
           onSelect={async () => {
             const status = volume.data?.status
@@ -85,7 +86,7 @@ export function VolumeContextMenu({ id, contentProps, buttonProps }: Props) {
       ) : null}
       {volume.data ? (
         <DropdownMenuItem
-          disabled={volume.data.status !== 'ready'}
+          disabled={!isReady}
           onSelect={async () => {
             const nextReadOnly = !volume.data.readOnly
             const response = await volumeUpdate.put({
@@ -118,7 +119,7 @@ export function VolumeContextMenu({ id, contentProps, buttonProps }: Props) {
         </DropdownMenuItem>
       ) : null}
       <DropdownMenuItem
-        disabled={volume.data?.status !== 'ready'}
+        disabled={!isReady}
         onSelect={() => openDialog('volumeResize', id)}
       >
         <DropdownMenuLeftSlot>
@@ -127,7 +128,7 @@ export function VolumeContextMenu({ id, contentProps, buttonProps }: Props) {
         Resize
       </DropdownMenuItem>
       <DropdownMenuItem
-        disabled={volume.data?.status !== 'ready'}
+        disabled={isOperationInProgress}
         onSelect={() => openDialog('volumeDelete', id)}
       >
         <DropdownMenuLeftSlot>
