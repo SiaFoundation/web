@@ -2,7 +2,7 @@ import { cx } from 'class-variance-authority'
 
 export function LoadingDots({ className }: { className?: string }) {
   return (
-    <div className={cx('flex gap-1', className)}>
+    <div className={cx('flex gap-1 items-center', className)}>
       <Dot />
       <Dot />
       <Dot />

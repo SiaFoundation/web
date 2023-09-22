@@ -1,4 +1,9 @@
-import { Separator, Text, Tooltip } from '@siafoundation/design-system'
+import {
+  LoadingDots,
+  Separator,
+  Text,
+  Tooltip,
+} from '@siafoundation/design-system'
 import { useObjectStats } from '@siafoundation/react-renterd'
 import { humanBytes } from '@siafoundation/sia-js'
 
@@ -13,6 +18,10 @@ export function FilesStatsMenuSize() {
       },
     },
   })
+
+  if (!stats.data && stats.isValidating) {
+    return <LoadingDots className="pr-1" />
+  }
 
   if (!stats.data) {
     return null
