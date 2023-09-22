@@ -1,9 +1,4 @@
-import {
-  LoadingDots,
-  Separator,
-  Text,
-  Tooltip,
-} from '@siafoundation/design-system'
+import { Separator, Text, Tooltip } from '@siafoundation/design-system'
 import { useObjectDirectory } from '@siafoundation/react-renterd'
 import { useMemo } from 'react'
 import { healthThresholds, useHealthLabel } from '../../../hooks/useHealthLabel'
