@@ -48,8 +48,11 @@ function useFilesMain() {
     [router, activeDirectory]
   )
 
-  const { uploadFiles, uploadsList } = useUploads({ activeDirectoryPath })
-  const { downloadFiles, downloadsList, getFileUrl } = useDownloads()
+  const { uploadFiles, uploadsList, uploadCancel } = useUploads({
+    activeDirectoryPath,
+  })
+  const { downloadFiles, downloadsList, getFileUrl, downloadCancel } =
+    useDownloads()
 
   const { response, dataset } = useDataset({
     activeDirectoryPath,
@@ -144,8 +147,10 @@ function useFilesMain() {
     columns: filteredTableColumns,
     uploadFiles,
     uploadsList,
+    uploadCancel,
     downloadFiles,
     downloadsList,
+    downloadCancel,
     configurableColumns,
     enabledColumns,
     sortableColumns,

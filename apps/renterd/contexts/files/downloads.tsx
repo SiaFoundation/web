@@ -1,43 +1,64 @@
-import { triggerErrorToast } from '@siafoundation/design-system'
+import { triggerErrorToast, triggerToast } from '@siafoundation/design-system'
 import { useAppSettings } from '@siafoundation/react-core'
 import { useObjectDownloadFunc } from '@siafoundation/react-renterd'
 import { throttle } from 'lodash'
 import { useCallback, useMemo, useState } from 'react'
-import { ObjectData } from './types'
 import {
   FullPath,
   bucketAndKeyParamsFromPath,
   getBucketFromPath,
   getFilename,
 } from './paths'
+import { ObjectData } from './types'
 
-type UploadsMap = Record<string, ObjectData>
+type DownloadProgress = ObjectData & {
+  controller: AbortController
+}
+
+type DownloadProgressParams = Omit<DownloadProgress, 'id' | 'type'>
+
+type DownloadsMap = Record<string, DownloadProgress>
 
 export function useDownloads() {
   const download = useObjectDownloadFunc()
-  const [downloadsMap, setDownloadsMap] = useState<UploadsMap>({})
+  const [downloadsMap, setDownloadsMap] = useState<DownloadsMap>({})
 
-  const updateDownloadProgress = useCallback(
-    (obj: {
-      path: string
-      bucket: string
-      name: string
-      loaded: number
-      size: number
-    }) => {
-      setDownloadsMap((download) => ({
-        ...download,
+  const initDownloadProgress = useCallback(
+    (obj: DownloadProgressParams) => {
+      setDownloadsMap((map) => ({
+        ...map,
         [obj.path]: {
           id: obj.path,
           path: obj.path,
-          name: obj.name,
           bucket: obj.bucket,
+          name: obj.name,
           size: obj.size,
           loaded: obj.loaded,
           isUploading: false,
+          controller: obj.controller,
           type: 'file',
         },
       }))
+    },
+    [setDownloadsMap]
+  )
+
+  const updateDownloadProgress = useCallback(
+    (obj: { path: string; loaded: number; size: number }) => {
+      setDownloadsMap((map) => {
+        if (!map[obj.path]) {
+          return map
+        }
+        return {
+          ...map,
+          [obj.path]: {
+            ...map[obj.path],
+            path: obj.path,
+            loaded: obj.loaded,
+            size: obj.size,
+          },
+        }
+      })
     },
     [setDownloadsMap]
   )
@@ -54,41 +75,56 @@ export function useDownloads() {
     [setDownloadsMap]
   )
 
+  const downloadCancel = useCallback((download: DownloadProgress) => {
+    download.controller.abort()
+  }, [])
+
   const downloadFiles = async (files: FullPath[]) => {
     files.forEach(async (path) => {
       let isDone = false
       const bucket = getBucketFromPath(path)
       const name = getFilename(path)
+
+      if (downloadsMap[path]) {
+        triggerErrorToast(`Already downloading file: ${path}`)
+        return
+      }
+
+      const controller = new AbortController()
       const onDownloadProgress = throttle((e) => {
         if (isDone) {
           return
         }
         updateDownloadProgress({
-          name,
           path,
-          bucket,
           loaded: e.loaded,
           size: e.total,
         })
       }, 2000)
-      updateDownloadProgress({
-        name,
+      initDownloadProgress({
         path,
+        name,
         bucket,
         loaded: 0,
         size: 1,
+        controller,
       })
       const response = await download.get(name, {
         params: bucketAndKeyParamsFromPath(path),
         config: {
           axios: {
             onDownloadProgress,
+            signal: controller.signal,
           },
         },
       })
       isDone = true
       if (response.error) {
-        triggerErrorToast(response.error)
+        if (response.error === 'canceled') {
+          triggerToast('File download canceled.')
+        } else {
+          triggerErrorToast(response.error)
+        }
         removeDownload(path)
       } else {
         removeDownload(path)
@@ -123,5 +159,6 @@ export function useDownloads() {
     downloadFiles,
     downloadsList,
     getFileUrl,
+    downloadCancel,
   }
 }
