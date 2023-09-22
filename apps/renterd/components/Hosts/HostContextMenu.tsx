@@ -9,6 +9,7 @@ import {
   Filter16,
   DropdownMenuLabel,
   Text,
+  secondsInMilliseconds,
 } from '@siafoundation/design-system'
 import {
   useHostsAllowlist,
@@ -115,7 +116,7 @@ export function HostContextMenu({
             payload: {
               hostKey: publicKey,
               hostIP: address,
-              timeout: 30000000000,
+              timeout: secondsInMilliseconds(30),
             },
           })
         }
