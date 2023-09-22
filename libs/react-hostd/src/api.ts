@@ -603,9 +603,9 @@ export function useLogsSearch(
 
 // alerts
 
-type AlertSeverity = 'info' | 'warning' | 'error' | 'critical'
+export type AlertSeverity = 'info' | 'warning' | 'error' | 'critical'
 
-type Alert = {
+export type Alert = {
   id: string
   severity: AlertSeverity
   message: string
