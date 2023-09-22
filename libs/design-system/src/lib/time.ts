@@ -34,12 +34,12 @@ export function millisecondsInHours(ms: number) {
   return ms / 1000 / 1000 / 60 / 60
 }
 
-export function millisecondsInMinutes(ns: number) {
-  return ns / 1000 / 60
+export function millisecondsInMinutes(ms: number) {
+  return ms / 1000 / 60
 }
 
-export function microsecondsInMinutes(ns: number) {
-  return ns / 1000 / 1000 / 60
+export function microsecondsInMinutes(us: number) {
+  return us / 1000 / 1000 / 60
 }
 
 export function nanosecondsInDays(ns: number) {
@@ -68,4 +68,8 @@ export function minutesInNanoseconds(minutes: number) {
 
 export function secondsInMinutes(seconds: number) {
   return seconds / 60
+}
+
+export function secondsInMilliseconds(seconds: number) {
+  return seconds * 1000
 }
