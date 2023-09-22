@@ -3,10 +3,9 @@ import {
   DropdownMenuItem,
   Button,
   DropdownMenuLeftSlot,
-  Delete16,
   DropdownMenuLabel,
-  BucketIcon,
 } from '@siafoundation/design-system'
+import { Delete16, BucketIcon } from '@siafoundation/react-icons'
 import { useDialog } from '../../contexts/dialog'
 
 type Props = {

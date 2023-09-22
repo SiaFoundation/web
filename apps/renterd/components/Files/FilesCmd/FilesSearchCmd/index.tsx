@@ -6,7 +6,8 @@ import {
   isDirectory,
 } from '../../../../contexts/files/paths'
 import { useFiles } from '../../../../contexts/files'
-import { Document16, FolderIcon, Text } from '@siafoundation/design-system'
+import { Text } from '@siafoundation/design-system'
+import { Document16, FolderIcon } from '@siafoundation/react-icons'
 import { FileSearchEmpty } from './FileSearchEmpty'
 
 export const filesSearchPage = {

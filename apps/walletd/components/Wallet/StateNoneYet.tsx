@@ -1,4 +1,5 @@
-import { Money32, Text } from '@siafoundation/design-system'
+import { Text } from '@siafoundation/design-system'
+import { Money32 } from '@siafoundation/react-icons'
 
 export function StateNoneYet() {
   return (

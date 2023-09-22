@@ -1,10 +1,10 @@
+import { Button } from '@siafoundation/design-system'
 import {
   Add16,
-  Button,
   CloudUpload16,
   FolderAdd16,
   Search16,
-} from '@siafoundation/design-system'
+} from '@siafoundation/react-icons'
 import { useFiles } from '../../contexts/files'
 import { useDropzone } from 'react-dropzone'
 import { FilesViewDropdownMenu } from './FilesViewDropdownMenu'

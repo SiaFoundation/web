@@ -1,13 +1,15 @@
 import {
   DropdownMenu,
   DropdownMenuItem,
-  Locked16,
-  Unlocked16,
   DropdownMenuLeftSlot,
   DropdownMenuLabel,
+} from '@siafoundation/design-system'
+import {
+  Locked16,
+  Unlocked16,
   Edit16,
   Delete16,
-} from '@siafoundation/design-system'
+} from '@siafoundation/react-icons'
 import { useDialog } from '../contexts/dialog'
 import { WalletData } from '../contexts/wallets/types'
 

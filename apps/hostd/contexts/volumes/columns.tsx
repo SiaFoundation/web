@@ -3,13 +3,15 @@ import {
   TableColumn,
   ProgressBar,
   ValueNum,
+  Tooltip,
+} from '@siafoundation/design-system'
+import {
   Locked16,
   CheckboxCheckedFilled16,
-  Tooltip,
   Edit16,
   WarningSquareFilled16,
   InProgress16,
-} from '@siafoundation/design-system'
+} from '@siafoundation/react-icons'
 import { humanBytes } from '@siafoundation/sia-js'
 import { VolumeContextMenu } from '../../components/Volumes/VolumeContextMenu'
 import { VolumeData, TableColumnId } from './types'

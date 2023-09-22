@@ -4,12 +4,10 @@ import {
   Badge,
   Paragraph,
   Tooltip,
-  Locked16,
-  Unlocked16,
   Button,
   ValueSc,
-  Draggable16,
 } from '@siafoundation/design-system'
+import { Locked16, Unlocked16, Draggable16 } from '@siafoundation/react-icons'
 import { humanDate } from '@siafoundation/sia-js'
 import { humanTimeAndUnits } from '../../lib/time'
 import { walletTypes } from '../../config/walletTypes'

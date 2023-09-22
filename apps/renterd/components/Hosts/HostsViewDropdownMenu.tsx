@@ -1,15 +1,17 @@
 import {
   Button,
-  CaretDown16,
-  SettingsAdjust16,
   PoolCombo,
   Popover,
   BaseMenuItem,
   MenuItemRightSlot,
   Label,
-  Reset16,
   MenuSectionLabelToggleAll,
 } from '@siafoundation/design-system'
+import {
+  CaretDown16,
+  SettingsAdjust16,
+  Reset16,
+} from '@siafoundation/react-icons'
 import { useHosts } from '../../contexts/hosts'
 
 export function HostsViewDropdownMenu() {

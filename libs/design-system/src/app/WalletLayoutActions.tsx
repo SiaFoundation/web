@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { Button } from '../core/Button'
-import { ArrowUpRight16, ArrowDownLeft16 } from '../icons/carbon'
+import { ArrowUpRight16, ArrowDownLeft16 } from '@siafoundation/react-icons'
 import { WalletBalance } from './WalletBalance'
 
 type Props = {

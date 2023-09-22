@@ -1,4 +1,5 @@
-import { Button, Close16, Panel, Text } from '@siafoundation/design-system'
+import { Button, Panel, Text } from '@siafoundation/design-system'
+import { Close16 } from '@siafoundation/react-icons'
 
 type Props = {
   title: string

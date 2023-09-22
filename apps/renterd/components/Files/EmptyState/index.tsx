@@ -1,4 +1,5 @@
-import { CloudUpload32, LinkButton, Text } from '@siafoundation/design-system'
+import { LinkButton, Text } from '@siafoundation/design-system'
+import { CloudUpload32 } from '@siafoundation/react-icons'
 import { routes } from '../../../config/routes'
 import { useFiles } from '../../../contexts/files'
 import { useAutopilotNotConfigured } from '../checks/useAutopilotNotConfigured'

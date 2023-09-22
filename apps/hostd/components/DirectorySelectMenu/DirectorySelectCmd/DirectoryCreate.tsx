@@ -1,9 +1,9 @@
 import {
-  FolderAdd16,
   Text,
   TextField,
   triggerErrorToast,
 } from '@siafoundation/design-system'
+import { FolderAdd16 } from '@siafoundation/react-icons'
 import { useSystemDirectoryCreate } from '@siafoundation/react-hostd'
 import { useHostOSPathSeparator } from '../../../hooks/useHostOSPathSeparator'
 import { getChildDirectoryPath } from '../../../lib/system'

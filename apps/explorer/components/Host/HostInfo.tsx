@@ -1,14 +1,16 @@
 import {
-  CheckmarkFilled16,
-  Fork16,
   Separator,
   Text,
-  Time16,
   Tooltip,
   ValueCopyable,
-  WarningFilled16,
   countryCodeEmoji,
 } from '@siafoundation/design-system'
+import {
+  CheckmarkFilled16,
+  Fork16,
+  Time16,
+  WarningFilled16,
+} from '@siafoundation/react-icons'
 import { SiaCentralHost } from '@siafoundation/sia-central'
 import { humanDate } from '@siafoundation/sia-js'
 import { formatDistance } from 'date-fns'

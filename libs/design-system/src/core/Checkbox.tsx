@@ -2,7 +2,7 @@
 
 import React from 'react'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
-import { Checkmark16 } from '../icons/carbon'
+import { Checkmark16 } from '@siafoundation/react-icons'
 import { Text } from './Text'
 import { cva } from 'class-variance-authority'
 import { VariantProps } from '../types'

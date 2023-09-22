@@ -1,5 +1,5 @@
 import { Text } from '../../core/Text'
-import { Filter32 } from '../../icons/carbon'
+import { Filter32 } from '@siafoundation/react-icons'
 
 type Props = {
   filtered: boolean

@@ -5,8 +5,8 @@ import {
   Button,
   ScrollArea,
   ControlGroup,
-  Close16,
 } from '@siafoundation/design-system'
+import { Close16 } from '@siafoundation/react-icons'
 import { useHosts } from '../../../contexts/hosts'
 import { Command } from 'cmdk'
 import { useCallback, useEffect, useRef, useState } from 'react'

@@ -1,4 +1,5 @@
-import { MisuseOutline32, Text } from '@siafoundation/design-system'
+import { Text } from '@siafoundation/design-system'
+import { MisuseOutline32 } from '@siafoundation/react-icons'
 import { SWRError } from '@siafoundation/react-core'
 import { StateNoneYet } from './StateNoneYet'
 

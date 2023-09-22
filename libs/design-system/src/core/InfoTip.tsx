@@ -1,5 +1,5 @@
 import { Tooltip } from './Tooltip'
-import { Information16 } from '../icons/carbon'
+import { Information16 } from '@siafoundation/react-icons'
 import { Text } from './Text'
 
 type Props = {

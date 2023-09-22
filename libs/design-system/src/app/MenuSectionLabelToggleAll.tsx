@@ -1,4 +1,4 @@
-import { View16, ViewOff16 } from '../icons/carbon'
+import { View16, ViewOff16 } from '@siafoundation/react-icons'
 import { Button } from '../core/Button'
 import { Label } from '../core/Label'
 import { BaseMenuItem, MenuItemRightSlot } from '../core/Menu'

@@ -1,4 +1,5 @@
-import { HouseIcon, SidenavItem } from '@siafoundation/design-system'
+import { SidenavItem } from '@siafoundation/design-system'
+import { HouseIcon } from '@siafoundation/react-icons'
 import { routes } from '../config/routes'
 
 export function WalletdSidenav() {

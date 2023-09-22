@@ -1,4 +1,5 @@
-import { HardDriveIcon, Text } from '@siafoundation/design-system'
+import { Text } from '@siafoundation/design-system'
+import { HardDriveIcon } from '@siafoundation/react-icons'
 
 export function StateNoneYet() {
   return (

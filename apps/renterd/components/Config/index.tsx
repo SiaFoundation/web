@@ -3,13 +3,12 @@ import {
   Button,
   triggerSuccessToast,
   triggerErrorToast,
-  Reset16,
-  Save16,
   ConfigurationPanel,
   TBToBytes,
   monthsToBlocks,
   useOnInvalid,
 } from '@siafoundation/design-system'
+import { Reset16, Save16 } from '@siafoundation/react-icons'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { RenterdSidenav } from '../RenterdSidenav'
 import { routes } from '../../config/routes'

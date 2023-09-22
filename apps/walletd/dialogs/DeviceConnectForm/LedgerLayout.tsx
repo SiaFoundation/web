@@ -1,13 +1,10 @@
+import { Text, Button, Panel, Tooltip } from '@siafoundation/design-system'
 import {
-  Text,
-  Button,
   Close16,
-  Panel,
   Bluetooth16,
   UsbIcon,
   HidIcon,
-  Tooltip,
-} from '@siafoundation/design-system'
+} from '@siafoundation/react-icons'
 import { useLedger } from '../../contexts/ledger'
 
 type Props = {

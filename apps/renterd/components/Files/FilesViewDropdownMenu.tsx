@@ -1,7 +1,5 @@
 import {
   Button,
-  CaretDown16,
-  SettingsAdjust16,
   Select,
   PoolCombo,
   Label,
@@ -11,6 +9,7 @@ import {
   MenuSeparator,
   Option,
 } from '@siafoundation/design-system'
+import { CaretDown16, SettingsAdjust16 } from '@siafoundation/react-icons'
 import { sortOptions, SortField } from '../../contexts/files/types'
 import { useFiles } from '../../contexts/files'
 import { groupBy } from 'lodash'

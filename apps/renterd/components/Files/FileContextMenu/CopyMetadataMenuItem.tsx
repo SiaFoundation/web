@@ -2,8 +2,8 @@ import {
   DropdownMenuItem,
   copyToClipboard,
   DropdownMenuLeftSlot,
-  Copy16,
 } from '@siafoundation/design-system'
+import { Copy16 } from '@siafoundation/react-icons'
 import { useObject } from '@siafoundation/react-renterd'
 import { bucketAndKeyParamsFromPath } from '../../../contexts/files/paths'
 

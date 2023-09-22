@@ -3,11 +3,10 @@ import {
   Heading,
   Link,
   Logo,
-  LogoDiscord16,
-  LogoGithub16,
   Tooltip,
   webLinks,
 } from '@siafoundation/design-system'
+import { LogoDiscord16, LogoGithub16 } from '@siafoundation/react-icons'
 import { cx } from 'class-variance-authority'
 import { menuSections } from '../../../config/siteMap'
 import { SiteMenu } from '../SiteMenu'

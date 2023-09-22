@@ -1,12 +1,9 @@
+import { Avatar, Separator, Skeleton, Text } from '@siafoundation/design-system'
 import {
-  Avatar,
   CloudDownload16,
   CloudUpload16,
-  Separator,
-  Skeleton,
-  Text,
   VmdkDisk16,
-} from '@siafoundation/design-system'
+} from '@siafoundation/react-icons'
 
 export function HostHeaderSkeleton() {
   return (

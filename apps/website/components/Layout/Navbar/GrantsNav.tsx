@@ -3,7 +3,7 @@ import {
   Schematics16,
   Stamp16,
   TestToolIcon,
-} from '@siafoundation/design-system'
+} from '@siafoundation/react-icons'
 import { routes } from '../../../config/routes'
 import { useRouter } from 'next/router'
 import { NavItem } from './NavItem'

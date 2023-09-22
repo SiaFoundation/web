@@ -3,17 +3,19 @@ import {
   DropdownMenuItem,
   Button,
   copyToClipboard,
-  Download16,
   DropdownMenuLeftSlot,
-  Copy16,
-  Delete16,
-  Document16,
   DropdownMenuLabel,
   copyToClipboardCustom,
   Text,
-  Warning16,
   Code,
 } from '@siafoundation/design-system'
+import {
+  Download16,
+  Copy16,
+  Delete16,
+  Document16,
+  Warning16,
+} from '@siafoundation/react-icons'
 import { useFiles } from '../../../contexts/files'
 import { useFileDelete } from '../useFileDelete'
 import { CopyMetadataMenuItem } from './CopyMetadataMenuItem'

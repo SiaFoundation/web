@@ -21,8 +21,8 @@ import {
   Microscope24,
   Policy24,
   EventsAlt24,
-} from '../icons/carbon'
-import { TestToolIcon } from '../icons/TestToolIcon'
+  TestToolIcon,
+} from '@siafoundation/react-icons'
 import { Link } from '../core/Link'
 import { Text } from '../core/Text'
 import { Paragraph } from '../core/Paragraph'

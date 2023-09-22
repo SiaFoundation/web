@@ -1,4 +1,5 @@
-import { Filter32, Text } from '@siafoundation/design-system'
+import { Text } from '@siafoundation/design-system'
+import { Filter32 } from '@siafoundation/react-icons'
 
 export function StateNoneMatching() {
   return (

@@ -2,7 +2,7 @@ import React from 'react'
 import { Text } from './Text'
 import { cx, VariantProps } from 'class-variance-authority'
 import Link from 'next/link'
-import { Link20 } from '../icons/carbon'
+import { Link20 } from '@siafoundation/react-icons'
 
 const DEFAULT_TAG = 'h1'
 

@@ -6,11 +6,13 @@ import {
   EntityListItemLayoutProps,
   Text,
   Tooltip,
+  Link,
+} from '@siafoundation/design-system'
+import {
   CloudDownload16,
   CloudUpload16,
   VmdkDisk16,
-  Link,
-} from '@siafoundation/design-system'
+} from '@siafoundation/react-icons'
 import {
   SiaCentralExchangeRates,
   SiaCentralHost,

@@ -1,4 +1,5 @@
-import { Link, Text, Tooltip, Warning16 } from '@siafoundation/design-system'
+import { Link, Text, Tooltip } from '@siafoundation/design-system'
+import { Warning16 } from '@siafoundation/react-icons'
 import { useFiles } from '../../../contexts/files'
 import { routes } from '../../../config/routes'
 import { useContractSetMismatch } from '../checks/useContractSetMismatch'

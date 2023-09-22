@@ -2,12 +2,10 @@ import {
   Text,
   Button,
   triggerSuccessToast,
-  Reset16,
   TBToBytes,
   ValueSc,
   useSiacoinFiat,
   ValueNum,
-  Save16,
   ConfigurationPanel,
   triggerErrorToast,
   useOnInvalid,
@@ -16,8 +14,8 @@ import {
   Popover,
   Label,
   Paragraph,
-  Settings16,
 } from '@siafoundation/design-system'
+import { Reset16, Save16, Settings16 } from '@siafoundation/react-icons'
 import BigNumber from 'bignumber.js'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { RenterdSidenav } from '../RenterdSidenav'

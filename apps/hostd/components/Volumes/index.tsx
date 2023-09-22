@@ -1,10 +1,5 @@
-import {
-  Button,
-  Add20,
-  Table,
-  Text,
-  Separator,
-} from '@siafoundation/design-system'
+import { Button, Table, Text, Separator } from '@siafoundation/design-system'
+import { Add20 } from '@siafoundation/react-icons'
 import { humanBytes } from '@siafoundation/sia-js'
 import { HostdAuthedLayout } from '../HostdAuthedLayout'
 import { useDialog } from '../../contexts/dialog'

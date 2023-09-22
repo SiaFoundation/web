@@ -9,10 +9,12 @@ import {
   Paragraph,
   webLinks,
   Callout,
+} from '@siafoundation/design-system'
+import {
   LogoTwitter24,
   LogoGithub16,
   LogoLinkedin16,
-} from '@siafoundation/design-system'
+} from '@siafoundation/react-icons'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
 import { getMinutesInSeconds } from '../../lib/time'

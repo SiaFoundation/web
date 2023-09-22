@@ -2,7 +2,7 @@
 // This is because I was having issues getting the @types to work in the published package.
 
 // Type definitions for @carbon/icons-react 10.31
-// Project: https://github.com/carbon-design-system/carbon/tree/master/packages/icons-react
+// Project: https://github.com/carbon-react-icons/carbon/tree/master/packages/icons-react
 // Definitions by: Eric Liu <https://github.com/metonym>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 4.0

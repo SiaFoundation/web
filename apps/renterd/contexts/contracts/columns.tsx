@@ -4,11 +4,11 @@ import {
   TableColumn,
   ContractTimeline,
   ValueCopyable,
-  ArrowUpLeft16,
   stripPrefix,
   Tooltip,
   ValueNum,
 } from '@siafoundation/design-system'
+import { ArrowUpLeft16 } from '@siafoundation/react-icons'
 import { humanBytes, humanDate } from '@siafoundation/sia-js'
 import { ContractData, TableColumnId } from './types'
 import { ContractContextMenu } from '../../components/Contracts/ContractContextMenu'

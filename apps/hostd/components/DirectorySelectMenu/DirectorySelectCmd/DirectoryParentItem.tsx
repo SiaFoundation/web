@@ -1,6 +1,7 @@
 import { CommandItemSearch } from '../../CmdRoot/Item'
 import { Page } from '../../CmdRoot/types'
-import { FolderIcon, Text } from '@siafoundation/design-system'
+import { Text } from '@siafoundation/design-system'
+import { FolderIcon } from '@siafoundation/react-icons'
 import { useHostOSPathSeparator } from '../../../hooks/useHostOSPathSeparator'
 import { getParentDir } from '../../../lib/system'
 

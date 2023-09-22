@@ -2,7 +2,7 @@ import { ConfigFields, FieldText } from '@siafoundation/design-system'
 import { useWallets } from '../contexts/wallets'
 import { humanTimeAndUnits } from '../lib/time'
 import { SeedLayout } from './SeedLayout'
-import { VerifyIcon } from './VerifyIcon'
+import { VerifyIcon } from '@siafoundation/react-icons'
 import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
 
 type Props<Values extends FieldValues, Categories extends string> = {

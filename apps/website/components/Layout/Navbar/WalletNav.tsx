@@ -1,9 +1,5 @@
-import {
-  Application16,
-  Terminal16,
-  Text,
-  Wallet16,
-} from '@siafoundation/design-system'
+import { Text } from '@siafoundation/design-system'
+import { Application16, Terminal16, Wallet16 } from '@siafoundation/react-icons'
 import { routes } from '../../../config/routes'
 import { useRouter } from 'next/router'
 import { NavItem } from './NavItem'

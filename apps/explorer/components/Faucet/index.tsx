@@ -2,7 +2,6 @@
 
 import {
   Container,
-  FaucetIcon,
   Heading,
   Panel,
   Tabs,
@@ -12,6 +11,7 @@ import {
   Text,
   webLinks,
 } from '@siafoundation/design-system'
+import { FaucetIcon } from '@siafoundation/react-icons'
 import { useCallback, useEffect, useState } from 'react'
 import { FaucetFundForm } from './FaucetFundForm'
 import { FaucetStatus } from './FaucetStatus'

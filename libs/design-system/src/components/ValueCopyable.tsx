@@ -3,7 +3,7 @@
 import { Text } from '../core/Text'
 import { Button } from '../core/Button'
 import { Link } from '../core/Link'
-import { Copy16 } from '../icons/carbon'
+import { Copy16 } from '@siafoundation/react-icons'
 import { copyToClipboard } from '../lib/clipboard'
 import { stripPrefix } from '../lib/utils'
 import { EntityType, getEntityTypeLabel } from '../lib/entityTypes'

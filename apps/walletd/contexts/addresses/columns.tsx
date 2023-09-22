@@ -5,8 +5,8 @@ import {
   Tooltip,
   Paragraph,
   Button,
-  Draggable16,
 } from '@siafoundation/design-system'
+import { Draggable16 } from '@siafoundation/react-icons'
 import { AddressContextMenu } from '../../components/WalletAddresses/AddressContextMenu'
 import { AddressData, TableColumnId } from './types'
 

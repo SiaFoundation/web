@@ -1,4 +1,4 @@
-import { Launch16 } from '../icons/carbon'
+import { Launch16 } from '@siafoundation/react-icons'
 import { Text } from '../core/Text'
 import { useIsExternalDomain } from '../hooks/useIsExternalDomain'
 

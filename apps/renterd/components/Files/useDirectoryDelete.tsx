@@ -1,9 +1,9 @@
 import {
-  Delete16,
   Paragraph,
   triggerErrorToast,
   triggerSuccessToast,
 } from '@siafoundation/design-system'
+import { Delete16 } from '@siafoundation/react-icons'
 import { useDialog } from '../../contexts/dialog'
 import { useCallback } from 'react'
 import { useObjectDelete } from '@siafoundation/react-renterd'

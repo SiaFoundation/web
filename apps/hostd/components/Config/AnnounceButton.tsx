@@ -1,10 +1,10 @@
 import {
   Button,
-  Bullhorn16,
   Paragraph,
   triggerErrorToast,
   triggerSuccessToast,
 } from '@siafoundation/design-system'
+import { Bullhorn16 } from '@siafoundation/react-icons'
 import { useDialog } from '../../contexts/dialog'
 import { useSettingsAnnounce, useTxPoolFee } from '@siafoundation/react-hostd'
 import { humanSiacoin } from '@siafoundation/sia-js'

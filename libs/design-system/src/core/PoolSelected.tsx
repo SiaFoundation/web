@@ -1,4 +1,4 @@
-import { Close16 } from '../icons/carbon'
+import { Close16 } from '@siafoundation/react-icons'
 import { Button } from './Button'
 import { ControlGroup } from './ControlGroup'
 

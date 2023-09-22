@@ -1,9 +1,5 @@
-import {
-  Button,
-  ConfigField,
-  View16,
-  ViewOff16,
-} from '@siafoundation/design-system'
+import { Button, ConfigField } from '@siafoundation/design-system'
+import { View16, ViewOff16 } from '@siafoundation/react-icons'
 import { FieldValues } from 'react-hook-form'
 import { blake2bHex } from 'blakejs'
 import { getWalletWasm } from './wasm'

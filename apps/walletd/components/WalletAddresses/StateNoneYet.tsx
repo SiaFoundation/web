@@ -1,4 +1,5 @@
-import { Text, WalletIcon } from '@siafoundation/design-system'
+import { Text } from '@siafoundation/design-system'
+import { WalletIcon } from '@siafoundation/react-icons'
 
 export function StateNoneYet() {
   return (

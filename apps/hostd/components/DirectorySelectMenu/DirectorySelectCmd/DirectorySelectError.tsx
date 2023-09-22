@@ -1,4 +1,5 @@
-import { Folder16, Text } from '@siafoundation/design-system'
+import { Text } from '@siafoundation/design-system'
+import { Folder16 } from '@siafoundation/react-icons'
 
 export function DirectorySelectError() {
   return (

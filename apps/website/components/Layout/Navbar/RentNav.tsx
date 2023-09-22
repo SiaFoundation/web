@@ -1,11 +1,11 @@
+import { Text } from '@siafoundation/design-system'
 import {
   Application16,
   Cloud16,
   Idea16,
   PlayOutline16,
   Terminal16,
-  Text,
-} from '@siafoundation/design-system'
+} from '@siafoundation/react-icons'
 import { routes } from '../../../config/routes'
 import { useRouter } from 'next/router'
 import { NavItem } from './NavItem'
