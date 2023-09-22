@@ -7,7 +7,7 @@ import { Text } from '../../core/Text'
 import { useDatasetEmptyState } from '../../hooks/useDatasetEmptyState'
 import { humanDate } from '@siafoundation/sia-js'
 import { cx } from 'class-variance-authority'
-import { difference, times } from 'lodash'
+import { times } from 'lodash'
 import { useCallback, useMemo, useState } from 'react'
 import { StateEmpty } from './StateEmpty'
 import { SWRResponse } from 'swr'
@@ -61,7 +61,7 @@ export function AlertsDialog({
 
   // Sort keys by dataFieldOrder, then alphabetically
   const getOrderedKeys = useCallback(
-    (obj: Record<string, unknown>, skip: string[] = []) => {
+    (obj: Record<string, unknown>) => {
       const orderedKeys = Object.keys(obj).sort((a, b) => {
         const aIndex = dataFieldOrder.indexOf(a)
         const bIndex = dataFieldOrder.indexOf(b)
@@ -76,7 +76,7 @@ export function AlertsDialog({
         }
         return aIndex - bIndex
       })
-      return difference(orderedKeys, skip)
+      return orderedKeys
     },
     [dataFieldOrder]
   )
@@ -231,7 +231,7 @@ export function AlertsDialog({
 
 function DefaultDisplay({ label, value }: { label: string; value: unknown }) {
   return (
-    <div className="flex gap-3 justify-between w-full">
+    <div className="flex justify-between w-full gap-2">
       <Text color="subtle">{label}</Text>
       <Text color="contrast" ellipsis>
         {String(value)}
