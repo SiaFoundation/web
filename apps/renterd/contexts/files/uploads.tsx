@@ -1,4 +1,8 @@
-import { triggerErrorToast, triggerToast } from '@siafoundation/design-system'
+import {
+  triggerErrorToast,
+  triggerSuccessToast,
+  triggerToast,
+} from '@siafoundation/design-system'
 import { useObjectUpload } from '@siafoundation/react-renterd'
 import { throttle } from 'lodash'
 import { useCallback, useMemo, useState } from 'react'
@@ -9,7 +13,13 @@ import {
   getFilePath,
 } from './paths'
 
-type UploadsMap = Record<string, ObjectData>
+type UploadProgress = ObjectData & {
+  controller: AbortController
+}
+
+type UploadProgressParams = Omit<UploadProgress, 'id' | 'type'>
+
+type UploadsMap = Record<string, UploadProgress>
 
 type Props = {
   activeDirectoryPath: string
@@ -19,16 +29,10 @@ export function useUploads({ activeDirectoryPath }: Props) {
   const upload = useObjectUpload()
   const [uploadsMap, setUploadsMap] = useState<UploadsMap>({})
 
-  const updateUploadProgress = useCallback(
-    (obj: {
-      path: string
-      name: string
-      bucket: string
-      loaded: number
-      size: number
-    }) => {
-      setUploadsMap((uploads) => ({
-        ...uploads,
+  const initUploadProgress = useCallback(
+    (obj: UploadProgressParams) => {
+      setUploadsMap((map) => ({
+        ...map,
         [obj.path]: {
           id: obj.path,
           path: obj.path,
@@ -37,9 +41,30 @@ export function useUploads({ activeDirectoryPath }: Props) {
           size: obj.size,
           loaded: obj.loaded,
           isUploading: true,
+          controller: obj.controller,
           type: 'file',
         },
       }))
+    },
+    [setUploadsMap]
+  )
+
+  const updateUploadProgress = useCallback(
+    (obj: { path: string; loaded: number; size: number }) => {
+      setUploadsMap((map) => {
+        if (!map[obj.path]) {
+          return map
+        }
+        return {
+          ...map,
+          [obj.path]: {
+            ...map[obj.path],
+            path: obj.path,
+            loaded: obj.loaded,
+            size: obj.size,
+          },
+        }
+      })
     },
     [setUploadsMap]
   )
@@ -56,29 +81,39 @@ export function useUploads({ activeDirectoryPath }: Props) {
     [setUploadsMap]
   )
 
+  const uploadCancel = useCallback((upload: UploadProgress) => {
+    upload.controller.abort()
+  }, [])
+
   const uploadFiles = async (files: File[]) => {
     files.forEach(async (file) => {
       const name = file.name
       // TODO: check if name has /prefix
       const path = getFilePath(activeDirectoryPath, name)
       const bucket = getBucketFromPath(path)
+
+      if (uploadsMap[path]) {
+        triggerErrorToast(`Already uploading file: ${path}`)
+        return
+      }
+
+      const controller = new AbortController()
       const onUploadProgress = throttle(
         (e) =>
           updateUploadProgress({
-            name,
             path,
-            bucket,
             loaded: e.loaded,
             size: e.total,
           }),
         2000
       )
-      updateUploadProgress({
-        name,
+      initUploadProgress({
         path,
+        name,
         bucket,
         loaded: 0,
         size: 1,
+        controller,
       })
       const response = await upload.put({
         params: bucketAndKeyParamsFromPath(path),
@@ -86,15 +121,20 @@ export function useUploads({ activeDirectoryPath }: Props) {
         config: {
           axios: {
             onUploadProgress,
+            signal: controller.signal,
           },
         },
       })
       if (response.error) {
-        triggerErrorToast(response.error)
+        if (response.error === 'canceled') {
+          triggerToast('File upload canceled.')
+        } else {
+          triggerErrorToast(response.error)
+        }
         removeUpload(path)
       } else {
         removeUpload(path)
-        triggerToast(`Upload complete: ${name}`)
+        triggerSuccessToast(`Upload complete: ${name}`)
       }
     })
   }
@@ -107,5 +147,6 @@ export function useUploads({ activeDirectoryPath }: Props) {
   return {
     uploadFiles,
     uploadsList,
+    uploadCancel,
   }
 }
