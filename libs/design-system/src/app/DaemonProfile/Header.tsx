@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 import { Text } from '../../core/Text'
 import { Button } from '../../core/Button'
-import { CheckmarkFilled16, Network_416 } from '../../icons/carbon'
+import { CheckmarkFilled16, Network_416 } from '@siafoundation/react-icons'
 import { Tooltip } from '../../core/Tooltip'
 
 type Props = {

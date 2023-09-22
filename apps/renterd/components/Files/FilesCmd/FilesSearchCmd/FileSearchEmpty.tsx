@@ -1,9 +1,5 @@
-import {
-  Document16,
-  Image16,
-  Text,
-  Video16,
-} from '@siafoundation/design-system'
+import { Text } from '@siafoundation/design-system'
+import { Document16, Image16, Video16 } from '@siafoundation/react-icons'
 
 export function FileSearchEmpty({
   debouncedSearch,

@@ -1,4 +1,5 @@
-import { Text, Unlocked16 } from '@siafoundation/design-system'
+import { Text } from '@siafoundation/design-system'
+import { Unlocked16 } from '@siafoundation/react-icons'
 import { useWallets } from '../../contexts/wallets'
 
 export function WalletsFiltersBar() {

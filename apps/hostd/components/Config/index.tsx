@@ -3,19 +3,20 @@ import {
   Button,
   triggerSuccessToast,
   triggerErrorToast,
+  ConfigurationPanel,
+  useOnInvalid,
+} from '@siafoundation/design-system'
+import {
   Reset16,
   Save16,
   Warning16,
   CheckmarkFilled16,
-  ConfigurationPanel,
-  useOnInvalid,
-} from '@siafoundation/design-system'
+} from '@siafoundation/react-icons'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { HostdSidenav } from '../HostdSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { HostdAuthedLayout } from '../../components/HostdAuthedLayout'
-import {} from '@siafoundation/design-system'
 import {
   HostSettings,
   useSettings,

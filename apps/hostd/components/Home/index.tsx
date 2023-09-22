@@ -2,12 +2,11 @@ import {
   Button,
   ControlGroup,
   Text,
-  CalendarHeatMap16,
   Tooltip,
   Select,
-  Ruler16,
   Option,
 } from '@siafoundation/design-system'
+import { CalendarHeatMap16, Ruler16 } from '@siafoundation/react-icons'
 import { useMetrics } from '../../contexts/metrics'
 import { HomeRevenue } from './HomeRevenue'
 import { HomeStorage } from './HomeStorage'

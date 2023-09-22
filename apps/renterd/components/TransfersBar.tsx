@@ -1,15 +1,17 @@
 import {
   Button,
-  Close16,
-  Download16,
   LoadingDots,
   Panel,
   ProgressBar,
   ScrollArea,
-  Subtract24,
   Text,
-  Upload16,
 } from '@siafoundation/design-system'
+import {
+  Close16,
+  Download16,
+  Subtract24,
+  Upload16,
+} from '@siafoundation/react-icons'
 import { useState } from 'react'
 import { useFiles } from '../contexts/files'
 

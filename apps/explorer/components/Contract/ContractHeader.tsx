@@ -1,10 +1,9 @@
 import {
-  ArrowLeft16,
-  ArrowRight16,
   Badge,
   ContractTimeline,
   LinkButton,
 } from '@siafoundation/design-system'
+import { ArrowLeft16, ArrowRight16 } from '@siafoundation/react-icons'
 import {
   SiaCentralContract,
   getSiaCentralBlockLatest,

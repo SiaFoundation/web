@@ -1,6 +1,4 @@
-import { LockIcon } from '../../icons/LockIcon'
-import { DiceIcon } from '../../icons/DiceIcon'
-import { GearIcon } from '../../icons/GearIcon'
+import { LockIcon, DiceIcon, GearIcon } from '@siafoundation/react-icons'
 import { Panel } from '../../core/Panel'
 import { Separator } from '../../core/Separator'
 import { Logo } from '../../core/Logo'

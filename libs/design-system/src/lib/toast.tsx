@@ -1,6 +1,6 @@
 'use client'
 
-import { CheckmarkOutline16, CloseOutline16 } from '../icons/carbon'
+import { CheckmarkOutline16, CloseOutline16 } from '@siafoundation/react-icons'
 import toast, {
   Renderable,
   Toaster as RToaster,

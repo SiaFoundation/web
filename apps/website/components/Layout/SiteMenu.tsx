@@ -5,14 +5,13 @@ import {
   ThemeRadio,
   Dialog,
   Button,
-  MenuIcon,
   Logo,
   Container,
   DialogClose,
   Switch,
-  Wikis16,
   Tooltip,
 } from '@siafoundation/design-system'
+import { MenuIcon, Wikis16 } from '@siafoundation/react-icons'
 import { cx } from 'class-variance-authority'
 import { useAppSettings } from '@siafoundation/react-core'
 

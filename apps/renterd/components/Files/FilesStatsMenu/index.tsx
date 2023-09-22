@@ -1,10 +1,5 @@
-import {
-  Filter16,
-  Separator,
-  Text,
-  Tooltip,
-  Wikis16,
-} from '@siafoundation/design-system'
+import { Separator, Text, Tooltip } from '@siafoundation/design-system'
+import { Filter16, Wikis16 } from '@siafoundation/react-icons'
 import { FilesStatsMenuSize } from './FilesStatsMenuSize'
 import { FilesStatsMenuHealth } from './FilesStatsMenuHealth'
 import { FilesStatsMenuWarnings } from './FilesStatsMenuWarnings'

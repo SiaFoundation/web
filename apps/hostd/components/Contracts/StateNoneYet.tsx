@@ -1,4 +1,5 @@
-import { FileContractIcon, Text } from '@siafoundation/design-system'
+import { Text } from '@siafoundation/design-system'
+import { FileContractIcon } from '@siafoundation/react-icons'
 
 export function StateNoneYet() {
   return (

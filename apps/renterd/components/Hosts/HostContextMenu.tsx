@@ -2,15 +2,17 @@ import {
   DropdownMenu,
   DropdownMenuItem,
   Button,
-  Draggable16,
-  DataView16,
-  ListChecked16,
   DropdownMenuLeftSlot,
-  Filter16,
   DropdownMenuLabel,
   Text,
   secondsInMilliseconds,
 } from '@siafoundation/design-system'
+import {
+  Draggable16,
+  DataView16,
+  ListChecked16,
+  Filter16,
+} from '@siafoundation/react-icons'
 import {
   useHostsAllowlist,
   useHostsBlocklist,

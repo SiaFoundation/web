@@ -1,9 +1,9 @@
+import { Text } from '@siafoundation/design-system'
 import {
   CheckmarkFilled16,
   Misuse16,
-  Text,
   WarningFilled16,
-} from '@siafoundation/design-system'
+} from '@siafoundation/react-icons'
 
 export const healthThresholds = {
   excellent: 1,

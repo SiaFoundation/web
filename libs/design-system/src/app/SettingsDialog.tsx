@@ -11,7 +11,7 @@ import {
   LogoDiscord16,
   Globe16,
   LogoGithub16,
-} from '../icons/carbon'
+} from '@siafoundation/react-icons'
 import { ThemeRadio } from '../components/ThemeRadio'
 import { webLinks } from '../data/webLinks'
 import { useAppSettings } from '@siafoundation/react-core'

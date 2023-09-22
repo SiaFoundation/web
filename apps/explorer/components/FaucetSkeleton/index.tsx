@@ -1,10 +1,5 @@
-import {
-  Container,
-  Panel,
-  Text,
-  FaucetIcon,
-  Heading,
-} from '@siafoundation/design-system'
+import { Container, Panel, Text, Heading } from '@siafoundation/design-system'
+import { FaucetIcon } from '@siafoundation/react-icons'
 import { networkName } from '../../config'
 
 export function FaucetSkeleton() {

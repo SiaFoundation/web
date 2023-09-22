@@ -1,4 +1,5 @@
-import { Code, Sprout16, Usb16, View16 } from '@siafoundation/design-system'
+import { Code } from '@siafoundation/design-system'
+import { Sprout16, Usb16, View16 } from '@siafoundation/react-icons'
 
 export const walletAddTypes = {
   walletAddNew: {

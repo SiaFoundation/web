@@ -5,9 +5,9 @@ import {
   Button,
   ScrollArea,
   ControlGroup,
-  Close16,
   truncate,
 } from '@siafoundation/design-system'
+import { Close16 } from '@siafoundation/react-icons'
 import { Command } from 'cmdk'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useContracts } from '../../../contexts/contracts'

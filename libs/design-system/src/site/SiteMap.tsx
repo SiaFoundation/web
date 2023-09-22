@@ -1,5 +1,5 @@
 import React from 'react'
-import { Launch16 } from '../icons/carbon'
+import { Launch16 } from '@siafoundation/react-icons'
 import { Link } from '../core/Link'
 import { LinkData } from '../lib/links'
 import { Heading } from '../core/Heading'

@@ -1,12 +1,11 @@
 'use client'
 
+import { Text, Tooltip } from '@siafoundation/design-system'
 import {
   CloudDownload16,
   CloudUpload16,
-  Text,
-  Tooltip,
   VmdkDisk16,
-} from '@siafoundation/design-system'
+} from '@siafoundation/react-icons'
 import {
   SiaCentralExchangeRates,
   SiaCentralHost,

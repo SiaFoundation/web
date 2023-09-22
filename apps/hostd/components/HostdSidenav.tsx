@@ -1,12 +1,11 @@
+import { SidenavItem, Text } from '@siafoundation/design-system'
 import {
-  SidenavItem,
   FileContractIcon,
   BarsProgressIcon,
   HouseIcon,
   HardDriveIcon,
   BellIcon,
-  Text,
-} from '@siafoundation/design-system'
+} from '@siafoundation/react-icons'
 import { useAlerts } from '@siafoundation/react-hostd'
 import { cx } from 'class-variance-authority'
 import { routes } from '../config/routes'

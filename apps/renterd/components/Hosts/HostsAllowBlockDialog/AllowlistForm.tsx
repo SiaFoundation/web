@@ -3,15 +3,13 @@ import {
   copyToClipboard,
   ScrollArea,
   Text,
-  ListChecked32,
-  Filter32,
   Panel,
-  Warning16,
   Paragraph,
   FormTextFieldFormik,
   FieldGroupFormik,
   FormSubmitButtonFormik,
 } from '@siafoundation/design-system'
+import { ListChecked32, Filter32, Warning16 } from '@siafoundation/react-icons'
 import { useHostsAllowlist } from '@siafoundation/react-renterd'
 import { useAllowlistUpdate } from '../../../hooks/useAllowlistUpdate'
 import { useFormik } from 'formik'

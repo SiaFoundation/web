@@ -2,16 +2,18 @@ import {
   DropdownMenu,
   DropdownMenuItem,
   Button,
-  Draggable16,
-  ListChecked16,
   DropdownMenuLeftSlot,
-  Filter16,
   DropdownMenuLabel,
   Text,
   copyToClipboard,
+} from '@siafoundation/design-system'
+import {
+  Draggable16,
+  ListChecked16,
+  Filter16,
   Copy16,
   Delete16,
-} from '@siafoundation/design-system'
+} from '@siafoundation/react-icons'
 import {
   useHostsAllowlist,
   useHostsBlocklist,

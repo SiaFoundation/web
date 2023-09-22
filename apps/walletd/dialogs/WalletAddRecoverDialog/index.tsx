@@ -16,7 +16,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { useWalletAdd } from '@siafoundation/react-walletd'
 import { blake2bHex } from 'blakejs'
 import { SeedLayout } from '../SeedLayout'
-import { SeedIcon } from '../SeedIcon'
+import { SeedIcon } from '@siafoundation/react-icons'
 import { walletAddTypes } from '../../config/walletTypes'
 import { getWalletWasm } from '../../lib/wasm'
 

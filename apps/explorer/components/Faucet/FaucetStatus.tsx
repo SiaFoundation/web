@@ -1,6 +1,5 @@
 import {
   Button,
-  Copy24,
   copyToClipboard,
   Label,
   LoadingDots,
@@ -11,6 +10,7 @@ import {
   ValueCopyable,
   ValueSc,
 } from '@siafoundation/design-system'
+import { Copy24 } from '@siafoundation/react-icons'
 import BigNumber from 'bignumber.js'
 import { useEffect, useState } from 'react'
 import { useFaucetStatus } from '../../hooks/useFaucetStatus'

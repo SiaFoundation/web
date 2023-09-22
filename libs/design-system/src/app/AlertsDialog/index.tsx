@@ -1,7 +1,9 @@
+'use client'
+
 import { Button } from '../../core/Button'
 import { Dialog } from '../../core/Dialog'
 import { Heading } from '../../core/Heading'
-import { Checkmark16 } from '../../icons/carbon'
+import { Checkmark16 } from '@siafoundation/react-icons'
 import { Skeleton } from '../../core/Skeleton'
 import { Text } from '../../core/Text'
 import { useDatasetEmptyState } from '../../hooks/useDatasetEmptyState'

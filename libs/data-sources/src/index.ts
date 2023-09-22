@@ -1,7 +1,6 @@
 export * from './lib/benchmarks'
 export * from './lib/error'
 export * from './lib/github'
-export * from './lib/siaStats'
 export * from './lib/siaCentral'
 export * from './lib/navigator'
 export * from './lib/assets'

@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useRef } from 'react'
-import { Text, ChevronRight16, ScrollArea } from '@siafoundation/design-system'
+import { Text, ScrollArea } from '@siafoundation/design-system'
+import { ChevronRight16 } from '@siafoundation/react-icons'
 import { useFiles } from '../../contexts/files'
 
 export function FilesBreadcrumbMenu() {

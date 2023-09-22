@@ -1,12 +1,11 @@
 import {
   Button,
-  Document16,
-  FolderIcon,
   LoadingDots,
   TableColumn,
   Text,
   ValueNum,
 } from '@siafoundation/design-system'
+import { Document16, FolderIcon } from '@siafoundation/react-icons'
 import { humanBytes } from '@siafoundation/sia-js'
 import { FileContextMenu } from '../../components/Files/FileContextMenu'
 import { DirectoryContextMenu } from '../../components/Files/DirectoryContextMenu'

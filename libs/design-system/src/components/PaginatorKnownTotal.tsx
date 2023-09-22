@@ -7,7 +7,7 @@ import {
   CaretRight16,
   PageFirst16,
   PageLast16,
-} from '../icons/carbon'
+} from '@siafoundation/react-icons'
 import { useRouter } from 'next/router'
 import { LoadingDots } from '..'
 

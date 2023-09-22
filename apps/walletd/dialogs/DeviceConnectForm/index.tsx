@@ -5,8 +5,8 @@ import {
   Text,
   Button,
   ValueCopyable,
-  Password16,
 } from '@siafoundation/design-system'
+import { Password16 } from '@siafoundation/react-icons'
 import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import useSWR from 'swr'

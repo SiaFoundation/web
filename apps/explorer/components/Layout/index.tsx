@@ -1,4 +1,5 @@
-import { FaucetIcon, LinkButton, Tooltip } from '@siafoundation/design-system'
+import { LinkButton, Tooltip } from '@siafoundation/design-system'
+import { FaucetIcon } from '@siafoundation/react-icons'
 import { routes } from '../../config/routes'
 import { Search } from './Search'
 import { isMainnet, network, networkName, appName } from '../../config'

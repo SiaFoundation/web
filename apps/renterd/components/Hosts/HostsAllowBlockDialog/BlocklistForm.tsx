@@ -5,13 +5,12 @@ import {
   ScrollArea,
   Text,
   Separator,
-  ListChecked32,
-  Filter32,
   Tooltip,
   hostnameOrIpRegex,
   FormTextFieldFormik,
   FieldGroupFormik,
 } from '@siafoundation/design-system'
+import { ListChecked32, Filter32 } from '@siafoundation/react-icons'
 import { useHostsBlocklist } from '@siafoundation/react-renterd'
 import { useContracts } from '../../../contexts/contracts'
 import { useFormik } from 'formik'

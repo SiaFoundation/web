@@ -4,8 +4,8 @@ import {
   ControlGroup,
   Button,
   LinkButton,
-  Download16,
 } from '@siafoundation/design-system'
+import { Download16 } from '@siafoundation/react-icons'
 import { useState } from 'react'
 import {
   getHostdDownloadLinks,

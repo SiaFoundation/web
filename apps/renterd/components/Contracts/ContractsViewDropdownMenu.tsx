@@ -1,7 +1,5 @@
 import {
   Button,
-  CaretDown16,
-  SettingsAdjust16,
   Select,
   PoolCombo,
   Label,
@@ -9,10 +7,14 @@ import {
   MenuItemRightSlot,
   BaseMenuItem,
   MenuSeparator,
-  Reset16,
   MenuSectionLabelToggleAll,
   Option,
 } from '@siafoundation/design-system'
+import {
+  CaretDown16,
+  SettingsAdjust16,
+  Reset16,
+} from '@siafoundation/react-icons'
 import { sortOptions, SortField } from '../../contexts/contracts/types'
 import { useContracts } from '../../contexts/contracts'
 import { groupBy } from 'lodash'

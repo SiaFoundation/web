@@ -1,4 +1,5 @@
-import { Query16, Text } from '@siafoundation/design-system'
+import { Text } from '@siafoundation/design-system'
+import { Query16 } from '@siafoundation/react-icons'
 
 export type CmdEmptyProps = { search: string; debouncedSearch: string }
 

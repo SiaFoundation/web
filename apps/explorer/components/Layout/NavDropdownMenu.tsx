@@ -7,10 +7,10 @@ import {
   Link,
   DropdownMenuGroup,
   DropdownMenuLabel,
-  Menu24,
   CurrencySelector,
   ThemeRadio,
 } from '@siafoundation/design-system'
+import { Menu24 } from '@siafoundation/react-icons'
 
 type Props = React.ComponentProps<typeof Button> & {
   trigger?: React.ReactNode

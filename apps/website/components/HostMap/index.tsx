@@ -1,11 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import {
-  Button,
-  ScrollArea,
-  Text,
-  Tooltip,
-  Wikis16,
-} from '@siafoundation/design-system'
+import { Button, ScrollArea, Text, Tooltip } from '@siafoundation/design-system'
+import { Wikis16 } from '@siafoundation/react-icons'
 import axios from 'axios'
 import { Stats } from '../../content/stats'
 import useSWR from 'swr'

@@ -2,7 +2,7 @@
 
 import React from 'react'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
-import { ChevronDown16 } from '../icons/carbon'
+import { ChevronDown16 } from '@siafoundation/react-icons'
 import { cva } from 'class-variance-authority'
 import { VariantProps } from '../types'
 import { Button } from './Button'

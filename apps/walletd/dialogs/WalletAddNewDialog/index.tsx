@@ -8,10 +8,9 @@ import {
   triggerErrorToast,
   FormSubmitButton,
   FieldTextArea,
-  Redo16,
   copyToClipboard,
-  Copy16,
 } from '@siafoundation/design-system'
+import { Redo16, Copy16 } from '@siafoundation/react-icons'
 import { MouseEvent, useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useWalletAdd } from '@siafoundation/react-walletd'
@@ -21,7 +20,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { walletAddTypes } from '../../config/walletTypes'
 import { blake2bHex } from 'blakejs'
 import { SeedLayout } from '../SeedLayout'
-import { SeedIcon } from '../SeedIcon'
+import { SeedIcon } from '@siafoundation/react-icons'
 import { getWalletWasm } from '../../lib/wasm'
 
 const defaultValues = {

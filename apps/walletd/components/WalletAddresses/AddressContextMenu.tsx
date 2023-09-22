@@ -3,12 +3,12 @@ import {
   DropdownMenuItem,
   DropdownMenuLeftSlot,
   DropdownMenuLabel,
-  Delete16,
   Paragraph,
   triggerErrorToast,
   triggerSuccessToast,
   stripPrefix,
 } from '@siafoundation/design-system'
+import { Delete16 } from '@siafoundation/react-icons'
 import { useWalletAddressDelete } from '@siafoundation/react-walletd'
 import { AddressData } from '../../contexts/addresses/types'
 import { useDialog } from '../../contexts/dialog'

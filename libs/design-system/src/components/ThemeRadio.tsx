@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useTheme } from 'next-themes'
-import { Asleep16, Awake16, Screen16 } from '../icons/carbon'
+import { Asleep16, Awake16, Screen16 } from '@siafoundation/react-icons'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 import { Tooltip } from '../core/Tooltip'
 import { cx } from 'class-variance-authority'

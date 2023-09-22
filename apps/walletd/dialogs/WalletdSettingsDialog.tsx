@@ -2,7 +2,6 @@ import {
   Alert,
   Heading,
   Text,
-  Information16,
   Switch,
   Select,
   Option,
@@ -10,6 +9,7 @@ import {
   SettingsDialog,
   minutesInMilliseconds,
 } from '@siafoundation/design-system'
+import { Information16 } from '@siafoundation/react-icons'
 import { useWallets } from '../contexts/wallets'
 
 export type WalletdSettingsDialogParams = never

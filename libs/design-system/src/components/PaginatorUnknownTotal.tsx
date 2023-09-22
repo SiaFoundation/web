@@ -2,7 +2,11 @@
 
 import { Button } from '../core/Button'
 import { ControlGroup } from '../core/ControlGroup'
-import { CaretLeft16, CaretRight16, PageFirst16 } from '../icons/carbon'
+import {
+  CaretLeft16,
+  CaretRight16,
+  PageFirst16,
+} from '@siafoundation/react-icons'
 import { useRouter } from 'next/router'
 import { LoadingDots } from './LoadingDots'
 

@@ -1,4 +1,5 @@
-import { ArrowDownLeft16, LinkButton } from '@siafoundation/design-system'
+import { LinkButton } from '@siafoundation/design-system'
+import { ArrowDownLeft16 } from '@siafoundation/react-icons'
 import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
 

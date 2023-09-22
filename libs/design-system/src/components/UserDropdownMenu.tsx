@@ -7,7 +7,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '../core/DropdownMenu'
-import { OverflowMenuHorizontal24 } from '../icons/carbon'
+import { OverflowMenuHorizontal24 } from '@siafoundation/react-icons'
 import { Button } from '../core/Button'
 import { ThemeRadio } from './ThemeRadio'
 

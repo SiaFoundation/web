@@ -4,7 +4,7 @@ import { ChartXYProps } from './useChartXY'
 import { ChartType, CurveType, StackOffset } from './types'
 import { InfoTip } from '../../core/InfoTip'
 import { Dialog } from '../../core/Dialog'
-import { Settings16 } from '../../icons/carbon'
+import { Settings16 } from '@siafoundation/react-icons'
 import { Button } from '../../core/Button'
 
 export function ChartXYConfig<Key extends string, Cat extends string>({

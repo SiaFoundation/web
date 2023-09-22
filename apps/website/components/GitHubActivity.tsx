@@ -1,10 +1,5 @@
-import {
-  Text,
-  Link,
-  Separator,
-  LogoGithub16,
-  ScrollArea,
-} from '@siafoundation/design-system'
+import { Text, Link, Separator, ScrollArea } from '@siafoundation/design-system'
+import { LogoGithub16 } from '@siafoundation/react-icons'
 import { format } from 'date-fns'
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { components } from '../config/mdx'

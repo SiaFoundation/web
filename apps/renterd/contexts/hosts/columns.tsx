@@ -3,16 +3,18 @@ import {
   TableColumn,
   ValueCopyable,
   ValueNum,
-  WarningSquareFilled16,
   Tooltip,
   LoadingDots,
   ValueSc,
+} from '@siafoundation/design-system'
+import {
+  WarningSquareFilled16,
   Plane16,
   Settings16,
   DataTable16,
   UndefinedFilled16,
   CheckboxCheckedFilled16,
-} from '@siafoundation/design-system'
+} from '@siafoundation/react-icons'
 import { humanBytes, humanNumber } from '@siafoundation/sia-js'
 import { HostData, TableColumnId } from './types'
 import { format, formatDistance, formatRelative } from 'date-fns'

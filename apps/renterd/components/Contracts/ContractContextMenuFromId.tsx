@@ -1,4 +1,5 @@
-import { Button, Draggable16 } from '@siafoundation/design-system'
+import { Button } from '@siafoundation/design-system'
+import { Draggable16 } from '@siafoundation/react-icons'
 import { useContract } from '@siafoundation/react-renterd'
 import { ContractContextMenu } from './ContractContextMenu'
 

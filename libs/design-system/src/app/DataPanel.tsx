@@ -3,7 +3,7 @@ import { Codeblock } from '../core/Codeblock'
 import { DropdownMenu, DropdownMenuItem } from '../core/DropdownMenu'
 import { Heading } from '../core/Heading'
 import { Panel } from '../core/Panel'
-import { OverflowMenuHorizontal16 } from '../icons/carbon'
+import { OverflowMenuHorizontal16 } from '@siafoundation/react-icons'
 
 type Action = {
   title: string

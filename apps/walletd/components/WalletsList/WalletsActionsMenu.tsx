@@ -1,4 +1,5 @@
-import { Add16, Button, Locked16 } from '@siafoundation/design-system'
+import { Button } from '@siafoundation/design-system'
+import { Add16, Locked16 } from '@siafoundation/react-icons'
 import { useWallets } from '../../contexts/wallets'
 import { useDialog } from '../../contexts/dialog'
 import { WalletsViewDropdownMenu } from './WalletsViewDropdownMenu'

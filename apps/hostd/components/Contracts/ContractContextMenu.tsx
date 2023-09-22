@@ -1,7 +1,6 @@
 import {
   DropdownMenu,
   Button,
-  Draggable16,
   DropdownMenuLabel,
   DropdownMenuItem,
   triggerErrorToast,
@@ -9,10 +8,10 @@ import {
   Code,
   Link,
   DropdownMenuLeftSlot,
-  DataCheck16,
   Tooltip,
   Text,
 } from '@siafoundation/design-system'
+import { Draggable16, DataCheck16 } from '@siafoundation/react-icons'
 import {
   ContractStatus,
   useContractsIntegrityCheck,

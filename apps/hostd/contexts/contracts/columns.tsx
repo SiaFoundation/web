@@ -3,16 +3,18 @@ import {
   ValueSc,
   TableColumn,
   ValueCopyable,
-  ArrowUpLeft16,
   stripPrefix,
   Tooltip,
-  ArrowDownRight16,
   Badge,
   ContractTimeline,
-  Money16,
   ValueNum,
   blockHeightToTime,
 } from '@siafoundation/design-system'
+import {
+  ArrowUpLeft16,
+  ArrowDownRight16,
+  Money16,
+} from '@siafoundation/react-icons'
 import { ContractStatus } from '@siafoundation/react-hostd'
 import { humanBytes, humanDate } from '@siafoundation/sia-js'
 import { ContractContextMenu } from '../../components/Contracts/ContractContextMenu'

@@ -1,9 +1,5 @@
-import {
-  Button,
-  Earth16,
-  ListChecked16,
-  Tooltip,
-} from '@siafoundation/design-system'
+import { Button, Tooltip } from '@siafoundation/design-system'
+import { Earth16, ListChecked16 } from '@siafoundation/react-icons'
 import { HostsViewDropdownMenu } from './HostsViewDropdownMenu'
 import { useDialog } from '../../contexts/dialog'
 import { useHosts } from '../../contexts/hosts'

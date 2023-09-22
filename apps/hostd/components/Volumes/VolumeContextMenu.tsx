@@ -2,19 +2,21 @@ import {
   DropdownMenu,
   DropdownMenuItem,
   Button,
-  Draggable16,
-  Ruler16,
-  Delete16,
   DropdownMenuLeftSlot,
   DropdownMenuLabel,
-  Locked16,
-  Edit16,
   triggerErrorToast,
   triggerSuccessToast,
   Text,
   truncate,
-  Close16,
 } from '@siafoundation/design-system'
+import {
+  Draggable16,
+  Ruler16,
+  Delete16,
+  Locked16,
+  Edit16,
+  Close16,
+} from '@siafoundation/react-icons'
 import {
   VolumeStatus,
   useVolume,

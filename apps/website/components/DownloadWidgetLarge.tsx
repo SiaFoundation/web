@@ -1,10 +1,5 @@
-import {
-  webLinks,
-  Link,
-  Text,
-  LogoGithub24,
-  Book24,
-} from '@siafoundation/design-system'
+import { webLinks, Link, Text } from '@siafoundation/design-system'
+import { LogoGithub24, Book24 } from '@siafoundation/react-icons'
 import { DownloadWidgetSelect } from './DownloadWidgetSelect'
 
 type Daemon = 'renterd' | 'hostd' | 'walletd'

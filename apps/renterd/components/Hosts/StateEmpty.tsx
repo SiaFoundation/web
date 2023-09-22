@@ -1,11 +1,9 @@
+import { Code, LinkButton, Text } from '@siafoundation/design-system'
 import {
-  Code,
   Filter32,
   HardDriveIcon,
-  LinkButton,
   MisuseOutline32,
-  Text,
-} from '@siafoundation/design-system'
+} from '@siafoundation/react-icons'
 import { routes } from '../../config/routes'
 import { useHosts } from '../../contexts/hosts'
 

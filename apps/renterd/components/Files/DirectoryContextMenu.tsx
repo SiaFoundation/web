@@ -3,10 +3,9 @@ import {
   DropdownMenuItem,
   Button,
   DropdownMenuLeftSlot,
-  Delete16,
   DropdownMenuLabel,
-  FolderIcon,
 } from '@siafoundation/design-system'
+import { Delete16, FolderIcon } from '@siafoundation/react-icons'
 import { useDirectoryDelete } from './useDirectoryDelete'
 
 type Props = {

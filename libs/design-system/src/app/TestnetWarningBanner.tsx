@@ -1,4 +1,4 @@
-import { Information16 } from '../icons/carbon'
+import { Information16 } from '@siafoundation/react-icons'
 import { Text } from '../core/Text'
 
 export function TestnetWarningBanner({ testnetName }: { testnetName: string }) {

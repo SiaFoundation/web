@@ -1,9 +1,5 @@
-import {
-  ArrowUpRight16,
-  Button,
-  Settings16,
-  WalletBalance,
-} from '@siafoundation/design-system'
+import { Button, WalletBalance } from '@siafoundation/design-system'
+import { ArrowUpRight16, Settings16 } from '@siafoundation/react-icons'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
 import BigNumber from 'bignumber.js'
 import { AddressesButton } from './AddressesButton'
