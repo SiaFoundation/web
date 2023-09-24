@@ -7,6 +7,7 @@ export type SiaCentralTransactionParams = {
 
 export type SiaCentralTransactionResponse = {
   message: string
+  type?: 'error'
   transaction: SiaCentralTransaction
 }
 

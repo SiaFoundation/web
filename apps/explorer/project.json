@@ -6,37 +6,42 @@
   "targets": {
     "build": {
       "executor": "@nx/next:build",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/explorer",
-        "postcssConfig": "apps/explorer/postcss.config.js",
-        "assets": [
-          {
-            "glob": "**/*",
-            "input": "libs/design-system/src/public/",
-            "output": "/"
-          }
-        ]
+        "postcssConfig": "apps/explorer/postcss.config.js"
       },
       "configurations": {
         "development": {},
-        "development-testnet": {
-          "outputPath": "dist/apps/explorer-testnet",
+        "development-testnet-zen": {
+          "outputPath": "dist/apps/explorer-testnet-zen",
           "fileReplacements": [
             {
               "replace": "apps/explorer/config/index.ts",
-              "with": "apps/explorer/config/testnet.ts"
+              "with": "apps/explorer/config/testnet-zen.ts"
+            }
+          ]
+        },
+        "local": {},
+        "local-testnet-zen": {
+          "outputPath": "dist/apps/explorer-testnet-zen",
+          "fileReplacements": [
+            {
+              "replace": "apps/explorer/config/index.ts",
+              "with": "apps/explorer/config/testnet-zen.ts"
             }
           ]
         },
         "production": {},
-        "production-testnet": {
-          "outputPath": "dist/apps/explorer-testnet",
+        "production-testnet-zen": {
+          "outputPath": "dist/apps/explorer-testnet-zen",
           "fileReplacements": [
             {
               "replace": "apps/explorer/config/index.ts",
-              "with": "apps/explorer/config/testnet.ts"
+              "with": "apps/explorer/config/testnet-zen.ts"
             }
           ]
         },
@@ -57,8 +62,8 @@
           "buildTarget": "explorer:build:development",
           "dev": true
         },
-        "development-testnet": {
-          "buildTarget": "explorer:build:development-testnet",
+        "development-testnet-zen": {
+          "buildTarget": "explorer:build:development-testnet-zen",
           "dev": true,
           "port": 3005
         },
@@ -66,16 +71,60 @@
           "buildTarget": "explorer:build:production",
           "dev": false
         },
-        "production-testnet": {
-          "buildTarget": "explorer:build:production-testnet",
+        "production-testnet-zen": {
+          "buildTarget": "explorer:build:production-testnet-zen",
           "dev": false,
           "port": 3005
         }
       }
     },
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "dependsOn": [
+        "build"
+      ],
+      "defaultConfiguration": "local",
+      "options": {
+        "engine": "docker",
+        "context": "./",
+        "file": "apps/explorer/Dockerfile"
+      },
+      "configurations": {
+        "local": {
+          "tags": [
+            "siafoundation/web-explorer:latest"
+          ],
+          "file": "apps/explorer/Dockerfile",
+          "push": false
+        },
+        "local-testnet-zen": {
+          "tags": [
+            "siafoundation/web-explorer-testnet-zen:latest"
+          ],
+          "file": "apps/explorer/Dockerfile.zen",
+          "push": false
+        },
+        "production": {
+          "tags": [
+            "ghcr.io/siafoundation/web-explorer:latest"
+          ],
+          "file": "apps/explorer/Dockerfile",
+          "push": true
+        },
+        "production-testnet-zen": {
+          "tags": [
+            "ghcr.io/siafoundation/web-explorer-testnet-zen:latest"
+          ],
+          "file": "apps/explorer/Dockerfile.zen",
+          "push": true
+        }
+      }
+    },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/apps/explorer"],
+      "outputs": [
+        "{workspaceRoot}/coverage/apps/explorer"
+      ],
       "options": {
         "jestConfig": "apps/explorer/jest.config.ts",
         "passWithNoTests": true
@@ -83,9 +132,13 @@
     },
     "lint": {
       "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["apps/explorer/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": [
+          "apps/explorer/**/*.{ts,tsx,js,jsx}"
+        ]
       }
     }
   },

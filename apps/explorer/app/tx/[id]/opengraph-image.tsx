@@ -17,7 +17,7 @@ export const contentType = 'image/png'
 export default async function Image({ params }) {
   const id = params?.id as string
 
-  const t = await getSiaCentralTransaction({
+  const { data: t } = await getSiaCentralTransaction({
     params: {
       id,
     },
@@ -25,6 +25,18 @@ export default async function Image({ params }) {
       api: siaCentralApi,
     },
   })
+
+  if (!t || !t.transaction) {
+    return getOGImage(
+      {
+        id,
+        title: truncate(id, 30),
+        subtitle: 'transaction',
+        initials: 'T',
+      },
+      size
+    )
+  }
 
   const values = [
     {

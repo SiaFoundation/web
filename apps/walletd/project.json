@@ -23,15 +23,16 @@
       "configurations": {
         "development": {},
         "production": {},
+        "local": {},
         "ci": {
           "outputPath": "apps/walletd/dist"
         },
-        "embed": {
-          "outputPath": "dist/apps/walletd-embed",
+        "export": {
+          "outputPath": "dist/apps/walletd-export",
           "fileReplacements": [
             {
               "replace": "apps/walletd/config/buildMode.ts",
-              "with": "apps/walletd/config/buildModeEmbed.ts"
+              "with": "apps/walletd/config/buildModeExport.ts"
             }
           ]
         }
@@ -49,8 +50,8 @@
           "buildTarget": "walletd:build:development",
           "dev": true
         },
-        "embed": {
-          "buildTarget": "walletd:build:embed",
+        "export": {
+          "buildTarget": "walletd:build:export",
           "dev": true
         },
         "production": {
@@ -59,10 +60,30 @@
         }
       }
     },
-    "export": {
-      "executor": "@nx/next:export",
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "dependsOn": [
+        "build"
+      ],
+      "defaultConfiguration": "local",
       "options": {
-        "buildTarget": "walletd:build:embed"
+        "engine": "docker",
+        "context": "./",
+        "file": "apps/walletd/Dockerfile"
+      },
+      "configurations": {
+        "local": {
+          "tags": [
+            "siafoundation/web-walletd:latest"
+          ],
+          "push": false
+        },
+        "production": {
+          "tags": [
+            "ghcr.io/siafoundation/web-walletd:latest"
+          ],
+          "push": true
+        }
       }
     },
     "test": {

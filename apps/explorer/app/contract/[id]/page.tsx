@@ -28,7 +28,7 @@ export const revalidate = 60
 
 export default async function Page({ params }) {
   const id = params?.id as string
-  const [c, r] = await Promise.all([
+  const [{ data: c, error }, { data: r }] = await Promise.all([
     getSiaCentralContract({
       params: {
         id,
@@ -44,11 +44,19 @@ export default async function Page({ params }) {
     }),
   ])
 
-  const contract = c?.contract
+  if (error) {
+    throw Error(error)
+  }
+
+  if (!c?.contract) {
+    return notFound()
+  }
+
+  const contract = c.contract
   const formationTxnId = getFormationTxnId(contract)
   const finalRevisionTxnId = contract?.transaction_id || ''
 
-  const [ft, rt] = await Promise.all([
+  const [{ data: ft }, { data: rt }] = await Promise.all([
     getSiaCentralTransaction({
       params: {
         id: formationTxnId,
@@ -72,14 +80,10 @@ export default async function Page({ params }) {
   const renewalTransaction = rt?.transaction
   const renewedTo = renewalTransaction?.storage_contracts?.[0]
 
-  if (!c.contract) {
-    return notFound()
-  }
-
   return (
     <ContractView
       contract={contract}
-      rates={r.rates}
+      rates={r?.rates}
       renewedFrom={renewedFrom}
       renewedTo={renewedTo}
       formationTransaction={formationTransaction}

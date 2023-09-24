@@ -28,8 +28,8 @@
     "**/*.js",
     "**/*.jsx",
     "next-env.d.ts",
-    "../../dist/apps/explorer/.next/types/**/*.ts",
-    "../../dist/apps/explorer-testnet/.next/types/**/*.ts"
+    "../../dist/apps/explorer-testnet-zen/.next/types/**/*.ts",
+    "../../dist/apps/explorer/.next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

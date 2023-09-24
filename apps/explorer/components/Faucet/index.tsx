@@ -25,7 +25,7 @@ export function Faucet() {
 
   useEffect(() => {
     if (isMainnet) {
-      window.location.replace(webLinks.explore.testnetFaucet)
+      window.location.replace(webLinks.explore.testnetZenFaucet)
     }
   }, [])
 

@@ -24,15 +24,16 @@
       "configurations": {
         "development": {},
         "production": {},
+        "local": {},
         "ci": {
           "outputPath": "apps/renterd/dist"
         },
-        "embed": {
-          "outputPath": "dist/apps/renterd-embed",
+        "export": {
+          "outputPath": "dist/apps/renterd-export",
           "fileReplacements": [
             {
               "replace": "apps/renterd/config/buildMode.ts",
-              "with": "apps/renterd/config/buildModeEmbed.ts"
+              "with": "apps/renterd/config/buildModeExport.ts"
             }
           ]
         }
@@ -50,8 +51,8 @@
           "buildTarget": "renterd:build:development",
           "dev": true
         },
-        "embed": {
-          "buildTarget": "renterd:build:embed",
+        "export": {
+          "buildTarget": "renterd:build:export",
           "dev": true
         },
         "production": {
@@ -60,10 +61,30 @@
         }
       }
     },
-    "export": {
-      "executor": "@nx/next:export",
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "dependsOn": [
+        "build"
+      ],
+      "defaultConfiguration": "local",
       "options": {
-        "buildTarget": "renterd:build:embed"
+        "engine": "docker",
+        "context": "./",
+        "file": "apps/renterd/Dockerfile"
+      },
+      "configurations": {
+        "local": {
+          "tags": [
+            "siafoundation/web-renterd:latest"
+          ],
+          "push": false
+        },
+        "production": {
+          "tags": [
+            "ghcr.io/siafoundation/web-renterd:latest"
+          ],
+          "push": true
+        }
       }
     },
     "test": {

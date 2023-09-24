@@ -25,7 +25,7 @@ const currency = currencyOptions.find((c) => c.id === 'usd') as CurrencyOption
 export default async function Image({ params }) {
   const id = params?.id as string
 
-  const [c, r] = await Promise.all([
+  const [{ data: c }, { data: r }] = await Promise.all([
     getSiaCentralContract({
       params: {
         id,
@@ -41,6 +41,18 @@ export default async function Image({ params }) {
     }),
   ])
 
+  if (!c || !c.contract) {
+    return getOGImage(
+      {
+        id,
+        title: truncate(id, 30),
+        subtitle: 'contract',
+        initials: 'C',
+      },
+      size
+    )
+  }
+
   const values = [
     {
       label: 'data size',
@@ -55,7 +67,7 @@ export default async function Image({ params }) {
     },
     {
       label: 'payout',
-      value: siacoinToFiat(c.contract.payout, {
+      value: siacoinToFiat(c.contract.payout, r && {
         currency,
         rate: r.rates.sc.usd,
       }),
@@ -72,8 +84,8 @@ export default async function Image({ params }) {
         c.contract.status === 'obligationSucceeded'
           ? 'green'
           : c.contract.status === 'obligationFailed'
-          ? 'red'
-          : 'amber',
+            ? 'red'
+            : 'amber',
       initials: 'C',
       values,
     },

@@ -26,7 +26,7 @@ export const revalidate = 60
 
 export default async function Page({ params }) {
   const id = params?.id as string
-  const [h, r] = await Promise.all([
+  const [{ data: h, error }, { data: r }] = await Promise.all([
     getSiaCentralHost({
       params: {
         id,
@@ -42,7 +42,11 @@ export default async function Page({ params }) {
     }),
   ])
 
-  if (!h.host) {
+  if (error) {
+    throw Error(error)
+  }
+
+  if (!h?.host) {
     return notFound()
   }
 

@@ -27,7 +27,7 @@ export const contentType = 'image/png'
 
 export default async function Image({ params }) {
   const id = params?.id as string
-  const [h, r] = await Promise.all([
+  const [{ data: h }, { data: r }] = await Promise.all([
     getSiaCentralHost({
       params: {
         id,
@@ -43,12 +43,25 @@ export default async function Image({ params }) {
     }),
   ])
 
+
+  if (!h || !h.host) {
+    return getOGImage(
+      {
+        id,
+        title: truncate(id, 30),
+        subtitle: 'host',
+        initials: 'H',
+      },
+      size
+    )
+  }
+
   const values = [
     {
       label: 'storage',
       value: getStorageCost({
         price: h.host.settings.storage_price,
-        exchange: {
+        exchange: r && {
           currency,
           rate: r.rates.sc.usd,
         },
@@ -59,21 +72,21 @@ export default async function Image({ params }) {
       label: 'download',
       value: getDownloadCost({
         price: h.host.settings.download_price,
-        exchange: {
+        exchange: r && {
           currency,
           rate: r.rates.sc.usd,
         },
       }),
       subvalue: humanSpeed(
         (h.host.benchmark.data_size * 8) /
-          (h.host.benchmark.download_time / 1000)
+        (h.host.benchmark.download_time / 1000)
       ),
     },
     {
       label: 'upload',
       value: getUploadCost({
         price: h.host.settings.upload_price,
-        exchange: {
+        exchange: r && {
           currency,
           rate: r.rates.sc.usd,
         },

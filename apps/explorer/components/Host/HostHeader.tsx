@@ -9,7 +9,7 @@ import { HostInfo } from './HostInfo'
 
 type Props = {
   host: SiaCentralHost
-  rates: SiaCentralExchangeRates
+  rates?: SiaCentralExchangeRates
 }
 
 export function HostHeader({ host, rates }: Props) {

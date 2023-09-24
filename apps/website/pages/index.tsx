@@ -281,7 +281,7 @@ export async function getStaticProps() {
   const featured = await getFeedContent(['sia-all', 'featured'], 5)
   const tutorials = await getTutorialArticles()
   const hosts = await getGeoHosts()
-  const rates = await getExchangeRates()
+  const { data: rates } = await getExchangeRates()
   const services = await getProjects('featured', 5)
   const stats = await getStats()
 
@@ -289,7 +289,7 @@ export async function getStaticProps() {
     featured,
     tutorials,
     hosts,
-    rates: rates.data?.rates.sc,
+    rates: rates?.rates.sc,
     services,
     fallback: {
       '/api/stats': stats,

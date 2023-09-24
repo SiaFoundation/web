@@ -27,7 +27,12 @@ export function generateMetadata(): Metadata {
 export const revalidate = 60
 
 export default async function HomePage() {
-  const [m, lb, r, h] = await Promise.all([
+  const [
+    { data: m, error: metricsError },
+    { data: lb, error: latestBlockError },
+    { data: r, error: exchangeRatesError, },
+    { data: h, error: hostsError }
+  ] = await Promise.all([
     getSiaCentralHostsNetworkMetrics({
       config: {
         api: siaCentralApi,
@@ -54,7 +59,7 @@ export default async function HomePage() {
   ])
 
   const lastBlockHeight = lb?.block.height || 0
-  const bs = await getSiaCentralBlocks({
+  const { data: bs, error: blocksError } = await getSiaCentralBlocks({
     payload: {
       heights: range(lastBlockHeight - 5, lastBlockHeight),
     },
@@ -63,13 +68,23 @@ export default async function HomePage() {
     },
   })
 
+  if (metricsError || latestBlockError || exchangeRatesError || hostsError || blocksError) {
+    console.log({
+      metricsError,
+      latestBlockError,
+      exchangeRatesError,
+      hostsError,
+      blocksError,
+    })
+  }
+
   return (
     <Home
       metrics={m}
       blockHeight={lastBlockHeight}
-      blocks={bs.blocks}
-      hosts={h.hosts}
-      rates={r.rates}
+      blocks={bs?.blocks || []}
+      hosts={h?.hosts || []}
+      rates={r?.rates}
     />
   )
 }

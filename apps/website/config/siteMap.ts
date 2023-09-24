@@ -165,7 +165,7 @@ export const menuSections = [
         newTab: true,
       },
       {
-        link: webLinks.explore.testnet,
+        link: webLinks.explore.testnetZen,
         title: 'Zen Testnet Explorer',
         newTab: true,
       },

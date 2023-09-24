@@ -1,13 +1,12 @@
 import {
   getBenchmarks,
-  getNavigatorStatus,
   getGitHub,
-  getSiaCentralHostsNetworkMetrics,
 } from '@siafoundation/data-sources'
 import { humanBytes, humanNumber, humanSpeed } from '@siafoundation/sia-js'
 import { AsyncReturnType } from '../lib/types'
 import { getCacheValue } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
+import { getSiaCentralBlockLatest, getSiaCentralHostsNetworkMetrics } from '@siafoundation/sia-central'
 
 const maxAge = getMinutesInSeconds(5)
 
@@ -41,9 +40,9 @@ async function readStats() {
     }
   }
 
-  const [hostsStats, navigator, github, benchmarks] = await Promise.all([
+  const [{ data: latestBlock }, { data: hostsStats }, github, benchmarks] = await Promise.all([
+    getSiaCentralBlockLatest(),
     getSiaCentralHostsNetworkMetrics(),
-    getNavigatorStatus(),
     getGitHub(),
     getBenchmarks(),
   ])
@@ -51,23 +50,23 @@ async function readStats() {
 
   const stats = {
     // network
-    blockHeight: humanNumber(navigator.data?.consensusblock),
-    activeHosts: humanNumber(hostsStats.data?.totals.active_hosts),
-    onlineHosts: humanNumber(hostsStats.data?.totals.total_hosts),
+    blockHeight: humanNumber(latestBlock?.block.height),
+    activeHosts: humanNumber(hostsStats?.totals.active_hosts),
+    onlineHosts: humanNumber(hostsStats?.totals.total_hosts),
     // storage
-    totalStorage: humanBytes(hostsStats.data?.totals.total_storage),
+    totalStorage: humanBytes(hostsStats?.totals.total_storage),
     usedStorage: humanBytes(
-      hostsStats.data?.totals.total_storage -
-        hostsStats.data?.totals.remaining_storage
+      hostsStats?.totals.total_storage -
+      hostsStats?.totals.remaining_storage
     ),
     totalRegistry: humanNumber(
-      (hostsStats.data?.totals.total_registry_entries || 0) / 1_000_000,
+      (hostsStats?.totals.total_registry_entries || 0) / 1_000_000,
       { units: 'M' }
     ),
     usedRegistry: humanNumber(
-      ((hostsStats.data?.totals.total_registry_entries || 0) -
-        (hostsStats.data?.totals.remaining_registry_entries || 0)) /
-        1_000_000,
+      ((hostsStats?.totals.total_registry_entries || 0) -
+        (hostsStats?.totals.remaining_registry_entries || 0)) /
+      1_000_000,
       { units: 'M' }
     ),
     // software

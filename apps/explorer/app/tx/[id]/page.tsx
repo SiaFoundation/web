@@ -23,7 +23,7 @@ export const revalidate = 60
 
 export default async function Page({ params }) {
   const id = params?.id as string
-  const transaction = await getSiaCentralTransaction({
+  const { data: transaction, error } = await getSiaCentralTransaction({
     params: {
       id,
     },
@@ -32,7 +32,11 @@ export default async function Page({ params }) {
     },
   })
 
-  if (!transaction.transaction) {
+  if (error) {
+    throw Error(error)
+  }
+
+  if (!transaction?.transaction) {
     return notFound()
   }
 
