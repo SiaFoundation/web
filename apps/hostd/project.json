@@ -24,15 +24,16 @@
       "configurations": {
         "development": {},
         "production": {},
+        "local": {},
         "ci": {
           "outputPath": "apps/hostd/dist"
         },
-        "embed": {
-          "outputPath": "dist/apps/hostd-embed",
+        "export": {
+          "outputPath": "dist/apps/hostd-export",
           "fileReplacements": [
             {
               "replace": "apps/hostd/config/buildMode.ts",
-              "with": "apps/hostd/config/buildModeEmbed.ts"
+              "with": "apps/hostd/config/buildModeExport.ts"
             }
           ]
         }
@@ -50,8 +51,8 @@
           "buildTarget": "hostd:build:development",
           "dev": true
         },
-        "embed": {
-          "buildTarget": "hostd:build:embed",
+        "export": {
+          "buildTarget": "hostd:build:export",
           "dev": true
         },
         "production": {
@@ -60,10 +61,30 @@
         }
       }
     },
-    "export": {
-      "executor": "@nx/next:export",
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "dependsOn": [
+        "build"
+      ],
+      "defaultConfiguration": "local",
       "options": {
-        "buildTarget": "hostd:build:embed"
+        "engine": "docker",
+        "context": "./",
+        "file": "apps/hostd/Dockerfile"
+      },
+      "configurations": {
+        "local": {
+          "tags": [
+            "siafoundation/web-hostd:latest"
+          ],
+          "push": false
+        },
+        "production": {
+          "tags": [
+            "ghcr.io/siafoundation/web-hostd:latest"
+          ],
+          "push": true
+        }
       }
     },
     "test": {

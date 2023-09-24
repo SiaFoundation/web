@@ -34,7 +34,7 @@ export const revalidate = 60
 
 export default async function Page({ params }) {
   const id = params?.id as string
-  const b = await getSiaCentralBlock({
+  const { data: b, error } = await getSiaCentralBlock({
     params: {
       id,
     },
@@ -43,7 +43,11 @@ export default async function Page({ params }) {
     },
   })
 
-  if (!b.block) {
+  if (error) {
+    throw Error(error)
+  }
+
+  if (!b?.block) {
     return notFound()
   }
 

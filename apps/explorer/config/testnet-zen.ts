@@ -4,7 +4,7 @@ export const network = 'zen'
 export const networkName = 'Zen Testnet'
 export const siteName = 'zen.siascan.com'
 export const appName = 'siascan'
-export const appLink = webLinks.explore.testnet
+export const appLink = webLinks.explore.testnetZen
 export const isMainnet = false
 
 // APIs

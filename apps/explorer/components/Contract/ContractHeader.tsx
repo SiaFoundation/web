@@ -25,11 +25,14 @@ export async function ContractHeader({
   renewedToId,
 }: Props) {
   const { id } = contract
-  const latest = await getSiaCentralBlockLatest({
+  const { data: latest, error } = await getSiaCentralBlockLatest({
     config: {
       api: siaCentralApi,
     },
   })
+  if (error) {
+    console.error(new Error(error).stack)
+  }
   return (
     <div className="flex flex-col gap-x-4 gap-y-4 pb-4">
       <div className="flex flex-wrap gap-x-4 gap-y-4 items-center justify-between">
@@ -42,6 +45,7 @@ export async function ContractHeader({
         <div className="flex gap-1">
           {renewedFromId && renewedFromId !== id && (
             <LinkButton
+              className="hidden sm:flex"
               variant="gray"
               href={routes.contract.view.replace(':id', renewedFromId)}
             >
@@ -58,16 +62,18 @@ export async function ContractHeader({
             {lowerCase(contract.status)}
           </Badge>
           {renewedToId && renewedToId !== id && (
-            <LinkButton href={routes.contract.view.replace(':id', renewedToId)}>
+            <LinkButton
+              className="hidden sm:flex"
+              href={routes.contract.view.replace(':id', renewedToId)}>
               renewed to
               <ArrowRight16 />
             </LinkButton>
           )}
         </div>
       </div>
-      <div className="px-1">
+      {latest && <div className="px-1">
         <ContractTimeline
-          currentHeight={latest?.block.height || 0}
+          currentHeight={latest.block.height || 0}
           contractHeightStart={contract.negotiation_height}
           contractHeightEnd={contract.expiration_height}
           proofWindowHeightStart={contract.expiration_height}
@@ -76,15 +82,15 @@ export async function ContractHeader({
           range={{
             startHeight: contract.negotiation_height,
             endHeight: Math.max(
-              latest?.block.height || 0,
+              latest.block.height || 0,
               Math.round(
                 contract.proof_deadline +
-                  (contract.expiration_height - contract.negotiation_height)
+                (contract.expiration_height - contract.negotiation_height)
               )
             ),
           }}
         />
-      </div>
+      </div>}
     </div>
   )
 }

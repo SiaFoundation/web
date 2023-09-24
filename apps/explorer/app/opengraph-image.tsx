@@ -5,6 +5,7 @@ import {
 import { getOGImage } from '../components/OGImage'
 import { network, siaCentralApi } from '../config'
 import { humanBytes } from '@siafoundation/sia-js'
+import { PreviewValue } from '../components/OGImage/Preview'
 
 export const revalidate = 60
 
@@ -17,7 +18,7 @@ export const size = {
 export const contentType = 'image/png'
 
 export default async function Image() {
-  const [metrics, lastestBlock] = await Promise.all([
+  const [{ data: metrics }, { data: latestBlock }] = await Promise.all([
     getSiaCentralHostsNetworkMetrics({
       config: {
         api: siaCentralApi,
@@ -29,24 +30,30 @@ export default async function Image() {
       },
     }),
   ])
-  const lastBlockHeight = Number(lastestBlock?.block.height || 0)
 
-  const values = [
-    {
+  const lastBlockHeight = Number(latestBlock?.block.height || 0)
+
+  const values: PreviewValue[] = []
+  if (latestBlock) {
+    values.push({
       label: 'Block height',
       value: lastBlockHeight.toLocaleString(),
-    },
-    {
-      label: 'Active hosts',
-      value: metrics.totals.active_hosts.toLocaleString(),
-    },
-    {
-      label: 'Used storage',
-      value: humanBytes(
-        metrics.totals.total_storage - metrics.totals.remaining_storage
-      ),
-    },
-  ]
+    })
+  }
+
+  if (metrics) {
+    values.push(
+      {
+        label: 'Active hosts',
+        value: metrics.totals.active_hosts.toLocaleString(),
+      },
+      {
+        label: 'Used storage',
+        value: humanBytes(
+          metrics.totals.total_storage - metrics.totals.remaining_storage
+        ),
+      })
+  }
 
   return getOGImage(
     {
@@ -55,7 +62,7 @@ export default async function Image() {
         network === 'mainnet'
           ? 'Sia blockchain and host explorer.'
           : 'Zen testnet blockchain and host explorer.',
-      values,
+      values: values.length ? values : undefined,
     },
     size
   )

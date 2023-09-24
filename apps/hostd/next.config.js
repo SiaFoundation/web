@@ -1,10 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const withNx = require('@nx/next/plugins/with-nx')
+const { composePlugins, withNx } = require('@nx/next');
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
  **/
-const nextConfig = {
+const nextConfigServe = {
   // Use downstream webserver compression in production
   compress: process.env.NODE_ENV === 'development',
   images: {
@@ -15,6 +14,28 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  output: 'standalone',
 }
 
-module.exports = withNx(nextConfig)
+/**
+ * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
+ **/
+const nextConfigExport = {
+  images: {
+    unoptimized: true,
+  },
+  nx: {
+    // Set this to true if you would like to to use SVGR
+    // See: https://github.com/gregberge/svgr
+    svgr: false,
+  },
+  output: 'export',
+}
+
+const nextConfig = process.env.NEXT_OUTPUT_EXPORT ? nextConfigExport : nextConfigServe
+
+const plugins = [
+  withNx,
+];
+
+module.exports = composePlugins(...plugins)(nextConfig);

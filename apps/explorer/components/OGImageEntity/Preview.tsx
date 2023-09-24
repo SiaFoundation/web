@@ -4,6 +4,7 @@ import { cx } from 'class-variance-authority'
 import { Background } from '../OGImage/Background'
 import { Header } from './Header'
 import { network } from '../../config'
+import { PreviewValue } from '../OGImage/Preview'
 
 type Props = {
   id: string
@@ -13,11 +14,7 @@ type Props = {
   initials: string
   status?: string
   statusColor?: string
-  values?: {
-    label?: string
-    value: string
-    subvalue?: string
-  }[]
+  values?: PreviewValue[]
 }
 
 export function Preview({
@@ -71,28 +68,29 @@ export function Preview({
             siascan
           </span>
         </div>
-        <div tw="flex bg-black/50 border-t-2 border-gray-400/10">
-          <div
-            tw="flex justify-between w-full pt-10 px-10 pb-14"
-            style={{
-              gap: '80px',
-            }}
-          >
-            {values?.map(({ label, value, subvalue }) => (
-              <div
-                key={label + value}
-                tw="flex flex-col items-end"
-                style={{
-                  gap: '5px',
-                }}
-              >
-                <span tw="text-white text-6xl">{value}</span>
-                {subvalue && <span tw="text-white text-2xl">{subvalue}</span>}
-                {label && <span tw="text-white/50 text-2xl">{label}</span>}
-              </div>
-            ))}
-          </div>
-        </div>
+        {values &&
+          <div tw="flex bg-black/50 border-t-2 border-gray-400/10">
+            <div
+              tw="flex justify-between w-full pt-10 px-10 pb-14"
+              style={{
+                gap: '80px',
+              }}
+            >
+              {values.map(({ label, value, subvalue }) => (
+                <div
+                  key={label + value}
+                  tw="flex flex-col items-end"
+                  style={{
+                    gap: '5px',
+                  }}
+                >
+                  <span tw="text-white text-6xl">{value}</span>
+                  {subvalue && <span tw="text-white text-2xl">{subvalue}</span>}
+                  {label && <span tw="text-white/50 text-2xl">{label}</span>}
+                </div>
+              ))}
+            </div>
+          </div>}
       </div>
       <div
         tw={cx(

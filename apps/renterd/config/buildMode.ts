@@ -1,1 +1,1 @@
-export const buildModeEmbed = false
+export const buildModeExport = false

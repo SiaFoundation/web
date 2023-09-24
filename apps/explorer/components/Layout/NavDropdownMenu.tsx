@@ -37,7 +37,7 @@ export function NavDropdownMenu({ trigger, children, ...props }: Props) {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem className="p-2">
-          <Link href={webLinks.explore.testnet} underline="none">
+          <Link href={webLinks.explore.testnetZen} underline="none">
             Zen Testnet
           </Link>
         </DropdownMenuItem>
@@ -45,7 +45,7 @@ export function NavDropdownMenu({ trigger, children, ...props }: Props) {
       <DropdownMenuGroup className="py-1 px-1 w-[120px]">
         <DropdownMenuLabel className="px-1">Tools</DropdownMenuLabel>
         <DropdownMenuItem className="p-2">
-          <Link href={webLinks.explore.testnetFaucet} underline="none">
+          <Link href={webLinks.explore.testnetZenFaucet} underline="none">
             Zen Faucet
           </Link>
         </DropdownMenuItem>

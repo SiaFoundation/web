@@ -9,7 +9,8 @@ import {
 
 export function Footer() {
   return (
-    <Container className="pt-16">
+    // mobile browsers clip the bottom because of how their the navbar works, so add padding
+    <Container className="pt-16 pb-20 sm:pb-0">
       <div className="py-4 border-t border-gray-200 dark:border-graydark-100">
         <div className="flex flex-wrap gap-4 items-center">
           <div className="flex gap-2 items-center">

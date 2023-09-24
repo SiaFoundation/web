@@ -9,10 +9,10 @@ import { Contract } from '../Contract'
 
 type Props = {
   contract: SiaCentralContract
-  rates: SiaCentralExchangeRates
+  rates?: SiaCentralExchangeRates
   renewedTo?: SiaCentralContract
   renewedFrom?: SiaCentralContract
-  formationTransaction: SiaCentralTransaction
+  formationTransaction?: SiaCentralTransaction
 }
 
 export function ContractView({

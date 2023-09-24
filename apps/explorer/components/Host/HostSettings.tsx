@@ -20,7 +20,7 @@ import { siacoinToFiat } from '../../lib/currency'
 
 type Props = {
   host: SiaCentralHost
-  rates: SiaCentralExchangeRates
+  rates?: SiaCentralExchangeRates
 }
 
 export function HostSettings({ host, rates }: Props) {

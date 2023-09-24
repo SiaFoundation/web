@@ -31,7 +31,7 @@ import { useExchangeRate } from '../../hooks/useExchangeRate'
 
 type Props = {
   host: SiaCentralHost
-  rates: SiaCentralExchangeRates
+  rates?: SiaCentralExchangeRates
   entity: EntityListItemLayoutProps
 }
 

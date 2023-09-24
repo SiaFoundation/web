@@ -49,6 +49,32 @@
         }
       }
     },
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "dependsOn": [
+        "build"
+      ],
+      "defaultConfiguration": "local",
+      "options": {
+        "engine": "docker",
+        "context": "./",
+        "file": "apps/website/Dockerfile"
+      },
+      "configurations": {
+        "local": {
+          "tags": [
+            "siafoundation/web-website:latest"
+          ],
+          "push": false
+        },
+        "production": {
+          "tags": [
+            "ghcr.io/siafoundation/web-website:latest"
+          ],
+          "push": true
+        }
+      }
+    },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": [

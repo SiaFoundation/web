@@ -1,4 +1,4 @@
-import { getSiaCentralHosts, SiaCentralHost } from '@siafoundation/data-sources'
+import { SiaCentralHost, getSiaCentralHosts } from '@siafoundation/sia-central'
 import { getCacheValue } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
 
@@ -11,16 +11,15 @@ export async function getGeoHosts(): Promise<Host[]> {
   return getCacheValue(
     'geoHosts',
     async () => {
-      const siaCentralHosts = await getSiaCentralHosts()
-
-      if (!siaCentralHosts.data) {
+      const { data: siaCentralHosts, error } = await getSiaCentralHosts()
+      if (error) {
         return []
       }
-      const hosts = siaCentralHosts.data.hosts
+      const hosts = siaCentralHosts.hosts
 
       hosts.sort((a, b) =>
         a.settings.total_storage - a.settings.remaining_storage <
-        b.settings.total_storage - a.settings.remaining_storage
+          b.settings.total_storage - a.settings.remaining_storage
           ? 1
           : -1
       )
@@ -40,9 +39,9 @@ export async function getGeoHosts(): Promise<Host[]> {
         for (const hostToDisplay of hostsToDisplay) {
           if (
             Math.abs(hostToDisplay.location[0] - host.location[0]) <
-              minDegreesApart &&
+            minDegreesApart &&
             Math.abs(hostToDisplay.location[1] - host.location[1]) <
-              minDegreesApart
+            minDegreesApart
           ) {
             unique = false
             break

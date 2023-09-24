@@ -19,8 +19,8 @@ export const webLinks = {
   },
   explore: {
     mainnet: 'https://siascan.com',
-    testnet: 'https://zen.siascan.com',
-    testnetFaucet: 'https://zen.siascan.com/faucet',
+    testnetZen: 'https://zen.siascan.com',
+    testnetZenFaucet: 'https://zen.siascan.com/faucet',
   },
   design: 'https://design.sia.tech',
   apiDocs: {

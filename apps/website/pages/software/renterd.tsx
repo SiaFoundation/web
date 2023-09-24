@@ -172,21 +172,21 @@ export default function Renterd({ version, technical, tutorials }: Props) {
                     command: [
                       'curl -X POST http://localhost:9980/api/worker/rhp/form --json \\',
                       "'" +
-                        JSON.stringify(
-                          {
-                            hostKey:
-                              'ed25519:878d7d27e75691aa8f554ecb4c3e0c371a2a2a3d0901fe77727b6df6c6a11a6a',
-                            hostIP: '127.0.0.1:59868',
-                            hostCollateral: '191285052982572071957200',
-                            renterFunds: '16666666666666666666666666',
-                            renterAddress:
-                              'addr:861c1574947689c04df41a987b3a6a0a44eef27bb4511f3d64d1531913ca26288a12efc3f227',
-                            endHeight: 126,
-                          },
-                          null,
-                          2
-                        ) +
-                        "'",
+                      JSON.stringify(
+                        {
+                          hostKey:
+                            'ed25519:878d7d27e75691aa8f554ecb4c3e0c371a2a2a3d0901fe77727b6df6c6a11a6a',
+                          hostIP: '127.0.0.1:59868',
+                          hostCollateral: '191285052982572071957200',
+                          renterFunds: '16666666666666666666666666',
+                          renterAddress:
+                            'addr:861c1574947689c04df41a987b3a6a0a44eef27bb4511f3d64d1531913ca26288a12efc3f227',
+                          endHeight: 126,
+                        },
+                        null,
+                        2
+                      ) +
+                      "'",
                     ],
                     result: ['{ file contract transaction }'],
                   },

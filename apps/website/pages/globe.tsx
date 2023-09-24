@@ -12,11 +12,11 @@ export default function Globe({ hosts, rates }: Props) {
 
 export async function getStaticProps() {
   const hosts = await getGeoHosts()
-  const rates = await getExchangeRates()
+  const { data: rates } = await getExchangeRates()
 
   const props = {
     hosts,
-    rates: rates.data?.rates.sc,
+    rates: rates?.rates.sc,
   }
 
   return {

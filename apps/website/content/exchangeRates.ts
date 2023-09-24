@@ -1,4 +1,4 @@
-import { getSiaCentralExchangeRates } from '@siafoundation/data-sources'
+import { getSiaCentralExchangeRates } from '@siafoundation/sia-central'
 import { getCacheValue } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
 

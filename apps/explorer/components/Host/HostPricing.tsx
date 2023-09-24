@@ -24,7 +24,7 @@ import { useExchangeRate } from '../../hooks/useExchangeRate'
 
 type Props = {
   host: SiaCentralHost
-  rates: SiaCentralExchangeRates
+  rates?: SiaCentralExchangeRates
 }
 
 export function HostPricing({ host, rates }: Props) {

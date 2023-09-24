@@ -29,11 +29,11 @@ export function Home({
   hosts,
   rates,
 }: {
-  metrics: SiaCentralHostsNetworkMetricsResponse
+  metrics?: SiaCentralHostsNetworkMetricsResponse
   blockHeight: number
   blocks: SiaCentralBlock[]
   hosts: SiaCentralHost[]
-  rates: SiaCentralExchangeRates
+  rates?: SiaCentralExchangeRates
 }) {
   const exchange = useExchangeRate(rates)
   const values = useMemo(() => {
@@ -52,139 +52,137 @@ export function Home({
           </Tooltip>
         ),
       },
-      {
-        label: 'Storage utilization',
-        value: (
-          <div className="flex flex-col sm:flex-row gap-1 items-baseline">
-            <Tooltip
-              content={`${humanBytes(
-                metrics?.totals.total_storage -
-                  metrics?.totals.remaining_storage
-              )} used storage`}
-            >
-              <Text
-                className="text-xl md:text-3xl"
-                weight="semibold"
-                color="contrast"
-              >
-                {humanBytes(
-                  metrics?.totals.total_storage -
-                    metrics?.totals.remaining_storage
-                )}
-              </Text>
-            </Tooltip>
-            <Text scaleSize="20" color="subtle" className="hidden sm:block">
-              /
-            </Text>
-            <Tooltip
-              content={`${humanBytes(
-                metrics?.totals.total_storage
-              )} total storage`}
-            >
-              <Text scaleSize="20" color="subtle">
-                {humanBytes(metrics?.totals.total_storage)}
-              </Text>
-            </Tooltip>
-          </div>
-        ),
-      },
-      {
-        label: 'Active hosts',
-        value: (
-          <div className="flex flex-col sm:flex-row gap-1 items-baseline">
-            <Tooltip content="Active hosts">
-              <Text
-                className="text-xl md:text-3xl"
-                weight="semibold"
-                color="contrast"
-              >
-                {humanNumber(metrics?.totals.active_hosts)}
-              </Text>
-            </Tooltip>
-            <Text scaleSize="20" color="subtle" className="hidden sm:block">
-              /
-            </Text>
-            <Tooltip content="Total hosts">
-              <Text scaleSize="20" color="subtle">
-                {humanNumber(metrics?.totals.total_hosts)}
-              </Text>
-            </Tooltip>
-          </div>
-        ),
-      },
-      {
-        label: 'Average storage price',
-        value: (
-          <Tooltip content="Average storage price per TB/month">
-            <div className="flex flex-col gap-1">
-              <Text
-                className="text-xl md:text-3xl"
-                weight="semibold"
-                color="contrast"
-              >
-                {getStorageCost({
-                  price: metrics?.average.settings.storage_price,
-                  exchange,
-                })}
-              </Text>
-              <Text color="subtle" className="text-end">
-                {getStorageCost({
-                  price: metrics?.average.settings.storage_price,
-                })}
-              </Text>
-            </div>
-          </Tooltip>
-        ),
-      },
-      {
-        label: 'Average download price',
-        value: (
-          <Tooltip content="Average download price per TB">
-            <div className="flex flex-col gap-1">
-              <Text
-                className="text-xl md:text-3xl"
-                weight="semibold"
-                color="contrast"
-              >
-                {getDownloadCost({
-                  price: metrics?.average.settings.download_price,
-                  exchange,
-                })}
-              </Text>
-              <Text color="subtle" className="text-end">
-                {getDownloadCost({
-                  price: metrics?.average.settings.download_price,
-                })}
-              </Text>
-            </div>
-          </Tooltip>
-        ),
-      },
-      {
-        label: 'Average upload price',
-        value: (
-          <Tooltip content="Average upload price per TB">
-            <div className="flex flex-col gap-1">
-              <Text
-                className="text-xl md:text-3xl"
-                weight="semibold"
-                color="contrast"
-              >
-                {getUploadCost({
-                  price: metrics?.average.settings.upload_price,
-                  exchange,
-                })}
-              </Text>
-              <Text color="subtle" className="text-end">
-                {getUploadCost({
-                  price: metrics?.average.settings.upload_price,
-                })}
-              </Text>
-            </div>
-          </Tooltip>
-        ),
-      },
     ]
+    if (metrics) {
+      list.push(
+        {
+          label: 'Storage utilization',
+          value: (
+            <div className="flex flex-col gap-1 items-baseline">
+              <Tooltip
+                content={`${humanBytes(
+                  metrics?.totals.total_storage -
+                  metrics?.totals.remaining_storage
+                )} used storage`}
+              >
+                <Text
+                  className="text-xl md:text-3xl"
+                  weight="semibold"
+                  color="contrast"
+                >
+                  {humanBytes(
+                    metrics?.totals.total_storage -
+                    metrics?.totals.remaining_storage
+                  )}
+                </Text>
+              </Tooltip>
+              <Tooltip
+                content={`${humanBytes(
+                  metrics?.totals.total_storage
+                )} total storage`}
+              >
+                <Text scaleSize="20" color="subtle">
+                  {humanBytes(metrics?.totals.total_storage)}
+                </Text>
+              </Tooltip>
+            </div>
+          ),
+        },
+        {
+          label: 'Active hosts',
+          value: (
+            <div className="flex flex-col gap-1 items-baseline">
+              <Tooltip content="Active hosts">
+                <Text
+                  className="text-xl md:text-3xl"
+                  weight="semibold"
+                  color="contrast"
+                >
+                  {humanNumber(metrics?.totals.active_hosts)}
+                </Text>
+              </Tooltip>
+              <Tooltip content="Total hosts">
+                <Text scaleSize="20" color="subtle">
+                  {humanNumber(metrics?.totals.total_hosts)}
+                </Text>
+              </Tooltip>
+            </div>
+          ),
+        },
+        {
+          label: 'Average storage price',
+          value: (
+            <Tooltip content="Average storage price per TB/month">
+              <div className="flex flex-col gap-1">
+                <Text
+                  className="text-xl md:text-3xl"
+                  weight="semibold"
+                  color="contrast"
+                >
+                  {getStorageCost({
+                    price: metrics?.average.settings.storage_price,
+                    exchange,
+                  })}
+                </Text>
+                <Text color="subtle">
+                  {getStorageCost({
+                    price: metrics?.average.settings.storage_price,
+                  })}
+                </Text>
+              </div>
+            </Tooltip>
+          ),
+        },
+        {
+          label: 'Average download price',
+          value: (
+            <Tooltip content="Average download price per TB">
+              <div className="flex flex-col gap-1">
+                <Text
+                  className="text-xl md:text-3xl"
+                  weight="semibold"
+                  color="contrast"
+                >
+                  {getDownloadCost({
+                    price: metrics?.average.settings.download_price,
+                    exchange,
+                  })}
+                </Text>
+                <Text color="subtle">
+                  {getDownloadCost({
+                    price: metrics?.average.settings.download_price,
+                  })}
+                </Text>
+              </div>
+            </Tooltip>
+          ),
+        },
+        {
+          label: 'Average upload price',
+          value: (
+            <Tooltip content="Average upload price per TB">
+              <div className="flex flex-col gap-1">
+                <Text
+                  className="text-xl md:text-3xl"
+                  weight="semibold"
+                  color="contrast"
+                >
+                  {getUploadCost({
+                    price: metrics?.average.settings.upload_price,
+                    exchange,
+                  })}
+                </Text>
+                <Text color="subtle">
+                  {getUploadCost({
+                    price: metrics?.average.settings.upload_price,
+                  })}
+                </Text>
+              </div>
+            </Tooltip>
+          ),
+        }
+      )
+    }
     return list
   }, [metrics, blockHeight, exchange])
 

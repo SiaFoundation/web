@@ -33,11 +33,9 @@ export function ExplorerDatum({
 }: DatumProps) {
   return (
     <div className="flex flex-wrap gap-x-12 gap-y-4 items-baseline py-1.5 overflow-hidden">
-      <div className="flex-1">
-        <Text color="subtle" scaleSize="14" ellipsis>
-          {upperFirst(label)}
-        </Text>
-      </div>
+      <Text color="subtle" scaleSize="14" ellipsis className="flex-1">
+        {upperFirst(label)}
+      </Text>
       <div className="flex flex-col gap-2 items-end md:items-end md:flex-[2]">
         {sc !== undefined && (
           <ValueSc scaleSize="18" variant="value" value={sc} />
@@ -57,7 +55,7 @@ export function ExplorerDatum({
                   ? Number(entityValue).toLocaleString()
                   : entityValue
               }
-              // className="relative top-0.5"
+            // className="relative top-0.5"
             />
           ) : (
             <Text font="mono" weight="semibold" scaleSize="18">

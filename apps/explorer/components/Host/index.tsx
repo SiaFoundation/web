@@ -8,7 +8,7 @@ import { HostSettings } from './HostSettings'
 
 type Props = {
   host: SiaCentralHost
-  rates: SiaCentralExchangeRates
+  rates?: SiaCentralExchangeRates
 }
 
 export function Host({ host, rates }: Props) {

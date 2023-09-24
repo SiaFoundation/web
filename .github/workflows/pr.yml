@@ -43,7 +43,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           ASSETS: ${{ github.workspace }}/assets
+      - name: Containers
+        shell: bash
+        run: npx nx affected --target=container --configuration=production --parallel=5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          ASSETS: ${{ github.workspace }}/assets
       - name: Export
         shell: bash
         # issue with parallelism
-        run: npx nx affected --target=export --configuration=ci --parallel=1
+        run: npx nx affected --target=build --configuration=export --parallel=5

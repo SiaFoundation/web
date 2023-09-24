@@ -4,10 +4,16 @@ import { Background } from './Background'
 import { cx } from 'class-variance-authority'
 import { network } from '../../config'
 
+export type PreviewValue = {
+  label?: string
+  value: string
+  subvalue?: string
+}
+
 type Props = {
   title: string
   subtitle?: string
-  values?: { label?: string; value: string; subvalue?: string }[]
+  values?: PreviewValue[]
 }
 
 export function Preview({ title, subtitle, values }: Props) {
