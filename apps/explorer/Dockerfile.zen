@@ -1,7 +1,5 @@
 FROM node:18-alpine as runner
 
-RUN npm i -g sharp
-
 WORKDIR /app
 
 ENV NODE_ENV production
@@ -15,6 +13,8 @@ RUN adduser --system --uid 1001 nextjs
 COPY --chown=nextjs:nodejs ./dist/apps/explorer-testnet-zen/.next/standalone ./
 COPY --chown=nextjs:nodejs ./dist/apps/explorer-testnet-zen/.next/static ./dist/apps/explorer-testnet-zen/.next/static
 COPY --chown=nextjs:nodejs ./dist/apps/explorer-testnet-zen/public ./apps/explorer/public
+
+RUN npm i sharp
 
 USER nextjs
 EXPOSE 3000

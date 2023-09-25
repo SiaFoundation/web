@@ -1,4 +1,5 @@
 import { fetchAllPages, Notion } from './notion'
+import { retry } from './retry'
 
 const feedDatabaseId = '9be1ecfc6f3142e7b8e284f2f6bd9338'
 
@@ -42,7 +43,7 @@ export async function savePost(allItems: FeedItem[], post: RssPost) {
 
 export async function saveItem(item: Omit<FeedItem, 'id'>) {
   try {
-    await Notion.pages.create({
+    await retry(() => Notion.pages.create({
       parent: {
         type: 'database_id',
         database_id: feedDatabaseId,
@@ -74,17 +75,17 @@ export async function saveItem(item: Omit<FeedItem, 'id'>) {
           },
         },
       },
-    })
+    }))
   } catch (e) {
     console.log(e)
   }
 }
 
 export async function deletePage(pageId: string) {
-  return Notion.pages.update({
+  return retry(() => Notion.pages.update({
     page_id: pageId,
     archived: true,
-  })
+  }))
 }
 
 type Tag =

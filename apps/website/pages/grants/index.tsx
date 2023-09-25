@@ -26,7 +26,7 @@ import { components } from '../../config/mdx'
 import { TableOfContents } from '../../components/TableOfContents'
 import { backgrounds, previews } from '../../content/assets'
 import { CalloutProject } from '../../components/CalloutProject'
-import { getNotionPage } from '../../lib/notion'
+import { getNotionPage } from '@siafoundation/data-sources'
 
 const title = 'Grants'
 const description = (

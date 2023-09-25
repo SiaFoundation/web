@@ -9,7 +9,7 @@ import { MDXRemote } from 'next-mdx-remote'
 import { components } from '../../config/mdx'
 import { backgrounds, previews } from '../../content/assets'
 import { SectionTransparent } from '../../components/SectionTransparent'
-import { getNotionPage } from '../../lib/notion'
+import { getNotionPage } from '@siafoundation/data-sources'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 

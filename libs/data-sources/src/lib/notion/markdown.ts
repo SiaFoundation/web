@@ -1,32 +1,10 @@
-import { isFullBlock, isFullPage } from '@notionhq/client'
-import { TableBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
-import { Notion, fetchAllChildrenBlocks } from '@siafoundation/data-sources'
-import matter from 'gray-matter'
-import { serialize } from 'next-mdx-remote/serialize'
-import remarkGfm from 'remark-gfm'
-
-export async function getNotionPage(pageId: string) {
-  const p = await Notion.pages.retrieve({ page_id: pageId })
-  const title = isFullPage(p)
-    ? (p.properties.title['title'][0].plain_text as string)
-    : null
-  const date = isFullPage(p) ? p.last_edited_time : null
-  const markdown = await notionToMarkdown(pageId)
-  const source = await serialize(matter(markdown).content, {
-    mdxOptions: {
-      remarkPlugins: [remarkGfm],
-    },
-  })
-
-  return {
-    title,
-    date,
-    source,
-  }
-}
+import { isFullBlock } from '@notionhq/client'
+import { RichTextItemResponse, TableBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
+import { Notion, fetchAllChildrenBlocks } from './notion'
+import { retry } from './retry'
 
 // Function to convert Notion rich text to markdown
-function richTextToMarkdown(richText) {
+export function richTextToMarkdown(richText: RichTextItemResponse[]) {
   return richText
     .map(({ plain_text, annotations, href }) => {
       let text = plain_text
@@ -46,7 +24,7 @@ function richTextToMarkdown(richText) {
     .join('')
 }
 
-async function notionToMarkdown(pageId, indent = '') {
+export async function notionToMarkdown(pageId: string, indent = '') {
   const blocks = await fetchAllChildrenBlocks({
     block_id: pageId,
   })
@@ -112,10 +90,10 @@ async function tableToMarkdown(
   block: TableBlockObjectResponse,
   markdown: string
 ): Promise<string> {
-  const tableData = await Notion.blocks.children.list({
+  const tableData = await retry(() => Notion.blocks.children.list({
     block_id: block.id,
     page_size: 100,
-  })
+  }))
 
   const rows = []
   for (const rowBlock of tableData.results) {
