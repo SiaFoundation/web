@@ -18,7 +18,7 @@ import { getPrs } from '../../content/prs'
 import { GitHubActivity } from '../../components/GitHubActivity'
 import { backgrounds, previews } from '../../content/assets'
 import { SectionTransparent } from '../../components/SectionTransparent'
-import { getNotionPage } from '../../lib/notion'
+import { getNotionPage } from '@siafoundation/data-sources'
 import { format } from 'date-fns'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']

@@ -11,7 +11,11 @@ export async function getGeoHosts(): Promise<Host[]> {
   return getCacheValue(
     'geoHosts',
     async () => {
-      const { data: siaCentralHosts, error } = await getSiaCentralHosts()
+      const { data: siaCentralHosts, error } = await getSiaCentralHosts({
+        params: {
+          limit: 300
+        }
+      })
       if (error) {
         return []
       }

@@ -10,13 +10,13 @@ RUN adduser --system --uid 1001 nextjs
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --chown=nextjs:nodejs ./dist/apps/explorer/.next/standalone ./
-COPY --chown=nextjs:nodejs ./dist/apps/explorer/.next/static ./dist/apps/explorer/.next/static
-COPY --chown=nextjs:nodejs ./dist/apps/explorer/public ./apps/explorer/public
+COPY --chown=nextjs:nodejs ./dist/apps/walletd/.next/standalone ./
+COPY --chown=nextjs:nodejs ./dist/apps/walletd/.next/static ./dist/apps/walletd/.next/static
+COPY --chown=nextjs:nodejs ./dist/apps/walletd/public ./apps/walletd/public
 
 RUN npm i sharp
 
 USER nextjs
 EXPOSE 3000
 
-CMD node apps/explorer/server.js
+CMD node apps/walletd/server.js
