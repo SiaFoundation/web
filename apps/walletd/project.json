@@ -11,14 +11,7 @@
       ],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/apps/walletd",
-        "assets": [
-          {
-            "glob": "**/*",
-            "input": "libs/design-system/src/public/",
-            "output": "/"
-          }
-        ]
+        "outputPath": "dist/apps/walletd"
       },
       "configurations": {
         "development": {},
@@ -48,10 +41,6 @@
       "configurations": {
         "development": {
           "buildTarget": "walletd:build:development",
-          "dev": true
-        },
-        "export": {
-          "buildTarget": "walletd:build:export",
           "dev": true
         },
         "production": {
