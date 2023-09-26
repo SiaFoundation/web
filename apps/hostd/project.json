@@ -12,14 +12,7 @@
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/hostd",
-        "postcssConfig": "apps/hostd/postcss.config.js",
-        "assets": [
-          {
-            "glob": "**/*",
-            "input": "libs/design-system/src/public/",
-            "output": "/"
-          }
-        ]
+        "postcssConfig": "apps/hostd/postcss.config.js"
       },
       "configurations": {
         "development": {},
@@ -49,10 +42,6 @@
       "configurations": {
         "development": {
           "buildTarget": "hostd:build:development",
-          "dev": true
-        },
-        "export": {
-          "buildTarget": "hostd:build:export",
           "dev": true
         },
         "production": {

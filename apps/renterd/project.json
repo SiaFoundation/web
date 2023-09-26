@@ -12,14 +12,7 @@
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/renterd",
-        "postcssConfig": "apps/renterd/postcss.config.js",
-        "assets": [
-          {
-            "glob": "**/*",
-            "input": "libs/design-system/src/public/",
-            "output": "/"
-          }
-        ]
+        "postcssConfig": "apps/renterd/postcss.config.js"
       },
       "configurations": {
         "development": {},
@@ -49,10 +42,6 @@
       "configurations": {
         "development": {
           "buildTarget": "renterd:build:development",
-          "dev": true
-        },
-        "export": {
-          "buildTarget": "renterd:build:export",
           "dev": true
         },
         "production": {
