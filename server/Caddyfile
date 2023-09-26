@@ -112,6 +112,12 @@ zen.siascan.com {
   reverse_proxy localhost:3005
 }
 
+beta.siascan.com {
+  import cloudflare
+  encode gzip
+  reverse_proxy localhost:5005
+}
+
 host.sia.tech {
   encode gzip
   reverse_proxy localhost:3006
@@ -134,4 +140,3 @@ www.sia.tech {
 support.sia.tech {
   redir https://docs.sia.tech{uri} permanent
 }
-
