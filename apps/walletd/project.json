@@ -6,9 +6,7 @@
   "targets": {
     "build": {
       "executor": "@nx/next:build",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/walletd"
@@ -51,9 +49,7 @@
     },
     "container": {
       "executor": "@nx-tools/nx-container:build",
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "defaultConfiguration": "local",
       "options": {
         "engine": "docker",
@@ -62,24 +58,18 @@
       },
       "configurations": {
         "local": {
-          "tags": [
-            "siafoundation/web-walletd:latest"
-          ],
+          "tags": ["siafoundation/web-walletd:latest"],
           "push": false
         },
         "production": {
-          "tags": [
-            "ghcr.io/siafoundation/web-walletd:latest"
-          ],
+          "tags": ["ghcr.io/siafoundation/web-walletd:latest"],
           "push": true
         }
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/apps/walletd"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/apps/walletd"],
       "options": {
         "jestConfig": "apps/walletd/jest.config.ts",
         "passWithNoTests": true
@@ -87,13 +77,9 @@
     },
     "lint": {
       "executor": "@nx/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "apps/walletd/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["apps/walletd/**/*.{ts,tsx,js,jsx}"]
       }
     }
   },

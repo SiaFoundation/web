@@ -41,6 +41,7 @@ const nextConfig = {
 
     return config
   },
+  output: 'standalone',
 }
 
 const plugins = [withMDX, withNx]

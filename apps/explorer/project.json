@@ -6,9 +6,7 @@
   "targets": {
     "build": {
       "executor": "@nx/next:build",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/explorer",
@@ -80,9 +78,7 @@
     },
     "container": {
       "executor": "@nx-tools/nx-container:build",
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "defaultConfiguration": "local",
       "options": {
         "engine": "docker",
@@ -91,30 +87,22 @@
       },
       "configurations": {
         "local": {
-          "tags": [
-            "siafoundation/web-explorer:latest"
-          ],
+          "tags": ["siafoundation/web-explorer:latest"],
           "file": "apps/explorer/Dockerfile",
           "push": false
         },
         "local-testnet-zen": {
-          "tags": [
-            "siafoundation/web-explorer-testnet-zen:latest"
-          ],
+          "tags": ["siafoundation/web-explorer-testnet-zen:latest"],
           "file": "apps/explorer/Dockerfile.zen",
           "push": false
         },
         "production": {
-          "tags": [
-            "ghcr.io/siafoundation/web-explorer:latest"
-          ],
+          "tags": ["ghcr.io/siafoundation/web-explorer:latest"],
           "file": "apps/explorer/Dockerfile",
           "push": true
         },
         "production-testnet-zen": {
-          "tags": [
-            "ghcr.io/siafoundation/web-explorer-testnet-zen:latest"
-          ],
+          "tags": ["ghcr.io/siafoundation/web-explorer-testnet-zen:latest"],
           "file": "apps/explorer/Dockerfile.zen",
           "push": true
         }
@@ -122,9 +110,7 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/apps/explorer"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/apps/explorer"],
       "options": {
         "jestConfig": "apps/explorer/jest.config.ts",
         "passWithNoTests": true
@@ -132,13 +118,9 @@
     },
     "lint": {
       "executor": "@nx/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "apps/explorer/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["apps/explorer/**/*.{ts,tsx,js,jsx}"]
       }
     }
   },
