@@ -30,11 +30,7 @@
         "assets": ["libs/sia-js/*.md"],
         "updateBuildableProjectDepsInPackageJson": true
       },
-      "configurations": {
-        "ci": {
-          "outputPath": "libs/sia-js/dist"
-        }
-      }
+      "configurations": {}
     }
   },
   "tags": []

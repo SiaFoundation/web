@@ -24,11 +24,7 @@
           }
         ]
       },
-      "configurations": {
-        "ci": {
-          "outputPath": "libs/sia-central/dist"
-        }
-      }
+      "configurations": {}
     },
     "lint": {
       "executor": "@nx/linter:eslint",

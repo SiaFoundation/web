@@ -24,11 +24,7 @@
           }
         ]
       },
-      "configurations": {
-        "ci": {
-          "outputPath": "libs/react-renterd/dist"
-        }
-      }
+      "configurations": {}
     },
     "lint": {
       "executor": "@nx/linter:eslint",

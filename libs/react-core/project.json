@@ -24,11 +24,7 @@
           }
         ]
       },
-      "configurations": {
-        "ci": {
-          "outputPath": "libs/react-core/dist"
-        }
-      }
+      "configurations": {}
     },
     "lint": {
       "executor": "@nx/linter:eslint",

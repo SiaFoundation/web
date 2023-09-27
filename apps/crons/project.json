@@ -23,13 +23,6 @@
           "extractLicenses": true,
           "sourceMap": false,
           "externalDependencies": "none"
-        },
-        "ci": {
-          "outputPath": "apps/crons/dist",
-          "optimization": true,
-          "extractLicenses": true,
-          "sourceMap": false,
-          "externalDependencies": "none"
         }
       }
     },

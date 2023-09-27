@@ -16,9 +16,6 @@
         "development": {},
         "production": {},
         "local": {},
-        "ci": {
-          "outputPath": "apps/renterd/dist"
-        },
         "export": {
           "outputPath": "dist/apps/renterd-export",
           "fileReplacements": [
