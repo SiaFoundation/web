@@ -24,11 +24,7 @@
           }
         ]
       },
-      "configurations": {
-        "ci": {
-          "outputPath": "libs/react-walletd/dist"
-        }
-      }
+      "configurations": {}
     },
     "lint": {
       "executor": "@nx/linter:eslint",

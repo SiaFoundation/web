@@ -23,13 +23,6 @@
           "extractLicenses": true,
           "sourceMap": false,
           "externalDependencies": "none"
-        },
-        "ci": {
-          "outputPath": "apps/assets/dist",
-          "optimization": true,
-          "extractLicenses": true,
-          "sourceMap": false,
-          "externalDependencies": "none"
         }
       }
     },

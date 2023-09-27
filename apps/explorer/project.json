@@ -42,9 +42,6 @@
               "with": "apps/explorer/config/testnet-zen.ts"
             }
           ]
-        },
-        "ci": {
-          "outputPath": "apps/explorer/dist"
         }
       }
     },

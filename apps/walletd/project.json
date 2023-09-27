@@ -15,9 +15,6 @@
         "development": {},
         "production": {},
         "local": {},
-        "ci": {
-          "outputPath": "apps/walletd/dist"
-        },
         "export": {
           "outputPath": "dist/apps/walletd-export",
           "fileReplacements": [
