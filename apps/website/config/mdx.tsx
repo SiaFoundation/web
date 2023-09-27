@@ -1,6 +1,7 @@
 import {
   Checkbox,
   Code,
+  Codeblock,
   Li,
   Link,
   Ol,
@@ -20,25 +21,30 @@ export const components = {
     </SectionHeading>
   ),
   h2: ({ children }) => (
-    <SectionHeading size="24" className="pb-4 pt-12">
+    <SectionHeading size="24" className="pb-4 pt-6">
       {children}
     </SectionHeading>
   ),
   h3: ({ children }) => (
-    <SectionHeading size="20" className="pb-2 pt-10">
+    <SectionHeading size="20" className="pb-2 pt-4">
       {children}
     </SectionHeading>
   ),
   p: ({ children }) => (
-    <Paragraph size="16" className="block pt-3">
+    <Paragraph size="16" className="!block pt-3">
       {children}
     </Paragraph>
   ),
   a: (props) => <Link {...props} target="_blank" />,
-  code: (props) => <Code {...props} />,
+  code: (props) => {
+    if (props.className) {
+      return <Codeblock {...props} />
+    }
+    return <Code {...props} />
+  },
   ol: Ol,
   ul: Ul,
-  li: (props) => <Li {...props} />,
+  li: (props) => <Li scaleSize="16" {...props} />,
   table: ({ children }) => (
     <table className={cx('table-auto border-collapse my-4', panelStyles())}>
       {children}

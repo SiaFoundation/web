@@ -1,5 +1,8 @@
 import { isFullBlock } from '@notionhq/client'
-import { RichTextItemResponse, TableBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
+import {
+  RichTextItemResponse,
+  TableBlockObjectResponse,
+} from '@notionhq/client/build/src/api-endpoints'
 import { Notion, fetchAllChildrenBlocks } from './notion'
 import { retry } from './retry'
 
@@ -35,9 +38,9 @@ export async function notionToMarkdown(pageId: string, indent = '') {
       continue
     }
 
+    let childMarkdown = ''
     if (block.has_children) {
-      const childMarkdown = await notionToMarkdown(block.id, indent + '     ')
-      markdown += childMarkdown
+      childMarkdown = await notionToMarkdown(block.id, indent + '     ')
     }
 
     switch (block.type) {
@@ -68,17 +71,29 @@ export async function notionToMarkdown(pageId: string, indent = '') {
           indent +
           '* ' +
           richTextToMarkdown(block.bulleted_list_item.rich_text) +
-          '\n'
+          '\n' +
+          childMarkdown
         break
       case 'numbered_list_item':
         markdown +=
           indent +
           '1. ' +
           richTextToMarkdown(block.numbered_list_item.rich_text) +
-          '\n'
+          '\n' +
+          childMarkdown
         break
       case 'table':
         markdown = await tableToMarkdown(block, markdown)
+        break
+      case 'code':
+        markdown +=
+          indent +
+          '```' +
+          block.code.language +
+          '\n' +
+          richTextToMarkdown(block.code.rich_text) +
+          '\n' +
+          '```\n\n'
         break
     }
   }
@@ -90,10 +105,12 @@ async function tableToMarkdown(
   block: TableBlockObjectResponse,
   markdown: string
 ): Promise<string> {
-  const tableData = await retry(() => Notion.blocks.children.list({
-    block_id: block.id,
-    page_size: 100,
-  }))
+  const tableData = await retry(() =>
+    Notion.blocks.children.list({
+      block_id: block.id,
+      page_size: 100,
+    })
+  )
 
   const rows = []
   for (const rowBlock of tableData.results) {

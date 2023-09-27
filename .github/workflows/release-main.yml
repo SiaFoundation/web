@@ -47,7 +47,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           ASSETS: ${{ github.workspace }}/assets
-      - name: Release
+      - name: Copy dists for publishing
         run: ./scripts/copy-dists-for-publishing.sh
       - name: Create Release Pull Request or Publish to NPM
         uses: changesets/action@v1

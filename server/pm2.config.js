@@ -20,16 +20,6 @@ module.exports = {
       },
     },
     {
-      name: 'sia-explorer',
-      script: 'nx',
-      args: 'run explorer:serve:production',
-    },
-    {
-      name: 'sia-explorer-testnet',
-      script: 'nx',
-      args: 'run explorer:serve:production-testnet',
-    },
-    {
       name: 'sia-renter',
       script: 'nx',
       args: 'run renterd:serve:production',

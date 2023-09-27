@@ -4,12 +4,6 @@ import {
   Callout,
   SiteHeading,
   webLinks,
-  Link,
-  Ol,
-  Li,
-  Code,
-  Text,
-  Paragraph,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
@@ -44,9 +38,8 @@ type Props = AsyncReturnType<typeof getStaticProps>['props']
 export default function Grants({
   grantExamples,
   grantIdeas,
-  grantCommittee,
-  grantApplicantFaqSource,
-  grantGranteeFaqSource,
+  grantsOverviewSource,
+  grantsDetailsSource,
 }: Props) {
   return (
     <Layout
@@ -54,7 +47,7 @@ export default function Grants({
       description={textContent(description)}
       path={routes.community.index}
       heading={
-        <SectionTransparent className="pt-24 md:pt-40 pb-6 md:pb-20">
+        <SectionTransparent className="pt-24 md:pt-40 pb-6">
           <SiteHeading
             title={title}
             description={description}
@@ -79,6 +72,14 @@ export default function Grants({
                   href: webLinks.forumGrants,
                   target: '_blank',
                   title: 'Browse current proposals',
+                },
+                {
+                  href: '#grant-guidelines',
+                  title: 'Grant guidelines',
+                },
+                {
+                  href: '#proposal-formats',
+                  title: 'Proposal formats',
                 },
                 {
                   href: '#create-a-proposal',
@@ -106,156 +107,7 @@ export default function Grants({
       previewImage={previews.nateSnow}
     >
       <SectionGradient className="pt-6 md:pt-10 pb-16 md:pb-32">
-        <div className="flex flex-col max-w-3xl overflow-hidden">
-          <SiteHeading
-            size="32"
-            className="pb-16 md:pb-20"
-            title="The Grant Process"
-            description={
-              <>
-                The following section outlines the proposal requirements, the
-                proposal process, and evaluation criteria for the Sia grant
-                program. Read on to get started on your own grant application.
-              </>
-            }
-          />
-          <ContentGallery
-            columnClassName="grid-cols-1"
-            className="gap-y-12 md:gap-y-20"
-            items={[
-              {
-                title: 'Proposal Requirements',
-                icon: 'ListChecked',
-                children: (
-                  <Ol className="mt-5 -ml-10 md:ml-0 !gap-2">
-                    <Li>
-                      Name of organization or individual and project name.
-                    </Li>
-                    <Li>
-                      Purpose of the grant: who benefits and how the project
-                      will serve the Foundation’s mission of user-owned data.
-                    </Li>
-                    <Li>Code contributions must be open source.</Li>
-                    <Li>Timeline with measurable objectives and goals.</Li>
-                    <Li>
-                      Any potential risks that will affect the outcome of the
-                      project.
-                    </Li>
-                    <Li>Budget and justification.</Li>
-                    <Li>
-                      Reporting requirements: Progress reports to the
-                      foundation/committee and to the community.
-                    </Li>
-                  </Ol>
-                ),
-              },
-              {
-                title: 'Proposal Process',
-                icon: 'MailAll',
-                children: (
-                  <Ol className="mt-5 -ml-10 md:ml-0 !gap-2">
-                    <Li>
-                      Create a proposal with the above requirements in mind.
-                    </Li>
-                    <Li>
-                      Submit your proposal at{' '}
-                      <Link href={webLinks.forumGrantsProposed} target="_blank">
-                        {webLinks.forumGrantsProposed}
-                      </Link>
-                      .
-                    </Li>
-                    <Li>
-                      Open discussion will ensue in the comment section from the
-                      community.
-                    </Li>
-                    <Li>
-                      The Grant Committee convenes every two weeks to review the
-                      following:
-                      <Ol className="mt-2 !gap-2">
-                        <Li>
-                          New proposals, to accept, reject, or request more
-                          info.
-                        </Li>
-                        <Li>Existing grants, to assess their progress.</Li>
-                        <Li>
-                          Newly completed grants, to review their outcomes.
-                        </Li>
-                      </Ol>
-                    </Li>
-                  </Ol>
-                ),
-              },
-              {
-                title: 'Scoring Rubric',
-                icon: 'TestTool',
-                children: (
-                  <div className="mt-3 -ml-10 md:ml-0">
-                    <Paragraph size="16">
-                      All proposals are reviewed by the Grant Committee. When
-                      evaluating a grant proposal, the Committee considers the
-                      following factors while utilizing a scoring matrix to
-                      ensure a thorough vetting process.
-                    </Paragraph>
-                    <Ol className="mt-6 !gap-2">
-                      <Li>
-                        <Text weight="semibold">
-                          In line with Foundation’s mission:
-                        </Text>{' '}
-                        Does the proposal address a recognized need in the
-                        decentralized cloud storage community? Is the need
-                        consistent with The Sia Foundation’s mission of
-                        user-owned data?
-                      </Li>
-                      <Li>
-                        <Text weight="semibold">Community Impact:</Text> Will
-                        the project provide a meaningful volume of services
-                        and/or people served in the decentralized cloud storage
-                        community (in particular the Sia community)?
-                      </Li>
-                      <Li>
-                        <Text weight="semibold">
-                          Goals, Objectives & Outcome:
-                        </Text>{' '}
-                        Are there clear goals and objectives written? Are
-                        measurable outcomes evident?
-                      </Li>
-                      <Li>
-                        <Text weight="semibold">Deliverable:</Text> How well
-                        does the individual/organization demonstrate the ability
-                        to deliver and measure proposed outcomes?
-                      </Li>
-                      <Li>
-                        <Text weight="semibold">
-                          Risks and Technical Feasibility:
-                        </Text>{' '}
-                        Is the risk reasonable for the timeline provided? Please
-                        be thoughtful if the risk is high enough to impact the
-                        outcome of the project.
-                      </Li>
-                      <Li>
-                        <Text weight="semibold">Budget Justification:</Text> How
-                        well does the applicant justify the budget?
-                      </Li>
-                    </Ol>
-                  </div>
-                ),
-              },
-              {
-                title: 'Grant Committee',
-                icon: 'EventsAlt',
-                children: (
-                  <Ol className="mt-5 -ml-10 md:ml-0 !gap-2">
-                    {grantCommittee.map(({ name }) => (
-                      <Li key={name}>{name}</Li>
-                    ))}
-                  </Ol>
-                ),
-              },
-            ]}
-          />
-        </div>
-      </SectionGradient>
-      <SectionGradient>
+        <MDXRemote {...grantsOverviewSource} components={components} />
         <SiteHeading
           id="ideas"
           size="32"
@@ -306,58 +158,33 @@ export default function Grants({
           columnClassName="grid-cols-1 md:grid-cols-2"
           gapClassName="gap-4 sm:gap-5"
         />
-        <Callout
-          id="create-a-proposal"
-          className="mt-20 md:mt-48 mb-16 md:mb-24"
-          title="Get started on your grant proposal"
-          size="2"
-          background={previews.tree}
-          description={
-            <>
-              The Sia Foundation looks forward to funding your open source
-              research and development projects.
-            </>
-          }
-          actionTitle="Create a proposal"
-          actionLink={webLinks.forumGrantsProposed}
-          actionNewTab
-        />
       </SectionGradient>
       <SectionGradient>
-        <div className="mb-20 md:mb-32">
-          <MDXRemote {...grantApplicantFaqSource} components={components} />
+        <MDXRemote {...grantsDetailsSource} components={components} />
+        <div className="pt-20 md:pt-48 pb-16 md:pb-40">
+          <Callout
+            id="create-a-proposal"
+            title="Get started on your grant proposal"
+            size="2"
+            background={previews.tree}
+            description={
+              <>
+                The Sia Foundation looks forward to funding your open source
+                research and development projects.
+              </>
+            }
+            actionTitle="Create a proposal"
+            actionLink={webLinks.forumGrantsProposed}
+            actionNewTab
+          />
         </div>
-        <MDXRemote {...grantGranteeFaqSource} components={components} />
-        <SiteHeading
-          id="more-questions"
-          size="32"
-          className="pt-32 md:pt-60 mb-32 md:pb-32"
-          title="Interested, but have more questions?"
-          description={
-            <>
-              If you’re interested but have questions or need help submitting
-              your grant feel free to join the discord server and hop in the{' '}
-              <Code>#grants-program</Code> channel to chat with Kino, Frances,
-              and the committee members. This channel provides a space to ask
-              questions, discuss the grant program, share ideas, provide
-              feedback, and collaborate with community members.
-            </>
-          }
-          links={[
-            {
-              title: 'Join the Discord',
-              link: webLinks.discord,
-              newTab: true,
-            },
-          ]}
-        />
       </SectionGradient>
     </Layout>
   )
 }
 
-const grantApplicantFaqId = 'f6971439deae401294d59f62046f88b8'
-const approvedGranteeFaqId = '89b7ca138da74872a20be9e533d272c7'
+const grantsOverviewId = 'bc9f65e5ca444e18831fbf89a54e7ee4'
+const grantsDetailsId = '9556470dcfcd4e0ca338b842bc13ec1d'
 
 export async function getStaticProps() {
   const stats = await getStats()
@@ -365,20 +192,16 @@ export async function getStaticProps() {
   const grantExamples = await getProjects('grant_examples', 6)
   const grantCommittee = await getGrantCommittee()
 
-  const { source: grantApplicantFaqSource } = await getNotionPage(
-    grantApplicantFaqId
-  )
-  const { source: grantGranteeFaqSource } = await getNotionPage(
-    approvedGranteeFaqId
-  )
+  const { source: grantsOverviewSource } = await getNotionPage(grantsOverviewId)
+  const { source: grantsDetailsSource } = await getNotionPage(grantsDetailsId)
 
   return {
     props: {
+      grantsOverviewSource,
       grantExamples,
       grantIdeas,
       grantCommittee,
-      grantApplicantFaqSource,
-      grantGranteeFaqSource,
+      grantsDetailsSource,
       fallback: {
         '/api/stats': stats,
       },
