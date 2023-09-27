@@ -14,8 +14,6 @@ COPY --chown=nextjs:nodejs ./dist/apps/renterd/.next/standalone ./
 COPY --chown=nextjs:nodejs ./dist/apps/renterd/.next/static ./dist/apps/renterd/.next/static
 COPY --chown=nextjs:nodejs ./dist/apps/renterd/public ./apps/renterd/public
 
-RUN npm i sharp
-
 USER nextjs
 EXPOSE 3000
 

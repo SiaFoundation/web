@@ -14,8 +14,6 @@ COPY --chown=nextjs:nodejs ./dist/apps/walletd/.next/standalone ./
 COPY --chown=nextjs:nodejs ./dist/apps/walletd/.next/static ./dist/apps/walletd/.next/static
 COPY --chown=nextjs:nodejs ./dist/apps/walletd/public ./apps/walletd/public
 
-RUN npm i sharp
-
 USER nextjs
 EXPOSE 3000
 

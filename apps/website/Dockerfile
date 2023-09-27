@@ -14,8 +14,6 @@ COPY --chown=nextjs:nodejs ./dist/apps/website/.next/standalone ./
 COPY --chown=nextjs:nodejs ./dist/apps/website/.next/static ./dist/apps/website/.next/static
 COPY --chown=nextjs:nodejs ./dist/apps/website/public ./apps/website/public
 
-RUN npm i sharp
-
 USER nextjs
 EXPOSE 3000
 

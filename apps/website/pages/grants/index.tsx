@@ -159,8 +159,8 @@ export default function Grants({
                     </Li>
                     <Li>
                       Submit your proposal at{' '}
-                      <Link href={webLinks.forumGrants} target="_blank">
-                        {webLinks.forumGrants}
+                      <Link href={webLinks.forumGrantsProposed} target="_blank">
+                        {webLinks.forumGrantsProposed}
                       </Link>
                       .
                     </Li>
@@ -319,7 +319,7 @@ export default function Grants({
             </>
           }
           actionTitle="Create a proposal"
-          actionLink={webLinks.forumGrants}
+          actionLink={webLinks.forumGrantsProposed}
           actionNewTab
         />
       </SectionGradient>

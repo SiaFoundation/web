@@ -14,8 +14,6 @@ COPY --chown=nextjs:nodejs ./dist/apps/explorer/.next/standalone ./
 COPY --chown=nextjs:nodejs ./dist/apps/explorer/.next/static ./dist/apps/explorer/.next/static
 COPY --chown=nextjs:nodejs ./dist/apps/explorer/public ./apps/explorer/public
 
-RUN npm i sharp
-
 USER nextjs
 EXPOSE 3000
 

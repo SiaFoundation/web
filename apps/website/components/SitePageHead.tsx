@@ -1,4 +1,4 @@
-import { webLinks } from '../data/webLinks'
+import { webLinks } from '@siafoundation/design-system'
 import Head from 'next/head'
 import Script from 'next/script'
 
