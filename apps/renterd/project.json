@@ -6,9 +6,7 @@
   "targets": {
     "build": {
       "executor": "@nx/next:build",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/renterd",
@@ -52,9 +50,7 @@
     },
     "container": {
       "executor": "@nx-tools/nx-container:build",
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "defaultConfiguration": "local",
       "options": {
         "engine": "docker",
@@ -63,24 +59,18 @@
       },
       "configurations": {
         "local": {
-          "tags": [
-            "siafoundation/web-renterd:latest"
-          ],
+          "tags": ["siafoundation/web-renterd:latest"],
           "push": false
         },
         "production": {
-          "tags": [
-            "ghcr.io/siafoundation/web-renterd:latest"
-          ],
+          "tags": ["ghcr.io/siafoundation/web-renterd:latest"],
           "push": true
         }
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/apps/renterd"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/apps/renterd"],
       "options": {
         "jestConfig": "apps/renterd/jest.config.ts",
         "passWithNoTests": true
@@ -88,13 +78,9 @@
     },
     "lint": {
       "executor": "@nx/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "apps/renterd/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["apps/renterd/**/*.{ts,tsx,js,jsx}"]
       }
     }
   },
