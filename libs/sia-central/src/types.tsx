@@ -312,8 +312,8 @@ export type SiaCentralBlock = {
   height: number
   nonce: number[]
   size: string
-  transactions: SiaCentralTransaction[]
-  siacoin_outputs: SiaCentralSiacoinOutput[]
+  transactions?: SiaCentralTransaction[]
+  siacoin_outputs?: SiaCentralSiacoinOutput[]
   siafund_pool: string
   timestamp: string
 }

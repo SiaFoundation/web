@@ -1,4 +1,5 @@
-import { SitePageHead, webLinks } from '@siafoundation/design-system'
+import { webLinks } from '@siafoundation/design-system'
+import { SitePageHead } from './SitePageHead'
 import { appName, newsFeedName } from '../config/app'
 import { routes } from '../config/routes'
 

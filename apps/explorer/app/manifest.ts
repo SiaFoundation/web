@@ -1,10 +1,17 @@
 import { MetadataRoute } from 'next'
+import { network } from '../config'
+
+const title = 'siascan'
+const description =
+  network === 'mainnet'
+    ? 'Sia blockchain and host explorer.'
+    : 'Zen blockchain and host explorer.'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Sia - Explorer',
-    short_name: 'Sia',
-    description: 'Sia blockchain explorer',
+    name: title,
+    short_name: title,
+    description,
     start_url: '/',
     display: 'standalone',
     background_color: '#fff',
@@ -12,7 +19,7 @@ export default function manifest(): MetadataRoute.Manifest {
     icons: [
       {
         src: '/favicon.ico',
-        sizes: 'any',
+        sizes: '16x16',
         type: 'image/x-icon',
       },
     ],

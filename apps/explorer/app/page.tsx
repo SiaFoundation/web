@@ -2,14 +2,15 @@ import { Metadata } from 'next'
 import { appLink, network, siaCentralApi } from '../config'
 import { Home } from '../components/Home'
 import {
+  SiaCentralBlock,
+  getSiaCentralBlock,
   getSiaCentralBlockLatest,
-  getSiaCentralBlocks,
   getSiaCentralExchangeRates,
   getSiaCentralHosts,
   getSiaCentralHostsNetworkMetrics,
 } from '@siafoundation/sia-central'
-import { range } from 'lodash'
 import { buildMetadata } from '../lib/utils'
+import { humanBytes } from '@siafoundation/sia-js'
 
 export function generateMetadata(): Metadata {
   const title = 'siascan'
@@ -31,7 +32,7 @@ export default async function HomePage() {
     { data: m, error: metricsError },
     { data: lb, error: latestBlockError },
     { data: r, error: exchangeRatesError, },
-    { data: h, error: hostsError }
+    { data: h, error: hostsError },
   ] = await Promise.all([
     getSiaCentralHostsNetworkMetrics({
       config: {
@@ -59,30 +60,89 @@ export default async function HomePage() {
   ])
 
   const lastBlockHeight = lb?.block.height || 0
-  const { data: bs, error: blocksError } = await getSiaCentralBlocks({
-    payload: {
-      heights: range(lastBlockHeight - 5, lastBlockHeight),
-    },
-    config: {
-      api: siaCentralApi,
-    },
-  })
+  const [one, two, three, four] = await Promise.all([
+    getSiaCentralBlock({
+      params: {
+        id: String(lastBlockHeight - 1),
+      },
+      config: {
+        api: siaCentralApi,
+      },
+    }),
+    getSiaCentralBlock({
+      params: {
+        id: String(lastBlockHeight - 2),
+      },
+      config: {
+        api: siaCentralApi,
+      },
+    }),
+    getSiaCentralBlock({
+      params: {
+        id: String(lastBlockHeight - 3),
+      },
+      config: {
+        api: siaCentralApi,
+      },
+    }),
+    getSiaCentralBlock({
+      params: {
+        id: String(lastBlockHeight - 4),
+      },
+      config: {
+        api: siaCentralApi,
+      },
+    })
+  ])
 
-  if (metricsError || latestBlockError || exchangeRatesError || hostsError || blocksError) {
-    console.log({
+  const blocks: SiaCentralBlock[] = []
+  if (lastBlockHeight) {
+    if (lb) {
+      blocks.push(lb.block)
+    }
+    if (one.data) {
+      blocks.push(one.data.block)
+    }
+    if (two.data) {
+      blocks.push(two.data.block)
+    }
+    if (three.data) {
+      blocks.push(three.data.block)
+    }
+    if (four.data) {
+      blocks.push(four.data.block)
+    }
+  }
+
+  if (metricsError || latestBlockError || exchangeRatesError || hostsError || latestBlockError || one.error || two.error || three.error || four.error) {
+    console.log(new Date().toISOString(), {
       metricsError,
       latestBlockError,
+      blockOneError: one.error,
+      blockTwoError: two.error,
+      blockThreeError: three.error,
+      blockFourError: four.error,
       exchangeRatesError,
       hostsError,
-      blocksError,
     })
   }
+
+  console.log(new Date().toISOString(), {
+    metrics: humanBytes(Buffer.byteLength(JSON.stringify(m || ''))),
+    latestBlock: humanBytes(Buffer.byteLength(JSON.stringify(lb || ''))),
+    blockOne: humanBytes(Buffer.byteLength(JSON.stringify(one || ''))),
+    blockTwo: humanBytes(Buffer.byteLength(JSON.stringify(two || ''))),
+    blockThree: humanBytes(Buffer.byteLength(JSON.stringify(three || ''))),
+    blockFour: humanBytes(Buffer.byteLength(JSON.stringify(four || ''))),
+    exchangeRates: humanBytes(Buffer.byteLength(JSON.stringify(r || ''))),
+    hosts: humanBytes(Buffer.byteLength(JSON.stringify(h || ''))),
+  })
 
   return (
     <Home
       metrics={m}
       blockHeight={lastBlockHeight}
-      blocks={bs?.blocks || []}
+      blocks={blocks}
       hosts={h?.hosts || []}
       rates={r?.rates}
     />

@@ -52,7 +52,7 @@ export function CalloutProject({
           {idea ? (
             router.asPath.startsWith(routes.grants.index) ? (
               <Link
-                href={webLinks.forumGrants}
+                href={webLinks.forumGrantsProposed}
                 target="_blank"
                 underline="accent"
                 color="contrast"
