@@ -118,6 +118,26 @@ beta.siascan.com {
   reverse_proxy localhost:5005
 }
 
+api.siascan.com {
+  import cloudflare
+  encode gzip
+  
+  # temporary, will be included in the explorer API  
+  handle_path /revenue* {
+    uri strip_prefix /revenue
+    reverse_proxy localhost:10005
+  } 
+
+  handle_path /zen/revenue* {
+    uri strip_prefix /zen_revenue
+    reverse_proxy localhost:11005
+  }
+
+  route * {
+	respond 404
+  }
+}
+
 host.sia.tech {
   encode gzip
   reverse_proxy localhost:3006
