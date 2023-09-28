@@ -5,5 +5,5 @@ export function getAssetPath(filePath: string) {
 }
 
 export function getAssetsDirectory() {
-  return process.env['ASSETS'] || './'
+  return process.env['ASSETS'] || '/assets'
 }

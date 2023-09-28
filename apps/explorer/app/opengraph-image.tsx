@@ -7,7 +7,7 @@ import { network, siaCentralApi } from '../config'
 import { humanBytes } from '@siafoundation/sia-js'
 import { PreviewValue } from '../components/OGImage/Preview'
 
-export const revalidate = 60
+export const revalidate = 0
 
 export const alt = 'Contract'
 export const size = {
