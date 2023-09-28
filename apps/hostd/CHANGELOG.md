@@ -1,5 +1,19 @@
 # hostd
 
+## 0.23.0
+
+### Minor Changes
+
+- ad8f9b62: The volume status icon now shows in progress operations more clearly.
+- ea95ab52: The contracts table now has a column for "remaining renter funds".
+- e3a3b65a: Alerts can now be filtered and dismissed by type.
+- e3a3b65a: The alert dialog now has a fixed height, so it stays in the same position when an alert is dismissed.
+- ad8f9b62: In-progress volume operations can now be canceled from the volume context menu.
+- a8f29daf: Bandwidth metrics are no longer broken out by protocol.
+- ad8f9b62: Volume operations are now disabled when one is already in progress.
+- a8f29daf: The node block height now shows the estimated network height when syncing.
+- e3a3b65a: Fixed an issue with the alert dismiss button overflowing.
+
 ## 0.22.0
 
 ### Minor Changes

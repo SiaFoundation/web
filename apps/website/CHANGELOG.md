@@ -1,5 +1,15 @@
 # website
 
+## 0.42.0
+
+### Minor Changes
+
+- 91102c09: Binary downloads are now the latest stable version.
+- 988375b9: Fix issue where the roadmap content gets clipped.
+- 26e15583: Content now renders as GitHub flavored markdown and supports nesting and tables.
+- a3ec0536: The website now includes grant guidelines and proposal formats for all the new grant types.
+- 26e15583: ToS and Privacy Policy are now linked in the website footer.
+
 ## 0.41.0
 
 ### Minor Changes

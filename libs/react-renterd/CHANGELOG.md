@@ -1,5 +1,11 @@
 # @siafoundation/react-renterd
 
+## 0.8.0
+
+### Minor Changes
+
+- 569d94c3: Added useBuckets, useBucketCreate, useBucketDelete, and bucket support to all object hooks.
+
 ## 0.7.0
 
 ### Minor Changes
