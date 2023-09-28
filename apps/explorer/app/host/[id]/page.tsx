@@ -22,7 +22,7 @@ export function generateMetadata({ params }): Metadata {
   })
 }
 
-export const revalidate = 60
+export const revalidate = 0
 
 export default async function Page({ params }) {
   const id = params?.id as string

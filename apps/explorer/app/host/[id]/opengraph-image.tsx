@@ -13,7 +13,7 @@ import { humanBytes, humanSpeed } from '@siafoundation/sia-js'
 import { truncate } from '@siafoundation/design-system'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
 
-export const revalidate = 60
+export const revalidate = 0
 
 export const alt = 'Host'
 export const size = {
@@ -42,7 +42,6 @@ export default async function Image({ params }) {
       },
     }),
   ])
-
 
   if (!h || !h.host) {
     return getOGImage(
@@ -79,7 +78,7 @@ export default async function Image({ params }) {
       }),
       subvalue: humanSpeed(
         (h.host.benchmark.data_size * 8) /
-        (h.host.benchmark.download_time / 1000)
+          (h.host.benchmark.download_time / 1000)
       ),
     },
     {

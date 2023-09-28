@@ -10,7 +10,7 @@ import { lowerCase } from 'lodash'
 import { siacoinToFiat } from '../../../lib/currency'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
 
-export const revalidate = 60
+export const revalidate = 0
 
 export const alt = 'Contract'
 export const size = {
@@ -67,10 +67,13 @@ export default async function Image({ params }) {
     },
     {
       label: 'payout',
-      value: siacoinToFiat(c.contract.payout, r && {
-        currency,
-        rate: r.rates.sc.usd,
-      }),
+      value: siacoinToFiat(
+        c.contract.payout,
+        r && {
+          currency,
+          rate: r.rates.sc.usd,
+        }
+      ),
     },
   ]
 
@@ -84,8 +87,8 @@ export default async function Image({ params }) {
         c.contract.status === 'obligationSucceeded'
           ? 'green'
           : c.contract.status === 'obligationFailed'
-            ? 'red'
-            : 'amber',
+          ? 'red'
+          : 'amber',
       initials: 'C',
       values,
     },
