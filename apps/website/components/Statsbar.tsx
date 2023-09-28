@@ -20,14 +20,9 @@ export function Statsbar() {
     contributors,
     forks,
     releases,
-    // downloadSpeed,
-    // uploadSpeed,
-    // cpuUsage,
-    // memoryUsage,
   } = data || {}
   return (
     <div className="flex flex-col gap-6">
-      {/* <Heading font="mono">Numbers</Heading> */}
       <div className="flex gap-x-20 gap-y-12 justify-start flex-wrap">
         <StatSection
           title="Network"
@@ -71,29 +66,6 @@ export function Statsbar() {
             },
           ]}
         />
-        {/* <StatSection
-        title="Benchmarks"
-        link={webLinks.benchmarks}
-        target="_blank"
-        stats={[
-          {
-            value: downloadSpeed,
-            label: 'download',
-          },
-          {
-            value: uploadSpeed,
-            label: 'upload',
-          },
-          {
-            value: cpuUsage,
-            label: 'CPU usage',
-          },
-          {
-            value: memoryUsage,
-            label: 'memory usage',
-          },
-        ]}
-      /> */}
         <StatSection
           title="Development"
           link={routes.activity.index}
