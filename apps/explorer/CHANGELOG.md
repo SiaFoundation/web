@@ -1,5 +1,22 @@
 # explorer
 
+## 0.7.0
+
+### Minor Changes
+
+- de6572aa: Fiat currency is now configurable.
+- 89ea9e7d: Contract details now include expiration, proof, proof deadline, and payout block heights and timestamps.
+- 5b950036: All explorer pages now show details in their open graph preview images.
+- 89ea9e7d: The foundation's public explorer is now siascan.com.
+- b62ef91e: Host settings are now displayed in human friendly units.
+- 5b950036: Contracts now show a visual timeline and status.
+- 5ff331fe: Add fathom analytics to explorers.
+- dd3ea428: Top hosts list now shows price and speed details.
+- 91102c09: The explorer now shows average prices on the home page.
+- 988375b9: Fixed an issue where the zen search bar was not searching via the zen API.
+- 5b950036: The explorer no longer depends on Navigator.
+- 5b950036: The explorer has been revamped and now supports searching for and viewing hosts.
+
 ## 0.6.0
 
 ### Minor Changes

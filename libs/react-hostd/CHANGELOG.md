@@ -1,5 +1,11 @@
 # @siafoundation/react-hostd
 
+## 0.9.0
+
+### Minor Changes
+
+- ad8f9b62: Added useVolumeCancel.
+
 ## 0.8.0
 
 ### Minor Changes

@@ -1,5 +1,18 @@
 # renterd
 
+## 0.29.0
+
+### Minor Changes
+
+- ea22ca7c: Initiated an already active upload or download now shows an error.
+- e3a3b65a: Alerts can now be filtered and dismissed by type.
+- 569d94c3: The not enough active contracts warning no longer flickers.
+- 569d94c3: The files feature now supports buckets.
+- ea22ca7c: File uploads and downloads can now be canceled from the transfers bar.
+- e3a3b65a: The alert dialog now has a fixed height, so it stays in the same position when an alert is dismissed.
+- ea22ca7c: Fixed an issue with file transfer progress reporting.
+- e3a3b65a: Fixed an issue with the alert dismiss button overflowing.
+
 ## 0.28.0
 
 ### Minor Changes
