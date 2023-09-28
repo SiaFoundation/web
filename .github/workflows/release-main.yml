@@ -64,3 +64,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           ASSETS: ${{ github.workspace }}/assets
+      - name: Containers
+        shell: bash
+        run: npx nx run-many --target=container --configuration=production-testnet-zen -all --parallel=5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}

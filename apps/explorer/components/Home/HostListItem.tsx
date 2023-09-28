@@ -72,7 +72,7 @@ export function HostListItem({ host, rates, entity }: Props) {
             </Link>
           </div>
           <div className="flex-1" />
-          <Text color="subtle">
+          <Text color="subtle" className="hidden lg:flex">
             {formatDistance(new Date(host.first_seen_timestamp), new Date(), {
               addSuffix: false,
             })}{' '}
@@ -95,7 +95,7 @@ export function HostListItem({ host, rates, entity }: Props) {
               </Text>
             </Tooltip>
           </div>
-          <div className="flex gap-1 items-center">
+          <div className="hidden lg:flex gap-1 items-center">
             <Text size="10" color="subtle" ellipsis className="scale-75">
               <CloudDownload16 />
             </Text>
@@ -110,7 +110,7 @@ export function HostListItem({ host, rates, entity }: Props) {
               </Text>
             </Tooltip>
           </div>
-          <div className="flex gap-1 items-center">
+          <div className="hidden lg:flex gap-1 items-center">
             <Text size="10" color="subtle" ellipsis className="scale-75">
               <CloudUpload16 />
             </Text>
