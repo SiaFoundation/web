@@ -121,15 +121,18 @@ beta.siascan.com {
 api.siascan.com {
   import cloudflare
   encode gzip
-
-  # temporary, will be included in the explorer API
-  handle_path /revenue* {
-    uri strip_prefix /revenue
+  
+  # temporary, will be included in the explorer API  
+  route /metrics* {
     reverse_proxy localhost:10005
   }
 
-  handle_path /zen/revenue* {
-    uri strip_prefix /zen_revenue
+  route /integrations* {
+    reverse_proxy localhost:10005
+  }
+
+  route /zen/metrics* {
+    uri strip_prefix /zen
     reverse_proxy localhost:11005
   }
 
