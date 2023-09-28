@@ -4,7 +4,7 @@ import { getOGImage } from '../../../components/OGImageEntity'
 import { siaCentralApi } from '../../../config'
 import { truncate } from '@siafoundation/design-system'
 
-export const revalidate = 60
+export const revalidate = 0
 
 export const alt = 'Block'
 export const size = {

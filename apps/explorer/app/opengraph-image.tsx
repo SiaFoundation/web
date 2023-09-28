@@ -52,7 +52,8 @@ export default async function Image() {
         value: humanBytes(
           metrics.totals.total_storage - metrics.totals.remaining_storage
         ),
-      })
+      }
+    )
   }
 
   return getOGImage(

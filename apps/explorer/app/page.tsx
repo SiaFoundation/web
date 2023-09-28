@@ -31,7 +31,7 @@ export default async function HomePage() {
   const [
     { data: m, error: metricsError },
     { data: lb, error: latestBlockError },
-    { data: r, error: exchangeRatesError, },
+    { data: r, error: exchangeRatesError },
     { data: h, error: hostsError },
   ] = await Promise.all([
     getSiaCentralHostsNetworkMetrics({
@@ -92,7 +92,7 @@ export default async function HomePage() {
       config: {
         api: siaCentralApi,
       },
-    })
+    }),
   ])
 
   const blocks: SiaCentralBlock[] = []
@@ -114,7 +114,17 @@ export default async function HomePage() {
     }
   }
 
-  if (metricsError || latestBlockError || exchangeRatesError || hostsError || latestBlockError || one.error || two.error || three.error || four.error) {
+  if (
+    metricsError ||
+    latestBlockError ||
+    exchangeRatesError ||
+    hostsError ||
+    latestBlockError ||
+    one.error ||
+    two.error ||
+    three.error ||
+    four.error
+  ) {
     console.log(new Date().toISOString(), {
       metricsError,
       latestBlockError,
