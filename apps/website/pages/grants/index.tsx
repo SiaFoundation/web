@@ -82,10 +82,6 @@ export default function Grants({
                   title: 'Proposal formats',
                 },
                 {
-                  href: '#create-a-proposal',
-                  title: 'Create a proposal',
-                },
-                {
                   href: '#grant-applicant-faq',
                   title: 'Grant applicant FAQ',
                 },
@@ -94,8 +90,8 @@ export default function Grants({
                   title: 'Approved grantee FAQ',
                 },
                 {
-                  href: '#more-questions',
-                  title: 'More questions?',
+                  href: '#create-a-proposal',
+                  title: 'Create a proposal',
                 },
               ]}
               className="mt-10"
