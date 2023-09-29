@@ -2,6 +2,5 @@
   "name": "@siafoundation/react-sia-central",
   "description": "React hooks for interacting with the Sia Central API.",
   "version": "0.0.1",
-  "private": true,
   "license": "MIT"
 }
