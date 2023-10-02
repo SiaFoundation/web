@@ -9,7 +9,7 @@ setupStatic(app)
 
 console.log(`Assets running in ${process.env.NODE_ENV}`)
 
-const port = 3002
+const port = process.env.PORT || 3002
 const server = app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)
 })
