@@ -15,7 +15,7 @@ import { humanNumber } from '@siafoundation/sia-js'
 import { formatDistance } from 'date-fns'
 import { upperFirst } from 'lodash'
 import BigNumber from 'bignumber.js'
-import { DotMark16 } from '@carbon/icons-react'
+import { DotMark16 } from '@siafoundation/react-icons'
 import { EntityListItemLayout } from './EntityListItemLayout'
 
 export type EntityListItemProps = {

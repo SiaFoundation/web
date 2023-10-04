@@ -6,6 +6,7 @@ import {
   Tooltip,
   Button,
   ValueSc,
+  ValueSf,
 } from '@siafoundation/design-system'
 import { Locked16, Unlocked16, Draggable16 } from '@siafoundation/react-icons'
 import { humanDate } from '@siafoundation/sia-js'
@@ -75,6 +76,7 @@ export const columns: WalletsTableColumn[] = [
     id: 'balance',
     label: 'balance',
     category: 'general',
+    contentClassName: 'justify-end',
     render: function RenderBalance({ data: { id } }) {
       const balance = useWalletBalance({
         params: {
@@ -85,11 +87,16 @@ export const columns: WalletsTableColumn[] = [
         return null
       }
       return (
-        <ValueSc
-          size="12"
-          variant="value"
-          value={new BigNumber(balance.data.siacoins)}
-        />
+        <div className="flex flex-col gap-1 items-end">
+          <ValueSc
+            size="12"
+            variant="value"
+            value={new BigNumber(balance.data.siacoins)}
+          />
+          {!!balance.data.siafunds && (
+            <ValueSf size="12" variant="value" value={balance.data.siafunds} />
+          )}
+        </div>
       )
     },
   },
