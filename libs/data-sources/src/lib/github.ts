@@ -118,15 +118,6 @@ async function getReleaseCount() {
   return historic.data.length + current.data.length
 }
 
-// NOTE: Currently not in use, copied from previous website code for reference.
-// function getUIReleases() {
-//   // TODO: Needs to be updated, historic count from a Gitlab API?
-//   return axios.get(
-//     'https://api.github.com/repos/NebulousLabs/Sia-UI/releases?per_page=100'
-//   )
-//   // TODO: Add next gen UI repo
-// }
-
 type GitHub = {
   commits: number
   contributors: number
@@ -168,9 +159,25 @@ export async function getGitHub(): AsyncDataSourceResponse<GitHub> {
   }
 }
 
+export type GitHubReleaseAsset = {
+  url: string
+  id: number
+  node_id: string
+  name: string
+  label?: string
+  content_type: string
+  state: string
+  size: number
+  download_count: number
+  created_at: string
+  updated_at: string
+  browser_download_url: string
+}
+
 export type GitHubRelease = {
   name: string
   tag_name: string
+  assets: GitHubReleaseAsset[]
 }
 
 export async function getGitHubRenterdLatestRelease(): Promise<GitHubRelease | null> {

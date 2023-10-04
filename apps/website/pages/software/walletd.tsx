@@ -19,7 +19,7 @@ import { SectionGradient } from '../../components/SectionGradient'
 import { useInView } from 'react-intersection-observer'
 import { cx } from 'class-variance-authority'
 import { getWalletdLatestRelease } from '../../content/releases'
-import { DownloadWidgetLarge } from '../../components/DownloadWidgetLarge'
+import { DownloadBar } from '../../components/DownloadBar'
 import { backgrounds, previews } from '../../content/assets'
 import { SectionTransparent } from '../../components/SectionTransparent'
 import { CarouselWalletd } from '../../components/CarouselWalletd'
@@ -43,8 +43,8 @@ const description = (
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-export default function Walletd({ version, technical, tutorials }: Props) {
-  const downloadEl = <DownloadWidgetLarge daemon={daemon} version={version} />
+export default function Walletd({ release, technical, tutorials }: Props) {
+  const downloadEl = <DownloadBar daemon={daemon} release={release} />
   const { ref: appRef, inView: appInView } = useInView()
 
   return (
@@ -132,7 +132,7 @@ export async function getStaticProps() {
     technical,
     tutorials,
     services,
-    version: release?.tag_name || null,
+    release,
     fallback: {
       '/api/stats': stats,
     },

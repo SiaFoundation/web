@@ -1,4 +1,4 @@
-import { Button, WalletBalance } from '@siafoundation/design-system'
+import { Button } from '@siafoundation/design-system'
 import { ArrowUpRight16, Settings16 } from '@siafoundation/react-icons'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
 import BigNumber from 'bignumber.js'
@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import { useWallets } from '../../contexts/wallets'
 import { useDialog } from '../../contexts/dialog'
 import { WalletContextMenu } from '../WalletContextMenu'
+import { WalletBalanceWithSf } from './WalletBalanceWithSf'
 
 export function WalletActionsMenu() {
   const status = useSyncStatus()
@@ -23,8 +24,9 @@ export function WalletActionsMenu() {
   const { wallet } = useWallets()
   return (
     <div className="flex gap-2">
-      <WalletBalance
+      <WalletBalanceWithSf
         sc={new BigNumber(balance.data?.siacoins || 0)}
+        sf={balance.data?.siafunds || 0}
         isSynced={status.isSynced}
       />
       <AddressesButton />
