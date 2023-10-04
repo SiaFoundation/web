@@ -1,14 +1,15 @@
 import { webLinks, Link, Text } from '@siafoundation/design-system'
 import { LogoGithub24, Book24 } from '@siafoundation/react-icons'
-import { DownloadWidgetSelect } from './DownloadWidgetSelect'
+import { DownloadSelect } from './DownloadSelect'
+import { GitHubRelease } from '@siafoundation/data-sources'
 
 type Daemon = 'renterd' | 'hostd' | 'walletd'
 type Props = {
   daemon: Daemon
-  version: string
+  release: GitHubRelease
 }
 
-export function DownloadWidgetLarge({ daemon, version }: Props) {
+export function DownloadBar({ daemon, release }: Props) {
   const githubUrl = webLinks.github[daemon]
   const docsUrl = webLinks.apiDocs[daemon]
 
@@ -43,12 +44,12 @@ export function DownloadWidgetLarge({ daemon, version }: Props) {
         )}
       </div>
       <div className="flex-1" />
-      {version ? (
+      {release ? (
         <>
           <Text className="hidden md:block" size="14" weight="bold">
             Downloads
           </Text>
-          <DownloadWidgetSelect daemon={daemon} version={version} />
+          <DownloadSelect daemon={daemon} release={release} />
         </>
       ) : null}
     </div>

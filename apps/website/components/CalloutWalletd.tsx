@@ -2,11 +2,7 @@ import { routes } from '../config/routes'
 import { CalloutCoreSoftware } from './CalloutCoreSoftware'
 import { patterns, getAssetUrl } from '../content/assets'
 
-type Props = {
-  version?: string
-}
-
-export function CalloutWalletd({ version }: Props) {
+export function CalloutWalletd() {
   return (
     <CalloutCoreSoftware
       name="walletd"
@@ -15,7 +11,6 @@ export function CalloutWalletd({ version }: Props) {
       }
       status="alpha"
       daemon="walletd"
-      version={version}
       href={routes.software.walletd}
       image={getAssetUrl('assets/walletd/send.png')}
       background={patterns.nateTrickle}

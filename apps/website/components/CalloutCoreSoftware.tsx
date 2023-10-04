@@ -5,9 +5,7 @@ import {
   Link,
   Badge,
 } from '@siafoundation/design-system'
-import { cx } from 'class-variance-authority'
 import Image from 'next/image'
-import { DownloadWidget } from './DownloadWidget'
 
 type Props = {
   name: string
@@ -15,7 +13,6 @@ type Props = {
   description: React.ReactNode
   href?: string
   daemon?: 'renterd' | 'hostd' | 'walletd'
-  version?: string
   newTab?: boolean
   image?: string
   background: string
@@ -27,8 +24,6 @@ export function CalloutCoreSoftware({
   status,
   description,
   href,
-  daemon,
-  version,
   image,
   background,
   children,
@@ -75,18 +70,6 @@ export function CalloutCoreSoftware({
         )}
         {children}
       </div>
-      {version && daemon && (
-        <div
-          className={cx(
-            'absolute bottom-0 w-full bg-gray-200 px-6 py-2',
-            'bg-white dark:bg-graydark-200',
-            'border-t',
-            'border-gray-400 dark:border-graydark-400'
-          )}
-        >
-          <DownloadWidget daemon={daemon} version={version} />
-        </div>
-      )}
     </PatternedPanel>
   )
 }
