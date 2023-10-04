@@ -37,13 +37,15 @@ services:
       - /home/debian/assets:/assets
     restart: unless-stopped
   web-assets:
-    image: siafoundation/web-assets:latest
+    image: ghcr.io/siafoundation/web-assets:latest
+    container_name: web-assets
     volumes:
       - /home/debian/assets:/assets
     ports:
       - 3002:3000
   web-crons:
-    image: siafoundation/web-crons:latest
+    image: ghcr.io/siafoundation/web-crons:latest
+    container_name: web-crons
     volumes:
       - /home/debian/assets:/assets
     environment:
