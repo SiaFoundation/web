@@ -141,6 +141,17 @@ api.siascan.com {
   }
 }
 
+siastats.info, www.siastats.info {
+  route /navigator-api/web3index/revenue { # web3index.org redirect until PR is accepted
+    uri replace /navigator-api/web3index/revenue /integrations/web3index/revenue
+    reverse_proxy localhost:10005
+  }
+
+  route * {
+    redir https://siascan.com 302
+  }
+}
+
 host.sia.tech {
   encode gzip
   reverse_proxy localhost:3006
