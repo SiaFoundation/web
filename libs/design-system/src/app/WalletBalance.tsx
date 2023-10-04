@@ -2,7 +2,7 @@ import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
 import { humanSiacoin } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
-import { Warning16 } from '@carbon/icons-react'
+import { Warning16 } from '@siafoundation/react-icons'
 import { Tooltip } from '../core/Tooltip'
 
 export function WalletBalance({
