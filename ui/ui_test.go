@@ -199,6 +199,8 @@ func TestNextJSRouter(t *testing.T) {
 		{"/foo/objects/bar", "foo/objects/[[...key]].html", http.StatusOK},
 		{"/foo/objects/bar/baz", "foo/objects/[[...key]].html", http.StatusOK},
 		{"/foo/objects/bar/baz/", "foo/objects/[[...key]].html", http.StatusOK},
+		{"/foo/objects/bar/biz.baz", "foo/objects/[[...key]].html", http.StatusOK}, // with dots in path
+		{"/foo/biz.baz", "404.html", http.StatusNotFound},                          // with dots in path
 	}
 
 	makeRequest := func(path string, status int) ([]byte, error) {

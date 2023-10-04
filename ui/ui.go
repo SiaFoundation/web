@@ -1,7 +1,6 @@
 package ui
 
 import (
-	"errors"
 	"fmt"
 	"io"
 	"io/fs"
@@ -45,16 +44,11 @@ func (nr *nextjsRouter) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ext := path.Ext(r.URL.Path)
 	if ext != "" { // most likely a static file
 		f, err := nr.fsys.Open(fp)
-		if errors.Is(err, fs.ErrNotExist) {
-			nr.serveErrorPage(http.StatusNotFound, w, r) // no match found, serve 404
+		if err == nil {
+			defer f.Close()
+			http.ServeContent(w, r, fp, time.Time{}, f.(io.ReadSeeker))
 			return
-		} else if err != nil {
-			panic(err)
 		}
-		defer f.Close()
-
-		http.ServeContent(w, r, fp, time.Time{}, f.(io.ReadSeeker))
-		return
 	}
 
 	if fp == "" { // root path, serve index.html
