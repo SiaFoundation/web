@@ -55,8 +55,9 @@ function useHostsMain() {
     if (filters.find((f) => f.id === 'hasActiveContracts') && allContracts) {
       keyIn = allContracts.map((c) => c.hostKey)
     }
-    if (filters.find((f) => f.id === 'publicKeyContains')) {
-      keyIn.push(filters.find((f) => f.id === 'publicKeyContains')?.value)
+    const publicKeyEquals = filters.find((f) => f.id === 'publicKeyEquals')
+    if (publicKeyEquals) {
+      keyIn.push(publicKeyEquals?.value)
     }
     return keyIn.length ? keyIn : undefined
   }, [filters, allContracts])

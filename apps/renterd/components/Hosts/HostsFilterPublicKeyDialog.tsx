@@ -2,6 +2,7 @@ import {
   Dialog,
   FormFieldFormik,
   FormSubmitButtonFormik,
+  truncate,
 } from '@siafoundation/design-system'
 import { useHosts } from '../../contexts/hosts'
 import { useFormik } from 'formik'
@@ -12,7 +13,7 @@ export function filterPublicKeyEquals(publicKey: string) {
   return {
     id: 'publicKeyEquals',
     value: publicKey,
-    label: `public key is ${publicKey}`,
+    label: `public key is ${truncate(publicKey, 20)}`,
   }
 }
 

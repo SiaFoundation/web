@@ -6,6 +6,7 @@ import {
   DropdownMenuLabel,
   Text,
   secondsInMilliseconds,
+  truncate,
 } from '@siafoundation/design-system'
 import {
   Draggable16,
@@ -26,6 +27,7 @@ import { useAllowlistUpdate } from '../../hooks/useAllowlistUpdate'
 import { useBlocklistUpdate } from '../../hooks/useBlocklistUpdate'
 import { addressContainsFilter } from '../Contracts/ContractsFilterAddressDialog'
 import { publicKeyContainsFilter } from '../Contracts/ContractsFilterPublicKeyDialog'
+import { filterPublicKeyEquals } from './HostsFilterPublicKeyDialog'
 
 type Props = {
   address: string
@@ -77,7 +79,7 @@ export function HostContextMenu({
           setHostsFilter({
             id: 'addressContains',
             value: address,
-            label: `Address contains ${address}`,
+            label: `Address contains ${truncate(address, 20)}`,
           })
           router.push(routes.hosts.index)
         }}
@@ -86,6 +88,18 @@ export function HostContextMenu({
           <Filter16 />
         </DropdownMenuLeftSlot>
         Filter hosts by address
+      </DropdownMenuItem>
+      <DropdownMenuItem
+        onSelect={() => {
+          resetHostsFilters()
+          setHostsFilter(filterPublicKeyEquals(publicKey))
+          router.push(routes.hosts.index)
+        }}
+      >
+        <DropdownMenuLeftSlot>
+          <Filter16 />
+        </DropdownMenuLeftSlot>
+        Filter hosts by public key
       </DropdownMenuItem>
       <DropdownMenuItem
         onSelect={() => {
