@@ -14,18 +14,24 @@ import {
 } from '@siafoundation/react-icons'
 import { useState } from 'react'
 import { useFiles } from '../contexts/files'
+import { useAppSettings } from '@siafoundation/react-core'
 
 function getProgress(transfer: { loaded?: number; size?: number }) {
   return transfer.loaded !== undefined ? transfer.loaded / transfer.size : 1
 }
 
 export function TransfersBar() {
+  const { isUnlocked } = useAppSettings()
   const { uploadsList, uploadCancel, downloadsList, downloadCancel } =
     useFiles()
   const [maximized, setMaximized] = useState<boolean>(true)
 
   const uploadCount = uploadsList.length
   const downloadCount = downloadsList.length
+
+  if (!isUnlocked) {
+    return null
+  }
 
   if (uploadCount === 0 && downloadCount === 0) {
     return null

@@ -4,17 +4,14 @@ import {
   FolderIcon,
   FileContractIcon,
   BarsProgressIcon,
-  PlaneIcon,
   BellIcon,
 } from '@siafoundation/react-icons'
 import { useAlerts } from '@siafoundation/react-renterd'
 import { cx } from 'class-variance-authority'
 import { routes } from '../config/routes'
-import { useApp } from '../contexts/app'
 import { useDialog } from '../contexts/dialog'
 
 export function RenterdSidenav() {
-  const { autopilot } = useApp()
   const alerts = useAlerts()
   const { openDialog } = useDialog()
 
@@ -28,11 +25,6 @@ export function RenterdSidenav() {
       <SidenavItem title="Files" route={routes.files.index}>
         <FolderIcon />
       </SidenavItem>
-      {autopilot.status === 'on' && (
-        <SidenavItem title="Autopilot" route={routes.autopilot.index}>
-          <PlaneIcon />
-        </SidenavItem>
-      )}
       <SidenavItem title="Configuration" route={routes.config.index}>
         <BarsProgressIcon />
       </SidenavItem>

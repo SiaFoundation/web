@@ -18,6 +18,7 @@ import { FullPath, FullPathSegments, pathSegmentsToPath } from './paths'
 import { useUploads } from './uploads'
 import { useDownloads } from './downloads'
 import { useDataset } from './dataset'
+import { OnboardingBar } from '../../components/OnboardingBar'
 
 function useFilesMain() {
   const router = useRouter()
@@ -186,6 +187,7 @@ export function FilesProvider({ children }: Props) {
   return (
     <FilesContext.Provider value={state}>
       {children}
+      <OnboardingBar />
       <TransfersBar />
     </FilesContext.Provider>
   )

@@ -19,12 +19,14 @@ export type HookArgsSwr<
 > = Params extends void
   ? {
       api?: string
+      standalone?: string
       config?: RequestConfig<void, Result>
       disabled?: boolean
     }
   : {
       params: Params
       api?: string
+      standalone?: string
       config?: RequestConfig<void, Result>
       disabled?: boolean
     }
@@ -45,11 +47,13 @@ export type HookArgsWithPayloadSwr<
   ? Payload extends void
     ? {
         api?: string
+        standalone?: string
         config?: RequestConfig<void, Result>
         disabled?: boolean
       }
     : {
         api?: string
+        standalone?: string
         payload: Payload
         config?: RequestConfig<void, Result>
         disabled?: boolean
@@ -58,6 +62,7 @@ export type HookArgsWithPayloadSwr<
   ? {
       params: Params
       api?: string
+      standalone?: string
       config?: RequestConfig<void, Result>
       disabled?: boolean
     }
@@ -65,6 +70,7 @@ export type HookArgsWithPayloadSwr<
       params: Params
       payload: Payload
       api?: string
+      standalone?: string
       config?: RequestConfig<void, Result>
       disabled?: boolean
     }

@@ -4,6 +4,7 @@ import { ContractsProvider } from '../contexts/contracts'
 import { HostsProvider } from '../contexts/hosts'
 import React from 'react'
 import { AppProvider } from '../contexts/app'
+import { ConfigProvider } from '../contexts/config'
 
 type Props = {
   children: React.ReactNode
@@ -12,18 +13,20 @@ type Props = {
 export function Providers({ children }: Props) {
   return (
     <AppProvider>
-      <DialogProvider>
-        <ContractsProvider>
-          <HostsProvider>
-            <FilesProvider>
-              {/* this is here so that dialogs can use all the other providers,
+      <ConfigProvider>
+        <DialogProvider>
+          <ContractsProvider>
+            <HostsProvider>
+              <FilesProvider>
+                {/* this is here so that dialogs can use all the other providers,
                   and the other providers can trigger dialogs */}
-              <Dialogs />
-              {children}
-            </FilesProvider>
-          </HostsProvider>
-        </ContractsProvider>
-      </DialogProvider>
+                <Dialogs />
+                {children}
+              </FilesProvider>
+            </HostsProvider>
+          </ContractsProvider>
+        </DialogProvider>
+      </ConfigProvider>
     </AppProvider>
   )
 }

@@ -32,7 +32,7 @@ export function useGetSwr<Params extends RequestParams, Result>(
   )
   return useSWR<Result, SWRError>(
     keyOrNull(
-      reqRoute,
+      args.standalone ? `${args.standalone}/${reqRoute}` : reqRoute,
       hookArgs.disabled || (passwordProtectRequestHooks && !settings.password)
     ),
     async () => {

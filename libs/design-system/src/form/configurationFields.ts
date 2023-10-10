@@ -18,6 +18,7 @@ export type ConfigField<
   type: 'number' | 'siacoin' | 'text' | 'password' | 'boolean' | 'select'
   title: string
   actions?: React.ReactNode
+  hidden?: boolean
   category?: Categories
   description?: React.ReactNode
   units?: string
@@ -68,11 +69,13 @@ export function useRegisterForm<
   const value = form.watch(name)
   const error =
     form.formState.touchedFields[name] && !!form.formState.errors[name]
+
   const {
     ref,
     onChange: _onChange,
     onBlur,
   } = form.register(name, field.validation)
+
   const onChange = useCallback(
     (e: { target: unknown; type: unknown }) => {
       _onChange(e)
