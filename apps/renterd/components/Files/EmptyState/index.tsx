@@ -39,7 +39,7 @@ export function EmptyState() {
             finds contracts with hosts based on the settings you choose.
             Autopilot also repairs your data as hosts come and go.
           </Text>
-          <LinkButton variant="accent" href={routes.autopilot.index}>
+          <LinkButton variant="accent" href={routes.config.index}>
             Configure autopilot →
           </LinkButton>
         </div>

@@ -5,15 +5,14 @@ export const routes = {
   files: {
     index: '/files',
   },
-  autopilot: {
-    index: '/autopilot',
-    contracts: '/autopilot#contracts',
-    hosts: '/autopilot#hosts',
-    wallet: '/autopilot#wallet',
-  },
   config: {
     index: '/config',
-    gouging: '/config#gouging',
+    storage: '/config#storage',
+    pricing: '/config#pricing',
+    hosts: '/config#hosts',
+    wallet: '/config#wallet',
+    contracts: '/config#contracts',
+    uploads: '/config#uploads',
     redundancy: '/config#redundancy',
   },
   contracts: {

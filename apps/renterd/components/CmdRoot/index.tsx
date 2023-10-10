@@ -10,7 +10,6 @@ import { WalletCmdGroup } from './WalletCmdGroup'
 import { AppCmdGroup } from './AppCmdGroup'
 import { useCallback, useState } from 'react'
 import { NodeCmdGroup } from './NodeCmdGroup'
-import { AutopilotCmdGroup } from './AutopilotCmdGroup'
 import { ConfigCmdGroup } from './ConfigCmdGroup'
 import { useDialog } from '../../contexts/dialog'
 import { useRouter } from 'next/router'
@@ -23,7 +22,6 @@ import { FilesCmd } from '../Files/FilesCmd'
 import { useHosts } from '../../contexts/hosts'
 import { useDebounce } from 'use-debounce'
 import { CmdEmptyDefault } from './CmdEmpty'
-import { useApp } from '../../contexts/app'
 
 type Props = {
   panel?: boolean
@@ -32,7 +30,6 @@ type Props = {
 export function CmdRoot({ panel }: Props) {
   const { resetFilters: resetContractsFilters } = useContracts()
   const { resetFilters: resetHostsFilters } = useHosts()
-  const { autopilot } = useApp()
   const { closeDialog } = useDialog()
   const router = useRouter()
   const [search, setSearch] = useState('')
@@ -105,9 +102,6 @@ export function CmdRoot({ panel }: Props) {
             afterSelect()
           }}
         />
-        {autopilot.status === 'on' && (
-          <AutopilotCmdGroup currentPage={page} pushPage={pushPage} />
-        )}
         <WalletCmdGroup currentPage={page} pushPage={pushPage} />
         <ContractsCmd
           currentPage={page}

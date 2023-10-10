@@ -7,7 +7,7 @@ import {
 import { useCallback } from 'react'
 import { useSettingUpdate } from '@siafoundation/react-renterd'
 import useLocalStorageState from 'use-local-storage-state'
-import { transformUpContractSet } from '../Config/transform'
+import { transformUpContractSet } from '../../contexts/config/transform'
 import { useContractSetSettings } from '../../hooks/useContractSetSettings'
 
 export function useSyncContractSet() {
@@ -38,7 +38,7 @@ export function useSyncContractSet() {
             },
             payload: transformUpContractSet(
               {
-                contractSet: autopilotContractSet,
+                defaultContractSet: autopilotContractSet,
               },
               contractSet.data
             ),

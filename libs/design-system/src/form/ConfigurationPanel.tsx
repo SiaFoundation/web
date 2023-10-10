@@ -25,8 +25,13 @@ export function ConfigurationPanel<
     Object.entries(fields) as [Path<Values>, ConfigField<Values, Categories>][]
   ).filter(
     ([_, val]) =>
-      val.category === category && (!val.show || val.show(form.getValues()))
+      val.category === category &&
+      !val.hidden &&
+      (!val.show || val.show(form.getValues()))
   )
+  if (list.length === 0) {
+    return null
+  }
   return (
     <PanelMenuSection title={title}>
       {list.map(([key, val], i) => (

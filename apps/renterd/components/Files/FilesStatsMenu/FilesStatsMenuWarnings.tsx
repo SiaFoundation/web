@@ -86,12 +86,12 @@ export function FilesStatsMenuWarnings() {
         <Text size="12" font="mono" weight="medium" color="amber">
           Configure autopilot to get started.{' '}
           <Link
-            underline="hover"
+            underline="none"
             size="12"
             font="mono"
             weight="medium"
             color="amber"
-            href={routes.autopilot.index}
+            href={routes.config.index}
           >
             Autopilot →
           </Link>
