@@ -45,7 +45,7 @@ export function Search() {
     async (values) => {
       const response = await search.get({
         params: {
-          query: values.query,
+          query: values.query.toLowerCase(),
         },
       })
 
