@@ -19,7 +19,7 @@ import {
   humanStoragePrice,
 } from '../../lib/humanUnits'
 import BigNumber from 'bignumber.js'
-import { scDecimalPlaces, SettingsData } from './fields'
+import { scDecimalPlaces, SettingsData } from './types'
 
 export function transformUp(
   values: SettingsData,
@@ -215,4 +215,14 @@ export function transformDown(s: HostSettings): SettingsData {
     // DNS options
     ...dnsOptions,
   }
+}
+
+export function calculateMaxCollateral(
+  storage: BigNumber,
+  collateralMultiplier: BigNumber
+) {
+  return new BigNumber(12960)
+    .times(storage)
+    .div(monthsToBlocks(1))
+    .times(collateralMultiplier)
 }

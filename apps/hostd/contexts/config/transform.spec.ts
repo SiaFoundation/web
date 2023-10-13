@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { transformDown, transformUp } from './transform'
+import { calculateMaxCollateral, transformDown, transformUp } from './transform'
 
 describe('data transforms', () => {
   it('down', () => {
@@ -134,5 +134,11 @@ describe('data transforms', () => {
         },
       },
     })
+  })
+
+  it('max collateral', () => {
+    expect(
+      calculateMaxCollateral(new BigNumber('400'), new BigNumber(2))
+    ).toEqual(new BigNumber('2400'))
   })
 })

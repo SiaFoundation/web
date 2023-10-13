@@ -10,6 +10,12 @@ export const routes = {
   },
   config: {
     index: '/config',
+    host: '/config#host',
+    pricing: '/config#pricing',
+    dns: '/config#dns',
+    bandwidth: '/config#bandwidth',
+    registry: '/config#registry',
+    accounts: '/config#accounts',
   },
   wallet: {
     view: '/wallet',
