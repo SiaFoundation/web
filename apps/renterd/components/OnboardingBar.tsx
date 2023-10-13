@@ -174,11 +174,13 @@ export function OnboardingBar() {
                   </Text>
                 ) : (
                   <>
-                    <Tooltip
-                      content={`Wallet scanning progress ${syncStatus.walletScanPercent}%`}
-                    >
-                      <Text size="14">{syncStatus.walletScanPercent}%</Text>
-                    </Tooltip>
+                    {!syncStatus.isWalletSynced && (
+                      <Tooltip
+                        content={`Wallet scanning progress ${syncStatus.walletScanPercent}%`}
+                      >
+                        <Text size="14">{syncStatus.walletScanPercent}%</Text>
+                      </Tooltip>
+                    )}
                     <Link
                       href={routes.wallet.view}
                       onClick={() => openDialog('addressDetails')}

@@ -480,6 +480,9 @@ export function useConfigMain() {
   const resetWithUserChanges = useCallback(() => {
     const currentFormValues = form.getValues()
     const serverFormValues = resetFormDataIfAllDataFetched()
+    if (!serverFormValues) {
+      return
+    }
     form.reset(serverFormValues)
     for (const [key, value] of Object.entries(currentFormValues)) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

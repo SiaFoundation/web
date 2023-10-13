@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useDialog } from '../../contexts/dialog'
 import { CommandGroup, CommandItemNav, CommandItemSearch } from './Item'
 import { Page } from './types'
+import { useConfig } from '../../contexts/config'
 
 const commandPage = {
   namespace: 'configuration',
@@ -17,6 +18,7 @@ type Props = {
 
 export function ConfigCmdGroup({ currentPage, parentPage, pushPage }: Props) {
   const router = useRouter()
+  const { showAdvanced } = useConfig()
   const { closeDialog } = useDialog()
   return (
     <CommandGroup currentPage={currentPage} commandPage={commandPage}>
@@ -40,26 +42,70 @@ export function ConfigCmdGroup({ currentPage, parentPage, pushPage }: Props) {
       >
         Open configuration
       </CommandItemSearch>
-      {/* <CommandItemSearch
+      <CommandItemSearch
         currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
-          router.push(routes.config.gouging)
+          router.push(routes.config.host)
           closeDialog()
         }}
       >
-        Configure gouging
+        Configure host
       </CommandItemSearch>
       <CommandItemSearch
         currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
-          router.push(routes.config.redundancy)
+          router.push(routes.config.pricing)
           closeDialog()
         }}
       >
-        Configure redundancy
-      </CommandItemSearch> */}
+        Configure pricing
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
+        commandPage={commandPage}
+        onSelect={() => {
+          router.push(routes.config.dns)
+          closeDialog()
+        }}
+      >
+        Configure DNS
+      </CommandItemSearch>
+      <CommandItemSearch
+        currentPage={currentPage}
+        commandPage={commandPage}
+        onSelect={() => {
+          router.push(routes.config.bandwidth)
+          closeDialog()
+        }}
+      >
+        Configure bandwidth
+      </CommandItemSearch>
+      {showAdvanced && (
+        <>
+          <CommandItemSearch
+            currentPage={currentPage}
+            commandPage={commandPage}
+            onSelect={() => {
+              router.push(routes.config.registry)
+              closeDialog()
+            }}
+          >
+            Configure registry
+          </CommandItemSearch>
+          <CommandItemSearch
+            currentPage={currentPage}
+            commandPage={commandPage}
+            onSelect={() => {
+              router.push(routes.config.accounts)
+              closeDialog()
+            }}
+          >
+            Configure accounts
+          </CommandItemSearch>
+        </>
+      )}
     </CommandGroup>
   )
 }

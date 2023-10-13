@@ -104,8 +104,9 @@ export function getFields({
       category: 'storage',
       title: 'Allowance',
       description: (
-        <>The amount of Siacoin you would like to spend for the period.</>
+        <>The amount of Siacoin you would like to spend per month.</>
       ),
+      units: 'SC/month',
       decimalsLimitSc: scDecimalPlaces,
       hidden: !isAutopilotEnabled || !showAdvanced,
       // always required, but set in background unless advanced mode
