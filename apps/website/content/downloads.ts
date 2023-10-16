@@ -13,6 +13,7 @@ export function getDownloadLinks(daemon: string, release: GitHubRelease) {
       .replace('linux', 'Linux')
       .replace('amd64', 'AMD64')
       .replace('arm64', 'ARM64')
+      .replace('zen', 'Zen Testnet -')
       .replace(/_/g, ' '),
     link: asset.browser_download_url,
   }))

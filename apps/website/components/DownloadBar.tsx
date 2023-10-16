@@ -7,9 +7,10 @@ type Daemon = 'renterd' | 'hostd' | 'walletd'
 type Props = {
   daemon: Daemon
   release: GitHubRelease
+  testnetOnly?: boolean
 }
 
-export function DownloadBar({ daemon, release }: Props) {
+export function DownloadBar({ daemon, release, testnetOnly }: Props) {
   const githubUrl = webLinks.github[daemon]
   const docsUrl = webLinks.apiDocs[daemon]
 
@@ -49,7 +50,11 @@ export function DownloadBar({ daemon, release }: Props) {
           <Text className="hidden md:block" size="14" weight="bold">
             Downloads
           </Text>
-          <DownloadSelect daemon={daemon} release={release} />
+          <DownloadSelect
+            daemon={daemon}
+            release={release}
+            testnetOnly={testnetOnly}
+          />
         </>
       ) : null}
     </div>

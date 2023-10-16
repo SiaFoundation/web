@@ -13,9 +13,10 @@ import { GitHubRelease } from '@siafoundation/data-sources'
 type Props = {
   daemon: 'renterd' | 'hostd' | 'walletd'
   release: GitHubRelease
+  testnetOnly?: boolean
 }
 
-export function DownloadSelect({ daemon, release }: Props) {
+export function DownloadSelect({ daemon, release, testnetOnly }: Props) {
   const downloadLinks = getDownloadLinks(daemon, release)
 
   const [download, setDownload] = useState(downloadLinks[0])
@@ -33,7 +34,7 @@ export function DownloadSelect({ daemon, release }: Props) {
       >
         {downloadLinks.map((i) => (
           <Option key={i.link} value={i.link}>
-            {i.title}
+            {testnetOnly ? `Testnet only: ${i.title}` : i.title}
           </Option>
         ))}
       </Select>
