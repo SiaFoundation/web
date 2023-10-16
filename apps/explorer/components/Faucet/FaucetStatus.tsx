@@ -142,7 +142,7 @@ export function FaucetStatus({ id: _id, setId }: Props) {
               <ValueCopyable
                 type="block"
                 value={status.data.blockID}
-                href={routes.block.view.replace('[id]', status.data.blockID)}
+                href={routes.block.view.replace(':id', status.data.blockID)}
               />
             ) : (
               <LoadingDots />

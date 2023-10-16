@@ -116,7 +116,7 @@ export function Address({ id, address }: Props) {
               label="address"
               type="address"
               value={id}
-              href={routes.address.view.replace('[id]', id)}
+              href={routes.address.view.replace(':id', id)}
             />
             <div className="flex gap-2 items-center">
               <Tooltip

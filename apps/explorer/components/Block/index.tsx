@@ -38,7 +38,7 @@ export function Block({ block }: Props) {
               label="block"
               type="block"
               value={String(block.height)}
-              href={routes.block.view.replace('[id]', String(block.height))}
+              href={routes.block.view.replace(':id', String(block.height))}
             />
             <div className="flex gap-2 items-center">
               <Tooltip
