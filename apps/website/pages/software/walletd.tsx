@@ -44,7 +44,9 @@ const description = (
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
 export default function Walletd({ release, technical, tutorials }: Props) {
-  const downloadEl = <DownloadBar daemon={daemon} release={release} />
+  const downloadEl = (
+    <DownloadBar daemon={daemon} release={release} testnetOnly />
+  )
   const { ref: appRef, inView: appInView } = useInView()
 
   return (
