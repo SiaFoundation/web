@@ -14,7 +14,6 @@ import {
   PendingFilled16,
   Subtract24,
 } from '@siafoundation/react-icons'
-import { useState } from 'react'
 import { useApp } from '../contexts/app'
 import { useSyncStatus } from '../hooks/useSyncStatus'
 import { routes } from '../config/routes'
@@ -24,6 +23,7 @@ import { useAutopilotConfig, useWallet } from '@siafoundation/react-renterd'
 import BigNumber from 'bignumber.js'
 import { humanSiacoin } from '@siafoundation/sia-js'
 import { useAppSettings } from '@siafoundation/react-core'
+import useLocalStorageState from 'use-local-storage-state'
 
 export function OnboardingBar() {
   const { isUnlocked } = useAppSettings()
@@ -37,7 +37,12 @@ export function OnboardingBar() {
       },
     },
   })
-  const [maximized, setMaximized] = useState<boolean>(true)
+  const [maximized, setMaximized] = useLocalStorageState<boolean>(
+    'v0/renterd/onboarding/maximized',
+    {
+      defaultValue: true,
+    }
+  )
 
   const syncStatus = useSyncStatus()
   const notEnoughContracts = useNotEnoughContracts()

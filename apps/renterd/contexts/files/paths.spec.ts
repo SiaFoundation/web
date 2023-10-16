@@ -36,6 +36,15 @@ describe('bucketAndKeyParamsFromPath', () => {
     })
   })
 
+  it('works for file with hash in path', () => {
+    expect(
+      bucketAndKeyParamsFromPath('bucket/path#/to#hash/file#hash.txt')
+    ).toEqual({
+      bucket: 'bucket',
+      key: 'path%23/to%23hash/file%23hash.txt',
+    })
+  })
+
   it('works for directory', () => {
     expect(bucketAndKeyParamsFromPath('bucket/path/to/directory/')).toEqual({
       bucket: 'bucket',

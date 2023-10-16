@@ -35,7 +35,11 @@ export function bucketAndKeyParamsFromPath(path: FullPath): {
 } {
   return {
     bucket: getBucketFromPath(path),
-    key: getKeyFromPath(path).slice(1),
+    key: getKeyFromPath(path)
+      .slice(1)
+      .split('/')
+      .map(encodeURIComponent)
+      .join('/'),
   }
 }
 
