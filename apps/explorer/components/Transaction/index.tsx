@@ -7,10 +7,20 @@ import { EntityList, EntityListItemProps } from '@siafoundation/design-system'
 import { routes } from '../../config/routes'
 import { ContentLayout } from '../ContentLayout'
 import { TransactionHeader } from './TransactionHeader'
+import { OutputListItem } from './OutputListItem'
 
 type Props = {
   transaction: SiaCentralTransaction
   title?: string
+}
+
+type OutputItem = {
+  label: string
+  addressHref: string
+  address: string
+  sc?: BigNumber
+  sf?: number
+  outputId: string
 }
 
 export function Transaction({ title, transaction }: Props) {
@@ -18,22 +28,26 @@ export function Transaction({ title, transaction }: Props) {
     if (!transaction) {
       return []
     }
-    const list: EntityListItemProps[] = []
+    const list: OutputItem[] = []
     transaction.siacoin_inputs?.forEach((o) => {
       list.push({
         label:
           o.source === 'transaction'
             ? 'siacoin output'
             : o.source.replace(/_/g, ' '),
+        addressHref: routes.address.view.replace(':id', o.unlock_hash),
+        address: o.unlock_hash,
         sc: new BigNumber(o.value),
-        hash: o.output_id,
+        outputId: o.output_id,
       })
     })
     transaction.siafund_inputs?.forEach((o) => {
       list.push({
         label: 'siafund output',
+        addressHref: routes.address.view.replace(':id', o.unlock_hash),
+        address: o.unlock_hash,
         sc: new BigNumber(o.value),
-        hash: o.output_id,
+        outputId: o.output_id,
       })
     })
     return list
@@ -43,22 +57,26 @@ export function Transaction({ title, transaction }: Props) {
     if (!transaction) {
       return []
     }
-    const list: EntityListItemProps[] = []
+    const list: OutputItem[] = []
     transaction.siacoin_outputs?.forEach((o) => {
       list.push({
         label:
           o.source === 'transaction'
             ? 'siacoin output'
             : o.source.replace(/_/g, ' '),
+        addressHref: routes.address.view.replace(':id', o.unlock_hash),
+        address: o.unlock_hash,
         sc: new BigNumber(o.value),
-        hash: o.output_id,
+        outputId: o.output_id,
       })
     })
     transaction.siafund_outputs?.forEach((o) => {
       list.push({
         label: 'siafund output',
+        addressHref: routes.address.view.replace(':id', o.unlock_hash),
+        address: o.unlock_hash,
         sf: Number(o.value),
-        hash: o.output_id,
+        outputId: o.output_id,
       })
     })
     return list
@@ -112,13 +130,21 @@ export function Transaction({ title, transaction }: Props) {
       <div className="flex flex-col gap-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5">
           <div>
-            <EntityList title={`Inputs (${inputs.length})`} entities={inputs} />
+            <EntityList title={`Inputs (${inputs.length})`} entities={inputs}>
+              {inputs?.map((i) => (
+                <OutputListItem key={i.outputId} {...i} />
+              ))}
+            </EntityList>
           </div>
           <div>
             <EntityList
               title={`Outputs (${outputs.length})`}
               entities={outputs}
-            />
+            >
+              {outputs?.map((o) => (
+                <OutputListItem key={o.outputId} {...o} />
+              ))}
+            </EntityList>
           </div>
         </div>
         {!!operations?.length && (
