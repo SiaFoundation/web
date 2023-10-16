@@ -14,7 +14,6 @@ import {
   PendingFilled16,
   Subtract24,
 } from '@siafoundation/react-icons'
-import { useState } from 'react'
 import { useSyncStatus } from '../hooks/useSyncStatus'
 import { routes } from '../config/routes'
 import { useDialog } from '../contexts/dialog'
@@ -23,6 +22,7 @@ import BigNumber from 'bignumber.js'
 import { humanSiacoin, toHastings } from '@siafoundation/sia-js'
 import { useAppSettings } from '@siafoundation/react-core'
 import { useVolumes } from '../contexts/volumes'
+import useLocalStorageState from 'use-local-storage-state'
 
 export function OnboardingBar() {
   const { isUnlocked } = useAppSettings()
@@ -30,7 +30,12 @@ export function OnboardingBar() {
   const { dataset: volumes } = useVolumes()
   const settings = useSettings()
   const wallet = useWallet()
-  const [maximized, setMaximized] = useState<boolean>(true)
+  const [maximized, setMaximized] = useLocalStorageState<boolean>(
+    'v0/hostd/onboarding/maximized',
+    {
+      defaultValue: true,
+    }
+  )
   const syncStatus = useSyncStatus()
 
   if (!isUnlocked) {

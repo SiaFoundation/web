@@ -25,7 +25,7 @@ function useFilesMain() {
 
   // [bucket, key, directory]
   const activeDirectory = useMemo<FullPathSegments>(
-    () => (router.query.path as FullPathSegments) || [],
+    () => (router.query.path as FullPathSegments).map(decodeURIComponent) || [],
     [router.query.path]
   )
 
@@ -42,7 +42,9 @@ function useFilesMain() {
   const setActiveDirectory = useCallback(
     (fn: (activeDirectory: FullPathSegments) => FullPathSegments) => {
       const nextActiveDirectory = fn(activeDirectory)
-      router.push('/files/' + nextActiveDirectory.join('/'))
+      router.push(
+        '/files/' + nextActiveDirectory.map(encodeURIComponent).join('/')
+      )
     },
     [router, activeDirectory]
   )
