@@ -5,6 +5,8 @@ import { HostsProvider } from '../contexts/hosts'
 import React from 'react'
 import { AppProvider } from '../contexts/app'
 import { ConfigProvider } from '../contexts/config'
+import { OnboardingBar } from '../components/OnboardingBar'
+import { TransfersBar } from '../components/TransfersBar'
 
 type Props = {
   children: React.ReactNode
@@ -20,6 +22,8 @@ export function Providers({ children }: Props) {
               <FilesProvider>
                 {/* this is here so that dialogs can use all the other providers,
                   and the other providers can trigger dialogs */}
+                <OnboardingBar />
+                <TransfersBar />
                 <Dialogs />
                 {children}
               </FilesProvider>

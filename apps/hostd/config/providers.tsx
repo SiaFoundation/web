@@ -3,6 +3,7 @@ import { MetricsProvider } from '../contexts/metrics'
 import { DialogProvider, Dialogs } from '../contexts/dialog'
 import { VolumesProvider } from '../contexts/volumes'
 import { ConfigProvider } from '../contexts/config'
+import { OnboardingBar } from '../components/OnboardingBar'
 
 type Props = {
   children: React.ReactNode
@@ -18,6 +19,7 @@ export function Providers({ children }: Props) {
               {/* this is here so that dialogs can use all the other providers,
             and the other providers can trigger dialogs */}
               <Dialogs />
+              <OnboardingBar />
               {children}
             </MetricsProvider>
           </ContractsProvider>

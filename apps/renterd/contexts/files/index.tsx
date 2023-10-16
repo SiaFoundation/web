@@ -6,7 +6,6 @@ import {
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import { createContext, useCallback, useContext, useMemo } from 'react'
-import { TransfersBar } from '../../components/TransfersBar'
 import { columns } from './columns'
 import {
   defaultSortField,
@@ -18,7 +17,6 @@ import { FullPath, FullPathSegments, pathSegmentsToPath } from './paths'
 import { useUploads } from './uploads'
 import { useDownloads } from './downloads'
 import { useDataset } from './dataset'
-import { OnboardingBar } from '../../components/OnboardingBar'
 
 function useFilesMain() {
   const router = useRouter()
@@ -184,11 +182,5 @@ type Props = {
 
 export function FilesProvider({ children }: Props) {
   const state = useFilesMain()
-  return (
-    <FilesContext.Provider value={state}>
-      {children}
-      <OnboardingBar />
-      <TransfersBar />
-    </FilesContext.Provider>
-  )
+  return <FilesContext.Provider value={state}>{children}</FilesContext.Provider>
 }
