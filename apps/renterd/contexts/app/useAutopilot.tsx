@@ -1,3 +1,4 @@
+import { secondsInMilliseconds } from '@siafoundation/design-system'
 import { useAutopilotState } from '@siafoundation/react-renterd'
 import { useEffect, useState } from 'react'
 
@@ -5,9 +6,10 @@ export function useAutopilot() {
   const state = useAutopilotState({
     config: {
       swr: {
-        dedupingInterval: 5_000,
+        dedupingInterval: secondsInMilliseconds(5),
         revalidateOnFocus: false,
-        refreshInterval: (data) => (!data ? 1_000 : 60_000),
+        refreshInterval: (data) =>
+          !data ? secondsInMilliseconds(1) : secondsInMilliseconds(60),
       },
     },
   })
