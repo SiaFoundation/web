@@ -1,14 +1,17 @@
 import { cx } from 'class-variance-authority'
+import { forwardRef } from 'react'
 
-export function LoadingDots({ className }: { className?: string }) {
-  return (
-    <div className={cx('flex gap-1 items-center', className)}>
-      <Dot />
-      <Dot />
-      <Dot />
-    </div>
-  )
-}
+export const LoadingDots = forwardRef<HTMLDivElement, { className?: string }>(
+  ({ className }, ref) => {
+    return (
+      <div ref={ref} className={cx('flex gap-1 items-center', className)}>
+        <Dot />
+        <Dot />
+        <Dot />
+      </div>
+    )
+  }
+)
 
 function Dot() {
   return (

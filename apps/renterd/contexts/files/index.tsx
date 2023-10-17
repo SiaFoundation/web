@@ -25,7 +25,8 @@ function useFilesMain() {
 
   // [bucket, key, directory]
   const activeDirectory = useMemo<FullPathSegments>(
-    () => (router.query.path as FullPathSegments).map(decodeURIComponent) || [],
+    () =>
+      ((router.query.path || []) as FullPathSegments).map(decodeURIComponent),
     [router.query.path]
   )
 
