@@ -5,13 +5,10 @@ import {
   useDatasetEmptyState,
   useClientFilters,
   useClientFilteredDataset,
+  minutesInMilliseconds,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
-import {
-  useConsensusState,
-  useContracts as useContractsData,
-  useEstimatedNetworkBlockHeight,
-} from '@siafoundation/react-renterd'
+import { useContracts as useContractsData } from '@siafoundation/react-renterd'
 import { createContext, useContext, useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import {
@@ -30,21 +27,20 @@ function useContractsMain() {
   const router = useRouter()
   const limit = Number(router.query.limit || defaultLimit)
   const offset = Number(router.query.offset || 0)
-  const response = useContractsData()
-  const geo = useSiaCentralHosts()
-  const geoHosts = useMemo(() => geo.data?.hosts || [], [geo.data])
-
-  const estimatedNetworkHeight = useEstimatedNetworkBlockHeight()
-  const network = useConsensusState({
+  const response = useContractsData({
     config: {
       swr: {
-        refreshInterval: 60_000,
+        refreshInterval: minutesInMilliseconds(1),
       },
     },
   })
-  const currentHeight = network.data?.synced
-    ? network.data.blockHeight
-    : estimatedNetworkHeight
+  const geo = useSiaCentralHosts()
+  const geoHosts = useMemo(() => geo.data?.hosts || [], [geo.data])
+
+  const syncStatus = useSyncStatus()
+  const currentHeight = syncStatus.isSynced
+    ? syncStatus.nodeBlockHeight
+    : syncStatus.estimatedBlockHeight
 
   const dataset = useMemo<ContractData[] | null>(() => {
     if (!response.data) {
@@ -142,7 +138,6 @@ function useContractsMain() {
     filters
   )
 
-  const syncStatus = useSyncStatus()
   const datasetConfirmedCount = useMemo(() => {
     if (!dataset) {
       return 0
@@ -165,7 +160,7 @@ function useContractsMain() {
     dataset,
     datasetPage,
     cellContext: {
-      currentHeight: estimatedNetworkHeight,
+      currentHeight: syncStatus.estimatedBlockHeight,
       contractsTimeRange,
     },
     configurableColumns,

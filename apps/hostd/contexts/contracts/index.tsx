@@ -3,13 +3,12 @@ import {
   useDatasetEmptyState,
   useServerFilters,
   getContractsTimeRangeBlockHeight,
+  secondsInMilliseconds,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import {
   ContractStatus,
   useContracts as useContractsData,
-  useEstimatedNetworkBlockHeight,
-  useStateConsensus,
 } from '@siafoundation/react-hostd'
 import { createContext, useContext, useMemo } from 'react'
 import {
@@ -21,6 +20,7 @@ import {
 } from './types'
 import { columns } from './columns'
 import { useDataset } from './dataset'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
 
 const defaultLimit = 50
 
@@ -64,6 +64,11 @@ function useContractsMain() {
         .filter((f) => f.id.startsWith('filterStatus'))
         .map((f) => f.value) as ContractStatus[],
     },
+    config: {
+      swr: {
+        refreshInterval: secondsInMilliseconds(60),
+      },
+    },
   })
 
   const dataset = useDataset({
@@ -79,17 +84,8 @@ function useContractsMain() {
   const error = response.error
   const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
-  const estimatedNetworkHeight = useEstimatedNetworkBlockHeight()
-  const state = useStateConsensus({
-    config: {
-      swr: {
-        refreshInterval: 60_000,
-      },
-    },
-  })
-  const currentHeight = state.data?.synced
-    ? state.data.chainIndex.height
-    : estimatedNetworkHeight
+  const { estimatedBlockHeight, isSynced, nodeBlockHeight } = useSyncStatus()
+  const currentHeight = isSynced ? nodeBlockHeight : estimatedBlockHeight
 
   const { range: contractsTimeRange } = useMemo(
     () => getContractsTimeRangeBlockHeight(currentHeight, dataset || []),

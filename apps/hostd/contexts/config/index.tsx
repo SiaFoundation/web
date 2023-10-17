@@ -3,6 +3,7 @@ import {
   triggerSuccessToast,
   triggerErrorToast,
   useOnInvalid,
+  minutesInMilliseconds,
 } from '@siafoundation/design-system'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
@@ -20,6 +21,11 @@ import useLocalStorageState from 'use-local-storage-state'
 export function useConfigMain() {
   const settings = useSettings({
     standalone: 'configSettingsForm',
+    config: {
+      swr: {
+        refreshInterval: minutesInMilliseconds(1),
+      },
+    },
   })
   const settingsUpdate = useSettingsUpdate()
   const dynDNSCheck = useSettingsDdns({

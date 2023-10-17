@@ -5,6 +5,7 @@ import {
   useOnInvalid,
   monthsToBlocks,
   TBToBytes,
+  minutesInMilliseconds,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -59,6 +60,7 @@ export function useConfigMain() {
     config: {
       swr: {
         errorRetryCount: 0,
+        refreshInterval: minutesInMilliseconds(1),
       },
     },
   })
@@ -67,6 +69,7 @@ export function useConfigMain() {
     config: {
       swr: {
         errorRetryCount: 0,
+        refreshInterval: minutesInMilliseconds(1),
       },
     },
   })
@@ -75,18 +78,34 @@ export function useConfigMain() {
     config: {
       swr: {
         errorRetryCount: 0,
+        refreshInterval: minutesInMilliseconds(1),
       },
     },
   })
   // settings with initial defaults
   const gouging = useGougingSettings({
     standalone: 'configFormGouging',
+    config: {
+      swr: {
+        refreshInterval: minutesInMilliseconds(1),
+      },
+    },
   })
   const redundancy = useRedundancySettings({
     standalone: 'configFormRedundancy',
+    config: {
+      swr: {
+        refreshInterval: minutesInMilliseconds(1),
+      },
+    },
   })
   const uploadPacking = useUploadPackingSettings({
     standalone: 'configFormUploadPacking',
+    config: {
+      swr: {
+        refreshInterval: minutesInMilliseconds(1),
+      },
+    },
   })
 
   const settingUpdate = useSettingUpdate()

@@ -1,8 +1,12 @@
 import {
   useTableState,
   useDatasetEmptyState,
+  secondsInMilliseconds,
 } from '@siafoundation/design-system'
-import { useVolumes as useVolumesData } from '@siafoundation/react-hostd'
+import {
+  VolumeMeta,
+  useVolumes as useVolumesData,
+} from '@siafoundation/react-hostd'
 import { createContext, useContext, useMemo } from 'react'
 import { columnsDefaultVisible, TableColumnId } from './types'
 import { columns } from './columns'
@@ -26,7 +30,16 @@ function useVolumesMain() {
     columnsDefaultVisible,
   })
 
-  const response = useVolumesData()
+  const response = useVolumesData({
+    config: {
+      swr: {
+        refreshInterval: (data) =>
+          data.find((v) => isOperationInProgress(v))
+            ? secondsInMilliseconds(5)
+            : secondsInMilliseconds(60),
+      },
+    },
+  })
 
   const dataset = useDataset({
     response,
@@ -75,4 +88,8 @@ export function VolumesProvider({ children }: Props) {
   return (
     <VolumesContext.Provider value={state}>{children}</VolumesContext.Provider>
   )
+}
+
+function isOperationInProgress(volume: VolumeMeta) {
+  return !['ready', 'unavailable'].includes(volume.status)
 }

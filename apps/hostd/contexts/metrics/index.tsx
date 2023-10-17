@@ -6,6 +6,7 @@ import {
   getDataIntervalLabelFormatter,
   getTimeRange,
   MiBToBytes,
+  minutesInMilliseconds,
 } from '@siafoundation/design-system'
 import { humanBytes, humanNumber, humanSiacoin } from '@siafoundation/sia-js'
 import { useCallback, useMemo } from 'react'
@@ -108,6 +109,7 @@ function useMetricsMain() {
     config: {
       swr: {
         revalidateOnFocus: false,
+        refreshInterval: minutesInMilliseconds(5),
       },
     },
   })

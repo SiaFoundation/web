@@ -12,6 +12,7 @@ import {
   getFilePath,
   isDirectory,
 } from './paths'
+import { minutesInMilliseconds } from '@siafoundation/design-system'
 
 type Props = {
   activeDirectoryPath: string
@@ -25,6 +26,11 @@ export function useDataset({ activeDirectoryPath, uploadsList }: Props) {
   const response = useObjectDirectory({
     disabled: !bucket,
     params: bucketAndKeyParamsFromPath(activeDirectoryPath),
+    config: {
+      swr: {
+        refreshInterval: minutesInMilliseconds(1),
+      },
+    },
   })
 
   const { dataset: allContracts } = useContracts()

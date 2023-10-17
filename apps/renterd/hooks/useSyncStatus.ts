@@ -1,3 +1,4 @@
+import { secondsInMilliseconds } from '@siafoundation/design-system'
 import { useAppSettings } from '@siafoundation/react-core'
 import {
   useConsensusState,
@@ -10,7 +11,8 @@ export function useSyncStatus() {
   const state = useConsensusState({
     config: {
       swr: {
-        refreshInterval: (data) => (data?.synced ? 60_000 : 10_000),
+        refreshInterval: (data) =>
+          data?.synced ? secondsInMilliseconds(60) : secondsInMilliseconds(10),
       },
     },
   })
@@ -20,7 +22,9 @@ export function useSyncStatus() {
     config: {
       swr: {
         refreshInterval: (data) =>
-          data?.scanHeight >= nodeBlockHeight ? 60_000 : 10_000,
+          data?.scanHeight >= nodeBlockHeight
+            ? secondsInMilliseconds(60)
+            : secondsInMilliseconds(10),
       },
     },
   })
