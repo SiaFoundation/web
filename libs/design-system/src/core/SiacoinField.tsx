@@ -127,23 +127,30 @@ export const SiacoinField = forwardRef(function SiacoinField(
     [updateSc, rate]
   )
 
+  const [hasInitializedSc, setHasInitializedSc] = useState(false)
   // sync externally controlled value
   useEffect(() => {
     if (!externalSc.isEqualTo(sc)) {
       const fesc = toFixedMax(externalSc, decimalsLimitSc)
       setLocalSc(fesc)
       // sync fiat if its not active, syncing it when it is being changed
-      // may change the decmials as the user is typing.
+      // may change the decimals as the user is typing.
       if (active !== 'fiat') {
         syncFiatToSc(fesc)
       }
     }
+    if (!hasInitializedSc) {
+      setHasInitializedSc(true)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [externalSc])
 
-  // initialize fiat once rate has loaded
+  // initialize fiat once rate has loaded,
+  // but only if the siacoin value has initialized
   useEffect(() => {
-    syncFiatToSc(sc)
+    if (hasInitializedSc) {
+      syncFiatToSc(sc)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rate])
 
