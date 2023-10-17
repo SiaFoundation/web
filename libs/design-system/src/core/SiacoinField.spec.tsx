@@ -1,4 +1,8 @@
-import { AppSettingsProvider, CoreProvider } from '@siafoundation/react-core'
+import {
+  AppSettingsProvider,
+  CoreProvider,
+  delay,
+} from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 import { SiacoinField } from './SiacoinField'
 import { fireEvent, render, waitFor } from '@testing-library/react'
@@ -333,6 +337,8 @@ async function renderNode({
   const scInput = node.getByTestId('scInput') as HTMLInputElement
   const fiatInput = node.getByTestId('fiatInput') as HTMLInputElement
   await waitFor(() => expect(fiatInput.value).toBeTruthy())
+  // let the component set state and finish the next render pass
+  await delay(0)
   return { node, scInput, fiatInput }
 }
 

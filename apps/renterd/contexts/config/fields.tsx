@@ -109,10 +109,12 @@ export function getFields({
       units: 'SC/month',
       decimalsLimitSc: scDecimalPlaces,
       hidden: !isAutopilotEnabled || !showAdvanced,
-      // always required, but set in background unless advanced mode
-      validation: {
-        required: 'required',
-      },
+      validation:
+        isAutopilotEnabled && showAdvanced
+          ? {
+              required: 'required',
+            }
+          : {},
     },
     periodWeeks: {
       type: 'number',

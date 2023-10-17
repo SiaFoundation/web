@@ -20,7 +20,7 @@ import {
   UploadPackingSettings,
   useSettingUpdate,
 } from '@siafoundation/react-renterd'
-import { toScale, toSiacoins } from '@siafoundation/sia-js'
+import { toSiacoins } from '@siafoundation/sia-js'
 import { getFields } from './fields'
 import { SettingsData, defaultValues } from './types'
 import {
@@ -36,7 +36,7 @@ import {
 } from './transform'
 import { useForm } from 'react-hook-form'
 import { useSyncContractSet } from './useSyncContractSet'
-import { delay, useMutate } from '@siafoundation/react-core'
+import { delay, useAppSettings, useMutate } from '@siafoundation/react-core'
 import { useContractSetSettings } from '../../hooks/useContractSetSettings'
 import {
   ConfigDisplayOptions,
@@ -262,6 +262,12 @@ export function useConfigMain() {
     resetFormData,
   ])
 
+  const maxStoragePriceTBMonth = form.watch('maxStoragePriceTBMonth')
+  const maxDownloadPriceTB = form.watch('maxDownloadPriceTB')
+  const maxUploadPriceTB = form.watch('maxUploadPriceTB')
+  const storageTB = form.watch('storageTB')
+  const downloadTBMonth = form.watch('downloadTBMonth')
+  const uploadTBMonth = form.watch('uploadTBMonth')
   const minShards = form.watch('minShards')
   const totalShards = form.watch('totalShards')
   const includeRedundancyMaxStoragePrice = form.watch(
@@ -270,14 +276,11 @@ export function useConfigMain() {
   const includeRedundancyMaxUploadPrice = form.watch(
     'includeRedundancyMaxUploadPrice'
   )
-  const storageTB = form.watch('storageTB')
-  const allowanceMonth = form.watch('allowanceMonth')
-  const maxStoragePriceTBMonth = form.watch('maxStoragePriceTBMonth')
-
   const redundancyMultiplier = useMemo(
     () => getRedundancyMultiplier(minShards, totalShards),
     [minShards, totalShards]
   )
+
   const fields = useMemo(() => {
     if (averages.data) {
       return getFields({
@@ -328,6 +331,64 @@ export function useConfigMain() {
     includeRedundancyMaxUploadPrice,
   ])
 
+  const canEstimate = useMemo(() => {
+    if (!isAutopilotEnabled) {
+      return false
+    }
+    return (
+      maxStoragePriceTBMonth?.gt(0) &&
+      storageTB?.gt(0) &&
+      maxDownloadPriceTB?.gt(0) &&
+      downloadTBMonth?.gt(0) &&
+      maxUploadPriceTB?.gt(0) &&
+      uploadTBMonth?.gt(0)
+    )
+  }, [
+    isAutopilotEnabled,
+    maxStoragePriceTBMonth,
+    storageTB,
+    maxDownloadPriceTB,
+    downloadTBMonth,
+    maxUploadPriceTB,
+    uploadTBMonth,
+  ])
+
+  const estimatedSpendingPerMonth = useMemo(() => {
+    if (!canEstimate) {
+      return new BigNumber(0)
+    }
+    const storageCostPerMonth = includeRedundancyMaxStoragePrice
+      ? maxStoragePriceTBMonth.times(storageTB)
+      : maxStoragePriceTBMonth.times(redundancyMultiplier).times(storageTB)
+    const downloadCostPerMonth = maxDownloadPriceTB.times(downloadTBMonth)
+    const uploadCostPerMonth = includeRedundancyMaxUploadPrice
+      ? maxUploadPriceTB.times(uploadTBMonth)
+      : maxUploadPriceTB.times(redundancyMultiplier).times(uploadTBMonth)
+    const totalCostPerMonth = storageCostPerMonth
+      .plus(downloadCostPerMonth)
+      .plus(uploadCostPerMonth)
+    return totalCostPerMonth
+  }, [
+    canEstimate,
+    includeRedundancyMaxStoragePrice,
+    includeRedundancyMaxUploadPrice,
+    redundancyMultiplier,
+    maxStoragePriceTBMonth,
+    storageTB,
+    maxDownloadPriceTB,
+    downloadTBMonth,
+    maxUploadPriceTB,
+    uploadTBMonth,
+  ])
+
+  const estimatedSpendingPerTB = useMemo(() => {
+    if (!canEstimate) {
+      return new BigNumber(0)
+    }
+    const totalCostPerMonthTB = estimatedSpendingPerMonth.div(storageTB)
+    return totalCostPerMonthTB
+  }, [canEstimate, estimatedSpendingPerMonth, storageTB])
+
   const mutate = useMutate()
   const onValid = useCallback(
     async (values: typeof defaultValues) => {
@@ -335,42 +396,62 @@ export function useConfigMain() {
         return
       }
       try {
+        const calculatedValues: Partial<SettingsData> = {}
+        if (isAutopilotEnabled && !showAdvanced) {
+          calculatedValues.allowanceMonth = estimatedSpendingPerMonth
+        }
+
+        const finalValues = {
+          ...values,
+          ...calculatedValues,
+        }
+
         const firstTimeSettingConfig = isAutopilotEnabled && !autopilot.data
         const autopilotResponse = isAutopilotEnabled
           ? await autopilotUpdate.put({
-              payload: transformUpAutopilot(values, autopilot.data),
+              payload: transformUpAutopilot(finalValues, autopilot.data),
             })
           : undefined
-        const contractSetResponse = await settingUpdate.put({
-          params: {
-            key: 'contractset',
-          },
-          payload: transformUpContractSet(values, contractSet.data),
-        })
-        const uploadPackingResponse = await settingUpdate.put({
-          params: {
-            key: 'uploadpacking',
-          },
-          payload: transformUpUploadPacking(values, uploadPacking.data),
-        })
-        const gougingResponse = await settingUpdate.put({
-          params: {
-            key: 'gouging',
-          },
-          payload: transformUpGouging(values, gouging.data),
-        })
-        const redundancyResponse = await settingUpdate.put({
-          params: {
-            key: 'redundancy',
-          },
-          payload: transformUpRedundancy(values, redundancy.data),
-        })
-        const configAppResponse = await settingUpdate.put({
-          params: {
-            key: configDisplayOptionsKey,
-          },
-          payload: transformUpConfigApp(values, configApp.data),
-        })
+
+        const [
+          contractSetResponse,
+          uploadPackingResponse,
+          gougingResponse,
+          redundancyResponse,
+          configAppResponse,
+        ] = await Promise.all([
+          settingUpdate.put({
+            params: {
+              key: 'contractset',
+            },
+            payload: transformUpContractSet(finalValues, contractSet.data),
+          }),
+          settingUpdate.put({
+            params: {
+              key: 'uploadpacking',
+            },
+            payload: transformUpUploadPacking(finalValues, uploadPacking.data),
+          }),
+          settingUpdate.put({
+            params: {
+              key: 'gouging',
+            },
+            payload: transformUpGouging(finalValues, gouging.data),
+          }),
+          settingUpdate.put({
+            params: {
+              key: 'redundancy',
+            },
+            payload: transformUpRedundancy(finalValues, redundancy.data),
+          }),
+          settingUpdate.put({
+            params: {
+              key: configDisplayOptionsKey,
+            },
+            payload: transformUpConfigApp(finalValues, configApp.data),
+          }),
+        ])
+
         if (autopilotResponse?.error) {
           throw Error(autopilotResponse.error)
         }
@@ -392,7 +473,7 @@ export function useConfigMain() {
 
         triggerSuccessToast('Configuration has been saved.')
         if (isAutopilotEnabled) {
-          syncDefaultContractSet(values.autopilotContractSet)
+          syncDefaultContractSet(finalValues.autopilotContractSet)
         }
 
         // if autopilot is being configured for the first time,
@@ -414,6 +495,8 @@ export function useConfigMain() {
       }
     },
     [
+      estimatedSpendingPerMonth,
+      showAdvanced,
       isAutopilotEnabled,
       autopilot,
       autopilotUpdate,
@@ -436,64 +519,6 @@ export function useConfigMain() {
     [form, onValid, onInvalid]
   )
 
-  const canEstimate = useMemo(() => {
-    if (!isAutopilotEnabled) {
-      return false
-    }
-    return !(
-      !storageTB ||
-      !allowanceMonth ||
-      storageTB.isZero() ||
-      allowanceMonth.isZero()
-    )
-  }, [isAutopilotEnabled, storageTB, allowanceMonth])
-
-  const estimatedSpendingPerMonth = useMemo(() => {
-    if (!canEstimate) {
-      return new BigNumber(0)
-    }
-    return toScale(allowanceMonth, 0)
-  }, [canEstimate, allowanceMonth])
-
-  const estimatedSpendingPerTB = useMemo(() => {
-    if (!canEstimate) {
-      return new BigNumber(0)
-    }
-    const estimatedSpendingPerMonthTB = estimatedSpendingPerMonth.div(storageTB)
-    return toScale(estimatedSpendingPerMonthTB, 0)
-  }, [canEstimate, estimatedSpendingPerMonth, storageTB])
-
-  // if simple mode, then calculate and set allowance when dependent values change
-  useEffect(() => {
-    if (
-      !showAdvanced &&
-      storageTB?.isGreaterThan(0) &&
-      maxStoragePriceTBMonth?.isGreaterThan(0)
-    ) {
-      form.setValue(
-        'allowanceMonth',
-        maxStoragePriceTBMonth
-          .times(storageTB)
-          .times(
-            !includeRedundancyMaxStoragePrice
-              ? getRedundancyMultiplier(minShards, totalShards)
-              : 1
-          ),
-        {
-          shouldDirty: true,
-        }
-      )
-    }
-  }, [
-    form,
-    showAdvanced,
-    storageTB,
-    maxStoragePriceTBMonth,
-    minShards,
-    totalShards,
-    includeRedundancyMaxStoragePrice,
-  ])
-
   // Resets so that stale values that are no longer in sync with what is on
   // the daemon will show up as changed.
   const resetWithUserChanges = useCallback(() => {
@@ -510,6 +535,14 @@ export function useConfigMain() {
       })
     }
   }, [form, resetFormDataIfAllDataFetched])
+
+  const { isUnlocked } = useAppSettings()
+  useEffect(() => {
+    if (isUnlocked && app.autopilot.status !== 'init') {
+      revalidateAndResetFormData()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isUnlocked, app.autopilot.status])
 
   useEffect(() => {
     if (form.formState.isSubmitting) {

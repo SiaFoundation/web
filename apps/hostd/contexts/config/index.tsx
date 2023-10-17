@@ -17,6 +17,7 @@ import { getFields } from './fields'
 import { calculateMaxCollateral, transformDown, transformUp } from './transform'
 import { useForm } from 'react-hook-form'
 import useLocalStorageState from 'use-local-storage-state'
+import { useAppSettings } from '@siafoundation/react-core'
 
 export function useConfigMain() {
   const settings = useSettings({
@@ -95,8 +96,21 @@ export function useConfigMain() {
         return
       }
       try {
+        const calculatedValues: Partial<SettingsData> = {}
+        if (!showAdvanced) {
+          calculatedValues.maxCollateral = calculateMaxCollateral(
+            values.storagePrice,
+            values.collateralMultiplier
+          )
+        }
+
+        const finalValues = {
+          ...values,
+          ...calculatedValues,
+        }
+
         const response = await settingsUpdate.patch({
-          payload: transformUp(values, settings.data),
+          payload: transformUp(finalValues, settings.data),
         })
         if (response.error) {
           throw Error(response.error)
@@ -117,7 +131,7 @@ export function useConfigMain() {
         console.log(e)
       }
     },
-    [form, settings, settingsUpdate, revalidateAndResetFormData]
+    [form, showAdvanced, settings, settingsUpdate, revalidateAndResetFormData]
   )
 
   const fields = useMemo(() => getFields({ showAdvanced }), [showAdvanced])
@@ -128,26 +142,6 @@ export function useConfigMain() {
     () => form.handleSubmit(onValid, onInvalid),
     [form, onValid, onInvalid]
   )
-
-  const storage = form.watch('storagePrice')
-  const collateralMultiplier = form.watch('collateralMultiplier')
-
-  // if simple mode, then calculate and set max collateral
-  useEffect(() => {
-    if (
-      !showAdvanced &&
-      storage?.isGreaterThan(0) &&
-      collateralMultiplier?.isGreaterThan(0)
-    ) {
-      form.setValue(
-        'maxCollateral',
-        calculateMaxCollateral(storage, collateralMultiplier),
-        {
-          shouldDirty: true,
-        }
-      )
-    }
-  }, [form, showAdvanced, storage, collateralMultiplier])
 
   // Resets so that stale values that are no longer in sync with what is on
   // the daemon will show up as changed.
@@ -165,6 +159,14 @@ export function useConfigMain() {
       })
     }
   }, [form, resetFormDataIfAllDataFetched])
+
+  const { isUnlocked } = useAppSettings()
+  useEffect(() => {
+    if (isUnlocked) {
+      revalidateAndResetFormData()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isUnlocked])
 
   useEffect(() => {
     if (form.formState.isSubmitting) {
