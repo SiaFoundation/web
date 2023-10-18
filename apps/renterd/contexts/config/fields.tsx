@@ -306,11 +306,7 @@ export function getFields({
         </>
       ),
       hidden: !showAdvanced,
-      validation: showAdvanced
-        ? {
-            required: 'required',
-          }
-        : {},
+      validation: {},
     },
 
     // gouging
