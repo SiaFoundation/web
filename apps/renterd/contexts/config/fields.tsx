@@ -294,15 +294,17 @@ export function getFields({
       title: 'Upload packing',
       description: (
         <>
-          Data on the Sia network is stored in 40MiB sectors so by default
-          uploaded files are divided and padded into these 40MiB peices. This
-          means that storage is wasted on padding but more importantly files
-          smaller than 40MiB still use 40MiB of space. Upload packing avoids
-          this waste by buffering files and packing them together before they
-          are uploaded to the network. This trades some performance for storage
-          efficiency. It is also important to note that because buffered files
-          are temporarily stored on disk they must be considered when backing up
-          your renterd data.
+          Data on the Sia network is stored in 4MiB sectors. With the default 10
+          of 30 redundancy scheme, uploaded files are split into 40MiB chunks
+          and encoded into 120MiB slabs. This means that storage is wasted on
+          padding and files smaller than 40MiB still use 120MiB of space. The
+          redundancy scheme can be configured, but unless all files are exactly
+          4MiB * the redundancy's minimum shards, there will always be wasted
+          storage. Upload packing avoids this waste by buffering files and
+          packing them together before they are uploaded to the network. This
+          trades some performance for storage efficiency. It is also important
+          to note that because buffered files are temporarily stored on disk
+          they must be considered when backing up your renterd data.
         </>
       ),
       hidden: !showAdvanced,
