@@ -35,7 +35,10 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/design-system/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": [
+          "libs/design-system/**/*.{ts,tsx,js,jsx}",
+          "libs/design-system/package.json"
+        ]
       }
     },
     "test": {

@@ -4,11 +4,26 @@
   "sourceRoot": "libs/sia-nodejs/src",
   "projectType": "library",
   "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/sia-nodejs",
+        "tsConfig": "libs/sia-nodejs/tsconfig.lib.json",
+        "packageJson": "libs/sia-nodejs/package.json",
+        "main": "libs/sia-nodejs/src/index.ts",
+        "assets": ["libs/sia-nodejs/*.md"]
+      },
+      "configurations": {}
+    },
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/sia-nodejs/**/*.ts"]
+        "lintFilePatterns": [
+          "libs/sia-nodejs/**/*.ts",
+          "libs/sia-nodejs/package.json"
+        ]
       }
     },
     "test": {
@@ -18,19 +33,6 @@
         "jestConfig": "libs/sia-nodejs/jest.config.ts",
         "passWithNoTests": true
       }
-    },
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/sia-nodejs",
-        "tsConfig": "libs/sia-nodejs/tsconfig.lib.json",
-        "packageJson": "libs/sia-nodejs/package.json",
-        "main": "libs/sia-nodejs/src/index.ts",
-        "assets": ["libs/sia-nodejs/*.md"],
-        "updateBuildableProjectDepsInPackageJson": true
-      },
-      "configurations": {}
     }
   },
   "tags": []

@@ -30,7 +30,10 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/react-hostd/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": [
+          "libs/react-hostd/**/*.{ts,tsx,js,jsx}",
+          "libs/react-hostd/package.json"
+        ]
       }
     },
     "test": {

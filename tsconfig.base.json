@@ -17,15 +17,15 @@
     "paths": {
       "@siafoundation/data-sources": ["libs/data-sources/src/index.ts"],
       "@siafoundation/design-system": ["libs/design-system/src/index.ts"],
-      "@siafoundation/react-icons": ["libs/react-icons/src/index.ts"],
       "@siafoundation/react-core": ["libs/react-core/src/index.ts"],
       "@siafoundation/react-hostd": ["libs/react-hostd/src/index.ts"],
+      "@siafoundation/react-icons": ["libs/react-icons/src/index.ts"],
       "@siafoundation/react-renterd": ["libs/react-renterd/src/index.ts"],
       "@siafoundation/react-sia-central": [
         "libs/react-sia-central/src/index.ts"
       ],
-      "@siafoundation/sia-central": ["libs/sia-central/src/index.ts"],
       "@siafoundation/react-walletd": ["libs/react-walletd/src/index.ts"],
+      "@siafoundation/sia-central": ["libs/sia-central/src/index.ts"],
       "@siafoundation/sia-js": ["libs/sia-js/src/index.ts"],
       "@siafoundation/sia-nodejs": ["libs/sia-nodejs/src/index.ts"]
     }

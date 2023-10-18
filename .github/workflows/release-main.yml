@@ -40,22 +40,10 @@ jobs:
         run: npx nx run-many --target=test --all --parallel=5
       - name: Build for publishing
         shell: bash
-        # configuration ci will put the dists in each project directory so changesets can publish
-        # NOTE: changed from ci to production and added script for copy
         run: npx nx run-many --target=build --configuration=production --all --parallel=5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-      - name: Copy dists for publishing
-        run: ./scripts/copy-dists-for-publishing.sh
-      - name: Create Release Pull Request or Publish to NPM
-        uses: changesets/action@v1
-        with:
-          commit: 'chore: release packages'
-          publish: npm run release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Containers
         shell: bash
         run: npx nx run-many --target=container --configuration=production -all --parallel=5
@@ -68,3 +56,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+      # If there are changesets, then update the release pull request
+      - name: Update release pull request or release versions
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          commit: 'chore: release packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Replace src code with dists for publishing
+        run: ./scripts/replace-src-with-dists-for-publishing.sh
+      # If there are no changesets, then try to publish to NPM,
+      # if the latest versions are already published, may fail
+      - name: Publish to NPM
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: npm run release
