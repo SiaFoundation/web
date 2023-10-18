@@ -9,7 +9,7 @@ import {
   PageLast16,
 } from '@siafoundation/react-icons'
 import { useRouter } from 'next/router'
-import { LoadingDots } from '..'
+import { LoadingDots } from '../components/LoadingDots'
 
 type Props = {
   offset: number

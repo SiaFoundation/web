@@ -50,6 +50,7 @@
     "@radix-ui/react-tabs": "^1.0.0",
     "@radix-ui/react-tooltip": "^1.0.0",
     "@radix-ui/react-use-layout-effect": "^1.0.0",
+    "@react-spring/web": "^9.7.3",
     "@siacentral/ledgerjs-sia": "^1.1.0",
     "@tailwindcss/container-queries": "^0.1.1",
     "@visx/axis": "^2.18.0",

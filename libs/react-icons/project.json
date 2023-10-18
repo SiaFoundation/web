@@ -15,6 +15,7 @@
         "entryFile": "libs/react-icons/src/index.ts",
         "external": ["react/jsx-runtime"],
         "rollupConfig": "@nx/react/plugins/bundle-rollup",
+        "format": ["esm", "cjs"],
         "compiler": "swc",
         "assets": [
           {
@@ -30,7 +31,10 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/react-icons/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": [
+          "libs/react-icons/**/*.{ts,tsx,js,jsx}",
+          "libs/react-icons/package.json"
+        ]
       }
     },
     "test": {

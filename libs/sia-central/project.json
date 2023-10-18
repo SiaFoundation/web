@@ -30,7 +30,10 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/sia-central/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": [
+          "libs/sia-central/**/*.{ts,tsx,js,jsx}",
+          "libs/sia-central/package.json"
+        ]
       }
     },
     "test": {

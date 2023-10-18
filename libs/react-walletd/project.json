@@ -30,7 +30,10 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/react-walletd/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": [
+          "libs/react-walletd/**/*.{ts,tsx,js,jsx}",
+          "libs/react-walletd/package.json"
+        ]
       }
     },
     "test": {
