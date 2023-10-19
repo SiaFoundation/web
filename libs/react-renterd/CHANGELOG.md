@@ -1,5 +1,12 @@
 # @siafoundation/react-renterd
 
+## 0.8.1
+
+### Patch Changes
+
+- Updated dependencies [21972d75]
+  - @siafoundation/react-core@0.15.0
+
 ## 0.8.0
 
 ### Minor Changes

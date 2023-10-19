@@ -1,5 +1,17 @@
 # hostd
 
+## 0.24.0
+
+### Minor Changes
+
+- d01fad01: The configuration now has an advanced mode that allows the user to view and change all settings.
+- 5d603561: New users will now see an onboarding wizard that prompts the user to complete the necessary setup steps - it also shows the status and progress of each.
+- d01fad01: The configuration page now shows the changed status on fields if the user has made a change but the server values were since updated.
+- d01fad01: The command palette now includes navigation to configuration sections.
+- 829d91df: Fixed an issue where fiat input fields values were not displaying properly.
+- c4aafc65: Data tables now refresh themselves without user interaction or refocusing the app, even more frequently if a long running operation is in progress.
+- d01fad01: The configuration is now much simpler by default, only requiring the user to set essential settings.
+
 ## 0.23.0
 
 ### Minor Changes

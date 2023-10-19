@@ -1,5 +1,11 @@
 # walletd
 
+## 0.12.0
+
+### Minor Changes
+
+- 170c1e3b: Wallet do now shows siafund balances when greater than 0.
+
 ## 0.11.0
 
 ### Minor Changes

@@ -1,5 +1,24 @@
 # renterd
 
+## 0.30.0
+
+### Minor Changes
+
+- 21972d75: Configuration values such as download and upload utilization are now per month instead of period.
+- 21972d75: The configuration now has an advanced mode that allows the user to view and change all settings.
+- 21972d75: The configuration is now much simpler by default, only requiring storage amount and price to be set during onboarding.
+- e7387383: Fixed an issue with the upload packing switch and updated the explanation.
+- 43f14e70: Fixed an issue where file and directory names could not contain the # symbol.
+- 21972d75: The configuration page now shows the changed status on fields if the user has made a change but the server values were since updated.
+- 21972d75: The default simple configuration automatically sets any unset advanced options to typical defaults. Settings with existing values are not changed.
+- 829d91df: Fixed an issue where fiat input fields values were not displaying properly.
+- c4aafc65: Data tables now refresh themselves without user interaction or refocusing the app, even more frequently if a long running operation is in progress.
+- 21972d75: The autopilot settings have been merged into a single configuration page.
+- 1b9e8f6d: Fixed an issue where URLs for file paths with periods would 404.
+- fc3e1d46: Fixed an issue with the hosts public key filter.
+- 21972d75: The spending estimates now show per TB and total per month.
+- 21972d75: New users will now see an onboarding wizard that prompts the user to complete the necessary setup steps - it also shows the status and progress of each.
+
 ## 0.29.0
 
 ### Minor Changes
