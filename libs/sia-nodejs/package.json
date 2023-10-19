@@ -5,7 +5,7 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
-    "@siafoundation/sia-js": "*",
+    "@siafoundation/sia-js": "^0.10.0",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.9",
     "tslib": "^2.6.2"
