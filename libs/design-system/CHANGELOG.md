@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.58.0
+
+### Minor Changes
+
+- 829d91df: Fixed an issue where fiat input fields values were not displaying properly.
+
+### Patch Changes
+
+- Updated dependencies [21972d75]
+  - @siafoundation/react-core@0.15.0
+  - @siafoundation/react-sia-central@0.0.2
+
 ## 0.57.0
 
 ### Minor Changes

@@ -1,5 +1,12 @@
 # website
 
+## 0.43.0
+
+### Minor Changes
+
+- ed4cba35: The download selectors now dynamically show all published GitHub assets.
+- 49b02dfd: walletd downloads now specify that they are testnet only. renterd and hostd testnet downloads naming is now more clear.
+
 ## 0.42.0
 
 ### Minor Changes

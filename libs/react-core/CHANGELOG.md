@@ -1,5 +1,11 @@
 # @siafoundation/react-core
 
+## 0.15.0
+
+### Minor Changes
+
+- 21972d75: Request hooks now have a standalone option that allows them to revalidate under a unique key.
+
 ## 0.14.0
 
 ### Minor Changes

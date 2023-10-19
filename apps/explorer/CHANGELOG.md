@@ -1,5 +1,13 @@
 # explorer
 
+## 0.8.0
+
+### Minor Changes
+
+- ccf0bdcb: The siascan search feature is now case insenstive.
+- 5cffb9ff: Fixed an issue where some links were routing to incorrect pages like /block/:id.
+- 601a9b02: Outputs on the transaction view now display and link to their associated address.
+
 ## 0.7.0
 
 ### Minor Changes

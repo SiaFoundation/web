@@ -1,5 +1,12 @@
 # @siafoundation/react-hostd
 
+## 0.9.1
+
+### Patch Changes
+
+- Updated dependencies [21972d75]
+  - @siafoundation/react-core@0.15.0
+
 ## 0.9.0
 
 ### Minor Changes

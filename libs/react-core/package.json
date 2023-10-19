@@ -1,7 +1,7 @@
 {
   "name": "@siafoundation/react-core",
   "description": "Core Sia types and library methods.",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "license": "MIT",
   "dependencies": {
     "swr": "^2.1.1",
