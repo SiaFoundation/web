@@ -56,19 +56,25 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-      # If there are changesets, then update the release pull request
-      - name: Update release pull request or release versions
+      # If there are changesets, then we are in PR prep mode and will
+      # update the release pull request. Note that there are no changesets
+      # this step will be skipped because no publish script is specified.
+      - name: Update release pull request
         id: changesets
         uses: changesets/action@v1
         with:
           commit: 'chore: release packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Replace src code with dists for publishing
         run: ./scripts/replace-src-with-dists-for-publishing.sh
-      # If there are no changesets, then try to publish to NPM,
-      # if the latest versions are already published, may fail
+      # If no changesets were detected in the PR prep step then we are in
+      # release/publish mode. Check for and publish any new versions to NPM.
       - name: Publish to NPM
         if: steps.changesets.outputs.hasChangesets == 'false'
-        run: npm run release
+        uses: changesets/action@v1
+        with:
+          publish: npm run release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
