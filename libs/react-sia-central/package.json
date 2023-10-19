@@ -4,8 +4,8 @@
   "version": "0.0.1",
   "license": "MIT",
   "dependencies": {
-    "@siafoundation/react-core": "*",
-    "@siafoundation/sia-central": "*"
+    "@siafoundation/react-core": "^0.14.0",
+    "@siafoundation/sia-central": "^0.0.1"
   },
   "types": "./src/index.d.ts"
 }

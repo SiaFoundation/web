@@ -4,7 +4,7 @@
   "version": "0.8.0",
   "license": "MIT",
   "dependencies": {
-    "@siafoundation/react-core": "*",
+    "@siafoundation/react-core": "^0.14.0",
     "swr": "^2.1.1",
     "lodash": "^4.17.21"
   },
