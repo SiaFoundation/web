@@ -1,5 +1,11 @@
 # hostd
 
+## 0.25.0
+
+### Minor Changes
+
+- 7f020f8b: Fixed an issue where the app would error on page load.
+
 ## 0.24.0
 
 ### Minor Changes
