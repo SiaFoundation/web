@@ -34,7 +34,7 @@ function useVolumesMain() {
     config: {
       swr: {
         refreshInterval: (data) =>
-          data.find((v) => isOperationInProgress(v))
+          data?.find((v) => isOperationInProgress(v))
             ? secondsInMilliseconds(5)
             : secondsInMilliseconds(60),
       },
