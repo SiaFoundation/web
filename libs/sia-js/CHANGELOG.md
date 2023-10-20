@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.0
+
+### Minor Changes
+
+- 1c376d0e: Package publishing format has been updated.
+
 ## 0.10.0
 
 ### Minor Changes

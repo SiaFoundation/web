@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.8
+
+### Patch Changes
+
+- Updated dependencies [1c376d0e]
+  - @siafoundation/sia-js@0.11.0
+
 ## [0.1.7](https://github.com/SiaFoundation/web/compare/sia-nodejs-0.1.6...sia-nodejs-0.1.7) (2022-10-13)
 
 ## [0.1.6](https://github.com/SiaFoundation/web/compare/sia-nodejs-0.1.5...sia-nodejs-0.1.6) (2022-05-06)
