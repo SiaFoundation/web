@@ -67,6 +67,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Replace src code with dists for publishing
+        if: steps.changesets.outputs.hasChangesets == 'false'
         run: ./scripts/replace-src-with-dists-for-publishing.sh
       # If no changesets were detected in the PR prep step then we are in
       # release/publish mode. Check for and publish any new versions to NPM.

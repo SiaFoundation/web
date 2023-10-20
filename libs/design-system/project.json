@@ -26,6 +26,11 @@
             "glob": "libs/design-system/src/public",
             "input": ".",
             "output": "."
+          },
+          {
+            "glob": "libs/design-system/src/config/*.{js,css}",
+            "input": ".",
+            "output": "src/config"
           }
         ]
       },
