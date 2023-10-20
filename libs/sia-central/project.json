@@ -18,7 +18,7 @@
         "compiler": "swc",
         "assets": [
           {
-            "glob": "libs/sia-central/README.md",
+            "glob": "libs/sia-central/*.md",
             "input": ".",
             "output": "."
           }

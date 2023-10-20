@@ -18,7 +18,7 @@
         "compiler": "swc",
         "assets": [
           {
-            "glob": "libs/design-system/README.md",
+            "glob": "libs/design-system/*.md",
             "input": ".",
             "output": "."
           },

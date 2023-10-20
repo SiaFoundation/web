@@ -18,6 +18,9 @@ for distDir in dist/apps/* dist/libs/*; do
     echo "$srcDir"
     if [ -d "$srcDir" ]; then
         rm -rf "$srcDir/"*
+        # leave the .md files, changesets needs the CHANGELOG.md
+        # to publish each packages GitHub release.
+        find "$srcDir" -type f ! -name '*.md' -exec rm -f {} +
         cp -r "$distDir/"* "$srcDir/"
     fi
 done

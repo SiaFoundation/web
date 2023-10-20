@@ -19,7 +19,7 @@
         "compiler": "swc",
         "assets": [
           {
-            "glob": "libs/react-icons/README.md",
+            "glob": "libs/react-icons/*.md",
             "input": ".",
             "output": "."
           }

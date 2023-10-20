@@ -18,7 +18,7 @@
         "compiler": "swc",
         "assets": [
           {
-            "glob": "libs/react-sia-central/README.md",
+            "glob": "libs/react-sia-central/*.md",
             "input": ".",
             "output": "."
           }

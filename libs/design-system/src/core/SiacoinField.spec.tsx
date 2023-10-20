@@ -338,7 +338,7 @@ async function renderNode({
   const fiatInput = node.getByTestId('fiatInput') as HTMLInputElement
   await waitFor(() => expect(fiatInput.value).toBeTruthy())
   // let the component set state and finish the next render pass
-  await delay(10)
+  await delay(100)
   return { node, scInput, fiatInput }
 }
 

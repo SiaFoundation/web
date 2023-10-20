@@ -18,7 +18,7 @@
         "compiler": "swc",
         "assets": [
           {
-            "glob": "libs/react-core/README.md",
+            "glob": "libs/react-core/*.md",
             "input": ".",
             "output": "."
           }

@@ -18,7 +18,7 @@
         "compiler": "swc",
         "assets": [
           {
-            "glob": "libs/react-hostd/README.md",
+            "glob": "libs/react-hostd/*.md",
             "input": ".",
             "output": "."
           }

@@ -12,7 +12,13 @@
         "tsConfig": "libs/sia-nodejs/tsconfig.lib.json",
         "packageJson": "libs/sia-nodejs/package.json",
         "main": "libs/sia-nodejs/src/index.ts",
-        "assets": ["libs/sia-nodejs/*.md"]
+        "assets": [
+          {
+            "glob": "libs/sia-nodejs/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
       },
       "configurations": {}
     },
