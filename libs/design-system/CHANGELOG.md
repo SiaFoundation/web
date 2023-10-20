@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.58.1
+
+### Patch Changes
+
+- Updated dependencies [1c376d0e]
+  - @siafoundation/react-icons@0.1.0
+  - @siafoundation/sia-js@0.11.0
+  - @siafoundation/react-sia-central@0.0.3
+
 ## 0.58.0
 
 ### Minor Changes

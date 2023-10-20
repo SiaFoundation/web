@@ -1,5 +1,12 @@
 # @siafoundation/react-sia-central
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies [1c376d0e]
+  - @siafoundation/sia-central@0.1.0
+
 ## 0.0.2
 
 ### Patch Changes
