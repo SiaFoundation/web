@@ -64,6 +64,7 @@ jobs:
         uses: changesets/action@v1
         with:
           commit: 'chore: release packages'
+          version: npm run version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Replace src code with dists for publishing

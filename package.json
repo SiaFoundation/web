@@ -10,6 +10,7 @@
     "build": "nx build",
     "test": "nx test",
     "release": "changeset publish",
+    "version": "changeset version && npm install",
     "build:wasm": "GOOS=js GOARCH=wasm go build -o  apps/walletd/public/walletd.wasm ./walletd/wasm"
   },
   "private": true,
