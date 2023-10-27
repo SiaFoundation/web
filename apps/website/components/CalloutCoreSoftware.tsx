@@ -37,7 +37,7 @@ export function CalloutCoreSoftware({
   testnetOnly,
 }: Props) {
   return (
-    <PatternedPanel background={background} className="overflow-hidden">
+    <PatternedPanel background={background}>
       <div className="flex flex-col gap-4 pt-8 pb-5 px-6">
         <div className="flex gap-2 items-center">
           <Heading size="40" font="mono" weight="semibold">

@@ -1,4 +1,8 @@
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
   AlertsDialog as DSAlertsDialog,
   Link,
   ScrollArea,
@@ -89,10 +93,12 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
 }
 
 const dataFieldOrder = [
+  'hint',
+  'error',
   'origin',
   'hostKey',
   'contractID',
-  'account',
+  'accountID',
   'slabKey',
   'additions',
   'removals',
@@ -272,6 +278,41 @@ const dataFields: Record<
         </>
       )
     },
+  },
+  error: {
+    render: ({ value }: { value: string }) => (
+      <div className="flex flex-col w-full gap-2">
+        <Accordion type="single">
+          <AccordionItem value="error" variant="ghost">
+            <AccordionTrigger>
+              <Text color="subtle" ellipsis>
+                error
+              </Text>
+            </AccordionTrigger>
+            <AccordionContent>
+              <Text color="contrast">{value}</Text>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </div>
+    ),
+  },
+  hint: {
+    render: ({ value }: { value: string }) => (
+      <div className="flex flex-col w-full gap-2">
+        <Text color="contrast">{value}</Text>
+      </div>
+    ),
+  },
+  allowance: {
+    render: ({ value }: { value: string }) => (
+      <div className="flex justify-between w-full gap-2">
+        <Text color="subtle" ellipsis>
+          allowance
+        </Text>
+        <ValueSc variant="value" value={new BigNumber(value)} />
+      </div>
+    ),
   },
   balance: {
     render: ({ value }: { value: string }) => (
