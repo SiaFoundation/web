@@ -1,5 +1,11 @@
 # website
 
+## 0.44.0
+
+### Minor Changes
+
+- e8199ecf: Core software can now be downloaded from the main rent, host, and wallet pages. The copy has also been improved.
+
 ## 0.43.0
 
 ### Minor Changes

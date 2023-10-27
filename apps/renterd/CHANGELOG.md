@@ -1,5 +1,12 @@
 # renterd
 
+## 0.31.0
+
+### Minor Changes
+
+- 2a2ef002: Alerts are now more concise and show an actionable hint when available.
+- 49d7b540: Fixed an issue where the allowance does not get set the first time saving settings in simple mode.
+
 ## 0.30.0
 
 ### Minor Changes
