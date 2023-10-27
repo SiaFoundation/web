@@ -1,8 +1,13 @@
 import { routes } from '../config/routes'
 import { CalloutCoreSoftware } from './CalloutCoreSoftware'
 import { patterns, getAssetUrl } from '../content/assets'
+import { GitHubRelease } from '@siafoundation/data-sources'
 
-export function CalloutWalletd() {
+type Props = {
+  release: GitHubRelease
+}
+
+export function CalloutWalletd({ release }: Props) {
   return (
     <CalloutCoreSoftware
       name="walletd"
@@ -11,6 +16,8 @@ export function CalloutWalletd() {
       }
       status="alpha"
       daemon="walletd"
+      release={release}
+      testnetOnly
       href={routes.software.walletd}
       image={getAssetUrl('assets/walletd/send.png')}
       background={patterns.nateTrickle}
