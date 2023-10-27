@@ -339,31 +339,31 @@ export function useConfigMain() {
       maxStoragePriceTBMonth?.gt(0) &&
       storageTB?.gt(0) &&
       maxDownloadPriceTB?.gt(0) &&
-      downloadTBMonth?.gt(0) &&
-      maxUploadPriceTB?.gt(0) &&
-      uploadTBMonth?.gt(0)
+      maxUploadPriceTB?.gt(0)
     )
   }, [
     isAutopilotEnabled,
     maxStoragePriceTBMonth,
     storageTB,
     maxDownloadPriceTB,
-    downloadTBMonth,
     maxUploadPriceTB,
-    uploadTBMonth,
   ])
 
   const estimatedSpendingPerMonth = useMemo(() => {
     if (!canEstimate) {
       return new BigNumber(0)
     }
+    // if not set, just show estimate with 1 TB up/down
+    // in simple mode these are the defaults that get set anyway
+    const _downloadTBMonth = downloadTBMonth?.gt(0) ? downloadTBMonth : 1
+    const _uploadTBMonth = uploadTBMonth?.gt(0) ? uploadTBMonth : 1
     const storageCostPerMonth = includeRedundancyMaxStoragePrice
       ? maxStoragePriceTBMonth.times(storageTB)
       : maxStoragePriceTBMonth.times(redundancyMultiplier).times(storageTB)
-    const downloadCostPerMonth = maxDownloadPriceTB.times(downloadTBMonth)
+    const downloadCostPerMonth = maxDownloadPriceTB.times(_downloadTBMonth)
     const uploadCostPerMonth = includeRedundancyMaxUploadPrice
-      ? maxUploadPriceTB.times(uploadTBMonth)
-      : maxUploadPriceTB.times(redundancyMultiplier).times(uploadTBMonth)
+      ? maxUploadPriceTB.times(_uploadTBMonth)
+      : maxUploadPriceTB.times(redundancyMultiplier).times(_uploadTBMonth)
     const totalCostPerMonth = storageCostPerMonth
       .plus(downloadCostPerMonth)
       .plus(uploadCostPerMonth)
