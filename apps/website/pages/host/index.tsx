@@ -19,6 +19,7 @@ import { SectionTransparent } from '../../components/SectionTransparent'
 import { SectionProjects } from '../../components/SectionProjects'
 import { CalloutHostd } from '../../components/CalloutHostd'
 import { SectionTutorials } from '../../components/SectionTutorials'
+import { getHostdLatestRelease } from '../../content/releases'
 
 const title = 'Host'
 const description = 'Offer your storage space on the Sia network.'
@@ -30,6 +31,7 @@ export default function Host({
   tutorials,
   thirdParty,
   ideas,
+  release,
 }: Props) {
   return (
     <Layout
@@ -58,17 +60,17 @@ export default function Host({
             className="mt-12 md:mt-12"
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <CalloutHostd />
+            <CalloutHostd release={release} />
             <Callout
-              title="Learn how hosting works"
+              title="Setup guide for hostd"
               background={patterns.bamboo}
               description={
                 <>
                   Learn how to become a host and offer storage on the Sia
-                  network.
+                  network using hostd.
                 </>
               }
-              actionTitle="Learn more"
+              actionTitle="Follow the setup guide"
               actionLink={webLinks.docs.hosting}
               actionNewTab
             />
@@ -142,11 +144,12 @@ export default function Host({
 }
 
 export async function getStaticProps() {
-  const [stats, technical, tutorials, projects] = await Promise.all([
+  const [stats, technical, tutorials, projects, release] = await Promise.all([
     getStats(),
     getFeedContent(['technical'], 8),
     getHostingArticles(),
     getProjects('hosting'),
+    getHostdLatestRelease(),
   ])
   const thirdParty = projects.filter((project) => !project.idea)
   const ideas = projects.filter((project) => project.idea)
@@ -156,6 +159,7 @@ export async function getStaticProps() {
     tutorials,
     thirdParty,
     ideas,
+    release,
     fallback: {
       '/api/stats': stats,
     },
