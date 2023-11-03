@@ -189,7 +189,7 @@ export const SiacoinField = forwardRef(function SiacoinField(
         size={size}
         variant="ghost"
         focus="none"
-        placeholder={placeholder.toFixed(decimalsLimitSc)}
+        placeholder={toFixedMax(placeholder, decimalsLimitSc)}
         units={units}
         value={localSc !== 'NaN' ? localSc : ''}
         decimalsLimit={decimalsLimitSc}

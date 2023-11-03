@@ -5,6 +5,8 @@ import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
 import { FieldLabelAndError } from '../components/Form'
 import { ConfigFields, useRegisterForm } from './configurationFields'
 import BigNumber from 'bignumber.js'
+import { useMemo } from 'react'
+import { toFixedMax } from '../lib/numbers'
 
 type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
@@ -20,6 +22,7 @@ export function ConfigurationSiacoin<
   const {
     average,
     suggestion,
+    placeholder: _placeholder,
     units,
     suggestionTip,
     averageTip,
@@ -34,6 +37,15 @@ export function ConfigurationSiacoin<
     form,
   })
   const After = after || (() => null)
+  const placeholder = useMemo(
+    () =>
+      _placeholder
+        ? new BigNumber(_placeholder)
+        : suggestion && typeof suggestion !== 'boolean'
+        ? new BigNumber(suggestion)
+        : undefined,
+    [_placeholder, suggestion]
+  )
   return (
     <div className="flex flex-col gap-3 items-end">
       <div className="flex flex-col gap-3 w-[220px]">
@@ -46,7 +58,7 @@ export function ConfigurationSiacoin<
           decimalsLimitFiat={decimalsLimitFiat}
           error={error}
           changed={form.formState.dirtyFields[name]}
-          placeholder={(suggestion as BigNumber) || (average as BigNumber)}
+          placeholder={placeholder}
           onChange={(val) => {
             setValue(val as PathValue<Values, Path<Values>>, true)
           }}

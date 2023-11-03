@@ -86,7 +86,7 @@ export const NumberField = forwardRef(function NumberField(
       data-testid="numberfield"
       size={size}
       placeholder={
-        placeholder.isNaN() ? '' : placeholder.toFixed(decimalsLimit)
+        placeholder.isNaN() ? '' : toFixedMax(placeholder, decimalsLimit)
       }
       units={units}
       value={localValue !== 'NaN' ? localValue : ''}
