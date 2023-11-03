@@ -11,6 +11,7 @@ export type HostData = {
   publicKey: string
   lastScanSuccess: boolean
   lastScan: string
+  lastAnnouncement: string
   knownSince: string
   uptime: BigNumber
   downtime: BigNumber
@@ -63,7 +64,7 @@ const generalColumns = [
   'publicKey',
   'lastScan',
   'totalScans',
-  'knownSince',
+  'lastAnnouncement',
   'uptime',
   'downtime',
   'successfulInteractions',
@@ -165,7 +166,7 @@ export const columnsDefaultVisible: TableColumnId[] = [
   'netAddress',
   'publicKey',
   'lastScan',
-  'knownSince',
+  'lastAnnouncement',
   'totalScans',
   'uptime',
   'hasContract',

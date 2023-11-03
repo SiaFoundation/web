@@ -248,6 +248,7 @@ export interface Host {
   publicKey: string
   netAddress: string
   knownSince: string
+  lastAnnouncement: string
   Announcements?: Announcement[]
   interactions: {
     Downtime: number
