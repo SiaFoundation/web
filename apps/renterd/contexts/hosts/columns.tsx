@@ -261,14 +261,16 @@ export const columns: HostsTableColumn[] = (
               <div className="mt-[5px]">
                 <Text color={color}>{icon}</Text>
               </div>
-              <div className="flex flex-col">
-                <Text size="12" noWrap>
-                  {ago}
-                </Text>
-                <Text color="subtle" size="10" noWrap>
-                  {format(new Date(data.lastScan), 'Pp')}
-                </Text>
-              </div>
+              {data.lastScan && (
+                <div className="flex flex-col">
+                  <Text size="12" noWrap>
+                    {ago}
+                  </Text>
+                  <Text color="subtle" size="10" noWrap>
+                    {format(new Date(data.lastScan), 'Pp')}
+                  </Text>
+                </div>
+              )}
             </div>
           </Tooltip>
         )
