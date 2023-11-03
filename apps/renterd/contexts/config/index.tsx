@@ -19,6 +19,7 @@ import {
   RedundancySettings,
   UploadPackingSettings,
   useSettingUpdate,
+  useAutopilotTrigger,
 } from '@siafoundation/react-renterd'
 import { toSiacoins } from '@siafoundation/sia-js'
 import { getFields } from './fields'
@@ -389,6 +390,7 @@ export function useConfigMain() {
     return totalCostPerMonthTB
   }, [canEstimate, estimatedSpendingPerMonth, storageTB])
 
+  const autopilotTrigger = useAutopilotTrigger()
   const mutate = useMutate()
   const onValid = useCallback(
     async (values: typeof defaultValues) => {
@@ -474,6 +476,11 @@ export function useConfigMain() {
         triggerSuccessToast('Configuration has been saved.')
         if (isAutopilotEnabled) {
           syncDefaultContractSet(finalValues.autopilotContractSet)
+          autopilotTrigger.post({
+            payload: {
+              forceScan: false,
+            },
+          })
         }
 
         // if autopilot is being configured for the first time,
@@ -509,6 +516,7 @@ export function useConfigMain() {
       redundancy,
       gouging,
       configApp,
+      autopilotTrigger,
     ]
   )
 
