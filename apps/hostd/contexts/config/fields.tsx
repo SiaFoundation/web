@@ -1,15 +1,23 @@
 import { blocksToMonths, ConfigFields } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { dnsProviderOptions, initialValues, scDecimalPlaces } from './types'
+import { SiaCentralExchangeRates } from '@siafoundation/sia-central'
+import { calculateMaxCollateral } from './transform'
 
 type Categories = 'host' | 'pricing' | 'DNS' | 'bandwidth' | 'registry' | 'RHP3'
 
 type GetFields = {
   showAdvanced: boolean
+  storageTBMonth?: BigNumber
+  collateralMultiplier?: BigNumber
+  rates?: SiaCentralExchangeRates
 }
 
 export function getFields({
   showAdvanced,
+  storageTBMonth,
+  collateralMultiplier,
+  rates,
 }: GetFields): ConfigFields<typeof initialValues, Categories> {
   return {
     // Host
@@ -38,7 +46,6 @@ export function getFields({
       decimalsLimit: 2,
       suggestion: new BigNumber(6),
       suggestionTip: 'The default maximum duration is 6 months.',
-
       description: (
         <>The maximum contract duration that the host will accept.</>
       ),
@@ -60,7 +67,9 @@ export function getFields({
       category: 'pricing',
       units: 'SC/TB/month',
       decimalsLimitSc: scDecimalPlaces,
-
+      suggestion: rates ? usdInScRoundedToNearestTen(1, rates) : undefined,
+      suggestionTip:
+        'The suggested storage price in siacoins per TB per month.',
       description: (
         <>{`The host's storage price in siacoins per TB per month.`}</>
       ),
@@ -74,7 +83,9 @@ export function getFields({
       category: 'pricing',
       units: 'SC/TB',
       decimalsLimitSc: scDecimalPlaces,
-
+      suggestion: rates ? usdInScRoundedToNearestTen(10, rates) : undefined,
+      suggestionTip:
+        'The suggested egress price in siacoins for egress per TB.',
       description: <>{`The host's egress price in siacoins per TB.`}</>,
       validation: {
         required: 'required',
@@ -85,8 +96,9 @@ export function getFields({
       type: 'siacoin',
       category: 'pricing',
       units: 'SC/TB',
+      suggestion: rates ? usdInScRoundedToNearestTen(0.05, rates) : undefined,
+      suggestionTip: 'The suggested ingress price in siacoins per TB.',
       decimalsLimitSc: scDecimalPlaces,
-
       description: <>{`The host's ingress price in siacoins per TB.`}</>,
       validation: {
         required: 'required',
@@ -113,7 +125,11 @@ export function getFields({
       type: 'siacoin',
       category: 'pricing',
       decimalsLimitSc: scDecimalPlaces,
-
+      suggestion:
+        storageTBMonth && collateralMultiplier
+          ? calculateMaxCollateral(storageTBMonth, collateralMultiplier)
+          : undefined,
+      suggestionTip: 'The suggested maximum collateral.',
       description: <>{`The host's maximum collateral in siacoins.`}</>,
       hidden: !showAdvanced,
       validation: {
@@ -125,6 +141,9 @@ export function getFields({
       type: 'siacoin',
       category: 'pricing',
       decimalsLimitSc: scDecimalPlaces,
+      suggestionTip: 'The suggested contract price.',
+      tipsDecimalsLimitSc: 1,
+      suggestion: new BigNumber(0.2),
       description: <>{`The host's contract price in siacoins.`}</>,
       hidden: !showAdvanced,
       validation: {
@@ -136,6 +155,9 @@ export function getFields({
       type: 'siacoin',
       category: 'pricing',
       units: 'SC/million',
+      suggestion: new BigNumber(1),
+      suggestionTip:
+        'The suggested base RPC price in siacoins per million calls.',
       decimalsLimitSc: scDecimalPlaces,
       description: (
         <>{`The host's base RPC price in siacoins per million calls.`}</>
@@ -151,9 +173,11 @@ export function getFields({
       category: 'pricing',
       units: 'SC/million',
       decimalsLimitSc: scDecimalPlaces,
-
+      suggestion: new BigNumber(1),
+      suggestionTip:
+        'The suggested sector access price in siacoins per million sectors.',
       description: (
-        <>{`The host's sector access price in siacoins million sectors.`}</>
+        <>{`The host's sector access price in siacoins per million sectors.`}</>
       ),
       hidden: !showAdvanced,
       validation: {
@@ -165,6 +189,8 @@ export function getFields({
       type: 'number',
       category: 'pricing',
       units: 'minutes',
+      suggestion: new BigNumber(30),
+      suggestionTip: 'The suggested price table validity.',
       description: (
         <>{`How long a renter's registered price table remains valid.`}</>
       ),
@@ -180,6 +206,8 @@ export function getFields({
       type: 'number',
       category: 'registry',
       units: 'entries',
+      suggestion: new BigNumber(1_000),
+      suggestionTip: 'The suggested maximum registry size.',
       decimalsLimit: 0,
       description: (
         <>{`The maximum number of registry entries that the host will store. Each registry entry is up to 113 bytes.`}</>
@@ -196,6 +224,8 @@ export function getFields({
       type: 'number',
       category: 'RHP3',
       units: 'days',
+      suggestion: new BigNumber(30),
+      suggestionTip: 'The suggested account expiry.',
       description: (
         <>{`How long a renter's ephemeral accounts are inactive before the host prunes them and recovers the remaining funds.`}</>
       ),
@@ -213,6 +243,8 @@ export function getFields({
       title: 'Maximum balance',
       type: 'siacoin',
       category: 'RHP3',
+      suggestion: new BigNumber(10),
+      suggestionTip: 'The suggested maximum account balance.',
       description: (
         <>{`Maximum balance a renter's ephemeral account can have. When the limit is reached, deposits are rejected until some of the funds have been spent.`}</>
       ),
@@ -391,4 +423,15 @@ export function getFields({
       },
     },
   }
+}
+
+function usdInScRoundedToNearestTen(
+  usdAmount: number,
+  rates: SiaCentralExchangeRates
+) {
+  return rates
+    ? new BigNumber(
+        new BigNumber(usdAmount).div(rates.sc.usd).div(10).toFixed(0)
+      ).times(10)
+    : undefined
 }

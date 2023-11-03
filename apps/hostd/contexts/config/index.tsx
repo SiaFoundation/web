@@ -18,6 +18,7 @@ import { calculateMaxCollateral, transformDown, transformUp } from './transform'
 import { useForm } from 'react-hook-form'
 import useLocalStorageState from 'use-local-storage-state'
 import { useAppSettings } from '@siafoundation/react-core'
+import { useSiaCentralExchangeRates } from '@siafoundation/react-sia-central'
 
 export function useConfigMain() {
   const settings = useSettings({
@@ -49,6 +50,8 @@ export function useConfigMain() {
     mode: 'all',
     defaultValues: initialValues,
   })
+  const storageTBMonth = form.watch('storagePrice')
+  const collateralMultiplier = form.watch('collateralMultiplier')
 
   const resetFormData = useCallback(
     (data: HostSettings) => {
@@ -134,7 +137,17 @@ export function useConfigMain() {
     [form, showAdvanced, settings, settingsUpdate, revalidateAndResetFormData]
   )
 
-  const fields = useMemo(() => getFields({ showAdvanced }), [showAdvanced])
+  const rates = useSiaCentralExchangeRates()
+  const fields = useMemo(
+    () =>
+      getFields({
+        showAdvanced,
+        storageTBMonth,
+        collateralMultiplier,
+        rates: rates.data?.rates,
+      }),
+    [showAdvanced, storageTBMonth, collateralMultiplier, rates.data]
+  )
 
   const onInvalid = useOnInvalid(fields)
 
