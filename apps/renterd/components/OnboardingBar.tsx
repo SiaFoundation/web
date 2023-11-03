@@ -56,10 +56,7 @@ export function OnboardingBar() {
 
   const step1Configured = app.autopilot.state.data?.configured
   const step2Synced = syncStatus.isSynced
-  const step3Funded =
-    app.autopilot.state.data?.configured &&
-    wallet.data &&
-    walletBalance.gte(allowance)
+  const step3Funded = walletBalance.gt(0)
   const step4Contracts = !notEnoughContracts.active
   const steps = [step1Configured, step2Synced, step3Funded, step4Contracts]
   const totalSteps = steps.length
