@@ -8,6 +8,7 @@ import {
   HookArgsCallback,
   HookArgsWithPayloadSwr,
   delay,
+  usePostFunc,
 } from '@siafoundation/react-core'
 
 type AutopilotStatus = {
@@ -104,5 +105,14 @@ export function useAutopilotHostsSearch(
   return usePostSwr({
     ...args,
     route: autopilotHostsKey,
+  })
+}
+
+export function useAutopilotTrigger(
+  args?: HookArgsCallback<void, { forceScan: boolean }, { triggered: boolean }>
+) {
+  return usePostFunc({
+    ...args,
+    route: '/autopilot/trigger',
   })
 }
