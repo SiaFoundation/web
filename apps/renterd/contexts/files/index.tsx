@@ -20,8 +20,6 @@ import { useDataset } from './dataset'
 
 function useFilesMain() {
   const router = useRouter()
-  const limit = Number(router.query.limit || 20)
-  const offset = Number(router.query.offset || 0)
 
   // [bucket, key, directory]
   const activeDirectory = useMemo<FullPathSegments>(
@@ -56,7 +54,7 @@ function useFilesMain() {
   const { downloadFiles, downloadsList, getFileUrl, downloadCancel } =
     useDownloads()
 
-  const { response, dataset } = useDataset({
+  const { limit, offset, response, dataset } = useDataset({
     activeDirectoryPath,
     uploadsList,
   })
