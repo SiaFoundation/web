@@ -4,6 +4,8 @@ import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
 import { ConfigFields, useRegisterForm } from './configurationFields'
 import { NumberField } from '../core/NumberField'
 import { FieldLabelAndError } from '../components/Form'
+import { toFixedMax, toFixedOrPrecision } from '../lib/numbers'
+import { useMemo } from 'react'
 
 type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
@@ -22,7 +24,7 @@ export function ConfigurationNumber<
     suggestion,
     suggestionTip,
     decimalsLimit = 2,
-    placeholder,
+    placeholder: _placeholder,
     units,
   } = field
   const { setValue, value, error } = useRegisterForm({
@@ -30,6 +32,15 @@ export function ConfigurationNumber<
     field,
     name,
   })
+  const placeholder = useMemo(
+    () =>
+      _placeholder
+        ? new BigNumber(_placeholder)
+        : suggestion && typeof suggestion !== 'boolean'
+        ? new BigNumber(suggestion)
+        : undefined,
+    [_placeholder, suggestion]
+  )
   return (
     <div className="flex flex-col gap-3 items-end">
       <div className="flex flex-col gap-3 w-[220px]">
@@ -38,7 +49,7 @@ export function ConfigurationNumber<
           value={value}
           units={units}
           decimalsLimit={decimalsLimit}
-          placeholder={placeholder ? new BigNumber(placeholder) : undefined}
+          placeholder={placeholder}
           state={
             error
               ? 'invalid'
