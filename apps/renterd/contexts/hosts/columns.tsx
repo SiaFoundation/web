@@ -331,17 +331,17 @@ export const columns: HostsTableColumn[] = (
       ),
     },
     {
-      id: 'knownSince',
-      label: 'known since',
+      id: 'lastAnnouncement',
+      label: 'last announcement',
       category: 'general',
       render: ({ data }) => {
         return (
           <div className="flex flex-col">
             <Text size="12" noWrap>
-              {formatDistance(new Date(), new Date(data.knownSince))} old
+              {formatDistance(new Date(), new Date(data.lastAnnouncement))} ago
             </Text>
             <Text color="subtle" size="10" noWrap>
-              {formatRelative(new Date(data.knownSince), new Date())}
+              {formatRelative(new Date(data.lastAnnouncement), new Date())}
             </Text>
           </div>
         )
