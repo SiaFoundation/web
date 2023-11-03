@@ -372,13 +372,13 @@ export function useContractsAcquire(
     ContractAcquireResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/bus/contracts/:id/acquire' })
+  return usePostFunc({ ...args, route: '/bus/contract/:id/acquire' })
 }
 
 export function useContractsRelease(
   args: HookArgsCallback<{ id: string }, void, never>
 ) {
-  return usePostFunc({ ...args, route: '/bus/contracts/:id/release' })
+  return usePostFunc({ ...args, route: '/bus/contract/:id/release' })
 }
 
 export function useContract(args: HookArgsSwr<{ id: string }, Contract>) {
@@ -388,33 +388,33 @@ export function useContract(args: HookArgsSwr<{ id: string }, Contract>) {
 export function useContractCreate(
   args: HookArgsCallback<{ id: string }, ContractsIDAddRequest, Contract>
 ) {
-  return usePostFunc({ ...args, route: '/bus/contracts/:id/new' })
+  return usePostFunc({ ...args, route: '/bus/contract/:id/new' })
 }
 
 export function useContractRenew(
   args: HookArgsCallback<{ id: string }, ContractsIDRenewedRequest, Contract>
 ) {
-  return usePostFunc({ ...args, route: '/bus/contracts/:id/renewed' })
+  return usePostFunc({ ...args, route: '/bus/contract/:id/renewed' })
 }
 
 export function useContractDelete(
   args?: HookArgsCallback<{ id: string }, void, never>
 ) {
-  return useDeleteFunc({ ...args, route: '/bus/contracts/:id/delete' })
+  return useDeleteFunc({ ...args, route: '/bus/contract/:id' })
 }
 
 export function useContractsets(args?: HookArgsSwr<void, string[][]>) {
-  return useGetSwr({ ...args, route: '/bus/contractsets' })
+  return useGetSwr({ ...args, route: '/bus/contracts/sets' })
 }
 
 export function useContractset(args: HookArgsSwr<{ name: string }, string[]>) {
-  return useGetSwr({ ...args, route: '/bus/contractsets/:name' })
+  return useGetSwr({ ...args, route: '/bus/contracts/sets/:set' })
 }
 
 export function useContractsetUpdate(
   args: HookArgsCallback<{ name: string }, string[], never>
 ) {
-  return usePutFunc({ ...args, route: '/bus/contractsets/:name' })
+  return usePutFunc({ ...args, route: '/bus/contracts/sets/:set' })
 }
 
 // objects
@@ -440,9 +440,9 @@ export function useBucketDelete(
   args?: HookArgsCallback<{ name: string }, void, never>
 ) {
   return useDeleteFunc(
-    { ...args, route: '/bus/buckets/:name' },
+    { ...args, route: '/bus/bucket/:name' },
     async (mutate) => {
-      mutate((key) => key.startsWith('/bus/buckets'))
+      mutate((key) => key.startsWith('/bus/bucket'))
     }
   )
 }
