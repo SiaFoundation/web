@@ -6,7 +6,6 @@ import { FieldLabelAndError } from '../components/Form'
 import { ConfigFields, useRegisterForm } from './configurationFields'
 import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
-import { toFixedMax } from '../lib/numbers'
 
 type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>

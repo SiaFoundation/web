@@ -4,7 +4,6 @@ import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
 import { ConfigFields, useRegisterForm } from './configurationFields'
 import { NumberField } from '../core/NumberField'
 import { FieldLabelAndError } from '../components/Form'
-import { toFixedMax, toFixedOrPrecision } from '../lib/numbers'
 import { useMemo } from 'react'
 
 type Props<Values extends FieldValues, Categories extends string> = {
