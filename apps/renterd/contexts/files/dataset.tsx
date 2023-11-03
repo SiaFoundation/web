@@ -13,19 +13,29 @@ import {
   isDirectory,
 } from './paths'
 import { minutesInMilliseconds } from '@siafoundation/design-system'
+import { useRouter } from 'next/router'
 
 type Props = {
   activeDirectoryPath: string
   uploadsList: ObjectData[]
 }
 
+const defaultLimit = 50
+
 export function useDataset({ activeDirectoryPath, uploadsList }: Props) {
   const buckets = useBuckets()
 
+  const router = useRouter()
+  const limit = Number(router.query.limit || defaultLimit)
+  const offset = Number(router.query.offset || 0)
   const bucket = getBucketFromPath(activeDirectoryPath)
   const response = useObjectDirectory({
     disabled: !bucket,
-    params: bucketAndKeyParamsFromPath(activeDirectoryPath),
+    params: {
+      ...bucketAndKeyParamsFromPath(activeDirectoryPath),
+      offset,
+      limit,
+    },
     config: {
       swr: {
         refreshInterval: minutesInMilliseconds(1),
@@ -95,6 +105,8 @@ export function useDataset({ activeDirectoryPath, uploadsList }: Props) {
   )
 
   return {
+    limit,
+    offset,
     response,
     dataset: d.data,
   }
