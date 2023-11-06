@@ -1,22 +1,27 @@
 import { AsyncReturnType } from '../lib/types'
-import { HostMap } from '../components/HostMap'
 import { getGeoHosts } from '../content/geoHosts'
 import { getExchangeRates } from '../content/exchangeRates'
 import { getMinutesInSeconds } from '../lib/time'
+import { Map } from '../components/Map'
+import { getStats } from '../content/stats'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-export default function Globe({ hosts, rates }: Props) {
-  return <HostMap hosts={hosts} rates={rates} />
+export default function MapPage({ hosts, rates, stats }: Props) {
+  return <Map hosts={hosts} rates={rates} stats={stats} />
 }
 
 export async function getStaticProps() {
-  const hosts = await getGeoHosts()
-  const { data: rates } = await getExchangeRates()
+  const [hosts, { data: rates }, stats] = await Promise.all([
+    getGeoHosts(),
+    getExchangeRates(),
+    getStats(),
+  ])
 
   const props = {
     hosts,
     rates: rates?.rates.sc,
+    stats,
   }
 
   return {

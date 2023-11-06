@@ -12,10 +12,16 @@ import { menuSections } from '../../../config/siteMap'
 import { SiteMenu } from '../SiteMenu'
 import { NavMenu } from './NavMenu'
 
-export function Navbar({ scrolledDown }: { scrolledDown: boolean }) {
+export function Navbar({
+  size = '4',
+  scrolledDown,
+}: {
+  size?: '4' | 'full'
+  scrolledDown: boolean
+}) {
   return (
     <Container
-      size="4"
+      size={size}
       pad={false}
       className={cx(
         'relative',
@@ -36,9 +42,16 @@ export function Navbar({ scrolledDown }: { scrolledDown: boolean }) {
           'duration-300'
         )}
       >
-        <Link href="/">
-          <Heading size="32" className="flex gap-1 items-center">
+        <Link href="/" underline="none">
+          <Heading size="32" className="flex gap-1.5 items-center">
             <Logo size={scrolledDown ? 35 : 40} className="transition-all" />
+            <Heading
+              font="mono"
+              size="24"
+              className="hidden pl-0 pr-px md:block tracking-tight relative -top-px"
+            >
+              sia
+            </Heading>
           </Heading>
         </Link>
         <div className="flex-1" />
