@@ -7,14 +7,14 @@ const maxAge = getMinutesInSeconds(5)
 const maxHosts = 1000
 const minDegreesApart = 1
 
-export async function getGeoHosts(): Promise<Host[]> {
+export async function getGeoHosts(): Promise<SiaCentralPartialHost[]> {
   return getCacheValue(
     'geoHosts',
     async () => {
       const { data: siaCentralHosts, error } = await getSiaCentralHosts({
         params: {
-          limit: 300
-        }
+          limit: 300,
+        },
       })
       if (error) {
         return []
@@ -23,7 +23,7 @@ export async function getGeoHosts(): Promise<Host[]> {
 
       hosts.sort((a, b) =>
         a.settings.total_storage - a.settings.remaining_storage <
-          b.settings.total_storage - a.settings.remaining_storage
+        b.settings.total_storage - a.settings.remaining_storage
           ? 1
           : -1
       )
@@ -43,9 +43,9 @@ export async function getGeoHosts(): Promise<Host[]> {
         for (const hostToDisplay of hostsToDisplay) {
           if (
             Math.abs(hostToDisplay.location[0] - host.location[0]) <
-            minDegreesApart &&
+              minDegreesApart &&
             Math.abs(hostToDisplay.location[1] - host.location[1]) <
-            minDegreesApart
+              minDegreesApart
           ) {
             unique = false
             break
@@ -65,7 +65,7 @@ export async function getGeoHosts(): Promise<Host[]> {
   )
 }
 
-export type Host = {
+export type SiaCentralPartialHost = {
   public_key: string
   country_code: string
   location: [number, number]
@@ -74,8 +74,9 @@ export type Host = {
     download_price: string
     upload_price: string
     total_storage: number
+    remaining_storage: number
   }
-  benchmark: {
+  benchmark?: {
     data_size: number
     download_time: number
     upload_time: number
@@ -83,7 +84,7 @@ export type Host = {
 }
 
 // transform to only necessary data to limit transfer size
-export function transformHost(h: SiaCentralHost): Host {
+export function transformHost(h: SiaCentralHost): SiaCentralPartialHost {
   return {
     public_key: h.public_key,
     country_code: h.country_code,
@@ -93,11 +94,12 @@ export function transformHost(h: SiaCentralHost): Host {
       download_price: h.settings.download_price,
       upload_price: h.settings.upload_price,
       total_storage: h.settings.total_storage,
+      remaining_storage: h.settings.remaining_storage,
     },
     benchmark: {
-      data_size: h.benchmark.data_size,
-      download_time: h.benchmark.download_time,
-      upload_time: h.benchmark.upload_time,
+      data_size: h.benchmark?.data_size || null,
+      download_time: h.benchmark?.download_time || null,
+      upload_time: h.benchmark?.upload_time || null,
     },
   }
 }

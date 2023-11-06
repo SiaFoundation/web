@@ -6,15 +6,18 @@ import {
   Text,
   Tooltip,
   countryCodeEmoji,
+  LinkButton,
+  webLinks,
 } from '@siafoundation/design-system'
 import { humanBytes, humanSiacoin, humanSpeed } from '@siafoundation/sia-js'
 import { cx } from 'class-variance-authority'
 import BigNumber from 'bignumber.js'
-import { Host } from '../../content/geoHosts'
+import { SiaCentralPartialHost } from '../../content/geoHosts'
+import { Launch16 } from '@siafoundation/react-icons'
 
 type Props = {
-  host: Host
-  activeHost: Host
+  host: SiaCentralPartialHost
+  activeHost: SiaCentralPartialHost
   setRef?: (el: HTMLButtonElement) => void
   selectActiveHost: (public_key: string) => void
   rates: {
@@ -81,9 +84,20 @@ export function HostItem({
     <Tooltip
       content={
         <div className="flex flex-col gap-1">
-          <Text color="contrast" weight="bold">
-            {countryCodeEmoji(host.country_code)} {host.country_code}
-          </Text>
+          <div className="w-full flex justify-between items-center">
+            <Text color="contrast" weight="bold" className="text-start">
+              {countryCodeEmoji(host.country_code)} {host.country_code}
+            </Text>
+            <LinkButton
+              size="none"
+              variant="ghost"
+              target="_blank"
+              tabIndex={-1}
+              href={`${webLinks.explore.mainnet}/host/${host.public_key}`}
+            >
+              <Launch16 />
+            </LinkButton>
+          </div>
           <div className="flex gap-2">
             <div className="flex flex-col gap-1">
               <Text color="subtle">storage</Text>
