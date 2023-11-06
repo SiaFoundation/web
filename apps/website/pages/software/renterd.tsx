@@ -41,7 +41,6 @@ const description = (
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
 export default function Renterd({ release, technical, tutorials }: Props) {
-  const downloadEl = <DownloadBar daemon={daemon} release={release} />
   const { ref: appRef, inView: appInView } = useInView()
 
   return (
@@ -50,7 +49,7 @@ export default function Renterd({ release, technical, tutorials }: Props) {
       description={textContent(description)}
       path={routes.software.renterd}
       heading={
-        <SectionTransparent className="pt-24 pb-0 md:pt-32 md:pb-0">
+        <SectionTransparent className="pt-24 md:pt-32 pb-0">
           <SiteHeading
             size="64"
             title={title}
@@ -64,6 +63,7 @@ export default function Renterd({ release, technical, tutorials }: Props) {
     >
       <SectionGradient className="pb:30">
         <div className="relative">
+          <DownloadBar daemon={daemon} release={release} />
           <div ref={appRef} className="absolute top-[70%]" />
           <div
             className={cx(
@@ -71,7 +71,6 @@ export default function Renterd({ release, technical, tutorials }: Props) {
               appInView ? 'md:scale-[1.03]' : ''
             )}
           >
-            <div className="pt-52">{downloadEl}</div>
             <CarouselRenterd />
           </div>
         </div>

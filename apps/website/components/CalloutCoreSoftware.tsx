@@ -4,11 +4,9 @@ import {
   Paragraph,
   Link,
   Badge,
-  Text,
 } from '@siafoundation/design-system'
 import Image from 'next/image'
 import { GitHubRelease } from '@siafoundation/data-sources'
-import { DownloadSelect } from './DownloadSelect'
 
 type Props = {
   name: string
@@ -31,10 +29,8 @@ export function CalloutCoreSoftware({
   href,
   image,
   background,
-  release,
   children,
   newTab,
-  testnetOnly,
 }: Props) {
   return (
     <PatternedPanel background={background}>
@@ -79,18 +75,6 @@ export function CalloutCoreSoftware({
         )}
         {children}
       </div>
-      {release && (
-        <div className="@container absolute bottom-0 w-full flex justify-between items-center px-3 py-2 bg-white dark:bg-graydark-200 border-t-2 border-graydark-400">
-          <Text size="14" weight="bold" className="hidden @md:flex">
-            Downloads
-          </Text>
-          <DownloadSelect
-            daemon="renterd"
-            release={release}
-            testnetOnly={testnetOnly}
-          />
-        </div>
-      )}
     </PatternedPanel>
   )
 }

@@ -1,5 +1,5 @@
 import { webLinks, Link, Text } from '@siafoundation/design-system'
-import { LogoGithub24, Book24 } from '@siafoundation/react-icons'
+import { LogoGithub24, Book24, Code24 } from '@siafoundation/react-icons'
 import { DownloadSelect } from './DownloadSelect'
 import { GitHubRelease } from '@siafoundation/data-sources'
 
@@ -11,23 +11,33 @@ type Props = {
 }
 
 export function DownloadBar({ daemon, release, testnetOnly }: Props) {
-  const githubUrl = webLinks.github[daemon]
+  const guideUrl = webLinks.docs[daemon]
   const docsUrl = webLinks.apiDocs[daemon]
+  const githubUrl = webLinks.github[daemon]
 
   return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+    <div className="py-14 flex flex-col gap-3 justify-center items-center">
+      <Text size="24" weight="semibold" className="">
+        Download {daemon} software
+      </Text>
+      <DownloadSelect
+        daemon={daemon}
+        release={release}
+        testnetOnly={testnetOnly}
+      />
       <div className="flex items-center gap-x-4 gap-y-3">
-        {githubUrl && (
+        {guideUrl && (
           <Link
             weight="bold"
-            href={githubUrl}
+            href={guideUrl}
             target="_blank"
             size="14"
             underline="hover"
             className="flex items-center gap-1"
+            ellipsis
           >
-            <LogoGithub24 />
-            <span>Source code</span>
+            <Book24 />
+            <span>Setup guide</span>
           </Link>
         )}
         {docsUrl && (
@@ -38,25 +48,27 @@ export function DownloadBar({ daemon, release, testnetOnly }: Props) {
             size="14"
             underline="hover"
             className="flex items-center gap-1"
+            ellipsis
           >
-            <Book24 />
+            <Code24 />
             <span>API Docs</span>
           </Link>
         )}
+        {githubUrl && (
+          <Link
+            weight="bold"
+            href={githubUrl}
+            target="_blank"
+            size="14"
+            underline="hover"
+            className="flex items-center gap-1"
+            ellipsis
+          >
+            <LogoGithub24 />
+            <span>Source code</span>
+          </Link>
+        )}
       </div>
-      <div className="flex-1" />
-      {release ? (
-        <>
-          <Text className="hidden md:block" size="14" weight="bold">
-            Downloads
-          </Text>
-          <DownloadSelect
-            daemon={daemon}
-            release={release}
-            testnetOnly={testnetOnly}
-          />
-        </>
-      ) : null}
     </div>
   )
 }

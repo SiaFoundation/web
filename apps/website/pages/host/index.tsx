@@ -20,6 +20,7 @@ import { SectionProjects } from '../../components/SectionProjects'
 import { CalloutHostd } from '../../components/CalloutHostd'
 import { SectionTutorials } from '../../components/SectionTutorials'
 import { getHostdLatestRelease } from '../../content/releases'
+import { DownloadBar } from '../../components/DownloadBar'
 
 const title = 'Host'
 const description = 'Offer your storage space on the Sia network.'
@@ -39,7 +40,7 @@ export default function Host({
       description={description}
       path={routes.rent.index}
       heading={
-        <SectionTransparent className="pt-24 md:pt-40 pb-6 md:pb-12">
+        <SectionTransparent className="pt-24 md:pt-32 pb-0">
           <SiteHeading
             anchorLink={false}
             size="64"
@@ -52,6 +53,7 @@ export default function Host({
       previewImage={previews.nateWaterfall}
     >
       <SectionGradient className="pb-20">
+        <DownloadBar daemon="hostd" release={release} />
         <div className="flex flex-col">
           <SiteHeading
             size="32"

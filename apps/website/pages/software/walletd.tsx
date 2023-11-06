@@ -44,9 +44,6 @@ const description = (
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
 export default function Walletd({ release, technical, tutorials }: Props) {
-  const downloadEl = (
-    <DownloadBar daemon={daemon} release={release} testnetOnly />
-  )
   const { ref: appRef, inView: appInView } = useInView()
 
   return (
@@ -55,7 +52,7 @@ export default function Walletd({ release, technical, tutorials }: Props) {
       description={textContent(description)}
       path={routes.software.walletd}
       heading={
-        <SectionTransparent className="pt-24 pb-0 md:pt-32 md:pb-0">
+        <SectionTransparent className="pt-24 md:pt-32 pb-0">
           <SiteHeading
             size="64"
             title={title}
@@ -68,6 +65,7 @@ export default function Walletd({ release, technical, tutorials }: Props) {
       previewImage={previews.walletd}
     >
       <SectionGradient className="pb:30">
+        <DownloadBar daemon={daemon} release={release} testnetOnly />
         <div className="relative">
           <div ref={appRef} className="absolute top-[70%]" />
           <div
@@ -76,7 +74,6 @@ export default function Walletd({ release, technical, tutorials }: Props) {
               appInView ? 'md:scale-[1.03]' : ''
             )}
           >
-            <div className="pt-52">{downloadEl}</div>
             <CarouselWalletd />
           </div>
         </div>
