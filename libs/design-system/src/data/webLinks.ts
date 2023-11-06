@@ -3,8 +3,11 @@ export const webLinks = {
   docs: {
     index: 'https://docs.sia.tech',
     sia101: 'https://docs.sia.tech/get-started-with-sia/sia101',
+    renterd: 'https://docs.sia.tech/renting/about-renting',
+    hostd: 'https://docs.sia.tech/hosting/about-hosting-on-sia',
+    walletd: 'https://docs.sia.tech/wallet/wallet-overview',
     renting: 'https://docs.sia.tech/renting/about-renting',
-    wallet: 'https://docs.sia.tech/your-sia-wallet/wallet-overview',
+    wallet: 'https://docs.sia.tech/wallet/wallet-overview',
     hosting: 'https://docs.sia.tech/hosting/about-hosting-on-sia',
     mining: 'https://docs.sia.tech/mining/about-mining-on-sia',
     embarcadero: 'https://github.com/SiaFoundation/embarcadero',

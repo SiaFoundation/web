@@ -20,6 +20,7 @@ import { CalloutRenterd } from '../../components/CalloutRenterd'
 import { SectionProjects } from '../../components/SectionProjects'
 import { SectionTutorials } from '../../components/SectionTutorials'
 import { getRenterdLatestRelease } from '../../content/releases'
+import { DownloadBar } from '../../components/DownloadBar'
 
 const title = 'Rent'
 const description = 'Rent storage space on the Sia network.'
@@ -39,7 +40,7 @@ export default function Rent({
       description={description}
       path={routes.rent.index}
       heading={
-        <SectionTransparent className="pt-24 md:pt-40 pb-6 md:pb-12">
+        <SectionTransparent className="pt-24 md:pt-32 pb-0">
           <SiteHeading
             anchorLink={false}
             size="64"
@@ -52,13 +53,13 @@ export default function Rent({
       previewImage={previews.leaves}
     >
       <SectionGradient className="pb-20">
+        <DownloadBar daemon="renterd" release={release} />
         <div className="flex flex-col">
           <SiteHeading
             id="core-software"
             size="32"
             title="Core Software"
             description="Official software, developed by the Sia Foundation."
-            className="mt-12 md:mt-12"
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <CalloutRenterd release={release} />
