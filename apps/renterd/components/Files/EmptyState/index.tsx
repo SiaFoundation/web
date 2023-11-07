@@ -1,4 +1,4 @@
-import { LinkButton, Text } from '@siafoundation/design-system'
+import { Code, LinkButton, Text } from '@siafoundation/design-system'
 import { CloudUpload32 } from '@siafoundation/react-icons'
 import { routes } from '../../../config/routes'
 import { useFiles } from '../../../contexts/files'
@@ -35,12 +35,13 @@ export function EmptyState() {
         </Text>
         <div className="flex flex-col gap-6 justify-center items-center">
           <Text color="subtle" className="text-center max-w-[500px]">
-            Before you can upload files you must configure autopilot. Autopilot
-            finds contracts with hosts based on the settings you choose.
-            Autopilot also repairs your data as hosts come and go.
+            Before you can upload files you must configure your settings. Once
+            configured, <Code>renterd</Code> will find contracts with hosts
+            based on the settings you choose. <Code>renterd</Code> will also
+            repair your data as hosts come and go.
           </Text>
           <LinkButton variant="accent" href={routes.config.index}>
-            Configure autopilot →
+            Configure
           </LinkButton>
         </div>
       </div>

@@ -28,6 +28,7 @@ describe('tansforms', () => {
             hosts: {
               allowRedundantIPs: false,
               maxDowntimeHours: 1440,
+              minRecentScanFailures: 10,
               scoreOverrides: null,
             },
             contracts: {
@@ -75,6 +76,7 @@ describe('tansforms', () => {
         storageTB: new BigNumber('1'),
         allowRedundantIPs: false,
         maxDowntimeHours: new BigNumber('1440'),
+        minRecentScanFailures: new BigNumber('10'),
         defragThreshold: new BigNumber('1000'),
         defaultContractSet: 'myset',
         uploadPackingEnabled: true,
@@ -105,6 +107,7 @@ describe('tansforms', () => {
             hosts: {
               allowRedundantIPs: false,
               maxDowntimeHours: 1440,
+              minRecentScanFailures: 10,
               scoreOverrides: null,
             },
             contracts: {
@@ -152,6 +155,7 @@ describe('tansforms', () => {
         storageTB: new BigNumber('1'),
         allowRedundantIPs: false,
         maxDowntimeHours: new BigNumber('1440'),
+        minRecentScanFailures: new BigNumber('10'),
         defragThreshold: new BigNumber('1000'),
         defaultContractSet: 'myset',
         uploadPackingEnabled: true,
@@ -188,6 +192,7 @@ describe('tansforms', () => {
             storageTB: new BigNumber('1'),
             allowRedundantIPs: false,
             maxDowntimeHours: new BigNumber('1440'),
+            minRecentScanFailures: new BigNumber('10'),
             defragThreshold: new BigNumber('1000'),
           },
           undefined
@@ -199,6 +204,7 @@ describe('tansforms', () => {
         hosts: {
           allowRedundantIPs: false,
           maxDowntimeHours: 1440,
+          minRecentScanFailures: 10,
           scoreOverrides: null,
         },
         contracts: {
@@ -228,6 +234,7 @@ describe('tansforms', () => {
             storageTB: new BigNumber('1'),
             allowRedundantIPs: false,
             maxDowntimeHours: new BigNumber('1440'),
+            minRecentScanFailures: new BigNumber('10'),
             defragThreshold: new BigNumber('1000'),
           },
           {
@@ -255,6 +262,7 @@ describe('tansforms', () => {
           foobar: 'value',
           allowRedundantIPs: false,
           maxDowntimeHours: 1440,
+          minRecentScanFailures: 10,
           scoreOverrides: null,
         },
         contracts: {
@@ -303,6 +311,7 @@ describe('tansforms', () => {
             storageTB: new BigNumber('1'),
             allowRedundantIPs: false,
             maxDowntimeHours: new BigNumber('1440'),
+            minRecentScanFailures: new BigNumber('10'),
             defragThreshold: new BigNumber('1000'),
             defaultContractSet: 'myset',
             uploadPackingEnabled: false,
@@ -356,6 +365,7 @@ describe('tansforms', () => {
             storageTB: new BigNumber('1'),
             allowRedundantIPs: false,
             maxDowntimeHours: new BigNumber('1440'),
+            minRecentScanFailures: new BigNumber('10'),
             defragThreshold: new BigNumber('1000'),
             defaultContractSet: 'myset',
             uploadPackingEnabled: false,
@@ -514,6 +524,7 @@ function buildAllResponses() {
       hosts: {
         allowRedundantIPs: false,
         maxDowntimeHours: 1440,
+        minRecentScanFailures: 10,
         scoreOverrides: null,
       },
       contracts: {

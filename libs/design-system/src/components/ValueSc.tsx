@@ -13,6 +13,7 @@ type Props = {
   tooltip?: string
   fixed?: number
   dynamicUnits?: boolean
+  hastingUnits?: boolean
   extendedSuffix?: string
   showTooltip?: boolean
 }
@@ -25,6 +26,7 @@ export function ValueSc({
   variant = 'change',
   fixed = 3,
   dynamicUnits = true,
+  hastingUnits = true,
   extendedSuffix,
   showTooltip = true,
 }: Props) {
@@ -52,7 +54,7 @@ export function ValueSc({
             fixed,
             dynamicUnits,
           })}`
-        : humanSiacoin(value, { fixed, dynamicUnits })}
+        : humanSiacoin(value, { fixed, dynamicUnits, hastingUnits })}
       <Text size="20" weight="medium" font="mono" ellipsis color="subtle">
         {extendedSuffix ? `${extendedSuffix}` : ''}
       </Text>

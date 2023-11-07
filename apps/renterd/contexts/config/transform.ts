@@ -85,6 +85,7 @@ export function transformUpAutopilot(
     hosts: {
       ...existingValues?.hosts,
       maxDowntimeHours: v.maxDowntimeHours.toNumber(),
+      minRecentScanFailures: v.minRecentScanFailures.toNumber(),
       allowRedundantIPs: v.allowRedundantIPs,
       scoreOverrides: existingValues?.hosts.scoreOverrides || null,
     },
@@ -241,6 +242,7 @@ export function transformDownAutopilot(
     // hosts
     allowRedundantIPs: config.hosts.allowRedundantIPs,
     maxDowntimeHours: new BigNumber(config.hosts.maxDowntimeHours),
+    minRecentScanFailures: new BigNumber(config.hosts.minRecentScanFailures),
     // wallet
     defragThreshold: new BigNumber(config.wallet.defragThreshold),
   }
