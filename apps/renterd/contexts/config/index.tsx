@@ -473,17 +473,26 @@ export function useConfigMain() {
           throw Error(configAppResponse.error)
         }
 
-        triggerSuccessToast('Configuration has been saved.')
         if (isAutopilotEnabled) {
+          // Sync default contract set if necessary. Only syncs if the setting
+          // is enabled in case the user changes in advanced mode and then
+          // goes back to simple mode.
+          // Might be simpler nice to just override in simple mode without a
+          // special setting since this is how other settings like allowance
+          // behave - but leaving for now.
           syncDefaultContractSet(finalValues.autopilotContractSet)
+
+          // Trigger the autopilot loop with new settings applied.
           autopilotTrigger.post({
             payload: {
-              forceScan: false,
+              forceScan: true,
             },
           })
         }
 
-        // if autopilot is being configured for the first time,
+        triggerSuccessToast('Configuration has been saved.')
+
+        // If autopilot is being configured for the first time,
         // revalidate the empty hosts list.
         if (firstTimeSettingConfig) {
           const refreshHostsAfterDelay = async () => {

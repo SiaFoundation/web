@@ -12,10 +12,10 @@ import { random, throttle } from 'lodash'
 import { HostItem } from './HostItem'
 import { Globe } from './Globe'
 import { cx } from 'class-variance-authority'
-import { Host } from '../../content/geoHosts'
+import { SiaCentralPartialHost } from '../../content/geoHosts'
 
 type Props = {
-  hosts: Host[]
+  hosts: SiaCentralPartialHost[]
 
   rates: {
     usd: string

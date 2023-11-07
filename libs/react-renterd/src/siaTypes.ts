@@ -346,6 +346,7 @@ export interface AutopilotHostsConfig {
   allowRedundantIPs: boolean
   scoreOverrides: { [key: PublicKey]: number }
   maxDowntimeHours: number
+  minRecentScanFailures: number
 }
 
 export interface AutopilotContractsConfig {

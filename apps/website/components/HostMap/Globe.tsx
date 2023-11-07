@@ -11,15 +11,15 @@ import dynamic from 'next/dynamic'
 import { GlobeMethods } from 'react-globe.gl'
 import { random, sortBy } from 'lodash'
 import { getHostLabel } from './utils'
-import { Host } from '../../content/geoHosts'
+import { SiaCentralPartialHost } from '../../content/geoHosts'
 import { getAssetUrl } from '../../content/assets'
 import { useTheme } from 'next-themes'
 import { useElementSize } from 'usehooks-ts'
 
 type Props = {
-  activeHost: Host
+  activeHost: SiaCentralPartialHost
   selectActiveHost: (public_key: string) => void
-  hosts: Host[]
+  hosts: SiaCentralPartialHost[]
   rates: {
     usd: string
   }
@@ -27,8 +27,8 @@ type Props = {
 
 type Route = {
   distance: number
-  src: Host
-  dst: Host
+  src: SiaCentralPartialHost
+  dst: SiaCentralPartialHost
 }
 
 const GlobeGl = dynamic(() => import('./GlobeGl'), {
@@ -44,7 +44,7 @@ const ReactGlobe = forwardRef(function ReactGlobe(
 
 function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
   const globeEl = useRef<GlobeMethods>(null)
-  const moveToHost = useCallback((host: Host) => {
+  const moveToHost = useCallback((host: SiaCentralPartialHost) => {
     globeEl.current?.pointOfView(
       {
         lat: host.location[0] - 8,
@@ -175,19 +175,21 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
         }}
         arcsTransitionDuration={0}
         pointsData={hosts}
-        pointLat={(h: Host) => h.location[0]}
-        pointLng={(h: Host) => h.location[1]}
-        pointLabel={(h: Host) => getHostLabel({ host: h, rates })}
+        pointLat={(h: SiaCentralPartialHost) => h.location[0]}
+        pointLng={(h: SiaCentralPartialHost) => h.location[1]}
+        pointLabel={(h: SiaCentralPartialHost) =>
+          getHostLabel({ host: h, rates })
+        }
         pointAltitude={0}
-        pointColor={(h: Host) =>
+        pointColor={(h: SiaCentralPartialHost) =>
           h.public_key === activeHost.public_key
             ? 'rgba(0,255,0,1)'
             : 'rgba(0,255,0,1)'
         }
-        pointRadius={(h: Host) =>
+        pointRadius={(h: SiaCentralPartialHost) =>
           h.public_key === activeHost.public_key ? 0.6 : 0.2
         }
-        onPointClick={(h: Host) => {
+        onPointClick={(h: SiaCentralPartialHost) => {
           selectActiveHost(h.public_key)
         }}
         pointsMerge={false}
@@ -198,14 +200,20 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
 
 export const Globe = memo(GlobeComponent)
 
-function distanceBetweenHosts(h1: Host, h2: Host) {
+function distanceBetweenHosts(
+  h1: SiaCentralPartialHost,
+  h2: SiaCentralPartialHost
+) {
   return Math.sqrt(
     Math.pow(h1.location[0] - h2.location[0], 2) +
       Math.pow(h1.location[1] - h2.location[1], 2)
   )
 }
 
-function doesIncludeActiveHost(route: Route, activeHost: Host) {
+function doesIncludeActiveHost(
+  route: Route,
+  activeHost: SiaCentralPartialHost
+) {
   return (
     route.dst.public_key === activeHost.public_key ||
     route.src.public_key === activeHost.public_key

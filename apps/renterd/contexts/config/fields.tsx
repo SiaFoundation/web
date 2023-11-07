@@ -244,6 +244,28 @@ export function getFields({
             }
           : {},
     },
+    minRecentScanFailures: {
+      type: 'number',
+      category: 'hosts',
+      title: 'Min recent scan failures',
+      description: (
+        <>
+          The minimum number of recent scan failures that autopilot will
+          tolerate.
+        </>
+      ),
+      units: 'scans',
+      decimalsLimit: 0,
+      suggestion: advancedDefaultAutopilot.minRecentScanFailures,
+      suggestionTip: `Defaults to ${advancedDefaultAutopilot.minRecentScanFailures.toNumber()}.`,
+      hidden: !isAutopilotEnabled || !showAdvanced,
+      validation:
+        isAutopilotEnabled && showAdvanced
+          ? {
+              required: 'required',
+            }
+          : {},
+    },
 
     // wallet
     defragThreshold: {
