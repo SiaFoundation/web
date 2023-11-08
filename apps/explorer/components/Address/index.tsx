@@ -52,10 +52,12 @@ export function Address({ id, address }: Props) {
         ...address.unconfirmed_transactions.map((tx) => ({
           hash: tx.id,
           sc: getTotal({
+            address: id,
             inputs: tx.siacoin_inputs,
             outputs: tx.siacoin_outputs,
           }),
           sf: getTotal({
+            address: id,
             inputs: tx.siafund_inputs,
             outputs: tx.siafund_outputs,
           }).toNumber(),
@@ -72,10 +74,12 @@ export function Address({ id, address }: Props) {
         ...address.transactions.map((tx) => ({
           hash: tx.id,
           sc: getTotal({
+            address: id,
             inputs: tx.siacoin_inputs,
             outputs: tx.siacoin_outputs,
           }),
           sf: getTotal({
+            address: id,
             inputs: tx.siafund_inputs,
             outputs: tx.siafund_outputs,
           }).toNumber(),
@@ -88,7 +92,7 @@ export function Address({ id, address }: Props) {
       )
     }
     return list
-  }, [address])
+  }, [id, address])
 
   const utxos = useMemo(() => {
     const list: EntityListItemProps[] = []
@@ -159,15 +163,23 @@ export function Address({ id, address }: Props) {
 }
 
 function getTotal({
+  address,
   inputs,
   outputs,
 }: {
-  inputs?: { value: string }[]
-  outputs?: { value: string }[]
+  address: string
+  inputs?: { value: string; unlock_hash: string }[]
+  outputs?: { value: string; unlock_hash: string }[]
 }) {
   return (outputs || [])
-    .reduce((acc, o) => acc.plus(o.value), new BigNumber(0))
+    .reduce(
+      (acc, o) => (o.unlock_hash === address ? acc.plus(o.value) : acc),
+      new BigNumber(0)
+    )
     .minus(
-      (inputs || []).reduce((acc, i) => acc.plus(i.value), new BigNumber(0))
+      (inputs || []).reduce(
+        (acc, i) => (i.unlock_hash === address ? acc.plus(i.value) : acc),
+        new BigNumber(0)
+      )
     )
 }
