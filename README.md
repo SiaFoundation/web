@@ -50,6 +50,7 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 - [@siafoundation/sia-nodejs](libs/sia-nodejs) - Sia NodeJS client for controlling a v1 `siad`.
 - [@siafoundation/design-system](libs/design-system) - React-based design system used across Sia apps and websites.
 - [@siafoundation/data-sources](libs/data-sources) - Data sources used for stats on the website.
+- [@siafoundation/units](libs/units) - Methods and types for converting and displaying units.
 
 ## Internal
 

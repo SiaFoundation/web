@@ -6,10 +6,12 @@ import { getOGImage } from '../../../components/OGImageEntity'
 import { siaCentralApi } from '../../../config'
 import {
   getDownloadCost,
+  getDownloadSpeed,
   getStorageCost,
   getUploadCost,
-} from '../../../lib/host'
-import { humanBytes, humanSpeed } from '@siafoundation/sia-js'
+  getUploadSpeed,
+} from '@siafoundation/units'
+import { humanBytes } from '@siafoundation/sia-js'
 import { truncate } from '@siafoundation/design-system'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
 
@@ -76,10 +78,7 @@ export default async function Image({ params }) {
           rate: r.rates.sc.usd,
         },
       }),
-      subvalue: humanSpeed(
-        (h.host.benchmark.data_size * 8) /
-          (h.host.benchmark.download_time / 1000)
-      ),
+      subvalue: h.host.benchmark && getDownloadSpeed(h.host),
     },
     {
       label: 'upload',
@@ -90,9 +89,7 @@ export default async function Image({ params }) {
           rate: r.rates.sc.usd,
         },
       }),
-      subvalue: humanSpeed(
-        (h.host.benchmark.data_size * 8) / (h.host.benchmark.upload_time / 1000)
-      ),
+      subvalue: h.host.benchmark && getUploadSpeed(h.host),
     },
   ]
 

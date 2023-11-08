@@ -19,7 +19,7 @@ import {
   getStorageCost,
   getUploadCost,
   getUploadSpeed,
-} from '../../lib/host'
+} from '@siafoundation/units'
 import { useExchangeRate } from '../../hooks/useExchangeRate'
 
 type Props = {
