@@ -1,0 +1,14 @@
+{
+  "name": "@siafoundation/units",
+  "description": "Methods and types for interacting with the Sia Central API.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "dependencies": {
+    "@siafoundation/design-system": "^0.58.1",
+    "@siafoundation/sia-central": "^0.1.0",
+    "bignumber.js": "^9.0.2",
+    "@siafoundation/sia-js": "^0.11.0",
+    "@siafoundation/react-core": "^0.15.0"
+  },
+  "types": "./src/index.d.ts"
+}

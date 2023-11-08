@@ -50,16 +50,28 @@ export function getUploadCost({ price, exchange }: Props) {
       })}/TB`
 }
 
-export function getDownloadSpeed(host: SiaCentralHost) {
-  return humanSpeed(
-    (host.benchmark.data_size * 8) / (host.benchmark.download_time / 1000)
-  )
+type SiaCentralPartialHost = {
+  benchmark?: {
+    data_size: number
+    download_time: number
+    upload_time: number
+  }
 }
 
-export function getUploadSpeed(host: SiaCentralHost) {
-  return humanSpeed(
-    (host.benchmark.data_size * 8) / (host.benchmark.upload_time / 1000)
-  )
+export function getDownloadSpeed(host: SiaCentralPartialHost) {
+  return host.benchmark
+    ? humanSpeed(
+        (host.benchmark.data_size * 8) / (host.benchmark.download_time / 1000)
+      )
+    : '-'
+}
+
+export function getUploadSpeed(host: SiaCentralPartialHost) {
+  return host.benchmark
+    ? humanSpeed(
+        (host.benchmark.data_size * 8) / (host.benchmark.upload_time / 1000)
+      )
+    : '-'
 }
 
 export function getRemainingOverTotalStorage(host: SiaCentralHost) {

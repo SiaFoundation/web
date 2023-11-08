@@ -7,10 +7,11 @@ import {
   Tooltip,
   countryCodeEmoji,
 } from '@siafoundation/design-system'
-import { humanBytes, humanSiacoin, humanSpeed } from '@siafoundation/sia-js'
+import { humanBytes, humanSiacoin } from '@siafoundation/sia-js'
 import { cx } from 'class-variance-authority'
 import BigNumber from 'bignumber.js'
 import { SiaCentralHost } from '@siafoundation/sia-central'
+import { getDownloadSpeed, getUploadSpeed } from '@siafoundation/units'
 
 type Host = SiaCentralHost
 
@@ -96,18 +97,8 @@ export function HostItem({
               <Text color="contrast">
                 {humanBytes(host.settings.total_storage)}
               </Text>
-              <Text color="contrast">
-                {humanSpeed(
-                  (host.benchmark.data_size * 8) /
-                    (host.benchmark.download_time / 1000)
-                )}{' '}
-              </Text>
-              <Text color="contrast">
-                {humanSpeed(
-                  (host.benchmark.data_size * 8) /
-                    (host.benchmark.upload_time / 1000)
-                )}{' '}
-              </Text>
+              <Text color="contrast">{getDownloadSpeed(host)}</Text>
+              <Text color="contrast">{getUploadSpeed(host)}</Text>
             </div>
             <div className="flex flex-col gap-1">
               <Text color="contrast">{storageCost}</Text>
@@ -149,12 +140,10 @@ export function HostItem({
             host.public_key === activeHost?.public_key ? 'semibold' : 'regular'
           }
         >
-          {humanBytes(host.settings.total_storage)} ·{' '}
-          {humanSpeed(
-            (host.benchmark.data_size * 8) /
-              (host.benchmark.download_time / 1000)
-          )}{' '}
-          · {storageCost}
+          {humanBytes(host.settings.total_storage)}
+          {host.benchmark && ` · ${getDownloadSpeed(host)}`}
+          {' · '}
+          {storageCost}
         </Text>
       </Button>
     </Tooltip>

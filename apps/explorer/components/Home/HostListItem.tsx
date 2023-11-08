@@ -24,7 +24,7 @@ import {
   getStorageCost,
   getUploadCost,
   getUploadSpeed,
-} from '../../lib/host'
+} from '@siafoundation/units'
 import { useMemo } from 'react'
 import { routes } from '../../config/routes'
 import { useExchangeRate } from '../../hooks/useExchangeRate'
@@ -106,7 +106,7 @@ export function HostListItem({ host, rates, entity }: Props) {
             </Tooltip>
             <Tooltip content="Download speed">
               <Text size="10" color="subtle" ellipsis>
-                {downloadSpeed}
+                {downloadSpeed || '-'}
               </Text>
             </Tooltip>
           </div>
@@ -121,7 +121,7 @@ export function HostListItem({ host, rates, entity }: Props) {
             </Tooltip>
             <Tooltip content="Upload speed">
               <Text size="10" color="subtle" ellipsis>
-                {uploadSpeed}
+                {uploadSpeed || '-'}
               </Text>
             </Tooltip>
           </div>

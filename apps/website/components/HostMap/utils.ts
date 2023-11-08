@@ -3,15 +3,16 @@ import {
   TBToBytes,
   countryCodeEmoji,
 } from '@siafoundation/design-system'
-import { humanBytes, humanSiacoin, humanSpeed } from '@siafoundation/sia-js'
+import { humanBytes, humanSiacoin } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
-import { Host } from '../../content/geoHosts'
+import { SiaCentralPartialHost } from '../../content/geoHosts'
+import { getDownloadSpeed } from '@siafoundation/units'
 
 export function getHostLabel({
   host,
   rates,
 }: {
-  host: Host
+  host: SiaCentralPartialHost
   rates: {
     usd: string
   }
@@ -32,7 +33,5 @@ export function getHostLabel({
 
   return `${countryCodeEmoji(host.country_code)} · ${humanBytes(
     host.settings.total_storage
-  )} · ${humanSpeed(
-    (host.benchmark.data_size * 8) / (host.benchmark.download_time / 1000)
-  )} · ${storageCost}`
+  )}${host.benchmark && ` · ${getDownloadSpeed(host)}`} · ${storageCost}`
 }

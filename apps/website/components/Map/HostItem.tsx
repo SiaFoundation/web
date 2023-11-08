@@ -8,11 +8,12 @@ import {
   LinkButton,
   webLinks,
 } from '@siafoundation/design-system'
-import { humanBytes, humanSiacoin, humanSpeed } from '@siafoundation/sia-js'
+import { humanBytes, humanSiacoin } from '@siafoundation/sia-js'
 import { cx } from 'class-variance-authority'
 import BigNumber from 'bignumber.js'
 import { SiaCentralPartialHost } from '../../content/geoHosts'
 import { Launch16 } from '@carbon/icons-react'
+import { getDownloadSpeed, getUploadSpeed } from '@siafoundation/units'
 
 type Props = {
   host: SiaCentralPartialHost
@@ -120,16 +121,10 @@ export function HostItem({
             {humanBytes(host.settings.total_storage)}
           </Text>
           <Text color="contrast" ellipsis>
-            {humanSpeed(
-              (host.benchmark.data_size * 8) /
-                (host.benchmark.download_time / 1000)
-            )}{' '}
+            {getDownloadSpeed(host)}
           </Text>
           <Text color="contrast" ellipsis>
-            {humanSpeed(
-              (host.benchmark.data_size * 8) /
-                (host.benchmark.upload_time / 1000)
-            )}{' '}
+            {getUploadSpeed(host)}
           </Text>
         </div>
         <div className="flex flex-col gap-1 items-end">

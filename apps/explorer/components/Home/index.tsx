@@ -18,7 +18,11 @@ import {
   SiaCentralHostsNetworkMetricsResponse,
 } from '@siafoundation/sia-central'
 import { hashToAvatar } from '../../lib/avatar'
-import { getDownloadCost, getStorageCost, getUploadCost } from '../../lib/host'
+import {
+  getDownloadCost,
+  getStorageCost,
+  getUploadCost,
+} from '@siafoundation/units'
 import { HostListItem } from './HostListItem'
 import { useExchangeRate } from '../../hooks/useExchangeRate'
 
@@ -62,7 +66,7 @@ export function Home({
               <Tooltip
                 content={`${humanBytes(
                   metrics?.totals.total_storage -
-                  metrics?.totals.remaining_storage
+                    metrics?.totals.remaining_storage
                 )} used storage`}
               >
                 <Text
@@ -72,7 +76,7 @@ export function Home({
                 >
                   {humanBytes(
                     metrics?.totals.total_storage -
-                    metrics?.totals.remaining_storage
+                      metrics?.totals.remaining_storage
                   )}
                 </Text>
               </Tooltip>

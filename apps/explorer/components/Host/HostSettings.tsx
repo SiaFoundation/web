@@ -14,7 +14,11 @@ import {
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { humanBytes, humanSiacoin, toSiacoins } from '@siafoundation/sia-js'
-import { getDownloadCost, getStorageCost, getUploadCost } from '../../lib/host'
+import {
+  getDownloadCost,
+  getStorageCost,
+  getUploadCost,
+} from '@siafoundation/units'
 import { useExchangeRate } from '../../hooks/useExchangeRate'
 import { siacoinToFiat } from '../../lib/currency'
 
