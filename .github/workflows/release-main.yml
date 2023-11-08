@@ -57,7 +57,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
       # If there are changesets, then we are in PR prep mode and will
-      # update the release pull request. Note that there are no changesets
+      # update the release pull request. Note that if there are no changesets
       # this step will be skipped because no publish script is specified.
       - name: Update release pull request
         id: changesets
@@ -72,7 +72,7 @@ jobs:
         run: ./scripts/replace-src-with-dists-for-publishing.sh
       # If no changesets were detected in the PR prep step then we are in
       # release/publish mode. Check for and publish any new versions to NPM.
-      - name: Publish to NPM
+      - name: Publish to NPM and create GitHub releases
         if: steps.changesets.outputs.hasChangesets == 'false'
         uses: changesets/action@v1
         with:
