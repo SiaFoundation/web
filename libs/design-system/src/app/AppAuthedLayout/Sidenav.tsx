@@ -20,7 +20,11 @@ type Props = {
   }
   profile: React.ReactNode
   showWallet?: boolean
-  walletBalance?: BigNumber
+  walletBalanceSc?: {
+    unconfirmed: BigNumber
+    confirmed: BigNumber
+    spendable: BigNumber
+  }
   isSynced: boolean
   lock?: () => void
   openSettings: () => void
@@ -32,7 +36,7 @@ export function Sidenav({
   profile,
   isSynced,
   showWallet = true,
-  walletBalance,
+  walletBalanceSc,
   lock,
   openSettings,
   children,
@@ -56,7 +60,7 @@ export function Sidenav({
             <SidenavItemWallet
               routes={routes}
               isSynced={isSynced}
-              walletBalance={walletBalance}
+              walletBalanceSc={walletBalanceSc}
             />
           )}
           <SidenavItem title="Blockchain node" route={routes.node.index}>

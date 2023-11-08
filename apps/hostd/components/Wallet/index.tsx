@@ -89,7 +89,6 @@ export function Wallet() {
         .sort((a, b) => (a.timestamp >= b.timestamp ? 1 : -1)),
     [metrics.data]
   )
-  console.log(balances)
 
   const { isSynced, isWalletSynced, syncPercent, walletScanPercent } =
     useSyncStatus()
@@ -106,11 +105,13 @@ export function Wallet() {
           isWalletSynced={isWalletSynced}
           syncPercent={syncPercent}
           walletScanPercent={walletScanPercent}
-          sc={
+          balanceSc={
             wallet.data
-              ? new BigNumber(wallet.data.spendable).plus(
-                  wallet.data.unconfirmed
-                )
+              ? {
+                  spendable: new BigNumber(wallet.data.spendable),
+                  unconfirmed: new BigNumber(wallet.data.unconfirmed),
+                  confirmed: new BigNumber(wallet.data.confirmed),
+                }
               : undefined
           }
           receiveSiacoin={() => openDialog('addressDetails')}

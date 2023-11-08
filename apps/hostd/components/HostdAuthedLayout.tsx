@@ -23,10 +23,12 @@ export function HostdAuthedLayout(
       banner={<HostdTestnetWarningBanner />}
       profile={<Profile />}
       isSynced={isSynced}
-      walletBalance={
-        wallet.data
-          ? new BigNumber(wallet.data.spendable).plus(wallet.data.unconfirmed)
-          : undefined
+      walletBalanceSc={
+        wallet.data && {
+          spendable: new BigNumber(wallet.data.spendable),
+          confirmed: new BigNumber(wallet.data.confirmed),
+          unconfirmed: new BigNumber(wallet.data.unconfirmed),
+        }
       }
       {...props}
     />
