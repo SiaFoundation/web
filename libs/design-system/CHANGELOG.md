@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.59.0
+
+### Minor Changes
+
+- 35ff2dec: Siacoin and number input placeholders now match the suggested value.
+- 6fc53f46: Extremely small siacoin values will now show as hastings by default rather than 0SC.
+
 ## 0.58.1
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @siafoundation/react-renterd
 
+## 0.9.0
+
+### Minor Changes
+
+- 2bd31cb4: Removed and updated deprecated route names.
+- db21136e: Add useAutopilotTrigger.
+
 ## 0.8.1
 
 ### Patch Changes

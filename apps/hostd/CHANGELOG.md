@@ -1,5 +1,15 @@
 # hostd
 
+## 0.26.0
+
+### Minor Changes
+
+- e04a35c7: Wallet now instructs new users to fund their wallet when there are no transactions yet.
+- 16b7df4c: The wallet balance tooltip now shows spendable confirmed and unconfirmed values.
+- 7996532c: The configuration now shows suggestions for pricing, collateral, and other settings.
+- 6fc53f46: Extremely small siacoin values will now show as hastings by default rather than 0SC.
+- e04a35c7: Wallet balance evolution graph is now hidden until at least 1 data point is available.
+
 ## 0.25.0
 
 ### Minor Changes
