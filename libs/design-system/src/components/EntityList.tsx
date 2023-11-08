@@ -13,6 +13,7 @@ type Props = {
   actions?: React.ReactNode
   entities?: EntityListItemProps[]
   children?: React.ReactNode
+  emptyState?: React.ReactNode
   emptyMessage?: string
   skeletonCount?: number
 }
@@ -21,6 +22,7 @@ export function EntityList({
   title,
   actions,
   entities,
+  emptyState,
   emptyMessage,
   skeletonCount = 10,
   children,
@@ -41,18 +43,19 @@ export function EntityList({
           </div>
         )}
         <div className="flex flex-col rounded overflow-hidden">
-          {entities?.length === 0 && (
-            <div
-              className={cx(
-                'flex items-center justify-center h-[84px]',
-                itemBorderStyles()
-              )}
-            >
-              <Text size="18" color="subtle">
-                {emptyMessage || 'No results'}
-              </Text>
-            </div>
-          )}
+          {entities?.length === 0 &&
+            (emptyState || (
+              <div
+                className={cx(
+                  'flex items-center justify-center h-[84px]',
+                  itemBorderStyles()
+                )}
+              >
+                <Text size="18" color="subtle">
+                  {emptyMessage || 'No results'}
+                </Text>
+              </div>
+            ))}
           {children ||
             entities?.map((entity, i) => {
               return (
