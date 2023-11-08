@@ -1,5 +1,13 @@
 # explorer
 
+## 0.9.0
+
+### Minor Changes
+
+- 723803a7: Fixed an issue loading the host page for hosts that are not benchmarked yet.
+- c54455f8: Siafunds now properly show on the address totals.
+- 3c5f490b: Fixed an issue where transaction values were incorrect on the address page transaction list.
+
 ## 0.8.0
 
 ### Minor Changes

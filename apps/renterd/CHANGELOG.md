@@ -1,5 +1,24 @@
 # renterd
 
+## 0.32.0
+
+### Minor Changes
+
+- e04a35c7: Wallet now instructs new users to fund their wallet when there are no transactions yet.
+- c8ae5aeb: Hosts last scan column now properly displays unscanned values rather than a very large time ago value.
+- 16b7df4c: The wallet balance tooltip now shows spendable confirmed and unconfirmed values.
+- 6fc53f46: The maxDowntimeHours setting default value is now 336.
+- 6fc53f46: Added support for the minRecentScanFailures autopilot hosts setting.
+- 35ff2dec: Siacoin and number input placeholders now match the suggested value.
+- 6fc53f46: Extremely small siacoin values will now show as hastings by default rather than 0SC.
+- e04a35c7: Fixed an issue where the wallet balance graph would not show the first data point.
+- db21136e: The autopilot loop is now triggered after settings are successfully updated.
+- a2db3b21: Files are now paginated.
+- 6fc53f46: Refined the warnings in the files feature navbar and file explorer empty states.
+- 9a065e66: Onboarding fund wallet step now requires >0 SC instead of a full allowance.
+- e04a35c7: Wallet balance evolution graph is now hidden until at least 1 data point is available.
+- 4462f129: The hosts table now has a last announcement column instead of the known since column.
+
 ## 0.31.0
 
 ### Minor Changes

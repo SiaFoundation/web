@@ -1,5 +1,13 @@
 # website
 
+## 0.45.0
+
+### Minor Changes
+
+- 6fc53f46: The navbar now includes the logo and "sia" as text.
+- 7a0f9545: The website now features an improved interactive host map.
+- 00041ed2: Downloads are now more prominent and the correct OS is preselected.
+
 ## 0.44.0
 
 ### Minor Changes
