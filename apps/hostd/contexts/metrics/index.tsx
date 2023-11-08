@@ -262,11 +262,13 @@ function useMetricsMain() {
     Chart<CollateralKeys, CollateralCategories>
   >(() => {
     const data = formatChartData(
-      metricsPeriod.data?.map((m) => ({
-        locked: Number(m.contracts.lockedCollateral),
-        risked: Number(m.contracts.riskedCollateral),
-        timestamp: new Date(m.timestamp).getTime(),
-      })),
+      metricsPeriod.data
+        ?.map((m) => ({
+          locked: Number(m.contracts.lockedCollateral),
+          risked: Number(m.contracts.riskedCollateral),
+          timestamp: new Date(m.timestamp).getTime(),
+        }))
+        .slice(1),
       'none'
     )
     const stats = computeChartStats(data)
@@ -291,22 +293,24 @@ function useMetricsMain() {
 
   const pricing = useMemo<Chart<PricingKeys, never>>(() => {
     const data = formatChartData(
-      metricsPeriod.data?.map((m) => ({
-        baseRPC: humanBaseRpcPrice(m.pricing.baseRPCPrice).toNumber(),
-        collateral: humanCollateralPrice(
-          new BigNumber(m.pricing.storagePrice).times(
-            m.pricing.collateralMultiplier
-          )
-        ).toNumber(),
-        contract: Number(m.pricing.contractPrice),
-        egress: humanEgressPrice(m.pricing.egressPrice).toNumber(),
-        ingress: humanIngressPrice(m.pricing.ingressPrice).toNumber(),
-        sectorAccess: humanSectorAccessPrice(
-          m.pricing.sectorAccessPrice
-        ).toNumber(),
-        storage: humanStoragePrice(m.pricing.storagePrice).toNumber(),
-        timestamp: new Date(m.timestamp).getTime(),
-      })),
+      metricsPeriod.data
+        ?.map((m) => ({
+          baseRPC: humanBaseRpcPrice(m.pricing.baseRPCPrice).toNumber(),
+          collateral: humanCollateralPrice(
+            new BigNumber(m.pricing.storagePrice).times(
+              m.pricing.collateralMultiplier
+            )
+          ).toNumber(),
+          contract: Number(m.pricing.contractPrice),
+          egress: humanEgressPrice(m.pricing.egressPrice).toNumber(),
+          ingress: humanIngressPrice(m.pricing.ingressPrice).toNumber(),
+          sectorAccess: humanSectorAccessPrice(
+            m.pricing.sectorAccessPrice
+          ).toNumber(),
+          storage: humanStoragePrice(m.pricing.storagePrice).toNumber(),
+          timestamp: new Date(m.timestamp).getTime(),
+        }))
+        .slice(1),
       'none'
     )
     const stats = computeChartStats(data)
@@ -352,14 +356,16 @@ function useMetricsMain() {
 
   const contracts = useMemo<Chart<ContractsKeys, never>>(() => {
     const data = formatChartData(
-      metricsPeriod.data?.map((m) => ({
-        active: m.contracts.active,
-        failed: m.contracts.failed,
-        pending: m.contracts.pending,
-        rejected: m.contracts.rejected,
-        successful: m.contracts.successful,
-        timestamp: new Date(m.timestamp).getTime(),
-      })),
+      metricsPeriod.data
+        ?.map((m) => ({
+          active: m.contracts.active,
+          failed: m.contracts.failed,
+          pending: m.contracts.pending,
+          rejected: m.contracts.rejected,
+          successful: m.contracts.successful,
+          timestamp: new Date(m.timestamp).getTime(),
+        }))
+        .slice(1),
       'none'
     )
     const stats = computeChartStats(data)
@@ -387,19 +393,21 @@ function useMetricsMain() {
 
   const storage = useMemo<Chart<StorageKeys, StorageCategories>>(() => {
     const data = formatChartData(
-      metricsPeriod.data?.map((m) => ({
-        maxSectors: MiBToBytes(m.storage.totalSectors).times(4).toNumber(),
-        registryEntries: m.registry.entries * 113,
-        maxRegistryEntries: m.registry.maxEntries * 113,
-        tempSectors: MiBToBytes(m.storage.tempSectors).times(4).toNumber(),
-        physicalSectors: MiBToBytes(m.storage.physicalSectors)
-          .times(4)
-          .toNumber(),
-        contractSectors: MiBToBytes(m.storage.contractSectors)
-          .times(4)
-          .toNumber(),
-        timestamp: new Date(m.timestamp).getTime(),
-      })),
+      metricsPeriod.data
+        ?.map((m) => ({
+          maxSectors: MiBToBytes(m.storage.totalSectors).times(4).toNumber(),
+          registryEntries: m.registry.entries * 113,
+          maxRegistryEntries: m.registry.maxEntries * 113,
+          tempSectors: MiBToBytes(m.storage.tempSectors).times(4).toNumber(),
+          physicalSectors: MiBToBytes(m.storage.physicalSectors)
+            .times(4)
+            .toNumber(),
+          contractSectors: MiBToBytes(m.storage.contractSectors)
+            .times(4)
+            .toNumber(),
+          timestamp: new Date(m.timestamp).getTime(),
+        }))
+        .slice(1),
       'none'
     )
     const stats = computeChartStats(data)

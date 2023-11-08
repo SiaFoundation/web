@@ -20,6 +20,7 @@ import BigNumber from 'bignumber.js'
 import { HostdSidenav } from '../HostdSidenav'
 import { HostdAuthedLayout } from '../HostdAuthedLayout'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
+import { EmptyState } from './EmptyState'
 
 export function Wallet() {
   const transactions = useWalletTransactions({
@@ -88,6 +89,7 @@ export function Wallet() {
         .sort((a, b) => (a.timestamp >= b.timestamp ? 1 : -1)),
     [metrics.data]
   )
+  console.log(balances)
 
   const { isSynced, isWalletSynced, syncPercent, walletScanPercent } =
     useSyncStatus()
@@ -125,11 +127,17 @@ export function Wallet() {
       }
     >
       <div className="p-6 flex flex-col gap-5">
-        <BalanceEvolution
-          balances={balances}
-          isLoading={metrics.isValidating}
+        {balances?.length && balances.find((b) => b.sc) ? (
+          <BalanceEvolution
+            balances={balances}
+            isLoading={metrics.isValidating}
+          />
+        ) : null}
+        <EntityList
+          title="Transactions"
+          entities={entities.slice(0, 100)}
+          emptyState={<EmptyState />}
         />
-        <EntityList title="Transactions" entities={entities.slice(0, 100)} />
       </div>
     </HostdAuthedLayout>
   )

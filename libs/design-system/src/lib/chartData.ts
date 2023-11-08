@@ -41,8 +41,7 @@ export function formatChartData<Key extends string>(
       result.push(point)
     })
   } else {
-    // if not delta mode, drop first datum as it was only fetched for delta mode
-    result = dataset.slice(1)
+    result = dataset
   }
   return result
 }
