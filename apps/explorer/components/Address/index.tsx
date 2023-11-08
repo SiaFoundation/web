@@ -39,7 +39,7 @@ export function Address({ id, address }: Props) {
     if (address.unspent_siafunds !== '0') {
       list.push({
         label: 'SF',
-        sc: new BigNumber(address.unspent_siafunds),
+        sf: Number(address.unspent_siafunds),
       })
     }
     return list
