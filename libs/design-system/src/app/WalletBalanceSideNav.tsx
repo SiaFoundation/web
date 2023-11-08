@@ -1,12 +1,10 @@
-import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
 import { humanSiacoin } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
-import { Warning16 } from '@siafoundation/react-icons'
 import { Tooltip } from '../core/Tooltip'
 import { ValueSc } from '../components/ValueSc'
 
-export function WalletBalance({
+export function WalletBalanceSideNav({
   balanceSc,
   isSynced,
   syncingMessage,
@@ -26,24 +24,23 @@ export function WalletBalance({
   if (!isSynced) {
     return (
       <Tooltip
+        side="right"
         content={
           syncingMessage || 'Blockchain is syncing, balance may be incorrect.'
         }
       >
-        <Panel className="hidden sm:flex h-7 pl-2 pr-3 gap-1.5 items-center">
-          <Text color="amber">
-            <Warning16 className="" />
-          </Text>
-          <Text size="12" weight="semibold">
-            {humanSiacoin(balanceSc.spendable.plus(balanceSc.unconfirmed))}
-          </Text>
-        </Panel>
+        <Text size="12" weight="medium">
+          {humanSiacoin(balanceSc.spendable.plus(balanceSc.unconfirmed), {
+            fixed: 0,
+          })}
+        </Text>
       </Tooltip>
     )
   }
 
   return (
     <Tooltip
+      side="right"
       content={
         <div className="flex flex-col gap-1">
           <div className="flex gap-2">
@@ -76,11 +73,11 @@ export function WalletBalance({
         </div>
       }
     >
-      <Panel className="hidden sm:flex h-7 px-3 items-center">
-        <Text size="12" weight="semibold">
-          {humanSiacoin(balanceSc.spendable.plus(balanceSc.unconfirmed))}
-        </Text>
-      </Panel>
+      <Text size="12" weight="medium">
+        {humanSiacoin(balanceSc.spendable.plus(balanceSc.unconfirmed), {
+          fixed: 0,
+        })}
+      </Text>
     </Tooltip>
   )
 }

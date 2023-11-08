@@ -27,7 +27,11 @@ type Props = {
   connectivityRoute: string
   isSynced: boolean
   showWallet?: boolean
-  walletBalance?: BigNumber
+  walletBalanceSc?: {
+    unconfirmed: BigNumber
+    confirmed: BigNumber
+    spendable: BigNumber
+  }
   scroll?: boolean
   routes: {
     login: string
@@ -57,7 +61,7 @@ export function AppAuthedLayout({
   connectivityRoute,
   isSynced,
   showWallet,
-  walletBalance,
+  walletBalanceSc,
   routes,
   scroll = true,
   openSettings,
@@ -88,7 +92,7 @@ export function AppAuthedLayout({
             openSettings={openSettings}
             lock={lock}
             showWallet={showWallet}
-            walletBalance={walletBalance}
+            walletBalanceSc={walletBalanceSc}
             isSynced={isSynced}
           >
             {sidenav}

@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { WalletIcon } from '@siafoundation/react-icons'
-import { WalletBalanceMini } from '../WalletBalanceMini'
+import { WalletBalanceSideNav } from '../WalletBalanceSideNav'
 import { SidenavItem } from './SidenavItem'
 
 type Routes = {
@@ -10,21 +10,28 @@ type Routes = {
 }
 
 type Props = {
-  walletBalance?: BigNumber
+  walletBalanceSc?: {
+    unconfirmed: BigNumber
+    confirmed: BigNumber
+    spendable: BigNumber
+  }
   isSynced: boolean
   routes: Routes
 }
 
-export function SidenavItemWallet({ walletBalance, isSynced, routes }: Props) {
+export function SidenavItemWallet({
+  walletBalanceSc,
+  isSynced,
+  routes,
+}: Props) {
   return (
     <SidenavItem title="Wallet" route={routes.wallet.view}>
       <div className="flex flex-col gap-3 items-center">
         <WalletIcon />
-        {isSynced && walletBalance && (
-          <WalletBalanceMini
-            wallet={{
-              sc: walletBalance,
-            }}
+        {isSynced && walletBalanceSc && (
+          <WalletBalanceSideNav
+            isSynced={isSynced}
+            balanceSc={walletBalanceSc}
           />
         )}
       </div>
