@@ -3,7 +3,7 @@ import {
   triggerSuccessToast,
   triggerToast,
 } from '@siafoundation/design-system'
-import { useObjectUpload } from '@siafoundation/react-renterd'
+import { useBuckets, useObjectUpload } from '@siafoundation/react-renterd'
 import { throttle } from 'lodash'
 import { useCallback, useMemo, useState } from 'react'
 import { ObjectData } from './types'
@@ -26,6 +26,7 @@ type Props = {
 }
 
 export function useUploads({ activeDirectoryPath }: Props) {
+  const buckets = useBuckets()
   const upload = useObjectUpload()
   const [uploadsMap, setUploadsMap] = useState<UploadsMap>({})
 
@@ -90,7 +91,8 @@ export function useUploads({ activeDirectoryPath }: Props) {
       const name = file.name
       // TODO: check if name has /prefix
       const path = getFilePath(activeDirectoryPath, name)
-      const bucket = getBucketFromPath(path)
+      const bucketName = getBucketFromPath(path)
+      const bucket = buckets.data?.find((b) => b.name === bucketName)
 
       if (uploadsMap[path]) {
         triggerErrorToast(`Already uploading file: ${path}`)
