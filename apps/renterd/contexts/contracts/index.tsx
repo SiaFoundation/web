@@ -138,15 +138,6 @@ function useContractsMain() {
     filters
   )
 
-  const datasetConfirmedCount = useMemo(() => {
-    if (!dataset) {
-      return 0
-    }
-    return dataset.filter(
-      (d) => d.contractHeightStart < syncStatus.nodeBlockHeight
-    ).length
-  }, [dataset, syncStatus.nodeBlockHeight])
-
   return {
     dataState,
     limit,
@@ -155,7 +146,6 @@ function useContractsMain() {
     error: response.error,
     pageCount: datasetPage?.length || 0,
     datasetCount: datasetFiltered?.length || 0,
-    datasetConfirmedCount,
     columns: filteredTableColumns,
     dataset,
     datasetPage,

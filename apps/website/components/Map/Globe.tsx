@@ -8,7 +8,6 @@ import earthTopology from '../../assets/earth-topology.png'
 import nightSky from '../../assets/night-sky.png'
 import { GlobeDyn } from './GlobeDyn'
 import { useSiaCentralExchangeRates } from '@siafoundation/react-sia-central'
-import { colors } from '@siafoundation/design-system'
 import { useDecRoutes } from './useRoutes'
 import { SiaCentralPartialHost } from '../../content/geoHosts'
 

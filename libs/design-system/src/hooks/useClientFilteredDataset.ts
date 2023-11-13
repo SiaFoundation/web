@@ -9,6 +9,7 @@ type DatumValue =
   | number
   | (() => void)
   | unknown[]
+  | object
 
 type Props<Datum extends Record<string, DatumValue>> = {
   dataset: Datum[] | null
