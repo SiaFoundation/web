@@ -1,3 +1,4 @@
+import { Bucket } from '@siafoundation/react-renterd'
 import { FullPath } from './paths'
 
 export type ObjectType = 'bucket' | 'directory' | 'file'
@@ -7,7 +8,7 @@ export type ObjectData = {
   // path is exacty bucket + returned key
   // eg: default + /path/to/file.txt = default/path/to/file.txt
   path: FullPath
-  bucket: string
+  bucket: Bucket
   name: string
   health?: number
   size: number
@@ -16,11 +17,18 @@ export type ObjectData = {
   loaded?: number
 }
 
-export type TableColumnId = 'actions' | 'type' | 'name' | 'size' | 'health'
+export type TableColumnId =
+  | 'actions'
+  | 'type'
+  | 'name'
+  | 'readAccess'
+  | 'size'
+  | 'health'
 
 export const columnsDefaultVisible: TableColumnId[] = [
   'type',
   'name',
+  'readAccess',
   'size',
   'health',
 ]
