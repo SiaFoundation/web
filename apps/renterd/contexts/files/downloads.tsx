@@ -1,6 +1,6 @@
 import { triggerErrorToast, triggerToast } from '@siafoundation/design-system'
 import { useAppSettings } from '@siafoundation/react-core'
-import { useObjectDownloadFunc } from '@siafoundation/react-renterd'
+import { useBuckets, useObjectDownloadFunc } from '@siafoundation/react-renterd'
 import { throttle } from 'lodash'
 import { useCallback, useMemo, useState } from 'react'
 import {
@@ -20,6 +20,7 @@ type DownloadProgressParams = Omit<DownloadProgress, 'id' | 'type'>
 type DownloadsMap = Record<string, DownloadProgress>
 
 export function useDownloads() {
+  const buckets = useBuckets()
   const download = useObjectDownloadFunc()
   const [downloadsMap, setDownloadsMap] = useState<DownloadsMap>({})
 
@@ -82,7 +83,8 @@ export function useDownloads() {
   const downloadFiles = async (files: FullPath[]) => {
     files.forEach(async (path) => {
       let isDone = false
-      const bucket = getBucketFromPath(path)
+      const bucketName = getBucketFromPath(path)
+      const bucket = buckets.data?.find((b) => b.name === bucketName)
       const name = getFilename(path)
 
       if (downloadsMap[path]) {
