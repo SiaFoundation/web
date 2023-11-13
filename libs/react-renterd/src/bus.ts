@@ -422,10 +422,17 @@ export function useContractsetUpdate(
 export type Bucket = {
   name: string
   createdAt: string
+  policy: {
+    publicReadAccess: boolean
+  }
 }
 
 export function useBuckets(args?: HookArgsSwr<void, Bucket[]>) {
   return useGetSwr({ ...args, route: '/bus/buckets' })
+}
+
+export function useBucket(args: HookArgsSwr<{ name: string }, Bucket>) {
+  return useGetSwr({ ...args, route: '/bus/bucket/:name' })
 }
 
 export function useBucketCreate(
@@ -434,6 +441,21 @@ export function useBucketCreate(
   return usePostFunc({ ...args, route: '/bus/buckets' }, async (mutate) => {
     mutate((key) => key.startsWith('/bus/buckets'))
   })
+}
+
+export type BucketPolicy = {
+  publicReadAccess: boolean
+}
+
+export function useBucketPolicyUpdate(
+  args?: HookArgsCallback<{ name: string }, { policy: BucketPolicy }, never>
+) {
+  return usePutFunc(
+    { ...args, route: '/bus/bucket/:name/policy' },
+    async (mutate) => {
+      mutate((key) => key.startsWith('/bus/bucket'))
+    }
+  )
 }
 
 export function useBucketDelete(
