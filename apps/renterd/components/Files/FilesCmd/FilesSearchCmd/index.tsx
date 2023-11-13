@@ -64,7 +64,10 @@ export function FilesSearchCmd({
             key={path}
             onSelect={() => {
               beforeSelect()
-              setActiveDirectory(() => getDirectorySegmentsFromPath(path))
+              setActiveDirectory(() => [
+                activeBucket,
+                ...getDirectorySegmentsFromPath(path),
+              ])
               afterSelect()
             }}
             value={path}
