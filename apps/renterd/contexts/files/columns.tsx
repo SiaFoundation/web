@@ -1,11 +1,19 @@
 import {
+  Badge,
   Button,
   LoadingDots,
   TableColumn,
   Text,
+  Tooltip,
   ValueNum,
 } from '@siafoundation/design-system'
-import { Document16, FolderIcon } from '@siafoundation/react-icons'
+import {
+  Document16,
+  Earth16,
+  FolderIcon,
+  Globe16,
+  Locked16,
+} from '@siafoundation/react-icons'
 import { humanBytes } from '@siafoundation/sia-js'
 import { FileContextMenu } from '../../components/Files/FileContextMenu'
 import { DirectoryContextMenu } from '../../components/Files/DirectoryContextMenu'
@@ -127,6 +135,37 @@ export const columns: FilesTableColumn[] = [
         <Text ellipsis weight="semibold">
           {name}
         </Text>
+      )
+    },
+  },
+  {
+    id: 'readAccess',
+    label: 'read access',
+    contentClassName: 'justify-center',
+    render: function ReadAccessColumn({ data }) {
+      if (data.name === '..') {
+        return null
+      }
+      const isPublic = data.bucket?.policy?.publicReadAccess
+      return (
+        <Tooltip
+          content={
+            isPublic
+              ? 'The bucket policy allows public read access.'
+              : 'The bucket policy only allows private read access.'
+          }
+        >
+          <div>
+            <Button variant="ghost" state="waiting">
+              <Text
+                color={isPublic ? 'contrast' : 'verySubtle'}
+                className="flex gap-0.5 items-center"
+              >
+                {isPublic ? <Earth16 /> : <Locked16 />}
+              </Text>
+            </Button>
+          </div>
+        </Tooltip>
       )
     },
   },

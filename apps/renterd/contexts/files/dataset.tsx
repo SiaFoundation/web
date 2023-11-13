@@ -28,9 +28,10 @@ export function useDataset({ activeDirectoryPath, uploadsList }: Props) {
   const router = useRouter()
   const limit = Number(router.query.limit || defaultLimit)
   const offset = Number(router.query.offset || 0)
-  const bucket = getBucketFromPath(activeDirectoryPath)
+  const activeBucketName = getBucketFromPath(activeDirectoryPath)
+  const activeBucket = buckets.data?.find((b) => b.name === activeBucketName)
   const response = useObjectDirectory({
-    disabled: !bucket,
+    disabled: !activeBucketName,
     params: {
       ...bucketAndKeyParamsFromPath(activeDirectoryPath),
       offset,
@@ -53,32 +54,32 @@ export function useDataset({ activeDirectoryPath, uploadsList }: Props) {
           uploadsList,
           allContracts,
           buckets.data,
-          bucket,
+          activeBucketName,
           activeDirectoryPath,
         ],
     () => {
       const dataMap: Record<string, ObjectData> = {}
-      if (!bucket) {
-        buckets.data?.forEach(({ name }) => {
-          const bucket = name
-          const path = getDirPath(bucket, '')
+      if (!activeBucket) {
+        buckets.data?.forEach((bucket) => {
+          const name = bucket.name
+          const path = getDirPath(name, '')
           dataMap[name] = {
             id: path,
             path,
             bucket,
             size: 0,
             health: 0,
-            name: name,
+            name,
             type: 'bucket',
           }
         })
       } else if (response.data) {
         response.data.entries?.forEach(({ name: key, size, health }) => {
-          const path = bucketAndResponseKeyToFilePath(bucket, key)
+          const path = bucketAndResponseKeyToFilePath(activeBucketName, key)
           dataMap[path] = {
             id: path,
             path,
-            bucket,
+            bucket: activeBucket,
             size,
             health,
             name: getFilename(key),

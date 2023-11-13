@@ -5,7 +5,7 @@ import {
   DropdownMenuLeftSlot,
   DropdownMenuLabel,
 } from '@siafoundation/design-system'
-import { Delete16, BucketIcon } from '@siafoundation/react-icons'
+import { Delete16, BucketIcon, Rule16 } from '@siafoundation/react-icons'
 import { useDialog } from '../../contexts/dialog'
 
 type Props = {
@@ -24,6 +24,16 @@ export function BucketContextMenu({ name }: Props) {
       contentProps={{ align: 'start' }}
     >
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
+      <DropdownMenuItem
+        onSelect={() => {
+          openDialog('filesBucketPolicy', name)
+        }}
+      >
+        <DropdownMenuLeftSlot>
+          <Rule16 />
+        </DropdownMenuLeftSlot>
+        Change policy
+      </DropdownMenuItem>
       <DropdownMenuItem
         disabled={name === 'default'}
         onSelect={() => {

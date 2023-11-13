@@ -18,6 +18,7 @@ import { RenterdTransactionDetailsDialog } from '../dialogs/RenterdTransactionDe
 import { AlertsDialog } from '../dialogs/AlertsDialog'
 import { HostsFilterPublicKeyDialog } from '../components/Hosts/HostsFilterPublicKeyDialog'
 import { FilesBucketDeleteDialog } from '../components/Files/FilesBucketDeleteDialog'
+import { FilesBucketPolicyDialog } from '../components/Files/FilesBucketPolicyDialog'
 import { FilesBucketCreateDialog } from '../components/Files/FilesBucketCreateDialog'
 
 export type DialogType =
@@ -38,6 +39,7 @@ export type DialogType =
   | 'filesCreateBucket'
   | 'filesDeleteBucket'
   | 'filesCreateDirectory'
+  | 'filesBucketPolicy'
   | 'filesSearch'
   | 'alerts'
   | 'confirm'
@@ -159,6 +161,10 @@ export function Dialogs() {
       />
       <FilesBucketDeleteDialog
         open={dialog === 'filesDeleteBucket'}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <FilesBucketPolicyDialog
+        open={dialog === 'filesBucketPolicy'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <FilesCreateDirectoryDialog
