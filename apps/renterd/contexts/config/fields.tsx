@@ -75,13 +75,12 @@ export function getFields({
         <>The amount of upload bandwidth you plan to use each month in TB.</>
       ),
       units: 'TB/month',
-      hidden: !isAutopilotEnabled || !showAdvanced,
-      validation:
-        isAutopilotEnabled && showAdvanced
-          ? {
-              required: 'required',
-            }
-          : {},
+      hidden: !isAutopilotEnabled,
+      validation: isAutopilotEnabled
+        ? {
+            required: 'required',
+          }
+        : {},
     },
     downloadTBMonth: {
       type: 'number',
@@ -91,13 +90,12 @@ export function getFields({
         <>The amount of download bandwidth you plan to use each month in TB.</>
       ),
       units: 'TB/month',
-      hidden: !isAutopilotEnabled || !showAdvanced,
-      validation:
-        isAutopilotEnabled && showAdvanced
-          ? {
-              required: 'required',
-            }
-          : {},
+      hidden: !isAutopilotEnabled,
+      validation: isAutopilotEnabled
+        ? {
+            required: 'required',
+          }
+        : {},
     },
     allowanceMonth: {
       type: 'siacoin',
@@ -414,12 +412,9 @@ export function getFields({
         )
       },
       decimalsLimitSc: scDecimalPlaces,
-      hidden: !showAdvanced,
-      validation: showAdvanced
-        ? {
-            required: 'required',
-          }
-        : {},
+      validation: {
+        required: 'required',
+      },
     },
     maxDownloadPriceTB: {
       category: 'gouging',
@@ -430,12 +425,9 @@ export function getFields({
       average: downloadAverage,
       averageTip: `Averages provided by Sia Central.`,
       decimalsLimitSc: scDecimalPlaces,
-      hidden: !showAdvanced,
-      validation: showAdvanced
-        ? {
-            required: 'required',
-          }
-        : {},
+      validation: {
+        required: 'required',
+      },
     },
     maxContractPrice: {
       category: 'gouging',

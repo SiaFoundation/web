@@ -1,5 +1,4 @@
 import {
-  Badge,
   Button,
   LoadingDots,
   TableColumn,
@@ -11,7 +10,6 @@ import {
   Document16,
   Earth16,
   FolderIcon,
-  Globe16,
   Locked16,
 } from '@siafoundation/react-icons'
 import { humanBytes } from '@siafoundation/sia-js'
@@ -140,7 +138,7 @@ export const columns: FilesTableColumn[] = [
   },
   {
     id: 'readAccess',
-    label: 'read access',
+    label: 'public read access',
     contentClassName: 'justify-center',
     render: function ReadAccessColumn({ data }) {
       if (data.name === '..') {

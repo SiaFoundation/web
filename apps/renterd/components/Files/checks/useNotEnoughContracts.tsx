@@ -3,17 +3,16 @@ import { useRedundancySettings } from '../../../hooks/useRedundancySettings'
 
 export function useNotEnoughContracts() {
   const redundancy = useRedundancySettings()
-  const { datasetConfirmedCount, isLoading: isContractsLoading } =
-    useContracts()
+  const { datasetCount, isLoading: isContractsLoading } = useContracts()
 
   const active =
     redundancy.data &&
     !isContractsLoading &&
-    datasetConfirmedCount < redundancy.data.totalShards
+    datasetCount < redundancy.data.totalShards
 
   return {
     active,
-    count: datasetConfirmedCount,
+    count: datasetCount,
     required: redundancy.data?.totalShards || 0,
   }
 }
