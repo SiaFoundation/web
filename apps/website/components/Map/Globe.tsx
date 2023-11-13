@@ -81,13 +81,13 @@ export function Globe({
 
     moveToLocation(activeHost?.location || [48.8323, 2.4075], 1.5)
 
-    const directionalLight = globeEl.current
-      ?.scene()
-      .children.find((obj3d) => obj3d.type === 'DirectionalLight')
-    if (directionalLight) {
-      // directionalLight.position.set(1, 1, 1)
-      directionalLight.intensity = 10
-    }
+    // const directionalLight = globeEl.current
+    //   ?.scene()
+    //   .children.find((obj3d) => obj3d.type === 'DirectionalLight')
+    // if (directionalLight) {
+    //   // directionalLight.position.set(1, 1, 1)
+    //   directionalLight.intensity = 10
+    // }
     return true
   })
 
@@ -136,7 +136,7 @@ export function Globe({
         arcColor={(r: Route) =>
           doesIncludeActiveHost(r, activeHost)
             ? [`rgba(187, 229, 201, 0.25)`, `rgba(187, 229, 201, 0.25)`]
-            : [`rgba(187, 229, 201, 0.10)`, `rgba(187, 229, 201, 0.10)`]
+            : [`rgba(187, 229, 201, 0.13)`, `rgba(187, 229, 201, 0.13)`]
         }
         // onArcClick={(r: Route) => {
         //   selectActiveHost(r.dst.public_key)
@@ -153,18 +153,20 @@ export function Globe({
         //   // h.public_key === activeHost.public_key ? 0.6 : 0.2
         // }
         pointAltitude={(h: SiaCentralPartialHost) => {
-          return 0.05
+          let radius = 0
+          radius = h.settings.total_storage / 1e15
+          return Math.max(radius, 0.005)
         }}
         pointsTransitionDuration={0}
-        pointColor={(h: SiaCentralPartialHost) => {
-          return activeHost?.public_key === h.public_key
-            ? colors.green[600]
-            : colorWithOpacity(colors.green[200], 1)
-        }}
+        pointColor={(h: SiaCentralPartialHost) =>
+          h.public_key === activeHost.public_key
+            ? 'rgba(0,255,0,1)'
+            : 'rgba(0,255,0,1)'
+        }
         pointRadius={(h: SiaCentralPartialHost) => {
           let radius = 0
           radius = h.settings.total_storage / 1e13 / 3
-          return Math.max(radius, 0.1)
+          return Math.max(radius, 0.2)
         }}
         onPointHover={(h: SiaCentralPartialHost) => {
           if (!h) {
@@ -197,10 +199,10 @@ function doesIncludeActiveHost(
   )
 }
 
-function colorWithOpacity(hexColor: string, opacity: number) {
-  const r = parseInt(hexColor.slice(1, 3), 16)
-  const g = parseInt(hexColor.slice(3, 5), 16)
-  const b = parseInt(hexColor.slice(5, 7), 16)
+// function colorWithOpacity(hexColor: string, opacity: number) {
+//   const r = parseInt(hexColor.slice(1, 3), 16)
+//   const g = parseInt(hexColor.slice(3, 5), 16)
+//   const b = parseInt(hexColor.slice(5, 7), 16)
 
-  return `rgba(${r}, ${g}, ${b}, ${opacity})`
-}
+//   return `rgba(${r}, ${g}, ${b}, ${opacity})`
+// }
