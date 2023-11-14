@@ -1,6 +1,5 @@
 import { Text } from '../core/Text'
 import { ValueSf } from '../components/ValueSf'
-import { ValueSc } from '../components/ValueSc'
 import { ValueCopyable } from '../components/ValueCopyable'
 import { Tooltip } from '../core/Tooltip'
 import BigNumber from 'bignumber.js'
@@ -9,6 +8,7 @@ import { Panel } from '../core/Panel'
 import { EntityType, getEntityTypeLabel } from '../lib/entityTypes'
 import { cx } from 'class-variance-authority'
 import { Skeleton } from '../core/Skeleton'
+import { ValueScFiat } from './ValueScFiat'
 
 // entityType&entityValue | value | values | sc | sf
 type Props = {
@@ -72,7 +72,7 @@ export function DatumCard({
             {!isLoading ? (
               <>
                 {sc !== undefined && (
-                  <ValueSc
+                  <ValueScFiat
                     extendedSuffix={extendedSuffix}
                     scaleSize={scaleSize}
                     variant="value"

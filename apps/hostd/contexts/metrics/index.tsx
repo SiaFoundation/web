@@ -7,8 +7,9 @@ import {
   getTimeRange,
   MiBToBytes,
   minutesInMilliseconds,
+  ValueScFiat,
 } from '@siafoundation/design-system'
-import { humanBytes, humanNumber, humanSiacoin } from '@siafoundation/sia-js'
+import { humanBytes, humanNumber } from '@siafoundation/sia-js'
 import { useCallback, useMemo } from 'react'
 import { chartConfigs } from '../../config/charts'
 import { useMetricsPeriod } from '@siafoundation/react-hostd'
@@ -249,7 +250,9 @@ function useMetricsMain() {
             'total'
           ),
         },
-        format: (v) => humanSiacoin(v),
+        formatComponent: function ({ value }) {
+          return <ValueScFiat variant="value" value={new BigNumber(value)} />
+        },
         formatTimestamp,
         disableAnimations,
       },
@@ -282,7 +285,9 @@ function useMetricsMain() {
           locked: chartConfigs.locked,
           risked: chartConfigs.risked,
         },
-        format: (v) => humanSiacoin(v),
+        formatComponent: function ({ value }) {
+          return <ValueScFiat variant="value" value={new BigNumber(value)} />
+        },
         formatTimestamp,
         disableAnimations,
       },
@@ -345,7 +350,9 @@ function useMetricsMain() {
           ingress: chartConfigs.ingress,
           storage: chartConfigs.storage,
         },
-        format: (v) => humanSiacoin(v),
+        formatComponent: function ({ value }) {
+          return <ValueScFiat variant="value" value={new BigNumber(value)} />
+        },
         formatTimestamp,
         disableAnimations,
       },

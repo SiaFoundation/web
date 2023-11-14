@@ -296,6 +296,7 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
                           return acc + val
                         }, 0)
                       : 0
+                    const Component = config?.formatComponent
 
                     return (
                       <div
@@ -330,9 +331,15 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
                                     nearestKey === key ? 'underline' : ''
                                   )}
                                 >
-                                  {val == null || Number.isNaN(val)
-                                    ? '–'
-                                    : config.format(val)}
+                                  {val == null || Number.isNaN(val) ? (
+                                    '–'
+                                  ) : Component ? (
+                                    <Component value={val} />
+                                  ) : config.format ? (
+                                    config.format(val)
+                                  ) : (
+                                    val
+                                  )}
                                 </Text>
                               </Fragment>
                             )
@@ -345,7 +352,13 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
                                 weight="bold"
                                 className="pt-2 text-end"
                               >
-                                {config.format(total)}
+                                {Component ? (
+                                  <Component value={total} />
+                                ) : config.format ? (
+                                  config.format(total)
+                                ) : (
+                                  total
+                                )}
                               </Text>
                             </>
                           )}

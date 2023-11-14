@@ -7,7 +7,7 @@ import {
   Link,
   DropdownMenuGroup,
   DropdownMenuLabel,
-  CurrencySelector,
+  CurrencyFiatSelector,
   ThemeRadio,
 } from '@siafoundation/design-system'
 import { Menu24 } from '@siafoundation/react-icons'
@@ -53,7 +53,7 @@ export function NavDropdownMenu({ trigger, children, ...props }: Props) {
       <DropdownMenuGroup className="py-1 px-1 w-[120px]">
         <DropdownMenuLabel className="px-1">Settings</DropdownMenuLabel>
         <div className="py-2 px-1">
-          <CurrencySelector />
+          <CurrencyFiatSelector />
         </div>
         <div className="py-2 px-2.5">
           <ThemeRadio />

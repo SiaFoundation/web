@@ -1,6 +1,6 @@
 import {
   Text,
-  ValueSc,
+  ValueScFiat,
   TableColumn,
   ContractTimeline,
   ValueCopyable,
@@ -172,7 +172,7 @@ export const columns: ContractsTableColumn[] = [
     category: 'financial',
     contentClassName: 'w-[120px] justify-end',
     render: ({ data: { totalCost } }) => (
-      <ValueSc size="12" value={totalCost.negated()} />
+      <ValueScFiat displayBoth size="12" value={totalCost.negated()} />
     ),
   },
   {
@@ -181,7 +181,7 @@ export const columns: ContractsTableColumn[] = [
     category: 'financial',
     contentClassName: 'w-[120px] justify-end',
     render: ({ data: { spendingUploads } }) => (
-      <ValueSc size="12" value={spendingUploads.negated()} />
+      <ValueScFiat displayBoth size="12" value={spendingUploads.negated()} />
     ),
   },
   {
@@ -190,7 +190,7 @@ export const columns: ContractsTableColumn[] = [
     category: 'financial',
     contentClassName: 'w-[120px] justify-end',
     render: ({ data: { spendingDownloads } }) => (
-      <ValueSc size="12" value={spendingDownloads.negated()} />
+      <ValueScFiat displayBoth size="12" value={spendingDownloads.negated()} />
     ),
   },
   {
@@ -199,7 +199,11 @@ export const columns: ContractsTableColumn[] = [
     category: 'financial',
     contentClassName: 'w-[120px] justify-end',
     render: ({ data: { spendingFundAccount } }) => (
-      <ValueSc size="12" value={spendingFundAccount.negated()} />
+      <ValueScFiat
+        displayBoth
+        size="12"
+        value={spendingFundAccount.negated()}
+      />
     ),
   },
 ]

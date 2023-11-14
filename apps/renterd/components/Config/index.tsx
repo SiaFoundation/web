@@ -4,7 +4,7 @@ import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
 import { useConfig } from '../../contexts/config'
-import { AutopilotStats } from './ConfigStats'
+import { ConfigStats } from './ConfigStats'
 import { ConfigActions } from './ConfigActions'
 import { ConfigNav } from './ConfigNav'
 
@@ -18,7 +18,7 @@ export function Config() {
       routes={routes}
       nav={<ConfigNav />}
       sidenav={<RenterdSidenav />}
-      stats={<AutopilotStats />}
+      stats={<ConfigStats />}
       actions={<ConfigActions />}
       openSettings={() => openDialog('settings')}
     >

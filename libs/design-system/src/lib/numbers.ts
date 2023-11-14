@@ -11,7 +11,9 @@ export function toFixedOrPrecision(
     digits,
     dynamicFixed = true,
   }: {
+    // number of digits to round to
     digits: number
+    // if true, will use toFixed if decimalPlaces > digits
     dynamicFixed?: boolean
   }
 ) {

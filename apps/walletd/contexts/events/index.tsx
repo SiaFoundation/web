@@ -82,14 +82,14 @@ export function useEventsMain() {
     }))
     const dataEvents: EventData[] = responseEvents.data.map((e, index) => {
       let amount = new BigNumber(0)
-      if (e.Type === 'siacoin transfer') {
+      if (e.type === 'siacoin transfer') {
         const inputsTotal =
-          e.Val?.Inputs?.reduce(
+          e.val?.inputs?.reduce(
             (acc, o) => acc.plus(o.value),
             new BigNumber(0)
           ) || new BigNumber(0)
         const outputsTotal =
-          e.Val?.Outputs?.reduce(
+          e.val?.outputs?.reduce(
             (acc, o) => acc.plus(o.value),
             new BigNumber(0)
           ) || new BigNumber(0)
@@ -99,34 +99,34 @@ export function useEventsMain() {
       const id = String(index)
       const res: EventData = {
         id,
-        type: e.Type,
-        timestamp: new Date(e.Timestamp).getTime(),
-        height: e.Index.height,
+        type: e.type,
+        timestamp: new Date(e.timestamp).getTime(),
+        height: e.index.height,
         pending: false,
         amount,
       }
-      if ('MaturityHeight' in e.Val) {
-        res.maturityHeight = e.Val.MaturityHeight
+      if ('maturityHeight' in e.val) {
+        res.maturityHeight = e.val.maturityHeight
       }
-      if ('Fee' in e.Val) {
-        res.fee = new BigNumber(e.Val.Fee)
+      if ('fee' in e.val) {
+        res.fee = new BigNumber(e.val.fee)
       }
-      if ('ContractID' in e.Val) {
-        res.contractId = e.Val.ContractID
+      if ('contractID' in e.val) {
+        res.contractId = e.val.contractID
       }
-      if ('TransactionID' in e.Val) {
-        res.id += e.Val.TransactionID
-        res.transactionId = e.Val.TransactionID
+      if ('transactionID' in e.val) {
+        res.id += e.val.transactionID
+        res.transactionId = e.val.transactionID
       }
-      if ('OutputID' in e.Val) {
-        res.id += e.Val.OutputID
-        res.outputId = e.Val.OutputID
+      if ('outputID' in e.val) {
+        res.id += e.val.outputID
+        res.outputId = e.val.outputID
       }
-      if ('NetAddress' in e.Val) {
-        res.netAddress = e.Val.NetAddress
+      if ('netAddress' in e.val) {
+        res.netAddress = e.val.netAddress
       }
-      if ('PublicKey' in e.Val) {
-        res.publicKey = e.Val.PublicKey
+      if ('publicKey' in e.val) {
+        res.publicKey = e.val.publicKey
       }
       return res
     })

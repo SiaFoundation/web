@@ -4,7 +4,7 @@ import {
   webLinks,
   Logo,
   ThemeRadio,
-  CurrencySelector,
+  CurrencyFiatSelector,
 } from '@siafoundation/design-system'
 
 export function Footer() {
@@ -48,7 +48,7 @@ export function Footer() {
           </div>
           <div className="flex-1" />
           <div className="flex-1 flex items-center justify-end gap-6">
-            <CurrencySelector />
+            <CurrencyFiatSelector />
             <ThemeRadio className="hidden md:flex" />
           </div>
         </div>

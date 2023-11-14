@@ -1,10 +1,10 @@
 import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
-import { humanSiacoin } from '@siafoundation/sia-js'
 import BigNumber from 'bignumber.js'
 import { Warning16 } from '@siafoundation/react-icons'
 import { Tooltip } from '../core/Tooltip'
-import { ValueSc } from '../components/ValueSc'
+import { WalletBalanceTip } from './WalletBalanceTip'
+import { ValueScFiat } from '../components/ValueScFiat'
 
 export function WalletBalance({
   balanceSc,
@@ -32,55 +32,29 @@ export function WalletBalance({
       >
         <Panel className="hidden sm:flex h-7 pl-2 pr-3 gap-1.5 items-center">
           <Text color="amber">
-            <Warning16 className="" />
+            <Warning16 />
           </Text>
-          <Text size="12" weight="semibold">
-            {humanSiacoin(balanceSc.spendable.plus(balanceSc.unconfirmed))}
-          </Text>
+          <ValueScFiat
+            variant="value"
+            value={balanceSc.spendable}
+            size="12"
+            showTooltip={false}
+          />
         </Panel>
       </Tooltip>
     )
   }
 
   return (
-    <Tooltip
-      content={
-        <div className="flex flex-col gap-1">
-          <div className="flex gap-2">
-            <div className="flex flex-col flex-1">
-              <Text>spendable</Text>
-              <Text color="subtle">All confirmed outputs not in-use.</Text>
-            </div>
-            <div className="flex justify-end">
-              <ValueSc variant="value" value={balanceSc.spendable} />
-            </div>
-          </div>
-          <div className="flex gap-2">
-            <div className="flex flex-col flex-1">
-              <Text>confirmed</Text>
-              <Text color="subtle">All confirmed outputs.</Text>
-            </div>
-            <div className="flex justify-end">
-              <ValueSc variant="value" value={balanceSc.confirmed} />
-            </div>
-          </div>
-          <div className="flex gap-2">
-            <div className="flex flex-col flex-1">
-              <Text>unconfirmed</Text>
-              <Text color="subtle">All unconfirmed outputs not in-use.</Text>
-            </div>
-            <div className="flex justify-end">
-              <ValueSc variant="value" value={balanceSc.unconfirmed} />
-            </div>
-          </div>
-        </div>
-      }
-    >
+    <WalletBalanceTip side="bottom" balanceSc={balanceSc}>
       <Panel className="hidden sm:flex h-7 px-3 items-center">
-        <Text size="12" weight="semibold">
-          {humanSiacoin(balanceSc.spendable.plus(balanceSc.unconfirmed))}
-        </Text>
+        <ValueScFiat
+          variant="value"
+          value={balanceSc.spendable}
+          size="12"
+          showTooltip={false}
+        />
       </Panel>
-    </Tooltip>
+    </WalletBalanceTip>
   )
 }

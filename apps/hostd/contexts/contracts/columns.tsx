@@ -1,6 +1,5 @@
 import {
   Text,
-  ValueSc,
   TableColumn,
   ValueCopyable,
   stripPrefix,
@@ -9,6 +8,7 @@ import {
   ContractTimeline,
   ValueNum,
   blockHeightToTime,
+  ValueScFiat,
 } from '@siafoundation/design-system'
 import {
   ArrowUpLeft16,
@@ -201,7 +201,7 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { revision } }) => (
-        <ValueSc size="12" value={revision.payout} />
+        <ValueScFiat displayBoth size="12" value={revision.payout} />
       ),
     },
     {
@@ -210,7 +210,11 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { revision } }) => (
-        <ValueSc size="12" value={revision.remainingRenterFunds} />
+        <ValueScFiat
+          displayBoth
+          size="12"
+          value={revision.remainingRenterFunds}
+        />
       ),
     },
     {
@@ -219,7 +223,7 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { lockedCollateral } }) => (
-        <ValueSc size="12" value={lockedCollateral} />
+        <ValueScFiat displayBoth size="12" value={lockedCollateral} />
       ),
     },
     {
@@ -228,7 +232,7 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { usage } }) => (
-        <ValueSc size="12" value={usage.riskedCollateral} />
+        <ValueScFiat displayBoth size="12" value={usage.riskedCollateral} />
       ),
     },
     {
@@ -237,7 +241,7 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { usage } }) => (
-        <ValueSc size="12" value={usage.total} />
+        <ValueScFiat displayBoth size="12" value={usage.total} />
       ),
     },
     {
@@ -246,7 +250,7 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { usage } }) => (
-        <ValueSc size="12" value={usage.storage} />
+        <ValueScFiat displayBoth size="12" value={usage.storage} />
       ),
     },
     {
@@ -255,7 +259,7 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { usage } }) => (
-        <ValueSc size="12" value={usage.ingress} />
+        <ValueScFiat displayBoth size="12" value={usage.ingress} />
       ),
     },
     {
@@ -264,7 +268,7 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { usage } }) => (
-        <ValueSc size="12" value={usage.egress} />
+        <ValueScFiat displayBoth size="12" value={usage.egress} />
       ),
     },
     {
@@ -273,7 +277,7 @@ export const columns: ContractsTableColumn[] = (
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
       render: ({ data: { usage } }) => (
-        <ValueSc size="12" value={usage.accountFunding} />
+        <ValueScFiat displayBoth size="12" value={usage.accountFunding} />
       ),
     },
     {
@@ -281,7 +285,9 @@ export const columns: ContractsTableColumn[] = (
       label: 'RPC usage',
       category: 'financial',
       contentClassName: 'w-[120px] justify-end',
-      render: ({ data: { usage } }) => <ValueSc size="12" value={usage.rpc} />,
+      render: ({ data: { usage } }) => (
+        <ValueScFiat displayBoth size="12" value={usage.rpc} />
+      ),
     },
   ] as ContractsTableColumn[]
 ).map(
