@@ -5,8 +5,8 @@ import {
   Paragraph,
   Tooltip,
   Button,
-  ValueSc,
   ValueSf,
+  ValueScFiat,
 } from '@siafoundation/design-system'
 import { Locked16, Unlocked16, Draggable16 } from '@siafoundation/react-icons'
 import { humanDate } from '@siafoundation/sia-js'
@@ -87,8 +87,9 @@ export const columns: WalletsTableColumn[] = [
         return null
       }
       return (
-        <div className="flex flex-col gap-1 items-end">
-          <ValueSc
+        <div className="flex flex-col gap-2 items-end">
+          <ValueScFiat
+            displayBoth
             size="12"
             variant="value"
             value={new BigNumber(balance.data.siacoins)}

@@ -3,7 +3,6 @@
 import { Link } from '../core/Link'
 import { Text } from '../core/Text'
 import { ValueSf } from './ValueSf'
-import { ValueSc } from './ValueSc'
 import { ValueCopyable } from './ValueCopyable'
 import {
   EntityType,
@@ -17,6 +16,7 @@ import { upperFirst } from 'lodash'
 import BigNumber from 'bignumber.js'
 import { DotMark16 } from '@siafoundation/react-icons'
 import { EntityListItemLayout } from './EntityListItemLayout'
+import { ValueScFiat } from './ValueScFiat'
 
 export type EntityListItemProps = {
   label?: string
@@ -73,7 +73,7 @@ export function EntityListItem(entity: EntityListItemProps) {
             <Text weight="medium">{title || truncHashEl}</Text>
           </div>
           <div className="flex-1" />
-          {!!sc && <ValueSc variant={entity.scVariant} value={sc} />}
+          {!!sc && <ValueScFiat variant={entity.scVariant} value={sc} />}
           {!!sf && <ValueSf variant={entity.sfVariant} value={sf} />}
         </div>
         <div className="flex justify-between w-full">

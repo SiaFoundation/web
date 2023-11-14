@@ -142,130 +142,130 @@ export type PoolTransaction = {
 // events
 
 type BaseEvent = {
-  Timestamp: string
-  Index: ChainIndex
+  timestamp: string
+  index: ChainIndex
 }
 
 // EventBlockReward represents a block reward.
 type EventBlockReward = BaseEvent & {
-  Type: 'block reward'
-  Val: {
-    OutputID: string
-    Output: SiacoinOutput
-    MaturityHeight: number
+  type: 'block reward'
+  val: {
+    outputID: string
+    output: SiacoinOutput
+    maturityHeight: number
   }
 }
 
 // EventFoundationSubsidy represents a Foundation subsidy.
 type EventFoundationSubsidy = BaseEvent & {
-  Type: 'foundation subsidy'
-  Val: {
-    OutputID: string
-    Output: SiacoinOutput
-    MaturityHeight: number
+  type: 'foundation subsidy'
+  val: {
+    outputID: string
+    output: SiacoinOutput
+    maturityHeight: number
   }
 }
 
 // EventSiacoinMaturation represents the maturation of a siacoin output.
 type EventSiacoinMaturation = BaseEvent & {
-  Type: 'siacoin maturation'
-  Val: {
-    OutputID: string
-    Output: SiacoinOutput
-    Source: number
+  type: 'siacoin maturation'
+  val: {
+    outputID: string
+    output: SiacoinOutput
+    source: number
   }
 }
 
 // EventSiacoinTransfer represents the transfer of siacoins within a
 // transaction.
 type EventSiacoinTransfer = BaseEvent & {
-  Type: 'siacoin transfer'
-  Val: {
-    TransactionID: string
-    Inputs: SiacoinElement[]
-    Outputs: SiacoinElement[]
-    Fee: Currency
+  type: 'siacoin transfer'
+  val: {
+    transactionID: string
+    inputs: SiacoinElement[]
+    outputs: SiacoinElement[]
+    fee: Currency
   }
 }
 
 // EventSiafundTransfer represents the transfer of siafunds within a
 // transaction.
 type EventSiafundTransfer = BaseEvent & {
-  Type: 'siafund transfer'
-  Val: {
-    TransactionID: string
-    Inputs: SiafundElement[]
-    Outputs: SiafundElement[]
-    ClaimOutputID: string
-    ClaimOutput: SiacoinOutput
+  type: 'siafund transfer'
+  val: {
+    transactionID: string
+    inputs: SiafundElement[]
+    outputs: SiafundElement[]
+    claimOutputID: string
+    claimOutput: SiacoinOutput
   }
 }
 
 // EventFileContractFormation represents the formation of a file contract within
 // a transaction.
 type EventFileContractFormation = BaseEvent & {
-  Type: 'file contract formation'
-  Val: {
-    TransactionID: string
-    ContractID: string
-    Contract: FileContract
+  type: 'file contract formation'
+  val: {
+    transactionID: string
+    contractID: string
+    contract: FileContract
   }
 }
 
 // EventFileContractRevision represents the revision of a file contract within
 // a transaction.
 type EventFileContractRevision = BaseEvent & {
-  Type: 'file contract revision'
-  Val: {
-    TransactionID: string
-    ContractID: string
-    OldContract: FileContract
-    NewContract: FileContract
+  type: 'file contract revision'
+  val: {
+    transactionID: string
+    contractID: string
+    oldContract: FileContract
+    newContract: FileContract
   }
 }
 
 // EventFileContractResolutionValid represents the valid resolution of a file
 // contract within a transaction.
 type EventFileContractResolutionValid = BaseEvent & {
-  Type: 'file contract resolution (valid)'
-  Val: {
-    TransactionID: string
-    ContractID: string
-    Contract: FileContract
-    OutputID: string
-    Output: SiacoinOutput
-    MaturityHeight: number
+  type: 'file contract resolution (valid)'
+  val: {
+    transactionID: string
+    contractID: string
+    contract: FileContract
+    outputID: string
+    output: SiacoinOutput
+    maturityHeight: number
   }
 }
 
 // EventFileContractResolutionMissed represents the expiration of a file
 // contract.
 type EventFileContractResolutionMissed = BaseEvent & {
-  Type: 'file contract resolution (missed)'
-  Val: {
-    Contract: FileContract
-    OutputID: string
-    Output: SiacoinOutput
-    MaturityHeight: number
+  type: 'file contract resolution (missed)'
+  val: {
+    contract: FileContract
+    outputID: string
+    output: SiacoinOutput
+    maturityHeight: number
   }
 }
 
 // EventHostAnnouncement represents a host announcement within a transaction.
 type EventHostAnnouncement = BaseEvent & {
-  Type: 'host annoucement'
-  Val: {
-    TransactionID: string
-    PublicKey: string
-    NetAddress: string
+  type: 'host annoucement'
+  val: {
+    transactionID: string
+    publicKey: string
+    netAddress: string
   }
 }
 
 // EventTransaction represents a generic transaction.
 type EventTransaction = BaseEvent & {
-  Type: 'transaction'
-  Val: {
-    TransactionID: string
-    Transaction: Transaction
+  type: 'transaction'
+  val: {
+    transactionID: string
+    transaction: Transaction
   }
 }
 

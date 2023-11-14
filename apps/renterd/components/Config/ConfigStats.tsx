@@ -10,7 +10,7 @@ import { humanBytes, toHastings } from '@siafoundation/sia-js'
 import { useConfig } from '../../contexts/config'
 import { useApp } from '../../contexts/app'
 
-export function AutopilotStats() {
+export function ConfigStats() {
   const { autopilot } = useApp()
   const {
     canEstimate,
@@ -35,7 +35,7 @@ export function AutopilotStats() {
     </Text>
   ) : (
     <ScrollArea>
-      <div className="flex gap-4">
+      <div className="flex gap-4 items-center h-full">
         <Text size="12" font="mono" weight="medium">
           Estimate:
         </Text>

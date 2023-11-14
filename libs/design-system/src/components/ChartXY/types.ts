@@ -13,7 +13,8 @@ export type ChartConfig<Key extends string, Cat extends string> = {
       toOpacity?: number
     }
   >
-  format: (v: number) => string
+  format?: (v: number) => string
+  formatComponent?: React.FC<{ value: number }>
   formatTimestamp?: (v: number) => string
   disableAnimations?: boolean
 }

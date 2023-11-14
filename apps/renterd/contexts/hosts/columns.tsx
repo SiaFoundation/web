@@ -5,7 +5,7 @@ import {
   ValueNum,
   Tooltip,
   LoadingDots,
-  ValueSc,
+  ValueScFiat,
 } from '@siafoundation/design-system'
 import {
   WarningSquareFilled16,
@@ -27,7 +27,7 @@ import {
   workerRhpScanRoute,
 } from '@siafoundation/react-renterd'
 import BigNumber from 'bignumber.js'
-import React from 'react'
+import React, { memo } from 'react'
 
 type HostsTableColumn = TableColumn<
   TableColumnId,
@@ -233,7 +233,7 @@ export const columns: HostsTableColumn[] = (
         if (isPending) {
           return <LoadingDots />
         }
-        const ago = formatDistance(new Date(data.lastScan), new Date(), {
+        const ago = formatDistance(new Date(data.lastScan || 0), new Date(), {
           addSuffix: true,
         })
         let message = ''
@@ -1087,18 +1087,20 @@ type Key =
   | keyof AutopilotHost['host']['settings']
 
 function makeRenderSc(section: 'priceTable' | 'settings', name: Key) {
-  return function RenderPriceTableNumber({ data }: { data: HostData }) {
+  return memo(function RenderPriceTableNumber({ data }: { data: HostData }) {
     if (!data[section]) {
       return null
     }
     return (
-      <ValueSc
+      <ValueScFiat
+        displayBoth
         size="12"
         value={new BigNumber(data[section][name] || 0)}
+        fixedFiat={4}
         variant="value"
       />
     )
-  }
+  })
 }
 
 function makeRenderNumber(

@@ -2,8 +2,8 @@ import {
   Text,
   TableColumn,
   ValueCopyable,
-  ValueSc,
   LoadingDots,
+  ValueScFiat,
 } from '@siafoundation/design-system'
 import { humanDate } from '@siafoundation/sia-js'
 import { EventData, TableColumnId } from './types'
@@ -105,22 +105,24 @@ export const columns: EventsTableColumn[] = [
     id: 'amount',
     label: 'amount',
     category: 'general',
+    contentClassName: 'w-[120px] justify-end',
     render: ({ data: { amount } }) => {
       if (!amount) {
         return null
       }
-      return <ValueSc size="12" value={amount} />
+      return <ValueScFiat displayBoth size="12" value={amount} />
     },
   },
   {
     id: 'fee',
     label: 'fee',
     category: 'general',
+    contentClassName: 'w-[120px] justify-end',
     render: ({ data: { fee } }) => {
       if (!fee) {
         return null
       }
-      return <ValueSc size="12" variant="value" value={fee} />
+      return <ValueScFiat displayBoth size="12" variant="value" value={fee} />
     },
   },
   {

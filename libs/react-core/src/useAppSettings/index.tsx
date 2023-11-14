@@ -9,6 +9,8 @@ import { clearAllSwrKeys } from '../utils'
 import { useWorkflows } from '../workflows'
 import { CurrencyId, CurrencyOption, currencyOptions } from './currency'
 
+export type CurrencyDisplay = 'sc' | 'fiat' | 'bothPreferSc' | 'bothPreferFiat'
+
 export type AppSettings = {
   api: string
   allowCustomApi: boolean
@@ -20,6 +22,7 @@ export type AppSettings = {
       lastUsed: number
     }
   }
+  currencyDisplay: CurrencyDisplay
   autoLock?: boolean
   autoLockTimeout?: number
 }
@@ -30,6 +33,7 @@ const defaultSettings: AppSettings = {
   siaCentral: true,
   password: undefined,
   currency: currencyOptions[0],
+  currencyDisplay: 'bothPreferSc',
   recentApis: {},
   autoLock: false,
   autoLockTimeout: 1000 * 60 * 10, // 10 minutes

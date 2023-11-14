@@ -12,6 +12,7 @@ type Props = {
   variant?: 'change' | 'value'
   tooltip?: string
   fixed?: number
+  color?: React.ComponentProps<typeof Text>['color']
   dynamicUnits?: boolean
   hastingUnits?: boolean
   extendedSuffix?: string
@@ -24,6 +25,7 @@ export function ValueSc({
   scaleSize,
   tooltip = '',
   variant = 'change',
+  color: customColor,
   fixed = 3,
   dynamicUnits = true,
   hastingUnits = true,
@@ -32,13 +34,14 @@ export function ValueSc({
 }: Props) {
   const sign = value.isGreaterThan(0) ? '+' : value.isLessThan(0) ? '-' : ''
   const color =
-    variant === 'change'
+    customColor ||
+    (variant === 'change'
       ? value.isGreaterThan(0)
         ? 'green'
         : value.isLessThan(0)
         ? 'red'
         : 'subtle'
-      : 'contrast'
+      : 'contrast')
 
   const el = (
     <Text

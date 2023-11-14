@@ -3,7 +3,7 @@
 import { Option, Select } from '../core/Select'
 import { CurrencyId, useAppSettings } from '@siafoundation/react-core'
 
-export function CurrencySelector() {
+export function CurrencyFiatSelector() {
   const { settings, setCurrency, currencyOptions } = useAppSettings()
 
   return (

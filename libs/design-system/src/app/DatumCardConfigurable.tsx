@@ -4,11 +4,11 @@ import { Option, Select } from '../core/Select'
 import { Text } from '../core/Text'
 import { DatumCard } from '../components/DatumCard'
 import { ValueNum } from '../components/ValueNum'
-import { ValueSc } from '../components/ValueSc'
 import { DataLabel } from './DataLabel'
 import BigNumber from 'bignumber.js'
 import { Tooltip } from '../core/Tooltip'
 import useLocalStorageState from 'use-local-storage-state'
+import { ValueScFiat } from '../components/ValueScFiat'
 
 type Mode = 'total' | 'average' | 'latest'
 
@@ -87,8 +87,9 @@ export function DatumCardConfigurable({
       comment={
         sc ? (
           <div className="flex items-center gap-4">
-            <ValueSc
+            <ValueScFiat
               tooltip="Net change over time range:"
+              fixedTipFiat={10}
               value={new BigNumber(sc.diff)}
             />
             {showChange && sc.change !== undefined && (
