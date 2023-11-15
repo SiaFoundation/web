@@ -77,8 +77,8 @@ export function useEventsMain() {
       id: e.ID,
       timestamp: 0,
       pending: true,
-      type: e.Type,
-      amount: new BigNumber(e.Received).minus(e.Sent),
+      type: e.type,
+      amount: new BigNumber(e.received).minus(e.sent),
     }))
     const dataEvents: EventData[] = responseEvents.data.map((e, index) => {
       let amount = new BigNumber(0)

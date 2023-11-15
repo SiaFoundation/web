@@ -132,11 +132,11 @@ export type FileContract = {
 
 export type PoolTransaction = {
   ID: string
-  Raw: Transaction
-  Type: string
-  Sent: Currency
-  Received: Currency
-  Locked: Currency
+  raw: Transaction
+  type: string
+  sent: Currency
+  received: Currency
+  locked: Currency
 }
 
 // events

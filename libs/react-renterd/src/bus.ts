@@ -1,4 +1,4 @@
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import {
   useDeleteFunc,
   useGetSwr,
@@ -400,7 +400,12 @@ export function useContractRenew(
 export function useContractDelete(
   args?: HookArgsCallback<{ id: string }, void, never>
 ) {
-  return useDeleteFunc({ ...args, route: '/bus/contract/:id' })
+  return useDeleteFunc(
+    { ...args, route: '/bus/contract/:id' },
+    async (mutate) => {
+      mutate((key) => key.startsWith('/bus/contract'))
+    }
+  )
 }
 
 export function useContractsets(args?: HookArgsSwr<void, string[][]>) {
