@@ -1,9 +1,11 @@
+import { ContractState } from '@siafoundation/react-renterd'
 import BigNumber from 'bignumber.js'
 
 export type ContractData = {
   id: string
   hostIp: string
   hostKey: string
+  state: ContractState
   location?: [number, number]
   isRenewed: boolean
   renewedFrom: string
@@ -28,6 +30,7 @@ export type TableColumnId =
   | 'contractId'
   | 'hostIp'
   | 'hostKey'
+  | 'state'
   | 'timeline'
   | 'startTime'
   | 'endTime'
@@ -41,6 +44,7 @@ export const columnsDefaultVisible: TableColumnId[] = [
   'contractId',
   'hostIp',
   'hostKey',
+  'state',
   'timeline',
   'size',
   'totalCost',
@@ -53,6 +57,7 @@ export type SortField =
   | 'contractId'
   | 'hostIp'
   | 'hostKey'
+  | 'state'
   | 'timeline'
   | 'startTime'
   | 'endTime'
@@ -82,6 +87,11 @@ export const sortOptions: {
   {
     id: 'hostKey',
     label: 'host public key',
+    category: 'general',
+  },
+  {
+    id: 'state',
+    label: 'state',
     category: 'general',
   },
   {

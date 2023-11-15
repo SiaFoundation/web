@@ -208,6 +208,8 @@ export interface ContractSpending {
   fundAccount: Currency
 }
 
+export type ContractState = 'pending' | 'active' | 'complete' | 'failed'
+
 export interface Contract {
   id: string
   hostIP: string
@@ -222,6 +224,7 @@ export interface Contract {
   spending: ContractSpending
   totalCost: Currency
   size: number
+  state: ContractState
 }
 
 export interface Block {
