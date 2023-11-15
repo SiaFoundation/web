@@ -137,6 +137,7 @@ export function Dialogs() {
       <SettingsDialog
         open={dialog === 'settings'}
         onOpenChange={onOpenChange}
+        showGpuSetting
       />
       <RenterdSendSiacoinDialog />
       <WalletSingleAddressDetailsDialog
