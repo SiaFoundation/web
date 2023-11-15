@@ -7,11 +7,14 @@ import {
   stripPrefix,
   Tooltip,
   ValueNum,
+  Badge,
+  Separator,
 } from '@siafoundation/design-system'
 import { ArrowUpLeft16 } from '@siafoundation/react-icons'
 import { humanBytes, humanDate } from '@siafoundation/sia-js'
 import { ContractData, TableColumnId } from './types'
 import { ContractContextMenu } from '../../components/Contracts/ContractContextMenu'
+import { ContractState } from '@siafoundation/react-renterd'
 
 type Context = {
   currentHeight: number
@@ -93,6 +96,59 @@ export const columns: ContractsTableColumn[] = [
     category: 'general',
     render: ({ data: { hostKey } }) => {
       return <ValueCopyable size="12" value={hostKey} label="host public key" />
+    },
+  },
+  {
+    id: 'state',
+    label: 'state',
+    category: 'general',
+    render: ({ data: { state } }) => {
+      return (
+        <Tooltip
+          content={
+            <div className="flex flex-col gap-1.5">
+              <div className="flex">
+                <Text className="flex-1" weight="medium">
+                  pending
+                </Text>
+                <Text className="flex-[2]" color="subtle">
+                  Contract has been added.
+                </Text>
+              </div>
+              <Separator className="w-full" />
+              <div className="flex">
+                <Text className="flex-1" weight="medium">
+                  active
+                </Text>
+                <Text className="flex-[2]" color="subtle">
+                  Contract has appeared on chain.
+                </Text>
+              </div>
+              <Separator className="w-full" />
+              <div className="flex">
+                <Text className="flex-1" weight="medium">
+                  complete
+                </Text>
+                <Text className="flex-[2]" color="subtle">
+                  Storage proof has appeared on chain.
+                </Text>
+              </div>
+              <Separator className="w-full" />
+              <div className="flex">
+                <Text className="flex-1" weight="medium">
+                  failed
+                </Text>
+                <Text className="flex-[2]" color="subtle">
+                  Storage proof was not submitted before the end of proof
+                  window.
+                </Text>
+              </div>
+            </div>
+          }
+        >
+          <Badge variant={getContractStateColor(state)}>{state}</Badge>
+        </Tooltip>
+      )
     },
   },
   {
@@ -207,3 +263,18 @@ export const columns: ContractsTableColumn[] = [
     ),
   },
 ]
+
+function getContractStateColor(state: ContractState) {
+  if (state === 'active') {
+    return 'amber'
+  }
+  if (state === 'failed') {
+    return 'red'
+  }
+  if (state === 'pending') {
+    return 'amber'
+  }
+  if (state === 'complete') {
+    return 'green'
+  }
+}

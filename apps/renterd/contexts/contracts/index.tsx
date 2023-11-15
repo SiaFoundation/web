@@ -57,6 +57,7 @@ function useContractsMain() {
         return {
           id: c.id,
           contractId: c.id,
+          state: c.state,
           hostIp: c.hostIP,
           hostKey: c.hostKey,
           location: geoHosts.find((h) => h.public_key === c.hostKey)?.location,
