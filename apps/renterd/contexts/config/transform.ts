@@ -163,6 +163,8 @@ export function transformUpGouging(
     minMaxEphemeralAccountBalance: toHastings(
       values.minMaxEphemeralAccountBalance
     ).toString(),
+    migrationSurchargeMultiplier:
+      values.migrationSurchargeMultiplier.toNumber(),
   }
 }
 
@@ -323,6 +325,7 @@ export function transformDownGouging(
       g.minMaxEphemeralAccountBalance,
       scDecimalPlaces
     ),
+    migrationSurchargeMultiplier: new BigNumber(g.migrationSurchargeMultiplier),
   }
 }
 

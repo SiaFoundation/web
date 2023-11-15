@@ -191,6 +191,7 @@ export type GougingSettings = {
   minPriceTableValidity: number
   minAccountExpiry: number
   minMaxEphemeralAccountBalance: string
+  migrationSurchargeMultiplier: number
 }
 
 export type UploadPackingSettings = {
