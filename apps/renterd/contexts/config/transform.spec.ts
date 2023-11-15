@@ -55,6 +55,7 @@ describe('tansforms', () => {
             minMaxCollateral: '10000000000000000000000000',
             minMaxEphemeralAccountBalance: '1000000000000000000000000',
             minPriceTableValidity: 300000000000,
+            migrationSurchargeMultiplier: 10,
           },
           {
             minShards: 10,
@@ -90,6 +91,7 @@ describe('tansforms', () => {
         minMaxCollateral: new BigNumber('10'),
         minMaxEphemeralAccountBalance: new BigNumber('1'),
         minPriceTableValidityMinutes: new BigNumber(5),
+        migrationSurchargeMultiplier: new BigNumber(10),
         minShards: new BigNumber(10),
         totalShards: new BigNumber(30),
         includeRedundancyMaxStoragePrice: false,
@@ -134,6 +136,7 @@ describe('tansforms', () => {
             minMaxCollateral: '10000000000000000000000000',
             minMaxEphemeralAccountBalance: '1000000000000000000000000',
             minPriceTableValidity: 300000000000,
+            migrationSurchargeMultiplier: 10,
           },
           {
             minShards: 10,
@@ -169,6 +172,7 @@ describe('tansforms', () => {
         minMaxCollateral: new BigNumber('10'),
         minMaxEphemeralAccountBalance: new BigNumber('1'),
         minPriceTableValidityMinutes: new BigNumber(5),
+        migrationSurchargeMultiplier: new BigNumber(10),
         minShards: new BigNumber(10),
         totalShards: new BigNumber(30),
         includeRedundancyMaxStoragePrice: true,
@@ -327,6 +331,7 @@ describe('tansforms', () => {
             minPriceTableValidityMinutes: new BigNumber(5),
             minShards: new BigNumber(10),
             totalShards: new BigNumber(30),
+            migrationSurchargeMultiplier: new BigNumber(10),
             includeRedundancyMaxStoragePrice: false,
             includeRedundancyMaxUploadPrice: false,
           },
@@ -348,6 +353,7 @@ describe('tansforms', () => {
         minMaxCollateral: '10000000000000000000000000',
         minMaxEphemeralAccountBalance: '1000000000000000000000000',
         minPriceTableValidity: 300000000000,
+        migrationSurchargeMultiplier: 10,
       })
     })
 
@@ -379,6 +385,7 @@ describe('tansforms', () => {
             minMaxCollateral: new BigNumber('10'),
             minMaxEphemeralAccountBalance: new BigNumber('1'),
             minPriceTableValidityMinutes: new BigNumber(5),
+            migrationSurchargeMultiplier: new BigNumber(10),
             minShards: new BigNumber(10),
             totalShards: new BigNumber(30),
             includeRedundancyMaxStoragePrice: true,
@@ -402,6 +409,7 @@ describe('tansforms', () => {
         minMaxCollateral: '10000000000000000000000000',
         minMaxEphemeralAccountBalance: '1000000000000000000000000',
         minPriceTableValidity: 300000000000,
+        migrationSurchargeMultiplier: 10,
       })
     })
 
@@ -551,6 +559,7 @@ function buildAllResponses() {
       minMaxCollateral: '10000000000000000000000000',
       minMaxEphemeralAccountBalance: '1000000000000000000000000',
       minPriceTableValidity: 300000000000,
+      migrationSurchargeMultiplier: 10,
     },
     redundancy: {
       minShards: 10,

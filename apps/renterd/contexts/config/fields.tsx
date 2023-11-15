@@ -567,6 +567,32 @@ export function getFields({
           }
         : {},
     },
+    migrationSurchargeMultiplier: {
+      category: 'gouging',
+      type: 'number',
+      title: 'Migration surcharge multiplier',
+      units: '* download price',
+      placeholder: '10',
+      decimalsLimit: 1,
+      description: (
+        <>
+          Factor that gets applied on the max download price when trying to
+          download migration-critical sectors from a host that is price gouging.
+          For example, when migrating a low-health file, if the download is
+          failing but would potentially succeed with looser gouging settings, we
+          apply the migration surcharge multiplier to overpay on every sector
+          download if it means saving the file/migration.
+        </>
+      ),
+      suggestion: new BigNumber(10),
+      suggestionTip: 'The default multiplier is 10x the download price.',
+      hidden: !showAdvanced,
+      validation: showAdvanced
+        ? {
+            required: 'required',
+          }
+        : {},
+    },
 
     // Redundancy
     minShards: {
