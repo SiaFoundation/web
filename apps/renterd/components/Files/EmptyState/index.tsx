@@ -3,7 +3,6 @@ import { CloudUpload32 } from '@siafoundation/react-icons'
 import { routes } from '../../../config/routes'
 import { useFiles } from '../../../contexts/files'
 import { useAutopilotNotConfigured } from '../checks/useAutopilotNotConfigured'
-import { useUploadPackingSettings } from '../../../hooks/useUploadPackingSettings'
 import { useNotEnoughContracts } from '../checks/useNotEnoughContracts'
 import { StateError } from './StateError'
 import { StateNoneMatching } from './StateNoneMatching'
@@ -14,7 +13,6 @@ export function EmptyState() {
 
   const autopilotNotConfigured = useAutopilotNotConfigured()
   const notEnoughContracts = useNotEnoughContracts()
-  const uploadPacking = useUploadPackingSettings()
 
   if (dataState === 'noneMatchingFilters') {
     return <StateNoneMatching />
@@ -62,21 +60,11 @@ export function EmptyState() {
           <CloudUpload32 className="scale-[200%]" />
         </Text>
         <div className="flex flex-col gap-4 justify-center items-center">
-          {uploadPacking.data?.enabled ? (
-            <Text color="subtle" className="text-center max-w-[500px]">
-              Drag and drop files or click here to start uploading. Redundancy
-              is configured to use {notEnoughContracts.required} shards which
-              means at least that many contracts are required. Small files can
-              be uploaded before contracts have formed but larger files will
-              fail to upload.
-            </Text>
-          ) : (
-            <Text color="subtle" className="text-center max-w-[500px]">
-              There are not enough contracts to upload data yet. Redundancy is
-              configured to use {notEnoughContracts.required} shards which means
-              at least that many contracts are required.
-            </Text>
-          )}
+          <Text color="subtle" className="text-center max-w-[500px]">
+            There are not enough contracts to upload data yet. Redundancy is
+            configured to use {notEnoughContracts.required} shards which means
+            at least that many contracts are required.
+          </Text>
           <Text size="30" className="text-center max-w-[500px]">
             {notEnoughContracts.count}/{notEnoughContracts.required}
           </Text>
