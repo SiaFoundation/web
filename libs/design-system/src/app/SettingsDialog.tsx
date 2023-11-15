@@ -24,9 +24,15 @@ type Props = {
   open: boolean
   onOpenChange: (open: boolean) => void
   securityEl?: React.ReactNode
+  showGpuSetting?: boolean
 }
 
-export function SettingsDialog({ open, onOpenChange, securityEl }: Props) {
+export function SettingsDialog({
+  open,
+  onOpenChange,
+  securityEl,
+  showGpuSetting,
+}: Props) {
   const { settings, setSettings, gpu } = useAppSettings()
 
   return (
@@ -96,30 +102,32 @@ export function SettingsDialog({ open, onOpenChange, securityEl }: Props) {
                 </Paragraph>
               </div>
             </Alert>
-            <Alert>
-              <div className="flex flex-col gap-4">
-                <div className="flex gap-2 items-center">
-                  <Text>
-                    <Information16 />
-                  </Text>
-                  <Heading size="20" className="flex-1">
-                    GPU
-                  </Heading>
-                  <Switch
-                    disabled={!gpu.canGpuRender}
-                    checked={gpu.canGpuRender && gpu.isGpuEnabled}
-                    onCheckedChange={gpu.setIsGpuEnabled}
-                    size="medium"
-                  />
+            {showGpuSetting && (
+              <Alert>
+                <div className="flex flex-col gap-4">
+                  <div className="flex gap-2 items-center">
+                    <Text>
+                      <Information16 />
+                    </Text>
+                    <Heading size="20" className="flex-1">
+                      GPU
+                    </Heading>
+                    <Switch
+                      disabled={!gpu.canGpuRender}
+                      checked={gpu.canGpuRender && gpu.isGpuEnabled}
+                      onCheckedChange={gpu.setIsGpuEnabled}
+                      size="medium"
+                    />
+                  </div>
+                  <Paragraph size="14">
+                    Enable features that require a GPU.{' '}
+                    {gpu.canGpuRender
+                      ? ''
+                      : 'This device does not support GPU rendering.'}
+                  </Paragraph>
                 </div>
-                <Paragraph size="14">
-                  Enable features that require a GPU.{' '}
-                  {gpu.canGpuRender
-                    ? ''
-                    : 'This device does not support GPU rendering.'}
-                </Paragraph>
-              </div>
-            </Alert>
+              </Alert>
+            )}
           </div>
         </div>
         <Separator className="w-full" />
