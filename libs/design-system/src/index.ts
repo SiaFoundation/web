@@ -136,7 +136,6 @@ export * from './site/Callout'
 export * from './site/Links'
 export * from './site/NextAppSsrAppRouter'
 export * from './site/NextAppCsr'
-export * from './site/NextDocument'
 export * from './site/BackgroundImagePattern'
 export * from './site/WebDomain'
 

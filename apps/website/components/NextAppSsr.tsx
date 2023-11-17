@@ -1,5 +1,4 @@
 import { TooltipProvider, Toaster } from '@siafoundation/design-system'
-import { rootFontClasses } from '@siafoundation/fonts'
 import { AppProps } from 'next/app'
 import { AppSettingsProvider, CoreProvider } from '@siafoundation/react-core'
 import { ThemeProvider } from 'next-themes'
@@ -17,7 +16,7 @@ export function NextAppSsr({
         <ThemeProvider attribute="class">
           <TooltipProvider>
             <AppSettingsProvider>
-              <div id="root" className={rootFontClasses}>
+              <div id="root">
                 <Toaster />
                 <Layout>
                   <Component {...pageProps} />
@@ -34,7 +33,7 @@ export function NextAppSsr({
       <ThemeProvider attribute="class">
         <TooltipProvider>
           <AppSettingsProvider>
-            <div id="root" className={rootFontClasses}>
+            <div id="root">
               <Toaster />
               <Component {...pageProps} />
             </div>
