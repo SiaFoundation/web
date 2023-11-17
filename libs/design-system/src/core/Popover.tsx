@@ -7,10 +7,8 @@ import { panelStyles } from './Panel'
 import { cva, cx } from 'class-variance-authority'
 import { useOpen } from '../hooks/useOpen'
 import { ScrollArea } from './ScrollArea'
-import { rootFontClasses } from '@siafoundation/fonts'
 
 const contentContainerStyles = cva([
-  rootFontClasses,
   'relative',
   'z-10',
   'outline-none',

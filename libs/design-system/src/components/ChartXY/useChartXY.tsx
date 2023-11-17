@@ -21,16 +21,16 @@ import { daysInMilliseconds } from '../../lib/time'
 import { usePrefersReducedMotion } from '@siafoundation/react-core'
 
 const numTicks = 4
+const defaultChartType = 'areastack'
+const defaultCurveType = 'linear'
+const defaultStackOffset = 'none'
 
 type SimpleScaleConfig = { type: 'band' | 'linear'; paddingInner?: number }
 
 export function useChartXY<Key extends string, Cat extends string>(
   id: string,
   chartData: ChartData<Key>,
-  config: ChartConfig<Key, Cat>,
-  initialChartType: ChartType,
-  initialCurveType: CurveType,
-  initialStackOffset: StackOffset
+  config: ChartConfig<Key, Cat>
 ) {
   const data = useMemo(() => {
     chartData.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1))
@@ -84,6 +84,10 @@ export function useChartXY<Key extends string, Cat extends string>(
   const [showHorizontalCrosshair, setShowHorizontalCrosshair] = useState(false)
   const [snapTooltipToDatum, setSnapTooltipToDatum] = useState(true)
   const [sharedTooltip, setSharedTooltip] = useState(true)
+
+  const initialChartType = config.chartType || defaultChartType
+  const initialCurveType = config.curveType || defaultCurveType
+  const initialStackOffset = config.stackOffset || defaultStackOffset
 
   const [chartType, setChartType] = useState<ChartType>(initialChartType)
   const [curveType, setCurveType] = useState<CurveType>(initialCurveType)
@@ -211,10 +215,10 @@ export function useChartXY<Key extends string, Cat extends string>(
     () => ({
       top: 30,
       bottom: xAxisOrientation === 'top' ? 0 : 20,
-      left: 0,
-      right: 0,
+      right: yAxisOrientation === 'right' ? 60 : 0,
+      left: yAxisOrientation === 'left' ? 60 : 0,
     }),
-    [xAxisOrientation]
+    [xAxisOrientation, yAxisOrientation]
   )
 
   return {
@@ -231,6 +235,8 @@ export function useChartXY<Key extends string, Cat extends string>(
     isStack,
     todayOffset,
     initialChartType,
+    initialCurveType,
+    initialStackOffset,
     chartType,
     curveType,
     keys,

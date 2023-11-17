@@ -8,10 +8,8 @@ import { separatorStyles, itemStyles, labelStyles } from './Menu'
 import { panelStyles } from './Panel'
 import { useOpen } from '../hooks/useOpen'
 import { ArrowRight16 } from '@siafoundation/react-icons'
-import { rootFontClasses } from '@siafoundation/fonts'
 
 const contentContainerStyles = cva([
-  rootFontClasses,
   'relative',
   'max-w-sm',
   'z-30',

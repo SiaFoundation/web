@@ -116,17 +116,17 @@ export const dataTimeSpanOptions: {
 }[] = [
   {
     label: '1D',
-    interval: '5m',
+    interval: '15m',
     value: '1',
   },
   {
     label: '7D',
-    interval: '15m',
+    interval: 'hourly',
     value: '7',
   },
   {
     label: '1M',
-    interval: 'hourly',
+    interval: 'daily',
     value: '30',
   },
   {

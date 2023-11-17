@@ -19,6 +19,8 @@ export function ChartXYConfig<Key extends string, Cat extends string>({
   setStackOffset,
   xAxisOrientation,
   setXAxisOrientation,
+  yAxisOrientation,
+  setYAxisOrientation,
 }: ChartXYProps<Key, Cat>) {
   const shouldDisableAll = initialChartType === 'line'
   const shouldDisableStack = initialChartType === 'area'
@@ -71,8 +73,12 @@ export function ChartXYConfig<Key extends string, Cat extends string>({
             className="flex flex-col gap-1"
           >
             <Radio disabled={!isStack} value="none">
-              Auto
+              None
               <InfoTip>zero-baseline</InfoTip>
+            </Radio>
+            <Radio disabled={!isStack} value="diverging">
+              Diverging
+              <InfoTip>non zero-baseline</InfoTip>
             </Radio>
             <Radio disabled={!isStack} value="expand">
               Expand
@@ -113,14 +119,14 @@ export function ChartXYConfig<Key extends string, Cat extends string>({
               <Radio value="bottom">Bottom</Radio>
               <Radio value="top">Top</Radio>
             </RadioGroup>
-            {/* <RadioGroup
-            value={yAxisOrientation}
-            onValueChange={(v) => setYAxisOrientation(v as 'left' | 'right')}
-            className="flex flex-col gap-2"
-          >
-            <Radio value="left">Left</Radio>
-            <Radio value="right">Right</Radio>
-          </RadioGroup> */}
+            <RadioGroup
+              value={yAxisOrientation}
+              onValueChange={(v) => setYAxisOrientation(v as 'left' | 'right')}
+              className="flex flex-col gap-2"
+            >
+              <Radio value="left">Left</Radio>
+              <Radio value="right">Right</Radio>
+            </RadioGroup>
           </div>
         </div>
       </div>

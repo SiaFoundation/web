@@ -62,9 +62,14 @@ export function BalanceEvolution({
         },
         format: (v) => humanSiacoin(v),
         formatTimestamp: getDataIntervalLabelFormatter('default'),
+        formatTickY: (v) =>
+          humanSiacoin(v, {
+            fixed: 0,
+            dynamicUnits: true,
+          }),
         disableAnimations: true,
+        chartType,
       },
-      chartType,
       isLoading,
     }
   }, [balances, isLoading, chartConfigs, chartType])
@@ -77,7 +82,6 @@ export function BalanceEvolution({
         allowConfiguration={false}
         data={chart.data}
         config={chart.config}
-        chartType={chart.chartType}
       />
     </div>
   )

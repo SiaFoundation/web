@@ -42,20 +42,10 @@ export function ChartXY<Key extends string, Cat extends string>({
   actionsLeft,
   isLoading,
   actionsRight,
-  chartType = 'areastack',
-  curveType = 'linear',
-  stackOffset = 'none',
   variant = 'panel',
   allowConfiguration = true,
 }: Props<Key, Cat>) {
-  const props = useChartXY<Key, Cat>(
-    id,
-    data,
-    config,
-    chartType,
-    curveType,
-    stackOffset
-  )
+  const props = useChartXY<Key, Cat>(id, data, config)
 
   const body = (
     <>

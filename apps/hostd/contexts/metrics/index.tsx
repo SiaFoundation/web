@@ -9,7 +9,7 @@ import {
   minutesInMilliseconds,
   ValueScFiat,
 } from '@siafoundation/design-system'
-import { humanBytes, humanNumber } from '@siafoundation/sia-js'
+import { humanBytes, humanNumber, humanSiacoin } from '@siafoundation/sia-js'
 import { useCallback, useMemo } from 'react'
 import { chartConfigs } from '../../config/charts'
 import { useMetricsPeriod } from '@siafoundation/react-hostd'
@@ -253,10 +253,16 @@ function useMetricsMain() {
         formatComponent: function ({ value }) {
           return <ValueScFiat variant="value" value={new BigNumber(value)} />
         },
+        formatTickY: (v) =>
+          humanSiacoin(v, {
+            fixed: 0,
+            dynamicUnits: true,
+          }),
         formatTimestamp,
         disableAnimations,
+        chartType: 'barstack',
+        stackOffset: 'diverging',
       },
-      chartType: 'line',
       isLoading: metricsPeriod.isValidating,
     }
   }, [metricsPeriod, formatTimestamp])
@@ -289,9 +295,16 @@ function useMetricsMain() {
           return <ValueScFiat variant="value" value={new BigNumber(value)} />
         },
         formatTimestamp,
+        formatTickY: (v) =>
+          humanSiacoin(v, {
+            fixed: 0,
+            dynamicUnits: true,
+          }),
         disableAnimations,
+        chartType: 'area',
+        curveType: 'linear',
+        stackOffset: 'none',
       },
-      chartType: 'area',
       isLoading: metricsPeriod.isValidating,
     }
   }, [metricsPeriod, formatTimestamp])
@@ -354,9 +367,16 @@ function useMetricsMain() {
           return <ValueScFiat variant="value" value={new BigNumber(value)} />
         },
         formatTimestamp,
+        formatTickY: (v) =>
+          humanSiacoin(v, {
+            fixed: 0,
+            dynamicUnits: true,
+          }),
         disableAnimations,
+        chartType: 'line',
+        curveType: 'linear',
+        stackOffset: 'none',
       },
-      chartType: 'line',
       isLoading: metricsPeriod.isValidating,
     }
   }, [metricsPeriod, formatTimestamp])
@@ -391,9 +411,12 @@ function useMetricsMain() {
         },
         format: (v) => `${v} contracts`,
         formatTimestamp,
+        formatTickY: (v) => humanNumber(v),
         disableAnimations,
+        chartType: 'areastack',
+        curveType: 'linear',
+        stackOffset: 'none',
       },
-      chartType: 'areastack',
       isLoading: metricsPeriod.isValidating,
     }
   }, [metricsPeriod, formatTimestamp])
@@ -473,9 +496,12 @@ function useMetricsMain() {
         },
         format: (v) => humanBytes(v),
         formatTimestamp,
+        formatTickY: (v) => humanBytes(v, { fixed: 0 }),
         disableAnimations,
+        chartType: 'line',
+        curveType: 'linear',
+        stackOffset: 'none',
       },
-      chartType: 'line',
       isLoading: metricsPeriod.isValidating,
     }
   }, [metricsPeriod, formatTimestamp])
@@ -515,10 +541,13 @@ function useMetricsMain() {
           storageWrites: chartConfigs.storageWrites,
         },
         format: (v) => humanNumber(v),
+        formatTickY: (v) => humanNumber(v),
         formatTimestamp,
         disableAnimations,
+        chartType: 'line',
+        curveType: 'linear',
+        stackOffset: 'none',
       },
-      chartType: 'line',
       isLoading: metricsPeriod.isValidating,
     }
   }, [metricsPeriod, formatTimestamp])
@@ -545,9 +574,15 @@ function useMetricsMain() {
         },
         format: (v) => humanBytes(v),
         formatTimestamp,
+        formatTickY: (v) =>
+          humanBytes(v, {
+            fixed: 0,
+          }),
         disableAnimations,
+        chartType: 'line',
+        curveType: 'linear',
+        stackOffset: 'none',
       },
-      chartType: 'line',
       isLoading: metricsPeriod.isValidating,
     }
   }, [metricsPeriod, formatTimestamp])
