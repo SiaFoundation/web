@@ -4,6 +4,7 @@ import { AppProps } from 'next/app'
 import { Providers } from '../config/providers'
 import { useWasm } from '../hooks/useWasm'
 import { routes } from '../config/routes'
+import { rootFontClasses } from '@siafoundation/fonts'
 
 export default function App({
   Component,
@@ -14,6 +15,7 @@ export default function App({
   useWasm()
   return (
     <NextAppCsr
+      className={rootFontClasses}
       fallback={pageProps.fallback}
       passwordProtectRequestHooks
       lockRoutes={routes}

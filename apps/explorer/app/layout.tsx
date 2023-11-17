@@ -2,27 +2,8 @@ import { Layout } from '../components/Layout'
 import '../config/style.css'
 import { NextAppSsrAppRouter } from '@siafoundation/design-system'
 import { appLink } from '../config'
-import { IBM_Plex_Sans, IBM_Plex_Mono } from '@next/font/google'
-import { cx } from 'class-variance-authority'
 import Script from 'next/script'
-
-const sans = IBM_Plex_Sans({
-  weight: ['100', '200', '300', '400', '500', '600', '700'],
-  style: ['normal', 'italic'],
-  subsets: ['latin'],
-  variable: '--font-sans',
-  display: 'swap',
-  preload: true,
-})
-
-const mono = IBM_Plex_Mono({
-  weight: ['100', '200', '300', '400', '500', '600', '700'],
-  style: ['normal', 'italic'],
-  subsets: ['latin'],
-  variable: '--font-mono',
-  display: 'swap',
-  preload: true,
-})
+import { rootFontClasses } from '@siafoundation/fonts'
 
 export const metadata = {
   title: 'Explorer',
@@ -40,11 +21,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={cx(sans.variable, mono.variable)}
-    >
+    <html lang="en" suppressHydrationWarning className={rootFontClasses}>
       <body>
         <NextAppSsrAppRouter>
           <Layout>{children}</Layout>

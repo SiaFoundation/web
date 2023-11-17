@@ -8,7 +8,7 @@ import DefaultNextDocument, {
   NextScript,
 } from 'next/document'
 
-export class NextDocument extends DefaultNextDocument {
+export default class NextDocument extends DefaultNextDocument {
   override render() {
     return (
       <Html lang="en">
