@@ -178,4 +178,3 @@ export * from './lib/getOs'
 export * from './lib/countryEmoji'
 
 export { colors } from './config/colors'
-export * from './config/css'

@@ -1,0 +1,49 @@
+{
+  "name": "fonts",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/fonts/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/fonts",
+        "tsConfig": "libs/fonts/tsconfig.lib.json",
+        "project": "libs/fonts/package.json",
+        "entryFile": "libs/fonts/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nx/react/plugins/bundle-rollup",
+        "format": ["esm", "cjs"],
+        "compiler": "swc",
+        "assets": [
+          {
+            "glob": "libs/fonts/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      },
+      "configurations": {}
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/fonts/**/*.{ts,tsx,js,jsx}",
+          "libs/fonts/package.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/fonts"],
+      "options": {
+        "jestConfig": "libs/fonts/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

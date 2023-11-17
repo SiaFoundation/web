@@ -11,9 +11,9 @@ import { Button } from './Button'
 import { ScrollArea } from './ScrollArea'
 import { textStyles } from './Text'
 import { VariantProps } from '../types'
-import { rootClasses } from '../config/css'
+import { rootFontClasses } from '@siafoundation/fonts'
 
-const containerStyles = cva([rootClasses, 'z-20', 'overflow-hidden'], {
+const containerStyles = cva([rootFontClasses, 'z-20', 'overflow-hidden'], {
   variants: {
     variant: {
       default: 'flex items-center justify-center w-full h-full',

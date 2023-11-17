@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react'
 import { ThemeProvider } from 'next-themes'
 import { TooltipProvider } from '../hooks/tooltip'
 import { AppSettingsProvider, CoreProvider } from '@siafoundation/react-core'
-import { rootClasses } from '../config/css'
 import { Toaster } from '../lib/toast'
+import { rootFontClasses } from '@siafoundation/fonts'
 
 export function ClientSide({ children }: { children: React.ReactNode }) {
   const [csrReady, setCsrReady] = useState(false)
@@ -39,7 +39,7 @@ export function NextAppCsr({
               lockRoutes={lockRoutes}
               passwordProtectRequestHooks={passwordProtectRequestHooks}
             >
-              <div id="root" className={rootClasses}>
+              <div id="root" className={rootFontClasses}>
                 <Toaster />
                 {children}
               </div>
