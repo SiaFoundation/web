@@ -1,7 +1,7 @@
 import { cx } from 'class-variance-authority'
-import { IBM_Plex_Sans, IBM_Plex_Mono } from '@next/font/google'
+import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google'
 
-export const sans = IBM_Plex_Sans({
+const sans = IBM_Plex_Sans({
   weight: ['100', '200', '300', '400', '500', '600', '700'],
   style: ['normal', 'italic'],
   subsets: ['latin'],
@@ -10,7 +10,7 @@ export const sans = IBM_Plex_Sans({
   preload: true,
 })
 
-export const mono = IBM_Plex_Mono({
+const mono = IBM_Plex_Mono({
   weight: ['100', '200', '300', '400', '500', '600', '700'],
   style: ['normal', 'italic'],
   subsets: ['latin'],
