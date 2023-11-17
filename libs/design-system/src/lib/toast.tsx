@@ -8,9 +8,9 @@ import toast, {
 } from 'react-hot-toast'
 import { cx } from 'class-variance-authority'
 import { panelStyles } from '../core/Panel'
-import { rootClasses } from '../config/css'
 import React from 'react'
 import { Text } from '../core/Text'
+import { rootFontClasses } from '@siafoundation/fonts'
 
 export type { ToastOptions }
 
@@ -71,7 +71,7 @@ export function buildToastOptions({
     position: 'top-center',
     duration: 6_000,
     className: cx(
-      rootClasses,
+      rootFontClasses,
       panelStyles(),
       'font-sans font-normal',
       'text-gray-1100 dark:text-white',

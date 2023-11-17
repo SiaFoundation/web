@@ -7,7 +7,7 @@ import { cx } from 'class-variance-authority'
 import { panelStyles } from './Panel'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useOpen } from '../hooks/useOpen'
-import { rootClasses } from '../config/css'
+import { rootFontClasses } from '@siafoundation/fonts'
 
 type TooltipProps = Omit<
   React.ComponentProps<typeof TooltipPrimitive.Root> &
@@ -71,7 +71,7 @@ export function Tooltip({
                 animate="show"
                 exit="exit"
                 className={cx(
-                  rootClasses,
+                  rootFontClasses,
                   'relative',
                   'z-50',
                   'data-[side=top]:bottom-1',

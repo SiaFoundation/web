@@ -7,10 +7,10 @@ import { ChartXYProps } from './useChartXY'
 import { Separator } from '../../core/Separator'
 import { PatternLines } from '@visx/pattern'
 import { cx } from 'class-variance-authority'
-import { rootClasses } from '../../config/css'
 import { groupBy } from 'lodash'
 import { ChartConfig, ChartPoint } from './types'
 import { humanDate } from '@siafoundation/sia-js'
+import { rootFontClasses } from '@siafoundation/fonts'
 
 export function ChartXYGraph<Key extends string, Cat extends string>({
   id,
@@ -266,7 +266,7 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
             ) as [Cat, KeyOption[]][]
 
             return (
-              <div className={cx(rootClasses, 'flex flex-col gap-2 py-1')}>
+              <div className={cx(rootFontClasses, 'flex flex-col gap-2 py-1')}>
                 <Text
                   font="mono"
                   size="12"

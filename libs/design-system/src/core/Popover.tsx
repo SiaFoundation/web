@@ -6,11 +6,11 @@ import * as PopoverPrimitive from '@radix-ui/react-popover'
 import { panelStyles } from './Panel'
 import { cva, cx } from 'class-variance-authority'
 import { useOpen } from '../hooks/useOpen'
-import { rootClasses } from '../config/css'
 import { ScrollArea } from './ScrollArea'
+import { rootFontClasses } from '@siafoundation/fonts'
 
 const contentContainerStyles = cva([
-  rootClasses,
+  rootFontClasses,
   'relative',
   'z-10',
   'outline-none',
