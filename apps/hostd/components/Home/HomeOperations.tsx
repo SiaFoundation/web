@@ -62,7 +62,6 @@ export function HomeOperations() {
           data={operations.data}
           config={operations.config}
           isLoading={operations.isLoading}
-          chartType={operations.chartType}
           actionsLeft={
             <>
               <Text font="mono" weight="semibold">

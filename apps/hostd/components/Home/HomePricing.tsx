@@ -98,7 +98,6 @@ export function HomePricing() {
         data={pricing.data}
         config={pricing.config}
         isLoading={pricing.isLoading}
-        chartType={pricing.chartType}
         actionsLeft={
           <>
             <Text font="mono" weight="semibold">

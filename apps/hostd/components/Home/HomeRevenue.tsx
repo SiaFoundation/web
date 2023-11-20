@@ -78,7 +78,6 @@ export function HomeRevenue() {
         data={revenue.data}
         config={revenue.config}
         isLoading={revenue.isLoading}
-        chartType={revenue.chartType}
         actionsLeft={
           <>
             <Text font="mono" weight="semibold">

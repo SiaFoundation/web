@@ -45,7 +45,6 @@ export function HomeCollateral() {
         data={collateral.data}
         config={collateral.config}
         isLoading={collateral.isLoading}
-        chartType={collateral.chartType}
         height={300}
       />
     </div>

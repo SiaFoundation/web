@@ -41,7 +41,6 @@ export function HomeStorage() {
         data={storage.data}
         config={storage.config}
         isLoading={storage.isLoading}
-        chartType={storage.chartType}
         actionsLeft={
           <>
             <Text font="mono" weight="semibold">

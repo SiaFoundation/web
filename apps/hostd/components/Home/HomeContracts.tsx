@@ -57,7 +57,6 @@ export function HomeContracts() {
         data={contracts.data}
         config={contracts.config}
         isLoading={contracts.isLoading}
-        chartType={contracts.chartType}
         height={300}
       />
     </div>
