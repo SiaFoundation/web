@@ -1,5 +1,11 @@
 # @siafoundation/react-renterd
 
+## 0.10.0
+
+### Minor Changes
+
+- 800c47d1: Add useBucket and useBucketPolicyUpdate.
+
 ## 0.9.0
 
 ### Minor Changes

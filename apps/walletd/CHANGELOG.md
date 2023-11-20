@@ -1,5 +1,12 @@
 # walletd
 
+## 0.13.0
+
+### Minor Changes
+
+- b72ef30f: Currency display can now be configured to siacoin, fiat, or both along with a preference for when only one can be displayed.
+- 5308806e: App preferences no longer list unused GPU setting.
+
 ## 0.12.0
 
 ### Minor Changes
