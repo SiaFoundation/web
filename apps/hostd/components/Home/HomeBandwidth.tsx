@@ -39,7 +39,6 @@ export function HomeBandwidth() {
         data={bandwidth.data}
         config={bandwidth.config}
         isLoading={bandwidth.isLoading}
-        chartType={bandwidth.chartType}
         actionsLeft={
           <>
             <Text font="mono" weight="semibold">
