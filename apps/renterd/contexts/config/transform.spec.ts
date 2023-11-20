@@ -185,6 +185,7 @@ describe('tansforms', () => {
     it('up autopilot', () => {
       expect(
         transformUpAutopilot(
+          'Mainnet',
           {
             autopilotContractSet: 'autopilot',
             allowanceMonth: new BigNumber('6006'),
@@ -223,10 +224,10 @@ describe('tansforms', () => {
         },
       })
     })
-
     it('up autopilot accepts unknown values', () => {
       expect(
         transformUpAutopilot(
+          'Mainnet',
           {
             autopilotContractSet: 'autopilot',
             allowanceMonth: new BigNumber('6006'),
@@ -273,6 +274,55 @@ describe('tansforms', () => {
           foobar: 'value',
           set: 'autopilot',
           amount: 51,
+          allowance: '8408400000000000000000000000',
+          period: 6048,
+          renewWindow: 2248,
+          download: 1099511627776,
+          upload: 1100000000000,
+          storage: 1000000000000,
+        },
+      })
+    })
+    it('uses testnet defaults', () => {
+      expect(
+        transformUpAutopilot(
+          'Zen Testnet',
+          {
+            autopilotContractSet: 'autopilot',
+            allowanceMonth: new BigNumber('6006'),
+            amountHosts: undefined,
+            periodWeeks: new BigNumber('6'),
+            renewWindowWeeks: new BigNumber('2.2301587301587302'),
+            downloadTBMonth: new BigNumber('0.785365448411428571428571428571'),
+            uploadTBMonth: new BigNumber('0.785714285714285714285714285714'),
+            storageTB: new BigNumber('1'),
+            allowRedundantIPs: false,
+            maxDowntimeHours: new BigNumber('1440'),
+            minRecentScanFailures: new BigNumber('10'),
+            defragThreshold: new BigNumber('1000'),
+          },
+          {
+            wallet: {},
+            contracts: {
+              period: 7777,
+            },
+            hosts: {},
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } as any
+        )
+      ).toEqual({
+        wallet: {
+          defragThreshold: 1000,
+        },
+        hosts: {
+          allowRedundantIPs: false,
+          maxDowntimeHours: 1440,
+          minRecentScanFailures: 10,
+          scoreOverrides: null,
+        },
+        contracts: {
+          set: 'autopilot',
+          amount: 12,
           allowance: '8408400000000000000000000000',
           period: 6048,
           renewWindow: 2248,
@@ -462,7 +512,7 @@ describe('tansforms', () => {
       expect(settings.downloadTBMonth).toEqual(new BigNumber('92.72'))
       // a little different due to rounding
       expect(
-        transformUpAutopilot(settings, autopilot).contracts.download
+        transformUpAutopilot('Mainnet', settings, autopilot).contracts.download
       ).toEqual(91088814814815)
 
       settings = transformDown(
@@ -483,7 +533,7 @@ describe('tansforms', () => {
       expect(settings.downloadTBMonth).toEqual(new BigNumber('92.72'))
       // using the rounded value results in same value
       expect(
-        transformUpAutopilot(settings, autopilot).contracts.download
+        transformUpAutopilot('Mainnet', settings, autopilot).contracts.download
       ).toEqual(91088814814815)
     })
   })
