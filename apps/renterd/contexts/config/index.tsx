@@ -20,10 +20,11 @@ import {
   UploadPackingSettings,
   useSettingUpdate,
   useAutopilotTrigger,
+  useBusState,
 } from '@siafoundation/react-renterd'
 import { toSiacoins } from '@siafoundation/sia-js'
 import { getFields } from './fields'
-import { SettingsData, defaultValues } from './types'
+import { SettingsData, defaultValues, getAdvancedDefaults } from './types'
 import {
   getRedundancyMultiplier,
   getRedundancyMultiplierIfIncluded,
@@ -282,9 +283,14 @@ export function useConfigMain() {
     [minShards, totalShards]
   )
 
+  const renterdState = useBusState()
   const fields = useMemo(() => {
+    const advancedDefaults = renterdState.data
+      ? getAdvancedDefaults(renterdState.data.network)
+      : undefined
     if (averages.data) {
       return getFields({
+        advancedDefaults,
         isAutopilotEnabled,
         showAdvanced,
         redundancyMultiplier,
@@ -315,6 +321,7 @@ export function useConfigMain() {
       })
     }
     return getFields({
+      advancedDefaults,
       isAutopilotEnabled,
       showAdvanced,
       redundancyMultiplier,
@@ -322,6 +329,7 @@ export function useConfigMain() {
       includeRedundancyMaxUploadPrice,
     })
   }, [
+    renterdState.data,
     isAutopilotEnabled,
     showAdvanced,
     averages.data,
@@ -394,7 +402,7 @@ export function useConfigMain() {
   const mutate = useMutate()
   const onValid = useCallback(
     async (values: typeof defaultValues) => {
-      if (!gouging.data || !redundancy.data) {
+      if (!gouging.data || !redundancy.data || !renterdState.data) {
         return
       }
       try {
@@ -411,7 +419,11 @@ export function useConfigMain() {
         const firstTimeSettingConfig = isAutopilotEnabled && !autopilot.data
         const autopilotResponse = isAutopilotEnabled
           ? await autopilotUpdate.put({
-              payload: transformUpAutopilot(finalValues, autopilot.data),
+              payload: transformUpAutopilot(
+                renterdState.data.network,
+                finalValues,
+                autopilot.data
+              ),
             })
           : undefined
 
@@ -511,6 +523,7 @@ export function useConfigMain() {
       }
     },
     [
+      renterdState.data,
       estimatedSpendingPerMonth,
       showAdvanced,
       isAutopilotEnabled,

@@ -257,7 +257,7 @@ export interface Host {
   interactions: {
     Downtime: number
     FailedInteractions: number
-    LastScan: string
+    LastScan?: string
     LastScanSuccess: boolean
     SecondToLastScanSuccess: boolean
     SuccessfulInteractions: number

@@ -23,7 +23,7 @@ import {
   AutopilotData,
   scDecimalPlaces,
   SettingsData,
-  advancedDefaultAutopilot,
+  getAdvancedDefaultAutopilot,
   ConfigAppData,
   ContractSetData,
   defaultConfigApp,
@@ -46,6 +46,7 @@ const filterUndefinedKeys = (obj: Record<string, unknown>) => {
 
 // up
 export function transformUpAutopilot(
+  network: 'Mainnet' | 'Zen Testnet',
   values: AutopilotData,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   existingValues: AutopilotConfig | undefined
@@ -53,7 +54,7 @@ export function transformUpAutopilot(
   // merge suggestions with values, if advanced values are required they will
   // be added before this function is called and will override suggestions
   const v: AutopilotData = {
-    ...advancedDefaultAutopilot,
+    ...getAdvancedDefaultAutopilot(network),
     ...filterUndefinedKeys(values),
   }
 

@@ -77,18 +77,39 @@ export type RedundancyData = typeof defaultRedundancy
 export type SettingsData = typeof defaultValues
 
 // advanced defaults
-export const advancedDefaultAutopilot: AutopilotData = {
-  ...defaultAutopilot,
-  downloadTBMonth: new BigNumber(1),
-  uploadTBMonth: new BigNumber(1),
-  periodWeeks: new BigNumber(6),
-  renewWindowWeeks: new BigNumber(2),
-  amountHosts: new BigNumber(50),
-  autopilotContractSet: 'autopilot',
-  allowRedundantIPs: false,
-  maxDowntimeHours: new BigNumber(336),
-  minRecentScanFailures: new BigNumber(10),
-  defragThreshold: new BigNumber(1000),
+export function getAdvancedDefaultAutopilot(
+  network: 'Mainnet' | 'Zen Testnet'
+): AutopilotData {
+  return {
+    // must be set
+    storageTB: undefined,
+    downloadTBMonth: undefined,
+    uploadTBMonth: undefined,
+    // calcuated and set
+    allowanceMonth: undefined,
+    // defaults
+    ...(network === 'Mainnet'
+      ? {
+          periodWeeks: new BigNumber(6),
+          renewWindowWeeks: new BigNumber(2),
+          amountHosts: new BigNumber(50),
+          autopilotContractSet: 'autopilot',
+          allowRedundantIPs: false,
+          maxDowntimeHours: new BigNumber(336),
+          minRecentScanFailures: new BigNumber(10),
+          defragThreshold: new BigNumber(1000),
+        }
+      : {
+          periodWeeks: new BigNumber(6),
+          renewWindowWeeks: new BigNumber(2),
+          amountHosts: new BigNumber(12),
+          autopilotContractSet: 'autopilot',
+          allowRedundantIPs: false,
+          maxDowntimeHours: new BigNumber(336),
+          minRecentScanFailures: new BigNumber(10),
+          defragThreshold: new BigNumber(1000),
+        }),
+  }
 }
 
 export const advancedDefaultContractSet: ContractSetData = {
@@ -108,6 +129,29 @@ export const advancedDefaultGouging: GougingData = {
   ...defaultGouging,
 }
 
-export const advancedDefaultRedundancy: RedundancyData = {
-  ...defaultRedundancy,
+export function getAdvancedDefaultRedundancy(
+  network: 'Mainnet' | 'Zen Testnet'
+): RedundancyData {
+  return network === 'Mainnet'
+    ? {
+        minShards: new BigNumber(10),
+        totalShards: new BigNumber(30),
+      }
+    : {
+        minShards: new BigNumber(2),
+        totalShards: new BigNumber(6),
+      }
+}
+
+export function getAdvancedDefaults(
+  network: 'Mainnet' | 'Zen Testnet'
+): SettingsData {
+  return {
+    ...getAdvancedDefaultAutopilot(network),
+    ...advancedDefaultContractSet,
+    ...advancedDefaultConfigApp,
+    ...advancedDefaultUploadPacking,
+    ...advancedDefaultGouging,
+    ...getAdvancedDefaultRedundancy(network),
+  }
 }
