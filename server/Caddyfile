@@ -50,6 +50,10 @@
   handle /assets* {
     reverse_proxy localhost:3002
   }
+
+  handle /downloads* {
+    uri replace /downloads /api/downloads
+  }
 }
 
 sia.tech {
