@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.60.0
+
+### Minor Changes
+
+- 2003a885: The ChartXY API has been refactored.
+
 ## 0.59.0
 
 ### Minor Changes

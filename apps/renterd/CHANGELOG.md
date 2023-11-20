@@ -1,5 +1,19 @@
 # renterd
 
+## 0.33.0
+
+### Minor Changes
+
+- 5958be26: The configuration now has zen-specific suggested/default values for number of contract hosts and shard values.
+- 69a696ca: The bucket context menu now allows you to edit the bucket policy and toggle the read access between public and private.
+- f0403c7e: The simple configuration mode now shows download and upload estimates and pricing.
+- b72ef30f: Currency display can now be configured to siacoin, fiat, or both along with a preference for when only one can be displayed.
+- d34b0a4f: Fixed an issue with file search where selecting a file would navigate to the path without the bucket.
+- 1af82db8: The configuration now includes a setting for a migration surcharge multiplier which allows you to set a factor for increasing the max download price when trying to repair critically low health sectors.
+- f0403c7e: The contract count shown in onboarding will update more quickly as it now includes pending contracts.
+- f3e8cfe9: The contracts table now includes a column for state that shows: pending, active, complete, or failed.
+- 141a7e44: The contract list now updates after a contract is deleted.
+
 ## 0.32.0
 
 ### Minor Changes
