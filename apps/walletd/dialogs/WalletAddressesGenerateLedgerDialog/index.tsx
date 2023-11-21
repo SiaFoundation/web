@@ -132,12 +132,6 @@ export function WalletAddressesGenerateLedgerDialog({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nextIndex])
 
-  const { handleOpenChange, closeAndReset } = useDialogFormHelpers({
-    form,
-    onOpenChange,
-    defaultValues,
-  })
-
   const formIndex = form.watch('index')
   const formCount = form.watch('count')
 
@@ -230,7 +224,15 @@ export function WalletAddressesGenerateLedgerDialog({
     return indiciesWithAddresses
   }, [existingAddresses, indices])
 
-  const newAddresses = useMemo(
+  const newIncompleteAddresses = useMemo(
+    () =>
+      Object.entries(indiciesWithAddresses)
+        .filter(([index, item]) => item.isNew && !item.address)
+        .map(([index, item]) => item),
+    [indiciesWithAddresses]
+  )
+
+  const newGeneratedAddresses = useMemo(
     () =>
       Object.entries(indiciesWithAddresses)
         .filter(([index, item]) => item.isNew && item.address)
@@ -239,8 +241,11 @@ export function WalletAddressesGenerateLedgerDialog({
   )
 
   const saveAddresses = useCallback(async () => {
-    const count = newAddresses.length
-    for (const [i, { address, publicKey, index }] of newAddresses.entries()) {
+    const count = newGeneratedAddresses.length
+    for (const [
+      i,
+      { address, publicKey, index },
+    ] of newGeneratedAddresses.entries()) {
       const response = await addressAdd.put({
         params: {
           id: walletId,
@@ -270,19 +275,27 @@ export function WalletAddressesGenerateLedgerDialog({
       triggerSuccessToast(`Successfully added ${count} addresses.`)
     }
     return
-  }, [addressAdd, walletId, newAddresses])
+  }, [addressAdd, walletId, newGeneratedAddresses])
+
+  const { handleOpenChange, closeAndReset } = useDialogFormHelpers({
+    form,
+    onOpenChange: (open: boolean) => {
+      setIndicies({})
+      onOpenChange(open)
+    },
+    defaultValues,
+  })
 
   const onSubmit = useCallback(async () => {
-    if (newAddresses.length === 0) {
+    if (newIncompleteAddresses.length === 0) {
       triggerErrorToast(
         'Add and generate addresses with your Ledger device to continue.'
       )
       return
     }
     await saveAddresses()
-    setIndicies({})
     closeAndReset()
-  }, [newAddresses, saveAddresses, closeAndReset])
+  }, [newIncompleteAddresses, saveAddresses, closeAndReset])
 
   return (
     <Dialog
@@ -295,11 +308,16 @@ export function WalletAddressesGenerateLedgerDialog({
       }}
       onSubmit={form.handleSubmit(onSubmit)}
       controls={
-        <div className="flex justify-end">
-          <FormSubmitButton form={form} variant="accent" size="medium">
-            Save {newAddresses.length}{' '}
-            {newAddresses.length === 1 ? 'address' : 'addresses'}
-          </FormSubmitButton>
+        <div className="flex gap-1 justify-end">
+          <Button size="medium" variant="gray" onClick={closeAndReset}>
+            Close
+          </Button>
+          {newGeneratedAddresses.length > 0 && (
+            <FormSubmitButton form={form} variant="accent" size="medium">
+              Save {newGeneratedAddresses.length}{' '}
+              {newGeneratedAddresses.length === 1 ? 'address' : 'addresses'}
+            </FormSubmitButton>
+          )}
         </div>
       }
     >
