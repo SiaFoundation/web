@@ -4,6 +4,8 @@ import {
   useServerFilters,
 } from '@siafoundation/design-system'
 import {
+  WalletEventMinerPayout,
+  WalletEventTransaction,
   useWalletEvents,
   useWalletSubscribe,
   useWalletTxPool,
@@ -81,19 +83,36 @@ export function useEventsMain() {
       amount: new BigNumber(e.received).minus(e.sent),
     }))
     const dataEvents: EventData[] = responseEvents.data.map((e, index) => {
-      let amount = new BigNumber(0)
-      if (e.type === 'siacoin transfer') {
-        const inputsTotal =
-          e.val?.inputs?.reduce(
-            (acc, o) => acc.plus(o.value),
+      let amountSc = new BigNumber(0)
+      let amountSf = 0
+      if (e.type === 'transaction') {
+        const inputsScTotal =
+          e.val?.siacoinInputs?.reduce(
+            (acc, o) => acc.plus(o.siacoinOutput.value),
             new BigNumber(0)
           ) || new BigNumber(0)
-        const outputsTotal =
-          e.val?.outputs?.reduce(
-            (acc, o) => acc.plus(o.value),
+        const outputsScTotal =
+          e.val?.siacoinOutputs?.reduce(
+            (acc, o) => acc.plus(o.siacoinOutput.value),
             new BigNumber(0)
           ) || new BigNumber(0)
-        amount = outputsTotal.minus(inputsTotal)
+        amountSc = outputsScTotal.minus(inputsScTotal)
+
+        const inputsSfTotal =
+          e.val?.siafundInputs?.reduce(
+            (acc, o) => acc + o.siafundElement.siafundOutput.value,
+            0
+          ) || 0
+        const outputsSfTotal =
+          e.val?.siafundOutputs?.reduce(
+            (acc, o) => acc + o.siafundOutput.value,
+            0
+          ) || 0
+        amountSf = outputsSfTotal - inputsSfTotal
+      }
+
+      if (e.type === 'miner payout') {
+        amountSc = new BigNumber(e.val.siacoinOutput.siacoinOutput.value)
       }
 
       const id = String(index)
@@ -103,30 +122,18 @@ export function useEventsMain() {
         timestamp: new Date(e.timestamp).getTime(),
         height: e.index.height,
         pending: false,
-        amount,
-      }
-      if ('maturityHeight' in e.val) {
-        res.maturityHeight = e.val.maturityHeight
+        amountSc,
+        amountSf,
       }
       if ('fee' in e.val) {
         res.fee = new BigNumber(e.val.fee)
       }
-      if ('contractID' in e.val) {
-        res.contractId = e.val.contractID
+      if ('fileContract' in e.val) {
+        res.contractId = e.val.fileContract.id
       }
       if ('transactionID' in e.val) {
         res.id += e.val.transactionID
         res.transactionId = e.val.transactionID
-      }
-      if ('outputID' in e.val) {
-        res.id += e.val.outputID
-        res.outputId = e.val.outputID
-      }
-      if ('netAddress' in e.val) {
-        res.netAddress = e.val.netAddress
-      }
-      if ('publicKey' in e.val) {
-        res.publicKey = e.val.publicKey
       }
       return res
     })

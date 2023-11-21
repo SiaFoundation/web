@@ -23,6 +23,7 @@ import {
   SiafundOutputID,
   Transaction,
   WalletEvent,
+  GatewayPeer,
 } from './siaTypes'
 
 // consensus
@@ -77,17 +78,6 @@ export function useEstimatedNetworkBlockHeight(): number {
 }
 
 // syncer
-
-type GatewayPeer = {
-  addr: string
-  inbound: boolean
-  version: string
-
-  firstSeen: string
-  connectedSince: string
-  syncedBlocks: number
-  syncDuration: number
-}
 
 export const syncerPeersKey = '/syncer/peers'
 

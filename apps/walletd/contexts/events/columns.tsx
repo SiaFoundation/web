@@ -4,6 +4,7 @@ import {
   ValueCopyable,
   LoadingDots,
   ValueScFiat,
+  ValueSf,
 } from '@siafoundation/design-system'
 import { humanDate } from '@siafoundation/sia-js'
 import { EventData, TableColumnId } from './types'
@@ -106,11 +107,18 @@ export const columns: EventsTableColumn[] = [
     label: 'amount',
     category: 'general',
     contentClassName: 'w-[120px] justify-end',
-    render: ({ data: { amount } }) => {
-      if (!amount) {
+    render: ({ data: { amountSc, amountSf } }) => {
+      if (!amountSc) {
         return null
       }
-      return <ValueScFiat displayBoth size="12" value={amount} />
+      return (
+        <div className="flex flex-col gap-2">
+          {!amountSc.isZero() && (
+            <ValueScFiat displayBoth size="12" value={amountSc} />
+          )}
+          {!!amountSf && <ValueSf size="12" value={amountSf} />}
+        </div>
+      )
     },
   },
   {
