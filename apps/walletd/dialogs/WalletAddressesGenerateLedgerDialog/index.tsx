@@ -224,14 +224,6 @@ export function WalletAddressesGenerateLedgerDialog({
     return indiciesWithAddresses
   }, [existingAddresses, indices])
 
-  const newIncompleteAddresses = useMemo(
-    () =>
-      Object.entries(indiciesWithAddresses)
-        .filter(([index, item]) => item.isNew && !item.address)
-        .map(([index, item]) => item),
-    [indiciesWithAddresses]
-  )
-
   const newGeneratedAddresses = useMemo(
     () =>
       Object.entries(indiciesWithAddresses)
@@ -287,7 +279,7 @@ export function WalletAddressesGenerateLedgerDialog({
   })
 
   const onSubmit = useCallback(async () => {
-    if (newIncompleteAddresses.length === 0) {
+    if (newGeneratedAddresses.length === 0) {
       triggerErrorToast(
         'Add and generate addresses with your Ledger device to continue.'
       )
@@ -295,7 +287,7 @@ export function WalletAddressesGenerateLedgerDialog({
     }
     await saveAddresses()
     closeAndReset()
-  }, [newIncompleteAddresses, saveAddresses, closeAndReset])
+  }, [newGeneratedAddresses, saveAddresses, closeAndReset])
 
   return (
     <Dialog

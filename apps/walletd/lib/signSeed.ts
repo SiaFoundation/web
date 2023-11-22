@@ -3,11 +3,11 @@ import {
   ConsensusNetwork,
   SiacoinElement,
   Transaction,
+  SiafundElement,
 } from '@siafoundation/react-walletd'
 import { getWalletWasm } from './wasm'
-import { stripPrefix } from '@siafoundation/design-system'
 import { AddressData } from '../contexts/addresses/types'
-import { addUnlockConditionsAndSignatures, getUtxoAndAddress } from './sign'
+import { addUnlockConditionsAndSignatures, getToSignMetadata } from './sign'
 
 export function signTransactionSeed({
   seed,
@@ -17,6 +17,7 @@ export function signTransactionSeed({
   cn,
   addresses,
   siacoinOutputs,
+  siafundOutputs,
 }: {
   seed: string
   cs: ConsensusState
@@ -25,7 +26,8 @@ export function signTransactionSeed({
   toSign: string[]
   addresses: AddressData[]
   siacoinOutputs: SiacoinElement[]
-}): { transaction?: Transaction; error?: string } {
+  siafundOutputs: SiafundElement[]
+}): { signedTransaction?: Transaction; error?: string } {
   if (!cs) {
     return { error: 'No consensus state' }
   }
@@ -37,10 +39,11 @@ export function signTransactionSeed({
   }
 
   const { error } = addUnlockConditionsAndSignatures({
-    transaction,
     toSign,
+    transaction,
     addresses,
     siacoinOutputs,
+    siafundOutputs,
   })
 
   if (error) {
@@ -48,15 +51,16 @@ export function signTransactionSeed({
   }
 
   // for each toSign
-  for (const [i, idPrefixed] of toSign.entries()) {
-    const id = stripPrefix(idPrefixed)
-
+  for (const [i, toSignId] of toSign.entries()) {
     // find the utxo and corresponding address
-    const { address, error: utxoAddressError } = getUtxoAndAddress({
-      id,
+    const { address, error: utxoAddressError } = getToSignMetadata({
+      toSignId,
+      transaction,
       addresses,
       siacoinOutputs,
+      siafundOutputs,
     })
+
     if (utxoAddressError) {
       return { error: utxoAddressError }
     }
@@ -86,6 +90,6 @@ export function signTransactionSeed({
   }
 
   return {
-    transaction,
+    signedTransaction: transaction,
   }
 }

@@ -1,14 +1,20 @@
-import { Text, ValueSc, ValueCopyable } from '@siafoundation/design-system'
-import BigNumber from 'bignumber.js'
+import {
+  Text,
+  ValueSc,
+  ValueCopyable,
+  ValueSf,
+} from '@siafoundation/design-system'
+import { SendParams } from './types'
 
 type Props = {
-  address: string
-  siacoin: BigNumber
-  fee: BigNumber
+  params: SendParams
   transactionId?: string
 }
 
-export function Receipt({ address, siacoin, fee, transactionId }: Props) {
+export function SendReceipt({
+  params: { address, mode, siacoin, siafund, fee },
+  transactionId,
+}: Props) {
   const totalSiacoin = siacoin.plus(fee)
   return (
     <div className="flex flex-col gap-2">
@@ -23,12 +29,16 @@ export function Receipt({ address, siacoin, fee, transactionId }: Props) {
           Amount
         </Text>
         <div className="flex relative top-[-0.5px]">
-          <ValueSc
-            size="14"
-            value={siacoin}
-            variant="value"
-            dynamicUnits={false}
-          />
+          {mode === 'siacoin' ? (
+            <ValueSc
+              size="14"
+              value={siacoin}
+              variant="value"
+              dynamicUnits={false}
+            />
+          ) : (
+            <ValueSf size="14" value={siafund} variant="value" />
+          )}
         </div>
       </div>
       <div className="flex gap-2 justify-between items-center">
@@ -39,19 +49,21 @@ export function Receipt({ address, siacoin, fee, transactionId }: Props) {
           <ValueSc size="14" value={fee} variant="value" dynamicUnits={false} />
         </div>
       </div>
-      <div className="flex items-center gap-2 justify-between">
-        <Text color="verySubtle" noWrap>
-          Total
-        </Text>
-        <div className="flex relative top-[-0.5px]">
-          <ValueSc
-            size="14"
-            value={totalSiacoin}
-            variant="value"
-            dynamicUnits={false}
-          />
+      {mode === 'siacoin' && (
+        <div className="flex items-center gap-2 justify-between">
+          <Text color="verySubtle" noWrap>
+            Total
+          </Text>
+          <div className="flex relative top-[-0.5px]">
+            <ValueSc
+              size="14"
+              value={totalSiacoin}
+              variant="value"
+              dynamicUnits={false}
+            />
+          </div>
         </div>
-      </div>
+      )}
       {transactionId && (
         <div className="flex gap-6 items-center justify-between">
           <Text color="verySubtle" noWrap>

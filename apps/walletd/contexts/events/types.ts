@@ -2,6 +2,7 @@ import BigNumber from 'bignumber.js'
 
 export type EventData = {
   id: string
+  transactionId?: string
   timestamp: number
   height?: number
   pending: boolean
@@ -9,13 +10,13 @@ export type EventData = {
   fee?: BigNumber
   amountSc?: BigNumber
   amountSf?: number
-  transactionId?: string
   contractId?: string
 }
 
 export type TableColumnId =
   // | 'actions'
   // | 'id'
+  | 'transactionId'
   | 'type'
   | 'height'
   | 'timestamp'
@@ -27,6 +28,7 @@ export type TableColumnId =
 export const columnsDefaultVisible: TableColumnId[] = [
   // 'actions',
   // 'id',
+  'transactionId',
   'type',
   'height',
   'timestamp',

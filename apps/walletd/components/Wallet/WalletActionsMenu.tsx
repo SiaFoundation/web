@@ -36,11 +36,11 @@ export function WalletActionsMenu() {
           variant="accent"
           onClick={() => {
             if (wallet?.type === 'seed') {
-              openDialog('walletSendSiacoinSeed', {
+              openDialog('walletSendSeed', {
                 walletId,
               })
             } else if (wallet?.type === 'ledger') {
-              openDialog('walletSendSiacoinLedger', {
+              openDialog('walletSendLedger', {
                 walletId,
               })
             }

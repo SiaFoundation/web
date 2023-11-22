@@ -1,9 +1,12 @@
-import { SiacoinElement, Transaction } from '@siafoundation/react-walletd'
+import {
+  SiacoinElement,
+  SiafundElement,
+  Transaction,
+} from '@siafoundation/react-walletd'
 import { getWalletWasm } from './wasm'
-import { stripPrefix } from '@siafoundation/design-system'
 import { AddressData } from '../contexts/addresses/types'
 import { LedgerDevice } from '../contexts/ledger/types'
-import { addUnlockConditionsAndSignatures, getUtxoAndAddress } from './sign'
+import { addUnlockConditionsAndSignatures, getToSignMetadata } from './sign'
 
 export async function signTransactionLedger({
   device,
@@ -11,12 +14,14 @@ export async function signTransactionLedger({
   toSign,
   addresses,
   siacoinOutputs,
+  siafundOutputs,
 }: {
   device: LedgerDevice
   transaction: Transaction
   toSign: string[]
   addresses: AddressData[]
   siacoinOutputs: SiacoinElement[]
+  siafundOutputs: SiafundElement[]
 }): Promise<{ transaction?: Transaction; error?: string }> {
   if (!addresses) {
     return { error: 'No addresses' }
@@ -30,6 +35,7 @@ export async function signTransactionLedger({
     toSign,
     addresses,
     siacoinOutputs,
+    siafundOutputs,
   })
 
   if (error) {
@@ -37,30 +43,29 @@ export async function signTransactionLedger({
   }
 
   // for each toSign
-  for (const [i, idPrefixed] of toSign.entries()) {
-    const id = stripPrefix(idPrefixed)
-
-    // find the utxo and corresponding address
-    const { address, error: utxoAddressError } = getUtxoAndAddress({
-      id,
+  for (const [i, toSignId] of toSign.entries()) {
+    const addressInfo = getToSignMetadata({
+      toSignId,
       addresses,
       siacoinOutputs,
+      siafundOutputs,
+      transaction,
     })
-    if (utxoAddressError) {
-      return { error: utxoAddressError }
+    if (addressInfo.error) {
+      return { error: addressInfo.error }
     }
 
     // This function generates the signature and adds it to the existing transaction
-    const { error } = await signTransactionIndex({
+    const signTxnResponse = await signTransactionIndex({
       device,
       transaction,
       signatureIndex: i,
-      keyIndex: address.index,
+      keyIndex: addressInfo.address.index,
     })
 
-    if (error) {
+    if (signTxnResponse.error) {
       return {
-        error,
+        error: signTxnResponse.error,
       }
     }
   }

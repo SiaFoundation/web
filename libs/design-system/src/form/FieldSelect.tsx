@@ -13,12 +13,19 @@ type Props<Values extends FieldValues, Categories extends string> = {
   form: UseFormReturn<Values>
   fields: ConfigFields<Values, Categories>
   group?: boolean
+  size?: React.ComponentProps<typeof Select>['size']
 }
 
 export function FieldSelect<
   Values extends FieldValues,
   Categories extends string
->({ name, form, fields, group = true }: Props<Values, Categories>) {
+>({
+  name,
+  form,
+  fields,
+  size = 'small',
+  group = true,
+}: Props<Values, Categories>) {
   const field = fields[name]
   const { options } = field
   const { ref, onChange, onBlur, error } = useRegisterForm({
@@ -31,7 +38,7 @@ export function FieldSelect<
     <Select
       ref={ref}
       name={name}
-      size="small"
+      size={size}
       state={
         error
           ? 'invalid'

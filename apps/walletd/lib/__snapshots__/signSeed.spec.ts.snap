@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`signSeed builds and signs valid transaction 1`] = `
+Object {
+  "signedTransaction": Object {
+    "minerFees": Array [
+      "3930000000000000000000",
+    ],
+    "siacoinInputs": Array [
+      Object {
+        "parentID": "scoid:b222428602c8382b67a769d17e1cdc0952f37f2441a872b92671a6ed76cf22f5",
+        "unlockConditions": Object {
+          "publicKeys": Array [
+            "ed25519:b5b9196a3c19f94982bcdba250a973181b22112437832a8f818f4aa73b8add74",
+          ],
+          "signaturesRequired": 1,
+          "timelock": 0,
+        },
+      },
+    ],
+    "siacoinOutputs": Array [
+      Object {
+        "address": "addr:934b885229a9f98153401d7a647a1862aede399c656f33ec8492dfffca557ca907a3d22089c8",
+        "value": "95408980544305197274920800",
+      },
+    ],
+    "siafundInputs": Array [
+      Object {
+        "claimAddress": "addr:934b885229a9f98153401d7a647a1862aede399c656f33ec8492dfffca557ca907a3d22089c8",
+        "parentID": "sfoid:b53e88ce69f19f0bf1d3496479f20b72e1133c719e82278830ee6618bb582852",
+        "unlockConditions": Object {
+          "publicKeys": Array [
+            "ed25519:8a7496aa59f17a4aae68c7e41e09d5ca94e64ba27f74cdb0b143f70dcc67b206",
+          ],
+          "signaturesRequired": 1,
+          "timelock": 0,
+        },
+      },
+    ],
+    "siafundOutputs": Array [
+      Object {
+        "address": "addr:eb2ee5169dd9aaab804b38f7e70043690ac21da1144990a4a28c1dcf66cd7ee9845aef03006f",
+        "value": 1,
+      },
+    ],
+    "signatures": Array [
+      Object {
+        "coveredFields": Object {
+          "wholeTransaction": true,
+        },
+        "parentID": "h:b53e88ce69f19f0bf1d3496479f20b72e1133c719e82278830ee6618bb582852",
+        "publicKeyIndex": 0,
+        "signature": "26nxM6vdUBMuoEXzWxZ5bC6cXstOl2LhzWLbG5QsfNni7j+5+Ro1AjK5mLO5jBVpLpQ7cbUb6DaUDsIyKABDCQ==",
+      },
+      Object {
+        "coveredFields": Object {
+          "wholeTransaction": true,
+        },
+        "parentID": "h:b222428602c8382b67a769d17e1cdc0952f37f2441a872b92671a6ed76cf22f5",
+        "publicKeyIndex": 0,
+        "signature": "mNrsyxNfQN7WKm3JY17+o5kxvF42Ww6mODH5Ft6fdgEgjk3zOe8/pTJmJSvErQ+j/BOT7DzWVd1ETOplsZAcDg==",
+      },
+    ],
+  },
+}
+`;

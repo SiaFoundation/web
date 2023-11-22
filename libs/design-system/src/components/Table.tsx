@@ -220,7 +220,7 @@ export function Table<
                         getCellClassNames(i, cellClassName, false),
                         // must use shadow based borders on the individual tds because a tailwind ring
                         // on the tr does not show up correctly in Safari
-                        focusId === row.id
+                        focusId && focusId === row.id
                           ? [
                               'shadow-border-y',
                               'first:shadow-border-tlb',
