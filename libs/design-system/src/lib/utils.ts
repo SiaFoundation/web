@@ -15,6 +15,7 @@ export function stripPrefix(hash: string) {
     .replace(/^fcid:/, '')
     .replace(/^h:/, '')
     .replace(/^scoid:/, '')
+    .replace(/^sfoid:/, '')
     .replace(/^key:/, '')
 }
 

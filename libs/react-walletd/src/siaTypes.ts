@@ -96,6 +96,12 @@ export type SiacoinOutput = {
   address: string
 }
 
+export type SiafundInput = {
+  parentID: string
+  unlockConditions: UnlockConditions
+  claimAddress: string
+}
+
 export type SiafundOutput = {
   value: number
   address: string
@@ -117,7 +123,7 @@ export type SiafundElement = {
   claimStart: string
 }
 
-export type SiafundInput = {
+export type SiafundElementAndClaim = {
   siafundElement: SiafundElement
   claimElement: SiacoinElement
 }
@@ -147,6 +153,7 @@ export type CoveredFields = {
 export interface Transaction {
   siacoinInputs?: SiacoinInput[]
   siacoinOutputs?: SiacoinOutput[]
+  siafundInputs?: SiafundInput[]
   siafundOutputs?: SiafundOutput[]
   minerFees?: Currency[]
   arbitraryData?: string[]
@@ -173,7 +180,7 @@ export type FileContractElement = {
 }
 
 export type PoolTransaction = {
-  ID: string
+  id: string
   raw: Transaction
   type: string
   sent: Currency
@@ -187,12 +194,12 @@ export type WalletEventTransaction = {
   relevant: Address[]
   type: 'transaction'
   val: {
-    transactionID: string
-    transaction: Transaction
+    // transactionID: string
+    // transaction: Transaction
     id: string
     siacoinInputs: SiacoinElement[]
     siacoinOutputs: SiacoinElement[]
-    siafundInputs: SiafundInput[]
+    siafundInputs: SiafundElementAndClaim[]
     siafundOutputs: SiafundElement[]
     fileContracts: FileContractElement[]
     v2FileContracts: null

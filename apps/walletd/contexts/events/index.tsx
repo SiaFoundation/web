@@ -4,8 +4,6 @@ import {
   useServerFilters,
 } from '@siafoundation/design-system'
 import {
-  WalletEventMinerPayout,
-  WalletEventTransaction,
   useWalletEvents,
   useWalletSubscribe,
   useWalletTxPool,
@@ -76,7 +74,8 @@ export function useEventsMain() {
       return null
     }
     const dataTxPool: EventData[] = responseTxPool.data.map((e) => ({
-      id: e.ID,
+      id: e.id,
+      transactionId: e.id,
       timestamp: 0,
       pending: true,
       type: e.type,
@@ -87,27 +86,35 @@ export function useEventsMain() {
       let amountSf = 0
       if (e.type === 'transaction') {
         const inputsScTotal =
-          e.val?.siacoinInputs?.reduce(
-            (acc, o) => acc.plus(o.siacoinOutput.value),
-            new BigNumber(0)
-          ) || new BigNumber(0)
+          e.val?.siacoinInputs?.reduce((acc, o) => {
+            if (e.relevant.includes(o.siacoinOutput.address)) {
+              return acc.plus(o.siacoinOutput.value)
+            }
+            return acc
+          }, new BigNumber(0)) || new BigNumber(0)
         const outputsScTotal =
-          e.val?.siacoinOutputs?.reduce(
-            (acc, o) => acc.plus(o.siacoinOutput.value),
-            new BigNumber(0)
-          ) || new BigNumber(0)
+          e.val?.siacoinOutputs?.reduce((acc, o) => {
+            if (e.relevant.includes(o.siacoinOutput.address)) {
+              return acc.plus(o.siacoinOutput.value)
+            }
+            return acc
+          }, new BigNumber(0)) || new BigNumber(0)
         amountSc = outputsScTotal.minus(inputsScTotal)
 
         const inputsSfTotal =
-          e.val?.siafundInputs?.reduce(
-            (acc, o) => acc + o.siafundElement.siafundOutput.value,
-            0
-          ) || 0
+          e.val?.siafundInputs?.reduce((acc, o) => {
+            if (e.relevant.includes(o.siafundElement.siafundOutput.address)) {
+              return acc + o.siafundElement.siafundOutput.value
+            }
+            return acc
+          }, 0) || 0
         const outputsSfTotal =
-          e.val?.siafundOutputs?.reduce(
-            (acc, o) => acc + o.siafundOutput.value,
-            0
-          ) || 0
+          e.val?.siafundOutputs?.reduce((acc, o) => {
+            if (e.relevant.includes(o.siafundOutput.address)) {
+              return acc + o.siafundOutput.value
+            }
+            return acc
+          }, 0) || 0
         amountSf = outputsSfTotal - inputsSfTotal
       }
 
@@ -131,9 +138,9 @@ export function useEventsMain() {
       if ('fileContract' in e.val) {
         res.contractId = e.val.fileContract.id
       }
-      if ('transactionID' in e.val) {
-        res.id += e.val.transactionID
-        res.transactionId = e.val.transactionID
+      if ('id' in e.val) {
+        res.id += e.val.id
+        res.transactionId = e.val.id
       }
       return res
     })

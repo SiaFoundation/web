@@ -102,13 +102,20 @@ export function useSyncerConnect(args?: HookArgsCallback<void, string, never>) {
 
 // txpool
 
+type TxPoolTransactions = {
+  transactions: Transaction[]
+  v2Transactions: unknown[]
+}
+
 const txPoolTransactionsRoute = '/txpool/transactions'
-export function useTxPoolTransactions(args?: HookArgsSwr<void, Transaction[]>) {
+export function useTxPoolTransactions(
+  args?: HookArgsSwr<void, TxPoolTransactions>
+) {
   return useGetSwr({ ...args, route: txPoolTransactionsRoute })
 }
 
 export function useTxPoolBroadcast(
-  args?: HookArgsCallback<void, Transaction[], unknown>
+  args?: HookArgsCallback<void, TxPoolTransactions, unknown>
 ) {
   return usePostFunc(
     {
@@ -284,6 +291,23 @@ export function useWalletFund(
   args?: HookArgsCallback<{ id: string }, WalletFundRequest, WalletFundResponse>
 ) {
   return usePostFunc({ ...args, route: '/wallets/:id/fund' })
+}
+
+type WalletFundRequestSf = {
+  transaction: Transaction
+  amount: number
+  changeAddress: string
+  claimAddress: string
+}
+
+export function useWalletFundSf(
+  args?: HookArgsCallback<
+    { id: string },
+    WalletFundRequestSf,
+    WalletFundResponse
+  >
+) {
+  return usePostFunc({ ...args, route: '/wallets/:id/fundsf' })
 }
 
 type WalletReserveRequest = {

@@ -8,12 +8,13 @@ type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
   form: UseFormReturn<Values>
   fields: ConfigFields<Values, Categories>
+  size?: React.ComponentProps<typeof NumberField>['size']
 }
 
 export function FieldNumber<
   Values extends FieldValues,
   Categories extends string
->({ name, form, fields }: Props<Values, Categories>) {
+>({ name, form, fields, size = 'small' }: Props<Values, Categories>) {
   const field = fields[name]
   const { placeholder, decimalsLimit = 2, units } = field
   const { setValue, error, value } = useRegisterForm({
@@ -27,6 +28,7 @@ export function FieldNumber<
         name={name}
         value={value}
         units={units}
+        size={size}
         decimalsLimit={decimalsLimit}
         placeholder={placeholder ? new BigNumber(placeholder) : undefined}
         state={

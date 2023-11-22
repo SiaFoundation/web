@@ -1,5 +1,4 @@
-import BigNumber from 'bignumber.js'
-import { WalletSendSiacoinReceipt } from './Receipt'
+import { SendReceipt } from '../_sharedWalletSend/SendReceipt'
 import { useForm } from 'react-hook-form'
 import { useCallback, useMemo, useState } from 'react'
 import {
@@ -10,21 +9,18 @@ import {
 import { getFieldMnemonic, MnemonicFieldType } from '../../lib/fieldMnemonic'
 import { FieldMnemonic } from '../FieldMnemonic'
 import { useWalletCachedSeed } from '../../hooks/useWalletCachedSeed'
-import { useSend } from './useSend'
+import { useSignAndBroadcast } from './useSignAndBroadcast'
 import { useWallets } from '../../contexts/wallets'
-
-const defaultValues = {
-  mnemonic: '',
-}
+import { SendParams } from '../_sharedWalletSend/types'
 
 type Props = {
   walletId: string
-  data: {
-    address: string
-    siacoin: BigNumber
-    fee: BigNumber
-  }
+  params: SendParams
   onConfirm: (params: { transactionId?: string }) => void
+}
+
+const defaultValues = {
+  mnemonic: '',
 }
 
 function getFields({
@@ -53,14 +49,13 @@ function getFields({
   }
 }
 
-export function useSendForm({ walletId, data, onConfirm }: Props) {
-  const send = useSend()
+export function useSendForm({ walletId, params, onConfirm }: Props) {
+  const signAndBroadcast = useSignAndBroadcast()
   const { isSeedCached, getSeedFromCacheOrForm } = useWalletCachedSeed(walletId)
   const { dataset } = useWallets()
   const wallet = dataset?.find((w) => w.id === walletId)
   const seedHash = wallet?.seedHash
 
-  const { address, siacoin, fee } = data || {}
   const form = useForm({
     mode: 'all',
     defaultValues,
@@ -87,11 +82,9 @@ export function useSendForm({ walletId, data, onConfirm }: Props) {
         return
       }
 
-      const { error } = await send({
+      const { error } = await signAndBroadcast({
         seed: seedResponse.seed,
-        address,
-        siacoin,
-        fee,
+        params,
       })
 
       if (error) {
@@ -101,7 +94,7 @@ export function useSendForm({ walletId, data, onConfirm }: Props) {
 
       onConfirm({})
     },
-    [getSeedFromCacheOrForm, send, address, fee, siacoin, onConfirm]
+    [getSeedFromCacheOrForm, signAndBroadcast, params, onConfirm]
   )
 
   const onInvalid = useOnInvalid(fields)
@@ -120,7 +113,7 @@ export function useSendForm({ walletId, data, onConfirm }: Props) {
         fields={fields}
         actionText="complete the transaction"
       />
-      <WalletSendSiacoinReceipt address={address} siacoin={siacoin} fee={fee} />
+      <SendReceipt params={params} />
     </div>
   )
 

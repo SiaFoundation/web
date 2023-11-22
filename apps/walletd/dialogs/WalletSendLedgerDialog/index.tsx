@@ -1,80 +1,66 @@
 import BigNumber from 'bignumber.js'
 import { useMemo, useState } from 'react'
+import { useWalletBalance } from '@siafoundation/react-walletd'
 import { useComposeForm } from '../_sharedWalletSend/useComposeForm'
 import { useSendForm } from './useSendForm'
-import { useWalletBalance } from '@siafoundation/react-walletd'
+import { SendParams, emptySendParams } from '../_sharedWalletSend/types'
 import { SendFlowDialog } from '../_sharedWalletSend/SendFlowDialog'
 
-export type WalletSendSeedDialogParams = {
+export type WalletSendLedgerDialogParams = {
   walletId: string
 }
 
+type Step = 'compose' | 'send' | 'done'
+
 type Props = {
-  params?: WalletSendSeedDialogParams
+  params?: WalletSendLedgerDialogParams
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
 }
 
-type Step = 'compose' | 'send' | 'done'
-
-type SendData = {
-  address: string
-  mode: 'siacoin' | 'siafund'
-  siacoin: BigNumber
-  siafund: number
-  fee: BigNumber
-}
-
-const emptySendData: SendData = {
-  address: '',
-  mode: 'siacoin',
-  siacoin: new BigNumber(0),
-  siafund: 0,
-  fee: new BigNumber(0),
-}
-
-export function WalletSendSeedDialog({
+export function WalletSendLedgerDialog({
   params: dialogParams,
   trigger,
   open,
   onOpenChange,
 }: Props) {
   const { walletId } = dialogParams || {}
+  const [step, setStep] = useState<Step>('compose')
+  const [signedTxnId, setSignedTxnId] = useState<string>()
+  const [sendParams, setSendParams] = useState<SendParams>(emptySendParams)
   const balance = useWalletBalance({
     disabled: !walletId,
     params: {
       id: walletId,
     },
   })
+
   const balanceSc = useMemo(
     () => new BigNumber(balance.data?.siacoins || 0),
     [balance.data]
   )
+
   const balanceSf = useMemo(
     () => new BigNumber(balance.data?.siafunds || 0),
     [balance.data]
   )
 
-  const [step, setStep] = useState<Step>('compose')
-  const [signedTxnId, setSignedTxnId] = useState<string>()
-  const [sendParams, setSendParams] = useState<SendData>(emptySendData)
-
   // Form for each step
   const compose = useComposeForm({
     balanceSc,
     balanceSf,
-    onComplete: (params) => {
+    onComplete: (data) => {
       setSendParams((d) => ({
         ...d,
-        ...params,
+        ...data,
       }))
       setStep('send')
     },
   })
-
   const send = useSendForm({
     walletId,
+    step,
     params: sendParams,
     onConfirm: ({ transactionId }) => {
       setSignedTxnId(transactionId)

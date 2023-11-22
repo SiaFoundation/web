@@ -1,5 +1,4 @@
-import BigNumber from 'bignumber.js'
-import { Receipt } from './Receipt'
+import { SendReceipt } from '../_sharedWalletSend/SendReceipt'
 import { useForm } from 'react-hook-form'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
@@ -13,23 +12,22 @@ import { DeviceConnectForm } from '../DeviceConnectForm'
 import { useLedger } from '../../contexts/ledger'
 import { Transaction } from '@siafoundation/react-walletd'
 import { LedgerSignTxn } from './LedgerSignTxn'
-import { useTxnMethods } from './useTxnMethods'
+import { useSign } from './useSign'
+import { useBroadcast } from '../_sharedWalletSend/useBroadcast'
+import { useFundAndSign } from './useFundAndSign'
+import { useCancel } from '../_sharedWalletSend/useCancel'
+import { useFund } from '../_sharedWalletSend/useFund'
+import { SendParams, SendStep } from '../_sharedWalletSend/types'
 
 const defaultValues = {
   isConnected: false,
   isSigned: false,
 }
 
-type SendData = {
-  address: string
-  siacoin: BigNumber
-  fee: BigNumber
-  includeFee: boolean
-}
-
 type Props = {
   walletId: string
-  data: SendData
+  step: SendStep
+  params: SendParams
   onConfirm: (params: { transactionId?: string }) => void
 }
 
@@ -56,8 +54,8 @@ function getFields(): ConfigFields<typeof defaultValues, never> {
   }
 }
 
-export function useSendForm({ data, onConfirm }: Props) {
-  const { address, siacoin, fee } = data || {}
+export function useSendForm({ params, step, onConfirm }: Props) {
+  const { address, siacoin, siafund, mode, fee } = params || {}
   const form = useForm({
     mode: 'all',
     defaultValues,
@@ -65,9 +63,19 @@ export function useSendForm({ data, onConfirm }: Props) {
   const isConnected = form.watch('isConnected')
   const isSigned = form.watch('isSigned')
   const { device, error: ledgerError } = useLedger()
-  const { fundAndSign, broadcast, cancel } = useTxnMethods()
+  const cancel = useCancel()
+  const sign = useSign({ cancel })
+  const broadcast = useBroadcast({ cancel })
+  const fund = useFund()
+  const fundAndSign = useFundAndSign({ cancel, fund, sign })
   const [waitingForUser, setWaitingForUser] = useState(false)
   const [txn, setTxn] = useState<Transaction>()
+
+  useEffect(() => {
+    if (step === 'compose') {
+      setTxn(undefined)
+    }
+  }, [step])
 
   useEffect(() => {
     if (device) {
@@ -129,7 +137,9 @@ export function useSendForm({ data, onConfirm }: Props) {
     setWaitingForUser(true)
     const { signedTransaction, error } = await fundAndSign({
       address,
+      mode,
       siacoin,
+      siafund,
       fee,
     })
     if (error) {
@@ -139,7 +149,7 @@ export function useSendForm({ data, onConfirm }: Props) {
       form.setValue('isSigned', true)
     }
     setWaitingForUser(false)
-  }, [form, fundAndSign, address, siacoin, fee])
+  }, [form, fundAndSign, mode, address, siacoin, siafund, fee])
 
   const el = (
     <div className="flex flex-col gap-4">
@@ -160,7 +170,7 @@ export function useSendForm({ data, onConfirm }: Props) {
           />
         </div>
       </div>
-      <Receipt address={address} siacoin={siacoin} fee={fee} />
+      <SendReceipt params={params} />
     </div>
   )
 

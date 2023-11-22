@@ -51,13 +51,13 @@ import {
   AddressRemoveDialogParams,
 } from '../dialogs/AddressRemoveDialog'
 import {
-  WalletSendSiacoinSeedDialog,
-  WalletSendSiacoinSeedDialogParams,
+  WalletSendSeedDialog,
+  WalletSendSeedDialogParams,
 } from '../dialogs/WalletSendSiacoinSeedDialog'
 import {
-  WalletSendSiacoinLedgerDialog,
-  WalletSendSiacoinLedgerDialogParams,
-} from '../dialogs/WalletSendSiacoinLedgerDialog'
+  WalletSendLedgerDialog,
+  WalletSendLedgerDialogParams,
+} from '../dialogs/WalletSendLedgerDialog'
 import {
   WalletUnlockDialog,
   WalletUnlockDialogParams,
@@ -75,8 +75,8 @@ import {
 type DialogParams = {
   cmdk?: void
   settings?: WalletdSettingsDialogParams
-  walletSendSiacoinSeed?: WalletSendSiacoinSeedDialogParams
-  walletSendSiacoinLedger?: WalletSendSiacoinLedgerDialogParams
+  walletSendSeed?: WalletSendSeedDialogParams
+  walletSendLedger?: WalletSendLedgerDialogParams
   transactionDetails?: void
   addressUpdate?: AddressUpdateDialogParams
   addressRemove?: AddressRemoveDialogParams
@@ -255,22 +255,18 @@ export function Dialogs() {
         }
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
-      <WalletSendSiacoinSeedDialog
-        open={dialog === 'walletSendSiacoinSeed'}
-        params={params['walletSendSiacoinSeed']}
+      <WalletSendSeedDialog
+        open={dialog === 'walletSendSeed'}
+        params={params['walletSendSeed']}
         onOpenChange={(val) =>
-          val
-            ? openDialog(dialog, params['walletSendSiacoinSeed'])
-            : closeDialog()
+          val ? openDialog(dialog, params['walletSendSeed']) : closeDialog()
         }
       />
-      <WalletSendSiacoinLedgerDialog
-        open={dialog === 'walletSendSiacoinLedger'}
-        params={params['walletSendSiacoinLedger']}
+      <WalletSendLedgerDialog
+        open={dialog === 'walletSendLedger'}
+        params={params['walletSendLedger']}
         onOpenChange={(val) =>
-          val
-            ? openDialog(dialog, params['walletSendSiacoinLedger'])
-            : closeDialog()
+          val ? openDialog(dialog, params['walletSendLedger']) : closeDialog()
         }
       />
       <ConfirmDialog
