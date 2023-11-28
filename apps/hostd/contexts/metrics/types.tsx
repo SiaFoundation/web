@@ -5,14 +5,8 @@ import {
 } from '@siafoundation/design-system'
 
 export type RevenueKeys =
-  | 'potential'
-  | 'earned'
   | 'rpcPotential'
   | 'rpc'
-  | 'registryWritePotential'
-  | 'registryWrite'
-  | 'registryReadPotential'
-  | 'registryRead'
   | 'egressPotential'
   | 'egress'
   | 'ingressPotential'
@@ -47,18 +41,12 @@ export type StorageKeys =
   | 'physicalSectors'
   | 'tempSectors'
   | 'contractSectors'
-  | 'registryEntries'
-  | 'maxRegistryEntries'
 
 export type StorageCategories = 'storage used' | 'storage capacity'
 
 export type BandwidthKeys = 'ingress' | 'egress'
 
-export type OperationsKeys =
-  | 'storageReads'
-  | 'storageWrites'
-  | 'registryReads'
-  | 'registryWrites'
+export type OperationsKeys = 'storageReads' | 'storageWrites'
 
 export type BandwidthCategories = 'ingress' | 'egress'
 

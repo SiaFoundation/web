@@ -4,6 +4,7 @@ import {
   Heading,
   DatumCardConfigurable,
   DatumScrollArea,
+  Separator,
 } from '@siafoundation/design-system'
 import { useMetrics } from '../../contexts/metrics'
 
@@ -16,7 +17,17 @@ export function HomeRevenue() {
       <DatumScrollArea bleed>
         <DatumCardConfigurable
           category="revenue"
-          label="earned revenue"
+          label="potential - all"
+          color={revenue.config.data['potential'].color}
+          sc={revenue.stats['potential']}
+          defaultMode="total"
+          isLoading={revenue.isLoading}
+          showChange={false}
+        />
+        <Separator variant="vertical" />
+        <DatumCardConfigurable
+          category="revenue"
+          label="earned - all"
           color={revenue.config.data['earned'].color}
           sc={revenue.stats['earned']}
           defaultMode="total"
@@ -24,16 +35,7 @@ export function HomeRevenue() {
         />
         <DatumCardConfigurable
           category="revenue"
-          label="potential revenue"
-          color={revenue.config.data['potential'].color}
-          sc={revenue.stats['potential']}
-          defaultMode="total"
-          isLoading={revenue.isLoading}
-          showChange={false}
-        />
-        <DatumCardConfigurable
-          category="revenue"
-          label="storage"
+          label="earned - storage"
           color={revenue.config.data['storage'].color}
           sc={revenue.stats['storage']}
           defaultMode="total"
@@ -41,7 +43,7 @@ export function HomeRevenue() {
         />
         <DatumCardConfigurable
           category="revenue"
-          label="egress"
+          label="earned - egress"
           color={revenue.config.data['egress'].color}
           sc={revenue.stats['egress']}
           defaultMode="total"
@@ -49,25 +51,9 @@ export function HomeRevenue() {
         />
         <DatumCardConfigurable
           category="revenue"
-          label="ingress"
+          label="earned - ingress"
           color={revenue.config.data['ingress'].color}
           sc={revenue.stats['ingress']}
-          defaultMode="total"
-          isLoading={revenue.isLoading}
-        />
-        <DatumCardConfigurable
-          category="revenue"
-          label="registry read"
-          color={revenue.config.data['registryRead'].color}
-          sc={revenue.stats['registryRead']}
-          defaultMode="total"
-          isLoading={revenue.isLoading}
-        />
-        <DatumCardConfigurable
-          category="revenue"
-          label="registry write"
-          color={revenue.config.data['registryWrite'].color}
-          sc={revenue.stats['registryWrite']}
           defaultMode="total"
           isLoading={revenue.isLoading}
         />
