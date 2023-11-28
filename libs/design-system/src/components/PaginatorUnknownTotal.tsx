@@ -24,7 +24,7 @@ export function PaginatorUnknownTotal({
   isLoading,
 }: Props) {
   const router = useRouter()
-  const isMore = pageTotal === limit
+  const isMore = pageTotal >= limit
   const from = offset + 1
   const to = Math.min(offset + limit, offset + pageTotal)
   return (

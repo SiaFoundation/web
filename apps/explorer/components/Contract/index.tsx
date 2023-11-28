@@ -65,9 +65,9 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
         value:
           contract.negotiation_timestamp !== '0001-01-01T00:00:00Z'
             ? humanDate(contract.negotiation_timestamp, {
-              dateStyle: 'medium',
-              timeStyle: 'short',
-            })
+                dateStyle: 'medium',
+                timeStyle: 'short',
+              })
             : '-',
       },
       {
@@ -81,9 +81,9 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
         value:
           contract.expiration_timestamp !== '0001-01-01T00:00:00Z'
             ? humanDate(contract.expiration_timestamp, {
-              dateStyle: 'medium',
-              timeStyle: 'short',
-            })
+                dateStyle: 'medium',
+                timeStyle: 'short',
+              })
             : '-',
       },
       {
@@ -99,9 +99,9 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
         value:
           contract.proof_timestamp !== '0001-01-01T00:00:00Z'
             ? humanDate(contract.proof_timestamp, {
-              dateStyle: 'medium',
-              timeStyle: 'short',
-            })
+                dateStyle: 'medium',
+                timeStyle: 'short',
+              })
             : '-',
       },
       {
@@ -115,9 +115,9 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
         value:
           contract.proof_deadline_timestamp !== '0001-01-01T00:00:00Z'
             ? humanDate(contract.proof_deadline_timestamp, {
-              dateStyle: 'medium',
-              timeStyle: 'short',
-            })
+                dateStyle: 'medium',
+                timeStyle: 'short',
+              })
             : '-',
       },
       {
@@ -131,9 +131,9 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
         value:
           contract.payout_timestamp !== '0001-01-01T00:00:00Z'
             ? humanDate(contract.payout_timestamp, {
-              dateStyle: 'medium',
-              timeStyle: 'short',
-            })
+                dateStyle: 'medium',
+                timeStyle: 'short',
+              })
             : '-',
       },
       {
@@ -202,13 +202,13 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
           <div>
             <EntityList
               title={`Missed proof outputs (${missedProofOutputs.length})`}
-              entities={missedProofOutputs}
+              dataset={missedProofOutputs}
             />
           </div>
           <div>
             <EntityList
               title={`Valid proof outputs (${validProofOutputs.length})`}
-              entities={validProofOutputs}
+              dataset={validProofOutputs}
             />
           </div>
         </div>

@@ -55,12 +55,15 @@ export function Node() {
         <div className="flex flex-wrap gap-7">
           <div className="flex-1">
             <PeerList
+              isLoading={peers.isValidating}
               peers={peers.data?.map((p) => p.addr)}
               connectPeer={() => openDialog('connectPeer')}
             />
           </div>
           {/* <div className="flex-1">
-            <TxPoolList transactions={txPool.data} />
+            <TxPoolList
+              isLoading={txPool.isValidating}
+              transactions={txPool.data} />
           </div> */}
         </div>
       </div>

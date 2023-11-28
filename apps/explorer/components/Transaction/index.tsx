@@ -130,17 +130,14 @@ export function Transaction({ title, transaction }: Props) {
       <div className="flex flex-col gap-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-5">
           <div>
-            <EntityList title={`Inputs (${inputs.length})`} entities={inputs}>
+            <EntityList title={`Inputs (${inputs.length})`} dataset={inputs}>
               {inputs?.map((i) => (
                 <OutputListItem key={i.outputId} {...i} />
               ))}
             </EntityList>
           </div>
           <div>
-            <EntityList
-              title={`Outputs (${outputs.length})`}
-              entities={outputs}
-            >
+            <EntityList title={`Outputs (${outputs.length})`} dataset={outputs}>
               {outputs?.map((o) => (
                 <OutputListItem key={o.outputId} {...o} />
               ))}
@@ -150,7 +147,7 @@ export function Transaction({ title, transaction }: Props) {
         {!!operations?.length && (
           <EntityList
             title={`Related operations (${operations.length})`}
-            entities={operations}
+            dataset={operations}
           />
         )}
       </div>

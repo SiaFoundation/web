@@ -11,8 +11,9 @@ import { EntityListItem, EntityListItemProps } from './EntityListItem'
 type Props = {
   title?: string
   actions?: React.ReactNode
-  entities?: EntityListItemProps[]
+  dataset?: EntityListItemProps[]
   children?: React.ReactNode
+  isLoading?: boolean
   emptyState?: React.ReactNode
   emptyMessage?: string
   skeletonCount?: number
@@ -21,13 +22,24 @@ type Props = {
 export function EntityList({
   title,
   actions,
-  entities,
+  dataset,
+  isLoading,
   emptyState,
   emptyMessage,
   skeletonCount = 10,
   children,
 }: Props) {
   const showHeading = title || actions
+  let show = 'emptyState'
+
+  if (isLoading && !dataset?.length && !children) {
+    show = 'skeleton'
+  }
+
+  if (dataset?.length || children) {
+    show = 'currentData'
+  }
+
   return (
     <Panel>
       <div className="flex flex-col rounded overflow-hidden">
@@ -43,7 +55,7 @@ export function EntityList({
           </div>
         )}
         <div className="flex flex-col rounded overflow-hidden">
-          {entities?.length === 0 &&
+          {show === 'emptyState' &&
             (emptyState || (
               <div
                 className={cx(
@@ -56,15 +68,19 @@ export function EntityList({
                 </Text>
               </div>
             ))}
-          {children ||
-            entities?.map((entity, i) => {
-              return (
-                <EntityListItem
-                  key={entity.hash || entity.label || i}
-                  {...entity}
-                />
-              )
-            }) || <EntityListSkeleton skeletonCount={skeletonCount} />}
+          {show === 'currentData' &&
+            (children ||
+              dataset?.map((entity, i) => {
+                return (
+                  <EntityListItem
+                    key={entity.hash || entity.label || i}
+                    {...entity}
+                  />
+                )
+              }))}
+          {show === 'skeleton' && (
+            <EntityListSkeleton skeletonCount={skeletonCount} />
+          )}
         </div>
       </div>
     </Panel>

@@ -1,19 +1,10 @@
 import {
   EntityList,
-  EntityListItemProps,
   WalletLayoutActions,
-  getTransactionType,
   BalanceEvolution,
-  daysInMilliseconds,
-  WalletSyncWarning,
+  PaginatorUnknownTotal,
 } from '@siafoundation/design-system'
-import {
-  useMetricsPeriod,
-  useWallet,
-  useWalletPending,
-  useWalletTransactions,
-} from '@siafoundation/react-hostd'
-import { useMemo } from 'react'
+import { useWallet } from '@siafoundation/react-hostd'
 import { useDialog } from '../../contexts/dialog'
 import { routes } from '../../config/routes'
 import BigNumber from 'bignumber.js'
@@ -21,77 +12,17 @@ import { HostdSidenav } from '../HostdSidenav'
 import { HostdAuthedLayout } from '../HostdAuthedLayout'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { EmptyState } from './EmptyState'
+import { useTransactions } from '../../contexts/transactions'
+import { WalletFilterBar } from './WalletFilterBar'
 
 export function Wallet() {
-  const transactions = useWalletTransactions({
-    params: {
-      limit: 50,
-      offset: 0,
-    },
-  })
-  const pending = useWalletPending()
-
   const { openDialog } = useDialog()
-
   const wallet = useWallet()
-
-  const entities: EntityListItemProps[] = useMemo(
-    () => [
-      ...(pending.data || []).map((t): EntityListItemProps => {
-        return {
-          type: 'transaction',
-          txType: getTransactionType(t.transaction, t.source),
-          hash: t.ID,
-          timestamp: new Date(t.timestamp).getTime(),
-          sc: new BigNumber(t.inflow).minus(t.outflow),
-          unconfirmed: true,
-        }
-      }),
-      ...(transactions.data || [])
-        .map((t): EntityListItemProps => {
-          return {
-            type: 'transaction',
-            txType: getTransactionType(t.transaction, t.source),
-            hash: t.ID,
-            timestamp: new Date(t.timestamp).getTime(),
-            onClick: () => openDialog('transactionDetails', t.ID),
-            sc: new BigNumber(t.inflow).minus(t.outflow),
-          }
-        })
-        .sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1)),
-    ],
-    [pending, transactions, openDialog]
-  )
-
-  const dayPeriods = 30
-  const start = useMemo(() => {
-    const today = new Date().getTime()
-    const periodsInMs = daysInMilliseconds(dayPeriods)
-    const periodsAgo = today - periodsInMs
-    return new Date(periodsAgo).toISOString()
-  }, [])
-
-  const metrics = useMetricsPeriod({
-    params: {
-      interval: 'daily',
-      start,
-    },
-  })
-  const balances = useMemo(
-    () =>
-      (metrics.data || [])
-        .map((t) => {
-          return {
-            sc: Number(t.balance),
-            timestamp: new Date(t.timestamp).getTime(),
-          }
-        })
-        .sort((a, b) => (a.timestamp >= b.timestamp ? 1 : -1)),
-    [metrics.data]
-  )
-
   const { isSynced, isWalletSynced, syncPercent, walletScanPercent } =
     useSyncStatus()
+
+  const { dataset, balances, metrics, offset, limit, dataState, pageCount } =
+    useTransactions()
 
   return (
     <HostdAuthedLayout
@@ -118,14 +49,7 @@ export function Wallet() {
           sendSiacoin={() => openDialog('sendSiacoin')}
         />
       }
-      stats={
-        <WalletSyncWarning
-          isSynced={isSynced}
-          isWalletSynced={isWalletSynced}
-          syncPercent={syncPercent}
-          walletScanPercent={walletScanPercent}
-        />
-      }
+      stats={<WalletFilterBar />}
     >
       <div className="p-6 flex flex-col gap-5">
         {balances?.length && balances.find((b) => b.sc) ? (
@@ -136,8 +60,17 @@ export function Wallet() {
         ) : null}
         <EntityList
           title="Transactions"
-          entities={entities.slice(0, 100)}
+          dataset={dataset}
+          isLoading={dataState === 'loading'}
           emptyState={<EmptyState />}
+          actions={
+            <PaginatorUnknownTotal
+              offset={offset}
+              limit={limit}
+              pageTotal={pageCount}
+              isLoading={dataState === 'loading'}
+            />
+          }
         />
       </div>
     </HostdAuthedLayout>

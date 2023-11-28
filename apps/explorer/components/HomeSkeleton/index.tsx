@@ -16,8 +16,8 @@ export function HomeSkeleton() {
       }
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-5">
-        <BlockList title="Latest blocks" skeletonCount={5} />
-        <EntityList title="Top hosts" skeletonCount={5} />
+        <BlockList title="Latest blocks" isLoading skeletonCount={5} />
+        <EntityList title="Top hosts" isLoading skeletonCount={5} />
       </div>
     </ContentLayout>
   )

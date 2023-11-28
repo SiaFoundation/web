@@ -18,11 +18,27 @@ type BlockListItemProps = {
 
 type Props = {
   title: string
-  blocks?: BlockListItemProps[]
+  isLoading?: boolean
+  dataset?: BlockListItemProps[]
   skeletonCount?: number
 }
 
-export function BlockList({ title, blocks, skeletonCount = 10 }: Props) {
+export function BlockList({
+  title,
+  dataset,
+  isLoading,
+  skeletonCount = 10,
+}: Props) {
+  let show = 'emptyState'
+
+  if (isLoading && !dataset?.length) {
+    show = 'skeleton'
+  }
+
+  if (dataset?.length) {
+    show = 'currentData'
+  }
+
   return (
     <Panel>
       <div className="flex flex-col rounded overflow-hidden">
@@ -33,7 +49,7 @@ export function BlockList({ title, blocks, skeletonCount = 10 }: Props) {
           <div className="flex-1" />
         </div>
         <div className="flex flex-col border-t border-gray-200 dark:border-graydark-300">
-          {blocks?.length === 0 && (
+          {show === 'emptyState' && (
             <div
               className={cx(
                 'flex items-center justify-center h-[100px]',
@@ -45,46 +61,50 @@ export function BlockList({ title, blocks, skeletonCount = 10 }: Props) {
               </Text>
             </div>
           )}
-          {blocks?.map((block, i) => (
-            <div
-              className={cx('flex gap-4 p-4', itemBorderStyles())}
-              key={block.height}
-            >
-              <EntityAvatar
-                label={getEntityTypeLabel('block')}
-                initials="B"
-                href={block.href}
-                shape="square"
-              />
-              <div className="flex flex-col gap-1 justify-center">
-                <Text color="subtle">
-                  <Text weight="bold">
-                    <Link href={block.href} underline="none">
-                      {humanNumber(block.height)}
-                    </Link>
+          {show === 'currentData' &&
+            dataset?.map((block, i) => (
+              <div
+                className={cx('flex gap-4 p-4', itemBorderStyles())}
+                key={block.height}
+              >
+                <EntityAvatar
+                  label={getEntityTypeLabel('block')}
+                  initials="B"
+                  href={block.href}
+                  shape="square"
+                />
+                <div className="flex flex-col gap-1 justify-center">
+                  <Text color="subtle">
+                    <Text weight="bold">
+                      <Link href={block.href} underline="none">
+                        {humanNumber(block.height)}
+                      </Link>
+                    </Text>
+                    {block.miningPool
+                      ? ' mined by '
+                      : i < dataset.length - 1
+                      ? ' mined '
+                      : ''}
+                    <Text weight="bold">{block.miningPool}</Text>
+                    {block.miningPool ? ' ' : ''}
+                    {i < dataset.length - 1
+                      ? `in ${formatDistance(
+                          new Date(block.timestamp),
+                          new Date(dataset[i + 1].timestamp)
+                        )}`
+                      : ''}
                   </Text>
-                  {block.miningPool
-                    ? ' mined by '
-                    : i < blocks.length - 1
-                    ? ' mined '
-                    : ''}
-                  <Text weight="bold">{block.miningPool}</Text>
-                  {block.miningPool ? ' ' : ''}
-                  {i < blocks.length - 1
-                    ? `in ${formatDistance(
-                        new Date(block.timestamp),
-                        new Date(blocks[i + 1].timestamp)
-                      )}`
-                    : ''}
-                </Text>
-                <Text color="subtle">
-                  {formatDistance(new Date(block.timestamp), new Date(), {
-                    addSuffix: true,
-                  })}
-                </Text>
+                  <Text color="subtle">
+                    {formatDistance(new Date(block.timestamp), new Date(), {
+                      addSuffix: true,
+                    })}
+                  </Text>
+                </div>
               </div>
-            </div>
-          )) || <EntityListSkeleton skeletonCount={skeletonCount} />}
+            ))}
+          {show === 'skeleton' && (
+            <EntityListSkeleton skeletonCount={skeletonCount} />
+          )}
         </div>
       </div>
     </Panel>

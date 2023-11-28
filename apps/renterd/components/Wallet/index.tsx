@@ -59,7 +59,8 @@ export function Wallet() {
         ) : null} */}
         <EntityList
           title="Transactions"
-          entities={dataset?.slice(0, 100)}
+          isLoading={dataState === 'loading'}
+          dataset={dataset}
           emptyState={<EmptyState />}
           actions={
             <PaginatorUnknownTotal

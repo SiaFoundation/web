@@ -63,7 +63,7 @@ export function Block({ block }: Props) {
     >
       <EntityList
         title={`Transactions (${block.transactions?.length || 0})`}
-        entities={block.transactions?.map((tx) => ({
+        dataset={block.transactions?.map((tx) => ({
           hash: tx.id,
           label: 'transaction',
           initials: 'T',
