@@ -35,26 +35,6 @@ export function HomeOperations() {
             enabledModes={['total', 'average', 'latest']}
             format={humanNumber}
           />
-          <DatumCardConfigurable
-            category="operations"
-            label="registry reads"
-            color={operations.config.data['registryReads'].color}
-            value={operations.stats['registryReads']}
-            defaultMode="total"
-            isLoading={operations.isLoading}
-            enabledModes={['total', 'average', 'latest']}
-            format={humanNumber}
-          />
-          <DatumCardConfigurable
-            category="operations"
-            label="registry writes"
-            color={operations.config.data['registryWrites'].color}
-            value={operations.stats['registryWrites']}
-            defaultMode="total"
-            isLoading={operations.isLoading}
-            enabledModes={['total', 'average', 'latest']}
-            format={humanNumber}
-          />
         </DatumScrollArea>
         <ChartXY
           id="operations"
