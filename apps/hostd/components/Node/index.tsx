@@ -46,6 +46,7 @@ export function Node() {
         </div>
         <PeerList
           peers={peerList}
+          isLoading={peers.isValidating}
           connectPeer={() => openDialog('connectPeer')}
         />
       </div>

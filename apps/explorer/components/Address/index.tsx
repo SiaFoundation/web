@@ -152,10 +152,10 @@ export function Address({ id, address }: Props) {
           <TabsTrigger value="utxos">Unspent outputs</TabsTrigger>
         </TabsList>
         <TabsContent value="transactions">
-          <EntityList entities={transactions} />
+          <EntityList dataset={transactions} />
         </TabsContent>
         <TabsContent value="utxos">
-          <EntityList entities={utxos} />
+          <EntityList dataset={utxos} />
         </TabsContent>
       </Tabs>
     </ContentLayout>

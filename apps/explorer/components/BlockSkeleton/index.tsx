@@ -25,7 +25,7 @@ export function BlockSkeleton() {
         </div>
       }
     >
-      <EntityList title="Transactions" entities={undefined} />
+      <EntityList title="Transactions" isLoading />
     </ContentLayout>
   )
 }

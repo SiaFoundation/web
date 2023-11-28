@@ -28,16 +28,12 @@ export function ContractSkeleton() {
         <div>
           <EntityList
             title="Missed proof outputs"
-            entities={undefined}
+            isLoading
             skeletonCount={2}
           />
         </div>
         <div>
-          <EntityList
-            title="Valid proof outputs"
-            entities={undefined}
-            skeletonCount={2}
-          />
+          <EntityList title="Valid proof outputs" isLoading skeletonCount={2} />
         </div>
       </div>
     </ContentLayout>

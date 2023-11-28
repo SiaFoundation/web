@@ -212,7 +212,7 @@ export function Home({
         <div>
           <BlockList
             title="Latest blocks"
-            blocks={reverse(sortBy(blocks, 'timestamp')).map((block) => ({
+            dataset={reverse(sortBy(blocks, 'timestamp')).map((block) => ({
               height: block.height,
               timestamp: block.timestamp,
               href: routes.block.view.replace(':id', String(block.height)),

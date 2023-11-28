@@ -30,10 +30,10 @@ export function AddressSkeleton() {
           <TabsTrigger value="utxos">Unspent outputs</TabsTrigger>
         </TabsList>
         <TabsContent value="transactions">
-          <EntityList />
+          <EntityList isLoading />
         </TabsContent>
         <TabsContent value="utxos">
-          <EntityList />
+          <EntityList isLoading />
         </TabsContent>
       </Tabs>
     </ContentLayout>
