@@ -3,6 +3,7 @@
 import { difference, intersection, uniq } from 'lodash'
 import { useCallback, useMemo } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
+import { useSorting } from './useSorting'
 
 type Column<ColumnId> = {
   id: ColumnId
@@ -44,19 +45,6 @@ export function useTableState<
     }
   )
 
-  const [sortField, setSortField] = useLocalStorageState<SortField>(
-    `${scope}/sortField`,
-    {
-      defaultValue: defaultSortField,
-    }
-  )
-
-  const [sortDirection, setSortDirection] = useLocalStorageState<
-    'desc' | 'asc'
-  >(`${scope}/sortDirection`, {
-    defaultValue: 'desc',
-  })
-
   const toggleColumnVisibility = useCallback(
     (column: string) => {
       setEnabledColumns((enabled) => {
@@ -91,18 +79,6 @@ export function useTableState<
     setEnabledColumns(columnsDefaultVisible)
   }, [setEnabledColumns, columnsDefaultVisible])
 
-  const toggleSort = useCallback(
-    (field: SortField) => {
-      if (sortField !== field) {
-        setSortField(field)
-        setSortDirection('asc')
-        return
-      }
-      setSortDirection((dir) => (dir === 'desc' ? 'asc' : 'desc'))
-    },
-    [sortField, setSortField, setSortDirection]
-  )
-
   const configurableColumns = useMemo(
     () =>
       columns.filter((column) => {
@@ -128,6 +104,18 @@ export function useTableState<
         .map((column) => column.id),
     [columns, _enabledColumns, disabledCategories]
   )
+
+  const {
+    sortField,
+    sortDirection,
+    setSortField,
+    setSortDirection,
+    toggleSort,
+  } = useSorting(scope, {
+    defaultSortField,
+    sortOptions,
+    enabledColumns,
+  })
 
   const sortableColumns = useMemo(() => {
     if (!sortOptions) {

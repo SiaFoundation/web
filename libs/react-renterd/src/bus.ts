@@ -484,7 +484,14 @@ export type ObjEntry = {
 
 export function useObjectDirectory(
   args: HookArgsSwr<
-    { key: string; bucket: string; limit?: number; offset?: number },
+    {
+      key: string
+      bucket: string
+      limit?: number
+      offset?: number
+      sortBy?: 'name' | 'health'
+      sortDir?: 'asc' | 'desc'
+    },
     { entries: ObjEntry[] }
   >
 ) {

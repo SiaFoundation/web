@@ -33,7 +33,7 @@ export const columnsDefaultVisible: TableColumnId[] = [
   'health',
 ]
 
-export type SortField = 'name'
+export type SortField = 'name' | 'health'
 
 export const defaultSortField: SortField = 'name'
 
@@ -42,6 +42,11 @@ export const sortOptions: { id: SortField; label: string; category: string }[] =
     {
       id: 'name',
       label: 'name',
+      category: 'general',
+    },
+    {
+      id: 'health',
+      label: 'health',
       category: 'general',
     },
   ]
