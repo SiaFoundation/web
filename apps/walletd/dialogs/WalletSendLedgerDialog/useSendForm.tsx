@@ -55,7 +55,6 @@ function getFields(): ConfigFields<typeof defaultValues, never> {
 }
 
 export function useSendForm({ params, step, onConfirm }: Props) {
-  const { address, siacoin, siafund, mode, fee } = params || {}
   const form = useForm({
     mode: 'all',
     defaultValues,
@@ -135,13 +134,7 @@ export function useSendForm({ params, step, onConfirm }: Props) {
 
   const runFundAndSign = useCallback(async () => {
     setWaitingForUser(true)
-    const { signedTransaction, error } = await fundAndSign({
-      address,
-      mode,
-      siacoin,
-      siafund,
-      fee,
-    })
+    const { signedTransaction, error } = await fundAndSign(params)
     if (error) {
       triggerErrorToast(error)
     } else {
@@ -149,7 +142,7 @@ export function useSendForm({ params, step, onConfirm }: Props) {
       form.setValue('isSigned', true)
     }
     setWaitingForUser(false)
-  }, [form, fundAndSign, mode, address, siacoin, siafund, fee])
+  }, [form, fundAndSign, params])
 
   const el = (
     <div className="flex flex-col gap-4">

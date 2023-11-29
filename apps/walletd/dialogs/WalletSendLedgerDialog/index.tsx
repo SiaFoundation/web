@@ -3,14 +3,17 @@ import { useMemo, useState } from 'react'
 import { useWalletBalance } from '@siafoundation/react-walletd'
 import { useComposeForm } from '../_sharedWalletSend/useComposeForm'
 import { useSendForm } from './useSendForm'
-import { SendParams, emptySendParams } from '../_sharedWalletSend/types'
+import {
+  SendParams,
+  SendStep,
+  emptySendParams,
+} from '../_sharedWalletSend/types'
 import { SendFlowDialog } from '../_sharedWalletSend/SendFlowDialog'
+import { useWalletAddresses } from '../../hooks/useWalletAddresses'
 
 export type WalletSendLedgerDialogParams = {
   walletId: string
 }
-
-type Step = 'compose' | 'send' | 'done'
 
 type Props = {
   params?: WalletSendLedgerDialogParams
@@ -26,7 +29,7 @@ export function WalletSendLedgerDialog({
   onOpenChange,
 }: Props) {
   const { walletId } = dialogParams || {}
-  const [step, setStep] = useState<Step>('compose')
+  const [step, setStep] = useState<SendStep>('compose')
   const [signedTxnId, setSignedTxnId] = useState<string>()
   const [sendParams, setSendParams] = useState<SendParams>(emptySendParams)
   const balance = useWalletBalance({
@@ -35,6 +38,7 @@ export function WalletSendLedgerDialog({
       id: walletId,
     },
   })
+  const { dataset: addresses } = useWalletAddresses({ id: walletId })
 
   const balanceSc = useMemo(
     () => new BigNumber(balance.data?.siacoins || 0),
@@ -50,6 +54,8 @@ export function WalletSendLedgerDialog({
   const compose = useComposeForm({
     balanceSc,
     balanceSf,
+    defaultChangeAddress: addresses?.[0]?.address,
+    defaultClaimAddress: addresses?.[0]?.address,
     onComplete: (data) => {
       setSendParams((d) => ({
         ...d,

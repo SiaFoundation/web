@@ -53,7 +53,7 @@ import {
 import {
   WalletSendSeedDialog,
   WalletSendSeedDialogParams,
-} from '../dialogs/WalletSendSiacoinSeedDialog'
+} from '../dialogs/WalletSendSeedDialog'
 import {
   WalletSendLedgerDialog,
   WalletSendLedgerDialogParams,

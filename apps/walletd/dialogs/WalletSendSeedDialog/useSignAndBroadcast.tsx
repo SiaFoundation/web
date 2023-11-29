@@ -35,19 +35,12 @@ export function useSignAndBroadcast() {
         return
       }
 
-      const { address, mode, siacoin, siafund, fee } = params
       // fund
       const {
         fundedTransaction,
         toSign,
         error: fundingError,
-      } = await fund({
-        address,
-        siacoin,
-        siafund,
-        mode,
-        fee,
-      })
+      } = await fund(params)
       if (fundingError) {
         return {
           fundedTransaction,

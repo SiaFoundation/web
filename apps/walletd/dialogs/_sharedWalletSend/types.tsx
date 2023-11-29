@@ -3,7 +3,9 @@ import BigNumber from 'bignumber.js'
 export type SendStep = 'compose' | 'send' | 'done'
 
 export type SendParams = {
-  address: string
+  receiveAddress: string
+  changeAddress: string
+  claimAddress: string
   mode: 'siacoin' | 'siafund'
   siafund: number
   siacoin: BigNumber
@@ -11,7 +13,9 @@ export type SendParams = {
 }
 
 export const emptySendParams: SendParams = {
-  address: '',
+  receiveAddress: '',
+  changeAddress: '',
+  claimAddress: '',
   mode: 'siacoin',
   siacoin: new BigNumber(0),
   siafund: 0,
