@@ -2,7 +2,7 @@ import { useBuckets, useObjectDirectory } from '@siafoundation/react-renterd'
 import { sortBy, toPairs } from 'lodash'
 import useSWR from 'swr'
 import { useContracts } from '../contracts'
-import { ObjectData } from './types'
+import { ObjectData, SortField } from './types'
 import {
   bucketAndKeyParamsFromPath,
   bucketAndResponseKeyToFilePath,
@@ -18,11 +18,18 @@ import { useRouter } from 'next/router'
 type Props = {
   activeDirectoryPath: string
   uploadsList: ObjectData[]
+  sortDirection: 'asc' | 'desc'
+  sortField: SortField
 }
 
 const defaultLimit = 50
 
-export function useDataset({ activeDirectoryPath, uploadsList }: Props) {
+export function useDataset({
+  activeDirectoryPath,
+  uploadsList,
+  sortDirection,
+  sortField,
+}: Props) {
   const buckets = useBuckets()
 
   const router = useRouter()
@@ -34,6 +41,8 @@ export function useDataset({ activeDirectoryPath, uploadsList }: Props) {
     disabled: !activeBucketName,
     params: {
       ...bucketAndKeyParamsFromPath(activeDirectoryPath),
+      sortBy: sortField,
+      sortDir: sortDirection,
       offset,
       limit,
     },
@@ -96,8 +105,11 @@ export function useDataset({ activeDirectoryPath, uploadsList }: Props) {
       }
       const all = sortBy(
         toPairs(dataMap).map((p) => p[1]),
-        'path'
+        sortField as keyof ObjectData
       )
+      if (sortDirection === 'desc') {
+        all.reverse()
+      }
       return all
     },
     {
