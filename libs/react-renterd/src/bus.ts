@@ -533,6 +533,7 @@ export function useObjectDelete(
 
 type ObjectsStats = {
   numObjects: number // number of objects
+  minHealth: number // minimum health across all objects
   totalObjectsSize: number // size of all objects
   totalSectorsSize: number // uploaded size of all objects
   totalUploadedSize: number // uploaded size of all objects including redundant sectors
