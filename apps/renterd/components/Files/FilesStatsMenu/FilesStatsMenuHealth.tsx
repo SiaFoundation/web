@@ -1,44 +1,26 @@
 import { Separator, Text, Tooltip } from '@siafoundation/design-system'
-import { useObjectDirectory } from '@siafoundation/react-renterd'
-import { useMemo } from 'react'
+import { useObjectStats } from '@siafoundation/react-renterd'
 import { healthThresholds, useHealthLabel } from '../../../hooks/useHealthLabel'
-import { useFiles } from '../../../contexts/files'
 
 export function FilesStatsMenuHealth() {
-  const { activeBucket } = useFiles()
-  const obj = useObjectDirectory({
-    disabled: !activeBucket,
-    params: {
-      key: '',
-      bucket: activeBucket,
-    },
+  const stats = useObjectStats({
     config: {
       swr: {
-        dedupingInterval: 5000,
+        // slow operation
+        refreshInterval: 60_000,
+        keepPreviousData: true,
+        revalidateOnFocus: false,
       },
     },
   })
 
-  const minHealth = useMemo(
-    () =>
-      obj.data?.entries?.reduce(
-        (acc, { health }) => (health < acc ? health : acc),
-        obj.data?.entries[0]?.health || 1
-      ),
-    [obj.data]
-  )
-
   const { displayHealth, label } = useHealthLabel({
-    health: minHealth,
+    health: stats.data?.minHealth,
     size: 1,
     isDirectory: true,
   })
 
-  if (!activeBucket) {
-    return null
-  }
-
-  if (!obj.data?.entries || obj.data.entries.length === 0) {
+  if (!stats.data) {
     return null
   }
 
