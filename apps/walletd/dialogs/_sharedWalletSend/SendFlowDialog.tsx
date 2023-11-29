@@ -79,7 +79,7 @@ export function SendFlowDialog({
         )
       }
       contentVariants={{
-        className: 'w-[400px]',
+        className: 'w-[450px]',
       }}
     >
       <div className="flex flex-col gap-4">

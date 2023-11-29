@@ -4,6 +4,12 @@ import { useComposeForm } from '../_sharedWalletSend/useComposeForm'
 import { useSendForm } from './useSendForm'
 import { useWalletBalance } from '@siafoundation/react-walletd'
 import { SendFlowDialog } from '../_sharedWalletSend/SendFlowDialog'
+import {
+  SendParams,
+  SendStep,
+  emptySendParams,
+} from '../_sharedWalletSend/types'
+import { useWalletAddresses } from '../../hooks/useWalletAddresses'
 
 export type WalletSendSeedDialogParams = {
   walletId: string
@@ -14,24 +20,6 @@ type Props = {
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
-}
-
-type Step = 'compose' | 'send' | 'done'
-
-type SendData = {
-  address: string
-  mode: 'siacoin' | 'siafund'
-  siacoin: BigNumber
-  siafund: number
-  fee: BigNumber
-}
-
-const emptySendData: SendData = {
-  address: '',
-  mode: 'siacoin',
-  siacoin: new BigNumber(0),
-  siafund: 0,
-  fee: new BigNumber(0),
 }
 
 export function WalletSendSeedDialog({
@@ -47,6 +35,7 @@ export function WalletSendSeedDialog({
       id: walletId,
     },
   })
+  const { dataset: addresses } = useWalletAddresses({ id: walletId })
   const balanceSc = useMemo(
     () => new BigNumber(balance.data?.siacoins || 0),
     [balance.data]
@@ -56,14 +45,16 @@ export function WalletSendSeedDialog({
     [balance.data]
   )
 
-  const [step, setStep] = useState<Step>('compose')
+  const [step, setStep] = useState<SendStep>('compose')
   const [signedTxnId, setSignedTxnId] = useState<string>()
-  const [sendParams, setSendParams] = useState<SendData>(emptySendData)
+  const [sendParams, setSendParams] = useState<SendParams>(emptySendParams)
 
   // Form for each step
   const compose = useComposeForm({
     balanceSc,
     balanceSf,
+    defaultChangeAddress: addresses?.[0]?.address,
+    defaultClaimAddress: addresses?.[0]?.address,
     onComplete: (params) => {
       setSendParams((d) => ({
         ...d,

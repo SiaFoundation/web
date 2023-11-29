@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import BigNumber from 'bignumber.js'
 import { isValidAddress, toHastings } from '@siafoundation/sia-js'
 import {
@@ -10,10 +11,12 @@ import {
   FieldText,
   FieldNumber,
   FieldSelect,
+  Tooltip,
 } from '@siafoundation/design-system'
 import { useForm } from 'react-hook-form'
 import { useCallback, useMemo } from 'react'
 import { SendParams } from './types'
+import { Information16 } from '@siafoundation/react-icons'
 
 const exampleAddr =
   'e3b1050aef388438668b52983cf78f40925af8f0aa8b9de80c18eadcefce8388d168a313e3f2'
@@ -21,7 +24,11 @@ const exampleAddr =
 const fee = toHastings(0.00393)
 
 const defaultValues = {
-  address: '',
+  receiveAddress: '',
+  changeAddress: '',
+  claimAddress: '',
+  customChangeAddress: false,
+  customClaimAddress: false,
   mode: 'siacoin' as 'siacoin' | 'siafund',
   siacoin: undefined as BigNumber,
   siafund: undefined as BigNumber,
@@ -38,23 +45,27 @@ function getFields({
   fee: BigNumber
 }): ConfigFields<typeof defaultValues, never> {
   return {
-    address: {
+    receiveAddress: {
       type: 'text',
-      title: 'Address',
+      title: 'Recipient address',
       placeholder: exampleAddr,
       validation: {
-        required: 'required',
         validate: {
-          valid: (value: string) => isValidAddress(value) || 'invalid address',
+          required: (value: string) => {
+            return !!value || 'required'
+          },
+          valid: (value: string) => {
+            return isValidAddress(value) || 'invalid address'
+          },
         },
       },
     },
     mode: {
       type: 'select',
-      title: 'Mode',
+      title: 'Action',
       options: [
-        { value: 'siacoin', label: 'Siacoin' },
-        { value: 'siafund', label: 'Siafund' },
+        { value: 'siacoin', label: 'Send siacoins' },
+        { value: 'siafund', label: 'Send siafunds' },
       ],
       validation: {
         required: 'required',
@@ -99,6 +110,96 @@ function getFields({
         },
       },
     },
+    customChangeAddress: {
+      type: 'boolean',
+      title: 'Custom change adress',
+      validation: {},
+    },
+    customClaimAddress: {
+      type: 'boolean',
+      title: 'Custom claim adress',
+      validation: {},
+    },
+    changeAddress: {
+      type: 'text',
+      title: 'Change address',
+      placeholder: exampleAddr,
+      actions: (
+        <Tooltip
+          content={
+            <>
+              The address where any change from the transaction will be sent. If
+              a custom change address is not specified it is automatically set
+              to the wallet's address 0.
+            </>
+          }
+        >
+          <Text color="subtle" className="cursor-pointer">
+            <Information16 className="scale-75" />
+          </Text>
+        </Tooltip>
+      ),
+      validation: {
+        validate: {
+          required: (value: string, values) => {
+            const customChangeAddressNotEnabled = !values.customChangeAddress
+            return customChangeAddressNotEnabled || !!value || 'required'
+          },
+          valid: (value: string, values) => {
+            const customChangeAddressNotEnabled = !values.customChangeAddress
+            return (
+              customChangeAddressNotEnabled ||
+              isValidAddress(value) ||
+              'invalid address'
+            )
+          },
+        },
+      },
+    },
+    claimAddress: {
+      type: 'text',
+      title: 'Claim address',
+      placeholder: exampleAddr,
+      actions: (
+        <Tooltip
+          content={
+            <>
+              The address that will receive any unclaimed siacoin earnings from
+              the siafund. If a custom claim address is not specified it is
+              automatically set to the wallet's address 0.
+            </>
+          }
+        >
+          <Text color="subtle" className="cursor-pointer">
+            <Information16 className="scale-75" />
+          </Text>
+        </Tooltip>
+      ),
+      validation: {
+        validate: {
+          required: (value: string, values) => {
+            const notSiafundMode = values.mode !== 'siafund'
+            const customChangeAddressNotEnabled = !values.customChangeAddress
+            return (
+              notSiafundMode ||
+              customChangeAddressNotEnabled ||
+              !!value ||
+              'required'
+            )
+          },
+          valid: (value: string, values) => {
+            const notSiafundMode = values.mode !== 'siafund'
+            const customChangeAddressNotEnabled = !values.customChangeAddress
+            return (
+              notSiafundMode ||
+              customChangeAddressNotEnabled ||
+              isValidAddress(value) ||
+              'invalid address'
+            )
+          },
+        },
+      },
+    },
     includeFee: {
       type: 'boolean',
       title: '',
@@ -111,9 +212,17 @@ type Props = {
   onComplete: (data: SendParams) => void
   balanceSc?: BigNumber
   balanceSf?: BigNumber
+  defaultChangeAddress: string
+  defaultClaimAddress: string
 }
 
-export function useComposeForm({ balanceSc, balanceSf, onComplete }: Props) {
+export function useComposeForm({
+  balanceSc,
+  balanceSf,
+  onComplete,
+  defaultChangeAddress,
+  defaultClaimAddress,
+}: Props) {
   const form = useForm({
     mode: 'all',
     defaultValues,
@@ -137,14 +246,20 @@ export function useComposeForm({ balanceSc, balanceSf, onComplete }: Props) {
       const siafund = sf.toNumber()
 
       onComplete({
-        address: values.address,
+        receiveAddress: values.receiveAddress,
+        changeAddress: values.customChangeAddress
+          ? values.changeAddress
+          : defaultChangeAddress,
+        claimAddress: values.customClaimAddress
+          ? values.claimAddress
+          : defaultClaimAddress,
         fee,
         mode: values.mode,
         siacoin,
         siafund,
       })
     },
-    [onComplete]
+    [onComplete, defaultChangeAddress, defaultClaimAddress]
   )
 
   const handleSubmit = useMemo(
@@ -154,6 +269,8 @@ export function useComposeForm({ balanceSc, balanceSf, onComplete }: Props) {
 
   const siacoin = form.watch('siacoin')
   const mode = form.watch('mode')
+  const customChangeAddress = form.watch('customChangeAddress')
+  const customClaimAddress = form.watch('customClaimAddress')
   const includeFee = form.watch('includeFee')
   const sc = toHastings(siacoin || 0)
 
@@ -166,9 +283,59 @@ export function useComposeForm({ balanceSc, balanceSf, onComplete }: Props) {
         size="medium"
         form={form}
         fields={fields}
-        name="address"
+        name="receiveAddress"
         autoComplete="off"
       />
+      <div className="flex gap-2">
+        <FieldSwitch
+          size="small"
+          form={form}
+          fields={fields}
+          name="customChangeAddress"
+          group={false}
+        >
+          <div className="flex items-center gap-px">
+            <Text color="verySubtle" weight="medium" size="14" ellipsis>
+              custom change address
+            </Text>
+            {fields.changeAddress.actions}
+          </div>
+        </FieldSwitch>
+        {mode === 'siafund' && (
+          <FieldSwitch
+            size="small"
+            form={form}
+            fields={fields}
+            name="customClaimAddress"
+            group={false}
+          >
+            <div className="flex items-center gap-px">
+              <Text color="verySubtle" weight="medium" size="14" ellipsis>
+                custom claim address
+              </Text>
+              {fields.claimAddress.actions}
+            </div>
+          </FieldSwitch>
+        )}
+      </div>
+      {customChangeAddress && (
+        <FieldText
+          size="medium"
+          form={form}
+          fields={fields}
+          name="changeAddress"
+          autoComplete="off"
+        />
+      )}
+      {mode === 'siafund' && customClaimAddress && (
+        <FieldText
+          size="medium"
+          form={form}
+          fields={fields}
+          name="claimAddress"
+          autoComplete="off"
+        />
+      )}
       {mode === 'siacoin' ? (
         <>
           <FieldSiacoin

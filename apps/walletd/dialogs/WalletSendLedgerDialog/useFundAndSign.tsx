@@ -1,21 +1,9 @@
 import { Transaction } from '@siafoundation/react-walletd'
 import { useCallback } from 'react'
-import BigNumber from 'bignumber.js'
+import { SendParams } from '../_sharedWalletSend/types'
 
 type Props = {
-  fund: ({
-    address,
-    mode,
-    siacoin,
-    siafund,
-    fee,
-  }: {
-    address: string
-    mode: 'siacoin' | 'siafund'
-    siacoin: BigNumber
-    siafund: number
-    fee: BigNumber
-  }) => Promise<{
+  fund: (params: SendParams) => Promise<{
     fundedTransaction?: Transaction
     toSign?: string[]
     error?: string
@@ -35,30 +23,12 @@ type Props = {
 
 export function useFundAndSign({ fund, cancel, sign }: Props) {
   const fundAndSign = useCallback(
-    async ({
-      address,
-      mode,
-      siacoin,
-      siafund,
-      fee,
-    }: {
-      address: string
-      mode: 'siacoin' | 'siafund'
-      siacoin: BigNumber
-      siafund: number
-      fee: BigNumber
-    }) => {
+    async (params: SendParams) => {
       const {
         fundedTransaction,
         toSign,
         error: fundingError,
-      } = await fund({
-        address,
-        siacoin,
-        siafund,
-        mode,
-        fee,
-      })
+      } = await fund(params)
       if (fundingError) {
         return {
           fundedTransaction,

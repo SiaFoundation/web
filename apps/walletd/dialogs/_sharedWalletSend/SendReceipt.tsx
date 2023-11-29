@@ -12,7 +12,15 @@ type Props = {
 }
 
 export function SendReceipt({
-  params: { address, mode, siacoin, siafund, fee },
+  params: {
+    receiveAddress,
+    changeAddress,
+    claimAddress,
+    mode,
+    siacoin,
+    siafund,
+    fee,
+  },
   transactionId,
 }: Props) {
   const totalSiacoin = siacoin.plus(fee)
@@ -20,10 +28,24 @@ export function SendReceipt({
     <div className="flex flex-col gap-2">
       <div className="flex gap-6 justify-between items-center">
         <Text color="verySubtle" noWrap>
-          Destination
+          Recipient address
         </Text>
-        <ValueCopyable value={address} type="address" />
+        <ValueCopyable value={receiveAddress} type="address" />
       </div>
+      <div className="flex gap-6 justify-between items-center">
+        <Text color="verySubtle" noWrap>
+          Change address
+        </Text>
+        <ValueCopyable value={changeAddress} type="address" />
+      </div>
+      {mode === 'siafund' && (
+        <div className="flex gap-6 justify-between items-center">
+          <Text color="verySubtle" noWrap>
+            Claim address
+          </Text>
+          <ValueCopyable value={claimAddress} type="address" />
+        </div>
+      )}
       <div className="flex gap-2 justify-between items-center">
         <Text color="verySubtle" noWrap>
           Amount
