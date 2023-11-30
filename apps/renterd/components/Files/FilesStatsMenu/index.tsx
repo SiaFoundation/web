@@ -10,14 +10,26 @@ import { FilesStatsMenuHealth } from './FilesStatsMenuHealth'
 import { FilesStatsMenuWarnings } from './FilesStatsMenuWarnings'
 import { FilesStatsMenuCount } from './FilesStatsMenuCount'
 import { useFiles } from '../../../contexts/files'
+import { FilesFilterDirectoryMenu } from '../FilesFilterDirectoryMenu'
 
 export function FilesStatsMenu() {
-  const { limit, offset, pageCount, dataState, isViewingABucket } = useFiles()
+  const {
+    limit,
+    offset,
+    pageCount,
+    dataState,
+    isViewingABucket,
+    isViewingBuckets,
+  } = useFiles()
   return (
-    <div className="flex gap-4 w-full">
-      <FilesStatsMenuWarnings />
-      <div className="flex-1" />
+    <div className="flex gap-3 w-full">
+      {isViewingBuckets ? (
+        <div className="flex-1" />
+      ) : (
+        <FilesFilterDirectoryMenu />
+      )}
       <div className="flex gap-3 items-center">
+        <FilesStatsMenuWarnings />
         <div className="flex gap-3">
           <Tooltip side="bottom" content="Filtered statistics">
             <Text size="12" color="verySubtle">
