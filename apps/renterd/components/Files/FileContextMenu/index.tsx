@@ -15,17 +15,19 @@ import {
   Delete16,
   Document16,
   Warning16,
+  Filter16,
 } from '@siafoundation/react-icons'
 import { useFiles } from '../../../contexts/files'
 import { useFileDelete } from '../useFileDelete'
 import { CopyMetadataMenuItem } from './CopyMetadataMenuItem'
+import { getFilename } from '../../../contexts/files/paths'
 
 type Props = {
   path: string
 }
 
 export function FileContextMenu({ path }: Props) {
-  const { downloadFiles, getFileUrl } = useFiles()
+  const { downloadFiles, getFileUrl, navigateToFile } = useFiles()
   const deleteFile = useFileDelete()
 
   return (
@@ -54,7 +56,38 @@ export function FileContextMenu({ path }: Props) {
         </DropdownMenuLeftSlot>
         Delete file
       </DropdownMenuItem>
+      <DropdownMenuLabel>Filter</DropdownMenuLabel>
+      <DropdownMenuItem
+        onSelect={() => {
+          navigateToFile(path)
+        }}
+      >
+        <DropdownMenuLeftSlot>
+          <Filter16 />
+        </DropdownMenuLeftSlot>
+        Filter by file name
+      </DropdownMenuItem>
       <DropdownMenuLabel>Copy</DropdownMenuLabel>
+      <DropdownMenuItem
+        onSelect={() => {
+          copyToClipboard(path, 'file path')
+        }}
+      >
+        <DropdownMenuLeftSlot>
+          <Copy16 />
+        </DropdownMenuLeftSlot>
+        Copy file path
+      </DropdownMenuItem>
+      <DropdownMenuItem
+        onSelect={() => {
+          copyToClipboard(getFilename(path), 'file path')
+        }}
+      >
+        <DropdownMenuLeftSlot>
+          <Copy16 />
+        </DropdownMenuLeftSlot>
+        Copy file name
+      </DropdownMenuItem>
       <DropdownMenuItem
         onSelect={() => {
           copyToClipboard(getFileUrl(path, false), 'file URL')

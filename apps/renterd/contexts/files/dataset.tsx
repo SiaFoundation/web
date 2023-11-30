@@ -1,4 +1,8 @@
-import { useBuckets, useObjectDirectory } from '@siafoundation/react-renterd'
+import {
+  ObjectDirectoryParams,
+  useBuckets,
+  useObjectDirectory,
+} from '@siafoundation/react-renterd'
 import { sortBy, toPairs } from 'lodash'
 import useSWR from 'swr'
 import { useContracts } from '../contracts'
@@ -12,14 +16,19 @@ import {
   getFilePath,
   isDirectory,
 } from './paths'
-import { minutesInMilliseconds } from '@siafoundation/design-system'
+import {
+  ServerFilterItem,
+  minutesInMilliseconds,
+} from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
+import { useMemo } from 'react'
 
 type Props = {
   activeDirectoryPath: string
   uploadsList: ObjectData[]
   sortDirection: 'asc' | 'desc'
   sortField: SortField
+  filters: ServerFilterItem[]
 }
 
 const defaultLimit = 50
@@ -29,6 +38,7 @@ export function useDataset({
   uploadsList,
   sortDirection,
   sortField,
+  filters,
 }: Props) {
   const buckets = useBuckets()
 
@@ -37,15 +47,33 @@ export function useDataset({
   const offset = Number(router.query.offset || 0)
   const activeBucketName = getBucketFromPath(activeDirectoryPath)
   const activeBucket = buckets.data?.find((b) => b.name === activeBucketName)
-  const response = useObjectDirectory({
-    disabled: !activeBucketName,
-    params: {
+  const fileNamePrefix =
+    filters.find((f) => f.id === 'fileNamePrefix')?.value || ''
+
+  const params = useMemo(() => {
+    const p: ObjectDirectoryParams = {
       ...bucketAndKeyParamsFromPath(activeDirectoryPath),
       sortBy: sortField,
       sortDir: sortDirection,
       offset,
       limit,
-    },
+    }
+    if (fileNamePrefix) {
+      p.prefix = fileNamePrefix
+    }
+    return p
+  }, [
+    activeDirectoryPath,
+    fileNamePrefix,
+    sortField,
+    sortDirection,
+    offset,
+    limit,
+  ])
+
+  const response = useObjectDirectory({
+    disabled: !activeBucketName,
+    params,
     config: {
       swr: {
         refreshInterval: minutesInMilliseconds(1),

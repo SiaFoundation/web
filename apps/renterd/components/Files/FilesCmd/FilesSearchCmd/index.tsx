@@ -1,10 +1,7 @@
 import { CommandGroup, CommandItemSearch } from '../../../CmdRoot/Item'
 import { Page } from '../../../CmdRoot/types'
 import { useObjectSearch } from '@siafoundation/react-renterd'
-import {
-  getDirectorySegmentsFromPath,
-  isDirectory,
-} from '../../../../contexts/files/paths'
+import { isDirectory } from '../../../../contexts/files/paths'
 import { useFiles } from '../../../../contexts/files'
 import { Text } from '@siafoundation/design-system'
 import { Document16, FolderIcon } from '@siafoundation/react-icons'
@@ -30,7 +27,7 @@ export function FilesSearchCmd({
   beforeSelect?: () => void
   afterSelect?: () => void
 }) {
-  const { activeBucket, setActiveDirectory } = useFiles()
+  const { activeBucket, navigateToFile } = useFiles()
   const onSearchPage = currentPage?.namespace === filesSearchPage.namespace
   const results = useObjectSearch({
     disabled: !onSearchPage,
@@ -64,10 +61,7 @@ export function FilesSearchCmd({
             key={path}
             onSelect={() => {
               beforeSelect()
-              setActiveDirectory(() => [
-                activeBucket,
-                ...getDirectorySegmentsFromPath(path),
-              ])
+              navigateToFile(path)
               afterSelect()
             }}
             value={path}

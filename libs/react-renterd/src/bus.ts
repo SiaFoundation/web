@@ -482,18 +482,18 @@ export type ObjEntry = {
   health: number
 }
 
+export type ObjectDirectoryParams = {
+  key: string
+  bucket: string
+  limit?: number
+  prefix?: string
+  offset?: number
+  sortBy?: 'name' | 'health'
+  sortDir?: 'asc' | 'desc'
+}
+
 export function useObjectDirectory(
-  args: HookArgsSwr<
-    {
-      key: string
-      bucket: string
-      limit?: number
-      offset?: number
-      sortBy?: 'name' | 'health'
-      sortDir?: 'asc' | 'desc'
-    },
-    { entries: ObjEntry[] }
-  >
+  args: HookArgsSwr<ObjectDirectoryParams, { entries: ObjEntry[] }>
 ) {
   return useGetSwr({ ...args, route: '/bus/objects/:key' })
 }

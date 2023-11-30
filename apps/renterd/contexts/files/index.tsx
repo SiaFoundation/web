@@ -7,7 +7,13 @@ import { useRouter } from 'next/router'
 import { createContext, useCallback, useContext, useMemo } from 'react'
 import { columns } from './columns'
 import { defaultSortField, columnsDefaultVisible, sortOptions } from './types'
-import { FullPath, FullPathSegments, pathSegmentsToPath } from './paths'
+import {
+  FullPath,
+  FullPathSegments,
+  getDirectorySegmentsFromPath,
+  getFilename,
+  pathSegmentsToPath,
+} from './paths'
 import { useUploads } from './uploads'
 import { useDownloads } from './downloads'
 import { useDataset } from './dataset'
@@ -74,6 +80,7 @@ function useFilesMain() {
     uploadsList,
     sortField,
     sortDirection,
+    filters,
   })
 
   const datasetPage = useMemo(() => {
@@ -116,6 +123,21 @@ function useFilesMain() {
   const isViewingRootOfABucket = activeDirectory.length === 1
   const isViewingABucket = activeDirectory.length > 0
 
+  const navigateToFile = useCallback(
+    (path: string) => {
+      setActiveDirectory(() => [
+        activeBucket,
+        ...getDirectorySegmentsFromPath(path),
+      ])
+      setFilter({
+        id: 'fileNamePrefix',
+        label: '',
+        value: getFilename(path),
+      })
+    },
+    [activeBucket, setActiveDirectory, setFilter]
+  )
+
   return {
     isViewingBuckets,
     isViewingABucket,
@@ -124,6 +146,7 @@ function useFilesMain() {
     activeDirectory,
     setActiveDirectory,
     activeDirectoryPath,
+    navigateToFile,
     dataState,
     limit,
     offset,
