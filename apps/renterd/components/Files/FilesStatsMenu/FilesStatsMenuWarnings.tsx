@@ -1,5 +1,6 @@
 import {
   Button,
+  Code,
   Paragraph,
   Popover,
   Separator,
@@ -8,15 +9,74 @@ import {
 import { Warning16 } from '@siafoundation/react-icons'
 import { useContractSetMismatch } from '../checks/useContractSetMismatch'
 import { useMemo } from 'react'
+import { useSyncStatus } from '../../../hooks/useSyncStatus'
+import { useAutopilotNotConfigured } from '../checks/useAutopilotNotConfigured'
+import { useNotEnoughContracts } from '../checks/useNotEnoughContracts'
 
 export function FilesStatsMenuWarnings() {
+  const syncStatus = useSyncStatus()
   const contractSetMismatch = useContractSetMismatch()
+  const autopilotNotConfigured = useAutopilotNotConfigured()
+  const notEnoughContracts = useNotEnoughContracts()
+
+  const syncStatusEl = useMemo(() => {
+    if (!syncStatus.isSynced) {
+      return (
+        <div className="flex flex-col gap-1">
+          <Text size="12" font="mono" weight="medium" color="amber">
+            Uploads are disabled until renterd is synced.
+          </Text>
+          <Paragraph size="12">
+            The blockchain must be fully synced before uploading files. This can
+            take a while depending on your hardware and network connection.
+          </Paragraph>
+        </div>
+      )
+    }
+    return null
+  }, [syncStatus.isSynced])
+
+  const autopilotNotConfiguredEl = useMemo(() => {
+    if (autopilotNotConfigured.active) {
+      return (
+        <div className="flex flex-col gap-1">
+          <Text size="12" font="mono" weight="medium" color="amber">
+            Uploads are disabled until settings are configured.
+          </Text>
+          <Paragraph size="12">
+            Before you can upload files you must configure your settings. Once
+            configured, <Code>renterd</Code> will find contracts with hosts
+            based on the settings you choose. <Code>renterd</Code> will also
+            repair your data as hosts come and go.
+          </Paragraph>
+        </div>
+      )
+    }
+    return null
+  }, [autopilotNotConfigured.active])
+
+  const notEnoughContractsEl = useMemo(() => {
+    if (notEnoughContracts.active) {
+      return (
+        <div className="flex flex-col gap-1">
+          <Text size="12" font="mono" weight="medium" color="amber">
+            Uploads are disabled until settings are configured.
+          </Text>
+          <Paragraph size="12">
+            There are not enough contracts to upload data yet. Redundancy is
+            configured to use {notEnoughContracts.required} shards which means
+            at least that many contracts are required.
+          </Paragraph>
+        </div>
+      )
+    }
+    return null
+  }, [notEnoughContracts])
 
   const contractSetMismatchEl = useMemo(() => {
-    // warn about contract set mismatch
     if (contractSetMismatch.active) {
       return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
           <Text size="12" font="mono" weight="medium" color="amber">
             Uploaded data will not be managed by autopilot.
           </Text>
@@ -33,22 +93,35 @@ export function FilesStatsMenuWarnings() {
     return null
   }, [contractSetMismatch.active])
 
-  if (!contractSetMismatchEl) {
-    return null
-  }
-
-  return (
-    <>
-      <Popover
-        trigger={
-          <Button variant="ghost" icon="contrast" color="amber">
-            <Warning16 />
-          </Button>
-        }
-      >
-        <div className="px-1 py-2">{contractSetMismatchEl}</div>
-      </Popover>
-      <Separator variant="vertical" className="h-full" />
-    </>
+  const warningList = useMemo(
+    () =>
+      [
+        syncStatusEl,
+        autopilotNotConfiguredEl,
+        notEnoughContractsEl,
+        contractSetMismatchEl,
+      ].filter(Boolean),
+    [
+      syncStatusEl,
+      autopilotNotConfiguredEl,
+      notEnoughContractsEl,
+      contractSetMismatchEl,
+    ]
   )
+
+  if (warningList.length)
+    return (
+      <>
+        <Popover
+          trigger={
+            <Button variant="ghost" icon="contrast" color="amber">
+              <Warning16 />
+            </Button>
+          }
+        >
+          <div className="flex flex-col gap-3 px-1 py-2">{warningList}</div>
+        </Popover>
+        <Separator variant="vertical" className="h-full" />
+      </>
+    )
 }

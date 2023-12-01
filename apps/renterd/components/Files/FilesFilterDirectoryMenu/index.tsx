@@ -31,8 +31,6 @@ export function FilesFilterDirectoryMenu() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch])
 
-  console.log('hi')
-
   return (
     <div className="flex gap-1 flex-1">
       <TextField
@@ -41,7 +39,7 @@ export function FilesFilterDirectoryMenu() {
         placeholder="Filter files in current directory"
         value={search}
         onChange={(e) => setSearch(e.currentTarget.value)}
-        className="w-full"
+        className="w-full !pl-0"
       />
       {!!search.length && (
         <>
