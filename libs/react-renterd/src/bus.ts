@@ -625,3 +625,101 @@ export function useAlertsDismiss(
 export function useSlabObjects(args: HookArgsSwr<{ key: string }, ObjEntry[]>) {
   return useGetSwr({ ...args, route: '/bus/slab/:key/objects' })
 }
+
+// metrics
+
+type MetricsParams = {
+  start: string
+  interval: number
+  n: number
+}
+
+type ContractMetric = {
+  timeStamp: string
+  contractID: string
+  hostKey: string
+  remainingCollateral: string
+  remainingFunds: string
+  revisionNumber: number
+  uploadSpending: string
+  downloadSpending: string
+  fundAccountSpending: string
+  deleteSpending: string
+  listSpending: string
+}
+
+type ContractMetricsParams = MetricsParams & {
+  contractID: string
+  hostKey: string
+}
+
+export function useMetricsContract(
+  args: HookArgsSwr<ContractMetricsParams, ContractMetric[]>
+) {
+  return useGetSwr({ ...args, route: '/bus/metric/contract' })
+}
+
+type ContractSetMetric = {
+  contracts: number
+  name: string
+  timestamp: string
+}
+
+type ContractSetMetricsParams = MetricsParams & {
+  name: string
+}
+
+export function useMetricsContractSet(
+  args: HookArgsSwr<ContractSetMetricsParams, ContractSetMetric[]>
+) {
+  return useGetSwr({ ...args, route: '/bus/metric/contractset' })
+}
+
+type ContractSetChurnMetric = {
+  direction: string
+  contractID: string
+  name: string
+  reason: string
+  timestamp: string
+}
+
+type ContractSetChurnMetricsParams = MetricsParams & {
+  name: string
+  direction: string
+  reason: string
+}
+
+export function useMetricsContractSetChurn(
+  args: HookArgsSwr<ContractSetChurnMetricsParams, ContractSetChurnMetric[]>
+) {
+  return useGetSwr({ ...args, route: '/bus/metric/churn' })
+}
+
+type WalletMetric = {
+  timestamp: string
+  confirmed: string
+  spendable: string
+  unconfirmed: string
+}
+
+type WalletMetricsParams = MetricsParams
+
+export function useMetricsWallet(
+  args: HookArgsSwr<WalletMetricsParams, WalletMetric[]>
+) {
+  return useGetSwr({ ...args, route: '/bus/metric/wallet' })
+}
+
+// type PerformanceMetric = {
+//   action: string
+//   hostKey: string
+//   origin: string
+//   duration: number
+//   timestamp: string
+// }
+
+// type PerformanceMetricsParams = MetricsParams & {
+//   action: string
+//   hostKey: string
+//   origin: string
+// }
