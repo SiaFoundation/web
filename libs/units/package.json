@@ -1,10 +1,10 @@
 {
   "name": "@siafoundation/units",
   "description": "Methods and types for interacting with the Sia Central API.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "MIT",
   "dependencies": {
-    "@siafoundation/design-system": "^0.60.0",
+    "@siafoundation/design-system": "^0.61.0",
     "@siafoundation/sia-central": "^0.1.0",
     "bignumber.js": "^9.0.2",
     "@siafoundation/sia-js": "^0.11.0",

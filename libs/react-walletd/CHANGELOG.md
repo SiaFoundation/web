@@ -1,5 +1,11 @@
 # @siafoundation/react-walletd
 
+## 0.3.0
+
+### Minor Changes
+
+- ccf9e177: Refactor types to match latest core changes.
+
 ## 0.2.1
 
 ### Patch Changes
