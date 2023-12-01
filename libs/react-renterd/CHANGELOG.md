@@ -1,5 +1,13 @@
 # @siafoundation/react-renterd
 
+## 0.11.0
+
+### Minor Changes
+
+- eae7d2f7: useObjectDirectory now supports prefix filtering.
+- 56aece36: useObjectDirectory now supports sortBy and sortDir.
+- 57339114: useObjectStats now includes minHealth.
+
 ## 0.10.0
 
 ### Minor Changes

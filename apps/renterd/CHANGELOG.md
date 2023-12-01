@@ -1,5 +1,22 @@
 # renterd
 
+## 0.34.0
+
+### Minor Changes
+
+- 57339114: The file stats overall health now uses the min health reported by the object stats endpoint.
+- 63aef996: Wallet transactions are now paginated.
+- 56aece36: Files can now be sorted by name and health, ascending or descending.
+- 40419ce8: File uploads are now disabled if the blockchain is not fully synced.
+- eae7d2f7: File warnings are now a simple warning icon next to the stats and are explained in a popover.
+- eae7d2f7: Selecting a file search result now navigates to the directory and applies a file name filter.
+- eae7d2f7: The bucket empty state now has a button for navigating back to the buckets list.
+- eae7d2f7: Files in the current directory can now be filtered.
+
+### Patch Changes
+
+- f57ac167: Fixed an issue where the filtered contract count was being used in the onboarding checks.
+
 ## 0.33.0
 
 ### Minor Changes

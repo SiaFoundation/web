@@ -1,5 +1,12 @@
 # @siafoundation/units
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies [f74dc260]
+  - @siafoundation/design-system@0.61.0
+
 ## 0.1.2
 
 ### Patch Changes

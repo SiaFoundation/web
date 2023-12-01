@@ -1,5 +1,14 @@
 # hostd
 
+## 0.28.0
+
+### Minor Changes
+
+- 1f858150: Revenue metrics no longer show negative potential on the bar graph.
+- 1f858150: Metrics no longer include registry related data.
+- f74dc260: Wallet transactions are now paginated.
+- 1f858150: Earned revenue stat cards are now clearly labeled as earned.
+
 ## 0.27.0
 
 ### Minor Changes

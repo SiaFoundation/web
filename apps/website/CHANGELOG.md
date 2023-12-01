@@ -1,5 +1,11 @@
 # website
 
+## 0.46.0
+
+### Minor Changes
+
+- 5a5fb05e: The website now includes routes for downloading the latest binaries.
+
 ## 0.45.0
 
 ### Minor Changes
