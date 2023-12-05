@@ -236,12 +236,6 @@ export interface Block {
   transactions?: Transaction[]
 }
 
-export interface Announcement {
-  Index: ChainIndex
-  Timestamp: string
-  NetAddress: string
-}
-
 export interface Interaction {
   Timestamp: string
   Type: string
@@ -253,16 +247,16 @@ export interface Host {
   netAddress: string
   knownSince: string
   lastAnnouncement: string
-  Announcements?: Announcement[]
   interactions: {
-    Downtime: number
-    FailedInteractions: number
-    LastScan?: string
-    LastScanSuccess: boolean
-    SecondToLastScanSuccess: boolean
-    SuccessfulInteractions: number
-    TotalScans: number
-    Uptime: number
+    downtime: number
+    failedInteractions: number
+    lastScan?: string
+    lastScanSuccess: boolean
+    lostSectors: number
+    secondToLastScanSuccess: boolean
+    successfulInteractions: number
+    totalScans: number
+    uptime: number
   }
   scanned: boolean
   priceTable?: {

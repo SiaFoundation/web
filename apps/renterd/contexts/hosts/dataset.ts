@@ -92,30 +92,30 @@ function getHostFields(host: Host, allContracts: ContractData[]) {
     id: host.publicKey,
     netAddress: host.netAddress,
     publicKey: host.publicKey,
-    lastScanSuccess: host.interactions.LastScanSuccess,
+    lastScanSuccess: host.interactions.lastScanSuccess,
     lastScan:
-      host.interactions.LastScan === '0001-01-01T00:00:00Z'
+      host.interactions.lastScan === '0001-01-01T00:00:00Z'
         ? null
-        : host.interactions.LastScan,
+        : host.interactions.lastScan,
     knownSince:
       host.knownSince === '0001-01-01T00:00:00Z' ? null : host.knownSince,
     lastAnnouncement:
       host.lastAnnouncement === '0001-01-01T00:00:00Z'
         ? null
         : host.lastAnnouncement,
-    uptime: new BigNumber(host.interactions.Uptime || 0),
-    downtime: new BigNumber(host.interactions.Downtime || 0),
+    uptime: new BigNumber(host.interactions.uptime || 0),
+    downtime: new BigNumber(host.interactions.downtime || 0),
     successfulInteractions: new BigNumber(
-      host.interactions.SuccessfulInteractions || 0
+      host.interactions.successfulInteractions || 0
     ),
     totalInteractions: new BigNumber(
-      host.interactions.SuccessfulInteractions +
-        host.interactions.FailedInteractions || 0
+      host.interactions.successfulInteractions +
+        host.interactions.failedInteractions || 0
     ),
     failedInteractions: new BigNumber(
-      host.interactions.FailedInteractions || 0
+      host.interactions.failedInteractions || 0
     ),
-    totalScans: new BigNumber(host.interactions.TotalScans || 0),
+    totalScans: new BigNumber(host.interactions.totalScans || 0),
     activeContractsCount: new BigNumber(
       allContracts?.filter((c) => c.hostKey === host.publicKey).length || 0
     ),
