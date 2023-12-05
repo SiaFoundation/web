@@ -21,6 +21,7 @@ import {
 import { columns } from './columns'
 import { useDataset } from './dataset'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
+import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 
 const defaultLimit = 50
 
@@ -92,14 +93,22 @@ function useContractsMain() {
     [currentHeight, dataset]
   )
 
+  const siascanUrl = useSiascanUrl()
+
+  const cellContext = useMemo(
+    () => ({
+      contractsTimeRange,
+      currentHeight,
+      siascanUrl,
+    }),
+    [contractsTimeRange, currentHeight, siascanUrl]
+  )
+
   return {
     dataState,
     offset,
     limit,
-    cellContext: {
-      contractsTimeRange,
-      currentHeight,
-    },
+    cellContext,
     pageCount: dataset?.length || 0,
     totalCount: response.data?.count,
     columns: filteredTableColumns,

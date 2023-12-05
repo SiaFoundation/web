@@ -12,6 +12,7 @@ import {
 } from '@siafoundation/react-hostd'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { useDialog } from '../../contexts/dialog'
+import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 
 export function Profile() {
   const { openDialog } = useDialog()
@@ -31,6 +32,7 @@ export function Profile() {
   })
   const syncStatus = useSyncStatus()
   const peers = useSyncerPeers()
+  const siascanUrl = useSiascanUrl()
 
   const version = state.data?.version
   const versionUrl = version?.match(/^v\d+\.\d+\.\d+/)
@@ -48,49 +50,50 @@ export function Profile() {
       firstTimeSyncing={syncStatus.firstTimeSyncing}
       moreThan100BlocksToSync={syncStatus.moreThan100BlocksToSync}
     >
-      <div className="flex gap-4 justify-between items-center">
+      <div className="flex gap-2 justify-between items-center">
         <Label size="14" color="subtle" noWrap className="w-[100px]">
           Net address
         </Label>
-        <div className="flex-1 flex justify-end overflow-hidden">
+        <div className="flex-1 flex justify-end overflow-hidden -mr-0.5 pr-0.5">
           <ValueCopyable
-            className="overflow-hidden"
             size="14"
             value={settings.data?.netAddress}
-            maxLength={50}
+            maxLength={24}
             label="network address"
+            type="hostIp"
+            siascanUrl={siascanUrl}
           />
         </div>
       </div>
-      <div className="flex gap-4 justify-between items-center">
+      <div className="flex gap-2 justify-between items-center">
         <Label size="14" color="subtle" noWrap className="w-[100px]">
           Public key
         </Label>
-        <div className="flex-1 flex justify-end overflow-hidden">
+        <div className="flex-1 flex justify-end overflow-hidden -mr-0.5 pr-0.5">
           <ValueCopyable
-            className="overflow-hidden"
             size="14"
             value={state.data?.publicKey}
-            maxLength={50}
+            maxLength={24}
             label="public key"
+            type="hostPublicKey"
+            siascanUrl={siascanUrl}
           />
         </div>
       </div>
-      <div className="flex gap-4 justify-between items-center">
+      <div className="flex gap-2 justify-between items-center">
         <Label size="14" color="subtle" noWrap className="w-[100px]">
           Wallet address
         </Label>
-        <div className="flex-1 flex justify-end overflow-hidden">
+        <div className="flex-1 flex justify-end overflow-hidden -mr-0.5 pr-0.5">
           <ValueCopyable
-            className="overflow-hidden"
             size="14"
-            maxLength={50}
+            maxLength={24}
             value={state.data?.walletAddress}
             type="address"
           />
         </div>
       </div>
-      <div className="flex gap-4 justify-between items-center">
+      <div className="flex gap-2 justify-between items-center">
         <Label size="14" color="subtle" noWrap className="w-[100px]">
           Network
         </Label>
@@ -98,7 +101,7 @@ export function Profile() {
           <Text size="14">{state.data?.network}</Text>
         </div>
       </div>
-      <div className="flex gap-4 justify-between items-center">
+      <div className="flex gap-2 justify-between items-center">
         <Label size="14" color="subtle" noWrap className="w-[100px]">
           Version
         </Label>

@@ -34,6 +34,7 @@ export type EntityListItemProps = {
   height?: number
   timestamp?: number
   unconfirmed?: boolean
+  siascanUrl?: string
   avatarShape?: 'square' | 'circle'
   avatar?: string
 }
@@ -46,6 +47,7 @@ export function EntityListItem(entity: EntityListItemProps) {
       value={entity.hash}
       type={entity.type}
       label={entity.label}
+      siascanUrl={entity.siascanUrl}
       href={entity.href}
       color="subtle"
     />

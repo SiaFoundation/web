@@ -1,3 +1,7 @@
+export type CellContext = {
+  siascanUrl: string
+}
+
 export type AddressData = {
   id: string
   address: string

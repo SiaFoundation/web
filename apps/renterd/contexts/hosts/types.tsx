@@ -2,6 +2,8 @@ import { AutopilotHost } from '@siafoundation/react-renterd'
 import BigNumber from 'bignumber.js'
 import { ContractData } from '../contracts/types'
 
+export type HostContext = { isAutopilotConfigured: boolean; siascanUrl: string }
+
 export type HostData = {
   id: string
   isOnAllowlist: boolean

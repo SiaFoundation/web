@@ -28,7 +28,9 @@ export function Profile() {
           <Label size="14" color="subtle" noWrap className="w-[100px]">
             Network
           </Label>
-          <Text size="14">{network.data.name}</Text>
+          <div className="flex-1 flex justify-end overflow-hidden -mr-0.5 pr-0.5">
+            <Text size="14">{network.data.name}</Text>
+          </div>
         </div>
       )}
       {/* <div className="flex gap-4 justify-between items-center">

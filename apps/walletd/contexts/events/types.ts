@@ -1,5 +1,9 @@
 import BigNumber from 'bignumber.js'
 
+export type CellContext = {
+  siascanUrl: string
+}
+
 export type EventData = {
   id: string
   transactionId?: string

@@ -8,9 +8,13 @@ import {
 } from '@siafoundation/design-system'
 import { Draggable16 } from '@siafoundation/react-icons'
 import { AddressContextMenu } from '../../components/WalletAddresses/AddressContextMenu'
-import { AddressData, TableColumnId } from './types'
+import { AddressData, CellContext, TableColumnId } from './types'
 
-type AddressesTableColumn = TableColumn<TableColumnId, AddressData, never> & {
+type AddressesTableColumn = TableColumn<
+  TableColumnId,
+  AddressData,
+  CellContext
+> & {
   fixed?: boolean
   category?: string
 }
@@ -38,10 +42,15 @@ export const columns: AddressesTableColumn[] = [
     label: 'address',
     category: 'general',
     fixed: true,
-    render: ({ data: { address, description } }) => {
+    render: ({ data: { address, description }, context }) => {
       return (
         <div className="flex flex-col gap-2">
-          <ValueCopyable maxLength={40} value={address} type="address" />
+          <ValueCopyable
+            maxLength={40}
+            value={address}
+            type="address"
+            siascanUrl={context.siascanUrl}
+          />
           {description && (
             <Tooltip
               content={

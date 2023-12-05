@@ -34,6 +34,7 @@ export function DaemonProfile({
     <HoverCard
       rootProps={{
         openDelay: 100,
+        closeDelay: 1000,
       }}
       contentProps={{
         side: 'right',
@@ -57,7 +58,7 @@ export function DaemonProfile({
         </div>
       }
     >
-      <div className="flex flex-col gap-2 px-1 pt-1 pb-2 w-[300px]">
+      <div className="flex flex-col gap-2 px-1 pt-1 pb-2 w-[350px]">
         <Header
           nodeBlockHeight={nodeBlockHeight}
           isSynced={isSynced}

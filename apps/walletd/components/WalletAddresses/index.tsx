@@ -21,6 +21,7 @@ export function WalletAddresses() {
     dataset,
     dataState,
     columns,
+    cellContext,
     sortableColumns,
     sortDirection,
     sortField,
@@ -75,6 +76,7 @@ export function WalletAddresses() {
           }
           pageSize={6}
           data={dataset}
+          context={cellContext}
           columns={columns}
           sortableColumns={sortableColumns}
           sortDirection={sortDirection}

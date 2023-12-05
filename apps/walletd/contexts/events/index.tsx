@@ -16,6 +16,7 @@ import {
   useMemo,
 } from 'react'
 import {
+  CellContext,
   EventData,
   columnsDefaultVisible,
   defaultSortField,
@@ -24,6 +25,7 @@ import {
 import { columns } from './columns'
 import { useRouter } from 'next/router'
 import BigNumber from 'bignumber.js'
+import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 
 const defaultLimit = 100
 
@@ -181,12 +183,21 @@ export function useEventsMain() {
 
   const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
+  const siascanUrl = useSiascanUrl()
+  const cellContext = useMemo<CellContext>(
+    () => ({
+      siascanUrl,
+    }),
+    [siascanUrl]
+  )
+
   return {
     dataState,
     error: responseEvents.error,
     pageCount: dataset?.length || 0,
     columns: filteredTableColumns,
     dataset,
+    cellContext,
     configurableColumns,
     enabledColumns,
     sortableColumns,

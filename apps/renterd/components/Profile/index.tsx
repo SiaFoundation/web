@@ -56,19 +56,20 @@ export function Profile() {
         <Label size="14" color="subtle" noWrap className="w-[100px]">
           Wallet address
         </Label>
-        <ValueCopyable
-          className="overflow-hidden"
-          size="14"
-          maxLength={50}
-          value={wallet.data?.address}
-          type="address"
-        />
+        <div className="flex-1 flex justify-end overflow-hidden -mr-0.5 pr-0.5">
+          <ValueCopyable
+            size="14"
+            maxLength={50}
+            value={wallet.data?.address}
+            type="address"
+          />
+        </div>
       </div>
       <div className="flex gap-4 justify-between items-center">
         <Label size="14" color="subtle" noWrap className="w-[100px]">
           Network
         </Label>
-        <div className="flex-1 flex justify-end overflow-hidden">
+        <div className="flex-1 flex justify-end overflow-hidden -mr-0.5 pr-0.5">
           <Text size="14">{state.data?.network}</Text>
         </div>
       </div>

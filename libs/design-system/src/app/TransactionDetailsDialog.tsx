@@ -15,7 +15,7 @@ type Props = {
     txType: TxType
     inflow: string
     outflow: string
-    timestamp: string
+    timestamp: string | number
     raw: Transaction
   }
   trigger?: React.ReactNode

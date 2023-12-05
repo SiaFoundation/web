@@ -7,9 +7,9 @@ import {
   ValueSf,
 } from '@siafoundation/design-system'
 import { humanDate } from '@siafoundation/sia-js'
-import { EventData, TableColumnId } from './types'
+import { CellContext, EventData, TableColumnId } from './types'
 
-type EventsTableColumn = TableColumn<TableColumnId, EventData, never> & {
+type EventsTableColumn = TableColumn<TableColumnId, EventData, CellContext> & {
   fixed?: boolean
   category?: string
 }
@@ -27,9 +27,15 @@ export const columns: EventsTableColumn[] = [
   //   label: 'ID',
   //   category: 'general',
   //   fixed: true,
-  //   render: ({ data: { id } }) => {
+  //   render: ({ data: { id }, context }) => {
   //     return (
-  //       <ValueCopyable size="12" maxLength={20} value={id} type="transaction" />
+  //       <ValueCopyable
+  //         size="12"
+  //         maxLength={20}
+  //         value={id}
+  //         type="transaction"
+  //         siascanUrl={context.siascanUrl}
+  //       />
   //     )
   //   },
   // },
@@ -37,12 +43,18 @@ export const columns: EventsTableColumn[] = [
     id: 'transactionId',
     label: 'transaction ID',
     category: 'general',
-    render: ({ data: { transactionId } }) => {
+    render: ({ data: { transactionId }, context }) => {
       if (!transactionId) {
         return null
       }
       return (
-        <ValueCopyable size="12" value={transactionId} label="transaction ID" />
+        <ValueCopyable
+          size="12"
+          value={transactionId}
+          label="transaction ID"
+          type="transaction"
+          siascanUrl={context.siascanUrl}
+        />
       )
     },
   },
@@ -135,11 +147,18 @@ export const columns: EventsTableColumn[] = [
     id: 'contractId',
     label: 'contract ID',
     category: 'general',
-    render: ({ data: { contractId } }) => {
+    render: ({ data: { contractId }, context }) => {
       if (!contractId) {
         return null
       }
-      return <ValueCopyable size="12" value={contractId} label="contract ID" />
+      return (
+        <ValueCopyable
+          size="12"
+          value={contractId}
+          label="contract ID"
+          siascanUrl={context.siascanUrl}
+        />
+      )
     },
   },
 ]
