@@ -192,6 +192,34 @@ export function getFields({
             }
           : {},
     },
+    prune: {
+      type: 'boolean',
+      category: 'storage',
+      title: 'Prune sector roots',
+      description: (
+        <>
+          When enabled, autopilot will try to prune deleted sector roots from
+          contracts one contract at a time, for a max duration of 10 minutes per
+          contract. For old hosts this process takes quite a while, while for
+          new hosts it is fast. For new hosts pruning effectively deletes data
+          from the contract, allowing the renter to stop paying for storage they
+          are not using.
+        </>
+      ),
+      suggestion: advancedDefaults?.prune,
+      suggestionTip: (
+        <>
+          The default value is <Code>{advancedDefaults?.prune}</Code>.
+        </>
+      ),
+      hidden: !isAutopilotEnabled || !showAdvanced,
+      validation:
+        isAutopilotEnabled && showAdvanced
+          ? {
+              required: 'required',
+            }
+          : {},
+    },
 
     // hosts
     allowRedundantIPs: {

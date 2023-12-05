@@ -356,6 +356,7 @@ export interface AutopilotContractsConfig {
   download: number
   upload: number
   storage: number
+  prune: boolean
 }
 
 export interface AutopilotConfig {

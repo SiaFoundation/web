@@ -40,6 +40,7 @@ describe('tansforms', () => {
               download: 1099511627776,
               upload: 1100000000000,
               storage: 1000000000000,
+              prune: true,
             },
           },
           { default: 'myset' },
@@ -75,6 +76,7 @@ describe('tansforms', () => {
         downloadTBMonth: new BigNumber('1.1'),
         uploadTBMonth: new BigNumber('1.1'),
         storageTB: new BigNumber('1'),
+        prune: true,
         allowRedundantIPs: false,
         maxDowntimeHours: new BigNumber('1440'),
         minRecentScanFailures: new BigNumber('10'),
@@ -121,6 +123,7 @@ describe('tansforms', () => {
               download: 1099511627776,
               upload: 1100000000000,
               storage: 1000000000000,
+              prune: true,
             },
           },
           { default: 'myset' },
@@ -177,6 +180,7 @@ describe('tansforms', () => {
         totalShards: new BigNumber(30),
         includeRedundancyMaxStoragePrice: true,
         includeRedundancyMaxUploadPrice: true,
+        prune: true,
       } as SettingsData)
     })
   })
@@ -195,6 +199,7 @@ describe('tansforms', () => {
             downloadTBMonth: new BigNumber('0.785365448411428571428571428571'),
             uploadTBMonth: new BigNumber('0.785714285714285714285714285714'),
             storageTB: new BigNumber('1'),
+            prune: true,
             allowRedundantIPs: false,
             maxDowntimeHours: new BigNumber('1440'),
             minRecentScanFailures: new BigNumber('10'),
@@ -221,6 +226,7 @@ describe('tansforms', () => {
           download: 1099511627776,
           upload: 1100000000000,
           storage: 1000000000000,
+          prune: true,
         },
       })
     })
@@ -237,6 +243,7 @@ describe('tansforms', () => {
             downloadTBMonth: new BigNumber('0.785365448411428571428571428571'),
             uploadTBMonth: new BigNumber('0.785714285714285714285714285714'),
             storageTB: new BigNumber('1'),
+            prune: true,
             allowRedundantIPs: false,
             maxDowntimeHours: new BigNumber('1440'),
             minRecentScanFailures: new BigNumber('10'),
@@ -280,6 +287,7 @@ describe('tansforms', () => {
           download: 1099511627776,
           upload: 1100000000000,
           storage: 1000000000000,
+          prune: true,
         },
       })
     })
@@ -296,6 +304,7 @@ describe('tansforms', () => {
             downloadTBMonth: new BigNumber('0.785365448411428571428571428571'),
             uploadTBMonth: new BigNumber('0.785714285714285714285714285714'),
             storageTB: new BigNumber('1'),
+            prune: true,
             allowRedundantIPs: false,
             maxDowntimeHours: new BigNumber('1440'),
             minRecentScanFailures: new BigNumber('10'),
@@ -329,6 +338,7 @@ describe('tansforms', () => {
           download: 1099511627776,
           upload: 1100000000000,
           storage: 1000000000000,
+          prune: true,
         },
       })
     })
@@ -363,6 +373,7 @@ describe('tansforms', () => {
             downloadTBMonth: new BigNumber('0.785365448411428571428571428571'),
             uploadTBMonth: new BigNumber('0.785714285714285714285714285714'),
             storageTB: new BigNumber('1'),
+            prune: true,
             allowRedundantIPs: false,
             maxDowntimeHours: new BigNumber('1440'),
             minRecentScanFailures: new BigNumber('10'),
@@ -419,6 +430,7 @@ describe('tansforms', () => {
             downloadTBMonth: new BigNumber('0.785365448411428571428571428571'),
             uploadTBMonth: new BigNumber('0.785714285714285714285714285714'),
             storageTB: new BigNumber('1'),
+            prune: true,
             allowRedundantIPs: false,
             maxDowntimeHours: new BigNumber('1440'),
             minRecentScanFailures: new BigNumber('10'),
@@ -594,6 +606,7 @@ function buildAllResponses() {
         download: 1099511627776,
         upload: 1100000000000,
         storage: 1000000000000,
+        prune: true,
       },
     },
     contractSet: { default: 'myset' },
