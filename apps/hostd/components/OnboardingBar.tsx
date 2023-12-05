@@ -25,7 +25,7 @@ import { useVolumes } from '../contexts/volumes'
 import useLocalStorageState from 'use-local-storage-state'
 
 export function OnboardingBar() {
-  const { isUnlocked } = useAppSettings()
+  const { isUnlockedAndAuthedRoute } = useAppSettings()
   const { openDialog } = useDialog()
   const { dataset: volumes } = useVolumes()
   const settings = useSettings()
@@ -38,7 +38,7 @@ export function OnboardingBar() {
   )
   const syncStatus = useSyncStatus()
 
-  if (!isUnlocked) {
+  if (!isUnlockedAndAuthedRoute) {
     return null
   }
 

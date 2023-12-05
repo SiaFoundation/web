@@ -1,10 +1,13 @@
 import {
   EntityListItemProps,
+  daysInMilliseconds,
   getTransactionType,
+  hoursInMilliseconds,
   secondsInMilliseconds,
   useDatasetEmptyState,
 } from '@siafoundation/design-system'
 import {
+  useMetricsWallet,
   useWalletPending,
   useWalletTransactions,
 } from '@siafoundation/react-renterd'
@@ -109,6 +112,35 @@ function useTransactionsMain() {
     filters
   )
 
+  const periods = 24
+  const intervalMs = hoursInMilliseconds(1)
+  const start = useMemo(() => {
+    const today = new Date().getTime()
+    const periodsInMs = periods * intervalMs
+    const periodsAgo = today - periodsInMs
+    return new Date(periodsAgo).toISOString()
+  }, [periods, intervalMs])
+
+  const metrics = useMetricsWallet({
+    params: {
+      start,
+      interval: intervalMs,
+      n: periods,
+    },
+  })
+  const balances = useMemo(
+    () =>
+      (metrics.data || [])
+        .map((t) => {
+          return {
+            sc: Number(t.confirmed),
+            timestamp: new Date(t.timestamp).getTime(),
+          }
+        })
+        .sort((a, b) => (a.timestamp >= b.timestamp ? 1 : -1)),
+    [metrics.data]
+  )
+
   return {
     dataset,
     error,
@@ -116,6 +148,8 @@ function useTransactionsMain() {
     offset,
     limit,
     pageCount: dataset?.length || 0,
+    balances,
+    metrics,
   }
 }
 

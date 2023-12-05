@@ -21,7 +21,7 @@ function getProgress(transfer: { loaded?: number; size?: number }) {
 }
 
 export function TransfersBar() {
-  const { isUnlocked } = useAppSettings()
+  const { isUnlockedAndAuthedRoute } = useAppSettings()
   const { uploadsList, uploadCancel, downloadsList, downloadCancel } =
     useFiles()
   const [maximized, setMaximized] = useState<boolean>(true)
@@ -29,7 +29,7 @@ export function TransfersBar() {
   const uploadCount = uploadsList.length
   const downloadCount = downloadsList.length
 
-  if (!isUnlocked) {
+  if (!isUnlockedAndAuthedRoute) {
     return null
   }
 

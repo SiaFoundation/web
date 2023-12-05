@@ -173,13 +173,13 @@ export function useConfigMain() {
     }
   }, [form, resetFormDataIfAllDataFetched])
 
-  const { isUnlocked } = useAppSettings()
+  const { isUnlockedAndAuthedRoute } = useAppSettings()
   useEffect(() => {
-    if (isUnlocked) {
+    if (isUnlockedAndAuthedRoute) {
       revalidateAndResetFormData()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isUnlocked])
+  }, [isUnlockedAndAuthedRoute])
 
   useEffect(() => {
     if (form.formState.isSubmitting) {

@@ -8,7 +8,7 @@ import {
 } from '@siafoundation/react-walletd'
 
 export function useSyncStatus() {
-  const { isUnlocked } = useAppSettings()
+  const { isUnlockedAndAuthedRoute } = useAppSettings()
   const state = useConsensusTip({
     config: {
       swr: {
@@ -29,7 +29,7 @@ export function useSyncStatus() {
   const nodeBlockHeight = state.data ? state.data?.height : 0
 
   const syncPercent =
-    isUnlocked && nodeBlockHeight && estimatedBlockHeight
+    isUnlockedAndAuthedRoute && nodeBlockHeight && estimatedBlockHeight
       ? Number(
           (Math.min(nodeBlockHeight / estimatedBlockHeight, 1) * 100).toFixed(1)
         )
