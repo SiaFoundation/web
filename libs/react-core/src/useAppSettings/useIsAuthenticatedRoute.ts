@@ -1,12 +1,12 @@
 'use client'
 
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 
 type UnauthenticatedRoutes = {
   login: string
 }
 
 export function useIsAuthenticatedRoute(routes: UnauthenticatedRoutes) {
-  const router = useRouter()
-  return ![routes.login].includes(router.asPath)
+  const pathname = usePathname()
+  return ![routes.login].includes(pathname)
 }

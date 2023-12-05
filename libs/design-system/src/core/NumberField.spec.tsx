@@ -46,6 +46,39 @@ describe('NumberField', () => {
     expectOnChangeValues([undefined, '4', '44', '44', '444', '444'], onChange)
   })
 
+  it('updates value starting with decimal', async () => {
+    const user = userEvent.setup()
+    const onChange = jest.fn()
+    const { input } = await renderNode({
+      initialValue: new BigNumber(33),
+      onChange,
+    })
+
+    expect(input.value).toBe('33')
+    await user.click(input)
+    await user.clear(input)
+    await user.type(input, '.44')
+    fireEvent.blur(input)
+    expect(input.value).toBe('0.44')
+  })
+
+  it('updates value starting with comma decimal separator', async () => {
+    const user = userEvent.setup()
+    const onChange = jest.fn()
+    const { input } = await renderNode({
+      initialValue: new BigNumber(33),
+      locale: 'de-DE',
+      onChange,
+    })
+
+    expect(input.value).toBe('33')
+    await user.click(input)
+    await user.clear(input)
+    await user.type(input, ',44')
+    fireEvent.blur(input)
+    expect(input.value).toBe('0,44')
+  })
+
   it('works with alternate locale: DE', async () => {
     const user = userEvent.setup()
     const onChange = jest.fn()

@@ -64,6 +64,45 @@ describe('SiacoinField', () => {
     expectOnChangeValues([undefined, '4', '44', '44', '444', '444'], onChange)
   })
 
+  it('updates value starting with decimal', async () => {
+    siaCentralExchangeRateEndpoint('1')
+    const user = userEvent.setup()
+    const onChange = jest.fn()
+    const { scInput, fiatInput } = await renderNode({
+      sc: new BigNumber(33),
+      onChange,
+    })
+
+    expect(scInput.value).toBe('33')
+    expect(fiatInput.value).toBe('$33')
+    await user.click(scInput)
+    await user.clear(scInput)
+    await user.type(scInput, '.44')
+    fireEvent.blur(scInput)
+    expect(scInput.value).toBe('0.44')
+    expect(fiatInput.value).toBe('$0.44')
+  })
+
+  it('updates value starting with comma decimal separator', async () => {
+    siaCentralExchangeRateEndpoint('1')
+    const user = userEvent.setup()
+    const onChange = jest.fn()
+    const { scInput, fiatInput } = await renderNode({
+      sc: new BigNumber(33),
+      locale: 'de-DE',
+      onChange,
+    })
+
+    expect(scInput.value).toBe('33')
+    expect(fiatInput.value).toBe('$33')
+    await user.click(scInput)
+    await user.clear(scInput)
+    await user.type(scInput, ',44')
+    fireEvent.blur(scInput)
+    expect(scInput.value).toBe('0,44')
+    expect(fiatInput.value).toBe('$0,44')
+  })
+
   it('works with alternate locale: DE', async () => {
     siaCentralExchangeRateEndpoint('1')
     const user = userEvent.setup()
