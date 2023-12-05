@@ -1,4 +1,5 @@
 import {
+  BalanceEvolution,
   EntityList,
   PaginatorUnknownTotal,
   WalletLayoutActions,
@@ -17,7 +18,8 @@ import { WalletFilterBar } from './WalletFilterBar'
 export function Wallet() {
   const { openDialog } = useDialog()
   const wallet = useWallet()
-  const { dataset, offset, limit, pageCount, dataState } = useTransactions()
+  const { dataset, offset, limit, pageCount, dataState, balances, metrics } =
+    useTransactions()
   const { isSynced, syncPercent, isWalletSynced, walletScanPercent } =
     useSyncStatus()
 
@@ -49,14 +51,14 @@ export function Wallet() {
       stats={<WalletFilterBar />}
     >
       <div className="p-6 flex flex-col gap-5">
-        {/* {balances?.length ? (
+        {balances?.length ? (
           <BalanceEvolution
             // see comment above
             chartType="line"
             balances={balances}
-            isLoading={transactions.isValidating}
+            isLoading={metrics.isValidating}
           />
-        ) : null} */}
+        ) : null}
         <EntityList
           title="Transactions"
           isLoading={dataState === 'loading'}

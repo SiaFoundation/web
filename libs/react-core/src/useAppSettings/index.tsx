@@ -8,6 +8,7 @@ import { useGpuFeatures } from './useGpuFeatures'
 import { clearAllSwrKeys } from '../utils'
 import { useWorkflows } from '../workflows'
 import { CurrencyId, CurrencyOption, currencyOptions } from './currency'
+import { useIsAuthenticatedRoute } from './useIsAuthenticatedRoute'
 
 export type CurrencyDisplay = 'sc' | 'fiat' | 'bothPreferSc' | 'bothPreferFiat'
 
@@ -147,7 +148,11 @@ function useAppSettingsMain({
     pathname,
   ])
 
+  const isAuthenticatedRoute = useIsAuthenticatedRoute({
+    login: lockRoutes?.login || '/login',
+  })
   const isUnlocked = useMemo(() => !!settings.password, [settings])
+  const isUnlockedAndAuthedRoute = isUnlocked && isAuthenticatedRoute
 
   const gpu = useGpuFeatures()
 
@@ -158,7 +163,7 @@ function useAppSettingsMain({
     currencyOptions,
     gpu,
     lock,
-    isUnlocked,
+    isUnlockedAndAuthedRoute,
     passwordProtectRequestHooks,
     setOnLockCallback,
   }

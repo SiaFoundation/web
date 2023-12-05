@@ -11,13 +11,13 @@ type Props = {
 }
 
 export function CmdKDialog({ open, onOpenChange, setOpen }: Props) {
-  const { isUnlocked } = useAppSettings()
+  const { isUnlockedAndAuthedRoute } = useAppSettings()
   const { isConnected } = useConnectivity({
     route: connectivityRoute,
   })
   // Toggle the menu when ⌘K is pressed
   useEffect(() => {
-    if (!isUnlocked || !isConnected) {
+    if (!isUnlockedAndAuthedRoute || !isConnected) {
       return
     }
     const down = (e: KeyboardEvent) => {
@@ -28,7 +28,7 @@ export function CmdKDialog({ open, onOpenChange, setOpen }: Props) {
 
     document.addEventListener('keydown', down)
     return () => document.removeEventListener('keydown', down)
-  }, [isUnlocked, isConnected, setOpen])
+  }, [isUnlockedAndAuthedRoute, isConnected, setOpen])
 
   return (
     <>

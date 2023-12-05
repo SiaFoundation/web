@@ -7,7 +7,7 @@ import {
 } from '@siafoundation/react-renterd'
 
 export function useSyncStatus() {
-  const { isUnlocked } = useAppSettings()
+  const { isUnlockedAndAuthedRoute } = useAppSettings()
   const state = useConsensusState({
     config: {
       swr: {
@@ -30,14 +30,14 @@ export function useSyncStatus() {
   })
 
   const syncPercent =
-    isUnlocked && nodeBlockHeight && estimatedBlockHeight
+    isUnlockedAndAuthedRoute && nodeBlockHeight && estimatedBlockHeight
       ? Number(
           (Math.min(nodeBlockHeight / estimatedBlockHeight, 1) * 100).toFixed(1)
         )
       : 0
 
   const walletScanPercent =
-    isUnlocked && nodeBlockHeight && wallet.data
+    isUnlockedAndAuthedRoute && nodeBlockHeight && wallet.data
       ? Number(
           (
             Math.min(wallet.data.scanHeight / estimatedBlockHeight, 1) * 100
