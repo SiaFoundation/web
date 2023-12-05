@@ -82,6 +82,7 @@ export function transformUpAutopilot(
         ).toFixed(0)
       ),
       storage: TBToBytes(v.storageTB).toNumber(),
+      prune: v.prune,
     },
     hosts: {
       ...existingValues?.hosts,
@@ -231,6 +232,7 @@ export function transformDownAutopilot(
     )
   )
   const storageTB = bytesToTB(new BigNumber(config.contracts.storage))
+  const prune = config.contracts.prune
 
   return {
     // contracts
@@ -242,6 +244,7 @@ export function transformDownAutopilot(
     downloadTBMonth,
     uploadTBMonth,
     storageTB,
+    prune,
     // hosts
     allowRedundantIPs: config.hosts.allowRedundantIPs,
     maxDowntimeHours: new BigNumber(config.hosts.maxDowntimeHours),

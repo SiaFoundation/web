@@ -2,7 +2,6 @@ import {
   EntityListItemProps,
   daysInMilliseconds,
   getTransactionType,
-  hoursInMilliseconds,
   secondsInMilliseconds,
   useDatasetEmptyState,
 } from '@siafoundation/design-system'
@@ -112,8 +111,8 @@ function useTransactionsMain() {
     filters
   )
 
-  const periods = 24
-  const intervalMs = hoursInMilliseconds(1)
+  const periods = 30
+  const intervalMs = daysInMilliseconds(1)
   const start = useMemo(() => {
     const today = new Date().getTime()
     const periodsInMs = periods * intervalMs

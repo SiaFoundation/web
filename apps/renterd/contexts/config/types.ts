@@ -13,6 +13,7 @@ export const defaultAutopilot = {
   downloadTBMonth: undefined as BigNumber | undefined,
   uploadTBMonth: undefined as BigNumber | undefined,
   storageTB: undefined as BigNumber | undefined,
+  prune: true,
   // hosts
   allowRedundantIPs: false,
   maxDowntimeHours: undefined as BigNumber | undefined,
@@ -98,6 +99,7 @@ export function getAdvancedDefaultAutopilot(
           maxDowntimeHours: new BigNumber(336),
           minRecentScanFailures: new BigNumber(10),
           defragThreshold: new BigNumber(1000),
+          prune: true,
         }
       : {
           periodWeeks: new BigNumber(6),
@@ -108,6 +110,7 @@ export function getAdvancedDefaultAutopilot(
           maxDowntimeHours: new BigNumber(336),
           minRecentScanFailures: new BigNumber(10),
           defragThreshold: new BigNumber(1000),
+          prune: true,
         }),
   }
 }
