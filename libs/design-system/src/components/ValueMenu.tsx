@@ -1,7 +1,7 @@
 import { Text } from '../core/Text'
 import { Link } from '../core/Link'
 import { stripPrefix } from '../lib/utils'
-import { EntityType } from '../lib/entityTypes'
+import { EntityType, getEntityDisplayLength } from '../lib/entityTypes'
 import { cx } from 'class-variance-authority'
 
 type Props = {
@@ -30,7 +30,7 @@ export function ValueMenu({
   menu,
   className,
 }: Props) {
-  const maxLength = customMaxLength || (type === 'ip' ? 20 : 12)
+  const maxLength = customMaxLength || getEntityDisplayLength(type)
   const cleanValue = stripPrefix(value)
   const renderValue = displayValue || cleanValue
 

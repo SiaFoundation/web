@@ -8,6 +8,7 @@ import { useWalletAddresses } from '@siafoundation/react-walletd'
 import { createContext, useContext, useMemo } from 'react'
 import {
   AddressData,
+  CellContext,
   columnsDefaultVisible,
   defaultSortField,
   sortOptions,
@@ -15,6 +16,7 @@ import {
 import { columns } from './columns'
 import { useRouter } from 'next/router'
 import { useDialog } from '../dialog'
+import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 
 export function useAddressesMain() {
   const { openDialog } = useDialog()
@@ -100,12 +102,21 @@ export function useAddressesMain() {
     -1
   )
 
+  const siascanUrl = useSiascanUrl()
+  const cellContext = useMemo<CellContext>(
+    () => ({
+      siascanUrl,
+    }),
+    [siascanUrl]
+  )
+
   return {
     dataState,
     error: response.error,
     datasetCount: datasetFiltered?.length || 0,
     columns: filteredTableColumns,
     dataset: datasetFiltered,
+    cellContext,
     lastIndex,
     configurableColumns,
     enabledColumns,

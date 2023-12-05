@@ -37,6 +37,7 @@ import { useApp } from '../app'
 import { useAppSettings } from '@siafoundation/react-core'
 import { Commands, emptyCommands } from '../../components/Hosts/HostMap/Globe'
 import { useSiaCentralHosts } from '@siafoundation/react-sia-central'
+import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 
 const defaultLimit = 50
 
@@ -240,12 +241,14 @@ function useHostsMain() {
     autopilot.status === 'on' ? autopilotResponse.error : regularResponse.error
   const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
+  const siascanUrl = useSiascanUrl()
   const isAutopilotConfigured = autopilot.state.data?.configured
   const tableContext = useMemo(
     () => ({
       isAutopilotConfigured,
+      siascanUrl,
     }),
-    [isAutopilotConfigured]
+    [isAutopilotConfigured, siascanUrl]
   )
 
   const hostsWithLocation = useMemo(

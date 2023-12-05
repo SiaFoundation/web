@@ -26,6 +26,7 @@ type Context = {
     startHeight: number
     endHeight: number
   }
+  siascanUrl: string
 }
 
 type ContractsTableColumn = TableColumn<
@@ -52,14 +53,15 @@ export const columns: ContractsTableColumn[] = (
       id: 'contractId',
       label: 'contract ID',
       category: 'general',
-      render: ({ data }) => {
+      render: ({ data, context }) => {
         const { id, renewedFrom, isRenewedFrom, renewedTo, isRenewedTo } = data
         return (
           <div className="flex flex-col gap-1 w-full">
             <ValueCopyable
               size="12"
               value={stripPrefix(id)}
-              label="contract ID"
+              type="contract"
+              siascanUrl={context.siascanUrl}
             />
             {isRenewedFrom && (
               <Tooltip content="Renewed from" align="start">
@@ -70,8 +72,9 @@ export const columns: ContractsTableColumn[] = (
                   <ValueCopyable
                     color="subtle"
                     size="10"
+                    type="contract"
                     value={stripPrefix(renewedFrom)}
-                    label="contract ID"
+                    siascanUrl={context.siascanUrl}
                   />
                 </div>
               </Tooltip>
@@ -86,7 +89,8 @@ export const columns: ContractsTableColumn[] = (
                     color="subtle"
                     size="10"
                     value={stripPrefix(renewedTo)}
-                    label="contract ID"
+                    type="contract"
+                    siascanUrl={context.siascanUrl}
                   />
                 </div>
               </Tooltip>

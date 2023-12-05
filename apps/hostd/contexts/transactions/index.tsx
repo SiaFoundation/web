@@ -1,5 +1,5 @@
 import {
-  EntityListItemProps,
+  TxType,
   daysInMilliseconds,
   getTransactionType,
   secondsInMilliseconds,
@@ -14,9 +14,29 @@ import { createContext, useContext, useMemo } from 'react'
 import { useDialog } from '../dialog'
 import BigNumber from 'bignumber.js'
 import { useRouter } from 'next/router'
+import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 
 const defaultLimit = 50
 const filters = []
+
+export type TransactionDataPending = {
+  type: 'transaction'
+  txType: TxType
+  siascanUrl: string
+}
+
+export type TransactionDataConfirmed = {
+  type: 'transaction'
+  txType: TxType
+  hash: string
+  timestamp: number
+  onClick: () => void
+  unconfirmed: boolean
+  sc: BigNumber
+  siascanUrl: string
+}
+
+export type TransactionData = TransactionDataPending | TransactionDataConfirmed
 
 function useTransactionsMain() {
   const router = useRouter()
@@ -42,13 +62,15 @@ function useTransactionsMain() {
   })
 
   const { openDialog } = useDialog()
+  const siascanUrl = useSiascanUrl()
 
-  const dataset: EntityListItemProps[] | null = useMemo(() => {
+  const dataset: TransactionData[] | null = useMemo(() => {
     if (!pending.data || !transactions.data) {
       return null
     }
     return [
-      ...(pending.data || []).map((t): EntityListItemProps => {
+      ...(pending.data || []).map((t): TransactionData => {
+        const notRealTxn = t.source !== 'transaction'
         return {
           type: 'transaction',
           txType: getTransactionType(t.transaction, t.source),
@@ -56,10 +78,12 @@ function useTransactionsMain() {
           timestamp: new Date(t.timestamp).getTime(),
           sc: new BigNumber(t.inflow).minus(t.outflow),
           unconfirmed: true,
+          siascanUrl: notRealTxn ? undefined : siascanUrl,
         }
       }),
       ...(transactions.data || [])
-        .map((t): EntityListItemProps => {
+        .map((t): TransactionData => {
+          const notRealTxn = t.source !== 'transaction'
           return {
             type: 'transaction',
             txType: getTransactionType(t.transaction, t.source),
@@ -67,11 +91,12 @@ function useTransactionsMain() {
             timestamp: new Date(t.timestamp).getTime(),
             onClick: () => openDialog('transactionDetails', t.ID),
             sc: new BigNumber(t.inflow).minus(t.outflow),
+            siascanUrl: notRealTxn ? undefined : siascanUrl,
           }
         })
-        .sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1)),
+        .sort((a, b) => (a['timestamp'] < b['timestamp'] ? 1 : -1)),
     ]
-  }, [pending, transactions, openDialog])
+  }, [pending, transactions, openDialog, siascanUrl])
 
   const dayPeriods = 30
   const start = useMemo(() => {

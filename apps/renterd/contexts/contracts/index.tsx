@@ -20,6 +20,7 @@ import {
 import { columns } from './columns'
 import { useSiaCentralHosts } from '@siafoundation/react-sia-central'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
+import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 
 const defaultLimit = 50
 
@@ -139,6 +140,17 @@ function useContractsMain() {
     filters
   )
 
+  const siascanUrl = useSiascanUrl()
+
+  const cellContext = useMemo(
+    () => ({
+      currentHeight: syncStatus.estimatedBlockHeight,
+      contractsTimeRange,
+      siascanUrl,
+    }),
+    [syncStatus.estimatedBlockHeight, contractsTimeRange, siascanUrl]
+  )
+
   return {
     dataState,
     limit,
@@ -150,11 +162,8 @@ function useContractsMain() {
     datasetFilteredCount: datasetFiltered?.length || 0,
     columns: filteredTableColumns,
     dataset,
+    cellContext,
     datasetPage,
-    cellContext: {
-      currentHeight: syncStatus.estimatedBlockHeight,
-      contractsTimeRange,
-    },
     configurableColumns,
     enabledColumns,
     sortableColumns,

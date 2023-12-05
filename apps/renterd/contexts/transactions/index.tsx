@@ -1,8 +1,9 @@
 import {
-  EntityListItemProps,
+  TxType,
   daysInMilliseconds,
   getTransactionType,
   secondsInMilliseconds,
+  stripPrefix,
   useDatasetEmptyState,
 } from '@siafoundation/design-system'
 import {
@@ -14,9 +15,33 @@ import { createContext, useContext, useMemo } from 'react'
 import { useDialog } from '../dialog'
 import BigNumber from 'bignumber.js'
 import { useRouter } from 'next/router'
+import { useSiascanUrl } from '../../hooks/useSiascanUrl'
+import { Transaction } from '@siafoundation/react-core'
 
 const defaultLimit = 50
 const filters = []
+
+export type TransactionDataPending = {
+  type: 'transaction'
+  txType: TxType
+  siascanUrl: string
+}
+
+export type TransactionDataConfirmed = {
+  type: 'transaction'
+  txType: TxType
+  hash: string
+  timestamp: number
+  onClick: () => void
+  raw: Transaction
+  inflow: string
+  outflow: string
+  unconfirmed: boolean
+  sc: BigNumber
+  siascanUrl: string
+}
+
+export type TransactionData = TransactionDataPending | TransactionDataConfirmed
 
 function useTransactionsMain() {
   const router = useRouter()
@@ -45,12 +70,14 @@ function useTransactionsMain() {
 
   const { openDialog } = useDialog()
 
-  const dataset: EntityListItemProps[] | null = useMemo(() => {
+  const siascanUrl = useSiascanUrl()
+
+  const dataset: TransactionData[] | null = useMemo(() => {
     if (!pending.data || !transactions.data) {
       return null
     }
     return [
-      ...(pending.data || []).map((t): EntityListItemProps => {
+      ...(pending.data || []).map((t): TransactionData => {
         return {
           type: 'transaction',
           txType: getTransactionType(t),
@@ -59,50 +86,28 @@ function useTransactionsMain() {
           // onClick: () => openDialog('transactionDetails', t.ID),
           // sc: totals.sc,
           unconfirmed: true,
+          siascanUrl,
         }
       }),
       ...(transactions.data || [])
-        .map((t): EntityListItemProps => {
+        .map((t): TransactionData => {
           return {
             type: 'transaction',
             txType: getTransactionType(t.raw),
-            hash: t.id,
+            hash: stripPrefix(t.id),
             timestamp: new Date(t.timestamp).getTime(),
-            onClick: () => openDialog('transactionDetails', t.id),
+            onClick: () => openDialog('transactionDetails', stripPrefix(t.id)),
+            raw: t.raw,
+            inflow: t.inflow,
+            outflow: t.outflow,
             sc: new BigNumber(t.inflow).minus(t.outflow),
+            siascanUrl,
           }
         })
-        .sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1)),
+        .sort((a, b) => (a['timestamp'] < b['timestamp'] ? 1 : -1)),
     ]
-  }, [pending.data, transactions.data, openDialog])
+  }, [pending.data, transactions.data, openDialog, siascanUrl])
 
-  // // This now works but the visx chart has an issue where the tooltip does not
-  // // find the correct nearest datum when the data is not at a consistent
-  // // interval due to axis scale issues. renterd needs to return clean data
-  // // like hostd or we need to wait for this issue to be fixed:
-  // // https://github.com/airbnb/visx/issues/1533
-  // // until then renterd will use a line graph which does not have the issue.
-  // const balances = useMemo(
-  //   () =>
-  //     transactions.data
-  //       ?.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1))
-  //       .reduce((acc, t, i) => {
-  //         if (i === 0) {
-  //           return acc.concat({
-  //             sc: new BigNumber(t.inflow).minus(t.outflow).toNumber(),
-  //             timestamp: new Date(t.timestamp).getTime(),
-  //           })
-  //         }
-  //         return acc.concat({
-  //           sc: new BigNumber(acc[i - 1].sc)
-  //             .plus(t.inflow)
-  //             .minus(t.outflow)
-  //             .toNumber(),
-  //           timestamp: new Date(t.timestamp).getTime(),
-  //         })
-  //       }, []),
-  //   [transactions.data]
-  // )
   const error = transactions.error
   const dataState = useDatasetEmptyState(
     dataset,
@@ -127,6 +132,12 @@ function useTransactionsMain() {
       n: periods,
     },
   })
+  // This now works but the visx chart has an issue where the tooltip does not
+  // find the correct nearest datum when the data is not at a consistent
+  // interval due to axis scale issues. renterd needs to return clean data
+  // like hostd or we need to wait for this issue to be fixed:
+  // https://github.com/airbnb/visx/issues/1533
+  // until then renterd will use a line graph which does not have the issue.
   const balances = useMemo(
     () =>
       (metrics.data || [])

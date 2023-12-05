@@ -16,7 +16,7 @@ import {
   CheckboxCheckedFilled16,
 } from '@siafoundation/react-icons'
 import { humanBytes, humanNumber } from '@siafoundation/sia-js'
-import { HostData, TableColumnId } from './types'
+import { HostContext, HostData, TableColumnId } from './types'
 import { format, formatDistance, formatRelative } from 'date-fns'
 import { HostContextMenu } from '../../components/Hosts/HostContextMenu'
 import { useWorkflows } from '@siafoundation/react-core'
@@ -29,11 +29,7 @@ import {
 import BigNumber from 'bignumber.js'
 import React, { memo } from 'react'
 
-type HostsTableColumn = TableColumn<
-  TableColumnId,
-  HostData,
-  { isAutopilotConfigured: boolean }
-> & {
+type HostsTableColumn = TableColumn<TableColumnId, HostData, HostContext> & {
   fixed?: boolean
   category: string
 }
@@ -309,12 +305,12 @@ export const columns: HostsTableColumn[] = (
       id: 'netAddress',
       label: 'address',
       category: 'general',
-      render: ({ data }) => (
+      render: ({ data, context }) => (
         <ValueCopyable
           value={data.netAddress}
-          type="ip"
           size="12"
-          label="host address"
+          type="hostIp"
+          siascanUrl={context.siascanUrl}
         />
       ),
     },
@@ -322,11 +318,12 @@ export const columns: HostsTableColumn[] = (
       id: 'publicKey',
       label: 'public key',
       category: 'general',
-      render: ({ data }) => (
+      render: ({ data, context }) => (
         <ValueCopyable
           value={data.publicKey}
           size="12"
-          label="host public key"
+          type="hostPublicKey"
+          siascanUrl={context.siascanUrl}
         />
       ),
     },
