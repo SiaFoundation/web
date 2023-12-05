@@ -58,6 +58,18 @@ export function BaseNumberField({
         autoComplete="off"
         spellCheck={false}
         onValueChange={onValueChange}
+        transformRawValue={(value) => {
+          if (value.length > 0) {
+            if (value[0] === '.') {
+              return '0.' + value.slice(1)
+            }
+            if (value[0] === ',') {
+              return '0,' + value.slice(1)
+            }
+          }
+
+          return value
+        }}
         className={cx(
           textFieldStyles({
             variant,
