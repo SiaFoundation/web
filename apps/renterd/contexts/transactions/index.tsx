@@ -7,6 +7,7 @@ import {
   useDatasetEmptyState,
 } from '@siafoundation/design-system'
 import {
+  useMetricsContract,
   useMetricsWallet,
   useWalletPending,
   useWalletTransactions,
@@ -143,7 +144,7 @@ function useTransactionsMain() {
       (metrics.data || [])
         .map((t) => {
           return {
-            sc: Number(t.confirmed),
+            sc: new BigNumber(t.spendable).plus(t.unconfirmed).toNumber(),
             timestamp: new Date(t.timestamp).getTime(),
           }
         })
