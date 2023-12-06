@@ -13,7 +13,7 @@ export const defaultAutopilot = {
   downloadTBMonth: undefined as BigNumber | undefined,
   uploadTBMonth: undefined as BigNumber | undefined,
   storageTB: undefined as BigNumber | undefined,
-  prune: true,
+  prune: false,
   // hosts
   allowRedundantIPs: false,
   maxDowntimeHours: undefined as BigNumber | undefined,
