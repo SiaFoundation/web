@@ -635,7 +635,7 @@ type MetricsParams = {
 }
 
 type ContractMetric = {
-  timeStamp: string
+  timestamp: string
   contractID: string
   hostKey: string
   remainingCollateral: string
@@ -649,8 +649,8 @@ type ContractMetric = {
 }
 
 type ContractMetricsParams = MetricsParams & {
-  contractID: string
-  hostKey: string
+  contractID?: string
+  hostKey?: string
 }
 
 export function useMetricsContract(

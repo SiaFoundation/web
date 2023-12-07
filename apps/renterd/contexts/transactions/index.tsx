@@ -7,7 +7,6 @@ import {
   useDatasetEmptyState,
 } from '@siafoundation/design-system'
 import {
-  useMetricsContract,
   useMetricsWallet,
   useWalletPending,
   useWalletTransactions,

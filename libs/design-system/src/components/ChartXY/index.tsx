@@ -21,7 +21,7 @@ export type { Chart, ChartPoint, ChartData, ChartStats, ChartConfig, ChartType }
 
 type Props<Key extends string, Cat extends string> = {
   id: string
-  height: number
+  height: string | number
   data: ChartData<Key>
   isLoading?: boolean
   config: ChartConfig<Key, Cat>
