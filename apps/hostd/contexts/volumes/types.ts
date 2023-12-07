@@ -3,7 +3,6 @@ import BigNumber from 'bignumber.js'
 
 export type VolumeData = {
   id: string
-  ID: number
   localPath: string
   usedSectors: number
   totalSectors: number

@@ -13,10 +13,10 @@ type Props = {
   id: string
   transaction?: {
     txType: TxType
-    inflow: string
-    outflow: string
-    timestamp: string | number
-    raw: Transaction
+    inflow?: string
+    outflow?: string
+    timestamp?: string | number
+    raw?: Transaction
   }
   trigger?: React.ReactNode
   open: boolean
@@ -49,36 +49,44 @@ export function TransactionDetailsDialog({
       {transaction ? (
         <div className="flex flex-col gap-4 pb-10 w-full overflow-hidden">
           <div className="flex flex-wrap gap-4">
-            <div className="flex items-baseline gap-2">
-              <Text>Inflow</Text>
-              <ValueSc value={new BigNumber(transaction?.inflow || 0)} />
-            </div>
-            <div className="flex items-baseline gap-2">
-              <Text>Outflow</Text>
-              <ValueSc
-                value={new BigNumber(transaction?.outflow || 0).negated()}
-              />
-            </div>
-            <div className="flex items-baseline gap-2">
-              <Text>Miner fee</Text>
-              <ValueSc
-                value={
-                  new BigNumber(
-                    transaction?.raw?.minerFees?.reduce(
-                      (acc, val) => acc.plus(val),
-                      new BigNumber(0)
-                    ) || 0
-                  )
-                }
-              />
-            </div>
+            {transaction?.inflow !== undefined && (
+              <div className="flex items-baseline gap-2">
+                <Text>Inflow</Text>
+                <ValueSc value={new BigNumber(transaction?.inflow || 0)} />
+              </div>
+            )}
+            {transaction?.outflow !== undefined && (
+              <div className="flex items-baseline gap-2">
+                <Text>Outflow</Text>
+                <ValueSc
+                  value={new BigNumber(transaction?.outflow || 0).negated()}
+                />
+              </div>
+            )}
+            {transaction?.raw?.minerFees !== undefined && (
+              <div className="flex items-baseline gap-2">
+                <Text>Miner fee</Text>
+                <ValueSc
+                  value={
+                    new BigNumber(
+                      transaction?.raw.minerFees?.reduce(
+                        (acc, val) => acc.plus(val),
+                        new BigNumber(0)
+                      ) || 0
+                    )
+                  }
+                />
+              </div>
+            )}
             <div className="flex-1" />
             <div className="flex items-baseline gap-2">
               <Text>Timestamp</Text>
               <Text>
-                {humanDate(transaction?.timestamp || 0, {
-                  timeStyle: 'short',
-                })}
+                {transaction?.timestamp
+                  ? humanDate(transaction?.timestamp || 0, {
+                      timeStyle: 'short',
+                    })
+                  : 'Unconfirmed'}
               </Text>
             </div>
           </div>

@@ -14,27 +14,20 @@ import {
   getMainnetBlockHeight,
   getTestnetZenBlockHeight,
   delay,
+  FileContractRevision,
+  OutputID,
+  CoveredFields,
+  FileContractID,
+  Block,
 } from '@siafoundation/react-core'
 import {
-  AddObjectRequest,
-  Block,
   ConsensusState,
   Contract,
-  ContractAcquireRequest,
-  ContractAcquireResponse,
-  ContractsIDAddRequest,
-  ContractsIDRenewedRequest,
+  ContractRevision,
   Host,
-  Interaction,
+  HostSettings,
   Obj,
   SiacoinElement,
-  WalletFundRequest,
-  WalletFundResponse,
-  WalletPrepareFormRequest,
-  WalletPrepareRenewRequest,
-  WalletPrepareRenewResponse,
-  WalletRedistributeRequest,
-  WalletSignRequest,
   WalletTransaction,
 } from './siaTypes'
 
@@ -196,16 +189,38 @@ export function useWalletUtxos(args?: HookArgsSwr<void, SiacoinElement[]>) {
   return useGetSwr({ ...args, route: '/bus/wallet/outputs' })
 }
 
+export type WalletFundRequest = {
+  transaction: Transaction
+  amount: Currency
+}
+
+export type WalletFundResponse = {
+  transaction: Transaction
+  toSign?: OutputID[]
+  dependsOn?: Transaction[]
+}
+
 export function useWalletFund(
   args?: HookArgsCallback<void, WalletFundRequest, WalletFundResponse>
 ) {
   return usePostFunc({ ...args, route: '/bus/wallet/fund' })
 }
 
+export type WalletSignRequest = {
+  transaction: Transaction
+  toSign?: OutputID[]
+  coveredFields: CoveredFields
+}
+
 export function useWalletSign(
   args?: HookArgsCallback<void, WalletSignRequest, Transaction>
 ) {
   return usePostFunc({ ...args, route: '/bus/wallet/sign' })
+}
+
+export type WalletRedistributeRequest = {
+  amount: Currency
+  outputs: number
 }
 
 export function useWalletRedistribute(
@@ -220,10 +235,35 @@ export function useWalletDiscard(
   return usePostFunc({ ...args, route: '/bus/wallet/discard' })
 }
 
+export type WalletPrepareFormRequest = {
+  renterKey?: string
+  hostKey: string
+  renterFunds: Currency
+  renterAddress: string
+  hostCollateral: Currency
+  endHeight: number
+  hostSettings: HostSettings
+}
+
 export function useWalletPrepareForm(
   args?: HookArgsCallback<void, WalletPrepareFormRequest, Transaction[]>
 ) {
   return usePostFunc({ ...args, route: '/bus/wallet/prepare/form' })
+}
+
+export type WalletPrepareRenewRequest = {
+  contract: FileContractRevision
+  renterKey?: string
+  hostKey: string
+  renterFunds: Currency
+  renterAddress: string
+  endHeight: number
+  hostSettings: HostSettings
+}
+
+export type WalletPrepareRenewResponse = {
+  transactionSet?: Transaction[]
+  finalPayment: Currency
 }
 
 export function useWalletPrepareRenew(
@@ -292,8 +332,14 @@ export function useHost(args: HookArgsSwr<{ hostKey: string }, Host>) {
   return useGetSwr({ ...args, route: '/bus/host/:hostKey' })
 }
 
+export type HostInteractionPayload = {
+  timestamp: string
+  type: string
+  result?: string
+}
+
 export function useHostsPubkeyInteractionAdd(
-  args: HookArgsCallback<{ hostKey: string }, Interaction, never>
+  args: HookArgsCallback<{ hostKey: string }, HostInteractionPayload, never>
 ) {
   return usePostFunc({
     ...args,
@@ -367,6 +413,14 @@ export function useContracts(args?: HookArgsSwr<void, Contract[]>) {
   return useGetSwr({ ...args, route: contractsActiveRoute })
 }
 
+export type ContractAcquireRequest = {
+  Duration: number
+}
+
+export type ContractAcquireResponse = {
+  locked: boolean
+}
+
 export function useContractsAcquire(
   args: HookArgsCallback<
     { id: string },
@@ -387,10 +441,23 @@ export function useContract(args: HookArgsSwr<{ id: string }, Contract>) {
   return useGetSwr({ ...args, route: '/bus/contract/:id' })
 }
 
+export type ContractsIDAddRequest = {
+  contract: ContractRevision
+  startHeight: number
+  totalCost: Currency
+}
+
 export function useContractCreate(
   args: HookArgsCallback<{ id: string }, ContractsIDAddRequest, Contract>
 ) {
   return usePostFunc({ ...args, route: '/bus/contract/:id/new' })
+}
+
+export type ContractsIDRenewedRequest = {
+  contract: ContractRevision
+  renewedFrom: string
+  startHeight: number
+  totalCost: Currency
 }
 
 export function useContractRenew(
@@ -511,6 +578,11 @@ export function useObjectSearch(
   >
 ) {
   return useGetSwr({ ...args, route: '/bus/search/objects' })
+}
+
+export type AddObjectRequest = {
+  object: Obj
+  usedContracts: { [key: PublicKey]: FileContractID }
 }
 
 export function useObjectAdd(
