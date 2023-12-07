@@ -15,28 +15,25 @@ import { useDialog } from '../dialog'
 import BigNumber from 'bignumber.js'
 import { useRouter } from 'next/router'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
+import { Transaction } from '@siafoundation/react-core'
 
 const defaultLimit = 50
 const filters = []
 
-export type TransactionDataPending = {
-  type: 'transaction'
-  txType: TxType
-  siascanUrl: string
-}
-
-export type TransactionDataConfirmed = {
+export type TransactionData = {
+  id: string
   type: 'transaction'
   txType: TxType
   hash: string
+  inflow: string
+  outflow: string
   timestamp: number
   onClick: () => void
-  unconfirmed: boolean
+  unconfirmed?: boolean
   sc: BigNumber
   siascanUrl: string
+  raw: Transaction
 }
-
-export type TransactionData = TransactionDataPending | TransactionDataConfirmed
 
 function useTransactionsMain() {
   const router = useRouter()
@@ -72,29 +69,39 @@ function useTransactionsMain() {
       ...(pending.data || []).map((t): TransactionData => {
         const notRealTxn = t.source !== 'transaction'
         return {
+          id: t.id,
           type: 'transaction',
-          txType: getTransactionType(t.transaction, t.source),
-          hash: t.ID,
-          timestamp: new Date(t.timestamp).getTime(),
-          sc: new BigNumber(t.inflow).minus(t.outflow),
           unconfirmed: true,
+          txType: getTransactionType(t.transaction, t.source),
+          hash: t.id,
+          inflow: t.inflow,
+          outflow: t.outflow,
+          sc: new BigNumber(t.inflow).minus(t.outflow),
           siascanUrl: notRealTxn ? undefined : siascanUrl,
+          timestamp: new Date(t.timestamp).getTime(),
+          onClick: () => openDialog('transactionDetails', t.id),
+          raw: t.transaction,
         }
       }),
       ...(transactions.data || [])
         .map((t): TransactionData => {
           const notRealTxn = t.source !== 'transaction'
           return {
+            id: t.id,
             type: 'transaction',
+            unconfirmed: false,
             txType: getTransactionType(t.transaction, t.source),
-            hash: t.ID,
-            timestamp: new Date(t.timestamp).getTime(),
-            onClick: () => openDialog('transactionDetails', t.ID),
+            hash: t.id,
+            inflow: t.inflow,
+            outflow: t.outflow,
             sc: new BigNumber(t.inflow).minus(t.outflow),
             siascanUrl: notRealTxn ? undefined : siascanUrl,
+            timestamp: new Date(t.timestamp).getTime(),
+            onClick: () => openDialog('transactionDetails', t.id),
+            raw: t.transaction,
           }
         })
-        .sort((a, b) => (a['timestamp'] < b['timestamp'] ? 1 : -1)),
+        .sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1)),
     ]
   }, [pending, transactions, openDialog, siascanUrl])
 

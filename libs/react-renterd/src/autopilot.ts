@@ -1,4 +1,4 @@
-import { Action, AutopilotConfig, Host } from './siaTypes'
+import { AutopilotConfig, Host } from './siaTypes'
 import { HostsSearchPayload, StateResponse } from './bus'
 import {
   useGetSwr,
@@ -52,15 +52,6 @@ export function useAutopilotConfigUpdate(
       mutate((key) => key === autopilotStateKey)
     }
     func()
-  })
-}
-
-export function useAutopilotActions(
-  args?: HookArgsSwr<{ since?: number; max?: number }, Action[]>
-) {
-  return useGetSwr({
-    ...args,
-    route: '/autopilot/actions',
   })
 }
 

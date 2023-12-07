@@ -27,7 +27,7 @@ describe('data transforms', () => {
           ipv4: false,
           ipv6: false,
           options: {
-            ID: 'ID',
+            id: 'ID',
             secret: 'secret',
             zoneID: 'zone',
           },
@@ -128,7 +128,7 @@ describe('data transforms', () => {
         ipv4: false,
         ipv6: false,
         options: {
-          ID: 'ID',
+          id: 'ID',
           secret: 'secret',
           zoneID: 'zone',
         },

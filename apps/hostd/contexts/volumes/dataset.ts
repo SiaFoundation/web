@@ -23,8 +23,7 @@ export function useDataset({
 
 function getFields(c: VolumeMeta): VolumeData {
   return {
-    id: String(c.ID),
-    ID: c.ID,
+    id: String(c.id),
     localPath: c.localPath,
     usedSectors: c.usedSectors,
     usedBytes: new BigNumber(c.usedSectors).times(MiBToBytes(4)).toNumber(),

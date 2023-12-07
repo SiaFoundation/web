@@ -45,7 +45,7 @@ export function transformUp(
   // DNS AWS
   if (values.dnsProvider === 'route53') {
     dnsOptions = {
-      ID: values.dnsAwsId,
+      id: values.dnsAwsId,
       secret: values.dnsAwsSecret,
       zoneID: values.dnsAwsZoneId,
     } as DNSAWSOptions
@@ -144,7 +144,7 @@ export function transformDown(s: HostSettings): SettingsData {
   // DNS AWS
   if (s.ddns.provider === 'route53') {
     dnsOptions = {
-      dnsAwsId: s.ddns.options['ID'],
+      dnsAwsId: s.ddns.options['id'],
       dnsAwsSecret: s.ddns.options['secret'],
       dnsAwsZoneId: s.ddns.options['zoneID'],
     }

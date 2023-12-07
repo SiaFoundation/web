@@ -81,9 +81,9 @@ function useTransactionsMain() {
         return {
           type: 'transaction',
           txType: getTransactionType(t),
-          // hash: t.ID,
+          // hash: t.id,
           // timestamp: new Date(t.Timestamp).getTime(),
-          // onClick: () => openDialog('transactionDetails', t.ID),
+          // onClick: () => openDialog('transactionDetails', t.id),
           // sc: totals.sc,
           unconfirmed: true,
           siascanUrl,

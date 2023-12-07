@@ -1,16 +1,13 @@
-import { Currency, Hash256 } from '@siafoundation/react-core'
-
-export type BlockHeight = number
-export type SiacoinOutputID = Hash256
-export type SiafundOutputID = Hash256
-export type Address = string
-
-// TODO: synchronize with other daemons and react-core
-
-export type ChainIndex = {
-  height: number
-  ID: string
-}
+import {
+  Currency,
+  ChainIndex,
+  Transaction,
+  Address,
+  SiacoinElement,
+  SiafundElementAndClaim,
+  SiafundElement,
+  FileContractElement,
+} from '@siafoundation/react-core'
 
 export type ConsensusNetwork = {
   name: 'mainnet' | 'zen'
@@ -78,105 +75,6 @@ export type GatewayPeer = {
   connectedSince: string
   syncedBlocks: number
   syncDuration: number
-}
-
-export type UnlockConditions = {
-  timelock: number
-  publicKeys?: string[]
-  signaturesRequired: number
-}
-
-export type SiacoinInput = {
-  parentID: string
-  unlockConditions: UnlockConditions
-}
-
-export type SiacoinOutput = {
-  value: string
-  address: string
-}
-
-export type SiafundInput = {
-  parentID: string
-  unlockConditions: UnlockConditions
-  claimAddress: string
-}
-
-export type SiafundOutput = {
-  value: number
-  address: string
-}
-
-export type SiacoinElement = {
-  id: string
-  leafIndex: number
-  merkleProof: string[] | null
-  siacoinOutput: SiacoinOutput
-  maturityHeight: number
-}
-
-export type SiafundElement = {
-  id: string
-  leafIndex: number
-  merkleProof: string[] | null
-  siafundOutput: SiafundOutput
-  claimStart: string
-}
-
-export type SiafundElementAndClaim = {
-  siafundElement: SiafundElement
-  claimElement: SiacoinElement
-}
-
-export type TransactionSignature = {
-  parentID: string
-  publicKeyIndex: number
-  timelock: number
-  coveredFields: CoveredFields
-  signature?: string
-}
-
-export type CoveredFields = {
-  wholeTransaction: boolean
-  siacoinInputs?: number[]
-  siacoinOutputs?: number[]
-  fileContracts?: number[]
-  fileContractRevisions?: number[]
-  storageProofs?: number[]
-  siafundInputs?: number[]
-  siafundOutputs?: number[]
-  minerFees?: number[]
-  arbitraryData?: number[]
-  signatures?: number[]
-}
-
-export interface Transaction {
-  siacoinInputs?: SiacoinInput[]
-  siacoinOutputs?: SiacoinOutput[]
-  siafundInputs?: SiafundInput[]
-  siafundOutputs?: SiafundOutput[]
-  minerFees?: Currency[]
-  arbitraryData?: string[]
-  signatures?: TransactionSignature[]
-}
-
-export type FileContract = {
-  filesize: number
-  fileMerkleRoot: string
-  windowStart: number
-  windowEnd: number
-  payout: string
-  validProofOutputs: SiacoinOutput[]
-  missedProofOutputs: SiacoinOutput[]
-  unlockHash: string
-  revisionNumber: number
-}
-
-export type FileContractElement = {
-  id: string
-  leafIndex: number
-  merkleProof: string[] | null
-  fileContract: FileContract
 }
 
 export type PoolTransaction = {

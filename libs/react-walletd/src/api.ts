@@ -10,18 +10,18 @@ import {
   getTestnetZenBlockHeight,
   useDeleteFunc,
   Currency,
-} from '@siafoundation/react-core'
-import {
   BlockHeight,
   ChainIndex,
+  SiacoinOutputID,
+  SiafundOutputID,
+  SiacoinElement,
+  SiafundElement,
+  Transaction,
+} from '@siafoundation/react-core'
+import {
   ConsensusState,
   ConsensusNetwork,
   PoolTransaction,
-  SiacoinElement,
-  SiacoinOutputID,
-  SiafundElement,
-  SiafundOutputID,
-  Transaction,
   WalletEvent,
   GatewayPeer,
 } from './siaTypes'

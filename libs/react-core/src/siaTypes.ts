@@ -2,60 +2,50 @@ export type ID = string
 export type Hash256 = string
 export type Signature = string
 export type Currency = string
+export type BlockHeight = number
 export type Hash = string
 export type OutputID = string
 export type EncryptionKey = string
 export type FileContractID = string
 export type PublicKey = string
 export type TransactionID = string
+export type SiacoinOutputID = Hash256
+export type SiafundOutputID = Hash256
+export type Address = string
 
-export interface SiaPublicKey {
-  Algorithm: string
-  Key?: string
+export type SiaPublicKey = {
+  algorithm: string
+  key?: string
 }
 
-export interface UnlockConditions {
-  Timelock: number
-  PublicKeys?: SiaPublicKey[]
-  SignaturesRequired: number
+export type UnlockConditions = {
+  timelock: number
+  publicKeys?: SiaPublicKey[]
+  signaturesRequired: number
 }
 
-export interface FileContractRevision {
-  ParentID: string
-  UnlockConditions: UnlockConditions
-  RevisionNumber: number
-  Filesize: number
-  FileMerkleRoot: string
-  WindowStart: number
-  WindowEnd: number
-  ValidProofOutputs?: SiacoinOutput[]
-  MissedProofOutputs?: SiacoinOutput[]
-  UnlockHash: string
+export type FileContractRevision = {
+  parentID: string
+  unlockConditions: UnlockConditions
+  revisionNumber: number
+  filesize: number
+  fileMerkleRoot: string
+  windowStart: number
+  windowEnd: number
+  validProofOutputs?: SiacoinOutput[]
+  missedProofOutputs?: SiacoinOutput[]
+  unlockHash: string
 }
 
-export interface CoveredFields {
-  WholeTransaction: boolean
-  SiacoinInputs?: number[]
-  SiacoinOutputs?: number[]
-  FileContracts?: number[]
-  FileContractRevisions?: number[]
-  StorageProofs?: number[]
-  SiafundInputs?: number[]
-  SiafundOutputs?: number[]
-  MinerFees?: number[]
-  ArbitraryData?: number[]
-  Signatures?: number[]
+export type TransactionSignature = {
+  parentID: string
+  publicKeyIndex: number
+  timelock: number
+  coveredFields: CoveredFields
+  signature?: string
 }
 
-export interface TransactionSignature {
-  ParentID: string
-  PublicKeyIndex: number
-  Timelock: number
-  CoveredFields: CoveredFields
-  Signature?: string
-}
-
-export interface SiacoinInput {
+export type SiacoinInput = {
   parentID: string
   unlockConditions: UnlockConditions
 }
@@ -65,36 +55,78 @@ export type SiacoinOutput = {
   address: string
 }
 
-export interface FileContract {
-  Filesize: number
-  FileMerkleRoot: string
-  WindowStart: number
-  WindowEnd: number
-  Payout: Currency
-  ValidProofOutputs?: SiacoinOutput[]
-  MissedProofOutputs?: SiacoinOutput[]
-  UnlockHash: string
-  RevisionNumber: number
+export type SiacoinElement = {
+  id: string
+  leafIndex: number
+  merkleProof: string[] | null
+  siacoinOutput: SiacoinOutput
+  maturityHeight: number
 }
 
-export interface StorageProof {
-  ParentID: string
-  Segment: string
-  Hashset?: Hash[]
+export type SiafundElement = {
+  id: string
+  leafIndex: number
+  merkleProof: string[] | null
+  siafundOutput: SiafundOutput
+  claimStart: string
 }
 
-export interface SiafundInput {
+export type SiafundElementAndClaim = {
+  siafundElement: SiafundElement
+  claimElement: SiacoinElement
+}
+
+export type CoveredFields = {
+  wholeTransaction: boolean
+  siacoinInputs?: number[]
+  siacoinOutputs?: number[]
+  fileContracts?: number[]
+  fileContractRevisions?: number[]
+  storageProofs?: number[]
+  siafundInputs?: number[]
+  siafundOutputs?: number[]
+  minerFees?: number[]
+  arbitraryData?: number[]
+  signatures?: number[]
+}
+
+export type FileContractElement = {
+  id: string
+  leafIndex: number
+  merkleProof: string[] | null
+  fileContract: FileContract
+}
+
+export type FileContract = {
+  filesize: number
+  fileMerkleRoot: string
+  windowStart: number
+  windowEnd: number
+  payout: Currency
+  validProofOutputs?: SiacoinOutput[]
+  missedProofOutputs?: SiacoinOutput[]
+  unlockHash: string
+  revisionNumber: number
+}
+
+export type StorageProof = {
+  parentID: string
+  segment: string
+  hashset?: Hash[]
+}
+
+export type SiafundInput = {
   parentID: string
   unlockConditions: UnlockConditions
-  claimUnlockHash: string
+  claimAddress: string
 }
 
-export interface SiafundOutput {
+export type SiafundOutput = {
   value: number
   address: string
 }
 
-export interface Transaction {
+export type Transaction = {
   siacoinInputs?: SiacoinInput[]
   siacoinOutputs?: SiacoinOutput[]
   fileContracts?: FileContract[]
@@ -107,26 +139,15 @@ export interface Transaction {
   transactionSignatures?: TransactionSignature[]
 }
 
-export interface Block {
-  ParentID: string
-  Nonce: string
-  Timestamp: number
-  MinerPayouts?: SiacoinOutput[]
-  Transactions?: Transaction[]
+export type Block = {
+  parentID: string
+  nonce: string
+  timestamp: number
+  minerPayouts?: SiacoinOutput[]
+  transactions?: Transaction[]
 }
 
-export interface ChainIndex {
-  Height: number
-  ID: string
-}
-
-export interface SiaPublicKey {
-  Algorithm: string
-  Key?: string
-}
-
-export interface UnlockConditions {
-  Timelock: number
-  PublicKeys?: SiaPublicKey[]
-  SignaturesRequired: number
+export type ChainIndex = {
+  height: number
+  id: string
 }
