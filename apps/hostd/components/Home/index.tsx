@@ -19,7 +19,7 @@ import { useDialog } from '../../contexts/dialog'
 import { DataTimeSpan, dataTimeSpanOptions } from '../../contexts/metrics/types'
 import { HomeOperations } from './HomeOperations'
 import { HomeBandwidth } from './HomeBandwidth'
-import { humanDate } from '@siafoundation/sia-js'
+import { humanDate } from '@siafoundation/units'
 import { HomeCollateral } from './HomeCollateral'
 
 export function Home() {

@@ -1,17 +1,21 @@
 import { useMemo } from 'react'
 import {
   Button,
-  monthsToBlocks,
-  TBToBytes,
   Text,
   Tooltip,
   countryCodeEmoji,
 } from '@siafoundation/design-system'
-import { humanBytes, humanSiacoin } from '@siafoundation/sia-js'
 import { cx } from 'class-variance-authority'
 import BigNumber from 'bignumber.js'
 import { SiaCentralHost } from '@siafoundation/sia-central'
-import { getDownloadSpeed, getUploadSpeed } from '@siafoundation/units'
+import {
+  monthsToBlocks,
+  TBToBytes,
+  humanBytes,
+  humanSiacoin,
+  getDownloadSpeed,
+  getUploadSpeed,
+} from '@siafoundation/units'
 
 type Host = SiaCentralHost
 

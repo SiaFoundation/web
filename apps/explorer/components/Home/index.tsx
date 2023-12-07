@@ -6,7 +6,6 @@ import {
   Tooltip,
   EntityList,
 } from '@siafoundation/design-system'
-import { humanBytes, humanNumber } from '@siafoundation/sia-js'
 import { useMemo } from 'react'
 import { routes } from '../../config/routes'
 import { ContentLayout } from '../ContentLayout'
@@ -19,6 +18,8 @@ import {
 } from '@siafoundation/sia-central'
 import { hashToAvatar } from '../../lib/avatar'
 import {
+  humanBytes,
+  humanNumber,
   getDownloadCost,
   getStorageCost,
   getUploadCost,

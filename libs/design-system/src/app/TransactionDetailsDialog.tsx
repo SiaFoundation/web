@@ -1,7 +1,7 @@
 import { Codeblock } from '../core/Codeblock'
 import { Text } from '../core/Text'
 import { ValueSc } from '../components/ValueSc'
-import { humanDate } from '@siafoundation/sia-js'
+import { humanDate } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { Dialog } from '../core/Dialog'
 import { getTitleId } from '../lib/utils'

@@ -46,8 +46,6 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 - [@siafoundation/react-walletd](libs/react-walletd) - React hooks for interacting with `walletd`.
 - [@siafoundation/react-sia-central](libs/react-sia-central) - React hooks for interacting with the Sia Central API.
 - [@siafoundation/sia-central](libs/sia-central) - Methods and types for interacting with the Sia Central API.
-- [@siafoundation/sia-js](libs/sia-js) - Core Sia types and library methods for v1 `siad`.
-- [@siafoundation/sia-nodejs](libs/sia-nodejs) - Sia NodeJS client for controlling a v1 `siad`.
 - [@siafoundation/design-system](libs/design-system) - React-based design system used across Sia apps and websites.
 - [@siafoundation/data-sources](libs/data-sources) - Data sources used for stats on the website.
 - [@siafoundation/fonts](libs/fonts) - Next font configuration for use across apps.

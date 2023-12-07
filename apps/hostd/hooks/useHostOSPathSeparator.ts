@@ -9,5 +9,5 @@ export function useHostOSPathSeparator() {
       },
     },
   })
-  return state.data?.OS === 'windows' ? '\\' : '/'
+  return state.data?.os === 'windows' ? '\\' : '/'
 }

@@ -1,6 +1,6 @@
 import { Warning16 } from '@siafoundation/react-icons'
 import { Panel, Separator, Text, Tooltip } from '@siafoundation/design-system'
-import { humanSiacoin, humanSiafund } from '@siafoundation/sia-js'
+import { humanSiacoin, humanSiafund } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { cx } from 'class-variance-authority'
 

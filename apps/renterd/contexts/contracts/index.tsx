@@ -1,5 +1,4 @@
 import {
-  blockHeightToTime,
   useTableState,
   getContractsTimeRangeBlockHeight,
   useDatasetEmptyState,
@@ -40,7 +39,7 @@ import { columns } from './columns'
 import { useSiaCentralHosts } from '@siafoundation/react-sia-central'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
-import { humanSiacoin } from '@siafoundation/sia-js'
+import { blockHeightToTime, humanSiacoin } from '@siafoundation/units'
 
 const defaultLimit = 50
 

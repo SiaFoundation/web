@@ -1,16 +1,17 @@
 import {
-  bytesToMB,
-  MBToBytes,
-  monthsToBlocks,
-} from '@siafoundation/design-system'
-import {
   DNSAWSOptions,
   DNSCloudflareOptions,
   DNSDuckDNSOptions,
   DNSNoIPOptions,
   HostSettings,
 } from '@siafoundation/react-hostd'
-import { toHastings, toSiacoins } from '@siafoundation/sia-js'
+import {
+  bytesToMB,
+  MBToBytes,
+  monthsToBlocks,
+  toHastings,
+  toSiacoins,
+} from '@siafoundation/units'
 import {
   humanBaseRpcPrice,
   humanEgressPrice,

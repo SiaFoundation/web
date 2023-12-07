@@ -5,11 +5,15 @@ import {
   formatChartData,
   getDataIntervalLabelFormatter,
   getTimeRange,
-  MiBToBytes,
   minutesInMilliseconds,
   ValueScFiat,
 } from '@siafoundation/design-system'
-import { humanBytes, humanNumber, humanSiacoin } from '@siafoundation/sia-js'
+import {
+  MiBToBytes,
+  humanBytes,
+  humanNumber,
+  humanSiacoin,
+} from '@siafoundation/units'
 import { useCallback, useMemo } from 'react'
 import { chartConfigs } from '../../config/charts'
 import { useMetricsPeriod } from '@siafoundation/react-hostd'

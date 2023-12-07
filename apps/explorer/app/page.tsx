@@ -8,7 +8,7 @@ import {
   getSiaCentralHostsNetworkMetrics,
 } from '@siafoundation/sia-central'
 import { buildMetadata } from '../lib/utils'
-import { humanBytes } from '@siafoundation/sia-js'
+import { humanBytes } from '@siafoundation/units'
 import { getLastFewBlocks } from '../lib/blocks'
 
 export function generateMetadata(): Metadata {

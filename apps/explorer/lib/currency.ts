@@ -1,6 +1,6 @@
 import { toFixedOrPrecision } from '@siafoundation/design-system'
 import { CurrencyOption } from '@siafoundation/react-core'
-import { humanSiacoin } from '@siafoundation/sia-js';
+import { humanSiacoin } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 
 const digits = 2

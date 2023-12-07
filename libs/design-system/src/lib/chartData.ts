@@ -1,4 +1,4 @@
-import { humanDate } from '@siafoundation/sia-js'
+import { humanDate } from '@siafoundation/units'
 import { omit } from 'lodash'
 import { ChartPoint } from '../components/ChartXY'
 import {

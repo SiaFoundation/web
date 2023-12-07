@@ -1,5 +1,5 @@
-import { GBToBytes, Text } from '@siafoundation/design-system'
-import { humanBytes } from '@siafoundation/sia-js'
+import { Text } from '@siafoundation/design-system'
+import { GBToBytes, humanBytes } from '@siafoundation/units'
 import { cx } from 'class-variance-authority'
 
 type Props = {

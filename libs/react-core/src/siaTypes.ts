@@ -13,14 +13,14 @@ export type SiacoinOutputID = Hash256
 export type SiafundOutputID = Hash256
 export type Address = string
 
-export type SiaPublicKey = {
-  algorithm: string
-  key?: string
-}
+// export type SiaPublicKey = {
+//   algorithm: string
+//   key?: string
+// }
 
 export type UnlockConditions = {
   timelock: number
-  publicKeys?: SiaPublicKey[]
+  publicKeys?: PublicKey[]
   signaturesRequired: number
 }
 
@@ -136,7 +136,7 @@ export type Transaction = {
   siafundOutputs?: SiafundOutput[]
   minerFees?: Currency[]
   arbitraryData?: string[]
-  transactionSignatures?: TransactionSignature[]
+  signatures?: TransactionSignature[]
 }
 
 export type Block = {

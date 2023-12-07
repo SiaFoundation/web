@@ -10,7 +10,7 @@ import {
 } from '@siafoundation/design-system'
 import { DeviceConnectForm } from '../DeviceConnectForm'
 import { useLedger } from '../../contexts/ledger'
-import { Transaction } from '@siafoundation/react-walletd'
+import { Transaction } from '@siafoundation/react-core'
 import { LedgerSignTxn } from './LedgerSignTxn'
 import { useSign } from './useSign'
 import { useBroadcast } from '../_sharedWalletSend/useBroadcast'

@@ -21,7 +21,7 @@ import { useDialog } from '../contexts/dialog'
 import { useNotEnoughContracts } from './Files/checks/useNotEnoughContracts'
 import { useAutopilotConfig, useWallet } from '@siafoundation/react-renterd'
 import BigNumber from 'bignumber.js'
-import { humanSiacoin } from '@siafoundation/sia-js'
+import { humanSiacoin } from '@siafoundation/units'
 import { useAppSettings } from '@siafoundation/react-core'
 import useLocalStorageState from 'use-local-storage-state'
 

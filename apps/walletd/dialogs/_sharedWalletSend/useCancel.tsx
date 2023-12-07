@@ -1,4 +1,5 @@
-import { useWalletRelease, Transaction } from '@siafoundation/react-walletd'
+import { Transaction } from '@siafoundation/react-core'
+import { useWalletRelease } from '@siafoundation/react-walletd'
 import { useWallets } from '../../contexts/wallets'
 import { useCallback } from 'react'
 import { triggerErrorToast } from '@siafoundation/design-system'

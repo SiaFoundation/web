@@ -1,5 +1,5 @@
 import { getSiaCentralAddress } from '@siafoundation/sia-central'
-import { humanSiacoin, humanSiafund } from '@siafoundation/sia-js'
+import { humanSiacoin, humanSiafund } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { siaCentralApi } from '../../../config'
 import { truncate } from '@siafoundation/design-system'

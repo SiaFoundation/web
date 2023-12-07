@@ -15,7 +15,7 @@ import {
   UndefinedFilled16,
   CheckboxCheckedFilled16,
 } from '@siafoundation/react-icons'
-import { humanBytes, humanNumber } from '@siafoundation/sia-js'
+import { humanBytes, humanNumber } from '@siafoundation/units'
 import { HostContext, HostData, TableColumnId } from './types'
 import { format, formatDistance, formatRelative } from 'date-fns'
 import { HostContextMenu } from '../../components/Hosts/HostContextMenu'

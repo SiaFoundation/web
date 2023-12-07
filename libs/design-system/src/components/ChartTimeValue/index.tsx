@@ -27,7 +27,7 @@ import { Panel } from '../../core/Panel'
 import { getPointTime, getPointValue, Point } from './utils'
 import { useTheme } from 'next-themes'
 import { colors } from '../../config/colors'
-import { humanDate } from '@siafoundation/sia-js'
+import { humanDate } from '@siafoundation/units'
 
 export type { Point }
 

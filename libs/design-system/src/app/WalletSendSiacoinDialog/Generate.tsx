@@ -1,7 +1,7 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import BigNumber from 'bignumber.js'
-import { toHastings } from '@siafoundation/sia-js'
+import { toHastings } from '@siafoundation/units'
 import { Text } from '../../core/Text'
 import { InfoTip } from '../../core/InfoTip'
 import { Switch } from '../../core/Switch'

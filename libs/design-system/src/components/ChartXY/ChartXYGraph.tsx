@@ -9,7 +9,7 @@ import { PatternLines } from '@visx/pattern'
 import { cx } from 'class-variance-authority'
 import { groupBy } from 'lodash'
 import { ChartConfig, ChartPoint } from './types'
-import { humanDate } from '@siafoundation/sia-js'
+import { humanDate } from '@siafoundation/units'
 
 export function ChartXYGraph<Key extends string, Cat extends string>({
   id,

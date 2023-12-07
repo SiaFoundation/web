@@ -1,19 +1,23 @@
 import { useMemo } from 'react'
 import {
   Button,
-  monthsToBlocks,
-  TBToBytes,
   Text,
   countryCodeEmoji,
   LinkButton,
   webLinks,
 } from '@siafoundation/design-system'
-import { humanBytes, humanSiacoin } from '@siafoundation/sia-js'
 import { cx } from 'class-variance-authority'
 import BigNumber from 'bignumber.js'
 import { SiaCentralPartialHost } from '../../content/geoHosts'
 import { Launch16 } from '@carbon/icons-react'
-import { getDownloadSpeed, getUploadSpeed } from '@siafoundation/units'
+import {
+  monthsToBlocks,
+  TBToBytes,
+  humanBytes,
+  humanSiacoin,
+  getDownloadSpeed,
+  getUploadSpeed,
+} from '@siafoundation/units'
 
 type Props = {
   host: SiaCentralPartialHost

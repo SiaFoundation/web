@@ -3,8 +3,6 @@ import {
   triggerSuccessToast,
   triggerErrorToast,
   useOnInvalid,
-  monthsToBlocks,
-  TBToBytes,
   minutesInMilliseconds,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
@@ -22,7 +20,7 @@ import {
   useAutopilotTrigger,
   useBusState,
 } from '@siafoundation/react-renterd'
-import { toSiacoins } from '@siafoundation/sia-js'
+import { monthsToBlocks, TBToBytes, toSiacoins } from '@siafoundation/units'
 import { getFields } from './fields'
 import { SettingsData, defaultValues, getAdvancedDefaults } from './types'
 import {

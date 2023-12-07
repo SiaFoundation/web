@@ -11,7 +11,7 @@ import {
   Separator,
 } from '@siafoundation/design-system'
 import { ArrowUpLeft16 } from '@siafoundation/react-icons'
-import { humanBytes, humanDate } from '@siafoundation/sia-js'
+import { humanBytes, humanDate } from '@siafoundation/units'
 import { ContractData, TableColumnId } from './types'
 import { ContractContextMenu } from '../../components/Contracts/ContractContextMenu'
 import { ContractState } from '@siafoundation/react-renterd'

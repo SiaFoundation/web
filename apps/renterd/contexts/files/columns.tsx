@@ -12,7 +12,7 @@ import {
   FolderIcon,
   Locked16,
 } from '@siafoundation/react-icons'
-import { humanBytes } from '@siafoundation/sia-js'
+import { humanBytes } from '@siafoundation/units'
 import { FileContextMenu } from '../../components/Files/FileContextMenu'
 import { DirectoryContextMenu } from '../../components/Files/DirectoryContextMenu'
 import BigNumber from 'bignumber.js'

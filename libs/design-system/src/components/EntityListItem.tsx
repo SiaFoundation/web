@@ -10,7 +10,7 @@ import {
   getTxTypeLabel,
   TxType,
 } from '../lib/entityTypes'
-import { humanNumber } from '@siafoundation/sia-js'
+import { humanNumber } from '@siafoundation/units'
 import { formatDistance } from 'date-fns'
 import { upperFirst } from 'lodash'
 import BigNumber from 'bignumber.js'

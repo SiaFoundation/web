@@ -1,5 +1,5 @@
 import { cx } from 'class-variance-authority'
-import { blockHeightToTime, blocksToMilliseconds } from '../../lib/blockTime'
+import { blockHeightToTime, blocksToMilliseconds } from '@siafoundation/units'
 import { BlockLabel, DateLabel, RelativeLabel } from './Labels'
 
 type Color = 'blue' | 'green' | 'amber'

@@ -6,7 +6,7 @@ import {
   ValueScFiat,
   ValueSf,
 } from '@siafoundation/design-system'
-import { humanDate } from '@siafoundation/sia-js'
+import { humanDate } from '@siafoundation/units'
 import { CellContext, EventData, TableColumnId } from './types'
 
 type EventsTableColumn = TableColumn<TableColumnId, EventData, CellContext> & {

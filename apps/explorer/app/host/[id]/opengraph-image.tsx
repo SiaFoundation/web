@@ -10,8 +10,8 @@ import {
   getStorageCost,
   getUploadCost,
   getUploadSpeed,
+  humanBytes,
 } from '@siafoundation/units'
-import { humanBytes } from '@siafoundation/sia-js'
 import { truncate } from '@siafoundation/design-system'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
 

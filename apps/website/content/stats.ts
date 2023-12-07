@@ -1,5 +1,5 @@
 import { getGitHub } from '@siafoundation/data-sources'
-import { humanBytes, humanNumber } from '@siafoundation/sia-js'
+import { humanBytes, humanNumber } from '@siafoundation/units'
 import { AsyncReturnType } from '../lib/types'
 import { getCacheValue } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'

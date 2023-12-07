@@ -12,7 +12,7 @@ import {
   WarningFilled16,
 } from '@siafoundation/react-icons'
 import { SiaCentralHost } from '@siafoundation/sia-central'
-import { humanDate } from '@siafoundation/sia-js'
+import { humanDate } from '@siafoundation/units'
 import { formatDistance } from 'date-fns'
 
 type Props = {
