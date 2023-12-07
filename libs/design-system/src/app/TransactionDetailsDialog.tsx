@@ -64,7 +64,7 @@ export function TransactionDetailsDialog({
               <ValueSc
                 value={
                   new BigNumber(
-                    transaction?.raw.minerFees?.reduce(
+                    transaction?.raw?.minerFees?.reduce(
                       (acc, val) => acc.plus(val),
                       new BigNumber(0)
                     ) || 0
