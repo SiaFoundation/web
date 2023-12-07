@@ -4,7 +4,7 @@ import {
   SiafundElement,
   SiafundInput,
   Transaction,
-} from '@siafoundation/react-walletd'
+} from '@siafoundation/react-core'
 import { stripPrefix } from '@siafoundation/design-system'
 import { AddressData } from '../contexts/addresses/types'
 

@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 import { ChartXY, Chart } from '../components/ChartXY'
-import { humanSiacoin } from '@siafoundation/sia-js'
+import { humanSiacoin } from '@siafoundation/units'
 import {
   formatChartData,
   getDataIntervalLabelFormatter,

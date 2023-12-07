@@ -2,7 +2,7 @@
 
 import { Text } from '../core/Text'
 import { Tooltip } from '../core/Tooltip'
-import { humanSiacoin } from '@siafoundation/sia-js'
+import { humanSiacoin } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 
 type Props = {

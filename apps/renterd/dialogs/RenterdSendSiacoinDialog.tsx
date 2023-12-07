@@ -43,7 +43,7 @@ export function RenterdSendSiacoinDialog() {
           transaction: fundResponse.data.transaction,
           toSign: fundResponse.data.toSign,
           coveredFields: {
-            WholeTransaction: true,
+            wholeTransaction: true,
           },
         },
       })

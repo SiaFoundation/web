@@ -12,7 +12,7 @@ import {
   WarningSquareFilled16,
   InProgress16,
 } from '@siafoundation/react-icons'
-import { humanBytes } from '@siafoundation/sia-js'
+import { humanBytes } from '@siafoundation/units'
 import { VolumeContextMenu } from '../../components/Volumes/VolumeContextMenu'
 import { VolumeData, TableColumnId } from './types'
 

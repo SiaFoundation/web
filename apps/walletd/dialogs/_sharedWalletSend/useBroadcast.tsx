@@ -1,4 +1,5 @@
-import { useTxPoolBroadcast, Transaction } from '@siafoundation/react-walletd'
+import { Transaction } from '@siafoundation/react-core'
+import { useTxPoolBroadcast } from '@siafoundation/react-walletd'
 import { useCallback } from 'react'
 
 export function useBroadcast({ cancel }: { cancel: (t: Transaction) => void }) {

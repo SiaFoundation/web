@@ -2,7 +2,7 @@
 
 import BigNumber from 'bignumber.js'
 import { useMemo, useState } from 'react'
-import { toHastings } from '@siafoundation/sia-js'
+import { toHastings } from '@siafoundation/units'
 import { Separator } from '../../core/Separator'
 import { Dialog } from '../../core/Dialog'
 import { useSendSiacoinGenerateForm } from './Generate'

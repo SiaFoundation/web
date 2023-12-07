@@ -1,4 +1,4 @@
-import { daysToBlocks } from './blockTime'
+import { daysToBlocks } from '@siafoundation/units'
 import {
   daysInMilliseconds,
   monthsInMilliseconds,

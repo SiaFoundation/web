@@ -5,7 +5,7 @@ import {
   DatumCardConfigurable,
   DatumScrollArea,
 } from '@siafoundation/design-system'
-import { humanBytes } from '@siafoundation/sia-js'
+import { humanBytes } from '@siafoundation/units'
 import { useMetrics } from '../../contexts/metrics'
 
 export function HomeBandwidth() {

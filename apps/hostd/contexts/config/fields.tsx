@@ -1,4 +1,5 @@
-import { blocksToMonths, ConfigFields } from '@siafoundation/design-system'
+import { blocksToMonths } from '@siafoundation/units'
+import { ConfigFields } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { dnsProviderOptions, initialValues, scDecimalPlaces } from './types'
 import { SiaCentralExchangeRates } from '@siafoundation/sia-central'

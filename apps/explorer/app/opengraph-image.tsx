@@ -4,7 +4,7 @@ import {
 } from '@siafoundation/sia-central'
 import { getOGImage } from '../components/OGImage'
 import { network, siaCentralApi } from '../config'
-import { humanBytes } from '@siafoundation/sia-js'
+import { humanBytes } from '@siafoundation/units'
 import { PreviewValue } from '../components/OGImage/Preview'
 
 export const revalidate = 0

@@ -5,7 +5,7 @@ import {
   Tooltip,
 } from '@siafoundation/design-system'
 import { useObjectStats } from '@siafoundation/react-renterd'
-import { humanBytes } from '@siafoundation/sia-js'
+import { humanBytes } from '@siafoundation/units'
 
 export function FilesStatsMenuSize() {
   const stats = useObjectStats({

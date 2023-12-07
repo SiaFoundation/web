@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import BigNumber from 'bignumber.js'
-import { isValidAddress, toHastings } from '@siafoundation/sia-js'
+import { isValidAddress, toHastings } from '@siafoundation/units'
 import {
   Text,
   InfoTip,

@@ -5,7 +5,7 @@ import {
   DatumCardConfigurable,
   DatumScrollArea,
 } from '@siafoundation/design-system'
-import { humanNumber } from '@siafoundation/sia-js'
+import { humanNumber } from '@siafoundation/units'
 import { useMetrics } from '../../contexts/metrics'
 
 export function HomeOperations() {

@@ -1,8 +1,6 @@
 import {
   Paragraph,
   Dialog,
-  bytesToGB,
-  GBToBytes,
   GBToSectors,
   triggerErrorToast,
   triggerSuccessToast,
@@ -13,7 +11,7 @@ import {
   useOnInvalid,
 } from '@siafoundation/design-system'
 import { useSystemDirectory, useVolumeCreate } from '@siafoundation/react-hostd'
-import { humanBytes } from '@siafoundation/sia-js'
+import { bytesToGB, GBToBytes, humanBytes } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'

@@ -13,8 +13,8 @@ import {
   blocksToWeeks,
   monthsToBlocks,
   weeksToBlocks,
-} from '@siafoundation/design-system'
-import { toHastings } from '@siafoundation/sia-js'
+  toHastings,
+} from '@siafoundation/units'
 
 describe('tansforms', () => {
   describe('down', () => {

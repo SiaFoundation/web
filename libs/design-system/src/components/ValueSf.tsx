@@ -2,7 +2,7 @@
 
 import { Text } from '../core/Text'
 import { Tooltip } from '../core/Tooltip'
-import { humanNumber } from '@siafoundation/sia-js'
+import { humanNumber } from '@siafoundation/units'
 
 type Props = {
   size?: React.ComponentProps<typeof Text>['size']

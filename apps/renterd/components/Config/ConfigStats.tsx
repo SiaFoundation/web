@@ -1,12 +1,11 @@
 import {
   Text,
-  TBToBytes,
   ValueSc,
   ValueNum,
   useSiacoinFiat,
   ScrollArea,
 } from '@siafoundation/design-system'
-import { humanBytes, toHastings } from '@siafoundation/sia-js'
+import { TBToBytes, humanBytes, toHastings } from '@siafoundation/units'
 import { useConfig } from '../../contexts/config'
 import { useApp } from '../../contexts/app'
 

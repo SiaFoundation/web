@@ -2,7 +2,7 @@ import {
   SiacoinElement,
   SiafundElement,
   Transaction,
-} from '@siafoundation/react-walletd'
+} from '@siafoundation/react-core'
 import { getWalletWasm } from './wasm'
 import { AddressData } from '../contexts/addresses/types'
 import { LedgerDevice } from '../contexts/ledger/types'

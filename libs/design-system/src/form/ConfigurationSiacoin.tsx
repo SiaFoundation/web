@@ -1,6 +1,6 @@
 import { SiacoinField } from '../core/SiacoinField'
 import { ConfigurationTipNumber } from './ConfigurationTipNumber'
-import { toHastings } from '@siafoundation/sia-js'
+import { toHastings } from '@siafoundation/units'
 import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
 import { FieldLabelAndError } from '../components/Form'
 import { ConfigFields, useRegisterForm } from './configurationFields'

@@ -1,9 +1,10 @@
+import { countryCodeEmoji } from '@siafoundation/design-system'
 import {
   monthsToBlocks,
   TBToBytes,
-  countryCodeEmoji,
-} from '@siafoundation/design-system'
-import { humanBytes, humanSiacoin } from '@siafoundation/sia-js'
+  humanBytes,
+  humanSiacoin,
+} from '@siafoundation/units'
 import { SiaCentralPartialHost } from '../../content/geoHosts'
 import BigNumber from 'bignumber.js'
 

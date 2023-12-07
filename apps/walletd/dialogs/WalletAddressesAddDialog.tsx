@@ -13,7 +13,7 @@ import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialogFormHelpers } from '../hooks/useDialogFormHelpers'
 import { useWallets } from '../contexts/wallets'
-import { isValidAddress } from '@siafoundation/sia-js'
+import { isValidAddress } from '@siafoundation/units'
 import { uniq } from 'lodash'
 
 export type WalletAddressesAddDialogParams = {

@@ -6,15 +6,14 @@ import {
   SiaCentralHost,
 } from '@siafoundation/sia-central'
 import { DatumProps, ExplorerDatum } from '../ExplorerDatum'
+import { Panel, toFixedOrPrecision } from '@siafoundation/design-system'
+import BigNumber from 'bignumber.js'
 import {
-  Panel,
   blocksToDays,
   blocksToMonths,
-  toFixedOrPrecision,
-} from '@siafoundation/design-system'
-import BigNumber from 'bignumber.js'
-import { humanBytes, humanSiacoin, toSiacoins } from '@siafoundation/sia-js'
-import {
+  humanBytes,
+  humanSiacoin,
+  toSiacoins,
   getDownloadCost,
   getStorageCost,
   getUploadCost,

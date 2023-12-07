@@ -7,7 +7,7 @@ import {
 import { Bullhorn16 } from '@siafoundation/react-icons'
 import { useDialog } from '../../contexts/dialog'
 import { useSettingsAnnounce, useTxPoolFee } from '@siafoundation/react-hostd'
-import { humanSiacoin } from '@siafoundation/sia-js'
+import { humanSiacoin } from '@siafoundation/units'
 import { useCallback } from 'react'
 import BigNumber from 'bignumber.js'
 

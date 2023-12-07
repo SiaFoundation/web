@@ -2,7 +2,7 @@ import {
   getSiaCentralContract,
   getSiaCentralExchangeRates,
 } from '@siafoundation/sia-central'
-import { humanBytes, humanDate } from '@siafoundation/sia-js'
+import { humanBytes, humanDate } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { siaCentralApi } from '../../../config'
 import { truncate } from '@siafoundation/design-system'

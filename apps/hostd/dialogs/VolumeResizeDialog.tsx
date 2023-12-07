@@ -3,8 +3,6 @@ import {
   Text,
   Dialog,
   Code,
-  bytesToGB,
-  GBToBytes,
   sectorsToGB,
   Label,
   GBToSectors,
@@ -20,7 +18,7 @@ import {
   useVolume,
   useVolumeResize,
 } from '@siafoundation/react-hostd'
-import { humanBytes } from '@siafoundation/sia-js'
+import { bytesToGB, GBToBytes, humanBytes } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'

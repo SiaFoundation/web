@@ -1,5 +1,5 @@
 import { Badge, Tooltip, EntityList } from '@siafoundation/design-system'
-import { humanNumber } from '@siafoundation/sia-js'
+import { humanNumber } from '@siafoundation/units'
 import { ExplorerDatum, DatumProps } from '../ExplorerDatum'
 import { useMemo } from 'react'
 import { routes } from '../../config/routes'

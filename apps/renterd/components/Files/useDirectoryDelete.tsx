@@ -7,7 +7,7 @@ import { Delete16 } from '@siafoundation/react-icons'
 import { useDialog } from '../../contexts/dialog'
 import { useCallback } from 'react'
 import { useObjectDelete } from '@siafoundation/react-renterd'
-import { humanBytes } from '@siafoundation/sia-js'
+import { humanBytes } from '@siafoundation/units'
 import { bucketAndKeyParamsFromPath } from '../../contexts/files/paths'
 
 export function useDirectoryDelete() {

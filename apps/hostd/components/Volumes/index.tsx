@@ -1,6 +1,6 @@
 import { Button, Table, Text, Separator } from '@siafoundation/design-system'
 import { Add20 } from '@siafoundation/react-icons'
-import { humanBytes } from '@siafoundation/sia-js'
+import { humanBytes } from '@siafoundation/units'
 import { HostdAuthedLayout } from '../HostdAuthedLayout'
 import { useDialog } from '../../contexts/dialog'
 import { HostdSidenav } from '../HostdSidenav'

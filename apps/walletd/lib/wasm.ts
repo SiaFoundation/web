@@ -1,4 +1,4 @@
-import { Transaction, UnlockConditions } from '@siafoundation/react-walletd'
+import { Transaction, UnlockConditions } from '@siafoundation/react-core'
 import { initWasmGo } from './wasm_exec_mod'
 
 interface WalletWASM {

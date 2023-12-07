@@ -4,7 +4,7 @@ import {
   Paragraph,
   triggerToast,
 } from '@siafoundation/design-system'
-import { toHastings } from '@siafoundation/sia-js'
+import { toHastings } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'

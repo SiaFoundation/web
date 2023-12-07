@@ -1,13 +1,8 @@
 import {
-  blocksToWeeks,
-  bytesToTB,
-  weeksToBlocks,
   daysInNanoseconds,
   minutesInNanoseconds,
-  monthsToBlocks,
   nanosecondsInDays,
   nanosecondsInMinutes,
-  TBToBytes,
   toFixedMax,
 } from '@siafoundation/design-system'
 import {
@@ -17,7 +12,15 @@ import {
   RedundancySettings,
   UploadPackingSettings,
 } from '@siafoundation/react-renterd'
-import { toHastings, toSiacoins } from '@siafoundation/sia-js'
+import {
+  toHastings,
+  toSiacoins,
+  blocksToWeeks,
+  bytesToTB,
+  weeksToBlocks,
+  monthsToBlocks,
+  TBToBytes,
+} from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import {
   AutopilotData,

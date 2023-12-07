@@ -14,7 +14,7 @@ import {
   FieldText,
 } from '@siafoundation/design-system'
 import { useVolume, useVolumeDelete } from '@siafoundation/react-hostd'
-import { humanBytes } from '@siafoundation/sia-js'
+import { humanBytes } from '@siafoundation/units'
 import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../contexts/dialog'

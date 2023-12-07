@@ -1,12 +1,13 @@
+import { countryCodeEmoji } from '@siafoundation/design-system'
+import BigNumber from 'bignumber.js'
+import { SiaCentralPartialHost } from '../../content/geoHosts'
 import {
   monthsToBlocks,
   TBToBytes,
-  countryCodeEmoji,
-} from '@siafoundation/design-system'
-import { humanBytes, humanSiacoin } from '@siafoundation/sia-js'
-import BigNumber from 'bignumber.js'
-import { SiaCentralPartialHost } from '../../content/geoHosts'
-import { getDownloadSpeed } from '@siafoundation/units'
+  humanBytes,
+  humanSiacoin,
+  getDownloadSpeed,
+} from '@siafoundation/units'
 
 export function getHostLabel({
   host,

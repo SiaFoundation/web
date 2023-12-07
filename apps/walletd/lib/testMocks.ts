@@ -1,6 +1,6 @@
 import Sia from '@siacentral/ledgerjs-sia'
 import { LedgerDevice } from '../contexts/ledger/types'
-import { Transaction } from '@siafoundation/react-walletd'
+import { Transaction } from '@siafoundation/react-core'
 
 export function getMockDevice() {
   return {

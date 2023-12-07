@@ -9,7 +9,7 @@ import {
   MiBToBytes,
   TBToBytes,
   TiBToBytes,
-} from './bytes'
+} from '@siafoundation/units'
 
 // function converts sectors to bytes
 export function sectorsToBytes(

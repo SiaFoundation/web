@@ -9,7 +9,7 @@ import {
   ValueScFiat,
 } from '@siafoundation/design-system'
 import { Locked16, Unlocked16, Draggable16 } from '@siafoundation/react-icons'
-import { humanDate } from '@siafoundation/sia-js'
+import { humanDate } from '@siafoundation/units'
 import { humanTimeAndUnits } from '../../lib/time'
 import { walletTypes } from '../../config/walletTypes'
 import { WalletData, TableColumnId } from './types'

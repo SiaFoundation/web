@@ -10,7 +10,7 @@ import {
   useAlerts,
   useAlertsDismiss,
 } from '@siafoundation/react-hostd'
-import { humanTime } from '@siafoundation/sia-js'
+import { humanTime } from '@siafoundation/units'
 import { useCallback } from 'react'
 
 type Props = {

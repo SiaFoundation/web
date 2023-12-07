@@ -10,7 +10,7 @@ import {
   EntityList,
   EntityListItemProps,
 } from '@siafoundation/design-system'
-import { humanNumber } from '@siafoundation/sia-js'
+import { humanNumber } from '@siafoundation/units'
 import { ExplorerDatum, DatumProps } from '../ExplorerDatum'
 import { useMemo, useState } from 'react'
 import { routes } from '../../config/routes'

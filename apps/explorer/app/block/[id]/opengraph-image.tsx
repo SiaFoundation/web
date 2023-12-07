@@ -1,5 +1,5 @@
 import { getSiaCentralBlock } from '@siafoundation/sia-central'
-import { humanDate } from '@siafoundation/sia-js'
+import { humanDate } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { siaCentralApi } from '../../../config'
 import { truncate } from '@siafoundation/design-system'

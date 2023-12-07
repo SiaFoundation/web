@@ -1,4 +1,4 @@
-import { monthsToBlocks, TBToBytes } from '@siafoundation/design-system'
+import { monthsToBlocks, TBToBytes } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 
 export const humanStoragePriceSuffix = '/TB/month'

@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useVolumes, VolumeMeta } from '@siafoundation/react-hostd'
 import { VolumeData } from './types'
 import BigNumber from 'bignumber.js'
-import { MiBToBytes } from '@siafoundation/design-system'
+import { MiBToBytes } from '@siafoundation/units'
 
 export function useDataset({
   response,
