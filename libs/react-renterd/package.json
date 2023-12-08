@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@siafoundation/react-core": "^0.15.0",
+    "@siafoundation/types": "^0.0.1",
     "swr": "^2.1.1",
     "lodash": "^4.17.21"
   },

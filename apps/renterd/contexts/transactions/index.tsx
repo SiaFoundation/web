@@ -16,7 +16,7 @@ import { useDialog } from '../dialog'
 import BigNumber from 'bignumber.js'
 import { useRouter } from 'next/router'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
-import { Transaction } from '@siafoundation/react-core'
+import { Transaction } from '@siafoundation/types'
 
 const defaultLimit = 50
 const filters = []

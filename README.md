@@ -40,7 +40,7 @@ The `explorer` user interface, a Sia blockchain explorer interface that powers [
 
 The Sia web libraries provide developers with convenient TypeScript SDKs for using Sia core types, blockchain utilities, data fetching, daemon-specific React hooks, and components for common functionality such as Siacoin/fiat input fields, transaction lists, files, and more.
 
-- [@siafoundation/react-core](libs/react-core) - Core Sia types and library methods.
+- [@siafoundation/react-core](libs/react-core) - Core library for building React hooks for interacting with a Sia daemon.
 - [@siafoundation/react-renterd](libs/react-renterd) - React hooks for interacting with `renterd`.
 - [@siafoundation/react-hostd](libs/react-hostd) - React hooks for interacting with `hostd`.
 - [@siafoundation/react-walletd](libs/react-walletd) - React hooks for interacting with `walletd`.
@@ -50,6 +50,7 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 - [@siafoundation/data-sources](libs/data-sources) - Data sources used for stats on the website.
 - [@siafoundation/fonts](libs/fonts) - Next font configuration for use across apps.
 - [@siafoundation/units](libs/units) - Methods and types for converting and displaying units.
+- [@siafoundation/types](libs/types) - Core Sia types and library methods.
 
 ## Internal
 

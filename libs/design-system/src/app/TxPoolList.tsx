@@ -1,6 +1,6 @@
 import { EntityList } from '../components/EntityList'
 import { getTransactionTotals, getTransactionType } from '../lib/entityTypes'
-import { Transaction } from '@siafoundation/react-core'
+import { Transaction } from '@siafoundation/types'
 
 type Props = {
   isLoading?: boolean

@@ -3,7 +3,7 @@ import {
   SiacoinElement,
   Transaction,
   SiafundElement,
-} from '@siafoundation/react-core'
+} from '@siafoundation/types'
 import { getWalletWasm } from './wasm'
 import { AddressData } from '../contexts/addresses/types'
 import { addUnlockConditionsAndSignatures, getToSignMetadata } from './sign'

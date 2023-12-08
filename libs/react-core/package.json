@@ -1,6 +1,6 @@
 {
   "name": "@siafoundation/react-core",
-  "description": "Core Sia types and library methods.",
+  "description": "Core library for building React hooks for interacting with a Sia daemon.",
   "version": "0.15.0",
   "license": "MIT",
   "dependencies": {

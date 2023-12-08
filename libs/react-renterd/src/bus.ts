@@ -8,18 +8,20 @@ import {
   HookArgsSwr,
   HookArgsCallback,
   HookArgsWithPayloadSwr,
-  Currency,
-  PublicKey,
-  Transaction,
   getMainnetBlockHeight,
   getTestnetZenBlockHeight,
   delay,
+} from '@siafoundation/react-core'
+import {
+  Currency,
+  PublicKey,
+  Transaction,
   FileContractRevision,
   OutputID,
   CoveredFields,
   FileContractID,
   Block,
-} from '@siafoundation/react-core'
+} from '@siafoundation/types'
 import {
   ConsensusState,
   Contract,

@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@siafoundation/types": ["libs/types/src/index.ts"],
       "@siafoundation/data-sources": ["libs/data-sources/src/index.ts"],
       "@siafoundation/design-system": ["libs/design-system/src/index.ts"],
       "@siafoundation/react-core": ["libs/react-core/src/index.ts"],

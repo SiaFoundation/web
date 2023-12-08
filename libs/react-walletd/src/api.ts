@@ -9,6 +9,8 @@ import {
   getMainnetBlockHeight,
   getTestnetZenBlockHeight,
   useDeleteFunc,
+} from '@siafoundation/react-core'
+import {
   Currency,
   BlockHeight,
   ChainIndex,
@@ -17,7 +19,7 @@ import {
   SiacoinElement,
   SiafundElement,
   Transaction,
-} from '@siafoundation/react-core'
+} from '@siafoundation/types'
 import {
   ConsensusState,
   ConsensusNetwork,

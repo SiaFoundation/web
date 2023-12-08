@@ -7,7 +7,7 @@ import {
   SiafundElementAndClaim,
   SiafundElement,
   FileContractElement,
-} from '@siafoundation/react-core'
+} from '@siafoundation/types'
 
 export type ConsensusNetwork = {
   name: 'mainnet' | 'zen'

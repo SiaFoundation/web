@@ -5,7 +5,7 @@ import { humanDate } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { Dialog } from '../core/Dialog'
 import { getTitleId } from '../lib/utils'
-import { Transaction } from '@siafoundation/react-core'
+import { Transaction } from '@siafoundation/types'
 import { getTxTypeLabel, TxType } from '../lib/entityTypes'
 import { upperFirst } from 'lodash'
 

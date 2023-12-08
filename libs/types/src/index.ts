@@ -13,11 +13,6 @@ export type SiacoinOutputID = Hash256
 export type SiafundOutputID = Hash256
 export type Address = string
 
-// export type SiaPublicKey = {
-//   algorithm: string
-//   key?: string
-// }
-
 export type UnlockConditions = {
   timelock: number
   publicKeys?: PublicKey[]
