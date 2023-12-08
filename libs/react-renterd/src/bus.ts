@@ -702,13 +702,13 @@ export function useSlabObjects(args: HookArgsSwr<{ key: string }, ObjEntry[]>) {
 
 // metrics
 
-type MetricsParams = {
+export type MetricsParams = {
   start: string
   interval: number
   n: number
 }
 
-type ContractMetric = {
+export type ContractMetric = {
   timestamp: string
   contractID: string
   hostKey: string
@@ -722,7 +722,7 @@ type ContractMetric = {
   listSpending: string
 }
 
-type ContractMetricsParams = MetricsParams & {
+export type ContractMetricsParams = MetricsParams & {
   contractID?: string
   hostKey?: string
 }
@@ -733,13 +733,13 @@ export function useMetricsContract(
   return useGetSwr({ ...args, route: '/bus/metric/contract' })
 }
 
-type ContractSetMetric = {
+export type ContractSetMetric = {
   contracts: number
   name: string
   timestamp: string
 }
 
-type ContractSetMetricsParams = MetricsParams & {
+export type ContractSetMetricsParams = MetricsParams & {
   name: string
 }
 
@@ -749,7 +749,7 @@ export function useMetricsContractSet(
   return useGetSwr({ ...args, route: '/bus/metric/contractset' })
 }
 
-type ContractSetChurnMetric = {
+export type ContractSetChurnMetric = {
   direction: string
   contractID: string
   name: string
@@ -757,10 +757,10 @@ type ContractSetChurnMetric = {
   timestamp: string
 }
 
-type ContractSetChurnMetricsParams = MetricsParams & {
+export type ContractSetChurnMetricsParams = MetricsParams & {
   name: string
-  direction: string
-  reason: string
+  direction?: string
+  reason?: string
 }
 
 export function useMetricsContractSetChurn(
@@ -769,14 +769,14 @@ export function useMetricsContractSetChurn(
   return useGetSwr({ ...args, route: '/bus/metric/churn' })
 }
 
-type WalletMetric = {
+export type WalletMetric = {
   timestamp: string
   confirmed: string
   spendable: string
   unconfirmed: string
 }
 
-type WalletMetricsParams = MetricsParams
+export type WalletMetricsParams = MetricsParams
 
 export function useMetricsWallet(
   args: HookArgsSwr<WalletMetricsParams, WalletMetric[]>
@@ -784,7 +784,7 @@ export function useMetricsWallet(
   return useGetSwr({ ...args, route: '/bus/metric/wallet' })
 }
 
-// type PerformanceMetric = {
+// export type PerformanceMetric = {
 //   action: string
 //   hostKey: string
 //   origin: string
@@ -792,7 +792,7 @@ export function useMetricsWallet(
 //   timestamp: string
 // }
 
-// type PerformanceMetricsParams = MetricsParams & {
+// export type PerformanceMetricsParams = MetricsParams & {
 //   action: string
 //   hostKey: string
 //   origin: string

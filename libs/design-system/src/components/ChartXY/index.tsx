@@ -30,6 +30,7 @@ type Props<Key extends string, Cat extends string> = {
   stackOffset?: StackOffset
   actionsRight?: React.ReactNode
   actionsLeft?: React.ReactNode
+  emptyState?: React.ReactNode
   allowConfiguration?: boolean
   variant?: 'panel' | 'ghost'
 }
@@ -42,6 +43,7 @@ export function ChartXY<Key extends string, Cat extends string>({
   actionsLeft,
   isLoading,
   actionsRight,
+  emptyState,
   variant = 'panel',
   allowConfiguration = true,
 }: Props<Key, Cat>) {
@@ -62,6 +64,8 @@ export function ChartXY<Key extends string, Cat extends string>({
             <div className="flex items-center justify-center h-full">
               <LoadingDots className="scale-150" />
             </div>
+          ) : data.length === 0 && emptyState ? (
+            emptyState
           ) : (
             <ChartXYGraph {...props} width={width} height={height} />
           )
