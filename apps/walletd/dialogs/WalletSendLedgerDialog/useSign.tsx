@@ -1,4 +1,4 @@
-import { Transaction } from '@siafoundation/react-core'
+import { Transaction } from '@siafoundation/types'
 import { useWalletOutputs } from '@siafoundation/react-walletd'
 import { useWallets } from '../../contexts/wallets'
 import { useCallback } from 'react'

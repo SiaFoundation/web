@@ -1,4 +1,4 @@
-import { Transaction } from '@siafoundation/react-core'
+import { Transaction } from '@siafoundation/types'
 import { useTxPoolBroadcast } from '@siafoundation/react-walletd'
 import { useCallback } from 'react'
 

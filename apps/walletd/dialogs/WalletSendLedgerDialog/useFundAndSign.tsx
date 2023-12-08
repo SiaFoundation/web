@@ -1,4 +1,4 @@
-import { Transaction } from '@siafoundation/react-core'
+import { Transaction } from '@siafoundation/types'
 import { useCallback } from 'react'
 import { SendParams } from '../_sharedWalletSend/types'
 

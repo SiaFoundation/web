@@ -6,17 +6,19 @@ import {
   HookArgsSwr,
   HookArgsCallback,
   HookArgsWithPayloadSwr,
-  FileContractID,
-  PublicKey,
   getTestnetZenBlockHeight,
   getMainnetBlockHeight,
-  Currency,
   usePutSwr,
   useDeleteFunc,
   delay,
-  TransactionID,
   usePatchFunc,
 } from '@siafoundation/react-core'
+import {
+  FileContractID,
+  PublicKey,
+  Currency,
+  TransactionID,
+} from '@siafoundation/types'
 import useSWR from 'swr'
 import { Contract, ContractStatus, WalletTransaction } from './siaTypes'
 

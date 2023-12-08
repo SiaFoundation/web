@@ -1,5 +1,4 @@
 export * from './types'
-export * from './siaTypes'
 export * from './utils'
 export * from './usePost'
 export * from './usePut'

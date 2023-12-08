@@ -4,7 +4,7 @@ import {
   Signature,
   UnlockConditions,
   SiacoinOutput,
-} from '@siafoundation/react-core'
+} from '@siafoundation/types'
 import {
   ContractFilterSortField,
   ContractStatus,

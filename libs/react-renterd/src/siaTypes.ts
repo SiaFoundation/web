@@ -6,7 +6,7 @@ import {
   EncryptionKey,
   PublicKey,
   TransactionSignature,
-} from '@siafoundation/react-core'
+} from '@siafoundation/types'
 
 export type ConsensusState = {
   blockHeight: number
