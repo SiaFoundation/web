@@ -183,6 +183,11 @@ const dataFields: Record<
         params: {
           key: value,
         },
+        config: {
+          swr: {
+            revalidateOnFocus: false,
+          },
+        },
       })
       return (
         <>

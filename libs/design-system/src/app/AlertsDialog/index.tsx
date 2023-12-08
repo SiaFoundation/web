@@ -99,38 +99,32 @@ export function AlertsDialog({
           </Heading>
           <div className="flex gap-1">
             <Button
+              variant={filter === undefined ? 'accent' : 'gray'}
+              onClick={() => setFilter(undefined)}
+            >
+              all
+            </Button>
+            <Button
               variant={filter === 'info' ? 'accent' : 'gray'}
-              onClick={() =>
-                filter === 'info' ? setFilter(undefined) : setFilter('info')
-              }
+              onClick={() => setFilter('info')}
             >
               info
             </Button>
             <Button
               variant={filter === 'warning' ? 'accent' : 'gray'}
-              onClick={() =>
-                filter === 'warning'
-                  ? setFilter(undefined)
-                  : setFilter('warning')
-              }
+              onClick={() => setFilter('warning')}
             >
               warning
             </Button>
             <Button
               variant={filter === 'error' ? 'accent' : 'gray'}
-              onClick={() =>
-                filter === 'error' ? setFilter(undefined) : setFilter('error')
-              }
+              onClick={() => setFilter('error')}
             >
               error
             </Button>
             <Button
               variant={filter === 'critical' ? 'accent' : 'gray'}
-              onClick={() =>
-                filter === 'critical'
-                  ? setFilter(undefined)
-                  : setFilter('critical')
-              }
+              onClick={() => setFilter('critical')}
             >
               critical
             </Button>
