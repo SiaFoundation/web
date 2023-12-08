@@ -16,7 +16,7 @@ export function FilesHealthColumnContents({
   path,
   isUploading,
   type,
-  health: _health,
+  health,
   size,
 }: ObjectData) {
   const isDirectory = type === 'directory'
@@ -31,7 +31,7 @@ export function FilesHealthColumnContents({
   })
 
   const { displayHealth, label } = useHealthLabel({
-    health: _health,
+    health,
     size,
     isDirectory,
   })
@@ -57,53 +57,43 @@ export function FilesHealthColumnContents({
   const slabs = sortBy(
     obj.data.object.slabs.map((s) => ({
       ...s.slab,
-      contractSetShards: computeSlabContractSetShards({
-        totalShards: s.slab.shards.length,
-        minShards: s.slab.minShards,
-        health: s.slab.health,
-      }),
+      isPartialSlab: !!s.slab.shards,
+      contractSetShards: s.slab.shards?.length
+        ? computeSlabContractSetShards({
+            totalShards: s.slab.shards.length,
+            minShards: s.slab.minShards,
+            health: s.slab.health,
+          })
+        : 0,
     })),
     'contractSetShards'
   )
-
-  const { partialSlab } = obj.data.object
 
   return (
     <Layout
       className={slabs.length > 15 ? 'h-[300px]' : ''}
       displayHealth={displayHealth}
       label={label}
-      minShards={partialSlab ? partialSlab.minShards : slabs[0]?.minShards}
-      totalShards={
-        partialSlab ? partialSlab.totalShards : slabs[0]?.shards.length
-      }
+      minShards={slabs.find((s) => s.minShards)?.minShards}
+      totalShards={slabs.find((s) => s.shards)?.shards.length}
     >
-      {partialSlab ? (
-        <Text
-          size="12"
-          color="verySubtle"
-          className="flex items-center justify-center my-2"
-          font="mono"
-        >
-          partial slab
-        </Text>
-      ) : (
-        slabs.map((slab) => (
-          <div key={slab.key} className="flex justify-between gap-2">
-            <Text
-              size="12"
-              color="subtle"
-              className="flex items-center"
-              font="mono"
-            >
-              Slab {slab.key.replace('key:', '').slice(0, 4)}:
-            </Text>
-            <Text size="12" className="flex items-center">
-              {slab.contractSetShards}/{slab.shards.length}
-            </Text>
-          </div>
-        ))
-      )}
+      {slabs.map((slab) => (
+        <div key={slab.key} className="flex justify-between gap-2">
+          <Text
+            size="12"
+            color="subtle"
+            className="flex items-center"
+            font="mono"
+          >
+            Slab {slab.key.replace('key:', '').slice(0, 4)}:
+          </Text>
+          <Text size="12" className="flex items-center">
+            {slab.isPartialSlab
+              ? `${slab.contractSetShards}/${slab.shards.length}`
+              : 'partial slab'}
+          </Text>
+        </div>
+      ))}
     </Layout>
   )
 }

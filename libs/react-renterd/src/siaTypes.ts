@@ -91,7 +91,8 @@ export type Slab = {
   health: number
   key: EncryptionKey
   minShards: number
-  shards: Sector[]
+  // if no shards, then its a partial slab
+  shards?: Sector[]
 }
 
 export type SlabSlice = {
@@ -105,12 +106,10 @@ export type Obj = {
   size: number
   health: number
   key: EncryptionKey
-  slabs?: SlabSlice[]
-  partialSlab?: {
-    minShards: number
-    totalShards: number
-    data?: string
-  }
+  eTag: string
+  mimeType: string
+  modTime: string
+  slabs: SlabSlice[]
 }
 
 export type ContractSetSettings = {
