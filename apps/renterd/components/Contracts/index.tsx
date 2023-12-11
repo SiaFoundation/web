@@ -26,15 +26,17 @@ export function Contracts() {
     cellContext,
     error,
     viewMode,
+    filters,
     selectedContract,
   } = useContracts()
 
-  const listHeight =
-    viewMode === 'detail'
-      ? datasetPage && datasetPage.length
-        ? `${400 - Math.max((2 - datasetPage.length) * 100, 0)}px`
-        : '400px'
-      : '100%'
+  const showDetailView =
+    viewMode === 'detail' && (!filters.length || selectedContract)
+  const listHeight = showDetailView
+    ? datasetPage && datasetPage.length
+      ? `${400 - Math.max((2 - datasetPage.length) * 100, 0)}px`
+      : '400px'
+    : '100%'
 
   return (
     <RenterdAuthedLayout
@@ -51,15 +53,15 @@ export function Contracts() {
         <div
           className={cx(
             'absolute w-full',
-            viewMode === 'detail' ? 'block' : 'invisible',
+            showDetailView ? 'block' : 'invisible',
             'transition-all',
             'p-6'
           )}
           style={{
-            height: `calc(100% - ${listHeight})`,
+            height: showDetailView ? `calc(100% - ${listHeight})` : 0,
           }}
         >
-          <ContractMetrics />
+          {showDetailView ? <ContractMetrics /> : null}
         </div>
         <div
           className={cx(
@@ -74,10 +76,7 @@ export function Contracts() {
         >
           <ScrollArea className="z-0" id="scroll-hosts">
             <div
-              className={cx(
-                viewMode === 'detail' ? 'pb-6 px-6' : 'p-6',
-                'min-w-fit'
-              )}
+              className={cx(showDetailView ? 'pb-6 px-6' : 'p-6', 'min-w-fit')}
             >
               <Table
                 context={cellContext}
