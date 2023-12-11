@@ -213,12 +213,7 @@ export function getFields({
         </>
       ),
       hidden: !isAutopilotEnabled || !showAdvanced,
-      validation:
-        isAutopilotEnabled && showAdvanced
-          ? {
-              required: 'required',
-            }
-          : {},
+      validation: {},
     },
 
     // hosts
