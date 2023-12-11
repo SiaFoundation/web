@@ -7,12 +7,14 @@ import {
   Text,
   secondsInMilliseconds,
   truncate,
+  copyToClipboard,
 } from '@siafoundation/design-system'
 import {
   Draggable16,
   DataView16,
   ListChecked16,
   Filter16,
+  Copy16,
 } from '@siafoundation/react-icons'
 import {
   useHostsAllowlist,
@@ -172,6 +174,23 @@ export function HostContextMenu({
           Add public key to allowlist
         </DropdownMenuItem>
       )}
+      <DropdownMenuLabel>Copy</DropdownMenuLabel>
+      <DropdownMenuItem
+        onSelect={() => copyToClipboard(publicKey, 'host public key')}
+      >
+        <DropdownMenuLeftSlot>
+          <Copy16 />
+        </DropdownMenuLeftSlot>
+        Host public key
+      </DropdownMenuItem>
+      <DropdownMenuItem
+        onSelect={() => copyToClipboard(address, 'host address')}
+      >
+        <DropdownMenuLeftSlot>
+          <Copy16 />
+        </DropdownMenuLeftSlot>
+        Host address
+      </DropdownMenuItem>
     </DropdownMenu>
   )
 }
