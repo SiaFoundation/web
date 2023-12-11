@@ -704,7 +704,7 @@ function getRedundancyTip(
         </Text>
         <Text color="subtle">
           Redundancy is calculated from the ratio of data shards:{' '}
-          <Code>min shards / total shards</Code>.
+          <Code>total shards / min shards</Code>.
         </Text>
       </div>
     )
