@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.62.1
+
+### Patch Changes
+
+- Updated dependencies [e211222d]
+  - @siafoundation/units@0.2.0
+
 ## 0.62.0
 
 ### Minor Changes
