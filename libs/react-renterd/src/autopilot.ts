@@ -70,18 +70,10 @@ export type AutopilotHost = {
     }
     unusableReasons: string[]
     gougingBreakdown: {
-      v2: {
-        contractErr?: string
-        downloadErr?: string
-        gougingErr?: string
-        uploadErr?: string
-      }
-      v3: {
-        contractErr?: string
-        downloadErr?: string
-        gougingErr?: string
-        uploadErr?: string
-      }
+      contractErr?: string
+      downloadErr?: string
+      gougingErr?: string
+      uploadErr?: string
     }
     gouging: boolean
     usable: boolean
