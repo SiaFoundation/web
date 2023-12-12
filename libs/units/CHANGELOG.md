@@ -1,5 +1,11 @@
 # @siafoundation/units
 
+## 0.2.0
+
+### Minor Changes
+
+- e211222d: Publish new version with updated structure.
+
 ## 0.1.3
 
 ### Patch Changes
