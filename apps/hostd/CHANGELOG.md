@@ -1,5 +1,15 @@
 # hostd
 
+## 0.29.0
+
+### Minor Changes
+
+- 23f4fb47: Copyable entity values now have a context menu with support for opening Siascan pages.
+- 5592bd90: The onboarding wallet balance check is now satisfied by a confirmed or unconfirmed balance above 0 SC.
+- a4d9df51: The onboarding wizard no longer shows on the login page.
+- bfa6b96b: Fixed an issue where number fields would not properly handle user input starting with a decimal separator.
+- 64ca2b2b: The alerts dialog now has an "all" filter.
+
 ## 0.28.0
 
 ### Minor Changes

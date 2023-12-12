@@ -1,5 +1,24 @@
 # renterd
 
+## 0.35.0
+
+### Minor Changes
+
+- 55e1a99f: Fixed an issue with the host interaction values showing as 0s on the host explorer.
+- 23f4fb47: Copyable entity values now have a context menu with support for opening Siascan pages.
+- 49648b5d: The advanced configuration now includes a prune sector roots setting.
+- 42dc75f9: Contracts now have a details view that shows a graph of the contract's daily funding and spending.
+- a64a77a9: The host context menu now has options for copying public key or address to clipboard.
+- 49648b5d: The wallet page now shows the balance evolution again, using the new wallet metrics API.
+- a5c6618b: The contracts feature now includes a graph of aggregate funding and spending across all active contracts.
+- a5c6618b: The contracts feature now includes a contract count graph for the autopilot contract set.
+- a4d9df51: The onboarding wizard no longer shows on the login page.
+- c32dcae5: Fixed an issue with the file health popover and updated it to display more accurate information.
+- ef4fcabc: The redundancy tooltip now correctly describes the ratio as total shards / min shards.
+- bfa6b96b: Fixed an issue where number fields would not properly handle user input starting with a decimal separator.
+- 4eb48496: Fixed an issue with the prune sector roots setting validation.
+- 64ca2b2b: The alerts dialog now has an "all" filter.
+
 ## 0.34.0
 
 ### Minor Changes
