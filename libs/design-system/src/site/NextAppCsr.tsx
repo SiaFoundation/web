@@ -21,7 +21,7 @@ type Props = {
   passwordProtectRequestHooks?: boolean
   fallback?: Record<string, unknown>
   children: React.ReactNode
-  lockRoutes: { home: string; login: string }
+  lockRoutes?: { home: string; login: string }
 }
 
 export function NextAppCsr({
