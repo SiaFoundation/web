@@ -1,5 +1,11 @@
 # walletd
 
+## 0.15.0
+
+### Minor Changes
+
+- 23f4fb47: Copyable entity values now have a context menu with support for opening Siascan pages.
+
 ## 0.14.0
 
 ### Minor Changes

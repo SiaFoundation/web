@@ -1,5 +1,13 @@
 # @siafoundation/react-renterd
 
+## 0.12.0
+
+### Minor Changes
+
+- 55e1a99f: Update host interaction type casing.
+- c9baf5e2: Add metrics APIs.
+- c32dcae5: Updated the object partial slab response structure.
+
 ## 0.11.0
 
 ### Minor Changes

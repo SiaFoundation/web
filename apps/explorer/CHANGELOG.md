@@ -1,5 +1,12 @@
 # explorer
 
+## 0.10.0
+
+### Minor Changes
+
+- 23f4fb47: Copyable entity values now have a context menu with support for opening Siascan pages.
+- 2c80becf: The faucet validation now allows up to 50,000 SC.
+
 ## 0.9.0
 
 ### Minor Changes
