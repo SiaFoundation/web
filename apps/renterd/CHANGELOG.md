@@ -1,5 +1,11 @@
 # renterd
 
+## 0.36.0
+
+### Minor Changes
+
+- 32b2efd4: The host gouging breakdown has been updated to the new versionless format.
+
 ## 0.35.0
 
 ### Minor Changes
