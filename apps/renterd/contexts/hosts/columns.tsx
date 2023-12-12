@@ -195,17 +195,10 @@ export const columns: HostsTableColumn[] = (
                 </Text>
               </div>
               <div className="flex flex-col">
-                {Object.entries(data.gougingBreakdown.v2)
+                {Object.entries(data.gougingBreakdown)
                   .filter(([_, reason]) => reason && typeof reason === 'string')
                   .map(([key, reason]) => (
-                    <Text key={'v2' + key} size="10" noWrap>
-                      {reason}
-                    </Text>
-                  ))}
-                {Object.entries(data.gougingBreakdown.v3)
-                  .filter(([_, reason]) => reason && typeof reason === 'string')
-                  .map(([key, reason]) => (
-                    <Text key={'v3' + key} size="10" noWrap>
+                    <Text key={key} size="10" noWrap>
                       {reason}
                     </Text>
                   ))}

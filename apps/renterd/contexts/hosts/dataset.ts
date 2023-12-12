@@ -161,18 +161,10 @@ function getAllowedFields({
 function getAutopilotFields(ahc?: {
   score: number
   gougingBreakdown: {
-    v2: {
-      contractErr?: string
-      downloadErr?: string
-      gougingErr?: string
-      uploadErr?: string
-    }
-    v3: {
-      contractErr?: string
-      downloadErr?: string
-      gougingErr?: string
-      uploadErr?: string
-    }
+    contractErr?: string
+    downloadErr?: string
+    gougingErr?: string
+    uploadErr?: string
   }
   gouging: boolean
   scoreBreakdown: {
@@ -200,10 +192,7 @@ function getAutopilotFields(ahc?: {
       uptime: new BigNumber(ahc?.scoreBreakdown.uptime || 0),
       version: new BigNumber(ahc?.scoreBreakdown.version || 0),
     },
-    gougingBreakdown: ahc?.gougingBreakdown || {
-      v2: {},
-      v3: {},
-    },
+    gougingBreakdown: ahc?.gougingBreakdown || {},
     gouging: ahc?.gouging,
     unusableReasons: ahc?.unusableReasons || [],
     usable: ahc?.usable,
