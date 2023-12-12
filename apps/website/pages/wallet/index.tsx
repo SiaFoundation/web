@@ -21,7 +21,7 @@ import { SectionTutorials } from '../../components/SectionTutorials'
 import { CalloutWalletd } from '../../components/CalloutWalletd'
 import { SoftwareSectionCurrentGen } from '../../components/SoftwareSectionCurrentGen'
 import { getWalletdLatestRelease } from '../../content/releases'
-import { DownloadBar } from '../../components/DownloadBar'
+// import { DownloadBar } from '../../components/DownloadBar'
 
 const title = 'Wallet'
 const description = 'Manage your wallet on the Sia network.'
@@ -53,7 +53,7 @@ export default function Wallet({
       previewImage={previews.jungle}
     >
       <SectionGradient className="pb-20">
-        <DownloadBar daemon="walletd" release={release} testnetOnly />
+        {/* <DownloadBar daemon="walletd" release={release} testnetOnly /> */}
         <div className="flex flex-col">
           <SiteHeading
             size="32"
