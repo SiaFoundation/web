@@ -36,7 +36,7 @@ export function WalletBalance({
           </Text>
           <ValueScFiat
             variant="value"
-            value={balanceSc.spendable}
+            value={balanceSc.spendable.plus(balanceSc.unconfirmed)}
             size="12"
             showTooltip={false}
           />
@@ -50,7 +50,7 @@ export function WalletBalance({
       <Panel className="hidden sm:flex h-7 px-3 items-center">
         <ValueScFiat
           variant="value"
-          value={balanceSc.spendable}
+          value={balanceSc.spendable.plus(balanceSc.unconfirmed)}
           size="12"
           showTooltip={false}
         />
