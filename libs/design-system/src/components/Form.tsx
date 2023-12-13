@@ -30,7 +30,7 @@ export function FieldLabel<Values extends FieldValues>({
 
 type FieldErrorProps<Values extends FieldValues> = {
   form: UseFormReturn<Values>
-  name: Path<Values>
+  name: 'root' | Path<Values>
 }
 
 export function FieldError<Values extends FieldValues>({
