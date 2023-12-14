@@ -34,7 +34,8 @@ export function useContractMetrics({
     const now = new Date().getTime()
     const today = getTimeClampedToNearest5min(now)
     const span = today - start
-    return Math.round(span / interval)
+    const numberOfPeriods = Math.round(span / interval)
+    return Math.max(numberOfPeriods, 1)
   }, [start, interval])
 
   const params = useMemo(() => {
