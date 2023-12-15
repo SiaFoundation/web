@@ -343,25 +343,34 @@ export function transformDownRedundancy(r: RedundancySettings): RedundancyData {
   }
 }
 
-export function transformDown(
-  a: AutopilotConfig | undefined,
-  c: ContractSetSettings | undefined,
-  u: UploadPackingSettings,
-  g: GougingSettings,
-  r: RedundancySettings,
-  ca: ConfigDisplayOptions | undefined
-): SettingsData {
-  const configApp = transformDownConfigApp(ca)
-  const redundancy = transformDownRedundancy(r)
+export type RemoteData = {
+  autopilotData: AutopilotConfig | undefined
+  contractSetData: ContractSetSettings | undefined
+  uploadPackingData: UploadPackingSettings
+  gougingData: GougingSettings
+  redundancyData: RedundancySettings
+  configAppData: ConfigDisplayOptions | undefined
+}
+
+export function transformDown({
+  autopilotData,
+  contractSetData,
+  uploadPackingData,
+  gougingData,
+  redundancyData,
+  configAppData,
+}: RemoteData): SettingsData {
+  const configApp = transformDownConfigApp(configAppData)
+  const redundancy = transformDownRedundancy(redundancyData)
   return {
     // autopilot
-    ...transformDownAutopilot(a),
+    ...transformDownAutopilot(autopilotData),
     // contractset
-    ...transformDownContractSet(c),
+    ...transformDownContractSet(contractSetData),
     // uploadpacking
-    ...transformDownUploadPacking(u),
+    ...transformDownUploadPacking(uploadPackingData),
     // gouging
-    ...transformDownGouging(g, redundancy, configApp),
+    ...transformDownGouging(gougingData, redundancy, configApp),
     // redundancy
     ...redundancy,
     // config app
