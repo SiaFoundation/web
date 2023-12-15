@@ -520,8 +520,8 @@ function useMetricsMain() {
   const bandwidth = useMemo<Chart<BandwidthKeys, BandwidthCategories>>(() => {
     const data = formatChartData(
       metricsPeriod.data?.map((m) => ({
-        egress: m.data.rhp3.egress + m.data.rhp2.egress,
-        ingress: m.data.rhp3.ingress + m.data.rhp2.ingress,
+        egress: m.data.rhp.egress,
+        ingress: m.data.rhp.ingress,
         timestamp: new Date(m.timestamp).getTime(),
       })),
       'delta'
