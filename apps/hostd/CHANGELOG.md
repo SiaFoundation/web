@@ -1,5 +1,14 @@
 # hostd
 
+## 0.30.0
+
+### Minor Changes
+
+- cbce1a89: Fix bug where announcement error shows both a success and error toast.
+- b84074f3: Data metrics no longer use RHP version specific data.
+- 0d805084: The wallet balance shown on the wallet page is now spendable plus unconfirmed.
+- 74553598: Fixed an issue where currency was displayed with too many decimals.
+
 ## 0.29.0
 
 ### Minor Changes
