@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.63.0
+
+### Minor Changes
+
+- 00a3ce62: ChartXY no longer adds padding point for barstack and bargroup.
+- f2145a38: Added useServerSyncedForm.
+
 ## 0.62.1
 
 ### Patch Changes

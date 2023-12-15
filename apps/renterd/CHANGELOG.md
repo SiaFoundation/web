@@ -1,5 +1,14 @@
 # renterd
 
+## 0.37.0
+
+### Minor Changes
+
+- 0d805084: The wallet balance shown on the wallet page is now spendable plus unconfirmed.
+- 00a3ce62: The contract funding and spending graph now shows a data point for brand new contracts.
+- f2145a38: The default suggested pricing for new users is now based on Sia Central averages.
+- 74553598: Fixed an issue where currency was displayed with too many decimals.
+
 ## 0.36.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @siafoundation/react-hostd
 
+## 0.10.0
+
+### Minor Changes
+
+- b84074f3: Data metrics no longer use RHP version specific data.
+
 ## 0.9.1
 
 ### Patch Changes
