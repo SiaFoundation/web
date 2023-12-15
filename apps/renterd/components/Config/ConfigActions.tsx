@@ -16,7 +16,7 @@ export function ConfigActions() {
     changeCount,
     shouldSyncDefaultContractSet,
     setShouldSyncDefaultContractSet,
-    revalidateAndResetFormData,
+    revalidateAndResetForm,
     form,
   } = useConfig()
 
@@ -31,7 +31,7 @@ export function ConfigActions() {
         tip="Reset all changes"
         icon="contrast"
         disabled={!changeCount}
-        onClick={revalidateAndResetFormData}
+        onClick={revalidateAndResetForm}
       >
         <Reset16 />
       </Button>

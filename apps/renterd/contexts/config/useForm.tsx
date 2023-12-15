@@ -1,7 +1,12 @@
 import { useMemo } from 'react'
-import { defaultValues } from './types'
+import { defaultValues, getAdvancedDefaults } from './types'
 import { getRedundancyMultiplier } from './transform'
 import { useForm as useHookForm } from 'react-hook-form'
+import { useAverages } from './useAverages'
+import { useBusState } from '@siafoundation/react-renterd'
+import { getFields } from './fields'
+import { useApp } from '../app'
+import useLocalStorageState from 'use-local-storage-state'
 
 export function useForm() {
   const form = useHookForm({
@@ -27,8 +32,72 @@ export function useForm() {
     [minShards, totalShards]
   )
 
+  const {
+    averages,
+    storageAverage,
+    uploadAverage,
+    downloadAverage,
+    contractAverage,
+  } = useAverages({
+    minShards,
+    totalShards,
+    includeRedundancyMaxStoragePrice,
+    includeRedundancyMaxUploadPrice,
+  })
+
+  const app = useApp()
+  const isAutopilotEnabled = app.autopilot.status === 'on'
+  const [showAdvanced, setShowAdvanced] = useLocalStorageState<boolean>(
+    'v0/config/showAdvanced',
+    {
+      defaultValue: false,
+    }
+  )
+
+  const renterdState = useBusState()
+  const fields = useMemo(() => {
+    const advancedDefaults = renterdState.data
+      ? getAdvancedDefaults(renterdState.data.network)
+      : undefined
+    if (averages.data) {
+      return getFields({
+        advancedDefaults,
+        isAutopilotEnabled,
+        showAdvanced,
+        redundancyMultiplier,
+        includeRedundancyMaxStoragePrice,
+        includeRedundancyMaxUploadPrice,
+        storageAverage,
+        uploadAverage,
+        downloadAverage,
+        contractAverage,
+      })
+    }
+    return getFields({
+      advancedDefaults,
+      isAutopilotEnabled,
+      showAdvanced,
+      redundancyMultiplier,
+      includeRedundancyMaxStoragePrice,
+      includeRedundancyMaxUploadPrice,
+    })
+  }, [
+    renterdState.data,
+    isAutopilotEnabled,
+    showAdvanced,
+    averages.data,
+    storageAverage,
+    uploadAverage,
+    downloadAverage,
+    contractAverage,
+    redundancyMultiplier,
+    includeRedundancyMaxStoragePrice,
+    includeRedundancyMaxUploadPrice,
+  ])
+
   return {
     form,
+    fields,
     maxStoragePriceTBMonth,
     maxDownloadPriceTB,
     maxUploadPriceTB,
@@ -40,5 +109,7 @@ export function useForm() {
     includeRedundancyMaxStoragePrice,
     includeRedundancyMaxUploadPrice,
     redundancyMultiplier,
+    showAdvanced,
+    setShowAdvanced,
   }
 }

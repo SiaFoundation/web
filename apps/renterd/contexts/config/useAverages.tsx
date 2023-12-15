@@ -82,6 +82,7 @@ export function useAverages({
   )
 
   return {
+    averages,
     storageAverage,
     uploadAverage,
     downloadAverage,

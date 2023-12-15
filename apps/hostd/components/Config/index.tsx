@@ -12,6 +12,7 @@ import { HostdAuthedLayout } from '../../components/HostdAuthedLayout'
 import { AnnounceButton } from './AnnounceButton'
 import { useConfig } from '../../contexts/config'
 import { ConfigNav } from './ConfigNav'
+import { StateConnError } from './StateConnError'
 
 export function Config() {
   const { openDialog } = useDialog()
@@ -20,9 +21,10 @@ export function Config() {
     settings,
     dynDNSCheck,
     changeCount,
-    revalidateAndResetFormData,
+    revalidateAndResetForm,
     form,
     onSubmit,
+    remoteError,
   } = useConfig()
   return (
     <HostdAuthedLayout
@@ -63,7 +65,7 @@ export function Config() {
             tip="Reset all changes"
             icon="contrast"
             disabled={!changeCount}
-            onClick={revalidateAndResetFormData}
+            onClick={revalidateAndResetForm}
           >
             <Reset16 />
           </Button>
@@ -81,44 +83,48 @@ export function Config() {
       }
       openSettings={() => openDialog('settings')}
     >
-      <div className="p-6 flex flex-col gap-16 max-w-screen-xl">
-        <ConfigurationPanel
-          title="Host"
-          category="host"
-          fields={fields}
-          form={form}
-        />
-        <ConfigurationPanel
-          title="Pricing"
-          category="pricing"
-          fields={fields}
-          form={form}
-        />
-        <ConfigurationPanel
-          title="DNS"
-          category="DNS"
-          fields={fields}
-          form={form}
-        />
-        <ConfigurationPanel
-          title="Bandwidth"
-          category="bandwidth"
-          fields={fields}
-          form={form}
-        />
-        <ConfigurationPanel
-          title="Registry"
-          category="registry"
-          fields={fields}
-          form={form}
-        />
-        <ConfigurationPanel
-          title="Accounts"
-          category="RHP3"
-          fields={fields}
-          form={form}
-        />
-      </div>
+      {remoteError ? (
+        <StateConnError />
+      ) : (
+        <div className="p-6 flex flex-col gap-16 max-w-screen-xl">
+          <ConfigurationPanel
+            title="Host"
+            category="host"
+            fields={fields}
+            form={form}
+          />
+          <ConfigurationPanel
+            title="Pricing"
+            category="pricing"
+            fields={fields}
+            form={form}
+          />
+          <ConfigurationPanel
+            title="DNS"
+            category="DNS"
+            fields={fields}
+            form={form}
+          />
+          <ConfigurationPanel
+            title="Bandwidth"
+            category="bandwidth"
+            fields={fields}
+            form={form}
+          />
+          <ConfigurationPanel
+            title="Registry"
+            category="registry"
+            fields={fields}
+            form={form}
+          />
+          <ConfigurationPanel
+            title="Accounts"
+            category="RHP3"
+            fields={fields}
+            form={form}
+          />
+        </div>
+      )}
     </HostdAuthedLayout>
   )
 }

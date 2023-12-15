@@ -12,6 +12,17 @@ export function useEstimates({
   downloadTBMonth,
   maxUploadPriceTB,
   uploadTBMonth,
+}: {
+  isAutopilotEnabled: boolean
+  includeRedundancyMaxStoragePrice: boolean
+  includeRedundancyMaxUploadPrice: boolean
+  redundancyMultiplier: BigNumber
+  maxStoragePriceTBMonth: BigNumber
+  storageTB: BigNumber
+  maxDownloadPriceTB: BigNumber
+  downloadTBMonth: BigNumber
+  maxUploadPriceTB: BigNumber
+  uploadTBMonth: BigNumber
 }) {
   const canEstimate = useMemo(() => {
     if (!isAutopilotEnabled) {

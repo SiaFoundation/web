@@ -5,7 +5,10 @@ import {
 import { useCallback } from 'react'
 import {
   autopilotHostsKey,
+  useAutopilotConfigUpdate,
   useAutopilotTrigger,
+  useBusState,
+  useSettingUpdate,
 } from '@siafoundation/react-renterd'
 import { SettingsData, defaultValues } from './types'
 import {
@@ -17,29 +20,37 @@ import {
   transformUpUploadPacking,
 } from './transform'
 import { delay, useMutate } from '@siafoundation/react-core'
-import { configDisplayOptionsKey } from '../../hooks/useConfigDisplayOptions'
+import { configDisplaySettingsKey } from '../../hooks/useConfigDisplaySettings'
+import { Resources } from './resources'
+import { useSyncContractSet } from './useSyncContractSet'
+import BigNumber from 'bignumber.js'
 
 export function useOnValid({
-  gouging,
-  redundancy,
-  renterdState,
+  resources,
   estimatedSpendingPerMonth,
   isAutopilotEnabled,
   showAdvanced,
-  revalidateAndResetFormData,
-  syncDefaultContractSet,
-  settingUpdate,
-  contractSet,
-  uploadPacking,
-  display,
-  autopilot,
-  autopilotUpdate,
+  revalidateAndResetForm,
+}: {
+  resources: Resources
+  estimatedSpendingPerMonth: BigNumber
+  isAutopilotEnabled: boolean
+  showAdvanced: boolean
+  revalidateAndResetForm: () => Promise<void>
 }) {
   const autopilotTrigger = useAutopilotTrigger()
+  const autopilotUpdate = useAutopilotConfigUpdate()
+  const settingUpdate = useSettingUpdate()
+  const renterdState = useBusState()
+  const { syncDefaultContractSet } = useSyncContractSet()
   const mutate = useMutate()
   const onValid = useCallback(
     async (values: typeof defaultValues) => {
-      if (!gouging.data || !redundancy.data || !renterdState.data) {
+      if (
+        !resources.gouging.data ||
+        !resources.redundancy.data ||
+        !renterdState.data
+      ) {
         return
       }
       try {
@@ -53,13 +64,14 @@ export function useOnValid({
           ...calculatedValues,
         }
 
-        const firstTimeSettingConfig = isAutopilotEnabled && !autopilot.data
+        const firstTimeSettingConfig =
+          isAutopilotEnabled && !resources.autopilot.data
         const autopilotResponse = isAutopilotEnabled
           ? await autopilotUpdate.put({
               payload: transformUpAutopilot(
                 renterdState.data.network,
                 finalValues,
-                autopilot.data
+                resources.autopilot.data
               ),
             })
           : undefined
@@ -75,31 +87,40 @@ export function useOnValid({
             params: {
               key: 'contractset',
             },
-            payload: transformUpContractSet(finalValues, contractSet.data),
+            payload: transformUpContractSet(
+              finalValues,
+              resources.contractSet.data
+            ),
           }),
           settingUpdate.put({
             params: {
               key: 'uploadpacking',
             },
-            payload: transformUpUploadPacking(finalValues, uploadPacking.data),
+            payload: transformUpUploadPacking(
+              finalValues,
+              resources.uploadPacking.data
+            ),
           }),
           settingUpdate.put({
             params: {
               key: 'gouging',
             },
-            payload: transformUpGouging(finalValues, gouging.data),
+            payload: transformUpGouging(finalValues, resources.gouging.data),
           }),
           settingUpdate.put({
             params: {
               key: 'redundancy',
             },
-            payload: transformUpRedundancy(finalValues, redundancy.data),
+            payload: transformUpRedundancy(
+              finalValues,
+              resources.redundancy.data
+            ),
           }),
           settingUpdate.put({
             params: {
-              key: configDisplayOptionsKey,
+              key: configDisplaySettingsKey,
             },
-            payload: transformUpDisplay(finalValues, display.data),
+            payload: transformUpDisplay(finalValues, resources.display.data),
           }),
         ])
 
@@ -153,7 +174,7 @@ export function useOnValid({
           refreshHostsAfterDelay()
         }
 
-        await revalidateAndResetFormData()
+        await revalidateAndResetForm()
       } catch (e) {
         triggerErrorToast((e as Error).message)
         console.log(e)
@@ -164,17 +185,12 @@ export function useOnValid({
       estimatedSpendingPerMonth,
       showAdvanced,
       isAutopilotEnabled,
-      autopilot,
       autopilotUpdate,
-      revalidateAndResetFormData,
+      revalidateAndResetForm,
       syncDefaultContractSet,
       mutate,
       settingUpdate,
-      contractSet,
-      uploadPacking,
-      redundancy,
-      gouging,
-      display,
+      resources,
       autopilotTrigger,
     ]
   )

@@ -37,7 +37,8 @@ import {
   defaultAutopilot,
   advancedDefaultContractSet,
 } from './types'
-import { ConfigDisplayOptions } from '../../hooks/useConfigDisplayOptions'
+import { ConfigDisplaySettings } from '../../hooks/useConfigDisplaySettings'
+import { firstTimeGougingData } from './resources'
 
 const filterUndefinedKeys = (obj: Record<string, unknown>) => {
   return Object.fromEntries(
@@ -187,7 +188,7 @@ export function transformUpRedundancy(
 export function transformUpDisplay(
   values: DisplayData,
   existingValues: Record<string, unknown> | undefined
-): ConfigDisplayOptions {
+): ConfigDisplaySettings {
   return {
     ...existingValues,
     includeRedundancyMaxStoragePrice: values.includeRedundancyMaxStoragePrice,
@@ -276,61 +277,84 @@ export function transformDownUploadPacking(
   }
 }
 
-export function transformDownConfigApp(ca?: ConfigDisplayOptions): DisplayData {
-  if (!ca) {
+export function transformDownDisplay(d?: ConfigDisplaySettings): DisplayData {
+  if (!d) {
     return defaultDisplay
   }
   return {
-    includeRedundancyMaxStoragePrice: ca.includeRedundancyMaxStoragePrice,
-    includeRedundancyMaxUploadPrice: ca.includeRedundancyMaxUploadPrice,
+    includeRedundancyMaxStoragePrice: d.includeRedundancyMaxStoragePrice,
+    includeRedundancyMaxUploadPrice: d.includeRedundancyMaxUploadPrice,
   }
 }
 
-export function transformDownGouging(
-  g: GougingSettings,
-  r: RedundancyData,
-  ca: DisplayData
-): GougingData {
+export function transformDownGouging({
+  gouging: _gouging,
+  redundancy,
+  display,
+  averages,
+  hasBeenConfigured,
+}: {
+  gouging: GougingSettings
+  redundancy: RedundancyData
+  display: DisplayData
+  averages?: {
+    settings: {
+      download_price: string
+      storage_price: string
+      upload_price: string
+    }
+  }
+  hasBeenConfigured: boolean
+}): GougingData {
+  const gouging = firstTimeGougingData({
+    gouging: _gouging,
+    averages,
+    hasBeenConfigured,
+  })
   return {
     maxStoragePriceTBMonth: toSiacoins(
-      new BigNumber(g.maxStoragePrice) // bytes/block
+      new BigNumber(gouging.maxStoragePrice) // bytes/block
         .times(monthsToBlocks(1)) // bytes/month
         .times(TBToBytes(1)) // tb/month
         .times(
           getRedundancyMultiplierIfIncluded(
-            r.minShards,
-            r.totalShards,
-            ca.includeRedundancyMaxStoragePrice
+            redundancy.minShards,
+            redundancy.totalShards,
+            display.includeRedundancyMaxStoragePrice
           )
         ),
       scDecimalPlaces
     ), // TB/month
     maxUploadPriceTB: toSiacoins(
-      new BigNumber(g.maxUploadPrice).times(
+      new BigNumber(gouging.maxUploadPrice).times(
         getRedundancyMultiplierIfIncluded(
-          r.minShards,
-          r.totalShards,
-          ca.includeRedundancyMaxUploadPrice
+          redundancy.minShards,
+          redundancy.totalShards,
+          display.includeRedundancyMaxUploadPrice
         )
       ),
       scDecimalPlaces
     ),
-    maxDownloadPriceTB: toSiacoins(g.maxDownloadPrice, scDecimalPlaces),
-    maxContractPrice: toSiacoins(g.maxContractPrice, scDecimalPlaces),
-    maxRpcPriceMillion: toSiacoins(g.maxRPCPrice, scDecimalPlaces).times(
+    maxDownloadPriceTB: toSiacoins(gouging.maxDownloadPrice, scDecimalPlaces),
+    maxContractPrice: toSiacoins(gouging.maxContractPrice, scDecimalPlaces),
+    maxRpcPriceMillion: toSiacoins(gouging.maxRPCPrice, scDecimalPlaces).times(
       1_000_000
     ),
-    minMaxCollateral: toSiacoins(g.minMaxCollateral, scDecimalPlaces),
-    hostBlockHeightLeeway: new BigNumber(g.hostBlockHeightLeeway),
+    minMaxCollateral: toSiacoins(gouging.minMaxCollateral, scDecimalPlaces),
+    hostBlockHeightLeeway: new BigNumber(gouging.hostBlockHeightLeeway),
     minPriceTableValidityMinutes: new BigNumber(
-      nanosecondsInMinutes(g.minPriceTableValidity)
+      nanosecondsInMinutes(gouging.minPriceTableValidity)
     ),
-    minAccountExpiryDays: new BigNumber(nanosecondsInDays(g.minAccountExpiry)),
+    minAccountExpiryDays: new BigNumber(
+      nanosecondsInDays(gouging.minAccountExpiry)
+    ),
     minMaxEphemeralAccountBalance: toSiacoins(
-      g.minMaxEphemeralAccountBalance,
+      gouging.minMaxEphemeralAccountBalance,
       scDecimalPlaces
     ),
-    migrationSurchargeMultiplier: new BigNumber(g.migrationSurchargeMultiplier),
+    migrationSurchargeMultiplier: new BigNumber(
+      gouging.migrationSurchargeMultiplier
+    ),
   }
 }
 
@@ -347,7 +371,14 @@ export type RemoteData = {
   uploadPacking: UploadPackingSettings
   gouging: GougingSettings
   redundancy: RedundancySettings
-  display: ConfigDisplayOptions | undefined
+  display: ConfigDisplaySettings | undefined
+  averages?: {
+    settings: {
+      download_price: string
+      storage_price: string
+      upload_price: string
+    }
+  }
 }
 
 export function transformDown({
@@ -355,11 +386,14 @@ export function transformDown({
   contractSet,
   uploadPacking,
   gouging,
-  redundancy,
-  display,
+  redundancy: _redundancy,
+  display: _display,
+  averages,
 }: RemoteData): SettingsData {
-  const d = transformDownConfigApp(display)
-  const r = transformDownRedundancy(redundancy)
+  // display will be undefined if its the first time the user is configuring
+  const hasBeenConfigured = !!_display
+  const display = transformDownDisplay(_display)
+  const redundancy = transformDownRedundancy(_redundancy)
   return {
     // autopilot
     ...transformDownAutopilot(autopilot),
@@ -368,11 +402,17 @@ export function transformDown({
     // uploadpacking
     ...transformDownUploadPacking(uploadPacking),
     // gouging
-    ...transformDownGouging(gouging, r, d),
+    ...transformDownGouging({
+      gouging,
+      averages,
+      redundancy,
+      display,
+      hasBeenConfigured,
+    }),
     // redundancy
-    ...r,
+    ...redundancy,
     // config app
-    ...d,
+    ...display,
   }
 }
 
