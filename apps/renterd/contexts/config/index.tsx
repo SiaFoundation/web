@@ -24,7 +24,7 @@ export function useConfigMain() {
     isAutopilotEnabled,
     autopilot,
     contractSet,
-    configApp,
+    display,
     gouging,
     redundancy,
     uploadPacking,
@@ -110,22 +110,22 @@ export function useConfigMain() {
   )
 
   const remoteValues: SettingsData = useMemo(() => {
-    const gougingData = buildGougingData(gouging.data)
+    const g = buildGougingData(gouging.data)
     if (
       (!isAutopilotEnabled || autopilot.data || autopilot.error) &&
-      gougingData &&
+      g &&
       redundancy.data &&
       uploadPacking.data &&
       (contractSet.data || contractSet.error) &&
-      (configApp.data || configApp.error)
+      (display.data || display.error)
     ) {
       return transformDown({
-        autopilotData: autopilot.data,
-        contractSetData: contractSet.data,
-        uploadPackingData: uploadPacking.data,
-        gougingData,
-        redundancyData: redundancy.data,
-        configAppData: configApp.data,
+        autopilot: autopilot.data,
+        contractSet: contractSet.data,
+        uploadPacking: uploadPacking.data,
+        gouging: g,
+        redundancy: redundancy.data,
+        display: display.data,
       })
     }
     return null
@@ -139,34 +139,32 @@ export function useConfigMain() {
     gouging.data,
     buildGougingData,
     redundancy.data,
-    configApp.data,
-    configApp.error,
+    display.data,
+    display.error,
   ])
 
   const revalidate = useCallback(async (): Promise<SettingsData | null> => {
-    const autopilotData = isAutopilotEnabled
-      ? await autopilot.mutate()
-      : undefined
-    const contractSetData = await contractSet.mutate()
-    const _gougingData = await gouging.mutate()
-    const redundancyData = await redundancy.mutate()
-    const uploadPackingData = await uploadPacking.mutate()
-    const configAppData = await configApp.mutate()
-    if (!_gougingData || !redundancyData) {
+    const a = isAutopilotEnabled ? await autopilot.mutate() : undefined
+    const cs = await contractSet.mutate()
+    const _g = await gouging.mutate()
+    const r = await redundancy.mutate()
+    const up = await uploadPacking.mutate()
+    const d = await display.mutate()
+    if (!_g || !r) {
       triggerErrorToast('Error fetching settings.')
       return null
     } else {
-      const gougingData = buildGougingData(_gougingData)
-      if (!gougingData) {
+      const g = buildGougingData(_g)
+      if (!g) {
         return null
       }
       return transformDown({
-        autopilotData,
-        contractSetData,
-        gougingData,
-        redundancyData,
-        uploadPackingData,
-        configAppData,
+        autopilot: a,
+        contractSet: cs,
+        gouging: g,
+        redundancy: r,
+        uploadPacking: up,
+        display: d,
       })
     }
   }, [
@@ -177,7 +175,7 @@ export function useConfigMain() {
     buildGougingData,
     uploadPacking,
     redundancy,
-    configApp,
+    display,
   ])
 
   const { isUnlockedAndAuthedRoute } = useAppSettings()
@@ -258,7 +256,7 @@ export function useConfigMain() {
     uploadPacking,
     redundancy,
     gouging,
-    configApp,
+    display,
   })
 
   const onInvalid = useOnInvalid(fields)

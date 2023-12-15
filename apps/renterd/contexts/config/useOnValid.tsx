@@ -10,7 +10,7 @@ import {
 import { SettingsData, defaultValues } from './types'
 import {
   transformUpAutopilot,
-  transformUpConfigApp,
+  transformUpDisplay,
   transformUpContractSet,
   transformUpGouging,
   transformUpRedundancy,
@@ -31,7 +31,7 @@ export function useOnValid({
   settingUpdate,
   contractSet,
   uploadPacking,
-  configApp,
+  display,
   autopilot,
   autopilotUpdate,
 }) {
@@ -99,7 +99,7 @@ export function useOnValid({
             params: {
               key: configDisplayOptionsKey,
             },
-            payload: transformUpConfigApp(finalValues, configApp.data),
+            payload: transformUpDisplay(finalValues, display.data),
           }),
         ])
 
@@ -174,7 +174,7 @@ export function useOnValid({
       uploadPacking,
       redundancy,
       gouging,
-      configApp,
+      display,
       autopilotTrigger,
     ]
   )

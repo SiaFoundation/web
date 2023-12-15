@@ -30,7 +30,7 @@ export const defaultUploadPacking = {
   uploadPackingEnabled: true,
 }
 
-export const defaultConfigApp = {
+export const defaultDisplay = {
   includeRedundancyMaxStoragePrice: true,
   includeRedundancyMaxUploadPrice: true,
 }
@@ -65,14 +65,14 @@ export const defaultValues = {
   ...defaultGouging,
   // redundancy
   ...defaultRedundancy,
-  // config app
-  ...defaultConfigApp,
+  // config display
+  ...defaultDisplay,
 }
 
 export type AutopilotData = typeof defaultAutopilot
 export type ContractSetData = typeof defaultContractSet
 export type UploadPackingData = typeof defaultUploadPacking
-export type ConfigAppData = typeof defaultConfigApp
+export type DisplayData = typeof defaultDisplay
 export type GougingData = typeof defaultGouging
 export type RedundancyData = typeof defaultRedundancy
 export type SettingsData = typeof defaultValues
@@ -120,8 +120,8 @@ export const advancedDefaultContractSet: ContractSetData = {
   defaultContractSet: 'autopilot',
 }
 
-export const advancedDefaultConfigApp: ConfigAppData = {
-  ...defaultConfigApp,
+export const advancedDefaultDisplay: DisplayData = {
+  ...defaultDisplay,
 }
 
 export const advancedDefaultUploadPacking: UploadPackingData = {
@@ -152,7 +152,7 @@ export function getAdvancedDefaults(
   return {
     ...getAdvancedDefaultAutopilot(network),
     ...advancedDefaultContractSet,
-    ...advancedDefaultConfigApp,
+    ...advancedDefaultDisplay,
     ...advancedDefaultUploadPacking,
     ...advancedDefaultGouging,
     ...getAdvancedDefaultRedundancy(network),
