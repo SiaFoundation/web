@@ -300,8 +300,7 @@ type RevenueMetrics = {
 
 // DataMetrics is a collection of metrics related to data usage.
 type DataMetrics = {
-  rhp2: Data
-  rhp3: Data
+  rhp: Data
 }
 
 type Metrics = {
