@@ -101,6 +101,46 @@ describe('tansforms', () => {
       } as SettingsData)
     })
 
+    it('default works with first time user overrides', () => {
+      const values = transformDown({
+        autopilot: undefined,
+        contractSet: undefined,
+        uploadPacking: {
+          enabled: false,
+        },
+        gouging: {
+          hostBlockHeightLeeway: 4,
+          maxContractPrice: '20000000000000000000000000',
+          maxDownloadPrice: '1004310000000000000000000000',
+          maxRPCPrice: '99970619000000000000000000',
+          maxStoragePrice: '210531181019',
+          maxUploadPrice: '1000232323000000000000000000',
+          minAccountExpiry: 86400000000000,
+          minMaxCollateral: '10000000000000000000000000',
+          minMaxEphemeralAccountBalance: '1000000000000000000000000',
+          minPriceTableValidity: 300000000000,
+          migrationSurchargeMultiplier: 10,
+        },
+        redundancy: {
+          minShards: 10,
+          totalShards: 30,
+        },
+        display: undefined,
+        averages: {
+          settings: {
+            download_price: (4e24).toString(),
+            storage_price: (4e24).toString(),
+            upload_price: (4e24).toString(),
+          },
+        },
+      })
+      expect(values.maxUploadPriceTB).toEqual(new BigNumber('12000000000000'))
+      expect(values.maxDownloadPriceTB).toEqual(new BigNumber('4000000000000'))
+      expect(values.maxStoragePriceTBMonth).toEqual(
+        new BigNumber('51840000000000000')
+      )
+    })
+
     it('with include redundancy for storage and upload', () => {
       expect(
         transformDown({

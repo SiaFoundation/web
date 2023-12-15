@@ -123,7 +123,9 @@ export * from './form/FieldText'
 export * from './form/FieldTextArea'
 export * from './form/FieldSwitch'
 export * from './form/FieldSelect'
-export * from './form/useServerSyncedForm'
+export * from './form/useFormServerSynced'
+export * from './form/useFormChangeCount'
+export * from './form/useFormInit'
 
 // site
 export * from './site/SiteHeading'

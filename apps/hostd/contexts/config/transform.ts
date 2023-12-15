@@ -125,93 +125,100 @@ export function transformUp(
   }
 }
 
-export function transformDown(s: HostSettings): SettingsData {
+export function transformDown({
+  settings,
+}: {
+  settings: HostSettings
+}): SettingsData {
   let dnsOptions = null
   // DNS DuckDNS
-  if (s.ddns.provider === 'duckdns') {
+  if (settings.ddns.provider === 'duckdns') {
     dnsOptions = {
-      dnsDuckDnsToken: s.ddns.options['token'],
+      dnsDuckDnsToken: settings.ddns.options['token'],
     }
   }
 
   // DNS No-IP
-  if (s.ddns.provider === 'noip') {
+  if (settings.ddns.provider === 'noip') {
     dnsOptions = {
-      dnsNoIpEmail: s.ddns.options['email'],
-      dnsNoIpPassword: s.ddns.options['password'],
+      dnsNoIpEmail: settings.ddns.options['email'],
+      dnsNoIpPassword: settings.ddns.options['password'],
     }
   }
 
   // DNS AWS
-  if (s.ddns.provider === 'route53') {
+  if (settings.ddns.provider === 'route53') {
     dnsOptions = {
-      dnsAwsId: s.ddns.options['id'],
-      dnsAwsSecret: s.ddns.options['secret'],
-      dnsAwsZoneId: s.ddns.options['zoneID'],
+      dnsAwsId: settings.ddns.options['id'],
+      dnsAwsSecret: settings.ddns.options['secret'],
+      dnsAwsZoneId: settings.ddns.options['zoneID'],
     }
   }
 
   // DNS Cloudflare
-  if (s.ddns.provider === 'cloudflare') {
+  if (settings.ddns.provider === 'cloudflare') {
     dnsOptions = {
-      dnsCloudflareToken: s.ddns.options['token'],
-      dnsCloudflareZoneId: s.ddns.options['zoneID'],
+      dnsCloudflareToken: settings.ddns.options['token'],
+      dnsCloudflareZoneId: settings.ddns.options['zoneID'],
     }
   }
 
   return {
     // Host settings
-    acceptingContracts: s.acceptingContracts,
-    netAddress: s.netAddress,
-    maxContractDuration: new BigNumber(s.maxContractDuration).div(
+    acceptingContracts: settings.acceptingContracts,
+    netAddress: settings.netAddress,
+    maxContractDuration: new BigNumber(settings.maxContractDuration).div(
       monthsToBlocks(1)
     ),
 
     // Pricing
-    contractPrice: toSiacoins(s.contractPrice, scDecimalPlaces),
+    contractPrice: toSiacoins(settings.contractPrice, scDecimalPlaces),
     baseRPCPrice: toSiacoins(
-      humanBaseRpcPrice(s.baseRPCPrice),
+      humanBaseRpcPrice(settings.baseRPCPrice),
       scDecimalPlaces
     ),
     sectorAccessPrice: toSiacoins(
-      humanSectorAccessPrice(s.sectorAccessPrice),
+      humanSectorAccessPrice(settings.sectorAccessPrice),
       scDecimalPlaces
     ),
 
-    collateralMultiplier: new BigNumber(s.collateralMultiplier),
-    maxCollateral: toSiacoins(s.maxCollateral, scDecimalPlaces),
+    collateralMultiplier: new BigNumber(settings.collateralMultiplier),
+    maxCollateral: toSiacoins(settings.maxCollateral, scDecimalPlaces),
 
     storagePrice: toSiacoins(
-      humanStoragePrice(s.storagePrice),
+      humanStoragePrice(settings.storagePrice),
       scDecimalPlaces
     ),
-    egressPrice: toSiacoins(humanEgressPrice(s.egressPrice), scDecimalPlaces),
+    egressPrice: toSiacoins(
+      humanEgressPrice(settings.egressPrice),
+      scDecimalPlaces
+    ),
     ingressPrice: toSiacoins(
-      humanIngressPrice(s.ingressPrice),
+      humanIngressPrice(settings.ingressPrice),
       scDecimalPlaces
     ),
 
-    priceTableValidity: new BigNumber(s.priceTableValidity)
+    priceTableValidity: new BigNumber(settings.priceTableValidity)
       .div(1_000_000_000) // nanoseconds to seconds
       .div(60), // seconds to minutes
 
     // Registry settings
-    maxRegistryEntries: new BigNumber(s.maxRegistryEntries),
+    maxRegistryEntries: new BigNumber(settings.maxRegistryEntries),
 
     // RHP3 settings
-    accountExpiry: new BigNumber(s.accountExpiry)
+    accountExpiry: new BigNumber(settings.accountExpiry)
       .div(1_000_000_000) // nanoseconds to seconds
       .div(60 * 60 * 24), // seconds to days
-    maxAccountBalance: toSiacoins(s.maxAccountBalance, scDecimalPlaces),
+    maxAccountBalance: toSiacoins(settings.maxAccountBalance, scDecimalPlaces),
 
     // Bandwidth limiter settings
-    ingressLimit: bytesToMB(new BigNumber(s.ingressLimit)),
-    egressLimit: bytesToMB(new BigNumber(s.egressLimit)),
+    ingressLimit: bytesToMB(new BigNumber(settings.ingressLimit)),
+    egressLimit: bytesToMB(new BigNumber(settings.egressLimit)),
 
     // DNS settings
-    dnsProvider: s.ddns.provider,
-    dnsIpv4: s.ddns.ipv4,
-    dnsIpv6: s.ddns.ipv6,
+    dnsProvider: settings.ddns.provider,
+    dnsIpv4: settings.ddns.ipv4,
+    dnsIpv6: settings.ddns.ipv6,
 
     // DNS options
     ...dnsOptions,
