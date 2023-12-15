@@ -39,7 +39,7 @@ export function useResources() {
       },
     },
   })
-  const configApp = useConfigDisplayOptions({
+  const display = useConfigDisplayOptions({
     standalone: 'configFormConfigApp',
     config: {
       swr: {
@@ -105,7 +105,7 @@ export function useResources() {
     isAutopilotEnabled,
     autopilot,
     contractSet,
-    configApp,
+    display,
     gouging,
     redundancy,
     uploadPacking,

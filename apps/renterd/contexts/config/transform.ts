@@ -27,9 +27,9 @@ import {
   scDecimalPlaces,
   SettingsData,
   getAdvancedDefaultAutopilot,
-  ConfigAppData,
+  DisplayData,
   ContractSetData,
-  defaultConfigApp,
+  defaultDisplay,
   defaultContractSet,
   GougingData,
   RedundancyData,
@@ -184,8 +184,8 @@ export function transformUpRedundancy(
   }
 }
 
-export function transformUpConfigApp(
-  values: ConfigAppData,
+export function transformUpDisplay(
+  values: DisplayData,
   existingValues: Record<string, unknown> | undefined
 ): ConfigDisplayOptions {
   return {
@@ -276,11 +276,9 @@ export function transformDownUploadPacking(
   }
 }
 
-export function transformDownConfigApp(
-  ca?: ConfigDisplayOptions
-): ConfigAppData {
+export function transformDownConfigApp(ca?: ConfigDisplayOptions): DisplayData {
   if (!ca) {
-    return defaultConfigApp
+    return defaultDisplay
   }
   return {
     includeRedundancyMaxStoragePrice: ca.includeRedundancyMaxStoragePrice,
@@ -291,7 +289,7 @@ export function transformDownConfigApp(
 export function transformDownGouging(
   g: GougingSettings,
   r: RedundancyData,
-  ca: ConfigAppData
+  ca: DisplayData
 ): GougingData {
   return {
     maxStoragePriceTBMonth: toSiacoins(
@@ -344,37 +342,37 @@ export function transformDownRedundancy(r: RedundancySettings): RedundancyData {
 }
 
 export type RemoteData = {
-  autopilotData: AutopilotConfig | undefined
-  contractSetData: ContractSetSettings | undefined
-  uploadPackingData: UploadPackingSettings
-  gougingData: GougingSettings
-  redundancyData: RedundancySettings
-  configAppData: ConfigDisplayOptions | undefined
+  autopilot: AutopilotConfig | undefined
+  contractSet: ContractSetSettings | undefined
+  uploadPacking: UploadPackingSettings
+  gouging: GougingSettings
+  redundancy: RedundancySettings
+  display: ConfigDisplayOptions | undefined
 }
 
 export function transformDown({
-  autopilotData,
-  contractSetData,
-  uploadPackingData,
-  gougingData,
-  redundancyData,
-  configAppData,
+  autopilot,
+  contractSet,
+  uploadPacking,
+  gouging,
+  redundancy,
+  display,
 }: RemoteData): SettingsData {
-  const configApp = transformDownConfigApp(configAppData)
-  const redundancy = transformDownRedundancy(redundancyData)
+  const d = transformDownConfigApp(display)
+  const r = transformDownRedundancy(redundancy)
   return {
     // autopilot
-    ...transformDownAutopilot(autopilotData),
+    ...transformDownAutopilot(autopilot),
     // contractset
-    ...transformDownContractSet(contractSetData),
+    ...transformDownContractSet(contractSet),
     // uploadpacking
-    ...transformDownUploadPacking(uploadPackingData),
+    ...transformDownUploadPacking(uploadPacking),
     // gouging
-    ...transformDownGouging(gougingData, redundancy, configApp),
+    ...transformDownGouging(gouging, r, d),
     // redundancy
-    ...redundancy,
+    ...r,
     // config app
-    ...configApp,
+    ...d,
   }
 }
 
