@@ -45,6 +45,7 @@ export function AnnounceButton() {
 
           if (response.error) {
             triggerErrorToast('Error announcing host.')
+            return
           }
           triggerSuccessToast('Successfully broadcast host announcement.')
         },
