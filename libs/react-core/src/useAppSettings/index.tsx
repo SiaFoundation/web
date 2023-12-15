@@ -66,7 +66,7 @@ function useAppSettingsMain({
     () => getDefaultSettings(overrideDefaultSettings),
     [overrideDefaultSettings]
   )
-  const [_settings, _setSettings] = useLocalStorageState('v0/settings', {
+  const [_settings, _setSettings] = useLocalStorageState('v1/settings', {
     defaultValue: customDefaultSettings,
   })
   // Merge in defaults incase new settings have been introduced
