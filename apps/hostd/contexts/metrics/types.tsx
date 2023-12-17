@@ -124,12 +124,12 @@ export const dataTimeSpanOptions: {
   },
   {
     label: '1Y',
-    interval: 'daily',
+    interval: 'weekly',
     value: '365',
   },
   {
     label: 'ALL',
-    interval: 'weekly',
+    interval: 'monthly',
     value: 'all',
   },
 ]
