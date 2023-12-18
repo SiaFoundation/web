@@ -4,11 +4,13 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
-  "dependencies": {
+  "peerDependencies": {
     "axios": "^0.27.2",
+    "lodash": "^4.17.21"
+  },
+  "dependencies": {
     "feed": "^4.2.2",
     "rss-parser": "^3.13.0",
-    "lodash": "^4.17.21",
     "@notionhq/client": "^2.2.8",
     "gray-matter": "^4.0.3",
     "next-mdx-remote": "^4.0.3",
