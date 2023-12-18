@@ -1,5 +1,11 @@
 # @siafoundation/react-core
 
+## 0.16.0
+
+### Minor Changes
+
+- d0c8a592: Refactored internal dependencies.
+
 ## 0.15.0
 
 ### Minor Changes

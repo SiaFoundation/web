@@ -1,5 +1,11 @@
 # renterd
 
+## 0.38.0
+
+### Minor Changes
+
+- d0c8a592: Refactored internal dependencies.
+
 ## 0.37.0
 
 ### Minor Changes
