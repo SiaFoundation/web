@@ -1,7 +1,7 @@
 {
   "name": "@siafoundation/fonts",
   "description": "Next font configuration for use across apps.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "license": "MIT",
   "peerDependencies": {
     "class-variance-authority": "^0.7.0",

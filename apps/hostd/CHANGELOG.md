@@ -1,5 +1,12 @@
 # hostd
 
+## 0.31.0
+
+### Minor Changes
+
+- c65b3667: Metrics intervals for 1Y and ALL are now weekly and monthly.
+- d0c8a592: Refactored internal dependencies.
+
 ## 0.30.0
 
 ### Minor Changes

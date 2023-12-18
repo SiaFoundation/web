@@ -1,5 +1,16 @@
 # @siafoundation/react-walletd
 
+## 1.0.0
+
+### Minor Changes
+
+- d0c8a592: Refactored internal dependencies.
+
+### Patch Changes
+
+- Updated dependencies [d0c8a592]
+  - @siafoundation/react-core@0.16.0
+
 ## 0.3.0
 
 ### Minor Changes
