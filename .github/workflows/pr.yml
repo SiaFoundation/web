@@ -14,7 +14,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
         with:
-          node_version: 20.8.0
+          node_version: 20.10.0
       - name: Commit lint
         shell: bash
         run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
