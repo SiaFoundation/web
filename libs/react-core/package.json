@@ -3,12 +3,14 @@
   "description": "Core library for building React hooks for interacting with a Sia daemon.",
   "version": "0.15.0",
   "license": "MIT",
-  "dependencies": {
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "next": "^13.5.2",
     "swr": "^2.1.1",
-    "react": "18.2.0",
     "axios": "^0.27.2",
-    "next": "13.5.2",
-    "use-local-storage-state": "^18.3.3",
+    "use-local-storage-state": "^18.3.3"
+  },
+  "dependencies": {
     "detect-gpu": "^5.0.34"
   },
   "types": "./src/index.d.ts"

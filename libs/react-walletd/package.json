@@ -3,7 +3,7 @@
   "description": " React hooks for interacting with `walletd`.",
   "version": "0.3.0",
   "license": "MIT",
-  "dependencies": {
+  "peerDependencies": {
     "@siafoundation/react-core": "^0.15.0",
     "@siafoundation/types": "^0.0.1",
     "swr": "^2.1.1"
