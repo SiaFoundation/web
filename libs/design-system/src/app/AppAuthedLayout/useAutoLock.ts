@@ -1,5 +1,7 @@
 import { useCallback } from 'react'
-import { useIdleTimer } from 'react-idle-timer'
+import reactIdleTimer from 'react-idle-timer'
+// esm compat
+const { useIdleTimer } = reactIdleTimer
 
 type Props = {
   enabled: boolean

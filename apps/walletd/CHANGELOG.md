@@ -1,5 +1,11 @@
 # walletd
 
+## 0.15.4
+
+### Patch Changes
+
+- esm
+
 ## 0.15.3
 
 ### Patch Changes
