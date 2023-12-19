@@ -1,5 +1,14 @@
 # @siafoundation/react-walletd
 
+## 1.0.2
+
+### Patch Changes
+
+- 4294302f: Adjust packaging.
+- Updated dependencies [4294302f]
+  - @siafoundation/react-core@0.16.4
+  - @siafoundation/types@0.0.3
+
 ## 1.0.0
 
 ### Minor Changes

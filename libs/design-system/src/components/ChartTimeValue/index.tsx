@@ -16,7 +16,7 @@ import { WithTooltipProvidedProps } from '@visx/tooltip/lib/enhancers/withToolti
 import { localPoint } from '@visx/event'
 import { LinearGradient } from '@visx/gradient'
 import { max, extent, bisector, min } from 'd3-array'
-import ParentSize from '@visx/responsive/lib/components/ParentSize'
+import { ParentSize } from '@visx/responsive'
 import { Button } from '../../core/Button'
 import { Text } from '../../core/Text'
 import { Tooltip as DsTooltip } from '../../core/Tooltip'

@@ -1,6 +1,6 @@
 'use client'
 
-import ParentSize from '@visx/responsive/lib/components/ParentSize'
+import { ParentSize } from '@visx/responsive'
 import { Panel } from '../../core/Panel'
 import { ChartXYGraph } from './ChartXYGraph'
 import {

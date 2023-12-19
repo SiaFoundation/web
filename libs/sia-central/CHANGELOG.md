@@ -1,5 +1,11 @@
 # @siafoundation/sia-central
 
+## 0.2.2
+
+### Patch Changes
+
+- 4294302f: Adjust packaging.
+
 ## 0.2.0
 
 ### Minor Changes

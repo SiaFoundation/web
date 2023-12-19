@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.4
+
+### Patch Changes
+
+- 4294302f: Adjust packaging.
+- Updated dependencies [4294302f]
+  - @siafoundation/next@0.0.2
+  - @siafoundation/react-core@0.16.4
+  - @siafoundation/react-icons@0.1.2
+  - @siafoundation/react-sia-central@1.0.2
+  - @siafoundation/types@0.0.3
+  - @siafoundation/units@1.0.2
+
 ## 1.0.0
 
 ### Minor Changes

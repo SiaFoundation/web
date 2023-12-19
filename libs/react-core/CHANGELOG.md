@@ -1,5 +1,13 @@
 # @siafoundation/react-core
 
+## 0.16.4
+
+### Patch Changes
+
+- 4294302f: Adjust packaging.
+- Updated dependencies [4294302f]
+  - @siafoundation/next@0.0.2
+
 ## 0.16.0
 
 ### Minor Changes
