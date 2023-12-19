@@ -2,10 +2,8 @@ import { minutesInMilliseconds } from '@siafoundation/design-system'
 import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import reactIdleTimer from 'react-idle-timer'
+import { useIdleTimer } from 'react-idle-timer'
 import useLocalStorageState from 'use-local-storage-state'
-// esm compat
-const { useIdleTimer } = reactIdleTimer
 
 export function useWalletSeedCache() {
   const [walletAutoLockEnabled, setWalletAutoLockEnabled] =
