@@ -1,5 +1,29 @@
 # @siafoundation/sia-central
 
+## 0.2.5
+
+### Patch Changes
+
+- esm lodash support.
+
+## 0.2.4
+
+### Patch Changes
+
+- lodash esm.
+
+## 0.2.3
+
+### Patch Changes
+
+- lodash es.
+
+## 0.2.2
+
+### Patch Changes
+
+- 4294302f: Adjust packaging.
+
 ## 0.2.0
 
 ### Minor Changes

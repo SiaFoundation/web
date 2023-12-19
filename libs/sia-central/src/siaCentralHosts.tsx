@@ -1,4 +1,4 @@
-import { merge } from 'lodash'
+import { merge } from 'lodash-es'
 import { runFetch } from './fetch'
 import { SiaCentralHost, api } from './types'
 
@@ -31,8 +31,10 @@ export async function getSiaCentralHosts(args?: {
     args
   )
   return runFetch<SiaCentralHostsResponse>(
-    `${config?.api || api
-    }/hosts/list?showinactive=false&sort=used_storage&dir=desc&protocol=rhp3&page=${params.page
+    `${
+      config?.api || api
+    }/hosts/list?showinactive=false&sort=used_storage&dir=desc&protocol=rhp3&page=${
+      params.page
     }&limit=${params.limit}`
   )
 }

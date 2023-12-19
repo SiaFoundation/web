@@ -1,5 +1,23 @@
 # explorer
 
+## 0.10.3
+
+### Patch Changes
+
+- esm lodash support.
+
+## 0.10.2
+
+### Patch Changes
+
+- lodash esm.
+
+## 0.10.1
+
+### Patch Changes
+
+- lodash es.
+
 ## 0.10.0
 
 ### Minor Changes

@@ -3,7 +3,7 @@ import {
   EntityList,
   DatumSkeleton,
 } from '@siafoundation/design-system'
-import { times } from 'lodash'
+import { times } from 'lodash-es'
 import { ContentLayout } from '../ContentLayout'
 
 export function BlockSkeleton() {

@@ -1,4 +1,6 @@
-import {
+// .js for esm compat
+import * as defaultColors from 'tailwindcss/colors.js'
+const {
   inherit,
   current,
   transparent,
@@ -26,7 +28,7 @@ import {
   fuchsia,
   pink,
   rose,
-} from 'tailwindcss/colors'
+} = defaultColors
 
 // manually sync with theme-colors.js
 export const colors = {

@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form'
 import { useDialogFormHelpers } from '../hooks/useDialogFormHelpers'
 import { useWallets } from '../contexts/wallets'
 import { isValidAddress } from '@siafoundation/units'
-import { uniq } from 'lodash'
+import { uniq } from 'lodash-es'
 
 export type WalletAddressesAddDialogParams = {
   walletId: string

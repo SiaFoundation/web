@@ -6,10 +6,12 @@ import {
   Search16,
 } from '@siafoundation/react-icons'
 import { useFiles } from '../../contexts/files'
-import { useDropzone } from 'react-dropzone'
+import * as reactDropzone from 'react-dropzone'
 import { FilesViewDropdownMenu } from './FilesViewDropdownMenu'
 import { useDialog } from '../../contexts/dialog'
 import { useCanUpload } from './useCanUpload'
+// esm compat
+const { useDropzone } = reactDropzone
 
 export function FilesActionsMenu() {
   const { openDialog } = useDialog()
