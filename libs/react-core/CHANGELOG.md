@@ -1,5 +1,11 @@
 # @siafoundation/react-core
 
+## 0.16.5
+
+### Patch Changes
+
+- detect-gpu esm support.
+
 ## 0.16.4
 
 ### Patch Changes

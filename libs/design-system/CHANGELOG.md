@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.6
+
+### Patch Changes
+
+- detect-gpu esm support.
+- Updated dependencies
+  - @siafoundation/react-core@0.16.5
+
 ## 1.0.5
 
 ### Patch Changes

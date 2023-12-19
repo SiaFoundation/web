@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
-import { getGPUTier } from 'detect-gpu'
+import detectGpu from 'detect-gpu'
 import { usePrefersReducedMotion } from '../userPrefersReducedMotion'
+const { getGPUTier } = detectGpu
 
 export function useGpuFeatures() {
   const reduceMotion = usePrefersReducedMotion()
