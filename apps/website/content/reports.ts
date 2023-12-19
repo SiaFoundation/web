@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { toPairs } from 'lodash'
+import { toPairs } from 'lodash-es'
 import { webLinks } from '@siafoundation/design-system'
 import { getMinutesInSeconds } from '../lib/time'
 import { getCacheValue } from '../lib/cache'

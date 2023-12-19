@@ -16,7 +16,7 @@ import { RecentlyViewed16, Settings16 } from '@siafoundation/react-icons'
 import { Button } from '../core/Button'
 import { Panel } from '../core/Panel'
 import { ControlGroup } from '../core/ControlGroup'
-import { sortBy } from 'lodash'
+import { sortBy } from 'lodash-es'
 
 function getDefaultValues(api: string) {
   return {

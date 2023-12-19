@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { random, sortBy } from 'lodash'
+import { random, sortBy } from 'lodash-es'
 import { HostDataWithLocation } from '../../../contexts/hosts/types'
 
 type Props = {

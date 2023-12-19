@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { entries } from 'lodash'
+import { entries } from 'lodash-es'
 import React, { MouseEvent, useCallback } from 'react'
 import {
   FieldErrors,

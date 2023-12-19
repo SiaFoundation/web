@@ -4,7 +4,7 @@ import {
   triggerToast,
 } from '@siafoundation/design-system'
 import { useBuckets, useObjectUpload } from '@siafoundation/react-renterd'
-import { throttle } from 'lodash'
+import { throttle } from 'lodash-es'
 import { useCallback, useMemo, useState } from 'react'
 import { ObjectData } from './types'
 import {

@@ -6,7 +6,7 @@ import {
   Text,
   WebDomain,
 } from '@siafoundation/design-system'
-import { random } from 'lodash'
+import { random } from 'lodash-es'
 import Image from 'next/image'
 import { useMemo } from 'react'
 import { routes } from '../config/routes'

@@ -4,7 +4,7 @@ import { Text } from '../core/Text'
 import { useCallback } from 'react'
 import { cx } from 'class-variance-authority'
 import { CaretDown16, CaretUp16 } from '@siafoundation/react-icons'
-import { times } from 'lodash'
+import { times } from 'lodash-es'
 
 type Data = {
   id: string

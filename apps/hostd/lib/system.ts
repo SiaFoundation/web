@@ -1,4 +1,4 @@
-import { trim, trimEnd } from 'lodash'
+import { trim, trimEnd } from 'lodash-es'
 
 type Separator = '\\' | '/'
 
