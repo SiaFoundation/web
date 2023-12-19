@@ -26,7 +26,7 @@ import {
   fuchsia,
   pink,
   rose,
-} from 'tailwindcss/colors'
+} from 'tailwindcss/colors.js'
 
 // manually sync with theme-colors.js
 export const colors = {
