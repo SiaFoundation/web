@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.10
+
+### Patch Changes
+
+- tailwind esm support.
+
 ## 1.0.9
 
 ### Patch Changes
