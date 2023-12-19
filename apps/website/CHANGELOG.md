@@ -1,5 +1,17 @@
 # website
 
+## 0.46.2
+
+### Patch Changes
+
+- lodash esm.
+
+## 0.46.1
+
+### Patch Changes
+
+- lodash es.
+
 ## 0.46.0
 
 ### Minor Changes

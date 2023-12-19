@@ -12,7 +12,7 @@ import {
 import { CaretDown16, SettingsAdjust16 } from '@siafoundation/react-icons'
 import { sortOptions, SortField } from '../../contexts/files/types'
 import { useFiles } from '../../contexts/files'
-import { groupBy } from 'lodash'
+import groupBy from 'lodash-es/groupBy'
 
 export function FilesViewDropdownMenu() {
   const {

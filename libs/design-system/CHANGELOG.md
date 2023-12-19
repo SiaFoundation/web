@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.0.8
+
+### Patch Changes
+
+- lodash esm.
+- Updated dependencies
+  - @siafoundation/next@0.0.4
+  - @siafoundation/react-core@0.16.7
+  - @siafoundation/react-icons@0.1.4
+  - @siafoundation/react-sia-central@1.0.4
+  - @siafoundation/types@0.0.5
+  - @siafoundation/units@1.0.4
+
+## 1.0.7
+
+### Patch Changes
+
+- lodash es.
+- Updated dependencies
+  - @siafoundation/next@0.0.3
+  - @siafoundation/react-core@0.16.6
+  - @siafoundation/react-icons@0.1.3
+  - @siafoundation/react-sia-central@1.0.3
+  - @siafoundation/types@0.0.4
+  - @siafoundation/units@1.0.3
+
 ## 1.0.6
 
 ### Patch Changes

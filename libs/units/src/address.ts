@@ -1,5 +1,5 @@
 import * as blake from 'blakejs'
-import { isEqual } from 'lodash'
+import isEqual from 'lodash-es/isEqual'
 
 function hexToBytes(hex: string) {
   const bytes: number[] = []

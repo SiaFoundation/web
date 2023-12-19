@@ -9,7 +9,7 @@ import {
   EntityType,
 } from '@siafoundation/design-system'
 import { Copy16 } from '@siafoundation/react-icons'
-import { upperFirst } from 'lodash'
+import upperFirst from 'lodash-es/upperFirst'
 
 type Props = {
   label: string

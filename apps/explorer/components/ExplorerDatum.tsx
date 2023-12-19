@@ -6,7 +6,7 @@ import {
   EntityType,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
-import { upperFirst } from 'lodash'
+import upperFirst from 'lodash-es/upperFirst'
 import { getHref } from '../lib/utils'
 
 // entityType&entityValue | value | values | sc | sf
@@ -55,7 +55,7 @@ export function ExplorerDatum({
                   ? Number(entityValue).toLocaleString()
                   : entityValue
               }
-            // className="relative top-0.5"
+              // className="relative top-0.5"
             />
           ) : (
             <Text font="mono" weight="semibold" scaleSize="18">

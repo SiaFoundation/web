@@ -12,7 +12,7 @@ import {
 } from '../lib/entityTypes'
 import { humanNumber } from '@siafoundation/units'
 import { formatDistance } from 'date-fns'
-import { upperFirst } from 'lodash'
+import upperFirst from 'lodash-es/upperFirst'
 import BigNumber from 'bignumber.js'
 import { DotMark16 } from '@siafoundation/react-icons'
 import { EntityListItemLayout } from './EntityListItemLayout'

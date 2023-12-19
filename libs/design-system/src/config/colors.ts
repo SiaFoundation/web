@@ -26,6 +26,7 @@ import {
   fuchsia,
   pink,
   rose,
+  // .js for esm compat
 } from 'tailwindcss/colors.js'
 
 // manually sync with theme-colors.js

@@ -1,5 +1,17 @@
 # renterd
 
+## 0.38.2
+
+### Patch Changes
+
+- lodash esm.
+
+## 0.38.1
+
+### Patch Changes
+
+- lodash es.
+
 ## 0.38.0
 
 ### Minor Changes

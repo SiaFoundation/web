@@ -1,4 +1,4 @@
-import { throttle } from 'lodash'
+import throttle from 'lodash-es/throttle'
 import { useEffect, useState } from 'react'
 
 export function useScrollTop() {

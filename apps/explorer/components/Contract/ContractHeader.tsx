@@ -8,7 +8,7 @@ import {
   SiaCentralContract,
   getSiaCentralBlockLatest,
 } from '@siafoundation/sia-central'
-import { lowerCase } from 'lodash'
+import lowerCase from 'lodash-es/lowerCase'
 import { routes } from '../../config/routes'
 import { EntityHeading } from '../EntityHeading'
 import { siaCentralApi } from '../../config'
@@ -64,33 +64,36 @@ export async function ContractHeader({
           {renewedToId && renewedToId !== id && (
             <LinkButton
               className="hidden sm:flex"
-              href={routes.contract.view.replace(':id', renewedToId)}>
+              href={routes.contract.view.replace(':id', renewedToId)}
+            >
               renewed to
               <ArrowRight16 />
             </LinkButton>
           )}
         </div>
       </div>
-      {latest && <div className="px-1">
-        <ContractTimeline
-          currentHeight={latest.block.height || 0}
-          contractHeightStart={contract.negotiation_height}
-          contractHeightEnd={contract.expiration_height}
-          proofWindowHeightStart={contract.expiration_height}
-          proofWindowHeightEnd={contract.proof_deadline}
-          proofHeight={contract.proof_height}
-          range={{
-            startHeight: contract.negotiation_height,
-            endHeight: Math.max(
-              latest.block.height || 0,
-              Math.round(
-                contract.proof_deadline +
-                (contract.expiration_height - contract.negotiation_height)
-              )
-            ),
-          }}
-        />
-      </div>}
+      {latest && (
+        <div className="px-1">
+          <ContractTimeline
+            currentHeight={latest.block.height || 0}
+            contractHeightStart={contract.negotiation_height}
+            contractHeightEnd={contract.expiration_height}
+            proofWindowHeightStart={contract.expiration_height}
+            proofWindowHeightEnd={contract.proof_deadline}
+            proofHeight={contract.proof_height}
+            range={{
+              startHeight: contract.negotiation_height,
+              endHeight: Math.max(
+                latest.block.height || 0,
+                Math.round(
+                  contract.proof_deadline +
+                    (contract.expiration_height - contract.negotiation_height)
+                )
+              ),
+            }}
+          />
+        </div>
+      )}
     </div>
   )
 }

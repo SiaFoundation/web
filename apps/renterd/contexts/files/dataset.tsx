@@ -3,7 +3,8 @@ import {
   useBuckets,
   useObjectDirectory,
 } from '@siafoundation/react-renterd'
-import { sortBy, toPairs } from 'lodash'
+import sortBy from 'lodash-es/sortBy'
+import toPairs from 'lodash-es/toPairs'
 import useSWR from 'swr'
 import { useContracts } from '../contracts'
 import { ObjectData, SortField } from './types'

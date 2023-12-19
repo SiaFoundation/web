@@ -1,7 +1,7 @@
 import { triggerErrorToast, triggerToast } from '@siafoundation/design-system'
 import { useAppSettings } from '@siafoundation/react-core'
 import { useBuckets, useObjectDownloadFunc } from '@siafoundation/react-renterd'
-import { throttle } from 'lodash'
+import throttle from 'lodash-es/throttle'
 import { useCallback, useMemo, useState } from 'react'
 import {
   FullPath,

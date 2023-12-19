@@ -9,7 +9,7 @@ import {
 import { useLogsSearch } from '@siafoundation/react-hostd'
 import { humanDate } from '@siafoundation/units'
 import { cx } from 'class-variance-authority'
-import { times } from 'lodash'
+import times from 'lodash-es/times'
 
 const filters = []
 

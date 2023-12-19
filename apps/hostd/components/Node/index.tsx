@@ -5,7 +5,7 @@ import { useDialog } from '../../contexts/dialog'
 import { HostdSidenav } from '../HostdSidenav'
 import { HostdAuthedLayout } from '../HostdAuthedLayout'
 import { useMemo } from 'react'
-import { orderBy } from 'lodash'
+import orderBy from 'lodash-es/orderBy'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
 
 export function Node() {

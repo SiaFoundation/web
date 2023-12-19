@@ -1,5 +1,23 @@
 # @siafoundation/units
 
+## 1.0.4
+
+### Patch Changes
+
+- lodash esm.
+- Updated dependencies
+  - @siafoundation/react-core@0.16.7
+  - @siafoundation/sia-central@0.2.4
+
+## 1.0.3
+
+### Patch Changes
+
+- lodash es.
+- Updated dependencies
+  - @siafoundation/react-core@0.16.6
+  - @siafoundation/sia-central@0.2.3
+
 ## 1.0.2
 
 ### Patch Changes

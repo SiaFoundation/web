@@ -9,7 +9,8 @@ import {
 import { useMemo } from 'react'
 import { routes } from '../../config/routes'
 import { ContentLayout } from '../ContentLayout'
-import { reverse, sortBy } from 'lodash'
+import reverse from 'lodash-es/reverse'
+import sortBy from 'lodash-es/sortBy'
 import {
   SiaCentralBlock,
   SiaCentralExchangeRates,

@@ -8,7 +8,8 @@ import {
   useAppSettings,
   usePrefersReducedMotion,
 } from '@siafoundation/react-core'
-import { random, throttle } from 'lodash'
+import random from 'lodash-es/random'
+import throttle from 'lodash-es/throttle'
 import { HostItem } from './HostItem'
 import { Globe } from './Globe'
 import { cx } from 'class-variance-authority'

@@ -1,5 +1,17 @@
 # @siafoundation/fonts
 
+## 0.1.4
+
+### Patch Changes
+
+- lodash esm.
+
+## 0.1.3
+
+### Patch Changes
+
+- lodash es.
+
 ## 0.1.2
 
 ### Patch Changes

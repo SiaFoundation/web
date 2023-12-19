@@ -17,7 +17,7 @@ import {
 } from '@siafoundation/react-icons'
 import { sortOptions, SortField } from '../../contexts/contracts/types'
 import { useContracts } from '../../contexts/contracts'
-import { groupBy } from 'lodash'
+import groupBy from 'lodash-es/groupBy'
 
 export function ContractsViewDropdownMenu() {
   const {

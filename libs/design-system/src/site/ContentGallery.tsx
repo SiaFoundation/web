@@ -1,7 +1,7 @@
 'use client'
 
 import { cx } from 'class-variance-authority'
-import { uniq } from 'lodash'
+import uniq from 'lodash-es/uniq'
 import { usePagesRouter } from '@siafoundation/next'
 import { useCallback, useMemo } from 'react'
 import { Badge } from '../core/Badge'

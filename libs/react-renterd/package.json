@@ -1,13 +1,13 @@
 {
   "name": "@siafoundation/react-renterd",
   "description": " React hooks for interacting with `renterd`.",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "license": "MIT",
   "peerDependencies": {
-    "@siafoundation/react-core": "^0.16.4",
-    "@siafoundation/types": "^0.0.3",
+    "@siafoundation/react-core": "^0.16.7",
+    "@siafoundation/types": "^0.0.5",
     "swr": "^2.1.1",
-    "lodash": "^4.17.21"
+    "lodash-es": "^4.17.21"
   },
   "types": "./src/index.d.ts"
 }
