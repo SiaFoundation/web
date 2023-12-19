@@ -1,11 +1,11 @@
 {
   "name": "@siafoundation/design-system",
   "description": "React-based design system used across Sia apps and websites",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "license": "MIT",
   "peerDependencies": {
     "@siafoundation/react-icons": "^0.1.5",
-    "@siafoundation/react-core": "^0.16.8",
+    "@siafoundation/react-core": "^0.16.9",
     "@siafoundation/units": "^1.0.5",
     "@siafoundation/types": "^0.0.6",
     "@siafoundation/next": "^0.0.5",

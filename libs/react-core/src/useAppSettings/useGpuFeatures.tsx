@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 import * as detectGpu from 'detect-gpu'
 import { usePrefersReducedMotion } from '../userPrefersReducedMotion'
-// esm compatible
+// esm compat
 const { getGPUTier } = detectGpu
 
 export function useGpuFeatures() {

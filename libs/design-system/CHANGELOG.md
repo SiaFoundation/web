@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.11
+
+### Patch Changes
+
+- esm compat.
+- Updated dependencies
+  - @siafoundation/react-core@0.16.9
+
 ## 1.0.10
 
 ### Patch Changes
