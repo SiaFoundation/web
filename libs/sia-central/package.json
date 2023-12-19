@@ -1,7 +1,7 @@
 {
   "name": "@siafoundation/sia-central",
   "description": "Methods and types for interacting with the Sia Central API.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "peerDependencies": {
     "lodash": "^4.17.21"

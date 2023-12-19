@@ -1,5 +1,11 @@
 # @siafoundation/react-core
 
+## 0.16.3
+
+### Patch Changes
+
+- ed8e2287: Add cjs.
+
 ## 0.16.0
 
 ### Minor Changes

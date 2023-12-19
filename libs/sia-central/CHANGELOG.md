@@ -1,5 +1,11 @@
 # @siafoundation/sia-central
 
+## 0.2.1
+
+### Patch Changes
+
+- ed8e2287: Add cjs.
+
 ## 0.2.0
 
 ### Minor Changes

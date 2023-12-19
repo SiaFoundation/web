@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.3
+
+### Patch Changes
+
+- ed8e2287: Add cjs.
+- Updated dependencies [ed8e2287]
+  - @siafoundation/react-core@0.16.3
+  - @siafoundation/react-icons@0.1.1
+  - @siafoundation/react-sia-central@1.0.1
+  - @siafoundation/types@0.0.2
+  - @siafoundation/units@1.0.1
+
 ## 1.0.0
 
 ### Minor Changes

@@ -16,6 +16,7 @@
         "external": ["react/jsx-runtime"],
         "rollupConfig": "@nx/react/plugins/bundle-rollup",
         "format": ["esm", "cjs"],
+        "generateExportsField": true,
         "compiler": "swc",
         "assets": [
           {

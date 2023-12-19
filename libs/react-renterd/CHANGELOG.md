@@ -1,5 +1,14 @@
 # @siafoundation/react-renterd
 
+## 1.0.1
+
+### Patch Changes
+
+- ed8e2287: Add cjs.
+- Updated dependencies [ed8e2287]
+  - @siafoundation/react-core@0.16.3
+  - @siafoundation/types@0.0.2
+
 ## 1.0.0
 
 ### Minor Changes
