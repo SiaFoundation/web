@@ -70,7 +70,6 @@
     "bignumber.js": "^9.0.2",
     "blakejs": "^1.2.1",
     "class-variance-authority": "^0.7.0",
-    "clipboard-polyfill": "^3.0.3",
     "cmdk": "^0.2.0",
     "cobe": "^0.6.3",
     "core-js": "^3.6.5",
