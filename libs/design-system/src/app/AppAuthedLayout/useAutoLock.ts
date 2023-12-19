@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import reactIdleTimer from 'react-idle-timer'
+import * as reactIdleTimer from 'react-idle-timer'
 // esm compat
 const { useIdleTimer } = reactIdleTimer
 

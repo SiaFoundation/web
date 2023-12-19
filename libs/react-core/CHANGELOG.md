@@ -1,5 +1,11 @@
 # @siafoundation/react-core
 
+## 0.16.10
+
+### Patch Changes
+
+- esm
+
 ## 0.16.9
 
 ### Patch Changes

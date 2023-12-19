@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.14
+
+### Patch Changes
+
+- esm
+- Updated dependencies
+  - @siafoundation/react-core@0.16.10
+
 ## 1.0.13
 
 ### Patch Changes

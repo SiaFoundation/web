@@ -1,9 +1,9 @@
 import { cx } from 'class-variance-authority'
-import * as pkg from 'react-dropzone'
+import * as reactDropzone from 'react-dropzone'
 import type { DropzoneOptions } from 'react-dropzone'
 import { Paragraph } from '../core/Paragraph'
 // esm compat
-const { useDropzone } = pkg
+const { useDropzone } = reactDropzone
 
 type Props = {
   title?: React.ReactNode

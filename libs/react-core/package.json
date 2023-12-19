@@ -1,7 +1,7 @@
 {
   "name": "@siafoundation/react-core",
   "description": "Core library for building React hooks for interacting with a Sia daemon.",
-  "version": "0.16.9",
+  "version": "0.16.10",
   "license": "MIT",
   "peerDependencies": {
     "react": "^18.2.0",
