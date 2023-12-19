@@ -1,7 +1,7 @@
 'use client'
 
 import { useAppSettings } from '@siafoundation/react-core'
-import { useRouter } from 'next/router'
+import { usePagesRouter } from '@siafoundation/next'
 import axios, { AxiosError } from 'axios'
 import { getRedirectRouteFromQuery } from './AppAuthedLayout/useConnAndPassLock'
 import { useForm } from 'react-hook-form'
@@ -121,7 +121,7 @@ type Props = {
 }
 
 export function AppLogin({ appName, route, routes }: Props) {
-  const router = useRouter()
+  const router = usePagesRouter()
   const { settings, setSettings } = useAppSettings()
   const { allowCustomApi } = settings
 

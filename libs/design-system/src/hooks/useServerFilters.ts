@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/router'
+import { usePagesRouter } from '@siafoundation/next'
 import { useCallback, useState } from 'react'
 
 export type ServerFilterItem = {
@@ -12,7 +12,7 @@ export type ServerFilterItem = {
 }
 
 export function useServerFilters() {
-  const router = useRouter()
+  const router = usePagesRouter()
   const [filters, _setFilters] = useState<ServerFilterItem[]>([])
 
   const removePagination = useCallback(() => {
