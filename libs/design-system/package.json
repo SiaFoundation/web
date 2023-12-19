@@ -1,19 +1,18 @@
 {
   "name": "@siafoundation/design-system",
   "description": "React-based design system used across Sia apps and websites",
-  "version": "1.0.6",
+  "version": "1.0.9",
   "license": "MIT",
   "peerDependencies": {
-    "@siafoundation/react-icons": "^0.1.2",
-    "@siafoundation/react-core": "^0.16.5",
-    "@siafoundation/units": "^1.0.2",
-    "@siafoundation/types": "^0.0.3",
-    "@siafoundation/next": "^0.0.2",
-    "@siafoundation/react-sia-central": "^1.0.2",
+    "@siafoundation/react-icons": "^0.1.5",
+    "@siafoundation/react-core": "^0.16.8",
+    "@siafoundation/units": "^1.0.5",
+    "@siafoundation/types": "^0.0.6",
+    "@siafoundation/next": "^0.0.5",
+    "@siafoundation/react-sia-central": "^1.0.5",
     "react": "^18.2.0",
     "swr": "^2.1.1",
     "class-variance-authority": "^0.7.0",
-    "lodash": "^4.17.21",
     "bignumber.js": "^9.0.2",
     "axios": "^0.27.2",
     "react-hook-form": "^7.43.9",
@@ -22,7 +21,8 @@
     "tailwind-scrollbar": "^2.0.1",
     "tailwindcss-text-fill": "^0.2.0",
     "tailwindcss-shadow-fill": "^1.0.1",
-    "@tailwindcss/container-queries": "^0.1.1"
+    "@tailwindcss/container-queries": "^0.1.1",
+    "lodash-es": "^4.17.21"
   },
   "dependencies": {
     "@visx/group": "2.17.0",

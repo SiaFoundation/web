@@ -1,12 +1,12 @@
 {
   "name": "@siafoundation/data-sources",
   "description": "Data sources used for stats on the website.",
-  "version": "0.2.0",
+  "version": "0.2.3",
   "private": true,
   "license": "MIT",
   "peerDependencies": {
     "axios": "^0.27.2",
-    "lodash": "^4.17.21"
+    "lodash-es": "^4.17.21"
   },
   "dependencies": {
     "feed": "^4.2.2",

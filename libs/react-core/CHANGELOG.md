@@ -1,5 +1,29 @@
 # @siafoundation/react-core
 
+## 0.16.8
+
+### Patch Changes
+
+- esm lodash support.
+- Updated dependencies
+  - @siafoundation/next@0.0.5
+
+## 0.16.7
+
+### Patch Changes
+
+- lodash esm.
+- Updated dependencies
+  - @siafoundation/next@0.0.4
+
+## 0.16.6
+
+### Patch Changes
+
+- lodash es.
+- Updated dependencies
+  - @siafoundation/next@0.0.3
+
 ## 0.16.5
 
 ### Patch Changes

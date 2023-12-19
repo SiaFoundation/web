@@ -1,5 +1,23 @@
 # hostd
 
+## 0.31.3
+
+### Patch Changes
+
+- esm lodash support.
+
+## 0.31.2
+
+### Patch Changes
+
+- lodash esm.
+
+## 0.31.1
+
+### Patch Changes
+
+- lodash es.
+
 ## 0.31.0
 
 ### Minor Changes

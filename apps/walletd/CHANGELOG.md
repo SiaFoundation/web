@@ -1,5 +1,23 @@
 # walletd
 
+## 0.15.3
+
+### Patch Changes
+
+- esm lodash support.
+
+## 0.15.2
+
+### Patch Changes
+
+- lodash esm.
+
+## 0.15.1
+
+### Patch Changes
+
+- lodash es.
+
 ## 0.15.0
 
 ### Minor Changes
