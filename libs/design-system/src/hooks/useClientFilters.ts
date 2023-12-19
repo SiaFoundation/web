@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/router'
+import { usePagesRouter } from '@siafoundation/next'
 import { useCallback, useState } from 'react'
 
 export type ClientFilterItem<Datum> = {
@@ -11,7 +11,7 @@ export type ClientFilterItem<Datum> = {
 }
 
 export function useClientFilters<Datum>() {
-  const router = useRouter()
+  const router = usePagesRouter()
   const [filters, _setFilters] = useState<ClientFilterItem<Datum>[]>([])
 
   const setFilter = useCallback(

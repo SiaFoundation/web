@@ -1,7 +1,7 @@
 'use client'
 
 import { useAppSettings } from '@siafoundation/react-core'
-import { NextRouter, useRouter } from 'next/router'
+import { NextRouter, usePagesRouter } from '@siafoundation/next'
 import { useEffect } from 'react'
 import { useConnectivity } from '../../hooks/useConnectivity'
 
@@ -36,7 +36,7 @@ export function useConnAndPassLock({
     route,
   })
   const { settings } = useAppSettings()
-  const router = useRouter()
+  const router = usePagesRouter()
 
   useEffect(() => {
     if (isValidating) {

@@ -7,7 +7,7 @@ import {
   CaretRight16,
   PageFirst16,
 } from '@siafoundation/react-icons'
-import { useRouter } from 'next/router'
+import { usePagesRouter } from '@siafoundation/next'
 import { LoadingDots } from './LoadingDots'
 
 type Props = {
@@ -23,7 +23,7 @@ export function PaginatorUnknownTotal({
   pageTotal,
   isLoading,
 }: Props) {
-  const router = useRouter()
+  const router = usePagesRouter()
   const isMore = pageTotal >= limit
   const from = offset + 1
   const to = Math.min(offset + limit, offset + pageTotal)

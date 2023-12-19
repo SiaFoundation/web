@@ -8,7 +8,7 @@ import {
   PageFirst16,
   PageLast16,
 } from '@siafoundation/react-icons'
-import { useRouter } from 'next/router'
+import { usePagesRouter } from '@siafoundation/next'
 import { LoadingDots } from '../components/LoadingDots'
 
 type Props = {
@@ -25,7 +25,7 @@ export function PaginatorKnownTotal({
   datasetTotal,
   isLoading,
 }: Props) {
-  const router = useRouter()
+  const router = usePagesRouter()
   return (
     <ControlGroup>
       <Button
