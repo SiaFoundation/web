@@ -1,5 +1,13 @@
 # @siafoundation/react-core
 
+## 0.16.11
+
+### Patch Changes
+
+- e24c8935: esm support
+- Updated dependencies [e24c8935]
+  - @siafoundation/next@0.0.6
+
 ## 0.15.0
 
 ### Minor Changes

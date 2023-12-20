@@ -1,5 +1,11 @@
 # explorer
 
+## 0.10.4
+
+### Patch Changes
+
+- e24c8935: esm support
+
 ## 0.10.0
 
 ### Minor Changes

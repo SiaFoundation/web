@@ -1,5 +1,16 @@
 # renterd
 
+## 0.39.0
+
+### Minor Changes
+
+- 1a8caef5: The contracts table now has a contract sets column that shows all the sets each contract is in.
+- e24c8935: The reported average redundancy factor now takes into account multipart uploads.
+
+### Patch Changes
+
+- e24c8935: esm support
+
 ## 0.37.0
 
 ### Minor Changes

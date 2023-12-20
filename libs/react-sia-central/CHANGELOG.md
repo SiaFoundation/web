@@ -1,5 +1,14 @@
 # @siafoundation/react-sia-central
 
+## 1.0.6
+
+### Patch Changes
+
+- e24c8935: esm support
+- Updated dependencies [e24c8935]
+  - @siafoundation/react-core@0.16.11
+  - @siafoundation/sia-central@0.2.6
+
 ## 1.0.0
 
 ### Minor Changes

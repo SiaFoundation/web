@@ -1,5 +1,11 @@
 # walletd
 
+## 0.15.5
+
+### Patch Changes
+
+- e24c8935: esm support
+
 ## 0.15.0
 
 ### Minor Changes

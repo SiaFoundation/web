@@ -1,5 +1,14 @@
 # @siafoundation/react-hostd
 
+## 1.0.6
+
+### Patch Changes
+
+- e24c8935: esm support
+- Updated dependencies [e24c8935]
+  - @siafoundation/react-core@0.16.11
+  - @siafoundation/types@0.0.7
+
 ## 0.10.0
 
 ### Minor Changes

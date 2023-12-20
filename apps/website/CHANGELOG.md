@@ -1,5 +1,11 @@
 # website
 
+## 0.46.4
+
+### Patch Changes
+
+- e24c8935: esm support
+
 ## 0.46.0
 
 ### Minor Changes

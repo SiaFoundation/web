@@ -1,5 +1,11 @@
 # @siafoundation/sia-central
 
+## 0.2.6
+
+### Patch Changes
+
+- e24c8935: esm support
+
 ## 0.1.0
 
 ### Minor Changes

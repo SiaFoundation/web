@@ -1,5 +1,11 @@
 # hostd
 
+## 0.31.4
+
+### Patch Changes
+
+- e24c8935: esm support
+
 ## 0.31.0
 
 ### Minor Changes

@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.16
+
+### Patch Changes
+
+- e24c8935: esm support
+- Updated dependencies [e24c8935]
+  - @siafoundation/next@0.0.6
+  - @siafoundation/react-core@0.16.11
+  - @siafoundation/react-icons@0.1.6
+  - @siafoundation/react-sia-central@1.0.6
+  - @siafoundation/types@0.0.7
+  - @siafoundation/units@1.0.6
+
 ## 1.0.0
 
 ### Minor Changes
