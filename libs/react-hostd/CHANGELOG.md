@@ -1,52 +1,5 @@
 # @siafoundation/react-hostd
 
-## 1.0.5
-
-### Patch Changes
-
-- esm lodash support.
-- Updated dependencies
-  - @siafoundation/react-core@0.16.8
-  - @siafoundation/types@0.0.6
-
-## 1.0.4
-
-### Patch Changes
-
-- lodash esm.
-- Updated dependencies
-  - @siafoundation/react-core@0.16.7
-  - @siafoundation/types@0.0.5
-
-## 1.0.3
-
-### Patch Changes
-
-- lodash es.
-- Updated dependencies
-  - @siafoundation/react-core@0.16.6
-  - @siafoundation/types@0.0.4
-
-## 1.0.2
-
-### Patch Changes
-
-- 4294302f: Adjust packaging.
-- Updated dependencies [4294302f]
-  - @siafoundation/react-core@0.16.4
-  - @siafoundation/types@0.0.3
-
-## 1.0.0
-
-### Minor Changes
-
-- d0c8a592: Refactored internal dependencies.
-
-### Patch Changes
-
-- Updated dependencies [d0c8a592]
-  - @siafoundation/react-core@0.16.0
-
 ## 0.10.0
 
 ### Minor Changes

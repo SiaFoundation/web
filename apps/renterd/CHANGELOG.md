@@ -1,29 +1,5 @@
 # renterd
 
-## 0.38.3
-
-### Patch Changes
-
-- esm lodash support.
-
-## 0.38.2
-
-### Patch Changes
-
-- lodash esm.
-
-## 0.38.1
-
-### Patch Changes
-
-- lodash es.
-
-## 0.38.0
-
-### Minor Changes
-
-- d0c8a592: Refactored internal dependencies.
-
 ## 0.37.0
 
 ### Minor Changes

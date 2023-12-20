@@ -104,9 +104,10 @@ export const columns: ContractsTableColumn[] = [
                 return (
                   <Tooltip
                     content={
-                      `Contract is part of set ${set}.` + isDefaultSet
-                        ? `${set} is the default contract set.`
-                        : ''
+                      `Contract is part of set ${set}.` +
+                      (isDefaultSet
+                        ? ` ${set} is the default contract set.`
+                        : '')
                     }
                     key={set}
                   >
