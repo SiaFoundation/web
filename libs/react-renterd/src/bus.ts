@@ -483,10 +483,6 @@ export function useContractsets(args?: HookArgsSwr<void, string[][]>) {
   return useGetSwr({ ...args, route: '/bus/contracts/sets' })
 }
 
-export function useContractset(args: HookArgsSwr<{ name: string }, string[]>) {
-  return useGetSwr({ ...args, route: '/bus/contracts/sets/:set' })
-}
-
 export function useContractsetUpdate(
   args: HookArgsCallback<{ name: string }, string[], never>
 ) {
@@ -614,8 +610,10 @@ export function useObjectDelete(
 
 type ObjectsStats = {
   numObjects: number // number of objects
+  numUnfinishedObjects: number // number of unfinished objects
   minHealth: number // minimum health across all objects
   totalObjectsSize: number // size of all objects
+  totalUnfinishedObjectsSize: number // size of all unfinished objects
   totalSectorsSize: number // uploaded size of all objects
   totalUploadedSize: number // uploaded size of all objects including redundant sectors
 }

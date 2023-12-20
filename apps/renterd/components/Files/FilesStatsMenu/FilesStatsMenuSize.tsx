@@ -27,8 +27,10 @@ export function FilesStatsMenuSize() {
     return null
   }
 
-  const averageRedundancyFactor = stats.data.totalObjectsSize
-    ? stats.data.totalSectorsSize / stats.data.totalObjectsSize
+  const totalObjectsSize =
+    stats.data.totalObjectsSize + stats.data.totalUnfinishedObjectsSize
+  const averageRedundancyFactor = totalObjectsSize
+    ? stats.data.totalSectorsSize / totalObjectsSize
     : 0
 
   return (

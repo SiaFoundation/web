@@ -67,7 +67,6 @@
     "@radix-ui/react-switch": "^1.0.0",
     "@radix-ui/react-tabs": "^1.0.0",
     "@radix-ui/react-tooltip": "^1.0.0",
-    "clipboard-polyfill": "^3.0.3",
     "react-hot-toast": "^2.2.0"
   },
   "devDependencies": {
