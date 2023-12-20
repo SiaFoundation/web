@@ -32,6 +32,7 @@ import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { blockHeightToTime } from '@siafoundation/units'
 import { useContractMetrics } from './useContractMetrics'
 import { useContractSetMetrics } from './useContractSetMetrics'
+import { useContractSetSettings } from '../../hooks/useContractSetSettings'
 
 const defaultLimit = 50
 
@@ -88,6 +89,7 @@ function useContractsMain() {
           state: c.state,
           hostIp: c.hostIP,
           hostKey: c.hostKey,
+          sets: c.sets,
           location: geoHosts.find((h) => h.public_key === c.hostKey)?.location,
           timeline: startTime,
           startTime,
@@ -174,13 +176,20 @@ function useContractsMain() {
 
   const siascanUrl = useSiascanUrl()
 
+  const contractSetSettings = useContractSetSettings()
   const cellContext = useMemo(
     () => ({
       currentHeight: syncStatus.estimatedBlockHeight,
+      defaultSet: contractSetSettings.data?.default,
       contractsTimeRange,
       siascanUrl,
     }),
-    [syncStatus.estimatedBlockHeight, contractsTimeRange, siascanUrl]
+    [
+      syncStatus.estimatedBlockHeight,
+      contractsTimeRange,
+      siascanUrl,
+      contractSetSettings.data,
+    ]
   )
 
   const thirtyDaysAgo = new Date().getTime() - daysInMilliseconds(30)

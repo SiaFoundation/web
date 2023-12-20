@@ -9,15 +9,18 @@ import {
   ValueNum,
   Badge,
   Separator,
+  ScrollArea,
 } from '@siafoundation/design-system'
-import { ArrowUpLeft16 } from '@siafoundation/react-icons'
+import { ArrowUpLeft16, CheckmarkFilled16 } from '@siafoundation/react-icons'
 import { humanBytes, humanDate } from '@siafoundation/units'
 import { ContractData, TableColumnId } from './types'
 import { ContractContextMenu } from '../../components/Contracts/ContractContextMenu'
 import { ContractState } from '@siafoundation/react-renterd'
+import { cx } from 'class-variance-authority'
 
 type Context = {
   currentHeight: number
+  defaultSet?: string
   contractsTimeRange: {
     startHeight: number
     endHeight: number
@@ -79,6 +82,52 @@ export const columns: ContractsTableColumn[] = [
               </div>
             </Tooltip>
           )}
+        </div>
+      )
+    },
+  },
+  {
+    id: 'sets',
+    label: 'contract sets',
+    contentClassName: 'w-[120px]',
+    category: 'general',
+    render: ({ data: { sets }, context: { defaultSet } }) => {
+      if (!sets) {
+        return null
+      }
+      return (
+        <div className="flex flex-col items-center overflow-hidden h-full">
+          <ScrollArea>
+            <div className="flex min-h-full gap-1 flex-wrap py-2 items-center">
+              {sets.map((set) => {
+                const isDefaultSet = defaultSet === set
+                return (
+                  <Tooltip
+                    content={
+                      `Contract is part of set ${set}.` + isDefaultSet
+                        ? `${set} is the default contract set.`
+                        : ''
+                    }
+                    key={set}
+                  >
+                    <Badge
+                      interactive={false}
+                      size="small"
+                      className={cx(
+                        'flex gap-px items-center',
+                        isDefaultSet ? 'pl-px' : ''
+                      )}
+                    >
+                      {isDefaultSet ? (
+                        <CheckmarkFilled16 className="scale-75" />
+                      ) : null}
+                      {set}
+                    </Badge>
+                  </Tooltip>
+                )
+              })}
+            </div>
+          </ScrollArea>
         </div>
       )
     },

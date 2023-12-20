@@ -5,13 +5,16 @@ import { VariantProps } from '../types'
 const styles = cva(
   [
     'items-center appearance-none inline-flex flex-shrink-0 whitespace-nowrap',
-    'font-sans font-regular text-sm',
-    'justify-center align-middle outline-none p-0 decoration-none select-none',
+    'font-sans font-regular',
+    'justify-center align-middle outline-none decoration-none select-none',
     'disabled:pointer-events-none',
-    'py-0.5 px-2',
   ],
   {
     variants: {
+      size: {
+        default: 'text-sm py-0.5 px-2',
+        small: 'text-xs py-px px-1',
+      },
       variant: {
         active: [
           'border',
@@ -77,6 +80,7 @@ const styles = cva(
       },
       interactive: {
         true: 'cursor-pointer',
+        false: 'cursor-auto',
       },
       rounded: {
         true: 'rounded',
@@ -85,7 +89,9 @@ const styles = cva(
     },
     defaultVariants: {
       variant: 'gray',
+      size: 'default',
       rounded: true,
+      interactive: false,
     },
   }
 )
@@ -93,10 +99,10 @@ const styles = cva(
 export const Badge = React.forwardRef<
   HTMLDivElement,
   VariantProps<typeof styles> & React.HTMLAttributes<HTMLDivElement>
->(({ variant, interactive, rounded, className, ...props }, ref) => (
+>(({ variant, size, interactive, rounded, className, ...props }, ref) => (
   <div
     {...props}
-    className={styles({ variant, interactive, rounded, className })}
+    className={styles({ variant, size, interactive, rounded, className })}
     ref={ref}
   />
 ))
