@@ -1,5 +1,11 @@
 # renterd
 
+## 0.40.0
+
+### Minor Changes
+
+- 2aff994b: Remove the wallet defrag threshold setting.
+
 ## 0.39.0
 
 ### Minor Changes

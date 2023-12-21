@@ -195,10 +195,6 @@ export type SiacoinElement = {
   maturityHeight: number
 }
 
-export type AutopilotWalletConfig = {
-  defragThreshold: number
-}
-
 export type AutopilotHostsConfig = {
   allowRedundantIPs: boolean
   scoreOverrides: { [key: PublicKey]: number }
@@ -219,7 +215,6 @@ export type AutopilotContractsConfig = {
 }
 
 export type AutopilotConfig = {
-  wallet: AutopilotWalletConfig
   hosts: AutopilotHostsConfig
   contracts: AutopilotContractsConfig
 }

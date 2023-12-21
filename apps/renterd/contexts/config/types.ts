@@ -18,8 +18,6 @@ export const defaultAutopilot = {
   allowRedundantIPs: false,
   maxDowntimeHours: undefined as BigNumber | undefined,
   minRecentScanFailures: undefined as BigNumber | undefined,
-  // wallet
-  defragThreshold: undefined as BigNumber | undefined,
 }
 
 export const defaultContractSet = {
@@ -98,7 +96,6 @@ export function getAdvancedDefaultAutopilot(
           allowRedundantIPs: false,
           maxDowntimeHours: new BigNumber(336),
           minRecentScanFailures: new BigNumber(10),
-          defragThreshold: new BigNumber(1000),
           prune: true,
         }
       : {
@@ -109,7 +106,6 @@ export function getAdvancedDefaultAutopilot(
           allowRedundantIPs: false,
           maxDowntimeHours: new BigNumber(336),
           minRecentScanFailures: new BigNumber(10),
-          defragThreshold: new BigNumber(1000),
           prune: true,
         }),
   }

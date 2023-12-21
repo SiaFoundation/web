@@ -95,10 +95,6 @@ export function transformUpAutopilot(
       allowRedundantIPs: v.allowRedundantIPs,
       scoreOverrides: existingValues?.hosts.scoreOverrides || null,
     },
-    wallet: {
-      ...existingValues?.wallet,
-      defragThreshold: v.defragThreshold.toNumber(),
-    },
   }
 }
 
@@ -253,8 +249,6 @@ export function transformDownAutopilot(
     allowRedundantIPs: config.hosts.allowRedundantIPs,
     maxDowntimeHours: new BigNumber(config.hosts.maxDowntimeHours),
     minRecentScanFailures: new BigNumber(config.hosts.minRecentScanFailures),
-    // wallet
-    defragThreshold: new BigNumber(config.wallet.defragThreshold),
   }
 }
 

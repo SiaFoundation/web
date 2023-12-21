@@ -22,9 +22,6 @@ describe('tansforms', () => {
       expect(
         transformDown({
           autopilot: {
-            wallet: {
-              defragThreshold: 1000,
-            },
             hosts: {
               allowRedundantIPs: false,
               maxDowntimeHours: 1440,
@@ -80,7 +77,6 @@ describe('tansforms', () => {
         allowRedundantIPs: false,
         maxDowntimeHours: new BigNumber('1440'),
         minRecentScanFailures: new BigNumber('10'),
-        defragThreshold: new BigNumber('1000'),
         defaultContractSet: 'myset',
         uploadPackingEnabled: true,
         hostBlockHeightLeeway: new BigNumber(4),
@@ -145,9 +141,6 @@ describe('tansforms', () => {
       expect(
         transformDown({
           autopilot: {
-            wallet: {
-              defragThreshold: 1000,
-            },
             hosts: {
               allowRedundantIPs: false,
               maxDowntimeHours: 1440,
@@ -202,7 +195,6 @@ describe('tansforms', () => {
         allowRedundantIPs: false,
         maxDowntimeHours: new BigNumber('1440'),
         minRecentScanFailures: new BigNumber('10'),
-        defragThreshold: new BigNumber('1000'),
         defaultContractSet: 'myset',
         uploadPackingEnabled: true,
         hostBlockHeightLeeway: new BigNumber(4),
@@ -243,14 +235,10 @@ describe('tansforms', () => {
             allowRedundantIPs: false,
             maxDowntimeHours: new BigNumber('1440'),
             minRecentScanFailures: new BigNumber('10'),
-            defragThreshold: new BigNumber('1000'),
           },
           undefined
         )
       ).toEqual({
-        wallet: {
-          defragThreshold: 1000,
-        },
         hosts: {
           allowRedundantIPs: false,
           maxDowntimeHours: 1440,
@@ -287,13 +275,9 @@ describe('tansforms', () => {
             allowRedundantIPs: false,
             maxDowntimeHours: new BigNumber('1440'),
             minRecentScanFailures: new BigNumber('10'),
-            defragThreshold: new BigNumber('1000'),
           },
           {
             foobar1: 'value',
-            wallet: {
-              foobar: 'value',
-            },
             contracts: {
               foobar: 'value',
               period: 7777,
@@ -306,10 +290,6 @@ describe('tansforms', () => {
         )
       ).toEqual({
         foobar1: 'value',
-        wallet: {
-          foobar: 'value',
-          defragThreshold: 1000,
-        },
         hosts: {
           foobar: 'value',
           allowRedundantIPs: false,
@@ -348,10 +328,8 @@ describe('tansforms', () => {
             allowRedundantIPs: false,
             maxDowntimeHours: new BigNumber('1440'),
             minRecentScanFailures: new BigNumber('10'),
-            defragThreshold: new BigNumber('1000'),
           },
           {
-            wallet: {},
             contracts: {
               period: 7777,
             },
@@ -360,9 +338,6 @@ describe('tansforms', () => {
           } as any
         )
       ).toEqual({
-        wallet: {
-          defragThreshold: 1000,
-        },
         hosts: {
           allowRedundantIPs: false,
           maxDowntimeHours: 1440,
@@ -417,7 +392,6 @@ describe('tansforms', () => {
             allowRedundantIPs: false,
             maxDowntimeHours: new BigNumber('1440'),
             minRecentScanFailures: new BigNumber('10'),
-            defragThreshold: new BigNumber('1000'),
             defaultContractSet: 'myset',
             uploadPackingEnabled: false,
             hostBlockHeightLeeway: new BigNumber(4),
@@ -474,7 +448,6 @@ describe('tansforms', () => {
             allowRedundantIPs: false,
             maxDowntimeHours: new BigNumber('1440'),
             minRecentScanFailures: new BigNumber('10'),
-            defragThreshold: new BigNumber('1000'),
             defaultContractSet: 'myset',
             uploadPackingEnabled: false,
             hostBlockHeightLeeway: new BigNumber(4),
@@ -628,9 +601,6 @@ describe('tansforms', () => {
 function buildAllResponses() {
   return {
     autopilot: {
-      wallet: {
-        defragThreshold: 1000,
-      },
       hosts: {
         allowRedundantIPs: false,
         maxDowntimeHours: 1440,

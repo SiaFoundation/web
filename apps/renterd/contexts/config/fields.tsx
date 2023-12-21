@@ -285,26 +285,6 @@ export function getFields({
           : {},
     },
 
-    // wallet
-    defragThreshold: {
-      type: 'number',
-      category: 'wallet',
-      title: 'Defrag threshold',
-      description: (
-        <>The threshold after which autopilot will defrag wallet outputs.</>
-      ),
-      units: 'outputs',
-      suggestion: advancedDefaults?.defragThreshold,
-      suggestionTip: 'Defaults to 1,000.',
-      hidden: !isAutopilotEnabled || !showAdvanced,
-      validation:
-        isAutopilotEnabled && showAdvanced
-          ? {
-              required: 'required',
-            }
-          : {},
-    },
-
     // contract
     defaultContractSet: {
       category: 'contractset',
