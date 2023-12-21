@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { random, sortBy } from 'lodash-es'
+import { random, sortBy } from '@technically/lodash'
 import { SiaCentralPartialHost } from '../../content/geoHosts'
 
 type Props = {

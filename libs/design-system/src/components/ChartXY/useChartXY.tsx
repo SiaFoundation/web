@@ -8,7 +8,7 @@ import { RenderTooltipGlyphProps } from '@visx/xychart/lib/components/Tooltip'
 import { lightTheme, darkTheme } from './customTheme'
 import { getChartComponents } from './getChartComponents'
 import { useTheme } from 'next-themes'
-import { omit } from 'lodash-es'
+import { omit } from '@technically/lodash'
 import {
   ChartConfig,
   ChartData,

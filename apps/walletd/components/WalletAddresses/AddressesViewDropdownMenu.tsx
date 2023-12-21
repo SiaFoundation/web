@@ -16,7 +16,7 @@ import {
   Reset16,
 } from '@siafoundation/react-icons'
 import { SortField, sortOptions } from '../../contexts/addresses/types'
-import { groupBy } from 'lodash-es'
+import { groupBy } from '@technically/lodash'
 import { useAddresses } from '../../contexts/addresses'
 
 export function AddressesViewDropdownMenu() {

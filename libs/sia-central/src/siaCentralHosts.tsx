@@ -1,4 +1,4 @@
-import { merge } from 'lodash-es'
+import { merge } from '@technically/lodash'
 import { runFetch } from './fetch'
 import { SiaCentralHost, api } from './types'
 

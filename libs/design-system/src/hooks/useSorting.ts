@@ -1,6 +1,6 @@
 'use client'
 
-import { intersection } from 'lodash-es'
+import { intersection } from '@technically/lodash'
 import { useCallback, useMemo } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 

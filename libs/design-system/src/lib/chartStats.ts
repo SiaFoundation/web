@@ -1,5 +1,5 @@
 import { ChartPoint } from '../components/ChartXY'
-import { omit } from 'lodash-es'
+import { omit } from '@technically/lodash'
 
 type KeyStats = {
   average: number

@@ -6,7 +6,7 @@ import {
   EntityType,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
-import { upperFirst } from 'lodash-es'
+import { upperFirst } from '@technically/lodash'
 import { getHref } from '../lib/utils'
 
 // entityType&entityValue | value | values | sc | sf

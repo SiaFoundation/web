@@ -1,5 +1,5 @@
 import { humanDate } from '@siafoundation/units'
-import { omit } from 'lodash-es'
+import { omit } from '@technically/lodash'
 import { ChartPoint } from '../components/ChartXY'
 import {
   daysInMilliseconds,

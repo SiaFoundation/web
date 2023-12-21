@@ -6,7 +6,7 @@ import {
 } from '@siafoundation/design-system'
 import { useObject } from '@siafoundation/react-renterd'
 import { cx } from 'class-variance-authority'
-import { sortBy } from 'lodash-es'
+import { sortBy } from '@technically/lodash'
 import { computeSlabContractSetShards } from '../../../../contexts/files/health'
 import { ObjectData } from '../../../../contexts/files/types'
 import { useHealthLabel } from '../../../../hooks/useHealthLabel'

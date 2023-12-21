@@ -1,5 +1,5 @@
 import { DatumSkeleton, Panel } from '@siafoundation/design-system'
-import { times } from 'lodash-es'
+import { times } from '@technically/lodash'
 import { ContentLayout } from '../ContentLayout'
 import { HostHeaderSkeleton } from './HostHeaderSkeleton'
 

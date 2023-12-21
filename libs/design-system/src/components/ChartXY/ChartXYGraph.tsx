@@ -7,7 +7,7 @@ import { ChartXYProps } from './useChartXY'
 import { Separator } from '../../core/Separator'
 import { PatternLines } from '@visx/pattern'
 import { cx } from 'class-variance-authority'
-import { groupBy } from 'lodash-es'
+import { groupBy } from '@technically/lodash'
 import { ChartConfig, ChartPoint } from './types'
 import { humanDate } from '@siafoundation/units'
 

@@ -4,7 +4,7 @@ import {
   getSiaCentralBlock,
   getSiaCentralBlocks,
 } from '@siafoundation/sia-central'
-import { range } from 'lodash-es'
+import { range } from '@technically/lodash'
 
 export async function getLastFewBlocksOneByOne(block?: SiaCentralBlock) {
   if (!block) {

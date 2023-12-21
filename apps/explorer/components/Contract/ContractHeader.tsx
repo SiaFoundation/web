@@ -8,7 +8,7 @@ import {
   SiaCentralContract,
   getSiaCentralBlockLatest,
 } from '@siafoundation/sia-central'
-import { lowerCase } from 'lodash-es'
+import { lowerCase } from '@technically/lodash'
 import { routes } from '../../config/routes'
 import { EntityHeading } from '../EntityHeading'
 import { siaCentralApi } from '../../config'

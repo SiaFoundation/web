@@ -7,7 +7,7 @@ import { Dialog } from '../core/Dialog'
 import { getTitleId } from '../lib/utils'
 import { Transaction } from '@siafoundation/types'
 import { getTxTypeLabel, TxType } from '../lib/entityTypes'
-import { upperFirst } from 'lodash-es'
+import { upperFirst } from '@technically/lodash'
 
 type Props = {
   id: string

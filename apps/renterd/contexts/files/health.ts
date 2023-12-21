@@ -1,5 +1,5 @@
 import { Obj, SlabSlice } from '@siafoundation/react-renterd'
-import { min } from 'lodash-es'
+import { min } from '@technically/lodash'
 import { ContractData } from '../contracts/types'
 
 export function getObjectHealth(

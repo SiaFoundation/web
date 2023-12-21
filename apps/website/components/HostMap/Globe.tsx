@@ -9,7 +9,7 @@ import {
 } from 'react'
 import dynamic from 'next/dynamic'
 import { GlobeMethods } from 'react-globe.gl'
-import { random, sortBy } from 'lodash-es'
+import { random, sortBy } from '@technically/lodash'
 import { getHostLabel } from './utils'
 import { SiaCentralPartialHost } from '../../content/geoHosts'
 import { getAssetUrl } from '../../content/assets'

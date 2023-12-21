@@ -17,7 +17,7 @@ import {
 } from '@siafoundation/react-icons'
 import { SortField, sortOptions } from '../../contexts/wallets/types'
 import { useWallets } from '../../contexts/wallets'
-import { groupBy } from 'lodash-es'
+import { groupBy } from '@technically/lodash'
 
 export function WalletsViewDropdownMenu() {
   const {

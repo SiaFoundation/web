@@ -1,6 +1,6 @@
 'use client'
 
-import { difference, intersection, uniq } from 'lodash-es'
+import { difference, intersection, uniq } from '@technically/lodash'
 import { useCallback, useMemo } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 import { useSorting } from './useSorting'

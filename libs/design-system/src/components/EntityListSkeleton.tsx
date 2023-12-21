@@ -1,5 +1,5 @@
 import { Skeleton } from '../core/Skeleton'
-import { times } from 'lodash-es'
+import { times } from '@technically/lodash'
 import { cx } from 'class-variance-authority'
 
 export function EntityListSkeleton({ skeletonCount = 10 }) {
