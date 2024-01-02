@@ -1,5 +1,5 @@
 import React from 'react'
-import * as clipboard from 'clipboard-polyfill'
+import { writeText } from 'clipboard-polyfill'
 import { ToastOptions, triggerToast, triggerToastNode } from './toast'
 
 export const copyToClipboard = (text: string, entity?: string) => {
@@ -7,7 +7,7 @@ export const copyToClipboard = (text: string, entity?: string) => {
     ? `Copied ${entity} to clipboard`
     : 'Copied to clipboard'
   triggerToast(message)
-  clipboard.writeText(text)
+  writeText(text)
 }
 
 export const copyToClipboardCustom = (
@@ -16,5 +16,5 @@ export const copyToClipboardCustom = (
   options?: ToastOptions
 ) => {
   triggerToastNode(message, options)
-  clipboard.writeText(text)
+  writeText(text)
 }
