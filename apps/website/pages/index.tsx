@@ -81,7 +81,7 @@ export default function Home({
             description={
               <>Rent space and store your data on the Sia network.</>
             }
-            actionTitle="Rent storage"
+            actionTitle="Rent storage on Sia"
             actionLink={routes.rent.index}
           />
           <Callout
@@ -89,7 +89,7 @@ export default function Home({
             title="Host"
             background={patterns.jungle}
             description={<>Offer your storage space on the Sia network.</>}
-            actionTitle="Start hosting"
+            actionTitle="Start hosting on Sia"
             actionLink={routes.host.index}
           />
           <Callout
@@ -102,7 +102,7 @@ export default function Home({
                 non-profit foundation that maintains it.
               </>
             }
-            actionTitle="Read more"
+            actionTitle="Learn how Sia works"
             actionLink={routes.learn.index}
           />
           <Callout
@@ -115,7 +115,7 @@ export default function Home({
                 to come and build on Sia through our Grants program.
               </>
             }
-            actionTitle="Apply for a grant"
+            actionTitle="Apply for a developer grant"
             actionLink={routes.grants.index}
           />
         </div>

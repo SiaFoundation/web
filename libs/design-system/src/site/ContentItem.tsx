@@ -40,6 +40,7 @@ export type ContentItemProps = {
   subtitle?: React.ReactNode
   children?: React.ReactNode
   link?: string
+  linkText?: string
   tags?: string[]
   idea?: boolean
   sections?: string[]

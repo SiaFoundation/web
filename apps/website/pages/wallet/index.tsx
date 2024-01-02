@@ -79,7 +79,7 @@ export default function Wallet({
                   with walletd.
                 </>
               }
-              actionTitle="Follow the setup guide"
+              actionTitle="Follow the walletd setup guide"
               actionLink={webLinks.docs.wallet}
               actionNewTab
             />
@@ -129,7 +129,7 @@ export default function Wallet({
               decentralized, data storage.
             </>
           }
-          actionTitle="Learn more"
+          actionTitle="Learn how Sia works"
           actionLink={routes.learn.index}
         />
       </SectionGradient>

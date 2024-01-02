@@ -70,7 +70,7 @@ export default function Rent({
               description={
                 <>Learn how to rent storage on the Sia network using renterd.</>
               }
-              actionTitle="Follow the setup guide"
+              actionTitle="Follow the renterd setup guide"
               actionLink={webLinks.docs.renting}
               actionNewTab
             />
@@ -135,7 +135,7 @@ export default function Rent({
               decentralized, data storage.
             </>
           }
-          actionTitle="Learn more"
+          actionTitle="Learn how Sia works"
           actionLink={routes.learn.index}
         />
       </SectionGradient>

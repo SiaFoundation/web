@@ -182,7 +182,7 @@ function Foundation({ team, featured, reports }: Props) {
               our openings.
             </>
           }
-          actionTitle="View openings"
+          actionTitle="View job openings"
           actionLink={webLinks.jobs}
           actionNewTab
         />

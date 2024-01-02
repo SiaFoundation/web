@@ -105,7 +105,7 @@ export default function CommunityEcosystem({ blogs, software }: Props) {
               over the world to come and build on Sia by offering grants.
             </>
           }
-          actionTitle="Learn about grants"
+          actionTitle="Learn about the Sia grants program"
           actionLink={routes.grants.index}
         />
       </SectionGradient>
