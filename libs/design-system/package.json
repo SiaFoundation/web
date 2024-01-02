@@ -22,7 +22,7 @@
     "tailwindcss-text-fill": "^0.2.0",
     "tailwindcss-shadow-fill": "^1.0.1",
     "@tailwindcss/container-queries": "^0.1.1",
-    "lodash-es": "^4.17.21"
+    "@technically/lodash": "^4.17.0"
   },
   "dependencies": {
     "@visx/group": "2.17.0",
