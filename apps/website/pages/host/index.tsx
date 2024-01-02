@@ -72,7 +72,7 @@ export default function Host({
                   network using hostd.
                 </>
               }
-              actionTitle="Follow the setup guide"
+              actionTitle="Follow the hostd setup guide"
               actionLink={webLinks.docs.hosting}
               actionNewTab
             />
@@ -137,7 +137,7 @@ export default function Host({
               decentralized, data storage.
             </>
           }
-          actionTitle="Learn more"
+          actionTitle="Learn how Sia works"
           actionLink={routes.learn.index}
         />
       </SectionGradient>

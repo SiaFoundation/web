@@ -169,7 +169,7 @@ export default function Grants({
                 research and development projects.
               </>
             }
-            actionTitle="Create a proposal"
+            actionTitle="Create a Sia grant proposal"
             actionLink={webLinks.forumGrantsProposed}
             actionNewTab
           />

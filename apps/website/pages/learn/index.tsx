@@ -100,11 +100,16 @@ export default function Learn({ getStarted }: Props) {
           <div className="w-full h-full max-w-lg overflow-hidden">
             <Callout
               title="Sia 101"
-              actionTitle="Learn more"
+              actionTitle="Visit our docs to learn more about Sia"
               actionLink={webLinks.docs.sia101}
               actionNewTab
               background={backgrounds.nateTrickle}
-              description={<>Visit our docs to learn more about Sia.</>}
+              description={
+                <>
+                  Visit our docs to learn about the history of Sia, how it
+                  works, and the available software.
+                </>
+              }
               className="w-full md:h-[500px]"
             />
           </div>
@@ -294,7 +299,7 @@ export default function Learn({ getStarted }: Props) {
             description={
               <>Rent space and store your data on the Sia network.</>
             }
-            actionTitle="Rent storage"
+            actionTitle="Rent storage on Sia"
             actionLink={routes.rent.index}
           />
           <Callout
@@ -302,7 +307,7 @@ export default function Learn({ getStarted }: Props) {
             title="Host"
             background={patterns.jungle}
             description={<>Offer your storage space on the Sia network.</>}
-            actionTitle="Start hosting"
+            actionTitle="Start hosting on Sia"
             actionLink={routes.host.index}
           />
         </div>

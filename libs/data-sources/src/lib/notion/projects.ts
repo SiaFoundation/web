@@ -19,6 +19,7 @@ export async function fetchProjects() {
       title: properties.title?.title[0]?.plain_text,
       subtitle: properties.subtitle?.rich_text[0]?.plain_text || null,
       link: properties.link?.url || null,
+      linkText: properties.link_text?.rich_text[0]?.plain_text || null,
       logo: properties.logo?.rich_text[0]?.plain_text || null,
       image: properties.image?.rich_text[0]?.plain_text || null,
       background: properties.background?.rich_text[0]?.plain_text || null,
