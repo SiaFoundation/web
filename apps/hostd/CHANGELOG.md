@@ -1,5 +1,11 @@
 # hostd
 
+## 0.32.0
+
+### Minor Changes
+
+- 0fc1c36c: Fixed an issue with the copy to clipboard feature.
+
 ## 0.31.4
 
 ### Patch Changes

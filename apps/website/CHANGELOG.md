@@ -1,5 +1,12 @@
 # website
 
+## 0.47.0
+
+### Minor Changes
+
+- 0fc1c36c: Fixed an issue with the copy to clipboard feature.
+- 2757ad9a: Improve links with more verbose text.
+
 ## 0.46.4
 
 ### Patch Changes

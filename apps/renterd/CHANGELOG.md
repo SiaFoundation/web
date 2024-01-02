@@ -1,5 +1,11 @@
 # renterd
 
+## 0.41.0
+
+### Minor Changes
+
+- 0fc1c36c: Fixed an issue with the copy to clipboard feature.
+
 ## 0.40.0
 
 ### Minor Changes
