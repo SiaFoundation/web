@@ -4,7 +4,7 @@
   "version": "0.2.6",
   "license": "MIT",
   "peerDependencies": {
-    "lodash-es": "^4.17.21"
+    "@technically/lodash": "^4.17.0"
   },
   "types": "./src/index.d.ts"
 }
