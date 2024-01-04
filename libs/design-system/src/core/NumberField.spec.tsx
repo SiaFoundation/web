@@ -35,15 +35,15 @@ describe('NumberField', () => {
     await user.type(input, '44')
     fireEvent.blur(input)
     expect(input.value).toBe('44')
-    expect(onChange.mock.calls.length).toBe(4)
-    expect(Number(onChange.mock.calls[3][0])).toBe(44)
+    expect(onChange.mock.calls.length).toBe(3)
+    expect(Number(onChange.mock.calls[2][0])).toBe(44)
     await user.click(input)
     await user.type(input, '4')
     fireEvent.blur(input)
     expect(input.value).toBe('444')
-    expect(onChange.mock.calls.length).toBe(6)
-    expect(Number(onChange.mock.calls[5][0])).toBe(444)
-    expectOnChangeValues([undefined, '4', '44', '44', '444', '444'], onChange)
+    expect(onChange.mock.calls.length).toBe(4)
+    expect(Number(onChange.mock.calls[3][0])).toBe(444)
+    expectOnChangeValues([undefined, '4', '44', '444'], onChange)
   })
 
   it('updates value starting with decimal', async () => {
@@ -93,20 +93,20 @@ describe('NumberField', () => {
     await user.clear(input)
     await user.type(input, '4444')
     await user.type(input, '.5')
-    expect(input.value).toBe('44.445')
+    expect(input.value).toBe('4.444,5')
     await user.type(input, ',5')
-    expect(input.value).toBe('44.445,5')
+    expect(input.value).toBe('4.444,55')
     expectOnChangeValues(
       [
+        '3333',
         undefined,
         '4',
         '44',
         '444',
         '4444',
         '4444',
-        '44445',
-        '44445',
-        '44445.5',
+        '4444.5',
+        '4444.55',
       ],
       onChange
     )
@@ -122,25 +122,25 @@ describe('NumberField', () => {
       onChange,
     })
 
-    expect(input.value).toBe('₽3333')
+    expect(input.value).toBe('₽3.333')
     await user.click(input)
     await user.clear(input)
     await user.type(input, '4444')
     await user.type(input, '.5')
-    expect(input.value).toBe('₽44445')
+    expect(input.value).toBe('₽4.444,5')
     await user.type(input, ',5')
-    expect(input.value).toBe('₽44445,5')
+    expect(input.value).toBe('₽4.444,55')
     expectOnChangeValues(
       [
+        '3333',
         undefined,
         '4',
         '44',
         '444',
         '4444',
         '4444',
-        '44445',
-        '44445',
-        '44445.5',
+        '4444.5',
+        '4444.55',
       ],
       onChange
     )
@@ -162,8 +162,8 @@ describe('NumberField', () => {
     fireEvent.blur(input)
     // Either way limits to 6 (not rounding)
     expect(input.value).toBe('0.123456')
-    expect(onChange.mock.calls.length).toBe(13)
-    expect(Number(onChange.mock.calls[12][0])).toBe(0.123456)
+    expect(onChange.mock.calls.length).toBe(9)
+    expect(Number(onChange.mock.calls[8][0])).toBe(0.123456)
     expectOnChangeValues(
       [
         undefined,
@@ -174,10 +174,6 @@ describe('NumberField', () => {
         '0.123',
         '0.1234',
         '0.12345',
-        '0.123456',
-        '0.123456',
-        '0.123456',
-        '0.123456',
         '0.123456',
       ],
       onChange

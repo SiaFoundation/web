@@ -5,7 +5,7 @@ import {
 } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 import { SiacoinField } from './SiacoinField'
-import { fireEvent, render, waitFor } from '@testing-library/react'
+import { fireEvent, render, waitFor, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
@@ -50,8 +50,8 @@ describe('SiacoinField', () => {
     fireEvent.blur(scInput)
     expect(scInput.value).toBe('44')
     expect(fiatInput.value).toBe('$44')
-    expect(onChange.mock.calls.length).toBe(4)
-    expect(Number(onChange.mock.calls[3][0])).toBe(44)
+    expect(onChange.mock.calls.length).toBe(3)
+    expect(Number(onChange.mock.calls[2][0])).toBe(44)
     // for some reason after fireEvent.blur, user.click does not trigger a re-focus
     fireEvent.focus(scInput)
     await user.click(scInput)
@@ -59,9 +59,9 @@ describe('SiacoinField', () => {
     fireEvent.blur(scInput)
     expect(scInput.value).toBe('444')
     expect(fiatInput.value).toBe('$444')
-    expect(onChange.mock.calls.length).toBe(6)
-    expect(Number(onChange.mock.calls[5][0])).toBe(444)
-    expectOnChangeValues([undefined, '4', '44', '44', '444', '444'], onChange)
+    expect(onChange.mock.calls.length).toBe(4)
+    expect(Number(onChange.mock.calls[3][0])).toBe(444)
+    expectOnChangeValues([undefined, '4', '44', '444'], onChange)
   })
 
   it('updates value starting with decimal', async () => {
@@ -119,22 +119,22 @@ describe('SiacoinField', () => {
     await user.clear(scInput)
     await user.type(scInput, '4444')
     await user.type(scInput, '.5')
-    expect(scInput.value).toBe('44.445')
-    expect(fiatInput.value).toBe('$44.445')
+    expect(scInput.value).toBe('4.444,5')
+    expect(fiatInput.value).toBe('$4.444,5')
     await user.type(scInput, ',5')
-    expect(scInput.value).toBe('44.445,5')
-    expect(fiatInput.value).toBe('$44.445,5')
+    expect(scInput.value).toBe('4.444,55')
+    expect(fiatInput.value).toBe('$4.444,55')
     expectOnChangeValues(
       [
+        '3333',
         undefined,
         '4',
         '44',
         '444',
         '4444',
         '4444',
-        '44445',
-        '44445',
-        '44445.5',
+        '4444.5',
+        '4444.55',
       ],
       onChange
     )
@@ -157,22 +157,22 @@ describe('SiacoinField', () => {
     await user.clear(scInput)
     await user.type(scInput, '4444')
     await user.type(scInput, '.5')
-    expect(scInput.value).toBe('44.445')
-    expect(fiatInput.value).toBe('₽44.445')
-    await user.type(scInput, ',5')
-    expect(scInput.value).toBe('44.445,5')
-    expect(fiatInput.value).toBe('₽44.445,5')
+    expect(scInput.value).toBe('4.444,5')
+    expect(fiatInput.value).toBe('₽4.444,5')
+    await user.type(scInput, '5')
+    expect(scInput.value).toBe('4.444,55')
+    expect(fiatInput.value).toBe('₽4.444,55')
     expectOnChangeValues(
       [
+        '3333',
         undefined,
         '4',
         '44',
         '444',
         '4444',
         '4444',
-        '44445',
-        '44445',
-        '44445.5',
+        '4444.5',
+        '4444.55',
       ],
       onChange
     )
@@ -189,28 +189,28 @@ describe('SiacoinField', () => {
       onChange,
     })
 
-    expect(scInput.value).toBe('3333')
-    expect(fiatInput.value).toBe('₽3333')
+    expect(scInput.value).toBe('3.333')
+    expect(fiatInput.value).toBe('₽3.333')
     await user.click(scInput)
     await user.clear(scInput)
     await user.type(scInput, '4444')
     await user.type(scInput, '.5')
-    expect(scInput.value).toBe('44445')
-    expect(fiatInput.value).toBe('₽44445')
+    expect(scInput.value).toBe('4.444,5')
+    expect(fiatInput.value).toBe('₽4.444,5')
     await user.type(scInput, ',5')
-    expect(scInput.value).toBe('44445,5')
-    expect(fiatInput.value).toBe('₽44445,5')
+    expect(scInput.value).toBe('4.444,55')
+    expect(fiatInput.value).toBe('₽4.444,55')
     expectOnChangeValues(
       [
+        '3333',
         undefined,
         '4',
         '44',
         '444',
         '4444',
         '4444',
-        '44445',
-        '44445',
-        '44445.5',
+        '4444.5',
+        '4444.55',
       ],
       onChange
     )
@@ -235,8 +235,8 @@ describe('SiacoinField', () => {
     // Either way limits to 6 (not rounding)
     expect(scInput.value).toBe('0.123456')
     expect(fiatInput.value).toBe('$0.123456')
-    expect(onChange.mock.calls.length).toBe(13)
-    expect(Number(onChange.mock.calls[12][0])).toBe(0.123456)
+    expect(onChange.mock.calls.length).toBe(9)
+    expect(Number(onChange.mock.calls[8][0])).toBe(0.123456)
     expectOnChangeValues(
       [
         undefined,
@@ -247,10 +247,6 @@ describe('SiacoinField', () => {
         '0.123',
         '0.1234',
         '0.12345',
-        '0.123456',
-        '0.123456',
-        '0.123456',
-        '0.123456',
         '0.123456',
       ],
       onChange
@@ -324,9 +320,9 @@ describe('SiacoinField', () => {
     expect(scInput.value).toBe('0.123')
     expect(fiatInput.value).toBe('$0.000446')
     // Fires one more time because the currency inut component fires onValueChange on blur.
-    expect(onChange.mock.calls.length).toBe(7)
+    expect(onChange.mock.calls.length).toBe(6)
     expectOnChangeValues(
-      [undefined, '0', '0', '0.1', '0.12', '0.123', '0.123'],
+      [undefined, '0', '0', '0.1', '0.12', '0.123'],
       onChange
     )
   })
@@ -377,7 +373,9 @@ async function renderNode({
   const fiatInput = node.getByTestId('fiatInput') as HTMLInputElement
   await waitFor(() => expect(fiatInput.value).toBeTruthy())
   // let the component set state and finish the next render pass
-  await delay(100)
+  await act(async () => {
+    await delay(100)
+  })
   return { node, scInput, fiatInput }
 }
 
