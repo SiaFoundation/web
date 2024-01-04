@@ -1,14 +1,7 @@
 'use client'
 
 import { BaseNumberField } from './BaseNumberField'
-import {
-  forwardRef,
-  Ref,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import { toFixedMax } from '../lib/numbers'
 
@@ -21,39 +14,38 @@ type Props = Omit<
   units?: string
   decimalsLimit?: number
   decimalsLimitFiat?: number
+  allowDecimals?: boolean
+  disableGroupSeparators?: boolean
   placeholder?: BigNumber
   showFiat?: boolean
   error?: boolean
   changed?: boolean
 }
 
-export const NumberField = forwardRef(function NumberField(
-  {
-    value: _externalValue,
-    placeholder = new BigNumber(100),
-    decimalsLimit = 6,
-    onChange,
-    size = 'small',
-    units,
-    error,
-    changed,
-    onBlur,
-    onFocus,
-    ...props
-  }: Props,
-  ref: Ref<HTMLInputElement>
-) {
+export function NumberField({
+  value: _externalValue,
+  placeholder = new BigNumber(100),
+  decimalsLimit = 6,
+  allowDecimals = true,
+  disableGroupSeparators,
+  onChange,
+  size = 'small',
+  units,
+  error,
+  changed,
+  onBlur,
+  onFocus,
+  ...props
+}: Props) {
   const externalValue = useMemo(
     () => new BigNumber(_externalValue),
     [_externalValue]
   )
   const [localValue, setLocalValue] = useState<string>('')
-  const value = useMemo(() => normalizedNumberString(localValue), [localValue])
 
   const updateExternalValue = useCallback(
     (value: string) => {
       if (onChange) {
-        value = normalizedNumberString(value)
         onChange(
           value && !isNaN(Number(value)) ? new BigNumber(value) : undefined
         )
@@ -72,7 +64,7 @@ export const NumberField = forwardRef(function NumberField(
 
   // sync externally controlled value
   useEffect(() => {
-    if (!externalValue.isEqualTo(value)) {
+    if (!externalValue.isEqualTo(localValue)) {
       const fesc = toFixedMax(externalValue, decimalsLimit)
       setLocalValue(fesc)
     }
@@ -81,8 +73,8 @@ export const NumberField = forwardRef(function NumberField(
 
   return (
     <BaseNumberField
-      ref={ref}
       {...props}
+      thousandsGroupStyle={disableGroupSeparators ? 'none' : undefined}
       data-testid="numberfield"
       size={size}
       placeholder={
@@ -90,7 +82,7 @@ export const NumberField = forwardRef(function NumberField(
       }
       units={units}
       value={localValue !== 'NaN' ? localValue : ''}
-      decimalsLimit={decimalsLimit}
+      decimalScale={allowDecimals ? decimalsLimit : 0}
       onBlur={(e) => {
         if (onBlur) {
           onBlur(e)
@@ -101,12 +93,7 @@ export const NumberField = forwardRef(function NumberField(
           onFocus(e)
         }
       }}
-      onValueChange={(value) => onValueChange(value || '')}
+      onValueChange={(value) => onValueChange(value.value || '')}
     />
   )
-})
-
-function normalizedNumberString(v: string): string {
-  // normalize separators
-  return v?.replace(/,/g, '.') || ''
 }

@@ -1,12 +1,12 @@
-import CurrencyInput from 'react-currency-input-field'
 import { textFieldStyles } from './TextField'
 import { Text } from './Text'
 import { cx } from 'class-variance-authority'
 import { VariantProps } from '../types'
-import { useEffect, useState } from 'react'
+import { NumericFormat } from 'react-number-format'
+import { useEffect, useMemo, useState } from 'react'
 
 type Props = VariantProps<typeof textFieldStyles> &
-  Omit<React.ComponentProps<typeof CurrencyInput>, 'size' | 'className'> & {
+  Omit<React.ComponentProps<typeof NumericFormat>, 'size' | 'className'> & {
     units?: string
   }
 
@@ -16,10 +16,10 @@ export function BaseNumberField({
   size = 'small',
   state,
   noSpin,
+  thousandsGroupStyle: customThousandsGroupStyle,
   focus,
   cursor,
   className,
-  decimalsLimit,
   onValueChange,
   ...props
 }: Props) {
@@ -28,48 +28,34 @@ export function BaseNumberField({
   const [locale, setLocale] = useState<string>()
   useEffect(() => {
     setLocale(navigator.language)
-    // Below code allows for dynamically changing language without refresh.
-    // Seems like it can cause NaN in the CurrencyInput so disabled for now.
-    // const onLanguageChange = () => {
-    //   setLocale(navigator.language)
-    // }
-    // setLocale(navigator.language)
-    // window.addEventListener('languagechange', onLanguageChange)
-    // return () => {
-    //   window.removeEventListener('languagechange', onLanguageChange)
-    // }
+    // allows for dynamically changing language without refresh
+    const onLanguageChange = () => {
+      setLocale(navigator.language)
+    }
+    setLocale(navigator.language)
+    window.addEventListener('languagechange', onLanguageChange)
+    return () => {
+      window.removeEventListener('languagechange', onLanguageChange)
+    }
   }, [])
+
+  const decimalSeparator = useMemo(() => getDecimalSeparator(locale), [locale])
+  const { groupingSeparator, groupingStyle } = useMemo(
+    () => getGroupingInfo(locale, customThousandsGroupStyle),
+    [locale, customThousandsGroupStyle]
+  )
+
   return (
     <div className="relative">
-      <CurrencyInput
+      <NumericFormat
         {...props}
-        decimalsLimit={decimalsLimit}
-        // For some reason decimalsLimit=0 is ignored and defaults to 2.
-        // Adding allowDecimals=false fixes that issue.
-        intlConfig={
-          // locale: navigator.language,
-          locale
-            ? {
-                locale,
-              }
-            : undefined
-        }
-        allowDecimals={!!decimalsLimit}
         autoComplete="off"
         spellCheck={false}
         onValueChange={onValueChange}
-        transformRawValue={(value) => {
-          if (value.length > 0) {
-            if (value[0] === '.') {
-              return '0.' + value.slice(1)
-            }
-            if (value[0] === ',') {
-              return '0,' + value.slice(1)
-            }
-          }
-
-          return value
-        }}
+        lang={locale}
+        decimalSeparator={decimalSeparator}
+        thousandsGroupStyle={groupingStyle}
+        thousandSeparator={groupingSeparator}
         className={cx(
           textFieldStyles({
             variant,
@@ -103,4 +89,70 @@ export function BaseNumberField({
       )}
     </div>
   )
+}
+
+function getGroupingStyle(groups: number[]): 'thousand' | 'lakh' | 'wan' {
+  // Standard thousand grouping
+  if (groups.every((size) => size === 3)) {
+    return 'thousand'
+  }
+
+  // Indian lakh/crore grouping
+  if (
+    groups.length >= 2 &&
+    groups.slice(1).every((size) => size === 2) &&
+    groups[0] === 3
+  ) {
+    return 'lakh'
+  }
+
+  // Chinese/Japanese wan grouping
+  if (groups.every((size) => size === 4)) {
+    return 'wan'
+  }
+
+  return 'thousand'
+}
+
+function getGroupingInfo(
+  locale: string | undefined,
+  customThousandsGroupStyle?: 'none' | 'thousand' | 'lakh' | 'wan'
+): {
+  groupingSeparator: string
+  groupingStyle: 'thousand' | 'lakh' | 'wan' | 'none'
+} {
+  if (customThousandsGroupStyle === 'none') {
+    return { groupingSeparator: '', groupingStyle: 'none' }
+  }
+
+  const largeNumber = 123456789
+  const formattedNumber = new Intl.NumberFormat(locale).format(largeNumber)
+
+  // Find the grouping separator
+  const groupingSeparator = formattedNumber.replace(/[0-9]/g, '')[0] // First non-numeric character
+
+  // Determine the grouping style
+  const groups = formattedNumber
+    .split(groupingSeparator)
+    .map((group) => group.length)
+
+  if (customThousandsGroupStyle) {
+    return {
+      groupingSeparator,
+      groupingStyle: customThousandsGroupStyle,
+    }
+  }
+
+  const groupingStyle = getGroupingStyle(groups)
+
+  return { groupingSeparator, groupingStyle }
+}
+
+function getDecimalSeparator(locale?: string) {
+  const numberWithDecimal = 1.1
+  const formattedNumber = new Intl.NumberFormat(locale).format(
+    numberWithDecimal
+  )
+  const decimalSeparator = formattedNumber[1] // Assuming '.' is at position 1
+  return decimalSeparator
 }
