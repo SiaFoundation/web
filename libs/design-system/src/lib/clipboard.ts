@@ -1,5 +1,5 @@
 import React from 'react'
-import { writeText } from 'clipboard-polyfill'
+import { writeText, write } from 'clipboard-polyfill'
 import { ToastOptions, triggerToast, triggerToastNode } from './toast'
 
 export const copyToClipboard = (text: string, entity?: string) => {
@@ -8,6 +8,18 @@ export const copyToClipboard = (text: string, entity?: string) => {
     : 'Copied to clipboard'
   triggerToast(message)
   writeText(text)
+}
+
+export const copyImageToClipboard = (
+  image: Blob,
+  type: string,
+  entity?: string
+) => {
+  const message = entity
+    ? `Copied ${entity} to clipboard`
+    : 'Copied to clipboard'
+  triggerToast(message)
+  write([new ClipboardItem({ [type]: image })])
 }
 
 export const copyToClipboardCustom = (

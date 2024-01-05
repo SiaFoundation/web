@@ -1,10 +1,11 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useRef } from 'react'
 import {
   triggerErrorToast,
   useOnInvalid,
   useFormInit,
   useFormServerSynced,
   useFormChangeCount,
+  nodeToImage,
 } from '@siafoundation/design-system'
 import { useCallback, useMemo } from 'react'
 import { transformDown } from './transform'
@@ -85,6 +86,19 @@ export function useConfigMain() {
     [form, onValid, onInvalid]
   )
 
+  const configRef = useRef()
+  const takeScreenshot = useCallback(
+    async (props: {
+      name: string
+      quality?: number
+      copy?: boolean
+      download?: boolean
+    }) => {
+      nodeToImage(configRef.current, props)
+    },
+    []
+  )
+
   return {
     fields,
     settings,
@@ -96,6 +110,8 @@ export function useConfigMain() {
     showAdvanced,
     setShowAdvanced,
     remoteError,
+    takeScreenshot,
+    configRef,
   }
 }
 

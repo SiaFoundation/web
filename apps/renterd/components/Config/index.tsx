@@ -11,7 +11,7 @@ import { StateConnError } from './StateConnError'
 
 export function Config() {
   const { openDialog } = useDialog()
-  const { form, fields, remoteError } = useConfig()
+  const { form, fields, remoteError, configRef } = useConfig()
 
   return (
     <RenterdAuthedLayout
@@ -26,7 +26,10 @@ export function Config() {
       {remoteError ? (
         <StateConnError />
       ) : (
-        <div className="px-5 py-6 flex flex-col gap-16 max-w-screen-xl">
+        <div
+          ref={configRef}
+          className="px-5 py-6 flex flex-col gap-16 max-w-screen-xl"
+        >
           <ConfigurationPanel
             title="Storage"
             category="storage"

@@ -1,31 +1,18 @@
-import { Text, Button, ConfigurationPanel } from '@siafoundation/design-system'
-import {
-  Reset16,
-  Save16,
-  Warning16,
-  CheckmarkFilled16,
-} from '@siafoundation/react-icons'
+import { Text, ConfigurationPanel } from '@siafoundation/design-system'
+import { Warning16, CheckmarkFilled16 } from '@siafoundation/react-icons'
 import { HostdSidenav } from '../HostdSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { HostdAuthedLayout } from '../../components/HostdAuthedLayout'
-import { AnnounceButton } from './AnnounceButton'
 import { useConfig } from '../../contexts/config'
 import { ConfigNav } from './ConfigNav'
 import { StateConnError } from './StateConnError'
+import { ConfigActions } from './ConfigActions'
 
 export function Config() {
   const { openDialog } = useDialog()
-  const {
-    fields,
-    settings,
-    dynDNSCheck,
-    changeCount,
-    revalidateAndResetForm,
-    form,
-    onSubmit,
-    remoteError,
-  } = useConfig()
+  const { fields, settings, dynDNSCheck, form, remoteError, configRef } =
+    useConfig()
   return (
     <HostdAuthedLayout
       title="Configuration"
@@ -54,39 +41,16 @@ export function Config() {
           )
         ) : null
       }
-      actions={
-        <div className="flex items-center gap-2">
-          {!!changeCount && (
-            <Text size="12" color="subtle">
-              {changeCount === 1 ? '1 change' : `${changeCount} changes`}
-            </Text>
-          )}
-          <Button
-            tip="Reset all changes"
-            icon="contrast"
-            disabled={!changeCount}
-            onClick={revalidateAndResetForm}
-          >
-            <Reset16 />
-          </Button>
-          <Button
-            tip="Save all changes"
-            variant="accent"
-            disabled={!form.formState.isDirty || form.formState.isSubmitting}
-            onClick={onSubmit}
-          >
-            <Save16 />
-            Save changes
-          </Button>
-          <AnnounceButton />
-        </div>
-      }
+      actions={<ConfigActions />}
       openSettings={() => openDialog('settings')}
     >
       {remoteError ? (
         <StateConnError />
       ) : (
-        <div className="p-6 flex flex-col gap-16 max-w-screen-xl">
+        <div
+          ref={configRef}
+          className="p-6 flex flex-col gap-16 max-w-screen-xl"
+        >
           <ConfigurationPanel
             title="Host"
             category="host"

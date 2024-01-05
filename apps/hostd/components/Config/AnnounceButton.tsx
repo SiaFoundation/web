@@ -54,11 +54,7 @@ export function AnnounceButton() {
   )
 
   return (
-    <Button
-      variant="accent"
-      tip="Announce host address"
-      onClick={triggerConfirm}
-    >
+    <Button tip="Announce host address" onClick={triggerConfirm}>
       <Bullhorn16 />
       Announce
     </Button>
