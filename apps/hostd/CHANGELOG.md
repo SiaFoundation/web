@@ -1,5 +1,13 @@
 # hostd
 
+## 0.33.0
+
+### Minor Changes
+
+- fa1297bf: The configuration page now has menu options to download or copy an image of the current configuration for easier sharing.
+- e470c163: Fixed an issue where siacoin and numeric input values would jump to an incorrect value.
+- 7484cbc0: The announce button is now disabled unless the net address does not match the last announcement. Closes https://github.com/SiaFoundation/hostd/issues/248
+
 ## 0.32.0
 
 ### Minor Changes

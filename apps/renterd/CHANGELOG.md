@@ -1,5 +1,16 @@
 # renterd
 
+## 0.42.0
+
+### Minor Changes
+
+- f5b44630: The total file count now includes in-progress uploads.
+- 7635e79d: Fixed an issue displaying the contract sets column data on the contracts explorer.
+- d2161c5e: The renterd file count stats tooltip description is now more accurate.
+- fa1297bf: The configuration page now has menu options to download or copy an image of the current configuration for easier sharing.
+- e470c163: Fixed an issue where siacoin and numeric input values would jump to an incorrect value.
+- cc7b1500: Contracts can now be filtered by contract set.
+
 ## 0.41.0
 
 ### Minor Changes
