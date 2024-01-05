@@ -8,7 +8,7 @@ export type ContractData = {
   hostKey: string
   state: ContractState
   location?: [number, number]
-  sets?: string[]
+  contractSets?: string[]
   isRenewed: boolean
   renewedFrom: string
   timeline: number
@@ -30,7 +30,7 @@ export type ContractData = {
 export type TableColumnId =
   | 'actions'
   | 'contractId'
-  | 'sets'
+  | 'contractSets'
   | 'hostIp'
   | 'hostKey'
   | 'state'
@@ -45,7 +45,7 @@ export type TableColumnId =
 
 export const columnsDefaultVisible: TableColumnId[] = [
   'contractId',
-  'sets',
+  'contractSets',
   'hostIp',
   'hostKey',
   'state',
