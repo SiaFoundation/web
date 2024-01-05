@@ -7,12 +7,12 @@ import {
   FieldText,
   Badge,
   Label,
+  useDialogFormHelpers,
 } from '@siafoundation/design-system'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useWalletAdd } from '@siafoundation/react-walletd'
 import { useWallets } from '../../contexts/wallets'
-import { useDialogFormHelpers } from '../../hooks/useDialogFormHelpers'
 
 const defaultValues = {
   name: '',

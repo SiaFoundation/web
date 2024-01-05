@@ -8,7 +8,10 @@ import {
   daysInMilliseconds,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
-import { useContracts as useContractsData } from '@siafoundation/react-renterd'
+import {
+  useContracts as useContractsData,
+  useContractSets,
+} from '@siafoundation/react-renterd'
 import {
   createContext,
   useCallback,
@@ -205,6 +208,8 @@ function useContractsMain() {
   const { contractSetMetrics: contractSetCountMetrics } =
     useContractSetMetrics()
 
+  const contractSets = useContractSets()
+
   return {
     dataState,
     limit,
@@ -244,6 +249,7 @@ function useContractsMain() {
     allContractsSpendingMetrics,
     selectedContractSpendingMetrics,
     contractSetCountMetrics,
+    contractSets,
   }
 }
 

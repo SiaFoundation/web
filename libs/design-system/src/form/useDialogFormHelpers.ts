@@ -1,13 +1,13 @@
 import { useCallback } from 'react'
-import { UseFormReturn } from 'react-hook-form'
+import { FieldValues, UseFormReturn } from 'react-hook-form'
 
-type Props<Values> = {
+type Props<Values extends FieldValues> = {
   form: UseFormReturn<Values>
   onOpenChange: (open: boolean) => void
   defaultValues: Values
 }
 
-export function useDialogFormHelpers<Values>({
+export function useDialogFormHelpers<Values extends FieldValues>({
   form,
   onOpenChange,
   defaultValues,

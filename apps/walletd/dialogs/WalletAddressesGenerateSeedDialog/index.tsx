@@ -6,11 +6,11 @@ import {
   FormSubmitButton,
   triggerErrorToast,
   triggerSuccessToast,
+  useDialogFormHelpers,
 } from '@siafoundation/design-system'
 import { useWalletAddressAdd } from '@siafoundation/react-walletd'
 import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useDialogFormHelpers } from '../../hooks/useDialogFormHelpers'
 import { getWalletWasm } from '../../lib/wasm'
 import { useWallets } from '../../contexts/wallets'
 import BigNumber from 'bignumber.js'

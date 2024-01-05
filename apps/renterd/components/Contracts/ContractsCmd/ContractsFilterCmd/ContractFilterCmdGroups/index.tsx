@@ -6,6 +6,7 @@ import { Page } from '../../../../CmdRoot/types'
 import { ClientFilterItem } from '@siafoundation/design-system'
 import { AddressCmdGroup } from './Address'
 import { PublicKeyCmdGroup } from './PublicKey'
+import { ContractSetCmdGroup } from './ContractSet'
 
 type Props = {
   currentPage: Page
@@ -17,6 +18,7 @@ export function ContractFilterCmdGroups({ currentPage, select }: Props) {
     <>
       <AddressCmdGroup currentPage={currentPage} select={select} />
       <PublicKeyCmdGroup currentPage={currentPage} select={select} />
+      <ContractSetCmdGroup currentPage={currentPage} select={select} />
       <ExpiryCmdGroup currentPage={currentPage} select={select} />
       <FormationCmdGroup currentPage={currentPage} select={select} />
       <RenewCmdGroup currentPage={currentPage} select={select} />
