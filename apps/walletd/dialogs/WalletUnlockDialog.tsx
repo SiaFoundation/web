@@ -3,11 +3,11 @@ import {
   ConfigFields,
   Dialog,
   FormSubmitButton,
+  useDialogFormHelpers,
   useOnInvalid,
 } from '@siafoundation/design-system'
 import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useDialogFormHelpers } from '../hooks/useDialogFormHelpers'
 import { getWalletWasm } from '../lib/wasm'
 import { useWallets } from '../contexts/wallets'
 import { getFieldMnemonic, MnemonicFieldType } from '../lib/fieldMnemonic'

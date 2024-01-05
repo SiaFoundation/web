@@ -126,6 +126,7 @@ export * from './form/FieldSelect'
 export * from './form/useFormServerSynced'
 export * from './form/useFormChangeCount'
 export * from './form/useFormInit'
+export * from './form/useDialogFormHelpers'
 
 // site
 export * from './site/SiteHeading'

@@ -479,11 +479,11 @@ export function useContractDelete(
   )
 }
 
-export function useContractsets(args?: HookArgsSwr<void, string[][]>) {
+export function useContractSets(args?: HookArgsSwr<void, string[]>) {
   return useGetSwr({ ...args, route: '/bus/contracts/sets' })
 }
 
-export function useContractsetUpdate(
+export function useContractSetUpdate(
   args: HookArgsCallback<{ name: string }, string[], never>
 ) {
   return usePutFunc({ ...args, route: '/bus/contracts/sets/:set' })
