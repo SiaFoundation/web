@@ -74,7 +74,6 @@ export function useConfigMain() {
 
   const onValid = useOnValid({
     resources,
-    dirtyFields: form.formState.dirtyFields,
     showAdvanced,
     revalidateAndResetForm,
   })
