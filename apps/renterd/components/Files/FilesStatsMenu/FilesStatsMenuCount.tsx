@@ -17,14 +17,26 @@ export function FilesStatsMenuCount() {
 
   if (isViewingABucket) {
     return (
-      <Tooltip side="bottom" content="Number of files in current directory">
+      <div className="flex gap-1">
+        <Tooltip
+          side="bottom"
+          content="Number of files in page of current directory"
+        >
+          <Text size="12" font="mono">
+            {pageCount.toLocaleString()}
+          </Text>
+        </Tooltip>
         <Text size="12" font="mono">
-          {pageCount.toLocaleString()}
-          {stats.data
-            ? ` of ${stats.data?.numObjects.toLocaleString()} files`
-            : ' files'}
+          of
         </Text>
-      </Tooltip>
+        <Tooltip side="bottom" content="Number of files across all buckets">
+          <Text size="12" font="mono">
+            {stats.data
+              ? `${stats.data?.numObjects.toLocaleString()} files`
+              : ' files'}
+          </Text>
+        </Tooltip>
+      </div>
     )
   }
   return (
