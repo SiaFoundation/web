@@ -9,7 +9,6 @@ export function useNowAtInterval(dataInterval: DataInterval) {
     setNow(new Date().getTime())
     const i = setInterval(() => {
       setNow(new Date().getTime())
-      console.log('reset time range')
     }, getDataIntervalInMs(dataInterval))
     return () => clearInterval(i)
   }, [dataInterval])

@@ -1,5 +1,6 @@
-import React, { createContext, useContext } from 'react'
+import React, { useRef, createContext, useContext } from 'react'
 import {
+  nodeToImage,
   triggerErrorToast,
   useFormChangeCount,
   useFormInit,
@@ -199,6 +200,19 @@ export function useConfigMain() {
     [form, onValid, onInvalid]
   )
 
+  const configRef = useRef()
+  const takeScreenshot = useCallback(
+    async (props: {
+      name: string
+      quality?: number
+      copy?: boolean
+      download?: boolean
+    }) => {
+      nodeToImage(configRef.current, props)
+    },
+    []
+  )
+
   return {
     onSubmit,
     revalidateAndResetForm,
@@ -215,6 +229,8 @@ export function useConfigMain() {
     showAdvanced,
     setShowAdvanced,
     remoteError,
+    configRef,
+    takeScreenshot,
   }
 }
 

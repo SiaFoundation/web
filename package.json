@@ -87,6 +87,7 @@
     "formik": "^2.2.9",
     "framer-motion": "^7.6.5",
     "gray-matter": "^4.0.3",
+    "html-to-image": "^1.11.11",
     "identicon.js": "^2.3.3",
     "jest-environment-jsdom": "29.4.3",
     "lowdb": "^3.0.0",

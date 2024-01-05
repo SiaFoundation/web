@@ -9,6 +9,7 @@ import {
 } from '@siafoundation/design-system'
 import { Reset16, Save16, Settings16 } from '@siafoundation/react-icons'
 import { useConfig } from '../../contexts/config'
+import { ConfigContextMenu } from './ConfigContextMenu'
 
 export function ConfigActions() {
   const {
@@ -72,6 +73,7 @@ export function ConfigActions() {
           </div>
         </Popover>
       </ControlGroup>
+      <ConfigContextMenu />
     </div>
   )
 }

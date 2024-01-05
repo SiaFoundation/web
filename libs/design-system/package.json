@@ -50,6 +50,7 @@
     "clipboard-polyfill": "^4.0.1",
     "@visx/xychart": "^2.18.0",
     "react-dropzone": "^14.2.3",
+    "html-to-image": "^1.11.11",
     "react-number-format": "^5.3.1",
     "@radix-ui/react-radio-group": "^1.0.0",
     "@radix-ui/react-accordion": "^1.0.0",
