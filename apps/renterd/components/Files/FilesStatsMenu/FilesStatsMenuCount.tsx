@@ -3,7 +3,7 @@ import { useFiles } from '../../../contexts/files'
 import { useObjectStats } from '@siafoundation/react-renterd'
 
 export function FilesStatsMenuCount() {
-  const { isViewingABucket, pageCount } = useFiles()
+  const { isViewingABucket, pageCount, uploadsList } = useFiles()
   const stats = useObjectStats({
     config: {
       swr: {
@@ -14,6 +14,10 @@ export function FilesStatsMenuCount() {
       },
     },
   })
+
+  const numberObject = stats.data?.numObjects || 0
+  const uploadsInProgress = uploadsList.length
+  const totalObjects = numberObject + uploadsInProgress
 
   if (isViewingABucket) {
     return (
@@ -31,9 +35,7 @@ export function FilesStatsMenuCount() {
         </Text>
         <Tooltip side="bottom" content="Number of files across all buckets">
           <Text size="12" font="mono">
-            {stats.data
-              ? `${stats.data?.numObjects.toLocaleString()} files`
-              : ' files'}
+            {stats.data ? `${totalObjects.toLocaleString()} files` : ' files'}
           </Text>
         </Tooltip>
       </div>
@@ -43,7 +45,7 @@ export function FilesStatsMenuCount() {
     <Tooltip side="bottom" content="Number of files across all buckets">
       {stats.data ? (
         <Text size="12" font="mono">
-          {stats.data?.numObjects.toLocaleString()} files
+          {totalObjects.toLocaleString()} files
         </Text>
       ) : (
         <LoadingDots />
