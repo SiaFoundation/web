@@ -151,7 +151,7 @@ export type Contract = {
   id: string
   hostIP: string
   hostKey: string
-  sets?: string[]
+  contractSets?: string[]
   proofHeight: number
   revisionHeight: number
   revisionNumber: number

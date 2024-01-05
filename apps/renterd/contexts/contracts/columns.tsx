@@ -87,19 +87,19 @@ export const columns: ContractsTableColumn[] = [
     },
   },
   {
-    id: 'sets',
+    id: 'contractSets',
     label: 'contract sets',
     contentClassName: 'w-[120px]',
     category: 'general',
-    render: ({ data: { sets }, context: { defaultSet } }) => {
-      if (!sets) {
+    render: ({ data: { contractSets }, context: { defaultSet } }) => {
+      if (!contractSets) {
         return null
       }
       return (
         <div className="flex flex-col items-center overflow-hidden h-full">
           <ScrollArea>
             <div className="flex min-h-full gap-1 flex-wrap py-2 items-center">
-              {sets.map((set) => {
+              {contractSets.map((set) => {
                 const isDefaultSet = defaultSet === set
                 return (
                   <Tooltip

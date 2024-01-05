@@ -89,7 +89,7 @@ function useContractsMain() {
           state: c.state,
           hostIp: c.hostIP,
           hostKey: c.hostKey,
-          sets: c.sets,
+          contractSets: c.contractSets,
           location: geoHosts.find((h) => h.public_key === c.hostKey)?.location,
           timeline: startTime,
           startTime,
