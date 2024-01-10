@@ -3,10 +3,12 @@ name: Release Go modules
 concurrency: commits-to-main
 
 on:
-  # daily at midnight
+  # Daily at 6 PM EST / 3 PM PST / 11 PM UTC
+  # The daemon repos check for UI updates an
+  # hour later at 7 PM EST / 4 PM PST / 12 AM UTC
   schedule:
-    - cron: 0 0 * * *
-  # enable manual trigger
+    - cron: 0 23 * * *
+  # Enable manual trigger
   workflow_dispatch:
 
 jobs:
