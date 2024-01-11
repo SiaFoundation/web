@@ -1,11 +1,11 @@
 {
   "name": "@siafoundation/units",
   "description": "Methods and types for interacting with the Sia Central API.",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "license": "MIT",
   "peerDependencies": {
-    "@siafoundation/sia-central": "^0.2.6",
-    "@siafoundation/react-core": "^0.16.11",
+    "@siafoundation/sia-central": "^0.3.0",
+    "@siafoundation/react-core": "^1.0.0",
     "bignumber.js": "^9.0.2"
   },
   "dependencies": {

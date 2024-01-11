@@ -1,5 +1,11 @@
 # @siafoundation/next
 
+## 0.1.0
+
+### Minor Changes
+
+- d8528c8e: Package build and bundling has been updated.
+
 ## 0.0.6
 
 ### Patch Changes
