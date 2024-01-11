@@ -12,7 +12,10 @@
         "outputPath": "dist/libs/design-system",
         "tsConfig": "libs/design-system/tsconfig.lib.json",
         "main": "libs/design-system/src/index.ts",
-        "assets": ["libs/design-system/*.md"]
+        "assets": [
+          "libs/design-system/*.md",
+          "libs/design-system/src/assets/**/*"
+        ]
       },
       "configurations": {}
     },
