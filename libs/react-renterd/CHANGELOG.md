@@ -1,5 +1,17 @@
 # @siafoundation/react-renterd
 
+## 2.0.0
+
+### Minor Changes
+
+- d8528c8e: Package build and bundling has been updated.
+
+### Patch Changes
+
+- Updated dependencies [d8528c8e]
+  - @siafoundation/react-core@1.0.0
+  - @siafoundation/types@0.1.0
+
 ## 1.0.6
 
 ### Patch Changes

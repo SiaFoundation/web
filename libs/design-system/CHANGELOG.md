@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.0.0
+
+### Minor Changes
+
+- d8528c8e: Package build and bundling has been updated.
+
+### Patch Changes
+
+- Updated dependencies [d8528c8e]
+  - @siafoundation/next@0.1.0
+  - @siafoundation/react-core@1.0.0
+  - @siafoundation/react-icons@0.2.0
+  - @siafoundation/react-sia-central@2.0.0
+  - @siafoundation/types@0.1.0
+  - @siafoundation/units@2.0.0
+
 ## 1.1.0
 
 ### Minor Changes
