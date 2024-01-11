@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.2
+
+### Patch Changes
+
+- Preserve modules and directives.
+- Updated dependencies
+  - @siafoundation/next@0.1.1
+  - @siafoundation/react-core@1.0.1
+  - @siafoundation/react-icons@0.2.1
+  - @siafoundation/react-sia-central@2.0.1
+  - @siafoundation/types@0.1.1
+  - @siafoundation/units@2.0.1
+
 ## 2.0.0
 
 ### Minor Changes

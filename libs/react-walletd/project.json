@@ -6,13 +6,23 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nrwl/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/react-walletd",
         "tsConfig": "libs/react-walletd/tsconfig.lib.json",
-        "main": "libs/react-walletd/src/index.ts",
-        "assets": ["libs/react-walletd/*.md"]
+        "project": "libs/react-walletd/package.json",
+        "entryFile": "libs/react-walletd/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nx/react/plugins/bundle-rollup",
+        "compiler": "swc",
+        "assets": [
+          {
+            "glob": "libs/react-walletd/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
       },
       "configurations": {}
     },

@@ -1,5 +1,13 @@
 # @siafoundation/react-core
 
+## 1.0.1
+
+### Patch Changes
+
+- Preserve modules and directives.
+- Updated dependencies
+  - @siafoundation/next@0.1.1
+
 ## 1.0.0
 
 ### Minor Changes

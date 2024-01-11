@@ -6,13 +6,23 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nrwl/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/units",
         "tsConfig": "libs/units/tsconfig.lib.json",
-        "main": "libs/units/src/index.ts",
-        "assets": ["libs/units/*.md"]
+        "project": "libs/units/package.json",
+        "entryFile": "libs/units/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nx/react/plugins/bundle-rollup",
+        "compiler": "swc",
+        "assets": [
+          {
+            "glob": "libs/units/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
       },
       "configurations": {}
     },

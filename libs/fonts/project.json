@@ -6,13 +6,23 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nrwl/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/fonts",
         "tsConfig": "libs/fonts/tsconfig.lib.json",
-        "main": "libs/fonts/src/index.ts",
-        "assets": ["libs/fonts/*.md"]
+        "project": "libs/fonts/package.json",
+        "entryFile": "libs/fonts/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nx/react/plugins/bundle-rollup",
+        "compiler": "swc",
+        "assets": [
+          {
+            "glob": "libs/fonts/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
       },
       "configurations": {}
     },

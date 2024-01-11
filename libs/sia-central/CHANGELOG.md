@@ -1,5 +1,11 @@
 # @siafoundation/sia-central
 
+## 0.3.1
+
+### Patch Changes
+
+- Preserve modules and directives.
+
 ## 0.3.0
 
 ### Minor Changes

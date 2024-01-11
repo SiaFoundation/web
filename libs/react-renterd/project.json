@@ -6,13 +6,23 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nrwl/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/react-renterd",
         "tsConfig": "libs/react-renterd/tsconfig.lib.json",
-        "main": "libs/react-renterd/src/index.ts",
-        "assets": ["libs/react-renterd/*.md"]
+        "project": "libs/react-renterd/package.json",
+        "entryFile": "libs/react-renterd/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nx/react/plugins/bundle-rollup",
+        "compiler": "swc",
+        "assets": [
+          {
+            "glob": "libs/react-renterd/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
       },
       "configurations": {}
     },

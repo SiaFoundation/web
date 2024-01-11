@@ -6,13 +6,23 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nrwl/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/react-icons",
         "tsConfig": "libs/react-icons/tsconfig.lib.json",
-        "main": "libs/react-icons/src/index.ts",
-        "assets": ["libs/react-icons/*.md"]
+        "project": "libs/react-icons/package.json",
+        "entryFile": "libs/react-icons/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nx/react/plugins/bundle-rollup",
+        "compiler": "swc",
+        "assets": [
+          {
+            "glob": "libs/react-icons/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
       },
       "configurations": {}
     },

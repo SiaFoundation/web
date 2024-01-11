@@ -1,5 +1,11 @@
 # @siafoundation/next
 
+## 0.1.1
+
+### Patch Changes
+
+- Preserve modules and directives.
+
 ## 0.1.0
 
 ### Minor Changes

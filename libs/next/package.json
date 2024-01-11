@@ -1,13 +1,10 @@
 {
   "name": "@siafoundation/next",
   "description": "NextJS wrappers for build compatibility.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "peerDependencies": {
     "next": "^13.5.2"
-  },
-  "dependencies": {
-    "tslib": "^2.6.2"
   },
   "types": "./src/index.d.ts"
 }

@@ -1,5 +1,14 @@
 # @siafoundation/react-hostd
 
+## 2.0.1
+
+### Patch Changes
+
+- Preserve modules and directives.
+- Updated dependencies
+  - @siafoundation/react-core@1.0.1
+  - @siafoundation/types@0.1.1
+
 ## 2.0.0
 
 ### Minor Changes

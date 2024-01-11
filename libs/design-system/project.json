@@ -6,15 +6,40 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nx/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/design-system",
         "tsConfig": "libs/design-system/tsconfig.lib.json",
-        "main": "libs/design-system/src/index.ts",
+        "project": "libs/design-system/package.json",
+        "entryFile": "libs/design-system/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": [
+          "@nx/react/plugins/bundle-rollup",
+          "libs/design-system/rollup.config.js"
+        ],
+        "compiler": "swc",
         "assets": [
-          "libs/design-system/*.md",
-          "libs/design-system/src/assets/**/*"
+          {
+            "glob": "libs/design-system/*.md",
+            "input": ".",
+            "output": "."
+          },
+          {
+            "glob": "libs/design-system/src/public",
+            "input": ".",
+            "output": "."
+          },
+          {
+            "glob": "libs/design-system/src/config/*.{js,css}",
+            "input": ".",
+            "output": "src/config"
+          },
+          {
+            "glob": "libs/design-system/src/plugins/*.js",
+            "input": ".",
+            "output": "src/plugins"
+          }
         ]
       },
       "configurations": {}

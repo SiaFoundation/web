@@ -1,15 +1,15 @@
 {
   "name": "@siafoundation/design-system",
   "description": "React-based design system used across Sia apps and websites",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "license": "MIT",
   "peerDependencies": {
-    "@siafoundation/react-icons": "^0.2.0",
-    "@siafoundation/react-core": "^1.0.0",
-    "@siafoundation/units": "^2.0.0",
-    "@siafoundation/types": "^0.1.0",
-    "@siafoundation/next": "^0.1.0",
-    "@siafoundation/react-sia-central": "^2.0.0",
+    "@siafoundation/react-icons": "^0.2.1",
+    "@siafoundation/react-core": "^1.0.1",
+    "@siafoundation/units": "^2.0.1",
+    "@siafoundation/types": "^0.1.1",
+    "@siafoundation/next": "^0.1.1",
+    "@siafoundation/react-sia-central": "^2.0.1",
     "react": "^18.2.0",
     "swr": "^2.1.1",
     "class-variance-authority": "^0.7.0",
@@ -69,8 +69,7 @@
     "@radix-ui/react-switch": "^1.0.0",
     "@radix-ui/react-tabs": "^1.0.0",
     "@radix-ui/react-tooltip": "^1.0.0",
-    "react-hot-toast": "^2.2.0",
-    "tslib": "^2.6.2"
+    "react-hot-toast": "^2.2.0"
   },
   "types": "./src/index.d.ts"
 }

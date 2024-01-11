@@ -6,13 +6,23 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nrwl/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/react-hostd",
         "tsConfig": "libs/react-hostd/tsconfig.lib.json",
-        "main": "libs/react-hostd/src/index.ts",
-        "assets": ["libs/react-hostd/*.md"]
+        "project": "libs/react-hostd/package.json",
+        "entryFile": "libs/react-hostd/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nx/react/plugins/bundle-rollup",
+        "compiler": "swc",
+        "assets": [
+          {
+            "glob": "libs/react-hostd/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
       },
       "configurations": {}
     },

@@ -6,13 +6,23 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nrwl/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/sia-central",
         "tsConfig": "libs/sia-central/tsconfig.lib.json",
-        "main": "libs/sia-central/src/index.ts",
-        "assets": ["libs/sia-central/*.md"]
+        "project": "libs/sia-central/package.json",
+        "entryFile": "libs/sia-central/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nx/react/plugins/bundle-rollup",
+        "compiler": "swc",
+        "assets": [
+          {
+            "glob": "libs/sia-central/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
       },
       "configurations": {}
     },

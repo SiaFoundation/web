@@ -5,14 +5,25 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nrwl/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/data-sources",
-        "main": "libs/data-sources/src/index.ts",
         "tsConfig": "libs/data-sources/tsconfig.lib.json",
-        "assets": ["libs/data-sources/*.md"]
-      }
+        "project": "libs/data-sources/package.json",
+        "entryFile": "libs/data-sources/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nx/react/plugins/bundle-rollup",
+        "compiler": "swc",
+        "assets": [
+          {
+            "glob": "libs/data-sources/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      },
+      "configurations": {}
     },
     "lint": {
       "executor": "@nx/eslint:lint",
