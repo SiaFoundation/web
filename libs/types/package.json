@@ -3,6 +3,8 @@
   "description": "Core Sia types and library methods.",
   "version": "0.0.7",
   "license": "MIT",
-  "dependencies": {},
-  "types": "./src/index.d.ts"
+  "types": "./src/index.d.ts",
+  "dependencies": {
+    "tslib": "^2.6.2"
+  }
 }

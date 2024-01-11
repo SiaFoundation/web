@@ -6,42 +6,25 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/rollup:rollup",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/units",
         "tsConfig": "libs/units/tsconfig.lib.json",
-        "project": "libs/units/package.json",
-        "entryFile": "libs/units/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nx/react/plugins/bundle-rollup",
-        "compiler": "swc",
-        "assets": [
-          {
-            "glob": "libs/units/*.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
+        "main": "libs/units/src/index.ts",
+        "assets": ["libs/units/*.md"]
       },
       "configurations": {}
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "libs/units/**/*.{ts,tsx,js,jsx}",
-          "libs/units/package.json"
-        ]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/units"],
       "options": {
-        "jestConfig": "libs/units/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/units/jest.config.ts"
       }
     }
   }

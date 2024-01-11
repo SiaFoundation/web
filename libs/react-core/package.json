@@ -11,7 +11,8 @@
     "@siafoundation/next": "^0.0.6"
   },
   "dependencies": {
-    "detect-gpu": "^5.0.34"
+    "detect-gpu": "^5.0.34",
+    "tslib": "^2.6.2"
   },
   "types": "./src/index.d.ts"
 }

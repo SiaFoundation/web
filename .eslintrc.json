@@ -2,6 +2,9 @@
   "root": true,
   "ignorePatterns": ["**/*"],
   "plugins": ["@nx"],
+  "env": {
+    "es6": true
+  },
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
@@ -18,7 +21,9 @@
               }
             ]
           }
-        ]
+        ],
+        // was causing an error within the rule code
+        "@typescript-eslint/no-useless-constructor": "off"
       }
     },
     {

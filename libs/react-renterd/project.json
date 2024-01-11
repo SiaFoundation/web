@@ -6,42 +6,25 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/rollup:rollup",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/react-renterd",
         "tsConfig": "libs/react-renterd/tsconfig.lib.json",
-        "project": "libs/react-renterd/package.json",
-        "entryFile": "libs/react-renterd/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nx/react/plugins/bundle-rollup",
-        "compiler": "swc",
-        "assets": [
-          {
-            "glob": "libs/react-renterd/*.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
+        "main": "libs/react-renterd/src/index.ts",
+        "assets": ["libs/react-renterd/*.md"]
       },
       "configurations": {}
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "libs/react-renterd/**/*.{ts,tsx,js,jsx}",
-          "libs/react-renterd/package.json"
-        ]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/react-renterd"],
       "options": {
-        "jestConfig": "libs/react-renterd/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/react-renterd/jest.config.ts"
       }
     }
   }

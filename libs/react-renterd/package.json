@@ -6,8 +6,11 @@
   "peerDependencies": {
     "@siafoundation/react-core": "^0.16.11",
     "@siafoundation/types": "^0.0.7",
-    "swr": "^2.1.1",
-    "@technically/lodash": "^4.17.0"
+    "swr": "^2.1.1"
+  },
+  "dependencies": {
+    "@technically/lodash": "^4.17.0",
+    "tslib": "^2.6.2"
   },
   "types": "./src/index.d.ts"
 }

@@ -68,18 +68,14 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/crons/**/*.ts"]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/crons"],
       "options": {
-        "jestConfig": "apps/crons/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "apps/crons/jest.config.ts"
       }
     }
   },
