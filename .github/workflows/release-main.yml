@@ -29,9 +29,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Workspace lint
-        shell: bash
-        run: npx nx workspace-lint
       - name: Lint
         shell: bash
         run: npx nx run-many --target=lint --all --parallel=5

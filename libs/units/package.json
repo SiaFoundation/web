@@ -6,11 +6,12 @@
   "peerDependencies": {
     "@siafoundation/sia-central": "^0.2.6",
     "@siafoundation/react-core": "^0.16.11",
-    "bignumber.js": "^9.0.2",
-    "@technically/lodash": "^4.17.0"
+    "bignumber.js": "^9.0.2"
   },
   "dependencies": {
-    "blakejs": "^1.2.1"
+    "@technically/lodash": "^4.17.0",
+    "blakejs": "^1.2.1",
+    "tslib": "^2.6.2"
   },
   "types": "./src/index.d.ts"
 }

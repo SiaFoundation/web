@@ -53,3 +53,5 @@ dist
 
 # assets
 /assets
+
+.nx/cache

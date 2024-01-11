@@ -15,21 +15,14 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "libs/data-sources/**/*.ts",
-          "libs/data-sources/package.json"
-        ]
-      }
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/data-sources"],
       "options": {
-        "jestConfig": "libs/data-sources/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/data-sources/jest.config.ts"
       }
     }
   },

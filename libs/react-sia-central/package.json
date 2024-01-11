@@ -7,5 +7,8 @@
     "@siafoundation/react-core": "^0.16.11",
     "@siafoundation/sia-central": "^0.2.6"
   },
+  "dependencies": {
+    "tslib": "^2.6.2"
+  },
   "types": "./src/index.d.ts"
 }
