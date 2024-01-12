@@ -145,6 +145,12 @@ export type ContractSpending = {
   fundAccount: Currency
 }
 
+export type S3AuthenticationSettings = {
+  v4Keypairs: {
+    [key: string]: string
+  }
+}
+
 export type ContractState = 'pending' | 'active' | 'complete' | 'failed'
 
 export type Contract = {
