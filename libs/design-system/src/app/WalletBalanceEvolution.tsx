@@ -9,7 +9,7 @@ import {
 } from '../lib/chartData'
 import { computeChartStats } from '../lib/chartStats'
 import { useTheme } from 'next-themes'
-import { colors } from '../config/colors'
+import { colors } from '../lib/colors'
 
 type BalanceEvolution = {
   sc: number

@@ -14,8 +14,9 @@
         "project": "libs/units/package.json",
         "entryFile": "libs/units/src/index.ts",
         "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nx/react/plugins/bundle-rollup",
-        "compiler": "swc",
+        "compiler": "tsc",
+        "outputFileName": "index.js",
+        "rollupConfig": "libs/units/rollup.config.js",
         "assets": [
           {
             "glob": "libs/units/*.md",

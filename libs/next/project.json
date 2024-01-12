@@ -14,8 +14,9 @@
         "project": "libs/next/package.json",
         "entryFile": "libs/next/src/index.ts",
         "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nx/react/plugins/bundle-rollup",
-        "compiler": "swc",
+        "compiler": "tsc",
+        "outputFileName": "index.js",
+        "rollupConfig": "libs/next/rollup.config.js",
         "assets": [
           {
             "glob": "libs/next/*.md",

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.2
+
+### Patch Changes
+
+- Reconfigure rollup.
+
 ## 0.3.1
 
 ### Patch Changes

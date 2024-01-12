@@ -1,5 +1,5 @@
 import { buildChartTheme } from '@visx/xychart'
-import { colors } from '../../config/colors'
+import { colors } from '../../lib/colors'
 
 export const lightTheme = {
   labels: {

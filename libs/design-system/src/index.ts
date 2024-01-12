@@ -178,5 +178,4 @@ export * from './lib/ipRegex'
 export * from './lib/getOs'
 export * from './lib/countryEmoji'
 export * from './lib/nodeToImage'
-
-export { colors } from './config/colors'
+export * from './lib/colors'

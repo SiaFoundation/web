@@ -9,5 +9,5 @@ module.exports = {
     ),
     ...createGlobPatternsForDependencies(__dirname),
   ],
-  presets: [require('../../libs/design-system/src/config/theme.js')],
+  presets: [require('../../libs/design-system/src/style/theme.js')],
 }

@@ -5,7 +5,10 @@
     "@nx/dependency-checks": [
       "error",
       {
-        "ignoredFiles": ["libs/design-system/tailwind.config.js"]
+        "ignoredFiles": [
+          "libs/design-system/tailwind.config.js",
+          "libs/design-system/rollup.config.js"
+        ]
       }
     ]
   },

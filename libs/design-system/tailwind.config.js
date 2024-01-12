@@ -7,5 +7,5 @@ module.exports = {
     join(__dirname, 'src/**/*!(*.stories|*.spec).{ts,tsx,html}'),
     ...createGlobPatternsForDependencies(__dirname),
   ],
-  presets: [require('./src/config/theme.js')],
+  presets: [require('./src/style/theme.js')],
 }

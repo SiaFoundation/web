@@ -26,7 +26,7 @@ import { Reset16 } from '@siafoundation/react-icons'
 import { Panel } from '../../core/Panel'
 import { getPointTime, getPointValue, Point } from './utils'
 import { useTheme } from 'next-themes'
-import { colors } from '../../config/colors'
+import { colors } from '../../lib/colors'
 import { humanDate } from '@siafoundation/units'
 
 export type { Point }
