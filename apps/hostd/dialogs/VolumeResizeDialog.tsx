@@ -32,7 +32,7 @@ type Props = {
   onOpenChange: (val: boolean) => void
 }
 
-const minSizeGB = 10
+const minSizeGB = new BigNumber(10)
 
 const defaultValues = {
   size: undefined as BigNumber | undefined,
@@ -120,17 +120,28 @@ export function VolumeResizeDialog({ trigger, open, onOpenChange }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [volume.data])
 
-  const newSizeGB = size?.toNumber()
-  const currentSizeGB = volume.data
-    ? sectorsToGB(volume.data.totalSectors).toNumber()
-    : 0
+  const newSizeGB = useMemo(() => size || new BigNumber(0), [size])
+  const currentSizeGB = useMemo(
+    () =>
+      volume.data ? sectorsToGB(volume.data.totalSectors) : new BigNumber(0),
+    [volume.data]
+  )
+  const freeSizeGB = useMemo(
+    () => (dir.data ? bytesToGB(dir.data.freeBytes) : new BigNumber(0)),
+    [dir.data]
+  )
+  const maxSizeGB = useMemo(
+    () => currentSizeGB.plus(freeSizeGB),
+    [currentSizeGB, freeSizeGB]
+  )
 
-  const maxSizeGB = dir.data ? bytesToGB(dir.data.totalBytes).toNumber() : 0
+  const isNewSizeBigger = currentSizeGB.lt(newSizeGB)
+  const isNewSizeDifferent = currentSizeGB.minus(newSizeGB).abs().gte(1)
 
-  const isNewSizeBigger = currentSizeGB < newSizeGB
-  const isNewSizeDifferent = Math.abs(currentSizeGB - newSizeGB) >= 1
-
-  const fields = useMemo(() => getFields(minSizeGB, maxSizeGB), [maxSizeGB])
+  const fields = useMemo(
+    () => getFields(minSizeGB.toNumber(), maxSizeGB.toNumber()),
+    [maxSizeGB]
+  )
 
   const onInvalid = useOnInvalid(fields)
 
@@ -171,18 +182,18 @@ export function VolumeResizeDialog({ trigger, open, onOpenChange }: Props) {
         </div>
         <FieldNumber name="size" form={form} fields={fields} />
         <VolumeSizeDiff
-          currentSizeGB={currentSizeGB}
-          newSizeGB={newSizeGB}
-          maxSizeGB={maxSizeGB}
+          currentSizeGB={currentSizeGB.toNumber()}
+          newSizeGB={newSizeGB.toNumber()}
+          maxSizeGB={maxSizeGB.toNumber()}
           label={
             isNewSizeDifferent ? (
               <Text size="12" color="subtle">
                 {isNewSizeBigger
                   ? `Increase by ${humanBytes(
-                      GBToBytes(newSizeGB - currentSizeGB)
+                      GBToBytes(newSizeGB.minus(currentSizeGB))
                     )}`
                   : `Decrease by ${humanBytes(
-                      GBToBytes(currentSizeGB - newSizeGB)
+                      GBToBytes(currentSizeGB.minus(newSizeGB))
                     )}`}
               </Text>
             ) : (
