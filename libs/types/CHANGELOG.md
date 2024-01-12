@@ -1,5 +1,11 @@
 # @siafoundation/types
 
+## 0.1.2
+
+### Patch Changes
+
+- Reconfigure rollup.
+
 ## 0.1.1
 
 ### Patch Changes

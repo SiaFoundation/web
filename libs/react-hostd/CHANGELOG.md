@@ -1,5 +1,14 @@
 # @siafoundation/react-hostd
 
+## 2.0.2
+
+### Patch Changes
+
+- Reconfigure rollup.
+- Updated dependencies
+  - @siafoundation/react-core@1.0.2
+  - @siafoundation/types@0.1.2
+
 ## 2.0.1
 
 ### Patch Changes

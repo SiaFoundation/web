@@ -1,5 +1,11 @@
 # @siafoundation/react-icons
 
+## 0.2.2
+
+### Patch Changes
+
+- Reconfigure rollup.
+
 ## 0.2.1
 
 ### Patch Changes

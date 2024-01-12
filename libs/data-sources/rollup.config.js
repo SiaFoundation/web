@@ -1,18 +1,17 @@
-const reactConfig = require('@nx/react/plugins/bundle-rollup')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const preserveDirectives = require('rollup-plugin-preserve-directives')
 
 // https://github.com/rollup/rollup/issues/4699#issuecomment-1465302665
-function getRollupOptions(config) {
-  const c = reactConfig(config)
+function getRollupOptions(options) {
   return {
-    ...c,
+    ...options,
     output: {
-      ...c.output,
+      ...options.output,
       preserveModules: true,
       format: 'esm',
       sourcemap: true,
     },
-    plugins: c.plugins.concat(preserveDirectives.default()),
+    plugins: options.plugins.concat(preserveDirectives.default()),
   }
 }
 

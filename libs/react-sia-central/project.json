@@ -14,8 +14,9 @@
         "project": "libs/react-sia-central/package.json",
         "entryFile": "libs/react-sia-central/src/index.ts",
         "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nx/react/plugins/bundle-rollup",
-        "compiler": "swc",
+        "compiler": "tsc",
+        "outputFileName": "index.js",
+        "rollupConfig": "libs/react-sia-central/rollup.config.js",
         "assets": [
           {
             "glob": "libs/react-sia-central/*.md",
