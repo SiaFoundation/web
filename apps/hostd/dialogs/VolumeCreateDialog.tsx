@@ -28,7 +28,7 @@ type Props = {
   onOpenChange: (val: boolean) => void
 }
 
-const minSizeGB = 10
+const minSizeGB = new BigNumber(10)
 
 const defaultValues = {
   size: undefined as BigNumber | undefined,
@@ -179,14 +179,23 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDir.data])
 
-  const newSizeGB = size?.toNumber() || 0
-  const freeSizeGB = selectedDir.data
-    ? bytesToGB(selectedDir.data.freeBytes).toNumber()
-    : 0
+  const newSizeGB = useMemo(() => size || new BigNumber(0), [size])
+  const freeSizeGB = useMemo(
+    () =>
+      selectedDir.data
+        ? bytesToGB(selectedDir.data.freeBytes)
+        : new BigNumber(0),
+    [selectedDir.data]
+  )
+  const maxSizeGB = useMemo(
+    () => bytesToGB(selectedDir.data?.freeBytes || new BigNumber(0)),
+    [selectedDir.data]
+  )
 
-  const maxSizeGB = bytesToGB(selectedDir.data?.freeBytes || 0).toNumber()
-
-  const fields = useMemo(() => getFields(minSizeGB, maxSizeGB), [maxSizeGB])
+  const fields = useMemo(
+    () => getFields(minSizeGB.toNumber(), maxSizeGB.toNumber()),
+    [maxSizeGB]
+  )
 
   const onInvalid = useOnInvalid(fields)
 
@@ -237,9 +246,9 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
         </div>
         <FieldNumber name="size" form={form} fields={fields} />
         <VolumeSizeDiff
-          newSizeGB={newSizeGB}
+          newSizeGB={newSizeGB.toNumber()}
           currentSizeGB={0}
-          maxSizeGB={freeSizeGB}
+          maxSizeGB={freeSizeGB.toNumber()}
         />
       </div>
     </Dialog>
