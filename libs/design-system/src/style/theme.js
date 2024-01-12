@@ -132,7 +132,7 @@ module.exports = {
     require('tailwind-scrollbar'),
     require('tailwindcss-text-fill'),
     require('tailwindcss-shadow-fill'),
-    require('../plugins/animation-delay'),
+    require('./plugins/animation-delay'),
     require('@tailwindcss/container-queries'),
     // navmenu
     plugin(({ matchUtilities }) => {

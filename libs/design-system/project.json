@@ -14,11 +14,9 @@
         "project": "libs/design-system/package.json",
         "entryFile": "libs/design-system/src/index.ts",
         "external": ["react/jsx-runtime"],
-        "rollupConfig": [
-          "@nx/react/plugins/bundle-rollup",
-          "libs/design-system/rollup.config.js"
-        ],
-        "compiler": "swc",
+        "compiler": "tsc",
+        "outputFileName": "index.js",
+        "rollupConfig": "libs/design-system/rollup.config.js",
         "assets": [
           {
             "glob": "libs/design-system/*.md",
@@ -31,14 +29,14 @@
             "output": "."
           },
           {
-            "glob": "libs/design-system/src/config/*.{js,css}",
+            "glob": "libs/design-system/src/style/*",
             "input": ".",
-            "output": "src/config"
+            "output": "."
           },
           {
-            "glob": "libs/design-system/src/plugins/*.js",
+            "glob": "libs/design-system/src/style/plugins/*",
             "input": ".",
-            "output": "src/plugins"
+            "output": "plugins"
           }
         ]
       },

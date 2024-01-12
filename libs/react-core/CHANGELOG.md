@@ -1,5 +1,13 @@
 # @siafoundation/react-core
 
+## 1.0.2
+
+### Patch Changes
+
+- Reconfigure rollup.
+- Updated dependencies
+  - @siafoundation/next@0.1.2
+
 ## 1.0.1
 
 ### Patch Changes

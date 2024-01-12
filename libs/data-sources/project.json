@@ -13,8 +13,9 @@
         "project": "libs/data-sources/package.json",
         "entryFile": "libs/data-sources/src/index.ts",
         "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nx/react/plugins/bundle-rollup",
-        "compiler": "swc",
+        "compiler": "tsc",
+        "outputFileName": "index.js",
+        "rollupConfig": "libs/data-sources/rollup.config.js",
         "assets": [
           {
             "glob": "libs/data-sources/*.md",
