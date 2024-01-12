@@ -13,8 +13,8 @@ export type HostData = {
   publicKey: string
   lastScanSuccess: boolean
   lastScan: string
-  lastAnnouncement: string
-  knownSince: string
+  lastAnnouncement: string | null
+  knownSince: string | null
   uptime: BigNumber
   downtime: BigNumber
   successfulInteractions: BigNumber
