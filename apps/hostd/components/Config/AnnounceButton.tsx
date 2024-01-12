@@ -31,7 +31,7 @@ export function AnnounceButton() {
   })
 
   const needsToAnnounce =
-    host.data.lastAnnouncement?.address !== settings.data?.netAddress
+    host.data?.lastAnnouncement?.address !== settings.data?.netAddress
 
   const triggerConfirm = useCallback(
     () =>

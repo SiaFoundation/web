@@ -325,6 +325,9 @@ export const columns: HostsTableColumn[] = (
       label: 'last announcement',
       category: 'general',
       render: ({ data }) => {
+        if (!data.lastAnnouncement) {
+          return null
+        }
         return (
           <div className="flex flex-col">
             <Text size="12" noWrap>
