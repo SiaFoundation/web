@@ -14,8 +14,9 @@
         "project": "libs/react-walletd/package.json",
         "entryFile": "libs/react-walletd/src/index.ts",
         "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nx/react/plugins/bundle-rollup",
-        "compiler": "swc",
+        "compiler": "tsc",
+        "outputFileName": "index.js",
+        "rollupConfig": "libs/react-walletd/rollup.config.js",
         "assets": [
           {
             "glob": "libs/react-walletd/*.md",

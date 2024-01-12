@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.3
+
+### Patch Changes
+
+- Reconfigure rollup.
+- Updated dependencies
+  - @siafoundation/next@0.1.2
+  - @siafoundation/react-core@1.0.2
+  - @siafoundation/react-icons@0.2.2
+  - @siafoundation/react-sia-central@2.0.2
+  - @siafoundation/types@0.1.2
+  - @siafoundation/units@2.0.2
+
 ## 2.0.2
 
 ### Patch Changes
