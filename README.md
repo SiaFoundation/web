@@ -61,7 +61,10 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 ## Development
 
 1. The Sia Web codebase is managed with the [Nx](https://nx.dev) build system. Either install `nx` globally via `npm install -g nx` or use `npx` to invoke commands.
-2. Install dependencies with `npm install`.
+2. This repo follows [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/#summary). Please use prefixes such as `feat:`, `fix:`, `docs:`, etc. when committing.
+3. Install dependencies with `npm install`.
+4. Run `nx test <app-name>` to run tests for a specific app.
+5. Run `npx changeset` to create a changeset for your changes. This will prompt you for a description of your changes and will create a changeset file in the `.changeset` directory.
 
 ## Community
 
