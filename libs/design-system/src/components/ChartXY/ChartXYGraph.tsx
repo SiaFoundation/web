@@ -222,7 +222,6 @@ export function ChartXYGraph<Key extends string, Cat extends string>({
         // values don't make sense in stream graph
         // tickFormat={stackOffset === 'wiggle' ? () => '' : undefined}
         tickFormat={config.formatTickY}
-        tickTransform={`translate(-300px, 0)`}
         tickLabelProps={(p) => ({
           ...p,
           fill: theme.labels.color,
