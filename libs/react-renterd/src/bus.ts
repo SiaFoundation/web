@@ -502,10 +502,10 @@ export function useContractSetUpdate(
 
 export type Bucket = {
   name: string
-  createdAt: string
-  policy: {
-    publicReadAccess: boolean
-  }
+  // createdAt: string
+  // policy: {
+  //   publicReadAccess: boolean
+  // }
 }
 
 export function useBuckets(args?: HookArgsSwr<void, Bucket[]>) {

@@ -1,0 +1,81 @@
+{
+  "name": "file",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/file",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/file",
+        "postcssConfig": "apps/file/postcss.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {},
+        "local": {},
+        "export": {
+          "outputPath": "dist/apps/file-export",
+          "fileReplacements": [
+            {
+              "replace": "apps/file/config/buildMode.ts",
+              "with": "apps/file/config/buildModeExport.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "file:build",
+        "port": 3010
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "file:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "file:build:production",
+          "dev": false
+        }
+      }
+    },
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "dependsOn": ["build"],
+      "defaultConfiguration": "local",
+      "options": {
+        "engine": "docker",
+        "context": "./",
+        "file": "apps/file/Dockerfile"
+      },
+      "configurations": {
+        "local": {
+          "tags": ["siafoundation/web-file:latest"],
+          "push": false
+        },
+        "production": {
+          "tags": ["ghcr.io/siafoundation/web-file:latest"],
+          "push": true
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/file"],
+      "options": {
+        "jestConfig": "apps/file/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": []
+}
