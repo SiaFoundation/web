@@ -24,6 +24,9 @@ export const routes = {
   wallet: {
     view: '/wallet',
   },
+  keys: {
+    index: '/keys',
+  },
   node: {
     index: '/node',
   },

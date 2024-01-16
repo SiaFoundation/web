@@ -21,6 +21,7 @@ import { HostsFilterPublicKeyDialog } from '../components/Hosts/HostsFilterPubli
 import { FilesBucketDeleteDialog } from '../components/Files/FilesBucketDeleteDialog'
 import { FilesBucketPolicyDialog } from '../components/Files/FilesBucketPolicyDialog'
 import { FilesBucketCreateDialog } from '../components/Files/FilesBucketCreateDialog'
+import { KeysCreateDialog } from '../components/Keys/KeysCreateDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -43,6 +44,7 @@ export type DialogType =
   | 'filesCreateDirectory'
   | 'filesBucketPolicy'
   | 'filesSearch'
+  | 'keysCreate'
   | 'alerts'
   | 'confirm'
 
@@ -204,6 +206,10 @@ export function Dialogs() {
       />
       <AlertsDialog
         open={dialog === 'alerts'}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <KeysCreateDialog
+        open={dialog === 'keysCreate'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <ConfirmDialog
