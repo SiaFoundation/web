@@ -5,6 +5,7 @@ import {
   FileContractIcon,
   BarsProgressIcon,
   BellIcon,
+  KeyIcon,
 } from '@siafoundation/react-icons'
 import { useAlerts } from '@siafoundation/react-renterd'
 import { cx } from 'class-variance-authority'
@@ -33,6 +34,9 @@ export function RenterdSidenav() {
       </SidenavItem>
       <SidenavItem title="Hosts" route={routes.hosts.index}>
         <DatabaseIcon />
+      </SidenavItem>
+      <SidenavItem title="S3 authentication keypairs" route={routes.keys.index}>
+        <KeyIcon />
       </SidenavItem>
       <div className="relative">
         {!!alertCount && onlyInfoAlerts && (

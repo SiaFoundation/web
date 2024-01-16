@@ -22,6 +22,7 @@ import { FilesCmd } from '../Files/FilesCmd'
 import { useHosts } from '../../contexts/hosts'
 import { useDebounce } from 'use-debounce'
 import { CmdEmptyDefault } from './CmdEmpty'
+import { KeysCmd } from '../Keys/KeysCmd'
 
 type Props = {
   panel?: boolean
@@ -127,6 +128,19 @@ export function CmdRoot({ panel }: Props) {
           afterSelect={() => {
             if (!router.pathname.startsWith(routes.hosts.index)) {
               router.push(routes.hosts.index)
+            }
+            afterSelect()
+          }}
+        />
+        <KeysCmd
+          currentPage={page}
+          pushPage={pushPage}
+          beforeSelect={() => {
+            beforeSelect()
+          }}
+          afterSelect={() => {
+            if (!router.pathname.startsWith(routes.keys.index)) {
+              router.push(routes.keys.index)
             }
             afterSelect()
           }}

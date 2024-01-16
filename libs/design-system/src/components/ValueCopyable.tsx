@@ -28,6 +28,7 @@ type Props = {
   href?: string
   size?: React.ComponentProps<typeof Text>['size']
   weight?: React.ComponentProps<typeof Text>['weight']
+  font?: React.ComponentProps<typeof Text>['font']
   scaleSize?: React.ComponentProps<typeof Text>['scaleSize']
   maxLength?: number
   color?: React.ComponentProps<typeof Text>['color']
@@ -45,6 +46,7 @@ export function ValueCopyable({
   size,
   scaleSize,
   weight,
+  font,
   color = 'contrast',
   className,
   siascanUrl,
@@ -68,6 +70,7 @@ export function ValueCopyable({
           scaleSize={scaleSize}
           color={color}
           weight={weight}
+          font={font}
           ellipsis
         >
           {text}
@@ -78,6 +81,7 @@ export function ValueCopyable({
           scaleSize={scaleSize}
           color={color}
           weight={weight}
+          font={font}
           ellipsis
         >
           {text}
