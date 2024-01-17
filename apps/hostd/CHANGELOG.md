@@ -1,5 +1,17 @@
 # hostd
 
+## 0.34.0
+
+### Minor Changes
+
+- 0aaec351: Fixed an issue where the app would not navigate when the metrics data interval was set to ALL.
+- de517fcf: Fixed the free space calculation in the resize volume dialog. Closes https://github.com/SiaFoundation/hostd/issues/241
+- 7b03a9f9: Fixed an issue where where the lack of a host announcement would crash the UI. Closes https://github.com/SiaFoundation/hostd/issues/271
+
+### Patch Changes
+
+- 23008657: Fixed an issue where the base RPC and sector access price calculation was off by 10.
+
 ## 0.33.0
 
 ### Minor Changes

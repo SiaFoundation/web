@@ -1,5 +1,11 @@
 # renterd
 
+## 0.43.0
+
+### Minor Changes
+
+- 891abb0e: S3 authentication keypairs can now be created and managed directly from the UI. Closes https://github.com/SiaFoundation/web/issues/430
+
 ## 0.42.0
 
 ### Minor Changes
