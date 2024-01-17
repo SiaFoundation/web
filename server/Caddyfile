@@ -72,25 +72,40 @@ beta.sia.tech {
   reverse_proxy localhost:3009
 }
 
+file.dev {
+  import cloudflare
+  redir https://sia.tech 302
+}
+
 api.sia.tech {
   route {
     handle /renterd {
       rewrite * /view/23671177/2s93RUsqo6
-      reverse_proxy https://documenter.getpostman.com
+      reverse_proxy https://documenter.getpostman.com {
+        header_up Host documenter.getpostman.com
+      }
     }
     handle /hostd {
       rewrite * /view/737767/2s93Xu2koJ
-      reverse_proxy https://documenter.getpostman.com
+      reverse_proxy https://documenter.getpostman.com {
+        header_up Host documenter.getpostman.com
+      }
     }
     handle /walletd {
       rewrite * /view/737767/2s9XxtzGU4
-      reverse_proxy https://documenter.getpostman.com
+      reverse_proxy https://documenter.getpostman.com {
+        header_up Host documenter.getpostman.com
+      }
     }
     handle /view* {
-      reverse_proxy https://documenter.getpostman.com
+      reverse_proxy https://documenter.getpostman.com {
+        header_up Host documenter.getpostman.com
+      }
     }
     handle /api* {
-      reverse_proxy https://documenter.getpostman.com
+      reverse_proxy https://documenter.getpostman.com {
+        header_up Host documenter.getpostman.com
+      }
     }
     redir /* /renterd permanent
   }
