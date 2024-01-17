@@ -20,7 +20,8 @@ export function FilesStatsMenuHealth() {
     isDirectory: true,
   })
 
-  if (!stats.data) {
+  const noDataYet = stats.data?.totalObjectsSize === 0
+  if (!stats.data || noDataYet) {
     return null
   }
 
