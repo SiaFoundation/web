@@ -1,5 +1,11 @@
 # renterd
 
+## 0.44.0
+
+### Minor Changes
+
+- 55c5f9c9: The file stats now only show health once there is more than 0 bytes of file data.
+
 ## 0.43.0
 
 ### Minor Changes

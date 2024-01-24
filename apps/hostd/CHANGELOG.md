@@ -1,5 +1,11 @@
 # hostd
 
+## 0.35.0
+
+### Minor Changes
+
+- 4dbb448d: Fixed an error with "lastAnnouncement" that occurs the first time the configuration is saved.
+
 ## 0.34.0
 
 ### Minor Changes

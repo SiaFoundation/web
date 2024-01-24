@@ -1,5 +1,12 @@
 # website
 
+## 0.48.0
+
+### Minor Changes
+
+- 40df7ab3: The roadmap page layout has been updated.
+- 40df7ab3: Header spacing has been updated for markdown based content.
+
 ## 0.47.0
 
 ### Minor Changes
