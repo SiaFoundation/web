@@ -52,7 +52,7 @@ export function useOnValid({
           throw Error(response.error)
         }
         const needsToAnnounce =
-          host.data.lastAnnouncement?.address !== values.netAddress
+          host.data?.lastAnnouncement?.address !== values.netAddress
         if (needsToAnnounce) {
           triggerSuccessToast(
             'Settings have been saved. Address has changed, make sure to re-announce the host.',
@@ -69,7 +69,7 @@ export function useOnValid({
         console.log(e)
       }
     },
-    [showAdvanced, resources, settingsUpdate, revalidateAndResetForm, host]
+    [showAdvanced, resources, settingsUpdate, revalidateAndResetForm, host.data]
   )
   return onValid
 }
