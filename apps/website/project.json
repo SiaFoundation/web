@@ -10,14 +10,7 @@
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/website",
-        "postcssConfig": "apps/website/postcss.config.js",
-        "assets": [
-          {
-            "glob": "**/*",
-            "input": "libs/design-system/src/public/",
-            "output": "/"
-          }
-        ]
+        "postcssConfig": "apps/website/postcss.config.js"
       },
       "configurations": {
         "development": {},
