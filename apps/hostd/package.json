@@ -1,7 +1,7 @@
 {
   "name": "hostd",
   "description": "The `hostd` user interface, dedicated to hosting related functionality.",
-  "version": "0.34.0",
+  "version": "0.35.0",
   "private": true,
   "license": "MIT"
 }
