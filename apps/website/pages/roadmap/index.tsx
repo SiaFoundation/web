@@ -13,7 +13,6 @@ import { getMinutesInSeconds } from '../../lib/time'
 import { SectionSolid } from '../../components/SectionSolid'
 import { MDXRemote } from 'next-mdx-remote'
 import { components } from '../../config/mdx'
-import { TableOfContents } from '../../components/TableOfContents'
 import { getPrs } from '../../content/prs'
 import { GitHubActivity } from '../../components/GitHubActivity'
 import { backgrounds, previews } from '../../content/assets'
@@ -34,31 +33,13 @@ export default function Roadmap({ date, source, prs }: Props) {
       description={description}
       path={routes.roadmap.index}
       heading={
-        <SectionTransparent className="pt-24 md:pt-40 pb-6">
+        <SectionTransparent className="pt-24 md:pt-40 pb-20 md:pb-40">
           <SiteHeading
             title={title}
             description={description}
             size="64"
             anchorLink={false}
-          >
-            <TableOfContents
-              className="mt-10"
-              items={[
-                {
-                  href: '#current',
-                  title: 'Current',
-                },
-                {
-                  href: '#future',
-                  title: 'Future',
-                },
-                {
-                  href: '#activity',
-                  title: 'Activity',
-                },
-              ]}
-            />
-          </SiteHeading>
+          />
         </SectionTransparent>
       }
       backgroundImage={backgrounds.nateTrickle}

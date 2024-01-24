@@ -21,7 +21,7 @@ export const components = {
     </SectionHeading>
   ),
   h2: ({ children }) => (
-    <SectionHeading size="24" className="pb-4 pt-6">
+    <SectionHeading size="24" className="pb-4 pt-20">
       {children}
     </SectionHeading>
   ),
