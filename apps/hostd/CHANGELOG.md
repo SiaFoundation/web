@@ -1,5 +1,11 @@
 # hostd
 
+## 0.36.0
+
+### Minor Changes
+
+- 8f8a17f3: Update the net address placeholder value to show port 9982.
+
 ## 0.35.0
 
 ### Minor Changes
