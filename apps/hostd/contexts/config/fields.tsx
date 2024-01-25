@@ -34,7 +34,7 @@ export function getFields({
       category: 'host',
       title: 'Address',
       description: <>The network address of the host.</>,
-      placeholder: 'my.host.com:9882',
+      placeholder: 'my.host.com:9982',
       validation: {
         required: 'required',
       },
