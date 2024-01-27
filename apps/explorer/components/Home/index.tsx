@@ -26,6 +26,7 @@ import {
 } from '@siafoundation/units'
 import { HostListItem } from './HostListItem'
 import { useExchangeRate } from '../../hooks/useExchangeRate'
+import { SiaCentralHostScanned } from '../Host/types'
 
 export function Home({
   metrics,
@@ -222,19 +223,21 @@ export function Home({
         </div>
         <div>
           <EntityList title="Top hosts">
-            {hosts.map((host) => (
-              <HostListItem
-                key={host.public_key}
-                host={host}
-                rates={rates}
-                entity={{
-                  label: host.net_address,
-                  initials: 'H',
-                  avatar: hashToAvatar(host.public_key),
-                  href: routes.host.view.replace(':id', host.public_key),
-                }}
-              />
-            ))}
+            {hosts
+              .filter((host) => host.settings)
+              .map((host) => (
+                <HostListItem
+                  key={host.public_key}
+                  host={host as SiaCentralHostScanned}
+                  rates={rates}
+                  entity={{
+                    label: host.net_address,
+                    initials: 'H',
+                    avatar: hashToAvatar(host.public_key),
+                    href: routes.host.view.replace(':id', host.public_key),
+                  }}
+                />
+              ))}
           </EntityList>
         </div>
       </div>

@@ -57,6 +57,19 @@ export default async function Image({ params }) {
     )
   }
 
+  if (!h.host.settings) {
+    return getOGImage(
+      {
+        id: h.host.public_key,
+        title: h.host.net_address,
+        subtitle: truncate(h.host.public_key, 30),
+        initials: 'H',
+        avatar: true,
+      },
+      size
+    )
+  }
+
   const values = [
     {
       label: 'storage',

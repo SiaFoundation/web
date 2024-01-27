@@ -59,28 +59,30 @@ export function HostInfo({ host }: Props) {
             </Text>
           </Text>
         </Tooltip>
-        <Tooltip
-          content={
-            host.settings.accepting_contracts
-              ? 'Host is accepting contracts'
-              : 'Host is not accepting contracts'
-          }
-        >
-          <Text
-            size="14"
-            color={host.settings.accepting_contracts ? 'green' : 'subtle'}
-            className="flex gap-1 items-center"
+        {host.settings && (
+          <Tooltip
+            content={
+              host.settings.accepting_contracts
+                ? 'Host is accepting contracts'
+                : 'Host is not accepting contracts'
+            }
           >
-            {host.settings.accepting_contracts ? (
-              <CheckmarkFilled16 />
-            ) : (
-              <WarningFilled16 />
-            )}
-            {host.settings.accepting_contracts
-              ? 'Accepting contracts'
-              : 'Not accepting contracts'}
-          </Text>
-        </Tooltip>
+            <Text
+              size="14"
+              color={host.settings.accepting_contracts ? 'green' : 'subtle'}
+              className="flex gap-1 items-center"
+            >
+              {host.settings.accepting_contracts ? (
+                <CheckmarkFilled16 />
+              ) : (
+                <WarningFilled16 />
+              )}
+              {host.settings.accepting_contracts
+                ? 'Accepting contracts'
+                : 'Not accepting contracts'}
+            </Text>
+          </Tooltip>
+        )}
       </div>
       <div className="flex flex-wrap gap-x-2 gap-y-1 items-center">
         <Tooltip content={`Host version ${host.version}`}>
