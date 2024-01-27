@@ -13,10 +13,7 @@ import {
   CloudUpload16,
   VmdkDisk16,
 } from '@siafoundation/react-icons'
-import {
-  SiaCentralExchangeRates,
-  SiaCentralHost,
-} from '@siafoundation/sia-central'
+import { SiaCentralExchangeRates } from '@siafoundation/sia-central'
 import {
   getDownloadCost,
   getDownloadSpeed,
@@ -28,9 +25,10 @@ import {
 import { useMemo } from 'react'
 import { routes } from '../../config/routes'
 import { useExchangeRate } from '../../hooks/useExchangeRate'
+import { SiaCentralHostScanned } from '../Host/types'
 
 type Props = {
-  host: SiaCentralHost
+  host: SiaCentralHostScanned
   rates?: SiaCentralExchangeRates
   entity: EntityListItemLayoutProps
 }

@@ -1,10 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
-import {
-  SiaCentralExchangeRates,
-  SiaCentralHost,
-} from '@siafoundation/sia-central'
+import { SiaCentralExchangeRates } from '@siafoundation/sia-central'
 import { DatumProps, ExplorerDatum } from '../ExplorerDatum'
 import { Panel, toFixedOrPrecision } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
@@ -20,9 +17,10 @@ import {
 } from '@siafoundation/units'
 import { useExchangeRate } from '../../hooks/useExchangeRate'
 import { siacoinToFiat } from '../../lib/currency'
+import { SiaCentralHostScanned } from './types'
 
 type Props = {
-  host: SiaCentralHost
+  host: SiaCentralHostScanned
   rates?: SiaCentralExchangeRates
 }
 

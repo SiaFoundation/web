@@ -77,11 +77,13 @@ export function getUploadSpeed(host: SiaCentralPartialHost) {
 }
 
 export function getRemainingOverTotalStorage(host: SiaCentralHost) {
-  return `${humanBytes(host.settings.remaining_storage)}/${humanBytes(
-    host.settings.total_storage
-  )} remaining`
+  return host.settings
+    ? `${humanBytes(host.settings.remaining_storage)}/${humanBytes(
+        host.settings.total_storage
+      )} remaining`
+    : '-'
 }
 
 export function getRemainingStorage(host: SiaCentralHost) {
-  return humanBytes(host.settings.remaining_storage)
+  return host.settings ? humanBytes(host.settings.remaining_storage) : '-'
 }

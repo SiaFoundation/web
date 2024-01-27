@@ -6,6 +6,7 @@ import {
 import { hashToAvatar } from '../../lib/avatar'
 import { HostPricing } from './HostPricing'
 import { HostInfo } from './HostInfo'
+import { SiaCentralHostScanned } from './types'
 
 type Props = {
   host: SiaCentralHost
@@ -30,7 +31,9 @@ export function HostHeader({ host, rates }: Props) {
         />
         <div className="flex flex-wrap gap-3 items-start justify-between w-full">
           <HostInfo host={host} />
-          <HostPricing host={host} rates={rates} />
+          {host.settings && (
+            <HostPricing host={host as SiaCentralHostScanned} rates={rates} />
+          )}
         </div>
       </div>
     </div>
