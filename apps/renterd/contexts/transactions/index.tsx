@@ -49,7 +49,6 @@ function useTransactionsMain() {
   const offset = Number(router.query.offset || 0)
   const transactions = useWalletTransactions({
     params: {
-      // Endpoint currently returns wrong end of txn list
       limit,
       offset,
     },

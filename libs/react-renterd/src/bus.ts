@@ -172,8 +172,6 @@ export function useWalletAddresses(args?: HookArgsSwr<void, string[]>) {
 }
 
 type WalletTransactionsParams = {
-  since?: number
-  before?: number
   offset?: number
   limit?: number
 }
