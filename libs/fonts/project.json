@@ -22,6 +22,16 @@
             "glob": "libs/fonts/*.md",
             "input": ".",
             "output": "."
+          },
+          {
+            "glob": "libs/fonts/src/fonts/IBM_Plex_Sans/*",
+            "input": ".",
+            "output": "fonts/IBM_Plex_Sans"
+          },
+          {
+            "glob": "libs/fonts/src/fonts/IBM_Plex_Mono/*",
+            "input": ".",
+            "output": "fonts/IBM_Plex_Mono"
           }
         ]
       },
