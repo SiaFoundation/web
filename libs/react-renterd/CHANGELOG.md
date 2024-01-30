@@ -1,5 +1,11 @@
 # @siafoundation/react-renterd
 
+## 2.0.3
+
+### Patch Changes
+
+- 4afab555: Deprecate the before and since query paramaters for transactions.
+
 ## 2.0.2
 
 ### Patch Changes

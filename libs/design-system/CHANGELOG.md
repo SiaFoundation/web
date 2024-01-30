@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0
+
+### Minor Changes
+
+- 48682ca5: Add missing dependency @react-spring/web.
+
 ## 2.0.5
 
 ### Patch Changes
