@@ -1,5 +1,11 @@
 # @siafoundation/fonts
 
+## 0.4.0
+
+### Minor Changes
+
+- 2f89ffd7: Add missing font assets.
+
 ## 0.3.2
 
 ### Patch Changes
