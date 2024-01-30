@@ -70,6 +70,7 @@ jobs:
       # If no changesets were detected in the PR prep step then we are in
       # release/publish mode. Check for and publish any new versions to NPM.
       - name: Publish to NPM and create GitHub releases
+        id: changesets_release
         if: steps.changesets.outputs.hasChangesets == 'false'
         uses: changesets/action@v1
         with:
@@ -77,3 +78,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Release Go modules
+        # if a release was published, release the Go modules
+        if: steps.changesets_release.outputs.published == 'true'
+        run: |
+          curl \
+            -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/SiaFoundation/web/actions/workflows/release-go.yml/dispatches \
+            -d '{"ref":"main"}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
