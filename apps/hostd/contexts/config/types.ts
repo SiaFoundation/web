@@ -45,9 +45,6 @@ export const initialValues = {
 
   priceTableValidity: undefined as BigNumber | undefined,
 
-  // Registry settings
-  maxRegistryEntries: undefined as BigNumber | undefined,
-
   // RHP3 settings
   accountExpiry: undefined as BigNumber | undefined,
   maxAccountBalance: undefined as BigNumber | undefined,
