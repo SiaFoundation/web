@@ -5,7 +5,7 @@ import { dnsProviderOptions, initialValues, scDecimalPlaces } from './types'
 import { SiaCentralExchangeRates } from '@siafoundation/sia-central'
 import { calculateMaxCollateral } from './transform'
 
-type Categories = 'host' | 'pricing' | 'DNS' | 'bandwidth' | 'registry' | 'RHP3'
+type Categories = 'host' | 'pricing' | 'DNS' | 'bandwidth' | 'RHP3'
 
 type GetFields = {
   showAdvanced: boolean
@@ -194,24 +194,6 @@ export function getFields({
       suggestionTip: 'The suggested price table validity.',
       description: (
         <>{`How long a renter's registered price table remains valid.`}</>
-      ),
-      hidden: !showAdvanced,
-      validation: {
-        required: 'required',
-      },
-    },
-
-    // Registry
-    maxRegistryEntries: {
-      title: 'Maximum registry size',
-      type: 'number',
-      category: 'registry',
-      units: 'entries',
-      suggestion: new BigNumber(1_000),
-      suggestionTip: 'The suggested maximum registry size.',
-      decimalsLimit: 0,
-      description: (
-        <>{`The maximum number of registry entries that the host will store. Each registry entry is up to 113 bytes.`}</>
       ),
       hidden: !showAdvanced,
       validation: {

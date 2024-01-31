@@ -411,9 +411,6 @@ export type HostSettings = {
 
   priceTableValidity: number
 
-  // Registry settings
-  maxRegistryEntries: number
-
   // RHP3 settings
   accountExpiry: number
   maxAccountBalance: Currency

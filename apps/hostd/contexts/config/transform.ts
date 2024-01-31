@@ -98,9 +98,6 @@ export function transformUp(
         .toFixed(0)
     ),
 
-    // Registry settings
-    maxRegistryEntries: Number(values.maxRegistryEntries.toFixed(0)),
-
     // RHP3 settings
     accountExpiry: Number(
       values.accountExpiry
@@ -201,9 +198,6 @@ export function transformDown({
     priceTableValidity: new BigNumber(settings.priceTableValidity)
       .div(1_000_000_000) // nanoseconds to seconds
       .div(60), // seconds to minutes
-
-    // Registry settings
-    maxRegistryEntries: new BigNumber(settings.maxRegistryEntries),
 
     // RHP3 settings
     accountExpiry: new BigNumber(settings.accountExpiry)
