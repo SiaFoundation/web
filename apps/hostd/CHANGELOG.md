@@ -1,5 +1,11 @@
 # hostd
 
+## 0.37.0
+
+### Minor Changes
+
+- 90813d49: Removed the maximum registry size configuration option.
+
 ## 0.36.0
 
 ### Minor Changes

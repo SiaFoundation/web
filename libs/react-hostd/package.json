@@ -1,7 +1,7 @@
 {
   "name": "@siafoundation/react-hostd",
   "description": " React hooks for interacting with `hostd`.",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "license": "MIT",
   "peerDependencies": {
     "swr": "^2.1.1",

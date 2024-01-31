@@ -1,5 +1,11 @@
 # @siafoundation/react-hostd
 
+## 2.1.0
+
+### Minor Changes
+
+- 90813d49: Removed the maximum registry size configuration option.
+
 ## 2.0.2
 
 ### Patch Changes
