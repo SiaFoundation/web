@@ -10,13 +10,13 @@ User interfaces for the Sia software. The latest Sia software takes a modular ap
 
 ### [renterd](apps/renterd)
 
-![stability-beta](https://img.shields.io/badge/stability-beta-yellow.svg)
+![stability-mature](https://img.shields.io/badge/stability-mature-008000.svg)
 
 The [`renterd`](https://github.com/siafoundation/renterd) user interface, focused on renting functionality.
 
 ### [hostd](apps/hostd)
 
-![stability-beta](https://img.shields.io/badge/stability-beta-yellow.svg)
+![stability-mature](https://img.shields.io/badge/stability-mature-008000.svg)
 
 The [`hostd`](https://github.com/siafoundation/hostd) user interface, focused on hosting functionality.
 
@@ -40,13 +40,14 @@ The `explorer` user interface, a Sia blockchain explorer interface that powers [
 
 The Sia web libraries provide developers with convenient TypeScript SDKs for using Sia core types, blockchain utilities, data fetching, daemon-specific React hooks, and components for common functionality such as Siacoin/fiat input fields, transaction lists, files, and more.
 
+- [@siafoundation/sdk](libs/sdk) - SDK for interacting directly with the Sia network from browsers and web clients.
 - [@siafoundation/react-core](libs/react-core) - Core library for building React hooks for interacting with a Sia daemon.
 - [@siafoundation/react-renterd](libs/react-renterd) - React hooks for interacting with `renterd`.
 - [@siafoundation/react-hostd](libs/react-hostd) - React hooks for interacting with `hostd`.
 - [@siafoundation/react-walletd](libs/react-walletd) - React hooks for interacting with `walletd`.
+- [@siafoundation/design-system](libs/design-system) - React-based design system used across Sia apps and websites.
 - [@siafoundation/react-sia-central](libs/react-sia-central) - React hooks for interacting with the Sia Central API.
 - [@siafoundation/sia-central](libs/sia-central) - Methods and types for interacting with the Sia Central API.
-- [@siafoundation/design-system](libs/design-system) - React-based design system used across Sia apps and websites.
 - [@siafoundation/data-sources](libs/data-sources) - Data sources used for stats on the website.
 - [@siafoundation/fonts](libs/fonts) - Next font configuration for use across apps.
 - [@siafoundation/units](libs/units) - Methods and types for converting and displaying units.

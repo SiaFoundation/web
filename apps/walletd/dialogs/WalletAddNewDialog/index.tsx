@@ -63,6 +63,7 @@ function getFields({
       type: 'text',
       title: 'Seed',
       onClick: (e) => {
+        // eslint-disable-next-line @typescript-eslint/no-extra-semi
         ;(e as MouseEvent<HTMLTextAreaElement>).currentTarget.select()
         copySeed()
       },
