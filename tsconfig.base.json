@@ -29,7 +29,8 @@
       "@siafoundation/react-walletd": ["libs/react-walletd/src/index.ts"],
       "@siafoundation/sia-central": ["libs/sia-central/src/index.ts"],
       "@siafoundation/types": ["libs/types/src/index.ts"],
-      "@siafoundation/units": ["libs/units/src/index.ts"]
+      "@siafoundation/units": ["libs/units/src/index.ts"],
+      "@siafoundation/sdk": ["libs/sdk/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
