@@ -20,7 +20,7 @@ import {
   Encoder,
   Decoder,
 } from './encoder'
-import { HostPrices, HostSettings, NetAddress } from './types'
+import { HostPrices, HostSettings, NetAddress } from '../types'
 
 export function encodeHostPrices(e: Encoder, hostPrices: HostPrices) {
   encodeCurrency(e, hostPrices.contractPrice)

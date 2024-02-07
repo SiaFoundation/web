@@ -1,0 +1,15 @@
+github.com/aead/chacha20 v0.0.0-20180709150244-8b13a72661da h1:KjTM2ks9d14ZYCvmHS9iAKVt9AyzRSqNU1qabPih5BY=
+github.com/aead/chacha20 v0.0.0-20180709150244-8b13a72661da/go.mod h1:eHEWzANqSiWQsof+nXEI9bUVUyV6F53Fp89EuCh2EAA=
+go.sia.tech/core v0.1.12-0.20230807160906-ad76cac3058f h1:ZPWqj1RphySPSdVvhW09VYI/nKc+TiqJlUnx9FcI0lY=
+go.sia.tech/core v0.1.12-0.20230807160906-ad76cac3058f/go.mod h1:D17UWSn99SEfQnEaR9G9n6Kz9+BwqMoUgZ6Cl424LsQ=
+go.sia.tech/core v0.2.2-0.20240202170315-3e6d0eca7490 h1:pfmR0dva8GQ1Oxb5VpF7JWfDuWgmfbgZKK8oAKWT24g=
+go.sia.tech/core v0.2.2-0.20240202170315-3e6d0eca7490/go.mod h1:3EoY+rR78w1/uGoXXVqcYdwSjSJKuEMI5bL7WROA27Q=
+go.sia.tech/web v0.0.0-20230628194305-c6e1696bad89 h1:wB/JRFeTEs6gviB6k7QARY7Goh54ufkADsdBdn0ZhRo=
+go.sia.tech/web v0.0.0-20230628194305-c6e1696bad89/go.mod h1:RKODSdOmR3VtObPAcGwQqm4qnqntDVFylbvOBbWYYBU=
+golang.org/x/crypto v0.0.0-20220507011949-2cf3adece122 h1:NvGWuYG8dkDHFSKksI1P9faiVJ9rayE6l0+ouWVIDs8=
+golang.org/x/crypto v0.0.0-20220507011949-2cf3adece122/go.mod h1:IxCIyHEi3zRg3s0A5j5BB6A9Jmi73HwBIUl50j+osU4=
+golang.org/x/sys v0.0.0-20190626221950-04f50cda93cb/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.5.0 h1:MUK/U/4lj1t1oPg0HfuXDN/Z1wv31ZJ/YcPiGccS4DU=
+golang.org/x/sys v0.5.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+lukechampine.com/frand v1.4.2 h1:RzFIpOvkMXuPMBb9maa4ND4wjBn71E1Jpf8BzJHMaVw=
+lukechampine.com/frand v1.4.2/go.mod h1:4S/TM2ZgrKejMcKMbeLjISpJMO+/eZ1zu3vYX9dtj3s=

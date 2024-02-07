@@ -5,7 +5,7 @@ import {
   decodeHostSettings,
 } from './encoding'
 import { newEncoder, newDecoder } from './encoder'
-import { HostPrices, HostSettings } from './types'
+import { HostPrices, HostSettings } from '../types'
 import { TextDecoder, TextEncoder } from 'node:util'
 
 Object.defineProperties(globalThis, {

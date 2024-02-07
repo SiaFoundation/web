@@ -17,16 +17,7 @@ import {
   RPCReadSector,
   RPCWriteSector,
   RPCSettings,
-} from './types'
-
-function base64ToArrayBuffer(base64: string) {
-  const binaryString = window.atob(base64)
-  const bytes = new Uint8Array(binaryString.length)
-  for (let i = 0; i < binaryString.length; i++) {
-    bytes[i] = binaryString.charCodeAt(i)
-  }
-  return bytes.buffer
-}
+} from '../types'
 
 export class WebTransportClient {
   private transport!: WebTransport
@@ -133,4 +124,13 @@ export class WebTransportClient {
       decodeRpcResponseSettings
     )
   }
+}
+
+function base64ToArrayBuffer(base64: string) {
+  const binaryString = window.atob(base64)
+  const bytes = new Uint8Array(binaryString.length)
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i)
+  }
+  return bytes.buffer
 }

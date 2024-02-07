@@ -5,7 +5,8 @@
     "@nx/dependency-checks": [
       "error",
       {
-        "ignoredFiles": ["libs/sdk/rollup.config.js"]
+        "ignoredFiles": ["libs/sdk/rollup.config.js"],
+        "ignoredDependencies": ["util"]
       }
     ]
   },

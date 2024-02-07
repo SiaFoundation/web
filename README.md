@@ -8,35 +8,16 @@ Web packages for the Sia project and ecosystem.
 
 User interfaces for the Sia software. The latest Sia software takes a modular approach, with separate daemons and user interfaces for renting, hosting, the explorer, and advanced wallet functionality.
 
-### [renterd](apps/renterd)
-
-![stability-mature](https://img.shields.io/badge/stability-mature-008000.svg)
-
-The [`renterd`](https://github.com/siafoundation/renterd) user interface, focused on renting functionality.
-
-### [hostd](apps/hostd)
-
-![stability-mature](https://img.shields.io/badge/stability-mature-008000.svg)
-
-The [`hostd`](https://github.com/siafoundation/hostd) user interface, focused on hosting functionality.
-
-### [walletd](apps/walletd)
-
-![stability-alpha](https://img.shields.io/badge/stability-alpha-orange.svg)
-
-The [`walletd`](https://github.com/siafoundation/walletd) user interface, includes a wallet with support for hot, cold, and hardware wallets.
-
-### [explorer](apps/explorer)
-
-![stability-mature](https://img.shields.io/badge/stability-mature-008000.svg)
-
-The `explorer` user interface, a Sia blockchain explorer interface that powers [siascan.com](https://siascan.com) and [zen.siascan.com](https://zen.siascan.com).
+- [renterd](apps/renterd) - The [`renterd`](https://github.com/siafoundation/renterd) user interface, focused on renting functionality.
+- [hostd](apps/hostd) - The [`hostd`](https://github.com/siafoundation/hostd) user interface, focused on hosting functionality.
+- [walletd](apps/walletd) - The [`walletd`](https://github.com/siafoundation/walletd) user interface, includes a wallet with support for hot, cold, and hardware wallets.
+- [explorer](apps/explorer) - The `explorer` user interface, a Sia blockchain explorer interface that powers [siascan.com](https://siascan.com) and [zen.siascan.com](https://zen.siascan.com).
 
 ## Libraries
 
-![stability-wip](https://img.shields.io/badge/stability-work_in_progress-orange.svg)
+![stability-beta](https://img.shields.io/badge/stability-beta-yellow.svg)
 
-> ⚠️ Please note that all libraries are currently unstable and subject to change or completely move. Do not depend on these libraries until version 1.0.0.
+### TypeScript
 
 The Sia web libraries provide developers with convenient TypeScript SDKs for using Sia core types, blockchain utilities, data fetching, daemon-specific React hooks, and components for common functionality such as Siacoin/fiat input fields, transaction lists, files, and more.
 
@@ -52,6 +33,15 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 - [@siafoundation/fonts](libs/fonts) - Next font configuration for use across apps.
 - [@siafoundation/units](libs/units) - Methods and types for converting and displaying units.
 - [@siafoundation/types](libs/types) - Core Sia types and library methods.
+
+### Go
+
+- [go.sia.tech/web/ui](ui) - Library for embedding NextJS applications in Go.
+- [go.sia.tech/web/sdk](sdk) - SDK for encoding RPCs, computing merkle proofs, and more. Compiled with WASM for use in the TypeScript SDK.
+- [go.sia.tech/web/walletd/wasm](walletd/wasm) - Wallet library for signing transactions. Compiled with WASM for use in the `walletd` application.
+- [go.sia.tech/web/walletd](walletd) - HTTP handler with embedded `walletd` application.
+- [go.sia.tech/web/renterd](renterd) - HTTP handler with embedded `renterd` application.
+- [go.sia.tech/web/hostd](hostd) - HTTP handler with embedded `hostd` application.
 
 ## Internal
 
