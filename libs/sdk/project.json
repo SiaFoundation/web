@@ -4,10 +4,26 @@
   "sourceRoot": "libs/sdk/src",
   "projectType": "library",
   "tags": [],
+  "namedInputs": {
+    "go": ["{workspaceRoot}/sdk/**/*"],
+    "production": ["default", "go"]
+  },
   "targets": {
+    "compile": {
+      "executor": "nx:run-commands",
+      "inputs": ["go"],
+      "cache": true,
+      "options": {
+        "commands": [
+          "tinygo build -o libs/sdk/src/wasm/resources/sdk.wasm -target wasm ./sdk"
+        ]
+      }
+    },
     "build": {
-      "executor": "@nrwl/rollup:rollup",
+      "executor": "@nx/rollup:rollup",
       "outputs": ["{options.outputPath}"],
+      "dependsOn": ["compile", "^build"],
+      "inputs": ["production", "^production"],
       "options": {
         "outputPath": "dist/libs/sdk",
         "tsConfig": "libs/sdk/tsconfig.lib.json",

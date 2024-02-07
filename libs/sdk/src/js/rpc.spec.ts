@@ -9,7 +9,7 @@ import {
   RPCSettingsResponse,
   RPCWriteSectorRequest,
   RPCWriteSectorResponse,
-} from './types'
+} from '../types'
 import { TextDecoder, TextEncoder } from 'node:util'
 import {
   decodeRpcRequestReadSector,

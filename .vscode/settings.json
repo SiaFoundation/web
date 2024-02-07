@@ -6,5 +6,11 @@
   ],
   "[go]": {
     "editor.defaultFormatter": "golang.go"
+  },
+  "gopls": {
+    "build.env": {
+      "GOOS": "js",
+      "GOARCH": "wasm"
+    }
   }
 }

@@ -5,4 +5,5 @@ use (
 	./hostd
 	./renterd
 	./walletd
+	./sdk
 )
