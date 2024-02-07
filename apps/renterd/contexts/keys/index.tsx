@@ -34,7 +34,6 @@ function useKeysMain() {
     if (!response.data) {
       return null
     }
-    console.log(response.data?.v4Keypairs)
     const data: KeyData[] =
       Object.entries(response.data?.v4Keypairs || {}).map(([key, secret]) => {
         return {

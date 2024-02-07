@@ -22,7 +22,7 @@ export function FilesStatsMenuWarnings() {
   const syncStatusEl = useMemo(() => {
     if (!syncStatus.isSynced) {
       return (
-        <div className="flex flex-col gap-1">
+        <div key="syncStatus" className="flex flex-col gap-1">
           <Text size="12" font="mono" weight="medium" color="amber">
             Uploads are disabled until renterd is synced.
           </Text>
@@ -39,7 +39,7 @@ export function FilesStatsMenuWarnings() {
   const autopilotNotConfiguredEl = useMemo(() => {
     if (autopilotNotConfigured.active) {
       return (
-        <div className="flex flex-col gap-1">
+        <div key="autopilotNotConfigured" className="flex flex-col gap-1">
           <Text size="12" font="mono" weight="medium" color="amber">
             Uploads are disabled until settings are configured.
           </Text>
@@ -58,7 +58,7 @@ export function FilesStatsMenuWarnings() {
   const notEnoughContractsEl = useMemo(() => {
     if (notEnoughContracts.active) {
       return (
-        <div className="flex flex-col gap-1">
+        <div key="notEnoughContracts" className="flex flex-col gap-1">
           <Text size="12" font="mono" weight="medium" color="amber">
             Uploads are disabled until settings are configured.
           </Text>
@@ -76,7 +76,7 @@ export function FilesStatsMenuWarnings() {
   const contractSetMismatchEl = useMemo(() => {
     if (contractSetMismatch.active) {
       return (
-        <div className="flex flex-col gap-1">
+        <div key="contractSetMismatch" className="flex flex-col gap-1">
           <Text size="12" font="mono" weight="medium" color="amber">
             Uploaded data will not be managed by autopilot.
           </Text>
