@@ -591,6 +591,24 @@ export function useObjectAdd(
   return usePutFunc({ ...args, route: '/bus/objects/:key' })
 }
 
+export type RenameObjectRequest = {
+  force: boolean
+  bucket: string
+  from: string
+  to: string
+  mode: 'single' | 'multi'
+}
+
+export function useObjectRename(
+  args: HookArgsCallback<
+    { key: string; bucket: string },
+    RenameObjectRequest,
+    never
+  >
+) {
+  return usePostFunc({ ...args, route: '/bus/objects/rename' })
+}
+
 export function useObjectDelete(
   args?: HookArgsCallback<
     { key: string; bucket: string; batch?: boolean },
