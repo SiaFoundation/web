@@ -551,7 +551,7 @@ export type ObjectDirectoryParams = {
   limit?: number
   prefix?: string
   offset?: number
-  sortBy?: 'name' | 'health'
+  sortBy?: 'name' | 'health' | 'size'
   sortDir?: 'asc' | 'desc'
 }
 
