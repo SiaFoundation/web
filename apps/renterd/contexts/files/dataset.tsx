@@ -24,6 +24,7 @@ import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 
 type Props = {
+  setActiveDirectory: (func: (directory: string[]) => string[]) => void
   activeDirectoryPath: string
   uploadsList: ObjectData[]
   sortDirection: 'asc' | 'desc'
@@ -34,6 +35,7 @@ type Props = {
 const defaultLimit = 50
 
 export function useDataset({
+  setActiveDirectory,
   activeDirectoryPath,
   uploadsList,
   sortDirection,
@@ -107,19 +109,28 @@ export function useDataset({
             size: 0,
             health: 0,
             name,
+            onClick: () => {
+              setActiveDirectory((p) => p.concat(name))
+            },
             type: 'bucket',
           }
         })
       } else if (response.data) {
         response.data.entries?.forEach(({ name: key, size, health }) => {
           const path = bucketAndResponseKeyToFilePath(activeBucketName, key)
+          const name = getFilename(key)
           dataMap[path] = {
             id: path,
             path,
             bucket: activeBucket,
             size,
             health,
-            name: getFilename(key),
+            name,
+            onClick: isDirectory(key)
+              ? () => {
+                  setActiveDirectory((p) => p.concat(name.slice(0, -1)))
+                }
+              : undefined,
             type: isDirectory(key) ? 'directory' : 'file',
           }
         })

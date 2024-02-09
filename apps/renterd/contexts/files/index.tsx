@@ -6,7 +6,12 @@ import {
 import { useRouter } from 'next/router'
 import { createContext, useCallback, useContext, useMemo } from 'react'
 import { columns } from './columns'
-import { defaultSortField, columnsDefaultVisible, sortOptions } from './types'
+import {
+  defaultSortField,
+  columnsDefaultVisible,
+  sortOptions,
+  ObjectData,
+} from './types'
 import {
   FullPath,
   FullPathSegments,
@@ -17,6 +22,7 @@ import {
 import { useUploads } from './uploads'
 import { useDownloads } from './downloads'
 import { useDataset } from './dataset'
+import { useMove } from './move'
 
 function useFilesMain() {
   const {
@@ -77,13 +83,29 @@ function useFilesMain() {
 
   const { limit, offset, response, dataset } = useDataset({
     activeDirectoryPath,
+    setActiveDirectory,
     uploadsList,
     sortField,
     sortDirection,
     filters,
   })
 
-  const datasetPage = useMemo(() => {
+  const {
+    onDragEnd,
+    onDragOver,
+    onDragCancel,
+    onDragMove,
+    onDragStart,
+    draggingObject,
+  } = useMove({
+    dataset,
+    activeDirectory,
+    setActiveDirectory,
+    mutate: response.mutate,
+  })
+
+  // Add parent directory to the dataset
+  const _datasetPage = useMemo(() => {
     if (!dataset) {
       return null
     }
@@ -94,7 +116,10 @@ function useFilesMain() {
           name: '..',
           path: '..',
           type: 'directory',
-        },
+          onClick: () => {
+            setActiveDirectory((p) => p.slice(0, -1))
+          },
+        } as ObjectData,
         ...dataset,
       ]
     }
@@ -103,6 +128,29 @@ function useFilesMain() {
     // when new data fetching is complete.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataset])
+
+  // Add drag and drop properties to the dataset
+  const datasetPage = useMemo(() => {
+    if (!_datasetPage) {
+      return null
+    }
+    return _datasetPage.map((d) => {
+      if (
+        draggingObject &&
+        draggingObject.id !== d.id &&
+        d.type === 'directory'
+      ) {
+        return {
+          ...d,
+          isDroppable: true,
+        }
+      }
+      return {
+        ...d,
+        isDraggable: d.type !== 'bucket' && !d.isUploading,
+      }
+    })
+  }, [_datasetPage, draggingObject])
 
   const filteredTableColumns = useMemo(
     () =>
@@ -177,6 +225,12 @@ function useFilesMain() {
     sortDirection,
     resetDefaultColumnVisibility,
     getFileUrl,
+    onDragStart,
+    onDragEnd,
+    onDragMove,
+    onDragCancel,
+    onDragOver,
+    draggingObject,
   }
 }
 

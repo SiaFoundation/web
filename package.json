@@ -23,6 +23,7 @@
   "dependencies": {
     "@carbon/icons-react": "^10.47.0",
     "@changesets/cli": "^2.25.0",
+    "@dnd-kit/core": "^6.1.0",
     "@ledgerhq/hw-transport-web-ble": "^6.27.19",
     "@ledgerhq/hw-transport-webhid": "^6.27.19",
     "@mdx-js/loader": "^2.1.1",

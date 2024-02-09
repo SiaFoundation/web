@@ -600,11 +600,7 @@ export type RenameObjectRequest = {
 }
 
 export function useObjectRename(
-  args: HookArgsCallback<
-    { key: string; bucket: string },
-    RenameObjectRequest,
-    never
-  >
+  args?: HookArgsCallback<void, RenameObjectRequest, never>
 ) {
   return usePostFunc({ ...args, route: '/bus/objects/rename' })
 }
