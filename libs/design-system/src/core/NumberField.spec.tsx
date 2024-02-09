@@ -216,12 +216,12 @@ async function renderNode({
 
   const input = node.getByTestId('numberfield') as HTMLInputElement
   await waitFor(() => expect(input.value).toBeTruthy())
-  return { node, input }
+  return { input }
 }
 
 function expectOnChangeValues(values: (string | undefined)[], fn: jest.Mock) {
   const matches: (string | undefined)[] = []
-  fn.mock.calls.forEach((call, i) => {
+  fn.mock.calls.forEach((call) => {
     matches.push(call[0]?.toString())
   })
   expect(matches).toEqual(values)

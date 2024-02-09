@@ -6,7 +6,7 @@
       "error",
       {
         "ignoredFiles": ["libs/sdk/rollup.config.js"],
-        "ignoredDependencies": ["util"]
+        "ignoredDependencies": ["util", "undici"]
       }
     ]
   },

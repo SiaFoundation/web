@@ -10,7 +10,6 @@ import {
   RPCWriteSectorRequest,
   RPCWriteSectorResponse,
 } from '../types'
-import { TextDecoder, TextEncoder } from 'node:util'
 import {
   decodeRpcRequestReadSector,
   decodeRpcRequestSettings,
@@ -25,11 +24,6 @@ import {
   encodeRpcResponseSettings,
   encodeRpcResponseWriteSector,
 } from './rpc'
-
-Object.defineProperties(globalThis, {
-  TextDecoder: { value: TextDecoder },
-  TextEncoder: { value: TextEncoder },
-})
 
 const prices: HostPrices = {
   contractPrice: BigInt(1000000000),

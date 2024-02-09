@@ -72,5 +72,8 @@
     "@radix-ui/react-tooltip": "^1.0.0",
     "react-hot-toast": "^2.2.0"
   },
+  "devDependencies": {
+    "undici": "5.28.3"
+  },
   "types": "./src/index.d.ts"
 }
