@@ -9,7 +9,7 @@
           "libs/design-system/tailwind.config.js",
           "libs/design-system/rollup.config.js"
         ],
-        "ignoredDependencies": ["@react-spring/web"]
+        "ignoredDependencies": ["@react-spring/web", "undici"]
       }
     ]
   },

@@ -6,12 +6,6 @@ import {
 } from './encoding'
 import { newEncoder, newDecoder } from './encoder'
 import { HostPrices, HostSettings } from '../types'
-import { TextDecoder, TextEncoder } from 'node:util'
-
-Object.defineProperties(globalThis, {
-  TextDecoder: { value: TextDecoder },
-  TextEncoder: { value: TextEncoder },
-})
 
 describe('encoding', () => {
   it('encodeHostPrices', () => {

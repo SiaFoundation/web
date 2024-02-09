@@ -7,10 +7,10 @@ import BigNumber from 'bignumber.js'
 import { SiacoinField } from './SiacoinField'
 import { fireEvent, render, waitFor, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { rest } from 'msw'
-import { setupServer } from 'msw/node'
 import { useState } from 'react'
 import { SiaCentralExchangeRatesResponse } from '@siafoundation/sia-central'
+import { setupServer } from 'msw/node'
+import { HttpResponse, http } from 'msw'
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn().mockReturnValue({
@@ -376,46 +376,41 @@ async function renderNode({
   await act(async () => {
     await delay(100)
   })
-  return { node, scInput, fiatInput }
+  return { scInput, fiatInput }
 }
 
 function siaCentralExchangeRateEndpoint(rate = '1') {
   server.use(
-    rest.get(
-      'https://api.siacentral.com/v2/market/exchange-rate',
-      (req, res, ctx) => {
-        return res(
-          ctx.json({
-            message: '',
-            type: '',
-            rates: {
-              sc: {
-                bch: rate,
-                btc: rate,
-                cad: rate,
-                cny: rate,
-                eth: rate,
-                eur: rate,
-                gbp: rate,
-                jpy: rate,
-                ltc: rate,
-                rub: rate,
-                scp: rate,
-                sf: rate,
-                usd: rate,
-              },
-            },
-            timestamp: new Date().toString(),
-          } as SiaCentralExchangeRatesResponse)
-        )
-      }
-    )
+    http.get('https://api.siacentral.com/v2/market/exchange-rate', () => {
+      return HttpResponse.json({
+        message: '',
+        type: '',
+        rates: {
+          sc: {
+            bch: rate,
+            btc: rate,
+            cad: rate,
+            cny: rate,
+            eth: rate,
+            eur: rate,
+            gbp: rate,
+            jpy: rate,
+            ltc: rate,
+            rub: rate,
+            scp: rate,
+            sf: rate,
+            usd: rate,
+          },
+        },
+        timestamp: new Date().toString(),
+      } as SiaCentralExchangeRatesResponse)
+    })
   )
 }
 
 function expectOnChangeValues(values: (string | undefined)[], fn: jest.Mock) {
   const matches: (string | undefined)[] = []
-  fn.mock.calls.forEach((call, i) => {
+  fn.mock.calls.forEach((call) => {
     matches.push(call[0]?.toString())
   })
   expect(matches).toEqual(values)

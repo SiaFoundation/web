@@ -16,6 +16,7 @@ import {
   InternalHookArgsWithPayloadSwr,
   getPathFromKey,
   After,
+  InternalHookArgsSwr,
 } from './request'
 import { SWRError } from './types'
 import { useAppSettings } from './useAppSettings'
@@ -25,7 +26,11 @@ import { useWorkflows } from './workflows'
 export function usePostSwr<Params extends RequestParams, Payload, Result>(
   args: InternalHookArgsWithPayloadSwr<Params, Payload, Result>
 ) {
-  const hookArgs = useMemo(() => mergeInternalHookArgsSwr(args), [args])
+  const hookArgs: InternalHookArgsSwr<
+    Record<string, string | number | boolean | string[]>,
+    Result
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  > = useMemo(() => mergeInternalHookArgsSwr(args as any), [args])
   const { settings, passwordProtectRequestHooks } = useAppSettings()
   const reqRoute = buildRouteWithParams(
     settings,

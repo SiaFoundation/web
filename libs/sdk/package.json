@@ -4,5 +4,8 @@
   "version": "0.0.1",
   "license": "MIT",
   "dependencies": {},
+  "devDependencies": {
+    "undici": "5.28.3"
+  },
   "types": "./src/index.d.ts"
 }
