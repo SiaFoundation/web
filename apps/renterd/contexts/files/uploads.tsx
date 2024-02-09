@@ -89,8 +89,14 @@ export function useUploads({ activeDirectoryPath }: Props) {
   const uploadFiles = async (files: File[]) => {
     files.forEach(async (file) => {
       const name = file.name
+      // https://developer.mozilla.org/en-US/docs/Web/API/File
+      // Documentation does not include `path` but all browsers populate it
+      // with the relative path of the file. Whereas webkitRelativePath is
+      // empty string in most browsers.
+      // Try `path` otherwise fallback to flat file structure.
+      const relativeUserFilePath = (file['path'] as string) || file.name
       // TODO: check if name has /prefix
-      const path = getFilePath(activeDirectoryPath, name)
+      const path = getFilePath(activeDirectoryPath, relativeUserFilePath)
       const bucketName = getBucketFromPath(path)
       const bucket = buckets.data?.find((b) => b.name === bucketName)
 
