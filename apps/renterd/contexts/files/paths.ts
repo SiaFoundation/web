@@ -2,6 +2,12 @@ export type FullPathSegments = string[]
 export type FullPath = string
 export type KeyPath = string
 
+export function join(a: string, b: string): FullPath {
+  const _a = a.endsWith('/') ? a.slice(0, -1) : a
+  const _b = b.startsWith('/') ? b.slice(1) : b
+  return `${_a}/${_b}`
+}
+
 export function getFilePath(dirPath: FullPath, name: string): FullPath {
   const n = name.startsWith('/') ? name.slice(1) : name
   return dirPath + n
@@ -24,7 +30,7 @@ export function getBucketFromPath(path: FullPath): string {
   return path.split('/')[0]
 }
 
-function getKeyFromPath(path: FullPath): KeyPath {
+export function getKeyFromPath(path: FullPath): KeyPath {
   const segsWithoutBucket = path.split('/').slice(1).join('/')
   return `/${segsWithoutBucket}`
 }

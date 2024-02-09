@@ -14,6 +14,12 @@ export function FilesExplorer() {
     sortDirection,
     sortableColumns,
     toggleSort,
+    onDragEnd,
+    onDragOver,
+    onDragStart,
+    onDragCancel,
+    onDragMove,
+    draggingObject,
   } = useFiles()
   const canUpload = useCanUpload()
   return (
@@ -34,6 +40,12 @@ export function FilesExplorer() {
           sortDirection={sortDirection}
           toggleSort={toggleSort}
           rowSize="dense"
+          onDragStart={onDragStart}
+          onDragOver={onDragOver}
+          onDragEnd={onDragEnd}
+          onDragCancel={onDragCancel}
+          onDragMove={onDragMove}
+          draggingDatum={draggingObject}
         />
       </Dropzone>
     </div>

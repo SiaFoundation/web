@@ -14,7 +14,10 @@ export type ObjectData = {
   size: number
   type: ObjectType
   isUploading?: boolean
+  isDraggable?: boolean
+  isDroppable?: boolean
   loaded?: number
+  onClick?: () => void
 }
 
 export type TableColumnId =
