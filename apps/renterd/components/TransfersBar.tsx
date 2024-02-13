@@ -13,7 +13,7 @@ import {
   Upload16,
 } from '@siafoundation/react-icons'
 import { useState } from 'react'
-import { useFiles } from '../contexts/files'
+import { useFilesManager } from '../contexts/filesManager'
 import { useAppSettings } from '@siafoundation/react-core'
 
 function getProgress(transfer: { loaded?: number; size?: number }) {
@@ -23,7 +23,7 @@ function getProgress(transfer: { loaded?: number; size?: number }) {
 export function TransfersBar() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()
   const { uploadsList, uploadCancel, downloadsList, downloadCancel } =
-    useFiles()
+    useFilesManager()
   const [maximized, setMaximized] = useState<boolean>(true)
 
   const uploadCount = uploadsList.length

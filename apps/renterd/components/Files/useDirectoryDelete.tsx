@@ -8,7 +8,7 @@ import { useDialog } from '../../contexts/dialog'
 import { useCallback } from 'react'
 import { useObjectDelete } from '@siafoundation/react-renterd'
 import { humanBytes } from '@siafoundation/units'
-import { bucketAndKeyParamsFromPath } from '../../contexts/files/paths'
+import { bucketAndKeyParamsFromPath } from '../../lib/paths'
 
 export function useDirectoryDelete() {
   const { openConfirmDialog } = useDialog()

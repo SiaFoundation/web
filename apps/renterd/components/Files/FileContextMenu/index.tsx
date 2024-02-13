@@ -18,18 +18,19 @@ import {
   Filter16,
   Edit16,
 } from '@siafoundation/react-icons'
-import { useFiles } from '../../../contexts/files'
 import { useFileDelete } from '../useFileDelete'
 import { CopyMetadataMenuItem } from './CopyMetadataMenuItem'
-import { getFilename } from '../../../contexts/files/paths'
+import { getFilename } from '../../../lib/paths'
 import { useDialog } from '../../../contexts/dialog'
+import { useFilesManager } from '../../../contexts/filesManager'
 
 type Props = {
   path: string
 }
 
 export function FileContextMenu({ path }: Props) {
-  const { downloadFiles, getFileUrl, navigateToFile } = useFiles()
+  const { downloadFiles, getFileUrl, navigateToFileDirectory } =
+    useFilesManager()
   const deleteFile = useFileDelete()
   const { openDialog } = useDialog()
 
@@ -68,7 +69,7 @@ export function FileContextMenu({ path }: Props) {
       <DropdownMenuLabel>Filter</DropdownMenuLabel>
       <DropdownMenuItem
         onSelect={() => {
-          navigateToFile(path)
+          navigateToFileDirectory(path)
         }}
       >
         <DropdownMenuLeftSlot>

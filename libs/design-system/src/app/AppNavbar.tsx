@@ -28,7 +28,7 @@ export function AppNavbar({ title, nav, stats, actions }: Props) {
           )
         ) : null}
         <div className="flex-1 flex gap-4 items-center justify-between h-full px-1 -mx-1 overflow-x-hidden">
-          <div className="flex gap-2 items-center h-full flex-1 overflow-x-hidden">
+          <div className="flex gap-2 items-center h-full flex-1 px-1 -mx-1 overflow-x-hidden">
             {nav}
           </div>
           <div className="flex gap-2 items-center h-full">{actions}</div>

@@ -1,11 +1,11 @@
 import { CommandGroup, CommandItemSearch } from '../../../CmdRoot/Item'
 import { Page } from '../../../CmdRoot/types'
 import { useObjectSearch } from '@siafoundation/react-renterd'
-import { isDirectory } from '../../../../contexts/files/paths'
-import { useFiles } from '../../../../contexts/files'
+import { isDirectory } from '../../../../lib/paths'
 import { Text } from '@siafoundation/design-system'
 import { Document16, FolderIcon } from '@siafoundation/react-icons'
 import { FileSearchEmpty } from './FileSearchEmpty'
+import { useFilesManager } from '../../../../contexts/filesManager'
 
 export const filesSearchPage = {
   namespace: 'files/search',
@@ -27,14 +27,15 @@ export function FilesSearchCmd({
   beforeSelect?: () => void
   afterSelect?: () => void
 }) {
-  const { activeBucket, navigateToFile } = useFiles()
+  const { activeBucketName: activeBucket, navigateToFileDirectory } =
+    useFilesManager()
   const onSearchPage = currentPage?.namespace === filesSearchPage.namespace
   const results = useObjectSearch({
     disabled: !onSearchPage,
     params: {
       bucket: activeBucket || 'default',
       key: debouncedSearch,
-      skip: 0,
+      offset: 0,
       limit: 10,
     },
     config: {
@@ -61,7 +62,7 @@ export function FilesSearchCmd({
             key={path}
             onSelect={() => {
               beforeSelect()
-              navigateToFile(path)
+              navigateToFileDirectory(path)
               afterSelect()
             }}
             value={path}

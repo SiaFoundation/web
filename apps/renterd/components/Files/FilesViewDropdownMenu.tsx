@@ -10,8 +10,8 @@ import {
   Option,
 } from '@siafoundation/design-system'
 import { CaretDown16, SettingsAdjust16 } from '@siafoundation/react-icons'
-import { sortOptions, SortField } from '../../contexts/files/types'
-import { useFiles } from '../../contexts/files'
+import { sortOptions, SortField } from '../../contexts/filesManager/types'
+import { useFilesManager } from '../../contexts/filesManager'
 import { groupBy } from '@technically/lodash'
 
 export function FilesViewDropdownMenu() {
@@ -24,7 +24,7 @@ export function FilesViewDropdownMenu() {
     sortDirection,
     setSortDirection,
     enabledColumns,
-  } = useFiles()
+  } = useFilesManager()
   return (
     <Popover
       trigger={
