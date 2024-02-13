@@ -21,6 +21,7 @@ import { HostsFilterPublicKeyDialog } from '../components/Hosts/HostsFilterPubli
 import { FilesBucketDeleteDialog } from '../components/Files/FilesBucketDeleteDialog'
 import { FilesBucketPolicyDialog } from '../components/Files/FilesBucketPolicyDialog'
 import { FilesBucketCreateDialog } from '../components/Files/FilesBucketCreateDialog'
+import { FileRenameDialog } from '../components/Files/FileRenameDialog'
 import { KeysCreateDialog } from '../components/Keys/KeysCreateDialog'
 
 export type DialogType =
@@ -44,6 +45,7 @@ export type DialogType =
   | 'filesCreateDirectory'
   | 'filesBucketPolicy'
   | 'filesSearch'
+  | 'fileRename'
   | 'keysCreate'
   | 'alerts'
   | 'confirm'
@@ -121,6 +123,7 @@ export function DialogProvider({ children }: Props) {
 
 export function Dialogs() {
   const {
+    id,
     dialog,
     openDialog,
     onOpenChange,
@@ -178,6 +181,11 @@ export function Dialogs() {
       />
       <FilesSearchDialog
         open={dialog === 'filesSearch'}
+        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      />
+      <FileRenameDialog
+        id={id}
+        open={dialog === 'fileRename'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <HostsAllowBlockDialog

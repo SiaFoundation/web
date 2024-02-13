@@ -5,8 +5,9 @@ import {
   DropdownMenuLeftSlot,
   DropdownMenuLabel,
 } from '@siafoundation/design-system'
-import { Delete16, FolderIcon } from '@siafoundation/react-icons'
+import { Delete16, Edit16, FolderIcon } from '@siafoundation/react-icons'
 import { useDirectoryDelete } from './useDirectoryDelete'
+import { useDialog } from '../../contexts/dialog'
 
 type Props = {
   path: string
@@ -15,6 +16,7 @@ type Props = {
 
 export function DirectoryContextMenu({ path, size }: Props) {
   const directoryConfirmDelete = useDirectoryDelete()
+  const { openDialog } = useDialog()
 
   return (
     <DropdownMenu
@@ -23,9 +25,24 @@ export function DirectoryContextMenu({ path, size }: Props) {
           <FolderIcon size={16} />
         </Button>
       }
-      contentProps={{ align: 'start' }}
+      contentProps={{
+        align: 'start',
+        onClick: (e) => {
+          e.stopPropagation()
+        },
+      }}
     >
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
+      <DropdownMenuItem
+        onSelect={() => {
+          openDialog('fileRename', path)
+        }}
+      >
+        <DropdownMenuLeftSlot>
+          <Edit16 />
+        </DropdownMenuLeftSlot>
+        Rename directory
+      </DropdownMenuItem>
       <DropdownMenuItem
         onSelect={() => {
           directoryConfirmDelete(path, size)

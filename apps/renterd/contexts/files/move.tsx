@@ -10,7 +10,7 @@ import {
 import { FullPathSegments, getDirectorySegmentsFromPath } from './paths'
 import { useObjectRename } from '@siafoundation/react-renterd'
 import { triggerErrorToast } from '@siafoundation/design-system'
-import { getRenameParams } from './rename'
+import { getMoveFileRenameParams } from './rename'
 
 type Props = {
   activeDirectory: FullPathSegments
@@ -18,14 +18,16 @@ type Props = {
     func: (directory: FullPathSegments) => FullPathSegments
   ) => void
   dataset?: ObjectData[]
-  mutate: () => void
+  refresh: () => void
 }
+
+const navigationDelay = 500
 
 export function useMove({
   dataset,
   activeDirectory,
   setActiveDirectory,
-  mutate,
+  refresh,
 }: Props) {
   const [draggingObject, setDraggingObject] = useState<ObjectData | null>(null)
   const [, setNavTimeout] = useState<NodeJS.Timeout>()
@@ -33,7 +35,10 @@ export function useMove({
 
   const moveFiles = useCallback(
     async (e: DragEndEvent) => {
-      const { bucket, from, to, mode } = getRenameParams(e, activeDirectory)
+      const { bucket, from, to, mode } = getMoveFileRenameParams(
+        e,
+        activeDirectory
+      )
       if (from === to) {
         return
       }
@@ -46,12 +51,12 @@ export function useMove({
           mode,
         },
       })
-      mutate()
+      refresh()
       if (response.error) {
         triggerErrorToast(response.error)
       }
     },
-    [mutate, rename, activeDirectory]
+    [refresh, rename, activeDirectory]
   )
 
   const delayedNavigation = useCallback(
@@ -67,7 +72,7 @@ export function useMove({
       }
       const newTimeout = setTimeout(() => {
         setActiveDirectory(() => directory)
-      }, 1000)
+      }, navigationDelay)
       setNavTimeout((t) => {
         if (t) {
           clearTimeout(t)

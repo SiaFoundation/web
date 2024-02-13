@@ -1,30 +1,50 @@
-import { bucketAndKeyParamsFromPath, getDirPath, getFilePath } from './paths'
+import {
+  bucketAndKeyParamsFromPath,
+  buildDirectoryPath,
+  getParentDirectoryPath,
+  join,
+} from './paths'
 
-describe('getFilePath', () => {
+describe('join', () => {
   it('a', () => {
-    expect(getFilePath('bucket/dir/', '/path/to/file.txt')).toEqual(
+    expect(join('bucket/dir/', '/path/to/file.txt')).toEqual(
       'bucket/dir/path/to/file.txt'
     )
   })
   it('b', () => {
-    expect(getFilePath('bucket/dir/', '')).toEqual('bucket/dir/')
+    expect(join('bucket/dir/', '')).toEqual('bucket/dir/')
   })
   it('b', () => {
-    expect(getFilePath('bucket/dir/', '/')).toEqual('bucket/dir/')
+    expect(join('bucket/dir/', '/')).toEqual('bucket/dir/')
   })
 })
 
-describe('getDirPath', () => {
+describe('buildDirPath', () => {
   it('a', () => {
-    expect(getDirPath('bucket/dir/', '/path/to/dir')).toEqual(
+    expect(buildDirectoryPath('bucket/dir/', '/path/to/dir')).toEqual(
       'bucket/dir/path/to/dir/'
     )
   })
   it('b', () => {
-    expect(getDirPath('bucket/dir/', '')).toEqual('bucket/dir/')
+    expect(buildDirectoryPath('bucket/dir/', '')).toEqual('bucket/dir/')
   })
   it('c', () => {
-    expect(getDirPath('bucket/dir/', '/')).toEqual('bucket/dir/')
+    expect(buildDirectoryPath('bucket/dir/', '/')).toEqual('bucket/dir/')
+  })
+})
+
+describe('getParentDirectoryPath', () => {
+  it('a', () => {
+    expect(getParentDirectoryPath('bucket/dir/')).toEqual('bucket/')
+  })
+  it('b', () => {
+    expect(getParentDirectoryPath('bucket/dir')).toEqual('bucket/')
+  })
+  it('c', () => {
+    expect(getParentDirectoryPath('/')).toEqual('/')
+  })
+  it('d', () => {
+    expect(getParentDirectoryPath('')).toEqual('/')
   })
 })
 

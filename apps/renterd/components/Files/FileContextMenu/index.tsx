@@ -16,11 +16,13 @@ import {
   Document16,
   Warning16,
   Filter16,
+  Edit16,
 } from '@siafoundation/react-icons'
 import { useFiles } from '../../../contexts/files'
 import { useFileDelete } from '../useFileDelete'
 import { CopyMetadataMenuItem } from './CopyMetadataMenuItem'
 import { getFilename } from '../../../contexts/files/paths'
+import { useDialog } from '../../../contexts/dialog'
 
 type Props = {
   path: string
@@ -29,6 +31,7 @@ type Props = {
 export function FileContextMenu({ path }: Props) {
   const { downloadFiles, getFileUrl, navigateToFile } = useFiles()
   const deleteFile = useFileDelete()
+  const { openDialog } = useDialog()
 
   return (
     <DropdownMenu
@@ -49,6 +52,12 @@ export function FileContextMenu({ path }: Props) {
           <Download16 />
         </DropdownMenuLeftSlot>
         Download file
+      </DropdownMenuItem>
+      <DropdownMenuItem onSelect={() => openDialog('fileRename', path)}>
+        <DropdownMenuLeftSlot>
+          <Edit16 />
+        </DropdownMenuLeftSlot>
+        Rename file
       </DropdownMenuItem>
       <DropdownMenuItem onSelect={() => deleteFile(path)}>
         <DropdownMenuLeftSlot>

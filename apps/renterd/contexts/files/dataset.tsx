@@ -9,11 +9,10 @@ import { useContracts } from '../contracts'
 import { ObjectData, SortField } from './types'
 import {
   bucketAndKeyParamsFromPath,
-  bucketAndResponseKeyToFilePath,
   getBucketFromPath,
-  getDirPath,
+  buildDirectoryPath,
   getFilename,
-  getFilePath,
+  join,
   isDirectory,
 } from './paths'
 import {
@@ -101,7 +100,7 @@ export function useDataset({
       if (!activeBucket) {
         buckets.data?.forEach((bucket) => {
           const name = bucket.name
-          const path = getDirPath(name, '')
+          const path = buildDirectoryPath(name, '')
           dataMap[name] = {
             id: path,
             path,
@@ -117,7 +116,7 @@ export function useDataset({
         })
       } else if (response.data) {
         response.data.entries?.forEach(({ name: key, size, health }) => {
-          const path = bucketAndResponseKeyToFilePath(activeBucketName, key)
+          const path = join(activeBucketName, key)
           const name = getFilename(key)
           dataMap[path] = {
             id: path,
@@ -135,9 +134,7 @@ export function useDataset({
           }
         })
         uploadsList
-          .filter(
-            ({ path, name }) => path === getFilePath(activeDirectoryPath, name)
-          )
+          .filter(({ path, name }) => path === join(activeDirectoryPath, name))
           .forEach((upload) => {
             dataMap[upload.path] = upload
           })
@@ -161,5 +158,6 @@ export function useDataset({
     offset,
     response,
     dataset: d.data,
+    refresh: response.mutate,
   }
 }
