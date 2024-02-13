@@ -7,10 +7,10 @@ import {
 import { useObject } from '@siafoundation/react-renterd'
 import { cx } from 'class-variance-authority'
 import { sortBy } from '@technically/lodash'
-import { computeSlabContractSetShards } from '../../../../contexts/files/health'
-import { ObjectData } from '../../../../contexts/files/types'
+import { computeSlabContractSetShards } from '../../../../lib/health'
+import { ObjectData } from '../../../../contexts/filesManager/types'
 import { useHealthLabel } from '../../../../hooks/useHealthLabel'
-import { bucketAndKeyParamsFromPath } from '../../../../contexts/files/paths'
+import { bucketAndKeyParamsFromPath } from '../../../../lib/paths'
 
 export function FilesHealthColumnContents({
   path,

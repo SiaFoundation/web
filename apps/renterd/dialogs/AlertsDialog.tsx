@@ -26,8 +26,8 @@ import { useCallback } from 'react'
 import { ContractContextMenuFromId } from '../components/Contracts/ContractContextMenuFromId'
 import { HostContextMenu } from '../components/Hosts/HostContextMenu'
 import { useDialog } from '../contexts/dialog'
-import { useFiles } from '../contexts/files'
-import { getDirectorySegmentsFromPath } from '../contexts/files/paths'
+import { useFilesManager } from '../contexts/filesManager'
+import { getDirectorySegmentsFromPath } from '../lib/paths'
 
 type Props = {
   open: boolean
@@ -177,7 +177,7 @@ const dataFields: Record<
   },
   slabKey: {
     render: function SlabField({ value }: { value: string }) {
-      const { setActiveDirectory } = useFiles()
+      const { setActiveDirectory } = useFilesManager()
       const { closeDialog } = useDialog()
       const objects = useSlabObjects({
         params: {

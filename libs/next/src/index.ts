@@ -3,6 +3,7 @@ import Head from 'next/head.js'
 import Image from 'next/image.js'
 import {
   useParams,
+  useSearchParams,
   usePathname,
   useRouter as useAppRouter,
 } from 'next/navigation.js'
@@ -18,6 +19,7 @@ export {
   Head,
   Image,
   useParams,
+  useSearchParams,
   usePathname,
   useAppRouter,
   usePagesRouter,

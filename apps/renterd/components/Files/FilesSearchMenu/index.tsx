@@ -11,9 +11,12 @@ import { useDialog } from '../../../contexts/dialog'
 import { useRouter } from 'next/router'
 import { routes } from '../../../config/routes'
 import { useContracts } from '../../../contexts/contracts'
-import { FilesSearchCmd, filesSearchPage } from '../FilesCmd/FilesSearchCmd'
+import {
+  FilesSearchCmd,
+  filesSearchPage,
+} from '../../Files/FilesCmd/FilesSearchCmd'
 import { useDebounce } from 'use-debounce'
-import { FileSearchEmpty } from '../FilesCmd/FilesSearchCmd/FileSearchEmpty'
+import { FileSearchEmpty } from '../../Files/FilesCmd/FilesSearchCmd/FileSearchEmpty'
 
 type Props = {
   panel?: boolean

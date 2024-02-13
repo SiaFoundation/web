@@ -1,10 +1,10 @@
 import { useSyncStatus } from '../../hooks/useSyncStatus'
-import { useFiles } from '../../contexts/files'
+import { useFilesManager } from '../../contexts/filesManager'
 import { useAutopilotNotConfigured } from './checks/useAutopilotNotConfigured'
 import { useNotEnoughContracts } from './checks/useNotEnoughContracts'
 
 export function useCanUpload() {
-  const { isViewingABucket } = useFiles()
+  const { isViewingABucket } = useFilesManager()
   const syncStatus = useSyncStatus()
   const autopilotNotConfigured = useAutopilotNotConfigured()
   const notEnoughContracts = useNotEnoughContracts()

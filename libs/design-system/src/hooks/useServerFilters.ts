@@ -1,6 +1,6 @@
 'use client'
 
-import { usePagesRouter } from '@siafoundation/next'
+import { useAppRouter, usePathname, useSearchParams } from '@siafoundation/next'
 import { useCallback, useState } from 'react'
 
 export type ServerFilterItem = {
@@ -12,18 +12,27 @@ export type ServerFilterItem = {
 }
 
 export function useServerFilters() {
-  const router = usePagesRouter()
+  const router = useAppRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   const [filters, _setFilters] = useState<ServerFilterItem[]>([])
 
   const removePagination = useCallback(() => {
+    // These can be undefined when the page is still initializing
+    if (!router || !pathname) {
+      return
+    }
     // remove any limit and offset
-    const query = { ...router.query }
-    delete query['limit']
-    delete query['offset']
-    router.replace({
-      query,
-    })
-  }, [router])
+    const query = new URLSearchParams(searchParams)
+    query.delete('limit')
+    query.delete('offset')
+    const str = query.toString()
+    if (str) {
+      router.replace(`${pathname}?${str}`)
+    } else {
+      router.replace(pathname)
+    }
+  }, [router, searchParams, pathname])
 
   const setFilter = useCallback(
     (item: ServerFilterItem) => {

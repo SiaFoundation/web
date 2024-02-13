@@ -74,6 +74,7 @@ export * from './components/SectionHeading'
 export * from './components/LoadingDots'
 export * from './components/PaginatorKnownTotal'
 export * from './components/PaginatorUnknownTotal'
+export * from './components/PaginatorMarker'
 
 // app
 export * from './app/AppPublicLayout'

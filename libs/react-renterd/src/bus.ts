@@ -556,9 +556,31 @@ export type ObjectDirectoryParams = {
 }
 
 export function useObjectDirectory(
-  args: HookArgsSwr<ObjectDirectoryParams, { entries: ObjEntry[] }>
+  args: HookArgsSwr<
+    ObjectDirectoryParams,
+    { hasMore: boolean; entries: ObjEntry[] }
+  >
 ) {
   return useGetSwr({ ...args, route: '/bus/objects/:key' })
+}
+
+export type ObjectListParams = {
+  bucket: string
+  limit?: number
+  prefix?: string
+  marker?: string
+  sortBy?: 'name' | 'health' | 'size'
+  sortDir?: 'asc' | 'desc'
+}
+
+export function useObjectList(
+  args: HookArgsWithPayloadSwr<
+    void,
+    ObjectListParams,
+    { hasMore: boolean; nextMarker: string; objects: ObjEntry[] }
+  >
+) {
+  return usePostSwr({ ...args, route: '/bus/objects/list' })
 }
 
 export function useObject(
@@ -569,7 +591,7 @@ export function useObject(
 
 export function useObjectSearch(
   args: HookArgsSwr<
-    { key: string; bucket: string; skip: number; limit: number },
+    { key: string; bucket: string; offset: number; limit: number },
     ObjEntry[]
   >
 ) {
