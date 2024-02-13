@@ -8,22 +8,9 @@ export function join(a: string, b: string): FullPath {
   return `${_a}/${_b}`
 }
 
-export function getFilePath(dirPath: FullPath, name: string): FullPath {
-  const n = name.startsWith('/') ? name.slice(1) : name
-  return dirPath + n
-}
-
-export function getDirPath(dirPath: FullPath, name: string): FullPath {
-  const path = getFilePath(dirPath, name)
+export function buildDirectoryPath(dirPath: FullPath, name: string): FullPath {
+  const path = join(dirPath, name)
   return path.endsWith('/') ? path : path + '/'
-}
-
-// response keys start with a slash, eg /path/to/file.txt
-export function bucketAndResponseKeyToFilePath(
-  bucket: string,
-  key: KeyPath
-): FullPath {
-  return `${bucket}${key}`
 }
 
 export function getBucketFromPath(path: FullPath): string {
@@ -35,6 +22,7 @@ export function getKeyFromPath(path: FullPath): KeyPath {
   return `/${segsWithoutBucket}`
 }
 
+// key is the path to the file or directory with a leading slash
 export function bucketAndKeyParamsFromPath(path: FullPath): {
   bucket: string
   key: KeyPath
@@ -61,6 +49,11 @@ export function isDirectory(path: FullPath): boolean {
   return path.endsWith('/')
 }
 
+export function getParentDirectoryPath(path: FullPath): FullPath {
+  const p = isDirectory(path) ? path.slice(0, -1) : path
+  return p.split('/').slice(0, -1).join('/').concat('/')
+}
+
 export function getDirectorySegmentsFromPath(path: FullPath): FullPathSegments {
   if (isDirectory(path)) {
     return path.slice(0, -1).split('/')
@@ -70,4 +63,11 @@ export function getDirectorySegmentsFromPath(path: FullPath): FullPathSegments {
 
 export function pathSegmentsToPath(segments: FullPathSegments): FullPath {
   return segments.join('/')
+}
+
+export function ensureDirectory(path: FullPath): FullPath {
+  if (isDirectory(path)) {
+    return path
+  }
+  return path.concat('/')
 }

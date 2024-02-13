@@ -162,10 +162,9 @@ export function TableRowDraggable<
   getCellClassNames,
   getContentClassNames,
 }: Props<Columns, D, Context>) {
-  const { isDragging, attributes, listeners, setNodeRef, transform } =
-    useDraggable({
-      id: data.id,
-    })
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: data.id,
+  })
   const style = transform
     ? {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
@@ -173,17 +172,10 @@ export function TableRowDraggable<
     : undefined
   const TableRow = useMemo(() => createTableRow<Columns, D, Context>(), [])
 
-  const className = isDragging
-    ? // ? // ? 'bg-gray-50 dark:bg-graydark-50 rounded ring ring-blue-200 dark:ring-blue-300'
-      // 'ring ring-blue-200 dark:ring-blue-300'
-      ''
-    : ''
-
   return (
     <TableRow
       ref={setNodeRef}
       style={style}
-      className={className}
       attributes={attributes}
       listeners={listeners}
       data={data}

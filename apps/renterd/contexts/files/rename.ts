@@ -5,11 +5,16 @@ import {
   getKeyFromPath,
   pathSegmentsToPath,
   join,
+  FullPath,
+  getParentDirectoryPath,
+  isDirectory,
+  ensureDirectory,
 } from './paths'
 
 type Id = string | number
 
-export function getRenameParams(
+// Parameters for moving a directory or file to drag destination
+export function getMoveFileRenameParams(
   e: { active: { id: Id }; collisions: { id: Id }[] },
   activeDirectory: FullPathSegments
 ) {
@@ -31,5 +36,21 @@ export function getRenameParams(
     from,
     to,
     mode: filename.endsWith('/') ? 'multi' : 'single',
+  } as const
+}
+
+// Parameters for renaming the name of a file or directory
+export function getRenameFileRenameParams(path: FullPath, newName: string) {
+  let to = join(getParentDirectoryPath(path), newName)
+  const isDir = isDirectory(path)
+  // handle renaming directories
+  if (isDir) {
+    to = ensureDirectory(to)
+  }
+  return {
+    bucket: getBucketFromPath(path),
+    from: getKeyFromPath(path),
+    to: getKeyFromPath(to),
+    mode: isDir ? 'multi' : 'single',
   } as const
 }

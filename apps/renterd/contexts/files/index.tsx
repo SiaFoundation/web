@@ -81,7 +81,7 @@ function useFilesMain() {
   const { downloadFiles, downloadsList, getFileUrl, downloadCancel } =
     useDownloads()
 
-  const { limit, offset, response, dataset } = useDataset({
+  const { limit, offset, response, refresh, dataset } = useDataset({
     activeDirectoryPath,
     setActiveDirectory,
     uploadsList,
@@ -101,7 +101,7 @@ function useFilesMain() {
     dataset,
     activeDirectory,
     setActiveDirectory,
-    mutate: response.mutate,
+    refresh,
   })
 
   // Add parent directory to the dataset
@@ -196,6 +196,7 @@ function useFilesMain() {
     activeDirectoryPath,
     navigateToFile,
     dataState,
+    refresh,
     limit,
     offset,
     datasetPage,

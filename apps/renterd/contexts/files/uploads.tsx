@@ -7,11 +7,7 @@ import { useBuckets, useObjectUpload } from '@siafoundation/react-renterd'
 import { throttle } from '@technically/lodash'
 import { useCallback, useMemo, useState } from 'react'
 import { ObjectData } from './types'
-import {
-  bucketAndKeyParamsFromPath,
-  getBucketFromPath,
-  getFilePath,
-} from './paths'
+import { bucketAndKeyParamsFromPath, getBucketFromPath, join } from './paths'
 
 type UploadProgress = ObjectData & {
   controller: AbortController
@@ -95,8 +91,7 @@ export function useUploads({ activeDirectoryPath }: Props) {
       // empty string in most browsers.
       // Try `path` otherwise fallback to flat file structure.
       const relativeUserFilePath = (file['path'] as string) || file.name
-      // TODO: check if name has /prefix
-      const path = getFilePath(activeDirectoryPath, relativeUserFilePath)
+      const path = join(activeDirectoryPath, relativeUserFilePath)
       const bucketName = getBucketFromPath(path)
       const bucket = buckets.data?.find((b) => b.name === bucketName)
 
