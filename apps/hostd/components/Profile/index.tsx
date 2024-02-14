@@ -13,6 +13,7 @@ import {
 import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { useDialog } from '../../contexts/dialog'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
+import { humanTime } from '@siafoundation/units'
 
 export function Profile() {
   const { openDialog } = useDialog()
@@ -38,6 +39,11 @@ export function Profile() {
   const versionUrl = version?.match(/^v\d+\.\d+\.\d+/)
     ? `https://github.com/SiaFoundation/hostd/releases/${version}`
     : `https://github.com/SiaFoundation/hostd/tree/${version}`
+
+  const uptime = state.data
+    ? new Date().getTime() - new Date(state.data?.startTime).getTime()
+    : 0
+
   return (
     <DaemonProfile
       name="hostd"
@@ -93,6 +99,16 @@ export function Profile() {
           />
         </div>
       </div>
+      {state.data && (
+        <div className="flex gap-4 justify-between items-center">
+          <Label size="14" color="subtle" noWrap className="w-[100px]">
+            Uptime
+          </Label>
+          <div className="flex-1 flex justify-end overflow-hidden -mr-0.5 pr-0.5">
+            <Text size="14">{humanTime(uptime, { format: 'long' })}</Text>
+          </div>
+        </div>
+      )}
       <div className="flex gap-2 justify-between items-center">
         <Label size="14" color="subtle" noWrap className="w-[100px]">
           Network
