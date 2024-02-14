@@ -37,12 +37,11 @@ export function FilesStatsMenuCount() {
             {pageCount.toLocaleString()}
           </Text>
         </Tooltip>
-        <Text size="12" font="mono">
-          of
-        </Text>
         <Tooltip side="bottom" content="Number of files across all buckets">
           <Text size="12" font="mono">
-            {stats.data ? `${totalObjects.toLocaleString()} files` : ' files'}
+            {stats.data
+              ? `of ${totalObjects.toLocaleString()} files`
+              : ' files'}
           </Text>
         </Tooltip>
       </div>
