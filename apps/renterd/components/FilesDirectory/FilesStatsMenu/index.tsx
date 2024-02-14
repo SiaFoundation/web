@@ -2,16 +2,11 @@ import { PaginatorUnknownTotal } from '@siafoundation/design-system'
 import { useFilesDirectory } from '../../../contexts/filesDirectory'
 import { FilesStatsMenuShared } from '../../Files/FilesStatsMenuShared'
 import { FilesFilterDirectoryMenu } from '../../Files/FilesFilterDirectoryMenu'
+import { useFilesManager } from '../../../contexts/filesManager'
 
 export function FilesStatsMenu() {
-  const {
-    limit,
-    offset,
-    pageCount,
-    dataState,
-    isViewingABucket,
-    isViewingBuckets,
-  } = useFilesDirectory()
+  const { isViewingABucket, isViewingBuckets } = useFilesManager()
+  const { limit, offset, pageCount, dataState } = useFilesDirectory()
   return (
     <div className="flex gap-3 w-full">
       {isViewingBuckets ? (
