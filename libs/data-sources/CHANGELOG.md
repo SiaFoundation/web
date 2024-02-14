@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.3
+
+### Patch Changes
+
+- b3e12c99: The package has been updated to use Next 14.
+
 ## 0.3.2
 
 ### Patch Changes

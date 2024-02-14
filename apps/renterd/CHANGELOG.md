@@ -1,5 +1,17 @@
 # renterd
 
+## 0.45.0
+
+### Minor Changes
+
+- 43029e2e: Uploading nested directories now preserves structure rather than flattening files into current directory.
+- a4099d4b: Files can now be sorted by size. Closes https://github.com/SiaFoundation/renterd/issues/860
+- e253b3e6: Files can now be moved by dragging into or out of directories. Closes https://github.com/SiaFoundation/renterd/issues/418
+- 021568d1: The file explorer now has a global mode that shows a flat list of files from across all directories in a bucket.
+- 021568d1: The file health indicator now show the percentage inline.
+- e3a5929e: Files and directories can now be renamed via the context menu. Closes https://github.com/SiaFoundation/renterd/issues/418
+- 021568d1: The file explorer global mode now allows you to sort across all files in a bucket.
+
 ## 0.44.0
 
 ### Minor Changes

@@ -1,5 +1,14 @@
 # @siafoundation/units
 
+## 2.0.3
+
+### Patch Changes
+
+- b3e12c99: The package has been updated to use Next 14.
+- Updated dependencies [b3e12c99]
+  - @siafoundation/react-core@1.0.3
+  - @siafoundation/sia-central@0.3.3
+
 ## 2.0.2
 
 ### Patch Changes

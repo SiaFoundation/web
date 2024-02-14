@@ -1,5 +1,20 @@
 # @siafoundation/react-renterd
 
+## 2.1.0
+
+### Minor Changes
+
+- 021568d1: Added useObjectList.
+- a4099d4b: useObjectDirectory now supports sortBy size.
+- 443ade97: Added useObjectRename.
+
+### Patch Changes
+
+- b3e12c99: The package has been updated to use Next 14.
+- Updated dependencies [b3e12c99]
+  - @siafoundation/react-core@1.0.3
+  - @siafoundation/types@0.1.3
+
 ## 2.0.3
 
 ### Patch Changes
