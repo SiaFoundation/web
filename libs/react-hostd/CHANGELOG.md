@@ -1,5 +1,14 @@
 # @siafoundation/react-hostd
 
+## 2.1.1
+
+### Patch Changes
+
+- b3e12c99: The package has been updated to use Next 14.
+- Updated dependencies [b3e12c99]
+  - @siafoundation/react-core@1.0.3
+  - @siafoundation/types@0.1.3
+
 ## 2.1.0
 
 ### Minor Changes

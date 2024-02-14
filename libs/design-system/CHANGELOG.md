@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.2.0
+
+### Minor Changes
+
+- e253b3e6: The Table now supports drag and drop on rows.
+
+### Patch Changes
+
+- b3e12c99: The package has been updated to use Next 14.
+- Updated dependencies [b3e12c99]
+  - @siafoundation/next@0.1.3
+  - @siafoundation/react-core@1.0.3
+  - @siafoundation/react-icons@0.2.3
+  - @siafoundation/react-sia-central@2.0.3
+  - @siafoundation/types@0.1.3
+  - @siafoundation/units@2.0.3
+
 ## 2.1.0
 
 ### Minor Changes
