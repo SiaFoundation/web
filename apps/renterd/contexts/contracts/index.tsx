@@ -4,7 +4,6 @@ import {
   useDatasetEmptyState,
   useClientFilters,
   useClientFilteredDataset,
-  minutesInMilliseconds,
   daysInMilliseconds,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
@@ -36,6 +35,7 @@ import { blockHeightToTime } from '@siafoundation/units'
 import { useContractMetrics } from './useContractMetrics'
 import { useContractSetMetrics } from './useContractSetMetrics'
 import { useContractSetSettings } from '../../hooks/useContractSetSettings'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
 
 const defaultLimit = 50
 
@@ -48,7 +48,7 @@ function useContractsMain() {
   const response = useContractsData({
     config: {
       swr: {
-        refreshInterval: minutesInMilliseconds(1),
+        refreshInterval: defaultDatasetRefreshInterval,
       },
     },
   })

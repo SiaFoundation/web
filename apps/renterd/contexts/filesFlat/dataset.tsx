@@ -1,13 +1,11 @@
 import { ObjectListParams, useObjectList } from '@siafoundation/react-renterd'
 import { SortField } from '../filesManager/types'
 import { useDataset as useDatasetGeneric } from '../filesManager/dataset'
-import {
-  ServerFilterItem,
-  minutesInMilliseconds,
-} from '@siafoundation/design-system'
+import { ServerFilterItem } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { useFilesManager } from '../filesManager'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
 
 type Props = {
   setActiveDirectory: (func: (directory: string[]) => string[]) => void
@@ -51,7 +49,7 @@ export function useDataset({ sortDirection, sortField, filters }: Props) {
     payload: params,
     config: {
       swr: {
-        refreshInterval: minutesInMilliseconds(1),
+        refreshInterval: defaultDatasetRefreshInterval,
       },
     },
   })

@@ -4,7 +4,6 @@ import {
   useServerFilters,
   triggerErrorToast,
   truncate,
-  minutesInMilliseconds,
 } from '@siafoundation/design-system'
 import {
   HostsSearchFilterMode,
@@ -38,6 +37,7 @@ import { useAppSettings } from '@siafoundation/react-core'
 import { Commands, emptyCommands } from '../../components/Hosts/HostMap/Globe'
 import { useSiaCentralHosts } from '@siafoundation/react-sia-central'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
 
 const defaultLimit = 50
 
@@ -83,7 +83,7 @@ function useHostsMain() {
       swr: {
         // before autopilot is configured this will repeatedly 500
         errorRetryInterval: 20_000,
-        refreshInterval: minutesInMilliseconds(1),
+        refreshInterval: defaultDatasetRefreshInterval,
       },
     },
   })
@@ -103,7 +103,7 @@ function useHostsMain() {
     },
     config: {
       swr: {
-        refreshInterval: minutesInMilliseconds(1),
+        refreshInterval: defaultDatasetRefreshInterval,
       },
     },
   })
