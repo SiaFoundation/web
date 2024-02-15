@@ -29,7 +29,9 @@ import {
   Host,
   HostSettings,
   Obj,
+  PartialSlab,
   SiacoinElement,
+  SlabSlice,
   WalletTransaction,
 } from './siaTypes'
 
@@ -838,3 +840,97 @@ export function useMetricsWallet(
 //   hostKey: string
 //   origin: string
 // }
+
+// multipart
+
+export type MultipartUploadCreatePayload = {
+  path: string
+  bucket: string
+  key?: string /// defaults to key:0000000000000000000000000000000000000000000000000000000000000000
+}
+
+export function useMultipartUploadCreate(
+  args?: HookArgsCallback<
+    void,
+    MultipartUploadCreatePayload,
+    { uploadID: string }
+  >
+) {
+  return usePostFunc(
+    { ...args, route: '/bus/multipart/create' },
+    async (mutate) => {
+      mutate((key) => {
+        return key.startsWith('/bus/multipart')
+      })
+    }
+  )
+}
+
+export type MultipartUploadPart = {
+  partNumber: number
+  eTag: string
+}
+
+export type MultipartUploadCompletePayload = {
+  path: string
+  bucket: string
+  uploadID: string
+  parts: MultipartUploadPart[]
+}
+
+export function useMultipartUploadComplete(
+  args?: HookArgsCallback<void, MultipartUploadCompletePayload, void>
+) {
+  return usePostFunc(
+    { ...args, route: '/bus/multipart/complete' },
+    async (mutate) => {
+      mutate((key) => {
+        return key.startsWith('/bus/multipart')
+      })
+    }
+  )
+}
+
+export type MultipartUploadAbortPayload = {
+  path: string
+  bucket: string
+  uploadID: string
+}
+
+export function useMultipartUploadAbort(
+  args?: HookArgsCallback<void, MultipartUploadAbortPayload, void>
+) {
+  return usePostFunc(
+    { ...args, route: '/bus/multipart/abort' },
+    async (mutate) => {
+      mutate((key) => {
+        return key.startsWith('/bus/multipart')
+      })
+    }
+  )
+}
+
+export type MultipartUploadAddPartPayload = {
+  path: string
+  bucket: string
+  uploadID: string
+  eTag: string
+  partNumber: number
+  contractSet?: string
+  partialSlabs?: PartialSlab[]
+  slices?: SlabSlice[]
+  usedContracts?: Contract[]
+}
+
+export function useMultipartUploadAddPart(
+  args?: HookArgsCallback<void, MultipartUploadAddPartPayload, void>
+) {
+  return usePostFunc(
+    { ...args, route: '/bus/multipart/part' },
+    async (mutate) => {
+      mutate((key) => {
+        return key.startsWith('/bus/multipart/listparts')
+      })
+    }
+  )
+}

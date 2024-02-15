@@ -55,6 +55,36 @@ export function useObjectUpload(
   )
 }
 
+export type MultipartUploadChunkParams = {
+  key: string
+  bucket?: string
+  contractset?: string
+  uploadid: string
+  partnumber: number
+  minshards?: number
+  totalshards?: number
+  offset?: number
+  disablepreshardingencryption?: boolean
+}
+
+export function useMultipartUploadChunk(
+  args?: HookArgsCallback<MultipartUploadChunkParams, Blob, void>
+) {
+  return usePutFunc({
+    ...args,
+    config: {
+      ...args?.config,
+      axios: {
+        ...args?.config?.axios,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    },
+    route: '/worker/multipart/:key',
+  })
+}
+
 export type RhpScanRequest = {
   hostKey: string
   hostIP: string

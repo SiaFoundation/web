@@ -22,7 +22,7 @@ export function getKeyFromPath(path: FullPath): KeyPath {
   return `/${segsWithoutBucket}`
 }
 
-// key is the path to the file or directory with a leading slash
+// key params need the leading slash removed
 export function bucketAndKeyParamsFromPath(path: FullPath): {
   bucket: string
   key: KeyPath

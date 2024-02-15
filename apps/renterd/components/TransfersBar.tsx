@@ -15,6 +15,7 @@ import {
 import { useState } from 'react'
 import { useFilesManager } from '../contexts/filesManager'
 import { useAppSettings } from '@siafoundation/react-core'
+import { upperFirst } from '@technically/lodash'
 
 function getProgress(transfer: { loaded?: number; size?: number }) {
   return transfer.loaded !== undefined ? transfer.loaded / transfer.size : 1
@@ -80,7 +81,7 @@ export function TransfersBar() {
                       />
                       <div className="flex justify-between mt-1">
                         <Text size="12" color="subtle">
-                          {progress === 1 ? 'Processing' : 'Uploading'}
+                          {upperFirst(upload.uploadStatus)}
                         </Text>
                         <Text size="12" color="subtle">
                           {(progress * 100).toFixed(0)}%

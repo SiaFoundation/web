@@ -57,6 +57,7 @@ export function FilesHealthColumnContents({
   const slabs = sortBy(
     obj.data.object.slabs.map((s) => ({
       ...s.slab,
+      key: `${s.offset}${s.length}${s.slab.key}`,
       isPartialSlab: !!s.slab.shards,
       contractSetShards: s.slab.shards?.length
         ? computeSlabContractSetShards({

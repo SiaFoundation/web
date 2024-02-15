@@ -84,6 +84,7 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
         return {
           status: response.status,
           data: response.data,
+          headers: response.headers,
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
