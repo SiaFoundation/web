@@ -12,6 +12,7 @@ import {
 } from '@siafoundation/react-hostd'
 import { humanTime } from '@siafoundation/units'
 import { useCallback } from 'react'
+import { defaultDatasetRefreshInterval } from '../config/swr'
 
 type Props = {
   open: boolean
@@ -19,7 +20,13 @@ type Props = {
 }
 
 export function AlertsDialog({ open, onOpenChange }: Props) {
-  const alerts = useAlerts()
+  const alerts = useAlerts({
+    config: {
+      swr: {
+        refreshInterval: defaultDatasetRefreshInterval,
+      },
+    },
+  })
   const dismiss = useAlertsDismiss()
 
   const dismissOne = useCallback(

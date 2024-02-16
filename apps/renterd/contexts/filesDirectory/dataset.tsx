@@ -4,10 +4,10 @@ import {
 } from '@siafoundation/react-renterd'
 import { useDataset as useDatasetGeneric } from '../filesManager/dataset'
 import { bucketAndKeyParamsFromPath } from '../../lib/paths'
-import { minutesInMilliseconds } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { useFilesManager } from '../filesManager'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
 
 const defaultLimit = 50
 
@@ -49,7 +49,7 @@ export function useDataset() {
     params,
     config: {
       swr: {
-        refreshInterval: minutesInMilliseconds(1),
+        refreshInterval: defaultDatasetRefreshInterval,
       },
     },
   })

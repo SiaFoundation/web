@@ -17,6 +17,7 @@ import { columns } from './columns'
 import { useRouter } from 'next/router'
 import { useDialog } from '../dialog'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
 
 export function useAddressesMain() {
   const { openDialog } = useDialog()
@@ -27,6 +28,11 @@ export function useAddressesMain() {
     disabled: !walletId,
     params: {
       id: walletId,
+    },
+    config: {
+      swr: {
+        refreshInterval: defaultDatasetRefreshInterval,
+      },
     },
   })
 

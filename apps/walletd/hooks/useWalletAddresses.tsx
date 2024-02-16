@@ -1,6 +1,7 @@
 import { useDatasetEmptyState } from '@siafoundation/design-system'
 import { useWalletAddresses as useData } from '@siafoundation/react-walletd'
 import { useMemo } from 'react'
+import { defaultDatasetRefreshInterval } from '../config/swr'
 
 type AddressData = {
   id: string
@@ -21,6 +22,11 @@ export function useWalletAddresses({ id }: { id: string }) {
     disabled: !id,
     params: {
       id,
+    },
+    config: {
+      swr: {
+        refreshInterval: defaultDatasetRefreshInterval,
+      },
     },
   })
 

@@ -3,7 +3,6 @@ import {
   useDatasetEmptyState,
   useServerFilters,
   getContractsTimeRangeBlockHeight,
-  secondsInMilliseconds,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import {
@@ -22,6 +21,7 @@ import { columns } from './columns'
 import { useDataset } from './dataset'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
 
 const defaultLimit = 50
 
@@ -67,7 +67,7 @@ function useContractsMain() {
     },
     config: {
       swr: {
-        refreshInterval: secondsInMilliseconds(60),
+        refreshInterval: defaultDatasetRefreshInterval,
       },
     },
   })

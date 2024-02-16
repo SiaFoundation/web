@@ -19,9 +19,16 @@ import { routes } from '../../config/routes'
 import { useWalletSeedCache } from './useWalletSeedCache'
 import { useDialog } from '../dialog'
 import { useAppSettings } from '@siafoundation/react-core'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
 
 function useWalletsMain() {
-  const response = useWalletsData()
+  const response = useWalletsData({
+    config: {
+      swr: {
+        refreshInterval: defaultDatasetRefreshInterval,
+      },
+    },
+  })
   const router = useRouter()
   const { openDialog } = useDialog()
   const { setOnLockCallback } = useAppSettings()

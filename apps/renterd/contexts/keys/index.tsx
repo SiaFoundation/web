@@ -3,7 +3,6 @@ import {
   useDatasetEmptyState,
   useClientFilters,
   useClientFilteredDataset,
-  minutesInMilliseconds,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useMemo } from 'react'
@@ -15,6 +14,7 @@ import {
 } from './types'
 import { columns } from './columns'
 import { useS3AuthenticationSettings } from '../../hooks/useS3AuthenticationSettings'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
 
 const defaultLimit = 50
 
@@ -25,7 +25,7 @@ function useKeysMain() {
   const response = useS3AuthenticationSettings({
     config: {
       swr: {
-        refreshInterval: minutesInMilliseconds(1),
+        refreshInterval: defaultDatasetRefreshInterval,
       },
     },
   })

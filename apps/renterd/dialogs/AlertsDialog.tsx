@@ -28,6 +28,7 @@ import { HostContextMenu } from '../components/Hosts/HostContextMenu'
 import { useDialog } from '../contexts/dialog'
 import { useFilesManager } from '../contexts/filesManager'
 import { getDirectorySegmentsFromPath } from '../lib/paths'
+import { defaultDatasetRefreshInterval } from '../config/swr'
 
 type Props = {
   open: boolean
@@ -35,7 +36,13 @@ type Props = {
 }
 
 export function AlertsDialog({ open, onOpenChange }: Props) {
-  const alerts = useAlerts()
+  const alerts = useAlerts({
+    config: {
+      swr: {
+        refreshInterval: defaultDatasetRefreshInterval,
+      },
+    },
+  })
   const dismiss = useAlertsDismiss()
 
   const dismissOne = useCallback(

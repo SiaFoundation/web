@@ -2,7 +2,6 @@ import {
   TxType,
   daysInMilliseconds,
   getTransactionType,
-  secondsInMilliseconds,
   stripPrefix,
   useDatasetEmptyState,
 } from '@siafoundation/design-system'
@@ -17,6 +16,7 @@ import BigNumber from 'bignumber.js'
 import { useRouter } from 'next/router'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { Transaction } from '@siafoundation/types'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
 
 const defaultLimit = 50
 const filters = []
@@ -54,7 +54,7 @@ function useTransactionsMain() {
     },
     config: {
       swr: {
-        refreshInterval: secondsInMilliseconds(60),
+        refreshInterval: defaultDatasetRefreshInterval,
       },
     },
   })
@@ -62,7 +62,7 @@ function useTransactionsMain() {
   const pending = useWalletPending({
     config: {
       swr: {
-        refreshInterval: secondsInMilliseconds(60),
+        refreshInterval: defaultDatasetRefreshInterval,
       },
     },
   })

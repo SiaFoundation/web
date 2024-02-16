@@ -5,7 +5,7 @@ import {
   formatChartData,
   getDataIntervalLabelFormatter,
   getTimeRange,
-  minutesInMilliseconds,
+  secondsInMilliseconds,
   ValueScFiat,
 } from '@siafoundation/design-system'
 import {
@@ -114,7 +114,7 @@ function useMetricsMain() {
     config: {
       swr: {
         revalidateOnFocus: false,
-        refreshInterval: minutesInMilliseconds(5),
+        refreshInterval: secondsInMilliseconds(60),
       },
     },
   })

@@ -26,6 +26,7 @@ import { columns } from './columns'
 import { useRouter } from 'next/router'
 import BigNumber from 'bignumber.js'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
 
 const defaultLimit = 100
 
@@ -41,6 +42,11 @@ export function useEventsMain() {
     params: {
       id,
     },
+    config: {
+      swr: {
+        refreshInterval: defaultDatasetRefreshInterval,
+      },
+    },
   })
   const responseEvents = useWalletEvents({
     disabled: !id,
@@ -48,6 +54,11 @@ export function useEventsMain() {
       limit,
       offset,
       id,
+    },
+    config: {
+      swr: {
+        refreshInterval: defaultDatasetRefreshInterval,
+      },
     },
   })
 
