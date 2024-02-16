@@ -12,6 +12,7 @@ import {
   useWallet,
 } from '@siafoundation/react-renterd'
 import { useDialog } from '../../contexts/dialog'
+import { humanTime } from '@siafoundation/units'
 
 export function Profile() {
   const { openDialog } = useDialog()
@@ -40,6 +41,10 @@ export function Profile() {
       ? `https://github.com/SiaFoundation/renterd/releases/${version}`
       : `https://github.com/SiaFoundation/renterd/tree/${version}`
 
+  const uptime = state.data
+    ? new Date().getTime() - new Date(state.data?.startTime).getTime()
+    : 0
+
   return (
     <DaemonProfile
       name="renterd"
@@ -65,6 +70,16 @@ export function Profile() {
           />
         </div>
       </div>
+      {state.data && (
+        <div className="flex gap-4 justify-between items-center">
+          <Label size="14" color="subtle" noWrap className="w-[100px]">
+            Uptime
+          </Label>
+          <div className="flex-1 flex justify-end overflow-hidden -mr-0.5 pr-0.5">
+            <Text size="14">{humanTime(uptime, { format: 'long' })}</Text>
+          </div>
+        </div>
+      )}
       <div className="flex gap-4 justify-between items-center">
         <Label size="14" color="subtle" noWrap className="w-[100px]">
           Network

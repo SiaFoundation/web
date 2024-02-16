@@ -58,16 +58,33 @@ export function humanBytes(
   return d.toFixed(fixed) + ' ' + units[digits]
 }
 
-export function humanTime(ns: number): string {
-  if (ns === 0) return '0ms'
+type UnitOptions = 'long' | 'abbreviated'
 
-  ns /= Math.pow(1000, 2)
-  if (ns < 1000) return ` ${Math.floor(ns * 100) / 100}ms`
+type HumanTimeOptions = {
+  format?: UnitOptions
+}
 
-  ns /= 1000
-  if (ns < 60) return `${Math.floor(ns * 100) / 100}s`
+export function humanTime(ms: number, options?: HumanTimeOptions): string {
+  const { format = 'abbreviated' } = options || {}
+  const abbreviate = format === 'abbreviated'
 
-  return `${Math.floor((ns / 60) * 100) / 100}m`
+  if (ms < 1000) {
+    return `${ms.toFixed(0)}${abbreviate ? 'ms' : ' milliseconds'}`
+  }
+
+  const seconds = ms / 1000
+  if (seconds < 60)
+    return `${seconds.toFixed(0)}${abbreviate ? 's' : ' seconds'}`
+
+  const minutes = seconds / 60
+  if (minutes < 60)
+    return `${minutes.toFixed(0)}${abbreviate ? 'm' : ' minutes'}`
+
+  const hours = minutes / 60
+  if (hours < 24) return `${hours.toFixed(0)}${abbreviate ? 'h' : ' hours'}`
+
+  const days = hours / 24
+  return `${days.toFixed(0)}${abbreviate ? 'd' : ' days'}`
 }
 
 type HumanNumberOptions = {
