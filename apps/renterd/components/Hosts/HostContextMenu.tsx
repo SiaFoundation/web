@@ -15,8 +15,10 @@ import {
   ListChecked16,
   Filter16,
   Copy16,
+  ResetAlt16,
 } from '@siafoundation/react-icons'
 import {
+  useHostResetLostSectorCount,
   useHostsAllowlist,
   useHostsBlocklist,
   useRhpScan,
@@ -54,6 +56,7 @@ export function HostContextMenu({
   const blocklistUpdate = useBlocklistUpdate()
   const allowlistUpdate = useAllowlistUpdate()
   const rescan = useRhpScan()
+  const resetLostSectors = useHostResetLostSectorCount()
   return (
     <DropdownMenu
       trigger={
@@ -174,6 +177,20 @@ export function HostContextMenu({
           Add public key to allowlist
         </DropdownMenuItem>
       )}
+      <DropdownMenuItem
+        onSelect={() =>
+          resetLostSectors.post({
+            params: {
+              publicKey,
+            },
+          })
+        }
+      >
+        <DropdownMenuLeftSlot>
+          <ResetAlt16 />
+        </DropdownMenuLeftSlot>
+        Reset lost sector count
+      </DropdownMenuItem>
       <DropdownMenuLabel>Copy</DropdownMenuLabel>
       <DropdownMenuItem
         onSelect={() => copyToClipboard(publicKey, 'host public key')}

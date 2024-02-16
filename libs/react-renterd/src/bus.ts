@@ -406,6 +406,15 @@ export function useHostsBlocklistUpdate(
   )
 }
 
+export function useHostResetLostSectorCount(
+  args?: HookArgsCallback<{ publicKey: string }, void, void>
+) {
+  return usePostFunc({
+    ...args,
+    route: '/bus/host/:publicKey/resetlostsectors',
+  })
+}
+
 // contracts
 
 const contractsActiveRoute = '/bus/contracts'
