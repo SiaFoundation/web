@@ -23,7 +23,7 @@ export function RelativeLabel({
     >
       <Text
         size="10"
-        color={variant === 'primary' ? 'contrast' : 'verySubtle'}
+        color="contrast"
         dir={align === 'start' ? 'rtl' : 'ltr'}
         weight={variant === 'primary' ? 'semibold' : 'regular'}
         ellipsis
