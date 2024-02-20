@@ -87,7 +87,9 @@ export function getFields({
       suggestion: rates ? usdInScRoundedToNearestTen(10, rates) : undefined,
       suggestionTip:
         'The suggested egress price in siacoins for egress per TB.',
-      description: <>{`The host's egress price in siacoins per TB.`}</>,
+      description: (
+        <>{`The host's egress price in siacoins per TB. Egress means bandwidth usage by outgoing download traffic.`}</>
+      ),
       validation: {
         required: 'required',
       },
@@ -100,7 +102,9 @@ export function getFields({
       suggestion: rates ? usdInScRoundedToNearestTen(0.05, rates) : undefined,
       suggestionTip: 'The suggested ingress price in siacoins per TB.',
       decimalsLimitSc: scDecimalPlaces,
-      description: <>{`The host's ingress price in siacoins per TB.`}</>,
+      description: (
+        <>{`The host's ingress price in siacoins per TB. Ingress means bandwidth usage by incoming upload traffic.`}</>
+      ),
       validation: {
         required: 'required',
       },
