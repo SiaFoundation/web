@@ -1,7 +1,7 @@
 'use client'
 
-import { usePagesRouter } from '@siafoundation/next'
 import { useCallback, useState } from 'react'
+import { useResetPagination } from './useResetPagination'
 
 export type ClientFilterItem<Datum> = {
   id: string
@@ -11,8 +11,8 @@ export type ClientFilterItem<Datum> = {
 }
 
 export function useClientFilters<Datum>() {
-  const router = usePagesRouter()
   const [filters, _setFilters] = useState<ClientFilterItem<Datum>[]>([])
+  const resetPaginationParams = useResetPagination()
 
   const setFilter = useCallback(
     (item: ClientFilterItem<Datum>) => {
@@ -20,31 +20,22 @@ export function useClientFilters<Datum>() {
         const nextFilters = filters.filter((f) => f.id !== item.id)
         return nextFilters.concat(item)
       })
-      // remove any limit and offset
-      router.replace({
-        query: {},
-      })
+      resetPaginationParams()
     },
-    [router, _setFilters]
+    [_setFilters, resetPaginationParams]
   )
 
   const resetFilters = useCallback(() => {
     _setFilters([])
-    // remove any limit and offset
-    router.replace({
-      query: {},
-    })
-  }, [router, _setFilters])
+    resetPaginationParams()
+  }, [_setFilters, resetPaginationParams])
 
   const removeFilter = useCallback(
     (id: string) => {
       _setFilters((filters) => filters.filter((f) => f.id !== id))
-      // remove any limit and offset
-      router.replace({
-        query: {},
-      })
+      resetPaginationParams()
     },
-    [router, _setFilters]
+    [_setFilters, resetPaginationParams]
   )
 
   const removeLastFilter = useCallback(() => {
@@ -52,11 +43,8 @@ export function useClientFilters<Datum>() {
       return
     }
     _setFilters((filters) => filters.slice(0, -1))
-    // remove any limit and offset
-    router.replace({
-      query: {},
-    })
-  }, [router, _setFilters, filters])
+    resetPaginationParams()
+  }, [_setFilters, filters, resetPaginationParams])
 
   return {
     filters,
