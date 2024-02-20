@@ -1,3 +1,5 @@
+import { trimStart } from '@technically/lodash'
+
 export type FullPathSegments = string[]
 export type FullPath = string
 export type KeyPath = string
@@ -9,6 +11,7 @@ export function join(a: string, b: string): FullPath {
 }
 
 export function buildDirectoryPath(dirPath: FullPath, name: string): FullPath {
+  dirPath = trimStart(dirPath, '/')
   const path = join(dirPath, name)
   return path.endsWith('/') ? path : path + '/'
 }
@@ -18,6 +21,7 @@ export function getBucketFromPath(path: FullPath): string {
 }
 
 export function getKeyFromPath(path: FullPath): KeyPath {
+  path = trimStart(path, '/')
   const segsWithoutBucket = path.split('/').slice(1).join('/')
   return `/${segsWithoutBucket}`
 }
@@ -37,9 +41,10 @@ export function bucketAndKeyParamsFromPath(path: FullPath): {
   }
 }
 
-export function getFilename(filePath: FullPath): string {
-  const parts = filePath.split('/')
-  if (filePath.endsWith('/')) {
+export function getFilename(path: FullPath): string {
+  path = trimStart(path, '/')
+  const parts = path.split('/')
+  if (path.endsWith('/')) {
     return `${parts[parts.length - 2]}/`
   }
   return parts[parts.length - 1]
@@ -50,11 +55,13 @@ export function isDirectory(path: FullPath): boolean {
 }
 
 export function getParentDirectoryPath(path: FullPath): FullPath {
+  path = trimStart(path, '/')
   const p = isDirectory(path) ? path.slice(0, -1) : path
   return p.split('/').slice(0, -1).join('/').concat('/')
 }
 
 export function getDirectorySegmentsFromPath(path: FullPath): FullPathSegments {
+  path = trimStart(path, '/')
   if (isDirectory(path)) {
     return path.slice(0, -1).split('/')
   }
@@ -66,6 +73,7 @@ export function pathSegmentsToPath(segments: FullPathSegments): FullPath {
 }
 
 export function ensureDirectory(path: FullPath): FullPath {
+  path = trimStart(path, '/')
   if (isDirectory(path)) {
     return path
   }
