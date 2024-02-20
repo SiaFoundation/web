@@ -1,24 +1,20 @@
 import { ObjectListParams, useObjectList } from '@siafoundation/react-renterd'
 import { SortField } from '../filesManager/types'
 import { useDataset as useDatasetGeneric } from '../filesManager/dataset'
-import { ServerFilterItem } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { useFilesManager } from '../filesManager'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 
 type Props = {
-  setActiveDirectory: (func: (directory: string[]) => string[]) => void
-  activeDirectoryPath: string
   sortDirection: 'asc' | 'desc'
   sortField: SortField
-  filters: ServerFilterItem[]
 }
 
 const defaultLimit = 50
 
-export function useDataset({ sortDirection, sortField, filters }: Props) {
-  const { activeBucketName, fileNamePrefix } = useFilesManager()
+export function useDataset({ sortDirection, sortField }: Props) {
+  const { activeBucketName, fileNamePrefixFilter } = useFilesManager()
   const router = useRouter()
   const limit = Number(router.query.limit || defaultLimit)
   const marker = router.query.marker as string
@@ -31,13 +27,15 @@ export function useDataset({ sortDirection, sortField, filters }: Props) {
       marker,
       limit,
     }
-    if (fileNamePrefix) {
-      p.prefix = fileNamePrefix
+    if (fileNamePrefixFilter) {
+      p.prefix = fileNamePrefixFilter.startsWith('/')
+        ? fileNamePrefixFilter
+        : '/' + fileNamePrefixFilter
     }
     return p
   }, [
     activeBucketName,
-    fileNamePrefix,
+    fileNamePrefixFilter,
     sortField,
     sortDirection,
     marker,

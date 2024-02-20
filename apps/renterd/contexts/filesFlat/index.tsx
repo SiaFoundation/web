@@ -5,20 +5,11 @@ import { useFilesManager } from '../filesManager'
 import { columns } from './columns'
 
 function useFilesFlatMain() {
-  const {
-    activeDirectoryPath,
-    setActiveDirectory,
-    sortDirection,
-    sortField,
-    filters,
-    enabledColumns,
-  } = useFilesManager()
+  const { sortDirection, sortField, filters, enabledColumns } =
+    useFilesManager()
   const { limit, response, refresh, dataset } = useDataset({
-    activeDirectoryPath,
-    setActiveDirectory,
     sortField,
     sortDirection,
-    filters,
   })
   const nextMarker = response.data?.nextMarker
   const isMore = response.data?.hasMore

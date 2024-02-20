@@ -15,7 +15,7 @@ export function useDataset() {
   const {
     activeBucketName,
     activeDirectoryPath,
-    fileNamePrefix,
+    fileNamePrefixFilter,
     sortDirection,
     sortField,
   } = useFilesManager()
@@ -31,13 +31,15 @@ export function useDataset() {
       offset,
       limit,
     }
-    if (fileNamePrefix) {
-      p.prefix = fileNamePrefix.slice(1)
+    if (fileNamePrefixFilter) {
+      p.prefix = fileNamePrefixFilter.startsWith('/')
+        ? fileNamePrefixFilter.slice(1)
+        : fileNamePrefixFilter
     }
     return p
   }, [
     activeDirectoryPath,
-    fileNamePrefix,
+    fileNamePrefixFilter,
     sortField,
     sortDirection,
     offset,

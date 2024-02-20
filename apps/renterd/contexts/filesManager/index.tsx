@@ -15,13 +15,14 @@ import {
   FullPathSegments,
   getDirectorySegmentsFromPath,
   getFilename,
+  getKeyFromPath,
   pathSegmentsToPath,
 } from '../../lib/paths'
 import { useUploads } from './uploads'
 import { useDownloads } from './downloads'
-import { usePathname, useSearchParams } from '@siafoundation/next'
 import { useBuckets } from '@siafoundation/react-renterd'
 import { routes } from '../../config/routes'
+import useLocalStorageState from 'use-local-storage-state'
 
 function useFilesManagerMain() {
   const {
@@ -47,12 +48,9 @@ function useFilesManagerMain() {
   const params = useParams<{ path: FullPathSegments }>()
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useServerFilters()
-  const fileNamePrefix = useMemo(() => {
+  const fileNamePrefixFilter = useMemo(() => {
     const prefix = filters.find((f) => f.id === 'fileNamePrefix')?.value
-    if (prefix) {
-      return prefix.startsWith('/') ? prefix : '/' + prefix
-    }
-    return ''
+    return prefix || ''
   }, [filters])
 
   // [bucket, key, directory]
@@ -73,19 +71,17 @@ function useFilesManagerMain() {
     return pathSegmentsToPath(activeDirectory) + '/'
   }, [activeDirectory])
 
+  const [activeExplorerMode, setActiveExplorerMode] =
+    useLocalStorageState<ExplorerMode>('renterd/v0/explorerMode', {
+      defaultValue: 'directory',
+    })
+
   const setActiveDirectory = useCallback(
-    (
-      fn: (activeDirectory: FullPathSegments) => FullPathSegments,
-      explorerMode?: ExplorerMode
-    ) => {
+    (fn: (activeDirectory: FullPathSegments) => FullPathSegments) => {
       const nextActiveDirectory = fn(activeDirectory)
-      let route =
-        routes.files.index +
-        '/' +
-        nextActiveDirectory.map(encodeURIComponent).join('/')
-      if (explorerMode === 'flat') {
-        route += `?view=flat`
-      }
+      const route = `${routes.files.index}/${nextActiveDirectory
+        .map(encodeURIComponent)
+        .join('/')}`
       router.push(route)
     },
     [router, activeDirectory]
@@ -101,39 +97,68 @@ function useFilesManagerMain() {
   const isViewingRootOfABucket = activeDirectory.length === 1
   const isViewingABucket = activeDirectory.length > 0
 
-  const pathname = usePathname()
-  const activeParams = useSearchParams()
-  const activeViewMode: ExplorerMode =
-    activeParams.get('view') === 'flat' ? 'flat' : 'directory'
-  const toggleViewModeParams = useMemo(() => {
-    const switchParams = new URLSearchParams(activeParams)
-    if (switchParams.get('view') === 'flat') {
-      switchParams.delete('view')
-    } else {
-      switchParams.set('view', 'flat')
-    }
-    const str = switchParams.toString()
-    return str ? `?${str}` : str
-  }, [activeParams])
-  const switchViewModeUrl = `${pathname}${toggleViewModeParams}`
-
-  const navigateToFileDirectory = useCallback(
-    (path: string) => {
+  const setFileNamePrefixFilter = useCallback(
+    (value: string) => {
       setFilter({
         id: 'fileNamePrefix',
         label: '',
-        value: getFilename(path),
+        value,
       })
-      setActiveDirectory(
-        () => [
-          activeBucketName,
-          ...getDirectorySegmentsFromPath(path.slice(1)),
-        ],
-        'directory'
+    },
+    [setFilter]
+  )
+
+  const setActiveDirectoryAndFileNamePrefix = useCallback(
+    (activeDirectory: string[], prefix: string) => {
+      setFileNamePrefixFilter(prefix)
+      setActiveDirectory(() => activeDirectory)
+    },
+    [setActiveDirectory, setFileNamePrefixFilter]
+  )
+
+  const navigateToFileInFilteredDirectory = useCallback(
+    (path: FullPath) => {
+      setActiveDirectoryAndFileNamePrefix(
+        getDirectorySegmentsFromPath(path),
+        getFilename(path)
       )
     },
-    [activeBucketName, setActiveDirectory, setFilter]
+    [setActiveDirectoryAndFileNamePrefix]
   )
+
+  const navigateToModeSpecificFiltering = useCallback(
+    (path: string) => {
+      if (activeExplorerMode === 'directory') {
+        navigateToFileInFilteredDirectory(path)
+      } else {
+        setFileNamePrefixFilter(getKeyFromPath(path).slice(1))
+      }
+    },
+    [
+      activeExplorerMode,
+      navigateToFileInFilteredDirectory,
+      setFileNamePrefixFilter,
+    ]
+  )
+
+  const toggleExplorerMode = useCallback(async () => {
+    const nextMode = activeExplorerMode === 'directory' ? 'flat' : 'directory'
+    if (nextMode === 'flat') {
+      setActiveDirectoryAndFileNamePrefix(
+        [activeBucketName],
+        getKeyFromPath(activeDirectoryPath).slice(1)
+      )
+    } else {
+      setActiveDirectoryAndFileNamePrefix([activeBucketName], '')
+    }
+    setActiveExplorerMode(nextMode)
+  }, [
+    activeBucketName,
+    activeDirectoryPath,
+    activeExplorerMode,
+    setActiveExplorerMode,
+    setActiveDirectoryAndFileNamePrefix,
+  ])
 
   return {
     isViewingBuckets,
@@ -144,8 +169,9 @@ function useFilesManagerMain() {
     activeBucketName,
     activeDirectory,
     setActiveDirectory,
+    setActiveDirectoryAndFileNamePrefix,
     activeDirectoryPath,
-    navigateToFileDirectory,
+    navigateToModeSpecificFiltering,
     uploadFiles,
     uploadsList,
     uploadCancel,
@@ -163,7 +189,8 @@ function useFilesManagerMain() {
     setSortField,
     sortField,
     filters,
-    fileNamePrefix,
+    fileNamePrefixFilter,
+    setFileNamePrefixFilter,
     setFilter,
     removeFilter,
     removeLastFilter,
@@ -171,14 +198,14 @@ function useFilesManagerMain() {
     sortDirection,
     resetDefaultColumnVisibility,
     getFileUrl,
-    activeViewMode,
-    switchViewModeUrl,
+    activeExplorerMode,
+    toggleExplorerMode,
   }
 }
 
-type State = ReturnType<typeof useFilesManagerMain>
+export type FilesManagerState = ReturnType<typeof useFilesManagerMain>
 
-const FilesManagerContext = createContext({} as State)
+const FilesManagerContext = createContext({} as FilesManagerState)
 export const useFilesManager = () => useContext(FilesManagerContext)
 
 type Props = {

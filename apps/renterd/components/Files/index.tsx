@@ -1,15 +1,13 @@
 import { FilesDirectory } from '../FilesDirectory'
-import { useSearchParams } from '@siafoundation/next'
 import { FilesFlat } from '../FilesFlat'
 import { useFilesManager } from '../../contexts/filesManager'
 
 export function Files() {
-  const { isViewingBuckets } = useFilesManager()
-  const params = useSearchParams()
+  const { isViewingBuckets, activeExplorerMode } = useFilesManager()
 
-  if (params.get('view') === 'flat' && !isViewingBuckets) {
-    return <FilesFlat />
+  if (activeExplorerMode === 'directory' || isViewingBuckets) {
+    return <FilesDirectory />
   }
 
-  return <FilesDirectory />
+  return <FilesFlat />
 }

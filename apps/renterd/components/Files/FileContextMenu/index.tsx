@@ -29,7 +29,7 @@ type Props = {
 }
 
 export function FileContextMenu({ path }: Props) {
-  const { downloadFiles, getFileUrl, navigateToFileDirectory } =
+  const { downloadFiles, getFileUrl, navigateToModeSpecificFiltering } =
     useFilesManager()
   const deleteFile = useFileDelete()
   const { openDialog } = useDialog()
@@ -69,7 +69,7 @@ export function FileContextMenu({ path }: Props) {
       <DropdownMenuLabel>Filter</DropdownMenuLabel>
       <DropdownMenuItem
         onSelect={() => {
-          navigateToFileDirectory(path)
+          navigateToModeSpecificFiltering(path)
         }}
       >
         <DropdownMenuLeftSlot>

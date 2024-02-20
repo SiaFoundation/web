@@ -5,12 +5,7 @@ import {
   Tooltip,
   ValueNum,
 } from '@siafoundation/design-system'
-import {
-  Document16,
-  Earth16,
-  FolderIcon,
-  Locked16,
-} from '@siafoundation/react-icons'
+import { Document16, Earth16, Locked16 } from '@siafoundation/react-icons'
 import { humanBytes } from '@siafoundation/units'
 import { FileContextMenu } from '../../components/Files/FileContextMenu'
 import { DirectoryContextMenu } from '../../components/Files/DirectoryContextMenu'
@@ -19,7 +14,7 @@ import { FilesHealthColumn } from '../../components/Files/Columns/FilesHealthCol
 import { BucketContextMenu } from '../../components/Files/BucketContextMenu'
 import { FilesTableColumn } from '../filesManager/types'
 import { useFilesManager } from '../filesManager'
-import { getDirectorySegmentsFromPath, getKeyFromPath } from '../../lib/paths'
+import { getKeyFromPath, getParentDirectoryPath } from '../../lib/paths'
 
 export const columns: FilesTableColumn[] = [
   {
@@ -30,25 +25,10 @@ export const columns: FilesTableColumn[] = [
     render: function TypeColumn({
       data: { isUploading, type, name, path, size },
     }) {
-      const { setActiveDirectory } = useFilesManager()
       if (isUploading) {
         return (
           <Button variant="ghost" state="waiting">
             <Document16 />
-          </Button>
-        )
-      }
-      if (name === '..') {
-        return (
-          <Button
-            variant="ghost"
-            icon="hover"
-            onClick={(e) => {
-              e.stopPropagation()
-              setActiveDirectory((p) => p.slice(0, -1))
-            }}
-          >
-            <FolderIcon size={16} />
           </Button>
         )
       }
@@ -65,9 +45,8 @@ export const columns: FilesTableColumn[] = [
     id: 'name',
     label: 'name',
     category: 'general',
-    // contentClassName: 'max-w-[600px]',
     render: function NameColumn({ data: { path, name, type } }) {
-      const { setActiveDirectory } = useFilesManager()
+      const { setFileNamePrefixFilter } = useFilesManager()
       const key = getKeyFromPath(path).slice(1)
       if (type === 'bucket') {
         return (
@@ -76,32 +55,12 @@ export const columns: FilesTableColumn[] = [
             color="accent"
             weight="semibold"
             className="cursor-pointer"
-            onClick={(e) => {
-              e.stopPropagation()
-              setActiveDirectory(() => [name])
-            }}
           >
             {name}
           </Text>
         )
       }
       if (type === 'directory') {
-        if (name === '..') {
-          return (
-            <Text
-              ellipsis
-              color="accent"
-              weight="semibold"
-              className="cursor-pointer"
-              onClick={(e) => {
-                e.stopPropagation()
-                setActiveDirectory((p) => p.slice(0, -1))
-              }}
-            >
-              {key}
-            </Text>
-          )
-        }
         return (
           <Text
             ellipsis
@@ -110,7 +69,7 @@ export const columns: FilesTableColumn[] = [
             className="cursor-pointer"
             onClick={(e) => {
               e.stopPropagation()
-              setActiveDirectory((p) => p.concat(name.slice(0, -1)))
+              setFileNamePrefixFilter(getParentDirectoryPath(key))
             }}
           >
             {key}
@@ -124,7 +83,7 @@ export const columns: FilesTableColumn[] = [
           className="cursor-pointer"
           onClick={(e) => {
             e.stopPropagation()
-            setActiveDirectory(() => getDirectorySegmentsFromPath(path))
+            setFileNamePrefixFilter(getParentDirectoryPath(key))
           }}
         >
           {key}
