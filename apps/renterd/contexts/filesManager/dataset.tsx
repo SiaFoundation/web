@@ -22,7 +22,7 @@ export function useDataset({ objects }: Props) {
   const {
     activeBucket,
     activeBucketName,
-    fileNamePrefix,
+    fileNamePrefixFilter,
     uploadsList,
     sortDirection,
     sortField,
@@ -83,7 +83,7 @@ export function useDataset({ objects }: Props) {
         uploadsList
           .filter(({ path, name }) => path === join(activeDirectoryPath, name))
           .filter(({ path }) =>
-            path.startsWith(join(activeBucketName, fileNamePrefix))
+            path.startsWith(join(activeBucketName, fileNamePrefixFilter))
           )
           .forEach((upload) => {
             dataMap[upload.path] = upload

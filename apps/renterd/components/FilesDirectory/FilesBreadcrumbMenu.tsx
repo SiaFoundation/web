@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef } from 'react'
 import { Text, ScrollArea } from '@siafoundation/design-system'
 import { ChevronRight16 } from '@siafoundation/react-icons'
 import { useFilesManager } from '../../contexts/filesManager'
-import { FilesBreadcrumbMenuMode } from '../Files/FilesBreadcrumbMenuMode'
+import { FilesExplorerModeButton } from '../Files/FilesExplorerModeButton'
 
 export function FilesBreadcrumbMenu() {
   const { activeDirectory, setActiveDirectory } = useFilesManager()
@@ -19,7 +19,7 @@ export function FilesBreadcrumbMenu() {
 
   return (
     <div className="flex gap-2 items-center h-full">
-      <FilesBreadcrumbMenuMode />
+      <FilesExplorerModeButton />
       <ScrollArea>
         <div className="flex gap-1 items-center h-full">
           <Text
@@ -29,7 +29,7 @@ export function FilesBreadcrumbMenu() {
             className="flex items-center cursor-pointer"
             noWrap
           >
-            Files
+            Buckets
           </Text>
           {activeDirectory.length > 0 && (
             <Text size="16" color="verySubtle" className="flex items-center">

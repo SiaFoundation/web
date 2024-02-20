@@ -27,13 +27,14 @@ export function FilesSearchCmd({
   beforeSelect?: () => void
   afterSelect?: () => void
 }) {
-  const { activeBucketName: activeBucket, navigateToFileDirectory } =
+  const { activeBucketName: activeBucket, navigateToModeSpecificFiltering } =
     useFilesManager()
   const onSearchPage = currentPage?.namespace === filesSearchPage.namespace
+  const searchBucket = activeBucket || 'default'
   const results = useObjectSearch({
     disabled: !onSearchPage,
     params: {
-      bucket: activeBucket || 'default',
+      bucket: searchBucket,
       key: debouncedSearch,
       offset: 0,
       limit: 10,
@@ -62,7 +63,7 @@ export function FilesSearchCmd({
             key={path}
             onSelect={() => {
               beforeSelect()
-              navigateToFileDirectory(path)
+              navigateToModeSpecificFiltering(searchBucket + path)
               afterSelect()
             }}
             value={path}

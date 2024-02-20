@@ -5,11 +5,12 @@ import { useFilesDirectory } from '../../../contexts/filesDirectory'
 import { useFilesFlat } from '../../../contexts/filesFlat'
 
 export function FilesStatsMenuCount() {
-  const { isViewingABucket, uploadsList, activeViewMode } = useFilesManager()
+  const { isViewingABucket, uploadsList, activeExplorerMode } =
+    useFilesManager()
   const { pageCount: directoryPageCount } = useFilesDirectory()
   const { pageCount: flatPageCount } = useFilesFlat()
   const pageCount =
-    activeViewMode === 'flat' ? flatPageCount : directoryPageCount
+    activeExplorerMode === 'flat' ? flatPageCount : directoryPageCount
 
   const stats = useObjectStats({
     config: {

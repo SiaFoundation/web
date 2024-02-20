@@ -66,7 +66,8 @@ export const columns: FilesTableColumn[] = [
     category: 'general',
     contentClassName: 'max-w-[600px]',
     render: function NameColumn({ data: { name, type } }) {
-      const { setActiveDirectory } = useFilesManager()
+      const { setActiveDirectoryAndFileNamePrefix, setActiveDirectory } =
+        useFilesManager()
       if (type === 'bucket') {
         return (
           <Text
@@ -76,7 +77,7 @@ export const columns: FilesTableColumn[] = [
             className="cursor-pointer"
             onClick={(e) => {
               e.stopPropagation()
-              setActiveDirectory(() => [name])
+              setActiveDirectoryAndFileNamePrefix([name], '')
             }}
           >
             {name}
