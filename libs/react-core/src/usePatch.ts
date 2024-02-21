@@ -159,6 +159,7 @@ export function usePatchFunc<Params extends RequestParams, Payload, Result>(
         return {
           status: response.status,
           data: response.data,
+          headers: response.headers,
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {

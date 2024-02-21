@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { AxiosRequestConfig, AxiosResponse, AxiosResponseHeaders } from 'axios'
 import { MutatorCallback, MutatorOptions } from 'swr'
 import { SWROptions } from './types'
 import { AppSettings } from './useAppSettings'
@@ -190,6 +190,7 @@ export function mergeInternalCallbackArgs<
 export type Response<T> = {
   status: number
   data?: T
+  headers?: AxiosResponseHeaders
   error?: string
 }
 
