@@ -1,5 +1,18 @@
 # hostd
 
+## 0.38.0
+
+### Minor Changes
+
+- 4506593d: Integrity check alert sector data will now update when there is an ongoing integrity check.
+- 4506593d: All app data will now refresh more frequently.
+- c98f1941: The node profile details now include uptime. Closes https://github.com/SiaFoundation/hostd/issues/92
+
+### Patch Changes
+
+- fdcfcb6d: The bandwidth settings for egress and ingress now have clearer descriptions.
+- bbbe56a8: The contract timeline labels have been darkened to increase contrast and readability.
+
 ## 0.37.0
 
 ### Minor Changes

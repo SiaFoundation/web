@@ -1,5 +1,16 @@
 # @siafoundation/react-renterd
 
+## 3.0.0
+
+### Minor Changes
+
+- 035f90e9: Add useHostResetLostSectorCount.
+
+### Patch Changes
+
+- Updated dependencies [40e402ad]
+  - @siafoundation/react-core@1.1.0
+
 ## 2.1.0
 
 ### Minor Changes

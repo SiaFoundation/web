@@ -1,5 +1,11 @@
 # @siafoundation/react-core
 
+## 1.1.0
+
+### Minor Changes
+
+- 40e402ad: Hook request functions now return headers.
+
 ## 1.0.3
 
 ### Patch Changes

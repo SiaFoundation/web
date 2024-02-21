@@ -1,5 +1,11 @@
 # walletd
 
+## 0.17.0
+
+### Minor Changes
+
+- 4506593d: All app data will now refresh more frequently.
+
 ## 0.16.0
 
 ### Minor Changes

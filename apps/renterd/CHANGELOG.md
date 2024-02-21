@@ -1,5 +1,21 @@
 # renterd
 
+## 0.46.0
+
+### Minor Changes
+
+- 035f90e9: The host context menu now has an option to reset the lost sector count.
+- c98f1941: The node profile details now include uptime.
+- 1afac605: File explorer navigation actions now retain the active explorer mode.
+- 4506593d: All app data will now refresh more frequently.
+- 1afac605: The selected file explorer mode is now persisted between sessions.
+
+### Patch Changes
+
+- 1afac605: The file breadcrumb nav now shows the root as "Buckets".
+- bbbe56a8: The contract timeline labels have been darkened to increase contrast and readability.
+- 1afac605: The explorer mode switcher button is now disabled when viewing buckets. Closes https://github.com/SiaFoundation/renterd/issues/973
+
 ## 0.45.0
 
 ### Minor Changes
