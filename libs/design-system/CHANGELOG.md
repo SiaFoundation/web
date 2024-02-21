@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.0.0
+
+### Patch Changes
+
+- bbbe56a8: The contract timeline labels have been darkened to increase contrast and readability.
+- Updated dependencies [ea9c20d2]
+- Updated dependencies [40e402ad]
+  - @siafoundation/units@3.0.0
+  - @siafoundation/react-core@1.1.0
+  - @siafoundation/react-sia-central@3.0.0
+
 ## 2.2.0
 
 ### Minor Changes

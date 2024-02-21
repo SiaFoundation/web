@@ -1,5 +1,16 @@
 # @siafoundation/units
 
+## 3.0.0
+
+### Minor Changes
+
+- ea9c20d2: humanTime now supports up to days and long and abbreviated formatting.
+
+### Patch Changes
+
+- Updated dependencies [40e402ad]
+  - @siafoundation/react-core@1.1.0
+
 ## 2.0.3
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @siafoundation/react-walletd
 
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies [40e402ad]
+  - @siafoundation/react-core@1.1.0
+
 ## 2.0.3
 
 ### Patch Changes
