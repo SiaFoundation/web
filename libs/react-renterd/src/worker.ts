@@ -55,7 +55,7 @@ export function useObjectUpload(
   )
 }
 
-export type MultipartUploadChunkParams = {
+export type MultipartUploadPartParams = {
   key: string
   uploadid: string
   partnumber: number
@@ -66,8 +66,8 @@ export type MultipartUploadChunkParams = {
   totalshards?: number
 }
 
-export function useMultipartUploadChunk(
-  args?: HookArgsCallback<MultipartUploadChunkParams, Blob, void>
+export function useMultipartUploadPart(
+  args?: HookArgsCallback<MultipartUploadPartParams, Blob, void>
 ) {
   return usePutFunc({
     ...args,
