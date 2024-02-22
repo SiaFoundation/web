@@ -87,6 +87,12 @@ export type Sector = {
   root: string
 }
 
+export type PartialSlab = {
+  key: EncryptionKey
+  offset: number
+  length: number
+}
+
 export type Slab = {
   health: number
   key: EncryptionKey

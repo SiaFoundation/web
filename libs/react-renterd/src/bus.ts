@@ -29,7 +29,9 @@ import {
   Host,
   HostSettings,
   Obj,
+  PartialSlab,
   SiacoinElement,
+  SlabSlice,
   WalletTransaction,
 } from './siaTypes'
 
@@ -838,3 +840,159 @@ export function useMetricsWallet(
 //   hostKey: string
 //   origin: string
 // }
+
+// multipart
+
+export type MultipartUploadCreatePayload = {
+  path: string
+  bucket: string
+  generateKey: boolean
+  key?: string
+}
+
+export function useMultipartUploadCreate(
+  args?: HookArgsCallback<
+    void,
+    MultipartUploadCreatePayload,
+    { uploadID: string }
+  >
+) {
+  return usePostFunc(
+    { ...args, route: '/bus/multipart/create' },
+    async (mutate) => {
+      mutate((key) => {
+        return key.startsWith('/bus/multipart')
+      })
+    }
+  )
+}
+
+export type MultipartUploadCompletePart = {
+  partNumber: number
+  eTag: string
+}
+
+export type MultipartUploadCompletePayload = {
+  path: string
+  bucket: string
+  uploadID: string
+  parts: MultipartUploadCompletePart[]
+}
+
+export function useMultipartUploadComplete(
+  args?: HookArgsCallback<void, MultipartUploadCompletePayload, void>
+) {
+  return usePostFunc(
+    { ...args, route: '/bus/multipart/complete' },
+    async (mutate) => {
+      mutate((key) => {
+        return key.startsWith('/bus/multipart')
+      })
+    }
+  )
+}
+
+export type MultipartUploadAbortPayload = {
+  path: string
+  bucket: string
+  uploadID: string
+}
+
+export function useMultipartUploadAbort(
+  args?: HookArgsCallback<void, MultipartUploadAbortPayload, void>
+) {
+  return usePostFunc(
+    { ...args, route: '/bus/multipart/abort' },
+    async (mutate) => {
+      mutate((key) => {
+        return key.startsWith('/bus/multipart')
+      })
+    }
+  )
+}
+
+export type MultipartUploadListPartsPayload = {
+  bucket: string
+  path: string
+  uploadID: string
+  partNumberMarker?: number
+  limit?: number
+}
+
+export type MultipartUploadListPartsResponse = {
+  hasMore: boolean
+  nextMarker?: number
+  parts: {
+    partNumber: number
+    lastModified: string
+    eTag: string
+    size: number
+  }[]
+}
+
+export function useMultipartUploadListParts(
+  args: HookArgsWithPayloadSwr<
+    void,
+    MultipartUploadListPartsPayload,
+    MultipartUploadListPartsResponse
+  >
+) {
+  return usePostSwr({
+    ...args,
+    route: '/bus/multipart/listparts',
+  })
+}
+
+export type MultipartUploadListUploadsPayload = {
+  bucket: string
+  prefix?: string
+  pathMarker?: string
+  uploadIDMarker?: string
+  limit?: number
+}
+
+export type MultipartUploadListUploadsResponse = {
+  uploads: {
+    path: string
+    uploadID: string
+    createdAt: string
+  }[]
+}
+
+export function useMultipartUploadListUploads(
+  args: HookArgsWithPayloadSwr<
+    void,
+    MultipartUploadListUploadsPayload,
+    MultipartUploadListUploadsResponse
+  >
+) {
+  return usePostSwr({
+    ...args,
+    route: '/bus/multipart/listuploads',
+  })
+}
+
+export type MultipartUploadAddPartPayload = {
+  path: string
+  bucket: string
+  uploadID: string
+  eTag: string
+  partNumber: number
+  contractSet?: string
+  partialSlabs?: PartialSlab[]
+  slices?: SlabSlice[]
+  usedContracts?: Contract[]
+}
+
+export function useMultipartUploadAddPart(
+  args?: HookArgsCallback<void, MultipartUploadAddPartPayload, void>
+) {
+  return usePostFunc(
+    { ...args, route: '/bus/multipart/part' },
+    async (mutate) => {
+      mutate((key) => {
+        return key.startsWith('/bus/multipart/listparts')
+      })
+    }
+  )
+}
