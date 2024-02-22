@@ -1,6 +1,11 @@
 name: PR
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
+    # https://graphite.dev/docs/stacking-and-ci#running-ci-upstack
+    # This clause will prevent upstack PRs from running CI, because
+    # upstack branches aren't directly based on main.
+    branches: [main]
 
 jobs:
   pr:
