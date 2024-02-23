@@ -10,7 +10,6 @@ import { Statsbar } from '../Statsbar'
 import { SectionTransparent } from '../SectionTransparent'
 import { SectionSolid } from '../SectionSolid'
 import { routes } from '../../config/routes'
-import { cx } from 'class-variance-authority'
 
 export function Footer() {
   return (
