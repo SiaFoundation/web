@@ -1,4 +1,10 @@
-import { Link, Logo, SiteMap, ThemeRadio } from '@siafoundation/design-system'
+import {
+  Link,
+  Logo,
+  SiteMap,
+  ThemeRadio,
+  webLinks,
+} from '@siafoundation/design-system'
 import { menuSections } from '../../config/siteMap'
 import { Statsbar } from '../Statsbar'
 import { SectionTransparent } from '../SectionTransparent'
@@ -8,12 +14,7 @@ import { cx } from 'class-variance-authority'
 
 export function Footer() {
   return (
-    <div
-      className={cx(
-        'flex flex-col overflow-hidden'
-        // 'rounded-b-[5px]'
-      )}
-    >
+    <div className="flex flex-col overflow-hidden">
       <SectionTransparent className="pt-10 pb-12 md:pt-14 md:pb-20">
         <SiteMap menuSections={menuSections} />
       </SectionTransparent>
@@ -53,6 +54,15 @@ export function Footer() {
               noWrap
             >
               Privacy Policy
+            </Link>
+            <Link
+              href={`mailto:${webLinks.email}`}
+              size="12"
+              color="subtle"
+              underline="hover"
+              noWrap
+            >
+              {webLinks.email}
             </Link>
             <div className="flex-1" />
             <ThemeRadio className="hidden md:flex" />
