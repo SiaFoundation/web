@@ -32,7 +32,7 @@ export function ExplorerDatum({
   comment,
 }: DatumProps) {
   return (
-    <div className="flex flex-wrap gap-x-12 gap-y-4 items-baseline py-1.5 overflow-hidden">
+    <div className="flex flex-wrap gap-x-12 gap-y-4 items-baseline py-1.5">
       <Text color="subtle" scaleSize="14" ellipsis className="flex-1">
         {upperFirst(label)}
       </Text>

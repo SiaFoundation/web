@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js'
 import {
   SiaCentralContract,
   SiaCentralExchangeRates,
+  SiaCentralPartialSiacoinOutput,
 } from '@siafoundation/sia-central'
 import { humanBytes, humanDate, humanSiacoin } from '@siafoundation/units'
 import { EntityList, EntityListItemProps } from '@siafoundation/design-system'
@@ -148,34 +149,90 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
     ] as DatumProps[]
   }, [contract, exchange])
 
-  const missedProofOutputs = useMemo(() => {
-    if (!contract) {
-      return []
+  const validProofOutputs = useMemo(() => {
+    if (isProperlyFormedNewContract(contract)) {
+      const { renterPayoutValid, hostPayoutValid } =
+        getNewContractFormattedOutputs(contract)
+      return [
+        {
+          label: 'renter payout: remaining renter allowance',
+          initials: 'r',
+          sc: new BigNumber(renterPayoutValid.value),
+          hash: renterPayoutValid.output_id,
+        },
+        {
+          label: 'host payout',
+          initials: 'h',
+          sc: new BigNumber(hostPayoutValid.value),
+          hash: hostPayoutValid.output_id,
+        },
+      ] as EntityListItemProps[]
     }
-    const list: EntityListItemProps[] = []
-    contract.missed_proof_outputs?.forEach((o) => {
-      list.push({
-        label: o.source ? o.source.replace(/_/g, ' ') : 'output',
-        sc: new BigNumber(o.value),
-        hash: o.output_id,
-      })
-    })
-    return list
+    if (isProperlyFormedRenewedContract(contract)) {
+      const { renterPayoutValid, hostPayoutValid } =
+        getRenewedContractFormattedOutputs(contract)
+      return [
+        {
+          label: 'renter payout: remaining renter allowance',
+          initials: 'r',
+          sc: new BigNumber(renterPayoutValid.value),
+          hash: renterPayoutValid.output_id,
+        },
+        {
+          label: 'host payout',
+          initials: 'h',
+          sc: new BigNumber(hostPayoutValid.value),
+          hash: hostPayoutValid.output_id,
+        },
+      ] as EntityListItemProps[]
+    }
+    return contract?.valid_proof_outputs?.map(genericOutputListItem) || []
   }, [contract])
 
-  const validProofOutputs = useMemo(() => {
-    if (!contract) {
-      return []
+  const missedProofOutputs = useMemo(() => {
+    if (isProperlyFormedNewContract(contract)) {
+      const { renterPayoutMissed, hostPayoutMissed, hostBurned } =
+        getNewContractFormattedOutputs(contract)
+      return [
+        {
+          label: 'renter payout: remaining renter allowance',
+          initials: 'r',
+          sc: new BigNumber(renterPayoutMissed.value),
+          hash: renterPayoutMissed.output_id,
+        },
+        {
+          label: `host payout: payout minus risked collateral and storage revenue`,
+          initials: 'h',
+          sc: new BigNumber(hostPayoutMissed.value),
+          hash: hostPayoutMissed.output_id,
+        },
+        {
+          label: 'host burn: host revenue plus risked collateral',
+          initials: 'b',
+          sc: new BigNumber(hostBurned.value),
+          hash: hostBurned.output_id,
+        },
+      ] as EntityListItemProps[]
     }
-    const list: EntityListItemProps[] = []
-    contract.valid_proof_outputs?.forEach((o) => {
-      list.push({
-        label: o.source ? o.source.replace(/_/g, ' ') : 'output',
-        sc: new BigNumber(o.value),
-        hash: o.output_id,
-      })
-    })
-    return list
+    if (isProperlyFormedRenewedContract(contract)) {
+      const { renterPayoutMissed, hostPayoutMissed } =
+        getRenewedContractFormattedOutputs(contract)
+      return [
+        {
+          label: 'renter payout: remaining renter allowance',
+          initials: 'r',
+          sc: new BigNumber(renterPayoutMissed.value),
+          hash: renterPayoutMissed.output_id,
+        },
+        {
+          label: `host payout: payout minus risked collateral and storage revenue`,
+          initials: 'h',
+          sc: new BigNumber(hostPayoutMissed.value),
+          hash: hostPayoutMissed.output_id,
+        },
+      ] as EntityListItemProps[]
+    }
+    return contract?.missed_proof_outputs?.map(genericOutputListItem) || []
   }, [contract])
 
   return (
@@ -215,4 +272,94 @@ export function Contract({ contract, rates, renewedFrom, renewedTo }: Props) {
       </div>
     </ContentLayout>
   )
+}
+
+function isProperlyFormedNewContract(contract: SiaCentralContract) {
+  // renter payout, host payout
+  if (contract.valid_proof_outputs?.length !== 2) {
+    return false
+  }
+  // renter payout, host payout, and host burned
+  if (contract.missed_proof_outputs?.length !== 3) {
+    return false
+  }
+
+  const { renterPayoutValid, renterPayoutMissed } =
+    getNewContractFormattedOutputs(contract)
+
+  // renter payout valid and missed should be the same
+  if (renterPayoutValid.value !== renterPayoutMissed.value) {
+    return false
+  }
+
+  // math.MaxUint64 with lost precision
+  const mathMaxUint64 = 18446744073709552000
+  if (contract.revision_number >= mathMaxUint64) {
+    return false
+  }
+  return true
+}
+
+function isProperlyFormedRenewedContract(contract: SiaCentralContract) {
+  // renter payout, host payout
+  if (contract.valid_proof_outputs?.length !== 2) {
+    return false
+  }
+  // renter payout, host payout
+  if (contract.missed_proof_outputs?.length !== 2) {
+    return false
+  }
+
+  const {
+    renterPayoutValid,
+    renterPayoutMissed,
+    hostPayoutValid,
+    hostPayoutMissed,
+  } = getRenewedContractFormattedOutputs(contract)
+
+  // renter payout valid and missed should be the same
+  if (renterPayoutValid.value !== renterPayoutMissed.value) {
+    return false
+  }
+
+  // host payout valid and missed should be the same
+  if (hostPayoutValid.value !== hostPayoutMissed.value) {
+    return false
+  }
+
+  // math.MaxUint64 with lost precision
+  const mathMaxUint64 = 18446744073709552000
+  if (contract.revision_number !== mathMaxUint64) {
+    return false
+  }
+  return true
+}
+
+function getNewContractFormattedOutputs(contract: SiaCentralContract) {
+  return {
+    renterPayoutValid: contract.valid_proof_outputs[0],
+    renterPayoutMissed: contract.missed_proof_outputs[0],
+    hostPayoutValid: contract.valid_proof_outputs[1],
+    hostPayoutMissed: contract.missed_proof_outputs[1],
+    hostBurned: contract.missed_proof_outputs[2],
+  }
+}
+
+function getRenewedContractFormattedOutputs(contract: SiaCentralContract) {
+  return {
+    renterPayoutValid: contract.valid_proof_outputs[0],
+    renterPayoutMissed: contract.missed_proof_outputs[0],
+    hostPayoutValid: contract.valid_proof_outputs[1],
+    hostPayoutMissed: contract.missed_proof_outputs[1],
+  }
+}
+
+function genericOutputListItem(
+  o: SiaCentralPartialSiacoinOutput
+): EntityListItemProps {
+  return {
+    label: o.source ? o.source.replace(/_/g, ' ') : 'output',
+    sc: new BigNumber(o.value),
+    hash: o.output_id,
+  }
 }
