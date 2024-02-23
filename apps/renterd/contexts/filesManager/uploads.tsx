@@ -23,6 +23,7 @@ import { MultipartUpload } from '../../lib/multipartUpload'
 import { MiBToBytes } from '@siafoundation/units'
 import { useMutate } from '@siafoundation/react-core'
 import { useRedundancySettings } from '../../hooks/useRedundancySettings'
+import { useWarnActiveUploadsOnClose } from './useWarnActiveUploadsOnClose'
 
 const maxConcurrentUploads = 5
 const maxConcurrentPartsPerUpload = 5
@@ -279,6 +280,9 @@ export function useUploads({ activeDirectoryPath }: Props) {
     () => Object.entries(uploadsMap).map((u) => u[1] as ObjectUploadData),
     [uploadsMap]
   )
+
+  // Abort local uploads when the browser tab is closed
+  useWarnActiveUploadsOnClose({ uploadsMap })
 
   return {
     uploadFiles,
