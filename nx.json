@@ -26,7 +26,10 @@
     },
     "@nx/eslint:lint": {
       "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
-      "cache": true
+      "cache": true,
+      "options": {
+        "maxWarnings": 0
+      }
     },
     "@nx/js:tsc": {
       "cache": true,
