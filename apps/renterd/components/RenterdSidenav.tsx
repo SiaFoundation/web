@@ -23,7 +23,7 @@ export function RenterdSidenav() {
       {/* <SidenavItem title="Dashboard" route={routes.home}>
         <HouseIcon />
       </SidenavItem> */}
-      <SidenavItem title="Files" route={routes.files.index}>
+      <SidenavItem title="Files" route={routes.buckets.index}>
         <FolderIcon />
       </SidenavItem>
       <SidenavItem title="Configuration" route={routes.config.index}>

@@ -45,7 +45,8 @@ function useFilesManagerMain() {
     defaultSortField,
   })
   const router = useAppRouter()
-  const params = useParams<{ path: FullPathSegments }>()
+  const params = useParams<{ bucket?: string; path?: FullPathSegments }>()
+  const activeBucketName = params?.bucket
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useServerFilters()
   const fileNamePrefixFilter = useMemo(() => {
@@ -54,15 +55,13 @@ function useFilesManagerMain() {
   }, [filters])
 
   // [bucket, key, directory]
-  const activeDirectory = useMemo<FullPathSegments>(
-    () => (params?.path || []).map(decodeURIComponent),
-    [params?.path]
-  )
+  const activeDirectory = useMemo<FullPathSegments>(() => {
+    if (!activeBucketName) return []
+    const path = (params?.path || []).map(decodeURIComponent)
+    return [activeBucketName, ...path]
+  }, [activeBucketName, params?.path])
 
   // bucket
-  const activeBucketName = useMemo(() => {
-    return activeDirectory[0]
-  }, [activeDirectory])
   const buckets = useBuckets()
   const activeBucket = buckets.data?.find((b) => b.name === activeBucketName)
 
@@ -79,15 +78,22 @@ function useFilesManagerMain() {
   const setActiveDirectory = useCallback(
     (fn: (activeDirectory: FullPathSegments) => FullPathSegments) => {
       const nextActiveDirectory = fn(activeDirectory)
-      const route = `${routes.files.index}/${nextActiveDirectory
-        .map(encodeURIComponent)
-        .join('/')}`
+      if (nextActiveDirectory.length === 0) {
+        router.push(routes.buckets.index)
+        return
+      }
+      const route = routes.buckets.files
+        .replace('[bucket]', nextActiveDirectory[0])
+        .replace(
+          '[path]',
+          nextActiveDirectory.slice(1).map(encodeURIComponent).join('/')
+        )
       router.push(route)
     },
     [router, activeDirectory]
   )
 
-  const { uploadFiles, uploadsList } = useUploads({
+  const { uploadFiles, uploadsMap, uploadsList } = useUploads({
     activeDirectoryPath,
   })
   const { downloadFiles, downloadsList, getFileUrl, downloadCancel } =
@@ -108,12 +114,20 @@ function useFilesManagerMain() {
     [setFilter]
   )
 
+  const removeFileNamePrefixFilter = useCallback(() => {
+    removeFilter('fileNamePrefix')
+  }, [removeFilter])
+
   const setActiveDirectoryAndFileNamePrefix = useCallback(
-    (activeDirectory: string[], prefix: string) => {
-      setFileNamePrefixFilter(prefix)
+    (activeDirectory: string[], prefix?: string) => {
+      if (prefix) {
+        setFileNamePrefixFilter(prefix)
+      } else {
+        removeFileNamePrefixFilter()
+      }
       setActiveDirectory(() => activeDirectory)
     },
-    [setActiveDirectory, setFileNamePrefixFilter]
+    [setActiveDirectory, setFileNamePrefixFilter, removeFileNamePrefixFilter]
   )
 
   const navigateToFileInFilteredDirectory = useCallback(
@@ -141,21 +155,32 @@ function useFilesManagerMain() {
     ]
   )
 
-  const toggleExplorerMode = useCallback(async () => {
-    const nextMode = activeExplorerMode === 'directory' ? 'flat' : 'directory'
-    if (nextMode === 'flat') {
-      setActiveDirectoryAndFileNamePrefix(
-        [activeBucketName],
-        getKeyFromPath(activeDirectoryPath).slice(1)
-      )
-    } else {
-      setActiveDirectoryAndFileNamePrefix([activeBucketName], '')
+  const setExplorerModeDirectory = useCallback(async () => {
+    if (activeExplorerMode === 'directory') {
+      return
     }
-    setActiveExplorerMode(nextMode)
+    setActiveDirectoryAndFileNamePrefix([activeBucketName], undefined)
+    setActiveExplorerMode('directory')
   }, [
+    activeExplorerMode,
+    activeBucketName,
+    setActiveExplorerMode,
+    setActiveDirectoryAndFileNamePrefix,
+  ])
+
+  const setExplorerModeFlat = useCallback(async () => {
+    if (activeExplorerMode === 'flat') {
+      return
+    }
+    setActiveDirectoryAndFileNamePrefix(
+      [activeBucketName],
+      getKeyFromPath(activeDirectoryPath).slice(1)
+    )
+    setActiveExplorerMode('flat')
+  }, [
+    activeExplorerMode,
     activeBucketName,
     activeDirectoryPath,
-    activeExplorerMode,
     setActiveExplorerMode,
     setActiveDirectoryAndFileNamePrefix,
   ])
@@ -173,6 +198,7 @@ function useFilesManagerMain() {
     activeDirectoryPath,
     navigateToModeSpecificFiltering,
     uploadFiles,
+    uploadsMap,
     uploadsList,
     downloadFiles,
     downloadsList,
@@ -198,7 +224,8 @@ function useFilesManagerMain() {
     resetDefaultColumnVisibility,
     getFileUrl,
     activeExplorerMode,
-    toggleExplorerMode,
+    setExplorerModeDirectory,
+    setExplorerModeFlat,
   }
 }
 

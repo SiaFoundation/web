@@ -1,10 +1,10 @@
 import { Button, Tooltip } from '@siafoundation/design-system'
-import { BucketIcon, Earth16, Folder16 } from '@siafoundation/react-icons'
+import { BucketIcon } from '@siafoundation/react-icons'
 import { useFilesManager } from '../../contexts/filesManager'
+import { FilesExplorerModeContextMenu } from './FilesExplorerModeContextMenu'
 
 export function FilesExplorerModeButton() {
-  const { isViewingBuckets, toggleExplorerMode, activeExplorerMode } =
-    useFilesManager()
+  const { isViewingBuckets } = useFilesManager()
 
   if (isViewingBuckets) {
     return (
@@ -18,16 +18,5 @@ export function FilesExplorerModeButton() {
     )
   }
 
-  return (
-    <Button
-      onClick={toggleExplorerMode}
-      tip={
-        activeExplorerMode === 'directory'
-          ? 'Viewing directory explorer'
-          : 'Viewing all bucket files'
-      }
-    >
-      {activeExplorerMode === 'directory' ? <Folder16 /> : <Earth16 />}
-    </Button>
-  )
+  return <FilesExplorerModeContextMenu />
 }

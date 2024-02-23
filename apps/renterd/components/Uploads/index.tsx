@@ -1,28 +1,28 @@
 import { RenterdSidenav } from '../RenterdSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
-import { FilesFlatBreadcrumbMenu } from './FilesFlatBreadcrumbMenu'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
-import { FilesActionsMenu } from './FilesActionsMenu'
-import { FilesStatsMenu } from './FilesStatsMenu'
-import { FilesExplorer } from './FilesExplorer'
+import { UploadsActionsMenu } from './UploadsActionsMenu'
+import { UploadsStatsMenu } from './UploadsStatsMenu'
+import { UploadsTable } from './UploadsTable'
+import { UploadsBreadcrumbMenu } from './UploadsBreadcrumbMenu'
 
-export function FilesFlat() {
+export function Uploads() {
   const { openDialog } = useDialog()
 
   return (
     <RenterdAuthedLayout
-      title="Files"
+      title="Uploads"
       navTitle={null}
       routes={routes}
       sidenav={<RenterdSidenav />}
-      nav={<FilesFlatBreadcrumbMenu />}
-      stats={<FilesStatsMenu />}
-      actions={<FilesActionsMenu />}
+      nav={<UploadsBreadcrumbMenu />}
+      stats={<UploadsStatsMenu />}
+      actions={<UploadsActionsMenu />}
       openSettings={() => openDialog('settings')}
     >
       <div className="p-6 min-w-fit">
-        <FilesExplorer />
+        <UploadsTable />
       </div>
     </RenterdAuthedLayout>
   )

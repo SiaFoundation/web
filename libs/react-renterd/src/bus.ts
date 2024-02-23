@@ -952,7 +952,10 @@ export type MultipartUploadListUploadsPayload = {
 }
 
 export type MultipartUploadListUploadsResponse = {
-  uploads: {
+  hasMore: boolean
+  nextMarker: string
+  nextUploadIDMarker: string
+  uploads?: {
     path: string
     uploadID: string
     createdAt: string

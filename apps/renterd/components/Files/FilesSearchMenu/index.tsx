@@ -62,8 +62,8 @@ export function FilesSearchMenu({ panel }: Props) {
               beforeSelect()
             }}
             afterSelect={() => {
-              if (!pathname.startsWith(routes.files.index)) {
-                router.push(routes.files.index)
+              if (!pathname.startsWith(routes.buckets.index)) {
+                router.push(routes.buckets.index)
               }
             }}
           />

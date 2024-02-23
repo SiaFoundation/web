@@ -1,6 +1,6 @@
 import { SetupServer } from 'msw/node'
 import { HttpResponse, http } from 'msw'
-import { Bucket } from '@siafoundation/react-renterd'
+import { Bucket, RedundancySettings } from '@siafoundation/react-renterd'
 
 export function mockApiBusBuckets(server: SetupServer) {
   server.use(
@@ -13,6 +13,17 @@ export function mockApiBusBuckets(server: SetupServer) {
           },
         },
       ] as Bucket[])
+    })
+  )
+}
+
+export function mockApiBusSettingRedundancy(server: SetupServer) {
+  server.use(
+    http.get('/api/bus/setting/redundancy', () => {
+      return HttpResponse.json({
+        minShards: 10,
+        totalShards: 30,
+      } as RedundancySettings)
     })
   )
 }

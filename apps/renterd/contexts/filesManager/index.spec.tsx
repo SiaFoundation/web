@@ -3,7 +3,11 @@ import { setupServer } from 'msw/node'
 import { NextAppCsr } from '@siafoundation/design-system'
 import { FilesManagerProvider, useFilesManager, FilesManagerState } from '.'
 import { useEffect } from 'react'
-import { mockApiBusBuckets, mockMatchMedia } from '../../mock/mock'
+import {
+  mockApiBusBuckets,
+  mockApiBusSettingRedundancy,
+  mockMatchMedia,
+} from '../../mock/mock'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { usePathname, useAppRouter } = require('@siafoundation/next')
 
@@ -25,6 +29,7 @@ const server = setupServer()
 beforeAll(() => {
   mockMatchMedia()
   mockApiBusBuckets(server)
+  mockApiBusSettingRedundancy(server)
   server.listen()
 })
 beforeEach(() => {
@@ -59,7 +64,7 @@ describe('filesManager', () => {
     const context = mountProvider()
     expect(context.state.activeExplorerMode).toBe('directory')
     act(() => {
-      context.state.toggleExplorerMode()
+      context.state.setExplorerModeFlat()
     })
     waitFor(() => {
       expect(context.state.activeExplorerMode).toBe('flat')
@@ -73,14 +78,14 @@ describe('filesManager', () => {
     usePathname.mockReturnValue('/files/foo/bar/baz')
     const context = mountProvider()
     act(() => {
-      context.state.toggleExplorerMode()
+      context.state.setExplorerModeFlat()
     })
     waitFor(() => {
       expect(context.state.activeExplorerMode).toBe('flat')
       expect(context.state.fileNamePrefixFilter).toBe('/foo/bar/baz')
     })
     act(() => {
-      context.state.toggleExplorerMode()
+      context.state.setExplorerModeDirectory()
     })
     waitFor(() => {
       expect(context.state.activeExplorerMode).toBe('directory')

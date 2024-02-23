@@ -50,8 +50,8 @@ export function FilesCmd({
           currentPage={currentPage}
           commandPage={commandPage}
           onSelect={() => {
-            if (!router.pathname.startsWith(routes.files.index)) {
-              router.push(routes.files.index)
+            if (!router.pathname.startsWith(routes.buckets.index)) {
+              router.push(routes.buckets.index)
             }
             closeDialog()
             afterSelect()

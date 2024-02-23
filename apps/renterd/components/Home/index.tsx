@@ -10,7 +10,7 @@ export function Home() {
   const { openDialog } = useDialog()
 
   useEffect(() => {
-    router.replace(routes.files.index)
+    router.replace(routes.buckets.index)
   }, [router])
 
   return (

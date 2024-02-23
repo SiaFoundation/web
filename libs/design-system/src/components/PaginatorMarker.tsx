@@ -28,6 +28,7 @@ export function PaginatorMarker({
         size="small"
         variant="gray"
         className="rounded-r-none"
+        disabled={!marker}
         onClick={() =>
           router.push({
             query: {

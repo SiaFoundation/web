@@ -141,7 +141,7 @@ export function useUploads({ activeDirectoryPath }: Props) {
             loaded: progress.sent,
             size: progress.total,
           })
-        }, 200)
+        }, 1000)
       )
       multipartUpload.setOnComplete(async () => {
         await mutate((key) => key.startsWith('/bus/objects'))
@@ -197,6 +197,7 @@ export function useUploads({ activeDirectoryPath }: Props) {
           upload: multipartUpload,
           uploadStatus: 'queued',
           uploadFile: uploadFile,
+          createdAt: new Date().toISOString(),
           uploadAbort: async () => {
             await multipartUpload.abort()
             removeUpload(uploadId)
