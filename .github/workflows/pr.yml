@@ -1,16 +1,17 @@
 name: PR
+
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
-    # https://graphite.dev/docs/stacking-and-ci#running-ci-upstack
-    # This clause will prevent upstack PRs from running CI, because
-    # upstack branches aren't directly based on main.
-    branches: [main]
+
+# cancel previous runs when the PR is updated
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   pr:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed' }}
     steps:
       - name: Checkout all commits
         uses: actions/checkout@v3
