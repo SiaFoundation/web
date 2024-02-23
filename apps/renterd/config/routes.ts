@@ -2,8 +2,10 @@ import { busStateKey } from '@siafoundation/react-renterd'
 
 export const routes = {
   home: '/',
-  files: {
-    index: '/files',
+  buckets: {
+    index: '/buckets',
+    files: '/buckets/[bucket]/files/[path]',
+    uploads: '/buckets/[bucket]/uploads',
   },
   config: {
     index: '/config',

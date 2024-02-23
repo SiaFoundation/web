@@ -3,7 +3,7 @@ import { ChevronRight16 } from '@siafoundation/react-icons'
 import { useFilesManager } from '../../contexts/filesManager'
 import { FilesExplorerModeButton } from '../Files/FilesExplorerModeButton'
 
-export function FilesBreadcrumbMenu() {
+export function FilesFlatBreadcrumbMenu() {
   const { activeBucketName: activeBucket, setActiveDirectory } =
     useFilesManager()
 
@@ -32,6 +32,17 @@ export function FilesBreadcrumbMenu() {
             noWrap
           >
             {activeBucket}
+          </Text>
+          <Text size="16" color="verySubtle" className="flex items-center">
+            <ChevronRight16 />
+          </Text>
+          <Text
+            size="18"
+            weight="semibold"
+            className="flex items-center cursor-pointer"
+            noWrap
+          >
+            All files
           </Text>
         </div>
       </ScrollArea>

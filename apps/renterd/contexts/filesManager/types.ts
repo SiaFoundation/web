@@ -83,14 +83,12 @@ export type ExplorerMode = 'directory' | 'flat'
 export type UploadStatus = 'queued' | 'uploading' | 'processing'
 
 export type ObjectUploadData = ObjectData & {
-  upload: MultipartUpload
+  upload?: MultipartUpload
   uploadStatus: UploadStatus
   uploadAbort?: () => Promise<void>
   uploadFile?: File
-}
-
-export type ObjectUploadRemoteData = ObjectData & {
-  remote: true
+  remote?: boolean
+  createdAt: string
 }
 
 export type UploadsMap = Record<string, ObjectUploadData>

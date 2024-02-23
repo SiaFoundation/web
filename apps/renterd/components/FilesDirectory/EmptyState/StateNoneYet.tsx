@@ -16,7 +16,7 @@ export function StateNoneYet() {
           drag and drop files or click here to start uploading.
         </Text>
         <LinkButton
-          href={routes.files.index}
+          href={routes.buckets.index}
           onClick={(e) => {
             e.stopPropagation()
           }}
