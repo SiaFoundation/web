@@ -2,6 +2,7 @@ name: PR
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, closed]
 
 # cancel previous runs when the PR is updated
 concurrency:
