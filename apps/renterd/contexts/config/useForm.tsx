@@ -21,12 +21,6 @@ export function useForm() {
   const uploadTBMonth = form.watch('uploadTBMonth')
   const minShards = form.watch('minShards')
   const totalShards = form.watch('totalShards')
-  const includeRedundancyMaxStoragePrice = form.watch(
-    'includeRedundancyMaxStoragePrice'
-  )
-  const includeRedundancyMaxUploadPrice = form.watch(
-    'includeRedundancyMaxUploadPrice'
-  )
   const redundancyMultiplier = useMemo(
     () => getRedundancyMultiplier(minShards, totalShards),
     [minShards, totalShards]
@@ -38,12 +32,7 @@ export function useForm() {
     uploadAverage,
     downloadAverage,
     contractAverage,
-  } = useAverages({
-    minShards,
-    totalShards,
-    includeRedundancyMaxStoragePrice,
-    includeRedundancyMaxUploadPrice,
-  })
+  } = useAverages()
 
   const app = useApp()
   const isAutopilotEnabled = app.autopilot.status === 'on'
@@ -64,22 +53,26 @@ export function useForm() {
         advancedDefaults,
         isAutopilotEnabled,
         showAdvanced,
+        maxStoragePriceTBMonth,
+        maxUploadPriceTB,
         redundancyMultiplier,
-        includeRedundancyMaxStoragePrice,
-        includeRedundancyMaxUploadPrice,
         storageAverage,
         uploadAverage,
         downloadAverage,
         contractAverage,
+        minShards,
+        totalShards,
       })
     }
     return getFields({
       advancedDefaults,
       isAutopilotEnabled,
       showAdvanced,
+      maxStoragePriceTBMonth,
+      maxUploadPriceTB,
       redundancyMultiplier,
-      includeRedundancyMaxStoragePrice,
-      includeRedundancyMaxUploadPrice,
+      minShards,
+      totalShards,
     })
   }, [
     renterdState.data,
@@ -91,8 +84,10 @@ export function useForm() {
     downloadAverage,
     contractAverage,
     redundancyMultiplier,
-    includeRedundancyMaxStoragePrice,
-    includeRedundancyMaxUploadPrice,
+    maxStoragePriceTBMonth,
+    maxUploadPriceTB,
+    minShards,
+    totalShards,
   ])
 
   return {
@@ -106,8 +101,6 @@ export function useForm() {
     uploadTBMonth,
     minShards,
     totalShards,
-    includeRedundancyMaxStoragePrice,
-    includeRedundancyMaxUploadPrice,
     redundancyMultiplier,
     showAdvanced,
     setShowAdvanced,

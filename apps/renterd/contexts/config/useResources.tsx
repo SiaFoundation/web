@@ -3,7 +3,6 @@ import { useAutopilotConfig } from '@siafoundation/react-renterd'
 import { useSyncContractSet } from './useSyncContractSet'
 import { useAppSettings } from '@siafoundation/react-core'
 import { useContractSetSettings } from '../../hooks/useContractSetSettings'
-import { useConfigDisplaySettings } from '../../hooks/useConfigDisplaySettings'
 import { useGougingSettings } from '../../hooks/useGougingSettings'
 import { useRedundancySettings } from '../../hooks/useRedundancySettings'
 import { useUploadPackingSettings } from '../../hooks/useUploadPackingSettings'
@@ -23,14 +22,6 @@ export function useResources() {
     },
   })
   const contractSet = useContractSetSettings({
-    config: {
-      swr: {
-        errorRetryCount: 0,
-        refreshInterval: minutesInMilliseconds(1),
-      },
-    },
-  })
-  const display = useConfigDisplaySettings({
     config: {
       swr: {
         errorRetryCount: 0,
@@ -77,9 +68,9 @@ export function useResources() {
   const appSettings = useAppSettings()
 
   return {
+    autopilotState: app.autopilot.state,
     autopilot,
     contractSet,
-    display,
     gouging,
     redundancy,
     uploadPacking,

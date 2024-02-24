@@ -21,7 +21,7 @@ type AutopilotStatus = {
   uptimeMS: string
 }
 
-type AutopilotState = AutopilotStatus & StateResponse
+export type AutopilotState = AutopilotStatus & StateResponse
 
 const autopilotStateKey = '/autopilot/state'
 

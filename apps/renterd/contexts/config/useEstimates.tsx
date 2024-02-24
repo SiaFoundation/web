@@ -3,8 +3,6 @@ import { useMemo } from 'react'
 
 export function useEstimates({
   isAutopilotEnabled,
-  includeRedundancyMaxStoragePrice,
-  includeRedundancyMaxUploadPrice,
   redundancyMultiplier,
   maxStoragePriceTBMonth,
   storageTB,
@@ -14,8 +12,6 @@ export function useEstimates({
   uploadTBMonth,
 }: {
   isAutopilotEnabled: boolean
-  includeRedundancyMaxStoragePrice: boolean
-  includeRedundancyMaxUploadPrice: boolean
   redundancyMultiplier: BigNumber
   maxStoragePriceTBMonth: BigNumber
   storageTB: BigNumber
@@ -63,13 +59,13 @@ export function useEstimates({
       ? maxDownloadPriceTB
       : new BigNumber(0)
 
-    const storageCostPerMonth = includeRedundancyMaxStoragePrice
-      ? _maxStoragePriceTBMonth.times(_storageTB)
-      : _maxStoragePriceTBMonth.times(redundancyMultiplier).times(_storageTB)
+    const storageCostPerMonth = _maxStoragePriceTBMonth
+      .times(redundancyMultiplier)
+      .times(_storageTB)
     const downloadCostPerMonth = _maxDownloadPriceTB.times(_downloadTBMonth)
-    const uploadCostPerMonth = includeRedundancyMaxUploadPrice
-      ? _maxUploadPriceTB.times(_uploadTBMonth)
-      : _maxUploadPriceTB.times(redundancyMultiplier).times(_uploadTBMonth)
+    const uploadCostPerMonth = _maxUploadPriceTB
+      .times(redundancyMultiplier)
+      .times(_uploadTBMonth)
 
     const totalCostPerMonth = storageCostPerMonth
       .plus(downloadCostPerMonth)
@@ -77,8 +73,6 @@ export function useEstimates({
     return totalCostPerMonth
   }, [
     canEstimate,
-    includeRedundancyMaxStoragePrice,
-    includeRedundancyMaxUploadPrice,
     redundancyMultiplier,
     maxStoragePriceTBMonth,
     storageTB,

@@ -13,14 +13,12 @@ import {
 import { SettingsData, defaultValues } from './types'
 import {
   transformUpAutopilot,
-  transformUpDisplay,
   transformUpContractSet,
   transformUpGouging,
   transformUpRedundancy,
   transformUpUploadPacking,
 } from './transform'
 import { delay, useMutate } from '@siafoundation/react-core'
-import { configDisplaySettingsKey } from '../../hooks/useConfigDisplaySettings'
 import { Resources } from './resources'
 import { useSyncContractSet } from './useSyncContractSet'
 import BigNumber from 'bignumber.js'
@@ -81,7 +79,6 @@ export function useOnValid({
           uploadPackingResponse,
           gougingResponse,
           redundancyResponse,
-          configAppResponse,
         ] = await Promise.all([
           settingUpdate.put({
             params: {
@@ -116,12 +113,6 @@ export function useOnValid({
               resources.redundancy.data
             ),
           }),
-          settingUpdate.put({
-            params: {
-              key: configDisplaySettingsKey,
-            },
-            payload: transformUpDisplay(finalValues, resources.display.data),
-          }),
         ])
 
         if (autopilotResponse?.error) {
@@ -138,9 +129,6 @@ export function useOnValid({
         }
         if (redundancyResponse.error) {
           throw Error(redundancyResponse.error)
-        }
-        if (configAppResponse.error) {
-          throw Error(configAppResponse.error)
         }
 
         if (isAutopilotEnabled) {

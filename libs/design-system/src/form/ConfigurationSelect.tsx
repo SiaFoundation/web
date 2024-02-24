@@ -2,10 +2,7 @@ import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
 import { FieldLabelAndError } from '../components/Form'
 import { Option, Select } from '../core/Select'
 import { ConfigurationTipText } from './ConfigurationTipText'
-import {
-  ConfigFields,
-  useRegisterForm,
-} from './configurationFields'
+import { ConfigFields, useRegisterForm } from './configurationFields'
 
 type Option = {
   value: string
@@ -31,7 +28,7 @@ export function ConfigurationSelect<
   })
   return (
     <div className="flex flex-col gap-3 items-end">
-      <div className="flex flex-col gap-3 w-[220px]">
+      <div className="flex flex-col gap-3 w-[250px]">
         <div className="flex justify-end w-full">
           <Select
             ref={ref}

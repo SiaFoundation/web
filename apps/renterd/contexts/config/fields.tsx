@@ -2,7 +2,7 @@
 import {
   Code,
   ConfigFields,
-  FieldSwitch,
+  Separator,
   Text,
   Tooltip,
   hoursInDays,
@@ -12,6 +12,8 @@ import {
 import BigNumber from 'bignumber.js'
 import React from 'react'
 import { defaultValues, SettingsData } from './types'
+import { humanSiacoin, toHastings } from '@siafoundation/units'
+import { Information16 } from '@carbon/icons-react'
 
 export const scDecimalPlaces = 6
 
@@ -28,9 +30,11 @@ type GetFields = {
   isAutopilotEnabled: boolean
   advancedDefaults?: SettingsData
   showAdvanced: boolean
+  maxStoragePriceTBMonth: BigNumber
+  maxUploadPriceTB: BigNumber
+  minShards: BigNumber
+  totalShards: BigNumber
   redundancyMultiplier: BigNumber
-  includeRedundancyMaxStoragePrice: boolean
-  includeRedundancyMaxUploadPrice: boolean
   storageAverage?: BigNumber
   uploadAverage?: BigNumber
   downloadAverage?: BigNumber
@@ -41,9 +45,11 @@ export function getFields({
   isAutopilotEnabled,
   advancedDefaults,
   showAdvanced,
+  maxStoragePriceTBMonth,
+  maxUploadPriceTB,
+  minShards,
+  totalShards,
   redundancyMultiplier,
-  includeRedundancyMaxStoragePrice,
-  includeRedundancyMaxUploadPrice,
   storageAverage,
   uploadAverage,
   downloadAverage,
@@ -336,37 +342,51 @@ export function getFields({
       category: 'gouging',
       type: 'siacoin',
       title: 'Max storage price',
-      description: <>The max allowed price to store 1 TB per month.</>,
+      description: (
+        <>
+          The max allowed price a host is allowed to charge to store 1 TB worth
+          of data per month.
+        </>
+      ),
       units: 'SC/TB/month',
       average: storageAverage,
-      averageTip: getAverageTip(
-        includeRedundancyMaxStoragePrice,
-        redundancyMultiplier
-      ),
-      after: function After({ form, fields }) {
+      averageTip: 'Averages provided by Sia Central.',
+      after: function After() {
+        if (!maxStoragePriceTBMonth || !minShards || !totalShards) {
+          return null
+        }
         return (
-          <Tooltip
-            align="start"
-            side="bottom"
-            content={getRedundancyTip(
-              includeRedundancyMaxStoragePrice,
-              redundancyMultiplier
-            )}
-          >
-            <div>
-              <FieldSwitch
-                size="small"
-                form={form}
-                fields={fields}
-                name="includeRedundancyMaxStoragePrice"
-                group={false}
-              >
-                <Text size="12" weight="medium">
-                  Including {redundancyMultiplier.toFixed(1)}x redundancy
+          <>
+            <Separator />
+            <Tooltip
+              align="start"
+              side="bottom"
+              content={
+                <>
+                  Price per TB/month when factoring in the configured{' '}
+                  {minShards} of {totalShards} redundancy.
+                </>
+              }
+            >
+              <div className="flex gap-1 items-center relative overflow-hidden">
+                <Text className="flex relative">
+                  <Information16 />
                 </Text>
-              </FieldSwitch>
-            </div>
-          </Tooltip>
+                <Text size="12" ellipsis>
+                  {humanSiacoin(
+                    toHastings(maxStoragePriceTBMonth).times(
+                      redundancyMultiplier
+                    ),
+                    {
+                      fixed: 0,
+                      dynamicUnits: false,
+                    }
+                  )}
+                  /TB/month with redundancy
+                </Text>
+              </div>
+            </Tooltip>
+          </>
         )
       },
       decimalsLimitSc: scDecimalPlaces,
@@ -378,37 +398,49 @@ export function getFields({
       category: 'gouging',
       type: 'siacoin',
       title: 'Max upload price',
-      description: <>The max allowed price to upload 1 TB.</>,
-      units: 'SC/TB/month',
-      average: uploadAverage,
-      averageTip: getAverageTip(
-        includeRedundancyMaxUploadPrice,
-        redundancyMultiplier
+      description: (
+        <>
+          The max allowed price a host is allowed to charge for uploading 1 TB
+          worth of data.
+        </>
       ),
-      after: function After({ form, fields }) {
+      units: 'SC/TB',
+      average: uploadAverage,
+      averageTip: 'Averages provided by Sia Central.',
+      after: function After() {
+        if (!maxUploadPriceTB || !minShards || !totalShards) {
+          return null
+        }
         return (
-          <Tooltip
-            align="start"
-            side="bottom"
-            content={getRedundancyTip(
-              includeRedundancyMaxUploadPrice,
-              redundancyMultiplier
-            )}
-          >
-            <div>
-              <FieldSwitch
-                size="small"
-                form={form}
-                fields={fields}
-                name="includeRedundancyMaxUploadPrice"
-                group={false}
-              >
-                <Text size="12" weight="medium">
-                  Including {redundancyMultiplier.toFixed(1)}x redundancy
+          <>
+            <Separator />
+            <Tooltip
+              align="start"
+              side="bottom"
+              content={
+                <>
+                  Price per TB when factoring in the configured {minShards} of{' '}
+                  {totalShards} redundancy.
+                </>
+              }
+            >
+              <div className="flex gap-1 items-center relative overflow-hidden">
+                <Text className="flex relative">
+                  <Information16 />
                 </Text>
-              </FieldSwitch>
-            </div>
-          </Tooltip>
+                <Text size="12" ellipsis>
+                  {humanSiacoin(
+                    toHastings(maxUploadPriceTB).times(redundancyMultiplier),
+                    {
+                      fixed: 0,
+                      dynamicUnits: false,
+                    }
+                  )}
+                  /TB with redundancy
+                </Text>
+              </div>
+            </Tooltip>
+          </>
         )
       },
       decimalsLimitSc: scDecimalPlaces,
@@ -421,7 +453,7 @@ export function getFields({
       type: 'siacoin',
       title: 'Max download price',
       description: <>The max allowed price to download 1 TB.</>,
-      units: 'SC/TB/month',
+      units: 'SC/TB',
       average: downloadAverage,
       averageTip: `Averages provided by Sia Central.`,
       decimalsLimitSc: scDecimalPlaces,
@@ -639,50 +671,5 @@ export function getFields({
           }
         : {},
     },
-
-    // hidden fields used by other config options
-    includeRedundancyMaxStoragePrice: {
-      type: 'boolean',
-      title: 'Include redundancy',
-      validation: {},
-    },
-    includeRedundancyMaxUploadPrice: {
-      type: 'boolean',
-      title: 'Include redundancy',
-      validation: {},
-    },
   }
-}
-
-function getAverageTip(
-  includeRedundancy: boolean,
-  redundancyMultiplier: BigNumber
-) {
-  if (includeRedundancy) {
-    return `The average price is adjusted for ${redundancyMultiplier.toFixed(
-      1
-    )}x redundancy. Averages provided by Sia Central.`
-  }
-  return `The average price is not adjusted for redundancy. Averages provided by Sia Central.`
-}
-
-function getRedundancyTip(
-  includeRedundancy: boolean,
-  redundancyMultiplier: BigNumber
-) {
-  if (includeRedundancy) {
-    return (
-      <div className="flex flex-col gap-1">
-        <Text color="subtle">
-          Specified max price includes the cost of{' '}
-          {redundancyMultiplier.toFixed(1)}x redundancy.
-        </Text>
-        <Text color="subtle">
-          Redundancy is calculated from the ratio of data shards:{' '}
-          <Code>total shards / min shards</Code>.
-        </Text>
-      </div>
-    )
-  }
-  return `Specified max price does not include redundancy.`
 }
