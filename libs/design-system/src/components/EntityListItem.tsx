@@ -17,6 +17,7 @@ import BigNumber from 'bignumber.js'
 import { DotMark16 } from '@siafoundation/react-icons'
 import { EntityListItemLayout } from './EntityListItemLayout'
 import { ValueScFiat } from './ValueScFiat'
+import { Tooltip } from '../core/Tooltip'
 
 export type EntityListItemProps = {
   label?: string
@@ -62,9 +63,9 @@ export function EntityListItem(entity: EntityListItemProps) {
   const title = isValidUrl(label) ? label : upperFirst(label)
   return (
     <EntityListItemLayout {...entity}>
-      <div className="flex flex-col items-center gap-1 w-full">
+      <div className="flex flex-col items-center gap-1 w-full min-w-0">
         <div className="flex gap-2 items-center w-full">
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center min-w-0">
             {entity.height && entity.blockHref && (
               <Text color="subtle" weight="semibold">
                 <Link href={entity.blockHref} underline="none">
@@ -72,11 +73,23 @@ export function EntityListItem(entity: EntityListItemProps) {
                 </Link>
               </Text>
             )}
-            <Text weight="medium">{title || truncHashEl}</Text>
+            {title ? (
+              <Tooltip content={title}>
+                <Text ellipsis weight="medium">
+                  {title}
+                </Text>
+              </Tooltip>
+            ) : (
+              <Text ellipsis weight="medium">
+                {truncHashEl}
+              </Text>
+            )}
           </div>
           <div className="flex-1" />
-          {!!sc && <ValueScFiat variant={entity.scVariant} value={sc} />}
-          {!!sf && <ValueSf variant={entity.sfVariant} value={sf} />}
+          <div className="flex items-center">
+            {!!sc && <ValueScFiat variant={entity.scVariant} value={sc} />}
+            {!!sf && <ValueSf variant={entity.sfVariant} value={sf} />}
+          </div>
         </div>
         <div className="flex justify-between w-full">
           <div className="flex gap-1">{!!title && truncHashEl}</div>
