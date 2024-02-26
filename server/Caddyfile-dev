@@ -26,7 +26,7 @@
 
   handle @cors {
     header Access-Control-Allow-Origin *
-    header Access-Control-Expose-Headers "Link"
+    header Access-Control-Expose-Headers "Link, ETag"
   }
 }
 

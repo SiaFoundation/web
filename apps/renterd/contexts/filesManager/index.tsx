@@ -87,7 +87,7 @@ function useFilesManagerMain() {
     [router, activeDirectory]
   )
 
-  const { uploadFiles, uploadsList, uploadCancel } = useUploads({
+  const { uploadFiles, uploadsList } = useUploads({
     activeDirectoryPath,
   })
   const { downloadFiles, downloadsList, getFileUrl, downloadCancel } =
@@ -174,7 +174,6 @@ function useFilesManagerMain() {
     navigateToModeSpecificFiltering,
     uploadFiles,
     uploadsList,
-    uploadCancel,
     downloadFiles,
     downloadsList,
     downloadCancel,

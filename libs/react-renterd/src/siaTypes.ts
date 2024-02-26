@@ -115,7 +115,7 @@ export type Obj = {
   eTag: string
   mimeType: string
   modTime: string
-  slabs: SlabSlice[]
+  slabs?: SlabSlice[]
 }
 
 export type ContractSetSettings = {
