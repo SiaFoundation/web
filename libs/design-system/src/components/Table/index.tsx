@@ -1,3 +1,5 @@
+'use client'
+
 import { Tooltip } from '../../core/Tooltip'
 import { Panel } from '../../core/Panel'
 import { Text } from '../../core/Text'
