@@ -46,7 +46,7 @@ export function HomeStorage() {
         />
       </DatumScrollArea>
       <ChartXY
-        id="storage"
+        id="hostd/v0/metrics/graphs/storage"
         height={300}
         data={storage.data}
         config={storage.config}

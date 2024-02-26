@@ -46,7 +46,7 @@ export function HomeContracts() {
         />
       </DatumScrollArea>
       <ChartXY
-        id="contracts"
+        id="hostd/v0/metrics/graphs/contracts"
         actionsLeft={
           <>
             <Text font="mono" weight="semibold">

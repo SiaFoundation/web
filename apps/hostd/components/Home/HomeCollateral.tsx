@@ -34,7 +34,7 @@ export function HomeCollateral() {
         />
       </DatumScrollArea>
       <ChartXY
-        id="collateral"
+        id="hostd/v0/metrics/graphs/collateral"
         actionsLeft={
           <>
             <Text font="mono" weight="semibold">

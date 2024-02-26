@@ -34,7 +34,7 @@ export function HomeBandwidth() {
         />
       </DatumScrollArea>
       <ChartXY
-        id="bandwidth"
+        id="hostd/v0/metrics/graphs/bandwidth"
         height={300}
         data={bandwidth.data}
         config={bandwidth.config}
