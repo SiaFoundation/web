@@ -1,3 +1,5 @@
+'use client'
+
 import { CSSProperties, forwardRef, useMemo } from 'react'
 import { cx } from 'class-variance-authority'
 import { useDroppable, useDraggable } from '@dnd-kit/core'
