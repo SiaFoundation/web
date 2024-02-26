@@ -26,18 +26,22 @@ export function getKeyFromPath(path: FullPath): KeyPath {
   return `/${segsWithoutBucket}`
 }
 
-// key is the path to the file or directory with a leading slash
+// the key parameter needs the leading slash removed and parts encoded
+export function getKeyParamFromPath(path: FullPath): KeyPath {
+  return getKeyFromPath(path)
+    .slice(1)
+    .split('/')
+    .map(encodeURIComponent)
+    .join('/')
+}
+
 export function bucketAndKeyParamsFromPath(path: FullPath): {
   bucket: string
   key: KeyPath
 } {
   return {
     bucket: getBucketFromPath(path),
-    key: getKeyFromPath(path)
-      .slice(1)
-      .split('/')
-      .map(encodeURIComponent)
-      .join('/'),
+    key: getKeyParamFromPath(path),
   }
 }
 

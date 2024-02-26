@@ -15,6 +15,7 @@ import {
 import { useState } from 'react'
 import { useFilesManager } from '../contexts/filesManager'
 import { useAppSettings } from '@siafoundation/react-core'
+import { upperFirst } from '@technically/lodash'
 
 function getProgress(transfer: { loaded?: number; size?: number }) {
   return transfer.loaded !== undefined ? transfer.loaded / transfer.size : 1
@@ -22,8 +23,7 @@ function getProgress(transfer: { loaded?: number; size?: number }) {
 
 export function TransfersBar() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()
-  const { uploadsList, uploadCancel, downloadsList, downloadCancel } =
-    useFilesManager()
+  const { uploadsList, downloadsList, downloadCancel } = useFilesManager()
   const [maximized, setMaximized] = useState<boolean>(true)
 
   const uploadCount = uploadsList.length
@@ -56,7 +56,7 @@ export function TransfersBar() {
                   const progress = getProgress(upload)
                   return (
                     <div
-                      key={upload.path}
+                      key={upload.id}
                       className="flex flex-col gap-1 border-t first:border-t-0 border-gray-200 dark:border-graydark-300 px-3 py-2"
                     >
                       <div className="flex gap-1">
@@ -67,7 +67,7 @@ export function TransfersBar() {
                           tip="Cancel file upload"
                           variant="ghost"
                           size="none"
-                          onClick={() => uploadCancel(upload)}
+                          onClick={() => upload.uploadAbort?.()}
                         >
                           <Close16 />
                         </Button>
@@ -80,7 +80,7 @@ export function TransfersBar() {
                       />
                       <div className="flex justify-between mt-1">
                         <Text size="12" color="subtle">
-                          {progress === 1 ? 'Processing' : 'Uploading'}
+                          {upperFirst(upload.uploadStatus)}
                         </Text>
                         <Text size="12" color="subtle">
                           {(progress * 100).toFixed(0)}%
