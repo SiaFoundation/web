@@ -21,7 +21,7 @@ export function HomeBandwidth() {
           value={bandwidth.stats['ingress']}
           defaultMode="total"
           isLoading={bandwidth.isLoading}
-          format={humanBytes}
+          valueFormat={humanBytes}
         />
         <DatumCardConfigurable
           category="bandwidth"
@@ -30,7 +30,7 @@ export function HomeBandwidth() {
           value={bandwidth.stats['egress']}
           defaultMode="total"
           isLoading={bandwidth.isLoading}
-          format={humanBytes}
+          valueFormat={humanBytes}
         />
       </DatumScrollArea>
       <ChartXY

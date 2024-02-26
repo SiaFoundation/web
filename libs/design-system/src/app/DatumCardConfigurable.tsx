@@ -23,6 +23,7 @@ type Props = {
     diff: number
     change: number
   }
+  scFixed?: number
   value?: {
     total: number
     average: number
@@ -30,8 +31,8 @@ type Props = {
     diff: number
     change: number
   }
+  valueFormat?: (val: number) => string
   extendedSuffix?: string
-  format?: (val: number) => string
   defaultMode: Mode
   enabledModes?: Mode[]
   showChange?: boolean
@@ -49,9 +50,10 @@ export function DatumCardConfigurable({
   label,
   color,
   sc,
+  scFixed = 2,
   value,
   extendedSuffix,
-  format = (val) => val.toFixed(2),
+  valueFormat = (val) => val.toFixed(2),
   defaultMode,
   enabledModes = ['total', 'average', 'latest'],
   isLoading,
@@ -80,9 +82,12 @@ export function DatumCardConfigurable({
         </Select>
       }
       sc={sc?.[mode] !== undefined ? new BigNumber(sc[mode]) : undefined}
+      scFixed={scFixed}
       extendedSuffix={extendedSuffix}
       value={
-        value?.[mode] !== undefined && format ? format(value[mode]) : undefined
+        value?.[mode] !== undefined && valueFormat
+          ? valueFormat(value[mode])
+          : undefined
       }
       comment={
         sc ? (
@@ -111,7 +116,7 @@ export function DatumCardConfigurable({
             <div className="flex items-center gap-4">
               <ValueNum
                 tooltip="Net change over time range:"
-                format={(val) => format(val.toNumber())}
+                format={(val) => valueFormat(val.toNumber())}
                 value={new BigNumber(value.diff)}
               />
               {showChange && value.change !== undefined && (
