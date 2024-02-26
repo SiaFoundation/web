@@ -20,6 +20,7 @@ type Props = {
   entityType?: EntityType
   entityValue?: string
   sc?: BigNumber
+  scFixed?: number
   sf?: number
   comment?: React.ReactNode
   commentTip?: React.ReactNode
@@ -39,6 +40,7 @@ export function DatumCard({
   extendedSuffix,
   hash,
   sc,
+  scFixed = 2,
   sf,
   comment,
   commentTip,
@@ -77,7 +79,7 @@ export function DatumCard({
                     scaleSize={scaleSize}
                     variant="value"
                     value={sc}
-                    fixed={0}
+                    fixed={scFixed}
                   />
                 )}
                 {sf !== undefined && (

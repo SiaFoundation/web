@@ -22,7 +22,7 @@ export function HomeStorage() {
           defaultMode="latest"
           isLoading={storage.isLoading}
           enabledModes={['latest', 'average']}
-          format={humanBytes}
+          valueFormat={humanBytes}
         />
         <DatumCardConfigurable
           category="storage"
@@ -32,7 +32,7 @@ export function HomeStorage() {
           defaultMode="latest"
           isLoading={storage.isLoading}
           enabledModes={['latest', 'average']}
-          format={humanBytes}
+          valueFormat={humanBytes}
         />
         <DatumCardConfigurable
           category="storage"
@@ -42,7 +42,7 @@ export function HomeStorage() {
           defaultMode="latest"
           isLoading={storage.isLoading}
           enabledModes={['latest', 'average']}
-          format={humanBytes}
+          valueFormat={humanBytes}
         />
       </DatumScrollArea>
       <ChartXY
