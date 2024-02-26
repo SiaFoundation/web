@@ -59,7 +59,7 @@ export function HomeRevenue() {
         />
       </DatumScrollArea>
       <ChartXY
-        id="revenue"
+        id="hostd/v0/metrics/graphs/revenue"
         height={300}
         data={revenue.data}
         config={revenue.config}

@@ -46,7 +46,7 @@ export function ContractMetrics() {
     <div className="w-full h-full">
       {graphMode === 'spending' && !selectedContract && (
         <ChartXY
-          id="fundingAndSpending"
+          id="renterd/v0/contracts/graphs/fundingAndSpending"
           height="100%"
           data={allContractsSpendingMetrics.data}
           config={allContractsSpendingMetrics.config}
@@ -57,7 +57,7 @@ export function ContractMetrics() {
       )}
       {graphMode === 'spending' && selectedContract && (
         <ChartXY
-          id="fundingAndSpending"
+          id="renterd/v0/contracts/graphs/fundingAndSpending"
           height="100%"
           data={selectedContractSpendingMetrics.data}
           config={selectedContractSpendingMetrics.config}
@@ -68,7 +68,7 @@ export function ContractMetrics() {
       )}
       {graphMode === 'count' && !selectedContract && (
         <ChartXY
-          id="count"
+          id="renterd/v0/contracts/graphs/count"
           height="100%"
           data={contractSetCountMetrics.data}
           config={contractSetCountMetrics.config}

@@ -93,7 +93,7 @@ export function HomePricing() {
         />
       </DatumScrollArea>
       <ChartXY
-        id="pricing"
+        id="hostd/v0/metrics/graphs/pricing"
         height={300}
         data={pricing.data}
         config={pricing.config}

@@ -37,7 +37,7 @@ export function HomeOperations() {
           />
         </DatumScrollArea>
         <ChartXY
-          id="operations"
+          id="hostd/v0/metrics/graphs/operations"
           height={300}
           data={operations.data}
           config={operations.config}

@@ -19,6 +19,7 @@ import {
 } from './types'
 import { daysInMilliseconds } from '../../lib/time'
 import { usePrefersReducedMotion } from '@siafoundation/react-core'
+import useLocalStorageState from 'use-local-storage-state'
 
 const numTicks = 4
 const defaultChartType = 'areastack'
@@ -45,28 +46,50 @@ export function useChartXY<Key extends string, Cat extends string>(
   >('center')
   const [gridProps, setGridProps] = useState<[boolean, boolean]>([false, false])
   const [showGridRows, showGridColumns] = gridProps
-  const [xAxisOrientation, setXAxisOrientation] = useState<'top' | 'bottom'>(
-    'bottom'
-  )
-  const [yAxisOrientation, setYAxisOrientation] = useState<'left' | 'right'>(
-    'right'
-  )
+  const [xAxisOrientation, setXAxisOrientation] = useLocalStorageState<
+    'top' | 'bottom'
+  >(`${id}/xAxisOrientation`, {
+    defaultValue: 'bottom',
+  })
+  const [yAxisOrientation, setYAxisOrientation] = useLocalStorageState<
+    'left' | 'right'
+  >(`${id}/yAxisOrientation`, {
+    defaultValue: 'right',
+  })
   const [showTooltip, setShowTooltip] = useState(true)
   const [showVerticalCrosshair, setShowVerticalCrosshair] = useState(true)
   const [showHorizontalCrosshair, setShowHorizontalCrosshair] = useState(false)
   const [snapTooltipToDatum, setSnapTooltipToDatum] = useState(true)
   const [sharedTooltip, setSharedTooltip] = useState(true)
 
-  const initialChartType = config.chartType || defaultChartType
-  const initialCurveType = config.curveType || defaultCurveType
-  const initialStackOffset = config.stackOffset || defaultStackOffset
+  const [chartType, setChartType] = useLocalStorageState<ChartType>(
+    `${id}/chartType`,
+    {
+      defaultValue: config.chartType || defaultChartType,
+    }
+  )
+  const [curveType, setCurveType] = useLocalStorageState<CurveType>(
+    `${id}/curveType`,
+    {
+      defaultValue: config.curveType || defaultCurveType,
+    }
+  )
+  const [stackOffset, setStackOffset] = useLocalStorageState<StackOffset>(
+    `${id}/stackOffset`,
+    {
+      defaultValue: config.stackOffset || defaultStackOffset,
+    }
+  )
 
-  const [chartType, setChartType] = useState<ChartType>(initialChartType)
-  const [curveType, setCurveType] = useState<CurveType>(initialCurveType)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const initialChartType = useMemo(() => config.chartType, [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const initialCurveType = useMemo(() => config.curveType, [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const initialStackOffset = useMemo(() => config.stackOffset, [])
+
   const isLine = ['line', 'area', 'areastack'].includes(chartType)
   const isStack = ['barstack', 'areastack'].includes(chartType)
-  const [stackOffset, setStackOffset] =
-    useState<StackOffset>(initialStackOffset)
   const glyphOutline = theme.xyChartTheme.gridStyles.stroke
   const [enableTooltipGlyph, setEnableTooltipGlyph] = useState(false)
   const [tooltipGlyphComponent, setTooltipGlyphComponent] = useState<

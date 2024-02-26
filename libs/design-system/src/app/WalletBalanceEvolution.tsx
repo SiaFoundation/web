@@ -77,7 +77,7 @@ export function BalanceEvolution({
   return (
     <div className="relative">
       <ChartXY
-        id="balance"
+        id="all/v0/wallet/balance"
         height={200}
         allowConfiguration={false}
         data={chart.data}
