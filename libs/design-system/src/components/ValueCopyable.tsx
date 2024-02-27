@@ -34,6 +34,7 @@ type Props = {
   color?: React.ComponentProps<typeof Text>['color']
   className?: string
   siascanUrl?: string
+  contextMenu?: React.ReactNode
 }
 
 export function ValueCopyable({
@@ -50,6 +51,7 @@ export function ValueCopyable({
   color = 'contrast',
   className,
   siascanUrl,
+  contextMenu,
 }: Props) {
   const label = customLabel || getEntityTypeCopyLabel(type)
   const maxLength = customMaxLength || getEntityDisplayLength(type)
@@ -88,13 +90,15 @@ export function ValueCopyable({
         </Text>
       )}
       <div className="ml-1 flex items-center">
-        <ValueContextMenu
-          cleanValue={cleanValue}
-          label={label}
-          size={size}
-          siascanUrl={siascanUrl}
-          type={type}
-        />
+        {contextMenu || (
+          <ValueContextMenu
+            cleanValue={cleanValue}
+            label={label}
+            size={size}
+            siascanUrl={siascanUrl}
+            type={type}
+          />
+        )}
       </div>
     </div>
   )

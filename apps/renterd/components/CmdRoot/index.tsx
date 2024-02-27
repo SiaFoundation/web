@@ -15,6 +15,7 @@ import { useDialog } from '../../contexts/dialog'
 import { useRouter } from 'next/router'
 import { routes } from '../../config/routes'
 import { ContractsCmd } from '../Contracts/ContractsCmd'
+import { AlertsCmd } from '../Alerts/AlertsCmd'
 import { Page } from './types'
 import { useContracts } from '../../contexts/contracts'
 import { HostsCmd } from '../Hosts/HostsCmd'
@@ -141,6 +142,20 @@ export function CmdRoot({ panel }: Props) {
           afterSelect={() => {
             if (!router.pathname.startsWith(routes.keys.index)) {
               router.push(routes.keys.index)
+            }
+            afterSelect()
+          }}
+        />
+        <AlertsCmd
+          currentPage={page}
+          pushPage={pushPage}
+          beforeSelect={() => {
+            beforeSelect()
+            resetContractsFilters()
+          }}
+          afterSelect={() => {
+            if (!router.pathname.startsWith(routes.alerts.index)) {
+              router.push(routes.alerts.index)
             }
             afterSelect()
           }}

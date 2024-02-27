@@ -29,6 +29,9 @@ export const routes = {
   keys: {
     index: '/keys',
   },
+  alerts: {
+    index: '/alerts',
+  },
   node: {
     index: '/node',
   },
