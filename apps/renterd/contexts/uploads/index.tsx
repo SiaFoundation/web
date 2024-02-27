@@ -76,8 +76,6 @@ function useUploadsMain() {
     )
   }, [uploadsMap, activeBucket, response.data, apiBusUploadAbort])
 
-  console.log(dataset)
-
   const {
     configurableColumns,
     enabledColumns,

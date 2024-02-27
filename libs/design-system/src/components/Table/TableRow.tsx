@@ -35,7 +35,7 @@ type Props<Columns extends string, Data, Context> = {
   data: Data
   context?: Context
   columns: TableColumn<Columns, Data, Context>[]
-  rowSize?: 'dense' | 'default'
+  rowSize?: 'dense' | 'default' | 'auto'
   focusId?: string
   focusColor?: 'green' | 'red' | 'amber' | 'blue' | 'default'
   getCellClassNames: (
@@ -135,7 +135,11 @@ export function createTableRow<
                 <div
                   className={cx(
                     getContentClassNames(i, className),
-                    rowSize === 'dense' ? 'h-[50px]' : 'h-[100px]'
+                    rowSize === 'dense'
+                      ? 'h-[50px]'
+                      : rowSize === 'default'
+                      ? 'h-[100px]'
+                      : ''
                   )}
                 >
                   <Render data={data} context={context} />

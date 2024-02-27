@@ -38,6 +38,7 @@ type Props = {
   publicKey: string
   contentProps?: React.ComponentProps<typeof DropdownMenu>['contentProps']
   buttonProps?: React.ComponentProps<typeof Button>
+  trigger?: React.ReactNode
 }
 
 export function HostContextMenu({
@@ -45,6 +46,7 @@ export function HostContextMenu({
   publicKey,
   contentProps,
   buttonProps,
+  trigger,
 }: Props) {
   const router = useRouter()
   const { setFilter: setHostsFilter, resetFilters: resetHostsFilters } =
@@ -60,9 +62,11 @@ export function HostContextMenu({
   return (
     <DropdownMenu
       trigger={
-        <Button variant="ghost" icon="hover" {...buttonProps}>
-          <Draggable16 />
-        </Button>
+        trigger || (
+          <Button variant="ghost" icon="hover" {...buttonProps}>
+            <Draggable16 />
+          </Button>
+        )
       }
       contentProps={{
         align: 'start',

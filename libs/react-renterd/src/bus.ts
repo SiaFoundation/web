@@ -719,8 +719,21 @@ export type Alert = {
   }
 }
 
+export type AlertsParams = {
+  limit: number
+  offset: number
+  severity?: AlertSeverity
+}
+
+export type AlertsResponse = {
+  alerts?: Alert[]
+  hasMore: boolean
+  totals: Record<AlertSeverity, number>
+}
+
 const alertsRoute = '/bus/alerts'
-export function useAlerts(args?: HookArgsSwr<void, Alert[]>) {
+// params are required because omitting them returns a deprecated response structure
+export function useAlerts(args: HookArgsSwr<AlertsParams, AlertsResponse>) {
   return useGetSwr({ ...args, route: alertsRoute })
 }
 

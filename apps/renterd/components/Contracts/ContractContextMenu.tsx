@@ -30,6 +30,7 @@ import { useContractConfirmDelete } from './useContractConfirmDelete'
 
 type Props = {
   id: string
+  trigger?: React.ReactNode
   address: string
   publicKey: string
   contentProps?: React.ComponentProps<typeof DropdownMenu>['contentProps']
@@ -38,6 +39,7 @@ type Props = {
 
 export function ContractContextMenu({
   id,
+  trigger,
   address,
   publicKey,
   contentProps,
@@ -56,9 +58,11 @@ export function ContractContextMenu({
   return (
     <DropdownMenu
       trigger={
-        <Button variant="ghost" icon="hover" {...buttonProps}>
-          <Draggable16 />
-        </Button>
+        trigger || (
+          <Button variant="ghost" icon="hover" {...buttonProps}>
+            <Draggable16 />
+          </Button>
+        )
       }
       contentProps={{
         align: 'start',

@@ -1,26 +1,24 @@
 import { Button } from '@siafoundation/design-system'
 import { CaretDown16 } from '@siafoundation/react-icons'
-import { useContract } from '@siafoundation/react-renterd'
-import { ContractContextMenu } from './ContractContextMenu'
+import { useHost } from '@siafoundation/react-renterd'
+import { HostContextMenu } from './HostContextMenu'
 
 type Props = {
-  id: string
-  contentProps?: React.ComponentProps<
-    typeof ContractContextMenu
-  >['contentProps']
+  hostKey: string
+  contentProps?: React.ComponentProps<typeof HostContextMenu>['contentProps']
   buttonProps?: React.ComponentProps<typeof Button>
 }
 
-export function ContractContextMenuFromId({
-  id,
+export function HostContextMenuFromKey({
+  hostKey,
   contentProps,
   buttonProps,
 }: Props) {
-  const contract = useContract({
-    params: { id },
+  const host = useHost({
+    params: { hostKey },
   })
 
-  if (!contract.data) {
+  if (!host.data) {
     return (
       <Button
         size="none"
@@ -34,10 +32,9 @@ export function ContractContextMenuFromId({
     )
   }
   return (
-    <ContractContextMenu
-      id={id}
-      address={contract.data.hostIP}
-      publicKey={contract.data.hostKey}
+    <HostContextMenu
+      address={host.data.netAddress}
+      publicKey={host.data.publicKey}
       contentProps={contentProps}
       buttonProps={buttonProps}
       trigger={

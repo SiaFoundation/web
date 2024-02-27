@@ -62,7 +62,7 @@ type Props<
   sortDirection?: 'asc' | 'desc'
   toggleSort?: (field: SortField) => void
   sortableColumns?: SortField[]
-  rowSize?: 'dense' | 'default'
+  rowSize?: 'dense' | 'default' | 'auto'
   pageSize: number
   isLoading: boolean
   emptyState?: React.ReactNode
@@ -319,7 +319,11 @@ export function Table<
                       <div
                         className={cx(
                           getContentClassNames(i, contentClassName),
-                          rowSize === 'dense' ? 'h-[50px]' : 'h-[100px]'
+                          rowSize === 'dense'
+                            ? 'h-[50px]'
+                            : rowSize === 'default'
+                            ? 'h-[100px]'
+                            : 'h-[100px]'
                         )}
                       />
                     </td>

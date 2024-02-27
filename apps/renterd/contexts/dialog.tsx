@@ -16,7 +16,6 @@ import { FilesSearchDialog } from '../dialogs/FilesSearchDialog'
 import { useSyncerConnect, useWallet } from '@siafoundation/react-renterd'
 import { RenterdSendSiacoinDialog } from '../dialogs/RenterdSendSiacoinDialog'
 import { RenterdTransactionDetailsDialog } from '../dialogs/RenterdTransactionDetailsDialog'
-import { AlertsDialog } from '../dialogs/AlertsDialog'
 import { HostsFilterPublicKeyDialog } from '../components/Hosts/HostsFilterPublicKeyDialog'
 import { FilesBucketDeleteDialog } from '../dialogs/FilesBucketDeleteDialog'
 import { FilesBucketPolicyDialog } from '../dialogs/FilesBucketPolicyDialog'
@@ -47,7 +46,6 @@ export type DialogType =
   | 'filesSearch'
   | 'fileRename'
   | 'keysCreate'
-  | 'alerts'
   | 'confirm'
 
 type ConfirmProps = {
@@ -210,10 +208,6 @@ export function Dialogs() {
       />
       <ContractsFilterPublicKeyDialog
         open={dialog === 'contractsFilterPublicKey'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
-      />
-      <AlertsDialog
-        open={dialog === 'alerts'}
         onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
       />
       <KeysCreateDialog
