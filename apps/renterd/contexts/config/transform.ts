@@ -27,9 +27,7 @@ import {
   scDecimalPlaces,
   SettingsData,
   getAdvancedDefaultAutopilot,
-  DisplayData,
   ContractSetData,
-  defaultDisplay,
   defaultContractSet,
   GougingData,
   RedundancyData,
@@ -37,7 +35,6 @@ import {
   defaultAutopilot,
   advancedDefaultContractSet,
 } from './types'
-import { ConfigDisplaySettings } from '../../hooks/useConfigDisplaySettings'
 import { firstTimeGougingData } from './resources'
 
 const filterUndefinedKeys = (obj: Record<string, unknown>) => {
@@ -135,23 +132,8 @@ export function transformUpGouging(
       values.maxStoragePriceTBMonth // TB/month
         .div(monthsToBlocks(1)) // TB/block
         .div(TBToBytes(1))
-        .div(
-          getRedundancyMultiplierIfIncluded(
-            values.minShards,
-            values.totalShards,
-            values.includeRedundancyMaxStoragePrice
-          )
-        ) // bytes/block
     ).toString(),
-    maxUploadPrice: toHastings(
-      values.maxUploadPriceTB.div(
-        getRedundancyMultiplierIfIncluded(
-          values.minShards,
-          values.totalShards,
-          values.includeRedundancyMaxUploadPrice
-        )
-      )
-    ).toString(),
+    maxUploadPrice: toHastings(values.maxUploadPriceTB).toString(),
     maxDownloadPrice: toHastings(values.maxDownloadPriceTB).toString(),
     maxContractPrice: toHastings(values.maxContractPrice).toString(),
     minMaxCollateral: toHastings(values.minMaxCollateral).toString(),
@@ -178,17 +160,6 @@ export function transformUpRedundancy(
     ...existingValues,
     minShards: values.minShards.toNumber(),
     totalShards: values.totalShards.toNumber(),
-  }
-}
-
-export function transformUpDisplay(
-  values: DisplayData,
-  existingValues: Record<string, unknown> | undefined
-): ConfigDisplaySettings {
-  return {
-    ...existingValues,
-    includeRedundancyMaxStoragePrice: values.includeRedundancyMaxStoragePrice,
-    includeRedundancyMaxUploadPrice: values.includeRedundancyMaxUploadPrice,
   }
 }
 
@@ -271,26 +242,12 @@ export function transformDownUploadPacking(
   }
 }
 
-export function transformDownDisplay(d?: ConfigDisplaySettings): DisplayData {
-  if (!d) {
-    return defaultDisplay
-  }
-  return {
-    includeRedundancyMaxStoragePrice: d.includeRedundancyMaxStoragePrice,
-    includeRedundancyMaxUploadPrice: d.includeRedundancyMaxUploadPrice,
-  }
-}
-
 export function transformDownGouging({
   gouging: _gouging,
-  redundancy,
-  display,
   averages,
   hasBeenConfigured,
 }: {
   gouging: GougingSettings
-  redundancy: RedundancyData
-  display: DisplayData
   averages?: {
     settings: {
       download_price: string
@@ -309,24 +266,11 @@ export function transformDownGouging({
     maxStoragePriceTBMonth: toSiacoins(
       new BigNumber(gouging.maxStoragePrice) // bytes/block
         .times(monthsToBlocks(1)) // bytes/month
-        .times(TBToBytes(1)) // tb/month
-        .times(
-          getRedundancyMultiplierIfIncluded(
-            redundancy.minShards,
-            redundancy.totalShards,
-            display.includeRedundancyMaxStoragePrice
-          )
-        ),
+        .times(TBToBytes(1)), // tb/month
       scDecimalPlaces
     ), // TB/month
     maxUploadPriceTB: toSiacoins(
-      new BigNumber(gouging.maxUploadPrice).times(
-        getRedundancyMultiplierIfIncluded(
-          redundancy.minShards,
-          redundancy.totalShards,
-          display.includeRedundancyMaxUploadPrice
-        )
-      ),
+      new BigNumber(gouging.maxUploadPrice),
       scDecimalPlaces
     ),
     maxDownloadPriceTB: toSiacoins(gouging.maxDownloadPrice, scDecimalPlaces),
@@ -360,12 +304,12 @@ export function transformDownRedundancy(r: RedundancySettings): RedundancyData {
 }
 
 export type RemoteData = {
+  hasBeenConfigured: boolean
   autopilot: AutopilotConfig | undefined
   contractSet: ContractSetSettings | undefined
   uploadPacking: UploadPackingSettings
   gouging: GougingSettings
   redundancy: RedundancySettings
-  display: ConfigDisplaySettings | undefined
   averages?: {
     settings: {
       download_price: string
@@ -376,18 +320,14 @@ export type RemoteData = {
 }
 
 export function transformDown({
+  hasBeenConfigured,
   autopilot,
   contractSet,
   uploadPacking,
   gouging,
-  redundancy: _redundancy,
-  display: _display,
+  redundancy,
   averages,
 }: RemoteData): SettingsData {
-  // display will be undefined if its the first time the user is configuring
-  const hasBeenConfigured = !!_display
-  const display = transformDownDisplay(_display)
-  const redundancy = transformDownRedundancy(_redundancy)
   return {
     // autopilot
     ...transformDownAutopilot(autopilot),
@@ -399,14 +339,10 @@ export function transformDown({
     ...transformDownGouging({
       gouging,
       averages,
-      redundancy,
-      display,
       hasBeenConfigured,
     }),
     // redundancy
-    ...redundancy,
-    // config app
-    ...display,
+    ...transformDownRedundancy(redundancy),
   }
 }
 
@@ -427,29 +363,10 @@ export function getRedundancyMultiplier(
   return redundancyMult
 }
 
-export function getRedundancyMultiplierIfIncluded(
-  minShards: BigNumber,
-  totalShards: BigNumber,
-  includeRedundancy: boolean
-): BigNumber {
-  const redundancyMult = getRedundancyMultiplier(minShards, totalShards)
-  return includeRedundancy ? redundancyMult : new BigNumber(1)
-}
-
 export function storagePricePerMonthToPerBlock(value: BigNumber) {
   return value // TB/month
     .div(monthsToBlocks(1)) // TB/block
     .div(TBToBytes(1)) // bytes/block
-}
-export function storagePricePerMonthToPerBlockWithRedundancy(
-  value: BigNumber,
-  minShards: BigNumber,
-  totalShards: BigNumber,
-  includeRedundancy: boolean
-) {
-  return storagePricePerMonthToPerBlock(value).div(
-    getRedundancyMultiplierIfIncluded(minShards, totalShards, includeRedundancy)
-  )
 }
 
 export function valuePerMonthToPerPeriod(

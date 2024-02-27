@@ -18,9 +18,10 @@ import {
 
 describe('tansforms', () => {
   describe('down', () => {
-    it('default works', () => {
+    it('default', () => {
       expect(
         transformDown({
+          hasBeenConfigured: true,
           autopilot: {
             hosts: {
               allowRedundantIPs: false,
@@ -59,10 +60,6 @@ describe('tansforms', () => {
             minShards: 10,
             totalShards: 30,
           },
-          display: {
-            includeRedundancyMaxStoragePrice: false,
-            includeRedundancyMaxUploadPrice: false,
-          },
         })
       ).toEqual({
         autopilotContractSet: 'autopilot',
@@ -92,13 +89,12 @@ describe('tansforms', () => {
         migrationSurchargeMultiplier: new BigNumber(10),
         minShards: new BigNumber(10),
         totalShards: new BigNumber(30),
-        includeRedundancyMaxStoragePrice: false,
-        includeRedundancyMaxUploadPrice: false,
       } as SettingsData)
     })
 
-    it('default works with first time user overrides', () => {
+    it('applies first time user overrides', () => {
       const values = transformDown({
+        hasBeenConfigured: false,
         autopilot: undefined,
         contractSet: undefined,
         uploadPacking: {
@@ -121,7 +117,6 @@ describe('tansforms', () => {
           minShards: 10,
           totalShards: 30,
         },
-        display: undefined,
         averages: {
           settings: {
             download_price: (4e24).toString(),
@@ -130,90 +125,42 @@ describe('tansforms', () => {
           },
         },
       })
-      expect(values.maxUploadPriceTB).toEqual(new BigNumber('12000000000000'))
+      expect(values.maxUploadPriceTB).toEqual(new BigNumber('4000000000000'))
       expect(values.maxDownloadPriceTB).toEqual(new BigNumber('4000000000000'))
       expect(values.maxStoragePriceTBMonth).toEqual(
-        new BigNumber('51840000000000000')
+        new BigNumber('17280000000000000')
       )
     })
 
-    it('with include redundancy for storage and upload', () => {
-      expect(
-        transformDown({
-          autopilot: {
-            hosts: {
-              allowRedundantIPs: false,
-              maxDowntimeHours: 1440,
-              minRecentScanFailures: 10,
-              scoreOverrides: null,
-            },
-            contracts: {
-              set: 'autopilot',
-              amount: 51,
-              allowance: '8408400000000000000000000000',
-              period: 6048,
-              renewWindow: 2248,
-              download: 1099511627776,
-              upload: 1100000000000,
-              storage: 1000000000000,
-              prune: true,
-            },
-          },
-          contractSet: { default: 'myset' },
-          uploadPacking: { enabled: true },
-          gouging: {
-            hostBlockHeightLeeway: 4,
-            maxContractPrice: '20000000000000000000000000',
-            maxDownloadPrice: '1004310000000000000000000000',
-            maxRPCPrice: '99970619000000000000000000',
-            maxStoragePrice: '210531181019',
-            maxUploadPrice: '1000232323000000000000000000',
-            minAccountExpiry: 86400000000000,
-            minMaxCollateral: '10000000000000000000000000',
-            minMaxEphemeralAccountBalance: '1000000000000000000000000',
-            minPriceTableValidity: 300000000000,
-            migrationSurchargeMultiplier: 10,
-          },
-          redundancy: {
-            minShards: 10,
-            totalShards: 30,
-          },
-          display: {
-            includeRedundancyMaxStoragePrice: true,
-            includeRedundancyMaxUploadPrice: true,
-          },
-        })
-      ).toEqual({
-        autopilotContractSet: 'autopilot',
-        allowanceMonth: new BigNumber('6006'),
-        amountHosts: new BigNumber('51'),
-        periodWeeks: new BigNumber('6'),
-        renewWindowWeeks: new BigNumber('2.2301587301587302'),
-        downloadTBMonth: new BigNumber('0.79'),
-        uploadTBMonth: new BigNumber('0.79'),
-        storageTB: new BigNumber('1'),
-        allowRedundantIPs: false,
-        maxDowntimeHours: new BigNumber('1440'),
-        minRecentScanFailures: new BigNumber('10'),
-        defaultContractSet: 'myset',
-        uploadPackingEnabled: true,
-        hostBlockHeightLeeway: new BigNumber(4),
-        maxContractPrice: new BigNumber('20'),
-        maxDownloadPriceTB: new BigNumber('1004.31'),
-        maxRpcPriceMillion: new BigNumber('99970619'),
-        maxStoragePriceTBMonth: new BigNumber('2728.484106'),
-        maxUploadPriceTB: new BigNumber('3000.696969'),
-        minAccountExpiryDays: new BigNumber(1),
-        minMaxCollateral: new BigNumber('10'),
-        minMaxEphemeralAccountBalance: new BigNumber('1'),
-        minPriceTableValidityMinutes: new BigNumber(5),
-        migrationSurchargeMultiplier: new BigNumber(10),
-        minShards: new BigNumber(10),
-        totalShards: new BigNumber(30),
-        includeRedundancyMaxStoragePrice: true,
-        includeRedundancyMaxUploadPrice: true,
-        prune: true,
-      } as SettingsData)
+    it('does not apply overrides if missing averages', () => {
+      const values = transformDown({
+        hasBeenConfigured: false,
+        autopilot: undefined,
+        contractSet: undefined,
+        uploadPacking: {
+          enabled: false,
+        },
+        gouging: {
+          hostBlockHeightLeeway: 4,
+          maxContractPrice: '20000000000000000000000000',
+          maxDownloadPrice: '1004310000000000000000000000',
+          maxRPCPrice: '99970619000000000000000000',
+          maxStoragePrice: '210531181019',
+          maxUploadPrice: '1000232323000000000000000000',
+          minAccountExpiry: 86400000000000,
+          minMaxCollateral: '10000000000000000000000000',
+          minMaxEphemeralAccountBalance: '1000000000000000000000000',
+          minPriceTableValidity: 300000000000,
+          migrationSurchargeMultiplier: 10,
+        },
+        redundancy: {
+          minShards: 10,
+          totalShards: 30,
+        },
+      })
+      expect(values.maxUploadPriceTB).toEqual(new BigNumber('1000.232323'))
+      expect(values.maxDownloadPriceTB).toEqual(new BigNumber('1004.31'))
+      expect(values.maxStoragePriceTBMonth).toEqual(new BigNumber('909.494702'))
     })
   })
 
@@ -407,8 +354,6 @@ describe('tansforms', () => {
             minShards: new BigNumber(10),
             totalShards: new BigNumber(30),
             migrationSurchargeMultiplier: new BigNumber(10),
-            includeRedundancyMaxStoragePrice: false,
-            includeRedundancyMaxUploadPrice: false,
           },
           {
             maxStoragePrice: '77777777777',
@@ -423,62 +368,6 @@ describe('tansforms', () => {
         maxDownloadPrice: '1004310000000000000000000000',
         maxRPCPrice: '99970619000000000000000000',
         maxStoragePrice: '210531181019',
-        maxUploadPrice: '1000232323000000000000000000',
-        minAccountExpiry: 86400000000000,
-        minMaxCollateral: '10000000000000000000000000',
-        minMaxEphemeralAccountBalance: '1000000000000000000000000',
-        minPriceTableValidity: 300000000000,
-        migrationSurchargeMultiplier: 10,
-      })
-    })
-
-    it('up gouging with include redundancy for storage', () => {
-      expect(
-        transformUpGouging(
-          {
-            autopilotContractSet: 'autopilot',
-            allowanceMonth: new BigNumber('6006'),
-            amountHosts: new BigNumber('51'),
-            periodWeeks: new BigNumber('6'),
-            renewWindowWeeks: new BigNumber('2.2301587301587302'),
-            downloadTBMonth: new BigNumber('0.785365448411428571428571428571'),
-            uploadTBMonth: new BigNumber('0.785714285714285714285714285714'),
-            storageTB: new BigNumber('1'),
-            prune: true,
-            allowRedundantIPs: false,
-            maxDowntimeHours: new BigNumber('1440'),
-            minRecentScanFailures: new BigNumber('10'),
-            defaultContractSet: 'myset',
-            uploadPackingEnabled: false,
-            hostBlockHeightLeeway: new BigNumber(4),
-            maxContractPrice: new BigNumber('20'),
-            maxDownloadPriceTB: new BigNumber('1004.31'),
-            maxRpcPriceMillion: new BigNumber('99970619'),
-            maxStoragePriceTBMonth: new BigNumber('909.494702'),
-            maxUploadPriceTB: new BigNumber('1000.232323'),
-            minAccountExpiryDays: new BigNumber(1),
-            minMaxCollateral: new BigNumber('10'),
-            minMaxEphemeralAccountBalance: new BigNumber('1'),
-            minPriceTableValidityMinutes: new BigNumber(5),
-            migrationSurchargeMultiplier: new BigNumber(10),
-            minShards: new BigNumber(10),
-            totalShards: new BigNumber(30),
-            includeRedundancyMaxStoragePrice: true,
-            includeRedundancyMaxUploadPrice: false,
-          },
-          {
-            maxStoragePrice: '77777777777',
-            foobar: 'value',
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } as any
-        )
-      ).toEqual({
-        foobar: 'value',
-        hostBlockHeightLeeway: 4,
-        maxContractPrice: '20000000000000000000000000',
-        maxDownloadPrice: '1004310000000000000000000000',
-        maxRPCPrice: '99970619000000000000000000',
-        maxStoragePrice: '70177060340',
         maxUploadPrice: '1000232323000000000000000000',
         minAccountExpiry: 86400000000000,
         minMaxCollateral: '10000000000000000000000000',
@@ -511,15 +400,10 @@ describe('tansforms', () => {
 
   describe('up down', () => {
     it('converts ap download up down', () => {
-      const {
-        autopilot,
-        contractSet,
-        uploadPacking,
-        gouging,
-        redundancy,
-        display,
-      } = buildAllResponses()
+      const { autopilot, contractSet, uploadPacking, gouging, redundancy } =
+        buildAllResponses()
       let settings = transformDown({
+        hasBeenConfigured: true,
         autopilot: {
           ...autopilot,
           contracts: {
@@ -532,7 +416,6 @@ describe('tansforms', () => {
         uploadPacking,
         gouging,
         redundancy,
-        display,
       })
       expect(settings.downloadTBMonth).toEqual(new BigNumber('92.72'))
       // a little different due to rounding
@@ -541,6 +424,7 @@ describe('tansforms', () => {
       ).toEqual(91088814814815)
 
       settings = transformDown({
+        hasBeenConfigured: true,
         autopilot: {
           ...autopilot,
           contracts: {
@@ -553,7 +437,6 @@ describe('tansforms', () => {
         uploadPacking,
         gouging,
         redundancy,
-        display,
       })
       expect(settings.downloadTBMonth).toEqual(new BigNumber('92.72'))
       // using the rounded value results in same value
@@ -637,10 +520,6 @@ function buildAllResponses() {
     redundancy: {
       minShards: 10,
       totalShards: 30,
-    },
-    display: {
-      includeRedundancyMaxStoragePrice: false,
-      includeRedundancyMaxUploadPrice: false,
     },
   }
 }

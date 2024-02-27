@@ -1,17 +1,21 @@
 import { SWRError } from '@siafoundation/react-core'
 import {
   AutopilotConfig,
+  AutopilotState,
   ContractSetSettings,
   GougingSettings,
   RedundancySettings,
   UploadPackingSettings,
 } from '@siafoundation/react-renterd'
-import { ConfigDisplaySettings } from '../../hooks/useConfigDisplaySettings'
 import { SiaCentralHostsNetworkAveragesResponse } from '@siafoundation/sia-central'
 import BigNumber from 'bignumber.js'
 import { TBToBytes } from '@siafoundation/units'
 
 export type Resources = {
+  autopilotState: {
+    data?: AutopilotState
+    error?: SWRError
+  }
   autopilot: {
     data?: AutopilotConfig
     error?: SWRError
@@ -32,10 +36,6 @@ export type Resources = {
     data?: RedundancySettings
     error?: SWRError
   }
-  display: {
-    data?: ConfigDisplaySettings
-    error?: SWRError
-  }
   averages: {
     data?: SiaCentralHostsNetworkAveragesResponse
     error?: SWRError
@@ -48,18 +48,19 @@ export type Resources = {
 }
 
 export function checkIfAllResourcesLoaded({
+  autopilotState,
   autopilot,
   contractSet,
   uploadPacking,
   gouging,
   redundancy,
-  display,
   averages,
   appSettings,
 }: Resources) {
   return !!(
     // these settings have initial daemon values
     (
+      autopilotState.data &&
       redundancy.data &&
       uploadPacking.data &&
       gouging.data &&
@@ -67,7 +68,6 @@ export function checkIfAllResourcesLoaded({
       // until the user sets them
       (autopilot.data || autopilot.error) &&
       (contractSet.data || contractSet.error) &&
-      (display.data || display.error) &&
       // other data dependencies
       (!appSettings.settings.siaCentral || averages.data)
     )

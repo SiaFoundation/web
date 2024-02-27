@@ -64,35 +64,38 @@ export function ConfigStats() {
             per TB/month with {redundancyMultiplier.toFixed(1)}x redundancy
           </Text>
         </div>
-        <div className="flex gap-1">
-          <ValueSc
-            size="12"
-            value={toHastings(estimatedSpendingPerMonth)}
-            dynamicUnits={false}
-            fixed={0}
-            variant="value"
-          />
-          {perMonth.fiat && (
-            <div className="flex">
-              <ValueNum
-                size="12"
-                weight="medium"
-                value={perMonth.fiat}
-                color="subtle"
-                variant="value"
-                format={(v) =>
-                  `(${perMonth.currency.prefix}${v.toFixed(
-                    perMonth.currency.fixed
-                  )})`
-                }
-              />
-            </div>
-          )}
-          <Text size="12" font="mono" weight="medium" ellipsis>
-            to store {humanBytes(TBToBytes(storageTB).toNumber())}/month with{' '}
-            {redundancyMultiplier.toFixed(1)}x redundancy
-          </Text>
-        </div>
+        {/* additionally show estimated spending for total storage if it's different from per TB */}
+        {!estimatedSpendingPerTB.eq(estimatedSpendingPerMonth) && (
+          <div className="flex gap-1">
+            <ValueSc
+              size="12"
+              value={toHastings(estimatedSpendingPerMonth)}
+              dynamicUnits={false}
+              fixed={0}
+              variant="value"
+            />
+            {perMonth.fiat && (
+              <div className="flex">
+                <ValueNum
+                  size="12"
+                  weight="medium"
+                  value={perMonth.fiat}
+                  color="subtle"
+                  variant="value"
+                  format={(v) =>
+                    `(${perMonth.currency.prefix}${v.toFixed(
+                      perMonth.currency.fixed
+                    )})`
+                  }
+                />
+              </div>
+            )}
+            <Text size="12" font="mono" weight="medium" ellipsis>
+              to store {humanBytes(TBToBytes(storageTB).toNumber())}/month with{' '}
+              {redundancyMultiplier.toFixed(1)}x redundancy
+            </Text>
+          </div>
+        )}
       </div>
     </ScrollArea>
   )

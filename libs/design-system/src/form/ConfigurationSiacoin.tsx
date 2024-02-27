@@ -47,7 +47,7 @@ export function ConfigurationSiacoin<
   )
   return (
     <div className="flex flex-col gap-3 items-end">
-      <div className="flex flex-col gap-3 w-[220px]">
+      <div className="flex flex-col gap-3 w-[250px]">
         <SiacoinField
           name={name}
           size="small"
@@ -65,7 +65,6 @@ export function ConfigurationSiacoin<
             setValue(value, true)
           }}
         />
-        <After name={name} form={form} fields={fields} />
         {average && (
           <ConfigurationTipNumber
             type="siacoin"
@@ -90,6 +89,7 @@ export function ConfigurationSiacoin<
             }}
           />
         )}
+        <After name={name} form={form} fields={fields} />
       </div>
       <div className="h-[20px]">
         <FieldLabelAndError form={form} name={name} />

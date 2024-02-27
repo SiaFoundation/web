@@ -23,7 +23,7 @@ export function ConfigurationSwitch<
   })
   return (
     <div className="flex flex-col gap-3 items-end">
-      <div className="flex flex-col gap-3 w-[220px]">
+      <div className="flex flex-col gap-3 w-[250px]">
         <div className="flex justify-end w-full">
           <Switch
             name={name}
