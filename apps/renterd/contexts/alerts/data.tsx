@@ -44,6 +44,7 @@ export const dataFields: Record<
             contract ID
           </Text>
           <ValueMenu
+            size="12"
             value={value}
             menu={
               <ContractContextMenuFromId
@@ -85,6 +86,7 @@ export const dataFields: Record<
             host key
           </Text>
           <ValueMenu
+            size="12"
             value={value}
             menu={
               <HostContextMenu
