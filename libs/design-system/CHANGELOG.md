@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.1.0
+
+### Minor Changes
+
+- dddc110a: Added a rowSize auto variant to Table.
+- dddc110a: Added a custom contextMenu prop to ValueCopyable.
+- dddc110a: Added a subtle variant to Panel.
+- 805f32e0: ChartXY now remembers any chart configuration that the user has selected per unique chart.
+
+### Patch Changes
+
+- 4fa7d882: Add use client / RSC support to Table.
+- 4ed40994: Fix flex layout and add a title tooltip to EntityListItem.
+
 ## 3.0.0
 
 ### Patch Changes

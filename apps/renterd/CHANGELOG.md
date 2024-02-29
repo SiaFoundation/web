@@ -1,5 +1,25 @@
 # renterd
 
+## 0.47.0
+
+### Minor Changes
+
+- 5994c4e0: File uploads now use multipart uploads. Closes https://github.com/SiaFoundation/renterd/issues/975
+- d20d0637: The browser now warns the user if they have active uploads and try to close the tab.
+- 805f32e0: All graphs now remember any chart configuration that the user has selected.
+- 9deee11e: Buckets now have a third view for viewing all active uploads, both local and from other sessions.
+- 5994c4e0: File uploads now have a max concurrency and get queued.
+- dddc110a: Alerts now support pagination. Closes https://github.com/SiaFoundation/renterd/issues/1001 Closes https://github.com/SiaFoundation/renterd/issues/862
+- 9deee11e: Remote file uploads can now be aborted from the uploads explorer. Closes https://github.com/SiaFoundation/web/issues/429
+- 2d6a9c77: Storage and upload price settings no longer default to or have the option to include redundancy. The price with the configured redundancy is now always shown below.
+- 9deee11e: The transfers bar now only lists downloads and shows two buttons with one navigating to the new uploads list.
+- dddc110a: Alerts now support the accumulated churn alert. Closes https://github.com/SiaFoundation/renterd/issues/1005
+- dddc110a: Alerts now have a dedicated tab with a larger area for display and navigation.
+
+### Patch Changes
+
+- 984ed75a: Fixed an issue where hovering over the file health information would crash the app. Closes https://github.com/SiaFoundation/renterd/issues/997
+
 ## 0.46.0
 
 ### Minor Changes

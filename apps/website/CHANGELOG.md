@@ -1,5 +1,11 @@
 # website
 
+## 0.49.0
+
+### Minor Changes
+
+- 7ef30999: The website now includes the contact email in the footer.
+
 ## 0.48.0
 
 ### Minor Changes
