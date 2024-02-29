@@ -1,5 +1,11 @@
 # @siafoundation/react-renterd
 
+## 3.1.0
+
+### Minor Changes
+
+- 2190046c: Add useMultipartUploadCreate, useMultipartUploadComplete, useMultipartUploadAbort, useMultipartUploadAddPart, useMultipartUploadChunk, useMultipartUploadListUploads, useMultipartUploadListParts.
+
 ## 3.0.0
 
 ### Minor Changes
