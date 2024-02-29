@@ -8,12 +8,9 @@ import { useUploads } from '../contexts/uploads'
 
 export function TransfersBar() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()
-  const { downloadsList, downloadCancel } = useFilesManager()
-  const {
-    pageCount: uploadsPageCount,
-    navigateToUploads,
-    isViewingUploads,
-  } = useUploads()
+  const { downloadsList, downloadCancel, isViewingUploads, navigateToUploads } =
+    useFilesManager()
+  const { pageCount: uploadsPageCount } = useUploads()
   const [maximized, setMaximized] = useState<boolean>(true)
 
   const isActiveUploads = !!uploadsPageCount

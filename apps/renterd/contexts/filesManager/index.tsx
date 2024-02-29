@@ -1,7 +1,7 @@
 'use client'
 
 import { useServerFilters, useTableState } from '@siafoundation/design-system'
-import { useParams, useAppRouter } from '@siafoundation/next'
+import { useParams, useAppRouter, usePathname } from '@siafoundation/next'
 import { createContext, useCallback, useContext, useMemo } from 'react'
 import { columns } from '../filesDirectory/columns'
 import {
@@ -155,13 +155,29 @@ function useFilesManagerMain() {
     ]
   )
 
+  const uploadsRoute = routes.buckets.uploads.replace(
+    '[bucket]',
+    activeBucketName
+  )
+
+  const navigateToUploads = useCallback(() => {
+    if (!activeBucket) {
+      return
+    }
+    router.push(uploadsRoute)
+  }, [activeBucket, uploadsRoute, router])
+
+  const pathname = usePathname()
+  const isViewingUploads = activeBucketName && pathname.startsWith(uploadsRoute)
+
   const setExplorerModeDirectory = useCallback(async () => {
-    if (activeExplorerMode === 'directory') {
+    if (!isViewingUploads && activeExplorerMode === 'directory') {
       return
     }
     setActiveDirectoryAndFileNamePrefix([activeBucketName], undefined)
     setActiveExplorerMode('directory')
   }, [
+    isViewingUploads,
     activeExplorerMode,
     activeBucketName,
     setActiveExplorerMode,
@@ -169,7 +185,7 @@ function useFilesManagerMain() {
   ])
 
   const setExplorerModeFlat = useCallback(async () => {
-    if (activeExplorerMode === 'flat') {
+    if (!isViewingUploads && activeExplorerMode === 'flat') {
       return
     }
     setActiveDirectoryAndFileNamePrefix(
@@ -178,6 +194,7 @@ function useFilesManagerMain() {
     )
     setActiveExplorerMode('flat')
   }, [
+    isViewingUploads,
     activeExplorerMode,
     activeBucketName,
     activeDirectoryPath,
@@ -189,10 +206,12 @@ function useFilesManagerMain() {
     isViewingBuckets,
     isViewingABucket,
     isViewingRootOfABucket,
+    isViewingUploads,
     buckets,
     activeBucket,
     activeBucketName,
     activeDirectory,
+    navigateToUploads,
     setActiveDirectory,
     setActiveDirectoryAndFileNamePrefix,
     activeDirectoryPath,
