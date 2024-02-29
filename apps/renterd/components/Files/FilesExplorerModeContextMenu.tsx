@@ -6,12 +6,15 @@ import {
 } from '@siafoundation/design-system'
 import { CloudUpload16, Earth16, Folder16 } from '@siafoundation/react-icons'
 import { useFilesManager } from '../../contexts/filesManager'
-import { useUploads } from '../../contexts/uploads'
 
 export function FilesExplorerModeContextMenu() {
-  const { activeExplorerMode, setExplorerModeDirectory, setExplorerModeFlat } =
-    useFilesManager()
-  const { isViewingUploads, navigateToUploads } = useUploads()
+  const {
+    activeExplorerMode,
+    setExplorerModeDirectory,
+    setExplorerModeFlat,
+    isViewingUploads,
+    navigateToUploads,
+  } = useFilesManager()
 
   return (
     <DropdownMenu

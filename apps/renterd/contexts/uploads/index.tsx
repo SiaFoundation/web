@@ -3,24 +3,22 @@ import {
   useDatasetEmptyState,
   useServerFilters,
 } from '@siafoundation/design-system'
-import { useAppRouter, usePathname, useSearchParams } from '@siafoundation/next'
+import { useSearchParams } from '@siafoundation/next'
 import {
   useMultipartUploadAbort,
   useMultipartUploadListUploads,
 } from '@siafoundation/react-renterd'
-import { createContext, useCallback, useContext, useMemo } from 'react'
+import { createContext, useContext, useMemo } from 'react'
 import { columnsDefaultVisible, defaultSortField, sortOptions } from './types'
 import { columns } from './columns'
 import { join, getFilename } from '../../lib/paths'
 import { useFilesManager } from '../filesManager'
 import { ObjectUploadData } from '../filesManager/types'
-import { routes } from '../../config/routes'
 
 const defaultLimit = 50
 
 function useUploadsMain() {
   const { uploadsMap, activeBucket } = useFilesManager()
-  const router = useAppRouter()
   const params = useSearchParams()
   const limit = Number(params.get('limit') || defaultLimit)
   const marker = params.get('marker')
@@ -111,27 +109,9 @@ function useUploadsMain() {
     filters
   )
 
-  const uploadsRoute = routes.buckets.uploads.replace(
-    '[bucket]',
-    activeBucket?.name
-  )
-
-  const pathname = usePathname()
-  const isViewingUploads = activeBucket && pathname.startsWith(uploadsRoute)
-
-  const navigateToUploads = useCallback(() => {
-    if (!activeBucket) {
-      return
-    }
-    router.push(uploadsRoute)
-  }, [activeBucket, uploadsRoute, router])
-
   return {
-    navigateToUploads,
-    isViewingUploads,
     dataState,
     limit,
-    marker,
     nextMarker: response.data?.nextUploadIDMarker,
     hasMore: response.data?.hasMore,
     isLoading: response.isLoading,
