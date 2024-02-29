@@ -1,5 +1,15 @@
 # explorer
 
+## 0.13.0
+
+### Minor Changes
+
+- 4fa7d882: Update title and description on manifest, og images, and generated metadata.
+
+### Patch Changes
+
+- 4ed40994: Add detailed labels to contract proof outputs explaining what each output is for.
+
 ## 0.12.0
 
 ### Minor Changes

@@ -1,5 +1,12 @@
 # hostd
 
+## 0.39.0
+
+### Minor Changes
+
+- d4fcadf8: Siacoin metric cards now show the dynamic units with two decimal places. Closes https://github.com/SiaFoundation/hostd/issues/217
+- 805f32e0: All graphs now remember any chart configuration that the user has selected.
+
 ## 0.38.0
 
 ### Minor Changes
