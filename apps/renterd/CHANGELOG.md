@@ -1,5 +1,17 @@
 # renterd
 
+## 0.48.0
+
+### Minor Changes
+
+- 033b2f26: Uploads will now error and abort if responses are missing etags.
+
+### Patch Changes
+
+- ca00b44b: Fixed an issue navigating back to the active explorer mode from the uploads list.
+- 72237e68: Fixed an issue where the alert data fields showed the wrong dates.
+- 72237e68: Fixed an issue where the alert columns were not initially showing.
+
 ## 0.47.0
 
 ### Minor Changes
