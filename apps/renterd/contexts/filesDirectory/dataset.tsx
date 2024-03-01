@@ -56,11 +56,17 @@ export function useDataset() {
     },
   })
 
-  const d = useDatasetGeneric({
-    objects: {
+  const objects = useMemo(
+    () => ({
       isValidating: response.isValidating,
       data: response.data?.entries,
-    },
+    }),
+    [response.isValidating, response.data?.entries]
+  )
+
+  const d = useDatasetGeneric({
+    id: 'filesDirectory',
+    objects,
   })
 
   return {

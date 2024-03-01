@@ -8,7 +8,7 @@ import {
   useMultipartUploadAbort,
   useMultipartUploadListUploads,
 } from '@siafoundation/react-renterd'
-import { createContext, useContext, useMemo } from 'react'
+import { createContext, useCallback, useContext, useMemo } from 'react'
 import { columnsDefaultVisible, defaultSortField, sortOptions } from './types'
 import { columns } from './columns'
 import { join, getFilename } from '../../lib/paths'
@@ -35,6 +35,25 @@ function useUploadsMain() {
       limit,
     },
   })
+
+  const abortAll = useCallback(async () => {
+    return Promise.all(
+      response.data?.uploads?.map(async (upload) => {
+        const localUpload = uploadsMap[upload.uploadID]
+        if (localUpload) {
+          localUpload.uploadAbort?.()
+        } else {
+          await apiBusUploadAbort.post({
+            payload: {
+              bucket: activeBucket?.name,
+              path: upload.path,
+              uploadID: upload.uploadID,
+            },
+          })
+        }
+      })
+    )
+  }, [response.data, apiBusUploadAbort, activeBucket, uploadsMap])
 
   const dataset: ObjectUploadData[] = useMemo(() => {
     return (
@@ -110,6 +129,7 @@ function useUploadsMain() {
   )
 
   return {
+    abortAll,
     dataState,
     limit,
     nextMarker: response.data?.nextUploadIDMarker,
