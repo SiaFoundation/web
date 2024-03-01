@@ -16,10 +16,12 @@ export type MultipartParams = {
   bucket: string
   path: string
   file: File
-  apiWorkerUploadPart: ApiWorkerUploadPart
-  apiBusUploadComplete: ApiBusUploadComplete
-  apiBusUploadCreate: ApiBusUploadCreate
-  apiBusUploadAbort: ApiBusUploadAbort
+  api: {
+    workerUploadPart: ApiWorkerUploadPart
+    busUploadComplete: ApiBusUploadComplete
+    busUploadCreate: ApiBusUploadCreate
+    busUploadAbort: ApiBusUploadAbort
+  }
   partSize?: number
   maxConcurrentParts?: number
   onProgress?: (event: {
@@ -43,10 +45,12 @@ export class MultipartUpload {
   #file: File
   #partSize: number
   #maxConcurrentParts: number
-  #apiWorkerUploadPart: ApiWorkerUploadPart
-  #apiBusUploadComplete: ApiBusUploadComplete
-  #apiBusUploadCreate: ApiBusUploadCreate
-  #apiBusUploadAbort: ApiBusUploadAbort
+  #api: {
+    workerUploadPart: ApiWorkerUploadPart
+    busUploadComplete: ApiBusUploadComplete
+    busUploadCreate: ApiBusUploadCreate
+    busUploadAbort: ApiBusUploadAbort
+  }
   #onProgress: (progress: {
     sent: number
     total: number
@@ -75,10 +79,7 @@ export class MultipartUpload {
     this.#partSize = options.partSize || 1024 * 1024 * 5
     this.#maxConcurrentParts = Math.min(options.maxConcurrentParts || 5, 15)
     this.#file = options.file
-    this.#apiWorkerUploadPart = options.apiWorkerUploadPart
-    this.#apiBusUploadAbort = options.apiBusUploadAbort
-    this.#apiBusUploadComplete = options.apiBusUploadComplete
-    this.#apiBusUploadCreate = options.apiBusUploadCreate
+    this.#api = options.api
     this.#onProgress = options.onProgress || (() => null)
     this.#onError = options.onError || (() => null)
     this.#onComplete = options.onComplete || (() => null)
@@ -98,7 +99,7 @@ export class MultipartUpload {
       generateKey: true,
       path: this.#path,
     }
-    const response = await this.#apiBusUploadCreate.post({
+    const response = await this.#api.busUploadCreate.post({
       payload: createPayload,
     })
 
@@ -129,7 +130,7 @@ export class MultipartUpload {
       })
 
     try {
-      await this.#apiBusUploadAbort.post({
+      await this.#api.busUploadAbort.post({
         payload: {
           bucket: this.#bucket,
           path: this.#path,
@@ -139,7 +140,7 @@ export class MultipartUpload {
     } catch (e) {
       triggerErrorToast(e.message)
     }
-    this.#resolve()
+    this.#resolve?.()
   }
 
   public setOnProgress(
@@ -207,10 +208,15 @@ export class MultipartUpload {
         this.#onError(error)
         return
       }
+
+      // TODO: catch 400 errors and abort the upload, 400 means that the multipart upload does not exist anymore.
+      // Additionally renterd itself should abort these active uploads.
+
+      // Besides the above, allow network errors to retry...
       this.#pendingPartNumbers.push(partNumber)
       await this.#waitToRetry()
     }
-    // try again even after a part errors
+    // try again after a part error, but not other specific errors
     this.#sendNext()
   }
 
@@ -233,7 +239,7 @@ export class MultipartUpload {
         uploadID: this.#uploadId,
         parts: this.#uploadedParts.sort((a, b) => a.partNumber - b.partNumber),
       }
-      await this.#apiBusUploadComplete.post({
+      await this.#api.busUploadComplete.post({
         payload: payload,
       })
       this.#onComplete()
@@ -272,7 +278,7 @@ export class MultipartUpload {
     this.#activeConnections[partNumber] = controller
     afterConnectionIsAdded()
     try {
-      const response = await this.#apiWorkerUploadPart.put({
+      const response = await this.#api.workerUploadPart.put({
         params: {
           key: this.#path.slice(1),
           bucket: this.#bucket,
@@ -310,6 +316,7 @@ export class MultipartUpload {
 
       this.#uploadedParts.push(uploadedPart)
     } finally {
+      this.#activeConnections[partNumber] = null
       delete this.#activeConnections[partNumber]
     }
   }

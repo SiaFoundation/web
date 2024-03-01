@@ -11,7 +11,7 @@ import {
   useMultipartUploadCreate,
 } from '@siafoundation/react-renterd'
 import { throttle } from '@technically/lodash'
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ObjectUploadData, UploadsMap } from './types'
 import {
   FullPath,
@@ -37,10 +37,10 @@ type Props = {
 export function useUploads({ activeDirectoryPath }: Props) {
   const buckets = useBuckets()
   const mutate = useMutate()
-  const apiWorkerUploadPart = useMultipartUploadPart()
-  const apiBusUploadComplete = useMultipartUploadComplete()
-  const apiBusUploadCreate = useMultipartUploadCreate()
-  const apiBusUploadAbort = useMultipartUploadAbort()
+  const workerUploadPart = useMultipartUploadPart()
+  const busUploadComplete = useMultipartUploadComplete()
+  const busUploadCreate = useMultipartUploadCreate()
+  const busUploadAbort = useMultipartUploadAbort()
   const [uploadsMap, setUploadsMap] = useState<UploadsMap>({})
   const redundancy = useRedundancySettings({
     config: {
@@ -48,14 +48,6 @@ export function useUploads({ activeDirectoryPath }: Props) {
         refreshInterval: minutesInMilliseconds(1),
       },
     },
-  })
-
-  // Because checkAndStartUploads is called in closures/asynchronous callbacks,
-  // use a ref to ensure the latest version of the function is used.
-  const ref = useRef<{
-    checkAndStartUploads: () => void
-  }>({
-    checkAndStartUploads: () => null,
   })
 
   const updateStatusToUploading = useCallback(
@@ -119,10 +111,7 @@ export function useUploads({ activeDirectoryPath }: Props) {
         file: uploadFile,
         path: key,
         bucket: bucket.name,
-        apiWorkerUploadPart,
-        apiBusUploadComplete,
-        apiBusUploadCreate,
-        apiBusUploadAbort,
+        api: ref.current,
         partSize: getMultipartUploadPartSize(
           redundancy.data?.minShards || 1
         ).toNumber(),
@@ -132,11 +121,11 @@ export function useUploads({ activeDirectoryPath }: Props) {
       const uploadId = await multipartUpload.create()
       multipartUpload.setOnError((error) => {
         triggerErrorToast(error.message)
-        removeUpload(uploadId)
+        ref.current.removeUpload(uploadId)
       })
       multipartUpload.setOnProgress(
         throttle((progress) => {
-          updateUploadProgress({
+          ref.current.updateUploadProgress({
             id: uploadId,
             loaded: progress.sent,
             size: progress.total,
@@ -144,8 +133,8 @@ export function useUploads({ activeDirectoryPath }: Props) {
         }, 1000)
       )
       multipartUpload.setOnComplete(async () => {
-        await mutate((key) => key.startsWith('/bus/objects'))
-        removeUpload(uploadId)
+        await ref.current.mutate((key) => key.startsWith('/bus/objects'))
+        ref.current.removeUpload(uploadId)
         setTimeout(() => {
           ref.current.checkAndStartUploads()
         }, 100)
@@ -155,16 +144,7 @@ export function useUploads({ activeDirectoryPath }: Props) {
         multipartUpload,
       }
     },
-    [
-      apiBusUploadAbort,
-      apiBusUploadComplete,
-      apiBusUploadCreate,
-      apiWorkerUploadPart,
-      mutate,
-      updateUploadProgress,
-      removeUpload,
-      redundancy.data,
-    ]
+    [redundancy.data]
   )
 
   const addUploadToQueue = useCallback(
@@ -200,13 +180,13 @@ export function useUploads({ activeDirectoryPath }: Props) {
           createdAt: new Date().toISOString(),
           uploadAbort: async () => {
             await multipartUpload.abort()
-            removeUpload(uploadId)
+            ref.current.removeUpload(uploadId)
           },
           type: 'file',
         },
       }))
     },
-    [setUploadsMap, createMultipartUpload, removeUpload]
+    [setUploadsMap, createMultipartUpload]
   )
 
   const startMultipartUpload = useCallback(
@@ -273,9 +253,52 @@ export function useUploads({ activeDirectoryPath }: Props) {
     [activeDirectoryPath, addUploadToQueue, buckets.data, uploadsMap]
   )
 
-  ref.current = {
+  // Use a ref for functions that will be used in closures/asynchronous callbacks
+  // to ensure the latest version of the function is used.
+  const ref = useRef({
     checkAndStartUploads,
-  }
+    workerUploadPart: workerUploadPart,
+    busUploadComplete: busUploadComplete,
+    busUploadCreate: busUploadCreate,
+    busUploadAbort: busUploadAbort,
+    removeUpload,
+    updateUploadProgress,
+    updateStatusToUploading,
+    mutate,
+  })
+
+  useEffect(() => {
+    ref.current = {
+      checkAndStartUploads,
+      busUploadAbort,
+      busUploadComplete,
+      busUploadCreate,
+      workerUploadPart,
+      mutate,
+      removeUpload,
+      updateUploadProgress,
+      updateStatusToUploading,
+    }
+  }, [
+    checkAndStartUploads,
+    busUploadAbort,
+    busUploadComplete,
+    busUploadCreate,
+    workerUploadPart,
+    mutate,
+    removeUpload,
+    updateUploadProgress,
+    updateStatusToUploading,
+  ])
+
+  useEffect(() => {
+    const i = setInterval(() => {
+      ref.current.checkAndStartUploads()
+    }, 3_000)
+    return () => {
+      clearInterval(i)
+    }
+  }, [])
 
   const uploadsList: ObjectUploadData[] = useMemo(
     () => Object.entries(uploadsMap).map((u) => u[1] as ObjectUploadData),

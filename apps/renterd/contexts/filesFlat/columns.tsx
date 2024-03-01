@@ -1,11 +1,10 @@
+import { Button, Text, Tooltip, ValueNum } from '@siafoundation/design-system'
 import {
-  Button,
-  LoadingDots,
-  Text,
-  Tooltip,
-  ValueNum,
-} from '@siafoundation/design-system'
-import { Document16, Earth16, Locked16 } from '@siafoundation/react-icons'
+  Document16,
+  Earth16,
+  Locked16,
+  Upload16,
+} from '@siafoundation/react-icons'
 import { humanBytes } from '@siafoundation/units'
 import { FileContextMenu } from '../../components/Files/FileContextMenu'
 import { DirectoryContextMenu } from '../../components/Files/DirectoryContextMenu'
@@ -126,12 +125,9 @@ export const columns: FilesTableColumn[] = [
     id: 'size',
     label: 'size',
     contentClassName: 'justify-end',
-    render: function SizeColumn({ data: { type, name, size, isUploading } }) {
+    render: function SizeColumn({ data: { type, name, size } }) {
       if (type === 'bucket') {
         return null
-      }
-      if (isUploading) {
-        return <LoadingDots />
       }
 
       if (name === '..') {
@@ -155,8 +151,26 @@ export const columns: FilesTableColumn[] = [
     label: 'health',
     contentClassName: 'justify-center',
     render: function HealthColumn({ data }) {
-      if (data.type === 'bucket') {
+      const { type, isUploading, loaded, size } = data
+      if (type === 'bucket') {
         return null
+      }
+      if (isUploading) {
+        const displayPercent = ((loaded / size) * 100).toFixed(0) + '%'
+        return (
+          <Tooltip
+            content={`Uploaded ${humanBytes(loaded)}/${humanBytes(size)}`}
+          >
+            <div className="flex items-center gap-1 cursor-pointer">
+              <Text color="subtle">
+                <Upload16 className="scale-75" />
+              </Text>
+              <Text color="subtle" size="12">
+                {displayPercent}
+              </Text>
+            </div>
+          </Tooltip>
+        )
       }
       return <FilesHealthColumn {...data} />
     },

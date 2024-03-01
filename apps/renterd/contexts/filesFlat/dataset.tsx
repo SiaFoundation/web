@@ -52,11 +52,17 @@ export function useDataset({ sortDirection, sortField }: Props) {
     },
   })
 
-  const d = useDatasetGeneric({
-    objects: {
+  const objects = useMemo(
+    () => ({
       isValidating: response.isValidating,
       data: response.data?.objects,
-    },
+    }),
+    [response.isValidating, response.data]
+  )
+
+  const d = useDatasetGeneric({
+    id: 'filesFlat',
+    objects,
   })
 
   return {

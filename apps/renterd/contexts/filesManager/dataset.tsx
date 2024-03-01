@@ -10,15 +10,17 @@ import {
   isDirectory,
 } from '../../lib/paths'
 import { useFilesManager } from '.'
+import { useEffect } from 'react'
 
 type Props = {
+  id: string
   objects: {
     isValidating: boolean
     data?: ObjEntry[]
   }
 }
 
-export function useDataset({ objects }: Props) {
+export function useDataset({ id, objects }: Props) {
   const {
     activeBucket,
     activeBucketName,
@@ -31,17 +33,10 @@ export function useDataset({ objects }: Props) {
     setActiveDirectory,
   } = useFilesManager()
   const { dataset: allContracts } = useContracts()
-  return useSWR<ObjectData[] | null>(
+  const response = useSWR<ObjectData[] | null>(
     objects.isValidating || buckets.isValidating
       ? null
-      : [
-          objects.data,
-          uploadsList,
-          allContracts,
-          buckets.data,
-          activeBucketName,
-          activeDirectoryPath,
-        ],
+      : [id, activeBucketName, activeDirectoryPath],
     () => {
       const dataMap: Record<string, ObjectData> = {}
       if (!activeBucket) {
@@ -61,7 +56,7 @@ export function useDataset({ objects }: Props) {
             type: 'bucket',
           }
         })
-      } else if (objects.data) {
+      } else if (objects.data || uploadsList.length) {
         objects.data?.forEach(({ name: key, size, health }) => {
           const path = join(activeBucketName, key)
           const name = getFilename(key)
@@ -102,4 +97,10 @@ export function useDataset({ objects }: Props) {
       keepPreviousData: true,
     }
   )
+  // refetch when the dependent data changes
+  useEffect(() => {
+    response.mutate()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [objects.data, uploadsList, allContracts, buckets.data])
+  return response
 }

@@ -47,7 +47,7 @@ describe('MultipartUpload', () => {
       [19, 20, 95],
       [20, 20, 100],
     ])
-    expect(params.apiBusUploadComplete.post).toHaveBeenCalledWith({
+    expect(params.api.busUploadComplete.post).toHaveBeenCalledWith({
       payload: {
         bucket: 'test-bucket',
         parts: [
@@ -111,7 +111,7 @@ describe('MultipartUpload', () => {
       [19, 20, 95],
       [20, 20, 100],
     ])
-    expect(params.apiBusUploadComplete.post).toHaveBeenCalledWith({
+    expect(params.api.busUploadComplete.post).toHaveBeenCalledWith({
       payload: {
         bucket: 'test-bucket',
         parts: [
@@ -141,14 +141,16 @@ describe('MultipartUpload', () => {
     const params = getMockedParams({
       file: new File(['012456'], 'test.txt', { type: 'text/plain' }),
       partSize,
-      apiWorkerUploadPart: buildMockApiWorkerUploadPart({
-        partSize,
-        failures: [
-          { failCallIndex: 1, failPartIndex: 1 },
-          { failCallIndex: 2, failPartIndex: 1 },
-          { failCallIndex: 3, failPartIndex: 0 },
-        ],
-      }),
+      api: {
+        workerUploadPart: buildMockApiWorkerUploadPart({
+          partSize,
+          failures: [
+            { failCallIndex: 1, failPartIndex: 1 },
+            { failCallIndex: 2, failPartIndex: 1 },
+            { failCallIndex: 3, failPartIndex: 0 },
+          ],
+        }),
+      },
       maxConcurrentParts: 1,
     })
     const multipartUpload = new MultipartUpload(params)
@@ -174,7 +176,7 @@ describe('MultipartUpload', () => {
       [5, 6, 83], // call 5
       [6, 6, 100],
     ])
-    expect(params.apiBusUploadComplete.post).toHaveBeenCalledWith({
+    expect(params.api.busUploadComplete.post).toHaveBeenCalledWith({
       payload: {
         bucket: 'test-bucket',
         parts: [
@@ -200,10 +202,14 @@ describe('MultipartUpload', () => {
     const params = getMockedParams({
       file: new File(['012456'], 'test.txt', { type: 'text/plain' }),
       partSize,
-      apiWorkerUploadPart: buildMockApiWorkerUploadPart({
-        partSize,
-        failures: [{ failCallIndex: 1, failPartIndex: 1, type: 'missingEtag' }],
-      }),
+      api: {
+        workerUploadPart: buildMockApiWorkerUploadPart({
+          partSize,
+          failures: [
+            { failCallIndex: 1, failPartIndex: 1, type: 'missingEtag' },
+          ],
+        }),
+      },
       maxConcurrentParts: 1,
     })
     const multipartUpload = new MultipartUpload(params)
@@ -222,7 +228,7 @@ describe('MultipartUpload', () => {
       [3, 6, 50], // call 1
       [4, 6, 67], // fail
     ])
-    expect(params.apiBusUploadComplete.post).not.toHaveBeenCalled()
+    expect(params.api.busUploadComplete.post).not.toHaveBeenCalled()
     expect(params.onComplete).not.toHaveBeenCalled()
     expect(params.onError).toHaveBeenCalledWith(expect.any(ErrorNoETag))
   })
@@ -231,8 +237,11 @@ describe('MultipartUpload', () => {
     const params = getMockedParams()
     const multipartUpload = new MultipartUpload({
       ...params,
-      apiBusUploadCreate: {
-        post: jest.fn(() => Promise.reject(new Error('Create failed'))),
+      api: {
+        ...params?.api,
+        busUploadCreate: {
+          post: jest.fn(() => Promise.reject(new Error('Create failed'))),
+        },
       },
     })
     try {
@@ -250,7 +259,7 @@ describe('MultipartUpload', () => {
     // allow the upload to get created and begin
     await delay(10)
     await multipartUpload.abort()
-    expect(params.apiBusUploadAbort.post).toHaveBeenCalledWith({
+    expect(params.api.busUploadAbort.post).toHaveBeenCalledWith({
       payload: { bucket: 'test-bucket', path: 'test-path', uploadID: '12345' },
     })
     expect(params.onComplete).not.toHaveBeenCalled()
@@ -260,32 +269,41 @@ describe('MultipartUpload', () => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getMockedParams(params?: Partial<Record<keyof MultipartParams, any>>) {
+  const {
+    partSize: paramsPartSize,
+    file: paramsFile,
+    api: paramsApi,
+    ...paramsRest
+  } = params || {}
   const file =
-    params?.file ||
+    paramsFile ||
     new File(['0123456789'], 'test-file.txt', { type: 'text/plain' })
-  const partSize = params?.partSize || 1
+  const partSize = paramsPartSize || 1
   return {
     bucket: 'test-bucket',
     path: 'test-path',
     partSize,
     maxConcurrentParts: 1,
     file,
-    apiWorkerUploadPart: buildMockApiWorkerUploadPart({ partSize }),
-    apiBusUploadComplete: { post: jest.fn() },
-    apiBusUploadCreate: {
-      post: jest.fn(() =>
-        Promise.resolve({
-          status: 201,
-          data: { uploadID: '12345' },
-          headers: { ETag: 'etag' },
-        })
-      ),
+    api: {
+      workerUploadPart: buildMockApiWorkerUploadPart({ partSize }),
+      busUploadComplete: { post: jest.fn() },
+      busUploadCreate: {
+        post: jest.fn(() =>
+          Promise.resolve({
+            status: 201,
+            data: { uploadID: '12345' },
+            headers: { ETag: 'etag' },
+          })
+        ),
+      },
+      busUploadAbort: { post: jest.fn() },
+      ...paramsApi,
     },
-    apiBusUploadAbort: { post: jest.fn() },
     onProgress: jest.fn(),
     onError: jest.fn(),
     onComplete: jest.fn(),
-    ...params,
+    ...paramsRest,
   }
 }
 
