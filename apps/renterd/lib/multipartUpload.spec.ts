@@ -1,5 +1,9 @@
 import { Response, delay } from '@siafoundation/react-core'
-import { MultipartParams, MultipartUpload } from './multipartUpload'
+import {
+  ErrorNoETag,
+  MultipartParams,
+  MultipartUpload,
+} from './multipartUpload'
 
 describe('MultipartUpload', () => {
   it('should report progress and complete with serial parts', async () => {
@@ -190,6 +194,39 @@ describe('MultipartUpload', () => {
     expect(elapsedTime).toBeGreaterThanOrEqual(3500)
   }, 10_000)
 
+  it('should abort the entire upload and error if a part is missing an etag', async () => {
+    // note that the upload mock is configured to report progress 2 times per part
+    const partSize = 2
+    const params = getMockedParams({
+      file: new File(['012456'], 'test.txt', { type: 'text/plain' }),
+      partSize,
+      apiWorkerUploadPart: buildMockApiWorkerUploadPart({
+        partSize,
+        failures: [{ failCallIndex: 1, failPartIndex: 1, type: 'missingEtag' }],
+      }),
+      maxConcurrentParts: 1,
+    })
+    const multipartUpload = new MultipartUpload(params)
+    await multipartUpload.create()
+    await multipartUpload.start()
+    expect(params.onProgress.mock.calls.length).toBe(4)
+    expect(
+      params.onProgress.mock.calls.map(([params]) => [
+        params.sent,
+        params.total,
+        params.percentage,
+      ])
+    ).toEqual([
+      [1, 6, 17], // call 0
+      [2, 6, 33],
+      [3, 6, 50], // call 1
+      [4, 6, 67], // fail
+    ])
+    expect(params.apiBusUploadComplete.post).not.toHaveBeenCalled()
+    expect(params.onComplete).not.toHaveBeenCalled()
+    expect(params.onError).toHaveBeenCalledWith(expect.any(ErrorNoETag))
+  })
+
   it('should handle an upload create error', async () => {
     const params = getMockedParams()
     const multipartUpload = new MultipartUpload({
@@ -255,6 +292,7 @@ function getMockedParams(params?: Partial<Record<keyof MultipartParams, any>>) {
 type Failure = {
   failCallIndex: number
   failPartIndex: number
+  type?: 'partFailed' | 'missingEtag'
 }
 
 function buildMockApiWorkerUploadPart({
@@ -284,14 +322,14 @@ function buildMockApiWorkerUploadPart({
             reject(new Error('Abort'))
             return
           }
-          const shouldFail = failures.find(
+          const failure = failures.find(
             (failure) =>
               callIndex === failure.failCallIndex &&
               partIndex === failure.failPartIndex
           )
           loaded += progressPartSize
           onUploadProgress({ type: 'progress', loaded, total })
-          if (shouldFail) {
+          if ((failure && !failure.type) || failure?.type === 'partFailed') {
             clearInterval(intervalId)
             reject(new Error('Upload failed'))
           } else {
@@ -299,7 +337,9 @@ function buildMockApiWorkerUploadPart({
               clearInterval(intervalId)
               resolve({
                 status: 200,
-                headers: { etag: eTag },
+                headers: {
+                  etag: failure?.type === 'missingEtag' ? undefined : eTag,
+                },
               })
             }
             partIndex++

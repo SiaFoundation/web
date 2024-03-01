@@ -139,6 +139,7 @@ export class MultipartUpload {
     } catch (e) {
       triggerErrorToast(e.message)
     }
+    this.#resolve()
   }
 
   public setOnProgress(
@@ -195,7 +196,15 @@ export class MultipartUpload {
       // On successful upload, reset the delay
       this.#resetDelay()
     } catch (error) {
-      if (error.name === 'canceled') {
+      // if the upload was canceled, don't retry
+      if (error instanceof ErrorCanceledRequest) {
+        return
+      }
+      // if the upload failed due to a missing ETag, abort the entire upload
+      // and report the error
+      if (error instanceof ErrorNoETag) {
+        await this.abort()
+        this.#onError(error)
         return
       }
       this.#pendingPartNumbers.push(partNumber)
@@ -282,15 +291,17 @@ export class MultipartUpload {
 
       // errors such as aborted/canceled request
       if (response.error) {
+        if (response.error === 'canceled') {
+          throw new ErrorCanceledRequest()
+        }
         throw new Error(response.error)
       }
 
       const eTag = response.headers['etag']
       if (!eTag) {
-        throw new Error(
-          'No ETag in response, add ETag to Access-Control-Expose-Headers list'
-        )
+        throw new ErrorNoETag()
       }
+
       const uploadedPart = {
         partNumber: partNumber,
         // removing the " enclosing characters from the raw ETag
@@ -298,10 +309,22 @@ export class MultipartUpload {
       }
 
       this.#uploadedParts.push(uploadedPart)
+    } finally {
       delete this.#activeConnections[partNumber]
-    } catch (e) {
-      delete this.#activeConnections[partNumber]
-      throw e
     }
+  }
+}
+
+export class ErrorCanceledRequest extends Error {
+  constructor() {
+    super('canceled')
+    this.name = 'CanceledError'
+  }
+}
+
+export class ErrorNoETag extends Error {
+  constructor() {
+    super('No ETag in response, add ETag to Access-Control-Expose-Headers list')
+    this.name = 'NoETagError'
   }
 }
