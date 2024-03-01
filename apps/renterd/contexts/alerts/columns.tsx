@@ -129,7 +129,7 @@ export const columns: KeysTableColumn[] = [
     render: ({ data: { timestamp } }) => {
       return (
         <Text color="subtle" size="12" ellipsis>
-          {formatRelative(new Date(), new Date(timestamp))}
+          {formatRelative(new Date(timestamp), new Date())}
         </Text>
       )
     },

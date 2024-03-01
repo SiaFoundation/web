@@ -370,7 +370,7 @@ function ContractSetChange({
               time
             </Text>
             <Text size="12" ellipsis>
-              {formatRelative(new Date(), new Date(time))}
+              {formatRelative(new Date(time), new Date())}
             </Text>
           </div>
           <div className="flex gap-2">
