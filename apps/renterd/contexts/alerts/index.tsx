@@ -130,7 +130,7 @@ function useAlertsMain() {
     sortField,
     sortDirection,
     resetDefaultColumnVisibility,
-  } = useTableState('renterd/v0/keys', {
+  } = useTableState('renterd/v0/alerts', {
     columns,
     columnsDefaultVisible,
     sortOptions,
