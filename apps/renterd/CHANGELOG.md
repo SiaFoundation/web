@@ -1,5 +1,16 @@
 # renterd
 
+## 0.49.0
+
+### Minor Changes
+
+- 5477362e: Directory and global file explorers now show upload progress inline.
+- 5477362e: Uploads now support aborting the entire visible page of active uploads.
+
+### Patch Changes
+
+- 5477362e: Fixed a slow memory leak that became especially apparent during long running large uploads, memory usage is now minimal and stable over time.
+
 ## 0.48.0
 
 ### Minor Changes
