@@ -2,6 +2,15 @@
 
 SDK for interacting directly with the Sia network from browsers and web clients.
 
-## Running unit tests
+## Installation
 
-Run `nx test sdk` to execute the unit tests via [Jest](https://jestjs.io).
+`npm install @siafoundation/sdk`
+
+## Usage
+
+```js
+import { initSDK } from '@siafoundation/sdk'
+
+const sdk = await initSDK()
+const { phrase, error } = sdk.wallet.generateSeedPhrase()
+```

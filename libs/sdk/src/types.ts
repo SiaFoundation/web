@@ -1,3 +1,10 @@
+import {
+  Transaction,
+  UnlockConditions,
+  ConsensusNetwork,
+  ConsensusState,
+} from '@siafoundation/types'
+
 type Currency = string
 type Signature = string
 type Address = string
@@ -141,6 +148,59 @@ export type WASM = {
     }
     decodeWriteSectorResponse: (rpc: Uint8Array) => {
       data?: RPCWriteSectorResponse
+      error?: string
+    }
+  }
+  wallet: {
+    generateSeedPhrase: () => {
+      phrase?: string
+      error?: string
+    }
+    generateKeyPair: () => {
+      privateKey?: string
+      publicKey?: string
+      error?: string
+    }
+    keyPairFromSeedPhrase: (
+      phrase: string,
+      index: number
+    ) => {
+      privateKey?: string
+      publicKey?: string
+      error?: string
+    }
+    standardUnlockConditions: (publicKey: string) => {
+      unlockConditions?: UnlockConditions
+      error?: string
+    }
+    standardUnlockHash: (publicKey: string) => {
+      address?: string
+      error?: string
+    }
+    addressFromUnlockConditions: (unlockConditions: UnlockConditions) => {
+      address?: string
+      error?: string
+    }
+    addressFromSpendPolicy: (spendPolicy: string) => {
+      address?: string
+      error?: string
+    }
+    encodeTransaction: (txn: Transaction) => {
+      encodedTransaction?: string
+      error?: string
+    }
+    signTransaction: (
+      cs: ConsensusState,
+      cn: ConsensusNetwork,
+      txn: Transaction,
+      sigIndex: number,
+      privateKey: string
+    ) => {
+      signature?: string
+      error?: string
+    }
+    transactionId: (txn: Transaction) => {
+      id?: string
       error?: string
     }
   }

@@ -1,30 +1,13 @@
-import Sia from '@siacentral/ledgerjs-sia'
-import { LedgerDevice } from '../contexts/ledger/types'
 import { Transaction } from '@siafoundation/types'
 
-export function getMockDevice() {
-  return {
-    type: 'HID',
-    sia: {
-      transport: {},
-      getVersion: jest.fn(() => '0.4.5'),
-      signTransaction: jest
-        .fn()
-        .mockReturnValueOnce(
-          'Xt1EJckLmWXU+7HHHDN9bRV5KRuLdC4YY01LzaAMF269QH4hWV8zFkY3kCWs65svhb9HhA1Ix1MRGvhN9orBDpAA'
-        )
-        .mockReturnValueOnce(
-          'fvmSaRzlO/n2L5tsT32e82kWqHnIjQJ8cqjWOc37TtlK6p/vIiOG+TO98HfvbgObTOYVqlKMtUyxTOjGb3bfCpAA'
-        ),
-    } as unknown as Sia,
-    transport: {
-      forget: jest.fn(),
-      deviceModel: {
-        productName: 'Ledger Nano S',
-      },
-      _disconnectEmitted: false,
-    },
-  } as LedgerDevice
+export const mockPhrase =
+  'print fragile winter vote coach pledge deal lazy soap crystal easy amount'
+
+export const mockKeyPair0 = {
+  privateKey:
+    'c0f720e0ba1d80f8b34c71ec93421083e72204bf14bc5bebb5bcdc3c621eb20e859398ea9342a3cb8fb62506e502907eec0831ff5846fa9b7f7664253462266d',
+  publicKey:
+    'ed25519:859398ea9342a3cb8fb62506e502907eec0831ff5846fa9b7f7664253462266d',
 }
 
 export function getTransaction(): Transaction {
@@ -35,9 +18,7 @@ export function getTransaction(): Transaction {
           'scoid:b222428602c8382b67a769d17e1cdc0952f37f2441a872b92671a6ed76cf22f5',
         unlockConditions: {
           timelock: 0,
-          publicKeys: [
-            'ed25519:b5b9196a3c19f94982bcdba250a973181b22112437832a8f818f4aa73b8add74',
-          ],
+          publicKeys: [mockKeyPair0.publicKey],
           signaturesRequired: 1,
         },
       },
@@ -71,15 +52,24 @@ export function getTransaction(): Transaction {
           'addr:eb2ee5169dd9aaab804b38f7e70043690ac21da1144990a4a28c1dcf66cd7ee9845aef03006f',
       },
     ],
+    signatures: [
+      {
+        parentID:
+          'h:b53e88ce69f19f0bf1d3496479f20b72e1133c719e82278830ee6618bb582852',
+        publicKeyIndex: 0,
+        timelock: 0,
+        coveredFields: {
+          wholeTransaction: true,
+        },
+        signature: '',
+      },
+    ],
     minerFees: ['3930000000000000000000'],
   }
 }
 
 export function getToSign() {
-  return [
-    'h:b53e88ce69f19f0bf1d3496479f20b72e1133c719e82278830ee6618bb582852',
-    'h:b222428602c8382b67a769d17e1cdc0952f37f2441a872b92671a6ed76cf22f5',
-  ]
+  return ['h:b53e88ce69f19f0bf1d3496479f20b72e1133c719e82278830ee6618bb582852']
 }
 
 export function getAddresses() {

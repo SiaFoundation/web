@@ -24,6 +24,18 @@ func main() {
 			"encodeWriteSectorResponse": jsFunc(encodeWriteSectorResponse),
 			"decodeWriteSectorResponse": jsFunc(decodeWriteSectorResponse),
 		},
+		"wallet": map[string]any{
+			"generateSeedPhrase":          jsFunc(generateSeedPhrase),
+			"generateKeyPair":             jsFunc(generateKeyPair),
+			"keyPairFromSeedPhrase":       jsFunc(keyPairFromSeedPhrase),
+			"standardUnlockConditions":    jsFunc(standardUnlockConditions),
+			"standardUnlockHash":          jsFunc(standardUnlockHash),
+			"addressFromUnlockConditions": jsFunc(addressFromUnlockConditions),
+			"addressFromSpendPolicy":      jsFunc(addressFromSpendPolicy),
+			"encodeTransaction":           jsFunc(encodeTransaction),
+			"transactionId":               jsFunc(transactionID),
+			"signTransaction":             jsFunc(signTransaction),
+		},
 	})
 	c := make(chan bool, 1)
 	<-c
