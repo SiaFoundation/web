@@ -1,276 +1,128 @@
 package main
 
 import (
+	"encoding/hex"
 	"syscall/js"
 
 	"go.sia.tech/core/rhp/v4"
-	"go.sia.tech/web/sdk/encode"
-	"go.sia.tech/web/sdk/utils"
 )
 
-// settings test
-
-func encodeSettings(this js.Value, args []js.Value) interface{} {
-	if err := utils.CheckArgs(args, js.TypeObject); err != nil {
-		return map[string]any{"error": err.Error()}
+func generateAccount(this js.Value, args []js.Value) result {
+	if err := checkArgs(args); err != nil {
+		return resultErr(err)
 	}
 
-	var r rhp.HostSettings
-	if err := encode.UnmarshalStruct(args[0], &r); err != nil {
-		return map[string]any{"error": err.Error()}
-	}
+	pk, a := rhp.GenerateAccount()
 
-	rpc, err := encode.EncodeRPC(&r)
-	if err != nil {
-		return map[string]any{"error": err.Error()}
-	}
+	privateKey := hex.EncodeToString(pk)
+	account := hex.EncodeToString(a[:])
 
-	return map[string]any{"rpc": rpc}
-}
-
-func decodeSettings(this js.Value, args []js.Value) interface{} {
-	if err := utils.CheckArgs(args, js.TypeObject); err != nil {
-		return map[string]any{"error": err.Error()}
-	}
-
-	hsRpc, err := encode.UnmarshalUint8Array(args[0])
-	if err != nil {
-		return map[string]any{"error": err.Error()}
-	}
-
-	var r rhp.HostSettings
-	data, err := encode.DecodeRPC(hsRpc, &r)
-	if err != nil {
-		return map[string]any{"error": err.Error()}
-	}
-
-	return map[string]any{"data": data}
+	return result(map[string]any{
+		"privateKey": privateKey,
+		"account":    account,
+	})
 }
 
 // settings
 
-// func encodeSettingsRequest(this js.Value, args []js.Value) interface{} {
-// 	if err := utils.CheckArgs(args, js.TypeObject); err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
+func encodeSettingsRequest(this js.Value, args []js.Value) result {
+	if err := checkArgs(args); err != nil {
+		return resultErr(err)
+	}
+	var r rhp.RPCSettingsRequest
+	return encodeRPCRequest(js.Undefined(), &r)
+}
 
-// 	var r rhp.RPCSettingsRequest
-// 	if err := encode.UnmarshalStruct(args[0], &r); err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
+func decodeSettingsRequest(this js.Value, args []js.Value) result {
+	if err := checkArgs(args, js.TypeObject); err != nil {
+		return resultErr(err)
+	}
+	var r rhp.RPCSettingsRequest
+	return decodeRPCRequest(args[0], &r)
+}
 
-// 	rpc, err := encode.EncodeRPC(&r)
-// 	if err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
+func encodeSettingsResponse(this js.Value, args []js.Value) result {
+	if err := checkArgs(args, js.TypeObject); err != nil {
+		return resultErr(err)
+	}
+	var r rhp.RPCSettingsResponse
+	return encodeRPCResponse(args[0], &r)
+}
 
-// 	return map[string]any{"rpc": rpc}
-// }
+func decodeSettingsResponse(this js.Value, args []js.Value) result {
+	if err := checkArgs(args, js.TypeObject); err != nil {
+		return resultErr(err)
+	}
+	var r rhp.RPCSettingsResponse
+	return decodeRPCResponse(args[0], &r)
+}
 
-// func decodeSettingsRequest(this js.Value, args []js.Value) interface{} {
-// 	if err := utils.CheckArgs(args, js.TypeObject); err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
+// read sector
 
-// 	hsRpc, err := encode.UnmarshalUint8Array(args[0])
-// 	if err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
+func encodeReadSectorRequest(this js.Value, args []js.Value) result {
+	if err := checkArgs(args, js.TypeObject); err != nil {
+		return resultErr(err)
+	}
 
-// 	var r rhp.RPCSettingsRequest
-// 	data, err := encode.DecodeRPC(hsRpc, &r)
-// 	if err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
+	var r rhp.RPCReadSectorRequest
+	return encodeRPCRequest(args[0], &r)
+}
 
-// 	return map[string]any{"data": data}
-// }
+func decodeReadSectorRequest(this js.Value, args []js.Value) result {
+	if err := checkArgs(args, js.TypeObject); err != nil {
+		return resultErr(err)
+	}
+	var r rhp.RPCReadSectorRequest
+	return decodeRPCRequest(args[0], &r)
+}
 
-// func encodeSettingsResponse(this js.Value, args []js.Value) interface{} {
-// 	if err := utils.CheckArgs(args, js.TypeObject); err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
+func encodeReadSectorResponse(this js.Value, args []js.Value) result {
+	if err := checkArgs(args, js.TypeObject); err != nil {
+		return resultErr(err)
+	}
+	var r rhp.RPCReadSectorResponse
+	return encodeRPCResponse(args[0], &r)
+}
 
-// 	var r rhp.RPCSettingsResponse
-// 	if err := encode.UnmarshalStruct(args[0], &r); err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
+func decodeReadSectorResponse(this js.Value, args []js.Value) result {
+	if err := checkArgs(args, js.TypeObject); err != nil {
+		return resultErr(err)
+	}
+	var r rhp.RPCReadSectorResponse
+	return decodeRPCResponse(args[0], &r)
+}
 
-// 	rpc, err := encode.EncodeRPC(&r)
-// 	if err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
+// write sector
 
-// 	return map[string]any{"rpc": rpc}
-// }
+func encodeWriteSectorRequest(this js.Value, args []js.Value) result {
+	if err := checkArgs(args, js.TypeObject); err != nil {
+		return resultErr(err)
+	}
+	var r rhp.RPCWriteSectorRequest
+	return encodeRPCRequest(args[0], &r)
+}
 
-// func decodeSettingsResponse(this js.Value, args []js.Value) interface{} {
-// 	if err := utils.CheckArgs(args, js.TypeObject); err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
+func decodeWriteSectorRequest(this js.Value, args []js.Value) result {
+	if err := checkArgs(args, js.TypeObject); err != nil {
+		return resultErr(err)
+	}
+	var r rhp.RPCWriteSectorRequest
+	return decodeRPCRequest(args[0], &r)
+}
 
-// 	hsRpc, err := encode.UnmarshalUint8Array(args[0])
-// 	if err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
+func encodeWriteSectorResponse(this js.Value, args []js.Value) result {
+	if err := checkArgs(args, js.TypeObject); err != nil {
+		return resultErr(err)
+	}
 
-// 	var r rhp.RPCSettingsResponse
-// 	data, err := encode.DecodeRPC(hsRpc, &r)
-// 	if err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
+	var r rhp.RPCWriteSectorResponse
+	return encodeRPCResponse(args[0], &r)
+}
 
-// 	return map[string]any{"data": data}
-// }
-
-// // read sector
-
-// func encodeReadSectorRequest(this js.Value, args []js.Value) interface{} {
-// 	if err := utils.CheckArgs(args, js.TypeObject); err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	var r rhp.RPCReadSectorRequest
-// 	if err := encode.UnmarshalStruct(args[0], &r); err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	rpc, err := encode.EncodeRPC(&r)
-// 	if err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	return map[string]any{"rpc": rpc}
-// }
-
-// func decodeReadSectorRequest(this js.Value, args []js.Value) interface{} {
-// 	if err := utils.CheckArgs(args, js.TypeObject); err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	hsRpc, err := encode.UnmarshalUint8Array(args[0])
-// 	if err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	var r rhp.RPCReadSectorRequest
-// 	data, err := encode.DecodeRPC(hsRpc, &r)
-// 	if err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	return map[string]any{"data": data}
-// }
-
-// func encodeReadSectorResponse(this js.Value, args []js.Value) interface{} {
-// 	if err := utils.CheckArgs(args, js.TypeObject); err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	var r rhp.RPCReadSectorResponse
-// 	if err := encode.UnmarshalStruct(args[0], &r); err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	rpc, err := encode.EncodeRPC(&r)
-// 	if err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	return map[string]any{"rpc": rpc}
-// }
-
-// func decodeReadSectorResponse(this js.Value, args []js.Value) interface{} {
-// 	if err := utils.CheckArgs(args, js.TypeObject); err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	hsRpc, err := encode.UnmarshalUint8Array(args[0])
-// 	if err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	var r rhp.RPCReadSectorResponse
-// 	data, err := encode.DecodeRPC(hsRpc, &r)
-// 	if err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	return map[string]any{"data": data}
-// }
-
-// // write sector
-
-// func encodeWriteSectorRequest(this js.Value, args []js.Value) interface{} {
-// 	if err := utils.CheckArgs(args, js.TypeObject); err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	var r rhp.RPCWriteSectorRequest
-// 	if err := encode.UnmarshalStruct(args[0], &r); err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	rpc, err := encode.EncodeRPC(&r)
-// 	if err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	return map[string]any{"rpc": rpc}
-// }
-
-// func decodeWriteSectorRequest(this js.Value, args []js.Value) interface{} {
-// 	if err := utils.CheckArgs(args, js.TypeObject); err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	hsRpc, err := encode.UnmarshalUint8Array(args[0])
-// 	if err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	var r rhp.RPCWriteSectorRequest
-// 	data, err := encode.DecodeRPC(hsRpc, &r)
-// 	if err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	return map[string]any{"data": data}
-// }
-
-// func encodeWriteSectorResponse(this js.Value, args []js.Value) interface{} {
-// 	if err := utils.CheckArgs(args, js.TypeObject); err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	var r rhp.RPCWriteSectorResponse
-// 	if err := encode.UnmarshalStruct(args[0], &r); err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	rpc, err := encode.EncodeRPC(&r)
-// 	if err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	return map[string]any{"rpc": rpc}
-// }
-
-// func decodeWriteSectorResponse(this js.Value, args []js.Value) interface{} {
-// 	if err := utils.CheckArgs(args, js.TypeObject); err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	hsRpc, err := encode.UnmarshalUint8Array(args[0])
-// 	if err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	var r rhp.RPCWriteSectorResponse
-// 	data, err := encode.DecodeRPC(hsRpc, &r)
-// 	if err != nil {
-// 		return map[string]any{"error": err.Error()}
-// 	}
-
-// 	return map[string]any{"data": data}
-// }
+func decodeWriteSectorResponse(this js.Value, args []js.Value) result {
+	if err := checkArgs(args, js.TypeObject); err != nil {
+		return resultErr(err)
+	}
+	var r rhp.RPCWriteSectorResponse
+	return decodeRPCResponse(args[0], &r)
+}

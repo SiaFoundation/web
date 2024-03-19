@@ -24,7 +24,7 @@ runs:
         registry-url: https://registry.npmjs.org
     - uses: actions/setup-go@v4
       with:
-        go-version: '1.20'
+        go-version: '1.21.7'
     - uses: acifani/setup-tinygo@v2
       with:
         tinygo-version: '0.30.0'
@@ -41,8 +41,13 @@ runs:
         # If source files changed but packages didn't, rebuild from a prior cache.
         restore-keys: |
           ${{ runner.os }}-${{ inputs.node_version }}-${{ hashFiles('**/package-lock.json') }}-
-    - name: Install
+    - name: Install JavaScript dependencies
       # could do this since its a ci, but it force rebuilds node_modules
       # run: npm ci
       run: npm install
+      shell: bash
+    - name: Install Go dependencies
+      run: |
+        go mod tidy
+        go mod download
       shell: bash

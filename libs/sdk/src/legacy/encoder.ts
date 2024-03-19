@@ -90,20 +90,24 @@ export function decodeString(d: Decoder): string {
   return s
 }
 
-export function encodeCurrency(e: Encoder, c: bigint) {
+export function encodeCurrency(e: Encoder, c: string) {
   // currency is 128 bits, little endian
-  e.dataView.setBigUint64(e.offset, c & BigInt('0xFFFFFFFFFFFFFFFF'), true)
+  e.dataView.setBigUint64(
+    e.offset,
+    BigInt(c) & BigInt('0xFFFFFFFFFFFFFFFF'),
+    true
+  )
   e.offset += 8
-  e.dataView.setBigUint64(e.offset, c >> BigInt(64), true)
+  e.dataView.setBigUint64(e.offset, BigInt(c) >> BigInt(64), true)
   e.offset += 8
 }
 
-export function decodeCurrency(d: Decoder): bigint {
+export function decodeCurrency(d: Decoder): string {
   const lo = d.dataView.getBigUint64(d.offset, true)
   d.offset += 8
   const hi = d.dataView.getBigUint64(d.offset, true)
   d.offset += 8
-  return (hi << BigInt(64)) | lo
+  return String((hi << BigInt(64)) | lo)
 }
 
 export function encodeAddress(e: Encoder, a: string) {

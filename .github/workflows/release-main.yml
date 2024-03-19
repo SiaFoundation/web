@@ -32,6 +32,9 @@ jobs:
       - name: Lint
         shell: bash
         run: npx nx run-many --target=lint --all --parallel=5
+      - name: Compile
+        shell: bash
+        run: npx nx run-many --target=compile --all --parallel=5
       - name: Test
         shell: bash
         run: npx nx run-many --target=test --all --parallel=5
