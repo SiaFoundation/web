@@ -1,35 +1,36 @@
 package main
 
 import (
-	"fmt"
 	"syscall/js"
 )
 
 func main() {
-	fmt.Println("WASM SDK: init")
-	js.Global().Set("sdk", map[string]interface{}{
-		"generateAccountID": js.FuncOf(generateAccountID),
-		"rhp": map[string]interface{}{
-			// test
-			"encodeSettings": js.FuncOf(encodeSettings),
-			"decodeSettings": js.FuncOf(decodeSettings),
-			// // settings
-			// "encodeSettingsRequest":  js.FuncOf(encodeSettingsRequest),
-			// "decodeSettingsRequest":  js.FuncOf(decodeSettingsRequest),
-			// "encodeSettingsResponse": js.FuncOf(encodeSettingsResponse),
-			// "decodeSettingsResponse": js.FuncOf(decodeSettingsResponse),
-			// // read sector
-			// "encodeReadSectorRequest":  js.FuncOf(encodeReadSectorRequest),
-			// "decodeReadSectorRequest":  js.FuncOf(decodeReadSectorRequest),
-			// "encodeReadSectorResponse": js.FuncOf(encodeReadSectorResponse),
-			// "decodeReadSectorResponse": js.FuncOf(decodeReadSectorResponse),
-			// // write sector
-			// "encodeWriteSectorRequest":  js.FuncOf(encodeWriteSectorRequest),
-			// "decodeWriteSectorRequest":  js.FuncOf(decodeWriteSectorRequest),
-			// "encodeWriteSectorResponse": js.FuncOf(encodeWriteSectorResponse),
-			// "decodeWriteSectorResponse": js.FuncOf(decodeWriteSectorResponse),
+	js.Global().Set("sia", map[string]any{
+		"rhp": map[string]any{
+			"generateAccount": jsFunc(generateAccount),
+			// settings
+			"encodeSettingsRequest":  jsFunc(encodeSettingsRequest),
+			"decodeSettingsRequest":  jsFunc(decodeSettingsRequest),
+			"encodeSettingsResponse": jsFunc(encodeSettingsResponse),
+			"decodeSettingsResponse": jsFunc(decodeSettingsResponse),
+			// read sector
+			"encodeReadSectorRequest":  jsFunc(encodeReadSectorRequest),
+			"decodeReadSectorRequest":  jsFunc(decodeReadSectorRequest),
+			"encodeReadSectorResponse": jsFunc(encodeReadSectorResponse),
+			"decodeReadSectorResponse": jsFunc(decodeReadSectorResponse),
+			// write sector
+			"encodeWriteSectorRequest":  jsFunc(encodeWriteSectorRequest),
+			"decodeWriteSectorRequest":  jsFunc(decodeWriteSectorRequest),
+			"encodeWriteSectorResponse": jsFunc(encodeWriteSectorResponse),
+			"decodeWriteSectorResponse": jsFunc(decodeWriteSectorResponse),
 		},
 	})
 	c := make(chan bool, 1)
 	<-c
+}
+
+func jsFunc(method func(js.Value, []js.Value) map[string]any) js.Func {
+	return js.FuncOf(func(this js.Value, args []js.Value) any {
+		return method(this, args)
+	})
 }

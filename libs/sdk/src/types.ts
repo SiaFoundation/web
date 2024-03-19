@@ -1,8 +1,15 @@
-type Currency = bigint
+type Currency = string
 type Signature = string
 type Address = string
 type Hash256 = string // 32 bytes
-type AccountID = string // 16 bytes
+type PrivateKey = string
+type PublicKey = string // 32 bytes
+
+type AccountToken = {
+  account: PublicKey
+  validUntil: string
+  signature: Signature
+}
 
 export type HostPrices = {
   contractPrice: Currency
@@ -21,7 +28,7 @@ export type NetAddress = {
 }
 
 export type HostSettings = {
-  version: string // 3 bytes
+  version: [number, number, number] // 3 bytes
   netAddresses: NetAddress[]
   walletAddress: Address // 32 bytes
   acceptingContracts: boolean
@@ -45,7 +52,7 @@ export type RPCSettings = {
 
 export type RPCReadSectorRequest = {
   prices: HostPrices
-  accountId: AccountID // 16 bytes
+  token: AccountToken
   root: Hash256 // 32 bytes - types.Hash256
   offset: number // uint64
   length: number // uint64
@@ -53,7 +60,7 @@ export type RPCReadSectorRequest = {
 
 export type RPCReadSectorResponse = {
   proof: Hash256[] // 32 bytes each - types.Hash256
-  sector: Uint8Array // []byte
+  sector: string // 4MiB sector, Go marshaling expects a base64-encoded representation of a byte array
 }
 
 export type RPCReadSector = {
@@ -63,8 +70,8 @@ export type RPCReadSector = {
 
 export type RPCWriteSectorRequest = {
   prices: HostPrices
-  accountId: AccountID // 16 bytes
-  sector: Uint8Array // []byte - extended to SectorSize by host
+  token: AccountToken
+  sector: string // 4MiB sector, Go marshaling expects a base64-encoded representation of a byte array
 }
 
 export type RPCWriteSectorResponse = {
@@ -77,3 +84,64 @@ export type RPCWriteSector = {
 }
 
 export type RPC = RPCSettings | RPCReadSector | RPCWriteSector
+
+export type WASM = {
+  rhp: {
+    generateAccount: () => {
+      privateKey?: PrivateKey
+      account?: PublicKey
+      error?: string
+    }
+    // settings
+    encodeSettingsRequest: (data: RPCSettingsRequest) => {
+      rpc?: Uint8Array
+      error?: string
+    }
+    decodeSettingsRequest: (rpc: Uint8Array) => {
+      data?: Record<string, never>
+      error?: string
+    }
+    encodeSettingsResponse: (data: RPCSettingsResponse) => {
+      rpc?: Uint8Array
+      error?: string
+    }
+    decodeSettingsResponse: (rpc: Uint8Array) => {
+      data?: RPCSettingsResponse
+      error?: string
+    }
+    // read sector
+    encodeReadSectorRequest: (data: RPCReadSectorRequest) => {
+      rpc?: Uint8Array
+      error?: string
+    }
+    decodeReadSectorRequest: (rpc: Uint8Array) => {
+      data?: RPCReadSectorRequest
+      error?: string
+    }
+    encodeReadSectorResponse: (data: RPCReadSectorResponse) => {
+      rpc?: Uint8Array
+      error?: string
+    }
+    decodeReadSectorResponse: (rpc: Uint8Array) => {
+      data?: RPCReadSectorResponse
+      error?: string
+    }
+    // read sector
+    encodeWriteSectorRequest: (data: RPCWriteSectorRequest) => {
+      rpc?: Uint8Array
+      error?: string
+    }
+    decodeWriteSectorRequest: (rpc: Uint8Array) => {
+      data?: RPCWriteSectorRequest
+      error?: string
+    }
+    encodeWriteSectorResponse: (data: RPCWriteSectorResponse) => {
+      rpc?: Uint8Array
+      error?: string
+    }
+    decodeWriteSectorResponse: (rpc: Uint8Array) => {
+      data?: RPCWriteSectorResponse
+      error?: string
+    }
+  }
+}

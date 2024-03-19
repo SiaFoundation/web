@@ -1,12 +1,3 @@
-import { Decoder, Encoder, newDecoder, newEncoder } from './encoder'
-import {
-  decodeRpcResponseSettings,
-  decodeRpcResponseReadSector,
-  decodeRpcResponseWriteSector,
-  encodeRpcRequestSettings,
-  encodeRpcRequestReadSector,
-  encodeRpcRequestWriteSector,
-} from './rpc'
 import {
   RPCReadSectorResponse,
   RPCSettingsResponse,
@@ -17,16 +8,20 @@ import {
   RPCReadSector,
   RPCWriteSector,
   RPCSettings,
-} from '../types'
+} from './types'
+import { WASM } from './types'
 
 export class WebTransportClient {
-  private transport!: WebTransport
-  private url: string
-  private cert: string
+  #url: string
+  #cert: string
+  #wasm: WASM
 
-  constructor(url: string, cert: string) {
-    this.url = url
-    this.cert = cert
+  #transport!: WebTransport
+
+  constructor(url: string, cert: string, wasm: WASM) {
+    this.#url = url
+    this.#cert = cert
+    this.#wasm = wasm
   }
 
   async connect() {
@@ -35,17 +30,17 @@ export class WebTransportClient {
     }
 
     try {
-      this.transport = new WebTransport(this.url, {
-        serverCertificateHashes: this.cert
+      this.#transport = new WebTransport(this.#url, {
+        serverCertificateHashes: this.#cert
           ? [
               {
                 algorithm: 'sha-256',
-                value: base64ToArrayBuffer(this.cert),
+                value: base64ToArrayBuffer(this.#cert),
               },
             ]
           : undefined,
       })
-      await this.transport.ready
+      await this.#transport.ready
     } catch (e) {
       console.error('connect', e)
       throw e
@@ -54,22 +49,22 @@ export class WebTransportClient {
 
   private async sendRequest<T extends RPC>(
     rpcRequest: T['request'],
-    encodeFn: (e: Encoder, data: T['request']) => void,
-    decodeFn: (d: Decoder) => T['response']
+    encodeFn: (data: T['request']) => { rpc?: Uint8Array; error?: string },
+    decodeFn: (rpc: Uint8Array) => { data?: T['response']; error?: string }
   ): Promise<T['response']> {
     let stream: WebTransportBidirectionalStream | undefined
     try {
-      stream = await this.transport.createBidirectionalStream()
+      stream = await this.#transport.createBidirectionalStream()
       if (!stream) {
         throw new Error('Bidirectional stream not opened')
       }
 
       const writer = stream.writable.getWriter()
-      const e = newEncoder()
-      encodeFn(e, rpcRequest)
-
-      const buf = new Uint8Array(e.dataView.buffer, 0, e.offset)
-      await writer.write(buf)
+      const { rpc, error } = encodeFn(rpcRequest)
+      if (!rpc || error) {
+        throw new Error(error)
+      }
+      await writer.write(rpc)
       await writer.close()
 
       return this.handleIncomingData(stream, decodeFn)
@@ -79,10 +74,10 @@ export class WebTransportClient {
     }
   }
 
-  private async handleIncomingData<T>(
+  private async handleIncomingData<T extends RPC>(
     stream: WebTransportBidirectionalStream,
-    decodeFn: (d: Decoder) => T
-  ): Promise<T> {
+    decodeFn: (rpc: Uint8Array) => { data?: T['response']; error?: string }
+  ): Promise<T['response']> {
     try {
       const reader = stream.readable.getReader()
       const { value, done } = await reader.read()
@@ -90,7 +85,11 @@ export class WebTransportClient {
         throw new Error('Stream closed by the server.')
       }
       await reader.cancel()
-      return decodeFn(newDecoder(value))
+      const { data, error } = decodeFn(value)
+      if (!data || error) {
+        throw new Error(error)
+      }
+      return data
     } catch (e) {
       console.error('handleIncomingData', e)
       throw e
@@ -102,8 +101,8 @@ export class WebTransportClient {
   ): Promise<RPCReadSectorResponse> {
     return this.sendRequest<RPCReadSector>(
       readSector,
-      encodeRpcRequestReadSector,
-      decodeRpcResponseReadSector
+      this.#wasm.rhp.encodeReadSectorRequest,
+      this.#wasm.rhp.decodeReadSectorResponse
     )
   }
 
@@ -112,25 +111,24 @@ export class WebTransportClient {
   ): Promise<RPCWriteSectorResponse> {
     return this.sendRequest<RPCWriteSector>(
       writeSector,
-      encodeRpcRequestWriteSector,
-      decodeRpcResponseWriteSector
+      this.#wasm.rhp.encodeWriteSectorRequest,
+      this.#wasm.rhp.decodeWriteSectorResponse
     )
   }
 
   async sendRPCSettingsRequest(): Promise<RPCSettingsResponse> {
     return this.sendRequest<RPCSettings>(
       undefined,
-      encodeRpcRequestSettings,
-      decodeRpcResponseSettings
+      this.#wasm.rhp.encodeSettingsRequest,
+      this.#wasm.rhp.decodeSettingsResponse
     )
   }
 }
 
-function base64ToArrayBuffer(base64: string) {
-  const binaryString = window.atob(base64)
-  const bytes = new Uint8Array(binaryString.length)
-  for (let i = 0; i < binaryString.length; i++) {
-    bytes[i] = binaryString.charCodeAt(i)
-  }
-  return bytes.buffer
+function base64ToArrayBuffer(base64: string): ArrayBuffer {
+  const buffer = Buffer.from(base64, 'base64')
+  return buffer.buffer.slice(
+    buffer.byteOffset,
+    buffer.byteOffset + buffer.byteLength
+  )
 }

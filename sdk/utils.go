@@ -1,4 +1,4 @@
-package utils
+package main
 
 import (
 	"encoding/json"
@@ -9,7 +9,7 @@ import (
 	"syscall/js"
 )
 
-func CheckArgs(args []js.Value, argTypes ...js.Type) error {
+func checkArgs(args []js.Value, argTypes ...js.Type) error {
 	if len(args) != len(argTypes) {
 		return fmt.Errorf("incorrect number of arguments - expected: %d, got: %d", len(argTypes), len(args))
 	}
@@ -23,7 +23,7 @@ func CheckArgs(args []js.Value, argTypes ...js.Type) error {
 	return nil
 }
 
-func encodeJSON(w io.Writer, v interface{}) error {
+func encodeJSON(w io.Writer, v any) error {
 	// encode nil slices as [] instead of null
 	if val := reflect.ValueOf(v); val.Kind() == reflect.Slice && val.Len() == 0 {
 		_, err := w.Write([]byte("[]\n"))
@@ -34,6 +34,6 @@ func encodeJSON(w io.Writer, v interface{}) error {
 	return enc.Encode(v)
 }
 
-func PrintStruct(v interface{}) error {
+func printStruct(v any) error {
 	return encodeJSON(os.Stdout, v)
 }

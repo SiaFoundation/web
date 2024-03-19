@@ -3,13 +3,11 @@ import {
   decodeCurrency,
   encodeAddress,
   encodeBoolean,
-  encodeBytes,
   encodeString,
   encodeUint64,
   encodeLengthPrefix,
   decodeAddress,
   decodeBoolean,
-  decodeBytes,
   decodeString,
   decodeUint64,
   decodeLengthPrefix,
@@ -19,8 +17,10 @@ import {
   decodeTime,
   Encoder,
   Decoder,
+  decodeUint8Array,
+  encodeUint8Array,
 } from './encoder'
-import { HostPrices, HostSettings, NetAddress } from '../types'
+import { HostPrices, HostSettings, NetAddress } from './types'
 
 export function encodeHostPrices(e: Encoder, hostPrices: HostPrices) {
   encodeCurrency(e, hostPrices.contractPrice)
@@ -69,7 +69,7 @@ export function decodeNetAddress(d: Decoder): NetAddress {
 }
 
 export function encodeHostSettings(e: Encoder, hostSettings: HostSettings) {
-  encodeBytes(e, hostSettings.version)
+  encodeUint8Array(e, hostSettings.version)
   encodeLengthPrefix(e, hostSettings.netAddresses.length)
   for (let i = 0; i < hostSettings.netAddresses.length; i++) {
     encodeNetAddress(e, hostSettings.netAddresses[i])
@@ -84,7 +84,7 @@ export function encodeHostSettings(e: Encoder, hostSettings: HostSettings) {
 }
 
 export function decodeHostSettings(d: Decoder): HostSettings {
-  const version = decodeBytes(d, 3)
+  const version = decodeUint8Array(d, 3)
   const netAddresses = []
   const length = decodeLengthPrefix(d)
   for (let i = 0; i < length; i++) {

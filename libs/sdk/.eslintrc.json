@@ -1,6 +1,6 @@
 {
   "extends": ["plugin:@nx/react", "../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*"],
+  "ignorePatterns": ["!**/*", "src/utils/wasm_exec.js"],
   "rules": {
     "@nx/dependency-checks": [
       "error",

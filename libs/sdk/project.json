@@ -15,7 +15,8 @@
       "cache": true,
       "options": {
         "commands": [
-          "tinygo build -o libs/sdk/src/wasm/resources/sdk.wasm -target wasm ./sdk"
+          "cp $(go env GOROOT)/misc/wasm/wasm_exec.js libs/sdk/src/utils/wasm_exec.js",
+          "GOOS=js GOARCH=wasm go build -o libs/sdk/src/resources/sdk.wasm ./sdk"
         ]
       }
     },
@@ -50,6 +51,7 @@
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/sdk"],
+      "dependsOn": ["compile"],
       "options": {
         "jestConfig": "libs/sdk/jest.config.ts"
       }

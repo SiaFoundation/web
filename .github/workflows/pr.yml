@@ -25,13 +25,16 @@ jobs:
       - name: Commit lint
         shell: bash
         run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
-      - name: Lint
+      - name: Lint TypeScript
         shell: bash
         run: npx nx affected --target=lint --parallel=5
       - name: Lint Go
         uses: golangci/golangci-lint-action@v3
         with:
           skip-cache: true
+      - name: Compile
+        shell: bash
+        run: npx nx affected --target=compile --parallel=5
       - name: Test
         shell: bash
         run: npx nx affected --target=test --parallel=5

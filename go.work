@@ -1,9 +1,9 @@
-go 1.20
+go 1.21.7
 
 use (
 	./
 	./hostd
 	./renterd
-	./walletd
 	./sdk
+	./walletd
 )

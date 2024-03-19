@@ -27,7 +27,7 @@ import {
   RPCSettingsResponse,
   RPCWriteSectorRequest,
   RPCWriteSectorResponse,
-} from '../types'
+} from './types'
 
 // NOTE: This JavaScript RPC and encoding implementations is not currently used
 // and may be incomplete or incorrect. It was written as a comparison to the WASM

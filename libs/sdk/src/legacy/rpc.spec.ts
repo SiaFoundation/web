@@ -9,7 +9,7 @@ import {
   RPCSettingsResponse,
   RPCWriteSectorRequest,
   RPCWriteSectorResponse,
-} from '../types'
+} from './types'
 import {
   decodeRpcRequestReadSector,
   decodeRpcRequestSettings,
@@ -26,18 +26,18 @@ import {
 } from './rpc'
 
 const prices: HostPrices = {
-  contractPrice: BigInt(1000000000),
-  collateral: BigInt(2000000000),
-  storagePrice: BigInt(3000000000),
-  ingressPrice: BigInt(4000000000),
-  egressPrice: BigInt(5000000000),
+  contractPrice: '1000000000',
+  collateral: '2000000000',
+  storagePrice: '3000000000',
+  ingressPrice: '4000000000',
+  egressPrice: '5000000000',
   tipHeight: 450_000,
   validUntil: '2022-12-31T00:00:00.000Z',
   signature: 'abcd567890123456789012345678901234567890123456789012345678901234',
 }
 
 const hostSettings: HostSettings = {
-  version: '123',
+  version: new Uint8Array([1, 2, 3]),
   netAddresses: [
     { protocol: 'protocol1', address: 'address1longer' },
     { protocol: 'protocol2longer', address: 'address2' },
@@ -45,7 +45,7 @@ const hostSettings: HostSettings = {
   // 32 bytes
   walletAddress: '12345678901234567890123456789012',
   acceptingContracts: true,
-  maxCollateral: BigInt(1000000000),
+  maxCollateral: '1000000000',
   maxDuration: 100,
   remainingStorage: 100,
   totalStorage: 100,

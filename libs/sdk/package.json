@@ -3,7 +3,6 @@
   "description": "SDK for interacting directly with the Sia network from browsers and web clients.",
   "version": "0.0.2",
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
     "undici": "5.28.3"
   },
