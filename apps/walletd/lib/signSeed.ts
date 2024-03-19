@@ -1,8 +1,9 @@
-import { ConsensusState, ConsensusNetwork } from '@siafoundation/react-walletd'
 import {
   SiacoinElement,
   Transaction,
   SiafundElement,
+  ConsensusState,
+  ConsensusNetwork,
 } from '@siafoundation/types'
 import { getWalletWasm } from './wasm'
 import { AddressData } from '../contexts/addresses/types'

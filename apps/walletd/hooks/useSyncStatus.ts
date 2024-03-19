@@ -1,7 +1,7 @@
 import { hoursInMilliseconds } from '@siafoundation/design-system'
 import { useAppSettings } from '@siafoundation/react-core'
+import { ConsensusState } from '@siafoundation/types'
 import {
-  ConsensusState,
   useConsensusTip,
   useConsensusTipState,
   useEstimatedNetworkBlockHeight,

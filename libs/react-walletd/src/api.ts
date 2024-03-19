@@ -11,6 +11,8 @@ import {
   useDeleteFunc,
 } from '@siafoundation/react-core'
 import {
+  ConsensusState,
+  ConsensusNetwork,
   Currency,
   BlockHeight,
   ChainIndex,
@@ -20,13 +22,7 @@ import {
   SiafundElement,
   Transaction,
 } from '@siafoundation/types'
-import {
-  ConsensusState,
-  ConsensusNetwork,
-  PoolTransaction,
-  WalletEvent,
-  GatewayPeer,
-} from './siaTypes'
+import { PoolTransaction, WalletEvent, GatewayPeer } from './siaTypes'
 
 // consensus
 

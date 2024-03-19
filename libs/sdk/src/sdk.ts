@@ -6,6 +6,7 @@ export function getSDK() {
   const wasm = (global as any).sia as WASM
   return {
     rhp: wasm.rhp,
+    wallet: wasm.wallet,
     WebTransportClient,
   }
 }
