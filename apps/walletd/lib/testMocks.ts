@@ -88,27 +88,36 @@ export function getAddresses() {
       id: 'addr:934b885229a9f98153401d7a647a1862aede399c656f33ec8492dfffca557ca907a3d22089c8',
       address:
         'addr:934b885229a9f98153401d7a647a1862aede399c656f33ec8492dfffca557ca907a3d22089c8',
-      publicKey:
-        'ed25519:b5b9196a3c19f94982bcdba250a973181b22112437832a8f818f4aa73b8add74',
-      index: 1,
+      description: '',
+      metadata: {
+        publicKey:
+          'ed25519:b5b9196a3c19f94982bcdba250a973181b22112437832a8f818f4aa73b8add74',
+        index: 1,
+      },
       walletId: 'ad18cbe1-3281-4ec7-a7ad-93615009fbbc',
     },
     {
       id: 'addr:eb2ee5169dd9aaab804b38f7e70043690ac21da1144990a4a28c1dcf66cd7ee9845aef03006f',
       address:
         'addr:eb2ee5169dd9aaab804b38f7e70043690ac21da1144990a4a28c1dcf66cd7ee9845aef03006f',
-      publicKey:
-        'ed25519:8a7496aa59f17a4aae68c7e41e09d5ca94e64ba27f74cdb0b143f70dcc67b206',
-      index: 2,
+      description: '',
+      metadata: {
+        publicKey:
+          'ed25519:8a7496aa59f17a4aae68c7e41e09d5ca94e64ba27f74cdb0b143f70dcc67b206',
+        index: 2,
+      },
       walletId: 'ad18cbe1-3281-4ec7-a7ad-93615009fbbc',
     },
     {
       id: 'addr:fc9bc3482711e9f83642d07be385c0d434892245842b4c3f3b83b26d42cec15fe1aaac1be1ff',
       address:
         'addr:fc9bc3482711e9f83642d07be385c0d434892245842b4c3f3b83b26d42cec15fe1aaac1be1ff',
-      publicKey:
-        'ed25519:e80ab90d5baab391ec2e8fe31bf100f7ca3d4b5e3055eacf86afd42ab05798ba',
-      index: 0,
+      description: '',
+      metadata: {
+        publicKey:
+          'ed25519:e80ab90d5baab391ec2e8fe31bf100f7ca3d4b5e3055eacf86afd42ab05798ba',
+        index: 0,
+      },
       walletId: 'ad18cbe1-3281-4ec7-a7ad-93615009fbbc',
     },
   ]

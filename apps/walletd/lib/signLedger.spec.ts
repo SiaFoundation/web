@@ -59,7 +59,9 @@ describe('signLedger', () => {
               id: 'id',
               walletId: 'id',
               address: 'address not in addresses',
-              index: 5,
+              metadata: {
+                index: 5,
+              },
             },
           ],
           siacoinOutputs: getSiacoinOutputs(),
@@ -83,6 +85,7 @@ describe('signLedger', () => {
               id: 'id',
               walletId: 'id',
               address: getSiacoinOutputs()[1].siacoinOutput.address,
+              metadata: {},
             },
           ],
           siacoinOutputs: getSiacoinOutputs(),
@@ -97,7 +100,7 @@ describe('signLedger', () => {
       await loadWASMTestEnv()
       const device = getMockDevice()
       const addresses = getAddresses()
-      addresses[0].publicKey = undefined
+      addresses[0].metadata.publicKey = undefined
       expect(
         await signTransactionLedger({
           device,

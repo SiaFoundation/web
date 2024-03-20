@@ -30,16 +30,16 @@ export function WalletActionsMenu() {
         isSynced={status.isSynced}
       />
       <AddressesButton />
-      {wallet?.type !== 'watch' && (
+      {wallet?.metadata.type !== 'watch' && (
         <Button
           size="small"
           variant="accent"
           onClick={() => {
-            if (wallet?.type === 'seed') {
+            if (wallet?.metadata.type === 'seed') {
               openDialog('walletSendSeed', {
                 walletId,
               })
-            } else if (wallet?.type === 'ledger') {
+            } else if (wallet?.metadata.type === 'ledger') {
               openDialog('walletSendLedger', {
                 walletId,
               })

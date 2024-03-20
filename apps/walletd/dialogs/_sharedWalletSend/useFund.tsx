@@ -1,4 +1,7 @@
-import { useWalletFund, useWalletFundSf } from '@siafoundation/react-walletd'
+import {
+  useWalletFundSiacoin,
+  useWalletFundSiafund,
+} from '@siafoundation/react-walletd'
 import { useWallets } from '../../contexts/wallets'
 import { useCallback } from 'react'
 import { SendParams } from './types'
@@ -6,8 +9,8 @@ import { SendParams } from './types'
 export function useFund() {
   const { wallet } = useWallets()
   const walletId = wallet?.id
-  const walletFund = useWalletFund()
-  const walletFundSf = useWalletFundSf()
+  const walletFundSc = useWalletFundSiacoin()
+  const walletFundSf = useWalletFundSiafund()
 
   const fund = useCallback(
     async ({
@@ -27,7 +30,7 @@ export function useFund() {
 
       // fund
       if (mode === 'siacoin') {
-        const fundResponse = await walletFund.post({
+        const fundResponse = await walletFundSc.post({
           params: {
             id: walletId,
           },
@@ -83,7 +86,7 @@ export function useFund() {
           }
         }
         toSign.push(...fundResponse.data.toSign)
-        fundResponse = await walletFund.post({
+        fundResponse = await walletFundSc.post({
           params: {
             id: walletId,
           },
@@ -105,7 +108,7 @@ export function useFund() {
         }
       }
     },
-    [walletFund, walletFundSf, walletId]
+    [walletFundSc, walletFundSf, walletId]
   )
 
   return fund

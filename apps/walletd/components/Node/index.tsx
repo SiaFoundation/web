@@ -28,7 +28,8 @@ export function Node() {
   const { openDialog } = useDialog()
 
   const transactionCount = txPool.data
-    ? txPool.data.transactions.length + txPool.data.v2Transactions.length
+    ? (txPool.data.transactions?.length || 0) +
+      (txPool.data.v2Transactions?.length || 0)
     : 0
 
   return (

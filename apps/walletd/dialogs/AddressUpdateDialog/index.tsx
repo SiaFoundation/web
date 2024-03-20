@@ -18,7 +18,9 @@ const defaultValues = {
   description: '',
 }
 
-function getFields(): ConfigFields<typeof defaultValues, never> {
+type Values = typeof defaultValues
+
+function getFields(): ConfigFields<Values, never> {
   return {
     description: {
       type: 'text',
@@ -71,14 +73,14 @@ export function AddressUpdateDialog({
 
   const fields = getFields()
   const onSubmit = useCallback(
-    async (values) => {
+    async (values: Values) => {
       const response = await addressAdd.put({
         params: {
           id: walletId,
-          addr,
         },
         payload: {
-          ...address,
+          ...address.raw,
+          address: addr,
           description: values.description,
         },
       })

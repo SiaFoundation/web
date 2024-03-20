@@ -4,17 +4,11 @@ import {
   useServerFilters,
 } from '@siafoundation/design-system'
 import {
+  useResubscribe,
   useWalletEvents,
-  useWalletSubscribe,
   useWalletTxPool,
 } from '@siafoundation/react-walletd'
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-} from 'react'
+import { createContext, useCallback, useContext, useMemo } from 'react'
 import {
   CellContext,
   EventData,
@@ -62,25 +56,12 @@ export function useEventsMain() {
     },
   })
 
-  const walletSub = useWalletSubscribe()
-  const subscribe = useCallback(async () => {
-    // do not handle error because the common case of
-    // already being subscribed returns a 500.
-    walletSub.post({
-      params: {
-        id,
-      },
+  const _resubscribe = useResubscribe()
+  const resubscribe = useCallback(async () => {
+    _resubscribe.post({
       payload: 0,
     })
-  }, [walletSub, id])
-
-  // Make sure the wallet is subscribed
-  useEffect(() => {
-    if (id) {
-      subscribe()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id])
+  }, [_resubscribe])
 
   const dataset = useMemo<EventData[] | null>(() => {
     if (!responseEvents.data || !responseTxPool.data) {
@@ -88,7 +69,6 @@ export function useEventsMain() {
     }
     const dataTxPool: EventData[] = responseTxPool.data.map((e) => ({
       id: e.id,
-      transactionId: e.id,
       timestamp: 0,
       pending: true,
       type: e.type,
@@ -134,10 +114,12 @@ export function useEventsMain() {
       if (e.type === 'miner payout') {
         amountSc = new BigNumber(e.val.siacoinOutput.siacoinOutput.value)
       }
+      if (e.type === 'foundation subsidy') {
+        amountSc = new BigNumber(e.val.siacoinOutput.siacoinOutput.value)
+      }
 
-      const id = String(index)
       const res: EventData = {
-        id,
+        id: e.id,
         type: e.type,
         timestamp: new Date(e.timestamp).getTime(),
         height: e.index.height,
@@ -145,15 +127,11 @@ export function useEventsMain() {
         amountSc,
         amountSf,
       }
-      if ('fee' in e.val) {
+      if (e.type === 'transaction') {
         res.fee = new BigNumber(e.val.fee)
       }
-      if ('fileContract' in e.val) {
+      if (e.type === 'contract payout') {
         res.contractId = e.val.fileContract.id
-      }
-      if ('id' in e.val) {
-        res.id += e.val.id
-        res.transactionId = e.val.id
       }
       return res
     })
@@ -226,6 +204,7 @@ export function useEventsMain() {
     removeFilter,
     removeLastFilter,
     resetFilters,
+    resubscribe,
     offset,
     limit,
   }

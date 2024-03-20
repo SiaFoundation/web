@@ -72,7 +72,7 @@ export function WalletUnlockDialog({
   })
 
   const fields = getFields({
-    seedHash: wallet?.seedHash,
+    seedHash: wallet?.metadata.seedHash,
     mnemonicFieldType,
     setMnemonicFieldType,
   })

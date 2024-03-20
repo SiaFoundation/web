@@ -14,7 +14,6 @@ import { useForm } from 'react-hook-form'
 import { useWalletAdd } from '@siafoundation/react-walletd'
 import { useDialog } from '../../contexts/dialog'
 import { useWallets } from '../../contexts/wallets'
-import { v4 as uuidv4 } from 'uuid'
 import { walletAddTypes } from '../../config/walletTypes'
 
 const defaultValues = {
@@ -22,11 +21,13 @@ const defaultValues = {
   description: '',
 }
 
+type Values = typeof defaultValues
+
 function getFields({
   walletNames,
 }: {
   walletNames: string[]
-}): ConfigFields<typeof defaultValues, never> {
+}): ConfigFields<Values, never> {
   return {
     name: {
       type: 'text',
@@ -75,24 +76,21 @@ export function WalletAddWatchDialog({ trigger, open, onOpenChange }: Props) {
   const fields = getFields({ walletNames })
 
   const onSubmit = useCallback(
-    async (values) => {
-      const id = uuidv4()
-      const response = await walletAdd.put({
-        params: {
-          id,
-        },
+    async (values: Values) => {
+      const response = await walletAdd.post({
         payload: {
-          type: 'watch',
           name: values.name,
           description: values.description,
-          createdAt: new Date().getTime(),
+          metadata: {
+            type: 'watch',
+          },
         },
       })
       if (response.error) {
         triggerErrorToast(response.error)
       } else {
         openDialog('walletAddressesAdd', {
-          walletId: id,
+          walletId: response.data.id,
         })
         form.reset(defaultValues)
       }

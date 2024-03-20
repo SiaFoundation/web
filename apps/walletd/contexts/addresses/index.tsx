@@ -1,6 +1,5 @@
 import {
   useTableState,
-  useDatasetEmptyState,
   useClientFilters,
   useClientFilteredDataset,
 } from '@siafoundation/design-system'
@@ -15,12 +14,11 @@ import {
 } from './types'
 import { columns } from './columns'
 import { useRouter } from 'next/router'
-import { useDialog } from '../dialog'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { useDataset } from './dataset'
 
 export function useAddressesMain() {
-  const { openDialog } = useDialog()
   const router = useRouter()
   const walletId = router.query.id as string
 
@@ -36,30 +34,14 @@ export function useAddressesMain() {
     },
   })
 
-  const dataset = useMemo<AddressData[] | null>(() => {
-    if (!response.data) {
-      return null
-    }
-    const data: AddressData[] = Object.entries(response.data || {}).map(
-      ([address, meta]) => ({
-        id: address,
-        address,
-        description: meta.description as string,
-        index: meta.index as number,
-        publicKey: meta.publicKey as string,
-        walletId,
-        onClick: () =>
-          openDialog('addressUpdate', {
-            walletId: walletId,
-            address,
-          }),
-      })
-    )
-    return data
-  }, [response.data, openDialog, walletId])
-
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useClientFilters<AddressData>()
+
+  const { dataset, dataState, lastIndex } = useDataset({
+    walletId,
+    response,
+    filters,
+  })
 
   const {
     configurableColumns,
@@ -94,18 +76,6 @@ export function useAddressesMain() {
         (column) => column.fixed || enabledColumns.includes(column.id)
       ),
     [enabledColumns]
-  )
-
-  const dataState = useDatasetEmptyState(
-    dataset,
-    response.isValidating,
-    response.error,
-    filters
-  )
-
-  const lastIndex = (dataset || []).reduce(
-    (highest, { index }) => (index > highest ? index : highest),
-    -1
   )
 
   const siascanUrl = useSiascanUrl()

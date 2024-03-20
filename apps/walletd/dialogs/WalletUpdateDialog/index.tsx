@@ -11,7 +11,7 @@ import {
 } from '@siafoundation/design-system'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
-import { useWalletAdd } from '@siafoundation/react-walletd'
+import { useWalletUpdate } from '@siafoundation/react-walletd'
 import { useWallets } from '../../contexts/wallets'
 
 const defaultValues = {
@@ -19,11 +19,13 @@ const defaultValues = {
   description: '',
 }
 
+type Values = typeof defaultValues
+
 function getFields({
   walletNames,
 }: {
   walletNames: string[]
-}): ConfigFields<typeof defaultValues, never> {
+}): ConfigFields<Values, never> {
   return {
     name: {
       type: 'text',
@@ -69,7 +71,7 @@ export function WalletUpdateDialog({
   const { walletId } = params || {}
   const { dataset } = useWallets()
   const wallet = dataset?.find((d) => d.id === walletId)
-  const walletAdd = useWalletAdd()
+  const walletUpdate = useWalletUpdate()
   const form = useForm({
     mode: 'all',
     defaultValues,
@@ -80,18 +82,14 @@ export function WalletUpdateDialog({
     defaultValues,
   })
   useEffect(() => {
-    // timeout 0 gets around a react-hook-form glitch where both fields
-    // do not get initialized.
-    setTimeout(() => {
-      form.reset(
-        wallet
-          ? {
-              name: wallet.name,
-              description: wallet.description,
-            }
-          : defaultValues
-      )
-    }, 0)
+    form.reset(
+      wallet
+        ? {
+            name: wallet.name,
+            description: wallet.description,
+          }
+        : defaultValues
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [walletId])
 
@@ -107,13 +105,13 @@ export function WalletUpdateDialog({
   )
   const fields = getFields({ walletNames })
   const onSubmit = useCallback(
-    async (values) => {
-      const response = await walletAdd.put({
+    async (values: Values) => {
+      const response = await walletUpdate.post({
         params: {
           id: walletId,
         },
         payload: {
-          ...wallet,
+          ...wallet.raw,
           name: values.name,
           description: values.description,
         },
@@ -124,7 +122,7 @@ export function WalletUpdateDialog({
         closeAndReset()
       }
     },
-    [walletId, walletAdd, wallet, closeAndReset]
+    [walletId, walletUpdate, wallet, closeAndReset]
   )
 
   return (
@@ -150,7 +148,7 @@ export function WalletUpdateDialog({
         <div className="flex flex-col gap-1">
           <Label>Type</Label>
           <div>
-            <Badge>{wallet?.type}</Badge>
+            <Badge>{wallet?.metadata.type}</Badge>
           </div>
         </div>
         <FieldText name="name" form={form} fields={fields} />

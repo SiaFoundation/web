@@ -54,7 +54,7 @@ export function useSendForm({ walletId, params, onConfirm }: Props) {
   const { isSeedCached, getSeedFromCacheOrForm } = useWalletCachedSeed(walletId)
   const { dataset } = useWallets()
   const wallet = dataset?.find((w) => w.id === walletId)
-  const seedHash = wallet?.seedHash
+  const seedHash = wallet?.metadata.seedHash
 
   const form = useForm({
     mode: 'all',

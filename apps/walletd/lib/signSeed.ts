@@ -65,7 +65,10 @@ export function signTransactionSeed({
       return { error: utxoAddressError }
     }
 
-    const pkResponse = getWalletWasm().privateKeyFromSeed(seed, address.index)
+    const pkResponse = getWalletWasm().privateKeyFromSeed(
+      seed,
+      address.metadata.index
+    )
 
     if (pkResponse.error) {
       return {

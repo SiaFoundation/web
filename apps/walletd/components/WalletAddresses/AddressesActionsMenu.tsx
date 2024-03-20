@@ -15,15 +15,15 @@ export function AddressesActionsMenu() {
       <Button
         variant="accent"
         onClick={() => {
-          if (wallet?.type === 'seed') {
+          if (wallet?.metadata.type === 'seed') {
             openDialog('walletAddressesGenerate', { walletId: id })
             return
           }
-          if (wallet?.type === 'watch') {
+          if (wallet?.metadata.type === 'watch') {
             openDialog('walletAddressesAdd', { walletId: id })
             return
           }
-          if (wallet?.type === 'ledger') {
+          if (wallet?.metadata.type === 'ledger') {
             openDialog('walletLedgerAddressGenerate', { walletId: id })
             return
           }

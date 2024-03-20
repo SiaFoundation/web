@@ -105,7 +105,11 @@ export const columns: WalletsTableColumn[] = [
     id: 'type',
     label: 'type',
     category: 'general',
-    render: ({ data: { type } }) => {
+    render: ({
+      data: {
+        metadata: { type },
+      },
+    }) => {
       return (
         <Tooltip content={walletTypes[type]?.title}>
           <Badge interactive={false} className="flex gap-0.5 items-center">
@@ -123,9 +127,12 @@ export const columns: WalletsTableColumn[] = [
     label: 'status',
     category: 'general',
     render: ({
-      data: { type, status, activityAt, unlock, lock },
+      data,
       context: { walletAutoLockEnabled, walletAutoLockTimeout },
     }) => {
+      const { type } = data.metadata
+      const { status, activityAt } = data.state
+      const { unlock, lock } = data.actions
       if (type === 'seed') {
         const sinceActivityMs = new Date().getTime() - activityAt
         const remainingMs = Math.max(walletAutoLockTimeout - sinceActivityMs, 0)

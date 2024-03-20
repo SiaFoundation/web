@@ -60,7 +60,7 @@ export async function signTransactionLedger({
       device,
       transaction,
       signatureIndex: i,
-      keyIndex: addressInfo.address.index,
+      keyIndex: addressInfo.address.metadata.index,
     })
 
     if (signTxnResponse.error) {

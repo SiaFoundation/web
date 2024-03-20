@@ -72,13 +72,13 @@ export const columns: AddressesTableColumn[] = [
     id: 'index',
     label: 'index',
     category: 'general',
-    render: ({ data: { index } }) => {
-      if (index === undefined) {
+    render: ({ data: { metadata } }) => {
+      if (metadata.index === undefined) {
         return null
       }
       return (
         <div className="flex flex-col gap-2">
-          <Text>{index.toLocaleString()}</Text>
+          <Text>{metadata.index.toLocaleString()}</Text>
         </div>
       )
     },
