@@ -28,12 +28,8 @@ export async function getGeoHosts(): Promise<SiaCentralPartialHost[]> {
           : -1
       )
 
-      // // filter hosts to unique locations
-      // const uniqueHosts = uniqBy(
-      //   hosts,
-      //   (h) => `${h.location[0]},${h.location[1]}`
-      // )
-      const uniqueHosts = hosts
+      // Filter out hosts without location data
+      const uniqueHosts = hosts.filter((h) => h.location)
 
       // to get a more even distribution, we want to select the top 64 hosts
       // where no two hosts are within n degrees of each other.
