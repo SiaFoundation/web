@@ -113,7 +113,7 @@ export function WalletAddressesGenerateSeedDialog({
   const count = form.watch('count')
 
   const fields = getFields({
-    seedHash: wallet?.seedHash,
+    seedHash: wallet?.metadata.seedHash,
     mnemonicFieldType,
     setMnemonicFieldType,
   })
@@ -137,11 +137,15 @@ export function WalletAddressesGenerateSeedDialog({
         const response = await addressAdd.put({
           params: {
             id: walletId,
-            addr: pkResponse.address,
           },
           payload: {
-            index: i,
-            publicKey: pkResponse.publicKey,
+            address: pkResponse.address,
+            description: '',
+            // spendPolicy: '', // TODO: use sdk and replace
+            metadata: {
+              index: i,
+              publicKey: pkResponse.publicKey,
+            },
           },
         })
         if (response.error) {

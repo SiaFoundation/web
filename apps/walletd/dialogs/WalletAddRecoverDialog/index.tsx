@@ -12,7 +12,6 @@ import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../../contexts/dialog'
 import { useWallets } from '../../contexts/wallets'
-import { v4 as uuidv4 } from 'uuid'
 import { useWalletAdd } from '@siafoundation/react-walletd'
 import { blake2bHex } from 'blakejs'
 import { SeedLayout } from '../SeedLayout'
@@ -26,11 +25,13 @@ const defaultValues = {
   mnemonic: '',
 }
 
+type Values = typeof defaultValues
+
 function getFields({
   walletNames,
 }: {
   walletNames: string[]
-}): ConfigFields<typeof defaultValues, never> {
+}): ConfigFields<Values, never> {
   return {
     name: {
       type: 'text',
@@ -93,27 +94,24 @@ export function WalletAddRecoverDialog({ trigger, open, onOpenChange }: Props) {
   const walletAdd = useWalletAdd()
 
   const onSubmit = useCallback(
-    async (values) => {
-      const id = uuidv4()
+    async (values: Values) => {
       const { seed } = getWalletWasm().seedFromPhrase(values.mnemonic)
       const seedHash = blake2bHex(seed)
-      const response = await walletAdd.put({
-        params: {
-          id,
-        },
+      const response = await walletAdd.post({
         payload: {
-          type: 'seed',
-          seedHash,
           name: values.name,
-          createdAt: new Date().getTime(),
           description: values.description,
+          metadata: {
+            type: 'seed',
+            seedHash,
+          },
         },
       })
       if (response.error) {
         triggerErrorToast(response.error)
       } else {
         openDialog('walletAddressesGenerate', {
-          walletId: id,
+          walletId: response.data.id,
         })
         form.reset(defaultValues)
       }

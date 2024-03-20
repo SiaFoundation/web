@@ -2,6 +2,7 @@
 import {
   ConfigFields,
   Dialog,
+  FieldSwitch,
   FieldTextArea,
   FormSubmitButton,
   Paragraph,
@@ -9,7 +10,10 @@ import {
   triggerSuccessToast,
   useDialogFormHelpers,
 } from '@siafoundation/design-system'
-import { useWalletAddressAdd } from '@siafoundation/react-walletd'
+import {
+  useResubscribe,
+  useWalletAddressAdd,
+} from '@siafoundation/react-walletd'
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { useWallets } from '../contexts/wallets'
@@ -29,7 +33,10 @@ type Props = {
 
 const defaultValues = {
   addresses: '',
+  shouldResubscribe: false,
 }
+
+type Values = typeof defaultValues
 
 const placeholder = `91acbc0feb9e20d538db1f8a509d508362d1b1f3d725d9b6639306531d770c1ef9eb637b4903
 b58849e347356878bb0098908191550ff3e46cc35ed166d0c571fe184d2f17b835747991c266
@@ -51,7 +58,7 @@ function isCorrectLength(addr: string) {
   return addr.length === 76
 }
 
-function getFields(): ConfigFields<typeof defaultValues, never> {
+function getFields(): ConfigFields<Values, never> {
   return {
     addresses: {
       type: 'text',
@@ -75,6 +82,11 @@ function getFields(): ConfigFields<typeof defaultValues, never> {
           },
         },
       },
+    },
+    shouldResubscribe: {
+      type: 'boolean',
+      title: 'Resubscribe',
+      validation: {},
     },
   }
 }
@@ -102,47 +114,73 @@ export function WalletAddressesAddDialog({
   const fields = getFields()
 
   const addressAdd = useWalletAddressAdd()
+  const resubscribe = useResubscribe()
   const addAllAddresses = useCallback(
     async (addresses: string) => {
       const addrs = formatAddresses(addresses)
-      const count = addrs.length
-      for (let i = 0; i < count; i++) {
+      const total = addrs.length
+      let successful = 0
+      for (let i = 0; i < total; i++) {
         const addr = addrs[i]
         const response = await addressAdd.put({
           params: {
             id: walletId,
-            addr,
           },
-          payload: {},
+          payload: {
+            address: addr,
+            description: '',
+            metadata: {},
+          },
         })
         if (response.error) {
-          if (count === 1) {
-            triggerErrorToast('Error saving address.')
-          } else {
-            triggerErrorToast(
-              `Error saving addresses. ${
-                i > 0 ? 'Not all addresses were saved.' : ''
-              }`
-            )
+          return {
+            error: response.error,
+            successful,
+            total,
           }
-          return
         }
+        successful += 1
       }
-      if (count === 1) {
-        triggerSuccessToast('Successfully added 1 address.')
-      } else {
-        triggerSuccessToast(`Successfully added ${count} addresses.`)
+      return {
+        successful,
+        total,
       }
-      closeAndReset()
     },
-    [walletId, addressAdd, closeAndReset]
+    [walletId, addressAdd]
   )
 
   const onSubmit = useCallback(
-    (values: typeof defaultValues) => {
-      return addAllAddresses(values.addresses)
+    async (values: Values) => {
+      const result = await addAllAddresses(values.addresses)
+      if (result.error) {
+        if (result.total === 1) {
+          triggerErrorToast('Error saving address.')
+        } else {
+          triggerErrorToast(
+            `Error saving addresses. ${
+              result.successful > 0
+                ? `${result.successful} of ${result.total} addresses were saved.`
+                : ''
+            }`
+          )
+        }
+        return
+      }
+      if (result.total === 1) {
+        triggerSuccessToast('Successfully added 1 address.')
+      } else {
+        triggerSuccessToast(
+          `Successfully added ${result.successful} addresses.`
+        )
+      }
+      if (values.shouldResubscribe) {
+        resubscribe.post({
+          payload: 0,
+        })
+      }
+      closeAndReset()
     },
-    [addAllAddresses]
+    [addAllAddresses, closeAndReset, resubscribe]
   )
 
   const addressesText = form.watch('addresses')
@@ -175,6 +213,7 @@ export function WalletAddressesAddDialog({
           Enter multiple addresses separated by spaces or commas.
         </Paragraph>
         <FieldTextArea form={form} fields={fields} name="addresses" />
+        <FieldSwitch form={form} fields={fields} name="shouldResubscribe" />
       </div>
     </Dialog>
   )

@@ -1,3 +1,5 @@
+import { WalletAddress } from '@siafoundation/react-walletd'
+
 export type CellContext = {
   siascanUrl: string
 }
@@ -6,9 +8,13 @@ export type AddressData = {
   id: string
   address: string
   description?: string
-  publicKey?: string
-  index?: number
+  spendPolicy?: string
+  metadata: {
+    index?: number
+    publicKey?: string
+  }
   walletId: string
+  raw?: WalletAddress
 }
 
 export type TableColumnId = 'actions' | 'address' | 'index'

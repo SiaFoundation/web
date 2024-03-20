@@ -41,7 +41,9 @@ function getDefaultValues(lastIndex: number) {
   }
 }
 
-function getFields(): ConfigFields<ReturnType<typeof getDefaultValues>, never> {
+type Values = ReturnType<typeof getDefaultValues>
+
+function getFields(): ConfigFields<Values, never> {
   return {
     ledgerConnected: {
       type: 'boolean',
@@ -213,12 +215,14 @@ export function WalletAddressesGenerateLedgerDialog({
   const indiciesWithAddresses = useMemo(() => {
     const indiciesWithAddresses: Record<string, AddressMeta> = {}
     for (const [index, { address, publicKey }] of Object.entries(indices)) {
-      const existing = existingAddresses?.find((a) => a.index === Number(index))
+      const existing = existingAddresses?.find(
+        (a) => a.metadata.index === Number(index)
+      )
       indiciesWithAddresses[index] = {
         isNew: !existing,
         index: Number(index),
         address: existing?.address || address,
-        publicKey: existing?.publicKey || publicKey,
+        publicKey: existing?.metadata.publicKey || publicKey,
       }
     }
     return indiciesWithAddresses
@@ -241,11 +245,14 @@ export function WalletAddressesGenerateLedgerDialog({
       const response = await addressAdd.put({
         params: {
           id: walletId,
-          addr: address,
         },
         payload: {
-          index,
-          publicKey,
+          address,
+          description: '',
+          metadata: {
+            index,
+            publicKey,
+          },
         },
       })
       if (response.error) {

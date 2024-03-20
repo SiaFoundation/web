@@ -64,7 +64,9 @@ describe('signSeed', () => {
             id: 'id',
             walletId: 'id',
             address: 'address not in addresses',
-            index: 5,
+            metadata: {
+              index: 5,
+            },
           },
         ],
         siacoinOutputs: getSiacoinOutputs(),
@@ -89,6 +91,7 @@ describe('signSeed', () => {
             id: 'id',
             walletId: 'id',
             address: getSiacoinOutputs()[1].siacoinOutput.address,
+            metadata: {},
           },
         ],
         siacoinOutputs: getSiacoinOutputs(),
@@ -102,7 +105,7 @@ describe('signSeed', () => {
   it('errors when an address is missing its public key', async () => {
     await loadWASMTestEnv()
     const addresses = getAddresses()
-    addresses[0].publicKey = undefined
+    addresses[0].metadata.publicKey = undefined
     expect(
       signTransactionSeed({
         seed,

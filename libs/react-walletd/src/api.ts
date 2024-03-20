@@ -21,8 +21,16 @@ import {
   SiacoinElement,
   SiafundElement,
   Transaction,
+  V2Transaction,
 } from '@siafoundation/types'
-import { PoolTransaction, WalletEvent, GatewayPeer } from './siaTypes'
+import {
+  PoolTransaction,
+  WalletEvent,
+  GatewayPeer,
+  Wallet,
+  Metadata,
+  WalletAddress,
+} from './siaTypes'
 
 // consensus
 
@@ -100,20 +108,29 @@ export function useSyncerConnect(args?: HookArgsCallback<void, string, never>) {
 
 // txpool
 
-type TxPoolTransactions = {
+type TxPoolTransactionsResponse = {
   transactions: Transaction[]
-  v2Transactions: unknown[]
+  v2Transactions: V2Transaction[]
 }
 
 const txPoolTransactionsRoute = '/txpool/transactions'
 export function useTxPoolTransactions(
-  args?: HookArgsSwr<void, TxPoolTransactions>
+  args?: HookArgsSwr<void, TxPoolTransactionsResponse>
 ) {
   return useGetSwr({ ...args, route: txPoolTransactionsRoute })
 }
 
+export function useTxPoolFee(args?: HookArgsSwr<void, Currency>) {
+  return useGetSwr({ ...args, route: '/txpool/fee' })
+}
+
+type TxPoolBroadcastPayload = {
+  transactions: Transaction[]
+  v2Transactions: V2Transaction[]
+}
+
 export function useTxPoolBroadcast(
-  args?: HookArgsCallback<void, TxPoolTransactions, unknown>
+  args?: HookArgsCallback<void, TxPoolBroadcastPayload, unknown>
 ) {
   return usePostFunc(
     {
@@ -133,37 +150,52 @@ export function useTxPoolBroadcast(
   )
 }
 
-// wallet
+// subscribe
 
-type Wallet = Record<string, unknown>
-type Wallets = Record<string, Wallet>
+export function useResubscribe(
+  args?: HookArgsCallback<void, BlockHeight, void>
+) {
+  return usePostFunc({
+    ...args,
+    route: '/resubscribe',
+  })
+}
+
+// wallet
 
 const walletsRoute = '/wallets'
 
-export function useWallets(args?: HookArgsSwr<void, Wallets>) {
+export function useWallets(args?: HookArgsSwr<void, Wallet[]>) {
   return useGetSwr({
     ...args,
     route: walletsRoute,
   })
 }
 
-type Address = Record<string, unknown>
-type Addresses = Record<string, Address>
-
-export const walletAddressesRoute = '/wallets/:id/addresses'
-export function useWalletAddresses(
-  args: HookArgsSwr<{ id: string }, Addresses>
-) {
-  return useGetSwr({
-    ...args,
-    route: walletAddressesRoute,
-  })
+type WalletUpdatePayload = {
+  name: string
+  description: string
+  metadata: Metadata
 }
 
 export function useWalletAdd(
-  args?: HookArgsCallback<{ id: string }, Wallet, void>
+  args?: HookArgsCallback<void, WalletUpdatePayload, Wallet>
 ) {
-  return usePutFunc(
+  return usePostFunc(
+    {
+      ...args,
+      route: '/wallets',
+    },
+    async (mutate) => {
+      mutate((key) => key.startsWith(walletsRoute))
+    }
+  )
+}
+
+export function useWalletUpdate(
+  args?: HookArgsCallback<{ id: string }, WalletUpdatePayload, Wallet>
+) {
+  return usePostFunc(
     {
       ...args,
       route: '/wallets/:id',
@@ -187,22 +219,25 @@ export function useWalletDelete(
   )
 }
 
-export function useWalletSubscribe(
-  args?: HookArgsCallback<{ id: string }, BlockHeight, void>
+// addresses
+
+export const walletAddressesRoute = '/wallets/:id/addresses'
+export function useWalletAddresses(
+  args: HookArgsSwr<{ id: string }, WalletAddress[]>
 ) {
-  return usePostFunc({
+  return useGetSwr({
     ...args,
-    route: '/wallets/:id/subscribe',
+    route: walletAddressesRoute,
   })
 }
 
 export function useWalletAddressAdd(
-  args?: HookArgsCallback<{ id: string; addr: string }, Address, void>
+  args?: HookArgsCallback<{ id: string }, WalletAddress, void>
 ) {
   return usePutFunc(
     {
       ...args,
-      route: '/wallets/:id/addresses/:addr',
+      route: '/wallets/:id/addresses',
     },
     async (mutate, data) => {
       mutate((key) =>
@@ -227,7 +262,10 @@ export function useWalletAddressDelete(
 
 const walletBalanceRoute = '/wallets/:id/balance'
 export function useWalletBalance(
-  args: HookArgsSwr<{ id: string }, { siacoins: string; siafunds: number }>
+  args: HookArgsSwr<
+    { id: string },
+    { siacoins: Currency; immatureSiacoins: Currency; siafunds: number }
+  >
 ) {
   return useGetSwr({
     ...args,
@@ -259,21 +297,25 @@ export function useWalletTxPool(
   })
 }
 
-type WalletOutputsResponse = {
-  siacoinOutputs: SiacoinElement[]
-  siafundOutputs: SiafundElement[]
-}
-
-export function useWalletOutputs(
-  args: HookArgsSwr<{ id: string }, WalletOutputsResponse>
+export function useWalletOutputsSiacoin(
+  args: HookArgsSwr<{ id: string }, SiacoinElement[]>
 ) {
   return useGetSwr({
     ...args,
-    route: '/wallets/:id/outputs',
+    route: '/wallets/:id/outputs/siacoin',
   })
 }
 
-type WalletFundRequest = {
+export function useWalletOutputsSiafund(
+  args: HookArgsSwr<{ id: string }, SiafundElement[]>
+) {
+  return useGetSwr({
+    ...args,
+    route: '/wallets/:id/outputs/siafund',
+  })
+}
+
+type WalletFundSiacoinPayload = {
   transaction: Transaction
   amount: Currency
   changeAddress: string
@@ -285,48 +327,52 @@ export type WalletFundResponse = {
   dependsOn: Transaction[]
 }
 
-export function useWalletFund(
-  args?: HookArgsCallback<{ id: string }, WalletFundRequest, WalletFundResponse>
+export function useWalletFundSiacoin(
+  args?: HookArgsCallback<
+    { id: string },
+    WalletFundSiacoinPayload,
+    WalletFundResponse
+  >
 ) {
   return usePostFunc({ ...args, route: '/wallets/:id/fund' })
 }
 
-type WalletFundRequestSf = {
+type WalletFundSiafundPayload = {
   transaction: Transaction
   amount: number
   changeAddress: string
   claimAddress: string
 }
 
-export function useWalletFundSf(
+export function useWalletFundSiafund(
   args?: HookArgsCallback<
     { id: string },
-    WalletFundRequestSf,
+    WalletFundSiafundPayload,
     WalletFundResponse
   >
 ) {
   return usePostFunc({ ...args, route: '/wallets/:id/fundsf' })
 }
 
-type WalletReserveRequest = {
+type WalletReservePayload = {
   siacoinOutputs?: SiacoinOutputID[]
   siafundOutputs?: SiafundOutputID[]
   duration: number
 }
 
 export function useWalletReserve(
-  args?: HookArgsCallback<{ id: string }, WalletReserveRequest, void>
+  args?: HookArgsCallback<{ id: string }, WalletReservePayload, void>
 ) {
   return usePostFunc({ ...args, route: '/wallets/:id/reserve' })
 }
 
-type WalletReleaseRequest = {
+type WalletReleasePayload = {
   siacoinOutputs?: SiacoinOutputID[]
   siafundOutputs?: SiafundOutputID[]
 }
 
 export function useWalletRelease(
-  args?: HookArgsCallback<{ id: string }, WalletReleaseRequest, void>
+  args?: HookArgsCallback<{ id: string }, WalletReleasePayload, void>
 ) {
   return usePostFunc({ ...args, route: '/wallets/:id/release' })
 }

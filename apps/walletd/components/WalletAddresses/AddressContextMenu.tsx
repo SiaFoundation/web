@@ -18,7 +18,7 @@ type Props = {
 } & Omit<React.ComponentProps<typeof DropdownMenu>, 'children'>
 
 export function AddressContextMenu({
-  address: { walletId, id, index },
+  address: { walletId, id, metadata },
   ...props
 }: Props) {
   const { openDialog } = useDialog()
@@ -31,8 +31,8 @@ export function AddressContextMenu({
         onSelect={() =>
           openDialog('confirm', {
             title:
-              index !== undefined
-                ? `Remove address ${index}`
+              metadata.index !== undefined
+                ? `Remove address ${metadata.index}`
                 : 'Remove address',
             action: 'Remove',
             variant: 'red',
@@ -57,8 +57,8 @@ export function AddressContextMenu({
                 triggerErrorToast(`Failed to delete address: ${response.error}`)
               } else {
                 triggerSuccessToast(
-                  index !== undefined
-                    ? `Address ${index} removed.`
+                  metadata.index !== undefined
+                    ? `Address ${metadata.index} removed.`
                     : 'Address removed.'
                 )
               }

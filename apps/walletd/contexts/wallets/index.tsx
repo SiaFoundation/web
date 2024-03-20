@@ -11,7 +11,7 @@ import {
   columnsDefaultVisible,
   defaultSortField,
   sortOptions,
-  WalletType,
+  WalletMetadata,
 } from './types'
 import { columns } from './columns'
 import { useRouter } from 'next/router'
@@ -54,19 +54,25 @@ function useWalletsMain() {
     if (!response.data) {
       return null
     }
-    const data: WalletData[] = Object.entries(response.data || {}).map(
-      ([id, meta]) => ({
+    const data: WalletData[] = response.data.map((wallet) => {
+      const { id, name, description, dateCreated, lastUpdated, metadata } =
+        wallet
+      return {
         id,
-        name: meta.name as string,
-        seed: seedCache[id],
-        status: seedCache[id] ? 'unlocked' : 'locked',
-        activityAt: walletActivityAt[id],
-        seedHash: meta.seedHash as string,
-        description: meta.description as string,
-        createdAt: (meta.createdAt as number) || 0,
-        type: meta.type as WalletType,
-        unlock: () => openDialog('walletUnlock', { walletId: id }),
-        lock: () => saveWalletSeed(id, undefined),
+        name,
+        description,
+        createdAt: new Date(dateCreated).getTime() || 0,
+        updatedAt: new Date(lastUpdated).getTime() || 0,
+        metadata: (metadata || {}) as WalletMetadata,
+        state: {
+          seed: seedCache[id],
+          status: seedCache[id] ? 'unlocked' : 'locked',
+          activityAt: walletActivityAt[id],
+        },
+        actions: {
+          unlock: () => openDialog('walletUnlock', { walletId: id }),
+          lock: () => saveWalletSeed(id, undefined),
+        },
         onClick: () =>
           router.push({
             pathname: routes.wallet.view,
@@ -74,8 +80,9 @@ function useWalletsMain() {
               id,
             },
           }),
-      })
-    )
+        raw: wallet,
+      }
+    })
     return data
   }, [
     router,
@@ -145,7 +152,7 @@ function useWalletsMain() {
     dataState,
     error: response.error,
     datasetCount: datasetFiltered?.length || 0,
-    unlockedCount: dataset?.filter((d) => d.seed).length || 0,
+    unlockedCount: dataset?.filter((d) => d.state.seed).length || 0,
     columns: filteredTableColumns,
     dataset: datasetFiltered,
     context,

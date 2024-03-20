@@ -18,18 +18,18 @@ type Props = {
 } & Omit<React.ComponentProps<typeof DropdownMenu>, 'children'>
 
 export function WalletContextMenu({
-  wallet: { id, type, status, lock, unlock },
+  wallet: { id, metadata, state, actions },
   ...props
 }: Props) {
   const { openDialog } = useDialog()
   return (
     <DropdownMenu {...props}>
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
-      {type === 'seed' ? (
-        status === 'unlocked' ? (
+      {metadata.type === 'seed' ? (
+        state.status === 'unlocked' ? (
           <DropdownMenuItem
             onClick={(e) => e.stopPropagation()}
-            onSelect={() => lock()}
+            onSelect={() => actions.lock()}
           >
             <DropdownMenuLeftSlot>
               <Locked16 />
@@ -39,7 +39,7 @@ export function WalletContextMenu({
         ) : (
           <DropdownMenuItem
             onClick={(e) => e.stopPropagation()}
-            onSelect={() => unlock()}
+            onSelect={() => actions.unlock()}
           >
             <DropdownMenuLeftSlot>
               <Unlocked16 />

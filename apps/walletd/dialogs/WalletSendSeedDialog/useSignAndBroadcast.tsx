@@ -1,7 +1,8 @@
 import {
   useConsensusNetwork,
-  useWalletOutputs,
+  useWalletOutputsSiacoin,
   useConsensusTipState,
+  useWalletOutputsSiafund,
 } from '@siafoundation/react-walletd'
 import { useWallets } from '../../contexts/wallets'
 import { useCallback } from 'react'
@@ -16,7 +17,13 @@ export function useSignAndBroadcast() {
   const { wallet, saveWalletSeed } = useWallets()
   const walletId = wallet?.id
 
-  const outputs = useWalletOutputs({
+  const siacoinOutputs = useWalletOutputsSiacoin({
+    disabled: !walletId,
+    params: {
+      id: walletId,
+    },
+  })
+  const siafundOutputs = useWalletOutputsSiafund({
     disabled: !walletId,
     params: {
       id: walletId,
@@ -47,17 +54,16 @@ export function useSignAndBroadcast() {
           error: fundingError,
         }
       }
-      const { signedTransaction, error: signingError } =
-        await signTransactionSeed({
-          seed,
-          transaction: fundedTransaction,
-          toSign,
-          cs: cs.data,
-          cn: cn.data,
-          addresses,
-          siacoinOutputs: outputs.data?.siacoinOutputs,
-          siafundOutputs: outputs.data?.siafundOutputs,
-        })
+      const { signedTransaction, error: signingError } = signTransactionSeed({
+        seed,
+        transaction: fundedTransaction,
+        toSign,
+        cs: cs.data,
+        cn: cn.data,
+        addresses,
+        siacoinOutputs: siacoinOutputs.data,
+        siafundOutputs: siafundOutputs.data,
+      })
       if (signingError) {
         cancel(fundedTransaction)
         return {
@@ -78,7 +84,8 @@ export function useSignAndBroadcast() {
       walletId,
       cs.data,
       cn.data,
-      outputs.data,
+      siacoinOutputs.data,
+      siafundOutputs.data,
       saveWalletSeed,
       broadcast,
     ]

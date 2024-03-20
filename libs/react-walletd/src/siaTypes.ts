@@ -4,9 +4,14 @@ import {
   Transaction,
   Address,
   SiacoinElement,
-  SiafundElementAndClaim,
   SiafundElement,
   FileContractElement,
+  Hash256,
+  FileContract,
+  V2FileContractResolutionType,
+  PublicKey,
+  TransactionID,
+  SpendPolicy,
 } from '@siafoundation/types'
 
 export type GatewayPeer = {
@@ -14,14 +19,14 @@ export type GatewayPeer = {
   inbound: boolean
   version: string
 
-  firstSeen: string
-  connectedSince: string
-  syncedBlocks: number
-  syncDuration: number
+  firstSeen?: string
+  connectedSince?: string
+  syncedBlocks?: number
+  syncDuration?: number
 }
 
 export type PoolTransaction = {
-  id: string
+  id: TransactionID
   raw: Transaction
   type: string
   sent: Currency
@@ -29,42 +34,72 @@ export type PoolTransaction = {
   locked: Currency
 }
 
-export type WalletEventTransaction = {
+export type WalletEventBase = {
+  id: Hash256
   timestamp: string
   index: ChainIndex
   relevant: Address[]
+}
+
+export type WalletSiafundInput = {
+  siafundElement: SiafundElement
+  claimElement: SiacoinElement
+}
+
+export type WalletFileContract = {
+  fileContract: FileContractElement
+  revision?: FileContract
+  validOutputs?: SiacoinElement[]
+}
+
+export type WalletV2FileContract = {
+  fileContract: FileContractElement
+  revision?: FileContract
+  resolution?: V2FileContractResolutionType
+  outputs?: SiacoinElement[]
+}
+
+export type WalletHostAnnouncement = {
+  publicKey: PublicKey
+  netAddress: string
+}
+
+export type WalletEventTransaction = WalletEventBase & {
   type: 'transaction'
   val: {
-    // transactionID: string
-    // transaction: Transaction
-    id: string
-    siacoinInputs: SiacoinElement[]
-    siacoinOutputs: SiacoinElement[]
-    siafundInputs: SiafundElementAndClaim[]
-    siafundOutputs: SiafundElement[]
-    fileContracts: FileContractElement[]
-    v2FileContracts: null
-    hostAnnouncements: null
+    siacoinInputs?: SiacoinElement[]
+    siacoinOutputs?: SiacoinElement[]
+    siafundInputs?: WalletSiafundInput[]
+    siafundOutputs?: SiafundElement[]
+    fileContracts?: WalletFileContract[]
+    v2FileContracts?: WalletV2FileContract[]
+    hostAnnouncements?: WalletHostAnnouncement[]
     fee: number
   }
 }
 
-export type WalletEventMissedFileContract = {
-  timestamp: string
-  index: ChainIndex
-  relevant: Address[]
-  type: 'missed file contract'
+export type WalletEventMinerPayout = WalletEventBase & {
+  type: 'miner payout'
   val: {
-    fileContract: FileContractElement
-    missedOutputs: SiacoinElement[]
+    siacoinOutput: SiacoinElement
   }
 }
 
-export type WalletEventMinerPayout = {
-  timestamp: string
-  index: ChainIndex
-  relevant: Address[]
-  type: 'miner payout'
+export type WalletEventContractPayout = WalletEventBase & {
+  type: 'contract payout'
+  val: {
+    fileContract: FileContractElement
+    siacoinOutput: SiacoinElement
+    missed: boolean
+  }
+}
+
+export type WalletEventSiafundClaim = WalletEventBase & {
+  type: 'siafund claim'
+}
+
+export type WalletEventFoundationSubsidy = WalletEventBase & {
+  type: 'foundation subsidy'
   val: {
     siacoinOutput: SiacoinElement
   }
@@ -72,5 +107,25 @@ export type WalletEventMinerPayout = {
 
 export type WalletEvent =
   | WalletEventTransaction
-  | WalletEventMissedFileContract
   | WalletEventMinerPayout
+  | WalletEventContractPayout
+  | WalletEventSiafundClaim
+  | WalletEventFoundationSubsidy
+
+export type Metadata = Record<string, unknown>
+
+export type Wallet = {
+  id: string
+  name: string
+  description: string
+  dateCreated: string
+  lastUpdated: string
+  metadata: Metadata
+}
+
+export type WalletAddress = {
+  address: string
+  description: string
+  spendPolicy?: SpendPolicy
+  metadata: Metadata
+}
