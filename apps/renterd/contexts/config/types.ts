@@ -34,7 +34,6 @@ export const defaultGouging = {
   maxContractPrice: undefined as BigNumber | undefined,
   maxDownloadPriceTB: undefined as BigNumber | undefined,
   maxUploadPriceTB: undefined as BigNumber | undefined,
-  minMaxCollateral: undefined as BigNumber | undefined,
   hostBlockHeightLeeway: undefined as BigNumber | undefined,
   minPriceTableValidityMinutes: undefined as BigNumber | undefined,
   minAccountExpiryDays: undefined as BigNumber | undefined,

@@ -128,7 +128,6 @@ export type GougingSettings = {
   maxUploadPrice: string
   maxContractPrice: string
   maxRPCPrice: string
-  minMaxCollateral: string
   hostBlockHeightLeeway: number
   minPriceTableValidity: number
   minAccountExpiry: number

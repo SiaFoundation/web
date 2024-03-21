@@ -492,21 +492,6 @@ export function getFields({
           }
         : {},
     },
-    minMaxCollateral: {
-      category: 'gouging',
-      type: 'siacoin',
-      title: 'Min max collateral',
-      description: (
-        <>The min value for max collateral in the host's price settings.</>
-      ),
-      decimalsLimitSc: scDecimalPlaces,
-      hidden: !showAdvanced,
-      validation: showAdvanced
-        ? {
-            required: 'required',
-          }
-        : {},
-    },
     hostBlockHeightLeeway: {
       category: 'gouging',
       type: 'number',
