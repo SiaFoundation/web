@@ -136,7 +136,6 @@ export function transformUpGouging(
     maxUploadPrice: toHastings(values.maxUploadPriceTB).toString(),
     maxDownloadPrice: toHastings(values.maxDownloadPriceTB).toString(),
     maxContractPrice: toHastings(values.maxContractPrice).toString(),
-    minMaxCollateral: toHastings(values.minMaxCollateral).toString(),
     hostBlockHeightLeeway: Math.round(values.hostBlockHeightLeeway.toNumber()),
     minPriceTableValidity: Math.round(
       minutesInNanoseconds(values.minPriceTableValidityMinutes.toNumber())
@@ -278,7 +277,6 @@ export function transformDownGouging({
     maxRpcPriceMillion: toSiacoins(gouging.maxRPCPrice, scDecimalPlaces).times(
       1_000_000
     ),
-    minMaxCollateral: toSiacoins(gouging.minMaxCollateral, scDecimalPlaces),
     hostBlockHeightLeeway: new BigNumber(gouging.hostBlockHeightLeeway),
     minPriceTableValidityMinutes: new BigNumber(
       nanosecondsInMinutes(gouging.minPriceTableValidity)
