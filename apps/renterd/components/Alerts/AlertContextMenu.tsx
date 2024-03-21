@@ -6,7 +6,7 @@ import {
   DropdownMenuLabel,
   Text,
 } from '@siafoundation/design-system'
-import { Draggable16, Checkmark16 } from '@siafoundation/react-icons'
+import { CaretDown16, Checkmark16 } from '@siafoundation/react-icons'
 import { useAlerts } from '../../contexts/alerts'
 
 type Props = {
@@ -22,7 +22,7 @@ export function AlertContextMenu({ id, contentProps, buttonProps }: Props) {
     <DropdownMenu
       trigger={
         <Button variant="ghost" icon="hover" {...buttonProps}>
-          <Draggable16 />
+          <CaretDown16 />
         </Button>
       }
       contentProps={{

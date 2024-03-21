@@ -9,6 +9,7 @@ import {
 } from '@siafoundation/design-system'
 import { AlertData, TableColumnId } from './types'
 import { dataFields } from './data'
+import { SetAdditions, SetChangesField, SetRemovals } from './SetChange'
 import { Checkmark16 } from '@carbon/icons-react'
 import { formatRelative } from 'date-fns'
 import { Fragment, useMemo } from 'react'
@@ -26,6 +27,7 @@ export const columns: KeysTableColumn[] = [
     label: '',
     fixed: true,
     cellClassName: 'w-[50px] !pr-4 [&+*]:!pl-0',
+    rowCellClassName: 'align-top pt-[19px]',
     render: ({ data: { dismiss } }) => (
       <ControlGroup>
         <Button tip="Dismiss alert" onClick={dismiss}>
@@ -40,6 +42,7 @@ export const columns: KeysTableColumn[] = [
     label: 'overview',
     category: 'general',
     contentClassName: 'min-w-[200px] max-w-[500px]',
+    rowCellClassName: 'align-top pt-[5px]',
     render: ({ data: { message, severity, data } }) => {
       return (
         <div className="flex flex-col gap-1 py-4">
@@ -77,9 +80,11 @@ export const columns: KeysTableColumn[] = [
   {
     id: 'data',
     label: 'data',
-    contentClassName: 'w-[400px]',
+    contentClassName: 'w-[500px]',
+    rowCellClassName: 'align-top',
     category: 'general',
     render: function DataColumn({ data: { data } }) {
+      // Collect data for data fields
       const datums = useMemo(
         () =>
           Object.keys(dataFields)
@@ -97,9 +102,32 @@ export const columns: KeysTableColumn[] = [
             .filter(Boolean),
         [data]
       )
+      // Collect set changes for the custom SetChangeField component
+      // which is a special case that combines two keys of data
+      const setAdditions = useMemo(
+        () => data['setAdditions'] as SetAdditions,
+        [data]
+      )
+      const setRemovals = useMemo(
+        () => data['setRemovals'] as SetRemovals,
+        [data]
+      )
       return (
         <div className="py-4 w-full">
           <Panel color="subtle" className="flex flex-col gap-1 w-full py-1">
+            {(setAdditions || setRemovals) && (
+              <Fragment key="setChanges">
+                <div className="py-1 px-2">
+                  <SetChangesField
+                    setAdditions={setAdditions}
+                    setRemovals={setRemovals}
+                  />
+                </div>
+                {datums.length >= 1 && (
+                  <Separator color="verySubtle" className="w-full" />
+                )}
+              </Fragment>
+            )}
             {datums.map(({ key, value }, i) => {
               const Component = dataFields?.[key]?.render
               if (!Component) {
@@ -126,6 +154,7 @@ export const columns: KeysTableColumn[] = [
     label: 'time',
     category: 'general',
     contentClassName: 'w-[120px] justify-end',
+    rowCellClassName: 'align-top pt-[26px]',
     render: ({ data: { timestamp } }) => {
       return (
         <Text color="subtle" size="12" ellipsis>

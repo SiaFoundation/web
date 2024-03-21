@@ -11,7 +11,7 @@ import {
   Tooltip,
   Text,
 } from '@siafoundation/design-system'
-import { Draggable16, DataCheck16 } from '@siafoundation/react-icons'
+import { CaretDown16, DataCheck16 } from '@siafoundation/react-icons'
 import {
   ContractStatus,
   useContractsIntegrityCheck,
@@ -62,7 +62,7 @@ export function ContractContextMenu({
     <DropdownMenu
       trigger={
         <Button variant="ghost" icon="hover" {...buttonProps}>
-          <Draggable16 />
+          <CaretDown16 />
         </Button>
       }
       contentProps={{ align: 'start', ...contentProps }}

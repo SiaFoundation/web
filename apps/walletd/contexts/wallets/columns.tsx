@@ -8,7 +8,7 @@ import {
   ValueSf,
   ValueScFiat,
 } from '@siafoundation/design-system'
-import { Locked16, Unlocked16, Draggable16 } from '@siafoundation/react-icons'
+import { Locked16, Unlocked16, CaretDown16 } from '@siafoundation/react-icons'
 import { humanDate } from '@siafoundation/units'
 import { humanTimeAndUnits } from '../../lib/time'
 import { walletTypes } from '../../config/walletTypes'
@@ -36,7 +36,7 @@ export const columns: WalletsTableColumn[] = [
       <WalletContextMenu
         trigger={
           <Button variant="ghost" icon="hover">
-            <Draggable16 />
+            <CaretDown16 />
           </Button>
         }
         contentProps={{ align: 'start' }}

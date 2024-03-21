@@ -6,7 +6,7 @@ import {
   Paragraph,
   Button,
 } from '@siafoundation/design-system'
-import { Draggable16 } from '@siafoundation/react-icons'
+import { CaretDown16 } from '@siafoundation/react-icons'
 import { AddressContextMenu } from '../../components/WalletAddresses/AddressContextMenu'
 import { AddressData, CellContext, TableColumnId } from './types'
 
@@ -29,7 +29,7 @@ export const columns: AddressesTableColumn[] = [
       <AddressContextMenu
         trigger={
           <Button variant="ghost" icon="hover">
-            <Draggable16 />
+            <CaretDown16 />
           </Button>
         }
         contentProps={{ align: 'start' }}

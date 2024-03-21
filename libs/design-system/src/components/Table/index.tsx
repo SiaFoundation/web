@@ -46,6 +46,8 @@ export type TableColumn<Columns, Data, Context> = {
   size?: number | string
   cellClassName?: string
   contentClassName?: string
+  rowCellClassName?: string
+  rowContentClassName?: string
   render: React.FC<Row<Data, Context>>
 }
 
