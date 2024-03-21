@@ -2,7 +2,6 @@ import {
   Link,
   ScrollArea,
   Text,
-  Tooltip,
   ValueCopyable,
   ValueMenu,
   ValueNum,
@@ -14,10 +13,8 @@ import { useFilesManager } from '../filesManager'
 import { useDialog } from '../dialog'
 import { getDirectorySegmentsFromPath } from '../../lib/paths'
 import BigNumber from 'bignumber.js'
-import { HostContextMenuFromKey } from '../../components/Hosts/HostContextMenuFromId'
 import { ContractContextMenuFromId } from '../../components/Contracts/ContractContextMenuFromId'
-import { humanBytes } from '@siafoundation/units'
-import { formatRelative } from 'date-fns'
+import { AccountContextMenu } from '../../components/AccountContextMenu'
 
 export const dataFields: Record<
   string,
@@ -70,7 +67,22 @@ export const dataFields: Record<
           <Text size="12" color="subtle" ellipsis>
             account ID
           </Text>
-          <ValueCopyable size="12" value={value} label="account ID" />
+          <ValueCopyable
+            size="12"
+            value={value}
+            label="account ID"
+            contextMenu={
+              <AccountContextMenu
+                id={value}
+                contentProps={{
+                  align: 'end',
+                }}
+                buttonProps={{
+                  size: 'none',
+                }}
+              />
+            }
+          />
         </div>
       )
     },
@@ -124,11 +136,11 @@ export const dataFields: Record<
         <div className="flex flex-col gap-2 max-h-[100px]">
           <div className="flex justify-between w-full gap-2">
             <Text size="12" color="subtle" ellipsis>
-              key
+              slab key
             </Text>
-            <ValueCopyable size="12" value={value} />
+            <ValueCopyable size="12" value={value} label="slab key" />
           </div>
-          {objects.data && (
+          {!!objects.data?.length && (
             <ScrollArea>
               <div className="flex flex-col gap-2 mt-2 mb-2">
                 {objects.data.map((o) => (
@@ -179,78 +191,6 @@ export const dataFields: Record<
       </div>
     ),
   },
-  setAdditions: {
-    render: function AdditionsField({
-      value,
-    }: {
-      value: Record<
-        string,
-        {
-          hostKey: string
-          additions: { size: number; time: string }[]
-        }
-      >
-    }) {
-      return (
-        <div className="flex flex-col gap-2">
-          <Text size="12" color="subtle" ellipsis>
-            contract set additions
-          </Text>
-          {value && (
-            <div className="flex flex-col gap-3 mb-2">
-              {Object.entries(value).map(
-                ([contractId, { hostKey, additions }], i) => (
-                  <ContractSetChange
-                    key={contractId}
-                    contractId={contractId}
-                    hostKey={hostKey}
-                    changes={additions}
-                    i={i}
-                  />
-                )
-              )}
-            </div>
-          )}
-        </div>
-      )
-    },
-  },
-  setRemovals: {
-    render: function RemovalsField({
-      value,
-    }: {
-      value: Record<
-        string,
-        {
-          hostKey: string
-          removals: { reasons: string; size: number; time: string }[]
-        }
-      >
-    }) {
-      return (
-        <div className="flex flex-col gap-2">
-          <Text size="12" color="subtle" ellipsis>
-            contract set removals
-          </Text>
-          {value && (
-            <div className="flex flex-col gap-3 mb-2">
-              {Object.entries(value).map(
-                ([contractId, { hostKey, removals }], i) => (
-                  <ContractSetChange
-                    key={contractId}
-                    contractId={contractId}
-                    hostKey={hostKey}
-                    changes={removals}
-                    i={i}
-                  />
-                )
-              )}
-            </div>
-          )}
-        </div>
-      )
-    },
-  },
   migrationsInterrupted: {
     render: ({ value }: { value: string }) => (
       <div className="flex justify-between w-full gap-2">
@@ -299,7 +239,22 @@ export const dataFields: Record<
         <Text size="12" color="subtle" ellipsis>
           account
         </Text>
-        <ValueCopyable size="12" value={value} />
+        <ValueCopyable
+          size="12"
+          value={value}
+          label="account"
+          contextMenu={
+            <AccountContextMenu
+              id={value}
+              contentProps={{
+                align: 'end',
+              }}
+              buttonProps={{
+                size: 'none',
+              }}
+            />
+          }
+        />
       </div>
     ),
   },
@@ -318,87 +273,4 @@ export const dataFields: Record<
       </div>
     ),
   },
-}
-
-function ContractSetChange({
-  contractId,
-  hostKey,
-  changes,
-  i,
-}: {
-  contractId: string
-  hostKey: string
-  changes: { reasons?: string; size: number; time: string }[]
-  i: number
-}) {
-  return (
-    <div className="flex flex-col gap-2">
-      <div className="flex gap-2 justify-between">
-        <Text size="12" ellipsis>
-          {i + 1}.
-        </Text>
-        <div className="flex gap-2">
-          <Text size="12" color="subtle" ellipsis>
-            contract
-          </Text>
-          <ValueCopyable
-            size="12"
-            value={contractId}
-            contextMenu={
-              <ContractContextMenuFromId
-                id={contractId}
-                contentProps={{
-                  align: 'end',
-                }}
-              />
-            }
-          />
-        </div>
-        <div className="flex gap-2">
-          <Text size="12" color="subtle" ellipsis>
-            host
-          </Text>
-          <ValueCopyable
-            size="12"
-            value={hostKey}
-            label="host key"
-            contextMenu={
-              <HostContextMenuFromKey
-                hostKey={hostKey}
-                contentProps={{
-                  align: 'end',
-                }}
-              />
-            }
-          />
-        </div>
-      </div>
-      {changes.map(({ reasons, size, time }) => (
-        <div key={reasons + time} className="flex gap-2 justify-between">
-          <Tooltip content={reasons}>
-            <Text size="12" ellipsis>
-              {reasons}
-            </Text>
-          </Tooltip>
-          <div className="flex-1" />
-          <div className="flex gap-2">
-            <Text size="12" color="subtle" ellipsis>
-              time
-            </Text>
-            <Text size="12" ellipsis>
-              {formatRelative(new Date(time), new Date())}
-            </Text>
-          </div>
-          <div className="flex gap-2">
-            <Text size="12" color="subtle" ellipsis>
-              size
-            </Text>
-            <Text size="12" ellipsis>
-              {humanBytes(size)}
-            </Text>
-          </div>
-        </div>
-      ))}
-    </div>
-  )
 }

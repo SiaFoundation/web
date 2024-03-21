@@ -10,7 +10,7 @@ import {
   triggerErrorToast,
   truncate,
 } from '@siafoundation/design-system'
-import { Draggable16, Delete16 } from '@siafoundation/react-icons'
+import { CaretDown16, Delete16 } from '@siafoundation/react-icons'
 import { useSettingUpdate } from '@siafoundation/react-renterd'
 import { useS3AuthenticationSettings } from '../../hooks/useS3AuthenticationSettings'
 import { useCallback } from 'react'
@@ -48,7 +48,7 @@ export function KeyContextMenu({ s3Key, contentProps, buttonProps }: Props) {
     <DropdownMenu
       trigger={
         <Button variant="ghost" icon="hover" {...buttonProps}>
-          <Draggable16 />
+          <CaretDown16 />
         </Button>
       }
       contentProps={{

@@ -10,7 +10,7 @@ import {
   truncate,
 } from '@siafoundation/design-system'
 import {
-  Draggable16,
+  CaretDown16,
   Ruler16,
   Delete16,
   Locked16,
@@ -47,7 +47,7 @@ export function VolumeContextMenu({ id, contentProps, buttonProps }: Props) {
     <DropdownMenu
       trigger={
         <Button variant="ghost" icon="hover" {...buttonProps}>
-          <Draggable16 />
+          <CaretDown16 />
         </Button>
       }
       contentProps={{ align: 'start', ...contentProps }}

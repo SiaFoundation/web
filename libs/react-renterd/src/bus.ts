@@ -417,6 +417,17 @@ export function useHostResetLostSectorCount(
   })
 }
 
+// accounts
+
+export function useAccountResetDrift(
+  args?: HookArgsCallback<{ id: string }, void, void>
+) {
+  return usePostFunc({
+    ...args,
+    route: '/bus/account/:id/resetdrift',
+  })
+}
+
 // contracts
 
 const contractsActiveRoute = '/bus/contracts'

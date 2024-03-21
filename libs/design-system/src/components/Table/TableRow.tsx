@@ -28,6 +28,8 @@ export type TableColumn<Columns, Data, Context> = {
   size?: number | string
   cellClassName?: string
   contentClassName?: string
+  rowCellClassName?: string
+  rowContentClassName?: string
   render: React.FC<Row<Data, Context>>
 }
 
@@ -97,15 +99,21 @@ export function createTableRow<
               {
                 id,
                 render: Render,
-                contentClassName: className,
+                contentClassName,
                 cellClassName,
+                rowCellClassName,
+                rowContentClassName,
               },
               i
             ) => (
               <td
                 key={`${id}/${data.id}`}
                 className={cx(
-                  getCellClassNames(i, cellClassName, false),
+                  getCellClassNames(
+                    i,
+                    cx(cellClassName, rowCellClassName),
+                    false
+                  ),
                   // must use shadow based borders on the individual tds because a tailwind ring
                   // on the tr does not show up correctly in Safari
                   focusId && focusId === data.id
@@ -134,7 +142,10 @@ export function createTableRow<
               >
                 <div
                   className={cx(
-                    getContentClassNames(i, className),
+                    getContentClassNames(
+                      i,
+                      cx(contentClassName, rowContentClassName)
+                    ),
                     rowSize === 'dense'
                       ? 'h-[50px]'
                       : rowSize === 'default'

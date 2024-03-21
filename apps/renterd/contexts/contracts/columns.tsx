@@ -44,7 +44,7 @@ export const columns: ContractsTableColumn[] = [
     fixed: true,
     cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
     render: ({ data: { id, hostIp, hostKey } }) => (
-      <ContractContextMenu id={id} address={hostIp} publicKey={hostKey} />
+      <ContractContextMenu id={id} hostAddress={hostIp} hostKey={hostKey} />
     ),
   },
   {
