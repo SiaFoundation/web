@@ -261,6 +261,7 @@ export function transformDownGouging({
     averages,
     hasBeenConfigured,
   })
+
   return {
     maxStoragePriceTBMonth: toSiacoins(
       new BigNumber(gouging.maxStoragePrice) // bytes/block
@@ -274,8 +275,9 @@ export function transformDownGouging({
     ),
     maxDownloadPriceTB: toSiacoins(gouging.maxDownloadPrice, scDecimalPlaces),
     maxContractPrice: toSiacoins(gouging.maxContractPrice, scDecimalPlaces),
-    maxRpcPriceMillion: toSiacoins(gouging.maxRPCPrice, scDecimalPlaces).times(
-      1_000_000
+    maxRpcPriceMillion: toSiacoins(
+      new BigNumber(gouging.maxRPCPrice).times(1_000_000),
+      scDecimalPlaces
     ),
     hostBlockHeightLeeway: new BigNumber(gouging.hostBlockHeightLeeway),
     minPriceTableValidityMinutes: new BigNumber(

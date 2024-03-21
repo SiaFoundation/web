@@ -408,7 +408,10 @@ describe('tansforms', () => {
         },
         contractSet,
         uploadPacking,
-        gouging,
+        gouging: {
+          ...gouging,
+          maxRPCPrice: '100000000000000000',
+        },
         redundancy,
       })
       expect(settings.downloadTBMonth).toEqual(new BigNumber('92.72'))
@@ -416,6 +419,7 @@ describe('tansforms', () => {
       expect(
         transformUpAutopilot('Mainnet', settings, autopilot).contracts.download
       ).toEqual(91088814814815)
+      expect(settings.maxRpcPriceMillion).toEqual(new BigNumber('0.1'))
 
       settings = transformDown({
         hasBeenConfigured: true,
