@@ -5,6 +5,7 @@ import {
   Tooltip,
   ValueCopyable,
   ValueMenu,
+  ValueNum,
   ValueSc,
 } from '@siafoundation/design-system'
 import { useHost, useSlabObjects } from '@siafoundation/react-renterd'
@@ -299,6 +300,21 @@ export const dataFields: Record<
           account
         </Text>
         <ValueCopyable size="12" value={value} />
+      </div>
+    ),
+  },
+  lostSectors: {
+    render: ({ value }: { value: number }) => (
+      <div className="flex justify-between w-full gap-2">
+        <Text size="12" color="subtle" ellipsis>
+          lost sectors
+        </Text>
+        <ValueNum
+          size="12"
+          variant="value"
+          value={new BigNumber(value)}
+          format={(value) => value.toString()}
+        />
       </div>
     ),
   },
