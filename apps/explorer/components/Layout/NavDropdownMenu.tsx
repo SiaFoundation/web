@@ -11,6 +11,7 @@ import {
   ThemeRadio,
 } from '@siafoundation/design-system'
 import { Menu24 } from '@siafoundation/react-icons'
+import { routes } from '../../config/routes'
 
 type Props = React.ComponentProps<typeof Button> & {
   trigger?: React.ReactNode
@@ -29,7 +30,7 @@ export function NavDropdownMenu({ trigger, children, ...props }: Props) {
       }
       contentProps={{ align: 'end' }}
     >
-      <DropdownMenuGroup className="py-1 px-1 w-[120px]">
+      <DropdownMenuGroup className="py-1 px-1">
         <DropdownMenuLabel className="px-1">Network</DropdownMenuLabel>
         <DropdownMenuItem className="p-2">
           <Link href={webLinks.explore.mainnet} underline="none">
@@ -42,15 +43,20 @@ export function NavDropdownMenu({ trigger, children, ...props }: Props) {
           </Link>
         </DropdownMenuItem>
       </DropdownMenuGroup>
-      <DropdownMenuGroup className="py-1 px-1 w-[120px]">
+      <DropdownMenuGroup className="py-1 px-1">
         <DropdownMenuLabel className="px-1">Tools</DropdownMenuLabel>
         <DropdownMenuItem className="p-2">
           <Link href={webLinks.explore.testnetZenFaucet} underline="none">
             Zen Faucet
           </Link>
         </DropdownMenuItem>
+        <DropdownMenuItem className="p-2">
+          <Link href={routes.hostRevenueCalculator.index} underline="none">
+            Host Revenue Calculator
+          </Link>
+        </DropdownMenuItem>
       </DropdownMenuGroup>
-      <DropdownMenuGroup className="py-1 px-1 w-[120px]">
+      <DropdownMenuGroup className="py-1 px-1">
         <DropdownMenuLabel className="px-1">Settings</DropdownMenuLabel>
         <div className="py-2 px-1">
           <CurrencyFiatSelector />
