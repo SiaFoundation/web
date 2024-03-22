@@ -20,4 +20,7 @@ export const routes = {
   faucet: {
     index: '/faucet',
   },
+  hostRevenueCalculator: {
+    index: '/host-revenue-calculator',
+  },
 }
