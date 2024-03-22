@@ -1,4 +1,4 @@
-package ui
+package nextjs
 
 import (
 	"bytes"
@@ -159,12 +159,13 @@ func TestNextJSRouter(t *testing.T) {
 	fs.Add("404.html", []byte("404.html"))
 	fs.Add("foo.html", []byte("foo.html"))
 	fs.Add("foo/bar.html", []byte("foo/bar.html"))
-	fs.Add("foo/bar/[bar].html", []byte("foo/bar/[bar].html"))                   // parameterized path
-	fs.Add("foo/files/[...key].html", []byte("foo/files/[...key].html"))         // required catch-all
-	fs.Add("foo/objects/[[...key]].html", []byte("foo/objects/[[...key]].html")) // optional catch-all
+	fs.Add("foo/bar/[bar].html", []byte("foo/bar/[bar].html"))                                           // parameterized path
+	fs.Add("foo/files/[...key].html", []byte("foo/files/[...key].html"))                                 // required catch-all
+	fs.Add("foo/objects/[[...key]].html", []byte("foo/objects/[[...key]].html"))                         // optional catch-all
+	fs.Add("buckets/[bucket]/files/[[...path]].html", []byte("buckets/[bucket]/files/[[...path]].html")) // param and catch-all
 	fs.Add("assets/foo.jpg", []byte("assets/foo.jpg"))
 
-	router, err := newNextJSRouter(fs)
+	router, err := NewRouter(fs)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -199,8 +200,10 @@ func TestNextJSRouter(t *testing.T) {
 		{"/foo/objects/bar", "foo/objects/[[...key]].html", http.StatusOK},
 		{"/foo/objects/bar/baz", "foo/objects/[[...key]].html", http.StatusOK},
 		{"/foo/objects/bar/baz/", "foo/objects/[[...key]].html", http.StatusOK},
-		{"/foo/objects/bar/biz.baz", "foo/objects/[[...key]].html", http.StatusOK}, // with dots in path
-		{"/foo/biz.baz", "404.html", http.StatusNotFound},                          // with dots in path
+		{"/foo/objects/bar/biz.baz", "foo/objects/[[...key]].html", http.StatusOK},                             // with dots in path
+		{"/foo/biz.baz", "404.html", http.StatusNotFound},                                                      // with dots in path
+		{"/buckets/default/files/path/to/directory", "buckets/[bucket]/files/[[...path]].html", http.StatusOK}, // param and catch-all
+		{"/buckets/default/files/path/to/directory/", "buckets/[bucket]/files/[[...path]].html", http.StatusOK},
 	}
 
 	makeRequest := func(path string, status int) ([]byte, error) {
