@@ -2,7 +2,7 @@ import { Text, Tooltip, ValueCopyable } from '@siafoundation/design-system'
 import { HostContextMenuFromKey } from '../../components/Hosts/HostContextMenuFromKey'
 import { ContractContextMenuFromId } from '../../components/Contracts/ContractContextMenuFromId'
 import { humanBytes } from '@siafoundation/units'
-import { format } from 'date-fns'
+import { formatRelative } from 'date-fns'
 import { useMemo } from 'react'
 import { Add16, Subtract16 } from '@siafoundation/react-icons'
 import { cx } from 'class-variance-authority'
@@ -50,36 +50,103 @@ export function SetChangesField({
       ...Object.keys(setAdditions),
       ...Object.keys(setRemovals),
     ])
-    return contractIds.map((contractId) => {
-      const additions = setAdditions[contractId]?.additions || []
-      const removals = setRemovals[contractId]?.removals || []
-      return {
-        contractId,
-        hostKey:
-          setAdditions[contractId]?.hostKey || setRemovals[contractId]?.hostKey,
-        events: [
-          ...additions.map((a) => ({
-            type: 'addition',
-            size: a.size,
-            time: a.time,
-          })),
-          ...removals.map((r) => ({
-            type: 'removal',
-            size: r.size,
-            time: r.time,
-            reasons: r.reasons,
-          })),
-        ].sort((a, b) =>
-          new Date(a.time).getTime() > new Date(b.time).getTime() ? 1 : -1
-        ) as ChangeEvent[],
-      }
-    })
+    return contractIds
+      .map((contractId) => {
+        const additions = setAdditions[contractId]?.additions || []
+        const removals = setRemovals[contractId]?.removals || []
+        return {
+          contractId,
+          hostKey:
+            setAdditions[contractId]?.hostKey ||
+            setRemovals[contractId]?.hostKey,
+          events: [
+            ...additions.map((a) => ({
+              type: 'addition',
+              size: a.size,
+              time: a.time,
+            })),
+            ...removals.map((r) => ({
+              type: 'removal',
+              size: r.size,
+              time: r.time,
+              reasons: r.reasons,
+            })),
+          ].sort((a, b) =>
+            new Date(a.time).getTime() < new Date(b.time).getTime() ? 1 : -1
+          ) as ChangeEvent[],
+        }
+      })
+      .sort((a, b) => {
+        // size in latest event
+        const aSize = a.events[0].size
+        const bSize = b.events[0].size
+        return aSize < bSize ? 1 : -1
+      })
   }, [setAdditions, setRemovals])
+
+  // calculate churn %: contracts removed size / total size
+  const totalSize = useMemo(
+    () => changes.reduce((acc, { events }) => acc + events[0].size, 0),
+    [changes]
+  )
+  const removals = useMemo(
+    () => changes.filter(({ events }) => events[0].type === 'removal'),
+    [changes]
+  )
+  const additions = useMemo(
+    () => changes.filter(({ events }) => events[0].type === 'addition'),
+    [changes]
+  )
+  const removedSize = useMemo(
+    () => removals.reduce((acc, { events }) => acc + events[0].size, 0),
+    [removals]
+  )
+  const churn = useMemo(
+    () => (removedSize / totalSize) * 100,
+    [removedSize, totalSize]
+  )
+
   return (
     <div className="flex flex-col gap-2">
-      <Text size="12" color="subtle" ellipsis>
-        contract set changes
-      </Text>
+      <div className="flex gap-2 items-center pr-1">
+        <Text size="12" color="subtle" ellipsis>
+          contract set changes
+        </Text>
+        <div className="flex-1" />
+        <Tooltip
+          content={`${humanBytes(removedSize)} of ${humanBytes(
+            totalSize
+          )} contract size removed`}
+        >
+          <div className="flex gap-1 items-center">
+            <Text size="12" color="contrast" ellipsis>
+              churn: {churn.toFixed(2)}%
+            </Text>
+            <Text size="12" color="subtle" ellipsis>
+              ({humanBytes(removedSize)} / {humanBytes(totalSize)})
+            </Text>
+          </div>
+        </Tooltip>
+        <div className="flex gap-1 items-center">
+          <Tooltip content={`${additions.length} contracts added`}>
+            <Text
+              size="12"
+              color="green"
+              ellipsis
+              className="flex items-center"
+            >
+              <Add16 />
+              {additions.length}
+            </Text>
+          </Tooltip>
+          <Tooltip content={`${removals.length} contracts removed`}>
+            <Text size="12" color="red" ellipsis className="flex items-center">
+              <Subtract16 />
+              {removals.length}
+            </Text>
+          </Tooltip>
+        </div>
+      </div>
       <div className="flex flex-col gap-3 mb-2">
         {changes.map(({ contractId, hostKey, events }, i) => (
           <ContractSetChange
@@ -104,11 +171,12 @@ function ContractSetChange({
   i: number
 }) {
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex gap-2 justify-between items-center">
-        <Text size="12" ellipsis>
+    <div className="flex flex-col gap-[3px]">
+      <div className="flex gap-2 items-center px-[3px]">
+        <Text size="12" weight="medium" ellipsis>
           {i + 1}.
         </Text>
+        <div className="flex-1" />
         <div className="flex gap-2 items-center">
           <Text size="12" color="subtle" ellipsis>
             contract
@@ -119,6 +187,9 @@ function ContractSetChange({
             contextMenu={
               <ContractContextMenuFromId
                 id={contractId}
+                buttonProps={{
+                  size: 'none',
+                }}
                 contentProps={{
                   align: 'end',
                 }}
@@ -137,6 +208,9 @@ function ContractSetChange({
             contextMenu={
               <HostContextMenuFromKey
                 hostKey={hostKey}
+                buttonProps={{
+                  size: 'none',
+                }}
                 contentProps={{
                   align: 'end',
                 }}
@@ -145,7 +219,7 @@ function ContractSetChange({
           />
         </div>
       </div>
-      {events.map(({ type, reasons, size, time }) => (
+      {events.map(({ type, reasons, size, time }, i) => (
         <Tooltip
           key={type + reasons + time}
           content={type === 'addition' ? 'added' : `removed: ${reasons}`}
@@ -154,8 +228,12 @@ function ContractSetChange({
         >
           <div
             className={cx(
-              'flex gap-2 justify-between',
-              type === 'addition' ? 'bg-green-400/20' : 'bg-red-400/20'
+              'flex gap-2 justify-between mr-2 pr-1',
+              i === 0
+                ? type === 'addition'
+                  ? 'bg-green-400/20'
+                  : 'bg-red-400/20'
+                : 'opacity-50'
             )}
           >
             <div className="flex gap-1 items-center overflow-hidden">
@@ -168,15 +246,15 @@ function ContractSetChange({
             </div>
             <div className="flex-1" />
             <div className="flex gap-2">
-              <Text size="12" color="subtle" ellipsis>
+              <Text color="subtle" size="12" ellipsis>
                 time
               </Text>
               <Text size="12" ellipsis>
-                {format(new Date(time), 'yyyy-MM-dd HH:mm a')}
+                {formatRelative(new Date(time), new Date())}
               </Text>
             </div>
             <div className="flex gap-2">
-              <Text size="12" color="subtle" ellipsis>
+              <Text color="subtle" size="12" ellipsis>
                 size
               </Text>
               <Text size="12" ellipsis>
