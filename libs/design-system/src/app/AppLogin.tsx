@@ -201,6 +201,7 @@ export function AppLogin({ appName, route, routes }: Props) {
               {appName}
             </Text>
             <DropdownMenu
+              label="login settings"
               trigger={
                 <Button icon="hover" variant="ghost">
                   <Settings16 />

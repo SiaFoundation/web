@@ -32,16 +32,24 @@ jobs:
         uses: golangci/golangci-lint-action@v3
         with:
           skip-cache: true
-      - name: Compile
+      - name: NX pre-build compile targets
         shell: bash
         run: npx nx affected --target=compile --parallel=5
-      - name: Test
+      - name: Test TypeScript
         shell: bash
         run: npx nx affected --target=test --parallel=5
       - name: Test Go
         uses: n8maninger/action-golang-test@v1
         with:
           args: '-race'
+      - name: Install playwright deps for e2e
+        shell: bash
+        run: npx playwright install-deps
+      - name: Test e2e
+        shell: bash
+        run: npx nx affected --target=e2e --parallel=5
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Build
         shell: bash
         run: npx nx affected --target=build --configuration=production --parallel=5

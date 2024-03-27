@@ -27,6 +27,7 @@ export function SidenavItem({ title, children, route, onClick }: Props) {
         content={title}
       >
         <Button
+          aria-label={title}
           icon="contrast"
           size="none"
           variant="state"
@@ -49,6 +50,7 @@ export function SidenavItem({ title, children, route, onClick }: Props) {
         content={title}
       >
         <Button
+          aria-label={title}
           icon="contrast"
           size="none"
           variant="state"

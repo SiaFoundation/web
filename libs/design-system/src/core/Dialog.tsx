@@ -123,7 +123,7 @@ export function DialogClose({ className }: { className?: string }) {
   return (
     <DialogPrimitive.Close asChild type="button">
       <div className={cx('appearance-none', className)}>
-        <Button size="small" variant="ghost" type="button">
+        <Button size="small" variant="ghost" type="button" aria-label="close">
           <Close24 />
         </Button>
       </div>

@@ -48,6 +48,7 @@ const animationVariants = {
 export const DropdownMenu = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   {
+    label?: string
     rootProps?: React.ComponentProps<typeof DropdownMenuPrimitive.Root>
     contentProps?: React.ComponentProps<typeof DropdownMenuPrimitive.Content>
     trigger: React.ReactNode
@@ -60,6 +61,7 @@ export const DropdownMenu = React.forwardRef<
   (
     {
       trigger,
+      label,
       children,
       rootProps,
       contentProps,
@@ -80,7 +82,7 @@ export const DropdownMenu = React.forwardRef<
         onOpenChange={onOpenChange}
         {...rootProps}
       >
-        <DropdownMenuPrimitive.Trigger asChild>
+        <DropdownMenuPrimitive.Trigger asChild aria-label={label}>
           {trigger}
         </DropdownMenuPrimitive.Trigger>
         <AnimatePresence>
