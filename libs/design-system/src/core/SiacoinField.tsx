@@ -39,6 +39,7 @@ export function SiacoinField({
   prefix,
   onBlur,
   onFocus,
+  name,
   ...props
 }: Props) {
   const externalSc = useMemo(
@@ -171,6 +172,7 @@ export function SiacoinField({
     >
       <BaseNumberField
         {...props}
+        name={name}
         data-testid="scInput"
         size={size}
         variant="ghost"
@@ -200,6 +202,7 @@ export function SiacoinField({
         <BaseNumberField
           {...props}
           data-testid="fiatInput"
+          name={`${name}-fiat`}
           size={size}
           variant="ghost"
           focus="none"

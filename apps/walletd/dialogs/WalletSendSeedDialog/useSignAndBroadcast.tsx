@@ -39,7 +39,9 @@ export function useSignAndBroadcast() {
   return useCallback(
     async ({ seed, params }: { seed: string; params: SendParams }) => {
       if (!addresses) {
-        return
+        return {
+          error: 'No addresses found',
+        }
       }
 
       // fund

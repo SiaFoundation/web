@@ -32,6 +32,7 @@ export function FieldSwitch<
   const el = (
     <div className="flex gap-1 items-center">
       <Switch
+        aria-label={name}
         name={name}
         size={size}
         checked={value}

@@ -8,6 +8,7 @@ export function AddressesButton() {
   const id = router.query.id as string
   return (
     <LinkButton
+      aria-label="view addresses"
       href={{
         pathname: routes.wallet.addresses,
         query: {

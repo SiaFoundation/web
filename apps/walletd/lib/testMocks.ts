@@ -1,6 +1,13 @@
 import Sia from '@siacentral/ledgerjs-sia'
 import { LedgerDevice } from '../contexts/ledger/types'
-import { Transaction } from '@siafoundation/types'
+import {
+  ConsensusNetwork,
+  ConsensusState,
+  SiacoinElement,
+  SiafundElement,
+  Transaction,
+} from '@siafoundation/types'
+import { AddressData } from '../contexts/addresses/types'
 
 export function getMockDevice() {
   return {
@@ -75,14 +82,14 @@ export function getTransaction(): Transaction {
   }
 }
 
-export function getToSign() {
+export function getToSign(): string[] {
   return [
     'h:b53e88ce69f19f0bf1d3496479f20b72e1133c719e82278830ee6618bb582852',
     'h:b222428602c8382b67a769d17e1cdc0952f37f2441a872b92671a6ed76cf22f5',
   ]
 }
 
-export function getAddresses() {
+export function getAddresses(): AddressData[] {
   return [
     {
       id: 'addr:934b885229a9f98153401d7a647a1862aede399c656f33ec8492dfffca557ca907a3d22089c8',
@@ -123,7 +130,7 @@ export function getAddresses() {
   ]
 }
 
-export function getSiacoinOutputs() {
+export function getSiacoinOutputs(): SiacoinElement[] {
   return [
     {
       id: 'h:31cf3ddc946d71d219fb1fbe9a11804e607b6d5ad1b4bf7b3678a2faa701a42e',
@@ -262,7 +269,7 @@ export function getSiacoinOutputs() {
   ]
 }
 
-export function getSiafundOutputs() {
+export function getSiafundOutputs(): SiafundElement[] {
   return [
     {
       id: 'h:425a60eee280854b7f3eb59b1613370bcc0ae3a02859f866f80e7b310475e1e8',
@@ -313,7 +320,7 @@ export function getSiafundOutputs() {
   ]
 }
 
-export function getConsensusState() {
+export function getConsensusState(): ConsensusState {
   return {
     index: {
       height: 45962,
@@ -363,7 +370,7 @@ export function getConsensusState() {
   }
 }
 
-export function getConsensusNetwork() {
+export function getConsensusNetwork(): ConsensusNetwork {
   return {
     name: 'zen',
     initialCoinbase: '300000000000000000000000000000',
@@ -405,5 +412,5 @@ export function getConsensusNetwork() {
       allowHeight: 100000,
       requireHeight: 102000,
     },
-  } as const
+  }
 }

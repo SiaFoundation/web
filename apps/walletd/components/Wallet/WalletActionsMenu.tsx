@@ -32,6 +32,7 @@ export function WalletActionsMenu() {
       <AddressesButton />
       {wallet?.metadata.type !== 'watch' && (
         <Button
+          aria-label="send"
           size="small"
           variant="accent"
           onClick={() => {

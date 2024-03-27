@@ -29,15 +29,31 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Lint
+      - name: Lint TypeScript
         shell: bash
         run: npx nx run-many --target=lint --all --parallel=5
-      - name: Compile
+      - name: Lint Go
+        uses: golangci/golangci-lint-action@v3
+        with:
+          skip-cache: true
+      - name: NX pre-build compile targets
         shell: bash
         run: npx nx run-many --target=compile --all --parallel=5
-      - name: Test
+      - name: Test TypeScript
         shell: bash
         run: npx nx run-many --target=test --all --parallel=5
+      - name: Test Go
+        uses: n8maninger/action-golang-test@v1
+        with:
+          args: '-race'
+      - name: Install playwright deps for e2e
+        shell: bash
+        run: npx playwright install-deps
+      - name: Test e2e
+        shell: bash
+        run: npx nx run-many --target=e2e --all --parallel=5
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Build for publishing
         shell: bash
         run: npx nx run-many --target=build --configuration=production --all --parallel=5
