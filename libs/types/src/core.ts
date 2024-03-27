@@ -8,6 +8,7 @@ export type OutputID = string
 export type EncryptionKey = string
 export type FileContractID = string
 export type PublicKey = string
+export type PrivateKey = string
 export type TransactionID = Hash256
 export type SiacoinOutputID = Hash256
 export type SiafundOutputID = Hash256

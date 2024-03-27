@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/walletd",
   "projectType": "application",
+  "implicitDependencies": ["sdk"],
   "targets": {
     "build": {
       "executor": "@nx/next:build",
@@ -67,6 +68,7 @@
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/walletd"],
+      "dependsOn": ["sdk:build"],
       "options": {
         "jestConfig": "apps/walletd/jest.config.ts"
       }

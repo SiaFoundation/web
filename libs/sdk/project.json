@@ -5,8 +5,7 @@
   "projectType": "library",
   "tags": [],
   "namedInputs": {
-    "go": ["{workspaceRoot}/sdk/**/*"],
-    "production": ["default", "go"]
+    "go": ["{workspaceRoot}/sdk/**/*"]
   },
   "targets": {
     "compile": {
@@ -24,7 +23,6 @@
       "executor": "@nx/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "dependsOn": ["compile", "^build"],
-      "inputs": ["production", "^production"],
       "options": {
         "outputPath": "dist/libs/sdk",
         "tsConfig": "libs/sdk/tsconfig.lib.json",
