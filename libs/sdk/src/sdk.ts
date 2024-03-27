@@ -1,12 +1,22 @@
 import { WebTransportClient } from './transport'
-import { WASM } from './types'
+import { WasmApi } from './types'
 
-export function getSDK() {
+export type SDK = WasmApi & {
+  WebTransportClient: typeof WebTransportClient
+}
+
+export function getWasmApi(): WasmApi {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const wasm = (global as any).sia as WASM
+  return (globalThis as any).sia as WasmApi
+}
+
+export function getSDK(): SDK {
+  const wasmApi = getWasmApi()
+  if (wasmApi === undefined) {
+    throw new Error('The Sia SDK has not been initialized')
+  }
   return {
-    rhp: wasm.rhp,
-    wallet: wasm.wallet,
+    ...wasmApi,
     WebTransportClient,
   }
 }

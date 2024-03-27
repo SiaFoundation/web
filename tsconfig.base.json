@@ -27,7 +27,9 @@
         "libs/react-sia-central/src/index.ts"
       ],
       "@siafoundation/react-walletd": ["libs/react-walletd/src/index.ts"],
-      "@siafoundation/sdk": ["dist/libs/sdk"],
+      // "buildLibsFromSource": false does not work with the next executor
+      // this is a very annoying workaround
+      "@siafoundation/sdk": ["dist/libs/sdk/index.esm.js"],
       "@siafoundation/sia-central": ["libs/sia-central/src/index.ts"],
       "@siafoundation/types": ["libs/types/src/index.ts"],
       "@siafoundation/units": ["libs/units/src/index.ts"]

@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/walletd-e2e/src",
   "projectType": "application",
+  "implicitDependencies": ["walletd"],
   "targets": {
     "e2e": {
       "executor": "@nx/playwright:playwright",
@@ -14,6 +15,5 @@
     "lint": {
       "executor": "@nx/eslint:lint"
     }
-  },
-  "implicitDependencies": ["walletd"]
+  }
 }

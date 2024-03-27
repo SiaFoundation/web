@@ -32,9 +32,14 @@ jobs:
         uses: golangci/golangci-lint-action@v3
         with:
           skip-cache: true
-      - name: NX pre-build compile targets
+      # The SDK is referenced via dist in the tsconfig.base.json
+      # because the next executor does not actually support
+      # buildLibsFromSource=false
+      # With this configuration NX does not build the SDK as expected
+      # when it is an app dependency
+      - name: Force build SDK
         shell: bash
-        run: npx nx affected --target=compile --parallel=5
+        run: npx nx run sdk:build
       - name: Test TypeScript
         shell: bash
         run: npx nx affected --target=test --parallel=5

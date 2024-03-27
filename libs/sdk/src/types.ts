@@ -3,14 +3,13 @@ import {
   UnlockConditions,
   ConsensusNetwork,
   ConsensusState,
+  Currency,
+  Signature,
+  Address,
+  Hash256,
+  PublicKey,
+  PrivateKey,
 } from '@siafoundation/types'
-
-type Currency = string
-type Signature = string
-type Address = string
-type Hash256 = string // 32 bytes
-type PrivateKey = string
-type PublicKey = string // 32 bytes
 
 type AccountToken = {
   account: PublicKey
@@ -92,7 +91,7 @@ export type RPCWriteSector = {
 
 export type RPC = RPCSettings | RPCReadSector | RPCWriteSector
 
-export type WASM = {
+export type WasmApi = {
   rhp: {
     generateAccount: () => {
       privateKey?: PrivateKey
@@ -189,7 +188,7 @@ export type WASM = {
       encodedTransaction?: string
       error?: string
     }
-    signTransaction: (
+    signTransactionV1: (
       cs: ConsensusState,
       cn: ConsensusNetwork,
       txn: Transaction,
