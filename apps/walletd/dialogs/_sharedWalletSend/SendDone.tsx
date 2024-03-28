@@ -16,7 +16,7 @@ export function SendDone({ params, transactionId }: Props) {
         <Text>
           <CheckmarkFilled32 />
         </Text>
-        <Text>Transaction successfully broadcasted.</Text>
+        <Text>Transaction successfully broadcast.</Text>
       </div>
     </div>
   )

@@ -4,7 +4,10 @@ export type WalletType = 'seed' | 'watch' | 'ledger'
 
 export type WalletMetadata = {
   type: WalletType
-  seedHash?: string
+  mnemonicHash?: string
+  // ledger
+  publicKey0?: string
+  address0?: string
 }
 
 export type WalletData = {
@@ -15,7 +18,7 @@ export type WalletData = {
   updatedAt?: number
   metadata: WalletMetadata
   state: {
-    seed?: string
+    mnemonic?: string
     activityAt?: number
     status: 'unlocked' | 'locked'
   }
@@ -24,6 +27,7 @@ export type WalletData = {
     lock: () => void
   }
   raw?: Wallet
+  onClick?: () => void
 }
 
 export type TableColumnId =

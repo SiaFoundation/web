@@ -46,7 +46,7 @@ test('send siacoin with a seed wallet', async ({ page }) => {
     .getByRole('button', { name: 'Sign and broadcast transaction' })
     .click()
   await expect(
-    page.getByText('Transaction successfully broadcasted')
+    page.getByText('Transaction successfully broadcast')
   ).toBeVisible()
   await expect(page.getByText(receiveAddress.slice(0, 5))).toBeVisible()
   await expect(page.getByText(changeAddress.slice(0, 5))).toBeVisible()

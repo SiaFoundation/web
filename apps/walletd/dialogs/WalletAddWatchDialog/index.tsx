@@ -15,6 +15,7 @@ import { useWalletAdd } from '@siafoundation/react-walletd'
 import { useDialog } from '../../contexts/dialog'
 import { useWallets } from '../../contexts/wallets'
 import { walletAddTypes } from '../../config/walletTypes'
+import { WalletMetadata } from '../../contexts/wallets/types'
 
 const defaultValues = {
   name: '',
@@ -77,13 +78,14 @@ export function WalletAddWatchDialog({ trigger, open, onOpenChange }: Props) {
 
   const onSubmit = useCallback(
     async (values: Values) => {
+      const metadata: WalletMetadata = {
+        type: 'watch',
+      }
       const response = await walletAdd.post({
         payload: {
           name: values.name,
           description: values.description,
-          metadata: {
-            type: 'watch',
-          },
+          metadata,
         },
       })
       if (response.error) {

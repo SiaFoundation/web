@@ -17,8 +17,13 @@ export function useWalletSeedCache() {
   const [walletActivityAt, setWalletActivityAt] = useState<
     Record<string, number>
   >({})
-  const [seedCache, _setSeedCache] = useState<Record<string, string>>({})
-  const seedCount = useMemo(() => Object.keys(seedCache).length, [seedCache])
+  const [mnemonicCache, _setMnemonicCache] = useState<Record<string, string>>(
+    {}
+  )
+  const cachedMnemonicCount = useMemo(
+    () => Object.keys(mnemonicCache).length,
+    [mnemonicCache]
+  )
 
   const updateWalletActivityAt = useCallback(
     (walletId: string) => {
@@ -30,17 +35,17 @@ export function useWalletSeedCache() {
     [setWalletActivityAt]
   )
 
-  const saveWalletSeed = useCallback(
-    (walletId: string, seed: string | undefined) => {
-      _setSeedCache((seeds) => ({
-        ...seeds,
-        [walletId]: seed,
+  const cacheWalletMnemonic = useCallback(
+    (walletId: string, mnemonic: string | undefined) => {
+      _setMnemonicCache((mnemonics) => ({
+        ...mnemonics,
+        [walletId]: mnemonic,
       }))
-      if (seed) {
+      if (mnemonic) {
         updateWalletActivityAt(walletId)
       }
     },
-    [_setSeedCache, updateWalletActivityAt]
+    [_setMnemonicCache, updateWalletActivityAt]
   )
 
   const evictStale = useCallback(() => {
@@ -49,25 +54,25 @@ export function useWalletSeedCache() {
     }
     const now = new Date().getTime()
     const ago = now - walletAutoLockTimeout
-    for (const [walletId, seed] of Object.entries(seedCache)) {
-      if (seed) {
+    for (const [walletId, mnemonic] of Object.entries(mnemonicCache)) {
+      if (mnemonic) {
         const timestamp = walletActivityAt[walletId] || 0
         if (timestamp < ago) {
-          saveWalletSeed(walletId, undefined)
+          cacheWalletMnemonic(walletId, undefined)
         }
       }
     }
   }, [
-    seedCache,
+    mnemonicCache,
     walletActivityAt,
-    saveWalletSeed,
+    cacheWalletMnemonic,
     walletAutoLockTimeout,
     walletAutoLockEnabled,
   ])
 
   const lockAllWallets = useCallback(() => {
-    _setSeedCache({})
-  }, [_setSeedCache])
+    _setMnemonicCache({})
+  }, [_setMnemonicCache])
 
   const router = useRouter()
   const onAction = useCallback(() => {
@@ -102,10 +107,10 @@ export function useWalletSeedCache() {
   return {
     walletActivityAt,
     updateWalletActivityAt,
-    seedCache,
-    saveWalletSeed,
+    mnemonicCache,
+    cacheWalletMnemonic,
     lockAllWallets,
-    seedCount,
+    cachedMnemonicCount,
     walletAutoLockTimeout,
     setWalletAutoLockTimeout,
     setWalletAutoLockEnabled,

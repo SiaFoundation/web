@@ -1,7 +1,13 @@
 import { WalletAddress } from '@siafoundation/react-walletd'
+import { UnlockConditions } from '@siafoundation/types'
 
 export type CellContext = {
   siascanUrl: string
+}
+
+export type AddressMetadata = {
+  index?: number
+  unlockConditions?: UnlockConditions
 }
 
 export type AddressData = {
@@ -9,12 +15,10 @@ export type AddressData = {
   address: string
   description?: string
   spendPolicy?: string
-  metadata: {
-    index?: number
-    publicKey?: string
-  }
+  metadata: AddressMetadata
   walletId: string
   raw?: WalletAddress
+  onClick?: () => void
 }
 
 export type TableColumnId = 'actions' | 'address' | 'index'

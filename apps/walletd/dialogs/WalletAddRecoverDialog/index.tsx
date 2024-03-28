@@ -17,7 +17,8 @@ import { blake2bHex } from 'blakejs'
 import { SeedLayout } from '../SeedLayout'
 import { SeedIcon } from '@siafoundation/react-icons'
 import { walletAddTypes } from '../../config/walletTypes'
-import { getWalletWasm } from '../../lib/wasm'
+import { getSDK } from '@siafoundation/sdk'
+import { WalletMetadata } from 'apps/walletd/contexts/wallets/types'
 
 const defaultValues = {
   name: '',
@@ -63,7 +64,7 @@ function getFields({
         required: 'required',
         validate: {
           valid: (value: string) => {
-            const { error } = getWalletWasm().seedFromPhrase(value)
+            const { error } = getSDK().wallet.keyPairFromSeedPhrase(value, 0)
             return !error || 'seed should be 12 word BIP39 mnemonic'
           },
         },
@@ -95,16 +96,16 @@ export function WalletAddRecoverDialog({ trigger, open, onOpenChange }: Props) {
 
   const onSubmit = useCallback(
     async (values: Values) => {
-      const { seed } = getWalletWasm().seedFromPhrase(values.mnemonic)
-      const seedHash = blake2bHex(seed)
+      const mnemonicHash = blake2bHex(values.mnemonic)
+      const metadata: WalletMetadata = {
+        type: 'seed',
+        mnemonicHash,
+      }
       const response = await walletAdd.post({
         payload: {
           name: values.name,
           description: values.description,
-          metadata: {
-            type: 'seed',
-            seedHash,
-          },
+          metadata,
         },
       })
       if (response.error) {

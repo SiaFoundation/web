@@ -120,7 +120,7 @@ export function useSyncerConnect(args?: HookArgsCallback<void, string, never>) {
 
 type TxPoolTransactionsResponse = {
   transactions: Transaction[]
-  v2Transactions: V2Transaction[]
+  v2transactions: V2Transaction[]
 }
 
 const txPoolTransactionsRoute = '/txpool/transactions'
@@ -138,7 +138,7 @@ export function useTxPoolFee(args?: HookArgsSwr<void, TxPoolFeeResponse>) {
 
 type TxPoolBroadcastPayload = {
   transactions: Transaction[]
-  v2Transactions: V2Transaction[]
+  v2transactions: V2Transaction[]
 }
 
 export function useTxPoolBroadcast(
@@ -254,10 +254,10 @@ export function useWalletAddresses(
   })
 }
 
-export type WalletAddressAddResponse = WalletAddress
+export type WalletAddressAddPayload = WalletAddress
 
 export function useWalletAddressAdd(
-  args?: HookArgsCallback<{ id: string }, WalletAddressAddResponse, void>
+  args?: HookArgsCallback<{ id: string }, WalletAddressAddPayload, void>
 ) {
   return usePutFunc(
     {

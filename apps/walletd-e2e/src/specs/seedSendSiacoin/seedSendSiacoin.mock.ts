@@ -22,8 +22,8 @@ export const newWallet = {
   lastUpdated: new Date().toISOString(),
   metadata: {
     type: 'seed',
-    seedHash:
-      'd4ad57da37936a053b0587fcc4964e9de89da8fbd610f7de190c32e22e6acd2a1c8f9f88bf219ffac04801b709712f3a2e64cc4f0271c402a6c4659573024440',
+    mnemonicHash:
+      '251cc9d01333287e9c9f39fc4749095a28a3970348a6106244848d2c414a908bc81ae4982911435a045a407fb305b69e51d05ce6f9b47ef1750c1e74ca299a48',
   },
 }
 

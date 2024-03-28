@@ -1,6 +1,6 @@
 import { signTransactionLedger } from './signLedger'
 import { TextEncoder, TextDecoder } from 'util'
-import { loadWASMTestEnv } from './wasmTestEnv'
+// import { loadWASMTestEnv } from './wasmTestEnv'
 import {
   getMockDevice,
   getAddresses,
@@ -15,7 +15,7 @@ global.TextDecoder = TextDecoder
 describe('signLedger', () => {
   describe('siacoin', () => {
     it('builds and signs valid transaction', async () => {
-      await loadWASMTestEnv()
+      // await loadWASMTestEnv()
       const device = getMockDevice()
       expect(
         await signTransactionLedger({
@@ -30,7 +30,7 @@ describe('signLedger', () => {
     })
 
     it('errors when a toSign utxo is missing', async () => {
-      await loadWASMTestEnv()
+      // await loadWASMTestEnv()
       const device = getMockDevice()
       expect(
         await signTransactionLedger({
@@ -47,7 +47,7 @@ describe('signLedger', () => {
     })
 
     it('errors when a public keys address is missing', async () => {
-      await loadWASMTestEnv()
+      // await loadWASMTestEnv()
       const device = getMockDevice()
       expect(
         await signTransactionLedger({
@@ -73,7 +73,7 @@ describe('signLedger', () => {
     })
 
     it('errors when an address is missing its index', async () => {
-      await loadWASMTestEnv()
+      // await loadWASMTestEnv()
       const device = getMockDevice()
       expect(
         await signTransactionLedger({
@@ -97,10 +97,10 @@ describe('signLedger', () => {
     })
 
     it('errors when an address is missing its public key', async () => {
-      await loadWASMTestEnv()
+      // await loadWASMTestEnv()
       const device = getMockDevice()
       const addresses = getAddresses()
-      addresses[0].metadata.publicKey = undefined
+      addresses[0].metadata.unlockConditions.publicKeys[0] = undefined
       expect(
         await signTransactionLedger({
           device,
