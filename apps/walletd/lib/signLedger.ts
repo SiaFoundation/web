@@ -3,10 +3,10 @@ import {
   SiafundElement,
   Transaction,
 } from '@siafoundation/types'
-import { getWalletWasm } from './wasm'
 import { AddressData } from '../contexts/addresses/types'
 import { LedgerDevice } from '../contexts/ledger/types'
 import { addUnlockConditionsAndSignatures, getToSignMetadata } from './sign'
+import { getSDK } from '@siafoundation/sdk'
 
 export async function signTransactionLedger({
   device,
@@ -86,9 +86,8 @@ async function signTransactionIndex({
   signatureIndex: number
   keyIndex: number
 }): Promise<{ transaction?: Transaction; error?: string }> {
-  const { encodedTransaction, error } = getWalletWasm().encodeTransaction(
-    JSON.stringify(transaction)
-  )
+  const { encodedTransaction, error } =
+    getSDK().wallet.encodeTransaction(transaction)
   if (error) {
     return { error }
   }

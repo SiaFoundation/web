@@ -4,7 +4,7 @@ import {
 } from '@siafoundation/design-system'
 import { useWalletAddresses } from '@siafoundation/react-walletd'
 import { useMemo } from 'react'
-import { AddressData } from './types'
+import { AddressData, AddressMetadata } from './types'
 import { useDialog } from '../dialog'
 
 export function useDataset({
@@ -23,15 +23,12 @@ export function useDataset({
     }
     const data: AddressData[] = response.data.map((addressObject) => {
       const { address, description, metadata, spendPolicy } = addressObject
-      return {
+      const datum: AddressData = {
         id: address,
         address,
         description: description,
         spendPolicy: spendPolicy,
-        metadata: {
-          index: metadata?.index as number,
-          publicKey: metadata?.publicKey as string,
-        },
+        metadata: (metadata || {}) as AddressMetadata,
         walletId,
         onClick: () =>
           openDialog('addressUpdate', {
@@ -40,6 +37,7 @@ export function useDataset({
           }),
         raw: addressObject,
       }
+      return datum
     })
     return data
   }, [response.data, openDialog, walletId])

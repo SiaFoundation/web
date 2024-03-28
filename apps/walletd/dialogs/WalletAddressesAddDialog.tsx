@@ -19,6 +19,7 @@ import { useForm } from 'react-hook-form'
 import { useWallets } from '../contexts/wallets'
 import { isValidAddress } from '@siafoundation/units'
 import { uniq } from '@technically/lodash'
+import { AddressMetadata } from '../contexts/addresses/types'
 
 export type WalletAddressesAddDialogParams = {
   walletId: string
@@ -122,6 +123,7 @@ export function WalletAddressesAddDialog({
       let successful = 0
       for (let i = 0; i < total; i++) {
         const addr = addrs[i]
+        const metadata: AddressMetadata = {}
         const response = await addressAdd.put({
           params: {
             id: walletId,
@@ -129,7 +131,7 @@ export function WalletAddressesAddDialog({
           payload: {
             address: addr,
             description: '',
-            metadata: {},
+            metadata,
           },
         })
         if (response.error) {

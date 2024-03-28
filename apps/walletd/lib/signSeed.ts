@@ -5,12 +5,12 @@ import {
   ConsensusState,
   ConsensusNetwork,
 } from '@siafoundation/types'
-import { getWalletWasm } from './wasm'
 import { AddressData } from '../contexts/addresses/types'
 import { addUnlockConditionsAndSignatures, getToSignMetadata } from './sign'
+import { getSDK } from '@siafoundation/sdk'
 
 export function signTransactionSeed({
-  seed,
+  mnemonic,
   transaction,
   toSign,
   cs,
@@ -19,7 +19,7 @@ export function signTransactionSeed({
   siacoinOutputs,
   siafundOutputs,
 }: {
-  seed: string
+  mnemonic: string
   cs: ConsensusState
   cn: ConsensusNetwork
   transaction: Transaction
@@ -65,8 +65,8 @@ export function signTransactionSeed({
       return { error: utxoAddressError }
     }
 
-    const pkResponse = getWalletWasm().privateKeyFromSeed(
-      seed,
+    const pkResponse = getSDK().wallet.keyPairFromSeedPhrase(
+      mnemonic,
       address.metadata.index
     )
 
@@ -76,11 +76,10 @@ export function signTransactionSeed({
       }
     }
 
-    // signTransaction generates a new transaction object with the signature
-    const { transaction: signedTxn, error } = getWalletWasm().signTransaction(
-      JSON.stringify(cs),
-      JSON.stringify(cn),
-      JSON.stringify(transaction),
+    const { signature, error } = getSDK().wallet.signTransactionV1(
+      cs,
+      cn,
+      transaction,
       i,
       pkResponse.privateKey
     )
@@ -89,7 +88,7 @@ export function signTransactionSeed({
         error,
       }
     }
-    transaction = signedTxn
+    transaction.signatures[i].signature = signature
   }
 
   return {

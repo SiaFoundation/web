@@ -20,6 +20,8 @@ import { DeviceConnectForm } from '../DeviceConnectForm'
 import { useLedger } from '../../contexts/ledger'
 import { LedgerAddress } from './LedgerAddress'
 import { useWalletAddresses } from '../../hooks/useWalletAddresses'
+import { getSDK } from '@siafoundation/sdk'
+import { AddressMetadata } from '../../contexts/addresses/types'
 
 export type WalletAddressesGenerateLedgerDialogParams = {
   walletId: string
@@ -222,7 +224,8 @@ export function WalletAddressesGenerateLedgerDialog({
         isNew: !existing,
         index: Number(index),
         address: existing?.address || address,
-        publicKey: existing?.metadata.publicKey || publicKey,
+        publicKey:
+          existing?.metadata.unlockConditions.publicKeys[0] || publicKey,
       }
     }
     return indiciesWithAddresses
@@ -238,10 +241,30 @@ export function WalletAddressesGenerateLedgerDialog({
 
   const saveAddresses = useCallback(async () => {
     const count = newGeneratedAddresses.length
+    function toastBatchError(count: number, i: number) {
+      if (count === 1) {
+        triggerErrorToast('Error saving address.')
+      } else {
+        triggerErrorToast(
+          `Error saving addresses. ${
+            i > 0 ? 'Not all addresses were saved.' : ''
+          }`
+        )
+      }
+    }
     for (const [
       i,
       { address, publicKey, index },
     ] of newGeneratedAddresses.entries()) {
+      const uc = getSDK().wallet.standardUnlockConditions(publicKey)
+      if (uc.error) {
+        toastBatchError(count, i)
+        return
+      }
+      const metadata: AddressMetadata = {
+        index,
+        unlockConditions: uc.unlockConditions,
+      }
       const response = await addressAdd.put({
         params: {
           id: walletId,
@@ -249,22 +272,12 @@ export function WalletAddressesGenerateLedgerDialog({
         payload: {
           address,
           description: '',
-          metadata: {
-            index,
-            publicKey,
-          },
+          // TODO: add spendPolicy?
+          metadata,
         },
       })
       if (response.error) {
-        if (count === 1) {
-          triggerErrorToast('Error saving address.')
-        } else {
-          triggerErrorToast(
-            `Error saving addresses. ${
-              i > 0 ? 'Not all addresses were saved.' : ''
-            }`
-          )
-        }
+        toastBatchError(count, i)
         return
       }
     }

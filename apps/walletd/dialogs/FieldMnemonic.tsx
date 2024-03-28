@@ -19,7 +19,7 @@ export function FieldMnemonic<
 >({ walletId, name, form, fields, actionText }: Props<Values, Categories>) {
   const { dataset, walletAutoLockEnabled, walletAutoLockTimeout } = useWallets()
   const wallet = dataset?.find((w) => w.id === walletId)
-  const cachedSeed = wallet?.state.seed
+  const cachedSeed = wallet?.state.mnemonic
   const isSeedCached = !!cachedSeed
   const cacheTime = humanTimeAndUnits(walletAutoLockTimeout)
   const fullActionText = actionText ? ` and ${actionText}` : ''
