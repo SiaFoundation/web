@@ -1,5 +1,11 @@
 # explorer
 
+## 0.14.0
+
+### Minor Changes
+
+- 5bafe41e: The explorer now features a host revenue calculator tool.
+
 ## 0.13.0
 
 ### Minor Changes

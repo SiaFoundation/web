@@ -1,5 +1,12 @@
 # @siafoundation/react-hostd
 
+## 4.0.0
+
+### Patch Changes
+
+- Updated dependencies [e2b8f950]
+  - @siafoundation/types@0.2.0
+
 ## 3.0.0
 
 ### Patch Changes

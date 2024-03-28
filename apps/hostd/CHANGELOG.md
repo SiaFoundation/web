@@ -1,5 +1,11 @@
 # hostd
 
+## 0.40.0
+
+### Minor Changes
+
+- 1053c506: Context menus now all use a caret icon.
+
 ## 0.39.0
 
 ### Minor Changes

@@ -1,5 +1,17 @@
 # @siafoundation/sdk
 
+## 0.1.0
+
+### Minor Changes
+
+- 8aa3db00: Wallet and transaction signing methods are now part of the sdk.
+- 6c0ee434: Updated SDK to latest core changes, updated structure.
+
+### Patch Changes
+
+- Updated dependencies [e2b8f950]
+  - @siafoundation/types@0.2.0
+
 ## 0.0.2
 
 ### Patch Changes
