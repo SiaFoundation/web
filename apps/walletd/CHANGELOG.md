@@ -1,5 +1,12 @@
 # walletd
 
+## 0.18.0
+
+### Minor Changes
+
+- e2b8f950: The UI now uses the new daemon endpoints and changes. Closes https://github.com/SiaFoundation/walletd/issues/73
+- 1053c506: Context menus now all use a caret icon.
+
 ## 0.17.0
 
 ### Minor Changes
