@@ -1,3 +1,4 @@
+import { getWasmApi } from './sdk'
 import {
   RPCReadSectorResponse,
   RPCSettingsResponse,
@@ -9,26 +10,27 @@ import {
   RPCWriteSector,
   RPCSettings,
 } from './types'
-import { WASM } from './types'
 
 export class WebTransportClient {
   #url: string
   #cert: string
-  #wasm: WASM
 
   #transport!: WebTransport
 
-  constructor(url: string, cert: string, wasm: WASM) {
+  constructor(url: string, cert: string) {
     this.#url = url
     this.#cert = cert
-    this.#wasm = wasm
-  }
 
-  async connect() {
+    if (!getWasmApi()) {
+      throw new Error('The Sia SDK has not been initialized.')
+    }
+
     if (!('WebTransport' in window)) {
       throw new Error('WebTransport is not supported in your browser.')
     }
+  }
 
+  async connect() {
     try {
       this.#transport = new WebTransport(this.#url, {
         serverCertificateHashes: this.#cert
@@ -101,8 +103,8 @@ export class WebTransportClient {
   ): Promise<RPCReadSectorResponse> {
     return this.sendRequest<RPCReadSector>(
       readSector,
-      this.#wasm.rhp.encodeReadSectorRequest,
-      this.#wasm.rhp.decodeReadSectorResponse
+      getWasmApi().rhp.encodeReadSectorRequest,
+      getWasmApi().rhp.decodeReadSectorResponse
     )
   }
 
@@ -111,16 +113,16 @@ export class WebTransportClient {
   ): Promise<RPCWriteSectorResponse> {
     return this.sendRequest<RPCWriteSector>(
       writeSector,
-      this.#wasm.rhp.encodeWriteSectorRequest,
-      this.#wasm.rhp.decodeWriteSectorResponse
+      getWasmApi().rhp.encodeWriteSectorRequest,
+      getWasmApi().rhp.decodeWriteSectorResponse
     )
   }
 
   async sendRPCSettingsRequest(): Promise<RPCSettingsResponse> {
     return this.sendRequest<RPCSettings>(
       undefined,
-      this.#wasm.rhp.encodeSettingsRequest,
-      this.#wasm.rhp.decodeSettingsResponse
+      getWasmApi().rhp.encodeSettingsRequest,
+      getWasmApi().rhp.decodeSettingsResponse
     )
   }
 }

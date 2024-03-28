@@ -34,7 +34,7 @@ func main() {
 			"addressFromSpendPolicy":      jsFunc(addressFromSpendPolicy),
 			"encodeTransaction":           jsFunc(encodeTransaction),
 			"transactionId":               jsFunc(transactionID),
-			"signTransaction":             jsFunc(signTransaction),
+			"signTransactionV1":           jsFunc(signTransactionV1),
 		},
 	})
 	c := make(chan bool, 1)

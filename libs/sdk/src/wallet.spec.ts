@@ -151,7 +151,7 @@ describe('wallet', () => {
     it('signs a valid transaction', async () => {
       const sdk = await initSDKTest()
       const { privateKey } = sdk.wallet.keyPairFromSeedPhrase(mockPhrase!, 0)
-      const { error, signature } = sdk.wallet.signTransaction(
+      const { error, signature } = sdk.wallet.signTransactionV1(
         getConsensusState(),
         getConsensusNetwork(),
         getTransaction(),
@@ -160,13 +160,13 @@ describe('wallet', () => {
       )
       expect(error).toBeUndefined()
       expect(signature).toEqual(
-        'sig:c58f8fe1ee5a08147484a53af7d3a64eca8039794b6c475342f0d8927b04d3172b3ed72861c183c73e87d719b782fb291dbfe8b3e0b1088095a9264bc97b6f06'
+        'xY+P4e5aCBR0hKU699OmTsqAOXlLbEdTQvDYknsE0xcrPtcoYcGDxz6H1xm3gvspHb/os+CxCICVqSZLyXtvBg=='
       )
     })
     it('errors if the signature index is invalid', async () => {
       const sdk = await initSDKTest()
       const { privateKey } = sdk.wallet.keyPairFromSeedPhrase(mockPhrase!, 0)
-      const { error, signature } = sdk.wallet.signTransaction(
+      const { error, signature } = sdk.wallet.signTransactionV1(
         getConsensusState(),
         getConsensusNetwork(),
         getTransaction(),
@@ -178,7 +178,7 @@ describe('wallet', () => {
     })
     it('errors if the private key is invalid', async () => {
       const sdk = await initSDKTest()
-      const { error, signature } = sdk.wallet.signTransaction(
+      const { error, signature } = sdk.wallet.signTransactionV1(
         getConsensusState(),
         getConsensusNetwork(),
         getTransaction(),

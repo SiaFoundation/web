@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"crypto/ed25519"
+	"encoding/base64"
 	"encoding/hex"
 	"fmt"
 	"syscall/js"
@@ -146,7 +147,7 @@ func encodeTransaction(this js.Value, args []js.Value) result {
 }
 
 // SignTransaction returns the signature of a transaction.
-func signTransaction(this js.Value, args []js.Value) result {
+func signTransactionV1(this js.Value, args []js.Value) result {
 	if err := checkArgs(args, js.TypeObject, js.TypeObject, js.TypeObject, js.TypeNumber, js.TypeString); err != nil {
 		return resultErr(err)
 	}
@@ -187,8 +188,9 @@ func signTransaction(this js.Value, args []js.Value) result {
 	} else {
 		sigHash = cs.PartialSigHash(txn, tsig.CoveredFields)
 	}
+	sig := privateKey.SignHash(sigHash)
 	return result(map[string]any{
-		"signature": privateKey.SignHash(sigHash).String(),
+		"signature": base64.StdEncoding.EncodeToString(sig[:]),
 	})
 }
 
