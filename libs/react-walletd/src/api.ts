@@ -301,11 +301,13 @@ export function useWalletBalance(
   })
 }
 
+export type WalletEventsResponse = WalletEvent[]
+
 const walletEventsRoute = '/wallets/:id/events'
 export function useWalletEvents(
   args: HookArgsSwr<
     { id: string; offset: number; limit: number },
-    WalletEvent[]
+    WalletEventsResponse
   >
 ) {
   return useGetSwr({
@@ -358,7 +360,7 @@ export type WalletFundSiacoinPayload = {
 export type WalletFundResponse = {
   transaction: Transaction
   toSign: string[]
-  dependsOn: Transaction[]
+  dependsOn: Transaction[] | null
 }
 
 export function useWalletFundSiacoin(

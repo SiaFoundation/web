@@ -45,9 +45,17 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 
 ## Internal
 
+### Apps
+
 - [website](apps/website) - The main [sia.tech](https://sia.tech) website with information on the Sia project and the Sia Foundation.
 - [assets](apps/assets) - Powers [api.sia.tech](https://api.sia.tech) and all downloadable assets on [sia.tech](https://sia.tech) such as the Sia software releases.
 - [crons](apps/crons) - Background tasks for [api.sia.tech](https://api.sia.tech) and [sia.tech](https://sia.tech).
+
+### Testing
+
+- [walletd-e2e](walletd-e2e) - App for testing walletd.
+- [@siafoundation/mock-walletd](mock-walletd) - `walletd` data and API mock library for testing.
+- [@siafoundation/mock-sia-central](mock-sia-central) - Sia Central data and API mock library for testing.
 
 ## Development
 
