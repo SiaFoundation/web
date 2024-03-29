@@ -36,9 +36,8 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 
 ### Go
 
+- [go.sia.tech/web/sdk](sdk) - SDK for signing transactions, encoding RPCs, computing merkle roots, and more. Compiled with WASM for use in the TypeScript SDK.
 - [go.sia.tech/web/ui](ui) - Library for embedding NextJS applications in Go.
-- [go.sia.tech/web/sdk](sdk) - SDK for encoding RPCs, computing merkle roots, and more. Compiled with WASM for use in the TypeScript SDK.
-- [go.sia.tech/web/walletd/wasm](walletd/wasm) - Wallet library for signing transactions. Compiled with WASM for use in the `walletd` application.
 - [go.sia.tech/web/walletd](walletd) - HTTP handler with embedded `walletd` application.
 - [go.sia.tech/web/renterd](renterd) - HTTP handler with embedded `renterd` application.
 - [go.sia.tech/web/hostd](hostd) - HTTP handler with embedded `hostd` application.
