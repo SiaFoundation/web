@@ -1,49 +1,41 @@
 import { signTransactionSeed } from './signSeed'
-import { TextEncoder, TextDecoder } from 'util'
-import { loadWASMTestEnv } from './wasmTestEnv'
-import {
-  getAddresses,
-  getConsensusNetwork,
-  getConsensusState,
-  getSiacoinOutputs,
-  getSiafundOutputs,
-  getToSign,
-  getTransaction,
-} from './testMocks'
-global.TextEncoder = TextEncoder
-global.TextDecoder = TextDecoder
+import { initSDK } from '@siafoundation/sdk'
+import { getMockScenarioSeedWallet } from '@siafoundation/mock-walletd'
+import { getMockAddresses } from './testMocks'
 
-const seed = '352ef42e07c0fe6e57d15ace7a7ac6cef8ddd187c76c1131fc172967e817ff58'
+beforeEach(async () => {
+  await initSDK()
+})
 
 describe('signSeed', () => {
   it('builds and signs valid transaction', async () => {
-    await loadWASMTestEnv()
+    const mocks = getMockScenarioSeedWallet()
     expect(
       signTransactionSeed({
-        seed,
-        transaction: getTransaction(),
-        toSign: getToSign(),
-        cs: getConsensusState(),
-        cn: getConsensusNetwork(),
-        addresses: getAddresses(),
-        siacoinOutputs: getSiacoinOutputs(),
-        siafundOutputs: getSiafundOutputs(),
+        mnemonic: mocks.mnemonic,
+        transaction: mocks.walletFundResponse.transaction,
+        toSign: mocks.walletFundResponse.toSign,
+        consensusState: mocks.consensusState,
+        consensusNetwork: mocks.consensusNetwork,
+        siacoinOutputs: mocks.walletOutputsSiacoinResponse,
+        siafundOutputs: mocks.walletOutputsSiafundResponse,
+        addresses: getMockAddresses(mocks),
       })
     ).toMatchSnapshot()
   })
 
   it('errors when a toSign utxo is missing', async () => {
-    await loadWASMTestEnv()
+    const mocks = getMockScenarioSeedWallet()
     expect(
       signTransactionSeed({
-        seed,
-        transaction: getTransaction(),
+        mnemonic: mocks.mnemonic,
+        transaction: mocks.walletFundResponse.transaction,
+        consensusState: mocks.consensusState,
+        consensusNetwork: mocks.consensusNetwork,
+        siacoinOutputs: mocks.walletOutputsSiacoinResponse,
+        siafundOutputs: mocks.walletOutputsSiafundResponse,
+        addresses: getMockAddresses(mocks),
         toSign: ['not in siacoinOutputs'],
-        cs: getConsensusState(),
-        cn: getConsensusNetwork(),
-        addresses: getAddresses(),
-        siacoinOutputs: getSiacoinOutputs(),
-        siafundOutputs: getSiafundOutputs(),
       })
     ).toEqual({
       error: 'Missing utxo',
@@ -51,14 +43,16 @@ describe('signSeed', () => {
   })
 
   it('errors when a public keys address is missing', async () => {
-    await loadWASMTestEnv()
+    const mocks = getMockScenarioSeedWallet()
     expect(
       signTransactionSeed({
-        seed,
-        transaction: getTransaction(),
-        toSign: getToSign(),
-        cs: getConsensusState(),
-        cn: getConsensusNetwork(),
+        mnemonic: mocks.mnemonic,
+        transaction: mocks.walletFundResponse.transaction,
+        toSign: mocks.walletFundResponse.toSign,
+        consensusState: mocks.consensusState,
+        consensusNetwork: mocks.consensusNetwork,
+        siacoinOutputs: mocks.walletOutputsSiacoinResponse,
+        siafundOutputs: mocks.walletOutputsSiafundResponse,
         addresses: [
           {
             id: 'id',
@@ -69,8 +63,6 @@ describe('signSeed', () => {
             },
           },
         ],
-        siacoinOutputs: getSiacoinOutputs(),
-        siafundOutputs: getSiafundOutputs(),
       })
     ).toEqual({
       error: 'Missing address',
@@ -78,24 +70,25 @@ describe('signSeed', () => {
   })
 
   it('errors when an address is missing its index', async () => {
-    await loadWASMTestEnv()
+    const mocks = getMockScenarioSeedWallet()
     expect(
       signTransactionSeed({
-        seed,
-        transaction: getTransaction(),
-        toSign: getToSign(),
-        cs: getConsensusState(),
-        cn: getConsensusNetwork(),
+        mnemonic: mocks.mnemonic,
+        transaction: mocks.walletFundResponse.transaction,
+        toSign: mocks.walletFundResponse.toSign,
+        consensusState: mocks.consensusState,
+        consensusNetwork: mocks.consensusNetwork,
+        siacoinOutputs: mocks.walletOutputsSiacoinResponse,
+        siafundOutputs: mocks.walletOutputsSiafundResponse,
         addresses: [
           {
             id: 'id',
             walletId: 'id',
-            address: getSiacoinOutputs()[1].siacoinOutput.address,
+            address:
+              mocks.walletOutputsSiacoinResponse[1].siacoinOutput.address,
             metadata: {},
           },
         ],
-        siacoinOutputs: getSiacoinOutputs(),
-        siafundOutputs: getSiafundOutputs(),
       })
     ).toEqual({
       error: 'Missing address index',
@@ -103,19 +96,19 @@ describe('signSeed', () => {
   })
 
   it('errors when an address is missing its public key', async () => {
-    await loadWASMTestEnv()
-    const addresses = getAddresses()
-    addresses[0].metadata.publicKey = undefined
+    const mocks = getMockScenarioSeedWallet()
+    const addresses = getMockAddresses(mocks)
+    addresses[0].metadata.unlockConditions.publicKeys[0] = undefined
     expect(
       signTransactionSeed({
-        seed,
-        transaction: getTransaction(),
-        toSign: getToSign(),
-        cs: getConsensusState(),
-        cn: getConsensusNetwork(),
+        mnemonic: mocks.mnemonic,
+        transaction: mocks.walletFundResponse.transaction,
+        toSign: mocks.walletFundResponse.toSign,
+        consensusState: mocks.consensusState,
+        consensusNetwork: mocks.consensusNetwork,
+        siacoinOutputs: mocks.walletOutputsSiacoinResponse,
+        siafundOutputs: mocks.walletOutputsSiafundResponse,
         addresses,
-        siacoinOutputs: getSiacoinOutputs(),
-        siafundOutputs: getSiafundOutputs(),
       })
     ).toEqual({
       error: 'Missing address public key',

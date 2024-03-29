@@ -53,21 +53,11 @@ export function addUnlockConditionsAndSignatures({
     }
 
     if (siacoinUtxo) {
-      // build the unlock conditions with the utxo funding element's public key
-      siacoinInput.unlockConditions = {
-        timelock: 0,
-        publicKeys: [address.metadata.publicKey],
-        signaturesRequired: 1,
-      }
+      siacoinInput.unlockConditions = address.metadata.unlockConditions
     }
 
     if (siafundUtxo) {
-      // build the unlock conditions with the utxo funding element's public key
-      siafundInput.unlockConditions = {
-        timelock: 0,
-        publicKeys: [address.metadata.publicKey],
-        signaturesRequired: 1,
-      }
+      siafundInput.unlockConditions = address.metadata.unlockConditions
     }
 
     if (!transaction.signatures) {
@@ -114,10 +104,13 @@ export function getSiacoinUtxoAndAddress({
   if (!addressData) {
     return { error: 'Missing address' }
   }
+  if (!addressData.metadata) {
+    return { error: 'Missing address metadata' }
+  }
   if (addressData.metadata.index === undefined) {
     return { error: 'Missing address index' }
   }
-  if (!addressData.metadata.publicKey) {
+  if (!addressData.metadata.unlockConditions.publicKeys[0]) {
     return { error: 'Missing address public key' }
   }
 
@@ -153,10 +146,13 @@ export function getSiafundUtxoAndAddress({
   if (!addressData) {
     return { error: 'Missing address' }
   }
+  if (!addressData.metadata) {
+    return { error: 'Missing address metadata' }
+  }
   if (addressData.metadata.index === undefined) {
     return { error: 'Missing address index' }
   }
-  if (!addressData.metadata.publicKey) {
+  if (!addressData.metadata.unlockConditions.publicKeys[0]) {
     return { error: 'Missing address public key' }
   }
 

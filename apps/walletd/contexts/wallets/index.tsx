@@ -4,14 +4,16 @@ import {
   useClientFilters,
   useClientFilteredDataset,
 } from '@siafoundation/design-system'
-import { useWallets as useWalletsData } from '@siafoundation/react-walletd'
+import {
+  WalletMetadata,
+  useWallets as useWalletsData,
+} from '@siafoundation/react-walletd'
 import { createContext, useContext, useEffect, useMemo } from 'react'
 import {
   WalletData,
   columnsDefaultVisible,
   defaultSortField,
   sortOptions,
-  WalletMetadata,
 } from './types'
 import { columns } from './columns'
 import { useRouter } from 'next/router'
@@ -33,9 +35,10 @@ function useWalletsMain() {
   const { openDialog } = useDialog()
   const { setOnLockCallback } = useAppSettings()
   const {
-    seedCache,
+    mnemonicCache,
     walletActivityAt,
-    saveWalletSeed,
+    cacheWalletMnemonic,
+    cachedMnemonicCount,
     lockAllWallets,
     walletAutoLockTimeout,
     setWalletAutoLockTimeout,
@@ -57,22 +60,29 @@ function useWalletsMain() {
     const data: WalletData[] = response.data.map((wallet) => {
       const { id, name, description, dateCreated, lastUpdated, metadata } =
         wallet
-      return {
+      const datum: WalletData = {
+        // Transformed data from the API response
         id,
         name,
         description,
         createdAt: new Date(dateCreated).getTime() || 0,
         updatedAt: new Date(lastUpdated).getTime() || 0,
         metadata: (metadata || {}) as WalletMetadata,
+        // Copy of the original data for merging into PUT updates
+        raw: wallet,
+        // State is data that is not persisted in the database,
+        // rather it is from the temporary session caches
         state: {
-          seed: seedCache[id],
-          status: seedCache[id] ? 'unlocked' : 'locked',
+          mnemonic: mnemonicCache[id],
+          status: mnemonicCache[id] ? 'unlocked' : 'locked',
           activityAt: walletActivityAt[id],
         },
+        // Wallet methods
         actions: {
           unlock: () => openDialog('walletUnlock', { walletId: id }),
-          lock: () => saveWalletSeed(id, undefined),
+          lock: () => cacheWalletMnemonic(id, undefined),
         },
+        // Table row click handler
         onClick: () =>
           router.push({
             pathname: routes.wallet.view,
@@ -80,17 +90,17 @@ function useWalletsMain() {
               id,
             },
           }),
-        raw: wallet,
       }
+      return datum
     })
     return data
   }, [
     router,
     response.data,
-    seedCache,
+    mnemonicCache,
     walletActivityAt,
     openDialog,
-    saveWalletSeed,
+    cacheWalletMnemonic,
   ])
 
   const wallet = dataset?.find((w) => w.id === (router.query.id as string))
@@ -152,7 +162,7 @@ function useWalletsMain() {
     dataState,
     error: response.error,
     datasetCount: datasetFiltered?.length || 0,
-    unlockedCount: dataset?.filter((d) => d.state.seed).length || 0,
+    unlockedCount: cachedMnemonicCount,
     columns: filteredTableColumns,
     dataset: datasetFiltered,
     context,
@@ -174,7 +184,7 @@ function useWalletsMain() {
     resetFilters,
     sortDirection,
     resetDefaultColumnVisibility,
-    saveWalletSeed,
+    cacheWalletMnemonic,
     lockAllWallets,
     walletAutoLockTimeout,
     setWalletAutoLockTimeout,

@@ -1,4 +1,7 @@
-import { WalletAddress } from '@siafoundation/react-walletd'
+import {
+  WalletAddress,
+  WalletAddressMetadata,
+} from '@siafoundation/react-walletd'
 
 export type CellContext = {
   siascanUrl: string
@@ -9,12 +12,10 @@ export type AddressData = {
   address: string
   description?: string
   spendPolicy?: string
-  metadata: {
-    index?: number
-    publicKey?: string
-  }
+  metadata: WalletAddressMetadata
   walletId: string
   raw?: WalletAddress
+  onClick?: () => void
 }
 
 export type TableColumnId = 'actions' | 'address' | 'index'

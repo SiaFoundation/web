@@ -1,41 +1,40 @@
 import { test, expect } from '@playwright/test'
-import { mockApiDefaults } from '../../mocks/mock'
-import { login } from '../../fixtures/login'
-import { createWallet } from '../../fixtures/createWallet'
-import { navigateToWallet } from '../../fixtures/navigateToWallet'
+import { login } from '../fixtures/login'
+import { createWallet } from '../fixtures/createWallet'
+import { navigateToWallet } from '../fixtures/navigateToWallet'
 import {
-  seed,
-  newWallet,
-  mockWalletAddressesResponse,
-} from './seedGenerateAddresses.mock'
-import { cloneDeep } from '@technically/lodash'
+  getMockScenarioSeedWallet,
+  mockApiDefaults,
+} from '@siafoundation/mock-walletd'
+import { WalletAddressesResponse } from '@siafoundation/react-walletd'
 
-const defaultMockWalletResponses = {
-  addresses: mockWalletAddressesResponse,
+function getMockWalletAddressesResponse(): WalletAddressesResponse {
+  return []
+}
+
+function getDefaultMockWalletResponses() {
+  return {
+    addresses: getMockWalletAddressesResponse(),
+  }
 }
 
 test('generate new addresses', async ({ page }) => {
   await mockApiDefaults({ page })
   await login({ page })
 
-  const mockAddressesInvalid = cloneDeep(mockWalletAddressesResponse)
-  mockAddressesInvalid.forEach((address) => {
-    address.metadata.publicKey = undefined
-  })
+  const mocks = getMockScenarioSeedWallet()
+  const { newWallet, mnemonic } = mocks
   await createWallet({
     page,
     newWallet,
-    seed,
-    responses: defaultMockWalletResponses,
+    mnemonic,
+    responses: getDefaultMockWalletResponses(),
   })
   await navigateToWallet({ page, wallet: newWallet })
   await page.getByLabel('view addresses').click()
   await page.getByRole('button', { name: 'Add addresses' }).click()
   await page.locator('input[name=count]').fill('5')
   await page.getByRole('button', { name: 'Continue' }).click()
-  await expect(
-    page.getByText('60838523a4bdeeec5b4f70a6678da48a77ad58fe...')
-  ).toBeVisible()
   await expect(
     page.getByText('65b40f6a720352ad5b9546b9f5077209672914cc...')
   ).toBeVisible()
@@ -47,5 +46,8 @@ test('generate new addresses', async ({ page }) => {
   ).toBeVisible()
   await expect(
     page.getByText('170173c40ca0f39f9618da30af14c390c7ce7024...')
+  ).toBeVisible()
+  await expect(
+    page.getByText('90c6057cdd2463eca61f83796e83152dbba28b6c...')
   ).toBeVisible()
 })

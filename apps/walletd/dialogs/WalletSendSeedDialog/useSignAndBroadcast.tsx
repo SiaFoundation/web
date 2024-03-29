@@ -14,7 +14,7 @@ import { useCancel } from '../_sharedWalletSend/useCancel'
 import { useFund } from '../_sharedWalletSend/useFund'
 
 export function useSignAndBroadcast() {
-  const { wallet, saveWalletSeed } = useWallets()
+  const { wallet, cacheWalletMnemonic } = useWallets()
   const walletId = wallet?.id
 
   const siacoinOutputs = useWalletOutputsSiacoin({
@@ -37,7 +37,7 @@ export function useSignAndBroadcast() {
   const broadcast = useBroadcast({ cancel })
 
   return useCallback(
-    async ({ seed, params }: { seed: string; params: SendParams }) => {
+    async ({ mnemonic, params }: { mnemonic: string; params: SendParams }) => {
       if (!addresses) {
         return {
           error: 'No addresses found',
@@ -57,11 +57,11 @@ export function useSignAndBroadcast() {
         }
       }
       const { signedTransaction, error: signingError } = signTransactionSeed({
-        seed,
+        mnemonic,
         transaction: fundedTransaction,
         toSign,
-        cs: cs.data,
-        cn: cn.data,
+        consensusState: cs.data,
+        consensusNetwork: cn.data,
         addresses,
         siacoinOutputs: siacoinOutputs.data,
         siafundOutputs: siafundOutputs.data,
@@ -74,7 +74,7 @@ export function useSignAndBroadcast() {
       }
 
       // if successfully signed cache the seed
-      saveWalletSeed(walletId, seed)
+      cacheWalletMnemonic(walletId, mnemonic)
 
       // broadcast
       return broadcast({ signedTransaction })
@@ -88,7 +88,7 @@ export function useSignAndBroadcast() {
       cn.data,
       siacoinOutputs.data,
       siafundOutputs.data,
-      saveWalletSeed,
+      cacheWalletMnemonic,
       broadcast,
     ]
   )

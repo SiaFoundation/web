@@ -2,7 +2,7 @@ import { Button, ConfigField } from '@siafoundation/design-system'
 import { View16, ViewOff16 } from '@siafoundation/react-icons'
 import { FieldValues } from 'react-hook-form'
 import { blake2bHex } from 'blakejs'
-import { getWalletWasm } from './wasm'
+import { getSDK } from '@siafoundation/sdk'
 
 export type MnemonicFieldType = 'text' | 'password'
 
@@ -10,11 +10,11 @@ export function getFieldMnemonic<
   Values extends FieldValues,
   Categories extends string
 >({
-  seedHash,
+  mnemonicHash,
   mnemonicFieldType: mnemonicType,
   setMnemonicFieldType: setMnemonicType,
 }: {
-  seedHash?: string
+  mnemonicHash?: string
   mnemonicFieldType: MnemonicFieldType
   setMnemonicFieldType: (type: MnemonicFieldType) => void
 }): ConfigField<Values, Categories> {
@@ -42,17 +42,17 @@ export function getFieldMnemonic<
       required: 'required',
       validate: {
         valid: (value: string) => {
-          const { error } = getWalletWasm().seedFromPhrase(value)
+          const { error } = getSDK().wallet.keyPairFromSeedPhrase(value, 0)
           return !error || 'seed should be 12 word BIP39 mnemonic'
         },
         match: (mnemonic: string) => {
-          const { seed } = getWalletWasm().seedFromPhrase(mnemonic)
           return (
-            blake2bHex(seed) === seedHash || 'seed does not match'
+            blake2bHex(mnemonic) === mnemonicHash ||
+            'seed phrase does not match'
             // Maybe re-enabled this so that wallets added via daemon can pass
-            // validation. Would need to add seedHash to metadata afterwards.
+            // validation. Would need to add mnemonicHash to metadata afterwards.
             // Potential issues if wrong valid seed is entered.
-            // !seedHash || blake2bHex(seed) === seedHash || 'seed does not match'
+            // !mnemonicHash || blake2bHex(seed) === mnemonicHash || 'seed does not match'
           )
         },
       },

@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { mockApiDefaults } from '../mocks/mock'
+import { mockApiDefaults } from '@siafoundation/mock-walletd'
 import { login } from '../fixtures/login'
 
 test('login', async ({ page }) => {

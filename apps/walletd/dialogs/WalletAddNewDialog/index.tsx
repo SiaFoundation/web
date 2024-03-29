@@ -13,14 +13,14 @@ import {
 import { Redo16, Copy16 } from '@siafoundation/react-icons'
 import { MouseEvent, useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useWalletAdd } from '@siafoundation/react-walletd'
+import { WalletMetadata, useWalletAdd } from '@siafoundation/react-walletd'
 import { useDialog } from '../../contexts/dialog'
 import { useWallets } from '../../contexts/wallets'
 import { walletAddTypes } from '../../config/walletTypes'
 import { blake2bHex } from 'blakejs'
 import { SeedLayout } from '../SeedLayout'
 import { SeedIcon } from '@siafoundation/react-icons'
-import { getWalletWasm } from '../../lib/wasm'
+import { getSDK } from '@siafoundation/sdk'
 
 const defaultValues = {
   name: '',
@@ -74,7 +74,7 @@ function getFields({
         required: 'required',
         validate: {
           valid: (value: string) => {
-            const { error } = getWalletWasm().seedFromPhrase(value)
+            const { error } = getSDK().wallet.keyPairFromSeedPhrase(value, 0)
             return !error || 'seed should be 12 word BIP39 mnemonic'
           },
           copied: (_, values) => values.hasCopied || 'Copy seed to continue',
@@ -118,7 +118,7 @@ export function WalletAddNewDialog({ trigger, open, onOpenChange }: Props) {
   }, [mnemonic, form])
 
   const regenerateMnemonic = useCallback(async () => {
-    const { phrase } = getWalletWasm().newSeedPhrase()
+    const { phrase } = getSDK().wallet.generateSeedPhrase()
     form.setValue('hasCopied', false)
     form.setValue('mnemonic', phrase)
     form.clearErrors(['hasCopied', 'mnemonic'])
@@ -138,16 +138,16 @@ export function WalletAddNewDialog({ trigger, open, onOpenChange }: Props) {
 
   const onSubmit = useCallback(
     async (values: Values) => {
-      const { seed } = getWalletWasm().seedFromPhrase(values.mnemonic)
-      const seedHash = blake2bHex(seed)
+      const mnemonicHash = blake2bHex(values.mnemonic)
+      const metadata: WalletMetadata = {
+        type: 'seed',
+        mnemonicHash,
+      }
       const response = await walletAdd.post({
         payload: {
           name: values.name,
           description: values.description,
-          metadata: {
-            type: 'seed',
-            seedHash,
-          },
+          metadata,
         },
       })
       if (response.error) {

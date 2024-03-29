@@ -8,7 +8,6 @@ import {
 } from '@siafoundation/design-system'
 import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { getWalletWasm } from '../lib/wasm'
 import { useWallets } from '../contexts/wallets'
 import { getFieldMnemonic, MnemonicFieldType } from '../lib/fieldMnemonic'
 import { FieldMnemonic } from './FieldMnemonic'
@@ -31,17 +30,17 @@ function getDefaultValues() {
 }
 
 function getFields({
-  seedHash,
+  mnemonicHash,
   mnemonicFieldType,
   setMnemonicFieldType,
 }: {
-  seedHash?: string
+  mnemonicHash?: string
   mnemonicFieldType: MnemonicFieldType
   setMnemonicFieldType: (type: MnemonicFieldType) => void
 }): ConfigFields<ReturnType<typeof getDefaultValues>, never> {
   return {
     mnemonic: getFieldMnemonic({
-      seedHash,
+      mnemonicHash,
       setMnemonicFieldType,
       mnemonicFieldType,
     }),
@@ -55,7 +54,7 @@ export function WalletUnlockDialog({
   onOpenChange,
 }: Props) {
   const { walletId } = params || {}
-  const { dataset, saveWalletSeed } = useWallets()
+  const { dataset, cacheWalletMnemonic } = useWallets()
   const wallet = dataset?.find((w) => w.id === walletId)
   const defaultValues = getDefaultValues()
   const [mnemonicFieldType, setMnemonicFieldType] =
@@ -72,18 +71,17 @@ export function WalletUnlockDialog({
   })
 
   const fields = getFields({
-    seedHash: wallet?.metadata.seedHash,
+    mnemonicHash: wallet?.metadata.mnemonicHash,
     mnemonicFieldType,
     setMnemonicFieldType,
   })
 
   const onValid = useCallback(
     (values: typeof defaultValues) => {
-      const { seed } = getWalletWasm().seedFromPhrase(values.mnemonic)
-      saveWalletSeed(walletId, seed)
+      cacheWalletMnemonic(walletId, values.mnemonic)
       closeAndReset()
     },
-    [walletId, saveWalletSeed, closeAndReset]
+    [walletId, cacheWalletMnemonic, closeAndReset]
   )
 
   const onInvalid = useOnInvalid(fields)

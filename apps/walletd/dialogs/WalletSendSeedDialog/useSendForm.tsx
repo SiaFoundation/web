@@ -23,17 +23,19 @@ const defaultValues = {
   mnemonic: '',
 }
 
+type Values = typeof defaultValues
+
 function getFields({
-  seedHash,
+  mnemonicHash,
   mnemonicFieldType,
   setMnemonicFieldType,
   isSeedCached,
 }: {
-  seedHash?: string
+  mnemonicHash?: string
   mnemonicFieldType: MnemonicFieldType
   setMnemonicFieldType: (type: MnemonicFieldType) => void
   isSeedCached: boolean
-}): ConfigFields<typeof defaultValues, never> {
+}): ConfigFields<Values, never> {
   return {
     mnemonic: isSeedCached
       ? {
@@ -42,7 +44,7 @@ function getFields({
           validation: {},
         }
       : getFieldMnemonic({
-          seedHash,
+          mnemonicHash,
           setMnemonicFieldType,
           mnemonicFieldType,
         }),
@@ -51,10 +53,10 @@ function getFields({
 
 export function useSendForm({ walletId, params, onConfirm }: Props) {
   const signAndBroadcast = useSignAndBroadcast()
-  const { isSeedCached, getSeedFromCacheOrForm } = useWalletCachedSeed(walletId)
+  const { isSeedCached } = useWalletCachedSeed(walletId)
   const { dataset } = useWallets()
   const wallet = dataset?.find((w) => w.id === walletId)
-  const seedHash = wallet?.metadata.seedHash
+  const mnemonicHash = wallet?.metadata.mnemonicHash
 
   const form = useForm({
     mode: 'all',
@@ -68,22 +70,16 @@ export function useSendForm({ walletId, params, onConfirm }: Props) {
       getFields({
         mnemonicFieldType,
         setMnemonicFieldType,
-        seedHash,
+        mnemonicHash,
         isSeedCached,
       }),
-    [mnemonicFieldType, setMnemonicFieldType, seedHash, isSeedCached]
+    [mnemonicFieldType, setMnemonicFieldType, mnemonicHash, isSeedCached]
   )
 
   const onValid = useCallback(
-    async (values: typeof defaultValues) => {
-      const seedResponse = getSeedFromCacheOrForm(values)
-      if (seedResponse.error) {
-        triggerErrorToast(seedResponse.error)
-        return
-      }
-
+    async (values: Values) => {
       const { error } = await signAndBroadcast({
-        seed: seedResponse.seed,
+        mnemonic: wallet.state.mnemonic || values.mnemonic,
         params,
       })
 
@@ -94,7 +90,7 @@ export function useSendForm({ walletId, params, onConfirm }: Props) {
 
       onConfirm({})
     },
-    [getSeedFromCacheOrForm, signAndBroadcast, params, onConfirm]
+    [signAndBroadcast, params, onConfirm, wallet]
   )
 
   const onInvalid = useOnInvalid(fields)

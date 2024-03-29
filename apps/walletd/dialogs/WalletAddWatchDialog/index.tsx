@@ -11,7 +11,7 @@ import {
 } from '@siafoundation/design-system'
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
-import { useWalletAdd } from '@siafoundation/react-walletd'
+import { WalletMetadata, useWalletAdd } from '@siafoundation/react-walletd'
 import { useDialog } from '../../contexts/dialog'
 import { useWallets } from '../../contexts/wallets'
 import { walletAddTypes } from '../../config/walletTypes'
@@ -77,13 +77,14 @@ export function WalletAddWatchDialog({ trigger, open, onOpenChange }: Props) {
 
   const onSubmit = useCallback(
     async (values: Values) => {
+      const metadata: WalletMetadata = {
+        type: 'watch',
+      }
       const response = await walletAdd.post({
         payload: {
           name: values.name,
           description: values.description,
-          metadata: {
-            type: 'watch',
-          },
+          metadata,
         },
       })
       if (response.error) {
