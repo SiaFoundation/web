@@ -1,11 +1,4 @@
-import { Wallet } from '@siafoundation/react-walletd'
-
-export type WalletType = 'seed' | 'watch' | 'ledger'
-
-export type WalletMetadata = {
-  type: WalletType
-  seedHash?: string
-}
+import { Wallet, WalletMetadata } from '@siafoundation/react-walletd'
 
 export type WalletData = {
   id: string
@@ -15,7 +8,7 @@ export type WalletData = {
   updatedAt?: number
   metadata: WalletMetadata
   state: {
-    seed?: string
+    mnemonic?: string
     activityAt?: number
     status: 'unlocked' | 'locked'
   }
@@ -24,6 +17,7 @@ export type WalletData = {
     lock: () => void
   }
   raw?: Wallet
+  onClick?: () => void
 }
 
 export type TableColumnId =

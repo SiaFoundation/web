@@ -1,5 +1,5 @@
 import { expect, Page } from '@playwright/test'
-import { mockApiWallet } from '../mocks/mock'
+import { mockApiWallet, mockApiWallets } from '@siafoundation/mock-walletd'
 import {
   Wallet,
   WalletAddressesResponse,
@@ -7,16 +7,15 @@ import {
   WalletFundResponse,
   WalletOutputsSiacoinResponse,
 } from '@siafoundation/react-walletd'
-import { mockApiWallets } from '../mocks/wallets'
 
 export async function createWallet({
   page,
-  seed,
+  mnemonic,
   newWallet,
   responses = {},
 }: {
   page: Page
-  seed: string
+  mnemonic: string
   newWallet: Wallet
   responses?: {
     balance?: WalletBalanceResponse
@@ -45,6 +44,6 @@ export async function createWallet({
   await expect(
     page.getByText(`Wallet ${newWallet.name.slice(0, 5)}`)
   ).toBeVisible()
-  await page.locator('input[name=mnemonic]').fill(seed)
+  await page.locator('input[name=mnemonic]').fill(mnemonic)
   await page.getByRole('button', { name: 'Continue' }).click()
 }

@@ -11,6 +11,7 @@ import {
   useDialogFormHelpers,
 } from '@siafoundation/design-system'
 import {
+  WalletAddressMetadata,
   useResubscribe,
   useWalletAddressAdd,
 } from '@siafoundation/react-walletd'
@@ -122,6 +123,7 @@ export function WalletAddressesAddDialog({
       let successful = 0
       for (let i = 0; i < total; i++) {
         const addr = addrs[i]
+        const metadata: WalletAddressMetadata = {}
         const response = await addressAdd.put({
           params: {
             id: walletId,
@@ -129,7 +131,7 @@ export function WalletAddressesAddDialog({
           payload: {
             address: addr,
             description: '',
-            metadata: {},
+            metadata,
           },
         })
         if (response.error) {

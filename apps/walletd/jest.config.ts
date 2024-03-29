@@ -22,4 +22,5 @@ export default {
       'next/dist/build/jest/__mocks__/nextFontMock.js'
     ),
   },
+  setupFiles: ['./jest.polyfills.js'],
 }

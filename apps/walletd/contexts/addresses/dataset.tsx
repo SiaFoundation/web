@@ -2,10 +2,40 @@ import {
   useDatasetEmptyState,
   ClientFilterItem,
 } from '@siafoundation/design-system'
-import { useWalletAddresses } from '@siafoundation/react-walletd'
+import {
+  WalletAddressMetadata,
+  WalletAddressesResponse,
+  useWalletAddresses,
+} from '@siafoundation/react-walletd'
 import { useMemo } from 'react'
 import { AddressData } from './types'
-import { useDialog } from '../dialog'
+import { OpenDialog, useDialog } from '../dialog'
+
+export function transformAddressesResponse(
+  response: WalletAddressesResponse,
+  walletId: string,
+  openDialog: OpenDialog
+) {
+  const data: AddressData[] = response.map((addressObject) => {
+    const { address, description, metadata, spendPolicy } = addressObject
+    const datum: AddressData = {
+      id: address,
+      address,
+      description: description,
+      spendPolicy: spendPolicy,
+      metadata: (metadata || {}) as WalletAddressMetadata,
+      walletId,
+      onClick: () =>
+        openDialog('addressUpdate', {
+          walletId: walletId,
+          address,
+        }),
+      raw: addressObject,
+    }
+    return datum
+  })
+  return data
+}
 
 export function useDataset({
   walletId,
@@ -21,27 +51,7 @@ export function useDataset({
     if (!response.data) {
       return null
     }
-    const data: AddressData[] = response.data.map((addressObject) => {
-      const { address, description, metadata, spendPolicy } = addressObject
-      return {
-        id: address,
-        address,
-        description: description,
-        spendPolicy: spendPolicy,
-        metadata: {
-          index: metadata?.index as number,
-          publicKey: metadata?.publicKey as string,
-        },
-        walletId,
-        onClick: () =>
-          openDialog('addressUpdate', {
-            walletId: walletId,
-            address,
-          }),
-        raw: addressObject,
-      }
-    })
-    return data
+    return transformAddressesResponse(response.data, walletId, openDialog)
   }, [response.data, openDialog, walletId])
 
   const dataState = useDatasetEmptyState(

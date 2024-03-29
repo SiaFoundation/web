@@ -72,7 +72,7 @@ import {
 } from '../dialogs/WalletAddressesGenerateLedgerDialog'
 // import { CmdKDialog } from '../components/CmdKDialog'
 
-type DialogParams = {
+export type DialogParams = {
   cmdk?: void
   settings?: WalletdSettingsDialogParams
   walletSendSeed?: WalletSendSeedDialogParams
@@ -95,13 +95,18 @@ type DialogParams = {
   walletUnlock?: WalletUnlockDialogParams
 }
 
-type DialogType = keyof DialogParams
+export type OpenDialog = <D extends DialogType>(
+  type: D,
+  params?: DialogParams[D]
+) => void
+
+export type DialogType = keyof DialogParams
 
 function useDialogMain() {
   const [dialog, setDialog] = useState<DialogType>()
   const [params, setParams] = useState<DialogParams>({})
 
-  const openDialog = useCallback(
+  const openDialog = useCallback<OpenDialog>(
     <D extends DialogType>(type: D, params?: DialogParams[D]) => {
       setParams((p) => ({
         ...p,

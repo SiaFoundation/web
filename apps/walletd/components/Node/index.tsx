@@ -29,7 +29,7 @@ export function Node() {
 
   const transactionCount = txPool.data
     ? (txPool.data.transactions?.length || 0) +
-      (txPool.data.v2Transactions?.length || 0)
+      (txPool.data.v2transactions?.length || 0)
     : 0
 
   return (

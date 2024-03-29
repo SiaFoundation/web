@@ -16,7 +16,7 @@ export function useBroadcast({ cancel }: { cancel: (t: Transaction) => void }) {
       const broadcastResponse = await txPoolBroadcast.post({
         payload: {
           transactions: [signedTransaction],
-          v2Transactions: [],
+          v2transactions: [],
         },
       })
       if (broadcastResponse.error) {
