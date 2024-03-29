@@ -22,7 +22,7 @@ export type StateElement = {
 
 export type UnlockConditions = {
   timelock: number
-  publicKeys?: PublicKey[]
+  publicKeys?: PublicKey[] | null
   signaturesRequired: number
 }
 

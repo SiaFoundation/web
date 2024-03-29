@@ -32,7 +32,9 @@
       "@siafoundation/sdk": ["dist/libs/sdk/index.esm.js"],
       "@siafoundation/sia-central": ["libs/sia-central/src/index.ts"],
       "@siafoundation/types": ["libs/types/src/index.ts"],
-      "@siafoundation/units": ["libs/units/src/index.ts"]
+      "@siafoundation/units": ["libs/units/src/index.ts"],
+      "@siafoundation/mock-walletd": ["libs/mock-walletd/src/index.ts"],
+      "@siafoundation/mock-sia-central": ["libs/mock-sia-central/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
