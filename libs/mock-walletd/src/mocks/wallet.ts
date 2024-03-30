@@ -12,13 +12,15 @@ import { mockApiWalletEvents } from './walletEvents'
 import { mockApiWalletTxPool } from './walletTxPool'
 import { mockApiWalletOutputsSiacoin } from './walletOutputsSiacoin'
 import { mockApiWalletOutputsSiafund } from './walletOutputsSiafund'
-import { mockApiWalletFund } from './walletFund'
+import { mockApiWalletFundSiacoin } from './walletFundSiacoin'
 import { mockApiWalletRelease } from './walletRelease'
+import { mockApiWalletFundSiafund } from './walletFundSiafund'
 
 export async function mockApiWallet({
   page,
   wallet,
   responses = {},
+  expects = {},
 }: {
   page: Page
   wallet: Wallet
@@ -27,6 +29,9 @@ export async function mockApiWallet({
     outputsSiacoin?: WalletOutputsSiacoinResponse
     fund?: WalletFundResponse
     addresses?: WalletAddressesResponse
+  }
+  expects?: {
+    fundSiacoinPost?: (data: string | null) => void
   }
 }) {
   await mockApiWalletBalance({
@@ -47,10 +52,15 @@ export async function mockApiWallet({
     response: responses.outputsSiacoin,
   })
   await mockApiWalletOutputsSiafund({ page, walletId: wallet.id })
-  await mockApiWalletFund({
+  await mockApiWalletFundSiafund({
+    page,
+    walletId: wallet.id,
+  })
+  await mockApiWalletFundSiacoin({
     page,
     walletId: wallet.id,
     response: responses.fund,
+    expectPost: expects.fundSiacoinPost,
   })
   await mockApiWalletRelease({
     page,

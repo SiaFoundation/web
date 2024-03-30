@@ -9,14 +9,24 @@ import {
   Label,
   useDialogFormHelpers,
 } from '@siafoundation/design-system'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useWalletUpdate } from '@siafoundation/react-walletd'
 import { useWallets } from '../../contexts/wallets'
+import { WalletData } from '../../contexts/wallets/types'
 
 const defaultValues = {
   name: '',
   description: '',
+}
+
+function getDefaultValues(wallet: WalletData) {
+  return wallet
+    ? {
+        name: wallet.name,
+        description: wallet.description,
+      }
+    : defaultValues
 }
 
 type Values = typeof defaultValues
@@ -72,26 +82,16 @@ export function WalletUpdateDialog({
   const { dataset } = useWallets()
   const wallet = dataset?.find((d) => d.id === walletId)
   const walletUpdate = useWalletUpdate()
+  const defaultValues = getDefaultValues(wallet)
   const form = useForm({
     mode: 'all',
     defaultValues,
   })
-  const { closeAndReset } = useDialogFormHelpers({
+  const { handleOpenChange, closeAndReset } = useDialogFormHelpers({
     form,
     onOpenChange,
     defaultValues,
   })
-  useEffect(() => {
-    form.reset(
-      wallet
-        ? {
-            name: wallet.name,
-            description: wallet.description,
-          }
-        : defaultValues
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [walletId])
 
   const walletNames = useMemo(
     () =>
@@ -133,7 +133,7 @@ export function WalletUpdateDialog({
       title={`${wallet?.name}`}
       trigger={trigger}
       open={open}
-      onOpenChange={onOpenChange}
+      onOpenChange={handleOpenChange}
       contentVariants={{
         className: 'w-[400px]',
       }}

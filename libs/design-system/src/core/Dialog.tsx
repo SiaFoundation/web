@@ -70,6 +70,14 @@ export const Dialog = React.forwardRef<
       onOpenChange: _onOpenChange,
     })
 
+    // The dialog itself only triggers on internal open state change
+    useEffect(() => {
+      if (open) {
+        onOpenChange(open)
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [open])
+
     return (
       <DialogPrimitive.Root
         open={open}

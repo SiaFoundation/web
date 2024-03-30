@@ -55,7 +55,12 @@ export function FieldSwitch<
   )
   if (group) {
     return (
-      <FieldGroup title={field.title} name={name} form={form}>
+      <FieldGroup
+        title={field.title}
+        name={name}
+        form={form}
+        className="pb-[1.5px]"
+      >
         {el}
       </FieldGroup>
     )

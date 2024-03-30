@@ -13,6 +13,7 @@ export async function createWallet({
   mnemonic,
   newWallet,
   responses = {},
+  expects = {},
 }: {
   page: Page
   mnemonic: string
@@ -23,12 +24,16 @@ export async function createWallet({
     fund?: WalletFundResponse
     addresses?: WalletAddressesResponse
   }
+  expects?: {
+    fundSiacoinPost?: (data: string | null) => void
+  }
 }) {
   const wallets = await mockApiWallets({ page, createWallet: newWallet })
   await mockApiWallet({
     page,
     wallet: newWallet,
     responses,
+    expects,
   })
 
   await expect(page.getByRole('button', { name: 'Add wallet' })).toBeVisible()
@@ -45,5 +50,5 @@ export async function createWallet({
     page.getByText(`Wallet ${newWallet.name.slice(0, 5)}`)
   ).toBeVisible()
   await page.locator('input[name=mnemonic]').fill(mnemonic)
-  await page.getByRole('button', { name: 'Continue' }).click()
+  await page.getByRole('button', { name: 'Generate addresses' }).click()
 }

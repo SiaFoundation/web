@@ -2,7 +2,6 @@
 import {
   ConfigFields,
   Dialog,
-  FieldSwitch,
   FieldTextArea,
   FormSubmitButton,
   Paragraph,
@@ -12,7 +11,6 @@ import {
 } from '@siafoundation/design-system'
 import {
   WalletAddressMetadata,
-  useResubscribe,
   useWalletAddressAdd,
 } from '@siafoundation/react-walletd'
 import { useCallback } from 'react'
@@ -20,6 +18,12 @@ import { useForm } from 'react-hook-form'
 import { useWallets } from '../contexts/wallets'
 import { isValidAddress } from '@siafoundation/units'
 import { uniq } from '@technically/lodash'
+import {
+  FieldRescan,
+  useTriggerRescan,
+  getRescanFields,
+  getDefaultRescanValues,
+} from './FieldRescan'
 
 export type WalletAddressesAddDialogParams = {
   walletId: string
@@ -34,7 +38,7 @@ type Props = {
 
 const defaultValues = {
   addresses: '',
-  shouldResubscribe: false,
+  ...getDefaultRescanValues(),
 }
 
 type Values = typeof defaultValues
@@ -84,11 +88,7 @@ function getFields(): ConfigFields<Values, never> {
         },
       },
     },
-    shouldResubscribe: {
-      type: 'boolean',
-      title: 'Resubscribe',
-      validation: {},
-    },
+    ...getRescanFields(),
   }
 }
 
@@ -115,7 +115,6 @@ export function WalletAddressesAddDialog({
   const fields = getFields()
 
   const addressAdd = useWalletAddressAdd()
-  const resubscribe = useResubscribe()
   const addAllAddresses = useCallback(
     async (addresses: string) => {
       const addrs = formatAddresses(addresses)
@@ -151,6 +150,7 @@ export function WalletAddressesAddDialog({
     [walletId, addressAdd]
   )
 
+  const triggerRescan = useTriggerRescan()
   const onSubmit = useCallback(
     async (values: Values) => {
       const result = await addAllAddresses(values.addresses)
@@ -178,17 +178,14 @@ export function WalletAddressesAddDialog({
           title: `Added ${result.successful} addresses`,
         })
       }
-      if (values.shouldResubscribe) {
-        resubscribe.post({
-          payload: 0,
-        })
-      }
+      triggerRescan(values)
       closeAndReset()
     },
-    [addAllAddresses, closeAndReset, resubscribe]
+    [addAllAddresses, closeAndReset, triggerRescan]
   )
 
   const addressesText = form.watch('addresses')
+  const shouldRescan = form.watch('shouldRescan')
   const addressCount = formatAddresses(addressesText).length
 
   return (
@@ -203,12 +200,17 @@ export function WalletAddressesAddDialog({
       onSubmit={form.handleSubmit(onSubmit)}
       controls={
         <div className="flex justify-end">
-          <FormSubmitButton form={form} variant="accent" size="medium">
+          <FormSubmitButton
+            form={form}
+            variant={shouldRescan ? 'red' : 'accent'}
+            size="medium"
+          >
             {addressCount === 0
               ? 'Add addresses'
               : addressCount === 1
               ? 'Add 1 address'
               : `Add ${addressCount.toLocaleString()} addresses`}
+            {shouldRescan ? ' and rescan' : ''}
           </FormSubmitButton>
         </div>
       }
@@ -218,7 +220,7 @@ export function WalletAddressesAddDialog({
           Enter multiple addresses separated by spaces or commas.
         </Paragraph>
         <FieldTextArea form={form} fields={fields} name="addresses" />
-        <FieldSwitch form={form} fields={fields} name="shouldResubscribe" />
+        <FieldRescan form={form} fields={fields} />
       </div>
     </Dialog>
   )

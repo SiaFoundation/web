@@ -162,14 +162,38 @@ export function useTxPoolBroadcast(
   )
 }
 
-// subscribe
+// rescan
 
-export function useResubscribe(
+export function useRescanStart(
   args?: HookArgsCallback<void, BlockHeight, void>
 ) {
-  return usePostFunc({
+  return usePostFunc(
+    {
+      ...args,
+      route: '/rescan',
+    },
+    async (mutate) => {
+      // Do not block the hook method from returning and allowing consumer to toast success etc
+      const func = async () => {
+        await delay(1_000)
+        await mutate((key) => key.startsWith('/rescan'))
+      }
+      func()
+    }
+  )
+}
+
+export type RescanResponse = {
+  startIndex: ChainIndex
+  index: ChainIndex
+  startTime: string
+  error?: string
+}
+
+export function useRescanStatus(args?: HookArgsSwr<void, RescanResponse>) {
+  return useGetSwr({
     ...args,
-    route: '/resubscribe',
+    route: '/rescan',
   })
 }
 
