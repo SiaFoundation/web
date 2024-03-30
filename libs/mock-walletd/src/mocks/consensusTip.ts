@@ -8,9 +8,9 @@ export function getMockConsensusTipResponse(): ConsensusTipResponse {
   }
 }
 
-export async function mockApiConsensusTipState({ page }: { page: Page }) {
+export async function mockApiConsensusTip({ page }: { page: Page }) {
   const json = getMockConsensusTipResponse()
-  await page.route('**/api/consensus/tipstate*', async (route) => {
+  await page.route('**/api/consensus/tip*', async (route) => {
     await route.fulfill({ json })
   })
   return json

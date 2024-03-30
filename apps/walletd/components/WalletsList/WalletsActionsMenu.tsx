@@ -1,8 +1,9 @@
 import { Button } from '@siafoundation/design-system'
-import { Add16, Locked16 } from '@siafoundation/react-icons'
+import { Add16, Locked16, Settings16 } from '@siafoundation/react-icons'
 import { useWallets } from '../../contexts/wallets'
 import { useDialog } from '../../contexts/dialog'
 import { WalletsViewDropdownMenu } from './WalletsViewDropdownMenu'
+import { WalletsContextMenu } from '../WalletsContextMenu'
 
 export function WalletsActionsMenu() {
   const { lockAllWallets, unlockedCount } = useWallets()
@@ -24,6 +25,21 @@ export function WalletsActionsMenu() {
         Add wallet
       </Button>
       <WalletsViewDropdownMenu />
+      <WalletsContextMenu
+        trigger={
+          <Button
+            size="small"
+            tip="Wallet settings"
+            tipAlign="end"
+            tipSide="bottom"
+          >
+            <Settings16 />
+          </Button>
+        }
+        contentProps={{
+          align: 'end',
+        }}
+      />
     </div>
   )
 }

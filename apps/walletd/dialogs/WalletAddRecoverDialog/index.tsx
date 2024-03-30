@@ -95,7 +95,8 @@ export function WalletAddRecoverDialog({ trigger, open, onOpenChange }: Props) {
 
   const onSubmit = useCallback(
     async (values: Values) => {
-      const mnemonicHash = blake2bHex(values.mnemonic)
+      const mnemonic = values.mnemonic.trim()
+      const mnemonicHash = blake2bHex(mnemonic)
       const metadata: WalletMetadata = {
         type: 'seed',
         mnemonicHash,

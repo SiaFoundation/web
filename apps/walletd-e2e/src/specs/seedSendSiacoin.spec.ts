@@ -28,6 +28,24 @@ test('send siacoin with a seed wallet', async ({ page }) => {
     newWallet,
     mnemonic,
     responses: getDefaultMockWalletResponses(mocks),
+    expects: {
+      fundSiacoinPost: (data) =>
+        expect(data).toEqual(
+          JSON.stringify({
+            amount: '1003930000000000000000000',
+            changeAddress: mocks.changeAddress,
+            transaction: {
+              minerFees: ['3930000000000000000000'],
+              siacoinOutputs: [
+                {
+                  value: '1000000000000000000000000',
+                  address: mocks.receiveAddress,
+                },
+              ],
+            },
+          })
+        ),
+    },
   })
   await navigateToWallet({ page, wallet: newWallet })
   await page.getByLabel('send').click()
@@ -71,6 +89,24 @@ test('errors if the input to sign is not found on the transaction', async ({
       ...getDefaultMockWalletResponses(mocks),
       fund: mockFundInvalid,
     },
+    expects: {
+      fundSiacoinPost: (data) =>
+        expect(data).toEqual(
+          JSON.stringify({
+            amount: '1003930000000000000000000',
+            changeAddress: mocks.changeAddress,
+            transaction: {
+              minerFees: ['3930000000000000000000'],
+              siacoinOutputs: [
+                {
+                  value: '1000000000000000000000000',
+                  address: mocks.receiveAddress,
+                },
+              ],
+            },
+          })
+        ),
+    },
   })
   await navigateToWallet({ page, wallet: newWallet })
   await page.getByLabel('send').click()
@@ -106,6 +142,24 @@ test('errors if the inputs matching utxo is not found', async ({ page }) => {
     responses: {
       ...getDefaultMockWalletResponses(mocks),
       outputsSiacoin: mockOutputsInvalid,
+    },
+    expects: {
+      fundSiacoinPost: (data) =>
+        expect(data).toEqual(
+          JSON.stringify({
+            amount: '1003930000000000000000000',
+            changeAddress: mocks.changeAddress,
+            transaction: {
+              minerFees: ['3930000000000000000000'],
+              siacoinOutputs: [
+                {
+                  value: '1000000000000000000000000',
+                  address: mocks.receiveAddress,
+                },
+              ],
+            },
+          })
+        ),
     },
   })
   await navigateToWallet({ page, wallet: newWallet })
@@ -144,6 +198,24 @@ test('errors if the address is missing its index', async ({ page }) => {
       ...getDefaultMockWalletResponses(mocks),
       addresses: mockAddressesInvalid,
     },
+    expects: {
+      fundSiacoinPost: (data) =>
+        expect(data).toEqual(
+          JSON.stringify({
+            amount: '1003930000000000000000000',
+            changeAddress: mocks.changeAddress,
+            transaction: {
+              minerFees: ['3930000000000000000000'],
+              siacoinOutputs: [
+                {
+                  value: '1000000000000000000000000',
+                  address: mocks.receiveAddress,
+                },
+              ],
+            },
+          })
+        ),
+    },
   })
   await navigateToWallet({ page, wallet: newWallet })
   await page.getByLabel('send').click()
@@ -180,6 +252,24 @@ test('errors if the address is missing its public key', async ({ page }) => {
     responses: {
       ...getDefaultMockWalletResponses(mocks),
       addresses: mockAddressesInvalid,
+    },
+    expects: {
+      fundSiacoinPost: (data) =>
+        expect(data).toEqual(
+          JSON.stringify({
+            amount: '1003930000000000000000000',
+            changeAddress: mocks.changeAddress,
+            transaction: {
+              minerFees: ['3930000000000000000000'],
+              siacoinOutputs: [
+                {
+                  value: '1000000000000000000000000',
+                  address: mocks.receiveAddress,
+                },
+              ],
+            },
+          })
+        ),
     },
   })
   await navigateToWallet({ page, wallet: newWallet })

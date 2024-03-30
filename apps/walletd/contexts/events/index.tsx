@@ -3,12 +3,8 @@ import {
   useDatasetEmptyState,
   useServerFilters,
 } from '@siafoundation/design-system'
-import {
-  useResubscribe,
-  useWalletEvents,
-  useWalletTxPool,
-} from '@siafoundation/react-walletd'
-import { createContext, useCallback, useContext, useMemo } from 'react'
+import { useWalletEvents, useWalletTxPool } from '@siafoundation/react-walletd'
+import { createContext, useContext, useMemo } from 'react'
 import {
   CellContext,
   EventData,
@@ -55,13 +51,6 @@ export function useEventsMain() {
       },
     },
   })
-
-  const _resubscribe = useResubscribe()
-  const resubscribe = useCallback(async () => {
-    _resubscribe.post({
-      payload: 0,
-    })
-  }, [_resubscribe])
 
   const dataset = useMemo<EventData[] | null>(() => {
     if (!responseEvents.data || !responseTxPool.data) {
@@ -204,7 +193,6 @@ export function useEventsMain() {
     removeFilter,
     removeLastFilter,
     resetFilters,
-    resubscribe,
     offset,
     limit,
   }

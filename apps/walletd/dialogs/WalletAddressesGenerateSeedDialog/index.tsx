@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import {
   ConfigFields,
   Dialog,
@@ -20,6 +19,13 @@ import { getFieldMnemonic, MnemonicFieldType } from '../../lib/fieldMnemonic'
 import { FieldMnemonic } from '../FieldMnemonic'
 import { useWalletAddresses } from '../../hooks/useWalletAddresses'
 import { getSDK } from '@siafoundation/sdk'
+import {
+  FieldRescan,
+  getRescanFields,
+  getDefaultRescanValues,
+  useTriggerRescan,
+} from '../FieldRescan'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
 
 export type WalletAddressesGenerateSeedDialogParams = {
   walletId: string
@@ -32,13 +38,22 @@ type Props = {
   onOpenChange: (val: boolean) => void
 }
 
-function getDefaultValues(lastIndex: number) {
+function getDefaultValues({
+  nextIndex,
+  currentHeight,
+}: {
+  nextIndex: number
+  currentHeight: number
+}) {
   return {
     mnemonic: '',
-    index: new BigNumber(lastIndex),
+    index: new BigNumber(nextIndex),
     count: new BigNumber(1),
+    ...getDefaultRescanValues({ rescanStartHeight: currentHeight }),
   }
 }
+
+type Values = ReturnType<typeof getDefaultValues>
 
 function getFields({
   mnemonicHash,
@@ -48,7 +63,7 @@ function getFields({
   mnemonicHash?: string
   mnemonicFieldType: MnemonicFieldType
   setMnemonicFieldType: (type: MnemonicFieldType) => void
-}): ConfigFields<ReturnType<typeof getDefaultValues>, never> {
+}): ConfigFields<Values, never> {
   return {
     mnemonic: getFieldMnemonic({
       mnemonicHash,
@@ -74,6 +89,7 @@ function getFields({
         max: 1000,
       },
     },
+    ...getRescanFields(),
   }
 }
 
@@ -88,7 +104,11 @@ export function WalletAddressesGenerateSeedDialog({
   const { dataset, cacheWalletMnemonic } = useWallets()
   const wallet = dataset?.find((w) => w.id === walletId)
   const nextIndex = lastIndex + 1
-  const defaultValues = getDefaultValues(nextIndex)
+  const syncStatus = useSyncStatus()
+  const defaultValues = getDefaultValues({
+    nextIndex,
+    currentHeight: syncStatus.nodeBlockHeight,
+  })
   const [mnemonicFieldType, setMnemonicFieldType] =
     useState<MnemonicFieldType>('password')
   const form = useForm({
@@ -113,6 +133,7 @@ export function WalletAddressesGenerateSeedDialog({
   const mnemonic = form.watch('mnemonic')
   const index = form.watch('index')
   const count = form.watch('count')
+  const shouldRescan = form.watch('shouldRescan')
 
   const fields = getFields({
     mnemonicHash: wallet?.metadata.mnemonicHash,
@@ -123,29 +144,31 @@ export function WalletAddressesGenerateSeedDialog({
   const addressAdd = useWalletAddressAdd()
   const generateAddresses = useCallback(
     async (mnemonic: string, index: number, count: number) => {
+      function toastBatchError(count: number, i: number, body: string) {
+        triggerErrorToast({
+          title: 'Error generating addresses',
+          body:
+            i > 0
+              ? `${
+                  i + 1
+                }/${count} addresses were generated and saved. Batch failed on with: ${body}`
+              : body,
+        })
+      }
       for (let i = index; i < index + count; i++) {
         const kp = getSDK().wallet.keyPairFromSeedPhrase(mnemonic, i)
         if (kp.error) {
-          triggerErrorToast({
-            title: 'Error generating addresses',
-            body: kp.error,
-          })
+          toastBatchError(count, i, kp.error)
           return
         }
         const suh = getSDK().wallet.standardUnlockHash(kp.publicKey)
         if (suh.error) {
-          triggerErrorToast({
-            title: 'Error generating unlock hash',
-            body: suh.error,
-          })
+          toastBatchError(count, i, suh.error)
           return
         }
         const uc = getSDK().wallet.standardUnlockConditions(kp.publicKey)
         if (uc.error) {
-          triggerErrorToast({
-            title: 'Error generating unlock conditions',
-            body: uc.error,
-          })
+          toastBatchError(count, i, uc.error)
           return
         }
         const metadata: WalletAddressMetadata = {
@@ -164,17 +187,7 @@ export function WalletAddressesGenerateSeedDialog({
           },
         })
         if (response.error) {
-          if (count === 1) {
-            triggerErrorToast({
-              title: 'Error saving address',
-              body: response.error,
-            })
-          } else {
-            triggerErrorToast({
-              title: 'Error saving addresses',
-              body: i > 0 ? 'Not all addresses were saved.' : '',
-            })
-          }
+          toastBatchError(count, i, response.error)
           return
         }
       }
@@ -194,13 +207,18 @@ export function WalletAddressesGenerateSeedDialog({
     [closeAndReset, addressAdd, walletId, cacheWalletMnemonic]
   )
 
-  const onSubmit = useCallback(() => {
-    return generateAddresses(
-      wallet.state.mnemonic || mnemonic,
-      index.toNumber(),
-      count.toNumber()
-    )
-  }, [generateAddresses, mnemonic, index, count, wallet])
+  const triggerRescan = useTriggerRescan()
+  const onSubmit = useCallback(
+    async (values: Values) => {
+      await generateAddresses(
+        wallet.state.mnemonic || mnemonic,
+        index.toNumber(),
+        count.toNumber()
+      )
+      triggerRescan(values)
+    },
+    [generateAddresses, mnemonic, index, count, wallet, triggerRescan]
+  )
 
   return (
     <Dialog
@@ -214,8 +232,13 @@ export function WalletAddressesGenerateSeedDialog({
       onSubmit={form.handleSubmit(onSubmit)}
       controls={
         <div className="flex justify-end">
-          <FormSubmitButton form={form} variant="accent" size="medium">
-            Continue
+          <FormSubmitButton
+            form={form}
+            size="medium"
+            variant={shouldRescan ? 'red' : 'accent'}
+          >
+            Generate addresses
+            {shouldRescan ? ' and rescan' : ''}
           </FormSubmitButton>
         </div>
       }
@@ -235,6 +258,7 @@ export function WalletAddressesGenerateSeedDialog({
           <FieldNumber form={form} fields={fields} name="count" />
         </div>
       </div>
+      <FieldRescan form={form} fields={fields} />
     </Dialog>
   )
 }
