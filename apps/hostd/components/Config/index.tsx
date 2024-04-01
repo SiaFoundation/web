@@ -43,14 +43,12 @@ export function Config() {
       }
       actions={<ConfigActions />}
       openSettings={() => openDialog('settings')}
+      size="3"
     >
       {remoteError ? (
         <StateConnError />
       ) : (
-        <div
-          ref={configRef}
-          className="p-6 flex flex-col gap-16 max-w-screen-xl"
-        >
+        <div ref={configRef} className="px-5 py-6 flex flex-col gap-16">
           <ConfigurationPanel
             title="Host"
             category="host"
