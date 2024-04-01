@@ -9,7 +9,7 @@ export function StateNoneYet() {
       </Text>
       <div className="flex flex-col gap-3 items-center">
         <Text color="subtle" className="text-center max-w-[500px]">
-          There are currenty no alerts.
+          There are currently no alerts.
         </Text>
       </div>
     </div>
