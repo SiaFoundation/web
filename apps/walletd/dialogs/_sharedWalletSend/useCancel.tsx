@@ -25,7 +25,10 @@ export function useCancel() {
         },
       })
       if (response.error) {
-        triggerErrorToast(response.error)
+        triggerErrorToast({
+          title: 'Error canceling transaction',
+          body: response.error,
+        })
       }
     },
     [walletId, walletRelease]

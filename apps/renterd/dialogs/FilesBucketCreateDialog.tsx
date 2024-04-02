@@ -57,9 +57,12 @@ export function FilesBucketCreateDialog({
         },
       })
       if (response.error) {
-        triggerErrorToast(response.error)
+        triggerErrorToast({
+          title: 'Error creating bucket',
+          body: response.error,
+        })
       } else {
-        triggerSuccessToast('Bucket created.')
+        triggerSuccessToast({ title: 'Bucket created' })
         form.reset()
         closeDialog()
       }

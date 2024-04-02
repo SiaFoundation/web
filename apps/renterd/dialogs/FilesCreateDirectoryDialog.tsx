@@ -3,7 +3,7 @@ import {
   FormFieldFormik,
   FormSubmitButtonFormik,
   triggerErrorToast,
-  triggerToast,
+  triggerSuccessToast,
 } from '@siafoundation/design-system'
 import { useObjectUpload } from '@siafoundation/react-renterd'
 import { useFilesManager } from '../contexts/filesManager'
@@ -44,9 +44,12 @@ export function FilesCreateDirectoryDialog({
         payload: null,
       })
       if (response.error) {
-        triggerErrorToast(response.error)
+        triggerErrorToast({
+          title: 'Error creating directory',
+          body: response.error,
+        })
       } else {
-        triggerToast('Directory created.')
+        triggerSuccessToast({ title: 'Directory created' })
         actions.resetForm()
         onOpenChange(false)
       }

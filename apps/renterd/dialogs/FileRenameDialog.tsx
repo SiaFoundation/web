@@ -97,15 +97,22 @@ export function FileRenameDialog({
         },
       })
       if (response.error) {
-        triggerErrorToast(response.error)
+        triggerErrorToast({
+          title: isDirectory(originalPath)
+            ? 'Error renaming directory'
+            : 'Error renaming file',
+          body: response.error,
+        })
       } else {
         refreshDirectory()
         refreshFlat()
         form.reset()
         closeDialog()
-        triggerSuccessToast(
-          isDirectory(originalPath) ? 'Directory renamed.' : 'File renamed.'
-        )
+        triggerSuccessToast({
+          title: isDirectory(originalPath)
+            ? 'Directory renamed'
+            : 'File renamed',
+        })
       }
     },
     [

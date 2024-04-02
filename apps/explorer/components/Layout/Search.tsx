@@ -5,7 +5,7 @@ import {
   ConfigFields,
   ControlGroup,
   FieldText,
-  triggerToast,
+  triggerErrorToast,
 } from '@siafoundation/design-system'
 import { Search16 } from '@siafoundation/react-icons'
 import React, { useCallback } from 'react'
@@ -51,7 +51,7 @@ export function Search() {
 
       if (!response.data) {
         form.setError('query', { message: 'Error connecting to server.' })
-        triggerToast('Error connecting to server.')
+        triggerErrorToast({ title: 'Error connecting to server' })
         return
       }
 
@@ -91,7 +91,7 @@ export function Search() {
         form.reset()
       } else {
         form.setError('query', { message: 'No results match query.' })
-        triggerToast('No results match query.')
+        triggerErrorToast({ title: 'No results match query' })
       }
     },
     [form, router, search]

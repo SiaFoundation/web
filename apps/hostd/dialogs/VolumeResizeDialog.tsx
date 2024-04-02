@@ -102,9 +102,12 @@ export function VolumeResizeDialog({ trigger, open, onOpenChange }: Props) {
         },
       })
       if (response.error) {
-        triggerErrorToast(response.error)
+        triggerErrorToast({
+          title: 'Error resizing volume',
+          body: response.error,
+        })
       } else {
-        triggerSuccessToast('Volume resizing initiated.')
+        triggerSuccessToast({ title: 'Volume resizing initiated' })
         form.reset(defaultValues)
         closeDialog()
       }

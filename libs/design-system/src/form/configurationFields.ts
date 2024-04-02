@@ -128,11 +128,12 @@ export function useOnInvalid<
 >(fields: ConfigFields<Values, Categories>) {
   return useCallback(
     (errors: FieldErrors<Values>) => {
-      triggerErrorToast(
-        entries(errors)
+      triggerErrorToast({
+        title: 'Error',
+        body: entries(errors)
           .map(([key, e]) => `${fields[key].title || key}: ${e?.message}`)
-          .join(', ')
-      )
+          .join(', '),
+      })
     },
     [fields]
   )

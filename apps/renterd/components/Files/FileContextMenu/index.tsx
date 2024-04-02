@@ -6,7 +6,6 @@ import {
   DropdownMenuLeftSlot,
   DropdownMenuLabel,
   copyToClipboardCustom,
-  Text,
   Code,
 } from '@siafoundation/design-system'
 import {
@@ -14,9 +13,9 @@ import {
   Copy16,
   Delete16,
   Document16,
-  Warning16,
   Filter16,
   Edit16,
+  Warning24,
 } from '@siafoundation/react-icons'
 import { useFileDelete } from '../useFileDelete'
 import { CopyMetadataMenuItem } from './CopyMetadataMenuItem'
@@ -110,25 +109,20 @@ export function FileContextMenu({ path }: Props) {
       </DropdownMenuItem>
       <DropdownMenuItem
         onSelect={() => {
-          copyToClipboardCustom(
-            getFileUrl(path, true),
-            <div className="flex flex-col gap-2">
-              <Text>Copied authenticated file URL to clipboard.</Text>
-              <Text>
+          copyToClipboardCustom({
+            text: getFileUrl(path, true),
+            title: 'Copied authenticated file URL to clipboard',
+            body: (
+              <>
                 The authenticated URL contains the <Code>renterd</Code>{' '}
                 password, be careful when pasting or sharing the URL.
-              </Text>
-            </div>,
-            {
-              icon: (
-                <div className="!flex-none w-5">
-                  <Warning16 className="w-5 text-amber-600" />
-                </div>
-              ),
-              duration: 10_000,
-              className: '!max-w-[1200px]',
-            }
-          )
+              </>
+            ),
+            icon: <Warning24 className="text-amber-600" />,
+            options: {
+              duration: 100_000,
+            },
+          })
         }}
       >
         <DropdownMenuLeftSlot>

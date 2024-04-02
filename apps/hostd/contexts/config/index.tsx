@@ -50,7 +50,7 @@ export function useConfigMain() {
   const revalidateAndResetForm = useCallback(async () => {
     const _settings = await settings.mutate()
     if (!_settings) {
-      triggerErrorToast('Error fetching settings.')
+      triggerErrorToast({ title: 'Error fetching settings' })
     } else {
       // also recheck dynamic dns
       await dynDNSCheck.mutate()

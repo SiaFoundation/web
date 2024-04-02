@@ -108,7 +108,10 @@ export function WalletAddRecoverDialog({ trigger, open, onOpenChange }: Props) {
         },
       })
       if (response.error) {
-        triggerErrorToast(response.error)
+        triggerErrorToast({
+          title: 'Error adding wallet',
+          body: response.error,
+        })
       } else {
         openDialog('walletAddressesGenerate', {
           walletId: response.data.id,

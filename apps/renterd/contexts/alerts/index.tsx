@@ -79,9 +79,12 @@ function useAlertsMain() {
         payload: [id],
       })
       if (response.error) {
-        triggerErrorToast('Error dismissing alert.')
+        triggerErrorToast({
+          title: 'Error dismissing alert',
+          body: response.error,
+        })
       } else {
-        triggerSuccessToast('Alert has been dismissed.')
+        triggerSuccessToast({ title: 'Alert has been dismissed.' })
       }
     },
     [dismiss]
@@ -93,9 +96,12 @@ function useAlertsMain() {
         payload: ids,
       })
       if (response.error) {
-        triggerErrorToast('Error dismissing alerts.')
+        triggerErrorToast({
+          title: 'Error dismissing alerts',
+          body: response.error,
+        })
       } else {
-        triggerSuccessToast('Selected alerts have been dismissed.')
+        triggerSuccessToast({ title: 'Selected alerts have been dismissed' })
       }
     },
     [dismiss]

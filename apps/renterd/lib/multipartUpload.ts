@@ -138,7 +138,7 @@ export class MultipartUpload {
         },
       })
     } catch (e) {
-      triggerErrorToast(e.message)
+      triggerErrorToast({ title: 'Error aborting upload', body: e.message })
     }
     this.#resolve?.()
   }

@@ -88,7 +88,10 @@ export function WalletAddWatchDialog({ trigger, open, onOpenChange }: Props) {
         },
       })
       if (response.error) {
-        triggerErrorToast(response.error)
+        triggerErrorToast({
+          title: 'Error adding wallet',
+          body: response.error,
+        })
       } else {
         openDialog('walletAddressesAdd', {
           walletId: response.data.id,

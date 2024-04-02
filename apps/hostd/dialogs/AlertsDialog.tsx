@@ -35,9 +35,12 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
         payload: [id],
       })
       if (response.error) {
-        triggerErrorToast('Error dismissing alert.')
+        triggerErrorToast({
+          title: 'Error dismissing alert',
+          body: response.error,
+        })
       } else {
-        triggerSuccessToast('Alert has been dismissed.')
+        triggerSuccessToast({ title: 'Alert has been dismissed' })
       }
     },
     [dismiss]
@@ -52,17 +55,18 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
         payload: ids,
       })
       if (response.error) {
-        triggerErrorToast(
-          filter
-            ? `Error dismissing all ${filter} alerts.`
-            : 'Error dismissing all alerts.'
-        )
+        triggerErrorToast({
+          title: filter
+            ? `Error dismissing all ${filter} alerts`
+            : 'Error dismissing all alerts',
+          body: response.error,
+        })
       } else {
-        triggerSuccessToast(
-          filter
-            ? `All ${filter} alerts have been dismissed.`
-            : 'All alerts have been dismissed.'
-        )
+        triggerSuccessToast({
+          title: filter
+            ? `All ${filter} alerts have been dismissed`
+            : 'All alerts have been dismissed',
+        })
       }
     },
     [dismiss, alerts]

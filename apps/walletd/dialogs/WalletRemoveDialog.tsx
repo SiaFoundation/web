@@ -74,9 +74,12 @@ export function WalletRemoveDialog({
       },
     })
     if (response.error) {
-      triggerErrorToast(response.error)
+      triggerErrorToast({
+        title: 'Error removing wallet',
+        body: response.error,
+      })
     } else {
-      triggerSuccessToast('Wallet permanently removed.')
+      triggerSuccessToast({ title: 'Wallet permanently removed' })
       form.reset()
       closeDialog()
       router.push(routes.home)

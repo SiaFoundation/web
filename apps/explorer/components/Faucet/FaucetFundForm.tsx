@@ -2,7 +2,7 @@ import {
   FormFieldFormik,
   FormSubmitButtonFormik,
   Paragraph,
-  triggerToast,
+  triggerSuccessToast,
 } from '@siafoundation/design-system'
 import { toHastings } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
@@ -50,7 +50,7 @@ export function FaucetFundForm({ onDone }: Props) {
       if (response.error) {
         actions.setStatus({ error: response.error })
       } else {
-        triggerToast('Address has been funded.')
+        triggerSuccessToast({ title: 'Address has been funded' })
         if (response.data) {
           onDone(response.data.id)
         }

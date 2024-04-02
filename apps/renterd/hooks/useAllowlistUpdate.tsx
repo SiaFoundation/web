@@ -1,6 +1,6 @@
 import {
   triggerErrorToast,
-  triggerToast,
+  triggerSuccessToast,
   truncate,
 } from '@siafoundation/design-system'
 import { useHostsAllowlistUpdate } from '@siafoundation/react-renterd'
@@ -19,20 +19,27 @@ export function useAllowlistUpdate() {
           },
         })
         if (response.error) {
-          triggerErrorToast(response.error)
+          triggerErrorToast({
+            title: 'Error updating allowlist',
+            body: response.error,
+          })
           return false
         } else {
           if (add.length) {
-            triggerToast(
-              `${add.map((i) => truncate(i, 20)).join(', ')} added to allowlist`
-            )
+            triggerSuccessToast({
+              title: 'Allowlist updated',
+              body: `${add
+                .map((i) => truncate(i, 20))
+                .join(', ')} added to allowlist.`,
+            })
           }
           if (remove.length) {
-            triggerToast(
-              `${remove
+            triggerSuccessToast({
+              title: 'Allowlist updated',
+              body: `${remove
                 .map((i) => truncate(i, 20))
-                .join(', ')} removed from allowlist`
-            )
+                .join(', ')} removed from allowlist.`,
+            })
           }
           return true
         }
