@@ -30,7 +30,10 @@ export function DirectoryCreate({
       },
     })
     if (response.error) {
-      triggerErrorToast(`Error creating directory: ${response.error}`)
+      triggerErrorToast({
+        title: 'Error creating directory',
+        body: response.error,
+      })
     } else {
       onCreate(newDirName)
       setNewDirName('')

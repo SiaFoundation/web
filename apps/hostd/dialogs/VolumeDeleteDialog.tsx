@@ -79,9 +79,12 @@ export function VolumeDeleteDialog({ trigger, open, onOpenChange }: Props) {
         },
       })
       if (response.error) {
-        triggerErrorToast(response.error)
+        triggerErrorToast({
+          title: 'Error deleting volume',
+          body: response.error,
+        })
       } else {
-        triggerSuccessToast('Volume permanently deleted.')
+        triggerSuccessToast({ title: 'Volume permanently deleted' })
         form.reset()
         closeDialog()
       }

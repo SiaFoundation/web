@@ -54,18 +54,22 @@ export function useOnValid({
         const needsToAnnounce =
           host.data?.lastAnnouncement?.address !== values.netAddress
         if (needsToAnnounce) {
-          triggerSuccessToast(
-            'Settings have been saved. Address has changed, make sure to re-announce the host.',
-            {
+          triggerSuccessToast({
+            title: 'Settings have been saved',
+            body: 'Address has changed, make sure to re-announce the host.',
+            options: {
               duration: 20_000,
-            }
-          )
+            },
+          })
         } else {
-          triggerSuccessToast('Settings have been saved.')
+          triggerSuccessToast({ title: 'Settings have been saved' })
         }
         await revalidateAndResetForm()
       } catch (e) {
-        triggerErrorToast((e as Error).message)
+        triggerErrorToast({
+          title: 'Error updating settings',
+          body: (e as Error).message,
+        })
         console.log(e)
       }
     },

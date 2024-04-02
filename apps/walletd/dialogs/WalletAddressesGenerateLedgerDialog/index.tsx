@@ -245,13 +245,12 @@ export function WalletAddressesGenerateLedgerDialog({
     const count = newGeneratedAddresses.length
     function toastBatchError(count: number, i: number) {
       if (count === 1) {
-        triggerErrorToast('Error saving address.')
+        triggerErrorToast({ title: 'Error saving address' })
       } else {
-        triggerErrorToast(
-          `Error saving addresses. ${
-            i > 0 ? 'Not all addresses were saved.' : ''
-          }`
-        )
+        triggerErrorToast({
+          title: 'Error saving addresses',
+          body: i > 0 ? 'Not all addresses were saved.' : '',
+        })
       }
     }
     for (const [
@@ -284,9 +283,9 @@ export function WalletAddressesGenerateLedgerDialog({
       }
     }
     if (count === 1) {
-      triggerSuccessToast('Successfully added 1 address.')
+      triggerSuccessToast({ title: 'Added 1 address' })
     } else {
-      triggerSuccessToast(`Successfully added ${count} addresses.`)
+      triggerSuccessToast({ title: `Added ${count} addresses` })
     }
     return
   }, [addressAdd, walletId, newGeneratedAddresses])
@@ -302,9 +301,10 @@ export function WalletAddressesGenerateLedgerDialog({
 
   const onSubmit = useCallback(async () => {
     if (newGeneratedAddresses.length === 0) {
-      triggerErrorToast(
-        'Add and generate addresses with your Ledger device to continue.'
-      )
+      triggerErrorToast({
+        title: 'Generate an address',
+        body: 'Add and generate addresses with your Ledger device to continue.',
+      })
       return
     }
     await saveAddresses()

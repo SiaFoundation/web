@@ -72,9 +72,12 @@ export function AddressRemoveDialog({
       },
     })
     if (response.error) {
-      triggerErrorToast(response.error)
+      triggerErrorToast({
+        title: 'Error removing address',
+        body: response.error,
+      })
     } else {
-      triggerSuccessToast('Address permanently removed.')
+      triggerSuccessToast({ title: 'Address permanently removed' })
       form.reset()
       closeDialog()
     }

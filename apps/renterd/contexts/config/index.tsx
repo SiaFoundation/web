@@ -133,7 +133,7 @@ export function useConfigMain() {
     const _redundancy = await redundancy.mutate()
     const _uploadPacking = await uploadPacking.mutate()
     if (!gouging || !redundancy) {
-      triggerErrorToast('Error fetching settings.')
+      triggerErrorToast({ title: 'Error fetching settings' })
       return null
     }
     form.reset(

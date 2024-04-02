@@ -41,19 +41,25 @@ export function ContractContextMenu({
       },
     })
     if (response.error) {
-      triggerErrorToast(response.error)
+      triggerErrorToast({
+        title: 'Error starting integrity check',
+        body: response.error,
+      })
     } else {
-      triggerSuccessToast(
-        <>
-          Integrity check successfully started, depending on contract data size
-          this operation can take a while. Check <Code>hostd</Code>{' '}
-          <Link onClick={() => openDialog('alerts')}>alerts</Link> for status
-          updates.
-        </>,
-        {
+      triggerSuccessToast({
+        title: 'Integrity check started',
+        body: (
+          <>
+            Depending on contract data size this operation can take a while.
+            Check <Code>hostd</Code>{' '}
+            <Link onClick={() => openDialog('alerts')}>alerts</Link> for status
+            updates.
+          </>
+        ),
+        options: {
           duration: 12_000,
-        }
-      )
+        },
+      })
     }
   }, [id, integrityCheck, openDialog])
 

@@ -68,15 +68,15 @@ export function VolumeContextMenu({ id, contentProps, buttonProps }: Props) {
               },
             })
             if (response.error) {
-              triggerErrorToast(
-                `Error canceling volume ${getActiveOperationLabel(status)}.`
-              )
-            } else {
-              triggerSuccessToast(
-                `Successfully canceled volume ${getActiveOperationLabel(
+              triggerErrorToast({
+                title: `Error canceling volume ${getActiveOperationLabel(
                   status
-                )}.`
-              )
+                )}`,
+              })
+            } else {
+              triggerSuccessToast({
+                title: `Canceled volume ${getActiveOperationLabel(status)}`,
+              })
             }
           }}
         >
@@ -100,17 +100,17 @@ export function VolumeContextMenu({ id, contentProps, buttonProps }: Props) {
               },
             })
             if (response.error) {
-              triggerErrorToast(
-                nextReadOnly
-                  ? 'Error setting volume to read-only.'
-                  : 'Error setting volume to read/write.'
-              )
+              triggerErrorToast({
+                title: nextReadOnly
+                  ? 'Error setting volume to read-only'
+                  : 'Error setting volume to read/write',
+              })
             } else {
-              triggerSuccessToast(
-                nextReadOnly
-                  ? 'Volume set to read-only.'
-                  : 'Volume set to read/write.'
-              )
+              triggerSuccessToast({
+                title: nextReadOnly
+                  ? 'Volume set to read-only'
+                  : 'Volume set to read/write',
+              })
             }
           }}
         >

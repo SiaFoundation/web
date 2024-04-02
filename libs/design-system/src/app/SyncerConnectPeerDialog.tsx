@@ -1,7 +1,7 @@
 'use client'
 
 import { Paragraph } from '../core/Paragraph'
-import { triggerToast } from '../lib/toast'
+import { triggerSuccessToast } from '../lib/toast'
 import {
   FormFieldFormik,
   FormSubmitButtonFormik,
@@ -58,7 +58,7 @@ export function SyncerConnectPeerDialog({
         )
         actions.setStatus({ error: formattedError })
       } else {
-        triggerToast('Connected to peer')
+        triggerSuccessToast({ title: 'Connected to peer' })
         actions.resetForm()
         onOpenChange(false)
       }

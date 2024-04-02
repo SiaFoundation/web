@@ -85,7 +85,10 @@ export function AddressUpdateDialog({
         },
       })
       if (response.error) {
-        triggerErrorToast(response.error)
+        triggerErrorToast({
+          title: 'Error updating address',
+          body: response.error,
+        })
       } else {
         closeDialog()
         form.reset(defaultValues)

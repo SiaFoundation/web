@@ -88,7 +88,7 @@ export function useDownloads() {
       const name = getFilename(path)
 
       if (downloadsMap[path]) {
-        triggerErrorToast(`Already downloading file: ${path}`)
+        triggerErrorToast({ title: 'Already downloading file', body: path })
         return
       }
 
@@ -123,14 +123,16 @@ export function useDownloads() {
       isDone = true
       if (response.error) {
         if (response.error === 'canceled') {
-          triggerToast('File download canceled.')
+          triggerToast({ title: 'File download canceled' })
         } else {
-          triggerErrorToast(response.error)
+          triggerErrorToast({
+            title: 'Error downloading file',
+            body: response.error,
+          })
         }
         removeDownload(path)
       } else {
         removeDownload(path)
-        // triggerToast(`Download complete: ${name}`)
       }
     })
   }

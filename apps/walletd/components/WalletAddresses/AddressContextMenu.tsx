@@ -54,13 +54,17 @@ export function AddressContextMenu({
                 },
               })
               if (response.error) {
-                triggerErrorToast(`Failed to delete address: ${response.error}`)
+                triggerErrorToast({
+                  title: 'Error deleting address',
+                  body: response.error,
+                })
               } else {
-                triggerSuccessToast(
-                  metadata.index !== undefined
-                    ? `Address ${metadata.index} removed.`
-                    : 'Address removed.'
-                )
+                triggerSuccessToast({
+                  title:
+                    metadata.index !== undefined
+                      ? `Address ${metadata.index} removed`
+                      : 'Address removed',
+                })
               }
             },
           })

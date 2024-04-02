@@ -61,10 +61,12 @@ export function AnnounceButton() {
           const response = await settingsAnnounce.post({})
 
           if (response.error) {
-            triggerErrorToast('Error announcing host.')
+            triggerErrorToast({ title: 'Error announcing host' })
             return
           }
-          triggerSuccessToast('Successfully broadcast host announcement.')
+          triggerSuccessToast({
+            title: 'Successfully broadcast host announcement',
+          })
         },
       }),
     [openConfirmDialog, settingsAnnounce, txpoolFee]

@@ -1,6 +1,5 @@
 import {
   Code,
-  Text,
   triggerErrorToast,
   triggerSuccessToast,
 } from '@siafoundation/design-system'
@@ -44,15 +43,21 @@ export function useSyncContractSet() {
             ),
           })
           contractSet.mutate()
-          triggerSuccessToast(
-            <Text>
-              Default contract set has been updated to:{' '}
-              <Code>{autopilotContractSet}</Code>.
-            </Text>
-          )
+          triggerSuccessToast({
+            title: 'Default contract set updated',
+            body: (
+              <>
+                Default contract set has been updated to:{' '}
+                <Code>{autopilotContractSet}</Code>.
+              </>
+            ),
+          })
         }
       } catch (e) {
-        triggerErrorToast((e as Error).message)
+        triggerErrorToast({
+          title: 'Error updating default contract set',
+          body: (e as Error).message,
+        })
         console.log(e)
       }
     },

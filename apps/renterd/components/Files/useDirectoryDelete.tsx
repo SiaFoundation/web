@@ -42,9 +42,12 @@ export function useDirectoryDelete() {
           })
 
           if (response.error) {
-            triggerErrorToast('Error deleting directory.')
+            triggerErrorToast({
+              title: 'Error deleting directory',
+              body: response.error,
+            })
           }
-          triggerSuccessToast('Successfully deleted directory.')
+          triggerSuccessToast({ title: 'Deleted directory' })
         },
       }),
     [openConfirmDialog, deleteObject]

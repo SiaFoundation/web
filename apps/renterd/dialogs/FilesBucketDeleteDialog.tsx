@@ -63,9 +63,12 @@ export function FilesBucketDeleteDialog({
         },
       })
       if (response.error) {
-        triggerErrorToast(response.error)
+        triggerErrorToast({
+          title: 'Error deleting bucket',
+          body: response.error,
+        })
       } else {
-        triggerSuccessToast('Bucket permanently deleted.')
+        triggerSuccessToast({ title: 'Bucket permanently deleted' })
         form.reset()
         closeDialog()
       }

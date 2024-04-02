@@ -40,9 +40,12 @@ export function useFileDelete() {
           })
 
           if (response.error) {
-            triggerErrorToast('Error deleting file.')
+            triggerErrorToast({
+              title: 'Error deleting file',
+              body: response.error,
+            })
           }
-          triggerSuccessToast('Successfully deleted file.')
+          triggerSuccessToast({ title: 'Deleted file' })
         },
       }),
     [openConfirmDialog, deleteObject]

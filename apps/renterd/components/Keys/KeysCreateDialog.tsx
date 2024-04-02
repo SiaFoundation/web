@@ -121,9 +121,9 @@ export function KeysCreateDialog({ trigger, open, onOpenChange }: Props) {
         },
       })
       if (response.error) {
-        triggerErrorToast(response.error)
+        triggerErrorToast({ title: 'Error creating key', body: response.error })
       } else {
-        triggerSuccessToast('New key created.')
+        triggerSuccessToast({ title: 'New key created' })
         form.reset(getDefaultValues())
         closeDialog()
       }

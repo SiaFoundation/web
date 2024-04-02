@@ -114,7 +114,9 @@ export function useSendForm({ params, step, onConfirm }: Props) {
       })
 
       if (error) {
-        triggerErrorToast(error)
+        triggerErrorToast({
+          title: error,
+        })
         return
       }
 
@@ -136,7 +138,7 @@ export function useSendForm({ params, step, onConfirm }: Props) {
     setWaitingForUser(true)
     const { signedTransaction, error } = await fundAndSign(params)
     if (error) {
-      triggerErrorToast(error)
+      triggerErrorToast({ title: error })
     } else {
       setTxn(signedTransaction)
       form.setValue('isSigned', true)

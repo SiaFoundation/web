@@ -1,65 +1,109 @@
 'use client'
 
-import { CheckmarkOutline16, CloseOutline16 } from '@siafoundation/react-icons'
-import toast, {
-  Renderable,
-  Toaster as RToaster,
-  ToastOptions,
-} from 'react-hot-toast'
+import {
+  CheckmarkOutline16,
+  CheckmarkOutline24,
+  Close16,
+  CloseOutline16,
+  CloseOutline24,
+} from '@siafoundation/react-icons'
+import toast, { Toaster as RToaster, ToastOptions } from 'react-hot-toast'
 import { cx } from 'class-variance-authority'
 import { panelStyles } from '../core/Panel'
 import React from 'react'
 import { Text } from '../core/Text'
+import { Button } from '../core/Button'
+import { Tooltip } from '../core/Tooltip'
+import { ScrollArea } from '../core/ScrollArea'
 
 export type { ToastOptions }
 
-export const triggerToast = (
-  text: React.ReactNode,
-  options: ToastOptions = {}
-) => {
+function ToastLayout({
+  icon,
+  title,
+  body,
+  toastId,
+}: {
+  icon?: React.ReactNode
+  title: React.ReactNode
+  body: React.ReactNode
+  toastId: string
+}) {
+  return (
+    <div className="flex flex-col overflow-hidden">
+      <div className="flex items-center gap-2 pt-1.5 pb-1 px-1 overflow-hidden">
+        {icon && (
+          <Text className="flex items-center" color="subtle">
+            {icon}
+          </Text>
+        )}
+        <Tooltip content={title}>
+          <Text ellipsis className="flex-1">
+            {title}
+          </Text>
+        </Tooltip>
+        <div className="flex items-center pl-1">
+          <Button
+            icon="hover"
+            size="none"
+            onClick={(e) => {
+              toast.dismiss(toastId)
+            }}
+          >
+            <Close16 />
+          </Button>
+        </div>
+      </div>
+      {body && (
+        <div className="pb-1">
+          <ScrollArea>
+            <div className="max-w-sm px-1 max-h-20">
+              <Text color="subtle" size="14">
+                {body}
+              </Text>
+            </div>
+          </ScrollArea>
+        </div>
+      )}
+    </div>
+  )
+}
+
+type ToastParams = {
+  title: React.ReactNode
+  body?: React.ReactNode
+  icon?: React.ReactNode
+  options?: ToastOptions
+}
+
+export const triggerToast = ({
+  title,
+  body,
+  icon,
+  options = {},
+}: ToastParams) => {
   toast(
-    <Text wrapEllipsis>
-      {typeof text === 'string' && text.length > 200
-        ? `${text.slice(0, 200)}`
-        : text}
-    </Text>,
+    (t) => <ToastLayout toastId={t.id} title={title} body={body} icon={icon} />,
     buildToastOptions(options)
   )
 }
 
-export const triggerToastNode = (
-  text: React.ReactNode,
-  options: ToastOptions = {}
-) => {
-  toast(text as Renderable, buildToastOptions(options))
+export function triggerSuccessToast({ title, body, options }: ToastParams) {
+  triggerToast({
+    title,
+    body,
+    icon: <CheckmarkOutline24 className="text-green-600" />,
+    options,
+  })
 }
 
-export const triggerSuccessToast = (
-  text: React.ReactNode,
-  options: ToastOptions = {}
-) => {
-  toast.success(
-    <Text wrapEllipsis>
-      {typeof text === 'string' && text.length > 200
-        ? `${text.slice(0, 200)}...`
-        : text}
-    </Text>,
-    buildToastOptions(options)
-  )
-}
-
-export const triggerErrorToast = (
-  text: React.ReactNode,
-  options: ToastOptions = {}
-) => {
-  toast.error(
-    <Text wrapEllipsis>
-      {typeof text === 'string' && text.length > 200
-        ? `${text.slice(0, 200)}...`
-        : text}
-    </Text>,
-    buildToastOptions(options)
-  )
+export function triggerErrorToast({ title, body, options }: ToastParams) {
+  triggerToast({
+    title,
+    body,
+    icon: <CloseOutline24 className="text-red-600" />,
+    options,
+  })
 }
 
 export function buildToastOptions({
@@ -71,11 +115,11 @@ export function buildToastOptions({
     duration: 6_000,
     className: cx(
       panelStyles(),
-      'font-sans font-normal',
-      'text-gray-1100 dark:text-white',
-      'max-w-[800px] overflow-hidden text-ellipsis',
+      'overflow-hidden',
+      '!max-w-[800px]',
       '[&>div]:overflow-hidden',
-      '[&>div]:flex-1',
+      '!p-0',
+      'z-50',
       className
     ),
     success: {
@@ -97,5 +141,12 @@ export function buildToastOptions({
 }
 
 export function Toaster() {
-  return <RToaster toastOptions={buildToastOptions()} />
+  return (
+    <RToaster
+      toastOptions={buildToastOptions()}
+      containerStyle={{
+        zIndex: 20,
+      }}
+    />
+  )
 }

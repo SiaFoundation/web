@@ -89,9 +89,12 @@ export function FilesBucketPolicyDialog({
         },
       })
       if (response.error) {
-        triggerErrorToast(response.error)
+        triggerErrorToast({
+          title: 'Error updating bucket policy',
+          body: response.error,
+        })
       } else {
-        triggerSuccessToast('Bucket policy has been updated.')
+        triggerSuccessToast({ title: 'Bucket policy has been updated' })
         form.reset()
         closeDialog()
       }

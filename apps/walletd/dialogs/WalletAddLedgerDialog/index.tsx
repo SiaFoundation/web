@@ -152,7 +152,7 @@ export function WalletAddLedgerDialog({ trigger, open, onOpenChange }: Props) {
         },
       })
       if (response.error) {
-        triggerErrorToast('Error saving address.')
+        triggerErrorToast({ title: 'Error saving address' })
         return
       }
     },
@@ -180,7 +180,10 @@ export function WalletAddLedgerDialog({ trigger, open, onOpenChange }: Props) {
         },
       })
       if (response.error) {
-        triggerErrorToast(response.error)
+        triggerErrorToast({
+          title: 'Error saving wallet',
+          body: response.error,
+        })
       } else {
         const uc = getSDK().wallet.standardUnlockConditions(device.publicKey0)
         if (!uc.error) {

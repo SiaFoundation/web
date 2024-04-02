@@ -39,9 +39,12 @@ export function useContractConfirmDelete() {
           })
 
           if (response.error) {
-            triggerErrorToast('Error deleting contract.')
+            triggerErrorToast({
+              title: 'Error deleting contract',
+              body: response.error,
+            })
           }
-          triggerSuccessToast('Successfully deleted contract.')
+          triggerSuccessToast({ title: 'Deleted contract' })
         },
       }),
     [openConfirmDialog, deleteContract]

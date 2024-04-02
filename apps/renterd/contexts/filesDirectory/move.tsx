@@ -53,7 +53,7 @@ export function useMove({
       })
       refresh()
       if (response.error) {
-        triggerErrorToast(response.error)
+        triggerErrorToast({ title: 'Error moving files', body: response.error })
       }
     },
     [refresh, rename, activeDirectory]

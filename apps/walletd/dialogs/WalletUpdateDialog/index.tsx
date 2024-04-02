@@ -117,7 +117,10 @@ export function WalletUpdateDialog({
         },
       })
       if (response.error) {
-        triggerErrorToast(response.error)
+        triggerErrorToast({
+          title: 'Error updating wallet',
+          body: response.error,
+        })
       } else {
         closeAndReset()
       }

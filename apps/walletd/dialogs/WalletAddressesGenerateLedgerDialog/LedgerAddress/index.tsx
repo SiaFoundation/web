@@ -34,7 +34,10 @@ export function LedgerAddress({
       return
     }
     if (error) {
-      triggerErrorToast(error.message)
+      triggerErrorToast({
+        title: 'Error connecting to Ledger',
+        body: error.message,
+      })
       return
     }
     try {

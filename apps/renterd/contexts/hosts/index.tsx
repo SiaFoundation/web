@@ -179,9 +179,10 @@ function useHostsMain() {
       if (location) {
         cmdRef.current.moveToLocation(location)
       } else {
-        triggerErrorToast(
-          `Geographic location is unknown for host ${truncate(publicKey, 20)}`
-        )
+        triggerErrorToast({
+          title: 'Geographic location is unknown for host',
+          body: truncate(publicKey, 20),
+        })
       }
       scrollToHost(publicKey)
     },

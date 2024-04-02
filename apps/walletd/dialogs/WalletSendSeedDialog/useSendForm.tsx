@@ -84,7 +84,7 @@ export function useSendForm({ walletId, params, onConfirm }: Props) {
       })
 
       if (error) {
-        triggerErrorToast(error)
+        triggerErrorToast({ title: error })
         return
       }
 

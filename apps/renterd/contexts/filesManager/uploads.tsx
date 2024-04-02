@@ -120,7 +120,10 @@ export function useUploads({ activeDirectoryPath }: Props) {
 
       const uploadId = await multipartUpload.create()
       multipartUpload.setOnError((error) => {
-        triggerErrorToast(error.message)
+        triggerErrorToast({
+          title: 'Error uploading file',
+          body: error.message,
+        })
         ref.current.removeUpload(uploadId)
       })
       multipartUpload.setOnProgress(
@@ -234,9 +237,10 @@ export function useUploads({ activeDirectoryPath }: Props) {
         const bucketName = getBucketFromPath(path)
         const bucket = buckets.data?.find((b) => b.name === bucketName)
         if (uploadsMap[path]) {
-          triggerErrorToast(
-            `Already uploading file: ${path}, aborting previous upload.`
-          )
+          triggerErrorToast({
+            title: `Already uploading file, aborting previous upload.`,
+            body: path,
+          })
           uploadsMap[path].uploadAbort?.()
         }
         addUploadToQueue({

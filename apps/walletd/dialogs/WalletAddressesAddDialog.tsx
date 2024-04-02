@@ -156,24 +156,27 @@ export function WalletAddressesAddDialog({
       const result = await addAllAddresses(values.addresses)
       if (result.error) {
         if (result.total === 1) {
-          triggerErrorToast('Error saving address.')
+          triggerErrorToast({
+            title: 'Error saving address',
+            body: result.error,
+          })
         } else {
-          triggerErrorToast(
-            `Error saving addresses. ${
+          triggerErrorToast({
+            title: 'Error saving addresses',
+            body:
               result.successful > 0
                 ? `${result.successful} of ${result.total} addresses were saved.`
-                : ''
-            }`
-          )
+                : '',
+          })
         }
         return
       }
       if (result.total === 1) {
-        triggerSuccessToast('Successfully added 1 address.')
+        triggerSuccessToast({ title: 'Added 1 address' })
       } else {
-        triggerSuccessToast(
-          `Successfully added ${result.successful} addresses.`
-        )
+        triggerSuccessToast({
+          title: `Added ${result.successful} addresses`,
+        })
       }
       if (values.shouldResubscribe) {
         resubscribe.post({

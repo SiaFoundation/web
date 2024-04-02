@@ -38,9 +38,9 @@ export function KeyContextMenu({ s3Key, contentProps, buttonProps }: Props) {
       },
     })
     if (response.error) {
-      triggerErrorToast(`Failed to delete key: ${response.error}`)
+      triggerErrorToast({ title: 'Error deleting key', body: response.error })
     } else {
-      triggerSuccessToast(`Key ${s3Key} removed.`)
+      triggerSuccessToast({ title: `Key ${s3Key} removed` })
     }
   }, [s3AuthenticationSettings.data, s3Key, update])
 

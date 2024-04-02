@@ -148,7 +148,7 @@ export function useOnValid({
           })
         }
 
-        triggerSuccessToast('Configuration has been saved.')
+        triggerSuccessToast({ title: 'Configuration has been saved' })
 
         // If autopilot is being configured for the first time,
         // revalidate the empty hosts list.
@@ -164,7 +164,10 @@ export function useOnValid({
 
         await revalidateAndResetForm()
       } catch (e) {
-        triggerErrorToast((e as Error).message)
+        triggerErrorToast({
+          title: 'Error updating configuration',
+          body: (e as Error).message,
+        })
         console.log(e)
       }
     },

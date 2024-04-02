@@ -126,17 +126,26 @@ export function WalletAddressesGenerateSeedDialog({
       for (let i = index; i < index + count; i++) {
         const kp = getSDK().wallet.keyPairFromSeedPhrase(mnemonic, i)
         if (kp.error) {
-          triggerErrorToast('Error generating addresses.')
+          triggerErrorToast({
+            title: 'Error generating addresses',
+            body: kp.error,
+          })
           return
         }
         const suh = getSDK().wallet.standardUnlockHash(kp.publicKey)
         if (suh.error) {
-          triggerErrorToast('Error generating unlock hash.')
+          triggerErrorToast({
+            title: 'Error generating unlock hash',
+            body: suh.error,
+          })
           return
         }
         const uc = getSDK().wallet.standardUnlockConditions(kp.publicKey)
         if (uc.error) {
-          triggerErrorToast('Error generating unlock conditions.')
+          triggerErrorToast({
+            title: 'Error generating unlock conditions',
+            body: uc.error,
+          })
           return
         }
         const metadata: WalletAddressMetadata = {
@@ -156,21 +165,25 @@ export function WalletAddressesGenerateSeedDialog({
         })
         if (response.error) {
           if (count === 1) {
-            triggerErrorToast('Error saving address.')
+            triggerErrorToast({
+              title: 'Error saving address',
+              body: response.error,
+            })
           } else {
-            triggerErrorToast(
-              `Error saving addresses. ${
-                i > 0 ? 'Not all addresses were saved.' : ''
-              }`
-            )
+            triggerErrorToast({
+              title: 'Error saving addresses',
+              body: i > 0 ? 'Not all addresses were saved.' : '',
+            })
           }
           return
         }
       }
       if (count === 1) {
-        triggerSuccessToast('Successfully generated 1 address.')
+        triggerSuccessToast({ title: 'Generated 1 address' })
       } else {
-        triggerSuccessToast(`Successfully generated ${count} addresses.`)
+        triggerSuccessToast({
+          title: `Generated ${count} addresses`,
+        })
       }
 
       // if successfully generated an address, cache the seed
