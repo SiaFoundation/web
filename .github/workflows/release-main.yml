@@ -1,4 +1,5 @@
 name: Release Versions or Publish NPM
+
 on:
   push:
     branches:
@@ -105,12 +106,8 @@ jobs:
       - name: Release Go modules
         # if a release was published, release the Go modules
         if: steps.changesets_release.outputs.published == 'true'
-        run: |
-          curl \
-            -X POST \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/SiaFoundation/web/actions/workflows/release-go.yml/dispatches \
-            -d '{"ref":"main"}'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.PAT_REPOSITORY_DISPATCH }}
+          repository: siafoundation/web
+          event-type: release-go
