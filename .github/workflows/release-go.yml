@@ -3,11 +3,8 @@ name: Release Go modules
 concurrency: commits-to-main
 
 on:
-  # Daily at 6 PM EST / 3 PM PST / 11 PM UTC
-  # The daemon repos check for UI updates an
-  # hour later at 7 PM EST / 4 PM PST / 12 AM UTC
-  schedule:
-    - cron: 0 23 * * *
+  repository_dispatch:
+    types: [release-go]
   # Enable manual trigger
   workflow_dispatch:
 
@@ -19,7 +16,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          token: ${{ secrets.COMMIT_PAT }}
       - name: Setup
         uses: ./.github/actions/setup
         with:
@@ -42,3 +38,21 @@ jobs:
           git push origin main --tags
           # cleanup
           git branch -D release
+      - name: Create UI PR on renterd repo
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.PAT_REPOSITORY_DISPATCH }}
+          repository: siafoundation/renterd
+          event-type: update-ui
+      - name: Create UI PR on hostd repo
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.PAT_REPOSITORY_DISPATCH }}
+          repository: siafoundation/hostd
+          event-type: update-ui
+      - name: Create UI PR on walletd repo
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.PAT_REPOSITORY_DISPATCH }}
+          repository: siafoundation/walletd
+          event-type: update-ui
