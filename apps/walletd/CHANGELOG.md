@@ -1,5 +1,16 @@
 # walletd
 
+## 0.18.0
+
+### Minor Changes
+
+- 1f5d3436: Toast notifications can now be dismissed. Closes https://github.com/SiaFoundation/web/issues/542
+- e2b8f950: The UI now uses the new daemon endpoints and changes. Closes https://github.com/SiaFoundation/walletd/issues/73
+- 8bdf8ee2: Full unlockConditions are now saved in address metadata.
+- 8bdf8ee2: Seeds are now hashed and cached as mnemonic rather than entropy.
+- 8bdf8ee2: walletd now uses the SDK for wallet and address generation, transaction signing, and all other Sia operations. Closes https://github.com/SiaFoundation/walletd/issues/73
+- 1053c506: Context menus now all use a caret icon.
+
 ## 0.17.0
 
 ### Minor Changes

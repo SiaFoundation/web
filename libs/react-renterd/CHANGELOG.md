@@ -1,5 +1,16 @@
 # @siafoundation/react-renterd
 
+## 4.0.0
+
+### Minor Changes
+
+- 1053c506: Added useAccountResetDrift.
+
+### Patch Changes
+
+- Updated dependencies [e2b8f950]
+  - @siafoundation/types@0.2.0
+
 ## 3.1.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # website
 
+## 0.49.1
+
+### Patch Changes
+
+- fa3f89ed: Fixed an issue where the host map could not refresh its data.
+
 ## 0.49.0
 
 ### Minor Changes

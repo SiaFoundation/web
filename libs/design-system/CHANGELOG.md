@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.0.0
+
+### Minor Changes
+
+- 1f5d3436: Toasts can not be dismissed and now use separate title and body props.
+- 1053c506: Table now has row specific cell class name props that do not apply to the table header.
+
+### Patch Changes
+
+- Updated dependencies [e2b8f950]
+  - @siafoundation/types@0.2.0
+
 ## 3.1.0
 
 ### Minor Changes

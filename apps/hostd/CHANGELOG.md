@@ -1,5 +1,16 @@
 # hostd
 
+## 0.40.0
+
+### Minor Changes
+
+- 1f5d3436: Toast notifications can now be dismissed. Closes https://github.com/SiaFoundation/web/issues/542
+- 1053c506: Context menus now all use a caret icon.
+
+### Patch Changes
+
+- c5e00b05: The configuration panel is now centered on larger screens. Closes https://github.com/SiaFoundation/web/issues/543
+
 ## 0.39.0
 
 ### Minor Changes
