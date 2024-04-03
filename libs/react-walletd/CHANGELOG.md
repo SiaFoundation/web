@@ -1,5 +1,16 @@
 # @siafoundation/react-walletd
 
+## 4.0.0
+
+### Minor Changes
+
+- e2b8f950: The React hooks have been updated for the daemon endpoint changes. Closes https://github.com/SiaFoundation/walletd/issues/73
+
+### Patch Changes
+
+- Updated dependencies [e2b8f950]
+  - @siafoundation/types@0.2.0
+
 ## 3.0.0
 
 ### Patch Changes

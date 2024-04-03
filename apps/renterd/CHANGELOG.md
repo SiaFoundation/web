@@ -1,5 +1,24 @@
 # renterd
 
+## 0.50.0
+
+### Minor Changes
+
+- 1f5d3436: Toast notifications can now be dismissed. Closes https://github.com/SiaFoundation/web/issues/542
+- 1053c506: Account alerts now feature an accounts context menu with the option to reset account drift. Closes https://github.com/SiaFoundation/web/issues/524
+- 1053c506: Context menus now all use a caret icon.
+- 1053c506: The contract set change alert data fields are now displayed as one field that shows additions and removals for each contract in one timeline.
+- afc6f047: The lost sector alert now shows the number of lost sectors. Closes https://github.com/SiaFoundation/renterd/issues/1080
+- 3a1b3d4f: Removed the min max collateral configuration setting. Closes https://github.com/SiaFoundation/renterd/issues/1079
+- 1053c506: Alert table row cell content is now aligned to the top of each row.
+
+### Patch Changes
+
+- 9fdea398: Fixed an issue where the max RPC price configuration would round decimal values to 0. Closes https://github.com/SiaFoundation/renterd/issues/1050
+- 1053c506: Fixed an issue where the alerts list would trigger an excessive number of API calls to fetch contract and host metadata.
+- 58a4d3e8: Fixed a typo in the alerts empty state. Closes https://github.com/SiaFoundation/web/issues/567
+- c5e00b05: The configuration panel is now centered on larger screens. Closes https://github.com/SiaFoundation/web/issues/543
+
 ## 0.49.0
 
 ### Minor Changes
