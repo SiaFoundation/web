@@ -32,6 +32,23 @@ import {
   WalletMetadata,
 } from './siaTypes'
 
+// state
+
+export type StateResponse = {
+  version: string
+  commit: string
+  os: string
+  buildTime: string
+  startTime: string
+}
+
+export function useNodeState(args?: HookArgsSwr<void, StateResponse>) {
+  return useGetSwr({
+    ...args,
+    route: '/state',
+  })
+}
+
 // consensus
 
 export type ConsensusTipResponse = ChainIndex
