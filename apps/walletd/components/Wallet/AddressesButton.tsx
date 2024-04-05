@@ -1,5 +1,5 @@
 import { LinkButton } from '@siafoundation/design-system'
-import { ArrowDownLeft16 } from '@siafoundation/react-icons'
+import { ListNumbered16 } from '@siafoundation/react-icons'
 import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
 
@@ -16,7 +16,7 @@ export function AddressesButton() {
         },
       }}
     >
-      <ArrowDownLeft16 />
+      <ListNumbered16 />
       Addresses
     </LinkButton>
   )
