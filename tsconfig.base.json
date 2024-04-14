@@ -25,19 +25,22 @@
       "@siafoundation/react-icons": ["libs/react-icons/src/index.ts"],
       "@siafoundation/renterd-types": ["libs/renterd-types/src/index.ts"],
       "@siafoundation/renterd-react": ["libs/renterd-react/src/index.ts"],
-      "@siafoundation/sia-central-react": [
-        "libs/sia-central-react/src/index.ts"
-      ],
       "@siafoundation/walletd-types": ["libs/walletd-types/src/index.ts"],
       "@siafoundation/walletd-react": ["libs/walletd-react/src/index.ts"],
       // "buildLibsFromSource": false does not work with the next executor
       // this is a very annoying workaround
       "@siafoundation/sdk": ["dist/libs/sdk/index.esm.js"],
-      "@siafoundation/sia-central": ["libs/sia-central/src/index.ts"],
+      "@siafoundation/sia-central-types": [
+        "libs/sia-central-types/src/index.ts"
+      ],
+      "@siafoundation/sia-central-js": ["libs/sia-central-js/src/index.ts"],
+      "@siafoundation/sia-central-react": [
+        "libs/sia-central-react/src/index.ts"
+      ],
+      "@siafoundation/sia-central-mock": ["libs/sia-central-mock/src/index.ts"],
       "@siafoundation/types": ["libs/types/src/index.ts"],
       "@siafoundation/units": ["libs/units/src/index.ts"],
-      "@siafoundation/walletd-mock": ["libs/walletd-mock/src/index.ts"],
-      "@siafoundation/sia-central-mock": ["libs/sia-central-mock/src/index.ts"]
+      "@siafoundation/walletd-mock": ["libs/walletd-mock/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

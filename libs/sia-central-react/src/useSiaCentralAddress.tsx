@@ -7,7 +7,7 @@ import {
   api,
   SiaCentralAddressParams,
   SiaCentralAddressResponse,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-types'
 
 export function useSiaCentralAddress(
   args?: HookArgsSwr<SiaCentralAddressParams, SiaCentralAddressResponse>

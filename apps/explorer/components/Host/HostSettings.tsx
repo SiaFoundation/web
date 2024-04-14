@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
-import { SiaCentralExchangeRates } from '@siafoundation/sia-central'
+import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 import { DatumProps, ExplorerDatum } from '../ExplorerDatum'
 import { Panel, toFixedOrPrecision } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'

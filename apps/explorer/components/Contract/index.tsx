@@ -6,7 +6,7 @@ import {
   SiaCentralContract,
   SiaCentralExchangeRates,
   SiaCentralPartialSiacoinOutput,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-types'
 import { humanBytes, humanDate, humanSiacoin } from '@siafoundation/units'
 import { EntityList, EntityListItemProps } from '@siafoundation/design-system'
 import { DatumProps, ExplorerDatum } from '../ExplorerDatum'

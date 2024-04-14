@@ -4,10 +4,8 @@ import {
   LinkButton,
 } from '@siafoundation/design-system'
 import { ArrowLeft16, ArrowRight16 } from '@siafoundation/react-icons'
-import {
-  SiaCentralContract,
-  getSiaCentralBlockLatest,
-} from '@siafoundation/sia-central'
+import { SiaCentralContract } from '@siafoundation/sia-central-types'
+import { getSiaCentralBlockLatest } from '@siafoundation/sia-central-js'
 import { lowerCase } from '@technically/lodash'
 import { routes } from '../../config/routes'
 import { EntityHeading } from '../EntityHeading'

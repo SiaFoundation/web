@@ -1,7 +1,7 @@
 import {
   getSiaCentralBlockLatest,
   getSiaCentralHostsNetworkMetrics,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-js'
 import { getOGImage } from '../components/OGImage'
 import { network, siaCentralApi } from '../config'
 import { humanBytes } from '@siafoundation/units'

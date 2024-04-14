@@ -7,7 +7,7 @@ import {
   api,
   SiaCentralSearchParams,
   SiaCentralSearchResponse,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-types'
 
 export function useSiaCentralSearch(
   args?: HookArgsCallback<

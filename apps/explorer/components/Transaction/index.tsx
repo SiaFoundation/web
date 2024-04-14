@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
-import { SiaCentralTransaction } from '@siafoundation/sia-central'
+import { SiaCentralTransaction } from '@siafoundation/sia-central-types'
 import { EntityList, EntityListItemProps } from '@siafoundation/design-system'
 import { routes } from '../../config/routes'
 import { ContentLayout } from '../ContentLayout'

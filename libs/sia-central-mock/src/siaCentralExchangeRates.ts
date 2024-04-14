@@ -1,4 +1,4 @@
-import { SiaCentralExchangeRatesResponse } from '@siafoundation/sia-central'
+import { SiaCentralExchangeRatesResponse } from '@siafoundation/sia-central-types'
 import { Page } from 'playwright'
 
 export function getMockSiaCentralExchangeRatesResponse(): SiaCentralExchangeRatesResponse {

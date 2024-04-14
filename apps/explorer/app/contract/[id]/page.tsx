@@ -1,9 +1,9 @@
+import { SiaCentralContract } from '@siafoundation/sia-central-types'
 import {
-  SiaCentralContract,
   getSiaCentralContract,
   getSiaCentralExchangeRates,
   getSiaCentralTransaction,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-js'
 import { ContractView } from '../../../components/ContractView'
 import { Metadata } from 'next'
 import { routes } from '../../../config/routes'

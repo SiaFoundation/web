@@ -17,7 +17,7 @@ import { routes } from '../../config/routes'
 import { EntityHeading } from '../EntityHeading'
 import BigNumber from 'bignumber.js'
 import { ContentLayout } from '../ContentLayout'
-import { SiaCentralAddressResponse } from '@siafoundation/sia-central'
+import { SiaCentralAddressResponse } from '@siafoundation/sia-central-types'
 
 type Tab = 'transactions' | 'evolution' | 'utxos'
 

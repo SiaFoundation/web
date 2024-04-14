@@ -3,7 +3,7 @@
 import {
   SiaCentralHost,
   SiaCentralHostSettings,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-types'
 
 export type SiaCentralHostScanned = SiaCentralHost & {
   settings: SiaCentralHostSettings

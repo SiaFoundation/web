@@ -2,7 +2,7 @@ import { Avatar } from '@siafoundation/design-system'
 import {
   SiaCentralExchangeRates,
   SiaCentralHost,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-types'
 import { hashToAvatar } from '../../lib/avatar'
 import { HostPricing } from './HostPricing'
 import { HostInfo } from './HostInfo'

@@ -6,7 +6,7 @@ import {
   getSiaCentralExchangeRates,
   getSiaCentralHosts,
   getSiaCentralHostsNetworkMetrics,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-js'
 import { buildMetadata } from '../lib/utils'
 import { humanBytes } from '@siafoundation/units'
 import { getLastFewBlocks } from '../lib/blocks'

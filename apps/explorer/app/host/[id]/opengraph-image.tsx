@@ -1,7 +1,7 @@
 import {
   getSiaCentralExchangeRates,
   getSiaCentralHost,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-js'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { siaCentralApi } from '../../../config'
 import {

@@ -13,7 +13,7 @@ import {
   CloudUpload16,
   VmdkDisk16,
 } from '@siafoundation/react-icons'
-import { SiaCentralExchangeRates } from '@siafoundation/sia-central'
+import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 import {
   getDownloadCost,
   getDownloadSpeed,

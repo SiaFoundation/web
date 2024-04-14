@@ -2,7 +2,7 @@ import { blocksToMonths } from '@siafoundation/units'
 import { ConfigFields } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { dnsProviderOptions, initialValues, scDecimalPlaces } from './types'
-import { SiaCentralExchangeRates } from '@siafoundation/sia-central'
+import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 import { calculateMaxCollateral } from './transform'
 
 type Categories = 'host' | 'pricing' | 'DNS' | 'bandwidth' | 'RHP3'

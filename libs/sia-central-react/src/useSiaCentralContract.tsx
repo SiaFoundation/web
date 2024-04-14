@@ -7,7 +7,7 @@ import {
   api,
   SiaCentralContractParams,
   SiaCentralContractResponse,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-types'
 
 export function useSiaCentralContract(
   args?: HookArgsSwr<SiaCentralContractParams, SiaCentralContractResponse>

@@ -1,4 +1,5 @@
-import { SiaCentralHost, getSiaCentralHosts } from '@siafoundation/sia-central'
+import { SiaCentralHost } from '@siafoundation/sia-central-types'
+import { getSiaCentralHosts } from '@siafoundation/sia-central-js'
 import { getCacheValue } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
 

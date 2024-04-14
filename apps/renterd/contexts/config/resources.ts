@@ -7,7 +7,7 @@ import {
   RedundancySettings,
   UploadPackingSettings,
 } from '@siafoundation/renterd-types'
-import { SiaCentralHostsNetworkAveragesResponse } from '@siafoundation/sia-central'
+import { SiaCentralHostsNetworkAveragesResponse } from '@siafoundation/sia-central-types'
 import BigNumber from 'bignumber.js'
 import { TBToBytes } from '@siafoundation/units'
 

@@ -15,7 +15,7 @@ import {
   SiaCentralExchangeRates,
   SiaCentralHost,
   SiaCentralHostsNetworkMetricsResponse,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-types'
 import { hashToAvatar } from '../../lib/avatar'
 import {
   humanBytes,

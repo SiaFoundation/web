@@ -3,7 +3,7 @@ import {
   HookArgsSwr,
   useGetSwr,
 } from '@siafoundation/react-core'
-import { api, SiaCentralBlock } from '@siafoundation/sia-central'
+import { api, SiaCentralBlock } from '@siafoundation/sia-central-types'
 
 type SiaCentralBlockLatestResponse = {
   message: string

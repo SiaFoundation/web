@@ -7,7 +7,7 @@ import {
   api,
   SiaCentralBlock,
   SiaCentralBlocksPayload,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-types'
 
 type SiaCentralBlocksResposne = {
   message: string

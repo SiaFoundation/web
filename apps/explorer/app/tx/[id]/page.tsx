@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { routes } from '../../../config/routes'
 import { Transaction } from '../../../components/Transaction'
-import { getSiaCentralTransaction } from '@siafoundation/sia-central'
+import { getSiaCentralTransaction } from '@siafoundation/sia-central-js'
 import { buildMetadata } from '../../../lib/utils'
 import { siaCentralApi } from '../../../config'
 import { notFound } from 'next/navigation'

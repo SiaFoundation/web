@@ -1,7 +1,7 @@
 import {
   getSiaCentralExchangeRates,
   getSiaCentralHost,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-js'
 import { Metadata } from 'next'
 import { routes } from '../../../config/routes'
 import { buildMetadata } from '../../../lib/utils'

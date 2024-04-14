@@ -1,0 +1,42 @@
+{
+  "name": "sia-central-types",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/sia-central-types/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/sia-central-types",
+        "tsConfig": "libs/sia-central-types/tsconfig.lib.json",
+        "project": "libs/sia-central-types/package.json",
+        "entryFile": "libs/sia-central-types/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "compiler": "tsc",
+        "outputFileName": "index.js",
+        "rollupConfig": "libs/sia-central-types/rollup.config.js",
+        "assets": [
+          {
+            "glob": "libs/sia-central-types/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      },
+      "configurations": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/sia-central-types"],
+      "options": {
+        "jestConfig": "libs/sia-central-types/jest.config.ts"
+      }
+    }
+  }
+}

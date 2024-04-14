@@ -7,7 +7,7 @@ import {
 } from '@siafoundation/design-system'
 import { cx } from 'class-variance-authority'
 import BigNumber from 'bignumber.js'
-import { SiaCentralHost } from '@siafoundation/sia-central'
+import { SiaCentralHost } from '@siafoundation/sia-central-types'
 import {
   monthsToBlocks,
   TBToBytes,

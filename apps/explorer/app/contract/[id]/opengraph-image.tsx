@@ -1,7 +1,7 @@
 import {
   getSiaCentralContract,
   getSiaCentralExchangeRates,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-js'
 import { humanBytes, humanDate } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { siaCentralApi } from '../../../config'

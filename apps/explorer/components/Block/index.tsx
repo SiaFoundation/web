@@ -5,7 +5,7 @@ import { useMemo } from 'react'
 import { routes } from '../../config/routes'
 import { EntityHeading } from '../EntityHeading'
 import { ContentLayout } from '../ContentLayout'
-import { SiaCentralBlock } from '@siafoundation/sia-central'
+import { SiaCentralBlock } from '@siafoundation/sia-central-types'
 
 type Props = {
   block: SiaCentralBlock
