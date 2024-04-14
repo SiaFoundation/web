@@ -1,4 +1,4 @@
-import { Obj, SlabSlice } from '@siafoundation/renterd-react'
+import { Obj, SlabSlice } from '@siafoundation/renterd-types'
 import { min } from '@technically/lodash'
 import { ContractData } from '../contexts/contracts/types'
 

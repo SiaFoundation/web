@@ -1,6 +1,6 @@
 import { SetupServer } from 'msw/node'
 import { HttpResponse, http } from 'msw'
-import { Bucket, RedundancySettings } from '@siafoundation/renterd-react'
+import { Bucket, RedundancySettings } from '@siafoundation/renterd-types'
 
 export function mockApiBusBuckets(server: SetupServer) {
   server.use(

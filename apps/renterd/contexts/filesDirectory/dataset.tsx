@@ -1,7 +1,5 @@
-import {
-  ObjectDirectoryParams,
-  useObjectDirectory,
-} from '@siafoundation/renterd-react'
+import { ObjectDirectoryParams } from '@siafoundation/renterd-types'
+import { useObjectDirectory } from '@siafoundation/renterd-react'
 import { useDataset as useDatasetGeneric } from '../filesManager/dataset'
 import { bucketAndKeyParamsFromPath } from '../../lib/paths'
 import { useRouter } from 'next/router'

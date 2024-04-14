@@ -1,6 +1,4 @@
 import { debounce } from '@technically/lodash'
-import { AutopilotHost } from './autopilot'
-import { Host, HostSettings } from './siaTypes'
 import {
   useGetDownloadFunc,
   usePutFunc,
@@ -9,17 +7,32 @@ import {
   HookArgsSwr,
   useGetSwr,
 } from '@siafoundation/react-core'
-import { StateResponse } from './bus'
+import {
+  AutopilotHost,
+  Host,
+  MultipartUploadPartParams,
+  MultipartUploadPartPayload,
+  MultipartUploadPartResponse,
+  ObjectDownloadParams,
+  ObjectDownloadPayload,
+  ObjectDownloadResponse,
+  ObjectUploadParams,
+  ObjectUploadPayload,
+  ObjectUploadResponse,
+  RhpScanParams,
+  RhpScanPayload,
+  RhpScanResponse,
+  WorkerStateParams,
+  WorkerStateResponse,
+} from '@siafoundation/renterd-types'
 
 // state
 
-type WorkerState = StateResponse & {
-  id: string
-}
-
 const workerStateKey = '/worker/state'
 
-export function useWorkerState(args?: HookArgsSwr<void, WorkerState>) {
+export function useWorkerState(
+  args?: HookArgsSwr<WorkerStateParams, WorkerStateResponse>
+) {
   return useGetSwr({
     ...args,
     route: workerStateKey,
@@ -27,13 +40,21 @@ export function useWorkerState(args?: HookArgsSwr<void, WorkerState>) {
 }
 
 export function useObjectDownloadFunc(
-  args?: HookArgsCallback<{ key: string; bucket: string }, void, Blob>
+  args?: HookArgsCallback<
+    ObjectDownloadParams,
+    ObjectDownloadPayload,
+    ObjectDownloadResponse
+  >
 ) {
   return useGetDownloadFunc({ ...args, route: '/worker/objects/:key' })
 }
 
 export function useObjectUpload(
-  args?: HookArgsCallback<{ key: string; bucket: string }, File, void>
+  args?: HookArgsCallback<
+    ObjectUploadParams,
+    ObjectUploadPayload,
+    ObjectUploadResponse
+  >
 ) {
   return usePutFunc(
     {
@@ -55,19 +76,12 @@ export function useObjectUpload(
   )
 }
 
-export type MultipartUploadPartParams = {
-  key: string
-  uploadid: string
-  partnumber: number
-  offset: number
-  bucket?: string
-  contractset?: string
-  minshards?: number
-  totalshards?: number
-}
-
 export function useMultipartUploadPart(
-  args?: HookArgsCallback<MultipartUploadPartParams, Blob, void>
+  args?: HookArgsCallback<
+    MultipartUploadPartParams,
+    MultipartUploadPartPayload,
+    MultipartUploadPartResponse
+  >
 ) {
   return usePutFunc({
     ...args,
@@ -84,23 +98,11 @@ export function useMultipartUploadPart(
   })
 }
 
-export type RhpScanRequest = {
-  hostKey: string
-  hostIP: string
-  timeout: number
-}
-
-type RhpScanResponse = {
-  ping: string
-  scanError?: string
-  settings?: HostSettings
-}
-
 const debouncedListRevalidate = debounce((func: () => void) => func(), 5_000)
 
 export const workerRhpScanRoute = '/worker/rhp/scan'
 export function useRhpScan(
-  args?: HookArgsCallback<void, RhpScanRequest, RhpScanResponse>
+  args?: HookArgsCallback<RhpScanParams, RhpScanPayload, RhpScanResponse>
 ) {
   return usePostFunc(
     { ...args, route: workerRhpScanRoute },

@@ -7,10 +7,8 @@ import {
   colors,
   getDataIntervalLabelFormatter,
 } from '@siafoundation/design-system'
-import {
-  ContractMetricsParams,
-  useMetricsContract,
-} from '@siafoundation/renterd-react'
+import { ContractMetricsParams } from '@siafoundation/renterd-types'
+import { useMetricsContract } from '@siafoundation/renterd-react'
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import { ChartContractCategory, ChartContractKey } from './types'

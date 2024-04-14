@@ -15,7 +15,7 @@ import { ArrowUpLeft16, CheckmarkFilled16 } from '@siafoundation/react-icons'
 import { humanBytes, humanDate } from '@siafoundation/units'
 import { ContractData, TableColumnId } from './types'
 import { ContractContextMenu } from '../../components/Contracts/ContractContextMenu'
-import { ContractState } from '@siafoundation/renterd-react'
+import { ContractState } from '@siafoundation/renterd-types'
 import { cx } from 'class-variance-authority'
 
 type Context = {

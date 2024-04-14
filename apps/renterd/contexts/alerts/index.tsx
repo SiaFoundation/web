@@ -17,9 +17,8 @@ import {
   triggerErrorToast,
   triggerSuccessToast,
 } from '@siafoundation/design-system'
+import { AlertSeverity, AlertsParams } from '@siafoundation/renterd-types'
 import {
-  AlertSeverity,
-  AlertsParams,
   useAlerts as useAlertsData,
   useAlertsDismiss,
 } from '@siafoundation/renterd-react'

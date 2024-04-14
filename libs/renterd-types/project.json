@@ -1,0 +1,42 @@
+{
+  "name": "renterd-types",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/renterd-types/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/renterd-types",
+        "tsConfig": "libs/renterd-types/tsconfig.lib.json",
+        "project": "libs/renterd-types/package.json",
+        "entryFile": "libs/renterd-types/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "compiler": "tsc",
+        "outputFileName": "index.js",
+        "rollupConfig": "libs/renterd-types/rollup.config.js",
+        "assets": [
+          {
+            "glob": "libs/renterd-types/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      },
+      "configurations": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/renterd-types"],
+      "options": {
+        "jestConfig": "libs/renterd-types/jest.config.ts"
+      }
+    }
+  }
+}

@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import { HostData } from './types'
+import { Host } from '@siafoundation/renterd-types'
 import {
-  Host,
   useAutopilotHostsSearch,
   useHostsAllowlist,
   useHostsBlocklist,
