@@ -17,8 +17,8 @@ import {
   Edit16,
   Close16,
 } from '@siafoundation/react-icons'
+import { VolumeStatus } from '@siafoundation/hostd-types'
 import {
-  VolumeStatus,
   useVolume,
   useVolumeCancel,
   useVolumeUpdate,

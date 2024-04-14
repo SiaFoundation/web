@@ -5,11 +5,8 @@ import {
   triggerSuccessToast,
   ValueCopyable,
 } from '@siafoundation/design-system'
-import {
-  AlertSeverity,
-  useAlerts,
-  useAlertsDismiss,
-} from '@siafoundation/hostd-react'
+import { AlertSeverity } from '@siafoundation/hostd-types'
+import { useAlerts, useAlertsDismiss } from '@siafoundation/hostd-react'
 import { humanTime } from '@siafoundation/units'
 import { useCallback } from 'react'
 import { defaultDatasetRefreshInterval } from '../config/swr'

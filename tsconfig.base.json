@@ -20,10 +20,11 @@
       "@siafoundation/fonts": ["libs/fonts/src/index.ts"],
       "@siafoundation/next": ["libs/next/src/index.ts"],
       "@siafoundation/react-core": ["libs/react-core/src/index.ts"],
+      "@siafoundation/hostd-types": ["libs/hostd-types/src/index.ts"],
       "@siafoundation/hostd-react": ["libs/hostd-react/src/index.ts"],
       "@siafoundation/react-icons": ["libs/react-icons/src/index.ts"],
-      "@siafoundation/renterd-react": ["libs/renterd-react/src/index.ts"],
       "@siafoundation/renterd-types": ["libs/renterd-types/src/index.ts"],
+      "@siafoundation/renterd-react": ["libs/renterd-react/src/index.ts"],
       "@siafoundation/sia-central-react": [
         "libs/sia-central-react/src/index.ts"
       ],

@@ -4,7 +4,7 @@ import {
   DNSDuckDNSOptions,
   DNSNoIPOptions,
   HostSettings,
-} from '@siafoundation/hostd-react'
+} from '@siafoundation/hostd-types'
 import {
   bytesToMB,
   MBToBytes,

@@ -1,6 +1,6 @@
 import { Panel, ScrollArea } from '@siafoundation/design-system'
 import { SWRError } from '@siafoundation/react-core'
-import { SystemDirResponse } from '@siafoundation/hostd-react'
+import { SystemDirectoryResponse } from '@siafoundation/hostd-types'
 import { Command } from 'cmdk'
 import { SWRResponse } from 'swr'
 import {
@@ -10,7 +10,7 @@ import {
 
 type Props = {
   path: string
-  dir: SWRResponse<SystemDirResponse, SWRError>
+  dir: SWRResponse<SystemDirectoryResponse, SWRError>
   onChange: (path: string) => void
 }
 
