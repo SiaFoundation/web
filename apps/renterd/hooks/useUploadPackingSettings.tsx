@@ -1,5 +1,6 @@
 import { HookArgsSwr } from '@siafoundation/react-core'
-import { UploadPackingSettings, useSetting } from '@siafoundation/renterd-react'
+import { UploadPackingSettings } from '@siafoundation/renterd-types'
+import { useSetting } from '@siafoundation/renterd-react'
 
 export function useUploadPackingSettings(
   args?: HookArgsSwr<void, UploadPackingSettings>

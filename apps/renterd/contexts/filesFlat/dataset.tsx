@@ -1,4 +1,5 @@
-import { ObjectListParams, useObjectList } from '@siafoundation/renterd-react'
+import { ObjectListPayload } from '@siafoundation/renterd-types'
+import { useObjectList } from '@siafoundation/renterd-react'
 import { SortField } from '../filesManager/types'
 import { useDataset as useDatasetGeneric } from '../filesManager/dataset'
 import { useRouter } from 'next/router'
@@ -20,7 +21,7 @@ export function useDataset({ sortDirection, sortField }: Props) {
   const marker = router.query.marker as string
 
   const params = useMemo(() => {
-    const p: ObjectListParams = {
+    const p: ObjectListPayload = {
       bucket: activeBucketName,
       sortBy: sortField,
       sortDir: sortDirection,

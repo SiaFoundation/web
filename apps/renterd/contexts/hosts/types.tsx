@@ -1,4 +1,4 @@
-import { AutopilotHost } from '@siafoundation/renterd-react'
+import { AutopilotHost } from '@siafoundation/renterd-types'
 import BigNumber from 'bignumber.js'
 import { ContractData } from '../contracts/types'
 

@@ -8,6 +8,8 @@ import {
 import {
   HostsSearchFilterMode,
   HostsUsabilityMode,
+} from '@siafoundation/renterd-types'
+import {
   useAutopilotHostsSearch,
   useHostsAllowlist,
   useHostsBlocklist,

@@ -13,45 +13,187 @@ import {
   delay,
 } from '@siafoundation/react-core'
 import {
-  Currency,
-  PublicKey,
-  Transaction,
-  FileContractRevision,
-  OutputID,
-  CoveredFields,
-  FileContractID,
-  Block,
-} from '@siafoundation/types'
-import {
-  ConsensusState,
-  Contract,
-  ContractRevision,
-  Host,
-  HostSettings,
-  Obj,
-  PartialSlab,
-  SiacoinElement,
-  SlabSlice,
-  WalletTransaction,
-} from './siaTypes'
+  AccountResetDriftParams,
+  AccountResetDriftPayload,
+  AccountResetDriftResponse,
+  AlertsDismissParams,
+  AlertsDismissPayload,
+  AlertsDismissResponse,
+  AlertsParams,
+  AlertsResponse,
+  BucketCreateParams,
+  BucketCreatePayload,
+  BucketCreateResponse,
+  BucketDeleteParams,
+  BucketDeletePayload,
+  BucketDeleteResponse,
+  BucketParams,
+  BucketPolicyUpdateParams,
+  BucketPolicyUpdatePayload,
+  BucketPolicyUpdateResponse,
+  BucketResponse,
+  BucketsParams,
+  BucketsResponse,
+  BusStateParams,
+  BusStateResponse,
+  ConsensusAcceptBlockParams,
+  ConsensusAcceptBlockPayload,
+  ConsensusAcceptBlockResponse,
+  ConsensusStateParams,
+  ConsensusStateResponse,
+  ContractAcquireParams,
+  ContractAcquirePayload,
+  ContractAcquireResponse,
+  ContractDeleteParams,
+  ContractDeletePayload,
+  ContractDeleteResponse,
+  ContractMetricsParams,
+  ContractMetricsResponse,
+  ContractParams,
+  ContractRenewedParams,
+  ContractRenewedPayload,
+  ContractRenewedResponse,
+  ContractResponse,
+  ContractSetChurnMetricsParams,
+  ContractSetChurnMetricsResponse,
+  ContractSetMetricsParams,
+  ContractSetMetricsResponse,
+  ContractSetUpdateParams,
+  ContractSetUpdatePayload,
+  ContractSetUpdateResponse,
+  ContractSetsParams,
+  ContractSetsResponse,
+  ContractsAddParams,
+  ContractsAddPayload,
+  ContractsAddResponse,
+  ContractsParams,
+  ContractsReleaseParams,
+  ContractsReleasePayload,
+  ContractsReleaseResponse,
+  ContractsResponse,
+  HostInteractionParams,
+  HostInteractionPayload,
+  HostInteractionResponse,
+  HostParams,
+  HostResetLostSectorCountParams,
+  HostResetLostSectorCountPayload,
+  HostResetLostSectorCountResponse,
+  HostResponse,
+  HostsAllowlistParams,
+  HostsAllowlistResponse,
+  HostsAllowlistUpdateParams,
+  HostsAllowlistUpdatePayload,
+  HostsAllowlistUpdateResponse,
+  HostsBlocklistParams,
+  HostsBlocklistResponse,
+  HostsBlocklistUpdateParams,
+  HostsBlocklistUpdatePayload,
+  HostsBlocklistUpdateResponse,
+  HostsParams,
+  HostsResponse,
+  HostsSearchParams,
+  HostsSearchPayload,
+  HostsSearchResponse,
+  MultipartUploadAbortParams,
+  MultipartUploadAbortPayload,
+  MultipartUploadAbortResponse,
+  MultipartUploadAddPartParams,
+  MultipartUploadAddPartPayload,
+  MultipartUploadAddPartResponse,
+  MultipartUploadCompleteParams,
+  MultipartUploadCompletePayload,
+  MultipartUploadCompleteResponse,
+  MultipartUploadCreateParams,
+  MultipartUploadCreatePayload,
+  MultipartUploadCreateResponse,
+  MultipartUploadListPartsParams,
+  MultipartUploadListPartsPayload,
+  MultipartUploadListPartsResponse,
+  MultipartUploadListUploadsParams,
+  MultipartUploadListUploadsPayload,
+  MultipartUploadListUploadsResponse,
+  ObjectAddParams,
+  ObjectAddPayload,
+  ObjectAddResponse,
+  ObjectDeleteParams,
+  ObjectDeletePayload,
+  ObjectDeleteResponse,
+  ObjectDirectoryParams,
+  ObjectDirectoryResponse,
+  ObjectListParams,
+  ObjectListPayload,
+  ObjectListResponse,
+  ObjectParams,
+  ObjectRenameParams,
+  ObjectRenamePayload,
+  ObjectRenameResponse,
+  ObjectResponse,
+  ObjectSearchParams,
+  ObjectSearchResponse,
+  ObjectsStatsParams,
+  ObjectsStatsResponse,
+  SettingParams,
+  SettingResponse,
+  SettingUpdateParams,
+  SettingUpdatePayload,
+  SettingUpdateResponse,
+  SettingsParams,
+  SettingsResponse,
+  SlabObjectsParams,
+  SlabObjectsResponse,
+  SyncerAddressParams,
+  SyncerAddressResponse,
+  SyncerConnectParams,
+  SyncerConnectPayload,
+  SyncerConnectResponse,
+  SyncerPeersParams,
+  SyncerPeersResponse,
+  TxPoolBroadcastParams,
+  TxPoolBroadcastPayload,
+  TxPoolBroadcastResponse,
+  TxPoolFeeParams,
+  TxPoolFeeResponse,
+  TxPoolTransactionsParams,
+  TxPoolTransactionsResponse,
+  WalletAddressesParams,
+  WalletAddressesResponse,
+  WalletDiscardParams,
+  WalletDiscardPayload,
+  WalletDiscardResponse,
+  WalletFundParams,
+  WalletFundPayload,
+  WalletFundResponse,
+  WalletMetricsParams,
+  WalletMetricsResponse,
+  WalletParams,
+  WalletPendingParams,
+  WalletPendingResponse,
+  WalletPrepareFormParams,
+  WalletPrepareFormPayload,
+  WalletPrepareFormResponse,
+  WalletPrepareRenewParams,
+  WalletPrepareRenewPayload,
+  WalletPrepareRenewResponse,
+  WalletRedistributeParams,
+  WalletRedistributePayload,
+  WalletRedistributeResponse,
+  WalletResponse,
+  WalletSignParams,
+  WalletSignPayload,
+  WalletSignResponse,
+  WalletTransactionsParams,
+  WalletTransactionsResponse,
+  WalletUtxoParams,
+  WalletUtxoResponse,
+} from '@siafoundation/renterd-types'
 
 // state
 
-type BuildState = {
-  network: 'Mainnet' | 'Zen Testnet'
-  version: string
-  commit: string
-  OS: string
-  buildTime: number
-}
-
-export type StateResponse = BuildState & {
-  startTime: number
-}
-
 export const busStateKey = '/bus/state'
 
-export function useBusState(args?: HookArgsSwr<void, StateResponse>) {
+export function useBusState(
+  args?: HookArgsSwr<BusStateParams, BusStateResponse>
+) {
   return useGetSwr({
     ...args,
     route: busStateKey,
@@ -60,7 +202,9 @@ export function useBusState(args?: HookArgsSwr<void, StateResponse>) {
 
 // consensus
 
-export function useConsensusState(args?: HookArgsSwr<void, ConsensusState>) {
+export function useConsensusState(
+  args?: HookArgsSwr<ConsensusStateParams, ConsensusStateResponse>
+) {
   return useGetSwr({
     ...args,
     route: '/bus/consensus/state',
@@ -92,7 +236,11 @@ export function useEstimatedNetworkBlockHeight(): number {
 }
 
 export function useConsensusAcceptBlock(
-  args?: HookArgsCallback<void, Block, void>
+  args?: HookArgsCallback<
+    ConsensusAcceptBlockParams,
+    ConsensusAcceptBlockPayload,
+    ConsensusAcceptBlockResponse
+  >
 ) {
   return usePostFunc({ ...args, route: '/bus/consensus/acceptblock' })
 }
@@ -101,14 +249,22 @@ export function useConsensusAcceptBlock(
 
 const syncerPeers = '/bus/syncer/peers'
 
-export function useSyncerPeers(args?: HookArgsSwr<void, string[]>) {
+export function useSyncerPeers(
+  args?: HookArgsSwr<SyncerPeersParams, SyncerPeersResponse>
+) {
   return useGetSwr({
     ...args,
     route: syncerPeers,
   })
 }
 
-export function useSyncerConnect(args?: HookArgsCallback<void, string, never>) {
+export function useSyncerConnect(
+  args?: HookArgsCallback<
+    SyncerConnectParams,
+    SyncerConnectPayload,
+    SyncerConnectResponse
+  >
+) {
   return usePostFunc(
     {
       ...args,
@@ -120,23 +276,33 @@ export function useSyncerConnect(args?: HookArgsCallback<void, string, never>) {
   )
 }
 
-export function useSyncerAddress(args?: HookArgsSwr<void, string>) {
+export function useSyncerAddress(
+  args?: HookArgsSwr<SyncerAddressParams, SyncerAddressResponse>
+) {
   return useGetSwr({ ...args, route: '/bus/syncer/addr' })
 }
 
 // txpool
 
-export function useTxPoolFee(args?: HookArgsSwr<void, Currency>) {
+export function useTxPoolFee(
+  args?: HookArgsSwr<TxPoolFeeParams, TxPoolFeeResponse>
+) {
   return useGetSwr({ ...args, route: '/bus/txpool/fee' })
 }
 
 const txPoolTransactionsRoute = '/bus/txpool/transactions'
-export function useTxPoolTransactions(args?: HookArgsSwr<void, Transaction[]>) {
+export function useTxPoolTransactions(
+  args?: HookArgsSwr<TxPoolTransactionsParams, TxPoolTransactionsResponse>
+) {
   return useGetSwr({ ...args, route: txPoolTransactionsRoute })
 }
 
 export function useTxPoolBroadcast(
-  args?: HookArgsCallback<void, Transaction[], unknown>
+  args?: HookArgsCallback<
+    TxPoolBroadcastParams,
+    TxPoolBroadcastPayload,
+    TxPoolBroadcastResponse
+  >
 ) {
   return usePostFunc(
     {
@@ -157,29 +323,18 @@ export function useTxPoolBroadcast(
 
 // wallet
 
-type WalletResponse = {
-  scanHeight: number
-  address: string
-  confirmed: string
-  unconfirmed: string
-  spendable: string
-}
-
-export function useWallet(args?: HookArgsSwr<void, WalletResponse>) {
+export function useWallet(args?: HookArgsSwr<WalletParams, WalletResponse>) {
   return useGetSwr({ ...args, route: '/bus/wallet' })
 }
 
-export function useWalletAddresses(args?: HookArgsSwr<void, string[]>) {
+export function useWalletAddresses(
+  args?: HookArgsSwr<WalletAddressesParams, WalletAddressesResponse>
+) {
   return useGetSwr({ ...args, route: '/bus/wallet/addresses' })
 }
 
-type WalletTransactionsParams = {
-  offset?: number
-  limit?: number
-}
-
 export function useWalletTransactions(
-  args: HookArgsSwr<WalletTransactionsParams, WalletTransaction[]>
+  args: HookArgsSwr<WalletTransactionsParams, WalletTransactionsResponse>
 ) {
   return useGetSwr({
     ...args,
@@ -187,91 +342,66 @@ export function useWalletTransactions(
   })
 }
 
-export function useWalletUtxos(args?: HookArgsSwr<void, SiacoinElement[]>) {
+export function useWalletUtxos(
+  args?: HookArgsSwr<WalletUtxoParams, WalletUtxoResponse>
+) {
   return useGetSwr({ ...args, route: '/bus/wallet/outputs' })
 }
 
-export type WalletFundRequest = {
-  transaction: Transaction
-  amount: Currency
-}
-
-export type WalletFundResponse = {
-  transaction: Transaction
-  toSign?: OutputID[]
-  dependsOn?: Transaction[]
-}
-
 export function useWalletFund(
-  args?: HookArgsCallback<void, WalletFundRequest, WalletFundResponse>
+  args?: HookArgsCallback<
+    WalletFundParams,
+    WalletFundPayload,
+    WalletFundResponse
+  >
 ) {
   return usePostFunc({ ...args, route: '/bus/wallet/fund' })
 }
 
-export type WalletSignRequest = {
-  transaction: Transaction
-  toSign?: OutputID[]
-  coveredFields: CoveredFields
-}
-
 export function useWalletSign(
-  args?: HookArgsCallback<void, WalletSignRequest, Transaction>
+  args?: HookArgsCallback<
+    WalletSignParams,
+    WalletSignPayload,
+    WalletSignResponse
+  >
 ) {
   return usePostFunc({ ...args, route: '/bus/wallet/sign' })
 }
 
-export type WalletRedistributeRequest = {
-  amount: Currency
-  outputs: number
-}
-
 export function useWalletRedistribute(
-  args?: HookArgsCallback<void, WalletRedistributeRequest, Transaction>
+  args?: HookArgsCallback<
+    WalletRedistributeParams,
+    WalletRedistributePayload,
+    WalletRedistributeResponse
+  >
 ) {
   return usePostFunc({ ...args, route: '/bus/wallet/redistribute' })
 }
 
 export function useWalletDiscard(
-  args?: HookArgsCallback<void, Transaction, never>
+  args?: HookArgsCallback<
+    WalletDiscardParams,
+    WalletDiscardPayload,
+    WalletDiscardResponse
+  >
 ) {
   return usePostFunc({ ...args, route: '/bus/wallet/discard' })
 }
 
-export type WalletPrepareFormRequest = {
-  renterKey?: string
-  hostKey: string
-  renterFunds: Currency
-  renterAddress: string
-  hostCollateral: Currency
-  endHeight: number
-  hostSettings: HostSettings
-}
-
 export function useWalletPrepareForm(
-  args?: HookArgsCallback<void, WalletPrepareFormRequest, Transaction[]>
+  args?: HookArgsCallback<
+    WalletPrepareFormParams,
+    WalletPrepareFormPayload,
+    WalletPrepareFormResponse
+  >
 ) {
   return usePostFunc({ ...args, route: '/bus/wallet/prepare/form' })
 }
 
-export type WalletPrepareRenewRequest = {
-  contract: FileContractRevision
-  renterKey?: string
-  hostKey: string
-  renterFunds: Currency
-  renterAddress: string
-  endHeight: number
-  hostSettings: HostSettings
-}
-
-export type WalletPrepareRenewResponse = {
-  transactionSet?: Transaction[]
-  finalPayment: Currency
-}
-
 export function useWalletPrepareRenew(
   args?: HookArgsCallback<
-    void,
-    WalletPrepareRenewRequest,
+    WalletPrepareRenewParams,
+    WalletPrepareRenewPayload,
     WalletPrepareRenewResponse
   >
 ) {
@@ -279,50 +409,26 @@ export function useWalletPrepareRenew(
 }
 
 const walletPendingRoute = '/bus/wallet/pending'
-export function useWalletPending(args?: HookArgsSwr<void, Transaction[]>) {
+export function useWalletPending(
+  args?: HookArgsSwr<WalletPendingParams, WalletPendingResponse>
+) {
   return useGetSwr({ ...args, route: walletPendingRoute })
 }
 
-// hosts
-
-type HostsParams = {
-  offset?: number
-  limit?: number
-}
-
-// TODO: ideally the API includes the following parameters
-// export type HostSortBy = 'firstSeen' | 'lastSeen' | 'score'
-// export type HostSortDir = 'asc' | 'desc'
-// export type ListMetaResponse = {
-//   total: number
-//   totalFiltered: number
-// }
-// export type HostsResponse = {
-//   hosts: Host[]
-//   meta: ListMetaResponse
-// }
-
-export function useHosts(args: HookArgsSwr<HostsParams, Host[]>) {
+export function useHosts(args: HookArgsSwr<HostsParams, HostsResponse>) {
   return useGetSwr({
     ...args,
     route: '/bus/hosts',
   })
 }
 
-export type HostsSearchFilterMode = 'all' | 'allowed' | 'blocked'
-export type HostsUsabilityMode = 'all' | 'usable' | 'unusable'
-export type HostsSearchPayload = {
-  filterMode: HostsSearchFilterMode
-  usabilityMode?: HostsUsabilityMode
-  addressContains?: string
-  keyIn?: string[]
-  offset?: number
-  limit?: number
-}
-
 const hostsSearchRoute = '/bus/search/hosts'
 export function useHostsSearch(
-  args: HookArgsWithPayloadSwr<void, HostsSearchPayload, Host[]>
+  args: HookArgsWithPayloadSwr<
+    HostsSearchParams,
+    HostsSearchPayload,
+    HostsSearchResponse
+  >
 ) {
   return usePostSwr({
     ...args,
@@ -330,18 +436,16 @@ export function useHostsSearch(
   })
 }
 
-export function useHost(args: HookArgsSwr<{ hostKey: string }, Host>) {
+export function useHost(args: HookArgsSwr<HostParams, HostResponse>) {
   return useGetSwr({ ...args, route: '/bus/host/:hostKey' })
 }
 
-export type HostInteractionPayload = {
-  timestamp: string
-  type: string
-  result?: string
-}
-
-export function useHostsPubkeyInteractionAdd(
-  args: HookArgsCallback<{ hostKey: string }, HostInteractionPayload, never>
+export function useHostsInteractionAdd(
+  args: HookArgsCallback<
+    HostInteractionParams,
+    HostInteractionPayload,
+    HostInteractionResponse
+  >
 ) {
   return usePostFunc({
     ...args,
@@ -349,23 +453,24 @@ export function useHostsPubkeyInteractionAdd(
   })
 }
 const hostsBlocklistRoute = '/bus/hosts/blocklist'
-export function useHostsBlocklist(args?: HookArgsSwr<void, string[]>) {
+export function useHostsBlocklist(
+  args?: HookArgsSwr<HostsBlocklistParams, HostsBlocklistResponse>
+) {
   return useGetSwr({ ...args, route: hostsBlocklistRoute })
 }
 
 const hostsAllowlistRoute = '/bus/hosts/allowlist'
-export function useHostsAllowlist(args?: HookArgsSwr<void, PublicKey[]>) {
+export function useHostsAllowlist(
+  args?: HookArgsSwr<HostsAllowlistParams, HostsAllowlistResponse>
+) {
   return useGetSwr({ ...args, route: hostsAllowlistRoute })
 }
 
 export function useHostsAllowlistUpdate(
   args?: HookArgsCallback<
-    void,
-    {
-      add: string[]
-      remove: string[]
-    },
-    void
+    HostsAllowlistUpdateParams,
+    HostsAllowlistUpdatePayload,
+    HostsAllowlistUpdateResponse
   >
 ) {
   return usePutFunc(
@@ -385,12 +490,9 @@ export function useHostsAllowlistUpdate(
 
 export function useHostsBlocklistUpdate(
   args?: HookArgsCallback<
-    void,
-    {
-      add: string[]
-      remove: string[]
-    },
-    void
+    HostsBlocklistUpdateParams,
+    HostsBlocklistUpdatePayload,
+    HostsBlocklistUpdateResponse
   >
 ) {
   return usePutFunc(
@@ -409,7 +511,11 @@ export function useHostsBlocklistUpdate(
 }
 
 export function useHostResetLostSectorCount(
-  args?: HookArgsCallback<{ publicKey: string }, void, void>
+  args?: HookArgsCallback<
+    HostResetLostSectorCountParams,
+    HostResetLostSectorCountPayload,
+    HostResetLostSectorCountResponse
+  >
 ) {
   return usePostFunc({
     ...args,
@@ -420,7 +526,11 @@ export function useHostResetLostSectorCount(
 // accounts
 
 export function useAccountResetDrift(
-  args?: HookArgsCallback<{ id: string }, void, void>
+  args?: HookArgsCallback<
+    AccountResetDriftParams,
+    AccountResetDriftPayload,
+    AccountResetDriftResponse
+  >
 ) {
   return usePostFunc({
     ...args,
@@ -431,22 +541,16 @@ export function useAccountResetDrift(
 // contracts
 
 const contractsActiveRoute = '/bus/contracts'
-export function useContracts(args?: HookArgsSwr<void, Contract[]>) {
+export function useContracts(
+  args?: HookArgsSwr<ContractsParams, ContractsResponse>
+) {
   return useGetSwr({ ...args, route: contractsActiveRoute })
-}
-
-export type ContractAcquireRequest = {
-  Duration: number
-}
-
-export type ContractAcquireResponse = {
-  locked: boolean
 }
 
 export function useContractsAcquire(
   args: HookArgsCallback<
-    { id: string },
-    ContractAcquireRequest,
+    ContractAcquireParams,
+    ContractAcquirePayload,
     ContractAcquireResponse
   >
 ) {
@@ -454,42 +558,47 @@ export function useContractsAcquire(
 }
 
 export function useContractsRelease(
-  args: HookArgsCallback<{ id: string }, void, never>
+  args: HookArgsCallback<
+    ContractsReleaseParams,
+    ContractsReleasePayload,
+    ContractsReleaseResponse
+  >
 ) {
   return usePostFunc({ ...args, route: '/bus/contract/:id/release' })
 }
 
-export function useContract(args: HookArgsSwr<{ id: string }, Contract>) {
+export function useContract(
+  args: HookArgsSwr<ContractParams, ContractResponse>
+) {
   return useGetSwr({ ...args, route: '/bus/contract/:id' })
 }
 
-export type ContractsIDAddRequest = {
-  contract: ContractRevision
-  startHeight: number
-  totalCost: Currency
-}
-
-export function useContractCreate(
-  args: HookArgsCallback<{ id: string }, ContractsIDAddRequest, Contract>
+export function useContractAdd(
+  args: HookArgsCallback<
+    ContractsAddParams,
+    ContractsAddPayload,
+    ContractsAddResponse
+  >
 ) {
   return usePostFunc({ ...args, route: '/bus/contract/:id/new' })
 }
 
-export type ContractsIDRenewedRequest = {
-  contract: ContractRevision
-  renewedFrom: string
-  startHeight: number
-  totalCost: Currency
-}
-
 export function useContractRenew(
-  args: HookArgsCallback<{ id: string }, ContractsIDRenewedRequest, Contract>
+  args: HookArgsCallback<
+    ContractRenewedParams,
+    ContractRenewedPayload,
+    ContractRenewedResponse
+  >
 ) {
   return usePostFunc({ ...args, route: '/bus/contract/:id/renewed' })
 }
 
 export function useContractDelete(
-  args?: HookArgsCallback<{ id: string }, void, never>
+  args?: HookArgsCallback<
+    ContractDeleteParams,
+    ContractDeletePayload,
+    ContractDeleteResponse
+  >
 ) {
   return useDeleteFunc(
     { ...args, route: '/bus/contract/:id' },
@@ -499,48 +608,50 @@ export function useContractDelete(
   )
 }
 
-export function useContractSets(args?: HookArgsSwr<void, string[]>) {
+export function useContractSets(
+  args?: HookArgsSwr<ContractSetsParams, ContractSetsResponse>
+) {
   return useGetSwr({ ...args, route: '/bus/contracts/sets' })
 }
 
 export function useContractSetUpdate(
-  args: HookArgsCallback<{ name: string }, string[], never>
+  args: HookArgsCallback<
+    ContractSetUpdateParams,
+    ContractSetUpdatePayload,
+    ContractSetUpdateResponse
+  >
 ) {
   return usePutFunc({ ...args, route: '/bus/contracts/sets/:set' })
 }
 
 // objects
 
-export type Bucket = {
-  name: string
-  createdAt: string
-  policy: {
-    publicReadAccess: boolean
-  }
-}
-
-export function useBuckets(args?: HookArgsSwr<void, Bucket[]>) {
+export function useBuckets(args?: HookArgsSwr<BucketsParams, BucketsResponse>) {
   return useGetSwr({ ...args, route: '/bus/buckets' })
 }
 
-export function useBucket(args: HookArgsSwr<{ name: string }, Bucket>) {
+export function useBucket(args: HookArgsSwr<BucketParams, BucketResponse>) {
   return useGetSwr({ ...args, route: '/bus/bucket/:name' })
 }
 
 export function useBucketCreate(
-  args?: HookArgsCallback<void, { name: string }, never>
+  args?: HookArgsCallback<
+    BucketCreateParams,
+    BucketCreatePayload,
+    BucketCreateResponse
+  >
 ) {
   return usePostFunc({ ...args, route: '/bus/buckets' }, async (mutate) => {
     mutate((key) => key.startsWith('/bus/buckets'))
   })
 }
 
-export type BucketPolicy = {
-  publicReadAccess: boolean
-}
-
 export function useBucketPolicyUpdate(
-  args?: HookArgsCallback<{ name: string }, { policy: BucketPolicy }, never>
+  args?: HookArgsCallback<
+    BucketPolicyUpdateParams,
+    BucketPolicyUpdatePayload,
+    BucketPolicyUpdateResponse
+  >
 ) {
   return usePutFunc(
     { ...args, route: '/bus/bucket/:name/policy' },
@@ -551,7 +662,11 @@ export function useBucketPolicyUpdate(
 }
 
 export function useBucketDelete(
-  args?: HookArgsCallback<{ name: string }, void, never>
+  args?: HookArgsCallback<
+    BucketDeleteParams,
+    BucketDeletePayload,
+    BucketDeleteResponse
+  >
 ) {
   return useDeleteFunc(
     { ...args, route: '/bus/bucket/:name' },
@@ -561,99 +676,53 @@ export function useBucketDelete(
   )
 }
 
-export type ObjEntry = {
-  name: string
-  size: number
-  health: number
-}
-
-export type ObjectDirectoryParams = {
-  key: string
-  bucket: string
-  limit?: number
-  prefix?: string
-  offset?: number
-  sortBy?: 'name' | 'health' | 'size'
-  sortDir?: 'asc' | 'desc'
-}
-
 export function useObjectDirectory(
-  args: HookArgsSwr<
-    ObjectDirectoryParams,
-    { hasMore: boolean; entries: ObjEntry[] }
-  >
+  args: HookArgsSwr<ObjectDirectoryParams, ObjectDirectoryResponse>
 ) {
   return useGetSwr({ ...args, route: '/bus/objects/:key' })
 }
 
-export type ObjectListParams = {
-  bucket: string
-  limit?: number
-  prefix?: string
-  marker?: string
-  sortBy?: 'name' | 'health' | 'size'
-  sortDir?: 'asc' | 'desc'
-}
-
 export function useObjectList(
   args: HookArgsWithPayloadSwr<
-    void,
     ObjectListParams,
-    { hasMore: boolean; nextMarker: string; objects: ObjEntry[] }
+    ObjectListPayload,
+    ObjectListResponse
   >
 ) {
   return usePostSwr({ ...args, route: '/bus/objects/list' })
 }
 
-export function useObject(
-  args: HookArgsSwr<{ key: string; bucket: string }, { object: Obj }>
-) {
+export function useObject(args: HookArgsSwr<ObjectParams, ObjectResponse>) {
   return useGetSwr({ ...args, route: '/bus/objects/:key' })
 }
 
 export function useObjectSearch(
-  args: HookArgsSwr<
-    { key: string; bucket: string; offset: number; limit: number },
-    ObjEntry[]
-  >
+  args: HookArgsSwr<ObjectSearchParams, ObjectSearchResponse>
 ) {
   return useGetSwr({ ...args, route: '/bus/search/objects' })
 }
 
-export type AddObjectRequest = {
-  object: Obj
-  usedContracts: { [key: PublicKey]: FileContractID }
-}
-
 export function useObjectAdd(
-  args: HookArgsCallback<
-    { key: string; bucket: string },
-    AddObjectRequest,
-    never
-  >
+  args: HookArgsCallback<ObjectAddParams, ObjectAddPayload, ObjectAddResponse>
 ) {
   return usePutFunc({ ...args, route: '/bus/objects/:key' })
 }
 
-export type RenameObjectRequest = {
-  force: boolean
-  bucket: string
-  from: string
-  to: string
-  mode: 'single' | 'multi'
-}
-
 export function useObjectRename(
-  args?: HookArgsCallback<void, RenameObjectRequest, never>
+  args?: HookArgsCallback<
+    ObjectRenameParams,
+    ObjectRenamePayload,
+    ObjectRenameResponse
+  >
 ) {
   return usePostFunc({ ...args, route: '/bus/objects/rename' })
 }
 
 export function useObjectDelete(
   args?: HookArgsCallback<
-    { key: string; bucket: string; batch?: boolean },
-    void,
-    never
+    ObjectDeleteParams,
+    ObjectDeletePayload,
+    ObjectDeleteResponse
   >
 ) {
   return useDeleteFunc(
@@ -664,46 +733,32 @@ export function useObjectDelete(
   )
 }
 
-type ObjectsStats = {
-  numObjects: number // number of objects
-  numUnfinishedObjects: number // number of unfinished objects
-  minHealth: number // minimum health across all objects
-  totalObjectsSize: number // size of all objects
-  totalUnfinishedObjectsSize: number // size of all unfinished objects
-  totalSectorsSize: number // uploaded size of all objects
-  totalUploadedSize: number // uploaded size of all objects including redundant sectors
-}
-
-export function useObjectStats(args?: HookArgsSwr<void, ObjectsStats>) {
+export function useObjectStats(
+  args?: HookArgsSwr<ObjectsStatsParams, ObjectsStatsResponse>
+) {
   return useGetSwr({ ...args, route: '/bus/stats/objects' })
 }
 
-// type ObjectsMigrateParams = {
-//   cutoff?: number
-//   limit?: number
-//   goodContracts?: string[]
-// }
-
-// export function useObjectsMigrate(
-//   args: ExtCallArgs<ObjectsMigrateParams, void, Slab[]>
-// ) {
-//   return useGet({ ...args, route: '/bus/migration/slabs' })
-// }
-
 type Setting = Record<string, unknown> | string
 
-export function useSettings(args?: HookArgsSwr<void, string[]>) {
+export function useSettings(
+  args?: HookArgsSwr<SettingsParams, SettingsResponse>
+) {
   return useGetSwr({ ...args, route: '/bus/settings' })
 }
 
 export function useSetting<T extends Setting>(
-  args: HookArgsSwr<{ key: string }, T>
+  args: HookArgsSwr<SettingParams, SettingResponse<T>>
 ) {
   return useGetSwr({ ...args, route: '/bus/setting/:key' })
 }
 
 export function useSettingUpdate(
-  args?: HookArgsCallback<{ key: string }, Setting, void>
+  args?: HookArgsCallback<
+    SettingUpdateParams,
+    SettingUpdatePayload,
+    SettingUpdateResponse
+  >
 ) {
   return usePutFunc(
     {
@@ -716,32 +771,6 @@ export function useSettingUpdate(
   )
 }
 
-export type AlertSeverity = 'info' | 'warning' | 'error' | 'critical'
-
-export type Alert = {
-  id: string
-  severity: AlertSeverity
-  message: string
-  timestamp: string
-  data: {
-    account?: string
-    host?: string
-    key?: string
-  }
-}
-
-export type AlertsParams = {
-  limit: number
-  offset: number
-  severity?: AlertSeverity
-}
-
-export type AlertsResponse = {
-  alerts?: Alert[]
-  hasMore: boolean
-  totals: Record<AlertSeverity, number>
-}
-
 const alertsRoute = '/bus/alerts'
 // params are required because omitting them returns a deprecated response structure
 export function useAlerts(args: HookArgsSwr<AlertsParams, AlertsResponse>) {
@@ -749,7 +778,11 @@ export function useAlerts(args: HookArgsSwr<AlertsParams, AlertsResponse>) {
 }
 
 export function useAlertsDismiss(
-  args?: HookArgsCallback<void, string[], void>
+  args?: HookArgsCallback<
+    AlertsDismissParams,
+    AlertsDismissPayload,
+    AlertsDismissResponse
+  >
 ) {
   return usePostFunc(
     { ...args, route: '/bus/alerts/dismiss' },
@@ -763,122 +796,48 @@ export function useAlertsDismiss(
 
 // slabs
 
-export function useSlabObjects(args: HookArgsSwr<{ key: string }, ObjEntry[]>) {
+export function useSlabObjects(
+  args: HookArgsSwr<SlabObjectsParams, SlabObjectsResponse>
+) {
   return useGetSwr({ ...args, route: '/bus/slab/:key/objects' })
 }
 
 // metrics
 
-export type MetricsParams = {
-  start: string
-  interval: number
-  n: number
-}
-
-export type ContractMetric = {
-  timestamp: string
-  contractID: string
-  hostKey: string
-  remainingCollateral: string
-  remainingFunds: string
-  revisionNumber: number
-  uploadSpending: string
-  downloadSpending: string
-  fundAccountSpending: string
-  deleteSpending: string
-  listSpending: string
-}
-
-export type ContractMetricsParams = MetricsParams & {
-  contractID?: string
-  hostKey?: string
-}
-
 export function useMetricsContract(
-  args: HookArgsSwr<ContractMetricsParams, ContractMetric[]>
+  args: HookArgsSwr<ContractMetricsParams, ContractMetricsResponse>
 ) {
   return useGetSwr({ ...args, route: '/bus/metric/contract' })
 }
 
-export type ContractSetMetric = {
-  contracts: number
-  name: string
-  timestamp: string
-}
-
-export type ContractSetMetricsParams = MetricsParams & {
-  name: string
-}
-
 export function useMetricsContractSet(
-  args: HookArgsSwr<ContractSetMetricsParams, ContractSetMetric[]>
+  args: HookArgsSwr<ContractSetMetricsParams, ContractSetMetricsResponse>
 ) {
   return useGetSwr({ ...args, route: '/bus/metric/contractset' })
 }
 
-export type ContractSetChurnMetric = {
-  direction: string
-  contractID: string
-  name: string
-  reason: string
-  timestamp: string
-}
-
-export type ContractSetChurnMetricsParams = MetricsParams & {
-  name: string
-  direction?: string
-  reason?: string
-}
-
 export function useMetricsContractSetChurn(
-  args: HookArgsSwr<ContractSetChurnMetricsParams, ContractSetChurnMetric[]>
+  args: HookArgsSwr<
+    ContractSetChurnMetricsParams,
+    ContractSetChurnMetricsResponse
+  >
 ) {
   return useGetSwr({ ...args, route: '/bus/metric/churn' })
 }
 
-export type WalletMetric = {
-  timestamp: string
-  confirmed: string
-  spendable: string
-  unconfirmed: string
-}
-
-export type WalletMetricsParams = MetricsParams
-
 export function useMetricsWallet(
-  args: HookArgsSwr<WalletMetricsParams, WalletMetric[]>
+  args: HookArgsSwr<WalletMetricsParams, WalletMetricsResponse>
 ) {
   return useGetSwr({ ...args, route: '/bus/metric/wallet' })
 }
 
-// export type PerformanceMetric = {
-//   action: string
-//   hostKey: string
-//   origin: string
-//   duration: number
-//   timestamp: string
-// }
-
-// export type PerformanceMetricsParams = MetricsParams & {
-//   action: string
-//   hostKey: string
-//   origin: string
-// }
-
 // multipart
-
-export type MultipartUploadCreatePayload = {
-  path: string
-  bucket: string
-  generateKey: boolean
-  key?: string
-}
 
 export function useMultipartUploadCreate(
   args?: HookArgsCallback<
-    void,
+    MultipartUploadCreateParams,
     MultipartUploadCreatePayload,
-    { uploadID: string }
+    MultipartUploadCreateResponse
   >
 ) {
   return usePostFunc(
@@ -891,20 +850,12 @@ export function useMultipartUploadCreate(
   )
 }
 
-export type MultipartUploadCompletePart = {
-  partNumber: number
-  eTag: string
-}
-
-export type MultipartUploadCompletePayload = {
-  path: string
-  bucket: string
-  uploadID: string
-  parts: MultipartUploadCompletePart[]
-}
-
 export function useMultipartUploadComplete(
-  args?: HookArgsCallback<void, MultipartUploadCompletePayload, void>
+  args?: HookArgsCallback<
+    MultipartUploadCompleteParams,
+    MultipartUploadCompletePayload,
+    MultipartUploadCompleteResponse
+  >
 ) {
   return usePostFunc(
     { ...args, route: '/bus/multipart/complete' },
@@ -916,14 +867,12 @@ export function useMultipartUploadComplete(
   )
 }
 
-export type MultipartUploadAbortPayload = {
-  path: string
-  bucket: string
-  uploadID: string
-}
-
 export function useMultipartUploadAbort(
-  args?: HookArgsCallback<void, MultipartUploadAbortPayload, void>
+  args?: HookArgsCallback<
+    MultipartUploadAbortParams,
+    MultipartUploadAbortPayload,
+    MultipartUploadAbortResponse
+  >
 ) {
   return usePostFunc(
     { ...args, route: '/bus/multipart/abort' },
@@ -935,28 +884,9 @@ export function useMultipartUploadAbort(
   )
 }
 
-export type MultipartUploadListPartsPayload = {
-  bucket: string
-  path: string
-  uploadID: string
-  partNumberMarker?: number
-  limit?: number
-}
-
-export type MultipartUploadListPartsResponse = {
-  hasMore: boolean
-  nextMarker?: number
-  parts: {
-    partNumber: number
-    lastModified: string
-    eTag: string
-    size: number
-  }[]
-}
-
 export function useMultipartUploadListParts(
   args: HookArgsWithPayloadSwr<
-    void,
+    MultipartUploadListPartsParams,
     MultipartUploadListPartsPayload,
     MultipartUploadListPartsResponse
   >
@@ -967,28 +897,9 @@ export function useMultipartUploadListParts(
   })
 }
 
-export type MultipartUploadListUploadsPayload = {
-  bucket: string
-  prefix?: string
-  pathMarker?: string
-  uploadIDMarker?: string
-  limit?: number
-}
-
-export type MultipartUploadListUploadsResponse = {
-  hasMore: boolean
-  nextMarker: string
-  nextUploadIDMarker: string
-  uploads?: {
-    path: string
-    uploadID: string
-    createdAt: string
-  }[]
-}
-
 export function useMultipartUploadListUploads(
   args: HookArgsWithPayloadSwr<
-    void,
+    MultipartUploadListUploadsParams,
     MultipartUploadListUploadsPayload,
     MultipartUploadListUploadsResponse
   >
@@ -999,20 +910,12 @@ export function useMultipartUploadListUploads(
   })
 }
 
-export type MultipartUploadAddPartPayload = {
-  path: string
-  bucket: string
-  uploadID: string
-  eTag: string
-  partNumber: number
-  contractSet?: string
-  partialSlabs?: PartialSlab[]
-  slices?: SlabSlice[]
-  usedContracts?: Contract[]
-}
-
 export function useMultipartUploadAddPart(
-  args?: HookArgsCallback<void, MultipartUploadAddPartPayload, void>
+  args?: HookArgsCallback<
+    MultipartUploadAddPartParams,
+    MultipartUploadAddPartPayload,
+    MultipartUploadAddPartResponse
+  >
 ) {
   return usePostFunc(
     { ...args, route: '/bus/multipart/part' },

@@ -2,8 +2,8 @@ import {
   minutesInMilliseconds,
   triggerErrorToast,
 } from '@siafoundation/design-system'
+import { Bucket } from '@siafoundation/renterd-types'
 import {
-  Bucket,
   useBuckets,
   useMultipartUploadAbort,
   useMultipartUploadPart,

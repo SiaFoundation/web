@@ -1,8 +1,6 @@
 import { HookArgsSwr } from '@siafoundation/react-core'
-import {
-  S3AuthenticationSettings,
-  useSetting,
-} from '@siafoundation/renterd-react'
+import { S3AuthenticationSettings } from '@siafoundation/renterd-types'
+import { useSetting } from '@siafoundation/renterd-react'
 
 export function useS3AuthenticationSettings(
   args?: HookArgsSwr<void, S3AuthenticationSettings>

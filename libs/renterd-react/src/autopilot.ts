@@ -1,5 +1,3 @@
-import { AutopilotConfig, Host } from './siaTypes'
-import { HostsSearchPayload, StateResponse } from './bus'
 import {
   useGetSwr,
   usePostSwr,
@@ -10,22 +8,27 @@ import {
   delay,
   usePostFunc,
 } from '@siafoundation/react-core'
-
-type AutopilotStatus = {
-  configured: boolean
-  migrating: boolean
-  migratingLastStart: string
-  scanning: boolean
-  scanningLastStart: string
-  synced: boolean
-  uptimeMS: string
-}
-
-export type AutopilotState = AutopilotStatus & StateResponse
+import {
+  AutopilotConfigParams,
+  AutopilotConfigResponse,
+  AutopilotConfigUpdateParams,
+  AutopilotConfigUpdatePayload,
+  AutopilotConfigUpdateResponse,
+  AutopilotHostsSearchParams,
+  AutopilotHostsSearchPayload,
+  AutopilotHostsSearchResponse,
+  AutopilotStateParams,
+  AutopilotStateResponse,
+  AutopilotTriggerParams,
+  AutopilotTriggerPayload,
+  AutopilotTriggerResponse,
+} from '@siafoundation/renterd-types'
 
 const autopilotStateKey = '/autopilot/state'
 
-export function useAutopilotState(args?: HookArgsSwr<void, AutopilotState>) {
+export function useAutopilotState(
+  args?: HookArgsSwr<AutopilotStateParams, AutopilotStateResponse>
+) {
   return useGetSwr({
     ...args,
     route: autopilotStateKey,
@@ -33,7 +36,9 @@ export function useAutopilotState(args?: HookArgsSwr<void, AutopilotState>) {
 }
 
 const autopilotConfigKey = '/autopilot/config'
-export function useAutopilotConfig(args?: HookArgsSwr<void, AutopilotConfig>) {
+export function useAutopilotConfig(
+  args?: HookArgsSwr<AutopilotConfigParams, AutopilotConfigResponse>
+) {
   return useGetSwr({
     ...args,
     route: autopilotConfigKey,
@@ -41,7 +46,11 @@ export function useAutopilotConfig(args?: HookArgsSwr<void, AutopilotConfig>) {
 }
 
 export function useAutopilotConfigUpdate(
-  args?: HookArgsCallback<void, AutopilotConfig, void>
+  args?: HookArgsCallback<
+    AutopilotConfigUpdateParams,
+    AutopilotConfigUpdatePayload,
+    AutopilotConfigUpdateResponse
+  >
 ) {
   return usePutFunc({ ...args, route: autopilotConfigKey }, async (mutate) => {
     mutate((key) => key === autopilotConfigKey)
@@ -55,35 +64,14 @@ export function useAutopilotConfigUpdate(
   })
 }
 
-export type AutopilotHost = {
-  host: Host
-  checks?: {
-    score: number
-    scoreBreakdown: {
-      age: number
-      collateral: number
-      interactions: number
-      storageRemaining: number
-      prices: number
-      uptime: number
-      version: number
-    }
-    unusableReasons: string[]
-    gougingBreakdown: {
-      contractErr?: string
-      downloadErr?: string
-      gougingErr?: string
-      uploadErr?: string
-    }
-    gouging: boolean
-    usable: boolean
-  }
-}
-
 export const autopilotHostsKey = '/autopilot/hosts'
 
 export function useAutopilotHostsSearch(
-  args?: HookArgsWithPayloadSwr<void, HostsSearchPayload, AutopilotHost[]>
+  args?: HookArgsWithPayloadSwr<
+    AutopilotHostsSearchParams,
+    AutopilotHostsSearchPayload,
+    AutopilotHostsSearchResponse
+  >
 ) {
   return usePostSwr({
     ...args,
@@ -92,7 +80,11 @@ export function useAutopilotHostsSearch(
 }
 
 export function useAutopilotTrigger(
-  args?: HookArgsCallback<void, { forceScan: boolean }, { triggered: boolean }>
+  args?: HookArgsCallback<
+    AutopilotTriggerParams,
+    AutopilotTriggerPayload,
+    AutopilotTriggerResponse
+  >
 ) {
   return usePostFunc({
     ...args,

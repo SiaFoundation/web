@@ -11,7 +11,7 @@ import {
   GougingSettings,
   RedundancySettings,
   UploadPackingSettings,
-} from '@siafoundation/renterd-react'
+} from '@siafoundation/renterd-types'
 import {
   toHastings,
   toSiacoins,

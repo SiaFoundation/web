@@ -20,9 +20,8 @@ import { HostContext, HostData, TableColumnId } from './types'
 import { format, formatDistance, formatRelative } from 'date-fns'
 import { HostContextMenu } from '../../components/Hosts/HostContextMenu'
 import { useWorkflows } from '@siafoundation/react-core'
+import { AutopilotHost, RhpScanPayload } from '@siafoundation/renterd-types'
 import {
-  AutopilotHost,
-  RhpScanRequest,
   useHostsAllowlist,
   workerRhpScanRoute,
 } from '@siafoundation/renterd-react'
@@ -215,7 +214,7 @@ export const columns: HostsTableColumn[] = (
       render: function LastScan({ data }) {
         const { workflows } = useWorkflows()
         const isPending = workflows.find(
-          (wf: { path?: string; payload?: RhpScanRequest }) =>
+          (wf: { path?: string; payload?: RhpScanPayload }) =>
             wf.path.startsWith(workerRhpScanRoute) &&
             wf.payload?.hostKey === data.publicKey
         )
