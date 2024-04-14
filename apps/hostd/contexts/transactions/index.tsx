@@ -8,7 +8,7 @@ import {
   useMetricsPeriod,
   useWalletPending,
   useWalletTransactions,
-} from '@siafoundation/react-hostd'
+} from '@siafoundation/hostd-react'
 import { createContext, useContext, useMemo } from 'react'
 import { useDialog } from '../dialog'
 import BigNumber from 'bignumber.js'

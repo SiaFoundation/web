@@ -4,7 +4,7 @@ import {
   PaginatorUnknownTotal,
   WalletLayoutActions,
 } from '@siafoundation/design-system'
-import { useWallet } from '@siafoundation/react-renterd'
+import { useWallet } from '@siafoundation/renterd-react'
 import { useDialog } from '../../contexts/dialog'
 import { routes } from '../../config/routes'
 import BigNumber from 'bignumber.js'

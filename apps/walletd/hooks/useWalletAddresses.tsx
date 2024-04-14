@@ -1,4 +1,4 @@
-import { useWalletAddresses as useWalletAddressData } from '@siafoundation/react-walletd'
+import { useWalletAddresses as useWalletAddressData } from '@siafoundation/walletd-react'
 import { defaultDatasetRefreshInterval } from '../config/swr'
 import { useDataset } from '../contexts/addresses/dataset'
 

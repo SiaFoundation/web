@@ -14,7 +14,7 @@ import {
   ArrowDownRight16,
   Money16,
 } from '@siafoundation/react-icons'
-import { ContractStatus } from '@siafoundation/react-hostd'
+import { ContractStatus } from '@siafoundation/hostd-react'
 import { blockHeightToTime, humanBytes, humanDate } from '@siafoundation/units'
 import { ContractContextMenu } from '../../components/Contracts/ContractContextMenu'
 import { ContractData, TableColumnId } from './types'

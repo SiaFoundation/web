@@ -9,7 +9,7 @@ import {
   stripPrefix,
 } from '@siafoundation/design-system'
 import { Delete16 } from '@siafoundation/react-icons'
-import { useWalletAddressDelete } from '@siafoundation/react-walletd'
+import { useWalletAddressDelete } from '@siafoundation/walletd-react'
 import { AddressData } from '../../contexts/addresses/types'
 import { useDialog } from '../../contexts/dialog'
 

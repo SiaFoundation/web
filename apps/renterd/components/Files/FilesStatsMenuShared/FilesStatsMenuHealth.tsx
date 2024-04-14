@@ -1,5 +1,5 @@
 import { Separator, Text, Tooltip } from '@siafoundation/design-system'
-import { useObjectStats } from '@siafoundation/react-renterd'
+import { useObjectStats } from '@siafoundation/renterd-react'
 import { healthThresholds, useHealthLabel } from '../../../hooks/useHealthLabel'
 
 export function FilesStatsMenuHealth() {

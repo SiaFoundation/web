@@ -6,7 +6,7 @@ import {
 import {
   VolumeMeta,
   useVolumes as useVolumesData,
-} from '@siafoundation/react-hostd'
+} from '@siafoundation/hostd-react'
 import { createContext, useContext, useMemo } from 'react'
 import { columnsDefaultVisible, TableColumnId } from './types'
 import { columns } from './columns'

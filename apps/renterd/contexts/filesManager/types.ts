@@ -1,4 +1,4 @@
-import { Bucket } from '@siafoundation/react-renterd'
+import { Bucket } from '@siafoundation/renterd-react'
 import { FullPath } from '../../lib/paths'
 import { TableColumn } from '@siafoundation/design-system'
 import { MultipartUpload } from '../../lib/multipartUpload'

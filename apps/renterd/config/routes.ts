@@ -1,4 +1,4 @@
-import { busStateKey } from '@siafoundation/react-renterd'
+import { busStateKey } from '@siafoundation/renterd-react'
 
 export const routes = {
   home: '/',

@@ -1,5 +1,5 @@
 import { HookArgsSwr } from '@siafoundation/react-core'
-import { GougingSettings, useSetting } from '@siafoundation/react-renterd'
+import { GougingSettings, useSetting } from '@siafoundation/renterd-react'
 
 export function useGougingSettings(args?: HookArgsSwr<void, GougingSettings>) {
   return useSetting<GougingSettings>({

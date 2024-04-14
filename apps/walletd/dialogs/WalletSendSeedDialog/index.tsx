@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 import { useMemo, useState } from 'react'
 import { useComposeForm } from '../_sharedWalletSend/useComposeForm'
 import { useSendForm } from './useSendForm'
-import { useWalletBalance } from '@siafoundation/react-walletd'
+import { useWalletBalance } from '@siafoundation/walletd-react'
 import { SendFlowDialog } from '../_sharedWalletSend/SendFlowDialog'
 import {
   SendParams,

@@ -8,7 +8,7 @@ import {
 import {
   ContractFilterSortField,
   ContractStatus,
-} from '@siafoundation/react-hostd'
+} from '@siafoundation/hostd-react'
 import BigNumber from 'bignumber.js'
 
 export type ContractData = {

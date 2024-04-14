@@ -5,7 +5,7 @@ import {
   SyncerConnectPeerDialog,
   SyncerConnectPeerDialogParams,
 } from '@siafoundation/design-system'
-import { useSyncerConnect } from '@siafoundation/react-walletd'
+import { useSyncerConnect } from '@siafoundation/walletd-react'
 import {
   WalletAddTypeDialog,
   WalletAddTypeDialogParams,

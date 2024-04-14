@@ -1,5 +1,5 @@
 import { HookArgsSwr } from '@siafoundation/react-core'
-import { ContractSetSettings, useSetting } from '@siafoundation/react-renterd'
+import { ContractSetSettings, useSetting } from '@siafoundation/renterd-react'
 
 export function useContractSetSettings(
   args?: HookArgsSwr<void, ContractSetSettings>

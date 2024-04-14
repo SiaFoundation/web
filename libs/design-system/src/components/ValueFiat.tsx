@@ -1,6 +1,6 @@
 'use client'
 
-import { useSiaCentralExchangeRates } from '@siafoundation/react-sia-central'
+import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
 import { Text } from '../core/Text'
 import { Tooltip } from '../core/Tooltip'
 import BigNumber from 'bignumber.js'

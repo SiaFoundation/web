@@ -7,7 +7,7 @@ import {
   ValueNum,
   ValueSc,
 } from '@siafoundation/design-system'
-import { useHost, useSlabObjects } from '@siafoundation/react-renterd'
+import { useHost, useSlabObjects } from '@siafoundation/renterd-react'
 import { HostContextMenu } from '../../components/Hosts/HostContextMenu'
 import { useFilesManager } from '../filesManager'
 import { useDialog } from '../dialog'

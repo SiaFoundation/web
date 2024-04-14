@@ -6,7 +6,7 @@ import {
 import { Delete16 } from '@siafoundation/react-icons'
 import { useDialog } from '../../contexts/dialog'
 import { useCallback } from 'react'
-import { useContractDelete } from '@siafoundation/react-renterd'
+import { useContractDelete } from '@siafoundation/renterd-react'
 
 export function useContractConfirmDelete() {
   const { openConfirmDialog } = useDialog()

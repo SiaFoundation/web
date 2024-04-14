@@ -20,7 +20,7 @@ import {
 } from '../../lib/paths'
 import { useUploads } from './uploads'
 import { useDownloads } from './downloads'
-import { useBuckets } from '@siafoundation/react-renterd'
+import { useBuckets } from '@siafoundation/renterd-react'
 import { routes } from '../../config/routes'
 import useLocalStorageState from 'use-local-storage-state'
 

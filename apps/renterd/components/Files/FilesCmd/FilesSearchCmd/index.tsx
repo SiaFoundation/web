@@ -1,6 +1,6 @@
 import { CommandGroup, CommandItemSearch } from '../../../CmdRoot/Item'
 import { Page } from '../../../CmdRoot/types'
-import { useObjectSearch } from '@siafoundation/react-renterd'
+import { useObjectSearch } from '@siafoundation/renterd-react'
 import { isDirectory } from '../../../../lib/paths'
 import { Text } from '@siafoundation/design-system'
 import { Document16, FolderIcon } from '@siafoundation/react-icons'

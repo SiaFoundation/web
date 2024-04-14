@@ -35,7 +35,7 @@
 - Updated dependencies [40e402ad]
   - @siafoundation/units@3.0.0
   - @siafoundation/react-core@1.1.0
-  - @siafoundation/react-sia-central@3.0.0
+  - @siafoundation/sia-central-react@3.0.0
 
 ## 2.2.0
 
@@ -50,7 +50,7 @@
   - @siafoundation/next@0.1.3
   - @siafoundation/react-core@1.0.3
   - @siafoundation/react-icons@0.2.3
-  - @siafoundation/react-sia-central@2.0.3
+  - @siafoundation/sia-central-react@2.0.3
   - @siafoundation/types@0.1.3
   - @siafoundation/units@2.0.3
 
@@ -81,7 +81,7 @@
   - @siafoundation/next@0.1.2
   - @siafoundation/react-core@1.0.2
   - @siafoundation/react-icons@0.2.2
-  - @siafoundation/react-sia-central@2.0.2
+  - @siafoundation/sia-central-react@2.0.2
   - @siafoundation/types@0.1.2
   - @siafoundation/units@2.0.2
 
@@ -94,7 +94,7 @@
   - @siafoundation/next@0.1.1
   - @siafoundation/react-core@1.0.1
   - @siafoundation/react-icons@0.2.1
-  - @siafoundation/react-sia-central@2.0.1
+  - @siafoundation/sia-central-react@2.0.1
   - @siafoundation/types@0.1.1
   - @siafoundation/units@2.0.1
 
@@ -110,7 +110,7 @@
   - @siafoundation/next@0.1.0
   - @siafoundation/react-core@1.0.0
   - @siafoundation/react-icons@0.2.0
-  - @siafoundation/react-sia-central@2.0.0
+  - @siafoundation/sia-central-react@2.0.0
   - @siafoundation/types@0.1.0
   - @siafoundation/units@2.0.0
 
@@ -129,7 +129,7 @@
   - @siafoundation/next@0.0.6
   - @siafoundation/react-core@0.16.11
   - @siafoundation/react-icons@0.1.6
-  - @siafoundation/react-sia-central@1.0.6
+  - @siafoundation/sia-central-react@1.0.6
   - @siafoundation/types@0.0.7
   - @siafoundation/units@1.0.6
 
@@ -143,7 +143,7 @@
 
 - Updated dependencies [d0c8a592]
   - @siafoundation/react-core@0.16.0
-  - @siafoundation/react-sia-central@1.0.0
+  - @siafoundation/sia-central-react@1.0.0
   - @siafoundation/units@1.0.0
 
 ## 0.63.0
@@ -193,7 +193,7 @@
 - Updated dependencies [1c376d0e]
   - @siafoundation/react-icons@0.1.0
   - @siafoundation/sia-js@0.11.0
-  - @siafoundation/react-sia-central@0.0.3
+  - @siafoundation/sia-central-react@0.0.3
 
 ## 0.58.0
 
@@ -205,7 +205,7 @@
 
 - Updated dependencies [21972d75]
   - @siafoundation/react-core@0.15.0
-  - @siafoundation/react-sia-central@0.0.2
+  - @siafoundation/sia-central-react@0.0.2
 
 ## 0.57.0
 

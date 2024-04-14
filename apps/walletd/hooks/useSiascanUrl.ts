@@ -1,5 +1,5 @@
 import { webLinks } from '@siafoundation/design-system'
-import { useConsensusNetwork } from '@siafoundation/react-walletd'
+import { useConsensusNetwork } from '@siafoundation/walletd-react'
 
 export function useSiascanUrl() {
   const network = useConsensusNetwork()

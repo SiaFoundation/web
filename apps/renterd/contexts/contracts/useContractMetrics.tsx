@@ -10,7 +10,7 @@ import {
 import {
   ContractMetricsParams,
   useMetricsContract,
-} from '@siafoundation/react-renterd'
+} from '@siafoundation/renterd-react'
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import { ChartContractCategory, ChartContractKey } from './types'

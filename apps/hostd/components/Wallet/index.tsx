@@ -4,7 +4,7 @@ import {
   BalanceEvolution,
   PaginatorUnknownTotal,
 } from '@siafoundation/design-system'
-import { useWallet } from '@siafoundation/react-hostd'
+import { useWallet } from '@siafoundation/hostd-react'
 import { useDialog } from '../../contexts/dialog'
 import { routes } from '../../config/routes'
 import BigNumber from 'bignumber.js'

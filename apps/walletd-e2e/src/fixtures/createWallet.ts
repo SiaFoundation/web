@@ -1,12 +1,12 @@
 import { expect, Page } from '@playwright/test'
-import { mockApiWallet, mockApiWallets } from '@siafoundation/mock-walletd'
+import { mockApiWallet, mockApiWallets } from '@siafoundation/walletd-mock'
 import {
   Wallet,
   WalletAddressesResponse,
   WalletBalanceResponse,
   WalletFundResponse,
   WalletOutputsSiacoinResponse,
-} from '@siafoundation/react-walletd'
+} from '@siafoundation/walletd-react'
 
 export async function createWallet({
   page,

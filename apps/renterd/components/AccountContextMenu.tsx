@@ -8,7 +8,7 @@ import {
   copyToClipboard,
 } from '@siafoundation/design-system'
 import { Copy16, ResetAlt16, CaretDown16 } from '@siafoundation/react-icons'
-import { useAccountResetDrift } from '@siafoundation/react-renterd'
+import { useAccountResetDrift } from '@siafoundation/renterd-react'
 
 type Props = {
   id: string

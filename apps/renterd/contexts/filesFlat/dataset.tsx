@@ -1,4 +1,4 @@
-import { ObjectListParams, useObjectList } from '@siafoundation/react-renterd'
+import { ObjectListParams, useObjectList } from '@siafoundation/renterd-react'
 import { SortField } from '../filesManager/types'
 import { useDataset as useDatasetGeneric } from '../filesManager/dataset'
 import { useRouter } from 'next/router'

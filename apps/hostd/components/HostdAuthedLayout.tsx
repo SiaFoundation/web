@@ -1,5 +1,5 @@
 import { AppAuthedLayout } from '@siafoundation/design-system'
-import { useWallet } from '@siafoundation/react-hostd'
+import { useWallet } from '@siafoundation/hostd-react'
 import BigNumber from 'bignumber.js'
 import { connectivityRoute } from '../config/routes'
 import { useSyncStatus } from '../hooks/useSyncStatus'

@@ -5,7 +5,7 @@ import {
   useConsensusTip,
   useConsensusTipState,
   useEstimatedNetworkBlockHeight,
-} from '@siafoundation/react-walletd'
+} from '@siafoundation/walletd-react'
 
 export function useSyncStatus() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()

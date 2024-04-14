@@ -3,7 +3,7 @@ import {
   useDatasetEmptyState,
   useServerFilters,
 } from '@siafoundation/design-system'
-import { useWalletEvents, useWalletTxPool } from '@siafoundation/react-walletd'
+import { useWalletEvents, useWalletTxPool } from '@siafoundation/walletd-react'
 import { createContext, useContext, useMemo } from 'react'
 import {
   CellContext,

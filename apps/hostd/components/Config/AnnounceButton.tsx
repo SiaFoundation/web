@@ -12,7 +12,7 @@ import {
   useSettingsAnnounce,
   useStateHost,
   useTxPoolFee,
-} from '@siafoundation/react-hostd'
+} from '@siafoundation/hostd-react'
 import { humanSiacoin } from '@siafoundation/units'
 import { useCallback } from 'react'
 import BigNumber from 'bignumber.js'

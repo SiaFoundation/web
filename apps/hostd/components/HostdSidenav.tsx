@@ -6,7 +6,7 @@ import {
   HardDriveIcon,
   BellIcon,
 } from '@siafoundation/react-icons'
-import { useAlerts } from '@siafoundation/react-hostd'
+import { useAlerts } from '@siafoundation/hostd-react'
 import { cx } from 'class-variance-authority'
 import { routes } from '../config/routes'
 import { useDialog } from '../contexts/dialog'

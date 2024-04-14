@@ -9,7 +9,7 @@ import {
   useMetricsWallet,
   useWalletPending,
   useWalletTransactions,
-} from '@siafoundation/react-renterd'
+} from '@siafoundation/renterd-react'
 import { createContext, useContext, useMemo } from 'react'
 import { useDialog } from '../dialog'
 import BigNumber from 'bignumber.js'

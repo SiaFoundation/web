@@ -10,7 +10,7 @@ import {
   useBusState,
   useSyncerPeers,
   useWallet,
-} from '@siafoundation/react-renterd'
+} from '@siafoundation/renterd-react'
 import { useDialog } from '../../contexts/dialog'
 import { humanTime } from '@siafoundation/units'
 

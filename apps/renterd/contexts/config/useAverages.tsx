@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
 import { monthsToBlocks, TBToBytes, toSiacoins } from '@siafoundation/units'
-import { useSiaCentralHostsNetworkAverages } from '@siafoundation/react-sia-central'
+import { useSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-react'
 
 export function useAverages() {
   const averages = useSiaCentralHostsNetworkAverages({

@@ -10,7 +10,7 @@ import {
   triggerErrorToast,
   stripPrefix,
 } from '@siafoundation/design-system'
-import { useWalletAddressDelete } from '@siafoundation/react-walletd'
+import { useWalletAddressDelete } from '@siafoundation/walletd-react'
 import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../contexts/dialog'

@@ -1,6 +1,6 @@
 import { Panel, ScrollArea } from '@siafoundation/design-system'
 import { SWRError } from '@siafoundation/react-core'
-import { SystemDirResponse } from '@siafoundation/react-hostd'
+import { SystemDirResponse } from '@siafoundation/hostd-react'
 import { Command } from 'cmdk'
 import { SWRResponse } from 'swr'
 import {

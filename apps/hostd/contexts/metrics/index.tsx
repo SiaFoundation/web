@@ -16,7 +16,7 @@ import {
 } from '@siafoundation/units'
 import { useCallback, useMemo } from 'react'
 import { chartConfigs } from '../../config/charts'
-import { useMetricsPeriod } from '@siafoundation/react-hostd'
+import { useMetricsPeriod } from '@siafoundation/hostd-react'
 import { configCategoryPattern, configCategoryLabel } from './utils'
 import BigNumber from 'bignumber.js'
 import {

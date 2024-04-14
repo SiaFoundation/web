@@ -6,7 +6,7 @@ import { fillComposeTransactionSiacoin } from '../fixtures/sendSiacoinDialog'
 import {
   getMockScenarioSeedWallet,
   mockApiDefaults,
-} from '@siafoundation/mock-walletd'
+} from '@siafoundation/walletd-mock'
 
 function getDefaultMockWalletResponses(
   mocks: ReturnType<typeof getMockScenarioSeedWallet>

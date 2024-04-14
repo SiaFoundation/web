@@ -23,11 +23,11 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 
 - [@siafoundation/sdk](libs/sdk) - SDK for interacting directly with the Sia network from browsers and web clients.
 - [@siafoundation/react-core](libs/react-core) - Core library for building React hooks for interacting with a Sia daemon.
-- [@siafoundation/react-renterd](libs/react-renterd) - React hooks for interacting with `renterd`.
-- [@siafoundation/react-hostd](libs/react-hostd) - React hooks for interacting with `hostd`.
-- [@siafoundation/react-walletd](libs/react-walletd) - React hooks for interacting with `walletd`.
+- [@siafoundation/renterd-react](libs/renterd-react) - React hooks for interacting with `renterd`.
+- [@siafoundation/hostd-react](libs/hostd-react) - React hooks for interacting with `hostd`.
+- [@siafoundation/walletd-react](libs/walletd-react) - React hooks for interacting with `walletd`.
 - [@siafoundation/design-system](libs/design-system) - React-based design system used across Sia apps and websites.
-- [@siafoundation/react-sia-central](libs/react-sia-central) - React hooks for interacting with the Sia Central API.
+- [@siafoundation/sia-central-react](libs/sia-central-react) - React hooks for interacting with the Sia Central API.
 - [@siafoundation/sia-central](libs/sia-central) - Methods and types for interacting with the Sia Central API.
 - [@siafoundation/data-sources](libs/data-sources) - Data sources used for stats on the website.
 - [@siafoundation/fonts](libs/fonts) - Next font configuration for use across apps.
@@ -53,8 +53,8 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 ### Testing
 
 - [walletd-e2e](walletd-e2e) - App for testing walletd.
-- [@siafoundation/mock-walletd](mock-walletd) - `walletd` data and API mock library for testing.
-- [@siafoundation/mock-sia-central](mock-sia-central) - Sia Central data and API mock library for testing.
+- [@siafoundation/walletd-mock](walletd-mock) - `walletd` data and API mock library for testing.
+- [@siafoundation/sia-central-mock](sia-central-mock) - Sia Central data and API mock library for testing.
 
 ## Development
 

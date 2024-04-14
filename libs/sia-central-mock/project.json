@@ -1,0 +1,42 @@
+{
+  "name": "sia-central-mock",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/sia-central-mock/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/sia-central-mock",
+        "tsConfig": "libs/sia-central-mock/tsconfig.lib.json",
+        "project": "libs/sia-central-mock/package.json",
+        "entryFile": "libs/sia-central-mock/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "compiler": "tsc",
+        "outputFileName": "index.js",
+        "rollupConfig": "libs/sia-central-mock/rollup.config.js",
+        "assets": [
+          {
+            "glob": "libs/sia-central-mock/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      },
+      "configurations": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/sia-central-mock"],
+      "options": {
+        "jestConfig": "libs/sia-central-mock/jest.config.ts"
+      }
+    }
+  }
+}

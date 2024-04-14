@@ -7,7 +7,7 @@ import {
 import {
   WalletMetadata,
   useWallets as useWalletsData,
-} from '@siafoundation/react-walletd'
+} from '@siafoundation/walletd-react'
 import { createContext, useContext, useEffect, useMemo } from 'react'
 import {
   WalletData,

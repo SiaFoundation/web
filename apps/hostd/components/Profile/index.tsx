@@ -9,7 +9,7 @@ import {
   useSettings,
   useStateHost,
   useSyncerPeers,
-} from '@siafoundation/react-hostd'
+} from '@siafoundation/hostd-react'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { useDialog } from '../../contexts/dialog'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'

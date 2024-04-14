@@ -11,7 +11,7 @@ import {
 } from '@siafoundation/design-system'
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
-import { WalletMetadata, useWalletAdd } from '@siafoundation/react-walletd'
+import { WalletMetadata, useWalletAdd } from '@siafoundation/walletd-react'
 import { useDialog } from '../../contexts/dialog'
 import { useWallets } from '../../contexts/wallets'
 import { walletAddTypes } from '../../config/walletTypes'

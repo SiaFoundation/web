@@ -17,7 +17,7 @@ import {
   useSystemDirectory,
   useVolume,
   useVolumeResize,
-} from '@siafoundation/react-hostd'
+} from '@siafoundation/hostd-react'
 import { bytesToGB, GBToBytes, humanBytes } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { useCallback, useEffect, useMemo } from 'react'

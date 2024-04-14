@@ -1,5 +1,5 @@
 import { DatumCard, PeerList } from '@siafoundation/design-system'
-import { useSyncerPeers } from '@siafoundation/react-hostd'
+import { useSyncerPeers } from '@siafoundation/hostd-react'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { HostdSidenav } from '../HostdSidenav'

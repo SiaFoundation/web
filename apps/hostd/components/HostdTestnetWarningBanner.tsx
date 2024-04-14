@@ -1,5 +1,5 @@
 import { TestnetWarningBanner } from '@siafoundation/design-system'
-import { useStateHost } from '@siafoundation/react-hostd'
+import { useStateHost } from '@siafoundation/hostd-react'
 
 export function HostdTestnetWarningBanner() {
   const host = useStateHost({

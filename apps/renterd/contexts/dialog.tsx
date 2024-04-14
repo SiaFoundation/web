@@ -13,7 +13,7 @@ import { ContractsFilterAddressDialog } from '../components/Contracts/ContractsF
 import { ContractsFilterPublicKeyDialog } from '../components/Contracts/ContractsFilterPublicKeyDialog'
 import { ContractsFilterContractSetDialog } from '../components/Contracts/ContractsFilterContractSetDialog'
 import { FilesSearchDialog } from '../dialogs/FilesSearchDialog'
-import { useSyncerConnect, useWallet } from '@siafoundation/react-renterd'
+import { useSyncerConnect, useWallet } from '@siafoundation/renterd-react'
 import { RenterdSendSiacoinDialog } from '../dialogs/RenterdSendSiacoinDialog'
 import { RenterdTransactionDetailsDialog } from '../dialogs/RenterdTransactionDetailsDialog'
 import { HostsFilterPublicKeyDialog } from '../components/Hosts/HostsFilterPublicKeyDialog'

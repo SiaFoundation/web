@@ -15,7 +15,7 @@ import { CaretDown16, DataCheck16 } from '@siafoundation/react-icons'
 import {
   ContractStatus,
   useContractsIntegrityCheck,
-} from '@siafoundation/react-hostd'
+} from '@siafoundation/hostd-react'
 import { useDialog } from '../../contexts/dialog'
 import { useCallback } from 'react'
 

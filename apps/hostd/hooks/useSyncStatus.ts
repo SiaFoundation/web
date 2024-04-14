@@ -3,7 +3,7 @@ import {
   useEstimatedNetworkBlockHeight,
   useStateConsensus,
   useWallet,
-} from '@siafoundation/react-hostd'
+} from '@siafoundation/hostd-react'
 
 export function useSyncStatus() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()

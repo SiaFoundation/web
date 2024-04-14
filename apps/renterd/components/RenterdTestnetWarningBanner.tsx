@@ -1,5 +1,5 @@
 import { TestnetWarningBanner } from '@siafoundation/design-system'
-import { useBusState } from '@siafoundation/react-renterd'
+import { useBusState } from '@siafoundation/renterd-react'
 
 export function RenterdTestnetWarningBanner() {
   const state = useBusState({

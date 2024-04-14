@@ -1,5 +1,5 @@
 import { HookArgsSwr } from '@siafoundation/react-core'
-import { RedundancySettings, useSetting } from '@siafoundation/react-renterd'
+import { RedundancySettings, useSetting } from '@siafoundation/renterd-react'
 
 export function useRedundancySettings(
   args?: HookArgsSwr<void, RedundancySettings>

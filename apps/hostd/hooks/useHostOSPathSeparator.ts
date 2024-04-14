@@ -1,4 +1,4 @@
-import { useStateHost } from '@siafoundation/react-hostd'
+import { useStateHost } from '@siafoundation/hostd-react'
 
 export function useHostOSPathSeparator() {
   const state = useStateHost({

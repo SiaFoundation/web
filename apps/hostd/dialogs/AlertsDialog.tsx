@@ -9,7 +9,7 @@ import {
   AlertSeverity,
   useAlerts,
   useAlertsDismiss,
-} from '@siafoundation/react-hostd'
+} from '@siafoundation/hostd-react'
 import { humanTime } from '@siafoundation/units'
 import { useCallback } from 'react'
 import { defaultDatasetRefreshInterval } from '../config/swr'

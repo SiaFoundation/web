@@ -4,7 +4,7 @@ import {
   triggerErrorToast,
 } from '@siafoundation/design-system'
 import { FolderAdd16 } from '@siafoundation/react-icons'
-import { useSystemDirectoryCreate } from '@siafoundation/react-hostd'
+import { useSystemDirectoryCreate } from '@siafoundation/hostd-react'
 import { useHostOSPathSeparator } from '../../../hooks/useHostOSPathSeparator'
 import { getChildDirectoryPath } from '../../../lib/system'
 import { useCallback, useState } from 'react'

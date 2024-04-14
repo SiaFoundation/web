@@ -1,4 +1,4 @@
-import { useAutopilotConfig } from '@siafoundation/react-renterd'
+import { useAutopilotConfig } from '@siafoundation/renterd-react'
 import { useApp } from '../../../contexts/app'
 
 export function useAutopilotNotConfigured() {

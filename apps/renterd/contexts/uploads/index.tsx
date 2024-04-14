@@ -7,7 +7,7 @@ import { useSearchParams } from '@siafoundation/next'
 import {
   useMultipartUploadAbort,
   useMultipartUploadListUploads,
-} from '@siafoundation/react-renterd'
+} from '@siafoundation/renterd-react'
 import { createContext, useCallback, useContext, useMemo } from 'react'
 import { columnsDefaultVisible, defaultSortField, sortOptions } from './types'
 import { columns } from './columns'

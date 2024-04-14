@@ -7,7 +7,7 @@ import { useCallback } from 'react'
 import { SettingsData, initialValues } from './types'
 import { calculateMaxCollateral, transformUp } from './transform'
 import { Resources } from './resources'
-import { useSettingsUpdate, useStateHost } from '@siafoundation/react-hostd'
+import { useSettingsUpdate, useStateHost } from '@siafoundation/hostd-react'
 
 export function useOnValid({
   resources,

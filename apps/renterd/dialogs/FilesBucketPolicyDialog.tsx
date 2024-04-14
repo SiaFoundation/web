@@ -11,7 +11,7 @@ import {
 import { useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../contexts/dialog'
-import { useBucket, useBucketPolicyUpdate } from '@siafoundation/react-renterd'
+import { useBucket, useBucketPolicyUpdate } from '@siafoundation/renterd-react'
 
 const defaultValues = {
   visibility: 'public',

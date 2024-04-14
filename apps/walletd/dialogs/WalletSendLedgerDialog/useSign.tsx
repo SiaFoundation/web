@@ -2,7 +2,7 @@ import { Transaction } from '@siafoundation/types'
 import {
   useWalletOutputsSiacoin,
   useWalletOutputsSiafund,
-} from '@siafoundation/react-walletd'
+} from '@siafoundation/walletd-react'
 import { useWallets } from '../../contexts/wallets'
 import { useCallback } from 'react'
 import { useWalletAddresses } from '../../hooks/useWalletAddresses'

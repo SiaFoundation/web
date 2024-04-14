@@ -9,7 +9,7 @@ import {
   useMultipartUploadPart,
   useMultipartUploadComplete,
   useMultipartUploadCreate,
-} from '@siafoundation/react-renterd'
+} from '@siafoundation/renterd-react'
 import { throttle } from '@technically/lodash'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ObjectUploadData, UploadsMap } from './types'

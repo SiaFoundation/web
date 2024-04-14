@@ -22,7 +22,7 @@ import {
   AlertsParams,
   useAlerts as useAlertsData,
   useAlertsDismiss,
-} from '@siafoundation/react-renterd'
+} from '@siafoundation/renterd-react'
 import { useCallback } from 'react'
 
 const defaultLimit = 50

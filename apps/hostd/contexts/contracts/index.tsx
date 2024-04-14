@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import {
   ContractStatus,
   useContracts as useContractsData,
-} from '@siafoundation/react-hostd'
+} from '@siafoundation/hostd-react'
 import { createContext, useContext, useMemo } from 'react'
 import {
   columnsDefaultVisible,

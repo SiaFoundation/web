@@ -13,7 +13,7 @@ import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../../contexts/dialog'
 import { useS3AuthenticationSettings } from '../../hooks/useS3AuthenticationSettings'
-import { useSettingUpdate } from '@siafoundation/react-renterd'
+import { useSettingUpdate } from '@siafoundation/renterd-react'
 import { Reset16 } from '@carbon/icons-react'
 
 type Props = {

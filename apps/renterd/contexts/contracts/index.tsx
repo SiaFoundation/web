@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 import {
   useContracts as useContractsData,
   useContractSets,
-} from '@siafoundation/react-renterd'
+} from '@siafoundation/renterd-react'
 import {
   createContext,
   useCallback,
@@ -28,7 +28,7 @@ import {
   sortOptions,
 } from './types'
 import { columns } from './columns'
-import { useSiaCentralHosts } from '@siafoundation/react-sia-central'
+import { useSiaCentralHosts } from '@siafoundation/sia-central-react'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { blockHeightToTime } from '@siafoundation/units'

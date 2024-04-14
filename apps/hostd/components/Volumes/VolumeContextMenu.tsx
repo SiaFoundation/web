@@ -22,7 +22,7 @@ import {
   useVolume,
   useVolumeCancel,
   useVolumeUpdate,
-} from '@siafoundation/react-hostd'
+} from '@siafoundation/hostd-react'
 import { useDialog } from '../../contexts/dialog'
 
 type Props = {

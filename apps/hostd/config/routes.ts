@@ -1,4 +1,4 @@
-import { stateHostKey } from '@siafoundation/react-hostd'
+import { stateHostKey } from '@siafoundation/hostd-react'
 
 export const routes = {
   home: '/',

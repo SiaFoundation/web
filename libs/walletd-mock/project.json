@@ -1,0 +1,42 @@
+{
+  "name": "walletd-mock",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/walletd-mock/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/walletd-mock",
+        "tsConfig": "libs/walletd-mock/tsconfig.lib.json",
+        "project": "libs/walletd-mock/package.json",
+        "entryFile": "libs/walletd-mock/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "compiler": "tsc",
+        "outputFileName": "index.js",
+        "rollupConfig": "libs/walletd-mock/rollup.config.js",
+        "assets": [
+          {
+            "glob": "libs/walletd-mock/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      },
+      "configurations": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/walletd-mock"],
+      "options": {
+        "jestConfig": "libs/walletd-mock/jest.config.ts"
+      }
+    }
+  }
+}

@@ -14,7 +14,7 @@ import {
 import {
   WalletAddressMetadata,
   useWalletAddressAdd,
-} from '@siafoundation/react-walletd'
+} from '@siafoundation/walletd-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useWallets } from '../../contexts/wallets'
