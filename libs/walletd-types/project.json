@@ -1,0 +1,42 @@
+{
+  "name": "walletd-types",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/walletd-types/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/walletd-types",
+        "tsConfig": "libs/walletd-types/tsconfig.lib.json",
+        "project": "libs/walletd-types/package.json",
+        "entryFile": "libs/walletd-types/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "compiler": "tsc",
+        "outputFileName": "index.js",
+        "rollupConfig": "libs/walletd-types/rollup.config.js",
+        "assets": [
+          {
+            "glob": "libs/walletd-types/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      },
+      "configurations": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/walletd-types"],
+      "options": {
+        "jestConfig": "libs/walletd-types/jest.config.ts"
+      }
+    }
+  }
+}

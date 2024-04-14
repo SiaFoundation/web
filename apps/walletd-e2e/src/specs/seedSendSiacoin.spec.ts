@@ -87,7 +87,7 @@ test('errors if the input to sign is not found on the transaction', async ({
     mnemonic,
     responses: {
       ...getDefaultMockWalletResponses(mocks),
-      fund: mockFundInvalid,
+      fundSiacoin: mockFundInvalid,
     },
     expects: {
       fundSiacoinPost: (data) =>

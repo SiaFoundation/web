@@ -1,4 +1,4 @@
-import { WalletEventsResponse } from '@siafoundation/walletd-react'
+import { WalletEventsResponse } from '@siafoundation/walletd-types'
 import { Page } from 'playwright'
 
 export function getMockWalletEventsResponse(): WalletEventsResponse {

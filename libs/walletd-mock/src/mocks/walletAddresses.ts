@@ -1,7 +1,7 @@
 import {
   WalletAddress,
   WalletAddressesResponse,
-} from '@siafoundation/walletd-react'
+} from '@siafoundation/walletd-types'
 import { Page } from 'playwright'
 
 export function getMockWalletAddressesResponse(): WalletAddressesResponse {

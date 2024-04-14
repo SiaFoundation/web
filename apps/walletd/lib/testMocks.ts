@@ -1,7 +1,7 @@
 import Sia from '@siacentral/ledgerjs-sia'
 import { LedgerDevice } from '../contexts/ledger/types'
 import { transformAddressesResponse } from '../contexts/addresses/dataset'
-import { Wallet, WalletAddressesResponse } from '@siafoundation/walletd-react'
+import { Wallet, WalletAddressesResponse } from '@siafoundation/walletd-types'
 
 export function getMockDevice() {
   return {

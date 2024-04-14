@@ -3,8 +3,8 @@ import {
   Wallet,
   WalletAddress,
   WalletBalanceResponse,
-  WalletFundResponse,
-} from '@siafoundation/walletd-react'
+  WalletFundSiacoinResponse,
+} from '@siafoundation/walletd-types'
 import { toHastings } from '@siafoundation/units'
 import { getMockConsensusNetworkResponse } from '../mocks/consensusNetwork'
 import { getMockConsensusTipStateResponse } from '../mocks/consensusTipState'
@@ -83,7 +83,7 @@ export function getMockScenarioSeedWallet() {
 
   const walletOutputsSiafundResponse: SiafundElement[] = []
 
-  const walletFundResponse: WalletFundResponse = {
+  const walletFundResponse: WalletFundSiacoinResponse = {
     transaction: {
       siacoinInputs: [
         {

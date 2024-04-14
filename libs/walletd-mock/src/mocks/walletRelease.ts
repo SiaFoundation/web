@@ -1,4 +1,4 @@
-import { WalletFundResponse } from '@siafoundation/walletd-react'
+import { WalletReleaseResponse } from '@siafoundation/walletd-types'
 import { Page } from 'playwright'
 
 export async function mockApiWalletRelease({
@@ -7,7 +7,7 @@ export async function mockApiWalletRelease({
 }: {
   page: Page
   walletId: string
-  response?: WalletFundResponse
+  response?: WalletReleaseResponse
 }) {
   await page.route(`**/api/wallets/${walletId}/release*`, async (route) => {
     await route.fulfill()

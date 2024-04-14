@@ -3,9 +3,9 @@ import {
   Wallet,
   WalletAddressesResponse,
   WalletBalanceResponse,
-  WalletFundResponse,
+  WalletFundSiacoinResponse,
   WalletOutputsSiacoinResponse,
-} from '@siafoundation/walletd-react'
+} from '@siafoundation/walletd-types'
 import { mockApiWalletBalance } from './walletBalance'
 import { mockApiWalletAddresses } from './walletAddresses'
 import { mockApiWalletEvents } from './walletEvents'
@@ -27,7 +27,7 @@ export async function mockApiWallet({
   responses?: {
     balance?: WalletBalanceResponse
     outputsSiacoin?: WalletOutputsSiacoinResponse
-    fund?: WalletFundResponse
+    fundSiacoin?: WalletFundSiacoinResponse
     addresses?: WalletAddressesResponse
   }
   expects?: {
@@ -59,7 +59,7 @@ export async function mockApiWallet({
   await mockApiWalletFundSiacoin({
     page,
     walletId: wallet.id,
-    response: responses.fund,
+    response: responses.fundSiacoin,
     expectPost: expects.fundSiacoinPost,
   })
   await mockApiWalletRelease({

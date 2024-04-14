@@ -1,4 +1,4 @@
-import { WalletBalanceResponse } from '@siafoundation/walletd-react'
+import { WalletBalanceResponse } from '@siafoundation/walletd-types'
 import { toHastings } from '@siafoundation/units'
 import { Page } from 'playwright'
 

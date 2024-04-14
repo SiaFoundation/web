@@ -1,4 +1,4 @@
-import { WalletOutputsSiafundResponse } from '@siafoundation/walletd-react'
+import { WalletOutputsSiafundResponse } from '@siafoundation/walletd-types'
 import { Page } from 'playwright'
 
 export function getMockWalletOutputsSiafundResponse(): WalletOutputsSiafundResponse {

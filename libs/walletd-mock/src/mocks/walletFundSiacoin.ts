@@ -1,7 +1,7 @@
-import { WalletFundResponse } from '@siafoundation/walletd-react'
+import { WalletFundSiacoinResponse } from '@siafoundation/walletd-types'
 import { Page } from 'playwright'
 
-export function getMockWalletFundSiacoinResponse(): WalletFundResponse {
+export function getMockWalletFundSiacoinResponse(): WalletFundSiacoinResponse {
   return {
     transaction: {
       siacoinInputs: [
@@ -54,7 +54,7 @@ export async function mockApiWalletFundSiacoin({
 }: {
   page: Page
   walletId: string
-  response?: WalletFundResponse
+  response?: WalletFundSiacoinResponse
   expectPost?: (data: string | null) => void
 }) {
   const json = response || getMockWalletFundSiacoinResponse()
