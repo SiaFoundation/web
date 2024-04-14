@@ -3,7 +3,7 @@ import {
   useConsensusTip,
   useSyncerPeers,
   useTxPoolTransactions,
-} from '@siafoundation/react-walletd'
+} from '@siafoundation/walletd-react'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { WalletdSidenav } from '../WalletdSidenav'

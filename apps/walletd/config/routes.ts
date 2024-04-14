@@ -1,4 +1,4 @@
-import { syncerPeersKey } from '@siafoundation/react-walletd'
+import { syncerPeersKey } from '@siafoundation/walletd-react'
 
 export const routes = {
   home: '/',

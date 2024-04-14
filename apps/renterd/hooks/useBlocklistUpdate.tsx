@@ -3,7 +3,7 @@ import {
   triggerToast,
   truncate,
 } from '@siafoundation/design-system'
-import { useHostsBlocklistUpdate } from '@siafoundation/react-renterd'
+import { useHostsBlocklistUpdate } from '@siafoundation/renterd-react'
 import { useCallback } from 'react'
 
 export function useBlocklistUpdate() {

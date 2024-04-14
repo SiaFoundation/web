@@ -25,7 +25,7 @@ import {
   RhpScanRequest,
   useHostsAllowlist,
   workerRhpScanRoute,
-} from '@siafoundation/react-renterd'
+} from '@siafoundation/renterd-react'
 import BigNumber from 'bignumber.js'
 import React, { memo } from 'react'
 

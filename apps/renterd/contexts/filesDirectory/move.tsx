@@ -8,7 +8,7 @@ import {
   DragCancelEvent,
 } from '@dnd-kit/core'
 import { FullPathSegments, getDirectorySegmentsFromPath } from '../../lib/paths'
-import { useObjectRename } from '@siafoundation/react-renterd'
+import { useObjectRename } from '@siafoundation/renterd-react'
 import { triggerErrorToast } from '@siafoundation/design-system'
 import { getMoveFileRenameParams } from '../../lib/rename'
 

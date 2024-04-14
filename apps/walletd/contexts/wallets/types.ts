@@ -1,4 +1,4 @@
-import { Wallet, WalletMetadata } from '@siafoundation/react-walletd'
+import { Wallet, WalletMetadata } from '@siafoundation/walletd-react'
 
 export type WalletData = {
   id: string

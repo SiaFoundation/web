@@ -3,12 +3,12 @@
 # from:
 # dist/apps/renterd/*
 # dist/apps/hostd/*
-# dist/libs/react-renterd/*
+# dist/libs/renterd-react/*
 # dist/libs/design-system/*
 # to:
 # apps/renterd/*
 # apps/hostd/*
-# libs/react-renterd/*
+# libs/renterd-react/*
 # libs/design-system/*
 
 for distDir in dist/apps/* dist/libs/*; do

@@ -1,0 +1,42 @@
+{
+  "name": "hostd-react",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/hostd-react/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/hostd-react",
+        "tsConfig": "libs/hostd-react/tsconfig.lib.json",
+        "project": "libs/hostd-react/package.json",
+        "entryFile": "libs/hostd-react/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "compiler": "tsc",
+        "outputFileName": "index.js",
+        "rollupConfig": "libs/hostd-react/rollup.config.js",
+        "assets": [
+          {
+            "glob": "libs/hostd-react/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      },
+      "configurations": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/hostd-react"],
+      "options": {
+        "jestConfig": "libs/hostd-react/jest.config.ts"
+      }
+    }
+  }
+}

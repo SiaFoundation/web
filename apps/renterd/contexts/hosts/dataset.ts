@@ -7,7 +7,7 @@ import {
   useHostsAllowlist,
   useHostsBlocklist,
   useHostsSearch,
-} from '@siafoundation/react-renterd'
+} from '@siafoundation/renterd-react'
 import { ContractData } from '../contracts/types'
 import { useApp } from '../app'
 import { SiaCentralHost } from '@siafoundation/sia-central'

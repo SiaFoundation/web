@@ -1,6 +1,6 @@
 import { Button, DropdownMenu } from '@siafoundation/design-system'
 import { CaretDown16 } from '@siafoundation/react-icons'
-import { useHost } from '@siafoundation/react-renterd'
+import { useHost } from '@siafoundation/renterd-react'
 import { HostContextMenuContent } from './HostContextMenu'
 
 type Props = {

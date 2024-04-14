@@ -11,7 +11,7 @@ import { Search16 } from '@siafoundation/react-icons'
 import React, { useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-import { useSiaCentralSearch } from '@siafoundation/react-sia-central'
+import { useSiaCentralSearch } from '@siafoundation/sia-central-react'
 import { routes } from '../../config/routes'
 import { siaCentralApi } from '../../config'
 

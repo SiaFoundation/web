@@ -9,7 +9,7 @@ import {
   useAutopilotTrigger,
   useBusState,
   useSettingUpdate,
-} from '@siafoundation/react-renterd'
+} from '@siafoundation/renterd-react'
 import { SettingsData, defaultValues } from './types'
 import {
   transformUpAutopilot,

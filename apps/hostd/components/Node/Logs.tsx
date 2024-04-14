@@ -6,7 +6,7 @@ import {
   Text,
   useDatasetEmptyState,
 } from '@siafoundation/design-system'
-import { useLogsSearch } from '@siafoundation/react-hostd'
+import { useLogsSearch } from '@siafoundation/hostd-react'
 import { humanDate } from '@siafoundation/units'
 import { cx } from 'class-variance-authority'
 import { times } from '@technically/lodash'

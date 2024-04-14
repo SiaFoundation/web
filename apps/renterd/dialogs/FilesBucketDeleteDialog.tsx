@@ -12,7 +12,7 @@ import {
 import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../contexts/dialog'
-import { useBucketDelete } from '@siafoundation/react-renterd'
+import { useBucketDelete } from '@siafoundation/renterd-react'
 
 const defaultValues = {
   name: '',

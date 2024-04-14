@@ -1,7 +1,7 @@
 import {
   useWalletFundSiacoin,
   useWalletFundSiafund,
-} from '@siafoundation/react-walletd'
+} from '@siafoundation/walletd-react'
 import { useWallets } from '../../contexts/wallets'
 import { useCallback } from 'react'
 import { SendParams } from './types'

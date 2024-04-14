@@ -1,5 +1,5 @@
 import { webLinks } from '@siafoundation/design-system'
-import { useBusState } from '@siafoundation/react-renterd'
+import { useBusState } from '@siafoundation/renterd-react'
 
 export function useSiascanUrl() {
   const network = useBusState()

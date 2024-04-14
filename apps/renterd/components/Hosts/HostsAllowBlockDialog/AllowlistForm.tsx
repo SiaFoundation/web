@@ -10,7 +10,7 @@ import {
   FormSubmitButtonFormik,
 } from '@siafoundation/design-system'
 import { ListChecked32, Filter32, Warning16 } from '@siafoundation/react-icons'
-import { useHostsAllowlist } from '@siafoundation/react-renterd'
+import { useHostsAllowlist } from '@siafoundation/renterd-react'
 import { useAllowlistUpdate } from '../../../hooks/useAllowlistUpdate'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'

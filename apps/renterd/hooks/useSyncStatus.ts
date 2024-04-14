@@ -4,7 +4,7 @@ import {
   useConsensusState,
   useEstimatedNetworkBlockHeight,
   useWallet,
-} from '@siafoundation/react-renterd'
+} from '@siafoundation/renterd-react'
 
 export function useSyncStatus() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()

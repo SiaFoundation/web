@@ -4,7 +4,7 @@ import { createWallet } from '../fixtures/createWallet'
 import {
   getMockScenarioSeedWallet,
   mockApiDefaults,
-} from '@siafoundation/mock-walletd'
+} from '@siafoundation/walletd-mock'
 
 test('wallet create', async ({ page }) => {
   const mocks = getMockScenarioSeedWallet()

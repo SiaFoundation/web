@@ -6,7 +6,7 @@ import {
   GougingSettings,
   RedundancySettings,
   UploadPackingSettings,
-} from '@siafoundation/react-renterd'
+} from '@siafoundation/renterd-react'
 import { SiaCentralHostsNetworkAveragesResponse } from '@siafoundation/sia-central'
 import BigNumber from 'bignumber.js'
 import { TBToBytes } from '@siafoundation/units'

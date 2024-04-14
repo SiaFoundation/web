@@ -10,7 +10,7 @@ import {
 } from '@siafoundation/design-system'
 import { Path, UseFormReturn } from 'react-hook-form'
 import BigNumber from 'bignumber.js'
-import { useRescanStart } from '@siafoundation/react-walletd'
+import { useRescanStart } from '@siafoundation/walletd-react'
 import { CalloutWarning } from './CalloutWarning'
 
 export function getRescanFields() {

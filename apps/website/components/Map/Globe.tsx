@@ -7,7 +7,7 @@ import earthDarkContrast from '../../assets/earth-dark-contrast.png'
 import earthTopology from '../../assets/earth-topology.png'
 import nightSky from '../../assets/night-sky.png'
 import { GlobeDyn } from './GlobeDyn'
-import { useSiaCentralExchangeRates } from '@siafoundation/react-sia-central'
+import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
 import { useDecRoutes } from './useRoutes'
 import { SiaCentralPartialHost } from '../../content/geoHosts'
 

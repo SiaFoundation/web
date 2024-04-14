@@ -1,5 +1,5 @@
 ---
-'@siafoundation/react-walletd': minor
+'@siafoundation/walletd-react': minor
 ---
 
 Added useNodeState.

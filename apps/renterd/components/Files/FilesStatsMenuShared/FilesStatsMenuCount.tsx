@@ -1,5 +1,5 @@
 import { LoadingDots, Text, Tooltip } from '@siafoundation/design-system'
-import { useObjectStats } from '@siafoundation/react-renterd'
+import { useObjectStats } from '@siafoundation/renterd-react'
 import { useFilesManager } from '../../../contexts/filesManager'
 import { useFilesDirectory } from '../../../contexts/filesDirectory'
 import { useFilesFlat } from '../../../contexts/filesFlat'

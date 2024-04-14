@@ -13,7 +13,7 @@ import { humanDate } from '@siafoundation/units'
 import { humanTimeAndUnits } from '../../lib/time'
 import { walletTypes } from '../../config/walletTypes'
 import { WalletData, TableColumnId } from './types'
-import { useWalletBalance } from '@siafoundation/react-walletd'
+import { useWalletBalance } from '@siafoundation/walletd-react'
 import BigNumber from 'bignumber.js'
 import { WalletContextMenu } from '../../components/WalletContextMenu'
 

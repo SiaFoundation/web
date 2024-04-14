@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test'
-import { Wallet } from '@siafoundation/react-walletd'
+import { Wallet } from '@siafoundation/walletd-react'
 
 export async function navigateToWallet({
   page,

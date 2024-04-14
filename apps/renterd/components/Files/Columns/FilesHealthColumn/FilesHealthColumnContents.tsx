@@ -4,7 +4,7 @@ import {
   Separator,
   Text,
 } from '@siafoundation/design-system'
-import { useObject } from '@siafoundation/react-renterd'
+import { useObject } from '@siafoundation/renterd-react'
 import { cx } from 'class-variance-authority'
 import { sortBy } from '@technically/lodash'
 import { computeSlabContractSetShards } from '../../../../lib/health'

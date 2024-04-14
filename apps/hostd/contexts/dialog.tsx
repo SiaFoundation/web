@@ -8,7 +8,7 @@ import {
 import { VolumeCreateDialog } from '../dialogs/VolumeCreateDialog'
 import { VolumeResizeDialog } from '../dialogs/VolumeResizeDialog'
 import { VolumeDeleteDialog } from '../dialogs/VolumeDeleteDialog'
-import { useSyncerConnect, useWallet } from '@siafoundation/react-hostd'
+import { useSyncerConnect, useWallet } from '@siafoundation/hostd-react'
 import { HostdSendSiacoinDialog } from '../dialogs/HostdSendSiacoinDialog'
 import { HostdTransactionDetailsDialog } from '../dialogs/HostdTransactionDetailsDialog'
 import { ContractsFilterContractIdDialog } from '../dialogs/ContractsFilterContractIdDialog'

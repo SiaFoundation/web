@@ -11,7 +11,7 @@ import {
   FieldGroupFormik,
 } from '@siafoundation/design-system'
 import { ListChecked32, Filter32 } from '@siafoundation/react-icons'
-import { useHostsBlocklist } from '@siafoundation/react-renterd'
+import { useHostsBlocklist } from '@siafoundation/renterd-react'
 import { useContracts } from '../../../contexts/contracts'
 import { useFormik } from 'formik'
 import { useEffect, useMemo } from 'react'

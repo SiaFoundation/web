@@ -3,7 +3,7 @@ import {
   useClientFilters,
   useClientFilteredDataset,
 } from '@siafoundation/design-system'
-import { useWalletAddresses } from '@siafoundation/react-walletd'
+import { useWalletAddresses } from '@siafoundation/walletd-react'
 import { createContext, useContext, useMemo } from 'react'
 import {
   AddressData,

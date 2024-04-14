@@ -6,7 +6,7 @@ import {
   useWalletDiscard,
   useWalletFund,
   useWalletSign,
-} from '@siafoundation/react-renterd'
+} from '@siafoundation/renterd-react'
 import { useDialog } from '../contexts/dialog'
 import BigNumber from 'bignumber.js'
 

@@ -13,7 +13,7 @@ import {
   FieldSwitch,
   FieldText,
 } from '@siafoundation/design-system'
-import { useVolume, useVolumeDelete } from '@siafoundation/react-hostd'
+import { useVolume, useVolumeDelete } from '@siafoundation/hostd-react'
 import { humanBytes } from '@siafoundation/units'
 import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'

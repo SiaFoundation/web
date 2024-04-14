@@ -11,7 +11,7 @@ import {
   truncate,
 } from '@siafoundation/design-system'
 import { CaretDown16, Delete16 } from '@siafoundation/react-icons'
-import { useSettingUpdate } from '@siafoundation/react-renterd'
+import { useSettingUpdate } from '@siafoundation/renterd-react'
 import { useS3AuthenticationSettings } from '../../hooks/useS3AuthenticationSettings'
 import { useCallback } from 'react'
 import { omit } from '@technically/lodash'

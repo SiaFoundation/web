@@ -17,7 +17,7 @@ import {
   WalletMetadata,
   useWalletAdd,
   useWalletAddressAdd,
-} from '@siafoundation/react-walletd'
+} from '@siafoundation/walletd-react'
 import { useDialog } from '../../contexts/dialog'
 import { useWallets } from '../../contexts/wallets'
 import { walletAddTypes } from '../../config/walletTypes'

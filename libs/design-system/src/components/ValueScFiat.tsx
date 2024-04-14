@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js'
 import { ValueSc } from './ValueSc'
 import { ValueFiat } from './ValueFiat'
 import { useAppSettings } from '@siafoundation/react-core'
-import { useSiaCentralExchangeRates } from '@siafoundation/react-sia-central'
+import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
 import { useMemo } from 'react'
 
 type Props = {

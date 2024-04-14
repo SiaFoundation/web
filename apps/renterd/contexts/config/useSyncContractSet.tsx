@@ -4,7 +4,7 @@ import {
   triggerSuccessToast,
 } from '@siafoundation/design-system'
 import { useCallback } from 'react'
-import { useSettingUpdate } from '@siafoundation/react-renterd'
+import { useSettingUpdate } from '@siafoundation/renterd-react'
 import useLocalStorageState from 'use-local-storage-state'
 import { transformUpContractSet } from '../../contexts/config/transform'
 import { useContractSetSettings } from '../../hooks/useContractSetSettings'

@@ -1,4 +1,4 @@
-import { ObjEntry } from '@siafoundation/react-renterd'
+import { ObjEntry } from '@siafoundation/renterd-react'
 import { sortBy, toPairs } from '@technically/lodash'
 import useSWR from 'swr'
 import { useContracts } from '../contracts'

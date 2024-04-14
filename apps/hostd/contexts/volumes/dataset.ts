@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useVolumes, VolumeMeta } from '@siafoundation/react-hostd'
+import { useVolumes, VolumeMeta } from '@siafoundation/hostd-react'
 import { VolumeData } from './types'
 import BigNumber from 'bignumber.js'
 import { MiBToBytes } from '@siafoundation/units'

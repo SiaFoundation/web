@@ -1,12 +1,12 @@
 import { minutesInMilliseconds } from '@siafoundation/design-system'
-import { useAutopilotConfig } from '@siafoundation/react-renterd'
+import { useAutopilotConfig } from '@siafoundation/renterd-react'
 import { useSyncContractSet } from './useSyncContractSet'
 import { useAppSettings } from '@siafoundation/react-core'
 import { useContractSetSettings } from '../../hooks/useContractSetSettings'
 import { useGougingSettings } from '../../hooks/useGougingSettings'
 import { useRedundancySettings } from '../../hooks/useRedundancySettings'
 import { useUploadPackingSettings } from '../../hooks/useUploadPackingSettings'
-import { useSiaCentralHostsNetworkAverages } from '@siafoundation/react-sia-central'
+import { useSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-react'
 import { useApp } from '../app'
 
 export function useResources() {

@@ -1,6 +1,6 @@
 import { triggerErrorToast, triggerToast } from '@siafoundation/design-system'
 import { useAppSettings } from '@siafoundation/react-core'
-import { useBuckets, useObjectDownloadFunc } from '@siafoundation/react-renterd'
+import { useBuckets, useObjectDownloadFunc } from '@siafoundation/renterd-react'
 import { throttle } from '@technically/lodash'
 import { useCallback, useMemo, useState } from 'react'
 import {

@@ -10,7 +10,7 @@ import {
 import { useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../contexts/dialog'
-import { useObjectRename } from '@siafoundation/react-renterd'
+import { useObjectRename } from '@siafoundation/renterd-react'
 import { getFilename, isDirectory } from '../lib/paths'
 import { getRenameFileRenameParams } from '../lib/rename'
 import { useFilesDirectory } from '../contexts/filesDirectory'

@@ -9,7 +9,7 @@ import {
 import {
   useAutopilotConfig,
   useMetricsContractSet,
-} from '@siafoundation/react-renterd'
+} from '@siafoundation/renterd-react'
 import { useMemo } from 'react'
 import { ChartContractSetCategory, ChartContractSetKey } from './types'
 import { getTimeClampedToNearest5min } from './utils'

@@ -1,4 +1,4 @@
-import { DNSProvider } from '@siafoundation/react-hostd'
+import { DNSProvider } from '@siafoundation/hostd-react'
 import BigNumber from 'bignumber.js'
 
 export const scDecimalPlaces = 6

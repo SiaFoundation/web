@@ -10,7 +10,7 @@ import {
   ConfigFields,
   useOnInvalid,
 } from '@siafoundation/design-system'
-import { useSystemDirectory, useVolumeCreate } from '@siafoundation/react-hostd'
+import { useSystemDirectory, useVolumeCreate } from '@siafoundation/hostd-react'
 import { bytesToGB, GBToBytes, humanBytes } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { useCallback, useEffect, useMemo } from 'react'

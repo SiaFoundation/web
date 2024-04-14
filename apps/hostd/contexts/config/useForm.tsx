@@ -3,7 +3,7 @@ import { initialValues } from './types'
 import { useMemo } from 'react'
 import { getFields } from './fields'
 import useLocalStorageState from 'use-local-storage-state'
-import { useSiaCentralExchangeRates } from '@siafoundation/react-sia-central'
+import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
 
 export function useForm() {
   const form = useHookForm({

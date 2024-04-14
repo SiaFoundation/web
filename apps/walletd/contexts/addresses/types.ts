@@ -1,7 +1,7 @@
 import {
   WalletAddress,
   WalletAddressMetadata,
-} from '@siafoundation/react-walletd'
+} from '@siafoundation/walletd-react'
 
 export type CellContext = {
   siascanUrl: string

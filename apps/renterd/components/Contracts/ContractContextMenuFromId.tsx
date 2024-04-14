@@ -1,6 +1,6 @@
 import { Button, DropdownMenu } from '@siafoundation/design-system'
 import { CaretDown16 } from '@siafoundation/react-icons'
-import { useContract } from '@siafoundation/react-renterd'
+import { useContract } from '@siafoundation/renterd-react'
 import { ContractContextMenuContent } from './ContractContextMenu'
 
 type Props = {

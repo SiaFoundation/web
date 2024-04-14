@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { WalletSendSiacoinDialog } from '@siafoundation/design-system'
-import { useWallet, useWalletSend } from '@siafoundation/react-hostd'
+import { useWallet, useWalletSend } from '@siafoundation/hostd-react'
 import { useDialog } from '../contexts/dialog'
 import BigNumber from 'bignumber.js'
 

@@ -1,5 +1,5 @@
 import { TestnetWarningBanner } from '@siafoundation/design-system'
-import { useConsensusNetwork } from '@siafoundation/react-walletd'
+import { useConsensusNetwork } from '@siafoundation/walletd-react'
 
 export function WalletdTestnetWarningBanner() {
   const network = useConsensusNetwork({

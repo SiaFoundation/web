@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import { cx } from 'class-variance-authority'
 import { toFixedMax } from '../lib/numbers'
-import { useSiaCentralExchangeRates } from '@siafoundation/react-sia-central'
+import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
 import { BaseNumberField } from './BaseNumberField'
 
 type Props = Omit<

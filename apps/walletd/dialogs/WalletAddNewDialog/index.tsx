@@ -13,7 +13,7 @@ import {
 import { Redo16, Copy16 } from '@siafoundation/react-icons'
 import { MouseEvent, useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { WalletMetadata, useWalletAdd } from '@siafoundation/react-walletd'
+import { WalletMetadata, useWalletAdd } from '@siafoundation/walletd-react'
 import { useDialog } from '../../contexts/dialog'
 import { useWallets } from '../../contexts/wallets'
 import { walletAddTypes } from '../../config/walletTypes'

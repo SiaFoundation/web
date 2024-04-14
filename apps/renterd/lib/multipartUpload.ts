@@ -5,7 +5,7 @@ import {
   useMultipartUploadPart,
   useMultipartUploadComplete,
   useMultipartUploadCreate,
-} from '@siafoundation/react-renterd'
+} from '@siafoundation/renterd-react'
 
 type ApiWorkerUploadPart = ReturnType<typeof useMultipartUploadPart>
 type ApiBusUploadComplete = ReturnType<typeof useMultipartUploadComplete>

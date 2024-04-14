@@ -3,7 +3,7 @@ import {
   useWalletOutputsSiacoin,
   useConsensusTipState,
   useWalletOutputsSiafund,
-} from '@siafoundation/react-walletd'
+} from '@siafoundation/walletd-react'
 import { useWallets } from '../../contexts/wallets'
 import { useCallback } from 'react'
 import { signTransactionSeed } from '../../lib/signSeed'

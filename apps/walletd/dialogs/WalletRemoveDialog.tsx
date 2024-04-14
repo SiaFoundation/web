@@ -9,7 +9,7 @@ import {
   Code,
   triggerErrorToast,
 } from '@siafoundation/design-system'
-import { useWalletDelete } from '@siafoundation/react-walletd'
+import { useWalletDelete } from '@siafoundation/walletd-react'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'

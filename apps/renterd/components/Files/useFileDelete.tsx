@@ -6,7 +6,7 @@ import {
 import { Delete16 } from '@siafoundation/react-icons'
 import { useDialog } from '../../contexts/dialog'
 import { useCallback } from 'react'
-import { useObjectDelete } from '@siafoundation/react-renterd'
+import { useObjectDelete } from '@siafoundation/renterd-react'
 import { bucketAndKeyParamsFromPath } from '../../lib/paths'
 
 export function useFileDelete() {

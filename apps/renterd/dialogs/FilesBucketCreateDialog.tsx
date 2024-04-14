@@ -11,7 +11,7 @@ import {
 import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../contexts/dialog'
-import { useBucketCreate } from '@siafoundation/react-renterd'
+import { useBucketCreate } from '@siafoundation/renterd-react'
 
 const defaultValues = {
   name: '',

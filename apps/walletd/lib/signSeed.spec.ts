@@ -1,6 +1,6 @@
 import { signTransactionSeed } from './signSeed'
 import { initSDK } from '@siafoundation/sdk'
-import { getMockScenarioSeedWallet } from '@siafoundation/mock-walletd'
+import { getMockScenarioSeedWallet } from '@siafoundation/walletd-mock'
 import { getMockAddresses } from './testMocks'
 
 beforeEach(async () => {

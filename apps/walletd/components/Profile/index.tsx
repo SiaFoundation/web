@@ -4,7 +4,7 @@ import {
   useConsensusNetwork,
   useNodeState,
   useSyncerPeers,
-} from '@siafoundation/react-walletd'
+} from '@siafoundation/walletd-react'
 import { useDialog } from '../../contexts/dialog'
 import { humanTime } from '@siafoundation/units'
 

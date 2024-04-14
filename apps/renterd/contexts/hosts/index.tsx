@@ -12,7 +12,7 @@ import {
   useHostsAllowlist,
   useHostsBlocklist,
   useHostsSearch,
-} from '@siafoundation/react-renterd'
+} from '@siafoundation/renterd-react'
 import {
   createContext,
   useCallback,
@@ -35,7 +35,7 @@ import { useDataset } from './dataset'
 import { useApp } from '../app'
 import { useAppSettings } from '@siafoundation/react-core'
 import { Commands, emptyCommands } from '../../components/Hosts/HostMap/Globe'
-import { useSiaCentralHosts } from '@siafoundation/react-sia-central'
+import { useSiaCentralHosts } from '@siafoundation/sia-central-react'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 

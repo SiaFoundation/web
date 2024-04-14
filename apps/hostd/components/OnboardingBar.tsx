@@ -17,7 +17,7 @@ import {
 import { useSyncStatus } from '../hooks/useSyncStatus'
 import { routes } from '../config/routes'
 import { useDialog } from '../contexts/dialog'
-import { useSettings, useWallet } from '@siafoundation/react-hostd'
+import { useSettings, useWallet } from '@siafoundation/hostd-react'
 import BigNumber from 'bignumber.js'
 import { toHastings } from '@siafoundation/units'
 import { useAppSettings } from '@siafoundation/react-core'
