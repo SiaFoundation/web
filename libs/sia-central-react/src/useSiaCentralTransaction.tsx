@@ -7,7 +7,7 @@ import {
   api,
   SiaCentralTransactionParams,
   SiaCentralTransactionResponse,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-types'
 
 export function useSiaCentralTransaction(
   args?: HookArgsSwr<SiaCentralTransactionParams, SiaCentralTransactionResponse>

@@ -3,9 +3,9 @@
   "description": "React hooks for interacting with the Sia Central API.",
   "version": "3.0.0",
   "license": "MIT",
-  "peerDependencies": {
+  "dependencies": {
     "@siafoundation/react-core": "^1.1.0",
-    "@siafoundation/sia-central": "^0.3.3"
+    "@siafoundation/sia-central-types": "0.0.0"
   },
   "types": "./src/index.d.ts"
 }

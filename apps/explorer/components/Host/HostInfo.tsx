@@ -11,7 +11,7 @@ import {
   Time16,
   WarningFilled16,
 } from '@siafoundation/react-icons'
-import { SiaCentralHost } from '@siafoundation/sia-central'
+import { SiaCentralHost } from '@siafoundation/sia-central-types'
 import { humanDate } from '@siafoundation/units'
 import { formatDistance } from 'date-fns'
 

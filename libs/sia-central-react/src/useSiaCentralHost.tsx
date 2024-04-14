@@ -7,7 +7,7 @@ import {
   SiaCentralHostResponse,
   SiaCentralHostParams,
   api,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-types'
 
 export function useSiaCentralHost(
   args?: HookArgsSwr<SiaCentralHostParams, SiaCentralHostResponse>

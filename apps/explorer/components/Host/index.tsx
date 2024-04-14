@@ -1,7 +1,7 @@
 import {
   SiaCentralExchangeRates,
   SiaCentralHost,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-types'
 import { ContentLayout } from '../ContentLayout'
 import { HostHeader } from './HostHeader'
 import { HostSettings } from './HostSettings'

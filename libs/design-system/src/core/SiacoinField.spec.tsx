@@ -8,7 +8,7 @@ import { SiacoinField } from './SiacoinField'
 import { fireEvent, render, waitFor, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useState } from 'react'
-import { SiaCentralExchangeRatesResponse } from '@siafoundation/sia-central'
+import { SiaCentralExchangeRatesResponse } from '@siafoundation/sia-central-types'
 import { setupServer } from 'msw/node'
 import { HttpResponse, http } from 'msw'
 

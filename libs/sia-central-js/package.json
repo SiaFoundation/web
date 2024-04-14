@@ -1,0 +1,11 @@
+{
+  "name": "@siafoundation/sia-central-js",
+  "description": "Methods and types for interacting with the Sia Central API.",
+  "version": "0.3.3",
+  "license": "MIT",
+  "dependencies": {
+    "@technically/lodash": "^4.17.0",
+    "@siafoundation/sia-central-types": "0.0.0"
+  },
+  "types": "./src/index.d.ts"
+}

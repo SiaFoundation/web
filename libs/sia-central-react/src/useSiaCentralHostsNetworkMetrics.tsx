@@ -6,7 +6,7 @@ import {
 import {
   api,
   SiaCentralHostsNetworkMetricsResponse,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-types'
 
 export function useSiaCentralHostsNetworkMetrics(
   args?: HookArgsSwr<void, SiaCentralHostsNetworkMetricsResponse>

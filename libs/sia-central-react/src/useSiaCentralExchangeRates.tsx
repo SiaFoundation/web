@@ -6,7 +6,7 @@ import {
 import {
   api,
   SiaCentralExchangeRatesResponse,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-types'
 
 export function useSiaCentralExchangeRates(
   args?: HookArgsSwr<void, SiaCentralExchangeRatesResponse>

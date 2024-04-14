@@ -6,7 +6,7 @@ import { getMinutesInSeconds } from '../lib/time'
 import {
   getSiaCentralBlockLatest,
   getSiaCentralHostsNetworkMetrics,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-js'
 
 const maxAge = getMinutesInSeconds(5)
 

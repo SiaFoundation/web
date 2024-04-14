@@ -1,6 +1,6 @@
 import { TBToBytes } from './bytes'
 import { monthsToBlocks } from './blockTime'
-import { SiaCentralHost } from '@siafoundation/sia-central'
+import { SiaCentralHost } from '@siafoundation/sia-central-types'
 import BigNumber from 'bignumber.js'
 import { humanSiacoin } from './currency'
 import { humanBytes, humanSpeed } from './humanUnits'

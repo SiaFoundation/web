@@ -1,9 +1,9 @@
 import { siaCentralApi } from '../config'
+import { SiaCentralBlock } from '@siafoundation/sia-central-types'
 import {
-  SiaCentralBlock,
   getSiaCentralBlock,
   getSiaCentralBlocks,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-js'
 import { range } from '@technically/lodash'
 
 export async function getLastFewBlocksOneByOne(block?: SiaCentralBlock) {

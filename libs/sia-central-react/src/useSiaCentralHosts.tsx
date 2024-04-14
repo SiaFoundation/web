@@ -3,7 +3,7 @@ import {
   useAppSettings,
   HookArgsSwr,
 } from '@siafoundation/react-core'
-import { SiaCentralHostsResponse, api } from '@siafoundation/sia-central'
+import { SiaCentralHostsResponse, api } from '@siafoundation/sia-central-types'
 
 export function useSiaCentralHosts(
   args?: HookArgsSwr<void, SiaCentralHostsResponse>

@@ -1,5 +1,5 @@
 import { Badge, Text, Tooltip } from '@siafoundation/design-system'
-import { SiaCentralTransaction } from '@siafoundation/sia-central'
+import { SiaCentralTransaction } from '@siafoundation/sia-central-types'
 import { humanDate } from '@siafoundation/units'
 import { routes } from '../../config/routes'
 import { EntityHeading } from '../EntityHeading'

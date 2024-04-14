@@ -7,7 +7,7 @@ import {
   api,
   SiaCentralBlockParams,
   SiaCentralBlockResponse,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-types'
 
 export function useSiaCentralBlock(
   args?: HookArgsSwr<SiaCentralBlockParams, SiaCentralBlockResponse>

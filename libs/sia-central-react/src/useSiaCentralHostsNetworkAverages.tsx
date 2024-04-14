@@ -6,7 +6,7 @@ import {
 import {
   api,
   SiaCentralHostsNetworkAveragesResponse,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-types'
 
 export function useSiaCentralHostsNetworkAverages(
   args?: HookArgsSwr<void, SiaCentralHostsNetworkAveragesResponse>

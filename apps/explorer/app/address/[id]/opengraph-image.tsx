@@ -1,4 +1,4 @@
-import { getSiaCentralAddress } from '@siafoundation/sia-central'
+import { getSiaCentralAddress } from '@siafoundation/sia-central-js'
 import { humanSiacoin, humanSiafund } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { siaCentralApi } from '../../../config'

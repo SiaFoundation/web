@@ -4,7 +4,7 @@ import {
   SiaCentralContract,
   SiaCentralExchangeRates,
   SiaCentralTransaction,
-} from '@siafoundation/sia-central'
+} from '@siafoundation/sia-central-types'
 import { Contract } from '../Contract'
 
 type Props = {

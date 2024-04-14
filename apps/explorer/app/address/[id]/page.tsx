@@ -1,4 +1,4 @@
-import { getSiaCentralAddress } from '@siafoundation/sia-central'
+import { getSiaCentralAddress } from '@siafoundation/sia-central-js'
 import { Address } from '../../../components/Address'
 import { Metadata } from 'next'
 import { routes } from '../../../config/routes'

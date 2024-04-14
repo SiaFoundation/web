@@ -1,4 +1,4 @@
-import { getSiaCentralBlock } from '@siafoundation/sia-central'
+import { getSiaCentralBlock } from '@siafoundation/sia-central-js'
 import { humanDate } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { siaCentralApi } from '../../../config'
