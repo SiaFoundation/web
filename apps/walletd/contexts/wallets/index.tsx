@@ -4,10 +4,8 @@ import {
   useClientFilters,
   useClientFilteredDataset,
 } from '@siafoundation/design-system'
-import {
-  WalletMetadata,
-  useWallets as useWalletsData,
-} from '@siafoundation/walletd-react'
+import { WalletMetadata } from '@siafoundation/walletd-types'
+import { useWallets as useWalletsData } from '@siafoundation/walletd-react'
 import { createContext, useContext, useEffect, useMemo } from 'react'
 import {
   WalletData,

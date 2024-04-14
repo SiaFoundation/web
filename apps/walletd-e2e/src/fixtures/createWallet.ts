@@ -4,9 +4,9 @@ import {
   Wallet,
   WalletAddressesResponse,
   WalletBalanceResponse,
-  WalletFundResponse,
+  WalletFundSiacoinResponse,
   WalletOutputsSiacoinResponse,
-} from '@siafoundation/walletd-react'
+} from '@siafoundation/walletd-types'
 
 export async function createWallet({
   page,
@@ -21,7 +21,7 @@ export async function createWallet({
   responses?: {
     balance?: WalletBalanceResponse
     outputsSiacoin?: WalletOutputsSiacoinResponse
-    fund?: WalletFundResponse
+    fundSiacoin?: WalletFundSiacoinResponse
     addresses?: WalletAddressesResponse
   }
   expects?: {

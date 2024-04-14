@@ -8,7 +8,7 @@ import { mockApiWallets } from './wallets'
 import { mockApiTxPoolBroadcast } from './txPoolBroadcast'
 import { mockApiWallet } from './wallet'
 import { mockApiRescan } from './rescan'
-import { RescanResponse } from '@siafoundation/walletd-react'
+import { RescanResponse } from '@siafoundation/walletd-types'
 
 type Responses = {
   rescan?: RescanResponse

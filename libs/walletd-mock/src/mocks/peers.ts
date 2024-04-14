@@ -1,4 +1,4 @@
-import { SyncerPeersResponse } from '@siafoundation/walletd-react'
+import { SyncerPeersResponse } from '@siafoundation/walletd-types'
 import { Page } from 'playwright'
 
 export function getMockPeersResponse(): SyncerPeersResponse {

@@ -1,4 +1,4 @@
-import { WalletOutputsSiacoinResponse } from '@siafoundation/walletd-react'
+import { WalletOutputsSiacoinResponse } from '@siafoundation/walletd-types'
 import { SiacoinElement } from '@siafoundation/types'
 import { Page } from 'playwright'
 

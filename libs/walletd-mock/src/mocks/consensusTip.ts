@@ -1,4 +1,4 @@
-import { ConsensusTipResponse } from '@siafoundation/walletd-react'
+import { ConsensusTipResponse } from '@siafoundation/walletd-types'
 import { Page } from 'playwright'
 
 export function getMockConsensusTipResponse(): ConsensusTipResponse {

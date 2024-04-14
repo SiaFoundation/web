@@ -1,4 +1,4 @@
-import { RescanResponse } from '@siafoundation/walletd-react'
+import { RescanResponse } from '@siafoundation/walletd-types'
 import { Page } from 'playwright'
 
 export function getMockRescanResponse(): RescanResponse {

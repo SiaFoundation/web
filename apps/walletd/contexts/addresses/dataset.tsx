@@ -5,8 +5,8 @@ import {
 import {
   WalletAddressMetadata,
   WalletAddressesResponse,
-  useWalletAddresses,
-} from '@siafoundation/walletd-react'
+} from '@siafoundation/walletd-types'
+import { useWalletAddresses } from '@siafoundation/walletd-react'
 import { useMemo } from 'react'
 import { AddressData } from './types'
 import { OpenDialog, useDialog } from '../dialog'

@@ -1,4 +1,4 @@
-import { WalletTxPoolResponse } from '@siafoundation/walletd-react'
+import { WalletTxPoolResponse } from '@siafoundation/walletd-types'
 import { Page } from 'playwright'
 
 export function getMockWalletTxPoolResponse(): WalletTxPoolResponse {

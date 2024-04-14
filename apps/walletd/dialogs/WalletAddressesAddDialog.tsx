@@ -9,10 +9,8 @@ import {
   triggerSuccessToast,
   useDialogFormHelpers,
 } from '@siafoundation/design-system'
-import {
-  WalletAddressMetadata,
-  useWalletAddressAdd,
-} from '@siafoundation/walletd-react'
+import { WalletAddressMetadata } from '@siafoundation/walletd-types'
+import { useWalletAddressAdd } from '@siafoundation/walletd-react'
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { useWallets } from '../contexts/wallets'
