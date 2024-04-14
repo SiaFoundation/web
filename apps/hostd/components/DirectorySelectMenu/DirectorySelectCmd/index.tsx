@@ -3,7 +3,7 @@ import { Page } from '../../CmdRoot/types'
 import { Text } from '@siafoundation/design-system'
 import { FolderIcon } from '@siafoundation/react-icons'
 import { DirectorySelectEmpty } from './DirectorySelectEmpty'
-import { SystemDirResponse } from '@siafoundation/hostd-react'
+import { SystemDirectoryResponse } from '@siafoundation/hostd-types'
 import { useHostOSPathSeparator } from '../../../hooks/useHostOSPathSeparator'
 import { getChildDirectoryPath } from '../../../lib/system'
 import { DirectorySelectError } from './DirectorySelectError'
@@ -27,7 +27,7 @@ export function DirectorySelectCmd({
   afterSelect,
 }: {
   path: string
-  dir: SWRResponse<SystemDirResponse, SWRError>
+  dir: SWRResponse<SystemDirectoryResponse, SWRError>
   setPath: (path: string) => void
   currentPage?: Page
   beforeSelect?: () => void

@@ -1,5 +1,5 @@
 import { SWRError } from '@siafoundation/react-core'
-import { HostSettings } from '@siafoundation/hostd-react'
+import { HostSettings } from '@siafoundation/hostd-types'
 
 export type Resources = {
   settings: {

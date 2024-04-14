@@ -5,10 +5,8 @@ import {
   getContractsTimeRangeBlockHeight,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
-import {
-  ContractStatus,
-  useContracts as useContractsData,
-} from '@siafoundation/hostd-react'
+import { ContractStatus } from '@siafoundation/hostd-types'
+import { useContracts as useContractsData } from '@siafoundation/hostd-react'
 import { createContext, useContext, useMemo } from 'react'
 import {
   columnsDefaultVisible,

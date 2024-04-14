@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
-import { Contract, useContracts } from '@siafoundation/hostd-react'
+import { Contract } from '@siafoundation/hostd-types'
+import { useContracts } from '@siafoundation/hostd-react'
 import { ContractData } from './types'
 import BigNumber from 'bignumber.js'
 
