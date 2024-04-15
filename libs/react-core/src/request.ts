@@ -2,11 +2,7 @@ import { AxiosRequestConfig, AxiosResponse, AxiosResponseHeaders } from 'axios'
 import { MutatorCallback, MutatorOptions } from 'swr'
 import { SWROptions } from './types'
 import { AppSettings } from './useAppSettings'
-
-export type RequestParams = Record<
-  string,
-  string | string[] | number | boolean
-> | void
+import { RequestParams, parameterizeRoute } from '@siafoundation/request'
 
 export type RequestConfig<Payload, Result> = {
   swr?: SWROptions<Result>
@@ -236,28 +232,6 @@ export function buildAxiosConfig<Params extends RequestParams, Payload, Result>(
     ...callArgs?.config?.axios,
     headers,
   } as AxiosRequestConfig<Payload>
-}
-
-function parameterizeRoute(
-  route: string | null,
-  params: RequestParams
-): string | null {
-  if (route && params) {
-    const paramKeys = Object.keys(params)
-    for (const key of paramKeys) {
-      const value = String(params[key])
-      if (route.includes(`:${key}`)) {
-        route = route.replace(`:${key}`, value)
-      } else {
-        if (!route.includes('?')) {
-          route += `?${key}=${encodeURIComponent(value)}`
-        } else {
-          route += `&${key}=${encodeURIComponent(value)}`
-        }
-      }
-    }
-  }
-  return route
 }
 
 export function buildRouteWithParams<

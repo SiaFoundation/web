@@ -8,7 +8,6 @@ import {
   buildRouteWithParams,
   InternalCallbackArgs,
   mergeInternalCallbackArgs,
-  RequestParams,
   Response,
   mergeInternalHookArgsCallback,
   InternalHookArgsSwr,
@@ -18,6 +17,7 @@ import {
 import { SWRError } from './types'
 import { useAppSettings } from './useAppSettings'
 import { keyOrNull } from './utils'
+import { RequestParams } from '@siafoundation/request'
 
 export function useGetSwr<Params extends RequestParams, Result>(
   args: InternalHookArgsSwr<Params, Result>

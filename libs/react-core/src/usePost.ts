@@ -8,7 +8,6 @@ import {
   buildRouteWithParams,
   InternalCallbackArgs,
   mergeInternalCallbackArgs,
-  RequestParams,
   Response,
   InternalHookArgsCallback,
   mergeInternalHookArgsCallback,
@@ -22,6 +21,7 @@ import { SWRError } from './types'
 import { useAppSettings } from './useAppSettings'
 import { keyOrNull } from './utils'
 import { useWorkflows } from './workflows'
+import { RequestParams } from '@siafoundation/request'
 
 export function usePostSwr<Params extends RequestParams, Payload, Result>(
   args: InternalHookArgsWithPayloadSwr<Params, Payload, Result>
