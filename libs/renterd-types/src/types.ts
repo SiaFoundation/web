@@ -211,6 +211,7 @@ export type AutopilotHostsConfig = {
   scoreOverrides: { [key: PublicKey]: number }
   maxDowntimeHours: number
   minRecentScanFailures: number
+  minProtocolVersion: string
 }
 
 export type AutopilotContractsConfig = {

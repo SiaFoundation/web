@@ -91,6 +91,7 @@ export function transformUpAutopilot(
       minRecentScanFailures: v.minRecentScanFailures.toNumber(),
       allowRedundantIPs: v.allowRedundantIPs,
       scoreOverrides: existingValues?.hosts.scoreOverrides || null,
+      minProtocolVersion: v.minProtocolVersion,
     },
   }
 }
@@ -219,6 +220,7 @@ export function transformDownAutopilot(
     allowRedundantIPs: config.hosts.allowRedundantIPs,
     maxDowntimeHours: new BigNumber(config.hosts.maxDowntimeHours),
     minRecentScanFailures: new BigNumber(config.hosts.minRecentScanFailures),
+    minProtocolVersion: config.hosts.minProtocolVersion || '',
   }
 }
 

@@ -28,6 +28,7 @@ describe('tansforms', () => {
               maxDowntimeHours: 1440,
               minRecentScanFailures: 10,
               scoreOverrides: null,
+              minProtocolVersion: null,
             },
             contracts: {
               set: 'autopilot',
@@ -73,6 +74,7 @@ describe('tansforms', () => {
         allowRedundantIPs: false,
         maxDowntimeHours: new BigNumber('1440'),
         minRecentScanFailures: new BigNumber('10'),
+        minProtocolVersion: '',
         defaultContractSet: 'myset',
         uploadPackingEnabled: true,
         hostBlockHeightLeeway: new BigNumber(4),
@@ -178,6 +180,7 @@ describe('tansforms', () => {
             allowRedundantIPs: false,
             maxDowntimeHours: new BigNumber('1440'),
             minRecentScanFailures: new BigNumber('10'),
+            minProtocolVersion: '',
           },
           undefined
         )
@@ -187,6 +190,7 @@ describe('tansforms', () => {
           maxDowntimeHours: 1440,
           minRecentScanFailures: 10,
           scoreOverrides: null,
+          minProtocolVersion: '1.6.0',
         },
         contracts: {
           set: 'autopilot',
@@ -218,6 +222,7 @@ describe('tansforms', () => {
             allowRedundantIPs: false,
             maxDowntimeHours: new BigNumber('1440'),
             minRecentScanFailures: new BigNumber('10'),
+            minProtocolVersion: '1.7.0',
           },
           {
             foobar1: 'value',
@@ -239,6 +244,7 @@ describe('tansforms', () => {
           maxDowntimeHours: 1440,
           minRecentScanFailures: 10,
           scoreOverrides: null,
+          minProtocolVersion: '1.7.0',
         },
         contracts: {
           foobar: 'value',
@@ -271,6 +277,7 @@ describe('tansforms', () => {
             allowRedundantIPs: false,
             maxDowntimeHours: new BigNumber('1440'),
             minRecentScanFailures: new BigNumber('10'),
+            minProtocolVersion: '1.7.0',
           },
           {
             contracts: {
@@ -286,6 +293,7 @@ describe('tansforms', () => {
           maxDowntimeHours: 1440,
           minRecentScanFailures: 10,
           scoreOverrides: null,
+          minProtocolVersion: '1.7.0',
         },
         contracts: {
           set: 'autopilot',
@@ -335,6 +343,7 @@ describe('tansforms', () => {
             allowRedundantIPs: false,
             maxDowntimeHours: new BigNumber('1440'),
             minRecentScanFailures: new BigNumber('10'),
+            minProtocolVersion: '1.7.0',
             defaultContractSet: 'myset',
             uploadPackingEnabled: false,
             hostBlockHeightLeeway: new BigNumber(4),
@@ -487,6 +496,7 @@ function buildAllResponses() {
         maxDowntimeHours: 1440,
         minRecentScanFailures: 10,
         scoreOverrides: null,
+        minProtocolVersion: '1.7.0',
       },
       contracts: {
         set: 'autopilot',
