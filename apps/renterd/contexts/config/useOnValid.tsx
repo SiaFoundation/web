@@ -4,7 +4,6 @@ import {
 } from '@siafoundation/design-system'
 import { useCallback } from 'react'
 import {
-  autopilotHostsKey,
   useAutopilotConfigUpdate,
   useAutopilotTrigger,
   useBusState,
@@ -22,6 +21,7 @@ import { delay, useMutate } from '@siafoundation/react-core'
 import { Resources } from './resources'
 import { useSyncContractSet } from './useSyncContractSet'
 import BigNumber from 'bignumber.js'
+import { autopilotHostsRoute } from '@siafoundation/renterd-types'
 
 export function useOnValid({
   resources,
@@ -155,9 +155,9 @@ export function useOnValid({
         if (firstTimeSettingConfig) {
           const refreshHostsAfterDelay = async () => {
             await delay(5_000)
-            mutate((key) => key.startsWith(autopilotHostsKey))
+            mutate((key) => key.startsWith(autopilotHostsRoute))
             await delay(5_000)
-            mutate((key) => key.startsWith(autopilotHostsKey))
+            mutate((key) => key.startsWith(autopilotHostsRoute))
           }
           refreshHostsAfterDelay()
         }

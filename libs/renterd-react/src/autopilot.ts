@@ -22,26 +22,27 @@ import {
   AutopilotTriggerParams,
   AutopilotTriggerPayload,
   AutopilotTriggerResponse,
+  autopilotConfigRoute,
+  autopilotHostsRoute,
+  autopilotStateRoute,
+  autopilotTriggerRoute,
 } from '@siafoundation/renterd-types'
-
-const autopilotStateKey = '/autopilot/state'
 
 export function useAutopilotState(
   args?: HookArgsSwr<AutopilotStateParams, AutopilotStateResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: autopilotStateKey,
+    route: autopilotStateRoute,
   })
 }
 
-const autopilotConfigKey = '/autopilot/config'
 export function useAutopilotConfig(
   args?: HookArgsSwr<AutopilotConfigParams, AutopilotConfigResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: autopilotConfigKey,
+    route: autopilotConfigRoute,
   })
 }
 
@@ -52,19 +53,20 @@ export function useAutopilotConfigUpdate(
     AutopilotConfigUpdateResponse
   >
 ) {
-  return usePutFunc({ ...args, route: autopilotConfigKey }, async (mutate) => {
-    mutate((key) => key === autopilotConfigKey)
-    // might need a delay before revalidating status which returns whether
-    // or not autopilot is configured
-    const func = async () => {
-      await delay(1000)
-      mutate((key) => key === autopilotStateKey)
+  return usePutFunc(
+    { ...args, route: autopilotConfigRoute },
+    async (mutate) => {
+      mutate((key) => key === autopilotConfigRoute)
+      // might need a delay before revalidating status which returns whether
+      // or not autopilot is configured
+      const func = async () => {
+        await delay(1000)
+        mutate((key) => key === autopilotStateRoute)
+      }
+      func()
     }
-    func()
-  })
+  )
 }
-
-export const autopilotHostsKey = '/autopilot/hosts'
 
 export function useAutopilotHostsSearch(
   args?: HookArgsWithPayloadSwr<
@@ -75,7 +77,7 @@ export function useAutopilotHostsSearch(
 ) {
   return usePostSwr({
     ...args,
-    route: autopilotHostsKey,
+    route: autopilotHostsRoute,
   })
 }
 
@@ -88,6 +90,6 @@ export function useAutopilotTrigger(
 ) {
   return usePostFunc({
     ...args,
-    route: '/autopilot/trigger',
+    route: autopilotTriggerRoute,
   })
 }
