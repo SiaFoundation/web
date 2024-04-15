@@ -26,6 +26,7 @@
       "@siafoundation/react-icons": ["libs/react-icons/src/index.ts"],
       "@siafoundation/renterd-types": ["libs/renterd-types/src/index.ts"],
       "@siafoundation/renterd-react": ["libs/renterd-react/src/index.ts"],
+      "@siafoundation/renterd-js": ["libs/renterd-js/src/index.ts"],
       "@siafoundation/walletd-types": ["libs/walletd-types/src/index.ts"],
       "@siafoundation/walletd-react": ["libs/walletd-react/src/index.ts"],
       // "buildLibsFromSource": false does not work with the next executor

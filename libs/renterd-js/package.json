@@ -1,0 +1,11 @@
+{
+  "name": "@siafoundation/renterd-js",
+  "description": "SDK for interacting with `renterd`.",
+  "version": "0.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "@siafoundation/renterd-types": "0.0.0",
+    "@siafoundation/request": "0.0.0"
+  },
+  "types": "./src/index.d.ts"
+}

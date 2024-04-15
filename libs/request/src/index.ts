@@ -36,7 +36,7 @@ export function buildRequestHandler<
 >(axios: Axios, method: Method, route: string) {
   type Args = Params extends void
     ? Data extends void
-      ? { config?: AxiosRequestConfig<Data> }
+      ? { config?: AxiosRequestConfig<Data> } | void
       : { data: Data; config?: AxiosRequestConfig<Data> }
     : Data extends void
     ? {
@@ -51,7 +51,13 @@ export function buildRequestHandler<
 
   return (args: Args) => {
     // args is sometimes undefined
-    const a = args || ({} as Args)
+    const a = {
+      ...args,
+    } as {
+      params?: Params
+      data?: Data
+      config?: AxiosRequestConfig<Data>
+    }
     const paramRoute =
       'params' in a
         ? // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
