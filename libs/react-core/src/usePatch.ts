@@ -9,7 +9,6 @@ import {
   InternalCallbackArgs,
   InternalHookArgsCallback,
   mergeInternalCallbackArgs,
-  RequestParams,
   Response,
   mergeInternalHookArgsCallback,
   getPathFromKey,
@@ -22,6 +21,7 @@ import { useAppSettings } from './useAppSettings'
 import { useMemo } from 'react'
 import { keyOrNull } from './utils'
 import { SWRError } from './types'
+import { RequestParams } from '@siafoundation/request'
 
 export function usePatchSwr<Params extends RequestParams, Payload, Result>(
   args: InternalHookArgsWithPayloadSwr<Params, Payload, Result>

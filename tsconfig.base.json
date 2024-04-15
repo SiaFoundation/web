@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@siafoundation/request": ["libs/request/src/index.ts"],
       "@siafoundation/data-sources": ["libs/data-sources/src/index.ts"],
       "@siafoundation/design-system": ["libs/design-system/src/index.ts"],
       "@siafoundation/fonts": ["libs/fonts/src/index.ts"],
