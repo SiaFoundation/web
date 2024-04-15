@@ -1,9 +1,15 @@
 import { HostSettings } from './types'
 import { BusStateResponse } from './bus'
 
+export const workerStateRoute = '/worker/state'
+export const workerObjectsKeyRoute = '/worker/objects/:key'
+export const workerMultipartKeyRoute = '/worker/multipart/:key'
+export const workerRhpScanRoute = '/worker/rhp/scan'
+
 // state
 
 export type WorkerStateParams = void
+export type WorkerStatePayload = void
 export type WorkerStateResponse = BusStateResponse & {
   id: string
 }

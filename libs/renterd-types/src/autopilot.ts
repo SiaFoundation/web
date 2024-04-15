@@ -1,6 +1,11 @@
 import { AutopilotConfig, Host } from './types'
 import { HostsSearchPayload, BusStateResponse } from './bus'
 
+export const autopilotStateRoute = '/autopilot/state'
+export const autopilotConfigRoute = '/autopilot/config'
+export const autopilotHostsRoute = '/autopilot/hosts'
+export const autopilotTriggerRoute = '/autopilot/trigger'
+
 type AutopilotStatus = {
   configured: boolean
   migrating: boolean
@@ -14,9 +19,11 @@ type AutopilotStatus = {
 export type AutopilotState = AutopilotStatus & BusStateResponse
 
 export type AutopilotStateParams = void
+export type AutopilotStatePayload = void
 export type AutopilotStateResponse = AutopilotState
 
 export type AutopilotConfigParams = void
+export type AutopilotConfigPayload = void
 export type AutopilotConfigResponse = AutopilotConfig
 
 export type AutopilotConfigUpdateParams = void

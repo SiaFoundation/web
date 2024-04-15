@@ -24,18 +24,23 @@ import {
   RhpScanResponse,
   WorkerStateParams,
   WorkerStateResponse,
+  autopilotHostsRoute,
+  busObjectsRoute,
+  busSearchHostsRoute,
+  workerMultipartKeyRoute,
+  workerObjectsKeyRoute,
+  workerRhpScanRoute,
+  workerStateRoute,
 } from '@siafoundation/renterd-types'
 
 // state
-
-const workerStateKey = '/worker/state'
 
 export function useWorkerState(
   args?: HookArgsSwr<WorkerStateParams, WorkerStateResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: workerStateKey,
+    route: workerStateRoute,
   })
 }
 
@@ -46,7 +51,7 @@ export function useObjectDownloadFunc(
     ObjectDownloadResponse
   >
 ) {
-  return useGetDownloadFunc({ ...args, route: '/worker/objects/:key' })
+  return useGetDownloadFunc({ ...args, route: workerObjectsKeyRoute })
 }
 
 export function useObjectUpload(
@@ -68,10 +73,10 @@ export function useObjectUpload(
           },
         },
       },
-      route: '/worker/objects/:key',
+      route: workerObjectsKeyRoute,
     },
     async (mutate) => {
-      mutate((key) => key.startsWith('/bus/objects'))
+      mutate((key) => key.startsWith(busObjectsRoute))
     }
   )
 }
@@ -94,13 +99,12 @@ export function useMultipartUploadPart(
         },
       },
     },
-    route: '/worker/multipart/:key',
+    route: workerMultipartKeyRoute,
   })
 }
 
 const debouncedListRevalidate = debounce((func: () => void) => func(), 5_000)
 
-export const workerRhpScanRoute = '/worker/rhp/scan'
 export function useRhpScan(
   args?: HookArgsCallback<RhpScanParams, RhpScanPayload, RhpScanResponse>
 ) {
@@ -114,7 +118,7 @@ export function useRhpScan(
       // succession the list is optimistically updated n times followed
       // by a single network revalidate.
       mutate<AutopilotHost[]>(
-        (key) => key.startsWith('/autopilot/hosts'),
+        (key) => key.startsWith(autopilotHostsRoute),
         (data) =>
           data?.map((aph) => {
             if (aph.host.publicKey === hostKey) {
@@ -136,7 +140,7 @@ export function useRhpScan(
         false
       )
       mutate<Host[]>(
-        (key) => key.startsWith('/bus/search/hosts'),
+        (key) => key.startsWith(busSearchHostsRoute),
         (data) =>
           data?.map((host) => {
             if (host.publicKey === hostKey) {
@@ -157,8 +161,8 @@ export function useRhpScan(
       debouncedListRevalidate(() => {
         mutate(
           (key) =>
-            key.startsWith('/autopilot/hosts') ||
-            key.startsWith('/bus/search/hosts'),
+            key.startsWith(autopilotHostsRoute) ||
+            key.startsWith(busSearchHostsRoute),
           (d) => d,
           true
         )

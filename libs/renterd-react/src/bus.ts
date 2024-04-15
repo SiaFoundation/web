@@ -185,18 +185,79 @@ import {
   WalletTransactionsResponse,
   WalletUtxoParams,
   WalletUtxoResponse,
+  busAccountIdResetdriftRoute,
+  busBucketRoute,
+  busBucketNamePolicyRoute,
+  busBucketNameRoute,
+  busBucketsRoute,
+  busConsensusAcceptblockRoute,
+  busConsensusStateRoute,
+  busContractRoute,
+  busContractIdAcquireRoute,
+  busContractIdNewRoute,
+  busContractIdReleaseRoute,
+  busContractIdRenewedRoute,
+  busContractIdRoute,
+  busContractsRoute,
+  busContractsSetsRoute,
+  busContractsSetsSetRoute,
+  busHostHostKeyRoute,
+  busHostPublicKeyResetlostsectorsRoute,
+  busHostsAllowlistRoute,
+  busHostsBlocklistRoute,
+  busHostsHostKeyRoute,
+  busHostsRoute,
+  busObjectsRoute,
+  busObjectsKeyRoute,
+  busObjectsListRoute,
+  busObjectsRenameRoute,
+  busSearchHostsRoute,
+  busSearchObjectsRoute,
+  busSettingKeyRoute,
+  busSettingsRoute,
+  busStateRoute,
+  busStatsObjectsRoute,
+  busSyncerAddrRoute,
+  busSyncerConnectRoute,
+  busSyncerPeersRoute,
+  busTxpoolBroadcastRoute,
+  busTxpoolFeeRoute,
+  busTxpoolTransactionsRoute,
+  busWalletAddressesRoute,
+  busWalletDiscardRoute,
+  busWalletFundRoute,
+  busWalletOutputsRoute,
+  busWalletPendingRoute,
+  busWalletPrepareFormRoute,
+  busWalletPrepareRenewRoute,
+  busWalletRedistributeRoute,
+  busWalletRoute,
+  busWalletSignRoute,
+  busWalletTransactionsRoute,
+  busAlertsRoute,
+  busAlertsDismissRoute,
+  busSlabKeyObjectsRoute,
+  busMetricContractRoute,
+  busMetricContractsetRoute,
+  busMetricChurnRoute,
+  busMetricWalletRoute,
+  busMultipartCreateRoute,
+  busMultipartRoute,
+  busMultipartCompleteRoute,
+  busMultipartAbortRoute,
+  busMultipartListpartsRoute,
+  busMultipartListuploadsRoute,
+  busMultipartPartRoute,
 } from '@siafoundation/renterd-types'
 
 // state
-
-export const busStateKey = '/bus/state'
 
 export function useBusState(
   args?: HookArgsSwr<BusStateParams, BusStateResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: busStateKey,
+    route: busStateRoute,
   })
 }
 
@@ -207,7 +268,7 @@ export function useConsensusState(
 ) {
   return useGetSwr({
     ...args,
-    route: '/bus/consensus/state',
+    route: busConsensusStateRoute,
   })
 }
 
@@ -242,19 +303,17 @@ export function useConsensusAcceptBlock(
     ConsensusAcceptBlockResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/bus/consensus/acceptblock' })
+  return usePostFunc({ ...args, route: busConsensusAcceptblockRoute })
 }
 
 // syncer
-
-const syncerPeers = '/bus/syncer/peers'
 
 export function useSyncerPeers(
   args?: HookArgsSwr<SyncerPeersParams, SyncerPeersResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: syncerPeers,
+    route: busSyncerPeersRoute,
   })
 }
 
@@ -268,10 +327,10 @@ export function useSyncerConnect(
   return usePostFunc(
     {
       ...args,
-      route: '/bus/syncer/connect',
+      route: busSyncerConnectRoute,
     },
     async (mutate) => {
-      mutate((key) => key === syncerPeers)
+      mutate((key) => key === busSyncerPeersRoute)
     }
   )
 }
@@ -279,7 +338,7 @@ export function useSyncerConnect(
 export function useSyncerAddress(
   args?: HookArgsSwr<SyncerAddressParams, SyncerAddressResponse>
 ) {
-  return useGetSwr({ ...args, route: '/bus/syncer/addr' })
+  return useGetSwr({ ...args, route: busSyncerAddrRoute })
 }
 
 // txpool
@@ -287,14 +346,13 @@ export function useSyncerAddress(
 export function useTxPoolFee(
   args?: HookArgsSwr<TxPoolFeeParams, TxPoolFeeResponse>
 ) {
-  return useGetSwr({ ...args, route: '/bus/txpool/fee' })
+  return useGetSwr({ ...args, route: busTxpoolFeeRoute })
 }
 
-const txPoolTransactionsRoute = '/bus/txpool/transactions'
 export function useTxPoolTransactions(
   args?: HookArgsSwr<TxPoolTransactionsParams, TxPoolTransactionsResponse>
 ) {
-  return useGetSwr({ ...args, route: txPoolTransactionsRoute })
+  return useGetSwr({ ...args, route: busTxpoolTransactionsRoute })
 }
 
 export function useTxPoolBroadcast(
@@ -307,14 +365,14 @@ export function useTxPoolBroadcast(
   return usePostFunc(
     {
       ...args,
-      route: '/bus/txpool/broadcast',
+      route: busTxpoolBroadcastRoute,
     },
     async (mutate) => {
       await delay(2_000)
       mutate((key) => {
         return (
-          key.startsWith(txPoolTransactionsRoute) ||
-          key.startsWith(walletPendingRoute)
+          key.startsWith(busTxpoolTransactionsRoute) ||
+          key.startsWith(busWalletPendingRoute)
         )
       })
     }
@@ -324,13 +382,13 @@ export function useTxPoolBroadcast(
 // wallet
 
 export function useWallet(args?: HookArgsSwr<WalletParams, WalletResponse>) {
-  return useGetSwr({ ...args, route: '/bus/wallet' })
+  return useGetSwr({ ...args, route: busWalletRoute })
 }
 
 export function useWalletAddresses(
   args?: HookArgsSwr<WalletAddressesParams, WalletAddressesResponse>
 ) {
-  return useGetSwr({ ...args, route: '/bus/wallet/addresses' })
+  return useGetSwr({ ...args, route: busWalletAddressesRoute })
 }
 
 export function useWalletTransactions(
@@ -338,14 +396,14 @@ export function useWalletTransactions(
 ) {
   return useGetSwr({
     ...args,
-    route: '/bus/wallet/transactions',
+    route: busWalletTransactionsRoute,
   })
 }
 
 export function useWalletUtxos(
   args?: HookArgsSwr<WalletUtxoParams, WalletUtxoResponse>
 ) {
-  return useGetSwr({ ...args, route: '/bus/wallet/outputs' })
+  return useGetSwr({ ...args, route: busWalletOutputsRoute })
 }
 
 export function useWalletFund(
@@ -355,7 +413,7 @@ export function useWalletFund(
     WalletFundResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/bus/wallet/fund' })
+  return usePostFunc({ ...args, route: busWalletFundRoute })
 }
 
 export function useWalletSign(
@@ -365,7 +423,7 @@ export function useWalletSign(
     WalletSignResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/bus/wallet/sign' })
+  return usePostFunc({ ...args, route: busWalletSignRoute })
 }
 
 export function useWalletRedistribute(
@@ -375,7 +433,7 @@ export function useWalletRedistribute(
     WalletRedistributeResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/bus/wallet/redistribute' })
+  return usePostFunc({ ...args, route: busWalletRedistributeRoute })
 }
 
 export function useWalletDiscard(
@@ -385,7 +443,7 @@ export function useWalletDiscard(
     WalletDiscardResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/bus/wallet/discard' })
+  return usePostFunc({ ...args, route: busWalletDiscardRoute })
 }
 
 export function useWalletPrepareForm(
@@ -395,7 +453,7 @@ export function useWalletPrepareForm(
     WalletPrepareFormResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/bus/wallet/prepare/form' })
+  return usePostFunc({ ...args, route: busWalletPrepareFormRoute })
 }
 
 export function useWalletPrepareRenew(
@@ -405,24 +463,22 @@ export function useWalletPrepareRenew(
     WalletPrepareRenewResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/bus/wallet/prepare/form' })
+  return usePostFunc({ ...args, route: busWalletPrepareRenewRoute })
 }
 
-const walletPendingRoute = '/bus/wallet/pending'
 export function useWalletPending(
   args?: HookArgsSwr<WalletPendingParams, WalletPendingResponse>
 ) {
-  return useGetSwr({ ...args, route: walletPendingRoute })
+  return useGetSwr({ ...args, route: busWalletPendingRoute })
 }
 
 export function useHosts(args: HookArgsSwr<HostsParams, HostsResponse>) {
   return useGetSwr({
     ...args,
-    route: '/bus/hosts',
+    route: busHostsRoute,
   })
 }
 
-const hostsSearchRoute = '/bus/search/hosts'
 export function useHostsSearch(
   args: HookArgsWithPayloadSwr<
     HostsSearchParams,
@@ -432,12 +488,12 @@ export function useHostsSearch(
 ) {
   return usePostSwr({
     ...args,
-    route: hostsSearchRoute,
+    route: busSearchHostsRoute,
   })
 }
 
 export function useHost(args: HookArgsSwr<HostParams, HostResponse>) {
-  return useGetSwr({ ...args, route: '/bus/host/:hostKey' })
+  return useGetSwr({ ...args, route: busHostHostKeyRoute })
 }
 
 export function useHostsInteractionAdd(
@@ -449,21 +505,19 @@ export function useHostsInteractionAdd(
 ) {
   return usePostFunc({
     ...args,
-    route: '/bus/hosts/:hostKey',
+    route: busHostsHostKeyRoute,
   })
 }
-const hostsBlocklistRoute = '/bus/hosts/blocklist'
 export function useHostsBlocklist(
   args?: HookArgsSwr<HostsBlocklistParams, HostsBlocklistResponse>
 ) {
-  return useGetSwr({ ...args, route: hostsBlocklistRoute })
+  return useGetSwr({ ...args, route: busHostsBlocklistRoute })
 }
 
-const hostsAllowlistRoute = '/bus/hosts/allowlist'
 export function useHostsAllowlist(
   args?: HookArgsSwr<HostsAllowlistParams, HostsAllowlistResponse>
 ) {
-  return useGetSwr({ ...args, route: hostsAllowlistRoute })
+  return useGetSwr({ ...args, route: busHostsAllowlistRoute })
 }
 
 export function useHostsAllowlistUpdate(
@@ -474,13 +528,13 @@ export function useHostsAllowlistUpdate(
   >
 ) {
   return usePutFunc(
-    { ...args, route: '/bus/hosts/allowlist' },
+    { ...args, route: busHostsAllowlistRoute },
     async (mutate) => {
       mutate((key) => {
         const matches = [
-          hostsSearchRoute,
-          hostsAllowlistRoute,
-          contractsActiveRoute,
+          busSearchHostsRoute,
+          busHostsAllowlistRoute,
+          busContractsRoute,
         ]
         return !!matches.find((match) => key.startsWith(match))
       })
@@ -496,13 +550,13 @@ export function useHostsBlocklistUpdate(
   >
 ) {
   return usePutFunc(
-    { ...args, route: '/bus/hosts/blocklist' },
+    { ...args, route: busHostsBlocklistRoute },
     async (mutate) => {
       mutate((key) => {
         const matches = [
-          hostsSearchRoute,
-          hostsBlocklistRoute,
-          contractsActiveRoute,
+          busSearchHostsRoute,
+          busHostsBlocklistRoute,
+          busContractsRoute,
         ]
         return !!matches.find((match) => key.startsWith(match))
       })
@@ -519,7 +573,7 @@ export function useHostResetLostSectorCount(
 ) {
   return usePostFunc({
     ...args,
-    route: '/bus/host/:publicKey/resetlostsectors',
+    route: busHostPublicKeyResetlostsectorsRoute,
   })
 }
 
@@ -534,17 +588,16 @@ export function useAccountResetDrift(
 ) {
   return usePostFunc({
     ...args,
-    route: '/bus/account/:id/resetdrift',
+    route: busAccountIdResetdriftRoute,
   })
 }
 
 // contracts
 
-const contractsActiveRoute = '/bus/contracts'
 export function useContracts(
   args?: HookArgsSwr<ContractsParams, ContractsResponse>
 ) {
-  return useGetSwr({ ...args, route: contractsActiveRoute })
+  return useGetSwr({ ...args, route: busContractsRoute })
 }
 
 export function useContractsAcquire(
@@ -554,7 +607,7 @@ export function useContractsAcquire(
     ContractAcquireResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/bus/contract/:id/acquire' })
+  return usePostFunc({ ...args, route: busContractIdAcquireRoute })
 }
 
 export function useContractsRelease(
@@ -564,13 +617,13 @@ export function useContractsRelease(
     ContractsReleaseResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/bus/contract/:id/release' })
+  return usePostFunc({ ...args, route: busContractIdReleaseRoute })
 }
 
 export function useContract(
   args: HookArgsSwr<ContractParams, ContractResponse>
 ) {
-  return useGetSwr({ ...args, route: '/bus/contract/:id' })
+  return useGetSwr({ ...args, route: busContractIdRoute })
 }
 
 export function useContractAdd(
@@ -580,7 +633,7 @@ export function useContractAdd(
     ContractsAddResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/bus/contract/:id/new' })
+  return usePostFunc({ ...args, route: busContractIdNewRoute })
 }
 
 export function useContractRenew(
@@ -590,7 +643,7 @@ export function useContractRenew(
     ContractRenewedResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/bus/contract/:id/renewed' })
+  return usePostFunc({ ...args, route: busContractIdRenewedRoute })
 }
 
 export function useContractDelete(
@@ -601,9 +654,9 @@ export function useContractDelete(
   >
 ) {
   return useDeleteFunc(
-    { ...args, route: '/bus/contract/:id' },
+    { ...args, route: busContractIdRoute },
     async (mutate) => {
-      mutate((key) => key.startsWith('/bus/contract'))
+      mutate((key) => key.startsWith(busContractRoute))
     }
   )
 }
@@ -611,7 +664,7 @@ export function useContractDelete(
 export function useContractSets(
   args?: HookArgsSwr<ContractSetsParams, ContractSetsResponse>
 ) {
-  return useGetSwr({ ...args, route: '/bus/contracts/sets' })
+  return useGetSwr({ ...args, route: busContractsSetsRoute })
 }
 
 export function useContractSetUpdate(
@@ -621,17 +674,17 @@ export function useContractSetUpdate(
     ContractSetUpdateResponse
   >
 ) {
-  return usePutFunc({ ...args, route: '/bus/contracts/sets/:set' })
+  return usePutFunc({ ...args, route: busContractsSetsSetRoute })
 }
 
 // objects
 
 export function useBuckets(args?: HookArgsSwr<BucketsParams, BucketsResponse>) {
-  return useGetSwr({ ...args, route: '/bus/buckets' })
+  return useGetSwr({ ...args, route: busBucketsRoute })
 }
 
 export function useBucket(args: HookArgsSwr<BucketParams, BucketResponse>) {
-  return useGetSwr({ ...args, route: '/bus/bucket/:name' })
+  return useGetSwr({ ...args, route: busBucketNameRoute })
 }
 
 export function useBucketCreate(
@@ -641,8 +694,8 @@ export function useBucketCreate(
     BucketCreateResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/bus/buckets' }, async (mutate) => {
-    mutate((key) => key.startsWith('/bus/buckets'))
+  return usePostFunc({ ...args, route: busBucketsRoute }, async (mutate) => {
+    mutate((key) => key.startsWith(busBucketsRoute))
   })
 }
 
@@ -654,9 +707,9 @@ export function useBucketPolicyUpdate(
   >
 ) {
   return usePutFunc(
-    { ...args, route: '/bus/bucket/:name/policy' },
+    { ...args, route: busBucketNamePolicyRoute },
     async (mutate) => {
-      mutate((key) => key.startsWith('/bus/bucket'))
+      mutate((key) => key.startsWith(busBucketRoute))
     }
   )
 }
@@ -669,9 +722,9 @@ export function useBucketDelete(
   >
 ) {
   return useDeleteFunc(
-    { ...args, route: '/bus/bucket/:name' },
+    { ...args, route: busBucketNameRoute },
     async (mutate) => {
-      mutate((key) => key.startsWith('/bus/bucket'))
+      mutate((key) => key.startsWith(busBucketRoute))
     }
   )
 }
@@ -679,7 +732,7 @@ export function useBucketDelete(
 export function useObjectDirectory(
   args: HookArgsSwr<ObjectDirectoryParams, ObjectDirectoryResponse>
 ) {
-  return useGetSwr({ ...args, route: '/bus/objects/:key' })
+  return useGetSwr({ ...args, route: busObjectsKeyRoute })
 }
 
 export function useObjectList(
@@ -689,23 +742,23 @@ export function useObjectList(
     ObjectListResponse
   >
 ) {
-  return usePostSwr({ ...args, route: '/bus/objects/list' })
+  return usePostSwr({ ...args, route: busObjectsListRoute })
 }
 
 export function useObject(args: HookArgsSwr<ObjectParams, ObjectResponse>) {
-  return useGetSwr({ ...args, route: '/bus/objects/:key' })
+  return useGetSwr({ ...args, route: busObjectsKeyRoute })
 }
 
 export function useObjectSearch(
   args: HookArgsSwr<ObjectSearchParams, ObjectSearchResponse>
 ) {
-  return useGetSwr({ ...args, route: '/bus/search/objects' })
+  return useGetSwr({ ...args, route: busSearchObjectsRoute })
 }
 
 export function useObjectAdd(
   args: HookArgsCallback<ObjectAddParams, ObjectAddPayload, ObjectAddResponse>
 ) {
-  return usePutFunc({ ...args, route: '/bus/objects/:key' })
+  return usePutFunc({ ...args, route: busObjectsKeyRoute })
 }
 
 export function useObjectRename(
@@ -715,7 +768,7 @@ export function useObjectRename(
     ObjectRenameResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/bus/objects/rename' })
+  return usePostFunc({ ...args, route: busObjectsRenameRoute })
 }
 
 export function useObjectDelete(
@@ -726,9 +779,9 @@ export function useObjectDelete(
   >
 ) {
   return useDeleteFunc(
-    { ...args, route: '/bus/objects/:key' },
+    { ...args, route: busObjectsKeyRoute },
     async (mutate) => {
-      mutate((key) => key.startsWith('/bus/objects/'))
+      mutate((key) => key.startsWith(busObjectsRoute))
     }
   )
 }
@@ -736,7 +789,7 @@ export function useObjectDelete(
 export function useObjectStats(
   args?: HookArgsSwr<ObjectsStatsParams, ObjectsStatsResponse>
 ) {
-  return useGetSwr({ ...args, route: '/bus/stats/objects' })
+  return useGetSwr({ ...args, route: busStatsObjectsRoute })
 }
 
 type Setting = Record<string, unknown> | string
@@ -744,13 +797,13 @@ type Setting = Record<string, unknown> | string
 export function useSettings(
   args?: HookArgsSwr<SettingsParams, SettingsResponse>
 ) {
-  return useGetSwr({ ...args, route: '/bus/settings' })
+  return useGetSwr({ ...args, route: busSettingsRoute })
 }
 
 export function useSetting<T extends Setting>(
   args: HookArgsSwr<SettingParams, SettingResponse<T>>
 ) {
-  return useGetSwr({ ...args, route: '/bus/setting/:key' })
+  return useGetSwr({ ...args, route: busSettingKeyRoute })
 }
 
 export function useSettingUpdate(
@@ -763,18 +816,19 @@ export function useSettingUpdate(
   return usePutFunc(
     {
       ...args,
-      route: '/bus/setting/:key',
+      route: busSettingKeyRoute,
     },
     async (mutate, args) => {
-      mutate((key) => key.startsWith(`/bus/setting/${args.params.key}`))
+      mutate((key) =>
+        key.startsWith(busSettingKeyRoute.replace(':key', args.params.key))
+      )
     }
   )
 }
 
-const alertsRoute = '/bus/alerts'
 // params are required because omitting them returns a deprecated response structure
 export function useAlerts(args: HookArgsSwr<AlertsParams, AlertsResponse>) {
-  return useGetSwr({ ...args, route: alertsRoute })
+  return useGetSwr({ ...args, route: busAlertsRoute })
 }
 
 export function useAlertsDismiss(
@@ -785,10 +839,10 @@ export function useAlertsDismiss(
   >
 ) {
   return usePostFunc(
-    { ...args, route: '/bus/alerts/dismiss' },
+    { ...args, route: busAlertsDismissRoute },
     async (mutate) => {
       mutate((key) => {
-        return key.startsWith(alertsRoute)
+        return key.startsWith(busAlertsRoute)
       })
     }
   )
@@ -799,7 +853,7 @@ export function useAlertsDismiss(
 export function useSlabObjects(
   args: HookArgsSwr<SlabObjectsParams, SlabObjectsResponse>
 ) {
-  return useGetSwr({ ...args, route: '/bus/slab/:key/objects' })
+  return useGetSwr({ ...args, route: busSlabKeyObjectsRoute })
 }
 
 // metrics
@@ -807,13 +861,13 @@ export function useSlabObjects(
 export function useMetricsContract(
   args: HookArgsSwr<ContractMetricsParams, ContractMetricsResponse>
 ) {
-  return useGetSwr({ ...args, route: '/bus/metric/contract' })
+  return useGetSwr({ ...args, route: busMetricContractRoute })
 }
 
 export function useMetricsContractSet(
   args: HookArgsSwr<ContractSetMetricsParams, ContractSetMetricsResponse>
 ) {
-  return useGetSwr({ ...args, route: '/bus/metric/contractset' })
+  return useGetSwr({ ...args, route: busMetricContractsetRoute })
 }
 
 export function useMetricsContractSetChurn(
@@ -822,13 +876,13 @@ export function useMetricsContractSetChurn(
     ContractSetChurnMetricsResponse
   >
 ) {
-  return useGetSwr({ ...args, route: '/bus/metric/churn' })
+  return useGetSwr({ ...args, route: busMetricChurnRoute })
 }
 
 export function useMetricsWallet(
   args: HookArgsSwr<WalletMetricsParams, WalletMetricsResponse>
 ) {
-  return useGetSwr({ ...args, route: '/bus/metric/wallet' })
+  return useGetSwr({ ...args, route: busMetricWalletRoute })
 }
 
 // multipart
@@ -841,10 +895,10 @@ export function useMultipartUploadCreate(
   >
 ) {
   return usePostFunc(
-    { ...args, route: '/bus/multipart/create' },
+    { ...args, route: busMultipartCreateRoute },
     async (mutate) => {
       mutate((key) => {
-        return key.startsWith('/bus/multipart')
+        return key.startsWith(busMultipartRoute)
       })
     }
   )
@@ -858,10 +912,10 @@ export function useMultipartUploadComplete(
   >
 ) {
   return usePostFunc(
-    { ...args, route: '/bus/multipart/complete' },
+    { ...args, route: busMultipartCompleteRoute },
     async (mutate) => {
       mutate((key) => {
-        return key.startsWith('/bus/multipart')
+        return key.startsWith(busMultipartRoute)
       })
     }
   )
@@ -875,10 +929,10 @@ export function useMultipartUploadAbort(
   >
 ) {
   return usePostFunc(
-    { ...args, route: '/bus/multipart/abort' },
+    { ...args, route: busMultipartAbortRoute },
     async (mutate) => {
       mutate((key) => {
-        return key.startsWith('/bus/multipart')
+        return key.startsWith(busMultipartRoute)
       })
     }
   )
@@ -893,7 +947,7 @@ export function useMultipartUploadListParts(
 ) {
   return usePostSwr({
     ...args,
-    route: '/bus/multipart/listparts',
+    route: busMultipartListpartsRoute,
   })
 }
 
@@ -906,7 +960,7 @@ export function useMultipartUploadListUploads(
 ) {
   return usePostSwr({
     ...args,
-    route: '/bus/multipart/listuploads',
+    route: busMultipartListuploadsRoute,
   })
 }
 
@@ -918,10 +972,10 @@ export function useMultipartUploadAddPart(
   >
 ) {
   return usePostFunc(
-    { ...args, route: '/bus/multipart/part' },
+    { ...args, route: busMultipartPartRoute },
     async (mutate) => {
       mutate((key) => {
-        return key.startsWith('/bus/multipart/listparts')
+        return key.startsWith(busMultipartListpartsRoute)
       })
     }
   )

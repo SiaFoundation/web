@@ -21,6 +21,72 @@ import {
   WalletTransaction,
 } from './types'
 
+export const busStateRoute = '/bus/state'
+export const busConsensusStateRoute = '/bus/consensus/state'
+export const busConsensusAcceptblockRoute = '/bus/consensus/acceptblock'
+export const busSyncerPeersRoute = '/bus/syncer/peers'
+export const busSyncerConnectRoute = '/bus/syncer/connect'
+export const busSyncerAddrRoute = '/bus/syncer/addr'
+export const busTxpoolTransactionsRoute = '/bus/txpool/transactions'
+export const busTxpoolBroadcastRoute = '/bus/txpool/broadcast'
+export const busTxpoolFeeRoute = '/bus/txpool/fee'
+export const busWalletRoute = '/bus/wallet'
+export const busWalletAddressesRoute = '/bus/wallet/addresses'
+export const busWalletTransactionsRoute = '/bus/wallet/transactions'
+export const busWalletOutputsRoute = '/bus/wallet/outputs'
+export const busWalletFundRoute = '/bus/wallet/fund'
+export const busWalletSignRoute = '/bus/wallet/sign'
+export const busWalletRedistributeRoute = '/bus/wallet/redistribute'
+export const busWalletDiscardRoute = '/bus/wallet/discard'
+export const busWalletPrepareFormRoute = '/bus/wallet/prepare/form'
+export const busWalletPrepareRenewRoute = '/bus/wallet/prepare/renew'
+export const busWalletPendingRoute = '/bus/wallet/pending'
+export const busHostsRoute = '/bus/hosts'
+export const busSearchHostsRoute = '/bus/search/hosts'
+export const busHostHostKeyRoute = '/bus/host/:hostKey'
+export const busHostsHostKeyRoute = '/bus/hosts/:hostKey'
+export const busHostsBlocklistRoute = '/bus/hosts/blocklist'
+export const busHostsAllowlistRoute = '/bus/hosts/allowlist'
+export const busHostPublicKeyResetlostsectorsRoute =
+  '/bus/host/:publicKey/resetlostsectors'
+export const busAccountIdResetdriftRoute = '/bus/account/:id/resetdrift'
+export const busContractsRoute = '/bus/contracts'
+export const busContractIdAcquireRoute = '/bus/contract/:id/acquire'
+export const busContractIdReleaseRoute = '/bus/contract/:id/release'
+export const busContractRoute = '/bus/contract'
+export const busContractIdRoute = '/bus/contract/:id'
+export const busContractIdNewRoute = '/bus/contract/:id/new'
+export const busContractIdRenewedRoute = '/bus/contract/:id/renewed'
+export const busContractsSetsRoute = '/bus/contracts/sets'
+export const busContractsSetsSetRoute = '/bus/contracts/sets/:set'
+export const busBucketRoute = '/bus/bucket'
+export const busBucketsRoute = '/bus/buckets'
+export const busBucketNameRoute = '/bus/bucket/:name'
+export const busBucketNamePolicyRoute = '/bus/bucket/:name/policy'
+export const busObjectsRoute = '/bus/objects'
+export const busObjectsKeyRoute = '/bus/objects/:key'
+export const busObjectsListRoute = '/bus/objects/list'
+export const busSearchObjectsRoute = '/bus/search/objects'
+export const busObjectsRenameRoute = '/bus/objects/rename'
+export const busStatsObjectsRoute = '/bus/stats/objects'
+export const busSettingRoute = '/bus/setting'
+export const busSettingsRoute = '/bus/settings'
+export const busSettingKeyRoute = '/bus/setting/:key'
+export const busAlertsRoute = '/bus/alerts'
+export const busAlertsDismissRoute = '/bus/alerts/dismiss'
+export const busSlabKeyObjectsRoute = '/bus/slab/:key/objects'
+export const busMetricContractRoute = '/bus/metric/contract'
+export const busMetricContractsetRoute = '/bus/metric/contractset'
+export const busMetricChurnRoute = '/bus/metric/churn'
+export const busMetricWalletRoute = '/bus/metric/wallet'
+export const busMultipartRoute = '/bus/multipart'
+export const busMultipartCreateRoute = '/bus/multipart/create'
+export const busMultipartCompleteRoute = '/bus/multipart/complete'
+export const busMultipartAbortRoute = '/bus/multipart/abort'
+export const busMultipartListpartsRoute = '/bus/multipart/listparts'
+export const busMultipartListuploadsRoute = '/bus/multipart/listuploads'
+export const busMultipartPartRoute = '/bus/multipart/part'
+
 // state
 
 type BuildState = {
@@ -32,6 +98,7 @@ type BuildState = {
 }
 
 export type BusStateParams = void
+export type BusStatePayload = void
 export type BusStateResponse = BuildState & {
   startTime: number
 }
@@ -39,6 +106,7 @@ export type BusStateResponse = BuildState & {
 // consensus
 
 export type ConsensusStateParams = void
+export type ConsensusStatePayload = void
 export type ConsensusStateResponse = ConsensusState
 
 export type ConsensusAcceptBlockParams = void
@@ -48,21 +116,25 @@ export type ConsensusAcceptBlockResponse = void
 // syncer
 
 export type SyncerPeersParams = void
+export type SyncerPeersPayload = void
 export type SyncerPeersResponse = string[]
 
 export type SyncerConnectParams = void
 export type SyncerConnectPayload = string
-export type SyncerConnectResponse = never
+export type SyncerConnectResponse = void
 
 export type SyncerAddressParams = void
+export type SyncerAddressPayload = void
 export type SyncerAddressResponse = string
 
 // txpool
 
 export type TxPoolFeeParams = void
+export type TxPoolFeePayload = void
 export type TxPoolFeeResponse = Currency
 
 export type TxPoolTransactionsParams = void
+export type TxPoolTransactionsPayload = void
 export type TxPoolTransactionsResponse = Transaction[]
 
 export type TxPoolBroadcastParams = void
@@ -72,6 +144,7 @@ export type TxPoolBroadcastResponse = unknown
 // wallet
 
 export type WalletParams = void
+export type WalletPayload = void
 export type WalletResponse = {
   scanHeight: number
   address: string
@@ -81,15 +154,18 @@ export type WalletResponse = {
 }
 
 export type WalletAddressesParams = void
+export type WalletAddressesPayload = void
 export type WalletAddressesResponse = string[]
 
 export type WalletTransactionsParams = {
   offset?: number
   limit?: number
 }
+export type WalletTransactionsPayload = void
 export type WalletTransactionsResponse = WalletTransaction[]
 
 export type WalletUtxoParams = void
+export type WalletUtxoPayload = void
 export type WalletUtxoResponse = SiacoinElement[]
 
 export type WalletFundParams = void
@@ -120,7 +196,7 @@ export type WalletRedistributeResponse = Transaction
 
 export type WalletDiscardParams = void
 export type WalletDiscardPayload = Transaction
-export type WalletDiscardResponse = never
+export type WalletDiscardResponse = void
 
 export type WalletPrepareFormParams = void
 export type WalletPrepareFormPayload = {
@@ -150,6 +226,7 @@ export type WalletPrepareRenewResponse = {
 }
 
 export type WalletPendingParams = void
+export type WalletPendingPayload = void
 export type WalletPendingResponse = Transaction[]
 
 // hosts
@@ -158,6 +235,7 @@ export type HostsParams = {
   offset?: number
   limit?: number
 }
+export type HostsPayload = void
 export type HostsResponse = Host[]
 
 export type HostsSearchParams = void
@@ -174,6 +252,7 @@ export type HostsSearchPayload = {
 export type HostsSearchResponse = Host[]
 
 export type HostParams = { hostKey: string }
+export type HostPayload = Host
 export type HostResponse = Host
 
 export type HostInteractionParams = { hostKey: string }
@@ -182,12 +261,14 @@ export type HostInteractionPayload = {
   type: string
   result?: string
 }
-export type HostInteractionResponse = never
+export type HostInteractionResponse = void
 
 export type HostsBlocklistParams = void
+export type HostsBlocklistPayload = void
 export type HostsBlocklistResponse = string[]
 
 export type HostsAllowlistParams = void
+export type HostsAllowlistPayload = void
 export type HostsAllowlistResponse = PublicKey[]
 
 export type HostsAllowlistUpdateParams = void
@@ -219,6 +300,7 @@ export type AccountResetDriftResponse = void
 // contracts
 
 export type ContractsParams = void
+export type ContractsPayload = void
 export type ContractsResponse = Contract[]
 
 export type ContractAcquireParams = {
@@ -235,11 +317,12 @@ export type ContractsReleaseParams = {
   id: string
 }
 export type ContractsReleasePayload = void
-export type ContractsReleaseResponse = never
+export type ContractsReleaseResponse = void
 
 export type ContractParams = {
   id: string
 }
+export type ContractPayload = void
 export type ContractResponse = Contract
 
 export type ContractsAddParams = {
@@ -267,16 +350,17 @@ export type ContractDeleteParams = {
   id: string
 }
 export type ContractDeletePayload = void
-export type ContractDeleteResponse = never
+export type ContractDeleteResponse = void
 
 export type ContractSetsParams = void
+export type ContractSetsPayload = void
 export type ContractSetsResponse = string[]
 
 export type ContractSetUpdateParams = {
   name: string
 }
 export type ContractSetUpdatePayload = string[]
-export type ContractSetUpdateResponse = never
+export type ContractSetUpdateResponse = void
 
 // objects
 
@@ -289,14 +373,16 @@ export type Bucket = {
 }
 
 export type BucketsParams = void
+export type BucketsPayload = void
 export type BucketsResponse = Bucket[]
 
 export type BucketParams = { name: string }
+export type BucketPayload = void
 export type BucketResponse = Bucket
 
 export type BucketCreateParams = void
 export type BucketCreatePayload = { name: string }
-export type BucketCreateResponse = never
+export type BucketCreateResponse = void
 
 export type BucketPolicy = {
   publicReadAccess: boolean
@@ -304,11 +390,11 @@ export type BucketPolicy = {
 
 export type BucketPolicyUpdateParams = { name: string }
 export type BucketPolicyUpdatePayload = { policy: BucketPolicy }
-export type BucketPolicyUpdateResponse = never
+export type BucketPolicyUpdateResponse = void
 
 export type BucketDeleteParams = { name: string }
 export type BucketDeletePayload = void
-export type BucketDeleteResponse = never
+export type BucketDeleteResponse = void
 
 export type ObjEntry = {
   name: string
@@ -325,6 +411,7 @@ export type ObjectDirectoryParams = {
   sortBy?: 'name' | 'health' | 'size'
   sortDir?: 'asc' | 'desc'
 }
+export type ObjectDirectoryPayload = void
 export type ObjectDirectoryResponse = { hasMore: boolean; entries: ObjEntry[] }
 
 export type ObjectListParams = void
@@ -343,6 +430,7 @@ export type ObjectListResponse = {
 }
 
 export type ObjectParams = { key: string; bucket: string }
+export type ObjectPayload = void
 export type ObjectResponse = { object: Obj }
 
 export type ObjectSearchParams = {
@@ -351,6 +439,7 @@ export type ObjectSearchParams = {
   offset: number
   limit: number
 }
+export type ObjectSearchPayload = void
 export type ObjectSearchResponse = ObjEntry[]
 
 export type ObjectAddParams = { key: string; bucket: string }
@@ -358,7 +447,7 @@ export type ObjectAddPayload = {
   object: Obj
   usedContracts: { [key: PublicKey]: FileContractID }
 }
-export type ObjectAddResponse = never
+export type ObjectAddResponse = void
 
 export type ObjectRenameParams = void
 export type ObjectRenamePayload = {
@@ -368,7 +457,7 @@ export type ObjectRenamePayload = {
   to: string
   mode: 'single' | 'multi'
 }
-export type ObjectRenameResponse = never
+export type ObjectRenameResponse = void
 
 export type ObjectDeleteParams = {
   key: string
@@ -376,9 +465,10 @@ export type ObjectDeleteParams = {
   batch?: boolean
 }
 export type ObjectDeletePayload = void
-export type ObjectDeleteResponse = never
+export type ObjectDeleteResponse = void
 
 export type ObjectsStatsParams = void
+export type ObjectsStatsPayload = void
 export type ObjectsStatsResponse = {
   numObjects: number // number of objects
   numUnfinishedObjects: number // number of unfinished objects
@@ -392,9 +482,11 @@ export type ObjectsStatsResponse = {
 export type Setting = Record<string, unknown> | string
 
 export type SettingsParams = void
+export type SettingsPayload = void
 export type SettingsResponse = string[]
 
 export type SettingParams = { key: string }
+export type SettingPayload = void
 export type SettingResponse<T extends Setting> = T
 
 export type SettingUpdateParams = { key: string }
@@ -422,7 +514,7 @@ export type AlertsParams = {
   offset: number
   severity?: AlertSeverity
 }
-
+export type AlertsPayload = void
 export type AlertsResponse = {
   alerts?: Alert[]
   hasMore: boolean
@@ -436,6 +528,7 @@ export type AlertsDismissResponse = void
 // slabs
 
 export type SlabObjectsParams = { key: string }
+export type SlabObjectsPayload = void
 export type SlabObjectsResponse = ObjEntry[]
 
 // metrics
@@ -464,6 +557,7 @@ export type ContractMetricsParams = MetricsParams & {
   contractID?: string
   hostKey?: string
 }
+export type ContractMetricsPayload = void
 export type ContractMetricsResponse = ContractMetric[]
 
 export type ContractSetMetric = {
@@ -475,6 +569,7 @@ export type ContractSetMetric = {
 export type ContractSetMetricsParams = MetricsParams & {
   name: string
 }
+export type ContractSetMetricsPayload = void
 export type ContractSetMetricsResponse = ContractSetMetric[]
 
 export type ContractSetChurnMetric = {
@@ -490,6 +585,7 @@ export type ContractSetChurnMetricsParams = MetricsParams & {
   direction?: string
   reason?: string
 }
+export type ContractSetChurnMetricsPayload = void
 export type ContractSetChurnMetricsResponse = ContractSetChurnMetric[]
 
 export type WalletMetric = {
@@ -500,6 +596,7 @@ export type WalletMetric = {
 }
 
 export type WalletMetricsParams = MetricsParams
+export type WalletMetricsPayload = void
 export type WalletMetricsResponse = WalletMetric[]
 
 // export type PerformanceMetric = {

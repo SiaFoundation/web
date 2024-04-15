@@ -20,11 +20,12 @@ import { HostContext, HostData, TableColumnId } from './types'
 import { format, formatDistance, formatRelative } from 'date-fns'
 import { HostContextMenu } from '../../components/Hosts/HostContextMenu'
 import { useWorkflows } from '@siafoundation/react-core'
-import { AutopilotHost, RhpScanPayload } from '@siafoundation/renterd-types'
 import {
-  useHostsAllowlist,
+  AutopilotHost,
+  RhpScanPayload,
   workerRhpScanRoute,
-} from '@siafoundation/renterd-react'
+} from '@siafoundation/renterd-types'
+import { useHostsAllowlist } from '@siafoundation/renterd-react'
 import BigNumber from 'bignumber.js'
 import React, { memo } from 'react'
 
