@@ -290,6 +290,32 @@ export function getFields({
             }
           : {},
     },
+    minProtocolVersion: {
+      type: 'text',
+      category: 'hosts',
+      title: 'Min protocol version',
+      description: (
+        <>
+          The minimum protocol version that autopilot will consider when forming
+          contracts with hosts.
+        </>
+      ),
+      suggestion: advancedDefaults?.minProtocolVersion,
+      suggestionTip: `Defaults to ${advancedDefaults?.minProtocolVersion}.`,
+      hidden: !isAutopilotEnabled || !showAdvanced,
+      validation:
+        isAutopilotEnabled && showAdvanced
+          ? {
+              required: 'required',
+              validate: {
+                version: (value: string) => {
+                  const regex = /^\d+\.\d+\.\d+$/
+                  return regex.test(value) || 'must be a valid version number'
+                },
+              },
+            }
+          : {},
+    },
 
     // contract
     defaultContractSet: {
