@@ -2,10 +2,10 @@ import { getTitleId } from '@siafoundation/design-system'
 import { Block } from '../../../components/Block'
 import { routes } from '../../../config/routes'
 import { Metadata } from 'next'
-import { getSiaCentralBlock } from '@siafoundation/sia-central-js'
 import { buildMetadata } from '../../../lib/utils'
-import { siaCentralApi } from '../../../config'
+import { siaCentral } from '../../../config/siaCentral'
 import { notFound } from 'next/navigation'
+import { to } from '@siafoundation/request'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -34,17 +34,16 @@ export const revalidate = 0
 
 export default async function Page({ params }) {
   const id = params?.id as string
-  const { data: b, error } = await getSiaCentralBlock({
-    params: {
-      id,
-    },
-    config: {
-      api: siaCentralApi,
-    },
-  })
+  const [b, error] = await to(
+    siaCentral.block({
+      params: {
+        id,
+      },
+    })
+  )
 
   if (error) {
-    throw Error(error)
+    throw error
   }
 
   if (!b?.block) {

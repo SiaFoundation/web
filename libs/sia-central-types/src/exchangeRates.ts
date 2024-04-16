@@ -17,6 +17,10 @@ export type SiaCentralExchangeRates = {
   }
 }
 
+export type SiaCentralExchangeRatesParams = {
+  currencies?: string
+}
+export type SiaCentralExchangeRatesPayload = void
 export type SiaCentralExchangeRatesResponse = {
   message: string
   type: string

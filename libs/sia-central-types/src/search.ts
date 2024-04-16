@@ -9,7 +9,7 @@ import {
 export type SiaCentralSearchParams = {
   query: string
 }
-
+export type SiaCentralSearchPayload = void
 export type SiaCentralSearchResponse = {
   message: string
   blocks?: SiaCentralBlock[]

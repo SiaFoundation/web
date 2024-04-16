@@ -4,7 +4,7 @@ import {
   HookArgsSwr,
 } from '@siafoundation/react-core'
 import {
-  api,
+  defaultApi,
   SiaCentralHostsNetworkAveragesResponse,
 } from '@siafoundation/sia-central-types'
 
@@ -13,7 +13,7 @@ export function useSiaCentralHostsNetworkAverages(
 ) {
   const { settings } = useAppSettings()
   return useGetSwr({
-    api,
+    api: defaultApi,
     ...args,
     route: '/hosts/network/averages',
     disabled: args?.disabled || !settings.siaCentral,

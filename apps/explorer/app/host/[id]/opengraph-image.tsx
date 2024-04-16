@@ -1,9 +1,5 @@
-import {
-  getSiaCentralExchangeRates,
-  getSiaCentralHost,
-} from '@siafoundation/sia-central-js'
 import { getOGImage } from '../../../components/OGImageEntity'
-import { siaCentralApi } from '../../../config'
+import { siaCentral } from '../../../config/siaCentral'
 import {
   getDownloadCost,
   getDownloadSpeed,
@@ -14,6 +10,7 @@ import {
 } from '@siafoundation/units'
 import { truncate } from '@siafoundation/design-system'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
+import { to } from '@siafoundation/request'
 
 export const revalidate = 0
 
@@ -29,20 +26,21 @@ export const contentType = 'image/png'
 
 export default async function Image({ params }) {
   const id = params?.id as string
-  const [{ data: h }, { data: r }] = await Promise.all([
-    getSiaCentralHost({
-      params: {
-        id,
-      },
-      config: {
-        api: siaCentralApi,
-      },
-    }),
-    getSiaCentralExchangeRates({
-      config: {
-        api: siaCentralApi,
-      },
-    }),
+  const [[h], [r]] = await Promise.all([
+    to(
+      siaCentral.host({
+        params: {
+          id,
+        },
+      })
+    ),
+    to(
+      siaCentral.exchangeRates({
+        params: {
+          currencies: 'sc',
+        },
+      })
+    ),
   ])
 
   if (!h || !h.host) {

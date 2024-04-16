@@ -4,7 +4,7 @@ import {
   HookArgsSwr,
 } from '@siafoundation/react-core'
 import {
-  api,
+  defaultApi,
   SiaCentralContractParams,
   SiaCentralContractResponse,
 } from '@siafoundation/sia-central-types'
@@ -14,7 +14,7 @@ export function useSiaCentralContract(
 ) {
   const { settings } = useAppSettings()
   return useGetSwr({
-    api,
+    api: defaultApi,
     ...args,
     route: '/explorer/contracts/:id',
     disabled: args?.disabled || !settings.siaCentral,

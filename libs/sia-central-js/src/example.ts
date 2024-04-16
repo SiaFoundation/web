@@ -1,17 +1,4 @@
-# sia-central-js
-
-Methods and types for interacting with the Sia Central API.
-
-## Installation
-
-```sh
-npm install @siafoundation/sia-central-js
-```
-
-## Usage
-
-```js
-import { SiaCentral } from '@siafoundation/sia-central-js'
+import { SiaCentral } from '.'
 
 export async function example() {
   const siaCentral = SiaCentral()
@@ -25,4 +12,3 @@ export async function example() {
   })
   console.log({ latestBlock, metrics, averages, exchangeRates })
 }
-```

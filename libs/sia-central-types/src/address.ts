@@ -3,7 +3,7 @@ import { SiaCentralSiafundOutput, SiaCentralTransaction } from './types'
 export type SiaCentralAddressParams = {
   id: string
 }
-
+export type SiaCentralAddressPayload = void
 export type SiaCentralAddressResponse = {
   message: 'successfully got transactions'
   type: 'success'

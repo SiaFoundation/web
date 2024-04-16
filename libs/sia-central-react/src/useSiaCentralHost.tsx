@@ -6,7 +6,7 @@ import {
 import {
   SiaCentralHostResponse,
   SiaCentralHostParams,
-  api,
+  defaultApi,
 } from '@siafoundation/sia-central-types'
 
 export function useSiaCentralHost(
@@ -14,7 +14,7 @@ export function useSiaCentralHost(
 ) {
   const { settings } = useAppSettings()
   return useGetSwr({
-    api,
+    api: defaultApi,
     ...args,
     route: '/hosts/:id',
     disabled: args?.disabled || !settings.siaCentral,

@@ -4,7 +4,7 @@ import {
   HookArgsSwr,
 } from '@siafoundation/react-core'
 import {
-  api,
+  defaultApi,
   SiaCentralExchangeRatesResponse,
 } from '@siafoundation/sia-central-types'
 
@@ -13,7 +13,7 @@ export function useSiaCentralExchangeRates(
 ) {
   const { settings } = useAppSettings()
   return useGetSwr({
-    api,
+    api: defaultApi,
     ...args,
     route: '/market/exchange-rate?currencies=sc',
     disabled: args?.disabled || !settings.siaCentral,

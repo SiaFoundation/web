@@ -3,10 +3,8 @@ import { humanBytes, humanNumber } from '@siafoundation/units'
 import { AsyncReturnType } from '../lib/types'
 import { getCacheValue } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
-import {
-  getSiaCentralBlockLatest,
-  getSiaCentralHostsNetworkMetrics,
-} from '@siafoundation/sia-central-js'
+import { siaCentral } from '../config/siaCentral'
+import { to } from '@siafoundation/request'
 
 const maxAge = getMinutesInSeconds(5)
 
@@ -36,12 +34,11 @@ async function readStats() {
     }
   }
 
-  const [{ data: latestBlock }, { data: hostsStats }, github] =
-    await Promise.all([
-      getSiaCentralBlockLatest(),
-      getSiaCentralHostsNetworkMetrics(),
-      getGitHub(),
-    ])
+  const [[latestBlock], [hostsStats], github] = await Promise.all([
+    to(siaCentral.blockLatest()),
+    to(siaCentral.hostsNetworkMetrics()),
+    getGitHub(),
+  ])
 
   const stats = {
     // network

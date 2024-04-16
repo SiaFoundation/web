@@ -1,1 +1,1 @@
-export const api = 'https://api.siacentral.com/v2'
+export const defaultApi = 'https://api.siacentral.com/v2'

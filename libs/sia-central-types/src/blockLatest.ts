@@ -1,6 +1,9 @@
 import { SiaCentralBlock } from './types'
 
+export type SiaCentralBlockLatestParams = void
+export type SiaCentralBlockLatestPayload = void
 export type SiaCentralBlockLatestResponse = {
   message: string
-  block: Omit<SiaCentralBlock, 'transactions'>
+  type: string
+  block?: Omit<SiaCentralBlock, 'transactions'>
 }

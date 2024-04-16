@@ -4,7 +4,7 @@ import {
   HookArgsWithPayloadSwr,
 } from '@siafoundation/react-core'
 import {
-  api,
+  defaultApi,
   SiaCentralBlock,
   SiaCentralBlocksPayload,
 } from '@siafoundation/sia-central-types'
@@ -23,7 +23,7 @@ export function useSiaCentralBlocks(
 ) {
   const { settings } = useAppSettings()
   return usePostSwr({
-    api,
+    api: defaultApi,
     ...args,
     route: '/explorer/blocks',
     disabled: args?.disabled || !settings.siaCentral,

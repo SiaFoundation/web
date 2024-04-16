@@ -30,13 +30,6 @@
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/libs/sia-central-mock"],
-      "options": {
-        "jestConfig": "libs/sia-central-mock/jest.config.ts"
-      }
     }
   }
 }

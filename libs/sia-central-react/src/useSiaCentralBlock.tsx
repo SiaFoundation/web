@@ -4,7 +4,7 @@ import {
   useGetSwr,
 } from '@siafoundation/react-core'
 import {
-  api,
+  defaultApi,
   SiaCentralBlockParams,
   SiaCentralBlockResponse,
 } from '@siafoundation/sia-central-types'
@@ -14,7 +14,7 @@ export function useSiaCentralBlock(
 ) {
   const { settings } = useAppSettings()
   return useGetSwr({
-    api,
+    api: defaultApi,
     ...args,
     route: '/explorer/blocks/:id',
     disabled: args?.disabled || !settings.siaCentral,

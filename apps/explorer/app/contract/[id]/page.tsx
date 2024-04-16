@@ -1,16 +1,12 @@
 import { SiaCentralContract } from '@siafoundation/sia-central-types'
-import {
-  getSiaCentralContract,
-  getSiaCentralExchangeRates,
-  getSiaCentralTransaction,
-} from '@siafoundation/sia-central-js'
 import { ContractView } from '../../../components/ContractView'
 import { Metadata } from 'next'
 import { routes } from '../../../config/routes'
 import { buildMetadata } from '../../../lib/utils'
-import { siaCentralApi } from '../../../config'
+import { siaCentral } from '../../../config/siaCentral'
 import { notFound } from 'next/navigation'
 import { truncate } from '@siafoundation/design-system'
+import { to } from '@siafoundation/request'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -28,51 +24,51 @@ export const revalidate = 0
 
 export default async function Page({ params }) {
   const id = params?.id as string
-  const [{ data: c, error }, { data: r }] = await Promise.all([
-    getSiaCentralContract({
-      params: {
-        id,
-      },
-      config: {
-        api: siaCentralApi,
-      },
-    }),
-    getSiaCentralExchangeRates({
-      config: {
-        api: siaCentralApi,
-      },
-    }),
+  const [[c, error], [r]] = await Promise.all([
+    to(
+      siaCentral.contract({
+        params: {
+          id,
+        },
+      })
+    ),
+    to(
+      siaCentral.exchangeRates({
+        params: {
+          currencies: 'sc',
+        },
+      })
+    ),
   ])
 
   if (error) {
-    throw Error(error)
+    throw error
   }
 
-  if (!c?.contract) {
+  const contract = c?.contract
+
+  if (!contract) {
     return notFound()
   }
 
-  const contract = c.contract
   const formationTxnId = getFormationTxnId(contract)
   const finalRevisionTxnId = contract?.transaction_id || ''
 
-  const [{ data: ft }, { data: rt }] = await Promise.all([
-    getSiaCentralTransaction({
-      params: {
-        id: formationTxnId,
-      },
-      config: {
-        api: siaCentralApi,
-      },
-    }),
-    getSiaCentralTransaction({
-      params: {
-        id: finalRevisionTxnId,
-      },
-      config: {
-        api: siaCentralApi,
-      },
-    }),
+  const [[ft], [rt]] = await Promise.all([
+    to(
+      siaCentral.transaction({
+        params: {
+          id: formationTxnId,
+        },
+      })
+    ),
+    to(
+      siaCentral.transaction({
+        params: {
+          id: finalRevisionTxnId,
+        },
+      })
+    ),
   ])
 
   const formationTransaction = ft?.transaction

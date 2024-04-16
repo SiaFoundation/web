@@ -1,8 +1,8 @@
-import { getSiaCentralBlock } from '@siafoundation/sia-central-js'
 import { humanDate } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
-import { siaCentralApi } from '../../../config'
+import { siaCentral } from '../../../config/siaCentral'
 import { truncate } from '@siafoundation/design-system'
+import { to } from '@siafoundation/request'
 
 export const revalidate = 0
 
@@ -16,14 +16,13 @@ export const contentType = 'image/png'
 
 export default async function Image({ params }) {
   const id = params?.id as string
-  const { data: b } = await getSiaCentralBlock({
-    params: {
-      id,
-    },
-    config: {
-      api: siaCentralApi,
-    },
-  })
+  const [b] = await to(
+    siaCentral.block({
+      params: {
+        id,
+      },
+    })
+  )
 
   if (!b || !b.block) {
     return getOGImage(

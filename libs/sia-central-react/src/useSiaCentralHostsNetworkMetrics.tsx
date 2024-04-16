@@ -4,7 +4,7 @@ import {
   HookArgsSwr,
 } from '@siafoundation/react-core'
 import {
-  api,
+  defaultApi,
   SiaCentralHostsNetworkMetricsResponse,
 } from '@siafoundation/sia-central-types'
 
@@ -13,7 +13,7 @@ export function useSiaCentralHostsNetworkMetrics(
 ) {
   const { settings } = useAppSettings()
   return useGetSwr({
-    api,
+    api: defaultApi,
     ...args,
     route: '/hosts/network/metrics',
     disabled: args?.disabled || !settings.siaCentral,

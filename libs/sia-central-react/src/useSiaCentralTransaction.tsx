@@ -4,7 +4,7 @@ import {
   HookArgsSwr,
 } from '@siafoundation/react-core'
 import {
-  api,
+  defaultApi,
   SiaCentralTransactionParams,
   SiaCentralTransactionResponse,
 } from '@siafoundation/sia-central-types'
@@ -14,7 +14,7 @@ export function useSiaCentralTransaction(
 ) {
   const { settings } = useAppSettings()
   return useGetSwr({
-    api,
+    api: defaultApi,
     ...args,
     route: '/explorer/transactions/:id',
     disabled: args?.disabled || !settings.siaCentral,

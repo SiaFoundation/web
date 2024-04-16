@@ -1,14 +1,11 @@
-import {
-  getSiaCentralContract,
-  getSiaCentralExchangeRates,
-} from '@siafoundation/sia-central-js'
 import { humanBytes, humanDate } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
-import { siaCentralApi } from '../../../config'
+import { siaCentral } from '../../../config/siaCentral'
 import { truncate } from '@siafoundation/design-system'
 import { lowerCase } from '@technically/lodash'
 import { siacoinToFiat } from '../../../lib/currency'
 import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
+import { to } from '@siafoundation/request'
 
 export const revalidate = 0
 
@@ -25,20 +22,21 @@ const currency = currencyOptions.find((c) => c.id === 'usd') as CurrencyOption
 export default async function Image({ params }) {
   const id = params?.id as string
 
-  const [{ data: c }, { data: r }] = await Promise.all([
-    getSiaCentralContract({
-      params: {
-        id,
-      },
-      config: {
-        api: siaCentralApi,
-      },
-    }),
-    getSiaCentralExchangeRates({
-      config: {
-        api: siaCentralApi,
-      },
-    }),
+  const [[c], [r]] = await Promise.all([
+    to(
+      siaCentral.contract({
+        params: {
+          id,
+        },
+      })
+    ),
+    to(
+      siaCentral.exchangeRates({
+        params: {
+          currencies: 'sc',
+        },
+      })
+    ),
   ])
 
   if (!c || !c.contract) {

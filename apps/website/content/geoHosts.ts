@@ -1,7 +1,8 @@
 import { SiaCentralHost } from '@siafoundation/sia-central-types'
-import { getSiaCentralHosts } from '@siafoundation/sia-central-js'
 import { getCacheValue } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
+import { siaCentral } from '../config/siaCentral'
+import { to } from '@siafoundation/request'
 
 const maxAge = getMinutesInSeconds(5)
 
@@ -12,11 +13,13 @@ export async function getGeoHosts(): Promise<SiaCentralPartialHost[]> {
   return getCacheValue(
     'geoHosts',
     async () => {
-      const { data: siaCentralHosts, error } = await getSiaCentralHosts({
-        params: {
-          limit: 300,
-        },
-      })
+      const [siaCentralHosts, error] = await to(
+        siaCentral.hosts({
+          params: {
+            limit: 300,
+          },
+        })
+      )
       if (error) {
         return []
       }
