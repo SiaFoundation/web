@@ -1,5 +1,16 @@
 # @siafoundation/sia-central-js
 
+## 0.4.0
+
+### Minor Changes
+
+- a12625e7: sia-central is now named sia-central-js.
+
+### Patch Changes
+
+- Updated dependencies [a12625e7]
+  - @siafoundation/sia-central-types@0.1.0
+
 ## 0.3.3
 
 ### Patch Changes

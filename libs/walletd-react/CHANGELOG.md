@@ -1,5 +1,21 @@
 # @siafoundation/walletd-react
 
+## 4.1.0
+
+### Minor Changes
+
+- 1b1952e5: Libraries now follow new naming scheme.
+- 61de825d: Added useNodeState.
+- 23168c6e: Added useRescanStart, useRescanStatus.
+
+### Patch Changes
+
+- Updated dependencies [1b1952e5]
+- Updated dependencies [0456e4b0]
+- Updated dependencies [0d7249a4]
+  - @siafoundation/react-core@1.2.0
+  - @siafoundation/walletd-types@0.1.0
+
 ## 4.0.0
 
 ### Minor Changes

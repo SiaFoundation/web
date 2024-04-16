@@ -1,5 +1,15 @@
 # walletd
 
+## 0.19.0
+
+### Minor Changes
+
+- 23168c6e: Address generation and addition dialogs now have an option to rescan from a specified height. Closes https://github.com/SiaFoundation/walletd/issues/96
+- 61de825d: The profile details now include uptime and version. Closes https://github.com/SiaFoundation/walletd/issues/97
+- 75d794c4: Added a receive button in addition to the addresses button to make send/receive options more clear. Closes https://github.com/SiaFoundation/walletd/issues/88
+- 23168c6e: There is now a dedicated rescan dialog that can be opened from the wallet list and wallet context menus. Closes https://github.com/SiaFoundation/walletd/issues/96
+- 23168c6e: Rescan progress and status including errors is now shown in a sticky status bar. Closes https://github.com/SiaFoundation/walletd/issues/96
+
 ## 0.18.0
 
 ### Minor Changes

@@ -1,5 +1,19 @@
 # @siafoundation/walletd-mock
 
+## 0.1.0
+
+### Minor Changes
+
+- 1b1952e5: Libraries now follow new naming scheme.
+
+### Patch Changes
+
+- Updated dependencies [1b1952e5]
+- Updated dependencies [0456e4b0]
+  - @siafoundation/sia-central-mock@0.1.0
+  - @siafoundation/walletd-types@0.1.0
+  - @siafoundation/units@3.0.1
+
 ## 0.0.1
 
 ### Patch Changes

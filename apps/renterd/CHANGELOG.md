@@ -1,5 +1,11 @@
 # renterd
 
+## 0.51.0
+
+### Minor Changes
+
+- 424636ad: The configuration now includes the min protocol version option, the value defaults to 1.6.0 when using simple configuration mode. Closes https://github.com/SiaFoundation/renterd/issues/1141 Closes https://github.com/SiaFoundation/web/issues/573
+
 ## 0.50.0
 
 ### Minor Changes
