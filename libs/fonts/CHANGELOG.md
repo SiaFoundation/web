@@ -1,5 +1,11 @@
 # @siafoundation/fonts
 
+## 0.5.0
+
+### Minor Changes
+
+- 0d7249a4: Peer dependencies now limited to react and next.
+
 ## 0.4.1
 
 ### Patch Changes

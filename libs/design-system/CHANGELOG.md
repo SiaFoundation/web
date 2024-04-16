@@ -1,5 +1,21 @@
 # Changelog
 
+## 4.1.0
+
+### Minor Changes
+
+- 23168c6e: Added async defaultValues support to useDialogFormHelpers via initKey prop.
+- 0d7249a4: Peer dependencies now limited to react and next.
+
+### Patch Changes
+
+- 23168c6e: Fixed an issue where Dialog and useDialogFormHelpers were not calling onOpenChange on open events.
+- Updated dependencies [1b1952e5]
+- Updated dependencies [0d7249a4]
+  - @siafoundation/react-core@1.2.0
+  - @siafoundation/sia-central-react@3.1.0
+  - @siafoundation/units@3.0.1
+
 ## 4.0.0
 
 ### Minor Changes

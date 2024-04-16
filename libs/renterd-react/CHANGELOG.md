@@ -1,5 +1,19 @@
 # @siafoundation/renterd-react
 
+## 4.1.0
+
+### Minor Changes
+
+- 1b1952e5: Libraries now follow new naming scheme.
+
+### Patch Changes
+
+- Updated dependencies [1b1952e5]
+- Updated dependencies [0d7249a4]
+- Updated dependencies [d2180c11]
+  - @siafoundation/react-core@1.2.0
+  - @siafoundation/renterd-types@0.1.0
+
 ## 4.0.0
 
 ### Minor Changes

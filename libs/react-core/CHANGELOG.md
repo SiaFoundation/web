@@ -1,5 +1,17 @@
 # @siafoundation/react-core
 
+## 1.2.0
+
+### Minor Changes
+
+- 1b1952e5: Libraries now follow new naming scheme.
+- 0d7249a4: Peer dependencies now limited to react and next.
+
+### Patch Changes
+
+- Updated dependencies [b3a08031]
+  - @siafoundation/request@0.1.0
+
 ## 1.1.0
 
 ### Minor Changes

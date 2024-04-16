@@ -1,5 +1,19 @@
 # @siafoundation/sia-central-react
 
+## 3.1.0
+
+### Minor Changes
+
+- 1b1952e5: Libraries now follow new naming scheme.
+
+### Patch Changes
+
+- Updated dependencies [1b1952e5]
+- Updated dependencies [0d7249a4]
+- Updated dependencies [a12625e7]
+  - @siafoundation/react-core@1.2.0
+  - @siafoundation/sia-central-types@0.1.0
+
 ## 3.0.0
 
 ### Patch Changes
