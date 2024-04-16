@@ -1,8 +1,8 @@
-import { getSiaCentralAddress } from '@siafoundation/sia-central-js'
 import { humanSiacoin, humanSiafund } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
-import { siaCentralApi } from '../../../config'
+import { siaCentral } from '../../../config/siaCentral'
 import { truncate } from '@siafoundation/design-system'
+import { to } from '@siafoundation/request'
 
 export const revalidate = 0
 
@@ -16,14 +16,13 @@ export const contentType = 'image/png'
 
 export default async function Image({ params }) {
   const id = params?.id as string
-  const { data: a } = await getSiaCentralAddress({
-    params: {
-      id,
-    },
-    config: {
-      api: siaCentralApi,
-    },
-  })
+  const [a] = await to(
+    siaCentral.address({
+      params: {
+        id,
+      },
+    })
+  )
 
   if (!a) {
     return getOGImage(

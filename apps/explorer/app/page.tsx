@@ -1,15 +1,11 @@
 import { Metadata } from 'next'
-import { appLink, network, siaCentralApi } from '../config'
+import { appLink, network } from '../config'
 import { Home } from '../components/Home'
-import {
-  getSiaCentralBlockLatest,
-  getSiaCentralExchangeRates,
-  getSiaCentralHosts,
-  getSiaCentralHostsNetworkMetrics,
-} from '@siafoundation/sia-central-js'
 import { buildMetadata } from '../lib/utils'
 import { humanBytes } from '@siafoundation/units'
 import { getLastFewBlocks } from '../lib/blocks'
+import { siaCentral } from '../config/siaCentral'
+import { to } from '@siafoundation/request'
 
 export function generateMetadata(): Metadata {
   const title = 'siascan'
@@ -28,71 +24,65 @@ export const revalidate = 0
 
 export default async function HomePage() {
   const [
-    { data: m, error: metricsError },
-    { data: lb, error: latestBlockError },
-    { data: r, error: exchangeRatesError },
-    { data: h, error: hostsError },
+    [metrics, metricsError],
+    [latestBlock, latestBlockError],
+    [exchangeRates, exchangeRatesError],
+    [hosts, hostsError],
   ] = await Promise.all([
-    getSiaCentralHostsNetworkMetrics({
-      config: {
-        api: siaCentralApi,
-      },
-    }),
-    getSiaCentralBlockLatest({
-      config: {
-        api: siaCentralApi,
-      },
-    }),
-    getSiaCentralExchangeRates({
-      config: {
-        api: siaCentralApi,
-      },
-    }),
-    getSiaCentralHosts({
-      params: {
-        limit: 5,
-      },
-      config: {
-        api: siaCentralApi,
-      },
-    }),
+    to(siaCentral.hostsNetworkMetrics()),
+    to(siaCentral.blockLatest()),
+    to(
+      siaCentral.exchangeRates({
+        params: { currencies: 'sc' },
+      })
+    ),
+    to(
+      siaCentral.hosts({
+        params: {
+          limit: 5,
+        },
+      })
+    ),
   ])
 
-  const lastBlockHeight = lb?.block.height || 0
-  const blocks = await getLastFewBlocks(lb?.block)
+  const lastBlockHeight = latestBlock?.block?.height || 0
+  const [blocks, blocksError] = await getLastFewBlocks(latestBlock?.block)
 
   if (
     metricsError ||
     latestBlockError ||
     exchangeRatesError ||
     hostsError ||
-    latestBlockError ||
-    blocks.error
+    blocksError
   ) {
     console.log(new Date().toISOString(), {
       metricsError,
       latestBlockError,
       exchangeRatesError,
-      blocksError: blocks.error,
+      blocksError,
       hostsError,
     })
   }
 
   console.log(new Date().toISOString(), {
-    metrics: humanBytes(Buffer.byteLength(JSON.stringify(m || ''))),
-    latestBlock: humanBytes(Buffer.byteLength(JSON.stringify(lb || ''))),
+    metrics: humanBytes(Buffer.byteLength(JSON.stringify(metrics || ''))),
+    latestBlock: humanBytes(
+      Buffer.byteLength(JSON.stringify(latestBlock || ''))
+    ),
     blocks: humanBytes(Buffer.byteLength(JSON.stringify(blocks || ''))),
-    exchangeRates: humanBytes(Buffer.byteLength(JSON.stringify(r || ''))),
-    hosts: humanBytes(Buffer.byteLength(JSON.stringify(h || ''))),
+    exchangeRates: humanBytes(
+      Buffer.byteLength(JSON.stringify(exchangeRates || ''))
+    ),
+    hosts: humanBytes(Buffer.byteLength(JSON.stringify(hosts || ''))),
   })
 
   return (
     <Home
-      metrics={m}
+      metrics={metrics}
       blockHeight={lastBlockHeight}
-      blocks={blocks?.blocks || []}
-      hosts={h?.hosts || []}
-      rates={r?.rates}
+      blocks={blocks || []}
+      hosts={hosts?.hosts || []}
+      rates={exchangeRates?.rates}
     />
   )
 }

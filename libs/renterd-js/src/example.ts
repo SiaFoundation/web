@@ -16,11 +16,14 @@ export async function example() {
     password: 'password1337',
   })
 
-  const buckets = await bus.buckets()
-
-  buckets.data.forEach((bucket) => {
-    console.log(bucket.name, bucket.createdAt, bucket.policy)
-  })
+  try {
+    const buckets = await bus.buckets()
+    buckets.data.forEach((bucket) => {
+      console.log(bucket.name, bucket.createdAt, bucket.policy)
+    })
+  } catch (error) {
+    console.log(error)
+  }
 
   bus.bucketCreate({
     data: { name: 'my-bucket' },
@@ -52,7 +55,7 @@ export async function example() {
     console.log(host.host.publicKey, host.host.priceTable)
   })
 
-  worker.objectUpload({
+  await worker.objectUpload({
     params: {
       key: 'path/to/file.txt',
       bucket: 'my-bucket',
@@ -65,7 +68,7 @@ export async function example() {
     },
   })
 
-  worker.objectDownload({
+  await worker.objectDownload({
     params: {
       key: 'path/to/file.txt',
       bucket: 'my-bucket',

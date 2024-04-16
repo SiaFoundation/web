@@ -1,14 +1,11 @@
-import {
-  getSiaCentralExchangeRates,
-  getSiaCentralHost,
-} from '@siafoundation/sia-central-js'
 import { Metadata } from 'next'
 import { routes } from '../../../config/routes'
 import { buildMetadata } from '../../../lib/utils'
 import { Host } from '../../../components/Host'
-import { siaCentralApi } from '../../../config'
 import { notFound } from 'next/navigation'
 import { truncate } from '@siafoundation/design-system'
+import { siaCentral } from '../../../config/siaCentral'
+import { to } from '@siafoundation/request'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -26,24 +23,25 @@ export const revalidate = 0
 
 export default async function Page({ params }) {
   const id = params?.id as string
-  const [{ data: h, error }, { data: r }] = await Promise.all([
-    getSiaCentralHost({
-      params: {
-        id,
-      },
-      config: {
-        api: siaCentralApi,
-      },
-    }),
-    getSiaCentralExchangeRates({
-      config: {
-        api: siaCentralApi,
-      },
-    }),
+  const [[h, error], [r]] = await Promise.all([
+    to(
+      siaCentral.host({
+        params: {
+          id,
+        },
+      })
+    ),
+    to(
+      siaCentral.exchangeRates({
+        params: {
+          currencies: 'sc',
+        },
+      })
+    ),
   ])
 
   if (error) {
-    throw Error(error)
+    throw error
   }
 
   if (!h?.host) {

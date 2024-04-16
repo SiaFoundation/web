@@ -12,7 +12,7 @@ export default function MapPage({ hosts, rates, stats }: Props) {
 }
 
 export async function getStaticProps() {
-  const [hosts, { data: rates }, stats] = await Promise.all([
+  const [hosts, rates, stats] = await Promise.all([
     getGeoHosts(),
     getExchangeRates(),
     getStats(),

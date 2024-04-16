@@ -3,7 +3,7 @@ import {
   HookArgsSwr,
   useGetSwr,
 } from '@siafoundation/react-core'
-import { api, SiaCentralBlock } from '@siafoundation/sia-central-types'
+import { defaultApi, SiaCentralBlock } from '@siafoundation/sia-central-types'
 
 type SiaCentralBlockLatestResponse = {
   message: string
@@ -15,7 +15,7 @@ export function useSiaCentralBlockLatest(
 ) {
   const { settings } = useAppSettings()
   return useGetSwr({
-    api,
+    api: defaultApi,
     ...args,
     route: '/explorer/blocks',
     disabled: args?.disabled || !settings.siaCentral,

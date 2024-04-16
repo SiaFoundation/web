@@ -4,7 +4,7 @@ import {
   HookArgsCallback,
 } from '@siafoundation/react-core'
 import {
-  api,
+  defaultApi,
   SiaCentralSearchParams,
   SiaCentralSearchResponse,
 } from '@siafoundation/sia-central-types'
@@ -18,7 +18,7 @@ export function useSiaCentralSearch(
 ) {
   const { settings } = useAppSettings()
   return useGetFunc({
-    api,
+    api: defaultApi,
     ...args,
     route: '/explorer/search/:query',
     disabled: args?.disabled || !settings.siaCentral,

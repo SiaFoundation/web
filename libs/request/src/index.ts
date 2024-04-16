@@ -1,4 +1,10 @@
-import { Axios, AxiosRequestConfig, AxiosRequestHeaders } from 'axios'
+import {
+  Axios,
+  AxiosError,
+  AxiosRequestConfig,
+  AxiosRequestHeaders,
+  AxiosResponse,
+} from 'axios'
 
 export type RequestParams = Record<
   string,
@@ -33,7 +39,7 @@ export function buildRequestHandler<
   Params = void,
   Data = void,
   Response = void
->(axios: Axios, method: Method, route: string) {
+>(axios: Axios, method: Method, route: string, defaultParams?: Params) {
   type Args = Params extends void
     ? Data extends void
       ? { config?: AxiosRequestConfig<Data> } | void
@@ -58,15 +64,40 @@ export function buildRequestHandler<
       data?: Data
       config?: AxiosRequestConfig<Data>
     }
-    const paramRoute =
-      'params' in a
-        ? // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          parameterizeRoute(route, a.params as RequestParams)!
-        : route
+    const params = {
+      ...defaultParams,
+      ...a.params,
+    }
 
-    const data = 'data' in a ? a.data : undefined
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const paramRoute = parameterizeRoute(route, params as RequestParams)!
+
+    const data = 'data' in a ? JSON.stringify(a.data) : undefined
 
     return axios[method]<Response>(paramRoute, data, a?.config)
+  }
+}
+
+export async function to<T>(
+  promise: Promise<AxiosResponse<T>>
+): Promise<
+  [
+    AxiosResponse<T>['data'] | undefined,
+    AxiosError<T> | undefined,
+    AxiosResponse<T> | undefined
+  ]
+> {
+  try {
+    const response = await promise
+    // Just in case the response is not already JSON
+    try {
+      const data = JSON.parse(response.data as string)
+      return [data, undefined, response]
+    } catch (e) {
+      return [response.data, undefined, response]
+    }
+  } catch (error) {
+    return [undefined, error as AxiosError<T>, undefined]
   }
 }
 
@@ -80,5 +111,6 @@ export function initAxios(api: string, password?: string): Axios {
   return new Axios({
     baseURL: api,
     headers,
+    responseType: 'json',
   })
 }

@@ -1,5 +1,7 @@
 import { SiaCentralNetworkStats } from './types'
 
+export type SiaCentralHostsNetworkMetricsParams = void
+export type SiaCentralHostsNetworkMetricsPayload = void
 export type SiaCentralHostsNetworkMetricsResponse = {
   message: string
   type: string
