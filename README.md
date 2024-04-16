@@ -22,17 +22,20 @@ User interfaces for the Sia software. The latest Sia software takes a modular ap
 The Sia web libraries provide developers with convenient TypeScript SDKs for using Sia core types, blockchain utilities, data fetching, daemon-specific React hooks, and components for common functionality such as Siacoin/fiat input fields, transaction lists, files, and more.
 
 - [@siafoundation/sdk](libs/sdk) - SDK for interacting directly with the Sia network from browsers and web clients.
-- [@siafoundation/react-core](libs/react-core) - Core library for building React hooks for interacting with a Sia daemon.
+- [@siafoundation/renterd-types](libs/renterd-types) - Types for `renterd`.
+- [@siafoundation/renterd-js](libs/renterd-js) - SDK for interacting with `renterd`.
 - [@siafoundation/renterd-react](libs/renterd-react) - React hooks for interacting with `renterd`.
+- [@siafoundation/hostd-types](libs/hostd-types) - Types for `hostd`.
 - [@siafoundation/hostd-react](libs/hostd-react) - React hooks for interacting with `hostd`.
+- [@siafoundation/walletd-types](libs/walletd-types) - Types for `walletd`.
 - [@siafoundation/walletd-react](libs/walletd-react) - React hooks for interacting with `walletd`.
 - [@siafoundation/design-system](libs/design-system) - React-based design system used across Sia apps and websites.
+- [@siafoundation/sia-central-types](libs/sia-central-types) - Types for the Sia Central API.
+- [@siafoundation/sia-central-js](libs/sia-central-js) - SDK for interacting with the Sia Central API.
 - [@siafoundation/sia-central-react](libs/sia-central-react) - React hooks for interacting with the Sia Central API.
-- [@siafoundation/sia-central](libs/sia-central) - Methods and types for interacting with the Sia Central API.
-- [@siafoundation/data-sources](libs/data-sources) - Data sources used for stats on the website.
-- [@siafoundation/fonts](libs/fonts) - Next font configuration for use across apps.
 - [@siafoundation/units](libs/units) - Methods and types for converting and displaying units.
 - [@siafoundation/types](libs/types) - Core Sia types and library methods.
+- [@siafoundation/react-core](libs/react-core) - Core library for building React hooks for interacting with a Sia daemon.
 
 ### Go
 
@@ -49,6 +52,13 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 - [website](apps/website) - The main [sia.tech](https://sia.tech) website with information on the Sia project and the Sia Foundation.
 - [assets](apps/assets) - Powers [api.sia.tech](https://api.sia.tech) and all downloadable assets on [sia.tech](https://sia.tech) such as the Sia software releases.
 - [crons](apps/crons) - Background tasks for [api.sia.tech](https://api.sia.tech) and [sia.tech](https://sia.tech).
+
+### Libraries
+
+- [@siafoundation/request](libs/request) - Core library for building request APIs.
+- [@siafoundation/react-icons](libs/react-icons) - React-based icons used across Sia apps and websites.
+- [@siafoundation/data-sources](libs/data-sources) - Data sources used for stats on the website.
+- [@siafoundation/fonts](libs/fonts) - Next font configuration for use across apps.
 
 ### Testing
 
