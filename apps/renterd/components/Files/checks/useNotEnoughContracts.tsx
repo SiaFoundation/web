@@ -1,8 +1,8 @@
+import { useSettingRedundancy } from '@siafoundation/renterd-react'
 import { useContracts } from '../../../contexts/contracts'
-import { useRedundancySettings } from '../../../hooks/useRedundancySettings'
 
 export function useNotEnoughContracts() {
-  const redundancy = useRedundancySettings()
+  const redundancy = useSettingRedundancy()
   const { datasetCount, isLoading: isContractsLoading } = useContracts()
 
   const active =

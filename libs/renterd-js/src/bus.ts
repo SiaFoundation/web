@@ -53,6 +53,7 @@ import {
   ContractSetMetricsParams,
   ContractSetMetricsPayload,
   ContractSetMetricsResponse,
+  ContractSetSettings,
   ContractSetUpdateParams,
   ContractSetUpdatePayload,
   ContractSetUpdateResponse,
@@ -68,6 +69,7 @@ import {
   ContractsReleasePayload,
   ContractsReleaseResponse,
   ContractsResponse,
+  GougingSettings,
   HostInteractionParams,
   HostInteractionPayload,
   HostInteractionResponse,
@@ -137,7 +139,8 @@ import {
   ObjectsStatsParams,
   ObjectsStatsPayload,
   ObjectsStatsResponse,
-  Setting,
+  RedundancySettings,
+  S3AuthenticationSettings,
   SettingParams,
   SettingPayload,
   SettingResponse,
@@ -168,6 +171,7 @@ import {
   TxPoolTransactionsParams,
   TxPoolTransactionsPayload,
   TxPoolTransactionsResponse,
+  UploadPackingSettings,
   WalletAddressesParams,
   WalletAddressesPayload,
   WalletAddressesResponse,
@@ -264,6 +268,7 @@ import {
   busWalletTransactionsRoute,
 } from '@siafoundation/renterd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
+import { AxiosRequestConfig } from 'axios'
 
 export function Bus({ api, password }: { api: string; password?: string }) {
   const axios = initAxios(api, password)
@@ -534,11 +539,107 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       SettingsPayload,
       SettingsResponse
     >(axios, 'get', busSettingsRoute),
-    setting: buildRequestHandler<
-      SettingParams,
-      SettingPayload,
-      SettingResponse<Setting>
-    >(axios, 'get', busSettingKeyRoute),
+    setting: function setting<Data extends Record<string, unknown>>({
+      params,
+      config,
+    }: {
+      params: SettingParams
+      config?: AxiosRequestConfig<SettingPayload>
+    }) {
+      return buildRequestHandler<
+        SettingParams,
+        SettingPayload,
+        SettingResponse<Data>
+      >(
+        axios,
+        'get',
+        busSettingKeyRoute
+      )({ params, config })
+    },
+    settingGouging: ({ config }: { config?: AxiosRequestConfig } = {}) => {
+      return buildRequestHandler<
+        SettingParams,
+        SettingPayload,
+        SettingResponse<GougingSettings>
+      >(
+        axios,
+        'get',
+        busSettingKeyRoute
+      )({
+        params: {
+          key: 'gouging',
+        },
+        config,
+      })
+    },
+    settingRedundancy: ({ config }: { config?: AxiosRequestConfig } = {}) => {
+      return buildRequestHandler<
+        SettingParams,
+        SettingPayload,
+        SettingResponse<RedundancySettings>
+      >(
+        axios,
+        'get',
+        busSettingKeyRoute
+      )({
+        params: {
+          key: 'redundancy',
+        },
+        config,
+      })
+    },
+    settingContractSet: ({ config }: { config?: AxiosRequestConfig } = {}) => {
+      return buildRequestHandler<
+        SettingParams,
+        SettingPayload,
+        SettingResponse<ContractSetSettings>
+      >(
+        axios,
+        'get',
+        busSettingKeyRoute
+      )({
+        params: {
+          key: 'contractset',
+        },
+        config,
+      })
+    },
+    settingUploadPacking: ({
+      config,
+    }: { config?: AxiosRequestConfig } = {}) => {
+      return buildRequestHandler<
+        SettingParams,
+        SettingPayload,
+        SettingResponse<UploadPackingSettings>
+      >(
+        axios,
+        'get',
+        busSettingKeyRoute
+      )({
+        params: {
+          key: 'uploadpacking',
+        },
+        config,
+      })
+    },
+    settingS3Authentication: ({
+      config,
+    }: { config?: AxiosRequestConfig } = {}) => {
+      return buildRequestHandler<
+        SettingParams,
+        SettingPayload,
+        SettingResponse<S3AuthenticationSettings>
+      >(
+        axios,
+        'get',
+        busSettingKeyRoute
+      )({
+        params: {
+          key: 's3authentication',
+        },
+        config,
+      })
+    },
     settingUpdate: buildRequestHandler<
       SettingUpdateParams,
       SettingUpdatePayload,

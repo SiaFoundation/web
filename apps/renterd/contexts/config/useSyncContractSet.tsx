@@ -4,17 +4,19 @@ import {
   triggerSuccessToast,
 } from '@siafoundation/design-system'
 import { useCallback } from 'react'
-import { useSettingUpdate } from '@siafoundation/renterd-react'
+import {
+  useSettingContractSet,
+  useSettingUpdate,
+} from '@siafoundation/renterd-react'
 import useLocalStorageState from 'use-local-storage-state'
 import { transformUpContractSet } from '../../contexts/config/transform'
-import { useContractSetSettings } from '../../hooks/useContractSetSettings'
 
 export function useSyncContractSet() {
   const [shouldSyncDefaultContractSet, setShouldSyncDefaultContractSet] =
     useLocalStorageState<boolean>('v0/autopilot/syncDefaultContractSet', {
       defaultValue: true,
     })
-  const contractSet = useContractSetSettings({
+  const contractSet = useSettingContractSet({
     config: {
       swr: {
         errorRetryCount: 0,

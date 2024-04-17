@@ -1,11 +1,13 @@
 import { minutesInMilliseconds } from '@siafoundation/design-system'
-import { useAutopilotConfig } from '@siafoundation/renterd-react'
+import {
+  useAutopilotConfig,
+  useSettingContractSet,
+  useSettingGouging,
+  useSettingRedundancy,
+  useSettingUploadPacking,
+} from '@siafoundation/renterd-react'
 import { useSyncContractSet } from './useSyncContractSet'
 import { useAppSettings } from '@siafoundation/react-core'
-import { useContractSetSettings } from '../../hooks/useContractSetSettings'
-import { useGougingSettings } from '../../hooks/useGougingSettings'
-import { useRedundancySettings } from '../../hooks/useRedundancySettings'
-import { useUploadPackingSettings } from '../../hooks/useUploadPackingSettings'
 import { useSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-react'
 import { useApp } from '../app'
 
@@ -21,7 +23,7 @@ export function useResources() {
       },
     },
   })
-  const contractSet = useContractSetSettings({
+  const contractSet = useSettingContractSet({
     config: {
       swr: {
         errorRetryCount: 0,
@@ -30,21 +32,21 @@ export function useResources() {
     },
   })
   // settings with initial defaults
-  const gouging = useGougingSettings({
+  const gouging = useSettingGouging({
     config: {
       swr: {
         refreshInterval: minutesInMilliseconds(1),
       },
     },
   })
-  const redundancy = useRedundancySettings({
+  const redundancy = useSettingRedundancy({
     config: {
       swr: {
         refreshInterval: minutesInMilliseconds(1),
       },
     },
   })
-  const uploadPacking = useUploadPackingSettings({
+  const uploadPacking = useSettingUploadPacking({
     config: {
       swr: {
         refreshInterval: minutesInMilliseconds(1),

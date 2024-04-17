@@ -14,6 +14,9 @@ import {
   AutopilotConfigUpdateParams,
   AutopilotConfigUpdatePayload,
   AutopilotConfigUpdateResponse,
+  AutopilotConfigEvaluateParams,
+  AutopilotConfigEvaluatePayload,
+  AutopilotConfigEvaluateResponse,
   AutopilotHostsSearchParams,
   AutopilotHostsSearchPayload,
   AutopilotHostsSearchResponse,
@@ -66,6 +69,16 @@ export function useAutopilotConfigUpdate(
       func()
     }
   )
+}
+
+export function useAutopilotConfigEvaluate(
+  args?: HookArgsCallback<
+    AutopilotConfigEvaluateParams,
+    AutopilotConfigEvaluatePayload,
+    AutopilotConfigEvaluateResponse
+  >
+) {
+  return usePostFunc({ ...args, route: autopilotConfigRoute })
 }
 
 export function useAutopilotHostsSearch(

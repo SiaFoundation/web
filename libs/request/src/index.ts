@@ -34,7 +34,7 @@ export function parameterizeRoute(
   return route
 }
 
-type Method = 'get' | 'post' | 'patch' | 'put' | 'delete'
+export type RequestMethod = 'get' | 'post' | 'patch' | 'put' | 'delete'
 
 export function buildRequestHandler<
   Params = void,
@@ -42,7 +42,7 @@ export function buildRequestHandler<
   Response = void
 >(
   axios: AxiosInstance,
-  method: Method,
+  method: RequestMethod,
   route: string,
   options: {
     defaultParams?: Params
