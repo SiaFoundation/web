@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 import {
   useContracts as useContractsData,
   useContractSets,
+  useSettingContractSet,
 } from '@siafoundation/renterd-react'
 import {
   createContext,
@@ -34,7 +35,6 @@ import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { blockHeightToTime } from '@siafoundation/units'
 import { useContractMetrics } from './useContractMetrics'
 import { useContractSetMetrics } from './useContractSetMetrics'
-import { useContractSetSettings } from '../../hooks/useContractSetSettings'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 
 const defaultLimit = 50
@@ -179,7 +179,7 @@ function useContractsMain() {
 
   const siascanUrl = useSiascanUrl()
 
-  const contractSetSettings = useContractSetSettings()
+  const contractSetSettings = useSettingContractSet()
   const cellContext = useMemo(
     () => ({
       currentHeight: syncStatus.estimatedBlockHeight,

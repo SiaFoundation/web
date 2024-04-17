@@ -248,6 +248,11 @@ import {
   busMultipartListpartsRoute,
   busMultipartListuploadsRoute,
   busMultipartPartRoute,
+  GougingSettings,
+  ContractSetSettings,
+  RedundancySettings,
+  S3AuthenticationSettings,
+  UploadPackingSettings,
 } from '@siafoundation/renterd-types'
 
 // state
@@ -804,6 +809,49 @@ export function useSetting<T extends Setting>(
   args: HookArgsSwr<SettingParams, SettingResponse<T>>
 ) {
   return useGetSwr({ ...args, route: busSettingKeyRoute })
+}
+
+export function useSettingGouging(args?: HookArgsSwr<void, GougingSettings>) {
+  return useSetting<GougingSettings>({
+    ...args,
+    params: { key: 'gouging' },
+  })
+}
+
+export function useSettingContractSet(
+  args?: HookArgsSwr<void, ContractSetSettings>
+) {
+  return useSetting<ContractSetSettings>({
+    ...args,
+    params: { key: 'contractset' },
+  })
+}
+
+export function useSettingRedundancy(
+  args?: HookArgsSwr<void, RedundancySettings>
+) {
+  return useSetting<RedundancySettings>({
+    ...args,
+    params: { key: 'redundancy' },
+  })
+}
+
+export function useSettingS3Authentication(
+  args?: HookArgsSwr<void, S3AuthenticationSettings>
+) {
+  return useSetting<S3AuthenticationSettings>({
+    ...args,
+    params: { key: 's3authentication' },
+  })
+}
+
+export function useSettingUploadPacking(
+  args?: HookArgsSwr<void, UploadPackingSettings>
+) {
+  return useSetting<UploadPackingSettings>({
+    ...args,
+    params: { key: 'uploadpacking' },
+  })
 }
 
 export function useSettingUpdate(

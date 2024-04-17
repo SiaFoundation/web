@@ -1,6 +1,8 @@
-import { useAutopilotConfig } from '@siafoundation/renterd-react'
+import {
+  useAutopilotConfig,
+  useSettingContractSet,
+} from '@siafoundation/renterd-react'
 import { useApp } from '../contexts/app'
-import { useContractSetSettings } from './useContractSetSettings'
 
 // is the autopilot contract set the same as the default contract set
 export function useIsApcsEqDcs() {
@@ -8,7 +10,7 @@ export function useIsApcsEqDcs() {
   const apc = useAutopilotConfig({
     disabled: autopilot.status !== 'on',
   })
-  const css = useContractSetSettings()
+  const css = useSettingContractSet()
 
   return {
     isValidating: apc.isValidating || css.isValidating,

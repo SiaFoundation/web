@@ -11,8 +11,10 @@ import {
   truncate,
 } from '@siafoundation/design-system'
 import { CaretDown16, Delete16 } from '@siafoundation/react-icons'
-import { useSettingUpdate } from '@siafoundation/renterd-react'
-import { useS3AuthenticationSettings } from '../../hooks/useS3AuthenticationSettings'
+import {
+  useSettingS3Authentication,
+  useSettingUpdate,
+} from '@siafoundation/renterd-react'
 import { useCallback } from 'react'
 import { omit } from '@technically/lodash'
 import { useDialog } from '../../contexts/dialog'
@@ -25,7 +27,7 @@ type Props = {
 
 export function KeyContextMenu({ s3Key, contentProps, buttonProps }: Props) {
   const { openConfirmDialog } = useDialog()
-  const s3AuthenticationSettings = useS3AuthenticationSettings()
+  const s3AuthenticationSettings = useSettingS3Authentication()
   const update = useSettingUpdate()
   const deleteKey = useCallback(async () => {
     const newKeys = omit(s3AuthenticationSettings.data?.v4Keypairs, s3Key)

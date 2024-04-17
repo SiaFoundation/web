@@ -9,6 +9,7 @@ import {
   useMultipartUploadPart,
   useMultipartUploadComplete,
   useMultipartUploadCreate,
+  useSettingRedundancy,
 } from '@siafoundation/renterd-react'
 import { throttle } from '@technically/lodash'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -22,7 +23,6 @@ import {
 import { MultipartUpload } from '../../lib/multipartUpload'
 import { MiBToBytes } from '@siafoundation/units'
 import { useMutate } from '@siafoundation/react-core'
-import { useRedundancySettings } from '../../hooks/useRedundancySettings'
 import { useWarnActiveUploadsOnClose } from './useWarnActiveUploadsOnClose'
 
 const maxConcurrentUploads = 5
@@ -42,7 +42,7 @@ export function useUploads({ activeDirectoryPath }: Props) {
   const busUploadCreate = useMultipartUploadCreate()
   const busUploadAbort = useMultipartUploadAbort()
   const [uploadsMap, setUploadsMap] = useState<UploadsMap>({})
-  const redundancy = useRedundancySettings({
+  const redundancy = useSettingRedundancy({
     config: {
       swr: {
         refreshInterval: minutesInMilliseconds(1),

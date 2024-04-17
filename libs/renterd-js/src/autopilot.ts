@@ -1,4 +1,7 @@
 import {
+  AutopilotConfigEvaluateParams,
+  AutopilotConfigEvaluatePayload,
+  AutopilotConfigEvaluateResponse,
   AutopilotConfigParams,
   AutopilotConfigPayload,
   AutopilotConfigResponse,
@@ -36,7 +39,7 @@ export function Autopilot({
       AutopilotStatePayload,
       AutopilotStateResponse
     >(axios, 'get', autopilotStateRoute),
-    confg: buildRequestHandler<
+    config: buildRequestHandler<
       AutopilotConfigParams,
       AutopilotConfigPayload,
       AutopilotConfigResponse
@@ -46,6 +49,11 @@ export function Autopilot({
       AutopilotConfigUpdatePayload,
       AutopilotConfigUpdateResponse
     >(axios, 'put', autopilotConfigRoute),
+    configEvaluate: buildRequestHandler<
+      AutopilotConfigEvaluateParams,
+      AutopilotConfigEvaluatePayload,
+      AutopilotConfigEvaluateResponse
+    >(axios, 'post', autopilotConfigRoute),
     hostsSearch: buildRequestHandler<
       AutopilotHostsSearchParams,
       AutopilotHostsSearchPayload,
