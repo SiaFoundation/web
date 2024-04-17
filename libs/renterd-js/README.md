@@ -15,15 +15,15 @@ import { Bus, Worker, Autopilot } from '@siafoundation/renterd-js'
 
 export async function example() {
   const bus = Bus({
-    api: 'http://localhost:9980',
+    api: 'http://localhost:9980/api',
     password: 'password1337',
   })
   const autopilot = Autopilot({
-    api: 'http://localhost:9980',
+    api: 'http://localhost:9980/api',
     password: 'password1337',
   })
   const worker = Worker({
-    api: 'http://worker:4444',
+    api: 'http://worker:4444/api',
     password: 'password1337',
   })
 
