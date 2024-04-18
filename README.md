@@ -28,6 +28,7 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 - [@siafoundation/hostd-js](libs/hostd-js) - SDK for interacting with `hostd`.
 - [@siafoundation/hostd-react](libs/hostd-react) - React hooks for interacting with `hostd`.
 - [@siafoundation/hostd-types](libs/hostd-types) - Types for `hostd`.
+- [@siafoundation/walletd-js](libs/walletd-js) - SDK for interacting with `walletd`.
 - [@siafoundation/walletd-react](libs/walletd-react) - React hooks for interacting with `walletd`.
 - [@siafoundation/walletd-types](libs/walletd-types) - Types for `walletd`.
 - [@siafoundation/design-system](libs/design-system) - React-based design system used across Sia apps and websites.

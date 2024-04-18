@@ -20,9 +20,34 @@ import {
   WalletMetadata,
 } from './types'
 
+export const stateRoute = '/state'
+export const consensusTipRoute = '/consensus/tip'
+export const consensusTipStateRoute = '/consensus/tipstate'
+export const consensusNetworkRoute = '/consensus/network'
+export const syncerPeersRoute = '/syncer/peers'
+export const syncerConnectRoute = '/syncer/connect'
+export const txPoolTransactionsRoute = '/txpool/transactions'
+export const txPoolFeeRoute = '/txpool/fee'
+export const txPoolBroadcastRoute = '/txpool/broadcast'
+export const rescanRoute = '/rescan'
+export const walletsRoute = '/wallets'
+export const walletsIdRoute = '/wallets/:id'
+export const walletsIdAddressesRoute = '/wallets/:id/addresses'
+export const walletsIdAddressesAddrRoute = '/wallets/:id/addresses/:addr'
+export const walletsIdBalanceRoute = '/wallets/:id/balance'
+export const walletsIdEventsRoute = '/wallets/:id/events'
+export const walletsIdTxPoolRoute = '/wallets/:id/txpool'
+export const walletsIdOutputsSiacoinRoute = '/wallets/:id/outputs/siacoin'
+export const walletsIdOutputsSiafundRoute = '/wallets/:id/outputs/siafund'
+export const walletsIdFundRoute = '/wallets/:id/fund'
+export const walletsIdFundSfRoute = '/wallets/:id/fundsf'
+export const walletsIdReserveRoute = '/wallets/:id/reserve'
+export const walletsIdReleaseRoute = '/wallets/:id/release'
+
 // state
 
 export type StateParams = void
+export type StatePayload = void
 export type StateResponse = {
   version: string
   commit: string
@@ -34,17 +59,21 @@ export type StateResponse = {
 // consensus
 
 export type ConsensusTipParams = void
+export type ConsensusTipPayload = void
 export type ConsensusTipResponse = ChainIndex
 
 export type ConsensusTipStateParams = void
+export type ConsensusTipStatePayload = void
 export type ConsensusTipStateResponse = ConsensusState
 
 export type ConsensusNetworkParams = void
+export type ConsensusNetworkPayload = void
 export type ConsensusNetworkResponse = ConsensusNetwork
 
 // syncer
 
 export type SyncerPeersParams = void
+export type SyncerPeersPayload = void
 export type SyncerPeersResponse = GatewayPeer[]
 
 export type SyncerConnectParams = void
@@ -54,12 +83,14 @@ export type SyncerConnectResponse = never
 // txpool
 
 export type TxPoolTransactionsParams = void
+export type TxPoolTransactionsPayload = void
 export type TxPoolTransactionsResponse = {
   transactions: Transaction[]
   v2transactions: V2Transaction[]
 }
 
 export type TxPoolFeeParams = void
+export type TxPoolFeePayload = void
 export type TxPoolFeeResponse = Currency
 
 export type TxPoolBroadcastParams = void
@@ -76,6 +107,7 @@ export type RescanStartPayload = BlockHeight
 export type RescanStartResponse = void
 
 export type RescanParams = void
+export type RescanPayload = void
 export type RescanResponse = {
   startIndex: ChainIndex
   index: ChainIndex
@@ -86,6 +118,7 @@ export type RescanResponse = {
 // wallet
 
 export type WalletsParams = void
+export type WalletsPayload = void
 export type WalletsResponse = Wallet[]
 
 export type WalletAddParams = void
@@ -111,6 +144,7 @@ export type WalletDeleteResponse = never
 // addresses
 
 export type WalletAddressesParams = { id: string }
+export type WalletAddressesPayload = void
 export type WalletAddressesResponse = WalletAddress[]
 
 export type WalletAddressAddParams = { id: string }
@@ -122,6 +156,7 @@ export type WalletAddressDeletePayload = void
 export type WalletAddressDeleteResponse = never
 
 export type WalletBalanceParams = { id: string }
+export type WalletBalancePayload = void
 export type WalletBalanceResponse = {
   siacoins: Currency
   immatureSiacoins: Currency
@@ -129,15 +164,19 @@ export type WalletBalanceResponse = {
 }
 
 export type WalletEventsParams = { id: string; offset: number; limit: number }
+export type WalletEventsPayload = void
 export type WalletEventsResponse = WalletEvent[]
 
 export type WalletTxPoolParams = { id: string }
+export type WalletTxPoolPayload = void
 export type WalletTxPoolResponse = PoolTransaction[]
 
 export type WalletOutputsSiacoinParams = { id: string }
+export type WalletOutputsSiacoinPayload = void
 export type WalletOutputsSiacoinResponse = SiacoinElement[]
 
 export type WalletOutputsSiafundParams = { id: string }
+export type WalletOutputsSiafundPayload = void
 export type WalletOutputsSiafundResponse = SiafundElement[]
 
 export type WalletFundSiacoinParams = {
