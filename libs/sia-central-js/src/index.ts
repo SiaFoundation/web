@@ -72,7 +72,9 @@ export function SiaCentral({ api }: { api: string } = { api: defaultApi }) {
       SiaCentralExchangeRatesPayload,
       SiaCentralExchangeRatesResponse
     >(axios, 'get', '/market/exchange-rate', {
-      currencies: 'sc',
+      defaultParams: {
+        currencies: 'sc',
+      },
     }),
     host: buildRequestHandler<
       SiaCentralHostParams,
@@ -84,12 +86,14 @@ export function SiaCentral({ api }: { api: string } = { api: defaultApi }) {
       SiaCentralHostsPayload,
       SiaCentralHostsResponse
     >(axios, 'get', '/hosts/list', {
-      showinactive: false,
-      sort: 'used_storage',
-      dir: 'desc',
-      protocol: 'rhp3',
-      limit: 10,
-      page: 1,
+      defaultParams: {
+        showinactive: false,
+        sort: 'used_storage',
+        dir: 'desc',
+        protocol: 'rhp3',
+        limit: 10,
+        page: 1,
+      },
     }),
     hostsNetworkAverages: buildRequestHandler<
       SiaCentralHostsNetworkAveragesParams,
