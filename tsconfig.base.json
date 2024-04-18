@@ -30,6 +30,7 @@
       "@siafoundation/renterd-js": ["libs/renterd-js/src/index.ts"],
       "@siafoundation/walletd-types": ["libs/walletd-types/src/index.ts"],
       "@siafoundation/walletd-react": ["libs/walletd-react/src/index.ts"],
+      "@siafoundation/wallet-js": ["libs/wallet-js/src/index.ts"],
       // "buildLibsFromSource": false does not work with the next executor
       // this is a very annoying workaround
       "@siafoundation/sdk": ["dist/libs/sdk/index.esm.js"],

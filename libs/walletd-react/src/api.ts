@@ -77,6 +77,29 @@ import {
   WalletUpdateResponse,
   WalletsParams,
   WalletsResponse,
+  consensusNetworkRoute,
+  consensusTipRoute,
+  consensusTipStateRoute,
+  rescanRoute,
+  stateRoute,
+  syncerConnectRoute,
+  syncerPeersRoute,
+  txPoolBroadcastRoute,
+  txPoolFeeRoute,
+  txPoolTransactionsRoute,
+  walletsIdAddressesAddrRoute,
+  walletsIdAddressesRoute,
+  walletsIdBalanceRoute,
+  walletsIdEventsRoute,
+  walletsIdFundRoute,
+  walletsIdFundSfRoute,
+  walletsIdOutputsSiacoinRoute,
+  walletsIdOutputsSiafundRoute,
+  walletsIdReleaseRoute,
+  walletsIdReserveRoute,
+  walletsIdRoute,
+  walletsIdTxPoolRoute,
+  walletsRoute,
 } from '@siafoundation/walletd-types'
 
 // state
@@ -84,7 +107,7 @@ import {
 export function useNodeState(args?: HookArgsSwr<StateParams, StateResponse>) {
   return useGetSwr({
     ...args,
-    route: '/state',
+    route: stateRoute,
   })
 }
 
@@ -95,7 +118,7 @@ export function useConsensusTip(
 ) {
   return useGetSwr({
     ...args,
-    route: '/consensus/tip',
+    route: consensusTipRoute,
   })
 }
 
@@ -104,7 +127,7 @@ export function useConsensusTipState(
 ) {
   return useGetSwr({
     ...args,
-    route: '/consensus/tipstate',
+    route: consensusTipStateRoute,
   })
 }
 
@@ -113,7 +136,7 @@ export function useConsensusNetwork(
 ) {
   return useGetSwr({
     ...args,
-    route: '/consensus/network',
+    route: consensusNetworkRoute,
   })
 }
 
@@ -143,14 +166,12 @@ export function useEstimatedNetworkBlockHeight(): number {
 
 // syncer
 
-export const syncerPeersKey = '/syncer/peers'
-
 export function useSyncerPeers(
   args?: HookArgsSwr<SyncerPeersParams, SyncerPeersResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: syncerPeersKey,
+    route: syncerPeersRoute,
   })
 }
 
@@ -164,17 +185,16 @@ export function useSyncerConnect(
   return usePostFunc(
     {
       ...args,
-      route: '/syncer/connect',
+      route: syncerConnectRoute,
     },
     async (mutate) => {
-      mutate((key) => key === syncerPeersKey)
+      mutate((key) => key === syncerPeersRoute)
     }
   )
 }
 
 // txpool
 
-const txPoolTransactionsRoute = '/txpool/transactions'
 export function useTxPoolTransactions(
   args?: HookArgsSwr<TxPoolTransactionsParams, TxPoolTransactionsResponse>
 ) {
@@ -184,7 +204,7 @@ export function useTxPoolTransactions(
 export function useTxPoolFee(
   args?: HookArgsSwr<TxPoolFeeParams, TxPoolFeeResponse>
 ) {
-  return useGetSwr({ ...args, route: '/txpool/fee' })
+  return useGetSwr({ ...args, route: txPoolFeeRoute })
 }
 
 export function useTxPoolBroadcast(
@@ -197,15 +217,15 @@ export function useTxPoolBroadcast(
   return usePostFunc(
     {
       ...args,
-      route: '/txpool/broadcast',
+      route: txPoolBroadcastRoute,
     },
     async (mutate) => {
       await delay(2_000)
       mutate((key) => {
         return (
           key.startsWith(txPoolTransactionsRoute) ||
-          // Most importantly to trigger /wallets/:id/txpool
-          key.startsWith('/wallets')
+          // Most importantly to trigger /wallets/:id/txpool.
+          key.startsWith(walletsRoute)
         )
       })
     }
@@ -224,13 +244,13 @@ export function useRescanStart(
   return usePostFunc(
     {
       ...args,
-      route: '/rescan',
+      route: rescanRoute,
     },
     async (mutate) => {
-      // Do not block the hook method from returning and allowing consumer to toast success etc
+      // Do not block the hook method from returning and allowing consumer to toast success etc.
       const func = async () => {
         await delay(1_000)
-        await mutate((key) => key.startsWith('/rescan'))
+        await mutate((key) => key.startsWith(rescanRoute))
       }
       func()
     }
@@ -242,13 +262,11 @@ export function useRescanStatus(
 ) {
   return useGetSwr({
     ...args,
-    route: '/rescan',
+    route: rescanRoute,
   })
 }
 
 // wallet
-
-const walletsRoute = '/wallets'
 
 export function useWallets(args?: HookArgsSwr<WalletsParams, WalletsResponse>) {
   return useGetSwr({
@@ -263,7 +281,7 @@ export function useWalletAdd(
   return usePostFunc(
     {
       ...args,
-      route: '/wallets',
+      route: walletsRoute,
     },
     async (mutate) => {
       mutate((key) => key.startsWith(walletsRoute))
@@ -281,7 +299,7 @@ export function useWalletUpdate(
   return usePostFunc(
     {
       ...args,
-      route: '/wallets/:id',
+      route: walletsIdRoute,
     },
     async (mutate) => {
       mutate((key) => key.startsWith(walletsRoute))
@@ -297,24 +315,21 @@ export function useWalletDelete(
   >
 ) {
   return useDeleteFunc(
-    { ...args, route: '/wallets/:id' },
+    { ...args, route: walletsIdRoute },
     async (mutate, data) => {
-      mutate((key) =>
-        key.startsWith(walletsRoute.replace(':id', data.params.id))
-      )
+      mutate((key) => key.startsWith(walletsRoute))
     }
   )
 }
 
 // addresses
 
-export const walletAddressesRoute = '/wallets/:id/addresses'
 export function useWalletAddresses(
   args: HookArgsSwr<WalletAddressesParams, WalletAddressesResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: walletAddressesRoute,
+    route: walletsIdAddressesRoute,
   })
 }
 
@@ -328,11 +343,11 @@ export function useWalletAddressAdd(
   return usePutFunc(
     {
       ...args,
-      route: '/wallets/:id/addresses',
+      route: walletsIdAddressesRoute,
     },
     async (mutate, data) => {
       mutate((key) =>
-        key.startsWith('/wallets/:id'.replace(':id', data.params.id))
+        key.startsWith(walletsIdRoute.replace(':id', data.params.id))
       )
     }
   )
@@ -346,43 +361,39 @@ export function useWalletAddressDelete(
   >
 ) {
   return useDeleteFunc(
-    { ...args, route: '/wallets/:id/addresses/:addr' },
+    { ...args, route: walletsIdAddressesAddrRoute },
     async (mutate, data) => {
       mutate((key) =>
-        key.startsWith(walletAddressesRoute.replace(':id', data.params.id))
+        key.startsWith(walletsIdAddressesRoute.replace(':id', data.params.id))
       )
     }
   )
 }
 
-const walletBalanceRoute = '/wallets/:id/balance'
 export function useWalletBalance(
   args: HookArgsSwr<WalletBalanceParams, WalletBalanceResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: walletBalanceRoute,
+    route: walletsIdBalanceRoute,
   })
 }
 
-const walletEventsRoute = '/wallets/:id/events'
 export function useWalletEvents(
   args: HookArgsSwr<WalletEventsParams, WalletEventsResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: walletEventsRoute,
+    route: walletsIdEventsRoute,
   })
 }
-
-const walletTxPoolRoute = '/wallets/:id/txpool'
 
 export function useWalletTxPool(
   args: HookArgsSwr<WalletTxPoolParams, WalletTxPoolResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: walletTxPoolRoute,
+    route: walletsIdTxPoolRoute,
   })
 }
 
@@ -391,7 +402,7 @@ export function useWalletOutputsSiacoin(
 ) {
   return useGetSwr({
     ...args,
-    route: '/wallets/:id/outputs/siacoin',
+    route: walletsIdOutputsSiacoinRoute,
   })
 }
 
@@ -400,7 +411,7 @@ export function useWalletOutputsSiafund(
 ) {
   return useGetSwr({
     ...args,
-    route: '/wallets/:id/outputs/siafund',
+    route: walletsIdOutputsSiafundRoute,
   })
 }
 
@@ -411,7 +422,7 @@ export function useWalletFundSiacoin(
     WalletFundSiacoinResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/wallets/:id/fund' })
+  return usePostFunc({ ...args, route: walletsIdFundRoute })
 }
 
 export function useWalletFundSiafund(
@@ -421,7 +432,7 @@ export function useWalletFundSiafund(
     WalletFundSiafundResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/wallets/:id/fundsf' })
+  return usePostFunc({ ...args, route: walletsIdFundSfRoute })
 }
 
 export function useWalletReserve(
@@ -431,7 +442,7 @@ export function useWalletReserve(
     WalletReserveResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/wallets/:id/reserve' })
+  return usePostFunc({ ...args, route: walletsIdReserveRoute })
 }
 
 export function useWalletRelease(
@@ -441,5 +452,5 @@ export function useWalletRelease(
     WalletReleaseResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/wallets/:id/release' })
+  return usePostFunc({ ...args, route: walletsIdReleaseRoute })
 }
