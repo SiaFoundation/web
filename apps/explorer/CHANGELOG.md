@@ -1,5 +1,11 @@
 # explorer
 
+## 0.15.0
+
+### Minor Changes
+
+- 8e2d3999: The site now uses the updated Sia Central SDK.
+
 ## 0.14.0
 
 ### Minor Changes
