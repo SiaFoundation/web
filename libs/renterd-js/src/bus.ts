@@ -268,6 +268,7 @@ import { buildRequestHandler, initAxios } from '@siafoundation/request'
 export function Bus({ api, password }: { api: string; password?: string }) {
   const axios = initAxios(api, password)
   return {
+    axios,
     busState: buildRequestHandler<
       BusStateParams,
       BusStatePayload,

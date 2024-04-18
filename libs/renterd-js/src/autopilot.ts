@@ -30,6 +30,7 @@ export function Autopilot({
 }) {
   const axios = initAxios(api, password)
   return {
+    axios,
     state: buildRequestHandler<
       AutopilotStateParams,
       AutopilotStatePayload,

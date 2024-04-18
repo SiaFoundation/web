@@ -1,6 +1,7 @@
-import {
-  Axios,
+import { merge } from '@technically/lodash'
+import axios, {
   AxiosError,
+  AxiosInstance,
   AxiosRequestConfig,
   AxiosRequestHeaders,
   AxiosResponse,
@@ -39,7 +40,15 @@ export function buildRequestHandler<
   Params = void,
   Data = void,
   Response = void
->(axios: Axios, method: Method, route: string, defaultParams?: Params) {
+>(
+  axios: AxiosInstance,
+  method: Method,
+  route: string,
+  options: {
+    defaultParams?: Params
+    config?: AxiosRequestConfig<Data>
+  } = {}
+) {
   type Args = Params extends void
     ? Data extends void
       ? { config?: AxiosRequestConfig<Data> } | void
@@ -55,26 +64,32 @@ export function buildRequestHandler<
         config?: AxiosRequestConfig<Data>
       }
 
+  type MaybeArgs = {
+    params?: Params
+    data?: Data
+    config?: AxiosRequestConfig<Data>
+  }
+
   return (args: Args) => {
-    // args is sometimes undefined
-    const a = {
+    // Force remove the void type
+    const nonVoidArgs: MaybeArgs = {
       ...args,
-    } as {
-      params?: Params
-      data?: Data
-      config?: AxiosRequestConfig<Data>
+    }
+    const mergedArgs: MaybeArgs = {
+      ...nonVoidArgs,
+      config: merge(options.config, nonVoidArgs.config),
     }
     const params = {
-      ...defaultParams,
-      ...a.params,
+      ...options.defaultParams,
+      ...mergedArgs.params,
     }
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const paramRoute = parameterizeRoute(route, params as RequestParams)!
 
-    const data = 'data' in a ? JSON.stringify(a.data) : undefined
+    const data = 'data' in mergedArgs ? mergedArgs.data : undefined
 
-    return axios[method]<Response>(paramRoute, data, a?.config)
+    return axios[method]<Response>(paramRoute, data, mergedArgs?.config)
   }
 }
 
@@ -89,28 +104,21 @@ export async function to<T>(
 > {
   try {
     const response = await promise
-    // Just in case the response is not already JSON
-    try {
-      const data = JSON.parse(response.data as string)
-      return [data, undefined, response]
-    } catch (e) {
-      return [response.data, undefined, response]
-    }
+    return [response.data, undefined, response]
   } catch (error) {
     return [undefined, error as AxiosError<T>, undefined]
   }
 }
 
-export function initAxios(api: string, password?: string): Axios {
+export function initAxios(api: string, password?: string): AxiosInstance {
   const headers: AxiosRequestHeaders = {
     'Content-Type': 'application/json',
   }
   if (password) {
     headers['Authorization'] = `Basic ${btoa(`:${password}`)}`
   }
-  return new Axios({
+  return axios.create({
     baseURL: api,
     headers,
-    responseType: 'json',
   })
 }

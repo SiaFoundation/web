@@ -24,6 +24,7 @@ import { buildRequestHandler, initAxios } from '@siafoundation/request'
 export function Worker({ api, password }: { api: string; password?: string }) {
   const axios = initAxios(api, password)
   return {
+    axios,
     workerState: buildRequestHandler<
       WorkerStateParams,
       WorkerStatePayload,
@@ -33,17 +34,33 @@ export function Worker({ api, password }: { api: string; password?: string }) {
       ObjectDownloadParams,
       ObjectDownloadPayload,
       ObjectDownloadResponse
-    >(axios, 'get', workerObjectsKeyRoute),
+    >(axios, 'get', workerObjectsKeyRoute, {
+      config: {
+        responseType: 'blob',
+      },
+    }),
     objectUpload: buildRequestHandler<
       ObjectUploadParams,
       ObjectUploadPayload,
       ObjectUploadResponse
-    >(axios, 'put', workerObjectsKeyRoute),
+    >(axios, 'put', workerObjectsKeyRoute, {
+      config: {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    }),
     multipartUploadPart: buildRequestHandler<
       MultipartUploadPartParams,
       MultipartUploadPartPayload,
       MultipartUploadPartResponse
-    >(axios, 'put', workerMultipartKeyRoute),
+    >(axios, 'put', workerMultipartKeyRoute, {
+      config: {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    }),
     rhpScan: buildRequestHandler<
       RhpScanParams,
       RhpScanPayload,

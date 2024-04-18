@@ -84,11 +84,6 @@ export async function example() {
       key: 'path/to/file.txt',
       bucket: 'my-bucket',
     },
-    config: {
-      onDownloadProgress: (progress) => {
-        console.log(progress.loaded / progress.total)
-      },
-    },
   })
 }
 ```
