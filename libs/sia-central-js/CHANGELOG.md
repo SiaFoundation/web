@@ -1,5 +1,11 @@
 # @siafoundation/sia-central-js
 
+## 0.5.0
+
+### Minor Changes
+
+- 8e2d3999: The SDK has been updated to use the request library.
+
 ## 0.4.0
 
 ### Minor Changes

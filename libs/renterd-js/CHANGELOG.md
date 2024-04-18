@@ -1,5 +1,11 @@
 # @siafoundation/renterd-js
 
+## 0.1.1
+
+### Patch Changes
+
+- aa118f29: Fixed an issue with upload and download content type and encoding. Closes https://github.com/SiaFoundation/web/issues/591
+
 ## 0.1.0
 
 ### Minor Changes

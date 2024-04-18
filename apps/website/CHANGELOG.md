@@ -1,5 +1,11 @@
 # website
 
+## 0.50.0
+
+### Minor Changes
+
+- 8e2d3999: The site now uses the updated Sia Central SDK.
+
 ## 0.49.1
 
 ### Patch Changes
