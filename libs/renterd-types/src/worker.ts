@@ -19,7 +19,13 @@ export type ObjectDownloadPayload = void
 export type ObjectDownloadResponse = Blob
 
 export type ObjectUploadParams = { key: string; bucket: string }
-export type ObjectUploadPayload = File
+export type ObjectUploadPayload =
+  | File
+  | Blob
+  | Buffer
+  | ArrayBuffer
+  | string
+  | Record<string, unknown>
 export type ObjectUploadResponse = void
 
 export type MultipartUploadPartParams = {
@@ -32,7 +38,7 @@ export type MultipartUploadPartParams = {
   minshards?: number
   totalshards?: number
 }
-export type MultipartUploadPartPayload = Blob
+export type MultipartUploadPartPayload = Blob | Buffer | ArrayBuffer | string
 export type MultipartUploadPartResponse = void
 
 export type RhpScanParams = void
