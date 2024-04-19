@@ -1,5 +1,12 @@
 # @siafoundation/sia-central-js
 
+## 0.5.1
+
+### Patch Changes
+
+- Updated dependencies [3a983801]
+  - @siafoundation/request@0.2.0
+
 ## 0.5.0
 
 ### Minor Changes

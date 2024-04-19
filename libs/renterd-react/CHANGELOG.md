@@ -1,5 +1,18 @@
 # @siafoundation/renterd-react
 
+## 4.2.0
+
+### Minor Changes
+
+- 3a983801: Added a method for each known bus setting, in addition to the generic setting method.
+- 3a983801: Added support for autopilot config evaluation.
+
+### Patch Changes
+
+- Updated dependencies [3a983801]
+  - @siafoundation/renterd-types@0.2.0
+  - @siafoundation/react-core@1.2.1
+
 ## 4.1.0
 
 ### Minor Changes

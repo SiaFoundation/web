@@ -1,5 +1,12 @@
 # @siafoundation/react-core
 
+## 1.2.1
+
+### Patch Changes
+
+- Updated dependencies [3a983801]
+  - @siafoundation/request@0.2.0
+
 ## 1.2.0
 
 ### Minor Changes

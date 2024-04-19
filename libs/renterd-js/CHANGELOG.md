@@ -1,5 +1,20 @@
 # @siafoundation/renterd-js
 
+## 0.2.0
+
+### Minor Changes
+
+- 3a983801: Added a method for each known bus setting, in addition to the generic setting method.
+- 3a983801: Added support for autopilot config evaluation.
+
+### Patch Changes
+
+- 3a983801: Fixed a typo in the naming of the config method.
+- Updated dependencies [3a983801]
+- Updated dependencies [3a983801]
+  - @siafoundation/request@0.2.0
+  - @siafoundation/renterd-types@0.2.0
+
 ## 0.1.1
 
 ### Patch Changes

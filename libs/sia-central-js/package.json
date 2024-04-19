@@ -1,11 +1,11 @@
 {
   "name": "@siafoundation/sia-central-js",
   "description": "Methods and types for interacting with the Sia Central API.",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "license": "MIT",
   "dependencies": {
     "@siafoundation/sia-central-types": "0.1.0",
-    "@siafoundation/request": "0.1.0"
+    "@siafoundation/request": "0.2.0"
   },
   "types": "./src/index.d.ts"
 }
