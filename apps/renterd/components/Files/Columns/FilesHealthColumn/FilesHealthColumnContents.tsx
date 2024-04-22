@@ -57,7 +57,12 @@ export function FilesHealthColumnContents({
   const slabs = sortBy(
     obj.data.object.slabs?.map((s) => ({
       ...s.slab,
-      key: `${s.offset}${s.length}${s.slab.key}`,
+      // id is for use as a unique React key.
+      // slab key is not necessarily unique. e.g. an object uploaded with tiny
+      // multipart uploads might reference the same slab over and over but at
+      // different offsets and lengths. So we should not assume that they are
+      // always unique.
+      id: `${s.offset}${s.length}${s.slab.key}`,
       isPartialSlab: !!s.slab.shards,
       contractSetShards: s.slab.shards?.length
         ? computeSlabContractSetShards({
@@ -79,7 +84,7 @@ export function FilesHealthColumnContents({
       totalShards={slabs.find((s) => s.shards)?.shards.length}
     >
       {slabs.map((slab) => (
-        <div key={slab.key} className="flex justify-between gap-2">
+        <div key={slab.id} className="flex justify-between gap-2">
           <Text
             size="12"
             color="subtle"
