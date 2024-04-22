@@ -18,9 +18,10 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.PAT_REPOSITORY_DISPATCH }}
       - name: Setup
-        uses: ./.github/actions/setup
+        uses: ./.github/actions/setup-all
         with:
           node_version: 20.10.0
+          go_version: 1.21.7
       - name: Release
         run: ./scripts/release-go.sh
       - name: Commit

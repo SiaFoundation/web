@@ -1,0 +1,15 @@
+name: Setup Git
+
+description: Setup Git
+
+runs:
+  using: composite
+  steps:
+    - name: git user config
+      shell: bash
+      run: |
+        git config user.name "${GITHUB_ACTOR}"
+        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+    - name: Configure git # required for golangci-lint on Windows
+      shell: bash
+      run: git config --global core.autocrlf false

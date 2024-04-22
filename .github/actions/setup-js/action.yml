@@ -1,6 +1,6 @@
-name: Setup
+name: Setup JS
 
-description: Setup
+description: Setup JS environment and dependencies
 
 inputs:
   node_version:
@@ -11,23 +11,12 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: git user config
-      shell: bash
-      run: |
-        git config user.name "${GITHUB_ACTOR}"
-        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-    - name: Derive appropriate SHAs for base and head for `nx affected` commands
-      uses: nrwl/nx-set-shas@v3
     - uses: actions/setup-node@v3
       with:
         node-version: ${{ inputs.node_version }}
         registry-url: https://registry.npmjs.org
-    - uses: actions/setup-go@v4
-      with:
-        go-version: '1.21.7'
-    - uses: acifani/setup-tinygo@v2
-      with:
-        tinygo-version: '0.30.0'
+    - name: Derive appropriate SHAs for base and head for `nx affected` commands
+      uses: nrwl/nx-set-shas@v3
     - name: Set up node cache
       uses: actions/cache@v3
       with:
@@ -45,9 +34,4 @@ runs:
       # could do this since its a ci, but it force rebuilds node_modules
       # run: npm ci
       run: npm install
-      shell: bash
-    - name: Install Go dependencies
-      run: |
-        go mod tidy
-        go mod download
       shell: bash
