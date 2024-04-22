@@ -1,0 +1,27 @@
+name: Setup all
+
+description: Setup all
+
+inputs:
+  node_version:
+    description: Node.js version
+    required: false
+    default: '20.10.0'
+  go_version:
+    description: Go version
+    required: false
+    default: '1.21.7'
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Git
+      uses: ./.github/actions/setup-git
+    - name: Setup JS
+      uses: ./.github/actions/setup-js
+      with:
+        node_version: ${{ inputs.node_version }}
+    - name: Setup Go
+      uses: ./.github/actions/setup-go
+      with:
+        go_version: ${{ inputs.go_version }}
