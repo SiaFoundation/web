@@ -6,7 +6,6 @@ import (
 	"io/fs"
 	"net/http"
 	"path"
-	"path/filepath"
 	"strings"
 	"time"
 )
@@ -114,9 +113,9 @@ func traverse(fs fs.ReadDirFS, fp string, segments []string, parent *node) error
 	}
 
 	for _, child := range dir {
-		childPath := filepath.Join(fp, child.Name())
+		childPath := path.Join(fp, child.Name())
 		name := child.Name()
-		ext := filepath.Ext(name)
+		ext := path.Ext(name)
 		name = strings.TrimSuffix(name, ext)
 
 		if !child.IsDir() && ext != ".html" {
