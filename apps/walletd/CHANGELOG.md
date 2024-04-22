@@ -1,5 +1,11 @@
 # walletd
 
+## 0.19.1
+
+### Patch Changes
+
+- 856b738a: Fixed an issue where the daemon would panic trying to read the embedded UI files on Windows. Closes https://github.com/SiaFoundation/web/issues/599
+
 ## 0.19.0
 
 ### Minor Changes
