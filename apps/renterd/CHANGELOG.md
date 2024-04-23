@@ -1,5 +1,11 @@
 # renterd
 
+## 0.51.2
+
+### Patch Changes
+
+- 703761a2: Fixed an issue where file health slab keys were showing up as repeated and incorrect. Closes https://github.com/SiaFoundation/web/issues/596
+
 ## 0.51.1
 
 ### Patch Changes
