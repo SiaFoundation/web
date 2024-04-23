@@ -115,6 +115,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
+        module: [./renterd, ./hostd, ./walletd]
     steps:
       - name: Checkout all commits
         uses: actions/checkout@v3
@@ -130,8 +131,10 @@ jobs:
       - name: Lint Go
         uses: golangci/golangci-lint-action@v4
         with:
+          working-directory: ${{ matrix.module }}
           skip-cache: true
       - name: Test Go
         uses: n8maninger/action-golang-test@v2
         with:
           args: '-race'
+          package: ${{ matrix.module }}/...
