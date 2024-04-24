@@ -12,10 +12,12 @@ import {
   InternalHookArgsCallback,
   mergeInternalHookArgsCallback,
   After,
-  getPathFromKey,
+  getRouteFromKey,
 } from './request'
 import { RequestParams } from '@siafoundation/request'
 import { useRequestSettings } from './appSettings/useRequestSettings'
+import { getKey } from './utils'
+import { buildMutateMatcherFn } from './mutate'
 
 type DeleteFunc<Params extends RequestParams, Result> = {
   delete: (
@@ -45,34 +47,29 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
         if (!reqRoute) {
           throw Error('No route')
         }
-        const path = getPathFromKey(
+
+        const key = getKey('delete', reqRoute)
+        const route = getRouteFromKey(
           requestSettings,
-          reqRoute,
+          key,
           args,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           callArgs as any
         )
-        setWorkflow(reqRoute, {
-          path,
+        const workflowKey = key.join('')
+        setWorkflow(workflowKey, {
+          route,
         })
         const response = await axios.delete<Result>(reqRoute, reqConfig)
         if (after) {
           await after(
             (matcher, data = (d) => d, opts) =>
-              mutate(
-                (key) => {
-                  if (typeof key !== 'string') {
-                    return false
-                  }
-                  const route = getPathFromKey(
-                    requestSettings,
-                    key,
-                    args,
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    callArgs as any
-                  )
-                  return matcher(route)
-                },
+              buildMutateMatcherFn(
+                mutate,
+                requestSettings,
+                args,
+                callArgs,
+                matcher,
                 data,
                 opts
               ),
@@ -80,7 +77,7 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
             response
           )
         }
-        removeWorkflow(reqRoute)
+        removeWorkflow(workflowKey)
         return {
           status: response.status,
           data: response.data,

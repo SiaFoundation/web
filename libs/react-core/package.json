@@ -16,5 +16,8 @@
     "detect-gpu": "^5.0.34",
     "bignumber.js": "^9.0.2"
   },
+  "devDependencies": {
+    "undici": "5.28.3"
+  },
   "types": "./src/index.d.ts"
 }

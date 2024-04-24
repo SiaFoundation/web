@@ -9,13 +9,14 @@ import {
 } from 'react'
 
 export type WorkflowPayload = Record<string, unknown> | undefined
+type Key = string
 type PendingMap = Record<string, WorkflowPayload>
 
 function useWorkflowsMain() {
   const [workflowsMap, setWorkflowsMap] = useState<PendingMap>({})
 
   const setWorkflow = useCallback(
-    (key: string, item?: WorkflowPayload) => {
+    (key: Key, item?: WorkflowPayload) => {
       setWorkflowsMap((workflows) => {
         return {
           ...workflows,
@@ -30,7 +31,7 @@ function useWorkflowsMain() {
   )
 
   const removeWorkflow = useCallback(
-    (key: string) => {
+    (key: Key) => {
       setWorkflowsMap((workflows) => {
         delete workflows[key]
         return {
