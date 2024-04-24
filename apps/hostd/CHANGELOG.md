@@ -1,5 +1,11 @@
 # hostd
 
+## 0.40.2
+
+### Patch Changes
+
+- a9560ff4: Fixed an issue where volume resize and delete dialogs were not loading the volumes data. Closes https://github.com/SiaFoundation/hostd/issues/371
+
 ## 0.40.1
 
 ### Patch Changes
