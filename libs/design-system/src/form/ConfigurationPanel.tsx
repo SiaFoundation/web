@@ -37,6 +37,7 @@ export function ConfigurationPanel<
       {list.map(([key, val], i) => (
         <Fragment key={key}>
           <PanelMenuSetting
+            id={key}
             title={val.title}
             description={val.description}
             control={

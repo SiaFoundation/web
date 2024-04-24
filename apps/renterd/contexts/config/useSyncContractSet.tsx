@@ -9,7 +9,7 @@ import {
   useSettingUpdate,
 } from '@siafoundation/renterd-react'
 import useLocalStorageState from 'use-local-storage-state'
-import { transformUpContractSet } from '../../contexts/config/transform'
+import { transformUpContractSet } from '../../contexts/config/transformUp'
 
 export function useSyncContractSet() {
   const [shouldSyncDefaultContractSet, setShouldSyncDefaultContractSet] =

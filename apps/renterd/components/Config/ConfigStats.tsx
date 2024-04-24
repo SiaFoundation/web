@@ -11,14 +11,11 @@ import { useApp } from '../../contexts/app'
 
 export function ConfigStats() {
   const { autopilot } = useApp()
-  const {
-    canEstimate,
-    estimatedSpendingPerMonth,
-    estimatedSpendingPerTB,
-    redundancyMultiplier,
-    storageTB,
-    showAdvanced,
-  } = useConfig()
+  const { estimates, redundancyMultiplier, storageTB, showAdvanced } =
+    useConfig()
+
+  const { canEstimate, estimatedSpendingPerMonth, estimatedSpendingPerTB } =
+    estimates
   const perMonth = useSiacoinFiat({ sc: estimatedSpendingPerMonth })
   const perTB = useSiacoinFiat({ sc: estimatedSpendingPerTB })
 

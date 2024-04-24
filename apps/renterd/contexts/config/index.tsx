@@ -9,10 +9,9 @@ import {
 } from '@siafoundation/design-system'
 import { useCallback, useMemo } from 'react'
 import { SettingsData } from './types'
-import { transformDown } from './transform'
+import { transformDown } from './transformDown'
 import { useResources } from './useResources'
 import { useOnValid } from './useOnValid'
-import { useEstimates } from './useEstimates'
 import { useForm } from './useForm'
 import {
   checkIfAllResourcesLoaded,
@@ -33,20 +32,6 @@ export function useConfigMain() {
     appSettings,
     isAutopilotEnabled,
   } = useResources()
-
-  const {
-    form,
-    maxStoragePriceTBMonth,
-    maxDownloadPriceTB,
-    maxUploadPriceTB,
-    storageTB,
-    downloadTBMonth,
-    uploadTBMonth,
-    redundancyMultiplier,
-    fields,
-    showAdvanced,
-    setShowAdvanced,
-  } = useForm()
 
   // resources required to intialize form
   const resources = useMemo(
@@ -103,6 +88,17 @@ export function useConfigMain() {
       appSettings.settings.siaCentral,
     ]
   )
+
+  const {
+    form,
+    storageTB,
+    estimates,
+    evaluation,
+    redundancyMultiplier,
+    fields,
+    showAdvanced,
+    setShowAdvanced,
+  } = useForm({ resources })
 
   const remoteValues: SettingsData = useMemo(() => {
     if (!checkIfAllResourcesLoaded(resources)) {
@@ -169,21 +165,9 @@ export function useConfigMain() {
   })
   const { changeCount } = useFormChangeCount({ form })
 
-  const { canEstimate, estimatedSpendingPerMonth, estimatedSpendingPerTB } =
-    useEstimates({
-      isAutopilotEnabled,
-      redundancyMultiplier,
-      maxStoragePriceTBMonth,
-      storageTB,
-      maxDownloadPriceTB,
-      downloadTBMonth,
-      maxUploadPriceTB,
-      uploadTBMonth,
-    })
-
   const onValid = useOnValid({
     resources,
-    estimatedSpendingPerMonth,
+    estimatedSpendingPerMonth: estimates.estimatedSpendingPerMonth,
     showAdvanced,
     isAutopilotEnabled,
     revalidateAndResetForm,
@@ -215,9 +199,7 @@ export function useConfigMain() {
     form,
     fields,
     changeCount,
-    canEstimate,
-    estimatedSpendingPerMonth,
-    estimatedSpendingPerTB,
+    estimates,
     redundancyMultiplier,
     storageTB,
     shouldSyncDefaultContractSet,
@@ -227,6 +209,7 @@ export function useConfigMain() {
     remoteError,
     configRef,
     takeScreenshot,
+    evaluation,
   }
 }
 

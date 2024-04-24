@@ -11,7 +11,7 @@ import {
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import React from 'react'
-import { defaultValues, SettingsData } from './types'
+import { RecommendationItem, SettingsData } from './types'
 import { humanSiacoin, toHastings } from '@siafoundation/units'
 import { Information16 } from '@carbon/icons-react'
 
@@ -39,7 +39,10 @@ type GetFields = {
   uploadAverage?: BigNumber
   downloadAverage?: BigNumber
   contractAverage?: BigNumber
+  recommendations: Partial<Record<keyof SettingsData, RecommendationItem>>
 }
+
+export type Fields = ReturnType<typeof getFields>
 
 export function getFields({
   isAutopilotEnabled,
@@ -54,7 +57,8 @@ export function getFields({
   uploadAverage,
   downloadAverage,
   contractAverage,
-}: GetFields): ConfigFields<typeof defaultValues, Categories> {
+  recommendations,
+}: GetFields): ConfigFields<SettingsData, Categories> {
   return {
     // storage
     storageTB: {
@@ -377,6 +381,8 @@ export function getFields({
       units: 'SC/TB/month',
       average: storageAverage,
       averageTip: 'Averages provided by Sia Central.',
+      suggestion: recommendations.maxStoragePriceTBMonth?.targetValue,
+      suggestionTip: 'This value will help you match with more hosts.',
       after: function After() {
         if (!maxStoragePriceTBMonth || !minShards || !totalShards) {
           return null
@@ -390,7 +396,7 @@ export function getFields({
               content={
                 <>
                   Price per TB/month when factoring in the configured{' '}
-                  {minShards} of {totalShards} redundancy.
+                  {minShards.toString()} of {totalShards.toString()} redundancy.
                 </>
               }
             >
@@ -433,6 +439,8 @@ export function getFields({
       units: 'SC/TB',
       average: uploadAverage,
       averageTip: 'Averages provided by Sia Central.',
+      suggestion: recommendations.maxUploadPriceTB?.targetValue,
+      suggestionTip: 'This value will help you match with more hosts.',
       after: function After() {
         if (!maxUploadPriceTB || !minShards || !totalShards) {
           return null
@@ -445,8 +453,8 @@ export function getFields({
               side="bottom"
               content={
                 <>
-                  Price per TB when factoring in the configured {minShards} of{' '}
-                  {totalShards} redundancy.
+                  Price per TB when factoring in the configured{' '}
+                  {minShards.toString()} of {totalShards.toString()} redundancy.
                 </>
               }
             >
@@ -482,6 +490,8 @@ export function getFields({
       units: 'SC/TB',
       average: downloadAverage,
       averageTip: `Averages provided by Sia Central.`,
+      suggestion: recommendations.maxDownloadPriceTB?.targetValue,
+      suggestionTip: 'This value will help you match with more hosts.',
       decimalsLimitSc: scDecimalPlaces,
       validation: {
         required: 'required',
@@ -496,6 +506,8 @@ export function getFields({
       decimalsLimitSc: scDecimalPlaces,
       tipsDecimalsLimitSc: 3,
       hidden: !showAdvanced,
+      suggestion: recommendations.maxContractPrice?.targetValue,
+      suggestionTip: 'This value will help you match with more hosts.',
       validation: showAdvanced
         ? {
             required: 'required',
@@ -512,6 +524,8 @@ export function getFields({
       units: 'SC/million',
       decimalsLimitSc: scDecimalPlaces,
       hidden: !showAdvanced,
+      suggestion: recommendations.maxRpcPriceMillion?.targetValue,
+      suggestionTip: 'This value will help you match with more hosts.',
       validation: showAdvanced
         ? {
             required: 'required',
@@ -530,8 +544,15 @@ export function getFields({
       ),
       units: 'blocks',
       decimalsLimit: 0,
-      suggestion: advancedDefaults?.hostBlockHeightLeeway,
-      suggestionTip: 'The recommended value is 6 blocks.',
+      ...(recommendations.hostBlockHeightLeeway
+        ? {
+            suggestion: recommendations.hostBlockHeightLeeway?.targetValue,
+            suggestionTip: 'This value will help you match with more hosts.',
+          }
+        : {
+            suggestion: advancedDefaults?.hostBlockHeightLeeway,
+            suggestionTip: 'The recommended value is 6 blocks.',
+          }),
       hidden: !showAdvanced,
       validation: showAdvanced
         ? {
@@ -553,6 +574,8 @@ export function getFields({
         <>The min accepted value for `Validity` in the host's price settings.</>
       ),
       hidden: !showAdvanced,
+      suggestion: recommendations.minPriceTableValidityMinutes?.targetValue,
+      suggestionTip: 'This value will help you match with more hosts.',
       validation: showAdvanced
         ? {
             required: 'required',
@@ -576,6 +599,8 @@ export function getFields({
         </>
       ),
       hidden: !showAdvanced,
+      suggestion: recommendations.minAccountExpiryDays?.targetValue,
+      suggestionTip: 'This value will help you match with more hosts.',
       validation: showAdvanced
         ? {
             required: 'required',
@@ -599,6 +624,8 @@ export function getFields({
       ),
       decimalsLimitSc: scDecimalPlaces,
       hidden: !showAdvanced,
+      suggestion: recommendations.minMaxEphemeralAccountBalance?.targetValue,
+      suggestionTip: 'This value will help you match with more hosts.',
       validation: showAdvanced
         ? {
             required: 'required',
@@ -627,8 +654,16 @@ export function getFields({
           download if it means saving the file/migration.
         </>
       ),
-      suggestion: new BigNumber(10),
-      suggestionTip: 'The default multiplier is 10x the download price.',
+      ...(recommendations.migrationSurchargeMultiplier
+        ? {
+            suggestion:
+              recommendations.migrationSurchargeMultiplier?.targetValue,
+            suggestionTip: 'This value will help you match with more hosts.',
+          }
+        : {
+            suggestion: new BigNumber(10),
+            suggestionTip: 'The default multiplier is 10x the download price.',
+          }),
       hidden: !showAdvanced,
       validation: showAdvanced
         ? {

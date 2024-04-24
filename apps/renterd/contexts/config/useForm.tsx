@@ -1,14 +1,17 @@
 import { useMemo } from 'react'
 import { defaultValues, getAdvancedDefaults } from './types'
-import { getRedundancyMultiplier } from './transform'
+import { getRedundancyMultiplier } from './utils'
 import { useForm as useHookForm } from 'react-hook-form'
 import { useAverages } from './useAverages'
 import { useBusState } from '@siafoundation/renterd-react'
 import { getFields } from './fields'
 import { useApp } from '../app'
 import useLocalStorageState from 'use-local-storage-state'
+import { useAutopilotEvaluations } from './useAutopilotEvaluations'
+import { useEstimates } from './useEstimates'
+import { Resources } from './resources'
 
-export function useForm() {
+export function useForm({ resources }: { resources: Resources }) {
   const form = useHookForm({
     mode: 'all',
     defaultValues,
@@ -43,11 +46,37 @@ export function useForm() {
     }
   )
 
+  const estimates = useEstimates({
+    isAutopilotEnabled,
+    redundancyMultiplier,
+    maxStoragePriceTBMonth,
+    storageTB,
+    maxDownloadPriceTB,
+    downloadTBMonth,
+    maxUploadPriceTB,
+    uploadTBMonth,
+  })
+  const { estimatedSpendingPerMonth } = estimates
+
+  const evaluation = useAutopilotEvaluations({
+    form,
+    resources,
+    isAutopilotEnabled,
+    showAdvanced,
+    estimatedSpendingPerMonth,
+  })
+
   const renterdState = useBusState()
   const fields = useMemo(() => {
     const advancedDefaults = renterdState.data
       ? getAdvancedDefaults(renterdState.data.network)
       : undefined
+    const recommendations = evaluation.recommendations.reduce((acc, rec) => {
+      return {
+        ...acc,
+        [rec.key]: rec,
+      }
+    }, {})
     if (averages.data) {
       return getFields({
         advancedDefaults,
@@ -62,6 +91,7 @@ export function useForm() {
         contractAverage,
         minShards,
         totalShards,
+        recommendations,
       })
     }
     return getFields({
@@ -73,6 +103,7 @@ export function useForm() {
       redundancyMultiplier,
       minShards,
       totalShards,
+      recommendations,
     })
   }, [
     renterdState.data,
@@ -88,11 +119,14 @@ export function useForm() {
     maxUploadPriceTB,
     minShards,
     totalShards,
+    evaluation,
   ])
 
   return {
     form,
     fields,
+    estimates,
+    evaluation,
     maxStoragePriceTBMonth,
     maxDownloadPriceTB,
     maxUploadPriceTB,

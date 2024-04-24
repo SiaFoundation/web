@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect } from 'react'
-import { FieldValues, UseFormReturn } from 'react-hook-form'
+import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
 
 type Props<DataForm extends FieldValues> = {
   form: UseFormReturn<DataForm>
@@ -18,12 +18,22 @@ export function useFormServerSynced<DataForm extends FieldValues>({
       return
     }
     const localValues = form.getValues()
-    form.reset(remoteValues)
-    for (const [key, value] of Object.entries(localValues)) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      form.setValue(key as any, value, {
-        shouldDirty: true,
+    // Update each field from remote data, while keeping any local
+    // dirty, error, or touched state.
+    for (const [key, value] of Object.entries(remoteValues)) {
+      form.resetField(key as Path<DataForm>, {
+        defaultValue: value,
+        keepDirty: true,
+        keepError: true,
+        keepTouched: true,
       })
+    }
+    // Retain any local values that the user actually changed but has not saved.
+    // Fields that have not been changed will update to show the latest remote value.
+    for (const [key, value] of Object.entries(localValues)) {
+      if (form.getFieldState(key as Path<DataForm>).isDirty) {
+        form.setValue(key as Path<DataForm>, value)
+      }
     }
   }, [form, remoteValues])
 

@@ -8,6 +8,7 @@ import { ConfigStats } from './ConfigStats'
 import { ConfigActions } from './ConfigActions'
 import { ConfigNav } from './ConfigNav'
 import { StateConnError } from './StateConnError'
+import { Recommendations } from './Recommendations'
 
 export function Config() {
   const { openDialog } = useDialog()
@@ -24,6 +25,7 @@ export function Config() {
       openSettings={() => openDialog('settings')}
       size="3"
     >
+      <Recommendations />
       {remoteError ? (
         <StateConnError />
       ) : (

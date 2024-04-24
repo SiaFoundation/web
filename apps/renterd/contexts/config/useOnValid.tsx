@@ -9,14 +9,8 @@ import {
   useBusState,
   useSettingUpdate,
 } from '@siafoundation/renterd-react'
-import { SettingsData, defaultValues } from './types'
-import {
-  transformUpAutopilot,
-  transformUpContractSet,
-  transformUpGouging,
-  transformUpRedundancy,
-  transformUpUploadPacking,
-} from './transform'
+import { defaultValues } from './types'
+import { transformUp } from './transformUp'
 import { delay, useMutate } from '@siafoundation/react-core'
 import { Resources } from './resources'
 import { useSyncContractSet } from './useSyncContractSet'
@@ -51,26 +45,21 @@ export function useOnValid({
       ) {
         return
       }
+      const firstTimeSettingConfig =
+        isAutopilotEnabled && !resources.autopilot.data
       try {
-        const calculatedValues: Partial<SettingsData> = {}
-        if (isAutopilotEnabled && !showAdvanced) {
-          calculatedValues.allowanceMonth = estimatedSpendingPerMonth
-        }
+        const { finalValues, payloads } = transformUp({
+          resources,
+          renterdState: renterdState.data,
+          isAutopilotEnabled,
+          showAdvanced,
+          estimatedSpendingPerMonth,
+          values,
+        })
 
-        const finalValues = {
-          ...values,
-          ...calculatedValues,
-        }
-
-        const firstTimeSettingConfig =
-          isAutopilotEnabled && !resources.autopilot.data
-        const autopilotResponse = isAutopilotEnabled
+        const autopilotResponse = payloads.autopilot
           ? await autopilotUpdate.put({
-              payload: transformUpAutopilot(
-                renterdState.data.network,
-                finalValues,
-                resources.autopilot.data
-              ),
+              payload: payloads.autopilot,
             })
           : undefined
 
@@ -84,34 +73,25 @@ export function useOnValid({
             params: {
               key: 'contractset',
             },
-            payload: transformUpContractSet(
-              finalValues,
-              resources.contractSet.data
-            ),
+            payload: payloads.contractSet,
           }),
           settingUpdate.put({
             params: {
               key: 'uploadpacking',
             },
-            payload: transformUpUploadPacking(
-              finalValues,
-              resources.uploadPacking.data
-            ),
+            payload: payloads.uploadPacking,
           }),
           settingUpdate.put({
             params: {
               key: 'gouging',
             },
-            payload: transformUpGouging(finalValues, resources.gouging.data),
+            payload: payloads.gouging,
           }),
           settingUpdate.put({
             params: {
               key: 'redundancy',
             },
-            payload: transformUpRedundancy(
-              finalValues,
-              resources.redundancy.data
-            ),
+            payload: payloads.redundancy,
           }),
         ])
 

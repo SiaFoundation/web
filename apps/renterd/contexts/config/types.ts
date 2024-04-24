@@ -143,3 +143,13 @@ export function getAdvancedDefaults(
     ...getAdvancedDefaultRedundancy(network),
   }
 }
+
+export type RecommendationItem = {
+  key: keyof SettingsData
+  title: string
+  currentLabel: string
+  targetLabel: string
+  currentValue: BigNumber
+  targetValue: BigNumber
+  direction: 'up' | 'down'
+}
