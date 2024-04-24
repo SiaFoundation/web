@@ -129,7 +129,7 @@ export function Dialogs() {
         open={dialog === 'addressDetails'}
         address={wallet.data?.address}
         isValidating={wallet.isValidating}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <HostdTransactionDetailsDialog />
       <SyncerConnectPeerDialog
@@ -141,23 +141,23 @@ export function Dialogs() {
           })
         }
         open={dialog === 'connectPeer'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <VolumeCreateDialog
         open={dialog === 'volumeCreate'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <VolumeResizeDialog
         open={dialog === 'volumeResize'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <VolumeDeleteDialog
         open={dialog === 'volumeDelete'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <ContractsFilterContractIdDialog
         open={dialog === 'contractsFilterContractId'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <ConfirmDialog
         open={dialog === 'confirm'}
