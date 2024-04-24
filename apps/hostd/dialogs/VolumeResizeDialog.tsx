@@ -12,6 +12,7 @@ import {
   FieldNumber,
   ConfigFields,
   useOnInvalid,
+  useDialogFormHelpers,
 } from '@siafoundation/design-system'
 import {
   useSystemDirectory,
@@ -20,7 +21,7 @@ import {
 } from '@siafoundation/hostd-react'
 import { bytesToGB, GBToBytes, humanBytes } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../contexts/dialog'
 import { useHostOSPathSeparator } from '../hooks/useHostOSPathSeparator'
@@ -34,14 +35,18 @@ type Props = {
 
 const minSizeGB = new BigNumber(10)
 
-const defaultValues = {
-  size: undefined as BigNumber | undefined,
+function getDefaultValues(size: BigNumber) {
+  return {
+    size,
+  }
 }
+
+type Values = ReturnType<typeof getDefaultValues>
 
 function getFields(
   minSizeGB: number,
   maxSizeGB: number
-): ConfigFields<typeof defaultValues, never> {
+): ConfigFields<Values, never> {
   return {
     size: {
       type: 'number',
@@ -65,7 +70,7 @@ function getFields(
 }
 
 export function VolumeResizeDialog({ trigger, open, onOpenChange }: Props) {
-  const { id, closeDialog } = useDialog()
+  const { id } = useDialog()
   const separator = useHostOSPathSeparator()
   const volume = useVolume({
     disabled: !id,
@@ -84,6 +89,10 @@ export function VolumeResizeDialog({ trigger, open, onOpenChange }: Props) {
   })
   const volumeResize = useVolumeResize()
 
+  const defaultValues = getDefaultValues(
+    volume.data ? sectorsToGB(volume.data.totalSectors) : new BigNumber(0)
+  )
+
   const form = useForm({
     mode: 'all',
     defaultValues,
@@ -91,8 +100,15 @@ export function VolumeResizeDialog({ trigger, open, onOpenChange }: Props) {
 
   const size = form.watch('size')
 
+  const { closeAndReset, handleOpenChange } = useDialogFormHelpers({
+    form,
+    onOpenChange,
+    defaultValues,
+    initKey: [volume.isLoading],
+  })
+
   const onSubmit = useCallback(
-    async (values) => {
+    async (values: Values) => {
       const response = await volumeResize.put({
         params: {
           id: Number(id),
@@ -108,20 +124,11 @@ export function VolumeResizeDialog({ trigger, open, onOpenChange }: Props) {
         })
       } else {
         triggerSuccessToast({ title: 'Volume resizing initiated' })
-        form.reset(defaultValues)
-        closeDialog()
+        closeAndReset()
       }
     },
-    [form, id, volumeResize, closeDialog]
+    [id, volumeResize, closeAndReset]
   )
-
-  useEffect(() => {
-    if (!volume.data) {
-      return
-    }
-    form.reset(defaultValues)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [volume.data])
 
   const newSizeGB = useMemo(() => size || new BigNumber(0), [size])
   const currentSizeGB = useMemo(
@@ -153,12 +160,7 @@ export function VolumeResizeDialog({ trigger, open, onOpenChange }: Props) {
       title="Resize Volume"
       trigger={trigger}
       open={open}
-      onOpenChange={(val) => {
-        if (!val) {
-          form.reset(defaultValues)
-        }
-        onOpenChange(val)
-      }}
+      onOpenChange={handleOpenChange}
       contentVariants={{
         className: 'max-w-[400px]',
       }}
