@@ -1,13 +1,11 @@
 import BigNumber from 'bignumber.js'
+import { transformDown } from './transformDown'
 import {
-  transformDown,
   transformUpAutopilot,
   transformUpContractSet,
   transformUpGouging,
   transformUpRedundancy,
-  valuePerMonthToPerPeriod,
-  valuePerPeriodToPerMonth,
-} from './transform'
+} from './transformUp'
 import { SettingsData } from './types'
 import {
   blocksToWeeks,
@@ -15,6 +13,7 @@ import {
   weeksToBlocks,
   toHastings,
 } from '@siafoundation/units'
+import { valuePerMonthToPerPeriod, valuePerPeriodToPerMonth } from './utils'
 
 describe('tansforms', () => {
   describe('down', () => {
@@ -446,7 +445,7 @@ describe('tansforms', () => {
         redundancy,
       })
       expect(settings.downloadTBMonth).toEqual(new BigNumber('92.72'))
-      // using the rounded value results in same value
+      // Using the rounded value results in same value.
       expect(
         transformUpAutopilot('Mainnet', settings, autopilot).contracts.download
       ).toEqual(91088814814815)

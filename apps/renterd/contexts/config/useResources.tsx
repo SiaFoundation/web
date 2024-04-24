@@ -53,7 +53,6 @@ export function useResources() {
       },
     },
   })
-
   const averages = useSiaCentralHostsNetworkAverages({
     config: {
       swr: {

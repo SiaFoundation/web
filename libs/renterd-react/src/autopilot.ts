@@ -72,13 +72,13 @@ export function useAutopilotConfigUpdate(
 }
 
 export function useAutopilotConfigEvaluate(
-  args?: HookArgsCallback<
+  args: HookArgsWithPayloadSwr<
     AutopilotConfigEvaluateParams,
     AutopilotConfigEvaluatePayload,
     AutopilotConfigEvaluateResponse
   >
 ) {
-  return usePostFunc({ ...args, route: autopilotConfigRoute })
+  return usePostSwr({ ...args, route: autopilotConfigRoute })
 }
 
 export function useAutopilotHostsSearch(
