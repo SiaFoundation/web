@@ -5,7 +5,8 @@
     "@nx/dependency-checks": [
       "error",
       {
-        "ignoredFiles": ["libs/react-core/rollup.config.js"]
+        "ignoredFiles": ["libs/react-core/rollup.config.js"],
+        "ignoredDependencies": ["undici"]
       }
     ]
   },

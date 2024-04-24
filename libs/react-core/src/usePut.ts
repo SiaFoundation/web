@@ -11,18 +11,18 @@ import {
   mergeInternalCallbackArgs,
   Response,
   mergeInternalHookArgsCallback,
-  getPathFromKey,
   After,
   InternalHookArgsWithPayloadSwr,
   mergeInternalHookArgsSwr,
   InternalHookArgsSwr,
+  getRouteFromKey,
 } from './request'
-import { useAppSettings } from './appSettings'
 import { useMemo } from 'react'
-import { keyOrNull } from './utils'
+import { getKey, keyOrNull } from './utils'
 import { SWRError } from './types'
 import { RequestParams } from '@siafoundation/request'
 import { useRequestSettings } from './appSettings/useRequestSettings'
+import { buildMutateMatcherFn } from './mutate'
 
 export function usePutSwr<Params extends RequestParams, Payload, Result>(
   args: InternalHookArgsWithPayloadSwr<Params, Payload, Result>
@@ -42,12 +42,7 @@ export function usePutSwr<Params extends RequestParams, Payload, Result>(
   const key = useMemo(
     () =>
       keyOrNull(
-        reqRoute
-          ? `${reqRoute}${JSON.stringify(
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              (args as any).payload !== undefined ? (args as any).payload : ''
-            )}`
-          : null,
+        getKey('put', reqRoute, args as { payload: Payload }),
         hookArgs.disabled ||
           (passwordProtectRequestHooks && !requestSettings.password)
       ),
@@ -94,16 +89,16 @@ export function usePutFunc<Params extends RequestParams, Payload, Result>(
   after?: After<Params, Payload, Result>
 ): PutFunc<Params, Payload, Result> {
   const { mutate } = useSWRConfig()
-  const { settings } = useAppSettings()
+  const { requestSettings } = useRequestSettings()
   const { setWorkflow, removeWorkflow } = useWorkflows()
   const hookArgs = mergeInternalHookArgsCallback(args)
   return {
     put: async (args: InternalCallbackArgs<Params, Payload, Result>) => {
       const callArgs = mergeInternalCallbackArgs(args)
       try {
-        const reqConfig = buildAxiosConfig(settings, hookArgs, callArgs)
+        const reqConfig = buildAxiosConfig(requestSettings, hookArgs, callArgs)
         const reqRoute = buildRouteWithParams(
-          settings,
+          requestSettings,
           hookArgs.route,
           hookArgs,
           callArgs
@@ -116,40 +111,30 @@ export function usePutFunc<Params extends RequestParams, Payload, Result>(
           payload = callArgs.payload
         }
 
-        const key = `${reqRoute}${JSON.stringify(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (args as any).payload !== undefined ? (args as any).payload : ''
-        )}`
+        const key = getKey('put', reqRoute, args as { payload: Payload })
 
-        const path = getPathFromKey(
-          settings,
-          reqRoute,
+        const route = getRouteFromKey(
+          requestSettings,
+          key,
           args,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           callArgs as any
         )
-        setWorkflow(key, {
-          path,
+        const workflowKey = key.join('')
+        setWorkflow(workflowKey, {
+          route,
           payload,
         })
         const response = await axios.put<Result>(reqRoute, payload, reqConfig)
         if (after) {
           await after(
             (matcher, data = (d) => d, opts) =>
-              mutate(
-                (key) => {
-                  if (typeof key !== 'string') {
-                    return false
-                  }
-                  const route = getPathFromKey(
-                    settings,
-                    key,
-                    args,
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    callArgs as any
-                  )
-                  return matcher(route)
-                },
+              buildMutateMatcherFn(
+                mutate,
+                requestSettings,
+                args,
+                callArgs,
+                matcher,
                 data,
                 opts
               ),
@@ -157,7 +142,7 @@ export function usePutFunc<Params extends RequestParams, Payload, Result>(
             response
           )
         }
-        removeWorkflow(key)
+        removeWorkflow(workflowKey)
         return {
           status: response.status,
           data: response.data,

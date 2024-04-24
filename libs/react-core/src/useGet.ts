@@ -16,7 +16,7 @@ import {
 } from './request'
 import { SWRError } from './types'
 import { useAppSettings } from './appSettings'
-import { keyOrNull } from './utils'
+import { getKey, keyOrNull } from './utils'
 import { RequestParams } from '@siafoundation/request'
 import { useRequestSettings } from './appSettings/useRequestSettings'
 
@@ -33,7 +33,7 @@ export function useGetSwr<Params extends RequestParams, Result>(
   )
   return useSWR<Result, SWRError>(
     keyOrNull(
-      args.standalone ? `${args.standalone}/${reqRoute}` : reqRoute,
+      getKey('get', reqRoute),
       hookArgs.disabled ||
         (passwordProtectRequestHooks && !requestSettings.password)
     ),

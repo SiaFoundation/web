@@ -219,9 +219,9 @@ export const columns: HostsTableColumn[] = (
       render: function LastScan({ data }) {
         const { workflows } = useWorkflows()
         const isPending = workflows.find((w) => {
-          const rhpw = w as { path?: string; payload?: RhpScanPayload }
+          const rhpw = w as { route?: string; payload?: RhpScanPayload }
           return (
-            rhpw.path?.startsWith(workerRhpScanRoute) &&
+            rhpw.route?.startsWith(workerRhpScanRoute) &&
             rhpw.payload?.hostKey === data.publicKey
           )
         })

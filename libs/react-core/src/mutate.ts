@@ -1,31 +1,67 @@
 'use client'
 
 import { useMemo } from 'react'
-import { mutate as swrMutate, MutatorCallback, MutatorOptions } from 'swr'
-import { getPathFromKey } from './request'
-import { useAppSettings } from './appSettings'
+import { MutatorCallback, MutatorOptions, useSWRConfig } from 'swr'
+import { getRouteFromKey } from './request'
+import { RequestSettings } from './appSettings/useRequestSettings/types'
+import { useRequestSettings } from './appSettings/useRequestSettings'
+import { ScopedMutator } from 'swr/_internal'
 
-export function useMutate(args?: { api: string }) {
-  const { settings } = useAppSettings()
+export type UseMutateReturn = <T>(
+  matcher: (key: string) => boolean,
+  data?: T | Promise<T> | MutatorCallback<T>,
+  opts?: boolean | MutatorOptions<T>
+) => Promise<(T | undefined)[]>
+
+export function useMutate(args?: { api: string }): UseMutateReturn {
+  const { requestSettings } = useRequestSettings()
+  const { mutate } = useSWRConfig()
   return useMemo(
     () =>
-      function mutate<T>(
-        matcher: (key: string) => boolean,
+      function mutateFn<T>(
+        matcher: (route: string) => boolean,
         data?: T | Promise<T> | MutatorCallback<T>,
         opts?: boolean | MutatorOptions<T>
       ): Promise<(T | undefined)[]> {
-        return swrMutate(
-          (key) => {
-            if (typeof key !== 'string') {
-              return false
-            }
-            const route = getPathFromKey(settings, key, args, undefined)
-            return matcher(route)
-          },
+        return buildMutateMatcherFn(
+          mutate,
+          requestSettings,
+          args,
+          undefined,
+          matcher,
           data,
           opts
         )
       },
-    [settings, args]
+    [mutate, requestSettings, args]
+  )
+}
+
+export function buildMutateMatcherFn<T>(
+  // This is the exact type from swr.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  mutate: ScopedMutator<any>,
+  requestSettings: RequestSettings,
+  hookArgs: { api?: string } | undefined,
+  callArgs: { api?: string } | undefined,
+  matcher: (key: string) => boolean,
+  data: T | Promise<T> | MutatorCallback<T> | undefined,
+  opts?: boolean | MutatorOptions<T>
+): Promise<(T | undefined)[]> {
+  return mutate(
+    (key) => {
+      if (!key || typeof key === 'string' || key.length !== 2) {
+        return false
+      }
+      const route = getRouteFromKey(
+        requestSettings,
+        key as [string, string],
+        hookArgs,
+        callArgs
+      )
+      return matcher(route)
+    },
+    data || ((d) => d),
+    opts
   )
 }
