@@ -4,6 +4,7 @@ import {
   DNSDuckDNSOptions,
   DNSNoIPOptions,
   HostSettings,
+  HostSettingsPinned,
 } from '@siafoundation/hostd-types'
 import {
   bytesToMB,
@@ -20,9 +21,13 @@ import {
   humanStoragePrice,
 } from '../../lib/humanUnits'
 import BigNumber from 'bignumber.js'
-import { scDecimalPlaces, SettingsData } from './types'
+import {
+  defaultValuesSettingsPinned,
+  scDecimalPlaces,
+  SettingsData,
+} from './types'
 
-export function transformUp(
+export function transformUpSettings(
   values: SettingsData,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   existingValues: any
@@ -122,10 +127,40 @@ export function transformUp(
   }
 }
 
+export function transformUpSettingsPinned(
+  values: SettingsData,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  existingValues: any
+): HostSettingsPinned {
+  return {
+    ...existingValues,
+    currency: values.pinnedCurrency,
+    threshold: values.pinnedThreshold.div(100).toNumber(),
+    storage: {
+      pinned: values.shouldPinStoragePrice,
+      value: values.storagePricePinned.toNumber(),
+    },
+    ingress: {
+      pinned: values.shouldPinIngressPrice,
+      value: values.ingressPricePinned.toNumber(),
+    },
+    egress: {
+      pinned: values.shouldPinEgressPrice,
+      value: values.egressPricePinned.toNumber(),
+    },
+    maxCollateral: {
+      pinned: values.shouldPinMaxCollateral,
+      value: values.maxCollateralPinned.toNumber(),
+    },
+  }
+}
+
 export function transformDown({
   settings,
+  settingsPinned,
 }: {
   settings: HostSettings
+  settingsPinned?: HostSettingsPinned
 }): SettingsData {
   let dnsOptions = null
   // DNS DuckDNS
@@ -180,8 +215,8 @@ export function transformDown({
     ),
 
     collateralMultiplier: new BigNumber(settings.collateralMultiplier),
-    maxCollateral: toSiacoins(settings.maxCollateral, scDecimalPlaces),
 
+    maxCollateral: toSiacoins(settings.maxCollateral, scDecimalPlaces),
     storagePrice: toSiacoins(
       humanStoragePrice(settings.storagePrice),
       scDecimalPlaces
@@ -216,6 +251,27 @@ export function transformDown({
 
     // DNS options
     ...dnsOptions,
+
+    // settings pinned
+    ...(settingsPinned
+      ? {
+          pinnedCurrency: settingsPinned.currency,
+          pinnedThreshold: new BigNumber(settingsPinned.threshold).times(100),
+          shouldPinMaxCollateral: settingsPinned.maxCollateral.pinned,
+          maxCollateralPinned: new BigNumber(
+            settingsPinned.maxCollateral.value
+          ),
+
+          shouldPinStoragePrice: settingsPinned.storage.pinned,
+          storagePricePinned: new BigNumber(settingsPinned.storage.value),
+
+          shouldPinEgressPrice: settingsPinned.egress.pinned,
+          egressPricePinned: new BigNumber(settingsPinned.egress.value),
+
+          shouldPinIngressPrice: settingsPinned.ingress.pinned,
+          ingressPricePinned: new BigNumber(settingsPinned.ingress.value),
+        }
+      : defaultValuesSettingsPinned),
   }
 }
 

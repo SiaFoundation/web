@@ -26,6 +26,10 @@ import {
   ContractsParams,
   ContractsPayload,
   ContractsResponse,
+  SettingsPinnedResponse,
+  SettingsPinnedUpdateParams,
+  SettingsPinnedUpdatePayload,
+  SettingsPinnedUpdateResponse,
   LogsSearchParams,
   LogsSearchPayload,
   LogsSearchResponse,
@@ -327,6 +331,30 @@ export function useSettingsDdns(
   >
 ) {
   return usePutSwr({ ...args, payload: {}, route: '/settings/ddns/update' })
+}
+
+const settingsPinnedRoute = '/settings/pinned'
+export function useSettingsPinned(
+  args?: HookArgsSwr<SettingsParams, SettingsPinnedResponse>
+) {
+  return useGetSwr({
+    ...args,
+    route: settingsPinnedRoute,
+  })
+}
+
+export function useSettingsPinnedUpdate(
+  args?: HookArgsCallback<
+    SettingsPinnedUpdateParams,
+    SettingsPinnedUpdatePayload,
+    SettingsPinnedUpdateResponse
+  >
+) {
+  return usePutFunc({ ...args, route: settingsPinnedRoute }, async (mutate) => {
+    mutate((key) => {
+      return key.startsWith(settingsPinnedRoute)
+    })
+  })
 }
 
 // volumes

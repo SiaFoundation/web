@@ -23,14 +23,17 @@ export function ConfigurationNumber<
     suggestion,
     suggestionTip,
     decimalsLimit = 2,
+    after,
     placeholder: _placeholder,
     units,
+    prefix,
   } = field
   const { setValue, value, error } = useRegisterForm({
     form,
     field,
     name,
   })
+  const After = after || (() => null)
   const placeholder = useMemo(
     () =>
       _placeholder
@@ -47,6 +50,7 @@ export function ConfigurationNumber<
           name={name}
           value={value}
           units={units}
+          prefix={prefix}
           decimalsLimit={decimalsLimit}
           placeholder={placeholder}
           state={
@@ -64,34 +68,33 @@ export function ConfigurationNumber<
             setValue(value, true)
           }}
         />
-        <div className="flex flex-col gap-2">
-          {average && (
-            <ConfigurationTipNumber
-              type="number"
-              label="Network average"
-              tip={averageTip || 'Averages provided by Sia Central.'}
-              decimalsLimit={decimalsLimit}
-              value={average as BigNumber}
-              units={units}
-              onClick={() => {
-                setValue(average as PathValue<Values, Path<Values>>, true)
-              }}
-            />
-          )}
-          {suggestion && suggestionTip && (
-            <ConfigurationTipNumber
-              type="number"
-              label="Suggestion"
-              tip={suggestionTip}
-              decimalsLimit={decimalsLimit}
-              value={suggestion as BigNumber}
-              units={units}
-              onClick={() => {
-                setValue(suggestion as PathValue<Values, Path<Values>>, true)
-              }}
-            />
-          )}
-        </div>
+        {average && (
+          <ConfigurationTipNumber
+            type="number"
+            label="Network average"
+            tip={averageTip || 'Averages provided by Sia Central.'}
+            decimalsLimit={decimalsLimit}
+            value={average as BigNumber}
+            units={units}
+            onClick={() => {
+              setValue(average as PathValue<Values, Path<Values>>, true)
+            }}
+          />
+        )}
+        {suggestion && suggestionTip && (
+          <ConfigurationTipNumber
+            type="number"
+            label="Suggestion"
+            tip={suggestionTip}
+            decimalsLimit={decimalsLimit}
+            value={suggestion as BigNumber}
+            units={units}
+            onClick={() => {
+              setValue(suggestion as PathValue<Values, Path<Values>>, true)
+            }}
+          />
+        )}
+        <After name={name} form={form} fields={fields} />
       </div>
       <div className="h-[20px]">
         <FieldLabelAndError form={form} name={name} />

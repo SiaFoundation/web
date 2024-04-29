@@ -11,6 +11,7 @@ type Props = {
   value: BigNumber // hastings
   variant?: 'change' | 'value'
   tooltip?: string
+  tipSide?: React.ComponentProps<typeof Tooltip>['side']
   fixed?: number
   color?: React.ComponentProps<typeof Text>['color']
   dynamicUnits?: boolean
@@ -24,6 +25,7 @@ export function ValueSc({
   size,
   scaleSize,
   tooltip = '',
+  tipSide,
   variant = 'change',
   color: customColor,
   fixed = 3,
@@ -74,6 +76,7 @@ export function ValueSc({
             dynamicUnits: false,
           })
         }
+        side={tipSide}
       >
         {el}
       </Tooltip>

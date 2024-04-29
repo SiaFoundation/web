@@ -1,19 +1,13 @@
-import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
+import { FieldValues, Path, PathValue } from 'react-hook-form'
 import { FieldLabelAndError } from '../components/Form'
 import { Switch } from '../core/Switch'
 import { ConfigurationTipText } from './ConfigurationTipText'
-import { ConfigFields, useRegisterForm } from './configurationFields'
-
-type Props<Values extends FieldValues, Categories extends string> = {
-  name: Path<Values>
-  form: UseFormReturn<Values>
-  fields: ConfigFields<Values, Categories>
-}
+import { FieldProps, useRegisterForm } from './configurationFields'
 
 export function ConfigurationSwitch<
   Values extends FieldValues,
   Categories extends string
->({ name, form, fields }: Props<Values, Categories>) {
+>({ name, form, fields }: FieldProps<Values, Categories>) {
   const field = fields[name]
   const { suggestion, suggestionTip } = field
   const { setValue, value, error } = useRegisterForm({

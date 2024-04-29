@@ -1,18 +1,7 @@
-import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
+import { FieldValues } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
 import { TextField } from '../core/TextField'
-import { ConfigFields, useRegisterForm } from './configurationFields'
-
-type Props<Values extends FieldValues, Categories extends string> = {
-  name: Path<Values>
-  form: UseFormReturn<Values>
-  fields: ConfigFields<Values, Categories>
-  size?: React.ComponentProps<typeof TextField>['size']
-  autoComplete?: React.ComponentProps<typeof TextField>['autoComplete']
-  spellCheck?: React.ComponentProps<typeof TextField>['spellCheck']
-  group?: boolean
-  state?: boolean
-}
+import { FieldProps, useRegisterForm } from './configurationFields'
 
 export function FieldText<
   Values extends FieldValues,
@@ -26,13 +15,20 @@ export function FieldText<
   spellCheck,
   state = true,
   group = true,
-}: Props<Values, Categories>) {
+}: FieldProps<Values, Categories> & {
+  size?: React.ComponentProps<typeof TextField>['size']
+  autoComplete?: React.ComponentProps<typeof TextField>['autoComplete']
+  spellCheck?: React.ComponentProps<typeof TextField>['spellCheck']
+  group?: boolean
+  state?: boolean
+}) {
   const field = fields[name]
   const { ref, onChange, onBlur, error } = useRegisterForm({
     name,
     form,
     field,
   })
+
   const el = (
     <TextField
       ref={ref}
@@ -57,6 +53,7 @@ export function FieldText<
       onBlur={onBlur}
     />
   )
+
   if (group) {
     return (
       <FieldGroup
@@ -68,7 +65,7 @@ export function FieldText<
         {el}
       </FieldGroup>
     )
-  } else {
-    return el
   }
+
+  return el
 }

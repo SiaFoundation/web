@@ -1,13 +1,16 @@
+/* eslint-disable react/no-unescaped-entities */
 import { blocksToMonths } from '@siafoundation/units'
 import { ConfigFields } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
-import { dnsProviderOptions, initialValues, scDecimalPlaces } from './types'
+import { SettingsData, dnsProviderOptions, scDecimalPlaces } from './types'
 import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 import { calculateMaxCollateral } from './transform'
+import { currencyOptions } from '@siafoundation/react-core'
 
 type Categories = 'host' | 'pricing' | 'DNS' | 'bandwidth' | 'RHP3'
 
 type GetFields = {
+  pinningEnabled: boolean
   showAdvanced: boolean
   storageTBMonth?: BigNumber
   collateralMultiplier?: BigNumber
@@ -15,11 +18,12 @@ type GetFields = {
 }
 
 export function getFields({
+  pinningEnabled,
   showAdvanced,
   storageTBMonth,
   collateralMultiplier,
   rates,
-}: GetFields): ConfigFields<typeof initialValues, Categories> {
+}: GetFields): ConfigFields<SettingsData, Categories> {
   return {
     // Host
     acceptingContracts: {
@@ -62,8 +66,70 @@ export function getFields({
     },
 
     // Pricing
+    pinnedCurrency: {
+      title: 'Pinned currency',
+      description: 'Currency to use for fields where price pinning is enabled.',
+      type: 'select',
+      options: [
+        ...currencyOptions.map(({ id, label }) => ({
+          label,
+          value: id,
+        })),
+        { label: 'none', value: '' },
+      ] as {
+        label: string
+        value: string
+      }[],
+      hidden: !pinningEnabled,
+      validation: {},
+    },
+    pinnedThreshold: {
+      title: 'Pinned currency change threshold',
+      type: 'number',
+      suggestionTip: 'A threshold of 2% is recommended.',
+      suggestion: new BigNumber(2),
+      units: '%',
+      decimalsLimit: 0,
+      description: (
+        <>
+          Percentage that controls the minimum change in exchange rate that will
+          trigger an update to pinned prices. This prevents the host from
+          changing prices too often.
+        </>
+      ),
+      hidden: !pinningEnabled,
+      validation: pinningEnabled
+        ? {
+            required: 'required',
+            validate: {
+              max: (value) =>
+                new BigNumber(value as BigNumber).lte(100) ||
+                `must be at most 100%`,
+              min: (value) =>
+                new BigNumber(value as BigNumber).gte(0) ||
+                `must be at least 0%`,
+            },
+          }
+        : {},
+    },
+
+    shouldPinStoragePrice: {
+      title: 'Pin storage price',
+      description: '',
+      type: 'boolean',
+      category: 'pricing',
+      hidden: !pinningEnabled,
+      validation: {},
+    },
     storagePrice: {
       title: 'Storage price',
+      description: (
+        <>
+          The host's storage price per TB per month. Choose whether to set your
+          storage price in siacoin per TB per month or to pin the siacoin price
+          to a fixed fiat value per TB per month.
+        </>
+      ),
       type: 'siacoin',
       category: 'pricing',
       units: 'SC/TB/month',
@@ -71,15 +137,50 @@ export function getFields({
       suggestion: rates ? usdInScRoundedToNearestTen(1, rates) : undefined,
       suggestionTip:
         'The suggested storage price in siacoins per TB per month.',
-      description: (
-        <>{`The host's storage price in siacoins per TB per month.`}</>
-      ),
       validation: {
         required: 'required',
       },
     },
+    storagePricePinned: {
+      title: 'Pinned storage price',
+      description: '',
+      units: '/TB/month',
+      type: 'fiat',
+      category: 'pricing',
+      hidden: !pinningEnabled,
+      validation: pinningEnabled
+        ? {
+            required: 'required',
+            validate: {
+              currency: (value, values) =>
+                !!values.pinnedCurrency || 'must select a pinned currency',
+              range: (value: BigNumber, values) =>
+                !values.shouldPinStoragePrice ||
+                value?.gt(0) ||
+                'storage price must be greater than 0',
+            },
+          }
+        : {},
+    },
+
+    shouldPinEgressPrice: {
+      title: 'Pin egress price',
+      description: '',
+      type: 'boolean',
+      category: 'pricing',
+      hidden: !pinningEnabled,
+      validation: {},
+    },
     egressPrice: {
       title: 'Egress price',
+      description: (
+        <>
+          The host's egress price per TB per month. Egress means bandwidth usage
+          by outgoing download traffic. Choose whether to set your egress price
+          in siacoin per TB or to pin the siacoin price to a fixed fiat value
+          per TB.
+        </>
+      ),
       type: 'siacoin',
       category: 'pricing',
       units: 'SC/TB',
@@ -87,28 +188,82 @@ export function getFields({
       suggestion: rates ? usdInScRoundedToNearestTen(10, rates) : undefined,
       suggestionTip:
         'The suggested egress price in siacoins for egress per TB.',
-      description: (
-        <>{`The host's egress price in siacoins per TB. Egress means bandwidth usage by outgoing download traffic.`}</>
-      ),
       validation: {
         required: 'required',
       },
     },
+    egressPricePinned: {
+      title: 'Pinned egress price',
+      description: '',
+      type: 'fiat',
+      units: '/TB',
+      category: 'pricing',
+      hidden: !pinningEnabled,
+      validation: pinningEnabled
+        ? {
+            required: 'required',
+            validate: {
+              currency: (value, values) =>
+                !!values.pinnedCurrency || 'must select a pinned currency',
+              range: (value: BigNumber, values) =>
+                !values.shouldPinEgressPrice ||
+                value?.gt(0) ||
+                'egress price must be greater than 0',
+            },
+          }
+        : {},
+    },
+
+    shouldPinIngressPrice: {
+      title: 'Pin ingress price',
+      description: '',
+      type: 'boolean',
+      category: 'pricing',
+      hidden: !pinningEnabled,
+      validation: {},
+    },
     ingressPrice: {
       title: 'Ingress price',
+      description: (
+        <>
+          The host's ingress price per TB per month. Ingress means bandwidth
+          usage by incoming upload traffic. Choose whether to set your ingress
+          price in siacoin per TB or to pin the siacoin price to a fixed fiat
+          value per TB.
+        </>
+      ),
       type: 'siacoin',
       category: 'pricing',
       units: 'SC/TB',
       suggestion: rates ? usdInScRoundedToNearestTen(0.05, rates) : undefined,
       suggestionTip: 'The suggested ingress price in siacoins per TB.',
       decimalsLimitSc: scDecimalPlaces,
-      description: (
-        <>{`The host's ingress price in siacoins per TB. Ingress means bandwidth usage by incoming upload traffic.`}</>
-      ),
       validation: {
         required: 'required',
       },
     },
+    ingressPricePinned: {
+      title: 'Pinned ingress price',
+      description: '',
+      type: 'fiat',
+      units: '/TB',
+      category: 'pricing',
+      hidden: !pinningEnabled,
+      validation: pinningEnabled
+        ? {
+            required: 'required',
+            validate: {
+              currency: (value, values) =>
+                !!values.pinnedCurrency || 'must select a pinned currency',
+              range: (value: BigNumber, values) =>
+                !values.shouldPinIngressPrice ||
+                value?.gt(0) ||
+                'ingress price must be greater than 0',
+            },
+          }
+        : {},
+    },
+
     collateralMultiplier: {
       title: 'Collateral multiplier',
       type: 'number',
@@ -125,8 +280,24 @@ export function getFields({
         required: 'required',
       },
     },
+
+    shouldPinMaxCollateral: {
+      title: 'Pin max collateral',
+      description: '',
+      type: 'boolean',
+      category: 'pricing',
+      hidden: !pinningEnabled || !showAdvanced,
+      validation: {},
+    },
     maxCollateral: {
-      title: 'Maximum collateral',
+      title: 'Max collateral',
+      description: (
+        <>
+          The host's maximum collateral. Choose whether to set your max
+          collateral price in siacoin or to pin the max collateral to a fixed
+          fiat value.
+        </>
+      ),
       type: 'siacoin',
       category: 'pricing',
       decimalsLimitSc: scDecimalPlaces,
@@ -135,11 +306,30 @@ export function getFields({
           ? calculateMaxCollateral(storageTBMonth, collateralMultiplier)
           : undefined,
       suggestionTip: 'The suggested maximum collateral.',
-      description: <>{`The host's maximum collateral in siacoins.`}</>,
       hidden: !showAdvanced,
       validation: {
         required: 'required',
       },
+    },
+    maxCollateralPinned: {
+      title: 'Pinned max collateral',
+      description: '',
+      type: 'fiat',
+      category: 'pricing',
+      hidden: !pinningEnabled || !showAdvanced,
+      validation: pinningEnabled
+        ? {
+            required: 'required',
+            validate: {
+              currency: (value, values) =>
+                !!values.pinnedCurrency || 'must select a pinned currency',
+              range: (value: BigNumber, values) =>
+                !values.shouldPinMaxCollateral ||
+                value?.gt(0) ||
+                'max collateral must be greater than 0',
+            },
+          }
+        : {},
     },
     contractPrice: {
       title: 'Contract price',

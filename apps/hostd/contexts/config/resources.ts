@@ -1,17 +1,24 @@
 import { SWRError } from '@siafoundation/react-core'
-import { HostSettings } from '@siafoundation/hostd-types'
+import { HostSettings, HostSettingsPinned } from '@siafoundation/hostd-types'
 
 export type Resources = {
   settings: {
     data?: HostSettings
     error?: SWRError
   }
+  settingsPinned: {
+    data?: HostSettingsPinned
+    error?: SWRError
+  }
 }
 
-export function checkIfAllResourcesLoaded({ settings }: Resources) {
+export function checkIfAllResourcesLoaded({
+  settings,
+  settingsPinned,
+}: Resources) {
   return !!(
     // has initial daemon values
-    settings.data
+    (settings.data && (settingsPinned.data || settingsPinned.error))
   )
 }
 

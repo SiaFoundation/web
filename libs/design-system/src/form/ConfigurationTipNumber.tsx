@@ -63,6 +63,7 @@ export function ConfigurationTipNumber({
             fixed={decimalsLimit}
             dynamicUnits={false}
             showTooltip={false}
+            tipSide="bottom"
           />
         ) : (
           <ValueNum
@@ -70,6 +71,7 @@ export function ConfigurationTipNumber({
             variant="value"
             size="12"
             format={(val) => `${toFixedMax(val, decimalsLimit)} ${units}`}
+            tipSide="bottom"
           />
         )}
       </div>

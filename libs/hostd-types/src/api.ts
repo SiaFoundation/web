@@ -20,6 +20,10 @@ export type StateHostResponse = {
   os: string
   startTime: string
   buildTime: string
+  explorer: {
+    enabled: boolean
+    url: string
+  }
   lastAnnouncement?: {
     index: ChainIndex
     publicKey: string
@@ -294,8 +298,37 @@ export type HostSettings = {
   revision: number
 }
 
+export type HostSettingsPinned = {
+  currency: string
+  threshold: number
+  storage: {
+    pinned: boolean
+    value: number
+  }
+  ingress: {
+    pinned: boolean
+    value: number
+  }
+  egress: {
+    pinned: boolean
+    value: number
+  }
+  maxCollateral: {
+    pinned: boolean
+    value: number
+  }
+}
+
 export type SettingsParams = void
 export type SettingsResponse = HostSettings
+
+export type SettingsPinnedParams = void
+export type SettingsPinnedPayload = void
+export type SettingsPinnedResponse = HostSettingsPinned
+
+export type SettingsPinnedUpdateParams = void
+export type SettingsPinnedUpdatePayload = HostSettingsPinned
+export type SettingsPinnedUpdateResponse = void
 
 export type SettingsUpdateParams = void
 export type SettingsUpdatePayload = Partial<HostSettings>

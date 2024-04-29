@@ -1,16 +1,7 @@
-import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
+import { FieldValues, Path, PathValue } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
 import { Switch } from '../core/Switch'
-import { ConfigFields, useRegisterForm } from './configurationFields'
-
-type Props<Values extends FieldValues, Categories extends string> = {
-  name: Path<Values>
-  form: UseFormReturn<Values>
-  fields: ConfigFields<Values, Categories>
-  size?: React.ComponentProps<typeof Switch>['size']
-  children?: React.ReactNode
-  group?: boolean
-}
+import { FieldProps, useRegisterForm } from './configurationFields'
 
 export function FieldSwitch<
   Values extends FieldValues,
@@ -21,16 +12,24 @@ export function FieldSwitch<
   fields,
   size = 'medium',
   group = true,
+  before,
   children,
-}: Props<Values, Categories>) {
+}: FieldProps<Values, Categories> & {
+  size?: React.ComponentProps<typeof Switch>['size']
+  before?: React.ReactNode
+  children?: React.ReactNode
+  group?: boolean
+}) {
   const field = fields[name]
   const { setValue, value, error } = useRegisterForm({
     name,
     field,
     form,
   })
+
   const el = (
     <div className="flex gap-1 items-center">
+      {before}
       <Switch
         aria-label={name}
         name={name}
@@ -53,6 +52,7 @@ export function FieldSwitch<
       {children}
     </div>
   )
+
   if (group) {
     return (
       <FieldGroup
@@ -65,5 +65,6 @@ export function FieldSwitch<
       </FieldGroup>
     )
   }
+
   return el
 }

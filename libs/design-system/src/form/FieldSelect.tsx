@@ -1,19 +1,11 @@
-import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
+import { FieldValues } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
 import { Option, Select } from '../core/Select'
-import { ConfigFields, useRegisterForm } from './configurationFields'
+import { FieldProps, useRegisterForm } from './configurationFields'
 
 type Option = {
   value: string
   label: string
-}
-
-type Props<Values extends FieldValues, Categories extends string> = {
-  name: Path<Values>
-  form: UseFormReturn<Values>
-  fields: ConfigFields<Values, Categories>
-  group?: boolean
-  size?: React.ComponentProps<typeof Select>['size']
 }
 
 export function FieldSelect<
@@ -25,7 +17,10 @@ export function FieldSelect<
   fields,
   size = 'small',
   group = true,
-}: Props<Values, Categories>) {
+}: FieldProps<Values, Categories> & {
+  group?: boolean
+  size?: React.ComponentProps<typeof Select>['size']
+}) {
   const field = fields[name]
   const { options } = field
   const { ref, onChange, onBlur, error } = useRegisterForm({

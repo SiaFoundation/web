@@ -17,6 +17,8 @@ export type SiaCentralExchangeRates = {
   }
 }
 
+export type SiaCentralCurrency = keyof SiaCentralExchangeRates['sc']
+
 export type SiaCentralExchangeRatesParams = {
   currencies?: string
 }

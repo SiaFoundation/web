@@ -1,5 +1,10 @@
 import BigNumber from 'bignumber.js'
-import { calculateMaxCollateral, transformDown, transformUp } from './transform'
+import {
+  calculateMaxCollateral,
+  transformDown,
+  transformUpSettings,
+  transformUpSettingsPinned,
+} from './transform'
 
 describe('data transforms', () => {
   it('down', () => {
@@ -34,8 +39,29 @@ describe('data transforms', () => {
           },
           revision: 0,
         },
+        settingsPinned: {
+          currency: 'jpy',
+          threshold: 0.1,
+          storage: {
+            pinned: false,
+            value: 0,
+          },
+          ingress: {
+            pinned: false,
+            value: 0,
+          },
+          egress: {
+            pinned: true,
+            value: 400.5,
+          },
+          maxCollateral: {
+            pinned: false,
+            value: 0,
+          },
+        },
       })
     ).toEqual({
+      // settings
       acceptingContracts: true,
       netAddress: 'tabo.zen.sia.tech:9882',
       maxContractDuration: new BigNumber('6'),
@@ -58,13 +84,25 @@ describe('data transforms', () => {
       dnsAwsId: 'ID',
       dnsAwsSecret: 'secret',
       dnsAwsZoneId: 'zone',
+      // settingsPinned
+      pinnedCurrency: 'jpy',
+      pinnedThreshold: new BigNumber('10'),
+      shouldPinStoragePrice: false,
+      storagePricePinned: new BigNumber('0'),
+      shouldPinEgressPrice: true,
+      egressPricePinned: new BigNumber('400.50'),
+      shouldPinIngressPrice: false,
+      ingressPricePinned: new BigNumber('0'),
+      shouldPinMaxCollateral: false,
+      maxCollateralPinned: new BigNumber('0'),
     })
   })
 
-  it('up', () => {
+  it('up settings', () => {
     expect(
-      transformUp(
+      transformUpSettings(
         {
+          // settings
           acceptingContracts: true,
           netAddress: 'tabo.zen.sia.tech:9882',
           maxContractDuration: new BigNumber('6'),
@@ -100,6 +138,18 @@ describe('data transforms', () => {
           // DNS Cloudflare
           dnsCloudflareToken: '',
           dnsCloudflareZoneId: '',
+
+          // settings pinned
+          pinnedCurrency: 'jpy',
+          pinnedThreshold: new BigNumber('10'),
+          shouldPinStoragePrice: false,
+          storagePricePinned: new BigNumber('0'),
+          shouldPinEgressPrice: true,
+          egressPricePinned: new BigNumber('400.50'),
+          shouldPinIngressPrice: false,
+          ingressPricePinned: new BigNumber('0'),
+          shouldPinMaxCollateral: false,
+          maxCollateralPinned: new BigNumber('0'),
         },
         { ddns: { provider: 'invalid' }, foobar: 'foobar' }
       )
@@ -131,6 +181,88 @@ describe('data transforms', () => {
           zoneID: 'zone',
         },
       },
+    })
+  })
+
+  it('up settings pinned', () => {
+    expect(
+      transformUpSettingsPinned(
+        {
+          // settings
+          acceptingContracts: true,
+          netAddress: 'tabo.zen.sia.tech:9882',
+          maxContractDuration: new BigNumber('6'),
+          contractPrice: new BigNumber('0.2'),
+          baseRPCPrice: new BigNumber('1'),
+          sectorAccessPrice: new BigNumber('1'),
+          collateralMultiplier: new BigNumber('2'),
+          maxCollateral: new BigNumber('1000'),
+          storagePrice: new BigNumber('50'),
+          egressPrice: new BigNumber('250'),
+          ingressPrice: new BigNumber('10'),
+          priceTableValidity: new BigNumber('30'),
+          accountExpiry: new BigNumber('30'),
+          maxAccountBalance: new BigNumber('10'),
+          ingressLimit: new BigNumber('0'),
+          egressLimit: new BigNumber('0'),
+          dnsProvider: 'route53',
+          dnsIpv4: false,
+          dnsIpv6: false,
+
+          // DNS DuckDNS
+          dnsDuckDnsToken: '',
+
+          // DNS No-IP
+          dnsNoIpEmail: '',
+          dnsNoIpPassword: '',
+
+          // DNS AWS
+          dnsAwsId: 'ID',
+          dnsAwsSecret: 'secret',
+          dnsAwsZoneId: 'zone',
+
+          // DNS Cloudflare
+          dnsCloudflareToken: '',
+          dnsCloudflareZoneId: '',
+
+          // settings pinned
+          pinnedCurrency: 'jpy',
+          pinnedThreshold: new BigNumber('10'),
+          shouldPinStoragePrice: false,
+          storagePricePinned: new BigNumber('0'),
+          shouldPinEgressPrice: false,
+          egressPricePinned: new BigNumber('400.50'),
+          shouldPinIngressPrice: false,
+          ingressPricePinned: new BigNumber('0'),
+          shouldPinMaxCollateral: false,
+          maxCollateralPinned: new BigNumber('0'),
+        },
+        { other: { pinned: true, value: 200 }, foobar: 'foobar' }
+      )
+    ).toEqual({
+      currency: 'jpy',
+      threshold: 0.1,
+      storage: {
+        pinned: false,
+        value: 0,
+      },
+      ingress: {
+        pinned: false,
+        value: 0,
+      },
+      egress: {
+        pinned: false,
+        value: 400.5,
+      },
+      maxCollateral: {
+        pinned: false,
+        value: 0,
+      },
+      other: {
+        pinned: true,
+        value: 200,
+      },
+      foobar: 'foobar',
     })
   })
 
