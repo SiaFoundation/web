@@ -15,13 +15,22 @@ export type ConfigField<
   Values extends FieldValues,
   Categories extends string
 > = {
-  type: 'number' | 'siacoin' | 'text' | 'password' | 'boolean' | 'select'
+  type:
+    | 'number'
+    | 'siacoin'
+    | 'fiat'
+    | 'text'
+    | 'password'
+    | 'boolean'
+    | 'select'
+    | 'custom'
   title: string
   actions?: React.ReactNode
   hidden?: boolean
   category?: Categories
   description?: React.ReactNode
   units?: string
+  prefix?: string
   readOnly?: boolean
   onClick?: <T>(e: MouseEvent<T>) => void
   placeholder?: string
@@ -30,6 +39,11 @@ export type ConfigField<
   average?: BigNumber | string | boolean
   averageTip?: React.ReactNode
   after?: React.FC<{
+    name: Path<Values>
+    form: UseFormReturn<Values>
+    fields: ConfigFields<Values, Categories>
+  }>
+  custom?: React.FC<{
     name: Path<Values>
     form: UseFormReturn<Values>
     fields: ConfigFields<Values, Categories>
@@ -137,4 +151,21 @@ export function useOnInvalid<
     },
     [fields]
   )
+}
+
+export type FieldProps<
+  Values extends FieldValues,
+  Categories extends string
+> = {
+  name: Path<Values>
+  form: UseFormReturn<Values>
+  fields: ConfigFields<Values, Categories>
+}
+
+export function shouldShowField<
+  Values extends FieldValues,
+  Categories extends string
+>({ name, form, fields }: FieldProps<Values, Categories>) {
+  const field = fields[name]
+  return !field.hidden && (!field.show || field.show(form.getValues()))
 }

@@ -1,24 +1,13 @@
-import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
+import { FieldValues, Path, PathValue } from 'react-hook-form'
 import { FieldLabelAndError } from '../components/Form'
 import { Option, Select } from '../core/Select'
 import { ConfigurationTipText } from './ConfigurationTipText'
-import { ConfigFields, useRegisterForm } from './configurationFields'
-
-type Option = {
-  value: string
-  label: string
-}
-
-type Props<Values extends FieldValues, Categories extends string> = {
-  name: Path<Values>
-  form: UseFormReturn<Values>
-  fields: ConfigFields<Values, Categories>
-}
+import { FieldProps, useRegisterForm } from './configurationFields'
 
 export function ConfigurationSelect<
   Values extends FieldValues,
   Categories extends string
->({ name, form, fields }: Props<Values, Categories>) {
+>({ name, form, fields }: FieldProps<Values, Categories>) {
   const field = fields[name]
   const { options, suggestion, suggestionTip } = field
   const { ref, onChange, setValue, onBlur, value, error } = useRegisterForm({

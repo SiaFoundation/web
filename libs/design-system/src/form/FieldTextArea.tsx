@@ -1,18 +1,19 @@
-import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
+import { FieldValues } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
 import { TextArea } from '../core/TextArea'
-import { ConfigFields, useRegisterForm } from './configurationFields'
-
-type Props<Values extends FieldValues, Categories extends string> = {
-  name: Path<Values>
-  form: UseFormReturn<Values>
-  fields: ConfigFields<Values, Categories>
-}
+import { FieldProps, useRegisterForm } from './configurationFields'
 
 export function FieldTextArea<
   Values extends FieldValues,
   Categories extends string
->({ name, form, fields }: Props<Values, Categories>) {
+>({
+  name,
+  form,
+  fields,
+  group = true,
+}: FieldProps<Values, Categories> & {
+  group?: boolean
+}) {
   const field = fields[name]
   const { placeholder } = field
   const { ref, onChange, onBlur, error } = useRegisterForm({
@@ -20,29 +21,38 @@ export function FieldTextArea<
     form,
     field,
   })
-  return (
-    <FieldGroup
-      title={field.title}
-      actions={field.actions}
+
+  const el = (
+    <TextArea
+      ref={ref}
       name={name}
-      form={form}
-    >
-      <TextArea
-        ref={ref}
-        name={name}
-        placeholder={placeholder}
-        readOnly={field.readOnly}
-        onClick={field.onClick}
-        state={
-          error
-            ? 'invalid'
-            : form.formState.dirtyFields[name]
-            ? 'valid'
-            : 'default'
-        }
-        onChange={onChange}
-        onBlur={onBlur}
-      />
-    </FieldGroup>
+      placeholder={placeholder}
+      readOnly={field.readOnly}
+      onClick={field.onClick}
+      state={
+        error
+          ? 'invalid'
+          : form.formState.dirtyFields[name]
+          ? 'valid'
+          : 'default'
+      }
+      onChange={onChange}
+      onBlur={onBlur}
+    />
   )
+
+  if (group) {
+    return (
+      <FieldGroup
+        title={field.title}
+        actions={field.actions}
+        name={name}
+        form={form}
+      >
+        {el}
+      </FieldGroup>
+    )
+  }
+
+  return el
 }

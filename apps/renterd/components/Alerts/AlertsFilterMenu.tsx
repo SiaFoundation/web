@@ -2,7 +2,7 @@
 
 import { Button, PaginatorKnownTotal, Text } from '@siafoundation/design-system'
 import { useAlerts } from '../../contexts/alerts'
-import { Checkmark16 } from '@carbon/icons-react'
+import { Checkmark16 } from '@siafoundation/react-icons'
 
 export function AlertsFilterMenu() {
   const {

@@ -10,7 +10,7 @@ import {
 import { AlertData, TableColumnId } from './types'
 import { dataFields } from './data'
 import { SetAdditions, SetChangesField, SetRemovals } from './SetChange'
-import { Checkmark16 } from '@carbon/icons-react'
+import { Checkmark16 } from '@siafoundation/react-icons'
 import { formatRelative } from 'date-fns'
 import { Fragment, useMemo } from 'react'
 

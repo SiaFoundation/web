@@ -16,7 +16,7 @@ import {
   useSettingS3Authentication,
   useSettingUpdate,
 } from '@siafoundation/renterd-react'
-import { Reset16 } from '@carbon/icons-react'
+import { Reset16 } from '@siafoundation/react-icons'
 
 type Props = {
   trigger?: React.ReactNode

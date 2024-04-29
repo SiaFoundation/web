@@ -13,7 +13,7 @@ import BigNumber from 'bignumber.js'
 import React from 'react'
 import { RecommendationItem, SettingsData } from './types'
 import { humanSiacoin, toHastings } from '@siafoundation/units'
-import { Information16 } from '@carbon/icons-react'
+import { Information16 } from '@siafoundation/react-icons'
 
 export const scDecimalPlaces = 6
 

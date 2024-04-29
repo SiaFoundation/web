@@ -1,11 +1,23 @@
 import { minutesInMilliseconds } from '@siafoundation/design-system'
-import { useSettings, useSettingsDdns } from '@siafoundation/hostd-react'
+import {
+  useSettings,
+  useSettingsDdns,
+  useSettingsPinned,
+} from '@siafoundation/hostd-react'
 
 export function useResources() {
   const settings = useSettings({
     config: {
       swr: {
         refreshInterval: minutesInMilliseconds(1),
+      },
+    },
+  })
+  const settingsPinned = useSettingsPinned({
+    config: {
+      swr: {
+        refreshInterval: minutesInMilliseconds(1),
+        errorRetryCount: 0,
       },
     },
   })
@@ -21,6 +33,7 @@ export function useResources() {
 
   return {
     settings,
+    settingsPinned,
     dynDNSCheck,
   }
 }

@@ -9,7 +9,7 @@ import {
 import { cx } from 'class-variance-authority'
 import BigNumber from 'bignumber.js'
 import { SiaCentralPartialHost } from '../../content/geoHosts'
-import { Launch16 } from '@carbon/icons-react'
+import { Launch16 } from '@siafoundation/react-icons'
 import {
   monthsToBlocks,
   TBToBytes,

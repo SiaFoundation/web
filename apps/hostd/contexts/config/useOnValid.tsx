@@ -4,10 +4,18 @@ import {
   minutesInMilliseconds,
 } from '@siafoundation/design-system'
 import { useCallback } from 'react'
-import { SettingsData, initialValues } from './types'
-import { calculateMaxCollateral, transformUp } from './transform'
+import { SettingsData } from './types'
+import {
+  calculateMaxCollateral,
+  transformUpSettings,
+  transformUpSettingsPinned,
+} from './transform'
 import { Resources } from './resources'
-import { useSettingsUpdate, useStateHost } from '@siafoundation/hostd-react'
+import {
+  useSettingsPinnedUpdate,
+  useSettingsUpdate,
+  useStateHost,
+} from '@siafoundation/hostd-react'
 
 export function useOnValid({
   resources,
@@ -18,7 +26,9 @@ export function useOnValid({
   showAdvanced: boolean
   revalidateAndResetForm: () => Promise<void>
 }) {
+  const state = useStateHost()
   const settingsUpdate = useSettingsUpdate()
+  const settingsPinnedUpdate = useSettingsPinnedUpdate()
   const host = useStateHost({
     config: {
       swr: {
@@ -27,7 +37,7 @@ export function useOnValid({
     },
   })
   const onValid = useCallback(
-    async (values: typeof initialValues) => {
+    async (values: SettingsData) => {
       if (!resources) {
         return
       }
@@ -45,12 +55,27 @@ export function useOnValid({
           ...calculatedValues,
         }
 
-        const response = await settingsUpdate.patch({
-          payload: transformUp(finalValues, resources.settings.data),
+        const settings = await settingsUpdate.patch({
+          payload: transformUpSettings(finalValues, resources.settings.data),
         })
-        if (response.error) {
-          throw Error(response.error)
+
+        if (settings.error) {
+          throw Error(settings.error)
         }
+
+        if (state.data?.explorer.enabled) {
+          const settingsPinned = await settingsPinnedUpdate.put({
+            payload: transformUpSettingsPinned(
+              finalValues,
+              resources.settingsPinned.data
+            ),
+          })
+
+          if (settingsPinned.error) {
+            throw Error(settingsPinned.error)
+          }
+        }
+
         const needsToAnnounce =
           host.data?.lastAnnouncement?.address !== values.netAddress
         if (needsToAnnounce) {
@@ -73,7 +98,15 @@ export function useOnValid({
         console.log(e)
       }
     },
-    [showAdvanced, resources, settingsUpdate, revalidateAndResetForm, host.data]
+    [
+      showAdvanced,
+      resources,
+      settingsUpdate,
+      settingsPinnedUpdate,
+      revalidateAndResetForm,
+      host.data,
+      state.data,
+    ]
   )
   return onValid
 }

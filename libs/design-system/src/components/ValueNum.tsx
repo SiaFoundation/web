@@ -8,6 +8,7 @@ type Props = {
   value: BigNumber
   variant?: 'change' | 'value'
   tooltip?: string
+  tipSide?: React.ComponentProps<typeof Tooltip>['side']
   color?: React.ComponentProps<typeof Text>['color']
   format: (value: BigNumber) => string
 }
@@ -17,6 +18,7 @@ export function ValueNum({
   size = '14',
   weight = 'semibold',
   tooltip = '',
+  tipSide,
   variant = 'change',
   color: customColor,
   format,
@@ -32,7 +34,10 @@ export function ValueNum({
       : 'contrast'
 
   return (
-    <Tooltip content={(tooltip ? `${tooltip} ` : '') + format(value)}>
+    <Tooltip
+      side={tipSide}
+      content={(tooltip ? `${tooltip} ` : '') + format(value)}
+    >
       <Text
         size={size}
         weight={weight}

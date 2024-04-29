@@ -1,5 +1,5 @@
 import { Alert, Text } from '@siafoundation/design-system'
-import { Warning16 } from '@carbon/icons-react'
+import { Warning16 } from '@siafoundation/react-icons'
 
 type Props = {
   label: string

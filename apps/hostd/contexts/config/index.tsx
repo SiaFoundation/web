@@ -12,25 +12,31 @@ import { transformDown } from './transform'
 import { useResources } from './useResources'
 import { useForm } from './useForm'
 import {
+  Resources,
   checkIfAllResourcesLoaded,
   checkIfAnyResourcesErrored,
 } from './resources'
 import { useOnValid } from './useOnValid'
+import { useStateHost } from '@siafoundation/hostd-react'
 
 export function useConfigMain() {
-  const { settings, dynDNSCheck } = useResources()
+  const { settings, settingsPinned, dynDNSCheck } = useResources()
 
   const { form, fields, setShowAdvanced, showAdvanced } = useForm()
 
-  // resources required to intialize form
-  const resources = useMemo(
+  // Resources required to intialize form.
+  const resources: Resources = useMemo(
     () => ({
       settings: {
         data: settings.data,
         error: settings.error,
       },
+      settingsPinned: {
+        data: settingsPinned.data,
+        error: settingsPinned.error,
+      },
     }),
-    [settings.data, settings.error]
+    [settings.data, settings.error, settingsPinned.data, settingsPinned.error]
   )
 
   const remoteValues = useMemo(() => {
@@ -39,6 +45,7 @@ export function useConfigMain() {
     }
     return transformDown({
       settings: resources.settings.data,
+      settingsPinned: resources.settingsPinned.data,
     })
   }, [resources])
 
@@ -47,20 +54,24 @@ export function useConfigMain() {
     [resources]
   )
 
+  const state = useStateHost()
+  const pinningEnabled = state.data?.explorer.enabled
   const revalidateAndResetForm = useCallback(async () => {
     const _settings = await settings.mutate()
-    if (!_settings) {
+    const _settingsPinned = await settingsPinned.mutate()
+    if (!_settings || (pinningEnabled && !_settingsPinned)) {
       triggerErrorToast({ title: 'Error fetching settings' })
     } else {
-      // also recheck dynamic dns
+      // Also recheck dynamic DNS.
       await dynDNSCheck.mutate()
       return form.reset(
         transformDown({
           settings: _settings,
+          settingsPinned: _settingsPinned,
         })
       )
     }
-  }, [form, settings, dynDNSCheck])
+  }, [form, settings, settingsPinned, dynDNSCheck, pinningEnabled])
 
   useFormInit({
     form,
@@ -111,6 +122,7 @@ export function useConfigMain() {
     remoteError,
     takeScreenshot,
     configRef,
+    pinningEnabled,
   }
 }
 
