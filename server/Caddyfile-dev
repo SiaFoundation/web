@@ -41,7 +41,7 @@ site.local {
   }
 
   # Redirect old paths
-  redir /jobs https://siafoundation.homerun.co permanent
+  redir /jobs https://jobs.lever.co/the-sia-foundation permanent
   redir /blog https://blog.sia.tech permanent
   redir /whitepaper.pdf /sia.pdf permanent
   redir /get-started /rent permanent

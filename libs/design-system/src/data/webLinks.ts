@@ -55,5 +55,5 @@ export const webLinks = {
   storageStats: 'https://hosts.siacentral.com/',
   hostTroubleshoot: 'https://troubleshoot.siacentral.com/',
   coinmarketcap: 'https://coinmarketcap.com/currencies/siacoin/',
-  jobs: 'https://siafoundation.homerun.co/',
+  jobs: 'https://jobs.lever.co/the-sia-foundation',
 }
