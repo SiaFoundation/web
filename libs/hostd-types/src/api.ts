@@ -7,9 +7,34 @@ import {
 } from '@siafoundation/types'
 import { Contract, ContractStatus, WalletTransaction } from './types'
 
+export const stateHostRoute = '/state/host'
+export const stateConsensusRoute = '/state/consensus'
+export const syncerPeersRoute = '/syncer/peers'
+export const walletRoute = '/wallet'
+export const walletTransactionsRoute = '/wallet/transactions'
+export const walletPendingRoute = '/wallet/pending'
+export const walletSendRoute = '/wallet/send'
+export const tpoolFeeRoute = '/tpool/fee'
+export const contractsRoute = '/contracts'
+export const contractsIdIntegrityRoute = '/contracts/:id/integrity'
+export const metricsRoute = '/metrics'
+export const metricsIntervalRoute = '/metrics/:interval'
+export const settingsRoute = '/settings'
+export const settingsAnnounceRoute = '/settings/announce'
+export const settingsDdnsUpdateRoute = '/settings/ddns/update'
+export const volumesRoute = '/volumes'
+export const volumesIdRoute = '/volumes/:id'
+export const volumesIdResizeRoute = '/volumes/:id/resize'
+export const volumesIdCancelRoute = '/volumes/:id/cancel'
+export const systemDirRoute = '/system/dir'
+export const logEntriesRoute = '/log/entries'
+export const alertsRoute = '/alerts'
+export const alertsDismissRoute = '/alerts/dismiss'
+
 // state
 
 export type StateHostParams = void
+export type StateHostPayload = void
 export type StateHostResponse = {
   name?: string
   publicKey: string
@@ -32,6 +57,7 @@ export type StateHostResponse = {
 }
 
 export type StateConsensusParams = void
+export type StateConsensusPayload = void
 export type StateConsensusResponse = {
   chainIndex: {
     height: number
@@ -48,6 +74,7 @@ type Peer = {
 }
 
 export type SyncerPeersParams = void
+export type SyncerPeersPayload = void
 export type SyncerPeersResponse = Peer[]
 
 export type SyncerConnectParams = void
@@ -57,6 +84,7 @@ export type SyncerConnectResponse = never
 // wallet
 
 export type WalletParams = void
+export type WalletPayload = void
 export type WalletResponse = {
   scanHeight: number
   address: string
@@ -66,9 +94,11 @@ export type WalletResponse = {
 }
 
 export type WalletTransactionsParams = { limit?: number; offset?: number }
+export type WalletTransactionsPayload = void
 export type WalletTransactionsResponse = WalletTransaction[]
 
 export type WalletPendingParams = void
+export type WalletPendingPayload = void
 export type WalletPendingResponse = WalletTransaction[]
 
 export type WalletSendParams = void
@@ -81,6 +111,7 @@ export type WalletSendResponse = TransactionID
 // txpool
 
 export type TxPoolFeeParams = void
+export type TxPoolFeePayload = void
 export type TxPoolFeeResponse = Currency
 
 // contracts
@@ -120,7 +151,7 @@ export type ContractsResponse = {
 }
 
 export type ContractsIntegrityCheckParams = { id: string }
-export type ContractsIntegrityCheckPaylaod = void
+export type ContractsIntegrityCheckPayload = void
 export type ContractsIntegrityCheckResponse = void
 
 // metrics
@@ -207,6 +238,7 @@ export type Metrics = {
 }
 
 export type MetricsParams = { timestamp: string }
+export type MetricsPayload = void
 export type MetricsResponse = Metrics
 
 type Interval =
@@ -223,6 +255,7 @@ export type MetricsPeriodParams = {
   start: string
   periods?: number
 }
+export type MetricsPeriodPayload = void
 export type MetricsPeriodResponse = Metrics[]
 
 // settings
@@ -320,6 +353,7 @@ export type HostSettingsPinned = {
 }
 
 export type SettingsParams = void
+export type SettingsPayload = void
 export type SettingsResponse = HostSettings
 
 export type SettingsPinnedParams = void
@@ -341,10 +375,6 @@ export type SettingsAnnounceResponse = void
 export type SettingsDdnsUpdateParams = void
 export type SettingsDdnsUpdatePayload = void
 export type SettingsDdnsUpdateResponse = void
-
-export type SettingsDdnsParams = void
-export type SettingsDdnsPayload = void
-export type SettingsDdnsResponse = void
 
 // volumes
 
@@ -376,9 +406,11 @@ export type VolumeStats = {
 export type VolumeMeta = Volume & VolumeStats
 
 export type VolumesParams = void
+export type VolumesPayload = void
 export type VolumesResponse = VolumeMeta[]
 
 export type VolumeParams = { id: string }
+export type VolumePayload = void
 export type VolumeResponse = VolumeMeta
 
 export type VolumeCreateParams = void
@@ -404,6 +436,7 @@ export type VolumeCancelResponse = void
 export type SystemDirectoryParams = {
   path: string
 }
+export type SystemDirectoryPayload = void
 export type SystemDirectoryResponse = {
   path: string
   totalBytes: number
@@ -475,6 +508,7 @@ export type Alert = {
 }
 
 export type AlertsParams = void
+export type AlertsPayload = void
 export type AlertsResponse = Alert[]
 
 export type AlertsDismissParams = void

@@ -23,6 +23,7 @@
       "@siafoundation/react-core": ["libs/react-core/src/index.ts"],
       "@siafoundation/hostd-types": ["libs/hostd-types/src/index.ts"],
       "@siafoundation/hostd-react": ["libs/hostd-react/src/index.ts"],
+      "@siafoundation/hostd-js": ["libs/hostd-js/src/index.ts"],
       "@siafoundation/react-icons": ["libs/react-icons/src/index.ts"],
       "@siafoundation/renterd-types": ["libs/renterd-types/src/index.ts"],
       "@siafoundation/renterd-react": ["libs/renterd-react/src/index.ts"],
