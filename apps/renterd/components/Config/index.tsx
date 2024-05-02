@@ -22,10 +22,10 @@ export function Config() {
       sidenav={<RenterdSidenav />}
       stats={<ConfigStats />}
       actions={<ConfigActions />}
+      after={<Recommendations />}
       openSettings={() => openDialog('settings')}
       size="3"
     >
-      <Recommendations />
       {remoteError ? (
         <StateConnError />
       ) : (

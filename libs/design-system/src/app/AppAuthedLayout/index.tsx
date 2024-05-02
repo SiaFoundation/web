@@ -23,6 +23,7 @@ type Props = {
   actions?: React.ReactNode
   sidenav?: React.ReactNode
   stats?: React.ReactNode
+  after?: React.ReactNode
   children: React.ReactNode
   connectivityRoute: string
   isSynced: boolean
@@ -56,6 +57,7 @@ export function AppAuthedLayout({
   nav,
   actions,
   stats,
+  after,
   children,
   sidenav,
   connectivityRoute,
@@ -103,6 +105,7 @@ export function AppAuthedLayout({
               nav={nav}
               actions={actions}
               stats={stats}
+              after={after}
             />
             {scroll ? (
               <ScrollArea className="z-0">
