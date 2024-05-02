@@ -242,41 +242,43 @@ function Layout({
   tip: React.ReactNode
 }) {
   return (
-    <div className="z-20 fixed top-[99px] left-1/2 -translate-x-1/2 flex justify-center">
-      <div className="w-[600px] flex flex-col max-h-[600px] bg-gray-50 dark:bg-graydark-50 border-b border-x border-gray-300 dark:border-graydark-400 rounded-b">
-        <ScrollArea>
-          <HoverCard
-            trigger={
-              <div
-                className={cx(
-                  'flex justify-between items-center px-3 py-1.5',
-                  maximized && children
-                    ? 'border-b border-gray-200 dark:border-graydark-300'
-                    : '',
-                  maximizeControls ? 'cursor-pointer' : ''
-                )}
-                onClick={() => {
-                  if (maximizeControls) {
-                    setMaximized(!maximized)
-                  }
-                }}
-              >
-                <div className={cx('flex gap-2 items-center')}>{title}</div>
-                {maximizeControls && (
-                  <Button
-                    variant="ghost"
-                    onClick={() => setMaximized(!maximized)}
-                  >
-                    {maximized ? <Subtract24 /> : <Add24 />}
-                  </Button>
-                )}
-              </div>
-            }
-          >
-            {tip}
-          </HoverCard>
-          {children}
-        </ScrollArea>
+    <div className="relative">
+      <div className="z-20 absolute top-0 left-1/2 -translate-x-1/2 flex justify-center">
+        <div className="w-[600px] flex flex-col max-h-[600px] bg-gray-50 dark:bg-graydark-50 border-b border-x border-gray-300 dark:border-graydark-400 rounded-b">
+          <ScrollArea>
+            <HoverCard
+              trigger={
+                <div
+                  className={cx(
+                    'flex justify-between items-center px-3 py-1.5',
+                    maximized && children
+                      ? 'border-b border-gray-200 dark:border-graydark-300'
+                      : '',
+                    maximizeControls ? 'cursor-pointer' : ''
+                  )}
+                  onClick={() => {
+                    if (maximizeControls) {
+                      setMaximized(!maximized)
+                    }
+                  }}
+                >
+                  <div className={cx('flex gap-2 items-center')}>{title}</div>
+                  {maximizeControls && (
+                    <Button
+                      variant="ghost"
+                      onClick={() => setMaximized(!maximized)}
+                    >
+                      {maximized ? <Subtract24 /> : <Add24 />}
+                    </Button>
+                  )}
+                </div>
+              }
+            >
+              {tip}
+            </HoverCard>
+            {children}
+          </ScrollArea>
+        </div>
       </div>
     </div>
   )
