@@ -21,7 +21,7 @@ import {
   AlertsParams,
   AlertsResponse,
   ContractsIntegrityCheckParams,
-  ContractsIntegrityCheckPaylaod,
+  ContractsIntegrityCheckPayload,
   ContractsIntegrityCheckResponse,
   ContractsParams,
   ContractsPayload,
@@ -40,9 +40,6 @@ import {
   SettingsAnnounceParams,
   SettingsAnnouncePayload,
   SettingsAnnounceResponse,
-  SettingsDdnsParams,
-  SettingsDdnsPayload,
-  SettingsDdnsResponse,
   SettingsDdnsUpdateParams,
   SettingsDdnsUpdatePayload,
   SettingsDdnsUpdateResponse,
@@ -95,18 +92,39 @@ import {
   WalletSendResponse,
   WalletTransactionsParams,
   WalletTransactionsResponse,
+  alertsDismissRoute,
+  alertsRoute,
+  contractsIdIntegrityRoute,
+  contractsRoute,
+  logEntriesRoute,
+  metricsIntervalRoute,
+  metricsRoute,
+  settingsAnnounceRoute,
+  settingsDdnsUpdateRoute,
+  settingsRoute,
+  stateConsensusRoute,
+  stateHostRoute,
+  syncerPeersRoute,
+  systemDirRoute,
+  tpoolFeeRoute,
+  volumesIdCancelRoute,
+  volumesIdResizeRoute,
+  volumesIdRoute,
+  volumesRoute,
+  walletPendingRoute,
+  walletRoute,
+  walletSendRoute,
+  walletTransactionsRoute,
 } from '@siafoundation/hostd-types'
 
 // state
-
-export const stateHostKey = '/state/host'
 
 export function useStateHost(
   args?: HookArgsSwr<StateHostParams, StateHostResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: stateHostKey,
+    route: stateHostRoute,
   })
 }
 
@@ -115,7 +133,7 @@ export function useStateConsensus(
 ) {
   return useGetSwr({
     ...args,
-    route: '/state/consensus',
+    route: stateConsensusRoute,
   })
 }
 
@@ -145,14 +163,12 @@ export function useEstimatedNetworkBlockHeight(): number {
 
 // syncer
 
-const syncerPeers = '/syncer/peers'
-
 export function useSyncerPeers(
   args?: HookArgsSwr<SyncerPeersParams, SyncerPeersResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: syncerPeers,
+    route: syncerPeersRoute,
   })
 }
 
@@ -166,10 +182,10 @@ export function useSyncerConnect(
   return usePutFunc(
     {
       ...args,
-      route: '/syncer/peers',
+      route: syncerPeersRoute,
     },
     async (mutate) => {
-      mutate((key) => key === syncerPeers)
+      mutate((key) => key === syncerPeersRoute)
     }
   )
 }
@@ -179,7 +195,7 @@ export function useSyncerConnect(
 export function useWallet(args?: HookArgsSwr<WalletParams, WalletResponse>) {
   return useGetSwr({
     ...args,
-    route: '/wallet',
+    route: walletRoute,
   })
 }
 
@@ -188,11 +204,10 @@ export function useWalletTransactions(
 ) {
   return useGetSwr({
     ...args,
-    route: '/wallet/transactions',
+    route: walletTransactionsRoute,
   })
 }
 
-const walletPendingRoute = '/wallet/pending'
 export function useWalletPending(
   args?: HookArgsSwr<WalletPendingParams, WalletPendingResponse>
 ) {
@@ -209,7 +224,7 @@ export function useWalletSend(
     WalletSendResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/wallet/send' }, async (mutate) => {
+  return usePostFunc({ ...args, route: walletSendRoute }, async (mutate) => {
     await delay(2_000)
     mutate((key) => {
       return (
@@ -227,13 +242,12 @@ export function useTxPoolFee(
 ) {
   return useGetSwr({
     ...args,
-    route: '/tpool/fee',
+    route: tpoolFeeRoute,
   })
 }
 
 // contracts
 
-const contractsRoute = '/contracts'
 export function useContracts(
   args: HookArgsWithPayloadSwr<
     ContractsParams,
@@ -250,16 +264,15 @@ export function useContracts(
 export function useContractsIntegrityCheck(
   args?: HookArgsCallback<
     ContractsIntegrityCheckParams,
-    ContractsIntegrityCheckPaylaod,
+    ContractsIntegrityCheckPayload,
     ContractsIntegrityCheckResponse
   >
 ) {
-  return usePutFunc({ ...args, route: '/contracts/:id/integrity' })
+  return usePutFunc({ ...args, route: contractsIdIntegrityRoute })
 }
 
 // metrics
 
-const metricsRoute = '/metrics'
 export function useMetrics(args?: HookArgsSwr<MetricsParams, MetricsResponse>) {
   return useGetSwr({
     ...args,
@@ -267,19 +280,17 @@ export function useMetrics(args?: HookArgsSwr<MetricsParams, MetricsResponse>) {
   })
 }
 
-const metricsPeriodRoute = '/metrics/:interval'
 export function useMetricsPeriod(
   args?: HookArgsSwr<MetricsPeriodParams, MetricsPeriodResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: metricsPeriodRoute,
+    route: metricsIntervalRoute,
   })
 }
 
 // settings
 
-const settingsRoute = '/settings'
 export function useSettings(
   args?: HookArgsSwr<SettingsParams, SettingsResponse>
 ) {
@@ -296,7 +307,7 @@ export function useSettingsUpdate(
     SettingsUpdateResponse
   >
 ) {
-  return usePatchFunc({ ...args, route: '/settings' }, async (mutate) => {
+  return usePatchFunc({ ...args, route: settingsRoute }, async (mutate) => {
     await mutate((key) => {
       return key.startsWith(settingsRoute)
     })
@@ -310,27 +321,17 @@ export function useSettingsAnnounce(
     SettingsAnnounceResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/settings/announce' })
+  return usePostFunc({ ...args, route: settingsAnnounceRoute })
 }
 
 export function useSettingsDdnsUpdate(
-  args?: HookArgsCallback<
+  args?: HookArgsWithPayloadSwr<
     SettingsDdnsUpdateParams,
     SettingsDdnsUpdatePayload,
     SettingsDdnsUpdateResponse
   >
 ) {
-  return usePutFunc({ ...args, route: '/settings/ddns/update' })
-}
-
-export function useSettingsDdns(
-  args?: HookArgsWithPayloadSwr<
-    SettingsDdnsParams,
-    SettingsDdnsPayload,
-    SettingsDdnsResponse
-  >
-) {
-  return usePutSwr({ ...args, payload: {}, route: '/settings/ddns/update' })
+  return usePutSwr({ ...args, payload: {}, route: settingsDdnsUpdateRoute })
 }
 
 const settingsPinnedRoute = '/settings/pinned'
@@ -360,14 +361,13 @@ export function useSettingsPinnedUpdate(
 // volumes
 
 export function useVolumes(args?: HookArgsSwr<VolumesParams, VolumesResponse>) {
-  return useGetSwr({ ...args, route: '/volumes' })
+  return useGetSwr({ ...args, route: volumesRoute })
 }
 
 export function useVolume(args?: HookArgsSwr<VolumeParams, VolumeResponse>) {
-  return useGetSwr({ ...args, route: '/volumes/:id' })
+  return useGetSwr({ ...args, route: volumesIdRoute })
 }
 
-const volumesRoute = '/volumes'
 export function useVolumeCreate(
   args?: HookArgsCallback<
     VolumeCreateParams,
@@ -389,7 +389,7 @@ export function useVolumeUpdate(
     VolumeUpdateResponse
   >
 ) {
-  return usePutFunc({ ...args, route: '/volumes/:id' }, async (mutate) => {
+  return usePutFunc({ ...args, route: volumesIdRoute }, async (mutate) => {
     mutate((key) => {
       return key.startsWith(volumesRoute)
     })
@@ -403,7 +403,7 @@ export function useVolumeDelete(
     VolumeDeleteResponse
   >
 ) {
-  return useDeleteFunc({ ...args, route: '/volumes/:id' }, async (mutate) => {
+  return useDeleteFunc({ ...args, route: volumesIdRoute }, async (mutate) => {
     mutate((key) => {
       return key.startsWith(volumesRoute)
     })
@@ -418,7 +418,7 @@ export function useVolumeResize(
   >
 ) {
   return usePutFunc(
-    { ...args, route: '/volumes/:id/resize' },
+    { ...args, route: volumesIdResizeRoute },
     async (mutate) => {
       await delay(10_000)
       mutate((key) => {
@@ -436,7 +436,7 @@ export function useVolumeCancel(
   >
 ) {
   return useDeleteFunc(
-    { ...args, route: '/volumes/:id/cancel' },
+    { ...args, route: volumesIdCancelRoute },
     async (mutate) => {
       await delay(3_000)
       mutate((key) => {
@@ -449,7 +449,7 @@ export function useVolumeCancel(
 export function useSystemDirectory(
   args: HookArgsSwr<SystemDirectoryParams, SystemDirectoryResponse>
 ) {
-  return useGetSwr({ ...args, route: '/system/dir' })
+  return useGetSwr({ ...args, route: systemDirRoute })
 }
 
 export function useSystemDirectoryCreate(
@@ -459,7 +459,7 @@ export function useSystemDirectoryCreate(
     SystemDirectoryCreateResponse
   >
 ) {
-  return usePutFunc({ ...args, route: '/system/dir' })
+  return usePutFunc({ ...args, route: systemDirRoute })
 }
 
 // logs
@@ -471,12 +471,10 @@ export function useLogsSearch(
     LogsSearchResponse
   >
 ) {
-  return usePostSwr({ ...args, route: '/log/entries' })
+  return usePostSwr({ ...args, route: logEntriesRoute })
 }
 
 // alerts
-
-const alertsRoute = '/alerts'
 
 export function useAlerts(args?: HookArgsSwr<AlertsParams, AlertsResponse>) {
   return useGetSwr({ ...args, route: alertsRoute })
@@ -489,7 +487,7 @@ export function useAlertsDismiss(
     AlertsDismissResponse
   >
 ) {
-  return usePostFunc({ ...args, route: '/alerts/dismiss' }, async (mutate) => {
+  return usePostFunc({ ...args, route: alertsDismissRoute }, async (mutate) => {
     mutate((key) => {
       return key.startsWith(alertsRoute)
     })

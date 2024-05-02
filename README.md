@@ -22,13 +22,14 @@ User interfaces for the Sia software. The latest Sia software takes a modular ap
 The Sia web libraries provide developers with convenient TypeScript SDKs for using Sia core types, blockchain utilities, data fetching, daemon-specific React hooks, and components for common functionality such as Siacoin/fiat input fields, transaction lists, files, and more.
 
 - [@siafoundation/sdk](libs/sdk) - SDK for interacting directly with the Sia network from browsers and web clients.
-- [@siafoundation/renterd-types](libs/renterd-types) - Types for `renterd`.
 - [@siafoundation/renterd-js](libs/renterd-js) - SDK for interacting with `renterd`.
 - [@siafoundation/renterd-react](libs/renterd-react) - React hooks for interacting with `renterd`.
-- [@siafoundation/hostd-types](libs/hostd-types) - Types for `hostd`.
+- [@siafoundation/renterd-types](libs/renterd-types) - Types for `renterd`.
+- [@siafoundation/hostd-js](libs/hostd-js) - SDK for interacting with `hostd`.
 - [@siafoundation/hostd-react](libs/hostd-react) - React hooks for interacting with `hostd`.
-- [@siafoundation/walletd-types](libs/walletd-types) - Types for `walletd`.
+- [@siafoundation/hostd-types](libs/hostd-types) - Types for `hostd`.
 - [@siafoundation/walletd-react](libs/walletd-react) - React hooks for interacting with `walletd`.
+- [@siafoundation/walletd-types](libs/walletd-types) - Types for `walletd`.
 - [@siafoundation/design-system](libs/design-system) - React-based design system used across Sia apps and websites.
 - [@siafoundation/sia-central-types](libs/sia-central-types) - Types for the Sia Central API.
 - [@siafoundation/sia-central-js](libs/sia-central-js) - SDK for interacting with the Sia Central API.

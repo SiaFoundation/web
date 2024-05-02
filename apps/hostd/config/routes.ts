@@ -1,4 +1,4 @@
-import { stateHostKey } from '@siafoundation/hostd-react'
+import { stateHostRoute } from '@siafoundation/hostd-types'
 
 export const routes = {
   home: '/',
@@ -28,4 +28,4 @@ export const routes = {
   login: '/login',
 }
 
-export const connectivityRoute = stateHostKey
+export const connectivityRoute = stateHostRoute

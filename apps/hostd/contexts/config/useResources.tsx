@@ -1,7 +1,7 @@
 import { minutesInMilliseconds } from '@siafoundation/design-system'
 import {
   useSettings,
-  useSettingsDdns,
+  useSettingsDdnsUpdate,
   useSettingsPinned,
 } from '@siafoundation/hostd-react'
 
@@ -21,8 +21,7 @@ export function useResources() {
       },
     },
   })
-  const dynDNSCheck = useSettingsDdns({
-    disabled: !settings.data || !settings.data.ddns.provider,
+  const dynDNSCheck = useSettingsDdnsUpdate({
     config: {
       swr: {
         revalidateOnFocus: false,

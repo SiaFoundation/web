@@ -1,0 +1,42 @@
+{
+  "name": "hostd-js",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/hostd-js/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/hostd-js",
+        "tsConfig": "libs/hostd-js/tsconfig.lib.json",
+        "project": "libs/hostd-js/package.json",
+        "entryFile": "libs/hostd-js/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "compiler": "tsc",
+        "outputFileName": "index.js",
+        "rollupConfig": "libs/hostd-js/rollup.config.js",
+        "assets": [
+          {
+            "glob": "libs/hostd-js/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      },
+      "configurations": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/hostd-js"],
+      "options": {
+        "jestConfig": "libs/hostd-js/jest.config.ts"
+      }
+    }
+  }
+}
