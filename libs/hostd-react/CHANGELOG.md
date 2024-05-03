@@ -1,5 +1,18 @@
 # @siafoundation/hostd-react
 
+## 4.2.0
+
+### Minor Changes
+
+- 78fe2e65: useStateHost now includes explorer data.
+- 78fe2e65: Add useSettingsPinned and useSettingsPinnedUpdate.
+
+### Patch Changes
+
+- 71cb25c9: Organized hostd types and constants.
+- Updated dependencies [71cb25c9]
+  - @siafoundation/hostd-types@0.1.1
+
 ## 4.1.0
 
 ### Minor Changes

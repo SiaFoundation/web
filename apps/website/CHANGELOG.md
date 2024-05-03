@@ -1,5 +1,11 @@
 # website
 
+## 0.51.0
+
+### Minor Changes
+
+- f42b6be6: Updated the homerun jobs link to the new lever.co link.
+
 ## 0.50.0
 
 ### Minor Changes

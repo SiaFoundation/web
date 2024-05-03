@@ -1,5 +1,16 @@
 # renterd
 
+## 0.52.0
+
+### Minor Changes
+
+- 49ff7435: The configuration page now recommends specific changes to settings to match with more hosts. Closes https://github.com/SiaFoundation/renterd/issues/1137
+- 49ff7435: Configuration settings that the user has not modified will be kept in sync with remote values that change. Closes https://github.com/SiaFoundation/hostd/issues/286
+
+### Patch Changes
+
+- 49ff7435: Fixed a bug where hovering over the max storage or upload price tooltips would crash the app.
+
 ## 0.51.2
 
 ### Patch Changes
