@@ -97,7 +97,7 @@ export function getFields({
           changing prices too often.
         </>
       ),
-      hidden: !pinningEnabled,
+      hidden: !pinningEnabled || !showAdvanced,
       validation: pinningEnabled
         ? {
             required: 'required',
