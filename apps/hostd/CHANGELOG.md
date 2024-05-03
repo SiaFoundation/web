@@ -1,5 +1,16 @@
 # hostd
 
+## 0.41.0
+
+### Minor Changes
+
+- 78fe2e65: The configuration settings now support price pinning to an external currency. Closes https://github.com/SiaFoundation/hostd/issues/328
+- 49ff7435: Configuration settings that the user has not modified will be kept in sync with remote values that change. Closes https://github.com/SiaFoundation/hostd/issues/286
+
+### Patch Changes
+
+- 71cb25c9: Organized hostd types and constants.
+
 ## 0.40.2
 
 ### Patch Changes

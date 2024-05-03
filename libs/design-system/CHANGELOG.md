@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.2.0
+
+### Minor Changes
+
+- 49ff7435: useFormServerSynced now updates values to remote values if they have not been modified by the user. Closes https://github.com/SiaFoundation/hostd/issues/286
+- 78fe2e65: Added FieldFiat with current siacoin value.
+- 9f8b8fc8: Add an after node prop to AppAuthedLayout and AppNavbar.
+- 78fe2e65: All Field components now support group prop.
+
+### Patch Changes
+
+- 49ff7435: Fixed a bug in useFormServerSynced that was triggering undesired form resets.
+
 ## 4.1.0
 
 ### Minor Changes
