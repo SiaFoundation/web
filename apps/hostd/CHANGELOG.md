@@ -1,5 +1,11 @@
 # hostd
 
+## 0.42.0
+
+### Minor Changes
+
+- 5760861a: Moved the pinned currency change threshold to advanced mode settings.
+
 ## 0.41.0
 
 ### Minor Changes
