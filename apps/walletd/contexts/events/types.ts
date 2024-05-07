@@ -9,17 +9,19 @@ export type EventData = {
   transactionId?: string
   timestamp: number
   height?: number
+  maturityHeight?: number
+  isMature?: boolean
   pending: boolean
   type: string
   fee?: BigNumber
   amountSc?: BigNumber
   amountSf?: number
   contractId?: string
+  className?: string
 }
 
 export type TableColumnId =
   // | 'actions'
-  // | 'id'
   | 'transactionId'
   | 'type'
   | 'height'
@@ -31,7 +33,6 @@ export type TableColumnId =
 
 export const columnsDefaultVisible: TableColumnId[] = [
   // 'actions',
-  // 'id',
   'transactionId',
   'type',
   'height',

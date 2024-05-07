@@ -11,6 +11,7 @@ const styles = cva(['m-0 flex-shrink-0 cursor-default'], {
       horizontal: 'border-b',
     },
     color: {
+      contrast: 'border-gray-700 dark:border-graydark-700',
       subtle: 'border-gray-300 dark:border-graydark-300',
       verySubtle: 'border-gray-100 dark:border-graydark-100',
       panel: 'border-gray-100 dark:border-graydark-400/50',

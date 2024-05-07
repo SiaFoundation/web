@@ -5,9 +5,11 @@ import {
   LoadingDots,
   ValueScFiat,
   ValueSf,
+  Tooltip,
 } from '@siafoundation/design-system'
 import { humanDate } from '@siafoundation/units'
 import { CellContext, EventData, TableColumnId } from './types'
+import { Locked16, Unlocked16 } from '@siafoundation/react-icons'
 
 type EventsTableColumn = TableColumn<TableColumnId, EventData, CellContext> & {
   fixed?: boolean
@@ -21,23 +23,6 @@ export const columns: EventsTableColumn[] = [
   //   fixed: true,
   //   cellClassName: 'w-[50px] !pl-2 !pr-4 [&+*]:!pl-0',
   //   render: ({ data: { name } }) => null,
-  // },
-  // {
-  //   id: 'id',
-  //   label: 'ID',
-  //   category: 'general',
-  //   fixed: true,
-  //   render: ({ data: { id }, context }) => {
-  //     return (
-  //       <ValueCopyable
-  //         size="12"
-  //         maxLength={20}
-  //         value={id}
-  //         type="transaction"
-  //         siascanUrl={context.siascanUrl}
-  //       />
-  //     )
-  //   },
   // },
   {
     id: 'transactionId',
@@ -75,7 +60,8 @@ export const columns: EventsTableColumn[] = [
     id: 'height',
     label: 'height',
     category: 'general',
-    render: ({ data: { height, pending } }) => {
+    contentClassName: 'justify-end',
+    render: ({ data: { height, pending, maturityHeight, isMature } }) => {
       if (pending) {
         return (
           <Text size="12" ellipsis>
@@ -86,8 +72,42 @@ export const columns: EventsTableColumn[] = [
       if (!height) {
         return null
       }
+      if (height && maturityHeight && maturityHeight > height) {
+        return (
+          <Tooltip
+            content={
+              isMature
+                ? 'The maturity height has been reached.'
+                : 'The maturity height has not been reached, therefore the output is still locked.'
+            }
+          >
+            <div className="flex flex-col gap-[5px]">
+              <div className="flex justify-end">
+                <Text
+                  size="12"
+                  font="mono"
+                  ellipsis
+                  color={isMature ? 'green' : 'red'}
+                  className="flex gap-1 items-center"
+                >
+                  {isMature ? <Unlocked16 /> : <Locked16 />}
+                  {maturityHeight.toLocaleString()}
+                </Text>
+              </div>
+              <div className="flex justify-between items-end gap-1">
+                <div className="pl-[8px] pb-[6px]">
+                  <div className="border-l border-b border-gray-800 dark:border-graydark-800 h-[20px] w-[7px]" />
+                </div>
+                <Text size="12" font="mono" color="subtle" ellipsis>
+                  {height.toLocaleString()}
+                </Text>
+              </div>
+            </div>
+          </Tooltip>
+        )
+      }
       return (
-        <Text size="12" ellipsis>
+        <Text size="12" font="mono" ellipsis>
           {height.toLocaleString()}
         </Text>
       )
@@ -97,6 +117,7 @@ export const columns: EventsTableColumn[] = [
     id: 'timestamp',
     label: 'timestamp',
     category: 'general',
+    contentClassName: 'justify-end',
     render: ({ data: { timestamp, pending } }) => {
       if (pending) {
         return (
