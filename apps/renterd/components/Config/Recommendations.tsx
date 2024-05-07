@@ -13,6 +13,7 @@ import {
   CaretDown16,
   Information20,
   CheckmarkFilled20,
+  PendingFilled20,
 } from '@siafoundation/react-icons'
 import { useApp } from '../../contexts/app'
 import { routes } from '../../config/routes'
@@ -33,6 +34,7 @@ export function Recommendations() {
   const {
     hostMargin50,
     hostTarget50,
+    hasDataToEvaluate,
     needsRecommendations,
     foundRecommendation,
     recommendations,
@@ -112,6 +114,27 @@ export function Recommendations() {
       )}
     </div>
   )
+
+  if (!hasDataToEvaluate) {
+    return (
+      <Layout
+        maximized={maximized}
+        setMaximized={setMaximized}
+        maximizeControls={false}
+        title={
+          <>
+            <Text color="contrast">
+              <PendingFilled20 />
+            </Text>
+            <Text size="16" weight="medium">
+              The system will review your configuration once all fields are
+              filled
+            </Text>
+          </>
+        }
+      />
+    )
+  }
 
   if (!needsRecommendations) {
     return (
@@ -239,43 +262,37 @@ function Layout({
   setMaximized: (maximized: boolean) => void
   maximizeControls: boolean
   title: React.ReactNode
-  tip: React.ReactNode
+  tip?: React.ReactNode
 }) {
+  const el = (
+    <div
+      className={cx(
+        'flex justify-between items-center px-3 py-1.5',
+        maximized && children
+          ? 'border-b border-gray-200 dark:border-graydark-300'
+          : '',
+        maximizeControls ? 'cursor-pointer' : ''
+      )}
+      onClick={() => {
+        if (maximizeControls) {
+          setMaximized(!maximized)
+        }
+      }}
+    >
+      <div className={cx('flex gap-2 items-center')}>{title}</div>
+      {maximizeControls && (
+        <Button variant="ghost" onClick={() => setMaximized(!maximized)}>
+          {maximized ? <Subtract24 /> : <Add24 />}
+        </Button>
+      )}
+    </div>
+  )
   return (
     <div className="relative">
-      <div className="z-20 absolute top-0 left-1/2 -translate-x-1/2 flex justify-center">
+      <div className="z-10 absolute top-0 left-1/2 -translate-x-1/2 flex justify-center">
         <div className="w-[600px] flex flex-col max-h-[600px] bg-gray-50 dark:bg-graydark-50 border-b border-x border-gray-300 dark:border-graydark-400 rounded-b">
           <ScrollArea>
-            <HoverCard
-              trigger={
-                <div
-                  className={cx(
-                    'flex justify-between items-center px-3 py-1.5',
-                    maximized && children
-                      ? 'border-b border-gray-200 dark:border-graydark-300'
-                      : '',
-                    maximizeControls ? 'cursor-pointer' : ''
-                  )}
-                  onClick={() => {
-                    if (maximizeControls) {
-                      setMaximized(!maximized)
-                    }
-                  }}
-                >
-                  <div className={cx('flex gap-2 items-center')}>{title}</div>
-                  {maximizeControls && (
-                    <Button
-                      variant="ghost"
-                      onClick={() => setMaximized(!maximized)}
-                    >
-                      {maximized ? <Subtract24 /> : <Add24 />}
-                    </Button>
-                  )}
-                </div>
-              }
-            >
-              {tip}
-            </HoverCard>
+            {tip ? <HoverCard trigger={el}>{tip}</HoverCard> : el}
             {children}
           </ScrollArea>
         </div>

@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { defaultValues, getAdvancedDefaults } from './types'
 import { getRedundancyMultiplier } from './utils'
 import { useForm as useHookForm } from 'react-hook-form'
@@ -45,6 +45,13 @@ export function useForm({ resources }: { resources: Resources }) {
       defaultValue: false,
     }
   )
+
+  // Trigger input validation on showAdvanced change because many field validation
+  // objects switch from required to not required.
+  useEffect(() => {
+    form.trigger()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showAdvanced])
 
   const estimates = useEstimates({
     isAutopilotEnabled,
