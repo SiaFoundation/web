@@ -17,6 +17,7 @@ import { useRouter } from 'next/router'
 import BigNumber from 'bignumber.js'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
 
 const defaultLimit = 100
 
@@ -52,6 +53,7 @@ export function useEventsMain() {
     },
   })
 
+  const syncStatus = useSyncStatus()
   const dataset = useMemo<EventData[] | null>(() => {
     if (!responseEvents.data || !responseTxPool.data) {
       return null
@@ -61,21 +63,25 @@ export function useEventsMain() {
       timestamp: 0,
       pending: true,
       type: e.type,
+      isMature: false,
       amount: new BigNumber(e.received).minus(e.sent),
     }))
     const dataEvents: EventData[] = responseEvents.data.map((e, index) => {
       let amountSc = new BigNumber(0)
       let amountSf = 0
+      if ('data' in e && 'siacoinOutput' in e.data) {
+        amountSc = new BigNumber(e.data.siacoinOutput.siacoinOutput.value)
+      }
       if (e.type === 'transaction') {
         const inputsScTotal =
-          e.val?.siacoinInputs?.reduce((acc, o) => {
+          e.data?.siacoinInputs?.reduce((acc, o) => {
             if (e.relevant.includes(o.siacoinOutput.address)) {
               return acc.plus(o.siacoinOutput.value)
             }
             return acc
           }, new BigNumber(0)) || new BigNumber(0)
         const outputsScTotal =
-          e.val?.siacoinOutputs?.reduce((acc, o) => {
+          e.data?.siacoinOutputs?.reduce((acc, o) => {
             if (e.relevant.includes(o.siacoinOutput.address)) {
               return acc.plus(o.siacoinOutput.value)
             }
@@ -84,14 +90,14 @@ export function useEventsMain() {
         amountSc = outputsScTotal.minus(inputsScTotal)
 
         const inputsSfTotal =
-          e.val?.siafundInputs?.reduce((acc, o) => {
+          e.data?.siafundInputs?.reduce((acc, o) => {
             if (e.relevant.includes(o.siafundElement.siafundOutput.address)) {
               return acc + o.siafundElement.siafundOutput.value
             }
             return acc
           }, 0) || 0
         const outputsSfTotal =
-          e.val?.siafundOutputs?.reduce((acc, o) => {
+          e.data?.siafundOutputs?.reduce((acc, o) => {
             if (e.relevant.includes(o.siafundOutput.address)) {
               return acc + o.siafundOutput.value
             }
@@ -100,32 +106,28 @@ export function useEventsMain() {
         amountSf = outputsSfTotal - inputsSfTotal
       }
 
-      if (e.type === 'miner payout') {
-        amountSc = new BigNumber(e.val.siacoinOutput.siacoinOutput.value)
-      }
-      if (e.type === 'foundation subsidy') {
-        amountSc = new BigNumber(e.val.siacoinOutput.siacoinOutput.value)
-      }
-
+      const isMature = e.maturityHeight <= syncStatus.nodeBlockHeight
       const res: EventData = {
         id: e.id,
         type: e.type,
         timestamp: new Date(e.timestamp).getTime(),
+        maturityHeight: e.maturityHeight,
+        isMature,
         height: e.index.height,
         pending: false,
         amountSc,
         amountSf,
       }
-      if (e.type === 'transaction') {
-        res.fee = new BigNumber(e.val.fee)
+      if ('data' in e && 'fee' in e.data) {
+        res.fee = new BigNumber(e.data.fee)
       }
       if (e.type === 'contract payout') {
-        res.contractId = e.val.fileContract.id
+        res.contractId = e.data.fileContract.id
       }
       return res
     })
     return [...dataTxPool.reverse(), ...dataEvents]
-  }, [responseEvents.data, responseTxPool.data])
+  }, [responseEvents.data, responseTxPool.data, syncStatus.nodeBlockHeight])
 
   const {
     configurableColumns,

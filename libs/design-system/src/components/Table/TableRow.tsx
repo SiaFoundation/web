@@ -12,6 +12,7 @@ type Data = {
   id: string
   isDraggable?: boolean
   isDroppable?: boolean
+  className?: string
   onClick?: () => void
 }
 
@@ -91,6 +92,7 @@ export function createTableRow<
           className={cx(
             'border-b border-gray-200/50 dark:border-graydark-100',
             data.onClick ? 'cursor-pointer' : '',
+            data.className,
             className
           )}
         >

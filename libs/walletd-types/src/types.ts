@@ -39,6 +39,7 @@ export type WalletEventBase = {
   id: Hash256
   timestamp: string
   index: ChainIndex
+  maturityHeight: number
   relevant: Address[]
 }
 
@@ -67,7 +68,7 @@ export type WalletHostAnnouncement = {
 
 export type WalletEventTransaction = WalletEventBase & {
   type: 'transaction'
-  val: {
+  data: {
     siacoinInputs?: SiacoinElement[]
     siacoinOutputs?: SiacoinElement[]
     siafundInputs?: WalletSiafundInput[]
@@ -81,14 +82,14 @@ export type WalletEventTransaction = WalletEventBase & {
 
 export type WalletEventMinerPayout = WalletEventBase & {
   type: 'miner payout'
-  val: {
+  data: {
     siacoinOutput: SiacoinElement
   }
 }
 
 export type WalletEventContractPayout = WalletEventBase & {
   type: 'contract payout'
-  val: {
+  data: {
     fileContract: FileContractElement
     siacoinOutput: SiacoinElement
     missed: boolean
@@ -101,7 +102,7 @@ export type WalletEventSiafundClaim = WalletEventBase & {
 
 export type WalletEventFoundationSubsidy = WalletEventBase & {
   type: 'foundation subsidy'
-  val: {
+  data: {
     siacoinOutput: SiacoinElement
   }
 }
