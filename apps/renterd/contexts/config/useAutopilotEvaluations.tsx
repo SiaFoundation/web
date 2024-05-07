@@ -29,14 +29,31 @@ export function useAutopilotEvaluations({
 }) {
   const values = form.watch()
   const renterdState = useBusState()
-  const payloads = useMemo(() => {
+
+  const hasDataToEvaluate = useMemo(() => {
     if (!checkIfAllResourcesLoaded(resources)) {
-      return
+      return false
     }
     if (!form.formState.isValid) {
-      return
+      return false
     }
     if (!renterdState.data) {
+      return false
+    }
+    return true
+  }, [form, resources, renterdState])
+
+  // We need to pass valid settings data into transformUp to get the payloads.
+  // The form can be invalid so we need to merge in valid data to make sure
+  // numbers are not undefined in the transformUp calculations that assume
+  // all data is valid and present.
+  const currentValuesWithZeroDefaults = useMemo(
+    () => mergeIfDefined(valuesZeroDefaults, values),
+    [values]
+  )
+
+  const payloads = useMemo(() => {
+    if (!hasDataToEvaluate) {
       return
     }
 
@@ -46,17 +63,17 @@ export function useAutopilotEvaluations({
       isAutopilotEnabled,
       showAdvanced,
       estimatedSpendingPerMonth,
-      values,
+      values: currentValuesWithZeroDefaults,
     })
     return payloads
   }, [
-    form,
-    values,
+    currentValuesWithZeroDefaults,
     resources,
     renterdState,
     isAutopilotEnabled,
     showAdvanced,
     estimatedSpendingPerMonth,
+    hasDataToEvaluate,
   ])
 
   const userContractCountTarget = payloads?.autopilot.contracts.amount || 0
@@ -187,7 +204,7 @@ export function useAutopilotEvaluations({
         const rec = getRecommendationItem({
           key: remoteToLocalFields[key],
           recommendationDown,
-          values,
+          values: currentValuesWithZeroDefaults,
         })
         if (rec) {
           recs.push(rec)
@@ -195,7 +212,12 @@ export function useAutopilotEvaluations({
       }
     })
     return recs
-  }, [recommendedGougingSettings, resources, payloads, values])
+  }, [
+    recommendedGougingSettings,
+    resources,
+    payloads,
+    currentValuesWithZeroDefaults,
+  ])
   const foundRecommendation = !!recommendations.length
 
   return {
@@ -206,6 +228,7 @@ export function useAutopilotEvaluations({
     usableHostsCurrent,
     userContractCountTarget,
     usableHostsAfterRecommendation,
+    hasDataToEvaluate,
     needsRecommendations,
     foundRecommendation,
     recommendations,
@@ -282,4 +305,44 @@ const remoteToLocalFields: Record<keyof GougingSettings, keyof Fields> = {
   minAccountExpiry: 'minAccountExpiryDays',
   minMaxEphemeralAccountBalance: 'minMaxEphemeralAccountBalance',
   migrationSurchargeMultiplier: 'migrationSurchargeMultiplier',
+}
+
+export const valuesZeroDefaults: SettingsData = {
+  autopilotContractSet: '',
+  amountHosts: new BigNumber(0),
+  allowanceMonth: new BigNumber(0),
+  periodWeeks: new BigNumber(0),
+  renewWindowWeeks: new BigNumber(0),
+  downloadTBMonth: new BigNumber(0),
+  uploadTBMonth: new BigNumber(0),
+  storageTB: new BigNumber(0),
+  prune: false,
+  allowRedundantIPs: false,
+  maxDowntimeHours: new BigNumber(0),
+  minRecentScanFailures: new BigNumber(0),
+  minProtocolVersion: '',
+  defaultContractSet: '',
+  uploadPackingEnabled: true,
+  maxRpcPriceMillion: new BigNumber(0),
+  maxStoragePriceTBMonth: new BigNumber(0),
+  maxContractPrice: new BigNumber(0),
+  maxDownloadPriceTB: new BigNumber(0),
+  maxUploadPriceTB: new BigNumber(0),
+  hostBlockHeightLeeway: new BigNumber(0),
+  minPriceTableValidityMinutes: new BigNumber(0),
+  minAccountExpiryDays: new BigNumber(0),
+  minMaxEphemeralAccountBalance: new BigNumber(0),
+  migrationSurchargeMultiplier: new BigNumber(0),
+  minShards: new BigNumber(0),
+  totalShards: new BigNumber(0),
+}
+
+export function mergeIfDefined(defaults: SettingsData, values: SettingsData) {
+  const merged: SettingsData = { ...defaults }
+  Object.keys(values).forEach((key) => {
+    if (values[key] !== undefined) {
+      merged[key] = values[key]
+    }
+  })
+  return merged
 }
