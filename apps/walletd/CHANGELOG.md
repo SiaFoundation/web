@@ -1,5 +1,12 @@
 # walletd
 
+## 0.20.0
+
+### Minor Changes
+
+- 0e393885: Updated wallet events to include maturityHeight and renamed val to data. Closes https://github.com/SiaFoundation/walletd/issues/114
+- 0e393885: The events list now shows the maturity height, transactions that have not reached this height are shown as locked. Closes https://github.com/SiaFoundation/walletd/issues/115
+
 ## 0.19.1
 
 ### Patch Changes
