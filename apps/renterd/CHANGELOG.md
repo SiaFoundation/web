@@ -1,5 +1,13 @@
 # renterd
 
+## 0.52.1
+
+### Patch Changes
+
+- c89d2e55: Fixed an issue where the recommendations bar was overlapping notifications.
+- c89d2e55: Fixed an issue where clearing some configuration fields would crash the app due to how recommendations were being calculated.
+- c89d2e55: The configuration recommendations now instruct the user to first fill all fields. Closes https://github.com/SiaFoundation/renterd/issues/1214
+
 ## 0.52.0
 
 ### Minor Changes
