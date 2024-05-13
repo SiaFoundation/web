@@ -35,7 +35,9 @@ export function FieldText<
       name={name}
       placeholder={field.placeholder}
       size={size}
-      autoComplete={autoComplete}
+      autoComplete={
+        autoComplete !== undefined ? autoComplete : field.autoComplete
+      }
       type={field.type}
       readOnly={field.readOnly}
       spellCheck={spellCheck}

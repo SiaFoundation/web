@@ -102,6 +102,7 @@ type FormSubmitProps<Values extends FieldValues> = {
   size?: React.ComponentProps<typeof Button>['size']
   variant?: React.ComponentProps<typeof Button>['variant']
   children: React.ReactNode
+  className?: string
   withStatusError?: boolean
 }
 
@@ -109,6 +110,7 @@ export function FormSubmitButton<Values extends FieldValues>({
   form,
   size = 'medium',
   variant = 'accent',
+  className,
   children,
 }: FormSubmitProps<Values>) {
   return (
@@ -117,6 +119,7 @@ export function FormSubmitButton<Values extends FieldValues>({
         <Text color="red">{formik.status.error}</Text>
       )} */}
       <Button
+        className={className}
         size={size}
         variant={variant}
         state={form.formState.isSubmitting ? 'waiting' : undefined}

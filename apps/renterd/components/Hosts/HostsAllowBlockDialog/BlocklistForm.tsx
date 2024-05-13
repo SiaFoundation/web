@@ -6,7 +6,6 @@ import {
   Text,
   Separator,
   Tooltip,
-  hostnameOrIpRegex,
   FormTextFieldFormik,
   FieldGroupFormik,
 } from '@siafoundation/design-system'
@@ -30,11 +29,7 @@ const suggestions = [
 ]
 
 const validationSchema = Yup.object().shape({
-  address: Yup.string()
-    .required('Required')
-    .test('address', 'Invalid hostname or IP address', (v) => {
-      return hostnameOrIpRegex().test(v || '')
-    }),
+  address: Yup.string().required('Required'),
 })
 
 export function BlocklistForm() {
