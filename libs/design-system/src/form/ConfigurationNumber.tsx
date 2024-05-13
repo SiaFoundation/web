@@ -25,6 +25,8 @@ export function ConfigurationNumber<
     decimalsLimit = 2,
     after,
     placeholder: _placeholder,
+    disableGroupSeparators,
+    autoComplete,
     units,
     prefix,
   } = field
@@ -52,6 +54,8 @@ export function ConfigurationNumber<
           units={units}
           prefix={prefix}
           decimalsLimit={decimalsLimit}
+          disableGroupSeparators={disableGroupSeparators}
+          autoComplete={autoComplete}
           placeholder={placeholder}
           state={
             error

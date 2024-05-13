@@ -1,33 +1,40 @@
 'use client'
 
 import { Paragraph } from '../core/Paragraph'
-import { triggerSuccessToast } from '../lib/toast'
-import {
-  FormFieldFormik,
-  FormSubmitButtonFormik,
-} from '../components/FormFormik'
+import { triggerErrorToast, triggerSuccessToast } from '../lib/toast'
 import { Response } from '@siafoundation/react-core'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import { hostnameOrIpRegex } from '../lib/ipRegex'
 import { Dialog } from '../core/Dialog'
+import { ConfigFields } from '../form/configurationFields'
+import { useDialogFormHelpers } from '../form/useDialogFormHelpers'
+import { useForm } from 'react-hook-form'
+import { useCallback } from 'react'
+import { FormSubmitButton } from '../components/Form'
+import { FieldText } from '../form/FieldText'
 
-const initialValues = {
-  port: 9981,
-  ip: '',
+function getDefaultValues() {
+  return {
+    address: '',
+  }
 }
 
-const validationSchema = Yup.object().shape({
-  port: Yup.number()
-    .required('Required')
-    .min(0, 'Out of valid range')
-    .max(65535, 'Out of valid range'),
-  ip: Yup.string()
-    .required('Required')
-    .test('ip', 'Invalid hostname or IP address', (v) =>
-      hostnameOrIpRegex().test(v || '')
-    ),
-})
+type Values = ReturnType<typeof getDefaultValues>
+
+function getFields(): ConfigFields<Values, never> {
+  return {
+    address: {
+      type: 'text',
+      title: 'Address',
+      placeholder: 'host.acme.com:9981 or 127.0.0.1:9981',
+      autoComplete: 'off',
+      validation: {
+        required: 'required',
+      },
+    },
+  }
+}
+
+const defaultValues = getDefaultValues()
+const fields = getFields()
 
 export type SyncerConnectPeerDialogParams = void
 
@@ -45,73 +52,51 @@ export function SyncerConnectPeerDialog({
   connect,
   onOpenChange,
 }: Props) {
-  const formik = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit: async (values, actions) => {
-      const netAddress = `${values.ip}:${values.port}`
-      const response = await connect(netAddress)
+  const form = useForm({
+    mode: 'all',
+    defaultValues,
+  })
+
+  const { handleOpenChange, closeAndReset } = useDialogFormHelpers({
+    form,
+    onOpenChange,
+    defaultValues,
+  })
+
+  const onSubmit = useCallback(
+    async (values: Values) => {
+      const response = await connect(values.address)
       if (response.error) {
-        const formattedError = response.error.replace(
-          `invalid peer address: address ${netAddress}:`,
-          ''
-        )
-        actions.setStatus({ error: formattedError })
+        triggerErrorToast({ title: response.error })
       } else {
         triggerSuccessToast({ title: 'Connected to peer' })
-        actions.resetForm()
-        onOpenChange(false)
+        closeAndReset()
       }
     },
-  })
+    [closeAndReset, connect]
+  )
 
   return (
     <Dialog
       trigger={trigger}
       title="Connect peer"
       open={open}
-      onOpenChange={(open) => {
-        if (!open) {
-          formik.resetForm()
-        }
-        onOpenChange(open)
-      }}
+      onOpenChange={handleOpenChange}
       contentVariants={{
         className: 'w-[400px]',
       }}
+      onSubmit={form.handleSubmit(onSubmit)}
+      controls={
+        <div className="px-1">
+          <FormSubmitButton form={form} size="medium" className="w-full">
+            Connect
+          </FormSubmitButton>
+        </div>
+      }
     >
       <div className="flex flex-col gap-4">
         <Paragraph size="14">Connect to a peer by IP address.</Paragraph>
-        <form onSubmit={formik.handleSubmit}>
-          <div className="flex flex-col gap-4">
-            <FormFieldFormik
-              formik={formik}
-              title="Address"
-              name="ip"
-              placeholder="host.acme.com or 127.0.0.1"
-              autoComplete="off"
-              type="text"
-              variants={{
-                size: 'medium',
-              }}
-            />
-            <FormFieldFormik
-              formik={formik}
-              title="Port"
-              name="port"
-              disableGroupSeparators
-              placeholder="9981"
-              autoComplete="off"
-              type="number"
-              variants={{
-                size: 'medium',
-              }}
-            />
-            <FormSubmitButtonFormik formik={formik} size="medium">
-              Connect
-            </FormSubmitButtonFormik>
-          </div>
-        </form>
+        <FieldText form={form} fields={fields} name="address" size="medium" />
       </div>
     </Dialog>
   )

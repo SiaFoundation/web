@@ -30,6 +30,7 @@ export function ConfigurationText<
           name={name}
           placeholder={placeholder}
           type={type}
+          autoComplete={field.autoComplete}
           state={
             error
               ? 'invalid'

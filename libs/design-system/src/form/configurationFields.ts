@@ -61,6 +61,10 @@ export type ConfigField<
 
   validation: RegisterOptions<Values>
   trigger?: Path<Values>[]
+
+  // other
+  disableGroupSeparators?: boolean
+  autoComplete?: string
 }
 
 export type ConfigFields<

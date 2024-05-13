@@ -32,6 +32,8 @@ export function FieldNumber<
       units={units}
       size={size}
       decimalsLimit={decimalsLimit}
+      disableGroupSeparators={field.disableGroupSeparators}
+      autoComplete={field.autoComplete}
       placeholder={placeholder ? new BigNumber(placeholder) : undefined}
       state={
         error
