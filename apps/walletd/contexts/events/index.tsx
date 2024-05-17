@@ -58,14 +58,18 @@ export function useEventsMain() {
     if (!responseEvents.data || !responseTxPool.data) {
       return null
     }
-    const dataTxPool: EventData[] = responseTxPool.data.map((e) => ({
-      id: e.id,
-      timestamp: 0,
-      pending: true,
-      type: e.type,
-      isMature: false,
-      amount: new BigNumber(e.received).minus(e.sent),
-    }))
+    const dataTxPool: EventData[] = responseTxPool.data.map((e) => {
+      const event: EventData = {
+        id: e.id,
+        timestamp: 0,
+        pending: true,
+        type: e.type,
+        isMature: false,
+        amountSc: new BigNumber(e.received).minus(e.sent),
+        fee: e.raw.minerFees[0] ? new BigNumber(e.raw.minerFees[0]) : undefined,
+      }
+      return event
+    })
     const dataEvents: EventData[] = responseEvents.data.map((e, index) => {
       let amountSc = new BigNumber(0)
       let amountSf = 0
