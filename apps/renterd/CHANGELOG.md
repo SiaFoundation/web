@@ -1,5 +1,12 @@
 # renterd
 
+## 0.53.0
+
+### Minor Changes
+
+- 0a0bab05: The host blocklist dialog now supports adding IPv6 addresses.
+- 0a0bab05: The connect to peer dialog now supports IPv6 addresses. Closes https://github.com/SiaFoundation/web/issues/624
+
 ## 0.52.1
 
 ### Patch Changes

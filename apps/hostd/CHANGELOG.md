@@ -1,5 +1,11 @@
 # hostd
 
+## 0.43.0
+
+### Minor Changes
+
+- 0a0bab05: The connect to peer dialog now supports IPv6 addresses. Closes https://github.com/SiaFoundation/web/issues/624
+
 ## 0.42.0
 
 ### Minor Changes
