@@ -1,5 +1,15 @@
 # walletd
 
+## 0.21.0
+
+### Minor Changes
+
+- 0a0bab05: The connect to peer dialog now supports IPv6 addresses. Closes https://github.com/SiaFoundation/web/issues/624
+
+### Patch Changes
+
+- e43d0d4e: Unconfirmed transactions rows now show their siacoin amount and fees. Closes https://github.com/SiaFoundation/walletd/issues/123
+
 ## 0.20.0
 
 ### Minor Changes
