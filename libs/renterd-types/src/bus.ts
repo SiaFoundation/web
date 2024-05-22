@@ -59,6 +59,7 @@ export const busContractIdNewRoute = '/bus/contract/:id/new'
 export const busContractIdRenewedRoute = '/bus/contract/:id/renewed'
 export const busContractsSetsRoute = '/bus/contracts/sets'
 export const busContractsSetsSetRoute = '/bus/contracts/sets/:set'
+export const busContractsPrunableRoute = '/bus/contracts/prunable'
 export const busBucketRoute = '/bus/bucket'
 export const busBucketsRoute = '/bus/buckets'
 export const busBucketNameRoute = '/bus/bucket/:name'
@@ -361,6 +362,18 @@ export type ContractSetUpdateParams = {
 }
 export type ContractSetUpdatePayload = string[]
 export type ContractSetUpdateResponse = void
+
+export type ContractsPrunableParams = void
+export type ContractsPrunablePayload = void
+export type ContractsPrunableResponse = {
+  contracts: {
+    id: string
+    prunable: number
+    size: number
+  }[]
+  totalPrunable: number
+  totalSize: number
+}
 
 // objects
 

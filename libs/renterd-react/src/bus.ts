@@ -253,6 +253,9 @@ import {
   RedundancySettings,
   S3AuthenticationSettings,
   UploadPackingSettings,
+  ContractsPrunableParams,
+  ContractsPrunableResponse,
+  busContractsPrunableRoute,
 } from '@siafoundation/renterd-types'
 
 // state
@@ -680,6 +683,12 @@ export function useContractSetUpdate(
   >
 ) {
   return usePutFunc({ ...args, route: busContractsSetsSetRoute })
+}
+
+export function useContractsPrunable(
+  args?: HookArgsSwr<ContractsPrunableParams, ContractsPrunableResponse>
+) {
+  return useGetSwr({ ...args, route: busContractsPrunableRoute })
 }
 
 // objects
