@@ -56,7 +56,7 @@ export function VolumeDeleteDialog({ trigger, open, onOpenChange }: Props) {
 
   const volumeDelete = useVolumeDelete()
   const volume = useVolume({
-    disabled: !id,
+    disabled: !open || !id,
     params: {
       id,
     },

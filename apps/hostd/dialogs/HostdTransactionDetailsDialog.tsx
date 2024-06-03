@@ -4,7 +4,7 @@ import { useDialog } from '../contexts/dialog'
 import { useTransactions } from '../contexts/transactions'
 
 export function HostdTransactionDetailsDialog() {
-  const { id, dialog, openDialog, closeDialog } = useDialog()
+  const { id, dialog, onOpenChange } = useDialog()
   const { dataset } = useTransactions()
 
   const transaction = useMemo(() => {
@@ -16,7 +16,7 @@ export function HostdTransactionDetailsDialog() {
       id={id}
       transaction={transaction}
       open={dialog === 'transactionDetails'}
-      onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      onOpenChange={onOpenChange}
     />
   )
 }

@@ -73,7 +73,7 @@ export function VolumeResizeDialog({ trigger, open, onOpenChange }: Props) {
   const { id } = useDialog()
   const separator = useHostOSPathSeparator()
   const volume = useVolume({
-    disabled: !id,
+    disabled: !open || !id,
     params: {
       id,
     },
