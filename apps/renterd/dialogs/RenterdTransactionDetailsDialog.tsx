@@ -7,7 +7,7 @@ import {
 } from '../contexts/transactions'
 
 export function RenterdTransactionDetailsDialog() {
-  const { id, dialog, openDialog, closeDialog } = useDialog()
+  const { id, dialog, onOpenChange } = useDialog()
 
   // TODO: add transaction endpoint
   const { dataset } = useTransactions()
@@ -20,7 +20,7 @@ export function RenterdTransactionDetailsDialog() {
       id={id}
       transaction={transaction as TransactionDataConfirmed}
       open={dialog === 'transactionDetails'}
-      onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      onOpenChange={onOpenChange}
     />
   )
 }
