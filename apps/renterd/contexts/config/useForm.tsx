@@ -68,7 +68,6 @@ export function useForm({ resources }: { resources: Resources }) {
     form,
     resources,
     isAutopilotEnabled,
-    configViewMode,
     estimatedSpendingPerMonth,
   })
 

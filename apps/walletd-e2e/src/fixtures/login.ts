@@ -13,5 +13,5 @@ export async function login({ page }: { page: Page }) {
     process.env.WALLETD_E2E_TEST_API_PASSWORD
   )
   await page.locator('input[name=password]').press('Enter')
-  await expect(page.locator('#navbar').getByText('Wallets')).toBeVisible()
+  await expect(page.getByTestId('navbar').getByText('Wallets')).toBeVisible()
 }

@@ -5,12 +5,7 @@ import {
 import { transformUp } from './transformUp'
 import { Resources, checkIfAllResourcesLoaded } from './resources'
 import BigNumber from 'bignumber.js'
-import {
-  ConfigViewMode,
-  RecommendationItem,
-  SettingsData,
-  getAdvancedDefaults,
-} from './types'
+import { RecommendationItem, SettingsData, getAdvancedDefaults } from './types'
 import { UseFormReturn } from 'react-hook-form'
 import { useMemo } from 'react'
 import { transformDownGouging } from './transformDown'
@@ -23,19 +18,20 @@ export function useAutopilotEvaluations({
   form,
   resources,
   isAutopilotEnabled,
-  configViewMode,
   estimatedSpendingPerMonth,
 }: {
   form: UseFormReturn<SettingsData>
   resources: Resources
   isAutopilotEnabled: boolean
-  configViewMode: ConfigViewMode
   estimatedSpendingPerMonth: BigNumber
 }) {
   const values = form.watch()
   const renterdState = useBusState()
 
   const hasDataToEvaluate = useMemo(() => {
+    if (!isAutopilotEnabled) {
+      return false
+    }
     if (!checkIfAllResourcesLoaded(resources)) {
       return false
     }
@@ -46,7 +42,7 @@ export function useAutopilotEvaluations({
       return false
     }
     return true
-  }, [form.formState.isValid, resources, renterdState.data])
+  }, [isAutopilotEnabled, form.formState.isValid, resources, renterdState.data])
 
   // We need to pass valid settings data into transformUp to get the payloads.
   // The form can be invalid or have empty fields depending on the mode, so we
