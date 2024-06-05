@@ -30,7 +30,7 @@ function ToastLayout({
   toastId: string
 }) {
   return (
-    <div className="flex flex-col overflow-hidden">
+    <div data-testid="toasts" className="flex flex-col overflow-hidden">
       <div className="flex items-center gap-2 pt-1.5 pb-1 px-1 overflow-hidden">
         {icon && (
           <Text className="flex items-center" color="subtle">

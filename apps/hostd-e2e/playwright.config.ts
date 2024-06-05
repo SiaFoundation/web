@@ -4,7 +4,7 @@ import { nxE2EPreset } from '@nx/playwright/preset'
 import { workspaceRoot } from '@nx/devkit'
 
 // For CI, you may want to set BASE_URL to the deployed application.
-const baseURL = process.env['BASE_URL'] || 'http://localhost:3008'
+const baseURL = process.env['BASE_URL'] || 'http://localhost:3006'
 
 /**
  * Read environment variables from file.
@@ -34,26 +34,29 @@ export default defineConfig({
   outputDir: 'output',
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npx nx serve walletd',
+    command: 'npx nx serve hostd',
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     cwd: workspaceRoot,
   },
+  // Run the tests serially as they may mutate the state of the same application.
+  workers: 1,
   projects: [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    // Disable firefox and webkit to save time since tests are running serially.
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
 
     // Uncomment for mobile browsers support
     /* {

@@ -140,6 +140,32 @@ jobs:
       - name: Test TypeScript
         shell: bash
         run: npx nx run-many --target=test --all --parallel=5
+  # This job should always pass because the workflow is running run against code that
+  # was already linted and tested in PR.
+  # This runs in parallel to the build and release process as an extra check but does
+  # not actually block the release if job fails.
+  test-e2e:
+    runs-on: ubuntu-latest
+    # Only run one test-e2e job at a time because they mutate the same data
+    concurrency: test-e2e
+    steps:
+      - name: Checkout all commits
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup
+        uses: ./.github/actions/setup-all
+        with:
+          node_version: 20.10.0
+          go_version: 1.21.7
+      # The SDK is referenced via dist in the tsconfig.base.json
+      # because the next executor does not actually support
+      # buildLibsFromSource=false
+      # With this configuration NX does not build the SDK as expected
+      # when it is an app dependency
+      - name: Force build SDK
+        shell: bash
+        run: npx nx run sdk:build
       - name: Install playwright deps for e2e
         shell: bash
         run: npx playwright install-deps
@@ -148,6 +174,21 @@ jobs:
         run: npx nx run-many --target=e2e --all --parallel=5
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          RENTERD_E2E_TEST_API_URL: ${{ secrets.RENTERD_E2E_TEST_API_URL }}
+          RENTERD_E2E_TEST_API_PASSWORD: ${{ secrets.RENTERD_E2E_TEST_API_PASSWORD }}
+          HOSTD_E2E_TEST_API_URL: ${{ secrets.HOSTD_E2E_TEST_API_URL }}
+          HOSTD_E2E_TEST_API_PASSWORD: ${{ secrets.HOSTD_E2E_TEST_API_PASSWORD }}
+          WALLETD_E2E_TEST_API_URL: ${{ secrets.WALLETD_E2E_TEST_API_URL }}
+          WALLETD_E2E_TEST_API_PASSWORD: ${{ secrets.WALLETD_E2E_TEST_API_PASSWORD }}
+      - uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
+        with:
+          name: playwright-report
+          path: |
+            apps/renterd-e2e/output/
+            apps/hostd-e2e/output/
+            apps/walletd-e2e/output/
+          retention-days: 3
   # This job should always pass because the workflow is running run against code that
   # was already linted and tested in PR.
   # This runs in parallel to the build and release process as an extra check but does

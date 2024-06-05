@@ -20,6 +20,7 @@ export function ConfigurationSwitch<
       <div className="flex flex-col gap-3 w-[250px]">
         <div className="flex justify-end w-full">
           <Switch
+            aria-label={name}
             name={name}
             size="medium"
             checked={value}

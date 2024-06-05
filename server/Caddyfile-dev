@@ -6,6 +6,7 @@
 # 127.0.0.1 zen.local
 # 127.0.0.1 host.local
 # 127.0.0.1 hostd.local
+# 127.0.0.1 hostd.zen.local
 # 127.0.0.1 renter.local
 # 127.0.0.1 renterd.local
 # 127.0.0.1 renterd.zen.local
@@ -124,6 +125,11 @@ walletd.local {
 }
 
 renterd.zen.local {
+  import cors
+  reverse_proxy localhost:9880
+}
+
+hostd.zen.local {
   import cors
   reverse_proxy localhost:9880
 }

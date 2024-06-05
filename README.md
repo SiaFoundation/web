@@ -65,6 +65,8 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 ### Testing
 
 - [walletd-e2e](walletd-e2e) - App for testing walletd.
+- [renterd-e2e](renterd-e2e) - App for testing renterd.
+- [hostd-e2e](hostd-e2e) - App for testing hostd.
 - [@siafoundation/walletd-mock](walletd-mock) - `walletd` data and API mock library for testing.
 - [@siafoundation/sia-central-mock](sia-central-mock) - Sia Central data and API mock library for testing.
 
