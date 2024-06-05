@@ -21,7 +21,12 @@ export function BucketContextMenu({ name }: Props) {
           <BucketIcon size={16} />
         </Button>
       }
-      contentProps={{ align: 'start' }}
+      contentProps={{
+        align: 'start',
+        onClick: (e) => {
+          e.stopPropagation()
+        },
+      }}
     >
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
       <DropdownMenuItem

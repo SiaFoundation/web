@@ -3,5 +3,5 @@ import { login } from '../fixtures/login'
 
 test('login', async ({ page }) => {
   await login({ page })
-  await expect(page.locator('#navbar').getByText('Buckets')).toBeVisible()
+  await expect(page.getByTestId('navbar').getByText('Buckets')).toBeVisible()
 })

@@ -149,7 +149,7 @@ export function Dialogs() {
         address={wallet.data?.address}
         isValidating={wallet.isValidating}
         open={dialog === 'addressDetails'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <RenterdTransactionDetailsDialog />
       <SyncerConnectPeerDialog
@@ -159,60 +159,60 @@ export function Dialogs() {
             payload: address,
           })
         }
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <FilesBucketCreateDialog
         open={dialog === 'filesCreateBucket'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <FilesBucketDeleteDialog
         open={dialog === 'filesDeleteBucket'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <FilesBucketPolicyDialog
         open={dialog === 'filesBucketPolicy'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <FilesCreateDirectoryDialog
         open={dialog === 'filesCreateDirectory'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <FilesSearchDialog
         open={dialog === 'filesSearch'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <FileRenameDialog
         id={id}
         open={dialog === 'fileRename'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <HostsAllowBlockDialog
         open={dialog === 'hostsManageAllowBlock'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <HostsFilterAddressDialog
         open={dialog === 'hostsFilterAddress'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <HostsFilterPublicKeyDialog
         open={dialog === 'hostsFilterPublicKey'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <ContractsFilterAddressDialog
         open={dialog === 'contractsFilterAddress'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <ContractsFilterContractSetDialog
         open={dialog === 'contractsFilterContractSet'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <ContractsFilterPublicKeyDialog
         open={dialog === 'contractsFilterPublicKey'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <KeysCreateDialog
         open={dialog === 'keysCreate'}
-        onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+        onOpenChange={onOpenChange}
       />
       <ConfirmDialog
         open={dialog === 'confirm'}
