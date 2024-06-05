@@ -309,7 +309,7 @@ export function useSettingsUpdate(
 ) {
   return usePatchFunc({ ...args, route: settingsRoute }, async (mutate) => {
     await mutate((key) => {
-      return key.startsWith(settingsRoute)
+      return key.startsWith(settingsRoute) || key.startsWith(stateHostRoute)
     })
   })
 }

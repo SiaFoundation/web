@@ -1,0 +1,19 @@
+{
+  "name": "renterd-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/renterd-e2e/src",
+  "projectType": "application",
+  "implicitDependencies": ["renterd"],
+  "targets": {
+    "e2e": {
+      "executor": "@nx/playwright:playwright",
+      "outputs": ["{workspaceRoot}/dist/.playwright/apps/renterd-e2e"],
+      "options": {
+        "config": "apps/renterd-e2e/playwright.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

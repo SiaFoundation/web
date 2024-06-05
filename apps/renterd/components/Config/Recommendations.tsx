@@ -197,6 +197,7 @@ export function Recommendations() {
           }) => (
             <Section
               key={key}
+              testId={key}
               title={
                 <Text size="14">
                   {direction === 'up' ? 'Increase ' : 'Decrease '}
@@ -237,11 +238,15 @@ export function Recommendations() {
 type SectionProps = {
   title: React.ReactNode
   action: React.ReactNode
+  testId: string
 }
 
-function Section({ title, action }: SectionProps) {
+function Section({ testId, title, action }: SectionProps) {
   return (
-    <div className="border-t first:border-t-0 border-gray-200 dark:border-graydark-100 px-3 py-2">
+    <div
+      data-testid={testId}
+      className="border-t first:border-t-0 border-gray-200 dark:border-graydark-100 px-3 py-2"
+    >
       <div className="flex gap-2 items-center">
         <div className="flex-1 flex items-center">{title}</div>
         {action}
@@ -294,7 +299,9 @@ function Layout({
         <div className="w-[600px] flex flex-col max-h-[600px] bg-gray-50 dark:bg-graydark-50 border-b border-x border-gray-300 dark:border-graydark-400 rounded-b">
           <ScrollArea>
             {tip ? <HoverCard trigger={el}>{tip}</HoverCard> : el}
-            {children}
+            {children && (
+              <div data-testid="recommendationsList">{children}</div>
+            )}
           </ScrollArea>
         </div>
       </div>
