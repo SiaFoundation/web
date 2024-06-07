@@ -3,6 +3,7 @@ import { Reset16, Save16 } from '@siafoundation/react-icons'
 import { AnnounceButton } from './AnnounceButton'
 import { useConfig } from '../../contexts/config'
 import { ConfigContextMenu } from './ConfigContextMenu'
+import { ConfigViewDropdownMenu } from './ConfigViewDropdownMenu'
 
 export function ConfigActions() {
   const { changeCount, revalidateAndResetForm, form, onSubmit } = useConfig()
@@ -32,6 +33,7 @@ export function ConfigActions() {
       </Button>
       <AnnounceButton />
       <ConfigContextMenu />
+      <ConfigViewDropdownMenu />
     </div>
   )
 }

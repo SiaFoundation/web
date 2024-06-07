@@ -10,6 +10,8 @@ import {
   FieldError,
   ConfigurationPanelSetting,
   shouldShowField,
+  Tooltip,
+  Switch,
 } from '@siafoundation/design-system'
 import { Warning16, CheckmarkFilled16 } from '@siafoundation/react-icons'
 import { HostdSidenav } from '../HostdSidenav'
@@ -23,8 +25,16 @@ import { ConfigActions } from './ConfigActions'
 
 export function Config() {
   const { openDialog } = useDialog()
-  const { fields, settings, dynDNSCheck, form, remoteError, configRef } =
-    useConfig()
+  const {
+    fields,
+    settings,
+    dynDNSCheck,
+    form,
+    remoteError,
+    configRef,
+    autoMaxCollateral,
+    setAutoMaxCollateral,
+  } = useConfig()
   const shouldPinStoragePrice = form.watch('shouldPinStoragePrice')
   const shouldPinEgressPrice = form.watch('shouldPinEgressPrice')
   const shouldPinIngressPrice = form.watch('shouldPinIngressPrice')
@@ -104,29 +114,23 @@ export function Config() {
                     fields,
                     name: 'shouldPinStoragePrice',
                   }) && (
-                    <div className="flex w-full justify-between">
-                      <Text weight="medium" color="verySubtle" size="14">
-                        Storage price
-                      </Text>
-                      <FieldSwitch
-                        name="shouldPinStoragePrice"
-                        form={form}
-                        fields={fields}
-                        size="small"
-                        group={false}
-                        before={
-                          <Text
-                            weight="medium"
-                            color={
-                              shouldPinStoragePrice ? 'contrast' : 'subtle'
-                            }
-                            size="14"
-                          >
-                            pinned
-                          </Text>
-                        }
-                      />
-                    </div>
+                    <Tooltip
+                      align="end"
+                      content="Pin the value to a fixed fiat amount. The daemon will automatically keep the value in sync."
+                    >
+                      <div className="flex w-full justify-between">
+                        <Text weight="medium" color="verySubtle" size="14">
+                          Pin
+                        </Text>
+                        <FieldSwitch
+                          name="shouldPinStoragePrice"
+                          form={form}
+                          fields={fields}
+                          size="small"
+                          group={false}
+                        />
+                      </div>
+                    </Tooltip>
                   )}
                   {shouldShowField({
                     form,
@@ -169,27 +173,23 @@ export function Config() {
                     fields,
                     name: 'shouldPinEgressPrice',
                   }) && (
-                    <div className="flex w-full justify-between">
-                      <Text weight="medium" color="verySubtle" size="14">
-                        Egress price
-                      </Text>
-                      <FieldSwitch
-                        name="shouldPinEgressPrice"
-                        form={form}
-                        fields={fields}
-                        size="small"
-                        group={false}
-                        before={
-                          <Text
-                            weight="medium"
-                            color={shouldPinEgressPrice ? 'contrast' : 'subtle'}
-                            size="14"
-                          >
-                            pinned
-                          </Text>
-                        }
-                      />
-                    </div>
+                    <Tooltip
+                      align="end"
+                      content="Pin the value to a fixed fiat amount. The daemon will automatically keep the value in sync."
+                    >
+                      <div className="flex w-full justify-between">
+                        <Text weight="medium" color="verySubtle" size="14">
+                          Pin
+                        </Text>
+                        <FieldSwitch
+                          name="shouldPinEgressPrice"
+                          form={form}
+                          fields={fields}
+                          size="small"
+                          group={false}
+                        />
+                      </div>
+                    </Tooltip>
                   )}
                   {shouldShowField({
                     form,
@@ -232,29 +232,23 @@ export function Config() {
                     fields,
                     name: 'shouldPinIngressPrice',
                   }) && (
-                    <div className="flex w-full justify-between">
-                      <Text weight="medium" color="verySubtle" size="14">
-                        Ingress price
-                      </Text>
-                      <FieldSwitch
-                        name="shouldPinIngressPrice"
-                        form={form}
-                        fields={fields}
-                        size="small"
-                        group={false}
-                        before={
-                          <Text
-                            weight="medium"
-                            color={
-                              shouldPinIngressPrice ? 'contrast' : 'subtle'
-                            }
-                            size="14"
-                          >
-                            pinned
-                          </Text>
-                        }
-                      />
-                    </div>
+                    <Tooltip
+                      align="end"
+                      content="Pin the value to a fixed fiat amount. The daemon will automatically keep the value in sync."
+                    >
+                      <div className="flex w-full justify-between">
+                        <Text weight="medium" color="verySubtle" size="14">
+                          Pin
+                        </Text>
+                        <FieldSwitch
+                          name="shouldPinIngressPrice"
+                          form={form}
+                          fields={fields}
+                          size="small"
+                          group={false}
+                        />
+                      </div>
+                    </Tooltip>
                   )}
                   {shouldShowField({
                     form,
@@ -309,29 +303,41 @@ export function Config() {
                         fields,
                         name: 'shouldPinMaxCollateral',
                       }) && (
-                        <div className="flex w-full justify-between">
-                          <Text weight="medium" color="verySubtle" size="14">
-                            Max collateral
-                          </Text>
-                          <FieldSwitch
-                            name="shouldPinMaxCollateral"
-                            form={form}
-                            fields={fields}
-                            size="small"
-                            group={false}
-                            before={
-                              <Text
-                                weight="medium"
-                                color={
-                                  shouldPinMaxCollateral ? 'contrast' : 'subtle'
-                                }
-                                size="14"
-                              >
-                                pinned
-                              </Text>
-                            }
-                          />
-                        </div>
+                        <Tooltip
+                          align="end"
+                          content="Pin the value to a fixed fiat amount. The daemon will automatically keep the value in sync."
+                        >
+                          <div className="flex w-full justify-between">
+                            <Text weight="medium" color="verySubtle" size="14">
+                              Pin
+                            </Text>
+                            <FieldSwitch
+                              name="shouldPinMaxCollateral"
+                              form={form}
+                              fields={fields}
+                              size="small"
+                              group={false}
+                            />
+                          </div>
+                        </Tooltip>
+                      )}
+                      {!shouldPinMaxCollateral && (
+                        <Tooltip
+                          align="end"
+                          content="Calculate value based on storage price and collateral multiplier."
+                        >
+                          <div className="flex w-full justify-between">
+                            <Text weight="medium" color="verySubtle" size="14">
+                              Calculate
+                            </Text>
+                            <Switch
+                              aria-label="autoMaxCollateral"
+                              size="small"
+                              checked={autoMaxCollateral}
+                              onCheckedChange={setAutoMaxCollateral}
+                            />
+                          </div>
+                        </Tooltip>
                       )}
                       {shouldShowField({
                         form,
@@ -361,6 +367,20 @@ export function Config() {
                       )}
                     </div>
                   }
+                />
+              </>
+            )}
+            {shouldShowField({
+              form,
+              fields,
+              name: 'contractPrice',
+            }) && (
+              <>
+                <Separator className="w-full my-3" />
+                <ConfigurationPanelSetting
+                  form={form}
+                  fields={fields}
+                  name="contractPrice"
                 />
               </>
             )}

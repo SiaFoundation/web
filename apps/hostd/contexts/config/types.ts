@@ -2,6 +2,8 @@ import { DNSProvider } from '@siafoundation/hostd-types'
 import { SiaCentralCurrency } from '@siafoundation/sia-central-types'
 import BigNumber from 'bignumber.js'
 
+export type ConfigViewMode = 'basic' | 'advanced'
+
 export const scDecimalPlaces = 6
 export const dnsProviderOptions: { value: DNSProvider; label: string }[] = [
   {

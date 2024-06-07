@@ -21,20 +21,18 @@ export function useOnValid({
   resources,
   estimatedSpendingPerMonth,
   isAutopilotEnabled,
-  showAdvanced,
   revalidateAndResetForm,
 }: {
   resources: Resources
   estimatedSpendingPerMonth: BigNumber
   isAutopilotEnabled: boolean
-  showAdvanced: boolean
   revalidateAndResetForm: () => Promise<void>
 }) {
   const autopilotTrigger = useAutopilotTrigger()
   const autopilotUpdate = useAutopilotConfigUpdate()
   const settingUpdate = useSettingUpdate()
   const renterdState = useBusState()
-  const { syncDefaultContractSet } = useSyncContractSet()
+  const { maybeSyncDefaultContractSet } = useSyncContractSet()
   const mutate = useMutate()
   const onValid = useCallback(
     async (values: typeof defaultValues) => {
@@ -48,11 +46,10 @@ export function useOnValid({
       const firstTimeSettingConfig =
         isAutopilotEnabled && !resources.autopilot.data
       try {
-        const { finalValues, payloads } = transformUp({
+        const { payloads } = transformUp({
           resources,
           renterdState: renterdState.data,
           isAutopilotEnabled,
-          showAdvanced,
           estimatedSpendingPerMonth,
           values,
         })
@@ -112,13 +109,8 @@ export function useOnValid({
         }
 
         if (isAutopilotEnabled) {
-          // Sync default contract set if necessary. Only syncs if the setting
-          // is enabled in case the user changes in advanced mode and then
-          // goes back to simple mode.
-          // Might be simpler nice to just override in simple mode without a
-          // special setting since this is how other settings like allowance
-          // behave - but leaving for now.
-          syncDefaultContractSet(finalValues.autopilotContractSet)
+          // Sync default contract set if the setting is enabled.
+          maybeSyncDefaultContractSet(values.autopilotContractSet)
 
           // Trigger the autopilot loop with new settings applied.
           autopilotTrigger.post({
@@ -154,11 +146,10 @@ export function useOnValid({
     [
       renterdState.data,
       estimatedSpendingPerMonth,
-      showAdvanced,
       isAutopilotEnabled,
       autopilotUpdate,
       revalidateAndResetForm,
-      syncDefaultContractSet,
+      maybeSyncDefaultContractSet,
       mutate,
       settingUpdate,
       resources,

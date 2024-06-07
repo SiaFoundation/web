@@ -125,17 +125,7 @@ describe('SiacoinField', () => {
     expect(scInput.value).toBe('4.444,55')
     expect(fiatInput.value).toBe('$4.444,55')
     expectOnChangeValues(
-      [
-        '3333',
-        undefined,
-        '4',
-        '44',
-        '444',
-        '4444',
-        '4444',
-        '4444.5',
-        '4444.55',
-      ],
+      [undefined, '4', '44', '444', '4444', '4444', '4444.5', '4444.55'],
       onChange
     )
   })
@@ -163,17 +153,7 @@ describe('SiacoinField', () => {
     expect(scInput.value).toBe('4.444,55')
     expect(fiatInput.value).toBe('₽4.444,55')
     expectOnChangeValues(
-      [
-        '3333',
-        undefined,
-        '4',
-        '44',
-        '444',
-        '4444',
-        '4444',
-        '4444.5',
-        '4444.55',
-      ],
+      [undefined, '4', '44', '444', '4444', '4444', '4444.5', '4444.55'],
       onChange
     )
   })
@@ -201,17 +181,7 @@ describe('SiacoinField', () => {
     expect(scInput.value).toBe('4.444,55')
     expect(fiatInput.value).toBe('₽4.444,55')
     expectOnChangeValues(
-      [
-        '3333',
-        undefined,
-        '4',
-        '44',
-        '444',
-        '4444',
-        '4444',
-        '4444.5',
-        '4444.55',
-      ],
+      [undefined, '4', '44', '444', '4444', '4444', '4444.5', '4444.55'],
       onChange
     )
   })

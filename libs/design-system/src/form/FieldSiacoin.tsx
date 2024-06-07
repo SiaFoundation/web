@@ -39,6 +39,7 @@ export function FieldSiacoin<
       units={units}
       decimalsLimitSc={decimalsLimitSc}
       decimalsLimitFiat={decimalsLimitFiat}
+      readOnly={field.readOnly}
       error={error}
       changed={form.formState.dirtyFields[name]}
       placeholder={(suggestion as BigNumber) || (average as BigNumber)}

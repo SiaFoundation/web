@@ -5,11 +5,7 @@ import {
 } from '@siafoundation/design-system'
 import { useCallback } from 'react'
 import { SettingsData } from './types'
-import {
-  calculateMaxCollateral,
-  transformUpSettings,
-  transformUpSettingsPinned,
-} from './transform'
+import { transformUpSettings, transformUpSettingsPinned } from './transform'
 import { Resources } from './resources'
 import {
   useSettingsPinnedUpdate,
@@ -19,11 +15,9 @@ import {
 
 export function useOnValid({
   resources,
-  showAdvanced,
   revalidateAndResetForm,
 }: {
   resources: Resources
-  showAdvanced: boolean
   revalidateAndResetForm: () => Promise<void>
 }) {
   const state = useStateHost()
@@ -42,21 +36,10 @@ export function useOnValid({
         return
       }
       try {
-        const calculatedValues: Partial<SettingsData> = {}
-        if (!showAdvanced) {
-          calculatedValues.maxCollateral = calculateMaxCollateral(
-            values.storagePrice,
-            values.collateralMultiplier
-          )
-        }
-
-        const finalValues = {
-          ...values,
-          ...calculatedValues,
-        }
+        const payload = transformUpSettings(values, resources.settings.data)
 
         const settings = await settingsUpdate.patch({
-          payload: transformUpSettings(finalValues, resources.settings.data),
+          payload,
         })
 
         if (settings.error) {
@@ -66,7 +49,7 @@ export function useOnValid({
         if (state.data?.explorer.enabled) {
           const settingsPinned = await settingsPinnedUpdate.put({
             payload: transformUpSettingsPinned(
-              finalValues,
+              values,
               resources.settingsPinned.data
             ),
           })
@@ -99,7 +82,6 @@ export function useOnValid({
       }
     },
     [
-      showAdvanced,
       resources,
       settingsUpdate,
       settingsPinnedUpdate,

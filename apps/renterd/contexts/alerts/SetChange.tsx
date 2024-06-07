@@ -102,7 +102,7 @@ export function SetChangesField({
     [removals]
   )
   const churn = useMemo(
-    () => (removedSize / totalSize) * 100,
+    () => (totalSize > 0 ? (removedSize / totalSize) * 100 : 0),
     [removedSize, totalSize]
   )
 

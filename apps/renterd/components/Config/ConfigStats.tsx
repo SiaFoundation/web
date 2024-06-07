@@ -11,7 +11,7 @@ import { useApp } from '../../contexts/app'
 
 export function ConfigStats() {
   const { autopilot } = useApp()
-  const { estimates, redundancyMultiplier, storageTB, showAdvanced } =
+  const { estimates, redundancyMultiplier, storageTB, configViewMode } =
     useConfig()
 
   const { canEstimate, estimatedSpendingPerMonth, estimatedSpendingPerTB } =
@@ -25,7 +25,7 @@ export function ConfigStats() {
 
   return !canEstimate ? (
     <Text size="12" font="mono" weight="medium">
-      {showAdvanced
+      {configViewMode === 'advanced'
         ? 'Enter expected storage, period, and allowance values to estimate monthly spending.'
         : 'Enter expected storage and max price to estimate monthly spending.'}
     </Text>

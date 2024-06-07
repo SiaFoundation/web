@@ -22,7 +22,14 @@ import { useStateHost } from '@siafoundation/hostd-react'
 export function useConfigMain() {
   const { settings, settingsPinned, dynDNSCheck } = useResources()
 
-  const { form, fields, setShowAdvanced, showAdvanced } = useForm()
+  const {
+    form,
+    fields,
+    configViewMode,
+    setConfigViewMode,
+    autoMaxCollateral,
+    setAutoMaxCollateral,
+  } = useForm()
 
   // Resources required to intialize form.
   const resources: Resources = useMemo(
@@ -85,7 +92,6 @@ export function useConfigMain() {
 
   const onValid = useOnValid({
     resources,
-    showAdvanced,
     revalidateAndResetForm,
   })
 
@@ -117,12 +123,14 @@ export function useConfigMain() {
     revalidateAndResetForm,
     form,
     onSubmit,
-    showAdvanced,
-    setShowAdvanced,
+    setConfigViewMode,
+    configViewMode,
     remoteError,
     takeScreenshot,
     configRef,
     pinningEnabled,
+    autoMaxCollateral,
+    setAutoMaxCollateral,
   }
 }
 

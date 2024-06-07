@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { entries } from '@technically/lodash'
-import React, { MouseEvent, useCallback } from 'react'
+import React, { MouseEvent, useCallback, useMemo } from 'react'
 import {
   FieldErrors,
   FieldValues,
@@ -38,6 +38,11 @@ export type ConfigField<
   suggestion?: BigNumber | string | boolean
   average?: BigNumber | string | boolean
   averageTip?: React.ReactNode
+  before?: React.FC<{
+    name: Path<Values>
+    form: UseFormReturn<Values>
+    fields: ConfigFields<Values, Categories>
+  }>
   after?: React.FC<{
     name: Path<Values>
     form: UseFormReturn<Values>
@@ -92,7 +97,10 @@ export function useRegisterForm<
     ref,
     onChange: _onChange,
     onBlur,
-  } = form.register(name, field.validation)
+  } = useMemo(
+    () => form.register(name, field.validation),
+    [form, name, field.validation]
+  )
 
   const onChange = useCallback(
     (e: { target: unknown; type: unknown }) => {

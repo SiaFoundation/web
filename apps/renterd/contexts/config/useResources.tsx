@@ -63,7 +63,7 @@ export function useResources() {
   const {
     shouldSyncDefaultContractSet,
     setShouldSyncDefaultContractSet,
-    syncDefaultContractSet,
+    maybeSyncDefaultContractSet,
   } = useSyncContractSet()
 
   const appSettings = useAppSettings()
@@ -78,7 +78,7 @@ export function useResources() {
     averages,
     shouldSyncDefaultContractSet,
     setShouldSyncDefaultContractSet,
-    syncDefaultContractSet,
+    maybeSyncDefaultContractSet,
     appSettings,
     isAutopilotEnabled,
   }

@@ -2,7 +2,12 @@
 import { blocksToMonths } from '@siafoundation/units'
 import { ConfigFields } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
-import { SettingsData, dnsProviderOptions, scDecimalPlaces } from './types'
+import {
+  ConfigViewMode,
+  SettingsData,
+  dnsProviderOptions,
+  scDecimalPlaces,
+} from './types'
 import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 import { calculateMaxCollateral } from './transform'
 import { currencyOptions } from '@siafoundation/react-core'
@@ -11,18 +16,24 @@ type Categories = 'host' | 'pricing' | 'DNS' | 'bandwidth' | 'RHP3'
 
 type GetFields = {
   pinningEnabled: boolean
-  showAdvanced: boolean
+  configViewMode: ConfigViewMode
   storageTBMonth?: BigNumber
   collateralMultiplier?: BigNumber
   rates?: SiaCentralExchangeRates
+  autoMaxCollateral?: boolean
+  validationContext: {
+    pinningEnabled: boolean
+  }
 }
 
 export function getFields({
   pinningEnabled,
-  showAdvanced,
+  configViewMode,
   storageTBMonth,
   collateralMultiplier,
+  autoMaxCollateral,
   rates,
+  validationContext,
 }: GetFields): ConfigFields<SettingsData, Categories> {
   return {
     // Host
@@ -54,7 +65,7 @@ export function getFields({
       description: (
         <>The maximum contract duration that the host will accept.</>
       ),
-      hidden: !showAdvanced,
+      hidden: configViewMode === 'basic',
       validation: {
         required: 'required',
         validate: {
@@ -97,20 +108,23 @@ export function getFields({
           changing prices too often.
         </>
       ),
-      hidden: !pinningEnabled || !showAdvanced,
-      validation: pinningEnabled
-        ? {
-            required: 'required',
-            validate: {
-              max: (value) =>
-                new BigNumber(value as BigNumber).lte(100) ||
-                `must be at most 100%`,
-              min: (value) =>
-                new BigNumber(value as BigNumber).gte(0) ||
-                `must be at least 0%`,
-            },
-          }
-        : {},
+      hidden: !pinningEnabled || configViewMode === 'basic',
+      validation: {
+        validate: {
+          required: requiredIfPinningEnabled(validationContext),
+          max: requiredIfPinningEnabled(
+            validationContext,
+            (value) =>
+              new BigNumber(value as BigNumber).lte(100) ||
+              `must be at most 100%`
+          ),
+          min: requiredIfPinningEnabled(
+            validationContext,
+            (value) =>
+              new BigNumber(value as BigNumber).gte(0) || `must be at least 0%`
+          ),
+        },
+      },
     },
 
     shouldPinStoragePrice: {
@@ -148,19 +162,23 @@ export function getFields({
       type: 'fiat',
       category: 'pricing',
       hidden: !pinningEnabled,
-      validation: pinningEnabled
-        ? {
-            required: 'required',
-            validate: {
-              currency: (value, values) =>
-                !!values.pinnedCurrency || 'must select a pinned currency',
-              range: (value: BigNumber, values) =>
-                !values.shouldPinStoragePrice ||
-                value?.gt(0) ||
-                'storage price must be greater than 0',
-            },
-          }
-        : {},
+      validation: {
+        validate: {
+          required: requiredIfPinningEnabled(validationContext),
+          currency: requiredIfPinningEnabled(
+            validationContext,
+            (_, values) =>
+              !!values.pinnedCurrency || 'must select a pinned currency'
+          ),
+          range: requiredIfPinningEnabled(
+            validationContext,
+            (value: BigNumber, values) =>
+              !values.shouldPinStoragePrice ||
+              value?.gt(0) ||
+              'storage price must be greater than 0'
+          ),
+        },
+      },
     },
 
     shouldPinEgressPrice: {
@@ -199,19 +217,23 @@ export function getFields({
       units: '/TB',
       category: 'pricing',
       hidden: !pinningEnabled,
-      validation: pinningEnabled
-        ? {
-            required: 'required',
-            validate: {
-              currency: (value, values) =>
-                !!values.pinnedCurrency || 'must select a pinned currency',
-              range: (value: BigNumber, values) =>
-                !values.shouldPinEgressPrice ||
-                value?.gt(0) ||
-                'egress price must be greater than 0',
-            },
-          }
-        : {},
+      validation: {
+        validate: {
+          required: requiredIfPinningEnabled(validationContext),
+          currency: requiredIfPinningEnabled(
+            validationContext,
+            (_, values) =>
+              !!values.pinnedCurrency || 'must select a pinned currency'
+          ),
+          range: requiredIfPinningEnabled(
+            validationContext,
+            (value: BigNumber, values) =>
+              !values.shouldPinEgressPrice ||
+              value?.gt(0) ||
+              'egress price must be greater than 0'
+          ),
+        },
+      },
     },
 
     shouldPinIngressPrice: {
@@ -249,19 +271,23 @@ export function getFields({
       units: '/TB',
       category: 'pricing',
       hidden: !pinningEnabled,
-      validation: pinningEnabled
-        ? {
-            required: 'required',
-            validate: {
-              currency: (value, values) =>
-                !!values.pinnedCurrency || 'must select a pinned currency',
-              range: (value: BigNumber, values) =>
-                !values.shouldPinIngressPrice ||
-                value?.gt(0) ||
-                'ingress price must be greater than 0',
-            },
-          }
-        : {},
+      validation: {
+        validate: {
+          required: requiredIfPinningEnabled(validationContext),
+          currency: requiredIfPinningEnabled(
+            validationContext,
+            (_, values) =>
+              !!values.pinnedCurrency || 'must select a pinned currency'
+          ),
+          range: requiredIfPinningEnabled(
+            validationContext,
+            (value: BigNumber, values) =>
+              !values.shouldPinIngressPrice ||
+              value?.gt(0) ||
+              'ingress price must be greater than 0'
+          ),
+        },
+      },
     },
 
     collateralMultiplier: {
@@ -286,7 +312,7 @@ export function getFields({
       description: '',
       type: 'boolean',
       category: 'pricing',
-      hidden: !pinningEnabled || !showAdvanced,
+      hidden: !pinningEnabled || configViewMode === 'basic',
       validation: {},
     },
     maxCollateral: {
@@ -306,7 +332,7 @@ export function getFields({
           ? calculateMaxCollateral(storageTBMonth, collateralMultiplier)
           : undefined,
       suggestionTip: 'The suggested maximum collateral.',
-      hidden: !showAdvanced,
+      readOnly: autoMaxCollateral,
       validation: {
         required: 'required',
       },
@@ -316,20 +342,24 @@ export function getFields({
       description: '',
       type: 'fiat',
       category: 'pricing',
-      hidden: !pinningEnabled || !showAdvanced,
-      validation: pinningEnabled
-        ? {
-            required: 'required',
-            validate: {
-              currency: (value, values) =>
-                !!values.pinnedCurrency || 'must select a pinned currency',
-              range: (value: BigNumber, values) =>
-                !values.shouldPinMaxCollateral ||
-                value?.gt(0) ||
-                'max collateral must be greater than 0',
-            },
-          }
-        : {},
+      hidden: !pinningEnabled || configViewMode === 'basic',
+      validation: {
+        validate: {
+          required: requiredIfPinningEnabled(validationContext),
+          currency: requiredIfPinningEnabled(
+            validationContext,
+            (_, values) =>
+              !!values.pinnedCurrency || 'must select a pinned currency'
+          ),
+          range: requiredIfPinningEnabled(
+            validationContext,
+            (value: BigNumber, values) =>
+              !values.shouldPinMaxCollateral ||
+              value?.gt(0) ||
+              'max collateral must be greater than 0'
+          ),
+        },
+      },
     },
     contractPrice: {
       title: 'Contract price',
@@ -340,7 +370,7 @@ export function getFields({
       tipsDecimalsLimitSc: 1,
       suggestion: new BigNumber(0.2),
       description: <>{`The host's contract price in siacoins.`}</>,
-      hidden: !showAdvanced,
+      hidden: configViewMode === 'basic',
       validation: {
         required: 'required',
       },
@@ -357,7 +387,7 @@ export function getFields({
       description: (
         <>{`The host's base RPC price in siacoins per million calls.`}</>
       ),
-      hidden: !showAdvanced,
+      hidden: configViewMode === 'basic',
       validation: {
         required: 'required',
       },
@@ -374,7 +404,7 @@ export function getFields({
       description: (
         <>{`The host's sector access price in siacoins per million sectors.`}</>
       ),
-      hidden: !showAdvanced,
+      hidden: configViewMode === 'basic',
       validation: {
         required: 'required',
       },
@@ -389,7 +419,7 @@ export function getFields({
       description: (
         <>{`How long a renter's registered price table remains valid.`}</>
       ),
-      hidden: !showAdvanced,
+      hidden: configViewMode === 'basic',
       validation: {
         required: 'required',
       },
@@ -406,7 +436,7 @@ export function getFields({
       description: (
         <>{`How long a renter's ephemeral accounts are inactive before the host prunes them and recovers the remaining funds.`}</>
       ),
-      hidden: !showAdvanced,
+      hidden: configViewMode === 'basic',
       validation: {
         required: 'required',
         validate: {
@@ -425,7 +455,7 @@ export function getFields({
       description: (
         <>{`Maximum balance a renter's ephemeral account can have. When the limit is reached, deposits are rejected until some of the funds have been spent.`}</>
       ),
-      hidden: !showAdvanced,
+      hidden: configViewMode === 'basic',
       validation: {
         required: 'required',
         validate: {
@@ -611,4 +641,21 @@ function usdInScRoundedToNearestTen(
         new BigNumber(usdAmount).div(rates.sc.usd).div(10).toFixed(0)
       ).times(10)
     : undefined
+}
+
+function requiredIfPinningEnabled<Values>(
+  context: {
+    pinningEnabled: boolean
+  },
+  method?: (value: unknown, values: Values) => string | boolean
+) {
+  return (value: unknown, values: Values) => {
+    if (context.pinningEnabled) {
+      if (method) {
+        return method(value, values)
+      }
+      return !!value || 'required'
+    }
+    return true
+  }
 }

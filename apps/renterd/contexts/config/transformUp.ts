@@ -153,51 +153,31 @@ export function transformUp({
   resources,
   renterdState,
   isAutopilotEnabled,
-  showAdvanced,
-  estimatedSpendingPerMonth,
   values,
 }: {
   resources: Resources
   renterdState: BusStateResponse
   isAutopilotEnabled: boolean
-  showAdvanced: boolean
   estimatedSpendingPerMonth: BigNumber
   values: SettingsData
 }) {
-  const calculatedValues: Partial<SettingsData> = {}
-  if (isAutopilotEnabled && !showAdvanced) {
-    calculatedValues.allowanceMonth = estimatedSpendingPerMonth
-  }
-
-  const finalValues = {
-    ...values,
-    ...calculatedValues,
-  }
-
   const autopilot = isAutopilotEnabled
     ? transformUpAutopilot(
         renterdState.network,
-        finalValues,
+        values,
         resources.autopilot.data
       )
     : undefined
 
-  const contractSet = transformUpContractSet(
-    finalValues,
-    resources.contractSet.data
-  )
+  const contractSet = transformUpContractSet(values, resources.contractSet.data)
   const uploadPacking = transformUpUploadPacking(
-    finalValues,
+    values,
     resources.uploadPacking.data
   )
-  const gouging = transformUpGouging(finalValues, resources.gouging.data)
-  const redundancy = transformUpRedundancy(
-    finalValues,
-    resources.redundancy.data
-  )
+  const gouging = transformUpGouging(values, resources.gouging.data)
+  const redundancy = transformUpRedundancy(values, resources.redundancy.data)
 
   return {
-    finalValues,
     payloads: {
       autopilot,
       contractSet,
@@ -214,4 +194,20 @@ function filterUndefinedKeys(obj: Record<string, unknown>) {
       ([key, value]) => value !== undefined && value !== ''
     )
   )
+}
+
+export function getCalculatedValues({
+  estimatedSpendingPerMonth,
+  isAutopilotEnabled,
+  autoAllowance,
+}: {
+  estimatedSpendingPerMonth: BigNumber
+  isAutopilotEnabled: boolean
+  autoAllowance: boolean
+}) {
+  const calculatedValues: Partial<SettingsData> = {}
+  if (isAutopilotEnabled && autoAllowance && estimatedSpendingPerMonth?.gt(0)) {
+    calculatedValues.allowanceMonth = estimatedSpendingPerMonth
+  }
+  return calculatedValues
 }

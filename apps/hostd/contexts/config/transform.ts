@@ -127,6 +127,25 @@ export function transformUpSettings(
   }
 }
 
+export function getCalculatedValues({
+  storagePrice,
+  collateralMultiplier,
+  autoMaxCollateral,
+}: {
+  storagePrice: BigNumber
+  collateralMultiplier: BigNumber
+  autoMaxCollateral: boolean
+}) {
+  const calculatedValues: Partial<SettingsData> = {}
+  if (autoMaxCollateral && storagePrice && collateralMultiplier) {
+    calculatedValues.maxCollateral = calculateMaxCollateral(
+      storagePrice,
+      collateralMultiplier
+    )
+  }
+  return calculatedValues
+}
+
 export function transformUpSettingsPinned(
   values: SettingsData,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

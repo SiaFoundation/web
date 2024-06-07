@@ -80,7 +80,7 @@ export function Recommendations() {
           {usableHostsCurrent} hosts
         </Text>
       </div>
-      {needsRecommendations && (
+      {needsRecommendations && foundRecommendation ? (
         <>
           <div className="flex justify-between items-center">
             <Text size="14" color="subtle">
@@ -91,25 +91,26 @@ export function Recommendations() {
             </Text>
           </div>
           <Separator className="w-full my-1" />
-          {foundRecommendation ? (
-            usableHostsAfterRecommendation < hostTarget50 ? (
-              <Text size="14" color="subtle">
-                The system found recommendations that would increase the number
-                of usable hosts from {usableHostsCurrent} to{' '}
-                {usableHostsAfterRecommendation} of the ideal {hostTarget50}.
-              </Text>
-            ) : (
-              <Text size="14" color="subtle">
-                Follow these recommendations to match with{' '}
-                {usableHostsAfterRecommendation} hosts.
-              </Text>
-            )
+          {usableHostsAfterRecommendation < hostTarget50 ? (
+            <Text size="14" color="subtle">
+              The system found recommendations that would increase the number of
+              usable hosts from {usableHostsCurrent} to{' '}
+              {usableHostsAfterRecommendation} of the ideal {hostTarget50}.
+            </Text>
           ) : (
             <Text size="14" color="subtle">
-              The system could not find recommendations that would increase the
-              usable host count.
+              Follow these recommendations to match with{' '}
+              {usableHostsAfterRecommendation} hosts.
             </Text>
           )}
+        </>
+      ) : (
+        <>
+          <Separator className="w-full my-1" />
+          <Text size="14" color="subtle">
+            The system could not find recommendations that would increase the
+            usable host count.
+          </Text>
         </>
       )}
     </div>

@@ -1,5 +1,7 @@
 import BigNumber from 'bignumber.js'
 
+export type ConfigViewMode = 'basic' | 'advanced'
+
 export const scDecimalPlaces = 6
 
 // form defaults

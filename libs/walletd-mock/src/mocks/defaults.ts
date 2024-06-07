@@ -9,6 +9,7 @@ import { mockApiTxPoolBroadcast } from './txPoolBroadcast'
 import { mockApiWallet } from './wallet'
 import { mockApiRescan } from './rescan'
 import { RescanResponse } from '@siafoundation/walletd-types'
+import { mockApiState } from './state'
 
 type Responses = {
   rescan?: RescanResponse
@@ -21,6 +22,7 @@ export async function mockApiDefaults({
   page: Page
   responses?: Responses
 }) {
+  await mockApiState({ page })
   await mockApiSiaCentralExchangeRates({ page })
   await mockApiSyncerPeers({ page })
   await mockApiConsensusTip({ page })
