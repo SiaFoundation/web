@@ -94,9 +94,11 @@ export function SiacoinField({
   const onScChange = useCallback(
     (sc: string) => {
       setLocalSc(sc)
-      updateExternalSc(sc)
+      if (active) {
+        updateExternalSc(sc)
+      }
     },
-    [setLocalSc, updateExternalSc]
+    [active, setLocalSc, updateExternalSc]
   )
 
   const syncFiatToSc = useCallback(
@@ -159,10 +161,16 @@ export function SiacoinField({
   return (
     <div
       className={cx(
-        'flex flex-col bg-white dark:bg-graydark-50',
+        'flex flex-col',
         'focus-within:ring ring-blue-500 dark:ring-blue-200',
         'border',
-        error
+        props.readOnly
+          ? 'bg-gray-200 dark:bg-graydark-300'
+          : 'bg-white dark:bg-graydark-50',
+        props.readOnly ? 'pointer-events-none' : '',
+        props.readOnly
+          ? 'border-blue-400 dark:border-blue-400'
+          : error
           ? 'border-red-500 dark:border-red-400'
           : changed
           ? 'border-green-500 dark:border-green-400'

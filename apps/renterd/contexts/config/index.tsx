@@ -96,8 +96,10 @@ export function useConfigMain() {
     evaluation,
     redundancyMultiplier,
     fields,
-    showAdvanced,
-    setShowAdvanced,
+    configViewMode,
+    setConfigViewMode,
+    autoAllowance,
+    setAutoAllowance,
   } = useForm({ resources })
 
   const remoteValues: SettingsData = useMemo(() => {
@@ -168,7 +170,6 @@ export function useConfigMain() {
   const onValid = useOnValid({
     resources,
     estimatedSpendingPerMonth: estimates.estimatedSpendingPerMonth,
-    showAdvanced,
     isAutopilotEnabled,
     revalidateAndResetForm,
   })
@@ -204,12 +205,14 @@ export function useConfigMain() {
     storageTB,
     shouldSyncDefaultContractSet,
     setShouldSyncDefaultContractSet,
-    showAdvanced,
-    setShowAdvanced,
+    configViewMode,
+    setConfigViewMode,
     remoteError,
     configRef,
     takeScreenshot,
     evaluation,
+    autoAllowance,
+    setAutoAllowance,
   }
 }
 

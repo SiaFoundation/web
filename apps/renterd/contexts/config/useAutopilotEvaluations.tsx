@@ -5,7 +5,12 @@ import {
 import { transformUp } from './transformUp'
 import { Resources, checkIfAllResourcesLoaded } from './resources'
 import BigNumber from 'bignumber.js'
-import { RecommendationItem, SettingsData } from './types'
+import {
+  ConfigViewMode,
+  RecommendationItem,
+  SettingsData,
+  getAdvancedDefaults,
+} from './types'
 import { UseFormReturn } from 'react-hook-form'
 import { useMemo } from 'react'
 import { transformDownGouging } from './transformDown'
@@ -18,13 +23,13 @@ export function useAutopilotEvaluations({
   form,
   resources,
   isAutopilotEnabled,
-  showAdvanced,
+  configViewMode,
   estimatedSpendingPerMonth,
 }: {
   form: UseFormReturn<SettingsData>
   resources: Resources
   isAutopilotEnabled: boolean
-  showAdvanced: boolean
+  configViewMode: ConfigViewMode
   estimatedSpendingPerMonth: BigNumber
 }) {
   const values = form.watch()
@@ -41,15 +46,19 @@ export function useAutopilotEvaluations({
       return false
     }
     return true
-  }, [form, resources, renterdState])
+  }, [form.formState.isValid, resources, renterdState.data])
 
   // We need to pass valid settings data into transformUp to get the payloads.
-  // The form can be invalid so we need to merge in valid data to make sure
-  // numbers are not undefined in the transformUp calculations that assume
-  // all data is valid and present.
-  const currentValuesWithZeroDefaults = useMemo(
-    () => mergeIfDefined(valuesZeroDefaults, values),
-    [values]
+  // The form can be invalid or have empty fields depending on the mode, so we
+  // need to merge in default data to make sure numbers are not undefined in
+  // the transformUp calculations that assume all data is valid and present.
+  const currentValuesWithDefaults = useMemo(
+    () =>
+      mergeValuesWithDefaultsOrZeroValues(
+        values,
+        resources.autopilotState.data?.network
+      ),
+    [values, resources.autopilotState.data?.network]
   )
 
   const payloads = useMemo(() => {
@@ -61,17 +70,15 @@ export function useAutopilotEvaluations({
       resources,
       renterdState: renterdState.data,
       isAutopilotEnabled,
-      showAdvanced,
       estimatedSpendingPerMonth,
-      values: currentValuesWithZeroDefaults,
+      values: currentValuesWithDefaults,
     })
     return payloads
   }, [
-    currentValuesWithZeroDefaults,
+    currentValuesWithDefaults,
     resources,
     renterdState,
     isAutopilotEnabled,
-    showAdvanced,
     estimatedSpendingPerMonth,
     hasDataToEvaluate,
   ])
@@ -204,7 +211,7 @@ export function useAutopilotEvaluations({
         const rec = getRecommendationItem({
           key: remoteToLocalFields[key],
           recommendationDown,
-          values: currentValuesWithZeroDefaults,
+          values: currentValuesWithDefaults,
         })
         if (rec) {
           recs.push(rec)
@@ -216,7 +223,7 @@ export function useAutopilotEvaluations({
     recommendedGougingSettings,
     resources,
     payloads,
-    currentValuesWithZeroDefaults,
+    currentValuesWithDefaults,
   ])
   const foundRecommendation = !!recommendations.length
 
@@ -284,13 +291,19 @@ function getRecommendationItem({
 
 // We just need some of the static metadata so pass in dummy values.
 const fields = getFields({
+  validationContext: {
+    isAutopilotEnabled: true,
+    configViewMode: 'basic',
+  },
   isAutopilotEnabled: true,
-  showAdvanced: true,
+  configViewMode: 'basic',
   maxStoragePriceTBMonth: new BigNumber(0),
   maxUploadPriceTB: new BigNumber(0),
   minShards: new BigNumber(0),
   totalShards: new BigNumber(0),
   redundancyMultiplier: new BigNumber(0),
+  autoAllowance: false,
+  setAutoAllowance: () => null,
   recommendations: {},
 })
 
@@ -337,11 +350,23 @@ export const valuesZeroDefaults: SettingsData = {
   totalShards: new BigNumber(0),
 }
 
-export function mergeIfDefined(defaults: SettingsData, values: SettingsData) {
-  const merged: SettingsData = { ...defaults }
-  Object.keys(values).forEach((key) => {
-    if (values[key] !== undefined) {
-      merged[key] = values[key]
+// current value, otherwise advanced default if there is one, otherwise zero value.
+export function mergeValuesWithDefaultsOrZeroValues(
+  values: SettingsData,
+  network: 'Mainnet' | 'Zen Testnet'
+) {
+  const merged: SettingsData = getAdvancedDefaults(network)
+  // advanced defaults include undefined values, for keys without defaults.
+  // Set these to zero values.
+  Object.entries(valuesZeroDefaults).forEach(([key, value]) => {
+    if (merged[key] === undefined) {
+      merged[key] = value
+    }
+  })
+  // Apply any non-zero user values.
+  Object.entries(values).forEach(([key, value]) => {
+    if (value !== undefined) {
+      merged[key] = value
     }
   })
   return merged

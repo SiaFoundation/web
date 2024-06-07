@@ -25,7 +25,7 @@ export function useSyncContractSet() {
   })
   const settingUpdate = useSettingUpdate()
 
-  const syncDefaultContractSet = useCallback(
+  const maybeSyncDefaultContractSet = useCallback(
     async (autopilotContractSet: string) => {
       const csd = contractSet.data || { default: '' }
       try {
@@ -70,6 +70,6 @@ export function useSyncContractSet() {
   return {
     shouldSyncDefaultContractSet,
     setShouldSyncDefaultContractSet,
-    syncDefaultContractSet,
+    maybeSyncDefaultContractSet,
   }
 }

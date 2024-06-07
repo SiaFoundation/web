@@ -7,7 +7,7 @@ import {
   mockApiDefaults,
   getMockRescanResponse,
 } from '@siafoundation/walletd-mock'
-import { WalletAddressesResponse } from '@siafoundation/walletd-react'
+import { WalletAddressesResponse } from '@siafoundation/walletd-types'
 
 function getMockWalletAddressesResponse(): WalletAddressesResponse {
   return []

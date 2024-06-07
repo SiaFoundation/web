@@ -18,7 +18,7 @@ type Props = {
 
 export function ConfigCmdGroup({ currentPage, parentPage, pushPage }: Props) {
   const router = useRouter()
-  const { showAdvanced } = useConfig()
+  const { configViewMode } = useConfig()
   const { closeDialog } = useDialog()
   return (
     <CommandGroup currentPage={currentPage} commandPage={commandPage}>
@@ -82,7 +82,7 @@ export function ConfigCmdGroup({ currentPage, parentPage, pushPage }: Props) {
       >
         Configure bandwidth
       </CommandItemSearch>
-      {showAdvanced && (
+      {configViewMode === 'advanced' && (
         <>
           <CommandItemSearch
             currentPage={currentPage}

@@ -12,7 +12,9 @@ export function ConfigurationControl<
 >({ name, form, fields }: FieldProps<Values, Categories>) {
   const field = fields[name]
   const Custom = field.custom || (() => null)
-  return field.type === 'number' ? (
+  return field.type === 'custom' ? (
+    <Custom form={form} name={name} fields={fields} />
+  ) : field.type === 'number' ? (
     <ConfigurationNumber form={form} name={name} fields={fields} />
   ) : field.type === 'siacoin' ? (
     <ConfigurationSiacoin form={form} name={name} fields={fields} />
@@ -29,7 +31,5 @@ export function ConfigurationControl<
     <ConfigurationSwitch form={form} name={name} fields={fields} />
   ) : field.type === 'select' ? (
     <ConfigurationSelect form={form} name={name} fields={fields} />
-  ) : field.type === 'custom' ? (
-    <Custom form={form} name={name} fields={fields} />
   ) : null
 }

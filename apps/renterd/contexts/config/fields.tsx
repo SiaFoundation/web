@@ -3,6 +3,7 @@ import {
   Code,
   ConfigFields,
   Separator,
+  Switch,
   Text,
   Tooltip,
   hoursInDays,
@@ -11,7 +12,7 @@ import {
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import React from 'react'
-import { RecommendationItem, SettingsData } from './types'
+import { ConfigViewMode, RecommendationItem, SettingsData } from './types'
 import { humanSiacoin, toHastings } from '@siafoundation/units'
 import { Information16 } from '@siafoundation/react-icons'
 
@@ -27,9 +28,7 @@ type Categories =
   | 'redundancy'
 
 type GetFields = {
-  isAutopilotEnabled: boolean
   advancedDefaults?: SettingsData
-  showAdvanced: boolean
   maxStoragePriceTBMonth: BigNumber
   maxUploadPriceTB: BigNumber
   minShards: BigNumber
@@ -39,15 +38,21 @@ type GetFields = {
   uploadAverage?: BigNumber
   downloadAverage?: BigNumber
   contractAverage?: BigNumber
+  isAutopilotEnabled: boolean
+  configViewMode: ConfigViewMode
   recommendations: Partial<Record<keyof SettingsData, RecommendationItem>>
+  autoAllowance: boolean
+  setAutoAllowance: (value: boolean) => void
+  validationContext: {
+    isAutopilotEnabled: boolean
+    configViewMode: ConfigViewMode
+  }
 }
 
 export type Fields = ReturnType<typeof getFields>
 
 export function getFields({
-  isAutopilotEnabled,
   advancedDefaults,
-  showAdvanced,
   maxStoragePriceTBMonth,
   maxUploadPriceTB,
   minShards,
@@ -58,6 +63,11 @@ export function getFields({
   downloadAverage,
   contractAverage,
   recommendations,
+  isAutopilotEnabled,
+  configViewMode,
+  validationContext,
+  autoAllowance,
+  setAutoAllowance,
 }: GetFields): ConfigFields<SettingsData, Categories> {
   return {
     // storage
@@ -68,11 +78,11 @@ export function getFields({
       description: <>The amount of storage you would like to rent in TB.</>,
       units: 'TB',
       hidden: !isAutopilotEnabled,
-      validation: isAutopilotEnabled
-        ? {
-            required: 'required',
-          }
-        : {},
+      validation: {
+        validate: {
+          required: requiredIfAutopilot(validationContext),
+        },
+      },
     },
     uploadTBMonth: {
       type: 'number',
@@ -83,11 +93,11 @@ export function getFields({
       ),
       units: 'TB/month',
       hidden: !isAutopilotEnabled,
-      validation: isAutopilotEnabled
-        ? {
-            required: 'required',
-          }
-        : {},
+      validation: {
+        validate: {
+          required: requiredIfAutopilot(validationContext),
+        },
+      },
     },
     downloadTBMonth: {
       type: 'number',
@@ -98,11 +108,11 @@ export function getFields({
       ),
       units: 'TB/month',
       hidden: !isAutopilotEnabled,
-      validation: isAutopilotEnabled
-        ? {
-            required: 'required',
-          }
-        : {},
+      validation: {
+        validate: {
+          required: requiredIfAutopilot(validationContext),
+        },
+      },
     },
     allowanceMonth: {
       type: 'siacoin',
@@ -111,15 +121,35 @@ export function getFields({
       description: (
         <>The amount of Siacoin you would like to spend per month.</>
       ),
+      before: () => (
+        <div className="pb-1">
+          <Tooltip
+            align="end"
+            content="Calculate value based on estimated spending per month."
+          >
+            <div className="flex w-full justify-between">
+              <Text weight="medium" color="verySubtle" size="14">
+                Calculate
+              </Text>
+              <Switch
+                aria-label="autoAllowance"
+                size="small"
+                checked={autoAllowance}
+                onCheckedChange={setAutoAllowance}
+              />
+            </div>
+          </Tooltip>
+        </div>
+      ),
+      readOnly: autoAllowance,
       units: 'SC/month',
       decimalsLimitSc: scDecimalPlaces,
-      hidden: !isAutopilotEnabled || !showAdvanced,
-      validation:
-        isAutopilotEnabled && showAdvanced
-          ? {
-              required: 'required',
-            }
-          : {},
+      hidden: !isAutopilotEnabled,
+      validation: {
+        validate: {
+          required: requiredIfAutopilotAndAdvanced(validationContext),
+        },
+      },
     },
     periodWeeks: {
       type: 'number',
@@ -129,13 +159,12 @@ export function getFields({
       units: 'weeks',
       suggestion: advancedDefaults?.periodWeeks,
       suggestionTip: `Typically ${advancedDefaults?.periodWeeks} weeks.`,
-      hidden: !isAutopilotEnabled || !showAdvanced,
-      validation:
-        isAutopilotEnabled && showAdvanced
-          ? {
-              required: 'required',
-            }
-          : {},
+      hidden: !isAutopilotEnabled || configViewMode === 'basic',
+      validation: {
+        validate: {
+          required: requiredIfAutopilotAndAdvanced(validationContext),
+        },
+      },
     },
     renewWindowWeeks: {
       type: 'number',
@@ -151,13 +180,12 @@ export function getFields({
       decimalsLimit: 6,
       suggestion: advancedDefaults?.renewWindowWeeks,
       suggestionTip: `Typically ${advancedDefaults?.renewWindowWeeks} weeks.`,
-      hidden: !isAutopilotEnabled || !showAdvanced,
-      validation:
-        isAutopilotEnabled && showAdvanced
-          ? {
-              required: 'required',
-            }
-          : {},
+      hidden: !isAutopilotEnabled || configViewMode === 'basic',
+      validation: {
+        validate: {
+          required: requiredIfAutopilotAndAdvanced(validationContext),
+        },
+      },
     },
     amountHosts: {
       type: 'number',
@@ -168,13 +196,12 @@ export function getFields({
       decimalsLimit: 0,
       suggestion: advancedDefaults?.amountHosts,
       suggestionTip: `Typically ${advancedDefaults?.amountHosts} hosts.`,
-      hidden: !isAutopilotEnabled || !showAdvanced,
-      validation:
-        isAutopilotEnabled && showAdvanced
-          ? {
-              required: 'required',
-            }
-          : {},
+      hidden: !isAutopilotEnabled || configViewMode === 'basic',
+      validation: {
+        validate: {
+          required: requiredIfAutopilotAndAdvanced(validationContext),
+        },
+      },
     },
     autopilotContractSet: {
       type: 'text',
@@ -194,13 +221,12 @@ export function getFields({
           <Code>{advancedDefaults?.autopilotContractSet}</Code>.
         </>
       ),
-      hidden: !isAutopilotEnabled || !showAdvanced,
-      validation:
-        isAutopilotEnabled && showAdvanced
-          ? {
-              required: 'required',
-            }
-          : {},
+      hidden: !isAutopilotEnabled || configViewMode === 'basic',
+      validation: {
+        validate: {
+          required: requiredIfAutopilotAndAdvanced(validationContext),
+        },
+      },
     },
     prune: {
       type: 'boolean',
@@ -222,7 +248,7 @@ export function getFields({
           The default value is <Code>{advancedDefaults?.prune}</Code>.
         </>
       ),
-      hidden: !isAutopilotEnabled || !showAdvanced,
+      hidden: !isAutopilotEnabled || configViewMode === 'basic',
       validation: {},
     },
 
@@ -241,7 +267,7 @@ export function getFields({
       suggestionTip: `Defaults to ${
         advancedDefaults?.allowRedundantIPs ? 'on' : 'off'
       }.`,
-      hidden: !isAutopilotEnabled || !showAdvanced,
+      hidden: !isAutopilotEnabled || configViewMode === 'basic',
       validation: {},
     },
     maxDowntimeHours: {
@@ -264,13 +290,12 @@ export function getFields({
         ),
         1
       )} days.`,
-      hidden: !isAutopilotEnabled || !showAdvanced,
-      validation:
-        isAutopilotEnabled && showAdvanced
-          ? {
-              required: 'required',
-            }
-          : {},
+      hidden: !isAutopilotEnabled || configViewMode === 'basic',
+      validation: {
+        validate: {
+          required: requiredIfAutopilotAndAdvanced(validationContext),
+        },
+      },
     },
     minRecentScanFailures: {
       type: 'number',
@@ -286,13 +311,12 @@ export function getFields({
       decimalsLimit: 0,
       suggestion: advancedDefaults?.minRecentScanFailures,
       suggestionTip: `Defaults to ${advancedDefaults?.minRecentScanFailures.toNumber()}.`,
-      hidden: !isAutopilotEnabled || !showAdvanced,
-      validation:
-        isAutopilotEnabled && showAdvanced
-          ? {
-              required: 'required',
-            }
-          : {},
+      hidden: !isAutopilotEnabled || configViewMode === 'basic',
+      validation: {
+        validate: {
+          required: requiredIfAutopilotAndAdvanced(validationContext),
+        },
+      },
     },
     minProtocolVersion: {
       type: 'text',
@@ -306,19 +330,19 @@ export function getFields({
       ),
       suggestion: advancedDefaults?.minProtocolVersion,
       suggestionTip: `Defaults to ${advancedDefaults?.minProtocolVersion}.`,
-      hidden: !isAutopilotEnabled || !showAdvanced,
-      validation:
-        isAutopilotEnabled && showAdvanced
-          ? {
-              required: 'required',
-              validate: {
-                version: (value: string) => {
-                  const regex = /^\d+\.\d+\.\d+$/
-                  return regex.test(value) || 'must be a valid version number'
-                },
-              },
+      hidden: !isAutopilotEnabled || configViewMode === 'basic',
+      validation: {
+        validate: {
+          required: requiredIfAutopilotAndAdvanced(validationContext),
+          version: requiredIfAutopilotAndAdvanced(
+            validationContext,
+            (value: string) => {
+              const regex = /^\d+\.\d+\.\d+$/
+              return regex.test(value) || 'must be a valid version number'
             }
-          : {},
+          ),
+        },
+      },
     },
 
     // contract
@@ -337,12 +361,12 @@ export function getFields({
       description: (
         <>The default contract set is where data is uploaded to by default.</>
       ),
-      hidden: !showAdvanced,
-      validation: showAdvanced
-        ? {
-            required: 'required',
-          }
-        : {},
+      hidden: configViewMode === 'basic',
+      validation: {
+        validate: {
+          required: requiredIfAdvanced(validationContext),
+        },
+      },
     },
     uploadPackingEnabled: {
       category: 'uploadpacking',
@@ -363,7 +387,7 @@ export function getFields({
           they must be considered when backing up your renterd data.
         </>
       ),
-      hidden: !showAdvanced,
+      hidden: configViewMode === 'basic',
       validation: {},
     },
 
@@ -505,14 +529,14 @@ export function getFields({
       average: contractAverage,
       decimalsLimitSc: scDecimalPlaces,
       tipsDecimalsLimitSc: 3,
-      hidden: !showAdvanced,
+      hidden: configViewMode === 'basic',
       suggestion: recommendations.maxContractPrice?.targetValue,
       suggestionTip: 'This value will help you match with more hosts.',
-      validation: showAdvanced
-        ? {
-            required: 'required',
-          }
-        : {},
+      validation: {
+        validate: {
+          required: requiredIfAdvanced(validationContext),
+        },
+      },
     },
     maxRpcPriceMillion: {
       category: 'gouging',
@@ -523,14 +547,14 @@ export function getFields({
       ),
       units: 'SC/million',
       decimalsLimitSc: scDecimalPlaces,
-      hidden: !showAdvanced,
+      hidden: configViewMode === 'basic',
       suggestion: recommendations.maxRpcPriceMillion?.targetValue,
       suggestionTip: 'This value will help you match with more hosts.',
-      validation: showAdvanced
-        ? {
-            required: 'required',
-          }
-        : {},
+      validation: {
+        validate: {
+          required: requiredIfAdvanced(validationContext),
+        },
+      },
     },
     hostBlockHeightLeeway: {
       category: 'gouging',
@@ -553,17 +577,18 @@ export function getFields({
             suggestion: advancedDefaults?.hostBlockHeightLeeway,
             suggestionTip: 'The recommended value is 6 blocks.',
           }),
-      hidden: !showAdvanced,
-      validation: showAdvanced
-        ? {
-            required: 'required',
-            validate: {
-              min: (value) =>
-                new BigNumber(value as BigNumber).gte(3) ||
-                'must be at least 3 blocks',
-            },
-          }
-        : {},
+      hidden: configViewMode === 'basic',
+      validation: {
+        validate: {
+          required: requiredIfAdvanced(validationContext),
+          min: requiredIfAdvanced(validationContext, (value) => {
+            return (
+              new BigNumber(value as BigNumber).gte(3) ||
+              'must be at least 3 blocks'
+            )
+          }),
+        },
+      },
     },
     minPriceTableValidityMinutes: {
       category: 'gouging',
@@ -573,19 +598,20 @@ export function getFields({
       description: (
         <>The min accepted value for `Validity` in the host's price settings.</>
       ),
-      hidden: !showAdvanced,
+      hidden: configViewMode === 'basic',
       suggestion: recommendations.minPriceTableValidityMinutes?.targetValue,
       suggestionTip: 'This value will help you match with more hosts.',
-      validation: showAdvanced
-        ? {
-            required: 'required',
-            validate: {
-              min: (value) =>
-                new BigNumber(value as BigNumber).gte(secondsInMinutes(10)) ||
-                'must be at least 10 seconds',
-            },
-          }
-        : {},
+      validation: {
+        validate: {
+          required: requiredIfAdvanced(validationContext),
+          min: requiredIfAdvanced(validationContext, (value) => {
+            return (
+              new BigNumber(value as BigNumber).gte(secondsInMinutes(10)) ||
+              'must be at least 10 seconds'
+            )
+          }),
+        },
+      },
     },
     minAccountExpiryDays: {
       category: 'gouging',
@@ -598,19 +624,20 @@ export function getFields({
           settings.
         </>
       ),
-      hidden: !showAdvanced,
+      hidden: configViewMode === 'basic',
       suggestion: recommendations.minAccountExpiryDays?.targetValue,
       suggestionTip: 'This value will help you match with more hosts.',
-      validation: showAdvanced
-        ? {
-            required: 'required',
-            validate: {
-              min: (value) =>
-                new BigNumber(value as BigNumber).gte(hoursInDays(1)) ||
-                'must be at least 1 hour',
-            },
-          }
-        : {},
+      validation: {
+        validate: {
+          required: requiredIfAdvanced(validationContext),
+          min: requiredIfAdvanced(validationContext, (value) => {
+            return (
+              new BigNumber(value as BigNumber).gte(hoursInDays(1)) ||
+              'must be at least 1 hour'
+            )
+          }),
+        },
+      },
     },
     minMaxEphemeralAccountBalance: {
       category: 'gouging',
@@ -623,19 +650,20 @@ export function getFields({
         </>
       ),
       decimalsLimitSc: scDecimalPlaces,
-      hidden: !showAdvanced,
+      hidden: configViewMode === 'basic',
       suggestion: recommendations.minMaxEphemeralAccountBalance?.targetValue,
       suggestionTip: 'This value will help you match with more hosts.',
-      validation: showAdvanced
-        ? {
-            required: 'required',
-            validate: {
-              min: (value) =>
-                new BigNumber(value as BigNumber).gte(1) ||
-                'must be at least 1 SC',
-            },
-          }
-        : {},
+      validation: {
+        validate: {
+          required: requiredIfAdvanced(validationContext),
+          min: requiredIfAdvanced(validationContext, (value) => {
+            return (
+              new BigNumber(value as BigNumber).gte(1) ||
+              'must be at least 1 SC'
+            )
+          }),
+        },
+      },
     },
     migrationSurchargeMultiplier: {
       category: 'gouging',
@@ -664,12 +692,12 @@ export function getFields({
             suggestion: new BigNumber(10),
             suggestionTip: 'The default multiplier is 10x the download price.',
           }),
-      hidden: !showAdvanced,
-      validation: showAdvanced
-        ? {
-            required: 'required',
-          }
-        : {},
+      hidden: configViewMode === 'basic',
+      validation: {
+        validate: {
+          required: requiredIfAdvanced(validationContext),
+        },
+      },
     },
 
     // Redundancy
@@ -681,17 +709,18 @@ export function getFields({
       suggestion: advancedDefaults?.minShards,
       suggestionTip: `Typically ${advancedDefaults?.minShards} shards.`,
       units: 'shards',
-      hidden: !showAdvanced,
-      validation: showAdvanced
-        ? {
-            required: 'required',
-            validate: {
-              min: (value) =>
-                new BigNumber(value as BigNumber).gt(0) ||
-                'must be greater than 0',
-            },
-          }
-        : {},
+      hidden: configViewMode === 'basic',
+      validation: {
+        validate: {
+          required: requiredIfAdvanced(validationContext),
+          min: requiredIfAdvanced(validationContext, (value) => {
+            return (
+              new BigNumber(value as BigNumber).gt(0) ||
+              'must be greater than 0'
+            )
+          }),
+        },
+      },
       trigger: ['totalShards'],
     },
     totalShards: {
@@ -702,20 +731,72 @@ export function getFields({
       suggestion: advancedDefaults?.totalShards,
       suggestionTip: `Typically ${advancedDefaults?.totalShards} shards.`,
       units: 'shards',
-      hidden: !showAdvanced,
-      validation: showAdvanced
-        ? {
-            required: 'required',
-            validate: {
-              gteMinShards: (value, values) =>
-                new BigNumber(value as BigNumber).gte(values.minShards) ||
-                'must be at least equal to min shards',
-              max: (value) =>
-                new BigNumber(value as BigNumber).lt(256) ||
-                'must be less than 256',
-            },
-          }
-        : {},
+      hidden: configViewMode === 'basic',
+      validation: {
+        validate: {
+          required: requiredIfAdvanced(validationContext),
+          gteMinShards: requiredIfAdvanced(
+            validationContext,
+            (value, values) =>
+              new BigNumber(value as BigNumber).gte(values.minShards) ||
+              'must be at least equal to min shards'
+          ),
+          max: requiredIfAdvanced(
+            validationContext,
+            (value) =>
+              new BigNumber(value as BigNumber).lt(256) ||
+              'must be less than 256'
+          ),
+        },
+      },
     },
+  }
+}
+
+function requiredIfAdvanced<Values>(
+  context: { configViewMode: ConfigViewMode },
+  method?: (value: unknown, values: Values) => string | boolean
+) {
+  return (value: unknown, values: Values) => {
+    if (context.configViewMode === 'advanced') {
+      if (method) {
+        return method(value, values)
+      }
+      return !!value || 'required'
+    }
+    return true
+  }
+}
+
+function requiredIfAutopilot<Values>(
+  context: { isAutopilotEnabled: boolean },
+  method?: (value: unknown, values: Values) => string | boolean
+) {
+  return (value: unknown, values: Values) => {
+    if (context.isAutopilotEnabled) {
+      if (method) {
+        return method(value, values)
+      }
+      return !!value || 'required'
+    }
+    return true
+  }
+}
+
+function requiredIfAutopilotAndAdvanced<Values>(
+  context: {
+    isAutopilotEnabled: boolean
+    configViewMode: ConfigViewMode
+  },
+  method?: (value: unknown, values: Values) => string | boolean
+) {
+  return (value: unknown, values: Values) => {
+    if (context.isAutopilotEnabled && context.configViewMode === 'advanced') {
+      if (method) {
+        return method(value, values)
+      }
+      return !!value || 'required'
+    }
+    return true
   }
 }

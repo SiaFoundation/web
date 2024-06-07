@@ -19,7 +19,7 @@ type Props = {
 
 export function ConfigCmdGroup({ currentPage, parentPage, pushPage }: Props) {
   const router = useRouter()
-  const { showAdvanced } = useConfig()
+  const { configViewMode } = useConfig()
   const { closeDialog } = useDialog()
   const { autopilot } = useApp()
   return (
@@ -66,7 +66,7 @@ export function ConfigCmdGroup({ currentPage, parentPage, pushPage }: Props) {
       >
         Configure pricing
       </CommandItemSearch>
-      {showAdvanced && (
+      {configViewMode === 'advanced' && (
         <>
           {autopilot.status === 'on' && (
             <>

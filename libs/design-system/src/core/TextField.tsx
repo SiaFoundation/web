@@ -7,6 +7,7 @@ export const textFieldStyles = cva(
     'font-sans [type=number]:font-mono',
     'outline-none m-0 p-0 w-full',
     'disabled:pointer-events-none',
+    'read-only:pointer-events-none',
     'tabular-nums',
     'rounded',
     'text-gray-1100 dark:text-white',
@@ -28,6 +29,7 @@ export const textFieldStyles = cva(
           'bg-white dark:bg-graydark-50',
           'autofill:bg-white autofill:dark:bg-graydark-50',
           'autofill:shadow-fill-white autofill:dark:shadow-fill-graydark-50',
+          'read-only:bg-gray-200 dark:read-only:bg-graydark-300',
         ],
         ghost: 'bg-transparent',
       },
@@ -35,6 +37,7 @@ export const textFieldStyles = cva(
         default: [
           'border-gray-400 dark:border-graydark-400',
           'enabled:hover:border-gray-500 enabled:hover:dark:border-graydark-500',
+          'read-only:border-gray-200 dark:read-only:border-graydark-200',
         ],
         invalid: ['border-red-500 dark:border-red-400'],
         valid: ['border-green-500 dark:border-green-400'],

@@ -13,7 +13,10 @@ export const navbarAppHeight = 60
 export function AppNavbar({ title, nav, stats, actions, after }: Props) {
   return (
     <>
-      <div className="flex items-center gap-2 px-6 h-14 z-10 bg-white dark:bg-graydark-50 border-b border-gray-500 dark:border-graydark-500">
+      <div
+        id="navbar"
+        className="flex items-center gap-2 px-6 h-14 z-10 bg-white dark:bg-graydark-50 border-b border-gray-500 dark:border-graydark-500"
+      >
         {title ? (
           typeof title === 'string' ? (
             <Text

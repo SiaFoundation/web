@@ -1,5 +1,5 @@
-import { useEffect, useMemo } from 'react'
-import { defaultValues, getAdvancedDefaults } from './types'
+import { useEffect, useMemo, useRef } from 'react'
+import { ConfigViewMode, defaultValues, getAdvancedDefaults } from './types'
 import { getRedundancyMultiplier } from './utils'
 import { useForm as useHookForm } from 'react-hook-form'
 import { useAverages } from './useAverages'
@@ -10,6 +10,7 @@ import useLocalStorageState from 'use-local-storage-state'
 import { useAutopilotEvaluations } from './useAutopilotEvaluations'
 import { useEstimates } from './useEstimates'
 import { Resources } from './resources'
+import { useAutoCalculatedFields } from './useAutoCalculatedFields'
 
 export function useForm({ resources }: { resources: Resources }) {
   const form = useHookForm({
@@ -39,19 +40,17 @@ export function useForm({ resources }: { resources: Resources }) {
 
   const app = useApp()
   const isAutopilotEnabled = app.autopilot.status === 'on'
-  const [showAdvanced, setShowAdvanced] = useLocalStorageState<boolean>(
-    'v0/config/showAdvanced',
-    {
-      defaultValue: false,
-    }
-  )
+  const [configViewMode, setConfigViewMode] =
+    useLocalStorageState<ConfigViewMode>('v0/config/mode', {
+      defaultValue: 'basic',
+    })
 
-  // Trigger input validation on showAdvanced change because many field validation
+  // Trigger input validation on configViewMode change because many field validation
   // objects switch from required to not required.
   useEffect(() => {
     form.trigger()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showAdvanced])
+  }, [configViewMode])
 
   const estimates = useEstimates({
     isAutopilotEnabled,
@@ -69,11 +68,29 @@ export function useForm({ resources }: { resources: Resources }) {
     form,
     resources,
     isAutopilotEnabled,
-    showAdvanced,
+    configViewMode,
     estimatedSpendingPerMonth,
   })
 
+  const { autoAllowance, setAutoAllowance } = useAutoCalculatedFields({
+    form,
+    estimatedSpendingPerMonth,
+    isAutopilotEnabled,
+  })
+
   const renterdState = useBusState()
+
+  // Field validation is only re-applied on re-mount,
+  // so we pass a ref with latest data that can be used interally.
+  const validationContext = useRef({
+    isAutopilotEnabled,
+    configViewMode,
+  })
+  useEffect(() => {
+    validationContext.current.isAutopilotEnabled = isAutopilotEnabled
+    validationContext.current.configViewMode = configViewMode
+  }, [isAutopilotEnabled, configViewMode])
+
   const fields = useMemo(() => {
     const advancedDefaults = renterdState.data
       ? getAdvancedDefaults(renterdState.data.network)
@@ -86,9 +103,10 @@ export function useForm({ resources }: { resources: Resources }) {
     }, {})
     if (averages.data) {
       return getFields({
-        advancedDefaults,
+        validationContext: validationContext.current,
         isAutopilotEnabled,
-        showAdvanced,
+        configViewMode,
+        advancedDefaults,
         maxStoragePriceTBMonth,
         maxUploadPriceTB,
         redundancyMultiplier,
@@ -99,23 +117,28 @@ export function useForm({ resources }: { resources: Resources }) {
         minShards,
         totalShards,
         recommendations,
+        autoAllowance,
+        setAutoAllowance,
       })
     }
     return getFields({
-      advancedDefaults,
+      validationContext: validationContext.current,
       isAutopilotEnabled,
-      showAdvanced,
+      configViewMode,
+      advancedDefaults,
       maxStoragePriceTBMonth,
       maxUploadPriceTB,
       redundancyMultiplier,
       minShards,
       totalShards,
       recommendations,
+      autoAllowance,
+      setAutoAllowance,
     })
   }, [
-    renterdState.data,
     isAutopilotEnabled,
-    showAdvanced,
+    configViewMode,
+    renterdState.data,
     averages.data,
     storageAverage,
     uploadAverage,
@@ -127,6 +150,8 @@ export function useForm({ resources }: { resources: Resources }) {
     minShards,
     totalShards,
     evaluation,
+    autoAllowance,
+    setAutoAllowance,
   ])
 
   return {
@@ -143,7 +168,9 @@ export function useForm({ resources }: { resources: Resources }) {
     minShards,
     totalShards,
     redundancyMultiplier,
-    showAdvanced,
-    setShowAdvanced,
+    configViewMode,
+    setConfigViewMode,
+    autoAllowance,
+    setAutoAllowance,
   }
 }
