@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 import { login } from '../fixtures/login'
 import { expectSwitchByLabel, setSwitchByLabel } from '../fixtures/switchValue'
 import { setViewMode } from '../fixtures/configViewMode'
-import { navigateToConfig } from '../fixtures/navigateToConfig'
+import { navigateToConfig } from '../fixtures/navigate'
 import { mockApiSiaCentralExchangeRates } from '@siafoundation/sia-central-mock'
 import {
   expectTextInputByName,

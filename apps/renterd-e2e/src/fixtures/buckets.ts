@@ -1,11 +1,10 @@
 import { Page, expect } from '@playwright/test'
-import { navigateToBuckets } from './navigateToBuckets'
+import { navigateToBuckets } from './navigate'
 import { fillTextInputByName } from './textInput'
 import { clearToasts } from './clearToasts'
 
 export async function createBucket(page: Page, name: string) {
   await navigateToBuckets({ page })
-  await expect(page.getByTestId('navbar').getByText('Buckets')).toBeVisible()
   await page.getByText('Create bucket').click()
   await fillTextInputByName(page, 'name', name)
   await page.locator('input[name=name]').press('Enter')

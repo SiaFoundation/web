@@ -37,10 +37,12 @@ const defaultValues = {
   immediatePath: '~',
 }
 
+type Values = typeof defaultValues
+
 function getFields(
   minSizeGB: number,
   maxSizeGB: number
-): ConfigFields<typeof defaultValues, never> {
+): ConfigFields<Values, never> {
   return {
     name: {
       type: 'text',
@@ -128,7 +130,7 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
   }, [path])
 
   const onSubmit = useCallback(
-    async (values) => {
+    async (values: Values) => {
       const response = await volumeAdd.post({
         payload: {
           localPath: joinPaths(path, name, separator),
@@ -202,7 +204,9 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
 
   const onInvalid = useOnInvalid(fields)
 
-  form.register('path', fields.path.validation)
+  useEffect(() => {
+    form.register('path', fields.path.validation)
+  }, [form, fields.path.validation])
 
   return (
     <Dialog
