@@ -24,7 +24,9 @@ const defaultValues = {
   force: false,
 }
 
-function getFields(path: string): ConfigFields<typeof defaultValues, never> {
+type Values = typeof defaultValues
+
+function getFields(path: string): ConfigFields<Values, never> {
   return {
     path: {
       type: 'text',
@@ -71,7 +73,7 @@ export function VolumeDeleteDialog({ trigger, open, onOpenChange }: Props) {
   })
 
   const onSubmit = useCallback(
-    async (values: typeof defaultValues) => {
+    async (values: Values) => {
       const response = await volumeDelete.delete({
         params: {
           id: volume.data?.id,
@@ -84,7 +86,9 @@ export function VolumeDeleteDialog({ trigger, open, onOpenChange }: Props) {
           body: response.error,
         })
       } else {
-        triggerSuccessToast({ title: 'Volume permanently deleted' })
+        triggerSuccessToast({
+          title: 'Volume is now being permanently deleted',
+        })
         form.reset()
         closeDialog()
       }

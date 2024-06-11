@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { navigateToBuckets } from '../fixtures/navigateToBuckets'
+import { navigateToBuckets } from '../fixtures/navigate'
 import { login } from '../fixtures/login'
 import {
   bucketInList,
