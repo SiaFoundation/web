@@ -39,21 +39,24 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     cwd: workspaceRoot,
   },
+  // Run the tests serially as they may mutate the state of the same application.
+  workers: 1,
   projects: [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    // Disable firefox and webkit to save time since tests are running serially.
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
 
     // Uncomment for mobile browsers support
     /* {

@@ -3,10 +3,14 @@ import { Page, expect } from '@playwright/test'
 export async function fillTextInputByName(
   page: Page,
   name: string,
-  value: string
+  value: string,
+  tabAfterFill = false
 ) {
   await page.locator(`input[name="${name}"]`).click()
   await page.locator(`input[name="${name}"]`).fill(value)
+  if (tabAfterFill) {
+    await page.locator(`input[name="${name}"]`).press('Tab')
+  }
 }
 
 export async function expectTextInputByName(

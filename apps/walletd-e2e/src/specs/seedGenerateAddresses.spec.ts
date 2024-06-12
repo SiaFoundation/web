@@ -1,46 +1,22 @@
 import { test, expect } from '@playwright/test'
 import { login } from '../fixtures/login'
-import { createWallet } from '../fixtures/createWallet'
+import { deleteWalletIfExists, recoverWallet } from '../fixtures/wallet'
 import { navigateToWallet } from '../fixtures/navigateToWallet'
-import {
-  getMockScenarioSeedWallet,
-  mockApiDefaults,
-  getMockRescanResponse,
-} from '@siafoundation/walletd-mock'
-import { WalletAddressesResponse } from '@siafoundation/walletd-types'
+import { fillTextInputByName } from '../fixtures/textInput'
 
-function getMockWalletAddressesResponse(): WalletAddressesResponse {
-  return []
-}
+test('generate new addresses', async ({ page, context }) => {
+  const name = 'my-existing-wallet'
+  const mnemonic =
+    'ridge business wish transfer home glove office salt wealth baby journey diary'
 
-function getDefaultMockWalletResponses() {
-  return {
-    addresses: getMockWalletAddressesResponse(),
-  }
-}
-
-test('generate new addresses', async ({ page }) => {
-  const rescanResponse = getMockRescanResponse()
-  await mockApiDefaults({
-    page,
-    responses: {
-      rescan: rescanResponse,
-    },
-  })
   await login({ page })
+  await deleteWalletIfExists(page, name)
 
-  const mocks = getMockScenarioSeedWallet()
-  const { newWallet, mnemonic } = mocks
-  await createWallet({
-    page,
-    newWallet,
-    mnemonic,
-    responses: getDefaultMockWalletResponses(),
-  })
-  await navigateToWallet({ page, wallet: newWallet })
+  await recoverWallet(page, context, name, mnemonic)
+  await navigateToWallet(page, name)
   await page.getByLabel('view addresses').click()
   await page.getByRole('button', { name: 'Add addresses' }).click()
-  await page.locator('input[name=count]').fill('5')
+  await fillTextInputByName(page, 'count', '5')
   await page.getByRole('button', { name: 'Generate addresses' }).click()
   await expect(
     page.getByText('65b40f6a720352ad5b9546b9f5077209672914cc...')
@@ -59,33 +35,28 @@ test('generate new addresses', async ({ page }) => {
   ).toBeVisible()
 })
 
-test('generate new addresses and rescan', async ({ page }) => {
-  const rescanResponse = getMockRescanResponse()
-  await mockApiDefaults({
-    page,
-    responses: {
-      rescan: rescanResponse,
-    },
-  })
-  await login({ page })
+test('generate new addresses and rescan', async ({ page, context }) => {
+  const name = 'my-existing-wallet'
+  const mnemonic =
+    'ridge business wish transfer home glove office salt wealth baby journey diary'
 
-  const mocks = getMockScenarioSeedWallet()
-  const { newWallet, mnemonic } = mocks
-  await createWallet({
-    page,
-    newWallet,
-    mnemonic,
-    responses: getDefaultMockWalletResponses(),
-  })
-  await navigateToWallet({ page, wallet: newWallet })
+  await login({ page })
+  await deleteWalletIfExists(page, name)
+
+  await recoverWallet(page, context, name, mnemonic)
+  await navigateToWallet(page, name)
   await page.getByLabel('view addresses').click()
   await page.getByRole('button', { name: 'Add addresses' }).click()
-  await page.locator('input[name=count]').fill('5')
+  await fillTextInputByName(page, 'count', '5')
   await page.getByLabel('shouldRescan').click()
-  await expect(page.locator('input[name=rescanStartHeight]')).toHaveValue(
-    '61,676'
+  const val = await page.locator('input[name=rescanStartHeight]').inputValue()
+  const defaultRescanStartHeight = Number(val.replace(/,/g, ''))
+  expect(defaultRescanStartHeight).toBeGreaterThan(60_000)
+  await fillTextInputByName(
+    page,
+    'rescanStartHeight',
+    String(defaultRescanStartHeight - 500)
   )
-  rescanResponse.index.height = 30_000
   await page
     .getByRole('button', { name: 'Generate addresses and rescan' })
     .click()
