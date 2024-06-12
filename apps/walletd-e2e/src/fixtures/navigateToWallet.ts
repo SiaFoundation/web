@@ -1,13 +1,8 @@
-import { Page } from '@playwright/test'
-import { Wallet } from '@siafoundation/walletd-types'
+import { Page, expect } from '@playwright/test'
+import { openWallet } from './wallet'
 
-export async function navigateToWallet({
-  page,
-  wallet,
-}: {
-  page: Page
-  wallet: Wallet
-}) {
+export async function navigateToWallet(page: Page, name: string) {
   await page.getByLabel('Dashboard').click()
-  await page.getByText(wallet.name).click()
+  await openWallet(page, name)
+  await expect(page.getByTestId('navbar').getByText(name)).toBeVisible()
 }

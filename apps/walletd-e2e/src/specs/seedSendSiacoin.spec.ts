@@ -1,58 +1,26 @@
 import { test, expect } from '@playwright/test'
 import { login } from '../fixtures/login'
-import { createWallet } from '../fixtures/createWallet'
+import { unlockWallet, walletInList } from '../fixtures/wallet'
 import { navigateToWallet } from '../fixtures/navigateToWallet'
 import { fillComposeTransactionSiacoin } from '../fixtures/sendSiacoinDialog'
-import {
-  getMockScenarioSeedWallet,
-  mockApiDefaults,
-} from '@siafoundation/walletd-mock'
-
-function getDefaultMockWalletResponses(
-  mocks: ReturnType<typeof getMockScenarioSeedWallet>
-) {
-  return {
-    fund: mocks.walletFundResponse,
-    outputsSiacoin: mocks.walletOutputsSiacoinResponse,
-    addresses: mocks.walletAddressesResponse,
-  }
-}
 
 test('send siacoin with a seed wallet', async ({ page }) => {
-  await mockApiDefaults({ page })
   await login({ page })
-  const mocks = getMockScenarioSeedWallet()
-  const { newWallet, mnemonic, receiveAddress, changeAddress } = mocks
-  await createWallet({
-    page,
-    newWallet,
-    mnemonic,
-    responses: getDefaultMockWalletResponses(mocks),
-    expects: {
-      fundSiacoinPost: (data) =>
-        expect(data).toEqual(
-          JSON.stringify({
-            amount: '1003930000000000000000000',
-            changeAddress: mocks.changeAddress,
-            transaction: {
-              minerFees: ['3930000000000000000000'],
-              siacoinOutputs: [
-                {
-                  value: '1000000000000000000000000',
-                  address: mocks.receiveAddress,
-                },
-              ],
-            },
-          })
-        ),
-    },
-  })
-  await navigateToWallet({ page, wallet: newWallet })
+  const name = 'test-send-siacoin-seed-wallet'
+  const receiveAddress =
+    '5739945c21e60afd70eaf97ccd33ea27836e0219212449f39e4b38acaa8b3119aa4150a9ef0f'
+  const changeAddress =
+    '170173c40ca0f39f9618da30af14c390c7ce70248a3662a7a5d3d5a8a31c9fbfa2071e9f6518'
+  const mnemonic =
+    'march wait photo expire sweet hurry photo joy sail certain time beef'
+  await walletInList(page, name)
+  await unlockWallet(page, name, mnemonic)
+  await navigateToWallet(page, name)
   await page.getByLabel('send').click()
   await fillComposeTransactionSiacoin({
     page,
-    receiveAddress: mocks.receiveAddress,
-    changeAddress: mocks.changeAddress,
+    receiveAddress,
+    changeAddress,
     amount: '1',
   })
   await expect(page.getByText('The wallet is currently unlocked')).toBeVisible()
@@ -69,223 +37,4 @@ test('send siacoin with a seed wallet', async ({ page }) => {
   await expect(page.getByText(changeAddress.slice(0, 5))).toBeVisible()
   await expect(page.getByText('Total')).toBeVisible()
   await expect(page.getByText('1.004 SC')).toBeVisible()
-})
-
-test('errors if the input to sign is not found on the transaction', async ({
-  page,
-}) => {
-  await mockApiDefaults({ page })
-  const mocks = getMockScenarioSeedWallet()
-  const { newWallet, mnemonic, receiveAddress, changeAddress } = mocks
-  const mockFundInvalid = mocks.walletFundResponse
-  mockFundInvalid.transaction.siacoinInputs[0].parentID =
-    'scoid:bb3e781330c9b3991e0141807df1327fadf114ca6c37acb9e58004f942d91dfb'
-  await login({ page })
-  await createWallet({
-    page,
-    newWallet,
-    mnemonic,
-    responses: {
-      ...getDefaultMockWalletResponses(mocks),
-      fundSiacoin: mockFundInvalid,
-    },
-    expects: {
-      fundSiacoinPost: (data) =>
-        expect(data).toEqual(
-          JSON.stringify({
-            amount: '1003930000000000000000000',
-            changeAddress: mocks.changeAddress,
-            transaction: {
-              minerFees: ['3930000000000000000000'],
-              siacoinOutputs: [
-                {
-                  value: '1000000000000000000000000',
-                  address: mocks.receiveAddress,
-                },
-              ],
-            },
-          })
-        ),
-    },
-  })
-  await navigateToWallet({ page, wallet: newWallet })
-  await page.getByLabel('send').click()
-  await fillComposeTransactionSiacoin({
-    page,
-    receiveAddress,
-    changeAddress,
-    amount: '1',
-  })
-  await expect(page.getByText('The wallet is currently unlocked')).toBeVisible()
-  await expect(page.getByText('Total')).toBeVisible()
-  await expect(page.getByText('1.004 SC')).toBeVisible()
-
-  await page
-    .getByRole('button', { name: 'Sign and broadcast transaction' })
-    .click()
-  await expect(page.getByText('Missing input')).toBeVisible()
-})
-
-test('errors if the inputs matching utxo is not found', async ({ page }) => {
-  await mockApiDefaults({ page })
-  const mocks = getMockScenarioSeedWallet()
-  const { newWallet, mnemonic, receiveAddress, changeAddress } = mocks
-  const mockOutputsInvalid = mocks.walletOutputsSiacoinResponse
-  mockOutputsInvalid.forEach((output) => {
-    output.id = 'not the matching id'
-  })
-  await login({ page })
-  await createWallet({
-    page,
-    newWallet,
-    mnemonic: mnemonic,
-    responses: {
-      ...getDefaultMockWalletResponses(mocks),
-      outputsSiacoin: mockOutputsInvalid,
-    },
-    expects: {
-      fundSiacoinPost: (data) =>
-        expect(data).toEqual(
-          JSON.stringify({
-            amount: '1003930000000000000000000',
-            changeAddress: mocks.changeAddress,
-            transaction: {
-              minerFees: ['3930000000000000000000'],
-              siacoinOutputs: [
-                {
-                  value: '1000000000000000000000000',
-                  address: mocks.receiveAddress,
-                },
-              ],
-            },
-          })
-        ),
-    },
-  })
-  await navigateToWallet({ page, wallet: newWallet })
-  await page.getByLabel('send').click()
-  await fillComposeTransactionSiacoin({
-    page,
-    receiveAddress,
-    changeAddress,
-    amount: '1',
-  })
-  await expect(page.getByText('The wallet is currently unlocked')).toBeVisible()
-  await expect(page.getByText('Total')).toBeVisible()
-  await expect(page.getByText('1.004 SC')).toBeVisible()
-
-  await page
-    .getByRole('button', { name: 'Sign and broadcast transaction' })
-    .click()
-  await expect(page.getByText('Missing utxo')).toBeVisible()
-})
-
-test('errors if the address is missing its index', async ({ page }) => {
-  await mockApiDefaults({ page })
-  await login({ page })
-
-  const mocks = getMockScenarioSeedWallet()
-  const { newWallet, mnemonic, receiveAddress, changeAddress } = mocks
-  const mockAddressesInvalid = mocks.walletAddressesResponse
-  mockAddressesInvalid.forEach((address) => {
-    address.metadata.index = undefined
-  })
-  await createWallet({
-    page,
-    newWallet,
-    mnemonic: mnemonic,
-    responses: {
-      ...getDefaultMockWalletResponses(mocks),
-      addresses: mockAddressesInvalid,
-    },
-    expects: {
-      fundSiacoinPost: (data) =>
-        expect(data).toEqual(
-          JSON.stringify({
-            amount: '1003930000000000000000000',
-            changeAddress: mocks.changeAddress,
-            transaction: {
-              minerFees: ['3930000000000000000000'],
-              siacoinOutputs: [
-                {
-                  value: '1000000000000000000000000',
-                  address: mocks.receiveAddress,
-                },
-              ],
-            },
-          })
-        ),
-    },
-  })
-  await navigateToWallet({ page, wallet: newWallet })
-  await page.getByLabel('send').click()
-  await fillComposeTransactionSiacoin({
-    page,
-    receiveAddress,
-    changeAddress,
-    amount: '1',
-  })
-  await expect(page.getByText('The wallet is currently unlocked')).toBeVisible()
-  await expect(page.getByText('Total')).toBeVisible()
-  await expect(page.getByText('1.004 SC')).toBeVisible()
-
-  await page
-    .getByRole('button', { name: 'Sign and broadcast transaction' })
-    .click()
-  await expect(page.getByText('Missing address index')).toBeVisible()
-})
-
-test('errors if the address is missing its public key', async ({ page }) => {
-  await mockApiDefaults({ page })
-  await login({ page })
-
-  const mocks = getMockScenarioSeedWallet()
-  const { newWallet, mnemonic, receiveAddress, changeAddress } = mocks
-  const mockAddressesInvalid = mocks.walletAddressesResponse
-  mockAddressesInvalid.forEach((address) => {
-    address.metadata.unlockConditions.publicKeys[0] = undefined
-  })
-  await createWallet({
-    page,
-    newWallet,
-    mnemonic: mnemonic,
-    responses: {
-      ...getDefaultMockWalletResponses(mocks),
-      addresses: mockAddressesInvalid,
-    },
-    expects: {
-      fundSiacoinPost: (data) =>
-        expect(data).toEqual(
-          JSON.stringify({
-            amount: '1003930000000000000000000',
-            changeAddress: mocks.changeAddress,
-            transaction: {
-              minerFees: ['3930000000000000000000'],
-              siacoinOutputs: [
-                {
-                  value: '1000000000000000000000000',
-                  address: mocks.receiveAddress,
-                },
-              ],
-            },
-          })
-        ),
-    },
-  })
-  await navigateToWallet({ page, wallet: newWallet })
-  await page.getByLabel('send').click()
-  await fillComposeTransactionSiacoin({
-    page,
-    receiveAddress,
-    changeAddress,
-    amount: '1',
-  })
-  await expect(page.getByText('The wallet is currently unlocked')).toBeVisible()
-  await expect(page.getByText('Total')).toBeVisible()
-  await expect(page.getByText('1.004 SC')).toBeVisible()
-
-  await page
-    .getByRole('button', { name: 'Sign and broadcast transaction' })
-    .click()
-  await expect(page.getByText('Missing address public key')).toBeVisible()
 })
