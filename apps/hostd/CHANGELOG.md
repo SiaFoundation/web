@@ -1,5 +1,18 @@
 # hostd
 
+## 0.44.0
+
+### Minor Changes
+
+- 5611d44a: Max collateral now has a field-specific option to auto-calculate its value. Closes https://github.com/SiaFoundation/web/issues/628
+- 5611d44a: The configuration page now has a view menu in the action bar that is consistent with all other feature pages.
+- 5611d44a: Basic configuration mode no longer sets certain fields in the background. Closes https://github.com/SiaFoundation/web/issues/628
+
+### Patch Changes
+
+- 6ae66f37: Refined the volume deletion toast message to "Volume is now being permanently deleted". Closes https://github.com/SiaFoundation/hostd/issues/409
+- 866641b4: Fixed an issue where the transaction information would not show in the dialog. Closes https://github.com/SiaFoundation/hostd/issues/402
+
 ## 0.43.0
 
 ### Minor Changes

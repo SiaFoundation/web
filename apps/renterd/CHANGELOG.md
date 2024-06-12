@@ -1,5 +1,22 @@
 # renterd
 
+## 0.54.0
+
+### Minor Changes
+
+- 5611d44a: Allowance now has a field-specific option to auto-calculate its value. Closes https://github.com/SiaFoundation/web/issues/628
+- 5611d44a: The configuration page now has a view menu in the action bar that is consistent with all other feature pages.
+- 5611d44a: Basic configuration mode no longer sets certain fields in the background. Closes https://github.com/SiaFoundation/web/issues/628
+
+### Patch Changes
+
+- 5611d44a: Fixed an issue where first-time configuration would not show the optimal recommendations.
+- 5611d44a: Fixed a bug where the churn alert would display NaN for the percentage when the total size was zero.
+- e7fd8107: Fixed an issue where selecting a bucket context menu option would also navigate into the bucket. Closes https://github.com/SiaFoundation/renterd/issues/1277
+- 5611d44a: Fixed an issue where toggling between basic and advanced modes would sometimes not revalidate all configuration fields.
+- 866641b4: Fixed an issue where the transaction information would not show in the dialog. Closes https://github.com/SiaFoundation/hostd/issues/402
+- e7fd8107: Fixed an issue that broke some dialogs including the bucket policy and bucket delete dialogs. Closes https://github.com/SiaFoundation/renterd/issues/1277
+
 ## 0.53.0
 
 ### Minor Changes
