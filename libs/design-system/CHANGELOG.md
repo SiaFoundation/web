@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.3.0
+
+### Minor Changes
+
+- 5611d44a: Fields now have better support and styling for readOnly.
+
 ## 4.2.1
 
 ### Patch Changes
