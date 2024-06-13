@@ -10,7 +10,7 @@ test('send siacoin with a seed wallet', async ({ page }) => {
   const receiveAddress =
     '5739945c21e60afd70eaf97ccd33ea27836e0219212449f39e4b38acaa8b3119aa4150a9ef0f'
   const changeAddress =
-    '170173c40ca0f39f9618da30af14c390c7ce70248a3662a7a5d3d5a8a31c9fbfa2071e9f6518'
+    '2a95add7cfc95b5c484a787c15b912e491876ca2f39982b62495049520acf798bf2e2cf6c326'
   const mnemonic =
     'march wait photo expire sweet hurry photo joy sail certain time beef'
   await walletInList(page, name)
