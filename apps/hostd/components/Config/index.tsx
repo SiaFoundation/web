@@ -5,13 +5,11 @@ import {
   PanelMenuSetting,
   Separator,
   FieldSwitch,
-  FieldSiacoin,
-  FieldFiat,
-  FieldError,
   ConfigurationPanelSetting,
   shouldShowField,
   Tooltip,
-  Switch,
+  ConfigurationSiacoin,
+  ConfigurationFiat,
 } from '@siafoundation/design-system'
 import { Warning16, CheckmarkFilled16 } from '@siafoundation/react-icons'
 import { HostdSidenav } from '../HostdSidenav'
@@ -25,16 +23,8 @@ import { ConfigActions } from './ConfigActions'
 
 export function Config() {
   const { openDialog } = useDialog()
-  const {
-    fields,
-    settings,
-    dynDNSCheck,
-    form,
-    remoteError,
-    configRef,
-    autoMaxCollateral,
-    setAutoMaxCollateral,
-  } = useConfig()
+  const { fields, settings, dynDNSCheck, form, remoteError, configRef } =
+    useConfig()
   const shouldPinStoragePrice = form.watch('shouldPinStoragePrice')
   const shouldPinEgressPrice = form.watch('shouldPinEgressPrice')
   const shouldPinIngressPrice = form.watch('shouldPinIngressPrice')
@@ -137,26 +127,18 @@ export function Config() {
                     fields,
                     name: 'shouldPinStoragePrice',
                   }) && shouldPinStoragePrice ? (
-                    <>
-                      <FieldFiat
-                        name="storagePricePinned"
-                        form={form}
-                        fields={fields}
-                        currency={pinnedCurrency}
-                        group={false}
-                      />
-                      <FieldError name="storagePricePinned" form={form} />
-                    </>
+                    <ConfigurationFiat
+                      name="storagePricePinned"
+                      form={form}
+                      fields={fields}
+                      currency={pinnedCurrency || undefined}
+                    />
                   ) : (
-                    <>
-                      <FieldSiacoin
-                        name="storagePrice"
-                        form={form}
-                        fields={fields}
-                        group={false}
-                      />
-                      <FieldError name="storagePrice" form={form} />
-                    </>
+                    <ConfigurationSiacoin
+                      name="storagePrice"
+                      form={form}
+                      fields={fields}
+                    />
                   )}
                 </div>
               }
@@ -196,26 +178,18 @@ export function Config() {
                     fields,
                     name: 'shouldPinEgressPrice',
                   }) && shouldPinEgressPrice ? (
-                    <>
-                      <FieldFiat
-                        name="egressPricePinned"
-                        form={form}
-                        fields={fields}
-                        currency={pinnedCurrency}
-                        group={false}
-                      />
-                      <FieldError name="egressPricePinned" form={form} />
-                    </>
+                    <ConfigurationFiat
+                      name="egressPricePinned"
+                      form={form}
+                      fields={fields}
+                      currency={pinnedCurrency}
+                    />
                   ) : (
-                    <>
-                      <FieldSiacoin
-                        name="egressPrice"
-                        form={form}
-                        fields={fields}
-                        group={false}
-                      />
-                      <FieldError name="egressPrice" form={form} />
-                    </>
+                    <ConfigurationSiacoin
+                      name="egressPrice"
+                      form={form}
+                      fields={fields}
+                    />
                   )}
                 </div>
               }
@@ -255,26 +229,18 @@ export function Config() {
                     fields,
                     name: 'shouldPinIngressPrice',
                   }) && shouldPinIngressPrice ? (
-                    <>
-                      <FieldFiat
-                        name="ingressPricePinned"
-                        form={form}
-                        fields={fields}
-                        currency={pinnedCurrency}
-                        group={false}
-                      />
-                      <FieldError name="ingressPricePinned" form={form} />
-                    </>
+                    <ConfigurationFiat
+                      name="ingressPricePinned"
+                      form={form}
+                      fields={fields}
+                      currency={pinnedCurrency}
+                    />
                   ) : (
-                    <>
-                      <FieldSiacoin
-                        name="ingressPrice"
-                        form={form}
-                        fields={fields}
-                        group={false}
-                      />
-                      <FieldError name="ingressPrice" form={form} />
-                    </>
+                    <ConfigurationSiacoin
+                      name="ingressPrice"
+                      form={form}
+                      fields={fields}
+                    />
                   )}
                 </div>
               }
@@ -321,49 +287,23 @@ export function Config() {
                           </div>
                         </Tooltip>
                       )}
-                      {!shouldPinMaxCollateral && (
-                        <Tooltip
-                          align="end"
-                          content="Calculate value based on storage price and collateral multiplier."
-                        >
-                          <div className="flex w-full justify-between">
-                            <Text weight="medium" color="verySubtle" size="14">
-                              Calculate
-                            </Text>
-                            <Switch
-                              aria-label="autoMaxCollateral"
-                              size="small"
-                              checked={autoMaxCollateral}
-                              onCheckedChange={setAutoMaxCollateral}
-                            />
-                          </div>
-                        </Tooltip>
-                      )}
                       {shouldShowField({
                         form,
                         fields,
                         name: 'shouldPinMaxCollateral',
                       }) && shouldPinMaxCollateral ? (
-                        <>
-                          <FieldFiat
-                            name="maxCollateralPinned"
-                            form={form}
-                            fields={fields}
-                            currency={pinnedCurrency}
-                            group={false}
-                          />
-                          <FieldError name="maxCollateralPinned" form={form} />
-                        </>
+                        <ConfigurationFiat
+                          name="maxCollateralPinned"
+                          form={form}
+                          fields={fields}
+                          currency={pinnedCurrency}
+                        />
                       ) : (
-                        <>
-                          <FieldSiacoin
-                            name="maxCollateral"
-                            form={form}
-                            fields={fields}
-                            group={false}
-                          />
-                          <FieldError name="maxCollateral" form={form} />
-                        </>
+                        <ConfigurationSiacoin
+                          name="maxCollateral"
+                          form={form}
+                          fields={fields}
+                        />
                       )}
                     </div>
                   }

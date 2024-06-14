@@ -39,7 +39,6 @@ export async function configResetAllSettings({ page }: { page: Page }) {
   await fillTextInputByName(page, 'collateralMultiplier', '2')
 
   await setSwitchByLabel(page, 'shouldPinMaxCollateral', false)
-  await setSwitchByLabel(page, 'autoMaxCollateral', false)
   await fillTextInputByName(page, 'maxCollateral', '10')
   await setSwitchByLabel(page, 'shouldPinMaxCollateral', true)
   await fillTextInputByName(page, 'maxCollateralPinned', '5')

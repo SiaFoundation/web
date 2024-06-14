@@ -1,52 +1,59 @@
-import { TipNumber } from './TipNumber'
-import { toHastings } from '@siafoundation/units'
 import { FieldValues, Path, PathValue } from 'react-hook-form'
 import { FieldError } from '../components/Form'
 import { FieldProps } from './configurationFields'
-import BigNumber from 'bignumber.js'
-import { FieldSiacoin } from './FieldSiacoin'
+import { FieldFiat } from './FieldFiat'
+import { SiaCentralCurrency } from '@siafoundation/sia-central-types'
+import { TipNumber } from './TipNumber'
 import { useFormSetField } from './useFormSetField'
+import { currencyOptions } from '@siafoundation/react-core'
+import BigNumber from 'bignumber.js'
 
-export function ConfigurationSiacoin<
+export function ConfigurationFiat<
   Values extends FieldValues,
   Categories extends string
->({ name, form, fields }: FieldProps<Values, Categories>) {
+>({
+  name,
+  form,
+  fields,
+  currency,
+}: FieldProps<Values, Categories> & {
+  currency: SiaCentralCurrency | ''
+}) {
   const field = fields[name]
-  const {
-    average,
-    averageTip,
-    suggestion,
-    suggestionTip,
-    before,
-    after,
-    tipsDecimalsLimitSc = 0,
-  } = field
-  const setField = useFormSetField({
-    name,
-    field,
-    form,
-  })
+  const { average, averageTip, suggestion, suggestionTip, before, after } =
+    field
   const Before = before || (() => null)
   const After = after || (() => null)
+  const setField = useFormSetField({
+    form,
+    name,
+    field,
+  })
+  const currencyMeta = currencyOptions.find((c) => c.id === currency)
+  if (!currency || !currencyMeta) {
+    return null
+  }
+  const { prefix, label, fixed } = currencyMeta
   return (
     <div className="flex flex-col gap-3 items-end">
       <div className="flex flex-col w-[250px]">
         <Before name={name} form={form} fields={fields} />
         <div className="flex flex-col gap-3 w-[250px]">
-          <FieldSiacoin
+          <FieldFiat
             name={name}
             fields={fields}
             form={form}
             group={false}
-            size="small"
+            currency={currency}
           />
           {average && (
             <TipNumber
-              type="siacoin"
+              type="number"
+              format={(val) => `${prefix}${val.toFixed(fixed)} ${label}`}
               label="Network average"
               tip={averageTip || 'Averages provided by Sia Central.'}
-              decimalsLimit={tipsDecimalsLimitSc}
-              value={toHastings(average as BigNumber)}
+              value={average as BigNumber}
+              decimalsLimit={fixed}
               onClick={() => {
                 setField(average as PathValue<Values, Path<Values>>, true)
               }}
@@ -54,11 +61,11 @@ export function ConfigurationSiacoin<
           )}
           {suggestion && suggestionTip && (
             <TipNumber
-              type="siacoin"
+              type="number"
               label="Suggestion"
               tip={suggestionTip}
-              decimalsLimit={tipsDecimalsLimitSc}
-              value={toHastings(suggestion as BigNumber)}
+              decimalsLimit={fixed}
+              value={suggestion as BigNumber}
               onClick={() => {
                 setField(suggestion as PathValue<Values, Path<Values>>, true)
               }}

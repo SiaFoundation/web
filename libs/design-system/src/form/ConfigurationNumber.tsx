@@ -1,10 +1,10 @@
 import BigNumber from 'bignumber.js'
-import { ConfigurationTipNumber } from './ConfigurationTipNumber'
+import { TipNumber } from './TipNumber'
 import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
-import { ConfigFields, useRegisterForm } from './configurationFields'
-import { NumberField } from '../core/NumberField'
-import { FieldLabelAndError } from '../components/Form'
-import { useMemo } from 'react'
+import { ConfigFields } from './configurationFields'
+import { FieldError } from '../components/Form'
+import { FieldNumber } from './FieldNumber'
+import { useFormSetField } from './useFormSetField'
 
 type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
@@ -24,69 +24,33 @@ export function ConfigurationNumber<
     suggestionTip,
     decimalsLimit = 2,
     after,
-    placeholder: _placeholder,
-    disableGroupSeparators,
-    autoComplete,
     units,
-    prefix,
   } = field
-  const { setValue, value, error } = useRegisterForm({
+  const setField = useFormSetField({
     form,
     field,
     name,
   })
   const After = after || (() => null)
-  const placeholder = useMemo(
-    () =>
-      _placeholder
-        ? new BigNumber(_placeholder)
-        : suggestion && typeof suggestion !== 'boolean'
-        ? new BigNumber(suggestion)
-        : undefined,
-    [_placeholder, suggestion]
-  )
+
   return (
     <div className="flex flex-col gap-3 items-end">
       <div className="flex flex-col gap-3 w-[250px]">
-        <NumberField
-          name={name}
-          value={value}
-          units={units}
-          prefix={prefix}
-          decimalsLimit={decimalsLimit}
-          disableGroupSeparators={disableGroupSeparators}
-          autoComplete={autoComplete}
-          placeholder={placeholder}
-          state={
-            error
-              ? 'invalid'
-              : form.formState.dirtyFields[name]
-              ? 'valid'
-              : 'default'
-          }
-          onChange={(val) => {
-            const v = val !== undefined ? new BigNumber(val) : undefined
-            setValue(v as PathValue<Values, Path<Values>>, true)
-          }}
-          onBlur={() => {
-            setValue(value, true)
-          }}
-        />
+        <FieldNumber name={name} fields={fields} form={form} group={false} />
         {average && (
-          <ConfigurationTipNumber
+          <TipNumber
             type="number"
             label="Network average"
             tip={averageTip || 'Averages provided by Sia Central.'}
             decimalsLimit={decimalsLimit}
             value={average as BigNumber}
-            units={units}
             onClick={() => {
-              setValue(average as PathValue<Values, Path<Values>>, true)
+              setField(average as PathValue<Values, Path<Values>>, true)
             }}
           />
         )}
         {suggestion && suggestionTip && (
-          <ConfigurationTipNumber
+          <TipNumber
             type="number"
             label="Suggestion"
             tip={suggestionTip}
@@ -94,14 +58,14 @@ export function ConfigurationNumber<
             value={suggestion as BigNumber}
             units={units}
             onClick={() => {
-              setValue(suggestion as PathValue<Values, Path<Values>>, true)
+              setField(suggestion as PathValue<Values, Path<Values>>, true)
             }}
           />
         )}
         <After name={name} form={form} fields={fields} />
       </div>
       <div className="h-[20px]">
-        <FieldLabelAndError form={form} name={name} />
+        <FieldError form={form} name={name} />
       </div>
     </div>
   )

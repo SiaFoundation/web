@@ -16,11 +16,12 @@ type Props = {
   tip: React.ReactNode
   value: BigNumber // number | hastings
   onClick?: (value: BigNumber) => void
+  format?: (value: BigNumber) => string
   decimalsLimit: number
   units?: string
 }
 
-export function ConfigurationTipNumber({
+export function TipNumber({
   type,
   label,
   link,
@@ -28,6 +29,7 @@ export function ConfigurationTipNumber({
   icon,
   value,
   onClick,
+  format,
   decimalsLimit,
   units,
 }: Props) {
@@ -48,6 +50,9 @@ export function ConfigurationTipNumber({
         </div>
       </Tooltip>
       <div
+        role="button"
+        tabIndex={0}
+        aria-label={label}
         className={cx('flex items-center', onClick ? 'cursor-pointer' : '')}
         onClick={() => {
           if (onClick) {
@@ -70,7 +75,11 @@ export function ConfigurationTipNumber({
             value={value}
             variant="value"
             size="12"
-            format={(val) => `${toFixedMax(val, decimalsLimit)} ${units}`}
+            format={
+              format ||
+              ((val) =>
+                `${toFixedMax(val, decimalsLimit)}${units ? ` ${units}` : ''}`)
+            }
             tipSide="bottom"
           />
         )}
