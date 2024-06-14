@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js'
 import { FieldValues, Path, PathValue } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
 import { FieldProps, useRegisterForm } from './configurationFields'
+import { useMemo } from 'react'
 
 export function FieldNumber<
   Values extends FieldValues,
@@ -18,22 +19,43 @@ export function FieldNumber<
   group?: boolean
 }) {
   const field = fields[name]
-  const { placeholder, decimalsLimit = 2, units } = field
+  const {
+    placeholder: _placeholder,
+    average,
+    suggestion,
+    units,
+    decimalsLimit = 2,
+    disableGroupSeparators,
+    autoComplete,
+    prefix,
+  } = field
   const { setValue, error, value } = useRegisterForm({
     form,
     field,
     name,
   })
+  const placeholder = useMemo(
+    () =>
+      _placeholder
+        ? new BigNumber(_placeholder)
+        : suggestion && typeof suggestion !== 'boolean'
+        ? new BigNumber(suggestion)
+        : average && typeof average !== 'boolean'
+        ? new BigNumber(average)
+        : undefined,
+    [_placeholder, suggestion, average]
+  )
 
   const el = (
     <NumberField
+      prefix={prefix}
       name={name}
       value={value}
       units={units}
       size={size}
       decimalsLimit={decimalsLimit}
-      disableGroupSeparators={field.disableGroupSeparators}
-      autoComplete={field.autoComplete}
+      disableGroupSeparators={disableGroupSeparators}
+      autoComplete={autoComplete}
       placeholder={placeholder ? new BigNumber(placeholder) : undefined}
       state={
         error

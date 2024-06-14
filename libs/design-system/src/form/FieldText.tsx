@@ -15,12 +15,14 @@ export function FieldText<
   spellCheck,
   state = true,
   group = true,
+  type,
 }: FieldProps<Values, Categories> & {
   size?: React.ComponentProps<typeof TextField>['size']
   autoComplete?: React.ComponentProps<typeof TextField>['autoComplete']
   spellCheck?: React.ComponentProps<typeof TextField>['spellCheck']
   group?: boolean
   state?: boolean
+  type?: 'password'
 }) {
   const field = fields[name]
   const { ref, onChange, onBlur, error } = useRegisterForm({
@@ -38,7 +40,7 @@ export function FieldText<
       autoComplete={
         autoComplete !== undefined ? autoComplete : field.autoComplete
       }
-      type={field.type}
+      type={type || field.type}
       readOnly={field.readOnly}
       spellCheck={spellCheck}
       onClick={field.onClick}

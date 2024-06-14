@@ -3,6 +3,7 @@ import { FieldValues, Path, PathValue } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
 import { FieldProps, useRegisterForm } from './configurationFields'
 import BigNumber from 'bignumber.js'
+import { useMemo } from 'react'
 
 export function FieldSiacoin<
   Values extends FieldValues,
@@ -19,6 +20,7 @@ export function FieldSiacoin<
 }) {
   const field = fields[name]
   const {
+    placeholder: _placeholder,
     average,
     suggestion,
     units,
@@ -31,6 +33,18 @@ export function FieldSiacoin<
     form,
   })
 
+  const placeholder = useMemo(
+    () =>
+      _placeholder
+        ? new BigNumber(_placeholder)
+        : suggestion && typeof suggestion !== 'boolean'
+        ? new BigNumber(suggestion)
+        : average && typeof average !== 'boolean'
+        ? new BigNumber(average)
+        : undefined,
+    [_placeholder, suggestion, average]
+  )
+
   const el = (
     <SiacoinField
       name={name}
@@ -42,7 +56,7 @@ export function FieldSiacoin<
       readOnly={field.readOnly}
       error={error}
       changed={form.formState.dirtyFields[name]}
-      placeholder={(suggestion as BigNumber) || (average as BigNumber)}
+      placeholder={placeholder}
       onChange={(val) => {
         setValue(val as PathValue<Values, Path<Values>>, true)
       }}

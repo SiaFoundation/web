@@ -12,13 +12,7 @@ type Props = {
   onClick: () => void
 }
 
-export function ConfigurationTipText({
-  label,
-  link,
-  tip,
-  value,
-  onClick,
-}: Props) {
+export function TipText({ label, link, tip, value, onClick }: Props) {
   return (
     <div className="flex justify-between items-center">
       <Tooltip align="start" side="bottom" content={tip}>
@@ -37,7 +31,13 @@ export function ConfigurationTipText({
           </Text>
         </div>
       </Tooltip>
-      <div className="flex cursor-pointer items-center" onClick={onClick}>
+      <div
+        role="button"
+        tabIndex={0}
+        aria-label={label}
+        className="flex cursor-pointer items-center"
+        onClick={onClick}
+      >
         <Text size="12">
           <Code>{value}</Code>
         </Text>

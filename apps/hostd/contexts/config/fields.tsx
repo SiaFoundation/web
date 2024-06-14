@@ -20,7 +20,6 @@ type GetFields = {
   storageTBMonth?: BigNumber
   collateralMultiplier?: BigNumber
   rates?: SiaCentralExchangeRates
-  autoMaxCollateral?: boolean
   validationContext: {
     pinningEnabled: boolean
   }
@@ -31,7 +30,6 @@ export function getFields({
   configViewMode,
   storageTBMonth,
   collateralMultiplier,
-  autoMaxCollateral,
   rates,
   validationContext,
 }: GetFields): ConfigFields<SettingsData, Categories> {
@@ -331,8 +329,8 @@ export function getFields({
         storageTBMonth && collateralMultiplier
           ? calculateMaxCollateral(storageTBMonth, collateralMultiplier)
           : undefined,
-      suggestionTip: 'The suggested maximum collateral.',
-      readOnly: autoMaxCollateral,
+      suggestionTip:
+        'The suggested maximum collateral, calculated based on the configured storage price and collateral multiplier.',
       validation: {
         required: 'required',
       },

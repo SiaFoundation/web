@@ -127,22 +127,9 @@ export function transformUpSettings(
   }
 }
 
-export function getCalculatedValues({
-  storagePrice,
-  collateralMultiplier,
-  autoMaxCollateral,
-}: {
-  storagePrice: BigNumber
-  collateralMultiplier: BigNumber
-  autoMaxCollateral: boolean
-}) {
+// There are no calculated values, left this method for future use.
+export function getCalculatedValues() {
   const calculatedValues: Partial<SettingsData> = {}
-  if (autoMaxCollateral && storagePrice && collateralMultiplier) {
-    calculatedValues.maxCollateral = calculateMaxCollateral(
-      storagePrice,
-      collateralMultiplier
-    )
-  }
   return calculatedValues
 }
 
@@ -298,6 +285,12 @@ export function calculateMaxCollateral(
   storage: BigNumber,
   collateralMultiplier: BigNumber
 ) {
+  if (!storage || !collateralMultiplier) {
+    return new BigNumber(0)
+  }
+  if (storage?.isZero() || collateralMultiplier?.isZero()) {
+    return new BigNumber(0)
+  }
   return new BigNumber(12960)
     .times(storage)
     .div(monthsToBlocks(1))

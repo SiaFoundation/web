@@ -20,10 +20,8 @@ export function useForm() {
       defaultValue: 'basic',
     })
 
-  const { autoMaxCollateral, setAutoMaxCollateral } = useAutoCalculatedFields({
+  useAutoCalculatedFields({
     form,
-    storagePrice,
-    collateralMultiplier,
   })
 
   const rates = useSiaCentralExchangeRates()
@@ -45,17 +43,9 @@ export function useForm() {
         storageTBMonth: storagePrice,
         collateralMultiplier,
         rates: rates.data?.rates,
-        autoMaxCollateral,
         validationContext: validationContext.current,
       }),
-    [
-      configViewMode,
-      storagePrice,
-      collateralMultiplier,
-      rates.data,
-      state.data,
-      autoMaxCollateral,
-    ]
+    [configViewMode, storagePrice, collateralMultiplier, rates.data, state.data]
   )
 
   return {
@@ -65,7 +55,5 @@ export function useForm() {
     collateralMultiplier,
     configViewMode,
     setConfigViewMode,
-    autoMaxCollateral,
-    setAutoMaxCollateral,
   }
 }
