@@ -1,6 +1,10 @@
 import { test, expect } from '@playwright/test'
 import { login } from '../fixtures/login'
-import { expectSwitchByLabel, setSwitchByLabel } from '../fixtures/switchValue'
+import {
+  expectSwitchByLabel,
+  expectSwitchVisible,
+  setSwitchByLabel,
+} from '../fixtures/switchValue'
 import { setViewMode } from '../fixtures/configViewMode'
 import { navigateToConfig } from '../fixtures/navigate'
 import { mockApiSiaCentralExchangeRates } from '@siafoundation/sia-central-mock'
@@ -58,6 +62,28 @@ test('basic field change and save behaviour', async ({ page }) => {
   await expectTextInputByName(page, 'egressPrice', '77')
   await expectTextInputNotVisible(page, 'egressPricePinned')
   await expectTextInputByName(page, 'baseRPCPrice', '77')
+})
+
+test('pin switches should show in both view modes', async ({ page }) => {
+  // Set up.
+  await mockApiSiaCentralExchangeRates({ page })
+  await login({ page })
+
+  await navigateToConfig({ page })
+  await setViewMode({ page, state: 'basic' })
+  await expectSwitchVisible(page, 'shouldPinStoragePrice')
+  await expectSwitchVisible(page, 'shouldPinEgressPrice')
+  await expectSwitchVisible(page, 'shouldPinIngressPrice')
+  await expectSwitchVisible(page, 'shouldPinMaxCollateral')
+  await expectSwitchVisible(page, 'autoMaxCollateral')
+
+  await navigateToConfig({ page })
+  await setViewMode({ page, state: 'advanced' })
+  await expectSwitchVisible(page, 'shouldPinStoragePrice')
+  await expectSwitchVisible(page, 'shouldPinEgressPrice')
+  await expectSwitchVisible(page, 'shouldPinIngressPrice')
+  await expectSwitchVisible(page, 'shouldPinMaxCollateral')
+  await expectSwitchVisible(page, 'autoMaxCollateral')
 })
 
 test('configure with auto max collateral', async ({ page }) => {

@@ -21,6 +21,10 @@ export async function expectTextInputNotVisible(page: Page, name: string) {
   await expect(page.locator(`input[name="${name}"]`)).toBeHidden()
 }
 
+export async function expectTextInputVisible(page: Page, name: string) {
+  await expect(page.locator(`input[name="${name}"]`)).toBeVisible()
+}
+
 export async function expectTextInputByNameAttribute(
   page: Page,
   name: string,
