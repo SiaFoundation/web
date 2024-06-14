@@ -4,6 +4,7 @@ import { fillTextInputByName } from './textInput'
 import { clearToasts } from './clearToasts'
 
 export async function createVolume(page: Page, name: string, path: string) {
+  const fullPath = `${path}/${name}`
   await navigateToVolumes({ page })
   await page.getByText('Create volume').click()
   await fillTextInputByName(page, 'name', name)
@@ -17,23 +18,24 @@ export async function createVolume(page: Page, name: string, path: string) {
   ).toBeHidden()
   await page.locator('input[name=size]').press('Enter')
   await expect(page.getByRole('dialog')).toBeHidden()
-  const row = page.getByRole('row', { name })
+  const row = page.getByRole('row', { name: fullPath })
   await expect(row.getByText('creating')).toBeVisible()
   await expect(page.getByText('Volume created')).toBeVisible()
   await clearToasts({ page })
-  await expect(page.getByRole('cell', { name })).toBeVisible()
+  await expect(page.getByRole('cell', { name: fullPath })).toBeVisible()
 }
 
 export async function deleteVolume(page: Page, name: string, path: string) {
-  await openVolumeContextMenu(page, path)
+  const fullPath = `${path}/${name}`
+  await openVolumeContextMenu(page, fullPath)
   await page.getByRole('menuitem', { name: 'Delete' }).click()
-  await fillTextInputByName(page, 'path', `${path}/${name}`)
+  await fillTextInputByName(page, 'path', fullPath)
   await page.locator('input[name=path]').press('Enter')
   await expect(page.getByRole('dialog')).toBeHidden()
   await expect(
     page.getByText('Volume is now being permanently deleted')
   ).toBeVisible()
-  await volumeNotInList(page, name)
+  await volumeNotInList(page, fullPath)
 }
 
 export async function deleteVolumeIfExists(
@@ -43,7 +45,7 @@ export async function deleteVolumeIfExists(
 ) {
   const doesVolumeExist = await page
     .getByRole('table')
-    .getByText(name)
+    .getByText(path + '/' + name)
     .isVisible()
   if (doesVolumeExist) {
     await deleteVolume(page, name, path)

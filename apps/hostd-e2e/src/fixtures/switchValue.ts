@@ -15,6 +15,16 @@ export async function setSwitchByLabel(
   )
 }
 
+export async function expectSwitchVisible(page: Page, label: string) {
+  const el = page.getByLabel(label)
+  await expect(el).toBeVisible()
+}
+
+export async function expectSwitchNotVisible(page: Page, label: string) {
+  const el = page.getByLabel(label)
+  await expect(el).toBeHidden()
+}
+
 export async function getSwitchByLabel(page: Page, label: string) {
   const el = page.getByLabel(label)
   const value = (await el.getAttribute('data-state')) as 'checked' | 'unchecked'

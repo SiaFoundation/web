@@ -312,7 +312,7 @@ export function getFields({
       description: '',
       type: 'boolean',
       category: 'pricing',
-      hidden: !pinningEnabled || configViewMode === 'basic',
+      hidden: !pinningEnabled,
       validation: {},
     },
     maxCollateral: {
