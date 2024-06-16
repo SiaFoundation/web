@@ -12,6 +12,8 @@ import {
   getEntityDisplayLength,
   getEntitySiascanUrl,
   getEntityTypeCopyLabel,
+  formatEntityValue,
+  defaultFormatValue,
 } from '../lib/entityTypes'
 import { cx } from 'class-variance-authority'
 import {
@@ -56,11 +58,11 @@ export function ValueCopyable({
   const label = customLabel || getEntityTypeCopyLabel(type)
   const maxLength = customMaxLength || getEntityDisplayLength(type)
   const cleanValue = stripPrefix(value)
-  const renderValue = displayValue || cleanValue
-
-  const text = `${renderValue?.slice(0, maxLength)}${
-    (renderValue?.length || 0) > maxLength ? '...' : ''
-  }`
+  // If we pass a defaultValue, use it. An entityType? Format it.
+  const renderValue =
+    displayValue || (type && formatEntityValue(type, cleanValue, maxLength))
+  // If we don't yet have a renderValue, apply some general formatting.
+  const text = renderValue || defaultFormatValue(cleanValue, maxLength)
 
   return (
     <div className={cx('flex items-center', className)}>
