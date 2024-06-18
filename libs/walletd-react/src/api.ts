@@ -54,6 +54,8 @@ import {
   WalletDeleteResponse,
   WalletEventsParams,
   WalletEventsResponse,
+  WalletEventsUnconfirmedParams,
+  WalletEventsUnconfirmedResponse,
   WalletFundSiacoinParams,
   WalletFundSiacoinPayload,
   WalletFundSiacoinResponse,
@@ -70,8 +72,6 @@ import {
   WalletReserveParams,
   WalletReservePayload,
   WalletReserveResponse,
-  WalletTxPoolParams,
-  WalletTxPoolResponse,
   WalletUpdateParams,
   WalletUpdatePayload,
   WalletUpdateResponse,
@@ -91,6 +91,7 @@ import {
   walletsIdAddressesRoute,
   walletsIdBalanceRoute,
   walletsIdEventsRoute,
+  walletsIdEventsUnconfirmedRoute,
   walletsIdFundRoute,
   walletsIdFundSfRoute,
   walletsIdOutputsSiacoinRoute,
@@ -98,7 +99,6 @@ import {
   walletsIdReleaseRoute,
   walletsIdReserveRoute,
   walletsIdRoute,
-  walletsIdTxPoolRoute,
   walletsRoute,
 } from '@siafoundation/walletd-types'
 
@@ -388,12 +388,15 @@ export function useWalletEvents(
   })
 }
 
-export function useWalletTxPool(
-  args: HookArgsSwr<WalletTxPoolParams, WalletTxPoolResponse>
+export function useWalletEventsUnconfirmed(
+  args: HookArgsSwr<
+    WalletEventsUnconfirmedParams,
+    WalletEventsUnconfirmedResponse
+  >
 ) {
   return useGetSwr({
     ...args,
-    route: walletsIdTxPoolRoute,
+    route: walletsIdEventsUnconfirmedRoute,
   })
 }
 

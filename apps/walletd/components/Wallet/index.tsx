@@ -39,6 +39,7 @@ export function Wallet() {
     >
       <div className="px-6 py-7 min-w-fit">
         <Table
+          testId="eventsTable"
           isLoading={dataState === 'loading'}
           emptyState={
             dataState === 'noneMatchingFilters' ? (

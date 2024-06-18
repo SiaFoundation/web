@@ -6,10 +6,12 @@ import {
   ValueScFiat,
   ValueSf,
   Tooltip,
+  Badge,
 } from '@siafoundation/design-system'
 import { humanDate } from '@siafoundation/units'
 import { CellContext, EventData, TableColumnId } from './types'
 import { Locked16, Unlocked16 } from '@siafoundation/react-icons'
+import { eventTypeToLabel } from './utils'
 
 type EventsTableColumn = TableColumn<TableColumnId, EventData, CellContext> & {
   fixed?: boolean
@@ -49,11 +51,7 @@ export const columns: EventsTableColumn[] = [
     category: 'general',
     fixed: true,
     render: ({ data: { type } }) => {
-      return (
-        <Text weight="medium" ellipsis>
-          {type}
-        </Text>
-      )
+      return <Badge size="small">{eventTypeToLabel(type)}</Badge>
     },
   },
   {

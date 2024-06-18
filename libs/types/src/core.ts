@@ -13,11 +13,12 @@ export type TransactionID = Hash256
 export type SiacoinOutputID = Hash256
 export type SiafundOutputID = Hash256
 export type Address = string
+export type MerkleProof = Hash256[] | null
 
 export type StateElement = {
   id: string
   leafIndex: number
-  merkleProof: Hash256[] | null
+  merkleProof: MerkleProof
 }
 
 export type UnlockConditions = {

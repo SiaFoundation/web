@@ -1,7 +1,9 @@
 import {
   Address,
+  ChainIndex,
   Currency,
   Hash256,
+  MerkleProof,
   PublicKey,
   SiacoinElement,
   SiacoinOutput,
@@ -94,4 +96,48 @@ export type AttestationElement = StateElement & {
   attestation: Attestation
 }
 
-export type V2FileContractResolutionType = unknown // TODO: replace `unknown` with the actual type
+type V2FileContractResolutionTypeBase = {
+  parent: V2FileContractElement
+}
+
+export type V2FileContractResolutionTypeExpiration =
+  V2FileContractResolutionTypeBase & {
+    type: 'expiration'
+    resolution: Record<string, never> // is this always empty for expiration type?
+  }
+export type V2FileContractResolutionTypeFinalization =
+  V2FileContractResolutionTypeBase & {
+    type: 'finalization'
+    resolution: V2FileContract
+  }
+
+export type V2FileContractResolutionTypeRenewal =
+  V2FileContractResolutionTypeBase & {
+    type: 'renewal'
+    resolution: {
+      finalRevision: V2FileContract
+      newContract: V2FileContract
+      renterRollover: Currency
+      hostRollover: Currency
+      renterSignature: Signature
+      hostSignature: Signature
+    }
+  }
+
+export type V2FileContractResolutionDataStorageProof =
+  V2FileContractResolutionTypeBase & {
+    type: 'storage proof'
+    resolution: {
+      proofIndex: StateElement & {
+        chainIndex: ChainIndex
+      }
+      leaf: string
+      proof: MerkleProof
+    }
+  }
+
+export type V2FileContractResolutionType =
+  | V2FileContractResolutionTypeExpiration
+  | V2FileContractResolutionTypeFinalization
+  | V2FileContractResolutionTypeRenewal
+  | V2FileContractResolutionDataStorageProof

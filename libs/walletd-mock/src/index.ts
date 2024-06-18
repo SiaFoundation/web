@@ -14,6 +14,6 @@ export * from './mocks/walletOutputsSiacoin'
 export * from './mocks/walletOutputsSiafund'
 export * from './mocks/walletRelease'
 export * from './mocks/wallets'
-export * from './mocks/walletTxPool'
+export * from './mocks/walletEventsUnconfirmed'
 
 export * from './scenarios/seedWallet'

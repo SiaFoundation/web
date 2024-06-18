@@ -12,7 +12,6 @@ import {
   V2Transaction,
 } from '@siafoundation/types'
 import {
-  PoolTransaction,
   WalletEvent,
   GatewayPeer,
   Wallet,
@@ -36,7 +35,7 @@ export const walletsIdAddressesRoute = '/wallets/:id/addresses'
 export const walletsIdAddressesAddrRoute = '/wallets/:id/addresses/:addr'
 export const walletsIdBalanceRoute = '/wallets/:id/balance'
 export const walletsIdEventsRoute = '/wallets/:id/events'
-export const walletsIdTxPoolRoute = '/wallets/:id/txpool'
+export const walletsIdEventsUnconfirmedRoute = '/wallets/:id/events/unconfirmed'
 export const walletsIdOutputsSiacoinRoute = '/wallets/:id/outputs/siacoin'
 export const walletsIdOutputsSiafundRoute = '/wallets/:id/outputs/siafund'
 export const walletsIdFundRoute = '/wallets/:id/fund'
@@ -167,9 +166,9 @@ export type WalletEventsParams = { id: string; offset: number; limit: number }
 export type WalletEventsPayload = void
 export type WalletEventsResponse = WalletEvent[]
 
-export type WalletTxPoolParams = { id: string }
-export type WalletTxPoolPayload = void
-export type WalletTxPoolResponse = PoolTransaction[]
+export type WalletEventsUnconfirmedParams = { id: string }
+export type WalletEventsUnconfirmedPayload = void
+export type WalletEventsUnconfirmedResponse = WalletEvent[]
 
 export type WalletOutputsSiacoinParams = { id: string }
 export type WalletOutputsSiacoinPayload = void

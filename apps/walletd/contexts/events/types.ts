@@ -1,3 +1,4 @@
+import { WalletEvent } from '@siafoundation/walletd-types'
 import BigNumber from 'bignumber.js'
 
 export type CellContext = {
@@ -12,7 +13,7 @@ export type EventData = {
   maturityHeight?: number
   isMature?: boolean
   pending: boolean
-  type: string
+  type: WalletEvent['type']
   fee?: BigNumber
   amountSc?: BigNumber
   amountSf?: number
