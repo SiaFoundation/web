@@ -9,7 +9,7 @@ import {
 import { mockApiWalletBalance } from './walletBalance'
 import { mockApiWalletAddresses } from './walletAddresses'
 import { mockApiWalletEvents } from './walletEvents'
-import { mockApiWalletTxPool } from './walletTxPool'
+import { mockApiWalletEventsUnconfirmed } from './walletEventsUnconfirmed'
 import { mockApiWalletOutputsSiacoin } from './walletOutputsSiacoin'
 import { mockApiWalletOutputsSiafund } from './walletOutputsSiafund'
 import { mockApiWalletFundSiacoin } from './walletFundSiacoin'
@@ -45,7 +45,7 @@ export async function mockApiWallet({
     response: responses.addresses,
   })
   await mockApiWalletEvents({ page, walletId: wallet.id })
-  await mockApiWalletTxPool({ page, walletId: wallet.id })
+  await mockApiWalletEventsUnconfirmed({ page, walletId: wallet.id })
   await mockApiWalletOutputsSiacoin({
     page,
     walletId: wallet.id,

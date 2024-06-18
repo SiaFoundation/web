@@ -53,6 +53,9 @@ import {
   WalletEventsParams,
   WalletEventsPayload,
   WalletEventsResponse,
+  WalletEventsUnconfirmedParams,
+  WalletEventsUnconfirmedPayload,
+  WalletEventsUnconfirmedResponse,
   WalletFundSiacoinParams,
   WalletFundSiacoinPayload,
   WalletFundSiacoinResponse,
@@ -71,9 +74,6 @@ import {
   WalletReserveParams,
   WalletReservePayload,
   WalletReserveResponse,
-  WalletTxPoolParams,
-  WalletTxPoolPayload,
-  WalletTxPoolResponse,
   WalletUpdateParams,
   WalletUpdatePayload,
   WalletUpdateResponse,
@@ -94,6 +94,7 @@ import {
   walletsIdAddressesRoute,
   walletsIdBalanceRoute,
   walletsIdEventsRoute,
+  walletsIdEventsUnconfirmedRoute,
   walletsIdFundRoute,
   walletsIdFundSfRoute,
   walletsIdOutputsSiacoinRoute,
@@ -101,7 +102,6 @@ import {
   walletsIdReleaseRoute,
   walletsIdReserveRoute,
   walletsIdRoute,
-  walletsIdTxPoolRoute,
   walletsRoute,
 } from '@siafoundation/walletd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
@@ -210,11 +210,11 @@ export function Walletd({ api, password }: { api: string; password?: string }) {
       WalletEventsPayload,
       WalletEventsResponse
     >(axios, 'get', walletsIdEventsRoute),
-    walletTxPool: buildRequestHandler<
-      WalletTxPoolParams,
-      WalletTxPoolPayload,
-      WalletTxPoolResponse
-    >(axios, 'get', walletsIdTxPoolRoute),
+    walletEventsUnconfirmed: buildRequestHandler<
+      WalletEventsUnconfirmedParams,
+      WalletEventsUnconfirmedPayload,
+      WalletEventsUnconfirmedResponse
+    >(axios, 'get', walletsIdEventsUnconfirmedRoute),
     walletOutputsSiacoin: buildRequestHandler<
       WalletOutputsSiacoinParams,
       WalletOutputsSiacoinPayload,

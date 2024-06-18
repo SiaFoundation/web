@@ -111,6 +111,7 @@ export function createTableRow<
             ) => (
               <td
                 key={`${id}/${data.id}`}
+                data-columnid={id}
                 className={cx(
                   getCellClassNames(
                     i,
