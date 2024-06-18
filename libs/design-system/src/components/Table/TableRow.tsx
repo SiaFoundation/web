@@ -88,6 +88,7 @@ export function createTableRow<
           {...listeners}
           style={style}
           id={data.id}
+          data-testid={data.id}
           onClick={data.onClick}
           className={cx(
             'border-b border-gray-200/50 dark:border-graydark-100',

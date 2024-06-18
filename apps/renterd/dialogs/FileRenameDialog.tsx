@@ -6,15 +6,16 @@ import {
   useOnInvalid,
   FormSubmitButton,
   FieldText,
+  useDialogFormHelpers,
 } from '@siafoundation/design-system'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
-import { useDialog } from '../contexts/dialog'
 import { useObjectRename } from '@siafoundation/renterd-react'
 import { getFilename, isDirectory } from '../lib/paths'
 import { getRenameFileRenameParams } from '../lib/rename'
 import { useFilesDirectory } from '../contexts/filesDirectory'
 import { useFilesFlat } from '../contexts/filesFlat'
+import { useDialog } from '../contexts/dialog'
 
 function getDefaultValues(currentName: string) {
   return {
@@ -50,38 +51,37 @@ function getFields({
 }
 
 type Props = {
-  id: string
   trigger?: React.ReactNode
   open: boolean
   onOpenChange: (val: boolean) => void
 }
 
-// Renames a file or directory
-export function FileRenameDialog({
-  id: originalPath,
-  trigger,
-  open,
-  onOpenChange,
-}: Props) {
-  const { closeDialog } = useDialog()
+// Renames a file or directory.
+export function FileRenameDialog({ trigger, open, onOpenChange }: Props) {
+  const { id: originalPath } = useDialog()
   const { refresh: refreshDirectory } = useFilesDirectory()
   const { refresh: refreshFlat } = useFilesFlat()
 
-  let name = getFilename(originalPath || '')
-  name = name.endsWith('/') ? name.slice(0, -1) : name
-  const defaultValues = getDefaultValues(name)
+  const name = useMemo(() => {
+    const name = getFilename(originalPath || '')
+    return name.endsWith('/') ? name.slice(0, -1) : name
+  }, [originalPath])
+  const defaultValues = useMemo(() => getDefaultValues(name), [name])
 
   const objectRename = useObjectRename()
   const form = useForm({
     mode: 'all',
     defaultValues,
   })
-  // Reset the form when the name changes
-  useEffect(() => {
-    form.reset(getDefaultValues(name))
-  }, [form, name])
 
-  const onSubmit = useCallback(
+  const { handleOpenChange, closeAndReset } = useDialogFormHelpers({
+    form,
+    onOpenChange,
+    defaultValues,
+    initKey: [name],
+  })
+
+  const onValid = useCallback(
     async (values: Values) => {
       const { bucket, to, from, mode } = getRenameFileRenameParams(
         originalPath,
@@ -106,8 +106,7 @@ export function FileRenameDialog({
       } else {
         refreshDirectory()
         refreshFlat()
-        form.reset()
-        closeDialog()
+        closeAndReset()
         triggerSuccessToast({
           title: isDirectory(originalPath)
             ? 'Directory renamed'
@@ -115,14 +114,7 @@ export function FileRenameDialog({
         })
       }
     },
-    [
-      form,
-      originalPath,
-      refreshDirectory,
-      refreshFlat,
-      objectRename,
-      closeDialog,
-    ]
+    [originalPath, refreshDirectory, refreshFlat, objectRename, closeAndReset]
   )
 
   const fields = useMemo(() => getFields({ currentName: name }), [name])
@@ -134,16 +126,11 @@ export function FileRenameDialog({
       title="Rename file"
       trigger={trigger}
       open={open}
-      onOpenChange={(val) => {
-        if (!val) {
-          form.reset(defaultValues)
-        }
-        onOpenChange(val)
-      }}
+      onOpenChange={handleOpenChange}
       contentVariants={{
         className: 'w-[400px]',
       }}
-      onSubmit={form.handleSubmit(onSubmit, onInvalid)}
+      onSubmit={form.handleSubmit(onValid, onInvalid)}
     >
       <div className="flex flex-col gap-4">
         <FieldText name="name" form={form} fields={fields} autoComplete="off" />

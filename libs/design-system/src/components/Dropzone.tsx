@@ -11,6 +11,7 @@ type Props = {
   rootClassName?: string
   className?: string
   message?: boolean
+  testId?: string
   showBorderInactive?: boolean
 } & DropzoneOptions
 
@@ -21,12 +22,17 @@ export function Dropzone({
   className,
   message,
   showBorderInactive,
+  testId,
   ...props
 }: Props) {
   const { getRootProps, getInputProps, isDragActive } = useDropzone(props)
 
   return (
-    <div {...getRootProps()} className={cx('outline-none', rootClassName)}>
+    <div
+      data-testid={testId}
+      {...getRootProps()}
+      className={cx('outline-none', rootClassName)}
+    >
       <div
         className={cx(
           isDragActive ? 'z-20' : '',

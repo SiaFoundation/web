@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test'
 import { navigateToBuckets } from '../fixtures/navigate'
-import { login } from '../fixtures/login'
 import {
   bucketInList,
   createBucket,
@@ -8,9 +7,13 @@ import {
   deleteBucketIfExists,
   openBucketContextMenu,
 } from '../fixtures/buckets'
+import { beforeTest } from '../fixtures/beforeTest'
+
+test.beforeEach(async ({ page }) => {
+  await beforeTest(page)
+})
 
 test('can change a buckets policy', async ({ page }) => {
-  await login({ page })
   await navigateToBuckets({ page })
   await openBucketContextMenu(page, 'default')
   await page.getByRole('menuitem', { name: 'Change policy' }).click()
@@ -22,7 +25,7 @@ test('can change a buckets policy', async ({ page }) => {
 })
 
 test('can create and delete a bucket', async ({ page }) => {
-  await login({ page })
+  await navigateToBuckets({ page })
   await deleteBucketIfExists(page, 'my-new-bucket')
   await createBucket(page, 'my-new-bucket')
   await deleteBucket(page, 'my-new-bucket')

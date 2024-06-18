@@ -1,26 +1,23 @@
 import { test, expect } from '@playwright/test'
-import { login } from '../fixtures/login'
 import { expectSwitchByLabel, setSwitchByLabel } from '../fixtures/switchValue'
 import { setViewMode } from '../fixtures/configViewMode'
 import { navigateToConfig } from '../fixtures/navigate'
-import { mockApiSiaCentralExchangeRates } from '@siafoundation/sia-central-mock'
 import {
   expectTextInputByName,
   expectTextInputByNameAttribute,
   fillTextInputByName,
 } from '../fixtures/textInput'
-import { configResetAllSettings } from '../fixtures/configResetAllSettings'
 import { clearToasts } from '../fixtures/clearToasts'
 import { clickIfEnabledAndWait, clickIf } from '../fixtures/click'
+import { beforeTest } from '../fixtures/beforeTest'
+
+test.beforeEach(async ({ page }) => {
+  await beforeTest(page)
+})
 
 test('basic field change and save behaviour', async ({ page }) => {
-  // Set up.
-  await mockApiSiaCentralExchangeRates({ page })
-  await login({ page })
-
   // Reset state.
   await navigateToConfig({ page })
-  await configResetAllSettings({ page })
   await setViewMode({ page, state: 'basic' })
   await setSwitchByLabel(page, 'autoAllowance', true)
 
@@ -50,10 +47,6 @@ test('basic field change and save behaviour', async ({ page }) => {
 test('estimate based off storage, pricing, and redundancy', async ({
   page,
 }) => {
-  // Set up.
-  await mockApiSiaCentralExchangeRates({ page })
-  await login({ page })
-
   // Reset state.
   await navigateToConfig({ page })
   await setSwitchByLabel(page, 'autoAllowance', true)
@@ -84,10 +77,6 @@ test('estimate based off storage, pricing, and redundancy', async ({
 })
 
 test('configure with auto allowance', async ({ page }) => {
-  // Set up.
-  await mockApiSiaCentralExchangeRates({ page })
-  await login({ page })
-
   // Reset state.
   await navigateToConfig({ page })
   await setSwitchByLabel(page, 'autoAllowance', true)
@@ -108,13 +97,8 @@ test('configure with auto allowance', async ({ page }) => {
 })
 
 test('configure allowance manually', async ({ page }) => {
-  // Set up.
-  await mockApiSiaCentralExchangeRates({ page })
-  await login({ page })
-
   // Reset state.
   await navigateToConfig({ page })
-  await configResetAllSettings({ page })
   await setSwitchByLabel(page, 'autoAllowance', false)
   await setViewMode({ page, state: 'basic' })
   await fillTextInputByName(page, 'allowanceMonth', '777')
@@ -135,13 +119,8 @@ test('configure allowance manually', async ({ page }) => {
 })
 
 test('system offers recommendations', async ({ page }) => {
-  // Set up.
-  await mockApiSiaCentralExchangeRates({ page })
-  await login({ page })
-
   // Reset state.
   await navigateToConfig({ page })
-  await configResetAllSettings({ page })
   await setViewMode({ page, state: 'basic' })
   await setSwitchByLabel(page, 'autoAllowance', true)
 

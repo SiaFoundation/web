@@ -121,7 +121,6 @@ export function DialogProvider({ children }: Props) {
 
 export function Dialogs() {
   const {
-    id,
     dialog,
     openDialog,
     onOpenChange,
@@ -182,7 +181,6 @@ export function Dialogs() {
         onOpenChange={onOpenChange}
       />
       <FileRenameDialog
-        id={id}
         open={dialog === 'fileRename'}
         onOpenChange={onOpenChange}
       />
