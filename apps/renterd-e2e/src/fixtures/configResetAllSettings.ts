@@ -13,7 +13,7 @@ export async function configResetAllSettings({ page }: { page: Page }) {
   await fillTextInputByName(page, 'storageTB', '1')
   await fillTextInputByName(page, 'uploadTBMonth', '1')
   await fillTextInputByName(page, 'downloadTBMonth', '1')
-  await fillTextInputByName(page, 'allowanceMonth', '1')
+  await fillTextInputByName(page, 'allowanceMonth', '21000')
   await fillTextInputByName(page, 'periodWeeks', '6')
   await fillTextInputByName(page, 'renewWindowWeeks', '2')
   await fillTextInputByName(page, 'amountHosts', '12')

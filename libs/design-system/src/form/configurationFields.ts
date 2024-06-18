@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { entries } from '@technically/lodash'
-import React, { MouseEvent, useCallback, useMemo } from 'react'
+import React, { MouseEvent, useCallback } from 'react'
 import {
   FieldErrors,
   FieldValues,
@@ -93,14 +93,13 @@ export function useRegisterForm<
   const error =
     form.formState.touchedFields[name] && !!form.formState.errors[name]
 
+  // Do not memoize this register call, for an unknown reason it sometimes
+  // causes form updates to stop working.
   const {
     ref,
     onChange: _onChange,
     onBlur,
-  } = useMemo(
-    () => form.register(name, field.validation),
-    [form, name, field.validation]
-  )
+  } = form.register(name, field.validation)
 
   const onChange = useCallback(
     (e: { target: unknown; type: unknown }) => {

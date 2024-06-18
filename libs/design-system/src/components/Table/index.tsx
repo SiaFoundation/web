@@ -76,6 +76,7 @@ type Props<
   onDragEnd?: (e: DragEndEvent) => void
   onDragCancel?: (e: DragCancelEvent) => void
   draggingDatum?: D
+  testId?: string
 }
 
 export function Table<
@@ -103,6 +104,7 @@ export function Table<
   onDragEnd,
   onDragCancel,
   draggingDatum,
+  testId,
 }: Props<Columns, SortField, D, Context>) {
   let show = 'emptyState'
 
@@ -183,7 +185,11 @@ export function Table<
         )}
       </DragOverlay>
       <Panel>
-        <table className="relative z-10 table-auto border-collapse w-full">
+        <table
+          data-testid={testId}
+          data-loading={show === 'skeleton'}
+          className="relative z-10 table-auto border-collapse w-full"
+        >
           <thead
             className={cx(
               'sticky top-0 z-20 bg-white dark:bg-graydark-100',

@@ -42,7 +42,10 @@ export function Sidenav({
   children,
 }: Props) {
   return (
-    <Panel className="relative overflow-hidden z-10 h-full w-[75px] rounded-none border-y-0">
+    <Panel
+      data-testid="sidenav"
+      className="relative overflow-hidden z-10 h-full w-[75px] rounded-none border-y-0"
+    >
       <div className="flex flex-col items-center h-full">
         <div
           className="flex items-center justify-center"

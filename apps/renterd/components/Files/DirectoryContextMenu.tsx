@@ -21,7 +21,11 @@ export function DirectoryContextMenu({ path, size }: Props) {
   return (
     <DropdownMenu
       trigger={
-        <Button variant="ghost" icon="hover">
+        <Button
+          aria-label="Directory context menu"
+          variant="ghost"
+          icon="hover"
+        >
           <FolderIcon size={16} />
         </Button>
       }

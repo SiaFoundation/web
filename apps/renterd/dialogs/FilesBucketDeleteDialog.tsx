@@ -8,6 +8,7 @@ import {
   FormSubmitButton,
   FieldText,
   Code,
+  useDialogFormHelpers,
 } from '@siafoundation/design-system'
 import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
@@ -18,7 +19,9 @@ const defaultValues = {
   name: '',
 }
 
-function getFields(name: string): ConfigFields<typeof defaultValues, never> {
+type Values = typeof defaultValues
+
+function getFields(name: string): ConfigFields<Values, never> {
   return {
     name: {
       type: 'text',
@@ -47,7 +50,7 @@ export function FilesBucketDeleteDialog({
   open,
   onOpenChange,
 }: Props) {
-  const { id: name, closeDialog } = useDialog()
+  const { id: name } = useDialog()
 
   const bucketDelete = useBucketDelete()
   const form = useForm({
@@ -55,8 +58,14 @@ export function FilesBucketDeleteDialog({
     defaultValues,
   })
 
+  const { handleOpenChange, closeAndReset } = useDialogFormHelpers({
+    form,
+    onOpenChange,
+    defaultValues,
+  })
+
   const onSubmit = useCallback(
-    async (values: typeof defaultValues) => {
+    async (values: Values) => {
       const response = await bucketDelete.delete({
         params: {
           name: values.name,
@@ -69,11 +78,10 @@ export function FilesBucketDeleteDialog({
         })
       } else {
         triggerSuccessToast({ title: 'Bucket permanently deleted' })
-        form.reset()
-        closeDialog()
+        closeAndReset()
       }
     },
-    [form, bucketDelete, closeDialog]
+    [bucketDelete, closeAndReset]
   )
 
   const fields = useMemo(() => getFields(name), [name])
@@ -85,12 +93,7 @@ export function FilesBucketDeleteDialog({
       title="Delete Bucket"
       trigger={trigger}
       open={open}
-      onOpenChange={(val) => {
-        if (!val) {
-          form.reset(defaultValues)
-        }
-        onOpenChange(val)
-      }}
+      onOpenChange={handleOpenChange}
       contentVariants={{
         className: 'w-[400px]',
       }}

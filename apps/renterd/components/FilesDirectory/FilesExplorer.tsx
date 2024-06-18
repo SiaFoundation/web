@@ -6,8 +6,14 @@ import { useFilesManager } from '../../contexts/filesManager'
 import { columns } from '../../contexts/filesDirectory/columns'
 
 export function FilesExplorer() {
-  const { uploadFiles, sortField, sortDirection, sortableColumns, toggleSort } =
-    useFilesManager()
+  const {
+    uploadFiles,
+    sortField,
+    sortDirection,
+    sortableColumns,
+    toggleSort,
+    isViewingBuckets,
+  } = useFilesManager()
   const {
     datasetPage,
     pageCount,
@@ -23,11 +29,13 @@ export function FilesExplorer() {
   return (
     <div className="relative">
       <Dropzone
+        testId="filesDropzone"
         onDrop={uploadFiles}
         noClick={!canUpload || pageCount > 0}
         noDrag={!canUpload}
       >
         <Table
+          testId={isViewingBuckets ? 'bucketsTable' : 'filesTable'}
           isLoading={dataState === 'loading'}
           emptyState={<EmptyState />}
           pageSize={10}

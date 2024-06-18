@@ -40,11 +40,17 @@ export function FilesActionsMenu() {
           <Button onClick={() => openDialog('filesSearch')} tip="Search files">
             <Search16 />
           </Button>
-          <Button {...getRootProps()} tip="Upload files" disabled={!canUpload}>
+          <Button
+            aria-label="Upload files"
+            {...getRootProps()}
+            tip="Upload files"
+            disabled={!canUpload}
+          >
             <input {...getInputProps()} />
             <CloudUpload16 />
           </Button>
           <Button
+            aria-label="Create directory"
             disabled={!canUpload}
             onClick={() => openDialog('filesCreateDirectory')}
             tip="Create directory"
