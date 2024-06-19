@@ -49,7 +49,6 @@ export function ExplorerDatum({
           (entityValue ? (
             <ValueCopyable
               scaleSize="18"
-              label={entityType}
               href={getHref(entityType, entityValue)}
               value={entityValue}
               type={entityType}
