@@ -50,13 +50,7 @@ export function ExplorerDatum({
             <ValueCopyable
               scaleSize="18"
               label={entityType}
-              href={
-                // We hit error boundary wihtout this avoidance due
-                // to getHref routes expectation.
-                entityType !== 'blockHash'
-                  ? getHref(entityType, entityValue)
-                  : null
-              }
+              href={getHref(entityType, entityValue)}
               value={entityValue}
               type={entityType}
               displayValue={displayValue}

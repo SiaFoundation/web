@@ -4,7 +4,9 @@ import { Metadata } from 'next'
 import { siteName } from '../config'
 
 export function getHref(type: EntityType, value: string) {
-  return routes[type].view.replace(':id', value)
+  // block accepts blockhash as a value.
+  const coercedType = type === 'blockHash' ? 'block' : type
+  return routes[coercedType].view.replace(':id', value)
 }
 
 export function buildMetadata({
