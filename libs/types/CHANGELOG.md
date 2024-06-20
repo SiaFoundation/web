@@ -1,5 +1,11 @@
 # @siafoundation/types
 
+## 0.3.0
+
+### Minor Changes
+
+- fff7febd: Wallet events have been updated to use the new types and data format. Closes https://github.com/SiaFoundation/walletd/issues/134
+
 ## 0.2.0
 
 ### Minor Changes

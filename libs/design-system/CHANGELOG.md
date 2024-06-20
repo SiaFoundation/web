@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.4.0
+
+### Minor Changes
+
+- b13c3b51: Updated react-hook-form.
+
+### Patch Changes
+
+- a04ef967: The configuration form components now use the field components internally.
+- Updated dependencies [fff7febd]
+  - @siafoundation/types@0.3.0
+
 ## 4.3.0
 
 ### Minor Changes
