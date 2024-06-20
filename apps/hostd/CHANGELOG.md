@@ -1,5 +1,16 @@
 # hostd
 
+## 0.45.0
+
+### Minor Changes
+
+- a04ef967: Max collateral no longer has an option to auto-calculate its value, the same value is shown as a suggestion. Closes https://github.com/SiaFoundation/hostd/issues/418
+- 1a4a2bd3: The pin max collateral switch is now visible in basic view mode. Closes https://github.com/SiaFoundation/hostd/issues/417
+
+### Patch Changes
+
+- a04ef967: Fixed an issue where suggestions or errors were not showing for some fields.
+
 ## 0.44.0
 
 ### Minor Changes

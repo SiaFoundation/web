@@ -1,5 +1,11 @@
 # @siafoundation/renterd-react
 
+## 4.2.2
+
+### Patch Changes
+
+- @siafoundation/renterd-types@0.2.2
+
 ## 4.2.1
 
 ### Patch Changes

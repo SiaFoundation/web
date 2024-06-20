@@ -1,5 +1,12 @@
 # renterd
 
+## 0.54.1
+
+### Patch Changes
+
+- b13c3b51: Fixed an issue where renaming a file would throw an error.
+- b13c3b51: Fixed an issue where the empty directory state was showing an empty bucket message.
+
 ## 0.54.0
 
 ### Minor Changes

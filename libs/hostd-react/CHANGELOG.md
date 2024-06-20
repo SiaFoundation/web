@@ -1,5 +1,11 @@
 # @siafoundation/hostd-react
 
+## 4.2.1
+
+### Patch Changes
+
+- @siafoundation/hostd-types@0.1.2
+
 ## 4.2.0
 
 ### Minor Changes
