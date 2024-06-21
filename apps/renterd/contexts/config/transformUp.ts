@@ -28,6 +28,7 @@ import {
 import { valuePerMonthToPerPeriod } from './utils'
 import { Resources } from './resources'
 import BigNumber from 'bignumber.js'
+import { derivePricingFromAllowance } from './derivePricesFromAllowance'
 
 // up
 export function transformUpAutopilot(
@@ -197,17 +198,39 @@ function filterUndefinedKeys(obj: Record<string, unknown>) {
 }
 
 export function getCalculatedValues({
-  estimatedSpendingPerMonth,
   isAutopilotEnabled,
-  autoAllowance,
+  allowanceDerivedPricing,
+  allowanceMonth,
+  storageTB,
+  downloadTBMonth,
+  uploadTBMonth,
+  redundancyMultiplier,
 }: {
-  estimatedSpendingPerMonth: BigNumber
+  allowanceMonth: BigNumber
+  storageTB: BigNumber
+  downloadTBMonth: BigNumber
+  uploadTBMonth: BigNumber
+  redundancyMultiplier: BigNumber
   isAutopilotEnabled: boolean
-  autoAllowance: boolean
+  allowanceDerivedPricing: boolean
 }) {
-  const calculatedValues: Partial<SettingsData> = {}
-  if (isAutopilotEnabled && autoAllowance && estimatedSpendingPerMonth?.gt(0)) {
-    calculatedValues.allowanceMonth = estimatedSpendingPerMonth
+  let calculatedValues: Partial<SettingsData> = {}
+  if (isAutopilotEnabled && allowanceDerivedPricing) {
+    const derivedPricing = derivePricingFromAllowance({
+      allowanceMonth,
+      allowanceFactor: 1.5,
+      storageTB,
+      downloadTBMonth,
+      uploadTBMonth,
+      redundancyMultiplier,
+      storageWeight: 4,
+      downloadWeight: 5,
+      uploadWeight: 1,
+    })
+    calculatedValues = {
+      ...calculatedValues,
+      ...derivedPricing,
+    }
   }
   return calculatedValues
 }
