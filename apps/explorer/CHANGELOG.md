@@ -1,5 +1,11 @@
 # explorer
 
+## 0.16.0
+
+### Minor Changes
+
+- 51f389a2: Block hashes now show both leading and ending characters to improve legibility. Closes https://github.com/SiaFoundation/web/issues/451
+
 ## 0.15.0
 
 ### Minor Changes

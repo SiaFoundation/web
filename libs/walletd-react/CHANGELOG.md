@@ -1,5 +1,13 @@
 # @siafoundation/walletd-react
 
+## 4.2.1
+
+### Patch Changes
+
+- 4806f299: Fixed a few inaccuracies in the event data types. Closes https://github.com/SiaFoundation/walletd/issues/141
+- Updated dependencies [4806f299]
+  - @siafoundation/walletd-types@0.3.1
+
 ## 4.2.0
 
 ### Minor Changes
