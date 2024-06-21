@@ -16,7 +16,8 @@ export function Block({ block }: Props) {
     const list: DatumProps[] = [
       {
         label: 'Block hash',
-        value: block.id,
+        entityType: 'blockHash',
+        entityValue: block.id,
       },
       {
         label: 'Miner payout address',
@@ -64,6 +65,7 @@ export function Block({ block }: Props) {
       <EntityList
         title={`Transactions (${block.transactions?.length || 0})`}
         dataset={block.transactions?.map((tx) => ({
+          type: 'transaction',
           hash: tx.id,
           label: 'transaction',
           initials: 'T',

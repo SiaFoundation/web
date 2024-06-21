@@ -13,6 +13,7 @@ import { getHref } from '../lib/utils'
 export type DatumProps = {
   label: string
   value?: React.ReactNode
+  displayValue?: string
   entityType?: EntityType
   entityValue?: string
   sc?: BigNumber
@@ -27,6 +28,7 @@ export function ExplorerDatum({
   entityValue,
   copyable = true,
   value,
+  displayValue,
   sc,
   sf,
   comment,
@@ -47,14 +49,10 @@ export function ExplorerDatum({
           (entityValue ? (
             <ValueCopyable
               scaleSize="18"
-              label={entityType}
               href={getHref(entityType, entityValue)}
               value={entityValue}
-              displayValue={
-                entityType === 'block' && entityValue
-                  ? Number(entityValue).toLocaleString()
-                  : entityValue
-              }
+              type={entityType}
+              displayValue={displayValue}
               // className="relative top-0.5"
             />
           ) : (

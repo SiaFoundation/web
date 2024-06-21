@@ -11,6 +11,7 @@ export type EntityType =
   | 'hostIp'
   | 'hostPublicKey'
   | 'contract'
+  | 'blockHash'
 
 export type TxType =
   | 'siacoin'
@@ -119,6 +120,7 @@ const entityLabels: Record<EntityType, string> = {
   hostIp: 'host',
   hostPublicKey: 'host',
   ip: 'IP',
+  blockHash: 'block hash',
 }
 
 const entityCopyLabels: Record<EntityType, string> = {
@@ -130,6 +132,7 @@ const entityCopyLabels: Record<EntityType, string> = {
   hostIp: 'host address',
   hostPublicKey: 'host public key',
   ip: 'IP',
+  blockHash: 'block hash',
 }
 
 const txTypeMap: Record<TxType, string> = {
@@ -198,5 +201,33 @@ export function getEntitySiascanUrl(
       return `${baseUrl}/block/${value}`
     default:
       return ''
+  }
+}
+
+export function defaultFormatValue(text: string, maxLength: number) {
+  return `${text?.slice(0, maxLength)}${
+    (text?.length || 0) > maxLength ? '...' : ''
+  }`
+}
+
+export function formatEntityValue(
+  type: EntityType,
+  text: string,
+  maxLength: number
+) {
+  switch (type) {
+    case 'blockHash': {
+      const halfMax = maxLength / 2
+      // Floor and ceil here to handle odd maxLengths.
+      // .slice() will round down on floats.
+      const firstHalf = text.slice(0, Math.floor(halfMax))
+      const lastHalf = text.slice(text.length - Math.ceil(halfMax))
+      return firstHalf + '...' + lastHalf
+    }
+    default: {
+      // We could also return null here, forcing the issue of defining
+      // formats for the missing cases in the switch above.
+      return defaultFormatValue(text, maxLength)
+    }
   }
 }
