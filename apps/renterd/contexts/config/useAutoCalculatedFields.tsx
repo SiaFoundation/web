@@ -7,29 +7,47 @@ import BigNumber from 'bignumber.js'
 
 export function useAutoCalculatedFields({
   form,
-  estimatedSpendingPerMonth,
+  allowanceMonth,
+  storageTB,
+  downloadTBMonth,
+  uploadTBMonth,
+  redundancyMultiplier,
   isAutopilotEnabled,
 }: {
   form: UseFormReturn<SettingsData>
-  estimatedSpendingPerMonth: BigNumber
+  allowanceMonth: BigNumber
+  storageTB: BigNumber
+  downloadTBMonth: BigNumber
+  uploadTBMonth: BigNumber
+  redundancyMultiplier: BigNumber
   isAutopilotEnabled: boolean
 }) {
-  const [autoAllowance, setAutoAllowance] = useLocalStorageState<boolean>(
-    'v0/config/auto/allowance',
-    {
+  const [allowanceDerivedPricing, setAllowanceDerivedPricing] =
+    useLocalStorageState<boolean>('v0/config/auto/allowance', {
       defaultValue: true,
-    }
-  )
+    })
 
   // Sync calculated values if applicable.
   const calculatedValues = useMemo(
     () =>
       getCalculatedValues({
-        estimatedSpendingPerMonth,
         isAutopilotEnabled,
-        autoAllowance,
+        allowanceDerivedPricing,
+        allowanceMonth,
+        storageTB,
+        downloadTBMonth,
+        uploadTBMonth,
+        redundancyMultiplier,
       }),
-    [estimatedSpendingPerMonth, isAutopilotEnabled, autoAllowance]
+    [
+      isAutopilotEnabled,
+      allowanceDerivedPricing,
+      allowanceMonth,
+      storageTB,
+      downloadTBMonth,
+      uploadTBMonth,
+      redundancyMultiplier,
+    ]
   )
 
   useEffect(() => {
@@ -43,7 +61,7 @@ export function useAutoCalculatedFields({
   }, [form, calculatedValues])
 
   return {
-    autoAllowance,
-    setAutoAllowance,
+    allowanceDerivedPricing,
+    setAllowanceDerivedPricing,
   }
 }

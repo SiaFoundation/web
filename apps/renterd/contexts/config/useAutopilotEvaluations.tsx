@@ -298,8 +298,8 @@ const fields = getFields({
   minShards: new BigNumber(0),
   totalShards: new BigNumber(0),
   redundancyMultiplier: new BigNumber(0),
-  autoAllowance: false,
-  setAutoAllowance: () => null,
+  allowanceDerivedPricing: false,
+  setAllowanceDerivedPricing: () => null,
   recommendations: {},
 })
 

@@ -19,7 +19,7 @@ test('basic field change and save behaviour', async ({ page }) => {
   // Reset state.
   await navigateToConfig({ page })
   await setViewMode({ page, state: 'basic' })
-  await setSwitchByLabel(page, 'autoAllowance', true)
+  await setSwitchByLabel(page, 'allowanceDerivedPricing', false)
 
   // Test that values can be updated.
   await fillTextInputByName(page, 'storageTB', '7')
@@ -28,6 +28,7 @@ test('basic field change and save behaviour', async ({ page }) => {
   await fillTextInputByName(page, 'maxStoragePriceTBMonth', '7000')
   await fillTextInputByName(page, 'maxUploadPriceTB', '7000')
   await fillTextInputByName(page, 'maxDownloadPriceTB', '7000')
+  await fillTextInputByName(page, 'allowanceMonth', '7000')
 
   // Correct number of changes is shown.
   await expect(page.getByText('7 changes')).toBeVisible()
@@ -41,33 +42,27 @@ test('basic field change and save behaviour', async ({ page }) => {
   await expectTextInputByName(page, 'maxStoragePriceTBMonth', '7,000')
   await expectTextInputByName(page, 'maxUploadPriceTB', '7,000')
   await expectTextInputByName(page, 'maxDownloadPriceTB', '7,000')
-  await expectTextInputByName(page, 'allowanceMonth', '343,000')
+  await expectTextInputByName(page, 'allowanceMonth', '7,000')
 })
 
-test('estimate based off storage, pricing, and redundancy', async ({
-  page,
-}) => {
+test('estimate is based off the allowance', async ({ page }) => {
   // Reset state.
   await navigateToConfig({ page })
-  await setSwitchByLabel(page, 'autoAllowance', true)
+  await setSwitchByLabel(page, 'allowanceDerivedPricing', false)
   await setViewMode({ page, state: 'advanced' })
 
   await fillTextInputByName(page, 'storageTB', '10')
-  await fillTextInputByName(page, 'uploadTBMonth', '10')
-  await fillTextInputByName(page, 'downloadTBMonth', '4')
-  await fillTextInputByName(page, 'maxStoragePriceTBMonth', '1500')
-  await fillTextInputByName(page, 'maxUploadPriceTB', '1000')
-  await fillTextInputByName(page, 'maxDownloadPriceTB', '5000')
+  await fillTextInputByName(page, 'allowanceMonth', '1000')
   await fillTextInputByName(page, 'minShards', '2')
   await fillTextInputByName(page, 'totalShards', '8')
 
   const estimateParts = [
     'Estimate',
-    '12,000 SC',
-    '($126.86)',
+    '100 SC',
+    '($10.57)',
     'per TB/month with 4.0x redundancy',
-    '120,000 SC',
-    '($1268.56)',
+    '1,000 SC',
+    '($10.57)',
     'to store 10.00 TB/month with 4.0x redundancy',
   ]
 
@@ -76,32 +71,39 @@ test('estimate based off storage, pricing, and redundancy', async ({
   }
 })
 
-test('configure with auto allowance', async ({ page }) => {
+test('configure with allowance derived pricing', async ({ page }) => {
   // Reset state.
   await navigateToConfig({ page })
-  await setSwitchByLabel(page, 'autoAllowance', true)
+  await setSwitchByLabel(page, 'allowanceDerivedPricing', true)
   await setViewMode({ page, state: 'basic' })
 
   // Set all values that affect the allowance calculation.
   await fillTextInputByName(page, 'storageTB', '10')
   await fillTextInputByName(page, 'uploadTBMonth', '10')
   await fillTextInputByName(page, 'downloadTBMonth', '4')
-  await fillTextInputByName(page, 'maxStoragePriceTBMonth', '1500')
-  await fillTextInputByName(page, 'maxUploadPriceTB', '1000')
-  await fillTextInputByName(page, 'maxDownloadPriceTB', '5000')
-  await expectSwitchByLabel(page, 'autoAllowance', true)
-  // Allowance auto updated.
-  await expectTextInputByName(page, 'allowanceMonth', '95,000')
-  // Allowance cannot be manually updated.
-  await expectTextInputByNameAttribute(page, 'allowanceMonth', 'readOnly')
+  await fillTextInputByName(page, 'allowanceMonth', '95,000')
+
+  // The following values are auto updated.
+  await expectTextInputByName(page, 'maxStoragePriceTBMonth', '3,352.941176')
+  await expectTextInputByName(page, 'maxUploadPriceTB', '838.235294')
+  await expectTextInputByName(page, 'maxDownloadPriceTB', '4,191.176471')
+  await expectSwitchByLabel(page, 'allowanceDerivedPricing', true)
+
+  // The following values cannot be manually updated.
+  await expectTextInputByNameAttribute(
+    page,
+    'maxStoragePriceTBMonth',
+    'readOnly'
+  )
+  await expectTextInputByNameAttribute(page, 'maxUploadPriceTB', 'readOnly')
+  await expectTextInputByNameAttribute(page, 'maxDownloadPriceTB', 'readOnly')
 })
 
-test('configure allowance manually', async ({ page }) => {
+test('configure max prices manually', async ({ page }) => {
   // Reset state.
   await navigateToConfig({ page })
-  await setSwitchByLabel(page, 'autoAllowance', false)
+  await setSwitchByLabel(page, 'allowanceDerivedPricing', false)
   await setViewMode({ page, state: 'basic' })
-  await fillTextInputByName(page, 'allowanceMonth', '777')
 
   // Set all values that affect the allowance calculation.
   await fillTextInputByName(page, 'storageTB', '10')
@@ -110,19 +112,20 @@ test('configure allowance manually', async ({ page }) => {
   await fillTextInputByName(page, 'maxStoragePriceTBMonth', '1500')
   await fillTextInputByName(page, 'maxUploadPriceTB', '1000')
   await fillTextInputByName(page, 'maxDownloadPriceTB', '5000')
-  await expectSwitchByLabel(page, 'autoAllowance', false)
-  // Allowance did not auto update.
-  await expectTextInputByName(page, 'allowanceMonth', '777')
-  // Allowance can be manually updated.
-  await fillTextInputByName(page, 'allowanceMonth', '4000')
-  await expectTextInputByName(page, 'allowanceMonth', '4,000')
+  await fillTextInputByName(page, 'allowanceMonth', '777')
+
+  // Changing the allowance does not auto update the max prices.
+  await expectTextInputByName(page, 'maxStoragePriceTBMonth', '1,500')
+  await expectTextInputByName(page, 'maxUploadPriceTB', '1,000')
+  await expectTextInputByName(page, 'maxDownloadPriceTB', '5,000')
+  await expectSwitchByLabel(page, 'allowanceDerivedPricing', false)
 })
 
 test('system offers recommendations', async ({ page }) => {
   // Reset state.
   await navigateToConfig({ page })
   await setViewMode({ page, state: 'basic' })
-  await setSwitchByLabel(page, 'autoAllowance', true)
+  await setSwitchByLabel(page, 'allowanceDerivedPricing', false)
 
   // Reset to very high values that will not need any recommendations.
   await fillTextInputByName(page, 'storageTB', '1')
@@ -146,6 +149,7 @@ test('system offers recommendations', async ({ page }) => {
   await fillTextInputByName(page, 'storageTB', '10')
   await fillTextInputByName(page, 'uploadTBMonth', '10')
   await fillTextInputByName(page, 'downloadTBMonth', '4')
+  await fillTextInputByName(page, 'allowanceMonth', '21000')
   await fillTextInputByName(page, 'maxStoragePriceTBMonth', '100')
   await fillTextInputByName(page, 'maxUploadPriceTB', '100')
   await fillTextInputByName(page, 'maxDownloadPriceTB', '100')

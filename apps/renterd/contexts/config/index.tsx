@@ -98,8 +98,8 @@ export function useConfigMain() {
     fields,
     configViewMode,
     setConfigViewMode,
-    autoAllowance,
-    setAutoAllowance,
+    allowanceDerivedPricing,
+    setAllowanceDerivedPricing,
   } = useForm({ resources })
 
   const remoteValues: SettingsData = useMemo(() => {
@@ -211,8 +211,8 @@ export function useConfigMain() {
     configRef,
     takeScreenshot,
     evaluation,
-    autoAllowance,
-    setAutoAllowance,
+    allowanceDerivedPricing,
+    setAllowanceDerivedPricing,
   }
 }
 
