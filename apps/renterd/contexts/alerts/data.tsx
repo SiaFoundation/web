@@ -1,4 +1,5 @@
 import {
+  Button,
   Link,
   ScrollArea,
   Text,
@@ -7,7 +8,7 @@ import {
   ValueNum,
   ValueSc,
 } from '@siafoundation/design-system'
-import { useHost, useSlabObjects } from '@siafoundation/renterd-react'
+import { useHost } from '@siafoundation/renterd-react'
 import { HostContextMenu } from '../../components/Hosts/HostContextMenu'
 import { useFilesManager } from '../filesManager'
 import { useDialog } from '../dialog'
@@ -15,6 +16,8 @@ import { getDirectorySegmentsFromPath } from '../../lib/paths'
 import BigNumber from 'bignumber.js'
 import { ContractContextMenuFromId } from '../../components/Contracts/ContractContextMenuFromId'
 import { AccountContextMenu } from '../../components/AccountContextMenu'
+import { FileContextMenu } from '../../components/Files/FileContextMenu'
+import { CaretDown16 } from '@siafoundation/react-icons'
 
 export const dataFields: Record<
   string,
@@ -120,49 +123,94 @@ export const dataFields: Record<
   },
   slabKey: {
     render: function SlabField({ value }: { value: string }) {
+      return (
+        <div className="flex justify-between w-full gap-2">
+          <Text size="12" color="subtle" ellipsis>
+            slab key
+          </Text>
+          <ValueCopyable size="12" value={value} label="slab key" />
+        </div>
+      )
+    },
+  },
+  health: {
+    render: function OriginField({ value }: { value: string }) {
+      return (
+        <div className="flex justify-between w-full gap-2">
+          <Text size="12" color="subtle" ellipsis>
+            health
+          </Text>
+          <Text size="12" color="contrast" ellipsis>
+            {value}
+          </Text>
+        </div>
+      )
+    },
+  },
+  objectIDs: {
+    render: function ObjectIdsField({
+      value,
+    }: {
+      value: Record<string, string[]>
+    }) {
       const { setActiveDirectory } = useFilesManager()
       const { closeDialog } = useDialog()
-      const objects = useSlabObjects({
-        params: {
-          key: value,
-        },
-        config: {
-          swr: {
-            revalidateOnFocus: false,
-          },
-        },
-      })
       return (
         <div className="flex flex-col gap-2 max-h-[100px]">
           <div className="flex justify-between w-full gap-2">
             <Text size="12" color="subtle" ellipsis>
-              slab key
+              object IDs
             </Text>
-            <ValueCopyable size="12" value={value} label="slab key" />
           </div>
-          {!!objects.data?.length && (
+          <div className="-mx-2">
             <ScrollArea>
-              <div className="flex flex-col gap-2 mt-2 mb-2">
-                {objects.data.map((o) => (
-                  <Link
-                    key={o.name}
-                    color="accent"
-                    underline="hover"
-                    size="12"
-                    noWrap
-                    onClick={() => {
-                      setActiveDirectory(() =>
-                        getDirectorySegmentsFromPath(o.name)
-                      )
-                      closeDialog()
-                    }}
-                  >
-                    {o.name}
-                  </Link>
-                ))}
+              <div className="flex flex-col gap-2 mt-2 mb-2 px-2">
+                {Object.entries(value).map(([bucket, paths]) =>
+                  paths.map((path) => {
+                    const fullPath = `${bucket}${path}`
+                    return (
+                      <div
+                        key={fullPath}
+                        className="flex justify-between w-full gap-2"
+                      >
+                        <Link
+                          color="accent"
+                          underline="hover"
+                          size="12"
+                          noWrap
+                          ellipsis
+                          onClick={() => {
+                            setActiveDirectory(() =>
+                              getDirectorySegmentsFromPath(fullPath)
+                            )
+                            closeDialog()
+                          }}
+                        >
+                          {fullPath}
+                        </Link>
+                        <FileContextMenu
+                          path={fullPath}
+                          contentProps={{
+                            align: 'end',
+                          }}
+                          trigger={
+                            <Button
+                              aria-label="File context menu"
+                              variant="ghost"
+                              icon="hover"
+                              size="none"
+                            >
+                              <CaretDown16 />
+                            </Button>
+                          }
+                        />
+                      </div>
+                    )
+                  })
+                )}
               </div>
             </ScrollArea>
-          )}
+          </div>
         </div>
       )
     },

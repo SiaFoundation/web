@@ -25,9 +25,11 @@ import { useFilesManager } from '../../../contexts/filesManager'
 
 type Props = {
   path: string
+  trigger?: React.ReactNode
+  contentProps?: React.ComponentProps<typeof DropdownMenu>['contentProps']
 }
 
-export function FileContextMenu({ path }: Props) {
+export function FileContextMenu({ trigger, path, contentProps }: Props) {
   const { downloadFiles, getFileUrl, navigateToModeSpecificFiltering } =
     useFilesManager()
   const deleteFile = useFileDelete()
@@ -36,11 +38,13 @@ export function FileContextMenu({ path }: Props) {
   return (
     <DropdownMenu
       trigger={
-        <Button aria-label="File context menu" variant="ghost" icon="hover">
-          <Document16 />
-        </Button>
+        trigger || (
+          <Button aria-label="File context menu" variant="ghost" icon="hover">
+            <Document16 />
+          </Button>
+        )
       }
-      contentProps={{ align: 'start' }}
+      contentProps={{ align: 'start', ...contentProps }}
     >
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
       <DropdownMenuItem
