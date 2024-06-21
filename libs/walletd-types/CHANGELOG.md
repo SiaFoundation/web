@@ -1,5 +1,11 @@
 # @siafoundation/walletd-types
 
+## 0.3.1
+
+### Patch Changes
+
+- 4806f299: Fixed a few inaccuracies in the event data types. Closes https://github.com/SiaFoundation/walletd/issues/141
+
 ## 0.3.0
 
 ### Minor Changes
