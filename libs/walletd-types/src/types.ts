@@ -12,6 +12,7 @@ import {
   V2Transaction,
   V2FileContractResolutionType,
   Address,
+  V2FileContractElement,
 } from '@siafoundation/types'
 
 export type GatewayPeer = {
@@ -25,10 +26,14 @@ export type GatewayPeer = {
   syncDuration?: number
 }
 
+export type UnconfirmedChainIndex = {
+  height: number
+}
+
 export type WalletEventBase = {
   id: Hash256
   timestamp: string
-  index: ChainIndex
+  index: ChainIndex | UnconfirmedChainIndex
   maturityHeight: number
   relevant: Address[]
 }
@@ -73,7 +78,7 @@ export type WalletEventTransactionV2 = WalletEventBase & {
 export type WalletEventContractResolutionV1 = WalletEventBase & {
   type: 'v1ContractResolution'
   data: {
-    fileContract: FileContractElement
+    parent: FileContractElement
     siacoinElement: SiacoinElement
     missed: boolean
   }
@@ -82,7 +87,7 @@ export type WalletEventContractResolutionV1 = WalletEventBase & {
 export type WalletEventContractResolutionV2 = WalletEventBase & {
   type: 'v2ContractResolution'
   data: {
-    fileContract: FileContractElement
+    parent: V2FileContractElement
     resolution: V2FileContractResolutionType
     siacoinElement: SiacoinElement
     missed: boolean
@@ -92,7 +97,7 @@ export type WalletEventContractResolutionV2 = WalletEventBase & {
 export type WalletEventMinerPayout = WalletEventBase & {
   type: 'miner'
   data: {
-    siacoinOutput: SiacoinElement
+    siacoinElement: SiacoinElement
   }
 }
 
@@ -106,7 +111,7 @@ export type WalletEventSiafundClaim = WalletEventBase & {
 export type WalletEventFoundationSubsidy = WalletEventBase & {
   type: 'foundation'
   data: {
-    siacoinOutput: SiacoinElement
+    siacoinElement: SiacoinElement
   }
 }
 

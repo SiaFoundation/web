@@ -21,10 +21,8 @@ import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
 import {
-  calculateScInflow,
-  calculateScOutflow,
-  calculateSfInflow,
-  calculateSfOutflow,
+  calculateScValue,
+  calculateSfValue,
   getContractId,
   getFee,
 } from './utils'
@@ -69,8 +67,8 @@ export function useEventsMain() {
       return null
     }
     const dataTxPool: EventData[] = responseTxPool.data.map((e) => {
-      const amountSc = calculateScInflow(e).minus(calculateScOutflow(e))
-      const amountSf = calculateSfInflow(e) - calculateSfOutflow(e)
+      const amountSc = calculateScValue(e)
+      const amountSf = calculateSfValue(e)
       const fee = getFee(e)
       const event: EventData = {
         id: e.id,
@@ -84,9 +82,9 @@ export function useEventsMain() {
       }
       return event
     })
-    const dataEvents: EventData[] = responseEvents.data.map((e, index) => {
-      const amountSc = calculateScInflow(e).minus(calculateScOutflow(e))
-      const amountSf = calculateSfInflow(e) - calculateSfOutflow(e)
+    const dataEvents: EventData[] = responseEvents.data.map((e) => {
+      const amountSc = calculateScValue(e)
+      const amountSf = calculateSfValue(e)
       const fee = getFee(e)
       const contractId = getContractId(e)
       const isMature = e.maturityHeight <= syncStatus.nodeBlockHeight
