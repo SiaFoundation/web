@@ -22,8 +22,11 @@ import { SectionGradient } from '../../components/SectionGradient'
 import { SectionTransparent } from '../../components/SectionTransparent'
 import { useInView } from 'react-intersection-observer'
 import { cx } from 'class-variance-authority'
-import { getRenterdLatestRelease } from '../../content/releases'
-import { DownloadBar } from '../../components/DownloadBar'
+import {
+  getRenterdLatestDaemonRelease,
+  getRenterdLatestDesktopRelease,
+} from '../../content/releases'
+import { DownloadSection } from '../../components/DownloadSection'
 import { backgrounds, previews } from '../../content/assets'
 
 const title = 'renterd'
@@ -40,7 +43,12 @@ const description = (
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-export default function Renterd({ release, technical, tutorials }: Props) {
+export default function Renterd({
+  releaseDaemon,
+  releaseDesktop,
+  technical,
+  tutorials,
+}: Props) {
   const { ref: appRef, inView: appInView } = useInView()
 
   return (
@@ -63,7 +71,11 @@ export default function Renterd({ release, technical, tutorials }: Props) {
     >
       <SectionGradient className="pb:30">
         <div className="relative">
-          <DownloadBar daemon={daemon} release={release} />
+          <DownloadSection
+            daemon={daemon}
+            releaseDaemon={releaseDaemon}
+            releaseDesktop={releaseDesktop}
+          />
           <div ref={appRef} className="absolute top-[70%]" />
           <div
             className={cx(
@@ -274,17 +286,22 @@ export default function Renterd({ release, technical, tutorials }: Props) {
 }
 
 export async function getStaticProps() {
-  const stats = await getStats()
-  const technical = await getFeedContent(['technical'], 8)
-  const tutorials = await getTutorialArticles()
-  const release = await getRenterdLatestRelease()
-  const services = await getProjects('storage_services', 5)
+  const [stats, technical, tutorials, releaseDaemon, releaseDesktop, services] =
+    await Promise.all([
+      getStats(),
+      getFeedContent(['technical'], 8),
+      getTutorialArticles(),
+      getRenterdLatestDaemonRelease(),
+      getRenterdLatestDesktopRelease(),
+      getProjects('storage_services', 5),
+    ])
 
   const props = {
     technical,
     tutorials,
     services,
-    release,
+    releaseDaemon,
+    releaseDesktop,
     fallback: {
       '/api/stats': stats,
     },

@@ -40,7 +40,7 @@ export const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
   VariantProps<typeof styles> & CheckboxPrimitive.CheckboxProps
 >(({ size, children, ...props }, ref) => (
-  <div className="flex gap-2">
+  <div className="flex gap-2 items-center">
     <CheckboxPrimitive.Root className={styles({ size })} {...props} ref={ref}>
       <CheckboxPrimitive.Indicator className="flex items-center justify-center h-full w-full text-white">
         <Checkmark16 />

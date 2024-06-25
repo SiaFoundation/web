@@ -20,8 +20,10 @@ import { SectionProjects } from '../../components/SectionProjects'
 import { SectionTutorials } from '../../components/SectionTutorials'
 import { CalloutWalletd } from '../../components/CalloutWalletd'
 import { SoftwareSectionCurrentGen } from '../../components/SoftwareSectionCurrentGen'
-import { getWalletdLatestRelease } from '../../content/releases'
-// import { DownloadBar } from '../../components/DownloadBar'
+import {
+  getWalletdLatestDaemonRelease,
+  getWalletdLatestDesktopRelease,
+} from '../../content/releases'
 
 const title = 'Wallet'
 const description = 'Manage your wallet on the Sia network.'
@@ -32,7 +34,8 @@ export default function Wallet({
   technical,
   tutorials,
   projects,
-  release,
+  releaseDaemon,
+  releaseDesktop,
 }: Props) {
   return (
     <Layout
@@ -69,7 +72,7 @@ export default function Wallet({
                 },
               }}
             />
-            <CalloutWalletd release={release} />
+            <CalloutWalletd />
             <Callout
               title="Setup guide for walletd"
               background={patterns.nateSnow}
@@ -138,19 +141,22 @@ export default function Wallet({
 }
 
 export async function getStaticProps() {
-  const [stats, technical, tutorials, projects, release] = await Promise.all([
-    getStats(),
-    getFeedContent(['technical'], 8),
-    getWalletArticles(),
-    getProjects('wallet'),
-    getWalletdLatestRelease(),
-  ])
+  const [stats, technical, tutorials, projects, releaseDaemon, releaseDesktop] =
+    await Promise.all([
+      getStats(),
+      getFeedContent(['technical'], 8),
+      getWalletArticles(),
+      getProjects('wallet'),
+      getWalletdLatestDaemonRelease(),
+      getWalletdLatestDesktopRelease(),
+    ])
 
   const props = {
     technical,
     tutorials,
     projects,
-    release,
+    releaseDaemon,
+    releaseDesktop,
     fallback: {
       '/api/stats': stats,
     },
