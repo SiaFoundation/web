@@ -180,7 +180,7 @@ export type GitHubRelease = {
   assets: GitHubReleaseAsset[]
 }
 
-export async function getGitHubRenterdLatestRelease(): Promise<GitHubRelease | null> {
+export async function getGitHubRenterdLatestDaemonRelease(): Promise<GitHubRelease | null> {
   try {
     const response = await axios.get(
       'https://api.github.com/repos/SiaFoundation/renterd/releases?per_page=1'
@@ -196,7 +196,7 @@ export async function getGitHubRenterdLatestRelease(): Promise<GitHubRelease | n
   }
 }
 
-export async function getGitHubHostdLatestRelease(): Promise<GitHubRelease | null> {
+export async function getGitHubHostdLatestDaemonRelease(): Promise<GitHubRelease | null> {
   try {
     const response = await axios.get(
       'https://api.github.com/repos/SiaFoundation/hostd/releases/latest'
@@ -212,7 +212,7 @@ export async function getGitHubHostdLatestRelease(): Promise<GitHubRelease | nul
   }
 }
 
-export async function getGitHubWalletdLatestRelease(): Promise<GitHubRelease | null> {
+export async function getGitHubWalletdLatestDaemonRelease(): Promise<GitHubRelease | null> {
   try {
     const response = await axios.get(
       'https://api.github.com/repos/SiaFoundation/walletd/releases?per_page=1'
@@ -226,4 +226,70 @@ export async function getGitHubWalletdLatestRelease(): Promise<GitHubRelease | n
     console.log(e)
     return null
   }
+}
+
+export async function getGitHubRenterdLatestDesktopRelease(): Promise<GitHubRelease | null> {
+  return getGitHubDesktopRelease('renterd')
+}
+
+export async function getGitHubHostdLatestDesktopRelease(): Promise<GitHubRelease | null> {
+  return getGitHubDesktopRelease('hostd')
+}
+
+export async function getGitHubWalletdLatestDesktopRelease(): Promise<GitHubRelease | null> {
+  return getGitHubDesktopRelease('walletd')
+}
+
+async function getGitHubDesktopRelease(
+  daemon: string
+): Promise<GitHubRelease | null> {
+  let found: GitHubRelease | null = null
+  let page = 1
+  while (!found) {
+    try {
+      const response = await axios.get(
+        `https://api.github.com/repos/SiaFoundation/desktop/releases?per_page=100&page=${page}`
+      )
+      if (!response.data.length) {
+        break
+      }
+      const release = sortReleasesByTag(response.data).find(
+        (d: GitHubRelease) => d.tag_name.startsWith(daemon)
+      )
+      if (release) {
+        found = release
+        break
+      }
+      page++
+    } catch (e) {
+      console.log(e)
+      return null
+    }
+  }
+  return found
+}
+
+function compareTags(r1: GitHubRelease, r2: GitHubRelease) {
+  const parseTag = (tag: string) => {
+    if (!tag.includes('@')) {
+      return [0, 0, 0]
+    }
+    const parts = tag.split('@')[1]
+    return parts.split('.').map(Number)
+  }
+
+  const [major1, minor1, patch1] = parseTag(r1.tag_name)
+  const [major2, minor2, patch2] = parseTag(r2.tag_name)
+
+  if (major1 !== major2) {
+    return major2 - major1
+  } else if (minor1 !== minor2) {
+    return minor2 - minor1
+  } else {
+    return patch2 - patch1
+  }
+}
+
+function sortReleasesByTag(releases: GitHubRelease[]) {
+  return releases.sort((a, b) => compareTags(a, b))
 }

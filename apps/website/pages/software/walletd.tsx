@@ -18,8 +18,11 @@ import { textContent } from '../../lib/utils'
 import { SectionGradient } from '../../components/SectionGradient'
 import { useInView } from 'react-intersection-observer'
 import { cx } from 'class-variance-authority'
-import { getWalletdLatestRelease } from '../../content/releases'
-import { DownloadBar } from '../../components/DownloadBar'
+import {
+  getWalletdLatestDaemonRelease,
+  getWalletdLatestDesktopRelease,
+} from '../../content/releases'
+import { DownloadSection } from '../../components/DownloadSection'
 import { backgrounds, previews } from '../../content/assets'
 import { SectionTransparent } from '../../components/SectionTransparent'
 import { CarouselWalletd } from '../../components/CarouselWalletd'
@@ -43,7 +46,12 @@ const description = (
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
-export default function Walletd({ release, technical, tutorials }: Props) {
+export default function Walletd({
+  releaseDaemon,
+  releaseDesktop,
+  technical,
+  tutorials,
+}: Props) {
   const { ref: appRef, inView: appInView } = useInView()
 
   return (
@@ -65,7 +73,12 @@ export default function Walletd({ release, technical, tutorials }: Props) {
       previewImage={previews.walletd}
     >
       <SectionGradient className="pb:30">
-        <DownloadBar daemon={daemon} release={release} testnetOnly />
+        <DownloadSection
+          daemon={daemon}
+          releaseDaemon={releaseDaemon}
+          releaseDesktop={releaseDesktop}
+          testnetOnly
+        />
         <div className="relative">
           <div ref={appRef} className="absolute top-[70%]" />
           <div
@@ -121,17 +134,22 @@ export default function Walletd({ release, technical, tutorials }: Props) {
 }
 
 export async function getStaticProps() {
-  const stats = await getStats()
-  const technical = await getFeedContent(['technical'], 8)
-  const tutorials = await getTutorialArticles()
-  const release = await getWalletdLatestRelease()
-  const services = await getProjects('storage_services', 5)
+  const [stats, technical, tutorials, releaseDaemon, releaseDesktop, services] =
+    await Promise.all([
+      getStats(),
+      getFeedContent(['technical'], 8),
+      getTutorialArticles(),
+      getWalletdLatestDaemonRelease(),
+      getWalletdLatestDesktopRelease(),
+      getProjects('storage_services', 5),
+    ])
 
   const props = {
     technical,
     tutorials,
     services,
-    release,
+    releaseDaemon,
+    releaseDesktop,
     fallback: {
       '/api/stats': stats,
     },

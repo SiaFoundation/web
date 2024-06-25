@@ -6,7 +6,6 @@ import {
   Badge,
 } from '@siafoundation/design-system'
 import Image from 'next/image'
-import { GitHubRelease } from '@siafoundation/data-sources'
 
 type Props = {
   name: string
@@ -14,7 +13,6 @@ type Props = {
   description: React.ReactNode
   href?: string
   daemon?: 'renterd' | 'hostd' | 'walletd'
-  release?: GitHubRelease
   newTab?: boolean
   image?: string
   background: string
