@@ -19,8 +19,11 @@ import { SectionTransparent } from '../../components/SectionTransparent'
 import { CalloutRenterd } from '../../components/CalloutRenterd'
 import { SectionProjects } from '../../components/SectionProjects'
 import { SectionTutorials } from '../../components/SectionTutorials'
-import { getRenterdLatestRelease } from '../../content/releases'
-import { DownloadBar } from '../../components/DownloadBar'
+import {
+  getRenterdLatestDaemonRelease,
+  getRenterdLatestDesktopRelease,
+} from '../../content/releases'
+import { DownloadSection } from '../../components/DownloadSection'
 
 const title = 'Rent'
 const description = 'Rent storage space on the Sia network.'
@@ -32,7 +35,8 @@ export default function Rent({
   tutorials,
   thirdParty,
   ideas,
-  release,
+  releaseDaemon,
+  releaseDesktop,
 }: Props) {
   return (
     <Layout
@@ -53,7 +57,11 @@ export default function Rent({
       previewImage={previews.leaves}
     >
       <SectionGradient className="pb-20">
-        <DownloadBar daemon="renterd" release={release} />
+        <DownloadSection
+          daemon="renterd"
+          releaseDaemon={releaseDaemon}
+          releaseDesktop={releaseDesktop}
+        />
         <div className="flex flex-col">
           <SiteHeading
             id="core-software"
@@ -62,7 +70,7 @@ export default function Rent({
             description="Official software, developed by the Sia Foundation."
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <CalloutRenterd release={release} />
+            <CalloutRenterd />
             <Callout
               size="1"
               title="Setup guide for renterd"
@@ -144,13 +152,15 @@ export default function Rent({
 }
 
 export async function getStaticProps() {
-  const [stats, technical, tutorials, projects, release] = await Promise.all([
-    getStats(),
-    getFeedContent(['technical'], 8),
-    getRentingArticles(),
-    getProjects('renting'),
-    getRenterdLatestRelease(),
-  ])
+  const [stats, technical, tutorials, projects, releaseDaemon, releaseDesktop] =
+    await Promise.all([
+      getStats(),
+      getFeedContent(['technical'], 8),
+      getRentingArticles(),
+      getProjects('renting'),
+      getRenterdLatestDaemonRelease(),
+      getRenterdLatestDesktopRelease(),
+    ])
   const thirdParty = projects.filter((project) => !project.idea)
   const ideas = projects.filter((project) => project.idea)
 
@@ -159,7 +169,8 @@ export async function getStaticProps() {
     tutorials,
     thirdParty,
     ideas,
-    release,
+    releaseDaemon,
+    releaseDesktop,
     fallback: {
       '/api/stats': stats,
     },

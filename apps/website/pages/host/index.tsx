@@ -19,8 +19,11 @@ import { SectionTransparent } from '../../components/SectionTransparent'
 import { SectionProjects } from '../../components/SectionProjects'
 import { CalloutHostd } from '../../components/CalloutHostd'
 import { SectionTutorials } from '../../components/SectionTutorials'
-import { getHostdLatestRelease } from '../../content/releases'
-import { DownloadBar } from '../../components/DownloadBar'
+import {
+  getHostdLatestDaemonRelease,
+  getHostdLatestDesktopRelease,
+} from '../../content/releases'
+import { DownloadSection } from '../../components/DownloadSection'
 
 const title = 'Host'
 const description = 'Offer your storage space on the Sia network.'
@@ -32,7 +35,8 @@ export default function Host({
   tutorials,
   thirdParty,
   ideas,
-  release,
+  releaseDaemon,
+  releaseDesktop,
 }: Props) {
   return (
     <Layout
@@ -53,7 +57,11 @@ export default function Host({
       previewImage={previews.nateWaterfall}
     >
       <SectionGradient className="pb-20">
-        <DownloadBar daemon="hostd" release={release} />
+        <DownloadSection
+          daemon="hostd"
+          releaseDaemon={releaseDaemon}
+          releaseDesktop={releaseDesktop}
+        />
         <div className="flex flex-col">
           <SiteHeading
             size="32"
@@ -62,7 +70,7 @@ export default function Host({
             className="mt-12 md:mt-12"
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <CalloutHostd release={release} />
+            <CalloutHostd />
             <Callout
               title="Setup guide for hostd"
               background={patterns.bamboo}
@@ -146,13 +154,15 @@ export default function Host({
 }
 
 export async function getStaticProps() {
-  const [stats, technical, tutorials, projects, release] = await Promise.all([
-    getStats(),
-    getFeedContent(['technical'], 8),
-    getHostingArticles(),
-    getProjects('hosting'),
-    getHostdLatestRelease(),
-  ])
+  const [stats, technical, tutorials, projects, releaseDaemon, releaseDesktop] =
+    await Promise.all([
+      getStats(),
+      getFeedContent(['technical'], 8),
+      getHostingArticles(),
+      getProjects('hosting'),
+      getHostdLatestDaemonRelease(),
+      getHostdLatestDesktopRelease(),
+    ])
   const thirdParty = projects.filter((project) => !project.idea)
   const ideas = projects.filter((project) => project.idea)
 
@@ -161,7 +171,8 @@ export async function getStaticProps() {
     tutorials,
     thirdParty,
     ideas,
-    release,
+    releaseDaemon,
+    releaseDesktop,
     fallback: {
       '/api/stats': stats,
     },

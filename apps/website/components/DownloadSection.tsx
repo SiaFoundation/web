@@ -1,16 +1,25 @@
 import { webLinks, Link, Text } from '@siafoundation/design-system'
 import { LogoGithub24, Book24, Code24 } from '@siafoundation/react-icons'
-import { DownloadSelect } from './DownloadSelect'
+import { DownloadDaemonSelect } from './DownloadDaemonSelect'
 import { GitHubRelease } from '@siafoundation/data-sources'
+import { DownloadDesktopSelect } from './DownloadDesktopSelect'
+import { backgrounds } from '../content/assets'
+import { DownloadCard } from './DownloadCard'
 
 type Daemon = 'renterd' | 'hostd' | 'walletd'
 type Props = {
   daemon: Daemon
-  release: GitHubRelease
+  releaseDaemon: GitHubRelease
+  releaseDesktop: GitHubRelease
   testnetOnly?: boolean
 }
 
-export function DownloadBar({ daemon, release, testnetOnly }: Props) {
+export function DownloadSection({
+  daemon,
+  releaseDaemon,
+  releaseDesktop,
+  testnetOnly,
+}: Props) {
   const guideUrl = webLinks.docs[daemon]
   const docsUrl = webLinks.apiDocs[daemon]
   const githubUrl = webLinks.github[daemon]
@@ -20,11 +29,33 @@ export function DownloadBar({ daemon, release, testnetOnly }: Props) {
       <Text size="24" weight="semibold" className="">
         Download {daemon} software
       </Text>
-      <DownloadSelect
-        daemon={daemon}
-        release={release}
-        testnetOnly={testnetOnly}
-      />
+      <div className="flex gap-3 justify-center items-center">
+        <DownloadCard
+          background={backgrounds.bamboo}
+          status="beta"
+          title="Desktop application"
+          description="Download the full-featured desktop app for Windows, macOS, or Linux."
+          downloadSelect={
+            <DownloadDesktopSelect
+              daemon={daemon}
+              release={releaseDesktop}
+              testnetOnly={testnetOnly}
+            />
+          }
+        />
+        <DownloadCard
+          background={backgrounds.ocean}
+          title="Terminal application"
+          description="Download the powerful CLI-based daemon for Windows, macOS, or Linux."
+          downloadSelect={
+            <DownloadDaemonSelect
+              daemon={daemon}
+              release={releaseDaemon}
+              testnetOnly={testnetOnly}
+            />
+          }
+        />
+      </div>
       <div className="flex items-center gap-x-4 gap-y-3">
         {guideUrl && (
           <Link

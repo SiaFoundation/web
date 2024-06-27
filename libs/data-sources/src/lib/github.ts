@@ -180,7 +180,7 @@ export type GitHubRelease = {
   assets: GitHubReleaseAsset[]
 }
 
-export async function getGitHubRenterdLatestRelease(): Promise<GitHubRelease | null> {
+export async function getGitHubRenterdLatestDaemonRelease(): Promise<GitHubRelease | null> {
   try {
     const response = await axios.get(
       'https://api.github.com/repos/SiaFoundation/renterd/releases?per_page=1'
@@ -196,7 +196,7 @@ export async function getGitHubRenterdLatestRelease(): Promise<GitHubRelease | n
   }
 }
 
-export async function getGitHubHostdLatestRelease(): Promise<GitHubRelease | null> {
+export async function getGitHubHostdLatestDaemonRelease(): Promise<GitHubRelease | null> {
   try {
     const response = await axios.get(
       'https://api.github.com/repos/SiaFoundation/hostd/releases/latest'
@@ -212,7 +212,7 @@ export async function getGitHubHostdLatestRelease(): Promise<GitHubRelease | nul
   }
 }
 
-export async function getGitHubWalletdLatestRelease(): Promise<GitHubRelease | null> {
+export async function getGitHubWalletdLatestDaemonRelease(): Promise<GitHubRelease | null> {
   try {
     const response = await axios.get(
       'https://api.github.com/repos/SiaFoundation/walletd/releases?per_page=1'
@@ -226,4 +226,50 @@ export async function getGitHubWalletdLatestRelease(): Promise<GitHubRelease | n
     console.log(e)
     return null
   }
+}
+
+export async function getGitHubRenterdLatestDesktopRelease(): Promise<GitHubRelease | null> {
+  return getGitHubDesktopRelease('renterd')
+}
+
+export async function getGitHubHostdLatestDesktopRelease(): Promise<GitHubRelease | null> {
+  return getGitHubDesktopRelease('hostd')
+}
+
+export async function getGitHubWalletdLatestDesktopRelease(): Promise<GitHubRelease | null> {
+  return getGitHubDesktopRelease('walletd')
+}
+
+async function getGitHubDesktopRelease(
+  daemon: string
+): Promise<GitHubRelease | null> {
+  let found: GitHubRelease | null = null
+  let page = 1
+  while (!found) {
+    try {
+      const response = await axios.get(
+        `https://api.github.com/repos/SiaFoundation/desktop/releases?per_page=100&page=${page}`
+      )
+      if (!response.data.length) {
+        break
+      }
+      // Releases that start with v (eg. v0.2.0) contain the electron app assets.
+      // Each daemon is released separately, so we need to find the latest
+      // version with assets for that daemon.
+      const release = response.data.find(
+        (d: GitHubRelease) =>
+          d.tag_name.startsWith('v') &&
+          d.assets.find((a: GitHubReleaseAsset) => a.name.includes(daemon))
+      )
+      if (release) {
+        found = release
+        break
+      }
+      page++
+    } catch (e) {
+      console.log(e)
+      return null
+    }
+  }
+  return found
 }

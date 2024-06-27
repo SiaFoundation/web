@@ -1,8 +1,8 @@
 import { GitHubRelease } from '@siafoundation/data-sources'
 import {
-  getHostdLatestRelease,
-  getRenterdLatestRelease,
-  getWalletdLatestRelease,
+  getHostdLatestDaemonRelease,
+  getRenterdLatestDaemonRelease,
+  getWalletdLatestDaemonRelease,
 } from '../../../../content/releases'
 import fetch from 'node-fetch'
 
@@ -19,15 +19,15 @@ export default async function handler(req, res) {
     let latest: GitHubRelease = null
     if (name.includes('hostd')) {
       daemon = 'hostd'
-      latest = await getHostdLatestRelease()
+      latest = await getHostdLatestDaemonRelease()
     }
     if (name.includes('renterd')) {
       daemon = 'renterd'
-      latest = await getRenterdLatestRelease()
+      latest = await getRenterdLatestDaemonRelease()
     }
     if (name.includes('walletd')) {
       daemon = 'walletd'
-      latest = await getWalletdLatestRelease()
+      latest = await getWalletdLatestDaemonRelease()
     }
     const githubUrl = `https://github.com/SiaFoundation/${daemon}/releases/download/${latest.tag_name}/${name}`
 
