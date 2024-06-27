@@ -1,5 +1,11 @@
 # renterd
 
+## 0.55.0
+
+### Minor Changes
+
+- bdbc4d58: The slab migration failed alert now shows health and an object IDs list that includes the file context menu for each object. Closes https://github.com/SiaFoundation/renterd/issues/1322
+
 ## 0.54.1
 
 ### Patch Changes
