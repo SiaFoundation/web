@@ -1,5 +1,11 @@
 # @siafoundation/sdk
 
+## 0.2.0
+
+### Minor Changes
+
+- 8c3dcc8a: The SDK now works in non-browser environments like nodejs and bun.
+
 ## 0.1.1
 
 ### Patch Changes
