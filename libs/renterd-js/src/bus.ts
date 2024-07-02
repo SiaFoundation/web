@@ -60,11 +60,17 @@ import {
   ContractSetsParams,
   ContractSetsPayload,
   ContractSetsResponse,
+  ContractSizeParams,
+  ContractSizePayload,
+  ContractSizeResponse,
   ContractsAddParams,
   ContractsAddPayload,
   ContractsAddResponse,
   ContractsParams,
   ContractsPayload,
+  ContractsPrunableParams,
+  ContractsPrunablePayload,
+  ContractsPrunableResponse,
   ContractsReleaseParams,
   ContractsReleasePayload,
   ContractsReleaseResponse,
@@ -221,6 +227,8 @@ import {
   busContractIdReleaseRoute,
   busContractIdRenewedRoute,
   busContractIdRoute,
+  busContractIdSize,
+  busContractsPrunableRoute,
   busContractsRoute,
   busContractsSetsRoute,
   busContractsSetsSetRoute,
@@ -459,6 +467,11 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       ContractDeletePayload,
       ContractDeleteResponse
     >(axios, 'delete', busContractIdRoute),
+    contractSize: buildRequestHandler<
+      ContractSizeParams,
+      ContractSizePayload,
+      ContractSizeResponse
+    >(axios, 'get', busContractIdSize),
     contractSets: buildRequestHandler<
       ContractSetsParams,
       ContractSetsPayload,
@@ -469,6 +482,11 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       ContractSetUpdatePayload,
       ContractSetUpdateResponse
     >(axios, 'put', busContractsSetsSetRoute),
+    contractsPrunable: buildRequestHandler<
+      ContractsPrunableParams,
+      ContractsPrunablePayload,
+      ContractsPrunableResponse
+    >(axios, 'get', busContractsPrunableRoute),
     buckets: buildRequestHandler<
       BucketsParams,
       BucketsPayload,

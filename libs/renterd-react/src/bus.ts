@@ -253,6 +253,12 @@ import {
   RedundancySettings,
   S3AuthenticationSettings,
   UploadPackingSettings,
+  ContractsPrunableParams,
+  ContractsPrunableResponse,
+  busContractsPrunableRoute,
+  ContractSizeParams,
+  ContractSizeResponse,
+  busContractIdSize,
 } from '@siafoundation/renterd-types'
 
 // state
@@ -666,6 +672,12 @@ export function useContractDelete(
   )
 }
 
+export function useContractSize(
+  args?: HookArgsSwr<ContractSizeParams, ContractSizeResponse>
+) {
+  return useGetSwr({ ...args, route: busContractIdSize })
+}
+
 export function useContractSets(
   args?: HookArgsSwr<ContractSetsParams, ContractSetsResponse>
 ) {
@@ -680,6 +692,12 @@ export function useContractSetUpdate(
   >
 ) {
   return usePutFunc({ ...args, route: busContractsSetsSetRoute })
+}
+
+export function useContractsPrunable(
+  args?: HookArgsSwr<ContractsPrunableParams, ContractsPrunableResponse>
+) {
+  return useGetSwr({ ...args, route: busContractsPrunableRoute })
 }
 
 // objects
