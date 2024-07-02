@@ -17,8 +17,6 @@ export function useEstimates({
     return !!allowanceMonth?.gt(0)
   }, [isAutopilotEnabled, allowanceMonth])
 
-  console.log('canEstimate', canEstimate)
-
   const estimatedSpendingPerMonth = useMemo(() => {
     if (!canEstimate) {
       return new BigNumber(0)

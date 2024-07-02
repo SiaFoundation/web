@@ -1,6 +1,7 @@
 import { BrowserContext, expect, Page } from '@playwright/test'
 import { fillTextInputByName } from './textInput'
 import { clickTextareaByName, fillTextareaByName } from './textarea'
+import { waitForTableToReload } from './table'
 
 export async function createNewWallet(
   page: Page,
@@ -59,8 +60,9 @@ export async function unlockWallet(page: Page, name: string, mnemonic: string) {
 }
 
 export async function deleteWalletIfExists(page: Page, name: string) {
+  await waitForTableToReload(page, 'walletsTable')
   const doesWalletExist = await page
-    .getByRole('table')
+    .getByTestId('walletsTable')
     .getByText(name)
     .first()
     .isVisible()

@@ -49,6 +49,7 @@ export type TableColumn<Columns, Data, Context> = {
   rowCellClassName?: string
   rowContentClassName?: string
   render: React.FC<Row<Data, Context>>
+  summary?: React.FC<{ context?: Context }>
 }
 
 type Props<
@@ -155,6 +156,14 @@ export function Table<
 
   const sensors = useSensors(mouseSensor, touchSensor)
 
+  const atLeastOneSummaryEl = useMemo(
+    () =>
+      columns.some(({ summary: Render }) => {
+        return Render && Render({ context })
+      }),
+    [columns, context]
+  )
+
   return (
     <DndContext
       sensors={sensors}
@@ -209,12 +218,13 @@ export function Table<
                   return (
                     <th
                       key={id}
+                      data-testid={id}
                       className={cx(
                         getCellClassNames(i, cellClassName, false),
                         'border-b border-gray-400 dark:border-graydark-400'
                       )}
                     >
-                      <div className={cx('overflow-hidden', 'py-3')}>
+                      <div className="overflow-hidden py-3">
                         <div
                           onClick={() => {
                             if (isSortable) {
@@ -252,7 +262,6 @@ export function Table<
                               <CaretUp16 className="scale-75" />
                             </Text>
                           )}
-                          {/* {tip && <InfoTip>{tip}</InfoTip>} */}
                         </div>
                       </div>
                     </th>
@@ -260,6 +269,38 @@ export function Table<
                 }
               )}
             </tr>
+            {atLeastOneSummaryEl && (
+              <tr>
+                {columns.map(
+                  (
+                    { id, cellClassName, contentClassName, summary: Summary },
+                    i
+                  ) => {
+                    return (
+                      <th
+                        key={id}
+                        data-testid={id}
+                        className={cx(
+                          getCellClassNames(i, cellClassName, false),
+                          'border-b border-gray-400 dark:border-graydark-400',
+                          'relative -top-px'
+                        )}
+                      >
+                        <div className="overflow-hidden py-3">
+                          <div
+                            className={cx(
+                              getContentClassNames(i, contentClassName)
+                            )}
+                          >
+                            {Summary && <Summary context={context} />}
+                          </div>
+                        </div>
+                      </th>
+                    )
+                  }
+                )}
+              </tr>
+            )}
           </thead>
           <tbody className="bg-gray-50 dark:bg-graydark-50">
             {show === 'currentData' &&

@@ -1,7 +1,25 @@
 import { ContractState } from '@siafoundation/renterd-types'
 import BigNumber from 'bignumber.js'
+import { useFilteredStats } from './useFilteredStats'
 
-export type ContractData = {
+export type ContractTableContext = {
+  currentHeight: number
+  contractsTimeRange: {
+    startHeight: number
+    endHeight: number
+  }
+  defaultContractSet?: string
+  autopilotContractSet?: string
+  siascanUrl: string
+  // prunable
+  hasFetchedAllPrunableSize: boolean
+  fetchPrunableSizeAll: () => void
+  isFetchingPrunableSizeAll: boolean
+  // totals
+  filteredStats: ReturnType<typeof useFilteredStats>
+}
+
+export type ContractDataWithoutPrunable = {
   id: string
   onClick: () => void
   hostIp: string
@@ -9,6 +27,8 @@ export type ContractData = {
   state: ContractState
   location?: [number, number]
   contractSets?: string[]
+  inAutopilotSet: boolean
+  inDefaultSet: boolean
   isRenewed: boolean
   renewedFrom: string
   timeline: number
@@ -27,6 +47,13 @@ export type ContractData = {
   size: BigNumber
 }
 
+export type ContractData = ContractDataWithoutPrunable & {
+  prunableSize?: BigNumber
+  isFetchingPrunableSize: boolean
+  hasFetchedPrunableSize: boolean
+  fetchPrunableSize: () => void
+}
+
 export type TableColumnId =
   | 'actions'
   | 'contractId'
@@ -38,6 +65,7 @@ export type TableColumnId =
   | 'startTime'
   | 'endTime'
   | 'size'
+  | 'prunableSize'
   | 'totalCost'
   | 'spendingUploads'
   | 'spendingDownloads'
@@ -51,6 +79,7 @@ export const columnsDefaultVisible: TableColumnId[] = [
   'state',
   'timeline',
   'size',
+  'prunableSize',
   'totalCost',
   'spendingUploads',
   'spendingDownloads',
@@ -66,6 +95,7 @@ export type SortField =
   | 'startTime'
   | 'endTime'
   | 'size'
+  | 'prunableSize'
   | 'totalCost'
   | 'spendingUploads'
   | 'spendingDownloads'
@@ -116,6 +146,11 @@ export const sortOptions: {
   {
     id: 'size',
     label: 'size',
+    category: 'general',
+  },
+  {
+    id: 'prunableSize',
+    label: 'prunable size',
     category: 'general',
   },
   {

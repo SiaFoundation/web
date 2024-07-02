@@ -8,6 +8,7 @@ import {
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import {
+  useAutopilotConfig,
   useContracts as useContractsData,
   useContractSets,
   useSettingContractSet,
@@ -19,9 +20,9 @@ import {
   useMemo,
   useState,
 } from 'react'
-import BigNumber from 'bignumber.js'
 import {
   ContractData,
+  ContractTableContext,
   GraphMode,
   ViewMode,
   columnsDefaultVisible,
@@ -29,13 +30,14 @@ import {
   sortOptions,
 } from './types'
 import { columns } from './columns'
-import { useSiaCentralHosts } from '@siafoundation/sia-central-react'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
-import { blockHeightToTime } from '@siafoundation/units'
 import { useContractMetrics } from './useContractMetrics'
 import { useContractSetMetrics } from './useContractSetMetrics'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { useDataset } from './dataset'
+import { useFilteredStats } from './useFilteredStats'
+import { useAutopilot } from '../app/useAutopilot'
 
 const defaultLimit = 50
 
@@ -52,8 +54,6 @@ function useContractsMain() {
       },
     },
   })
-  const geo = useSiaCentralHosts()
-  const geoHosts = useMemo(() => geo.data?.hosts || [], [geo.data])
 
   const syncStatus = useSyncStatus()
   const currentHeight = syncStatus.isSynced
@@ -73,47 +73,24 @@ function useContractsMain() {
     },
     [selectedContractId, setSelectedContractId, setViewMode]
   )
-  const dataset = useMemo<ContractData[] | null>(() => {
-    if (!response.data) {
-      return null
-    }
-    const data: ContractData[] =
-      response.data?.map((c) => {
-        const isRenewed =
-          c.renewedFrom !==
-          'fcid:0000000000000000000000000000000000000000000000000000000000000000'
-        const startTime = blockHeightToTime(currentHeight, c.startHeight)
-        const endHeight = c.windowStart
-        const endTime = blockHeightToTime(currentHeight, endHeight)
-        return {
-          id: c.id,
-          onClick: () => selectContract(c.id),
-          contractId: c.id,
-          state: c.state,
-          hostIp: c.hostIP,
-          hostKey: c.hostKey,
-          contractSets: c.contractSets,
-          location: geoHosts.find((h) => h.public_key === c.hostKey)?.location,
-          timeline: startTime,
-          startTime,
-          endTime,
-          contractHeightStart: c.startHeight,
-          contractHeightEnd: endHeight,
-          proofWindowHeightStart: c.windowStart,
-          proofWindowHeightEnd: c.windowEnd,
-          proofHeight: c.proofHeight,
-          revisionHeight: c.revisionHeight,
-          isRenewed,
-          renewedFrom: c.renewedFrom,
-          totalCost: new BigNumber(c.totalCost),
-          spendingUploads: new BigNumber(c.spending.uploads),
-          spendingDownloads: new BigNumber(c.spending.downloads),
-          spendingFundAccount: new BigNumber(c.spending.fundAccount),
-          size: new BigNumber(c.size),
-        }
-      }) || []
-    return data
-  }, [response.data, geoHosts, currentHeight, selectContract])
+
+  const ap = useAutopilot()
+  const isAutopilotEnabled = ap.status === 'on'
+  const apConfig = useAutopilotConfig({
+    disabled: !isAutopilotEnabled,
+  })
+  const autopilotContractSet = apConfig.data?.contracts.set
+  const contractSetSettings = useSettingContractSet()
+  const defaultContractSet = contractSetSettings.data?.default
+
+  const {
+    dataset,
+    isFetchingPrunableSizeAll,
+    isFetchingPrunableSizeById,
+    fetchPrunableSize,
+    fetchPrunableSizeAll,
+    hasFetchedAllPrunableSize,
+  } = useDataset({ selectContract, autopilotContractSet, defaultContractSet })
 
   const selectedContract = useMemo(
     () => dataset?.find((d) => d.id === selectedContractId),
@@ -179,21 +156,32 @@ function useContractsMain() {
 
   const siascanUrl = useSiascanUrl()
 
-  const contractSetSettings = useSettingContractSet()
-  const cellContext = useMemo(
-    () => ({
+  const filteredStats = useFilteredStats({ datasetFiltered })
+
+  const cellContext = useMemo(() => {
+    const context: ContractTableContext = {
       currentHeight: syncStatus.estimatedBlockHeight,
-      defaultSet: contractSetSettings.data?.default,
+      defaultContractSet,
+      autopilotContractSet,
       contractsTimeRange,
       siascanUrl,
-    }),
-    [
-      syncStatus.estimatedBlockHeight,
-      contractsTimeRange,
-      siascanUrl,
-      contractSetSettings.data,
-    ]
-  )
+      hasFetchedAllPrunableSize,
+      isFetchingPrunableSizeAll,
+      fetchPrunableSizeAll,
+      filteredStats,
+    }
+    return context
+  }, [
+    syncStatus.estimatedBlockHeight,
+    contractsTimeRange,
+    siascanUrl,
+    hasFetchedAllPrunableSize,
+    isFetchingPrunableSizeAll,
+    fetchPrunableSizeAll,
+    filteredStats,
+    defaultContractSet,
+    autopilotContractSet,
+  ])
 
   const thirtyDaysAgo = new Date().getTime() - daysInMilliseconds(30)
   const { contractMetrics: allContractsSpendingMetrics } = useContractMetrics({
@@ -250,6 +238,10 @@ function useContractsMain() {
     selectedContractSpendingMetrics,
     contractSetCountMetrics,
     contractSets,
+    isFetchingPrunableSizeAll,
+    isFetchingPrunableSizeById,
+    fetchPrunableSize,
+    fetchPrunableSizeAll,
   }
 }
 

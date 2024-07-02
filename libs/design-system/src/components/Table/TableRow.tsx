@@ -111,15 +111,15 @@ export function createTableRow<
             ) => (
               <td
                 key={`${id}/${data.id}`}
-                data-columnid={id}
+                data-testid={id}
                 className={cx(
                   getCellClassNames(
                     i,
                     cx(cellClassName, rowCellClassName),
                     false
                   ),
-                  // must use shadow based borders on the individual tds because a tailwind ring
-                  // on the tr does not show up correctly in Safari
+                  // Must use shadow based borders on the individual tds because a tailwind ring
+                  // on the tr does not show up correctly in Safari.
                   focusId && focusId === data.id
                     ? [
                         'shadow-border-y',

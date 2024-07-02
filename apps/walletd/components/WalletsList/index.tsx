@@ -37,6 +37,7 @@ export function WalletsList() {
         {dataState === 'noneYet' && <StateNoneYet />}
         {dataState !== 'noneYet' && (
           <Table
+            testId="walletsTable"
             isLoading={dataState === 'loading'}
             emptyState={
               dataState === 'noneMatchingFilters' ? (

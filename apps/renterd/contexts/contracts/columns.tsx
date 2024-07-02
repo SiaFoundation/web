@@ -10,28 +10,30 @@ import {
   Badge,
   Separator,
   ScrollArea,
+  Button,
+  LoadingDots,
 } from '@siafoundation/design-system'
-import { ArrowUpLeft16, CheckmarkFilled16 } from '@siafoundation/react-icons'
+import {
+  ArrowUpLeft16,
+  Calculator16,
+  CheckmarkFilled16,
+  CheckmarkFilledError16,
+  CheckmarkOutlineError16,
+  Cut16,
+  Hourglass16,
+  Reset16,
+} from '@siafoundation/react-icons'
 import { humanBytes, humanDate } from '@siafoundation/units'
-import { ContractData, TableColumnId } from './types'
+import { ContractData, ContractTableContext, TableColumnId } from './types'
 import { ContractContextMenu } from '../../components/Contracts/ContractContextMenu'
 import { ContractState } from '@siafoundation/renterd-types'
 import { cx } from 'class-variance-authority'
-
-type Context = {
-  currentHeight: number
-  defaultSet?: string
-  contractsTimeRange: {
-    startHeight: number
-    endHeight: number
-  }
-  siascanUrl: string
-}
+import BigNumber from 'bignumber.js'
 
 type ContractsTableColumn = TableColumn<
   TableColumnId,
   ContractData,
-  Context
+  ContractTableContext
 > & {
   fixed?: boolean
   category?: string
@@ -55,7 +57,6 @@ export const columns: ContractsTableColumn[] = [
       data: { id, isRenewed, renewedFrom },
       context: { siascanUrl },
     }) => {
-      // const { label, color } = getStatus(row)
       return (
         <div className="flex flex-col gap-1 w-full">
           <ValueCopyable
@@ -91,8 +92,11 @@ export const columns: ContractsTableColumn[] = [
     label: 'contract sets',
     contentClassName: 'w-[120px]',
     category: 'general',
-    render: ({ data: { contractSets }, context: { defaultSet } }) => {
-      if (!contractSets) {
+    render: ({
+      data: { contractSets },
+      context: { defaultContractSet, autopilotContractSet },
+    }) => {
+      if (!contractSets.length) {
         return null
       }
       return (
@@ -100,14 +104,31 @@ export const columns: ContractsTableColumn[] = [
           <ScrollArea>
             <div className="flex min-h-full gap-1 flex-wrap py-2 items-center">
               {contractSets.map((set) => {
-                const isDefaultSet = defaultSet === set
+                const isDefaultSet = defaultContractSet === set
+                const isAutopilotSet = autopilotContractSet === set
+                const isBothAutopilotAndDefaultSet =
+                  isAutopilotSet && isDefaultSet
+                let message = ''
+                let icon = null
+
+                if (isBothAutopilotAndDefaultSet) {
+                  message = `This set is the default contract set and the autopilot contract set.`
+                  icon = <CheckmarkFilled16 className="scale-75" />
+                } else if (isAutopilotSet) {
+                  message = `This set is the autopilot contract set but not the default contract set.`
+                  icon = <CheckmarkFilledError16 className="scale-75" />
+                } else if (isDefaultSet) {
+                  message = `This set is the default contract set but not the autopilot contract set.`
+                  icon = <CheckmarkOutlineError16 className="scale-75" />
+                }
+
                 return (
                   <Tooltip
                     content={
-                      `Contract is part of set ${set}.` +
-                      (isDefaultSet
-                        ? ` ${set} is the default contract set.`
-                        : '')
+                      <>
+                        Contract is part of set{' '}
+                        <Badge size="small">{set}</Badge>. {message}
+                      </>
                     }
                     key={set}
                   >
@@ -119,9 +140,7 @@ export const columns: ContractsTableColumn[] = [
                         isDefaultSet ? 'pl-px' : ''
                       )}
                     >
-                      {isDefaultSet ? (
-                        <CheckmarkFilled16 className="scale-75" />
-                      ) : null}
+                      {icon}
                       {set}
                     </Badge>
                   </Tooltip>
@@ -286,6 +305,118 @@ export const columns: ContractsTableColumn[] = [
         format={(d) => humanBytes(d)}
       />
     ),
+    summary: ({ context }) => {
+      if (!context.filteredStats.sizeTotal) {
+        return null
+      }
+      return (
+        <ValueNum
+          size="12"
+          value={context.filteredStats.sizeTotal}
+          format={(d) => humanBytes(d)}
+          variant="value"
+        />
+      )
+    },
+  },
+  {
+    id: 'prunableSize',
+    label: 'prunable size',
+    category: 'general',
+    contentClassName: 'px-1 justify-end',
+    render: function PrunableSizeCell({
+      data: {
+        fetchPrunableSize,
+        isFetchingPrunableSize,
+        prunableSize,
+        inAutopilotSet,
+      },
+      context: { isFetchingPrunableSizeAll },
+    }) {
+      const isFetching = isFetchingPrunableSize || isFetchingPrunableSizeAll
+      if (prunableSize === undefined) {
+        return (
+          <Button
+            tip="Calculate prunable size for contract"
+            onClick={(e) => {
+              e.stopPropagation()
+              fetchPrunableSize()
+            }}
+          >
+            {isFetching ? <LoadingDots /> : <Calculator16 />}
+          </Button>
+        )
+      }
+      return (
+        <div className="flex items-center gap-2" aria-label="prunable sizes">
+          {inAutopilotSet ? (
+            <ValuePrunableSize
+              value={new BigNumber(prunableSize)}
+              tip="The amount of data that can be pruned from this autopilot contract"
+              variant="prunable"
+            />
+          ) : (
+            <ValuePrunableSize
+              value={new BigNumber(prunableSize)}
+              tip="The amount of data that will eventually expire from this non-autopilot contract"
+              variant="expiring"
+            />
+          )}
+          <Button
+            tip="Realculate prunable size for contract"
+            onClick={(e) => {
+              e.stopPropagation()
+              fetchPrunableSize()
+            }}
+          >
+            {isFetching ? <LoadingDots /> : <Reset16 />}
+          </Button>
+        </div>
+      )
+    },
+    summary: ({ context }) => {
+      if (!context.hasFetchedAllPrunableSize) {
+        return (
+          <Button
+            tip="Calculate prunable size for all contracts"
+            state={context.isFetchingPrunableSizeAll ? 'waiting' : undefined}
+            onClick={context.fetchPrunableSizeAll}
+          >
+            {context.isFetchingPrunableSizeAll ? (
+              <LoadingDots />
+            ) : (
+              <Calculator16 />
+            )}
+          </Button>
+        )
+      }
+
+      return (
+        <div className="flex items-center gap-2" aria-label="prunable sizes">
+          {context.filteredStats.prunableSizeTotal && (
+            <ValuePrunableSize
+              value={context.filteredStats.prunableSizeTotal}
+              tip="The amount of data that can be pruned from autopilot contracts in the filtered set of active contracts"
+              variant="prunable"
+            />
+          )}
+          {context.filteredStats.expiringSizeTotal && (
+            <ValuePrunableSize
+              value={context.filteredStats.expiringSizeTotal}
+              tip="The amount of data that will eventually expire from non-autopilot contracts in the filtered set of active contracts"
+              variant="expiring"
+            />
+          )}
+          <Button
+            tip="Recalculate prunable size for all contracts"
+            state={context.isFetchingPrunableSizeAll ? 'waiting' : undefined}
+            onClick={context.fetchPrunableSizeAll}
+          >
+            {context.isFetchingPrunableSizeAll ? <LoadingDots /> : <Reset16 />}
+          </Button>
+        </div>
+      )
+    },
   },
   {
     id: 'totalCost',
@@ -294,6 +425,14 @@ export const columns: ContractsTableColumn[] = [
     contentClassName: 'w-[120px] justify-end',
     render: ({ data: { totalCost } }) => (
       <ValueScFiat displayBoth size="12" value={totalCost.negated()} />
+    ),
+    summary: ({ context: { filteredStats } }) => (
+      <ValueScFiat
+        displayBoth
+        size="12"
+        value={filteredStats.totalCostTotal.negated()}
+        tooltip="Total cost across the filtered set of active contracts"
+      />
     ),
   },
   {
@@ -304,6 +443,14 @@ export const columns: ContractsTableColumn[] = [
     render: ({ data: { spendingUploads } }) => (
       <ValueScFiat displayBoth size="12" value={spendingUploads.negated()} />
     ),
+    summary: ({ context: { filteredStats } }) => (
+      <ValueScFiat
+        displayBoth
+        size="12"
+        value={filteredStats.spendingUploadsTotal.negated()}
+        tooltip="Uploads spending across the filtered set of active contracts"
+      />
+    ),
   },
   {
     id: 'spendingDownloads',
@@ -312,6 +459,14 @@ export const columns: ContractsTableColumn[] = [
     contentClassName: 'w-[120px] justify-end',
     render: ({ data: { spendingDownloads } }) => (
       <ValueScFiat displayBoth size="12" value={spendingDownloads.negated()} />
+    ),
+    summary: ({ context: { filteredStats } }) => (
+      <ValueScFiat
+        displayBoth
+        size="12"
+        value={filteredStats.spendingDownloadsTotal.negated()}
+        tooltip="Downloads spending across the filtered set of active contracts"
+      />
     ),
   },
   {
@@ -324,6 +479,14 @@ export const columns: ContractsTableColumn[] = [
         displayBoth
         size="12"
         value={spendingFundAccount.negated()}
+      />
+    ),
+    summary: ({ context: { filteredStats } }) => (
+      <ValueScFiat
+        displayBoth
+        size="12"
+        value={filteredStats.spendingFundAccountTotal.negated()}
+        tooltip="Fund account spending across the filtered set of active contracts"
       />
     ),
   },
@@ -342,4 +505,32 @@ function getContractStateColor(state: ContractState) {
   if (state === 'complete') {
     return 'green'
   }
+}
+
+function ValuePrunableSize({
+  value,
+  tip,
+  variant,
+}: {
+  value: BigNumber
+  tip: string
+  variant: 'prunable' | 'expiring'
+}) {
+  return (
+    <Tooltip content={tip}>
+      <div className="flex items-center gap-0.5" aria-label={variant}>
+        <ValueNum
+          size="12"
+          value={value}
+          format={(d) => humanBytes(d)}
+          variant="value"
+        />
+        {variant === 'prunable' ? (
+          <Cut16 className="scale-75" />
+        ) : (
+          <Hourglass16 className="scale-75" />
+        )}
+      </div>
+    </Tooltip>
+  )
 }

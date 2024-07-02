@@ -54,7 +54,12 @@ export function ContractsViewDropdownMenu() {
   return (
     <Popover
       trigger={
-        <Button size="small" tip="Configure view" tipAlign="end">
+        <Button
+          aria-label="configure view"
+          size="small"
+          tip="Configure view"
+          tipAlign="end"
+        >
           <SettingsAdjust16 />
           View
           <CaretDown16 />
