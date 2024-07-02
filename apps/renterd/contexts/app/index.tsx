@@ -1,9 +1,13 @@
 import React, { createContext, useContext } from 'react'
 import { useAutopilot } from './useAutopilot'
+import { useBusSdk } from './useBusSdk'
 
 function useAppMain() {
   const autopilot = useAutopilot()
+  const bus = useBusSdk()
+
   return {
+    bus,
     autopilot,
   }
 }

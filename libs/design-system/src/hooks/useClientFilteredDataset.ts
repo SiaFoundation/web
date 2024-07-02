@@ -40,10 +40,22 @@ export function useClientFilteredDataset<
       const aVal = a[sortField]
       const bVal = b[sortField]
       if (sortDirection === 'desc') {
+        if (aVal === undefined) {
+          return 1
+        }
+        if (bVal === undefined) {
+          return -1
+        }
         if (aVal instanceof BigNumber && bVal instanceof BigNumber) {
           return aVal.lte(bVal) ? 1 : -1
         }
         return aVal <= bVal ? 1 : -1
+      }
+      if (aVal === undefined) {
+        return -1
+      }
+      if (bVal === undefined) {
+        return 1
       }
       if (aVal instanceof BigNumber && bVal instanceof BigNumber) {
         return aVal.gte(bVal) ? 1 : -1

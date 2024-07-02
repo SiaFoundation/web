@@ -79,6 +79,7 @@ export function Contracts() {
               className={cx(showDetailView ? 'pb-6 px-6' : 'p-6', 'min-w-fit')}
             >
               <Table
+                testId="contractsTable"
                 context={cellContext}
                 isLoading={dataState === 'loading'}
                 emptyState={

@@ -17,6 +17,8 @@ export function PoolCombo({ values, options, onChange }: Props) {
       {options.map((option) => {
         return (
           <Button
+            role="checkbox"
+            aria-checked={values.includes(option.value)}
             key={option.value}
             variant={values.includes(option.value) ? 'active' : 'inactive'}
             onClick={() => {

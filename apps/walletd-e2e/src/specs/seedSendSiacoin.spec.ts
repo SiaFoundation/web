@@ -54,7 +54,7 @@ test('send siacoin with a seed wallet', async ({ page }) => {
       .getByTestId('eventsTable')
       .locator('tbody tr')
       .first()
-      .locator('[data-columnid="amount"]')
+      .getByTestId('amount')
       .getByText(`-${amountWithFeeString}`)
   ).toBeVisible()
 })

@@ -3,6 +3,7 @@ import {
   Separator,
   Text,
   Tooltip,
+  minutesInMilliseconds,
 } from '@siafoundation/design-system'
 import { useObjectStats } from '@siafoundation/renterd-react'
 import { humanBytes } from '@siafoundation/units'
@@ -12,8 +13,7 @@ export function FilesStatsMenuSize() {
     config: {
       swr: {
         // slow operation
-        refreshInterval: 60_000,
-        keepPreviousData: true,
+        refreshInterval: minutesInMilliseconds(5),
         revalidateOnFocus: false,
       },
     },
@@ -52,9 +52,6 @@ export function FilesStatsMenuSize() {
             )}
             <Separator className="w-full my-1" />
             <Text size="12" color="subtle">
-              reclaimable space
-            </Text>
-            <Text size="12" color="subtle">
               total storage utilization
             </Text>
           </Text>
@@ -67,11 +64,6 @@ export function FilesStatsMenuSize() {
               </Text>
             )}
             <Separator className="w-full my-1" />
-            <Text size="12">
-              {humanBytes(
-                stats.data.totalUploadedSize - stats.data.totalSectorsSize
-              )}
-            </Text>
             <Text size="12">{humanBytes(stats.data.totalUploadedSize)}</Text>
           </Text>
         </Text>

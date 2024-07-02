@@ -40,8 +40,8 @@ export function bytesToTB(bytes: BigNumber | string | number): BigNumber {
 }
 
 // function converts TB to bytes
-export function TBToBytes(TiB: BigNumber | string | number): BigNumber {
-  return new BigNumber(TiB).times(1000).times(1000).times(1000).times(1000)
+export function TBToBytes(TB: BigNumber | string | number): BigNumber {
+  return new BigNumber(TB).times(1000).times(1000).times(1000).times(1000)
 }
 
 // function converts bytes to GB
