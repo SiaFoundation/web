@@ -41,8 +41,8 @@ type GetFields = {
   isAutopilotEnabled: boolean
   configViewMode: ConfigViewMode
   recommendations: Partial<Record<keyof SettingsData, RecommendationItem>>
-  autoAllowance: boolean
-  setAutoAllowance: (value: boolean) => void
+  allowanceDerivedPricing: boolean
+  setAllowanceDerivedPricing: (value: boolean) => void
   validationContext: {
     isAutopilotEnabled: boolean
     configViewMode: ConfigViewMode
@@ -66,8 +66,8 @@ export function getFields({
   isAutopilotEnabled,
   configViewMode,
   validationContext,
-  autoAllowance,
-  setAutoAllowance,
+  allowanceDerivedPricing,
+  setAllowanceDerivedPricing,
 }: GetFields): ConfigFields<SettingsData, Categories> {
   return {
     // storage
@@ -125,23 +125,22 @@ export function getFields({
         <div className="pb-1">
           <Tooltip
             align="end"
-            content="Calculate value based on estimated spending per month."
+            content="Automatically calculate and set max storage, upload, and download prices based on the allowance."
           >
             <div className="flex w-full justify-between">
               <Text weight="medium" color="verySubtle" size="14">
-                Calculate
+                Calculate prices
               </Text>
               <Switch
-                aria-label="autoAllowance"
+                aria-label="allowanceDerivedPricing"
                 size="small"
-                checked={autoAllowance}
-                onCheckedChange={setAutoAllowance}
+                checked={allowanceDerivedPricing}
+                onCheckedChange={setAllowanceDerivedPricing}
               />
             </div>
           </Tooltip>
         </div>
       ),
-      readOnly: autoAllowance,
       units: 'SC/month',
       decimalsLimitSc: scDecimalPlaces,
       hidden: !isAutopilotEnabled,
@@ -402,6 +401,7 @@ export function getFields({
           of data per month.
         </>
       ),
+      readOnly: allowanceDerivedPricing,
       units: 'SC/TB/month',
       average: storageAverage,
       averageTip: 'Averages provided by Sia Central.',
@@ -461,6 +461,7 @@ export function getFields({
         </>
       ),
       units: 'SC/TB',
+      readOnly: allowanceDerivedPricing,
       average: uploadAverage,
       averageTip: 'Averages provided by Sia Central.',
       suggestion: recommendations.maxUploadPriceTB?.targetValue,
@@ -512,6 +513,7 @@ export function getFields({
       title: 'Max download price',
       description: <>The max allowed price to download 1 TB.</>,
       units: 'SC/TB',
+      readOnly: allowanceDerivedPricing,
       average: downloadAverage,
       averageTip: `Averages provided by Sia Central.`,
       suggestion: recommendations.maxDownloadPriceTB?.targetValue,

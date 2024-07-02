@@ -17,6 +17,7 @@ export function useForm({ resources }: { resources: Resources }) {
     mode: 'all',
     defaultValues,
   })
+  const allowanceMonth = form.watch('allowanceMonth')
   const maxStoragePriceTBMonth = form.watch('maxStoragePriceTBMonth')
   const maxDownloadPriceTB = form.watch('maxDownloadPriceTB')
   const maxUploadPriceTB = form.watch('maxUploadPriceTB')
@@ -54,13 +55,8 @@ export function useForm({ resources }: { resources: Resources }) {
 
   const estimates = useEstimates({
     isAutopilotEnabled,
-    redundancyMultiplier,
-    maxStoragePriceTBMonth,
+    allowanceMonth,
     storageTB,
-    maxDownloadPriceTB,
-    downloadTBMonth,
-    maxUploadPriceTB,
-    uploadTBMonth,
   })
   const { estimatedSpendingPerMonth } = estimates
 
@@ -71,11 +67,16 @@ export function useForm({ resources }: { resources: Resources }) {
     estimatedSpendingPerMonth,
   })
 
-  const { autoAllowance, setAutoAllowance } = useAutoCalculatedFields({
-    form,
-    estimatedSpendingPerMonth,
-    isAutopilotEnabled,
-  })
+  const { allowanceDerivedPricing, setAllowanceDerivedPricing } =
+    useAutoCalculatedFields({
+      form,
+      allowanceMonth,
+      storageTB,
+      downloadTBMonth,
+      uploadTBMonth,
+      redundancyMultiplier,
+      isAutopilotEnabled,
+    })
 
   const renterdState = useBusState()
 
@@ -116,8 +117,8 @@ export function useForm({ resources }: { resources: Resources }) {
         minShards,
         totalShards,
         recommendations,
-        autoAllowance,
-        setAutoAllowance,
+        allowanceDerivedPricing,
+        setAllowanceDerivedPricing,
       })
     }
     return getFields({
@@ -131,8 +132,8 @@ export function useForm({ resources }: { resources: Resources }) {
       minShards,
       totalShards,
       recommendations,
-      autoAllowance,
-      setAutoAllowance,
+      allowanceDerivedPricing,
+      setAllowanceDerivedPricing,
     })
   }, [
     isAutopilotEnabled,
@@ -149,8 +150,8 @@ export function useForm({ resources }: { resources: Resources }) {
     minShards,
     totalShards,
     evaluation,
-    autoAllowance,
-    setAutoAllowance,
+    allowanceDerivedPricing,
+    setAllowanceDerivedPricing,
   ])
 
   return {
@@ -169,7 +170,7 @@ export function useForm({ resources }: { resources: Resources }) {
     redundancyMultiplier,
     configViewMode,
     setConfigViewMode,
-    autoAllowance,
-    setAutoAllowance,
+    allowanceDerivedPricing,
+    setAllowanceDerivedPricing,
   }
 }

@@ -7,7 +7,7 @@ import { clickIfEnabledAndWait } from './click'
 
 export async function configResetAllSettings({ page }: { page: Page }) {
   await setViewMode({ page, state: 'advanced' })
-  await setSwitchByLabel(page, 'autoAllowance', false)
+  await setSwitchByLabel(page, 'allowanceDerivedPricing', false)
 
   // storage
   await fillTextInputByName(page, 'storageTB', '1')
