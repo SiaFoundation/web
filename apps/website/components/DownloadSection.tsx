@@ -6,6 +6,13 @@ import { DownloadDesktopSelect } from './DownloadDesktopSelect'
 import { backgrounds } from '../content/assets'
 import { DownloadCard } from './DownloadCard'
 
+const systemRequirements = {
+  renterd: 'quad-core processor, 8GB RAM, 256GB SSD for consensus data',
+  hostd:
+    'quad-core processor, 8GB RAM, 256GB SSD for consensus data, 4TB HDD for stored data',
+  walletd: 'quad-core processor, 8GB RAM, 256GB SSD for consensus data',
+}
+
 type Daemon = 'renterd' | 'hostd' | 'walletd'
 type Props = {
   daemon: Daemon
@@ -29,7 +36,10 @@ export function DownloadSection({
       <Text size="24" weight="semibold" className="">
         Download {daemon} software
       </Text>
-      <div className="flex gap-3 justify-center items-center">
+      <Text color="subtle" size="14">
+        System requirements: {systemRequirements[daemon]}
+      </Text>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 justify-center items-center">
         <DownloadCard
           background={backgrounds.bamboo}
           status="beta"
