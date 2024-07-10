@@ -1,5 +1,11 @@
 # hostd
 
+## 0.45.1
+
+### Patch Changes
+
+- 627355b7: Fixed an issue where scrollbars could not be grabbed by moving mouse to the edge of the screen. Closes https://github.com/SiaFoundation/hostd/issues/423 Fixed by https://github.com/kocoten1992
+
 ## 0.45.0
 
 ### Minor Changes
