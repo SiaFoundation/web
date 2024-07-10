@@ -31,7 +31,7 @@ export const ScrollArea = React.forwardRef<
     <ScrollAreaPrimitive.Scrollbar
       key={keyToResetScrollbars ? `v-${keyToResetScrollbars}` : undefined}
       orientation="vertical"
-      className="z-10 flex select-none touch-none transition-colors hover:bg-black/20 w-1.5 m-px"
+      className="z-10 flex select-none touch-none transition-colors hover:bg-black/20 w-1.5"
     >
       <ScrollAreaPrimitive.Thumb
         className={cx(
@@ -43,7 +43,7 @@ export const ScrollArea = React.forwardRef<
     <ScrollAreaPrimitive.Scrollbar
       key={keyToResetScrollbars ? `h-${keyToResetScrollbars}` : undefined}
       orientation="horizontal"
-      className="z-10 flex flex-col select-none touch-none transition-colors duration-1000 hover:bg-black/20 h-1 m-px"
+      className="z-10 flex flex-col select-none touch-none transition-colors duration-1000 hover:bg-black/20 h-1"
     >
       <ScrollAreaPrimitive.Thumb
         className={cx(
