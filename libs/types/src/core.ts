@@ -43,7 +43,7 @@ export type FileContractRevision = {
 export type TransactionSignature = {
   parentID: string
   publicKeyIndex: number
-  timelock: number
+  timelock?: number
   coveredFields: CoveredFields
   signature?: string
 }

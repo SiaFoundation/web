@@ -20,12 +20,8 @@ import { useRouter } from 'next/router'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
-import {
-  calculateScValue,
-  calculateSfValue,
-  getContractId,
-  getFee,
-} from './utils'
+import { getContractId, getFee } from './utils'
+import { calculateScValue, calculateSfValue } from './transactionValue'
 
 const defaultLimit = 100
 
