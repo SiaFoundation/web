@@ -8,6 +8,9 @@ type Command = {
   result: string[]
 }
 
+const foo = 'foo'
+console.log(foo)
+
 type Sequence = Command[]
 
 type Props = { sequences: Sequence[]; wrap?: boolean; className?: string }
