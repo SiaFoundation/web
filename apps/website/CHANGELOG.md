@@ -1,5 +1,11 @@
 # website
 
+## 0.53.0
+
+### Minor Changes
+
+- 68c9aa67: The wallet status badge has been updated to beta.
+
 ## 0.52.0
 
 ### Minor Changes
