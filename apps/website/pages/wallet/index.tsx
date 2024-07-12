@@ -65,13 +65,6 @@ export default function Wallet({
             className="mt-12 md:mt-12"
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <SoftwareSectionCurrentGen
-              versions={{
-                sia: {
-                  latest: '1.5.9',
-                },
-              }}
-            />
             <CalloutWalletd />
             <Callout
               title="Setup guide for walletd"
@@ -85,6 +78,13 @@ export default function Wallet({
               actionTitle="Follow the walletd setup guide"
               actionLink={webLinks.docs.wallet}
               actionNewTab
+            />
+            <SoftwareSectionCurrentGen
+              versions={{
+                sia: {
+                  latest: '1.5.9',
+                },
+              }}
             />
           </div>
           <SiteHeading

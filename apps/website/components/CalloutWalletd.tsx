@@ -9,7 +9,7 @@ export function CalloutWalletd() {
       description={
         'walletd is the flagship Sia wallet, suitable for miners, exchanges, and everyday hodlers. Its client-server architecture gives you the flexibility to access your funds from anywhere, on any device, without compromising the security of your private keys.'
       }
-      status="alpha"
+      status="beta"
       daemon="walletd"
       testnetOnly
       href={routes.software.walletd}
