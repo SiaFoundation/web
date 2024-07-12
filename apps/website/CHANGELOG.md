@@ -1,5 +1,13 @@
 # website
 
+## 0.52.0
+
+### Minor Changes
+
+- 63f12c80: Software downloads now also list system requirements. Closes https://github.com/SiaFoundation/web/issues/553
+- f8c68b07: The website download sections now prompt and link to the terms of service. Closes https://github.com/SiaFoundation/web/issues/548
+- f8c68b07: The website now displays both desktop and terminal/daemon downloads. Closes https://github.com/SiaFoundation/web/issues/649 Closes https://github.com/SiaFoundation/web/issues/548
+
 ## 0.51.1
 
 ### Patch Changes

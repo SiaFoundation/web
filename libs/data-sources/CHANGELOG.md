@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0
+
+### Minor Changes
+
+- f8c68b07: Added methods for fetching the latest desktop app versions.
+
 ## 0.3.3
 
 ### Patch Changes

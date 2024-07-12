@@ -1,10 +1,10 @@
 {
   "name": "@siafoundation/walletd-types",
   "description": "Types for `walletd`.",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "license": "MIT",
   "dependencies": {
-    "@siafoundation/types": "^0.3.0"
+    "@siafoundation/types": "^0.4.0"
   },
   "types": "./src/index.d.ts"
 }

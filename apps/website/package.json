@@ -1,7 +1,7 @@
 {
   "name": "website",
   "description": "The main sia.tech website with information on the Sia project and the Sia Foundation.",
-  "version": "0.51.1",
+  "version": "0.52.0",
   "private": true,
   "license": "MIT"
 }

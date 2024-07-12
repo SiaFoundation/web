@@ -1,5 +1,20 @@
 # Changelog
 
+## 4.5.0
+
+### Minor Changes
+
+- 3fdf6655: The Table header now supports an optional sticky summary row. The row shows if at least one cell renders a summary value.
+
+### Patch Changes
+
+- f8c68b07: The Checkbox text label is now center aligned.
+- 3fdf6655: useClientFilteredDataset now supports sorting undefined values.
+- Updated dependencies [24b47560]
+- Updated dependencies [3fdf6655]
+  - @siafoundation/types@0.4.0
+  - @siafoundation/units@3.0.3
+
 ## 4.4.0
 
 ### Minor Changes

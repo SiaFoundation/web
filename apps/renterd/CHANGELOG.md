@@ -1,5 +1,15 @@
 # renterd
 
+## 0.57.0
+
+### Minor Changes
+
+- 3fdf6655: The contracts table can now be sorted on prunable size.
+- 3fdf6655: The file stats no longer show reclaimable space. Closes https://github.com/SiaFoundation/renterd/issues/1247
+- 3fdf6655: The contracts table now allows the user to check the prunable and expiring data size for a specific contract, across all contracts, or a filtered set of contracts. Prunable means data that the autopilot sector pruning feature would prune, expiring means prunable data outside of autopilot contracts that will likely eventually expire. Closes https://github.com/SiaFoundation/renterd/issues/1247
+- 3fdf6655: The contracts contract set column tags now more clearly show whether a set is the autopilot set, default set, or both.
+- 3fdf6655: All contract table financial columns now show a sum total across filtered contracts in the summary row.
+
 ## 0.56.1
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @siafoundation/renterd-types
 
+## 0.3.0
+
+### Minor Changes
+
+- 802e45c0: Added the contracts prunable API.
+- 802e45c0: Added the contract size API.
+
+### Patch Changes
+
+- Updated dependencies [24b47560]
+  - @siafoundation/types@0.4.0
+
 ## 0.2.2
 
 ### Patch Changes

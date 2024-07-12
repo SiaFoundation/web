@@ -1,5 +1,11 @@
 # @siafoundation/units
 
+## 3.0.3
+
+### Patch Changes
+
+- 3fdf6655: Fixed variable name in TBToBytes.
+
 ## 3.0.2
 
 ### Patch Changes
