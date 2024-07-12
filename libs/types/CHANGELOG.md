@@ -1,5 +1,11 @@
 # @siafoundation/types
 
+## 0.4.0
+
+### Minor Changes
+
+- 24b47560: TransactionSignature timelock is now optional.
+
 ## 0.3.0
 
 ### Minor Changes

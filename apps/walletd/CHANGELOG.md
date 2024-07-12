@@ -1,5 +1,11 @@
 # walletd
 
+## 0.22.3
+
+### Patch Changes
+
+- 24b47560: Fixed an issue where calculating the siacoin value for a transaction without relevant siacoin inputs would cause an error. Closes https://github.com/SiaFoundation/walletd/issues/150
+
 ## 0.22.2
 
 ### Patch Changes

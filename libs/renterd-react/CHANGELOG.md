@@ -1,5 +1,18 @@
 # @siafoundation/renterd-react
 
+## 4.3.0
+
+### Minor Changes
+
+- 802e45c0: Added the contracts prunable API.
+- 802e45c0: Added the contract size API.
+
+### Patch Changes
+
+- Updated dependencies [802e45c0]
+- Updated dependencies [802e45c0]
+  - @siafoundation/renterd-types@0.3.0
+
 ## 4.2.2
 
 ### Patch Changes
