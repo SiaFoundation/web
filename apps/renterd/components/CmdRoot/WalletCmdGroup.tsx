@@ -1,10 +1,10 @@
 import { copyToClipboard } from '@siafoundation/design-system'
-import { routes } from '../../config/routes'
+import { useWallet } from '@siafoundation/renterd-react'
 import { useRouter } from 'next/router'
+import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { CommandGroup, CommandItemNav, CommandItemSearch } from './Item'
-import { useWallet } from '@siafoundation/renterd-react'
-import { Page } from './types'
+import type { Page } from './types'
 
 const commandPage = {
   namespace: 'wallet',
@@ -12,7 +12,7 @@ const commandPage = {
 }
 
 type Props = {
-  currentPage: Page
+  currentPage?: Page
   parentPage?: Page
   pushPage: (page: Page) => void
 }

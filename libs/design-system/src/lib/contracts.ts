@@ -9,7 +9,7 @@ import {
 
 export function getContractsTimeRangeBlockHeight(
   currentHeight: number,
-  contracts: { contractHeightStart: number; contractHeightEnd: number }[]
+  contracts: { contractHeightStart: number; contractHeightEnd: number }[],
 ) {
   const range = contracts.reduce(
     (acc, item) => {
@@ -31,7 +31,7 @@ export function getContractsTimeRangeBlockHeight(
     {
       startHeight: currentHeight,
       endHeight: 0,
-    }
+    },
   )
 
   // pad it out, also gives space for 1 day proof window
@@ -54,7 +54,7 @@ export function getContractsTimeRangeBlockHeight(
         timestamp: date,
       },
     }),
-    {}
+    {},
   )
 
   return {
@@ -64,7 +64,7 @@ export function getContractsTimeRangeBlockHeight(
 }
 
 export function getContractTimeRange(
-  range: 'day' | 'week' | 'month' | 'year'
+  range: 'day' | 'week' | 'month' | 'year',
 ): [number, number] {
   const now = nowInMilliseconds()
   if (range === 'month') {

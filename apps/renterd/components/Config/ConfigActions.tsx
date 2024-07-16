@@ -1,11 +1,11 @@
 import {
-  Text,
   Button,
-  Switch,
   ControlGroup,
-  Popover,
   Label,
   Paragraph,
+  Popover,
+  Switch,
+  Text,
 } from '@siafoundation/design-system'
 import { Reset16, Save16, Settings16 } from '@siafoundation/react-icons'
 import { useConfig } from '../../contexts/config'
@@ -62,7 +62,9 @@ export function ConfigActions() {
             <div>
               <Switch
                 checked={shouldSyncDefaultContractSet}
-                onCheckedChange={(val) => setShouldSyncDefaultContractSet(val)}
+                onCheckedChange={(val: boolean) =>
+                  setShouldSyncDefaultContractSet(val)
+                }
               >
                 sync default contract set
               </Switch>

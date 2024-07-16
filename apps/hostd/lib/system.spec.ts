@@ -17,21 +17,21 @@ describe('paths', () => {
         currentPath: '/',
         childPath: 'foo',
         separator: '/',
-      })
+      }),
     ).toBe('/foo')
     expect(
       getChildDirectoryPath({
         currentPath: '/foo/bar',
         childPath: 'foo',
         separator: '/',
-      })
+      }),
     ).toBe('/foo/bar/foo')
     expect(
       getChildDirectoryPath({
         currentPath: '/',
         childPath: 'foo/',
         separator: '/',
-      })
+      }),
     ).toBe('/foo')
     // windows
     expect(
@@ -39,21 +39,21 @@ describe('paths', () => {
         currentPath: 'C:',
         childPath: 'foo',
         separator: '\\',
-      })
+      }),
     ).toBe('C:\\foo')
     expect(
       getChildDirectoryPath({
         currentPath: 'C:\\',
         childPath: 'foo',
         separator: '\\',
-      })
+      }),
     ).toBe('C:\\foo')
     expect(
       getChildDirectoryPath({
         currentPath: '\\',
         childPath: 'C:',
         separator: '\\',
-      })
+      }),
     ).toBe('C:\\')
   })
   it('getParentDir', () => {

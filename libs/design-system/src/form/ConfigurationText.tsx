@@ -1,13 +1,13 @@
-import { FieldValues, Path, PathValue } from 'react-hook-form'
+import type { FieldValues, Path, PathValue } from 'react-hook-form'
 import { FieldError } from '../components/Form'
-import { FieldProps } from './configurationFields'
 import { FieldText } from './FieldText'
 import { TipText } from './TipText'
+import type { FieldProps } from './configurationFields'
 import { useFormSetField } from './useFormSetField'
 
 export function ConfigurationText<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   name,
   form,

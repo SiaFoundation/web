@@ -1,5 +1,5 @@
-import { HostSettings } from './types'
-import { BusStateResponse } from './bus'
+import type { BusStateResponse } from './bus'
+import type { HostSettings } from './types'
 
 export const workerStateRoute = '/worker/state'
 export const workerObjectsKeyRoute = '/worker/objects/:key'
@@ -19,13 +19,13 @@ export type ObjectDownloadPayload = void
 export type ObjectDownloadResponse = Blob
 
 export type ObjectUploadParams = { key: string; bucket: string }
-export type ObjectUploadPayload =
-  | File
-  | Blob
-  | Buffer
-  | ArrayBuffer
-  | string
-  | Record<string, unknown>
+export type ObjectUploadPayload = File
+// TODO: figure out how to handle this
+// | Blob
+// | Buffer
+// | ArrayBuffer
+// | string
+// | Record<string, unknown>
 export type ObjectUploadResponse = void
 
 export type MultipartUploadPartParams = {
@@ -38,7 +38,9 @@ export type MultipartUploadPartParams = {
   minshards?: number
   totalshards?: number
 }
-export type MultipartUploadPartPayload = Blob | Buffer | ArrayBuffer | string
+export type MultipartUploadPartPayload = Blob
+// TODO: figure out how to handle this
+// | Buffer | ArrayBuffer | string
 export type MultipartUploadPartResponse = void
 
 export type RhpScanParams = void

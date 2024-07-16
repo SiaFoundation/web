@@ -1,18 +1,18 @@
 import {
-  Button,
-  Select,
-  PoolCombo,
-  Label,
-  Popover,
-  MenuItemRightSlot,
   BaseMenuItem,
+  Button,
+  Label,
+  MenuItemRightSlot,
   MenuSeparator,
   Option,
+  PoolCombo,
+  Popover,
+  Select,
 } from '@siafoundation/design-system'
 import { CaretDown16, SettingsAdjust16 } from '@siafoundation/react-icons'
-import { sortOptions, SortField } from '../../contexts/filesManager/types'
-import { useFilesManager } from '../../contexts/filesManager'
 import { groupBy } from '@technically/lodash'
+import { useFilesManager } from '../../contexts/filesManager'
+import { type SortField, sortOptions } from '../../contexts/filesManager/types'
 
 export function FilesViewDropdownMenu() {
   const {
@@ -57,7 +57,7 @@ export function FilesViewDropdownMenu() {
                     </Option>
                   ))}
                 </optgroup>
-              )
+              ),
             )}
           </Select>
         </MenuItemRightSlot>

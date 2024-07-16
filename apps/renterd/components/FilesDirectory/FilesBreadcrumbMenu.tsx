@@ -1,6 +1,6 @@
-import { Fragment, useEffect, useRef } from 'react'
-import { Text, ScrollArea } from '@siafoundation/design-system'
+import { ScrollArea, Text } from '@siafoundation/design-system'
 import { ChevronRight16 } from '@siafoundation/react-icons'
+import { Fragment, useEffect, useRef } from 'react'
 import { useFilesManager } from '../../contexts/filesManager'
 import { FilesExplorerModeButton } from '../Files/FilesExplorerModeButton'
 
@@ -8,6 +8,7 @@ export function FilesBreadcrumbMenu() {
   const { activeDirectory, setActiveDirectory } = useFilesManager()
   const ref = useRef<HTMLDivElement>(null)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const t = setTimeout(() => {
       ref.current?.scrollIntoView({ behavior: 'smooth' })
@@ -38,6 +39,7 @@ export function FilesBreadcrumbMenu() {
           )}
           {activeDirectory.map((part, i) => {
             return (
+              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               <Fragment key={part + i}>
                 {i > 0 && (
                   <Text

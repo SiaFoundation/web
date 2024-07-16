@@ -13,7 +13,7 @@ export async function fetchAllAssets() {
   const allPages = await fetchAllPages('name', {
     database_id: assetsDatabaseId,
   })
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   return allPages.map((i: any): Asset => {
     return {
       name: i.properties.name?.title[0]?.plain_text,

@@ -1,5 +1,5 @@
-import { SWRError } from '@siafoundation/react-core'
-import {
+import type { SWRError } from '@siafoundation/react-core'
+import type {
   AutopilotConfig,
   AutopilotState,
   ContractSetSettings,
@@ -7,9 +7,9 @@ import {
   RedundancySettings,
   UploadPackingSettings,
 } from '@siafoundation/renterd-types'
-import { SiaCentralHostsNetworkAveragesResponse } from '@siafoundation/sia-central-types'
-import BigNumber from 'bignumber.js'
+import type { SiaCentralHostsNetworkAveragesResponse } from '@siafoundation/sia-central-types'
 import { TBToBytes } from '@siafoundation/units'
+import BigNumber from 'bignumber.js'
 
 export type Resources = {
   autopilotState: {

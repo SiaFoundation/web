@@ -1,7 +1,7 @@
 import { Image as NextImage } from '@siafoundation/next'
 import { cva } from 'class-variance-authority'
-import React from 'react'
-import { VariantProps } from '../types'
+import type React from 'react'
+import type { VariantProps } from '../types'
 
 const styles = cva(['rounded'])
 

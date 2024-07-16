@@ -1,8 +1,8 @@
-import { Text } from '../core/Text'
-import { Link } from '../core/Link'
-import { stripPrefix } from '../lib/utils'
-import { EntityType, getEntityDisplayLength } from '../lib/entityTypes'
 import { cx } from 'class-variance-authority'
+import { Link } from '../core/Link'
+import { Text } from '../core/Text'
+import { type EntityType, getEntityDisplayLength } from '../lib/entityTypes'
+import { stripPrefix } from '../lib/utils'
 
 type Props = {
   value: string

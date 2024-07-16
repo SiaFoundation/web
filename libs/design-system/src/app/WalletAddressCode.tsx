@@ -1,7 +1,7 @@
+import QRCode from 'react-qr-code'
+import { ValueCopyable } from '../components/ValueCopyable'
 import { Heading } from '../core/Heading'
 import { Text } from '../core/Text'
-import { ValueCopyable } from '../components/ValueCopyable'
-import QRCode from 'react-qr-code'
 
 type Props = {
   title?: string

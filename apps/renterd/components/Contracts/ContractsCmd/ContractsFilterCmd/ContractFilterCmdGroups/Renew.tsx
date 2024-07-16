@@ -1,13 +1,13 @@
 import {
+  type ClientFilterItem,
   daysInMilliseconds,
-  weeksInMilliseconds,
   monthsInMilliseconds,
+  weeksInMilliseconds,
   yearsInMilliseconds,
-  ClientFilterItem,
 } from '@siafoundation/design-system'
-import { ContractData } from '../../../../../contexts/contracts/types'
+import type { ContractData } from '../../../../../contexts/contracts/types'
 import { CommandGroup, CommandItemSearch } from '../../../../CmdRoot/Item'
-import { Page } from '../../../../CmdRoot/types'
+import type { Page } from '../../../../CmdRoot/types'
 
 export const contractFilterRenewPage = {
   namespace: 'contracts/filterRenewDate',
@@ -81,7 +81,7 @@ export function RenewCmdGroup({
   currentPage,
   select,
 }: {
-  currentPage: Page
+  currentPage?: Page
   select: (filter: ClientFilterItem<ContractData>) => void
 }) {
   return (

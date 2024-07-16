@@ -1,8 +1,9 @@
+import type { GitHubRelease } from '@siafoundation/data-sources'
 import {
-  Select,
-  Option,
   Button,
   LinkButton,
+  Option,
+  Select,
   triggerToast,
 } from '@siafoundation/design-system'
 import { Download16 } from '@siafoundation/react-icons'
@@ -11,7 +12,6 @@ import {
   findUserDefaultDownload,
   getDownloadLinksDaemon,
 } from '../content/downloads'
-import { GitHubRelease } from '@siafoundation/data-sources'
 import { useTermsOfService } from '../hooks/useTermsOfService'
 
 type Props = {
@@ -26,12 +26,12 @@ export function DownloadDaemonSelect({ daemon, release, testnetOnly }: Props) {
 
   const [download, setDownload] = useState(downloadLinks[0])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const d = findUserDefaultDownload(downloadLinks)
     if (d) {
       setDownload(d)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -42,7 +42,7 @@ export function DownloadDaemonSelect({ daemon, release, testnetOnly }: Props) {
         value={download.link}
         onChange={(e) =>
           setDownload(
-            downloadLinks.find((i) => i.link === e.currentTarget.value)
+            downloadLinks.find((i) => i.link === e.currentTarget.value),
           )
         }
       >

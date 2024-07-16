@@ -7,8 +7,8 @@ export function useEstimates({
   storageTB,
 }: {
   isAutopilotEnabled: boolean
-  allowanceMonth: BigNumber
-  storageTB: BigNumber
+  allowanceMonth?: BigNumber
+  storageTB?: BigNumber
 }) {
   const canEstimate = useMemo(() => {
     if (!isAutopilotEnabled) {
@@ -28,7 +28,7 @@ export function useEstimates({
     if (!canEstimate) {
       return new BigNumber(0)
     }
-    const totalCostPerMonthTB = estimatedSpendingPerMonth.div(storageTB)
+    const totalCostPerMonthTB = estimatedSpendingPerMonth!.div(storageTB!)
     return totalCostPerMonthTB
   }, [canEstimate, estimatedSpendingPerMonth, storageTB])
 

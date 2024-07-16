@@ -1,23 +1,23 @@
 'use client'
 
-import { useMemo } from 'react'
-import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
-import { DatumProps, ExplorerDatum } from '../ExplorerDatum'
 import { Panel, toFixedOrPrecision } from '@siafoundation/design-system'
-import BigNumber from 'bignumber.js'
+import type { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 import {
   blocksToDays,
   blocksToMonths,
-  humanBytes,
-  humanSiacoin,
-  toSiacoins,
   getDownloadCost,
   getStorageCost,
   getUploadCost,
+  humanBytes,
+  humanSiacoin,
+  toSiacoins,
 } from '@siafoundation/units'
+import BigNumber from 'bignumber.js'
+import { useMemo } from 'react'
 import { useExchangeRate } from '../../hooks/useExchangeRate'
 import { siacoinToFiat } from '../../lib/currency'
-import { SiaCentralHostScanned } from './types'
+import { type DatumProps, ExplorerDatum } from '../ExplorerDatum'
+import type { SiaCentralHostScanned } from './types'
 
 type Props = {
   host: SiaCentralHostScanned
@@ -86,26 +86,26 @@ export function HostSettings({ host, rates }: Props) {
         label: 'base RPC price',
         copyable: false,
         value: `${exchange?.currency.prefix || ''}${toSiacoins(
-          host.settings.base_rpc_price
+          host.settings.base_rpc_price,
         )
           .times(1e6)
           .times(exchange?.rate || 1)
           .precision(2)}/million`,
         comment: `${toSiacoins(host.settings.base_rpc_price).times(
-          1e6
+          1e6,
         )} SC/million`,
       },
       {
         label: 'sector access price',
         copyable: false,
         value: `${exchange?.currency.prefix || ''}${toSiacoins(
-          host.settings.sector_access_price
+          host.settings.sector_access_price,
         )
           .times(1e6)
           .times(exchange?.rate || 1)
           .precision(2)} SC/million`,
         comment: `${toSiacoins(host.settings.sector_access_price).times(
-          1e6
+          1e6,
         )} SC/million`,
       },
       {
@@ -120,7 +120,7 @@ export function HostSettings({ host, rates }: Props) {
           blocksToMonths(host.settings.max_duration),
           {
             digits: 2,
-          }
+          },
         )} months`,
         comment: `${host.settings.max_duration} blocks`,
       },

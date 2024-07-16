@@ -4,9 +4,9 @@ import {
   triggerSuccessToast,
 } from '@siafoundation/design-system'
 import { Delete16 } from '@siafoundation/react-icons'
-import { useDialog } from '../../contexts/dialog'
-import { useCallback } from 'react'
 import { useObjectDelete } from '@siafoundation/renterd-react'
+import { useCallback } from 'react'
+import { useDialog } from '../../contexts/dialog'
 import { bucketAndKeyParamsFromPath } from '../../lib/paths'
 
 export function useFileDelete() {
@@ -48,6 +48,6 @@ export function useFileDelete() {
           triggerSuccessToast({ title: 'Deleted file' })
         },
       }),
-    [openConfirmDialog, deleteObject]
+    [openConfirmDialog, deleteObject],
   )
 }

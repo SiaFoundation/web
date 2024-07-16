@@ -11,30 +11,27 @@ type ImageItem = {
 export function useCarousel(items: ImageItem[]) {
   const [intervalKey, setIntervalKey] = useState<number>(Math.random())
 
-  const [currentItem, _setCurrentItem] = useState<ImageItem>(items[0])
+  const [currentItem, _setCurrentItem] = useState<ImageItem>(items[0]!)
 
-  const setCurrentItem = useCallback(
-    (item: ImageItem) => {
-      _setCurrentItem(item)
-      setIntervalKey(Math.random())
-    },
-    [_setCurrentItem, setIntervalKey]
-  )
+  const setCurrentItem = useCallback((item: ImageItem) => {
+    _setCurrentItem(item)
+    setIntervalKey(Math.random())
+  }, [])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const interval = setInterval(() => {
       _setCurrentItem((currentItem) => {
         const index = items.findIndex((item) => item.key === currentItem.key)
         const nextIndex = index === items.length - 1 ? 0 : index + 1
         const nextImage = items[nextIndex]
-        return nextImage
+        return nextImage!
       })
     }, 4_000)
 
     return () => {
       clearInterval(interval)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [intervalKey])
 
   return {
@@ -66,7 +63,7 @@ export function CarouselTags({
           color={currentItem.key === item.key ? 'contrast' : 'subtle'}
           className={cx(
             'cursor-pointer underline-offset-2',
-            currentItem.key === item.key ? 'underline' : ''
+            currentItem.key === item.key ? 'underline' : '',
           )}
         >
           {item.title}

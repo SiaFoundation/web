@@ -1,10 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
-
 import { cx } from 'class-variance-authority'
-import { Background } from '../OGImage/Background'
-import { Header } from './Header'
 import { network } from '../../config'
-import { PreviewValue } from '../OGImage/Preview'
+import { Background } from '../OGImage/Background'
+import type { PreviewValue } from '../OGImage/Preview'
+import { Header } from './Header'
 
 type Props = {
   id: string
@@ -44,7 +42,7 @@ export function Preview({
                 'pt-1 pb-2 px-3 rounded text-2xl text-white items-center justify-center',
                 statusColor === 'amber' ? 'bg-amber-400' : '',
                 statusColor === 'green' ? 'bg-green-600' : '',
-                statusColor === 'red' ? 'bg-red-400' : ''
+                statusColor === 'red' ? 'bg-red-400' : '',
               )}
             >
               {status}
@@ -68,7 +66,7 @@ export function Preview({
             siascan
           </span>
         </div>
-        {values &&
+        {values && (
           <div tw="flex bg-black/50 border-t-2 border-gray-400/10">
             <div
               tw="flex justify-between w-full pt-10 px-10 pb-14"
@@ -90,12 +88,13 @@ export function Preview({
                 </div>
               ))}
             </div>
-          </div>}
+          </div>
+        )}
       </div>
       <div
         tw={cx(
           'absolute bottom-0 left-0 right-0 h-4',
-          network !== 'mainnet' ? 'bg-amber-500' : 'bg-green-600'
+          network !== 'mainnet' ? 'bg-amber-500' : 'bg-green-600',
         )}
       />
     </div>

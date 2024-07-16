@@ -1,12 +1,12 @@
 import { Text, Tooltip, ValueCopyable } from '@siafoundation/design-system'
-import { HostContextMenuFromKey } from '../../components/Hosts/HostContextMenuFromKey'
-import { ContractContextMenuFromId } from '../../components/Contracts/ContractContextMenuFromId'
+import { Add16, Subtract16 } from '@siafoundation/react-icons'
 import { humanBytes } from '@siafoundation/units'
+import { uniq } from '@technically/lodash'
+import { cx } from 'class-variance-authority'
 import { formatRelative } from 'date-fns'
 import { useMemo } from 'react'
-import { Add16, Subtract16 } from '@siafoundation/react-icons'
-import { cx } from 'class-variance-authority'
-import { uniq } from '@technically/lodash'
+import { ContractContextMenuFromId } from '../../components/Contracts/ContractContextMenuFromId'
+import { HostContextMenuFromKey } from '../../components/Hosts/HostContextMenuFromKey'
 
 type ChangeEvent = {
   type: 'addition' | 'removal'
@@ -72,38 +72,38 @@ export function SetChangesField({
               reasons: r.reasons,
             })),
           ].sort((a, b) =>
-            new Date(a.time).getTime() < new Date(b.time).getTime() ? 1 : -1
+            new Date(a.time).getTime() < new Date(b.time).getTime() ? 1 : -1,
           ) as ChangeEvent[],
         }
       })
       .sort((a, b) => {
         // size in latest event
-        const aSize = a.events[0].size
-        const bSize = b.events[0].size
+        const aSize = a.events[0]!.size
+        const bSize = b.events[0]!.size
         return aSize < bSize ? 1 : -1
       })
   }, [setAdditions, setRemovals])
 
   // calculate churn %: contracts removed size / total size
   const totalSize = useMemo(
-    () => changes.reduce((acc, { events }) => acc + events[0].size, 0),
-    [changes]
+    () => changes.reduce((acc, { events }) => acc + events[0]!.size, 0),
+    [changes],
   )
   const removals = useMemo(
-    () => changes.filter(({ events }) => events[0].type === 'removal'),
-    [changes]
+    () => changes.filter(({ events }) => events[0]!.type === 'removal'),
+    [changes],
   )
   const additions = useMemo(
-    () => changes.filter(({ events }) => events[0].type === 'addition'),
-    [changes]
+    () => changes.filter(({ events }) => events[0]!.type === 'addition'),
+    [changes],
   )
   const removedSize = useMemo(
-    () => removals.reduce((acc, { events }) => acc + events[0].size, 0),
-    [removals]
+    () => removals.reduce((acc, { events }) => acc + events[0]!.size, 0),
+    [removals],
   )
   const churn = useMemo(
     () => (totalSize > 0 ? (removedSize / totalSize) * 100 : 0),
-    [removedSize, totalSize]
+    [removedSize, totalSize],
   )
 
   return (
@@ -115,7 +115,7 @@ export function SetChangesField({
         <div className="flex-1" />
         <Tooltip
           content={`${humanBytes(removedSize)} of ${humanBytes(
-            totalSize
+            totalSize,
           )} contract size removed`}
         >
           <div className="flex gap-1 items-center">
@@ -152,7 +152,7 @@ export function SetChangesField({
           <ContractSetChange
             key={contractId + hostKey}
             contractId={contractId}
-            hostKey={hostKey}
+            hostKey={hostKey!}
             events={events}
             i={i}
           />
@@ -233,7 +233,7 @@ function ContractSetChange({
                 ? type === 'addition'
                   ? 'bg-green-400/20'
                   : 'bg-red-400/20'
-                : 'opacity-50'
+                : 'opacity-50',
             )}
           >
             <div className="flex gap-1 items-center overflow-hidden">

@@ -1,13 +1,13 @@
+import { useRouter } from 'next/router'
+import { routes } from '../../../config/routes'
+import { useDialog } from '../../../contexts/dialog'
 import {
   CommandGroup,
   CommandItemNav,
   CommandItemSearch,
 } from '../../CmdRoot/Item'
+import type { Page } from '../../CmdRoot/types'
 import { HostsFilterCmd } from './HostsFilterCmd'
-import { Page } from '../../CmdRoot/types'
-import { useRouter } from 'next/router'
-import { useDialog } from '../../../contexts/dialog'
-import { routes } from '../../../config/routes'
 
 export const commandPage = {
   namespace: 'hosts',
@@ -21,7 +21,7 @@ export function HostsCmd({
   beforeSelect,
   afterSelect,
 }: {
-  currentPage: Page
+  currentPage?: Page
   parentPage?: Page
   beforeSelect?: () => void
   afterSelect?: () => void

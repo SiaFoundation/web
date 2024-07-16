@@ -1,8 +1,8 @@
 import { Panel, ScrollArea } from '@siafoundation/design-system'
-import { SWRError } from '@siafoundation/react-core'
-import { SystemDirectoryResponse } from '@siafoundation/hostd-types'
+import type { SystemDirectoryResponse } from '@siafoundation/hostd-types'
+import type { SWRError } from '@siafoundation/react-core'
 import { Command } from 'cmdk'
-import { SWRResponse } from 'swr'
+import type { SWRResponse } from 'swr'
 import {
   DirectorySelectCmd,
   volumesDirectorySelectPage,

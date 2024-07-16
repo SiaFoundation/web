@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js'
+import type BigNumber from 'bignumber.js'
 
 /**
  * This function calculates the max price per TB for storage, download, and
@@ -49,12 +49,12 @@ export function derivePricingFromAllowance({
   downloadWeight = 5,
   uploadWeight = 1,
 }: {
-  allowanceMonth: BigNumber
+  allowanceMonth?: BigNumber
   allowanceFactor?: number
-  storageTB: BigNumber
-  downloadTBMonth: BigNumber
-  uploadTBMonth: BigNumber
-  redundancyMultiplier: BigNumber
+  storageTB?: BigNumber
+  downloadTBMonth?: BigNumber
+  uploadTBMonth?: BigNumber
+  redundancyMultiplier?: BigNumber
   storageWeight?: number
   downloadWeight?: number
   uploadWeight?: number
@@ -81,7 +81,7 @@ export function derivePricingFromAllowance({
     storageTBWithRedundancy
       .times(storageWeight)
       .plus(downloadTBMonth.times(downloadWeight))
-      .plus(uploadTBMonthWithRedundancy.times(uploadWeight))
+      .plus(uploadTBMonthWithRedundancy.times(uploadWeight)),
   )
 
   // Calculate the price per TB for each type of usage.

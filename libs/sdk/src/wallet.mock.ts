@@ -1,4 +1,4 @@
-import { Transaction } from '@siafoundation/types'
+import type { Transaction } from '@siafoundation/types'
 
 export const mockPhrase =
   'print fragile winter vote coach pledge deal lazy soap crystal easy amount'

@@ -1,4 +1,4 @@
-import { Links, Text, LinkData, Link } from '@siafoundation/design-system'
+import { Link, type LinkData, Links, Text } from '@siafoundation/design-system'
 import { Book16, LogoGithub16 } from '@siafoundation/react-icons'
 import { CalloutCoreSoftware } from './CalloutCoreSoftware'
 

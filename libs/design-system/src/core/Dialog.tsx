@@ -1,16 +1,16 @@
 'use client'
 
-import { AnimatePresence, motion } from 'framer-motion'
-import { cva, cx } from 'class-variance-authority'
-import { panelStyles } from './Panel'
-import { useOpen } from '../hooks/useOpen'
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { Close24 } from '@siafoundation/react-icons'
+import { cva, cx } from 'class-variance-authority'
+import { AnimatePresence, motion } from 'framer-motion'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useOpen } from '../hooks/useOpen'
+import type { VariantProps } from '../types'
 import { Button } from './Button'
+import { panelStyles } from './Panel'
 import { ScrollArea } from './ScrollArea'
 import { textStyles } from './Text'
-import { VariantProps } from '../types'
 
 const containerStyles = cva(['z-20', 'overflow-hidden'], {
   variants: {
@@ -63,7 +63,7 @@ export const Dialog = React.forwardRef<
       closeClassName,
       dynamicHeight = true,
     },
-    ref
+    ref,
   ) => {
     const { open, onOpenChange } = useOpen({
       open: _open,
@@ -71,11 +71,11 @@ export const Dialog = React.forwardRef<
     })
 
     // The dialog itself only triggers on internal open state change
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     useEffect(() => {
       if (open) {
         onOpenChange(open)
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [open])
 
     return (
@@ -101,7 +101,7 @@ export const Dialog = React.forwardRef<
                     initial="init"
                     animate="show"
                     exit="exit"
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
                     className={containerStyles(containerVariants as any)}
                   >
                     <Content
@@ -124,7 +124,7 @@ export const Dialog = React.forwardRef<
         </AnimatePresence>
       </DialogPrimitive.Root>
     )
-  }
+  },
 )
 
 export function DialogClose({ className }: { className?: string }) {
@@ -176,23 +176,22 @@ const Content = React.forwardRef<HTMLDivElement, ContentProps>(
       bodyClassName,
       dynamicHeight = true,
     },
-    ref
+    ref,
   ) => {
     const { ref: heightRef, height } = useHeight([children, description])
     const [showSeparator, setShowSeparator] = useState<boolean>(false)
     useEffect(() => {
       // 0.7 is eual to the maxHeight: 70vh below
       setShowSeparator(height > window.innerHeight * 0.7)
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [height])
     const Tag = onSubmit ? 'form' : 'div'
     return (
       <Tag
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         onSubmit={onSubmit as any}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         ref={ref as any}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         className={contentStyles(contentVariants as any)}
       >
         {title && (
@@ -225,7 +224,7 @@ const Content = React.forwardRef<HTMLDivElement, ContentProps>(
         <DialogClose className={closeClassName || 'absolute top-3.5 right-2'} />
       </Tag>
     )
-  }
+  },
 )
 
 function useHeight(deps: unknown[] = []) {
@@ -246,7 +245,6 @@ function useHeight(deps: unknown[] = []) {
       node.removeEventListener('resize', update)
       resizeOb.unobserve(node)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps)
   return {
     ref,
@@ -270,7 +268,7 @@ export const dialogTitleStyles = cva(
         true: 'border-b border-gray-200 dark:border-graydark-200',
       },
     },
-  }
+  },
 )
 
 export const dialogDescriptionStyles = cva([
@@ -291,7 +289,7 @@ function DialogControls({ children, separator = true }: DialogControlsProps) {
     <div
       className={cx(
         'py-2 mx-3',
-        separator ? 'border-t border-gray-200 dark:border-graydark-200' : ''
+        separator ? 'border-t border-gray-200 dark:border-graydark-200' : '',
       )}
     >
       {children}

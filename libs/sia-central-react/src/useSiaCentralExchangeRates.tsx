@@ -1,15 +1,15 @@
 import {
-  useGetSwr,
+  type HookArgsSwr,
   useAppSettings,
-  HookArgsSwr,
+  useGetSwr,
 } from '@siafoundation/react-core'
 import {
+  type SiaCentralExchangeRatesResponse,
   defaultApi,
-  SiaCentralExchangeRatesResponse,
 } from '@siafoundation/sia-central-types'
 
 export function useSiaCentralExchangeRates(
-  args?: HookArgsSwr<void, SiaCentralExchangeRatesResponse>
+  args?: HookArgsSwr<void, SiaCentralExchangeRatesResponse>,
 ) {
   const { settings } = useAppSettings()
   return useGetSwr({

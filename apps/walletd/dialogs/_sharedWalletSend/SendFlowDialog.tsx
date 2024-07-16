@@ -1,12 +1,12 @@
 import {
-  Separator,
   Dialog,
-  ProgressSteps,
   FormSubmitButton,
+  ProgressSteps,
+  Separator,
 } from '@siafoundation/design-system'
+import type { UseFormReturn } from 'react-hook-form'
 import { SendDone } from './SendDone'
-import { SendParams, SendStep } from './types'
-import { UseFormReturn } from 'react-hook-form'
+import type { SendParams, SendStep } from './types'
 
 export type SendDialogParams = {
   walletId: string
@@ -17,14 +17,14 @@ type Props = {
   open: boolean
   onOpenChange: (val: boolean) => void
   compose: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     form: UseFormReturn<any>
     el: React.ReactNode
     handleSubmit: () => void
     reset: () => void
   }
   send: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     form: UseFormReturn<any>
     el: React.ReactNode
     handleSubmit: () => void
@@ -35,7 +35,7 @@ type Props = {
   step: SendStep
   setStep: (step: SendStep) => void
   controls?: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     form: UseFormReturn<any>
     submitLabel: string
     handleSubmit: () => void

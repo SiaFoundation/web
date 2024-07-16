@@ -1,12 +1,12 @@
 import { Avatar } from '@siafoundation/design-system'
-import {
+import type {
   SiaCentralExchangeRates,
   SiaCentralHost,
 } from '@siafoundation/sia-central-types'
 import { hashToAvatar } from '../../lib/avatar'
-import { HostPricing } from './HostPricing'
 import { HostInfo } from './HostInfo'
-import { SiaCentralHostScanned } from './types'
+import { HostPricing } from './HostPricing'
+import type { SiaCentralHostScanned } from './types'
 
 type Props = {
   host: SiaCentralHost

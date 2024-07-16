@@ -1,30 +1,30 @@
 import {
-  FullPathSegments,
+  type FullPath,
+  type FullPathSegments,
+  ensureDirectory,
   getBucketFromPath,
   getFilename,
   getKeyFromPath,
-  pathSegmentsToPath,
-  join,
-  FullPath,
   getParentDirectoryPath,
   isDirectory,
-  ensureDirectory,
+  join,
+  pathSegmentsToPath,
 } from './paths'
 
 type Id = string | number
 
 // Parameters for moving a directory or file to drag destination
 export function getMoveFileRenameParams(
-  e: { active: { id: Id }; collisions: { id: Id }[] },
-  activeDirectory: FullPathSegments
+  e: { active: { id: Id }; collisions: { id: Id }[] | null },
+  activeDirectory: FullPathSegments,
 ) {
   const fromPath = String(e.active.id)
   let toPath = pathSegmentsToPath(activeDirectory)
-  if (e.collisions.length) {
-    if (e.collisions[0].id === '..') {
+  if (e.collisions?.length) {
+    if (e.collisions[0]!.id === '..') {
       toPath = pathSegmentsToPath(activeDirectory.slice(0, -1))
     } else {
-      toPath = String(e.collisions[0].id)
+      toPath = String(e.collisions[0]!.id)
     }
   }
   const filename = getFilename(fromPath)

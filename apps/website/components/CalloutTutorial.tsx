@@ -1,8 +1,8 @@
 import {
-  PatternedPanel,
   Heading,
-  Paragraph,
   Link,
+  Paragraph,
+  PatternedPanel,
   Text,
   WebDomain,
 } from '@siafoundation/design-system'
@@ -10,7 +10,7 @@ import { random } from '@technically/lodash'
 import Image from 'next/image'
 import { useMemo } from 'react'
 import { routes } from '../config/routes'
-import { patterns, getAssetUrl } from '../content/assets'
+import { getAssetUrl, patterns } from '../content/assets'
 
 type Props = {
   title: string

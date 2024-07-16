@@ -1,9 +1,9 @@
 import { Separator, Text, Tooltip } from '@siafoundation/design-system'
 import { Filter16, Wikis16 } from '@siafoundation/react-icons'
-import { FilesStatsMenuSize } from './FilesStatsMenuSize'
-import { FilesStatsMenuHealth } from './FilesStatsMenuHealth'
-import { FilesStatsMenuWarnings } from './FilesStatsMenuWarnings'
 import { FilesStatsMenuCount } from './FilesStatsMenuCount'
+import { FilesStatsMenuHealth } from './FilesStatsMenuHealth'
+import { FilesStatsMenuSize } from './FilesStatsMenuSize'
+import { FilesStatsMenuWarnings } from './FilesStatsMenuWarnings'
 
 export function FilesStatsMenuShared() {
   return (

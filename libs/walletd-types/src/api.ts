@@ -1,21 +1,21 @@
-import {
-  ConsensusState,
-  ConsensusNetwork,
-  Currency,
+import type {
   BlockHeight,
   ChainIndex,
-  SiacoinOutputID,
-  SiafundOutputID,
+  ConsensusNetwork,
+  ConsensusState,
+  Currency,
   SiacoinElement,
+  SiacoinOutputID,
   SiafundElement,
+  SiafundOutputID,
   Transaction,
   V2Transaction,
 } from '@siafoundation/types'
-import {
-  WalletEvent,
+import type {
   GatewayPeer,
   Wallet,
   WalletAddress,
+  WalletEvent,
   WalletMetadata,
 } from './types'
 

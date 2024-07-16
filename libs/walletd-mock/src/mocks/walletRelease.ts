@@ -1,5 +1,5 @@
-import { WalletReleaseResponse } from '@siafoundation/walletd-types'
-import { Page } from 'playwright'
+import type { WalletReleaseResponse } from '@siafoundation/walletd-types'
+import type { Page } from 'playwright'
 
 export async function mockApiWalletRelease({
   page,

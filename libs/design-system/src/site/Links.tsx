@@ -1,6 +1,6 @@
-import { Link } from '../core/Link'
-import { LinkData } from '../lib/links'
 import { cx } from 'class-variance-authority'
+import { Link } from '../core/Link'
+import type { LinkData } from '../lib/links'
 
 type Props = {
   links?: LinkData[]

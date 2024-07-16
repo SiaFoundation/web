@@ -1,13 +1,13 @@
+import { useRouter } from 'next/router'
+import { routes } from '../../../config/routes'
+import { useDialog } from '../../../contexts/dialog'
 import {
   CommandGroup,
   CommandItemNav,
   CommandItemSearch,
 } from '../../CmdRoot/Item'
+import type { Page } from '../../CmdRoot/types'
 import { FilesSearchCmd, filesSearchPage } from './FilesSearchCmd'
-import { Page } from '../../CmdRoot/types'
-import { useRouter } from 'next/router'
-import { useDialog } from '../../../contexts/dialog'
-import { routes } from '../../../config/routes'
 
 export const commandPage = {
   namespace: 'files',
@@ -25,7 +25,7 @@ export function FilesCmd({
 }: {
   search: string
   debouncedSearch: string
-  currentPage: Page
+  currentPage?: Page
   parentPage?: Page
   beforeSelect?: () => void
   afterSelect?: () => void
@@ -54,7 +54,7 @@ export function FilesCmd({
               router.push(routes.buckets.index)
             }
             closeDialog()
-            afterSelect()
+            afterSelect?.()
           }}
         >
           View files
@@ -64,7 +64,7 @@ export function FilesCmd({
           commandPage={commandPage}
           onSelect={() => {
             pushPage(filesSearchPage)
-            afterSelect()
+            afterSelect?.()
           }}
         >
           Search files

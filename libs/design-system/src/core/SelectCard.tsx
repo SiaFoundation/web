@@ -1,5 +1,5 @@
-import React from 'react'
 import { cx } from 'class-variance-authority'
+import React from 'react'
 
 export const SelectCard = React.forwardRef<
   HTMLButtonElement,
@@ -17,7 +17,7 @@ export const SelectCard = React.forwardRef<
       'border-gray-400 dark:border-graydark-400',
       'enabled:hover:border-gray-500 enabled:hover:dark:border-graydark-500',
       'disabled:cursor-default',
-      'disabled:opacity-50'
+      'disabled:opacity-50',
     )}
   />
 ))

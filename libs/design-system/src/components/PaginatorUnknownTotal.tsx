@@ -1,13 +1,13 @@
 'use client'
 
-import { Button } from '../core/Button'
-import { ControlGroup } from '../core/ControlGroup'
+import { usePagesRouter } from '@siafoundation/next'
 import {
   CaretLeft16,
   CaretRight16,
   PageFirst16,
 } from '@siafoundation/react-icons'
-import { usePagesRouter } from '@siafoundation/next'
+import { Button } from '../core/Button'
+import { ControlGroup } from '../core/ControlGroup'
 import { LoadingDots } from './LoadingDots'
 
 type Props = {

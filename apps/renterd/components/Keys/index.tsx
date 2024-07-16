@@ -1,13 +1,13 @@
-import { RenterdSidenav } from '../RenterdSidenav'
-import { routes } from '../../config/routes'
 import { Table } from '@siafoundation/design-system'
+import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
+import { useKeys } from '../../contexts/keys'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
-import { StateNoneMatching } from './StateNoneMatching'
-import { StateNoneYet } from './StateNoneYet'
+import { RenterdSidenav } from '../RenterdSidenav'
 import { KeysActionsMenu } from './KeysActionsMenu'
 import { StateError } from './StateError'
-import { useKeys } from '../../contexts/keys'
+import { StateNoneMatching } from './StateNoneMatching'
+import { StateNoneYet } from './StateNoneYet'
 
 export function Keys() {
   const { openDialog } = useDialog()

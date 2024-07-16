@@ -2,17 +2,22 @@ import {
   useAutopilotConfigEvaluate,
   useBusState,
 } from '@siafoundation/renterd-react'
-import { transformUp } from './transformUp'
-import { Resources, checkIfAllResourcesLoaded } from './resources'
-import BigNumber from 'bignumber.js'
-import { RecommendationItem, SettingsData, getAdvancedDefaults } from './types'
-import { UseFormReturn } from 'react-hook-form'
-import { useMemo } from 'react'
-import { transformDownGouging } from './transformDown'
-import { Fields, getFields } from './fields'
+import type { GougingSettings } from '@siafoundation/renterd-types'
 import { humanNumber, humanSiacoin, toHastings } from '@siafoundation/units'
 import { lowerFirst } from '@technically/lodash'
-import { GougingSettings } from '@siafoundation/renterd-types'
+import BigNumber from 'bignumber.js'
+import { useMemo } from 'react'
+import type { UseFormReturn } from 'react-hook-form'
+import { type Fields, getFields } from './fields'
+import { type Resources, checkIfAllResourcesLoaded } from './resources'
+import { transformDownGouging } from './transformDown'
+import { transformUp } from './transformUp'
+import {
+  type GougingData,
+  type RecommendationItem,
+  type SettingsData,
+  getAdvancedDefaults,
+} from './types'
 
 export function useAutopilotEvaluations({
   form,
@@ -23,7 +28,7 @@ export function useAutopilotEvaluations({
   form: UseFormReturn<SettingsData>
   resources: Resources
   isAutopilotEnabled: boolean
-  estimatedSpendingPerMonth: BigNumber
+  estimatedSpendingPerMonth?: BigNumber
 }) {
   const values = form.watch()
   const renterdState = useBusState()
@@ -52,9 +57,9 @@ export function useAutopilotEvaluations({
     () =>
       mergeValuesWithDefaultsOrZeroValues(
         values,
-        resources.autopilotState.data?.network
+        resources.autopilotState.data?.network!,
       ),
-    [values, resources.autopilotState.data?.network]
+    [values, resources.autopilotState.data?.network],
   )
 
   const payloads = useMemo(() => {
@@ -64,9 +69,9 @@ export function useAutopilotEvaluations({
 
     const { payloads } = transformUp({
       resources,
-      renterdState: renterdState.data,
+      renterdState: renterdState.data!,
       isAutopilotEnabled,
-      estimatedSpendingPerMonth,
+      estimatedSpendingPerMonth: estimatedSpendingPerMonth!,
       values: currentValuesWithDefaults,
     })
     return payloads
@@ -79,7 +84,7 @@ export function useAutopilotEvaluations({
     hasDataToEvaluate,
   ])
 
-  const userContractCountTarget = payloads?.autopilot.contracts.amount || 0
+  const userContractCountTarget = payloads?.autopilot!.contracts.amount || 0
 
   // Find settings where the usable host count is at least 50% more than the
   // amount of contracts the user wants. If that is not possible, try 10% more.
@@ -93,9 +98,9 @@ export function useAutopilotEvaluations({
   const eval0 = useAutopilotConfigEvaluate({
     disabled: !eval0Enabled,
     payload: {
-      gougingSettings: payloads?.gouging,
-      redundancySettings: payloads?.redundancy,
-      autopilotConfig: payloads?.autopilot,
+      gougingSettings: payloads?.gouging!,
+      redundancySettings: payloads?.redundancy!,
+      autopilotConfig: payloads?.autopilot!,
     },
     config: {
       swr: {
@@ -114,12 +119,12 @@ export function useAutopilotEvaluations({
   const eval50 = useAutopilotConfigEvaluate({
     disabled: !eval50Enabled,
     payload: {
-      gougingSettings: payloads?.gouging,
-      redundancySettings: payloads?.redundancy,
+      gougingSettings: payloads?.gouging!,
+      redundancySettings: payloads?.redundancy!,
       autopilotConfig: {
-        ...payloads?.autopilot,
+        ...payloads?.autopilot!,
         contracts: {
-          ...payloads?.autopilot.contracts,
+          ...payloads?.autopilot!.contracts!,
           amount: hostTarget50,
         },
       },
@@ -139,12 +144,12 @@ export function useAutopilotEvaluations({
   const eval10 = useAutopilotConfigEvaluate({
     disabled: !eval10Enabled,
     payload: {
-      gougingSettings: payloads?.gouging,
-      redundancySettings: payloads?.redundancy,
+      gougingSettings: payloads?.gouging!,
+      redundancySettings: payloads?.redundancy!,
       autopilotConfig: {
-        ...payloads?.autopilot,
+        ...payloads?.autopilot!,
         contracts: {
-          ...payloads?.autopilot.contracts,
+          ...payloads?.autopilot!.contracts!,
           amount: hostTarget10,
         },
       },
@@ -166,19 +171,19 @@ export function useAutopilotEvaluations({
   const recommendationMargin = recommendedGougingSettings50
     ? '50%'
     : recommendedGougingSettings10
-    ? '10%'
-    : recommendedGougingSettings0
-    ? '0%'
-    : 'N/A'
+      ? '10%'
+      : recommendedGougingSettings0
+        ? '0%'
+        : 'N/A'
 
   // Get the number of usable hosts we would have after applying the recommended settings.
   const usableAfterRecsEvalEnabled = !!(payloads && recommendedGougingSettings)
   const usableAfterRecsEval = useAutopilotConfigEvaluate({
     disabled: !usableAfterRecsEvalEnabled,
     payload: {
-      gougingSettings: recommendedGougingSettings,
-      redundancySettings: payloads?.redundancy,
-      autopilotConfig: payloads?.autopilot,
+      gougingSettings: recommendedGougingSettings!,
+      redundancySettings: payloads?.redundancy!,
+      autopilotConfig: payloads?.autopilot!,
     },
     config: {
       swr: {
@@ -200,10 +205,12 @@ export function useAutopilotEvaluations({
     })
 
     // Generate recommendation metadata for each value that differs from current settings.
-    const recs = []
-    const gougingKeys = Object.keys(recommendedGougingSettings)
+    const recs: RecommendationItem[] = []
+    const gougingKeys = Object.keys(
+      recommendedGougingSettings,
+    ) as (keyof GougingSettings)[]
     gougingKeys.forEach((key) => {
-      if (recommendedGougingSettings[key] !== payloads.gouging[key]) {
+      if (recommendedGougingSettings[key] !== payloads.gouging![key]) {
         const rec = getRecommendationItem({
           key: remoteToLocalFields[key],
           recommendationDown,
@@ -247,38 +254,42 @@ function getRecommendationItem({
   key: keyof Fields
   recommendationDown: ReturnType<typeof transformDownGouging>
   values: SettingsData
-}): RecommendationItem {
+}): RecommendationItem | null {
+  const keyGouging = key as keyof GougingData
   if (fields[key].type === 'siacoin') {
     const currentValue = values[key] as BigNumber
-    const targetValue = recommendationDown[key]
-    const direction = currentValue.lt(targetValue) ? 'up' : 'down'
+    const targetValue = recommendationDown[keyGouging]
+    const direction = currentValue.lt(targetValue!) ? 'up' : 'down'
     return {
-      key,
+      key: keyGouging,
       title: lowerFirst(fields[key].title),
       currentLabel: `${humanSiacoin(toHastings(currentValue), {
         fixed: 1,
       })}${fields[key].units?.replace('SC/', '/')}`,
-      targetLabel: `${humanSiacoin(toHastings(recommendationDown[key]), {
-        fixed: 1,
-      })}${fields[key].units?.replace('SC/', '/')}`,
+      targetLabel: `${humanSiacoin(
+        toHastings(recommendationDown[keyGouging]!),
+        {
+          fixed: 1,
+        },
+      )}${fields[key].units?.replace('SC/', '/')}`,
       currentValue,
-      targetValue: recommendationDown[key],
+      targetValue: recommendationDown[keyGouging]!,
       direction,
     }
   }
   if (fields[key].type === 'number') {
     const currentValue = values[key] as BigNumber
-    const targetValue = recommendationDown[key]
-    const direction = currentValue.lt(targetValue) ? 'up' : 'down'
+    const targetValue = recommendationDown[keyGouging]
+    const direction = currentValue.lt(targetValue!) ? 'up' : 'down'
     return {
-      key,
+      key: keyGouging,
       title: lowerFirst(fields[key].title),
       currentLabel: `${humanNumber(currentValue)} ${fields[key].units}`,
-      targetLabel: `${humanNumber(recommendationDown[key])} ${
+      targetLabel: `${humanNumber(recommendationDown[keyGouging])} ${
         fields[key].units
       }`,
       currentValue: currentValue,
-      targetValue: recommendationDown[key],
+      targetValue: recommendationDown[keyGouging]!,
       direction,
     }
   }
@@ -349,19 +360,21 @@ export const valuesZeroDefaults: SettingsData = {
 // current value, otherwise advanced default if there is one, otherwise zero value.
 export function mergeValuesWithDefaultsOrZeroValues(
   values: SettingsData,
-  network: 'Mainnet' | 'Zen Testnet'
+  network: 'Mainnet' | 'Zen Testnet',
 ) {
   const merged: SettingsData = getAdvancedDefaults(network)
-  // advanced defaults include undefined values, for keys without defaults.
+  // defaults include undefined values, for keys without defaults.
   // Set these to zero values.
   Object.entries(valuesZeroDefaults).forEach(([key, value]) => {
-    if (merged[key] === undefined) {
+    if (merged[key as keyof SettingsData] === undefined) {
+      // @ts-ignore
       merged[key] = value
     }
   })
   // Apply any non-zero user values.
   Object.entries(values).forEach(([key, value]) => {
     if (value !== undefined) {
+      // @ts-ignore
       merged[key] = value
     }
   })

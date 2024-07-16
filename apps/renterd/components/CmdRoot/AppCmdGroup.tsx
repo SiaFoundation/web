@@ -1,5 +1,5 @@
-import { useTheme } from 'next-themes'
 import { useAppSettings } from '@siafoundation/react-core'
+import { useTheme } from 'next-themes'
 import { useDialog } from '../../contexts/dialog'
 import {
   CommandGroup,
@@ -7,7 +7,7 @@ import {
   CommandItemRootAndSearch,
   CommandItemSearch,
 } from './Item'
-import { Page } from './types'
+import type { Page } from './types'
 
 const commandPage = {
   namespace: 'settings',
@@ -15,7 +15,7 @@ const commandPage = {
 }
 
 type Props = {
-  currentPage: Page
+  currentPage?: Page
   parentPage?: Page
   pushPage: (page: Page) => void
 }

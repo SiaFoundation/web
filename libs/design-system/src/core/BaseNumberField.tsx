@@ -1,9 +1,9 @@
-import { textFieldStyles } from './TextField'
-import { Text } from './Text'
 import { cx } from 'class-variance-authority'
-import { VariantProps } from '../types'
-import { NumericFormat } from 'react-number-format'
 import { useEffect, useMemo, useState } from 'react'
+import { NumericFormat } from 'react-number-format'
+import type { VariantProps } from '../types'
+import { Text } from './Text'
+import { textFieldStyles } from './TextField'
 
 type Props = VariantProps<typeof textFieldStyles> &
   Omit<React.ComponentProps<typeof NumericFormat>, 'size' | 'className'> & {
@@ -42,7 +42,7 @@ export function BaseNumberField({
   const decimalSeparator = useMemo(() => getDecimalSeparator(locale), [locale])
   const { groupingSeparator, groupingStyle } = useMemo(
     () => getGroupingInfo(locale, customThousandsGroupStyle),
-    [locale, customThousandsGroupStyle]
+    [locale, customThousandsGroupStyle],
   )
 
   return (
@@ -66,7 +66,7 @@ export function BaseNumberField({
             cursor,
             className,
           }),
-          units ? 'pr-9' : ''
+          units ? 'pr-9' : '',
         )}
       />
       {units && (
@@ -75,7 +75,7 @@ export function BaseNumberField({
             'flex items-center absolute top-0 h-full',
             size === 'small' ? 'right-2' : '',
             size === 'medium' ? 'right-3' : '',
-            size === 'large' ? 'right-3' : ''
+            size === 'large' ? 'right-3' : '',
           )}
         >
           <Text
@@ -116,7 +116,7 @@ function getGroupingStyle(groups: number[]): 'thousand' | 'lakh' | 'wan' {
 
 function getGroupingInfo(
   locale: string | undefined,
-  customThousandsGroupStyle?: 'none' | 'thousand' | 'lakh' | 'wan'
+  customThousandsGroupStyle?: 'none' | 'thousand' | 'lakh' | 'wan',
 ): {
   groupingSeparator: string
   groupingStyle: 'thousand' | 'lakh' | 'wan' | 'none'
@@ -129,7 +129,7 @@ function getGroupingInfo(
   const formattedNumber = new Intl.NumberFormat(locale).format(largeNumber)
 
   // Find the grouping separator
-  const groupingSeparator = formattedNumber.replace(/[0-9]/g, '')[0] // First non-numeric character
+  const groupingSeparator = formattedNumber.replace(/[0-9]/g, '')[0]! // First non-numeric character
 
   // Determine the grouping style
   const groups = formattedNumber
@@ -151,7 +151,7 @@ function getGroupingInfo(
 function getDecimalSeparator(locale?: string) {
   const numberWithDecimal = 1.1
   const formattedNumber = new Intl.NumberFormat(locale).format(
-    numberWithDecimal
+    numberWithDecimal,
   )
   const decimalSeparator = formattedNumber[1] // Assuming '.' is at position 1
   return decimalSeparator

@@ -1,5 +1,5 @@
-import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { useFilesManager } from '../../contexts/filesManager'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { useAutopilotNotConfigured } from './checks/useAutopilotNotConfigured'
 import { useNotEnoughContracts } from './checks/useNotEnoughContracts'
 

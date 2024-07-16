@@ -1,5 +1,5 @@
-import { ConsensusState } from '@siafoundation/types'
-import { Page } from 'playwright'
+import type { ConsensusState } from '@siafoundation/types'
+import type { Page } from 'playwright'
 
 export function getMockConsensusTipStateResponse(): ConsensusState {
   return {

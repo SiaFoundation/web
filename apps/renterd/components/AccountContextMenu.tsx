@@ -1,13 +1,13 @@
 import {
+  Button,
   DropdownMenu,
   DropdownMenuItem,
-  Button,
-  DropdownMenuLeftSlot,
   DropdownMenuLabel,
+  DropdownMenuLeftSlot,
   Text,
   copyToClipboard,
 } from '@siafoundation/design-system'
-import { Copy16, ResetAlt16, CaretDown16 } from '@siafoundation/react-icons'
+import { CaretDown16, Copy16, ResetAlt16 } from '@siafoundation/react-icons'
 import { useAccountResetDrift } from '@siafoundation/renterd-react'
 
 type Props = {
@@ -36,7 +36,7 @@ export function AccountContextMenu({
       contentProps={{
         align: 'start',
         ...contentProps,
-        onClick: (e) => {
+        onClick: (e: React.MouseEvent<HTMLElement>) => {
           e.stopPropagation()
         },
       }}

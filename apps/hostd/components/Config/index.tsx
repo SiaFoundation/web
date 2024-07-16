@@ -1,25 +1,25 @@
 import {
-  Text,
+  ConfigurationFiat,
   ConfigurationPanel,
+  ConfigurationPanelSetting,
+  ConfigurationSiacoin,
+  FieldSwitch,
   PanelMenuSection,
   PanelMenuSetting,
   Separator,
-  FieldSwitch,
-  ConfigurationPanelSetting,
-  shouldShowField,
+  Text,
   Tooltip,
-  ConfigurationSiacoin,
-  ConfigurationFiat,
+  shouldShowField,
 } from '@siafoundation/design-system'
-import { Warning16, CheckmarkFilled16 } from '@siafoundation/react-icons'
-import { HostdSidenav } from '../HostdSidenav'
-import { routes } from '../../config/routes'
-import { useDialog } from '../../contexts/dialog'
+import { CheckmarkFilled16, Warning16 } from '@siafoundation/react-icons'
 import { HostdAuthedLayout } from '../../components/HostdAuthedLayout'
+import { routes } from '../../config/routes'
 import { useConfig } from '../../contexts/config'
+import { useDialog } from '../../contexts/dialog'
+import { HostdSidenav } from '../HostdSidenav'
+import { ConfigActions } from './ConfigActions'
 import { ConfigNav } from './ConfigNav'
 import { StateConnError } from './StateConnError'
-import { ConfigActions } from './ConfigActions'
 
 export function Config() {
   const { openDialog } = useDialog()

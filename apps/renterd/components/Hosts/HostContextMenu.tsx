@@ -1,21 +1,21 @@
 import {
+  Button,
   DropdownMenu,
   DropdownMenuItem,
-  Button,
-  DropdownMenuLeftSlot,
   DropdownMenuLabel,
+  DropdownMenuLeftSlot,
   Text,
+  copyToClipboard,
   secondsInMilliseconds,
   truncate,
-  copyToClipboard,
 } from '@siafoundation/design-system'
 import {
-  DataView16,
-  ListChecked16,
-  Filter16,
-  Copy16,
-  ResetAlt16,
   CaretDown16,
+  Copy16,
+  DataView16,
+  Filter16,
+  ListChecked16,
+  ResetAlt16,
 } from '@siafoundation/react-icons'
 import {
   useHostResetLostSectorCount,
@@ -23,8 +23,8 @@ import {
   useHostsBlocklist,
   useRhpScan,
 } from '@siafoundation/renterd-react'
-import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
+import { routes } from '../../config/routes'
 import { useContracts } from '../../contexts/contracts'
 import { useHosts } from '../../contexts/hosts'
 import { useAllowlistUpdate } from '../../hooks/useAllowlistUpdate'
@@ -103,7 +103,7 @@ export function HostContextMenuContent({
           setHostsFilter({
             id: 'addressContains',
             value: address,
-            label: `Address contains ${truncate(address, 20)}`,
+            label: `Address contains ${truncate(address!, 20)}`,
           })
           router.push(routes.hosts.index)
         }}
@@ -129,7 +129,7 @@ export function HostContextMenuContent({
         disabled={!address}
         onSelect={() => {
           resetContractsFilters()
-          setContractsFilter(addressContainsFilter(address))
+          setContractsFilter(addressContainsFilter(address!))
           router.push(routes.contracts.index)
         }}
       >
@@ -157,7 +157,7 @@ export function HostContextMenuContent({
           rescan.post({
             payload: {
               hostKey: publicKey,
-              hostIP: address,
+              hostIP: address!,
               timeout: secondsInMilliseconds(30),
             },
           })
@@ -181,7 +181,7 @@ export function HostContextMenuContent({
       ) : (
         <DropdownMenuItem
           disabled={!address}
-          onSelect={() => blocklistUpdate([address], [])}
+          onSelect={() => blocklistUpdate([address!], [])}
         >
           <DropdownMenuLeftSlot>
             <ListChecked16 />
@@ -230,7 +230,7 @@ export function HostContextMenuContent({
       <DropdownMenuItem
         disabled={!address}
         onSelect={() => {
-          copyToClipboard(address, 'host address')
+          copyToClipboard(address!, 'host address')
         }}
       >
         <DropdownMenuLeftSlot>

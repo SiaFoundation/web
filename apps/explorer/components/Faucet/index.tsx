@@ -13,9 +13,9 @@ import {
 } from '@siafoundation/design-system'
 import { FaucetIcon } from '@siafoundation/react-icons'
 import { useCallback, useEffect, useState } from 'react'
+import { isMainnet, networkName } from '../../config'
 import { FaucetFundForm } from './FaucetFundForm'
 import { FaucetStatus } from './FaucetStatus'
-import { isMainnet, networkName } from '../../config'
 
 type Tab = 'fund' | 'status'
 
@@ -34,7 +34,7 @@ export function Faucet() {
       setId(id)
       setTab('status')
     },
-    [setId, setTab]
+    [setId, setTab],
   )
 
   return (

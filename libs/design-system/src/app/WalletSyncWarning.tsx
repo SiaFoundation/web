@@ -1,5 +1,5 @@
-import { Text } from '../core/Text'
 import { Warning16 } from '@siafoundation/react-icons'
+import { Text } from '../core/Text'
 
 export function WalletSyncWarning({
   isSynced,

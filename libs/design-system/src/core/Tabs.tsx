@@ -1,10 +1,10 @@
 'use client'
 
+import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { cx } from 'class-variance-authority'
 import React from 'react'
-import * as TabsPrimitive from '@radix-ui/react-tabs'
+import type { VariantProps } from '../types'
 import { textStyles } from './Text'
-import { VariantProps } from '../types'
 
 export const Tabs = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Root>,
@@ -28,7 +28,7 @@ export const TabsList = React.forwardRef<
       ref={ref}
       className={cx(
         'flex flex-shrink-0 border-b border-gray-500 dark:border-graydark-500',
-        className
+        className,
       )}
       {...props}
     />
@@ -55,7 +55,7 @@ export const TabsTrigger = React.forwardRef<
         'data-[state=active]:text-accent-1100 data-[state=active]:dark:text-accentdark-1100',
         'data-[state=active]:border-green-600 data-[state=active]:dark:border-green-500',
         textStyles({ font, size, weight, ellipsis: true }),
-        className
+        className,
       )}
       {...props}
     />

@@ -1,16 +1,16 @@
-import { useMemo } from 'react'
-import BigNumber from 'bignumber.js'
-import { HostData } from './types'
-import { Host } from '@siafoundation/renterd-types'
-import {
+import type {
   useAutopilotHostsSearch,
   useHostsAllowlist,
   useHostsBlocklist,
   useHostsSearch,
 } from '@siafoundation/renterd-react'
-import { ContractData } from '../contracts/types'
-import { useApp } from '../app'
-import { SiaCentralHost } from '@siafoundation/sia-central-types'
+import type { Host } from '@siafoundation/renterd-types'
+import type { SiaCentralHost } from '@siafoundation/sia-central-types'
+import BigNumber from 'bignumber.js'
+import { useMemo } from 'react'
+import type { useApp } from '../app'
+import type { ContractData } from '../contracts/types'
+import type { HostData } from './types'
 
 export function useDataset({
   autopilotStatus,
@@ -38,38 +38,40 @@ export function useDataset({
       return (
         regularResponse.data?.map((host) => {
           const sch = geoHosts.find((gh) => gh.public_key === host.publicKey)
-          return {
+          const datum: HostData = {
             onClick: () => onHostSelect(host.publicKey, sch?.location),
             ...getHostFields(host, allContracts),
             ...getAllowedFields({
               host,
-              allowlist: allowlist.data,
-              blocklist: blocklist.data,
+              allowlist: allowlist.data!,
+              blocklist: blocklist.data!,
               isAllowlistActive,
             }),
             ...getAutopilotFields(),
             location: sch?.location,
             countryCode: sch?.country_code,
           }
+          return datum
         }) || null
       )
     } else if (autopilotStatus === 'on') {
       return (
         autopilotResponse.data?.map((ah) => {
           const sch = geoHosts.find((gh) => gh.public_key === ah.host.publicKey)
-          return {
+          const datum: HostData = {
             onClick: () => onHostSelect(ah.host.publicKey, sch?.location),
             ...getHostFields(ah.host, allContracts),
             ...getAllowedFields({
               host: ah.host,
-              allowlist: allowlist.data,
-              blocklist: blocklist.data,
+              allowlist: allowlist.data!,
+              blocklist: blocklist.data!,
               isAllowlistActive,
             }),
             ...getAutopilotFields(ah.checks),
             location: sch?.location,
             countryCode: sch?.country_code,
           }
+          return datum
         }) || null
       )
     }
@@ -96,7 +98,7 @@ function getHostFields(host: Host, allContracts: ContractData[]) {
     lastScan:
       host.interactions.lastScan === '0001-01-01T00:00:00Z'
         ? null
-        : host.interactions.lastScan,
+        : host.interactions.lastScan || null,
     knownSince:
       host.knownSince === '0001-01-01T00:00:00Z' ? null : host.knownSince,
     lastAnnouncement:
@@ -106,18 +108,18 @@ function getHostFields(host: Host, allContracts: ContractData[]) {
     uptime: new BigNumber(host.interactions.uptime || 0),
     downtime: new BigNumber(host.interactions.downtime || 0),
     successfulInteractions: new BigNumber(
-      host.interactions.successfulInteractions || 0
+      host.interactions.successfulInteractions || 0,
     ),
     totalInteractions: new BigNumber(
       host.interactions.successfulInteractions +
-        host.interactions.failedInteractions || 0
+        host.interactions.failedInteractions || 0,
     ),
     failedInteractions: new BigNumber(
-      host.interactions.failedInteractions || 0
+      host.interactions.failedInteractions || 0,
     ),
     totalScans: new BigNumber(host.interactions.totalScans || 0),
     activeContractsCount: new BigNumber(
-      allContracts?.filter((c) => c.hostKey === host.publicKey).length || 0
+      allContracts?.filter((c) => c.hostKey === host.publicKey).length || 0,
     ),
     activeContracts:
       allContracts?.filter((c) => c.hostKey === host.publicKey) || [],
@@ -187,7 +189,7 @@ function getAutopilotFields(ahc?: {
       interactions: new BigNumber(ahc?.scoreBreakdown.interactions || 0),
       prices: new BigNumber(ahc?.scoreBreakdown.prices || 0),
       storageRemaining: new BigNumber(
-        ahc?.scoreBreakdown.storageRemaining || 0
+        ahc?.scoreBreakdown.storageRemaining || 0,
       ),
       uptime: new BigNumber(ahc?.scoreBreakdown.uptime || 0),
       version: new BigNumber(ahc?.scoreBreakdown.version || 0),

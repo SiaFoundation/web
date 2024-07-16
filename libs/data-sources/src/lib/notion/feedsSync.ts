@@ -1,5 +1,5 @@
 import { fetchRssFeedItems } from '../feedRssSync'
-import { deletePage, FeedItem, fetchAllFeedItems, savePost } from './feed'
+import { type FeedItem, deletePage, fetchAllFeedItems, savePost } from './feed'
 
 // sync articles from rss feeds
 export async function syncFeedsToNotion() {
@@ -12,11 +12,10 @@ export async function syncFeedsToNotion() {
   const items = await fetchRssFeedItems()
 
   console.log('saving posts')
-  // eslint-disable-next-line no-undef
   await Promise.all(
     items.map(async (post) => {
       await savePost(allArticles, post)
-    })
+    }),
   )
 
   // double check no duplicates

@@ -1,4 +1,4 @@
-import { Wallet, WalletMetadata } from '@siafoundation/walletd-types'
+import type { Wallet, WalletMetadata } from '@siafoundation/walletd-types'
 
 export type WalletData = {
   id: string

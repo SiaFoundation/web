@@ -1,7 +1,7 @@
-import { Text } from '../../core/Text'
-import { ValueSc } from '../../components/ValueSc'
-import BigNumber from 'bignumber.js'
+import type BigNumber from 'bignumber.js'
 import { ValueCopyable } from '../../components/ValueCopyable'
+import { ValueSc } from '../../components/ValueSc'
+import { Text } from '../../core/Text'
 
 type Props = {
   address: string

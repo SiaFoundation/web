@@ -1,16 +1,16 @@
 import {
-  Button,
-  PoolCombo,
-  Label,
-  Popover,
-  MenuItemRightSlot,
   BaseMenuItem,
+  Button,
+  Label,
+  MenuItemRightSlot,
   MenuSectionLabelToggleAll,
+  PoolCombo,
+  Popover,
 } from '@siafoundation/design-system'
 import {
   CaretDown16,
-  SettingsAdjust16,
   Reset16,
+  SettingsAdjust16,
 } from '@siafoundation/react-icons'
 import { useAlerts } from '../../contexts/alerts'
 
@@ -50,7 +50,7 @@ export function AlertsViewDropdownMenu() {
           <Button
             tip="Reset all to defaults"
             variant="ghost"
-            onClick={(e) => {
+            onClick={(e: React.MouseEvent<HTMLElement>) => {
               e.stopPropagation()
               resetDefaultColumnVisibility()
             }}

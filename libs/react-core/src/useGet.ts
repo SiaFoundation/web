@@ -1,26 +1,26 @@
 'use client'
 
+import type { RequestParams } from '@siafoundation/request'
 import axios from 'axios'
 import { useMemo } from 'react'
 import useSWR from 'swr'
 import {
+  type InternalCallbackArgs,
+  type InternalHookArgsCallback,
+  type InternalHookArgsSwr,
+  type Response,
   buildAxiosConfig,
   buildRouteWithParams,
-  InternalCallbackArgs,
   mergeInternalCallbackArgs,
-  Response,
   mergeInternalHookArgsCallback,
-  InternalHookArgsSwr,
   mergeInternalHookArgsSwr,
-  InternalHookArgsCallback,
 } from './request'
-import { SWRError } from './types'
+import type { SWRError } from './types'
 import { useAppSettings } from './useAppSettings'
 import { keyOrNull } from './utils'
-import { RequestParams } from '@siafoundation/request'
 
 export function useGetSwr<Params extends RequestParams, Result>(
-  args: InternalHookArgsSwr<Params, Result>
+  args: InternalHookArgsSwr<Params, Result>,
 ) {
   const hookArgs = useMemo(() => mergeInternalHookArgsSwr(args), [args])
   const { settings, passwordProtectRequestHooks } = useAppSettings()
@@ -28,12 +28,12 @@ export function useGetSwr<Params extends RequestParams, Result>(
     settings,
     hookArgs.route,
     hookArgs,
-    undefined
+    undefined,
   )
   return useSWR<Result, SWRError>(
     keyOrNull(
       args.standalone ? `${args.standalone}/${reqRoute}` : reqRoute,
-      hookArgs.disabled || (passwordProtectRequestHooks && !settings.password)
+      hookArgs.disabled || (passwordProtectRequestHooks && !settings.password),
     ),
     async () => {
       if (!hookArgs.route) {
@@ -46,7 +46,7 @@ export function useGetSwr<Params extends RequestParams, Result>(
       try {
         const response = await axios.get<Result>(reqRoute, reqConfig)
         return response.data
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       } catch (e: any) {
         const error: SWRError = new Error(e.response.data)
         // Attach extra info to the error object.
@@ -54,18 +54,18 @@ export function useGetSwr<Params extends RequestParams, Result>(
         throw error
       }
     },
-    hookArgs.config?.swr
+    hookArgs.config?.swr,
   )
 }
 
 type GetFunc<Params extends RequestParams, Result> = {
   get: (
-    args: InternalCallbackArgs<Params, void, Result>
+    args: InternalCallbackArgs<Params, void, Result>,
   ) => Promise<Response<Result>>
 }
 
 export function useGetFunc<Params extends RequestParams, Result>(
-  args: InternalHookArgsCallback<Params, void, Result>
+  args: InternalHookArgsCallback<Params, void, Result>,
 ): GetFunc<Params, Result> {
   const { settings } = useAppSettings()
   const hookArgs = mergeInternalHookArgsCallback(args)
@@ -78,7 +78,7 @@ export function useGetFunc<Params extends RequestParams, Result>(
           settings,
           hookArgs.route,
           hookArgs,
-          callArgs
+          callArgs,
         )
         if (!reqRoute) {
           throw Error('No route')
@@ -89,7 +89,7 @@ export function useGetFunc<Params extends RequestParams, Result>(
           data: response.data,
           headers: response.headers,
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       } catch (e: any) {
         // If the network is disconnected then response.status will be 0 and
         // data undefined, so return axios e.message error.

@@ -1,5 +1,5 @@
-import BigNumber from 'bignumber.js'
 import { WalletIcon } from '@siafoundation/react-icons'
+import type BigNumber from 'bignumber.js'
 import { WalletBalanceSideNav } from '../WalletBalanceSideNav'
 import { SidenavItem } from './SidenavItem'
 

@@ -1,12 +1,12 @@
 import { SidenavItem, Text } from '@siafoundation/design-system'
-import {
-  FileContractIcon,
-  BarsProgressIcon,
-  HouseIcon,
-  HardDriveIcon,
-  BellIcon,
-} from '@siafoundation/react-icons'
 import { useAlerts } from '@siafoundation/hostd-react'
+import {
+  BarsProgressIcon,
+  BellIcon,
+  FileContractIcon,
+  HardDriveIcon,
+  HouseIcon,
+} from '@siafoundation/react-icons'
 import { cx } from 'class-variance-authority'
 import { routes } from '../config/routes'
 import { useDialog } from '../contexts/dialog'
@@ -38,7 +38,7 @@ export function HostdSidenav() {
               'absolute -right-[2px] top-px w-1 h-1',
               'rounded-full',
               'bg-gray-1000 dark:bg-white',
-              'pointer-events-none'
+              'pointer-events-none',
             )}
           />
         )}
@@ -49,7 +49,7 @@ export function HostdSidenav() {
               'absolute -right-[9px] -top-1 py-px px-[5px]',
               'text-white',
               'bg-red-500 dark:bg-red-500 rounded',
-              'pointer-events-none'
+              'pointer-events-none',
             )}
             color="none"
           >

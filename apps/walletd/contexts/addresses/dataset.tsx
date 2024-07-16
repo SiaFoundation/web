@@ -1,20 +1,20 @@
 import {
+  type ClientFilterItem,
   useDatasetEmptyState,
-  ClientFilterItem,
 } from '@siafoundation/design-system'
-import {
+import type { useWalletAddresses } from '@siafoundation/walletd-react'
+import type {
   WalletAddressMetadata,
   WalletAddressesResponse,
 } from '@siafoundation/walletd-types'
-import { useWalletAddresses } from '@siafoundation/walletd-react'
 import { useMemo } from 'react'
-import { AddressData } from './types'
-import { OpenDialog, useDialog } from '../dialog'
+import { type OpenDialog, useDialog } from '../dialog'
+import type { AddressData } from './types'
 
 export function transformAddressesResponse(
   response: WalletAddressesResponse,
   walletId: string,
-  openDialog: OpenDialog
+  openDialog: OpenDialog,
 ) {
   const data: AddressData[] = response.map((addressObject) => {
     const { address, description, metadata, spendPolicy } = addressObject
@@ -58,13 +58,13 @@ export function useDataset({
     dataset,
     response.isValidating,
     response.error,
-    filters
+    filters,
   )
 
   const lastIndex = (dataset || []).reduce(
     (highest, { metadata }) =>
       metadata.index > highest ? metadata.index : highest,
-    -1
+    -1,
   )
 
   return {

@@ -1,10 +1,10 @@
-import { GitHubRelease } from '@siafoundation/data-sources'
+import type { GitHubRelease } from '@siafoundation/data-sources'
+import fetch from 'node-fetch'
 import {
   getHostdLatestDaemonRelease,
   getRenterdLatestDaemonRelease,
   getWalletdLatestDaemonRelease,
 } from '../../../../content/releases'
-import fetch from 'node-fetch'
 
 export const config = {
   api: {

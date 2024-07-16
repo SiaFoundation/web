@@ -1,14 +1,14 @@
 'use client'
 
-import { Option, Select } from '../core/Select'
-import { Text } from '../core/Text'
+import BigNumber from 'bignumber.js'
+import useLocalStorageState from 'use-local-storage-state'
 import { DatumCard } from '../components/DatumCard'
 import { ValueNum } from '../components/ValueNum'
-import { DataLabel } from './DataLabel'
-import BigNumber from 'bignumber.js'
-import { Tooltip } from '../core/Tooltip'
-import useLocalStorageState from 'use-local-storage-state'
 import { ValueScFiat } from '../components/ValueScFiat'
+import { Option, Select } from '../core/Select'
+import { Text } from '../core/Text'
+import { Tooltip } from '../core/Tooltip'
+import { DataLabel } from './DataLabel'
 
 type Mode = 'total' | 'average' | 'latest'
 
@@ -63,7 +63,7 @@ export function DatumCardConfigurable({
     `v0/datum/${category}/${label}`,
     {
       defaultValue: defaultMode,
-    }
+    },
   )
   return (
     <DatumCard

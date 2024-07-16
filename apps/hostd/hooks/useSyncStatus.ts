@@ -1,9 +1,9 @@
-import { useAppSettings } from '@siafoundation/react-core'
 import {
   useEstimatedNetworkBlockHeight,
   useStateConsensus,
   useWallet,
 } from '@siafoundation/hostd-react'
+import { useAppSettings } from '@siafoundation/react-core'
 
 export function useSyncStatus() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()
@@ -28,7 +28,9 @@ export function useSyncStatus() {
   const syncPercent =
     isUnlockedAndAuthedRoute && nodeBlockHeight && estimatedBlockHeight
       ? Number(
-          (Math.min(nodeBlockHeight / estimatedBlockHeight, 1) * 100).toFixed(1)
+          (Math.min(nodeBlockHeight / estimatedBlockHeight, 1) * 100).toFixed(
+            1,
+          ),
         )
       : 0
 
@@ -37,7 +39,7 @@ export function useSyncStatus() {
       ? Number(
           (
             Math.min(wallet.data.scanHeight / estimatedBlockHeight, 1) * 100
-          ).toFixed(1)
+          ).toFixed(1),
         )
       : 0
 

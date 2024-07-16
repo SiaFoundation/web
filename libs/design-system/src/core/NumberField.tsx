@@ -1,9 +1,9 @@
 'use client'
 
-import { BaseNumberField } from './BaseNumberField'
-import { useCallback, useEffect, useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { toFixedMax } from '../lib/numbers'
+import { BaseNumberField } from './BaseNumberField'
 
 type Props = Omit<
   React.ComponentProps<typeof BaseNumberField>,
@@ -39,7 +39,7 @@ export function NumberField({
 }: Props) {
   const externalValue = useMemo(
     () => new BigNumber(_externalValue),
-    [_externalValue]
+    [_externalValue],
   )
   const [localValue, setLocalValue] = useState<string>('')
 
@@ -47,11 +47,11 @@ export function NumberField({
     (value: string) => {
       if (onChange) {
         onChange(
-          value && !isNaN(Number(value)) ? new BigNumber(value) : undefined
+          value && !isNaN(Number(value)) ? new BigNumber(value) : undefined,
         )
       }
     },
-    [onChange]
+    [onChange],
   )
 
   const onValueChange = useCallback(
@@ -59,16 +59,16 @@ export function NumberField({
       setLocalValue(value)
       updateExternalValue(value)
     },
-    [setLocalValue, updateExternalValue]
+    [updateExternalValue],
   )
 
   // sync externally controlled value
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!externalValue.isEqualTo(localValue)) {
       const fesc = toFixedMax(externalValue, decimalsLimit)
       setLocalValue(fesc)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [externalValue])
 
   return (

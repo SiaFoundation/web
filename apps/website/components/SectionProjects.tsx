@@ -1,4 +1,4 @@
-import { ContentItemProps } from '@siafoundation/design-system'
+import type { ContentItemProps } from '@siafoundation/design-system'
 import { CalloutProject } from './CalloutProject'
 
 type Props = {

@@ -1,11 +1,11 @@
 'use client'
 
 import { useCallback, useEffect } from 'react'
-import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
+import type { FieldValues, Path, UseFormReturn } from 'react-hook-form'
 
 type Props<DataForm extends FieldValues> = {
   form: UseFormReturn<DataForm>
-  remoteValues?: DataForm
+  remoteValues?: DataForm | null
 }
 
 export function useFormServerSynced<DataForm extends FieldValues>({
@@ -37,9 +37,9 @@ export function useFormServerSynced<DataForm extends FieldValues>({
     }
   }, [form, remoteValues])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     syncRemoteDataWithUserChanges()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     // if any of the remote data changes, trigger a sync
     remoteValues,

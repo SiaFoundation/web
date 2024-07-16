@@ -1,9 +1,9 @@
-import BigNumber from 'bignumber.js'
-import {
+import type {
   WalletEvent,
   WalletEventTransactionV1,
   WalletEventTransactionV2,
 } from '@siafoundation/walletd-types'
+import BigNumber from 'bignumber.js'
 
 export function calculateScValue(e: WalletEvent) {
   if (e.type === 'v2Transaction') {

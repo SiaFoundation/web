@@ -1,25 +1,25 @@
 'use client'
 
-import { Tooltip } from '../../core/Tooltip'
-import { Panel } from '../../core/Panel'
-import { Text } from '../../core/Text'
-import { useCallback, useMemo } from 'react'
-import { cx } from 'class-variance-authority'
-import { CaretDown16, CaretUp16 } from '@siafoundation/react-icons'
-import { times } from '@technically/lodash'
 import {
   DndContext,
-  DragStartEvent,
-  DragCancelEvent,
-  DragEndEvent,
-  DragOverEvent,
-  DragMoveEvent,
+  type DragCancelEvent,
+  type DragEndEvent,
+  type DragMoveEvent,
+  type DragOverEvent,
   DragOverlay,
+  type DragStartEvent,
   MouseSensor,
   TouchSensor,
   useSensor,
   useSensors,
 } from '@dnd-kit/core'
+import { CaretDown16, CaretUp16 } from '@siafoundation/react-icons'
+import { times } from '@technically/lodash'
+import { cx } from 'class-variance-authority'
+import { useCallback, useMemo } from 'react'
+import { Panel } from '../../core/Panel'
+import { Text } from '../../core/Text'
+import { Tooltip } from '../../core/Tooltip'
 import {
   TableRowDraggable,
   TableRowDroppable,
@@ -35,7 +35,7 @@ type Data = {
 
 export type Row<Data, Context> = {
   data: Data
-  context?: Context
+  context: Context
 }
 
 export type TableColumn<Columns, Data, Context> = {
@@ -49,16 +49,16 @@ export type TableColumn<Columns, Data, Context> = {
   rowCellClassName?: string
   rowContentClassName?: string
   render: React.FC<Row<Data, Context>>
-  summary?: React.FC<{ context?: Context }>
+  summary?: React.FC<{ context: Context }>
 }
 
 type Props<
   Columns extends string,
   SortField extends string,
   D extends Data,
-  Context
+  Context extends Record<string, unknown>,
 > = {
-  data?: D[]
+  data?: D[] | null
   context?: Context
   columns: TableColumn<Columns, D, Context>[]
   sortField?: SortField
@@ -76,7 +76,7 @@ type Props<
   onDragMove?: (e: DragMoveEvent) => void
   onDragEnd?: (e: DragEndEvent) => void
   onDragCancel?: (e: DragCancelEvent) => void
-  draggingDatum?: D
+  draggingDatum?: D | null
   testId?: string
 }
 
@@ -84,11 +84,11 @@ export function Table<
   Columns extends string,
   SortField extends string,
   D extends Data,
-  Context
+  Context extends Record<string, unknown>,
 >({
   columns,
   data,
-  context,
+  context = {} as Context,
   sortField,
   sortDirection,
   sortableColumns,
@@ -128,14 +128,14 @@ export function Table<
               i === columns.length - 1 ? 'rounded-tr-lg' : '',
             ]
           : '',
-        className
+        className,
       ),
-    [columns]
+    [columns],
   )
 
   const getContentClassNames = useCallback(
     (i: number, className?: string) => cx('flex items-center', className),
-    []
+    [],
   )
 
   const TableRow = useMemo(() => createTableRow<Columns, D, Context>(), [])
@@ -161,7 +161,7 @@ export function Table<
       columns.some(({ summary: Render }) => {
         return Render && Render({ context })
       }),
-    [columns, context]
+    [columns, context],
   )
 
   return (
@@ -202,14 +202,14 @@ export function Table<
           <thead
             className={cx(
               'sticky top-0 z-20 bg-white dark:bg-graydark-100',
-              'shadow-border-b shadow-gray-400 dark:shadow-graydark-300'
+              'shadow-border-b shadow-gray-400 dark:shadow-graydark-300',
             )}
           >
             <tr>
               {columns.map(
                 (
                   { id, icon, label, tip, cellClassName, contentClassName },
-                  i
+                  i,
                 ) => {
                   const isSortable =
                     sortableColumns?.includes(id as unknown as SortField) &&
@@ -221,7 +221,7 @@ export function Table<
                       data-testid={id}
                       className={cx(
                         getCellClassNames(i, cellClassName, false),
-                        'border-b border-gray-400 dark:border-graydark-400'
+                        'border-b border-gray-400 dark:border-graydark-400',
                       )}
                     >
                       <div className="overflow-hidden py-3">
@@ -233,7 +233,7 @@ export function Table<
                           }}
                           className={cx(
                             getContentClassNames(i, contentClassName),
-                            isSortable ? 'cursor-pointer' : ''
+                            isSortable ? 'cursor-pointer' : '',
                           )}
                         >
                           <Tooltip content={tip}>
@@ -266,7 +266,7 @@ export function Table<
                       </div>
                     </th>
                   )
-                }
+                },
               )}
             </tr>
             {atLeastOneSummaryEl && (
@@ -274,7 +274,7 @@ export function Table<
                 {columns.map(
                   (
                     { id, cellClassName, contentClassName, summary: Summary },
-                    i
+                    i,
                   ) => {
                     return (
                       <th
@@ -283,13 +283,13 @@ export function Table<
                         className={cx(
                           getCellClassNames(i, cellClassName, false),
                           'border-b border-gray-400 dark:border-graydark-400',
-                          'relative -top-px'
+                          'relative -top-px',
                         )}
                       >
                         <div className="overflow-hidden py-3">
                           <div
                             className={cx(
-                              getContentClassNames(i, contentClassName)
+                              getContentClassNames(i, contentClassName),
                             )}
                           >
                             {Summary && <Summary context={context} />}
@@ -297,7 +297,7 @@ export function Table<
                         </div>
                       </th>
                     )
-                  }
+                  },
                 )}
               </tr>
             )}
@@ -371,8 +371,8 @@ export function Table<
                           rowSize === 'dense'
                             ? 'h-[50px]'
                             : rowSize === 'default'
-                            ? 'h-[100px]'
-                            : 'h-[100px]'
+                              ? 'h-[100px]'
+                              : 'h-[100px]',
                         )}
                       />
                     </td>

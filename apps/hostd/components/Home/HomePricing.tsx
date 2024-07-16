@@ -1,10 +1,11 @@
 import {
   ChartXY,
-  Text,
-  Heading,
   DatumCardConfigurable,
   DatumScrollArea,
+  Heading,
+  Text,
 } from '@siafoundation/design-system'
+import { useMetrics } from '../../contexts/metrics'
 import {
   humanBaseRpcPriceSuffix,
   humanCollateralPriceSuffix,
@@ -13,7 +14,6 @@ import {
   humanSectorAccessPriceSuffix,
   humanStoragePriceSuffix,
 } from '../../lib/humanUnits'
-import { useMetrics } from '../../contexts/metrics'
 
 export function HomePricing() {
   const { pricing } = useMetrics()

@@ -1,15 +1,15 @@
-import {
-  FileContractID,
-  Hash256,
-  Signature,
-  UnlockConditions,
-  SiacoinOutput,
-} from '@siafoundation/types'
-import {
+import type {
   ContractFilterSortField,
   ContractStatus,
 } from '@siafoundation/hostd-types'
-import BigNumber from 'bignumber.js'
+import type {
+  FileContractID,
+  Hash256,
+  SiacoinOutput,
+  Signature,
+  UnlockConditions,
+} from '@siafoundation/types'
+import type BigNumber from 'bignumber.js'
 
 export type ContractData = {
   id: string

@@ -10,7 +10,7 @@ export function WalletdAuthedLayout(
   props: Omit<
     Props,
     'appName' | 'connectivityRoute' | 'walletBalance' | 'profile' | 'isSynced'
-  >
+  >,
 ) {
   const { isSynced } = useSyncStatus()
   return (

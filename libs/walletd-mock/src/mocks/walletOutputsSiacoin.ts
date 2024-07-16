@@ -1,6 +1,6 @@
-import { WalletOutputsSiacoinResponse } from '@siafoundation/walletd-types'
-import { SiacoinElement } from '@siafoundation/types'
-import { Page } from 'playwright'
+import type { SiacoinElement } from '@siafoundation/types'
+import type { WalletOutputsSiacoinResponse } from '@siafoundation/walletd-types'
+import type { Page } from 'playwright'
 
 export function getMockWalletOutputsSiacoinResponse(): WalletOutputsSiacoinResponse {
   return [
@@ -62,7 +62,7 @@ export async function mockApiWalletOutputsSiacoin({
     `**/api/wallets/${walletId}/outputs/siacoin*`,
     async (route) => {
       await route.fulfill({ json })
-    }
+    },
   )
   return json
 }

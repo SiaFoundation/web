@@ -1,9 +1,9 @@
-import { weeksToBlocks, monthsToBlocks, TBToBytes } from '@siafoundation/units'
+import { TBToBytes, monthsToBlocks, weeksToBlocks } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 
 export function getRedundancyMultiplier(
-  minShards: BigNumber,
-  totalShards: BigNumber
+  minShards?: BigNumber,
+  totalShards?: BigNumber,
 ): BigNumber {
   let redundancyMult = new BigNumber(1)
   const canCalcRedundancy =
@@ -26,7 +26,7 @@ export function storagePricePerMonthToPerBlock(value: BigNumber) {
 
 export function valuePerMonthToPerPeriod(
   valuePerMonth: BigNumber,
-  periodWeeks: BigNumber
+  periodWeeks: BigNumber,
 ) {
   const periodBlocks = weeksToBlocks(periodWeeks.toNumber())
   return valuePerMonth.times(periodBlocks).div(monthsToBlocks(1))
@@ -34,7 +34,7 @@ export function valuePerMonthToPerPeriod(
 
 export function valuePerPeriodToPerMonth(
   valuePerPeriod: BigNumber,
-  periodBlocks: number
+  periodBlocks: number,
 ) {
   const valuePerBlock = valuePerPeriod.div(periodBlocks)
   return valuePerBlock.times(monthsToBlocks(1))

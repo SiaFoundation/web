@@ -1,4 +1,4 @@
-import { DataSourceResponse } from './types'
+import type { DataSourceResponse } from './types'
 
 export function buildErrorResponse500<T>(): DataSourceResponse<T> {
   return {

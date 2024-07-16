@@ -1,18 +1,18 @@
 import {
   ContentGallery,
-  ContentItemProps,
+  type ContentItemProps,
   SiteHeading,
 } from '@siafoundation/design-system'
-import { Layout } from '../../components/Layout'
-import { routes } from '../../config/routes'
-import { getStats } from '../../content/stats'
-import useSWR from 'swr'
 import { useRouter } from 'next/router'
-import { getNewsFeed } from '../../content/feed'
-import { getMinutesInSeconds } from '../../lib/time'
+import useSWR from 'swr'
+import { Layout } from '../../components/Layout'
 import { SectionSolid } from '../../components/SectionSolid'
-import { backgrounds, previews } from '../../content/assets'
 import { SectionTransparent } from '../../components/SectionTransparent'
+import { routes } from '../../config/routes'
+import { backgrounds, previews } from '../../content/assets'
+import { getNewsFeed } from '../../content/feed'
+import { getStats } from '../../content/stats'
+import { getMinutesInSeconds } from '../../lib/time'
 
 const title = 'News'
 const description = 'Updates from the Sia Foundation and the Sia ecosystem.'

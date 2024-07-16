@@ -1,7 +1,7 @@
 import { Button } from '@siafoundation/design-system'
+import { ChartArea16 } from '@siafoundation/react-icons'
 import { useContracts } from '../../contexts/contracts'
 import { ContractsViewDropdownMenu } from './ContractsViewDropdownMenu'
-import { ChartArea16 } from '@siafoundation/react-icons'
 
 export function ContractsActionsMenu() {
   const { setViewMode } = useContracts()

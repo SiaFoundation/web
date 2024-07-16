@@ -1,9 +1,9 @@
 import { getGitHubClosedPRs } from '@siafoundation/data-sources'
-import { MDXRemoteSerializeResult } from 'next-mdx-remote'
+import type { MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
+import remarkGfm from 'remark-gfm'
 import { getCacheValue } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
-import remarkGfm from 'remark-gfm'
 
 const maxAge = getMinutesInSeconds(5)
 
@@ -34,10 +34,10 @@ export async function getPrs() {
             repoUrl: pr.base.repo.html_url,
             repoFullName: pr.base.repo.full_name,
           }
-        })
+        }),
       )
       return prs
     },
-    maxAge
+    maxAge,
   )
 }

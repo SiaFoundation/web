@@ -1,5 +1,5 @@
-import { Text } from '../../core/Text'
 import { ProgressBar } from '../../core/ProgressBar'
+import { Text } from '../../core/Text'
 
 type Props = {
   nodeBlockHeight: number

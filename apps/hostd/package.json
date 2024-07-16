@@ -3,5 +3,17 @@
   "description": "The `hostd` user interface, dedicated to hosting related functionality.",
   "version": "0.45.1",
   "private": true,
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@siafoundation/design-system": "^4.5.0",
+    "@siafoundation/hostd-react": "^4.2.2",
+    "@siafoundation/react-icons": "^0.2.3",
+    "@siafoundation/units": "^3.0.3",
+    "next": "14.2.5",
+    "react": "18.3.0",
+    "react-dom": "18.3.0"
+  },
+  "devDependencies": {
+    "del-cli": "^5.1.0"
+  }
 }

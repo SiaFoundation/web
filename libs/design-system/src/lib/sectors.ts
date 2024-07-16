@@ -1,19 +1,19 @@
-import BigNumber from 'bignumber.js'
 import {
-  bytesToGB,
-  bytesToGiB,
-  bytesToMiB,
-  bytesToTB,
   GBToBytes,
   GiBToBytes,
   MiBToBytes,
   TBToBytes,
   TiBToBytes,
+  bytesToGB,
+  bytesToGiB,
+  bytesToMiB,
+  bytesToTB,
 } from '@siafoundation/units'
+import type BigNumber from 'bignumber.js'
 
 // function converts sectors to bytes
 export function sectorsToBytes(
-  sectors: BigNumber | string | number
+  sectors: BigNumber | string | number,
 ): BigNumber {
   return MiBToBytes(sectors).times(4)
 }

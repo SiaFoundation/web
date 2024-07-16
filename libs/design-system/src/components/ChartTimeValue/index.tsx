@@ -1,33 +1,32 @@
 'use client'
 
-import React, { useMemo, useCallback, useState, useRef, useEffect } from 'react'
-import { Line, Bar } from '@visx/shape'
-import { GridColumns, GridRows } from '@visx/grid'
-import { scaleTime, scaleLinear } from '@visx/scale'
-import { PatternLines } from '@visx/pattern'
-import { withTooltip, TooltipWithBounds, defaultStyles } from '@visx/tooltip'
+import { Reset16 } from '@siafoundation/react-icons'
+import { humanDate } from '@siafoundation/units'
+import { throttle } from '@technically/lodash'
 import { Brush } from '@visx/brush'
-import { Bounds } from '@visx/brush/lib/types'
-import BaseBrush, {
-  BaseBrushState,
-  UpdateBrush,
-} from '@visx/brush/lib/BaseBrush'
-import { WithTooltipProvidedProps } from '@visx/tooltip/lib/enhancers/withTooltip'
+import type BaseBrush from '@visx/brush/lib/BaseBrush'
+import type { BaseBrushState, UpdateBrush } from '@visx/brush/lib/BaseBrush'
+import type { Bounds } from '@visx/brush/lib/types'
 import { localPoint } from '@visx/event'
 import { LinearGradient } from '@visx/gradient'
-import { max, extent, bisector, min } from 'd3-array'
+import { GridColumns, GridRows } from '@visx/grid'
+import { PatternLines } from '@visx/pattern'
 import { ParentSize } from '@visx/responsive'
+import { scaleLinear, scaleTime } from '@visx/scale'
+import { Bar, Line } from '@visx/shape'
+import { TooltipWithBounds, defaultStyles, withTooltip } from '@visx/tooltip'
+import type { WithTooltipProvidedProps } from '@visx/tooltip/lib/enhancers/withTooltip'
+import { bisector, extent, max, min } from 'd3-array'
+import { useTheme } from 'next-themes'
+import type React from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Button } from '../../core/Button'
+import { Panel } from '../../core/Panel'
 import { Text } from '../../core/Text'
 import { Tooltip as DsTooltip } from '../../core/Tooltip'
-import { throttle } from '@technically/lodash'
-import { AreaChart } from './AreaChart'
-import { Reset16 } from '@siafoundation/react-icons'
-import { Panel } from '../../core/Panel'
-import { getPointTime, getPointValue, Point } from './utils'
-import { useTheme } from 'next-themes'
 import { colors } from '../../lib/colors'
-import { humanDate } from '@siafoundation/units'
+import { AreaChart } from './AreaChart'
+import { type Point, getPointTime, getPointValue } from './utils'
 
 export type { Point }
 
@@ -40,7 +39,7 @@ const throttled = throttle((func: () => void) => func(), 15)
 
 // accessors
 export const bisectDate = bisector<Point, Date>(
-  (d) => new Date(d?.timestamp || 0)
+  (d) => new Date(d?.timestamp || 0),
 ).left
 
 export type ChartProps = {
@@ -137,17 +136,17 @@ const Chart = withTooltip<ChartProps, TooltipData>(
       }
     }, [resolvedTheme])
 
-    const [selectedDatasetName, setSelectedDatasetName] = useState<string>(
-      datasets[0]?.name
-    )
+    const [selectedDatasetName, setSelectedDatasetName] = useState<
+      string | undefined
+    >(datasets[0]?.name)
     const selectedDataset = useMemo(
       () => datasets.find((d) => d.name === selectedDatasetName),
-      [datasets, selectedDatasetName]
+      [datasets, selectedDatasetName],
     )
 
     const dataset = useMemo(() => {
       const selectedDataset = datasets.find(
-        (d) => d.name === selectedDatasetName
+        (d) => d.name === selectedDatasetName,
       )
       if (!selectedDataset) {
         return []
@@ -156,11 +155,11 @@ const Chart = withTooltip<ChartProps, TooltipData>(
         return selectedDataset.dataset
       }
       const paddedDataset: Point[] = []
-      const startTime = selectedDataset.dataset.length
-        ? selectedDataset.dataset[0].timestamp
+      const startTime: number = selectedDataset?.dataset.length
+        ? selectedDataset?.dataset[0]!.timestamp
         : new Date().getTime()
       const lastValue = selectedDataset.dataset.length
-        ? selectedDataset.dataset[selectedDataset.dataset.length - 1].value
+        ? selectedDataset?.dataset[selectedDataset.dataset.length - 1]!.value
         : 0
       const oneDay = 1000 * 60 * 60 * 24
       paddedDataset.push({ timestamp: startTime - oneDay, value: 0 })
@@ -206,7 +205,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
     const xBrushMax = Math.max(width - brushMargin.left - brushMargin.right, 0)
     const yBrushMax = Math.max(
       bottomChartHeight - brushMargin.top - brushMargin.bottom,
-      0
+      0,
     )
 
     // scales
@@ -217,7 +216,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
           range: [0, xMax],
           domain: extent(filteredDataset, getPointTime) as [Date, Date],
         }),
-      [xMax, filteredDataset]
+      [xMax, filteredDataset],
     )
     const valueScale = useMemo(
       () =>
@@ -232,7 +231,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
           ],
           nice: true,
         }),
-      [yMax, filteredDataset]
+      [yMax, filteredDataset],
     )
     const brushTimeScale = useMemo(
       () =>
@@ -240,7 +239,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
           range: [0, xBrushMax],
           domain: extent(dataset, getPointTime) as [Date, Date],
         }),
-      [dataset, xBrushMax]
+      [dataset, xBrushMax],
     )
     const brushValueScale = useMemo(
       () =>
@@ -249,7 +248,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
           domain: [0, max(dataset, getPointValue) || 0],
           nice: true,
         }),
-      [dataset, yBrushMax]
+      [dataset, yBrushMax],
     )
 
     const initialBrushPosition = useMemo(
@@ -257,7 +256,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
         start: { x: brushTimeScale(getPointTime(dataset[0])) },
         end: { x: brushTimeScale(getPointTime(dataset[dataset.length - 1])) },
       }),
-      [dataset, brushTimeScale]
+      [dataset, brushTimeScale],
     )
 
     // // event handlers
@@ -273,7 +272,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
         const updater: UpdateBrush = (prevBrush) => {
           const newExtent = brushRef.current?.getExtent(
             initialBrushPosition.start,
-            initialBrushPosition.end
+            initialBrushPosition.end,
           )
 
           if (!newExtent) {
@@ -297,7 +296,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
       (
         event:
           | React.TouchEvent<SVGRectElement>
-          | React.MouseEvent<SVGRectElement>
+          | React.MouseEvent<SVGRectElement>,
       ) => {
         throttled(() => {
           const { x } = localPoint(event) || { x: 0 }
@@ -320,7 +319,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
           })
         })
       },
-      [showTooltip, valueScale, timeScale, filteredDataset]
+      [showTooltip, valueScale, timeScale, filteredDataset],
     )
     if (width < 10) return null
 
@@ -500,7 +499,7 @@ const Chart = withTooltip<ChartProps, TooltipData>(
         </div>
       </div>
     )
-  }
+  },
 )
 
 type Dataset = {

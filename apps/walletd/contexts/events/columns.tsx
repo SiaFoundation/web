@@ -1,16 +1,16 @@
 import {
-  Text,
-  TableColumn,
-  ValueCopyable,
+  Badge,
   LoadingDots,
+  type TableColumn,
+  Text,
+  Tooltip,
+  ValueCopyable,
   ValueScFiat,
   ValueSf,
-  Tooltip,
-  Badge,
 } from '@siafoundation/design-system'
-import { humanDate } from '@siafoundation/units'
-import { CellContext, EventData, TableColumnId } from './types'
 import { Locked16, Unlocked16 } from '@siafoundation/react-icons'
+import { humanDate } from '@siafoundation/units'
+import type { CellContext, EventData, TableColumnId } from './types'
 import { eventTypeToLabel } from './utils'
 
 type EventsTableColumn = TableColumn<TableColumnId, EventData, CellContext> & {

@@ -1,11 +1,12 @@
-import { test, expect } from '@playwright/test'
-import { navigateToBuckets } from '../fixtures/navigate'
+import path from 'path'
+import { expect, test } from '@playwright/test'
+import { beforeTest } from '../fixtures/beforeTest'
 import {
   createBucket,
   deleteBucketIfExists,
   openBucket,
 } from '../fixtures/buckets'
-import path from 'path'
+import { clearToasts } from '../fixtures/clearToasts'
 import {
   createDirectoryIfNotExists,
   deleteDirectoryIfExists,
@@ -16,9 +17,8 @@ import {
   openDirectory,
   openFileContextMenu,
 } from '../fixtures/files'
+import { navigateToBuckets } from '../fixtures/navigate'
 import { fillTextInputByName } from '../fixtures/textInput'
-import { clearToasts } from '../fixtures/clearToasts'
-import { beforeTest } from '../fixtures/beforeTest'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page)
@@ -41,7 +41,7 @@ test('can create directory, upload file, rename file, navigate, delete a file, d
   await createBucket(page, bucketName)
   await openBucket(page, bucketName)
   await expect(
-    page.getByText('bucket does not contain any files')
+    page.getByText('bucket does not contain any files'),
   ).toBeVisible()
 
   // create directory
@@ -49,7 +49,7 @@ test('can create directory, upload file, rename file, navigate, delete a file, d
   await fileInList(page, dirPath)
   await openDirectory(page, dirPath)
   await expect(
-    page.getByText('The current directory does not contain any files yet')
+    page.getByText('The current directory does not contain any files yet'),
   ).toBeVisible()
   await clearToasts({ page })
 
@@ -58,7 +58,7 @@ test('can create directory, upload file, rename file, navigate, delete a file, d
     page,
     `[data-testid=filesDropzone]`,
     path.join(__dirname, originalFileName),
-    originalFileName
+    originalFileName,
   )
   await fileInList(page, originalFilePath)
   await expect(page.getByText('100%')).toBeVisible()
@@ -81,7 +81,7 @@ test('can create directory, upload file, rename file, navigate, delete a file, d
     page,
     `[data-testid=filesDropzone]`,
     path.join(__dirname, originalFileName),
-    originalFileName
+    originalFileName,
   )
   await fileInList(page, originalFilePath)
   await expect(page.getByText('100%')).toBeVisible()

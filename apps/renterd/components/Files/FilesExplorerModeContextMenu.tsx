@@ -25,8 +25,8 @@ export function FilesExplorerModeContextMenu() {
             isViewingUploads
               ? 'Viewing uploads'
               : activeExplorerMode === 'directory'
-              ? 'Viewing directory explorer'
-              : 'Viewing all bucket files'
+                ? 'Viewing directory explorer'
+                : 'Viewing all bucket files'
           }
         >
           {isViewingUploads ? (

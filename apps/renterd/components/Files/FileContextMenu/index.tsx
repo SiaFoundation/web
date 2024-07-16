@@ -1,27 +1,27 @@
 import {
+  Button,
+  Code,
   DropdownMenu,
   DropdownMenuItem,
-  Button,
-  copyToClipboard,
-  DropdownMenuLeftSlot,
   DropdownMenuLabel,
+  DropdownMenuLeftSlot,
+  copyToClipboard,
   copyToClipboardCustom,
-  Code,
 } from '@siafoundation/design-system'
 import {
-  Download16,
   Copy16,
   Delete16,
   Document16,
-  Filter16,
+  Download16,
   Edit16,
+  Filter16,
   Warning24,
 } from '@siafoundation/react-icons'
-import { useFileDelete } from '../useFileDelete'
-import { CopyMetadataMenuItem } from './CopyMetadataMenuItem'
-import { getFilename } from '../../../lib/paths'
 import { useDialog } from '../../../contexts/dialog'
 import { useFilesManager } from '../../../contexts/filesManager'
+import { getFilename } from '../../../lib/paths'
+import { useFileDelete } from '../useFileDelete'
+import { CopyMetadataMenuItem } from './CopyMetadataMenuItem'
 
 type Props = {
   path: string

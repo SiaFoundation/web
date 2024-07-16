@@ -1,7 +1,7 @@
 'use client'
 
+import { type CurrencyId, useAppSettings } from '@siafoundation/react-core'
 import { Option, Select } from '../core/Select'
-import { CurrencyId, useAppSettings } from '@siafoundation/react-core'
 
 export function CurrencyFiatSelector() {
   const { settings, setCurrency, currencyOptions } = useAppSettings()

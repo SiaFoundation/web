@@ -1,9 +1,9 @@
 'use client'
 
-import React from 'react'
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
 import { cva, cx } from 'class-variance-authority'
-import { VariantProps } from '../types'
+import React from 'react'
+import type { VariantProps } from '../types'
 
 const avatarStyles = cva(
   [
@@ -47,7 +47,7 @@ const avatarStyles = cva(
       variant: 'gray',
       shape: 'circle',
     },
-  }
+  },
 )
 
 const fallbackStyles = cva('uppercase', {
@@ -85,7 +85,7 @@ export const Avatar = React.forwardRef<
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
     return (
       <div className={cx('relative h-fit w-fit', className)}>
@@ -120,5 +120,5 @@ export const Avatar = React.forwardRef<
         </AvatarPrimitive.Root>
       </div>
     )
-  }
+  },
 )

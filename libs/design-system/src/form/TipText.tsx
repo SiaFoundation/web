@@ -1,8 +1,8 @@
+import { Information16 } from '@siafoundation/react-icons'
 import { Code } from '../core/Code'
 import { Link } from '../core/Link'
 import { Text } from '../core/Text'
 import { Tooltip } from '../core/Tooltip'
-import { Information16 } from '@siafoundation/react-icons'
 
 type Props = {
   label: string

@@ -1,0 +1,16 @@
+{
+  "name": "renterd-e2e",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "e2e": "playwright test"
+  },
+  "keywords": [],
+  "private": true,
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.45.2",
+    "@types/node": "^20.14.11"
+  }
+}

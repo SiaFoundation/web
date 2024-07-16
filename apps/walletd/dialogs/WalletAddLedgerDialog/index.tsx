@@ -1,29 +1,29 @@
 import {
-  Paragraph,
   Button,
+  type ConfigFields,
   Dialog,
-  ConfigFields,
-  FieldText,
-  triggerErrorToast,
-  FormSubmitButton,
-  FieldTextArea,
-  FieldLabel,
   FieldError,
+  FieldLabel,
+  FieldText,
+  FieldTextArea,
+  FormSubmitButton,
+  Paragraph,
+  triggerErrorToast,
 } from '@siafoundation/design-system'
-import { useCallback, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import {
+import { getSDK } from '@siafoundation/sdk'
+import type { UnlockConditions } from '@siafoundation/types'
+import { useWalletAdd, useWalletAddressAdd } from '@siafoundation/walletd-react'
+import type {
   WalletAddressMetadata,
   WalletMetadata,
 } from '@siafoundation/walletd-types'
-import { useWalletAdd, useWalletAddressAdd } from '@siafoundation/walletd-react'
-import { useDialog } from '../../contexts/dialog'
-import { useWallets } from '../../contexts/wallets'
+import { useCallback, useEffect } from 'react'
+import { useForm } from 'react-hook-form'
 import { walletAddTypes } from '../../config/walletTypes'
-import { DeviceConnectForm } from '../DeviceConnectForm'
+import { useDialog } from '../../contexts/dialog'
 import { useLedger } from '../../contexts/ledger'
-import { UnlockConditions } from '@siafoundation/types'
-import { getSDK } from '@siafoundation/sdk'
+import { useWallets } from '../../contexts/wallets'
+import { DeviceConnectForm } from '../DeviceConnectForm'
 
 const defaultValues = {
   name: '',
@@ -93,15 +93,15 @@ export function WalletAddLedgerDialog({ trigger, open, onOpenChange }: Props) {
 
   // make sure the user explicitly connects to the correct device when
   // adding a new ledger wallet
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (open) {
       disconnect()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
   useEffect(() => {
-    if (device && device.publicKey0) {
+    if (device?.publicKey0) {
       form.setValue('ledgerConnectedAndVerified', true)
     } else {
       form.setValue('ledgerConnectedAndVerified', false)
@@ -133,7 +133,7 @@ export function WalletAddLedgerDialog({ trigger, open, onOpenChange }: Props) {
       {
         unlockConditions,
         address,
-      }: { unlockConditions: UnlockConditions; address: string }
+      }: { unlockConditions: UnlockConditions; address: string },
     ) => {
       const metadata: WalletAddressMetadata = {
         index: 0,
@@ -155,7 +155,7 @@ export function WalletAddLedgerDialog({ trigger, open, onOpenChange }: Props) {
         return
       }
     },
-    [addressAdd]
+    [addressAdd],
   )
 
   const onSubmit = useCallback(
@@ -198,12 +198,12 @@ export function WalletAddLedgerDialog({ trigger, open, onOpenChange }: Props) {
         form.reset(defaultValues)
       }
     },
-    [form, openDialog, walletAdd, device, addAddress0]
+    [form, openDialog, walletAdd, device, addAddress0],
   )
 
   form.register(
     'ledgerConnectedAndVerified',
-    fields.ledgerConnectedAndVerified.validation
+    fields.ledgerConnectedAndVerified.validation,
   )
 
   return (

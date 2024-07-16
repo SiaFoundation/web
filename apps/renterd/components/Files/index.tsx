@@ -1,6 +1,6 @@
+import { useFilesManager } from '../../contexts/filesManager'
 import { FilesDirectory } from '../FilesDirectory'
 import { FilesFlat } from '../FilesFlat'
-import { useFilesManager } from '../../contexts/filesManager'
 
 export function Files() {
   const { isViewingBuckets, activeExplorerMode } = useFilesManager()

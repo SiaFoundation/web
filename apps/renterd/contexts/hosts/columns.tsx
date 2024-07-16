@@ -1,35 +1,42 @@
 import {
+  LoadingDots,
+  type TableColumn,
   Text,
-  TableColumn,
+  Tooltip,
   ValueCopyable,
   ValueNum,
-  Tooltip,
-  LoadingDots,
   ValueScFiat,
 } from '@siafoundation/design-system'
-import {
-  WarningSquareFilled16,
-  Plane16,
-  Settings16,
-  DataTable16,
-  UndefinedFilled16,
-  CheckboxCheckedFilled16,
-} from '@siafoundation/react-icons'
-import { humanBytes, humanNumber } from '@siafoundation/units'
-import { HostContext, HostData, TableColumnId } from './types'
-import { format, formatDistance, formatRelative } from 'date-fns'
-import { HostContextMenu } from '../../components/Hosts/HostContextMenu'
 import { useWorkflows } from '@siafoundation/react-core'
 import {
+  CheckboxCheckedFilled16,
+  DataTable16,
+  Plane16,
+  Settings16,
+  UndefinedFilled16,
+  WarningSquareFilled16,
+} from '@siafoundation/react-icons'
+import { useHostsAllowlist } from '@siafoundation/renterd-react'
+import {
   AutopilotHost,
-  RhpScanPayload,
+  type HostPriceTable,
+  type HostSettings,
+  type RhpScanPayload,
   workerRhpScanRoute,
 } from '@siafoundation/renterd-types'
-import { useHostsAllowlist } from '@siafoundation/renterd-react'
+import { humanBytes, humanNumber } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
-import React, { memo } from 'react'
+import { format, formatDistance, formatRelative } from 'date-fns'
+import type React from 'react'
+import { memo } from 'react'
+import { HostContextMenu } from '../../components/Hosts/HostContextMenu'
+import type { HostCellContext, HostData, TableColumnId } from './types'
 
-type HostsTableColumn = TableColumn<TableColumnId, HostData, HostContext> & {
+type HostsTableColumn = TableColumn<
+  TableColumnId,
+  HostData,
+  HostCellContext
+> & {
   fixed?: boolean
   category: string
 }
@@ -214,11 +221,19 @@ export const columns: HostsTableColumn[] = (
       category: 'general',
       render: function LastScan({ data }) {
         const { workflows } = useWorkflows()
-        const isPending = workflows.find(
-          (wf: { path?: string; payload?: RhpScanPayload }) =>
-            wf.path.startsWith(workerRhpScanRoute) &&
-            wf.payload?.hostKey === data.publicKey
-        )
+        const isPending = workflows.find((wf) => {
+          if (!wf) {
+            return false
+          }
+          const { path, payload } = wf as {
+            path?: string
+            payload?: RhpScanPayload
+          }
+          return (
+            path?.startsWith(workerRhpScanRoute) &&
+            payload?.hostKey === data.publicKey
+          )
+        })
         if (isPending) {
           return <LoadingDots />
         }
@@ -1040,7 +1055,7 @@ export const columns: HostsTableColumn[] = (
   (col): HostsTableColumn => ({
     ...col,
     ...getFullLabelAndTip(col),
-  })
+  }),
 )
 
 function getFullLabelAndTip(col: HostsTableColumn): {
@@ -1075,9 +1090,10 @@ function getFullLabelAndTip(col: HostsTableColumn): {
   }
 }
 
-type Key =
-  | keyof AutopilotHost['host']['priceTable']
-  | keyof AutopilotHost['host']['settings']
+type HostSettingsKeys = keyof HostSettings
+type HostPriceTableKeys = keyof HostPriceTable
+
+type Key = HostSettingsKeys | HostPriceTableKeys
 
 function makeRenderSc(section: 'priceTable' | 'settings', name: Key) {
   return memo(function RenderPriceTableNumber({ data }: { data: HostData }) {
@@ -1088,7 +1104,7 @@ function makeRenderSc(section: 'priceTable' | 'settings', name: Key) {
       <ValueScFiat
         displayBoth
         size="12"
-        value={new BigNumber(data[section][name] || 0)}
+        value={new BigNumber((data as any)[section][name] || 0)}
         fixedFiat={4}
         variant="value"
       />
@@ -1099,7 +1115,7 @@ function makeRenderSc(section: 'priceTable' | 'settings', name: Key) {
 function makeRenderNumber(
   section: 'priceTable' | 'settings',
   name: Key,
-  abbreviated?: boolean
+  abbreviated?: boolean,
 ) {
   return function RenderNumberColumn({ data }: { data: HostData }) {
     if (!data[section]) {
@@ -1108,7 +1124,7 @@ function makeRenderNumber(
     return (
       <ValueNum
         size="12"
-        value={new BigNumber(data[section][name] || 0)}
+        value={new BigNumber((data as any)[section][name] || 0)}
         variant="value"
         format={(v) =>
           humanNumber(v, {
@@ -1125,7 +1141,7 @@ function makeRenderString(section: 'priceTable' | 'settings', name: Key) {
     if (!data[section]) {
       return null
     }
-    return <ValueCopyable value={data[section][name]} size="12" />
+    return <ValueCopyable value={(data as any)[section]![name]} size="12" />
   }
 }
 
@@ -1136,7 +1152,7 @@ function makeRenderBytes(section: 'priceTable' | 'settings', name: Key) {
     }
     return (
       <Text size="12" weight="semibold" ellipsis>
-        {humanBytes(data[section][name])}
+        {humanBytes((data as any)[section]![name])}
       </Text>
     )
   }
@@ -1149,8 +1165,8 @@ function makeRenderBool(section: 'priceTable' | 'settings', name: Key) {
     }
     return (
       <div className="mt-[5px]">
-        <Text color={data[section][name] ? 'green' : 'red'}>
-          {data[section][name] ? (
+        <Text color={(data as any)[section]?.[name] ? 'green' : 'red'}>
+          {(data as any)[section]?.[name] ? (
             <CheckboxCheckedFilled16 />
           ) : (
             <WarningSquareFilled16 />

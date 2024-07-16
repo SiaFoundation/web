@@ -1,7 +1,7 @@
-import { Text } from '../core/Text'
-import { WalletAddressCode } from './WalletAddressCode'
-import { getTitleId, stripPrefix } from '../lib/utils'
 import { Dialog } from '../core/Dialog'
+import { Text } from '../core/Text'
+import { getTitleId, stripPrefix } from '../lib/utils'
+import { WalletAddressCode } from './WalletAddressCode'
 
 type Props = {
   address: string

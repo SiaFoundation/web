@@ -1,4 +1,4 @@
-import {
+import type {
   SiaCentralBlock,
   SiaCentralContract,
   SiaCentralHost,

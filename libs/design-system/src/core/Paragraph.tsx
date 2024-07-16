@@ -1,6 +1,6 @@
+import { cx } from 'class-variance-authority'
 import React from 'react'
 import { Text } from './Text'
-import { cx } from 'class-variance-authority'
 
 type ParagraphSizeVariants = '12' | '14' | '16' | '18' | '20'
 type ParagraphProps = Omit<React.ComponentProps<typeof Text>, 'size'> & {
@@ -22,5 +22,5 @@ export const Paragraph = React.forwardRef<HTMLParagraphElement, ParagraphProps>(
         className={cx('leading-relaxed md:leading-relaxed', props.className)}
       />
     )
-  }
+  },
 )

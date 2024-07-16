@@ -1,9 +1,9 @@
 import {
-  daysInMilliseconds,
-  Chart,
-  formatChartData,
-  computeChartStats,
+  type Chart,
   colors,
+  computeChartStats,
+  daysInMilliseconds,
+  formatChartData,
   getDataIntervalLabelFormatter,
 } from '@siafoundation/design-system'
 import {
@@ -11,14 +11,14 @@ import {
   useMetricsContractSet,
 } from '@siafoundation/renterd-react'
 import { useMemo } from 'react'
-import { ChartContractSetCategory, ChartContractSetKey } from './types'
+import type { ChartContractSetCategory, ChartContractSetKey } from './types'
 import { getTimeClampedToNearest5min } from './utils'
 
 export function useContractSetMetrics() {
   // don't use exact times, round to 5 minutes so that swr can cache
   // if the user flips back and forth between contracts.
   const start = getTimeClampedToNearest5min(
-    new Date().getTime() - daysInMilliseconds(30)
+    new Date().getTime() - daysInMilliseconds(30),
   )
   const interval = daysInMilliseconds(1)
   const periods = useMemo(() => {
@@ -32,7 +32,7 @@ export function useContractSetMetrics() {
   const response = useMetricsContractSet({
     disabled: !config.data,
     params: {
-      name: config.data?.contracts.set,
+      name: config.data?.contracts.set!,
       start: new Date(start).toISOString(),
       interval,
       n: periods,
@@ -47,7 +47,7 @@ export function useContractSetMetrics() {
         contracts: Number(m.contracts),
         timestamp: new Date(m.timestamp).getTime(),
       })),
-      'none'
+      'none',
     )
     const stats = computeChartStats(data)
     return {

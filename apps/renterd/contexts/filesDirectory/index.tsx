@@ -1,10 +1,10 @@
 import { useDatasetEmptyState } from '@siafoundation/design-system'
 import { createContext, useContext, useMemo } from 'react'
-import { ObjectData } from '../filesManager/types'
+import { useFilesManager } from '../filesManager'
+import type { ObjectData } from '../filesManager/types'
+import { columns } from './columns'
 import { useDataset } from './dataset'
 import { useMove } from './move'
-import { useFilesManager } from '../filesManager'
-import { columns } from './columns'
 
 function useFilesDirectoryMain() {
   const {
@@ -33,6 +33,7 @@ function useFilesDirectoryMain() {
   })
 
   // Add parent directory to the dataset
+  // biome-ignore lint/correctness/useExhaustiveDependencies:
   const _datasetPage = useMemo(() => {
     if (!dataset) {
       return null
@@ -54,11 +55,10 @@ function useFilesDirectoryMain() {
     return dataset
     // Purposely do not include activeDirectory - we only want to update
     // when new data fetching is complete.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataset])
 
   // Add drag and drop properties to the dataset
-  const datasetPage = useMemo(() => {
+  const datasetPage: ObjectData[] | null = useMemo(() => {
     if (!_datasetPage) {
       return null
     }
@@ -84,15 +84,15 @@ function useFilesDirectoryMain() {
     dataset,
     response.isValidating,
     response.error,
-    filters
+    filters,
   )
 
   const filteredTableColumns = useMemo(
     () =>
       columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
+        (column) => column.fixed || enabledColumns.includes(column.id),
       ),
-    [enabledColumns]
+    [enabledColumns],
   )
 
   return {

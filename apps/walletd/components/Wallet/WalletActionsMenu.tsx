@@ -4,17 +4,17 @@ import {
   ArrowUpRight16,
   Settings16,
 } from '@siafoundation/react-icons'
-import { useSyncStatus } from '../../hooks/useSyncStatus'
+import { useWalletBalance } from '@siafoundation/walletd-react'
 import BigNumber from 'bignumber.js'
+import { useRouter } from 'next/router'
+import { useAddresses } from '../../contexts/addresses'
+import { useDialog } from '../../contexts/dialog'
+import { useWallets } from '../../contexts/wallets'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
+import { WalletContextMenu } from '../WalletContextMenu'
 import { AddressesButton } from './AddressesButton'
 import { EventsViewDropdownMenu } from './EventsViewDropdownMenu'
-import { useWalletBalance } from '@siafoundation/walletd-react'
-import { useRouter } from 'next/router'
-import { useWallets } from '../../contexts/wallets'
-import { useDialog } from '../../contexts/dialog'
-import { WalletContextMenu } from '../WalletContextMenu'
 import { WalletBalanceWithSf } from './WalletBalanceWithSf'
-import { useAddresses } from '../../contexts/addresses'
 
 export function WalletActionsMenu() {
   const status = useSyncStatus()
@@ -44,7 +44,7 @@ export function WalletActionsMenu() {
             variant="accent"
             onClick={() => {
               const addressLowestIndex = dataset?.sort((a, b) =>
-                a.metadata.index > b.metadata.index ? 1 : -1
+                a.metadata.index > b.metadata.index ? 1 : -1,
               )[0]?.address
               openDialog('addressUpdate', {
                 walletId: walletId,

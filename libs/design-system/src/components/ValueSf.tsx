@@ -1,8 +1,8 @@
 'use client'
 
+import { humanNumber } from '@siafoundation/units'
 import { Text } from '../core/Text'
 import { Tooltip } from '../core/Tooltip'
-import { humanNumber } from '@siafoundation/units'
 
 type Props = {
   size?: React.ComponentProps<typeof Text>['size']
@@ -35,8 +35,8 @@ export function ValueSf({
             ? value > 0
               ? 'green'
               : value < 0
-              ? 'red'
-              : 'subtle'
+                ? 'red'
+                : 'subtle'
             : 'contrast'
         }
       >

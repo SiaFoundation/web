@@ -1,10 +1,10 @@
 'use client'
 
-import React from 'react'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
-import { Text } from './Text'
 import { cva, cx } from 'class-variance-authority'
-import { VariantProps } from '../types'
+import React from 'react'
+import type { VariantProps } from '../types'
+import { Text } from './Text'
 
 export const radioIndicatorStyles = cva(
   [
@@ -21,7 +21,7 @@ export const radioIndicatorStyles = cva(
     defaultVariants: {
       size: 'small',
     },
-  }
+  },
 )
 
 export const radioStyles = cva(
@@ -50,7 +50,7 @@ export const radioStyles = cva(
     defaultVariants: {
       size: 'small',
     },
-  }
+  },
 )
 
 export const Radio = React.forwardRef<

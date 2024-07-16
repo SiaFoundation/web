@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
 import React from 'react'
-import { VariantProps } from '../types'
+import type { VariantProps } from '../types'
 
 const styles = cva(['flex-shrink-0 w-full mx-auto'], {
   variants: {

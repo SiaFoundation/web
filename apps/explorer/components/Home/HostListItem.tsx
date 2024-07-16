@@ -1,19 +1,18 @@
 'use client'
 
-import { formatDistance } from 'date-fns'
 import {
   EntityListItemLayout,
-  EntityListItemLayoutProps,
+  type EntityListItemLayoutProps,
+  Link,
   Text,
   Tooltip,
-  Link,
 } from '@siafoundation/design-system'
 import {
   CloudDownload16,
   CloudUpload16,
   VmdkDisk16,
 } from '@siafoundation/react-icons'
-import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
+import type { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 import {
   getDownloadCost,
   getDownloadSpeed,
@@ -22,10 +21,11 @@ import {
   getUploadCost,
   getUploadSpeed,
 } from '@siafoundation/units'
+import { formatDistance } from 'date-fns'
 import { useMemo } from 'react'
 import { routes } from '../../config/routes'
 import { useExchangeRate } from '../../hooks/useExchangeRate'
-import { SiaCentralHostScanned } from '../Host/types'
+import type { SiaCentralHostScanned } from '../Host/types'
 
 type Props = {
   host: SiaCentralHostScanned
@@ -37,17 +37,17 @@ export function HostListItem({ host, rates, entity }: Props) {
   const exchange = useExchangeRate(rates)
   const storageCost = useMemo(
     () => getStorageCost({ price: host.settings.storage_price, exchange }),
-    [exchange, host]
+    [exchange, host],
   )
 
   const downloadCost = useMemo(
     () => getDownloadCost({ price: host.settings.download_price, exchange }),
-    [exchange, host]
+    [exchange, host],
   )
 
   const uploadCost = useMemo(
     () => getUploadCost({ price: host.settings.upload_price, exchange }),
-    [exchange, host]
+    [exchange, host],
   )
 
   const downloadSpeed = useMemo(() => getDownloadSpeed(host), [host])

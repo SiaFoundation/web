@@ -1,10 +1,10 @@
-import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
+import { routes } from '../../config/routes'
+import { useApp } from '../../contexts/app'
+import { useConfig } from '../../contexts/config'
 import { useDialog } from '../../contexts/dialog'
 import { CommandGroup, CommandItemNav, CommandItemSearch } from './Item'
-import { Page } from './types'
-import { useConfig } from '../../contexts/config'
-import { useApp } from '../../contexts/app'
+import type { Page } from './types'
 
 const commandPage = {
   namespace: 'configuration',
@@ -12,7 +12,7 @@ const commandPage = {
 }
 
 type Props = {
-  currentPage: Page
+  currentPage?: Page
   parentPage?: Page
   pushPage: (page: Page) => void
 }

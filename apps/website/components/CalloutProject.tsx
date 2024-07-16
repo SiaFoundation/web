@@ -1,17 +1,17 @@
 import {
-  PatternedPanel,
   Heading,
-  Paragraph,
   Link,
-  webLinks,
+  Paragraph,
+  PatternedPanel,
   WebDomain,
+  webLinks,
 } from '@siafoundation/design-system'
 import { random } from '@technically/lodash'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { routes } from '../config/routes'
-import { patterns, getAssetUrl } from '../content/assets'
+import { getAssetUrl, patterns } from '../content/assets'
 
 type Props = {
   title: string

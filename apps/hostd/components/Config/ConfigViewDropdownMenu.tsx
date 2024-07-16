@@ -1,9 +1,9 @@
 import {
+  BaseMenuItem,
   Button,
   Label,
-  Popover,
   MenuItemRightSlot,
-  BaseMenuItem,
+  Popover,
 } from '@siafoundation/design-system'
 import { CaretDown16, SettingsAdjust16 } from '@siafoundation/react-icons'
 import { ViewModeToggle } from './ViewModeToggle'

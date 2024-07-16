@@ -1,13 +1,13 @@
 'use client'
 
-import React from 'react'
-import { AreaClosed } from '@visx/shape'
-import { Group } from '@visx/group'
-import { curveStep, curveMonotoneX } from '@visx/curve'
-import { MarkerCircle } from '@visx/marker'
-import { AxisLeft, AxisBottom, AxisScale } from '@visx/axis'
+import { AxisBottom, AxisLeft, type AxisScale } from '@visx/axis'
+import { curveMonotoneX, curveStep } from '@visx/curve'
 import { LinearGradient } from '@visx/gradient'
-import { getPointTime, getPointValue, Point } from './utils'
+import { Group } from '@visx/group'
+import { MarkerCircle } from '@visx/marker'
+import { AreaClosed } from '@visx/shape'
+import type React from 'react'
+import { type Point, getPointTime, getPointValue } from './utils'
 
 const axisColor = 'var(--colors-hiContrast)'
 const axisBottomTickLabelProps = {

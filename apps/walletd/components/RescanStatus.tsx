@@ -5,9 +5,9 @@ import {
   Text,
 } from '@siafoundation/design-system'
 import { useRescanStatus } from '@siafoundation/walletd-react'
-import { useSyncStatus } from '../hooks/useSyncStatus'
 import { formatRelative } from 'date-fns'
 import { defaultDatasetRefreshInterval } from '../config/swr'
+import { useSyncStatus } from '../hooks/useSyncStatus'
 
 export function RescanStatus() {
   const syncStatus = useSyncStatus()

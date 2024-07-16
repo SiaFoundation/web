@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test'
+import type { Page } from '@playwright/test'
 
 export async function waitForTableToReload(page: Page, tableTestId: string) {
   await page

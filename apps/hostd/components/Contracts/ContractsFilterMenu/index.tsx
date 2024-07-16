@@ -1,17 +1,17 @@
 import {
-  textFieldStyles,
+  Button,
+  ControlGroup,
   Label,
   Panel,
-  Button,
   ScrollArea,
-  ControlGroup,
+  textFieldStyles,
   truncate,
 } from '@siafoundation/design-system'
 import { Close16 } from '@siafoundation/react-icons'
 import { Command } from 'cmdk'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useContracts } from '../../../contexts/contracts'
-import { Page } from '../../CmdRoot/types'
+import type { Page } from '../../CmdRoot/types'
 import { ContractsFilterCmd } from '../ContractsCmd/ContractsFilterCmd'
 
 export function ContractsFilterMenu() {
@@ -28,7 +28,7 @@ export function ContractsFilterMenu() {
     (page: Page) => {
       setPages((pages) => [...pages, page])
     },
-    [setPages]
+    [setPages],
   )
 
   const resetPage = useCallback(() => {

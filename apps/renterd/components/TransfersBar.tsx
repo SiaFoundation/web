@@ -1,10 +1,10 @@
 import { Button, Panel, ScrollArea, Text } from '@siafoundation/design-system'
+import { useAppSettings } from '@siafoundation/react-core'
 import { Download16, Subtract24, Upload16 } from '@siafoundation/react-icons'
 import { useState } from 'react'
 import { useFilesManager } from '../contexts/filesManager'
-import { useAppSettings } from '@siafoundation/react-core'
-import { TransfersBarItem } from './TransfersBarItem'
 import { useUploads } from '../contexts/uploads'
+import { TransfersBarItem } from './TransfersBarItem'
 
 export function TransfersBar() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()

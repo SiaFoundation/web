@@ -1,14 +1,14 @@
-import { Button, ConfigField } from '@siafoundation/design-system'
+import { Button, type ConfigField } from '@siafoundation/design-system'
 import { View16, ViewOff16 } from '@siafoundation/react-icons'
-import { FieldValues } from 'react-hook-form'
-import { blake2bHex } from 'blakejs'
 import { getSDK } from '@siafoundation/sdk'
+import { blake2bHex } from 'blakejs'
+import type { FieldValues } from 'react-hook-form'
 
 export type MnemonicFieldType = 'text' | 'password'
 
 export function getFieldMnemonic<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   mnemonicHash,
   mnemonicFieldType: mnemonicType,

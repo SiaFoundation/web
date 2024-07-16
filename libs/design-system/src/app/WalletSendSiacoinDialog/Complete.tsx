@@ -1,6 +1,6 @@
-import BigNumber from 'bignumber.js'
-import { Text } from '../../core/Text'
 import { CheckmarkFilled32 } from '@siafoundation/react-icons'
+import type BigNumber from 'bignumber.js'
+import { Text } from '../../core/Text'
 import { WalletSendSiacoinReceipt } from './Receipt'
 
 type Props = {

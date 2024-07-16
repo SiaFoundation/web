@@ -1,5 +1,5 @@
-import { useMemo } from 'react'
 import { TransactionDetailsDialog } from '@siafoundation/design-system'
+import { useMemo } from 'react'
 import { useDialog } from '../contexts/dialog'
 import { useTransactions } from '../contexts/transactions'
 

@@ -1,7 +1,7 @@
 import {
   DropdownMenuItem,
-  copyToClipboard,
   DropdownMenuLeftSlot,
+  copyToClipboard,
 } from '@siafoundation/design-system'
 import { Copy16 } from '@siafoundation/react-icons'
 import { useObject } from '@siafoundation/renterd-react'
@@ -30,7 +30,7 @@ export function CopyMetadataMenuItem({ path }: Props) {
         if (obj.data) {
           copyToClipboard(
             JSON.stringify(obj.data.object, null, 2),
-            'object metadata'
+            'object metadata',
           )
         }
       }}

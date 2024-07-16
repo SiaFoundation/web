@@ -1,28 +1,28 @@
 'use client'
 
 import { useServerFilters, useTableState } from '@siafoundation/design-system'
-import { useParams, useAppRouter, usePathname } from '@siafoundation/next'
+import { useAppRouter, useParams, usePathname } from '@siafoundation/next'
+import { useBuckets } from '@siafoundation/renterd-react'
 import { createContext, useCallback, useContext, useMemo } from 'react'
-import { columns } from '../filesDirectory/columns'
+import useLocalStorageState from 'use-local-storage-state'
+import { routes } from '../../config/routes'
 import {
-  defaultSortField,
-  columnsDefaultVisible,
-  sortOptions,
-  ExplorerMode,
-} from './types'
-import {
-  FullPath,
-  FullPathSegments,
+  type FullPath,
+  type FullPathSegments,
   getDirectorySegmentsFromPath,
   getFilename,
   getKeyFromPath,
   pathSegmentsToPath,
 } from '../../lib/paths'
-import { useUploads } from './uploads'
+import { columns } from '../filesDirectory/columns'
 import { useDownloads } from './downloads'
-import { useBuckets } from '@siafoundation/renterd-react'
-import { routes } from '../../config/routes'
-import useLocalStorageState from 'use-local-storage-state'
+import {
+  type ExplorerMode,
+  columnsDefaultVisible,
+  defaultSortField,
+  sortOptions,
+} from './types'
+import { useUploads } from './uploads'
 
 function useFilesManagerMain() {
   const {
@@ -83,14 +83,14 @@ function useFilesManagerMain() {
         return
       }
       const route = routes.buckets.files
-        .replace('[bucket]', nextActiveDirectory[0])
+        .replace('[bucket]', nextActiveDirectory[0]!)
         .replace(
           '[path]',
-          nextActiveDirectory.slice(1).map(encodeURIComponent).join('/')
+          nextActiveDirectory.slice(1).map(encodeURIComponent).join('/'),
         )
       router.push(route)
     },
-    [router, activeDirectory]
+    [router, activeDirectory],
   )
 
   const { uploadFiles, uploadsMap, uploadsList } = useUploads({
@@ -111,7 +111,7 @@ function useFilesManagerMain() {
         value,
       })
     },
-    [setFilter]
+    [setFilter],
   )
 
   const removeFileNamePrefixFilter = useCallback(() => {
@@ -127,17 +127,17 @@ function useFilesManagerMain() {
       }
       setActiveDirectory(() => activeDirectory)
     },
-    [setActiveDirectory, setFileNamePrefixFilter, removeFileNamePrefixFilter]
+    [setActiveDirectory, setFileNamePrefixFilter, removeFileNamePrefixFilter],
   )
 
   const navigateToFileInFilteredDirectory = useCallback(
     (path: FullPath) => {
       setActiveDirectoryAndFileNamePrefix(
         getDirectorySegmentsFromPath(path),
-        getFilename(path)
+        getFilename(path),
       )
     },
-    [setActiveDirectoryAndFileNamePrefix]
+    [setActiveDirectoryAndFileNamePrefix],
   )
 
   const navigateToModeSpecificFiltering = useCallback(
@@ -152,12 +152,12 @@ function useFilesManagerMain() {
       activeExplorerMode,
       navigateToFileInFilteredDirectory,
       setFileNamePrefixFilter,
-    ]
+    ],
   )
 
   const uploadsRoute = routes.buckets.uploads.replace(
     '[bucket]',
-    activeBucketName
+    activeBucketName!,
   )
 
   const navigateToUploads = useCallback(() => {
@@ -174,7 +174,7 @@ function useFilesManagerMain() {
     if (!isViewingUploads && activeExplorerMode === 'directory') {
       return
     }
-    setActiveDirectoryAndFileNamePrefix([activeBucketName], undefined)
+    setActiveDirectoryAndFileNamePrefix([activeBucketName!], undefined)
     setActiveExplorerMode('directory')
   }, [
     isViewingUploads,
@@ -189,8 +189,8 @@ function useFilesManagerMain() {
       return
     }
     setActiveDirectoryAndFileNamePrefix(
-      [activeBucketName],
-      getKeyFromPath(activeDirectoryPath).slice(1)
+      [activeBucketName!],
+      getKeyFromPath(activeDirectoryPath).slice(1),
     )
     setActiveExplorerMode('flat')
   }, [

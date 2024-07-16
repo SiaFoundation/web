@@ -1,31 +1,31 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
-  ContentGallery,
   Callout,
   Code,
+  ContentGallery,
   SiteHeading,
   webLinks,
 } from '@siafoundation/design-system'
-import { Layout } from '../../components/Layout'
-import { routes } from '../../config/routes'
-import { getMinutesInSeconds } from '../../lib/time'
-import { getFeedContent } from '../../content/feed'
-import { AsyncReturnType } from '../../lib/types'
-import { getProjects } from '../../content/projects'
-import { getStats } from '../../content/stats'
-import { getTutorialArticles } from '../../content/articles'
-import { textContent } from '../../lib/utils'
-import { SectionGradient } from '../../components/SectionGradient'
-import { useInView } from 'react-intersection-observer'
 import { cx } from 'class-variance-authority'
+import { useInView } from 'react-intersection-observer'
+import { CarouselWalletd } from '../../components/CarouselWalletd'
+import { DownloadSection } from '../../components/DownloadSection'
+import { Layout } from '../../components/Layout'
+import { SectionGradient } from '../../components/SectionGradient'
+import { SectionTransparent } from '../../components/SectionTransparent'
+import { routes } from '../../config/routes'
+import { getTutorialArticles } from '../../content/articles'
+import { backgrounds, previews } from '../../content/assets'
+import { getFeedContent } from '../../content/feed'
+import { getProjects } from '../../content/projects'
 import {
   getWalletdLatestDaemonRelease,
   getWalletdLatestDesktopRelease,
 } from '../../content/releases'
-import { DownloadSection } from '../../components/DownloadSection'
-import { backgrounds, previews } from '../../content/assets'
-import { SectionTransparent } from '../../components/SectionTransparent'
-import { CarouselWalletd } from '../../components/CarouselWalletd'
+import { getStats } from '../../content/stats'
+import { getMinutesInSeconds } from '../../lib/time'
+import type { AsyncReturnType } from '../../lib/types'
+import { textContent } from '../../lib/utils'
 
 const title = 'walletd'
 const daemon = 'walletd'
@@ -84,7 +84,7 @@ export default function Walletd({
           <div
             className={cx(
               'relative transition-transform',
-              appInView ? 'md:scale-[1.03]' : ''
+              appInView ? 'md:scale-[1.03]' : '',
             )}
           >
             <CarouselWalletd />

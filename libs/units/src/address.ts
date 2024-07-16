@@ -1,10 +1,10 @@
-import * as blake from 'blakejs'
 import { isEqual } from '@technically/lodash'
+import * as blake from 'blakejs'
 
 function hexToBytes(hex: string) {
   const bytes: number[] = []
   for (let c = 0; c < hex.length; c += 2) {
-    bytes.push(parseInt(hex.substr(c, 2), 16))
+    bytes.push(Number.parseInt(hex.substr(c, 2), 16))
   }
   return bytes
 }

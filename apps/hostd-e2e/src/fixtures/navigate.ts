@@ -1,4 +1,4 @@
-import { Page, expect } from '@playwright/test'
+import { type Page, expect } from '@playwright/test'
 
 export async function navigateToDashboard({ page }: { page: Page }) {
   await page.getByLabel('Overview').click()
@@ -8,7 +8,7 @@ export async function navigateToDashboard({ page }: { page: Page }) {
 export async function navigateToConfig({ page }: { page: Page }) {
   await page.getByLabel('Configuration').click()
   await expect(
-    page.getByTestId('navbar').getByText('Configuration')
+    page.getByTestId('navbar').getByText('Configuration'),
   ).toBeVisible()
 }
 

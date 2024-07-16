@@ -1,4 +1,5 @@
 import { minutesInMilliseconds } from '@siafoundation/design-system'
+import { useAppSettings } from '@siafoundation/react-core'
 import {
   useAutopilotConfig,
   useSettingContractSet,
@@ -6,10 +7,9 @@ import {
   useSettingRedundancy,
   useSettingUploadPacking,
 } from '@siafoundation/renterd-react'
-import { useSyncContractSet } from './useSyncContractSet'
-import { useAppSettings } from '@siafoundation/react-core'
 import { useSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-react'
 import { useApp } from '../app'
+import { useSyncContractSet } from './useSyncContractSet'
 
 export function useResources() {
   const app = useApp()

@@ -1,9 +1,9 @@
+import type BigNumber from 'bignumber.js'
 import { useEffect, useMemo } from 'react'
-import { SettingsData } from './types'
-import { UseFormReturn } from 'react-hook-form'
+import type { UseFormReturn } from 'react-hook-form'
 import useLocalStorageState from 'use-local-storage-state'
 import { getCalculatedValues } from './transformUp'
-import BigNumber from 'bignumber.js'
+import type { SettingsData } from './types'
 
 export function useAutoCalculatedFields({
   form,
@@ -15,11 +15,11 @@ export function useAutoCalculatedFields({
   isAutopilotEnabled,
 }: {
   form: UseFormReturn<SettingsData>
-  allowanceMonth: BigNumber
-  storageTB: BigNumber
-  downloadTBMonth: BigNumber
-  uploadTBMonth: BigNumber
-  redundancyMultiplier: BigNumber
+  allowanceMonth?: BigNumber
+  storageTB?: BigNumber
+  downloadTBMonth?: BigNumber
+  uploadTBMonth?: BigNumber
+  redundancyMultiplier?: BigNumber
   isAutopilotEnabled: boolean
 }) {
   const [allowanceDerivedPricing, setAllowanceDerivedPricing] =
@@ -47,7 +47,7 @@ export function useAutoCalculatedFields({
       downloadTBMonth,
       uploadTBMonth,
       redundancyMultiplier,
-    ]
+    ],
   )
 
   useEffect(() => {

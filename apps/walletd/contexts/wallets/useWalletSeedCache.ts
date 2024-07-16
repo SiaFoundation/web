@@ -1,9 +1,9 @@
 import { minutesInMilliseconds } from '@siafoundation/design-system'
-import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useIdleTimer } from 'react-idle-timer'
 import useLocalStorageState from 'use-local-storage-state'
+import { routes } from '../../config/routes'
 
 export function useWalletSeedCache() {
   const [walletAutoLockEnabled, setWalletAutoLockEnabled] =
@@ -18,11 +18,11 @@ export function useWalletSeedCache() {
     Record<string, number>
   >({})
   const [mnemonicCache, _setMnemonicCache] = useState<Record<string, string>>(
-    {}
+    {},
   )
   const cachedMnemonicCount = useMemo(
     () => Object.keys(mnemonicCache).length,
-    [mnemonicCache]
+    [mnemonicCache],
   )
 
   const updateWalletActivityAt = useCallback(
@@ -32,7 +32,7 @@ export function useWalletSeedCache() {
         [walletId]: new Date().getTime(),
       }))
     },
-    [setWalletActivityAt]
+    [setWalletActivityAt],
   )
 
   const cacheWalletMnemonic = useCallback(
@@ -45,7 +45,7 @@ export function useWalletSeedCache() {
         updateWalletActivityAt(walletId)
       }
     },
-    [_setMnemonicCache, updateWalletActivityAt]
+    [_setMnemonicCache, updateWalletActivityAt],
   )
 
   const evictStale = useCallback(() => {
@@ -89,6 +89,7 @@ export function useWalletSeedCache() {
     eventsThrottle: 5_000,
   })
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!walletAutoLockEnabled) {
       return
@@ -101,7 +102,6 @@ export function useWalletSeedCache() {
     return () => {
       clearInterval(interval)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [walletAutoLockEnabled])
 
   return {

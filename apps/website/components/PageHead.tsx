@@ -1,7 +1,7 @@
 import { webLinks } from '@siafoundation/design-system'
-import { SitePageHead } from './SitePageHead'
 import { appName, newsFeedName } from '../config/app'
 import { routes } from '../config/routes'
+import { SitePageHead } from './SitePageHead'
 
 type Props = {
   title: string

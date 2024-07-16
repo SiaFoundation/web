@@ -1,26 +1,29 @@
 import {
   Button,
   ControlGroup,
+  Option,
+  Select,
   Text,
   Tooltip,
-  Select,
-  Option,
 } from '@siafoundation/design-system'
 import { CalendarHeatMap16, Ruler16 } from '@siafoundation/react-icons'
+import { humanDate } from '@siafoundation/units'
+import { routes } from '../../config/routes'
+import { useDialog } from '../../contexts/dialog'
 import { useMetrics } from '../../contexts/metrics'
+import {
+  type DataTimeSpan,
+  dataTimeSpanOptions,
+} from '../../contexts/metrics/types'
+import { HostdAuthedLayout } from '../HostdAuthedLayout'
+import { HostdSidenav } from '../HostdSidenav'
+import { HomeBandwidth } from './HomeBandwidth'
+import { HomeCollateral } from './HomeCollateral'
+import { HomeContracts } from './HomeContracts'
+import { HomeOperations } from './HomeOperations'
+import { HomePricing } from './HomePricing'
 import { HomeRevenue } from './HomeRevenue'
 import { HomeStorage } from './HomeStorage'
-import { HomeContracts } from './HomeContracts'
-import { HomePricing } from './HomePricing'
-import { HostdAuthedLayout } from '../HostdAuthedLayout'
-import { routes } from '../../config/routes'
-import { HostdSidenav } from '../HostdSidenav'
-import { useDialog } from '../../contexts/dialog'
-import { DataTimeSpan, dataTimeSpanOptions } from '../../contexts/metrics/types'
-import { HomeOperations } from './HomeOperations'
-import { HomeBandwidth } from './HomeBandwidth'
-import { humanDate } from '@siafoundation/units'
-import { HomeCollateral } from './HomeCollateral'
 
 export function Home() {
   const { openDialog } = useDialog()

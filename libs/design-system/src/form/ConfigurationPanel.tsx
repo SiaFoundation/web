@@ -1,13 +1,13 @@
-import { Separator } from '../core/Separator'
-import { PanelMenuSection } from '../app/PanelMenuSection'
 import { Fragment } from 'react'
-import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
+import type { FieldValues, Path, UseFormReturn } from 'react-hook-form'
+import { PanelMenuSection } from '../app/PanelMenuSection'
+import { Separator } from '../core/Separator'
+import { ConfigurationPanelSetting } from './ConfigurationPanelSetting'
 import {
-  ConfigField,
-  ConfigFields,
+  type ConfigField,
+  type ConfigFields,
   shouldShowField,
 } from './configurationFields'
-import { ConfigurationPanelSetting } from './ConfigurationPanelSetting'
 
 type Props<Values extends FieldValues, Categories extends string> = {
   title: string
@@ -18,14 +18,14 @@ type Props<Values extends FieldValues, Categories extends string> = {
 
 export function ConfigurationPanel<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({ title, category, form, fields }: Props<Values, Categories>) {
   const names = (
     Object.entries(fields) as [Path<Values>, ConfigField<Values, Categories>][]
   )
     .filter(
       ([name, val]) =>
-        val.category === category && shouldShowField({ form, fields, name })
+        val.category === category && shouldShowField({ form, fields, name }),
     )
     .map(([name]) => name)
 

@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
-import { ContractData } from './types'
+import type { ContractData } from './types'
 
 export function useFilteredStats({
   datasetFiltered,
@@ -24,7 +24,7 @@ export function useFilteredStats({
       if (!datum.inAutopilotSet) {
         return acc
       }
-      return acc.plus(datum.prunableSize)
+      return acc.plus(datum.prunableSize!)
     }, new BigNumber(0))
   }, [datasetFiltered])
 
@@ -36,7 +36,7 @@ export function useFilteredStats({
       if (datum.inAutopilotSet) {
         return acc
       }
-      return acc.plus(datum.size).minus(datum.prunableSize)
+      return acc.plus(datum.size).minus(datum.prunableSize!)
     }, new BigNumber(0))
   }, [datasetFiltered])
 

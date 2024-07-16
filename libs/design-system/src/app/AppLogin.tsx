@@ -1,22 +1,22 @@
 'use client'
 
-import { useAppSettings } from '@siafoundation/react-core'
 import { usePagesRouter } from '@siafoundation/next'
-import axios, { AxiosError } from 'axios'
-import { getRedirectRouteFromQuery } from './AppAuthedLayout/useConnAndPassLock'
-import { useForm } from 'react-hook-form'
+import { useAppSettings } from '@siafoundation/react-core'
+import { RecentlyViewed16, Settings16 } from '@siafoundation/react-icons'
+import { sortBy } from '@technically/lodash'
+import axios, { type AxiosError } from 'axios'
 import { useCallback, useEffect, useMemo } from 'react'
-import { ConfigFields, useOnInvalid } from '../form/configurationFields'
-import { FieldText } from '../form/FieldText'
+import { useForm } from 'react-hook-form'
 import { FormSubmitButton } from '../components/Form'
+import { Button } from '../core/Button'
+import { ControlGroup } from '../core/ControlGroup'
+import { DropdownMenu, DropdownMenuItem } from '../core/DropdownMenu'
+import { Panel } from '../core/Panel'
 import { Separator } from '../core/Separator'
 import { Text } from '../core/Text'
-import { DropdownMenu, DropdownMenuItem } from '../core/DropdownMenu'
-import { RecentlyViewed16, Settings16 } from '@siafoundation/react-icons'
-import { Button } from '../core/Button'
-import { Panel } from '../core/Panel'
-import { ControlGroup } from '../core/ControlGroup'
-import { sortBy } from '@technically/lodash'
+import { FieldText } from '../form/FieldText'
+import { type ConfigFields, useOnInvalid } from '../form/configurationFields'
+import { getRedirectRouteFromQuery } from './AppAuthedLayout/useConnAndPassLock'
 
 function getDefaultValues(api: string) {
   return {
@@ -127,7 +127,7 @@ export function AppLogin({ appName, route, routes }: Props) {
 
   const defaultValues = useMemo(
     () => getDefaultValues(settings.api),
-    [settings.api]
+    [settings.api],
   )
 
   const form = useForm({
@@ -136,9 +136,9 @@ export function AppLogin({ appName, route, routes }: Props) {
   })
 
   // when the API field is toggled off clear any existing errors
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     form.clearErrors()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allowCustomApi])
 
   const onValid = useCallback(
@@ -179,7 +179,7 @@ export function AppLogin({ appName, route, routes }: Props) {
       setSettings,
       defaultValues,
       route,
-    ]
+    ],
   )
 
   const fields = getFields({ allowCustomApi })
@@ -189,7 +189,7 @@ export function AppLogin({ appName, route, routes }: Props) {
 
   const recentApis = sortBy(
     Object.entries(settings.recentApis),
-    ([_, { lastUsed }]) => -lastUsed
+    ([_, { lastUsed }]) => -lastUsed,
   ).map(([api]) => api)
 
   return (

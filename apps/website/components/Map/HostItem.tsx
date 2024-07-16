@@ -1,23 +1,23 @@
-import { useMemo } from 'react'
 import {
   Button,
+  LinkButton,
   Text,
   countryCodeEmoji,
-  LinkButton,
   webLinks,
 } from '@siafoundation/design-system'
-import { cx } from 'class-variance-authority'
-import BigNumber from 'bignumber.js'
-import { SiaCentralPartialHost } from '../../content/geoHosts'
 import { Launch16 } from '@siafoundation/react-icons'
 import {
-  monthsToBlocks,
   TBToBytes,
-  humanBytes,
-  humanSiacoin,
   getDownloadSpeed,
   getUploadSpeed,
+  humanBytes,
+  humanSiacoin,
+  monthsToBlocks,
 } from '@siafoundation/units'
+import BigNumber from 'bignumber.js'
+import { cx } from 'class-variance-authority'
+import { useMemo } from 'react'
+import type { SiaCentralPartialHost } from '../../content/geoHosts'
 
 type Props = {
   host: SiaCentralPartialHost
@@ -49,9 +49,9 @@ export function HostItem({
             new BigNumber(host.settings.storage_price)
               .times(TBToBytes(1))
               .times(monthsToBlocks(1)),
-            { fixed: 0 }
+            { fixed: 0 },
           )}/TB`,
-    [rates, host]
+    [rates, host],
   )
 
   const downloadCost = useMemo(
@@ -64,9 +64,9 @@ export function HostItem({
             .toFixed(2)}/TB`
         : `${humanSiacoin(
             new BigNumber(host.settings.download_price).times(TBToBytes(1)),
-            { fixed: 0 }
+            { fixed: 0 },
           )}/TB`,
-    [rates, host]
+    [rates, host],
   )
 
   const uploadCost = useMemo(
@@ -79,9 +79,9 @@ export function HostItem({
             .toFixed(2)}/TB`
         : `${humanSiacoin(
             new BigNumber(host.settings.upload_price).times(TBToBytes(1)),
-            { fixed: 0 }
+            { fixed: 0 },
           )}/TB`,
-    [rates, host]
+    [rates, host],
   )
 
   return (
@@ -89,7 +89,7 @@ export function HostItem({
       onClick={() => selectActiveHost(host.public_key)}
       className={cx(
         'flex flex-col py-1 px-2 gap-1 h-[100px] cursor-pointer',
-        activeHost?.public_key === host.public_key && 'ring !ring-green-600'
+        activeHost?.public_key === host.public_key && 'ring !ring-green-600',
       )}
       key={host.public_key}
       id={host.public_key}

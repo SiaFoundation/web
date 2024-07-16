@@ -1,18 +1,18 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Button, ScrollArea, Text, Tooltip } from '@siafoundation/design-system'
-import { Wikis16 } from '@siafoundation/react-icons'
-import axios from 'axios'
-import { Stats } from '../../content/stats'
-import useSWR from 'swr'
 import {
   useAppSettings,
   usePrefersReducedMotion,
 } from '@siafoundation/react-core'
+import { Wikis16 } from '@siafoundation/react-icons'
 import { random, throttle } from '@technically/lodash'
-import { HostItem } from './HostItem'
-import { Globe } from './Globe'
+import axios from 'axios'
 import { cx } from 'class-variance-authority'
-import { SiaCentralPartialHost } from '../../content/geoHosts'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import useSWR from 'swr'
+import type { SiaCentralPartialHost } from '../../content/geoHosts'
+import type { Stats } from '../../content/stats'
+import { Globe } from './Globe'
+import { HostItem } from './HostItem'
 
 type Props = {
   hosts: SiaCentralPartialHost[]
@@ -25,15 +25,15 @@ type Props = {
 
 export function HostMap({ className, hosts, rates }: Props) {
   const { data } = useSWR<Stats>('/api/stats', (key) =>
-    axios.get(key).then((res) => res.data)
+    axios.get(key).then((res) => res.data),
   )
   const { activeHosts, totalStorage } = data || {}
 
   const scrollRef = useRef<HTMLDivElement>()
-  const refs = useRef([]) // to store refs for all items
+  const refs = useRef<HTMLDivElement[]>([]) // to store refs for all items
 
   const [activeIndex, setActiveIndex] = useState<number>(
-    random(0, hosts.length - 1)
+    random(0, hosts.length - 1),
   )
   const activeHost = useMemo(() => hosts[activeIndex], [hosts, activeIndex])
   const [reset, setReset] = useState<string>()
@@ -42,7 +42,7 @@ export function HostMap({ className, hosts, rates }: Props) {
       setActiveIndex(i)
       setReset(String(Math.random()))
     },
-    [setActiveIndex, setReset]
+    [setActiveIndex, setReset],
   )
 
   const selectActiveHost = useCallback(
@@ -51,7 +51,7 @@ export function HostMap({ className, hosts, rates }: Props) {
       setActiveIndex(index)
       setReset(String(Math.random()))
     },
-    [hosts, setActiveIndex, setReset]
+    [hosts],
   )
 
   const selectNextHost = useCallback(() => {
@@ -67,6 +67,8 @@ export function HostMap({ className, hosts, rates }: Props) {
 
   const reduceMotion = usePrefersReducedMotion()
   const [isInteracting, setIsInteracting] = useState(false)
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (isInteracting) {
       return
@@ -80,17 +82,21 @@ export function HostMap({ className, hosts, rates }: Props) {
     }
   }, [reset, selectNextHost, reduceMotion, isGlobeActive, isInteracting])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (hosts.length) {
       selectActiveHostByIndex(0)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hosts])
 
   useEffect(() => {
     if (activeIndex !== null && refs.current[activeIndex]) {
       const scrollContainer = scrollRef.current
       const selectedElement = refs.current[activeIndex]
+
+      if (!scrollContainer || !selectedElement) {
+        return
+      }
 
       const containerWidth = scrollContainer.offsetWidth
       const selectedElementWidth = selectedElement.offsetWidth
@@ -106,6 +112,7 @@ export function HostMap({ className, hosts, rates }: Props) {
   }, [activeIndex])
 
   const [interactionTimer, setInteractionTimer] = useState<string>()
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const t = setTimeout(() => {
       setIsInteracting(false)
@@ -115,21 +122,23 @@ export function HostMap({ className, hosts, rates }: Props) {
     }
   }, [interactionTimer])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const onMouseMove = useMemo(
     () =>
       throttle(() => {
         setIsInteracting(true)
         setInteractionTimer(String(Math.random()))
       }, 1000),
-    [setIsInteracting, setInteractionTimer]
+    [setIsInteracting, setInteractionTimer],
   )
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const onMouseLeave = useMemo(
     () =>
       throttle(() => {
         setIsInteracting(false)
       }, 1000),
-    [setIsInteracting]
+    [setIsInteracting],
   )
 
   return (
@@ -142,7 +151,7 @@ export function HostMap({ className, hosts, rates }: Props) {
           gpu.hasCheckedGpu && !gpu.shouldRender
             ? 'h-[50px] md:h-[200px]'
             : 'aspect-[2/1]',
-          'transition-all duration-[400ms]'
+          'transition-all duration-[400ms]',
         )}
       >
         <div
@@ -152,7 +161,7 @@ export function HostMap({ className, hosts, rates }: Props) {
               ? '-mt-[50px] md:-mt-[80px]'
               : '',
             gpu.hasCheckedGpu && gpu.shouldRender ? 'opacity-1' : 'opacity-0',
-            'transition-opacity duration-[400ms]'
+            'transition-opacity duration-[400ms]',
           )}
         >
           {gpu.hasCheckedGpu && gpu.shouldRender && (

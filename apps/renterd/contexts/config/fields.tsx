@@ -1,7 +1,6 @@
-/* eslint-disable react/no-unescaped-entities */
 import {
   Code,
-  ConfigFields,
+  type ConfigFields,
   Separator,
   Switch,
   Text,
@@ -10,11 +9,11 @@ import {
   secondsInMinutes,
   toFixedMax,
 } from '@siafoundation/design-system'
+import { Information16 } from '@siafoundation/react-icons'
+import { humanSiacoin, toHastings } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import React from 'react'
-import { ConfigViewMode, RecommendationItem, SettingsData } from './types'
-import { humanSiacoin, toHastings } from '@siafoundation/units'
-import { Information16 } from '@siafoundation/react-icons'
+import type { ConfigViewMode, RecommendationItem, SettingsData } from './types'
 
 export const scDecimalPlaces = 6
 
@@ -29,11 +28,11 @@ type Categories =
 
 type GetFields = {
   advancedDefaults?: SettingsData
-  maxStoragePriceTBMonth: BigNumber
-  maxUploadPriceTB: BigNumber
-  minShards: BigNumber
-  totalShards: BigNumber
-  redundancyMultiplier: BigNumber
+  maxStoragePriceTBMonth?: BigNumber
+  maxUploadPriceTB?: BigNumber
+  minShards?: BigNumber
+  totalShards?: BigNumber
+  redundancyMultiplier?: BigNumber
   storageAverage?: BigNumber
   uploadAverage?: BigNumber
   downloadAverage?: BigNumber
@@ -281,13 +280,13 @@ export function getFields({
       ),
       units: 'hours',
       suggestion: advancedDefaults?.maxDowntimeHours,
-      suggestionTip: `Defaults to ${advancedDefaults?.maxDowntimeHours
-        .toNumber()
+      suggestionTip: `Defaults to ${advancedDefaults
+        ?.maxDowntimeHours!.toNumber()
         .toLocaleString()} which is ${toFixedMax(
         new BigNumber(
-          hoursInDays(advancedDefaults?.maxDowntimeHours.toNumber())
+          hoursInDays(advancedDefaults?.maxDowntimeHours!.toNumber() || 0),
         ),
-        1
+        1,
       )} days.`,
       hidden: !isAutopilotEnabled || configViewMode === 'basic',
       validation: {
@@ -309,7 +308,7 @@ export function getFields({
       units: 'scans',
       decimalsLimit: 0,
       suggestion: advancedDefaults?.minRecentScanFailures,
-      suggestionTip: `Defaults to ${advancedDefaults?.minRecentScanFailures.toNumber()}.`,
+      suggestionTip: `Defaults to ${advancedDefaults?.minRecentScanFailures!.toNumber()}.`,
       hidden: !isAutopilotEnabled || configViewMode === 'basic',
       validation: {
         validate: {
@@ -338,7 +337,7 @@ export function getFields({
             (value: string) => {
               const regex = /^\d+\.\d+\.\d+$/
               return regex.test(value) || 'must be a valid version number'
-            }
+            },
           ),
         },
       },
@@ -408,7 +407,12 @@ export function getFields({
       suggestion: recommendations.maxStoragePriceTBMonth?.targetValue,
       suggestionTip: 'This value will help you match with more hosts.',
       after: function After() {
-        if (!maxStoragePriceTBMonth || !minShards || !totalShards) {
+        if (
+          !maxStoragePriceTBMonth ||
+          !minShards ||
+          !totalShards ||
+          !redundancyMultiplier
+        ) {
           return null
         }
         return (
@@ -431,12 +435,12 @@ export function getFields({
                 <Text size="12" ellipsis>
                   {humanSiacoin(
                     toHastings(maxStoragePriceTBMonth).times(
-                      redundancyMultiplier
+                      redundancyMultiplier,
                     ),
                     {
                       fixed: 0,
                       dynamicUnits: false,
-                    }
+                    },
                   )}
                   /TB/month with redundancy
                 </Text>
@@ -467,7 +471,12 @@ export function getFields({
       suggestion: recommendations.maxUploadPriceTB?.targetValue,
       suggestionTip: 'This value will help you match with more hosts.',
       after: function After() {
-        if (!maxUploadPriceTB || !minShards || !totalShards) {
+        if (
+          !maxUploadPriceTB ||
+          !minShards ||
+          !totalShards ||
+          !redundancyMultiplier
+        ) {
           return null
         }
         return (
@@ -493,7 +502,7 @@ export function getFields({
                     {
                       fixed: 0,
                       dynamicUnits: false,
-                    }
+                    },
                   )}
                   /TB with redundancy
                 </Text>
@@ -515,7 +524,7 @@ export function getFields({
       units: 'SC/TB',
       readOnly: allowanceDerivedPricing,
       average: downloadAverage,
-      averageTip: `Averages provided by Sia Central.`,
+      averageTip: 'Averages provided by Sia Central.',
       suggestion: recommendations.maxDownloadPriceTB?.targetValue,
       suggestionTip: 'This value will help you match with more hosts.',
       decimalsLimitSc: scDecimalPlaces,
@@ -740,14 +749,14 @@ export function getFields({
           gteMinShards: requiredIfAdvanced(
             validationContext,
             (value, values) =>
-              new BigNumber(value as BigNumber).gte(values.minShards) ||
-              'must be at least equal to min shards'
+              new BigNumber(value as BigNumber).gte(values.minShards!) ||
+              'must be at least equal to min shards',
           ),
           max: requiredIfAdvanced(
             validationContext,
             (value) =>
               new BigNumber(value as BigNumber).lt(256) ||
-              'must be less than 256'
+              'must be less than 256',
           ),
         },
       },
@@ -757,9 +766,11 @@ export function getFields({
 
 function requiredIfAdvanced<Values>(
   context: { configViewMode: ConfigViewMode },
-  method?: (value: unknown, values: Values) => string | boolean
+  // biome-ignore lint/suspicious/noExplicitAny: any field type
+  method?: (value: any, values: Values) => string | boolean,
 ) {
-  return (value: unknown, values: Values) => {
+  // biome-ignore lint/suspicious/noExplicitAny: any field type
+  return (value: any, values: Values) => {
     if (context.configViewMode === 'advanced') {
       if (method) {
         return method(value, values)
@@ -772,9 +783,11 @@ function requiredIfAdvanced<Values>(
 
 function requiredIfAutopilot<Values>(
   context: { isAutopilotEnabled: boolean },
-  method?: (value: unknown, values: Values) => string | boolean
+  // biome-ignore lint/suspicious/noExplicitAny: any field type
+  method?: (value: any, values: Values) => string | boolean,
 ) {
-  return (value: unknown, values: Values) => {
+  // biome-ignore lint/suspicious/noExplicitAny: any field type
+  return (value: any, values: Values) => {
     if (context.isAutopilotEnabled) {
       if (method) {
         return method(value, values)
@@ -790,9 +803,11 @@ function requiredIfAutopilotAndAdvanced<Values>(
     isAutopilotEnabled: boolean
     configViewMode: ConfigViewMode
   },
-  method?: (value: unknown, values: Values) => string | boolean
+  // biome-ignore lint/suspicious/noExplicitAny: any field type
+  method?: (value: any, values: Values) => string | boolean,
 ) {
-  return (value: unknown, values: Values) => {
+  // biome-ignore lint/suspicious/noExplicitAny: any field type
+  return (value: any, values: Values) => {
     if (context.isAutopilotEnabled && context.configViewMode === 'advanced') {
       if (method) {
         return method(value, values)

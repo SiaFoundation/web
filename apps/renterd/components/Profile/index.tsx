@@ -5,14 +5,14 @@ import {
   Text,
   ValueCopyable,
 } from '@siafoundation/design-system'
-import { useSyncStatus } from '../../hooks/useSyncStatus'
 import {
   useBusState,
   useSyncerPeers,
   useWallet,
 } from '@siafoundation/renterd-react'
-import { useDialog } from '../../contexts/dialog'
 import { humanTime } from '@siafoundation/units'
+import { useDialog } from '../../contexts/dialog'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
 
 export function Profile() {
   const { openDialog } = useDialog()
@@ -38,8 +38,8 @@ export function Profile() {
     version === '?'
       ? `https://github.com/SiaFoundation/renterd/commits/`
       : version?.match(/^v\d+\.\d+\.\d+/)
-      ? `https://github.com/SiaFoundation/renterd/releases/${version}`
-      : `https://github.com/SiaFoundation/renterd/tree/${version}`
+        ? `https://github.com/SiaFoundation/renterd/releases/${version}`
+        : `https://github.com/SiaFoundation/renterd/tree/${version}`
 
   const uptime = state.data
     ? new Date().getTime() - new Date(state.data?.startTime).getTime()
@@ -48,7 +48,7 @@ export function Profile() {
   return (
     <DaemonProfile
       name="renterd"
-      peerCount={peers.data?.length}
+      peerCount={peers.data?.length || 0}
       connectPeer={() => openDialog('connectPeer')}
       isSynced={syncStatus.isSynced}
       syncPercent={syncStatus.syncPercent}
@@ -65,7 +65,7 @@ export function Profile() {
           <ValueCopyable
             size="14"
             maxLength={50}
-            value={wallet.data?.address}
+            value={wallet.data?.address || ''}
             type="address"
           />
         </div>

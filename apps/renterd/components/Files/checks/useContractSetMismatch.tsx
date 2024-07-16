@@ -1,5 +1,5 @@
-import { useIsApcsEqDcs } from '../../../hooks/useIsApcsEqDcs'
 import { useApp } from '../../../contexts/app'
+import { useIsApcsEqDcs } from '../../../hooks/useIsApcsEqDcs'
 
 export function useContractSetMismatch() {
   const { autopilot } = useApp()

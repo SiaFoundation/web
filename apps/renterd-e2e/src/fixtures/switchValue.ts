@@ -1,9 +1,9 @@
-import { Page, expect } from '@playwright/test'
+import { type Page, expect } from '@playwright/test'
 
 export async function setSwitchByLabel(
   page: Page,
   label: string,
-  state: boolean
+  state: boolean,
 ) {
   const { el, value } = await getSwitchByLabel(page, label)
   if (state !== value) {
@@ -11,7 +11,7 @@ export async function setSwitchByLabel(
   }
   await expect(el).toHaveAttribute(
     'data-state',
-    state ? 'checked' : 'unchecked'
+    state ? 'checked' : 'unchecked',
   )
 }
 
@@ -27,7 +27,7 @@ export async function getSwitchByLabel(page: Page, label: string) {
 export async function expectSwitchByLabel(
   page: Page,
   label: string,
-  value: boolean
+  value: boolean,
 ) {
   const { value: actualValue } = await getSwitchByLabel(page, label)
   expect(actualValue).toBe(value)

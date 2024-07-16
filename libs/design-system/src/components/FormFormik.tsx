@@ -1,16 +1,16 @@
+import BigNumber from 'bignumber.js'
+import { cx } from 'class-variance-authority'
 import { Button } from '../core/Button'
-import { TextField, textFieldStyles } from '../core/TextField'
 import { Label } from '../core/Label'
-import { Text } from '../core/Text'
 import { NumberField } from '../core/NumberField'
 import { SiacoinField } from '../core/SiacoinField'
-import BigNumber from 'bignumber.js'
-import { VariantProps } from '../types'
-import { cx } from 'class-variance-authority'
+import { Text } from '../core/Text'
+import { TextField, type textFieldStyles } from '../core/TextField'
+import type { VariantProps } from '../types'
 import { LoadingDots } from './LoadingDots'
 
 type FormFieldFormikProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   formik: any
   title?: string
   name: string
@@ -99,7 +99,7 @@ export function FormFieldFormik({
 }
 
 type FormTextFieldFormikProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   formik: any
   name: string
   placeholder: string
@@ -144,7 +144,7 @@ export function FormTextFieldFormik({
 }
 
 type FormNumberFieldFormikProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   formik: any
   name: string
   units?: string
@@ -192,7 +192,7 @@ function FormNumberFieldFormik({
 }
 
 type FormSiacoinFieldFormikProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   formik: any
   name: string
   disabled?: boolean
@@ -237,7 +237,7 @@ function FormSiacoinFieldFormik({
 }
 
 type FieldErrorFormikProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   formik: any
   title?: string
   name: string
@@ -288,7 +288,7 @@ export function FieldGroupFormik({
 }
 
 type FormSubmitButtonFormikProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   formik: any
   size?: React.ComponentProps<typeof Button>['size']
   variant?: React.ComponentProps<typeof Button>['variant']

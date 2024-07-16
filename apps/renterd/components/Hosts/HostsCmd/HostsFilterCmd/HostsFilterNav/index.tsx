@@ -1,12 +1,12 @@
-import { CommandItemNav } from '../../../../CmdRoot/Item'
-import { AddressCmdNav } from '../HostsFilterCmdGroups/Address'
-import { Page } from '../../../../CmdRoot/types'
-import { hostsFilterAllowBlockPage } from '../HostsFilterCmdGroups/AllowBlock'
-import { ServerFilterItem } from '@siafoundation/design-system'
-import { hostsFilterContractsPage } from '../HostsFilterCmdGroups/Contracts'
-import { hostsFilterUsablePage } from '../HostsFilterCmdGroups/Usable'
-import { PublicKeyCmdNav } from '../HostsFilterCmdGroups/PublicKey'
+import type { ServerFilterItem } from '@siafoundation/design-system'
 import { useApp } from '../../../../../contexts/app'
+import { CommandItemNav } from '../../../../CmdRoot/Item'
+import type { Page } from '../../../../CmdRoot/types'
+import { AddressCmdNav } from '../HostsFilterCmdGroups/Address'
+import { hostsFilterAllowBlockPage } from '../HostsFilterCmdGroups/AllowBlock'
+import { hostsFilterContractsPage } from '../HostsFilterCmdGroups/Contracts'
+import { PublicKeyCmdNav } from '../HostsFilterCmdGroups/PublicKey'
+import { hostsFilterUsablePage } from '../HostsFilterCmdGroups/Usable'
 
 export const commandPage = {
   namespace: 'hosts',
@@ -14,7 +14,7 @@ export const commandPage = {
 }
 
 type Props = {
-  currentPage: Page
+  currentPage?: Page
   parentPage?: Page
   pushPage: (page: Page) => void
   select: (filter?: ServerFilterItem) => void

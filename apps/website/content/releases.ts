@@ -17,7 +17,7 @@ export async function getRenterdLatestDaemonRelease() {
     () => {
       return getGitHubRenterdLatestDaemonRelease()
     },
-    maxAge
+    maxAge,
   )
 }
 
@@ -27,7 +27,7 @@ export async function getHostdLatestDaemonRelease() {
     () => {
       return getGitHubHostdLatestDaemonRelease()
     },
-    maxAge
+    maxAge,
   )
 }
 
@@ -37,7 +37,7 @@ export async function getWalletdLatestDaemonRelease() {
     () => {
       return getGitHubWalletdLatestDaemonRelease()
     },
-    maxAge
+    maxAge,
   )
 }
 
@@ -47,7 +47,7 @@ export async function getRenterdLatestDesktopRelease() {
     () => {
       return getGitHubRenterdLatestDesktopRelease()
     },
-    maxAge
+    maxAge,
   )
 }
 
@@ -57,7 +57,7 @@ export async function getHostdLatestDesktopRelease() {
     () => {
       return getGitHubHostdLatestDesktopRelease()
     },
-    maxAge
+    maxAge,
   )
 }
 
@@ -67,6 +67,6 @@ export async function getWalletdLatestDesktopRelease() {
     () => {
       return getGitHubWalletdLatestDesktopRelease()
     },
-    maxAge
+    maxAge,
   )
 }

@@ -1,10 +1,10 @@
 import {
-  Button,
-  PoolCombo,
-  Label,
-  Popover,
-  MenuItemRightSlot,
   BaseMenuItem,
+  Button,
+  Label,
+  MenuItemRightSlot,
+  PoolCombo,
+  Popover,
 } from '@siafoundation/design-system'
 import { CaretDown16, SettingsAdjust16 } from '@siafoundation/react-icons'
 import { useUploads } from '../../contexts/uploads'

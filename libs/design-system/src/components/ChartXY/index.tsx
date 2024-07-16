@@ -2,20 +2,20 @@
 
 import { ParentSize } from '@visx/responsive'
 import { Panel } from '../../core/Panel'
+import { LoadingDots } from '../LoadingDots'
+import { ChartXYConfig } from './ChartXYConfig'
 import { ChartXYGraph } from './ChartXYGraph'
-import {
+import type {
   Chart,
-  ChartPoint,
-  ChartData,
-  ChartStats,
   ChartConfig,
+  ChartData,
+  ChartPoint,
+  ChartStats,
   ChartType,
   CurveType,
   StackOffset,
 } from './types'
 import { useChartXY } from './useChartXY'
-import { ChartXYConfig } from './ChartXYConfig'
-import { LoadingDots } from '../LoadingDots'
 
 export type { Chart, ChartPoint, ChartData, ChartStats, ChartConfig, ChartType }
 

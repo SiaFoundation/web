@@ -1,8 +1,8 @@
-import { Page, expect } from '@playwright/test'
-import { navigateToBuckets } from './navigate'
-import { fillTextInputByName } from './textInput'
+import { type Page, expect } from '@playwright/test'
 import { clearToasts } from './clearToasts'
 import { deleteDirectory, deleteFile } from './files'
+import { navigateToBuckets } from './navigate'
+import { fillTextInputByName } from './textInput'
 
 export async function createBucket(page: Page, name: string) {
   await navigateToBuckets({ page })
@@ -33,10 +33,9 @@ export async function deleteBucketIfExists(page: Page, name: string) {
     await openBucket(page, name)
     // The list changes to filesTable and is still loading=false for a split second
     // before the files start fetching - this is why we need to wait for 1000ms.
-    // eslint-disable-next-line playwright/no-wait-for-timeout
     await page.waitForTimeout(1000)
     await expect(
-      page.locator('[data-testid=filesTable][data-loading=false]')
+      page.locator('[data-testid=filesTable][data-loading=false]'),
     ).toBeVisible()
     const tableRows = await page
       .getByTestId('filesTable')

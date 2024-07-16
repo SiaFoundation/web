@@ -1,12 +1,31 @@
 {
   "name": "@siafoundation/renterd-js",
-  "description": "SDK for interacting with `renterd`.",
   "version": "0.3.0",
+  "description": "SDK for interacting with `renterd`.",
   "license": "MIT",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "run-p bundle type:gen",
+    "build:dev": "run-p bundle:watch type:gen:watch",
+    "bundle": "tsup src/index.ts --format esm",
+    "clean": "del dist tsconfig.tsbuildinfo",
+    "coverage": "vitest run --coverage ",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest",
+    "type:check": "tsc --noEmit",
+    "type:gen": "tsc --emitDeclarationOnly"
+  },
   "dependencies": {
     "@siafoundation/renterd-types": "0.3.0",
     "@siafoundation/request": "0.2.0",
+    "@siafoundation/types": "^0.4.0",
     "axios": "^0.27.2"
   },
-  "types": "./src/index.d.ts"
+  "devDependencies": {
+    "@siafoundation/typescript-config": "^0.0.0",
+    "@swc/core": "^1.6.13",
+    "del-cli": "^5.1.0",
+    "tsup": "^8.1.0"
+  }
 }

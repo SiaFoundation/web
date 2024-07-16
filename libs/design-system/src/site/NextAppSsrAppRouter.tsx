@@ -1,9 +1,9 @@
 'use client'
 
-import { TooltipProvider } from '../hooks/tooltip'
-import { Toaster } from '../lib/toast'
 import { AppSettingsProvider, CoreProvider } from '@siafoundation/react-core'
 import { ThemeProvider } from 'next-themes'
+import { TooltipProvider } from '../hooks/tooltip'
+import { Toaster } from '../lib/toast'
 
 export function NextAppSsrAppRouter({
   children,

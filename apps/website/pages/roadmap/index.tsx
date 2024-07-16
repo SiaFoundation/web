@@ -1,24 +1,24 @@
+import { getNotionPage } from '@siafoundation/data-sources'
 import {
-  SiteHeading,
   Heading,
   Link,
   Separator,
+  SiteHeading,
   Text,
 } from '@siafoundation/design-system'
-import { Layout } from '../../components/Layout'
-import { routes } from '../../config/routes'
-import { getStats } from '../../content/stats'
-import { AsyncReturnType } from '../../lib/types'
-import { getMinutesInSeconds } from '../../lib/time'
-import { SectionSolid } from '../../components/SectionSolid'
-import { MDXRemote } from 'next-mdx-remote'
-import { components } from '../../config/mdx'
-import { getPrs } from '../../content/prs'
-import { GitHubActivity } from '../../components/GitHubActivity'
-import { backgrounds, previews } from '../../content/assets'
-import { SectionTransparent } from '../../components/SectionTransparent'
-import { getNotionPage } from '@siafoundation/data-sources'
 import { format } from 'date-fns'
+import { MDXRemote } from 'next-mdx-remote'
+import { GitHubActivity } from '../../components/GitHubActivity'
+import { Layout } from '../../components/Layout'
+import { SectionSolid } from '../../components/SectionSolid'
+import { SectionTransparent } from '../../components/SectionTransparent'
+import { components } from '../../config/mdx'
+import { routes } from '../../config/routes'
+import { backgrounds, previews } from '../../content/assets'
+import { getPrs } from '../../content/prs'
+import { getStats } from '../../content/stats'
+import { getMinutesInSeconds } from '../../lib/time'
+import type { AsyncReturnType } from '../../lib/types'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 

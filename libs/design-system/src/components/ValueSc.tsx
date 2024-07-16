@@ -1,9 +1,9 @@
 'use client'
 
+import { humanSiacoin } from '@siafoundation/units'
+import type BigNumber from 'bignumber.js'
 import { Text } from '../core/Text'
 import { Tooltip } from '../core/Tooltip'
-import { humanSiacoin } from '@siafoundation/units'
-import BigNumber from 'bignumber.js'
 
 type Props = {
   size?: React.ComponentProps<typeof Text>['size']
@@ -41,8 +41,8 @@ export function ValueSc({
       ? value.isGreaterThan(0)
         ? 'green'
         : value.isLessThan(0)
-        ? 'red'
-        : 'subtle'
+          ? 'red'
+          : 'subtle'
       : 'contrast')
 
   const el = (

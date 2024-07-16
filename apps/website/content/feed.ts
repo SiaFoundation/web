@@ -1,7 +1,7 @@
+import { fetchAllFeedItems } from '@siafoundation/data-sources'
 import { getCacheValue } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
 import { addNewTab } from '../lib/utils'
-import { fetchAllFeedItems } from '@siafoundation/data-sources'
 
 type Tag =
   | 'sia-all'
@@ -22,12 +22,12 @@ const maxAge = getMinutesInSeconds(5)
 
 async function fetchFeedContent(
   tags: Tag[],
-  limit?: number
+  limit?: number,
 ): Promise<FeedItem[]> {
   const items = await getFeedItems()
   return items
     .filter((a) =>
-      !tags.length ? true : tags.find((tag) => a.tags?.includes(tag))
+      !tags.length ? true : tags.find((tag) => a.tags?.includes(tag)),
     )
     .slice(0, limit)
     .map(addNewTab) as FeedItem[]
@@ -39,7 +39,7 @@ export async function getFeedContent(tags: Tag[], limit?: number) {
     async () => {
       return fetchFeedContent(tags, limit)
     },
-    maxAge
+    maxAge,
   )
 }
 
@@ -49,7 +49,7 @@ async function getFeedItems() {
     async () => {
       return fetchAllFeedItems([])
     },
-    maxAge
+    maxAge,
   )
 }
 

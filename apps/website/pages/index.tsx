@@ -1,29 +1,29 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
-  ContentGallery,
   Callout,
-  SiteHeading,
-  webLinks,
   Code,
+  ContentGallery,
+  SiteHeading,
   Text,
+  webLinks,
 } from '@siafoundation/design-system'
+import { CalloutProject } from '../components/CalloutProject'
+import { HostMap } from '../components/HostMap'
 import { Layout } from '../components/Layout'
-import { routes } from '../config/routes'
-import { AsyncReturnType } from '../lib/types'
-import { getFeedContent } from '../content/feed'
-import { getProjects } from '../content/projects'
-import { getTutorialArticles } from '../content/articles'
-import { textContent } from '../lib/utils'
 import { SectionGradient } from '../components/SectionGradient'
 import { SectionSolid } from '../components/SectionSolid'
 import { SectionTransparent } from '../components/SectionTransparent'
+import { routes } from '../config/routes'
+import { getTutorialArticles } from '../content/articles'
 import { backgrounds, patterns, previews } from '../content/assets'
-import { HostMap } from '../components/HostMap'
-import { CalloutProject } from '../components/CalloutProject'
-import { getGeoHosts } from '../content/geoHosts'
 import { getExchangeRates } from '../content/exchangeRates'
+import { getFeedContent } from '../content/feed'
+import { getGeoHosts } from '../content/geoHosts'
+import { getProjects } from '../content/projects'
 import { getStats } from '../content/stats'
 import { getMinutesInSeconds } from '../lib/time'
+import type { AsyncReturnType } from '../lib/types'
+import { textContent } from '../lib/utils'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 

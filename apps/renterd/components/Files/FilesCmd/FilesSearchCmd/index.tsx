@@ -1,11 +1,11 @@
-import { CommandGroup, CommandItemSearch } from '../../../CmdRoot/Item'
-import { Page } from '../../../CmdRoot/types'
-import { useObjectSearch } from '@siafoundation/renterd-react'
-import { isDirectory } from '../../../../lib/paths'
 import { Text } from '@siafoundation/design-system'
 import { Document16, FolderIcon } from '@siafoundation/react-icons'
-import { FileSearchEmpty } from './FileSearchEmpty'
+import { useObjectSearch } from '@siafoundation/renterd-react'
 import { useFilesManager } from '../../../../contexts/filesManager'
+import { isDirectory } from '../../../../lib/paths'
+import { CommandGroup, CommandItemSearch } from '../../../CmdRoot/Item'
+import type { Page } from '../../../CmdRoot/types'
+import { FileSearchEmpty } from './FileSearchEmpty'
 
 export const filesSearchPage = {
   namespace: 'files/search',
@@ -62,9 +62,9 @@ export function FilesSearchCmd({
             currentPage={currentPage}
             key={path}
             onSelect={() => {
-              beforeSelect()
+              beforeSelect?.()
               navigateToModeSpecificFiltering(searchBucket + path)
-              afterSelect()
+              afterSelect?.()
             }}
             value={path}
           >

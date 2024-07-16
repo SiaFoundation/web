@@ -1,4 +1,4 @@
-import { Panel, Container, Text } from '@siafoundation/design-system'
+import { Container, Panel, Text } from '@siafoundation/design-system'
 
 type Props = {
   code?: number

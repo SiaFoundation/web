@@ -1,8 +1,8 @@
-import { useMemo } from 'react'
 import { TransactionDetailsDialog } from '@siafoundation/design-system'
+import { useMemo } from 'react'
 import { useDialog } from '../contexts/dialog'
 import {
-  TransactionDataConfirmed,
+  type TransactionDataConfirmed,
   useTransactions,
 } from '../contexts/transactions'
 
@@ -12,12 +12,12 @@ export function RenterdTransactionDetailsDialog() {
   // TODO: add transaction endpoint
   const { dataset } = useTransactions()
   const transaction = useMemo(() => {
-    return dataset?.find((t) => t['hash'] === id)
+    return dataset?.find((t) => 'hash' in t && t['hash'] === id)
   }, [dataset, id])
 
   return (
     <TransactionDetailsDialog
-      id={id}
+      id={id!}
       transaction={transaction as TransactionDataConfirmed}
       open={dialog === 'transactionDetails'}
       onOpenChange={onOpenChange}

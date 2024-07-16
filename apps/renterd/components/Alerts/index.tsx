@@ -1,14 +1,14 @@
-import { RenterdSidenav } from '../RenterdSidenav'
-import { routes } from '../../config/routes'
 import { Table } from '@siafoundation/design-system'
+import { routes } from '../../config/routes'
+import { useAlerts } from '../../contexts/alerts'
 import { useDialog } from '../../contexts/dialog'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
+import { RenterdSidenav } from '../RenterdSidenav'
+import { AlertsActionsMenu } from './AlertsActionsMenu'
+import { AlertsFilterMenu } from './AlertsFilterMenu'
+import { StateError } from './StateError'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
-import { AlertsActionsMenu } from './AlertsActionsMenu'
-import { StateError } from './StateError'
-import { useAlerts } from '../../contexts/alerts'
-import { AlertsFilterMenu } from './AlertsFilterMenu'
 
 export function Alerts() {
   const { openDialog } = useDialog()

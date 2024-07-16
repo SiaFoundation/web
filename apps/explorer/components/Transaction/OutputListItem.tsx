@@ -7,7 +7,7 @@ import {
   ValueSc,
   ValueSf,
 } from '@siafoundation/design-system'
-import BigNumber from 'bignumber.js'
+import type BigNumber from 'bignumber.js'
 
 type Props = {
   label: string

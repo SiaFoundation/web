@@ -1,4 +1,4 @@
-import { Text, ScrollArea } from '@siafoundation/design-system'
+import { ScrollArea, Text } from '@siafoundation/design-system'
 import { ChevronRight16 } from '@siafoundation/react-icons'
 import { useFilesManager } from '../../contexts/filesManager'
 import { FilesExplorerModeButton } from '../Files/FilesExplorerModeButton'
@@ -25,7 +25,7 @@ export function UploadsBreadcrumbMenu() {
             <ChevronRight16 />
           </Text>
           <Text
-            onClick={() => setActiveDirectory(() => [activeBucket])}
+            onClick={() => setActiveDirectory(() => [activeBucket!])}
             size="18"
             weight="semibold"
             className="flex items-center cursor-pointer"

@@ -17,7 +17,7 @@ export function ViewModeToggle() {
           <Switch
             aria-label="configViewMode"
             checked={configViewMode === 'advanced'}
-            onCheckedChange={(checked) =>
+            onCheckedChange={(checked: boolean) =>
               setConfigViewMode(checked ? 'advanced' : 'basic')
             }
           />

@@ -1,5 +1,5 @@
-import { WalletEventsResponse } from '@siafoundation/walletd-types'
-import { Page } from 'playwright'
+import type { WalletEventsResponse } from '@siafoundation/walletd-types'
+import type { Page } from 'playwright'
 
 export function getMockWalletEventsResponse(): WalletEventsResponse {
   return []

@@ -1,9 +1,9 @@
-import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
-import { RenterdSidenav } from '../RenterdSidenav'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
+import { RenterdSidenav } from '../RenterdSidenav'
 
 export function Home() {
   const router = useRouter()

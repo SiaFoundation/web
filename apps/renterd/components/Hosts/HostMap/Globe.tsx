@@ -1,25 +1,25 @@
-import { useEffect, useRef, useCallback, useMemo } from 'react'
-import { GlobeMethods } from 'react-globe.gl'
-import { getHostLabel } from './utils'
-import { useElementSize } from 'usehooks-ts'
 import { useTryUntil } from '@siafoundation/react-core'
+import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
+import BigNumber from 'bignumber.js'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
+import type { GlobeMethods } from 'react-globe.gl'
+import { useElementSize } from 'usehooks-ts'
 import earthDarkContrast from '../../../assets/earth-dark-contrast.png'
 import earthTopology from '../../../assets/earth-topology.png'
-import { GlobeDyn } from './GlobeDyn'
-import { HostDataWithLocation } from '../../../contexts/hosts/types'
-import BigNumber from 'bignumber.js'
 import { getHostStatus } from '../../../contexts/hosts/status'
-import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
+import type { HostDataWithLocation } from '../../../contexts/hosts/types'
+import { GlobeDyn } from './GlobeDyn'
+import { getHostLabel } from './utils'
 
 export type Commands = {
   moveToLocation: (
     location: [number, number] | undefined,
-    altitude?: number
+    altitude?: number,
   ) => void
 }
 
 export const emptyCommands: Commands = {
-  moveToLocation: (location: [number, number], altitude?: number) => null,
+  moveToLocation: () => null,
 }
 
 type Props = {
@@ -63,10 +63,10 @@ export function Globe({
           lng: location[1],
           altitude: altitude || 1.5,
         },
-        700
+        700,
       )
     },
-    []
+    [],
   )
 
   useEffect(() => {
@@ -82,7 +82,9 @@ export function Globe({
 
     const directionalLight = globeEl.current
       ?.scene()
-      .children.find((obj3d) => obj3d.type === 'DirectionalLight')
+      .children.find(
+        (obj3d: { type: string }) => obj3d.type === 'DirectionalLight',
+      )
     if (directionalLight) {
       // directionalLight.position.set(1, 1, 1)
       directionalLight.intensity = 10
@@ -90,15 +92,15 @@ export function Globe({
     return true
   })
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (onMount) {
       onMount(cmdRef.current)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // const routes = useDecRoutes({ hosts, activeHost })
-  const routes = []
+  const routes: unknown[] = []
 
   const [containerRef, { height, width }] = useElementSize()
 
@@ -108,6 +110,7 @@ export function Globe({
     <div ref={containerRef} className="w-full h-full">
       <GlobeDyn
         ref={globeEl}
+        // @ts-expect-error - revisit whether this prop is necessary
         width={width}
         height={height}
         backgroundColor="rgba(0,0,0,0)"
@@ -157,8 +160,8 @@ export function Globe({
             return h.publicKey === activeHost?.publicKey
               ? 0.1
               : h.activeContractsCount.gt(0)
-              ? 0.1
-              : 0.1
+                ? 0.1
+                : 0.1
           }
           return h.activeContractsCount.gt(0) ? 0.1 : 0.1
         }}
@@ -178,7 +181,7 @@ export function Globe({
               .div(1e12)
               .toNumber()
           }
-          radius = h.settings.remainingstorage / 1e13 / 3
+          radius = (h.settings?.remainingstorage || 0) / 1e13 / 3
 
           return Math.max(radius, 0.1)
         }}
@@ -202,7 +205,7 @@ export function Globe({
 
 function doesIncludeActiveHost(
   route: Route,
-  activeHost?: HostDataWithLocation
+  activeHost?: HostDataWithLocation,
 ) {
   if (!activeHost) {
     return false
@@ -214,9 +217,9 @@ function doesIncludeActiveHost(
 }
 
 function colorWithOpacity(hexColor: string, opacity: number) {
-  const r = parseInt(hexColor.slice(1, 3), 16)
-  const g = parseInt(hexColor.slice(3, 5), 16)
-  const b = parseInt(hexColor.slice(5, 7), 16)
+  const r = Number.parseInt(hexColor.slice(1, 3), 16)
+  const g = Number.parseInt(hexColor.slice(3, 5), 16)
+  const b = Number.parseInt(hexColor.slice(5, 7), 16)
 
   return `rgba(${r}, ${g}, ${b}, ${opacity})`
 }

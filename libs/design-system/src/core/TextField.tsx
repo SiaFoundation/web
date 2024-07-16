@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
 import React from 'react'
-import { VariantProps } from '../types'
+import type { VariantProps } from '../types'
 
 export const textFieldStyles = cva(
   [
@@ -61,7 +61,7 @@ export const textFieldStyles = cva(
       cursor: 'default',
       state: 'default',
     },
-  }
+  },
 )
 
 export const TextField = React.forwardRef<
@@ -71,7 +71,7 @@ export const TextField = React.forwardRef<
 >(
   (
     { variant, size, state, noSpin, cursor, focus, className, ...props },
-    ref
+    ref,
   ) => {
     return (
       <input
@@ -88,5 +88,5 @@ export const TextField = React.forwardRef<
         {...props}
       />
     )
-  }
+  },
 )

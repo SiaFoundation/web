@@ -1,7 +1,7 @@
 import { Text } from '@siafoundation/design-system'
 import { Application16, Terminal16, Wallet16 } from '@siafoundation/react-icons'
-import { routes } from '../../../config/routes'
 import { useRouter } from 'next/router'
+import { routes } from '../../../config/routes'
 import { NavItem } from './NavItem'
 import { NavbarLink } from './NavbarLink'
 

@@ -1,7 +1,7 @@
 import { Table } from '@siafoundation/design-system'
-import { EmptyState } from './EmptyState'
-import { columns } from '../../contexts/uploads/columns'
 import { useUploads } from '../../contexts/uploads'
+import { columns } from '../../contexts/uploads/columns'
+import { EmptyState } from './EmptyState'
 
 export function UploadsTable() {
   const {

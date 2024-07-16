@@ -1,9 +1,9 @@
 import '../config/style.css'
 import { NextAppCsr } from '@siafoundation/design-system'
-import { AppProps } from 'next/app'
+import { rootFontClasses } from '@siafoundation/fonts'
+import type { AppProps } from 'next/app'
 import { Providers } from '../config/providers'
 import { routes } from '../config/routes'
-import { rootFontClasses } from '@siafoundation/fonts'
 
 export default function App({
   Component,

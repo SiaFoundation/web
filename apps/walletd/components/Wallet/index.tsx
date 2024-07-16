@@ -1,16 +1,16 @@
 import { Table } from '@siafoundation/design-system'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
+import { useEvents } from '../../contexts/events'
+import { useWallets } from '../../contexts/wallets'
 import { WalletdAuthedLayout } from '../WalletdAuthedLayout'
 import { WalletdSidenav } from '../WalletdSidenav'
-import { WalletActionsMenu } from './WalletActionsMenu'
-import { useEvents } from '../../contexts/events'
+import { EventsFilterBar } from './EventsFilterBar'
+import { StateError } from './StateError'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
-import { StateError } from './StateError'
-import { useWallets } from '../../contexts/wallets'
+import { WalletActionsMenu } from './WalletActionsMenu'
 import { WalletNavMenu } from './WalletNavMenu'
-import { EventsFilterBar } from './EventsFilterBar'
 
 export function Wallet() {
   const { openDialog } = useDialog()

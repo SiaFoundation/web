@@ -1,13 +1,13 @@
 import {
-  Text,
-  ValueSc,
-  ValueNum,
-  useSiacoinFiat,
   ScrollArea,
+  Text,
+  ValueNum,
+  ValueSc,
+  useSiacoinFiat,
 } from '@siafoundation/design-system'
 import { TBToBytes, humanBytes, toHastings } from '@siafoundation/units'
-import { useConfig } from '../../contexts/config'
 import { useApp } from '../../contexts/app'
+import { useConfig } from '../../contexts/config'
 
 export function ConfigStats() {
   const { autopilot } = useApp()
@@ -52,7 +52,9 @@ export function ConfigStats() {
                 color="subtle"
                 variant="value"
                 format={(v) =>
-                  `(${perTB.currency.prefix}${v.toFixed(perTB.currency.fixed)})`
+                  `(${perTB.currency!.prefix}${v.toFixed(
+                    perTB.currency!.fixed,
+                  )})`
                 }
               />
             </div>
@@ -62,11 +64,11 @@ export function ConfigStats() {
           </Text>
         </div>
         {/* additionally show estimated spending for total storage if it's different from per TB */}
-        {!estimatedSpendingPerTB.eq(estimatedSpendingPerMonth) && (
+        {!estimatedSpendingPerTB.eq(estimatedSpendingPerMonth!) && (
           <div className="flex gap-1">
             <ValueSc
               size="12"
-              value={toHastings(estimatedSpendingPerMonth)}
+              value={toHastings(estimatedSpendingPerMonth!)}
               dynamicUnits={false}
               fixed={0}
               variant="value"
@@ -80,15 +82,15 @@ export function ConfigStats() {
                   color="subtle"
                   variant="value"
                   format={(v) =>
-                    `(${perMonth.currency.prefix}${v.toFixed(
-                      perMonth.currency.fixed
+                    `(${perMonth.currency!.prefix}${v.toFixed(
+                      perMonth.currency!.fixed,
                     )})`
                   }
                 />
               </div>
             )}
             <Text size="12" font="mono" weight="medium" ellipsis>
-              to store {humanBytes(TBToBytes(storageTB).toNumber())}/month with{' '}
+              to store {humanBytes(TBToBytes(storageTB!).toNumber())}/month with{' '}
               {redundancyMultiplier.toFixed(1)}x redundancy
             </Text>
           </div>

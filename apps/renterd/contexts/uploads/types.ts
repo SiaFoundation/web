@@ -1,5 +1,5 @@
-import { TableColumn } from '@siafoundation/design-system'
-import { ObjectUploadData } from '../filesManager/types'
+import type { TableColumn } from '@siafoundation/design-system'
+import type { ObjectUploadData } from '../filesManager/types'
 
 export type TableColumnId = 'actions' | 'path' | 'status' | 'size' | 'createdAt'
 

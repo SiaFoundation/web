@@ -1,8 +1,8 @@
+import { truncate } from '@siafoundation/design-system'
+import { to } from '@siafoundation/request'
 import { humanSiacoin, humanSiafund } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { siaCentral } from '../../../config/siaCentral'
-import { truncate } from '@siafoundation/design-system'
-import { to } from '@siafoundation/request'
 
 export const revalidate = 0
 
@@ -21,7 +21,7 @@ export default async function Image({ params }) {
       params: {
         id,
       },
-    })
+    }),
   )
 
   if (!a) {
@@ -32,7 +32,7 @@ export default async function Image({ params }) {
         subtitle: 'address',
         initials: 'A',
       },
-      size
+      size,
     )
   }
 
@@ -58,6 +58,6 @@ export default async function Image({ params }) {
       initials: 'A',
       values,
     },
-    size
+    size,
   )
 }

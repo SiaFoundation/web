@@ -1,16 +1,16 @@
-import React from 'react'
 import {
-  DropdownMenu,
   Button,
-  DropdownMenuItem,
-  webLinks,
-  Link,
-  DropdownMenuGroup,
-  DropdownMenuLabel,
   CurrencyFiatSelector,
+  DropdownMenu,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  Link,
   ThemeRadio,
+  webLinks,
 } from '@siafoundation/design-system'
 import { Menu24 } from '@siafoundation/react-icons'
+import type React from 'react'
 import { routes } from '../../config/routes'
 
 type Props = React.ComponentProps<typeof Button> & {

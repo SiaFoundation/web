@@ -1,10 +1,11 @@
 'use client'
 
-import React, { forwardRef } from 'react'
 import * as SwitchPrimitive from '@radix-ui/react-switch'
-import { Text } from './Text'
 import { cva } from 'class-variance-authority'
-import { VariantProps } from '../types'
+import type React from 'react'
+import { forwardRef } from 'react'
+import type { VariantProps } from '../types'
+import { Text } from './Text'
 
 const thumbStyles = cva(
   [
@@ -30,7 +31,7 @@ const thumbStyles = cva(
     defaultVariants: {
       size: 'small',
     },
-  }
+  },
 )
 
 const styles = cva(
@@ -69,7 +70,7 @@ const styles = cva(
       size: 'small',
       state: 'default',
     },
-  }
+  },
 )
 
 export const Switch = forwardRef<

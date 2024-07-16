@@ -10,7 +10,7 @@ describe('paths', () => {
   describe('join', () => {
     it('a', () => {
       expect(join('bucket/dir/', '/path/to/file.txt')).toEqual(
-        'bucket/dir/path/to/file.txt'
+        'bucket/dir/path/to/file.txt',
       )
     })
     it('b', () => {
@@ -24,7 +24,7 @@ describe('paths', () => {
   describe('buildDirPath', () => {
     it('a', () => {
       expect(buildDirectoryPath('bucket/dir/', '/path/to/dir')).toEqual(
-        'bucket/dir/path/to/dir/'
+        'bucket/dir/path/to/dir/',
       )
     })
     it('b', () => {
@@ -85,7 +85,7 @@ describe('paths', () => {
 
     it('works for file with hash in path', () => {
       expect(
-        bucketAndKeyParamsFromPath('bucket/path#/to#hash/file#hash.txt')
+        bucketAndKeyParamsFromPath('bucket/path#/to#hash/file#hash.txt'),
       ).toEqual({
         bucket: 'bucket',
         key: 'path%23/to%23hash/file%23hash.txt',

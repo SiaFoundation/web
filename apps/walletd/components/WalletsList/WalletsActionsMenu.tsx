@@ -1,9 +1,9 @@
 import { Button } from '@siafoundation/design-system'
 import { Add16, Locked16, Settings16 } from '@siafoundation/react-icons'
-import { useWallets } from '../../contexts/wallets'
 import { useDialog } from '../../contexts/dialog'
-import { WalletsViewDropdownMenu } from './WalletsViewDropdownMenu'
+import { useWallets } from '../../contexts/wallets'
 import { WalletsContextMenu } from '../WalletsContextMenu'
+import { WalletsViewDropdownMenu } from './WalletsViewDropdownMenu'
 
 export function WalletsActionsMenu() {
   const { lockAllWallets, unlockedCount } = useWallets()

@@ -1,8 +1,8 @@
 import { Button } from '@siafoundation/design-system'
 import { Add16 } from '@siafoundation/react-icons'
-import { useWallets } from '../../contexts/wallets'
 import { useRouter } from 'next/router'
 import { useDialog } from '../../contexts/dialog'
+import { useWallets } from '../../contexts/wallets'
 import { AddressesViewDropdownMenu } from './AddressesViewDropdownMenu'
 
 export function AddressesActionsMenu() {

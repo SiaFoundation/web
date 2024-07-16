@@ -1,14 +1,14 @@
 import { getWasmApi } from './sdk'
-import {
-  RPCReadSectorResponse,
-  RPCSettingsResponse,
-  RPCWriteSectorResponse,
-  RPCReadSectorRequest,
-  RPCWriteSectorRequest,
+import type {
   RPC,
   RPCReadSector,
-  RPCWriteSector,
+  RPCReadSectorRequest,
+  RPCReadSectorResponse,
   RPCSettings,
+  RPCSettingsResponse,
+  RPCWriteSector,
+  RPCWriteSectorRequest,
+  RPCWriteSectorResponse,
 } from './types'
 
 export class WebTransportClient {
@@ -52,7 +52,7 @@ export class WebTransportClient {
   private async sendRequest<T extends RPC>(
     rpcRequest: T['request'],
     encodeFn: (data: T['request']) => { rpc?: Uint8Array; error?: string },
-    decodeFn: (rpc: Uint8Array) => { data?: T['response']; error?: string }
+    decodeFn: (rpc: Uint8Array) => { data?: T['response']; error?: string },
   ): Promise<T['response']> {
     let stream: WebTransportBidirectionalStream | undefined
     try {
@@ -78,7 +78,7 @@ export class WebTransportClient {
 
   private async handleIncomingData<T extends RPC>(
     stream: WebTransportBidirectionalStream,
-    decodeFn: (rpc: Uint8Array) => { data?: T['response']; error?: string }
+    decodeFn: (rpc: Uint8Array) => { data?: T['response']; error?: string },
   ): Promise<T['response']> {
     try {
       const reader = stream.readable.getReader()
@@ -99,22 +99,22 @@ export class WebTransportClient {
   }
 
   async sendReadSectorRequest(
-    readSector: RPCReadSectorRequest
+    readSector: RPCReadSectorRequest,
   ): Promise<RPCReadSectorResponse> {
     return this.sendRequest<RPCReadSector>(
       readSector,
       getWasmApi().rhp.encodeReadSectorRequest,
-      getWasmApi().rhp.decodeReadSectorResponse
+      getWasmApi().rhp.decodeReadSectorResponse,
     )
   }
 
   async sendWriteSectorRequest(
-    writeSector: RPCWriteSectorRequest
+    writeSector: RPCWriteSectorRequest,
   ): Promise<RPCWriteSectorResponse> {
     return this.sendRequest<RPCWriteSector>(
       writeSector,
       getWasmApi().rhp.encodeWriteSectorRequest,
-      getWasmApi().rhp.decodeWriteSectorResponse
+      getWasmApi().rhp.decodeWriteSectorResponse,
     )
   }
 
@@ -122,7 +122,7 @@ export class WebTransportClient {
     return this.sendRequest<RPCSettings>(
       undefined,
       getWasmApi().rhp.encodeSettingsRequest,
-      getWasmApi().rhp.decodeSettingsResponse
+      getWasmApi().rhp.decodeSettingsResponse,
     )
   }
 }
@@ -131,6 +131,6 @@ function base64ToArrayBuffer(base64: string): ArrayBuffer {
   const buffer = Buffer.from(base64, 'base64')
   return buffer.buffer.slice(
     buffer.byteOffset,
-    buffer.byteOffset + buffer.byteLength
+    buffer.byteOffset + buffer.byteLength,
   )
 }

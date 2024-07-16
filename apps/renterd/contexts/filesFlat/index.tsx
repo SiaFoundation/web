@@ -1,8 +1,8 @@
 import { useDatasetEmptyState } from '@siafoundation/design-system'
 import { createContext, useContext, useMemo } from 'react'
-import { useDataset } from './dataset'
 import { useFilesManager } from '../filesManager'
 import { columns } from './columns'
+import { useDataset } from './dataset'
 
 function useFilesFlatMain() {
   const { sortDirection, sortField, filters, enabledColumns } =
@@ -12,7 +12,7 @@ function useFilesFlatMain() {
     sortDirection,
   })
   const nextMarker = response.data?.nextMarker
-  const isMore = response.data?.hasMore
+  const isMore = !!response.data?.hasMore
 
   const datasetPage = useMemo(() => {
     return dataset
@@ -22,15 +22,15 @@ function useFilesFlatMain() {
     dataset,
     response.isValidating,
     response.error,
-    filters
+    filters,
   )
 
   const filteredTableColumns = useMemo(
     () =>
       columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
+        (column) => column.fixed || enabledColumns.includes(column.id),
       ),
-    [enabledColumns]
+    [enabledColumns],
   )
 
   return {

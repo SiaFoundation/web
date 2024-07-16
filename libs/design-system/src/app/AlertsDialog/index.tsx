@@ -1,18 +1,18 @@
 'use client'
 
+import { Checkmark16 } from '@siafoundation/react-icons'
+import { humanDate } from '@siafoundation/units'
+import { times } from '@technically/lodash'
+import { cx } from 'class-variance-authority'
+import { useCallback, useMemo, useState } from 'react'
+import type { SWRResponse } from 'swr'
 import { Button } from '../../core/Button'
 import { Dialog } from '../../core/Dialog'
 import { Heading } from '../../core/Heading'
-import { Checkmark16 } from '@siafoundation/react-icons'
 import { Skeleton } from '../../core/Skeleton'
 import { Text } from '../../core/Text'
 import { useDatasetEmptyState } from '../../hooks/useDatasetEmptyState'
-import { humanDate } from '@siafoundation/units'
-import { cx } from 'class-variance-authority'
-import { times } from '@technically/lodash'
-import { useCallback, useMemo, useState } from 'react'
 import { StateEmpty } from './StateEmpty'
-import { SWRResponse } from 'swr'
 
 type AlertSeverity = 'info' | 'warning' | 'error' | 'critical'
 type Alert = {
@@ -51,14 +51,14 @@ export function AlertsDialog({
     alerts.data,
     alerts.isValidating,
     alerts.error,
-    stubFilters
+    stubFilters,
   )
 
   const [filter, setFilter] = useState<AlertSeverity>()
   const dataset = useMemo(
     () =>
       alerts.data?.filter((a) => (filter ? a.severity === filter : true)) || [],
-    [alerts.data, filter]
+    [alerts.data, filter],
   )
 
   // Sort keys by dataFieldOrder, then alphabetically
@@ -80,7 +80,7 @@ export function AlertsDialog({
       })
       return orderedKeys
     },
-    [dataFieldOrder]
+    [dataFieldOrder],
   )
 
   return (
@@ -135,7 +135,7 @@ export function AlertsDialog({
                 onClick={() =>
                   dismissMany(
                     dataset.map((a) => a.id),
-                    filter
+                    filter,
                   )
                 }
               >
@@ -150,7 +150,7 @@ export function AlertsDialog({
       <div
         className={cx(
           'flex flex-col overflow-hidden -m-4',
-          'border-t border-gray-200 dark:border-graydark-300'
+          'border-t border-gray-200 dark:border-graydark-300',
         )}
       >
         {loadingState === 'noneYet' && <StateEmpty filtered={false} />}
@@ -158,7 +158,7 @@ export function AlertsDialog({
           <div
             className={cx(
               'flex items-center justify-center h-[100px]',
-              itemBorderStyles()
+              itemBorderStyles(),
             )}
           >
             <Text size="18" color="subtle">
@@ -176,7 +176,7 @@ export function AlertsDialog({
                   className={cx(
                     'flex flex-col gap-1 w-full p-4',
                     'border-t border-gray-200 dark:border-graydark-300',
-                    'first:border-none'
+                    'first:border-none',
                   )}
                 >
                   <div className="flex justify-between gap-1 w-full">
@@ -261,6 +261,6 @@ function EntityListSkeleton() {
 function itemBorderStyles() {
   return cx(
     'border-t border-gray-200 dark:border-graydark-300',
-    'first:border-none'
+    'first:border-none',
   )
 }

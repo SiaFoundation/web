@@ -1,7 +1,7 @@
-import { Warning16 } from '@siafoundation/react-icons'
 import { Panel, Separator, Text, Tooltip } from '@siafoundation/design-system'
+import { Warning16 } from '@siafoundation/react-icons'
 import { humanSiacoin, humanSiafund } from '@siafoundation/units'
-import BigNumber from 'bignumber.js'
+import type BigNumber from 'bignumber.js'
 import { cx } from 'class-variance-authority'
 
 export function WalletBalanceWithSf({
@@ -48,7 +48,7 @@ export function WalletBalanceWithSf({
     <Panel
       className={cx(
         'hidden sm:flex h-7 items-center gap-2',
-        !isSynced ? 'pl-2 pr-3' : 'px-3'
+        !isSynced ? 'pl-2 pr-3' : 'px-3',
       )}
     >
       {!isSynced && (

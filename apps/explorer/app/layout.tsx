@@ -1,9 +1,9 @@
 import { Layout } from '../components/Layout'
 import '../config/style.css'
 import { NextAppSsrAppRouter } from '@siafoundation/design-system'
-import { appLink } from '../config'
-import Script from 'next/script'
 import { rootFontClasses } from '@siafoundation/fonts'
+import Script from 'next/script'
+import { appLink } from '../config'
 
 export const metadata = {
   title: 'Explorer',
@@ -11,7 +11,7 @@ export const metadata = {
   metadataBase: new URL(
     process.env.NODE_ENV === 'development'
       ? `http://localhost:${process.env.PORT || 3000}`
-      : appLink
+      : appLink,
   ),
 }
 

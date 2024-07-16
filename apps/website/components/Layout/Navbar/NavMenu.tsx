@@ -6,10 +6,10 @@ import {
   panelStyles,
 } from '@siafoundation/design-system'
 import { cx } from 'class-variance-authority'
-import { RentNav } from './RentNav'
-import { HostNav } from './HostNav'
-import { WalletNav } from './WalletNav'
 import { GrantsNav } from './GrantsNav'
+import { HostNav } from './HostNav'
+import { RentNav } from './RentNav'
+import { WalletNav } from './WalletNav'
 
 export function NavMenu() {
   return (
@@ -33,7 +33,7 @@ export function NavMenu() {
             'origin-[top_center] overflow-hidden rounded-[6px] transition-[width,_height] duration-300',
             'mt-[10px] h-[var(--radix-navigation-menu-viewport-height)]',
             'w-full sm:w-[var(--radix-navigation-menu-viewport-width)]',
-            panelStyles()
+            panelStyles(),
           )}
         />
       </div>

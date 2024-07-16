@@ -1,5 +1,5 @@
-import { Bus } from './bus'
 import { Autopilot } from './autopilot'
+import { Bus } from './bus'
 import { Worker } from './worker'
 
 export async function example() {

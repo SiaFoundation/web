@@ -1,12 +1,12 @@
 'use client'
 
-import { Text } from '../core/Text'
-import BigNumber from 'bignumber.js'
-import { ValueSc } from './ValueSc'
-import { ValueFiat } from './ValueFiat'
 import { useAppSettings } from '@siafoundation/react-core'
 import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
+import type BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
+import type { Text } from '../core/Text'
+import { ValueFiat } from './ValueFiat'
+import { ValueSc } from './ValueSc'
 
 type Props = {
   size?: React.ComponentProps<typeof Text>['size']
@@ -82,7 +82,7 @@ export function ValueScFiat({
       currencyDisplay,
       displayBoth,
       displayBothDirection,
-    ]
+    ],
   )
 
   const fiatEl = useMemo(
@@ -123,7 +123,7 @@ export function ValueScFiat({
       currencyDisplay,
       displayBoth,
       displayBothDirection,
-    ]
+    ],
   )
 
   if (currencyDisplay === 'sc') {

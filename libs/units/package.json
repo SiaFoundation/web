@@ -1,14 +1,32 @@
 {
   "name": "@siafoundation/units",
-  "description": "Methods and types for interacting with the Sia Central API.",
   "version": "3.0.3",
+  "description": "Methods and types for interacting with the Sia Central API.",
   "license": "MIT",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "run-p bundle type:gen",
+    "build:dev": "run-p bundle:watch type:gen:watch",
+    "bundle": "tsup src/index.ts --format esm",
+    "clean": "del dist tsconfig.tsbuildinfo",
+    "coverage": "vitest run --coverage ",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest",
+    "type:check": "tsc --noEmit",
+    "type:gen": "tsc --emitDeclarationOnly"
+  },
   "dependencies": {
     "@siafoundation/react-core": "^1.2.0",
-    "bignumber.js": "^9.0.2",
+    "@siafoundation/sia-central-types": "0.1.1",
     "@technically/lodash": "^4.17.0",
-    "blakejs": "^1.2.1",
-    "@siafoundation/sia-central-types": "0.1.1"
+    "bignumber.js": "^9.0.2",
+    "blakejs": "^1.2.1"
   },
-  "types": "./src/index.d.ts"
+  "devDependencies": {
+    "@siafoundation/typescript-config": "^0.0.0",
+    "@swc/core": "^1.6.13",
+    "del-cli": "^5.1.0",
+    "tsup": "^8.1.0"
+  }
 }

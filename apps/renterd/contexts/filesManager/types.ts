@@ -1,7 +1,7 @@
-import { Bucket } from '@siafoundation/renterd-types'
-import { FullPath } from '../../lib/paths'
-import { TableColumn } from '@siafoundation/design-system'
-import { MultipartUpload } from '../../lib/multipartUpload'
+import type { TableColumn } from '@siafoundation/design-system'
+import type { Bucket } from '@siafoundation/renterd-types'
+import type { MultipartUpload } from '../../lib/multipartUpload'
+import type { FullPath } from '../../lib/paths'
 
 export type ObjectType = 'bucket' | 'directory' | 'file'
 

@@ -8,7 +8,7 @@ export function TransparentGradient({ className }: { className?: string }) {
         'bg-gradient-to-b',
         'from-white via-white/95 to-white',
         'dark:from-graydark-50 dark:via-graydark-100/95 dark:to-graydark-50',
-        className
+        className,
       )}
     />
   )

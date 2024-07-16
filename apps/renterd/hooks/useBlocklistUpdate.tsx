@@ -46,6 +46,6 @@ export function useBlocklistUpdate() {
       }
       return func()
     },
-    [blocklistUpdate]
+    [blocklistUpdate],
   )
 }

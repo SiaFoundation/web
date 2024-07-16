@@ -1,17 +1,17 @@
 import {
-  triggerSuccessToast,
-  triggerErrorToast,
   minutesInMilliseconds,
+  triggerErrorToast,
+  triggerSuccessToast,
 } from '@siafoundation/design-system'
-import { useCallback } from 'react'
-import { SettingsData } from './types'
-import { transformUpSettings, transformUpSettingsPinned } from './transform'
-import { Resources } from './resources'
 import {
   useSettingsPinnedUpdate,
   useSettingsUpdate,
   useStateHost,
 } from '@siafoundation/hostd-react'
+import { useCallback } from 'react'
+import type { Resources } from './resources'
+import { transformUpSettings, transformUpSettingsPinned } from './transform'
+import type { SettingsData } from './types'
 
 export function useOnValid({
   resources,
@@ -50,7 +50,7 @@ export function useOnValid({
           const settingsPinned = await settingsPinnedUpdate.put({
             payload: transformUpSettingsPinned(
               values,
-              resources.settingsPinned.data
+              resources.settingsPinned.data,
             ),
           })
 
@@ -88,7 +88,7 @@ export function useOnValid({
       revalidateAndResetForm,
       host.data,
       state.data,
-    ]
+    ],
   )
   return onValid
 }

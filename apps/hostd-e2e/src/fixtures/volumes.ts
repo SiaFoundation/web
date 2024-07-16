@@ -1,7 +1,7 @@
-import { Page, expect } from '@playwright/test'
+import { type Page, expect } from '@playwright/test'
+import { clearToasts } from './clearToasts'
 import { navigateToVolumes } from './navigate'
 import { fillTextInputByName } from './textInput'
-import { clearToasts } from './clearToasts'
 
 export async function createVolume(page: Page, name: string, path: string) {
   const fullPath = `${path}/${name}`
@@ -10,11 +10,10 @@ export async function createVolume(page: Page, name: string, path: string) {
   await fillTextInputByName(page, 'name', name)
   await fillTextInputByName(page, 'immediatePath', path)
   // immediatePath updates path after 500ms
-  // eslint-disable-next-line playwright/no-wait-for-timeout
   await page.waitForTimeout(1000)
   await fillTextInputByName(page, 'size', '11')
   await expect(
-    page.getByRole('dialog').getByText('Must be between 10.00 GB')
+    page.getByRole('dialog').getByText('Must be between 10.00 GB'),
   ).toBeHidden()
   await page.locator('input[name=size]').press('Enter')
   await expect(page.getByRole('dialog')).toBeHidden()
@@ -33,7 +32,7 @@ export async function deleteVolume(page: Page, name: string, path: string) {
   await page.locator('input[name=path]').press('Enter')
   await expect(page.getByRole('dialog')).toBeHidden()
   await expect(
-    page.getByText('Volume is now being permanently deleted')
+    page.getByText('Volume is now being permanently deleted'),
   ).toBeVisible()
   await volumeNotInList(page, fullPath)
 }
@@ -41,7 +40,7 @@ export async function deleteVolume(page: Page, name: string, path: string) {
 export async function deleteVolumeIfExists(
   page: Page,
   name: string,
-  path: string
+  path: string,
 ) {
   const doesVolumeExist = await page
     .getByRole('table')

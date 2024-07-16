@@ -1,9 +1,9 @@
 'use client'
 
+import { usePathname } from '@siafoundation/next'
 import { Button } from '../../core/Button'
 import { Link } from '../../core/Link'
 import { Tooltip } from '../../core/Tooltip'
-import { usePathname } from '@siafoundation/next'
 
 type Props = {
   title: string

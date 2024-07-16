@@ -1,6 +1,6 @@
 import {
   Button,
-  ConfigFields,
+  type ConfigFields,
   Dialog,
   FieldError,
   FieldLabel,
@@ -11,24 +11,24 @@ import {
   triggerSuccessToast,
   useDialogFormHelpers,
 } from '@siafoundation/design-system'
-import { WalletAddressMetadata } from '@siafoundation/walletd-types'
+import { getSDK } from '@siafoundation/sdk'
 import { useWalletAddressAdd } from '@siafoundation/walletd-react'
+import type { WalletAddressMetadata } from '@siafoundation/walletd-types'
+import BigNumber from 'bignumber.js'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useWallets } from '../../contexts/wallets'
-import BigNumber from 'bignumber.js'
-import { DeviceConnectForm } from '../DeviceConnectForm'
 import { useLedger } from '../../contexts/ledger'
-import { LedgerAddress } from './LedgerAddress'
+import { useWallets } from '../../contexts/wallets'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { useWalletAddresses } from '../../hooks/useWalletAddresses'
-import { getSDK } from '@siafoundation/sdk'
+import { DeviceConnectForm } from '../DeviceConnectForm'
 import {
   FieldRescan,
-  getRescanFields,
   getDefaultRescanValues,
+  getRescanFields,
   useTriggerRescan,
 } from '../FieldRescan'
-import { useSyncStatus } from '../../hooks/useSyncStatus'
+import { LedgerAddress } from './LedgerAddress'
 
 export type WalletAddressesGenerateLedgerDialogParams = {
   walletId: string
@@ -140,19 +140,19 @@ export function WalletAddressesGenerateLedgerDialog({
   // make sure the user explicitly connects to the correct device when
   // adding addresses - except when this dialog is triggered right after
   // the wallet is created.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!walletJustCreated && open) {
       disconnect()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (form.formState.isSubmitting) {
       return
     }
     form.setValue('index', new BigNumber(nextIndex))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nextIndex])
 
   const formIndex = form.watch('index')
@@ -176,13 +176,13 @@ export function WalletAddressesGenerateLedgerDialog({
   // index to address
   const [indices, setIndicies] = useState<Record<string, AddressMeta>>({})
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (open && walletJustCreated) {
       setIndicies({
         '0': emptyMeta(0),
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
   const addIndicies = useCallback(() => {
@@ -231,14 +231,14 @@ export function WalletAddressesGenerateLedgerDialog({
         return newIndices
       })
     },
-    [setIndicies]
+    [setIndicies],
   )
 
   const indiciesWithAddresses = useMemo(() => {
     const indiciesWithAddresses: Record<string, AddressMeta> = {}
     for (const [index, { address, publicKey }] of Object.entries(indices)) {
       const existing = existingAddresses?.find(
-        (a) => a.metadata.index === Number(index)
+        (a) => a.metadata.index === Number(index),
       )
       indiciesWithAddresses[index] = {
         isNew: !existing,
@@ -256,7 +256,7 @@ export function WalletAddressesGenerateLedgerDialog({
       Object.entries(indiciesWithAddresses)
         .filter(([index, item]) => item.isNew && item.address)
         .map(([index, item]) => item),
-    [indiciesWithAddresses]
+    [indiciesWithAddresses],
   )
 
   const saveAddresses = useCallback(async () => {
@@ -327,7 +327,7 @@ export function WalletAddressesGenerateLedgerDialog({
       await triggerRescan(values)
       closeAndReset()
     },
-    [newGeneratedAddresses, saveAddresses, closeAndReset, triggerRescan]
+    [newGeneratedAddresses, saveAddresses, closeAndReset, triggerRescan],
   )
 
   return (
@@ -394,7 +394,7 @@ export function WalletAddressesGenerateLedgerDialog({
                   index={Number(index)}
                   remove={() => removeIndex(Number(index))}
                 />
-              )
+              ),
             )}
           </div>
         </div>

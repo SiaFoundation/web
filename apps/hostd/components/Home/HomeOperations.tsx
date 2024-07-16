@@ -1,9 +1,9 @@
 import {
   ChartXY,
-  Text,
-  Heading,
   DatumCardConfigurable,
   DatumScrollArea,
+  Heading,
+  Text,
 } from '@siafoundation/design-system'
 import { humanNumber } from '@siafoundation/units'
 import { useMetrics } from '../../contexts/metrics'

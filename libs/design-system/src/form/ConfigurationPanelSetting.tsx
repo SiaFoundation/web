@@ -1,11 +1,11 @@
+import type { FieldValues } from 'react-hook-form'
 import { PanelMenuSetting } from '../app/PanelMenuSetting'
-import { FieldValues } from 'react-hook-form'
-import { FieldProps } from './configurationFields'
 import { ConfigurationControl } from './ConfigurationControl'
+import type { FieldProps } from './configurationFields'
 
 export function ConfigurationPanelSetting<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({ name, form, fields }: FieldProps<Values, Categories>) {
   const field = fields[name]
   return (

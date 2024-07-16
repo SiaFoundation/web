@@ -1,16 +1,16 @@
 import {
-  useGetSwr,
+  type HookArgsSwr,
   useAppSettings,
-  HookArgsSwr,
+  useGetSwr,
 } from '@siafoundation/react-core'
 import {
+  type SiaCentralContractParams,
+  type SiaCentralContractResponse,
   defaultApi,
-  SiaCentralContractParams,
-  SiaCentralContractResponse,
 } from '@siafoundation/sia-central-types'
 
 export function useSiaCentralContract(
-  args?: HookArgsSwr<SiaCentralContractParams, SiaCentralContractResponse>
+  args?: HookArgsSwr<SiaCentralContractParams, SiaCentralContractResponse>,
 ) {
   const { settings } = useAppSettings()
   return useGetSwr({

@@ -1,10 +1,10 @@
-import { TBToBytes } from './bytes'
-import { monthsToBlocks } from './blockTime'
-import { SiaCentralHost } from '@siafoundation/sia-central-types'
+import type { CurrencyOption } from '@siafoundation/react-core'
+import type { SiaCentralHost } from '@siafoundation/sia-central-types'
 import BigNumber from 'bignumber.js'
+import { monthsToBlocks } from './blockTime'
+import { TBToBytes } from './bytes'
 import { humanSiacoin } from './currency'
 import { humanBytes, humanSpeed } from './humanUnits'
-import { CurrencyOption } from '@siafoundation/react-core'
 
 type Props = {
   price: string
@@ -24,7 +24,7 @@ export function getStorageCost({ price, exchange }: Props) {
         .toFormat(2)}/TB`
     : `${humanSiacoin(
         new BigNumber(price).times(TBToBytes(1)).times(monthsToBlocks(1)),
-        { fixed: 3 }
+        { fixed: 3 },
       )}/TB`
 }
 
@@ -63,7 +63,7 @@ type SiaCentralPartialHost = {
 export function getDownloadSpeed(host: SiaCentralPartialHost) {
   return host.benchmark
     ? humanSpeed(
-        (host.benchmark.data_size * 8) / (host.benchmark.download_time / 1000)
+        (host.benchmark.data_size * 8) / (host.benchmark.download_time / 1000),
       )
     : '-'
 }
@@ -71,7 +71,7 @@ export function getDownloadSpeed(host: SiaCentralPartialHost) {
 export function getUploadSpeed(host: SiaCentralPartialHost) {
   return host.benchmark
     ? humanSpeed(
-        (host.benchmark.data_size * 8) / (host.benchmark.upload_time / 1000)
+        (host.benchmark.data_size * 8) / (host.benchmark.upload_time / 1000),
       )
     : '-'
 }
@@ -79,7 +79,7 @@ export function getUploadSpeed(host: SiaCentralPartialHost) {
 export function getRemainingOverTotalStorage(host: SiaCentralHost) {
   return host.settings
     ? `${humanBytes(host.settings.remaining_storage)}/${humanBytes(
-        host.settings.total_storage
+        host.settings.total_storage,
       )} remaining`
     : '-'
 }

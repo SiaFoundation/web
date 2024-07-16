@@ -1,15 +1,15 @@
-import { RenterdSidenav } from '../RenterdSidenav'
-import { routes } from '../../config/routes'
 import { ScrollArea, Table } from '@siafoundation/design-system'
+import { cx } from 'class-variance-authority'
+import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { useHosts } from '../../contexts/hosts'
+import { getHostStatus } from '../../contexts/hosts/status'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
-import { StateEmpty } from './StateEmpty'
+import { RenterdSidenav } from '../RenterdSidenav'
+import { HostMap } from './HostMap'
 import { HostsActionsMenu } from './HostsActionsMenu'
 import { HostsFilterBar } from './HostsFilterBar'
-import { HostMap } from './HostMap'
-import { cx } from 'class-variance-authority'
-import { getHostStatus } from '../../contexts/hosts/status'
+import { StateEmpty } from './StateEmpty'
 
 export function Hosts() {
   const { openDialog } = useDialog()
@@ -39,7 +39,7 @@ export function Hosts() {
           className={cx(
             'absolute h-[70%] w-full',
             viewMode === 'map' ? 'block' : 'invisible',
-            'transition-all'
+            'transition-all',
           )}
         >
           <HostMap />
@@ -48,7 +48,7 @@ export function Hosts() {
           className={cx(
             'absolute overflow-hidden transition-all w-full',
             'duration-300',
-            'overflow-hidden'
+            'overflow-hidden',
           )}
           style={{
             bottom: 0,
@@ -64,7 +64,7 @@ export function Hosts() {
             <div
               className={cx(
                 viewMode === 'map' ? 'pb-6 px-6' : 'p-6',
-                'min-w-fit'
+                'min-w-fit',
               )}
             >
               <Table

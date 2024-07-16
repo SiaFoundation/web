@@ -1,6 +1,6 @@
-import { useMemo } from 'react'
 import { random, sortBy } from '@technically/lodash'
-import { SiaCentralPartialHost } from '../../content/geoHosts'
+import { useMemo } from 'react'
+import type { SiaCentralPartialHost } from '../../content/geoHosts'
 
 type Props = {
   activeHost?: SiaCentralPartialHost
@@ -43,7 +43,7 @@ export function useDecRoutes({ activeHost, hosts }: Props) {
         const randomDistantIndex = random(
           // Math.round((hostRoutes.length - 1) / 2),
           0,
-          hostRoutes.length - 1
+          hostRoutes.length - 1,
         )
         const extra = hostRoutes[randomDistantIndex]
         routes.push(extra)
@@ -75,7 +75,7 @@ export function useDecRoutes({ activeHost, hosts }: Props) {
 
   const routes = useMemo(
     () => [...backgroundRoutes, ...activeRoutes],
-    [backgroundRoutes, activeRoutes]
+    [backgroundRoutes, activeRoutes],
   )
 
   return routes
@@ -83,10 +83,10 @@ export function useDecRoutes({ activeHost, hosts }: Props) {
 
 function distanceBetweenHosts(
   h1: SiaCentralPartialHost,
-  h2: SiaCentralPartialHost
+  h2: SiaCentralPartialHost,
 ) {
   return Math.sqrt(
     Math.pow(h1.location[0] - h2.location[0], 2) +
-      Math.pow(h1.location[1] - h2.location[1], 2)
+      Math.pow(h1.location[1] - h2.location[1], 2),
   )
 }

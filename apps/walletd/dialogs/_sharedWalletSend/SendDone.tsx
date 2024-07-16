@@ -1,7 +1,7 @@
 import { Text } from '@siafoundation/design-system'
 import { CheckmarkFilled32 } from '@siafoundation/react-icons'
 import { SendReceipt } from './SendReceipt'
-import { SendParams } from './types'
+import type { SendParams } from './types'
 
 type Props = {
   params: SendParams

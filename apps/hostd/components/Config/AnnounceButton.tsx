@@ -5,17 +5,17 @@ import {
   triggerErrorToast,
   triggerSuccessToast,
 } from '@siafoundation/design-system'
-import { Bullhorn16 } from '@siafoundation/react-icons'
-import { useDialog } from '../../contexts/dialog'
 import {
   useSettings,
   useSettingsAnnounce,
   useStateHost,
   useTxPoolFee,
 } from '@siafoundation/hostd-react'
+import { Bullhorn16 } from '@siafoundation/react-icons'
 import { humanSiacoin } from '@siafoundation/units'
-import { useCallback } from 'react'
 import BigNumber from 'bignumber.js'
+import { useCallback } from 'react'
+import { useDialog } from '../../contexts/dialog'
 
 export function AnnounceButton() {
   const { openConfirmDialog } = useDialog()
@@ -69,7 +69,7 @@ export function AnnounceButton() {
           })
         },
       }),
-    [openConfirmDialog, settingsAnnounce, txpoolFee]
+    [openConfirmDialog, settingsAnnounce, txpoolFee],
   )
 
   return (

@@ -1,20 +1,20 @@
 import {
-  PoolSelected,
-  copyToClipboard,
-  ScrollArea,
-  Text,
-  Panel,
-  Paragraph,
-  FormTextFieldFormik,
   FieldGroupFormik,
   FormSubmitButtonFormik,
+  FormTextFieldFormik,
+  Panel,
+  Paragraph,
+  PoolSelected,
+  ScrollArea,
+  Text,
+  copyToClipboard,
 } from '@siafoundation/design-system'
-import { ListChecked32, Filter32, Warning16 } from '@siafoundation/react-icons'
+import { Filter32, ListChecked32, Warning16 } from '@siafoundation/react-icons'
 import { useHostsAllowlist } from '@siafoundation/renterd-react'
-import { useAllowlistUpdate } from '../../../hooks/useAllowlistUpdate'
 import { useFormik } from 'formik'
-import * as Yup from 'yup'
 import { useEffect } from 'react'
+import * as Yup from 'yup'
+import { useAllowlistUpdate } from '../../../hooks/useAllowlistUpdate'
 
 const initialValues = {
   publicKey: '',
@@ -47,15 +47,15 @@ export function AllowlistForm() {
     },
   })
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     formik.setStatus(undefined)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values])
 
   const isFiltered = formik.values.publicKey
   const filtered =
     allowlistResponse.data?.filter(
-      (a) => !formik.values.publicKey || a.includes(formik.values.publicKey)
+      (a) => !formik.values.publicKey || a.includes(formik.values.publicKey),
     ) || []
 
   return (

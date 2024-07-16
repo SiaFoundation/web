@@ -1,10 +1,10 @@
-import {
+import type {
   ChainIndex,
-  FileContractRevision,
-  Transaction,
   Currency,
   EncryptionKey,
+  FileContractRevision,
   PublicKey,
+  Transaction,
   TransactionSignature,
 } from '@siafoundation/types'
 

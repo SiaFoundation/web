@@ -1,11 +1,11 @@
 'use client'
 
-import React from 'react'
-import { useTheme } from 'next-themes'
-import { Asleep16, Awake16, Screen16 } from '@siafoundation/react-icons'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
-import { Tooltip } from '../core/Tooltip'
+import { Asleep16, Awake16, Screen16 } from '@siafoundation/react-icons'
 import { cx } from 'class-variance-authority'
+import { useTheme } from 'next-themes'
+import React from 'react'
+import { Tooltip } from '../core/Tooltip'
 
 const RadioCard = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Item>,
@@ -19,7 +19,7 @@ const RadioCard = React.forwardRef<
       'focus:ring ring-blue-500 dark:ring-blue-200',
       'text-gray-700 dark:text-graydark-700',
       'data-[state=checked]:text-gray-1100 data-[state=checked]:dark:text-white',
-      className
+      className,
     )}
   />
 ))

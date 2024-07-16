@@ -3,11 +3,11 @@ import {
   triggerErrorToast,
   triggerSuccessToast,
 } from '@siafoundation/design-system'
-import { useCallback } from 'react'
 import {
   useSettingContractSet,
   useSettingUpdate,
 } from '@siafoundation/renterd-react'
+import { useCallback } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 import { transformUpContractSet } from '../../contexts/config/transformUp'
 
@@ -41,7 +41,7 @@ export function useSyncContractSet() {
               {
                 defaultContractSet: autopilotContractSet,
               },
-              contractSet.data
+              contractSet.data,
             ),
           })
           contractSet.mutate()
@@ -63,8 +63,12 @@ export function useSyncContractSet() {
         console.log(e)
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [contractSet.data, settingUpdate, shouldSyncDefaultContractSet]
+    [
+      contractSet.data,
+      contractSet.mutate,
+      settingUpdate,
+      shouldSyncDefaultContractSet,
+    ],
   )
 
   return {

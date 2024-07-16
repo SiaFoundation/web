@@ -1,25 +1,25 @@
 import {
-  useTableState,
-  useDatasetEmptyState,
-  useClientFilters,
   useClientFilteredDataset,
+  useClientFilters,
+  useDatasetEmptyState,
+  useTableState,
 } from '@siafoundation/design-system'
-import { WalletMetadata } from '@siafoundation/walletd-types'
+import { useAppSettings } from '@siafoundation/react-core'
 import { useWallets as useWalletsData } from '@siafoundation/walletd-react'
+import type { WalletMetadata } from '@siafoundation/walletd-types'
+import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useMemo } from 'react'
+import { routes } from '../../config/routes'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { useDialog } from '../dialog'
+import { columns } from './columns'
 import {
-  WalletData,
+  type WalletData,
   columnsDefaultVisible,
   defaultSortField,
   sortOptions,
 } from './types'
-import { columns } from './columns'
-import { useRouter } from 'next/router'
-import { routes } from '../../config/routes'
 import { useWalletSeedCache } from './useWalletSeedCache'
-import { useDialog } from '../dialog'
-import { useAppSettings } from '@siafoundation/react-core'
-import { defaultDatasetRefreshInterval } from '../../config/swr'
 
 function useWalletsMain() {
   const response = useWalletsData({
@@ -44,11 +44,11 @@ function useWalletsMain() {
     walletAutoLockEnabled,
   } = useWalletSeedCache()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setOnLockCallback('wallets', () => {
       lockAllWallets()
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const dataset = useMemo<WalletData[] | null>(() => {
@@ -136,16 +136,16 @@ function useWalletsMain() {
   const filteredTableColumns = useMemo(
     () =>
       columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
+        (column) => column.fixed || enabledColumns.includes(column.id),
       ),
-    [enabledColumns]
+    [enabledColumns],
   )
 
   const dataState = useDatasetEmptyState(
     dataset,
     response.isValidating,
     response.error,
-    filters
+    filters,
   )
 
   const context = useMemo(
@@ -153,7 +153,7 @@ function useWalletsMain() {
       walletAutoLockTimeout,
       walletAutoLockEnabled,
     }),
-    [walletAutoLockEnabled, walletAutoLockTimeout]
+    [walletAutoLockEnabled, walletAutoLockTimeout],
   )
 
   return {

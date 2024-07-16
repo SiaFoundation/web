@@ -1,12 +1,12 @@
 import {
+  type HookArgsCallback,
   useAppSettings,
   useGetFunc,
-  HookArgsCallback,
 } from '@siafoundation/react-core'
 import {
+  type SiaCentralSearchParams,
+  type SiaCentralSearchResponse,
   defaultApi,
-  SiaCentralSearchParams,
-  SiaCentralSearchResponse,
 } from '@siafoundation/sia-central-types'
 
 export function useSiaCentralSearch(
@@ -14,7 +14,7 @@ export function useSiaCentralSearch(
     SiaCentralSearchParams,
     void,
     SiaCentralSearchResponse
-  >
+  >,
 ) {
   const { settings } = useAppSettings()
   return useGetFunc({

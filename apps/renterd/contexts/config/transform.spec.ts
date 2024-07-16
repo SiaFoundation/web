@@ -1,3 +1,9 @@
+import {
+  blocksToWeeks,
+  monthsToBlocks,
+  toHastings,
+  weeksToBlocks,
+} from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { transformDown } from './transformDown'
 import {
@@ -6,13 +12,7 @@ import {
   transformUpGouging,
   transformUpRedundancy,
 } from './transformUp'
-import { SettingsData } from './types'
-import {
-  blocksToWeeks,
-  monthsToBlocks,
-  weeksToBlocks,
-  toHastings,
-} from '@siafoundation/units'
+import type { SettingsData } from './types'
 import { valuePerMonthToPerPeriod, valuePerPeriodToPerMonth } from './utils'
 
 describe('tansforms', () => {
@@ -59,7 +59,7 @@ describe('tansforms', () => {
             minShards: 10,
             totalShards: 30,
           },
-        })
+        }),
       ).toEqual({
         autopilotContractSet: 'autopilot',
         allowanceMonth: new BigNumber('500'),
@@ -126,7 +126,7 @@ describe('tansforms', () => {
       expect(values.maxUploadPriceTB).toEqual(new BigNumber('4000000000000'))
       expect(values.maxDownloadPriceTB).toEqual(new BigNumber('4000000000000'))
       expect(values.maxStoragePriceTBMonth).toEqual(
-        new BigNumber('17280000000000000')
+        new BigNumber('17280000000000000'),
       )
     })
 
@@ -181,8 +181,8 @@ describe('tansforms', () => {
             minRecentScanFailures: new BigNumber('10'),
             minProtocolVersion: '',
           },
-          undefined
-        )
+          undefined,
+        ),
       ).toEqual({
         hosts: {
           allowRedundantIPs: false,
@@ -232,9 +232,9 @@ describe('tansforms', () => {
             hosts: {
               foobar: 'value',
             },
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } as any
-        )
+            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+          } as any,
+        ),
       ).toEqual({
         foobar1: 'value',
         hosts: {
@@ -283,9 +283,9 @@ describe('tansforms', () => {
               period: 7777,
             },
             hosts: {},
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } as any
-        )
+            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+          } as any,
+        ),
       ).toEqual({
         hosts: {
           allowRedundantIPs: false,
@@ -317,9 +317,9 @@ describe('tansforms', () => {
           {
             default: '77777777777',
             foobar: 'value',
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } as any
-        )
+            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+          } as any,
+        ),
       ).toEqual({
         default: 'myset',
         foobar: 'value',
@@ -361,9 +361,9 @@ describe('tansforms', () => {
           {
             maxStoragePrice: '77777777777',
             foobar: 'value',
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } as any
-        )
+            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+          } as any,
+        ),
       ).toEqual({
         foobar: 'value',
         hostBlockHeightLeeway: 4,
@@ -389,9 +389,9 @@ describe('tansforms', () => {
           {
             minShards: 77,
             foobar: 'value',
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } as any
-        )
+            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+          } as any,
+        ),
       ).toEqual({
         foobar: 'value',
         minShards: 10,
@@ -425,7 +425,7 @@ describe('tansforms', () => {
       expect(settings.downloadTBMonth).toEqual(new BigNumber('92.72'))
       // a little different due to rounding
       expect(
-        transformUpAutopilot('Mainnet', settings, autopilot).contracts.download
+        transformUpAutopilot('Mainnet', settings, autopilot).contracts.download,
       ).toEqual(91088814814815)
       expect(settings.maxRpcPriceMillion).toEqual(new BigNumber('0.1'))
 
@@ -447,7 +447,7 @@ describe('tansforms', () => {
       expect(settings.downloadTBMonth).toEqual(new BigNumber('92.72'))
       // Using the rounded value results in same value.
       expect(
-        transformUpAutopilot('Mainnet', settings, autopilot).contracts.download
+        transformUpAutopilot('Mainnet', settings, autopilot).contracts.download,
       ).toEqual(91088814814815)
     })
   })
@@ -457,14 +457,14 @@ describe('tansforms', () => {
     const periodBlocks = new BigNumber(4244)
     const valuePerMonth = valuePerPeriodToPerMonth(
       valuePerPeriod,
-      periodBlocks.toNumber()
+      periodBlocks.toNumber(),
     )
     expect(valuePerMonth).toEqual(
-      new BigNumber('92716244841034.38265786993402450518378887952')
+      new BigNumber('92716244841034.38265786993402450518378887952'),
     )
     const periodWeeks = new BigNumber(blocksToWeeks(periodBlocks.toNumber()))
     expect(
-      valuePerMonthToPerPeriod(valuePerMonth, periodWeeks).toFixed(0)
+      valuePerMonthToPerPeriod(valuePerMonth, periodWeeks).toFixed(0),
     ).toEqual(valuePerPeriod.toString())
   })
 
@@ -472,7 +472,7 @@ describe('tansforms', () => {
     const valuePerMonth = new BigNumber(87908469486735)
     const periodWeeks = new BigNumber(30).div(7)
     expect(valuePerMonthToPerPeriod(valuePerMonth, periodWeeks)).toEqual(
-      valuePerMonth
+      valuePerMonth,
     )
   })
   it('period <- month', () => {
@@ -482,7 +482,7 @@ describe('tansforms', () => {
 
     const periodBlocks = weeksToBlocks(periodWeeks.toNumber())
     expect(
-      valuePerPeriodToPerMonth(valuePerPeriod, periodBlocks).toFixed(0)
+      valuePerPeriodToPerMonth(valuePerPeriod, periodBlocks).toFixed(0),
     ).toEqual('30')
   })
 })

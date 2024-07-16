@@ -1,5 +1,5 @@
-import { Notion } from './notion/notion'
 import Parser from 'rss-parser'
+import { Notion } from './notion/notion'
 import { retry } from './notion/retry'
 
 type RssPost = {
@@ -53,10 +53,12 @@ export async function fetchRssFeedItems() {
 const rssFeedsDatabaseId = '422b97b4f7d94eaaa5e5fa85c83e2e4e'
 
 async function fetchFeedList() {
-  const response = await retry(() => Notion.databases.query({
-    database_id: rssFeedsDatabaseId,
-  }))
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const response = await retry(() =>
+    Notion.databases.query({
+      database_id: rssFeedsDatabaseId,
+    }),
+  )
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   return response.results.map((page: any) => ({
     name: page.properties.name.title?.[0]?.plain_text,
     link: page.properties.link?.url || null,

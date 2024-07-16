@@ -1,11 +1,11 @@
-import { Badge, Tooltip, EntityList } from '@siafoundation/design-system'
+import { Badge, EntityList, Tooltip } from '@siafoundation/design-system'
+import type { SiaCentralBlock } from '@siafoundation/sia-central-types'
 import { humanNumber } from '@siafoundation/units'
-import { ExplorerDatum, DatumProps } from '../ExplorerDatum'
 import { useMemo } from 'react'
 import { routes } from '../../config/routes'
-import { EntityHeading } from '../EntityHeading'
 import { ContentLayout } from '../ContentLayout'
-import { SiaCentralBlock } from '@siafoundation/sia-central-types'
+import { EntityHeading } from '../EntityHeading'
+import { type DatumProps, ExplorerDatum } from '../ExplorerDatum'
 
 type Props = {
   block: SiaCentralBlock
@@ -23,7 +23,7 @@ export function Block({ block }: Props) {
         label: 'Miner payout address',
         entityType: 'address',
         entityValue: block.siacoin_outputs?.find(
-          (output) => output.source === 'miner_payout'
+          (output) => output.source === 'miner_payout',
         )?.unlock_hash,
       },
     ]
@@ -44,7 +44,7 @@ export function Block({ block }: Props) {
             <div className="flex gap-2 items-center">
               <Tooltip
                 content={`${humanNumber(
-                  block.transactions?.length || 0
+                  block.transactions?.length || 0,
                 )} transactions`}
               >
                 <Badge variant="accent">

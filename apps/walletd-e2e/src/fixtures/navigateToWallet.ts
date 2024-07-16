@@ -1,4 +1,4 @@
-import { Page, expect } from '@playwright/test'
+import { type Page, expect } from '@playwright/test'
 import { openWallet } from './wallet'
 
 export async function navigateToWallet(page: Page, name: string) {

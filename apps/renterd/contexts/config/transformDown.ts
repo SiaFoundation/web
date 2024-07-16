@@ -3,7 +3,7 @@ import {
   nanosecondsInMinutes,
   toFixedMax,
 } from '@siafoundation/design-system'
-import {
+import type {
   AutopilotConfig,
   ContractSetSettings,
   GougingSettings,
@@ -11,29 +11,29 @@ import {
   UploadPackingSettings,
 } from '@siafoundation/renterd-types'
 import {
-  toSiacoins,
+  TBToBytes,
   blocksToWeeks,
   bytesToTB,
   monthsToBlocks,
-  TBToBytes,
+  toSiacoins,
 } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
-import {
-  AutopilotData,
-  scDecimalPlaces,
-  SettingsData,
-  ContractSetData,
-  defaultContractSet,
-  GougingData,
-  RedundancyData,
-  UploadPackingData,
-  defaultAutopilot,
-} from './types'
 import { firstTimeGougingData } from './resources'
+import {
+  type AutopilotData,
+  type ContractSetData,
+  type GougingData,
+  type RedundancyData,
+  type SettingsData,
+  type UploadPackingData,
+  defaultAutopilot,
+  defaultContractSet,
+  scDecimalPlaces,
+} from './types'
 
 // down
 export function transformDownAutopilot(
-  config?: AutopilotConfig
+  config?: AutopilotConfig,
 ): AutopilotData {
   if (!config) {
     return defaultAutopilot
@@ -43,32 +43,32 @@ export function transformDownAutopilot(
   const allowanceMonth = toSiacoins(
     valuePerPeriodToPerMonth(
       new BigNumber(config.contracts.allowance),
-      config.contracts.period
+      config.contracts.period,
     ),
-    scDecimalPlaces
+    scDecimalPlaces,
   )
   const amountHosts = new BigNumber(config.contracts.amount)
   const periodWeeks = new BigNumber(blocksToWeeks(config.contracts.period))
   const renewWindowWeeks = new BigNumber(
-    blocksToWeeks(config.contracts.renewWindow)
+    blocksToWeeks(config.contracts.renewWindow),
   )
   const downloadTBMonth = new BigNumber(
     toFixedMax(
       valuePerPeriodToPerMonth(
         bytesToTB(config.contracts.download),
-        config.contracts.period
+        config.contracts.period,
       ),
-      2
-    )
+      2,
+    ),
   )
   const uploadTBMonth = new BigNumber(
     toFixedMax(
       valuePerPeriodToPerMonth(
         bytesToTB(config.contracts.upload),
-        config.contracts.period
+        config.contracts.period,
       ),
-      2
-    )
+      2,
+    ),
   )
   const storageTB = bytesToTB(new BigNumber(config.contracts.storage))
   const prune = config.contracts.prune
@@ -93,7 +93,7 @@ export function transformDownAutopilot(
 }
 
 export function transformDownContractSet(
-  c?: ContractSetSettings
+  c?: ContractSetSettings,
 ): ContractSetData {
   if (!c) {
     return defaultContractSet
@@ -104,7 +104,7 @@ export function transformDownContractSet(
 }
 
 export function transformDownUploadPacking(
-  u: UploadPackingSettings
+  u: UploadPackingSettings,
 ): UploadPackingData {
   return {
     uploadPackingEnabled: u.enabled,
@@ -137,31 +137,31 @@ export function transformDownGouging({
       new BigNumber(gouging.maxStoragePrice) // bytes/block
         .times(monthsToBlocks(1)) // bytes/month
         .times(TBToBytes(1)), // tb/month
-      scDecimalPlaces
+      scDecimalPlaces,
     ), // TB/month
     maxUploadPriceTB: toSiacoins(
       new BigNumber(gouging.maxUploadPrice),
-      scDecimalPlaces
+      scDecimalPlaces,
     ),
     maxDownloadPriceTB: toSiacoins(gouging.maxDownloadPrice, scDecimalPlaces),
     maxContractPrice: toSiacoins(gouging.maxContractPrice, scDecimalPlaces),
     maxRpcPriceMillion: toSiacoins(
       new BigNumber(gouging.maxRPCPrice).times(1_000_000),
-      scDecimalPlaces
+      scDecimalPlaces,
     ),
     hostBlockHeightLeeway: new BigNumber(gouging.hostBlockHeightLeeway),
     minPriceTableValidityMinutes: new BigNumber(
-      nanosecondsInMinutes(gouging.minPriceTableValidity)
+      nanosecondsInMinutes(gouging.minPriceTableValidity),
     ),
     minAccountExpiryDays: new BigNumber(
-      nanosecondsInDays(gouging.minAccountExpiry)
+      nanosecondsInDays(gouging.minAccountExpiry),
     ),
     minMaxEphemeralAccountBalance: toSiacoins(
       gouging.minMaxEphemeralAccountBalance,
-      scDecimalPlaces
+      scDecimalPlaces,
     ),
     migrationSurchargeMultiplier: new BigNumber(
-      gouging.migrationSurchargeMultiplier
+      gouging.migrationSurchargeMultiplier,
     ),
   }
 }
@@ -218,7 +218,7 @@ export function transformDown({
 
 export function getRedundancyMultiplier(
   minShards: BigNumber,
-  totalShards: BigNumber
+  totalShards: BigNumber,
 ): BigNumber {
   let redundancyMult = new BigNumber(1)
   const canCalcRedundancy =
@@ -235,7 +235,7 @@ export function getRedundancyMultiplier(
 
 function valuePerPeriodToPerMonth(
   valuePerPeriod: BigNumber,
-  periodBlocks: number
+  periodBlocks: number,
 ) {
   const valuePerBlock = valuePerPeriod.div(periodBlocks)
   return valuePerBlock.times(monthsToBlocks(1))

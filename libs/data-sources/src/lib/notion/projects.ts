@@ -13,7 +13,7 @@ export async function fetchProjects() {
     ],
   })
   const projects = results.map((page) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     const { properties } = page as any
     return {
       title: properties.title?.title[0]?.plain_text,
@@ -23,7 +23,7 @@ export async function fetchProjects() {
       logo: properties.logo?.rich_text[0]?.plain_text || null,
       image: properties.image?.rich_text[0]?.plain_text || null,
       background: properties.background?.rich_text[0]?.plain_text || null,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       tags: properties.tags?.multi_select.map((tag: any) => tag.name),
       idea: properties.idea?.checkbox,
     }

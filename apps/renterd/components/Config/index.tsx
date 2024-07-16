@@ -1,14 +1,14 @@
 import { ConfigurationPanel } from '@siafoundation/design-system'
-import { RenterdSidenav } from '../RenterdSidenav'
 import { routes } from '../../config/routes'
+import { useConfig } from '../../contexts/config'
 import { useDialog } from '../../contexts/dialog'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
-import { useConfig } from '../../contexts/config'
-import { ConfigStats } from './ConfigStats'
+import { RenterdSidenav } from '../RenterdSidenav'
 import { ConfigActions } from './ConfigActions'
 import { ConfigNav } from './ConfigNav'
-import { StateConnError } from './StateConnError'
+import { ConfigStats } from './ConfigStats'
 import { Recommendations } from './Recommendations'
+import { StateConnError } from './StateConnError'
 
 export function Config() {
   const { openDialog } = useDialog()

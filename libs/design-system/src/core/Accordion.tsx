@@ -1,11 +1,11 @@
 'use client'
 
-import React from 'react'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
-import { cva } from 'class-variance-authority'
-import { VariantProps } from '../types'
-import { Button } from './Button'
 import { ChevronDown16 } from '@siafoundation/react-icons'
+import { cva } from 'class-variance-authority'
+import React from 'react'
+import type { VariantProps } from '../types'
+import { Button } from './Button'
 
 export const Accordion = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Root>,

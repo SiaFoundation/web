@@ -1,8 +1,8 @@
-import { Locator, expect } from '@playwright/test'
+import { type Locator, expect } from '@playwright/test'
 
 export async function clickIfEnabledAndWait(
   locator: Locator,
-  waitForLocator?: Locator
+  waitForLocator?: Locator,
 ) {
   const isDisabled = await locator.isDisabled()
   if (!isDisabled) {
@@ -24,7 +24,7 @@ export async function clickAndWait(locator: Locator, waitForLocator?: Locator) {
 
 export async function clickIf(
   locator: Locator,
-  clickIf: 'isVisible' | 'isDisabled'
+  clickIf: 'isVisible' | 'isDisabled',
 ) {
   const click = await locator[clickIf]()
   if (click) {

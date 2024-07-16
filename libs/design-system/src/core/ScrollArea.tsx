@@ -1,8 +1,8 @@
 'use client'
 
-import React from 'react'
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area'
 import { cx } from 'class-variance-authority'
+import React from 'react'
 
 type Props = {
   id?: string
@@ -36,7 +36,7 @@ export const ScrollArea = React.forwardRef<
       <ScrollAreaPrimitive.Thumb
         className={cx(
           'flex-1 relative bg-gray-300 rounded',
-          'before:content[""] before:absolute before:top-1/2 before:left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full'
+          'before:content[""] before:absolute before:top-1/2 before:left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full',
         )}
       />
     </ScrollAreaPrimitive.Scrollbar>
@@ -48,7 +48,7 @@ export const ScrollArea = React.forwardRef<
       <ScrollAreaPrimitive.Thumb
         className={cx(
           'flex-1 relative bg-gray-300 rounded',
-          'before:content[""] before:absolute before:top-1/2 before:left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full'
+          'before:content[""] before:absolute before:top-1/2 before:left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full',
         )}
       />
     </ScrollAreaPrimitive.Scrollbar>

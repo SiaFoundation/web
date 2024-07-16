@@ -1,12 +1,12 @@
+import { monthsToBlocks, toHastings } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
+import { transformDown } from './transformDown'
 import {
   transformUpAutopilot,
   transformUpContractSet,
   transformUpGouging,
   transformUpRedundancy,
 } from './transformUp'
-import { monthsToBlocks, toHastings } from '@siafoundation/units'
-import { transformDown } from './transformDown'
 
 describe('up', () => {
   it('up autopilot', () => {
@@ -28,8 +28,8 @@ describe('up', () => {
           minRecentScanFailures: new BigNumber('10'),
           minProtocolVersion: '',
         },
-        undefined
-      )
+        undefined,
+      ),
     ).toEqual({
       hosts: {
         allowRedundantIPs: false,
@@ -79,9 +79,9 @@ describe('up', () => {
           hosts: {
             foobar: 'value',
           },
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any
-      )
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        } as any,
+      ),
     ).toEqual({
       foobar1: 'value',
       hosts: {
@@ -130,9 +130,9 @@ describe('up', () => {
             period: 7777,
           },
           hosts: {},
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any
-      )
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        } as any,
+      ),
     ).toEqual({
       hosts: {
         allowRedundantIPs: false,
@@ -164,9 +164,9 @@ describe('up', () => {
         {
           default: '77777777777',
           foobar: 'value',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any
-      )
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        } as any,
+      ),
     ).toEqual({
       default: 'myset',
       foobar: 'value',
@@ -208,9 +208,9 @@ describe('up', () => {
         {
           maxStoragePrice: '77777777777',
           foobar: 'value',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any
-      )
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        } as any,
+      ),
     ).toEqual({
       foobar: 'value',
       hostBlockHeightLeeway: 4,
@@ -236,9 +236,9 @@ describe('up', () => {
         {
           minShards: 77,
           foobar: 'value',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any
-      )
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        } as any,
+      ),
     ).toEqual({
       foobar: 'value',
       minShards: 10,
@@ -272,7 +272,7 @@ describe('up down', () => {
     expect(settings.downloadTBMonth).toEqual(new BigNumber('92.72'))
     // A little different due to rounding.
     expect(
-      transformUpAutopilot('Mainnet', settings, autopilot).contracts.download
+      transformUpAutopilot('Mainnet', settings, autopilot).contracts.download,
     ).toEqual(91088814814815)
     expect(settings.maxRpcPriceMillion).toEqual(new BigNumber('0.1'))
 
@@ -294,7 +294,7 @@ describe('up down', () => {
     expect(settings.downloadTBMonth).toEqual(new BigNumber('92.72'))
     // Using the rounded value results in same value.
     expect(
-      transformUpAutopilot('Mainnet', settings, autopilot).contracts.download
+      transformUpAutopilot('Mainnet', settings, autopilot).contracts.download,
     ).toEqual(91088814814815)
   })
 })

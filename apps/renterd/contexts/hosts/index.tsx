@@ -1,20 +1,23 @@
 import {
-  useTableState,
-  useDatasetEmptyState,
-  useServerFilters,
   triggerErrorToast,
   truncate,
+  useDatasetEmptyState,
+  useServerFilters,
+  useTableState,
 } from '@siafoundation/design-system'
-import {
-  HostsSearchFilterMode,
-  HostsUsabilityMode,
-} from '@siafoundation/renterd-types'
+import { useAppSettings } from '@siafoundation/react-core'
 import {
   useAutopilotHostsSearch,
   useHostsAllowlist,
   useHostsBlocklist,
   useHostsSearch,
 } from '@siafoundation/renterd-react'
+import type {
+  HostsSearchFilterMode,
+  HostsUsabilityMode,
+} from '@siafoundation/renterd-types'
+import { useSiaCentralHosts } from '@siafoundation/sia-central-react'
+import { useRouter } from 'next/router'
 import {
   createContext,
   useCallback,
@@ -25,21 +28,22 @@ import {
   useState,
 } from 'react'
 import {
-  TableColumnId,
-  columnsDefaultVisible,
-  ViewMode,
-  HostDataWithLocation,
-} from './types'
-import { useRouter } from 'next/router'
-import { columns } from './columns'
-import { useContracts } from '../contracts'
-import { useDataset } from './dataset'
-import { useApp } from '../app'
-import { useAppSettings } from '@siafoundation/react-core'
-import { Commands, emptyCommands } from '../../components/Hosts/HostMap/Globe'
-import { useSiaCentralHosts } from '@siafoundation/sia-central-react'
-import { useSiascanUrl } from '../../hooks/useSiascanUrl'
+  type Commands,
+  emptyCommands,
+} from '../../components/Hosts/HostMap/Globe'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { useSiascanUrl } from '../../hooks/useSiascanUrl'
+import { useApp } from '../app'
+import { useContracts } from '../contracts'
+import { columns } from './columns'
+import { useDataset } from './dataset'
+import {
+  type HostCellContext,
+  type HostDataWithLocation,
+  type TableColumnId,
+  type ViewMode,
+  columnsDefaultVisible,
+} from './types'
 
 const defaultLimit = 50
 
@@ -61,7 +65,7 @@ function useHostsMain() {
     }
     const publicKeyEquals = filters.find((f) => f.id === 'publicKeyEquals')
     if (publicKeyEquals) {
-      keyIn.push(publicKeyEquals?.value)
+      keyIn.push(publicKeyEquals?.value!)
     }
     return keyIn.length ? keyIn : undefined
   }, [filters, allContracts])
@@ -138,7 +142,7 @@ function useHostsMain() {
     (cmd: Commands) => {
       cmdRef.current = cmd
     },
-    [cmdRef]
+    [cmdRef],
   )
 
   const [activeHostPublicKey, setActiveHostPublicKey] = useState<string>()
@@ -168,7 +172,7 @@ function useHostsMain() {
       }
       scrollToHost(publicKey)
     },
-    [setActiveHostPublicKey, cmdRef, activeHostPublicKey, scrollToHost]
+    [setActiveHostPublicKey, cmdRef, activeHostPublicKey, scrollToHost],
   )
 
   const onHostListClick = useCallback(
@@ -188,12 +192,12 @@ function useHostsMain() {
       }
       scrollToHost(publicKey)
     },
-    [setActiveHostPublicKey, cmdRef, activeHostPublicKey, scrollToHost]
+    [setActiveHostPublicKey, cmdRef, activeHostPublicKey, scrollToHost],
   )
 
   const onHostMapHover = useCallback(
     (publicKey: string, location?: [number, number]) => null,
-    []
+    [],
   )
 
   const dataset = useDataset({
@@ -210,7 +214,7 @@ function useHostsMain() {
 
   const disabledCategories = useMemo(
     () => (autopilot.status === 'off' ? ['autopilot'] : []),
-    [autopilot.status]
+    [autopilot.status],
   )
 
   const {
@@ -233,7 +237,7 @@ function useHostsMain() {
 
   const filteredTableColumns = useMemo(
     () => columns.filter((column) => enabledColumns.includes(column.id)),
-    [enabledColumns]
+    [enabledColumns],
   )
 
   const isValidating =
@@ -245,23 +249,23 @@ function useHostsMain() {
   const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
   const siascanUrl = useSiascanUrl()
-  const isAutopilotConfigured = autopilot.state.data?.configured
-  const tableContext = useMemo(
+  const isAutopilotConfigured = !!autopilot.state.data?.configured
+  const tableContext: HostCellContext = useMemo(
     () => ({
       isAutopilotConfigured,
       siascanUrl,
     }),
-    [isAutopilotConfigured, siascanUrl]
+    [isAutopilotConfigured, siascanUrl],
   )
 
   const hostsWithLocation = useMemo(
     () => dataset?.filter((h) => h.location) as HostDataWithLocation[],
-    [dataset]
+    [dataset],
   )
 
   const activeHost = useMemo(
     () => dataset?.find((d) => d.publicKey === activeHostPublicKey),
-    [dataset, activeHostPublicKey]
+    [dataset, activeHostPublicKey],
   )
 
   return {

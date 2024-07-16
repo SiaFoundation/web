@@ -6,9 +6,9 @@ import {
   Search16,
 } from '@siafoundation/react-icons'
 import * as reactDropzone from 'react-dropzone'
+import { useDialog } from '../../contexts/dialog'
 import { useFilesManager } from '../../contexts/filesManager'
 import { FilesViewDropdownMenu } from '../Files/FilesViewDropdownMenu'
-import { useDialog } from '../../contexts/dialog'
 import { useCanUpload } from '../Files/useCanUpload'
 // esm compat
 const { useDropzone } = reactDropzone

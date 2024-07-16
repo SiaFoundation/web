@@ -1,7 +1,7 @@
-import { Metadata } from 'next'
+import { Container, Heading } from '@siafoundation/design-system'
+import type { Metadata } from 'next'
 import { routes } from '../../config/routes'
 import { buildMetadata } from '../../lib/utils'
-import { Container, Heading } from '@siafoundation/design-system'
 
 export function generateMetadata(): Metadata {
   const title = 'Host revenue calculator'

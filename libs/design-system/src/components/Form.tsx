@@ -1,9 +1,9 @@
+import { cx } from 'class-variance-authority'
+import type { FieldValues, Path, UseFormReturn } from 'react-hook-form'
 import { Button } from '../core/Button'
 import { Label } from '../core/Label'
 import { Text } from '../core/Text'
-import { cx } from 'class-variance-authority'
 import { LoadingDots } from './LoadingDots'
-import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
 
 type FieldLabelProps<Values extends FieldValues> = {
   title?: string
@@ -37,7 +37,7 @@ export function FieldError<Values extends FieldValues>({
   form,
   name,
 }: FieldErrorProps<Values>) {
-  const showError = form.formState.errors[name] // && form.formState.touchedFields[name]
+  const showError = form.formState.errors[name] // && (form.formState.touchedFields as Record<string, boolean>)[name]
   const errorMessage = form.formState.errors[name]?.message as string
 
   return showError ? (
@@ -64,14 +64,14 @@ export function FieldLabelAndError<Values extends FieldValues>({
   className,
   wrap,
 }: FieldLabelAndErrorProps<Values>) {
-  const showError = form.formState.errors[name] // && form.formState.touchedFields[name]
+  const showError = form.formState.errors[name] // && (form.formState.touchedFields as Record<string, boolean>)[name]
 
   return title || showError ? (
     <div
       className={cx(
         'flex justify-between items-center gap-x-4 overflow-hidden',
         wrap ? 'flex-wrap' : '',
-        className
+        className,
       )}
     >
       <FieldLabel name={name} title={title} actions={actions} />

@@ -1,13 +1,12 @@
 'use client'
 
-import { cva, cx } from 'class-variance-authority'
 import { Link as BaseNextLink } from '@siafoundation/next'
+import { cva, cx } from 'class-variance-authority'
 import React, { useCallback } from 'react'
-import { textStyles } from './Text'
+import type { VariantProps } from '../types'
 import { buttonStyles } from './Button'
-import { VariantProps } from '../types'
+import { textStyles } from './Text'
 import { Tooltip } from './Tooltip'
-import { UrlObject } from 'url'
 
 const linkVariants = cva(['cursor-pointer'], {
   variants: {
@@ -55,14 +54,14 @@ export const linkStyles = ({
       underline,
     }),
     linkVariants({ disabled, underline }),
-    className
+    className,
   )
 
 export const Link = React.forwardRef<
   HTMLAnchorElement,
   Omit<React.ComponentProps<typeof BaseNextLink>, 'href'> &
     LinkVariants & {
-      href?: string | UrlObject
+      href?: string | URL
     }
 >(
   (
@@ -83,7 +82,7 @@ export const Link = React.forwardRef<
       onClick,
       ...props
     },
-    ref
+    ref,
   ) => {
     const rel = _rel || (target === '_blank' ? 'noopener' : undefined)
     const handleClick = useCallback(
@@ -95,7 +94,7 @@ export const Link = React.forwardRef<
           onClick(e)
         }
       },
-      [onClick, href]
+      [onClick, href],
     )
     return (
       <BaseNextLink
@@ -119,15 +118,16 @@ export const Link = React.forwardRef<
         target={target}
       />
     )
-  }
+  },
 )
 
 export const LinkButton = React.forwardRef<
   HTMLAnchorElement,
   Omit<React.ComponentProps<typeof BaseNextLink>, 'href' | 'tip'> &
     VariantProps<typeof buttonStyles> & {
-      href?: string | UrlObject
+      href?: string | URL
       tip?: React.ReactNode
+      foo?: string
     }
 >(
   (
@@ -146,7 +146,7 @@ export const LinkButton = React.forwardRef<
       onClick,
       ...props
     },
-    ref
+    ref,
   ) => {
     const rel = _rel || (target === '_blank' ? 'noopener' : undefined)
     const handleClick = useCallback(
@@ -158,7 +158,7 @@ export const LinkButton = React.forwardRef<
           onClick(e)
         }
       },
-      [onClick, href]
+      [onClick, href],
     )
     if (tip) {
       return (
@@ -202,5 +202,5 @@ export const LinkButton = React.forwardRef<
         target={target}
       />
     )
-  }
+  },
 )

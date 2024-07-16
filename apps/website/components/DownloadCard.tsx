@@ -1,13 +1,13 @@
 import {
-  Text,
-  Heading,
-  PatternedPanel,
-  Checkbox,
-  Link,
   Badge,
+  Checkbox,
+  Heading,
+  Link,
+  PatternedPanel,
+  Text,
 } from '@siafoundation/design-system'
-import { useTermsOfService } from '../hooks/useTermsOfService'
 import { routes } from '../config/routes'
+import { useTermsOfService } from '../hooks/useTermsOfService'
 
 type Props = {
   background: string

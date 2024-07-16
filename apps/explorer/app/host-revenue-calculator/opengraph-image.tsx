@@ -15,6 +15,6 @@ export default async function Image() {
       subtitle:
         'Calculator for modeling revenue based on storage cost, usage, pricing, and collateral.',
     },
-    size
+    size,
   )
 }

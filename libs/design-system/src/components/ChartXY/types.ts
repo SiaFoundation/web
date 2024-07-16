@@ -33,7 +33,10 @@ export type ChartConfig<Key extends string, Cat extends string> = {
   stackOffset?: StackOffset
 }
 
-export type ChartPoint<T extends string> = Record<T | 'timestamp', number>
+export type ChartPoint<T extends string> = {
+  timestamp: number
+  [key: string]: number
+}
 
 export type ChartData<T extends string> = ChartPoint<T>[]
 

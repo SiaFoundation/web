@@ -1,8 +1,8 @@
 import { PaginatorUnknownTotal } from '@siafoundation/design-system'
 import { useFilesDirectory } from '../../../contexts/filesDirectory'
-import { FilesStatsMenuShared } from '../../Files/FilesStatsMenuShared'
-import { FilesFilterDirectoryMenu } from '../../Files/FilesFilterDirectoryMenu'
 import { useFilesManager } from '../../../contexts/filesManager'
+import { FilesFilterDirectoryMenu } from '../../Files/FilesFilterDirectoryMenu'
+import { FilesStatsMenuShared } from '../../Files/FilesStatsMenuShared'
 
 export function FilesStatsMenu() {
   const { isViewingABucket, isViewingBuckets } = useFilesManager()

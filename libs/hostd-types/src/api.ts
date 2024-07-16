@@ -1,11 +1,11 @@
-import {
+import type {
+  ChainIndex,
+  Currency,
   FileContractID,
   PublicKey,
-  Currency,
   TransactionID,
-  ChainIndex,
 } from '@siafoundation/types'
-import { Contract, ContractStatus, WalletTransaction } from './types'
+import type { Contract, ContractStatus, WalletTransaction } from './types'
 
 export const stateHostRoute = '/state/host'
 export const stateConsensusRoute = '/state/consensus'

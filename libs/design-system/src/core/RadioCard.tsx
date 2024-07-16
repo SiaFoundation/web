@@ -1,8 +1,8 @@
 'use client'
 
-import React from 'react'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 import { cx } from 'class-variance-authority'
+import React from 'react'
 import { radioIndicatorStyles, radioStyles } from './Radio'
 
 export function RadioCardGroup({
@@ -35,7 +35,7 @@ export const RadioCard = React.forwardRef<
 
       'enabled:data-[state=checked]:ring',
       'enabled:data-[state=checked]:ring-green-600 dark:enabled:data-[state=checked]:ring-green-500',
-      'disabled:data-[state=checked]:ring-green-600/50 dark:disabled:data-[state=checked]:ring-green-500/50'
+      'disabled:data-[state=checked]:ring-green-600/50 dark:disabled:data-[state=checked]:ring-green-500/50',
     )}
   >
     {indicator && (

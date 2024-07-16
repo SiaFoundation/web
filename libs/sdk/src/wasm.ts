@@ -1,4 +1,4 @@
-import './utils/wasm_exec'
+import './utils/wasm_exec.js'
 import wasm from './resources/sdk.wasm'
 
 export async function initWASM(): Promise<void> {

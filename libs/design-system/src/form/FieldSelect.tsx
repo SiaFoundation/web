@@ -1,16 +1,11 @@
-import { FieldValues } from 'react-hook-form'
+import type { FieldValues } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
 import { Option, Select } from '../core/Select'
-import { FieldProps, useRegisterForm } from './configurationFields'
-
-type Option = {
-  value: string
-  label: string
-}
+import { type FieldProps, useRegisterForm } from './configurationFields'
 
 export function FieldSelect<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   name,
   form,
@@ -37,9 +32,9 @@ export function FieldSelect<
       state={
         error
           ? 'invalid'
-          : form.formState.dirtyFields[name]
-          ? 'valid'
-          : 'default'
+          : (form.formState.dirtyFields as Record<string, boolean>)[name]
+            ? 'valid'
+            : 'default'
       }
       onChange={onChange}
       onBlur={onBlur}

@@ -1,12 +1,12 @@
-import { BrowserContext, expect, Page } from '@playwright/test'
+import { type BrowserContext, type Page, expect } from '@playwright/test'
+import { waitForTableToReload } from './table'
 import { fillTextInputByName } from './textInput'
 import { clickTextareaByName, fillTextareaByName } from './textarea'
-import { waitForTableToReload } from './table'
 
 export async function createNewWallet(
   page: Page,
   context: BrowserContext,
-  name: string
+  name: string,
 ) {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'])
   await expect(page.getByRole('button', { name: 'Add wallet' })).toBeVisible()
@@ -27,7 +27,7 @@ export async function recoverWallet(
   page: Page,
   context: BrowserContext,
   name: string,
-  mnemonic: string
+  mnemonic: string,
 ) {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'])
   await expect(page.getByRole('button', { name: 'Add wallet' })).toBeVisible()

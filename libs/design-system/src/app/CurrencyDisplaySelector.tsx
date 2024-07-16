@@ -1,7 +1,7 @@
 'use client'
 
+import { type CurrencyDisplay, useAppSettings } from '@siafoundation/react-core'
 import { Option, Select } from '../core/Select'
-import { CurrencyDisplay, useAppSettings } from '@siafoundation/react-core'
 
 const displayOptions = [
   { id: 'sc', label: 'Siacoin' },

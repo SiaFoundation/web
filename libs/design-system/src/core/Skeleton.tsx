@@ -1,5 +1,5 @@
 import { cva } from 'class-variance-authority'
-import { VariantProps } from '../types'
+import type { VariantProps } from '../types'
 
 const styles = cva([
   'bg-gray-300 dark:bg-graydark-300',

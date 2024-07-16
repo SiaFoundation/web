@@ -1,11 +1,11 @@
 import { useContracts as useContractsData } from '@siafoundation/renterd-react'
-import { useMemo } from 'react'
-import BigNumber from 'bignumber.js'
-import { ContractData, ContractDataWithoutPrunable } from './types'
 import { useSiaCentralHosts } from '@siafoundation/sia-central-react'
-import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { blockHeightToTime } from '@siafoundation/units'
+import BigNumber from 'bignumber.js'
+import { useMemo } from 'react'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
+import type { ContractData, ContractDataWithoutPrunable } from './types'
 import { usePrunableContractSizes } from './usePrunableContractSizes'
 
 export function useDataset({
@@ -14,8 +14,8 @@ export function useDataset({
   defaultContractSet,
 }: {
   selectContract: (id: string) => void
-  autopilotContractSet: string
-  defaultContractSet: string
+  autopilotContractSet?: string
+  defaultContractSet?: string
 }) {
   const response = useContractsData({
     config: {
@@ -53,8 +53,8 @@ export function useDataset({
           hostIp: c.hostIP,
           hostKey: c.hostKey,
           contractSets: c.contractSets || [],
-          inAutopilotSet: c.contractSets?.includes(autopilotContractSet),
-          inDefaultSet: c.contractSets?.includes(defaultContractSet),
+          inAutopilotSet: !!c.contractSets?.includes(autopilotContractSet!),
+          inDefaultSet: !!c.contractSets?.includes(defaultContractSet!),
           location: geoHosts.find((h) => h.public_key === c.hostKey)?.location,
           timeline: startTime,
           startTime,
@@ -101,9 +101,9 @@ export function useDataset({
           hasFetchedPrunableSize: prunableSizes[d.id]?.prunable !== undefined,
           prunableSize:
             prunableSizes[d.id]?.prunable !== undefined
-              ? new BigNumber(prunableSizes[d.id].prunable)
+              ? new BigNumber(prunableSizes[d.id]!.prunable)
               : undefined,
-          isFetchingPrunableSize: isFetchingPrunableSizeById[d.id],
+          isFetchingPrunableSize: !!isFetchingPrunableSizeById[d.id],
           fetchPrunableSize: () => fetchPrunableSize(d.id),
         }
         return datum
@@ -113,12 +113,12 @@ export function useDataset({
       prunableSizes,
       fetchPrunableSize,
       isFetchingPrunableSizeById,
-    ]
+    ],
   )
 
   const hasFetchedAllPrunableSize = useMemo(
     () => dataset?.every((d) => d.hasFetchedPrunableSize),
-    [dataset]
+    [dataset],
   )
 
   return {

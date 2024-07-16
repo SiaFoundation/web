@@ -1,6 +1,6 @@
-import { WalletBalanceResponse } from '@siafoundation/walletd-types'
 import { toHastings } from '@siafoundation/units'
-import { Page } from 'playwright'
+import type { WalletBalanceResponse } from '@siafoundation/walletd-types'
+import type { Page } from 'playwright'
 
 export function getMockWalletBalanceResponse(): WalletBalanceResponse {
   return {

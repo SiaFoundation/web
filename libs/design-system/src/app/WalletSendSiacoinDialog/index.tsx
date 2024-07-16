@@ -1,15 +1,15 @@
 'use client'
 
+import { toHastings } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { useMemo, useState } from 'react'
-import { toHastings } from '@siafoundation/units'
-import { Separator } from '../../core/Separator'
+import { FormSubmitButtonFormik } from '../../components/FormFormik'
 import { Dialog } from '../../core/Dialog'
-import { useSendSiacoinGenerateForm } from './Generate'
-import { useSendSiacoinConfirmForm } from './Confirm'
+import { Separator } from '../../core/Separator'
 import { ProgressSteps } from '../ProgressSteps'
 import { WalletSendSiacoinComplete } from './Complete'
-import { FormSubmitButtonFormik } from '../../components/FormFormik'
+import { useSendSiacoinConfirmForm } from './Confirm'
+import { useSendSiacoinGenerateForm } from './Generate'
 
 export type SendSiacoinFormData = {
   address: string

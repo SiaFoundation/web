@@ -18,7 +18,7 @@ export async function fetchArticlesByTag(tag: string) {
       },
     },
   })
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   return results.map((page: any) => {
     return {
       title: page.properties.title.title?.[0]?.plain_text,

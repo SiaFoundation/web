@@ -1,26 +1,26 @@
 import {
-  encodeCurrency,
-  decodeCurrency,
-  encodeAddress,
-  encodeBoolean,
-  encodeString,
-  encodeUint64,
-  encodeLengthPrefix,
+  type Decoder,
+  type Encoder,
   decodeAddress,
   decodeBoolean,
-  decodeString,
-  decodeUint64,
+  decodeCurrency,
   decodeLengthPrefix,
-  encodeSignature,
   decodeSignature,
-  encodeTime,
+  decodeString,
   decodeTime,
-  Encoder,
-  Decoder,
   decodeUint8Array,
+  decodeUint64,
+  encodeAddress,
+  encodeBoolean,
+  encodeCurrency,
+  encodeLengthPrefix,
+  encodeSignature,
+  encodeString,
+  encodeTime,
   encodeUint8Array,
+  encodeUint64,
 } from './encoder'
-import { HostPrices, HostSettings, NetAddress } from './types'
+import type { HostPrices, HostSettings, NetAddress } from './types'
 
 export function encodeHostPrices(e: Encoder, hostPrices: HostPrices) {
   encodeCurrency(e, hostPrices.contractPrice)

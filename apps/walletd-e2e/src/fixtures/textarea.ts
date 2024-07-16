@@ -1,4 +1,4 @@
-import { Page, expect } from '@playwright/test'
+import { type Page, expect } from '@playwright/test'
 
 export async function clickTextareaByName(page: Page, name: string) {
   await page.locator(`textarea[name="${name}"]`).click()
@@ -8,7 +8,7 @@ export async function fillTextareaByName(
   page: Page,
   name: string,
   value: string,
-  tabAfterFill = false
+  tabAfterFill = false,
 ) {
   await page.locator(`textarea[name="${name}"]`).click()
   await page.locator(`textarea[name="${name}"]`).fill(value)
@@ -20,7 +20,7 @@ export async function fillTextareaByName(
 export async function expectTextareaByName(
   page: Page,
   name: string,
-  value: string
+  value: string,
 ) {
   await expect(page.locator(`textarea[name="${name}"]`)).toHaveValue(value)
 }
@@ -32,7 +32,7 @@ export async function expectTextareaNotVisible(page: Page, name: string) {
 export async function expectTextareaByNameAttribute(
   page: Page,
   name: string,
-  value: string
+  value: string,
 ) {
   await expect(page.locator(`textarea[name="${name}"]`)).toHaveAttribute(value)
 }

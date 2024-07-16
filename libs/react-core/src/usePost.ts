@@ -1,55 +1,56 @@
 'use client'
 
+import type { RequestParams } from '@siafoundation/request'
 import axios from 'axios'
-import useSWR, { useSWRConfig } from 'swr'
 import { useMemo } from 'react'
+import useSWR, { useSWRConfig } from 'swr'
 import {
+  type After,
+  type InternalCallbackArgs,
+  type InternalHookArgsCallback,
+  type InternalHookArgsSwr,
+  type InternalHookArgsWithPayloadSwr,
+  type Response,
   buildAxiosConfig,
   buildRouteWithParams,
-  InternalCallbackArgs,
+  getPathFromKey,
   mergeInternalCallbackArgs,
-  Response,
-  InternalHookArgsCallback,
   mergeInternalHookArgsCallback,
   mergeInternalHookArgsSwr,
-  InternalHookArgsWithPayloadSwr,
-  getPathFromKey,
-  After,
-  InternalHookArgsSwr,
 } from './request'
-import { SWRError } from './types'
+import type { SWRError } from './types'
 import { useAppSettings } from './useAppSettings'
 import { keyOrNull } from './utils'
 import { useWorkflows } from './workflows'
-import { RequestParams } from '@siafoundation/request'
 
 export function usePostSwr<Params extends RequestParams, Payload, Result>(
-  args: InternalHookArgsWithPayloadSwr<Params, Payload, Result>
+  args: InternalHookArgsWithPayloadSwr<Params, Payload, Result>,
 ) {
   const hookArgs: InternalHookArgsSwr<
     Record<string, string | number | boolean | string[]>,
     Result
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   > = useMemo(() => mergeInternalHookArgsSwr(args as any), [args])
   const { settings, passwordProtectRequestHooks } = useAppSettings()
   const reqRoute = buildRouteWithParams(
     settings,
     hookArgs.route,
     hookArgs,
-    undefined
+    undefined,
   )
   const key = useMemo(
     () =>
       keyOrNull(
         reqRoute
           ? `${reqRoute}${JSON.stringify(
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              (args as any).payload !== undefined ? (args as any).payload : ''
+              // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+              (args as any).payload !== undefined ? (args as any).payload : '',
             )}`
           : null,
-        hookArgs.disabled || (passwordProtectRequestHooks && !settings.password)
+        hookArgs.disabled ||
+          (passwordProtectRequestHooks && !settings.password),
       ),
-    [reqRoute, args, hookArgs, passwordProtectRequestHooks, settings]
+    [reqRoute, args, hookArgs, passwordProtectRequestHooks, settings],
   )
   return useSWR<Result, SWRError>(
     key,
@@ -64,12 +65,12 @@ export function usePostSwr<Params extends RequestParams, Payload, Result>(
       try {
         const response = await axios.post<Result>(
           reqRoute,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
           (args as any).payload,
-          reqConfig
+          reqConfig,
         )
         return response.data
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       } catch (e: any) {
         const error: SWRError = new Error(e.response.data)
         // Attach extra info to the error object.
@@ -77,19 +78,19 @@ export function usePostSwr<Params extends RequestParams, Payload, Result>(
         throw error
       }
     },
-    hookArgs.config?.swr
+    hookArgs.config?.swr,
   )
 }
 
 type PostFunc<Params extends RequestParams, Payload, Result> = {
   post: (
-    args: InternalCallbackArgs<Params, Payload, Result>
+    args: InternalCallbackArgs<Params, Payload, Result>,
   ) => Promise<Response<Result>>
 }
 
 export function usePostFunc<Params extends RequestParams, Payload, Result>(
   args: InternalHookArgsCallback<Params, Payload, Result>,
-  after?: After<Params, Payload, Result>
+  after?: After<Params, Payload, Result>,
 ): PostFunc<Params, Payload, Result> {
   const { setWorkflow, removeWorkflow } = useWorkflows()
   const { mutate } = useSWRConfig()
@@ -104,7 +105,7 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
           settings,
           hookArgs.route,
           hookArgs,
-          callArgs
+          callArgs,
         )
         if (!reqRoute) {
           throw Error('No route')
@@ -115,16 +116,16 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
         }
 
         const key = `${reqRoute}${JSON.stringify(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (args as any).payload !== undefined ? (args as any).payload : ''
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+          (args as any).payload !== undefined ? (args as any).payload : '',
         )}`
 
         const path = getPathFromKey(
           settings,
           reqRoute,
           args,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          callArgs as any
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+          callArgs as any,
         )
 
         setWorkflow(key, {
@@ -144,16 +145,16 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
                     settings,
                     key,
                     args,
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    callArgs as any
+                    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+                    callArgs as any,
                   )
                   return matcher(route)
                 },
                 data,
-                opts
+                opts,
               ),
             callArgs,
-            response
+            response,
           )
         }
         removeWorkflow(key)
@@ -162,7 +163,7 @@ export function usePostFunc<Params extends RequestParams, Payload, Result>(
           data: response.data,
           headers: response.headers,
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       } catch (e: any) {
         // If the network is disconnected then response.status will be 0 and
         // data undefined, so return axios e.message error.

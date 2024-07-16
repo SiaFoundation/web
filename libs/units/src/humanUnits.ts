@@ -39,14 +39,14 @@ type HumanBytesOptions = {
 
 export function humanBytes(
   bytes: number | BigNumber | string,
-  options?: HumanBytesOptions
+  options?: HumanBytesOptions,
 ): string {
   const b =
     typeof bytes === 'number'
       ? bytes
       : bytes instanceof BigNumber
-      ? bytes.toNumber()
-      : Number(bytes)
+        ? bytes.toNumber()
+        : Number(bytes)
   const { fixed = 2 } = options || {}
   if (!b) return '0 B'
   else if (b < 1000) return `${b} B`
@@ -95,7 +95,7 @@ type HumanNumberOptions = {
 
 export function humanNumber(
   numb: BigNumber | string | number | undefined,
-  options?: HumanNumberOptions
+  options?: HumanNumberOptions,
 ) {
   const { fixed = 0, units = '', abbreviated = false } = options || {}
   const num = new BigNumber(numb || 0)
@@ -133,7 +133,7 @@ export function humanNumber(
 
 export function humanDate(
   t: Date | string | number,
-  options?: Intl.DateTimeFormatOptions
+  options?: Intl.DateTimeFormatOptions,
 ) {
   let language: string | undefined = undefined
   if (typeof window !== 'undefined') {

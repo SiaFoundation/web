@@ -1,18 +1,18 @@
 import {
-  encodeBytes,
-  encodeString,
-  encodeUint64,
-  encodeLengthPrefix,
+  type Decoder,
+  type Encoder,
   decodeBytes,
-  decodeString,
-  decodeUint64,
   decodeLengthPrefix,
-  Encoder,
-  Decoder,
-  encodeUint8Array,
-  decodeUint8Array,
-  encodeRpcId,
   decodeRpcId,
+  decodeString,
+  decodeUint8Array,
+  decodeUint64,
+  encodeBytes,
+  encodeLengthPrefix,
+  encodeRpcId,
+  encodeString,
+  encodeUint8Array,
+  encodeUint64,
 } from './encoder'
 import {
   decodeHostPrices,
@@ -20,7 +20,7 @@ import {
   encodeHostPrices,
   encodeHostSettings,
 } from './encoding'
-import {
+import type {
   RPCReadSectorRequest,
   RPCReadSectorResponse,
   RPCSettingsRequest,
@@ -37,7 +37,7 @@ import {
 
 export function encodeRpcRequestSettings(
   e: Encoder,
-  _rpcSettings: RPCSettingsRequest
+  _rpcSettings: RPCSettingsRequest,
 ) {
   encodeRpcId(e, 'Settings')
 }
@@ -61,7 +61,7 @@ export function decodeRpcResponseSettings(d: Decoder): RPCSettingsResponse {
 
 export function encodeRpcRequestReadSector(
   e: Encoder,
-  readSector: RPCReadSectorRequest
+  readSector: RPCReadSectorRequest,
 ) {
   encodeRpcId(e, 'ReadSector')
   encodeHostPrices(e, readSector.prices)
@@ -91,7 +91,7 @@ export function decodeRpcRequestReadSector(d: Decoder): RPCReadSectorRequest {
 
 export function encodeRpcResponseReadSector(
   e: Encoder,
-  rsr: RPCReadSectorResponse
+  rsr: RPCReadSectorResponse,
 ) {
   encodeLengthPrefix(e, rsr.proof.length)
   for (let i = 0; i < rsr.proof.length; i++) {
@@ -117,7 +117,7 @@ export function decodeRpcResponseReadSector(d: Decoder): RPCReadSectorResponse {
 
 export function encodeRpcRequestWriteSector(
   e: Encoder,
-  writeSector: RPCWriteSectorRequest
+  writeSector: RPCWriteSectorRequest,
 ) {
   encodeRpcId(e, 'WriteSector')
   encodeHostPrices(e, writeSector.prices)
@@ -141,13 +141,13 @@ export function decodeRpcRequestWriteSector(d: Decoder): RPCWriteSectorRequest {
 
 export function encodeRpcResponseWriteSector(
   e: Encoder,
-  wsr: RPCWriteSectorResponse
+  wsr: RPCWriteSectorResponse,
 ) {
   encodeBytes(e, wsr.root)
 }
 
 export function decodeRpcResponseWriteSector(
-  d: Decoder
+  d: Decoder,
 ): RPCWriteSectorResponse {
   const root = decodeBytes(d, 32)
   return {

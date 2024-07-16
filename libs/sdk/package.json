@@ -1,13 +1,25 @@
 {
   "name": "@siafoundation/sdk",
-  "description": "SDK for interacting directly with the Sia network from browsers and web clients.",
   "version": "0.2.1",
+  "description": "SDK for interacting directly with the Sia network from browsers and web clients.",
   "license": "MIT",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "rollup --config",
+    "check-types": "tsc --noEmit",
+    "dev": "rollup --config --watch"
+  },
   "dependencies": {
     "@siafoundation/types": "0.4.0"
   },
   "devDependencies": {
+    "@rollup/plugin-wasm": "^6.2.2",
+    "@siafoundation/typescript-config": "^0.0.0",
+    "@swc/core": "^1.6.13",
+    "del-cli": "^5.1.0",
+    "rollup-plugin-preserve-directives": "^0.4.0",
+    "tsup": "^8.1.0",
     "undici": "5.28.3"
-  },
-  "types": "./src/index.d.ts"
+  }
 }

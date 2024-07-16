@@ -1,16 +1,16 @@
-import { ObjEntry } from '@siafoundation/renterd-types'
+import type { ObjEntry } from '@siafoundation/renterd-types'
 import { sortBy, toPairs } from '@technically/lodash'
+import { useEffect } from 'react'
 import useSWR from 'swr'
-import { useContracts } from '../contracts'
-import { ObjectData } from './types'
+import { useFilesManager } from '.'
 import {
   buildDirectoryPath,
   getFilename,
-  join,
   isDirectory,
+  join,
 } from '../../lib/paths'
-import { useFilesManager } from '.'
-import { useEffect } from 'react'
+import { useContracts } from '../contracts'
+import type { ObjectData } from './types'
 
 type Props = {
   id: string
@@ -58,7 +58,7 @@ export function useDataset({ id, objects }: Props) {
         })
       } else if (objects.data || uploadsList.length) {
         objects.data?.forEach(({ name: key, size, health }) => {
-          const path = join(activeBucketName, key)
+          const path = join(activeBucketName!, key)
           const name = getFilename(key)
           dataMap[path] = {
             id: path,
@@ -78,7 +78,7 @@ export function useDataset({ id, objects }: Props) {
         uploadsList
           .filter(({ path, name }) => path === join(activeDirectoryPath, name))
           .filter(({ path }) =>
-            path.startsWith(join(activeBucketName, fileNamePrefixFilter))
+            path.startsWith(join(activeBucketName!, fileNamePrefixFilter)),
           )
           .forEach((upload) => {
             dataMap[upload.path] = upload
@@ -86,7 +86,7 @@ export function useDataset({ id, objects }: Props) {
       }
       const all = sortBy(
         toPairs(dataMap).map((p) => p[1]),
-        sortField as keyof ObjectData
+        sortField as keyof ObjectData,
       )
       if (sortDirection === 'desc') {
         all.reverse()
@@ -95,12 +95,12 @@ export function useDataset({ id, objects }: Props) {
     },
     {
       keepPreviousData: true,
-    }
+    },
   )
   // refetch when the dependent data changes
+  // biome-ignore lint/correctness/useExhaustiveDependencies:
   useEffect(() => {
     response.mutate()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [objects.data, uploadsList, allContracts, buckets.data])
   return response
 }

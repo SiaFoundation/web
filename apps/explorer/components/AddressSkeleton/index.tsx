@@ -1,11 +1,11 @@
 import {
+  DatumSkeleton,
+  EntityList,
   Skeleton,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-  EntityList,
-  DatumSkeleton,
 } from '@siafoundation/design-system'
 import { times } from '@technically/lodash'
 import { ContentLayout } from '../ContentLayout'

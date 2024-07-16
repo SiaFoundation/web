@@ -1,25 +1,25 @@
 import {
+  Button,
   DropdownMenu,
   DropdownMenuItem,
-  Button,
-  DropdownMenuLeftSlot,
   DropdownMenuLabel,
+  DropdownMenuLeftSlot,
   Text,
   copyToClipboard,
 } from '@siafoundation/design-system'
 import {
   CaretDown16,
-  ListChecked16,
-  Filter16,
   Copy16,
   Delete16,
+  Filter16,
+  ListChecked16,
 } from '@siafoundation/react-icons'
 import {
   useHostsAllowlist,
   useHostsBlocklist,
 } from '@siafoundation/renterd-react'
-import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
+import { routes } from '../../config/routes'
 import { useContracts } from '../../contexts/contracts'
 import { useHosts } from '../../contexts/hosts'
 import { useAllowlistUpdate } from '../../hooks/useAllowlistUpdate'
@@ -57,7 +57,7 @@ export function ContractContextMenu({
       contentProps={{
         align: 'start',
         ...contentProps,
-        onClick: (e) => {
+        onClick: (e: React.MouseEvent<HTMLElement>) => {
           e.stopPropagation()
         },
       }}
@@ -119,7 +119,7 @@ export function ContractContextMenuContent({
         disabled={!hostAddress}
         onSelect={() => {
           resetContractsFilters()
-          setContractsFilter(addressContainsFilter(hostAddress))
+          setContractsFilter(addressContainsFilter(hostAddress!))
           router.push(routes.contracts.index)
         }}
       >
@@ -132,7 +132,7 @@ export function ContractContextMenuContent({
         disabled={!hostKey}
         onSelect={() => {
           resetContractsFilters()
-          setContractsFilter(publicKeyContainsFilter(hostKey))
+          setContractsFilter(publicKeyContainsFilter(hostKey!))
           router.push(routes.contracts.index)
         }}
       >
@@ -145,7 +145,7 @@ export function ContractContextMenuContent({
       {blocklist.data?.find((l) => l === hostAddress) ? (
         <DropdownMenuItem
           disabled={!hostAddress}
-          onSelect={() => blocklistUpdate([], [hostAddress])}
+          onSelect={() => blocklistUpdate([], [hostAddress!])}
         >
           <DropdownMenuLeftSlot>
             <ListChecked16 />
@@ -155,7 +155,7 @@ export function ContractContextMenuContent({
       ) : (
         <DropdownMenuItem
           disabled={!hostAddress}
-          onSelect={() => blocklistUpdate([hostAddress], [])}
+          onSelect={() => blocklistUpdate([hostAddress!], [])}
         >
           <DropdownMenuLeftSlot>
             <ListChecked16 />
@@ -166,7 +166,7 @@ export function ContractContextMenuContent({
       {allowlist.data?.find((l) => l === hostKey) ? (
         <DropdownMenuItem
           disabled={!hostKey}
-          onSelect={() => allowlistUpdate([], [hostKey])}
+          onSelect={() => allowlistUpdate([], [hostKey!])}
         >
           <DropdownMenuLeftSlot>
             <ListChecked16 />
@@ -176,7 +176,7 @@ export function ContractContextMenuContent({
       ) : (
         <DropdownMenuItem
           disabled={!hostKey}
-          onSelect={() => allowlistUpdate([hostKey], [])}
+          onSelect={() => allowlistUpdate([hostKey!], [])}
         >
           <DropdownMenuLeftSlot>
             <ListChecked16 />
@@ -199,7 +199,7 @@ export function ContractContextMenuContent({
       </DropdownMenuItem>
       <DropdownMenuItem
         disabled={!hostKey}
-        onSelect={() => copyToClipboard(hostKey, 'host public key')}
+        onSelect={() => copyToClipboard(hostKey!, 'host public key')}
       >
         <DropdownMenuLeftSlot>
           <Copy16 />
@@ -208,7 +208,7 @@ export function ContractContextMenuContent({
       </DropdownMenuItem>
       <DropdownMenuItem
         disabled={!hostAddress}
-        onSelect={() => copyToClipboard(hostAddress, 'host address')}
+        onSelect={() => copyToClipboard(hostAddress!, 'host address')}
       >
         <DropdownMenuLeftSlot>
           <Copy16 />

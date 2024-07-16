@@ -6,9 +6,9 @@ import {
   triggerSuccessToast,
 } from '@siafoundation/design-system'
 import { useObjectUpload } from '@siafoundation/renterd-react'
-import { useFilesManager } from '../contexts/filesManager'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useFilesManager } from '../contexts/filesManager'
 import { bucketAndKeyParamsFromPath } from '../lib/paths'
 
 const initialValues = {
@@ -39,9 +39,10 @@ export function FilesCreateDirectoryDialog({
     onSubmit: async (values, actions) => {
       const response = await upload.put({
         params: bucketAndKeyParamsFromPath(
-          activeDirectoryPath + values.name + '/'
+          activeDirectoryPath + values.name + '/',
         ),
-        payload: null,
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        payload: null as any,
       })
       if (response.error) {
         triggerErrorToast({

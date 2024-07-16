@@ -12,11 +12,11 @@ const hastingsPerSiacoin = new BigNumber('10').exponentiatedBy(24)
 
 export function toSiacoins(
   hastings: BigNumber | number | string,
-  fixed?: number
+  fixed?: number,
 ) {
   if (fixed !== undefined) {
     return new BigNumber(
-      new BigNumber(hastings).dividedBy(hastingsPerSiacoin).toFixed(fixed)
+      new BigNumber(hastings).dividedBy(hastingsPerSiacoin).toFixed(fixed),
     )
   }
   return new BigNumber(hastings).dividedBy(hastingsPerSiacoin)
@@ -24,7 +24,7 @@ export function toSiacoins(
 
 export function toHastings(siacoins: BigNumber | number | string) {
   return new BigNumber(
-    new BigNumber(siacoins).times(hastingsPerSiacoin).toFixed(0)
+    new BigNumber(siacoins).times(hastingsPerSiacoin).toFixed(0),
   )
 }
 
@@ -52,7 +52,7 @@ const humanSiacoinOptionDefaults: HumanSiacoinOptions = {
  */
 export function humanSiacoin(
   hastings: BigNumber | number | string,
-  options?: HumanSiacoinOptions
+  options?: HumanSiacoinOptions,
 ): string {
   const { fixed, dynamicUnits, hastingUnits } = {
     ...humanSiacoinOptionDefaults,

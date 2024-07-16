@@ -1,7 +1,7 @@
+import { useSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-react'
+import { TBToBytes, monthsToBlocks, toSiacoins } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
-import { monthsToBlocks, TBToBytes, toSiacoins } from '@siafoundation/units'
-import { useSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-react'
 
 export function useAverages() {
   const averages = useSiaCentralHostsNetworkAverages({
@@ -18,10 +18,10 @@ export function useAverages() {
             toSiacoins(averages.data.settings.storage_price) // bytes/block
               .times(monthsToBlocks(1)) // bytes/month
               .times(TBToBytes(1)) // TB/month
-              .toFixed(0)
+              .toFixed(0),
           )
         : undefined,
-    [averages.data]
+    [averages.data],
   )
   const uploadAverage = useMemo(
     () =>
@@ -29,10 +29,10 @@ export function useAverages() {
         ? new BigNumber(
             toSiacoins(averages.data.settings.upload_price) // bytes
               .times(TBToBytes(1)) // TB
-              .toFixed(0)
+              .toFixed(0),
           )
         : undefined,
-    [averages.data]
+    [averages.data],
   )
   const downloadAverage = useMemo(
     () =>
@@ -40,20 +40,20 @@ export function useAverages() {
         ? new BigNumber(
             toSiacoins(averages.data.settings.download_price) // bytes
               .times(TBToBytes(1)) // TB
-              .toFixed(0)
+              .toFixed(0),
           )
         : undefined,
-    [averages.data]
+    [averages.data],
   )
 
   const contractAverage = useMemo(
     () =>
       averages.data
         ? new BigNumber(
-            toSiacoins(averages.data.settings.contract_price).toFixed(0)
+            toSiacoins(averages.data.settings.contract_price).toFixed(0),
           )
         : undefined,
-    [averages.data]
+    [averages.data],
   )
 
   return {

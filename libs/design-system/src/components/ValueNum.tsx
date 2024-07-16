@@ -1,6 +1,6 @@
+import type BigNumber from 'bignumber.js'
 import { Text } from '../core/Text'
 import { Tooltip } from '../core/Tooltip'
-import BigNumber from 'bignumber.js'
 
 type Props = {
   size?: React.ComponentProps<typeof Text>['size']
@@ -29,8 +29,8 @@ export function ValueNum({
       ? value.isGreaterThan(0)
         ? 'green'
         : value.isLessThan(0)
-        ? 'red'
-        : 'subtle'
+          ? 'red'
+          : 'subtle'
       : 'contrast'
 
   return (

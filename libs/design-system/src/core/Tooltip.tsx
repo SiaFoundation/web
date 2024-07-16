@@ -1,12 +1,12 @@
 'use client'
 
-import React from 'react'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
-import { Paragraph } from './Paragraph'
 import { cx } from 'class-variance-authority'
-import { panelStyles } from './Panel'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import type React from 'react'
 import { useOpen } from '../hooks/useOpen'
+import { panelStyles } from './Panel'
+import { Paragraph } from './Paragraph'
 
 type TooltipProps = Omit<
   React.ComponentProps<typeof TooltipPrimitive.Root> &
@@ -79,7 +79,7 @@ export function Tooltip({
                   'data-[side=left]:right-1',
                   'data-[side=left]:origin-right',
                   'data-[side=right]:left-1',
-                  'data-[side=right]:origin-left'
+                  'data-[side=right]:origin-left',
                 )}
               >
                 <div
@@ -87,7 +87,7 @@ export function Tooltip({
                     'py-1 px-2',
                     'max-w-xs',
                     'overflow-hidden',
-                    panelStyles()
+                    panelStyles(),
                   )}
                 >
                   <Paragraph size="12">{content}</Paragraph>

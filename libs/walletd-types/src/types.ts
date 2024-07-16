@@ -1,18 +1,18 @@
-import {
+import type {
+  Address,
   ChainIndex,
-  Transaction,
-  SiacoinElement,
-  SiafundElement,
+  FileContract,
   FileContractElement,
   Hash256,
-  FileContract,
   PublicKey,
+  SiacoinElement,
+  SiafundElement,
   SpendPolicy,
+  Transaction,
   UnlockConditions,
-  V2Transaction,
-  V2FileContractResolutionType,
-  Address,
   V2FileContractElement,
+  V2FileContractResolutionType,
+  V2Transaction,
 } from '@siafoundation/types'
 
 export type GatewayPeer = {

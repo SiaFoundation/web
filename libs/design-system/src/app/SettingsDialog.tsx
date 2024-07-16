@@ -1,24 +1,24 @@
-import { Alert } from '../core/Alert'
-import { Heading } from '../core/Heading'
-import { Paragraph } from '../core/Paragraph'
-import { Option, Select } from '../core/Select'
-import { Switch } from '../core/Switch'
-import { Text } from '../core/Text'
-import { Separator } from '../core/Separator'
-import { Link } from '../core/Link'
+import { useAppSettings } from '@siafoundation/react-core'
 import {
+  Globe16,
   Information16,
   LogoDiscord16,
-  Globe16,
   LogoGithub16,
 } from '@siafoundation/react-icons'
 import { ThemeRadio } from '../components/ThemeRadio'
-import { webLinks } from '../data/webLinks'
-import { useAppSettings } from '@siafoundation/react-core'
+import { Alert } from '../core/Alert'
 import { Dialog } from '../core/Dialog'
+import { Heading } from '../core/Heading'
+import { Link } from '../core/Link'
+import { Paragraph } from '../core/Paragraph'
+import { Option, Select } from '../core/Select'
+import { Separator } from '../core/Separator'
+import { Switch } from '../core/Switch'
+import { Text } from '../core/Text'
+import { webLinks } from '../data/webLinks'
 import { minutesInMilliseconds } from '../lib/time'
-import { CurrencyFiatSelector } from './CurrencyFiatSelector'
 import { CurrencyDisplaySelector } from './CurrencyDisplaySelector'
+import { CurrencyFiatSelector } from './CurrencyFiatSelector'
 
 type Props = {
   open: boolean
@@ -174,7 +174,8 @@ export function SettingsDialog({
                   </Select>
                 </div>
                 <Paragraph size="14">
-                  {`Automatically lock the app after a certain period of inactivity.`}
+                  Automatically lock the app after a certain period of
+                  inactivity.
                 </Paragraph>
               </div>
             </Alert>

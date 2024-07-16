@@ -1,9 +1,9 @@
 import { mockApiSiaCentralExchangeRates } from '@siafoundation/sia-central-mock'
-import { login } from './login'
-import { navigateToConfig } from './navigate'
+import type { Page } from 'playwright'
 import { configResetAllSettings } from './configResetAllSettings'
 import { setViewMode } from './configViewMode'
-import { Page } from 'playwright'
+import { login } from './login'
+import { navigateToConfig } from './navigate'
 
 export async function beforeTest(page: Page) {
   await mockApiSiaCentralExchangeRates({ page })

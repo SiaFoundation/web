@@ -21,3 +21,5 @@ export type {
   HookArgsSwr,
   Response,
 } from './request'
+
+export type * from 'swr'

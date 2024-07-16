@@ -1,5 +1,5 @@
-import { Panel } from '../core/Panel'
 import { cx } from 'class-variance-authority'
+import { Panel } from '../core/Panel'
 import { BackgroundImagePattern } from './BackgroundImagePattern'
 
 type Props = {

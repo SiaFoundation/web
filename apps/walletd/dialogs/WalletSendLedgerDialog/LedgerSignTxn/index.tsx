@@ -1,4 +1,4 @@
-import { Paragraph, Button, Text } from '@siafoundation/design-system'
+import { Button, Paragraph, Text } from '@siafoundation/design-system'
 import { TransactionLayout } from './TransactionLayout'
 
 export function LedgerSignTxn({

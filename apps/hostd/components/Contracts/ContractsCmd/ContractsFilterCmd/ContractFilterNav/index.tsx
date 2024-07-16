@@ -1,5 +1,5 @@
 import { CommandItemNav } from '../../../../CmdRoot/Item'
-import { Page } from '../../../../CmdRoot/types'
+import type { Page } from '../../../../CmdRoot/types'
 import { ContractIdCmdNav } from '../ContractFilterCmdGroups/ContractId'
 import { contractsFilterStatusPage } from '../ContractFilterCmdGroups/Status'
 

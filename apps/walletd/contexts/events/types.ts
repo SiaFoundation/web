@@ -1,5 +1,5 @@
-import { WalletEvent } from '@siafoundation/walletd-types'
-import BigNumber from 'bignumber.js'
+import type { WalletEvent } from '@siafoundation/walletd-types'
+import type BigNumber from 'bignumber.js'
 
 export type CellContext = {
   siascanUrl: string

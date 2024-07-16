@@ -2,9 +2,9 @@
 
 import * as LabelPrimitive from '@radix-ui/react-label'
 import React from 'react'
-import { textStyles } from './Text'
-import { VariantProps } from '../types'
+import type { VariantProps } from '../types'
 import { labelStyles } from './Menu'
+import type { textStyles } from './Text'
 
 export const Label = React.forwardRef<
   React.ComponentRef<typeof LabelPrimitive.Root>,
@@ -22,7 +22,7 @@ export const Label = React.forwardRef<
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
     return (
       <LabelPrimitive.Root
@@ -40,5 +40,5 @@ export const Label = React.forwardRef<
         })}
       />
     )
-  }
+  },
 )

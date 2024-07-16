@@ -3,9 +3,9 @@ import {
   FormFieldFormik,
   FormSubmitButtonFormik,
 } from '@siafoundation/design-system'
-import { useContracts } from '../contexts/contracts'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useContracts } from '../contexts/contracts'
 import { useDialog } from '../contexts/dialog'
 
 export function filterContractId(contractId: string) {

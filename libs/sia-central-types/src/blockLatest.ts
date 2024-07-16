@@ -1,4 +1,4 @@
-import { SiaCentralBlock } from './types'
+import type { SiaCentralBlock } from './types'
 
 export type SiaCentralBlockLatestParams = void
 export type SiaCentralBlockLatestPayload = void

@@ -1,22 +1,22 @@
-import { NumberField } from '../core/NumberField'
-import BigNumber from 'bignumber.js'
-import { FieldValues, Path, PathValue } from 'react-hook-form'
-import { FieldGroup } from '../components/Form'
-import { FieldProps, useRegisterForm } from './configurationFields'
+import { currencyOptions, useAppSettings } from '@siafoundation/react-core'
 import { ChartArea16 } from '@siafoundation/react-icons'
+import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
+import type { SiaCentralCurrency } from '@siafoundation/sia-central-types'
+import { toHastings } from '@siafoundation/units'
+import BigNumber from 'bignumber.js'
+import { useMemo } from 'react'
+import type { FieldValues, Path, PathValue } from 'react-hook-form'
+import { FieldGroup } from '../components/Form'
+import { ValueSc } from '../components/ValueSc'
+import { NumberField } from '../core/NumberField'
 import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
-import { toHastings } from '@siafoundation/units'
-import { SiaCentralCurrency } from '@siafoundation/sia-central-types'
-import { currencyOptions, useAppSettings } from '@siafoundation/react-core'
-import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
-import { useMemo } from 'react'
 import { Tooltip } from '../core/Tooltip'
-import { ValueSc } from '../components/ValueSc'
+import { type FieldProps, useRegisterForm } from './configurationFields'
 
 export function FieldFiat<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   name,
   form,
@@ -53,7 +53,7 @@ export function FieldFiat<
   })
   const currencyOption = useMemo(
     () => currencyOptions.find((c) => c.id === currency),
-    [currency]
+    [currency],
   )
 
   const el = (
@@ -69,9 +69,9 @@ export function FieldFiat<
         state={
           error
             ? 'invalid'
-            : form.formState.dirtyFields[name]
-            ? 'valid'
-            : 'default'
+            : (form.formState.dirtyFields as Record<string, boolean>)[name]
+              ? 'valid'
+              : 'default'
         }
         onChange={(val) => {
           const v = val !== undefined ? new BigNumber(val) : undefined

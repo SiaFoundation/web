@@ -1,4 +1,4 @@
-import {
+import type {
   WalletAddress,
   WalletAddressMetadata,
 } from '@siafoundation/walletd-types'

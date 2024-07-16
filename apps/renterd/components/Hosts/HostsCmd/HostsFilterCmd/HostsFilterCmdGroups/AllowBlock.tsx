@@ -1,6 +1,6 @@
-import { ServerFilterItem } from '@siafoundation/design-system'
+import type { ServerFilterItem } from '@siafoundation/design-system'
 import { CommandGroup, CommandItemSearch } from '../../../../CmdRoot/Item'
-import { Page } from '../../../../CmdRoot/types'
+import type { Page } from '../../../../CmdRoot/types'
 
 export const hostsFilterAllowBlockPage = {
   namespace: 'hosts/filterAllowBlock',
@@ -24,7 +24,7 @@ export function AllowBlockCmdGroup({
   select,
   currentPage,
 }: {
-  currentPage: Page
+  currentPage?: Page
   select: (filter: ServerFilterItem) => void
 }) {
   return (

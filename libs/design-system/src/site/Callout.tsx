@@ -1,9 +1,9 @@
-import { Link } from '../core/Link'
-import { Text } from '../core/Text'
-import { Paragraph } from '../core/Paragraph'
-import { PatternedPanel } from './PatternedPanel'
-import { Heading } from '../core/Heading'
 import { cx } from 'class-variance-authority'
+import { Heading } from '../core/Heading'
+import { Link } from '../core/Link'
+import { Paragraph } from '../core/Paragraph'
+import { Text } from '../core/Text'
+import { PatternedPanel } from './PatternedPanel'
 import { WebDomain } from './WebDomain'
 
 type Props = {
@@ -40,8 +40,8 @@ export function Callout({
           size === '0'
             ? 'py-14 px-6'
             : size === '2'
-            ? 'py-40 px-5 lg:px-16'
-            : 'pt-40 pr-5 pb-6 pl-5'
+              ? 'py-40 px-5 lg:px-16'
+              : 'pt-40 pr-5 pb-6 pl-5',
         )}
       >
         {eyebrow && (

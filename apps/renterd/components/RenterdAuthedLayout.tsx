@@ -12,7 +12,7 @@ export function RenterdAuthedLayout(
   props: Omit<
     Props,
     'appName' | 'connectivityRoute' | 'walletBalance' | 'profile' | 'isSynced'
-  >
+  >,
 ) {
   const wallet = useWallet()
   const { isSynced } = useSyncStatus()

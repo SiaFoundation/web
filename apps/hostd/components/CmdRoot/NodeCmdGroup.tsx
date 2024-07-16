@@ -1,8 +1,8 @@
-import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
+import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { CommandGroup, CommandItemNav, CommandItemSearch } from './Item'
-import { Page } from './types'
+import type { Page } from './types'
 
 const commandPage = {
   namespace: 'node',
@@ -10,7 +10,7 @@ const commandPage = {
 }
 
 type Props = {
-  currentPage: Page
+  currentPage?: Page
   parentPage?: Page
   pushPage: (page: Page) => void
 }

@@ -1,5 +1,5 @@
+import type BigNumber from 'bignumber.js'
 import { useFormik } from 'formik'
-import BigNumber from 'bignumber.js'
 import { WalletSendSiacoinReceipt } from './Receipt'
 
 type Props = {

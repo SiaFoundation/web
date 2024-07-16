@@ -1,18 +1,19 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "@siafoundation/typescript-config/nextjs.json",
   "compilerOptions": {
-    "jsx": "preserve",
-    "allowJs": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": false,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "incremental": true,
-    "types": ["jest", "node"]
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": { "*": ["./node_modules/@types/*"] }
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "next-env.d.ts"],
-  "exclude": ["node_modules", "jest.config.ts"]
+  "include": [
+    "next-env.d.ts",
+    "next.config.mjs",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.spec.tsx"]
 }

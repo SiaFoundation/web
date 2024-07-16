@@ -1,10 +1,10 @@
+import { Warning16 } from '@siafoundation/react-icons'
+import type BigNumber from 'bignumber.js'
+import { ValueScFiat } from '../components/ValueScFiat'
 import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
-import BigNumber from 'bignumber.js'
-import { Warning16 } from '@siafoundation/react-icons'
 import { Tooltip } from '../core/Tooltip'
 import { WalletBalanceTip } from './WalletBalanceTip'
-import { ValueScFiat } from '../components/ValueScFiat'
 
 export function WalletBalance({
   balanceSc,

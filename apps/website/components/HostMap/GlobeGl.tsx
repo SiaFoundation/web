@@ -1,5 +1,5 @@
-import { MutableRefObject } from 'react'
-import GlobeTmpl, { GlobeMethods } from 'react-globe.gl'
+import type { MutableRefObject } from 'react'
+import GlobeTmpl, { type GlobeMethods } from 'react-globe.gl'
 
 const GlobeGl = ({
   forwardRef,

@@ -10,10 +10,10 @@ import {
   useStateHost,
   useSyncerPeers,
 } from '@siafoundation/hostd-react'
-import { useSyncStatus } from '../../hooks/useSyncStatus'
+import { humanTime } from '@siafoundation/units'
 import { useDialog } from '../../contexts/dialog'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
-import { humanTime } from '@siafoundation/units'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
 
 export function Profile() {
   const { openDialog } = useDialog()

@@ -1,29 +1,29 @@
-import { cx } from 'class-variance-authority'
 import {
-  textFieldStyles,
-  panelStyles,
   Label,
   Separator,
+  panelStyles,
+  textFieldStyles,
 } from '@siafoundation/design-system'
+import { cx } from 'class-variance-authority'
 import { Command } from 'cmdk'
-import { WalletCmdGroup } from './WalletCmdGroup'
-import { AppCmdGroup } from './AppCmdGroup'
-import { useCallback, useState } from 'react'
-import { NodeCmdGroup } from './NodeCmdGroup'
-import { ConfigCmdGroup } from './ConfigCmdGroup'
-import { useDialog } from '../../contexts/dialog'
 import { useRouter } from 'next/router'
-import { routes } from '../../config/routes'
-import { ContractsCmd } from '../Contracts/ContractsCmd'
-import { AlertsCmd } from '../Alerts/AlertsCmd'
-import { Page } from './types'
-import { useContracts } from '../../contexts/contracts'
-import { HostsCmd } from '../Hosts/HostsCmd'
-import { FilesCmd } from '../Files/FilesCmd'
-import { useHosts } from '../../contexts/hosts'
+import { useCallback, useState } from 'react'
 import { useDebounce } from 'use-debounce'
-import { CmdEmptyDefault } from './CmdEmpty'
+import { routes } from '../../config/routes'
+import { useContracts } from '../../contexts/contracts'
+import { useDialog } from '../../contexts/dialog'
+import { useHosts } from '../../contexts/hosts'
+import { AlertsCmd } from '../Alerts/AlertsCmd'
+import { ContractsCmd } from '../Contracts/ContractsCmd'
+import { FilesCmd } from '../Files/FilesCmd'
+import { HostsCmd } from '../Hosts/HostsCmd'
 import { KeysCmd } from '../Keys/KeysCmd'
+import { AppCmdGroup } from './AppCmdGroup'
+import { CmdEmptyDefault } from './CmdEmpty'
+import { ConfigCmdGroup } from './ConfigCmdGroup'
+import { NodeCmdGroup } from './NodeCmdGroup'
+import { WalletCmdGroup } from './WalletCmdGroup'
+import type { Page } from './types'
 
 type Props = {
   panel?: boolean
@@ -40,12 +40,9 @@ export function CmdRoot({ panel }: Props) {
   const page: Page | undefined = pages[pages.length - 1]
   const rootPage = pages.length === 0
 
-  const pushPage = useCallback(
-    (page: Page) => {
-      setPages((pages) => [...pages, page])
-    },
-    [setPages]
-  )
+  const pushPage = useCallback((page: Page) => {
+    setPages((pages) => [...pages, page])
+  }, [])
 
   const beforeSelect = useCallback(() => {
     closeDialog()
@@ -53,7 +50,7 @@ export function CmdRoot({ panel }: Props) {
 
   const afterSelect = useCallback(() => {
     setSearch('')
-  }, [setSearch])
+  }, [])
 
   const Empty = page?.empty || CmdEmptyDefault
 
@@ -62,7 +59,7 @@ export function CmdRoot({ panel }: Props) {
       label="Command Menu"
       loop
       className={cx(panel && panelStyles())}
-      onKeyDown={(e) => {
+      onKeyDown={(e: React.KeyboardEvent<HTMLElement>) => {
         // Escape goes to previous page
         // Backspace goes to previous page when search is empty
         if (
@@ -83,7 +80,7 @@ export function CmdRoot({ panel }: Props) {
           page?.prompt ||
           (rootPage
             ? 'Search for commands, eg: theme, redundancy'
-            : `Search commands`)
+            : 'Search commands')
         }
       />
       <Separator className="my-2" />

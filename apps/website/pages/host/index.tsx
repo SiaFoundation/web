@@ -1,29 +1,29 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
-  ContentGallery,
   Callout,
+  ContentGallery,
   SiteHeading,
   webLinks,
 } from '@siafoundation/design-system'
-import { Layout } from '../../components/Layout'
-import { routes } from '../../config/routes'
-import { getMinutesInSeconds } from '../../lib/time'
-import { getFeedContent } from '../../content/feed'
-import { AsyncReturnType } from '../../lib/types'
-import { getProjects } from '../../content/projects'
-import { getStats } from '../../content/stats'
-import { getHostingArticles } from '../../content/articles'
-import { SectionGradient } from '../../components/SectionGradient'
-import { backgrounds, patterns, previews } from '../../content/assets'
-import { SectionTransparent } from '../../components/SectionTransparent'
-import { SectionProjects } from '../../components/SectionProjects'
 import { CalloutHostd } from '../../components/CalloutHostd'
+import { DownloadSection } from '../../components/DownloadSection'
+import { Layout } from '../../components/Layout'
+import { SectionGradient } from '../../components/SectionGradient'
+import { SectionProjects } from '../../components/SectionProjects'
+import { SectionTransparent } from '../../components/SectionTransparent'
 import { SectionTutorials } from '../../components/SectionTutorials'
+import { routes } from '../../config/routes'
+import { getHostingArticles } from '../../content/articles'
+import { backgrounds, patterns, previews } from '../../content/assets'
+import { getFeedContent } from '../../content/feed'
+import { getProjects } from '../../content/projects'
 import {
   getHostdLatestDaemonRelease,
   getHostdLatestDesktopRelease,
 } from '../../content/releases'
-import { DownloadSection } from '../../components/DownloadSection'
+import { getStats } from '../../content/stats'
+import { getMinutesInSeconds } from '../../lib/time'
+import type { AsyncReturnType } from '../../lib/types'
 
 const title = 'Host'
 const description = 'Offer your storage space on the Sia network.'

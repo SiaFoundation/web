@@ -1,4 +1,7 @@
-import { GitHubRelease, GitHubReleaseAsset } from '@siafoundation/data-sources'
+import type {
+  GitHubRelease,
+  GitHubReleaseAsset,
+} from '@siafoundation/data-sources'
 
 type DownloadOption = { title: string; link: string; tags: DownloadTag[] }
 
@@ -26,7 +29,7 @@ export function getDownloadLinksDaemon(daemon: string, release: GitHubRelease) {
 
 export function getDownloadLinksDesktop(
   daemon: string,
-  release: GitHubRelease
+  release: GitHubRelease,
 ): DownloadOption[] {
   if (!release) {
     return []
@@ -56,7 +59,7 @@ export function getDownloadLinksDesktop(
   }
 
   const debArm = assets.find(
-    (asset) => asset.name.includes('.deb') && asset.name.includes('arm64')
+    (asset) => asset.name.includes('.deb') && asset.name.includes('arm64'),
   )
   if (debArm) {
     final.push({
@@ -67,7 +70,7 @@ export function getDownloadLinksDesktop(
   }
 
   const debAmd = assets.find(
-    (asset) => asset.name.includes('.deb') && asset.name.includes('amd64')
+    (asset) => asset.name.includes('.deb') && asset.name.includes('amd64'),
   )
   if (debAmd) {
     final.push({
@@ -78,7 +81,7 @@ export function getDownloadLinksDesktop(
   }
 
   const rpmArm = assets.find(
-    (asset) => asset.name.includes('.rpm') && asset.name.includes('arm64')
+    (asset) => asset.name.includes('.rpm') && asset.name.includes('arm64'),
   )
   if (rpmArm) {
     final.push({
@@ -89,7 +92,7 @@ export function getDownloadLinksDesktop(
   }
 
   const rpmAmd = assets.find(
-    (asset) => asset.name.includes('.rpm') && asset.name.includes('x86_64')
+    (asset) => asset.name.includes('.rpm') && asset.name.includes('x86_64'),
   )
   if (rpmAmd) {
     final.push({
@@ -128,7 +131,7 @@ function getTags(asset: GitHubReleaseAsset): DownloadTag[] {
 }
 
 export function findUserDefaultDownload(
-  downloads: DownloadOption[] = []
+  downloads: DownloadOption[] = [],
 ): DownloadOption | null {
   let d = null
   if (navigator.userAgent.includes('Macintosh')) {
@@ -136,21 +139,21 @@ export function findUserDefaultDownload(
       (i) =>
         i.tags.includes('macos') &&
         i.tags.includes('arm64') &&
-        !i.tags.includes('zen')
+        !i.tags.includes('zen'),
     )
   } else if (navigator.userAgent.includes('Windows')) {
     d = downloads.find(
       (i) =>
         i.tags.includes('windows') &&
         i.tags.includes('amd64') &&
-        !i.tags.includes('zen')
+        !i.tags.includes('zen'),
     )
   } else if (navigator.userAgent.includes('Linux')) {
     d = downloads.find(
       (i) =>
         i.tags.includes('linux') &&
         i.tags.includes('amd64') &&
-        !i.tags.includes('zen')
+        !i.tags.includes('zen'),
     )
   }
   return d

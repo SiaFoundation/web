@@ -1,13 +1,13 @@
-import {
+import { Panel, Text } from '@siafoundation/design-system'
+import type {
   SiaCentralExchangeRates,
   SiaCentralHost,
 } from '@siafoundation/sia-central-types'
+import { formatDistance } from 'date-fns'
 import { ContentLayout } from '../ContentLayout'
 import { HostHeader } from './HostHeader'
 import { HostSettings } from './HostSettings'
-import { Panel, Text } from '@siafoundation/design-system'
-import { SiaCentralHostScanned } from './types'
-import { formatDistance } from 'date-fns'
+import type { SiaCentralHostScanned } from './types'
 
 type Props = {
   host: SiaCentralHost
@@ -27,7 +27,7 @@ export function Host({ host, rates }: Props) {
             {host.last_scan !== '0001-01-01T00:00:00Z' &&
               ` Last scan attempt was ${formatDistance(
                 new Date(host.last_scan),
-                new Date()
+                new Date(),
               )} ago.`}
           </Text>
         </Panel>

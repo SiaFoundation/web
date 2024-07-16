@@ -1,25 +1,25 @@
-import { cx } from 'class-variance-authority'
 import {
-  textFieldStyles,
-  panelStyles,
   Label,
   Separator,
+  panelStyles,
+  textFieldStyles,
 } from '@siafoundation/design-system'
+import { cx } from 'class-variance-authority'
 import { Command } from 'cmdk'
-import { WalletCmdGroup } from './WalletCmdGroup'
-import { AppCmdGroup } from './AppCmdGroup'
-import { useCallback, useState } from 'react'
-import { NodeCmdGroup } from './NodeCmdGroup'
-import { ConfigCmdGroup } from './ConfigCmdGroup'
-import { Page } from './types'
-import { useContracts } from '../../contexts/contracts'
-import { useDebounce } from 'use-debounce'
-import { CmdEmptyDefault } from './CmdEmpty'
-import { ContractsCmd } from '../Contracts/ContractsCmd'
-import { useDialog } from '../../contexts/dialog'
 import { useRouter } from 'next/router'
+import { useCallback, useState } from 'react'
+import { useDebounce } from 'use-debounce'
 import { routes } from '../../config/routes'
+import { useContracts } from '../../contexts/contracts'
+import { useDialog } from '../../contexts/dialog'
+import { ContractsCmd } from '../Contracts/ContractsCmd'
 import { VolumesCmd } from '../Volumes/VolumesCmd'
+import { AppCmdGroup } from './AppCmdGroup'
+import { CmdEmptyDefault } from './CmdEmpty'
+import { ConfigCmdGroup } from './ConfigCmdGroup'
+import { NodeCmdGroup } from './NodeCmdGroup'
+import { WalletCmdGroup } from './WalletCmdGroup'
+import type { Page } from './types'
 
 type Props = {
   panel?: boolean
@@ -39,7 +39,7 @@ export function CmdRoot({ panel }: Props) {
     (page: Page) => {
       setPages((pages) => [...pages, page])
     },
-    [setPages]
+    [setPages],
   )
 
   const beforeSelect = useCallback(() => {

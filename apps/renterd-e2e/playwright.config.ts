@@ -1,7 +1,4 @@
 import { defineConfig, devices } from '@playwright/test'
-import { nxE2EPreset } from '@nx/playwright/preset'
-
-import { workspaceRoot } from '@nx/devkit'
 
 // For CI, you may want to set BASE_URL to the deployed application.
 const baseURL = process.env['BASE_URL'] || 'http://localhost:3007'
@@ -16,7 +13,7 @@ const baseURL = process.env['BASE_URL'] || 'http://localhost:3007'
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  ...nxE2EPreset(__filename, { testDir: './src' }),
+  // ...nxE2EPreset(__filename, { testDir: './src' }),
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     baseURL,
@@ -34,10 +31,10 @@ export default defineConfig({
   outputDir: 'output',
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npx nx serve renterd',
+    command: 'turbo dev --filter=renterd',
     url: baseURL,
     reuseExistingServer: !process.env.CI,
-    cwd: workspaceRoot,
+    cwd: '../../',
   },
   // Run the tests serially as they may mutate the state of the same application.
   workers: 1,

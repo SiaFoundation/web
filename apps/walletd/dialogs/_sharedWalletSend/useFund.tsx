@@ -2,9 +2,9 @@ import {
   useWalletFundSiacoin,
   useWalletFundSiafund,
 } from '@siafoundation/walletd-react'
-import { useWallets } from '../../contexts/wallets'
 import { useCallback } from 'react'
-import { SendParams } from './types'
+import { useWallets } from '../../contexts/wallets'
+import type { SendParams } from './types'
 
 export function useFund() {
   const { wallet } = useWallets()
@@ -108,7 +108,7 @@ export function useFund() {
         }
       }
     },
-    [walletFundSc, walletFundSf, walletId]
+    [walletFundSc, walletFundSf, walletId],
   )
 
   return fund

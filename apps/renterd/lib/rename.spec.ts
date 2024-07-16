@@ -10,8 +10,8 @@ describe('getMoveFileRenameParams', () => {
           },
           collisions: [],
         },
-        ['default', 'path', 'to']
-      )
+        ['default', 'path', 'to'],
+      ),
     ).toEqual({
       bucket: 'default',
       from: '/path/a/',
@@ -32,8 +32,8 @@ describe('getMoveFileRenameParams', () => {
             },
           ],
         },
-        ['default', 'path', 'to']
-      )
+        ['default', 'path', 'to'],
+      ),
     ).toEqual({
       bucket: 'default',
       from: '/path/a/',
@@ -50,8 +50,8 @@ describe('getMoveFileRenameParams', () => {
           },
           collisions: [],
         },
-        ['default', 'path', 'to']
-      )
+        ['default', 'path', 'to'],
+      ),
     ).toEqual({
       bucket: 'default',
       from: '/path/a',
@@ -72,8 +72,8 @@ describe('getMoveFileRenameParams', () => {
             },
           ],
         },
-        ['default', 'path', 'to']
-      )
+        ['default', 'path', 'to'],
+      ),
     ).toEqual({
       bucket: 'default',
       from: '/path/a',

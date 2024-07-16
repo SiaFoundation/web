@@ -9,10 +9,10 @@ type Formik = {
 }
 
 export function useFormChanged(form: Formik, skip: string[] = []) {
-  type Changed = Record<keyof typeof form['initialValues'], boolean>
+  type Changed = Record<keyof (typeof form)['initialValues'], boolean>
   const changed = useMemo(() => {
     const keys = Object.keys(form.initialValues).filter(
-      (k) => !skip.includes(k)
+      (k) => !skip.includes(k),
     )
     return keys.reduce((acc, key) => {
       const iv = form.initialValues[key]

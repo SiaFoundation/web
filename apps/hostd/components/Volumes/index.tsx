@@ -1,13 +1,13 @@
-import { Button, Table, Text, Separator } from '@siafoundation/design-system'
+import { Button, Separator, Table, Text } from '@siafoundation/design-system'
 import { Add20 } from '@siafoundation/react-icons'
 import { humanBytes } from '@siafoundation/units'
-import { HostdAuthedLayout } from '../HostdAuthedLayout'
-import { useDialog } from '../../contexts/dialog'
-import { HostdSidenav } from '../HostdSidenav'
 import { routes } from '../../config/routes'
+import { useDialog } from '../../contexts/dialog'
 import { useVolumes } from '../../contexts/volumes'
-import { VolumesViewDropdownMenu } from './VolumesViewDropdownMenu'
+import { HostdAuthedLayout } from '../HostdAuthedLayout'
+import { HostdSidenav } from '../HostdSidenav'
 import { StateNoneYet } from './StateNoneYet'
+import { VolumesViewDropdownMenu } from './VolumesViewDropdownMenu'
 
 export function Volumes() {
   const { openDialog } = useDialog()
@@ -36,15 +36,15 @@ export function Volumes() {
       stats={
         <div className="flex gap-4">
           <Text size="12" font="mono" weight="medium">{`${humanBytes(
-            used
+            used,
           )} used`}</Text>
           <Separator variant="vertical" />
           <Text size="12" font="mono" weight="medium">{`${humanBytes(
-            free
+            free,
           )} free`}</Text>
           <Separator variant="vertical" />
           <Text size="12" font="mono" weight="medium">{`${humanBytes(
-            total
+            total,
           )} total`}</Text>
         </div>
       }

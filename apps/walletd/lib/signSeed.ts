@@ -1,13 +1,13 @@
-import {
-  SiacoinElement,
-  Transaction,
-  SiafundElement,
-  ConsensusState,
-  ConsensusNetwork,
-} from '@siafoundation/types'
-import { AddressData } from '../contexts/addresses/types'
-import { addUnlockConditionsAndSignatures, getToSignMetadata } from './sign'
 import { getSDK } from '@siafoundation/sdk'
+import type {
+  ConsensusNetwork,
+  ConsensusState,
+  SiacoinElement,
+  SiafundElement,
+  Transaction,
+} from '@siafoundation/types'
+import type { AddressData } from '../contexts/addresses/types'
+import { addUnlockConditionsAndSignatures, getToSignMetadata } from './sign'
 
 export function signTransactionSeed({
   mnemonic,
@@ -67,7 +67,7 @@ export function signTransactionSeed({
 
     const pkResponse = getSDK().wallet.keyPairFromSeedPhrase(
       mnemonic,
-      address.metadata.index
+      address.metadata.index,
     )
 
     if (pkResponse.error) {
@@ -81,7 +81,7 @@ export function signTransactionSeed({
       consensusNetwork,
       transaction,
       i,
-      pkResponse.privateKey
+      pkResponse.privateKey,
     )
     if (error) {
       return {

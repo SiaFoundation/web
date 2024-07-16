@@ -1,11 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
   Dialog,
+  Paragraph,
   Tabs,
+  TabsContent,
   TabsList,
   TabsTrigger,
-  TabsContent,
-  Paragraph,
 } from '@siafoundation/design-system'
 import { AllowlistForm } from './AllowlistForm'
 import { BlocklistForm } from './BlocklistForm'

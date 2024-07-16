@@ -1,14 +1,14 @@
 import {
-  Text,
-  TableColumn,
-  ValueCopyable,
-  Tooltip,
-  Paragraph,
   Button,
+  Paragraph,
+  type TableColumn,
+  Text,
+  Tooltip,
+  ValueCopyable,
 } from '@siafoundation/design-system'
 import { CaretDown16 } from '@siafoundation/react-icons'
 import { AddressContextMenu } from '../../components/WalletAddresses/AddressContextMenu'
-import { AddressData, CellContext, TableColumnId } from './types'
+import type { AddressData, CellContext, TableColumnId } from './types'
 
 type AddressesTableColumn = TableColumn<
   TableColumnId,

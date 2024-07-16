@@ -1,8 +1,8 @@
 'use client'
 
-import React from 'react'
-import { cva, VariantProps } from 'class-variance-authority'
 import * as SeparatorPrimitive from '@radix-ui/react-separator'
+import { type VariantProps, cva } from 'class-variance-authority'
+import React from 'react'
 
 const styles = cva(['m-0 flex-shrink-0 cursor-default'], {
   variants: {

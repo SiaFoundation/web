@@ -1,5 +1,5 @@
-import { SyncerPeersResponse } from '@siafoundation/walletd-types'
-import { Page } from 'playwright'
+import type { SyncerPeersResponse } from '@siafoundation/walletd-types'
+import type { Page } from 'playwright'
 
 export function getMockPeersResponse(): SyncerPeersResponse {
   return [

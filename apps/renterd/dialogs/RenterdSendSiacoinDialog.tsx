@@ -1,4 +1,3 @@
-import { useCallback } from 'react'
 import { WalletSendSiacoinDialog } from '@siafoundation/design-system'
 import {
   useTxPoolBroadcast,
@@ -7,8 +6,9 @@ import {
   useWalletFund,
   useWalletSign,
 } from '@siafoundation/renterd-react'
-import { useDialog } from '../contexts/dialog'
 import BigNumber from 'bignumber.js'
+import { useCallback } from 'react'
+import { useDialog } from '../contexts/dialog'
 
 export function RenterdSendSiacoinDialog() {
   const { dialog, openDialog, closeDialog } = useDialog()
@@ -40,8 +40,8 @@ export function RenterdSendSiacoinDialog() {
       }
       const signResponse = await sign.post({
         payload: {
-          transaction: fundResponse.data.transaction,
-          toSign: fundResponse.data.toSign,
+          transaction: fundResponse.data!.transaction,
+          toSign: fundResponse.data!.toSign,
           coveredFields: {
             wholeTransaction: true,
           },
@@ -49,18 +49,18 @@ export function RenterdSendSiacoinDialog() {
       })
       if (signResponse.error) {
         discard.post({
-          payload: fundResponse.data.transaction,
+          payload: fundResponse.data!.transaction,
         })
         return {
           error: signResponse.error,
         }
       }
       const broadcastResponse = await broadcast.post({
-        payload: [signResponse.data],
+        payload: [signResponse.data!],
       })
       if (broadcastResponse.error) {
         discard.post({
-          payload: signResponse.data,
+          payload: signResponse.data!,
         })
         return {
           error: broadcastResponse.error,
@@ -71,7 +71,7 @@ export function RenterdSendSiacoinDialog() {
         // transactionId: signResponse.data.??,
       }
     },
-    [fund, sign, broadcast, discard]
+    [fund, sign, broadcast, discard],
   )
 
   return (
@@ -79,7 +79,7 @@ export function RenterdSendSiacoinDialog() {
       balance={wallet.data ? new BigNumber(wallet.data.spendable) : undefined}
       send={send}
       open={dialog === 'sendSiacoin'}
-      onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      onOpenChange={(val) => (val ? openDialog(dialog!) : closeDialog())}
     />
   )
 }

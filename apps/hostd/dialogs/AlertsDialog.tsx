@@ -1,12 +1,12 @@
 import {
   AlertsDialog as DSAlertsDialog,
   Text,
+  ValueCopyable,
   triggerErrorToast,
   triggerSuccessToast,
-  ValueCopyable,
 } from '@siafoundation/design-system'
-import { AlertSeverity } from '@siafoundation/hostd-types'
 import { useAlerts, useAlertsDismiss } from '@siafoundation/hostd-react'
+import type { AlertSeverity } from '@siafoundation/hostd-types'
 import { humanTime } from '@siafoundation/units'
 import { useCallback } from 'react'
 import { defaultDatasetRefreshInterval } from '../config/swr'
@@ -40,7 +40,7 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
         triggerSuccessToast({ title: 'Alert has been dismissed' })
       }
     },
-    [dismiss]
+    [dismiss],
   )
 
   const dismissMany = useCallback(
@@ -66,7 +66,7 @@ export function AlertsDialog({ open, onOpenChange }: Props) {
         })
       }
     },
-    [dismiss, alerts]
+    [dismiss, alerts],
   )
 
   return (

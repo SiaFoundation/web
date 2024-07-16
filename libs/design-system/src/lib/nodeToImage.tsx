@@ -2,7 +2,7 @@ import * as htmlToImage from 'html-to-image'
 import { copyImageToClipboard } from './clipboard'
 
 export async function nodeToImage(
-  node: HTMLElement,
+  node: HTMLDivElement,
   {
     name,
     quality,
@@ -13,7 +13,7 @@ export async function nodeToImage(
     quality?: number
     copy?: boolean
     download?: boolean
-  }
+  },
 ) {
   if (!node) {
     throw Error('HTML node required')

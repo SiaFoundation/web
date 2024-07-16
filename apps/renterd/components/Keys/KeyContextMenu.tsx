@@ -1,13 +1,13 @@
 import {
+  Button,
   DropdownMenu,
   DropdownMenuItem,
-  Button,
-  DropdownMenuLeftSlot,
   DropdownMenuLabel,
-  Text,
+  DropdownMenuLeftSlot,
   Paragraph,
-  triggerSuccessToast,
+  Text,
   triggerErrorToast,
+  triggerSuccessToast,
   truncate,
 } from '@siafoundation/design-system'
 import { CaretDown16, Delete16 } from '@siafoundation/react-icons'
@@ -15,8 +15,8 @@ import {
   useSettingS3Authentication,
   useSettingUpdate,
 } from '@siafoundation/renterd-react'
-import { useCallback } from 'react'
 import { omit } from '@technically/lodash'
+import { useCallback } from 'react'
 import { useDialog } from '../../contexts/dialog'
 
 type Props = {

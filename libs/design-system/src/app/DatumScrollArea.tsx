@@ -1,5 +1,5 @@
-import { ScrollArea } from '../core/ScrollArea'
 import { cx } from 'class-variance-authority'
+import { ScrollArea } from '../core/ScrollArea'
 
 type Props = {
   children: React.ReactNode

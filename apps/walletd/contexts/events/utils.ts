@@ -1,5 +1,5 @@
+import type { WalletEvent } from '@siafoundation/walletd-types'
 import BigNumber from 'bignumber.js'
-import { WalletEvent } from '@siafoundation/walletd-types'
 
 export function getFee(e: WalletEvent) {
   if (e.type === 'v2Transaction') {

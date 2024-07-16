@@ -1,10 +1,10 @@
-import { useForm as useHookForm } from 'react-hook-form'
-import { ConfigViewMode, defaultValues } from './types'
-import { useEffect, useMemo, useRef } from 'react'
-import { getFields } from './fields'
-import useLocalStorageState from 'use-local-storage-state'
-import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
 import { useStateHost } from '@siafoundation/hostd-react'
+import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
+import { useEffect, useMemo, useRef } from 'react'
+import { useForm as useHookForm } from 'react-hook-form'
+import useLocalStorageState from 'use-local-storage-state'
+import { getFields } from './fields'
+import { type ConfigViewMode, defaultValues } from './types'
 import { useAutoCalculatedFields } from './useAutoCalculatedFields'
 
 export function useForm() {
@@ -45,7 +45,13 @@ export function useForm() {
         rates: rates.data?.rates,
         validationContext: validationContext.current,
       }),
-    [configViewMode, storagePrice, collateralMultiplier, rates.data, state.data]
+    [
+      configViewMode,
+      storagePrice,
+      collateralMultiplier,
+      rates.data,
+      state.data,
+    ],
   )
 
   return {

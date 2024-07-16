@@ -1,5 +1,5 @@
-import { WalletFundSiacoinResponse } from '@siafoundation/walletd-types'
-import { Page } from 'playwright'
+import type { WalletFundSiacoinResponse } from '@siafoundation/walletd-types'
+import type { Page } from 'playwright'
 
 export function getMockWalletFundSiacoinResponse(): WalletFundSiacoinResponse {
   return {

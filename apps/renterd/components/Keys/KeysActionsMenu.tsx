@@ -1,7 +1,7 @@
 import { Button } from '@siafoundation/design-system'
-import { KeysViewDropdownMenu } from './KeysViewDropdownMenu'
 import { Add16 } from '@siafoundation/react-icons'
 import { useDialog } from '../../contexts/dialog'
+import { KeysViewDropdownMenu } from './KeysViewDropdownMenu'
 
 export function KeysActionsMenu() {
   const { openDialog } = useDialog()

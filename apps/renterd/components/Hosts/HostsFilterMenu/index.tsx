@@ -1,16 +1,16 @@
 import {
-  textFieldStyles,
+  Button,
+  ControlGroup,
   Label,
   Panel,
-  Button,
   ScrollArea,
-  ControlGroup,
+  textFieldStyles,
 } from '@siafoundation/design-system'
 import { Close16 } from '@siafoundation/react-icons'
-import { useHosts } from '../../../contexts/hosts'
 import { Command } from 'cmdk'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Page } from '../../CmdRoot/types'
+import { useHosts } from '../../../contexts/hosts'
+import type { Page } from '../../CmdRoot/types'
 import { HostsFilterCmd } from '../HostsCmd/HostsFilterCmd'
 
 export function HostsFilterMenu() {
@@ -19,14 +19,14 @@ export function HostsFilterMenu() {
   const [search, setSearch] = useState('')
   const [pages, setPages] = useState<Page[]>([])
   const currentPage = pages[pages.length - 1]
-  const rootRef = useRef(null)
+  const rootRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const pushPage = useCallback(
     (page: Page) => {
       setPages((pages) => [...pages, page])
     },
-    [setPages]
+    [setPages],
   )
 
   const resetPage = useCallback(() => {
@@ -34,8 +34,8 @@ export function HostsFilterMenu() {
   }, [setPages])
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (rootRef.current && !rootRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (rootRef.current && !rootRef.current.contains(event.target as Node)) {
         setOpen(false)
       }
     }

@@ -1,9 +1,9 @@
 import fs from 'fs'
-import { toPairs } from '@technically/lodash'
-import { webLinks } from '@siafoundation/design-system'
-import { getMinutesInSeconds } from '../lib/time'
-import { getCacheValue } from '../lib/cache'
 import { getAssetPath } from '@siafoundation/data-sources'
+import { webLinks } from '@siafoundation/design-system'
+import { toPairs } from '@technically/lodash'
+import { getCacheValue } from '../lib/cache'
+import { getMinutesInSeconds } from '../lib/time'
 
 type Report = {
   year: string
@@ -43,15 +43,18 @@ function readReports(): ReportPair[] {
     return []
   }
 
-  const reportsMap = reports.reduce((acc, report) => {
-    const year = acc[report.year] || []
-    return {
-      ...acc,
-      [report.year]: year
-        .concat(report)
-        .sort((a, b) => (a.quarter > b.quarter ? 1 : -1)),
-    }
-  }, {} as Record<string, Report[]>)
+  const reportsMap = reports.reduce(
+    (acc, report) => {
+      const year = acc[report.year] || []
+      return {
+        ...acc,
+        [report.year]: year
+          .concat(report)
+          .sort((a, b) => (a.quarter > b.quarter ? 1 : -1)),
+      }
+    },
+    {} as Record<string, Report[]>,
+  )
 
   return toPairs(reportsMap).sort((a, b) => (a[0] < b[0] ? 1 : -1))
 }

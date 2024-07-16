@@ -13,7 +13,7 @@ export function BackgroundImagePattern({ background, className }: Props) {
       <Image
         className={cx(
           'absolute z-0 w-full h-full object-cover opacity-[10%] dark:opacity-10',
-          className
+          className,
         )}
         quality={1}
         width={256 * 3}

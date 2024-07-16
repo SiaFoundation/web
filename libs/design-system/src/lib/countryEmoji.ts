@@ -18,13 +18,13 @@ export function countryCodeEmoji(cc: string): string {
     throw new TypeError(
       `cc argument must be an ISO 3166-1 alpha-2 string, but got '${
         type === 'string' ? cc : type
-      }' instead.`
+      }' instead.`,
     )
   }
 
   const codePoints = [...cc.toUpperCase()].map(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (c) => (c as any).codePointAt() + OFFSET
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    (c) => (c as any).codePointAt() + OFFSET,
   )
   return String.fromCodePoint(...codePoints)
 }
@@ -40,11 +40,11 @@ export function emojiCountryCode(flag: string) {
     throw new TypeError(
       `flag argument must be a flag emoji, but got '${
         type === 'string' ? flag : type
-      }' instead.`
+      }' instead.`,
     )
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const codePoints = [...flag].map((c) => (c as any).codePointAt() - OFFSET)
   return String.fromCodePoint(...codePoints)
 }

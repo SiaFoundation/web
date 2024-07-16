@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
-  ConfigFields,
+  type ConfigFields,
   Dialog,
   FormSubmitButton,
   useDialogFormHelpers,
@@ -9,7 +9,7 @@ import {
 import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useWallets } from '../contexts/wallets'
-import { getFieldMnemonic, MnemonicFieldType } from '../lib/fieldMnemonic'
+import { type MnemonicFieldType, getFieldMnemonic } from '../lib/fieldMnemonic'
 import { FieldMnemonic } from './FieldMnemonic'
 
 export type WalletUnlockDialogParams = {
@@ -81,7 +81,7 @@ export function WalletUnlockDialog({
       cacheWalletMnemonic(walletId, values.mnemonic)
       closeAndReset()
     },
-    [walletId, cacheWalletMnemonic, closeAndReset]
+    [walletId, cacheWalletMnemonic, closeAndReset],
   )
 
   const onInvalid = useOnInvalid(fields)

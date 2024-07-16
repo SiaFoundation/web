@@ -1,5 +1,5 @@
 import {
-  ConfigFields,
+  type ConfigFields,
   FieldNumber,
   FieldSwitch,
   Label,
@@ -8,9 +8,9 @@ import {
   triggerErrorToast,
   triggerSuccessToast,
 } from '@siafoundation/design-system'
-import { Path, UseFormReturn } from 'react-hook-form'
-import BigNumber from 'bignumber.js'
 import { useRescanStart } from '@siafoundation/walletd-react'
+import BigNumber from 'bignumber.js'
+import type { Path, UseFormReturn } from 'react-hook-form'
 import { CalloutWarning } from './CalloutWarning'
 
 export function getRescanFields() {

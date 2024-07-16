@@ -3,7 +3,7 @@ import { Close16 } from '@siafoundation/react-icons'
 import { TransferProgress } from './TransferProgress'
 
 type Props = {
-  loaded: number
+  loaded?: number
   size: number
   path: string
   abortTip: string

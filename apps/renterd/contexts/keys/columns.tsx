@@ -1,18 +1,10 @@
-import { TableColumn, ValueCopyable } from '@siafoundation/design-system'
-import { KeyData, TableColumnId } from './types'
+import { type TableColumn, ValueCopyable } from '@siafoundation/design-system'
 import { KeyContextMenu } from '../../components/Keys/KeyContextMenu'
+import type { KeyData, TableColumnId } from './types'
 
-type Context = {
-  currentHeight: number
-  defaultSet?: string
-  contractsTimeRange: {
-    startHeight: number
-    endHeight: number
-  }
-  siascanUrl: string
-}
+export type KeyCellContext = Record<string, never>
 
-type KeysTableColumn = TableColumn<TableColumnId, KeyData, Context> & {
+type KeysTableColumn = TableColumn<TableColumnId, KeyData, KeyCellContext> & {
   fixed?: boolean
   category?: string
 }

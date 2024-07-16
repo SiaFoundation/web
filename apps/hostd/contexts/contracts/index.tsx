@@ -1,25 +1,25 @@
 import {
-  useTableState,
+  getContractsTimeRangeBlockHeight,
   useDatasetEmptyState,
   useServerFilters,
-  getContractsTimeRangeBlockHeight,
+  useTableState,
 } from '@siafoundation/design-system'
-import { useRouter } from 'next/router'
-import { ContractStatus } from '@siafoundation/hostd-types'
 import { useContracts as useContractsData } from '@siafoundation/hostd-react'
+import type { ContractStatus } from '@siafoundation/hostd-types'
+import { useRouter } from 'next/router'
 import { createContext, useContext, useMemo } from 'react'
-import {
-  columnsDefaultVisible,
-  defaultSortField,
-  SortField,
-  sortOptions,
-  TableColumnId,
-} from './types'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { useSiascanUrl } from '../../hooks/useSiascanUrl'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { columns } from './columns'
 import { useDataset } from './dataset'
-import { useSyncStatus } from '../../hooks/useSyncStatus'
-import { useSiascanUrl } from '../../hooks/useSiascanUrl'
-import { defaultDatasetRefreshInterval } from '../../config/swr'
+import {
+  type SortField,
+  type TableColumnId,
+  columnsDefaultVisible,
+  defaultSortField,
+  sortOptions,
+} from './types'
 
 const defaultLimit = 50
 
@@ -76,7 +76,7 @@ function useContractsMain() {
 
   const filteredTableColumns = useMemo(
     () => columns.filter((column) => enabledColumns.includes(column.id)),
-    [enabledColumns]
+    [enabledColumns],
   )
 
   const isValidating = response.isValidating
@@ -88,7 +88,7 @@ function useContractsMain() {
 
   const { range: contractsTimeRange } = useMemo(
     () => getContractsTimeRangeBlockHeight(currentHeight, dataset || []),
-    [currentHeight, dataset]
+    [currentHeight, dataset],
   )
 
   const siascanUrl = useSiascanUrl()
@@ -99,7 +99,7 @@ function useContractsMain() {
       currentHeight,
       siascanUrl,
     }),
-    [contractsTimeRange, currentHeight, siascanUrl]
+    [contractsTimeRange, currentHeight, siascanUrl],
   )
 
   return {

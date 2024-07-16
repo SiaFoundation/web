@@ -1,12 +1,12 @@
-import { DaemonProfile, Label, Text, Link } from '@siafoundation/design-system'
-import { useSyncStatus } from '../../hooks/useSyncStatus'
+import { DaemonProfile, Label, Link, Text } from '@siafoundation/design-system'
+import { humanTime } from '@siafoundation/units'
 import {
   useConsensusNetwork,
   useNodeState,
   useSyncerPeers,
 } from '@siafoundation/walletd-react'
 import { useDialog } from '../../contexts/dialog'
-import { humanTime } from '@siafoundation/units'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
 
 export function Profile() {
   const { openDialog } = useDialog()
@@ -26,8 +26,8 @@ export function Profile() {
     version === '?'
       ? `https://github.com/SiaFoundation/walletd/commits/`
       : version?.match(/^v\d+\.\d+\.\d+/)
-      ? `https://github.com/SiaFoundation/walletd/releases/${version}`
-      : `https://github.com/SiaFoundation/walletd/tree/${version}`
+        ? `https://github.com/SiaFoundation/walletd/releases/${version}`
+        : `https://github.com/SiaFoundation/walletd/tree/${version}`
 
   const uptime = state.data
     ? new Date().getTime() - new Date(state.data?.startTime).getTime()

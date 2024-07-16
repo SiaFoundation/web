@@ -4,24 +4,30 @@ import {
   ControlGroup,
   Panel,
   Separator,
-  TableColumn,
+  type TableColumn,
   Text,
 } from '@siafoundation/design-system'
-import { AlertData, TableColumnId } from './types'
-import { dataFields } from './data'
-import { SetAdditions, SetChangesField, SetRemovals } from './SetChange'
 import { Checkmark16 } from '@siafoundation/react-icons'
 import { formatRelative } from 'date-fns'
 import { Fragment, useMemo } from 'react'
+import {
+  type SetAdditions,
+  SetChangesField,
+  type SetRemovals,
+} from './SetChange'
+import { dataFields } from './data'
+import type { AlertCellContext, AlertData, TableColumnId } from './types'
 
-type Context = never
-
-type KeysTableColumn = TableColumn<TableColumnId, AlertData, Context> & {
+type AlertsTableColumn = TableColumn<
+  TableColumnId,
+  AlertData,
+  AlertCellContext
+> & {
   fixed?: boolean
   category?: string
 }
 
-export const columns: KeysTableColumn[] = [
+export const columns: AlertsTableColumn[] = [
   {
     id: 'actions',
     label: '',
@@ -52,8 +58,8 @@ export const columns: KeysTableColumn[] = [
                 severity === 'error' || severity === 'critical'
                   ? 'red'
                   : severity === 'warning'
-                  ? 'amber'
-                  : 'gray'
+                    ? 'amber'
+                    : 'gray'
               }
               size="small"
             >
@@ -63,16 +69,16 @@ export const columns: KeysTableColumn[] = [
               {message}
             </Text>
           </div>
-          {data['hint'] && (
+          {data['hint'] ? (
             <Text size="12" color="subtle">
               {data['hint'] as string}
             </Text>
-          )}
-          {data['error'] && (
+          ) : null}
+          {data['error'] ? (
             <Text size="12" color="subtle">
               {data['error'] as string}
             </Text>
-          )}
+          ) : null}
         </div>
       )
     },
@@ -99,18 +105,18 @@ export const columns: KeysTableColumn[] = [
               }
               return { key, value }
             })
-            .filter(Boolean),
-        [data]
+            .filter(Boolean) as { key: string; value: unknown }[],
+        [data],
       )
       // Collect set changes for the custom SetChangeField component
       // which is a special case that combines two keys of data
       const setAdditions = useMemo(
         () => data['setAdditions'] as SetAdditions,
-        [data]
+        [data],
       )
       const setRemovals = useMemo(
         () => data['setRemovals'] as SetRemovals,
-        [data]
+        [data],
       )
       return (
         <div className="py-4 w-full">

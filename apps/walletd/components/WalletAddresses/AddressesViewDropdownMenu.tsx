@@ -1,23 +1,23 @@
 import {
-  Button,
-  Select,
-  PoolCombo,
-  Label,
-  Popover,
-  MenuItemRightSlot,
   BaseMenuItem,
-  MenuSeparator,
+  Button,
+  Label,
+  MenuItemRightSlot,
   MenuSectionLabelToggleAll,
+  MenuSeparator,
   Option,
+  PoolCombo,
+  Popover,
+  Select,
 } from '@siafoundation/design-system'
 import {
   CaretDown16,
-  SettingsAdjust16,
   Reset16,
+  SettingsAdjust16,
 } from '@siafoundation/react-icons'
-import { SortField, sortOptions } from '../../contexts/addresses/types'
 import { groupBy } from '@technically/lodash'
 import { useAddresses } from '../../contexts/addresses'
+import { type SortField, sortOptions } from '../../contexts/addresses/types'
 
 export function AddressesViewDropdownMenu() {
   const {
@@ -76,7 +76,7 @@ export function AddressesViewDropdownMenu() {
                     </Option>
                   ))}
                 </optgroup>
-              )
+              ),
             )}
           </Select>
         </MenuItemRightSlot>

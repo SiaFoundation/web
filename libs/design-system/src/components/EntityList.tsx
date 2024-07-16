@@ -1,17 +1,17 @@
 'use client'
 
+import { cx } from 'class-variance-authority'
+import type React from 'react'
 import { Heading } from '../core/Heading'
 import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
-import React from 'react'
-import { cx } from 'class-variance-authority'
+import { EntityListItem, type EntityListItemProps } from './EntityListItem'
 import { EntityListSkeleton } from './EntityListSkeleton'
-import { EntityListItem, EntityListItemProps } from './EntityListItem'
 
 type Props = {
   title?: string
   actions?: React.ReactNode
-  dataset?: EntityListItemProps[]
+  dataset?: EntityListItemProps[] | null
   children?: React.ReactNode
   isLoading?: boolean
   emptyState?: React.ReactNode
@@ -60,7 +60,7 @@ export function EntityList({
               <div
                 className={cx(
                   'flex items-center justify-center h-[84px]',
-                  itemBorderStyles()
+                  itemBorderStyles(),
                 )}
               >
                 <Text size="18" color="subtle">
@@ -90,6 +90,6 @@ export function EntityList({
 function itemBorderStyles() {
   return cx(
     'border-t border-gray-200 dark:border-graydark-300',
-    'first:border-none'
+    'first:border-none',
   )
 }

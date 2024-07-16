@@ -1,12 +1,12 @@
 import {
+  type EntityType,
   Text,
-  ValueSf,
-  ValueSc,
   ValueCopyable,
-  EntityType,
+  ValueSc,
+  ValueSf,
 } from '@siafoundation/design-system'
-import BigNumber from 'bignumber.js'
 import { upperFirst } from '@technically/lodash'
+import type BigNumber from 'bignumber.js'
 import { getHref } from '../lib/utils'
 
 // entityType&entityValue | value | values | sc | sf

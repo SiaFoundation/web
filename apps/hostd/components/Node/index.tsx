@@ -1,12 +1,12 @@
 import { DatumCard, PeerList } from '@siafoundation/design-system'
 import { useSyncerPeers } from '@siafoundation/hostd-react'
+import { orderBy } from '@technically/lodash'
+import { useMemo } from 'react'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
-import { HostdSidenav } from '../HostdSidenav'
-import { HostdAuthedLayout } from '../HostdAuthedLayout'
-import { useMemo } from 'react'
-import { orderBy } from '@technically/lodash'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
+import { HostdAuthedLayout } from '../HostdAuthedLayout'
+import { HostdSidenav } from '../HostdSidenav'
 
 export function Node() {
   const peers = useSyncerPeers()

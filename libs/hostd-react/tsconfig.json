@@ -1,25 +1,9 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "@siafoundation/typescript-config/react-library.json",
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "allowJs": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "outDir": "dist",
+    "rootDir": "src"
   },
-  "files": [],
-  "include": [],
-  "references": [
-    {
-      "path": "./tsconfig.lib.json"
-    },
-    {
-      "path": "./tsconfig.spec.json"
-    }
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "**/*.spec.ts"]
 }

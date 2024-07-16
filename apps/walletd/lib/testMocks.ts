@@ -1,7 +1,10 @@
-import Sia from '@siacentral/ledgerjs-sia'
-import { LedgerDevice } from '../contexts/ledger/types'
+import type Sia from '@siacentral/ledgerjs-sia'
+import type {
+  Wallet,
+  WalletAddressesResponse,
+} from '@siafoundation/walletd-types'
 import { transformAddressesResponse } from '../contexts/addresses/dataset'
-import { Wallet, WalletAddressesResponse } from '@siafoundation/walletd-types'
+import type { LedgerDevice } from '../contexts/ledger/types'
 
 export function getMockDevice() {
   return {
@@ -12,10 +15,10 @@ export function getMockDevice() {
       signTransaction: jest
         .fn()
         .mockReturnValueOnce(
-          'Xt1EJckLmWXU+7HHHDN9bRV5KRuLdC4YY01LzaAMF269QH4hWV8zFkY3kCWs65svhb9HhA1Ix1MRGvhN9orBDpAA'
+          'Xt1EJckLmWXU+7HHHDN9bRV5KRuLdC4YY01LzaAMF269QH4hWV8zFkY3kCWs65svhb9HhA1Ix1MRGvhN9orBDpAA',
         )
         .mockReturnValueOnce(
-          'fvmSaRzlO/n2L5tsT32e82kWqHnIjQJ8cqjWOc37TtlK6p/vIiOG+TO98HfvbgObTOYVqlKMtUyxTOjGb3bfCpAA'
+          'fvmSaRzlO/n2L5tsT32e82kWqHnIjQJ8cqjWOc37TtlK6p/vIiOG+TO98HfvbgObTOYVqlKMtUyxTOjGb3bfCpAA',
         ),
     } as unknown as Sia,
     transport: {
@@ -38,6 +41,6 @@ export function getMockAddresses({
   return transformAddressesResponse(
     walletAddressesResponse,
     newWallet.id,
-    () => null
+    () => null,
   )
 }

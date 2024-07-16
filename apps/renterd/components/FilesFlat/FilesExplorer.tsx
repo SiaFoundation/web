@@ -1,8 +1,8 @@
 import { Table } from '@siafoundation/design-system'
-import { EmptyState } from './EmptyState'
 import { useFilesFlat } from '../../contexts/filesFlat'
-import { useFilesManager } from '../../contexts/filesManager'
 import { columns } from '../../contexts/filesFlat/columns'
+import { useFilesManager } from '../../contexts/filesManager'
+import { EmptyState } from './EmptyState'
 
 export function FilesExplorer() {
   const { sortableColumns, toggleSort } = useFilesManager()

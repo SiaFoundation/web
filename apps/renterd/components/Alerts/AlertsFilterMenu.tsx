@@ -1,8 +1,8 @@
 'use client'
 
 import { Button, PaginatorKnownTotal, Text } from '@siafoundation/design-system'
-import { useAlerts } from '../../contexts/alerts'
 import { Checkmark16 } from '@siafoundation/react-icons'
+import { useAlerts } from '../../contexts/alerts'
 
 export function AlertsFilterMenu() {
   const {
@@ -56,7 +56,11 @@ export function AlertsFilterMenu() {
       {!dataState && !!pageCount && (
         <Button
           tip={severityFilter ? `dismiss ${pageCount}` : 'dismiss all'}
-          onClick={() => dismissMany(datasetPage.map((a) => a.id))}
+          onClick={() => {
+            if (datasetPage?.length) {
+              dismissMany(datasetPage.map((a) => a.id))
+            }
+          }}
         >
           <Checkmark16 />
           Dismiss ({pageCount})

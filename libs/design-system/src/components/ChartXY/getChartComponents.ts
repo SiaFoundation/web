@@ -12,7 +12,6 @@ import {
   AnimatedGlyphSeries,
   AnimatedGrid,
   AnimatedLineSeries,
-
   // not animated
   AreaSeries,
   AreaStack,
@@ -22,7 +21,6 @@ import {
   BarStack,
   Grid,
   LineSeries,
-
   // no animated equivalents
   Tooltip,
   XYChart,

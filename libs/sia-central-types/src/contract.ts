@@ -1,4 +1,4 @@
-import { SiaCentralContract } from './types'
+import type { SiaCentralContract } from './types'
 
 export type SiaCentralContractParams = {
   id: string

@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const preserveDirectives = require('rollup-plugin-preserve-directives')
+import preserveDirectives from 'rollup-plugin-preserve-directives'
 
 // https://github.com/rollup/rollup/issues/4699#issuecomment-1465302665
 function getRollupOptions(options) {
@@ -11,8 +10,8 @@ function getRollupOptions(options) {
       format: 'esm',
       sourcemap: true,
     },
-    plugins: options.plugins.concat(preserveDirectives.default()),
+    plugins: options.plugins.concat(preserveDirectives()),
   }
 }
 
-module.exports = getRollupOptions
+export default getRollupOptions

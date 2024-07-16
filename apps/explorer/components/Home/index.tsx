@@ -1,32 +1,32 @@
 'use client'
 
 import {
-  Text,
   BlockList,
-  Tooltip,
   EntityList,
+  Text,
+  Tooltip,
 } from '@siafoundation/design-system'
-import { useMemo } from 'react'
-import { routes } from '../../config/routes'
-import { ContentLayout } from '../ContentLayout'
-import { reverse, sortBy } from '@technically/lodash'
-import {
+import type {
   SiaCentralBlock,
   SiaCentralExchangeRates,
   SiaCentralHost,
   SiaCentralHostsNetworkMetricsResponse,
 } from '@siafoundation/sia-central-types'
-import { hashToAvatar } from '../../lib/avatar'
 import {
-  humanBytes,
-  humanNumber,
   getDownloadCost,
   getStorageCost,
   getUploadCost,
+  humanBytes,
+  humanNumber,
 } from '@siafoundation/units'
-import { HostListItem } from './HostListItem'
+import { reverse, sortBy } from '@technically/lodash'
+import { useMemo } from 'react'
+import { routes } from '../../config/routes'
 import { useExchangeRate } from '../../hooks/useExchangeRate'
-import { SiaCentralHostScanned } from '../Host/types'
+import { hashToAvatar } from '../../lib/avatar'
+import { ContentLayout } from '../ContentLayout'
+import type { SiaCentralHostScanned } from '../Host/types'
+import { HostListItem } from './HostListItem'
 
 export function Home({
   metrics,
@@ -68,7 +68,7 @@ export function Home({
               <Tooltip
                 content={`${humanBytes(
                   metrics?.totals.total_storage -
-                    metrics?.totals.remaining_storage
+                    metrics?.totals.remaining_storage,
                 )} used storage`}
               >
                 <Text
@@ -78,13 +78,13 @@ export function Home({
                 >
                   {humanBytes(
                     metrics?.totals.total_storage -
-                      metrics?.totals.remaining_storage
+                      metrics?.totals.remaining_storage,
                   )}
                 </Text>
               </Tooltip>
               <Tooltip
                 content={`${humanBytes(
-                  metrics?.totals.total_storage
+                  metrics?.totals.total_storage,
                 )} total storage`}
               >
                 <Text scaleSize="20" color="subtle">
@@ -186,7 +186,7 @@ export function Home({
               </div>
             </Tooltip>
           ),
-        }
+        },
       )
     }
     return list

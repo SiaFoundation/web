@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import { Feed } from 'feed'
-import { fetchAllFeedItems } from './notion/feed'
 import { getAssetPath } from './assets'
+import { fetchAllFeedItems } from './notion/feed'
 
 export async function generateRssFeed() {
   const posts = await fetchAllFeedItems([])

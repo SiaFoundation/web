@@ -1,13 +1,13 @@
 import {
+  Button,
   DropdownMenu,
   DropdownMenuItem,
-  Button,
-  DropdownMenuLeftSlot,
   DropdownMenuLabel,
+  DropdownMenuLeftSlot,
 } from '@siafoundation/design-system'
 import { Delete16, Edit16, FolderIcon } from '@siafoundation/react-icons'
-import { useDirectoryDelete } from './useDirectoryDelete'
 import { useDialog } from '../../contexts/dialog'
+import { useDirectoryDelete } from './useDirectoryDelete'
 
 type Props = {
   path: string

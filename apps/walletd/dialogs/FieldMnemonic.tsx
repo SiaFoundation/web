@@ -1,9 +1,9 @@
-import { ConfigFields, FieldText } from '@siafoundation/design-system'
+import { type ConfigFields, FieldText } from '@siafoundation/design-system'
+import { VerifyIcon } from '@siafoundation/react-icons'
+import type { FieldValues, Path, UseFormReturn } from 'react-hook-form'
 import { useWallets } from '../contexts/wallets'
 import { humanTimeAndUnits } from '../lib/time'
 import { SeedLayout } from './SeedLayout'
-import { VerifyIcon } from '@siafoundation/react-icons'
-import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
 
 type Props<Values extends FieldValues, Categories extends string> = {
   name: Path<Values>
@@ -15,7 +15,7 @@ type Props<Values extends FieldValues, Categories extends string> = {
 
 export function FieldMnemonic<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({ walletId, name, form, fields, actionText }: Props<Values, Categories>) {
   const { dataset, walletAutoLockEnabled, walletAutoLockTimeout } = useWallets()
   const wallet = dataset?.find((w) => w.id === walletId)

@@ -1,8 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
-import { Header } from './Header'
-import { Background } from './Background'
 import { cx } from 'class-variance-authority'
 import { network } from '../../config'
+import { Background } from './Background'
+/* eslint-disable @next/next/no-img-element */
+import { Header } from './Header'
 
 export type PreviewValue = {
   label?: string
@@ -28,7 +28,7 @@ export function Preview({ title, subtitle, values }: Props) {
         <div
           tw={cx(
             'flex justify-start items-center px-10',
-            values ? 'pb-6' : 'pb-10'
+            values ? 'pb-6' : 'pb-10',
           )}
           style={{
             gap: '8px',
@@ -72,7 +72,7 @@ export function Preview({ title, subtitle, values }: Props) {
       <div
         tw={cx(
           'absolute bottom-0 left-0 right-0 h-4',
-          network !== 'mainnet' ? 'bg-amber-500' : 'bg-green-600'
+          network !== 'mainnet' ? 'bg-amber-500' : 'bg-green-600',
         )}
       />
     </div>

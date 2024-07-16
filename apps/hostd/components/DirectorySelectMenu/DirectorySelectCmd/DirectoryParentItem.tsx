@@ -1,9 +1,9 @@
-import { CommandItemSearch } from '../../CmdRoot/Item'
-import { Page } from '../../CmdRoot/types'
 import { Text } from '@siafoundation/design-system'
 import { FolderIcon } from '@siafoundation/react-icons'
 import { useHostOSPathSeparator } from '../../../hooks/useHostOSPathSeparator'
 import { getParentDir } from '../../../lib/system'
+import { CommandItemSearch } from '../../CmdRoot/Item'
+import type { Page } from '../../CmdRoot/types'
 
 export function DirectoryParentItem({
   path,

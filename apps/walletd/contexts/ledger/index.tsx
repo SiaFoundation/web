@@ -8,7 +8,7 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { LedgerDevice, TransportType } from './types'
+import type { LedgerDevice, TransportType } from './types'
 
 function useLedgerMain() {
   const [waitingForUser, setWaitingForUser] = useState(false)

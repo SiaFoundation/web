@@ -1,21 +1,21 @@
 import {
-  DropdownMenu,
   Button,
-  DropdownMenuLabel,
+  Code,
+  DropdownMenu,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuLeftSlot,
+  Link,
+  Text,
+  Tooltip,
   triggerErrorToast,
   triggerSuccessToast,
-  Code,
-  Link,
-  DropdownMenuLeftSlot,
-  Tooltip,
-  Text,
 } from '@siafoundation/design-system'
-import { CaretDown16, DataCheck16 } from '@siafoundation/react-icons'
-import { ContractStatus } from '@siafoundation/hostd-types'
 import { useContractsIntegrityCheck } from '@siafoundation/hostd-react'
-import { useDialog } from '../../contexts/dialog'
+import type { ContractStatus } from '@siafoundation/hostd-types'
+import { CaretDown16, DataCheck16 } from '@siafoundation/react-icons'
 import { useCallback } from 'react'
+import { useDialog } from '../../contexts/dialog'
 
 type Props = {
   id: string

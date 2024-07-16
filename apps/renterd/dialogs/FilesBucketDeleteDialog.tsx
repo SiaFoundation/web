@@ -1,19 +1,19 @@
 import {
-  Paragraph,
+  Code,
+  type ConfigFields,
   Dialog,
+  FieldText,
+  FormSubmitButton,
+  Paragraph,
   triggerErrorToast,
   triggerSuccessToast,
-  ConfigFields,
-  useOnInvalid,
-  FormSubmitButton,
-  FieldText,
-  Code,
   useDialogFormHelpers,
+  useOnInvalid,
 } from '@siafoundation/design-system'
+import { useBucketDelete } from '@siafoundation/renterd-react'
 import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../contexts/dialog'
-import { useBucketDelete } from '@siafoundation/renterd-react'
 
 const defaultValues = {
   name: '',
@@ -81,10 +81,10 @@ export function FilesBucketDeleteDialog({
         closeAndReset()
       }
     },
-    [bucketDelete, closeAndReset]
+    [bucketDelete, closeAndReset],
   )
 
-  const fields = useMemo(() => getFields(name), [name])
+  const fields = useMemo(() => getFields(name!), [name])
 
   const onInvalid = useOnInvalid(fields)
 

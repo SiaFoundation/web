@@ -1,5 +1,5 @@
-import { DNSProvider } from '@siafoundation/hostd-types'
-import { SiaCentralCurrency } from '@siafoundation/sia-central-types'
+import type { DNSProvider } from '@siafoundation/hostd-types'
+import type { SiaCentralCurrency } from '@siafoundation/sia-central-types'
 import BigNumber from 'bignumber.js'
 
 export type ConfigViewMode = 'basic' | 'advanced'

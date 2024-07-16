@@ -1,6 +1,6 @@
-import { signTransactionSeed } from './signSeed'
 import { initSDK } from '@siafoundation/sdk'
 import { getMockScenarioSeedWallet } from '@siafoundation/walletd-mock'
+import { signTransactionSeed } from './signSeed'
 import { getMockAddresses } from './testMocks'
 
 beforeEach(async () => {
@@ -20,7 +20,7 @@ describe('signSeed', () => {
         siacoinOutputs: mocks.walletOutputsSiacoinResponse,
         siafundOutputs: mocks.walletOutputsSiafundResponse,
         addresses: getMockAddresses(mocks),
-      })
+      }),
     ).toMatchSnapshot()
   })
 
@@ -36,7 +36,7 @@ describe('signSeed', () => {
         siafundOutputs: mocks.walletOutputsSiafundResponse,
         addresses: getMockAddresses(mocks),
         toSign: ['not in siacoinOutputs'],
-      })
+      }),
     ).toEqual({
       error: 'Missing utxo',
     })
@@ -63,7 +63,7 @@ describe('signSeed', () => {
             },
           },
         ],
-      })
+      }),
     ).toEqual({
       error: 'Missing address',
     })
@@ -89,7 +89,7 @@ describe('signSeed', () => {
             metadata: {},
           },
         ],
-      })
+      }),
     ).toEqual({
       error: 'Missing address index',
     })
@@ -109,7 +109,7 @@ describe('signSeed', () => {
         siacoinOutputs: mocks.walletOutputsSiacoinResponse,
         siafundOutputs: mocks.walletOutputsSiafundResponse,
         addresses,
-      })
+      }),
     ).toEqual({
       error: 'Missing address public key',
     })

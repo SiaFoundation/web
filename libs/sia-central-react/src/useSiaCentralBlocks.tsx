@@ -1,12 +1,12 @@
 import {
+  type HookArgsWithPayloadSwr,
   useAppSettings,
   usePostSwr,
-  HookArgsWithPayloadSwr,
 } from '@siafoundation/react-core'
 import {
+  type SiaCentralBlock,
+  type SiaCentralBlocksPayload,
   defaultApi,
-  SiaCentralBlock,
-  SiaCentralBlocksPayload,
 } from '@siafoundation/sia-central-types'
 
 type SiaCentralBlocksResposne = {
@@ -19,7 +19,7 @@ export function useSiaCentralBlocks(
     void,
     SiaCentralBlocksPayload,
     SiaCentralBlocksResposne
-  >
+  >,
 ) {
   const { settings } = useAppSettings()
   return usePostSwr({

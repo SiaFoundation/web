@@ -1,17 +1,17 @@
 import {
-  Dialog,
-  ConfigFields,
-  triggerErrorToast,
-  FormSubmitButton,
-  FieldTextArea,
-  truncate,
-  WalletAddressCode,
   Button,
+  type ConfigFields,
+  Dialog,
+  FieldTextArea,
+  FormSubmitButton,
+  WalletAddressCode,
+  triggerErrorToast,
+  truncate,
   useDialogFormHelpers,
 } from '@siafoundation/design-system'
+import { useWalletAddressAdd } from '@siafoundation/walletd-react'
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
-import { useWalletAddressAdd } from '@siafoundation/walletd-react'
 import { useDialog } from '../../contexts/dialog'
 import { useWalletAddresses } from '../../hooks/useWalletAddresses'
 
@@ -99,7 +99,7 @@ export function AddressUpdateDialog({
         closeAndReset()
       }
     },
-    [walletId, addr, addressAdd, address, closeAndReset]
+    [walletId, addr, addressAdd, address, closeAndReset],
   )
 
   return (

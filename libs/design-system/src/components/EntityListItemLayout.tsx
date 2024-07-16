@@ -1,6 +1,6 @@
-import { EntityType } from '../lib/entityTypes'
-import { EntityAvatar } from './EntityAvatar'
 import { cx } from 'class-variance-authority'
+import type { EntityType } from '../lib/entityTypes'
+import { EntityAvatar } from './EntityAvatar'
 
 export type EntityListItemLayoutProps = {
   label?: string
@@ -41,7 +41,7 @@ export function EntityListItemLayout({
 function itemBorderStyles() {
   return cx(
     'border-t border-gray-200 dark:border-graydark-300',
-    'first:border-none'
+    'first:border-none',
   )
 }
 

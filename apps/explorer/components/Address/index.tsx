@@ -2,22 +2,22 @@
 
 import {
   Badge,
+  EntityList,
+  type EntityListItemProps,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
   Tooltip,
-  EntityList,
-  EntityListItemProps,
 } from '@siafoundation/design-system'
+import type { SiaCentralAddressResponse } from '@siafoundation/sia-central-types'
 import { humanNumber } from '@siafoundation/units'
-import { ExplorerDatum, DatumProps } from '../ExplorerDatum'
+import BigNumber from 'bignumber.js'
 import { useMemo, useState } from 'react'
 import { routes } from '../../config/routes'
-import { EntityHeading } from '../EntityHeading'
-import BigNumber from 'bignumber.js'
 import { ContentLayout } from '../ContentLayout'
-import { SiaCentralAddressResponse } from '@siafoundation/sia-central-types'
+import { EntityHeading } from '../EntityHeading'
+import { type DatumProps, ExplorerDatum } from '../ExplorerDatum'
 
 type Tab = 'transactions' | 'evolution' | 'utxos'
 
@@ -66,7 +66,7 @@ export function Address({ id, address }: Props) {
           href: routes.transaction.view.replace(':id', tx.id),
           height: tx.block_height,
           timestamp: new Date(tx.timestamp).getTime(),
-        }))
+        })),
       )
     }
     if (address.transactions?.length) {
@@ -88,7 +88,7 @@ export function Address({ id, address }: Props) {
           href: routes.transaction.view.replace(':id', tx.id),
           height: tx.block_height,
           timestamp: new Date(tx.timestamp).getTime(),
-        }))
+        })),
       )
     }
     return list
@@ -105,7 +105,7 @@ export function Address({ id, address }: Props) {
           initials: 'SO',
           scVariant: 'value' as const,
           height: o.block_height,
-        }))
+        })),
       )
     }
     return list
@@ -125,7 +125,7 @@ export function Address({ id, address }: Props) {
             <div className="flex gap-2 items-center">
               <Tooltip
                 content={`${humanNumber(
-                  address.transactions?.length
+                  address.transactions?.length,
                 )} total transactions`}
               >
                 <Badge variant="accent">
@@ -174,12 +174,12 @@ function getTotal({
   return (outputs || [])
     .reduce(
       (acc, o) => (o.unlock_hash === address ? acc.plus(o.value) : acc),
-      new BigNumber(0)
+      new BigNumber(0),
     )
     .minus(
       (inputs || []).reduce(
         (acc, i) => (i.unlock_hash === address ? acc.plus(i.value) : acc),
-        new BigNumber(0)
-      )
+        new BigNumber(0),
+      ),
     )
 }

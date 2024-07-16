@@ -1,11 +1,11 @@
-import { Metadata } from 'next'
-import { appLink, network } from '../config'
-import { Home } from '../components/Home'
-import { buildMetadata } from '../lib/utils'
-import { humanBytes } from '@siafoundation/units'
-import { getLastFewBlocks } from '../lib/blocks'
-import { siaCentral } from '../config/siaCentral'
 import { to } from '@siafoundation/request'
+import { humanBytes } from '@siafoundation/units'
+import type { Metadata } from 'next'
+import { Home } from '../components/Home'
+import { appLink, network } from '../config'
+import { siaCentral } from '../config/siaCentral'
+import { getLastFewBlocks } from '../lib/blocks'
+import { buildMetadata } from '../lib/utils'
 
 export function generateMetadata(): Metadata {
   const title = 'siascan'
@@ -34,14 +34,14 @@ export default async function HomePage() {
     to(
       siaCentral.exchangeRates({
         params: { currencies: 'sc' },
-      })
+      }),
     ),
     to(
       siaCentral.hosts({
         params: {
           limit: 5,
         },
-      })
+      }),
     ),
   ])
 
@@ -67,11 +67,11 @@ export default async function HomePage() {
   console.log(new Date().toISOString(), {
     metrics: humanBytes(Buffer.byteLength(JSON.stringify(metrics || ''))),
     latestBlock: humanBytes(
-      Buffer.byteLength(JSON.stringify(latestBlock || ''))
+      Buffer.byteLength(JSON.stringify(latestBlock || '')),
     ),
     blocks: humanBytes(Buffer.byteLength(JSON.stringify(blocks || ''))),
     exchangeRates: humanBytes(
-      Buffer.byteLength(JSON.stringify(exchangeRates || ''))
+      Buffer.byteLength(JSON.stringify(exchangeRates || '')),
     ),
     hosts: humanBytes(Buffer.byteLength(JSON.stringify(hosts || ''))),
   })

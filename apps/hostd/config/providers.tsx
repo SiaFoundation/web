@@ -1,10 +1,10 @@
-import { ContractsProvider } from '../contexts/contracts'
-import { MetricsProvider } from '../contexts/metrics'
-import { DialogProvider, Dialogs } from '../contexts/dialog'
-import { VolumesProvider } from '../contexts/volumes'
-import { ConfigProvider } from '../contexts/config'
 import { OnboardingBar } from '../components/OnboardingBar'
+import { ConfigProvider } from '../contexts/config'
+import { ContractsProvider } from '../contexts/contracts'
+import { DialogProvider, Dialogs } from '../contexts/dialog'
+import { MetricsProvider } from '../contexts/metrics'
 import { TransactionsProvider } from '../contexts/transactions'
+import { VolumesProvider } from '../contexts/volumes'
 
 type Props = {
   children: React.ReactNode

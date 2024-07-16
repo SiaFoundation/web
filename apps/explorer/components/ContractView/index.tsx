@@ -1,11 +1,11 @@
 import { Container, Separator } from '@siafoundation/design-system'
-import { Transaction } from '../Transaction'
-import {
+import type {
   SiaCentralContract,
   SiaCentralExchangeRates,
   SiaCentralTransaction,
 } from '@siafoundation/sia-central-types'
 import { Contract } from '../Contract'
+import { Transaction } from '../Transaction'
 
 type Props = {
   contract: SiaCentralContract

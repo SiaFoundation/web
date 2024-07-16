@@ -1,7 +1,7 @@
 import { Link, Paragraph, Text, webLinks } from '@siafoundation/design-system'
 import useSWR from 'swr'
 import { routes } from '../config/routes'
-import { Stats } from '../content/stats'
+import type { Stats } from '../content/stats'
 
 export function Statsbar() {
   const { data } = useSWR<Stats>('/api/stats', async () => {

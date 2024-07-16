@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { toHastings, toSiacoins, humanSiacoin } from './currency'
+import { humanSiacoin, toHastings, toSiacoins } from './currency'
 
 const HASTINGS_PER_SIACOIN = '1000000000000000000000000'
 
@@ -26,7 +26,7 @@ describe('currency', () => {
     expect(humanSiacoin('1', { hastingUnits: true })).toBe('1 H')
     expect(humanSiacoin('1000', { hastingUnits: true })).toBe('1000 H')
     expect(humanSiacoin('100000000000', { hastingUnits: true })).toBe(
-      '100000000000 H'
+      '100000000000 H',
     )
     expect(humanSiacoin('1')).toBe('0 SC')
     expect(humanSiacoin('1000')).toBe('0 SC')
@@ -39,33 +39,33 @@ describe('currency', () => {
     expect(humanSiacoin('1000000000000000000')).toBe('1.000 uS')
     expect(humanSiacoin('1000000000000000000000')).toBe('1.000 mS')
     expect(
-      humanSiacoin(new BigNumber('1').multipliedBy(HASTINGS_PER_SIACOIN))
+      humanSiacoin(new BigNumber('1').multipliedBy(HASTINGS_PER_SIACOIN)),
     ).toBe('1.000 SC')
     expect(
-      humanSiacoin(new BigNumber('1000').multipliedBy(HASTINGS_PER_SIACOIN))
+      humanSiacoin(new BigNumber('1000').multipliedBy(HASTINGS_PER_SIACOIN)),
     ).toBe('1.000 KS')
     expect(
-      humanSiacoin(new BigNumber('1000000').multipliedBy(HASTINGS_PER_SIACOIN))
+      humanSiacoin(new BigNumber('1000000').multipliedBy(HASTINGS_PER_SIACOIN)),
     ).toBe('1.000 MS')
     expect(
       humanSiacoin(
-        new BigNumber('1000000000').multipliedBy(HASTINGS_PER_SIACOIN)
-      )
+        new BigNumber('1000000000').multipliedBy(HASTINGS_PER_SIACOIN),
+      ),
     ).toBe('1.000 GS')
     expect(
       humanSiacoin(
-        new BigNumber('1000000000000').multipliedBy(HASTINGS_PER_SIACOIN)
-      )
+        new BigNumber('1000000000000').multipliedBy(HASTINGS_PER_SIACOIN),
+      ),
     ).toBe('1.000 TS')
     expect(
       humanSiacoin(
-        new BigNumber('1234560000000').multipliedBy(HASTINGS_PER_SIACOIN)
-      )
+        new BigNumber('1234560000000').multipliedBy(HASTINGS_PER_SIACOIN),
+      ),
     ).toBe('1.235 TS')
     expect(
       humanSiacoin(
-        new BigNumber('1234560000000000').multipliedBy(HASTINGS_PER_SIACOIN)
-      )
+        new BigNumber('1234560000000000').multipliedBy(HASTINGS_PER_SIACOIN),
+      ),
     ).toBe('1,234.560 TS')
   })
 })

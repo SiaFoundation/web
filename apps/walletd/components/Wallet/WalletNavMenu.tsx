@@ -1,7 +1,7 @@
 import { Button } from '@siafoundation/design-system'
-import { useWallets } from '../../contexts/wallets'
-import { useDialog } from '../../contexts/dialog'
 import { walletTypes } from '../../config/walletTypes'
+import { useDialog } from '../../contexts/dialog'
+import { useWallets } from '../../contexts/wallets'
 
 export function WalletNavMenu() {
   const { wallet } = useWallets()

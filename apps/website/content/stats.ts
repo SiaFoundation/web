@@ -1,10 +1,10 @@
 import { getGitHub } from '@siafoundation/data-sources'
+import { to } from '@siafoundation/request'
 import { humanBytes, humanNumber } from '@siafoundation/units'
-import { AsyncReturnType } from '../lib/types'
+import { siaCentral } from '../config/siaCentral'
 import { getCacheValue } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
-import { siaCentral } from '../config/siaCentral'
-import { to } from '@siafoundation/request'
+import type { AsyncReturnType } from '../lib/types'
 
 const maxAge = getMinutesInSeconds(5)
 
@@ -48,17 +48,17 @@ async function readStats() {
     // storage
     totalStorage: humanBytes(hostsStats?.totals.total_storage),
     usedStorage: humanBytes(
-      hostsStats?.totals.total_storage - hostsStats?.totals.remaining_storage
+      hostsStats?.totals.total_storage - hostsStats?.totals.remaining_storage,
     ),
     totalRegistry: humanNumber(
       (hostsStats?.totals.total_registry_entries || 0) / 1_000_000,
-      { units: 'M' }
+      { units: 'M' },
     ),
     usedRegistry: humanNumber(
       ((hostsStats?.totals.total_registry_entries || 0) -
         (hostsStats?.totals.remaining_registry_entries || 0)) /
         1_000_000,
-      { units: 'M' }
+      { units: 'M' },
     ),
     // software
     commits: humanNumber(github.data?.commits),

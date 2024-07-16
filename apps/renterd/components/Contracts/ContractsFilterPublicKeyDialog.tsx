@@ -4,11 +4,11 @@ import {
   FormSubmitButtonFormik,
   truncate,
 } from '@siafoundation/design-system'
-import { useContracts } from '../../contexts/contracts'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useContracts } from '../../contexts/contracts'
+import type { ContractData } from '../../contexts/contracts/types'
 import { useDialog } from '../../contexts/dialog'
-import { ContractData } from '../../contexts/contracts/types'
 
 export function publicKeyContainsFilter(publicKey: string) {
   return {

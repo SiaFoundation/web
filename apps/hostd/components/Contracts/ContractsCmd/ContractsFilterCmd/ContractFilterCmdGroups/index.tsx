@@ -1,8 +1,8 @@
-import { ContractData } from '../../../../../contexts/contracts/types'
-import { Page } from '../../../../CmdRoot/types'
-import { ClientFilterItem } from '@siafoundation/design-system'
-import { StatusCmdGroup } from './Status'
+import type { ClientFilterItem } from '@siafoundation/design-system'
+import type { ContractData } from '../../../../../contexts/contracts/types'
+import type { Page } from '../../../../CmdRoot/types'
 import { ContractIdCmdGroup } from './ContractId'
+import { StatusCmdGroup } from './Status'
 
 type Props = {
   currentPage: Page

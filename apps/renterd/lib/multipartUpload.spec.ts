@@ -1,7 +1,7 @@
-import { Response, delay } from '@siafoundation/react-core'
+import { type Response, delay } from '@siafoundation/react-core'
 import {
   ErrorNoETag,
-  MultipartParams,
+  type MultipartParams,
   MultipartUpload,
 } from './multipartUpload'
 
@@ -24,7 +24,7 @@ describe('MultipartUpload', () => {
         params.sent,
         params.total,
         params.percentage,
-      ])
+      ]),
     ).toEqual([
       [1, 20, 5],
       [2, 20, 10],
@@ -88,7 +88,7 @@ describe('MultipartUpload', () => {
         params.sent,
         params.total,
         params.percentage,
-      ])
+      ]),
     ).toEqual([
       [1, 20, 5],
       [2, 20, 10],
@@ -162,7 +162,7 @@ describe('MultipartUpload', () => {
         params.sent,
         params.total,
         params.percentage,
-      ])
+      ]),
     ).toEqual([
       [1, 6, 17], // call 0
       [2, 6, 33],
@@ -221,7 +221,7 @@ describe('MultipartUpload', () => {
         params.sent,
         params.total,
         params.percentage,
-      ])
+      ]),
     ).toEqual([
       [1, 6, 17], // call 0
       [2, 6, 33],
@@ -267,7 +267,7 @@ describe('MultipartUpload', () => {
   })
 })
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 function getMockedParams(params?: Partial<Record<keyof MultipartParams, any>>) {
   const {
     partSize: paramsPartSize,
@@ -294,7 +294,7 @@ function getMockedParams(params?: Partial<Record<keyof MultipartParams, any>>) {
             status: 201,
             data: { uploadID: '12345' },
             headers: { ETag: 'etag' },
-          })
+          }),
         ),
       },
       busUploadAbort: { post: jest.fn() },
@@ -343,7 +343,7 @@ function buildMockApiWorkerUploadPart({
           const failure = failures.find(
             (failure) =>
               callIndex === failure.failCallIndex &&
-              partIndex === failure.failPartIndex
+              partIndex === failure.failPartIndex,
           )
           loaded += progressPartSize
           onUploadProgress({ type: 'progress', loaded, total })

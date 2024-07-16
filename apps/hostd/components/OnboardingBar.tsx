@@ -7,22 +7,22 @@ import {
   Text,
   Tooltip,
 } from '@siafoundation/design-system'
+import { useSettings, useWallet } from '@siafoundation/hostd-react'
+import { useAppSettings } from '@siafoundation/react-core'
 import {
-  RadioButton16,
   CheckmarkFilled16,
   Launch16,
   PendingFilled16,
+  RadioButton16,
   Subtract24,
 } from '@siafoundation/react-icons'
-import { useSyncStatus } from '../hooks/useSyncStatus'
+import { toHastings } from '@siafoundation/units'
+import BigNumber from 'bignumber.js'
+import useLocalStorageState from 'use-local-storage-state'
 import { routes } from '../config/routes'
 import { useDialog } from '../contexts/dialog'
-import { useSettings, useWallet } from '@siafoundation/hostd-react'
-import BigNumber from 'bignumber.js'
-import { toHastings } from '@siafoundation/units'
-import { useAppSettings } from '@siafoundation/react-core'
 import { useVolumes } from '../contexts/volumes'
-import useLocalStorageState from 'use-local-storage-state'
+import { useSyncStatus } from '../hooks/useSyncStatus'
 
 export function OnboardingBar() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()
@@ -34,7 +34,7 @@ export function OnboardingBar() {
     'v0/hostd/onboarding/maximized',
     {
       defaultValue: true,
-    }
+    },
   )
   const syncStatus = useSyncStatus()
 
@@ -43,7 +43,7 @@ export function OnboardingBar() {
   }
 
   const walletBalance = new BigNumber(
-    wallet.data ? wallet.data.confirmed + wallet.data.unconfirmed : 0
+    wallet.data ? wallet.data.confirmed + wallet.data.unconfirmed : 0,
   )
   const minimumBalance = toHastings(0)
   const step1Funded = wallet.data && walletBalance.gt(minimumBalance)

@@ -1,9 +1,9 @@
 import '../config/style.css'
-import { TooltipProvider, Toaster } from '@siafoundation/design-system'
-import { AppProps } from 'next/app'
+import { Toaster, TooltipProvider } from '@siafoundation/design-system'
+import { rootFontClasses } from '@siafoundation/fonts'
 import { AppSettingsProvider, CoreProvider } from '@siafoundation/react-core'
 import { ThemeProvider } from 'next-themes'
-import { rootFontClasses } from '@siafoundation/fonts'
+import type { AppProps } from 'next/app'
 
 export default function NextAppSsr({
   Component,

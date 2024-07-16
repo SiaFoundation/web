@@ -1,11 +1,11 @@
-import { SiacoinElement, SiafundElement } from '@siafoundation/types'
-import {
+import type { SiacoinElement, SiafundElement } from '@siafoundation/types'
+import { toHastings } from '@siafoundation/units'
+import type {
   Wallet,
   WalletAddress,
   WalletBalanceResponse,
   WalletFundSiacoinResponse,
 } from '@siafoundation/walletd-types'
-import { toHastings } from '@siafoundation/units'
 import { getMockConsensusNetworkResponse } from '../mocks/consensusNetwork'
 import { getMockConsensusTipStateResponse } from '../mocks/consensusTipState'
 

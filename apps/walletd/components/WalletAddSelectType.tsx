@@ -1,4 +1,4 @@
-import { Paragraph, Heading, SelectCard } from '@siafoundation/design-system'
+import { Heading, Paragraph, SelectCard } from '@siafoundation/design-system'
 import { walletAddTypes } from '../config/walletTypes'
 import { useDialog } from '../contexts/dialog'
 

@@ -7,13 +7,13 @@ import {
   Upload16,
 } from '@siafoundation/react-icons'
 import { humanBytes } from '@siafoundation/units'
-import { FileContextMenu } from '../../components/Files/FileContextMenu'
-import { DirectoryContextMenu } from '../../components/Files/DirectoryContextMenu'
 import BigNumber from 'bignumber.js'
-import { FilesHealthColumn } from '../../components/Files/Columns/FilesHealthColumn'
 import { BucketContextMenu } from '../../components/Files/BucketContextMenu'
-import { FilesTableColumn } from '../filesManager/types'
+import { FilesHealthColumn } from '../../components/Files/Columns/FilesHealthColumn'
+import { DirectoryContextMenu } from '../../components/Files/DirectoryContextMenu'
+import { FileContextMenu } from '../../components/Files/FileContextMenu'
 import { useFilesManager } from '../filesManager'
+import type { FilesTableColumn } from '../filesManager/types'
 
 export const columns: FilesTableColumn[] = [
   {
@@ -179,7 +179,7 @@ export const columns: FilesTableColumn[] = [
     label: 'health',
     contentClassName: 'justify-center',
     render: function HealthColumn({ data }) {
-      const { type, isUploading, loaded, size } = data
+      const { type, isUploading, loaded = 0, size } = data
       if (type === 'bucket') {
         return null
       }

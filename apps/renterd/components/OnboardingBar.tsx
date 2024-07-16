@@ -7,23 +7,23 @@ import {
   Text,
   Tooltip,
 } from '@siafoundation/design-system'
+import { useAppSettings } from '@siafoundation/react-core'
 import {
-  RadioButton16,
   CheckmarkFilled16,
   Launch16,
   PendingFilled16,
+  RadioButton16,
   Subtract24,
 } from '@siafoundation/react-icons'
-import { useApp } from '../contexts/app'
-import { useSyncStatus } from '../hooks/useSyncStatus'
-import { routes } from '../config/routes'
-import { useDialog } from '../contexts/dialog'
-import { useNotEnoughContracts } from './Files/checks/useNotEnoughContracts'
 import { useAutopilotConfig, useWallet } from '@siafoundation/renterd-react'
-import BigNumber from 'bignumber.js'
 import { humanSiacoin } from '@siafoundation/units'
-import { useAppSettings } from '@siafoundation/react-core'
+import BigNumber from 'bignumber.js'
 import useLocalStorageState from 'use-local-storage-state'
+import { routes } from '../config/routes'
+import { useApp } from '../contexts/app'
+import { useDialog } from '../contexts/dialog'
+import { useSyncStatus } from '../hooks/useSyncStatus'
+import { useNotEnoughContracts } from './Files/checks/useNotEnoughContracts'
 
 export function OnboardingBar() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()
@@ -41,7 +41,7 @@ export function OnboardingBar() {
     'v0/renterd/onboarding/maximized',
     {
       defaultValue: true,
-    }
+    },
   )
 
   const syncStatus = useSyncStatus()
@@ -52,7 +52,7 @@ export function OnboardingBar() {
   }
 
   const walletBalance = new BigNumber(
-    wallet.data ? wallet.data.confirmed + wallet.data.unconfirmed : 0
+    wallet.data ? wallet.data.confirmed + wallet.data.unconfirmed : 0,
   )
   const allowance = new BigNumber(autopilot.data?.contracts.allowance || 0)
 
@@ -165,7 +165,7 @@ export function OnboardingBar() {
                 </Link>
               }
               description={`Fund your wallet with at least ${humanSiacoin(
-                allowance
+                allowance,
               )} siacoin to cover the required allowance.${
                 syncStatus.isWalletSynced
                   ? ''

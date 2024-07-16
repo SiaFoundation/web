@@ -1,15 +1,18 @@
 'use client'
 
-import { useCallback, useMemo, useState } from 'react'
-import { AnimationTrajectory } from '@visx/react-spring/lib/types'
-import { GlyphCross, GlyphDot, GlyphStar } from '@visx/glyph'
-import { curveLinear, curveStep, curveCardinal } from '@visx/curve'
-import { RenderTooltipGlyphProps } from '@visx/xychart/lib/components/Tooltip'
-import { lightTheme, darkTheme } from './customTheme'
-import { getChartComponents } from './getChartComponents'
-import { useTheme } from 'next-themes'
+import { usePrefersReducedMotion } from '@siafoundation/react-core'
 import { omit } from '@technically/lodash'
-import {
+import { curveCardinal, curveLinear, curveStep } from '@visx/curve'
+import { GlyphCross, GlyphDot, GlyphStar } from '@visx/glyph'
+import type { AnimationTrajectory } from '@visx/react-spring/lib/types'
+import type { RenderTooltipGlyphProps } from '@visx/xychart/lib/components/Tooltip'
+import { useTheme } from 'next-themes'
+import { useCallback, useMemo, useState } from 'react'
+import useLocalStorageState from 'use-local-storage-state'
+import { daysInMilliseconds } from '../../lib/time'
+import { darkTheme, lightTheme } from './customTheme'
+import { getChartComponents } from './getChartComponents'
+import type {
   ChartConfig,
   ChartData,
   ChartPoint,
@@ -17,9 +20,7 @@ import {
   CurveType,
   StackOffset,
 } from './types'
-import { daysInMilliseconds } from '../../lib/time'
-import { usePrefersReducedMotion } from '@siafoundation/react-core'
-import useLocalStorageState from 'use-local-storage-state'
+import type { CurveFactory } from 'd3-shape'
 
 const numTicks = 4
 const defaultChartType = 'areastack'
@@ -31,15 +32,15 @@ type SimpleScaleConfig = { type: 'band' | 'linear'; paddingInner?: number }
 export function useChartXY<Key extends string, Cat extends string>(
   id: string,
   chartData: ChartData<Key>,
-  config: ChartConfig<Key, Cat>
+  config: ChartConfig<Key, Cat>,
 ) {
   const [useAnimatedComponents, setUseAnimatedComponents] = useState(
-    !usePrefersReducedMotion() && !config.disableAnimations
+    !usePrefersReducedMotion() && !config.disableAnimations,
   )
   const { resolvedTheme } = useTheme()
   const theme = useMemo(
     () => (resolvedTheme === 'dark' ? darkTheme : lightTheme),
-    [resolvedTheme]
+    [resolvedTheme],
   )
   const [animationTrajectory, setAnimationTrajectory] = useState<
     AnimationTrajectory | undefined
@@ -66,26 +67,26 @@ export function useChartXY<Key extends string, Cat extends string>(
     `${id}/chartType`,
     {
       defaultValue: config.chartType || defaultChartType,
-    }
+    },
   )
   const [curveType, setCurveType] = useLocalStorageState<CurveType>(
     `${id}/curveType`,
     {
       defaultValue: config.curveType || defaultCurveType,
-    }
+    },
   )
   const [stackOffset, setStackOffset] = useLocalStorageState<StackOffset>(
     `${id}/stackOffset`,
     {
       defaultValue: config.stackOffset || defaultStackOffset,
-    }
+    },
   )
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const initialChartType = useMemo(() => config.chartType, [])
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const initialCurveType = useMemo(() => config.curveType, [])
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const initialStackOffset = useMemo(() => config.stackOffset, [])
 
   const isLine = ['line', 'area', 'areastack'].includes(chartType)
@@ -149,7 +150,7 @@ export function useChartXY<Key extends string, Cat extends string>(
         </text>
       )
     },
-    [tooltipGlyphComponent, glyphOutline]
+    [tooltipGlyphComponent, glyphOutline],
   )
 
   const data = useMemo(() => {
@@ -168,7 +169,7 @@ export function useChartXY<Key extends string, Cat extends string>(
     if (chartType !== 'barstack' && chartType !== 'bargroup') {
       return [
         ...chartData,
-        { ...lastEl, timestamp: lastEl.timestamp + daysInMilliseconds(1) },
+        { ...lastEl, timestamp: lastEl!.timestamp + daysInMilliseconds(1) },
       ]
     }
     return chartData
@@ -177,16 +178,16 @@ export function useChartXY<Key extends string, Cat extends string>(
     if (data.length < 2) {
       return 0
     }
-    const range = [data[0].timestamp, data[data.length - 1].timestamp]
+    const range = [data[0]!.timestamp, data[data.length - 1]!.timestamp]
     const now = new Date().getTime()
-    return now > range[0] && now < range[1]
-      ? (now - range[0]) / (range[1] - range[0])
+    return now > range[0]! && now < range[1]!
+      ? (now - range[0]!) / (range[1]! - range[0]!)
       : 0
   }, [data])
 
   const keys = useMemo(
     () => Object.keys(omit(chartData[0], 'timestamp')) as Key[],
-    [chartData]
+    [chartData],
   )
 
   const enabledGraph = useMemo(() => {
@@ -201,21 +202,23 @@ export function useChartXY<Key extends string, Cat extends string>(
     () => ({
       x: keys.reduce(
         (acc, key) => ({
+          // biome-ignore lint/performance/noAccumulatingSpread: <explanation>
           ...acc,
           [key]: (d: ChartPoint<Key>) => d.timestamp,
         }),
-        {} as Record<string, (d: ChartPoint<Key>) => number>
+        {} as Record<Key, (d: ChartPoint<Key>) => number>,
       ),
       y: keys.reduce(
         (acc, key) => ({
+          // biome-ignore lint/performance/noAccumulatingSpread: <explanation>
           ...acc,
           [key]: (d: ChartPoint<Key>) => d[key],
         }),
-        {} as Record<string, (d: ChartPoint<Key>) => number>
+        {} as Record<Key, (d: ChartPoint<Key>) => number>,
       ),
       date: (d: ChartPoint<Key>) => d.timestamp,
     }),
-    [keys]
+    [keys],
   )
 
   const scales = useMemo(
@@ -226,15 +229,15 @@ export function useChartXY<Key extends string, Cat extends string>(
       } as SimpleScaleConfig,
       y: { type: 'linear' } as SimpleScaleConfig,
     }),
-    [isLine]
+    [isLine],
   )
 
-  const curve = useMemo(
+  const curve: CurveFactory = useMemo(
     () =>
       (curveType === 'cardinal' && curveCardinal) ||
       (curveType === 'step' && curveStep) ||
       curveLinear,
-    [curveType]
+    [curveType],
   )
 
   const margin = useMemo(
@@ -244,7 +247,7 @@ export function useChartXY<Key extends string, Cat extends string>(
       right: yAxisOrientation === 'right' ? 60 : 0,
       left: yAxisOrientation === 'left' ? 60 : 0,
     }),
-    [xAxisOrientation, yAxisOrientation]
+    [xAxisOrientation, yAxisOrientation],
   )
 
   return {

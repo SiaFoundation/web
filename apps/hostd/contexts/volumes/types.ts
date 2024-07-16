@@ -1,5 +1,5 @@
-import { VolumeStatus } from '@siafoundation/hostd-types'
-import BigNumber from 'bignumber.js'
+import type { VolumeStatus } from '@siafoundation/hostd-types'
+import type BigNumber from 'bignumber.js'
 
 export type VolumeData = {
   id: string

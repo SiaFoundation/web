@@ -1,7 +1,7 @@
-import { addNewTab } from '../lib/utils'
-import { getMinutesInSeconds } from '../lib/time'
-import { getCacheValue } from '../lib/cache'
 import { fetchArticlesByTag } from '@siafoundation/data-sources'
+import { getCacheValue } from '../lib/cache'
+import { getMinutesInSeconds } from '../lib/time'
+import { addNewTab } from '../lib/utils'
 
 type Article = {
   title: string
@@ -17,7 +17,7 @@ export async function getTutorialArticles(limit?: number) {
     () => {
       return fetchArticlesByTag('tutorial')
     },
-    maxAge
+    maxAge,
   )
   return articles.slice(0, limit).map(addNewTab) as Article[]
 }
@@ -28,7 +28,7 @@ export async function getRentingArticles(limit?: number) {
     () => {
       return fetchArticlesByTag('renting')
     },
-    maxAge
+    maxAge,
   )
   return articles.slice(0, limit).map(addNewTab) as Article[]
 }
@@ -39,7 +39,7 @@ export async function getHostingArticles(limit?: number) {
     () => {
       return fetchArticlesByTag('hosting')
     },
-    maxAge
+    maxAge,
   )
   return articles.slice(0, limit).map(addNewTab) as Article[]
 }
@@ -50,7 +50,7 @@ export async function getWalletArticles(limit?: number) {
     () => {
       return fetchArticlesByTag('wallet')
     },
-    maxAge
+    maxAge,
   )
   return articles.slice(0, limit).map(addNewTab) as Article[]
 }

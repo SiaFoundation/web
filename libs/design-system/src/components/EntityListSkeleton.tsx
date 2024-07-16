@@ -1,6 +1,6 @@
-import { Skeleton } from '../core/Skeleton'
 import { times } from '@technically/lodash'
 import { cx } from 'class-variance-authority'
+import { Skeleton } from '../core/Skeleton'
 
 export function EntityListSkeleton({ skeletonCount = 10 }) {
   return (
@@ -24,6 +24,6 @@ export function EntityListSkeleton({ skeletonCount = 10 }) {
 function itemBorderStyles() {
   return cx(
     'border-t border-gray-200 dark:border-graydark-300',
-    'first:border-none'
+    'first:border-none',
   )
 }

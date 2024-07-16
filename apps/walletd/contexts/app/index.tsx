@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect } from 'react'
 import { initSDK } from '@siafoundation/sdk'
+import { createContext, useContext, useEffect } from 'react'
 
 function useAppMain() {
   // Initialize the SDK on app load

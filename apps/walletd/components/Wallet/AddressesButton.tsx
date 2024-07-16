@@ -1,7 +1,7 @@
 import { LinkButton } from '@siafoundation/design-system'
 import { ListNumbered16 } from '@siafoundation/react-icons'
-import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
+import { routes } from '../../config/routes'
 
 export function AddressesButton() {
   const router = useRouter()

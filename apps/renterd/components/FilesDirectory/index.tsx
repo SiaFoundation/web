@@ -1,11 +1,11 @@
-import { RenterdSidenav } from '../RenterdSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
-import { FilesBreadcrumbMenu } from './FilesBreadcrumbMenu'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
+import { RenterdSidenav } from '../RenterdSidenav'
 import { FilesActionsMenu } from './FilesActionsMenu'
-import { FilesStatsMenu } from './FilesStatsMenu'
+import { FilesBreadcrumbMenu } from './FilesBreadcrumbMenu'
 import { FilesExplorer } from './FilesExplorer'
+import { FilesStatsMenu } from './FilesStatsMenu'
 
 export function FilesDirectory() {
   const { openDialog } = useDialog()

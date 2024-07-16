@@ -1,15 +1,15 @@
 import {
-  useGetSwr,
+  type HookArgsSwr,
   useAppSettings,
-  HookArgsSwr,
+  useGetSwr,
 } from '@siafoundation/react-core'
 import {
-  SiaCentralHostsResponse,
+  type SiaCentralHostsResponse,
   defaultApi,
 } from '@siafoundation/sia-central-types'
 
 export function useSiaCentralHosts(
-  args?: HookArgsSwr<void, SiaCentralHostsResponse>
+  args?: HookArgsSwr<void, SiaCentralHostsResponse>,
 ) {
   const { settings } = useAppSettings()
   return useGetSwr({

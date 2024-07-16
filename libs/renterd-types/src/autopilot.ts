@@ -1,10 +1,10 @@
-import {
+import type { BusStateResponse, HostsSearchPayload } from './bus'
+import type {
   AutopilotConfig,
   GougingSettings,
   Host,
   RedundancySettings,
 } from './types'
-import { HostsSearchPayload, BusStateResponse } from './bus'
 
 export const autopilotStateRoute = '/autopilot/state'
 export const autopilotConfigRoute = '/autopilot/config'

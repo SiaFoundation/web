@@ -1,19 +1,22 @@
 'use client'
 
-import { useMemo } from 'react'
-import BigNumber from 'bignumber.js'
 import {
+  EntityList,
+  type EntityListItemProps,
+} from '@siafoundation/design-system'
+import type {
   SiaCentralContract,
   SiaCentralExchangeRates,
   SiaCentralPartialSiacoinOutput,
 } from '@siafoundation/sia-central-types'
 import { humanBytes, humanDate, humanSiacoin } from '@siafoundation/units'
-import { EntityList, EntityListItemProps } from '@siafoundation/design-system'
-import { DatumProps, ExplorerDatum } from '../ExplorerDatum'
-import { ContentLayout } from '../ContentLayout'
-import { ContractHeader } from './ContractHeader'
-import { siacoinToFiat } from '../../lib/currency'
+import BigNumber from 'bignumber.js'
+import { useMemo } from 'react'
 import { useExchangeRate } from '../../hooks/useExchangeRate'
+import { siacoinToFiat } from '../../lib/currency'
+import { ContentLayout } from '../ContentLayout'
+import { type DatumProps, ExplorerDatum } from '../ExplorerDatum'
+import { ContractHeader } from './ContractHeader'
 
 type Props = {
   contract: SiaCentralContract
@@ -355,7 +358,7 @@ function getRenewedContractFormattedOutputs(contract: SiaCentralContract) {
 }
 
 function genericOutputListItem(
-  o: SiaCentralPartialSiacoinOutput
+  o: SiaCentralPartialSiacoinOutput,
 ): EntityListItemProps {
   return {
     label: o.source ? o.source.replace(/_/g, ' ') : 'output',

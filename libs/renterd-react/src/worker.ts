@@ -1,29 +1,28 @@
-import { debounce } from '@technically/lodash'
 import {
+  type HookArgsCallback,
+  type HookArgsSwr,
   useGetDownloadFunc,
-  usePutFunc,
-  usePostFunc,
-  HookArgsCallback,
-  HookArgsSwr,
   useGetSwr,
+  usePostFunc,
+  usePutFunc,
 } from '@siafoundation/react-core'
 import {
-  AutopilotHost,
-  Host,
-  MultipartUploadPartParams,
-  MultipartUploadPartPayload,
-  MultipartUploadPartResponse,
-  ObjectDownloadParams,
-  ObjectDownloadPayload,
-  ObjectDownloadResponse,
-  ObjectUploadParams,
-  ObjectUploadPayload,
-  ObjectUploadResponse,
-  RhpScanParams,
-  RhpScanPayload,
-  RhpScanResponse,
-  WorkerStateParams,
-  WorkerStateResponse,
+  type AutopilotHost,
+  type Host,
+  type MultipartUploadPartParams,
+  type MultipartUploadPartPayload,
+  type MultipartUploadPartResponse,
+  type ObjectDownloadParams,
+  type ObjectDownloadPayload,
+  type ObjectDownloadResponse,
+  type ObjectUploadParams,
+  type ObjectUploadPayload,
+  type ObjectUploadResponse,
+  type RhpScanParams,
+  type RhpScanPayload,
+  type RhpScanResponse,
+  type WorkerStateParams,
+  type WorkerStateResponse,
   autopilotHostsRoute,
   busObjectsRoute,
   busSearchHostsRoute,
@@ -32,11 +31,12 @@ import {
   workerRhpScanRoute,
   workerStateRoute,
 } from '@siafoundation/renterd-types'
+import { debounce } from '@technically/lodash'
 
 // state
 
 export function useWorkerState(
-  args?: HookArgsSwr<WorkerStateParams, WorkerStateResponse>
+  args?: HookArgsSwr<WorkerStateParams, WorkerStateResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -49,7 +49,7 @@ export function useObjectDownloadFunc(
     ObjectDownloadParams,
     ObjectDownloadPayload,
     ObjectDownloadResponse
-  >
+  >,
 ) {
   return useGetDownloadFunc({ ...args, route: workerObjectsKeyRoute })
 }
@@ -59,7 +59,7 @@ export function useObjectUpload(
     ObjectUploadParams,
     ObjectUploadPayload,
     ObjectUploadResponse
-  >
+  >,
 ) {
   return usePutFunc(
     {
@@ -77,7 +77,7 @@ export function useObjectUpload(
     },
     async (mutate) => {
       mutate((key) => key.startsWith(busObjectsRoute))
-    }
+    },
   )
 }
 
@@ -86,7 +86,7 @@ export function useMultipartUploadPart(
     MultipartUploadPartParams,
     MultipartUploadPartPayload,
     MultipartUploadPartResponse
-  >
+  >,
 ) {
   return usePutFunc({
     ...args,
@@ -106,7 +106,7 @@ export function useMultipartUploadPart(
 const debouncedListRevalidate = debounce((func: () => void) => func(), 5_000)
 
 export function useRhpScan(
-  args?: HookArgsCallback<RhpScanParams, RhpScanPayload, RhpScanResponse>
+  args?: HookArgsCallback<RhpScanParams, RhpScanPayload, RhpScanResponse>,
 ) {
   return usePostFunc(
     { ...args, route: workerRhpScanRoute },
@@ -137,7 +137,7 @@ export function useRhpScan(
             }
             return aph
           }),
-        false
+        false,
       )
       mutate<Host[]>(
         (key) => key.startsWith(busSearchHostsRoute),
@@ -156,7 +156,7 @@ export function useRhpScan(
             }
             return host
           }),
-        false
+        false,
       )
       debouncedListRevalidate(() => {
         mutate(
@@ -164,9 +164,9 @@ export function useRhpScan(
             key.startsWith(autopilotHostsRoute) ||
             key.startsWith(busSearchHostsRoute),
           (d) => d,
-          true
+          true,
         )
       })
-    }
+    },
   )
 }

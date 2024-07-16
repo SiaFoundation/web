@@ -1,19 +1,19 @@
-import { useState } from 'react'
 import {
-  LinkData,
-  SiteMap,
-  ThemeRadio,
-  Dialog,
   Button,
-  Logo,
   Container,
+  Dialog,
   DialogClose,
+  type LinkData,
+  Logo,
+  SiteMap,
   Switch,
+  ThemeRadio,
   Tooltip,
 } from '@siafoundation/design-system'
+import { useAppSettings } from '@siafoundation/react-core'
 import { MenuIcon, Wikis16 } from '@siafoundation/react-icons'
 import { cx } from 'class-variance-authority'
-import { useAppSettings } from '@siafoundation/react-core'
+import { useState } from 'react'
 
 export type MenuSection = {
   title: string
@@ -95,7 +95,7 @@ export function SiteMenu({ menuSections }: Props) {
         <div
           className={cx(
             'bg-black flex flex-col items-start justify-center h-full',
-            'pt-32 lg:pt-40 px-6 mx-auto xl:ml-32 2xl:ml-40 w-full max-w-screen-lg'
+            'pt-32 lg:pt-40 px-6 mx-auto xl:ml-32 2xl:ml-40 w-full max-w-screen-lg',
           )}
         >
           <SiteMap menuSections={menuSections} onClick={() => setOpen(false)} />

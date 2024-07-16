@@ -1,16 +1,16 @@
 import {
-  Button,
-  PoolCombo,
-  Label,
-  Popover,
-  MenuItemRightSlot,
   BaseMenuItem,
+  Button,
+  Label,
+  MenuItemRightSlot,
   MenuSectionLabelToggleAll,
+  PoolCombo,
+  Popover,
 } from '@siafoundation/design-system'
 import {
   CaretDown16,
-  SettingsAdjust16,
   Reset16,
+  SettingsAdjust16,
 } from '@siafoundation/react-icons'
 import { useVolumes } from '../../contexts/volumes'
 

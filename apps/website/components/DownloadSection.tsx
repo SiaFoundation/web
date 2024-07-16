@@ -1,10 +1,10 @@
-import { webLinks, Link, Text } from '@siafoundation/design-system'
-import { LogoGithub24, Book24, Code24 } from '@siafoundation/react-icons'
-import { DownloadDaemonSelect } from './DownloadDaemonSelect'
-import { GitHubRelease } from '@siafoundation/data-sources'
-import { DownloadDesktopSelect } from './DownloadDesktopSelect'
+import type { GitHubRelease } from '@siafoundation/data-sources'
+import { Link, Text, webLinks } from '@siafoundation/design-system'
+import { Book24, Code24, LogoGithub24 } from '@siafoundation/react-icons'
 import { backgrounds } from '../content/assets'
 import { DownloadCard } from './DownloadCard'
+import { DownloadDaemonSelect } from './DownloadDaemonSelect'
+import { DownloadDesktopSelect } from './DownloadDesktopSelect'
 
 const systemRequirements = {
   renterd: 'quad-core processor, 8GB RAM, 256GB SSD for consensus data',

@@ -1,20 +1,20 @@
-import {
-  useEffect,
-  useRef,
-  memo,
-  forwardRef,
-  MutableRefObject,
-  useMemo,
-  useCallback,
-} from 'react'
-import dynamic from 'next/dynamic'
-import { GlobeMethods } from 'react-globe.gl'
 import { random, sortBy } from '@technically/lodash'
-import { getHostLabel } from './utils'
-import { SiaCentralPartialHost } from '../../content/geoHosts'
-import { getAssetUrl } from '../../content/assets'
 import { useTheme } from 'next-themes'
+import dynamic from 'next/dynamic'
+import {
+  type MutableRefObject,
+  forwardRef,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react'
+import type { GlobeMethods } from 'react-globe.gl'
 import { useElementSize } from 'usehooks-ts'
+import { getAssetUrl } from '../../content/assets'
+import type { SiaCentralPartialHost } from '../../content/geoHosts'
+import { getHostLabel } from './utils'
 
 type Props = {
   activeHost: SiaCentralPartialHost
@@ -35,9 +35,10 @@ const GlobeGl = dynamic(() => import('./GlobeGl'), {
   ssr: false,
 })
 
+// @ts-expect-error
 const ReactGlobe = forwardRef(function ReactGlobe(
   props: Omit<React.ComponentProps<typeof GlobeGl>, 'forwardRef'>,
-  ref: MutableRefObject<GlobeMethods>
+  ref: MutableRefObject<GlobeMethods>,
 ) {
   return <GlobeGl {...props} forwardRef={ref} />
 })
@@ -51,7 +52,7 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
         lng: host.location[1],
         altitude: 2,
       },
-      700
+      700,
     )
   }, [])
 
@@ -59,11 +60,12 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
     moveToHost(activeHost)
   }, [moveToHost, activeHost])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     moveToActiveHost()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeHost])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setTimeout(() => {
       if (globeEl.current) {
@@ -71,7 +73,6 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
       }
       moveToActiveHost()
     }, 1000)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const backgroundRoutes = useMemo(() => {
@@ -84,11 +85,11 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
           continue
         }
         const host2 = hosts[j]
-        const distance = distanceBetweenHosts(host1, host2)
+        const distance = distanceBetweenHosts(host1!, host2!)
         hostRoutes.push({
           distance,
-          src: host1,
-          dst: host2,
+          src: host1!,
+          dst: host2!,
         })
       }
       hostRoutes = sortBy(hostRoutes, 'distance')
@@ -100,10 +101,10 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
         const randomDistantIndex = random(
           // Math.round((hostRoutes.length - 1) / 2),
           0,
-          hostRoutes.length - 1
+          hostRoutes.length - 1,
         )
         const extra = hostRoutes[randomDistantIndex]
-        routes.push(extra)
+        routes.push(extra!)
       }
     }
     return routes
@@ -113,14 +114,14 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
     let routes: Route[] = []
     for (let i = 0; i < hosts.length; i++) {
       const host = hosts[i]
-      if (activeHost.public_key === host.public_key) {
+      if (activeHost.public_key === host!.public_key) {
         continue
       }
-      const distance = distanceBetweenHosts(activeHost, host)
+      const distance = distanceBetweenHosts(activeHost, host!)
       routes.push({
         distance,
         src: activeHost,
-        dst: host,
+        dst: host!,
       })
     }
     routes = sortBy(routes, 'distance')
@@ -129,7 +130,7 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
 
   const routes = useMemo(
     () => [...backgroundRoutes, ...activeRoutes],
-    [backgroundRoutes, activeRoutes]
+    [backgroundRoutes, activeRoutes],
   )
 
   const { resolvedTheme } = useTheme()
@@ -139,14 +140,15 @@ function GlobeComponent({ activeHost, hosts, rates, selectActiveHost }: Props) {
     <div ref={containerRef}>
       <ReactGlobe
         ref={globeEl}
+        // @ts-expect-error - revisit whether this prop is necessary
         width={size}
         height={size}
         backgroundColor="rgba(0,0,0,0)"
         globeImageUrl={`/_next/image?url=${encodeURIComponent(
-          getAssetUrl('assets/map.png')
+          getAssetUrl('assets/map.png'),
         )}&w=2048&q=50`}
         bumpImageUrl={`/_next/image?url=${encodeURIComponent(
-          getAssetUrl('assets/earth-topology.png')
+          getAssetUrl('assets/earth-topology.png'),
         )}&w=2048&q=70`}
         arcsData={routes}
         atmosphereColor="rgba(30, 169,76, 1)"
@@ -202,17 +204,17 @@ export const Globe = memo(GlobeComponent)
 
 function distanceBetweenHosts(
   h1: SiaCentralPartialHost,
-  h2: SiaCentralPartialHost
+  h2: SiaCentralPartialHost,
 ) {
   return Math.sqrt(
     Math.pow(h1.location[0] - h2.location[0], 2) +
-      Math.pow(h1.location[1] - h2.location[1], 2)
+      Math.pow(h1.location[1] - h2.location[1], 2),
   )
 }
 
 function doesIncludeActiveHost(
   route: Route,
-  activeHost: SiaCentralPartialHost
+  activeHost: SiaCentralPartialHost,
 ) {
   return (
     route.dst.public_key === activeHost.public_key ||

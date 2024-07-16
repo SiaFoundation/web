@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { hashToAvatar } from '../../lib/avatar'
 import { cx } from 'class-variance-authority'
+import { hashToAvatar } from '../../lib/avatar'
 
 export function Header({
   initials,
@@ -27,7 +27,7 @@ export function Header({
           tw={cx(
             'w-24 h-24 rounded border',
             'bg-white text-black',
-            'border-gray-500'
+            'border-gray-500',
           )}
           alt={initials}
         />

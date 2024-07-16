@@ -1,31 +1,31 @@
-/* eslint-disable react/no-unescaped-entities */
-import { Fragment } from 'react'
 import {
-  Link,
-  Text,
+  Callout,
   ContentGallery,
+  Link,
+  Paragraph,
   Separator,
   SiteHeading,
-  Paragraph,
+  Text,
   webLinks,
-  Callout,
 } from '@siafoundation/design-system'
 import {
-  LogoTwitter24,
   LogoGithub16,
   LogoLinkedin16,
+  LogoTwitter24,
 } from '@siafoundation/react-icons'
+/* eslint-disable react/no-unescaped-entities */
+import { Fragment } from 'react'
 import { Layout } from '../../components/Layout'
+import { SectionGradient } from '../../components/SectionGradient'
+import { SectionTransparent } from '../../components/SectionTransparent'
 import { routes } from '../../config/routes'
-import { getMinutesInSeconds } from '../../lib/time'
-import { AsyncReturnType } from '../../lib/types'
+import { backgrounds, previews } from '../../content/assets'
+import { getFeedContent } from '../../content/feed'
 import { getReports } from '../../content/reports'
 import { getStats } from '../../content/stats'
 import { getTeam } from '../../content/team'
-import { SectionGradient } from '../../components/SectionGradient'
-import { SectionTransparent } from '../../components/SectionTransparent'
-import { getFeedContent } from '../../content/feed'
-import { backgrounds, previews } from '../../content/assets'
+import { getMinutesInSeconds } from '../../lib/time'
+import type { AsyncReturnType } from '../../lib/types'
 
 const title = 'The Sia Foundation'
 const description =

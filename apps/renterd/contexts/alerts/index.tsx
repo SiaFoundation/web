@@ -1,28 +1,29 @@
 import {
-  useTableState,
   useDatasetEmptyState,
   useServerFilters,
+  useTableState,
 } from '@siafoundation/design-system'
-import { useRouter } from 'next/router'
-import { createContext, useContext, useMemo } from 'react'
-import {
-  AlertData,
-  columnsDefaultVisible,
-  defaultSortField,
-  sortOptions,
-} from './types'
-import { columns } from './columns'
-import { defaultDatasetRefreshInterval } from '../../config/swr'
 import {
   triggerErrorToast,
   triggerSuccessToast,
 } from '@siafoundation/design-system'
-import { AlertSeverity, AlertsParams } from '@siafoundation/renterd-types'
 import {
   useAlerts as useAlertsData,
   useAlertsDismiss,
 } from '@siafoundation/renterd-react'
+import type { AlertSeverity, AlertsParams } from '@siafoundation/renterd-types'
+import { useRouter } from 'next/router'
+import { createContext, useContext, useMemo } from 'react'
 import { useCallback } from 'react'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { columns } from './columns'
+import {
+  type AlertCellContext,
+  type AlertData,
+  columnsDefaultVisible,
+  defaultSortField,
+  sortOptions,
+} from './types'
 
 const defaultLimit = 50
 
@@ -45,7 +46,7 @@ function useAlertsMain() {
         })
       }
     },
-    [setFilter, removeFilter]
+    [setFilter, removeFilter],
   )
 
   const severityFilter = filters.find((f) => f.id === 'severity')
@@ -86,7 +87,7 @@ function useAlertsMain() {
         triggerSuccessToast({ title: 'Alert has been dismissed.' })
       }
     },
-    [dismiss]
+    [dismiss],
   )
 
   const dismissMany = useCallback(
@@ -103,7 +104,7 @@ function useAlertsMain() {
         triggerSuccessToast({ title: 'Selected alerts have been dismissed' })
       }
     },
-    [dismiss]
+    [dismiss],
   )
 
   const datasetPage = useMemo<AlertData[] | null>(() => {
@@ -145,31 +146,31 @@ function useAlertsMain() {
   const filteredTableColumns = useMemo(
     () =>
       columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
+        (column) => column.fixed || enabledColumns.includes(column.id),
       ),
-    [enabledColumns]
+    [enabledColumns],
   )
 
   const dataState = useDatasetEmptyState(
     datasetPage,
     response.isValidating,
     response.error,
-    filters
+    filters,
   )
 
-  const cellContext = useMemo(() => ({}), [])
+  const cellContext: AlertCellContext = useMemo(() => ({}), [])
 
   const totals = useMemo(
     () => ({
       ...response.data?.totals,
       all: Object.entries(response.data?.totals || {}).reduce(
-        (acc, [severity, count]) => {
+        (acc, [, count]) => {
           return acc + count
         },
-        0
+        0,
       ),
     }),
-    [response.data]
+    [response.data],
   )
 
   return {

@@ -1,11 +1,11 @@
 import { getTitleId } from '@siafoundation/design-system'
+import { to } from '@siafoundation/request'
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { Block } from '../../../components/Block'
 import { routes } from '../../../config/routes'
-import { Metadata } from 'next'
-import { buildMetadata } from '../../../lib/utils'
 import { siaCentral } from '../../../config/siaCentral'
-import { notFound } from 'next/navigation'
-import { to } from '@siafoundation/request'
+import { buildMetadata } from '../../../lib/utils'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -39,7 +39,7 @@ export default async function Page({ params }) {
       params: {
         id,
       },
-    })
+    }),
   )
 
   if (error) {

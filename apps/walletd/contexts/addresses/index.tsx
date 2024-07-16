@@ -1,22 +1,22 @@
 import {
-  useTableState,
-  useClientFilters,
   useClientFilteredDataset,
+  useClientFilters,
+  useTableState,
 } from '@siafoundation/design-system'
 import { useWalletAddresses } from '@siafoundation/walletd-react'
+import { useRouter } from 'next/router'
 import { createContext, useContext, useMemo } from 'react'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { useSiascanUrl } from '../../hooks/useSiascanUrl'
+import { columns } from './columns'
+import { useDataset } from './dataset'
 import {
-  AddressData,
-  CellContext,
+  type AddressData,
+  type CellContext,
   columnsDefaultVisible,
   defaultSortField,
   sortOptions,
 } from './types'
-import { columns } from './columns'
-import { useRouter } from 'next/router'
-import { useSiascanUrl } from '../../hooks/useSiascanUrl'
-import { defaultDatasetRefreshInterval } from '../../config/swr'
-import { useDataset } from './dataset'
 
 export function useAddressesMain() {
   const router = useRouter()
@@ -73,9 +73,9 @@ export function useAddressesMain() {
   const filteredTableColumns = useMemo(
     () =>
       columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
+        (column) => column.fixed || enabledColumns.includes(column.id),
       ),
-    [enabledColumns]
+    [enabledColumns],
   )
 
   const siascanUrl = useSiascanUrl()
@@ -83,7 +83,7 @@ export function useAddressesMain() {
     () => ({
       siascanUrl,
     }),
-    [siascanUrl]
+    [siascanUrl],
   )
 
   return {

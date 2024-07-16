@@ -1,7 +1,7 @@
-import React from 'react'
-import { writeText, write } from 'clipboard-polyfill'
-import { ToastOptions, triggerToast } from './toast'
 import { Copy24 } from '@siafoundation/react-icons'
+import { write, writeText } from 'clipboard-polyfill'
+import type React from 'react'
+import { type ToastOptions, triggerToast } from './toast'
 
 export const copyToClipboard = (text: string, entity?: string) => {
   const message = entity
@@ -14,7 +14,7 @@ export const copyToClipboard = (text: string, entity?: string) => {
 export const copyImageToClipboard = (
   image: Blob,
   type: string,
-  entity?: string
+  entity?: string,
 ) => {
   const message = entity
     ? `Copied ${entity} to clipboard`

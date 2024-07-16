@@ -23,10 +23,10 @@ const validationSchema = Yup.object().shape({
     .test(
       'greater than zero',
       'Must be greater than 0 SC',
-      (val) => !new BigNumber(val || 0).isZero()
+      (val) => !new BigNumber(val || 0).isZero(),
     )
     .test('less than 1000', 'Must be 50,000 SC or less', (val) =>
-      new BigNumber(val || 0).lte(50_000)
+      new BigNumber(val || 0).lte(50_000),
     ),
 })
 

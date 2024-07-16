@@ -1,14 +1,14 @@
 'use client'
 
-import React from 'react'
 import { useAppSettings } from '@siafoundation/react-core'
+import type BigNumber from 'bignumber.js'
+import type React from 'react'
 import { Container } from '../../core/Container'
 import { ScrollArea } from '../../core/ScrollArea'
 import { AppBackdrop } from '../AppBackdrop'
-import { Sidenav } from './Sidenav'
-import { AppRootLayout } from '../AppRootLayout'
 import { AppNavbar } from '../AppNavbar'
-import BigNumber from 'bignumber.js'
+import { AppRootLayout } from '../AppRootLayout'
+import { Sidenav } from './Sidenav'
 import { useAutoLock } from './useAutoLock'
 import { useConnAndPassLock } from './useConnAndPassLock'
 

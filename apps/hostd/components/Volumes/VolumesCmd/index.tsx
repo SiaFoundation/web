@@ -1,12 +1,12 @@
+import { useRouter } from 'next/router'
+import { routes } from '../../../config/routes'
+import { useDialog } from '../../../contexts/dialog'
 import {
   CommandGroup,
   CommandItemNav,
   CommandItemSearch,
 } from '../../CmdRoot/Item'
-import { Page } from '../../CmdRoot/types'
-import { useRouter } from 'next/router'
-import { useDialog } from '../../../contexts/dialog'
-import { routes } from '../../../config/routes'
+import type { Page } from '../../CmdRoot/types'
 
 export const commandPage = {
   namespace: 'volumes',
@@ -18,7 +18,7 @@ export function VolumesCmd({
   parentPage,
   pushPage,
 }: {
-  currentPage: Page
+  currentPage?: Page
   parentPage?: Page
   pushPage: (page: Page) => void
 }) {

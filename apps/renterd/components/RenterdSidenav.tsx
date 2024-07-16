@@ -1,10 +1,10 @@
 import { SidenavItem, Text } from '@siafoundation/design-system'
 import {
-  DatabaseIcon,
-  FolderIcon,
-  FileContractIcon,
   BarsProgressIcon,
   BellIcon,
+  DatabaseIcon,
+  FileContractIcon,
+  FolderIcon,
   KeyIcon,
 } from '@siafoundation/react-icons'
 import { cx } from 'class-variance-authority'
@@ -39,7 +39,7 @@ export function RenterdSidenav() {
                 'absolute -right-[2px] top-px w-1 h-1',
                 'rounded-full',
                 'bg-gray-1000 dark:bg-white',
-                'pointer-events-none'
+                'pointer-events-none',
               )}
             />
           ) : (
@@ -49,7 +49,7 @@ export function RenterdSidenav() {
                 'absolute -right-[9px] -top-1 py-px px-[5px]',
                 'text-white',
                 'bg-red-500 dark:bg-red-500 rounded',
-                'pointer-events-none'
+                'pointer-events-none',
               )}
               color="none"
             >

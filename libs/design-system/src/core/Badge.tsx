@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
 import React from 'react'
-import { VariantProps } from '../types'
+import type { VariantProps } from '../types'
 
 const styles = cva(
   [
@@ -93,7 +93,7 @@ const styles = cva(
       rounded: true,
       interactive: false,
     },
-  }
+  },
 )
 
 export const Badge = React.forwardRef<

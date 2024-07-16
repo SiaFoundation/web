@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
-import { DataInterval, getDataIntervalInMs } from './types'
 import { hoursInMilliseconds } from '@siafoundation/design-system'
+import { useEffect, useState } from 'react'
+import { type DataInterval, getDataIntervalInMs } from './types'
 
 // now timestamp updated every interval
 // used to reset the time range and keep the graph up to date
@@ -12,7 +12,7 @@ export function useNowAtInterval(dataInterval: DataInterval) {
     const minIntervalMs = hoursInMilliseconds(1)
     const intervalMs = Math.min(
       getDataIntervalInMs(dataInterval),
-      minIntervalMs
+      minIntervalMs,
     )
     const i = setInterval(() => {
       setNow(new Date().getTime())

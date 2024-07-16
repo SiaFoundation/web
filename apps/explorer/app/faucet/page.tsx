@@ -1,4 +1,4 @@
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import { Faucet } from '../../components/Faucet'
 import { routes } from '../../config/routes'
 import { buildMetadata } from '../../lib/utils'

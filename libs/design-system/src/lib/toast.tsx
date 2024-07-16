@@ -7,14 +7,14 @@ import {
   CloseOutline16,
   CloseOutline24,
 } from '@siafoundation/react-icons'
-import toast, { Toaster as RToaster, ToastOptions } from 'react-hot-toast'
 import { cx } from 'class-variance-authority'
-import { panelStyles } from '../core/Panel'
-import React from 'react'
-import { Text } from '../core/Text'
+import type React from 'react'
+import toast, { Toaster as RToaster, type ToastOptions } from 'react-hot-toast'
 import { Button } from '../core/Button'
-import { Tooltip } from '../core/Tooltip'
+import { panelStyles } from '../core/Panel'
 import { ScrollArea } from '../core/ScrollArea'
+import { Text } from '../core/Text'
+import { Tooltip } from '../core/Tooltip'
 
 export type { ToastOptions }
 
@@ -84,7 +84,7 @@ export const triggerToast = ({
 }: ToastParams) => {
   toast(
     (t) => <ToastLayout toastId={t.id} title={title} body={body} icon={icon} />,
-    buildToastOptions(options)
+    buildToastOptions(options),
   )
 }
 
@@ -120,7 +120,7 @@ export function buildToastOptions({
       '[&>div]:overflow-hidden',
       '!p-0',
       'z-50',
-      className
+      className,
     ),
     success: {
       icon: (

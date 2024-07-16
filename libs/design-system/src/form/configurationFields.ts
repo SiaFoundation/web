@@ -1,7 +1,8 @@
-import BigNumber from 'bignumber.js'
 import { entries } from '@technically/lodash'
-import React, { MouseEvent, useCallback } from 'react'
-import {
+import type BigNumber from 'bignumber.js'
+import type React from 'react'
+import { type MouseEvent, useCallback } from 'react'
+import type {
   FieldErrors,
   FieldValues,
   Path,
@@ -13,7 +14,7 @@ import { triggerErrorToast } from '../lib/toast'
 
 export type ConfigField<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 > = {
   type:
     | 'number'
@@ -74,12 +75,12 @@ export type ConfigField<
 
 export type ConfigFields<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 > = Record<keyof Values, ConfigField<Values, Categories>>
 
 export function useRegisterForm<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   form,
   field,
@@ -91,7 +92,8 @@ export function useRegisterForm<
 }) {
   const value = form.watch(name)
   const error =
-    form.formState.touchedFields[name] && !!form.formState.errors[name]
+    (form.formState.touchedFields as Record<string, boolean>)[name] &&
+    !!form.formState.errors[name]
 
   // Do not memoize this register call, for an unknown reason it sometimes
   // causes form updates to stop working.
@@ -106,7 +108,7 @@ export function useRegisterForm<
       _onChange(e)
       field.trigger?.forEach((t) => form.trigger(t))
     },
-    [_onChange, form, field]
+    [_onChange, form, field],
   )
   const setValue = useCallback(
     (
@@ -117,7 +119,7 @@ export function useRegisterForm<
             shouldValidate: boolean
             shouldDirty: boolean
             shouldTouch: boolean
-          }
+          },
     ) => {
       form.setValue(
         name,
@@ -130,11 +132,11 @@ export function useRegisterForm<
                 shouldTouch: true,
               }
             : undefined
-          : options
+          : options,
       )
       field.trigger?.forEach((t) => form.trigger(t))
     },
-    [name, form, field]
+    [name, form, field],
   )
   return {
     ref,
@@ -149,24 +151,24 @@ export function useRegisterForm<
 
 export function useOnInvalid<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >(fields: ConfigFields<Values, Categories>) {
   return useCallback(
     (errors: FieldErrors<Values>) => {
       triggerErrorToast({
         title: 'Error',
         body: entries(errors)
-          .map(([key, e]) => `${fields[key].title || key}: ${e?.message}`)
+          .map(([key, e]) => `${fields[key]?.title || key}: ${e?.message}`)
           .join(', '),
       })
     },
-    [fields]
+    [fields],
   )
 }
 
 export type FieldProps<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 > = {
   name: Path<Values>
   form: UseFormReturn<Values>
@@ -175,7 +177,7 @@ export type FieldProps<
 
 export function shouldShowField<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({ name, form, fields }: FieldProps<Values, Categories>) {
   const field = fields[name]
   return !field.hidden && (!field.show || field.show(form.getValues()))

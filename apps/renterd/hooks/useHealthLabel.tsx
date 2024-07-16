@@ -1,4 +1,4 @@
-import { Text } from '@siafoundation/design-system'
+import type { Text } from '@siafoundation/design-system'
 import {
   CheckmarkFilled16,
   Misuse16,
@@ -12,11 +12,11 @@ export const healthThresholds = {
 }
 
 export function useHealthLabel({
-  health,
+  health = 0,
   size,
   isDirectory,
 }: {
-  health: number
+  health?: number
   size: number
   isDirectory: boolean
 }) {

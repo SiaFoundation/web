@@ -1,8 +1,8 @@
+import { truncate } from '@siafoundation/design-system'
+import { to } from '@siafoundation/request'
 import { humanDate } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { siaCentral } from '../../../config/siaCentral'
-import { truncate } from '@siafoundation/design-system'
-import { to } from '@siafoundation/request'
 
 export const revalidate = 0
 
@@ -22,7 +22,7 @@ export default async function Image({ params }) {
       params: {
         id,
       },
-    })
+    }),
   )
 
   if (!t || !t.transaction) {
@@ -33,7 +33,7 @@ export default async function Image({ params }) {
         subtitle: 'transaction',
         initials: 'T',
       },
-      size
+      size,
     )
   }
 
@@ -64,6 +64,6 @@ export default async function Image({ params }) {
       initials: 'T',
       values,
     },
-    size
+    size,
   )
 }

@@ -1,6 +1,6 @@
 import { Text } from '@siafoundation/design-system'
+import type { SWRError } from '@siafoundation/react-core'
 import { MisuseOutline32 } from '@siafoundation/react-icons'
-import { SWRError } from '@siafoundation/react-core'
 import { StateNoneYet } from './StateNoneYet'
 
 type Props = {

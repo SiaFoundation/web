@@ -1,23 +1,23 @@
 'use client'
 
+import { DotMark16 } from '@siafoundation/react-icons'
+import { humanNumber } from '@siafoundation/units'
+import { upperFirst } from '@technically/lodash'
+import type BigNumber from 'bignumber.js'
+import { formatDistance } from 'date-fns'
 import { Link } from '../core/Link'
 import { Text } from '../core/Text'
-import { ValueSf } from './ValueSf'
-import { ValueCopyable } from './ValueCopyable'
+import { Tooltip } from '../core/Tooltip'
 import {
-  EntityType,
+  type EntityType,
+  type TxType,
   getEntityTypeLabel,
   getTxTypeLabel,
-  TxType,
 } from '../lib/entityTypes'
-import { humanNumber } from '@siafoundation/units'
-import { formatDistance } from 'date-fns'
-import { upperFirst } from '@technically/lodash'
-import BigNumber from 'bignumber.js'
-import { DotMark16 } from '@siafoundation/react-icons'
 import { EntityListItemLayout } from './EntityListItemLayout'
+import { ValueCopyable } from './ValueCopyable'
 import { ValueScFiat } from './ValueScFiat'
-import { Tooltip } from '../core/Tooltip'
+import { ValueSf } from './ValueSf'
 
 export type EntityListItemProps = {
   label?: string

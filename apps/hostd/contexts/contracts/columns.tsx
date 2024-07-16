@@ -1,23 +1,23 @@
 import {
-  Text,
-  TableColumn,
-  ValueCopyable,
-  stripPrefix,
-  Tooltip,
   Badge,
   ContractTimeline,
+  type TableColumn,
+  Text,
+  Tooltip,
+  ValueCopyable,
   ValueNum,
   ValueScFiat,
+  stripPrefix,
 } from '@siafoundation/design-system'
+import type { ContractStatus } from '@siafoundation/hostd-types'
 import {
-  ArrowUpLeft16,
   ArrowDownRight16,
+  ArrowUpLeft16,
   Money16,
 } from '@siafoundation/react-icons'
-import { ContractStatus } from '@siafoundation/hostd-types'
 import { blockHeightToTime, humanBytes, humanDate } from '@siafoundation/units'
 import { ContractContextMenu } from '../../components/Contracts/ContractContextMenu'
-import { ContractData, TableColumnId } from './types'
+import type { ContractData, TableColumnId } from './types'
 
 type Context = {
   currentHeight: number
@@ -297,7 +297,7 @@ export const columns: ContractsTableColumn[] = (
   (col): ContractsTableColumn => ({
     ...col,
     ...getFullLabelAndTip(col),
-  })
+  }),
 )
 
 function getFullLabelAndTip(col: ContractsTableColumn): {

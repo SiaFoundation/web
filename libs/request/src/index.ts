@@ -1,10 +1,10 @@
 import { merge } from '@technically/lodash'
 import axios, {
-  AxiosError,
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosRequestHeaders,
-  AxiosResponse,
+  type AxiosError,
+  type AxiosInstance,
+  type AxiosRequestConfig,
+  type AxiosRequestHeaders,
+  type AxiosResponse,
 } from 'axios'
 
 export type RequestParams = Record<
@@ -14,24 +14,25 @@ export type RequestParams = Record<
 
 export function parameterizeRoute(
   route: string | null,
-  params: RequestParams
+  params: RequestParams,
 ): string | null {
-  if (route && params) {
+  let _route = route
+  if (_route && params) {
     const paramKeys = Object.keys(params)
     for (const key of paramKeys) {
       const value = String(params[key])
-      if (route.includes(`:${key}`)) {
-        route = route.replace(`:${key}`, value)
+      if (_route.includes(`:${key}`)) {
+        _route = _route.replace(`:${key}`, value)
       } else {
-        if (!route.includes('?')) {
-          route += `?${key}=${encodeURIComponent(value)}`
+        if (!_route.includes('?')) {
+          _route += `?${key}=${encodeURIComponent(value)}`
         } else {
-          route += `&${key}=${encodeURIComponent(value)}`
+          _route += `&${key}=${encodeURIComponent(value)}`
         }
       }
     }
   }
-  return route
+  return _route
 }
 
 export type RequestMethod = 'get' | 'post' | 'patch' | 'put' | 'delete'
@@ -39,7 +40,7 @@ export type RequestMethod = 'get' | 'post' | 'patch' | 'put' | 'delete'
 export function buildRequestHandler<
   Params = void,
   Data = void,
-  Response = void
+  Response = void,
 >(
   axios: AxiosInstance,
   method: RequestMethod,
@@ -47,22 +48,22 @@ export function buildRequestHandler<
   options: {
     defaultParams?: Params
     config?: AxiosRequestConfig<Data>
-  } = {}
+  } = {},
 ) {
   type Args = Params extends void
     ? Data extends void
       ? { config?: AxiosRequestConfig<Data> } | void
       : { data: Data; config?: AxiosRequestConfig<Data> }
     : Data extends void
-    ? {
-        params: Params
-        config?: AxiosRequestConfig<Data>
-      }
-    : {
-        params: Params
-        data: Data
-        config?: AxiosRequestConfig<Data>
-      }
+      ? {
+          params: Params
+          config?: AxiosRequestConfig<Data>
+        }
+      : {
+          params: Params
+          data: Data
+          config?: AxiosRequestConfig<Data>
+        }
 
   type MaybeArgs = {
     params?: Params
@@ -84,7 +85,6 @@ export function buildRequestHandler<
       ...mergedArgs.params,
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const paramRoute = parameterizeRoute(route, params as RequestParams)!
 
     const data = 'data' in mergedArgs ? mergedArgs.data : undefined
@@ -94,12 +94,12 @@ export function buildRequestHandler<
 }
 
 export async function to<T>(
-  promise: Promise<AxiosResponse<T>>
+  promise: Promise<AxiosResponse<T>>,
 ): Promise<
   [
     AxiosResponse<T>['data'] | undefined,
     AxiosError<T> | undefined,
-    AxiosResponse<T> | undefined
+    AxiosResponse<T> | undefined,
   ]
 > {
   try {
@@ -115,10 +115,13 @@ export function initAxios(api: string, password?: string): AxiosInstance {
     'Content-Type': 'application/json',
   }
   if (password) {
-    headers['Authorization'] = `Basic ${btoa(`:${password}`)}`
+    headers.Authorization = `Basic ${btoa(`:${password}`)}`
   }
   return axios.create({
     baseURL: api,
     headers,
   })
 }
+
+
+export type * from 'axios'

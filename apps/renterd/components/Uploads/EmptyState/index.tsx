@@ -1,7 +1,7 @@
+import { useUploads } from '../../../contexts/uploads'
 import { StateError } from './StateError'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
-import { useUploads } from '../../../contexts/uploads'
 
 export function EmptyState() {
   const { dataState } = useUploads()

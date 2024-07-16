@@ -1,9 +1,9 @@
 import {
-  PatternedPanel,
-  Heading,
-  Paragraph,
-  Link,
   Badge,
+  Heading,
+  Link,
+  Paragraph,
+  PatternedPanel,
 } from '@siafoundation/design-system'
 import Image from 'next/image'
 

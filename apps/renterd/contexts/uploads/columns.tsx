@@ -1,10 +1,10 @@
 import { Text, ValueCopyable } from '@siafoundation/design-system'
-import { UploadsTableColumn } from './types'
-import { getKeyFromPath } from '../../lib/paths'
-import { TransferProgress } from '../../components/TransferProgress'
 import { humanBytes } from '@siafoundation/units'
 import { formatRelative } from 'date-fns'
+import { TransferProgress } from '../../components/TransferProgress'
 import { UploadContextMenu } from '../../components/Uploads/UploadContextMenu'
+import { getKeyFromPath } from '../../lib/paths'
+import type { UploadsTableColumn } from './types'
 
 export const columns: UploadsTableColumn[] = [
   {

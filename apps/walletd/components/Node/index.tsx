@@ -6,8 +6,8 @@ import {
 } from '@siafoundation/walletd-react'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
-import { WalletdSidenav } from '../WalletdSidenav'
 import { WalletdAuthedLayout } from '../WalletdAuthedLayout'
+import { WalletdSidenav } from '../WalletdSidenav'
 
 export function Node() {
   const peers = useSyncerPeers()

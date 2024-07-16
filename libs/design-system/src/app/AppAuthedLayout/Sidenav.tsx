@@ -1,11 +1,11 @@
-import { LockIcon, DiceIcon, GearIcon } from '@siafoundation/react-icons'
+import { DiceIcon, GearIcon, LockIcon } from '@siafoundation/react-icons'
+import type BigNumber from 'bignumber.js'
+import { Logo } from '../../core/Logo'
 import { Panel } from '../../core/Panel'
 import { Separator } from '../../core/Separator'
-import { Logo } from '../../core/Logo'
 import { navbarAppHeight } from '../AppNavbar'
-import { SidenavItemWallet } from './SidenavItemWallet'
 import { SidenavItem } from './SidenavItem'
-import BigNumber from 'bignumber.js'
+import { SidenavItemWallet } from './SidenavItemWallet'
 
 type Props = {
   routes: {

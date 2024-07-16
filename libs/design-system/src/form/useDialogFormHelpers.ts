@@ -1,13 +1,13 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import { FieldValues, UseFormReturn } from 'react-hook-form'
+import type { FieldValues, UseFormReturn } from 'react-hook-form'
 
 type Props<Values extends FieldValues> = {
   form: UseFormReturn<Values>
   onOpenChange: (open: boolean) => void
   defaultValues: Values
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   initKey?: any[]
 }
 
@@ -39,7 +39,7 @@ export function useDialogFormHelpers<Values extends FieldValues>({
         }, 0)
       }
     },
-    [closeAndReset, reset, onOpenChange]
+    [closeAndReset, reset, onOpenChange],
   )
 
   // Use an internal key that is memoed on a shallow element comparison
@@ -50,6 +50,7 @@ export function useDialogFormHelpers<Values extends FieldValues>({
   // once values are ready, determined by passing an array with:
   // - a deep change of values
   // - all truthy values
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!internalInitKey || !internalInitKey.length) {
       return
@@ -60,8 +61,6 @@ export function useDialogFormHelpers<Values extends FieldValues>({
     if (internalInitKey.every((k) => !!k)) {
       reset()
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [internalInitKey])
 
   return {
@@ -71,10 +70,11 @@ export function useDialogFormHelpers<Values extends FieldValues>({
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 function useArrayElementShallowCompare<T extends any[]>(externalVal: T): T {
   const [internalVal, setInternalVal] = useState<T>(externalVal)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     // if externalVal is empty on mount, do nothing
     if (!externalVal || !externalVal.length) {
@@ -90,7 +90,6 @@ function useArrayElementShallowCompare<T extends any[]>(externalVal: T): T {
     if (didChange) {
       setInternalVal(externalVal)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [externalVal])
 
   return internalVal

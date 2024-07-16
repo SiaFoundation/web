@@ -1,7 +1,7 @@
-import { useCarousel, CarouselTags } from './Carousel'
-import { cx } from 'class-variance-authority'
 import { Image } from '@siafoundation/design-system'
+import { cx } from 'class-variance-authority'
 import { getAssetUrl } from '../content/assets'
+import { CarouselTags, useCarousel } from './Carousel'
 
 const images = [
   {
@@ -54,7 +54,7 @@ export function CarouselHostd() {
               props.currentItem.key === item.key ? 'z-10' : 'z-0',
               props.currentItem.key === item.key ? 'opacity-100' : 'opacity-0',
               'top-0',
-              props.currentItem.key === item.key ? 'relative' : 'absolute'
+              props.currentItem.key === item.key ? 'relative' : 'absolute',
             )}
           >
             <Image

@@ -1,20 +1,20 @@
-import { useEffect, useRef, useCallback, useMemo } from 'react'
-import { GlobeMethods } from 'react-globe.gl'
-import { getHostLabel } from './utils'
-import { useElementSize } from 'usehooks-ts'
 import { useTryUntil } from '@siafoundation/react-core'
+import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
+import type { GlobeMethods } from 'react-globe.gl'
+import { useElementSize } from 'usehooks-ts'
 import earthDarkContrast from '../../assets/earth-dark-contrast.png'
 import earthTopology from '../../assets/earth-topology.png'
 import nightSky from '../../assets/night-sky.png'
+import type { SiaCentralPartialHost } from '../../content/geoHosts'
 import { GlobeDyn } from './GlobeDyn'
-import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
 import { useDecRoutes } from './useRoutes'
-import { SiaCentralPartialHost } from '../../content/geoHosts'
+import { getHostLabel } from './utils'
 
 export type Commands = {
   moveToLocation: (
     location: [number, number] | undefined,
-    altitude?: number
+    altitude?: number,
   ) => void
 }
 
@@ -63,10 +63,10 @@ export function Globe({
           lng: location[1],
           altitude: altitude || 1.5,
         },
-        700
+        700,
       )
     },
-    []
+    [],
   )
 
   useEffect(() => {
@@ -90,11 +90,11 @@ export function Globe({
     return true
   })
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (onMount) {
       onMount(cmdRef.current)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const routes = useDecRoutes({ hosts, activeHost })
@@ -187,7 +187,7 @@ export function Globe({
 
 function doesIncludeActiveHost(
   route: Route,
-  activeHost?: SiaCentralPartialHost
+  activeHost?: SiaCentralPartialHost,
 ) {
   if (!activeHost) {
     return false

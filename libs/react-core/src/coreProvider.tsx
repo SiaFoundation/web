@@ -1,6 +1,6 @@
 'use client'
 
-import { Cache, SWRConfig as BaseSWRConfig } from 'swr'
+import { SWRConfig as BaseSWRConfig, type Cache } from 'swr'
 import { WorkflowsProvider } from './workflows'
 
 type Props = {

@@ -5,11 +5,11 @@ import {
   ThemeRadio,
   webLinks,
 } from '@siafoundation/design-system'
-import { menuSections } from '../../config/siteMap'
-import { Statsbar } from '../Statsbar'
-import { SectionTransparent } from '../SectionTransparent'
-import { SectionSolid } from '../SectionSolid'
 import { routes } from '../../config/routes'
+import { menuSections } from '../../config/siteMap'
+import { SectionSolid } from '../SectionSolid'
+import { SectionTransparent } from '../SectionTransparent'
+import { Statsbar } from '../Statsbar'
 
 export function Footer() {
   return (

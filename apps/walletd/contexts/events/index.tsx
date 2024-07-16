@@ -1,27 +1,27 @@
 import {
-  useTableState,
   useDatasetEmptyState,
   useServerFilters,
+  useTableState,
 } from '@siafoundation/design-system'
 import {
   useWalletEvents,
   useWalletEventsUnconfirmed,
 } from '@siafoundation/walletd-react'
+import { useRouter } from 'next/router'
 import { createContext, useContext, useMemo } from 'react'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { useSiascanUrl } from '../../hooks/useSiascanUrl'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
+import { columns } from './columns'
+import { calculateScValue, calculateSfValue } from './transactionValue'
 import {
-  CellContext,
-  EventData,
+  type CellContext,
+  type EventData,
   columnsDefaultVisible,
   defaultSortField,
   sortOptions,
 } from './types'
-import { columns } from './columns'
-import { useRouter } from 'next/router'
-import { useSiascanUrl } from '../../hooks/useSiascanUrl'
-import { defaultDatasetRefreshInterval } from '../../config/swr'
-import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { getContractId, getFee } from './utils'
-import { calculateScValue, calculateSfValue } from './transactionValue'
 
 const defaultLimit = 100
 
@@ -125,9 +125,9 @@ export function useEventsMain() {
   const filteredTableColumns = useMemo(
     () =>
       columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
+        (column) => column.fixed || enabledColumns.includes(column.id),
       ),
-    [enabledColumns]
+    [enabledColumns],
   )
 
   const isValidating =
@@ -141,7 +141,7 @@ export function useEventsMain() {
     () => ({
       siascanUrl,
     }),
-    [siascanUrl]
+    [siascanUrl],
   )
 
   return {

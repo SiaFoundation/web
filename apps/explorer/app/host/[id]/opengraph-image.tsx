@@ -1,5 +1,6 @@
-import { getOGImage } from '../../../components/OGImageEntity'
-import { siaCentral } from '../../../config/siaCentral'
+import { truncate } from '@siafoundation/design-system'
+import { type CurrencyOption, currencyOptions } from '@siafoundation/react-core'
+import { to } from '@siafoundation/request'
 import {
   getDownloadCost,
   getDownloadSpeed,
@@ -8,9 +9,8 @@ import {
   getUploadSpeed,
   humanBytes,
 } from '@siafoundation/units'
-import { truncate } from '@siafoundation/design-system'
-import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
-import { to } from '@siafoundation/request'
+import { getOGImage } from '../../../components/OGImageEntity'
+import { siaCentral } from '../../../config/siaCentral'
 
 export const revalidate = 0
 
@@ -32,14 +32,14 @@ export default async function Image({ params }) {
         params: {
           id,
         },
-      })
+      }),
     ),
     to(
       siaCentral.exchangeRates({
         params: {
           currencies: 'sc',
         },
-      })
+      }),
     ),
   ])
 
@@ -51,7 +51,7 @@ export default async function Image({ params }) {
         subtitle: 'host',
         initials: 'H',
       },
-      size
+      size,
     )
   }
 
@@ -64,7 +64,7 @@ export default async function Image({ params }) {
         initials: 'H',
         avatar: true,
       },
-      size
+      size,
     )
   }
 
@@ -113,6 +113,6 @@ export default async function Image({ params }) {
       avatar: true,
       values,
     },
-    size
+    size,
   )
 }

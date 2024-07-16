@@ -1,11 +1,11 @@
+import { newDecoder, newEncoder } from './encoder'
 import {
-  encodeHostPrices,
   decodeHostPrices,
-  encodeHostSettings,
   decodeHostSettings,
+  encodeHostPrices,
+  encodeHostSettings,
 } from './encoding'
-import { newEncoder, newDecoder } from './encoder'
-import { HostPrices, HostSettings } from './types'
+import type { HostPrices, HostSettings } from './types'
 
 describe('encoding', () => {
   it('encodeHostPrices', () => {

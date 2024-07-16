@@ -1,10 +1,10 @@
-import React from 'react'
 import { Launch16 } from '@siafoundation/react-icons'
-import { Link } from '../core/Link'
-import { LinkData } from '../lib/links'
-import { Heading } from '../core/Heading'
-import { useIsExternalDomain } from '../hooks/useIsExternalDomain'
 import { cx } from 'class-variance-authority'
+import type React from 'react'
+import { Heading } from '../core/Heading'
+import { Link } from '../core/Link'
+import { useIsExternalDomain } from '../hooks/useIsExternalDomain'
+import type { LinkData } from '../lib/links'
 
 export type MenuSection = {
   title: string

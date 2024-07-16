@@ -1,21 +1,21 @@
 import {
-  triggerSuccessToast,
   triggerErrorToast,
+  triggerSuccessToast,
 } from '@siafoundation/design-system'
-import { useCallback } from 'react'
+import { delay, useMutate } from '@siafoundation/react-core'
 import {
   useAutopilotConfigUpdate,
   useAutopilotTrigger,
   useBusState,
   useSettingUpdate,
 } from '@siafoundation/renterd-react'
-import { defaultValues } from './types'
-import { transformUp } from './transformUp'
-import { delay, useMutate } from '@siafoundation/react-core'
-import { Resources } from './resources'
-import { useSyncContractSet } from './useSyncContractSet'
-import BigNumber from 'bignumber.js'
 import { autopilotHostsRoute } from '@siafoundation/renterd-types'
+import type BigNumber from 'bignumber.js'
+import { useCallback } from 'react'
+import type { Resources } from './resources'
+import { transformUp } from './transformUp'
+import type { defaultValues } from './types'
+import { useSyncContractSet } from './useSyncContractSet'
 
 export function useOnValid({
   resources,
@@ -154,7 +154,7 @@ export function useOnValid({
       settingUpdate,
       resources,
       autopilotTrigger,
-    ]
+    ],
   )
 
   return onValid

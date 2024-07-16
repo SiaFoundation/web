@@ -1,19 +1,19 @@
 import {
-  Dialog,
-  ConfigFields,
-  triggerErrorToast,
-  FormSubmitButton,
-  FieldTextArea,
-  FieldText,
   Badge,
+  type ConfigFields,
+  Dialog,
+  FieldText,
+  FieldTextArea,
+  FormSubmitButton,
   Label,
+  triggerErrorToast,
   useDialogFormHelpers,
 } from '@siafoundation/design-system'
+import { useWalletUpdate } from '@siafoundation/walletd-react'
 import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
-import { useWalletUpdate } from '@siafoundation/walletd-react'
 import { useWallets } from '../../contexts/wallets'
-import { WalletData } from '../../contexts/wallets/types'
+import type { WalletData } from '../../contexts/wallets/types'
 
 const defaultValues = {
   name: '',
@@ -101,7 +101,7 @@ export function WalletUpdateDialog({
         }
         return acc
       }, []) || [],
-    [dataset, wallet]
+    [dataset, wallet],
   )
   const fields = getFields({ walletNames })
   const onSubmit = useCallback(
@@ -125,7 +125,7 @@ export function WalletUpdateDialog({
         closeAndReset()
       }
     },
-    [walletId, walletUpdate, wallet, closeAndReset]
+    [walletId, walletUpdate, wallet, closeAndReset],
   )
 
   return (

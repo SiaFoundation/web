@@ -1,6 +1,6 @@
 import { test } from '@playwright/test'
-import { navigateToVolumes } from '../fixtures/navigate'
 import { login } from '../fixtures/login'
+import { navigateToVolumes } from '../fixtures/navigate'
 import {
   createVolume,
   deleteVolume,

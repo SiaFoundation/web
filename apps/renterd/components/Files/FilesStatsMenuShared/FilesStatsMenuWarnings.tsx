@@ -7,10 +7,10 @@ import {
   Text,
 } from '@siafoundation/design-system'
 import { Warning16 } from '@siafoundation/react-icons'
-import { useContractSetMismatch } from '../checks/useContractSetMismatch'
 import { useMemo } from 'react'
 import { useSyncStatus } from '../../../hooks/useSyncStatus'
 import { useAutopilotNotConfigured } from '../checks/useAutopilotNotConfigured'
+import { useContractSetMismatch } from '../checks/useContractSetMismatch'
 import { useNotEnoughContracts } from '../checks/useNotEnoughContracts'
 
 export function FilesStatsMenuWarnings() {
@@ -106,7 +106,7 @@ export function FilesStatsMenuWarnings() {
       autopilotNotConfiguredEl,
       notEnoughContractsEl,
       contractSetMismatchEl,
-    ]
+    ],
   )
 
   if (warningList.length)

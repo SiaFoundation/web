@@ -1,11 +1,11 @@
 import {
+  Button,
   DropdownMenu,
   DropdownMenuItem,
-  Button,
-  DropdownMenuLeftSlot,
   DropdownMenuLabel,
+  DropdownMenuLeftSlot,
 } from '@siafoundation/design-system'
-import { Delete16, BucketIcon, Rule16 } from '@siafoundation/react-icons'
+import { BucketIcon, Delete16, Rule16 } from '@siafoundation/react-icons'
 import { useDialog } from '../../contexts/dialog'
 
 type Props = {

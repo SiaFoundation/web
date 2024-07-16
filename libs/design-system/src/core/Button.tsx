@@ -1,6 +1,6 @@
 'use client'
 
-import { cva, VariantProps } from 'class-variance-authority'
+import { type VariantProps, cva } from 'class-variance-authority'
 import React from 'react'
 import { Tooltip } from './Tooltip'
 
@@ -155,7 +155,7 @@ export const buttonStyles = cva(
       icon: 'subtle',
       color: 'none',
     },
-  }
+  },
 )
 
 export const Button = React.forwardRef<
@@ -183,7 +183,7 @@ export const Button = React.forwardRef<
       type = 'button',
       ...props
     },
-    ref
+    ref,
   ) => {
     if (tip) {
       return (
@@ -225,5 +225,5 @@ export const Button = React.forwardRef<
         {...props}
       />
     )
-  }
+  },
 )

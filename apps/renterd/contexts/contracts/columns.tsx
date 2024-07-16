@@ -1,17 +1,17 @@
 import {
-  Text,
-  ValueScFiat,
-  TableColumn,
-  ContractTimeline,
-  ValueCopyable,
-  stripPrefix,
-  Tooltip,
-  ValueNum,
   Badge,
-  Separator,
-  ScrollArea,
   Button,
+  ContractTimeline,
   LoadingDots,
+  ScrollArea,
+  Separator,
+  type TableColumn,
+  Text,
+  Tooltip,
+  ValueCopyable,
+  ValueNum,
+  ValueScFiat,
+  stripPrefix,
 } from '@siafoundation/design-system'
 import {
   ArrowUpLeft16,
@@ -23,12 +23,12 @@ import {
   Hourglass16,
   Reset16,
 } from '@siafoundation/react-icons'
+import type { ContractState } from '@siafoundation/renterd-types'
 import { humanBytes, humanDate } from '@siafoundation/units'
-import { ContractData, ContractTableContext, TableColumnId } from './types'
-import { ContractContextMenu } from '../../components/Contracts/ContractContextMenu'
-import { ContractState } from '@siafoundation/renterd-types'
-import { cx } from 'class-variance-authority'
 import BigNumber from 'bignumber.js'
+import { cx } from 'class-variance-authority'
+import { ContractContextMenu } from '../../components/Contracts/ContractContextMenu'
+import type { ContractData, ContractTableContext, TableColumnId } from './types'
 
 type ContractsTableColumn = TableColumn<
   TableColumnId,
@@ -96,7 +96,7 @@ export const columns: ContractsTableColumn[] = [
       data: { contractSets },
       context: { defaultContractSet, autopilotContractSet },
     }) => {
-      if (!contractSets.length) {
+      if (!contractSets?.length) {
         return null
       }
       return (
@@ -137,7 +137,7 @@ export const columns: ContractsTableColumn[] = [
                       size="small"
                       className={cx(
                         'flex gap-px items-center',
-                        isDefaultSet ? 'pl-px' : ''
+                        isDefaultSet ? 'pl-px' : '',
                       )}
                     >
                       {icon}
@@ -430,7 +430,7 @@ export const columns: ContractsTableColumn[] = [
       <ValueScFiat
         displayBoth
         size="12"
-        value={filteredStats.totalCostTotal.negated()}
+        value={filteredStats.totalCostTotal!.negated()}
         tooltip="Total cost across the filtered set of active contracts"
       />
     ),
@@ -447,7 +447,7 @@ export const columns: ContractsTableColumn[] = [
       <ValueScFiat
         displayBoth
         size="12"
-        value={filteredStats.spendingUploadsTotal.negated()}
+        value={filteredStats.spendingUploadsTotal!.negated()}
         tooltip="Uploads spending across the filtered set of active contracts"
       />
     ),
@@ -464,7 +464,7 @@ export const columns: ContractsTableColumn[] = [
       <ValueScFiat
         displayBoth
         size="12"
-        value={filteredStats.spendingDownloadsTotal.negated()}
+        value={filteredStats.spendingDownloadsTotal!.negated()}
         tooltip="Downloads spending across the filtered set of active contracts"
       />
     ),
@@ -485,7 +485,7 @@ export const columns: ContractsTableColumn[] = [
       <ValueScFiat
         displayBoth
         size="12"
-        value={filteredStats.spendingFundAccountTotal.negated()}
+        value={filteredStats.spendingFundAccountTotal!.negated()}
         tooltip="Fund account spending across the filtered set of active contracts"
       />
     ),

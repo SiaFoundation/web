@@ -1,10 +1,10 @@
 import {
   ChartXY,
-  Text,
-  Heading,
   DatumCardConfigurable,
   DatumScrollArea,
+  Heading,
   Separator,
+  Text,
 } from '@siafoundation/design-system'
 import { useMetrics } from '../../contexts/metrics'
 

@@ -1,9 +1,12 @@
 import {
+  type HookArgsSwr,
   useAppSettings,
-  HookArgsSwr,
   useGetSwr,
 } from '@siafoundation/react-core'
-import { defaultApi, SiaCentralBlock } from '@siafoundation/sia-central-types'
+import {
+  type SiaCentralBlock,
+  defaultApi,
+} from '@siafoundation/sia-central-types'
 
 type SiaCentralBlockLatestResponse = {
   message: string
@@ -11,7 +14,7 @@ type SiaCentralBlockLatestResponse = {
 }
 
 export function useSiaCentralBlockLatest(
-  args?: HookArgsSwr<void, SiaCentralBlockLatestResponse>
+  args?: HookArgsSwr<void, SiaCentralBlockLatestResponse>,
 ) {
   const { settings } = useAppSettings()
   return useGetSwr({

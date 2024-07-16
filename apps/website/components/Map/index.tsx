@@ -1,18 +1,18 @@
-import { useAppSettings } from '@siafoundation/react-core'
-import { Globe } from './Globe'
-import { useCallback, useMemo, useRef, useState } from 'react'
 import { ScrollArea, Text, Tooltip } from '@siafoundation/design-system'
-import { HostItem } from './HostItem'
-import { Navbar } from '../Layout/Navbar'
-import { SiaCentralPartialHost } from '../../content/geoHosts'
-import { PageHead } from '../PageHead'
+import { useAppSettings } from '@siafoundation/react-core'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import { previews } from '../../content/assets'
-import { Stats } from '../../content/stats'
+import type { SiaCentralPartialHost } from '../../content/geoHosts'
+import type { Stats } from '../../content/stats'
+import { Navbar } from '../Layout/Navbar'
+import { PageHead } from '../PageHead'
+import { Globe } from './Globe'
+import { HostItem } from './HostItem'
 
 export type Commands = {
   moveToLocation: (
     location: [number, number] | undefined,
-    altitude?: number
+    altitude?: number,
   ) => void
 }
 
@@ -30,12 +30,12 @@ export function Map({ hosts, rates, stats }: Props) {
   const { gpu, settings } = useAppSettings()
 
   const [activeHostPublicKey, setActiveHostPublicKey] = useState<string>(
-    hosts[0].public_key
+    hosts[0].public_key,
   )
 
   const activeHost = useMemo(
     () => hosts?.find((d) => d.public_key === activeHostPublicKey),
-    [hosts, activeHostPublicKey]
+    [hosts, activeHostPublicKey],
   )
 
   const cmdRef = useRef<Commands>(emptyCommands)
@@ -44,7 +44,7 @@ export function Map({ hosts, rates, stats }: Props) {
     (cmd: Commands) => {
       cmdRef.current = cmd
     },
-    [cmdRef]
+    [cmdRef],
   )
 
   const scrollToHost = useCallback((publicKey: string) => {
@@ -76,7 +76,7 @@ export function Map({ hosts, rates, stats }: Props) {
       }
       scrollToHost(publicKey)
     },
-    [setActiveHostPublicKey, cmdRef, activeHostPublicKey, scrollToHost]
+    [setActiveHostPublicKey, cmdRef, activeHostPublicKey, scrollToHost],
   )
 
   const onHostListClick = useCallback(
@@ -91,12 +91,12 @@ export function Map({ hosts, rates, stats }: Props) {
       }
       scrollToHost(publicKey)
     },
-    [setActiveHostPublicKey, cmdRef, activeHostPublicKey, scrollToHost]
+    [setActiveHostPublicKey, cmdRef, activeHostPublicKey, scrollToHost],
   )
 
   const onHostMapHover = useCallback(
     (publicKey: string, location?: [number, number]) => null,
-    []
+    [],
   )
 
   if (settings.siaCentral && !gpu.shouldRender) {

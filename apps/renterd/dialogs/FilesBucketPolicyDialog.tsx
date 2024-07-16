@@ -1,17 +1,17 @@
 import {
-  Paragraph,
+  type ConfigFields,
   Dialog,
+  FieldSelect,
+  FormSubmitButton,
+  Paragraph,
   triggerErrorToast,
   triggerSuccessToast,
-  ConfigFields,
   useOnInvalid,
-  FormSubmitButton,
-  FieldSelect,
 } from '@siafoundation/design-system'
+import { useBucket, useBucketPolicyUpdate } from '@siafoundation/renterd-react'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../contexts/dialog'
-import { useBucket, useBucketPolicyUpdate } from '@siafoundation/renterd-react'
 
 const defaultValues = {
   visibility: 'public',
@@ -55,7 +55,7 @@ export function FilesBucketPolicyDialog({
   const bucket = useBucket({
     disabled: !open,
     params: {
-      name: name,
+      name: name!,
     },
     config: {
       swr: {
@@ -80,7 +80,7 @@ export function FilesBucketPolicyDialog({
     async (values: typeof defaultValues) => {
       const response = await policyUpdate.put({
         params: {
-          name,
+          name: name!,
         },
         payload: {
           policy: {
@@ -99,10 +99,10 @@ export function FilesBucketPolicyDialog({
         closeDialog()
       }
     },
-    [form, name, policyUpdate, closeDialog]
+    [form, name, policyUpdate, closeDialog],
   )
 
-  const fields = useMemo(() => getFields(name), [name])
+  const fields = useMemo(() => getFields(name!), [name])
 
   const onInvalid = useOnInvalid(fields)
 

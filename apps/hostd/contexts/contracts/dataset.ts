@@ -1,8 +1,8 @@
-import { useMemo } from 'react'
-import { Contract } from '@siafoundation/hostd-types'
-import { useContracts } from '@siafoundation/hostd-react'
-import { ContractData } from './types'
+import type { useContracts } from '@siafoundation/hostd-react'
+import type { Contract } from '@siafoundation/hostd-types'
 import BigNumber from 'bignumber.js'
+import { useMemo } from 'react'
+import type { ContractData } from './types'
 
 export function useDataset({
   response,
@@ -51,10 +51,10 @@ function getContractFields(c: Contract): ContractData {
       payout: new BigNumber(
         c.status == 'active' || c.resolutionHeight > 0
           ? c.revision.validProofOutputs[1].value
-          : c.revision.missedProofOutputs[1].value
+          : c.revision.missedProofOutputs[1].value,
       ),
       remainingRenterFunds: new BigNumber(
-        c.revision.validProofOutputs?.[0].value || 0
+        c.revision.validProofOutputs?.[0].value || 0,
       ),
       validProofOutputs: c.revision.validProofOutputs,
       missedProofOutputs: c.revision.missedProofOutputs,

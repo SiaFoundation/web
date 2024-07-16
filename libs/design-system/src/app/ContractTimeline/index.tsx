@@ -1,5 +1,5 @@
-import { Segment } from './Segment'
 import { Point } from './Point'
+import { Segment } from './Segment'
 
 type Props = {
   currentHeight: number

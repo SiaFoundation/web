@@ -1,5 +1,5 @@
 import {
-  TxType,
+  type TxType,
   daysInMilliseconds,
   getTransactionType,
   useDatasetEmptyState,
@@ -9,13 +9,13 @@ import {
   useWalletPending,
   useWalletTransactions,
 } from '@siafoundation/hostd-react'
-import { createContext, useContext, useMemo } from 'react'
-import { useDialog } from '../dialog'
+import type { Transaction } from '@siafoundation/types'
 import BigNumber from 'bignumber.js'
 import { useRouter } from 'next/router'
-import { useSiascanUrl } from '../../hooks/useSiascanUrl'
-import { Transaction } from '@siafoundation/types'
+import { createContext, useContext, useMemo } from 'react'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { useSiascanUrl } from '../../hooks/useSiascanUrl'
+import { useDialog } from '../dialog'
 
 const defaultLimit = 50
 const filters = []
@@ -129,7 +129,7 @@ function useTransactionsMain() {
           }
         })
         .sort((a, b) => (a.timestamp >= b.timestamp ? 1 : -1)),
-    [metrics.data]
+    [metrics.data],
   )
 
   const error = transactions.error
@@ -137,7 +137,7 @@ function useTransactionsMain() {
     dataset,
     transactions.isValidating,
     error,
-    filters
+    filters,
   )
 
   return {

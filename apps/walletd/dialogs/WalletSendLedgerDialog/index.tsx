@@ -1,15 +1,15 @@
+import { useWalletBalance } from '@siafoundation/walletd-react'
 import BigNumber from 'bignumber.js'
 import { useMemo, useState } from 'react'
-import { useWalletBalance } from '@siafoundation/walletd-react'
-import { useComposeForm } from '../_sharedWalletSend/useComposeForm'
-import { useSendForm } from './useSendForm'
+import { useWalletAddresses } from '../../hooks/useWalletAddresses'
+import { SendFlowDialog } from '../_sharedWalletSend/SendFlowDialog'
 import {
-  SendParams,
-  SendStep,
+  type SendParams,
+  type SendStep,
   emptySendParams,
 } from '../_sharedWalletSend/types'
-import { SendFlowDialog } from '../_sharedWalletSend/SendFlowDialog'
-import { useWalletAddresses } from '../../hooks/useWalletAddresses'
+import { useComposeForm } from '../_sharedWalletSend/useComposeForm'
+import { useSendForm } from './useSendForm'
 
 export type WalletSendLedgerDialogParams = {
   walletId: string
@@ -42,12 +42,12 @@ export function WalletSendLedgerDialog({
 
   const balanceSc = useMemo(
     () => new BigNumber(balance.data?.siacoins || 0),
-    [balance.data]
+    [balance.data],
   )
 
   const balanceSf = useMemo(
     () => new BigNumber(balance.data?.siafunds || 0),
-    [balance.data]
+    [balance.data],
   )
 
   // Form for each step

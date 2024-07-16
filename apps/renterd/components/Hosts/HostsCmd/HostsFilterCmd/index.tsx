@@ -1,9 +1,9 @@
+import type { ServerFilterItem } from '@siafoundation/design-system'
+import { useCallback } from 'react'
+import { useHosts } from '../../../../contexts/hosts'
+import type { Page } from '../../../CmdRoot/types'
 import { ContractFilterCmdGroups } from './HostsFilterCmdGroups'
 import { HostsFilterNav } from './HostsFilterNav'
-import { Page } from '../../../CmdRoot/types'
-import { useHosts } from '../../../../contexts/hosts'
-import { useCallback } from 'react'
-import { ServerFilterItem } from '@siafoundation/design-system'
 
 export function HostsFilterCmd({
   currentPage,
@@ -12,7 +12,7 @@ export function HostsFilterCmd({
   beforeSelect,
   afterSelect,
 }: {
-  currentPage: Page
+  currentPage?: Page
   parentPage?: Page
   beforeSelect?: () => void
   afterSelect?: () => void
@@ -32,7 +32,7 @@ export function HostsFilterCmd({
         afterSelect()
       }
     },
-    [setFilter, beforeSelect, afterSelect]
+    [setFilter, beforeSelect, afterSelect],
   )
 
   return (

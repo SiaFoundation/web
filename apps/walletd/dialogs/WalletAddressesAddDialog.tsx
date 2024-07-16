@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
-  ConfigFields,
+  type ConfigFields,
   Dialog,
   FieldTextArea,
   FormSubmitButton,
@@ -9,18 +9,18 @@ import {
   triggerSuccessToast,
   useDialogFormHelpers,
 } from '@siafoundation/design-system'
-import { WalletAddressMetadata } from '@siafoundation/walletd-types'
+import { isValidAddress } from '@siafoundation/units'
 import { useWalletAddressAdd } from '@siafoundation/walletd-react'
+import type { WalletAddressMetadata } from '@siafoundation/walletd-types'
+import { uniq } from '@technically/lodash'
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { useWallets } from '../contexts/wallets'
-import { isValidAddress } from '@siafoundation/units'
-import { uniq } from '@technically/lodash'
 import {
   FieldRescan,
-  useTriggerRescan,
-  getRescanFields,
   getDefaultRescanValues,
+  getRescanFields,
+  useTriggerRescan,
 } from './FieldRescan'
 
 export type WalletAddressesAddDialogParams = {
@@ -53,7 +53,7 @@ function formatAddresses(value: string) {
       .trim()
       .split(/[^0-9a-fA-F]+/)
       .map((v) => v)
-      .filter((v) => !!v)
+      .filter((v) => !!v),
   )
 }
 
@@ -145,7 +145,7 @@ export function WalletAddressesAddDialog({
         total,
       }
     },
-    [walletId, addressAdd]
+    [walletId, addressAdd],
   )
 
   const triggerRescan = useTriggerRescan()
@@ -179,7 +179,7 @@ export function WalletAddressesAddDialog({
       triggerRescan(values)
       closeAndReset()
     },
-    [addAllAddresses, closeAndReset, triggerRescan]
+    [addAllAddresses, closeAndReset, triggerRescan],
   )
 
   const addressesText = form.watch('addresses')
@@ -206,8 +206,8 @@ export function WalletAddressesAddDialog({
             {addressCount === 0
               ? 'Add addresses'
               : addressCount === 1
-              ? 'Add 1 address'
-              : `Add ${addressCount.toLocaleString()} addresses`}
+                ? 'Add 1 address'
+                : `Add ${addressCount.toLocaleString()} addresses`}
             {shouldRescan ? ' and rescan' : ''}
           </FormSubmitButton>
         </div>

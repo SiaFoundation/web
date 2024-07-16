@@ -1,97 +1,81 @@
 import {
-  useGetSwr,
-  usePostFunc,
-  usePutFunc,
-  usePostSwr,
-  HookArgsSwr,
-  HookArgsCallback,
-  HookArgsWithPayloadSwr,
-  getTestnetZenBlockHeight,
-  getMainnetBlockHeight,
-  usePutSwr,
-  useDeleteFunc,
-  delay,
-  usePatchFunc,
-} from '@siafoundation/react-core'
-import useSWR from 'swr'
-import {
-  AlertsDismissParams,
-  AlertsDismissPayload,
-  AlertsDismissResponse,
-  AlertsParams,
-  AlertsResponse,
-  ContractsIntegrityCheckParams,
-  ContractsIntegrityCheckPayload,
-  ContractsIntegrityCheckResponse,
-  ContractsParams,
-  ContractsPayload,
-  ContractsResponse,
-  SettingsPinnedResponse,
-  SettingsPinnedUpdateParams,
-  SettingsPinnedUpdatePayload,
-  SettingsPinnedUpdateResponse,
-  LogsSearchParams,
-  LogsSearchPayload,
-  LogsSearchResponse,
-  MetricsParams,
-  MetricsPeriodParams,
-  MetricsPeriodResponse,
-  MetricsResponse,
-  SettingsAnnounceParams,
-  SettingsAnnouncePayload,
-  SettingsAnnounceResponse,
-  SettingsDdnsUpdateParams,
-  SettingsDdnsUpdatePayload,
-  SettingsDdnsUpdateResponse,
-  SettingsParams,
-  SettingsResponse,
-  SettingsUpdateParams,
-  SettingsUpdatePayload,
-  SettingsUpdateResponse,
-  StateConsensusParams,
-  StateConsensusResponse,
-  StateHostParams,
-  StateHostResponse,
-  SyncerConnectParams,
-  SyncerConnectPayload,
-  SyncerConnectResponse,
-  SyncerPeersParams,
-  SyncerPeersResponse,
-  SystemDirectoryCreateParams,
-  SystemDirectoryCreatePayload,
-  SystemDirectoryCreateResponse,
-  SystemDirectoryParams,
-  SystemDirectoryResponse,
-  TxPoolFeeParams,
-  TxPoolFeeResponse,
-  VolumeCancelParams,
-  VolumeCancelPayload,
-  VolumeCancelResponse,
-  VolumeCreateParams,
-  VolumeCreatePayload,
-  VolumeCreateResponse,
-  VolumeDeleteParams,
-  VolumeDeletePayload,
-  VolumeDeleteResponse,
-  VolumeParams,
-  VolumeResizeParams,
-  VolumeResizePayload,
-  VolumeResizeResponse,
-  VolumeResponse,
-  VolumeUpdateParams,
-  VolumeUpdatePayload,
-  VolumeUpdateResponse,
-  VolumesParams,
-  VolumesResponse,
-  WalletParams,
-  WalletPendingParams,
-  WalletPendingResponse,
-  WalletResponse,
-  WalletSendParams,
-  WalletSendPayload,
-  WalletSendResponse,
-  WalletTransactionsParams,
-  WalletTransactionsResponse,
+  type AlertsDismissParams,
+  type AlertsDismissPayload,
+  type AlertsDismissResponse,
+  type AlertsParams,
+  type AlertsResponse,
+  type ContractsIntegrityCheckParams,
+  type ContractsIntegrityCheckPayload,
+  type ContractsIntegrityCheckResponse,
+  type ContractsParams,
+  type ContractsPayload,
+  type ContractsResponse,
+  type LogsSearchParams,
+  type LogsSearchPayload,
+  type LogsSearchResponse,
+  type MetricsParams,
+  type MetricsPeriodParams,
+  type MetricsPeriodResponse,
+  type MetricsResponse,
+  type SettingsAnnounceParams,
+  type SettingsAnnouncePayload,
+  type SettingsAnnounceResponse,
+  type SettingsDdnsUpdateParams,
+  type SettingsDdnsUpdatePayload,
+  type SettingsDdnsUpdateResponse,
+  type SettingsParams,
+  type SettingsPinnedResponse,
+  type SettingsPinnedUpdateParams,
+  type SettingsPinnedUpdatePayload,
+  type SettingsPinnedUpdateResponse,
+  type SettingsResponse,
+  type SettingsUpdateParams,
+  type SettingsUpdatePayload,
+  type SettingsUpdateResponse,
+  type StateConsensusParams,
+  type StateConsensusResponse,
+  type StateHostParams,
+  type StateHostResponse,
+  type SyncerConnectParams,
+  type SyncerConnectPayload,
+  type SyncerConnectResponse,
+  type SyncerPeersParams,
+  type SyncerPeersResponse,
+  type SystemDirectoryCreateParams,
+  type SystemDirectoryCreatePayload,
+  type SystemDirectoryCreateResponse,
+  type SystemDirectoryParams,
+  type SystemDirectoryResponse,
+  type TxPoolFeeParams,
+  type TxPoolFeeResponse,
+  type VolumeCancelParams,
+  type VolumeCancelPayload,
+  type VolumeCancelResponse,
+  type VolumeCreateParams,
+  type VolumeCreatePayload,
+  type VolumeCreateResponse,
+  type VolumeDeleteParams,
+  type VolumeDeletePayload,
+  type VolumeDeleteResponse,
+  type VolumeParams,
+  type VolumeResizeParams,
+  type VolumeResizePayload,
+  type VolumeResizeResponse,
+  type VolumeResponse,
+  type VolumeUpdateParams,
+  type VolumeUpdatePayload,
+  type VolumeUpdateResponse,
+  type VolumesParams,
+  type VolumesResponse,
+  type WalletParams,
+  type WalletPendingParams,
+  type WalletPendingResponse,
+  type WalletResponse,
+  type WalletSendParams,
+  type WalletSendPayload,
+  type WalletSendResponse,
+  type WalletTransactionsParams,
+  type WalletTransactionsResponse,
   alertsDismissRoute,
   alertsRoute,
   contractsIdIntegrityRoute,
@@ -116,11 +100,27 @@ import {
   walletSendRoute,
   walletTransactionsRoute,
 } from '@siafoundation/hostd-types'
+import {
+  type HookArgsCallback,
+  type HookArgsSwr,
+  type HookArgsWithPayloadSwr,
+  delay,
+  getMainnetBlockHeight,
+  getTestnetZenBlockHeight,
+  useDeleteFunc,
+  useGetSwr,
+  usePatchFunc,
+  usePostFunc,
+  usePostSwr,
+  usePutFunc,
+  usePutSwr,
+} from '@siafoundation/react-core'
+import useSWR from 'swr'
 
 // state
 
 export function useStateHost(
-  args?: HookArgsSwr<StateHostParams, StateHostResponse>
+  args?: HookArgsSwr<StateHostParams, StateHostResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -129,7 +129,7 @@ export function useStateHost(
 }
 
 export function useStateConsensus(
-  args?: HookArgsSwr<StateConsensusParams, StateConsensusResponse>
+  args?: HookArgsSwr<StateConsensusParams, StateConsensusResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -156,7 +156,7 @@ export function useEstimatedNetworkBlockHeight(): number {
     {
       refreshInterval: 60_000,
       keepPreviousData: true,
-    }
+    },
   )
   return res.data || 0
 }
@@ -164,7 +164,7 @@ export function useEstimatedNetworkBlockHeight(): number {
 // syncer
 
 export function useSyncerPeers(
-  args?: HookArgsSwr<SyncerPeersParams, SyncerPeersResponse>
+  args?: HookArgsSwr<SyncerPeersParams, SyncerPeersResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -177,7 +177,7 @@ export function useSyncerConnect(
     SyncerConnectParams,
     SyncerConnectPayload,
     SyncerConnectResponse
-  >
+  >,
 ) {
   return usePutFunc(
     {
@@ -186,7 +186,7 @@ export function useSyncerConnect(
     },
     async (mutate) => {
       mutate((key) => key === syncerPeersRoute)
-    }
+    },
   )
 }
 
@@ -200,7 +200,7 @@ export function useWallet(args?: HookArgsSwr<WalletParams, WalletResponse>) {
 }
 
 export function useWalletTransactions(
-  args?: HookArgsSwr<WalletTransactionsParams, WalletTransactionsResponse>
+  args?: HookArgsSwr<WalletTransactionsParams, WalletTransactionsResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -209,7 +209,7 @@ export function useWalletTransactions(
 }
 
 export function useWalletPending(
-  args?: HookArgsSwr<WalletPendingParams, WalletPendingResponse>
+  args?: HookArgsSwr<WalletPendingParams, WalletPendingResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -222,7 +222,7 @@ export function useWalletSend(
     WalletSendParams,
     WalletSendPayload,
     WalletSendResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: walletSendRoute }, async (mutate) => {
     await delay(2_000)
@@ -238,7 +238,7 @@ export function useWalletSend(
 // txpool
 
 export function useTxPoolFee(
-  args?: HookArgsSwr<TxPoolFeeParams, TxPoolFeeResponse>
+  args?: HookArgsSwr<TxPoolFeeParams, TxPoolFeeResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -253,7 +253,7 @@ export function useContracts(
     ContractsParams,
     ContractsPayload,
     ContractsResponse
-  >
+  >,
 ) {
   return usePostSwr({
     ...args,
@@ -266,7 +266,7 @@ export function useContractsIntegrityCheck(
     ContractsIntegrityCheckParams,
     ContractsIntegrityCheckPayload,
     ContractsIntegrityCheckResponse
-  >
+  >,
 ) {
   return usePutFunc({ ...args, route: contractsIdIntegrityRoute })
 }
@@ -281,7 +281,7 @@ export function useMetrics(args?: HookArgsSwr<MetricsParams, MetricsResponse>) {
 }
 
 export function useMetricsPeriod(
-  args?: HookArgsSwr<MetricsPeriodParams, MetricsPeriodResponse>
+  args?: HookArgsSwr<MetricsPeriodParams, MetricsPeriodResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -292,7 +292,7 @@ export function useMetricsPeriod(
 // settings
 
 export function useSettings(
-  args?: HookArgsSwr<SettingsParams, SettingsResponse>
+  args?: HookArgsSwr<SettingsParams, SettingsResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -305,7 +305,7 @@ export function useSettingsUpdate(
     SettingsUpdateParams,
     SettingsUpdatePayload,
     SettingsUpdateResponse
-  >
+  >,
 ) {
   return usePatchFunc({ ...args, route: settingsRoute }, async (mutate) => {
     await mutate((key) => {
@@ -319,7 +319,7 @@ export function useSettingsAnnounce(
     SettingsAnnounceParams,
     SettingsAnnouncePayload,
     SettingsAnnounceResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: settingsAnnounceRoute })
 }
@@ -329,14 +329,14 @@ export function useSettingsDdnsUpdate(
     SettingsDdnsUpdateParams,
     SettingsDdnsUpdatePayload,
     SettingsDdnsUpdateResponse
-  >
+  >,
 ) {
   return usePutSwr({ ...args, payload: {}, route: settingsDdnsUpdateRoute })
 }
 
 const settingsPinnedRoute = '/settings/pinned'
 export function useSettingsPinned(
-  args?: HookArgsSwr<SettingsParams, SettingsPinnedResponse>
+  args?: HookArgsSwr<SettingsParams, SettingsPinnedResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -349,7 +349,7 @@ export function useSettingsPinnedUpdate(
     SettingsPinnedUpdateParams,
     SettingsPinnedUpdatePayload,
     SettingsPinnedUpdateResponse
-  >
+  >,
 ) {
   return usePutFunc({ ...args, route: settingsPinnedRoute }, async (mutate) => {
     mutate((key) => {
@@ -373,7 +373,7 @@ export function useVolumeCreate(
     VolumeCreateParams,
     VolumeCreatePayload,
     VolumeCreateResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: volumesRoute }, async (mutate) => {
     mutate((key) => {
@@ -387,7 +387,7 @@ export function useVolumeUpdate(
     VolumeUpdateParams,
     VolumeUpdatePayload,
     VolumeUpdateResponse
-  >
+  >,
 ) {
   return usePutFunc({ ...args, route: volumesIdRoute }, async (mutate) => {
     mutate((key) => {
@@ -401,7 +401,7 @@ export function useVolumeDelete(
     VolumeDeleteParams,
     VolumeDeletePayload,
     VolumeDeleteResponse
-  >
+  >,
 ) {
   return useDeleteFunc({ ...args, route: volumesIdRoute }, async (mutate) => {
     mutate((key) => {
@@ -415,7 +415,7 @@ export function useVolumeResize(
     VolumeResizeParams,
     VolumeResizePayload,
     VolumeResizeResponse
-  >
+  >,
 ) {
   return usePutFunc(
     { ...args, route: volumesIdResizeRoute },
@@ -424,7 +424,7 @@ export function useVolumeResize(
       mutate((key) => {
         return key.startsWith(volumesRoute)
       })
-    }
+    },
   )
 }
 
@@ -433,7 +433,7 @@ export function useVolumeCancel(
     VolumeCancelParams,
     VolumeCancelPayload,
     VolumeCancelResponse
-  >
+  >,
 ) {
   return useDeleteFunc(
     { ...args, route: volumesIdCancelRoute },
@@ -442,12 +442,12 @@ export function useVolumeCancel(
       mutate((key) => {
         return key.startsWith(volumesRoute)
       })
-    }
+    },
   )
 }
 
 export function useSystemDirectory(
-  args: HookArgsSwr<SystemDirectoryParams, SystemDirectoryResponse>
+  args: HookArgsSwr<SystemDirectoryParams, SystemDirectoryResponse>,
 ) {
   return useGetSwr({ ...args, route: systemDirRoute })
 }
@@ -457,7 +457,7 @@ export function useSystemDirectoryCreate(
     SystemDirectoryCreateParams,
     SystemDirectoryCreatePayload,
     SystemDirectoryCreateResponse
-  >
+  >,
 ) {
   return usePutFunc({ ...args, route: systemDirRoute })
 }
@@ -469,7 +469,7 @@ export function useLogsSearch(
     LogsSearchParams,
     LogsSearchPayload,
     LogsSearchResponse
-  >
+  >,
 ) {
   return usePostSwr({ ...args, route: logEntriesRoute })
 }
@@ -485,7 +485,7 @@ export function useAlertsDismiss(
     AlertsDismissParams,
     AlertsDismissPayload,
     AlertsDismissResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: alertsDismissRoute }, async (mutate) => {
     mutate((key) => {

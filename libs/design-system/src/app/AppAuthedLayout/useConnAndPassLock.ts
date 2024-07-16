@@ -1,7 +1,7 @@
 'use client'
 
+import { type NextRouter, usePagesRouter } from '@siafoundation/next'
 import { useAppSettings } from '@siafoundation/react-core'
-import { NextRouter, usePagesRouter } from '@siafoundation/next'
 import { useEffect } from 'react'
 import { useConnectivity } from '../../hooks/useConnectivity'
 
@@ -38,6 +38,7 @@ export function useConnAndPassLock({
   const { settings } = useAppSettings()
   const router = usePagesRouter()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (isValidating) {
       return
@@ -48,6 +49,5 @@ export function useConnAndPassLock({
       lock()
       return
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router, settings.password, isConnected, isValidating])
 }

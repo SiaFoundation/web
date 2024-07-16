@@ -1,11 +1,11 @@
-import { DialogProvider, Dialogs } from '../contexts/dialog'
-import React from 'react'
-import { WalletsProvider } from '../contexts/wallets'
+import type React from 'react'
+import { RescanStatus } from '../components/RescanStatus'
 import { AddressesProvider } from '../contexts/addresses'
+import { AppProvider } from '../contexts/app'
+import { DialogProvider, Dialogs } from '../contexts/dialog'
 import { EventsProvider } from '../contexts/events'
 import { LedgerProvider } from '../contexts/ledger'
-import { AppProvider } from '../contexts/app'
-import { RescanStatus } from '../components/RescanStatus'
+import { WalletsProvider } from '../contexts/wallets'
 
 type Props = {
   children: React.ReactNode

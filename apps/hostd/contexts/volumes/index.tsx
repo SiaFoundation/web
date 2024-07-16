@@ -1,15 +1,15 @@
 import {
-  useTableState,
-  useDatasetEmptyState,
   secondsInMilliseconds,
+  useDatasetEmptyState,
+  useTableState,
 } from '@siafoundation/design-system'
-import { VolumeMeta } from '@siafoundation/hostd-types'
 import { useVolumes as useVolumesData } from '@siafoundation/hostd-react'
+import type { VolumeMeta } from '@siafoundation/hostd-types'
 import { createContext, useContext, useMemo } from 'react'
-import { columnsDefaultVisible, TableColumnId } from './types'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { columns } from './columns'
 import { useDataset } from './dataset'
-import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { type TableColumnId, columnsDefaultVisible } from './types'
 
 function useVolumesMain() {
   const {
@@ -46,7 +46,7 @@ function useVolumesMain() {
 
   const filteredTableColumns = useMemo(
     () => columns.filter((column) => enabledColumns.includes(column.id)),
-    [enabledColumns]
+    [enabledColumns],
   )
 
   const isValidating = response.isValidating

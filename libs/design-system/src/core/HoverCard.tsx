@@ -1,11 +1,11 @@
 'use client'
 
-import React from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
 import * as HoverCardPrimitive from '@radix-ui/react-hover-card'
-import { panelStyles } from './Panel'
 import { cva, cx } from 'class-variance-authority'
+import { AnimatePresence, motion } from 'framer-motion'
+import React from 'react'
 import { useOpen } from '../hooks/useOpen'
+import { panelStyles } from './Panel'
 
 const contentContainerStyles = cva([
   'relative',

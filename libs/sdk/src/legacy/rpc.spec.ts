@@ -1,15 +1,5 @@
 import crypto from 'crypto'
-import { newEncoder, newDecoder } from './encoder'
-import {
-  HostPrices,
-  HostSettings,
-  RPCReadSectorRequest,
-  RPCReadSectorResponse,
-  RPCSettingsRequest,
-  RPCSettingsResponse,
-  RPCWriteSectorRequest,
-  RPCWriteSectorResponse,
-} from './types'
+import { newDecoder, newEncoder } from './encoder'
 import {
   decodeRpcRequestReadSector,
   decodeRpcRequestSettings,
@@ -24,6 +14,16 @@ import {
   encodeRpcResponseSettings,
   encodeRpcResponseWriteSector,
 } from './rpc'
+import type {
+  HostPrices,
+  HostSettings,
+  RPCReadSectorRequest,
+  RPCReadSectorResponse,
+  RPCSettingsRequest,
+  RPCSettingsResponse,
+  RPCWriteSectorRequest,
+  RPCWriteSectorResponse,
+} from './types'
 
 const prices: HostPrices = {
   contractPrice: '1000000000',

@@ -1,11 +1,10 @@
 'use client'
 
-import React from 'react'
-import { Link as NextLink } from '@siafoundation/next'
 import * as NavMenuPrimitives from '@radix-ui/react-navigation-menu'
+import { Link as NextLink } from '@siafoundation/next'
 import { cx } from 'class-variance-authority'
-import { linkStyles, LinkVariants } from './Link'
-import { UrlObject } from 'url'
+import React from 'react'
+import { type LinkVariants, linkStyles } from './Link'
 
 type Props = {
   rootProps?: React.ComponentProps<typeof NavMenuPrimitives.Item>
@@ -29,7 +28,7 @@ export const NavMenuItem = React.forwardRef<
         className={cx(
           'absolute top-0 left-0 w-full sm:w-auto',
           'data-[motion=from-start]:animate-enterFromLeft data-[motion=from-end]:animate-enterFromRight',
-          'data-[motion=to-start]:animate-exitToLeft data-[motion=to-end]:animate-exitToRight'
+          'data-[motion=to-start]:animate-exitToLeft data-[motion=to-end]:animate-exitToRight',
         )}
         {...contentProps}
       >
@@ -48,7 +47,7 @@ export const NavMenuLink = React.forwardRef<
   HTMLAnchorElement,
   Omit<React.ComponentProps<typeof NextLink>, 'href'> &
     LinkVariants & {
-      href?: string | UrlObject
+      href?: string | URL
     }
 >(
   (
@@ -68,7 +67,7 @@ export const NavMenuLink = React.forwardRef<
       target,
       ...props
     },
-    ref
+    ref,
   ) => {
     const rel = _rel || (target === '_blank' ? 'noopener' : undefined)
     return (
@@ -93,5 +92,5 @@ export const NavMenuLink = React.forwardRef<
         />
       </NavMenuPrimitives.Link>
     )
-  }
+  },
 )

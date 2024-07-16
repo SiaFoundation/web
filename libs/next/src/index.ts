@@ -1,11 +1,11 @@
-import Link from 'next/link.js'
 import Head from 'next/head.js'
 import Image from 'next/image.js'
+import Link from 'next/link.js'
 import {
-  useParams,
-  useSearchParams,
-  usePathname,
   useRouter as useAppRouter,
+  useParams,
+  usePathname,
+  useSearchParams,
 } from 'next/navigation.js'
 import { useRouter as usePagesRouter } from 'next/router.js'
 import type { NextRouter } from 'next/router.js'
@@ -23,5 +23,5 @@ export {
   usePathname,
   useAppRouter,
   usePagesRouter,
-  NextRouter,
+  type NextRouter,
 }

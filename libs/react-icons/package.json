@@ -1,10 +1,38 @@
 {
   "name": "@siafoundation/react-icons",
-  "description": "React-based icons used across Sia apps and websites.",
   "version": "0.2.3",
+  "description": "React-based icons used across Sia apps and websites.",
   "license": "MIT",
-  "dependencies": {
-    "@carbon/icons-react": "^10.47.0"
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "run-p bundle type:gen",
+    "build:dev": "run-p bundle:watch type:gen:watch",
+    "bundle": "tsup src/index.ts --format esm",
+    "clean": "del dist tsconfig.tsbuildinfo",
+    "coverage": "vitest run --coverage ",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest",
+    "type:check": "tsc --noEmit",
+    "type:gen": "tsc --emitDeclarationOnly"
   },
-  "types": "./src/index.d.ts"
+  "dependencies": {
+    "@carbon/icons-react": "^10.47.0",
+    "@siafoundation/typescript-config": "^0.0.0"
+  },
+  "devDependencies": {
+    "@siafoundation/typescript-config": "^0.0.0",
+    "@swc/core": "^1.6.13",
+    "@types/carbon__icons-react": "^10.31.2",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "del-cli": "^5.1.0",
+    "react": "18.3.0",
+    "react-dom": "18.3.0",
+    "tsup": "^8.1.0"
+  },
+  "peerDependencies": {
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0"
+  }
 }

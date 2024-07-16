@@ -1,15 +1,15 @@
 'use client'
 
-import { Button } from '../core/Button'
-import { ControlGroup } from '../core/ControlGroup'
+import { usePagesRouter } from '@siafoundation/next'
 import {
   CaretLeft16,
   CaretRight16,
   PageFirst16,
   PageLast16,
 } from '@siafoundation/react-icons'
-import { usePagesRouter } from '@siafoundation/next'
 import { LoadingDots } from '../components/LoadingDots'
+import { Button } from '../core/Button'
+import { ControlGroup } from '../core/ControlGroup'
 
 type Props = {
   offset: number

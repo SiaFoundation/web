@@ -1,4 +1,4 @@
-import { fetchAllPages, Notion } from './notion'
+import { Notion, fetchAllPages } from './notion'
 import { retry } from './retry'
 
 const feedDatabaseId = '9be1ecfc6f3142e7b8e284f2f6bd9338'
@@ -43,49 +43,53 @@ export async function savePost(allItems: FeedItem[], post: RssPost) {
 
 export async function saveItem(item: Omit<FeedItem, 'id'>) {
   try {
-    await retry(() => Notion.pages.create({
-      parent: {
-        type: 'database_id',
-        database_id: feedDatabaseId,
-      },
+    await retry(() =>
+      Notion.pages.create({
+        parent: {
+          type: 'database_id',
+          database_id: feedDatabaseId,
+        },
 
-      properties: {
-        title: {
-          title: [
-            {
-              text: {
-                content: item.title,
+        properties: {
+          title: {
+            title: [
+              {
+                text: {
+                  content: item.title,
+                },
               },
-            },
-          ],
-        },
-        link: {
-          url: item.link,
-        },
-        tags: {
-          multi_select: item.tags.map((tag) => {
-            return {
-              name: tag,
-            }
-          }),
-        },
-        date: {
+            ],
+          },
+          link: {
+            url: item.link,
+          },
+          tags: {
+            multi_select: item.tags.map((tag) => {
+              return {
+                name: tag,
+              }
+            }),
+          },
           date: {
-            start: new Date(item.date).toISOString(),
+            date: {
+              start: new Date(item.date).toISOString(),
+            },
           },
         },
-      },
-    }))
+      }),
+    )
   } catch (e) {
     console.log(e)
   }
 }
 
 export async function deletePage(pageId: string) {
-  return retry(() => Notion.pages.update({
-    page_id: pageId,
-    archived: true,
-  }))
+  return retry(() =>
+    Notion.pages.update({
+      page_id: pageId,
+      archived: true,
+    }),
+  )
 }
 
 type Tag =
@@ -99,19 +103,19 @@ export async function fetchAllFeedItems(tags: Tag[], limit?: number) {
   const allPages = await fetchAllPages('title', {
     database_id: feedDatabaseId,
   })
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const items = allPages.map((page: any) => ({
     id: page.id,
     title: page.properties.title.title?.[0]?.plain_text,
     link: page.properties.link.url,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     tags: page.properties.tags.multi_select.map((tag: any) => tag.name),
     date: page.properties.date.date.start,
   }))
   return items
     .sort((a, b) => (new Date(a.date) < new Date(b.date) ? 1 : -1))
     .filter((a) =>
-      !tags.length ? true : tags.find((tag) => a.tags?.includes(tag))
+      !tags.length ? true : tags.find((tag) => a.tags?.includes(tag)),
     )
     .slice(0, limit)
 }

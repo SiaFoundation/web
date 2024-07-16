@@ -1,6 +1,6 @@
 import { cx } from 'class-variance-authority'
 import React from 'react'
-import { VariantProps } from '../types'
+import type { VariantProps } from '../types'
 import { textStyles } from './Text'
 
 export const Codeblock = React.forwardRef<
@@ -19,7 +19,7 @@ export const Codeblock = React.forwardRef<
           'bg-white dark:bg-graydark-200',
           'border border-gray-400 dark:border-graydark-400',
           'rounded',
-          className
+          className,
         )}
         {...props}
         ref={forwardedRef}

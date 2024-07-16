@@ -1,10 +1,10 @@
+import type { ClientFilterItem } from '@siafoundation/design-system'
+import { useCallback } from 'react'
+import { useContracts } from '../../../../contexts/contracts'
+import type { ContractData } from '../../../../contexts/contracts/types'
+import type { Page } from '../../../CmdRoot/types'
 import { ContractFilterCmdGroups } from './ContractFilterCmdGroups'
 import { ContractFilterNav } from './ContractFilterNav'
-import { Page } from '../../../CmdRoot/types'
-import { ClientFilterItem } from '@siafoundation/design-system'
-import { ContractData } from '../../../../contexts/contracts/types'
-import { useContracts } from '../../../../contexts/contracts'
-import { useCallback } from 'react'
 
 export function ContractsFilterCmd({
   currentPage,
@@ -13,7 +13,7 @@ export function ContractsFilterCmd({
   beforeSelect,
   afterSelect,
 }: {
-  currentPage: Page
+  currentPage?: Page
   parentPage?: Page
   beforeSelect?: () => void
   afterSelect?: () => void
@@ -33,7 +33,7 @@ export function ContractsFilterCmd({
         afterSelect()
       }
     },
-    [setFilter, beforeSelect, afterSelect]
+    [setFilter, beforeSelect, afterSelect],
   )
 
   return (

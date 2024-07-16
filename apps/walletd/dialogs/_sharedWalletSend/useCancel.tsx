@@ -1,8 +1,8 @@
-import { Transaction } from '@siafoundation/types'
-import { useWalletRelease } from '@siafoundation/walletd-react'
-import { useWallets } from '../../contexts/wallets'
-import { useCallback } from 'react'
 import { triggerErrorToast } from '@siafoundation/design-system'
+import type { Transaction } from '@siafoundation/types'
+import { useWalletRelease } from '@siafoundation/walletd-react'
+import { useCallback } from 'react'
+import { useWallets } from '../../contexts/wallets'
 
 export function useCancel() {
   const { wallet } = useWallets()
@@ -31,7 +31,7 @@ export function useCancel() {
         })
       }
     },
-    [walletId, walletRelease]
+    [walletId, walletRelease],
   )
 
   return cancel

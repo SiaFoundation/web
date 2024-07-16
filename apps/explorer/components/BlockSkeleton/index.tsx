@@ -1,7 +1,7 @@
 import {
-  Skeleton,
-  EntityList,
   DatumSkeleton,
+  EntityList,
+  Skeleton,
 } from '@siafoundation/design-system'
 import { times } from '@technically/lodash'
 import { ContentLayout } from '../ContentLayout'

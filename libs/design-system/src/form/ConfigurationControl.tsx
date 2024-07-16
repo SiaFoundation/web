@@ -1,14 +1,14 @@
-import { ConfigurationSiacoin } from './ConfigurationSiacoin'
+import type { FieldValues } from 'react-hook-form'
 import { ConfigurationNumber } from './ConfigurationNumber'
-import { ConfigurationText } from './ConfigurationText'
-import { ConfigurationSwitch } from './ConfigurationSwitch'
 import { ConfigurationSelect } from './ConfigurationSelect'
-import { FieldValues } from 'react-hook-form'
-import { FieldProps } from './configurationFields'
+import { ConfigurationSiacoin } from './ConfigurationSiacoin'
+import { ConfigurationSwitch } from './ConfigurationSwitch'
+import { ConfigurationText } from './ConfigurationText'
+import type { FieldProps } from './configurationFields'
 
 export function ConfigurationControl<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({ name, form, fields }: FieldProps<Values, Categories>) {
   const field = fields[name]
   const Custom = field.custom || (() => null)

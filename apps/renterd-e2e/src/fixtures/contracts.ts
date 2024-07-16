@@ -1,4 +1,4 @@
-import { Page, expect } from '@playwright/test'
+import { type Page, expect } from '@playwright/test'
 
 export async function getContractRowById(page: Page, id: string) {
   return page.getByTestId('contractsTable').getByTestId(id)
@@ -31,7 +31,7 @@ export async function getContractRows(page: Page) {
 export async function toggleColumnVisibility(
   page: Page,
   name: string,
-  visible: boolean
+  visible: boolean,
 ) {
   await page.getByLabel('configure view').click()
   const configureView = page.getByRole('dialog')

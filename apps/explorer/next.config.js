@@ -1,4 +1,4 @@
-const { composePlugins, withNx } = require('@nx/next');
+const { composePlugins, withNx } = require('@nx/next')
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
@@ -14,8 +14,6 @@ const nextConfig = {
   output: 'standalone',
 }
 
-const plugins = [
-  withNx,
-];
+const plugins = [withNx]
 
-module.exports = composePlugins(...plugins)(nextConfig);
+module.exports = composePlugins(...plugins)(nextConfig)

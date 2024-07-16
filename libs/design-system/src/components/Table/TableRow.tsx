@@ -1,12 +1,12 @@
 'use client'
 
-import { CSSProperties, forwardRef, useMemo } from 'react'
-import { cx } from 'class-variance-authority'
-import { useDroppable, useDraggable } from '@dnd-kit/core'
-import {
+import { useDraggable, useDroppable } from '@dnd-kit/core'
+import type {
   DraggableAttributes,
   DraggableSyntheticListeners,
 } from '@dnd-kit/core/dist/hooks'
+import { cx } from 'class-variance-authority'
+import { type CSSProperties, forwardRef, useMemo } from 'react'
 
 type Data = {
   id: string
@@ -18,7 +18,7 @@ type Data = {
 
 export type Row<Data, Context> = {
   data: Data
-  context?: Context
+  context: Context
 }
 
 export type TableColumn<Columns, Data, Context> = {
@@ -36,7 +36,7 @@ export type TableColumn<Columns, Data, Context> = {
 
 type Props<Columns extends string, Data, Context> = {
   data: Data
-  context?: Context
+  context: Context
   columns: TableColumn<Columns, Data, Context>[]
   rowSize?: 'dense' | 'default' | 'auto'
   focusId?: string
@@ -44,7 +44,7 @@ type Props<Columns extends string, Data, Context> = {
   getCellClassNames: (
     i: number,
     className: string | undefined,
-    rounded?: boolean
+    rounded?: boolean,
   ) => string
   getContentClassNames: (i: number, className?: string) => string
 }
@@ -52,7 +52,7 @@ type Props<Columns extends string, Data, Context> = {
 export function createTableRow<
   Columns extends string,
   D extends Data,
-  Context
+  Context,
 >() {
   const TableRow = forwardRef<
     HTMLTableRowElement,
@@ -78,7 +78,7 @@ export function createTableRow<
         getContentClassNames,
         className,
       },
-      ref
+      ref,
     ) => {
       return (
         <tr
@@ -94,7 +94,7 @@ export function createTableRow<
             'border-b border-gray-200/50 dark:border-graydark-100',
             data.onClick ? 'cursor-pointer' : '',
             data.className,
-            className
+            className,
           )}
         >
           {columns.map(
@@ -107,7 +107,7 @@ export function createTableRow<
                 rowCellClassName,
                 rowContentClassName,
               },
-              i
+              i,
             ) => (
               <td
                 key={`${id}/${data.id}`}
@@ -116,7 +116,7 @@ export function createTableRow<
                   getCellClassNames(
                     i,
                     cx(cellClassName, rowCellClassName),
-                    false
+                    false,
                   ),
                   // Must use shadow based borders on the individual tds because a tailwind ring
                   // on the tr does not show up correctly in Safari.
@@ -141,30 +141,30 @@ export function createTableRow<
                     : '',
                   focusColor === 'green'
                     ? '!shadow-green-500 dark:!shadow-green-400'
-                    : ''
+                    : '',
                 )}
               >
                 <div
                   className={cx(
                     getContentClassNames(
                       i,
-                      cx(contentClassName, rowContentClassName)
+                      cx(contentClassName, rowContentClassName),
                     ),
                     rowSize === 'dense'
                       ? 'h-[50px]'
                       : rowSize === 'default'
-                      ? 'h-[100px]'
-                      : ''
+                        ? 'h-[100px]'
+                        : '',
                   )}
                 >
                   <Render data={data} context={context} />
                 </div>
               </td>
-            )
+            ),
           )}
         </tr>
       )
-    }
+    },
   )
   return TableRow
 }
@@ -172,7 +172,7 @@ export function createTableRow<
 export function TableRowDraggable<
   Columns extends string,
   D extends Data,
-  Context
+  Context,
 >({
   data,
   context,
@@ -214,7 +214,7 @@ export function TableRowDraggable<
 export function TableRowDroppable<
   Columns extends string,
   D extends Data,
-  Context
+  Context,
 >({
   data,
   context,

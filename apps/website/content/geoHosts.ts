@@ -1,8 +1,8 @@
-import { SiaCentralHost } from '@siafoundation/sia-central-types'
+import { to } from '@siafoundation/request'
+import type { SiaCentralHost } from '@siafoundation/sia-central-types'
+import { siaCentral } from '../config/siaCentral'
 import { getCacheValue } from '../lib/cache'
 import { getMinutesInSeconds } from '../lib/time'
-import { siaCentral } from '../config/siaCentral'
-import { to } from '@siafoundation/request'
 
 const maxAge = getMinutesInSeconds(5)
 
@@ -18,7 +18,7 @@ export async function getGeoHosts(): Promise<SiaCentralPartialHost[]> {
           params: {
             limit: 300,
           },
-        })
+        }),
       )
       if (error) {
         return []
@@ -29,7 +29,7 @@ export async function getGeoHosts(): Promise<SiaCentralPartialHost[]> {
         a.settings.total_storage - a.settings.remaining_storage <
         b.settings.total_storage - a.settings.remaining_storage
           ? 1
-          : -1
+          : -1,
       )
 
       // Filter out hosts without location data
@@ -61,7 +61,7 @@ export async function getGeoHosts(): Promise<SiaCentralPartialHost[]> {
 
       return hostsToDisplay.slice(0, maxHosts).map(transformHost)
     },
-    maxAge
+    maxAge,
   )
 }
 

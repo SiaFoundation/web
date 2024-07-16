@@ -1,5 +1,5 @@
-import { getMinutesInSeconds } from '../../lib/time'
 import { getNewsFeed } from '../../content/feed'
+import { getMinutesInSeconds } from '../../lib/time'
 
 const maxAge = getMinutesInSeconds(5)
 

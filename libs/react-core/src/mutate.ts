@@ -1,7 +1,11 @@
 'use client'
 
 import { useMemo } from 'react'
-import { mutate as swrMutate, MutatorCallback, MutatorOptions } from 'swr'
+import {
+  type MutatorCallback,
+  type MutatorOptions,
+  mutate as swrMutate,
+} from 'swr'
 import { getPathFromKey } from './request'
 import { useAppSettings } from './useAppSettings'
 
@@ -12,7 +16,7 @@ export function useMutate(args?: { api: string }) {
       function mutate<T>(
         matcher: (key: string) => boolean,
         data?: T | Promise<T> | MutatorCallback<T>,
-        opts?: boolean | MutatorOptions<T>
+        opts?: boolean | MutatorOptions<T>,
       ): Promise<(T | undefined)[]> {
         return swrMutate(
           (key) => {
@@ -23,9 +27,9 @@ export function useMutate(args?: { api: string }) {
             return matcher(route)
           },
           data,
-          opts
+          opts,
         )
       },
-    [settings, args]
+    [settings, args],
   )
 }

@@ -1,19 +1,19 @@
-import { Obj, SlabSlice } from '@siafoundation/renterd-types'
+import type { Obj, SlabSlice } from '@siafoundation/renterd-types'
 import { min } from '@technically/lodash'
-import { ContractData } from '../contexts/contracts/types'
+import type { ContractData } from '../contexts/contracts/types'
 
 export function getObjectHealth(
   obj: Obj,
-  contracts: ContractData[]
+  contracts: ContractData[],
 ): {
   slabs: SlabHealthStats[]
   health: number
 } {
-  const slabHealths = []
+  const slabHealths: SlabHealthStats[] = []
   obj.slabs?.forEach((sl, index) => {
     slabHealths.push(getSlabHealthStats(sl, contracts, String(index)))
   })
-  const health = min(slabHealths.map((s) => s.health))
+  const health = min(slabHealths.map((s) => s.health)) || 0
   return {
     health,
     slabs: slabHealths,
@@ -31,7 +31,7 @@ type SlabHealthStats = {
 function getSlabHealthStats(
   slabSlice: SlabSlice,
   contracts: ContractData[],
-  index: string
+  index: string,
 ): SlabHealthStats {
   const slab = slabSlice.slab
   let shardsWithContracts = 0
@@ -54,7 +54,7 @@ function getSlabHealthStats(
 export function computeSlabHealth(
   totalShards: number,
   minShards: number,
-  contractShards: number
+  contractShards: number,
 ) {
   if (contractShards >= totalShards) {
     return 1

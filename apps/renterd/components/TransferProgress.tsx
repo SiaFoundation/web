@@ -1,13 +1,13 @@
 import { ProgressBar, Text } from '@siafoundation/design-system'
-import { useMemo } from 'react'
 import { upperFirst } from '@technically/lodash'
+import { useMemo } from 'react'
 
-function getProgress(transfer: { loaded?: number; size?: number }) {
-  return transfer.loaded !== undefined ? transfer.loaded / transfer.size : 1
+function getProgress({ loaded, size = 0 }: { loaded?: number; size: number }) {
+  return loaded !== undefined ? loaded / size : 1
 }
 
 type Props = {
-  loaded: number
+  loaded?: number
   size: number
   status: string
 }

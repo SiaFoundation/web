@@ -1,15 +1,15 @@
 import {
-  ConfigFields,
+  type ConfigFields,
   Dialog,
   FieldSelect,
   FormSubmitButton,
   useDialogFormHelpers,
   useOnInvalid,
 } from '@siafoundation/design-system'
-import { useContracts } from '../../contexts/contracts'
-import { ContractData } from '../../contexts/contracts/types'
-import { useForm } from 'react-hook-form'
 import { useCallback } from 'react'
+import { useForm } from 'react-hook-form'
+import { useContracts } from '../../contexts/contracts'
+import type { ContractData } from '../../contexts/contracts/types'
 
 export function contractSetsIncludeFilter(contractSet: string) {
   return {
@@ -17,7 +17,7 @@ export function contractSetsIncludeFilter(contractSet: string) {
     value: contractSet,
     label: `contract in set ${contractSet}`,
     fn: (d: ContractData) => {
-      return d.contractSets?.includes(contractSet)
+      return !!d.contractSets?.includes(contractSet)
     },
   }
 }
@@ -80,10 +80,10 @@ export function ContractsFilterContractSetDialog({
 
   const onValid = useCallback(
     (values: Values) => {
-      setFilter(contractSetsIncludeFilter(values.contractSet))
+      setFilter(contractSetsIncludeFilter(values.contractSet!))
       closeAndReset()
     },
-    [setFilter, closeAndReset]
+    [setFilter, closeAndReset],
   )
 
   const onInvalid = useOnInvalid(fields)

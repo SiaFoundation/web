@@ -5,14 +5,14 @@ import {
   WalletLayoutActions,
 } from '@siafoundation/design-system'
 import { useWallet } from '@siafoundation/renterd-react'
-import { useDialog } from '../../contexts/dialog'
-import { routes } from '../../config/routes'
 import BigNumber from 'bignumber.js'
-import { RenterdSidenav } from '../RenterdSidenav'
-import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
-import { useSyncStatus } from '../../hooks/useSyncStatus'
-import { EmptyState } from './EmptyState'
+import { routes } from '../../config/routes'
+import { useDialog } from '../../contexts/dialog'
 import { useTransactions } from '../../contexts/transactions'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
+import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
+import { RenterdSidenav } from '../RenterdSidenav'
+import { EmptyState } from './EmptyState'
 import { WalletFilterBar } from './WalletFilterBar'
 
 export function Wallet() {

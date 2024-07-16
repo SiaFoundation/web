@@ -1,16 +1,20 @@
-import { useEffect, useMemo, useRef } from 'react'
-import { ConfigViewMode, defaultValues, getAdvancedDefaults } from './types'
-import { getRedundancyMultiplier } from './utils'
-import { useForm as useHookForm } from 'react-hook-form'
-import { useAverages } from './useAverages'
 import { useBusState } from '@siafoundation/renterd-react'
-import { getFields } from './fields'
-import { useApp } from '../app'
+import { useEffect, useMemo, useRef } from 'react'
+import { useForm as useHookForm } from 'react-hook-form'
 import useLocalStorageState from 'use-local-storage-state'
-import { useAutopilotEvaluations } from './useAutopilotEvaluations'
-import { useEstimates } from './useEstimates'
-import { Resources } from './resources'
+import { useApp } from '../app'
+import { getFields } from './fields'
+import type { Resources } from './resources'
+import {
+  type ConfigViewMode,
+  defaultValues,
+  getAdvancedDefaults,
+} from './types'
 import { useAutoCalculatedFields } from './useAutoCalculatedFields'
+import { useAutopilotEvaluations } from './useAutopilotEvaluations'
+import { useAverages } from './useAverages'
+import { useEstimates } from './useEstimates'
+import { getRedundancyMultiplier } from './utils'
 
 export function useForm({ resources }: { resources: Resources }) {
   const form = useHookForm({
@@ -28,7 +32,7 @@ export function useForm({ resources }: { resources: Resources }) {
   const totalShards = form.watch('totalShards')
   const redundancyMultiplier = useMemo(
     () => getRedundancyMultiplier(minShards, totalShards),
-    [minShards, totalShards]
+    [minShards, totalShards],
   )
 
   const {
@@ -48,9 +52,9 @@ export function useForm({ resources }: { resources: Resources }) {
 
   // Trigger input validation on configViewMode change because many field validation
   // objects switch from required to not required.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     form.trigger()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [configViewMode])
 
   const estimates = useEstimates({
@@ -97,6 +101,7 @@ export function useForm({ resources }: { resources: Resources }) {
       : undefined
     const recommendations = evaluation.recommendations.reduce((acc, rec) => {
       return {
+        // biome-ignore lint/performance/noAccumulatingSpread: <explanation>
         ...acc,
         [rec.key]: rec,
       }

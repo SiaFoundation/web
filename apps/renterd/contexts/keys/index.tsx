@@ -1,20 +1,20 @@
 import {
-  useTableState,
-  useDatasetEmptyState,
-  useClientFilters,
   useClientFilteredDataset,
+  useClientFilters,
+  useDatasetEmptyState,
+  useTableState,
 } from '@siafoundation/design-system'
+import { useSettingS3Authentication } from '@siafoundation/renterd-react'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useMemo } from 'react'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { type KeyCellContext, columns } from './columns'
 import {
-  KeyData,
+  type KeyData,
   columnsDefaultVisible,
   defaultSortField,
   sortOptions,
 } from './types'
-import { columns } from './columns'
-import { defaultDatasetRefreshInterval } from '../../config/swr'
-import { useSettingS3Authentication } from '@siafoundation/renterd-react'
 
 const defaultLimit = 50
 
@@ -85,19 +85,19 @@ function useKeysMain() {
   const filteredTableColumns = useMemo(
     () =>
       columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
+        (column) => column.fixed || enabledColumns.includes(column.id),
       ),
-    [enabledColumns]
+    [enabledColumns],
   )
 
   const dataState = useDatasetEmptyState(
     datasetFiltered,
     response.isValidating,
     response.error,
-    filters
+    filters,
   )
 
-  const cellContext = useMemo(() => ({}), [])
+  const cellContext: KeyCellContext = useMemo(() => ({}), [])
 
   return {
     dataState,

@@ -4,12 +4,12 @@ import {
   LinkButton,
 } from '@siafoundation/design-system'
 import { ArrowLeft16, ArrowRight16 } from '@siafoundation/react-icons'
-import { SiaCentralContract } from '@siafoundation/sia-central-types'
+import { to } from '@siafoundation/request'
+import type { SiaCentralContract } from '@siafoundation/sia-central-types'
 import { lowerCase } from '@technically/lodash'
 import { routes } from '../../config/routes'
-import { EntityHeading } from '../EntityHeading'
 import { siaCentral } from '../../config/siaCentral'
-import { to } from '@siafoundation/request'
+import { EntityHeading } from '../EntityHeading'
 
 type Props = {
   contract: SiaCentralContract
@@ -81,8 +81,8 @@ export async function ContractHeader({
                 latest.block.height || 0,
                 Math.round(
                   contract.proof_deadline +
-                    (contract.expiration_height - contract.negotiation_height)
-                )
+                    (contract.expiration_height - contract.negotiation_height),
+                ),
               ),
             }}
           />

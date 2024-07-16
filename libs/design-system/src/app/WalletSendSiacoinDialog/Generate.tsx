@@ -1,12 +1,12 @@
+import { toHastings } from '@siafoundation/units'
+import BigNumber from 'bignumber.js'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import BigNumber from 'bignumber.js'
-import { toHastings } from '@siafoundation/units'
-import { Text } from '../../core/Text'
+import { FormFieldFormik } from '../../components/FormFormik'
+import { ValueSc } from '../../components/ValueSc'
 import { InfoTip } from '../../core/InfoTip'
 import { Switch } from '../../core/Switch'
-import { ValueSc } from '../../components/ValueSc'
-import { FormFieldFormik } from '../../components/FormFormik'
+import { Text } from '../../core/Text'
 
 const exampleAddr =
   'e3b1050aef388438668b52983cf78f40925af8f0aa8b9de80c18eadcefce8388d168a313e3f2'
@@ -24,7 +24,7 @@ const validationSchema = Yup.object().shape({
     .test(
       'greater than zero',
       'Must be greater than zero',
-      (val) => !new BigNumber(val || 0).isZero()
+      (val) => !new BigNumber(val || 0).isZero(),
     ),
 })
 

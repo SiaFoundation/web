@@ -1,16 +1,16 @@
 import {
+  type HookArgsSwr,
   useAppSettings,
-  HookArgsSwr,
   useGetSwr,
 } from '@siafoundation/react-core'
 import {
+  type SiaCentralAddressParams,
+  type SiaCentralAddressResponse,
   defaultApi,
-  SiaCentralAddressParams,
-  SiaCentralAddressResponse,
 } from '@siafoundation/sia-central-types'
 
 export function useSiaCentralAddress(
-  args?: HookArgsSwr<SiaCentralAddressParams, SiaCentralAddressResponse>
+  args?: HookArgsSwr<SiaCentralAddressParams, SiaCentralAddressResponse>,
 ) {
   const { settings } = useAppSettings()
   return useGetSwr({

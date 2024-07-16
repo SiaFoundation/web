@@ -1,9 +1,9 @@
 import { AppSettingsProvider, CoreProvider } from '@siafoundation/react-core'
-import BigNumber from 'bignumber.js'
-import { NumberField } from './NumberField'
 import { fireEvent, render, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import BigNumber from 'bignumber.js'
 import { useState } from 'react'
+import { NumberField } from './NumberField'
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn().mockReturnValue({
@@ -108,7 +108,7 @@ describe('NumberField', () => {
         '4444.5',
         '4444.55',
       ],
-      onChange
+      onChange,
     )
   })
 
@@ -142,7 +142,7 @@ describe('NumberField', () => {
         '4444.5',
         '4444.55',
       ],
-      onChange
+      onChange,
     )
   })
 
@@ -176,7 +176,7 @@ describe('NumberField', () => {
         '0.12345',
         '0.123456',
       ],
-      onChange
+      onChange,
     )
   })
 })
@@ -191,7 +191,7 @@ function Component({
   return (
     <NumberField
       value={value}
-      onChange={(v) => setValue(v || new BigNumber(NaN))}
+      onChange={(v) => setValue(v || new BigNumber(Number.NaN))}
       {...props}
     />
   )
@@ -211,7 +211,7 @@ async function renderNode({
       <AppSettingsProvider>
         <Component initialValue={initialValue} {...props} />
       </AppSettingsProvider>
-    </CoreProvider>
+    </CoreProvider>,
   )
 
   const input = node.getByTestId('numberfield') as HTMLInputElement

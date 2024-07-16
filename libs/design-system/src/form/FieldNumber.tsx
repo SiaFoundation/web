@@ -1,13 +1,13 @@
-import { NumberField } from '../core/NumberField'
 import BigNumber from 'bignumber.js'
-import { FieldValues, Path, PathValue } from 'react-hook-form'
-import { FieldGroup } from '../components/Form'
-import { FieldProps, useRegisterForm } from './configurationFields'
 import { useMemo } from 'react'
+import type { FieldValues, Path, PathValue } from 'react-hook-form'
+import { FieldGroup } from '../components/Form'
+import { NumberField } from '../core/NumberField'
+import { type FieldProps, useRegisterForm } from './configurationFields'
 
 export function FieldNumber<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   name,
   form,
@@ -39,11 +39,11 @@ export function FieldNumber<
       _placeholder
         ? new BigNumber(_placeholder)
         : suggestion && typeof suggestion !== 'boolean'
-        ? new BigNumber(suggestion)
-        : average && typeof average !== 'boolean'
-        ? new BigNumber(average)
-        : undefined,
-    [_placeholder, suggestion, average]
+          ? new BigNumber(suggestion)
+          : average && typeof average !== 'boolean'
+            ? new BigNumber(average)
+            : undefined,
+    [_placeholder, suggestion, average],
   )
 
   const el = (
@@ -60,9 +60,9 @@ export function FieldNumber<
       state={
         error
           ? 'invalid'
-          : form.formState.dirtyFields[name]
-          ? 'valid'
-          : 'default'
+          : (form.formState.dirtyFields as Record<string, boolean>)[name]
+            ? 'valid'
+            : 'default'
       }
       onChange={(val) => {
         const v = val !== undefined ? new BigNumber(val) : undefined

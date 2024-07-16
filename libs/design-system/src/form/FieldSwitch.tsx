@@ -1,11 +1,11 @@
-import { FieldValues, Path, PathValue } from 'react-hook-form'
+import type { FieldValues, Path, PathValue } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
 import { Switch } from '../core/Switch'
-import { FieldProps, useRegisterForm } from './configurationFields'
+import { type FieldProps, useRegisterForm } from './configurationFields'
 
 export function FieldSwitch<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   name,
   form,
@@ -38,9 +38,9 @@ export function FieldSwitch<
         state={
           error
             ? 'invalid'
-            : form.formState.dirtyFields[name]
-            ? 'valid'
-            : 'default'
+            : (form.formState.dirtyFields as Record<string, boolean>)[name]
+              ? 'valid'
+              : 'default'
         }
         onCheckedChange={(val) => {
           setValue(val as PathValue<Values, Path<Values>>, true)

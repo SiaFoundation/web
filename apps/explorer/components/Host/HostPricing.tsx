@@ -6,8 +6,7 @@ import {
   CloudUpload16,
   VmdkDisk16,
 } from '@siafoundation/react-icons'
-import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
-import { useMemo } from 'react'
+import type { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 import {
   getDownloadCost,
   getDownloadSpeed,
@@ -17,8 +16,9 @@ import {
   getUploadCost,
   getUploadSpeed,
 } from '@siafoundation/units'
+import { useMemo } from 'react'
 import { useExchangeRate } from '../../hooks/useExchangeRate'
-import { SiaCentralHostScanned } from './types'
+import type { SiaCentralHostScanned } from './types'
 
 type Props = {
   host: SiaCentralHostScanned
@@ -29,17 +29,17 @@ export function HostPricing({ host, rates }: Props) {
   const exchange = useExchangeRate(rates)
   const storageCost = useMemo(
     () => getStorageCost({ price: host.settings.storage_price, exchange }),
-    [exchange, host]
+    [exchange, host],
   )
 
   const downloadCost = useMemo(
     () => getDownloadCost({ price: host.settings.download_price, exchange }),
-    [exchange, host]
+    [exchange, host],
   )
 
   const uploadCost = useMemo(
     () => getUploadCost({ price: host.settings.upload_price, exchange }),
-    [exchange, host]
+    [exchange, host],
   )
 
   const downloadSpeed = useMemo(() => getDownloadSpeed(host), [host])
@@ -48,7 +48,7 @@ export function HostPricing({ host, rates }: Props) {
 
   const remainingOverTotalStorage = useMemo(
     () => getRemainingOverTotalStorage(host),
-    [host]
+    [host],
   )
 
   const remainingStorage = useMemo(() => getRemainingStorage(host), [host])

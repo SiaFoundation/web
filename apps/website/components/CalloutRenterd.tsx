@@ -1,6 +1,6 @@
 import { routes } from '../config/routes'
+import { getAssetUrl, patterns } from '../content/assets'
 import { CalloutCoreSoftware } from './CalloutCoreSoftware'
-import { patterns, getAssetUrl } from '../content/assets'
 
 export function CalloutRenterd() {
   return (

@@ -1,9 +1,9 @@
-import { Table, Dropzone } from '@siafoundation/design-system'
+import { Dropzone, Table } from '@siafoundation/design-system'
 import { useFilesDirectory } from '../../contexts/filesDirectory'
-import { EmptyState } from './EmptyState'
-import { useCanUpload } from '../Files/useCanUpload'
-import { useFilesManager } from '../../contexts/filesManager'
 import { columns } from '../../contexts/filesDirectory/columns'
+import { useFilesManager } from '../../contexts/filesManager'
+import { useCanUpload } from '../Files/useCanUpload'
+import { EmptyState } from './EmptyState'
 
 export function FilesExplorer() {
   const {

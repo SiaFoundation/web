@@ -1,18 +1,18 @@
 import {
-  useTableState,
-  getContractsTimeRangeBlockHeight,
-  useDatasetEmptyState,
-  useClientFilters,
-  useClientFilteredDataset,
   daysInMilliseconds,
+  getContractsTimeRangeBlockHeight,
+  useClientFilteredDataset,
+  useClientFilters,
+  useDatasetEmptyState,
+  useTableState,
 } from '@siafoundation/design-system'
-import { useRouter } from 'next/router'
 import {
   useAutopilotConfig,
-  useContracts as useContractsData,
   useContractSets,
+  useContracts as useContractsData,
   useSettingContractSet,
 } from '@siafoundation/renterd-react'
+import { useRouter } from 'next/router'
 import {
   createContext,
   useCallback,
@@ -20,24 +20,24 @@ import {
   useMemo,
   useState,
 } from 'react'
+import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { useSiascanUrl } from '../../hooks/useSiascanUrl'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
+import { useAutopilot } from '../app/useAutopilot'
+import { columns } from './columns'
+import { useDataset } from './dataset'
 import {
-  ContractData,
-  ContractTableContext,
-  GraphMode,
-  ViewMode,
+  type ContractData,
+  type ContractTableContext,
+  type GraphMode,
+  type ViewMode,
   columnsDefaultVisible,
   defaultSortField,
   sortOptions,
 } from './types'
-import { columns } from './columns'
-import { useSyncStatus } from '../../hooks/useSyncStatus'
-import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { useContractMetrics } from './useContractMetrics'
 import { useContractSetMetrics } from './useContractSetMetrics'
-import { defaultDatasetRefreshInterval } from '../../config/swr'
-import { useDataset } from './dataset'
 import { useFilteredStats } from './useFilteredStats'
-import { useAutopilot } from '../app/useAutopilot'
 
 const defaultLimit = 50
 
@@ -71,7 +71,7 @@ function useContractsMain() {
       setViewMode('detail')
       setGraphMode('spending')
     },
-    [selectedContractId, setSelectedContractId, setViewMode]
+    [selectedContractId, setSelectedContractId, setViewMode],
   )
 
   const ap = useAutopilot()
@@ -94,7 +94,7 @@ function useContractsMain() {
 
   const selectedContract = useMemo(
     () => dataset?.find((d) => d.id === selectedContractId),
-    [dataset, selectedContractId]
+    [dataset, selectedContractId],
   )
 
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
@@ -136,22 +136,22 @@ function useContractsMain() {
 
   const { range: contractsTimeRange } = useMemo(
     () => getContractsTimeRangeBlockHeight(currentHeight, datasetPage || []),
-    [currentHeight, datasetPage]
+    [currentHeight, datasetPage],
   )
 
   const filteredTableColumns = useMemo(
     () =>
       columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
+        (column) => column.fixed || enabledColumns.includes(column.id),
       ),
-    [enabledColumns]
+    [enabledColumns],
   )
 
   const dataState = useDatasetEmptyState(
     datasetFiltered,
     response.isValidating,
     response.error,
-    filters
+    filters,
   )
 
   const siascanUrl = useSiascanUrl()

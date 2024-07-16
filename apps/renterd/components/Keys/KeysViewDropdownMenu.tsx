@@ -1,23 +1,23 @@
 import {
-  Button,
-  Select,
-  PoolCombo,
-  Label,
-  Popover,
-  MenuItemRightSlot,
   BaseMenuItem,
-  MenuSeparator,
+  Button,
+  Label,
+  MenuItemRightSlot,
   MenuSectionLabelToggleAll,
+  MenuSeparator,
   Option,
+  PoolCombo,
+  Popover,
+  Select,
 } from '@siafoundation/design-system'
 import {
   CaretDown16,
-  SettingsAdjust16,
   Reset16,
+  SettingsAdjust16,
 } from '@siafoundation/react-icons'
-import { sortOptions, SortField } from '../../contexts/keys/types'
 import { groupBy } from '@technically/lodash'
 import { useKeys } from '../../contexts/keys'
+import { type SortField, sortOptions } from '../../contexts/keys/types'
 
 export function KeysViewDropdownMenu() {
   const {
@@ -71,7 +71,7 @@ export function KeysViewDropdownMenu() {
                     </Option>
                   ))}
                 </optgroup>
-              )
+              ),
             )}
           </Select>
         </MenuItemRightSlot>

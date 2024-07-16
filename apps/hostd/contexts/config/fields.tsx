@@ -1,16 +1,16 @@
+import type { ConfigFields } from '@siafoundation/design-system'
+import { currencyOptions } from '@siafoundation/react-core'
+import type { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 /* eslint-disable react/no-unescaped-entities */
 import { blocksToMonths } from '@siafoundation/units'
-import { ConfigFields } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
+import { calculateMaxCollateral } from './transform'
 import {
-  ConfigViewMode,
-  SettingsData,
+  type ConfigViewMode,
+  type SettingsData,
   dnsProviderOptions,
   scDecimalPlaces,
 } from './types'
-import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
-import { calculateMaxCollateral } from './transform'
-import { currencyOptions } from '@siafoundation/react-core'
 
 type Categories = 'host' | 'pricing' | 'DNS' | 'bandwidth' | 'RHP3'
 
@@ -114,12 +114,12 @@ export function getFields({
             validationContext,
             (value) =>
               new BigNumber(value as BigNumber).lte(100) ||
-              `must be at most 100%`
+              `must be at most 100%`,
           ),
           min: requiredIfPinningEnabled(
             validationContext,
             (value) =>
-              new BigNumber(value as BigNumber).gte(0) || `must be at least 0%`
+              new BigNumber(value as BigNumber).gte(0) || `must be at least 0%`,
           ),
         },
       },
@@ -166,14 +166,14 @@ export function getFields({
           currency: requiredIfPinningEnabled(
             validationContext,
             (_, values) =>
-              !!values.pinnedCurrency || 'must select a pinned currency'
+              !!values.pinnedCurrency || 'must select a pinned currency',
           ),
           range: requiredIfPinningEnabled(
             validationContext,
             (value: BigNumber, values) =>
               !values.shouldPinStoragePrice ||
               value?.gt(0) ||
-              'storage price must be greater than 0'
+              'storage price must be greater than 0',
           ),
         },
       },
@@ -221,14 +221,14 @@ export function getFields({
           currency: requiredIfPinningEnabled(
             validationContext,
             (_, values) =>
-              !!values.pinnedCurrency || 'must select a pinned currency'
+              !!values.pinnedCurrency || 'must select a pinned currency',
           ),
           range: requiredIfPinningEnabled(
             validationContext,
             (value: BigNumber, values) =>
               !values.shouldPinEgressPrice ||
               value?.gt(0) ||
-              'egress price must be greater than 0'
+              'egress price must be greater than 0',
           ),
         },
       },
@@ -275,14 +275,14 @@ export function getFields({
           currency: requiredIfPinningEnabled(
             validationContext,
             (_, values) =>
-              !!values.pinnedCurrency || 'must select a pinned currency'
+              !!values.pinnedCurrency || 'must select a pinned currency',
           ),
           range: requiredIfPinningEnabled(
             validationContext,
             (value: BigNumber, values) =>
               !values.shouldPinIngressPrice ||
               value?.gt(0) ||
-              'ingress price must be greater than 0'
+              'ingress price must be greater than 0',
           ),
         },
       },
@@ -347,14 +347,14 @@ export function getFields({
           currency: requiredIfPinningEnabled(
             validationContext,
             (_, values) =>
-              !!values.pinnedCurrency || 'must select a pinned currency'
+              !!values.pinnedCurrency || 'must select a pinned currency',
           ),
           range: requiredIfPinningEnabled(
             validationContext,
             (value: BigNumber, values) =>
               !values.shouldPinMaxCollateral ||
               value?.gt(0) ||
-              'max collateral must be greater than 0'
+              'max collateral must be greater than 0',
           ),
         },
       },
@@ -632,11 +632,11 @@ export function getFields({
 
 function usdInScRoundedToNearestTen(
   usdAmount: number,
-  rates: SiaCentralExchangeRates
+  rates: SiaCentralExchangeRates,
 ) {
   return rates
     ? new BigNumber(
-        new BigNumber(usdAmount).div(rates.sc.usd).div(10).toFixed(0)
+        new BigNumber(usdAmount).div(rates.sc.usd).div(10).toFixed(0),
       ).times(10)
     : undefined
 }
@@ -645,7 +645,7 @@ function requiredIfPinningEnabled<Values>(
   context: {
     pinningEnabled: boolean
   },
-  method?: (value: unknown, values: Values) => string | boolean
+  method?: (value: unknown, values: Values) => string | boolean,
 ) {
   return (value: unknown, values: Values) => {
     if (context.pinningEnabled) {

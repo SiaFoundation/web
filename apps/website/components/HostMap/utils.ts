@@ -1,13 +1,13 @@
 import { countryCodeEmoji } from '@siafoundation/design-system'
-import BigNumber from 'bignumber.js'
-import { SiaCentralPartialHost } from '../../content/geoHosts'
 import {
-  monthsToBlocks,
   TBToBytes,
+  getDownloadSpeed,
   humanBytes,
   humanSiacoin,
-  getDownloadSpeed,
+  monthsToBlocks,
 } from '@siafoundation/units'
+import BigNumber from 'bignumber.js'
+import type { SiaCentralPartialHost } from '../../content/geoHosts'
 
 export function getHostLabel({
   host,
@@ -29,10 +29,10 @@ export function getHostLabel({
         new BigNumber(host.settings.storage_price)
           .times(TBToBytes(1))
           .times(monthsToBlocks(1)),
-        { fixed: 0 }
+        { fixed: 0 },
       )}/TB`
 
   return `${countryCodeEmoji(host.country_code)} · ${humanBytes(
-    host.settings.total_storage
+    host.settings.total_storage,
   )}${host.benchmark && ` · ${getDownloadSpeed(host)}`} · ${storageCost}`
 }

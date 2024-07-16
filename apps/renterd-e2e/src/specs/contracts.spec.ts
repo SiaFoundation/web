@@ -1,5 +1,4 @@
-import { test, expect } from '@playwright/test'
-import { navigateToContracts } from '../fixtures/navigate'
+import { expect, test } from '@playwright/test'
 import { beforeTest } from '../fixtures/beforeTest'
 import {
   getContractRowByIndex,
@@ -7,6 +6,7 @@ import {
   getContractsSummaryRow,
   toggleColumnVisibility,
 } from '../fixtures/contracts'
+import { navigateToContracts } from '../fixtures/navigate'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page)
@@ -55,7 +55,7 @@ test('contracts prunable size', async ({ page }) => {
     await expect(prunableSizes).toBeVisible()
     await expect(prunableSizes).toHaveAttribute(
       'aria-label',
-      /prunable|expiring/
+      /prunable|expiring/,
     )
   }
 })

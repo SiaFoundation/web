@@ -1,13 +1,13 @@
-import { Codeblock } from '../core/Codeblock'
-import { Text } from '../core/Text'
-import { ValueSc } from '../components/ValueSc'
+import type { Transaction } from '@siafoundation/types'
 import { humanDate } from '@siafoundation/units'
-import BigNumber from 'bignumber.js'
-import { Dialog } from '../core/Dialog'
-import { getTitleId } from '../lib/utils'
-import { Transaction } from '@siafoundation/types'
-import { getTxTypeLabel, TxType } from '../lib/entityTypes'
 import { upperFirst } from '@technically/lodash'
+import BigNumber from 'bignumber.js'
+import { ValueSc } from '../components/ValueSc'
+import { Codeblock } from '../core/Codeblock'
+import { Dialog } from '../core/Dialog'
+import { Text } from '../core/Text'
+import { type TxType, getTxTypeLabel } from '../lib/entityTypes'
+import { getTitleId } from '../lib/utils'
 
 type Props = {
   id: string
@@ -37,7 +37,7 @@ export function TransactionDetailsDialog({
           ? upperFirst(getTxTypeLabel(transaction.txType))
           : 'Transaction',
         id,
-        16
+        16,
       )}
       trigger={trigger}
       open={open}
@@ -71,8 +71,8 @@ export function TransactionDetailsDialog({
                     new BigNumber(
                       transaction?.raw.minerFees?.reduce(
                         (acc, val) => acc.plus(val),
-                        new BigNumber(0)
-                      ) || 0
+                        new BigNumber(0),
+                      ) || 0,
                     )
                   }
                 />

@@ -2,11 +2,11 @@
 
 import { useAppSettings } from '@siafoundation/react-core'
 import { useEffect, useState } from 'react'
-import { FieldValues, UseFormReturn } from 'react-hook-form'
+import type { FieldValues, UseFormReturn } from 'react-hook-form'
 
 type Props<DataForm extends FieldValues> = {
   form: UseFormReturn<DataForm>
-  remoteValues?: DataForm
+  remoteValues?: DataForm | null
 }
 
 // Initializes form when the remoteValues first become available
@@ -23,15 +23,14 @@ export function useFormInit<DataForm extends FieldValues>({
     if (!isUnlockedAndAuthedRoute) {
       setInit(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUnlockedAndAuthedRoute])
 
   // Reset form when needs init and the remoteValues become available.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!init && remoteValues) {
       setInit(true)
       form.reset(remoteValues)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [remoteValues])
 }

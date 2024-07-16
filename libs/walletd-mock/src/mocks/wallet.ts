@@ -1,20 +1,20 @@
-import { Page } from 'playwright'
-import {
+import type {
   Wallet,
   WalletAddressesResponse,
   WalletBalanceResponse,
   WalletFundSiacoinResponse,
   WalletOutputsSiacoinResponse,
 } from '@siafoundation/walletd-types'
-import { mockApiWalletBalance } from './walletBalance'
+import type { Page } from 'playwright'
 import { mockApiWalletAddresses } from './walletAddresses'
+import { mockApiWalletBalance } from './walletBalance'
 import { mockApiWalletEvents } from './walletEvents'
 import { mockApiWalletEventsUnconfirmed } from './walletEventsUnconfirmed'
+import { mockApiWalletFundSiacoin } from './walletFundSiacoin'
+import { mockApiWalletFundSiafund } from './walletFundSiafund'
 import { mockApiWalletOutputsSiacoin } from './walletOutputsSiacoin'
 import { mockApiWalletOutputsSiafund } from './walletOutputsSiafund'
-import { mockApiWalletFundSiacoin } from './walletFundSiacoin'
 import { mockApiWalletRelease } from './walletRelease'
-import { mockApiWalletFundSiafund } from './walletFundSiafund'
 
 export async function mockApiWallet({
   page,

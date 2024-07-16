@@ -1,8 +1,8 @@
-import axios from 'axios'
 import * as fs from 'fs'
 import * as path from 'path'
+import axios from 'axios'
 import { getAssetsDirectory } from '../assets'
-import { Asset, fetchAllAssets } from './assets'
+import { type Asset, fetchAllAssets } from './assets'
 
 export async function syncAssets() {
   const assets = await fetchAllAssets()
@@ -28,8 +28,8 @@ async function downloadFileAndSaveToContentDirectory(nf: Asset) {
       .pipe(
         fs.createWriteStream(
           path.join(imageDir, `${nf.name}.${nf.fileType}`),
-          {}
-        )
+          {},
+        ),
       )
       .on('error', (e: Error) => console.log(e))
   } catch (e) {

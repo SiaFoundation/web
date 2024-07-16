@@ -5,11 +5,11 @@ import {
   Li,
   Link,
   Ol,
-  panelStyles,
   Paragraph,
   SectionHeading,
   Text,
   Ul,
+  panelStyles,
 } from '@siafoundation/design-system'
 import { cx } from 'class-variance-authority'
 

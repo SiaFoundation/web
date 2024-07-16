@@ -1,22 +1,22 @@
-/* eslint-disable react/no-unescaped-entities */
-import BigNumber from 'bignumber.js'
-import { isValidAddress, toHastings } from '@siafoundation/units'
 import {
-  Text,
-  InfoTip,
-  ValueSc,
-  FieldSwitch,
-  ConfigFields,
-  FieldSiacoin,
-  FieldText,
+  type ConfigFields,
   FieldNumber,
   FieldSelect,
+  FieldSiacoin,
+  FieldSwitch,
+  FieldText,
+  InfoTip,
+  Text,
   Tooltip,
+  ValueSc,
 } from '@siafoundation/design-system'
-import { useForm } from 'react-hook-form'
-import { useCallback, useMemo } from 'react'
-import { SendParams } from './types'
 import { Information16 } from '@siafoundation/react-icons'
+import { isValidAddress, toHastings } from '@siafoundation/units'
+/* eslint-disable react/no-unescaped-entities */
+import BigNumber from 'bignumber.js'
+import { useCallback, useMemo } from 'react'
+import { useForm } from 'react-hook-form'
+import type { SendParams } from './types'
 
 const exampleAddr =
   'e3b1050aef388438668b52983cf78f40925af8f0aa8b9de80c18eadcefce8388d168a313e3f2'
@@ -259,12 +259,12 @@ export function useComposeForm({
         siafund,
       })
     },
-    [onComplete, defaultChangeAddress, defaultClaimAddress]
+    [onComplete, defaultChangeAddress, defaultClaimAddress],
   )
 
   const handleSubmit = useMemo(
     () => form.handleSubmit(onValid),
-    [form, onValid]
+    [form, onValid],
   )
 
   const siacoin = form.watch('siacoin')

@@ -1,9 +1,9 @@
-import dotenv from 'dotenv'
 import {
   generateRssFeed,
   syncAssets,
   syncFeedsToNotion,
 } from '@siafoundation/data-sources'
+import dotenv from 'dotenv'
 import cron from 'node-cron'
 
 dotenv.config()

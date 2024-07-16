@@ -1,9 +1,9 @@
 import {
-  Paragraph,
-  ConfigFields,
-  FieldSelect,
-  Text,
   Button,
+  type ConfigFields,
+  FieldSelect,
+  Paragraph,
+  Text,
   ValueCopyable,
 } from '@siafoundation/design-system'
 import { Password16 } from '@siafoundation/react-icons'
@@ -12,8 +12,8 @@ import { useForm } from 'react-hook-form'
 import useSWR from 'swr'
 import { useLedger } from '../../contexts/ledger'
 import {
+  type TransportType,
   getSupportedTransports,
-  TransportType,
 } from '../../contexts/ledger/types'
 import { LedgerLayout } from './LedgerLayout'
 
@@ -61,21 +61,21 @@ export function DeviceConnectForm({
     () => getSupportedTransports(),
     {
       revalidateOnFocus: false,
-    }
+    },
   )
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (supportedTransports.data) {
       form.setValue('transportType', supportedTransports.data[0])
       if (supportedTransports.data.length === 0) {
         setError(
           new Error(
-            'This browser does not support connecting to Ledger devices, please use a different browser.'
-          )
+            'This browser does not support connecting to Ledger devices, please use a different browser.',
+          ),
         )
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [supportedTransports.data])
 
   const fields = getFields({

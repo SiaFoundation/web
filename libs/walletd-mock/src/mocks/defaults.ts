@@ -1,15 +1,15 @@
-import { Page } from 'playwright'
 import { mockApiSiaCentralExchangeRates } from '@siafoundation/sia-central-mock'
-import { mockApiSyncerPeers } from './peers'
+import type { RescanResponse } from '@siafoundation/walletd-types'
+import type { Page } from 'playwright'
+import { mockApiConsensusNetwork } from './consensusNetwork'
 import { mockApiConsensusTip } from './consensusTip'
 import { mockApiConsensusTipState } from './consensusTipState'
-import { mockApiConsensusNetwork } from './consensusNetwork'
-import { mockApiWallets } from './wallets'
+import { mockApiSyncerPeers } from './peers'
+import { mockApiRescan } from './rescan'
+import { mockApiState } from './state'
 import { mockApiTxPoolBroadcast } from './txPoolBroadcast'
 import { mockApiWallet } from './wallet'
-import { mockApiRescan } from './rescan'
-import { RescanResponse } from '@siafoundation/walletd-types'
-import { mockApiState } from './state'
+import { mockApiWallets } from './wallets'
 
 type Responses = {
   rescan?: RescanResponse

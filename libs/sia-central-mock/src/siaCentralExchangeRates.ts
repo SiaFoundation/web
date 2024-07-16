@@ -1,5 +1,5 @@
-import { SiaCentralExchangeRatesResponse } from '@siafoundation/sia-central-types'
-import { Page } from 'playwright'
+import type { SiaCentralExchangeRatesResponse } from '@siafoundation/sia-central-types'
+import type { Page } from 'playwright'
 
 export function getMockSiaCentralExchangeRatesResponse(): SiaCentralExchangeRatesResponse {
   return {
@@ -33,7 +33,7 @@ export async function mockApiSiaCentralExchangeRates({ page }: { page: Page }) {
     'https://api.siacentral.com/v2/market/exchange-rate?currencies=sc',
     async (route) => {
       await route.fulfill({ json })
-    }
+    },
   )
   return json
 }

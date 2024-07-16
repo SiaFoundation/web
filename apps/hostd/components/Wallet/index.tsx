@@ -1,18 +1,18 @@
 import {
-  EntityList,
-  WalletLayoutActions,
   BalanceEvolution,
+  EntityList,
   PaginatorUnknownTotal,
+  WalletLayoutActions,
 } from '@siafoundation/design-system'
 import { useWallet } from '@siafoundation/hostd-react'
-import { useDialog } from '../../contexts/dialog'
-import { routes } from '../../config/routes'
 import BigNumber from 'bignumber.js'
-import { HostdSidenav } from '../HostdSidenav'
-import { HostdAuthedLayout } from '../HostdAuthedLayout'
-import { useSyncStatus } from '../../hooks/useSyncStatus'
-import { EmptyState } from './EmptyState'
+import { routes } from '../../config/routes'
+import { useDialog } from '../../contexts/dialog'
 import { useTransactions } from '../../contexts/transactions'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
+import { HostdAuthedLayout } from '../HostdAuthedLayout'
+import { HostdSidenav } from '../HostdSidenav'
+import { EmptyState } from './EmptyState'
 import { WalletFilterBar } from './WalletFilterBar'
 
 export function Wallet() {

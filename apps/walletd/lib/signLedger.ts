@@ -1,12 +1,12 @@
-import {
+import { getSDK } from '@siafoundation/sdk'
+import type {
   SiacoinElement,
   SiafundElement,
   Transaction,
 } from '@siafoundation/types'
-import { AddressData } from '../contexts/addresses/types'
-import { LedgerDevice } from '../contexts/ledger/types'
+import type { AddressData } from '../contexts/addresses/types'
+import type { LedgerDevice } from '../contexts/ledger/types'
 import { addUnlockConditionsAndSignatures, getToSignMetadata } from './sign'
-import { getSDK } from '@siafoundation/sdk'
 
 export async function signTransactionLedger({
   device,
@@ -102,14 +102,14 @@ async function signTransactionIndex({
       signature = await device.sia.signTransactionV044(
         encodedTransactionBuffer,
         signatureIndex,
-        keyIndex
+        keyIndex,
       )
     } else {
       signature = await device.sia.signTransaction(
         encodedTransactionBuffer,
         signatureIndex,
         keyIndex,
-        0
+        0,
       )
     }
   } catch (e) {
@@ -133,9 +133,9 @@ function versionCmp(a, b) {
     let as = 0,
       bs = 0
 
-    if (i < aPieces.length) as = parseInt(aPieces[i], 10)
+    if (i < aPieces.length) as = Number.parseInt(aPieces[i], 10)
 
-    if (i < bPieces.length) bs = parseInt(bPieces[i], 10)
+    if (i < bPieces.length) bs = Number.parseInt(bPieces[i], 10)
 
     if (isNaN(as)) as = 0
 

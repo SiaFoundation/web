@@ -4,10 +4,10 @@ import {
   triggerSuccessToast,
 } from '@siafoundation/design-system'
 import { Delete16 } from '@siafoundation/react-icons'
-import { useDialog } from '../../contexts/dialog'
-import { useCallback } from 'react'
 import { useObjectDelete } from '@siafoundation/renterd-react'
 import { humanBytes } from '@siafoundation/units'
+import { useCallback } from 'react'
+import { useDialog } from '../../contexts/dialog'
 import { bucketAndKeyParamsFromPath } from '../../lib/paths'
 
 export function useDirectoryDelete() {
@@ -50,6 +50,6 @@ export function useDirectoryDelete() {
           triggerSuccessToast({ title: 'Deleted directory' })
         },
       }),
-    [openConfirmDialog, deleteObject]
+    [openConfirmDialog, deleteObject],
   )
 }

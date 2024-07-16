@@ -1,6 +1,6 @@
-import { useMemo } from 'react'
 import { random, sortBy } from '@technically/lodash'
-import { HostDataWithLocation } from '../../../contexts/hosts/types'
+import { useMemo } from 'react'
+import type { HostDataWithLocation } from '../../../contexts/hosts/types'
 
 type Props = {
   activeHost?: HostDataWithLocation
@@ -27,11 +27,11 @@ export function useDecRoutes({ activeHost, hosts }: Props) {
           continue
         }
         const host2 = hosts[j]
-        const distance = distanceBetweenHosts(host1, host2)
+        const distance = distanceBetweenHosts(host1!, host2!)
         hostRoutes.push({
           distance,
-          src: host1,
-          dst: host2,
+          src: host1!,
+          dst: host2!,
         })
       }
       hostRoutes = sortBy(hostRoutes, 'distance')
@@ -43,10 +43,10 @@ export function useDecRoutes({ activeHost, hosts }: Props) {
         const randomDistantIndex = random(
           // Math.round((hostRoutes.length - 1) / 2),
           0,
-          hostRoutes.length - 1
+          hostRoutes.length - 1,
         )
         const extra = hostRoutes[randomDistantIndex]
-        routes.push(extra)
+        routes.push(extra!)
       }
     }
     return routes
@@ -59,14 +59,14 @@ export function useDecRoutes({ activeHost, hosts }: Props) {
     }
     for (let i = 0; i < hosts.length; i++) {
       const host = hosts[i]
-      if (activeHost.publicKey === host.publicKey) {
+      if (activeHost.publicKey === host!.publicKey) {
         continue
       }
-      const distance = distanceBetweenHosts(activeHost, host)
+      const distance = distanceBetweenHosts(activeHost, host!)
       routes.push({
         distance,
         src: activeHost,
-        dst: host,
+        dst: host!,
       })
     }
     routes = sortBy(routes, 'distance')
@@ -75,7 +75,7 @@ export function useDecRoutes({ activeHost, hosts }: Props) {
 
   const routes = useMemo(
     () => [...backgroundRoutes, ...activeRoutes],
-    [backgroundRoutes, activeRoutes]
+    [backgroundRoutes, activeRoutes],
   )
 
   return routes
@@ -83,10 +83,10 @@ export function useDecRoutes({ activeHost, hosts }: Props) {
 
 function distanceBetweenHosts(
   h1: HostDataWithLocation,
-  h2: HostDataWithLocation
+  h2: HostDataWithLocation,
 ) {
   return Math.sqrt(
     Math.pow(h1.location[0] - h2.location[0], 2) +
-      Math.pow(h1.location[1] - h2.location[1], 2)
+      Math.pow(h1.location[1] - h2.location[1], 2),
   )
 }

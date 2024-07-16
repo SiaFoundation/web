@@ -1,6 +1,6 @@
 import { hoursInMilliseconds } from '@siafoundation/design-system'
 import { useAppSettings } from '@siafoundation/react-core'
-import { ConsensusState } from '@siafoundation/types'
+import type { ConsensusState } from '@siafoundation/types'
 import {
   useConsensusTip,
   useConsensusTipState,
@@ -31,7 +31,9 @@ export function useSyncStatus() {
   const syncPercent =
     isUnlockedAndAuthedRoute && nodeBlockHeight && estimatedBlockHeight
       ? Number(
-          (Math.min(nodeBlockHeight / estimatedBlockHeight, 1) * 100).toFixed(1)
+          (Math.min(nodeBlockHeight / estimatedBlockHeight, 1) * 100).toFixed(
+            1,
+          ),
         )
       : 0
 

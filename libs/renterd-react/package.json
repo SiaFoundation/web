@@ -1,13 +1,34 @@
 {
   "name": "@siafoundation/renterd-react",
-  "description": "React hooks for interacting with `renterd`.",
   "version": "4.3.0",
+  "description": "React hooks for interacting with `renterd`.",
   "license": "MIT",
-  "dependencies": {
-    "@technically/lodash": "^4.17.0",
-    "@siafoundation/react-core": "^1.2.1",
-    "swr": "^2.1.1",
-    "@siafoundation/renterd-types": "0.3.0"
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "run-p bundle type:gen",
+    "build:dev": "run-p bundle:watch type:gen:watch",
+    "bundle": "tsup src/index.ts --format esm",
+    "clean": "del dist tsconfig.tsbuildinfo",
+    "coverage": "vitest run --coverage ",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest",
+    "type:check": "tsc --noEmit",
+    "type:gen": "tsc --emitDeclarationOnly"
   },
-  "types": "./src/index.d.ts"
+  "dependencies": {
+    "@siafoundation/react-core": "^1.2.1",
+    "@siafoundation/renterd-types": "0.3.0",
+    "@siafoundation/types": "^0.4.0",
+    "@technically/lodash": "^4.17.0",
+    "swr": "^2.1.1"
+  },
+  "devDependencies": {
+    "@siafoundation/typescript-config": "^0.0.0",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "@swc/core": "^1.6.13",
+    "del-cli": "^5.1.0",
+    "tsup": "^8.1.0"
+  }
 }

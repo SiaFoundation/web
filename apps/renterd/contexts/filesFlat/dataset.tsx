@@ -1,11 +1,11 @@
-import { ObjectListPayload } from '@siafoundation/renterd-types'
 import { useObjectList } from '@siafoundation/renterd-react'
-import { SortField } from '../filesManager/types'
-import { useDataset as useDatasetGeneric } from '../filesManager/dataset'
+import type { ObjectListPayload } from '@siafoundation/renterd-types'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
-import { useFilesManager } from '../filesManager'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { useFilesManager } from '../filesManager'
+import { useDataset as useDatasetGeneric } from '../filesManager/dataset'
+import type { SortField } from '../filesManager/types'
 
 type Props = {
   sortDirection: 'asc' | 'desc'
@@ -22,7 +22,7 @@ export function useDataset({ sortDirection, sortField }: Props) {
 
   const params = useMemo(() => {
     const p: ObjectListPayload = {
-      bucket: activeBucketName,
+      bucket: activeBucketName!,
       sortBy: sortField,
       sortDir: sortDirection,
       marker,
@@ -58,7 +58,7 @@ export function useDataset({ sortDirection, sortField }: Props) {
       isValidating: response.isValidating,
       data: response.data?.objects,
     }),
-    [response.isValidating, response.data]
+    [response.isValidating, response.data],
   )
 
   const d = useDatasetGeneric({

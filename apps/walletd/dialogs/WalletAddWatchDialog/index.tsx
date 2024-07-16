@@ -1,21 +1,21 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
-  Paragraph,
   Button,
+  type ConfigFields,
   Dialog,
-  ConfigFields,
   FieldText,
-  triggerErrorToast,
-  FormSubmitButton,
   FieldTextArea,
+  FormSubmitButton,
+  Paragraph,
+  triggerErrorToast,
 } from '@siafoundation/design-system'
+import { useWalletAdd } from '@siafoundation/walletd-react'
+import type { WalletMetadata } from '@siafoundation/walletd-types'
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
-import { WalletMetadata } from '@siafoundation/walletd-types'
-import { useWalletAdd } from '@siafoundation/walletd-react'
+import { walletAddTypes } from '../../config/walletTypes'
 import { useDialog } from '../../contexts/dialog'
 import { useWallets } from '../../contexts/wallets'
-import { walletAddTypes } from '../../config/walletTypes'
 
 const defaultValues = {
   name: '',
@@ -100,7 +100,7 @@ export function WalletAddWatchDialog({ trigger, open, onOpenChange }: Props) {
         form.reset(defaultValues)
       }
     },
-    [form, openDialog, walletAdd]
+    [form, openDialog, walletAdd],
   )
 
   return (

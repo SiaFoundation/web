@@ -1,10 +1,10 @@
 import { triggerErrorToast } from '@siafoundation/design-system'
 import { delay } from '@siafoundation/react-core'
-import {
+import type {
   useMultipartUploadAbort,
-  useMultipartUploadPart,
   useMultipartUploadComplete,
   useMultipartUploadCreate,
+  useMultipartUploadPart,
 } from '@siafoundation/renterd-react'
 
 type ApiWorkerUploadPart = ReturnType<typeof useMultipartUploadPart>
@@ -60,12 +60,12 @@ export class MultipartUpload {
   #onComplete: () => void
 
   // state
-  #resolve: () => void
+  #resolve: (() => void) | undefined
   #progressCache: Record<number, number>
   #activeConnections: Record<number, AbortController>
   #pendingPartNumbers: number[]
   #uploadedParts: UploadedPart[]
-  #uploadId: string
+  #uploadId?: string | null
   #aborted: boolean
   // error retry backoff
   #initialDelay = 500 // 1/2 second
@@ -108,9 +108,9 @@ export class MultipartUpload {
     const partCount = Math.ceil(this.#file.size / this.#partSize)
     this.#pendingPartNumbers = Array.from(
       { length: partCount },
-      (_, i) => i + 1
+      (_, i) => i + 1,
     )
-    return this.#uploadId
+    return this.#uploadId!
   }
 
   public async start() {
@@ -126,7 +126,7 @@ export class MultipartUpload {
     Object.keys(this.#activeConnections)
       .map(Number)
       .forEach((id) => {
-        this.#activeConnections[id].abort()
+        this.#activeConnections[id]?.abort()
       })
 
     try {
@@ -134,11 +134,14 @@ export class MultipartUpload {
         payload: {
           bucket: this.#bucket,
           path: this.#path,
-          uploadID: this.#uploadId,
+          uploadID: this.#uploadId!,
         },
       })
     } catch (e) {
-      triggerErrorToast({ title: 'Error aborting upload', body: e.message })
+      triggerErrorToast({
+        title: 'Error aborting upload',
+        body: (e as Error).message,
+      })
     }
     this.#resolve?.()
   }
@@ -148,7 +151,7 @@ export class MultipartUpload {
       sent: number
       total: number
       percentage: number
-    }) => void
+    }) => void,
   ) {
     this.#onProgress = onProgress
   }
@@ -180,7 +183,7 @@ export class MultipartUpload {
       return
     }
 
-    const partNumber = this.#pendingPartNumbers.pop()
+    const partNumber = this.#pendingPartNumbers.pop()!
     const partIndex = partNumber - 1
     const partOffset = partIndex * this.#partSize
     const partData = this.#file.slice(partOffset, partOffset + this.#partSize)
@@ -236,7 +239,7 @@ export class MultipartUpload {
       const payload = {
         bucket: this.#bucket,
         path: this.#path,
-        uploadID: this.#uploadId,
+        uploadID: this.#uploadId!,
         parts: this.#uploadedParts.sort((a, b) => a.partNumber - b.partNumber),
       }
       await this.#api.busUploadComplete.post({
@@ -244,9 +247,9 @@ export class MultipartUpload {
       })
       this.#onComplete()
     } catch (error) {
-      this.#onError(error)
+      this.#onError(error as Error)
     }
-    this.#resolve()
+    this.#resolve?.()
   }
 
   #handleProgress(partNumber: number, event: ProgressEvent) {
@@ -254,7 +257,7 @@ export class MultipartUpload {
 
     const progressTotal = Object.keys(this.#progressCache)
       .map(Number)
-      .reduce((acc, id) => (acc += this.#progressCache[id]), 0)
+      .reduce((acc, id) => (acc += this.#progressCache[id]!), 0)
 
     const sent = Math.min(progressTotal, this.#file.size)
     const total = this.#file.size
@@ -272,7 +275,7 @@ export class MultipartUpload {
     partNumber: number,
     partData: Blob,
     partOffset: number,
-    afterConnectionIsAdded: () => void
+    afterConnectionIsAdded: () => void,
   ): Promise<void> {
     const controller = new AbortController()
     this.#activeConnections[partNumber] = controller
@@ -282,7 +285,7 @@ export class MultipartUpload {
         params: {
           key: this.#path.slice(1),
           bucket: this.#bucket,
-          uploadid: this.#uploadId,
+          uploadid: this.#uploadId!,
           offset: partOffset,
           partnumber: partNumber,
         },
@@ -303,7 +306,7 @@ export class MultipartUpload {
         throw new Error(response.error)
       }
 
-      const eTag = response.headers['etag']
+      const eTag = response.headers!['etag']
       if (!eTag) {
         throw new ErrorNoETag()
       }
@@ -316,7 +319,6 @@ export class MultipartUpload {
 
       this.#uploadedParts.push(uploadedPart)
     } finally {
-      this.#activeConnections[partNumber] = null
       delete this.#activeConnections[partNumber]
     }
   }

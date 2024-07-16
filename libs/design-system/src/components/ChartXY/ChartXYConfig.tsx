@@ -1,11 +1,11 @@
-import { Radio, RadioGroup } from '../../core/Radio'
-import { Text } from '../../core/Text'
-import { ChartXYProps } from './useChartXY'
-import { ChartType, CurveType, StackOffset } from './types'
-import { InfoTip } from '../../core/InfoTip'
-import { Dialog } from '../../core/Dialog'
 import { Settings16 } from '@siafoundation/react-icons'
 import { Button } from '../../core/Button'
+import { Dialog } from '../../core/Dialog'
+import { InfoTip } from '../../core/InfoTip'
+import { Radio, RadioGroup } from '../../core/Radio'
+import { Text } from '../../core/Text'
+import type { ChartType, CurveType, StackOffset } from './types'
+import type { ChartXYProps } from './useChartXY'
 
 export function ChartXYConfig<Key extends string, Cat extends string>({
   initialChartType,

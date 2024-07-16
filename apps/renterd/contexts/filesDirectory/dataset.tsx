@@ -1,11 +1,11 @@
-import { ObjectDirectoryParams } from '@siafoundation/renterd-types'
 import { useObjectDirectory } from '@siafoundation/renterd-react'
-import { useDataset as useDatasetGeneric } from '../filesManager/dataset'
-import { bucketAndKeyParamsFromPath } from '../../lib/paths'
+import type { ObjectDirectoryParams } from '@siafoundation/renterd-types'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
-import { useFilesManager } from '../filesManager'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { bucketAndKeyParamsFromPath } from '../../lib/paths'
+import { useFilesManager } from '../filesManager'
+import { useDataset as useDatasetGeneric } from '../filesManager/dataset'
 
 const defaultLimit = 50
 
@@ -59,7 +59,7 @@ export function useDataset() {
       isValidating: response.isValidating,
       data: response.data?.entries,
     }),
-    [response.isValidating, response.data?.entries]
+    [response.isValidating, response.data?.entries],
   )
 
   const d = useDatasetGeneric({

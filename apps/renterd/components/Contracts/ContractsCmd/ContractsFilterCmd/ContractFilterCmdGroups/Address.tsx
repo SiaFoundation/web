@@ -1,10 +1,10 @@
+import { useDialog } from '../../../../../contexts/dialog'
 import {
   CommandGroup,
   CommandItemNav,
   CommandItemSearch,
 } from '../../../../CmdRoot/Item'
-import { Page } from '../../../../CmdRoot/types'
-import { useDialog } from '../../../../../contexts/dialog'
+import type { Page } from '../../../../CmdRoot/types'
 import { addressContainsFilter } from '../../../ContractsFilterAddressDialog'
 
 export const contractsFilterAddressPage = {
@@ -16,7 +16,7 @@ export function AddressCmdGroup({
   select,
   currentPage,
 }: {
-  currentPage: Page
+  currentPage?: Page
   select: () => void
 }) {
   const { openDialog } = useDialog()
@@ -46,8 +46,8 @@ export function AddressCmdNav({
   parentPage,
   commandPage,
 }: {
-  currentPage: Page
-  parentPage: Page
+  currentPage?: Page
+  parentPage?: Page
   commandPage: Page
   select: () => void
 }) {

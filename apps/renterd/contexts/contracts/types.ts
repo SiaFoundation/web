@@ -1,6 +1,6 @@
-import { ContractState } from '@siafoundation/renterd-types'
-import BigNumber from 'bignumber.js'
-import { useFilteredStats } from './useFilteredStats'
+import type { ContractState } from '@siafoundation/renterd-types'
+import type BigNumber from 'bignumber.js'
+import type { useFilteredStats } from './useFilteredStats'
 
 export type ContractTableContext = {
   currentHeight: number

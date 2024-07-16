@@ -1,42 +1,26 @@
-import React, { createContext, useContext } from 'react'
 import {
-  Chart,
+  type Chart,
+  ValueScFiat,
   computeChartStats,
   formatChartData,
   getDataIntervalLabelFormatter,
   getTimeRange,
   secondsInMilliseconds,
-  ValueScFiat,
 } from '@siafoundation/design-system'
+import { useMetricsPeriod } from '@siafoundation/hostd-react'
 import {
   MiBToBytes,
   humanBytes,
   humanNumber,
   humanSiacoin,
 } from '@siafoundation/units'
-import { useCallback, useMemo } from 'react'
-import { chartConfigs } from '../../config/charts'
-import { useMetricsPeriod } from '@siafoundation/hostd-react'
-import { configCategoryPattern, configCategoryLabel } from './utils'
 import BigNumber from 'bignumber.js'
-import {
-  DataInterval,
-  DataTimeSpan,
-  dataTimeSpanOptions,
-  BandwidthKeys,
-  ContractsKeys,
-  PricingKeys,
-  RevenueKeys,
-  StorageKeys,
-  BandwidthCategories,
-  StorageCategories,
-  RevenueCategories,
-  OperationsKeys,
-  getDataIntervalInMs,
-  CollateralKeys,
-  CollateralCategories,
-} from './types'
 import { formatISO } from 'date-fns'
+import type React from 'react'
+import { createContext, useContext } from 'react'
+import { useCallback, useMemo } from 'react'
+import useLocalStorageState from 'use-local-storage-state'
+import { chartConfigs } from '../../config/charts'
 import {
   humanBaseRpcPrice,
   humanCollateralPrice,
@@ -45,8 +29,25 @@ import {
   humanSectorAccessPrice,
   humanStoragePrice,
 } from '../../lib/humanUnits'
-import useLocalStorageState from 'use-local-storage-state'
+import {
+  type BandwidthCategories,
+  type BandwidthKeys,
+  type CollateralCategories,
+  type CollateralKeys,
+  type ContractsKeys,
+  type DataInterval,
+  type DataTimeSpan,
+  type OperationsKeys,
+  type PricingKeys,
+  type RevenueCategories,
+  type RevenueKeys,
+  type StorageCategories,
+  type StorageKeys,
+  dataTimeSpanOptions,
+  getDataIntervalInMs,
+} from './types'
 import { useNowAtInterval } from './useNowAtInterval'
+import { configCategoryLabel, configCategoryPattern } from './utils'
 
 type TimeRange = {
   start: number
@@ -70,13 +71,13 @@ function useMetricsMain() {
     'v0/metrics/dataTimeSpan',
     {
       defaultValue: defaultTimeSpan.value,
-    }
+    },
   )
   const [dataInterval, setDataInterval] = useLocalStorageState<DataInterval>(
     'v0/metrics/dataInterval',
     {
       defaultValue: defaultTimeSpan.interval,
-    }
+    },
   )
 
   // reset the time range every interval to keep the graph up to date
@@ -84,7 +85,7 @@ function useMetricsMain() {
 
   const timeRange = useMemo<TimeRange>(
     () => getTimeRange(dataTimeSpan, now),
-    [dataTimeSpan, now]
+    [dataTimeSpan, now],
   )
 
   const setDataTimeSpan = useCallback(
@@ -93,12 +94,12 @@ function useMetricsMain() {
       setDataInterval(option.interval)
       _setDataTimeSpan(option.value)
     },
-    [_setDataTimeSpan, setDataInterval]
+    [_setDataTimeSpan, setDataInterval],
   )
 
   const formatTimestamp = useMemo(
     () => getDataIntervalLabelFormatter(dataInterval),
-    [dataInterval]
+    [dataInterval],
   )
 
   const metricsPeriod = useMetricsPeriod({
@@ -107,7 +108,7 @@ function useMetricsMain() {
       // subtract 1 data interval so that one previous datum is available for
       // calculating the first delta
       start: formatISO(
-        new Date(timeRange.start - getDataIntervalInMs(dataInterval))
+        new Date(timeRange.start - getDataIntervalInMs(dataInterval)),
       ),
       // periods: getPeriods(timeRange, dataInterval),
     },
@@ -143,7 +144,7 @@ function useMetricsMain() {
           .toNumber(),
         timestamp: new Date(m.timestamp).getTime(),
       })),
-      'delta'
+      'delta',
     )
     const stats = computeChartStats(dataWithNegatives)
     const dataWithoutNegatives = dataWithNegatives.map((m) => ({
@@ -186,68 +187,68 @@ function useMetricsMain() {
           storagePotential: configCategoryPattern<RevenueCategories>(
             chartConfigs.storage,
             'potential',
-            true
+            true,
           ),
           ingressPotential: configCategoryPattern<RevenueCategories>(
             chartConfigs.ingress,
             'potential',
-            true
+            true,
           ),
           egressPotential: configCategoryPattern<RevenueCategories>(
             chartConfigs.egress,
             'potential',
-            true
+            true,
           ),
           registryReadPotential: configCategoryPattern<RevenueCategories>(
             chartConfigs.registryReads,
             'potential',
-            true
+            true,
           ),
           registryWritePotential: configCategoryPattern<RevenueCategories>(
             chartConfigs.registryWrites,
             'potential',
-            true
+            true,
           ),
           rpcPotential: configCategoryPattern<RevenueCategories>(
             chartConfigs.rpc,
             'potential',
-            true
+            true,
           ),
 
           storage: configCategoryPattern<RevenueCategories>(
             chartConfigs.storage,
-            'earned'
+            'earned',
           ),
           ingress: configCategoryPattern<RevenueCategories>(
             chartConfigs.ingress,
-            'earned'
+            'earned',
           ),
           egress: configCategoryPattern<RevenueCategories>(
             chartConfigs.egress,
-            'earned'
+            'earned',
           ),
           registryRead: configCategoryPattern<RevenueCategories>(
             chartConfigs.registryReads,
-            'earned'
+            'earned',
           ),
           registryWrite: configCategoryPattern<RevenueCategories>(
             chartConfigs.registryWrites,
-            'earned'
+            'earned',
           ),
           rpc: configCategoryPattern<RevenueCategories>(
             chartConfigs.rpc,
-            'earned'
+            'earned',
           ),
           earned: configCategoryLabel<RevenueCategories>({}, 'earned', 'total'),
           potential: configCategoryLabel<RevenueCategories>(
             {},
             'potential',
-            'total'
+            'total',
           ),
         },
-        formatComponent: function ({ value }) {
-          return <ValueScFiat variant="value" value={new BigNumber(value)} />
-        },
+        formatComponent: ({ value }) => (
+          <ValueScFiat variant="value" value={new BigNumber(value)} />
+        ),
         formatTickY: (v) =>
           humanSiacoin(v, {
             fixed: 0,
@@ -273,7 +274,7 @@ function useMetricsMain() {
           timestamp: new Date(m.timestamp).getTime(),
         }))
         .slice(1),
-      'none'
+      'none',
     )
     const stats = computeChartStats(data)
     return {
@@ -286,9 +287,9 @@ function useMetricsMain() {
           locked: chartConfigs.locked,
           risked: chartConfigs.risked,
         },
-        formatComponent: function ({ value }) {
-          return <ValueScFiat variant="value" value={new BigNumber(value)} />
-        },
+        formatComponent: ({ value }) => (
+          <ValueScFiat variant="value" value={new BigNumber(value)} />
+        ),
         formatTimestamp,
         formatTickY: (v) =>
           humanSiacoin(v, {
@@ -311,20 +312,20 @@ function useMetricsMain() {
           baseRPC: humanBaseRpcPrice(m.pricing.baseRPCPrice).toNumber(),
           collateral: humanCollateralPrice(
             new BigNumber(m.pricing.storagePrice).times(
-              m.pricing.collateralMultiplier
-            )
+              m.pricing.collateralMultiplier,
+            ),
           ).toNumber(),
           contract: Number(m.pricing.contractPrice),
           egress: humanEgressPrice(m.pricing.egressPrice).toNumber(),
           ingress: humanIngressPrice(m.pricing.ingressPrice).toNumber(),
           sectorAccess: humanSectorAccessPrice(
-            m.pricing.sectorAccessPrice
+            m.pricing.sectorAccessPrice,
           ).toNumber(),
           storage: humanStoragePrice(m.pricing.storagePrice).toNumber(),
           timestamp: new Date(m.timestamp).getTime(),
         }))
         .slice(1),
-      'none'
+      'none',
     )
     const stats = computeChartStats(data)
     return {
@@ -358,9 +359,9 @@ function useMetricsMain() {
           ingress: chartConfigs.ingress,
           storage: chartConfigs.storage,
         },
-        formatComponent: function ({ value }) {
-          return <ValueScFiat variant="value" value={new BigNumber(value)} />
-        },
+        formatComponent: ({ value }) => (
+          <ValueScFiat variant="value" value={new BigNumber(value)} />
+        ),
         formatTimestamp,
         formatTickY: (v) =>
           humanSiacoin(v, {
@@ -388,7 +389,7 @@ function useMetricsMain() {
           timestamp: new Date(m.timestamp).getTime(),
         }))
         .slice(1),
-      'none'
+      'none',
     )
     const stats = computeChartStats(data)
     return {
@@ -431,7 +432,7 @@ function useMetricsMain() {
           timestamp: new Date(m.timestamp).getTime(),
         }))
         .slice(1),
-      'none'
+      'none',
     )
     const stats = computeChartStats(data)
     return {
@@ -455,22 +456,22 @@ function useMetricsMain() {
           maxSectors: configCategoryLabel<StorageCategories>(
             chartConfigs.capacityStorage,
             'storage capacity',
-            'sectors'
+            'sectors',
           ),
           physicalSectors: configCategoryLabel<StorageCategories>(
             chartConfigs.storagePhysical,
             'storage used',
-            'sectors physical'
+            'sectors physical',
           ),
           tempSectors: configCategoryLabel<StorageCategories>(
             chartConfigs.sectorsTemp,
             'storage used',
-            'sectors temp'
+            'sectors temp',
           ),
           contractSectors: configCategoryLabel<StorageCategories>(
             chartConfigs.storage,
             'storage used',
-            'sectors contract'
+            'sectors contract',
           ),
         },
         format: (v) => humanBytes(v),
@@ -492,7 +493,7 @@ function useMetricsMain() {
         storageWrites: m.storage.writes,
         timestamp: new Date(m.timestamp).getTime(),
       })),
-      'delta'
+      'delta',
     )
     const stats = computeChartStats(data)
     return {
@@ -524,7 +525,7 @@ function useMetricsMain() {
         ingress: m.data.rhp.ingress,
         timestamp: new Date(m.timestamp).getTime(),
       })),
-      'delta'
+      'delta',
     )
     const stats = computeChartStats(data)
     return {

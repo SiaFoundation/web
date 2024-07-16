@@ -1,23 +1,23 @@
 import {
-  Button,
-  Select,
-  PoolCombo,
-  Label,
-  Popover,
-  MenuItemRightSlot,
   BaseMenuItem,
-  MenuSeparator,
+  Button,
+  Label,
+  MenuItemRightSlot,
   MenuSectionLabelToggleAll,
+  MenuSeparator,
   Option,
+  PoolCombo,
+  Popover,
+  Select,
 } from '@siafoundation/design-system'
 import {
   CaretDown16,
-  SettingsAdjust16,
   Reset16,
+  SettingsAdjust16,
 } from '@siafoundation/react-icons'
-import { sortOptions, SortField } from '../../contexts/contracts/types'
-import { useContracts } from '../../contexts/contracts'
 import { groupBy } from '@technically/lodash'
+import { useContracts } from '../../contexts/contracts'
+import { type SortField, sortOptions } from '../../contexts/contracts/types'
 
 export function ContractsViewDropdownMenu() {
   const {
@@ -88,7 +88,7 @@ export function ContractsViewDropdownMenu() {
                     </Option>
                   ))}
                 </optgroup>
-              )
+              ),
             )}
           </Select>
         </MenuItemRightSlot>

@@ -1,7 +1,7 @@
-import { Text, Link, Separator, ScrollArea } from '@siafoundation/design-system'
+import { Link, ScrollArea, Separator, Text } from '@siafoundation/design-system'
 import { LogoGithub16 } from '@siafoundation/react-icons'
 import { format } from 'date-fns'
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
+import { MDXRemote, type MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { components } from '../config/mdx'
 
 type Pr = {

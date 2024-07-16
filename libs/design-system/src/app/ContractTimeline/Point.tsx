@@ -1,5 +1,5 @@
-import { cx } from 'class-variance-authority'
 import { blockHeightToTime, blocksToMilliseconds } from '@siafoundation/units'
+import { cx } from 'class-variance-authority'
 import { BlockLabel, DateLabel, RelativeLabel } from './Labels'
 
 type Color = 'gray' | 'green' | 'amber' | 'blue'
@@ -55,7 +55,7 @@ export function Point({
         'flex items-center justify-center',
         'rounded-full cursor-pointer',
         '-translate-x-1/2',
-        className
+        className,
       )}
       style={{
         left: toPercent(eventPos),
@@ -65,7 +65,7 @@ export function Point({
         className={cx(
           'relative w-full h-full',
           'flex items-center justify-center',
-          'rounded-full cursor-pointer'
+          'rounded-full cursor-pointer',
         )}
       >
         {unconfirmedPing && eventUnconfirmed && (
@@ -74,7 +74,7 @@ export function Point({
               'z-0 absolute w-1.5 h-1.5',
               'rounded-full',
               'bg-amber-500 dark:bg-amber-200',
-              'animate-pingslow'
+              'animate-pingslow',
             )}
           />
         )}
@@ -82,7 +82,7 @@ export function Point({
           className={cx(
             'z-0 absolute w-4 h-4',
             'rounded-full',
-            'group-hover:bg-blue-500/10 dark:group-hover:bg-blue-200/10'
+            'group-hover:bg-blue-500/10 dark:group-hover:bg-blue-200/10',
           )}
         />
         <div
@@ -117,7 +117,7 @@ export function Point({
                   'group-hover:bg-blue-400 dark:group-hover:bg-blue-400',
                   'border-white dark:border-white',
                 ]
-              : []
+              : [],
           )}
         />
         <div className="hidden group-hover:flex absolute justify-between gap-1 bottom-[100%] left-1.5">

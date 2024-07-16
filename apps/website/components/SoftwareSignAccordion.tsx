@@ -1,12 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
-  Paragraph,
   Accordion,
-  AccordionTrigger,
   AccordionContent,
   AccordionItem,
+  AccordionTrigger,
   Codeblock,
   Link,
+  Paragraph,
   webLinks,
 } from '@siafoundation/design-system'
 

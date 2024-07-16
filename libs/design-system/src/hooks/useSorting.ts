@@ -12,7 +12,7 @@ type Params<ColumnId extends string, SortField extends string> = {
 
 export function useSorting<ColumnId extends string, SortField extends string>(
   scope: string,
-  params: Params<ColumnId, SortField>
+  params: Params<ColumnId, SortField>,
 ) {
   const { defaultSortField, sortOptions, enabledColumns } = params
 
@@ -20,7 +20,7 @@ export function useSorting<ColumnId extends string, SortField extends string>(
     `${scope}/sortField`,
     {
       defaultValue: defaultSortField,
-    }
+    },
   )
 
   const [sortDirection, setSortDirection] = useLocalStorageState<
@@ -38,7 +38,7 @@ export function useSorting<ColumnId extends string, SortField extends string>(
       }
       setSortDirection((dir) => (dir === 'desc' ? 'asc' : 'desc'))
     },
-    [sortField, setSortField, setSortDirection]
+    [sortField, setSortField, setSortDirection],
   )
 
   const sortableColumns = useMemo(() => {

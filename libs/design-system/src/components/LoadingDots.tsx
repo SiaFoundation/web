@@ -10,7 +10,7 @@ export const LoadingDots = forwardRef<HTMLDivElement, { className?: string }>(
         <Dot />
       </div>
     )
-  }
+  },
 )
 
 function Dot() {

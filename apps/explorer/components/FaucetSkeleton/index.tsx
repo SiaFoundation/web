@@ -1,4 +1,4 @@
-import { Container, Panel, Text, Heading } from '@siafoundation/design-system'
+import { Container, Heading, Panel, Text } from '@siafoundation/design-system'
 import { FaucetIcon } from '@siafoundation/react-icons'
 import { networkName } from '../../config'
 

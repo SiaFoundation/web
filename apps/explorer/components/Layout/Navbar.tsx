@@ -16,14 +16,17 @@ type Props = {
 
 export function Navbar({ appName, network, homeHref, children }: Props) {
   return (
-    <div className={cx("py-3 z-10 bg-white dark:bg-graydark-50 border-b border-gray-200 dark:border-graydark-200",
-      network === 'mainnet' ? (
-        "border-t-4  border-t-green-500 dark:border-t-green-400"
-      ) : '',
-      network === 'zen' ? (
-        "border-t-4  border-t-amber-500 dark:border-t-amber-400"
-      ) : '',
-    )}>
+    <div
+      className={cx(
+        'py-3 z-10 bg-white dark:bg-graydark-50 border-b border-gray-200 dark:border-graydark-200',
+        network === 'mainnet'
+          ? 'border-t-4  border-t-green-500 dark:border-t-green-400'
+          : '',
+        network === 'zen'
+          ? 'border-t-4  border-t-amber-500 dark:border-t-amber-400'
+          : '',
+      )}
+    >
       <Container size="4" className="relative">
         <div className="flex items-center justify-between gap-2">
           <div className="relative z-10 flex">

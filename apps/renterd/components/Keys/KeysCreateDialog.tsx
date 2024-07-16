@@ -1,22 +1,22 @@
 import {
+  Button,
+  type ConfigFields,
   Dialog,
-  triggerErrorToast,
-  triggerSuccessToast,
   FieldText,
   FormSubmitButton,
-  ConfigFields,
-  useOnInvalid,
   Paragraph,
-  Button,
+  triggerErrorToast,
+  triggerSuccessToast,
+  useOnInvalid,
 } from '@siafoundation/design-system'
-import { useCallback, useMemo } from 'react'
-import { useForm } from 'react-hook-form'
-import { useDialog } from '../../contexts/dialog'
+import { Reset16 } from '@siafoundation/react-icons'
 import {
   useSettingS3Authentication,
   useSettingUpdate,
 } from '@siafoundation/renterd-react'
-import { Reset16 } from '@siafoundation/react-icons'
+import { useCallback, useMemo } from 'react'
+import { useForm } from 'react-hook-form'
+import { useDialog } from '../../contexts/dialog'
 
 type Props = {
   trigger?: React.ReactNode
@@ -123,14 +123,17 @@ export function KeysCreateDialog({ trigger, open, onOpenChange }: Props) {
         },
       })
       if (response.error) {
-        triggerErrorToast({ title: 'Error creating key', body: response.error })
+        triggerErrorToast({
+          title: 'Error creating key',
+          body: response.error,
+        })
       } else {
         triggerSuccessToast({ title: 'New key created' })
         form.reset(getDefaultValues())
         closeDialog()
       }
     },
-    [form, closeDialog, update, s3AuthenticationSettings.data]
+    [form, closeDialog, update, s3AuthenticationSettings.data],
   )
 
   const fields = useMemo(
@@ -143,10 +146,10 @@ export function KeysCreateDialog({ trigger, open, onOpenChange }: Props) {
           form.setValue('secret', generateSecretAccessKey())
         },
         existingKeys: Object.keys(
-          s3AuthenticationSettings.data?.v4Keypairs || {}
+          s3AuthenticationSettings.data?.v4Keypairs || {},
         ),
       }),
-    [s3AuthenticationSettings.data, form]
+    [s3AuthenticationSettings.data, form],
   )
 
   const onInvalid = useOnInvalid(fields)

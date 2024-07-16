@@ -1,13 +1,13 @@
-import { Transaction } from '@siafoundation/types'
+import type { Transaction } from '@siafoundation/types'
 import {
   useWalletOutputsSiacoin,
   useWalletOutputsSiafund,
 } from '@siafoundation/walletd-react'
-import { useWallets } from '../../contexts/wallets'
 import { useCallback } from 'react'
+import { useLedger } from '../../contexts/ledger'
+import { useWallets } from '../../contexts/wallets'
 import { useWalletAddresses } from '../../hooks/useWalletAddresses'
 import { signTransactionLedger } from '../../lib/signLedger'
-import { useLedger } from '../../contexts/ledger'
 
 export function useSign({ cancel }: { cancel: (t: Transaction) => void }) {
   const { wallet } = useWallets()
@@ -57,7 +57,7 @@ export function useSign({ cancel }: { cancel: (t: Transaction) => void }) {
         signedTransaction: signResponse.transaction,
       }
     },
-    [device, addresses, siacoinOutputs.data, siafundOutputs.data, cancel]
+    [device, addresses, siacoinOutputs.data, siafundOutputs.data, cancel],
   )
 
   return sign

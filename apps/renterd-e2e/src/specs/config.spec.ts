@@ -1,15 +1,15 @@
-import { test, expect } from '@playwright/test'
-import { expectSwitchByLabel, setSwitchByLabel } from '../fixtures/switchValue'
+import { expect, test } from '@playwright/test'
+import { beforeTest } from '../fixtures/beforeTest'
+import { clearToasts } from '../fixtures/clearToasts'
+import { clickIf, clickIfEnabledAndWait } from '../fixtures/click'
 import { setViewMode } from '../fixtures/configViewMode'
 import { navigateToConfig } from '../fixtures/navigate'
+import { expectSwitchByLabel, setSwitchByLabel } from '../fixtures/switchValue'
 import {
   expectTextInputByName,
   expectTextInputByNameAttribute,
   fillTextInputByName,
 } from '../fixtures/textInput'
-import { clearToasts } from '../fixtures/clearToasts'
-import { clickIfEnabledAndWait, clickIf } from '../fixtures/click'
-import { beforeTest } from '../fixtures/beforeTest'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page)
@@ -93,7 +93,7 @@ test('configure with allowance derived pricing', async ({ page }) => {
   await expectTextInputByNameAttribute(
     page,
     'maxStoragePriceTBMonth',
-    'readOnly'
+    'readOnly',
   )
   await expectTextInputByNameAttribute(page, 'maxUploadPriceTB', 'readOnly')
   await expectTextInputByNameAttribute(page, 'maxDownloadPriceTB', 'readOnly')
@@ -136,14 +136,14 @@ test('system offers recommendations', async ({ page }) => {
   await fillTextInputByName(page, 'maxDownloadPriceTB', '100000000')
   await clickIfEnabledAndWait(
     page.getByText('Save changes'),
-    page.getByText('Configuration has been saved')
+    page.getByText('Configuration has been saved'),
   )
   await clearToasts({ page })
 
   await expect(
     page.getByText(
-      /(0 recommendations to match with more hosts|Configuration matches with a sufficient number of hosts)/
-    )
+      /(0 recommendations to match with more hosts|Configuration matches with a sufficient number of hosts)/,
+    ),
   ).toBeVisible()
 
   await fillTextInputByName(page, 'storageTB', '10')
@@ -155,12 +155,12 @@ test('system offers recommendations', async ({ page }) => {
   await fillTextInputByName(page, 'maxDownloadPriceTB', '100')
   await clickIfEnabledAndWait(
     page.getByText('Save changes'),
-    page.getByText('Configuration has been saved')
+    page.getByText('Configuration has been saved'),
   )
   await clearToasts({ page })
   // There are now recommendations.
   await expect(
-    page.getByText('0 recommendations to match with more hosts')
+    page.getByText('0 recommendations to match with more hosts'),
   ).toBeHidden()
 
   // Apply all recommendations.

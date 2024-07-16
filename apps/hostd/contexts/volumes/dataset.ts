@@ -1,9 +1,9 @@
-import { useMemo } from 'react'
-import { VolumeMeta } from '@siafoundation/hostd-types'
-import { useVolumes } from '@siafoundation/hostd-react'
-import { VolumeData } from './types'
-import BigNumber from 'bignumber.js'
+import type { useVolumes } from '@siafoundation/hostd-react'
+import type { VolumeMeta } from '@siafoundation/hostd-types'
 import { MiBToBytes } from '@siafoundation/units'
+import BigNumber from 'bignumber.js'
+import { useMemo } from 'react'
+import type { VolumeData } from './types'
 
 export function useDataset({
   response,

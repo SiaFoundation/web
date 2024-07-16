@@ -1,3 +1,5 @@
+export type AlertCellContext = Record<string, unknown>
+
 export type AlertSeverity = 'info' | 'warning' | 'error' | 'critical'
 
 export type AlertData = {

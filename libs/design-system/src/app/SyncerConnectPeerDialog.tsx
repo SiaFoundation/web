@@ -1,15 +1,15 @@
 'use client'
 
-import { Paragraph } from '../core/Paragraph'
-import { triggerErrorToast, triggerSuccessToast } from '../lib/toast'
-import { Response } from '@siafoundation/react-core'
-import { Dialog } from '../core/Dialog'
-import { ConfigFields } from '../form/configurationFields'
-import { useDialogFormHelpers } from '../form/useDialogFormHelpers'
-import { useForm } from 'react-hook-form'
+import type { Response } from '@siafoundation/react-core'
 import { useCallback } from 'react'
+import { useForm } from 'react-hook-form'
 import { FormSubmitButton } from '../components/Form'
+import { Dialog } from '../core/Dialog'
+import { Paragraph } from '../core/Paragraph'
 import { FieldText } from '../form/FieldText'
+import type { ConfigFields } from '../form/configurationFields'
+import { useDialogFormHelpers } from '../form/useDialogFormHelpers'
+import { triggerErrorToast, triggerSuccessToast } from '../lib/toast'
 
 function getDefaultValues() {
   return {
@@ -73,7 +73,7 @@ export function SyncerConnectPeerDialog({
         closeAndReset()
       }
     },
-    [closeAndReset, connect]
+    [closeAndReset, connect],
   )
 
   return (

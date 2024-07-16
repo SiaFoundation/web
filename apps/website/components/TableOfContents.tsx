@@ -1,4 +1,4 @@
-import { Heading, Link, Ul, Li } from '@siafoundation/design-system'
+import { Heading, Li, Link, Ul } from '@siafoundation/design-system'
 import { cx } from 'class-variance-authority'
 
 type Props = {

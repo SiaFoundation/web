@@ -1,11 +1,11 @@
-import { RenterdSidenav } from '../RenterdSidenav'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
+import { RenterdSidenav } from '../RenterdSidenav'
 import { UploadsActionsMenu } from './UploadsActionsMenu'
+import { UploadsBreadcrumbMenu } from './UploadsBreadcrumbMenu'
 import { UploadsStatsMenu } from './UploadsStatsMenu'
 import { UploadsTable } from './UploadsTable'
-import { UploadsBreadcrumbMenu } from './UploadsBreadcrumbMenu'
 
 export function Uploads() {
   const { openDialog } = useDialog()

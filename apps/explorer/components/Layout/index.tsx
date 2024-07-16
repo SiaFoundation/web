@@ -1,11 +1,11 @@
 import { LinkButton, Tooltip } from '@siafoundation/design-system'
 import { FaucetIcon } from '@siafoundation/react-icons'
+import { appName, isMainnet, network, networkName } from '../../config'
 import { routes } from '../../config/routes'
-import { Search } from './Search'
-import { isMainnet, network, networkName, appName } from '../../config'
-import { NavDropdownMenu } from './NavDropdownMenu'
 import { Footer } from './Footer'
+import { NavDropdownMenu } from './NavDropdownMenu'
 import { Navbar } from './Navbar'
+import { Search } from './Search'
 
 type Props = {
   children: React.ReactNode

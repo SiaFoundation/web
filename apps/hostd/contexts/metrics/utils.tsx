@@ -1,7 +1,7 @@
 export function configCategoryPattern<Cat extends string>(
   config: { label: string; color: string },
   category: Cat,
-  pattern?: boolean
+  pattern?: boolean,
 ) {
   return {
     ...config,
@@ -13,7 +13,7 @@ export function configCategoryPattern<Cat extends string>(
 export function configCategoryLabel<Cat extends string>(
   config: { label?: string; color?: string },
   category: Cat,
-  label?: string
+  label?: string,
 ) {
   return {
     ...config,

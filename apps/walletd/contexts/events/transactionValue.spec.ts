@@ -1,6 +1,6 @@
-import { WalletEvent } from '@siafoundation/walletd-types'
-import { calculateScValue, calculateSfValue } from './transactionValue'
 import { toHastings } from '@siafoundation/units'
+import type { WalletEvent } from '@siafoundation/walletd-types'
+import { calculateScValue, calculateSfValue } from './transactionValue'
 
 test('v1TxnCalculateScValue', () => {
   const e: WalletEvent = {

@@ -1,12 +1,12 @@
 'use client'
 
-import { cx } from 'class-variance-authority'
-import { uniq } from '@technically/lodash'
 import { usePagesRouter } from '@siafoundation/next'
+import { uniq } from '@technically/lodash'
+import { cx } from 'class-variance-authority'
 import { useCallback, useMemo } from 'react'
 import { Badge } from '../core/Badge'
 import { Text } from '../core/Text'
-import { ContentItemProps, ContentItem } from '../site/ContentItem'
+import { ContentItem, type ContentItemProps } from '../site/ContentItem'
 
 type Props = {
   items: ContentItemProps[]
@@ -42,10 +42,10 @@ export function ContentGallery({
         : uniq(
             items.reduce(
               (acc, item) => acc.concat(item.tags || []),
-              [] as string[]
-            )
+              [] as string[],
+            ),
           ),
-    [filterMode, items, customFilters]
+    [filterMode, items, customFilters],
   )
   const filteredItems = useMemo(() => {
     if (filterMode === 'external') {
@@ -69,7 +69,7 @@ export function ContentGallery({
         },
       })
     },
-    [filterable, router]
+    [filterable, router],
   )
 
   const ContentComponent = component || ContentItem
@@ -109,7 +109,7 @@ export function ContentGallery({
         className={cx(
           'grid overflow-hidden',
           gapClassName ? gapClassName : 'gap-x-6 gap-y-10 md:gap-y-14',
-          columnClassName ? columnClassName : 'grid-cols-1 sm:grid-cols-2'
+          columnClassName ? columnClassName : 'grid-cols-1 sm:grid-cols-2',
         )}
       >
         {filteredItems.map((item) => (

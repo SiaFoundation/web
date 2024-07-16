@@ -1,7 +1,7 @@
 import {
-  useTableState,
   useDatasetEmptyState,
   useServerFilters,
+  useTableState,
 } from '@siafoundation/design-system'
 import { useSearchParams } from '@siafoundation/next'
 import {
@@ -9,11 +9,11 @@ import {
   useMultipartUploadListUploads,
 } from '@siafoundation/renterd-react'
 import { createContext, useCallback, useContext, useMemo } from 'react'
-import { columnsDefaultVisible, defaultSortField, sortOptions } from './types'
-import { columns } from './columns'
-import { join, getFilename } from '../../lib/paths'
+import { getFilename, join } from '../../lib/paths'
 import { useFilesManager } from '../filesManager'
-import { ObjectUploadData } from '../filesManager/types'
+import type { ObjectUploadData } from '../filesManager/types'
+import { columns } from './columns'
+import { columnsDefaultVisible, defaultSortField, sortOptions } from './types'
 
 const defaultLimit = 50
 
@@ -21,7 +21,7 @@ function useUploadsMain() {
   const { uploadsMap, activeBucket } = useFilesManager()
   const params = useSearchParams()
   const limit = Number(params.get('limit') || defaultLimit)
-  const marker = params.get('marker')
+  const marker = params.get('marker') || undefined
 
   const { filters, setFilter, removeFilter, removeLastFilter, resetFilters } =
     useServerFilters()
@@ -30,29 +30,33 @@ function useUploadsMain() {
   const response = useMultipartUploadListUploads({
     disabled: !activeBucket,
     payload: {
-      bucket: activeBucket?.name,
+      bucket: activeBucket?.name!,
       uploadIDMarker: marker,
       limit,
     },
   })
 
   const abortAll = useCallback(async () => {
-    return Promise.all(
-      response.data?.uploads?.map(async (upload) => {
-        const localUpload = uploadsMap[upload.uploadID]
-        if (localUpload) {
-          localUpload.uploadAbort?.()
-        } else {
-          await apiBusUploadAbort.post({
-            payload: {
-              bucket: activeBucket?.name,
-              path: upload.path,
-              uploadID: upload.uploadID,
-            },
-          })
+    const promises = response.data?.uploads?.map(async (upload) => {
+      const localUpload = uploadsMap[upload.uploadID]
+      if (localUpload) {
+        if (localUpload.uploadAbort) {
+          localUpload.uploadAbort()
         }
-      })
-    )
+      } else {
+        await apiBusUploadAbort.post({
+          payload: {
+            bucket: activeBucket?.name!,
+            path: upload.path,
+            uploadID: upload.uploadID,
+          },
+        })
+      }
+    })
+    if (!promises) {
+      return
+    }
+    return Promise.all(promises)
   }, [response.data, apiBusUploadAbort, activeBucket, uploadsMap])
 
   const dataset: ObjectUploadData[] = useMemo(() => {
@@ -60,17 +64,15 @@ function useUploadsMain() {
       response.data?.uploads?.map((upload) => {
         const id = upload.uploadID
         const name = getFilename(upload.path)
-        const fullPath = join(activeBucket?.name, upload.path)
+        const fullPath = join(activeBucket?.name!, upload.path)
         const localUpload = uploadsMap[id]
         if (localUpload) {
-          {
-            return localUpload
-          }
+          return localUpload
         }
-        return {
+        const u: ObjectUploadData = {
           id,
           path: fullPath,
-          bucket: activeBucket,
+          bucket: activeBucket!,
           name,
           size: 1,
           loaded: 1,
@@ -82,13 +84,15 @@ function useUploadsMain() {
           uploadAbort: async () => {
             await apiBusUploadAbort.post({
               payload: {
-                bucket: activeBucket?.name,
+                bucket: activeBucket?.name!,
                 path: upload.path,
                 uploadID: upload.uploadID,
               },
             })
           },
         }
+
+        return u
       }) || []
     )
   }, [uploadsMap, activeBucket, response.data, apiBusUploadAbort])
@@ -116,16 +120,16 @@ function useUploadsMain() {
   const filteredTableColumns = useMemo(
     () =>
       columns.filter(
-        (column) => column.fixed || enabledColumns.includes(column.id)
+        (column) => column.fixed || enabledColumns.includes(column.id),
       ),
-    [enabledColumns]
+    [enabledColumns],
   )
 
   const dataState = useDatasetEmptyState(
     dataset,
     response.isValidating,
     response.error,
-    filters
+    filters,
   )
 
   return {
@@ -133,7 +137,7 @@ function useUploadsMain() {
     dataState,
     limit,
     nextMarker: response.data?.nextUploadIDMarker,
-    hasMore: response.data?.hasMore,
+    hasMore: !!response.data?.hasMore,
     isLoading: response.isLoading,
     error: response.error,
     pageCount: dataset?.length || 0,

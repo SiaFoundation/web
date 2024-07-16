@@ -1,4 +1,4 @@
-import { CmdEmptyProps } from './CmdEmpty'
+import type { CmdEmptyProps } from './CmdEmpty'
 
 export type Page = {
   namespace: string

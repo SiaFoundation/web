@@ -1,14 +1,14 @@
-import {
-  Transaction,
-  UnlockConditions,
+import type {
+  Address,
   ConsensusNetwork,
   ConsensusState,
   Currency,
-  Signature,
-  Address,
   Hash256,
-  PublicKey,
   PrivateKey,
+  PublicKey,
+  Signature,
+  Transaction,
+  UnlockConditions,
 } from '@siafoundation/types'
 
 type AccountToken = {
@@ -162,7 +162,7 @@ export type WasmApi = {
     }
     keyPairFromSeedPhrase: (
       phrase: string,
-      index: number
+      index: number,
     ) => {
       privateKey?: string
       publicKey?: string
@@ -193,7 +193,7 @@ export type WasmApi = {
       cn: ConsensusNetwork,
       txn: Transaction,
       sigIndex: number,
-      privateKey: string
+      privateKey: string,
     ) => {
       signature?: string
       error?: string

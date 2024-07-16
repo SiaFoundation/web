@@ -1,5 +1,5 @@
-import { WalletOutputsSiafundResponse } from '@siafoundation/walletd-types'
-import { Page } from 'playwright'
+import type { WalletOutputsSiafundResponse } from '@siafoundation/walletd-types'
+import type { Page } from 'playwright'
 
 export function getMockWalletOutputsSiafundResponse(): WalletOutputsSiafundResponse {
   return []
@@ -17,7 +17,7 @@ export async function mockApiWalletOutputsSiafund({
     `**/api/wallets/${walletId}/outputs/siafund*`,
     async (route) => {
       await route.fulfill({ json })
-    }
+    },
   )
   return json
 }

@@ -1,33 +1,33 @@
-import { format } from 'date-fns'
 import {
-  WindGusts24,
-  Finance24,
-  Wallet24,
-  Currency24,
-  Industry24,
   Archive24,
-  IbmSecurity24,
-  Development24,
   CenterCircle24,
   Code24,
-  Money24,
+  Currency24,
+  Development24,
+  EventSchedule24,
+  EventsAlt24,
+  Finance24,
+  IbmSecurity24,
+  Idea24,
+  Industry24,
+  Integration24,
   ListChecked24,
   MailAll24,
-  TreeViewAlt24,
-  Password24,
-  Idea24,
-  EventSchedule24,
-  Integration24,
   Microscope24,
+  Money24,
+  Password24,
   Policy24,
-  EventsAlt24,
   TestToolIcon,
+  TreeViewAlt24,
+  Wallet24,
+  WindGusts24,
 } from '@siafoundation/react-icons'
+import { format } from 'date-fns'
+import type React from 'react'
 import { Link } from '../core/Link'
-import { Text } from '../core/Text'
 import { Paragraph } from '../core/Paragraph'
+import { Text } from '../core/Text'
 import { WebDomain } from './WebDomain'
-import React from 'react'
 
 export type ContentItemProps = {
   title: string

@@ -2,7 +2,7 @@
 const plugin = require('tailwindcss/plugin')
 
 const animationDelay = plugin(
-  function ({ addUtilities, theme, e }) {
+  ({ addUtilities, theme, e }) => {
     const values = theme('animationDelay')
     var utilities = Object.entries(values).map(([key, value]) => {
       return {
@@ -43,6 +43,6 @@ const animationDelay = plugin(
         9000: '9000ms',
       },
     },
-  }
+  },
 )
 module.exports = animationDelay

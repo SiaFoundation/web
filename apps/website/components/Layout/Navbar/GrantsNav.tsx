@@ -4,8 +4,8 @@ import {
   Stamp16,
   TestToolIcon,
 } from '@siafoundation/react-icons'
-import { routes } from '../../../config/routes'
 import { useRouter } from 'next/router'
+import { routes } from '../../../config/routes'
 import { NavItem } from './NavItem'
 import { NavbarLink } from './NavbarLink'
 

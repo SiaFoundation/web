@@ -1,11 +1,11 @@
-import {
-  SiacoinOutput,
-  Transaction,
-  UnlockConditions,
-  Hash256,
-  Signature,
+import type {
   Currency,
   FileContractID,
+  Hash256,
+  SiacoinOutput,
+  Signature,
+  Transaction,
+  UnlockConditions,
 } from '@siafoundation/types'
 
 export interface WalletTransaction {

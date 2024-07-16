@@ -1,9 +1,9 @@
-import { Page } from '@playwright/test'
-import { setSwitchByLabel } from './switchValue'
-import { setViewMode } from './configViewMode'
-import { fillTextInputByName } from './textInput'
+import type { Page } from '@playwright/test'
 import { clearToasts } from './clearToasts'
 import { clickIfEnabledAndWait } from './click'
+import { setViewMode } from './configViewMode'
+import { setSwitchByLabel } from './switchValue'
+import { fillTextInputByName } from './textInput'
 
 export async function configResetAllSettings({ page }: { page: Page }) {
   await setViewMode({ page, state: 'advanced' })
@@ -49,7 +49,7 @@ export async function configResetAllSettings({ page }: { page: Page }) {
   // save
   await clickIfEnabledAndWait(
     page.getByText('Save changes'),
-    page.getByText('Configuration has been saved')
+    page.getByText('Configuration has been saved'),
   )
   await clearToasts({ page })
 }

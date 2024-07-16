@@ -1,5 +1,5 @@
 import {
-  ConfigFields,
+  type ConfigFields,
   Dialog,
   FieldNumber,
   FormSubmitButton,
@@ -8,14 +8,14 @@ import {
 } from '@siafoundation/design-system'
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
+import { useSyncStatus } from '../hooks/useSyncStatus'
 import {
-  useTriggerRescan,
-  getRescanFields,
-  getDefaultRescanValues,
   RescanCalloutWarningExpensive,
   RescanCalloutWarningStartHeight,
+  getDefaultRescanValues,
+  getRescanFields,
+  useTriggerRescan,
 } from './FieldRescan'
-import { useSyncStatus } from '../hooks/useSyncStatus'
 
 export type WalletsRescanDialogParams = void
 
@@ -69,7 +69,7 @@ export function WalletsRescanDialog({ trigger, open, onOpenChange }: Props) {
       triggerRescan(values)
       closeAndReset()
     },
-    [closeAndReset, triggerRescan]
+    [closeAndReset, triggerRescan],
   )
 
   return (

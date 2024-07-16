@@ -1,14 +1,14 @@
-import { HostdSidenav } from '../HostdSidenav'
-import { routes } from '../../config/routes'
 import { Table } from '@siafoundation/design-system'
-import { useDialog } from '../../contexts/dialog'
+import { routes } from '../../config/routes'
 import { useContracts } from '../../contexts/contracts'
+import { useDialog } from '../../contexts/dialog'
 import { HostdAuthedLayout } from '../HostdAuthedLayout'
-import { StateNoneMatching } from './StateNoneMatching'
-import { StateNoneYet } from './StateNoneYet'
-import { StateError } from './StateError'
+import { HostdSidenav } from '../HostdSidenav'
 import { ContractsActionsMenu } from './ContractsActionsMenu'
 import { ContractsFiltersBar } from './ContractsFiltersBar'
+import { StateError } from './StateError'
+import { StateNoneMatching } from './StateNoneMatching'
+import { StateNoneYet } from './StateNoneYet'
 
 export function Contracts() {
   const { openDialog } = useDialog()

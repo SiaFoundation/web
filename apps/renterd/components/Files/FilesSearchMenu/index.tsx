@@ -1,20 +1,20 @@
-import { cx } from 'class-variance-authority'
 import {
-  textFieldStyles,
-  panelStyles,
   Label,
   Separator,
+  panelStyles,
+  textFieldStyles,
 } from '@siafoundation/design-system'
+import { useAppRouter, usePathname } from '@siafoundation/next'
+import { cx } from 'class-variance-authority'
 import { Command } from 'cmdk'
 import { useCallback, useState } from 'react'
-import { useDialog } from '../../../contexts/dialog'
-import { useAppRouter, usePathname } from '@siafoundation/next'
+import { useDebounce } from 'use-debounce'
 import { routes } from '../../../config/routes'
+import { useDialog } from '../../../contexts/dialog'
 import {
   FilesSearchCmd,
   filesSearchPage,
 } from '../../Files/FilesCmd/FilesSearchCmd'
-import { useDebounce } from 'use-debounce'
 import { FileSearchEmpty } from '../../Files/FilesCmd/FilesSearchCmd/FileSearchEmpty'
 
 type Props = {

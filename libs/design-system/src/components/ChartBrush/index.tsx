@@ -1,15 +1,15 @@
 'use client'
 
-import { MutableRefObject, useMemo } from 'react'
-import { scaleTime, scaleLinear } from '@visx/scale'
-import { PatternLines } from '@visx/pattern'
 import { Brush } from '@visx/brush'
-import { Bounds } from '@visx/brush/lib/types'
-import BaseBrush from '@visx/brush/lib/BaseBrush'
+import type BaseBrush from '@visx/brush/lib/BaseBrush'
+import type { Bounds } from '@visx/brush/lib/types'
+import { PatternLines } from '@visx/pattern'
 import { ParentSize } from '@visx/responsive'
-import { AreaChart } from '../ChartTimeValue/AreaChart'
+import { scaleLinear, scaleTime } from '@visx/scale'
+import { type MutableRefObject, useMemo } from 'react'
 import { Panel } from '../../core/Panel'
 import { daysInMilliseconds } from '../../lib/time'
+import { AreaChart } from '../ChartTimeValue/AreaChart'
 
 const accentColor = 'var(--colors-accent9)'
 const patternColor = 'var(--colors-accent9)'
@@ -76,7 +76,7 @@ function Chart({
         domain: [0, 1],
         nice: true,
       }),
-    [yMax]
+    [yMax],
   )
 
   const initialBrushPosition = useMemo(
@@ -84,7 +84,7 @@ function Chart({
       start: { x: start },
       end: { x: end },
     }),
-    [start, end]
+    [start, end],
   )
 
   if (width < 10) return null

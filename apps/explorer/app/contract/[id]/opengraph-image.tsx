@@ -1,11 +1,11 @@
+import { truncate } from '@siafoundation/design-system'
+import { type CurrencyOption, currencyOptions } from '@siafoundation/react-core'
+import { to } from '@siafoundation/request'
 import { humanBytes, humanDate } from '@siafoundation/units'
+import { lowerCase } from '@technically/lodash'
 import { getOGImage } from '../../../components/OGImageEntity'
 import { siaCentral } from '../../../config/siaCentral'
-import { truncate } from '@siafoundation/design-system'
-import { lowerCase } from '@technically/lodash'
 import { siacoinToFiat } from '../../../lib/currency'
-import { CurrencyOption, currencyOptions } from '@siafoundation/react-core'
-import { to } from '@siafoundation/request'
 
 export const revalidate = 0
 
@@ -28,14 +28,14 @@ export default async function Image({ params }) {
         params: {
           id,
         },
-      })
+      }),
     ),
     to(
       siaCentral.exchangeRates({
         params: {
           currencies: 'sc',
         },
-      })
+      }),
     ),
   ])
 
@@ -47,7 +47,7 @@ export default async function Image({ params }) {
         subtitle: 'contract',
         initials: 'C',
       },
-      size
+      size,
     )
   }
 
@@ -70,7 +70,7 @@ export default async function Image({ params }) {
         r && {
           currency,
           rate: r.rates.sc.usd,
-        }
+        },
       ),
     },
   ]
@@ -85,11 +85,11 @@ export default async function Image({ params }) {
         c.contract.status === 'obligationSucceeded'
           ? 'green'
           : c.contract.status === 'obligationFailed'
-          ? 'red'
-          : 'amber',
+            ? 'red'
+            : 'amber',
       initials: 'C',
       values,
     },
-    size
+    size,
   )
 }

@@ -1,4 +1,4 @@
-import { SiaCentralTransaction } from './types'
+import type { SiaCentralTransaction } from './types'
 
 export type SiaCentralTransactionParams = {
   id: string

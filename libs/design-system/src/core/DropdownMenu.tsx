@@ -1,13 +1,13 @@
 'use client'
 
-import React from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { cva, cx } from 'class-variance-authority'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
-import { separatorStyles, itemStyles, labelStyles } from './Menu'
-import { panelStyles } from './Panel'
-import { useOpen } from '../hooks/useOpen'
 import { ArrowRight16 } from '@siafoundation/react-icons'
+import { cva, cx } from 'class-variance-authority'
+import { AnimatePresence, motion } from 'framer-motion'
+import React from 'react'
+import { useOpen } from '../hooks/useOpen'
+import { itemStyles, labelStyles, separatorStyles } from './Menu'
+import { panelStyles } from './Panel'
 
 const contentContainerStyles = cva([
   'relative',
@@ -29,7 +29,7 @@ const contentStyles = (className?: string) =>
     panelStyles(),
     cva(['max-w-xs', 'shadow-sm', 'py-1', 'px-1'])({
       className,
-    })
+    }),
   )
 
 const animationVariants = {
@@ -69,7 +69,7 @@ export const DropdownMenu = React.forwardRef<
       open: _open,
       onOpenChange: _onOpenChange,
     },
-    ref
+    ref,
   ) => {
     const { open, onOpenChange } = useOpen({
       open: _open,
@@ -109,7 +109,7 @@ export const DropdownMenu = React.forwardRef<
         </AnimatePresence>
       </DropdownMenuPrimitive.Root>
     )
-  }
+  },
 )
 
 export const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
@@ -136,7 +136,7 @@ export const DropdownMenuSub = React.forwardRef<
       open: _open,
       onOpenChange: _onOpenChange,
     },
-    ref
+    ref,
   ) => {
     const { open, onOpenChange } = useOpen({
       open: _open,
@@ -180,7 +180,7 @@ export const DropdownMenuSub = React.forwardRef<
         </AnimatePresence>
       </DropdownMenuPrimitive.Sub>
     )
-  }
+  },
 )
 
 export const DropdownMenuSeparator = React.forwardRef<

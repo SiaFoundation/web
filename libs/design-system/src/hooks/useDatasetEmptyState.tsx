@@ -10,10 +10,10 @@ type EmptyState =
   | undefined
 
 export function useDatasetEmptyState(
-  dataset: unknown[] | undefined,
+  dataset: unknown[] | undefined | null,
   isFetching: boolean,
   error: Error | undefined,
-  filters: unknown[]
+  filters: unknown[],
 ): EmptyState {
   const [lastDatasetSize, setLastDatasetSize] = useState<number>()
   useEffect(() => {

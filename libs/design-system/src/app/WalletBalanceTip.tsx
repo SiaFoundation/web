@@ -1,8 +1,8 @@
-import { Text } from '../core/Text'
-import BigNumber from 'bignumber.js'
-import { Tooltip } from '../core/Tooltip'
+import type BigNumber from 'bignumber.js'
 import { ValueScFiat } from '../components/ValueScFiat'
 import { Separator } from '../core/Separator'
+import { Text } from '../core/Text'
+import { Tooltip } from '../core/Tooltip'
 
 export function WalletBalanceTip({
   side,

@@ -1,6 +1,6 @@
-import BigNumber from 'bignumber.js'
-import { Tooltip } from '../core/Tooltip'
+import type BigNumber from 'bignumber.js'
 import { ValueScFiat } from '../components/ValueScFiat'
+import { Tooltip } from '../core/Tooltip'
 import { WalletBalanceTip } from './WalletBalanceTip'
 
 export function WalletBalanceSideNav({

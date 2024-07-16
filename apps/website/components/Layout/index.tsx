@@ -1,11 +1,11 @@
 import { Container } from '@siafoundation/design-system'
-import React from 'react'
 import { cx } from 'class-variance-authority'
-import { Background } from './Background'
-import { PageHead } from '../PageHead'
-import { Navbar } from './Navbar'
-import { Footer } from './Footer'
+import type React from 'react'
 import { useScrollTop } from '../../hooks/useScrollTop'
+import { PageHead } from '../PageHead'
+import { Background } from './Background'
+import { Footer } from './Footer'
+import { Navbar } from './Navbar'
 
 type Props = {
   title: string
@@ -49,7 +49,7 @@ export function Layout({
             'relative p-0 z-10',
             'border-y-0',
             'border-x-2',
-            'border-gray-400 dark:border-graydark-600'
+            'border-gray-400 dark:border-graydark-600',
             // 'rounded-lg',
           )}
         >

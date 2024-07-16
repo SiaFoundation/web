@@ -1,12 +1,12 @@
-import { SiaCentralContract } from '@siafoundation/sia-central-types'
-import { ContractView } from '../../../components/ContractView'
-import { Metadata } from 'next'
-import { routes } from '../../../config/routes'
-import { buildMetadata } from '../../../lib/utils'
-import { siaCentral } from '../../../config/siaCentral'
-import { notFound } from 'next/navigation'
 import { truncate } from '@siafoundation/design-system'
 import { to } from '@siafoundation/request'
+import type { SiaCentralContract } from '@siafoundation/sia-central-types'
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import { ContractView } from '../../../components/ContractView'
+import { routes } from '../../../config/routes'
+import { siaCentral } from '../../../config/siaCentral'
+import { buildMetadata } from '../../../lib/utils'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -30,14 +30,14 @@ export default async function Page({ params }) {
         params: {
           id,
         },
-      })
+      }),
     ),
     to(
       siaCentral.exchangeRates({
         params: {
           currencies: 'sc',
         },
-      })
+      }),
     ),
   ])
 
@@ -60,14 +60,14 @@ export default async function Page({ params }) {
         params: {
           id: formationTxnId,
         },
-      })
+      }),
     ),
     to(
       siaCentral.transaction({
         params: {
           id: finalRevisionTxnId,
         },
-      })
+      }),
     ),
   ])
 

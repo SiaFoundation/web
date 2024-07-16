@@ -1,21 +1,21 @@
 import {
-  Text,
-  TableColumn,
   Badge,
-  Paragraph,
-  Tooltip,
   Button,
-  ValueSf,
+  Paragraph,
+  type TableColumn,
+  Text,
+  Tooltip,
   ValueScFiat,
+  ValueSf,
 } from '@siafoundation/design-system'
-import { Locked16, Unlocked16, CaretDown16 } from '@siafoundation/react-icons'
+import { CaretDown16, Locked16, Unlocked16 } from '@siafoundation/react-icons'
 import { humanDate } from '@siafoundation/units'
-import { humanTimeAndUnits } from '../../lib/time'
-import { walletTypes } from '../../config/walletTypes'
-import { WalletData, TableColumnId } from './types'
 import { useWalletBalance } from '@siafoundation/walletd-react'
 import BigNumber from 'bignumber.js'
 import { WalletContextMenu } from '../../components/WalletContextMenu'
+import { walletTypes } from '../../config/walletTypes'
+import { humanTimeAndUnits } from '../../lib/time'
+import type { TableColumnId, WalletData } from './types'
 
 type WalletsTableColumn = TableColumn<
   TableColumnId,
@@ -141,7 +141,7 @@ export const columns: WalletsTableColumn[] = [
 
         const tipUnlocked = walletAutoLockEnabled
           ? `The wallet is currently unlocked. The wallet will stay unlocked until it is inactive for ${remaining.amount.toFixed(
-              0
+              0,
             )} more ${remaining.units}, manually locked, or the app is closed.`
           : `The wallet is currently unlocked. The wallet will stay unlocked until it is manually locked or the app is closed.`
         const tip =

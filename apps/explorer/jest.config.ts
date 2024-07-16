@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'explorer',
   preset: '../../jest.preset.js',
@@ -19,7 +18,7 @@ export default {
   ],
   moduleNameMapper: {
     'next/font/(.*)': require.resolve(
-      'next/dist/build/jest/__mocks__/nextFontMock.js'
+      'next/dist/build/jest/__mocks__/nextFontMock.js',
     ),
   },
 }

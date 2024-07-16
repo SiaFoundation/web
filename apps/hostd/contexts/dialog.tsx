@@ -1,19 +1,20 @@
-import React, { createContext, useContext, useCallback, useState } from 'react'
 import {
   ConfirmDialog,
   SettingsDialog,
   SyncerConnectPeerDialog,
   WalletSingleAddressDetailsDialog,
 } from '@siafoundation/design-system'
-import { VolumeCreateDialog } from '../dialogs/VolumeCreateDialog'
-import { VolumeResizeDialog } from '../dialogs/VolumeResizeDialog'
-import { VolumeDeleteDialog } from '../dialogs/VolumeDeleteDialog'
 import { useSyncerConnect, useWallet } from '@siafoundation/hostd-react'
-import { HostdSendSiacoinDialog } from '../dialogs/HostdSendSiacoinDialog'
-import { HostdTransactionDetailsDialog } from '../dialogs/HostdTransactionDetailsDialog'
-import { ContractsFilterContractIdDialog } from '../dialogs/ContractsFilterContractIdDialog'
+import type React from 'react'
+import { createContext, useCallback, useContext, useState } from 'react'
 import { CmdKDialog } from '../components/CmdKDialog'
 import { AlertsDialog } from '../dialogs/AlertsDialog'
+import { ContractsFilterContractIdDialog } from '../dialogs/ContractsFilterContractIdDialog'
+import { HostdSendSiacoinDialog } from '../dialogs/HostdSendSiacoinDialog'
+import { HostdTransactionDetailsDialog } from '../dialogs/HostdTransactionDetailsDialog'
+import { VolumeCreateDialog } from '../dialogs/VolumeCreateDialog'
+import { VolumeDeleteDialog } from '../dialogs/VolumeDeleteDialog'
+import { VolumeResizeDialog } from '../dialogs/VolumeResizeDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -47,7 +48,7 @@ function useDialogMain() {
       setDialog(dialog)
       setId(id)
     },
-    [setDialog, setId]
+    [setDialog, setId],
   )
 
   const [confirm, setConfirm] = useState<ConfirmProps>()
@@ -56,7 +57,7 @@ function useDialogMain() {
       setDialog('confirm')
       setConfirm(confirm)
     },
-    [setDialog, setConfirm]
+    [setDialog, setConfirm],
   )
 
   const closeDialog = useCallback(() => {
@@ -71,7 +72,7 @@ function useDialogMain() {
         closeDialog()
       }
     },
-    [closeDialog]
+    [closeDialog],
   )
 
   return {

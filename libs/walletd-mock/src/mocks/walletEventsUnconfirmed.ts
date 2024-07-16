@@ -1,8 +1,8 @@
 import {
-  WalletEventsUnconfirmedResponse,
+  type WalletEventsUnconfirmedResponse,
   walletsIdEventsUnconfirmedRoute,
 } from '@siafoundation/walletd-types'
-import { Page } from 'playwright'
+import type { Page } from 'playwright'
 
 export function getMockWalletEventsUnconfirmedResponse(): WalletEventsUnconfirmedResponse {
   return []
@@ -20,7 +20,7 @@ export async function mockApiWalletEventsUnconfirmed({
     `**/api${walletsIdEventsUnconfirmedRoute.replace(':id', walletId)}**`,
     async (route) => {
       await route.fulfill({ json })
-    }
+    },
   )
   return json
 }

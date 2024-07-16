@@ -1,31 +1,31 @@
 'use client'
 
+import type { RequestParams } from '@siafoundation/request'
 import axios from 'axios'
 import { useSWRConfig } from 'swr'
-import { useWorkflows } from './workflows'
 import {
+  type After,
+  type InternalCallbackArgs,
+  type InternalHookArgsCallback,
+  type Response,
   buildAxiosConfig,
   buildRouteWithParams,
-  InternalCallbackArgs,
-  mergeInternalCallbackArgs,
-  Response,
-  InternalHookArgsCallback,
-  mergeInternalHookArgsCallback,
-  After,
   getPathFromKey,
+  mergeInternalCallbackArgs,
+  mergeInternalHookArgsCallback,
 } from './request'
 import { useAppSettings } from './useAppSettings'
-import { RequestParams } from '@siafoundation/request'
+import { useWorkflows } from './workflows'
 
 type DeleteFunc<Params extends RequestParams, Result> = {
   delete: (
-    args: InternalCallbackArgs<Params, undefined, Result>
+    args: InternalCallbackArgs<Params, undefined, Result>,
   ) => Promise<Response<Result>>
 }
 
 export function useDeleteFunc<Params extends RequestParams, Result>(
   args: InternalHookArgsCallback<Params, void, Result>,
-  after?: After<Params, void, Result>
+  after?: After<Params, void, Result>,
 ): DeleteFunc<Params, Result> {
   const { mutate } = useSWRConfig()
   const { settings } = useAppSettings()
@@ -40,7 +40,7 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
           settings,
           hookArgs.route,
           hookArgs,
-          callArgs
+          callArgs,
         )
         if (!reqRoute) {
           throw Error('No route')
@@ -49,8 +49,8 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
           settings,
           reqRoute,
           args,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          callArgs as any
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+          callArgs as any,
         )
         setWorkflow(reqRoute, {
           path,
@@ -68,16 +68,16 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
                     settings,
                     key,
                     args,
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    callArgs as any
+                    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+                    callArgs as any,
                   )
                   return matcher(route)
                 },
                 data,
-                opts
+                opts,
               ),
             callArgs,
-            response
+            response,
           )
         }
         removeWorkflow(reqRoute)
@@ -86,7 +86,7 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
           data: response.data,
           headers: response.headers,
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       } catch (e: any) {
         // If the network is disconnected then response.status will be 0 and
         // data undefined, so return axios e.message error.

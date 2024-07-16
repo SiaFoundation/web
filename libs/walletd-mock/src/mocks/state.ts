@@ -1,5 +1,5 @@
-import { StateResponse } from '@siafoundation/walletd-types'
-import { Page } from 'playwright'
+import type { StateResponse } from '@siafoundation/walletd-types'
+import type { Page } from 'playwright'
 
 export function getMockState(): StateResponse {
   return {

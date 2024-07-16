@@ -1,14 +1,14 @@
 'use client'
 
-import React from 'react'
+import { OverflowMenuHorizontal24 } from '@siafoundation/react-icons'
+import type React from 'react'
+import { Button } from '../core/Button'
 import {
   DropdownMenu,
   DropdownMenuGroup,
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '../core/DropdownMenu'
-import { OverflowMenuHorizontal24 } from '@siafoundation/react-icons'
-import { Button } from '../core/Button'
 import { ThemeRadio } from './ThemeRadio'
 
 type Props = React.ComponentProps<typeof Button> & {

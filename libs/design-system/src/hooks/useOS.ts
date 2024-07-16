@@ -1,4 +1,4 @@
-import { getOs, OS } from '../lib/getOs'
+import { type OS, getOs } from '../lib/getOs'
 
 type Separator = '\\' | '/'
 

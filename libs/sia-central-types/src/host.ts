@@ -1,4 +1,4 @@
-import { SiaCentralHost } from './types'
+import type { SiaCentralHost } from './types'
 
 export type SiaCentralHostParams = {
   id: string

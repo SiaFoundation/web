@@ -28,7 +28,7 @@ export function SectionGradient({ children, className, ...props }: Props) {
           'after:bg-gradient-to-b after:from-white after:via-gray-100 after:to-white',
           'dark:after:bg-gradient-to-b dark:after:from-graydark-50 dark:after:via-graydark-600 dark:after:to-graydark-50',
         ],
-        className
+        className,
       )}
     >
       {children}

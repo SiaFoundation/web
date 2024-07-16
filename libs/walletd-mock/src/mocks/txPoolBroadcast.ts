@@ -1,4 +1,4 @@
-import { Page } from 'playwright'
+import type { Page } from 'playwright'
 
 export async function mockApiTxPoolBroadcast({ page }: { page: Page }) {
   await page.route(`**/api/txpool/broadcast*`, async (route) => {

@@ -1,29 +1,29 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
-  ContentGallery,
   Callout,
+  ContentGallery,
   SiteHeading,
   webLinks,
 } from '@siafoundation/design-system'
-import { Layout } from '../../components/Layout'
-import { routes } from '../../config/routes'
-import { getMinutesInSeconds } from '../../lib/time'
-import { getFeedContent } from '../../content/feed'
-import { AsyncReturnType } from '../../lib/types'
-import { getProjects } from '../../content/projects'
-import { getStats } from '../../content/stats'
-import { getWalletArticles } from '../../content/articles'
-import { SectionGradient } from '../../components/SectionGradient'
-import { backgrounds, patterns, previews } from '../../content/assets'
-import { SectionTransparent } from '../../components/SectionTransparent'
-import { SectionProjects } from '../../components/SectionProjects'
-import { SectionTutorials } from '../../components/SectionTutorials'
 import { CalloutWalletd } from '../../components/CalloutWalletd'
+import { Layout } from '../../components/Layout'
+import { SectionGradient } from '../../components/SectionGradient'
+import { SectionProjects } from '../../components/SectionProjects'
+import { SectionTransparent } from '../../components/SectionTransparent'
+import { SectionTutorials } from '../../components/SectionTutorials'
 import { SoftwareSectionCurrentGen } from '../../components/SoftwareSectionCurrentGen'
+import { routes } from '../../config/routes'
+import { getWalletArticles } from '../../content/articles'
+import { backgrounds, patterns, previews } from '../../content/assets'
+import { getFeedContent } from '../../content/feed'
+import { getProjects } from '../../content/projects'
 import {
   getWalletdLatestDaemonRelease,
   getWalletdLatestDesktopRelease,
 } from '../../content/releases'
+import { getStats } from '../../content/stats'
+import { getMinutesInSeconds } from '../../lib/time'
+import type { AsyncReturnType } from '../../lib/types'
 
 const title = 'Wallet'
 const description = 'Manage your wallet on the Sia network.'

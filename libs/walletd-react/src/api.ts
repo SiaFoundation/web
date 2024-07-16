@@ -1,82 +1,81 @@
-import useSWR from 'swr'
 import {
-  useGetSwr,
-  usePostFunc,
-  usePutFunc,
-  HookArgsSwr,
-  HookArgsCallback,
+  type HookArgsCallback,
+  type HookArgsSwr,
   delay,
   getMainnetBlockHeight,
   getTestnetZenBlockHeight,
   useDeleteFunc,
+  useGetSwr,
+  usePostFunc,
+  usePutFunc,
 } from '@siafoundation/react-core'
 import {
-  ConsensusNetworkParams,
-  ConsensusNetworkResponse,
-  ConsensusTipParams,
-  ConsensusTipResponse,
-  ConsensusTipStateParams,
-  ConsensusTipStateResponse,
-  RescanParams,
-  RescanResponse,
-  RescanStartParams,
-  RescanStartPayload,
-  RescanStartResponse,
-  StateParams,
-  StateResponse,
-  SyncerConnectParams,
-  SyncerConnectPayload,
-  SyncerConnectResponse,
-  SyncerPeersParams,
-  SyncerPeersResponse,
-  TxPoolBroadcastParams,
-  TxPoolBroadcastPayload,
-  TxPoolBroadcastResponse,
-  TxPoolFeeParams,
-  TxPoolFeeResponse,
-  TxPoolTransactionsParams,
-  TxPoolTransactionsResponse,
-  WalletAddParams,
-  WalletAddPayload,
-  WalletAddResponse,
-  WalletAddressAddParams,
-  WalletAddressAddPayload,
-  WalletAddressAddResponse,
-  WalletAddressDeleteParams,
-  WalletAddressDeletePayload,
-  WalletAddressDeleteResponse,
-  WalletAddressesParams,
-  WalletAddressesResponse,
-  WalletBalanceParams,
-  WalletBalanceResponse,
-  WalletDeleteParams,
-  WalletDeletePayload,
-  WalletDeleteResponse,
-  WalletEventsParams,
-  WalletEventsResponse,
-  WalletEventsUnconfirmedParams,
-  WalletEventsUnconfirmedResponse,
-  WalletFundSiacoinParams,
-  WalletFundSiacoinPayload,
-  WalletFundSiacoinResponse,
-  WalletFundSiafundParams,
-  WalletFundSiafundPayload,
-  WalletFundSiafundResponse,
-  WalletOutputsSiacoinParams,
-  WalletOutputsSiacoinResponse,
-  WalletOutputsSiafundParams,
-  WalletOutputsSiafundResponse,
-  WalletReleaseParams,
-  WalletReleasePayload,
-  WalletReleaseResponse,
-  WalletReserveParams,
-  WalletReservePayload,
-  WalletReserveResponse,
-  WalletUpdateParams,
-  WalletUpdatePayload,
-  WalletUpdateResponse,
-  WalletsParams,
-  WalletsResponse,
+  type ConsensusNetworkParams,
+  type ConsensusNetworkResponse,
+  type ConsensusTipParams,
+  type ConsensusTipResponse,
+  type ConsensusTipStateParams,
+  type ConsensusTipStateResponse,
+  type RescanParams,
+  type RescanResponse,
+  type RescanStartParams,
+  type RescanStartPayload,
+  type RescanStartResponse,
+  type StateParams,
+  type StateResponse,
+  type SyncerConnectParams,
+  type SyncerConnectPayload,
+  type SyncerConnectResponse,
+  type SyncerPeersParams,
+  type SyncerPeersResponse,
+  type TxPoolBroadcastParams,
+  type TxPoolBroadcastPayload,
+  type TxPoolBroadcastResponse,
+  type TxPoolFeeParams,
+  type TxPoolFeeResponse,
+  type TxPoolTransactionsParams,
+  type TxPoolTransactionsResponse,
+  type WalletAddParams,
+  type WalletAddPayload,
+  type WalletAddResponse,
+  type WalletAddressAddParams,
+  type WalletAddressAddPayload,
+  type WalletAddressAddResponse,
+  type WalletAddressDeleteParams,
+  type WalletAddressDeletePayload,
+  type WalletAddressDeleteResponse,
+  type WalletAddressesParams,
+  type WalletAddressesResponse,
+  type WalletBalanceParams,
+  type WalletBalanceResponse,
+  type WalletDeleteParams,
+  type WalletDeletePayload,
+  type WalletDeleteResponse,
+  type WalletEventsParams,
+  type WalletEventsResponse,
+  type WalletEventsUnconfirmedParams,
+  type WalletEventsUnconfirmedResponse,
+  type WalletFundSiacoinParams,
+  type WalletFundSiacoinPayload,
+  type WalletFundSiacoinResponse,
+  type WalletFundSiafundParams,
+  type WalletFundSiafundPayload,
+  type WalletFundSiafundResponse,
+  type WalletOutputsSiacoinParams,
+  type WalletOutputsSiacoinResponse,
+  type WalletOutputsSiafundParams,
+  type WalletOutputsSiafundResponse,
+  type WalletReleaseParams,
+  type WalletReleasePayload,
+  type WalletReleaseResponse,
+  type WalletReserveParams,
+  type WalletReservePayload,
+  type WalletReserveResponse,
+  type WalletUpdateParams,
+  type WalletUpdatePayload,
+  type WalletUpdateResponse,
+  type WalletsParams,
+  type WalletsResponse,
   consensusNetworkRoute,
   consensusTipRoute,
   consensusTipStateRoute,
@@ -101,6 +100,7 @@ import {
   walletsIdRoute,
   walletsRoute,
 } from '@siafoundation/walletd-types'
+import useSWR from 'swr'
 
 // state
 
@@ -114,7 +114,7 @@ export function useNodeState(args?: HookArgsSwr<StateParams, StateResponse>) {
 // consensus
 
 export function useConsensusTip(
-  args?: HookArgsSwr<ConsensusTipParams, ConsensusTipResponse>
+  args?: HookArgsSwr<ConsensusTipParams, ConsensusTipResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -123,7 +123,7 @@ export function useConsensusTip(
 }
 
 export function useConsensusTipState(
-  args?: HookArgsSwr<ConsensusTipStateParams, ConsensusTipStateResponse>
+  args?: HookArgsSwr<ConsensusTipStateParams, ConsensusTipStateResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -132,7 +132,7 @@ export function useConsensusTipState(
 }
 
 export function useConsensusNetwork(
-  args?: HookArgsSwr<ConsensusNetworkParams, ConsensusNetworkResponse>
+  args?: HookArgsSwr<ConsensusNetworkParams, ConsensusNetworkResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -159,7 +159,7 @@ export function useEstimatedNetworkBlockHeight(): number {
     {
       refreshInterval: 60_000,
       keepPreviousData: true,
-    }
+    },
   )
   return res.data || 0
 }
@@ -167,7 +167,7 @@ export function useEstimatedNetworkBlockHeight(): number {
 // syncer
 
 export function useSyncerPeers(
-  args?: HookArgsSwr<SyncerPeersParams, SyncerPeersResponse>
+  args?: HookArgsSwr<SyncerPeersParams, SyncerPeersResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -180,7 +180,7 @@ export function useSyncerConnect(
     SyncerConnectParams,
     SyncerConnectPayload,
     SyncerConnectResponse
-  >
+  >,
 ) {
   return usePostFunc(
     {
@@ -189,20 +189,20 @@ export function useSyncerConnect(
     },
     async (mutate) => {
       mutate((key) => key === syncerPeersRoute)
-    }
+    },
   )
 }
 
 // txpool
 
 export function useTxPoolTransactions(
-  args?: HookArgsSwr<TxPoolTransactionsParams, TxPoolTransactionsResponse>
+  args?: HookArgsSwr<TxPoolTransactionsParams, TxPoolTransactionsResponse>,
 ) {
   return useGetSwr({ ...args, route: txPoolTransactionsRoute })
 }
 
 export function useTxPoolFee(
-  args?: HookArgsSwr<TxPoolFeeParams, TxPoolFeeResponse>
+  args?: HookArgsSwr<TxPoolFeeParams, TxPoolFeeResponse>,
 ) {
   return useGetSwr({ ...args, route: txPoolFeeRoute })
 }
@@ -212,7 +212,7 @@ export function useTxPoolBroadcast(
     TxPoolBroadcastParams,
     TxPoolBroadcastPayload,
     TxPoolBroadcastResponse
-  >
+  >,
 ) {
   return usePostFunc(
     {
@@ -228,7 +228,7 @@ export function useTxPoolBroadcast(
           key.startsWith(walletsRoute)
         )
       })
-    }
+    },
   )
 }
 
@@ -239,7 +239,7 @@ export function useRescanStart(
     RescanStartParams,
     RescanStartPayload,
     RescanStartResponse
-  >
+  >,
 ) {
   return usePostFunc(
     {
@@ -253,12 +253,12 @@ export function useRescanStart(
         await mutate((key) => key.startsWith(rescanRoute))
       }
       func()
-    }
+    },
   )
 }
 
 export function useRescanStatus(
-  args?: HookArgsSwr<RescanParams, RescanResponse>
+  args?: HookArgsSwr<RescanParams, RescanResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -276,7 +276,7 @@ export function useWallets(args?: HookArgsSwr<WalletsParams, WalletsResponse>) {
 }
 
 export function useWalletAdd(
-  args?: HookArgsCallback<WalletAddParams, WalletAddPayload, WalletAddResponse>
+  args?: HookArgsCallback<WalletAddParams, WalletAddPayload, WalletAddResponse>,
 ) {
   return usePostFunc(
     {
@@ -285,7 +285,7 @@ export function useWalletAdd(
     },
     async (mutate) => {
       mutate((key) => key.startsWith(walletsRoute))
-    }
+    },
   )
 }
 
@@ -294,7 +294,7 @@ export function useWalletUpdate(
     WalletUpdateParams,
     WalletUpdatePayload,
     WalletUpdateResponse
-  >
+  >,
 ) {
   return usePostFunc(
     {
@@ -303,7 +303,7 @@ export function useWalletUpdate(
     },
     async (mutate) => {
       mutate((key) => key.startsWith(walletsRoute))
-    }
+    },
   )
 }
 
@@ -312,20 +312,20 @@ export function useWalletDelete(
     WalletDeleteParams,
     WalletDeletePayload,
     WalletDeleteResponse
-  >
+  >,
 ) {
   return useDeleteFunc(
     { ...args, route: walletsIdRoute },
     async (mutate, data) => {
       mutate((key) => key.startsWith(walletsRoute))
-    }
+    },
   )
 }
 
 // addresses
 
 export function useWalletAddresses(
-  args: HookArgsSwr<WalletAddressesParams, WalletAddressesResponse>
+  args: HookArgsSwr<WalletAddressesParams, WalletAddressesResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -338,7 +338,7 @@ export function useWalletAddressAdd(
     WalletAddressAddParams,
     WalletAddressAddPayload,
     WalletAddressAddResponse
-  >
+  >,
 ) {
   return usePutFunc(
     {
@@ -347,9 +347,9 @@ export function useWalletAddressAdd(
     },
     async (mutate, data) => {
       mutate((key) =>
-        key.startsWith(walletsIdRoute.replace(':id', data.params.id))
+        key.startsWith(walletsIdRoute.replace(':id', data.params.id)),
       )
-    }
+    },
   )
 }
 
@@ -358,20 +358,20 @@ export function useWalletAddressDelete(
     WalletAddressDeleteParams,
     WalletAddressDeletePayload,
     WalletAddressDeleteResponse
-  >
+  >,
 ) {
   return useDeleteFunc(
     { ...args, route: walletsIdAddressesAddrRoute },
     async (mutate, data) => {
       mutate((key) =>
-        key.startsWith(walletsIdAddressesRoute.replace(':id', data.params.id))
+        key.startsWith(walletsIdAddressesRoute.replace(':id', data.params.id)),
       )
-    }
+    },
   )
 }
 
 export function useWalletBalance(
-  args: HookArgsSwr<WalletBalanceParams, WalletBalanceResponse>
+  args: HookArgsSwr<WalletBalanceParams, WalletBalanceResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -380,7 +380,7 @@ export function useWalletBalance(
 }
 
 export function useWalletEvents(
-  args: HookArgsSwr<WalletEventsParams, WalletEventsResponse>
+  args: HookArgsSwr<WalletEventsParams, WalletEventsResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -392,7 +392,7 @@ export function useWalletEventsUnconfirmed(
   args: HookArgsSwr<
     WalletEventsUnconfirmedParams,
     WalletEventsUnconfirmedResponse
-  >
+  >,
 ) {
   return useGetSwr({
     ...args,
@@ -401,7 +401,7 @@ export function useWalletEventsUnconfirmed(
 }
 
 export function useWalletOutputsSiacoin(
-  args: HookArgsSwr<WalletOutputsSiacoinParams, WalletOutputsSiacoinResponse>
+  args: HookArgsSwr<WalletOutputsSiacoinParams, WalletOutputsSiacoinResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -410,7 +410,7 @@ export function useWalletOutputsSiacoin(
 }
 
 export function useWalletOutputsSiafund(
-  args: HookArgsSwr<WalletOutputsSiafundParams, WalletOutputsSiafundResponse>
+  args: HookArgsSwr<WalletOutputsSiafundParams, WalletOutputsSiafundResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -423,7 +423,7 @@ export function useWalletFundSiacoin(
     WalletFundSiacoinParams,
     WalletFundSiacoinPayload,
     WalletFundSiacoinResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: walletsIdFundRoute })
 }
@@ -433,7 +433,7 @@ export function useWalletFundSiafund(
     WalletFundSiafundParams,
     WalletFundSiafundPayload,
     WalletFundSiafundResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: walletsIdFundSfRoute })
 }
@@ -443,7 +443,7 @@ export function useWalletReserve(
     WalletReserveParams,
     WalletReservePayload,
     WalletReserveResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: walletsIdReserveRoute })
 }
@@ -453,7 +453,7 @@ export function useWalletRelease(
     WalletReleaseParams,
     WalletReleasePayload,
     WalletReleaseResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: walletsIdReleaseRoute })
 }

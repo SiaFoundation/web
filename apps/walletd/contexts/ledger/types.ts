@@ -1,6 +1,6 @@
 import TransportWebBLE from '@ledgerhq/hw-transport-web-ble'
 import TransportWebHID from '@ledgerhq/hw-transport-webhid'
-import Sia from '@siacentral/ledgerjs-sia'
+import type Sia from '@siacentral/ledgerjs-sia'
 
 export type LedgerDevice = {
   type: TransportType
@@ -26,7 +26,7 @@ export async function getSupportedTransports() {
       return supported && !isBrave ? 'Bluetooth' : null
     }),
     TransportWebHID.isSupported().then((supported) =>
-      supported ? 'HID' : null
+      supported ? 'HID' : null,
     ),
     // USB is not supported by ledger or the sia app.
     // Attempting to use this transports results in the following error:

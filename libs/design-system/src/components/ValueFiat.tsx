@@ -1,10 +1,10 @@
 'use client'
 
+import { useAppSettings } from '@siafoundation/react-core'
 import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
+import BigNumber from 'bignumber.js'
 import { Text } from '../core/Text'
 import { Tooltip } from '../core/Tooltip'
-import BigNumber from 'bignumber.js'
-import { useAppSettings } from '@siafoundation/react-core'
 
 type Props = {
   size?: React.ComponentProps<typeof Text>['size']
@@ -39,18 +39,18 @@ export function ValueFiat({
   const sign = sc.isZero()
     ? ''
     : sc.isGreaterThan(0) && variant === 'change'
-    ? '+'
-    : sc.isLessThan(0)
-    ? '-'
-    : ''
+      ? '+'
+      : sc.isLessThan(0)
+        ? '-'
+        : ''
   const color =
     customColor ||
     (variant === 'change'
       ? sc.isGreaterThan(0)
         ? 'green'
         : sc.isLessThan(0)
-        ? 'red'
-        : 'subtle'
+          ? 'red'
+          : 'subtle'
       : 'contrast')
 
   if (!exchangeRates.data) {
@@ -73,7 +73,7 @@ export function ValueFiat({
     >
       {`${sign}${currency.prefix}${formatBigNumberLocale(
         fiat.absoluteValue(),
-        digits
+        digits,
       )}`}
     </Text>
   )
@@ -105,7 +105,7 @@ function formatBigNumberLocale(bigNumber: BigNumber, fixed: number): string {
 
   // Format the integer part using the locale
   const formattedIntegerPart = new Intl.NumberFormat().format(
-    parseInt(integerPart)
+    Number.parseInt(integerPart!),
   )
 
   // Return the formatted number with the original decimal part

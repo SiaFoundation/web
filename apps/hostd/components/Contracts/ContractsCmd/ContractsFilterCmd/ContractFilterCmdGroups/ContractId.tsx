@@ -1,11 +1,11 @@
+import { useDialog } from '../../../../../contexts/dialog'
+import { filterContractId } from '../../../../../dialogs/ContractsFilterContractIdDialog'
 import {
   CommandGroup,
   CommandItemNav,
   CommandItemSearch,
 } from '../../../../CmdRoot/Item'
-import { Page } from '../../../../CmdRoot/types'
-import { useDialog } from '../../../../../contexts/dialog'
-import { filterContractId } from '../../../../../dialogs/ContractsFilterContractIdDialog'
+import type { Page } from '../../../../CmdRoot/types'
 
 export const contractsFilterContractIdPage = {
   namespace: 'contracts/filterAddress',

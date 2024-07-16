@@ -1,27 +1,27 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
-  Paragraph,
   Button,
+  type ConfigFields,
   Dialog,
-  ConfigFields,
   FieldText,
-  triggerErrorToast,
-  FormSubmitButton,
   FieldTextArea,
+  FormSubmitButton,
+  Paragraph,
   copyToClipboard,
+  triggerErrorToast,
 } from '@siafoundation/design-system'
-import { Redo16, Copy16 } from '@siafoundation/react-icons'
-import { MouseEvent, useCallback, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import { WalletMetadata } from '@siafoundation/walletd-types'
-import { useWalletAdd } from '@siafoundation/walletd-react'
-import { useDialog } from '../../contexts/dialog'
-import { useWallets } from '../../contexts/wallets'
-import { walletAddTypes } from '../../config/walletTypes'
-import { blake2bHex } from 'blakejs'
-import { SeedLayout } from '../SeedLayout'
+import { Copy16, Redo16 } from '@siafoundation/react-icons'
 import { SeedIcon } from '@siafoundation/react-icons'
 import { getSDK } from '@siafoundation/sdk'
+import { useWalletAdd } from '@siafoundation/walletd-react'
+import type { WalletMetadata } from '@siafoundation/walletd-types'
+import { blake2bHex } from 'blakejs'
+import { type MouseEvent, useCallback, useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { walletAddTypes } from '../../config/walletTypes'
+import { useDialog } from '../../contexts/dialog'
+import { useWallets } from '../../contexts/wallets'
+import { SeedLayout } from '../SeedLayout'
 
 const defaultValues = {
   name: '',
@@ -65,7 +65,6 @@ function getFields({
       type: 'text',
       title: 'Seed',
       onClick: (e) => {
-        // eslint-disable-next-line @typescript-eslint/no-extra-semi
         ;(e as MouseEvent<HTMLTextAreaElement>).currentTarget.select()
         copySeed()
       },
@@ -125,11 +124,11 @@ export function WalletAddNewDialog({ trigger, open, onOpenChange }: Props) {
     form.clearErrors(['hasCopied', 'mnemonic'])
   }, [form])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (open) {
       regenerateMnemonic()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
   const { dataset } = useWallets()
@@ -164,7 +163,7 @@ export function WalletAddNewDialog({ trigger, open, onOpenChange }: Props) {
         form.reset(defaultValues)
       }
     },
-    [form, openDialog, walletAdd]
+    [form, openDialog, walletAdd],
   )
 
   return (

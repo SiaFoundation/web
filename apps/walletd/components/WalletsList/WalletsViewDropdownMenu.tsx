@@ -1,23 +1,23 @@
 import {
-  Button,
-  Select,
-  PoolCombo,
-  Label,
-  Popover,
-  MenuItemRightSlot,
   BaseMenuItem,
-  MenuSeparator,
+  Button,
+  Label,
+  MenuItemRightSlot,
   MenuSectionLabelToggleAll,
+  MenuSeparator,
   Option,
+  PoolCombo,
+  Popover,
+  Select,
 } from '@siafoundation/design-system'
 import {
   CaretDown16,
-  SettingsAdjust16,
   Reset16,
+  SettingsAdjust16,
 } from '@siafoundation/react-icons'
-import { SortField, sortOptions } from '../../contexts/wallets/types'
-import { useWallets } from '../../contexts/wallets'
 import { groupBy } from '@technically/lodash'
+import { useWallets } from '../../contexts/wallets'
+import { type SortField, sortOptions } from '../../contexts/wallets/types'
 
 export function WalletsViewDropdownMenu() {
   const {
@@ -76,7 +76,7 @@ export function WalletsViewDropdownMenu() {
                     </Option>
                   ))}
                 </optgroup>
-              )
+              ),
             )}
           </Select>
         </MenuItemRightSlot>

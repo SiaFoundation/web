@@ -1,8 +1,8 @@
 import {
-  Paragraph,
   Button,
-  ValueCopyable,
+  Paragraph,
   Text,
+  ValueCopyable,
   triggerErrorToast,
 } from '@siafoundation/design-system'
 import { useCallback, useState } from 'react'

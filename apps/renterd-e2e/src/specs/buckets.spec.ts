@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test'
-import { navigateToBuckets } from '../fixtures/navigate'
+import { expect, test } from '@playwright/test'
+import { beforeTest } from '../fixtures/beforeTest'
 import {
   bucketInList,
   createBucket,
@@ -7,7 +7,7 @@ import {
   deleteBucketIfExists,
   openBucketContextMenu,
 } from '../fixtures/buckets'
-import { beforeTest } from '../fixtures/beforeTest'
+import { navigateToBuckets } from '../fixtures/navigate'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page)

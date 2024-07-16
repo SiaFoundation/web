@@ -1,12 +1,12 @@
 import { WebTransportClient } from './transport'
-import { WasmApi } from './types'
+import type { WasmApi } from './types'
 
 export type SDK = WasmApi & {
   WebTransportClient: typeof WebTransportClient
 }
 
 export function getWasmApi(): WasmApi {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   return (globalThis as any).sia as WasmApi
 }
 

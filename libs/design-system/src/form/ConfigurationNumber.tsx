@@ -1,9 +1,14 @@
-import BigNumber from 'bignumber.js'
-import { TipNumber } from './TipNumber'
-import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
-import { ConfigFields } from './configurationFields'
+import type BigNumber from 'bignumber.js'
+import type {
+  FieldValues,
+  Path,
+  PathValue,
+  UseFormReturn,
+} from 'react-hook-form'
 import { FieldError } from '../components/Form'
 import { FieldNumber } from './FieldNumber'
+import { TipNumber } from './TipNumber'
+import type { ConfigFields } from './configurationFields'
 import { useFormSetField } from './useFormSetField'
 
 type Props<Values extends FieldValues, Categories extends string> = {
@@ -14,7 +19,7 @@ type Props<Values extends FieldValues, Categories extends string> = {
 
 export function ConfigurationNumber<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({ name, form, fields }: Props<Values, Categories>) {
   const field = fields[name]
   const {

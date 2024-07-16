@@ -1,12 +1,12 @@
-import { Panel } from '../core/Panel'
+import { humanNumber } from '@siafoundation/units'
+import { cx } from 'class-variance-authority'
+import { formatDistance } from 'date-fns'
 import { Heading } from '../core/Heading'
 import { Link } from '../core/Link'
+import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
 import { getEntityTypeLabel } from '../lib/entityTypes'
-import { humanNumber } from '@siafoundation/units'
-import { formatDistance } from 'date-fns'
 import { EntityAvatar } from './EntityAvatar'
-import { cx } from 'class-variance-authority'
 import { EntityListSkeleton } from './EntityListSkeleton'
 
 type BlockListItemProps = {
@@ -53,7 +53,7 @@ export function BlockList({
             <div
               className={cx(
                 'flex items-center justify-center h-[100px]',
-                itemBorderStyles()
+                itemBorderStyles(),
               )}
             >
               <Text size="18" color="subtle">
@@ -83,14 +83,14 @@ export function BlockList({
                     {block.miningPool
                       ? ' mined by '
                       : i < dataset.length - 1
-                      ? ' mined '
-                      : ''}
+                        ? ' mined '
+                        : ''}
                     <Text weight="bold">{block.miningPool}</Text>
                     {block.miningPool ? ' ' : ''}
                     {i < dataset.length - 1
                       ? `in ${formatDistance(
                           new Date(block.timestamp),
-                          new Date(dataset[i + 1].timestamp)
+                          new Date(dataset[i + 1]?.timestamp || 0),
                         )}`
                       : ''}
                   </Text>
@@ -114,6 +114,6 @@ export function BlockList({
 function itemBorderStyles() {
   return cx(
     'border-t border-gray-200 dark:border-graydark-300',
-    'first:border-none'
+    'first:border-none',
   )
 }

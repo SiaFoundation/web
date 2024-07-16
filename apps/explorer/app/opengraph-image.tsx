@@ -1,9 +1,9 @@
-import { getOGImage } from '../components/OGImage'
-import { network } from '../config'
-import { humanBytes } from '@siafoundation/units'
-import { PreviewValue } from '../components/OGImage/Preview'
-import { siaCentral } from '../config/siaCentral'
 import { to } from '@siafoundation/request'
+import { humanBytes } from '@siafoundation/units'
+import { getOGImage } from '../components/OGImage'
+import type { PreviewValue } from '../components/OGImage/Preview'
+import { network } from '../config'
+import { siaCentral } from '../config/siaCentral'
 
 export const revalidate = 0
 
@@ -40,9 +40,9 @@ export default async function Image() {
       {
         label: 'Used storage',
         value: humanBytes(
-          metrics.totals.total_storage - metrics.totals.remaining_storage
+          metrics.totals.total_storage - metrics.totals.remaining_storage,
         ),
-      }
+      },
     )
   }
 
@@ -55,6 +55,6 @@ export default async function Image() {
           : 'Siascan Zen is a block explorer with host statistics and pricing details. Siascan Zen is built for the Sia Zen Testnet.',
       values: values.length ? values : undefined,
     },
-    size
+    size,
   )
 }

@@ -1,26 +1,26 @@
+import { getNotionPage } from '@siafoundation/data-sources'
 /* eslint-disable react/no-unescaped-entities */
 import {
-  ContentGallery,
   Callout,
+  ContentGallery,
   SiteHeading,
   webLinks,
 } from '@siafoundation/design-system'
+import { MDXRemote } from 'next-mdx-remote'
+import { CalloutProject } from '../../components/CalloutProject'
 import { Layout } from '../../components/Layout'
+import { SectionGradient } from '../../components/SectionGradient'
+import { SectionTransparent } from '../../components/SectionTransparent'
+import { TableOfContents } from '../../components/TableOfContents'
+import { components } from '../../config/mdx'
 import { routes } from '../../config/routes'
+import { backgrounds, previews } from '../../content/assets'
+import { getGrantCommittee } from '../../content/grantCommittee'
 import { getProjects } from '../../content/projects'
 import { getStats } from '../../content/stats'
-import { textContent } from '../../lib/utils'
-import { AsyncReturnType } from '../../lib/types'
 import { getMinutesInSeconds } from '../../lib/time'
-import { getGrantCommittee } from '../../content/grantCommittee'
-import { SectionTransparent } from '../../components/SectionTransparent'
-import { SectionGradient } from '../../components/SectionGradient'
-import { MDXRemote } from 'next-mdx-remote'
-import { components } from '../../config/mdx'
-import { TableOfContents } from '../../components/TableOfContents'
-import { backgrounds, previews } from '../../content/assets'
-import { CalloutProject } from '../../components/CalloutProject'
-import { getNotionPage } from '@siafoundation/data-sources'
+import type { AsyncReturnType } from '../../lib/types'
+import { textContent } from '../../lib/utils'
 
 const title = 'Grants'
 const description = (

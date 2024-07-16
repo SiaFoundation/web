@@ -1,13 +1,23 @@
 'use client'
 
 import { useAppRouter, usePathname } from '@siafoundation/next'
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { useCallback } from 'react'
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+} from 'react'
 import useLocalStorageState from 'use-local-storage-state'
-import { useGpuFeatures } from './useGpuFeatures'
 import { clearAllSwrKeys } from '../utils'
 import { useWorkflows } from '../workflows'
-import { CurrencyId, CurrencyOption, currencyOptions } from './currency'
+import {
+  type CurrencyId,
+  type CurrencyOption,
+  currencyOptions,
+} from './currency'
+import { useGpuFeatures } from './useGpuFeatures'
 import { useIsAuthenticatedRoute } from './useIsAuthenticatedRoute'
 
 export type CurrencyDisplay = 'sc' | 'fiat' | 'bothPreferSc' | 'bothPreferFiat'
@@ -33,7 +43,7 @@ const defaultSettings: AppSettings = {
   allowCustomApi: false,
   siaCentral: true,
   password: undefined,
-  currency: currencyOptions[0],
+  currency: currencyOptions[0]!,
   currencyDisplay: 'bothPreferSc',
   recentApis: {},
   autoLock: false,
@@ -64,37 +74,41 @@ function useAppSettingsMain({
 }: Props) {
   const customDefaultSettings = useMemo(
     () => getDefaultSettings(overrideDefaultSettings),
-    [overrideDefaultSettings]
+    [overrideDefaultSettings],
   )
   const [_settings, _setSettings] = useLocalStorageState('v1/settings', {
     defaultValue: customDefaultSettings,
   })
+  const [foo, setFoo] = useState(0)
+  setFoo((foo) => foo + 1)
   // Merge in defaults incase new settings have been introduced
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
+    // @ts-expect-error TODO: fix types
     _setSettings((settings) => ({
       ...customDefaultSettings,
       ...settings,
     }))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const settings = useMemo(
     () => ({
       ...customDefaultSettings,
       ..._settings,
     }),
-    [_settings, customDefaultSettings]
+    [_settings, customDefaultSettings],
   )
 
   const { resetWorkflows } = useWorkflows()
 
   const setSettings = useCallback(
     (values: Partial<AppSettings>) => {
+      // @ts-expect-error TODO: fix types
       _setSettings((s) => ({
         ...s,
         ...values,
       }))
     },
-    [_setSettings]
+    [_setSettings],
   )
 
   const setCurrency = useCallback(
@@ -106,7 +120,7 @@ function useAppSettingsMain({
         })
       }
     },
-    [setSettings]
+    [setSettings],
   )
 
   const router = useAppRouter()
@@ -122,19 +136,18 @@ function useAppSettingsMain({
         [key]: callback,
       }))
     },
-    [setOnLockCallbacks]
+    [],
   )
   const lock = useCallback(() => {
     if (lockRoutes) {
       router.push(
-        `${lockRoutes.login}?prev=${getRouteToSaveAsPrev(pathname, lockRoutes)}`
+        `${lockRoutes.login}?prev=${getRouteToSaveAsPrev(pathname, lockRoutes)}`,
       )
     }
     setSettings({ password: '' })
     resetWorkflows()
     clearAllSwrKeys()
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    for (const [_, callback] of Object.entries(onLockCallbacks)) {
+    for (const [, callback] of Object.entries(onLockCallbacks)) {
       if (callback) {
         callback()
       }
@@ -185,7 +198,7 @@ export function AppSettingsProvider({ children, ...props }: Props) {
 
 export function getRouteToSaveAsPrev(
   pathname: string,
-  routes: { home: string; login: string }
+  routes: { home: string; login: string },
 ) {
   if ([routes.login].includes(pathname)) {
     return routes.home

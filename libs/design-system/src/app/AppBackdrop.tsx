@@ -1,12 +1,13 @@
-import React from 'react'
-import pattern from '../assets/background-pattern.jpg'
+import type React from 'react'
+// import pattern from '../assets/background-pattern.jpg'
 import { getImageProps } from '../lib/image'
 
 type Props = {
   children?: React.ReactNode
 }
 
-const patternSrc = getImageProps(pattern).src
+// const patternSrc = getImageProps(pattern).src
+const patternSrc = '/background-pattern.jpg'
 
 export function AppBackdrop({ children }: Props) {
   return (

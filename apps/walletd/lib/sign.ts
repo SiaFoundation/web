@@ -1,12 +1,12 @@
-import {
+import { stripPrefix } from '@siafoundation/design-system'
+import type {
   SiacoinElement,
   SiacoinInput,
   SiafundElement,
   SiafundInput,
   Transaction,
 } from '@siafoundation/types'
-import { stripPrefix } from '@siafoundation/design-system'
-import { AddressData } from '../contexts/addresses/types'
+import type { AddressData } from '../contexts/addresses/types'
 
 export function addUnlockConditionsAndSignatures({
   transaction,
@@ -98,7 +98,7 @@ export function getSiacoinUtxoAndAddress({
   // find the utxo's address metadata which has the index and public key saved
   // the public key was computed and saved when the address was generated
   const addressData = addresses?.find(
-    (a) => stripPrefix(a.address) === stripPrefix(utxo.siacoinOutput.address)
+    (a) => stripPrefix(a.address) === stripPrefix(utxo.siacoinOutput.address),
   )
 
   if (!addressData) {
@@ -140,7 +140,7 @@ export function getSiafundUtxoAndAddress({
   // find the utxo's address metadata which has the index and public key saved
   // the public key was computed and saved when the address was generated
   const addressData = addresses?.find(
-    (a) => stripPrefix(a.address) === stripPrefix(utxo.siafundOutput.address)
+    (a) => stripPrefix(a.address) === stripPrefix(utxo.siafundOutput.address),
   )
 
   if (!addressData) {
@@ -193,7 +193,7 @@ export function getToSignMetadata({
   if (!scUtxoAddr.error) {
     // find the siacoin input by matching the toSign ID to the siacoin input's parent ID
     const sci = transaction.siacoinInputs?.find(
-      (sci) => stripPrefix(sci.parentID) === stripPrefix(scUtxoAddr.utxo.id)
+      (sci) => stripPrefix(sci.parentID) === stripPrefix(scUtxoAddr.utxo.id),
     )
 
     if (!sci) {
@@ -217,7 +217,7 @@ export function getToSignMetadata({
   if (!sfUtxoAddr.error) {
     // find the siacoin input by matching the toSign ID to the saifund input's parent ID
     const sfi = transaction.siafundInputs?.find(
-      (sfi) => stripPrefix(sfi.parentID) === stripPrefix(sfUtxoAddr.utxo.id)
+      (sfi) => stripPrefix(sfi.parentID) === stripPrefix(sfUtxoAddr.utxo.id),
     )
 
     if (!sfi) {

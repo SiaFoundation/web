@@ -1,12 +1,12 @@
 'use client'
 
 import {
-  copyToClipboard,
-  Heading,
-  humanId,
   Button,
+  type EntityType,
+  Heading,
   Link,
-  EntityType,
+  copyToClipboard,
+  humanId,
 } from '@siafoundation/design-system'
 import { Copy16 } from '@siafoundation/react-icons'
 import { upperFirst } from '@technically/lodash'

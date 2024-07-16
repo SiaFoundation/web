@@ -1,13 +1,13 @@
-import { Text } from '../core/Text'
-import { ValueSf } from '../components/ValueSf'
-import { ValueCopyable } from '../components/ValueCopyable'
-import { Tooltip } from '../core/Tooltip'
-import BigNumber from 'bignumber.js'
 import { upperFirst } from '@technically/lodash'
-import { Panel } from '../core/Panel'
-import { EntityType, getEntityTypeLabel } from '../lib/entityTypes'
+import type BigNumber from 'bignumber.js'
 import { cx } from 'class-variance-authority'
+import { ValueCopyable } from '../components/ValueCopyable'
+import { ValueSf } from '../components/ValueSf'
+import { Panel } from '../core/Panel'
 import { Skeleton } from '../core/Skeleton'
+import { Text } from '../core/Text'
+import { Tooltip } from '../core/Tooltip'
+import { type EntityType, getEntityTypeLabel } from '../lib/entityTypes'
 import { ValueScFiat } from './ValueScFiat'
 
 // entityType&entityValue | value | values | sc | sf
@@ -59,7 +59,7 @@ export function DatumCard({
       <div
         className={cx(
           'flex items-center py-2 px-4 h-full min-w-[250px]',
-          onClick ? 'cursor-pointer' : ''
+          onClick ? 'cursor-pointer' : '',
         )}
         onClick={onClick}
       >

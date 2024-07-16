@@ -1,6 +1,6 @@
+import * as detectGpu from 'detect-gpu'
 import { useCallback, useEffect, useState } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
-import * as detectGpu from 'detect-gpu'
 import { usePrefersReducedMotion } from '../userPrefersReducedMotion'
 // esm compat
 const { getGPUTier } = detectGpu
@@ -16,25 +16,26 @@ export function useGpuFeatures() {
         isGpuEnabled: !reduceMotion,
         hasUserSet: false,
       },
-    }
+    },
   )
 
   const setIsGpuEnabled = useCallback(
     (isGpuEnabled: boolean, byUser = true) => {
+      // @ts-expect-error TODO: fix types
       setSettings((settings) => ({
         ...settings,
         isGpuEnabled,
         hasUserSet: byUser,
       }))
     },
-    [setSettings]
+    [setSettings],
   )
 
   const checkGpu = useCallback(async () => {
     let canRender = false
     // library prints lots of console.error for unimplemented libraries
     // skip check during tests
-    if (process.env['NODE_ENV'] !== 'test') {
+    if (process.env.NODE_ENV !== 'test') {
       const gpu = await getGPUTier()
       console.log('GPU', gpu)
       // canRender = gpu.gpu?.startsWith('apple') || (gpu.fps || 0) >= 15
@@ -46,11 +47,11 @@ export function useGpuFeatures() {
     }
     setCanGpuRender(canRender)
     setHasCheckedGpu(true)
-  }, [setCanGpuRender, setIsGpuEnabled, hasUserSet])
+  }, [setIsGpuEnabled, hasUserSet])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     checkGpu()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const shouldRender = canGpuRender && isGpuEnabled

@@ -1,4 +1,4 @@
-import { Transaction } from '@siafoundation/types'
+import type { Transaction } from '@siafoundation/types'
 import { useTxPoolBroadcast } from '@siafoundation/walletd-react'
 import { useCallback } from 'react'
 
@@ -31,7 +31,7 @@ export function useBroadcast({ cancel }: { cancel: (t: Transaction) => void }) {
         // transactionId: signResponse.data.??,
       }
     },
-    [cancel, txPoolBroadcast]
+    [cancel, txPoolBroadcast],
   )
 
   return broadcast

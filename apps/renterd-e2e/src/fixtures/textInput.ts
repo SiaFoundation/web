@@ -1,9 +1,9 @@
-import { Page, expect } from '@playwright/test'
+import { type Page, expect } from '@playwright/test'
 
 export async function fillTextInputByName(
   page: Page,
   name: string,
-  value: string
+  value: string,
 ) {
   await page.locator(`input[name="${name}"]`).click()
   await page.locator(`input[name="${name}"]`).fill(value)
@@ -12,7 +12,7 @@ export async function fillTextInputByName(
 export async function expectTextInputByName(
   page: Page,
   name: string,
-  value: string
+  value: string,
 ) {
   await expect(page.locator(`input[name="${name}"]`)).toHaveValue(value)
 }
@@ -24,7 +24,7 @@ export async function expectTextInputNotVisible(page: Page, name: string) {
 export async function expectTextInputByNameAttribute(
   page: Page,
   name: string,
-  value: string
+  value: string,
 ) {
   await expect(page.locator(`input[name="${name}"]`)).toHaveAttribute(value)
 }

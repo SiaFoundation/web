@@ -1,9 +1,10 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
-import { ThemeProvider } from 'next-themes'
-import { TooltipProvider } from '../hooks/tooltip'
 import { AppSettingsProvider, CoreProvider } from '@siafoundation/react-core'
+import { ThemeProvider } from 'next-themes'
+import type React from 'react'
+import { useEffect, useState } from 'react'
+import { TooltipProvider } from '../hooks/tooltip'
 import { Toaster } from '../lib/toast'
 
 export function ClientSide({ children }: { children: React.ReactNode }) {

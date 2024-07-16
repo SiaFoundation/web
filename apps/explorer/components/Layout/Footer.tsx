@@ -1,10 +1,10 @@
 import {
   Container,
+  CurrencyFiatSelector,
   Link,
-  webLinks,
   Logo,
   ThemeRadio,
-  CurrencyFiatSelector,
+  webLinks,
 } from '@siafoundation/design-system'
 
 export function Footer() {

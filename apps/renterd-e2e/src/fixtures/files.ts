@@ -1,5 +1,5 @@
-import { Page, expect } from '@playwright/test'
-import { readFileSync } from 'fs'
+import { readFileSync } from 'node:fs'
+import { type Page, expect } from '@playwright/test'
 import { fillTextInputByName } from './textInput'
 
 export async function deleteFile(page: Page, path: string) {
@@ -26,7 +26,7 @@ export async function deleteDirectory(page: Page, path: string) {
   await expect(deleteDirectoryItem).toBeVisible()
   await deleteDirectoryItem.click()
   await expect(
-    page.getByRole('dialog').getByText('Delete directory')
+    page.getByRole('dialog').getByText('Delete directory'),
   ).toBeVisible()
   await page.locator('form button[type=submit]').click()
   await expect(page.getByRole('dialog')).toBeHidden()
@@ -43,7 +43,6 @@ export async function deleteDirectoryIfExists(page: Page, path: string) {
 export async function openDirectoryContextMenu(page: Page, path: string) {
   const selector = page.getByTestId(path).getByLabel('Directory context menu')
   // Click doesn't work until animation is finished.
-  // eslint-disable-next-line playwright/no-wait-for-timeout
   await page.waitForTimeout(100)
   await expect(selector).toBeVisible()
   await selector.click()
@@ -90,7 +89,7 @@ export async function dragAndDropFile(
   selector: string,
   filePath: string,
   fileName: string,
-  fileType = ''
+  fileType = '',
 ) {
   const buffer = readFileSync(filePath).toString('base64')
 
@@ -108,7 +107,7 @@ export async function dragAndDropFile(
       bufferData: `data:application/octet-stream;base64,${buffer}`,
       localFileName: fileName,
       localFileType: fileType,
-    }
+    },
   )
 
   await page.dispatchEvent(selector, 'drop', { dataTransfer })

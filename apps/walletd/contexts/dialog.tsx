@@ -1,78 +1,79 @@
-import React, { createContext, useContext, useCallback, useState } from 'react'
 import {
   ConfirmDialog,
-  ConfirmDialogParams,
+  type ConfirmDialogParams,
   SyncerConnectPeerDialog,
-  SyncerConnectPeerDialogParams,
+  type SyncerConnectPeerDialogParams,
 } from '@siafoundation/design-system'
 import { useSyncerConnect } from '@siafoundation/walletd-react'
+import type React from 'react'
+import { createContext, useCallback, useContext, useState } from 'react'
 import {
-  WalletAddTypeDialog,
-  WalletAddTypeDialogParams,
-} from '../dialogs/WalletAddTypeDialog'
-import {
-  WalletAddNewDialog,
-  WalletAddNewDialogParams,
-} from '../dialogs/WalletAddNewDialog'
-import {
-  WalletAddressesGenerateSeedDialog,
-  WalletAddressesGenerateSeedDialogParams,
-} from '../dialogs/WalletAddressesGenerateSeedDialog'
-import {
-  WalletRemoveDialog,
-  WalletRemoveDialogParams,
-} from '../dialogs/WalletRemoveDialog'
+  AddressRemoveDialog,
+  type AddressRemoveDialogParams,
+} from '../dialogs/AddressRemoveDialog'
 import {
   AddressUpdateDialog,
-  AddressUpdateDialogParams,
+  type AddressUpdateDialogParams,
 } from '../dialogs/AddressUpdateDialog'
 import {
-  WalletUpdateDialog,
-  WalletUpdateDialogParams,
-} from '../dialogs/WalletUpdateDialog'
-import {
   WalletAddLedgerDialog,
-  WalletAddLedgerDialogParams,
+  type WalletAddLedgerDialogParams,
 } from '../dialogs/WalletAddLedgerDialog'
 import {
+  WalletAddNewDialog,
+  type WalletAddNewDialogParams,
+} from '../dialogs/WalletAddNewDialog'
+import {
   WalletAddRecoverDialog,
-  WalletAddRecoverDialogParams,
+  type WalletAddRecoverDialogParams,
 } from '../dialogs/WalletAddRecoverDialog'
 import {
+  WalletAddTypeDialog,
+  type WalletAddTypeDialogParams,
+} from '../dialogs/WalletAddTypeDialog'
+import {
   WalletAddWatchDialog,
-  WalletAddWatchDialogParams,
+  type WalletAddWatchDialogParams,
 } from '../dialogs/WalletAddWatchDialog'
 import {
   WalletAddressesAddDialog,
-  WalletAddressesAddDialogParams,
+  type WalletAddressesAddDialogParams,
 } from '../dialogs/WalletAddressesAddDialog'
 import {
-  AddressRemoveDialog,
-  AddressRemoveDialogParams,
-} from '../dialogs/AddressRemoveDialog'
-import {
-  WalletSendSeedDialog,
-  WalletSendSeedDialogParams,
-} from '../dialogs/WalletSendSeedDialog'
-import {
-  WalletSendLedgerDialog,
-  WalletSendLedgerDialogParams,
-} from '../dialogs/WalletSendLedgerDialog'
-import {
-  WalletUnlockDialog,
-  WalletUnlockDialogParams,
-} from '../dialogs/WalletUnlockDialog'
-import {
-  WalletdSettingsDialog,
-  WalletdSettingsDialogParams,
-} from '../dialogs/WalletdSettingsDialog'
-import {
   WalletAddressesGenerateLedgerDialog,
-  WalletAddressesGenerateLedgerDialogParams,
+  type WalletAddressesGenerateLedgerDialogParams,
 } from '../dialogs/WalletAddressesGenerateLedgerDialog'
 import {
-  WalletsRescanDialogParams,
+  WalletAddressesGenerateSeedDialog,
+  type WalletAddressesGenerateSeedDialogParams,
+} from '../dialogs/WalletAddressesGenerateSeedDialog'
+import {
+  WalletRemoveDialog,
+  type WalletRemoveDialogParams,
+} from '../dialogs/WalletRemoveDialog'
+import {
+  WalletSendLedgerDialog,
+  type WalletSendLedgerDialogParams,
+} from '../dialogs/WalletSendLedgerDialog'
+import {
+  WalletSendSeedDialog,
+  type WalletSendSeedDialogParams,
+} from '../dialogs/WalletSendSeedDialog'
+import {
+  WalletUnlockDialog,
+  type WalletUnlockDialogParams,
+} from '../dialogs/WalletUnlockDialog'
+import {
+  WalletUpdateDialog,
+  type WalletUpdateDialogParams,
+} from '../dialogs/WalletUpdateDialog'
+import {
+  WalletdSettingsDialog,
+  type WalletdSettingsDialogParams,
+} from '../dialogs/WalletdSettingsDialog'
+import {
   WalletsRescanDialog,
+  type WalletsRescanDialogParams,
 } from '../dialogs/WalletsRescanDialog'
 // import { CmdKDialog } from '../components/CmdKDialog'
 
@@ -102,7 +103,7 @@ export type DialogParams = {
 
 export type OpenDialog = <D extends DialogType>(
   type: D,
-  params?: DialogParams[D]
+  params?: DialogParams[D],
 ) => void
 
 export type DialogType = keyof DialogParams
@@ -119,7 +120,7 @@ function useDialogMain() {
       }))
       setDialog(type)
     },
-    [setParams, setDialog]
+    [setParams, setDialog],
   )
 
   const closeDialog = useCallback(() => {
@@ -136,7 +137,7 @@ function useDialogMain() {
         closeDialog()
       }
     },
-    [closeDialog]
+    [closeDialog],
   )
 
   return {

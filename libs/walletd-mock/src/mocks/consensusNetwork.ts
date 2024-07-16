@@ -1,5 +1,5 @@
-import { ConsensusNetwork } from '@siafoundation/types'
-import { Page } from 'playwright'
+import type { ConsensusNetwork } from '@siafoundation/types'
+import type { Page } from 'playwright'
 
 export function getMockConsensusNetworkResponse(): ConsensusNetwork {
   return {

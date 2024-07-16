@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export function useTryUntil(fn: () => boolean, interval = 1000) {
   const [isTruthy, setIsTruthy] = useState(false)

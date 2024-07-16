@@ -4,12 +4,12 @@ import { useBuckets, useObjectDownloadFunc } from '@siafoundation/renterd-react'
 import { throttle } from '@technically/lodash'
 import { useCallback, useMemo, useState } from 'react'
 import {
-  FullPath,
+  type FullPath,
   bucketAndKeyParamsFromPath,
   getBucketFromPath,
   getFilename,
 } from '../../lib/paths'
-import { ObjectData } from './types'
+import type { ObjectData } from './types'
 
 type DownloadProgress = ObjectData & {
   controller: AbortController
@@ -41,7 +41,7 @@ export function useDownloads() {
         },
       }))
     },
-    [setDownloadsMap]
+    [setDownloadsMap],
   )
 
   const updateDownloadProgress = useCallback(
@@ -50,10 +50,11 @@ export function useDownloads() {
         if (!map[obj.path]) {
           return map
         }
+        const prev = map[obj.path] as DownloadProgress
         return {
           ...map,
           [obj.path]: {
-            ...map[obj.path],
+            ...prev,
             path: obj.path,
             loaded: obj.loaded,
             size: obj.size,
@@ -61,7 +62,7 @@ export function useDownloads() {
         }
       })
     },
-    [setDownloadsMap]
+    [setDownloadsMap],
   )
 
   const removeDownload = useCallback(
@@ -73,7 +74,7 @@ export function useDownloads() {
         }
       })
     },
-    [setDownloadsMap]
+    [setDownloadsMap],
   )
 
   const downloadCancel = useCallback((download: DownloadProgress) => {
@@ -84,7 +85,7 @@ export function useDownloads() {
     files.forEach(async (path) => {
       let isDone = false
       const bucketName = getBucketFromPath(path)
-      const bucket = buckets.data?.find((b) => b.name === bucketName)
+      const bucket = buckets.data?.find((b) => b.name === bucketName)!
       const name = getFilename(path)
 
       if (downloadsMap[path]) {
@@ -139,7 +140,7 @@ export function useDownloads() {
 
   const downloadsList = useMemo(
     () => Object.entries(downloadsMap).map((d) => d[1]),
-    [downloadsMap]
+    [downloadsMap],
   )
 
   const { settings } = useAppSettings()
@@ -156,7 +157,7 @@ export function useDownloads() {
       }
       return `${scheme}://${host}/api${workerPath}`
     },
-    [settings]
+    [settings],
   )
 
   return {

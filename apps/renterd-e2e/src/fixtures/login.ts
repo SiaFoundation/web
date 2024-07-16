@@ -1,4 +1,4 @@
-import { Page, expect } from '@playwright/test'
+import { type Page, expect } from '@playwright/test'
 import { fillTextInputByName } from './textInput'
 
 export async function login({ page }: { page: Page }) {
@@ -10,7 +10,7 @@ export async function login({ page }: { page: Page }) {
   await fillTextInputByName(
     page,
     'password',
-    process.env.RENTERD_E2E_TEST_API_PASSWORD
+    process.env.RENTERD_E2E_TEST_API_PASSWORD,
   )
   await page.locator('input[name=password]').press('Enter')
   await expect(page.getByTestId('navbar').getByText('Buckets')).toBeVisible()

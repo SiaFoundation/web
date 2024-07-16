@@ -20,7 +20,7 @@ export async function fetchTeam(): Promise<Member[]> {
       },
     ],
   })
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   return results.map((member: any) => ({
     name: member.properties.name.title?.[0]?.plain_text,
     title: member.properties.title.rich_text[0]?.plain_text || null,

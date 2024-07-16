@@ -1,4 +1,4 @@
-import { Link, LinkData } from '@siafoundation/design-system'
+import { Link, type LinkData } from '@siafoundation/design-system'
 
 type Props = {
   links?: LinkData[]

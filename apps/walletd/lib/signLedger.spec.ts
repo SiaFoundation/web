@@ -1,7 +1,7 @@
 import { initSDK } from '@siafoundation/sdk'
+import { getMockScenarioSeedWallet } from '@siafoundation/walletd-mock'
 import { signTransactionLedger } from './signLedger'
 import { getMockAddresses, getMockDevice } from './testMocks'
-import { getMockScenarioSeedWallet } from '@siafoundation/walletd-mock'
 
 beforeEach(async () => {
   await initSDK()
@@ -20,7 +20,7 @@ describe('signLedger', () => {
           siacoinOutputs: mocks.walletOutputsSiacoinResponse,
           siafundOutputs: mocks.walletOutputsSiafundResponse,
           addresses: getMockAddresses(mocks),
-        })
+        }),
       ).toMatchSnapshot()
     })
 
@@ -35,7 +35,7 @@ describe('signLedger', () => {
           siafundOutputs: mocks.walletOutputsSiafundResponse,
           addresses: getMockAddresses(mocks),
           toSign: [mocks.walletFundResponse.toSign[0], 'not in siacoinOutputs'],
-        })
+        }),
       ).toEqual({
         error: 'Missing utxo',
       })
@@ -61,7 +61,7 @@ describe('signLedger', () => {
               },
             },
           ],
-        })
+        }),
       ).toEqual({
         error: 'Missing address',
       })
@@ -86,7 +86,7 @@ describe('signLedger', () => {
               metadata: {},
             },
           ],
-        })
+        }),
       ).toEqual({
         error: 'Missing address index',
       })
@@ -105,7 +105,7 @@ describe('signLedger', () => {
           siacoinOutputs: mocks.walletOutputsSiacoinResponse,
           siafundOutputs: mocks.walletOutputsSiafundResponse,
           addresses,
-        })
+        }),
       ).toEqual({
         error: 'Missing address public key',
       })

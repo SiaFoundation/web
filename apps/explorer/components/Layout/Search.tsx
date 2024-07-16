@@ -2,18 +2,18 @@
 
 import {
   Button,
-  ConfigFields,
+  type ConfigFields,
   ControlGroup,
   FieldText,
   triggerErrorToast,
 } from '@siafoundation/design-system'
 import { Search16 } from '@siafoundation/react-icons'
-import React, { useCallback } from 'react'
-import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
 import { useSiaCentralSearch } from '@siafoundation/sia-central-react'
-import { routes } from '../../config/routes'
+import { useRouter } from 'next/navigation'
+import React, { useCallback } from 'react'
+import { useForm } from 'react-hook-form'
 import { siaCentralApi } from '../../config'
+import { routes } from '../../config/routes'
 
 const defaultValues = {
   query: '',
@@ -59,34 +59,34 @@ export function Search() {
         router.push(
           routes.block.view.replace(
             ':id',
-            String(response.data.blocks[0].height)
-          )
+            String(response.data.blocks[0].height),
+          ),
         )
         form.reset()
       } else if (response.data.transactions?.length) {
         router.push(
           routes.transaction.view.replace(
             ':id',
-            response.data.transactions[0].id
-          )
+            response.data.transactions[0].id,
+          ),
         )
         form.reset()
       } else if (response.data.contracts?.length) {
         router.push(
-          routes.contract.view.replace(':id', response.data.contracts[0].id)
+          routes.contract.view.replace(':id', response.data.contracts[0].id),
         )
         form.reset()
       } else if (response.data.unlock_hashes?.length) {
         router.push(
           routes.address.view.replace(
             ':id',
-            response.data.unlock_hashes[0].address
-          )
+            response.data.unlock_hashes[0].address,
+          ),
         )
         form.reset()
       } else if (response.data.hosts?.length) {
         router.push(
-          routes.host.view.replace(':id', response.data.hosts[0].public_key)
+          routes.host.view.replace(':id', response.data.hosts[0].public_key),
         )
         form.reset()
       } else {
@@ -94,7 +94,7 @@ export function Search() {
         triggerErrorToast({ title: 'No results match query' })
       }
     },
-    [form, router, search]
+    [form, router, search],
   )
 
   return (

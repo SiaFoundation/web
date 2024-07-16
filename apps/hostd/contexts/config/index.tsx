@@ -1,23 +1,23 @@
-import { createContext, useContext, useRef } from 'react'
 import {
+  nodeToImage,
   triggerErrorToast,
-  useOnInvalid,
+  useFormChangeCount,
   useFormInit,
   useFormServerSynced,
-  useFormChangeCount,
-  nodeToImage,
+  useOnInvalid,
 } from '@siafoundation/design-system'
+import { useStateHost } from '@siafoundation/hostd-react'
+import { createContext, useContext, useRef } from 'react'
 import { useCallback, useMemo } from 'react'
-import { transformDown } from './transform'
-import { useResources } from './useResources'
-import { useForm } from './useForm'
 import {
-  Resources,
+  type Resources,
   checkIfAllResourcesLoaded,
   checkIfAnyResourcesErrored,
 } from './resources'
+import { transformDown } from './transform'
+import { useForm } from './useForm'
 import { useOnValid } from './useOnValid'
-import { useStateHost } from '@siafoundation/hostd-react'
+import { useResources } from './useResources'
 
 export function useConfigMain() {
   const { settings, settingsPinned, dynDNSCheck } = useResources()
@@ -36,7 +36,7 @@ export function useConfigMain() {
         error: settingsPinned.error,
       },
     }),
-    [settings.data, settings.error, settingsPinned.data, settingsPinned.error]
+    [settings.data, settings.error, settingsPinned.data, settingsPinned.error],
   )
 
   const remoteValues = useMemo(() => {
@@ -51,7 +51,7 @@ export function useConfigMain() {
 
   const remoteError = useMemo(
     () => checkIfAnyResourcesErrored(resources),
-    [resources]
+    [resources],
   )
 
   const state = useStateHost()
@@ -68,7 +68,7 @@ export function useConfigMain() {
         transformDown({
           settings: _settings,
           settingsPinned: _settingsPinned,
-        })
+        }),
       )
     }
   }, [form, settings, settingsPinned, dynDNSCheck, pinningEnabled])
@@ -92,7 +92,7 @@ export function useConfigMain() {
 
   const onSubmit = useMemo(
     () => form.handleSubmit(onValid, onInvalid),
-    [form, onValid, onInvalid]
+    [form, onValid, onInvalid],
   )
 
   const configRef = useRef()
@@ -105,7 +105,7 @@ export function useConfigMain() {
     }) => {
       nodeToImage(configRef.current, props)
     },
-    []
+    [],
   )
 
   return {

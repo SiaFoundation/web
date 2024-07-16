@@ -1,11 +1,11 @@
-import { FieldValues } from 'react-hook-form'
+import type { FieldValues } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
 import { TextField } from '../core/TextField'
-import { FieldProps, useRegisterForm } from './configurationFields'
+import { type FieldProps, useRegisterForm } from './configurationFields'
 
 export function FieldText<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   name,
   form,
@@ -48,9 +48,9 @@ export function FieldText<
         state
           ? error
             ? 'invalid'
-            : form.formState.dirtyFields[name]
-            ? 'valid'
-            : 'default'
+            : (form.formState.dirtyFields as Record<string, boolean>)[name]
+              ? 'valid'
+              : 'default'
           : 'default'
       }
       onChange={onChange}

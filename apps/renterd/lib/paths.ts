@@ -17,7 +17,7 @@ export function buildDirectoryPath(dirPath: FullPath, name: string): FullPath {
 }
 
 export function getBucketFromPath(path: FullPath): string {
-  return path.split('/')[0]
+  return path.split('/')[0]!
 }
 
 export function getKeyFromPath(path: FullPath): KeyPath {
@@ -51,7 +51,7 @@ export function getFilename(path: FullPath): string {
   if (path.endsWith('/')) {
     return `${parts[parts.length - 2]}/`
   }
-  return parts[parts.length - 1]
+  return parts[parts.length - 1]!
 }
 
 export function isDirectory(path: FullPath): boolean {

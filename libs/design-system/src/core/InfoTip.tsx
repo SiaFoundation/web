@@ -1,6 +1,6 @@
-import { Tooltip } from './Tooltip'
 import { Information16 } from '@siafoundation/react-icons'
 import { Text } from './Text'
+import { Tooltip } from './Tooltip'
 
 type Props = {
   children: React.ReactNode

@@ -1,9 +1,9 @@
 import { cx } from 'class-variance-authority'
-import React from 'react'
+import type React from 'react'
 import { SectionHeading } from '../components/SectionHeading'
 import { Paragraph } from '../core/Paragraph'
 import { Text } from '../core/Text'
-import { LinkData } from '../lib/links'
+import type { LinkData } from '../lib/links'
 import { Links } from './Links'
 
 type Size = '20' | '24' | '32' | '64'
@@ -82,7 +82,7 @@ export function SiteHeading({
         'flex flex-col',
         sizeToGap[size],
         sizeToPadding[size],
-        className
+        className,
       )}
     >
       {eyebrow && (

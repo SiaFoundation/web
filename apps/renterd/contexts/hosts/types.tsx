@@ -1,8 +1,11 @@
-import { AutopilotHost } from '@siafoundation/renterd-types'
-import BigNumber from 'bignumber.js'
-import { ContractData } from '../contracts/types'
+import type { AutopilotHost } from '@siafoundation/renterd-types'
+import type BigNumber from 'bignumber.js'
+import type { ContractData } from '../contracts/types'
 
-export type HostContext = { isAutopilotConfigured: boolean; siascanUrl: string }
+export type HostCellContext = {
+  isAutopilotConfigured: boolean
+  siascanUrl: string
+}
 
 export type HostData = {
   id: string
@@ -12,7 +15,7 @@ export type HostData = {
   netAddress: string
   publicKey: string
   lastScanSuccess: boolean
-  lastScan: string
+  lastScan: string | null
   lastAnnouncement: string | null
   knownSince: string | null
   uptime: BigNumber
@@ -41,14 +44,16 @@ export type HostData = {
   }
   priceTable?: AutopilotHost['host']['priceTable']
   settings?: AutopilotHost['host']['settings']
-  gouging: boolean
-  usable: boolean
+  gouging?: boolean
+  usable?: boolean
   activeContractsCount: BigNumber
   activeContracts: ContractData[]
   // merged in from sia central API
 
   location?: [number, number]
   countryCode?: string
+
+  onClick?: () => void
 }
 
 const generalColumns = [
@@ -144,10 +149,10 @@ const settingsColumns = [
   'hs_windowsize',
 ] as const
 
-export type HostTableColumnGeneral = typeof generalColumns[number]
-export type HostTableColumnAutopilot = typeof autopilotColumns[number]
-export type HostTableColumnPriceTable = typeof priceTableColumns[number]
-export type HostTableColumnSettings = typeof settingsColumns[number]
+export type HostTableColumnGeneral = (typeof generalColumns)[number]
+export type HostTableColumnAutopilot = (typeof autopilotColumns)[number]
+export type HostTableColumnPriceTable = (typeof priceTableColumns)[number]
+export type HostTableColumnSettings = (typeof settingsColumns)[number]
 
 export type TableColumnId =
   | HostTableColumnGeneral

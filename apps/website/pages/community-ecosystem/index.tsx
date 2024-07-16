@@ -1,21 +1,21 @@
 import {
-  ContentGallery,
   Callout,
+  ContentGallery,
   SiteHeading,
   webLinks,
 } from '@siafoundation/design-system'
+import { CalloutProject } from '../../components/CalloutProject'
 import { Layout } from '../../components/Layout'
+import { SectionGradient } from '../../components/SectionGradient'
+import { SectionTransparent } from '../../components/SectionTransparent'
 import { routes } from '../../config/routes'
+import { backgrounds, previews } from '../../content/assets'
 import { getFeedContent } from '../../content/feed'
 import { getProjects } from '../../content/projects'
 import { getStats } from '../../content/stats'
-import { AsyncReturnType } from '../../lib/types'
-import { textContent } from '../../lib/utils'
 import { getMinutesInSeconds } from '../../lib/time'
-import { SectionTransparent } from '../../components/SectionTransparent'
-import { SectionGradient } from '../../components/SectionGradient'
-import { backgrounds, previews } from '../../content/assets'
-import { CalloutProject } from '../../components/CalloutProject'
+import type { AsyncReturnType } from '../../lib/types'
+import { textContent } from '../../lib/utils'
 
 const title = 'Community & Ecosystem'
 const description = (

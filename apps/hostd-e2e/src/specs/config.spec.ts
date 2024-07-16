@@ -1,20 +1,20 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
+import { mockApiSiaCentralExchangeRates } from '@siafoundation/sia-central-mock'
+import { configResetAllSettings } from '../fixtures/configResetAllSettings'
+import { setViewMode } from '../fixtures/configViewMode'
 import { login } from '../fixtures/login'
+import { navigateToConfig } from '../fixtures/navigate'
+import { fillSelectInputByName } from '../fixtures/selectInput'
 import {
   expectSwitchByLabel,
   expectSwitchVisible,
   setSwitchByLabel,
 } from '../fixtures/switchValue'
-import { setViewMode } from '../fixtures/configViewMode'
-import { navigateToConfig } from '../fixtures/navigate'
-import { mockApiSiaCentralExchangeRates } from '@siafoundation/sia-central-mock'
-import { configResetAllSettings } from '../fixtures/configResetAllSettings'
 import {
   expectTextInputByName,
   expectTextInputNotVisible,
   fillTextInputByName,
 } from '../fixtures/textInput'
-import { fillSelectInputByName } from '../fixtures/selectInput'
 
 test('basic field change and save behaviour', async ({ page }) => {
   // Set up.
@@ -96,7 +96,7 @@ test('dynamic max collateral suggestion', async ({ page }) => {
     page
       .getByTestId('maxCollateralGroup')
       .getByLabel('Suggestion')
-      .getByText('60 SC')
+      .getByText('60 SC'),
   ).toBeVisible()
 
   // Set all values that affect the max collateral calculation.
@@ -106,6 +106,6 @@ test('dynamic max collateral suggestion', async ({ page }) => {
     page
       .getByTestId('maxCollateralGroup')
       .getByLabel('Suggestion')
-      .getByText('300 SC')
+      .getByText('300 SC'),
   ).toBeVisible()
 })

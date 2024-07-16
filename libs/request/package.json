@@ -1,11 +1,29 @@
 {
   "name": "@siafoundation/request",
-  "description": "Core library for building request APIs.",
   "version": "0.2.0",
+  "description": "Core library for building request APIs.",
   "license": "MIT",
-  "dependencies": {
-    "axios": "^0.27.2",
-    "@technically/lodash": "^4.17.0"
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "run-p bundle type:gen",
+    "bundle": "tsup src/index.ts --format esm",
+    "clean": "del dist tsconfig.tsbuildinfo",
+    "coverage": "vitest run --coverage ",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest",
+    "type:check": "tsc --noEmit",
+    "type:gen": "tsc --emitDeclarationOnly"
   },
-  "types": "./src/index.d.ts"
+  "dependencies": {
+    "@technically/lodash": "^4.17.0",
+    "axios": "^0.27.2"
+  },
+  "devDependencies": {
+    "@siafoundation/typescript-config": "^0.0.0",
+    "@swc/core": "^1.6.13",
+    "del-cli": "^5.1.0",
+    "tsup": "^8.1.0",
+    "typescript": "5.5.3"
+  }
 }

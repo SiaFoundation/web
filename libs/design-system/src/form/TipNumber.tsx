@@ -1,12 +1,12 @@
+import { Information16 } from '@siafoundation/react-icons'
+import type BigNumber from 'bignumber.js'
+import { cx } from 'class-variance-authority'
+import { ValueNum } from '../components/ValueNum'
+import { ValueSc } from '../components/ValueSc'
 import { Link } from '../core/Link'
 import { Text } from '../core/Text'
 import { Tooltip } from '../core/Tooltip'
-import { ValueSc } from '../components/ValueSc'
-import { ValueNum } from '../components/ValueNum'
-import { Information16 } from '@siafoundation/react-icons'
 import { toFixedMax } from '../lib/numbers'
-import BigNumber from 'bignumber.js'
-import { cx } from 'class-variance-authority'
 
 type Props = {
   type: 'siacoin' | 'number'

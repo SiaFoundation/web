@@ -1,9 +1,9 @@
 import {
+  Button,
   DropdownMenu,
   DropdownMenuItem,
-  Button,
-  DropdownMenuLeftSlot,
   DropdownMenuLabel,
+  DropdownMenuLeftSlot,
 } from '@siafoundation/design-system'
 import {
   Copy16,

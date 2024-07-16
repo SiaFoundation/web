@@ -1,5 +1,5 @@
 import {
-  TxType,
+  type TxType,
   daysInMilliseconds,
   getTransactionType,
   stripPrefix,
@@ -10,16 +10,16 @@ import {
   useWalletPending,
   useWalletTransactions,
 } from '@siafoundation/renterd-react'
-import { createContext, useContext, useMemo } from 'react'
-import { useDialog } from '../dialog'
+import type { Transaction } from '@siafoundation/types'
 import BigNumber from 'bignumber.js'
 import { useRouter } from 'next/router'
-import { useSiascanUrl } from '../../hooks/useSiascanUrl'
-import { Transaction } from '@siafoundation/types'
+import { createContext, useContext, useMemo } from 'react'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { useSiascanUrl } from '../../hooks/useSiascanUrl'
+import { useDialog } from '../dialog'
 
 const defaultLimit = 50
-const filters = []
+const filters: unknown[] = []
 
 export type TransactionDataPending = {
   type: 'transaction'
@@ -79,7 +79,7 @@ function useTransactionsMain() {
       ...(pending.data || []).map((t): TransactionData => {
         return {
           type: 'transaction',
-          txType: getTransactionType(t),
+          txType: getTransactionType(t)!,
           // hash: t.id,
           // timestamp: new Date(t.Timestamp).getTime(),
           // onClick: () => openDialog('transactionDetails', t.id),
@@ -92,7 +92,7 @@ function useTransactionsMain() {
         .map((t): TransactionData => {
           return {
             type: 'transaction',
-            txType: getTransactionType(t.raw),
+            txType: getTransactionType(t.raw)!,
             hash: stripPrefix(t.id),
             timestamp: new Date(t.timestamp).getTime(),
             onClick: () => openDialog('transactionDetails', stripPrefix(t.id)),
@@ -103,7 +103,10 @@ function useTransactionsMain() {
             siascanUrl,
           }
         })
-        .sort((a, b) => (a['timestamp'] < b['timestamp'] ? 1 : -1)),
+        // sort by timestamp or if undefined put at the top
+        .sort((a, b) =>
+          (a as any)['timestamp'] < (b as any)['timestamp'] ? 1 : -1,
+        ),
     ]
   }, [pending.data, transactions.data, openDialog, siascanUrl])
 
@@ -112,7 +115,7 @@ function useTransactionsMain() {
     dataset,
     transactions.isValidating,
     error,
-    filters
+    filters,
   )
 
   const periods = 30
@@ -147,7 +150,7 @@ function useTransactionsMain() {
           }
         })
         .sort((a, b) => (a.timestamp >= b.timestamp ? 1 : -1)),
-    [metrics.data]
+    [metrics.data],
   )
 
   return {

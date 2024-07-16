@@ -1,6 +1,6 @@
 import { Paragraph, ScrollArea } from '@siafoundation/design-system'
 import { cx } from 'class-variance-authority'
-import { useEffect, useRef, useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import Typed from 'typed.js'
 
 type Command = {
@@ -23,11 +23,11 @@ export function Terminal({ sequences, wrap, className }: Props) {
               '<span style="color:white">' +
               c.command.join('\n') +
               '</span>^500\n' +
-              c.result.map((line) => `\`${line}\`\n`).join('')
+              c.result.map((line) => `\`${line}\`\n`).join(''),
           )
-          .join('')
+          .join(''),
       ),
-    [sequences]
+    [sequences],
   )
 
   const scrollEl = useRef<HTMLDivElement>(null)
@@ -74,7 +74,7 @@ export function Terminal({ sequences, wrap, className }: Props) {
         'pt-3',
         'overflow-hidden',
         'w-[500px] max-w-full',
-        className
+        className,
       )}
     >
       <div className="flex gap-2 px-3">

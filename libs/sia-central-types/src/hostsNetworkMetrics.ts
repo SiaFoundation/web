@@ -1,4 +1,4 @@
-import { SiaCentralNetworkStats } from './types'
+import type { SiaCentralNetworkStats } from './types'
 
 export type SiaCentralHostsNetworkMetricsParams = void
 export type SiaCentralHostsNetworkMetricsPayload = void

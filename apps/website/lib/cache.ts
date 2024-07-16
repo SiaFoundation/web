@@ -7,13 +7,13 @@ type Item<T> = {
   updatedAt: number
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const cache: Record<string, Item<any>> = {}
 
 export async function getCacheValue<T>(
   key: string,
   func: () => Promise<T>,
-  maxAge: Seconds
+  maxAge: Seconds,
 ): Promise<T> {
   const updateCache = async (lastUpdatedAt?: number) => {
     const value = await func()
@@ -28,8 +28,8 @@ export async function getCacheValue<T>(
           new Date(),
           {
             addSuffix: true,
-          }
-        )}`
+          },
+        )}`,
       )
     }
     return value

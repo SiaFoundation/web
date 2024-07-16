@@ -1,8 +1,8 @@
-import { itemStyles, Label } from '@siafoundation/design-system'
+import { Label, itemStyles } from '@siafoundation/design-system'
 import { cx } from 'class-variance-authority'
 import { Command, useCommandState } from 'cmdk'
-import React from 'react'
-import { Page } from './types'
+import type React from 'react'
+import type { Page } from './types'
 
 export function CommandItemNav({
   currentPage,
@@ -13,7 +13,7 @@ export function CommandItemNav({
 }: React.ComponentProps<typeof Command.Item> & {
   currentPage?: Page
   parentPage?: Page
-  commandPage: Page
+  commandPage?: Page
 }) {
   const search = useCommandState((state) => state.search)
   // show if user is on parent page and not searching
@@ -21,7 +21,7 @@ export function CommandItemNav({
     return (
       <Command.Item
         className={cx(itemStyles(), 'group', className)}
-        value={`${commandPage?.label} ${props.children.toString()}`}
+        value={`${commandPage?.label} ${props.children?.toString()}`}
         {...props}
       />
     )
@@ -39,7 +39,7 @@ export function CommandItemSearch({
   const search = useCommandState((state) => state.search)
   // show if user is searching, or we are on the commands page
   const withinSearchSpace = commandPage.namespace.startsWith(
-    currentPage?.namespace || ''
+    currentPage?.namespace || '',
   )
   if (
     (search && withinSearchSpace) ||
@@ -48,7 +48,7 @@ export function CommandItemSearch({
     return (
       <Command.Item
         className={cx(itemStyles(), 'group', className)}
-        value={`${commandPage.label} ${props.children.toString()}`}
+        value={`${commandPage.label} ${props.children?.toString()}`}
         {...props}
       />
     )
@@ -66,7 +66,7 @@ export function CommandItemRootAndSearch({
   const search = useCommandState((state) => state.search)
   // show if user is searching, or we are on the root or commands page
   const withinSearchSpace = commandPage.namespace.startsWith(
-    currentPage?.namespace || ''
+    currentPage?.namespace || '',
   )
   if (
     (search && withinSearchSpace) ||
@@ -76,14 +76,13 @@ export function CommandItemRootAndSearch({
     return (
       <Command.Item
         className={cx(itemStyles(), 'group', className)}
-        value={`${commandPage.label} ${props.children.toString()}`}
+        value={`${commandPage.label} ${props.children?.toString()}`}
         {...props}
       />
     )
 }
 
 export function CommandGroup({
-  heading,
   currentPage,
   commandPage,
   ...props

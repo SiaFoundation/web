@@ -7,19 +7,19 @@ import {
   Text,
 } from '@siafoundation/design-system'
 import {
-  Subtract24,
   Add24,
-  CaretUp16,
   CaretDown16,
-  Information20,
+  CaretUp16,
   CheckmarkFilled20,
+  Information20,
   PendingFilled20,
+  Subtract24,
 } from '@siafoundation/react-icons'
-import { useApp } from '../../contexts/app'
-import { routes } from '../../config/routes'
-import useLocalStorageState from 'use-local-storage-state'
-import { useConfig } from '../../contexts/config'
 import { cx } from 'class-variance-authority'
+import useLocalStorageState from 'use-local-storage-state'
+import { routes } from '../../config/routes'
+import { useApp } from '../../contexts/app'
+import { useConfig } from '../../contexts/config'
 
 export function Recommendations() {
   const app = useApp()
@@ -27,7 +27,7 @@ export function Recommendations() {
     'v0/renterd/config/recommendations',
     {
       defaultValue: true,
-    }
+    },
   )
 
   const { form, evaluation } = useConfig()
@@ -202,7 +202,7 @@ export function Recommendations() {
                 <Text size="14">
                   {direction === 'up' ? 'Increase ' : 'Decrease '}
                   <Link
-                    href={routes.config.index + '#' + key}
+                    href={`${routes.config.index}#${key}`}
                     size="14"
                     underline="hover"
                   >
@@ -229,7 +229,7 @@ export function Recommendations() {
                 </Text>
               }
             />
-          )
+          ),
         )}
     </Layout>
   )
@@ -272,12 +272,19 @@ function Layout({
 }) {
   const el = (
     <div
+      role="button"
+      tabIndex={0}
+      onKeyDown={() => {
+        if (maximizeControls) {
+          setMaximized(!maximized)
+        }
+      }}
       className={cx(
         'flex justify-between items-center px-3 py-1.5',
         maximized && children
           ? 'border-b border-gray-200 dark:border-graydark-300'
           : '',
-        maximizeControls ? 'cursor-pointer' : ''
+        maximizeControls ? 'cursor-pointer' : '',
       )}
       onClick={() => {
         if (maximizeControls) {

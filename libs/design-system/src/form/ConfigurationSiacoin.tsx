@@ -1,15 +1,15 @@
-import { TipNumber } from './TipNumber'
 import { toHastings } from '@siafoundation/units'
-import { FieldValues, Path, PathValue } from 'react-hook-form'
+import type BigNumber from 'bignumber.js'
+import type { FieldValues, Path, PathValue } from 'react-hook-form'
 import { FieldError } from '../components/Form'
-import { FieldProps } from './configurationFields'
-import BigNumber from 'bignumber.js'
 import { FieldSiacoin } from './FieldSiacoin'
+import { TipNumber } from './TipNumber'
+import type { FieldProps } from './configurationFields'
 import { useFormSetField } from './useFormSetField'
 
 export function ConfigurationSiacoin<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({ name, form, fields }: FieldProps<Values, Categories>) {
   const field = fields[name]
   const {

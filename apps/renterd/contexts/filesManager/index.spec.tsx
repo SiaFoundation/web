@@ -1,14 +1,17 @@
-import { render, act } from '@testing-library/react'
-import { setupServer } from 'msw/node'
 import { NextAppCsr } from '@siafoundation/design-system'
-import { FilesManagerProvider, useFilesManager, FilesManagerState } from '.'
+import { act, render } from '@testing-library/react'
+import { setupServer } from 'msw/node'
 import { useEffect } from 'react'
+import {
+  FilesManagerProvider,
+  type FilesManagerState,
+  useFilesManager,
+} from '.'
 import {
   mockApiBusBuckets,
   mockApiBusSettingRedundancy,
   mockMatchMedia,
 } from '../../mock/mock'
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { usePathname, useAppRouter, useParams } = require('@siafoundation/next')
 
 // NOTE: Update to use a functional test router after migrating to vitest.
@@ -47,13 +50,13 @@ describe('filesManager', () => {
     })
     usePathname.mockReturnValue('/buckets/default/files/foo/bar/baz')
     const context = mountProvider()
-    expect(context.state.activeExplorerMode).toBe('directory')
+    expect(context.state!.activeExplorerMode).toBe('directory')
     act(() => {
-      context.state.navigateToModeSpecificFiltering('/default/photos/cats')
+      context.state!.navigateToModeSpecificFiltering('/default/photos/cats')
     })
     const lastPushCallParams = getLastRouterPushCallParams()
     expect(lastPushCallParams[0]).toBe('/buckets/default/files/photos')
-    expect(context.state.fileNamePrefixFilter).toBe('cats')
+    expect(context.state!.fileNamePrefixFilter).toBe('cats')
   })
   it('toggling to flat explorer mode applies the active directory as a filter', async () => {
     useAppRouter.mockClear()
@@ -63,14 +66,14 @@ describe('filesManager', () => {
     })
     usePathname.mockReturnValue('/buckets/default/files/foo/bar/baz')
     const context = mountProvider()
-    expect(context.state.activeExplorerMode).toBe('directory')
+    expect(context.state!.activeExplorerMode).toBe('directory')
     act(() => {
-      context.state.setExplorerModeFlat()
+      context.state!.setExplorerModeFlat()
     })
-    expect(context.state.activeExplorerMode).toBe('flat')
+    expect(context.state!.activeExplorerMode).toBe('flat')
     const lastPushCallParams = getLastRouterPushCallParams()
     expect(lastPushCallParams[0]).toBe('/buckets/default/files/')
-    expect(context.state.fileNamePrefixFilter).toBe('foo/bar/baz/')
+    expect(context.state!.fileNamePrefixFilter).toBe('foo/bar/baz/')
   })
   it('toggling from flat mode to directory clears the file filter', async () => {
     useAppRouter.mockClear()
@@ -81,17 +84,17 @@ describe('filesManager', () => {
     usePathname.mockReturnValue('/buckets/default/files/foo/bar/baz')
     const context = mountProvider()
     act(() => {
-      context.state.setExplorerModeFlat()
+      context.state!.setExplorerModeFlat()
     })
-    expect(context.state.activeExplorerMode).toBe('flat')
-    expect(context.state.fileNamePrefixFilter).toBe('foo/bar/baz/')
+    expect(context.state!.activeExplorerMode).toBe('flat')
+    expect(context.state!.fileNamePrefixFilter).toBe('foo/bar/baz/')
     act(() => {
-      context.state.setExplorerModeDirectory()
+      context.state!.setExplorerModeDirectory()
     })
-    expect(context.state.activeExplorerMode).toBe('directory')
+    expect(context.state!.activeExplorerMode).toBe('directory')
     const lastPushCallParams = getLastRouterPushCallParams()
     expect(lastPushCallParams[0]).toBe('/buckets/default/files/')
-    expect(context.state.fileNamePrefixFilter).toBe('')
+    expect(context.state!.fileNamePrefixFilter).toBe('')
   })
   it('does not routes if mode already active', async () => {
     useAppRouter.mockClear()
@@ -102,12 +105,12 @@ describe('filesManager', () => {
     usePathname.mockReturnValue('/buckets/default/files')
     const context = mountProvider()
     act(() => {
-      context.state.setExplorerModeDirectory()
+      context.state!.setExplorerModeDirectory()
     })
-    expect(context.state.activeExplorerMode).toBe('directory')
+    expect(context.state!.activeExplorerMode).toBe('directory')
     const pushCount = getRouterPushCallCount()
     expect(pushCount).toBe(0)
-    expect(context.state.fileNamePrefixFilter).toBe('')
+    expect(context.state!.fileNamePrefixFilter).toBe('')
   })
   it('routes to active mode if viewing uploads', async () => {
     useAppRouter.mockClear()
@@ -117,12 +120,12 @@ describe('filesManager', () => {
     usePathname.mockReturnValue('/buckets/default/uploads')
     const context = mountProvider()
     act(() => {
-      context.state.setExplorerModeDirectory()
+      context.state!.setExplorerModeDirectory()
     })
-    expect(context.state.activeExplorerMode).toBe('directory')
+    expect(context.state!.activeExplorerMode).toBe('directory')
     const lastPushCallParams = getLastRouterPushCallParams()
     expect(lastPushCallParams[0]).toBe('/buckets/default/files/')
-    expect(context.state.fileNamePrefixFilter).toBe('')
+    expect(context.state!.fileNamePrefixFilter).toBe('')
   })
 })
 
@@ -142,7 +145,7 @@ function ContextConsumer({
 
 function mountProvider() {
   const context: { state?: FilesManagerState } = {}
-  const onContext = (c) => {
+  const onContext = (c: FilesManagerState) => {
     context.state = c
   }
   render(
@@ -150,7 +153,7 @@ function mountProvider() {
       <FilesManagerProvider>
         <ContextConsumer onContext={onContext} />
       </FilesManagerProvider>
-    </NextAppCsr>
+    </NextAppCsr>,
   )
   return context
 }

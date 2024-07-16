@@ -1,26 +1,26 @@
 'use client'
 
-import { Text } from '../core/Text'
-import { Button } from '../core/Button'
-import { Link } from '../core/Link'
 import { CaretDown16, Copy16, Launch16 } from '@siafoundation/react-icons'
-import { copyToClipboard } from '../lib/clipboard'
-import { stripPrefix } from '../lib/utils'
-import {
-  EntityType,
-  doesEntityHaveSiascanUrl,
-  getEntityDisplayLength,
-  getEntitySiascanUrl,
-  getEntityTypeCopyLabel,
-  formatEntityValue,
-  defaultFormatValue,
-} from '../lib/entityTypes'
 import { cx } from 'class-variance-authority'
+import { Button } from '../core/Button'
 import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuLeftSlot,
 } from '../core/DropdownMenu'
+import { Link } from '../core/Link'
+import { Text } from '../core/Text'
+import { copyToClipboard } from '../lib/clipboard'
+import {
+  type EntityType,
+  defaultFormatValue,
+  doesEntityHaveSiascanUrl,
+  formatEntityValue,
+  getEntityDisplayLength,
+  getEntitySiascanUrl,
+  getEntityTypeCopyLabel,
+} from '../lib/entityTypes'
+import { stripPrefix } from '../lib/utils'
 
 type Props = {
   value: string

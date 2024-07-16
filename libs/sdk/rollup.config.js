@@ -1,25 +1,13 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const preserveDirectives = require('rollup-plugin-preserve-directives')
-const { wasm } = require('@rollup/plugin-wasm')
+import wasm from '@rollup/plugin-wasm'
+import preserveDirectives from 'rollup-plugin-preserve-directives'
 
 // https://github.com/rollup/rollup/issues/4699#issuecomment-1465302665
-function getRollupOptions(options) {
-  return {
-    ...options,
-    output: {
-      ...options.output,
-      preserveModules: true,
-      format: 'esm',
-      sourcemap: true,
-    },
-    plugins: options.plugins
-      .concat(
-        wasm({
-          targetEnv: 'auto-inline',
-        })
-      )
-      .concat(preserveDirectives.default()),
-  }
+export default {
+  input: 'src/index.ts',
+  output: {
+    preserveModules: true,
+    format: 'esm',
+    sourcemap: true,
+  },
+  plugins: [wasm({ targetEnv: 'auto-inline' }), preserveDirectives()],
 }
-
-module.exports = getRollupOptions

@@ -1,13 +1,12 @@
-const { createGlobPatternsForDependencies } = require('@nx/react/tailwind')
-const { join } = require('path')
+const { join } = require('node:path')
 
 module.exports = {
   content: [
     join(
       __dirname,
-      '{src,pages,components,hooks,contexts,dialogs}/**/*!(*.stories|*.spec).{ts,tsx,html}'
+      '{src,pages,components,hooks,contexts,dialogs}/**/*!(*.stories|*.spec).{ts,tsx,html}',
     ),
-    ...createGlobPatternsForDependencies(__dirname),
+    'node_modules/@siafoundation/**/**/*.js',
   ],
   presets: [require('../../libs/design-system/src/style/theme.js')],
 }

@@ -28,7 +28,7 @@ export function Navbar({
         // !scrolledDown ? 'rounded-t-[5px]' : '',
         'bg-white dark:bg-graydark-50',
         'sticky top-0 z-20',
-        'h-[60px]'
+        'h-[60px]',
       )}
     >
       <div
@@ -39,7 +39,7 @@ export function Navbar({
           scrolledDown ? 'h-[60px]' : 'h-[100px]',
           'border-gray-400/50 dark:border-graydark-400/50',
           'transition-all',
-          'duration-300'
+          'duration-300',
         )}
       >
         <Link href="/" underline="none">

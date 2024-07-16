@@ -8,20 +8,20 @@ import {
   ValueNum,
   ValueSc,
 } from '@siafoundation/design-system'
-import { useHost } from '@siafoundation/renterd-react'
-import { HostContextMenu } from '../../components/Hosts/HostContextMenu'
-import { useFilesManager } from '../filesManager'
-import { useDialog } from '../dialog'
-import { getDirectorySegmentsFromPath } from '../../lib/paths'
-import BigNumber from 'bignumber.js'
-import { ContractContextMenuFromId } from '../../components/Contracts/ContractContextMenuFromId'
-import { AccountContextMenu } from '../../components/AccountContextMenu'
-import { FileContextMenu } from '../../components/Files/FileContextMenu'
 import { CaretDown16 } from '@siafoundation/react-icons'
+import { useHost } from '@siafoundation/renterd-react'
+import BigNumber from 'bignumber.js'
+import { AccountContextMenu } from '../../components/AccountContextMenu'
+import { ContractContextMenuFromId } from '../../components/Contracts/ContractContextMenuFromId'
+import { FileContextMenu } from '../../components/Files/FileContextMenu'
+import { HostContextMenu } from '../../components/Hosts/HostContextMenu'
+import { getDirectorySegmentsFromPath } from '../../lib/paths'
+import { useDialog } from '../dialog'
+import { useFilesManager } from '../filesManager'
 
 export const dataFields: Record<
   string,
-  { render: (props: { value: unknown }) => JSX.Element }
+  { render: (props: { value: any }) => React.ReactNode }
 > = {
   origin: {
     render: function OriginField({ value }: { value: string }) {
@@ -181,7 +181,7 @@ export const dataFields: Record<
                           ellipsis
                           onClick={() => {
                             setActiveDirectory(() =>
-                              getDirectorySegmentsFromPath(fullPath)
+                              getDirectorySegmentsFromPath(fullPath),
                             )
                             closeDialog()
                           }}
@@ -206,7 +206,7 @@ export const dataFields: Record<
                         />
                       </div>
                     )
-                  })
+                  }),
                 )}
               </div>
             </ScrollArea>

@@ -1,6 +1,6 @@
 import { readdirSync } from 'fs'
-import express from 'express'
 import { getAssetPath } from '@siafoundation/data-sources'
+import express from 'express'
 
 export async function setupStatic(server) {
   // Rest of static assets on root domain

@@ -25,7 +25,7 @@ type Params<ColumnId extends string, SortField extends string> = {
 
 export function useTableState<
   ColumnId extends string,
-  SortField extends string
+  SortField extends string,
 >(scope: string, params: Params<ColumnId, SortField>) {
   const {
     columns,
@@ -42,7 +42,7 @@ export function useTableState<
     `${scope}/enabledColumns`,
     {
       defaultValue: columnsDefaultVisible,
-    }
+    },
   )
 
   const toggleColumnVisibility = useCallback(
@@ -54,7 +54,7 @@ export function useTableState<
         return enabled.concat(column)
       })
     },
-    [setEnabledColumns]
+    [setEnabledColumns],
   )
 
   const setColumnsVisible = useCallback(
@@ -63,7 +63,7 @@ export function useTableState<
         return uniq([...enabled, ...columns])
       })
     },
-    [setEnabledColumns]
+    [setEnabledColumns],
   )
 
   const setColumnsHidden = useCallback(
@@ -72,7 +72,7 @@ export function useTableState<
         return difference(enabled, columns)
       })
     },
-    [setEnabledColumns]
+    [setEnabledColumns],
   )
 
   const resetDefaultColumnVisibility = useCallback(() => {
@@ -83,11 +83,11 @@ export function useTableState<
     () =>
       columns.filter((column) => {
         const columnExplicitlyDisabled = disabledCategories?.includes(
-          column.category || ''
+          column.category || '',
         )
         return !column.fixed && !columnExplicitlyDisabled
       }),
-    [columns, disabledCategories]
+    [columns, disabledCategories],
   )
 
   const enabledColumns = useMemo(
@@ -97,12 +97,12 @@ export function useTableState<
           const columnIsLogicallyEnabled =
             column.fixed || _enabledColumns.includes(column.id)
           const columnExplicitlyDisabled = disabledCategories?.includes(
-            column.category || ''
+            column.category || '',
           )
           return columnIsLogicallyEnabled && !columnExplicitlyDisabled
         })
         .map((column) => column.id),
-    [columns, _enabledColumns, disabledCategories]
+    [columns, _enabledColumns, disabledCategories],
   )
 
   const {

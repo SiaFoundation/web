@@ -1,4 +1,4 @@
-import { ContentItemProps } from '@siafoundation/design-system'
+import type { ContentItemProps } from '@siafoundation/design-system'
 
 export function addNewTab(item: ContentItemProps) {
   return {
@@ -20,7 +20,7 @@ export function textContent(elem: React.ReactNode): string {
     return elem
   }
   const children =
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     ((elem as any).props && (elem as any).props.children) || false
 
   if (children instanceof Array) {

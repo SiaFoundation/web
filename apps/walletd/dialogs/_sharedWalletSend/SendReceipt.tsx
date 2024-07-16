@@ -1,10 +1,10 @@
 import {
   Text,
-  ValueSc,
   ValueCopyable,
+  ValueSc,
   ValueSf,
 } from '@siafoundation/design-system'
-import { SendParams } from './types'
+import type { SendParams } from './types'
 
 type Props = {
   params: SendParams

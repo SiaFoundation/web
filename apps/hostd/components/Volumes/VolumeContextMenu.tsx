@@ -1,28 +1,28 @@
 import {
+  Button,
   DropdownMenu,
   DropdownMenuItem,
-  Button,
-  DropdownMenuLeftSlot,
   DropdownMenuLabel,
+  DropdownMenuLeftSlot,
+  Text,
   triggerErrorToast,
   triggerSuccessToast,
-  Text,
   truncate,
 } from '@siafoundation/design-system'
-import {
-  CaretDown16,
-  Ruler16,
-  Delete16,
-  Locked16,
-  Edit16,
-  Close16,
-} from '@siafoundation/react-icons'
-import { VolumeStatus } from '@siafoundation/hostd-types'
 import {
   useVolume,
   useVolumeCancel,
   useVolumeUpdate,
 } from '@siafoundation/hostd-react'
+import type { VolumeStatus } from '@siafoundation/hostd-types'
+import {
+  CaretDown16,
+  Close16,
+  Delete16,
+  Edit16,
+  Locked16,
+  Ruler16,
+} from '@siafoundation/react-icons'
 import { useDialog } from '../../contexts/dialog'
 
 type Props = {
@@ -70,7 +70,7 @@ export function VolumeContextMenu({ id, contentProps, buttonProps }: Props) {
             if (response.error) {
               triggerErrorToast({
                 title: `Error canceling volume ${getActiveOperationLabel(
-                  status
+                  status,
                 )}`,
               })
             } else {

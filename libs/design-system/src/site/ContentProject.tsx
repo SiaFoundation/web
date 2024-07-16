@@ -1,12 +1,12 @@
 'use client'
 
-import { Link } from '../core/Link'
-import { Text } from '../core/Text'
-import { Paragraph } from '../core/Paragraph'
-import { ContentItemProps } from './ContentItem'
-import { WebDomain } from './WebDomain'
-import { useTheme } from 'next-themes'
 import { cx } from 'class-variance-authority'
+import { useTheme } from 'next-themes'
+import { Link } from '../core/Link'
+import { Paragraph } from '../core/Paragraph'
+import { Text } from '../core/Text'
+import type { ContentItemProps } from './ContentItem'
+import { WebDomain } from './WebDomain'
 
 export type ContentProjectProps = ContentItemProps & {
   logo: string

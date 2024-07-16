@@ -1,10 +1,10 @@
+import { useDialog } from '../../../../../contexts/dialog'
 import {
   CommandGroup,
   CommandItemNav,
   CommandItemSearch,
 } from '../../../../CmdRoot/Item'
-import { Page } from '../../../../CmdRoot/types'
-import { useDialog } from '../../../../../contexts/dialog'
+import type { Page } from '../../../../CmdRoot/types'
 import { publicKeyContainsFilter } from '../../../ContractsFilterPublicKeyDialog'
 
 export const contractsFilterPublicKeyPage = {
@@ -16,7 +16,7 @@ export function PublicKeyCmdGroup({
   select,
   currentPage,
 }: {
-  currentPage: Page
+  currentPage?: Page
   select: () => void
 }) {
   const filter = publicKeyContainsFilter('')
@@ -46,8 +46,8 @@ export function PublicKeyCmdNav({
   parentPage,
   commandPage,
 }: {
-  currentPage: Page
-  parentPage: Page
+  currentPage?: Page
+  parentPage?: Page
   commandPage: Page
   select: () => void
 }) {

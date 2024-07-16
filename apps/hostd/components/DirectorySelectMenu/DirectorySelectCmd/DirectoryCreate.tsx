@@ -3,11 +3,11 @@ import {
   TextField,
   triggerErrorToast,
 } from '@siafoundation/design-system'
-import { FolderAdd16 } from '@siafoundation/react-icons'
 import { useSystemDirectoryCreate } from '@siafoundation/hostd-react'
+import { FolderAdd16 } from '@siafoundation/react-icons'
+import { useCallback, useState } from 'react'
 import { useHostOSPathSeparator } from '../../../hooks/useHostOSPathSeparator'
 import { getChildDirectoryPath } from '../../../lib/system'
-import { useCallback, useState } from 'react'
 
 export function DirectoryCreate({
   path,

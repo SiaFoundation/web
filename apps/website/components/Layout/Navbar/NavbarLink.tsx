@@ -1,4 +1,4 @@
-import { Link, NavMenuLink } from '@siafoundation/design-system'
+import { type Link, NavMenuLink } from '@siafoundation/design-system'
 
 type Props = {
   title: string

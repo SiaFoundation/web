@@ -1,13 +1,13 @@
-import { SiacoinField } from '../core/SiacoinField'
-import { FieldValues, Path, PathValue } from 'react-hook-form'
-import { FieldGroup } from '../components/Form'
-import { FieldProps, useRegisterForm } from './configurationFields'
 import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
+import type { FieldValues, Path, PathValue } from 'react-hook-form'
+import { FieldGroup } from '../components/Form'
+import { SiacoinField } from '../core/SiacoinField'
+import { type FieldProps, useRegisterForm } from './configurationFields'
 
 export function FieldSiacoin<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   name,
   form,
@@ -38,11 +38,11 @@ export function FieldSiacoin<
       _placeholder
         ? new BigNumber(_placeholder)
         : suggestion && typeof suggestion !== 'boolean'
-        ? new BigNumber(suggestion)
-        : average && typeof average !== 'boolean'
-        ? new BigNumber(average)
-        : undefined,
-    [_placeholder, suggestion, average]
+          ? new BigNumber(suggestion)
+          : average && typeof average !== 'boolean'
+            ? new BigNumber(average)
+            : undefined,
+    [_placeholder, suggestion, average],
   )
 
   const el = (
@@ -55,7 +55,7 @@ export function FieldSiacoin<
       decimalsLimitFiat={decimalsLimitFiat}
       readOnly={field.readOnly}
       error={error}
-      changed={form.formState.dirtyFields[name]}
+      changed={(form.formState.dirtyFields as Record<string, boolean>)[name]}
       placeholder={placeholder}
       onChange={(val) => {
         setValue(val as PathValue<Values, Path<Values>>, true)

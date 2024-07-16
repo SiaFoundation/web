@@ -1,16 +1,19 @@
 import {
-  useGetSwr,
+  type HookArgsSwr,
   useAppSettings,
-  HookArgsSwr,
+  useGetSwr,
 } from '@siafoundation/react-core'
 import {
+  type SiaCentralTransactionParams,
+  type SiaCentralTransactionResponse,
   defaultApi,
-  SiaCentralTransactionParams,
-  SiaCentralTransactionResponse,
 } from '@siafoundation/sia-central-types'
 
 export function useSiaCentralTransaction(
-  args?: HookArgsSwr<SiaCentralTransactionParams, SiaCentralTransactionResponse>
+  args?: HookArgsSwr<
+    SiaCentralTransactionParams,
+    SiaCentralTransactionResponse
+  >,
 ) {
   const { settings } = useAppSettings()
   return useGetSwr({

@@ -95,7 +95,7 @@ export function encodeCurrency(e: Encoder, c: string) {
   e.dataView.setBigUint64(
     e.offset,
     BigInt(c) & BigInt('0xFFFFFFFFFFFFFFFF'),
-    true
+    true,
   )
   e.offset += 8
   e.dataView.setBigUint64(e.offset, BigInt(c) >> BigInt(64), true)

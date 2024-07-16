@@ -1,14 +1,14 @@
 import {
   useConsensusNetwork,
-  useWalletOutputsSiacoin,
   useConsensusTipState,
+  useWalletOutputsSiacoin,
   useWalletOutputsSiafund,
 } from '@siafoundation/walletd-react'
-import { useWallets } from '../../contexts/wallets'
 import { useCallback } from 'react'
-import { signTransactionSeed } from '../../lib/signSeed'
+import { useWallets } from '../../contexts/wallets'
 import { useWalletAddresses } from '../../hooks/useWalletAddresses'
-import { SendParams } from '../_sharedWalletSend/types'
+import { signTransactionSeed } from '../../lib/signSeed'
+import type { SendParams } from '../_sharedWalletSend/types'
 import { useBroadcast } from '../_sharedWalletSend/useBroadcast'
 import { useCancel } from '../_sharedWalletSend/useCancel'
 import { useFund } from '../_sharedWalletSend/useFund'
@@ -90,6 +90,6 @@ export function useSignAndBroadcast() {
       siafundOutputs.data,
       cacheWalletMnemonic,
       broadcast,
-    ]
+    ],
   )
 }

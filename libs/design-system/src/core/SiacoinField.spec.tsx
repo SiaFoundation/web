@@ -3,14 +3,14 @@ import {
   CoreProvider,
   delay,
 } from '@siafoundation/react-core'
-import BigNumber from 'bignumber.js'
-import { SiacoinField } from './SiacoinField'
-import { fireEvent, render, waitFor, act } from '@testing-library/react'
+import type { SiaCentralExchangeRatesResponse } from '@siafoundation/sia-central-types'
+import { act, fireEvent, render, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { useState } from 'react'
-import { SiaCentralExchangeRatesResponse } from '@siafoundation/sia-central-types'
+import BigNumber from 'bignumber.js'
+import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
-import { HttpResponse, http } from 'msw'
+import { useState } from 'react'
+import { SiacoinField } from './SiacoinField'
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn().mockReturnValue({
@@ -126,7 +126,7 @@ describe('SiacoinField', () => {
     expect(fiatInput.value).toBe('$4.444,55')
     expectOnChangeValues(
       [undefined, '4', '44', '444', '4444', '4444', '4444.5', '4444.55'],
-      onChange
+      onChange,
     )
   })
 
@@ -154,7 +154,7 @@ describe('SiacoinField', () => {
     expect(fiatInput.value).toBe('₽4.444,55')
     expectOnChangeValues(
       [undefined, '4', '44', '444', '4444', '4444', '4444.5', '4444.55'],
-      onChange
+      onChange,
     )
   })
 
@@ -182,7 +182,7 @@ describe('SiacoinField', () => {
     expect(fiatInput.value).toBe('₽4.444,55')
     expectOnChangeValues(
       [undefined, '4', '44', '444', '4444', '4444', '4444.5', '4444.55'],
-      onChange
+      onChange,
     )
   })
 
@@ -219,7 +219,7 @@ describe('SiacoinField', () => {
         '0.12345',
         '0.123456',
       ],
-      onChange
+      onChange,
     )
   })
 
@@ -243,7 +243,7 @@ describe('SiacoinField', () => {
     expect(onChange.mock.calls.length).toBe(6)
     expectOnChangeValues(
       [undefined, '0', '0', '0.1', '0.12', '0.123'],
-      onChange
+      onChange,
     )
   })
 
@@ -293,7 +293,7 @@ describe('SiacoinField', () => {
     expect(onChange.mock.calls.length).toBe(6)
     expectOnChangeValues(
       [undefined, '0', '0', '0.1', '0.12', '0.123'],
-      onChange
+      onChange,
     )
   })
 
@@ -336,7 +336,7 @@ async function renderNode({
       <AppSettingsProvider>
         <Component sc={sc} {...props} />
       </AppSettingsProvider>
-    </CoreProvider>
+    </CoreProvider>,
   )
 
   const scInput = node.getByTestId('scInput') as HTMLInputElement
@@ -374,7 +374,7 @@ function siaCentralExchangeRateEndpoint(rate = '1') {
         },
         timestamp: new Date().toString(),
       } as SiaCentralExchangeRatesResponse)
-    })
+    }),
   )
 }
 

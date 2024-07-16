@@ -1,27 +1,28 @@
-import React, { createContext, useContext, useCallback, useState } from 'react'
 import {
   ConfirmDialog,
   SettingsDialog,
   SyncerConnectPeerDialog,
   WalletSingleAddressDetailsDialog,
 } from '@siafoundation/design-system'
+import { useSyncerConnect, useWallet } from '@siafoundation/renterd-react'
+import type React from 'react'
+import { createContext, useCallback, useContext, useState } from 'react'
 import { CmdKDialog } from '../components/CmdKDialog'
-import { FilesCreateDirectoryDialog } from '../dialogs/FilesCreateDirectoryDialog'
+import { ContractsFilterAddressDialog } from '../components/Contracts/ContractsFilterAddressDialog'
+import { ContractsFilterContractSetDialog } from '../components/Contracts/ContractsFilterContractSetDialog'
+import { ContractsFilterPublicKeyDialog } from '../components/Contracts/ContractsFilterPublicKeyDialog'
 import { HostsAllowBlockDialog } from '../components/Hosts/HostsAllowBlockDialog'
 import { HostsFilterAddressDialog } from '../components/Hosts/HostsFilterAddressDialog'
-import { ContractsFilterAddressDialog } from '../components/Contracts/ContractsFilterAddressDialog'
-import { ContractsFilterPublicKeyDialog } from '../components/Contracts/ContractsFilterPublicKeyDialog'
-import { ContractsFilterContractSetDialog } from '../components/Contracts/ContractsFilterContractSetDialog'
-import { FilesSearchDialog } from '../dialogs/FilesSearchDialog'
-import { useSyncerConnect, useWallet } from '@siafoundation/renterd-react'
-import { RenterdSendSiacoinDialog } from '../dialogs/RenterdSendSiacoinDialog'
-import { RenterdTransactionDetailsDialog } from '../dialogs/RenterdTransactionDetailsDialog'
 import { HostsFilterPublicKeyDialog } from '../components/Hosts/HostsFilterPublicKeyDialog'
+import { KeysCreateDialog } from '../components/Keys/KeysCreateDialog'
+import { FileRenameDialog } from '../dialogs/FileRenameDialog'
+import { FilesBucketCreateDialog } from '../dialogs/FilesBucketCreateDialog'
 import { FilesBucketDeleteDialog } from '../dialogs/FilesBucketDeleteDialog'
 import { FilesBucketPolicyDialog } from '../dialogs/FilesBucketPolicyDialog'
-import { FilesBucketCreateDialog } from '../dialogs/FilesBucketCreateDialog'
-import { FileRenameDialog } from '../dialogs/FileRenameDialog'
-import { KeysCreateDialog } from '../components/Keys/KeysCreateDialog'
+import { FilesCreateDirectoryDialog } from '../dialogs/FilesCreateDirectoryDialog'
+import { FilesSearchDialog } from '../dialogs/FilesSearchDialog'
+import { RenterdSendSiacoinDialog } from '../dialogs/RenterdSendSiacoinDialog'
+import { RenterdTransactionDetailsDialog } from '../dialogs/RenterdTransactionDetailsDialog'
 
 export type DialogType =
   | 'cmdk'
@@ -65,7 +66,7 @@ function useDialogMain() {
       setDialog(dialog)
       setId(id)
     },
-    [setDialog, setId]
+    [setDialog, setId],
   )
 
   const [confirm, setConfirm] = useState<ConfirmProps>()
@@ -74,7 +75,7 @@ function useDialogMain() {
       setDialog('confirm')
       setConfirm(confirm)
     },
-    [setDialog, setConfirm]
+    [setDialog, setConfirm],
   )
 
   const closeDialog = useCallback(() => {
@@ -89,7 +90,7 @@ function useDialogMain() {
         closeDialog()
       }
     },
-    [closeDialog]
+    [closeDialog],
   )
 
   return {
@@ -145,7 +146,7 @@ export function Dialogs() {
       />
       <RenterdSendSiacoinDialog />
       <WalletSingleAddressDetailsDialog
-        address={wallet.data?.address}
+        address={wallet.data?.address!}
         isValidating={wallet.isValidating}
         open={dialog === 'addressDetails'}
         onOpenChange={onOpenChange}
@@ -216,7 +217,7 @@ export function Dialogs() {
         open={dialog === 'confirm'}
         params={confirm}
         onOpenChange={(val) =>
-          val ? openConfirmDialog(confirm) : closeDialog()
+          val ? openConfirmDialog(confirm!) : closeDialog()
         }
       />
     </>

@@ -1,11 +1,11 @@
 'use client'
 
-import React from 'react'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import { Checkmark16 } from '@siafoundation/react-icons'
-import { Text } from './Text'
 import { cva } from 'class-variance-authority'
-import { VariantProps } from '../types'
+import React from 'react'
+import type { VariantProps } from '../types'
+import { Text } from './Text'
 
 const styles = cva(
   [
@@ -33,7 +33,7 @@ const styles = cva(
     defaultVariants: {
       size: 'small',
     },
-  }
+  },
 )
 
 export const Checkbox = React.forwardRef<

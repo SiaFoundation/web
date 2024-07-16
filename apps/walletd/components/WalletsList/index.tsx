@@ -1,14 +1,14 @@
 import { Table } from '@siafoundation/design-system'
-import { useWallets } from '../../contexts/wallets'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
+import { useWallets } from '../../contexts/wallets'
 import { WalletdAuthedLayout } from '../WalletdAuthedLayout'
 import { WalletdSidenav } from '../WalletdSidenav'
+import { StateError } from './StateError'
+import { StateNoneMatching } from './StateNoneMatching'
+import { StateNoneYet } from './StateNoneYet'
 import { WalletsActionsMenu } from './WalletsActionsMenu'
 import { WalletsFiltersBar } from './WalletsFiltersBar'
-import { StateNoneYet } from './StateNoneYet'
-import { StateNoneMatching } from './StateNoneMatching'
-import { StateError } from './StateError'
 
 export function WalletsList() {
   const { openDialog } = useDialog()

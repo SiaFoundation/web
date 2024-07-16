@@ -1,9 +1,9 @@
-import { AsyncReturnType } from '../lib/types'
-import { getGeoHosts } from '../content/geoHosts'
-import { getExchangeRates } from '../content/exchangeRates'
-import { getMinutesInSeconds } from '../lib/time'
 import { Map } from '../components/Map'
+import { getExchangeRates } from '../content/exchangeRates'
+import { getGeoHosts } from '../content/geoHosts'
 import { getStats } from '../content/stats'
+import { getMinutesInSeconds } from '../lib/time'
+import type { AsyncReturnType } from '../lib/types'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 

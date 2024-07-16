@@ -1,4 +1,4 @@
-import {
+import type {
   Address,
   ChainIndex,
   Currency,

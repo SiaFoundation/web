@@ -1,8 +1,8 @@
-import {
+import type {
   WalletAddress,
   WalletAddressesResponse,
 } from '@siafoundation/walletd-types'
-import { Page } from 'playwright'
+import type { Page } from 'playwright'
 
 export function getMockWalletAddressesResponse(): WalletAddressesResponse {
   return [

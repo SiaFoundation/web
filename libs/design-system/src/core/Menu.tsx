@@ -1,10 +1,10 @@
 'use client'
 
+import type * as SeparatorPrimitive from '@radix-ui/react-separator'
 import { cx } from 'class-variance-authority'
-import * as SeparatorPrimitive from '@radix-ui/react-separator'
 import React from 'react'
-import { VariantProps } from '../types'
-import { Separator, SeparatorProps } from './Separator'
+import type { VariantProps } from '../types'
+import { Separator, type SeparatorProps } from './Separator'
 import { textStyles } from './Text'
 
 export const baseItemStyles = ({
@@ -37,7 +37,7 @@ export const baseItemStyles = ({
       'whitespace-nowrap',
       'px-1.5',
       'py-1.5',
-    ]
+    ],
   )
 
 export const itemStyles = ({
@@ -75,7 +75,7 @@ export const itemStyles = ({
       'data-[disabled]:pointer-events-none',
       'data-[disabled]:text-gray-700',
       'dark:data-[disabled]:text-graydark-700',
-    ]
+    ],
   )
 
 export const labelStyles = ({
@@ -127,7 +127,7 @@ export const BaseMenuItem = React.forwardRef<
       ellipsis,
       ...props
     },
-    ref
+    ref,
   ) => {
     return (
       <div
@@ -142,12 +142,12 @@ export const BaseMenuItem = React.forwardRef<
             scaleSize,
             noWrap,
             ellipsis,
-          })
+          }),
         )}
         {...props}
       />
     )
-  }
+  },
 )
 
 export const MenuItem = React.forwardRef<
@@ -166,7 +166,7 @@ export const MenuItem = React.forwardRef<
       ellipsis,
       ...props
     },
-    ref
+    ref,
   ) => {
     return (
       <div
@@ -181,12 +181,12 @@ export const MenuItem = React.forwardRef<
             scaleSize,
             noWrap,
             ellipsis,
-          })
+          }),
         )}
         {...props}
       />
     )
-  }
+  },
 )
 
 export const MenuItemRightSlot = React.forwardRef<

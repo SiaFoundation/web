@@ -1,6 +1,6 @@
-import { Transaction } from '@siafoundation/types'
+import type { Transaction } from '@siafoundation/types'
 import { useCallback } from 'react'
-import { SendParams } from '../_sharedWalletSend/types'
+import type { SendParams } from '../_sharedWalletSend/types'
 
 type Props = {
   fund: (params: SendParams) => Promise<{
@@ -50,7 +50,7 @@ export function useFundAndSign({ fund, cancel, sign }: Props) {
         signedTransaction,
       }
     },
-    [fund, sign, cancel]
+    [fund, sign, cancel],
   )
 
   return fundAndSign

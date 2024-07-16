@@ -1,30 +1,30 @@
 import {
+  type HookArgsCallback,
+  type HookArgsSwr,
+  type HookArgsWithPayloadSwr,
+  delay,
   useGetSwr,
+  usePostFunc,
   usePostSwr,
   usePutFunc,
-  HookArgsSwr,
-  HookArgsCallback,
-  HookArgsWithPayloadSwr,
-  delay,
-  usePostFunc,
 } from '@siafoundation/react-core'
 import {
-  AutopilotConfigParams,
-  AutopilotConfigResponse,
-  AutopilotConfigUpdateParams,
-  AutopilotConfigUpdatePayload,
-  AutopilotConfigUpdateResponse,
-  AutopilotConfigEvaluateParams,
-  AutopilotConfigEvaluatePayload,
-  AutopilotConfigEvaluateResponse,
-  AutopilotHostsSearchParams,
-  AutopilotHostsSearchPayload,
-  AutopilotHostsSearchResponse,
-  AutopilotStateParams,
-  AutopilotStateResponse,
-  AutopilotTriggerParams,
-  AutopilotTriggerPayload,
-  AutopilotTriggerResponse,
+  type AutopilotConfigEvaluateParams,
+  type AutopilotConfigEvaluatePayload,
+  type AutopilotConfigEvaluateResponse,
+  type AutopilotConfigParams,
+  type AutopilotConfigResponse,
+  type AutopilotConfigUpdateParams,
+  type AutopilotConfigUpdatePayload,
+  type AutopilotConfigUpdateResponse,
+  type AutopilotHostsSearchParams,
+  type AutopilotHostsSearchPayload,
+  type AutopilotHostsSearchResponse,
+  type AutopilotStateParams,
+  type AutopilotStateResponse,
+  type AutopilotTriggerParams,
+  type AutopilotTriggerPayload,
+  type AutopilotTriggerResponse,
   autopilotConfigRoute,
   autopilotHostsRoute,
   autopilotStateRoute,
@@ -32,7 +32,7 @@ import {
 } from '@siafoundation/renterd-types'
 
 export function useAutopilotState(
-  args?: HookArgsSwr<AutopilotStateParams, AutopilotStateResponse>
+  args?: HookArgsSwr<AutopilotStateParams, AutopilotStateResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -41,7 +41,7 @@ export function useAutopilotState(
 }
 
 export function useAutopilotConfig(
-  args?: HookArgsSwr<AutopilotConfigParams, AutopilotConfigResponse>
+  args?: HookArgsSwr<AutopilotConfigParams, AutopilotConfigResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -54,7 +54,7 @@ export function useAutopilotConfigUpdate(
     AutopilotConfigUpdateParams,
     AutopilotConfigUpdatePayload,
     AutopilotConfigUpdateResponse
-  >
+  >,
 ) {
   return usePutFunc(
     { ...args, route: autopilotConfigRoute },
@@ -67,7 +67,7 @@ export function useAutopilotConfigUpdate(
         mutate((key) => key === autopilotStateRoute)
       }
       func()
-    }
+    },
   )
 }
 
@@ -76,7 +76,7 @@ export function useAutopilotConfigEvaluate(
     AutopilotConfigEvaluateParams,
     AutopilotConfigEvaluatePayload,
     AutopilotConfigEvaluateResponse
-  >
+  >,
 ) {
   return usePostSwr({ ...args, route: autopilotConfigRoute })
 }
@@ -86,7 +86,7 @@ export function useAutopilotHostsSearch(
     AutopilotHostsSearchParams,
     AutopilotHostsSearchPayload,
     AutopilotHostsSearchResponse
-  >
+  >,
 ) {
   return usePostSwr({
     ...args,
@@ -99,7 +99,7 @@ export function useAutopilotTrigger(
     AutopilotTriggerParams,
     AutopilotTriggerPayload,
     AutopilotTriggerResponse
-  >
+  >,
 ) {
   return usePostFunc({
     ...args,

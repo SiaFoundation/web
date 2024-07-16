@@ -1,9 +1,9 @@
-import { useAppSettings } from '@siafoundation/react-core'
-import { Globe } from './Globe'
-import { useHosts } from '../../../contexts/hosts'
-import { HostDataWithLocation } from '../../../contexts/hosts/types'
 import { DataLabel } from '@siafoundation/design-system'
+import { useAppSettings } from '@siafoundation/react-core'
+import { useHosts } from '../../../contexts/hosts'
 import { hostColors } from '../../../contexts/hosts/status'
+import type { HostDataWithLocation } from '../../../contexts/hosts/types'
+import { Globe } from './Globe'
 
 export function HostMap() {
   const { gpu, settings } = useAppSettings()

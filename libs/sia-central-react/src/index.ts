@@ -9,3 +9,5 @@ export * from './useSiaCentralHostsNetworkMetrics'
 export * from './useSiaCentralExchangeRates'
 export * from './useSiaCentralTransaction'
 export * from './useSiaCentralSearch'
+
+export type * from 'swr'

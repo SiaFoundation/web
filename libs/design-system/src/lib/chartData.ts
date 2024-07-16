@@ -1,6 +1,6 @@
 import { humanDate } from '@siafoundation/units'
 import { omit } from '@technically/lodash'
-import { ChartPoint } from '../components/ChartXY'
+import type { ChartPoint } from '../components/ChartXY'
 import {
   daysInMilliseconds,
   hoursInMilliseconds,
@@ -11,7 +11,7 @@ type TransformMode = 'delta' | 'none'
 
 export function formatChartData<Key extends string>(
   dataset: ChartPoint<Key>[] | undefined,
-  transformMode: TransformMode
+  transformMode: TransformMode,
 ) {
   if (!dataset || !dataset.length) {
     return []
@@ -33,8 +33,8 @@ export function formatChartData<Key extends string>(
         return
       }
       keys.forEach((key) => {
-        const currVal = datum[key]
-        const prevVal = dataset[i - 1][key]
+        const currVal = datum[key]!
+        const prevVal = dataset[i - 1]![key]!
         const delta = currVal - prevVal
         point[key] = delta
       })
@@ -103,25 +103,25 @@ const dataIntervalLabelFormatters: Record<
   daily: (timestamp: number) => {
     const endTimestamp = timestamp + hoursInMilliseconds(24)
     return `Day interval from ${humanDate(timestamp)} to ${humanDate(
-      endTimestamp
+      endTimestamp,
     )}`
   },
   weekly: (timestamp: number) => {
     const endTimestamp = timestamp + daysInMilliseconds(7)
     return `Week interval from ${humanDate(timestamp)} to ${humanDate(
-      endTimestamp
+      endTimestamp,
     )}`
   },
   monthly: (timestamp: number) => {
     const endTimestamp = timestamp + daysInMilliseconds(30)
     return `Month interval from ${humanDate(timestamp)} to ${humanDate(
-      endTimestamp
+      endTimestamp,
     )}`
   },
   yearly: (timestamp: number) => {
     const endTimestamp = timestamp + daysInMilliseconds(365)
     return `Year interval from ${humanDate(timestamp)} to ${humanDate(
-      endTimestamp
+      endTimestamp,
     )}`
   },
   default: (timestamp: number) => {
@@ -139,7 +139,7 @@ export type DataInterval =
   | 'yearly'
 
 export function getDataIntervalLabelFormatter(
-  dataInterval: DataInterval | 'default'
+  dataInterval: DataInterval | 'default',
 ) {
   return (
     dataIntervalLabelFormatters[dataInterval] ||

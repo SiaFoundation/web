@@ -1,16 +1,16 @@
-import { FieldValues, Path, PathValue } from 'react-hook-form'
-import { FieldError } from '../components/Form'
-import { FieldProps } from './configurationFields'
-import { FieldFiat } from './FieldFiat'
-import { SiaCentralCurrency } from '@siafoundation/sia-central-types'
-import { TipNumber } from './TipNumber'
-import { useFormSetField } from './useFormSetField'
 import { currencyOptions } from '@siafoundation/react-core'
-import BigNumber from 'bignumber.js'
+import type { SiaCentralCurrency } from '@siafoundation/sia-central-types'
+import type BigNumber from 'bignumber.js'
+import type { FieldValues, Path, PathValue } from 'react-hook-form'
+import { FieldError } from '../components/Form'
+import { FieldFiat } from './FieldFiat'
+import { TipNumber } from './TipNumber'
+import type { FieldProps } from './configurationFields'
+import { useFormSetField } from './useFormSetField'
 
 export function ConfigurationFiat<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   name,
   form,

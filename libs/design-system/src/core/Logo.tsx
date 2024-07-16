@@ -1,7 +1,8 @@
-import logo from '../assets/logo.png'
+// TODO
+// import logo from '../assets/logo.png'
 import { Image } from './Image'
 
-const props = typeof logo === 'string' ? { src: logo } : logo
+// const props = typeof logo === 'string' ? { src: logo } : logo
 
 type Props = {
   size?: number
@@ -10,13 +11,15 @@ type Props = {
 
 export function Logo({ size = 30, className }: Props) {
   return (
-    <Image
-      priority
-      src={props.src}
-      alt="Logo"
-      width={size}
-      height={size}
-      className={className}
-    />
+    <div>imagex</div>
+    // TODO
+    // <Image
+    //   priority
+    //   src={props.src}
+    //   alt="Logo"
+    //   width={size}
+    //   height={size}
+    //   className={className}
+    // />
   )
 }

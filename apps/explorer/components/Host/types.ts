@@ -1,6 +1,6 @@
 'use client'
 
-import {
+import type {
   SiaCentralHost,
   SiaCentralHostSettings,
 } from '@siafoundation/sia-central-types'

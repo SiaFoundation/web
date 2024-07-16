@@ -1,16 +1,16 @@
 import { Link, Table, Text, truncate } from '@siafoundation/design-system'
+import { useRouter } from 'next/router'
 import { routes } from '../../config/routes'
+import { useAddresses } from '../../contexts/addresses'
 import { useDialog } from '../../contexts/dialog'
+import { useWallets } from '../../contexts/wallets'
 import { WalletdAuthedLayout } from '../WalletdAuthedLayout'
 import { WalletdSidenav } from '../WalletdSidenav'
 import { AddressesActionsMenu } from './AddressesActionsMenu'
-import { useRouter } from 'next/router'
-import { useAddresses } from '../../contexts/addresses'
+import { AddressesFiltersBar } from './AddressesFilterBar'
+import { StateError } from './StateError'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
-import { StateError } from './StateError'
-import { useWallets } from '../../contexts/wallets'
-import { AddressesFiltersBar } from './AddressesFilterBar'
 
 export function WalletAddresses() {
   const router = useRouter()

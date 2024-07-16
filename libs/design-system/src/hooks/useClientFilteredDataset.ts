@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
-import { ClientFilterItem } from './useClientFilters'
+import type { ClientFilterItem } from './useClientFilters'
 
 type DatumValue =
   | BigNumber
@@ -19,7 +19,7 @@ type Props<Datum extends Record<string, DatumValue>> = {
 }
 
 export function useClientFilteredDataset<
-  Datum extends Record<string, DatumValue>
+  Datum extends Record<string, DatumValue>,
 >({ dataset, filters, sortField, sortDirection }: Props<Datum>) {
   return useMemo<Datum[] | null>(() => {
     if (!dataset) {

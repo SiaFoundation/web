@@ -11,7 +11,7 @@ import {
   Time16,
   WarningFilled16,
 } from '@siafoundation/react-icons'
-import { SiaCentralHost } from '@siafoundation/sia-central-types'
+import type { SiaCentralHost } from '@siafoundation/sia-central-types'
 import { humanDate } from '@siafoundation/units'
 import { formatDistance } from 'date-fns'
 
@@ -107,10 +107,7 @@ export function HostInfo({ host }: Props) {
         >
           <Text size="14" color="subtle" className="flex gap-1 items-center">
             <Time16 />
-            {formatDistance(
-              new Date(host.first_seen_timestamp),
-              new Date()
-            )}{' '}
+            {formatDistance(new Date(host.first_seen_timestamp), new Date())}{' '}
             old
           </Text>
         </Tooltip>

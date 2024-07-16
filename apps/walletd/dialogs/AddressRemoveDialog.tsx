@@ -1,14 +1,14 @@
 import {
-  Paragraph,
-  Dialog,
-  triggerSuccessToast,
-  ConfigFields,
-  useOnInvalid,
-  FormSubmitButton,
-  FieldText,
   Code,
-  triggerErrorToast,
+  type ConfigFields,
+  Dialog,
+  FieldText,
+  FormSubmitButton,
+  Paragraph,
   stripPrefix,
+  triggerErrorToast,
+  triggerSuccessToast,
+  useOnInvalid,
 } from '@siafoundation/design-system'
 import { useWalletAddressDelete } from '@siafoundation/walletd-react'
 import { useCallback, useMemo } from 'react'

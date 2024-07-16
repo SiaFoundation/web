@@ -1,7 +1,7 @@
 import { Dialog, useConnectivity } from '@siafoundation/design-system'
 import { useAppSettings } from '@siafoundation/react-core'
-import { connectivityRoute } from '../../config/routes'
 import { useEffect } from 'react'
+import { connectivityRoute } from '../../config/routes'
 import { CmdRoot } from '../CmdRoot'
 
 type Props = {

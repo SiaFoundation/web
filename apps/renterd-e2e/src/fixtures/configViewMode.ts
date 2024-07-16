@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test'
+import type { Page } from '@playwright/test'
 import { getSwitchByLabel } from './switchValue'
 
 export async function setViewMode({

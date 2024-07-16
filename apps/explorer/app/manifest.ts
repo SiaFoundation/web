@@ -1,4 +1,4 @@
-import { MetadataRoute } from 'next'
+import type { MetadataRoute } from 'next'
 import { network } from '../config'
 
 const title = 'siascan'

@@ -1,9 +1,9 @@
 import {
+  Button,
   DropdownMenu,
   DropdownMenuItem,
-  Button,
-  DropdownMenuLeftSlot,
   DropdownMenuLabel,
+  DropdownMenuLeftSlot,
   Text,
 } from '@siafoundation/design-system'
 import { CaretDown16, Checkmark16 } from '@siafoundation/react-icons'
@@ -28,7 +28,7 @@ export function AlertContextMenu({ id, contentProps, buttonProps }: Props) {
       contentProps={{
         align: 'start',
         ...contentProps,
-        onClick: (e) => {
+        onClick: (e: React.MouseEvent<HTMLElement>) => {
           e.stopPropagation()
         },
       }}

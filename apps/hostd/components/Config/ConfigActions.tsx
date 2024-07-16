@@ -1,7 +1,7 @@
-import { Text, Button } from '@siafoundation/design-system'
+import { Button, Text } from '@siafoundation/design-system'
 import { Reset16, Save16 } from '@siafoundation/react-icons'
-import { AnnounceButton } from './AnnounceButton'
 import { useConfig } from '../../contexts/config'
+import { AnnounceButton } from './AnnounceButton'
 import { ConfigContextMenu } from './ConfigContextMenu'
 import { ConfigViewDropdownMenu } from './ConfigViewDropdownMenu'
 

@@ -1,16 +1,16 @@
-import { RenterdSidenav } from '../RenterdSidenav'
-import { routes } from '../../config/routes'
 import { ScrollArea, Table } from '@siafoundation/design-system'
-import { useDialog } from '../../contexts/dialog'
+import { cx } from 'class-variance-authority'
+import { routes } from '../../config/routes'
 import { useContracts } from '../../contexts/contracts'
+import { useDialog } from '../../contexts/dialog'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
+import { RenterdSidenav } from '../RenterdSidenav'
+import { ContractMetrics } from './ContractMetrics'
+import { ContractsActionsMenu } from './ContractsActionsMenu'
+import { ContractsFilterBar } from './ContractsFilterBar'
+import { StateError } from './StateError'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
-import { ContractsActionsMenu } from './ContractsActionsMenu'
-import { StateError } from './StateError'
-import { ContractsFilterBar } from './ContractsFilterBar'
-import { cx } from 'class-variance-authority'
-import { ContractMetrics } from './ContractMetrics'
 
 export function Contracts() {
   const { openDialog } = useDialog()
@@ -55,7 +55,7 @@ export function Contracts() {
             'absolute w-full',
             showDetailView ? 'block' : 'invisible',
             'transition-all',
-            'p-6'
+            'p-6',
           )}
           style={{
             height: showDetailView ? `calc(100% - ${listHeight})` : 0,
@@ -67,7 +67,7 @@ export function Contracts() {
           className={cx(
             'absolute overflow-hidden transition-all w-full',
             'duration-300',
-            'overflow-hidden'
+            'overflow-hidden',
           )}
           style={{
             bottom: 0,

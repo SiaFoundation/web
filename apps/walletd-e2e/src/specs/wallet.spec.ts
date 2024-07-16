@@ -1,12 +1,12 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 import { login } from '../fixtures/login'
+import { navigateToWallet } from '../fixtures/navigateToWallet'
 import {
   createNewWallet,
   deleteWalletIfExists,
   recoverWallet,
   walletInList,
 } from '../fixtures/wallet'
-import { navigateToWallet } from '../fixtures/navigateToWallet'
 
 test('create new seed wallet', async ({ page, context }) => {
   const name = 'my-new-seed-wallet'

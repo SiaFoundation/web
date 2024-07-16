@@ -1,20 +1,20 @@
 import {
-  Text,
-  TableColumn,
   ProgressBar,
-  ValueNum,
+  type TableColumn,
+  Text,
   Tooltip,
+  ValueNum,
 } from '@siafoundation/design-system'
 import {
-  Locked16,
   CheckboxCheckedFilled16,
   Edit16,
-  WarningSquareFilled16,
   InProgress16,
+  Locked16,
+  WarningSquareFilled16,
 } from '@siafoundation/react-icons'
 import { humanBytes } from '@siafoundation/units'
 import { VolumeContextMenu } from '../../components/Volumes/VolumeContextMenu'
-import { VolumeData, TableColumnId } from './types'
+import type { TableColumnId, VolumeData } from './types'
 
 type Context = Record<string, never>
 
@@ -118,7 +118,7 @@ export const columns: VolumesTableColumn[] = [
           value={data.usedBytes}
           max={data.totalBytes}
           label={`${humanBytes(data.usedBytes)} / ${humanBytes(
-            data.totalBytes
+            data.totalBytes,
           )}`}
         />
       </div>

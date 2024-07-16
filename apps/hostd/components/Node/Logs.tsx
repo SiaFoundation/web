@@ -8,8 +8,8 @@ import {
 } from '@siafoundation/design-system'
 import { useLogsSearch } from '@siafoundation/hostd-react'
 import { humanDate } from '@siafoundation/units'
-import { cx } from 'class-variance-authority'
 import { times } from '@technically/lodash'
+import { cx } from 'class-variance-authority'
 
 const filters = []
 
@@ -25,7 +25,7 @@ export function Logs() {
     logs.data?.entries,
     logs.isValidating,
     logs.error,
-    filters
+    filters,
   )
 
   return (
@@ -42,7 +42,7 @@ export function Logs() {
             <div
               className={cx(
                 'flex items-center justify-center h-[100px]',
-                itemBorderStyles()
+                itemBorderStyles(),
               )}
             >
               <Text size="18" color="subtle">
@@ -54,7 +54,7 @@ export function Logs() {
             <div
               className={cx(
                 'flex items-center justify-center h-[100px]',
-                itemBorderStyles()
+                itemBorderStyles(),
               )}
             >
               <Text size="18" color="subtle">
@@ -70,7 +70,7 @@ export function Logs() {
                 className={cx(
                   'flex flex-col gap-1 w-full p-4',
                   'border-t border-gray-200 dark:border-graydark-300',
-                  'first:border-none'
+                  'first:border-none',
                 )}
               >
                 <div className="flex justify-between w-full">
@@ -117,6 +117,6 @@ export function EntityListSkeleton() {
 export function itemBorderStyles() {
   return cx(
     'border-t border-gray-200 dark:border-graydark-300',
-    'first:border-none'
+    'first:border-none',
   )
 }

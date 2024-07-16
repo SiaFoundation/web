@@ -1,203 +1,215 @@
-import useSWR from 'swr'
 import {
-  useDeleteFunc,
-  useGetSwr,
-  usePostSwr,
-  usePutFunc,
-  usePostFunc,
-  HookArgsSwr,
-  HookArgsCallback,
-  HookArgsWithPayloadSwr,
+  type HookArgsCallback,
+  type HookArgsSwr,
+  type HookArgsWithPayloadSwr,
+  delay,
   getMainnetBlockHeight,
   getTestnetZenBlockHeight,
-  delay,
+  useDeleteFunc,
+  useGetSwr,
+  usePostFunc,
+  usePostSwr,
+  usePutFunc,
 } from '@siafoundation/react-core'
 import {
-  AccountResetDriftParams,
-  AccountResetDriftPayload,
-  AccountResetDriftResponse,
-  AlertsDismissParams,
-  AlertsDismissPayload,
-  AlertsDismissResponse,
-  AlertsParams,
-  AlertsResponse,
-  BucketCreateParams,
-  BucketCreatePayload,
-  BucketCreateResponse,
-  BucketDeleteParams,
-  BucketDeletePayload,
-  BucketDeleteResponse,
-  BucketParams,
-  BucketPolicyUpdateParams,
-  BucketPolicyUpdatePayload,
-  BucketPolicyUpdateResponse,
-  BucketResponse,
-  BucketsParams,
-  BucketsResponse,
-  BusStateParams,
-  BusStateResponse,
-  ConsensusAcceptBlockParams,
-  ConsensusAcceptBlockPayload,
-  ConsensusAcceptBlockResponse,
-  ConsensusStateParams,
-  ConsensusStateResponse,
-  ContractAcquireParams,
-  ContractAcquirePayload,
-  ContractAcquireResponse,
-  ContractDeleteParams,
-  ContractDeletePayload,
-  ContractDeleteResponse,
-  ContractMetricsParams,
-  ContractMetricsResponse,
-  ContractParams,
-  ContractRenewedParams,
-  ContractRenewedPayload,
-  ContractRenewedResponse,
-  ContractResponse,
-  ContractSetChurnMetricsParams,
-  ContractSetChurnMetricsResponse,
-  ContractSetMetricsParams,
-  ContractSetMetricsResponse,
-  ContractSetUpdateParams,
-  ContractSetUpdatePayload,
-  ContractSetUpdateResponse,
-  ContractSetsParams,
-  ContractSetsResponse,
-  ContractsAddParams,
-  ContractsAddPayload,
-  ContractsAddResponse,
-  ContractsParams,
-  ContractsReleaseParams,
-  ContractsReleasePayload,
-  ContractsReleaseResponse,
-  ContractsResponse,
-  HostInteractionParams,
-  HostInteractionPayload,
-  HostInteractionResponse,
-  HostParams,
-  HostResetLostSectorCountParams,
-  HostResetLostSectorCountPayload,
-  HostResetLostSectorCountResponse,
-  HostResponse,
-  HostsAllowlistParams,
-  HostsAllowlistResponse,
-  HostsAllowlistUpdateParams,
-  HostsAllowlistUpdatePayload,
-  HostsAllowlistUpdateResponse,
-  HostsBlocklistParams,
-  HostsBlocklistResponse,
-  HostsBlocklistUpdateParams,
-  HostsBlocklistUpdatePayload,
-  HostsBlocklistUpdateResponse,
-  HostsParams,
-  HostsResponse,
-  HostsSearchParams,
-  HostsSearchPayload,
-  HostsSearchResponse,
-  MultipartUploadAbortParams,
-  MultipartUploadAbortPayload,
-  MultipartUploadAbortResponse,
-  MultipartUploadAddPartParams,
-  MultipartUploadAddPartPayload,
-  MultipartUploadAddPartResponse,
-  MultipartUploadCompleteParams,
-  MultipartUploadCompletePayload,
-  MultipartUploadCompleteResponse,
-  MultipartUploadCreateParams,
-  MultipartUploadCreatePayload,
-  MultipartUploadCreateResponse,
-  MultipartUploadListPartsParams,
-  MultipartUploadListPartsPayload,
-  MultipartUploadListPartsResponse,
-  MultipartUploadListUploadsParams,
-  MultipartUploadListUploadsPayload,
-  MultipartUploadListUploadsResponse,
-  ObjectAddParams,
-  ObjectAddPayload,
-  ObjectAddResponse,
-  ObjectDeleteParams,
-  ObjectDeletePayload,
-  ObjectDeleteResponse,
-  ObjectDirectoryParams,
-  ObjectDirectoryResponse,
-  ObjectListParams,
-  ObjectListPayload,
-  ObjectListResponse,
-  ObjectParams,
-  ObjectRenameParams,
-  ObjectRenamePayload,
-  ObjectRenameResponse,
-  ObjectResponse,
-  ObjectSearchParams,
-  ObjectSearchResponse,
-  ObjectsStatsParams,
-  ObjectsStatsResponse,
-  SettingParams,
-  SettingResponse,
-  SettingUpdateParams,
-  SettingUpdatePayload,
-  SettingUpdateResponse,
-  SettingsParams,
-  SettingsResponse,
-  SlabObjectsParams,
-  SlabObjectsResponse,
-  SyncerAddressParams,
-  SyncerAddressResponse,
-  SyncerConnectParams,
-  SyncerConnectPayload,
-  SyncerConnectResponse,
-  SyncerPeersParams,
-  SyncerPeersResponse,
-  TxPoolBroadcastParams,
-  TxPoolBroadcastPayload,
-  TxPoolBroadcastResponse,
-  TxPoolFeeParams,
-  TxPoolFeeResponse,
-  TxPoolTransactionsParams,
-  TxPoolTransactionsResponse,
-  WalletAddressesParams,
-  WalletAddressesResponse,
-  WalletDiscardParams,
-  WalletDiscardPayload,
-  WalletDiscardResponse,
-  WalletFundParams,
-  WalletFundPayload,
-  WalletFundResponse,
-  WalletMetricsParams,
-  WalletMetricsResponse,
-  WalletParams,
-  WalletPendingParams,
-  WalletPendingResponse,
-  WalletPrepareFormParams,
-  WalletPrepareFormPayload,
-  WalletPrepareFormResponse,
-  WalletPrepareRenewParams,
-  WalletPrepareRenewPayload,
-  WalletPrepareRenewResponse,
-  WalletRedistributeParams,
-  WalletRedistributePayload,
-  WalletRedistributeResponse,
-  WalletResponse,
-  WalletSignParams,
-  WalletSignPayload,
-  WalletSignResponse,
-  WalletTransactionsParams,
-  WalletTransactionsResponse,
-  WalletUtxoParams,
-  WalletUtxoResponse,
+  type AccountResetDriftParams,
+  type AccountResetDriftPayload,
+  type AccountResetDriftResponse,
+  type AlertsDismissParams,
+  type AlertsDismissPayload,
+  type AlertsDismissResponse,
+  type AlertsParams,
+  type AlertsResponse,
+  type BucketCreateParams,
+  type BucketCreatePayload,
+  type BucketCreateResponse,
+  type BucketDeleteParams,
+  type BucketDeletePayload,
+  type BucketDeleteResponse,
+  type BucketParams,
+  type BucketPolicyUpdateParams,
+  type BucketPolicyUpdatePayload,
+  type BucketPolicyUpdateResponse,
+  type BucketResponse,
+  type BucketsParams,
+  type BucketsResponse,
+  type BusStateParams,
+  type BusStateResponse,
+  type ConsensusAcceptBlockParams,
+  type ConsensusAcceptBlockPayload,
+  type ConsensusAcceptBlockResponse,
+  type ConsensusStateParams,
+  type ConsensusStateResponse,
+  type ContractAcquireParams,
+  type ContractAcquirePayload,
+  type ContractAcquireResponse,
+  type ContractDeleteParams,
+  type ContractDeletePayload,
+  type ContractDeleteResponse,
+  type ContractMetricsParams,
+  type ContractMetricsResponse,
+  type ContractParams,
+  type ContractRenewedParams,
+  type ContractRenewedPayload,
+  type ContractRenewedResponse,
+  type ContractResponse,
+  type ContractSetChurnMetricsParams,
+  type ContractSetChurnMetricsResponse,
+  type ContractSetMetricsParams,
+  type ContractSetMetricsResponse,
+  type ContractSetSettings,
+  type ContractSetUpdateParams,
+  type ContractSetUpdatePayload,
+  type ContractSetUpdateResponse,
+  type ContractSetsParams,
+  type ContractSetsResponse,
+  type ContractSizeParams,
+  type ContractSizeResponse,
+  type ContractsAddParams,
+  type ContractsAddPayload,
+  type ContractsAddResponse,
+  type ContractsParams,
+  type ContractsPrunableParams,
+  type ContractsPrunableResponse,
+  type ContractsReleaseParams,
+  type ContractsReleasePayload,
+  type ContractsReleaseResponse,
+  type ContractsResponse,
+  type GougingSettings,
+  type HostInteractionParams,
+  type HostInteractionPayload,
+  type HostInteractionResponse,
+  type HostParams,
+  type HostResetLostSectorCountParams,
+  type HostResetLostSectorCountPayload,
+  type HostResetLostSectorCountResponse,
+  type HostResponse,
+  type HostsAllowlistParams,
+  type HostsAllowlistResponse,
+  type HostsAllowlistUpdateParams,
+  type HostsAllowlistUpdatePayload,
+  type HostsAllowlistUpdateResponse,
+  type HostsBlocklistParams,
+  type HostsBlocklistResponse,
+  type HostsBlocklistUpdateParams,
+  type HostsBlocklistUpdatePayload,
+  type HostsBlocklistUpdateResponse,
+  type HostsParams,
+  type HostsResponse,
+  type HostsSearchParams,
+  type HostsSearchPayload,
+  type HostsSearchResponse,
+  type MultipartUploadAbortParams,
+  type MultipartUploadAbortPayload,
+  type MultipartUploadAbortResponse,
+  type MultipartUploadAddPartParams,
+  type MultipartUploadAddPartPayload,
+  type MultipartUploadAddPartResponse,
+  type MultipartUploadCompleteParams,
+  type MultipartUploadCompletePayload,
+  type MultipartUploadCompleteResponse,
+  type MultipartUploadCreateParams,
+  type MultipartUploadCreatePayload,
+  type MultipartUploadCreateResponse,
+  type MultipartUploadListPartsParams,
+  type MultipartUploadListPartsPayload,
+  type MultipartUploadListPartsResponse,
+  type MultipartUploadListUploadsParams,
+  type MultipartUploadListUploadsPayload,
+  type MultipartUploadListUploadsResponse,
+  type ObjectAddParams,
+  type ObjectAddPayload,
+  type ObjectAddResponse,
+  type ObjectDeleteParams,
+  type ObjectDeletePayload,
+  type ObjectDeleteResponse,
+  type ObjectDirectoryParams,
+  type ObjectDirectoryResponse,
+  type ObjectListParams,
+  type ObjectListPayload,
+  type ObjectListResponse,
+  type ObjectParams,
+  type ObjectRenameParams,
+  type ObjectRenamePayload,
+  type ObjectRenameResponse,
+  type ObjectResponse,
+  type ObjectSearchParams,
+  type ObjectSearchResponse,
+  type ObjectsStatsParams,
+  type ObjectsStatsResponse,
+  type RedundancySettings,
+  type S3AuthenticationSettings,
+  type SettingParams,
+  type SettingResponse,
+  type SettingUpdateParams,
+  type SettingUpdatePayload,
+  type SettingUpdateResponse,
+  type SettingsParams,
+  type SettingsResponse,
+  type SlabObjectsParams,
+  type SlabObjectsResponse,
+  type SyncerAddressParams,
+  type SyncerAddressResponse,
+  type SyncerConnectParams,
+  type SyncerConnectPayload,
+  type SyncerConnectResponse,
+  type SyncerPeersParams,
+  type SyncerPeersResponse,
+  type TxPoolBroadcastParams,
+  type TxPoolBroadcastPayload,
+  type TxPoolBroadcastResponse,
+  type TxPoolFeeParams,
+  type TxPoolFeeResponse,
+  type TxPoolTransactionsParams,
+  type TxPoolTransactionsResponse,
+  type UploadPackingSettings,
+  type WalletAddressesParams,
+  type WalletAddressesResponse,
+  type WalletDiscardParams,
+  type WalletDiscardPayload,
+  type WalletDiscardResponse,
+  type WalletFundParams,
+  type WalletFundPayload,
+  type WalletFundResponse,
+  type WalletMetricsParams,
+  type WalletMetricsResponse,
+  type WalletParams,
+  type WalletPendingParams,
+  type WalletPendingResponse,
+  type WalletPrepareFormParams,
+  type WalletPrepareFormPayload,
+  type WalletPrepareFormResponse,
+  type WalletPrepareRenewParams,
+  type WalletPrepareRenewPayload,
+  type WalletPrepareRenewResponse,
+  type WalletRedistributeParams,
+  type WalletRedistributePayload,
+  type WalletRedistributeResponse,
+  type WalletResponse,
+  type WalletSignParams,
+  type WalletSignPayload,
+  type WalletSignResponse,
+  type WalletTransactionsParams,
+  type WalletTransactionsResponse,
+  type WalletUtxoParams,
+  type WalletUtxoResponse,
   busAccountIdResetdriftRoute,
-  busBucketRoute,
+  busAlertsDismissRoute,
+  busAlertsRoute,
   busBucketNamePolicyRoute,
   busBucketNameRoute,
+  busBucketRoute,
   busBucketsRoute,
   busConsensusAcceptblockRoute,
   busConsensusStateRoute,
-  busContractRoute,
   busContractIdAcquireRoute,
   busContractIdNewRoute,
   busContractIdReleaseRoute,
   busContractIdRenewedRoute,
   busContractIdRoute,
+  busContractIdSize,
+  busContractRoute,
+  busContractsPrunableRoute,
   busContractsRoute,
   busContractsSetsRoute,
   busContractsSetsSetRoute,
@@ -207,14 +219,26 @@ import {
   busHostsBlocklistRoute,
   busHostsHostKeyRoute,
   busHostsRoute,
-  busObjectsRoute,
+  busMetricChurnRoute,
+  busMetricContractRoute,
+  busMetricContractsetRoute,
+  busMetricWalletRoute,
+  busMultipartAbortRoute,
+  busMultipartCompleteRoute,
+  busMultipartCreateRoute,
+  busMultipartListpartsRoute,
+  busMultipartListuploadsRoute,
+  busMultipartPartRoute,
+  busMultipartRoute,
   busObjectsKeyRoute,
   busObjectsListRoute,
   busObjectsRenameRoute,
+  busObjectsRoute,
   busSearchHostsRoute,
   busSearchObjectsRoute,
   busSettingKeyRoute,
   busSettingsRoute,
+  busSlabKeyObjectsRoute,
   busStateRoute,
   busStatsObjectsRoute,
   busSyncerAddrRoute,
@@ -234,37 +258,13 @@ import {
   busWalletRoute,
   busWalletSignRoute,
   busWalletTransactionsRoute,
-  busAlertsRoute,
-  busAlertsDismissRoute,
-  busSlabKeyObjectsRoute,
-  busMetricContractRoute,
-  busMetricContractsetRoute,
-  busMetricChurnRoute,
-  busMetricWalletRoute,
-  busMultipartCreateRoute,
-  busMultipartRoute,
-  busMultipartCompleteRoute,
-  busMultipartAbortRoute,
-  busMultipartListpartsRoute,
-  busMultipartListuploadsRoute,
-  busMultipartPartRoute,
-  GougingSettings,
-  ContractSetSettings,
-  RedundancySettings,
-  S3AuthenticationSettings,
-  UploadPackingSettings,
-  ContractsPrunableParams,
-  ContractsPrunableResponse,
-  busContractsPrunableRoute,
-  ContractSizeParams,
-  ContractSizeResponse,
-  busContractIdSize,
 } from '@siafoundation/renterd-types'
+import useSWR from 'swr'
 
 // state
 
 export function useBusState(
-  args?: HookArgsSwr<BusStateParams, BusStateResponse>
+  args?: HookArgsSwr<BusStateParams, BusStateResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -275,7 +275,7 @@ export function useBusState(
 // consensus
 
 export function useConsensusState(
-  args?: HookArgsSwr<ConsensusStateParams, ConsensusStateResponse>
+  args?: HookArgsSwr<ConsensusStateParams, ConsensusStateResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -302,7 +302,7 @@ export function useEstimatedNetworkBlockHeight(): number {
     {
       refreshInterval: 60_000,
       keepPreviousData: true,
-    }
+    },
   )
   return res.data || 0
 }
@@ -312,7 +312,7 @@ export function useConsensusAcceptBlock(
     ConsensusAcceptBlockParams,
     ConsensusAcceptBlockPayload,
     ConsensusAcceptBlockResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: busConsensusAcceptblockRoute })
 }
@@ -320,7 +320,7 @@ export function useConsensusAcceptBlock(
 // syncer
 
 export function useSyncerPeers(
-  args?: HookArgsSwr<SyncerPeersParams, SyncerPeersResponse>
+  args?: HookArgsSwr<SyncerPeersParams, SyncerPeersResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -333,7 +333,7 @@ export function useSyncerConnect(
     SyncerConnectParams,
     SyncerConnectPayload,
     SyncerConnectResponse
-  >
+  >,
 ) {
   return usePostFunc(
     {
@@ -342,12 +342,12 @@ export function useSyncerConnect(
     },
     async (mutate) => {
       mutate((key) => key === busSyncerPeersRoute)
-    }
+    },
   )
 }
 
 export function useSyncerAddress(
-  args?: HookArgsSwr<SyncerAddressParams, SyncerAddressResponse>
+  args?: HookArgsSwr<SyncerAddressParams, SyncerAddressResponse>,
 ) {
   return useGetSwr({ ...args, route: busSyncerAddrRoute })
 }
@@ -355,13 +355,13 @@ export function useSyncerAddress(
 // txpool
 
 export function useTxPoolFee(
-  args?: HookArgsSwr<TxPoolFeeParams, TxPoolFeeResponse>
+  args?: HookArgsSwr<TxPoolFeeParams, TxPoolFeeResponse>,
 ) {
   return useGetSwr({ ...args, route: busTxpoolFeeRoute })
 }
 
 export function useTxPoolTransactions(
-  args?: HookArgsSwr<TxPoolTransactionsParams, TxPoolTransactionsResponse>
+  args?: HookArgsSwr<TxPoolTransactionsParams, TxPoolTransactionsResponse>,
 ) {
   return useGetSwr({ ...args, route: busTxpoolTransactionsRoute })
 }
@@ -371,7 +371,7 @@ export function useTxPoolBroadcast(
     TxPoolBroadcastParams,
     TxPoolBroadcastPayload,
     TxPoolBroadcastResponse
-  >
+  >,
 ) {
   return usePostFunc(
     {
@@ -386,7 +386,7 @@ export function useTxPoolBroadcast(
           key.startsWith(busWalletPendingRoute)
         )
       })
-    }
+    },
   )
 }
 
@@ -397,13 +397,13 @@ export function useWallet(args?: HookArgsSwr<WalletParams, WalletResponse>) {
 }
 
 export function useWalletAddresses(
-  args?: HookArgsSwr<WalletAddressesParams, WalletAddressesResponse>
+  args?: HookArgsSwr<WalletAddressesParams, WalletAddressesResponse>,
 ) {
   return useGetSwr({ ...args, route: busWalletAddressesRoute })
 }
 
 export function useWalletTransactions(
-  args: HookArgsSwr<WalletTransactionsParams, WalletTransactionsResponse>
+  args: HookArgsSwr<WalletTransactionsParams, WalletTransactionsResponse>,
 ) {
   return useGetSwr({
     ...args,
@@ -412,7 +412,7 @@ export function useWalletTransactions(
 }
 
 export function useWalletUtxos(
-  args?: HookArgsSwr<WalletUtxoParams, WalletUtxoResponse>
+  args?: HookArgsSwr<WalletUtxoParams, WalletUtxoResponse>,
 ) {
   return useGetSwr({ ...args, route: busWalletOutputsRoute })
 }
@@ -422,7 +422,7 @@ export function useWalletFund(
     WalletFundParams,
     WalletFundPayload,
     WalletFundResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: busWalletFundRoute })
 }
@@ -432,7 +432,7 @@ export function useWalletSign(
     WalletSignParams,
     WalletSignPayload,
     WalletSignResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: busWalletSignRoute })
 }
@@ -442,7 +442,7 @@ export function useWalletRedistribute(
     WalletRedistributeParams,
     WalletRedistributePayload,
     WalletRedistributeResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: busWalletRedistributeRoute })
 }
@@ -452,7 +452,7 @@ export function useWalletDiscard(
     WalletDiscardParams,
     WalletDiscardPayload,
     WalletDiscardResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: busWalletDiscardRoute })
 }
@@ -462,7 +462,7 @@ export function useWalletPrepareForm(
     WalletPrepareFormParams,
     WalletPrepareFormPayload,
     WalletPrepareFormResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: busWalletPrepareFormRoute })
 }
@@ -472,13 +472,13 @@ export function useWalletPrepareRenew(
     WalletPrepareRenewParams,
     WalletPrepareRenewPayload,
     WalletPrepareRenewResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: busWalletPrepareRenewRoute })
 }
 
 export function useWalletPending(
-  args?: HookArgsSwr<WalletPendingParams, WalletPendingResponse>
+  args?: HookArgsSwr<WalletPendingParams, WalletPendingResponse>,
 ) {
   return useGetSwr({ ...args, route: busWalletPendingRoute })
 }
@@ -495,7 +495,7 @@ export function useHostsSearch(
     HostsSearchParams,
     HostsSearchPayload,
     HostsSearchResponse
-  >
+  >,
 ) {
   return usePostSwr({
     ...args,
@@ -512,7 +512,7 @@ export function useHostsInteractionAdd(
     HostInteractionParams,
     HostInteractionPayload,
     HostInteractionResponse
-  >
+  >,
 ) {
   return usePostFunc({
     ...args,
@@ -520,13 +520,13 @@ export function useHostsInteractionAdd(
   })
 }
 export function useHostsBlocklist(
-  args?: HookArgsSwr<HostsBlocklistParams, HostsBlocklistResponse>
+  args?: HookArgsSwr<HostsBlocklistParams, HostsBlocklistResponse>,
 ) {
   return useGetSwr({ ...args, route: busHostsBlocklistRoute })
 }
 
 export function useHostsAllowlist(
-  args?: HookArgsSwr<HostsAllowlistParams, HostsAllowlistResponse>
+  args?: HookArgsSwr<HostsAllowlistParams, HostsAllowlistResponse>,
 ) {
   return useGetSwr({ ...args, route: busHostsAllowlistRoute })
 }
@@ -536,7 +536,7 @@ export function useHostsAllowlistUpdate(
     HostsAllowlistUpdateParams,
     HostsAllowlistUpdatePayload,
     HostsAllowlistUpdateResponse
-  >
+  >,
 ) {
   return usePutFunc(
     { ...args, route: busHostsAllowlistRoute },
@@ -549,7 +549,7 @@ export function useHostsAllowlistUpdate(
         ]
         return !!matches.find((match) => key.startsWith(match))
       })
-    }
+    },
   )
 }
 
@@ -558,7 +558,7 @@ export function useHostsBlocklistUpdate(
     HostsBlocklistUpdateParams,
     HostsBlocklistUpdatePayload,
     HostsBlocklistUpdateResponse
-  >
+  >,
 ) {
   return usePutFunc(
     { ...args, route: busHostsBlocklistRoute },
@@ -571,7 +571,7 @@ export function useHostsBlocklistUpdate(
         ]
         return !!matches.find((match) => key.startsWith(match))
       })
-    }
+    },
   )
 }
 
@@ -580,7 +580,7 @@ export function useHostResetLostSectorCount(
     HostResetLostSectorCountParams,
     HostResetLostSectorCountPayload,
     HostResetLostSectorCountResponse
-  >
+  >,
 ) {
   return usePostFunc({
     ...args,
@@ -595,7 +595,7 @@ export function useAccountResetDrift(
     AccountResetDriftParams,
     AccountResetDriftPayload,
     AccountResetDriftResponse
-  >
+  >,
 ) {
   return usePostFunc({
     ...args,
@@ -606,7 +606,7 @@ export function useAccountResetDrift(
 // contracts
 
 export function useContracts(
-  args?: HookArgsSwr<ContractsParams, ContractsResponse>
+  args?: HookArgsSwr<ContractsParams, ContractsResponse>,
 ) {
   return useGetSwr({ ...args, route: busContractsRoute })
 }
@@ -616,7 +616,7 @@ export function useContractsAcquire(
     ContractAcquireParams,
     ContractAcquirePayload,
     ContractAcquireResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: busContractIdAcquireRoute })
 }
@@ -626,13 +626,13 @@ export function useContractsRelease(
     ContractsReleaseParams,
     ContractsReleasePayload,
     ContractsReleaseResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: busContractIdReleaseRoute })
 }
 
 export function useContract(
-  args: HookArgsSwr<ContractParams, ContractResponse>
+  args: HookArgsSwr<ContractParams, ContractResponse>,
 ) {
   return useGetSwr({ ...args, route: busContractIdRoute })
 }
@@ -642,7 +642,7 @@ export function useContractAdd(
     ContractsAddParams,
     ContractsAddPayload,
     ContractsAddResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: busContractIdNewRoute })
 }
@@ -652,7 +652,7 @@ export function useContractRenew(
     ContractRenewedParams,
     ContractRenewedPayload,
     ContractRenewedResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: busContractIdRenewedRoute })
 }
@@ -662,24 +662,24 @@ export function useContractDelete(
     ContractDeleteParams,
     ContractDeletePayload,
     ContractDeleteResponse
-  >
+  >,
 ) {
   return useDeleteFunc(
     { ...args, route: busContractIdRoute },
     async (mutate) => {
       mutate((key) => key.startsWith(busContractRoute))
-    }
+    },
   )
 }
 
 export function useContractSize(
-  args?: HookArgsSwr<ContractSizeParams, ContractSizeResponse>
+  args?: HookArgsSwr<ContractSizeParams, ContractSizeResponse>,
 ) {
   return useGetSwr({ ...args, route: busContractIdSize })
 }
 
 export function useContractSets(
-  args?: HookArgsSwr<ContractSetsParams, ContractSetsResponse>
+  args?: HookArgsSwr<ContractSetsParams, ContractSetsResponse>,
 ) {
   return useGetSwr({ ...args, route: busContractsSetsRoute })
 }
@@ -689,13 +689,13 @@ export function useContractSetUpdate(
     ContractSetUpdateParams,
     ContractSetUpdatePayload,
     ContractSetUpdateResponse
-  >
+  >,
 ) {
   return usePutFunc({ ...args, route: busContractsSetsSetRoute })
 }
 
 export function useContractsPrunable(
-  args?: HookArgsSwr<ContractsPrunableParams, ContractsPrunableResponse>
+  args?: HookArgsSwr<ContractsPrunableParams, ContractsPrunableResponse>,
 ) {
   return useGetSwr({ ...args, route: busContractsPrunableRoute })
 }
@@ -715,7 +715,7 @@ export function useBucketCreate(
     BucketCreateParams,
     BucketCreatePayload,
     BucketCreateResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: busBucketsRoute }, async (mutate) => {
     mutate((key) => key.startsWith(busBucketsRoute))
@@ -727,13 +727,13 @@ export function useBucketPolicyUpdate(
     BucketPolicyUpdateParams,
     BucketPolicyUpdatePayload,
     BucketPolicyUpdateResponse
-  >
+  >,
 ) {
   return usePutFunc(
     { ...args, route: busBucketNamePolicyRoute },
     async (mutate) => {
       mutate((key) => key.startsWith(busBucketRoute))
-    }
+    },
   )
 }
 
@@ -742,18 +742,18 @@ export function useBucketDelete(
     BucketDeleteParams,
     BucketDeletePayload,
     BucketDeleteResponse
-  >
+  >,
 ) {
   return useDeleteFunc(
     { ...args, route: busBucketNameRoute },
     async (mutate) => {
       mutate((key) => key.startsWith(busBucketRoute))
-    }
+    },
   )
 }
 
 export function useObjectDirectory(
-  args: HookArgsSwr<ObjectDirectoryParams, ObjectDirectoryResponse>
+  args: HookArgsSwr<ObjectDirectoryParams, ObjectDirectoryResponse>,
 ) {
   return useGetSwr({ ...args, route: busObjectsKeyRoute })
 }
@@ -763,7 +763,7 @@ export function useObjectList(
     ObjectListParams,
     ObjectListPayload,
     ObjectListResponse
-  >
+  >,
 ) {
   return usePostSwr({ ...args, route: busObjectsListRoute })
 }
@@ -773,13 +773,13 @@ export function useObject(args: HookArgsSwr<ObjectParams, ObjectResponse>) {
 }
 
 export function useObjectSearch(
-  args: HookArgsSwr<ObjectSearchParams, ObjectSearchResponse>
+  args: HookArgsSwr<ObjectSearchParams, ObjectSearchResponse>,
 ) {
   return useGetSwr({ ...args, route: busSearchObjectsRoute })
 }
 
 export function useObjectAdd(
-  args: HookArgsCallback<ObjectAddParams, ObjectAddPayload, ObjectAddResponse>
+  args: HookArgsCallback<ObjectAddParams, ObjectAddPayload, ObjectAddResponse>,
 ) {
   return usePutFunc({ ...args, route: busObjectsKeyRoute })
 }
@@ -789,7 +789,7 @@ export function useObjectRename(
     ObjectRenameParams,
     ObjectRenamePayload,
     ObjectRenameResponse
-  >
+  >,
 ) {
   return usePostFunc({ ...args, route: busObjectsRenameRoute })
 }
@@ -799,18 +799,18 @@ export function useObjectDelete(
     ObjectDeleteParams,
     ObjectDeletePayload,
     ObjectDeleteResponse
-  >
+  >,
 ) {
   return useDeleteFunc(
     { ...args, route: busObjectsKeyRoute },
     async (mutate) => {
       mutate((key) => key.startsWith(busObjectsRoute))
-    }
+    },
   )
 }
 
 export function useObjectStats(
-  args?: HookArgsSwr<ObjectsStatsParams, ObjectsStatsResponse>
+  args?: HookArgsSwr<ObjectsStatsParams, ObjectsStatsResponse>,
 ) {
   return useGetSwr({ ...args, route: busStatsObjectsRoute })
 }
@@ -818,13 +818,13 @@ export function useObjectStats(
 type Setting = Record<string, unknown> | string
 
 export function useSettings(
-  args?: HookArgsSwr<SettingsParams, SettingsResponse>
+  args?: HookArgsSwr<SettingsParams, SettingsResponse>,
 ) {
   return useGetSwr({ ...args, route: busSettingsRoute })
 }
 
 export function useSetting<T extends Setting>(
-  args: HookArgsSwr<SettingParams, SettingResponse<T>>
+  args: HookArgsSwr<SettingParams, SettingResponse<T>>,
 ) {
   return useGetSwr({ ...args, route: busSettingKeyRoute })
 }
@@ -837,7 +837,7 @@ export function useSettingGouging(args?: HookArgsSwr<void, GougingSettings>) {
 }
 
 export function useSettingContractSet(
-  args?: HookArgsSwr<void, ContractSetSettings>
+  args?: HookArgsSwr<void, ContractSetSettings>,
 ) {
   return useSetting<ContractSetSettings>({
     ...args,
@@ -846,7 +846,7 @@ export function useSettingContractSet(
 }
 
 export function useSettingRedundancy(
-  args?: HookArgsSwr<void, RedundancySettings>
+  args?: HookArgsSwr<void, RedundancySettings>,
 ) {
   return useSetting<RedundancySettings>({
     ...args,
@@ -855,7 +855,7 @@ export function useSettingRedundancy(
 }
 
 export function useSettingS3Authentication(
-  args?: HookArgsSwr<void, S3AuthenticationSettings>
+  args?: HookArgsSwr<void, S3AuthenticationSettings>,
 ) {
   return useSetting<S3AuthenticationSettings>({
     ...args,
@@ -864,7 +864,7 @@ export function useSettingS3Authentication(
 }
 
 export function useSettingUploadPacking(
-  args?: HookArgsSwr<void, UploadPackingSettings>
+  args?: HookArgsSwr<void, UploadPackingSettings>,
 ) {
   return useSetting<UploadPackingSettings>({
     ...args,
@@ -877,7 +877,7 @@ export function useSettingUpdate(
     SettingUpdateParams,
     SettingUpdatePayload,
     SettingUpdateResponse
-  >
+  >,
 ) {
   return usePutFunc(
     {
@@ -886,9 +886,9 @@ export function useSettingUpdate(
     },
     async (mutate, args) => {
       mutate((key) =>
-        key.startsWith(busSettingKeyRoute.replace(':key', args.params.key))
+        key.startsWith(busSettingKeyRoute.replace(':key', args.params.key)),
       )
-    }
+    },
   )
 }
 
@@ -902,7 +902,7 @@ export function useAlertsDismiss(
     AlertsDismissParams,
     AlertsDismissPayload,
     AlertsDismissResponse
-  >
+  >,
 ) {
   return usePostFunc(
     { ...args, route: busAlertsDismissRoute },
@@ -910,14 +910,14 @@ export function useAlertsDismiss(
       mutate((key) => {
         return key.startsWith(busAlertsRoute)
       })
-    }
+    },
   )
 }
 
 // slabs
 
 export function useSlabObjects(
-  args: HookArgsSwr<SlabObjectsParams, SlabObjectsResponse>
+  args: HookArgsSwr<SlabObjectsParams, SlabObjectsResponse>,
 ) {
   return useGetSwr({ ...args, route: busSlabKeyObjectsRoute })
 }
@@ -925,13 +925,13 @@ export function useSlabObjects(
 // metrics
 
 export function useMetricsContract(
-  args: HookArgsSwr<ContractMetricsParams, ContractMetricsResponse>
+  args: HookArgsSwr<ContractMetricsParams, ContractMetricsResponse>,
 ) {
   return useGetSwr({ ...args, route: busMetricContractRoute })
 }
 
 export function useMetricsContractSet(
-  args: HookArgsSwr<ContractSetMetricsParams, ContractSetMetricsResponse>
+  args: HookArgsSwr<ContractSetMetricsParams, ContractSetMetricsResponse>,
 ) {
   return useGetSwr({ ...args, route: busMetricContractsetRoute })
 }
@@ -940,13 +940,13 @@ export function useMetricsContractSetChurn(
   args: HookArgsSwr<
     ContractSetChurnMetricsParams,
     ContractSetChurnMetricsResponse
-  >
+  >,
 ) {
   return useGetSwr({ ...args, route: busMetricChurnRoute })
 }
 
 export function useMetricsWallet(
-  args: HookArgsSwr<WalletMetricsParams, WalletMetricsResponse>
+  args: HookArgsSwr<WalletMetricsParams, WalletMetricsResponse>,
 ) {
   return useGetSwr({ ...args, route: busMetricWalletRoute })
 }
@@ -958,7 +958,7 @@ export function useMultipartUploadCreate(
     MultipartUploadCreateParams,
     MultipartUploadCreatePayload,
     MultipartUploadCreateResponse
-  >
+  >,
 ) {
   return usePostFunc(
     { ...args, route: busMultipartCreateRoute },
@@ -966,7 +966,7 @@ export function useMultipartUploadCreate(
       mutate((key) => {
         return key.startsWith(busMultipartRoute)
       })
-    }
+    },
   )
 }
 
@@ -975,7 +975,7 @@ export function useMultipartUploadComplete(
     MultipartUploadCompleteParams,
     MultipartUploadCompletePayload,
     MultipartUploadCompleteResponse
-  >
+  >,
 ) {
   return usePostFunc(
     { ...args, route: busMultipartCompleteRoute },
@@ -983,7 +983,7 @@ export function useMultipartUploadComplete(
       mutate((key) => {
         return key.startsWith(busMultipartRoute)
       })
-    }
+    },
   )
 }
 
@@ -992,7 +992,7 @@ export function useMultipartUploadAbort(
     MultipartUploadAbortParams,
     MultipartUploadAbortPayload,
     MultipartUploadAbortResponse
-  >
+  >,
 ) {
   return usePostFunc(
     { ...args, route: busMultipartAbortRoute },
@@ -1000,7 +1000,7 @@ export function useMultipartUploadAbort(
       mutate((key) => {
         return key.startsWith(busMultipartRoute)
       })
-    }
+    },
   )
 }
 
@@ -1009,7 +1009,7 @@ export function useMultipartUploadListParts(
     MultipartUploadListPartsParams,
     MultipartUploadListPartsPayload,
     MultipartUploadListPartsResponse
-  >
+  >,
 ) {
   return usePostSwr({
     ...args,
@@ -1022,7 +1022,7 @@ export function useMultipartUploadListUploads(
     MultipartUploadListUploadsParams,
     MultipartUploadListUploadsPayload,
     MultipartUploadListUploadsResponse
-  >
+  >,
 ) {
   return usePostSwr({
     ...args,
@@ -1035,7 +1035,7 @@ export function useMultipartUploadAddPart(
     MultipartUploadAddPartParams,
     MultipartUploadAddPartPayload,
     MultipartUploadAddPartResponse
-  >
+  >,
 ) {
   return usePostFunc(
     { ...args, route: busMultipartPartRoute },
@@ -1043,6 +1043,6 @@ export function useMultipartUploadAddPart(
       mutate((key) => {
         return key.startsWith(busMultipartListpartsRoute)
       })
-    }
+    },
   )
 }

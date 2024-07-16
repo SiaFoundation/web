@@ -46,6 +46,6 @@ export function useAllowlistUpdate() {
       }
       return func()
     },
-    [allowlistUpdate]
+    [allowlistUpdate],
   )
 }

@@ -1,4 +1,3 @@
-import React, { useRef, createContext, useContext } from 'react'
 import {
   nodeToImage,
   triggerErrorToast,
@@ -7,16 +6,18 @@ import {
   useFormServerSynced,
   useOnInvalid,
 } from '@siafoundation/design-system'
+import type React from 'react'
+import { createContext, useContext, useRef } from 'react'
 import { useCallback, useMemo } from 'react'
-import { SettingsData } from './types'
-import { transformDown } from './transformDown'
-import { useResources } from './useResources'
-import { useOnValid } from './useOnValid'
-import { useForm } from './useForm'
 import {
   checkIfAllResourcesLoaded,
   checkIfAnyResourcesErrored,
 } from './resources'
+import { transformDown } from './transformDown'
+import type { SettingsData } from './types'
+import { useForm } from './useForm'
+import { useOnValid } from './useOnValid'
+import { useResources } from './useResources'
 
 export function useConfigMain() {
   const {
@@ -86,7 +87,7 @@ export function useConfigMain() {
       averages.data,
       averages.error,
       appSettings.settings.siaCentral,
-    ]
+    ],
   )
 
   const {
@@ -102,24 +103,24 @@ export function useConfigMain() {
     setAllowanceDerivedPricing,
   } = useForm({ resources })
 
-  const remoteValues: SettingsData = useMemo(() => {
+  const remoteValues: SettingsData | null = useMemo(() => {
     if (!checkIfAllResourcesLoaded(resources)) {
       return null
     }
     return transformDown({
-      hasBeenConfigured: resources.autopilotState.data?.configured,
+      hasBeenConfigured: !!resources.autopilotState.data?.configured,
       autopilot: resources.autopilot.data,
       contractSet: resources.contractSet.data,
-      uploadPacking: resources.uploadPacking.data,
-      gouging: resources.gouging.data,
+      uploadPacking: resources.uploadPacking.data!,
+      gouging: resources.gouging.data!,
       averages: resources.averages.data,
-      redundancy: resources.redundancy.data,
+      redundancy: resources.redundancy.data!,
     })
   }, [resources])
 
   const remoteError = useMemo(
     () => checkIfAnyResourcesErrored(resources),
-    [resources]
+    [resources],
   )
 
   const revalidateAndResetForm = useCallback(async () => {
@@ -132,18 +133,18 @@ export function useConfigMain() {
     const _uploadPacking = await uploadPacking.mutate()
     if (!gouging || !redundancy) {
       triggerErrorToast({ title: 'Error fetching settings' })
-      return null
+      return
     }
     form.reset(
       transformDown({
-        hasBeenConfigured: _autopilotState.configured,
+        hasBeenConfigured: _autopilotState!.configured,
         autopilot: _autopilot,
         contractSet: _contractSet,
-        uploadPacking: _uploadPacking,
-        gouging: _gouging,
+        uploadPacking: _uploadPacking!,
+        gouging: _gouging!,
         averages: averages.data,
-        redundancy: _redundancy,
-      })
+        redundancy: _redundancy!,
+      }),
     )
   }, [
     form,
@@ -157,11 +158,11 @@ export function useConfigMain() {
     averages.data,
   ])
 
-  useFormInit({
+  useFormInit<SettingsData>({
     form,
     remoteValues,
   })
-  useFormServerSynced({
+  useFormServerSynced<SettingsData>({
     form,
     remoteValues,
   })
@@ -169,7 +170,7 @@ export function useConfigMain() {
 
   const onValid = useOnValid({
     resources,
-    estimatedSpendingPerMonth: estimates.estimatedSpendingPerMonth,
+    estimatedSpendingPerMonth: estimates.estimatedSpendingPerMonth!,
     isAutopilotEnabled,
     revalidateAndResetForm,
   })
@@ -178,10 +179,10 @@ export function useConfigMain() {
 
   const onSubmit = useMemo(
     () => form.handleSubmit(onValid, onInvalid),
-    [form, onValid, onInvalid]
+    [form, onValid, onInvalid],
   )
 
-  const configRef = useRef()
+  const configRef = useRef<HTMLDivElement>(null)
   const takeScreenshot = useCallback(
     async (props: {
       name: string
@@ -189,9 +190,11 @@ export function useConfigMain() {
       copy?: boolean
       download?: boolean
     }) => {
-      nodeToImage(configRef.current, props)
+      if (configRef.current) {
+        nodeToImage(configRef.current, props)
+      }
     },
-    []
+    [],
   )
 
   return {

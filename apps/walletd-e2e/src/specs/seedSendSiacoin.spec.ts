@@ -1,9 +1,9 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
+import { random } from '@technically/lodash'
 import { login } from '../fixtures/login'
-import { unlockWallet, walletInList } from '../fixtures/wallet'
 import { navigateToWallet } from '../fixtures/navigateToWallet'
 import { fillComposeTransactionSiacoin } from '../fixtures/sendSiacoinDialog'
-import { random } from '@technically/lodash'
+import { unlockWallet, walletInList } from '../fixtures/wallet'
 
 test('send siacoin with a seed wallet', async ({ page }) => {
   const name = 'test-send-siacoin-seed-wallet'
@@ -29,7 +29,7 @@ test('send siacoin with a seed wallet', async ({ page }) => {
   })
   const sendDialog = page.getByRole('dialog', { name: 'Send' })
   await expect(
-    sendDialog.getByText('The wallet is currently unlocked')
+    sendDialog.getByText('The wallet is currently unlocked'),
   ).toBeVisible()
   await expect(sendDialog.getByText('Total')).toBeVisible()
   await expect(sendDialog.getByText(amountWithFeeString)).toBeVisible()
@@ -38,7 +38,7 @@ test('send siacoin with a seed wallet', async ({ page }) => {
     .getByRole('button', { name: 'Sign and broadcast transaction' })
     .click()
   await expect(
-    page.getByText('Transaction successfully broadcast')
+    page.getByText('Transaction successfully broadcast'),
   ).toBeVisible()
   await expect(sendDialog.getByText(receiveAddress.slice(0, 5))).toBeVisible()
   await expect(sendDialog.getByText(changeAddress.slice(0, 5))).toBeVisible()
@@ -47,7 +47,7 @@ test('send siacoin with a seed wallet', async ({ page }) => {
   await sendDialog.getByRole('button', { name: 'Close' }).click()
   await expect(page.getByTestId('eventsTable')).toBeVisible()
   await expect(
-    page.getByTestId('eventsTable').locator('tbody tr').first()
+    page.getByTestId('eventsTable').locator('tbody tr').first(),
   ).toBeVisible()
   await expect(
     page
@@ -55,6 +55,6 @@ test('send siacoin with a seed wallet', async ({ page }) => {
       .locator('tbody tr')
       .first()
       .getByTestId('amount')
-      .getByText(`-${amountWithFeeString}`)
+      .getByText(`-${amountWithFeeString}`),
   ).toBeVisible()
 })

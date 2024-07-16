@@ -1,10 +1,10 @@
 import { to } from '@siafoundation/request'
-import { siaCentral } from '../config/siaCentral'
-import { SiaCentralBlock } from '@siafoundation/sia-central-types'
+import type { SiaCentralBlock } from '@siafoundation/sia-central-types'
 import { range } from '@technically/lodash'
+import { siaCentral } from '../config/siaCentral'
 
 export async function getLastFewBlocks(
-  block?: SiaCentralBlock
+  block?: SiaCentralBlock,
 ): Promise<[SiaCentralBlock[], undefined] | [undefined, Error]> {
   if (!block) {
     return [undefined, Error('no block')]
@@ -15,7 +15,7 @@ export async function getLastFewBlocks(
       data: {
         heights: range(lastBlockHeight - 4, lastBlockHeight),
       },
-    })
+    }),
   )
   if (blocks?.blocks) {
     return [[block, ...blocks.blocks], undefined]

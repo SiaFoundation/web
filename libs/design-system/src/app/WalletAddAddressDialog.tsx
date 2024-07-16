@@ -1,12 +1,12 @@
 'use client'
 
-import { Paragraph } from '../core/Paragraph'
-import { TextField } from '../core/TextField'
-import { Button } from '../core/Button'
-import { Label } from '../core/Label'
-import { Text } from '../core/Text'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { Button } from '../core/Button'
+import { Label } from '../core/Label'
+import { Paragraph } from '../core/Paragraph'
+import { Text } from '../core/Text'
+import { TextField } from '../core/TextField'
 
 const exampleAddr =
   'addr:e3b1050aef388438668b52983cf78f40925af8f0aa8b9de80c18eadcefce8388d168a313e3f2'
@@ -91,7 +91,7 @@ export function WalletAddAddressDialog({ closeDialog }: Props) {
 }
 
 type FieldProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   formik: any
   title: string
   name: string

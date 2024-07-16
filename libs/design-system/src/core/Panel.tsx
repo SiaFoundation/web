@@ -1,4 +1,4 @@
-import { cva, VariantProps } from 'class-variance-authority'
+import { type VariantProps, cva } from 'class-variance-authority'
 import React from 'react'
 
 export const panelStyles = cva(
@@ -21,7 +21,7 @@ export const panelStyles = cva(
     defaultVariants: {
       color: 'default',
     },
-  }
+  },
 )
 
 export const Panel = React.forwardRef<

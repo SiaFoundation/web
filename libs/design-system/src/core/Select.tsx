@@ -1,7 +1,7 @@
+import { CaretSort16 } from '@siafoundation/react-icons'
 import { cva, cx } from 'class-variance-authority'
 import React from 'react'
-import { CaretSort16 } from '@siafoundation/react-icons'
-import { VariantProps } from '../types'
+import type { VariantProps } from '../types'
 
 const containerStyles = cva(
   [
@@ -42,7 +42,7 @@ const containerStyles = cva(
       state: 'default',
       size: 'small',
     },
-  }
+  },
 )
 
 // TODO: convert to radix select
@@ -77,7 +77,7 @@ export const Option = React.forwardRef<
     className={cx(
       'bg-white dark:bg-graydark-200',
       'text-gray-1100 dark:text-white',
-      className
+      className,
     )}
   />
 ))

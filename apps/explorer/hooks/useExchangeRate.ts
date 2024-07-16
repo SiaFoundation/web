@@ -1,7 +1,7 @@
 'use client'
 
 import { useAppSettings } from '@siafoundation/react-core'
-import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
+import type { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 
 export function useExchangeRate(rates?: SiaCentralExchangeRates) {
   const {

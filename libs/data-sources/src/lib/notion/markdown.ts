@@ -1,5 +1,5 @@
 import { isFullBlock } from '@notionhq/client'
-import {
+import type {
   RichTextItemResponse,
   TableBlockObjectResponse,
 } from '@notionhq/client/build/src/api-endpoints'
@@ -103,19 +103,19 @@ export async function notionToMarkdown(pageId: string, indent = '') {
 
 async function tableToMarkdown(
   block: TableBlockObjectResponse,
-  markdown: string
+  markdown: string,
 ): Promise<string> {
   const tableData = await retry(() =>
     Notion.blocks.children.list({
       block_id: block.id,
       page_size: 100,
-    })
+    }),
   )
 
   const rows = []
   for (const rowBlock of tableData.results) {
     const row = []
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     for (const cell of (rowBlock as any).table_row.cells) {
       const cellMarkdown = richTextToMarkdown(cell).trim()
       row.push(cellMarkdown)

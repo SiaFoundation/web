@@ -1,8 +1,8 @@
-import { useCallback } from 'react'
 import { WalletSendSiacoinDialog } from '@siafoundation/design-system'
 import { useWallet, useWalletSend } from '@siafoundation/hostd-react'
-import { useDialog } from '../contexts/dialog'
 import BigNumber from 'bignumber.js'
+import { useCallback } from 'react'
+import { useDialog } from '../contexts/dialog'
 
 export function HostdSendSiacoinDialog() {
   const { dialog, openDialog, closeDialog } = useDialog()
@@ -24,7 +24,7 @@ export function HostdSendSiacoinDialog() {
       }
       return { transactionId: fundResponse.data }
     },
-    [walletSend]
+    [walletSend],
   )
 
   return (

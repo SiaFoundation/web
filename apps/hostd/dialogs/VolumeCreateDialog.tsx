@@ -1,17 +1,17 @@
 import {
-  Paragraph,
+  type ConfigFields,
   Dialog,
-  GBToSectors,
-  triggerErrorToast,
-  triggerSuccessToast,
   FieldNumber,
   FieldText,
   FormSubmitButton,
-  ConfigFields,
+  GBToSectors,
+  Paragraph,
+  triggerErrorToast,
+  triggerSuccessToast,
   useOnInvalid,
 } from '@siafoundation/design-system'
 import { useSystemDirectory, useVolumeCreate } from '@siafoundation/hostd-react'
-import { bytesToGB, GBToBytes, humanBytes } from '@siafoundation/units'
+import { GBToBytes, bytesToGB, humanBytes } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
@@ -41,7 +41,7 @@ type Values = typeof defaultValues
 
 function getFields(
   minSizeGB: number,
-  maxSizeGB: number
+  maxSizeGB: number,
 ): ConfigFields<Values, never> {
   return {
     name: {
@@ -82,7 +82,7 @@ function getFields(
         validate: {
           between: (value: number) => {
             const error = `Must be between ${humanBytes(
-              GBToBytes(minSizeGB)
+              GBToBytes(minSizeGB),
             )} and ${humanBytes(GBToBytes(maxSizeGB), { fixed: 3 })}`
             return (value <= maxSizeGB && value >= minSizeGB) || error
           },
@@ -116,17 +116,17 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
     }
   }, 500)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     syncPath()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [immediatePath])
 
   // when path changes instantly update immediate path
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (path !== immediatePath) {
       form.setValue('immediatePath', path)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path])
 
   const onSubmit = useCallback(
@@ -148,7 +148,7 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
         closeDialog()
       }
     },
-    [form, volumeAdd, closeDialog, name, path, separator]
+    [form, volumeAdd, closeDialog, name, path, separator],
   )
 
   const selectedDir = useSystemDirectory({
@@ -164,16 +164,17 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
     },
   })
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (selectedDir.error) {
       form.setError('immediatePath', {
         message: 'Directory does not exist',
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDir.error])
 
   // Redirect ~ to the absolute path
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!selectedDir.data) {
       return
@@ -181,7 +182,6 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
     if (selectedDir.data.path !== path) {
       form.setValue('path', selectedDir.data.path)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDir.data])
 
   const newSizeGB = useMemo(() => size || new BigNumber(0), [size])
@@ -190,16 +190,16 @@ export function VolumeCreateDialog({ trigger, open, onOpenChange }: Props) {
       selectedDir.data
         ? bytesToGB(selectedDir.data.freeBytes)
         : new BigNumber(0),
-    [selectedDir.data]
+    [selectedDir.data],
   )
   const maxSizeGB = useMemo(
     () => bytesToGB(selectedDir.data?.freeBytes || new BigNumber(0)),
-    [selectedDir.data]
+    [selectedDir.data],
   )
 
   const fields = useMemo(
     () => getFields(minSizeGB.toNumber(), maxSizeGB.toNumber()),
-    [maxSizeGB]
+    [maxSizeGB],
   )
 
   const onInvalid = useOnInvalid(fields)

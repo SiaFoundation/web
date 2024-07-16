@@ -1,9 +1,9 @@
+import { OverflowMenuHorizontal16 } from '@siafoundation/react-icons'
 import { Button } from '../core/Button'
 import { Codeblock } from '../core/Codeblock'
 import { DropdownMenu, DropdownMenuItem } from '../core/DropdownMenu'
 import { Heading } from '../core/Heading'
 import { Panel } from '../core/Panel'
-import { OverflowMenuHorizontal16 } from '@siafoundation/react-icons'
 
 type Action = {
   title: string
@@ -13,7 +13,7 @@ type Action = {
 type Props = {
   actions?: Action[]
   title: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   data?: any
 }
 

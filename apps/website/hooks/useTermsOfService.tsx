@@ -5,7 +5,7 @@ export function useTermsOfService() {
     'v0/website/terms/accepted',
     {
       defaultValue: false,
-    }
+    },
   )
   return {
     accepted,

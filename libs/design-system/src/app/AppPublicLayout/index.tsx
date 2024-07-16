@@ -1,7 +1,7 @@
-import React from 'react'
+import type React from 'react'
 import { Container } from '../../core/Container'
-import { AppNavbar } from '../AppNavbar'
 import { AppBackdrop } from '../AppBackdrop'
+import { AppNavbar } from '../AppNavbar'
 import { AppRootLayout } from '../AppRootLayout'
 
 type Props = {

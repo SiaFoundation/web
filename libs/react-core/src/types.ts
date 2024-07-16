@@ -1,4 +1,4 @@
-import { Fetcher, Key, SWRConfiguration } from 'swr'
+import type { Fetcher, Key, SWRConfiguration } from 'swr'
 
 export type SWROptions<Data> = SWRConfiguration<Data, Error, Fetcher<Data, Key>>
 

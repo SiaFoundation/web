@@ -1,22 +1,22 @@
-import { Decoder, Encoder, newDecoder, newEncoder } from './encoder'
+import { type Decoder, type Encoder, newDecoder, newEncoder } from './encoder'
 import {
-  decodeRpcResponseSettings,
   decodeRpcResponseReadSector,
+  decodeRpcResponseSettings,
   decodeRpcResponseWriteSector,
-  encodeRpcRequestSettings,
   encodeRpcRequestReadSector,
+  encodeRpcRequestSettings,
   encodeRpcRequestWriteSector,
 } from './rpc'
-import {
-  RPCReadSectorResponse,
-  RPCSettingsResponse,
-  RPCWriteSectorResponse,
-  RPCReadSectorRequest,
-  RPCWriteSectorRequest,
+import type {
   RPC,
   RPCReadSector,
-  RPCWriteSector,
+  RPCReadSectorRequest,
+  RPCReadSectorResponse,
   RPCSettings,
+  RPCSettingsResponse,
+  RPCWriteSector,
+  RPCWriteSectorRequest,
+  RPCWriteSectorResponse,
 } from './types'
 
 export class WebTransportClient {
@@ -55,7 +55,7 @@ export class WebTransportClient {
   private async sendRequest<T extends RPC>(
     rpcRequest: T['request'],
     encodeFn: (e: Encoder, data: T['request']) => void,
-    decodeFn: (d: Decoder) => T['response']
+    decodeFn: (d: Decoder) => T['response'],
   ): Promise<T['response']> {
     let stream: WebTransportBidirectionalStream | undefined
     try {
@@ -81,7 +81,7 @@ export class WebTransportClient {
 
   private async handleIncomingData<T>(
     stream: WebTransportBidirectionalStream,
-    decodeFn: (d: Decoder) => T
+    decodeFn: (d: Decoder) => T,
   ): Promise<T> {
     try {
       const reader = stream.readable.getReader()
@@ -98,22 +98,22 @@ export class WebTransportClient {
   }
 
   async sendReadSectorRequest(
-    readSector: RPCReadSectorRequest
+    readSector: RPCReadSectorRequest,
   ): Promise<RPCReadSectorResponse> {
     return this.sendRequest<RPCReadSector>(
       readSector,
       encodeRpcRequestReadSector,
-      decodeRpcResponseReadSector
+      decodeRpcResponseReadSector,
     )
   }
 
   async sendWriteSectorRequest(
-    writeSector: RPCWriteSectorRequest
+    writeSector: RPCWriteSectorRequest,
   ): Promise<RPCWriteSectorResponse> {
     return this.sendRequest<RPCWriteSector>(
       writeSector,
       encodeRpcRequestWriteSector,
-      decodeRpcResponseWriteSector
+      decodeRpcResponseWriteSector,
     )
   }
 
@@ -121,7 +121,7 @@ export class WebTransportClient {
     return this.sendRequest<RPCSettings>(
       undefined,
       encodeRpcRequestSettings,
-      decodeRpcResponseSettings
+      decodeRpcResponseSettings,
     )
   }
 }

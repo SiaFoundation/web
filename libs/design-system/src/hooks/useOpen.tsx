@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useCallback } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 type Props = {
   open?: boolean
@@ -29,7 +29,7 @@ export function useOpen({
         localSetOpen(open)
       }
     },
-    [controlOnOpenChange]
+    [controlOnOpenChange],
   )
 
   return {

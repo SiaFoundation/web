@@ -1,6 +1,6 @@
+import type { Transaction } from '@siafoundation/types'
 import { EntityList } from '../components/EntityList'
 import { getTransactionTotals, getTransactionType } from '../lib/entityTypes'
-import { Transaction } from '@siafoundation/types'
 
 type Props = {
   isLoading?: boolean

@@ -1,5 +1,5 @@
+import { type VariantProps, cva } from 'class-variance-authority'
 import React from 'react'
-import { cva, VariantProps } from 'class-variance-authority'
 import { textStyles } from './Text'
 
 export const styles = cva(
@@ -50,7 +50,7 @@ export const styles = cva(
       cursor: 'default',
       state: 'default',
     },
-  }
+  },
 )
 
 export const TextArea = React.forwardRef<

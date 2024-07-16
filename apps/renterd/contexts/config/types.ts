@@ -71,7 +71,7 @@ export type SettingsData = typeof defaultValues
 
 // advanced defaults
 export function getAdvancedDefaultAutopilot(
-  network: 'Mainnet' | 'Zen Testnet'
+  network: 'Mainnet' | 'Zen Testnet',
 ): AutopilotData {
   return {
     // must be set
@@ -121,7 +121,7 @@ export const advancedDefaultGouging: GougingData = {
 }
 
 export function getAdvancedDefaultRedundancy(
-  network: 'Mainnet' | 'Zen Testnet'
+  network: 'Mainnet' | 'Zen Testnet',
 ): RedundancyData {
   return network === 'Mainnet'
     ? {
@@ -135,7 +135,7 @@ export function getAdvancedDefaultRedundancy(
 }
 
 export function getAdvancedDefaults(
-  network: 'Mainnet' | 'Zen Testnet'
+  network: 'Mainnet' | 'Zen Testnet',
 ): SettingsData {
   return {
     ...getAdvancedDefaultAutopilot(network),

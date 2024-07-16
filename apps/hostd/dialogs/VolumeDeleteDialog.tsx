@@ -1,17 +1,17 @@
 import {
-  Text,
-  Paragraph,
-  InfoTip,
-  Dialog,
   Code,
+  type ConfigFields,
+  Dialog,
+  FieldSwitch,
+  FieldText,
+  FormSubmitButton,
+  InfoTip,
+  Paragraph,
+  Text,
   sectorsToBytes,
   triggerErrorToast,
   triggerSuccessToast,
-  ConfigFields,
   useOnInvalid,
-  FormSubmitButton,
-  FieldSwitch,
-  FieldText,
 } from '@siafoundation/design-system'
 import { useVolume, useVolumeDelete } from '@siafoundation/hostd-react'
 import { humanBytes } from '@siafoundation/units'
@@ -93,7 +93,7 @@ export function VolumeDeleteDialog({ trigger, open, onOpenChange }: Props) {
         closeDialog()
       }
     },
-    [form, volume.data, volumeDelete, closeDialog]
+    [form, volume.data, volumeDelete, closeDialog],
   )
 
   const fields = useMemo(() => getFields(path), [path])

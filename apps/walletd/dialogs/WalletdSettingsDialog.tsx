@@ -1,12 +1,12 @@
 import {
   Alert,
   Heading,
-  Text,
-  Switch,
-  Select,
   Option,
   Paragraph,
+  Select,
   SettingsDialog,
+  Switch,
+  Text,
   minutesInMilliseconds,
 } from '@siafoundation/design-system'
 import { Information16 } from '@siafoundation/react-icons'

@@ -1,14 +1,14 @@
 'use client'
 
-import { useMemo } from 'react'
-import { ChartXY, Chart } from '../components/ChartXY'
 import { humanSiacoin } from '@siafoundation/units'
+import { useTheme } from 'next-themes'
+import { useMemo } from 'react'
+import { type Chart, ChartXY } from '../components/ChartXY'
 import {
   formatChartData,
   getDataIntervalLabelFormatter,
 } from '../lib/chartData'
 import { computeChartStats } from '../lib/chartStats'
-import { useTheme } from 'next-themes'
 import { colors } from '../lib/colors'
 
 type BalanceEvolution = {
@@ -45,7 +45,7 @@ export function BalanceEvolution({
               color: colors.accentdark[800],
             },
           },
-    [resolvedTheme]
+    [resolvedTheme],
   )
 
   const chart = useMemo<Chart<Key, never>>(() => {

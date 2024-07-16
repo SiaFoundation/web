@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { UploadsMap } from './types'
+import type { UploadsMap } from './types'
 
 export function useWarnActiveUploadsOnClose({
   uploadsMap,
@@ -8,7 +8,7 @@ export function useWarnActiveUploadsOnClose({
 }) {
   useEffect(() => {
     const activeUploads = Object.values(uploadsMap).filter(
-      (upload) => upload.uploadStatus === 'uploading'
+      (upload) => upload.uploadStatus === 'uploading',
     )
 
     const warnUserAboutActiveUploads = (event: BeforeUnloadEvent) => {

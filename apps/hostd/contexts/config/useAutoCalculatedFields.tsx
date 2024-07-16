@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react'
-import { SettingsData } from './types'
-import { UseFormReturn } from 'react-hook-form'
+import type { UseFormReturn } from 'react-hook-form'
 import { getCalculatedValues } from './transform'
+import type { SettingsData } from './types'
 
 export function useAutoCalculatedFields({
   form,

@@ -1,7 +1,7 @@
-import { useCallback, useState } from 'react'
 import { triggerErrorToast } from '@siafoundation/design-system'
+import type { FileContractID } from '@siafoundation/types'
+import { useCallback, useState } from 'react'
 import { useApp } from '../app'
-import { FileContractID } from '@siafoundation/types'
 
 type PrunableSizeData = { id: FileContractID; size: number; prunable: number }
 type PrunableSizes = Record<FileContractID, PrunableSizeData>
@@ -10,7 +10,9 @@ export function usePrunableContractSizes() {
   const { bus } = useApp()
 
   const [prunableSizes, setPrunableSizes] = useState<PrunableSizes>({})
-  const [isFetchingPrunableSizeById, setIsFetchingPrunableById] = useState({})
+  const [isFetchingPrunableSizeById, setIsFetchingPrunableById] = useState<
+    Record<string, boolean>
+  >({})
   const [isFetchingPrunableSizeAll, setIsFetchingPrunableAll] = useState(false)
 
   const fetchPrunableSizeAll = useCallback(async () => {
@@ -19,7 +21,7 @@ export function usePrunableContractSizes() {
       const prunable = await bus?.contractsPrunable()
       setPrunableSizes((data) => ({
         ...data,
-        ...prunable.data?.contracts.reduce(
+        ...prunable!.data.contracts.reduce(
           (acc, contract) => ({
             ...acc,
             [contract.id]: {
@@ -28,11 +30,11 @@ export function usePrunableContractSizes() {
               prunable: contract.prunable,
             },
           }),
-          {}
+          {},
         ),
       }))
     } catch (err) {
-      triggerErrorToast({ title: 'Error', body: err.message })
+      triggerErrorToast({ title: 'Error', body: (err as Error).message })
     } finally {
       setIsFetchingPrunableAll(false)
     }
@@ -50,11 +52,11 @@ export function usePrunableContractSizes() {
           ...data,
           [id]: {
             id,
-            ...prunable.data,
+            ...prunable!.data,
           },
         }))
       } catch (err) {
-        triggerErrorToast({ title: 'Error', body: err.message })
+        triggerErrorToast({ title: 'Error', body: (err as Error).message })
       } finally {
         setIsFetchingPrunableById((data) => ({
           ...data,
@@ -62,7 +64,7 @@ export function usePrunableContractSizes() {
         }))
       }
     },
-    [bus]
+    [bus],
   )
 
   return {

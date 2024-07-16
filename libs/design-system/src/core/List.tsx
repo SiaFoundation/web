@@ -1,7 +1,7 @@
-/* eslint-disable react/jsx-pascal-case */
-import { Text, textStyles } from './Text'
-import React from 'react'
 import { cx } from 'class-variance-authority'
+import type React from 'react'
+/* eslint-disable react/jsx-pascal-case */
+import { type Text, textStyles } from './Text'
 
 type Props = {
   children: React.ReactNode
@@ -55,7 +55,7 @@ export function Li({
         // The className removes vertical padding from p tags, this was added
         // because when Li is used in mdx rendering there is always a nested p tag
         '[&>p]:!py-0',
-        className
+        className,
       )}
     >
       {children}

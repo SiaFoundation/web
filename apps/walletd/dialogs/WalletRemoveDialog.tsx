@@ -1,13 +1,13 @@
 import {
-  Paragraph,
-  Dialog,
-  triggerSuccessToast,
-  ConfigFields,
-  useOnInvalid,
-  FormSubmitButton,
-  FieldText,
   Code,
+  type ConfigFields,
+  Dialog,
+  FieldText,
+  FormSubmitButton,
+  Paragraph,
   triggerErrorToast,
+  triggerSuccessToast,
+  useOnInvalid,
 } from '@siafoundation/design-system'
 import { useWalletDelete } from '@siafoundation/walletd-react'
 import { useRouter } from 'next/router'

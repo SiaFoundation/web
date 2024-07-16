@@ -1,13 +1,16 @@
 'use client'
 
-import { useMemo } from 'react'
+import {
+  EntityList,
+  type EntityListItemProps,
+} from '@siafoundation/design-system'
+import type { SiaCentralTransaction } from '@siafoundation/sia-central-types'
 import BigNumber from 'bignumber.js'
-import { SiaCentralTransaction } from '@siafoundation/sia-central-types'
-import { EntityList, EntityListItemProps } from '@siafoundation/design-system'
+import { useMemo } from 'react'
 import { routes } from '../../config/routes'
 import { ContentLayout } from '../ContentLayout'
-import { TransactionHeader } from './TransactionHeader'
 import { OutputListItem } from './OutputListItem'
+import { TransactionHeader } from './TransactionHeader'
 
 type Props = {
   transaction: SiaCentralTransaction

@@ -1,18 +1,18 @@
 import {
-  daysInMilliseconds,
-  Chart,
-  formatChartData,
-  computeChartStats,
+  type Chart,
   ValueScFiat,
   colors,
+  computeChartStats,
+  daysInMilliseconds,
+  formatChartData,
   getDataIntervalLabelFormatter,
 } from '@siafoundation/design-system'
-import { ContractMetricsParams } from '@siafoundation/renterd-types'
 import { useMetricsContract } from '@siafoundation/renterd-react'
-import { useMemo } from 'react'
-import BigNumber from 'bignumber.js'
-import { ChartContractCategory, ChartContractKey } from './types'
+import type { ContractMetricsParams } from '@siafoundation/renterd-types'
 import { humanSiacoin } from '@siafoundation/units'
+import BigNumber from 'bignumber.js'
+import { useMemo } from 'react'
+import type { ChartContractCategory, ChartContractKey } from './types'
 import { getTimeClampedToNearest5min } from './utils'
 
 export function useContractMetrics({
@@ -66,7 +66,7 @@ export function useContractMetrics({
         remainingFunds: Number(m.remainingFunds),
         timestamp: new Date(m.timestamp).getTime(),
       })),
-      'none'
+      'none',
     )
     const stats = computeChartStats(data)
     return {
@@ -123,9 +123,9 @@ export function useContractMetrics({
             color: colors.red[600],
           },
         },
-        formatComponent: function ({ value }) {
-          return <ValueScFiat variant="value" value={new BigNumber(value)} />
-        },
+        formatComponent: ({ value }) => (
+          <ValueScFiat variant="value" value={new BigNumber(value)} />
+        ),
         formatTimestamp:
           interval === daysInMilliseconds(1)
             ? getDataIntervalLabelFormatter('daily')

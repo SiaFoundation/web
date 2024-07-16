@@ -1,9 +1,9 @@
-import { Text, Button, Panel, Tooltip } from '@siafoundation/design-system'
+import { Button, Panel, Text, Tooltip } from '@siafoundation/design-system'
 import {
-  Close16,
   Bluetooth16,
-  UsbIcon,
+  Close16,
   HidIcon,
+  UsbIcon,
 } from '@siafoundation/react-icons'
 import { useLedger } from '../../contexts/ledger'
 

@@ -1,14 +1,14 @@
-import { AddressCmdGroup } from './Address'
-import { Page } from '../../../../CmdRoot/types'
-import { AllowBlockCmdGroup } from './AllowBlock'
-import { ServerFilterItem } from '@siafoundation/design-system'
-import { ContractsCmdGroup } from './Contracts'
-import { UsableCmdGroup } from './Usable'
+import type { ServerFilterItem } from '@siafoundation/design-system'
 import { useApp } from '../../../../../contexts/app'
+import type { Page } from '../../../../CmdRoot/types'
+import { AddressCmdGroup } from './Address'
+import { AllowBlockCmdGroup } from './AllowBlock'
+import { ContractsCmdGroup } from './Contracts'
 import { PublicKeyCmdGroup } from './PublicKey'
+import { UsableCmdGroup } from './Usable'
 
 type Props = {
-  currentPage: Page
+  currentPage?: Page
   pushPage: (page: Page) => void
   select: (filter?: ServerFilterItem) => void
 }

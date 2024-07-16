@@ -1,8 +1,8 @@
 import {
   DropdownMenu,
   DropdownMenuItem,
-  DropdownMenuLeftSlot,
   DropdownMenuLabel,
+  DropdownMenuLeftSlot,
 } from '@siafoundation/design-system'
 import { Scan16 } from '@siafoundation/react-icons'
 import { useDialog } from '../contexts/dialog'

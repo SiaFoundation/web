@@ -1,7 +1,7 @@
-import Axios from 'axios'
 import { orderBy } from '@technically/lodash'
+import Axios from 'axios'
 import { buildErrorResponse500 } from './error'
-import { AsyncDataSourceResponse } from './types'
+import type { AsyncDataSourceResponse } from './types'
 
 const githubToken = process.env['GITHUB_TOKEN']
 
@@ -13,13 +13,13 @@ const axios = Axios.create({
 
 async function getCommitCount() {
   const contributors = await axios.get(
-    'https://api.github.com/repos/SiaFoundation/siad/commits?per_page=1'
+    'https://api.github.com/repos/SiaFoundation/siad/commits?per_page=1',
   )
   const link = contributors.headers['link']
 
   // Get commit count by parsing last page number from `link` header
   const regex = /rel="next", .*&page=(\d+)>;/g
-  const res = regex.exec(link)
+  const res = regex.exec(link!)
   const commitCount = Number(res ? res[1] : 0)
 
   return commitCount
@@ -43,7 +43,7 @@ export async function getGitHubClosedPRs(): Promise<GitHubPR[]> {
   let prs = []
   try {
     const response = await axios.get(
-      'https://api.github.com/repos/SiaFoundation/renterd/pulls?state=closed&per_page=30'
+      'https://api.github.com/repos/SiaFoundation/renterd/pulls?state=closed&per_page=30',
     )
     prs.push(...response.data)
   } catch (e) {
@@ -51,7 +51,7 @@ export async function getGitHubClosedPRs(): Promise<GitHubPR[]> {
   }
   try {
     const response = await axios.get(
-      'https://api.github.com/repos/SiaFoundation/walletd/pulls?state=closed&per_page=30'
+      'https://api.github.com/repos/SiaFoundation/walletd/pulls?state=closed&per_page=30',
     )
     prs.push(...response.data)
   } catch (e) {
@@ -59,7 +59,7 @@ export async function getGitHubClosedPRs(): Promise<GitHubPR[]> {
   }
   try {
     const response = await axios.get(
-      'https://api.github.com/repos/SiaFoundation/hostd/pulls?state=closed&per_page=30'
+      'https://api.github.com/repos/SiaFoundation/hostd/pulls?state=closed&per_page=30',
     )
     prs.push(...response.data)
   } catch (e) {
@@ -67,7 +67,7 @@ export async function getGitHubClosedPRs(): Promise<GitHubPR[]> {
   }
   try {
     const response = await axios.get(
-      'https://api.github.com/repos/SiaFoundation/core/pulls?state=closed&per_page=30'
+      'https://api.github.com/repos/SiaFoundation/core/pulls?state=closed&per_page=30',
     )
     prs.push(...response.data)
   } catch (e) {
@@ -75,10 +75,10 @@ export async function getGitHubClosedPRs(): Promise<GitHubPR[]> {
   }
   try {
     const response = await axios.get(
-      'https://api.github.com/repos/SiaFoundation/web/pulls?state=closed&per_page=30'
+      'https://api.github.com/repos/SiaFoundation/web/pulls?state=closed&per_page=30',
     )
     prs.push(
-      ...response.data.filter((d: GitHubPR) => d.title !== 'Version Packages')
+      ...response.data.filter((d: GitHubPR) => d.title !== 'Version Packages'),
     )
   } catch (e) {
     console.log(e)
@@ -90,7 +90,7 @@ export async function getGitHubClosedPRs(): Promise<GitHubPR[]> {
 
 async function getContributorCount() {
   const contributors = await axios.get(
-    'https://api.github.com/repos/SiaFoundation/siad/contributors?per_page=100'
+    'https://api.github.com/repos/SiaFoundation/siad/contributors?per_page=100',
   )
 
   return contributors.data.length
@@ -98,10 +98,10 @@ async function getContributorCount() {
 
 async function getForkCount() {
   const historic = await axios.get(
-    'https://api.github.com/search/repositories?q=user%3ANebulousLabs+repo%3ASia'
+    'https://api.github.com/search/repositories?q=user%3ANebulousLabs+repo%3ASia',
   )
   const current = await axios.get(
-    'https://api.github.com/search/repositories?q=user%3ASiaFoundation+repo%3Asiad'
+    'https://api.github.com/search/repositories?q=user%3ASiaFoundation+repo%3Asiad',
   )
 
   return historic.data.items[0].forks_count + current.data.items[0].forks_count
@@ -109,10 +109,10 @@ async function getForkCount() {
 
 async function getReleaseCount() {
   const historic = await axios.get(
-    'https://api.github.com/repos/NebulousLabs/Sia/releases?per_page=100'
+    'https://api.github.com/repos/NebulousLabs/Sia/releases?per_page=100',
   )
   const current = await axios.get(
-    'https://api.github.com/repos/SiaFoundation/siad/releases?per_page=100'
+    'https://api.github.com/repos/SiaFoundation/siad/releases?per_page=100',
   )
 
   return historic.data.length + current.data.length
@@ -183,7 +183,7 @@ export type GitHubRelease = {
 export async function getGitHubRenterdLatestDaemonRelease(): Promise<GitHubRelease | null> {
   try {
     const response = await axios.get(
-      'https://api.github.com/repos/SiaFoundation/renterd/releases?per_page=1'
+      'https://api.github.com/repos/SiaFoundation/renterd/releases?per_page=1',
     )
     if (response.data.length) {
       return response.data[0]
@@ -199,7 +199,7 @@ export async function getGitHubRenterdLatestDaemonRelease(): Promise<GitHubRelea
 export async function getGitHubHostdLatestDaemonRelease(): Promise<GitHubRelease | null> {
   try {
     const response = await axios.get(
-      'https://api.github.com/repos/SiaFoundation/hostd/releases/latest'
+      'https://api.github.com/repos/SiaFoundation/hostd/releases/latest',
     )
     if (response.data) {
       return response.data
@@ -215,7 +215,7 @@ export async function getGitHubHostdLatestDaemonRelease(): Promise<GitHubRelease
 export async function getGitHubWalletdLatestDaemonRelease(): Promise<GitHubRelease | null> {
   try {
     const response = await axios.get(
-      'https://api.github.com/repos/SiaFoundation/walletd/releases?per_page=1'
+      'https://api.github.com/repos/SiaFoundation/walletd/releases?per_page=1',
     )
     if (response.data.length) {
       return response.data[0]
@@ -241,20 +241,20 @@ export async function getGitHubWalletdLatestDesktopRelease(): Promise<GitHubRele
 }
 
 async function getGitHubDesktopRelease(
-  daemon: string
+  daemon: string,
 ): Promise<GitHubRelease | null> {
   let found: GitHubRelease | null = null
   let page = 1
   while (!found) {
     try {
       const response = await axios.get(
-        `https://api.github.com/repos/SiaFoundation/desktop/releases?per_page=100&page=${page}`
+        `https://api.github.com/repos/SiaFoundation/desktop/releases?per_page=100&page=${page}`,
       )
       if (!response.data.length) {
         break
       }
       const release = sortReleasesByTag(response.data).find(
-        (d: GitHubRelease) => d.tag_name.startsWith(daemon)
+        (d: GitHubRelease) => d.tag_name.startsWith(daemon),
       )
       if (release) {
         found = release
@@ -270,12 +270,15 @@ async function getGitHubDesktopRelease(
 }
 
 function compareTags(r1: GitHubRelease, r2: GitHubRelease) {
-  const parseTag = (tag: string) => {
+  const parseTag = (tag: string): [number, number, number] => {
     if (!tag.includes('@')) {
       return [0, 0, 0]
     }
+    if (tag.includes('-')) {
+      tag = tag.split('-')[0]!
+    }
     const parts = tag.split('@')[1]
-    return parts.split('.').map(Number)
+    return parts!.split('.').map(Number) as [number, number, number]
   }
 
   const [major1, minor1, patch1] = parseTag(r1.tag_name)

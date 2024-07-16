@@ -1,10 +1,10 @@
 'use client'
 
-import React from 'react'
 import * as ProgressPrimitive from '@radix-ui/react-progress'
-import { Text } from './Text'
 import { cva } from 'class-variance-authority'
-import { VariantProps } from '../types'
+import React from 'react'
+import type { VariantProps } from '../types'
+import { Text } from './Text'
 
 const styles = cva(['relative h-1 w-full overflow-hidden rounded-lg'], {
   variants: {

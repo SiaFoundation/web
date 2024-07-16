@@ -1,6 +1,5 @@
 import {
   Button,
-  copyToClipboard,
   Label,
   LoadingDots,
   Paragraph,
@@ -9,13 +8,14 @@ import {
   TextField,
   ValueCopyable,
   ValueSc,
+  copyToClipboard,
 } from '@siafoundation/design-system'
 import { Copy24 } from '@siafoundation/react-icons'
 import BigNumber from 'bignumber.js'
 import { useEffect, useState } from 'react'
-import { useFaucetStatus } from '../../hooks/useFaucetStatus'
 import { useDebounce } from 'use-debounce'
 import { routes } from '../../config/routes'
+import { useFaucetStatus } from '../../hooks/useFaucetStatus'
 
 type Props = {
   id: string
@@ -37,17 +37,17 @@ export function FaucetStatus({ id: _id, setId }: Props) {
     },
   })
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: run when ID changes
   useEffect(() => {
     setSuccess(false)
     status.mutate(undefined)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
   useEffect(() => {
     if (status.data) {
       setSuccess(status.data.status === 'confirmed')
     }
-  }, [status.data, setSuccess])
+  }, [status.data])
 
   return (
     <div className="flex flex-col gap-4">
@@ -128,7 +128,7 @@ export function FaucetStatus({ id: _id, setId }: Props) {
                 value={status.data.transactionID}
                 href={routes.transaction.view.replace(
                   '[id]',
-                  status.data.transactionID
+                  status.data.transactionID,
                 )}
               />
             ) : (

@@ -1,14 +1,14 @@
-import {
+import type {
+  Block,
+  CoveredFields,
   Currency,
-  PublicKey,
-  Transaction,
+  FileContractID,
   FileContractRevision,
   OutputID,
-  CoveredFields,
-  FileContractID,
-  Block,
+  PublicKey,
+  Transaction,
 } from '@siafoundation/types'
-import {
+import type {
   ConsensusState,
   Contract,
   ContractRevision,

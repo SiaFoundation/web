@@ -1,16 +1,16 @@
-import { ExpiryCmdGroup } from './Expiry'
-import { ContractData } from '../../../../../contexts/contracts/types'
-import { FormationCmdGroup } from './Formation'
-import { RenewCmdGroup } from './Renew'
-import { Page } from '../../../../CmdRoot/types'
-import { ClientFilterItem } from '@siafoundation/design-system'
+import type { ClientFilterItem } from '@siafoundation/design-system'
+import type { ContractData } from '../../../../../contexts/contracts/types'
+import type { Page } from '../../../../CmdRoot/types'
 import { AddressCmdGroup } from './Address'
-import { PublicKeyCmdGroup } from './PublicKey'
 import { ContractSetCmdGroup } from './ContractSet'
+import { ExpiryCmdGroup } from './Expiry'
+import { FormationCmdGroup } from './Formation'
+import { PublicKeyCmdGroup } from './PublicKey'
+import { RenewCmdGroup } from './Renew'
 
 type Props = {
-  currentPage: Page
-  select?: (filter?: ClientFilterItem<ContractData>) => void
+  currentPage?: Page
+  select: (filter?: ClientFilterItem<ContractData>) => void
 }
 
 export function ContractFilterCmdGroups({ currentPage, select }: Props) {

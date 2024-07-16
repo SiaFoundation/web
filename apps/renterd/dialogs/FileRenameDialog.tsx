@@ -1,21 +1,21 @@
 import {
+  type ConfigFields,
   Dialog,
+  FieldText,
+  FormSubmitButton,
   triggerErrorToast,
   triggerSuccessToast,
-  ConfigFields,
-  useOnInvalid,
-  FormSubmitButton,
-  FieldText,
   useDialogFormHelpers,
+  useOnInvalid,
 } from '@siafoundation/design-system'
+import { useObjectRename } from '@siafoundation/renterd-react'
 import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
-import { useObjectRename } from '@siafoundation/renterd-react'
-import { getFilename, isDirectory } from '../lib/paths'
-import { getRenameFileRenameParams } from '../lib/rename'
+import { useDialog } from '../contexts/dialog'
 import { useFilesDirectory } from '../contexts/filesDirectory'
 import { useFilesFlat } from '../contexts/filesFlat'
-import { useDialog } from '../contexts/dialog'
+import { getFilename, isDirectory } from '../lib/paths'
+import { getRenameFileRenameParams } from '../lib/rename'
 
 function getDefaultValues(currentName: string) {
   return {
@@ -84,8 +84,8 @@ export function FileRenameDialog({ trigger, open, onOpenChange }: Props) {
   const onValid = useCallback(
     async (values: Values) => {
       const { bucket, to, from, mode } = getRenameFileRenameParams(
-        originalPath,
-        values.name
+        originalPath!,
+        values.name,
       )
       const response = await objectRename.post({
         payload: {
@@ -98,7 +98,7 @@ export function FileRenameDialog({ trigger, open, onOpenChange }: Props) {
       })
       if (response.error) {
         triggerErrorToast({
-          title: isDirectory(originalPath)
+          title: isDirectory(originalPath!)
             ? 'Error renaming directory'
             : 'Error renaming file',
           body: response.error,
@@ -108,13 +108,13 @@ export function FileRenameDialog({ trigger, open, onOpenChange }: Props) {
         refreshFlat()
         closeAndReset()
         triggerSuccessToast({
-          title: isDirectory(originalPath)
+          title: isDirectory(originalPath!)
             ? 'Directory renamed'
             : 'File renamed',
         })
       }
     },
-    [originalPath, refreshDirectory, refreshFlat, objectRename, closeAndReset]
+    [originalPath, refreshDirectory, refreshFlat, objectRename, closeAndReset],
   )
 
   const fields = useMemo(() => getFields({ currentName: name }), [name])

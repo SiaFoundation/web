@@ -1,4 +1,5 @@
-import React, { createContext, useContext } from 'react'
+import type React from 'react'
+import { createContext, useContext } from 'react'
 import { useAutopilot } from './useAutopilot'
 import { useBusSdk } from './useBusSdk'
 

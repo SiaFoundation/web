@@ -2,7 +2,7 @@ import {
   daysInNanoseconds,
   minutesInNanoseconds,
 } from '@siafoundation/design-system'
-import {
+import type {
   AutopilotConfig,
   BusStateResponse,
   ContractSetSettings,
@@ -11,31 +11,31 @@ import {
   UploadPackingSettings,
 } from '@siafoundation/renterd-types'
 import {
+  TBToBytes,
+  monthsToBlocks,
   toHastings,
   weeksToBlocks,
-  monthsToBlocks,
-  TBToBytes,
 } from '@siafoundation/units'
+import type BigNumber from 'bignumber.js'
+import { derivePricingFromAllowance } from './derivePricesFromAllowance'
+import type { Resources } from './resources'
 import {
-  AutopilotData,
-  SettingsData,
-  getAdvancedDefaultAutopilot,
-  ContractSetData,
-  RedundancyData,
-  UploadPackingData,
+  type AutopilotData,
+  type ContractSetData,
+  type RedundancyData,
+  type SettingsData,
+  type UploadPackingData,
   advancedDefaultContractSet,
+  getAdvancedDefaultAutopilot,
 } from './types'
 import { valuePerMonthToPerPeriod } from './utils'
-import { Resources } from './resources'
-import BigNumber from 'bignumber.js'
-import { derivePricingFromAllowance } from './derivePricesFromAllowance'
 
 // up
 export function transformUpAutopilot(
   network: 'Mainnet' | 'Zen Testnet',
   values: AutopilotData,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  existingValues: AutopilotConfig | undefined
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  existingValues: AutopilotConfig | undefined,
 ): AutopilotConfig {
   // Merge suggestions with values, if advanced values are required they will
   // be added before this function is called and will override suggestions.
@@ -49,33 +49,33 @@ export function transformUpAutopilot(
     contracts: {
       ...existingValues?.contracts,
       set: v.autopilotContractSet,
-      amount: Math.round(v.amountHosts.toNumber()),
+      amount: Math.round(v.amountHosts!.toNumber()),
       allowance: toHastings(
-        valuePerMonthToPerPeriod(v.allowanceMonth, v.periodWeeks)
+        valuePerMonthToPerPeriod(v.allowanceMonth!, v.periodWeeks!),
       ).toString(),
-      period: Math.round(weeksToBlocks(v.periodWeeks.toNumber())),
-      renewWindow: Math.round(weeksToBlocks(v.renewWindowWeeks.toNumber())),
+      period: Math.round(weeksToBlocks(v.periodWeeks!.toNumber())),
+      renewWindow: Math.round(weeksToBlocks(v.renewWindowWeeks!.toNumber())),
       download: Number(
         valuePerMonthToPerPeriod(
-          TBToBytes(v.downloadTBMonth),
-          v.periodWeeks
-        ).toFixed(0)
+          TBToBytes(v.downloadTBMonth!),
+          v.periodWeeks!,
+        ).toFixed(0),
       ),
       upload: Number(
         valuePerMonthToPerPeriod(
-          TBToBytes(v.uploadTBMonth),
-          v.periodWeeks
-        ).toFixed(0)
+          TBToBytes(v.uploadTBMonth!),
+          v.periodWeeks!,
+        ).toFixed(0),
       ),
-      storage: TBToBytes(v.storageTB).toNumber(),
+      storage: TBToBytes(v.storageTB!).toNumber(),
       prune: v.prune,
     },
     hosts: {
       ...existingValues?.hosts,
-      maxDowntimeHours: v.maxDowntimeHours.toNumber(),
-      minRecentScanFailures: v.minRecentScanFailures.toNumber(),
+      maxDowntimeHours: v.maxDowntimeHours!.toNumber(),
+      minRecentScanFailures: v.minRecentScanFailures!.toNumber(),
       allowRedundantIPs: v.allowRedundantIPs,
-      scoreOverrides: existingValues?.hosts.scoreOverrides || null,
+      scoreOverrides: existingValues?.hosts.scoreOverrides || {},
       minProtocolVersion: v.minProtocolVersion,
     },
   }
@@ -83,7 +83,7 @@ export function transformUpAutopilot(
 
 export function transformUpContractSet(
   values: ContractSetData,
-  existingValues: ContractSetSettings | undefined
+  existingValues: ContractSetSettings | undefined,
 ): ContractSetSettings {
   const _default =
     values.defaultContractSet ||
@@ -97,7 +97,7 @@ export function transformUpContractSet(
 
 export function transformUpUploadPacking(
   values: UploadPackingData,
-  existingValues: UploadPackingSettings
+  existingValues: UploadPackingSettings,
 ): UploadPackingSettings {
   return {
     ...existingValues,
@@ -107,46 +107,49 @@ export function transformUpUploadPacking(
 
 export function transformUpGouging(
   values: SettingsData,
-  existingValues: GougingSettings
+  existingValues: GougingSettings,
 ): GougingSettings {
   return {
     ...existingValues,
     maxRPCPrice: toHastings(
-      values.maxRpcPriceMillion.div(1_000_000)
+      values.maxRpcPriceMillion!.div(1_000_000),
     ).toString(),
     maxStoragePrice: toHastings(
-      values.maxStoragePriceTBMonth // TB/month
+      values
+        .maxStoragePriceTBMonth! // TB/month
         .div(monthsToBlocks(1)) // TB/block
-        .div(TBToBytes(1))
+        .div(TBToBytes(1)),
     ).toString(),
-    maxUploadPrice: toHastings(values.maxUploadPriceTB).toString(),
-    maxDownloadPrice: toHastings(values.maxDownloadPriceTB).toString(),
-    maxContractPrice: toHastings(values.maxContractPrice).toString(),
+    maxUploadPrice: toHastings(values.maxUploadPriceTB!).toString(),
+    maxDownloadPrice: toHastings(values.maxDownloadPriceTB!).toString(),
+    maxContractPrice: toHastings(values.maxContractPrice!).toString(),
     hostBlockHeightLeeway: Math.round(
-      values.hostBlockHeightLeeway?.toNumber() || 0
+      values.hostBlockHeightLeeway?.toNumber() || 0,
     ),
     minPriceTableValidity: Math.round(
-      minutesInNanoseconds(values.minPriceTableValidityMinutes?.toNumber() || 0)
+      minutesInNanoseconds(
+        values.minPriceTableValidityMinutes?.toNumber() || 0,
+      ),
     ),
     minAccountExpiry: Math.round(
-      daysInNanoseconds(values.minAccountExpiryDays.toNumber())
+      daysInNanoseconds(values.minAccountExpiryDays!.toNumber()),
     ),
     minMaxEphemeralAccountBalance: toHastings(
-      values.minMaxEphemeralAccountBalance
+      values.minMaxEphemeralAccountBalance!,
     ).toString(),
     migrationSurchargeMultiplier:
-      values.migrationSurchargeMultiplier.toNumber(),
+      values.migrationSurchargeMultiplier!.toNumber(),
   }
 }
 
 export function transformUpRedundancy(
   values: RedundancyData,
-  existingValues: RedundancySettings
+  existingValues: RedundancySettings,
 ): RedundancySettings {
   return {
     ...existingValues,
-    minShards: values.minShards.toNumber(),
-    totalShards: values.totalShards.toNumber(),
+    minShards: values.minShards!.toNumber(),
+    totalShards: values.totalShards!.toNumber(),
   }
 }
 
@@ -166,17 +169,17 @@ export function transformUp({
     ? transformUpAutopilot(
         renterdState.network,
         values,
-        resources.autopilot.data
+        resources.autopilot.data,
       )
     : undefined
 
   const contractSet = transformUpContractSet(values, resources.contractSet.data)
   const uploadPacking = transformUpUploadPacking(
     values,
-    resources.uploadPacking.data
+    resources.uploadPacking.data!,
   )
-  const gouging = transformUpGouging(values, resources.gouging.data)
-  const redundancy = transformUpRedundancy(values, resources.redundancy.data)
+  const gouging = transformUpGouging(values, resources.gouging.data!)
+  const redundancy = transformUpRedundancy(values, resources.redundancy.data!)
 
   return {
     payloads: {
@@ -192,8 +195,8 @@ export function transformUp({
 function filterUndefinedKeys(obj: Record<string, unknown>) {
   return Object.fromEntries(
     Object.entries(obj).filter(
-      ([key, value]) => value !== undefined && value !== ''
-    )
+      ([, value]) => value !== undefined && value !== '',
+    ),
   )
 }
 
@@ -206,11 +209,11 @@ export function getCalculatedValues({
   uploadTBMonth,
   redundancyMultiplier,
 }: {
-  allowanceMonth: BigNumber
-  storageTB: BigNumber
-  downloadTBMonth: BigNumber
-  uploadTBMonth: BigNumber
-  redundancyMultiplier: BigNumber
+  allowanceMonth?: BigNumber
+  storageTB?: BigNumber
+  downloadTBMonth?: BigNumber
+  uploadTBMonth?: BigNumber
+  redundancyMultiplier?: BigNumber
   isAutopilotEnabled: boolean
   allowanceDerivedPricing: boolean
 }) {

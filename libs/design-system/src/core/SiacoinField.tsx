@@ -1,11 +1,11 @@
 'use client'
 
 import { useAppSettings } from '@siafoundation/react-core'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
 import BigNumber from 'bignumber.js'
 import { cx } from 'class-variance-authority'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { toFixedMax } from '../lib/numbers'
-import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
 import { BaseNumberField } from './BaseNumberField'
 
 type Props = Omit<
@@ -43,8 +43,8 @@ export function SiacoinField({
   ...props
 }: Props) {
   const externalSc = useMemo(
-    () => new BigNumber(_externalSc === undefined ? NaN : _externalSc),
-    [_externalSc]
+    () => new BigNumber(_externalSc === undefined ? Number.NaN : _externalSc),
+    [_externalSc],
   )
   const { settings } = useAppSettings()
   const rates = useSiaCentralExchangeRates({
@@ -70,7 +70,7 @@ export function SiacoinField({
         onChange(sc && !isNaN(Number(sc)) ? new BigNumber(sc) : undefined)
       }
     },
-    [onChange]
+    [onChange],
   )
 
   const updateFiat = useCallback(
@@ -78,7 +78,7 @@ export function SiacoinField({
       const uf = toFixedMax(fiat, decimalsLimitFiat)
       setLocalFiat(uf)
     },
-    [setLocalFiat, decimalsLimitFiat]
+    [setLocalFiat, decimalsLimitFiat],
   )
 
   const updateSc = useCallback(
@@ -88,7 +88,7 @@ export function SiacoinField({
       updateExternalSc(usc)
       return usc
     },
-    [setLocalSc, decimalsLimitSc, updateExternalSc]
+    [setLocalSc, decimalsLimitSc, updateExternalSc],
   )
 
   const onScChange = useCallback(
@@ -98,7 +98,7 @@ export function SiacoinField({
         updateExternalSc(sc)
       }
     },
-    [active, setLocalSc, updateExternalSc]
+    [active, setLocalSc, updateExternalSc],
   )
 
   const syncFiatToSc = useCallback(
@@ -106,7 +106,7 @@ export function SiacoinField({
       const fiat = new BigNumber(sc).times(rate)
       updateFiat(fiat)
     },
-    [updateFiat, rate]
+    [updateFiat, rate],
   )
 
   const syncScToFiat = useCallback(
@@ -114,11 +114,12 @@ export function SiacoinField({
       const sc = new BigNumber(fiat).dividedBy(rate)
       updateSc(sc)
     },
-    [updateSc, rate]
+    [updateSc, rate],
   )
 
   const [hasInitializedSc, setHasInitializedSc] = useState(false)
   // sync externally controlled value
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!externalSc.isEqualTo(localSc)) {
       const fesc = toFixedMax(externalSc, decimalsLimitSc)
@@ -132,30 +133,29 @@ export function SiacoinField({
     if (!hasInitializedSc) {
       setHasInitializedSc(true)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [externalSc])
 
   // initialize fiat once rate has loaded,
   // but only if the siacoin value has initialized
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (hasInitializedSc) {
       syncFiatToSc(localSc)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rate])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (active === 'sc') {
       syncFiatToSc(localSc)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localSc])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (active === 'fiat') {
       syncScToFiat(localFiat)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localFiat])
 
   return (
@@ -171,11 +171,11 @@ export function SiacoinField({
         props.readOnly
           ? 'border-blue-400 dark:border-blue-400'
           : error
-          ? 'border-red-500 dark:border-red-400'
-          : changed
-          ? 'border-green-500 dark:border-green-400'
-          : 'border-gray-200 dark:border-graydark-200',
-        'rounded'
+            ? 'border-red-500 dark:border-red-400'
+            : changed
+              ? 'border-green-500 dark:border-green-400'
+              : 'border-gray-200 dark:border-graydark-200',
+        'rounded',
       )}
     >
       <BaseNumberField

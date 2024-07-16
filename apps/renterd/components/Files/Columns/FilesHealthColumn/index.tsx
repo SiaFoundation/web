@@ -1,5 +1,5 @@
 import { HoverCard, LoadingDots, Text } from '@siafoundation/design-system'
-import { ObjectData } from '../../../../contexts/filesManager/types'
+import type { ObjectData } from '../../../../contexts/filesManager/types'
 import { useHealthLabel } from '../../../../hooks/useHealthLabel'
 import { FilesHealthColumnContents } from './FilesHealthColumnContents'
 

@@ -1,10 +1,15 @@
 import { useCallback } from 'react'
-import { FieldValues, Path, PathValue, UseFormReturn } from 'react-hook-form'
-import { ConfigField } from './configurationFields'
+import type {
+  FieldValues,
+  Path,
+  PathValue,
+  UseFormReturn,
+} from 'react-hook-form'
+import type { ConfigField } from './configurationFields'
 
 export function useFormSetField<
   Values extends FieldValues,
-  Categories extends string
+  Categories extends string,
 >({
   form,
   field,
@@ -23,7 +28,7 @@ export function useFormSetField<
             shouldValidate: boolean
             shouldDirty: boolean
             shouldTouch: boolean
-          }
+          },
     ) => {
       form.setValue(
         name,
@@ -36,10 +41,10 @@ export function useFormSetField<
                 shouldTouch: true,
               }
             : undefined
-          : options
+          : options,
       )
       field.trigger?.forEach((t) => form.trigger(t))
     },
-    [name, form, field]
+    [name, form, field],
   )
 }

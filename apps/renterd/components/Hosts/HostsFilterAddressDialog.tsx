@@ -3,10 +3,10 @@ import {
   FormFieldFormik,
   FormSubmitButtonFormik,
 } from '@siafoundation/design-system'
-import { useHosts } from '../../contexts/hosts'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useDialog } from '../../contexts/dialog'
+import { useHosts } from '../../contexts/hosts'
 
 export function filterAddressContains(address: string) {
   return {

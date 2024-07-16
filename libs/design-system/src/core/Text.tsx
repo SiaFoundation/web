@@ -1,6 +1,6 @@
 import { cva, cx } from 'class-variance-authority'
 import React from 'react'
-import { VariantProps } from '../types'
+import type { VariantProps } from '../types'
 
 // // avoid clipping decenders when overflow is hidden
 // padding: '0.14em 0',
@@ -112,13 +112,14 @@ export const Text = React.forwardRef<
       wrapEllipsis,
       ...props
     },
-    ref
+    ref,
   ) => {
     const Tag = tag
     return (
       <Tag
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         ref={ref as any}
+        style={{ color: 'red' }}
         className={cx(
           className,
           textStyles({
@@ -131,10 +132,10 @@ export const Text = React.forwardRef<
             noWrap,
             ellipsis,
             wrapEllipsis,
-          })
+          }),
         )}
         {...props}
       />
     )
-  }
+  },
 )

@@ -1,4 +1,4 @@
-import { Transaction } from '@siafoundation/types'
+import type { Transaction } from '@siafoundation/types'
 import BigNumber from 'bignumber.js'
 
 export type EntityType =
@@ -32,11 +32,11 @@ export type TxType =
 export function getTransactionTotals(txn: Transaction) {
   const sc = (txn.siacoinOutputs || []).reduce(
     (acc, i) => acc.plus(i.value),
-    new BigNumber(0)
+    new BigNumber(0),
   )
   const sf = (txn.siafundOutputs || []).reduce(
     (acc, i) => acc.plus(i.value),
-    new BigNumber(0)
+    new BigNumber(0),
   )
 
   return {
@@ -47,7 +47,7 @@ export function getTransactionTotals(txn: Transaction) {
 
 export function getTransactionType(
   txn: Transaction,
-  source?: string
+  source?: string,
 ): TxType | undefined {
   if (source === 'miner') {
     return 'minerPayout'
@@ -81,7 +81,7 @@ export function getTransactionType(
   if (
     txn.arbitraryData &&
     txn.arbitraryData.length > 0 &&
-    atob(txn.arbitraryData[0]).indexOf('HostAnnouncement') === 0
+    atob(txn.arbitraryData[0]!).indexOf('HostAnnouncement') === 0
   ) {
     return 'hostAnnouncement'
   }
@@ -184,7 +184,7 @@ export function doesEntityHaveSiascanUrl(type?: EntityType) {
 export function getEntitySiascanUrl(
   baseUrl: string,
   type: EntityType,
-  value: string
+  value: string,
 ) {
   switch (type) {
     case 'hostIp':
@@ -213,7 +213,7 @@ export function defaultFormatValue(text: string, maxLength: number) {
 export function formatEntityValue(
   type: EntityType,
   text: string,
-  maxLength: number
+  maxLength: number,
 ) {
   switch (type) {
     case 'blockHash': {

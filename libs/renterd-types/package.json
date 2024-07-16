@@ -1,10 +1,29 @@
 {
   "name": "@siafoundation/renterd-types",
-  "description": "Types for `renterd`.",
   "version": "0.3.0",
+  "description": "Types for `renterd`.",
   "license": "MIT",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "run-p bundle type:gen",
+    "build:dev": "run-p bundle:watch type:gen:watch",
+    "bundle": "tsup src/index.ts --format esm",
+    "clean": "del dist tsconfig.tsbuildinfo",
+    "coverage": "vitest run --coverage ",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest",
+    "type:check": "tsc --noEmit",
+    "type:gen": "tsc --emitDeclarationOnly"
+  },
   "dependencies": {
     "@siafoundation/types": "^0.4.0"
   },
-  "types": "./src/index.d.ts"
+  "devDependencies": {
+    "@siafoundation/typescript-config": "^0.0.0",
+    "@swc/core": "^1.6.13",
+    "@types/node": "^20.14.11",
+    "del-cli": "^5.1.0",
+    "tsup": "^8.1.0"
+  }
 }

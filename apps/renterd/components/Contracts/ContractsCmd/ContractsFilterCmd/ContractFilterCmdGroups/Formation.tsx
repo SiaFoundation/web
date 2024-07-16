@@ -1,13 +1,13 @@
 import {
+  type ClientFilterItem,
   daysInMilliseconds,
-  weeksInMilliseconds,
   monthsInMilliseconds,
+  weeksInMilliseconds,
   yearsInMilliseconds,
-  ClientFilterItem,
 } from '@siafoundation/design-system'
-import { ContractData } from '../../../../../contexts/contracts/types'
+import type { ContractData } from '../../../../../contexts/contracts/types'
 import { CommandGroup, CommandItemSearch } from '../../../../CmdRoot/Item'
-import { Page } from '../../../../CmdRoot/types'
+import type { Page } from '../../../../CmdRoot/types'
 
 export const contractFilterFormationPage = {
   namespace: 'contracts/filterFormationDate',
@@ -81,7 +81,7 @@ export function FormationCmdGroup({
   currentPage,
   select,
 }: {
-  currentPage: Page
+  currentPage?: Page
   select: (filter: ClientFilterItem<ContractData>) => void
 }) {
   return (

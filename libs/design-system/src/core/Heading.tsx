@@ -1,8 +1,8 @@
-import React from 'react'
-import { Text } from './Text'
-import { cx, VariantProps } from 'class-variance-authority'
 import { Link } from '@siafoundation/next'
 import { Link20 } from '@siafoundation/react-icons'
+import { type VariantProps, cx } from 'class-variance-authority'
+import React from 'react'
+import { Text } from './Text'
 
 const DEFAULT_TAG = 'h1'
 
@@ -92,7 +92,7 @@ export const Heading = React.forwardRef<
         className={cx(
           'proportional-nums inline-block',
           textStyles[size],
-          className
+          className,
         )}
       >
         {children}

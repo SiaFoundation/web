@@ -1,4 +1,4 @@
-import {
+import type {
   DNSAWSOptions,
   DNSCloudflareOptions,
   DNSDuckDNSOptions,
@@ -7,12 +7,13 @@ import {
   HostSettingsPinned,
 } from '@siafoundation/hostd-types'
 import {
-  bytesToMB,
   MBToBytes,
+  bytesToMB,
   monthsToBlocks,
   toHastings,
   toSiacoins,
 } from '@siafoundation/units'
+import BigNumber from 'bignumber.js'
 import {
   humanBaseRpcPrice,
   humanEgressPrice,
@@ -20,17 +21,16 @@ import {
   humanSectorAccessPrice,
   humanStoragePrice,
 } from '../../lib/humanUnits'
-import BigNumber from 'bignumber.js'
 import {
+  type SettingsData,
   defaultValuesSettingsPinned,
   scDecimalPlaces,
-  SettingsData,
 } from './types'
 
 export function transformUpSettings(
   values: SettingsData,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  existingValues: any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  existingValues: any,
 ): Omit<HostSettings, 'revision'> {
   let dnsOptions = null
   // DNS DuckDNS
@@ -71,7 +71,7 @@ export function transformUpSettings(
     acceptingContracts: values.acceptingContracts,
     netAddress: values.netAddress,
     maxContractDuration: Number(
-      values.maxContractDuration.times(monthsToBlocks(1)).toFixed(0)
+      values.maxContractDuration.times(monthsToBlocks(1)).toFixed(0),
     ),
 
     // Pricing
@@ -100,7 +100,7 @@ export function transformUpSettings(
       values.priceTableValidity
         .times(60) // minutes to seconds
         .times(1_000_000_000) // seconds to nanoseconds
-        .toFixed(0)
+        .toFixed(0),
     ),
 
     // RHP3 settings
@@ -108,7 +108,7 @@ export function transformUpSettings(
       values.accountExpiry
         .times(60 * 60 * 24) // days to seconds
         .times(1_000_000_000) // seconds to nanoseconds
-        .toFixed(0)
+        .toFixed(0),
     ),
     maxAccountBalance: toHastings(values.maxAccountBalance).toString(),
 
@@ -135,8 +135,8 @@ export function getCalculatedValues() {
 
 export function transformUpSettingsPinned(
   values: SettingsData,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  existingValues: any
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  existingValues: any,
 ): HostSettingsPinned {
   return {
     ...existingValues,
@@ -206,18 +206,18 @@ export function transformDown({
     acceptingContracts: settings.acceptingContracts,
     netAddress: settings.netAddress,
     maxContractDuration: new BigNumber(settings.maxContractDuration).div(
-      monthsToBlocks(1)
+      monthsToBlocks(1),
     ),
 
     // Pricing
     contractPrice: toSiacoins(settings.contractPrice, scDecimalPlaces),
     baseRPCPrice: toSiacoins(
       humanBaseRpcPrice(settings.baseRPCPrice),
-      scDecimalPlaces
+      scDecimalPlaces,
     ),
     sectorAccessPrice: toSiacoins(
       humanSectorAccessPrice(settings.sectorAccessPrice),
-      scDecimalPlaces
+      scDecimalPlaces,
     ),
 
     collateralMultiplier: new BigNumber(settings.collateralMultiplier),
@@ -225,15 +225,15 @@ export function transformDown({
     maxCollateral: toSiacoins(settings.maxCollateral, scDecimalPlaces),
     storagePrice: toSiacoins(
       humanStoragePrice(settings.storagePrice),
-      scDecimalPlaces
+      scDecimalPlaces,
     ),
     egressPrice: toSiacoins(
       humanEgressPrice(settings.egressPrice),
-      scDecimalPlaces
+      scDecimalPlaces,
     ),
     ingressPrice: toSiacoins(
       humanIngressPrice(settings.ingressPrice),
-      scDecimalPlaces
+      scDecimalPlaces,
     ),
 
     priceTableValidity: new BigNumber(settings.priceTableValidity)
@@ -265,7 +265,7 @@ export function transformDown({
           pinnedThreshold: new BigNumber(settingsPinned.threshold).times(100),
           shouldPinMaxCollateral: settingsPinned.maxCollateral.pinned,
           maxCollateralPinned: new BigNumber(
-            settingsPinned.maxCollateral.value
+            settingsPinned.maxCollateral.value,
           ),
 
           shouldPinStoragePrice: settingsPinned.storage.pinned,
@@ -283,7 +283,7 @@ export function transformDown({
 
 export function calculateMaxCollateral(
   storage: BigNumber,
-  collateralMultiplier: BigNumber
+  collateralMultiplier: BigNumber,
 ) {
   if (!storage || !collateralMultiplier) {
     return new BigNumber(0)

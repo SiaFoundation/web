@@ -1,11 +1,11 @@
 import { CommandItemNav } from '../../../../CmdRoot/Item'
+import type { Page } from '../../../../CmdRoot/types'
+import { AddressCmdNav } from '../ContractFilterCmdGroups/Address'
+import { ContractSetCmdNav } from '../ContractFilterCmdGroups/ContractSet'
 import { contractFilterExpiryPage } from '../ContractFilterCmdGroups/Expiry'
 import { contractFilterFormationPage } from '../ContractFilterCmdGroups/Formation'
-import { contractFilterRenewPage } from '../ContractFilterCmdGroups/Renew'
-import { Page } from '../../../../CmdRoot/types'
-import { AddressCmdNav } from '../ContractFilterCmdGroups/Address'
 import { PublicKeyCmdNav } from '../ContractFilterCmdGroups/PublicKey'
-import { ContractSetCmdNav } from '../ContractFilterCmdGroups/ContractSet'
+import { contractFilterRenewPage } from '../ContractFilterCmdGroups/Renew'
 
 export const commandPage = {
   namespace: 'contracts',
@@ -13,7 +13,7 @@ export const commandPage = {
 }
 
 type Props = {
-  currentPage: Page
+  currentPage?: Page
   parentPage?: Page
   pushPage: (page: Page) => void
   select: () => void

@@ -71,10 +71,6 @@
       "options": {
         "jestConfig": "apps/renterd/jest.config.ts"
       }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
     }
   },
   "tags": []

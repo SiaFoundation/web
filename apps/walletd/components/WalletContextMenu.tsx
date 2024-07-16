@@ -1,18 +1,18 @@
 import {
   DropdownMenu,
   DropdownMenuItem,
-  DropdownMenuLeftSlot,
   DropdownMenuLabel,
+  DropdownMenuLeftSlot,
 } from '@siafoundation/design-system'
 import {
-  Locked16,
-  Unlocked16,
-  Edit16,
   Delete16,
+  Edit16,
+  Locked16,
   Scan16,
+  Unlocked16,
 } from '@siafoundation/react-icons'
 import { useDialog } from '../contexts/dialog'
-import { WalletData } from '../contexts/wallets/types'
+import type { WalletData } from '../contexts/wallets/types'
 
 type Props = {
   wallet: WalletData

@@ -1,7 +1,7 @@
 import { Button, Separator, TextField } from '@siafoundation/design-system'
+import { Close16 } from '@siafoundation/react-icons'
 import { useEffect, useState } from 'react'
 import { useDebounce } from 'use-debounce'
-import { Close16 } from '@siafoundation/react-icons'
 import { useFilesManager } from '../../../contexts/filesManager'
 
 type Props = {
@@ -14,14 +14,15 @@ export function FilesFilterDirectoryMenu({ placeholder }: Props) {
   const [debouncedSearch] = useDebounce(search, 500)
 
   // Update search value directly when fileNamePrefixFilter changes
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (fileNamePrefixFilter !== search) {
       setSearch(fileNamePrefixFilter)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fileNamePrefixFilter])
 
   // Update and trigger the server filter if the debounced search value changes
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (fileNamePrefixFilter === debouncedSearch) {
       return
@@ -35,7 +36,6 @@ export function FilesFilterDirectoryMenu({ placeholder }: Props) {
     } else {
       removeFilter('fileNamePrefix')
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch])
 
   return (

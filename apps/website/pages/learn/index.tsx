@@ -1,21 +1,21 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
-  ContentGallery,
   Callout,
+  ContentGallery,
   Link,
   SiteHeading,
   webLinks,
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
-import { routes } from '../../config/routes'
-import { getStats } from '../../content/stats'
-import { getMinutesInSeconds } from '../../lib/time'
-import { textContent } from '../../lib/utils'
-import { getTutorialArticles } from '../../content/articles'
-import { AsyncReturnType } from '../../lib/types'
 import { SectionGradient } from '../../components/SectionGradient'
 import { SectionTransparent } from '../../components/SectionTransparent'
+import { routes } from '../../config/routes'
+import { getTutorialArticles } from '../../content/articles'
 import { backgrounds, patterns, previews } from '../../content/assets'
+import { getStats } from '../../content/stats'
+import { getMinutesInSeconds } from '../../lib/time'
+import type { AsyncReturnType } from '../../lib/types'
+import { textContent } from '../../lib/utils'
 
 const title = 'Learn'
 const description =

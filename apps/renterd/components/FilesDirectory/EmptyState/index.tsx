@@ -2,12 +2,12 @@ import { Code, LinkButton, Text } from '@siafoundation/design-system'
 import { CloudUpload32 } from '@siafoundation/react-icons'
 import { routes } from '../../../config/routes'
 import { useFilesDirectory } from '../../../contexts/filesDirectory'
+import { useFilesManager } from '../../../contexts/filesManager'
 import { useAutopilotNotConfigured } from '../../Files/checks/useAutopilotNotConfigured'
 import { useNotEnoughContracts } from '../../Files/checks/useNotEnoughContracts'
 import { StateError } from './StateError'
 import { StateNoneMatching } from './StateNoneMatching'
 import { StateNoneYet } from './StateNoneYet'
-import { useFilesManager } from '../../../contexts/filesManager'
 
 export function EmptyState() {
   const { isViewingRootOfABucket } = useFilesManager()

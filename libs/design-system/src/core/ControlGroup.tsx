@@ -1,6 +1,6 @@
-import React from 'react'
 import { cva } from 'class-variance-authority'
-import { VariantProps } from '../types'
+import React from 'react'
+import type { VariantProps } from '../types'
 
 const styles = cva([
   'flex',

@@ -1,23 +1,23 @@
-import { SendReceipt } from '../_sharedWalletSend/SendReceipt'
-import { useForm } from 'react-hook-form'
-import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
-  ConfigFields,
+  type ConfigFields,
   FieldError,
   FieldLabel,
   triggerErrorToast,
   useOnInvalid,
 } from '@siafoundation/design-system'
-import { DeviceConnectForm } from '../DeviceConnectForm'
+import type { Transaction } from '@siafoundation/types'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { useLedger } from '../../contexts/ledger'
-import { Transaction } from '@siafoundation/types'
-import { LedgerSignTxn } from './LedgerSignTxn'
-import { useSign } from './useSign'
+import { DeviceConnectForm } from '../DeviceConnectForm'
+import { SendReceipt } from '../_sharedWalletSend/SendReceipt'
+import type { SendParams, SendStep } from '../_sharedWalletSend/types'
 import { useBroadcast } from '../_sharedWalletSend/useBroadcast'
-import { useFundAndSign } from './useFundAndSign'
 import { useCancel } from '../_sharedWalletSend/useCancel'
 import { useFund } from '../_sharedWalletSend/useFund'
-import { SendParams, SendStep } from '../_sharedWalletSend/types'
+import { LedgerSignTxn } from './LedgerSignTxn'
+import { useFundAndSign } from './useFundAndSign'
+import { useSign } from './useSign'
 
 const defaultValues = {
   isConnected: false,
@@ -124,14 +124,14 @@ export function useSendForm({ params, step, onConfirm }: Props) {
         // transactionId,
       })
     },
-    [broadcast, txn, onConfirm]
+    [broadcast, txn, onConfirm],
   )
 
   const onInvalid = useOnInvalid(fields)
 
   const handleSubmit = useMemo(
     () => form.handleSubmit(onValid, onInvalid),
-    [form, onValid, onInvalid]
+    [form, onValid, onInvalid],
   )
 
   const runFundAndSign = useCallback(async () => {

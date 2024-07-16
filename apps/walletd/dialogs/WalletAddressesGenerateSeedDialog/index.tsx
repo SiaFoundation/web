@@ -1,5 +1,5 @@
 import {
-  ConfigFields,
+  type ConfigFields,
   Dialog,
   FieldNumber,
   FormSubmitButton,
@@ -7,23 +7,26 @@ import {
   triggerSuccessToast,
   useDialogFormHelpers,
 } from '@siafoundation/design-system'
-import { WalletAddressMetadata } from '@siafoundation/walletd-types'
+import { getSDK } from '@siafoundation/sdk'
 import { useWalletAddressAdd } from '@siafoundation/walletd-react'
+import type { WalletAddressMetadata } from '@siafoundation/walletd-types'
+import BigNumber from 'bignumber.js'
 import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useWallets } from '../../contexts/wallets'
-import BigNumber from 'bignumber.js'
-import { getFieldMnemonic, MnemonicFieldType } from '../../lib/fieldMnemonic'
-import { FieldMnemonic } from '../FieldMnemonic'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { useWalletAddresses } from '../../hooks/useWalletAddresses'
-import { getSDK } from '@siafoundation/sdk'
+import {
+  type MnemonicFieldType,
+  getFieldMnemonic,
+} from '../../lib/fieldMnemonic'
+import { FieldMnemonic } from '../FieldMnemonic'
 import {
   FieldRescan,
-  getRescanFields,
   getDefaultRescanValues,
+  getRescanFields,
   useTriggerRescan,
 } from '../FieldRescan'
-import { useSyncStatus } from '../../hooks/useSyncStatus'
 
 export type WalletAddressesGenerateSeedDialogParams = {
   walletId: string
@@ -114,12 +117,12 @@ export function WalletAddressesGenerateSeedDialog({
     defaultValues,
   })
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (form.formState.isSubmitting) {
       return
     }
     form.setValue('index', new BigNumber(nextIndex))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nextIndex])
 
   const { handleOpenChange, closeAndReset } = useDialogFormHelpers({
@@ -202,7 +205,7 @@ export function WalletAddressesGenerateSeedDialog({
 
       closeAndReset()
     },
-    [closeAndReset, addressAdd, walletId, cacheWalletMnemonic]
+    [closeAndReset, addressAdd, walletId, cacheWalletMnemonic],
   )
 
   const triggerRescan = useTriggerRescan()
@@ -211,11 +214,11 @@ export function WalletAddressesGenerateSeedDialog({
       await generateAddresses(
         wallet.state.mnemonic || mnemonic,
         index.toNumber(),
-        count.toNumber()
+        count.toNumber(),
       )
       triggerRescan(values)
     },
-    [generateAddresses, mnemonic, index, count, wallet, triggerRescan]
+    [generateAddresses, mnemonic, index, count, wallet, triggerRescan],
   )
 
   return (

@@ -1,18 +1,41 @@
 {
   "name": "@siafoundation/react-core",
-  "description": "Core library for building React hooks for interacting with a Sia daemon.",
   "version": "1.2.1",
+  "description": "Core library for building React hooks for interacting with a Sia daemon.",
   "license": "MIT",
-  "peerDependencies": {
-    "react": "^18.2.0"
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "run-p bundle type:gen",
+    "build:dev": "run-p bundle type:gen",
+    "bundle": "tsup src/index.ts --format esm",
+    "clean": "del dist tsconfig.tsbuildinfo",
+    "coverage": "vitest run --coverage ",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest",
+    "type:check": "tsc --noEmit",
+    "type:gen": "tsc --emitDeclarationOnly"
   },
   "dependencies": {
     "@siafoundation/next": "^0.1.3",
-    "@siafoundation/request": "0.2.0",
-    "swr": "^2.1.1",
+    "@siafoundation/request": "^0.2.0",
+    "@siafoundation/typescript-config": "^0.0.0",
     "axios": "^0.27.2",
-    "use-local-storage-state": "^18.3.3",
-    "detect-gpu": "^5.0.34"
+    "detect-gpu": "^5.0.34",
+    "swr": "^2.1.1",
+    "use-local-storage-state": "^19.3.1"
   },
-  "types": "./src/index.d.ts"
+  "devDependencies": {
+    "@siafoundation/typescript-config": "^0.0.0",
+    "@swc/core": "^1.6.13",
+    "@types/node": "^20.14.11",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "18.3.0",
+    "del-cli": "^5.1.0",
+    "react": "^18.3.0",
+    "tsup": "^8.1.0"
+  },
+  "peerDependencies": {
+    "react": "^18.3.0"
+  }
 }

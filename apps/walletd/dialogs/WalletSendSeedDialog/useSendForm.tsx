@@ -1,17 +1,20 @@
-import { SendReceipt } from '../_sharedWalletSend/SendReceipt'
-import { useForm } from 'react-hook-form'
-import { useCallback, useMemo, useState } from 'react'
 import {
-  ConfigFields,
+  type ConfigFields,
   triggerErrorToast,
   useOnInvalid,
 } from '@siafoundation/design-system'
-import { getFieldMnemonic, MnemonicFieldType } from '../../lib/fieldMnemonic'
-import { FieldMnemonic } from '../FieldMnemonic'
-import { useWalletCachedSeed } from '../../hooks/useWalletCachedSeed'
-import { useSignAndBroadcast } from './useSignAndBroadcast'
+import { useCallback, useMemo, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { useWallets } from '../../contexts/wallets'
-import { SendParams } from '../_sharedWalletSend/types'
+import { useWalletCachedSeed } from '../../hooks/useWalletCachedSeed'
+import {
+  type MnemonicFieldType,
+  getFieldMnemonic,
+} from '../../lib/fieldMnemonic'
+import { FieldMnemonic } from '../FieldMnemonic'
+import { SendReceipt } from '../_sharedWalletSend/SendReceipt'
+import type { SendParams } from '../_sharedWalletSend/types'
+import { useSignAndBroadcast } from './useSignAndBroadcast'
 
 type Props = {
   walletId: string
@@ -73,7 +76,7 @@ export function useSendForm({ walletId, params, onConfirm }: Props) {
         mnemonicHash,
         isSeedCached,
       }),
-    [mnemonicFieldType, setMnemonicFieldType, mnemonicHash, isSeedCached]
+    [mnemonicFieldType, setMnemonicFieldType, mnemonicHash, isSeedCached],
   )
 
   const onValid = useCallback(
@@ -90,14 +93,14 @@ export function useSendForm({ walletId, params, onConfirm }: Props) {
 
       onConfirm({})
     },
-    [signAndBroadcast, params, onConfirm, wallet]
+    [signAndBroadcast, params, onConfirm, wallet],
   )
 
   const onInvalid = useOnInvalid(fields)
 
   const handleSubmit = useMemo(
     () => form.handleSubmit(onValid, onInvalid),
-    [form, onValid, onInvalid]
+    [form, onValid, onInvalid],
   )
 
   const el = (

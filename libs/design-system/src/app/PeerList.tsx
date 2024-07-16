@@ -1,5 +1,5 @@
-import { Button } from '../core/Button'
 import { EntityList } from '../components/EntityList'
+import { Button } from '../core/Button'
 
 type Props = {
   peers?: string[]

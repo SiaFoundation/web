@@ -1,5 +1,5 @@
-import { Text } from '../../core/Text'
 import { humanDate } from '@siafoundation/units'
+import { Text } from '../../core/Text'
 
 type RelativeLabelProps = {
   children: React.ReactNode

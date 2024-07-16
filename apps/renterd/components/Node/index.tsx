@@ -6,8 +6,8 @@ import {
 } from '@siafoundation/renterd-react'
 import { routes } from '../../config/routes'
 import { useDialog } from '../../contexts/dialog'
-import { RenterdSidenav } from '../RenterdSidenav'
 import { RenterdAuthedLayout } from '../RenterdAuthedLayout'
+import { RenterdSidenav } from '../RenterdSidenav'
 
 export function Node() {
   const peers = useSyncerPeers()

@@ -1,20 +1,20 @@
 import {
-  FormSubmitButtonFormik,
-  PoolSelected,
-  copyToClipboard,
-  ScrollArea,
-  Text,
-  Separator,
-  Tooltip,
-  FormTextFieldFormik,
   FieldGroupFormik,
+  FormSubmitButtonFormik,
+  FormTextFieldFormik,
+  PoolSelected,
+  ScrollArea,
+  Separator,
+  Text,
+  Tooltip,
+  copyToClipboard,
 } from '@siafoundation/design-system'
-import { ListChecked32, Filter32 } from '@siafoundation/react-icons'
+import { Filter32, ListChecked32 } from '@siafoundation/react-icons'
 import { useHostsBlocklist } from '@siafoundation/renterd-react'
-import { useContracts } from '../../../contexts/contracts'
 import { useFormik } from 'formik'
 import { useEffect, useMemo } from 'react'
 import * as Yup from 'yup'
+import { useContracts } from '../../../contexts/contracts'
 import { useBlocklistUpdate } from '../../../hooks/useBlocklistUpdate'
 
 const initialValues = {
@@ -55,18 +55,18 @@ export function BlocklistForm() {
     },
   })
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     formik.setStatus(undefined)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values])
 
   const isFiltered = formik.values.address
   const filtered = useMemo(
     () =>
       blockListResponse.data?.filter(
-        (a) => !formik.values.address || a.includes(formik.values.address)
+        (a) => !formik.values.address || a.includes(formik.values.address),
       ) || [],
-    [blockListResponse.data, formik.values.address]
+    [blockListResponse.data, formik.values.address],
   )
 
   const { dataset } = useContracts()
@@ -78,7 +78,7 @@ export function BlocklistForm() {
           address: s,
           contractCount: dataset?.filter((d) => d.hostIp === s).length,
         })),
-    [blockListResponse.data, dataset]
+    [blockListResponse.data, dataset],
   )
 
   return (

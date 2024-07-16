@@ -1,5 +1,8 @@
-import { SWRError } from '@siafoundation/react-core'
-import { HostSettings, HostSettingsPinned } from '@siafoundation/hostd-types'
+import type {
+  HostSettings,
+  HostSettingsPinned,
+} from '@siafoundation/hostd-types'
+import type { SWRError } from '@siafoundation/react-core'
 
 export type Resources = {
   settings: {
