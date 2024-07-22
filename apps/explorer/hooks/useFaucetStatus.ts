@@ -20,7 +20,7 @@ export function useFaucetStatus(
   return useGetSwr({
     api: faucetApi,
     ...args,
-    route: '/request/:id',
+    route: '/:id',
     disabled: !args.params?.id,
   })
 }
