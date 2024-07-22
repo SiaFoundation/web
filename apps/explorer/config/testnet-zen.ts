@@ -8,5 +8,5 @@ export const appLink = webLinks.explore.testnetZen
 export const isMainnet = false
 
 // APIs
-export const faucetApi = 'https://faucet.zen.sia.tech/api'
+export const faucetApi = 'https://api.siascan.com/zen/faucet'
 export const siaCentralApi = 'https://api.siacentral.com/v2/zen'
