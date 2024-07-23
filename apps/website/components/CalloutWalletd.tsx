@@ -11,7 +11,6 @@ export function CalloutWalletd() {
       }
       status="beta"
       daemon="walletd"
-      testnetOnly
       href={routes.software.walletd}
       image={getAssetUrl('assets/walletd/send.png')}
       background={patterns.nateTrickle}

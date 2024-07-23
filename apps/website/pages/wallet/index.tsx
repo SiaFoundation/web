@@ -24,6 +24,7 @@ import {
   getWalletdLatestDaemonRelease,
   getWalletdLatestDesktopRelease,
 } from '../../content/releases'
+import { DownloadSection } from '../../components/DownloadSection'
 
 const title = 'Wallet'
 const description = 'Manage your wallet on the Sia network.'
@@ -56,7 +57,13 @@ export default function Wallet({
       previewImage={previews.jungle}
     >
       <SectionGradient className="pb-20">
-        {/* <DownloadBar daemon="walletd" release={release} testnetOnly /> */}
+        <DownloadSection
+          daemon="walletd"
+          releaseDaemon={releaseDaemon}
+          releaseDesktop={releaseDesktop}
+          statusDaemon="beta"
+          statusDesktop="beta"
+        />
         <div className="flex flex-col">
           <SiteHeading
             size="32"

@@ -75,6 +75,7 @@ export default function Renterd({
             daemon={daemon}
             releaseDaemon={releaseDaemon}
             releaseDesktop={releaseDesktop}
+            statusDesktop="beta"
           />
           <div ref={appRef} className="absolute top-[70%]" />
           <div

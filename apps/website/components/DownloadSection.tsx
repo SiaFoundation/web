@@ -18,14 +18,16 @@ type Props = {
   daemon: Daemon
   releaseDaemon: GitHubRelease
   releaseDesktop: GitHubRelease
-  testnetOnly?: boolean
+  statusDaemon?: string
+  statusDesktop?: string
 }
 
 export function DownloadSection({
   daemon,
   releaseDaemon,
   releaseDesktop,
-  testnetOnly,
+  statusDaemon,
+  statusDesktop,
 }: Props) {
   const guideUrl = webLinks.docs[daemon]
   const docsUrl = webLinks.apiDocs[daemon]
@@ -42,27 +44,20 @@ export function DownloadSection({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 justify-center items-center">
         <DownloadCard
           background={backgrounds.bamboo}
-          status="beta"
+          status={statusDesktop}
           title="Desktop application"
           description="Download the full-featured desktop app for Windows, macOS, or Linux."
           downloadSelect={
-            <DownloadDesktopSelect
-              daemon={daemon}
-              release={releaseDesktop}
-              testnetOnly={testnetOnly}
-            />
+            <DownloadDesktopSelect daemon={daemon} release={releaseDesktop} />
           }
         />
         <DownloadCard
           background={backgrounds.ocean}
+          status={statusDaemon}
           title="Terminal application"
           description="Download the powerful CLI-based daemon for Windows, macOS, or Linux."
           downloadSelect={
-            <DownloadDaemonSelect
-              daemon={daemon}
-              release={releaseDaemon}
-              testnetOnly={testnetOnly}
-            />
+            <DownloadDaemonSelect daemon={daemon} release={releaseDaemon} />
           }
         />
       </div>

@@ -76,6 +76,7 @@ export default function Hostd({
             daemon={daemon}
             releaseDaemon={releaseDaemon}
             releaseDesktop={releaseDesktop}
+            statusDesktop="beta"
           />
           <div ref={appRef} className="absolute top-[70%]" />
           <div

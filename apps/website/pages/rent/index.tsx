@@ -61,6 +61,7 @@ export default function Rent({
           daemon="renterd"
           releaseDaemon={releaseDaemon}
           releaseDesktop={releaseDesktop}
+          statusDesktop="beta"
         />
         <div className="flex flex-col">
           <SiteHeading

@@ -17,7 +17,6 @@ type Props = {
   image?: string
   background: string
   children?: React.ReactNode
-  testnetOnly?: boolean
 }
 
 export function CalloutCoreSoftware({

@@ -77,7 +77,8 @@ export default function Walletd({
           daemon={daemon}
           releaseDaemon={releaseDaemon}
           releaseDesktop={releaseDesktop}
-          testnetOnly
+          statusDaemon="beta"
+          statusDesktop="beta"
         />
         <div className="relative">
           <div ref={appRef} className="absolute top-[70%]" />

@@ -61,6 +61,7 @@ export default function Host({
           daemon="hostd"
           releaseDaemon={releaseDaemon}
           releaseDesktop={releaseDesktop}
+          statusDesktop="beta"
         />
         <div className="flex flex-col">
           <SiteHeading
