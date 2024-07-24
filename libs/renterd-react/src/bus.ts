@@ -259,6 +259,7 @@ import {
   ContractSizeParams,
   ContractSizeResponse,
   busContractIdSize,
+  PricePinSettings,
 } from '@siafoundation/renterd-types'
 
 // state
@@ -869,6 +870,15 @@ export function useSettingUploadPacking(
   return useSetting<UploadPackingSettings>({
     ...args,
     params: { key: 'uploadpacking' },
+  })
+}
+
+export function useSettingPricePinning(
+  args?: HookArgsSwr<void, PricePinSettings>
+) {
+  return useSetting<PricePinSettings>({
+    ...args,
+    params: { key: 'pricepinning' },
   })
 }
 

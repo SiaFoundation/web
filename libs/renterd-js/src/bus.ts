@@ -145,6 +145,7 @@ import {
   ObjectsStatsParams,
   ObjectsStatsPayload,
   ObjectsStatsResponse,
+  PricePinSettings,
   RedundancySettings,
   S3AuthenticationSettings,
   SettingParams,
@@ -654,6 +655,22 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       )({
         params: {
           key: 's3authentication',
+        },
+        config,
+      })
+    },
+    settingPricePinning: ({ config }: { config?: AxiosRequestConfig } = {}) => {
+      return buildRequestHandler<
+        SettingParams,
+        SettingPayload,
+        SettingResponse<PricePinSettings>
+      >(
+        axios,
+        'get',
+        busSettingKeyRoute
+      )({
+        params: {
+          key: 'pricepinning',
         },
         config,
       })
