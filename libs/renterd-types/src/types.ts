@@ -1,3 +1,4 @@
+import { CurrencyId } from '@siafoundation/react-core'
 import {
   ChainIndex,
   FileContractRevision,
@@ -154,6 +155,50 @@ export type S3AuthenticationSettings = {
   v4Keypairs: {
     [key: string]: string
   }
+}
+
+export type Pin = {
+  pinned: boolean
+  value: number
+}
+
+export type GougingSettingsPins = {
+  maxStorage: Pin
+  maxDownload: Pin
+  maxUpload: Pin
+  maxRPCPrice: Pin
+}
+
+export type AutopilotPins = {
+  allowance: Pin
+}
+
+// PricePinSettings holds the configuration for pinning certain settings to
+// a specific currency (e.g., USD). It uses a Forex API to fetch the current
+// exchange rate, allowing users to set prices in USD instead of SC.
+export type PricePinSettings = {
+  // Enabled can be used to either enable or temporarily disable price
+  // pinning. If enabled, both the currency and the Forex endpoint URL
+  // must be valid.
+  enabled: boolean
+
+  // Currency is the external three-letter currency code.
+  currency: CurrencyId | ''
+
+  // ForexEndpointURL is the endpoint that returns the exchange rate for
+  // Siacoin against the underlying currency.
+  forexEndpointURL: string
+
+  // Threshold is a percentage between 0 and 1 that determines when the
+  // pinned settings are updated based on the exchange rate at the time.
+  threshold: number
+
+  // Autopilots contains the pinned settings for every autopilot.
+  autopilots: AutopilotPins
+
+  // GougingSettingsPins contains the pinned settings for the gouging
+  // settings.
+  gougingSettingsPins: GougingSettingsPins
 }
 
 export type ContractState = 'pending' | 'active' | 'complete' | 'failed'
