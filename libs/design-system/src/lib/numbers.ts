@@ -4,6 +4,18 @@ export function toFixedMax(val: BigNumber, limit: number) {
   return val.decimalPlaces() > limit ? val.toFixed(limit) : val.toString()
 }
 
+export function toFixedMaxString(val: BigNumber, limit: number) {
+  return val.decimalPlaces() > limit ? val.toFixed(limit) : val.toString()
+}
+
+export function toFixedMaxBigNumber(val: BigNumber, limit: number) {
+  return new BigNumber(toFixedMaxString(val, limit))
+}
+
+export function toFixedMaxNumber(val: BigNumber, limit: number) {
+  return Number(toFixedMaxString(val, limit))
+}
+
 // to precision for values less than 1, otherwise to fixed
 export function toFixedOrPrecision(
   val: BigNumber | number,

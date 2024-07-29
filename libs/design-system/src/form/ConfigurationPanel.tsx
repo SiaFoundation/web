@@ -1,6 +1,4 @@
-import { Separator } from '../core/Separator'
 import { PanelMenuSection } from '../app/PanelMenuSection'
-import { Fragment } from 'react'
 import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
 import {
   ConfigField,
@@ -34,18 +32,14 @@ export function ConfigurationPanel<
   }
   return (
     <PanelMenuSection title={title}>
-      {names.map((name, i) => {
-        return (
-          <Fragment key={name}>
-            <ConfigurationPanelSetting
-              name={name}
-              form={form}
-              fields={fields}
-            />
-            {i < names.length - 1 && <Separator className="w-full my-3" />}
-          </Fragment>
-        )
-      })}
+      {names.map((name) => (
+        <ConfigurationPanelSetting
+          key={name}
+          name={name}
+          form={form}
+          fields={fields}
+        />
+      ))}
     </PanelMenuSection>
   )
 }

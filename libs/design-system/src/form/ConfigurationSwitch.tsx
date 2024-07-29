@@ -10,21 +10,21 @@ export function ConfigurationSwitch<
   Categories extends string
 >({ name, form, fields }: FieldProps<Values, Categories>) {
   const field = fields[name]
-  const { suggestion, suggestionTip } = field
+  const { suggestionLabel, suggestion, suggestionTip } = field
   const setField = useFormSetField({
     form,
     name,
-    field,
+    fields,
   })
   return (
     <div className="flex flex-col gap-3 items-end">
-      <div className="flex flex-col gap-3 w-[250px]">
+      <div className="flex flex-col gap-3 w-[260px]">
         <div className="flex justify-end w-full">
           <FieldSwitch name={name} form={form} fields={fields} group={false} />
         </div>
         {suggestion !== undefined && suggestionTip && (
           <TipText
-            label="Suggestion"
+            label={suggestionLabel || 'Suggestion'}
             tip={suggestionTip}
             value={suggestion ? 'on' : 'off'}
             onClick={() => {

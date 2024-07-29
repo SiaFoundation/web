@@ -14,11 +14,13 @@ type Props = {
   variant?: 'change' | 'value'
   tooltip?: string
   fixed?: number
+  font?: React.ComponentProps<typeof Text>['font']
   fixedTip?: number
   dynamicUnits?: boolean
   hastingUnits?: boolean
   extendedSuffix?: string
   showTooltip?: boolean
+  tipSide?: React.ComponentProps<typeof Tooltip>['side']
 }
 
 export function ValueFiat({
@@ -29,8 +31,11 @@ export function ValueFiat({
   tooltip = '',
   variant = 'change',
   fixed,
+  font = 'mono',
   fixedTip = 20,
   showTooltip = true,
+  tipSide,
+  extendedSuffix,
 }: Props) {
   const exchangeRates = useSiaCentralExchangeRates()
   const {
@@ -67,28 +72,27 @@ export function ValueFiat({
       size={size}
       scaleSize={scaleSize}
       weight="medium"
-      font="mono"
+      font={font}
       ellipsis
       color={color}
     >
       {`${sign}${currency.prefix}${formatBigNumberLocale(
         fiat.absoluteValue(),
         digits
-      )}`}
+      )}${extendedSuffix ? extendedSuffix : ''}`}
     </Text>
   )
 
   if (showTooltip) {
     return (
       <Tooltip
+        side={tipSide}
         content={
           (tooltip ? `${tooltip} ` : '') +
-          `${sign}${currency.prefix}${
-            formatBigNumberLocale(fiat.absoluteValue(), fixedTip)
-            // fixedTip
-            //   ? fiat.absoluteValue().toFixed(fixedTip)
-            //   : fiat.absoluteValue().toString()
-          }`
+          `${sign}${currency.prefix}${formatBigNumberLocale(
+            fiat.absoluteValue(),
+            fixedTip
+          )}${extendedSuffix ? extendedSuffix : ''}`
         }
       >
         {el}

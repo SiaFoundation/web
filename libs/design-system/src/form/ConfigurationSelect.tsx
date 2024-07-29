@@ -10,15 +10,15 @@ export function ConfigurationSelect<
   Categories extends string
 >({ name, form, fields }: FieldProps<Values, Categories>) {
   const field = fields[name]
-  const { suggestion, suggestionTip } = field
+  const { suggestionLabel, suggestion, suggestionTip } = field
   const setField = useFormSetField({
     form,
     name,
-    field,
+    fields,
   })
   return (
     <div className="flex flex-col gap-3 items-end">
-      <div className="flex flex-col gap-3 w-[250px]">
+      <div className="flex flex-col gap-3 w-[260px]">
         <div className="flex justify-end w-full">
           <FieldSelect
             name={name}
@@ -30,7 +30,7 @@ export function ConfigurationSelect<
         </div>
         {suggestion && suggestionTip && (
           <TipText
-            label="Suggestion"
+            label={suggestionLabel || 'Suggestion'}
             tip={suggestionTip}
             value={suggestion as string}
             onClick={() => {

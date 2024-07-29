@@ -20,6 +20,7 @@ export function ConfigurationNumber<
   const {
     average,
     averageTip,
+    suggestionLabel,
     suggestion,
     suggestionTip,
     decimalsLimit = 2,
@@ -28,14 +29,14 @@ export function ConfigurationNumber<
   } = field
   const setField = useFormSetField({
     form,
-    field,
+    fields,
     name,
   })
   const After = after || (() => null)
 
   return (
     <div className="flex flex-col gap-3 items-end">
-      <div className="flex flex-col gap-3 w-[250px]">
+      <div className="flex flex-col gap-3 w-[260px]">
         <FieldNumber name={name} fields={fields} form={form} group={false} />
         {average && (
           <TipNumber
@@ -52,7 +53,7 @@ export function ConfigurationNumber<
         {suggestion && suggestionTip && (
           <TipNumber
             type="number"
-            label="Suggestion"
+            label={suggestionLabel || 'Suggestion'}
             tip={suggestionTip}
             decimalsLimit={decimalsLimit}
             value={suggestion as BigNumber}

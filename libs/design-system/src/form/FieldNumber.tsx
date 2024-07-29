@@ -29,7 +29,7 @@ export function FieldNumber<
     autoComplete,
     prefix,
   } = field
-  const { setValue, error, value } = useRegisterForm({
+  const { setValue, onBlur, error, value } = useRegisterForm({
     form,
     field,
     name,
@@ -68,9 +68,7 @@ export function FieldNumber<
         const v = val !== undefined ? new BigNumber(val) : undefined
         setValue(v as PathValue<Values, Path<Values>>, true)
       }}
-      onBlur={() => {
-        setValue(value, true)
-      }}
+      onBlur={onBlur}
     />
   )
 

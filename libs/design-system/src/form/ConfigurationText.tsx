@@ -17,19 +17,25 @@ export function ConfigurationText<
   type?: 'password'
 }) {
   const field = fields[name]
-  const { suggestion, suggestionTip } = field
+  const { suggestionLabel, suggestion, suggestionTip } = field
   const setField = useFormSetField({
     form,
     name,
-    field,
+    fields,
   })
   return (
     <div className="flex flex-col gap-3 items-end">
-      <div className="flex flex-col gap-3 w-[250px]">
-        <FieldText name={name} form={form} fields={fields} type={type} />
+      <div className="flex flex-col gap-3 w-[260px]">
+        <FieldText
+          name={name}
+          form={form}
+          fields={fields}
+          type={type}
+          group={false}
+        />
         {suggestion && suggestionTip && (
           <TipText
-            label="Suggestion"
+            label={suggestionLabel || 'Suggestion'}
             tip={suggestionTip}
             value={suggestion as string}
             onClick={() => {

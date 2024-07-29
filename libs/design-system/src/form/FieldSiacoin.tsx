@@ -27,7 +27,7 @@ export function FieldSiacoin<
     decimalsLimitSc = 6,
     decimalsLimitFiat = 6,
   } = field
-  const { setValue, value, error } = useRegisterForm({
+  const { setValue, onBlur, value, error } = useRegisterForm({
     name,
     field,
     form,
@@ -60,9 +60,7 @@ export function FieldSiacoin<
       onChange={(val) => {
         setValue(val as PathValue<Values, Path<Values>>, true)
       }}
-      onBlur={() => {
-        setValue(value, true)
-      }}
+      onBlur={onBlur}
     />
   )
 

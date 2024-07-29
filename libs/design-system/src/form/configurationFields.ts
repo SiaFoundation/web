@@ -34,6 +34,7 @@ export type ConfigField<
   readOnly?: boolean
   onClick?: <T>(e: MouseEvent<T>) => void
   placeholder?: string
+  suggestionLabel?: string
   suggestionTip?: React.ReactNode
   suggestion?: BigNumber | string | boolean
   average?: BigNumber | string | boolean
@@ -95,11 +96,7 @@ export function useRegisterForm<
 
   // Do not memoize this register call, for an unknown reason it sometimes
   // causes form updates to stop working.
-  const {
-    ref,
-    onChange: _onChange,
-    onBlur,
-  } = form.register(name, field.validation)
+  const { ref, onChange: _onChange } = form.register(name, field.validation)
 
   const onChange = useCallback(
     (e: { target: unknown; type: unknown }) => {
@@ -108,6 +105,12 @@ export function useRegisterForm<
     },
     [_onChange, form, field]
   )
+
+  const onBlur = useCallback(() => {
+    form.trigger(name)
+    field.trigger?.forEach((t) => form.trigger(t))
+  }, [form, field, name])
+
   const setValue = useCallback(
     (
       val: PathValue<Values, Path<Values>>,
@@ -136,6 +139,7 @@ export function useRegisterForm<
     },
     [name, form, field]
   )
+
   return {
     ref,
     name,
