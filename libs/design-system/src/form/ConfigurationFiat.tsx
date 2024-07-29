@@ -20,25 +20,32 @@ export function ConfigurationFiat<
   currency: SiaCentralCurrency | ''
 }) {
   const field = fields[name]
-  const { average, averageTip, suggestion, suggestionTip, before, after } =
-    field
+  const {
+    average,
+    averageTip,
+    suggestionLabel,
+    suggestion,
+    suggestionTip,
+    before,
+    after,
+  } = field
   const Before = before || (() => null)
   const After = after || (() => null)
   const setField = useFormSetField({
     form,
+    fields,
     name,
-    field,
   })
   const currencyMeta = currencyOptions.find((c) => c.id === currency)
   if (!currency || !currencyMeta) {
     return null
   }
-  const { prefix, label, fixed } = currencyMeta
+  const { prefix, fixed } = currencyMeta
   return (
     <div className="flex flex-col gap-3 items-end">
-      <div className="flex flex-col w-[250px]">
+      <div className="flex flex-col w-[260px]">
         <Before name={name} form={form} fields={fields} />
-        <div className="flex flex-col gap-3 w-[250px]">
+        <div className="flex flex-col gap-3 w-[260px]">
           <FieldFiat
             name={name}
             fields={fields}
@@ -49,7 +56,7 @@ export function ConfigurationFiat<
           {average && (
             <TipNumber
               type="number"
-              format={(val) => `${prefix}${val.toFixed(fixed)} ${label}`}
+              format={(val) => `${prefix}${val.toFixed(fixed)}`}
               label="Network average"
               tip={averageTip || 'Averages provided by Sia Central.'}
               value={average as BigNumber}
@@ -62,7 +69,8 @@ export function ConfigurationFiat<
           {suggestion && suggestionTip && (
             <TipNumber
               type="number"
-              label="Suggestion"
+              format={(val) => `${prefix}${val.toFixed(fixed)}`}
+              label={suggestionLabel || 'Suggestion'}
               tip={suggestionTip}
               decimalsLimit={fixed}
               value={suggestion as BigNumber}

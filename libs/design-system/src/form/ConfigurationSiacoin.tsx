@@ -15,6 +15,7 @@ export function ConfigurationSiacoin<
   const {
     average,
     averageTip,
+    suggestionLabel,
     suggestion,
     suggestionTip,
     before,
@@ -23,16 +24,16 @@ export function ConfigurationSiacoin<
   } = field
   const setField = useFormSetField({
     name,
-    field,
+    fields,
     form,
   })
   const Before = before || (() => null)
   const After = after || (() => null)
   return (
     <div className="flex flex-col gap-3 items-end">
-      <div className="flex flex-col w-[250px]">
+      <div className="flex flex-col w-[260px]">
         <Before name={name} form={form} fields={fields} />
-        <div className="flex flex-col gap-3 w-[250px]">
+        <div className="flex flex-col gap-3 w-[260px]">
           <FieldSiacoin
             name={name}
             fields={fields}
@@ -55,7 +56,7 @@ export function ConfigurationSiacoin<
           {suggestion && suggestionTip && (
             <TipNumber
               type="siacoin"
-              label="Suggestion"
+              label={suggestionLabel || 'Suggestion'}
               tip={suggestionTip}
               decimalsLimit={tipsDecimalsLimitSc}
               value={toHastings(suggestion as BigNumber)}

@@ -2,12 +2,15 @@ import { TBToBytes } from './bytes'
 import { monthsToBlocks } from './blockTime'
 import { SiaCentralHost } from '@siafoundation/sia-central-types'
 import BigNumber from 'bignumber.js'
-import { humanSiacoin } from './currency'
+import { humanSiacoin, toSiacoins } from './currency'
 import { humanBytes, humanSpeed } from './humanUnits'
 import { CurrencyOption } from '@siafoundation/react-core'
+import { valuePerTBPerMonthToPerBytePerBlock } from './valuePer'
+
+type Hastings = string
 
 type Props = {
-  price: string
+  price: Hastings
   exchange?: {
     currency: CurrencyOption
     rate: string
@@ -16,10 +19,9 @@ type Props = {
 
 export function getStorageCost({ price, exchange }: Props) {
   return exchange
-    ? `${exchange.currency.prefix}${new BigNumber(price)
-        .times(TBToBytes(1))
-        .times(monthsToBlocks(1))
-        .div(1e24)
+    ? `${exchange.currency.prefix}${toSiacoins(
+        valuePerTBPerMonthToPerBytePerBlock(new BigNumber(price))
+      )
         .times(exchange.rate || 1)
         .toFormat(2)}/TB`
     : `${humanSiacoin(
@@ -28,11 +30,11 @@ export function getStorageCost({ price, exchange }: Props) {
       )}/TB`
 }
 
-export function getDownloadCost({ price, exchange }: Props) {
+function hastingsPerByteToCurrencyPerTBFormatted({ price, exchange }: Props) {
   return exchange
-    ? `${exchange.currency.prefix}${new BigNumber(price)
-        .times(TBToBytes(1))
-        .div(1e24)
+    ? `${exchange.currency.prefix}${toSiacoins(
+        new BigNumber(price).times(TBToBytes(1))
+      )
         .times(exchange.rate || 1)
         .toFormat(2)}/TB`
     : `${humanSiacoin(new BigNumber(price).times(TBToBytes(1)), {
@@ -40,16 +42,12 @@ export function getDownloadCost({ price, exchange }: Props) {
       })}/TB`
 }
 
+export function getDownloadCost({ price, exchange }: Props) {
+  return hastingsPerByteToCurrencyPerTBFormatted({ price, exchange })
+}
+
 export function getUploadCost({ price, exchange }: Props) {
-  return exchange
-    ? `${exchange.currency.prefix}${new BigNumber(price)
-        .times(TBToBytes(1))
-        .div(1e24)
-        .times(exchange.rate || 1)
-        .toFormat(2)}/TB`
-    : `${humanSiacoin(new BigNumber(price).times(TBToBytes(1)), {
-        fixed: 3,
-      })}/TB`
+  return hastingsPerByteToCurrencyPerTBFormatted({ price, exchange })
 }
 
 type SiaCentralPartialHost = {
@@ -86,4 +84,60 @@ export function getRemainingOverTotalStorage(host: SiaCentralHost) {
 
 export function getRemainingStorage(host: SiaCentralHost) {
   return host.settings ? humanBytes(host.settings.remaining_storage) : '-'
+}
+
+export function getRedundancyMultiplier(
+  minShards: BigNumber,
+  totalShards: BigNumber
+): BigNumber {
+  let redundancyMult = new BigNumber(1)
+  const canCalcRedundancy =
+    minShards &&
+    totalShards &&
+    !minShards.isZero() &&
+    !totalShards.isZero() &&
+    totalShards.gte(minShards)
+  if (canCalcRedundancy) {
+    redundancyMult = totalShards.div(minShards)
+  }
+  return redundancyMult
+}
+
+export function calculateEstimatedSpending({
+  maxStoragePriceTBMonth,
+  maxDownloadPriceTB,
+  maxUploadPriceTB,
+  storageTB,
+  downloadTBMonth,
+  uploadTBMonth,
+  redundancyMultiplier,
+}: {
+  maxStoragePriceTBMonth: BigNumber
+  maxDownloadPriceTB: BigNumber
+  maxUploadPriceTB: BigNumber
+  storageTB: BigNumber
+  downloadTBMonth: BigNumber
+  uploadTBMonth: BigNumber
+  redundancyMultiplier: BigNumber
+}) {
+  // Return null if zero or negative values are provided.
+  if (
+    !maxStoragePriceTBMonth?.gt(0) ||
+    !maxDownloadPriceTB?.gt(0) ||
+    !maxUploadPriceTB?.gt(0) ||
+    !redundancyMultiplier?.gt(0) ||
+    !storageTB?.gt(0) ||
+    !downloadTBMonth?.gt(0) ||
+    !uploadTBMonth?.gt(0)
+  ) {
+    return null
+  }
+
+  const storageTBWithRedundancy = storageTB.times(redundancyMultiplier)
+  const uploadTBMonthWithRedundancy = uploadTBMonth.times(redundancyMultiplier)
+
+  return storageTBWithRedundancy
+    .times(maxStoragePriceTBMonth)
+    .plus(downloadTBMonth.times(maxDownloadPriceTB))
+    .plus(uploadTBMonthWithRedundancy.times(maxUploadPriceTB))
 }

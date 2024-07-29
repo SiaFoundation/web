@@ -13,15 +13,23 @@ const styles = cva(['font-mono', 'whitespace-nowrap', 'rounded'], {
         'text-accent-1100 dark:text-accentdark-1100',
       ],
     },
+    ellipsis: {
+      true: 'overflow-hidden text-ellipsis whitespace-nowrap',
+    },
   },
   defaultVariants: {
     color: 'accent',
+    ellipsis: false,
   },
 })
 
 export const Code = React.forwardRef<
   HTMLElement,
   React.HTMLAttributes<HTMLElement> & VariantProps<typeof styles>
->(({ color, className, ...props }, ref) => (
-  <code {...props} className={styles({ color, className })} ref={ref} />
+>(({ color, className, ellipsis, ...props }, ref) => (
+  <code
+    {...props}
+    className={styles({ color, ellipsis, className })}
+    ref={ref}
+  />
 ))

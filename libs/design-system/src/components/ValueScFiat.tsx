@@ -7,6 +7,7 @@ import { ValueFiat } from './ValueFiat'
 import { useAppSettings } from '@siafoundation/react-core'
 import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
 import { useMemo } from 'react'
+import { Tooltip } from '../core/Tooltip'
 
 type Props = {
   size?: React.ComponentProps<typeof Text>['size']
@@ -22,6 +23,8 @@ type Props = {
   extendedSuffix?: string
   showTooltip?: boolean
   displayBoth?: boolean
+  tipSide?: React.ComponentProps<typeof Tooltip>['side']
+  font?: React.ComponentProps<typeof Text>['font']
   displayBothDirection?: 'row' | 'column'
 }
 
@@ -34,6 +37,8 @@ export function ValueScFiat({
   fixed = 3,
   fixedFiat,
   fixedTipFiat,
+  font = 'mono',
+  tipSide,
   dynamicUnits = true,
   hastingUnits = true,
   extendedSuffix,
@@ -62,10 +67,12 @@ export function ValueScFiat({
         tooltip={tooltip}
         variant={variant}
         fixed={fixed}
+        font={font}
         dynamicUnits={dynamicUnits}
         hastingUnits={hastingUnits}
         extendedSuffix={extendedSuffix}
         showTooltip={showTooltip}
+        tipSide={tipSide}
       />
     ),
     [
@@ -75,10 +82,12 @@ export function ValueScFiat({
       tooltip,
       variant,
       fixed,
+      font,
       dynamicUnits,
       hastingUnits,
       extendedSuffix,
       showTooltip,
+      tipSide,
       currencyDisplay,
       displayBoth,
       displayBothDirection,
@@ -102,10 +111,12 @@ export function ValueScFiat({
         variant={variant}
         fixed={fixedFiat}
         fixedTip={fixedTipFiat}
+        font={font}
         dynamicUnits={dynamicUnits}
         hastingUnits={hastingUnits}
         extendedSuffix={extendedSuffix}
         showTooltip={showTooltip}
+        tipSide={tipSide}
       />
     ),
     [
@@ -114,12 +125,14 @@ export function ValueScFiat({
       scaleSize,
       tooltip,
       variant,
+      font,
       fixedFiat,
       fixedTipFiat,
       dynamicUnits,
       hastingUnits,
       extendedSuffix,
       showTooltip,
+      tipSide,
       currencyDisplay,
       displayBoth,
       displayBothDirection,

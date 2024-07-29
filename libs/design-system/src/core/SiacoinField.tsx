@@ -4,7 +4,7 @@ import { useAppSettings } from '@siafoundation/react-core'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import { cx } from 'class-variance-authority'
-import { toFixedMax } from '../lib/numbers'
+import { toFixedMaxString } from '../lib/numbers'
 import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
 import { BaseNumberField } from './BaseNumberField'
 
@@ -75,7 +75,7 @@ export function SiacoinField({
 
   const updateFiat = useCallback(
     (fiat: BigNumber) => {
-      const uf = toFixedMax(fiat, decimalsLimitFiat)
+      const uf = toFixedMaxString(fiat, decimalsLimitFiat)
       setLocalFiat(uf)
     },
     [setLocalFiat, decimalsLimitFiat]
@@ -83,7 +83,7 @@ export function SiacoinField({
 
   const updateSc = useCallback(
     (sc: BigNumber) => {
-      const usc = toFixedMax(sc, decimalsLimitSc)
+      const usc = toFixedMaxString(sc, decimalsLimitSc)
       setLocalSc(usc)
       updateExternalSc(usc)
       return usc
@@ -121,7 +121,7 @@ export function SiacoinField({
   // sync externally controlled value
   useEffect(() => {
     if (!externalSc.isEqualTo(localSc)) {
-      const fesc = toFixedMax(externalSc, decimalsLimitSc)
+      const fesc = toFixedMaxString(externalSc, decimalsLimitSc)
       setLocalSc(fesc)
       // sync fiat if its not active, syncing it when it is being changed
       // may change the decimals as the user is typing.
@@ -185,7 +185,7 @@ export function SiacoinField({
         size={size}
         variant="ghost"
         focus="none"
-        placeholder={toFixedMax(placeholder, decimalsLimitSc)}
+        placeholder={toFixedMaxString(placeholder, decimalsLimitSc)}
         units={units}
         value={localSc !== 'NaN' ? localSc : ''}
         decimalScale={decimalsLimitSc}

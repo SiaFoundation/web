@@ -21,7 +21,7 @@ export function FieldSwitch<
   group?: boolean
 }) {
   const field = fields[name]
-  const { setValue, value, error } = useRegisterForm({
+  const { setValue, onBlur, value, error } = useRegisterForm({
     name,
     field,
     form,
@@ -45,9 +45,7 @@ export function FieldSwitch<
         onCheckedChange={(val) => {
           setValue(val as PathValue<Values, Path<Values>>, true)
         }}
-        onBlur={() => {
-          setValue(value, true)
-        }}
+        onBlur={onBlur}
       />
       {children}
     </div>

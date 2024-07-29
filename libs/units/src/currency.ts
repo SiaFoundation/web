@@ -32,6 +32,14 @@ export function toScale(num: BigNumber | number | string, fixed: number) {
   return new BigNumber(new BigNumber(num).toFixed(fixed))
 }
 
+export function fiatToSiacoin(fiat: BigNumber, exchangeRate: BigNumber) {
+  return fiat.div(exchangeRate)
+}
+
+export function siacoinToFiat(siacoin: BigNumber, exchangeRate: BigNumber) {
+  return siacoin.times(exchangeRate)
+}
+
 type HumanSiacoinOptions = {
   fixed?: number
   dynamicUnits?: boolean

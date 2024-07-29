@@ -13,6 +13,7 @@ type Props = {
   tooltip?: string
   tipSide?: React.ComponentProps<typeof Tooltip>['side']
   fixed?: number
+  font?: React.ComponentProps<typeof Text>['font']
   color?: React.ComponentProps<typeof Text>['color']
   dynamicUnits?: boolean
   hastingUnits?: boolean
@@ -26,6 +27,7 @@ export function ValueSc({
   scaleSize,
   tooltip = '',
   tipSide,
+  font = 'mono',
   variant = 'change',
   color: customColor,
   fixed = 3,
@@ -50,7 +52,7 @@ export function ValueSc({
       size={size}
       scaleSize={scaleSize}
       weight="medium"
-      font="mono"
+      font={font}
       ellipsis
       color={color}
     >
@@ -60,9 +62,7 @@ export function ValueSc({
             dynamicUnits,
           })}`
         : humanSiacoin(value, { fixed, dynamicUnits, hastingUnits })}
-      <Text size="20" weight="medium" font="mono" ellipsis color="subtle">
-        {extendedSuffix ? `${extendedSuffix}` : ''}
-      </Text>
+      {extendedSuffix ? extendedSuffix : ''}
     </Text>
   )
 

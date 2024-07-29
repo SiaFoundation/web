@@ -3,7 +3,7 @@
 import { BaseNumberField } from './BaseNumberField'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
-import { toFixedMax } from '../lib/numbers'
+import { toFixedMaxString } from '../lib/numbers'
 
 type Props = Omit<
   React.ComponentProps<typeof BaseNumberField>,
@@ -65,7 +65,7 @@ export function NumberField({
   // sync externally controlled value
   useEffect(() => {
     if (!externalValue.isEqualTo(localValue)) {
-      const fesc = toFixedMax(externalValue, decimalsLimit)
+      const fesc = toFixedMaxString(externalValue, decimalsLimit)
       setLocalValue(fesc)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -78,7 +78,7 @@ export function NumberField({
       data-testid="numberfield"
       size={size}
       placeholder={
-        placeholder.isNaN() ? '' : toFixedMax(placeholder, decimalsLimit)
+        placeholder.isNaN() ? '' : toFixedMaxString(placeholder, decimalsLimit)
       }
       units={units}
       value={localValue !== 'NaN' ? localValue : ''}
