@@ -1,0 +1,42 @@
+{
+  "name": "explored-react",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/explored-react/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/explored-react",
+        "tsConfig": "libs/explored-react/tsconfig.lib.json",
+        "project": "libs/explored-react/package.json",
+        "entryFile": "libs/explored-react/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "compiler": "tsc",
+        "outputFileName": "index.js",
+        "rollupConfig": "libs/explored-react/rollup.config.js",
+        "assets": [
+          {
+            "glob": "libs/explored-react/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      },
+      "configurations": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/explored-react"],
+      "options": {
+        "jestConfig": "libs/explored-react/jest.config.ts"
+      }
+    }
+  }
+}

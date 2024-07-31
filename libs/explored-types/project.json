@@ -1,0 +1,42 @@
+{
+  "name": "explored-types",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/explored-types/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/explored-types",
+        "tsConfig": "libs/explored-types/tsconfig.lib.json",
+        "project": "libs/explored-types/package.json",
+        "entryFile": "libs/explored-types/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "compiler": "tsc",
+        "outputFileName": "index.js",
+        "rollupConfig": "libs/explored-types/rollup.config.js",
+        "assets": [
+          {
+            "glob": "libs/explored-types/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      },
+      "configurations": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/explored-types"],
+      "options": {
+        "jestConfig": "libs/explored-types/jest.config.ts"
+      }
+    }
+  }
+}

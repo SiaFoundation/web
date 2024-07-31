@@ -31,6 +31,9 @@ The Sia web libraries provide developers with convenient TypeScript SDKs for usi
 - [@siafoundation/walletd-js](libs/walletd-js) - SDK for interacting with `walletd`.
 - [@siafoundation/walletd-react](libs/walletd-react) - React hooks for interacting with `walletd`.
 - [@siafoundation/walletd-types](libs/walletd-types) - Types for `walletd`.
+- [@siafoundation/explored-js](libs/explored-js) - SDK for interacting with `explored`.
+- [@siafoundation/explored-react](libs/explored-react) - React hooks for interacting with `explored`.
+- [@siafoundation/explored-types](libs/explored-types) - Types for `explored`.
 - [@siafoundation/design-system](libs/design-system) - React-based design system used across Sia apps and websites.
 - [@siafoundation/sia-central-types](libs/sia-central-types) - Types for the Sia Central API.
 - [@siafoundation/sia-central-js](libs/sia-central-js) - SDK for interacting with the Sia Central API.
