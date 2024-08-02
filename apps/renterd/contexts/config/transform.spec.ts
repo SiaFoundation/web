@@ -1,9 +1,11 @@
 import BigNumber from 'bignumber.js'
 import { transformDown } from './transformDown'
 import {
+  transformUp,
   transformUpAutopilot,
   transformUpContractSet,
   transformUpGouging,
+  transformUpPricePinning,
   transformUpRedundancy,
 } from './transformUp'
 import { SettingsData } from './types'
@@ -12,53 +14,37 @@ import {
   monthsToBlocks,
   weeksToBlocks,
   toHastings,
+  valuePerPeriodToPerMonth,
+  valuePerMonthToPerPeriod,
 } from '@siafoundation/units'
-import { valuePerMonthToPerPeriod, valuePerPeriodToPerMonth } from './utils'
+import { CurrencyId } from '@siafoundation/react-core'
 
 describe('tansforms', () => {
   describe('down', () => {
     it('default', () => {
+      const {
+        autopilot,
+        contractSet,
+        uploadPacking,
+        gouging,
+        redundancy,
+        pricePinning,
+      } = buildAllResponses()
       expect(
         transformDown({
           hasBeenConfigured: true,
           autopilot: {
+            ...autopilot,
             hosts: {
-              allowRedundantIPs: false,
-              maxDowntimeHours: 1440,
-              minRecentScanFailures: 10,
-              scoreOverrides: null,
+              ...autopilot.hosts,
               minProtocolVersion: null,
             },
-            contracts: {
-              set: 'autopilot',
-              amount: 51,
-              allowance: toHastings(500).toString(),
-              period: monthsToBlocks(1),
-              renewWindow: 2248,
-              download: 1099511627776,
-              upload: 1100000000000,
-              storage: 1000000000000,
-              prune: true,
-            },
           },
-          contractSet: { default: 'myset' },
-          uploadPacking: { enabled: true },
-          gouging: {
-            hostBlockHeightLeeway: 4,
-            maxContractPrice: '20000000000000000000000000',
-            maxDownloadPrice: '1004310000000000000000000000',
-            maxRPCPrice: '99970619000000000000000000',
-            maxStoragePrice: '210531181019',
-            maxUploadPrice: '1000232323000000000000000000',
-            minAccountExpiry: 86400000000000,
-            minMaxEphemeralAccountBalance: '1000000000000000000000000',
-            minPriceTableValidity: 300000000000,
-            migrationSurchargeMultiplier: 10,
-          },
-          redundancy: {
-            minShards: 10,
-            totalShards: 30,
-          },
+          contractSet,
+          uploadPacking,
+          gouging,
+          redundancy,
+          pricePinning,
         })
       ).toEqual({
         autopilotContractSet: 'autopilot',
@@ -79,7 +65,7 @@ describe('tansforms', () => {
         hostBlockHeightLeeway: new BigNumber(4),
         maxContractPrice: new BigNumber('20'),
         maxDownloadPriceTB: new BigNumber('1004.31'),
-        maxRpcPriceMillion: new BigNumber('99970619'),
+        maxRPCPriceMillion: new BigNumber('99970619'),
         maxStoragePriceTBMonth: new BigNumber('909.494702'),
         maxUploadPriceTB: new BigNumber('1000.232323'),
         minAccountExpiryDays: new BigNumber(1),
@@ -88,10 +74,25 @@ describe('tansforms', () => {
         migrationSurchargeMultiplier: new BigNumber(10),
         minShards: new BigNumber(10),
         totalShards: new BigNumber(30),
+        allowanceMonthPinned: new BigNumber('0'),
+        maxStoragePriceTBMonthPinned: new BigNumber('43200000'),
+        maxDownloadPriceTBPinned: new BigNumber('100000000000'),
+        maxUploadPriceTBPinned: new BigNumber('1000000000000'),
+        maxRPCPriceMillionPinned: new BigNumber('1100000'),
+        shouldPinAllowance: false,
+        shouldPinMaxDownloadPrice: false,
+        shouldPinMaxUploadPrice: false,
+        shouldPinMaxStoragePrice: false,
+        shouldPinMaxRPCPrice: false,
+        pinnedCurrency: 'usd',
+        pinnedThreshold: new BigNumber(10),
+        pinningEnabled: false,
+        forexEndpointURL: '',
       } as SettingsData)
     })
 
     it('applies first time user overrides', () => {
+      const { gouging, redundancy, pricePinning } = buildAllResponses()
       const values = transformDown({
         hasBeenConfigured: false,
         autopilot: undefined,
@@ -99,22 +100,9 @@ describe('tansforms', () => {
         uploadPacking: {
           enabled: false,
         },
-        gouging: {
-          hostBlockHeightLeeway: 4,
-          maxContractPrice: '20000000000000000000000000',
-          maxDownloadPrice: '1004310000000000000000000000',
-          maxRPCPrice: '99970619000000000000000000',
-          maxStoragePrice: '210531181019',
-          maxUploadPrice: '1000232323000000000000000000',
-          minAccountExpiry: 86400000000000,
-          minMaxEphemeralAccountBalance: '1000000000000000000000000',
-          minPriceTableValidity: 300000000000,
-          migrationSurchargeMultiplier: 10,
-        },
-        redundancy: {
-          minShards: 10,
-          totalShards: 30,
-        },
+        gouging,
+        redundancy,
+        pricePinning,
         averages: {
           settings: {
             download_price: (4e24).toString(),
@@ -131,6 +119,7 @@ describe('tansforms', () => {
     })
 
     it('does not apply overrides if missing averages', () => {
+      const { gouging, redundancy, pricePinning } = buildAllResponses()
       const values = transformDown({
         hasBeenConfigured: false,
         autopilot: undefined,
@@ -138,22 +127,9 @@ describe('tansforms', () => {
         uploadPacking: {
           enabled: false,
         },
-        gouging: {
-          hostBlockHeightLeeway: 4,
-          maxContractPrice: '20000000000000000000000000',
-          maxDownloadPrice: '1004310000000000000000000000',
-          maxRPCPrice: '99970619000000000000000000',
-          maxStoragePrice: '210531181019',
-          maxUploadPrice: '1000232323000000000000000000',
-          minAccountExpiry: 86400000000000,
-          minMaxEphemeralAccountBalance: '1000000000000000000000000',
-          minPriceTableValidity: 300000000000,
-          migrationSurchargeMultiplier: 10,
-        },
-        redundancy: {
-          minShards: 10,
-          totalShards: 30,
-        },
+        gouging,
+        redundancy,
+        pricePinning,
       })
       expect(values.maxUploadPriceTB).toEqual(new BigNumber('1000.232323'))
       expect(values.maxDownloadPriceTB).toEqual(new BigNumber('1004.31'))
@@ -348,7 +324,7 @@ describe('tansforms', () => {
             hostBlockHeightLeeway: new BigNumber(4),
             maxContractPrice: new BigNumber('20'),
             maxDownloadPriceTB: new BigNumber('1004.31'),
-            maxRpcPriceMillion: new BigNumber('99970619'),
+            maxRPCPriceMillion: new BigNumber('99970619'),
             maxStoragePriceTBMonth: new BigNumber('909.494702'),
             maxUploadPriceTB: new BigNumber('1000.232323'),
             minAccountExpiryDays: new BigNumber(1),
@@ -357,6 +333,20 @@ describe('tansforms', () => {
             minShards: new BigNumber(10),
             totalShards: new BigNumber(30),
             migrationSurchargeMultiplier: new BigNumber(10),
+            allowanceMonthPinned: new BigNumber('0'),
+            maxStoragePriceTBMonthPinned: new BigNumber('0'),
+            maxDownloadPriceTBPinned: new BigNumber('0'),
+            maxUploadPriceTBPinned: new BigNumber('0'),
+            maxRPCPriceMillionPinned: new BigNumber('0'),
+            shouldPinAllowance: false,
+            shouldPinMaxDownloadPrice: false,
+            shouldPinMaxUploadPrice: false,
+            shouldPinMaxStoragePrice: false,
+            shouldPinMaxRPCPrice: false,
+            pinnedCurrency: 'usd',
+            pinnedThreshold: new BigNumber(0),
+            pinningEnabled: false,
+            forexEndpointURL: '',
           },
           {
             maxStoragePrice: '77777777777',
@@ -398,12 +388,78 @@ describe('tansforms', () => {
         totalShards: 30,
       })
     })
+
+    it('up price pinning', () => {
+      expect(
+        transformUpPricePinning(
+          {
+            pinningEnabled: true,
+            pinnedCurrency: 'usd',
+            forexEndpointURL: '',
+            pinnedThreshold: new BigNumber(1),
+            shouldPinAllowance: true,
+            allowanceMonthPinned: new BigNumber('1000'),
+            shouldPinMaxStoragePrice: true,
+            maxStoragePriceTBMonthPinned: new BigNumber('2000'),
+            shouldPinMaxUploadPrice: true,
+            maxUploadPriceTBPinned: new BigNumber('1'),
+            shouldPinMaxDownloadPrice: true,
+            maxDownloadPriceTBPinned: new BigNumber('1.1'),
+            shouldPinMaxRPCPrice: false,
+            maxRPCPriceMillionPinned: new BigNumber('0.001'),
+            periodWeeks: new BigNumber('6'),
+          },
+          {
+            otherNewValue: '77777777777',
+            foobar: 'value',
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } as any
+        )
+      ).toEqual({
+        enabled: true,
+        currency: 'usd' as CurrencyId,
+        forexEndpointURL: '',
+        threshold: 0.01,
+        autopilots: {
+          allowance: {
+            pinned: true,
+            value: 1400,
+          },
+        },
+        gougingSettingsPins: {
+          maxStorage: {
+            pinned: true,
+            value: 4.629629629629629e-13,
+          },
+          maxDownload: {
+            pinned: true,
+            value: 1.1e-12,
+          },
+          maxUpload: {
+            pinned: true,
+            value: 1e-12,
+          },
+          maxRPCPrice: {
+            pinned: false,
+            value: 1e-9,
+          },
+        },
+        otherNewValue: '77777777777',
+        foobar: 'value',
+      })
+    })
   })
 
-  describe('up down', () => {
-    it('converts ap download up down', () => {
-      const { autopilot, contractSet, uploadPacking, gouging, redundancy } =
-        buildAllResponses()
+  describe('down up down', () => {
+    it('converts ap download down up down', () => {
+      const {
+        autopilot,
+        contractSet,
+        uploadPacking,
+        gouging,
+        redundancy,
+        pricePinning,
+      } = buildAllResponses()
       let settings = transformDown({
         hasBeenConfigured: true,
         autopilot: {
@@ -421,34 +477,53 @@ describe('tansforms', () => {
           maxRPCPrice: '100000000000000000',
         },
         redundancy,
+        pricePinning,
       })
       expect(settings.downloadTBMonth).toEqual(new BigNumber('92.72'))
       // a little different due to rounding
       expect(
         transformUpAutopilot('mainnet', settings, autopilot).contracts.download
       ).toEqual(91088814814815)
-      expect(settings.maxRpcPriceMillion).toEqual(new BigNumber('0.1'))
+      expect(settings.maxRPCPriceMillion).toEqual(new BigNumber('0.1'))
+
+      const up = transformUp({
+        resources: {
+          autopilotState: {},
+          autopilot: {},
+          contractSet: {},
+          uploadPacking: {},
+          gouging: {},
+          redundancy: {},
+          pricePinning: {},
+          averages: {},
+          appSettings: {
+            settings: {
+              siaCentral: false,
+            },
+          },
+        },
+        renterdState: {
+          network: 'mainnet',
+        },
+        isAutopilotEnabled: true,
+        values: settings,
+      })
 
       settings = transformDown({
         hasBeenConfigured: true,
-        autopilot: {
-          ...autopilot,
-          contracts: {
-            ...autopilot.contracts,
-            download: 91088814814815,
-            period: 4244,
-          },
-        },
-        contractSet,
-        uploadPacking,
-        gouging,
-        redundancy,
+        ...up.payloads,
       })
       expect(settings.downloadTBMonth).toEqual(new BigNumber('92.72'))
       // Using the rounded value results in same value.
       expect(
         transformUpAutopilot('mainnet', settings, autopilot).contracts.download
       ).toEqual(91088814814815)
+      expect(settings.maxStoragePriceTBMonthPinned).toEqual(
+        new BigNumber('43200000')
+      )
+      expect(settings.maxDownloadPriceTBPinned).toEqual(
+        new BigNumber('100000000000')
+      )
     })
   })
 
@@ -526,6 +601,36 @@ function buildAllResponses() {
     redundancy: {
       minShards: 10,
       totalShards: 30,
+    },
+    pricePinning: {
+      enabled: false,
+      currency: 'usd' as CurrencyId,
+      forexEndpointURL: '',
+      threshold: 0.1,
+      gougingSettingsPins: {
+        maxStorage: {
+          pinned: false,
+          value: 0.00000001,
+        },
+        maxDownload: {
+          pinned: false,
+          value: 0.1,
+        },
+        maxUpload: {
+          pinned: false,
+          value: 1,
+        },
+        maxRPCPrice: {
+          pinned: false,
+          value: 1.1,
+        },
+      },
+      autopilots: {
+        allowance: {
+          pinned: false,
+          value: 0,
+        },
+      },
     },
   }
 }

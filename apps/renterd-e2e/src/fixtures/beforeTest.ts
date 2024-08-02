@@ -4,9 +4,11 @@ import { navigateToConfig } from './navigate'
 import { configResetAllSettings } from './configResetAllSettings'
 import { setViewMode } from './configViewMode'
 import { Page } from 'playwright'
+import { mockApiSiaScanExchangeRates } from './siascan'
 
 export async function beforeTest(page: Page) {
   await mockApiSiaCentralExchangeRates({ page })
+  await mockApiSiaScanExchangeRates({ page })
   await login({ page })
 
   // Reset state.

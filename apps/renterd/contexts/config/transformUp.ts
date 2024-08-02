@@ -4,17 +4,20 @@ import {
 } from '@siafoundation/design-system'
 import {
   AutopilotConfig,
-  BusStateResponse,
   ContractSetSettings,
   GougingSettings,
+  PricePinSettings,
   RedundancySettings,
   UploadPackingSettings,
 } from '@siafoundation/renterd-types'
 import {
   toHastings,
   weeksToBlocks,
-  monthsToBlocks,
   TBToBytes,
+  valuePerTBPerMonthToPerBytePerBlock,
+  valuePerMonthToPerPeriod,
+  valuePerTBToPerByte,
+  valuePerMillionToPerOne,
 } from '@siafoundation/units'
 import {
   AutopilotData,
@@ -24,11 +27,12 @@ import {
   RedundancyData,
   UploadPackingData,
   advancedDefaultContractSet,
+  PricePinData,
 } from './types'
-import { valuePerMonthToPerPeriod } from './utils'
 import { Resources } from './resources'
 import BigNumber from 'bignumber.js'
-import { derivePricingFromAllowance } from './derivePricesFromAllowance'
+import { pickBy } from '@technically/lodash'
+import { Dictionary } from 'lodash'
 
 // up
 export function transformUpAutopilot(
@@ -112,12 +116,10 @@ export function transformUpGouging(
   return {
     ...existingValues,
     maxRPCPrice: toHastings(
-      values.maxRpcPriceMillion.div(1_000_000)
+      valuePerMillionToPerOne(values.maxRPCPriceMillion)
     ).toString(),
     maxStoragePrice: toHastings(
-      values.maxStoragePriceTBMonth // TB/month
-        .div(monthsToBlocks(1)) // TB/block
-        .div(TBToBytes(1))
+      valuePerTBPerMonthToPerBytePerBlock(values.maxStoragePriceTBMonth)
     ).toString(),
     maxUploadPrice: toHastings(values.maxUploadPriceTB).toString(),
     maxDownloadPrice: toHastings(values.maxDownloadPriceTB).toString(),
@@ -150,6 +152,52 @@ export function transformUpRedundancy(
   }
 }
 
+export function transformUpPricePinning(
+  values: PricePinData & { periodWeeks: BigNumber },
+  existingValues: PricePinSettings
+): PricePinSettings {
+  return {
+    ...existingValues,
+    enabled: values.pinningEnabled,
+    currency: values.pinnedCurrency,
+    forexEndpointURL: values.forexEndpointURL,
+    threshold: values.pinnedThreshold.div(100).toNumber(),
+    autopilots: {
+      allowance: {
+        pinned: values.shouldPinAllowance,
+        value: valuePerMonthToPerPeriod(
+          values.allowanceMonthPinned,
+          // If autopilot is disabled the period value may be undefined,
+          // but in that case the pinned allowance is also unused.
+          values.periodWeeks || new BigNumber(6)
+        ).toNumber(),
+      },
+    },
+    gougingSettingsPins: {
+      maxStorage: {
+        pinned: values.shouldPinMaxStoragePrice,
+        value: valuePerTBPerMonthToPerBytePerBlock(
+          values.maxStoragePriceTBMonthPinned
+        ).toNumber(),
+      },
+      maxDownload: {
+        pinned: values.shouldPinMaxDownloadPrice,
+        value: valuePerTBToPerByte(values.maxDownloadPriceTBPinned).toNumber(),
+      },
+      maxUpload: {
+        pinned: values.shouldPinMaxUploadPrice,
+        value: valuePerTBToPerByte(values.maxUploadPriceTBPinned).toNumber(),
+      },
+      maxRPCPrice: {
+        pinned: values.shouldPinMaxRPCPrice,
+        value: valuePerMillionToPerOne(
+          values.maxRPCPriceMillionPinned
+        ).toNumber(),
+      },
+    },
+  }
+}
+
 export function transformUp({
   resources,
   renterdState,
@@ -157,9 +205,8 @@ export function transformUp({
   values,
 }: {
   resources: Resources
-  renterdState: BusStateResponse
+  renterdState: { network: 'mainnet' | 'zen' | 'anagami' }
   isAutopilotEnabled: boolean
-  estimatedSpendingPerMonth: BigNumber
   values: SettingsData
 }) {
   const autopilot = isAutopilotEnabled
@@ -177,6 +224,10 @@ export function transformUp({
   )
   const gouging = transformUpGouging(values, resources.gouging.data)
   const redundancy = transformUpRedundancy(values, resources.redundancy.data)
+  const pricePinning = transformUpPricePinning(
+    values,
+    resources.pricePinning.data
+  )
 
   return {
     payloads: {
@@ -185,52 +236,16 @@ export function transformUp({
       uploadPacking,
       gouging,
       redundancy,
+      pricePinning,
     },
   }
 }
 
-function filterUndefinedKeys(obj: Record<string, unknown>) {
-  return Object.fromEntries(
-    Object.entries(obj).filter(
-      ([key, value]) => value !== undefined && value !== ''
-    )
+export function filterUndefinedKeys(
+  obj: Dictionary<string | boolean | BigNumber>
+) {
+  return pickBy(
+    obj,
+    (value) => value !== undefined && value !== null && value !== ''
   )
-}
-
-export function getCalculatedValues({
-  isAutopilotEnabled,
-  allowanceDerivedPricing,
-  allowanceMonth,
-  storageTB,
-  downloadTBMonth,
-  uploadTBMonth,
-  redundancyMultiplier,
-}: {
-  allowanceMonth: BigNumber
-  storageTB: BigNumber
-  downloadTBMonth: BigNumber
-  uploadTBMonth: BigNumber
-  redundancyMultiplier: BigNumber
-  isAutopilotEnabled: boolean
-  allowanceDerivedPricing: boolean
-}) {
-  let calculatedValues: Partial<SettingsData> = {}
-  if (isAutopilotEnabled && allowanceDerivedPricing) {
-    const derivedPricing = derivePricingFromAllowance({
-      allowanceMonth,
-      allowanceFactor: 1.5,
-      storageTB,
-      downloadTBMonth,
-      uploadTBMonth,
-      redundancyMultiplier,
-      storageWeight: 4,
-      downloadWeight: 5,
-      uploadWeight: 1,
-    })
-    calculatedValues = {
-      ...calculatedValues,
-      ...derivedPricing,
-    }
-  }
-  return calculatedValues
 }

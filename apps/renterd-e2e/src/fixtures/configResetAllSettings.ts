@@ -4,15 +4,28 @@ import { setViewMode } from './configViewMode'
 import { fillTextInputByName } from './textInput'
 import { clearToasts } from './clearToasts'
 import { clickIfEnabledAndWait } from './click'
+import { fillSelectInputByName } from './selectInput'
 
 export async function configResetAllSettings({ page }: { page: Page }) {
   await setViewMode({ page, state: 'advanced' })
-  await setSwitchByLabel(page, 'allowanceDerivedPricing', false)
+
+  // pinning
+  await setSwitchByLabel(page, 'pinningEnabled', true)
+  await fillSelectInputByName(page, 'pinnedCurrency', 'usd')
+  await fillTextInputByName(page, 'pinnedThreshold', '2')
+  await fillTextInputByName(
+    page,
+    'forexEndpointURL',
+    'https://api.siascan.com/exchange-rate/siacoin'
+  )
 
   // storage
   await fillTextInputByName(page, 'storageTB', '1')
   await fillTextInputByName(page, 'uploadTBMonth', '1')
   await fillTextInputByName(page, 'downloadTBMonth', '1')
+  await setSwitchByLabel(page, 'shouldPinAllowance', true)
+  await fillTextInputByName(page, 'allowanceMonthPinned', '10')
+  await setSwitchByLabel(page, 'shouldPinAllowance', false)
   await fillTextInputByName(page, 'allowanceMonth', '21000')
   await fillTextInputByName(page, 'periodWeeks', '6')
   await fillTextInputByName(page, 'renewWindowWeeks', '2')
@@ -31,11 +44,27 @@ export async function configResetAllSettings({ page }: { page: Page }) {
   await setSwitchByLabel(page, 'uploadPackingEnabled', true)
 
   // gouging
+  await setSwitchByLabel(page, 'shouldPinMaxStoragePrice', true)
+  await setSwitchByLabel(page, 'shouldPinMaxDownloadPrice', true)
+  await setSwitchByLabel(page, 'shouldPinMaxUploadPrice', true)
+  await setSwitchByLabel(page, 'shouldPinMaxRPCPrice', true)
+
+  await fillTextInputByName(page, 'maxStoragePriceTBMonthPinned', '5')
+  await fillTextInputByName(page, 'maxUploadPriceTBPinned', '5')
+  await fillTextInputByName(page, 'maxDownloadPriceTBPinned', '5')
+  await fillTextInputByName(page, 'maxRPCPriceMillionPinned', '1')
+
+  await setSwitchByLabel(page, 'shouldPinMaxStoragePrice', false)
+  await setSwitchByLabel(page, 'shouldPinMaxDownloadPrice', false)
+  await setSwitchByLabel(page, 'shouldPinMaxUploadPrice', false)
+  await setSwitchByLabel(page, 'shouldPinMaxRPCPrice', false)
+
   await fillTextInputByName(page, 'maxStoragePriceTBMonth', '3000')
   await fillTextInputByName(page, 'maxUploadPriceTB', '3000')
   await fillTextInputByName(page, 'maxDownloadPriceTB', '3000')
+  await fillTextInputByName(page, 'maxRPCPriceMillion', '10')
+
   await fillTextInputByName(page, 'maxContractPrice', '1')
-  await fillTextInputByName(page, 'maxRpcPriceMillion', '10')
   await fillTextInputByName(page, 'hostBlockHeightLeeway', '12')
   await fillTextInputByName(page, 'minPriceTableValidityMinutes', '5')
   await fillTextInputByName(page, 'minAccountExpiryDays', '1')
