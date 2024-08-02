@@ -1,3 +1,4 @@
+import { calculateEstimatedSpending } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 
 /**
@@ -94,4 +95,70 @@ export function derivePricingFromAllowance({
     maxDownloadPriceTB,
     maxStoragePriceTBMonth,
   }
+}
+
+/**
+ * This function calculates the ideal allowance per month given the
+ * max price per TB for storage, download, and upload, along with estimated
+ * usage in TB for each type.
+ *
+ * @param params - The parameters for the function.
+ * @param params.maxStoragePriceTBMonth - The max price per TB per month for storage.
+ * @param params.maxDownloadPriceTB - The max price per TB for download.
+ * @param params.maxUploadPriceTB - The max price per TB for upload.
+ * @param params.allowanceFactor - The scaling factor applied to the allowance.
+ * @param params.storageTB - The estimated amount of storage in TB.
+ * @param params.downloadTBMonth - The estimated amount of download in TB per month.
+ * @param params.uploadTBMonth - The estimated amount of upload in TB per month.
+ * @param params.redundancyMultiplier - The redundancy multiplier.
+ * @returns The calculated allowance per month.
+ */
+export function calculateIdealAllowance({
+  maxStoragePriceTBMonth,
+  maxDownloadPriceTB,
+  maxUploadPriceTB,
+  allowanceFactor = 1.5,
+  storageTB,
+  downloadTBMonth,
+  uploadTBMonth,
+  redundancyMultiplier,
+}: {
+  maxStoragePriceTBMonth: BigNumber
+  maxDownloadPriceTB: BigNumber
+  maxUploadPriceTB: BigNumber
+  allowanceFactor?: number
+  storageTB: BigNumber
+  downloadTBMonth: BigNumber
+  uploadTBMonth: BigNumber
+  redundancyMultiplier: BigNumber
+}) {
+  // Return null if zero or negative values are provided.
+  if (
+    !maxStoragePriceTBMonth?.gt(0) ||
+    !maxDownloadPriceTB?.gt(0) ||
+    !maxUploadPriceTB?.gt(0) ||
+    allowanceFactor <= 0 ||
+    !redundancyMultiplier?.gt(0) ||
+    !storageTB?.gt(0) ||
+    !downloadTBMonth?.gt(0) ||
+    !uploadTBMonth?.gt(0)
+  ) {
+    return null
+  }
+
+  // Calculate the esimated spending.
+  const scaledSpending = calculateEstimatedSpending({
+    maxStoragePriceTBMonth,
+    maxDownloadPriceTB,
+    maxUploadPriceTB,
+    storageTB,
+    downloadTBMonth,
+    uploadTBMonth,
+    redundancyMultiplier,
+  })
+
+  // Calculate the ideal allowance by dividing the spending by the allowance factor.
+  const allowanceMonth = scaledSpending.div(allowanceFactor)
+
+  return allowanceMonth.integerValue()
 }

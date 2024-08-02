@@ -16,6 +16,7 @@ export const routes = {
     contracts: '/config#contracts',
     uploads: '/config#uploads',
     redundancy: '/config#redundancy',
+    pinning: '/config#pinning',
   },
   contracts: {
     index: '/contracts',

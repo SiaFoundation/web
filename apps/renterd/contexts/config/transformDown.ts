@@ -1,12 +1,14 @@
 import {
   nanosecondsInDays,
   nanosecondsInMinutes,
-  toFixedMax,
+  toFixedMaxBigNumber,
+  toFixedMaxString,
 } from '@siafoundation/design-system'
 import {
   AutopilotConfig,
   ContractSetSettings,
   GougingSettings,
+  PricePinSettings,
   RedundancySettings,
   UploadPackingSettings,
 } from '@siafoundation/renterd-types'
@@ -14,8 +16,11 @@ import {
   toSiacoins,
   blocksToWeeks,
   bytesToTB,
-  monthsToBlocks,
-  TBToBytes,
+  valuePerBytePerBlockToPerTBPerMonth,
+  valuePerPeriodToPerMonth,
+  valuePerOneToPerMillion,
+  valuePerByteToPerTB,
+  weeksToBlocks,
 } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import {
@@ -28,8 +33,10 @@ import {
   RedundancyData,
   UploadPackingData,
   defaultAutopilot,
+  PricePinData,
 } from './types'
 import { firstTimeGougingData } from './resources'
+import { currencyOptions } from '@siafoundation/react-core'
 
 // down
 export function transformDownAutopilot(
@@ -53,7 +60,7 @@ export function transformDownAutopilot(
     blocksToWeeks(config.contracts.renewWindow)
   )
   const downloadTBMonth = new BigNumber(
-    toFixedMax(
+    toFixedMaxString(
       valuePerPeriodToPerMonth(
         bytesToTB(config.contracts.download),
         config.contracts.period
@@ -62,7 +69,7 @@ export function transformDownAutopilot(
     )
   )
   const uploadTBMonth = new BigNumber(
-    toFixedMax(
+    toFixedMaxString(
       valuePerPeriodToPerMonth(
         bytesToTB(config.contracts.upload),
         config.contracts.period
@@ -134,9 +141,9 @@ export function transformDownGouging({
 
   return {
     maxStoragePriceTBMonth: toSiacoins(
-      new BigNumber(gouging.maxStoragePrice) // bytes/block
-        .times(monthsToBlocks(1)) // bytes/month
-        .times(TBToBytes(1)), // tb/month
+      valuePerBytePerBlockToPerTBPerMonth(
+        new BigNumber(gouging.maxStoragePrice)
+      ),
       scDecimalPlaces
     ), // TB/month
     maxUploadPriceTB: toSiacoins(
@@ -145,8 +152,8 @@ export function transformDownGouging({
     ),
     maxDownloadPriceTB: toSiacoins(gouging.maxDownloadPrice, scDecimalPlaces),
     maxContractPrice: toSiacoins(gouging.maxContractPrice, scDecimalPlaces),
-    maxRpcPriceMillion: toSiacoins(
-      new BigNumber(gouging.maxRPCPrice).times(1_000_000),
+    maxRPCPriceMillion: toSiacoins(
+      valuePerOneToPerMillion(new BigNumber(gouging.maxRPCPrice)),
       scDecimalPlaces
     ),
     hostBlockHeightLeeway: new BigNumber(gouging.hostBlockHeightLeeway),
@@ -166,6 +173,54 @@ export function transformDownGouging({
   }
 }
 
+export function transformDownPricePinning(
+  p: PricePinSettings,
+  periodBlocks?: number
+): PricePinData {
+  const fixedFiat = currencyOptions.find((c) => c.id === p.currency)?.fixed || 6
+  return {
+    pinningEnabled: p.enabled,
+    pinnedCurrency: p.currency,
+    forexEndpointURL: p.forexEndpointURL,
+    pinnedThreshold: new BigNumber(p.threshold).times(100),
+    shouldPinAllowance: p.autopilots?.allowance.pinned || false,
+    allowanceMonthPinned: toFixedMaxBigNumber(
+      valuePerPeriodToPerMonth(
+        new BigNumber(p.autopilots?.allowance.value || 0),
+        // If pinned allowance is non zero, the period value will be defined.
+        periodBlocks || weeksToBlocks(6)
+      ),
+      fixedFiat
+    ),
+    shouldPinMaxRPCPrice: p.gougingSettingsPins?.maxRPCPrice.pinned,
+    maxRPCPriceMillionPinned: toFixedMaxBigNumber(
+      valuePerOneToPerMillion(
+        new BigNumber(p.gougingSettingsPins.maxRPCPrice.value)
+      ),
+      fixedFiat
+    ),
+    shouldPinMaxStoragePrice: p.gougingSettingsPins?.maxStorage.pinned,
+    maxStoragePriceTBMonthPinned: toFixedMaxBigNumber(
+      valuePerBytePerBlockToPerTBPerMonth(
+        new BigNumber(p.gougingSettingsPins.maxStorage.value)
+      ),
+      fixedFiat
+    ),
+    shouldPinMaxUploadPrice: p.gougingSettingsPins?.maxUpload.pinned,
+    maxUploadPriceTBPinned: toFixedMaxBigNumber(
+      valuePerByteToPerTB(new BigNumber(p.gougingSettingsPins.maxUpload.value)),
+      fixedFiat
+    ),
+    shouldPinMaxDownloadPrice: p.gougingSettingsPins?.maxDownload.pinned,
+    maxDownloadPriceTBPinned: toFixedMaxBigNumber(
+      valuePerByteToPerTB(
+        new BigNumber(p.gougingSettingsPins.maxDownload.value)
+      ),
+      fixedFiat
+    ),
+  }
+}
+
 export function transformDownRedundancy(r: RedundancySettings): RedundancyData {
   return {
     minShards: new BigNumber(r.minShards),
@@ -180,6 +235,7 @@ export type RemoteData = {
   uploadPacking: UploadPackingSettings
   gouging: GougingSettings
   redundancy: RedundancySettings
+  pricePinning: PricePinSettings
   averages?: {
     settings: {
       download_price: string
@@ -196,6 +252,7 @@ export function transformDown({
   uploadPacking,
   gouging,
   redundancy,
+  pricePinning,
   averages,
 }: RemoteData): SettingsData {
   return {
@@ -211,32 +268,9 @@ export function transformDown({
       averages,
       hasBeenConfigured,
     }),
+    // price pinning
+    ...transformDownPricePinning(pricePinning, autopilot?.contracts.period),
     // redundancy
     ...transformDownRedundancy(redundancy),
   }
-}
-
-export function getRedundancyMultiplier(
-  minShards: BigNumber,
-  totalShards: BigNumber
-): BigNumber {
-  let redundancyMult = new BigNumber(1)
-  const canCalcRedundancy =
-    minShards &&
-    totalShards &&
-    !minShards.isZero() &&
-    !totalShards.isZero() &&
-    totalShards.gte(minShards)
-  if (canCalcRedundancy) {
-    redundancyMult = totalShards.div(minShards)
-  }
-  return redundancyMult
-}
-
-function valuePerPeriodToPerMonth(
-  valuePerPeriod: BigNumber,
-  periodBlocks: number
-) {
-  const valuePerBlock = valuePerPeriod.div(periodBlocks)
-  return valuePerBlock.times(monthsToBlocks(1))
 }

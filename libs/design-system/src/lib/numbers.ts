@@ -1,9 +1,5 @@
 import BigNumber from 'bignumber.js'
 
-export function toFixedMax(val: BigNumber, limit: number) {
-  return val.decimalPlaces() > limit ? val.toFixed(limit) : val.toString()
-}
-
 export function toFixedMaxString(val: BigNumber, limit: number) {
   return val.decimalPlaces() > limit ? val.toFixed(limit) : val.toString()
 }

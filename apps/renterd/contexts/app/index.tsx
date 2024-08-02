@@ -9,6 +9,7 @@ function useAppMain() {
   return {
     bus,
     autopilot,
+    isAutopilotEnabled: autopilot.status === 'on',
   }
 }
 

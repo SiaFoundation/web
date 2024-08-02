@@ -4,6 +4,7 @@ import {
   AutopilotState,
   ContractSetSettings,
   GougingSettings,
+  PricePinSettings,
   RedundancySettings,
   UploadPackingSettings,
 } from '@siafoundation/renterd-types'
@@ -36,6 +37,10 @@ export type Resources = {
     data?: RedundancySettings
     error?: SWRError
   }
+  pricePinning: {
+    data?: PricePinSettings
+    error?: SWRError
+  }
   averages: {
     data?: SiaCentralHostsNetworkAveragesResponse
     error?: SWRError
@@ -54,6 +59,7 @@ export function checkIfAllResourcesLoaded({
   uploadPacking,
   gouging,
   redundancy,
+  pricePinning,
   averages,
   appSettings,
 }: Resources) {
@@ -64,6 +70,7 @@ export function checkIfAllResourcesLoaded({
       redundancy.data &&
       uploadPacking.data &&
       gouging.data &&
+      pricePinning.data &&
       // these settings are undefined and will error
       // until the user sets them
       (autopilot.data || autopilot.error) &&
