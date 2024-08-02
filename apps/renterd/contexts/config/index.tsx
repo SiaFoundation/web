@@ -17,6 +17,7 @@ import {
   checkIfAllResourcesLoaded,
   checkIfAnyResourcesErrored,
 } from './resources'
+import { useApp } from '../app'
 
 export function useConfigMain() {
   const {
@@ -26,11 +27,11 @@ export function useConfigMain() {
     gouging,
     redundancy,
     uploadPacking,
+    pricePinning,
     averages,
     shouldSyncDefaultContractSet,
     setShouldSyncDefaultContractSet,
     appSettings,
-    isAutopilotEnabled,
   } = useResources()
 
   // resources required to intialize form
@@ -60,6 +61,10 @@ export function useConfigMain() {
         data: redundancy.data,
         error: redundancy.error,
       },
+      pricePinning: {
+        data: pricePinning.data,
+        error: pricePinning.error,
+      },
       averages: {
         data: averages.data,
         error: averages.error,
@@ -83,6 +88,8 @@ export function useConfigMain() {
       gouging.error,
       redundancy.data,
       redundancy.error,
+      pricePinning.data,
+      pricePinning.error,
       averages.data,
       averages.error,
       appSettings.settings.siaCentral,
@@ -92,14 +99,11 @@ export function useConfigMain() {
   const {
     form,
     storageTB,
-    estimates,
     evaluation,
     redundancyMultiplier,
     fields,
     configViewMode,
     setConfigViewMode,
-    allowanceDerivedPricing,
-    setAllowanceDerivedPricing,
   } = useForm({ resources })
 
   const remoteValues: SettingsData = useMemo(() => {
@@ -114,6 +118,7 @@ export function useConfigMain() {
       gouging: resources.gouging.data,
       averages: resources.averages.data,
       redundancy: resources.redundancy.data,
+      pricePinning: resources.pricePinning.data,
     })
   }, [resources])
 
@@ -122,6 +127,7 @@ export function useConfigMain() {
     [resources]
   )
 
+  const { isAutopilotEnabled } = useApp()
   const revalidateAndResetForm = useCallback(async () => {
     // these do not seem to throw on errors, just return undefined
     const _autopilotState = await autopilotState.mutate()
@@ -130,6 +136,7 @@ export function useConfigMain() {
     const _gouging = await gouging.mutate()
     const _redundancy = await redundancy.mutate()
     const _uploadPacking = await uploadPacking.mutate()
+    const _pricePinning = await pricePinning.mutate()
     if (!gouging || !redundancy) {
       triggerErrorToast({ title: 'Error fetching settings' })
       return null
@@ -143,6 +150,7 @@ export function useConfigMain() {
         gouging: _gouging,
         averages: averages.data,
         redundancy: _redundancy,
+        pricePinning: _pricePinning,
       })
     )
   }, [
@@ -154,6 +162,7 @@ export function useConfigMain() {
     gouging,
     uploadPacking,
     redundancy,
+    pricePinning,
     averages.data,
   ])
 
@@ -169,7 +178,6 @@ export function useConfigMain() {
 
   const onValid = useOnValid({
     resources,
-    estimatedSpendingPerMonth: estimates.estimatedSpendingPerMonth,
     isAutopilotEnabled,
     revalidateAndResetForm,
   })
@@ -200,7 +208,6 @@ export function useConfigMain() {
     form,
     fields,
     changeCount,
-    estimates,
     redundancyMultiplier,
     storageTB,
     shouldSyncDefaultContractSet,
@@ -211,8 +218,6 @@ export function useConfigMain() {
     configRef,
     takeScreenshot,
     evaluation,
-    allowanceDerivedPricing,
-    setAllowanceDerivedPricing,
   }
 }
 

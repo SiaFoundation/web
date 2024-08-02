@@ -1,9 +1,17 @@
 import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
-import { monthsToBlocks, TBToBytes, toSiacoins } from '@siafoundation/units'
+import {
+  valuePerBytePerBlockToPerTBPerMonth,
+  toSiacoins,
+  valuePerByteToPerTB,
+  valuePerOneToPerMillion,
+} from '@siafoundation/units'
 import { useSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-react'
+import { useForexExchangeRate } from './useAllowanceDerivedPricing'
+import { UseFormReturn } from 'react-hook-form'
+import { SettingsData } from './types'
 
-export function useAverages() {
+export function useAverages({ form }: { form: UseFormReturn<SettingsData> }) {
   const averages = useSiaCentralHostsNetworkAverages({
     config: {
       swr: {
@@ -15,10 +23,9 @@ export function useAverages() {
     () =>
       averages.data
         ? new BigNumber(
-            toSiacoins(averages.data.settings.storage_price) // bytes/block
-              .times(monthsToBlocks(1)) // bytes/month
-              .times(TBToBytes(1)) // TB/month
-              .toFixed(0)
+            valuePerBytePerBlockToPerTBPerMonth(
+              toSiacoins(averages.data.settings.storage_price)
+            ).toFixed(0)
           )
         : undefined,
     [averages.data]
@@ -27,9 +34,9 @@ export function useAverages() {
     () =>
       averages.data
         ? new BigNumber(
-            toSiacoins(averages.data.settings.upload_price) // bytes
-              .times(TBToBytes(1)) // TB
-              .toFixed(0)
+            valuePerByteToPerTB(
+              toSiacoins(averages.data.settings.upload_price)
+            ).toFixed(0)
           )
         : undefined,
     [averages.data]
@@ -38,9 +45,9 @@ export function useAverages() {
     () =>
       averages.data
         ? new BigNumber(
-            toSiacoins(averages.data.settings.download_price) // bytes
-              .times(TBToBytes(1)) // TB
-              .toFixed(0)
+            valuePerByteToPerTB(
+              toSiacoins(averages.data.settings.download_price)
+            ).toFixed(0)
           )
         : undefined,
     [averages.data]
@@ -56,11 +63,62 @@ export function useAverages() {
     [averages.data]
   )
 
-  return {
-    averages,
+  const rpcAverage = useMemo(
+    () =>
+      averages.data
+        ? valuePerOneToPerMillion(
+            toSiacoins(averages.data.settings.base_rpc_price)
+          )
+        : undefined,
+    [averages.data]
+  )
+
+  const exchangeRate = useForexExchangeRate({
+    form,
+  })
+  const averagesSc = useMemo(() => {
+    if (!averages.data) {
+      return null
+    }
+    return {
+      storageAverage,
+      uploadAverage,
+      downloadAverage,
+      contractAverage,
+      rpcAverage,
+    }
+  }, [
+    averages.data,
     storageAverage,
     uploadAverage,
     downloadAverage,
     contractAverage,
+    rpcAverage,
+  ])
+
+  const averagesFiat = useMemo(() => {
+    if (!averages.data || !exchangeRate) {
+      return null
+    }
+    return {
+      storageAverage: storageAverage.times(exchangeRate),
+      uploadAverage: uploadAverage.times(exchangeRate),
+      downloadAverage: downloadAverage.times(exchangeRate),
+      contractAverage: contractAverage.times(exchangeRate),
+      rpcAverage: rpcAverage.times(exchangeRate),
+    }
+  }, [
+    averages.data,
+    exchangeRate,
+    storageAverage,
+    uploadAverage,
+    downloadAverage,
+    contractAverage,
+    rpcAverage,
+  ])
+
+  return {
+    averagesSc,
+    averagesFiat,
   }
 }

@@ -5,6 +5,7 @@ import {
   ScrollArea,
   Separator,
   Text,
+  formSetField,
 } from '@siafoundation/design-system'
 import {
   Subtract24,
@@ -30,7 +31,7 @@ export function Recommendations() {
     }
   )
 
-  const { form, evaluation } = useConfig()
+  const { form, fields, evaluation } = useConfig()
   const {
     hostMargin50,
     hostTarget50,
@@ -188,6 +189,7 @@ export function Recommendations() {
         foundRecommendation &&
         recommendations.map(
           ({
+            hrefId,
             key,
             title,
             currentLabel,
@@ -202,7 +204,7 @@ export function Recommendations() {
                 <Text size="14">
                   {direction === 'up' ? 'Increase ' : 'Decrease '}
                   <Link
-                    href={routes.config.index + '#' + key}
+                    href={routes.config.index + '#' + hrefId}
                     size="14"
                     underline="hover"
                   >
@@ -212,10 +214,12 @@ export function Recommendations() {
                   <Button
                     size="none"
                     onClick={() =>
-                      form.setValue(key, targetValue, {
-                        shouldDirty: true,
-                        shouldTouch: true,
-                        shouldValidate: true,
+                      formSetField({
+                        form,
+                        fields,
+                        name: key,
+                        value: targetValue,
+                        options: true,
                       })
                     }
                   >

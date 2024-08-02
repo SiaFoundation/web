@@ -3,6 +3,7 @@ import {
   useAutopilotConfig,
   useSettingContractSet,
   useSettingGouging,
+  useSettingPricePinning,
   useSettingRedundancy,
   useSettingUploadPacking,
 } from '@siafoundation/renterd-react'
@@ -13,7 +14,6 @@ import { useApp } from '../app'
 
 export function useResources() {
   const app = useApp()
-  const isAutopilotEnabled = app.autopilot.status === 'on'
   // settings that 404 when empty
   const autopilot = useAutopilotConfig({
     config: {
@@ -53,6 +53,13 @@ export function useResources() {
       },
     },
   })
+  const pricePinning = useSettingPricePinning({
+    config: {
+      swr: {
+        refreshInterval: minutesInMilliseconds(1),
+      },
+    },
+  })
   const averages = useSiaCentralHostsNetworkAverages({
     config: {
       swr: {
@@ -75,11 +82,11 @@ export function useResources() {
     gouging,
     redundancy,
     uploadPacking,
+    pricePinning,
     averages,
     shouldSyncDefaultContractSet,
     setShouldSyncDefaultContractSet,
     maybeSyncDefaultContractSet,
     appSettings,
-    isAutopilotEnabled,
   }
 }

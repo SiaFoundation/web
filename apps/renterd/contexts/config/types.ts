@@ -1,4 +1,15 @@
+import { CurrencyId } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
+
+export type Categories =
+  | 'storage'
+  | 'gouging'
+  | 'hosts'
+  | 'wallet'
+  | 'contractset'
+  | 'uploadpacking'
+  | 'redundancy'
+  | 'pinning'
 
 export type ConfigViewMode = 'basic' | 'advanced'
 
@@ -32,7 +43,7 @@ export const defaultUploadPacking = {
 }
 
 export const defaultGouging = {
-  maxRpcPriceMillion: undefined as BigNumber | undefined,
+  maxRPCPriceMillion: undefined as BigNumber | undefined,
   maxStoragePriceTBMonth: undefined as BigNumber | undefined,
   maxContractPrice: undefined as BigNumber | undefined,
   maxDownloadPriceTB: undefined as BigNumber | undefined,
@@ -42,6 +53,23 @@ export const defaultGouging = {
   minAccountExpiryDays: undefined as BigNumber | undefined,
   minMaxEphemeralAccountBalance: undefined as BigNumber | undefined,
   migrationSurchargeMultiplier: undefined as BigNumber | undefined,
+}
+
+export const defaultPricePinning = {
+  pinningEnabled: false,
+  pinnedCurrency: '' as CurrencyId | '',
+  forexEndpointURL: '',
+  pinnedThreshold: undefined as BigNumber | undefined,
+  shouldPinMaxStoragePrice: false,
+  maxStoragePriceTBMonthPinned: undefined as BigNumber | undefined,
+  shouldPinMaxDownloadPrice: false,
+  maxDownloadPriceTBPinned: undefined as BigNumber | undefined,
+  shouldPinMaxRPCPrice: false,
+  maxRPCPriceMillionPinned: undefined as BigNumber | undefined,
+  shouldPinMaxUploadPrice: false,
+  maxUploadPriceTBPinned: undefined as BigNumber | undefined,
+  shouldPinAllowance: false,
+  allowanceMonthPinned: undefined as BigNumber | undefined,
 }
 
 export const defaultRedundancy = {
@@ -60,6 +88,8 @@ export const defaultValues = {
   ...defaultGouging,
   // redundancy
   ...defaultRedundancy,
+  // price pinning
+  ...defaultPricePinning,
 }
 
 export type AutopilotData = typeof defaultAutopilot
@@ -68,6 +98,7 @@ export type UploadPackingData = typeof defaultUploadPacking
 export type GougingData = typeof defaultGouging
 export type RedundancyData = typeof defaultRedundancy
 export type SettingsData = typeof defaultValues
+export type PricePinData = typeof defaultPricePinning
 
 // advanced defaults
 export function getAdvancedDefaultAutopilot(
@@ -120,6 +151,10 @@ export const advancedDefaultGouging: GougingData = {
   ...defaultGouging,
 }
 
+export const advancedDefaultPricePinning: PricePinData = {
+  ...defaultPricePinning,
+}
+
 export function getAdvancedDefaultRedundancy(
   network: 'mainnet' | 'zen' | 'anagami'
 ): RedundancyData {
@@ -143,10 +178,12 @@ export function getAdvancedDefaults(
     ...advancedDefaultUploadPacking,
     ...advancedDefaultGouging,
     ...getAdvancedDefaultRedundancy(network),
+    ...advancedDefaultPricePinning,
   }
 }
 
 export type RecommendationItem = {
+  hrefId: string
   key: keyof SettingsData
   title: string
   currentLabel: string

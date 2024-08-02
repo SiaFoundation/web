@@ -1,5 +1,8 @@
 import BigNumber from 'bignumber.js'
-import { derivePricingFromAllowance } from './derivePricesFromAllowance'
+import {
+  calculateIdealAllowance,
+  derivePricingFromAllowance,
+} from './deriveAllowance'
 
 test('with estimates of 1 TB, standard weights, 1x redundancy, 1x allowance factor', () => {
   const allowanceMonth = new BigNumber(1000)
@@ -34,6 +37,18 @@ test('with estimates of 1 TB, standard weights, 1x redundancy, 1x allowance fact
     maxStoragePriceTBMonth: '400.00',
     maxUploadPriceTB: '100.00',
   })
+  expect(
+    calculateIdealAllowance({
+      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices.maxDownloadPriceTB,
+      maxUploadPriceTB: prices.maxUploadPriceTB,
+      allowanceFactor,
+      storageTB,
+      downloadTBMonth,
+      uploadTBMonth,
+      redundancyMultiplier,
+    })
+  ).toEqual(allowanceMonth)
 })
 
 test('with estimates of 1 TB, standard weights, 2x redundancy, 1x allowance factor', () => {
@@ -69,6 +84,18 @@ test('with estimates of 1 TB, standard weights, 2x redundancy, 1x allowance fact
     maxStoragePriceTBMonth: '266.67',
     maxUploadPriceTB: '66.67',
   })
+  expect(
+    calculateIdealAllowance({
+      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices.maxDownloadPriceTB,
+      maxUploadPriceTB: prices.maxUploadPriceTB,
+      allowanceFactor,
+      storageTB,
+      downloadTBMonth,
+      uploadTBMonth,
+      redundancyMultiplier,
+    })
+  ).toEqual(allowanceMonth)
 })
 
 test('with estimates of 1 TB, standard weights, 3x redunancy, 1x allowance factor', () => {
@@ -104,6 +131,18 @@ test('with estimates of 1 TB, standard weights, 3x redunancy, 1x allowance facto
     maxStoragePriceTBMonth: '200.00',
     maxUploadPriceTB: '50.00',
   })
+  expect(
+    calculateIdealAllowance({
+      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices.maxDownloadPriceTB,
+      maxUploadPriceTB: prices.maxUploadPriceTB,
+      allowanceFactor,
+      storageTB,
+      downloadTBMonth,
+      uploadTBMonth,
+      redundancyMultiplier,
+    })
+  ).toEqual(allowanceMonth)
 })
 
 test('with estimates of 1 TB, standard weights, 1x redundancy, 2x allowance factor', () => {
@@ -139,6 +178,18 @@ test('with estimates of 1 TB, standard weights, 1x redundancy, 2x allowance fact
     maxStoragePriceTBMonth: '800.00',
     maxUploadPriceTB: '200.00',
   })
+  expect(
+    calculateIdealAllowance({
+      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices.maxDownloadPriceTB,
+      maxUploadPriceTB: prices.maxUploadPriceTB,
+      allowanceFactor,
+      storageTB,
+      downloadTBMonth,
+      uploadTBMonth,
+      redundancyMultiplier,
+    })
+  ).toEqual(allowanceMonth)
 })
 
 test('with estimates of 1 TB, standard weights, 2x redundancy, 2x allowance factor', () => {
@@ -174,6 +225,18 @@ test('with estimates of 1 TB, standard weights, 2x redundancy, 2x allowance fact
     maxStoragePriceTBMonth: '533.33',
     maxUploadPriceTB: '133.33',
   })
+  expect(
+    calculateIdealAllowance({
+      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices.maxDownloadPriceTB,
+      maxUploadPriceTB: prices.maxUploadPriceTB,
+      allowanceFactor,
+      storageTB,
+      downloadTBMonth,
+      uploadTBMonth,
+      redundancyMultiplier,
+    })
+  ).toEqual(allowanceMonth)
 })
 
 test('with estimates of 1 TB, standard weights, 3x redunancy, 2x allowance factor', () => {
@@ -209,6 +272,18 @@ test('with estimates of 1 TB, standard weights, 3x redunancy, 2x allowance facto
     maxStoragePriceTBMonth: '400.00',
     maxUploadPriceTB: '100.00',
   })
+  expect(
+    calculateIdealAllowance({
+      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices.maxDownloadPriceTB,
+      maxUploadPriceTB: prices.maxUploadPriceTB,
+      allowanceFactor,
+      storageTB,
+      downloadTBMonth,
+      uploadTBMonth,
+      redundancyMultiplier,
+    })
+  ).toEqual(allowanceMonth)
 })
 
 test('with mostly storage, standard weights, 1x redunancy, 2x allowance factor', () => {
@@ -244,6 +319,18 @@ test('with mostly storage, standard weights, 1x redunancy, 2x allowance factor',
     maxStoragePriceTBMonth: '761.90',
     maxUploadPriceTB: '190.48',
   })
+  expect(
+    calculateIdealAllowance({
+      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices.maxDownloadPriceTB,
+      maxUploadPriceTB: prices.maxUploadPriceTB,
+      allowanceFactor,
+      storageTB,
+      downloadTBMonth,
+      uploadTBMonth,
+      redundancyMultiplier,
+    })
+  ).toEqual(allowanceMonth)
 })
 
 test('with varied estimates, standard weights, 1x redunancy, 2x allowance factor', () => {
@@ -279,6 +366,18 @@ test('with varied estimates, standard weights, 1x redunancy, 2x allowance factor
     maxStoragePriceTBMonth: '72.73',
     maxUploadPriceTB: '18.18',
   })
+  expect(
+    calculateIdealAllowance({
+      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices.maxDownloadPriceTB,
+      maxUploadPriceTB: prices.maxUploadPriceTB,
+      allowanceFactor,
+      storageTB,
+      downloadTBMonth,
+      uploadTBMonth,
+      redundancyMultiplier,
+    })
+  ).toEqual(allowanceMonth)
 })
 
 test('with estimates of 1 TB, standard weights, 1x redundancy, 1.5x allowance factor', () => {
@@ -314,6 +413,18 @@ test('with estimates of 1 TB, standard weights, 1x redundancy, 1.5x allowance fa
     maxStoragePriceTBMonth: '600.00',
     maxUploadPriceTB: '150.00',
   })
+  expect(
+    calculateIdealAllowance({
+      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices.maxDownloadPriceTB,
+      maxUploadPriceTB: prices.maxUploadPriceTB,
+      allowanceFactor,
+      storageTB,
+      downloadTBMonth,
+      uploadTBMonth,
+      redundancyMultiplier,
+    })
+  ).toEqual(allowanceMonth)
 })
 
 test('with varied estimates, standard weights, 1x redundancy, 1.5x allowance factor', () => {
@@ -349,6 +460,18 @@ test('with varied estimates, standard weights, 1x redundancy, 1.5x allowance fac
     maxStoragePriceTBMonth: '54.55',
     maxUploadPriceTB: '13.64',
   })
+  expect(
+    calculateIdealAllowance({
+      maxStoragePriceTBMonth: prices.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: prices.maxDownloadPriceTB,
+      maxUploadPriceTB: prices.maxUploadPriceTB,
+      allowanceFactor,
+      storageTB,
+      downloadTBMonth,
+      uploadTBMonth,
+      redundancyMultiplier,
+    })
+  ).toEqual(allowanceMonth)
 })
 
 test('with zero allowance returns null', () => {
@@ -367,4 +490,27 @@ test('with zero allowance returns null', () => {
   })
 
   expect(prices).toBeNull()
+})
+
+test('with zero prices returns null', () => {
+  const maxStoragePriceTBMonth = new BigNumber(0)
+  const maxDownloadPriceTB = new BigNumber(0)
+  const maxUploadPriceTB = new BigNumber(0)
+  const storageTB = new BigNumber(1)
+  const downloadTBMonth = new BigNumber(1)
+  const uploadTBMonth = new BigNumber(1)
+  const redundancyMultiplier = new BigNumber(1)
+
+  const allowance = calculateIdealAllowance({
+    maxDownloadPriceTB,
+    maxStoragePriceTBMonth,
+    maxUploadPriceTB,
+    allowanceFactor: 1.5,
+    storageTB,
+    downloadTBMonth,
+    uploadTBMonth,
+    redundancyMultiplier,
+  })
+
+  expect(allowance).toBeNull()
 })

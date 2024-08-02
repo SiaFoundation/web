@@ -5,25 +5,34 @@ import {
 import { transformUp } from './transformUp'
 import { Resources, checkIfAllResourcesLoaded } from './resources'
 import BigNumber from 'bignumber.js'
-import { RecommendationItem, SettingsData, getAdvancedDefaults } from './types'
+import {
+  GougingData,
+  RecommendationItem,
+  SettingsData,
+  getAdvancedDefaults,
+} from './types'
 import { UseFormReturn } from 'react-hook-form'
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { transformDownGouging } from './transformDown'
 import { Fields, getFields } from './fields'
 import { humanNumber, humanSiacoin, toHastings } from '@siafoundation/units'
-import { lowerFirst } from '@technically/lodash'
-import { GougingSettings } from '@siafoundation/renterd-types'
+import {
+  pricesToPinnedPrices,
+  useEnabledAllowanceInSiacoin,
+  useEnabledPricingValuesInSiacoin,
+  useForexExchangeRate,
+} from './useAllowanceDerivedPricing'
+import { objectEntries } from '@siafoundation/design-system'
+import { currencyOptions } from '@siafoundation/react-core'
 
 export function useAutopilotEvaluations({
   form,
   resources,
   isAutopilotEnabled,
-  estimatedSpendingPerMonth,
 }: {
   form: UseFormReturn<SettingsData>
   resources: Resources
   isAutopilotEnabled: boolean
-  estimatedSpendingPerMonth: BigNumber
 }) {
   const values = form.watch()
   const renterdState = useBusState()
@@ -44,18 +53,39 @@ export function useAutopilotEvaluations({
     return true
   }, [isAutopilotEnabled, form.formState.isValid, resources, renterdState.data])
 
-  // We need to pass valid settings data into transformUp to get the payloads.
-  // The form can be invalid or have empty fields depending on the mode, so we
-  // need to merge in default data to make sure numbers are not undefined in
-  // the transformUp calculations that assume all data is valid and present.
-  const currentValuesWithDefaults = useMemo(
-    () =>
-      mergeValuesWithDefaultsOrZeroValues(
-        values,
-        resources.autopilotState.data?.network
-      ),
-    [values, resources.autopilotState.data?.network]
-  )
+  // Convert any pinned fields over to siacoin values.
+  const allowance = useEnabledAllowanceInSiacoin({
+    form,
+  })
+  const pricing = useEnabledPricingValuesInSiacoin({
+    form,
+  })
+  const anyPinnedValuesAsSiacoin = useMemo(() => {
+    if (allowance) {
+      return {
+        allowanceMonth: allowance,
+        ...pricing,
+      }
+    }
+    return pricing
+  }, [allowance, pricing])
+
+  const currentValuesWithPinnedOverridesAndDefaults = useMemo(() => {
+    // Any pinned values are converted to siacoin and merged into the
+    // corresponding non-pinned fields.
+    const valuesWithPinnedOverrides = {
+      ...values,
+      ...anyPinnedValuesAsSiacoin,
+    }
+    // We need to pass valid settings data into transformUp to get the payloads.
+    // The form can be invalid or have empty fields depending on the mode, so we
+    // need to merge in default data to make sure numbers are not undefined in
+    // the transformUp calculations that assume all data is valid and present.
+    return mergeValuesWithDefaultsOrZeroValues(
+      valuesWithPinnedOverrides,
+      resources.autopilotState.data?.network
+    )
+  }, [values, anyPinnedValuesAsSiacoin, resources.autopilotState.data?.network])
 
   const payloads = useMemo(() => {
     if (!hasDataToEvaluate) {
@@ -66,16 +96,14 @@ export function useAutopilotEvaluations({
       resources,
       renterdState: renterdState.data,
       isAutopilotEnabled,
-      estimatedSpendingPerMonth,
-      values: currentValuesWithDefaults,
+      values: currentValuesWithPinnedOverridesAndDefaults,
     })
     return payloads
   }, [
-    currentValuesWithDefaults,
+    currentValuesWithPinnedOverridesAndDefaults,
     resources,
     renterdState,
     isAutopilotEnabled,
-    estimatedSpendingPerMonth,
     hasDataToEvaluate,
   ])
 
@@ -188,30 +216,92 @@ export function useAutopilotEvaluations({
   })
   const usableHostsAfterRecommendation = usableAfterRecsEval.data?.usable || 0
 
-  const recommendations: RecommendationItem[] = useMemo(() => {
+  const shouldPinMaxStoragePrice = form.watch('shouldPinMaxStoragePrice')
+  const shouldPinMaxUploadPrice = form.watch('shouldPinMaxUploadPrice')
+  const shouldPinMaxDownloadPrice = form.watch('shouldPinMaxDownloadPrice')
+
+  const getIsFieldEnabled = useCallback(
+    (key: string) => {
+      const map = {
+        maxStoragePriceTBMonth: !shouldPinMaxStoragePrice,
+        maxUploadPriceTB: !shouldPinMaxUploadPrice,
+        maxDownloadPriceTB: !shouldPinMaxDownloadPrice,
+        maxStoragePriceTBMonthPinned: shouldPinMaxStoragePrice,
+        maxUploadPriceTBPinned: shouldPinMaxUploadPrice,
+        maxDownloadPriceTBPinned: shouldPinMaxDownloadPrice,
+      }
+      if (map[key] !== undefined) {
+        return map[key]
+      }
+      return true
+    },
+    [
+      shouldPinMaxStoragePrice,
+      shouldPinMaxUploadPrice,
+      shouldPinMaxDownloadPrice,
+    ]
+  )
+
+  const pinnedCurrency = form.watch('pinnedCurrency')
+  const exchangeRate = useForexExchangeRate({
+    form,
+  })
+
+  const recommendations = useMemo(() => {
     if (!payloads || !recommendedGougingSettings) {
       return []
     }
 
-    const recommendationDown = transformDownGouging({
+    const recommendationsImprovement =
+      usableHostsAfterRecommendation - usableHostsCurrent
+
+    if (recommendationsImprovement <= 0) {
+      return []
+    }
+
+    const recommended = transformDownGouging({
       gouging: recommendedGougingSettings,
       averages: resources.averages.data,
       hasBeenConfigured: true,
     })
+    const recommendedPinned = pricesToPinnedPrices({
+      exchangeRate,
+      maxStoragePriceTBMonth: recommended.maxStoragePriceTBMonth,
+      maxDownloadPriceTB: recommended.maxDownloadPriceTB,
+      maxUploadPriceTB: recommended.maxUploadPriceTB,
+      maxRPCPriceMillion: recommended.maxRPCPriceMillion,
+    })
+
+    const recommendedValues = {
+      ...recommended,
+      ...recommendedPinned,
+    }
 
     // Generate recommendation metadata for each value that differs from current settings.
-    const recs = []
-    const gougingKeys = Object.keys(recommendedGougingSettings)
-    gougingKeys.forEach((key) => {
-      if (recommendedGougingSettings[key] !== payloads.gouging[key]) {
-        const rec = getRecommendationItem({
-          key: remoteToLocalFields[key],
-          recommendationDown,
-          values: currentValuesWithDefaults,
-        })
-        if (rec) {
-          recs.push(rec)
-        }
+    const recs: RecommendationItem[] = []
+    objectEntries(recommendedValues).forEach(([key, targetValue]) => {
+      const isEnabled = getIsFieldEnabled(key)
+      // Only show recommendations for enabled visible fields.
+      if (!isEnabled) {
+        return
+      }
+      // Only show recommendations if the difference is greater than 1%.
+      const currentValue = currentValuesWithPinnedOverridesAndDefaults[key]
+      const percentDifference = targetValue
+        .minus(currentValue)
+        .div(currentValue)
+        .times(100)
+      if (percentDifference.lte(1)) {
+        return
+      }
+      const rec = getRecommendationItem({
+        key,
+        currentValue,
+        targetValue,
+        currencyId: pinnedCurrency,
+      })
+      if (rec) {
+        recs.push(rec)
       }
     })
     return recs
@@ -219,8 +309,14 @@ export function useAutopilotEvaluations({
     recommendedGougingSettings,
     resources,
     payloads,
-    currentValuesWithDefaults,
+    currentValuesWithPinnedOverridesAndDefaults,
+    getIsFieldEnabled,
+    pinnedCurrency,
+    usableHostsCurrent,
+    usableHostsAfterRecommendation,
+    exchangeRate,
   ])
+
   const foundRecommendation = !!recommendations.length
 
   return {
@@ -241,48 +337,50 @@ export function useAutopilotEvaluations({
 
 function getRecommendationItem({
   key,
-  recommendationDown,
-  values,
+  currentValue,
+  targetValue,
+  currencyId,
 }: {
   key: keyof Fields
-  recommendationDown: ReturnType<typeof transformDownGouging>
-  values: SettingsData
+  currentValue: BigNumber
+  targetValue: BigNumber
+  currencyId: string
 }): RecommendationItem {
+  const direction = currentValue.lt(targetValue) ? 'up' : 'down'
+  const rec: RecommendationItem = {
+    key,
+    hrefId: fieldToHrefId[key],
+    title: fieldToLabel[key],
+    currentValue,
+    targetValue,
+    direction,
+    currentLabel: '',
+    targetLabel: '',
+  }
   if (fields[key].type === 'siacoin') {
-    const currentValue = values[key] as BigNumber
-    const targetValue = recommendationDown[key]
-    const direction = currentValue.lt(targetValue) ? 'up' : 'down'
-    return {
-      key,
-      title: lowerFirst(fields[key].title),
-      currentLabel: `${humanSiacoin(toHastings(currentValue), {
+    const format = (val: BigNumber) =>
+      `${humanSiacoin(toHastings(val), {
         fixed: 1,
-      })}${fields[key].units?.replace('SC/', '/')}`,
-      targetLabel: `${humanSiacoin(toHastings(recommendationDown[key]), {
-        fixed: 1,
-      })}${fields[key].units?.replace('SC/', '/')}`,
-      currentValue,
-      targetValue: recommendationDown[key],
-      direction,
-    }
+      })}${fields[key].units?.replace('SC/', '/')}`
+    rec.currentLabel = format(currentValue)
+    rec.targetLabel = format(targetValue)
   }
   if (fields[key].type === 'number') {
-    const currentValue = values[key] as BigNumber
-    const targetValue = recommendationDown[key]
-    const direction = currentValue.lt(targetValue) ? 'up' : 'down'
-    return {
-      key,
-      title: lowerFirst(fields[key].title),
-      currentLabel: `${humanNumber(currentValue)} ${fields[key].units}`,
-      targetLabel: `${humanNumber(recommendationDown[key])} ${
-        fields[key].units
-      }`,
-      currentValue: currentValue,
-      targetValue: recommendationDown[key],
-      direction,
-    }
+    const format = (val: BigNumber) =>
+      `${humanNumber(val)} ${fields[key].units}`
+    rec.currentLabel = format(currentValue)
+    rec.targetLabel = format(targetValue)
   }
-  return null
+  if (fields[key].type === 'fiat') {
+    const currency = currencyOptions.find((c) => c.id === currencyId)
+    const format = (val: BigNumber) =>
+      `${currency?.prefix}${humanNumber(val, {
+        fixed: currency.fixed,
+      })} ${currency?.label}${fields[key].units}`
+    rec.currentLabel = format(currentValue)
+    rec.targetLabel = format(targetValue)
+  }
+  return rec
 }
 
 // We just need some of the static metadata so pass in dummy values.
@@ -290,6 +388,7 @@ const fields = getFields({
   validationContext: {
     isAutopilotEnabled: true,
     configViewMode: 'basic',
+    pinningEnabled: false,
   },
   isAutopilotEnabled: true,
   configViewMode: 'basic',
@@ -298,28 +397,58 @@ const fields = getFields({
   minShards: new BigNumber(0),
   totalShards: new BigNumber(0),
   redundancyMultiplier: new BigNumber(0),
-  allowanceDerivedPricing: false,
-  setAllowanceDerivedPricing: () => null,
   recommendations: {},
 })
 
-const remoteToLocalFields: Record<keyof GougingSettings, keyof Fields> = {
-  maxStoragePrice: 'maxStoragePriceTBMonth',
-  maxDownloadPrice: 'maxDownloadPriceTB',
-  maxUploadPrice: 'maxUploadPriceTB',
+type PinnablePrices = {
+  maxStoragePriceTBMonthPinned: BigNumber
+  maxUploadPriceTBPinned: BigNumber
+  maxDownloadPriceTBPinned: BigNumber
+  maxRPCPriceMillionPinned: BigNumber
+}
+
+type RecommendableFields = GougingData & PinnablePrices
+
+const fieldToHrefId: Record<keyof RecommendableFields, string> = {
+  maxStoragePriceTBMonth: 'maxStoragePriceTBMonthGroup',
+  maxDownloadPriceTB: 'maxDownloadPriceTBGroup',
+  maxUploadPriceTB: 'maxUploadPriceTBGroup',
+  maxRPCPriceMillion: 'maxRPCPriceMillionGroup',
+  maxStoragePriceTBMonthPinned: 'maxStoragePriceTBMonthGroup',
+  maxUploadPriceTBPinned: 'maxUploadPriceTBGroup',
+  maxDownloadPriceTBPinned: 'maxDownloadPriceTBGroup',
+  maxRPCPriceMillionPinned: 'maxRPCPriceMillionGroup',
   maxContractPrice: 'maxContractPrice',
-  maxRPCPrice: 'maxRpcPriceMillion',
   hostBlockHeightLeeway: 'hostBlockHeightLeeway',
-  minPriceTableValidity: 'minPriceTableValidityMinutes',
-  minAccountExpiry: 'minAccountExpiryDays',
+  minPriceTableValidityMinutes: 'minPriceTableValidityMinutes',
+  minAccountExpiryDays: 'minAccountExpiryDays',
   minMaxEphemeralAccountBalance: 'minMaxEphemeralAccountBalance',
   migrationSurchargeMultiplier: 'migrationSurchargeMultiplier',
+}
+
+const fieldToLabel: Record<keyof RecommendableFields, string> = {
+  maxStoragePriceTBMonth: 'max storage price',
+  maxDownloadPriceTB: 'max download price',
+  maxUploadPriceTB: 'max upload price',
+  maxRPCPriceMillion: 'max RPC price',
+  maxStoragePriceTBMonthPinned: 'max storage price',
+  maxUploadPriceTBPinned: 'max upload price',
+  maxDownloadPriceTBPinned: 'max download price',
+  maxRPCPriceMillionPinned: 'max RPC price',
+  maxContractPrice: 'max contract price',
+  hostBlockHeightLeeway: 'host block height leeway',
+  minPriceTableValidityMinutes: 'min price table validity',
+  minAccountExpiryDays: 'min account expiry',
+  minMaxEphemeralAccountBalance: 'min max ephemeral account balance',
+  migrationSurchargeMultiplier: 'migration surcharge multiplier',
 }
 
 export const valuesZeroDefaults: SettingsData = {
   autopilotContractSet: '',
   amountHosts: new BigNumber(0),
+  shouldPinAllowance: false,
   allowanceMonth: new BigNumber(0),
+  allowanceMonthPinned: new BigNumber(0),
   periodWeeks: new BigNumber(0),
   renewWindowWeeks: new BigNumber(0),
   downloadTBMonth: new BigNumber(0),
@@ -332,11 +461,19 @@ export const valuesZeroDefaults: SettingsData = {
   minProtocolVersion: '',
   defaultContractSet: '',
   uploadPackingEnabled: true,
-  maxRpcPriceMillion: new BigNumber(0),
+  shouldPinMaxRPCPrice: false,
+  maxRPCPriceMillion: new BigNumber(0),
+  maxRPCPriceMillionPinned: new BigNumber(0),
+  shouldPinMaxStoragePrice: false,
   maxStoragePriceTBMonth: new BigNumber(0),
+  maxStoragePriceTBMonthPinned: new BigNumber(0),
   maxContractPrice: new BigNumber(0),
+  shouldPinMaxDownloadPrice: false,
   maxDownloadPriceTB: new BigNumber(0),
+  maxDownloadPriceTBPinned: new BigNumber(0),
+  shouldPinMaxUploadPrice: false,
   maxUploadPriceTB: new BigNumber(0),
+  maxUploadPriceTBPinned: new BigNumber(0),
   hostBlockHeightLeeway: new BigNumber(0),
   minPriceTableValidityMinutes: new BigNumber(0),
   minAccountExpiryDays: new BigNumber(0),
@@ -344,6 +481,10 @@ export const valuesZeroDefaults: SettingsData = {
   migrationSurchargeMultiplier: new BigNumber(0),
   minShards: new BigNumber(0),
   totalShards: new BigNumber(0),
+  pinningEnabled: false,
+  forexEndpointURL: '',
+  pinnedCurrency: 'usd',
+  pinnedThreshold: new BigNumber(0),
 }
 
 // current value, otherwise advanced default if there is one, otherwise zero value.
