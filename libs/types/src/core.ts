@@ -1,4 +1,5 @@
 export type ID = string
+export type BlockID = string
 export type Hash256 = string
 export type Signature = string
 export type Currency = string
