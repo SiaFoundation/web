@@ -14,17 +14,14 @@ import { transformUp } from './transformUp'
 import { delay, useMutate } from '@siafoundation/react-core'
 import { Resources } from './resources'
 import { useSyncContractSet } from './useSyncContractSet'
-import BigNumber from 'bignumber.js'
 import { autopilotHostsRoute } from '@siafoundation/renterd-types'
 
 export function useOnValid({
   resources,
-  estimatedSpendingPerMonth,
   isAutopilotEnabled,
   revalidateAndResetForm,
 }: {
   resources: Resources
-  estimatedSpendingPerMonth: BigNumber
   isAutopilotEnabled: boolean
   revalidateAndResetForm: () => Promise<void>
 }) {
@@ -50,7 +47,6 @@ export function useOnValid({
           resources,
           renterdState: renterdState.data,
           isAutopilotEnabled,
-          estimatedSpendingPerMonth,
           values,
         })
 
@@ -65,6 +61,7 @@ export function useOnValid({
           uploadPackingResponse,
           gougingResponse,
           redundancyResponse,
+          pricePinningResponse,
         ] = await Promise.all([
           settingUpdate.put({
             params: {
@@ -90,6 +87,12 @@ export function useOnValid({
             },
             payload: payloads.redundancy,
           }),
+          settingUpdate.put({
+            params: {
+              key: 'pricepinning',
+            },
+            payload: payloads.pricePinning,
+          }),
         ])
 
         if (autopilotResponse?.error) {
@@ -106,6 +109,9 @@ export function useOnValid({
         }
         if (redundancyResponse.error) {
           throw Error(redundancyResponse.error)
+        }
+        if (pricePinningResponse.error) {
+          throw Error(pricePinningResponse.error)
         }
 
         if (isAutopilotEnabled) {
@@ -145,7 +151,6 @@ export function useOnValid({
     },
     [
       renterdState.data,
-      estimatedSpendingPerMonth,
       isAutopilotEnabled,
       autopilotUpdate,
       revalidateAndResetForm,

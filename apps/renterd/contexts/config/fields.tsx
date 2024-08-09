@@ -2,30 +2,37 @@
 import {
   Code,
   ConfigFields,
-  Separator,
-  Switch,
+  Link,
   Text,
-  Tooltip,
   hoursInDays,
   secondsInMinutes,
-  toFixedMax,
+  toFixedMaxString,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import React from 'react'
-import { ConfigViewMode, RecommendationItem, SettingsData } from './types'
-import { humanSiacoin, toHastings } from '@siafoundation/units'
-import { Information16 } from '@siafoundation/react-icons'
+import {
+  Categories,
+  ConfigViewMode,
+  RecommendationItem,
+  SettingsData,
+} from './types'
+import { currencyOptions } from '@siafoundation/react-core'
+import { AllowanceTips } from './fieldTips/Allowance'
+import {
+  MaxStoragePriceTips,
+  MaxStoragePricePinnedTips,
+} from './fieldTips/MaxStoragePrice'
+import {
+  MaxUploadPriceTips,
+  MaxUploadPricePinnedTips,
+} from './fieldTips/MaxUploadPrice'
+import {
+  MaxDownloadPriceTips,
+  MaxDownloadPricePinnedTips,
+} from './fieldTips/MaxDownloadPrice'
+import { MaxRPCPricePinnedTips, MaxRPCPriceTips } from './fieldTips/MaxRPCPrice'
 
 export const scDecimalPlaces = 6
-
-type Categories =
-  | 'storage'
-  | 'gouging'
-  | 'hosts'
-  | 'wallet'
-  | 'contractset'
-  | 'uploadpacking'
-  | 'redundancy'
 
 type GetFields = {
   advancedDefaults?: SettingsData
@@ -34,18 +41,27 @@ type GetFields = {
   minShards: BigNumber
   totalShards: BigNumber
   redundancyMultiplier: BigNumber
-  storageAverage?: BigNumber
-  uploadAverage?: BigNumber
-  downloadAverage?: BigNumber
-  contractAverage?: BigNumber
+  averagesSc?: {
+    storageAverage?: BigNumber
+    uploadAverage?: BigNumber
+    downloadAverage?: BigNumber
+    contractAverage?: BigNumber
+    rpcAverage?: BigNumber
+  }
+  averagesFiat?: {
+    storageAverage?: BigNumber
+    uploadAverage?: BigNumber
+    downloadAverage?: BigNumber
+    contractAverage?: BigNumber
+    rpcAverage?: BigNumber
+  }
   isAutopilotEnabled: boolean
   configViewMode: ConfigViewMode
   recommendations: Partial<Record<keyof SettingsData, RecommendationItem>>
-  allowanceDerivedPricing: boolean
-  setAllowanceDerivedPricing: (value: boolean) => void
   validationContext: {
     isAutopilotEnabled: boolean
     configViewMode: ConfigViewMode
+    pinningEnabled: boolean
   }
 }
 
@@ -53,21 +69,12 @@ export type Fields = ReturnType<typeof getFields>
 
 export function getFields({
   advancedDefaults,
-  maxStoragePriceTBMonth,
-  maxUploadPriceTB,
-  minShards,
-  totalShards,
-  redundancyMultiplier,
-  storageAverage,
-  uploadAverage,
-  downloadAverage,
-  contractAverage,
+  averagesSc,
+  averagesFiat,
   recommendations,
   isAutopilotEnabled,
   configViewMode,
   validationContext,
-  allowanceDerivedPricing,
-  setAllowanceDerivedPricing,
 }: GetFields): ConfigFields<SettingsData, Categories> {
   return {
     // storage
@@ -114,41 +121,66 @@ export function getFields({
         },
       },
     },
+    shouldPinAllowance: {
+      title: '',
+      description: '',
+      type: 'boolean',
+      category: 'storage',
+      validation: {},
+    },
     allowanceMonth: {
       type: 'siacoin',
       category: 'storage',
       title: 'Allowance',
       description: (
-        <>The amount of Siacoin you would like to spend per month.</>
-      ),
-      before: () => (
-        <div className="pb-1">
-          <Tooltip
-            align="end"
-            content="Automatically calculate and set max storage, upload, and download prices based on the allowance."
-          >
-            <div className="flex w-full justify-between">
-              <Text weight="medium" color="verySubtle" size="14">
-                Calculate prices
-              </Text>
-              <Switch
-                aria-label="allowanceDerivedPricing"
-                size="small"
-                checked={allowanceDerivedPricing}
-                onCheckedChange={setAllowanceDerivedPricing}
-              />
-            </div>
-          </Tooltip>
-        </div>
+        <>
+          The amount you would like to spend per month. Choose whether to set
+          your allowance in siacoin per month or to pin the siacoin price to a
+          fixed fiat value per month.
+        </>
       ),
       units: 'SC/month',
       decimalsLimitSc: scDecimalPlaces,
       hidden: !isAutopilotEnabled,
       validation: {
         validate: {
-          required: requiredIfAutopilotAndAdvanced(validationContext),
+          required: requiredIfAutopilot(validationContext),
         },
       },
+      after: AllowanceTips,
+    },
+    allowanceMonthPinned: {
+      title: '',
+      description: '',
+      units: '/month',
+      type: 'fiat',
+      category: 'storage',
+      validation: {
+        validate: {
+          required: requiredIfPinningEnabled(
+            validationContext,
+            (value: BigNumber, values) => {
+              if (!values.shouldPinAllowance) {
+                return true
+              }
+              return !!value || 'required'
+            }
+          ),
+          currency: requiredIfPinningEnabled(
+            validationContext,
+            (_, values) =>
+              !!values.pinnedCurrency || 'must select a pinned currency'
+          ),
+          range: requiredIfPinningEnabled(
+            validationContext,
+            (value: BigNumber, values) =>
+              !values.shouldPinAllowance ||
+              value?.gt(0) ||
+              'must be greater than 0'
+          ),
+        },
+      },
+      after: AllowanceTips,
     },
     periodWeeks: {
       type: 'number',
@@ -283,7 +315,7 @@ export function getFields({
       suggestion: advancedDefaults?.maxDowntimeHours,
       suggestionTip: `Defaults to ${advancedDefaults?.maxDowntimeHours
         .toNumber()
-        .toLocaleString()} which is ${toFixedMax(
+        .toLocaleString()} which is ${toFixedMaxString(
         new BigNumber(
           hoursInDays(advancedDefaults?.maxDowntimeHours.toNumber())
         ),
@@ -391,6 +423,13 @@ export function getFields({
     },
 
     // gouging
+    shouldPinMaxStoragePrice: {
+      title: '',
+      description: '',
+      type: 'boolean',
+      category: 'gouging',
+      validation: {},
+    },
     maxStoragePriceTBMonth: {
       category: 'gouging',
       type: 'siacoin',
@@ -398,57 +437,78 @@ export function getFields({
       description: (
         <>
           The max allowed price a host is allowed to charge to store 1 TB worth
-          of data per month.
+          of data per month. Choose whether to set the price in siacoin per TB
+          per month or to pin the siacoin price to a fixed fiat value per TB per
+          month.
         </>
       ),
-      readOnly: allowanceDerivedPricing,
       units: 'SC/TB/month',
-      average: storageAverage,
+      average: averagesSc?.storageAverage,
       averageTip: 'Averages provided by Sia Central.',
-      suggestion: recommendations.maxStoragePriceTBMonth?.targetValue,
-      suggestionTip: 'This value will help you match with more hosts.',
-      after: function After() {
-        if (!maxStoragePriceTBMonth || !minShards || !totalShards) {
-          return null
-        }
-        return (
-          <>
-            <Separator />
-            <Tooltip
-              align="start"
-              side="bottom"
-              content={
-                <>
-                  Price per TB/month when factoring in the configured{' '}
-                  {minShards.toString()} of {totalShards.toString()} redundancy.
-                </>
-              }
-            >
-              <div className="flex gap-1 items-center relative overflow-hidden">
-                <Text className="flex relative">
-                  <Information16 />
-                </Text>
-                <Text size="12" ellipsis>
-                  {humanSiacoin(
-                    toHastings(maxStoragePriceTBMonth).times(
-                      redundancyMultiplier
-                    ),
-                    {
-                      fixed: 0,
-                      dynamicUnits: false,
-                    }
-                  )}
-                  /TB/month with redundancy
-                </Text>
-              </div>
-            </Tooltip>
-          </>
-        )
-      },
       decimalsLimitSc: scDecimalPlaces,
       validation: {
         required: 'required',
       },
+      after: ({ form, fields }) => (
+        <MaxStoragePriceTips
+          form={form}
+          fields={fields}
+          recommendations={recommendations}
+        />
+      ),
+    },
+    maxStoragePriceTBMonthPinned: {
+      title: '',
+      description: '',
+      units: '/TB/month',
+      type: 'fiat',
+      category: 'gouging',
+      average: averagesFiat?.storageAverage,
+      averageTip: 'Averages provided by Sia Central.',
+      validation: {
+        validate: {
+          required: requiredIfPinningEnabled(
+            validationContext,
+            (value: BigNumber, values) => {
+              if (!values.shouldPinMaxStoragePrice) {
+                return true
+              }
+              return !!value || 'required'
+            }
+          ),
+          disabled: (value: BigNumber, values) => {
+            if (!values.pinningEnabled && values.shouldPinMaxStoragePrice) {
+              return 'please enable pinning and select a currency'
+            }
+          },
+          currency: requiredIfPinningEnabled(
+            validationContext,
+            (_, values) =>
+              !!values.pinnedCurrency || 'must select a pinned currency'
+          ),
+          range: requiredIfPinningEnabled(
+            validationContext,
+            (value: BigNumber, values) =>
+              !values.shouldPinMaxStoragePrice ||
+              value?.gt(0) ||
+              'must be greater than 0'
+          ),
+        },
+      },
+      after: ({ form, fields }) => (
+        <MaxStoragePricePinnedTips
+          form={form}
+          fields={fields}
+          recommendations={recommendations}
+        />
+      ),
+    },
+    shouldPinMaxUploadPrice: {
+      title: '',
+      description: '',
+      type: 'boolean',
+      category: 'gouging',
+      validation: {},
     },
     maxUploadPriceTB: {
       category: 'gouging',
@@ -457,81 +517,151 @@ export function getFields({
       description: (
         <>
           The max allowed price a host is allowed to charge for uploading 1 TB
-          worth of data.
+          worth of data. Choose whether to set the price in siacoin per TB or to
+          pin the siacoin price to a fixed fiat value per TB.
         </>
       ),
       units: 'SC/TB',
-      readOnly: allowanceDerivedPricing,
-      average: uploadAverage,
+      average: averagesSc?.uploadAverage,
       averageTip: 'Averages provided by Sia Central.',
-      suggestion: recommendations.maxUploadPriceTB?.targetValue,
-      suggestionTip: 'This value will help you match with more hosts.',
-      after: function After() {
-        if (!maxUploadPriceTB || !minShards || !totalShards) {
-          return null
-        }
-        return (
-          <>
-            <Separator />
-            <Tooltip
-              align="start"
-              side="bottom"
-              content={
-                <>
-                  Price per TB when factoring in the configured{' '}
-                  {minShards.toString()} of {totalShards.toString()} redundancy.
-                </>
-              }
-            >
-              <div className="flex gap-1 items-center relative overflow-hidden">
-                <Text className="flex relative">
-                  <Information16 />
-                </Text>
-                <Text size="12" ellipsis>
-                  {humanSiacoin(
-                    toHastings(maxUploadPriceTB).times(redundancyMultiplier),
-                    {
-                      fixed: 0,
-                      dynamicUnits: false,
-                    }
-                  )}
-                  /TB with redundancy
-                </Text>
-              </div>
-            </Tooltip>
-          </>
-        )
-      },
       decimalsLimitSc: scDecimalPlaces,
       validation: {
         required: 'required',
       },
+      after: ({ form, fields }) => (
+        <MaxUploadPriceTips
+          form={form}
+          fields={fields}
+          recommendations={recommendations}
+        />
+      ),
+    },
+    maxUploadPriceTBPinned: {
+      title: '',
+      description: '',
+      units: '/TB',
+      type: 'fiat',
+      average: averagesFiat?.uploadAverage,
+      averageTip: 'Averages provided by Sia Central.',
+      category: 'gouging',
+      validation: {
+        validate: {
+          required: requiredIfPinningEnabled(
+            validationContext,
+            (value: BigNumber, values) => {
+              if (!values.shouldPinMaxUploadPrice) {
+                return true
+              }
+              return !!value || 'required'
+            }
+          ),
+          currency: requiredIfPinningEnabled(
+            validationContext,
+            (_, values) =>
+              !!values.pinnedCurrency || 'must select a pinned currency'
+          ),
+          range: requiredIfPinningEnabled(
+            validationContext,
+            (value: BigNumber, values) =>
+              !values.shouldPinMaxUploadPrice ||
+              value?.gt(0) ||
+              'must be greater than 0'
+          ),
+        },
+      },
+      after: ({ form, fields }) => (
+        <MaxUploadPricePinnedTips
+          form={form}
+          fields={fields}
+          recommendations={recommendations}
+        />
+      ),
+    },
+    shouldPinMaxDownloadPrice: {
+      title: '',
+      description: '',
+      type: 'boolean',
+      category: 'gouging',
+      validation: {},
     },
     maxDownloadPriceTB: {
       category: 'gouging',
       type: 'siacoin',
       title: 'Max download price',
-      description: <>The max allowed price to download 1 TB.</>,
+      description: (
+        <>
+          The max allowed price to download 1 TB. Choose whether to set the
+          price in siacoin per TB or to pin the siacoin price to a fixed fiat
+          value per TB.
+        </>
+      ),
       units: 'SC/TB',
-      readOnly: allowanceDerivedPricing,
-      average: downloadAverage,
+      average: averagesSc?.downloadAverage,
       averageTip: `Averages provided by Sia Central.`,
-      suggestion: recommendations.maxDownloadPriceTB?.targetValue,
-      suggestionTip: 'This value will help you match with more hosts.',
       decimalsLimitSc: scDecimalPlaces,
       validation: {
         required: 'required',
       },
+      after: ({ form, fields }) => (
+        <MaxDownloadPriceTips
+          form={form}
+          fields={fields}
+          recommendations={recommendations}
+        />
+      ),
+    },
+    maxDownloadPriceTBPinned: {
+      title: '',
+      description: '',
+      units: '/TB',
+      type: 'fiat',
+      average: averagesFiat?.downloadAverage,
+      averageTip: `Averages provided by Sia Central.`,
+      category: 'gouging',
+      validation: {
+        validate: {
+          required: requiredIfPinningEnabled(
+            validationContext,
+            (value: BigNumber, values) => {
+              if (!values.shouldPinMaxDownloadPrice) {
+                return true
+              }
+              return !!value || 'required'
+            }
+          ),
+          currency: requiredIfPinningEnabled(
+            validationContext,
+            (_, values) =>
+              !!values.pinnedCurrency || 'must select a pinned currency'
+          ),
+          range: requiredIfPinningEnabled(
+            validationContext,
+            (value: BigNumber, values) =>
+              !values.shouldPinMaxDownloadPrice ||
+              value?.gt(0) ||
+              'must be greater than 0'
+          ),
+        },
+      },
+      after: ({ form, fields }) => (
+        <MaxDownloadPricePinnedTips
+          form={form}
+          fields={fields}
+          recommendations={recommendations}
+        />
+      ),
     },
     maxContractPrice: {
       category: 'gouging',
       type: 'siacoin',
       title: 'Max contract price',
       description: <>The max allowed price to form a contract.</>,
-      average: contractAverage,
+      average: averagesSc?.contractAverage,
+      averageTip: `Averages provided by Sia Central.`,
       decimalsLimitSc: scDecimalPlaces,
       tipsDecimalsLimitSc: 3,
       hidden: configViewMode === 'basic',
+      suggestionLabel: 'Match with more hosts',
       suggestion: recommendations.maxContractPrice?.targetValue,
       suggestionTip: 'This value will help you match with more hosts.',
       validation: {
@@ -540,23 +670,83 @@ export function getFields({
         },
       },
     },
-    maxRpcPriceMillion: {
+    shouldPinMaxRPCPrice: {
+      title: '',
+      description: '',
+      type: 'boolean',
+      category: 'gouging',
+      validation: {},
+    },
+    maxRPCPriceMillion: {
       category: 'gouging',
       type: 'siacoin',
       title: 'Max RPC price',
       description: (
-        <>The max allowed base price for RPCs in siacoins per million calls.</>
+        <>
+          The max allowed base price for RPCs in siacoins per million calls.
+          Choose whether to set the price in siacoin per million calls or to pin
+          the siacoin price to a fixed fiat value per million calls.
+        </>
       ),
       units: 'SC/million',
       decimalsLimitSc: scDecimalPlaces,
       hidden: configViewMode === 'basic',
-      suggestion: recommendations.maxRpcPriceMillion?.targetValue,
+      average: averagesSc?.rpcAverage,
+      averageTip: 'Averages provided by Sia Central.',
       suggestionTip: 'This value will help you match with more hosts.',
       validation: {
         validate: {
           required: requiredIfAdvanced(validationContext),
         },
       },
+      after: ({ form, fields }) => (
+        <MaxRPCPriceTips
+          form={form}
+          fields={fields}
+          recommendations={recommendations}
+        />
+      ),
+    },
+    maxRPCPriceMillionPinned: {
+      title: '',
+      description: '',
+      units: '/million',
+      type: 'fiat',
+      category: 'gouging',
+      average: averagesFiat?.rpcAverage,
+      averageTip: 'Averages provided by Sia Central.',
+      validation: {
+        validate: {
+          required: requiredIfPinningEnabled(
+            validationContext,
+            (value: BigNumber, values) => {
+              if (!values.shouldPinMaxRPCPrice) {
+                return true
+              }
+              return !!value || 'required'
+            }
+          ),
+          currency: requiredIfPinningEnabled(
+            validationContext,
+            (_, values) =>
+              !!values.pinnedCurrency || 'must select a pinned currency'
+          ),
+          range: requiredIfPinningEnabled(
+            validationContext,
+            (value: BigNumber, values) =>
+              !values.shouldPinMaxRPCPrice ||
+              value?.gt(0) ||
+              'must be greater than 0'
+          ),
+        },
+      },
+      after: ({ form, fields }) => (
+        <MaxRPCPricePinnedTips
+          form={form}
+          fields={fields}
+          recommendations={recommendations}
+        />
+      ),
     },
     hostBlockHeightLeeway: {
       category: 'gouging',
@@ -572,6 +762,7 @@ export function getFields({
       decimalsLimit: 0,
       ...(recommendations.hostBlockHeightLeeway
         ? {
+            suggestionLabel: 'Match with more hosts',
             suggestion: recommendations.hostBlockHeightLeeway?.targetValue,
             suggestionTip: 'This value will help you match with more hosts.',
           }
@@ -601,6 +792,7 @@ export function getFields({
         <>The min accepted value for `Validity` in the host's price settings.</>
       ),
       hidden: configViewMode === 'basic',
+      suggestionLabel: 'Match with more hosts',
       suggestion: recommendations.minPriceTableValidityMinutes?.targetValue,
       suggestionTip: 'This value will help you match with more hosts.',
       validation: {
@@ -627,6 +819,7 @@ export function getFields({
         </>
       ),
       hidden: configViewMode === 'basic',
+      suggestionLabel: 'Match with more hosts',
       suggestion: recommendations.minAccountExpiryDays?.targetValue,
       suggestionTip: 'This value will help you match with more hosts.',
       validation: {
@@ -653,6 +846,7 @@ export function getFields({
       ),
       decimalsLimitSc: scDecimalPlaces,
       hidden: configViewMode === 'basic',
+      suggestionLabel: 'Match with more hosts',
       suggestion: recommendations.minMaxEphemeralAccountBalance?.targetValue,
       suggestionTip: 'This value will help you match with more hosts.',
       validation: {
@@ -686,6 +880,7 @@ export function getFields({
       ),
       ...(recommendations.migrationSurchargeMultiplier
         ? {
+            suggestionLabel: 'Match with more hosts',
             suggestion:
               recommendations.migrationSurchargeMultiplier?.targetValue,
             suggestionTip: 'This value will help you match with more hosts.',
@@ -752,6 +947,110 @@ export function getFields({
         },
       },
     },
+
+    // pinning
+    pinningEnabled: {
+      category: 'pinning',
+      type: 'boolean',
+      title: 'Pinning',
+      description:
+        'Pinning allows you to set a fixed fiat price for each supported field. Pinning is available for allowance and maximum price fields.',
+      validation: {},
+    },
+    pinnedCurrency: {
+      category: 'pinning',
+      title: 'Pinned currency',
+      description: 'Currency to use for fields where price pinning is enabled.',
+      type: 'select',
+      options: [
+        ...currencyOptions.map(({ id, label }) => ({
+          label,
+          value: id,
+        })),
+        { label: 'none', value: '' },
+      ] as {
+        label: string
+        value: string
+      }[],
+      validation: {
+        validate: {
+          required: requiredIfPinningEnabled(validationContext),
+        },
+      },
+    },
+    pinnedThreshold: {
+      category: 'pinning',
+      title: 'Pinned currency change threshold',
+      type: 'number',
+      suggestionTip: 'A threshold of 2% is recommended.',
+      suggestion: new BigNumber(2),
+      units: '%',
+      decimalsLimit: 0,
+      description: (
+        <>
+          Percentage that controls the minimum change in exchange rate that will
+          trigger an update to pinned prices. This prevents the host from
+          changing prices too often.
+        </>
+      ),
+      // hidden: configViewMode === 'basic',
+      validation: {
+        validate: {
+          required: requiredIfPinningEnabled(validationContext),
+          max: requiredIfPinningEnabled(
+            validationContext,
+            (value) =>
+              new BigNumber(value as BigNumber).lte(100) ||
+              `must be at most 100%`
+          ),
+          min: requiredIfPinningEnabled(
+            validationContext,
+            (value) =>
+              new BigNumber(value as BigNumber).gte(0) || `must be at least 0%`
+          ),
+        },
+      },
+    },
+    forexEndpointURL: {
+      category: 'pinning',
+      type: 'text',
+      title: 'Forex endpoint URL',
+      placeholder: 'https://api.siascan.com/exchange-rate/siacoin',
+      suggestion: 'https://api.siascan.com/exchange-rate/siacoin',
+      suggestionTip: 'SiaScan provides an exchange rate endpoint.',
+      description: (
+        <Text className="flex flex-col gap-2">
+          <Text color="subtle" size="14">
+            Endpoint for fetching exchange rates. The endpoint URL should allow
+            appending a currency code to the URL and the endpoint response
+            should be a single number representing the exchange rate. For
+            example, the SiaScan exchange rate endpoint:
+          </Text>
+          <Text color="contrast">
+            https://api.siascan.com/exchange-rate/siacoin
+          </Text>
+          <Link
+            color="subtle"
+            target="_blank"
+            href={'https://api.siascan.com/exchange-rate/siacoin/usd'}
+          >
+            https://api.siascan.com/exchange-rate/siacoin/usd
+          </Link>
+          <Link
+            color="subtle"
+            target="_blank"
+            href={'https://api.siascan.com/exchange-rate/siacoin/jpy'}
+          >
+            https://api.siascan.com/exchange-rate/siacoin/jpy
+          </Link>
+        </Text>
+      ),
+      validation: {
+        validate: {
+          required: requiredIfPinningEnabled(validationContext),
+        },
+      },
+    },
   }
 }
 
@@ -794,6 +1093,23 @@ function requiredIfAutopilotAndAdvanced<Values>(
 ) {
   return (value: unknown, values: Values) => {
     if (context.isAutopilotEnabled && context.configViewMode === 'advanced') {
+      if (method) {
+        return method(value, values)
+      }
+      return !!value || 'required'
+    }
+    return true
+  }
+}
+
+function requiredIfPinningEnabled<Values>(
+  context: {
+    pinningEnabled: boolean
+  },
+  method?: (value: unknown, values: Values) => string | boolean
+) {
+  return (value: unknown, values: Values) => {
+    if (context.pinningEnabled) {
       if (method) {
         return method(value, values)
       }

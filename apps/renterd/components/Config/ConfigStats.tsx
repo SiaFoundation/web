@@ -8,14 +8,15 @@ import {
 import { TBToBytes, humanBytes, toHastings } from '@siafoundation/units'
 import { useConfig } from '../../contexts/config'
 import { useApp } from '../../contexts/app'
+import { useEstimatedSpending } from './useEstimatedSpending'
 
 export function ConfigStats() {
   const { autopilot } = useApp()
-  const { estimates, redundancyMultiplier, storageTB, configViewMode } =
-    useConfig()
+  const { redundancyMultiplier, storageTB, configViewMode } = useConfig()
 
   const { canEstimate, estimatedSpendingPerMonth, estimatedSpendingPerTB } =
-    estimates
+    useEstimatedSpending()
+
   const perMonth = useSiacoinFiat({ sc: estimatedSpendingPerMonth })
   const perTB = useSiacoinFiat({ sc: estimatedSpendingPerTB })
 
