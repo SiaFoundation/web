@@ -1,8 +1,8 @@
 import { TestnetWarningBanner } from '@siafoundation/design-system'
-import { useStateHost } from '@siafoundation/hostd-react'
+import { useConsensusNetwork } from '@siafoundation/hostd-react'
 
 export function HostdTestnetWarningBanner() {
-  const host = useStateHost({
+  const host = useConsensusNetwork({
     config: {
       swr: {
         revalidateOnFocus: false,
@@ -10,9 +10,9 @@ export function HostdTestnetWarningBanner() {
     },
   })
 
-  if (!host.data || host.data.network === 'Mainnet') {
+  if (!host.data || host.data.name === 'mainnet') {
     return null
   }
 
-  return <TestnetWarningBanner testnetName={host.data.network} />
+  return <TestnetWarningBanner testnetName={host.data.name} />
 }

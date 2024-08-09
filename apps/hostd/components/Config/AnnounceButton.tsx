@@ -10,7 +10,7 @@ import { useDialog } from '../../contexts/dialog'
 import {
   useSettings,
   useSettingsAnnounce,
-  useStateHost,
+  useHostState,
   useTxPoolFee,
 } from '@siafoundation/hostd-react'
 import { humanSiacoin } from '@siafoundation/units'
@@ -21,7 +21,7 @@ export function AnnounceButton() {
   const { openConfirmDialog } = useDialog()
   const txpoolFee = useTxPoolFee()
   const settingsAnnounce = useSettingsAnnounce()
-  const host = useStateHost()
+  const host = useHostState()
   const settings = useSettings({
     config: {
       swr: {

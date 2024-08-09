@@ -7,8 +7,10 @@ import {
 } from '@siafoundation/design-system'
 import {
   useSettings,
-  useStateHost,
+  useHostState,
   useSyncerPeers,
+  useWallet,
+  useConsensusNetwork,
 } from '@siafoundation/hostd-react'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
 import { useDialog } from '../../contexts/dialog'
@@ -17,7 +19,21 @@ import { humanTime } from '@siafoundation/units'
 
 export function Profile() {
   const { openDialog } = useDialog()
-  const state = useStateHost({
+  const state = useHostState({
+    config: {
+      swr: {
+        revalidateOnFocus: false,
+      },
+    },
+  })
+  const wallet = useWallet({
+    config: {
+      swr: {
+        revalidateOnFocus: false,
+      },
+    },
+  })
+  const network = useConsensusNetwork({
     config: {
       swr: {
         revalidateOnFocus: false,
@@ -94,7 +110,7 @@ export function Profile() {
           <ValueCopyable
             size="14"
             maxLength={24}
-            value={state.data?.walletAddress}
+            value={wallet.data?.address}
             type="address"
           />
         </div>
@@ -114,7 +130,7 @@ export function Profile() {
           Network
         </Label>
         <div className="flex-1 flex justify-end overflow-hidden">
-          <Text size="14">{state.data?.network}</Text>
+          <Text size="14">{network.data?.name}</Text>
         </div>
       </div>
       <div className="flex gap-2 justify-between items-center">

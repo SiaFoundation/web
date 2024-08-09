@@ -7,6 +7,7 @@ import {
   useWalletEvents,
   useWalletEventsUnconfirmed,
 } from '@siafoundation/walletd-react'
+import { getEventContractId, getEventFee } from '@siafoundation/units'
 import { createContext, useContext, useMemo } from 'react'
 import {
   CellContext,
@@ -20,7 +21,6 @@ import { useRouter } from 'next/router'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
-import { getContractId, getFee } from './utils'
 import { calculateScValue, calculateSfValue } from './transactionValue'
 
 const defaultLimit = 100
@@ -65,7 +65,7 @@ export function useEventsMain() {
     const dataTxPool: EventData[] = responseTxPool.data.map((e) => {
       const amountSc = calculateScValue(e)
       const amountSf = calculateSfValue(e)
-      const fee = getFee(e)
+      const fee = getEventFee(e)
       const event: EventData = {
         id: e.id,
         timestamp: 0,
@@ -81,8 +81,8 @@ export function useEventsMain() {
     const dataEvents: EventData[] = responseEvents.data.map((e) => {
       const amountSc = calculateScValue(e)
       const amountSf = calculateSfValue(e)
-      const fee = getFee(e)
-      const contractId = getContractId(e)
+      const fee = getEventFee(e)
+      const contractId = getEventContractId(e)
       const isMature = e.maturityHeight <= syncStatus.nodeBlockHeight
       const res: EventData = {
         id: e.id,

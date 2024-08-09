@@ -10,6 +10,7 @@ import {
   SiafundElement,
   Transaction,
   V2Transaction,
+  Address,
 } from '@siafoundation/types'
 import {
   WalletEvent,
@@ -162,13 +163,17 @@ export type WalletBalanceResponse = {
   siafunds: number
 }
 
+export type WalletdWalletEvent = WalletEvent & {
+  relevant: Address[]
+}
+
 export type WalletEventsParams = { id: string; offset: number; limit: number }
 export type WalletEventsPayload = void
-export type WalletEventsResponse = WalletEvent[]
+export type WalletEventsResponse = WalletdWalletEvent[]
 
 export type WalletEventsUnconfirmedParams = { id: string }
 export type WalletEventsUnconfirmedPayload = void
-export type WalletEventsUnconfirmedResponse = WalletEvent[]
+export type WalletEventsUnconfirmedResponse = WalletdWalletEvent[]
 
 export type WalletOutputsSiacoinParams = { id: string }
 export type WalletOutputsSiacoinPayload = void

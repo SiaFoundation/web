@@ -8,7 +8,8 @@
     "bignumber.js": "^9.0.2",
     "@technically/lodash": "^4.17.0",
     "blakejs": "^1.2.1",
-    "@siafoundation/sia-central-types": "0.1.1"
+    "@siafoundation/sia-central-types": "0.1.1",
+    "@siafoundation/types": "0.4.0"
   },
   "types": "./src/index.d.ts"
 }

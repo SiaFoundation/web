@@ -5,12 +5,21 @@ import {
   AlertsParams,
   AlertsPayload,
   AlertsResponse,
+  ConsensusTipParams,
+  ConsensusTipPayload,
+  ConsensusTipResponse,
+  ConsensusTipStateParams,
+  ConsensusTipStatePayload,
+  ConsensusTipStateResponse,
   ContractsIntegrityCheckParams,
   ContractsIntegrityCheckPayload,
   ContractsIntegrityCheckResponse,
   ContractsParams,
   ContractsPayload,
   ContractsResponse,
+  IndexTipParams,
+  IndexTipPayload,
+  IndexTipResponse,
   LogsSearchParams,
   LogsSearchPayload,
   LogsSearchResponse,
@@ -32,12 +41,9 @@ import {
   SettingsUpdateParams,
   SettingsUpdatePayload,
   SettingsUpdateResponse,
-  StateConsensusParams,
-  StateConsensusPayload,
-  StateConsensusResponse,
-  StateHostParams,
-  StateHostPayload,
-  StateHostResponse,
+  HostStateParams,
+  HostStatePayload,
+  HostStateResponse,
   SyncerConnectParams,
   SyncerConnectPayload,
   SyncerConnectResponse,
@@ -74,6 +80,9 @@ import {
   VolumesParams,
   VolumesPayload,
   VolumesResponse,
+  WalletEventsParams,
+  WalletEventsPayload,
+  WalletEventsResponse,
   WalletParams,
   WalletPayload,
   WalletPendingParams,
@@ -83,21 +92,20 @@ import {
   WalletSendParams,
   WalletSendPayload,
   WalletSendResponse,
-  WalletTransactionsParams,
-  WalletTransactionsPayload,
-  WalletTransactionsResponse,
   alertsDismissRoute,
   alertsRoute,
+  consensusTipRoute,
+  consensusTipStateRoute,
   contractsIdIntegrityRoute,
   contractsRoute,
+  indexTipRoute,
   logEntriesRoute,
   metricsIntervalRoute,
   metricsRoute,
   settingsAnnounceRoute,
   settingsDdnsUpdateRoute,
   settingsRoute,
-  stateConsensusRoute,
-  stateHostRoute,
+  hostStateRoute,
   syncerPeersRoute,
   systemDirRoute,
   tpoolFeeRoute,
@@ -105,10 +113,10 @@ import {
   volumesIdResizeRoute,
   volumesIdRoute,
   volumesRoute,
+  walletEventsRoute,
   walletPendingRoute,
   walletRoute,
   walletSendRoute,
-  walletTransactionsRoute,
 } from '@siafoundation/hostd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 
@@ -117,15 +125,25 @@ export function Hostd({ api, password }: { api: string; password?: string }) {
   return {
     axios,
     stateHost: buildRequestHandler<
-      StateHostParams,
-      StateHostPayload,
-      StateHostResponse
-    >(axios, 'get', stateHostRoute),
-    stateConsensus: buildRequestHandler<
-      StateConsensusParams,
-      StateConsensusPayload,
-      StateConsensusResponse
-    >(axios, 'get', stateConsensusRoute),
+      HostStateParams,
+      HostStatePayload,
+      HostStateResponse
+    >(axios, 'get', hostStateRoute),
+    consensusTip: buildRequestHandler<
+      ConsensusTipParams,
+      ConsensusTipPayload,
+      ConsensusTipResponse
+    >(axios, 'get', consensusTipRoute),
+    consensusTipState: buildRequestHandler<
+      ConsensusTipStateParams,
+      ConsensusTipStatePayload,
+      ConsensusTipStateResponse
+    >(axios, 'get', consensusTipStateRoute),
+    indexTip: buildRequestHandler<
+      IndexTipParams,
+      IndexTipPayload,
+      IndexTipResponse
+    >(axios, 'get', indexTipRoute),
     syncerPeers: buildRequestHandler<
       SyncerPeersParams,
       SyncerPeersPayload,
@@ -141,16 +159,16 @@ export function Hostd({ api, password }: { api: string; password?: string }) {
       'get',
       walletRoute
     ),
-    walletTransactions: buildRequestHandler<
-      WalletTransactionsParams,
-      WalletTransactionsPayload,
-      WalletTransactionsResponse
-    >(axios, 'get', walletTransactionsRoute),
     walletPending: buildRequestHandler<
       WalletPendingParams,
       WalletPendingPayload,
       WalletPendingResponse
     >(axios, 'get', walletPendingRoute),
+    walletEvents: buildRequestHandler<
+      WalletEventsParams,
+      WalletEventsPayload,
+      WalletEventsResponse
+    >(axios, 'get', walletEventsRoute),
     walletSend: buildRequestHandler<
       WalletSendParams,
       WalletSendPayload,
