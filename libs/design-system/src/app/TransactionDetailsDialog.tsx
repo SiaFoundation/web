@@ -1,18 +1,20 @@
 import { Codeblock } from '../core/Codeblock'
 import { Text } from '../core/Text'
 import { ValueSc } from '../components/ValueSc'
-import { humanDate } from '@siafoundation/units'
+import { getEventLabel, humanDate } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import { Dialog } from '../core/Dialog'
 import { getTitleId } from '../lib/utils'
-import { Transaction } from '@siafoundation/types'
+import { Transaction, WalletEventType } from '@siafoundation/types'
 import { getTxTypeLabel, TxType } from '../lib/entityTypes'
 import { upperFirst } from '@technically/lodash'
 
 type Props = {
   id: string
   transaction?: {
-    txType: TxType
+    // deprecated
+    txType?: TxType
+    type?: WalletEventType
     inflow?: string
     outflow?: string
     timestamp?: string | number
@@ -33,7 +35,9 @@ export function TransactionDetailsDialog({
   return (
     <Dialog
       title={getTitleId(
-        transaction?.txType
+        transaction?.type
+          ? getEventLabel(transaction.type)
+          : transaction?.txType
           ? upperFirst(getTxTypeLabel(transaction.txType))
           : 'Transaction',
         id,

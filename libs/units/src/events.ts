@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
-import { WalletEvent } from '@siafoundation/walletd-types'
+import { WalletEvent, WalletEventType } from '@siafoundation/types'
 
-export function getFee(e: WalletEvent) {
+export function getEventFee(e: WalletEvent) {
   if (e.type === 'v2Transaction') {
     return new BigNumber(e.data.minerFee)
   }
@@ -10,7 +10,7 @@ export function getFee(e: WalletEvent) {
     : undefined
 }
 
-export function getContractId(e: WalletEvent) {
+export function getEventContractId(e: WalletEvent) {
   if (e.type === 'v1ContractResolution') {
     return e.data.parent.id
   }
@@ -20,7 +20,7 @@ export function getContractId(e: WalletEvent) {
   return undefined
 }
 
-export function eventTypeToLabel(type: WalletEvent['type']) {
+export function getEventLabel(type: WalletEventType) {
   if (type === 'v1Transaction') {
     return 'v1 transaction'
   }

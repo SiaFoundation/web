@@ -8,9 +8,9 @@ import { SettingsData } from './types'
 import { transformUpSettings, transformUpSettingsPinned } from './transform'
 import { Resources } from './resources'
 import {
+  useHostState,
   useSettingsPinnedUpdate,
   useSettingsUpdate,
-  useStateHost,
 } from '@siafoundation/hostd-react'
 
 export function useOnValid({
@@ -20,16 +20,15 @@ export function useOnValid({
   resources: Resources
   revalidateAndResetForm: () => Promise<void>
 }) {
-  const state = useStateHost()
-  const settingsUpdate = useSettingsUpdate()
-  const settingsPinnedUpdate = useSettingsPinnedUpdate()
-  const host = useStateHost({
+  const state = useHostState({
     config: {
       swr: {
         refreshInterval: minutesInMilliseconds(1),
       },
     },
   })
+  const settingsUpdate = useSettingsUpdate()
+  const settingsPinnedUpdate = useSettingsPinnedUpdate()
   const onValid = useCallback(
     async (values: SettingsData) => {
       if (!resources) {
@@ -60,7 +59,7 @@ export function useOnValid({
         }
 
         const needsToAnnounce =
-          host.data?.lastAnnouncement?.address !== values.netAddress
+          state.data?.lastAnnouncement?.address !== values.netAddress
         if (needsToAnnounce) {
           triggerSuccessToast({
             title: 'Settings have been saved',
@@ -86,7 +85,6 @@ export function useOnValid({
       settingsUpdate,
       settingsPinnedUpdate,
       revalidateAndResetForm,
-      host.data,
       state.data,
     ]
   )
