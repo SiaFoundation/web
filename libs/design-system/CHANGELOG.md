@@ -1,5 +1,24 @@
 # Changelog
 
+## 4.6.0
+
+### Minor Changes
+
+- 6ad3f2f9: Added font and tipSide props to ValueFiat. Component also now uses existing extendedSuffix prop.
+- 6ad3f2f9: Added an objectEntries method, a typesafe Object.entries.
+- 6ad3f2f9: FieldFiat input is now a unified control with focus and other states including both the input and read-only siacoin value.
+- 6ad3f2f9: Renamed toFixMax and added BigNumber and Number variants.
+- 6ad3f2f9: Added font prop to ValueSc.
+- 6ad3f2f9: Added a TipText.
+- 6ad3f2f9: Added an autoVisibility prop to ConfigurationPanelSetting.
+- 6ad3f2f9: Form configuration tips now follow currency display settings.
+- 6ad3f2f9: Slightly widened the width of form configuration fields.
+- 6ad3f2f9: Form field inputs no longer trigger setValue on blur.
+- 6ad3f2f9: Added font and tipSide props to ValueScFiat.
+- 6ad3f2f9: Added ellipsis prop to Code.
+- 6ad3f2f9: Added formSetField and formSetFields convenience methods for working with ConfigFields form data.
+- 6ad3f2f9: The ConfigField type now supports a custom suggestionLabel property.
+
 ## 4.5.0
 
 ### Minor Changes

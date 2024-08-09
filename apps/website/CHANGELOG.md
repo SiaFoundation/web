@@ -1,5 +1,11 @@
 # website
 
+## 0.53.1
+
+### Patch Changes
+
+- b9ad7b87: The testnet prefix label was removed from the walletd downloads. Closes https://github.com/SiaFoundation/web/issues/667
+
 ## 0.53.0
 
 ### Minor Changes

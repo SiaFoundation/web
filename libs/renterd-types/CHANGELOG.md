@@ -1,5 +1,11 @@
 # @siafoundation/renterd-types
 
+## 0.4.0
+
+### Minor Changes
+
+- bffe101c: Add price pinning configuration API.
+
 ## 0.3.0
 
 ### Minor Changes
