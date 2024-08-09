@@ -1,5 +1,16 @@
 # @siafoundation/renterd-react
 
+## 4.4.0
+
+### Minor Changes
+
+- bffe101c: Add price pinning configuration API.
+
+### Patch Changes
+
+- Updated dependencies [bffe101c]
+  - @siafoundation/renterd-types@0.4.0
+
 ## 4.3.0
 
 ### Minor Changes
