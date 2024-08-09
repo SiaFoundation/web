@@ -1,4 +1,4 @@
-import { EntityType } from '../lib/entityTypes'
+import { EntityType } from '@siafoundation/units'
 import { EntityAvatar } from './EntityAvatar'
 import { cx } from 'class-variance-authority'
 

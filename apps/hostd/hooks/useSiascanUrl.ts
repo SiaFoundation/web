@@ -1,9 +1,9 @@
 import { webLinks } from '@siafoundation/design-system'
-import { useStateHost } from '@siafoundation/hostd-react'
+import { useConsensusNetwork } from '@siafoundation/hostd-react'
 
 export function useSiascanUrl() {
-  const state = useStateHost()
-  return state.data?.network === 'Zen Testnet'
+  const state = useConsensusNetwork()
+  return state.data?.name === 'zen'
     ? webLinks.explore.testnetZen
     : webLinks.explore.mainnet
 }

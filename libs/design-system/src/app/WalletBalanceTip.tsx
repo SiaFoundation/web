@@ -14,6 +14,7 @@ export function WalletBalanceTip({
     unconfirmed: BigNumber
     confirmed: BigNumber
     spendable: BigNumber
+    immature?: BigNumber
   }
   children: React.ReactNode
 }) {
@@ -39,6 +40,26 @@ export function WalletBalanceTip({
               />
             </div>
           </div>
+          {balanceSc.immature && (
+            <>
+              <Separator className="w-full" />
+              <div className="flex gap-4">
+                <div className="flex flex-col flex-1">
+                  <Text>immature</Text>
+                  <Text color="subtle">
+                    All confirmed but still locked outputs.
+                  </Text>
+                </div>
+                <div className="flex justify-end">
+                  <ValueScFiat
+                    displayBoth
+                    variant="value"
+                    value={balanceSc.unconfirmed}
+                  />
+                </div>
+              </div>
+            </>
+          )}
           <Separator className="w-full" />
           <div className="flex gap-4">
             <div className="flex flex-col flex-1">

@@ -8,8 +8,8 @@ import {
 } from '../fixtures/volumes'
 
 test('can create and delete a volume', async ({ page }) => {
-  const name = 'my-new-bucket'
-  const path = '/tmp'
+  const name = 'my-new-volume'
+  const path = '/data'
   await login({ page })
   await navigateToVolumes({ page })
   await deleteVolumeIfExists(page, name, path)

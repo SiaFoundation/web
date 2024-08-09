@@ -17,7 +17,7 @@ import {
   checkIfAnyResourcesErrored,
 } from './resources'
 import { useOnValid } from './useOnValid'
-import { useStateHost } from '@siafoundation/hostd-react'
+import { useHostState } from '@siafoundation/hostd-react'
 
 export function useConfigMain() {
   const { settings, settingsPinned, dynDNSCheck } = useResources()
@@ -54,7 +54,7 @@ export function useConfigMain() {
     [resources]
   )
 
-  const state = useStateHost()
+  const state = useHostState()
   const pinningEnabled = state.data?.explorer.enabled
   const revalidateAndResetForm = useCallback(async () => {
     const _settings = await settings.mutate()

@@ -3,7 +3,6 @@ import {
   ConfigurationPanel,
   PanelMenuSection,
   PanelMenuSetting,
-  Separator,
   FieldSwitch,
   ConfigurationPanelSetting,
   shouldShowField,
@@ -73,26 +72,18 @@ export function Config() {
             form={form}
           />
           <PanelMenuSection title="Pricing">
-            {shouldShowField({ form, fields, name: 'pinnedCurrency' }) && (
-              <>
-                <ConfigurationPanelSetting
-                  name="pinnedCurrency"
-                  form={form}
-                  fields={fields}
-                />
-                <Separator className="w-full my-3" />
-              </>
-            )}
-            {shouldShowField({ form, fields, name: 'pinnedThreshold' }) && (
-              <>
-                <ConfigurationPanelSetting
-                  form={form}
-                  fields={fields}
-                  name="pinnedThreshold"
-                />
-                <Separator className="w-full my-3" />
-              </>
-            )}
+            <ConfigurationPanelSetting
+              autoVisibility
+              name="pinnedCurrency"
+              form={form}
+              fields={fields}
+            />
+            <ConfigurationPanelSetting
+              autoVisibility
+              form={form}
+              fields={fields}
+              name="pinnedThreshold"
+            />
             <PanelMenuSetting
               id="storagePriceGroup"
               title="Storage price"
@@ -143,7 +134,6 @@ export function Config() {
                 </div>
               }
             />
-            <Separator className="w-full my-3" />
             <PanelMenuSetting
               id="egressPriceGroup"
               title="Egress price"
@@ -194,7 +184,6 @@ export function Config() {
                 </div>
               }
             />
-            <Separator className="w-full my-3" />
             <PanelMenuSetting
               id="ingressPriceGroup"
               title="Ingress price"
@@ -245,7 +234,6 @@ export function Config() {
                 </div>
               }
             />
-            <Separator className="w-full my-3" />
             <ConfigurationPanelSetting
               name="collateralMultiplier"
               form={form}
@@ -256,116 +244,81 @@ export function Config() {
               fields,
               name: 'maxCollateral',
             }) && (
-              <>
-                <Separator className="w-full my-3" />
-                <PanelMenuSetting
-                  id="maxCollateralGroup"
-                  title="Max collateral"
-                  description={fields.maxCollateral.description}
-                  control={
-                    <div className="flex flex-col gap-1 w-[250px]">
-                      {shouldShowField({
-                        form,
-                        fields,
-                        name: 'shouldPinMaxCollateral',
-                      }) && (
-                        <Tooltip
-                          align="end"
-                          content="Pin the value to a fixed fiat amount. The daemon will automatically keep the value in sync."
-                        >
-                          <div className="flex w-full justify-between">
-                            <Text weight="medium" color="verySubtle" size="14">
-                              Pin
-                            </Text>
-                            <FieldSwitch
-                              name="shouldPinMaxCollateral"
-                              form={form}
-                              fields={fields}
-                              size="small"
-                              group={false}
-                            />
-                          </div>
-                        </Tooltip>
-                      )}
-                      {shouldShowField({
-                        form,
-                        fields,
-                        name: 'shouldPinMaxCollateral',
-                      }) && shouldPinMaxCollateral ? (
-                        <ConfigurationFiat
-                          name="maxCollateralPinned"
-                          form={form}
-                          fields={fields}
-                          currency={pinnedCurrency}
-                        />
-                      ) : (
-                        <ConfigurationSiacoin
-                          name="maxCollateral"
-                          form={form}
-                          fields={fields}
-                        />
-                      )}
-                    </div>
-                  }
-                />
-              </>
+              <PanelMenuSetting
+                id="maxCollateralGroup"
+                title="Max collateral"
+                description={fields.maxCollateral.description}
+                control={
+                  <div className="flex flex-col gap-1 w-[250px]">
+                    {shouldShowField({
+                      form,
+                      fields,
+                      name: 'shouldPinMaxCollateral',
+                    }) && (
+                      <Tooltip
+                        align="end"
+                        content="Pin the value to a fixed fiat amount. The daemon will automatically keep the value in sync."
+                      >
+                        <div className="flex w-full justify-between">
+                          <Text weight="medium" color="verySubtle" size="14">
+                            Pin
+                          </Text>
+                          <FieldSwitch
+                            name="shouldPinMaxCollateral"
+                            form={form}
+                            fields={fields}
+                            size="small"
+                            group={false}
+                          />
+                        </div>
+                      </Tooltip>
+                    )}
+                    {shouldShowField({
+                      form,
+                      fields,
+                      name: 'shouldPinMaxCollateral',
+                    }) && shouldPinMaxCollateral ? (
+                      <ConfigurationFiat
+                        name="maxCollateralPinned"
+                        form={form}
+                        fields={fields}
+                        currency={pinnedCurrency}
+                      />
+                    ) : (
+                      <ConfigurationSiacoin
+                        name="maxCollateral"
+                        form={form}
+                        fields={fields}
+                      />
+                    )}
+                  </div>
+                }
+              />
             )}
-            {shouldShowField({
-              form,
-              fields,
-              name: 'contractPrice',
-            }) && (
-              <>
-                <Separator className="w-full my-3" />
-                <ConfigurationPanelSetting
-                  form={form}
-                  fields={fields}
-                  name="contractPrice"
-                />
-              </>
-            )}
-            {shouldShowField({
-              form,
-              fields,
-              name: 'baseRPCPrice',
-            }) && (
-              <>
-                <Separator className="w-full my-3" />
-                <ConfigurationPanelSetting
-                  form={form}
-                  fields={fields}
-                  name="baseRPCPrice"
-                />
-              </>
-            )}
-            {shouldShowField({
-              form,
-              fields,
-              name: 'sectorAccessPrice',
-            }) && (
-              <>
-                <Separator className="w-full my-3" />
-                <ConfigurationPanelSetting
-                  form={form}
-                  fields={fields}
-                  name="sectorAccessPrice"
-                />
-              </>
-            )}
-            {shouldShowField({
-              form,
-              fields,
-              name: 'priceTableValidity',
-            }) && (
-              <>
-                <Separator className="w-full my-3" />
-                <ConfigurationPanelSetting
-                  form={form}
-                  fields={fields}
-                  name="priceTableValidity"
-                />
-              </>
-            )}
+            <ConfigurationPanelSetting
+              autoVisibility
+              form={form}
+              fields={fields}
+              name="contractPrice"
+            />
+            <ConfigurationPanelSetting
+              autoVisibility
+              form={form}
+              fields={fields}
+              name="baseRPCPrice"
+            />
+            <ConfigurationPanelSetting
+              autoVisibility
+              form={form}
+              fields={fields}
+              name="sectorAccessPrice"
+            />
+            <ConfigurationPanelSetting
+              autoVisibility
+              form={form}
+              fields={fields}
+              name="priceTableValidity"
+            />
           </PanelMenuSection>
           <ConfigurationPanel
             title="DNS"

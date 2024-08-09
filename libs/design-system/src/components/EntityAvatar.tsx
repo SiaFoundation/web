@@ -3,7 +3,7 @@
 import { Avatar } from '../core/Avatar'
 import { Link } from '../core/Link'
 import { Tooltip } from '../core/Tooltip'
-import { EntityType, getEntityTypeLabel } from '../lib/entityTypes'
+import { EntityType, getEntityTypeLabel } from '@siafoundation/units'
 
 type Props = {
   initials?: string

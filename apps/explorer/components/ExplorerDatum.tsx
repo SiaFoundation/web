@@ -3,11 +3,11 @@ import {
   ValueSf,
   ValueSc,
   ValueCopyable,
-  EntityType,
 } from '@siafoundation/design-system'
 import BigNumber from 'bignumber.js'
 import { upperFirst } from '@technically/lodash'
 import { getHref } from '../lib/utils'
+import { EntityType } from '@siafoundation/units'
 
 // entityType&entityValue | value | values | sc | sf
 export type DatumProps = {

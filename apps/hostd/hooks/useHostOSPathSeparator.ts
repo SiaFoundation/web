@@ -1,7 +1,7 @@
-import { useStateHost } from '@siafoundation/hostd-react'
+import { useHostState } from '@siafoundation/hostd-react'
 
 export function useHostOSPathSeparator() {
-  const state = useStateHost({
+  const state = useHostState({
     config: {
       swr: {
         revalidateOnFocus: false,

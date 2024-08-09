@@ -3,7 +3,7 @@ import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
 import { useDialog } from '../../contexts/dialog'
 import { CommandGroup, CommandItemNav, CommandItemSearch } from './Item'
-import { useStateHost } from '@siafoundation/hostd-react'
+import { useWallet } from '@siafoundation/hostd-react'
 import { Page } from './types'
 
 const commandPage = {
@@ -20,7 +20,7 @@ type Props = {
 export function WalletCmdGroup({ currentPage, parentPage, pushPage }: Props) {
   const { openDialog, closeDialog } = useDialog()
   const router = useRouter()
-  const state = useStateHost({
+  const wallet = useWallet({
     config: {
       swr: {
         revalidateOnFocus: false,
@@ -81,7 +81,7 @@ export function WalletCmdGroup({ currentPage, parentPage, pushPage }: Props) {
         currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
-          copyToClipboard(state.data?.walletAddress, 'wallet address')
+          copyToClipboard(wallet.data?.address, 'wallet address')
           closeDialog()
         }}
       >
