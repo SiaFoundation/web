@@ -46,10 +46,8 @@ import {
   SettingsUpdateParams,
   SettingsUpdatePayload,
   SettingsUpdateResponse,
-  StateConsensusParams,
-  StateConsensusResponse,
-  StateHostParams,
-  StateHostResponse,
+  HostStateParams,
+  HostStateResponse,
   SyncerConnectParams,
   SyncerConnectPayload,
   SyncerConnectResponse,
@@ -88,8 +86,6 @@ import {
   WalletSendParams,
   WalletSendPayload,
   WalletSendResponse,
-  WalletTransactionsParams,
-  WalletTransactionsResponse,
   alertsDismissRoute,
   alertsRoute,
   contractsIdIntegrityRoute,
@@ -100,8 +96,7 @@ import {
   settingsAnnounceRoute,
   settingsDdnsUpdateRoute,
   settingsRoute,
-  stateConsensusRoute,
-  stateHostRoute,
+  hostStateRoute,
   syncerPeersRoute,
   systemDirRoute,
   tpoolFeeRoute,
@@ -112,7 +107,21 @@ import {
   walletPendingRoute,
   walletRoute,
   walletSendRoute,
-  walletTransactionsRoute,
+  ConsensusNetworkParams,
+  ConsensusNetworkResponse,
+  consensusNetworkRoute,
+  IndexTipParams,
+  IndexTipResponse,
+  indexTipRoute,
+  ConsensusTipParams,
+  ConsensusTipResponse,
+  ConsensusTipStateResponse,
+  ConsensusTipStateParams,
+  consensusTipStateRoute,
+  consensusTipRoute,
+  WalletEventsParams,
+  WalletEventsResponse,
+  walletEventsRoute,
 } from '@siafoundation/hostd-types'
 import {
   getMainnetBlockHeight,
@@ -121,26 +130,53 @@ import {
 
 // state
 
-export function useStateHost(
-  args?: HookArgsSwr<StateHostParams, StateHostResponse>
+export function useHostState(
+  args?: HookArgsSwr<HostStateParams, HostStateResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: stateHostRoute,
+    route: hostStateRoute,
   })
 }
 
-export function useStateConsensus(
-  args?: HookArgsSwr<StateConsensusParams, StateConsensusResponse>
+export function useConsensusTip(
+  args?: HookArgsSwr<ConsensusTipParams, ConsensusTipResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: stateConsensusRoute,
+    route: consensusTipRoute,
+  })
+}
+
+export function useConsensusTipState(
+  args?: HookArgsSwr<ConsensusTipStateParams, ConsensusTipStateResponse>
+) {
+  return useGetSwr({
+    ...args,
+    route: consensusTipStateRoute,
+  })
+}
+
+export function useConsensusNetwork(
+  args?: HookArgsSwr<ConsensusNetworkParams, ConsensusNetworkResponse>
+) {
+  return useGetSwr({
+    ...args,
+    route: consensusNetworkRoute,
+  })
+}
+
+export function useIndexTip(
+  args?: HookArgsSwr<IndexTipParams, IndexTipResponse>
+) {
+  return useGetSwr({
+    ...args,
+    route: indexTipRoute,
   })
 }
 
 export function useEstimatedNetworkBlockHeight(): number {
-  const state = useStateHost({
+  const state = useConsensusNetwork({
     config: {
       swr: {
         revalidateOnFocus: false,
@@ -150,7 +186,7 @@ export function useEstimatedNetworkBlockHeight(): number {
   const res = useSWR(
     state,
     () => {
-      if (state.data?.network === 'Zen Testnet') {
+      if (state.data?.name === 'zen') {
         return getTestnetZenBlockHeight()
       }
       return getMainnetBlockHeight()
@@ -201,12 +237,12 @@ export function useWallet(args?: HookArgsSwr<WalletParams, WalletResponse>) {
   })
 }
 
-export function useWalletTransactions(
-  args?: HookArgsSwr<WalletTransactionsParams, WalletTransactionsResponse>
+export function useWalletEvents(
+  args?: HookArgsSwr<WalletEventsParams, WalletEventsResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: walletTransactionsRoute,
+    route: walletEventsRoute,
   })
 }
 
@@ -311,7 +347,7 @@ export function useSettingsUpdate(
 ) {
   return usePatchFunc({ ...args, route: settingsRoute }, async (mutate) => {
     await mutate((key) => {
-      return key.startsWith(settingsRoute) || key.startsWith(stateHostRoute)
+      return key.startsWith(settingsRoute) || key.startsWith(hostStateRoute)
     })
   })
 }

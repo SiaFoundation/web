@@ -9,7 +9,7 @@ import {
   getEntityTypeLabel,
   getTxTypeLabel,
   TxType,
-} from '../lib/entityTypes'
+} from '@siafoundation/units'
 import { humanNumber } from '@siafoundation/units'
 import { formatDistance } from 'date-fns'
 import { upperFirst } from '@technically/lodash'

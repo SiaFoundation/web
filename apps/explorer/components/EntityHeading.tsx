@@ -6,9 +6,9 @@ import {
   humanId,
   Button,
   Link,
-  EntityType,
 } from '@siafoundation/design-system'
 import { Copy16 } from '@siafoundation/react-icons'
+import { EntityType } from '@siafoundation/units'
 import { upperFirst } from '@technically/lodash'
 
 type Props = {

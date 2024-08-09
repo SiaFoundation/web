@@ -3,7 +3,7 @@ import {
   WalletEvent,
   WalletEventTransactionV1,
   WalletEventTransactionV2,
-} from '@siafoundation/walletd-types'
+} from '@siafoundation/types'
 
 export function calculateScValue(e: WalletEvent) {
   if (e.type === 'v2Transaction') {

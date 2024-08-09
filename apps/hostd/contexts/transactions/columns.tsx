@@ -8,7 +8,7 @@ import {
   Tooltip,
   Badge,
 } from '@siafoundation/design-system'
-import { getTxTypeLabel, humanDate } from '@siafoundation/units'
+import { humanDate, getTxTypeLabel } from '@siafoundation/units'
 import { CellContext, EventData, TableColumnId } from './types'
 import { Locked16, Unlocked16 } from '@siafoundation/react-icons'
 

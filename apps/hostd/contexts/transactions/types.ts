@@ -1,5 +1,5 @@
-import { WalletEventType } from '@siafoundation/types'
 import { TxType } from '@siafoundation/units'
+import { WalletEventType } from '@siafoundation/types'
 import BigNumber from 'bignumber.js'
 
 export type CellContext = {
@@ -24,7 +24,6 @@ export type EventData = {
 }
 
 export type TableColumnId =
-  // | 'actions'
   | 'transactionId'
   | 'type'
   | 'height'
@@ -35,7 +34,6 @@ export type TableColumnId =
   | 'contractId'
 
 export const columnsDefaultVisible: TableColumnId[] = [
-  // 'actions',
   'transactionId',
   'type',
   'height',
@@ -52,10 +50,4 @@ export const sortOptions: {
   id: SortField
   label: string
   category: string
-}[] = [
-  // {
-  //   id: 'address',
-  //   label: 'address',
-  //   category: 'general',
-  // },
-]
+}[] = []

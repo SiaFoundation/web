@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef } from 'react'
 import { getFields } from './fields'
 import useLocalStorageState from 'use-local-storage-state'
 import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
-import { useStateHost } from '@siafoundation/hostd-react'
+import { useHostState } from '@siafoundation/hostd-react'
 import { useAutoCalculatedFields } from './useAutoCalculatedFields'
 
 export function useForm() {
@@ -25,7 +25,7 @@ export function useForm() {
   })
 
   const rates = useSiaCentralExchangeRates()
-  const state = useStateHost()
+  const state = useHostState()
   const pinningEnabled = state.data?.explorer.enabled
   // Field validation is only re-applied on re-mount,
   // so we pass a ref with latest data that can be used interally.

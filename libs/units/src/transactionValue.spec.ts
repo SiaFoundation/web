@@ -1,6 +1,6 @@
-import { WalletEvent } from '@siafoundation/walletd-types'
 import { calculateScValue, calculateSfValue } from './transactionValue'
-import { toHastings } from '@siafoundation/units'
+import { toHastings } from './currency'
+import { WalletEvent } from '@siafoundation/types'
 
 test('v1TxnCalculateScValue', () => {
   const e: WalletEvent = {
@@ -62,7 +62,7 @@ test('v1TxnCalculateScValue', () => {
           },
         },
       ],
-      spentSiafundElements: null,
+      spentSiafundElements: undefined,
     },
     relevant: ['addr:1', 'addr:2'],
   }
@@ -95,8 +95,8 @@ test('v1TxnCalculateScValue when no relevant / spentSiacoinElements is null', ()
         minerFees: ['1000000000000000000000000'],
         signatures: [],
       },
-      spentSiacoinElements: null,
-      spentSiafundElements: null,
+      spentSiacoinElements: undefined,
+      spentSiafundElements: undefined,
     },
     relevant: ['addr:1'],
   }
@@ -193,7 +193,7 @@ test('v1TxnCalculateSfValue', () => {
         minerFees: ['1000000000000000000000000'],
         signatures: [],
       },
-      spentSiacoinElements: null,
+      spentSiacoinElements: undefined,
       spentSiafundElements: [
         {
           id: 'id-1',
@@ -258,8 +258,8 @@ test('v1TxnCalculateSfValue when no relevant / spentSiafundElements is null', ()
         minerFees: ['1000000000000000000000000'],
         signatures: [],
       },
-      spentSiacoinElements: null,
-      spentSiafundElements: null,
+      spentSiacoinElements: undefined,
+      spentSiafundElements: undefined,
     },
     relevant: ['addr:1'],
   }

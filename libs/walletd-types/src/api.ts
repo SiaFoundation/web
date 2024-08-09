@@ -10,14 +10,9 @@ import {
   SiafundElement,
   Transaction,
   V2Transaction,
-} from '@siafoundation/types'
-import {
   WalletEvent,
-  GatewayPeer,
-  Wallet,
-  WalletAddress,
-  WalletMetadata,
-} from './types'
+} from '@siafoundation/types'
+import { GatewayPeer, Wallet, WalletAddress, WalletMetadata } from './types'
 
 export const stateRoute = '/state'
 export const consensusTipRoute = '/consensus/tip'

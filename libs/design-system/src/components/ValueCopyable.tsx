@@ -14,7 +14,7 @@ import {
   getEntityTypeCopyLabel,
   formatEntityValue,
   defaultFormatValue,
-} from '../lib/entityTypes'
+} from '@siafoundation/units'
 import { cx } from 'class-variance-authority'
 import {
   DropdownMenu,

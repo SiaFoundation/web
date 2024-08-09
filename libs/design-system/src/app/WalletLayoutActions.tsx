@@ -12,6 +12,7 @@ type Props = {
     unconfirmed: BigNumber
     confirmed: BigNumber
     spendable: BigNumber
+    immature?: BigNumber
   }
   receiveSiacoin?: () => void
   sendSiacoin: () => void

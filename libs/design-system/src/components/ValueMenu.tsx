@@ -1,7 +1,7 @@
 import { Text } from '../core/Text'
 import { Link } from '../core/Link'
 import { stripPrefix } from '../lib/utils'
-import { EntityType, getEntityDisplayLength } from '../lib/entityTypes'
+import { EntityType, getEntityDisplayLength } from '@siafoundation/units'
 import { cx } from 'class-variance-authority'
 
 type Props = {

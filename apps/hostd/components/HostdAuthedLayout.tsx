@@ -27,6 +27,7 @@ export function HostdAuthedLayout(
         wallet.data && {
           spendable: new BigNumber(wallet.data.spendable),
           confirmed: new BigNumber(wallet.data.confirmed),
+          immature: new BigNumber(wallet.data.immature),
           unconfirmed: new BigNumber(wallet.data.unconfirmed),
         }
       }

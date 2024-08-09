@@ -32,6 +32,7 @@ type Props = {
     unconfirmed: BigNumber
     confirmed: BigNumber
     spendable: BigNumber
+    immature?: BigNumber
   }
   scroll?: boolean
   routes: {

@@ -1,7 +1,7 @@
-import { EntityType } from '@siafoundation/design-system'
 import { routes } from '../config/routes'
 import { Metadata } from 'next'
 import { siteName } from '../config'
+import { EntityType } from '@siafoundation/units'
 
 export function getHref(type: EntityType, value: string) {
   // block accepts blockhash as a value.

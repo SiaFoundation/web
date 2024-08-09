@@ -4,14 +4,18 @@ import {
   Currency,
   TransactionID,
   ChainIndex,
+  WalletEvent,
 } from '@siafoundation/types'
 import { Contract, ContractStatus, WalletTransaction } from './types'
 
-export const stateHostRoute = '/state/host'
-export const stateConsensusRoute = '/state/consensus'
+export const hostStateRoute = '/state'
+export const consensusNetworkRoute = '/consensus/network'
+export const consensusTipRoute = '/consensus/tip'
+export const consensusTipStateRoute = '/consensus/tipstate'
+export const indexTipRoute = '/index/tip'
 export const syncerPeersRoute = '/syncer/peers'
 export const walletRoute = '/wallet'
-export const walletTransactionsRoute = '/wallet/transactions'
+export const walletEventsRoute = '/wallet/events'
 export const walletPendingRoute = '/wallet/pending'
 export const walletSendRoute = '/wallet/send'
 export const tpoolFeeRoute = '/tpool/fee'
@@ -33,13 +37,11 @@ export const alertsDismissRoute = '/alerts/dismiss'
 
 // state
 
-export type StateHostParams = void
-export type StateHostPayload = void
-export type StateHostResponse = {
+export type HostStateParams = void
+export type HostStatePayload = void
+export type HostStateResponse = {
   name?: string
   publicKey: string
-  walletAddress: string
-  network: 'Mainnet' | 'Zen Testnet'
   version: string
   commit: string
   os: string
@@ -56,15 +58,74 @@ export type StateHostResponse = {
   }
 }
 
-export type StateConsensusParams = void
-export type StateConsensusPayload = void
-export type StateConsensusResponse = {
-  chainIndex: {
+export type ConsensusNetworkParams = void
+export type ConsensusNetworkPayload = void
+export type ConsensusNetworkResponse = {
+  name: 'mainnet' | 'zen'
+  initialCoinbase: string
+  minimumCoinbase: string
+  initialTarget: string
+  hardforkDevAddr: {
     height: number
-    id: string
+    oldAddress: string
+    newAddress: string
   }
-  synced: boolean
+  hardforkTax: {
+    height: number
+  }
+  hardforkStorageProof: {
+    height: number
+  }
+  hardforkOak: {
+    height: number
+    fixHeight: number
+    genesisTimestamp: string
+  }
+  hardforkASIC: {
+    height: number
+    oakTime: number
+    oakTarget: string
+  }
+  hardforkFoundation: {
+    height: number
+    primaryAddress: string
+    failsafeAddress: string
+  }
+  hardforkV2: {
+    allowHeight: number
+    requireHeight: number
+  }
 }
+
+export type ConsensusTipParams = void
+export type ConsensusTipPayload = void
+export type ConsensusTipResponse = ChainIndex
+
+export type ConsensusTipStateParams = void
+export type ConsensusTipStatePayload = void
+export type ConsensusTipStateResponse = {
+  index: ChainIndex
+  prevTimestamps: string[]
+  depth: string
+  childTarget: string
+  siafundPool: string
+  oakTime: number
+  oakTarget: string
+  foundationPrimaryAddress: string
+  foundationFailsafeAddress: string
+  totalWork: string
+  difficulty: string
+  oakWork: string
+  elements: {
+    numLeaves: number
+    trees: string[]
+  }
+  attestations: number
+}
+
+export type IndexTipParams = void
+export type IndexTipPayload = void
+export type IndexTipResponse = ChainIndex
 
 // syncer
 
@@ -86,20 +147,24 @@ export type SyncerConnectResponse = never
 export type WalletParams = void
 export type WalletPayload = void
 export type WalletResponse = {
-  scanHeight: number
-  address: string
   spendable: string
   confirmed: string
   unconfirmed: string
+  immature: string
+  address: string
 }
 
 export type WalletTransactionsParams = { limit?: number; offset?: number }
 export type WalletTransactionsPayload = void
 export type WalletTransactionsResponse = WalletTransaction[]
 
+export type WalletEventsParams = { limit?: number; offset?: number }
+export type WalletEventsPayload = void
+export type WalletEventsResponse = WalletEvent[]
+
 export type WalletPendingParams = void
 export type WalletPendingPayload = void
-export type WalletPendingResponse = WalletTransaction[]
+export type WalletPendingResponse = WalletEvent[]
 
 export type WalletSendParams = void
 export type WalletSendPayload = {

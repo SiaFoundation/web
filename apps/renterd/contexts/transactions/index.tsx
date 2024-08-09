@@ -1,7 +1,5 @@
 import {
-  TxType,
   daysInMilliseconds,
-  getTransactionType,
   stripPrefix,
   useDatasetEmptyState,
 } from '@siafoundation/design-system'
@@ -17,6 +15,7 @@ import { useRouter } from 'next/router'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { Transaction } from '@siafoundation/types'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { TxType, getTransactionType } from '@siafoundation/units'
 
 const defaultLimit = 50
 const filters = []

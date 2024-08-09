@@ -1,10 +1,7 @@
 import { useMemo } from 'react'
 import { TransactionDetailsDialog } from '@siafoundation/design-system'
 import { useDialog } from '../contexts/dialog'
-import {
-  TransactionDataConfirmed,
-  useTransactions,
-} from '../contexts/transactions'
+import { useTransactions } from '../contexts/transactions'
 
 export function RenterdTransactionDetailsDialog() {
   const { id, dialog, onOpenChange } = useDialog()
@@ -18,7 +15,7 @@ export function RenterdTransactionDetailsDialog() {
   return (
     <TransactionDetailsDialog
       id={id}
-      transaction={transaction as TransactionDataConfirmed}
+      transaction={transaction}
       open={dialog === 'transactionDetails'}
       onOpenChange={onOpenChange}
     />
