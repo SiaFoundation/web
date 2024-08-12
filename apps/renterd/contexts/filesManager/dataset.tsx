@@ -75,11 +75,53 @@ export function useDataset({ id, objects }: Props) {
             type: isDirectory(key) ? 'directory' : 'file',
           }
         })
+        // Find intermediate directories that may not exist yet and add them
+        // so that they show up before the files are fully uploaded.
+        for (const upload of uploadsList) {
+          if (upload.path.startsWith(activeDirectoryPath)) {
+            // Must be a child of the active directory.
+            if (!upload.path.startsWith(activeDirectoryPath)) {
+              continue
+            }
+            const nestedPath = upload.path.slice(activeDirectoryPath.length)
+            const parts = nestedPath.split('/')
+            // Must be a directory with nested children.
+            if (parts.length <= 1) {
+              continue
+            }
+            const newDirName = parts[0]
+            const newDirPath = join(activeDirectoryPath, newDirName) + '/'
+            // Must not already exist.
+            if (dataMap[newDirPath]) {
+              continue
+            }
+            dataMap[newDirPath] = {
+              id: newDirPath,
+              path: newDirPath,
+              bucket: activeBucket,
+              size: 0,
+              health: 0,
+              name: newDirName + '/',
+              onClick: () => {
+                setActiveDirectory((p) => p.concat(newDirName))
+              },
+              type: 'directory',
+            }
+          }
+        }
+        // Add file uploads that are direct children of the active directory.
         uploadsList
-          .filter(({ path, name }) => path === join(activeDirectoryPath, name))
-          .filter(({ path }) =>
-            path.startsWith(join(activeBucketName, fileNamePrefixFilter))
-          )
+          .filter(({ path }) => {
+            if (!path.startsWith(activeDirectoryPath)) {
+              return false
+            }
+            const parts = path.slice(activeDirectoryPath.length).split('/')
+            const isDirectChild = parts.length === 1
+            const prefix = fileNamePrefixFilter
+              ? join(activeDirectoryPath, fileNamePrefixFilter)
+              : activeDirectoryPath
+            return isDirectChild && path.startsWith(prefix)
+          })
           .forEach((upload) => {
             dataMap[upload.path] = upload
           })
@@ -97,10 +139,17 @@ export function useDataset({ id, objects }: Props) {
       keepPreviousData: true,
     }
   )
-  // refetch when the dependent data changes
+  // Refetch when the dependent data changes. Adding these object reference
+  // dependencies to the swr key would cause the swr cache to grow indefinitely.
   useEffect(() => {
     response.mutate()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [objects.data, uploadsList, allContracts, buckets.data])
+  }, [
+    objects.data,
+    uploadsList,
+    allContracts,
+    buckets.data,
+    fileNamePrefixFilter,
+  ])
   return response
 }
