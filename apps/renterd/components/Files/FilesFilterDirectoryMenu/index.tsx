@@ -41,6 +41,7 @@ export function FilesFilterDirectoryMenu({ placeholder }: Props) {
   return (
     <div className="flex gap-1 flex-1">
       <TextField
+        aria-label="filter files in current directory"
         variant="ghost"
         focus="none"
         placeholder={placeholder || 'Filter files in current directory'}

@@ -12,7 +12,10 @@ export async function deleteFile(page: Page, path: string) {
 }
 
 export async function deleteFileIfExists(page: Page, path: string) {
-  const exists = await page.getByRole('table').getByTestId(path).isVisible()
+  const exists = await page
+    .getByTestId('filesTable')
+    .getByTestId(path)
+    .isVisible()
   if (exists) {
     await deleteFile(page, path)
   }
@@ -34,7 +37,10 @@ export async function deleteDirectory(page: Page, path: string) {
 }
 
 export async function deleteDirectoryIfExists(page: Page, path: string) {
-  const exists = await page.getByRole('table').getByTestId(path).isVisible()
+  const exists = await page
+    .getByTestId('filesTable')
+    .getByTestId(path)
+    .isVisible()
   if (exists) {
     await deleteDirectory(page, path)
   }
@@ -56,10 +62,14 @@ export async function openFileContextMenu(page: Page, path: string) {
 }
 
 export async function openDirectory(page: Page, path: string) {
-  await page.getByRole('table').getByTestId(path).click()
+  await page.getByTestId('filesTable').getByTestId(path).click()
   for (const dir of path.split('/').slice(0, -1)) {
     await expect(page.getByTestId('navbar').getByText(dir)).toBeVisible()
   }
+}
+
+export async function navigateToParentDirectory(page: Page) {
+  await page.getByRole('cell', { name: '..' }).click()
 }
 
 export async function crateDirectory(page: Page, name: string) {
@@ -71,18 +81,25 @@ export async function crateDirectory(page: Page, name: string) {
 }
 
 export async function createDirectoryIfNotExists(page: Page, name: string) {
-  const exists = await page.getByRole('table').getByTestId(name).isVisible()
+  const exists = await page
+    .getByTestId('filesTable')
+    .getByTestId(name)
+    .isVisible()
   if (!exists) {
     await crateDirectory(page, name)
   }
 }
 
 export async function fileInList(page: Page, path: string) {
-  await expect(page.getByRole('table').getByTestId(path)).toBeVisible()
+  await expect(page.getByTestId('filesTable').getByTestId(path)).toBeVisible()
 }
 
 export async function fileNotInList(page: Page, path: string) {
-  await expect(page.getByRole('table').getByTestId(path)).toBeHidden()
+  await expect(page.getByTestId('filesTable').getByTestId(path)).toBeHidden()
+}
+
+export async function getFileRowById(page: Page, id: string) {
+  return page.getByTestId('filesTable').getByTestId(id)
 }
 
 export async function dragAndDropFile(
