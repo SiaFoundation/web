@@ -32,7 +32,7 @@ import { derivePricingFromAllowance } from './derivePricesFromAllowance'
 
 // up
 export function transformUpAutopilot(
-  network: 'Mainnet' | 'Zen Testnet',
+  network: 'mainnet' | 'zen' | 'anagami',
   values: AutopilotData,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   existingValues: AutopilotConfig | undefined

@@ -10,7 +10,7 @@ export function RenterdTestnetWarningBanner() {
     },
   })
 
-  if (!state.data || state.data.network === 'Mainnet') {
+  if (!state.data || state.data.network === 'mainnet') {
     return null
   }
 

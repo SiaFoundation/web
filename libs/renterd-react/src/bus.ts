@@ -295,7 +295,7 @@ export function useEstimatedNetworkBlockHeight(): number {
   const res = useSWR(
     state,
     () => {
-      if (state.data?.network === 'Zen Testnet') {
+      if (state.data?.network === 'zen') {
         return getTestnetZenBlockHeight()
       }
       return getMainnetBlockHeight()

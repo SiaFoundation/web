@@ -349,7 +349,7 @@ export const valuesZeroDefaults: SettingsData = {
 // current value, otherwise advanced default if there is one, otherwise zero value.
 export function mergeValuesWithDefaultsOrZeroValues(
   values: SettingsData,
-  network: 'Mainnet' | 'Zen Testnet'
+  network: 'mainnet' | 'zen' | 'anagami'
 ) {
   const merged: SettingsData = getAdvancedDefaults(network)
   // advanced defaults include undefined values, for keys without defaults.

@@ -71,7 +71,7 @@ export type SettingsData = typeof defaultValues
 
 // advanced defaults
 export function getAdvancedDefaultAutopilot(
-  network: 'Mainnet' | 'Zen Testnet'
+  network: 'mainnet' | 'zen' | 'anagami'
 ): AutopilotData {
   return {
     // must be set
@@ -81,7 +81,7 @@ export function getAdvancedDefaultAutopilot(
     // calcuated and set
     allowanceMonth: undefined,
     // defaults
-    ...(network === 'Mainnet'
+    ...(network === 'mainnet'
       ? {
           periodWeeks: new BigNumber(6),
           renewWindowWeeks: new BigNumber(2),
@@ -121,9 +121,9 @@ export const advancedDefaultGouging: GougingData = {
 }
 
 export function getAdvancedDefaultRedundancy(
-  network: 'Mainnet' | 'Zen Testnet'
+  network: 'mainnet' | 'zen' | 'anagami'
 ): RedundancyData {
-  return network === 'Mainnet'
+  return network === 'mainnet'
     ? {
         minShards: new BigNumber(10),
         totalShards: new BigNumber(30),
@@ -135,7 +135,7 @@ export function getAdvancedDefaultRedundancy(
 }
 
 export function getAdvancedDefaults(
-  network: 'Mainnet' | 'Zen Testnet'
+  network: 'mainnet' | 'zen' | 'anagami'
 ): SettingsData {
   return {
     ...getAdvancedDefaultAutopilot(network),
