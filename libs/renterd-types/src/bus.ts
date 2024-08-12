@@ -92,7 +92,7 @@ export const busMultipartPartRoute = '/bus/multipart/part'
 // state
 
 type BuildState = {
-  network: 'Mainnet' | 'Zen Testnet'
+  network: 'mainnet' | 'zen' | 'anagami'
   version: string
   commit: string
   OS: string

@@ -8,7 +8,7 @@ export function TestnetWarningBanner({ testnetName }: { testnetName: string }) {
         <Information16 />
       </Text>
       <Text size="14" color="lo">
-        You are on the {testnetName}.
+        You are on the {testnetName} testnet.
       </Text>
     </div>
   )

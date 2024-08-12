@@ -165,7 +165,7 @@ describe('tansforms', () => {
     it('up autopilot', () => {
       expect(
         transformUpAutopilot(
-          'Mainnet',
+          'mainnet',
           {
             autopilotContractSet: 'autopilot',
             allowanceMonth: new BigNumber('6006'),
@@ -207,7 +207,7 @@ describe('tansforms', () => {
     it('up autopilot accepts unknown values', () => {
       expect(
         transformUpAutopilot(
-          'Mainnet',
+          'mainnet',
           {
             autopilotContractSet: 'autopilot',
             allowanceMonth: new BigNumber('6006'),
@@ -262,7 +262,7 @@ describe('tansforms', () => {
     it('uses testnet defaults', () => {
       expect(
         transformUpAutopilot(
-          'Zen Testnet',
+          'zen',
           {
             autopilotContractSet: 'autopilot',
             allowanceMonth: new BigNumber('6006'),
@@ -425,7 +425,7 @@ describe('tansforms', () => {
       expect(settings.downloadTBMonth).toEqual(new BigNumber('92.72'))
       // a little different due to rounding
       expect(
-        transformUpAutopilot('Mainnet', settings, autopilot).contracts.download
+        transformUpAutopilot('mainnet', settings, autopilot).contracts.download
       ).toEqual(91088814814815)
       expect(settings.maxRpcPriceMillion).toEqual(new BigNumber('0.1'))
 
@@ -447,7 +447,7 @@ describe('tansforms', () => {
       expect(settings.downloadTBMonth).toEqual(new BigNumber('92.72'))
       // Using the rounded value results in same value.
       expect(
-        transformUpAutopilot('Mainnet', settings, autopilot).contracts.download
+        transformUpAutopilot('mainnet', settings, autopilot).contracts.download
       ).toEqual(91088814814815)
     })
   })
