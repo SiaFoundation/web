@@ -7,7 +7,8 @@
     "@technically/lodash": "^4.17.0",
     "@siafoundation/react-core": "^1.2.1",
     "swr": "^2.1.1",
-    "@siafoundation/renterd-types": "0.3.0"
+    "@siafoundation/renterd-types": "0.3.0",
+    "@siafoundation/units": "3.0.3"
   },
   "types": "./src/index.d.ts"
 }

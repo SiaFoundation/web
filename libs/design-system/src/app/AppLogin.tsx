@@ -26,9 +26,9 @@ function getDefaultValues(api: string) {
 }
 
 function getFields({
-  allowCustomApi,
+  loginWithCustomApi,
 }: {
-  allowCustomApi: boolean
+  loginWithCustomApi: boolean
 }): ConfigFields<ReturnType<typeof getDefaultValues>, never> {
   return {
     api: {
@@ -37,7 +37,8 @@ function getFields({
       placeholder: 'http://127.0.0.1:9980',
       validation: {
         validate: {
-          required: (value) => !allowCustomApi || !!value || 'API is required',
+          required: (value) =>
+            !loginWithCustomApi || !!value || 'API is required',
           url: (value) => {
             try {
               const url = new URL(value)
@@ -123,7 +124,7 @@ type Props = {
 export function AppLogin({ appName, route, routes }: Props) {
   const router = usePagesRouter()
   const { settings, setSettings } = useAppSettings()
-  const { allowCustomApi } = settings
+  const { loginWithCustomApi } = settings
 
   const defaultValues = useMemo(
     () => getDefaultValues(settings.api),
@@ -139,12 +140,12 @@ export function AppLogin({ appName, route, routes }: Props) {
   useEffect(() => {
     form.clearErrors()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allowCustomApi])
+  }, [loginWithCustomApi])
 
   const onValid = useCallback(
     async (values: typeof defaultValues) => {
       let api = ''
-      if (allowCustomApi) {
+      if (loginWithCustomApi) {
         const url = new URL(values.api)
         api = `${url.protocol}//${url.host}`
       }
@@ -171,7 +172,7 @@ export function AppLogin({ appName, route, routes }: Props) {
       }
     },
     [
-      allowCustomApi,
+      loginWithCustomApi,
       form,
       router,
       routes,
@@ -182,7 +183,7 @@ export function AppLogin({ appName, route, routes }: Props) {
     ]
   )
 
-  const fields = getFields({ allowCustomApi })
+  const fields = getFields({ loginWithCustomApi })
   const onInvalid = useOnInvalid(fields)
 
   const error = form.formState.errors.api || form.formState.errors.password
@@ -211,18 +212,18 @@ export function AppLogin({ appName, route, routes }: Props) {
               <DropdownMenuItem
                 onSelect={() =>
                   setSettings({
-                    allowCustomApi: !allowCustomApi,
+                    loginWithCustomApi: !loginWithCustomApi,
                   })
                 }
               >
-                {allowCustomApi ? 'Hide custom API' : 'Show custom API'}
+                {loginWithCustomApi ? 'Hide custom API' : 'Show custom API'}
               </DropdownMenuItem>
             </DropdownMenu>
           </div>
           <Separator className="w-full mt-2 mb-3" />
           <form onSubmit={form.handleSubmit(onValid, onInvalid)}>
             <div className="flex flex-col gap-1.5">
-              {allowCustomApi ? (
+              {loginWithCustomApi ? (
                 <ControlGroup>
                   <FieldText
                     name="api"

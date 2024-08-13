@@ -9,7 +9,6 @@ export * from './useGetDownload'
 export * from './useAppSettings/currency'
 export * from './useAppSettings'
 export * from './useTryUntil'
-export * from './blockHeight'
 export * from './userPrefersReducedMotion'
 export * from './mutate'
 

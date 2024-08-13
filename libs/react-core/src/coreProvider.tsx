@@ -9,6 +9,9 @@ type Props = {
   children: React.ReactNode
 }
 
+/**
+ * The core provider includes the workflows provider and the swr config provider.
+ */
 export function CoreProvider({ fallback, cacheProvider, children }: Props) {
   return (
     <WorkflowsProvider>
