@@ -6,8 +6,6 @@ import {
   HookArgsSwr,
   HookArgsCallback,
   HookArgsWithPayloadSwr,
-  getTestnetZenBlockHeight,
-  getMainnetBlockHeight,
   usePutSwr,
   useDeleteFunc,
   delay,
@@ -116,6 +114,10 @@ import {
   walletSendRoute,
   walletTransactionsRoute,
 } from '@siafoundation/hostd-types'
+import {
+  getMainnetBlockHeight,
+  getTestnetZenBlockHeight,
+} from '@siafoundation/units'
 
 // state
 

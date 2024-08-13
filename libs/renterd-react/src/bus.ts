@@ -8,10 +8,12 @@ import {
   HookArgsSwr,
   HookArgsCallback,
   HookArgsWithPayloadSwr,
-  getMainnetBlockHeight,
-  getTestnetZenBlockHeight,
   delay,
 } from '@siafoundation/react-core'
+import {
+  getMainnetBlockHeight,
+  getTestnetZenBlockHeight,
+} from '@siafoundation/units'
 import {
   AccountResetDriftParams,
   AccountResetDriftPayload,
@@ -520,6 +522,7 @@ export function useHostsInteractionAdd(
     route: busHostsHostKeyRoute,
   })
 }
+
 export function useHostsBlocklist(
   args?: HookArgsSwr<HostsBlocklistParams, HostsBlocklistResponse>
 ) {

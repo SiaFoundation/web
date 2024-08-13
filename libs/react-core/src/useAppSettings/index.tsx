@@ -14,7 +14,7 @@ export type CurrencyDisplay = 'sc' | 'fiat' | 'bothPreferSc' | 'bothPreferFiat'
 
 export type AppSettings = {
   api: string
-  allowCustomApi: boolean
+  loginWithCustomApi: boolean
   siaCentral: boolean
   password?: string
   currency: CurrencyOption
@@ -30,7 +30,7 @@ export type AppSettings = {
 
 const defaultSettings: AppSettings = {
   api: '',
-  allowCustomApi: false,
+  loginWithCustomApi: false,
   siaCentral: true,
   password: undefined,
   currency: currencyOptions[0],
@@ -172,6 +172,10 @@ function useAppSettingsMain({
 type State = ReturnType<typeof useAppSettingsMain>
 
 const SettingsContext = createContext({} as State)
+/**
+ * The app settings context allows you to configure all app settings and
+ * preferences such as the api address, password, currency, etc.
+ */
 export const useAppSettings = () => useContext(SettingsContext)
 
 export function AppSettingsProvider({ children, ...props }: Props) {

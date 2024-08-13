@@ -61,6 +61,11 @@ function useWorkflowsMain() {
 type State = ReturnType<typeof useWorkflowsMain>
 
 const WorkflowsContext = createContext({} as State)
+/**
+ * The workflows context is a generic way to mark and track any long-running as in-progress.
+ * For example, all mutation hooks (eg: usePostFunc) automatically are automatically tracked
+ * as workflows using their unique route key.
+ */
 export const useWorkflows = () => useContext(WorkflowsContext)
 
 type Props = {

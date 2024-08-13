@@ -6,10 +6,12 @@ import {
   HookArgsSwr,
   HookArgsCallback,
   delay,
-  getMainnetBlockHeight,
-  getTestnetZenBlockHeight,
   useDeleteFunc,
 } from '@siafoundation/react-core'
+import {
+  getMainnetBlockHeight,
+  getTestnetZenBlockHeight,
+} from '@siafoundation/units'
 import {
   ConsensusNetworkParams,
   ConsensusNetworkResponse,

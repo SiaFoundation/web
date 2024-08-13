@@ -6,7 +6,8 @@
   "dependencies": {
     "@siafoundation/react-core": "^1.2.0",
     "swr": "^2.1.1",
-    "@siafoundation/walletd-types": "0.3.2"
+    "@siafoundation/walletd-types": "0.3.2",
+    "@siafoundation/units": "3.0.3"
   },
   "types": "./src/index.d.ts"
 }
