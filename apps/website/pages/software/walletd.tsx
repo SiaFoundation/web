@@ -77,7 +77,6 @@ export default function Walletd({
           daemon={daemon}
           releaseDaemon={releaseDaemon}
           releaseDesktop={releaseDesktop}
-          statusDaemon="beta"
           statusDesktop="beta"
         />
         <div className="relative">
