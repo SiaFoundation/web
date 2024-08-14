@@ -19,7 +19,7 @@ import { SectionTransparent } from '../../components/SectionTransparent'
 import { SectionProjects } from '../../components/SectionProjects'
 import { SectionTutorials } from '../../components/SectionTutorials'
 import { CalloutWalletd } from '../../components/CalloutWalletd'
-import { SoftwareSectionCurrentGen } from '../../components/SoftwareSectionCurrentGen'
+import { SoftwareSectionSiaUI } from '../../components/SoftwareSectionCurrentGen'
 import {
   getWalletdLatestDaemonRelease,
   getWalletdLatestDesktopRelease,
@@ -61,7 +61,6 @@ export default function Wallet({
           daemon="walletd"
           releaseDaemon={releaseDaemon}
           releaseDesktop={releaseDesktop}
-          statusDaemon="beta"
           statusDesktop="beta"
         />
         <div className="flex flex-col">
@@ -86,13 +85,7 @@ export default function Wallet({
               actionLink={webLinks.docs.wallet}
               actionNewTab
             />
-            <SoftwareSectionCurrentGen
-              versions={{
-                sia: {
-                  latest: '1.5.9',
-                },
-              }}
-            />
+            <SoftwareSectionSiaUI />
           </div>
           <SiteHeading
             size="32"
