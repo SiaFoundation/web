@@ -1,5 +1,15 @@
 # hostd
 
+## 0.46.0
+
+### Minor Changes
+
+- a64f40cc: Sync status is now determined by whether the last block's timestamp is within
+  the last 12 hours.
+- a64f40cc: The app has been updated to use the new v2 endpoints and data types. Closes https://github.com/SiaFoundation/hostd/issues/440
+- a64f40cc: Transaction types have been refined to include new v2 derived transaction types.
+- a64f40cc: The wallet balance tip now includes an immature balance.
+
 ## 0.45.1
 
 ### Patch Changes

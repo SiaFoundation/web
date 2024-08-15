@@ -1,5 +1,17 @@
 # website
 
+## 0.54.0
+
+### Minor Changes
+
+- d4c828ed: Fixed the Sia-UI download links.
+- d4c828ed: Removed the beta badge for the walletd daemon.
+- d4c828ed: Removed siad from the website.
+
+### Patch Changes
+
+- b9ad7b87: The testnet prefix label was removed from the walletd downloads. Closes https://github.com/SiaFoundation/web/issues/667
+
 ## 0.53.0
 
 ### Minor Changes

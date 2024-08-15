@@ -1,5 +1,20 @@
 # @siafoundation/renterd-types
 
+## 0.4.0
+
+### Minor Changes
+
+- bffe101c: Add price pinning configuration API.
+- ce89b99a: Added support for the new network naming scheme and the anagami testnet.
+
+### Patch Changes
+
+- Updated dependencies [a6c956ea]
+- Updated dependencies [a64f40cc]
+- Updated dependencies [a6c956ea]
+  - @siafoundation/react-core@1.3.0
+  - @siafoundation/types@0.5.0
+
 ## 0.3.0
 
 ### Minor Changes

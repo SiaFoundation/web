@@ -1,5 +1,13 @@
 # @siafoundation/react-core
 
+## 1.3.0
+
+### Minor Changes
+
+- a6c956ea: App setting allowCustomApi is now more accurately named loginWithCustomApi.
+- a6c956ea: The network block height calculation methods have been moved to the units
+  package.
+
 ## 1.2.1
 
 ### Patch Changes
