@@ -1,5 +1,17 @@
 # @siafoundation/renterd-js
 
+## 0.4.0
+
+### Minor Changes
+
+- bffe101c: Add price pinning configuration API.
+
+### Patch Changes
+
+- Updated dependencies [bffe101c]
+- Updated dependencies [ce89b99a]
+  - @siafoundation/renterd-types@0.4.0
+
 ## 0.3.0
 
 ### Minor Changes

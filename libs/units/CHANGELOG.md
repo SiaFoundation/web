@@ -1,5 +1,22 @@
 # @siafoundation/units
 
+## 3.1.0
+
+### Minor Changes
+
+- a6c956ea: The network block height calculation methods have been moved to the units
+  package.
+- a64f40cc: Transaction types have been refined to include new v2 derived transaction types.
+- a64f40cc: Event and transaction utility methods have been moved to the units library.
+
+### Patch Changes
+
+- Updated dependencies [a6c956ea]
+- Updated dependencies [a64f40cc]
+- Updated dependencies [a6c956ea]
+  - @siafoundation/react-core@1.3.0
+  - @siafoundation/types@0.5.0
+
 ## 3.0.3
 
 ### Patch Changes

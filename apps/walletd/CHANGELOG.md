@@ -1,5 +1,12 @@
 # walletd
 
+## 0.23.0
+
+### Minor Changes
+
+- a64f40cc: Transaction types have been refined to include new v2 derived transaction types.
+- a64f40cc: Event and transaction utility methods have been moved to the units library.
+
 ## 0.22.3
 
 ### Patch Changes

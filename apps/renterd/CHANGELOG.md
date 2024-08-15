@@ -1,5 +1,20 @@
 # renterd
 
+## 0.58.0
+
+### Minor Changes
+
+- eabad8c5: The allowance configuration now includes "Set max prices to fit current allowance" and "Set allowance to fit current max prices" actions as well as a status indicating whether or not the current prices fit the current allowance.
+- eabad8c5: The max RPC price field now shows a network average tip.
+- eabad8c5: Allowance, max storage price, max upload price, max download price, and max RPC price fields now support price pinning. The user can choose to pin any or all of those values to a fiat currency value.
+- eabad8c5: The allowance fitting features now work with pinned prices or a mix of pinned and unpinned prices.
+- eabad8c5: The configuration system recommendations now support evaluating and setting pinned fields.
+- eabad8c5: Each max pricing field that is factored into the allowance now has (when available) both a recommendation for matching with more hosts and an option to fit the current allowance. These are available in both non-pinned siacoin and pinned fiat modes.
+- ce89b99a: Added support for the new network naming scheme and the anagami testnet.
+- 4bb128df: The file explorer now shows new directories right away when uploading nested files.
+- eabad8c5: All tips and recommendations are now displayed according to the app preferences currency setting.
+- eabad8c5: The configuration has a new section for enabling pinning, selecting the currency, setting the exchange rate endpoint, and the threshold.
+
 ## 0.57.0
 
 ### Minor Changes

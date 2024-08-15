@@ -1,5 +1,18 @@
 # @siafoundation/hostd-js
 
+## 0.2.0
+
+### Minor Changes
+
+- a64f40cc: Updated with v2 endpoints and data types. Closes https://github.com/SiaFoundation/hostd/issues/440
+- a64f40cc: Core Event types have been moved to the core types library. Closes https://github.com/SiaFoundation/hostd/issues/440
+
+### Patch Changes
+
+- Updated dependencies [a64f40cc]
+- Updated dependencies [a64f40cc]
+  - @siafoundation/hostd-types@0.2.0
+
 ## 0.1.2
 
 ### Patch Changes

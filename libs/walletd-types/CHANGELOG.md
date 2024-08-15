@@ -1,5 +1,16 @@
 # @siafoundation/walletd-types
 
+## 0.4.0
+
+### Minor Changes
+
+- a64f40cc: Core Event types have been moved to the core types library. Closes https://github.com/SiaFoundation/hostd/issues/440
+
+### Patch Changes
+
+- Updated dependencies [a64f40cc]
+  - @siafoundation/types@0.5.0
+
 ## 0.3.2
 
 ### Patch Changes

@@ -1,5 +1,26 @@
 # @siafoundation/renterd-react
 
+## 4.4.0
+
+### Minor Changes
+
+- a6c956ea: The network block height calculation methods have been moved to the units
+  package.
+- bffe101c: Add price pinning configuration API.
+- ce89b99a: Added support for the new network naming scheme and the anagami testnet.
+
+### Patch Changes
+
+- Updated dependencies [a6c956ea]
+- Updated dependencies [a6c956ea]
+- Updated dependencies [bffe101c]
+- Updated dependencies [a64f40cc]
+- Updated dependencies [ce89b99a]
+- Updated dependencies [a64f40cc]
+  - @siafoundation/react-core@1.3.0
+  - @siafoundation/units@3.1.0
+  - @siafoundation/renterd-types@0.4.0
+
 ## 4.3.0
 
 ### Minor Changes

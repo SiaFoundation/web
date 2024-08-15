@@ -1,5 +1,26 @@
 # @siafoundation/hostd-react
 
+## 4.3.0
+
+### Minor Changes
+
+- a64f40cc: Updated with v2 endpoints and data types. Closes https://github.com/SiaFoundation/hostd/issues/440
+- a64f40cc: Core Event types have been moved to the core types library. Closes https://github.com/SiaFoundation/hostd/issues/440
+- a6c956ea: The network block height calculation methods have been moved to the units
+  package.
+
+### Patch Changes
+
+- Updated dependencies [a6c956ea]
+- Updated dependencies [a64f40cc]
+- Updated dependencies [a64f40cc]
+- Updated dependencies [a6c956ea]
+- Updated dependencies [a64f40cc]
+- Updated dependencies [a64f40cc]
+  - @siafoundation/react-core@1.3.0
+  - @siafoundation/hostd-types@0.2.0
+  - @siafoundation/units@3.1.0
+
 ## 4.2.2
 
 ### Patch Changes
