@@ -1,5 +1,16 @@
 # @siafoundation/renterd-js
 
+## 0.5.0
+
+### Minor Changes
+
+- 09871542: Updated the pricepinning configuration structure to support multiple autopilots. Closes https://github.com/SiaFoundation/renterd/issues/1448
+
+### Patch Changes
+
+- Updated dependencies [09871542]
+  - @siafoundation/renterd-types@0.5.0
+
 ## 0.4.0
 
 ### Minor Changes
