@@ -1,5 +1,11 @@
 # renterd
 
+## 0.59.0
+
+### Minor Changes
+
+- 09871542: Fixed an issue where the pricepinning response was crashing the app. Closes https://github.com/SiaFoundation/renterd/issues/1448
+
 ## 0.58.0
 
 ### Minor Changes
