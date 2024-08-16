@@ -166,7 +166,6 @@ export type GougingSettingsPins = {
   maxStorage: Pin
   maxDownload: Pin
   maxUpload: Pin
-  maxRPCPrice: Pin
 }
 
 export type AutopilotPins = {

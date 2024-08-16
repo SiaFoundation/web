@@ -269,7 +269,6 @@ export function useAutopilotEvaluations({
       maxStoragePriceTBMonth: recommended.maxStoragePriceTBMonth,
       maxDownloadPriceTB: recommended.maxDownloadPriceTB,
       maxUploadPriceTB: recommended.maxUploadPriceTB,
-      maxRPCPriceMillion: recommended.maxRPCPriceMillion,
     })
 
     const recommendedValues = {
@@ -404,7 +403,6 @@ type PinnablePrices = {
   maxStoragePriceTBMonthPinned: BigNumber
   maxUploadPriceTBPinned: BigNumber
   maxDownloadPriceTBPinned: BigNumber
-  maxRPCPriceMillionPinned: BigNumber
 }
 
 type RecommendableFields = GougingData & PinnablePrices
@@ -417,7 +415,6 @@ const fieldToHrefId: Record<keyof RecommendableFields, string> = {
   maxStoragePriceTBMonthPinned: 'maxStoragePriceTBMonthGroup',
   maxUploadPriceTBPinned: 'maxUploadPriceTBGroup',
   maxDownloadPriceTBPinned: 'maxDownloadPriceTBGroup',
-  maxRPCPriceMillionPinned: 'maxRPCPriceMillionGroup',
   maxContractPrice: 'maxContractPrice',
   hostBlockHeightLeeway: 'hostBlockHeightLeeway',
   minPriceTableValidityMinutes: 'minPriceTableValidityMinutes',
@@ -434,7 +431,6 @@ const fieldToLabel: Record<keyof RecommendableFields, string> = {
   maxStoragePriceTBMonthPinned: 'max storage price',
   maxUploadPriceTBPinned: 'max upload price',
   maxDownloadPriceTBPinned: 'max download price',
-  maxRPCPriceMillionPinned: 'max RPC price',
   maxContractPrice: 'max contract price',
   hostBlockHeightLeeway: 'host block height leeway',
   minPriceTableValidityMinutes: 'min price table validity',
@@ -461,9 +457,7 @@ export const valuesZeroDefaults: SettingsData = {
   minProtocolVersion: '',
   defaultContractSet: '',
   uploadPackingEnabled: true,
-  shouldPinMaxRPCPrice: false,
   maxRPCPriceMillion: new BigNumber(0),
-  maxRPCPriceMillionPinned: new BigNumber(0),
   shouldPinMaxStoragePrice: false,
   maxStoragePriceTBMonth: new BigNumber(0),
   maxStoragePriceTBMonthPinned: new BigNumber(0),

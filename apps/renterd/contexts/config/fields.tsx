@@ -30,7 +30,7 @@ import {
   MaxDownloadPriceTips,
   MaxDownloadPricePinnedTips,
 } from './fieldTips/MaxDownloadPrice'
-import { MaxRPCPricePinnedTips, MaxRPCPriceTips } from './fieldTips/MaxRPCPrice'
+import { MaxRPCPriceTips } from './fieldTips/MaxRPCPrice'
 
 export const scDecimalPlaces = 6
 
@@ -670,13 +670,6 @@ export function getFields({
         },
       },
     },
-    shouldPinMaxRPCPrice: {
-      title: '',
-      description: '',
-      type: 'boolean',
-      category: 'gouging',
-      validation: {},
-    },
     maxRPCPriceMillion: {
       category: 'gouging',
       type: 'siacoin',
@@ -701,47 +694,6 @@ export function getFields({
       },
       after: ({ form, fields }) => (
         <MaxRPCPriceTips
-          form={form}
-          fields={fields}
-          recommendations={recommendations}
-        />
-      ),
-    },
-    maxRPCPriceMillionPinned: {
-      title: '',
-      description: '',
-      units: '/million',
-      type: 'fiat',
-      category: 'gouging',
-      average: averagesFiat?.rpcAverage,
-      averageTip: 'Averages provided by Sia Central.',
-      validation: {
-        validate: {
-          required: requiredIfPinningEnabled(
-            validationContext,
-            (value: BigNumber, values) => {
-              if (!values.shouldPinMaxRPCPrice) {
-                return true
-              }
-              return !!value || 'required'
-            }
-          ),
-          currency: requiredIfPinningEnabled(
-            validationContext,
-            (_, values) =>
-              !!values.pinnedCurrency || 'must select a pinned currency'
-          ),
-          range: requiredIfPinningEnabled(
-            validationContext,
-            (value: BigNumber, values) =>
-              !values.shouldPinMaxRPCPrice ||
-              value?.gt(0) ||
-              'must be greater than 0'
-          ),
-        },
-      },
-      after: ({ form, fields }) => (
-        <MaxRPCPricePinnedTips
           form={form}
           fields={fields}
           recommendations={recommendations}

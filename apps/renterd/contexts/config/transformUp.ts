@@ -16,7 +16,6 @@ import {
   TBToBytes,
   valuePerTBPerMonthToPerBytePerBlock,
   valuePerMonthToPerPeriod,
-  valuePerTBToPerByte,
   valuePerMillionToPerOne,
 } from '@siafoundation/units'
 import {
@@ -167,35 +166,22 @@ export function transformUpPricePinning(
       autopilot: {
         allowance: {
           pinned: values.shouldPinAllowance,
-          value: valuePerMonthToPerPeriod(
-            values.allowanceMonthPinned,
-            // If autopilot is disabled the period value may be undefined,
-            // but in that case the pinned allowance is also unused.
-            values.periodWeeks || new BigNumber(6)
-          ).toNumber(),
+          value: values.allowanceMonthPinned.toNumber(),
         },
       },
     },
     gougingSettingsPins: {
       maxStorage: {
         pinned: values.shouldPinMaxStoragePrice,
-        value: valuePerTBPerMonthToPerBytePerBlock(
-          values.maxStoragePriceTBMonthPinned
-        ).toNumber(),
+        value: values.maxStoragePriceTBMonthPinned.toNumber(),
       },
       maxDownload: {
         pinned: values.shouldPinMaxDownloadPrice,
-        value: valuePerTBToPerByte(values.maxDownloadPriceTBPinned).toNumber(),
+        value: values.maxDownloadPriceTBPinned.toNumber(),
       },
       maxUpload: {
         pinned: values.shouldPinMaxUploadPrice,
-        value: valuePerTBToPerByte(values.maxUploadPriceTBPinned).toNumber(),
-      },
-      maxRPCPrice: {
-        pinned: values.shouldPinMaxRPCPrice,
-        value: valuePerMillionToPerOne(
-          values.maxRPCPriceMillionPinned
-        ).toNumber(),
+        value: values.maxUploadPriceTBPinned.toNumber(),
       },
     },
   }

@@ -30,7 +30,6 @@ export function Config() {
   const shouldPinMaxStoragePrice = form.watch('shouldPinMaxStoragePrice')
   const shouldPinMaxUploadPrice = form.watch('shouldPinMaxUploadPrice')
   const shouldPinMaxDownloadPrice = form.watch('shouldPinMaxDownloadPrice')
-  const shouldPinMaxRpcPrice = form.watch('shouldPinMaxRPCPrice')
 
   const canShowPinned = pinningEnabled && pinnedCurrency && forexEndpointURL
 
@@ -251,41 +250,11 @@ export function Config() {
               form={form}
               fields={fields}
             />
-            <PanelMenuSetting
-              id="maxRPCPriceMillionGroup"
-              title="Max RPC price"
-              description={fields.maxRPCPriceMillion.description}
-              control={
-                <div className="flex flex-col gap-1 w-[260px]">
-                  <ShouldPinSwitch
-                    name="shouldPinMaxRPCPrice"
-                    form={form}
-                    fields={fields}
-                  />
-                  {shouldPinMaxRpcPrice ? (
-                    canShowPinned ? (
-                      <ConfigurationFiat
-                        name="maxRPCPriceMillionPinned"
-                        form={form}
-                        fields={fields}
-                        currency={pinnedCurrency || undefined}
-                      />
-                    ) : (
-                      <PinnedCurrencyWarning
-                        pinningEnabled={pinningEnabled}
-                        pinnedCurrency={pinnedCurrency}
-                        forexEndpointURL={forexEndpointURL}
-                      />
-                    )
-                  ) : (
-                    <ConfigurationSiacoin
-                      name="maxRPCPriceMillion"
-                      form={form}
-                      fields={fields}
-                    />
-                  )}
-                </div>
-              }
+            <ConfigurationPanelSetting
+              autoVisibility
+              name="maxRPCPriceMillion"
+              form={form}
+              fields={fields}
             />
             <ConfigurationPanelSetting
               autoVisibility

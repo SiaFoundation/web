@@ -19,8 +19,6 @@ import {
   valuePerBytePerBlockToPerTBPerMonth,
   valuePerPeriodToPerMonth,
   valuePerOneToPerMillion,
-  valuePerByteToPerTB,
-  weeksToBlocks,
 } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import {
@@ -173,10 +171,7 @@ export function transformDownGouging({
   }
 }
 
-export function transformDownPricePinning(
-  p: PricePinSettings,
-  periodBlocks?: number
-): PricePinData {
+export function transformDownPricePinning(p: PricePinSettings): PricePinData {
   const fixedFiat = currencyOptions.find((c) => c.id === p.currency)?.fixed || 6
   return {
     pinningEnabled: p.enabled,
@@ -186,38 +181,20 @@ export function transformDownPricePinning(
     // Assume the default autopilot named 'autopilot'.
     shouldPinAllowance: p.autopilots['autopilot']?.allowance.pinned || false,
     allowanceMonthPinned: toFixedMaxBigNumber(
-      valuePerPeriodToPerMonth(
-        new BigNumber(p.autopilots['autopilot']?.allowance.value || 0),
-        // If pinned allowance is non zero, the period value will be defined.
-        periodBlocks || weeksToBlocks(6)
-      ),
-      fixedFiat
-    ),
-    shouldPinMaxRPCPrice: p.gougingSettingsPins?.maxRPCPrice.pinned,
-    maxRPCPriceMillionPinned: toFixedMaxBigNumber(
-      valuePerOneToPerMillion(
-        new BigNumber(p.gougingSettingsPins.maxRPCPrice.value)
-      ),
+      new BigNumber(p.autopilots['autopilot']?.allowance.value || 0),
       fixedFiat
     ),
     shouldPinMaxStoragePrice: p.gougingSettingsPins?.maxStorage.pinned,
-    maxStoragePriceTBMonthPinned: toFixedMaxBigNumber(
-      valuePerBytePerBlockToPerTBPerMonth(
-        new BigNumber(p.gougingSettingsPins.maxStorage.value)
-      ),
-      fixedFiat
+    maxStoragePriceTBMonthPinned: new BigNumber(
+      p.gougingSettingsPins.maxStorage.value
     ),
     shouldPinMaxUploadPrice: p.gougingSettingsPins?.maxUpload.pinned,
-    maxUploadPriceTBPinned: toFixedMaxBigNumber(
-      valuePerByteToPerTB(new BigNumber(p.gougingSettingsPins.maxUpload.value)),
-      fixedFiat
+    maxUploadPriceTBPinned: new BigNumber(
+      p.gougingSettingsPins.maxUpload.value
     ),
     shouldPinMaxDownloadPrice: p.gougingSettingsPins?.maxDownload.pinned,
-    maxDownloadPriceTBPinned: toFixedMaxBigNumber(
-      valuePerByteToPerTB(
-        new BigNumber(p.gougingSettingsPins.maxDownload.value)
-      ),
-      fixedFiat
+    maxDownloadPriceTBPinned: new BigNumber(
+      p.gougingSettingsPins.maxDownload.value
     ),
   }
 }
@@ -270,7 +247,7 @@ export function transformDown({
       hasBeenConfigured,
     }),
     // price pinning
-    ...transformDownPricePinning(pricePinning, autopilot?.contracts.period),
+    ...transformDownPricePinning(pricePinning),
     // redundancy
     ...transformDownRedundancy(redundancy),
   }
