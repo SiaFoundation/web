@@ -194,7 +194,7 @@ export type PricePinSettings = {
   threshold: number
 
   // Autopilots contains the pinned settings for every autopilot.
-  autopilots: AutopilotPins
+  autopilots: Record<string, AutopilotPins>
 
   // GougingSettingsPins contains the pinned settings for the gouging
   // settings.

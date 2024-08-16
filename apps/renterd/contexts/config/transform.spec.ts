@@ -421,9 +421,11 @@ describe('tansforms', () => {
         forexEndpointURL: '',
         threshold: 0.01,
         autopilots: {
-          allowance: {
-            pinned: true,
-            value: 1400,
+          autopilot: {
+            allowance: {
+              pinned: true,
+              value: 1400,
+            },
           },
         },
         gougingSettingsPins: {
@@ -626,9 +628,12 @@ function buildAllResponses() {
         },
       },
       autopilots: {
-        allowance: {
-          pinned: false,
-          value: 0,
+        // Update the default autopilot named 'autopilot'.
+        autopilot: {
+          allowance: {
+            pinned: false,
+            value: 0,
+          },
         },
       },
     },

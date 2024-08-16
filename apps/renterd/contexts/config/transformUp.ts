@@ -163,14 +163,17 @@ export function transformUpPricePinning(
     forexEndpointURL: values.forexEndpointURL,
     threshold: values.pinnedThreshold.div(100).toNumber(),
     autopilots: {
-      allowance: {
-        pinned: values.shouldPinAllowance,
-        value: valuePerMonthToPerPeriod(
-          values.allowanceMonthPinned,
-          // If autopilot is disabled the period value may be undefined,
-          // but in that case the pinned allowance is also unused.
-          values.periodWeeks || new BigNumber(6)
-        ).toNumber(),
+      // Update the default autopilot named 'autopilot'.
+      autopilot: {
+        allowance: {
+          pinned: values.shouldPinAllowance,
+          value: valuePerMonthToPerPeriod(
+            values.allowanceMonthPinned,
+            // If autopilot is disabled the period value may be undefined,
+            // but in that case the pinned allowance is also unused.
+            values.periodWeeks || new BigNumber(6)
+          ).toNumber(),
+        },
       },
     },
     gougingSettingsPins: {

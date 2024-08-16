@@ -183,10 +183,11 @@ export function transformDownPricePinning(
     pinnedCurrency: p.currency,
     forexEndpointURL: p.forexEndpointURL,
     pinnedThreshold: new BigNumber(p.threshold).times(100),
-    shouldPinAllowance: p.autopilots?.allowance.pinned || false,
+    // Assume the default autopilot named 'autopilot'.
+    shouldPinAllowance: p.autopilots['autopilot']?.allowance.pinned || false,
     allowanceMonthPinned: toFixedMaxBigNumber(
       valuePerPeriodToPerMonth(
-        new BigNumber(p.autopilots?.allowance.value || 0),
+        new BigNumber(p.autopilots['autopilot']?.allowance.value || 0),
         // If pinned allowance is non zero, the period value will be defined.
         periodBlocks || weeksToBlocks(6)
       ),
