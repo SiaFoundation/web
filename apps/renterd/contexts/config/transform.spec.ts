@@ -11,7 +11,6 @@ import {
 import { SettingsData } from './types'
 import {
   blocksToWeeks,
-  monthsToBlocks,
   weeksToBlocks,
   toHastings,
   valuePerPeriodToPerMonth,
@@ -48,12 +47,12 @@ describe('tansforms', () => {
         })
       ).toEqual({
         autopilotContractSet: 'autopilot',
-        allowanceMonth: new BigNumber('500'),
+        allowanceMonth: new BigNumber('357.142857'),
         amountHosts: new BigNumber('51'),
-        periodWeeks: new BigNumber('4.285714285714286'),
+        periodWeeks: new BigNumber('6'),
         renewWindowWeeks: new BigNumber('2.2301587301587302'),
-        downloadTBMonth: new BigNumber('1.1'),
-        uploadTBMonth: new BigNumber('1.1'),
+        downloadTBMonth: new BigNumber('0.79'),
+        uploadTBMonth: new BigNumber('0.79'),
         storageTB: new BigNumber('1'),
         prune: true,
         allowRedundantIPs: false,
@@ -74,7 +73,7 @@ describe('tansforms', () => {
         migrationSurchargeMultiplier: new BigNumber(10),
         minShards: new BigNumber(10),
         totalShards: new BigNumber(30),
-        allowanceMonthPinned: new BigNumber('100'),
+        allowanceMonthPinned: new BigNumber('71.43'),
         maxStoragePriceTBMonthPinned: new BigNumber('5'),
         maxDownloadPriceTBPinned: new BigNumber('4'),
         maxUploadPriceTBPinned: new BigNumber('2'),
@@ -418,7 +417,7 @@ describe('tansforms', () => {
           autopilot: {
             allowance: {
               pinned: true,
-              value: 1000,
+              value: 1400,
             },
           },
         },
@@ -561,7 +560,7 @@ function buildAllResponses() {
         set: 'autopilot',
         amount: 51,
         allowance: toHastings(500).toString(),
-        period: monthsToBlocks(1),
+        period: weeksToBlocks(6),
         renewWindow: 2248,
         download: 1099511627776,
         upload: 1100000000000,
@@ -607,7 +606,7 @@ function buildAllResponses() {
         },
       },
       autopilots: {
-        // Update the default autopilot named 'autopilot'.
+        // The default autopilot named 'autopilot'.
         autopilot: {
           allowance: {
             pinned: false,

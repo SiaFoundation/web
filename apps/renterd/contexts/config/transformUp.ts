@@ -166,7 +166,12 @@ export function transformUpPricePinning(
       autopilot: {
         allowance: {
           pinned: values.shouldPinAllowance,
-          value: values.allowanceMonthPinned.toNumber(),
+          value: valuePerMonthToPerPeriod(
+            values.allowanceMonthPinned,
+            // If autopilot is disabled the period value may be undefined,
+            // but in that case the pinned allowance is also unused.
+            values.periodWeeks || new BigNumber(6)
+          ).toNumber(),
         },
       },
     },

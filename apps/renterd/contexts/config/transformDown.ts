@@ -19,6 +19,7 @@ import {
   valuePerBytePerBlockToPerTBPerMonth,
   valuePerPeriodToPerMonth,
   valuePerOneToPerMillion,
+  weeksToBlocks,
 } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import {
@@ -171,7 +172,10 @@ export function transformDownGouging({
   }
 }
 
-export function transformDownPricePinning(p: PricePinSettings): PricePinData {
+export function transformDownPricePinning(
+  p: PricePinSettings,
+  periodBlocks?: number
+): PricePinData {
   const fixedFiat = currencyOptions.find((c) => c.id === p.currency)?.fixed || 6
   return {
     pinningEnabled: p.enabled,
@@ -181,7 +185,11 @@ export function transformDownPricePinning(p: PricePinSettings): PricePinData {
     // Assume the default autopilot named 'autopilot'.
     shouldPinAllowance: p.autopilots['autopilot']?.allowance.pinned || false,
     allowanceMonthPinned: toFixedMaxBigNumber(
-      new BigNumber(p.autopilots['autopilot']?.allowance.value || 0),
+      valuePerPeriodToPerMonth(
+        new BigNumber(p.autopilots['autopilot']?.allowance.value || 0),
+        // If pinned allowance is non zero, the period value will be defined.
+        periodBlocks || weeksToBlocks(6)
+      ),
       fixedFiat
     ),
     shouldPinMaxStoragePrice: p.gougingSettingsPins?.maxStorage.pinned,
@@ -247,7 +255,7 @@ export function transformDown({
       hasBeenConfigured,
     }),
     // price pinning
-    ...transformDownPricePinning(pricePinning),
+    ...transformDownPricePinning(pricePinning, autopilot?.contracts.period),
     // redundancy
     ...transformDownRedundancy(redundancy),
   }
