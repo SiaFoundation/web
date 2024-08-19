@@ -15,6 +15,8 @@ export function CurrencyDisplaySelector() {
 
   return (
     <Select
+      aria-label="currency display"
+      name="currencyDisplay"
       disabled={!settings.siaCentral}
       value={settings.currencyDisplay}
       onChange={(e) =>

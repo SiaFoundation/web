@@ -1,5 +1,5 @@
 import { DNSProvider } from '@siafoundation/hostd-types'
-import { SiaCentralCurrency } from '@siafoundation/sia-central-types'
+import { CurrencyId } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
 
 export type ConfigViewMode = 'basic' | 'advanced'
@@ -29,7 +29,7 @@ export const dnsProviderOptions: { value: DNSProvider; label: string }[] = [
 ]
 
 export const defaultValuesSettingsPinned = {
-  pinnedCurrency: '' as SiaCentralCurrency | '',
+  pinnedCurrency: '' as CurrencyId | '',
   pinnedThreshold: new BigNumber(0),
   shouldPinStoragePrice: false,
   storagePricePinned: new BigNumber(0),

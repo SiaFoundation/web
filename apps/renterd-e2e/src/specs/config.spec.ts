@@ -9,6 +9,7 @@ import {
 import { clearToasts } from '../fixtures/clearToasts'
 import { clickIfEnabledAndWait, clickIf } from '../fixtures/click'
 import { beforeTest } from '../fixtures/beforeTest'
+import { setCurrencyDisplay } from '../fixtures/preferences'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page)
@@ -56,6 +57,33 @@ test('basic field change and save behaviour', async ({ page }) => {
   for (const part of estimateParts) {
     await expect(page.getByText(part)).toBeVisible()
   }
+
+  // Tips are displayed in the correct currency.
+  await expect(
+    page
+      .getByTestId('maxStoragePriceTBMonthGroup')
+      .getByLabel('Network average')
+      .getByText('357')
+  ).toBeVisible()
+  await expect(
+    page
+      .getByTestId('maxStoragePriceTBMonthGroup')
+      .getByLabel('Fit current allowance')
+      .getByText('300')
+  ).toBeVisible()
+  await setCurrencyDisplay(page, 'bothPreferFiat')
+  await expect(
+    page
+      .getByTestId('maxStoragePriceTBMonthGroup')
+      .getByLabel('Network average')
+      .getByText('$3.77')
+  ).toBeVisible()
+  await expect(
+    page
+      .getByTestId('maxStoragePriceTBMonthGroup')
+      .getByLabel('Fit current allowance')
+      .getByText('$3.17')
+  ).toBeVisible()
 })
 
 test('set max prices to fit current allowance', async ({ page }) => {

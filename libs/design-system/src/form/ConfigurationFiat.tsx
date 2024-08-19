@@ -2,11 +2,12 @@ import { FieldValues, Path, PathValue } from 'react-hook-form'
 import { FieldError } from '../components/Form'
 import { FieldProps } from './configurationFields'
 import { FieldFiat } from './FieldFiat'
-import { SiaCentralCurrency } from '@siafoundation/sia-central-types'
 import { TipNumber } from './TipNumber'
 import { useFormSetField } from './useFormSetField'
-import { currencyOptions } from '@siafoundation/react-core'
+import { CurrencyId } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
+import { useExchangeRate } from '../hooks/useExchangeRate'
+import { useMemo } from 'react'
 
 export function ConfigurationFiat<
   Values extends FieldValues,
@@ -17,7 +18,7 @@ export function ConfigurationFiat<
   fields,
   currency,
 }: FieldProps<Values, Categories> & {
-  currency: SiaCentralCurrency | ''
+  currency: CurrencyId | ''
 }) {
   const field = fields[name]
   const {
@@ -36,11 +37,21 @@ export function ConfigurationFiat<
     fields,
     name,
   })
-  const currencyMeta = currencyOptions.find((c) => c.id === currency)
-  if (!currency || !currencyMeta) {
-    return null
-  }
-  const { prefix, fixed } = currencyMeta
+  const rate = useExchangeRate({ currency })
+  const averageSc = useMemo(
+    () =>
+      average && typeof average !== 'boolean' && rate
+        ? new BigNumber(average).times(rate)
+        : undefined,
+    [average, rate]
+  )
+  const suggestionSc = useMemo(
+    () =>
+      suggestion && typeof suggestion !== 'boolean' && rate
+        ? new BigNumber(suggestion).times(rate)
+        : undefined,
+    [suggestion, rate]
+  )
   return (
     <div className="flex flex-col gap-3 items-end">
       <div className="flex flex-col w-[260px]">
@@ -53,27 +64,25 @@ export function ConfigurationFiat<
             group={false}
             currency={currency}
           />
-          {average && (
+          {averageSc && (
             <TipNumber
-              type="number"
-              format={(val) => `${prefix}${val.toFixed(fixed)}`}
+              type="siacoin"
               label="Network average"
               tip={averageTip || 'Averages provided by Sia Central.'}
-              value={average as BigNumber}
-              decimalsLimit={fixed}
+              value={averageSc}
+              decimalsLimit={0}
               onClick={() => {
                 setField(average as PathValue<Values, Path<Values>>, true)
               }}
             />
           )}
-          {suggestion && suggestionTip && (
+          {suggestionSc && suggestionTip && (
             <TipNumber
-              type="number"
-              format={(val) => `${prefix}${val.toFixed(fixed)}`}
+              type="siacoin"
               label={suggestionLabel || 'Suggestion'}
               tip={suggestionTip}
-              decimalsLimit={fixed}
-              value={suggestion as BigNumber}
+              decimalsLimit={0}
+              value={suggestionSc}
               onClick={() => {
                 setField(suggestion as PathValue<Values, Path<Values>>, true)
               }}
