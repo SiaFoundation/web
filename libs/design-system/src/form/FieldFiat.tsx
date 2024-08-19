@@ -7,13 +7,12 @@ import { ChartArea16 } from '@siafoundation/react-icons'
 import { Panel } from '../core/Panel'
 import { Text } from '../core/Text'
 import { toHastings } from '@siafoundation/units'
-import { SiaCentralCurrency } from '@siafoundation/sia-central-types'
-import { currencyOptions, useAppSettings } from '@siafoundation/react-core'
-import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
+import { CurrencyId, currencyOptions } from '@siafoundation/react-core'
 import { useMemo } from 'react'
 import { Tooltip } from '../core/Tooltip'
 import { ValueSc } from '../components/ValueSc'
 import { cx } from 'class-variance-authority'
+import { useExchangeRate } from '../hooks/useExchangeRate'
 
 export function FieldFiat<
   Values extends FieldValues,
@@ -27,24 +26,10 @@ export function FieldFiat<
   group = true,
 }: FieldProps<Values, Categories> & {
   size?: React.ComponentProps<typeof NumberField>['size']
-  currency: SiaCentralCurrency | ''
+  currency: CurrencyId | ''
   group?: boolean
 }) {
-  const { settings } = useAppSettings()
-  const rates = useSiaCentralExchangeRates({
-    disabled: !settings.siaCentral,
-    config: {
-      swr: {
-        revalidateOnFocus: false,
-      },
-    },
-  })
-  const rate = useMemo(() => {
-    if (!settings.siaCentral || !rates.data) {
-      return new BigNumber(0)
-    }
-    return new BigNumber((currency && rates.data?.rates.sc[currency]) || 0)
-  }, [rates.data, settings, currency])
+  const rate = useExchangeRate({ currency })
   const field = fields[name]
   const { placeholder, decimalsLimit = 2, units } = field
   const { setValue, onBlur, error, value } = useRegisterForm({
@@ -56,7 +41,6 @@ export function FieldFiat<
     () => currencyOptions.find((c) => c.id === currency),
     [currency]
   )
-
   const changed = form.formState.dirtyFields[name]
   const el = (
     <div
@@ -118,7 +102,7 @@ function SiacoinPinnedValue({
   rate,
 }: {
   value: BigNumber
-  currency: SiaCentralCurrency | ''
+  currency: CurrencyId | ''
   rate: BigNumber
 }) {
   const available = value && !value.isZero() && rate && !rate.isZero()

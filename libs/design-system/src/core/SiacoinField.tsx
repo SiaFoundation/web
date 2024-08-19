@@ -5,8 +5,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import { cx } from 'class-variance-authority'
 import { toFixedMaxString } from '../lib/numbers'
-import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
 import { BaseNumberField } from './BaseNumberField'
+import { useExchangeRate } from '../hooks/useExchangeRate'
 
 type Props = Omit<
   React.ComponentProps<typeof BaseNumberField>,
@@ -22,8 +22,6 @@ type Props = Omit<
   error?: boolean
   changed?: boolean
 }
-
-const zero = new BigNumber(0)
 
 export function SiacoinField({
   sc: _externalSc,
@@ -47,19 +45,7 @@ export function SiacoinField({
     [_externalSc]
   )
   const { settings } = useAppSettings()
-  const rates = useSiaCentralExchangeRates({
-    config: {
-      swr: {
-        revalidateOnFocus: false,
-      },
-    },
-  })
-  const rate = useMemo(() => {
-    if (!settings.siaCentral || !rates.data) {
-      return zero
-    }
-    return new BigNumber(rates.data?.rates.sc[settings.currency.id] || zero)
-  }, [rates.data, settings])
+  const rate = useExchangeRate({ currency: settings.currency.id })
   const [active, setActive] = useState<'sc' | 'fiat'>()
   const [localSc, setLocalSc] = useState<string>('')
   const [localFiat, setLocalFiat] = useState<string>('')

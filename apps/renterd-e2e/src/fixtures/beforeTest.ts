@@ -5,6 +5,7 @@ import { configResetAllSettings } from './configResetAllSettings'
 import { setViewMode } from './configViewMode'
 import { Page } from 'playwright'
 import { mockApiSiaScanExchangeRates } from './siascan'
+import { setCurrencyDisplay } from './preferences'
 
 export async function beforeTest(page: Page) {
   await mockApiSiaCentralExchangeRates({ page })
@@ -12,6 +13,7 @@ export async function beforeTest(page: Page) {
   await login({ page })
 
   // Reset state.
+  await setCurrencyDisplay(page, 'bothPreferSc')
   await navigateToConfig({ page })
   await configResetAllSettings({ page })
   await setViewMode({ page, state: 'basic' })

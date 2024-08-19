@@ -163,6 +163,7 @@ export * from './hooks/useServerFilters'
 export * from './hooks/useFormChanged'
 export * from './hooks/useDatasetEmptyState'
 export * from './hooks/useSiacoinFiat'
+export * from './hooks/useExchangeRate'
 export * from './hooks/useOS'
 
 // data
