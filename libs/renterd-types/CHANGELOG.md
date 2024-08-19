@@ -1,5 +1,11 @@
 # @siafoundation/renterd-types
 
+## 0.6.0
+
+### Minor Changes
+
+- 186e17a6: Max RPC price is no longer pinnable.
+
 ## 0.5.0
 
 ### Minor Changes
