@@ -1,5 +1,16 @@
 # @siafoundation/renterd-react
 
+## 4.6.0
+
+### Minor Changes
+
+- 186e17a6: Max RPC price is no longer pinnable.
+
+### Patch Changes
+
+- Updated dependencies [186e17a6]
+  - @siafoundation/renterd-types@0.6.0
+
 ## 4.5.0
 
 ### Minor Changes

@@ -1,5 +1,12 @@
 # renterd
 
+## 0.60.0
+
+### Minor Changes
+
+- 186e17a6: Max RPC price is no longer pinnable.
+- 186e17a6: Fixed an issue where the UI would set extremely small pinned max price values because it set values in per byte instead of TB.
+
 ## 0.59.0
 
 ### Minor Changes
