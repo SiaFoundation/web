@@ -47,17 +47,14 @@ export async function configResetAllSettings({ page }: { page: Page }) {
   await setSwitchByLabel(page, 'shouldPinMaxStoragePrice', true)
   await setSwitchByLabel(page, 'shouldPinMaxDownloadPrice', true)
   await setSwitchByLabel(page, 'shouldPinMaxUploadPrice', true)
-  await setSwitchByLabel(page, 'shouldPinMaxRPCPrice', true)
 
   await fillTextInputByName(page, 'maxStoragePriceTBMonthPinned', '5')
   await fillTextInputByName(page, 'maxUploadPriceTBPinned', '5')
   await fillTextInputByName(page, 'maxDownloadPriceTBPinned', '5')
-  await fillTextInputByName(page, 'maxRPCPriceMillionPinned', '1')
 
   await setSwitchByLabel(page, 'shouldPinMaxStoragePrice', false)
   await setSwitchByLabel(page, 'shouldPinMaxDownloadPrice', false)
   await setSwitchByLabel(page, 'shouldPinMaxUploadPrice', false)
-  await setSwitchByLabel(page, 'shouldPinMaxRPCPrice', false)
 
   await fillTextInputByName(page, 'maxStoragePriceTBMonth', '3000')
   await fillTextInputByName(page, 'maxUploadPriceTB', '3000')

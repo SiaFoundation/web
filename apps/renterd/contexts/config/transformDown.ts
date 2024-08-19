@@ -19,7 +19,6 @@ import {
   valuePerBytePerBlockToPerTBPerMonth,
   valuePerPeriodToPerMonth,
   valuePerOneToPerMillion,
-  valuePerByteToPerTB,
   weeksToBlocks,
 } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
@@ -193,31 +192,17 @@ export function transformDownPricePinning(
       ),
       fixedFiat
     ),
-    shouldPinMaxRPCPrice: p.gougingSettingsPins?.maxRPCPrice.pinned,
-    maxRPCPriceMillionPinned: toFixedMaxBigNumber(
-      valuePerOneToPerMillion(
-        new BigNumber(p.gougingSettingsPins.maxRPCPrice.value)
-      ),
-      fixedFiat
-    ),
     shouldPinMaxStoragePrice: p.gougingSettingsPins?.maxStorage.pinned,
-    maxStoragePriceTBMonthPinned: toFixedMaxBigNumber(
-      valuePerBytePerBlockToPerTBPerMonth(
-        new BigNumber(p.gougingSettingsPins.maxStorage.value)
-      ),
-      fixedFiat
+    maxStoragePriceTBMonthPinned: new BigNumber(
+      p.gougingSettingsPins.maxStorage.value
     ),
     shouldPinMaxUploadPrice: p.gougingSettingsPins?.maxUpload.pinned,
-    maxUploadPriceTBPinned: toFixedMaxBigNumber(
-      valuePerByteToPerTB(new BigNumber(p.gougingSettingsPins.maxUpload.value)),
-      fixedFiat
+    maxUploadPriceTBPinned: new BigNumber(
+      p.gougingSettingsPins.maxUpload.value
     ),
     shouldPinMaxDownloadPrice: p.gougingSettingsPins?.maxDownload.pinned,
-    maxDownloadPriceTBPinned: toFixedMaxBigNumber(
-      valuePerByteToPerTB(
-        new BigNumber(p.gougingSettingsPins.maxDownload.value)
-      ),
-      fixedFiat
+    maxDownloadPriceTBPinned: new BigNumber(
+      p.gougingSettingsPins.maxDownload.value
     ),
   }
 }

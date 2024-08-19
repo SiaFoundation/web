@@ -11,7 +11,6 @@ import {
 import { SettingsData } from './types'
 import {
   blocksToWeeks,
-  monthsToBlocks,
   weeksToBlocks,
   toHastings,
   valuePerPeriodToPerMonth,
@@ -48,12 +47,12 @@ describe('tansforms', () => {
         })
       ).toEqual({
         autopilotContractSet: 'autopilot',
-        allowanceMonth: new BigNumber('500'),
+        allowanceMonth: new BigNumber('357.142857'),
         amountHosts: new BigNumber('51'),
-        periodWeeks: new BigNumber('4.285714285714286'),
+        periodWeeks: new BigNumber('6'),
         renewWindowWeeks: new BigNumber('2.2301587301587302'),
-        downloadTBMonth: new BigNumber('1.1'),
-        uploadTBMonth: new BigNumber('1.1'),
+        downloadTBMonth: new BigNumber('0.79'),
+        uploadTBMonth: new BigNumber('0.79'),
         storageTB: new BigNumber('1'),
         prune: true,
         allowRedundantIPs: false,
@@ -74,16 +73,14 @@ describe('tansforms', () => {
         migrationSurchargeMultiplier: new BigNumber(10),
         minShards: new BigNumber(10),
         totalShards: new BigNumber(30),
-        allowanceMonthPinned: new BigNumber('0'),
-        maxStoragePriceTBMonthPinned: new BigNumber('43200000'),
-        maxDownloadPriceTBPinned: new BigNumber('100000000000'),
-        maxUploadPriceTBPinned: new BigNumber('1000000000000'),
-        maxRPCPriceMillionPinned: new BigNumber('1100000'),
+        allowanceMonthPinned: new BigNumber('71.43'),
+        maxStoragePriceTBMonthPinned: new BigNumber('5'),
+        maxDownloadPriceTBPinned: new BigNumber('4'),
+        maxUploadPriceTBPinned: new BigNumber('2'),
         shouldPinAllowance: false,
         shouldPinMaxDownloadPrice: false,
         shouldPinMaxUploadPrice: false,
         shouldPinMaxStoragePrice: false,
-        shouldPinMaxRPCPrice: false,
         pinnedCurrency: 'usd',
         pinnedThreshold: new BigNumber(10),
         pinningEnabled: false,
@@ -337,12 +334,10 @@ describe('tansforms', () => {
             maxStoragePriceTBMonthPinned: new BigNumber('0'),
             maxDownloadPriceTBPinned: new BigNumber('0'),
             maxUploadPriceTBPinned: new BigNumber('0'),
-            maxRPCPriceMillionPinned: new BigNumber('0'),
             shouldPinAllowance: false,
             shouldPinMaxDownloadPrice: false,
             shouldPinMaxUploadPrice: false,
             shouldPinMaxStoragePrice: false,
-            shouldPinMaxRPCPrice: false,
             pinnedCurrency: 'usd',
             pinnedThreshold: new BigNumber(0),
             pinningEnabled: false,
@@ -405,8 +400,6 @@ describe('tansforms', () => {
             maxUploadPriceTBPinned: new BigNumber('1'),
             shouldPinMaxDownloadPrice: true,
             maxDownloadPriceTBPinned: new BigNumber('1.1'),
-            shouldPinMaxRPCPrice: false,
-            maxRPCPriceMillionPinned: new BigNumber('0.001'),
             periodWeeks: new BigNumber('6'),
           },
           {
@@ -431,19 +424,15 @@ describe('tansforms', () => {
         gougingSettingsPins: {
           maxStorage: {
             pinned: true,
-            value: 4.629629629629629e-13,
+            value: 2000,
           },
           maxDownload: {
             pinned: true,
-            value: 1.1e-12,
+            value: 1.1,
           },
           maxUpload: {
             pinned: true,
-            value: 1e-12,
-          },
-          maxRPCPrice: {
-            pinned: false,
-            value: 1e-9,
+            value: 1,
           },
         },
         otherNewValue: '77777777777',
@@ -462,33 +451,7 @@ describe('tansforms', () => {
         redundancy,
         pricePinning,
       } = buildAllResponses()
-      let settings = transformDown({
-        hasBeenConfigured: true,
-        autopilot: {
-          ...autopilot,
-          contracts: {
-            ...autopilot.contracts,
-            download: 91085125718831,
-            period: 4244,
-          },
-        },
-        contractSet,
-        uploadPacking,
-        gouging: {
-          ...gouging,
-          maxRPCPrice: '100000000000000000',
-        },
-        redundancy,
-        pricePinning,
-      })
-      expect(settings.downloadTBMonth).toEqual(new BigNumber('92.72'))
-      // a little different due to rounding
-      expect(
-        transformUpAutopilot('mainnet', settings, autopilot).contracts.download
-      ).toEqual(91088814814815)
-      expect(settings.maxRPCPriceMillion).toEqual(new BigNumber('0.1'))
-
-      const up = transformUp({
+      const transformUpMocks = {
         resources: {
           autopilotState: {},
           autopilot: {},
@@ -505,27 +468,46 @@ describe('tansforms', () => {
           },
         },
         renterdState: {
-          network: 'mainnet',
+          network: 'mainnet' as const,
         },
         isAutopilotEnabled: true,
-        values: settings,
+      }
+      const down = transformDown({
+        hasBeenConfigured: true,
+        autopilot: {
+          ...autopilot,
+          contracts: {
+            ...autopilot.contracts,
+            // This value will be rounded when converted to per month.
+            download: 91085125718831,
+            period: 4244,
+          },
+        },
+        contractSet,
+        uploadPacking,
+        gouging,
+        redundancy,
+        pricePinning,
+      })
+      // Coming down, some fields are a little different due to rounding.
+      expect(down.downloadTBMonth).toEqual(new BigNumber('92.72'))
+
+      const downUp = transformUp({
+        ...transformUpMocks,
+        values: down,
+      })
+      const downUpDown = transformDown({
+        hasBeenConfigured: true,
+        ...downUp.payloads,
       })
 
-      settings = transformDown({
-        hasBeenConfigured: true,
-        ...up.payloads,
+      // Once saved/rounded, values are then always the same.
+      expect(down).toEqual(downUpDown)
+      const downUpDownUp = transformUp({
+        ...transformUpMocks,
+        values: downUpDown,
       })
-      expect(settings.downloadTBMonth).toEqual(new BigNumber('92.72'))
-      // Using the rounded value results in same value.
-      expect(
-        transformUpAutopilot('mainnet', settings, autopilot).contracts.download
-      ).toEqual(91088814814815)
-      expect(settings.maxStoragePriceTBMonthPinned).toEqual(
-        new BigNumber('43200000')
-      )
-      expect(settings.maxDownloadPriceTBPinned).toEqual(
-        new BigNumber('100000000000')
-      )
+      expect(downUp).toEqual(downUpDownUp)
     })
   })
 
@@ -578,7 +560,7 @@ function buildAllResponses() {
         set: 'autopilot',
         amount: 51,
         allowance: toHastings(500).toString(),
-        period: monthsToBlocks(1),
+        period: weeksToBlocks(6),
         renewWindow: 2248,
         download: 1099511627776,
         upload: 1100000000000,
@@ -612,27 +594,23 @@ function buildAllResponses() {
       gougingSettingsPins: {
         maxStorage: {
           pinned: false,
-          value: 0.00000001,
+          value: 5,
         },
         maxDownload: {
           pinned: false,
-          value: 0.1,
+          value: 4,
         },
         maxUpload: {
           pinned: false,
-          value: 1,
-        },
-        maxRPCPrice: {
-          pinned: false,
-          value: 1.1,
+          value: 2,
         },
       },
       autopilots: {
-        // Update the default autopilot named 'autopilot'.
+        // The default autopilot named 'autopilot'.
         autopilot: {
           allowance: {
             pinned: false,
-            value: 0,
+            value: 100,
           },
         },
       },

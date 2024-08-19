@@ -290,13 +290,11 @@ export function pricesToPinnedPrices({
   maxStoragePriceTBMonth,
   maxDownloadPriceTB,
   maxUploadPriceTB,
-  maxRPCPriceMillion,
 }: {
   exchangeRate?: BigNumber
   maxStoragePriceTBMonth: BigNumber
   maxDownloadPriceTB: BigNumber
   maxUploadPriceTB: BigNumber
-  maxRPCPriceMillion: BigNumber
 }) {
   if (!exchangeRate) {
     return null
@@ -308,6 +306,5 @@ export function pricesToPinnedPrices({
     ),
     maxDownloadPriceTBPinned: siacoinToFiat(maxDownloadPriceTB, exchangeRate),
     maxUploadPriceTBPinned: siacoinToFiat(maxUploadPriceTB, exchangeRate),
-    maxRPCPriceMillionPinned: siacoinToFiat(maxRPCPriceMillion, exchangeRate),
   }
 }

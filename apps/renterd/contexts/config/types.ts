@@ -64,8 +64,6 @@ export const defaultPricePinning = {
   maxStoragePriceTBMonthPinned: undefined as BigNumber | undefined,
   shouldPinMaxDownloadPrice: false,
   maxDownloadPriceTBPinned: undefined as BigNumber | undefined,
-  shouldPinMaxRPCPrice: false,
-  maxRPCPriceMillionPinned: undefined as BigNumber | undefined,
   shouldPinMaxUploadPrice: false,
   maxUploadPriceTBPinned: undefined as BigNumber | undefined,
   shouldPinAllowance: false,
