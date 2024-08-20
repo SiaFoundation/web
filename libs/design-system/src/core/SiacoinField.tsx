@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js'
 import { cx } from 'class-variance-authority'
 import { toFixedMaxString } from '../lib/numbers'
 import { BaseNumberField } from './BaseNumberField'
-import { useExchangeRate } from '../hooks/useExchangeRate'
+import { useActiveExchangeRate } from '../hooks/useExchangeRate'
 
 type Props = Omit<
   React.ComponentProps<typeof BaseNumberField>,
@@ -45,7 +45,8 @@ export function SiacoinField({
     [_externalSc]
   )
   const { settings } = useAppSettings()
-  const rate = useExchangeRate({ currency: settings.currency.id })
+  const exchangeRate = useActiveExchangeRate()
+  const rate = exchangeRate ? exchangeRate.rate : undefined
   const [active, setActive] = useState<'sc' | 'fiat'>()
   const [localSc, setLocalSc] = useState<string>('')
   const [localFiat, setLocalFiat] = useState<string>('')
@@ -89,7 +90,7 @@ export function SiacoinField({
 
   const syncFiatToSc = useCallback(
     (sc: string) => {
-      const fiat = new BigNumber(sc).times(rate)
+      const fiat = new BigNumber(sc).times(rate || 0)
       updateFiat(fiat)
     },
     [updateFiat, rate]
@@ -97,7 +98,7 @@ export function SiacoinField({
 
   const syncScToFiat = useCallback(
     (fiat: string) => {
-      const sc = new BigNumber(fiat).dividedBy(rate)
+      const sc = new BigNumber(fiat).dividedBy(rate || 0)
       updateSc(sc)
     },
     [updateSc, rate]

@@ -123,7 +123,7 @@ type Props = {
 
 export function AppLogin({ appName, route, routes }: Props) {
   const router = usePagesRouter()
-  const { settings, setSettings } = useAppSettings()
+  const { settings, setRequestSettings } = useAppSettings()
   const { loginWithCustomApi } = settings
 
   const defaultValues = useMemo(
@@ -155,7 +155,7 @@ export function AppLogin({ appName, route, routes }: Props) {
         password: values.password,
       })
       if (!error) {
-        setSettings({
+        setRequestSettings({
           api,
           password: values.password,
           recentApis: {
@@ -177,7 +177,7 @@ export function AppLogin({ appName, route, routes }: Props) {
       router,
       routes,
       settings,
-      setSettings,
+      setRequestSettings,
       defaultValues,
       route,
     ]
@@ -211,7 +211,7 @@ export function AppLogin({ appName, route, routes }: Props) {
             >
               <DropdownMenuItem
                 onSelect={() =>
-                  setSettings({
+                  setRequestSettings({
                     loginWithCustomApi: !loginWithCustomApi,
                   })
                 }

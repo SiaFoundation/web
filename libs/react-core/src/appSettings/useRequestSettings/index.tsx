@@ -4,69 +4,31 @@ import { useAppRouter, usePathname } from '@siafoundation/next'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { useCallback } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
-import { useGpuFeatures } from './useGpuFeatures'
-import { clearAllSwrKeys } from '../utils'
-import { useWorkflows } from '../workflows'
-import { CurrencyId, CurrencyOption, currencyOptions } from './currency'
+import { clearAllSwrKeys } from '../../utils'
+import { useWorkflows } from '../../workflows'
 import { useIsAuthenticatedRoute } from './useIsAuthenticatedRoute'
+import { RequestSettings, getDefaultRequestSettings } from './types'
 
-export type CurrencyDisplay = 'sc' | 'fiat' | 'bothPreferSc' | 'bothPreferFiat'
-
-export type AppSettings = {
-  api: string
-  loginWithCustomApi: boolean
-  siaCentral: boolean
-  password?: string
-  currency: CurrencyOption
-  recentApis: {
-    [api: string]: {
-      lastUsed: number
-    }
-  }
-  currencyDisplay: CurrencyDisplay
-  autoLock?: boolean
-  autoLockTimeout?: number
-}
-
-const defaultSettings: AppSettings = {
-  api: '',
-  loginWithCustomApi: false,
-  siaCentral: true,
-  password: undefined,
-  currency: currencyOptions[0],
-  currencyDisplay: 'bothPreferSc',
-  recentApis: {},
-  autoLock: false,
-  autoLockTimeout: 1000 * 60 * 10, // 10 minutes
-}
-
-function getDefaultSettings(customDefaults?: Partial<AppSettings>) {
-  return {
-    ...defaultSettings,
-    ...customDefaults,
-  }
-}
-
-type Props = {
+export type RequestSettingsProviderProps = {
   children?: React.ReactNode
   passwordProtectRequestHooks?: boolean
   lockRoutes?: {
     home: string
     login: string
   }
-  defaultSettings?: Partial<AppSettings>
+  defaultSettings?: Partial<RequestSettings>
 }
 
-function useAppSettingsMain({
+function useRequestSettingsMain({
   passwordProtectRequestHooks,
   lockRoutes,
   defaultSettings: overrideDefaultSettings,
-}: Props) {
+}: RequestSettingsProviderProps) {
   const customDefaultSettings = useMemo(
-    () => getDefaultSettings(overrideDefaultSettings),
+    () => getDefaultRequestSettings(overrideDefaultSettings),
     [overrideDefaultSettings]
   )
-  const [_settings, _setSettings] = useLocalStorageState('v1/settings', {
+  const [_settings, _setSettings] = useLocalStorageState('v1/requestConfig', {
     defaultValue: customDefaultSettings,
   })
   // Merge in defaults incase new settings have been introduced
@@ -77,7 +39,7 @@ function useAppSettingsMain({
     }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const settings = useMemo(
+  const requestSettings = useMemo(
     () => ({
       ...customDefaultSettings,
       ..._settings,
@@ -87,26 +49,14 @@ function useAppSettingsMain({
 
   const { resetWorkflows } = useWorkflows()
 
-  const setSettings = useCallback(
-    (values: Partial<AppSettings>) => {
+  const setRequestSettings = useCallback(
+    (values: Partial<RequestSettings>) => {
       _setSettings((s) => ({
         ...s,
         ...values,
       }))
     },
     [_setSettings]
-  )
-
-  const setCurrency = useCallback(
-    (id: CurrencyId) => {
-      const currency = currencyOptions.find((i) => i.id === id)
-      if (currency) {
-        setSettings({
-          currency,
-        })
-      }
-    },
-    [setSettings]
   )
 
   const router = useAppRouter()
@@ -130,7 +80,7 @@ function useAppSettingsMain({
         `${lockRoutes.login}?prev=${getRouteToSaveAsPrev(pathname, lockRoutes)}`
       )
     }
-    setSettings({ password: '' })
+    setRequestSettings({ password: '' })
     resetWorkflows()
     clearAllSwrKeys()
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -142,7 +92,7 @@ function useAppSettingsMain({
   }, [
     router,
     lockRoutes,
-    setSettings,
+    setRequestSettings,
     resetWorkflows,
     onLockCallbacks,
     pathname,
@@ -151,40 +101,20 @@ function useAppSettingsMain({
   const isAuthenticatedRoute = useIsAuthenticatedRoute({
     login: lockRoutes?.login || '/login',
   })
-  const isUnlocked = useMemo(() => !!settings.password, [settings])
+  const isUnlocked = useMemo(
+    () => !!requestSettings.password,
+    [requestSettings]
+  )
   const isUnlockedAndAuthedRoute = isUnlocked && isAuthenticatedRoute
 
-  const gpu = useGpuFeatures()
-
   return {
-    settings,
-    setSettings,
-    setCurrency,
-    currencyOptions,
-    gpu,
+    requestSettings,
+    setRequestSettings,
     lock,
     isUnlockedAndAuthedRoute,
     passwordProtectRequestHooks,
     setOnLockCallback,
   }
-}
-
-type State = ReturnType<typeof useAppSettingsMain>
-
-const SettingsContext = createContext({} as State)
-/**
- * The app settings context allows you to configure all app settings and
- * preferences such as the api address, password, currency, etc.
- */
-export const useAppSettings = () => useContext(SettingsContext)
-
-export function AppSettingsProvider({ children, ...props }: Props) {
-  const state = useAppSettingsMain(props)
-  return (
-    <SettingsContext.Provider value={state}>
-      {children}
-    </SettingsContext.Provider>
-  )
 }
 
 export function getRouteToSaveAsPrev(
@@ -195,4 +125,25 @@ export function getRouteToSaveAsPrev(
     return routes.home
   }
   return pathname
+}
+
+type State = ReturnType<typeof useRequestSettingsMain>
+
+const RequestSettingsContext = createContext({} as State)
+/**
+ * The app settings context allows you to configure all app settings and
+ * preferences such as the api address, password, currency, etc.
+ */
+export const useRequestSettings = () => useContext(RequestSettingsContext)
+
+export function RequestSettingsProvider({
+  children,
+  ...props
+}: RequestSettingsProviderProps) {
+  const state = useRequestSettingsMain(props)
+  return (
+    <RequestSettingsContext.Provider value={state}>
+      {children}
+    </RequestSettingsContext.Provider>
+  )
 }

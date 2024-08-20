@@ -11,7 +11,7 @@ const displayOptions = [
 ] as const
 
 export function CurrencyDisplaySelector() {
-  const { settings, setSettings } = useAppSettings()
+  const { settings, setExternalDataSettings } = useAppSettings()
 
   return (
     <Select
@@ -20,7 +20,7 @@ export function CurrencyDisplaySelector() {
       disabled={!settings.siaCentral}
       value={settings.currencyDisplay}
       onChange={(e) =>
-        setSettings({
+        setExternalDataSettings({
           currencyDisplay: e.currentTarget.value as CurrencyDisplay,
         })
       }

@@ -19,6 +19,7 @@ import { Dialog } from '../core/Dialog'
 import { minutesInMilliseconds } from '../lib/time'
 import { CurrencyFiatSelector } from './CurrencyFiatSelector'
 import { CurrencyDisplaySelector } from './CurrencyDisplaySelector'
+import { ValueCopyable } from '../components/ValueCopyable'
 
 type Props = {
   open: boolean
@@ -33,7 +34,13 @@ export function SettingsDialog({
   securityEl,
   showGpuSetting,
 }: Props) {
-  const { settings, setSettings, gpu } = useAppSettings()
+  const {
+    settings,
+    setRequestSettings,
+    setExternalDataSettings,
+    daemonExplorer,
+    gpu,
+  } = useAppSettings()
 
   return (
     <Dialog
@@ -64,8 +71,8 @@ export function SettingsDialog({
                 </div>
                 <Paragraph size="14">
                   Select whether you would like to see currency values in
-                  siacoin, fiat, or both. Fiat requires Sia Central third-party
-                  data enabled under Privacy.
+                  siacoin, fiat, or both. Fiat requires a third-party API
+                  enabled under Privacy.
                 </Paragraph>
               </div>
             </Alert>
@@ -82,7 +89,7 @@ export function SettingsDialog({
                 </div>
                 <Paragraph size="14">
                   Select a fiat currency for price conversions from Siacoin.
-                  Requires Sia Central third-party data enabled under Privacy.
+                  Requires a third-party API enabled under Privacy.
                 </Paragraph>
               </div>
             </Alert>
@@ -149,13 +156,15 @@ export function SettingsDialog({
                   <Switch
                     size="medium"
                     checked={settings.autoLock}
-                    onCheckedChange={(val) => setSettings({ autoLock: val })}
+                    onCheckedChange={(val) =>
+                      setRequestSettings({ autoLock: val })
+                    }
                   />
                   <Select
                     disabled={!settings.autoLock}
                     value={String(settings.autoLockTimeout)}
                     onChange={(e) => {
-                      setSettings({
+                      setRequestSettings({
                         autoLockTimeout: Number(e.currentTarget.value),
                       })
                     }}
@@ -189,8 +198,8 @@ export function SettingsDialog({
           <div className="flex flex-col gap-4">
             <Paragraph size="14">
               Configure privacy preferences. The app uses the third-party APIs
-              listed below to improve the user experience. All third-party APIs
-              are optional and can be toggled on or off.
+              listed below to improve the user experience. Third-party APIs are
+              optional and can be toggled on or off.
             </Paragraph>
             <Alert>
               <div className="flex flex-col gap-4">
@@ -204,15 +213,83 @@ export function SettingsDialog({
                   <Switch
                     size="medium"
                     checked={settings.siaCentral}
-                    onCheckedChange={(val) => setSettings({ siaCentral: val })}
+                    onCheckedChange={(val) =>
+                      setExternalDataSettings({ siaCentral: val })
+                    }
                   />
                 </div>
                 <Paragraph size="14">
-                  The app fetches Siacoin exchange rates from the Sia Central
-                  API.
+                  The app fetches network average prices and host geolocation
+                  from the Sia Central API.
                 </Paragraph>
               </div>
             </Alert>
+            {daemonExplorer.isSupported ? (
+              <Alert>
+                <div className="flex flex-col gap-4">
+                  <div className="flex gap-1 items-center justify-between">
+                    <div className="flex gap-2 items-center">
+                      <Text>
+                        <Information16 />
+                      </Text>
+                      <Heading size="20" className="flex-1">
+                        Explorer
+                      </Heading>
+                    </div>
+                    <div className="flex gap-2 items-center">
+                      {daemonExplorer.api ? (
+                        <ValueCopyable
+                          maxLength={30}
+                          value={
+                            daemonExplorer.api || 'https://api.siascan.com'
+                          }
+                        />
+                      ) : (
+                        <Text size="14" weight="medium" color="subtle">
+                          Not configured
+                        </Text>
+                      )}
+                      <Switch
+                        size="medium"
+                        disabled
+                        checked={daemonExplorer.enabled}
+                        onCheckedChange={(val) =>
+                          setExternalDataSettings({ siaCentral: val })
+                        }
+                      />
+                    </div>
+                  </div>
+                  <Paragraph size="14">
+                    The app fetches Siacoin exchange rates from the configured
+                    explorer API. This API is configured and enabled in the
+                    daemon's startup configuration.
+                  </Paragraph>
+                </div>
+              </Alert>
+            ) : (
+              <Alert>
+                <div className="flex flex-col gap-4">
+                  <div className="flex gap-2 items-center">
+                    <Text>
+                      <Information16 />
+                    </Text>
+                    <Heading size="20" className="flex-1">
+                      Siascan
+                    </Heading>
+                    <Switch
+                      size="medium"
+                      checked={settings.siascan}
+                      onCheckedChange={(val) =>
+                        setExternalDataSettings({ siascan: val })
+                      }
+                    />
+                  </div>
+                  <Paragraph size="14">
+                    The app fetches Siacoin exchange rates from the Siascan API.
+                  </Paragraph>
+                </div>
+              </Alert>
+            )}
           </div>
         </div>
         <Separator className="w-full" />

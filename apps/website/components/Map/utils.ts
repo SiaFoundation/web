@@ -10,19 +10,17 @@ import BigNumber from 'bignumber.js'
 
 export function getHostLabel({
   host,
-  rates,
+  exchangeRateUSD,
 }: {
   host: SiaCentralPartialHost
-  rates?: {
-    usd: string
-  }
+  exchangeRateUSD?: BigNumber
 }) {
-  const storageCost = rates
+  const storageCost = exchangeRateUSD
     ? `$${new BigNumber(host.settings.storage_price)
         .times(TBToBytes(1))
         .times(monthsToBlocks(1))
         .div(1e24)
-        .times(rates?.usd || 1)
+        .times(exchangeRateUSD)
         .toFixed(2)}/TB`
     : `${humanSiacoin(
         new BigNumber(host.settings.storage_price)

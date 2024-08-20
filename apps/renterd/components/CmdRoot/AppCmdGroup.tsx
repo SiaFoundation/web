@@ -23,8 +23,13 @@ type Props = {
 export function AppCmdGroup({ currentPage, parentPage }: Props) {
   const { openDialog, closeDialog } = useDialog()
   const { setTheme } = useTheme()
-  const { settings, setSettings, lock, currencyOptions, setCurrency } =
-    useAppSettings()
+  const {
+    settings,
+    setExternalDataSettings,
+    lock,
+    currencyOptions,
+    setCurrency,
+  } = useAppSettings()
   return (
     <CommandGroup currentPage={currentPage} commandPage={commandPage}>
       <CommandItemNav
@@ -41,7 +46,7 @@ export function AppCmdGroup({ currentPage, parentPage }: Props) {
         currentPage={currentPage}
         commandPage={commandPage}
         onSelect={() => {
-          setSettings({ siaCentral: !settings.siaCentral })
+          setExternalDataSettings({ siaCentral: !settings.siaCentral })
           closeDialog()
         }}
       >

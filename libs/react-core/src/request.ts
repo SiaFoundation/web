@@ -1,7 +1,7 @@
 import { AxiosRequestConfig, AxiosResponse, AxiosResponseHeaders } from 'axios'
 import { MutatorCallback, MutatorOptions } from 'swr'
 import { SWROptions } from './types'
-import { AppSettings } from './useAppSettings'
+import { RequestSettings } from './appSettings/useRequestSettings/types'
 import { RequestParams, parameterizeRoute } from '@siafoundation/request'
 
 export type RequestConfig<Payload, Result> = {
@@ -191,7 +191,7 @@ export type Response<T> = {
 }
 
 function getApi<Params extends RequestParams, Payload, Result>(
-  settings: AppSettings,
+  settings: RequestSettings,
   hookArgs:
     | {
         api?: string
@@ -203,7 +203,7 @@ function getApi<Params extends RequestParams, Payload, Result>(
 }
 
 function buildHeaders<Params extends RequestParams, Payload, Result>(
-  settings: AppSettings,
+  settings: RequestSettings,
   configArgs: InternalHookArgsCallback<Params, Payload, Result>,
   callArgs: InternalCallbackArgs<Params, Payload, Result> | undefined
 ) {
@@ -221,7 +221,7 @@ function buildHeaders<Params extends RequestParams, Payload, Result>(
 }
 
 export function buildAxiosConfig<Params extends RequestParams, Payload, Result>(
-  settings: AppSettings,
+  settings: RequestSettings,
   configArgs: InternalHookArgsCallback<Params, Payload, Result>,
   callArgs: InternalCallbackArgs<Params, Payload, Result> | undefined
 ) {
@@ -239,7 +239,7 @@ export function buildRouteWithParams<
   Payload,
   Result
 >(
-  settings: AppSettings,
+  settings: RequestSettings,
   route: string | null,
   hookArgs:
     | {
@@ -273,7 +273,7 @@ export function buildRouteWithParams<
 }
 
 export function getPathFromKey<Params extends RequestParams, Payload, Result>(
-  settings: AppSettings,
+  settings: RequestSettings,
   route: string,
   hookArgs:
     | {

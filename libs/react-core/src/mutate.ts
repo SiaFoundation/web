@@ -3,7 +3,7 @@
 import { useMemo } from 'react'
 import { mutate as swrMutate, MutatorCallback, MutatorOptions } from 'swr'
 import { getPathFromKey } from './request'
-import { useAppSettings } from './useAppSettings'
+import { useAppSettings } from './appSettings'
 
 export function useMutate(args?: { api: string }) {
   const { settings } = useAppSettings()

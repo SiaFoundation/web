@@ -3,9 +3,9 @@ import { ConfigViewMode, defaultValues } from './types'
 import { useEffect, useMemo, useRef } from 'react'
 import { getFields } from './fields'
 import useLocalStorageState from 'use-local-storage-state'
-import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
 import { useHostState } from '@siafoundation/hostd-react'
 import { useAutoCalculatedFields } from './useAutoCalculatedFields'
+import { useExchangeRate } from '@siafoundation/design-system'
 
 export function useForm() {
   const form = useHookForm({
@@ -24,7 +24,9 @@ export function useForm() {
     form,
   })
 
-  const rates = useSiaCentralExchangeRates()
+  const exchangeRateUSD = useExchangeRate({
+    currency: 'usd',
+  })
   const state = useHostState()
   const pinningEnabled = state.data?.explorer.enabled
   // Field validation is only re-applied on re-mount,
@@ -42,10 +44,16 @@ export function useForm() {
         configViewMode,
         storageTBMonth: storagePrice,
         collateralMultiplier,
-        rates: rates.data?.rates,
+        exchangeRateUSD: exchangeRateUSD.rate,
         validationContext: validationContext.current,
       }),
-    [configViewMode, storagePrice, collateralMultiplier, rates.data, state.data]
+    [
+      configViewMode,
+      storagePrice,
+      collateralMultiplier,
+      exchangeRateUSD.rate,
+      state.data,
+    ]
   )
 
   return {

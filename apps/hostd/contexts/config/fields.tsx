@@ -8,7 +8,6 @@ import {
   dnsProviderOptions,
   scDecimalPlaces,
 } from './types'
-import { SiaCentralExchangeRates } from '@siafoundation/sia-central-types'
 import { calculateMaxCollateral } from './transform'
 import { currencyOptions } from '@siafoundation/react-core'
 
@@ -19,7 +18,7 @@ type GetFields = {
   configViewMode: ConfigViewMode
   storageTBMonth?: BigNumber
   collateralMultiplier?: BigNumber
-  rates?: SiaCentralExchangeRates
+  exchangeRateUSD?: BigNumber
   validationContext: {
     pinningEnabled: boolean
   }
@@ -30,7 +29,7 @@ export function getFields({
   configViewMode,
   storageTBMonth,
   collateralMultiplier,
-  rates,
+  exchangeRateUSD,
   validationContext,
 }: GetFields): ConfigFields<SettingsData, Categories> {
   return {
@@ -146,7 +145,9 @@ export function getFields({
       category: 'pricing',
       units: 'SC/TB/month',
       decimalsLimitSc: scDecimalPlaces,
-      suggestion: rates ? usdInScRoundedToNearestTen(1, rates) : undefined,
+      suggestion: exchangeRateUSD
+        ? usdInScRoundedToNearestTen(1, exchangeRateUSD)
+        : undefined,
       suggestionTip:
         'The suggested storage price in siacoins per TB per month.',
       validation: {
@@ -201,7 +202,9 @@ export function getFields({
       category: 'pricing',
       units: 'SC/TB',
       decimalsLimitSc: scDecimalPlaces,
-      suggestion: rates ? usdInScRoundedToNearestTen(10, rates) : undefined,
+      suggestion: exchangeRateUSD
+        ? usdInScRoundedToNearestTen(10, exchangeRateUSD)
+        : undefined,
       suggestionTip:
         'The suggested egress price in siacoins for egress per TB.',
       validation: {
@@ -255,7 +258,9 @@ export function getFields({
       type: 'siacoin',
       category: 'pricing',
       units: 'SC/TB',
-      suggestion: rates ? usdInScRoundedToNearestTen(0.05, rates) : undefined,
+      suggestion: exchangeRateUSD
+        ? usdInScRoundedToNearestTen(0.05, exchangeRateUSD)
+        : undefined,
       suggestionTip: 'The suggested ingress price in siacoins per TB.',
       decimalsLimitSc: scDecimalPlaces,
       validation: {
@@ -632,11 +637,11 @@ export function getFields({
 
 function usdInScRoundedToNearestTen(
   usdAmount: number,
-  rates: SiaCentralExchangeRates
+  exchangeRateUSD?: BigNumber
 ) {
-  return rates
+  return exchangeRateUSD
     ? new BigNumber(
-        new BigNumber(usdAmount).div(rates.sc.usd).div(10).toFixed(0)
+        new BigNumber(usdAmount).div(exchangeRateUSD).div(10).toFixed(0)
       ).times(10)
     : undefined
 }

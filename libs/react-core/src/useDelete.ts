@@ -14,8 +14,8 @@ import {
   After,
   getPathFromKey,
 } from './request'
-import { useAppSettings } from './useAppSettings'
 import { RequestParams } from '@siafoundation/request'
+import { useRequestSettings } from './appSettings/useRequestSettings'
 
 type DeleteFunc<Params extends RequestParams, Result> = {
   delete: (
@@ -28,16 +28,16 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
   after?: After<Params, void, Result>
 ): DeleteFunc<Params, Result> {
   const { mutate } = useSWRConfig()
-  const { settings } = useAppSettings()
+  const { requestSettings } = useRequestSettings()
   const { setWorkflow, removeWorkflow } = useWorkflows()
   const hookArgs = mergeInternalHookArgsCallback(args)
   return {
     delete: async (args: InternalCallbackArgs<Params, void, Result>) => {
       const callArgs = mergeInternalCallbackArgs(args)
       try {
-        const reqConfig = buildAxiosConfig(settings, hookArgs, callArgs)
+        const reqConfig = buildAxiosConfig(requestSettings, hookArgs, callArgs)
         const reqRoute = buildRouteWithParams(
-          settings,
+          requestSettings,
           hookArgs.route,
           hookArgs,
           callArgs
@@ -46,7 +46,7 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
           throw Error('No route')
         }
         const path = getPathFromKey(
-          settings,
+          requestSettings,
           reqRoute,
           args,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -65,7 +65,7 @@ export function useDeleteFunc<Params extends RequestParams, Result>(
                     return false
                   }
                   const route = getPathFromKey(
-                    settings,
+                    requestSettings,
                     key,
                     args,
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any

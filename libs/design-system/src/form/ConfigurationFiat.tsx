@@ -6,7 +6,7 @@ import { TipNumber } from './TipNumber'
 import { useFormSetField } from './useFormSetField'
 import { CurrencyId } from '@siafoundation/react-core'
 import BigNumber from 'bignumber.js'
-import { useExchangeRate } from '../hooks/useExchangeRate'
+import { useSiascanExchangeRate } from '../hooks/useExchangeRate'
 import { useMemo } from 'react'
 
 export function ConfigurationFiat<
@@ -37,7 +37,10 @@ export function ConfigurationFiat<
     fields,
     name,
   })
-  const rate = useExchangeRate({ currency })
+  const exchangeRate = useSiascanExchangeRate({
+    currency: currency || undefined,
+  })
+  const rate = exchangeRate.rate
   const averageSc = useMemo(
     () =>
       average && typeof average !== 'boolean' && rate

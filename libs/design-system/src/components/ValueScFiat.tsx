@@ -5,9 +5,9 @@ import BigNumber from 'bignumber.js'
 import { ValueSc } from './ValueSc'
 import { ValueFiat } from './ValueFiat'
 import { useAppSettings } from '@siafoundation/react-core'
-import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
 import { useMemo } from 'react'
 import { Tooltip } from '../core/Tooltip'
+import { useActiveExchangeRate } from '../hooks/useExchangeRate'
 
 type Props = {
   size?: React.ComponentProps<typeof Text>['size']
@@ -49,7 +49,7 @@ export function ValueScFiat({
   const {
     settings: { currencyDisplay },
   } = useAppSettings()
-  const exchangeRates = useSiaCentralExchangeRates()
+  const { rate } = useActiveExchangeRate()
 
   const scEl = useMemo(
     () => (
@@ -143,7 +143,7 @@ export function ValueScFiat({
     return scEl
   }
 
-  if (!exchangeRates.data) {
+  if (!rate) {
     return scEl
   }
 

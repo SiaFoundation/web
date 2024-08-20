@@ -18,6 +18,7 @@ export function ClientSide({ children }: { children: React.ReactNode }) {
 
 type Props = {
   className?: string
+  daemonExplorerInfoRoute?: string
   passwordProtectRequestHooks?: boolean
   fallback?: Record<string, unknown>
   children: React.ReactNode
@@ -26,6 +27,7 @@ type Props = {
 
 export function NextAppCsr({
   className,
+  daemonExplorerInfoRoute,
   passwordProtectRequestHooks,
   fallback,
   children,
@@ -38,6 +40,7 @@ export function NextAppCsr({
           <TooltipProvider>
             <AppSettingsProvider
               lockRoutes={lockRoutes}
+              daemonExplorerInfoRoute={daemonExplorerInfoRoute}
               passwordProtectRequestHooks={passwordProtectRequestHooks}
             >
               <div id="root" className={className}>
