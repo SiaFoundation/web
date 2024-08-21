@@ -1,5 +1,12 @@
 # @siafoundation/renterd-react
 
+## 4.6.1
+
+### Patch Changes
+
+- @siafoundation/renterd-types@0.6.1
+- @siafoundation/units@3.1.1
+
 ## 4.6.0
 
 ### Minor Changes

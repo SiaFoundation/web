@@ -1,5 +1,11 @@
 # @siafoundation/renterd-js
 
+## 0.6.1
+
+### Patch Changes
+
+- @siafoundation/renterd-types@0.6.1
+
 ## 0.6.0
 
 ### Minor Changes

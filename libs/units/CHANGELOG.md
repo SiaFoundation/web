@@ -1,5 +1,12 @@
 # @siafoundation/units
 
+## 3.1.1
+
+### Patch Changes
+
+- Updated dependencies [04b45f7d]
+  - @siafoundation/types@0.6.0
+
 ## 3.1.0
 
 ### Minor Changes
