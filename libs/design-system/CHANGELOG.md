@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.6.1
+
+### Patch Changes
+
+- 9e6640a3: Fiat fields now show averages and suggestions according to the currency display preference.
+- Updated dependencies [04b45f7d]
+  - @siafoundation/types@0.6.0
+  - @siafoundation/units@3.1.1
+
 ## 4.6.0
 
 ### Minor Changes

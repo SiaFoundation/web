@@ -1,5 +1,11 @@
 # @siafoundation/types
 
+## 0.6.0
+
+### Minor Changes
+
+- 04b45f7d: Added the explored-types, js, and react libraries.
+
 ## 0.5.0
 
 ### Minor Changes

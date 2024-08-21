@@ -1,5 +1,11 @@
 # renterd
 
+## 0.60.1
+
+### Patch Changes
+
+- 9e6640a3: Fixed an issue where network averages shown on pinned field tips did not follow the currency display preference.
+
 ## 0.60.0
 
 ### Minor Changes
