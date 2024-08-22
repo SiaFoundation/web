@@ -1,10 +1,9 @@
 import { TBToBytes } from './bytes'
-import { monthsToBlocks } from './blockTime'
 import { SiaCentralHost } from '@siafoundation/sia-central-types'
 import BigNumber from 'bignumber.js'
 import { humanSiacoin, toSiacoins } from './currency'
 import { humanBytes, humanSpeed } from './humanUnits'
-import { valuePerTBPerMonthToPerBytePerBlock } from './valuePer'
+import { valuePerBytePerBlockToPerTBPerMonth } from './valuePer'
 
 type Hastings = string
 
@@ -20,14 +19,16 @@ type Props = {
 
 export function getStorageCost({ price, exchange }: Props) {
   return exchange
-    ? `${exchange.currency.prefix}${toSiacoins(
-        valuePerTBPerMonthToPerBytePerBlock(new BigNumber(price))
+    ? `${exchange.currency.prefix}${valuePerBytePerBlockToPerTBPerMonth(
+        toSiacoins(price)
       )
         .times(exchange.rate || 1)
         .toFormat(2)}/TB`
     : `${humanSiacoin(
-        new BigNumber(price).times(TBToBytes(1)).times(monthsToBlocks(1)),
-        { fixed: 3 }
+        valuePerBytePerBlockToPerTBPerMonth(new BigNumber(price)),
+        {
+          fixed: 3,
+        }
       )}/TB`
 }
 
