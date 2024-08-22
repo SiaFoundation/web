@@ -5,7 +5,6 @@ import {
   DropdownMenuLeftSlot,
   DropdownMenuLabel,
   Text,
-  secondsInMilliseconds,
   truncate,
   copyToClipboard,
 } from '@siafoundation/design-system'
@@ -32,6 +31,7 @@ import { useBlocklistUpdate } from '../../hooks/useBlocklistUpdate'
 import { addressContainsFilter } from '../Contracts/ContractsFilterAddressDialog'
 import { publicKeyContainsFilter } from '../Contracts/ContractsFilterPublicKeyDialog'
 import { filterPublicKeyEquals } from './HostsFilterPublicKeyDialog'
+import { secondsInMilliseconds } from '@siafoundation/units'
 
 type Props = {
   address: string

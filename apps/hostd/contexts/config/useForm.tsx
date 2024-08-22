@@ -5,7 +5,7 @@ import { getFields } from './fields'
 import useLocalStorageState from 'use-local-storage-state'
 import { useHostState } from '@siafoundation/hostd-react'
 import { useAutoCalculatedFields } from './useAutoCalculatedFields'
-import { useExchangeRate } from '@siafoundation/design-system'
+import { useExchangeRate } from '@siafoundation/react-core'
 
 export function useForm() {
   const form = useHookForm({

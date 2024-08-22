@@ -2,11 +2,11 @@ import { getGitHub } from '@siafoundation/data-sources'
 import { humanBytes, humanNumber } from '@siafoundation/units'
 import { AsyncReturnType } from '../lib/types'
 import { getCacheValue } from '../lib/cache'
-import { getMinutesInSeconds } from '../lib/time'
+import { minutesInSeconds } from '@siafoundation/units'
 import { siaCentral } from '../config/siaCentral'
 import { to } from '@siafoundation/request'
 
-const maxAge = getMinutesInSeconds(5)
+const maxAge = minutesInSeconds(5)
 
 export async function getStats() {
   return getCacheValue('stats', () => readStats(), maxAge)

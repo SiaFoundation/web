@@ -1,5 +1,4 @@
 import {
-  daysInMilliseconds,
   Chart,
   formatChartData,
   computeChartStats,
@@ -13,6 +12,7 @@ import {
 import { useMemo } from 'react'
 import { ChartContractSetCategory, ChartContractSetKey } from './types'
 import { getTimeClampedToNearest5min } from './utils'
+import { daysInMilliseconds } from '@siafoundation/units'
 
 export function useContractSetMetrics() {
   // don't use exact times, round to 5 minutes so that swr can cache

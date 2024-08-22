@@ -1,11 +1,11 @@
-import { humanDate } from '@siafoundation/units'
-import { omit } from '@technically/lodash'
-import { ChartPoint } from '../components/ChartXY'
 import {
+  humanDate,
   daysInMilliseconds,
   hoursInMilliseconds,
   minutesInMilliseconds,
-} from './time'
+} from '@siafoundation/units'
+import { omit } from '@technically/lodash'
+import { ChartPoint } from '../components/ChartXY'
 
 type TransformMode = 'delta' | 'none'
 

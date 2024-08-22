@@ -7,7 +7,7 @@ import {
 } from '@siafoundation/design-system'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
-import { getMinutesInSeconds } from '../../lib/time'
+import { minutesInSeconds } from '@siafoundation/units'
 import { getFeedContent } from '../../content/feed'
 import { AsyncReturnType } from '../../lib/types'
 import { getProjects } from '../../content/projects'
@@ -164,6 +164,6 @@ export async function getStaticProps() {
 
   return {
     props,
-    revalidate: getMinutesInSeconds(5),
+    revalidate: minutesInSeconds(5),
   }
 }

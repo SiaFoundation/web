@@ -9,7 +9,7 @@ import BaseBrush from '@visx/brush/lib/BaseBrush'
 import { ParentSize } from '@visx/responsive'
 import { AreaChart } from '../ChartTimeValue/AreaChart'
 import { Panel } from '../../core/Panel'
-import { daysInMilliseconds } from '../../lib/time'
+import { daysInMilliseconds } from '@siafoundation/units'
 
 const accentColor = 'var(--colors-accent9)'
 const patternColor = 'var(--colors-accent9)'

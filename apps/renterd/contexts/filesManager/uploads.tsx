@@ -1,7 +1,4 @@
-import {
-  minutesInMilliseconds,
-  triggerErrorToast,
-} from '@siafoundation/design-system'
+import { triggerErrorToast } from '@siafoundation/design-system'
 import { Bucket } from '@siafoundation/renterd-types'
 import {
   useBuckets,
@@ -21,7 +18,7 @@ import {
   join,
 } from '../../lib/paths'
 import { MultipartUpload } from '../../lib/multipartUpload'
-import { MiBToBytes } from '@siafoundation/units'
+import { MiBToBytes, minutesInMilliseconds } from '@siafoundation/units'
 import { useMutate } from '@siafoundation/react-core'
 import { useWarnActiveUploadsOnClose } from './useWarnActiveUploadsOnClose'
 

@@ -1,10 +1,10 @@
 import { ContentItemProps } from '@siafoundation/design-system'
 import { addNewTab } from '../lib/utils'
-import { getMinutesInSeconds } from '../lib/time'
+import { minutesInSeconds } from '@siafoundation/units'
 import { getCacheValue } from '../lib/cache'
 import { fetchProjects } from '@siafoundation/data-sources'
 
-const maxAge = getMinutesInSeconds(5)
+const maxAge = minutesInSeconds(5)
 
 export async function getProjects(
   tag: string | null,

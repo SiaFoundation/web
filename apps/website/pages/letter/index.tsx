@@ -3,7 +3,7 @@ import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
 import { getStats } from '../../content/stats'
 import { AsyncReturnType } from '../../lib/types'
-import { getMinutesInSeconds } from '../../lib/time'
+import { minutesInSeconds } from '@siafoundation/units'
 import { SectionSolid } from '../../components/SectionSolid'
 import { MDXRemote } from 'next-mdx-remote'
 import { components } from '../../config/mdx'
@@ -57,6 +57,6 @@ export async function getStaticProps() {
         '/api/stats': stats,
       },
     },
-    revalidate: getMinutesInSeconds(5),
+    revalidate: minutesInSeconds(5),
   }
 }

@@ -4,10 +4,9 @@ import {
   ConfigFields,
   Link,
   Text,
-  hoursInDays,
-  secondsInMinutes,
   toFixedMaxString,
 } from '@siafoundation/design-system'
+import { hoursInDays, secondsInMinutes } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import React from 'react'
 import {

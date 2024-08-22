@@ -1,7 +1,7 @@
 import { AsyncReturnType } from '../lib/types'
 import { getGeoHosts } from '../content/geoHosts'
 import { getExchangeRates } from '../content/exchangeRates'
-import { getMinutesInSeconds } from '../lib/time'
+import { minutesInSeconds } from '@siafoundation/units'
 import { Map } from '../components/Map'
 import { getStats } from '../content/stats'
 
@@ -26,6 +26,6 @@ export async function getStaticProps() {
 
   return {
     props,
-    revalidate: getMinutesInSeconds(5),
+    revalidate: minutesInSeconds(5),
   }
 }

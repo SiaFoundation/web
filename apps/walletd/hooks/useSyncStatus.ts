@@ -1,4 +1,4 @@
-import { hoursInMilliseconds } from '@siafoundation/design-system'
+import { hoursInMilliseconds } from '@siafoundation/units'
 import { useAppSettings } from '@siafoundation/react-core'
 import { ConsensusState } from '@siafoundation/types'
 import {

@@ -2,14 +2,13 @@ import { useEffect, useRef, useCallback, useMemo } from 'react'
 import { GlobeMethods } from 'react-globe.gl'
 import { getHostLabel } from './utils'
 import { useElementSize } from 'usehooks-ts'
-import { useTryUntil } from '@siafoundation/react-core'
+import { useTryUntil, useExchangeRate } from '@siafoundation/react-core'
 import earthDarkContrast from '../../assets/earth-dark-contrast.png'
 import earthTopology from '../../assets/earth-topology.png'
 import nightSky from '../../assets/night-sky.png'
 import { GlobeDyn } from './GlobeDyn'
 import { useDecRoutes } from './useRoutes'
 import { SiaCentralPartialHost } from '../../content/geoHosts'
-import { useExchangeRate } from '@siafoundation/design-system'
 
 export type Commands = {
   moveToLocation: (

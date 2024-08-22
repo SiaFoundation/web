@@ -1,8 +1,4 @@
 import {
-  daysInNanoseconds,
-  minutesInNanoseconds,
-} from '@siafoundation/design-system'
-import {
   AutopilotConfig,
   ContractSetSettings,
   GougingSettings,
@@ -17,6 +13,8 @@ import {
   valuePerTBPerMonthToPerBytePerBlock,
   valuePerMonthToPerPeriod,
   valuePerMillionToPerOne,
+  daysInNanoseconds,
+  minutesInNanoseconds,
 } from '@siafoundation/units'
 import {
   AutopilotData,

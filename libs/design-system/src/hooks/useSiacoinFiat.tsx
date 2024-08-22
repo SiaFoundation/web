@@ -1,7 +1,10 @@
-import { CurrencyOption, useAppSettings } from '@siafoundation/react-core'
+import {
+  CurrencyOption,
+  useAppSettings,
+  useExchangeRate,
+} from '@siafoundation/react-core'
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
-import { useSiascanExchangeRate } from './useExchangeRate'
 
 type Props = {
   sc: BigNumber
@@ -12,7 +15,7 @@ export function useSiacoinFiat({ sc }: Props): {
   currency?: CurrencyOption
 } {
   const { settings } = useAppSettings()
-  const exchangeRate = useSiascanExchangeRate({
+  const exchangeRate = useExchangeRate({
     currency: settings.currency.id,
   })
   const fiat = useMemo(

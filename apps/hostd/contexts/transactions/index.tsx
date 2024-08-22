@@ -1,5 +1,4 @@
 import {
-  daysInMilliseconds,
   useDatasetEmptyState,
   useServerFilters,
   useTableState,
@@ -20,6 +19,7 @@ import {
   getEventContractId,
   getEventFee,
   getEventTxType,
+  daysInMilliseconds,
 } from '@siafoundation/units'
 import {
   CellContext,

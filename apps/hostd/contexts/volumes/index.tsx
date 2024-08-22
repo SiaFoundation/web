@@ -1,7 +1,6 @@
 import {
   useTableState,
   useDatasetEmptyState,
-  secondsInMilliseconds,
 } from '@siafoundation/design-system'
 import { VolumeMeta } from '@siafoundation/hostd-types'
 import { useVolumes as useVolumesData } from '@siafoundation/hostd-react'
@@ -10,6 +9,7 @@ import { columnsDefaultVisible, TableColumnId } from './types'
 import { columns } from './columns'
 import { useDataset } from './dataset'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { secondsInMilliseconds } from '@siafoundation/units'
 
 function useVolumesMain() {
   const {

@@ -4,7 +4,6 @@ import {
   useDatasetEmptyState,
   useClientFilters,
   useClientFilteredDataset,
-  daysInMilliseconds,
 } from '@siafoundation/design-system'
 import { useRouter } from 'next/router'
 import {
@@ -38,6 +37,7 @@ import { defaultDatasetRefreshInterval } from '../../config/swr'
 import { useDataset } from './dataset'
 import { useFilteredStats } from './useFilteredStats'
 import { useAutopilot } from '../app/useAutopilot'
+import { daysInMilliseconds } from '@siafoundation/units'
 
 const defaultLimit = 50
 

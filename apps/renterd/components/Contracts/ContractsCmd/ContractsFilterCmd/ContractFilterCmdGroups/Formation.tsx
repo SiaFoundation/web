@@ -3,8 +3,8 @@ import {
   weeksInMilliseconds,
   monthsInMilliseconds,
   yearsInMilliseconds,
-  ClientFilterItem,
-} from '@siafoundation/design-system'
+} from '@siafoundation/units'
+import { ClientFilterItem } from '@siafoundation/design-system'
 import { ContractData } from '../../../../../contexts/contracts/types'
 import { CommandGroup, CommandItemSearch } from '../../../../CmdRoot/Item'
 import { Page } from '../../../../CmdRoot/types'

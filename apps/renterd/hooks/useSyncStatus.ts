@@ -1,4 +1,4 @@
-import { secondsInMilliseconds } from '@siafoundation/design-system'
+import { secondsInMilliseconds } from '@siafoundation/units'
 import { useAppSettings } from '@siafoundation/react-core'
 import {
   useConsensusState,

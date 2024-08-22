@@ -23,7 +23,7 @@ import { CalloutProject } from '../components/CalloutProject'
 import { getGeoHosts } from '../content/geoHosts'
 import { getExchangeRates } from '../content/exchangeRates'
 import { getStats } from '../content/stats'
-import { getMinutesInSeconds } from '../lib/time'
+import { minutesInSeconds } from '@siafoundation/units'
 
 type Props = AsyncReturnType<typeof getStaticProps>['props']
 
@@ -298,6 +298,6 @@ export async function getStaticProps() {
 
   return {
     props,
-    revalidate: getMinutesInSeconds(5),
+    revalidate: minutesInSeconds(5),
   }
 }

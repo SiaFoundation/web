@@ -1,4 +1,4 @@
-import { minutesInMilliseconds } from '@siafoundation/design-system'
+import { minutesInMilliseconds } from '@siafoundation/units'
 import { routes } from '../../config/routes'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useMemo, useState } from 'react'

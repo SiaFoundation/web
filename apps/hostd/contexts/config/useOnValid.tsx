@@ -1,7 +1,6 @@
 import {
   triggerSuccessToast,
   triggerErrorToast,
-  minutesInMilliseconds,
 } from '@siafoundation/design-system'
 import { useCallback } from 'react'
 import { SettingsData } from './types'
@@ -12,6 +11,7 @@ import {
   useSettingsPinnedUpdate,
   useSettingsUpdate,
 } from '@siafoundation/hostd-react'
+import { minutesInMilliseconds } from '@siafoundation/units'
 
 export function useOnValid({
   resources,

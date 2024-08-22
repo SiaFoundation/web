@@ -1,4 +1,4 @@
-import { secondsInMilliseconds } from '@siafoundation/design-system'
+import { secondsInMilliseconds } from '@siafoundation/units'
 import { useAutopilotState } from '@siafoundation/renterd-react'
 import { useEffect, useState } from 'react'
 

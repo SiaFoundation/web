@@ -16,10 +16,10 @@ import { ThemeRadio } from '../components/ThemeRadio'
 import { webLinks } from '../data/webLinks'
 import { useAppSettings } from '@siafoundation/react-core'
 import { Dialog } from '../core/Dialog'
-import { minutesInMilliseconds } from '../lib/time'
 import { CurrencyFiatSelector } from './CurrencyFiatSelector'
 import { CurrencyDisplaySelector } from './CurrencyDisplaySelector'
 import { ValueCopyable } from '../components/ValueCopyable'
+import { minutesInMilliseconds } from '@siafoundation/units'
 
 type Props = {
   open: boolean

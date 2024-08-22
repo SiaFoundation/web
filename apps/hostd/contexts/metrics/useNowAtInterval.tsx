@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { DataInterval, getDataIntervalInMs } from './types'
-import { hoursInMilliseconds } from '@siafoundation/design-system'
+import { hoursInMilliseconds } from '@siafoundation/units'
 
 // now timestamp updated every interval
 // used to reset the time range and keep the graph up to date

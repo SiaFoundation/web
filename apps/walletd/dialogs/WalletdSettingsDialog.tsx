@@ -7,10 +7,10 @@ import {
   Option,
   Paragraph,
   SettingsDialog,
-  minutesInMilliseconds,
 } from '@siafoundation/design-system'
 import { Information16 } from '@siafoundation/react-icons'
 import { useWallets } from '../contexts/wallets'
+import { minutesInMilliseconds } from '@siafoundation/units'
 
 export type WalletdSettingsDialogParams = never
 

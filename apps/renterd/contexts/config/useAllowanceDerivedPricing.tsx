@@ -4,7 +4,6 @@ import { UseFormReturn } from 'react-hook-form'
 import BigNumber from 'bignumber.js'
 import useSWR from 'swr'
 import axios from 'axios'
-import { minutesInMilliseconds } from '@siafoundation/design-system'
 import {
   calculateIdealAllowance,
   derivePricingFromAllowance,
@@ -17,7 +16,11 @@ import {
   storageWeight,
   uploadWeight,
 } from './deriveAllowanceConfig'
-import { fiatToSiacoin, siacoinToFiat } from '@siafoundation/units'
+import {
+  fiatToSiacoin,
+  siacoinToFiat,
+  minutesInMilliseconds,
+} from '@siafoundation/units'
 
 export function useForexExchangeRate({
   form,
