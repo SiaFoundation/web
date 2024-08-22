@@ -8,7 +8,6 @@ import { SiacoinField } from './SiacoinField'
 import { fireEvent, render, waitFor, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useState } from 'react'
-import { SiaCentralExchangeRatesResponse } from '@siafoundation/sia-central-types'
 import { setupServer } from 'msw/node'
 import { HttpResponse, http } from 'msw'
 
@@ -34,7 +33,7 @@ afterAll(() => server.close())
 
 describe('SiacoinField', () => {
   it('updates fiat and external value immediately', async () => {
-    siaCentralExchangeRateEndpoint('1')
+    siascanExchangeRateEndpoint('1')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -65,7 +64,7 @@ describe('SiacoinField', () => {
   })
 
   it('updates value starting with decimal', async () => {
-    siaCentralExchangeRateEndpoint('1')
+    siascanExchangeRateEndpoint('1')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -84,7 +83,7 @@ describe('SiacoinField', () => {
   })
 
   it('updates value starting with comma decimal separator', async () => {
-    siaCentralExchangeRateEndpoint('1')
+    siascanExchangeRateEndpoint('1')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -104,7 +103,7 @@ describe('SiacoinField', () => {
   })
 
   it('works with alternate locale: DE', async () => {
-    siaCentralExchangeRateEndpoint('1')
+    siascanExchangeRateEndpoint('1')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -131,7 +130,7 @@ describe('SiacoinField', () => {
   })
 
   it('works with alternate locale: DE and alternate currency', async () => {
-    siaCentralExchangeRateEndpoint('1')
+    siascanExchangeRateEndpoint('1')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -159,7 +158,7 @@ describe('SiacoinField', () => {
   })
 
   it('works with alternate locale: ES', async () => {
-    siaCentralExchangeRateEndpoint('1')
+    siascanExchangeRateEndpoint('1')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -187,7 +186,7 @@ describe('SiacoinField', () => {
   })
 
   it('rounds to 6 decimal places', async () => {
-    siaCentralExchangeRateEndpoint('1')
+    siascanExchangeRateEndpoint('1')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -224,7 +223,7 @@ describe('SiacoinField', () => {
   })
 
   it('updates sc based on fiat change', async () => {
-    siaCentralExchangeRateEndpoint('1')
+    siascanExchangeRateEndpoint('1')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -251,7 +250,7 @@ describe('SiacoinField', () => {
     // since updating fiat immediately updates siacoin, the source of truth
     // this test asserts that the siacoin values does not then immediately
     // re-update the fiat with a new rounded value.
-    siaCentralExchangeRateEndpoint('0.003494929784')
+    siascanExchangeRateEndpoint('0.003494929784')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -273,7 +272,7 @@ describe('SiacoinField', () => {
   })
 
   it('rounds when changing fiat with realistic exchange rate', async () => {
-    siaCentralExchangeRateEndpoint('0.003623859876')
+    siascanExchangeRateEndpoint('0.003623859876')
     const user = userEvent.setup()
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
@@ -298,7 +297,7 @@ describe('SiacoinField', () => {
   })
 
   it('touching the fiat field without changing it does not trigger', async () => {
-    siaCentralExchangeRateEndpoint('0.003623859876')
+    siascanExchangeRateEndpoint('0.003623859876')
     const onChange = jest.fn()
     const { scInput, fiatInput } = await renderNode({
       sc: new BigNumber(0.444),
@@ -349,31 +348,10 @@ async function renderNode({
   return { scInput, fiatInput }
 }
 
-function siaCentralExchangeRateEndpoint(rate = '1') {
+function siascanExchangeRateEndpoint(rate = '1') {
   server.use(
-    http.get('https://api.siacentral.com/v2/market/exchange-rate', () => {
-      return HttpResponse.json({
-        message: '',
-        type: '',
-        rates: {
-          sc: {
-            bch: rate,
-            btc: rate,
-            cad: rate,
-            cny: rate,
-            eth: rate,
-            eur: rate,
-            gbp: rate,
-            jpy: rate,
-            ltc: rate,
-            rub: rate,
-            scp: rate,
-            sf: rate,
-            usd: rate,
-          },
-        },
-        timestamp: new Date().toString(),
-      } as SiaCentralExchangeRatesResponse)
+    http.get('https://api.siascan.com/exchange-rate/siacoin/*', () => {
+      return HttpResponse.json(rate)
     })
   )
 }

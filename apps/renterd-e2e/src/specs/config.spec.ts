@@ -47,10 +47,10 @@ test('basic field change and save behaviour', async ({ page }) => {
   const estimateParts = [
     'Estimate',
     '1,000 SC',
-    '($10.57)',
+    '($3.94)',
     'per TB/month with 3.0x redundancy',
     '7,000 SC',
-    '($74.00)',
+    '($27.61)',
     'to store 7.00 TB/month with 3.0x redundancy',
   ]
 
@@ -63,7 +63,7 @@ test('basic field change and save behaviour', async ({ page }) => {
     page
       .getByTestId('maxStoragePriceTBMonthGroup')
       .getByLabel('Network average')
-      .getByText('357')
+      .getByText('341')
   ).toBeVisible()
   await expect(
     page
@@ -76,13 +76,13 @@ test('basic field change and save behaviour', async ({ page }) => {
     page
       .getByTestId('maxStoragePriceTBMonthGroup')
       .getByLabel('Network average')
-      .getByText('$3.77')
+      .getByText('$1.34')
   ).toBeVisible()
   await expect(
     page
       .getByTestId('maxStoragePriceTBMonthGroup')
       .getByLabel('Fit current allowance')
-      .getByText('$3.17')
+      .getByText('$1.18')
   ).toBeVisible()
 })
 

@@ -1,10 +1,9 @@
 'use client'
 
-import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
 import { Text } from '../core/Text'
 import { Tooltip } from '../core/Tooltip'
 import BigNumber from 'bignumber.js'
-import { useAppSettings } from '@siafoundation/react-core'
+import { useActiveExchangeRate } from '../hooks/useExchangeRate'
 
 type Props = {
   size?: React.ComponentProps<typeof Text>['size']
@@ -37,10 +36,7 @@ export function ValueFiat({
   tipSide,
   extendedSuffix,
 }: Props) {
-  const exchangeRates = useSiaCentralExchangeRates()
-  const {
-    settings: { currency },
-  } = useAppSettings()
+  const { rate, currency } = useActiveExchangeRate()
   const sign = sc.isZero()
     ? ''
     : sc.isGreaterThan(0) && variant === 'change'
@@ -58,12 +54,10 @@ export function ValueFiat({
         : 'subtle'
       : 'contrast')
 
-  if (!exchangeRates.data) {
+  if (!rate || !currency) {
     return null
   }
-  const fiat = new BigNumber(exchangeRates.data.rates.sc[currency.id] || 1)
-    .times(sc)
-    .div(1e24)
+  const fiat = rate.times(sc).div(1e24)
 
   const digits = fixed !== undefined ? fixed : currency.fixed
 

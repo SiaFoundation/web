@@ -6,8 +6,9 @@ export * from './usePatch'
 export * from './useGet'
 export * from './useDelete'
 export * from './useGetDownload'
-export * from './useAppSettings/currency'
-export * from './useAppSettings'
+export * from './appSettings'
+export * from './appSettings/useExternalData/currency'
+export type { CurrencyDisplay } from './appSettings/useExternalData/types'
 export * from './useTryUntil'
 export * from './userPrefersReducedMotion'
 export * from './mutate'
@@ -19,4 +20,5 @@ export type {
   HookArgsWithPayloadSwr,
   HookArgsSwr,
   Response,
+  RequestConfig,
 } from './request'

@@ -9,7 +9,7 @@ import { GlobeDyn } from './GlobeDyn'
 import { HostDataWithLocation } from '../../../contexts/hosts/types'
 import BigNumber from 'bignumber.js'
 import { getHostStatus } from '../../../contexts/hosts/status'
-import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
+import { useExchangeRate } from '@siafoundation/design-system'
 
 export type Commands = {
   moveToLocation: (
@@ -43,12 +43,8 @@ export function Globe({
   onHostClick,
   onHostHover,
 }: Props) {
-  const rates = useSiaCentralExchangeRates({
-    config: {
-      swr: {
-        revalidateOnFocus: false,
-      },
-    },
+  const exchangeRateUSD = useExchangeRate({
+    currency: 'usd',
   })
   const globeEl = useRef<GlobeMethods>(null)
   const cmdRef = useRef<Commands>(emptyCommands)
@@ -119,7 +115,7 @@ export function Globe({
         atmosphereAltitude={0.16}
         animateIn={false}
         arcLabel={(r: Route) =>
-          getHostLabel({ host: r.dst, rates: rates.data?.rates.sc })
+          getHostLabel({ host: r.dst, exchangeRateUSD: exchangeRateUSD.rate })
         }
         arcStartLat={(r: Route) => +r.src.location[0]}
         arcStartLng={(r: Route) => +r.src.location[1]}
@@ -146,7 +142,7 @@ export function Globe({
         pointLat={(h: HostDataWithLocation) => h.location[0]}
         pointLng={(h: HostDataWithLocation) => h.location[1]}
         pointLabel={(h: HostDataWithLocation) =>
-          getHostLabel({ host: h, rates: rates.data?.rates.sc })
+          getHostLabel({ host: h, exchangeRateUSD: exchangeRateUSD.rate })
         }
         // pointAltitude={
         //   (h: HostDataWithLocation) => h.settings.remainingstorage / 1e13 / 100

@@ -17,11 +17,12 @@ import {
   mergeInternalHookArgsSwr,
   InternalHookArgsSwr,
 } from './request'
-import { useAppSettings } from './useAppSettings'
+import { useAppSettings } from './appSettings'
 import { useMemo } from 'react'
 import { keyOrNull } from './utils'
 import { SWRError } from './types'
 import { RequestParams } from '@siafoundation/request'
+import { useRequestSettings } from './appSettings/useRequestSettings'
 
 export function usePutSwr<Params extends RequestParams, Payload, Result>(
   args: InternalHookArgsWithPayloadSwr<Params, Payload, Result>
@@ -31,9 +32,9 @@ export function usePutSwr<Params extends RequestParams, Payload, Result>(
     Result
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   > = useMemo(() => mergeInternalHookArgsSwr(args as any), [args])
-  const { settings, passwordProtectRequestHooks } = useAppSettings()
+  const { requestSettings, passwordProtectRequestHooks } = useRequestSettings()
   const reqRoute = buildRouteWithParams(
-    settings,
+    requestSettings,
     hookArgs.route,
     hookArgs,
     undefined
@@ -47,9 +48,10 @@ export function usePutSwr<Params extends RequestParams, Payload, Result>(
               (args as any).payload !== undefined ? (args as any).payload : ''
             )}`
           : null,
-        hookArgs.disabled || (passwordProtectRequestHooks && !settings.password)
+        hookArgs.disabled ||
+          (passwordProtectRequestHooks && !requestSettings.password)
       ),
-    [reqRoute, args, hookArgs, passwordProtectRequestHooks, settings]
+    [reqRoute, args, hookArgs, passwordProtectRequestHooks, requestSettings]
   )
   return useSWR<Result, SWRError>(
     key,
@@ -57,7 +59,7 @@ export function usePutSwr<Params extends RequestParams, Payload, Result>(
       if (!hookArgs.route) {
         throw Error('No route')
       }
-      const reqConfig = buildAxiosConfig(settings, hookArgs, undefined)
+      const reqConfig = buildAxiosConfig(requestSettings, hookArgs, undefined)
       if (!reqRoute) {
         throw Error('No route')
       }

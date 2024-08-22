@@ -7,9 +7,9 @@ import earthDarkContrast from '../../assets/earth-dark-contrast.png'
 import earthTopology from '../../assets/earth-topology.png'
 import nightSky from '../../assets/night-sky.png'
 import { GlobeDyn } from './GlobeDyn'
-import { useSiaCentralExchangeRates } from '@siafoundation/sia-central-react'
 import { useDecRoutes } from './useRoutes'
 import { SiaCentralPartialHost } from '../../content/geoHosts'
+import { useExchangeRate } from '@siafoundation/design-system'
 
 export type Commands = {
   moveToLocation: (
@@ -43,12 +43,8 @@ export function Globe({
   onHostClick,
   onHostHover,
 }: Props) {
-  const rates = useSiaCentralExchangeRates({
-    config: {
-      swr: {
-        revalidateOnFocus: false,
-      },
-    },
+  const exchangeRateUSD = useExchangeRate({
+    currency: 'usd',
   })
   const globeEl = useRef<GlobeMethods>(null)
   const cmdRef = useRef<Commands>(emptyCommands)
@@ -118,7 +114,7 @@ export function Globe({
         atmosphereAltitude={0.16}
         animateIn={false}
         arcLabel={(r: Route) =>
-          getHostLabel({ host: r.dst, rates: rates.data?.rates.sc })
+          getHostLabel({ host: r.dst, exchangeRateUSD: exchangeRateUSD.rate })
         }
         arcStartLat={(r: Route) => +r.src.location[0]}
         arcStartLng={(r: Route) => +r.src.location[1]}
@@ -145,7 +141,7 @@ export function Globe({
         pointLat={(h: SiaCentralPartialHost) => h.location[0]}
         pointLng={(h: SiaCentralPartialHost) => h.location[1]}
         pointLabel={(h: SiaCentralPartialHost) =>
-          getHostLabel({ host: h, rates: rates.data?.rates.sc })
+          getHostLabel({ host: h, exchangeRateUSD: exchangeRateUSD.rate })
         }
         // pointAltitude={
         //   (h: SiaCentralPartialHost) => h.settings.remainingstorage / 1e13 / 100

@@ -12,7 +12,7 @@ import { useMemo } from 'react'
 import { Tooltip } from '../core/Tooltip'
 import { ValueSc } from '../components/ValueSc'
 import { cx } from 'class-variance-authority'
-import { useExchangeRate } from '../hooks/useExchangeRate'
+import { useSiascanExchangeRate } from '../hooks/useExchangeRate'
 
 export function FieldFiat<
   Values extends FieldValues,
@@ -29,7 +29,10 @@ export function FieldFiat<
   currency: CurrencyId | ''
   group?: boolean
 }) {
-  const rate = useExchangeRate({ currency })
+  const exchangeRate = useSiascanExchangeRate({
+    currency: currency || undefined,
+  })
+  const rate = exchangeRate.rate
   const field = fields[name]
   const { placeholder, decimalsLimit = 2, units } = field
   const { setValue, onBlur, error, value } = useRegisterForm({

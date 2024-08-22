@@ -15,17 +15,18 @@ import {
   InternalHookArgsCallback,
 } from './request'
 import { SWRError } from './types'
-import { useAppSettings } from './useAppSettings'
+import { useAppSettings } from './appSettings'
 import { keyOrNull } from './utils'
 import { RequestParams } from '@siafoundation/request'
+import { useRequestSettings } from './appSettings/useRequestSettings'
 
 export function useGetSwr<Params extends RequestParams, Result>(
   args: InternalHookArgsSwr<Params, Result>
 ) {
   const hookArgs = useMemo(() => mergeInternalHookArgsSwr(args), [args])
-  const { settings, passwordProtectRequestHooks } = useAppSettings()
+  const { requestSettings, passwordProtectRequestHooks } = useRequestSettings()
   const reqRoute = buildRouteWithParams(
-    settings,
+    requestSettings,
     hookArgs.route,
     hookArgs,
     undefined
@@ -33,13 +34,14 @@ export function useGetSwr<Params extends RequestParams, Result>(
   return useSWR<Result, SWRError>(
     keyOrNull(
       args.standalone ? `${args.standalone}/${reqRoute}` : reqRoute,
-      hookArgs.disabled || (passwordProtectRequestHooks && !settings.password)
+      hookArgs.disabled ||
+        (passwordProtectRequestHooks && !requestSettings.password)
     ),
     async () => {
       if (!hookArgs.route) {
         throw Error('No route')
       }
-      const reqConfig = buildAxiosConfig(settings, hookArgs, undefined)
+      const reqConfig = buildAxiosConfig(requestSettings, hookArgs, undefined)
       if (!reqRoute) {
         throw Error('No route')
       }
