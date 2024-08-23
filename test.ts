@@ -1,16 +1,10 @@
-import { login } from './login'
-import { navigateToConfig } from './navigate'
-import { configResetAllSettings } from './configResetAllSettings'
-import { setViewMode } from './configViewMode'
-import { Page } from 'playwright'
 import child from 'child_process'
 import { random } from '@technically/lodash'
 import Axios from 'axios'
-import { setCurrencyDisplay } from './preferences'
-import { mockApiSiaScanExchangeRates } from './siascan'
-import { mockApiSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-mock'
 
 let clusterd: child.ChildProcessWithoutNullStreams
+
+setupCluster({ hostdCount: 3 })
 
 export async function setupCluster({ hostdCount = 0 } = {}) {
   const managementPort = random(10000, 65535)
@@ -34,13 +28,13 @@ export async function setupCluster({ hostdCount = 0 } = {}) {
     return false
   }, 20_000)
 
-  // clusterd.stdout.on('data', (data) => {
-  //   console.log(`stdout: ${data}`)
-  // })
+  clusterd.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`)
+  })
 
-  // clusterd.stderr.on('data', (data) => {
-  //   console.error(`clusterd error: ${data}`)
-  // })
+  clusterd.stderr.on('data', (data) => {
+    console.error(`clusterd error: ${data}`)
+  })
 
   clusterd.on('error', (err) => {
     console.error('Failed to start clusterd:', err)
@@ -61,30 +55,6 @@ export async function setupCluster({ hostdCount = 0 } = {}) {
       console.log('Mined', blocks, 'blocks')
     },
   }
-}
-
-export async function teardownCluster() {
-  console.log('stopping cluster')
-  clusterd?.kill()
-}
-
-export async function beforeTest(page: Page, { hostdCount = 0 } = {}) {
-  await mockApiSiaScanExchangeRates({ page })
-  await mockApiSiaCentralHostsNetworkAverages({ page })
-  const { address, password, mine } = await setupCluster({ hostdCount })
-  await login({ page, address, password })
-
-  // Reset state.
-  await setCurrencyDisplay(page, 'bothPreferSc')
-  await navigateToConfig({ page })
-  await configResetAllSettings({ page })
-  await setViewMode({ page, state: 'basic' })
-
-  return { mine }
-}
-
-export async function afterTest() {
-  teardownCluster()
 }
 
 function waitFor(condition: () => Promise<boolean>, timeout = 1000) {

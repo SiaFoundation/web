@@ -20,10 +20,14 @@ import {
 } from '../fixtures/files'
 import { fillTextInputByName } from '../fixtures/textInput'
 import { clearToasts } from '../fixtures/clearToasts'
-import { beforeTest } from '../fixtures/beforeTest'
+import { afterTest, beforeTest } from '../fixtures/beforeTest'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page)
+})
+
+test.afterEach(async () => {
+  await afterTest()
 })
 
 test('can create directory, upload file, rename file, navigate, delete a file, delete a directory', async ({

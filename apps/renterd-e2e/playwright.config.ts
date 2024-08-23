@@ -25,7 +25,7 @@ export default defineConfig({
     video: 'on-first-retry',
   },
   // Timeout per test.
-  timeout: 60_000,
+  timeout: 120_000,
   expect: {
     // Raise the timeout because it is running against next dev mode
     // which requires compilation the first to a page is visited
@@ -40,7 +40,7 @@ export default defineConfig({
     cwd: workspaceRoot,
   },
   // Run the tests serially as they may mutate the state of the same application.
-  workers: 1,
+  workers: 5,
   projects: [
     {
       name: 'chromium',

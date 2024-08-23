@@ -8,11 +8,15 @@ import {
 } from '../fixtures/textInput'
 import { clearToasts } from '../fixtures/clearToasts'
 import { clickIfEnabledAndWait, clickIf } from '../fixtures/click'
-import { beforeTest } from '../fixtures/beforeTest'
+import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import { setCurrencyDisplay } from '../fixtures/preferences'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page)
+})
+
+test.afterEach(async () => {
+  await afterTest()
 })
 
 test('basic field change and save behaviour', async ({ page }) => {
