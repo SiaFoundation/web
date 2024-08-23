@@ -4,10 +4,12 @@ import { Text } from '../core/Text'
 import BigNumber from 'bignumber.js'
 import { ValueSc } from './ValueSc'
 import { ValueFiat } from './ValueFiat'
-import { useAppSettings } from '@siafoundation/react-core'
+import {
+  useAppSettings,
+  useActiveExchangeRate,
+} from '@siafoundation/react-core'
 import { useMemo } from 'react'
 import { Tooltip } from '../core/Tooltip'
-import { useActiveExchangeRate } from '../hooks/useExchangeRate'
 
 type Props = {
   size?: React.ComponentProps<typeof Text>['size']

@@ -2,7 +2,7 @@ import {
   daysInMilliseconds,
   hoursInMilliseconds,
   minutesInMilliseconds,
-} from '@siafoundation/design-system'
+} from '@siafoundation/units'
 
 export type RevenueKeys =
   | 'rpcPotential'

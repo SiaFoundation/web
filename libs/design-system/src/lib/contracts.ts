@@ -1,11 +1,11 @@
-import { daysToBlocks } from '@siafoundation/units'
 import {
+  daysToBlocks,
   daysInMilliseconds,
   monthsInMilliseconds,
   nowInMilliseconds,
   weeksInMilliseconds,
   yearsInMilliseconds,
-} from './time'
+} from '@siafoundation/units'
 
 export function getContractsTimeRangeBlockHeight(
   currentHeight: number,

@@ -1,5 +1,4 @@
 import {
-  daysInMilliseconds,
   Chart,
   formatChartData,
   computeChartStats,
@@ -12,7 +11,7 @@ import { useMetricsContract } from '@siafoundation/renterd-react'
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import { ChartContractCategory, ChartContractKey } from './types'
-import { humanSiacoin } from '@siafoundation/units'
+import { humanSiacoin, daysInMilliseconds } from '@siafoundation/units'
 import { getTimeClampedToNearest5min } from './utils'
 
 export function useContractMetrics({

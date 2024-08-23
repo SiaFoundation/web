@@ -17,7 +17,7 @@ import {
   CurveType,
   StackOffset,
 } from './types'
-import { daysInMilliseconds } from '../../lib/time'
+import { daysInMilliseconds } from '@siafoundation/units'
 import { usePrefersReducedMotion } from '@siafoundation/react-core'
 import useLocalStorageState from 'use-local-storage-state'
 

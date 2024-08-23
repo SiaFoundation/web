@@ -5,7 +5,6 @@ import {
   formatChartData,
   getDataIntervalLabelFormatter,
   getTimeRange,
-  secondsInMilliseconds,
   ValueScFiat,
 } from '@siafoundation/design-system'
 import {
@@ -13,6 +12,7 @@ import {
   humanBytes,
   humanNumber,
   humanSiacoin,
+  secondsInMilliseconds,
 } from '@siafoundation/units'
 import { useCallback, useMemo } from 'react'
 import { chartConfigs } from '../../config/charts'

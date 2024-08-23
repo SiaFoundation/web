@@ -1,4 +1,4 @@
-import { minutesInMilliseconds } from '@siafoundation/design-system'
+import { minutesInMilliseconds } from '@siafoundation/units'
 
 export function getTimeClampedToNearest5min(t: number) {
   const granularity = minutesInMilliseconds(5)

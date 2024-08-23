@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { toPairs } from '@technically/lodash'
 import { webLinks } from '@siafoundation/design-system'
-import { getMinutesInSeconds } from '../lib/time'
+import { minutesInSeconds } from '@siafoundation/units'
 import { getCacheValue } from '../lib/cache'
 import { getAssetPath } from '@siafoundation/data-sources'
 
@@ -12,7 +12,7 @@ type Report = {
 }
 type ReportPair = [string, Report[]]
 
-const maxAge = getMinutesInSeconds(5)
+const maxAge = minutesInSeconds(5)
 
 export async function getReports(): Promise<ReportPair[]> {
   return getCacheValue('transparencyReports', async () => readReports(), maxAge)

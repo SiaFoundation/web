@@ -1,6 +1,4 @@
 import {
-  nanosecondsInDays,
-  nanosecondsInMinutes,
   toFixedMaxBigNumber,
   toFixedMaxString,
 } from '@siafoundation/design-system'
@@ -20,6 +18,8 @@ import {
   valuePerPeriodToPerMonth,
   valuePerOneToPerMillion,
   weeksToBlocks,
+  nanosecondsInDays,
+  nanosecondsInMinutes,
 } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import {

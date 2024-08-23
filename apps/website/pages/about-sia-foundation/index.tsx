@@ -17,7 +17,7 @@ import {
 } from '@siafoundation/react-icons'
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
-import { getMinutesInSeconds } from '../../lib/time'
+import { minutesInSeconds } from '@siafoundation/units'
 import { AsyncReturnType } from '../../lib/types'
 import { getReports } from '../../content/reports'
 import { getStats } from '../../content/stats'
@@ -230,7 +230,7 @@ export async function getStaticProps() {
         '/api/stats': stats,
       },
     },
-    revalidate: getMinutesInSeconds(5),
+    revalidate: minutesInSeconds(5),
   }
 }
 

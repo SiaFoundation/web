@@ -1,10 +1,10 @@
 import { SiaCentralHost } from '@siafoundation/sia-central-types'
 import { getCacheValue } from '../lib/cache'
-import { getMinutesInSeconds } from '../lib/time'
 import { siaCentral } from '../config/siaCentral'
 import { to } from '@siafoundation/request'
+import { minutesInSeconds } from '@siafoundation/units'
 
-const maxAge = getMinutesInSeconds(5)
+const maxAge = minutesInSeconds(5)
 
 const maxHosts = 1000
 const minDegreesApart = 1

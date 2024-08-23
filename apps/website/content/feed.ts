@@ -1,5 +1,5 @@
+import { minutesInSeconds } from '@siafoundation/units'
 import { getCacheValue } from '../lib/cache'
-import { getMinutesInSeconds } from '../lib/time'
 import { addNewTab } from '../lib/utils'
 import { fetchAllFeedItems } from '@siafoundation/data-sources'
 
@@ -18,7 +18,7 @@ type FeedItem = {
   newTab?: boolean
 }
 
-const maxAge = getMinutesInSeconds(5)
+const maxAge = minutesInSeconds(5)
 
 async function fetchFeedContent(
   tags: Tag[],

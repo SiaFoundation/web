@@ -1,7 +1,7 @@
 import { addNewTab } from '../lib/utils'
-import { getMinutesInSeconds } from '../lib/time'
 import { getCacheValue } from '../lib/cache'
 import { fetchArticlesByTag } from '@siafoundation/data-sources'
+import { minutesInSeconds } from '@siafoundation/units'
 
 type Article = {
   title: string
@@ -9,7 +9,7 @@ type Article = {
   link: string
 }
 
-const maxAge = getMinutesInSeconds(5)
+const maxAge = minutesInSeconds(5)
 
 export async function getTutorialArticles(limit?: number) {
   const articles = await getCacheValue<Article[]>(

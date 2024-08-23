@@ -3,10 +3,9 @@ import {
   Separator,
   Text,
   Tooltip,
-  minutesInMilliseconds,
 } from '@siafoundation/design-system'
 import { useObjectStats } from '@siafoundation/renterd-react'
-import { humanBytes } from '@siafoundation/units'
+import { humanBytes, minutesInMilliseconds } from '@siafoundation/units'
 
 export function FilesStatsMenuSize() {
   const stats = useObjectStats({

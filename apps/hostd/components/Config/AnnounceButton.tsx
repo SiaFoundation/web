@@ -1,7 +1,6 @@
 import {
   Button,
   Paragraph,
-  minutesInMilliseconds,
   triggerErrorToast,
   triggerSuccessToast,
 } from '@siafoundation/design-system'
@@ -13,7 +12,7 @@ import {
   useHostState,
   useTxPoolFee,
 } from '@siafoundation/hostd-react'
-import { humanSiacoin } from '@siafoundation/units'
+import { humanSiacoin, minutesInMilliseconds } from '@siafoundation/units'
 import { useCallback } from 'react'
 import BigNumber from 'bignumber.js'
 

@@ -9,7 +9,7 @@ import { getStats } from '../../content/stats'
 import useSWR from 'swr'
 import { useRouter } from 'next/router'
 import { getNewsFeed } from '../../content/feed'
-import { getMinutesInSeconds } from '../../lib/time'
+import { minutesInSeconds } from '@siafoundation/units'
 import { SectionSolid } from '../../components/SectionSolid'
 import { backgrounds, previews } from '../../content/assets'
 import { SectionTransparent } from '../../components/SectionTransparent'
@@ -74,7 +74,7 @@ export async function getStaticProps() {
         '/api/stats': stats,
       },
     },
-    revalidate: getMinutesInSeconds(5),
+    revalidate: minutesInSeconds(5),
   }
 }
 

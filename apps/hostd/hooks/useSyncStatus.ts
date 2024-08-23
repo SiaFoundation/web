@@ -4,7 +4,7 @@ import {
   useConsensusTipState,
   useIndexTip,
 } from '@siafoundation/hostd-react'
-import { hoursInMilliseconds } from '@siafoundation/design-system'
+import { hoursInMilliseconds } from '@siafoundation/units'
 
 export function useSyncStatus() {
   const { isUnlockedAndAuthedRoute } = useAppSettings()

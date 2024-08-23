@@ -2,10 +2,10 @@ import { getGitHubClosedPRs } from '@siafoundation/data-sources'
 import { MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
 import { getCacheValue } from '../lib/cache'
-import { getMinutesInSeconds } from '../lib/time'
+import { minutesInSeconds } from '@siafoundation/units'
 import remarkGfm from 'remark-gfm'
 
-const maxAge = getMinutesInSeconds(5)
+const maxAge = minutesInSeconds(5)
 
 export async function getPrs() {
   return getCacheValue(

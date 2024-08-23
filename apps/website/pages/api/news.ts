@@ -1,7 +1,7 @@
-import { getMinutesInSeconds } from '../../lib/time'
+import { minutesInSeconds } from '@siafoundation/units'
 import { getNewsFeed } from '../../content/feed'
 
-const maxAge = getMinutesInSeconds(5)
+const maxAge = minutesInSeconds(5)
 
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', `s-maxage=${maxAge}`)

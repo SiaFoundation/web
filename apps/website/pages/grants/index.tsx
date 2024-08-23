@@ -11,7 +11,7 @@ import { getProjects } from '../../content/projects'
 import { getStats } from '../../content/stats'
 import { textContent } from '../../lib/utils'
 import { AsyncReturnType } from '../../lib/types'
-import { getMinutesInSeconds } from '../../lib/time'
+import { minutesInSeconds } from '@siafoundation/units'
 import { getGrantCommittee } from '../../content/grantCommittee'
 import { SectionTransparent } from '../../components/SectionTransparent'
 import { SectionGradient } from '../../components/SectionGradient'
@@ -202,6 +202,6 @@ export async function getStaticProps() {
         '/api/stats': stats,
       },
     },
-    revalidate: getMinutesInSeconds(5),
+    revalidate: minutesInSeconds(5),
   }
 }

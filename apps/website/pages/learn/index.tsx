@@ -9,7 +9,7 @@ import {
 import { Layout } from '../../components/Layout'
 import { routes } from '../../config/routes'
 import { getStats } from '../../content/stats'
-import { getMinutesInSeconds } from '../../lib/time'
+import { minutesInSeconds } from '@siafoundation/units'
 import { textContent } from '../../lib/utils'
 import { getTutorialArticles } from '../../content/articles'
 import { AsyncReturnType } from '../../lib/types'
@@ -326,6 +326,6 @@ export async function getStaticProps() {
         '/api/stats': stats,
       },
     },
-    revalidate: getMinutesInSeconds(5),
+    revalidate: minutesInSeconds(5),
   }
 }

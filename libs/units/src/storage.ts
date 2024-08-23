@@ -4,7 +4,6 @@ import { SiaCentralHost } from '@siafoundation/sia-central-types'
 import BigNumber from 'bignumber.js'
 import { humanSiacoin, toSiacoins } from './currency'
 import { humanBytes, humanSpeed } from './humanUnits'
-import { CurrencyOption } from '@siafoundation/react-core'
 import { valuePerTBPerMonthToPerBytePerBlock } from './valuePer'
 
 type Hastings = string
@@ -12,7 +11,9 @@ type Hastings = string
 type Props = {
   price: Hastings
   exchange?: {
-    currency: CurrencyOption
+    currency: {
+      prefix: string
+    }
     rate: string
   }
 }

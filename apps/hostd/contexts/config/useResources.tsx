@@ -1,9 +1,9 @@
-import { minutesInMilliseconds } from '@siafoundation/design-system'
 import {
   useSettings,
   useSettingsDdnsUpdate,
   useSettingsPinned,
 } from '@siafoundation/hostd-react'
+import { minutesInMilliseconds } from '@siafoundation/units'
 
 export function useResources() {
   const settings = useSettings({
