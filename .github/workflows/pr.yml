@@ -128,4 +128,5 @@ jobs:
         uses: n8maninger/action-golang-test@v2
         with:
           args: '-race'
-          package: ${{ matrix.module }}/...
+          working-directory: ${{ matrix.module }}
+          package: ./...
