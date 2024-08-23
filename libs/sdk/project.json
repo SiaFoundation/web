@@ -1,75 +1,58 @@
 {
-	"name": "sdk",
-	"$schema": "../../node_modules/nx/schemas/project-schema.json",
-	"sourceRoot": "libs/sdk/src",
-	"projectType": "library",
-	"tags": [],
-	"namedInputs": {
-		"go": [
-			"{workspaceRoot}/sdk/**/*"
-		]
-	},
-	"targets": {
-		"compile": {
-			"executor": "nx:run-commands",
-			"inputs": [
-				"go"
-			],
-			"cache": true,
-			"options": {
-				"commands": [
-					"cp $(go env GOROOT)/misc/wasm/wasm_exec.js libs/sdk/src/utils/wasm_exec.js",
-					"cd sdk && GOOS=js GOARCH=wasm go build -o ../libs/sdk/src/resources/sdk.wasm ."
-				]
-			}
-		},
-		"build": {
-			"executor": "@nx/rollup:rollup",
-			"outputs": [
-				"{options.outputPath}"
-			],
-			"dependsOn": [
-				"compile",
-				"^build"
-			],
-			"options": {
-				"outputPath": "dist/libs/sdk",
-				"tsConfig": "libs/sdk/tsconfig.lib.json",
-				"project": "libs/sdk/package.json",
-				"entryFile": "libs/sdk/src/index.ts",
-				"external": [
-					"react/jsx-runtime"
-				],
-				"compiler": "tsc",
-				"outputFileName": "index.js",
-				"rollupConfig": "libs/sdk/rollup.config.js",
-				"assets": [
-					{
-						"glob": "libs/sdk/*.md",
-						"input": ".",
-						"output": "."
-					}
-				]
-			},
-			"configurations": {}
-		},
-		"lint": {
-			"executor": "@nx/eslint:lint",
-			"outputs": [
-				"{options.outputFile}"
-			]
-		},
-		"test": {
-			"executor": "@nx/jest:jest",
-			"outputs": [
-				"{workspaceRoot}/coverage/libs/sdk"
-			],
-			"dependsOn": [
-				"compile"
-			],
-			"options": {
-				"jestConfig": "libs/sdk/jest.config.ts"
-			}
-		}
-	}
+  "name": "sdk",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/sdk/src",
+  "projectType": "library",
+  "tags": [],
+  "namedInputs": {
+    "go": ["{workspaceRoot}/sdk/**/*"]
+  },
+  "targets": {
+    "compile": {
+      "executor": "nx:run-commands",
+      "inputs": ["go"],
+      "cache": true,
+      "options": {
+        "commands": [
+          "cp $(go env GOROOT)/misc/wasm/wasm_exec.js libs/sdk/src/utils/wasm_exec.js",
+          "cd sdk && GOOS=js GOARCH=wasm go build -o ../libs/sdk/src/resources/sdk.wasm ."
+        ]
+      }
+    },
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": ["compile", "^build"],
+      "options": {
+        "outputPath": "dist/libs/sdk",
+        "tsConfig": "libs/sdk/tsconfig.lib.json",
+        "project": "libs/sdk/package.json",
+        "entryFile": "libs/sdk/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "compiler": "tsc",
+        "outputFileName": "index.js",
+        "rollupConfig": "libs/sdk/rollup.config.js",
+        "assets": [
+          {
+            "glob": "libs/sdk/*.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      },
+      "configurations": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/sdk"],
+      "dependsOn": ["compile"],
+      "options": {
+        "jestConfig": "libs/sdk/jest.config.ts"
+      }
+    }
+  }
 }
