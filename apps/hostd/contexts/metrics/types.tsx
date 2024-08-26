@@ -30,10 +30,11 @@ export type PricingKeys =
   | 'storage'
 
 export type ContractsKeys =
-  | 'failed'
-  | 'rejected'
-  | 'pending'
   | 'active'
+  | 'rejected'
+  | 'failed'
+  | 'renewed'
+  | 'finalized'
   | 'successful'
 
 export type StorageKeys =
