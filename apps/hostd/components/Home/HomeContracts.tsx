@@ -36,6 +36,16 @@ export function HomeContracts() {
         />
         <DatumCardConfigurable
           category="contracts"
+          label="Renewed contracts"
+          color={contracts.config.data['renewed'].color}
+          value={contracts.stats['renewed']}
+          valueFormat={(v) => v.toFixed(0)}
+          defaultMode="latest"
+          isLoading={contracts.isLoading}
+          enabledModes={['latest', 'average']}
+        />
+        <DatumCardConfigurable
+          category="contracts"
           label="Failed contracts"
           color={contracts.config.data['failed'].color}
           value={contracts.stats['failed']}

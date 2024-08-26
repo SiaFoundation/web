@@ -2,16 +2,9 @@ import { colors } from '@siafoundation/design-system'
 
 export const chartConfigs = {
   // states
-  successful: {
-    color: colors.green[600],
-  },
   active: {
     color: colors.amber[600],
     // pattern: true,
-  },
-  pending: {
-    color: colors.amber[600],
-    pattern: true,
   },
   rejected: {
     color: colors.red[600],
@@ -19,6 +12,15 @@ export const chartConfigs = {
   },
   failed: {
     color: colors.red[600],
+  },
+  renewed: {
+    color: colors.blue[600],
+  },
+  finalized: {
+    color: colors.yellow[600],
+  },
+  successful: {
+    color: colors.green[600],
   },
   // potential: {
   //   color: colors.amber[600],

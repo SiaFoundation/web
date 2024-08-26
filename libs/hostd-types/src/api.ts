@@ -231,27 +231,25 @@ type Revenue = {
   registryWrite: string
 }
 
-// Data is a collection of metrics related to data usage.
-type Data = {
+type DataRHPMetrics = {
   // Ingress returns the number of bytes received by the host.
   ingress: number
   // Egress returns the number of bytes sent by the host.
   egress: number
 }
 
-// Contracts is a collection of metrics related to contracts.
-type Contracts = {
-  pending: number
+type ContractMetrics = {
   active: number
   rejected: number
   failed: number
+  renewed: number
+  finalized: number
   successful: number
   lockedCollateral: string
   riskedCollateral: string
 }
 
-// Pricing is a collection of metrics related to the host's pricing settings.
-type Pricing = {
+type PricingMetrics = {
   contractPrice: string
   ingressPrice: string
   egressPrice: string
@@ -261,8 +259,7 @@ type Pricing = {
   collateralMultiplier: number
 }
 
-// Registry is a collection of metrics related to the host's registry.
-type Registry = {
+type RegistryMetrics = {
   entries: number
   maxEntries: number
 
@@ -270,35 +267,46 @@ type Registry = {
   writes: number
 }
 
-// Storage is a collection of metrics related to storage.
-type Storage = {
+type StorageMetrics = {
   totalSectors: number
   physicalSectors: number
+  lostSectors: number
   contractSectors: number
   tempSectors: number
   reads: number
   writes: number
+  sectorCacheHits: number
+  sectorCacheMisses: number
 }
 
-// RevenueMetrics is a collection of metrics related to revenue.
 type RevenueMetrics = {
   potential: Revenue
   earned: Revenue
 }
 
-// DataMetrics is a collection of metrics related to data usage.
 type DataMetrics = {
-  rhp: Data
+  rhp: DataRHPMetrics
+}
+
+type AccountMetrics = {
+  active: number
+  balance: string
+}
+
+type WalletMetrics = {
+  balance: string
+  immatureBalance: string
 }
 
 export type Metrics = {
+  accounts: AccountMetrics
   revenue: RevenueMetrics
-  pricing: Pricing
-  contracts: Contracts
-  storage: Storage
-  registry: Registry
+  pricing: PricingMetrics
+  contracts: ContractMetrics
+  storage: StorageMetrics
+  registry: RegistryMetrics
   data: DataMetrics
-  balance: string
+  wallet: WalletMetrics
   timestamp: string
 }
 
