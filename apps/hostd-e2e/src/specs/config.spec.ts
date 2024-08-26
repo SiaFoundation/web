@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test'
-import { login } from '../fixtures/login'
 import {
   expectSwitchByLabel,
   expectSwitchVisible,
@@ -7,23 +6,20 @@ import {
 } from '../fixtures/switchValue'
 import { setViewMode } from '../fixtures/configViewMode'
 import { navigateToConfig } from '../fixtures/navigate'
-import { mockApiSiaCentralExchangeRates } from '@siafoundation/sia-central-mock'
-import { configResetAllSettings } from '../fixtures/configResetAllSettings'
 import {
   expectTextInputByName,
   expectTextInputNotVisible,
   fillTextInputByName,
 } from '../fixtures/textInput'
 import { fillSelectInputByName } from '../fixtures/selectInput'
+import { beforeTest } from '../fixtures/beforeTest'
+
+test.beforeEach(async ({ page }) => {
+  await beforeTest(page)
+})
 
 test('basic field change and save behaviour', async ({ page }) => {
-  // Set up.
-  await mockApiSiaCentralExchangeRates({ page })
-  await login({ page })
-
   // Reset state.
-  await navigateToConfig({ page })
-  await configResetAllSettings({ page })
   await setViewMode({ page, state: 'advanced' })
 
   // Test that values can be updated.
@@ -63,10 +59,6 @@ test('basic field change and save behaviour', async ({ page }) => {
 })
 
 test('pin switches should show in both view modes', async ({ page }) => {
-  // Set up.
-  await mockApiSiaCentralExchangeRates({ page })
-  await login({ page })
-
   await navigateToConfig({ page })
   await setViewMode({ page, state: 'basic' })
   await expectSwitchVisible(page, 'shouldPinStoragePrice')
@@ -83,14 +75,7 @@ test('pin switches should show in both view modes', async ({ page }) => {
 })
 
 test('dynamic max collateral suggestion', async ({ page }) => {
-  // Set up.
-  await mockApiSiaCentralExchangeRates({ page })
-  await login({ page })
-
-  // Reset state.
   await navigateToConfig({ page })
-  await configResetAllSettings({ page })
-  await setViewMode({ page, state: 'basic' })
   await fillTextInputByName(page, 'maxCollateral', '777')
   await expect(
     page

@@ -7,6 +7,7 @@ import {
   CoveredFields,
   FileContractID,
   Block,
+  TransactionID,
 } from '@siafoundation/types'
 import {
   ConsensusState,
@@ -29,13 +30,14 @@ export const busSyncerConnectRoute = '/bus/syncer/connect'
 export const busSyncerAddrRoute = '/bus/syncer/addr'
 export const busTxpoolTransactionsRoute = '/bus/txpool/transactions'
 export const busTxpoolBroadcastRoute = '/bus/txpool/broadcast'
-export const busTxpoolFeeRoute = '/bus/txpool/fee'
+export const busTxpoolRecommendedFeeRoute = '/bus/txpool/recommendedfee'
 export const busWalletRoute = '/bus/wallet'
 export const busWalletAddressesRoute = '/bus/wallet/addresses'
 export const busWalletTransactionsRoute = '/bus/wallet/transactions'
 export const busWalletOutputsRoute = '/bus/wallet/outputs'
 export const busWalletFundRoute = '/bus/wallet/fund'
 export const busWalletSignRoute = '/bus/wallet/sign'
+export const busWalletSendRoute = '/bus/wallet/send'
 export const busWalletRedistributeRoute = '/bus/wallet/redistribute'
 export const busWalletDiscardRoute = '/bus/wallet/discard'
 export const busWalletPrepareFormRoute = '/bus/wallet/prepare/form'
@@ -130,9 +132,9 @@ export type SyncerAddressResponse = string
 
 // txpool
 
-export type TxPoolFeeParams = void
-export type TxPoolFeePayload = void
-export type TxPoolFeeResponse = Currency
+export type TxPoolRecommendedFeeParams = void
+export type TxPoolRecommendedFeePayload = void
+export type TxPoolRecommendedFeeResponse = Currency
 
 export type TxPoolTransactionsParams = void
 export type TxPoolTransactionsPayload = void
@@ -187,6 +189,15 @@ export type WalletSignPayload = {
   coveredFields: CoveredFields
 }
 export type WalletSignResponse = Transaction
+
+export type WalletSendParams = void
+export type WalletSendPayload = {
+  address: string
+  amount: Currency
+  subtractMinerFee?: boolean
+  useUnconfirmed?: boolean
+}
+export type WalletSendResponse = TransactionID
 
 export type WalletRedistributeParams = void
 export type WalletRedistributePayload = {

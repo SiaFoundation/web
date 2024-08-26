@@ -1,28 +1,55 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { WalletSendSiacoinDialog } from '@siafoundation/design-system'
-import { useWallet, useWalletSend } from '@siafoundation/hostd-react'
+import {
+  useTxPoolFee,
+  useWallet,
+  useWalletSend,
+} from '@siafoundation/hostd-react'
 import { useDialog } from '../contexts/dialog'
 import BigNumber from 'bignumber.js'
+
+const standardTxnSize = 1200 // bytes
 
 export function HostdSendSiacoinDialog() {
   const { dialog, openDialog, closeDialog } = useDialog()
   const wallet = useWallet()
   const walletSend = useWalletSend()
 
+  const recommendedFee = useTxPoolFee()
+  const fee = useMemo(
+    () =>
+      recommendedFee.data
+        ? // This is the same estimated fee calculation that happens in the daemon.
+          new BigNumber(recommendedFee.data).times(standardTxnSize)
+        : undefined,
+    [recommendedFee.data]
+  )
+
   const send = useCallback(
-    async ({ sc, address }: { sc: BigNumber; address: string }) => {
-      const fundResponse = await walletSend.post({
+    async ({
+      address,
+      hastings,
+      includeFee,
+    }: {
+      address: string
+      hastings: BigNumber
+      includeFee: boolean
+    }) => {
+      const response = await walletSend.post({
         payload: {
           address,
-          amount: sc.toString(),
+          amount: hastings.toString(),
+          subtractMinerFee: includeFee,
         },
       })
-      if (fundResponse.error) {
+      if (response.error) {
         return {
-          error: fundResponse.error,
+          error: response.error,
         }
       }
-      return { transactionId: fundResponse.data }
+      return {
+        transactionId: response.data,
+      }
     },
     [walletSend]
   )
@@ -31,6 +58,7 @@ export function HostdSendSiacoinDialog() {
     <WalletSendSiacoinDialog
       balance={wallet.data ? new BigNumber(wallet.data.spendable) : undefined}
       send={send}
+      fee={fee}
       open={dialog === 'sendSiacoin'}
       onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
     />

@@ -22,5 +22,6 @@ export async function beforeTest(page: Page, shouldResetConfig = true) {
     await navigateToConfig({ page })
     await configResetAllSettings({ page })
     await setViewMode({ page, state: 'basic' })
+    await navigateToConfig({ page })
   }
 }

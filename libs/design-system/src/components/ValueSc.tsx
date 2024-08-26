@@ -6,6 +6,7 @@ import { humanSiacoin } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 
 type Props = {
+  testId?: string
   size?: React.ComponentProps<typeof Text>['size']
   scaleSize?: React.ComponentProps<typeof Text>['scaleSize']
   value: BigNumber // hastings
@@ -22,6 +23,7 @@ type Props = {
 }
 
 export function ValueSc({
+  testId,
   value,
   size,
   scaleSize,
@@ -49,6 +51,7 @@ export function ValueSc({
 
   const el = (
     <Text
+      data-testid={testId}
       size={size}
       scaleSize={scaleSize}
       weight="medium"

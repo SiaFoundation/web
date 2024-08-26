@@ -1,16 +1,13 @@
 import { useFormik } from 'formik'
 import BigNumber from 'bignumber.js'
 import { WalletSendSiacoinReceipt } from './Receipt'
+import { SendSiacoinFormData } from './types'
 
 type Props = {
-  send: (params: {
-    address: string
-    sc: BigNumber
-  }) => Promise<{ transactionId?: string; error?: string }>
-  formData: {
-    address: string
-    siacoin: BigNumber
-  }
+  send: (
+    params: SendSiacoinFormData
+  ) => Promise<{ transactionId?: string; error?: string }>
+  formData: SendSiacoinFormData
   fee: BigNumber
   onConfirm: (params: { transactionId?: string }) => void
 }
@@ -21,13 +18,14 @@ export function useSendSiacoinConfirmForm({
   fee,
   onConfirm,
 }: Props) {
-  const { address, siacoin } = formData || {}
+  const { address, hastings, includeFee } = formData || {}
   const formik = useFormik({
     initialValues: {},
     onSubmit: async () => {
       const { transactionId, error } = await send({
         address,
-        sc: siacoin,
+        hastings,
+        includeFee,
       })
 
       if (error) {
@@ -45,7 +43,12 @@ export function useSendSiacoinConfirmForm({
 
   const form = (
     <div className="flex flex-col gap-4">
-      <WalletSendSiacoinReceipt address={address} siacoin={siacoin} fee={fee} />
+      <WalletSendSiacoinReceipt
+        address={address}
+        hastings={hastings}
+        fee={fee}
+        includeFee={includeFee}
+      />
     </div>
   )
 

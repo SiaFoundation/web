@@ -151,8 +151,8 @@ import {
   TxPoolBroadcastParams,
   TxPoolBroadcastPayload,
   TxPoolBroadcastResponse,
-  TxPoolFeeParams,
-  TxPoolFeeResponse,
+  TxPoolRecommendedFeeParams,
+  TxPoolRecommendedFeeResponse,
   TxPoolTransactionsParams,
   TxPoolTransactionsResponse,
   WalletAddressesParams,
@@ -220,7 +220,7 @@ import {
   busSyncerConnectRoute,
   busSyncerPeersRoute,
   busTxpoolBroadcastRoute,
-  busTxpoolFeeRoute,
+  busTxpoolRecommendedFeeRoute,
   busTxpoolTransactionsRoute,
   busWalletAddressesRoute,
   busWalletDiscardRoute,
@@ -259,6 +259,10 @@ import {
   ContractSizeResponse,
   busContractIdSize,
   PricePinSettings,
+  WalletSendParams,
+  WalletSendPayload,
+  WalletSendResponse,
+  busWalletSendRoute,
 } from '@siafoundation/renterd-types'
 
 // state
@@ -354,10 +358,10 @@ export function useSyncerAddress(
 
 // txpool
 
-export function useTxPoolFee(
-  args?: HookArgsSwr<TxPoolFeeParams, TxPoolFeeResponse>
+export function useTxPoolRecommendedFee(
+  args?: HookArgsSwr<TxPoolRecommendedFeeParams, TxPoolRecommendedFeeResponse>
 ) {
-  return useGetSwr({ ...args, route: busTxpoolFeeRoute })
+  return useGetSwr({ ...args, route: busTxpoolRecommendedFeeRoute })
 }
 
 export function useTxPoolTransactions(
@@ -435,6 +439,24 @@ export function useWalletSign(
   >
 ) {
   return usePostFunc({ ...args, route: busWalletSignRoute })
+}
+
+export function useWalletSend(
+  args?: HookArgsCallback<
+    WalletSendParams,
+    WalletSendPayload,
+    WalletSendResponse
+  >
+) {
+  return usePostFunc({ ...args, route: busWalletSendRoute }, async (mutate) => {
+    await delay(2_000)
+    mutate((key) => {
+      return (
+        key.startsWith(busTxpoolTransactionsRoute) ||
+        key.startsWith(busWalletPendingRoute)
+      )
+    })
+  })
 }
 
 export function useWalletRedistribute(

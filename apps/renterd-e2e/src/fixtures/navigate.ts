@@ -18,3 +18,8 @@ export async function navigateToConfig({ page }: { page: Page }) {
     page.getByTestId('navbar').getByText('Configuration')
   ).toBeVisible()
 }
+
+export async function navigateToWallet(page: Page) {
+  await page.getByTestId('sidenav').getByLabel('Wallet').click()
+  await expect(page.getByTestId('navbar').getByText('Wallet')).toBeVisible()
+}

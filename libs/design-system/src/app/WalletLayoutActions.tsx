@@ -41,12 +41,17 @@ export function WalletLayoutActions({
         />
       )}
       {receiveSiacoin && (
-        <Button size="small" onClick={receiveSiacoin}>
+        <Button aria-label="receive" size="small" onClick={receiveSiacoin}>
           <ArrowDownLeft16 />
           Receive
         </Button>
       )}
-      <Button size="small" variant="accent" onClick={sendSiacoin}>
+      <Button
+        aria-label="send"
+        size="small"
+        variant="accent"
+        onClick={sendSiacoin}
+      >
         <ArrowUpRight16 />
         Send
       </Button>
