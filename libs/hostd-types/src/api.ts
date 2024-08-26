@@ -170,6 +170,7 @@ export type WalletSendParams = void
 export type WalletSendPayload = {
   amount: string
   address: string
+  subtractMinerFee?: boolean
 }
 export type WalletSendResponse = TransactionID
 

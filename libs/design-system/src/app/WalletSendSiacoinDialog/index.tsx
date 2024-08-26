@@ -2,7 +2,6 @@
 
 import BigNumber from 'bignumber.js'
 import { useMemo, useState } from 'react'
-import { toHastings } from '@siafoundation/units'
 import { Separator } from '../../core/Separator'
 import { Dialog } from '../../core/Dialog'
 import { useSendSiacoinGenerateForm } from './Generate'
@@ -10,20 +9,13 @@ import { useSendSiacoinConfirmForm } from './Confirm'
 import { ProgressSteps } from '../ProgressSteps'
 import { WalletSendSiacoinComplete } from './Complete'
 import { FormSubmitButtonFormik } from '../../components/FormFormik'
-
-export type SendSiacoinFormData = {
-  address: string
-  siacoin: BigNumber
-  includeFee: boolean
-}
+import { SendSiacoinFormData } from './types'
 
 type Step = 'setup' | 'confirm' | 'done'
 
-const fee = toHastings(0.00393)
-
-const emptyFormData = {
+const emptyFormData: SendSiacoinFormData = {
   address: '',
-  siacoin: new BigNumber(0),
+  hastings: new BigNumber(0),
   includeFee: false,
 }
 
@@ -32,10 +24,10 @@ type Props = {
   open: boolean
   onOpenChange: (val: boolean) => void
   balance?: BigNumber
-  send: (params: {
-    address: string
-    sc: BigNumber
-  }) => Promise<{ transactionId?: string; error?: string }>
+  fee: BigNumber
+  send: (
+    params: SendSiacoinFormData
+  ) => Promise<{ transactionId?: string; error?: string }>
 }
 
 export function WalletSendSiacoinDialog({
@@ -43,6 +35,7 @@ export function WalletSendSiacoinDialog({
   open,
   onOpenChange,
   balance,
+  fee,
   send,
 }: Props) {
   const [step, setStep] = useState<Step>('setup')

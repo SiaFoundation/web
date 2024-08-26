@@ -2,28 +2,38 @@ import { Text } from '../../core/Text'
 import { ValueSc } from '../../components/ValueSc'
 import BigNumber from 'bignumber.js'
 import { ValueCopyable } from '../../components/ValueCopyable'
+import { SendSiacoinFormData } from './types'
+import { getAmountUserWillReceive, getTotalTransactionCost } from './utils'
 
-type Props = {
-  address: string
-  siacoin: BigNumber
+type Props = SendSiacoinFormData & {
   fee: BigNumber
   transactionId?: string
 }
 
 export function WalletSendSiacoinReceipt({
   address,
-  siacoin,
+  hastings,
   fee,
+  includeFee,
   transactionId,
 }: Props) {
-  const totalSiacoin = siacoin.plus(fee)
+  const amount = getAmountUserWillReceive({
+    hastings,
+    includeFee,
+    fee,
+  })
+  const total = getTotalTransactionCost({
+    hastings,
+    includeFee,
+    fee,
+  })
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-6 justify-between items-center">
         <Text color="verySubtle" noWrap>
           Address
         </Text>
-        <ValueCopyable value={address} type="address" />
+        <ValueCopyable testId="address" value={address} type="address" />
       </div>
       <div className="flex gap-2 justify-between items-center">
         <Text color="verySubtle" noWrap>
@@ -31,8 +41,9 @@ export function WalletSendSiacoinReceipt({
         </Text>
         <div className="flex relative top-[-0.5px]">
           <ValueSc
+            testId="amount"
             size="14"
-            value={siacoin}
+            value={amount}
             variant="value"
             dynamicUnits={false}
           />
@@ -43,7 +54,13 @@ export function WalletSendSiacoinReceipt({
           Network fee
         </Text>
         <div className="flex relative top-[-0.5px]">
-          <ValueSc size="14" value={fee} variant="value" dynamicUnits={false} />
+          <ValueSc
+            testId="networkFee"
+            size="14"
+            value={fee}
+            variant="value"
+            dynamicUnits={false}
+          />
         </div>
       </div>
       <div className="flex items-center gap-2 justify-between">
@@ -52,8 +69,9 @@ export function WalletSendSiacoinReceipt({
         </Text>
         <div className="flex relative top-[-0.5px]">
           <ValueSc
+            testId="total"
             size="14"
-            value={totalSiacoin}
+            value={total}
             variant="value"
             dynamicUnits={false}
           />
@@ -64,7 +82,11 @@ export function WalletSendSiacoinReceipt({
           <Text color="verySubtle" noWrap>
             Transaction ID
           </Text>
-          <ValueCopyable value={transactionId} type="transaction" />
+          <ValueCopyable
+            testId="transactionId"
+            value={transactionId}
+            type="transaction"
+          />
         </div>
       )}
     </div>

@@ -1,83 +1,64 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { WalletSendSiacoinDialog } from '@siafoundation/design-system'
 import {
-  useTxPoolBroadcast,
+  useTxPoolRecommendedFee,
   useWallet,
-  useWalletDiscard,
-  useWalletFund,
-  useWalletSign,
+  useWalletSend,
 } from '@siafoundation/renterd-react'
 import { useDialog } from '../contexts/dialog'
 import BigNumber from 'bignumber.js'
+
+const standardTxnSize = 1200 // bytes
 
 export function RenterdSendSiacoinDialog() {
   const { dialog, openDialog, closeDialog } = useDialog()
   const wallet = useWallet()
 
-  const fund = useWalletFund()
-  const sign = useWalletSign()
-  const broadcast = useTxPoolBroadcast()
-  const discard = useWalletDiscard()
+  const recommendedFee = useTxPoolRecommendedFee()
+  const fee = useMemo(
+    () =>
+      recommendedFee.data
+        ? // This is the same estimated fee calculation that happens in the daemon.
+          new BigNumber(recommendedFee.data).times(standardTxnSize)
+        : undefined,
+    [recommendedFee.data]
+  )
+
+  const walletSend = useWalletSend()
   const send = useCallback(
-    async ({ sc, address }: { sc: BigNumber; address: string }) => {
-      const fundResponse = await fund.post({
+    async ({
+      address,
+      hastings,
+      includeFee,
+    }: {
+      address: string
+      hastings: BigNumber
+      includeFee: boolean
+    }) => {
+      const response = await walletSend.post({
         payload: {
-          amount: sc.toString(),
-          transaction: {
-            siacoinOutputs: [
-              {
-                address: address,
-                value: sc.toString(),
-              },
-            ],
-          },
+          address,
+          amount: hastings.toString(),
+          subtractMinerFee: includeFee,
         },
       })
-      if (fundResponse.error) {
+      if (response.error) {
         return {
-          error: fundResponse.error,
-        }
-      }
-      const signResponse = await sign.post({
-        payload: {
-          transaction: fundResponse.data.transaction,
-          toSign: fundResponse.data.toSign,
-          coveredFields: {
-            wholeTransaction: true,
-          },
-        },
-      })
-      if (signResponse.error) {
-        discard.post({
-          payload: fundResponse.data.transaction,
-        })
-        return {
-          error: signResponse.error,
-        }
-      }
-      const broadcastResponse = await broadcast.post({
-        payload: [signResponse.data],
-      })
-      if (broadcastResponse.error) {
-        discard.post({
-          payload: signResponse.data,
-        })
-        return {
-          error: broadcastResponse.error,
+          error: response.error,
         }
       }
       return {
-        // Need transaction ID, but its not part of transaction object
-        // transactionId: signResponse.data.??,
+        transactionId: response.data,
       }
     },
-    [fund, sign, broadcast, discard]
+    [walletSend]
   )
 
   return (
     <WalletSendSiacoinDialog
       balance={wallet.data ? new BigNumber(wallet.data.spendable) : undefined}
       send={send}
+      fee={fee}
       open={dialog === 'sendSiacoin'}
       onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
     />

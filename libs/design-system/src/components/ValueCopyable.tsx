@@ -23,6 +23,7 @@ import {
 } from '../core/DropdownMenu'
 
 type Props = {
+  testId?: string
   value: string
   displayValue?: string
   type?: EntityType
@@ -40,6 +41,7 @@ type Props = {
 }
 
 export function ValueCopyable({
+  testId,
   value,
   displayValue,
   type,
@@ -65,7 +67,7 @@ export function ValueCopyable({
   const text = renderValue || defaultFormatValue(cleanValue, maxLength)
 
   return (
-    <div className={cx('flex items-center', className)}>
+    <div data-testid={testId} className={cx('flex items-center', className)}>
       {href ? (
         <Link
           href={href}

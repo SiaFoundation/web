@@ -7,6 +7,8 @@ import { InfoTip } from '../../core/InfoTip'
 import { Switch } from '../../core/Switch'
 import { ValueSc } from '../../components/ValueSc'
 import { FormFieldFormik } from '../../components/FormFormik'
+import { SendSiacoinFormData } from './types'
+import { getTotalTransactionCost } from './utils'
 
 const exampleAddr =
   'e3b1050aef388438668b52983cf78f40925af8f0aa8b9de80c18eadcefce8388d168a313e3f2'
@@ -28,15 +30,9 @@ const validationSchema = Yup.object().shape({
     ),
 })
 
-type FormData = {
-  address: string
-  siacoin: BigNumber
-  includeFee: boolean
-}
-
 type Props = {
   fee: BigNumber
-  onComplete: (data: FormData) => void
+  onComplete: (data: SendSiacoinFormData) => void
   balance?: BigNumber
 }
 
@@ -49,12 +45,13 @@ export function useSendSiacoinGenerateForm({
     initialValues,
     validationSchema,
     onSubmit: async (values) => {
+      if (!fee) {
+        return
+      }
+
       if (!values.siacoin) {
         return
       }
-      const siacoin = values.includeFee
-        ? toHastings(values.siacoin).minus(fee)
-        : toHastings(values.siacoin)
 
       if (!balance) {
         return
@@ -69,12 +66,12 @@ export function useSendSiacoinGenerateForm({
       onComplete({
         includeFee: values.includeFee,
         address: values.address,
-        siacoin: siacoin,
+        hastings: toHastings(values.siacoin),
       })
     },
   })
 
-  const sc = toHastings(formik.values.siacoin || 0)
+  const hastings = toHastings(formik.values.siacoin || 0)
 
   const form = (
     <div className="flex flex-col gap-4">
@@ -96,7 +93,9 @@ export function useSendSiacoinGenerateForm({
       />
       <div className="flex items-center">
         <Switch
+          aria-label="include fee"
           name="includeFee"
+          checked={formik.values.includeFee}
           onCheckedChange={(val) => formik.setFieldValue('includeFee', val)}
         >
           Include fee
@@ -111,6 +110,7 @@ export function useSendSiacoinGenerateForm({
           <Text color="verySubtle">Network fee</Text>
           <div className="flex relative top-[-0.5px]">
             <ValueSc
+              testId="networkFee"
               size="14"
               value={fee}
               variant="value"
@@ -122,8 +122,13 @@ export function useSendSiacoinGenerateForm({
           <Text color="verySubtle">Total</Text>
           <div className="flex relative top-[-0.5px]">
             <ValueSc
+              testId="total"
               size="14"
-              value={formik.values.includeFee ? sc : sc.plus(fee)}
+              value={getTotalTransactionCost({
+                hastings,
+                includeFee: formik.values.includeFee,
+                fee,
+              })}
               variant="value"
               dynamicUnits={false}
             />

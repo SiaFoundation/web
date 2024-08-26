@@ -166,9 +166,9 @@ import {
   TxPoolBroadcastParams,
   TxPoolBroadcastPayload,
   TxPoolBroadcastResponse,
-  TxPoolFeeParams,
-  TxPoolFeePayload,
-  TxPoolFeeResponse,
+  TxPoolRecommendedFeeParams,
+  TxPoolRecommendedFeePayload,
+  TxPoolRecommendedFeeResponse,
   TxPoolTransactionsParams,
   TxPoolTransactionsPayload,
   TxPoolTransactionsResponse,
@@ -200,6 +200,9 @@ import {
   WalletRedistributePayload,
   WalletRedistributeResponse,
   WalletResponse,
+  WalletSendParams,
+  WalletSendPayload,
+  WalletSendResponse,
   WalletSignParams,
   WalletSignPayload,
   WalletSignResponse,
@@ -255,7 +258,7 @@ import {
   busSyncerConnectRoute,
   busSyncerPeersRoute,
   busTxpoolBroadcastRoute,
-  busTxpoolFeeRoute,
+  busTxpoolRecommendedFeeRoute,
   busTxpoolTransactionsRoute,
   busWalletAddressesRoute,
   busWalletDiscardRoute,
@@ -265,6 +268,7 @@ import {
   busWalletPrepareFormRoute,
   busWalletRedistributeRoute,
   busWalletRoute,
+  busWalletSendRoute,
   busWalletSignRoute,
   busWalletTransactionsRoute,
 } from '@siafoundation/renterd-types'
@@ -306,10 +310,10 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       SyncerAddressResponse
     >(axios, 'get', busSyncerAddrRoute),
     txPoolFee: buildRequestHandler<
-      TxPoolFeeParams,
-      TxPoolFeePayload,
-      TxPoolFeeResponse
-    >(axios, 'get', busTxpoolFeeRoute),
+      TxPoolRecommendedFeeParams,
+      TxPoolRecommendedFeePayload,
+      TxPoolRecommendedFeeResponse
+    >(axios, 'get', busTxpoolRecommendedFeeRoute),
     txPoolTransactions: buildRequestHandler<
       TxPoolTransactionsParams,
       TxPoolTransactionsPayload,
@@ -345,6 +349,11 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       WalletFundPayload,
       WalletFundResponse
     >(axios, 'post', busWalletFundRoute),
+    walletSend: buildRequestHandler<
+      WalletSendParams,
+      WalletSendPayload,
+      WalletSendResponse
+    >(axios, 'post', busWalletSendRoute),
     walletSign: buildRequestHandler<
       WalletSignParams,
       WalletSignPayload,
