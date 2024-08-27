@@ -91,8 +91,6 @@ import {
   HostsBlocklistUpdateParams,
   HostsBlocklistUpdatePayload,
   HostsBlocklistUpdateResponse,
-  HostsParams,
-  HostsResponse,
   HostsSearchParams,
   HostsSearchPayload,
   HostsSearchResponse,
@@ -208,7 +206,6 @@ import {
   busHostsAllowlistRoute,
   busHostsBlocklistRoute,
   busHostsHostKeyRoute,
-  busHostsRoute,
   busObjectsRoute,
   busObjectsKeyRoute,
   busObjectsListRoute,
@@ -484,13 +481,6 @@ export function useWalletPending(
   args?: HookArgsSwr<WalletPendingParams, WalletPendingResponse>
 ) {
   return useGetSwr({ ...args, route: busWalletPendingRoute })
-}
-
-export function useHosts(args: HookArgsSwr<HostsParams, HostsResponse>) {
-  return useGetSwr({
-    ...args,
-    route: busHostsRoute,
-  })
 }
 
 export function useHostsSearch(

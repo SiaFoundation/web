@@ -41,7 +41,6 @@ export const busWalletDiscardRoute = '/bus/wallet/discard'
 export const busWalletPrepareFormRoute = '/bus/wallet/prepare/form'
 export const busWalletPrepareRenewRoute = '/bus/wallet/prepare/renew'
 export const busWalletPendingRoute = '/bus/wallet/pending'
-export const busHostsRoute = '/bus/hosts'
 export const busSearchHostsRoute = '/bus/search/hosts'
 export const busHostHostKeyRoute = '/bus/host/:hostKey'
 export const busHostsHostKeyRoute = '/bus/hosts/:hostKey'
@@ -232,13 +231,6 @@ export type WalletPendingPayload = void
 export type WalletPendingResponse = Transaction[]
 
 // hosts
-
-export type HostsParams = {
-  offset?: number
-  limit?: number
-}
-export type HostsPayload = void
-export type HostsResponse = Host[]
 
 export type HostsSearchParams = void
 export type HostsSearchFilterMode = 'all' | 'allowed' | 'blocked'
