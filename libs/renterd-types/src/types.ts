@@ -254,7 +254,7 @@ export type AutopilotHostsConfig = {
   allowRedundantIPs: boolean
   scoreOverrides: { [key: PublicKey]: number }
   maxDowntimeHours: number
-  minRecentScanFailures: number
+  maxConsecutiveScanFailures: number
   minProtocolVersion: string
 }
 

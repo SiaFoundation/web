@@ -327,20 +327,20 @@ export function getFields({
         },
       },
     },
-    minRecentScanFailures: {
+    maxConsecutiveScanFailures: {
       type: 'number',
       category: 'hosts',
-      title: 'Min recent scan failures',
+      title: 'Max consecutive scan failures',
       description: (
         <>
-          The minimum number of recent scan failures that autopilot will
+          The maximum number of consecutive scan failures that autopilot will
           tolerate.
         </>
       ),
       units: 'scans',
       decimalsLimit: 0,
-      suggestion: advancedDefaults?.minRecentScanFailures,
-      suggestionTip: `Defaults to ${advancedDefaults?.minRecentScanFailures.toNumber()}.`,
+      suggestion: advancedDefaults?.maxConsecutiveScanFailures,
+      suggestionTip: `Defaults to ${advancedDefaults?.maxConsecutiveScanFailures.toNumber()}.`,
       hidden: !isAutopilotEnabled || configViewMode === 'basic',
       validation: {
         validate: {

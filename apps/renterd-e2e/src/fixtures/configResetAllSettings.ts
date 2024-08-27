@@ -36,7 +36,7 @@ export async function configResetAllSettings({ page }: { page: Page }) {
   // hosts
   await setSwitchByLabel(page, 'allowRedundantIPs', false)
   await fillTextInputByName(page, 'maxDowntimeHours', '7')
-  await fillTextInputByName(page, 'minRecentScanFailures', '1')
+  await fillTextInputByName(page, 'maxConsecutiveScanFailures', '1')
   await fillTextInputByName(page, 'minProtocolVersion', '1.6.0')
 
   // contracts
