@@ -177,7 +177,9 @@ export function Recommendations() {
             {usableHostsCurrent}/{hostTarget50}
           </Text>
           <Text size="16" weight="medium">
-            {recommendations.length === 1
+            {recommendations.length === 0
+              ? 'No recommendations'
+              : recommendations.length === 1
               ? '1 recommendation'
               : `${recommendations.length} recommendations`}{' '}
             to match with more hosts
