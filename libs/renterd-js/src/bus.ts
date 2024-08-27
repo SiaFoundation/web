@@ -97,9 +97,6 @@ import {
   HostsBlocklistUpdateParams,
   HostsBlocklistUpdatePayload,
   HostsBlocklistUpdateResponse,
-  HostsParams,
-  HostsPayload,
-  HostsResponse,
   HostsSearchParams,
   HostsSearchPayload,
   HostsSearchResponse,
@@ -238,7 +235,6 @@ import {
   busHostsAllowlistRoute,
   busHostsBlocklistRoute,
   busHostsHostKeyRoute,
-  busHostsRoute,
   busMetricChurnRoute,
   busMetricContractRoute,
   busMetricContractsetRoute,
@@ -383,11 +379,6 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       WalletPendingPayload,
       WalletPendingResponse
     >(axios, 'get', busWalletPendingRoute),
-    hosts: buildRequestHandler<HostsParams, HostsPayload, HostsResponse>(
-      axios,
-      'get',
-      busHostsRoute
-    ),
     hostsSearch: buildRequestHandler<
       HostsSearchParams,
       HostsSearchPayload,
