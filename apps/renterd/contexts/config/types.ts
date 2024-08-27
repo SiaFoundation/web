@@ -30,7 +30,7 @@ export const defaultAutopilot = {
   // hosts
   allowRedundantIPs: false,
   maxDowntimeHours: undefined as BigNumber | undefined,
-  minRecentScanFailures: undefined as BigNumber | undefined,
+  maxConsecutiveScanFailures: undefined as BigNumber | undefined,
   minProtocolVersion: '',
 }
 
@@ -118,7 +118,7 @@ export function getAdvancedDefaultAutopilot(
           autopilotContractSet: 'autopilot',
           allowRedundantIPs: false,
           maxDowntimeHours: new BigNumber(336),
-          minRecentScanFailures: new BigNumber(10),
+          maxConsecutiveScanFailures: new BigNumber(10),
           minProtocolVersion: '1.6.0',
           prune: true,
         }
@@ -129,7 +129,7 @@ export function getAdvancedDefaultAutopilot(
           autopilotContractSet: 'autopilot',
           allowRedundantIPs: false,
           maxDowntimeHours: new BigNumber(336),
-          minRecentScanFailures: new BigNumber(10),
+          maxConsecutiveScanFailures: new BigNumber(10),
           minProtocolVersion: '1.6.0',
           prune: true,
         }),

@@ -93,7 +93,9 @@ export function transformDownAutopilot(
     // hosts
     allowRedundantIPs: config.hosts.allowRedundantIPs,
     maxDowntimeHours: new BigNumber(config.hosts.maxDowntimeHours),
-    minRecentScanFailures: new BigNumber(config.hosts.minRecentScanFailures),
+    maxConsecutiveScanFailures: new BigNumber(
+      config.hosts.maxConsecutiveScanFailures
+    ),
     minProtocolVersion: config.hosts.minProtocolVersion || '',
   }
 }

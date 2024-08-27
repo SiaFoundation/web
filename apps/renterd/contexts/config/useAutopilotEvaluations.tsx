@@ -453,7 +453,7 @@ export const valuesZeroDefaults: SettingsData = {
   prune: false,
   allowRedundantIPs: false,
   maxDowntimeHours: new BigNumber(0),
-  minRecentScanFailures: new BigNumber(0),
+  maxConsecutiveScanFailures: new BigNumber(0),
   minProtocolVersion: '',
   defaultContractSet: '',
   uploadPackingEnabled: true,
