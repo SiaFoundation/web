@@ -48,7 +48,6 @@ export const busHostsBlocklistRoute = '/bus/hosts/blocklist'
 export const busHostsAllowlistRoute = '/bus/hosts/allowlist'
 export const busHostPublicKeyResetlostsectorsRoute =
   '/bus/host/:publicKey/resetlostsectors'
-export const busAccountIdResetdriftRoute = '/bus/account/:id/resetdrift'
 export const busContractsRoute = '/bus/contracts'
 export const busContractIdAcquireRoute = '/bus/contract/:id/acquire'
 export const busContractIdReleaseRoute = '/bus/contract/:id/release'
@@ -284,12 +283,6 @@ export type HostResetLostSectorCountParams = {
 }
 export type HostResetLostSectorCountPayload = void
 export type HostResetLostSectorCountResponse = void
-
-// accounts
-
-export type AccountResetDriftParams = { id: string }
-export type AccountResetDriftPayload = void
-export type AccountResetDriftResponse = void
 
 // contracts
 

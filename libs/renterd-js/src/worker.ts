@@ -1,4 +1,7 @@
 import {
+  AccountResetDriftParams,
+  AccountResetDriftPayload,
+  AccountResetDriftResponse,
   MultipartUploadPartParams,
   MultipartUploadPartPayload,
   MultipartUploadPartResponse,
@@ -14,6 +17,7 @@ import {
   WorkerStateParams,
   WorkerStatePayload,
   WorkerStateResponse,
+  workerAccountIdResetdriftRoute,
   workerMultipartKeyRoute,
   workerObjectsKeyRoute,
   workerRhpScanRoute,
@@ -66,5 +70,10 @@ export function Worker({ api, password }: { api: string; password?: string }) {
       RhpScanPayload,
       RhpScanResponse
     >(axios, 'post', workerRhpScanRoute),
+    accountResetDrift: buildRequestHandler<
+      AccountResetDriftParams,
+      AccountResetDriftPayload,
+      AccountResetDriftResponse
+    >(axios, 'post', workerAccountIdResetdriftRoute),
   }
 }

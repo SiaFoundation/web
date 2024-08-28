@@ -5,6 +5,7 @@ export const workerStateRoute = '/worker/state'
 export const workerObjectsKeyRoute = '/worker/objects/:key'
 export const workerMultipartKeyRoute = '/worker/multipart/:key'
 export const workerRhpScanRoute = '/worker/rhp/scan'
+export const workerAccountIdResetdriftRoute = '/worker/account/:id/resetdrift'
 
 // state
 
@@ -13,6 +14,8 @@ export type WorkerStatePayload = void
 export type WorkerStateResponse = BusStateResponse & {
   id: string
 }
+
+// objects
 
 export type ObjectDownloadParams = { key: string; bucket: string }
 export type ObjectDownloadPayload = void
@@ -28,6 +31,8 @@ export type ObjectUploadPayload =
   | Record<string, unknown>
 export type ObjectUploadResponse = void
 
+// multipart
+
 export type MultipartUploadPartParams = {
   key: string
   uploadid: string
@@ -41,6 +46,8 @@ export type MultipartUploadPartParams = {
 export type MultipartUploadPartPayload = Blob | Buffer | ArrayBuffer | string
 export type MultipartUploadPartResponse = void
 
+// rhp
+
 export type RhpScanParams = void
 export type RhpScanPayload = {
   hostKey: string
@@ -52,3 +59,9 @@ export type RhpScanResponse = {
   scanError?: string
   settings?: HostSettings
 }
+
+// accounts
+
+export type AccountResetDriftParams = { id: string }
+export type AccountResetDriftPayload = void
+export type AccountResetDriftResponse = void
