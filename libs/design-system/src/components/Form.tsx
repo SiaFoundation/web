@@ -97,8 +97,10 @@ export function FieldGroup<Values extends FieldValues>({
   )
 }
 
-type FormSubmitProps<Values extends FieldValues> = {
-  form: UseFormReturn<Values>
+type FormSubmitProps = {
+  // The button is agnostic to the form's FieldValues.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  form: UseFormReturn<any>
   size?: React.ComponentProps<typeof Button>['size']
   variant?: React.ComponentProps<typeof Button>['variant']
   children: React.ReactNode
@@ -106,27 +108,22 @@ type FormSubmitProps<Values extends FieldValues> = {
   withStatusError?: boolean
 }
 
-export function FormSubmitButton<Values extends FieldValues>({
+export function FormSubmitButton({
   form,
   size = 'medium',
   variant = 'accent',
   className,
   children,
-}: FormSubmitProps<Values>) {
+}: FormSubmitProps) {
   return (
-    <>
-      {/* {withStatusError && formik.status?.error && (
-        <Text color="red">{formik.status.error}</Text>
-      )} */}
-      <Button
-        className={className}
-        size={size}
-        variant={variant}
-        state={form.formState.isSubmitting ? 'waiting' : undefined}
-        type="submit"
-      >
-        {form.formState.isSubmitting ? <LoadingDots /> : children}
-      </Button>
-    </>
+    <Button
+      className={className}
+      size={size}
+      variant={variant}
+      state={form.formState.isSubmitting ? 'waiting' : undefined}
+      type="submit"
+    >
+      {form.formState.isSubmitting ? <LoadingDots /> : children}
+    </Button>
   )
 }

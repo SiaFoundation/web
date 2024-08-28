@@ -96,7 +96,7 @@ test('send siacoin with include fee on', async ({ page }) => {
   const sendDialog = page.getByRole('dialog', { name: 'Send siacoin' })
   await fillTextInputByName(page, 'address', receiveAddress)
   await fillTextInputByName(page, 'siacoin', amount.toString())
-  await setSwitchByLabel(page, 'include fee', true)
+  await setSwitchByLabel(page, 'includeFee', true)
   await expect(
     sendDialog.getByTestId('networkFee').getByText('0.012 SC')
   ).toBeVisible()

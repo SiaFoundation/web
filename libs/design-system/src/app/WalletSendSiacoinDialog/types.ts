@@ -2,8 +2,7 @@
 
 import BigNumber from 'bignumber.js'
 
-export type SendSiacoinFormData = {
+export type SendSiacoinParams = {
   address: string
   hastings: BigNumber
-  includeFee: boolean
 }
