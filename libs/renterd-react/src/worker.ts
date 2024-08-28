@@ -8,6 +8,9 @@ import {
   useGetSwr,
 } from '@siafoundation/react-core'
 import {
+  AccountResetDriftParams,
+  AccountResetDriftPayload,
+  AccountResetDriftResponse,
   AutopilotHost,
   Host,
   MultipartUploadPartParams,
@@ -27,6 +30,7 @@ import {
   autopilotHostsRoute,
   busObjectsRoute,
   busSearchHostsRoute,
+  workerAccountIdResetdriftRoute,
   workerMultipartKeyRoute,
   workerObjectsKeyRoute,
   workerRhpScanRoute,
@@ -169,4 +173,19 @@ export function useRhpScan(
       })
     }
   )
+}
+
+// accounts
+
+export function useAccountResetDrift(
+  args?: HookArgsCallback<
+    AccountResetDriftParams,
+    AccountResetDriftPayload,
+    AccountResetDriftResponse
+  >
+) {
+  return usePostFunc({
+    ...args,
+    route: workerAccountIdResetdriftRoute,
+  })
 }

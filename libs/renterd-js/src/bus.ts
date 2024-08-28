@@ -1,7 +1,4 @@
 import {
-  AccountResetDriftParams,
-  AccountResetDriftPayload,
-  AccountResetDriftResponse,
   AlertsDismissParams,
   AlertsDismissPayload,
   AlertsDismissResponse,
@@ -212,7 +209,6 @@ import {
   WalletUtxoParams,
   WalletUtxoPayload,
   WalletUtxoResponse,
-  busAccountIdResetdriftRoute,
   busAlertsDismissRoute,
   busAlertsRoute,
   busBucketNamePolicyRoute,
@@ -419,11 +415,6 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       HostResetLostSectorCountPayload,
       HostResetLostSectorCountResponse
     >(axios, 'post', busHostPublicKeyResetlostsectorsRoute),
-    accountResetDrift: buildRequestHandler<
-      AccountResetDriftParams,
-      AccountResetDriftPayload,
-      AccountResetDriftResponse
-    >(axios, 'post', busAccountIdResetdriftRoute),
     contracts: buildRequestHandler<
       ContractsParams,
       ContractsPayload,

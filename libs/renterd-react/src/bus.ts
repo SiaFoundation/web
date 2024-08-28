@@ -15,9 +15,6 @@ import {
   getTestnetZenBlockHeight,
 } from '@siafoundation/units'
 import {
-  AccountResetDriftParams,
-  AccountResetDriftPayload,
-  AccountResetDriftResponse,
   AlertsDismissParams,
   AlertsDismissPayload,
   AlertsDismissResponse,
@@ -185,7 +182,6 @@ import {
   WalletTransactionsResponse,
   WalletUtxoParams,
   WalletUtxoResponse,
-  busAccountIdResetdriftRoute,
   busBucketRoute,
   busBucketNamePolicyRoute,
   busBucketNameRoute,
@@ -579,21 +575,6 @@ export function useHostResetLostSectorCount(
   return usePostFunc({
     ...args,
     route: busHostPublicKeyResetlostsectorsRoute,
-  })
-}
-
-// accounts
-
-export function useAccountResetDrift(
-  args?: HookArgsCallback<
-    AccountResetDriftParams,
-    AccountResetDriftPayload,
-    AccountResetDriftResponse
-  >
-) {
-  return usePostFunc({
-    ...args,
-    route: busAccountIdResetdriftRoute,
   })
 }
 
