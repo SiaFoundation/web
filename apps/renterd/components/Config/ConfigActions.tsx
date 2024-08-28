@@ -11,6 +11,7 @@ import { Reset16, Save16, Settings16 } from '@siafoundation/react-icons'
 import { useConfig } from '../../contexts/config'
 import { ConfigContextMenu } from './ConfigContextMenu'
 import { ConfigViewDropdownMenu } from './ConfigViewDropdownMenu'
+import { pluralize } from '@siafoundation/units'
 
 export function ConfigActions() {
   const {
@@ -26,7 +27,7 @@ export function ConfigActions() {
     <div className="flex items-center gap-2">
       {!!changeCount && (
         <Text size="12" color="subtle">
-          {changeCount === 1 ? '1 change' : `${changeCount} changes`}
+          {pluralize(changeCount, 'change', 'changes')}
         </Text>
       )}
       <Button

@@ -29,6 +29,7 @@ import {
   useTriggerRescan,
 } from '../FieldRescan'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
+import { pluralize } from '@siafoundation/units'
 
 export type WalletAddressesGenerateLedgerDialogParams = {
   walletId: string
@@ -301,11 +302,9 @@ export function WalletAddressesGenerateLedgerDialog({
         return
       }
     }
-    if (count === 1) {
-      triggerSuccessToast({ title: 'Added 1 address' })
-    } else {
-      triggerSuccessToast({ title: `Added ${count} addresses` })
-    }
+    triggerSuccessToast({
+      title: `Added ${pluralize(count, 'address', 'addresses')}`,
+    })
     return
   }, [addressAdd, walletId, newGeneratedAddresses])
 
@@ -352,9 +351,11 @@ export function WalletAddressesGenerateLedgerDialog({
               variant={shouldRescan ? 'red' : 'accent'}
             >
               {newGeneratedAddresses.length > 0
-                ? `Save ${newGeneratedAddresses.length} ${
-                    newGeneratedAddresses.length === 1 ? 'address' : 'addresses'
-                  }${shouldRescan ? ' and rescan' : ''}`
+                ? `Save ${pluralize(
+                    newGeneratedAddresses.length,
+                    'address',
+                    'addresses'
+                  )}${shouldRescan ? ' and rescan' : ''}`
                 : 'Rescan'}
             </FormSubmitButton>
           )}
@@ -363,10 +364,9 @@ export function WalletAddressesGenerateLedgerDialog({
     >
       <div className="flex flex-col gap-4">
         <Text>
-          Wallet currently has {datasetCount}{' '}
-          {datasetCount === 1 ? 'address' : 'addresses'} with a highest index of{' '}
-          {lastIndex}. Select a start index and the number of sequential
-          addresses you would like to generate.
+          Wallet currently has {pluralize(datasetCount, 'address', 'addresses')}{' '}
+          with a highest index of {lastIndex}. Select a start index and the
+          number of sequential addresses you would like to generate.
         </Text>
         <div className="flex flex-col gap-1">
           <FieldLabel title="Device" name="ledgerConnected" />

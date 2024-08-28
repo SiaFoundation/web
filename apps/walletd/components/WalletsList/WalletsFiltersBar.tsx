@@ -1,6 +1,7 @@
 import { Text } from '@siafoundation/design-system'
 import { Unlocked16 } from '@siafoundation/react-icons'
 import { useWallets } from '../../contexts/wallets'
+import { pluralize } from '@siafoundation/units'
 
 export function WalletsFiltersBar() {
   const { datasetCount, unlockedCount } = useWallets()
@@ -13,17 +14,13 @@ export function WalletsFiltersBar() {
             <Unlocked16 />
           </Text>
           <Text size="12" font="mono">
-            {unlockedCount === 1
-              ? '1 wallet unlocked'
-              : `${unlockedCount.toLocaleString()} wallets unlocked`}
+            {pluralize(unlockedCount, 'wallet')} unlocked
           </Text>
         </div>
       )}
       <div className="flex-1" />
       <Text size="12" font="mono">
-        {datasetCount === 1
-          ? '1 wallet'
-          : `${datasetCount.toLocaleString()} wallets`}
+        {pluralize(datasetCount, 'wallet')}
       </Text>
     </div>
   )
