@@ -95,7 +95,7 @@ export type ConsensusStateResponse = ConsensusState
 // Block
 
 // Returns the block with the specified ID.
-export const blockByIDRoute = '/explorer/block/:id'
+export const blockByIDRoute = '/blocks/:id'
 export type BlockByIDParams = { id: BlockID }
 export type BlockByIDPayload = void
 export type BlockByIDResponse = ExplorerBlock
@@ -103,13 +103,13 @@ export type BlockByIDResponse = ExplorerBlock
 // Transaction
 
 // Returns the transaction with the specified ID.
-export const transactionByIDRoute = '/explorer/transactions/:id'
+export const transactionByIDRoute = '/transactions/:id'
 export type TransactionByIDParams = { id: TransactionID }
 export type TransactionByIDPayload = void
 export type TransactionByIDResponse = ExplorerTransaction
 
 // Returns the transactions with the specified IDs.
-export const transactionsByIDsRoute = '/explorer/transactions'
+export const transactionsByIDsRoute = '/transactions'
 export type TransactionsByIDsParams = void
 export type TransactionsByIDsPayload = { ids: TransactionID[] }
 export type TransactionsByIDsResponse = ExplorerTransaction[]
@@ -153,11 +153,13 @@ export type AddressBalancePayload = void
 export type AddressBalanceResponse = AddressBalance
 
 // Output
+// Returns the specified siacoin output.
 export const outputSiacoineRoute = '/outputs/siacoin/:siacoinoutputid'
 export type OutputSiacoineParams = { siacoinOutputID: SiacoinOutputID }
 export type OutputSiacoinePayload = void
 export type OutputSiacoineResponse = ExplorerSiacoinOutput
 
+// Returns the specified address' events.
 export const outputSiafundeRoute = '/outputs/siafund/:siafundoutputid'
 export type OutputSiafundeParams = { address: SiafundOutputID }
 export type OutputSiafundePayload = void
@@ -166,19 +168,19 @@ export type OutputSiafundeResponse = ExplorerSiafundOutput
 // Contract
 
 // Returns the file contract with the specified ID.
-export const contractByIDRoute = '/explorer/contracts/:id'
+export const contractByIDRoute = '/contracts/:id'
 export type ContractByIDParams = { id: FileContractID }
 export type ContractByIDPayload = void
 export type ContractByIDResponse = ExplorerFileContract
 
 // Returns the file contracts with the specified IDs.
-export const contractsByIDsRoute = '/exporer/contracts/'
+export const contractsByIDsRoute = '/contracts'
 export type ContractsByIDsParams = void
 export type ContractsByIDsPayload = { ids: FileContractID[] }
 export type ContractsByIDsResponse = ExplorerFileContract[]
 
 // Returns the file contracts for a particular ed25519 key.
-export const contractByPubkeyRoute = '/explorer/pubkey/:pubkey/contracts'
+export const contractByPubkeyRoute = '/pubkey/:pubkey/contracts'
 export type ContractByPubkeyParams = { key: number }
 export type ContractByPubkeyPayload = void
 export type ContractByPubkeyResponse = ExplorerFileContract
@@ -186,13 +188,13 @@ export type ContractByPubkeyResponse = ExplorerFileContract
 // Metrics
 
 // Returns the most recent metrics about Sia.
-export const metricsRoute = '/explorer/metrics'
+export const metricsRoute = '/metrics/block'
 export type MetricsParams = void
 export type MetricsPayload = void
 export type MetricsResponse = Metrics
 
 // Returns various metrics about Sia at the time of the given block ID.
-export const metricsByIDRoute = '/explorer/metrics/:id'
+export const metricsByIDRoute = '/metrics/block/:id'
 export type MetricsByIDParams = { id: BlockID }
 export type MetricsByIDPayload = void
 export type MetricsByIDResponse = Metrics
@@ -200,7 +202,7 @@ export type MetricsByIDResponse = Metrics
 // Search
 
 // Returns what type of object an ID is.
-export const searchResultTypeRoute = '/explorer/search/:id'
+export const searchResultTypeRoute = '/search/:id'
 export type SearchResultTypeParams = { id: Hash256 }
 export type SearchResultTypePayload = void
 export type SearchResultTypeResponse = SearchResultType
