@@ -24,6 +24,7 @@ import {
   useTriggerRescan,
 } from '../FieldRescan'
 import { useSyncStatus } from '../../hooks/useSyncStatus'
+import { pluralize } from '@siafoundation/units'
 
 export type WalletAddressesGenerateSeedDialogParams = {
   walletId: string
@@ -189,13 +190,9 @@ export function WalletAddressesGenerateSeedDialog({
           return
         }
       }
-      if (count === 1) {
-        triggerSuccessToast({ title: 'Generated 1 address' })
-      } else {
-        triggerSuccessToast({
-          title: `Generated ${count} addresses`,
-        })
-      }
+      triggerSuccessToast({
+        title: `Generated ${pluralize(count, 'address', 'addresses')}`,
+      })
 
       // if successfully generated an address, cache the seed
       cacheWalletMnemonic(walletId, mnemonic)

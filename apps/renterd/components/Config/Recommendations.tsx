@@ -21,6 +21,7 @@ import { routes } from '../../config/routes'
 import useLocalStorageState from 'use-local-storage-state'
 import { useConfig } from '../../contexts/config'
 import { cx } from 'class-variance-authority'
+import { pluralize } from '@siafoundation/units'
 
 export function Recommendations() {
   const app = useApp()
@@ -177,11 +178,9 @@ export function Recommendations() {
             {usableHostsCurrent}/{hostTarget50}
           </Text>
           <Text size="16" weight="medium">
-            {recommendations.length === 0
-              ? 'No recommendations'
-              : recommendations.length === 1
-              ? '1 recommendation'
-              : `${recommendations.length} recommendations`}{' '}
+            {pluralize(recommendations.length, 'recommendation', {
+              zeroForm: 'No recommendations',
+            })}{' '}
             to match with more hosts
           </Text>
         </>

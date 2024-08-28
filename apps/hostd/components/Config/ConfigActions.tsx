@@ -4,6 +4,7 @@ import { AnnounceButton } from './AnnounceButton'
 import { useConfig } from '../../contexts/config'
 import { ConfigContextMenu } from './ConfigContextMenu'
 import { ConfigViewDropdownMenu } from './ConfigViewDropdownMenu'
+import { pluralize } from '@siafoundation/units'
 
 export function ConfigActions() {
   const { changeCount, revalidateAndResetForm, form, onSubmit } = useConfig()
@@ -11,7 +12,7 @@ export function ConfigActions() {
     <div className="flex items-center gap-2">
       {!!changeCount && (
         <Text size="12" color="subtle">
-          {changeCount === 1 ? '1 change' : `${changeCount} changes`}
+          {pluralize(changeCount, 'change', 'changes')}
         </Text>
       )}
       <Button

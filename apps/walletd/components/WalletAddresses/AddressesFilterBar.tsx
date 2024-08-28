@@ -1,5 +1,6 @@
 import { Text } from '@siafoundation/design-system'
 import { useAddresses } from '../../contexts/addresses'
+import { pluralize } from '@siafoundation/units'
 
 export function AddressesFiltersBar() {
   const { datasetCount } = useAddresses()
@@ -7,9 +8,7 @@ export function AddressesFiltersBar() {
   return (
     <div className="flex gap-2 justify-end w-full">
       <Text size="12" font="mono">
-        {datasetCount === 1
-          ? '1 address'
-          : `${datasetCount.toLocaleString()} addresses`}
+        {pluralize(datasetCount, 'address', 'addresses')}
       </Text>
     </div>
   )

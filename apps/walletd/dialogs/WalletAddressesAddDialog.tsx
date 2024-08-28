@@ -14,7 +14,7 @@ import { useWalletAddressAdd } from '@siafoundation/walletd-react'
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { useWallets } from '../contexts/wallets'
-import { isValidAddress } from '@siafoundation/units'
+import { isValidAddress, pluralize } from '@siafoundation/units'
 import { uniq } from '@technically/lodash'
 import {
   FieldRescan,
@@ -169,13 +169,9 @@ export function WalletAddressesAddDialog({
         }
         return
       }
-      if (result.total === 1) {
-        triggerSuccessToast({ title: 'Added 1 address' })
-      } else {
-        triggerSuccessToast({
-          title: `Added ${result.successful} addresses`,
-        })
-      }
+      triggerSuccessToast({
+        title: `Added ${pluralize(1, 'address', 'addresses')}`,
+      })
       triggerRescan(values)
       closeAndReset()
     },
@@ -203,11 +199,7 @@ export function WalletAddressesAddDialog({
             variant={shouldRescan ? 'red' : 'accent'}
             size="medium"
           >
-            {addressCount === 0
-              ? 'Add addresses'
-              : addressCount === 1
-              ? 'Add 1 address'
-              : `Add ${addressCount.toLocaleString()} addresses`}
+            Add {pluralize(addressCount, 'address', 'addresses')}
             {shouldRescan ? ' and rescan' : ''}
           </FormSubmitButton>
         </div>
