@@ -8,15 +8,14 @@ import { useSendSiacoinGenerateForm } from './Generate'
 import { useSendSiacoinConfirmForm } from './Confirm'
 import { ProgressSteps } from '../ProgressSteps'
 import { WalletSendSiacoinComplete } from './Complete'
-import { FormSubmitButtonFormik } from '../../components/FormFormik'
-import { SendSiacoinFormData } from './types'
+import { FormSubmitButton } from '../../components/Form'
+import { SendSiacoinParams } from './types'
 
 type Step = 'setup' | 'confirm' | 'done'
 
-const emptyFormData: SendSiacoinFormData = {
+const emptyFormData: SendSiacoinParams = {
   address: '',
   hastings: new BigNumber(0),
-  includeFee: false,
 }
 
 type Props = {
@@ -26,7 +25,7 @@ type Props = {
   balance?: BigNumber
   fee: BigNumber
   send: (
-    params: SendSiacoinFormData
+    params: SendSiacoinParams & { includeFee: boolean }
   ) => Promise<{ transactionId?: string; error?: string }>
 }
 
@@ -40,20 +39,20 @@ export function WalletSendSiacoinDialog({
 }: Props) {
   const [step, setStep] = useState<Step>('setup')
   const [signedTxnId, setSignedTxnId] = useState<string>()
-  const [formData, setFormData] = useState<SendSiacoinFormData>(emptyFormData)
+  const [params, setParams] = useState<SendSiacoinParams>(emptyFormData)
 
   // Form for each step
   const generate = useSendSiacoinGenerateForm({
     balance,
     fee,
     onComplete: (data) => {
-      setFormData(data)
+      setParams(data)
       setStep('confirm')
     },
   })
   const confirm = useSendSiacoinConfirmForm({
     fee,
-    formData,
+    params,
     send,
     onConfirm: ({ transactionId }) => {
       setSignedTxnId(transactionId)
@@ -65,13 +64,19 @@ export function WalletSendSiacoinDialog({
     if (step === 'setup') {
       return {
         submitLabel: 'Generate transaction',
-        formik: generate.formik,
+        el: generate.el,
+        form: generate.form,
+        reset: generate.reset,
+        submit: generate.submit,
       }
     }
     if (step === 'confirm') {
       return {
         submitLabel: 'Broadcast transaction',
-        formik: confirm.formik,
+        el: confirm.el,
+        form: confirm.form,
+        reset: confirm.reset,
+        submit: confirm.submit,
       }
     }
     return undefined
@@ -83,25 +88,20 @@ export function WalletSendSiacoinDialog({
       open={open}
       onOpenChange={(val) => {
         if (!val) {
-          generate.formik.resetForm()
-          confirm.formik.resetForm()
+          generate.reset()
+          confirm.reset()
           setStep('setup')
         }
         onOpenChange(val)
       }}
       title="Send siacoin"
-      onSubmit={
-        controls
-          ? (controls.formik
-              .handleSubmit as React.FormEventHandler<HTMLFormElement>)
-          : undefined
-      }
+      onSubmit={controls ? controls.submit : undefined}
       controls={
         controls && (
           <div className="flex flex-col gap-1">
-            <FormSubmitButtonFormik formik={controls.formik}>
+            <FormSubmitButton form={controls.form}>
               {controls.submitLabel}
-            </FormSubmitButtonFormik>
+            </FormSubmitButton>
           </div>
         )
       }
@@ -129,11 +129,11 @@ export function WalletSendSiacoinDialog({
           ]}
         />
         <Separator className="w-full mt-4" />
-        {step === 'setup' && generate.form}
-        {step === 'confirm' && confirm.form}
+        {step === 'setup' && generate.el}
+        {step === 'confirm' && confirm.el}
         {step === 'done' && (
           <WalletSendSiacoinComplete
-            data={formData}
+            data={params}
             fee={fee}
             transactionId={signedTxnId}
           />

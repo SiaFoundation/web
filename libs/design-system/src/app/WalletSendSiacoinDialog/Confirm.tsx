@@ -1,59 +1,66 @@
-import { useFormik } from 'formik'
+import { useForm } from 'react-hook-form'
 import BigNumber from 'bignumber.js'
 import { WalletSendSiacoinReceipt } from './Receipt'
-import { SendSiacoinFormData } from './types'
+import { SendSiacoinParams } from './types'
+import { triggerErrorToast } from '../../lib/toast'
+import { useCallback, useMemo } from 'react'
 
 type Props = {
   send: (
-    params: SendSiacoinFormData
+    params: SendSiacoinParams & { includeFee: boolean }
   ) => Promise<{ transactionId?: string; error?: string }>
-  formData: SendSiacoinFormData
+  params: SendSiacoinParams
   fee: BigNumber
   onConfirm: (params: { transactionId?: string }) => void
 }
 
 export function useSendSiacoinConfirmForm({
   send,
-  formData,
+  params,
   fee,
   onConfirm,
 }: Props) {
-  const { address, hastings, includeFee } = formData || {}
-  const formik = useFormik({
-    initialValues: {},
-    onSubmit: async () => {
-      const { transactionId, error } = await send({
-        address,
-        hastings,
-        includeFee,
-      })
-
-      if (error) {
-        formik.setStatus({
-          error,
-        })
-        return
-      }
-
-      onConfirm({
-        transactionId,
-      })
-    },
+  const { address, hastings } = params || {}
+  const form = useForm({
+    defaultValues: {},
   })
 
-  const form = (
+  const onValid = useCallback(async () => {
+    const { transactionId, error } = await send({
+      address,
+      hastings,
+      includeFee: false,
+    })
+
+    if (error) {
+      triggerErrorToast({
+        title: 'Error sending siacoin',
+        body: error,
+      })
+      return
+    }
+
+    onConfirm({
+      transactionId,
+    })
+  }, [onConfirm, address, hastings, send])
+
+  const submit = useMemo(() => form.handleSubmit(onValid), [form, onValid])
+
+  const el = (
     <div className="flex flex-col gap-4">
       <WalletSendSiacoinReceipt
         address={address}
         hastings={hastings}
         fee={fee}
-        includeFee={includeFee}
       />
     </div>
   )
 
   return {
+    el,
     form,
-    formik,
+    reset: form.reset,
+    submit,
   }
 }

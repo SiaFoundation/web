@@ -2,10 +2,9 @@ import { Text } from '../../core/Text'
 import { ValueSc } from '../../components/ValueSc'
 import BigNumber from 'bignumber.js'
 import { ValueCopyable } from '../../components/ValueCopyable'
-import { SendSiacoinFormData } from './types'
-import { getAmountUserWillReceive, getTotalTransactionCost } from './utils'
+import { SendSiacoinParams } from './types'
 
-type Props = SendSiacoinFormData & {
+type Props = SendSiacoinParams & {
   fee: BigNumber
   transactionId?: string
 }
@@ -14,19 +13,9 @@ export function WalletSendSiacoinReceipt({
   address,
   hastings,
   fee,
-  includeFee,
   transactionId,
 }: Props) {
-  const amount = getAmountUserWillReceive({
-    hastings,
-    includeFee,
-    fee,
-  })
-  const total = getTotalTransactionCost({
-    hastings,
-    includeFee,
-    fee,
-  })
+  const total = hastings.plus(fee)
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-6 justify-between items-center">
@@ -43,7 +32,7 @@ export function WalletSendSiacoinReceipt({
           <ValueSc
             testId="amount"
             size="14"
-            value={amount}
+            value={hastings}
             variant="value"
             dynamicUnits={false}
           />

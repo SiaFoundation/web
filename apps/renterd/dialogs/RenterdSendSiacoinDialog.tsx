@@ -11,7 +11,7 @@ import BigNumber from 'bignumber.js'
 const standardTxnSize = 1200 // bytes
 
 export function RenterdSendSiacoinDialog() {
-  const { dialog, openDialog, closeDialog } = useDialog()
+  const { dialog, onOpenChange } = useDialog()
   const wallet = useWallet()
 
   const recommendedFee = useTxPoolRecommendedFee()
@@ -60,7 +60,7 @@ export function RenterdSendSiacoinDialog() {
       send={send}
       fee={fee}
       open={dialog === 'sendSiacoin'}
-      onOpenChange={(val) => (val ? openDialog(dialog) : closeDialog())}
+      onOpenChange={onOpenChange}
     />
   )
 }

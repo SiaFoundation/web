@@ -66,20 +66,19 @@ test('send siacoin with include fee off', async ({ page }) => {
   await expect(sendDialog.getByTestId('transactionId')).toBeVisible()
 
   // List.
-  // TODO: Add this after we migrate to the new events API.
-  // await sendDialog.getByRole('button', { name: 'Close' }).click()
-  // await expect(page.getByTestId('eventsTable')).toBeVisible()
-  // await expect(
-  //   page.getByTestId('eventsTable').locator('tbody tr').first()
-  // ).toBeVisible()
-  // await expect(
-  //   page
-  //     .getByTestId('eventsTable')
-  //     .locator('tbody tr')
-  //     .first()
-  //     .getByTestId('amount')
-  //     .getByText(`-${amountWithFeeString}`)
-  // ).toBeVisible()
+  await sendDialog.getByRole('button', { name: 'Close' }).click()
+  await expect(page.getByTestId('eventsTable')).toBeVisible()
+  await expect(
+    page.getByTestId('eventsTable').locator('tbody tr').first()
+  ).toBeVisible()
+  await expect(
+    page
+      .getByTestId('eventsTable')
+      .locator('tbody tr')
+      .first()
+      .getByTestId('amount')
+      .getByText(`-${amountWithFeeString}`)
+  ).toBeVisible()
 })
 
 test('send siacoin with include fee on', async ({ page }) => {
@@ -96,7 +95,7 @@ test('send siacoin with include fee on', async ({ page }) => {
   const sendDialog = page.getByRole('dialog', { name: 'Send siacoin' })
   await fillTextInputByName(page, 'address', receiveAddress)
   await fillTextInputByName(page, 'siacoin', amount.toString())
-  await setSwitchByLabel(page, 'include fee', true)
+  await setSwitchByLabel(page, 'includeFee', true)
   await expect(
     sendDialog.getByTestId('networkFee').getByText('0.012 SC')
   ).toBeVisible()
@@ -139,18 +138,17 @@ test('send siacoin with include fee on', async ({ page }) => {
   await expect(sendDialog.getByTestId('transactionId')).toBeVisible()
 
   // List.
-  // TODO: Add this after we migrate to the new events API.
-  // await sendDialog.getByRole('button', { name: 'Close' }).click()
-  // await expect(page.getByTestId('eventsTable')).toBeVisible()
-  // await expect(
-  //   page.getByTestId('eventsTable').locator('tbody tr').first()
-  // ).toBeVisible()
-  // await expect(
-  //   page
-  //     .getByTestId('eventsTable')
-  //     .locator('tbody tr')
-  //     .first()
-  //     .getByTestId('amount')
-  //     .getByText(`-${amountWithFeeString}`)
-  // ).toBeVisible()
+  await sendDialog.getByRole('button', { name: 'Close' }).click()
+  await expect(page.getByTestId('eventsTable')).toBeVisible()
+  await expect(
+    page.getByTestId('eventsTable').locator('tbody tr').first()
+  ).toBeVisible()
+  await expect(
+    page
+      .getByTestId('eventsTable')
+      .locator('tbody tr')
+      .first()
+      .getByTestId('amount')
+      .getByText(`-${amountString}`)
+  ).toBeVisible()
 })

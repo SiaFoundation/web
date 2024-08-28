@@ -1,38 +1,81 @@
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
+import { useForm } from 'react-hook-form'
 import BigNumber from 'bignumber.js'
-import { toHastings } from '@siafoundation/units'
+import { isValidAddress, toHastings } from '@siafoundation/units'
 import { Text } from '../../core/Text'
 import { InfoTip } from '../../core/InfoTip'
-import { Switch } from '../../core/Switch'
 import { ValueSc } from '../../components/ValueSc'
-import { FormFieldFormik } from '../../components/FormFormik'
-import { SendSiacoinFormData } from './types'
-import { getTotalTransactionCost } from './utils'
+import { ConfigFields } from '../../form/configurationFields'
+import { SendSiacoinParams } from './types'
+import { FieldText } from '../../form/FieldText'
+import { FieldSwitch } from '../../form/FieldSwitch'
+import { FieldSiacoin } from '../../form/FieldSiacoin'
 
 const exampleAddr =
   'e3b1050aef388438668b52983cf78f40925af8f0aa8b9de80c18eadcefce8388d168a313e3f2'
 
-const initialValues = {
+const defaultValues = {
   address: '',
-  siacoin: undefined,
+  siacoin: undefined as BigNumber | undefined,
   includeFee: false,
 }
 
-const validationSchema = Yup.object().shape({
-  address: Yup.string().required('Required'),
-  siacoin: Yup.string()
-    .required('Required')
-    .test(
-      'greater than zero',
-      'Must be greater than zero',
-      (val) => !new BigNumber(val || 0).isZero()
-    ),
-})
+type Values = typeof defaultValues
+
+function getFields({
+  balance,
+  fee,
+}: {
+  balance?: BigNumber
+  fee: BigNumber
+}): ConfigFields<Values, never> {
+  return {
+    address: {
+      title: 'Address',
+      type: 'text',
+      placeholder: exampleAddr,
+      validation: {
+        required: 'required',
+        validate: {
+          isValidAddress: (val) =>
+            isValidAddress(val as string) || 'Invalid address',
+        },
+      },
+    },
+    siacoin: {
+      title: 'Siacoin',
+      type: 'siacoin',
+      placeholder: '100',
+      validation: {
+        required: 'required',
+        validate: {
+          greaterThanZero: (val) =>
+            !new BigNumber((val as BigNumber) || 0).isZero() ||
+            'Must be greater than zero',
+          lessThanBalance: (val, values) => {
+            const hastings = toHastings((val as BigNumber) || 0)
+            const total = getTotalTransactionCost({
+              hastings,
+              includeFee: values.includeFee,
+              fee,
+            })
+            return (
+              total.isLessThan(balance || 0) || 'Not enough funds in wallet'
+            )
+          },
+        },
+      },
+    },
+    includeFee: {
+      type: 'boolean',
+      title: 'Include fee',
+      validation: {},
+    },
+  }
+}
 
 type Props = {
   fee: BigNumber
-  onComplete: (data: SendSiacoinFormData) => void
+  onComplete: (data: SendSiacoinParams) => void
   balance?: BigNumber
 }
 
@@ -41,65 +84,69 @@ export function useSendSiacoinGenerateForm({
   fee,
   onComplete,
 }: Props) {
-  const formik = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit: async (values) => {
-      if (!fee) {
-        return
-      }
-
-      if (!values.siacoin) {
-        return
-      }
-
-      if (!balance) {
-        return
-      }
-
-      if (balance.isLessThan(toHastings(values.siacoin).plus(fee))) {
-        formik.setStatus({ error: 'Not enough funds in wallet.' })
-        return
-      }
-
-      formik.setStatus({})
-      onComplete({
-        includeFee: values.includeFee,
-        address: values.address,
-        hastings: toHastings(values.siacoin),
-      })
-    },
+  const form = useForm({
+    defaultValues,
   })
 
-  const hastings = toHastings(formik.values.siacoin || 0)
+  const onValid = async (values: Values) => {
+    if (!values.siacoin) {
+      return
+    }
 
-  const form = (
+    if (!balance) {
+      return
+    }
+
+    const hastings = values.includeFee
+      ? toHastings(values.siacoin).minus(fee)
+      : toHastings(values.siacoin)
+
+    const total = getTotalTransactionCost({
+      hastings,
+      includeFee: values.includeFee,
+      fee,
+    })
+
+    if (balance.isLessThan(total)) {
+      return
+    }
+
+    onComplete({
+      address: values.address,
+      hastings,
+    })
+  }
+
+  const fields = getFields({ balance, fee })
+
+  const submit = form.handleSubmit(onValid)
+
+  const includeFee = form.watch('includeFee')
+  const siacoin = form.watch('siacoin')
+  const hastings = toHastings(siacoin || 0)
+
+  const el = (
     <div className="flex flex-col gap-4">
-      <FormFieldFormik
-        formik={formik}
-        variants={{ size: 'medium' }}
-        title="Address"
+      <FieldText
+        form={form}
+        fields={fields}
+        size="medium"
         name="address"
-        placeholder={exampleAddr}
         autoComplete="off"
-        type="text"
       />
-      <FormFieldFormik
-        formik={formik}
-        title="Siacoin"
-        name="siacoin"
-        placeholder="100"
-        type="siacoin"
-      />
+      <FieldSiacoin form={form} fields={fields} name="siacoin" />
       <div className="flex items-center">
-        <Switch
-          aria-label="include fee"
+        <FieldSwitch
           name="includeFee"
-          checked={formik.values.includeFee}
-          onCheckedChange={(val) => formik.setFieldValue('includeFee', val)}
+          form={form}
+          size="small"
+          fields={fields}
+          group={false}
         >
-          Include fee
-        </Switch>
+          <Text size="14" color="contrast">
+            Include fee
+          </Text>
+        </FieldSwitch>
         <InfoTip>
           Include or exclude the network fee from the above transaction value.
         </InfoTip>
@@ -126,7 +173,7 @@ export function useSendSiacoinGenerateForm({
               size="14"
               value={getTotalTransactionCost({
                 hastings,
-                includeFee: formik.values.includeFee,
+                includeFee,
                 fee,
               })}
               variant="value"
@@ -139,7 +186,21 @@ export function useSendSiacoinGenerateForm({
   )
 
   return {
-    formik,
+    el,
+    reset: form.reset,
     form,
+    submit,
   }
+}
+
+function getTotalTransactionCost({
+  hastings,
+  includeFee,
+  fee,
+}: {
+  hastings: BigNumber
+  includeFee: boolean
+  fee: BigNumber
+}) {
+  return includeFee ? hastings : hastings.plus(fee)
 }

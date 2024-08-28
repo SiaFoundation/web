@@ -71,8 +71,7 @@ export function SendFlowDialog({
       controls={
         controls?.form && (
           <div className="flex flex-col gap-1">
-            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            <FormSubmitButton<any> form={controls.form}>
+            <FormSubmitButton form={controls.form}>
               {controls.submitLabel}
             </FormSubmitButton>
           </div>

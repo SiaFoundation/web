@@ -72,7 +72,7 @@ export function Wallet() {
           />
         ) : null}
         <Table
-          testId="transactionsTable"
+          testId="eventsTable"
           isLoading={dataState === 'loading'}
           emptyState={
             dataState === 'noneMatchingFilters' ? (
