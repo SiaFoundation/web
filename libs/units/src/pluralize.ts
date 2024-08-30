@@ -1,6 +1,6 @@
 type PluralizeOptions = {
   plural?: string
-  zeroForm?: string
+  customZero?: string
 }
 
 export function pluralize(
@@ -8,20 +8,30 @@ export function pluralize(
   word: string,
   pluralFormOrOptions?: string | PluralizeOptions
 ) {
-  const pluralForm =
-    typeof pluralFormOrOptions === 'string'
-      ? pluralFormOrOptions
-      : pluralFormOrOptions?.plural
-  const zeroForm =
-    typeof pluralFormOrOptions === 'string'
-      ? `0 ${pluralForm}`
-      : pluralFormOrOptions?.zeroForm
+  const oneForm = `1 ${word}`
+  let plural = `${word}s`
+  let customZero = ''
+
+  if (typeof pluralFormOrOptions === 'string') {
+    plural = pluralFormOrOptions
+  }
+
+  if (typeof pluralFormOrOptions === 'object') {
+    if (pluralFormOrOptions.plural) {
+      plural = pluralFormOrOptions.plural
+    }
+    if (pluralFormOrOptions.customZero) {
+      customZero = pluralFormOrOptions.customZero
+    }
+  }
+
+  const pluralForm = `${count.toLocaleString()} ${plural}`
 
   if (count === 0) {
-    return zeroForm
+    return customZero || pluralForm
   } else if (count === 1) {
-    return `1 ${word}`
+    return oneForm
   } else {
-    return `${count.toLocaleString()} ${pluralForm}`
+    return pluralForm
   }
 }
