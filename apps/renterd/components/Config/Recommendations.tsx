@@ -179,7 +179,7 @@ export function Recommendations() {
           </Text>
           <Text size="16" weight="medium">
             {pluralize(recommendations.length, 'recommendation', {
-              zeroForm: 'No recommendations',
+              customZero: 'No recommendations',
             })}{' '}
             to match with more hosts
           </Text>
