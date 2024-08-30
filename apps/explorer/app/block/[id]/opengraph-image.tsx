@@ -1,8 +1,8 @@
 import { humanDate } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
-import { siaCentral } from '../../../config/siaCentral'
-import { truncate } from '@siafoundation/design-system'
+import { stripPrefix, truncate } from '@siafoundation/design-system'
 import { to } from '@siafoundation/request'
+import { explored } from '../../../config/explored'
 
 export const revalidate = 0
 
@@ -14,36 +14,47 @@ export const size = {
 
 export const contentType = 'image/png'
 
+const formatOGImage = (id: string) => {
+  return getOGImage(
+    {
+      id,
+      title: truncate(id, 30),
+      subtitle: 'block',
+      initials: 'B',
+    },
+    size
+  )
+}
+
 export default async function Image({ params }) {
   const id = params?.id as string
-  const [b] = await to(
-    siaCentral.block({
-      params: {
-        id,
-      },
-    })
+
+  // Grab chainIndex at height.
+  const [chainIndex, chainIndexError] = await to(
+    explored.consensusTipByHeight({ params: { height: Number(id) } })
   )
 
-  if (!b || !b.block) {
-    return getOGImage(
-      {
-        id,
-        title: truncate(id, 30),
-        subtitle: 'block',
-        initials: 'B',
-      },
-      size
-    )
+  if (!chainIndex || chainIndexError) {
+    return formatOGImage(id)
+  }
+
+  // Grab block for id at ChainIndex in request above.
+  const [block, blockError] = await to(
+    explored.blockByID({ params: { id: stripPrefix(chainIndex.id) } })
+  )
+
+  if (!block || blockError) {
+    return formatOGImage(id)
   }
 
   const values = [
     {
       label: 'transactions',
-      value: (b.block.transactions?.length || 0).toLocaleString(),
+      value: (block.transactions.length || 0).toLocaleString(),
     },
     {
       label: 'time',
-      value: humanDate(b.block.timestamp, {
+      value: humanDate(block.timestamp, {
         dateStyle: 'medium',
         timeStyle: 'short',
       }),
@@ -53,7 +64,7 @@ export default async function Image({ params }) {
   return getOGImage(
     {
       id,
-      title: b.block.height.toLocaleString(),
+      title: block.height.toLocaleString(),
       subtitle: 'block',
       initials: 'B',
       values,
