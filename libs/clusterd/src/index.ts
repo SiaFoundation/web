@@ -4,23 +4,33 @@ import Axios from 'axios'
 import { Bus } from '@siafoundation/renterd-js'
 import { pluralize } from '@siafoundation/units'
 
+type Node = {
+  type: string
+  apiAddress: string
+  password: string
+}
+
 export const clusterd = {
-  process: null as child.ChildProcessWithoutNullStreams,
-  managementPort: undefined as number,
-  renterdAddress: undefined as string,
-  renterdPassword: undefined as string,
+  process: undefined as child.ChildProcessWithoutNullStreams | undefined,
+  managementPort: undefined as number | undefined,
+  nodes: [] as Node[],
 }
 
 const maxTimeWaitingForAllNodesToStartup = 30_000
 const maxTimeWaitingForContractsToForm = 60_000
 
-export async function setupCluster({ hostdCount = 0 } = {}) {
+export async function setupCluster({
+  renterdCount = 0,
+  hostdCount = 0,
+  walletdCount = 0,
+} = {}) {
   clusterd.managementPort = random(10000, 65535)
   console.log('Starting cluster on port', clusterd.managementPort)
 
   clusterd.process = child.spawn('internal/cluster/bin/clusterd', [
-    '-renterd=1',
+    `-renterd=${renterdCount}`,
     `-hostd=${hostdCount}`,
+    `-walletd=${walletdCount}`,
     `-api=:${clusterd.managementPort}`,
   ])
   // Drain buffer to prevent process from hanging.
@@ -31,7 +41,7 @@ export async function setupCluster({ hostdCount = 0 } = {}) {
   })
   clusterd.process.on('exit', (code) => {
     console.log(
-      `clusterd process ${clusterd.process.pid} exited with code ${code}`
+      `clusterd process ${clusterd?.process?.pid} exited with code ${code}`
     )
   })
 
@@ -40,15 +50,14 @@ export async function setupCluster({ hostdCount = 0 } = {}) {
     async () => {
       const addr = `http://localhost:${clusterd.managementPort}/nodes`
       try {
-        const nodes = await Axios.get(addr)
-        const renterNodes = nodes.data.filter((n) => n.type === 'renterd')
-        const hostdNodes = nodes.data.filter((n) => n.type === 'hostd')
-        if (renterNodes.length === 1 && hostdNodes.length === hostdCount) {
-          clusterd.renterdAddress = renterNodes[0].apiAddress.replace(
-            '[::]',
-            '127.0.0.1'
-          )
-          clusterd.renterdPassword = renterNodes[0].password
+        const nodes = await Axios.get<
+          { type: string; apiAddress: string; password: string }[]
+        >(`http://localhost:${clusterd.managementPort}/nodes`)
+        if (nodes.data.length === renterdCount + hostdCount + walletdCount) {
+          clusterd.nodes = nodes.data.map((n) => ({
+            ...n,
+            apiAddress: n.apiAddress.replace('[::]', '127.0.0.1'),
+          }))
           return true
         }
         console.log('waiting for nodes...')
@@ -65,12 +74,22 @@ export async function setupCluster({ hostdCount = 0 } = {}) {
   )
   console.timeEnd('waiting for nodes to start')
 
-  console.log(`renterd node started, ${hostdCount} hostd nodes started`)
+  console.log(
+    `started: ${renterdCount} renterd, ${hostdCount} hostd, and ${walletdCount} walletd nodes`
+  )
+}
 
-  const renterdApi = `${clusterd.renterdAddress}/api`
+export async function waitForContracts({
+  renterdNode,
+  hostdCount,
+}: {
+  renterdNode: Node
+  hostdCount: number
+}) {
+  const renterdApi = `${renterdNode.apiAddress}/api`
   const bus = Bus({
     api: renterdApi,
-    password: clusterd.renterdPassword,
+    password: renterdNode.password,
   })
 
   if (hostdCount === 0) {
