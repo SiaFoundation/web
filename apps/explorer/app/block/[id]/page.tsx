@@ -3,9 +3,9 @@ import { Block } from '../../../components/Block'
 import { routes } from '../../../config/routes'
 import { Metadata } from 'next'
 import { buildMetadata } from '../../../lib/utils'
-import { siaCentral } from '../../../config/siaCentral'
 import { notFound } from 'next/navigation'
 import { to } from '@siafoundation/request'
+import { explored } from '../../../config/explored'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -33,22 +33,31 @@ export function generateMetadata({ params }): Metadata {
 export const revalidate = 0
 
 export default async function Page({ params }) {
-  const id = params?.id as string
-  const [b, error] = await to(
-    siaCentral.block({
-      params: {
-        id,
-      },
-    })
+  const id = params?.id as number
+
+  // 1. Grab the tip at this height.
+  const [tipInfo, tipInfoError] = await to(
+    explored.consensusTipByHeight({ params: { height: id } })
   )
 
-  if (error) {
-    throw error
+  if (tipInfoError) {
+    throw tipInfoError
+  }
+  if (!tipInfo) {
+    throw notFound()
   }
 
-  if (!b?.block) {
+  // 2. Get the block using the id from the previous request.
+  const [block, blockError] = await to(
+    explored.blockByID({ params: { id: tipInfo.id } })
+  )
+
+  if (blockError) {
+    throw blockError
+  }
+  if (!block) {
     return notFound()
   }
 
-  return <Block block={b.block} />
+  return <Block block={block} blockID={tipInfo.id} />
 }

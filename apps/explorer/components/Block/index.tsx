@@ -1,34 +1,44 @@
-import { Badge, Tooltip, EntityList } from '@siafoundation/design-system'
+import {
+  Badge,
+  Tooltip,
+  EntityList,
+  stripPrefix,
+} from '@siafoundation/design-system'
 import { humanNumber } from '@siafoundation/units'
 import { ExplorerDatum, DatumProps } from '../ExplorerDatum'
 import { useMemo } from 'react'
 import { routes } from '../../config/routes'
 import { EntityHeading } from '../EntityHeading'
 import { ContentLayout } from '../ContentLayout'
-import { SiaCentralBlock } from '@siafoundation/sia-central-types'
+import { ExplorerBlock } from '@siafoundation/explored-types'
 
 type Props = {
-  block: SiaCentralBlock
+  block: ExplorerBlock
+  blockID: string
 }
 
-export function Block({ block }: Props) {
-  const values = useMemo(() => {
-    const list: DatumProps[] = [
+export function Block({ block, blockID }: Props) {
+  const blockDatums: DatumProps[] = useMemo(() => {
+    // Grab the miner payout address
+    const minerPayoutAddress = block.minerPayouts.find(
+      (payout) => payout.source === 'miner_payout'
+    )?.siacoinOutput.address
+    // Trim "bid:" from the incoming blockID
+    const strippedBlockID = stripPrefix(blockID)
+
+    return [
       {
         label: 'Block hash',
         entityType: 'blockHash',
-        entityValue: block.id,
+        entityValue: strippedBlockID,
       },
       {
         label: 'Miner payout address',
         entityType: 'address',
-        entityValue: block.siacoin_outputs?.find(
-          (output) => output.source === 'miner_payout'
-        )?.unlock_hash,
+        entityValue: minerPayoutAddress,
       },
     ]
-    return list
-  }, [block])
+  }, [block, blockID])
 
   return (
     <ContentLayout
@@ -55,7 +65,7 @@ export function Block({ block }: Props) {
             </div>
           </div>
           <div className="flex flex-col gap-y-2 md:gap-y-4">
-            {values.map((item) => (
+            {blockDatums.map((item) => (
               <ExplorerDatum key={item.label} {...item} />
             ))}
           </div>
@@ -64,13 +74,16 @@ export function Block({ block }: Props) {
     >
       <EntityList
         title={`Transactions (${block.transactions?.length || 0})`}
-        dataset={block.transactions?.map((tx) => ({
-          type: 'transaction',
-          hash: tx.id,
-          label: 'transaction',
-          initials: 'T',
-          href: routes.transaction.view.replace(':id', tx.id),
-        }))}
+        dataset={block.transactions?.map((tx) => {
+          const txID = stripPrefix(tx.id)
+          return {
+            type: 'transaction',
+            hash: txID,
+            label: 'transaction',
+            initials: 'T',
+            href: routes.transaction.view.replace(':id', txID),
+          }
+        })}
       />
     </ContentLayout>
   )
