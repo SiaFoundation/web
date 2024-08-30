@@ -174,6 +174,7 @@ export type ExplorerBlock = {
   height: number
   parentID: BlockID
   nonce: number
+  timestamp: string
   minerPayouts: ExplorerSiacoinOutput[]
   transactions: ExplorerTransaction[]
 }
