@@ -3,9 +3,9 @@ module go.sia.tech/web/cluster
 go 1.23.0
 
 require (
-	go.sia.tech/cluster v0.0.0-20240820001441-51c7ee96dadd
-	go.sia.tech/core v0.4.4-0.20240814175157-ebc804c7119c
-	go.sia.tech/coreutils v0.2.6-0.20240814205841-6bd57953a01b
+	go.sia.tech/cluster v0.0.0-20240831153623-021a68fff452
+	go.sia.tech/core v0.4.4
+	go.sia.tech/coreutils v0.3.0
 	go.uber.org/zap v1.27.0
 )
 
@@ -30,11 +30,11 @@ require (
 	github.com/shopspring/decimal v1.4.0 // indirect
 	go.etcd.io/bbolt v1.3.10 // indirect
 	go.sia.tech/gofakes3 v0.0.4 // indirect
-	go.sia.tech/hostd v1.1.3-0.20240820000212-be52ed2b3528 // indirect
+	go.sia.tech/hostd v1.1.3-0.20240828185110-4988d631e612 // indirect
 	go.sia.tech/jape v0.12.0 // indirect
 	go.sia.tech/mux v1.2.0 // indirect
-	go.sia.tech/renterd v1.0.8-0.20240819141600-60ee37f3596c // indirect
-	go.sia.tech/walletd v0.8.1-0.20240817143605-6f9aaeec1812 // indirect
+	go.sia.tech/renterd v1.0.8-0.20240830132325-ce2b3cab496c // indirect
+	go.sia.tech/walletd v0.8.1-0.20240830193535-90d18cf2393c // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.26.0 // indirect
 	golang.org/x/net v0.27.0 // indirect
