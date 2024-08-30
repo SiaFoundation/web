@@ -1,5 +1,20 @@
 # @siafoundation/react-core
 
+## 1.4.0
+
+### Minor Changes
+
+- 5f34c9a6: Added support for detecting and exposing daemon explorer via AppSettings. Closes https://github.com/SiaFoundation/web/issues/690
+- 8be86046: Exchange rate hooks were moved from design-system to react-core.
+- 5f34c9a6: Refactored AppSettings into a RequestSettings and an ExternalData provider, the providers can be used directly or via a composite AppSettings provider for backwards compatibility.
+
+### Patch Changes
+
+- Updated dependencies [5c0df06e]
+- Updated dependencies [8be86046]
+- Updated dependencies [d5dc0f86]
+  - @siafoundation/units@3.2.0
+
 ## 1.3.0
 
 ### Minor Changes

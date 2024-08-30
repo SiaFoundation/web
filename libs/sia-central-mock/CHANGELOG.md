@@ -1,5 +1,11 @@
 # @siafoundation/sia-central-mock
 
+## 0.2.0
+
+### Minor Changes
+
+- 5f34c9a6: Add mock for hosts network averages.
+
 ## 0.1.1
 
 ### Patch Changes

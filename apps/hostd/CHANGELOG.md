@@ -1,5 +1,15 @@
 # hostd
 
+## 0.47.0
+
+### Minor Changes
+
+- 02c02fe7: The send siacoin feature now validates the entered address.
+- 5f34c9a6: The UI now uses the daemon configured explorer for exchange rates.
+- 81d374f4: The send siacoin feature now calculates the fee using the daemon's recommended fee per byte and a standard transaction size.
+- 5f34c9a6: Migrated all exchange rate usage from Sia Central to Siascan.
+- d6eed368: The contracts metrics now show active, rejected, failed, renewed, finalized, and successful.
+
 ## 0.46.0
 
 ### Minor Changes

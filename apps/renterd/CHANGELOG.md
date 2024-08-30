@@ -1,5 +1,15 @@
 # renterd
 
+## 0.61.0
+
+### Minor Changes
+
+- 02c02fe7: The send siacoin feature now validates the entered address.
+- 81d374f4: The send siacoin feature now calculates the fee using the daemon's recommended fee per byte and a standard transaction size.
+- a7ff93e9: Min recent scan failures is now max consecutive scan failures. Relates to https://github.com/SiaFoundation/renterd/pull/1482
+- 5f34c9a6: Migrated all exchange rate usage from Sia Central to Siascan.
+- dd1b4036: The recommendations now say "no recommendations" instead of 0. Closes https://github.com/SiaFoundation/desktop/issues/90
+
 ## 0.60.1
 
 ### Patch Changes

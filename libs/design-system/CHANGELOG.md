@@ -1,5 +1,28 @@
 # Changelog
 
+## 4.7.0
+
+### Minor Changes
+
+- 02c02fe7: The send siacoin feature now validates the entered address.
+- 8be86046: Time conversion helpers were moved from design-system to units package.
+- 8be86046: Fiat components requiring exchange rate now use the generic useExchangeRate hook rather than useSiascanExchangeRate directly.
+- 5f34c9a6: Migrated all exchange rate usage from Sia Central to Siascan.
+- 02c02fe7: WalletSendSiacoinDialog no longer uses formik.
+- 8be86046: Exchange rate hooks were moved from design-system to react-core.
+- 5f34c9a6: Added ability to use daemon explorer when available, otherwise falling back to direct siascan setting.
+
+### Patch Changes
+
+- Updated dependencies [5c0df06e]
+- Updated dependencies [8be86046]
+- Updated dependencies [5f34c9a6]
+- Updated dependencies [d5dc0f86]
+- Updated dependencies [8be86046]
+- Updated dependencies [5f34c9a6]
+  - @siafoundation/units@3.2.0
+  - @siafoundation/react-core@1.4.0
+
 ## 4.6.1
 
 ### Patch Changes

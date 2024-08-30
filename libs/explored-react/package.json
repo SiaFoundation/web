@@ -1,11 +1,11 @@
 {
   "name": "@siafoundation/explored-react",
   "description": "React hooks for interacting with `explored`.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "dependencies": {
-    "@siafoundation/react-core": "^1.3.0",
-    "@siafoundation/explored-types": "0.1.0"
+    "@siafoundation/react-core": "^1.4.0",
+    "@siafoundation/explored-types": "0.2.0"
   },
   "types": "./src/index.d.ts"
 }

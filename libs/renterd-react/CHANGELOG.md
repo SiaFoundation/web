@@ -1,5 +1,31 @@
 # @siafoundation/renterd-react
 
+## 4.7.0
+
+### Minor Changes
+
+- a8c22bbe: The account reset drift API was moved from bus to worker. Closes https://github.com/SiaFoundation/web/issues/704
+- 49cd9db1: Remove deprecated hosts API. Relates to https://github.com/SiaFoundation/renterd/pull/1484
+- 81d374f4: Added the wallet send API.
+
+### Patch Changes
+
+- 81d374f4: Fixed the route for the recommended fee API.
+- Updated dependencies [5c0df06e]
+- Updated dependencies [a8c22bbe]
+- Updated dependencies [8be86046]
+- Updated dependencies [a7ff93e9]
+- Updated dependencies [5f34c9a6]
+- Updated dependencies [d5dc0f86]
+- Updated dependencies [8be86046]
+- Updated dependencies [49cd9db1]
+- Updated dependencies [5f34c9a6]
+- Updated dependencies [81d374f4]
+- Updated dependencies [81d374f4]
+  - @siafoundation/units@3.2.0
+  - @siafoundation/renterd-types@0.7.0
+  - @siafoundation/react-core@1.4.0
+
 ## 4.6.1
 
 ### Patch Changes

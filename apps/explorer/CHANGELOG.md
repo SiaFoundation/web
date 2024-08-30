@@ -1,5 +1,15 @@
 # explorer
 
+## 0.17.0
+
+### Minor Changes
+
+- 3fc5db60: Added base explored API for future Siacentral phase out.
+
+### Patch Changes
+
+- 4e807730: Fixed a bug in the average fiat storage cost calculation.
+
 ## 0.16.2
 
 ### Patch Changes

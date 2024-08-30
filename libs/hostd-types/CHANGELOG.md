@@ -1,5 +1,13 @@
 # @siafoundation/hostd-types
 
+## 0.3.0
+
+### Minor Changes
+
+- 81d374f4: The wallet send API now supports the subtractMinerFee option.
+- d6eed368: The metrics API types now include all available fields.
+- d6eed368: The metrics APIs now include wallet with balance and immatureBalance. Closes https://github.com/SiaFoundation/hostd/issues/450
+
 ## 0.2.1
 
 ### Patch Changes

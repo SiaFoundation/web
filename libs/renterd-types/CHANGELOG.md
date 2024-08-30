@@ -1,5 +1,22 @@
 # @siafoundation/renterd-types
 
+## 0.7.0
+
+### Minor Changes
+
+- a8c22bbe: The account reset drift API was moved from bus to worker. Closes https://github.com/SiaFoundation/web/issues/704
+- a7ff93e9: Min recent scan failures is now max consecutive scan failures. Relates to https://github.com/SiaFoundation/renterd/pull/1482
+- 49cd9db1: Remove deprecated hosts API. Relates to https://github.com/SiaFoundation/renterd/pull/1484
+- 81d374f4: Added the wallet send API.
+
+### Patch Changes
+
+- 81d374f4: Fixed the route for the recommended fee API.
+- Updated dependencies [5f34c9a6]
+- Updated dependencies [8be86046]
+- Updated dependencies [5f34c9a6]
+  - @siafoundation/react-core@1.4.0
+
 ## 0.6.1
 
 ### Patch Changes
