@@ -4,16 +4,23 @@ import { setCurrencyDisplay } from './preferences'
 import { mockApiSiaScanExchangeRates } from './siascan'
 import { mockApiSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-mock'
 import { clickIf } from './click'
-import { clusterd, setupCluster, teardownCluster } from './clusterd'
+import {
+  clusterd,
+  setupCluster,
+  teardownCluster,
+  waitForContracts,
+} from '@siafoundation/clusterd'
 
 export async function beforeTest(page: Page, { hostdCount = 0 } = {}) {
   await mockApiSiaScanExchangeRates({ page })
   await mockApiSiaCentralHostsNetworkAverages({ page })
-  await setupCluster({ hostdCount })
+  await setupCluster({ renterdCount: 1, hostdCount })
+  const renterdNode = clusterd.nodes.find((n) => n.type === 'renterd')
+  await waitForContracts({ renterdNode, hostdCount })
   await login({
     page,
-    address: clusterd.renterdAddress,
-    password: clusterd.renterdPassword,
+    address: renterdNode.apiAddress,
+    password: renterdNode.password,
   })
 
   // Reset state.
