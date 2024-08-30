@@ -24,11 +24,11 @@ export default defineConfig({
     trace: 'on-first-retry',
     video: 'on-first-retry',
   },
-  // Timeout per test.
-  timeout: 60_000,
+  // Timeout per test. The cluster takes up to 30 seconds to start and form contracts.
+  timeout: 120_000,
   expect: {
     // Raise the timeout because it is running against next dev mode
-    // which requires compilation the first to a page is visited
+    // which requires compilation the first to a page is visited.
     timeout: 15_000,
   },
   outputDir: 'output',
@@ -39,20 +39,16 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     cwd: workspaceRoot,
   },
-  // Run the tests serially as they may mutate the state of the same application.
-  workers: 1,
+  workers: process.env.CI ? 4 : undefined,
   projects: [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-
-    // Disable firefox and webkit to save time since tests are running serially.
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
-
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
     // {
     //   name: 'webkit',
     //   use: { ...devices['Desktop Safari'] },

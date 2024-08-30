@@ -5,9 +5,16 @@
   "projectType": "application",
   "implicitDependencies": ["renterd"],
   "targets": {
+    "build-cluster": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go build -C internal/cluster -o bin/clusterd ./cmd/clusterd"
+      }
+    },
     "e2e": {
       "executor": "@nx/playwright:playwright",
       "outputs": ["{workspaceRoot}/dist/.playwright/apps/renterd-e2e"],
+      "dependsOn": ["build-cluster"],
       "options": {
         "config": "apps/renterd-e2e/playwright.config.ts"
       }

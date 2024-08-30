@@ -68,6 +68,7 @@ export function Hosts() {
               )}
             >
               <Table
+                testId="hostsTable"
                 focusId={activeHost?.publicKey}
                 focusColor={
                   activeHost ? getHostStatus(activeHost).colorName : undefined

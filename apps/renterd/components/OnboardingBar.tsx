@@ -80,7 +80,11 @@ export function OnboardingBar() {
                   Welcome to Sia
                 </Text>
               </div>
-              <Button variant="ghost" onClick={() => setMaximized(false)}>
+              <Button
+                aria-label="minimize onboarding wizard"
+                variant="ghost"
+                onClick={() => setMaximized(false)}
+              >
                 <Subtract24 />
               </Button>
             </div>

@@ -139,7 +139,10 @@ export const columns: HostsTableColumn[] = (
           >
             <div className="flex gap-2 items-center">
               <div className="mt-[5px]">
-                <Text color={data.usable ? 'green' : 'red'}>
+                <Text
+                  aria-label={data.usable ? 'usable' : 'not usable'}
+                  color={data.usable ? 'green' : 'red'}
+                >
                   {data.usable ? (
                     <CheckboxCheckedFilled16 />
                   ) : (

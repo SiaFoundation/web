@@ -23,3 +23,8 @@ export async function navigateToWallet(page: Page) {
   await page.getByTestId('sidenav').getByLabel('Wallet').click()
   await expect(page.getByTestId('navbar').getByText('Wallet')).toBeVisible()
 }
+
+export async function navigateToHosts({ page }: { page: Page }) {
+  await page.getByTestId('sidenav').getByLabel('Hosts').click()
+  await expect(page.getByTestId('navbar').getByText('Hosts')).toBeVisible()
+}

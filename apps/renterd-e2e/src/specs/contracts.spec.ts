@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { navigateToContracts } from '../fixtures/navigate'
-import { beforeTest } from '../fixtures/beforeTest'
+import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import {
   getContractRowByIndex,
   getContractRows,
@@ -9,7 +9,13 @@ import {
 } from '../fixtures/contracts'
 
 test.beforeEach(async ({ page }) => {
-  await beforeTest(page)
+  await beforeTest(page, {
+    hostdCount: 3,
+  })
+})
+
+test.afterEach(async () => {
+  await afterTest()
 })
 
 test('contracts prunable size', async ({ page }) => {
@@ -23,7 +29,9 @@ test('contracts prunable size', async ({ page }) => {
   const summaryRowCell = summaryRow.getByTestId('prunableSize')
   await expect(summaryRowCell).toBeVisible()
   await expect(summaryRowCell.getByRole('button')).toBeVisible()
-  await expect(summaryRowCell.getByLabel('prunable sizes')).toBeHidden()
+  await expect(summaryRowCell.getByLabel('prunable sizes')).toBeHidden({
+    timeout: 30_000,
+  })
 
   // Check that the prunable size is not visible on the first row.
   const row1 = await getContractRowByIndex(page, 0)
