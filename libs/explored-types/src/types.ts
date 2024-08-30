@@ -153,6 +153,7 @@ export type ExplorerFileContractRevision = ExplorerFileContract & {
  * to explorerd.
  */
 export type ExplorerTransaction = {
+  id: string
   siacoinInputs: SiacoinInput[]
   siacoinOutputs: ExplorerSiacoinOutput[]
   siafundInputs: SiafundInput[]
