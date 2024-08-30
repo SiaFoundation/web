@@ -1,6 +1,6 @@
 module go.sia.tech/web/sdk
 
-go 1.21.7
+go 1.23.0
 
 require (
 	go.sia.tech/core v0.2.2-0.20240229154321-d97c1d5b2172

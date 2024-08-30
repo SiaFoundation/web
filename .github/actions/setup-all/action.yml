@@ -10,7 +10,7 @@ inputs:
   go_version:
     description: Go version
     required: false
-    default: '1.21.7'
+    default: '1.23.0'
 
 runs:
   using: composite

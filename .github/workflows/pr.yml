@@ -23,7 +23,7 @@ jobs:
         uses: ./.github/actions/setup-all
         with:
           node_version: 20.10.0
-          go_version: 1.21.7
+          go_version: 1.23.0
       - name: Commit lint
         shell: bash
         run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
@@ -66,7 +66,7 @@ jobs:
         uses: ./.github/actions/setup-all
         with:
           node_version: 20.10.0
-          go_version: 1.21.7
+          go_version: 1.23.0
       # The SDK is referenced via dist in the tsconfig.base.json
       # because the next executor does not actually support
       # buildLibsFromSource=false
@@ -80,7 +80,7 @@ jobs:
         run: npx playwright install-deps
       - name: Test e2e
         shell: bash
-        run: npx nx affected --target=e2e --parallel=5
+        run: npx nx affected --target=e2e --parallel=1
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           RENTERD_E2E_TEST_API_URL: ${{ secrets.RENTERD_E2E_TEST_API_URL }}
@@ -118,7 +118,7 @@ jobs:
       - name: Setup Go
         uses: ./.github/actions/setup-go
         with:
-          go_version: 1.21.7
+          go_version: 1.23.0
       - name: Lint Go
         uses: golangci/golangci-lint-action@v4
         with:

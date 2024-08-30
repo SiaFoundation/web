@@ -5,8 +5,10 @@ import { fillTextInputByName } from './textInput'
 import { clearToasts } from './clearToasts'
 import { clickIfEnabledAndWait } from './click'
 import { fillSelectInputByName } from './selectInput'
+import { navigateToConfig } from './navigate'
 
 export async function configResetAllSettings({ page }: { page: Page }) {
+  await navigateToConfig({ page })
   await setViewMode({ page, state: 'advanced' })
 
   // pinning
@@ -29,14 +31,14 @@ export async function configResetAllSettings({ page }: { page: Page }) {
   await fillTextInputByName(page, 'allowanceMonth', '21000')
   await fillTextInputByName(page, 'periodWeeks', '6')
   await fillTextInputByName(page, 'renewWindowWeeks', '2')
-  await fillTextInputByName(page, 'amountHosts', '12')
+  await fillTextInputByName(page, 'amountHosts', '3')
   await fillTextInputByName(page, 'autopilotContractSet', 'autopilot')
   await setSwitchByLabel(page, 'prune', false)
 
   // hosts
   await setSwitchByLabel(page, 'allowRedundantIPs', false)
-  await fillTextInputByName(page, 'maxDowntimeHours', '7')
-  await fillTextInputByName(page, 'maxConsecutiveScanFailures', '1')
+  await fillTextInputByName(page, 'maxDowntimeHours', '330')
+  await fillTextInputByName(page, 'maxConsecutiveScanFailures', '10')
   await fillTextInputByName(page, 'minProtocolVersion', '1.6.0')
 
   // contracts
@@ -69,8 +71,8 @@ export async function configResetAllSettings({ page }: { page: Page }) {
   await fillTextInputByName(page, 'migrationSurchargeMultiplier', '1')
 
   // redundancy
-  await fillTextInputByName(page, 'minShards', '2')
-  await fillTextInputByName(page, 'totalShards', '6')
+  await fillTextInputByName(page, 'minShards', '1')
+  await fillTextInputByName(page, 'totalShards', '3')
 
   // save
   await clickIfEnabledAndWait(
@@ -78,4 +80,5 @@ export async function configResetAllSettings({ page }: { page: Page }) {
     page.getByText('Configuration has been saved')
   )
   await clearToasts({ page })
+  await setViewMode({ page, state: 'basic' })
 }
