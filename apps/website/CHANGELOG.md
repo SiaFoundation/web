@@ -1,5 +1,11 @@
 # website
 
+## 0.55.0
+
+### Minor Changes
+
+- 5f34c9a6: Migrated all exchange rate usage from Sia Central to Siascan.
+
 ## 0.54.0
 
 ### Minor Changes

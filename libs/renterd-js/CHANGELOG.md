@@ -1,5 +1,23 @@
 # @siafoundation/renterd-js
 
+## 0.7.0
+
+### Minor Changes
+
+- a8c22bbe: The account reset drift API was moved from bus to worker. Closes https://github.com/SiaFoundation/web/issues/704
+- 49cd9db1: Remove deprecated hosts API. Relates to https://github.com/SiaFoundation/renterd/pull/1484
+- 81d374f4: Added the wallet send API.
+
+### Patch Changes
+
+- 81d374f4: Fixed the route for the recommended fee API.
+- Updated dependencies [a8c22bbe]
+- Updated dependencies [a7ff93e9]
+- Updated dependencies [49cd9db1]
+- Updated dependencies [81d374f4]
+- Updated dependencies [81d374f4]
+  - @siafoundation/renterd-types@0.7.0
+
 ## 0.6.1
 
 ### Patch Changes

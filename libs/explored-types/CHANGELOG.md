@@ -1,5 +1,13 @@
 # @siafoundation/explored-types
 
+## 0.2.0
+
+### Minor Changes
+
+- 5e478dc3: Added id field to ExplorerTransaction type.
+- 6bb9322f: Updated routes to match explored API changes.
+- 3c66edbb: Fixed webpack-related empty export warning.
+
 ## 0.1.0
 
 ### Minor Changes

@@ -1,5 +1,16 @@
 # @siafoundation/units
 
+## 3.2.0
+
+### Minor Changes
+
+- 8be86046: Time conversion helpers were moved from design-system to units package.
+- d5dc0f86: Add pluralization helper pluralize.
+
+### Patch Changes
+
+- 5c0df06e: Fixed a bug in the pluralize helper.
+
 ## 3.1.1
 
 ### Patch Changes

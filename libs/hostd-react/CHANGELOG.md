@@ -1,5 +1,28 @@
 # @siafoundation/hostd-react
 
+## 4.4.0
+
+### Minor Changes
+
+- 81d374f4: The wallet send API now supports the subtractMinerFee option.
+- d6eed368: The metrics API types now include all available fields.
+- d6eed368: The metrics APIs now include wallet with balance and immatureBalance. Closes https://github.com/SiaFoundation/hostd/issues/450
+
+### Patch Changes
+
+- Updated dependencies [5c0df06e]
+- Updated dependencies [8be86046]
+- Updated dependencies [5f34c9a6]
+- Updated dependencies [d5dc0f86]
+- Updated dependencies [8be86046]
+- Updated dependencies [81d374f4]
+- Updated dependencies [d6eed368]
+- Updated dependencies [d6eed368]
+- Updated dependencies [5f34c9a6]
+  - @siafoundation/units@3.2.0
+  - @siafoundation/react-core@1.4.0
+  - @siafoundation/hostd-types@0.3.0
+
 ## 4.3.1
 
 ### Patch Changes
