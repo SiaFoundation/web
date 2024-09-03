@@ -113,7 +113,7 @@ export type TxpoolTransactions = {
 /**
  * The origin of a `SiacoinOutput`--whether it came from a miner or a transaction.
  */
-type Source = number
+type Source = string
 
 /**
  * An `ExplorerSiacoinOutput` is a core type `SiacoinElement` with added `source` and
