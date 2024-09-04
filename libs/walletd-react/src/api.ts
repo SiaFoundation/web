@@ -251,6 +251,7 @@ export function useRescanStart(
     async (mutate) => {
       // Do not block the hook method from returning and allowing consumer to toast success etc.
       const func = async () => {
+        await mutate((key) => key.startsWith(rescanRoute))
         await delay(1_000)
         await mutate((key) => key.startsWith(rescanRoute))
       }

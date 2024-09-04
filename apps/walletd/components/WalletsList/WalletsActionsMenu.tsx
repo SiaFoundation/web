@@ -29,6 +29,7 @@ export function WalletsActionsMenu() {
         trigger={
           <Button
             size="small"
+            aria-label="wallet settings"
             tip="Wallet settings"
             tipAlign="end"
             tipSide="bottom"
