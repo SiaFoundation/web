@@ -1,13 +1,17 @@
 import { test, expect } from '@playwright/test'
 import { navigateToWallet } from '../fixtures/navigate'
 import { random } from '@technically/lodash'
-import { beforeTest } from '../fixtures/beforeTest'
+import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import { fillTextInputByName } from '../fixtures/textInput'
 import { setSwitchByLabel } from '../fixtures/switchValue'
 import BigNumber from 'bignumber.js'
 
 test.beforeEach(async ({ page }) => {
-  await beforeTest(page, false)
+  await beforeTest(page)
+})
+
+test.afterEach(async () => {
+  await afterTest()
 })
 
 test('send siacoin with include fee off', async ({ page }) => {
