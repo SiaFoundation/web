@@ -12,10 +12,16 @@ import {
   fillTextInputByName,
 } from '../fixtures/textInput'
 import { fillSelectInputByName } from '../fixtures/selectInput'
-import { beforeTest } from '../fixtures/beforeTest'
+import { afterTest, beforeTest } from '../fixtures/beforeTest'
+import { configResetAllSettings } from '../fixtures/configResetAllSettings'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page)
+  await configResetAllSettings({ page })
+})
+
+test.afterEach(async () => {
+  await afterTest()
 })
 
 test('basic field change and save behaviour', async ({ page }) => {

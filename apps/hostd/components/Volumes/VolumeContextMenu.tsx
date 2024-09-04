@@ -32,6 +32,21 @@ type Props = {
 }
 
 export function VolumeContextMenu({ id, contentProps, buttonProps }: Props) {
+  return (
+    <DropdownMenu
+      trigger={
+        <Button variant="ghost" icon="hover" {...buttonProps}>
+          <CaretDown16 />
+        </Button>
+      }
+      contentProps={{ align: 'start', ...contentProps }}
+    >
+      <VolumeContextMenuContents id={id} />
+    </DropdownMenu>
+  )
+}
+
+function VolumeContextMenuContents({ id }: Props) {
   const { openDialog } = useDialog()
   const volumeUpdate = useVolumeUpdate()
   const volume = useVolume({
@@ -44,14 +59,7 @@ export function VolumeContextMenu({ id, contentProps, buttonProps }: Props) {
   const isOperationInProgress =
     volume.data && !['ready', 'unavailable'].includes(volume.data.status)
   return (
-    <DropdownMenu
-      trigger={
-        <Button variant="ghost" icon="hover" {...buttonProps}>
-          <CaretDown16 />
-        </Button>
-      }
-      contentProps={{ align: 'start', ...contentProps }}
-    >
+    <>
       <div className="px-1.5 py-1">
         <Text size="14" weight="medium" color="subtle">
           Volume {volume.data ? truncate(volume.data?.localPath, 24) : id}
@@ -138,7 +146,7 @@ export function VolumeContextMenu({ id, contentProps, buttonProps }: Props) {
         </DropdownMenuLeftSlot>
         Delete
       </DropdownMenuItem>
-    </DropdownMenu>
+    </>
   )
 }
 
