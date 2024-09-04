@@ -25,7 +25,7 @@ export default defineConfig({
     video: 'on-first-retry',
   },
   // Timeout per test.
-  timeout: 60_000,
+  timeout: 120_000,
   expect: {
     // Raise the timeout because it is running against next dev mode
     // which requires compilation the first to a page is visited
@@ -39,24 +39,34 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     cwd: workspaceRoot,
   },
-  // Run the tests serially as they may mutate the state of the same application.
-  workers: 1,
+  // Docs recommend 1 worker on CI: https://playwright.dev/docs/ci#workers
+  workers: process.env.CI ? 1 : undefined,
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        contextOptions: {
+          permissions: ['clipboard-read', 'clipboard-write'],
+        },
+      },
     },
-
-    // Disable firefox and webkit to save time since tests are running serially.
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
-
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
+    {
+      name: 'firefox',
+      use: {
+        ...devices['Desktop Firefox'],
+        launchOptions: {
+          firefoxUserPrefs: {
+            'dom.events.asyncClipboard.readText': true,
+            'dom.events.testing.asyncClipboard': true,
+          },
+        },
+      },
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+    },
 
     // Uncomment for mobile browsers support
     /* {

@@ -8,7 +8,16 @@
     "build-cluster": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "go build -C internal/cluster -o bin/clusterd ./cmd/clusterd"
+        "commands": [
+          "cd internal/cluster && go get -u go.sia.tech/hostd@its-happening",
+          "cd internal/cluster && go get -u go.sia.tech/renterd@dev",
+          "cd internal/cluster && go get -u go.sia.tech/walletd@master",
+          "cd internal/cluster && go mod tidy",
+          "cd internal/cluster && go build -o bin/clusterd ./cmd/clusterd || echo 'BUILD FAILED'",
+          "git checkout internal/cluster/go.mod internal/cluster/go.sum",
+          "test ! -f internal/cluster/bin/clusterd && exit 1 || exit 0"
+        ],
+        "parallel": false
       }
     },
     "e2e": {
