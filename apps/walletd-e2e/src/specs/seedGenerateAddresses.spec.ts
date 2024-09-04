@@ -1,18 +1,25 @@
 import { test, expect } from '@playwright/test'
-import { login } from '../fixtures/login'
-import { deleteWalletIfExists, recoverWallet } from '../fixtures/wallet'
+import { recoverWallet } from '../fixtures/wallet'
 import { navigateToWallet } from '../fixtures/navigateToWallet'
 import { fillTextInputByName } from '../fixtures/textInput'
+import { afterTest, beforeTest } from '../fixtures/beforeTest'
+import { mine } from '@siafoundation/clusterd'
+import { testRequiresClipboardPermissions } from '../fixtures/skip'
 
-test('generate new addresses', async ({ page, context }) => {
+test.beforeEach(async ({ page }) => {
+  await beforeTest(page)
+})
+
+test.afterEach(async () => {
+  await afterTest()
+})
+
+test('generate new addresses', async ({ page, browserName }) => {
+  testRequiresClipboardPermissions(browserName)
   const name = 'my-existing-wallet'
   const mnemonic =
     'ridge business wish transfer home glove office salt wealth baby journey diary'
-
-  await login({ page })
-  await deleteWalletIfExists(page, name)
-
-  await recoverWallet(page, context, name, mnemonic)
+  await recoverWallet(page, name, mnemonic)
   await navigateToWallet(page, name)
   await page.getByLabel('view addresses').click()
   await page.getByRole('button', { name: 'Add addresses' }).click()
@@ -35,15 +42,16 @@ test('generate new addresses', async ({ page, context }) => {
   ).toBeVisible()
 })
 
-test('generate new addresses and rescan', async ({ page, context }) => {
+test('generate new addresses and rescan', async ({ page, browserName }) => {
+  testRequiresClipboardPermissions(browserName)
+  const blocksToMine = 100
+  const scanFromHeight = 30
+  await mine(blocksToMine)
+  await page.reload()
   const name = 'my-existing-wallet'
   const mnemonic =
     'ridge business wish transfer home glove office salt wealth baby journey diary'
-
-  await login({ page })
-  await deleteWalletIfExists(page, name)
-
-  await recoverWallet(page, context, name, mnemonic)
+  await recoverWallet(page, name, mnemonic)
   await navigateToWallet(page, name)
   await page.getByLabel('view addresses').click()
   await page.getByRole('button', { name: 'Add addresses' }).click()
@@ -51,16 +59,14 @@ test('generate new addresses and rescan', async ({ page, context }) => {
   await page.getByLabel('shouldRescan').click()
   const val = await page.locator('input[name=rescanStartHeight]').inputValue()
   const defaultRescanStartHeight = Number(val.replace(/,/g, ''))
-  expect(defaultRescanStartHeight).toBeGreaterThan(60_000)
-  await fillTextInputByName(
-    page,
-    'rescanStartHeight',
-    String(defaultRescanStartHeight - 500)
-  )
+  expect(defaultRescanStartHeight).toBeGreaterThan(blocksToMine)
+  await fillTextInputByName(page, 'rescanStartHeight', String(scanFromHeight))
   await page
     .getByRole('button', { name: 'Generate addresses and rescan' })
     .click()
-  await expect(page.getByText('Rescanning the blockchain')).toBeVisible()
+  await expect(
+    page.getByTestId('rescanStatusPanel').getByText('Rescanning the blockchain')
+  ).toBeVisible()
   await expect(
     page.getByText('65b40f6a720352ad5b9546b9f5077209672914cc...')
   ).toBeVisible()
