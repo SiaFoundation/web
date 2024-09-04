@@ -5,8 +5,10 @@ import { fillTextInputByName } from './textInput'
 import { fillSelectInputByName } from './selectInput'
 import { clearToasts } from './clearToasts'
 import { clickIfEnabledAndWait } from './click'
+import { navigateToConfig } from './navigate'
 
 export async function configResetAllSettings({ page }: { page: Page }) {
+  await navigateToConfig({ page })
   await setViewMode({ page, state: 'advanced' })
 
   // host
@@ -66,4 +68,6 @@ export async function configResetAllSettings({ page }: { page: Page }) {
     page.getByText('Settings have been saved')
   )
   await clearToasts({ page })
+  await setViewMode({ page, state: 'basic' })
+  await navigateToConfig({ page })
 }

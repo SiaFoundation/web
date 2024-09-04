@@ -1,7 +1,6 @@
 import { Page, expect } from '@playwright/test'
 import { navigateToVolumes } from './navigate'
 import { fillTextInputByName } from './textInput'
-import { clearToasts } from './clearToasts'
 
 export async function createVolume(page: Page, name: string, path: string) {
   const fullPath = `${path}/${name}`
@@ -19,16 +18,16 @@ export async function createVolume(page: Page, name: string, path: string) {
   await page.locator('input[name=size]').press('Enter')
   await expect(page.getByRole('dialog')).toBeHidden()
   const row = page.getByRole('row', { name: fullPath })
-  await expect(row.getByText('creating')).toBeVisible()
   await expect(page.getByText('Volume created')).toBeVisible()
-  await clearToasts({ page })
+  await expect(row.getByText('ready')).toBeVisible()
   await expect(page.getByRole('cell', { name: fullPath })).toBeVisible()
 }
 
 export async function deleteVolume(page: Page, name: string, path: string) {
   const fullPath = `${path}/${name}`
   await openVolumeContextMenu(page, fullPath)
-  await page.getByRole('menuitem', { name: 'Delete' }).click()
+  const menuDelete = page.getByRole('menuitem', { name: 'Delete' })
+  await menuDelete.click({ timeout: 10_000 })
   await fillTextInputByName(page, 'path', fullPath)
   await page.locator('input[name=path]').press('Enter')
   await expect(page.getByRole('dialog')).toBeHidden()
