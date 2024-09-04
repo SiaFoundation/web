@@ -1,14 +1,10 @@
-import { BrowserContext, expect, Page } from '@playwright/test'
+import { expect, Page } from '@playwright/test'
 import { fillTextInputByName } from './textInput'
 import { clickTextareaByName, fillTextareaByName } from './textarea'
 import { waitForTableToReload } from './table'
+import { navigateToWallet } from './navigateToWallet'
 
-export async function createNewWallet(
-  page: Page,
-  context: BrowserContext,
-  name: string
-) {
-  await context.grantPermissions(['clipboard-read', 'clipboard-write'])
+export async function createNewWallet(page: Page, name: string) {
   await expect(page.getByRole('button', { name: 'Add wallet' })).toBeVisible()
   await page.getByRole('button', { name: 'Add wallet' }).click()
   await page.getByRole('button', { name: 'Create a wallet' }).click()
@@ -25,11 +21,9 @@ export async function createNewWallet(
 
 export async function recoverWallet(
   page: Page,
-  context: BrowserContext,
   name: string,
   mnemonic: string
 ) {
-  await context.grantPermissions(['clipboard-read', 'clipboard-write'])
   await expect(page.getByRole('button', { name: 'Add wallet' })).toBeVisible()
   await page.getByRole('button', { name: 'Add wallet' }).click()
   await page.getByRole('button', { name: 'Recover a wallet' }).click()
@@ -59,6 +53,64 @@ export async function unlockWallet(page: Page, name: string, mnemonic: string) {
   await expect(page.getByRole('dialog')).toBeHidden()
 }
 
+export async function rescanWallets(page: Page) {
+  await openWalletsContextMenu(page)
+  await page.getByRole('menuitem', { name: 'Rescan blockchain' }).click()
+  await fillTextInputByName(page, 'rescanStartHeight', '0')
+  await page.locator('input[name=rescanStartHeight]').press('Enter')
+  await waitForRescanToFinish(page)
+}
+
+export async function waitForRescanToFinish(page: Page) {
+  // eslint-disable-next-line playwright/no-wait-for-timeout
+  await page.waitForTimeout(1000)
+  const isScanning = page
+    .getByTestId('rescanStatusPanel')
+    .getByText('Rescanning the blockchain')
+    .isVisible()
+  if (isScanning) {
+    await expect(
+      page
+        .getByTestId('rescanStatusPanel')
+        .getByText('Rescanning the blockchain')
+    ).toBeHidden()
+  }
+}
+
+export async function generateAddresses({
+  walletName,
+  page,
+  startIndex,
+  count,
+  rescan = false,
+  rescanStartHeight = 0,
+}: {
+  walletName: string
+  page: Page
+  startIndex: number
+  count: number
+  rescan?: boolean
+  rescanStartHeight: number
+}) {
+  await navigateToWallet(page, walletName)
+  await page.getByLabel('view addresses').click()
+  await page.getByRole('button', { name: 'Add addresses' }).click()
+  await fillTextInputByName(page, 'index', startIndex.toString())
+  await fillTextInputByName(page, 'count', count.toString())
+  if (rescan) {
+    await page.getByLabel('shouldRescan').click()
+    await fillTextInputByName(
+      page,
+      'rescanStartHeight',
+      rescanStartHeight.toString()
+    )
+  }
+  await page.getByRole('button', { name: 'Generate addresses' }).click()
+  if (rescan) {
+    await waitForRescanToFinish(page)
+  }
+}
+
 export async function deleteWalletIfExists(page: Page, name: string) {
   await waitForTableToReload(page, 'walletsTable')
   const doesWalletExist = await page
@@ -77,6 +129,10 @@ export async function openWallet(page: Page, name: string) {
 
 export async function openWalletContextMenu(page: Page, name: string) {
   await page.getByRole('row', { name }).getByRole('button').first().click()
+}
+
+export async function openWalletsContextMenu(page: Page) {
+  await page.getByLabel('wallet settings').click()
 }
 
 export async function walletInList(page: Page, name: string) {
