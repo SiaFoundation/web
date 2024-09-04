@@ -39,20 +39,34 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     cwd: workspaceRoot,
   },
-  workers: process.env.CI ? 4 : undefined,
+  // Docs recommend 1 worker on CI: https://playwright.dev/docs/ci#workers
+  workers: process.env.CI ? 1 : undefined,
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        contextOptions: {
+          permissions: ['clipboard-read', 'clipboard-write'],
+        },
+      },
     },
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: {
+        ...devices['Desktop Firefox'],
+        launchOptions: {
+          firefoxUserPrefs: {
+            'dom.events.asyncClipboard.readText': true,
+            'dom.events.testing.asyncClipboard': true,
+          },
+        },
+      },
     },
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+    },
 
     // Uncomment for mobile browsers support
     /* {
