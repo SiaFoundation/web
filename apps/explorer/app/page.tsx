@@ -3,7 +3,7 @@ import { appLink, network } from '../config'
 import { Home } from '../components/Home'
 import { buildMetadata } from '../lib/utils'
 import { humanBytes } from '@siafoundation/units'
-import { getLastFewBlocks } from '../lib/blocks'
+import { getLatestBlocks } from '../lib/blocks'
 import { siaCentral } from '../config/siaCentral'
 import { to } from '@siafoundation/request'
 
@@ -25,12 +25,10 @@ export const revalidate = 0
 export default async function HomePage() {
   const [
     [metrics, metricsError],
-    [latestBlock, latestBlockError],
     [exchangeRates, exchangeRatesError],
     [hosts, hostsError],
   ] = await Promise.all([
     to(siaCentral.hostsNetworkMetrics()),
-    to(siaCentral.blockLatest()),
     to(
       siaCentral.exchangeRates({
         params: { currencies: 'sc' },
@@ -45,31 +43,23 @@ export default async function HomePage() {
     ),
   ])
 
-  const lastBlockHeight = latestBlock?.block?.height || 0
-  const [blocks, blocksError] = await getLastFewBlocks(latestBlock?.block)
+  const [latestBlocks, latestBlocksError] = await getLatestBlocks()
+  const latestHeight = latestBlocks ? latestBlocks[0].height : 0
 
-  if (
-    metricsError ||
-    latestBlockError ||
-    exchangeRatesError ||
-    hostsError ||
-    blocksError
-  ) {
+  if (metricsError || latestBlocksError || exchangeRatesError || hostsError) {
     console.log(new Date().toISOString(), {
       metricsError,
-      latestBlockError,
+      latestBlocksError,
       exchangeRatesError,
-      blocksError,
       hostsError,
     })
   }
 
   console.log(new Date().toISOString(), {
     metrics: humanBytes(Buffer.byteLength(JSON.stringify(metrics || ''))),
-    latestBlock: humanBytes(
-      Buffer.byteLength(JSON.stringify(latestBlock || ''))
+    latestBlocks: humanBytes(
+      Buffer.byteLength(JSON.stringify(latestBlocks || ''))
     ),
-    blocks: humanBytes(Buffer.byteLength(JSON.stringify(blocks || ''))),
     exchangeRates: humanBytes(
       Buffer.byteLength(JSON.stringify(exchangeRates || ''))
     ),
@@ -79,8 +69,8 @@ export default async function HomePage() {
   return (
     <Home
       metrics={metrics}
-      blockHeight={lastBlockHeight}
-      blocks={blocks || []}
+      blockHeight={latestHeight}
+      blocks={latestBlocks || []}
       hosts={hosts?.hosts || []}
       rates={exchangeRates?.rates}
     />

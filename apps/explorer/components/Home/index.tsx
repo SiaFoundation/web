@@ -11,7 +11,6 @@ import { routes } from '../../config/routes'
 import { ContentLayout } from '../ContentLayout'
 import { reverse, sortBy } from '@technically/lodash'
 import {
-  SiaCentralBlock,
   SiaCentralExchangeRates,
   SiaCentralHost,
   SiaCentralHostsNetworkMetricsResponse,
@@ -27,6 +26,7 @@ import {
 import { HostListItem } from './HostListItem'
 import { useExchangeRate } from '../../hooks/useExchangeRate'
 import { SiaCentralHostScanned } from '../Host/types'
+import { ExplorerBlock } from '@siafoundation/explored-types'
 
 export function Home({
   metrics,
@@ -37,7 +37,7 @@ export function Home({
 }: {
   metrics?: SiaCentralHostsNetworkMetricsResponse
   blockHeight: number
-  blocks: SiaCentralBlock[]
+  blocks: ExplorerBlock[]
   hosts: SiaCentralHost[]
   rates?: SiaCentralExchangeRates
 }) {
