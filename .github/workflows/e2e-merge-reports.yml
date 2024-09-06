@@ -1,0 +1,41 @@
+name: Merge e2e test reports
+
+on:
+  workflow_call:
+    inputs:
+      project:
+        required: true
+        type: string
+
+jobs:
+  merge-reports:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Download blob reports from GitHub Actions Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ${{ inputs.project }}-blob-reports
+          pattern: ${{ inputs.project }}-blob-report-*
+          merge-multiple: true
+      - name: Merge into HTML Report
+        id: merge
+        run: |
+          if [ -d "./${{ inputs.project }}-blob-reports" ]; then
+            echo "Merging reports..."
+            npx playwright merge-reports --reporter html ./${{ inputs.project }}-blob-reports
+            echo "continue=true" >> $GITHUB_OUTPUT
+          else
+            echo "No reports found. Skipping merge."
+            echo "continue=false" >> $GITHUB_OUTPUT
+          fi
+      - name: Upload HTML report
+        if: ${{ steps.merge.outputs.continue == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.project }}-html-report--attempt-${{ github.run_attempt }}
+          path: playwright-report
+          retention-days: 2

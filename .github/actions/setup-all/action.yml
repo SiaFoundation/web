@@ -11,6 +11,10 @@ inputs:
     description: Go version
     required: false
     default: '1.23.0'
+  base_ref:
+    description: Determines which base SHA to use ('base' for a specific SHA/branch, 'last_successful' for the last successful workflow)
+    required: false
+    default: base
 
 runs:
   using: composite
@@ -21,6 +25,7 @@ runs:
       uses: ./.github/actions/setup-js
       with:
         node_version: ${{ inputs.node_version }}
+        base_ref: ${{ inputs.base_ref }}
     - name: Setup Go
       uses: ./.github/actions/setup-go
       with:

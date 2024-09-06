@@ -7,6 +7,10 @@ inputs:
     description: Node.js version
     required: false
     default: '20.10.0'
+  base_ref:
+    description: Determines which base SHA to use ('base' for a specific SHA/branch, 'last_successful' for the last successful workflow)
+    required: false
+    default: base
 
 runs:
   using: composite
@@ -17,6 +21,15 @@ runs:
         registry-url: https://registry.npmjs.org
     - name: Derive appropriate SHAs for base and head for `nx affected` commands
       uses: nrwl/nx-set-shas@v3
+    - name: Derive last successful base SHA for `nx affected` commands
+      if: ${{ inputs.base_ref == 'last_successful' }}
+      uses: nrwl/nx-set-shas@v3
+    - name: Derive base SHA for `nx affected`
+      if: ${{ inputs.base_ref == 'base' }}
+      shell: bash
+      run: |
+        echo "NX_BASE=${{ github.event.pull_request.base.sha }}" >> $GITHUB_ENV
+        echo "NX_HEAD=${{ github.sha }}" >> $GITHUB_ENV
     - name: Set up node cache
       uses: actions/cache@v3
       with:
