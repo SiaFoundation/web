@@ -1,0 +1,69 @@
+name: e2e
+
+on:
+  workflow_call:
+    secrets:
+      NPM_TOKEN:
+        required: true
+
+jobs:
+  renterd-e2e-shard-tests:
+    if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
+    uses: ./.github/workflows/e2e-shard-tests.yml
+    with:
+      project: renterd-e2e
+      shardIndex: ${{ matrix.shardIndex }}
+      shardTotal: ${{ matrix.shardTotal }}
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  renterd-e2e-merge-reports:
+    if: ${{ !cancelled() }}
+    needs: [renterd-e2e-shard-tests]
+    uses: ./.github/workflows/e2e-merge-reports.yml
+    with:
+      project: renterd-e2e
+  hostd-e2e-shard-tests:
+    if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
+    uses: ./.github/workflows/e2e-shard-tests.yml
+    with:
+      project: hostd-e2e
+      shardIndex: ${{ matrix.shardIndex }}
+      shardTotal: ${{ matrix.shardTotal }}
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  hostd-e2e-merge-reports:
+    if: ${{ !cancelled() }}
+    needs: [hostd-e2e-shard-tests]
+    uses: ./.github/workflows/e2e-merge-reports.yml
+    with:
+      project: hostd-e2e
+  walletd-e2e-shard-tests:
+    if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
+    uses: ./.github/workflows/e2e-shard-tests.yml
+    with:
+      project: walletd-e2e
+      shardIndex: ${{ matrix.shardIndex }}
+      shardTotal: ${{ matrix.shardTotal }}
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  walletd-e2e-merge-reports:
+    if: ${{ !cancelled() }}
+    needs: [walletd-e2e-shard-tests]
+    uses: ./.github/workflows/e2e-merge-reports.yml
+    with:
+      project: walletd-e2e
