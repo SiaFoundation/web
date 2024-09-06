@@ -61,46 +61,51 @@ export function BlockList({
             </div>
           )}
           {show === 'currentData' &&
-            dataset?.map((block, i) => (
-              <div
-                className={cx('flex gap-4 p-4', itemBorderStyles())}
-                key={block.height}
-              >
-                <EntityAvatar
-                  label={getEntityTypeLabel('block')}
-                  initials="B"
-                  href={block.href}
-                  shape="square"
-                />
-                <div className="flex flex-col gap-1 justify-center">
-                  <Text color="subtle">
-                    <Text weight="bold">
-                      <Link href={block.href} underline="none">
-                        {humanNumber(block.height)}
-                      </Link>
+            dataset?.map((block, i) => {
+              // This dataset contains an extra block at the end, fetched to calculate
+              // the 'mined in x minutes' blurb below for the last displayed block.
+              if (i === dataset.length - 1) return null
+              return (
+                <div
+                  className={cx('flex gap-4 p-4', itemBorderStyles())}
+                  key={block.height}
+                >
+                  <EntityAvatar
+                    label={getEntityTypeLabel('block')}
+                    initials="B"
+                    href={block.href}
+                    shape="square"
+                  />
+                  <div className="flex flex-col gap-1 justify-center">
+                    <Text color="subtle">
+                      <Text weight="bold">
+                        <Link href={block.href} underline="none">
+                          {humanNumber(block.height)}
+                        </Link>
+                      </Text>
+                      {block.miningPool
+                        ? ' mined by '
+                        : i < dataset.length - 1
+                        ? ' mined '
+                        : ''}
+                      <Text weight="bold">{block.miningPool}</Text>
+                      {block.miningPool ? ' ' : ''}
+                      {i < dataset.length - 1
+                        ? `in ${formatDistance(
+                            new Date(block.timestamp),
+                            new Date(dataset[i + 1].timestamp)
+                          )}`
+                        : ''}
                     </Text>
-                    {block.miningPool
-                      ? ' mined by '
-                      : i < dataset.length - 1
-                      ? ' mined '
-                      : ''}
-                    <Text weight="bold">{block.miningPool}</Text>
-                    {block.miningPool ? ' ' : ''}
-                    {i < dataset.length - 1
-                      ? `in ${formatDistance(
-                          new Date(block.timestamp),
-                          new Date(dataset[i + 1].timestamp)
-                        )}`
-                      : ''}
-                  </Text>
-                  <Text color="subtle">
-                    {formatDistance(new Date(block.timestamp), new Date(), {
-                      addSuffix: true,
-                    })}
-                  </Text>
+                    <Text color="subtle">
+                      {formatDistance(new Date(block.timestamp), new Date(), {
+                        addSuffix: true,
+                      })}
+                    </Text>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           {show === 'skeleton' && (
             <EntityListSkeleton skeletonCount={skeletonCount} />
           )}
