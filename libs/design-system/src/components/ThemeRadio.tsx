@@ -32,6 +32,7 @@ type Props = {
 
 export function ThemeRadio({ className, tooltipClassName, tabIndex }: Props) {
   const { theme, setTheme } = useTheme()
+
   return (
     <RadioGroupPrimitive.Root
       value={theme}
