@@ -22,8 +22,18 @@ jobs:
           pattern: ${{ inputs.project }}-blob-report-*
           merge-multiple: true
       - name: Merge into HTML Report
-        run: npx playwright merge-reports --reporter html ./${{ inputs.project }}-blob-reports
+        id: merge
+        run: |
+          if [ -d "./${{ inputs.project }}-blob-reports" ]; then
+            echo "Merging reports..."
+            npx playwright merge-reports --reporter html ./${{ inputs.project }}-blob-reports
+            echo "continue=true" >> $GITHUB_OUTPUT
+          else
+            echo "No reports found. Skipping merge."
+            echo "continue=false" >> $GITHUB_OUTPUT
+          fi
       - name: Upload HTML report
+        if: ${{ steps.merge.outputs.continue == 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.project }}-html-report--attempt-${{ github.run_attempt }}

@@ -31,29 +31,36 @@ jobs:
           node_version: 20.10.0
           go_version: 1.23.0
       - name: Only run if ${{ inputs.project }} is affected
+        id: check
         run: |
-          AFFECTED=$(npx nx print-affected --target=e2e --projects=${{ inputs.project }} --select=projects)
+          AFFECTED=$(npx nx show projects --affected --projects=${{ inputs.project }})
           if [[ -z "$AFFECTED" ]]; then
             echo "${{ inputs.project }} is unaffected. Exiting."
-            exit 0
+            echo "continue=false" >> $GITHUB_OUTPUT
+          else
+            echo "${{ inputs.project }} is affected. Continuing."
+            echo "continue=true" >> $GITHUB_OUTPUT
           fi
       # The SDK is referenced via dist in the tsconfig.base.json because the
       # next executor does not actually support buildLibsFromSource=false.
       # With this configuration NX does not build the SDK as expected when
       # it is an app dependency.
       - name: Force build SDK
+        if: ${{ steps.check.outputs.continue == 'true' }}
         shell: bash
         run: npx nx run sdk:build
       - name: Install Playwright dependencies
+        if: ${{ steps.check.outputs.continue == 'true' }}
         shell: bash
         run: npx playwright install-deps
       - name: Test e2e for ${{ inputs.project }}
+        if: ${{ steps.check.outputs.continue == 'true' }}
         shell: bash
         run: npx nx run ${{ inputs.project }}:e2e --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Upload blob report to GitHub Actions Artifacts
-        if: ${{ !cancelled() }}
+        if: ${{ steps.check.outputs.continue == 'true' && !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.project }}-blob-report-${{ inputs.shardIndex }}
