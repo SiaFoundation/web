@@ -5,6 +5,7 @@ import {
   Logo,
   ThemeRadio,
   CurrencyFiatSelector,
+  ClientSideOnly,
 } from '@siafoundation/design-system'
 
 export function Footer() {
@@ -49,7 +50,11 @@ export function Footer() {
           <div className="flex-1" />
           <div className="flex-1 flex items-center justify-end gap-6">
             <CurrencyFiatSelector />
-            <ThemeRadio className="hidden md:flex" />
+            <ClientSideOnly
+              fallback={<div className="w-[80px] h-[16px]"></div>}
+            >
+              <ThemeRadio className="hidden md:flex" />
+            </ClientSideOnly>
           </div>
         </div>
       </div>
