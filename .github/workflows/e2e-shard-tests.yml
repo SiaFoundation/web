@@ -1,0 +1,61 @@
+name: Run sharded e2e tests
+
+on:
+  workflow_call:
+    inputs:
+      project:
+        required: true
+        type: string
+      shardIndex:
+        required: true
+        type: number
+      shardTotal:
+        required: true
+        type: number
+    secrets:
+      NPM_TOKEN:
+        required: true
+
+jobs:
+  test-e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout all commits
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      # Full setup required since building the JS SDK requires Go.
+      - name: Setup environment
+        uses: ./.github/actions/setup-all
+        with:
+          node_version: 20.10.0
+          go_version: 1.23.0
+      - name: Only run if ${{ inputs.project }} is affected
+        run: |
+          AFFECTED=$(npx nx print-affected --target=e2e --projects=${{ inputs.project }} --select=projects)
+          if [[ -z "$AFFECTED" ]]; then
+            echo "${{ inputs.project }} is unaffected. Exiting."
+            exit 0
+          fi
+      # The SDK is referenced via dist in the tsconfig.base.json because the
+      # next executor does not actually support buildLibsFromSource=false.
+      # With this configuration NX does not build the SDK as expected when
+      # it is an app dependency.
+      - name: Force build SDK
+        shell: bash
+        run: npx nx run sdk:build
+      - name: Install Playwright dependencies
+        shell: bash
+        run: npx playwright install-deps
+      - name: Test e2e for ${{ inputs.project }}
+        shell: bash
+        run: npx nx run ${{ inputs.project }}:e2e --shard=${{ inputs.shardIndex }}/${{ inputs.shardTotal }}
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Upload blob report to GitHub Actions Artifacts
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.project }}-blob-report-${{ inputs.shardIndex }}
+          path: blob-report
+          retention-days: 1
