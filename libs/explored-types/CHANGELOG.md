@@ -1,5 +1,12 @@
 # @siafoundation/explored-types
 
+## 0.3.0
+
+### Minor Changes
+
+- a0aff962: Add timestamp field to ExplorerBlock type.
+- f3100c8e: Change Source type from number to string to match responses.
+
 ## 0.2.0
 
 ### Minor Changes

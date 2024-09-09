@@ -1,5 +1,11 @@
 # explorer
 
+## 0.18.0
+
+### Minor Changes
+
+- 82b8a619: The explorer now uses explored for block data. Closes https://github.com/SiaFoundation/web/issues/720
+
 ## 0.17.0
 
 ### Minor Changes
