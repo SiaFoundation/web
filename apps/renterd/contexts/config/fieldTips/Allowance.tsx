@@ -136,9 +136,12 @@ export function AllowanceTips({
         <TipAction
           icon={<NextFilled16 />}
           iconColor="contrast"
-          disabled={!allowanceMonth?.gt(0)}
+          disabled={!enabledDerivedPrices}
           tip={fitAllPricesToCurrentAllowanceTipContent}
           onClick={() => {
+            if (!enabledDerivedPrices) {
+              return
+            }
             formSetFields({
               form,
               fields,
@@ -152,13 +155,12 @@ export function AllowanceTips({
         <TipAction
           icon={<PreviousFilled16 />}
           iconColor="contrast"
-          disabled={!pricesInSiacoin}
+          disabled={!enabledAllowance}
           tip="Set the allowance to fit the current max prices for storage, upload, and download."
           onClick={() => {
             if (!enabledAllowance) {
               return
             }
-
             formSetFields({
               form,
               fields,
