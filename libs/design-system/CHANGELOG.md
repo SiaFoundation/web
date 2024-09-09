@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.8.0
+
+### Minor Changes
+
+- 82b8a619: stripPrefix now support block ID / bid.
+
 ## 4.7.0
 
 ### Minor Changes
