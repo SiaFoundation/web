@@ -62,7 +62,7 @@ export function useAllowanceDerivedPricingForEnabledFields({
   maxStoragePriceTBMonthPinned?: BigNumber
   maxDownloadPriceTBPinned?: BigNumber
   maxUploadPriceTBPinned?: BigNumber
-} {
+} | null {
   const { isAutopilotEnabled } = useApp()
   const allowanceMonth = useEnabledAllowanceInSiacoin({
     form,
@@ -91,6 +91,9 @@ export function useAllowanceDerivedPricingForEnabledFields({
         downloadWeight,
         uploadWeight,
       })
+      if (!derivedPricing) {
+        return null
+      }
       // Convert derived siacoin prices to pinned fiat prices.
       const pinnedPricing = exchangeRate
         ? {

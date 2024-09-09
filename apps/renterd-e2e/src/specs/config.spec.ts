@@ -106,6 +106,12 @@ test('set max prices to fit current allowance', async ({ page }) => {
   await expectTextInputByName(page, 'maxStoragePriceTBMonth', '3,352.941176')
   await expectTextInputByName(page, 'maxUploadPriceTB', '838.235294')
   await expectTextInputByName(page, 'maxDownloadPriceTB', '4,191.176471')
+
+  // If a component of the fit calculation is missing, it should not be shown.
+  await fillTextInputByName(page, 'storageTB', '')
+  await expect(
+    page.getByText('Set max prices to fit current allowance')
+  ).toBeDisabled()
 })
 
 test('set allowance to fit current max prices', async ({ page }) => {
@@ -120,9 +126,16 @@ test('set allowance to fit current max prices', async ({ page }) => {
   await fillTextInputByName(page, 'maxStoragePriceTBMonth', '1500')
   await fillTextInputByName(page, 'maxUploadPriceTB', '1000')
   await fillTextInputByName(page, 'maxDownloadPriceTB', '5000')
+  await page.getByText('Set allowance to fit current max prices').click()
 
-  // The following allownce is fit to the max prices.
-  await expectTextInputByName(page, 'allowanceMonth', '21,000')
+  // The following allowance is fit to the max prices.
+  await expectTextInputByName(page, 'allowanceMonth', '63,333')
+
+  // If a component of the fit calculation is missing, it should not be shown.
+  await fillTextInputByName(page, 'storageTB', '')
+  await expect(
+    page.getByText('Set allowance to fit current max prices')
+  ).toBeDisabled()
 })
 
 test('should show warning if pinning is not fully configured', async ({
