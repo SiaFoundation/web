@@ -1,52 +1,42 @@
-import { stripPrefix, useDatasetEmptyState } from '@siafoundation/design-system'
+import {
+  useDatasetEmptyState,
+  useTableState,
+} from '@siafoundation/design-system'
 import {
   useMetricsWallet,
+  useWalletEvents,
   useWalletPending,
-  useWalletTransactions,
 } from '@siafoundation/renterd-react'
 import { createContext, useContext, useMemo } from 'react'
-import { useDialog } from '../dialog'
-import BigNumber from 'bignumber.js'
 import { useRouter } from 'next/router'
 import { useSiascanUrl } from '../../hooks/useSiascanUrl'
-import { Transaction } from '@siafoundation/types'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { useSyncStatus } from '../../hooks/useSyncStatus'
+import { columns } from './columns'
 import {
-  TxType,
-  getTransactionType,
+  calculateScValue,
+  getEventContractId,
+  getEventFee,
+  getEventTxType,
   daysInMilliseconds,
 } from '@siafoundation/units'
+import {
+  CellContext,
+  EventData,
+  columnsDefaultVisible,
+  defaultSortField,
+  sortOptions,
+} from './types'
+import BigNumber from 'bignumber.js'
 
-const defaultLimit = 50
+const defaultPageSize = 50
 const filters = []
-
-export type TransactionDataPending = {
-  type: 'transaction'
-  txType: TxType
-  siascanUrl: string
-}
-
-export type TransactionDataConfirmed = {
-  type: 'transaction'
-  txType: TxType
-  hash: string
-  timestamp: number
-  onClick: () => void
-  raw: Transaction
-  inflow: string
-  outflow: string
-  unconfirmed: boolean
-  sc: BigNumber
-  siascanUrl: string
-}
-
-export type TransactionData = TransactionDataPending | TransactionDataConfirmed
 
 function useTransactionsMain() {
   const router = useRouter()
-  const limit = Number(router.query.limit || defaultLimit)
+  const limit = Number(router.query.limit || defaultPageSize)
   const offset = Number(router.query.offset || 0)
-  const transactions = useWalletTransactions({
+  const events = useWalletEvents({
     params: {
       limit,
       offset,
@@ -57,7 +47,6 @@ function useTransactionsMain() {
       },
     },
   })
-
   const pending = useWalletPending({
     config: {
       swr: {
@@ -66,52 +55,88 @@ function useTransactionsMain() {
     },
   })
 
-  const { openDialog } = useDialog()
-
-  const siascanUrl = useSiascanUrl()
-
-  const dataset: TransactionData[] | null = useMemo(() => {
-    if (!pending.data || !transactions.data) {
+  const syncStatus = useSyncStatus()
+  const dataset = useMemo<EventData[] | null>(() => {
+    if (!events.data || !pending.data) {
       return null
     }
-    return [
-      ...(pending.data || []).map((t): TransactionData => {
-        return {
-          type: 'transaction',
-          txType: getTransactionType(t),
-          // hash: t.id,
-          // timestamp: new Date(t.Timestamp).getTime(),
-          // onClick: () => openDialog('transactionDetails', t.id),
-          // sc: totals.sc,
-          unconfirmed: true,
-          siascanUrl,
-        }
-      }),
-      ...(transactions.data || [])
-        .map((t): TransactionData => {
-          return {
-            type: 'transaction',
-            txType: getTransactionType(t.raw),
-            hash: stripPrefix(t.id),
-            timestamp: new Date(t.timestamp).getTime(),
-            onClick: () => openDialog('transactionDetails', stripPrefix(t.id)),
-            raw: t.raw,
-            inflow: t.inflow,
-            outflow: t.outflow,
-            sc: new BigNumber(t.inflow).minus(t.outflow),
-            siascanUrl,
-          }
-        })
-        .sort((a, b) => (a['timestamp'] < b['timestamp'] ? 1 : -1)),
-    ]
-  }, [pending.data, transactions.data, openDialog, siascanUrl])
+    const dataPending: EventData[] = pending.data.map((e) => {
+      const amountSc = calculateScValue(e)
+      const fee = getEventFee(e)
+      const event: EventData = {
+        id: e.id,
+        timestamp: 0,
+        pending: true,
+        type: e.type,
+        txType: getEventTxType(e),
+        isMature: false,
+        amountSc,
+        fee,
+      }
+      return event
+    })
+    const dataEvents: EventData[] = events.data.map((e) => {
+      const amountSc = calculateScValue(e)
+      const fee = getEventFee(e)
+      const contractId = getEventContractId(e)
+      const isMature = e.maturityHeight <= syncStatus.nodeBlockHeight
+      const res: EventData = {
+        id: e.id,
+        type: e.type,
+        txType: getEventTxType(e),
+        timestamp: new Date(e.timestamp).getTime(),
+        maturityHeight: e.maturityHeight,
+        isMature,
+        height: e.index.height,
+        pending: false,
+        amountSc,
+        fee,
+        contractId,
+      }
+      return res
+    })
+    return [...dataPending.reverse(), ...dataEvents]
+  }, [events.data, pending.data, syncStatus.nodeBlockHeight])
 
-  const error = transactions.error
-  const dataState = useDatasetEmptyState(
-    dataset,
-    transactions.isValidating,
-    error,
-    filters
+  const {
+    configurableColumns,
+    enabledColumns,
+    sortableColumns,
+    toggleColumnVisibility,
+    setColumnsVisible,
+    setColumnsHidden,
+    toggleSort,
+    setSortDirection,
+    setSortField,
+    sortField,
+    sortDirection,
+    resetDefaultColumnVisibility,
+  } = useTableState('renterd/v0/events', {
+    columns,
+    columnsDefaultVisible,
+    sortOptions,
+    defaultSortField,
+  })
+
+  const filteredTableColumns = useMemo(
+    () =>
+      columns.filter(
+        (column) => column.fixed || enabledColumns.includes(column.id)
+      ),
+    [enabledColumns]
+  )
+
+  const isValidating = events.isValidating || pending.isValidating
+  const error = events.error || pending.error
+
+  const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
+
+  const siascanUrl = useSiascanUrl()
+  const cellContext = useMemo<CellContext>(
+    () => ({
+      siascanUrl,
+    }),
+    [siascanUrl]
   )
 
   const periods = 30
@@ -150,14 +175,31 @@ function useTransactionsMain() {
   )
 
   return {
+    balances,
+    metrics,
     dataset,
     error,
     dataState,
     offset,
     limit,
     pageCount: dataset?.length || 0,
-    balances,
-    metrics,
+    defaultPageSize,
+    cellContext,
+    configurableColumns,
+    enabledColumns,
+    sortableColumns,
+    toggleColumnVisibility,
+    setColumnsVisible,
+    setColumnsHidden,
+    toggleSort,
+    setSortDirection,
+    setSortField,
+    sortField,
+    sortDirection,
+    resetDefaultColumnVisibility,
+    filters,
+    filteredTableColumns,
+    columns,
   }
 }
 

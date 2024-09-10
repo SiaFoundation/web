@@ -7,7 +7,7 @@ import BigNumber from 'bignumber.js'
 import { setSwitchByLabel } from '../fixtures/switchValue'
 
 test.beforeEach(async ({ page }) => {
-  await beforeTest(page, false)
+  await beforeTest(page)
 })
 
 test('send siacoin with include fee off', async ({ page }) => {
@@ -66,20 +66,35 @@ test('send siacoin with include fee off', async ({ page }) => {
   await expect(sendDialog.getByTestId('transactionId')).toBeVisible()
 
   // List.
-  // TODO: Add this after we migrate to the new events API.
-  // await sendDialog.getByRole('button', { name: 'Close' }).click()
-  // await expect(page.getByTestId('eventsTable')).toBeVisible()
-  // await expect(
-  //   page.getByTestId('eventsTable').locator('tbody tr').first()
-  // ).toBeVisible()
-  // await expect(
-  //   page
-  //     .getByTestId('eventsTable')
-  //     .locator('tbody tr')
-  //     .first()
-  //     .getByTestId('amount')
-  //     .getByText(`-${amountWithFeeString}`)
-  // ).toBeVisible()
+  await sendDialog.getByRole('button', { name: 'Close' }).click()
+  await expect(page.getByTestId('eventsTable')).toBeVisible()
+  await expect(
+    page.getByTestId('eventsTable').locator('tbody tr').first()
+  ).toBeVisible()
+  await expect(
+    page
+      .getByTestId('eventsTable')
+      .locator('tbody tr')
+      .first()
+      .getByTestId('amount')
+      .getByText(`-${amountWithFeeString}`)
+  ).toBeVisible()
+  await expect(
+    page
+      .getByTestId('eventsTable')
+      .locator('tbody tr')
+      .first()
+      .getByTestId('type')
+      .getByText('siacoin transfer')
+  ).toBeVisible()
+  await expect(
+    page
+      .getByTestId('eventsTable')
+      .locator('tbody tr')
+      .first()
+      .getByTestId('fee')
+      .getByText('12.000 mS')
+  ).toBeVisible()
 })
 
 test('send siacoin with include fee on', async ({ page }) => {
@@ -139,18 +154,33 @@ test('send siacoin with include fee on', async ({ page }) => {
   await expect(sendDialog.getByTestId('transactionId')).toBeVisible()
 
   // List.
-  // TODO: Add this after we migrate to the new events API.
-  // await sendDialog.getByRole('button', { name: 'Close' }).click()
-  // await expect(page.getByTestId('eventsTable')).toBeVisible()
-  // await expect(
-  //   page.getByTestId('eventsTable').locator('tbody tr').first()
-  // ).toBeVisible()
-  // await expect(
-  //   page
-  //     .getByTestId('eventsTable')
-  //     .locator('tbody tr')
-  //     .first()
-  //     .getByTestId('amount')
-  //     .getByText(`-${amountWithFeeString}`)
-  // ).toBeVisible()
+  await sendDialog.getByRole('button', { name: 'Close' }).click()
+  await expect(page.getByTestId('eventsTable')).toBeVisible()
+  await expect(
+    page.getByTestId('eventsTable').locator('tbody tr').first()
+  ).toBeVisible()
+  await expect(
+    page
+      .getByTestId('eventsTable')
+      .locator('tbody tr')
+      .first()
+      .getByTestId('amount')
+      .getByText(`-${amountString}`)
+  ).toBeVisible()
+  await expect(
+    page
+      .getByTestId('eventsTable')
+      .locator('tbody tr')
+      .first()
+      .getByTestId('type')
+      .getByText('siacoin transfer')
+  ).toBeVisible()
+  await expect(
+    page
+      .getByTestId('eventsTable')
+      .locator('tbody tr')
+      .first()
+      .getByTestId('fee')
+      .getByText('12.000 mS')
+  ).toBeVisible()
 })

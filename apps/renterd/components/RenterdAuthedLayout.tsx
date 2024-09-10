@@ -28,6 +28,7 @@ export function RenterdAuthedLayout(
           spendable: new BigNumber(wallet.data.spendable),
           confirmed: new BigNumber(wallet.data.confirmed),
           unconfirmed: new BigNumber(wallet.data.unconfirmed),
+          immature: new BigNumber(wallet.data.immature),
         }
       }
       {...props}
