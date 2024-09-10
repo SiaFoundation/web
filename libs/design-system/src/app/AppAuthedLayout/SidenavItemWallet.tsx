@@ -14,6 +14,7 @@ type Props = {
     unconfirmed: BigNumber
     confirmed: BigNumber
     spendable: BigNumber
+    immature: BigNumber
   }
   isSynced: boolean
   routes: Routes

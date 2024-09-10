@@ -14,7 +14,7 @@ export function WalletBalanceTip({
     unconfirmed: BigNumber
     confirmed: BigNumber
     spendable: BigNumber
-    immature?: BigNumber
+    immature: BigNumber
   }
   children: React.ReactNode
 }) {

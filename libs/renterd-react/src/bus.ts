@@ -152,14 +152,6 @@ import {
   TxPoolRecommendedFeeResponse,
   TxPoolTransactionsParams,
   TxPoolTransactionsResponse,
-  WalletAddressesParams,
-  WalletAddressesResponse,
-  WalletDiscardParams,
-  WalletDiscardPayload,
-  WalletDiscardResponse,
-  WalletFundParams,
-  WalletFundPayload,
-  WalletFundResponse,
   WalletMetricsParams,
   WalletMetricsResponse,
   WalletParams,
@@ -175,13 +167,6 @@ import {
   WalletRedistributePayload,
   WalletRedistributeResponse,
   WalletResponse,
-  WalletSignParams,
-  WalletSignPayload,
-  WalletSignResponse,
-  WalletTransactionsParams,
-  WalletTransactionsResponse,
-  WalletUtxoParams,
-  WalletUtxoResponse,
   busBucketRoute,
   busBucketNamePolicyRoute,
   busBucketNameRoute,
@@ -218,17 +203,11 @@ import {
   busTxpoolBroadcastRoute,
   busTxpoolRecommendedFeeRoute,
   busTxpoolTransactionsRoute,
-  busWalletAddressesRoute,
-  busWalletDiscardRoute,
-  busWalletFundRoute,
-  busWalletOutputsRoute,
   busWalletPendingRoute,
   busWalletPrepareFormRoute,
   busWalletPrepareRenewRoute,
   busWalletRedistributeRoute,
   busWalletRoute,
-  busWalletSignRoute,
-  busWalletTransactionsRoute,
   busAlertsRoute,
   busAlertsDismissRoute,
   busSlabKeyObjectsRoute,
@@ -262,6 +241,9 @@ import {
   busAutopilotsRoute,
   AutopilotsParams,
   AutopilotsResponse,
+  WalletEventsParams,
+  WalletEventsResponse,
+  busWalletEventsRoute,
 } from '@siafoundation/renterd-types'
 
 // state
@@ -410,45 +392,19 @@ export function useWallet(args?: HookArgsSwr<WalletParams, WalletResponse>) {
   return useGetSwr({ ...args, route: busWalletRoute })
 }
 
-export function useWalletAddresses(
-  args?: HookArgsSwr<WalletAddressesParams, WalletAddressesResponse>
-) {
-  return useGetSwr({ ...args, route: busWalletAddressesRoute })
-}
-
-export function useWalletTransactions(
-  args: HookArgsSwr<WalletTransactionsParams, WalletTransactionsResponse>
+export function useWalletEvents(
+  args: HookArgsSwr<WalletEventsParams, WalletEventsResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: busWalletTransactionsRoute,
+    route: busWalletEventsRoute,
   })
 }
 
-export function useWalletUtxos(
-  args?: HookArgsSwr<WalletUtxoParams, WalletUtxoResponse>
+export function useWalletPending(
+  args?: HookArgsSwr<WalletPendingParams, WalletPendingResponse>
 ) {
-  return useGetSwr({ ...args, route: busWalletOutputsRoute })
-}
-
-export function useWalletFund(
-  args?: HookArgsCallback<
-    WalletFundParams,
-    WalletFundPayload,
-    WalletFundResponse
-  >
-) {
-  return usePostFunc({ ...args, route: busWalletFundRoute })
-}
-
-export function useWalletSign(
-  args?: HookArgsCallback<
-    WalletSignParams,
-    WalletSignPayload,
-    WalletSignResponse
-  >
-) {
-  return usePostFunc({ ...args, route: busWalletSignRoute })
+  return useGetSwr({ ...args, route: busWalletPendingRoute })
 }
 
 export function useWalletSend(
@@ -479,16 +435,6 @@ export function useWalletRedistribute(
   return usePostFunc({ ...args, route: busWalletRedistributeRoute })
 }
 
-export function useWalletDiscard(
-  args?: HookArgsCallback<
-    WalletDiscardParams,
-    WalletDiscardPayload,
-    WalletDiscardResponse
-  >
-) {
-  return usePostFunc({ ...args, route: busWalletDiscardRoute })
-}
-
 export function useWalletPrepareForm(
   args?: HookArgsCallback<
     WalletPrepareFormParams,
@@ -507,12 +453,6 @@ export function useWalletPrepareRenew(
   >
 ) {
   return usePostFunc({ ...args, route: busWalletPrepareRenewRoute })
-}
-
-export function useWalletPending(
-  args?: HookArgsSwr<WalletPendingParams, WalletPendingResponse>
-) {
-  return useGetSwr({ ...args, route: busWalletPendingRoute })
 }
 
 export function useHosts(

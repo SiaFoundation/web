@@ -173,20 +173,14 @@ import {
   TxPoolTransactionsPayload,
   TxPoolTransactionsResponse,
   UploadPackingSettings,
-  WalletAddressesParams,
-  WalletAddressesPayload,
-  WalletAddressesResponse,
-  WalletDiscardParams,
-  WalletDiscardPayload,
-  WalletDiscardResponse,
-  WalletFundParams,
-  WalletFundPayload,
-  WalletFundResponse,
   WalletMetricsParams,
   WalletMetricsPayload,
   WalletMetricsResponse,
   WalletParams,
   WalletPayload,
+  WalletEventsParams,
+  WalletEventsPayload,
+  WalletEventsResponse,
   WalletPendingParams,
   WalletPendingPayload,
   WalletPendingResponse,
@@ -203,15 +197,6 @@ import {
   WalletSendParams,
   WalletSendPayload,
   WalletSendResponse,
-  WalletSignParams,
-  WalletSignPayload,
-  WalletSignResponse,
-  WalletTransactionsParams,
-  WalletTransactionsPayload,
-  WalletTransactionsResponse,
-  WalletUtxoParams,
-  WalletUtxoPayload,
-  WalletUtxoResponse,
   busAlertsDismissRoute,
   busAlertsRoute,
   busBucketNamePolicyRoute,
@@ -260,21 +245,16 @@ import {
   busTxpoolBroadcastRoute,
   busTxpoolRecommendedFeeRoute,
   busTxpoolTransactionsRoute,
-  busWalletAddressesRoute,
-  busWalletDiscardRoute,
-  busWalletFundRoute,
-  busWalletOutputsRoute,
   busWalletPendingRoute,
   busWalletPrepareFormRoute,
   busWalletRedistributeRoute,
   busWalletRoute,
   busWalletSendRoute,
-  busWalletSignRoute,
-  busWalletTransactionsRoute,
   busAutopilotsRoute,
   AutopilotsParams,
   AutopilotsPayload,
   AutopilotsResponse,
+  busWalletEventsRoute,
 } from '@siafoundation/renterd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 import { AxiosRequestConfig } from 'axios'
@@ -338,46 +318,26 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       'get',
       busWalletRoute
     ),
-    walletAddresses: buildRequestHandler<
-      WalletAddressesParams,
-      WalletAddressesPayload,
-      WalletAddressesResponse
-    >(axios, 'get', busWalletAddressesRoute),
-    walletTransactions: buildRequestHandler<
-      WalletTransactionsParams,
-      WalletTransactionsPayload,
-      WalletTransactionsResponse
-    >(axios, 'get', busWalletTransactionsRoute),
-    walletUtxos: buildRequestHandler<
-      WalletUtxoParams,
-      WalletUtxoPayload,
-      WalletUtxoResponse
-    >(axios, 'get', busWalletOutputsRoute),
-    walletFund: buildRequestHandler<
-      WalletFundParams,
-      WalletFundPayload,
-      WalletFundResponse
-    >(axios, 'post', busWalletFundRoute),
+    walletEvents: buildRequestHandler<
+      WalletEventsParams,
+      WalletEventsPayload,
+      WalletEventsResponse
+    >(axios, 'get', busWalletEventsRoute),
+    walletPending: buildRequestHandler<
+      WalletPendingParams,
+      WalletPendingPayload,
+      WalletPendingResponse
+    >(axios, 'get', busWalletPendingRoute),
     walletSend: buildRequestHandler<
       WalletSendParams,
       WalletSendPayload,
       WalletSendResponse
     >(axios, 'post', busWalletSendRoute),
-    walletSign: buildRequestHandler<
-      WalletSignParams,
-      WalletSignPayload,
-      WalletSignResponse
-    >(axios, 'post', busWalletSignRoute),
     walletRedistribute: buildRequestHandler<
       WalletRedistributeParams,
       WalletRedistributePayload,
       WalletRedistributeResponse
     >(axios, 'post', busWalletRedistributeRoute),
-    walletDiscard: buildRequestHandler<
-      WalletDiscardParams,
-      WalletDiscardPayload,
-      WalletDiscardResponse
-    >(axios, 'post', busWalletDiscardRoute),
     walletPrepareForm: buildRequestHandler<
       WalletPrepareFormParams,
       WalletPrepareFormPayload,
@@ -388,11 +348,6 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       WalletPrepareRenewPayload,
       WalletPrepareRenewResponse
     >(axios, 'post', '/bus/wallet/prepare/form'),
-    walletPending: buildRequestHandler<
-      WalletPendingParams,
-      WalletPendingPayload,
-      WalletPendingResponse
-    >(axios, 'get', busWalletPendingRoute),
     hosts: buildRequestHandler<HostsParams, HostsPayload, HostsResponse>(
       axios,
       'post',

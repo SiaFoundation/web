@@ -3,11 +3,10 @@ import {
   PublicKey,
   Transaction,
   FileContractRevision,
-  OutputID,
-  CoveredFields,
   FileContractID,
   Block,
   TransactionID,
+  WalletEvent,
 } from '@siafoundation/types'
 import {
   Autopilot,
@@ -18,9 +17,7 @@ import {
   HostSettings,
   Obj,
   PartialSlab,
-  SiacoinElement,
   SlabSlice,
-  WalletTransaction,
 } from './types'
 
 export const busStateRoute = '/bus/state'
@@ -34,17 +31,12 @@ export const busTxpoolTransactionsRoute = '/bus/txpool/transactions'
 export const busTxpoolBroadcastRoute = '/bus/txpool/broadcast'
 export const busTxpoolRecommendedFeeRoute = '/bus/txpool/recommendedfee'
 export const busWalletRoute = '/bus/wallet'
-export const busWalletAddressesRoute = '/bus/wallet/addresses'
-export const busWalletTransactionsRoute = '/bus/wallet/transactions'
-export const busWalletOutputsRoute = '/bus/wallet/outputs'
-export const busWalletFundRoute = '/bus/wallet/fund'
-export const busWalletSignRoute = '/bus/wallet/sign'
-export const busWalletSendRoute = '/bus/wallet/send'
+export const busWalletEventsRoute = '/bus/wallet/events'
+export const busWalletPendingRoute = '/bus/wallet/pending'
 export const busWalletRedistributeRoute = '/bus/wallet/redistribute'
-export const busWalletDiscardRoute = '/bus/wallet/discard'
+export const busWalletSendRoute = '/bus/wallet/send'
 export const busWalletPrepareFormRoute = '/bus/wallet/prepare/form'
 export const busWalletPrepareRenewRoute = '/bus/wallet/prepare/renew'
-export const busWalletPendingRoute = '/bus/wallet/pending'
 export const busHostsRoute = '/bus/hosts'
 export const busHostHostKeyRoute = '/bus/host/:hostKey'
 export const busHostsHostKeyRoute = '/bus/hosts/:hostKey'
@@ -155,47 +147,27 @@ export type TxPoolBroadcastResponse = unknown
 
 export type WalletParams = void
 export type WalletPayload = void
-export type WalletResponse = {
-  scanHeight: number
-  address: string
+export type WalletBalance = {
   confirmed: string
   unconfirmed: string
   spendable: string
+  immature: string
+}
+export type WalletResponse = WalletBalance & {
+  scanHeight: number
+  address: string
 }
 
-export type WalletAddressesParams = void
-export type WalletAddressesPayload = void
-export type WalletAddressesResponse = string[]
-
-export type WalletTransactionsParams = {
-  offset?: number
+export type WalletEventsParams = {
   limit?: number
+  offset?: number
 }
-export type WalletTransactionsPayload = void
-export type WalletTransactionsResponse = WalletTransaction[]
+export type WalletEventsPayload = void
+export type WalletEventsResponse = WalletEvent[]
 
-export type WalletUtxoParams = void
-export type WalletUtxoPayload = void
-export type WalletUtxoResponse = SiacoinElement[]
-
-export type WalletFundParams = void
-export type WalletFundPayload = {
-  transaction: Transaction
-  amount: Currency
-}
-export type WalletFundResponse = {
-  transaction: Transaction
-  toSign?: OutputID[]
-  dependsOn?: Transaction[]
-}
-
-export type WalletSignParams = void
-export type WalletSignPayload = {
-  transaction: Transaction
-  toSign?: OutputID[]
-  coveredFields: CoveredFields
-}
-export type WalletSignResponse = Transaction
+export type WalletPendingParams = void
+export type WalletPendingPayload = void
+export type WalletPendingResponse = WalletEvent[]
 
 export type WalletSendParams = void
 export type WalletSendPayload = {
@@ -212,10 +184,6 @@ export type WalletRedistributePayload = {
   outputs: number
 }
 export type WalletRedistributeResponse = Transaction
-
-export type WalletDiscardParams = void
-export type WalletDiscardPayload = Transaction
-export type WalletDiscardResponse = void
 
 export type WalletPrepareFormParams = void
 export type WalletPrepareFormPayload = {
@@ -243,10 +211,6 @@ export type WalletPrepareRenewResponse = {
   transactionSet?: Transaction[]
   finalPayment: Currency
 }
-
-export type WalletPendingParams = void
-export type WalletPendingPayload = void
-export type WalletPendingResponse = Transaction[]
 
 // hosts
 

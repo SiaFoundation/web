@@ -12,6 +12,7 @@ export function WalletBalanceSideNav({
     unconfirmed: BigNumber
     confirmed: BigNumber
     spendable: BigNumber
+    immature: BigNumber
   }
   isSynced: boolean
   syncingMessage?: string

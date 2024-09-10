@@ -113,7 +113,7 @@ function useTransactionsMain() {
     sortField,
     sortDirection,
     resetDefaultColumnVisibility,
-  } = useTableState('walletd/v0/events', {
+  } = useTableState('hostd/v0/events', {
     columns,
     columnsDefaultVisible,
     sortOptions,
