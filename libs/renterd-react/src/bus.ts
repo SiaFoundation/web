@@ -88,9 +88,9 @@ import {
   HostsBlocklistUpdateParams,
   HostsBlocklistUpdatePayload,
   HostsBlocklistUpdateResponse,
-  HostsSearchParams,
-  HostsSearchPayload,
-  HostsSearchResponse,
+  HostsParams,
+  HostsPayload,
+  HostsResponse,
   MultipartUploadAbortParams,
   MultipartUploadAbortPayload,
   MultipartUploadAbortResponse,
@@ -206,7 +206,7 @@ import {
   busObjectsKeyRoute,
   busObjectsListRoute,
   busObjectsRenameRoute,
-  busSearchHostsRoute,
+  busHostsRoute,
   busSearchObjectsRoute,
   busSettingKeyRoute,
   busSettingsRoute,
@@ -259,6 +259,9 @@ import {
   WalletSendPayload,
   WalletSendResponse,
   busWalletSendRoute,
+  busAutopilotsRoute,
+  AutopilotsParams,
+  AutopilotsResponse,
 } from '@siafoundation/renterd-types'
 
 // state
@@ -269,6 +272,17 @@ export function useBusState(
   return useGetSwr({
     ...args,
     route: busStateRoute,
+  })
+}
+
+// autopilots
+
+export function useAutopilots(
+  args?: HookArgsSwr<AutopilotsParams, AutopilotsResponse>
+) {
+  return useGetSwr({
+    ...args,
+    route: busAutopilotsRoute,
   })
 }
 
@@ -501,16 +515,12 @@ export function useWalletPending(
   return useGetSwr({ ...args, route: busWalletPendingRoute })
 }
 
-export function useHostsSearch(
-  args: HookArgsWithPayloadSwr<
-    HostsSearchParams,
-    HostsSearchPayload,
-    HostsSearchResponse
-  >
+export function useHosts(
+  args: HookArgsWithPayloadSwr<HostsParams, HostsPayload, HostsResponse>
 ) {
   return usePostSwr({
     ...args,
-    route: busSearchHostsRoute,
+    route: busHostsRoute,
   })
 }
 
@@ -555,7 +565,7 @@ export function useHostsAllowlistUpdate(
     async (mutate) => {
       mutate((key) => {
         const matches = [
-          busSearchHostsRoute,
+          busHostsRoute,
           busHostsAllowlistRoute,
           busContractsRoute,
         ]
@@ -577,7 +587,7 @@ export function useHostsBlocklistUpdate(
     async (mutate) => {
       mutate((key) => {
         const matches = [
-          busSearchHostsRoute,
+          busHostsRoute,
           busHostsBlocklistRoute,
           busContractsRoute,
         ]

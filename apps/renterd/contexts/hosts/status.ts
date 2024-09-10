@@ -18,7 +18,7 @@ export const hostColors = {
 
 export function getHostStatus(h: HostData) {
   // active and unusable
-  if (h.activeContractsCount.gt(0) && !h.usable) {
+  if (h.activeContractsCount.gt(0) && !h.isUsable) {
     return {
       status: 'activeAndUnusable',
       ...hostColors.activeAndUnusable,

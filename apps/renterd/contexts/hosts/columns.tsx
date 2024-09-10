@@ -21,7 +21,8 @@ import { format, formatDistance, formatRelative } from 'date-fns'
 import { HostContextMenu } from '../../components/Hosts/HostContextMenu'
 import { useWorkflows } from '@siafoundation/react-core'
 import {
-  AutopilotHost,
+  HostPriceTable,
+  HostSettings,
   RhpScanPayload,
   workerRhpScanRoute,
 } from '@siafoundation/renterd-types'
@@ -135,15 +136,15 @@ export const columns: HostsTableColumn[] = (
         return (
           <Tooltip
             side="right"
-            content={data.usable ? 'Host is usable' : 'Host is not usable'}
+            content={data.isUsable ? 'Host is usable' : 'Host is not usable'}
           >
             <div className="flex gap-2 items-center">
               <div className="mt-[5px]">
                 <Text
-                  aria-label={data.usable ? 'usable' : 'not usable'}
-                  color={data.usable ? 'green' : 'red'}
+                  aria-label={data.isUsable ? 'usable' : 'not usable'}
+                  color={data.isUsable ? 'green' : 'red'}
                 >
-                  {data.usable ? (
+                  {data.isUsable ? (
                     <CheckboxCheckedFilled16 />
                   ) : (
                     <WarningSquareFilled16 />
@@ -182,15 +183,15 @@ export const columns: HostsTableColumn[] = (
           <Tooltip
             side="right"
             content={
-              data.gouging
+              data.isGouging
                 ? 'Host is price gouging'
                 : 'Host is not price gouging'
             }
           >
             <div className="flex gap-2 items-center">
               <div className="mt-[5px]">
-                <Text color={!data.gouging ? 'subtle' : 'red'}>
-                  {!data.gouging ? (
+                <Text color={!data.isGouging ? 'subtle' : 'red'}>
+                  {!data.isGouging ? (
                     <UndefinedFilled16 />
                   ) : (
                     <WarningSquareFilled16 />
@@ -1078,9 +1079,7 @@ function getFullLabelAndTip(col: HostsTableColumn): {
   }
 }
 
-type Key =
-  | keyof AutopilotHost['host']['priceTable']
-  | keyof AutopilotHost['host']['settings']
+type Key = keyof HostPriceTable | keyof HostSettings
 
 function makeRenderSc(section: 'priceTable' | 'settings', name: Key) {
   return memo(function RenderPriceTableNumber({ data }: { data: HostData }) {

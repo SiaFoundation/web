@@ -40,8 +40,9 @@ export async function example() {
     },
   })
 
-  const hosts = await autopilot.hostsSearch({
+  const hosts = await bus.hosts({
     data: {
+      autopilotID: 'autopilot-id',
       filterMode: 'allowed',
       usabilityMode: 'usable',
       addressContains: 'example.com',
@@ -52,7 +53,7 @@ export async function example() {
   })
 
   hosts.data.forEach((host) => {
-    console.log(host.host.publicKey, host.host.priceTable)
+    console.log(host.publicKey, host.priceTable)
   })
 
   await worker.objectUpload({
@@ -74,4 +75,7 @@ export async function example() {
       bucket: 'my-bucket',
     },
   })
+
+  const state = await autopilot.state()
+  console.log(state.data.migrating)
 }

@@ -100,8 +100,9 @@ export async function waitForContracts({
   await waitFor(
     async () => {
       await mine(1)
-      const hosts = await bus.hostsSearch({
+      const hosts = await bus.hosts({
         data: {
+          autopilotID: 'autopilot',
           filterMode: 'allowed',
           usabilityMode: 'usable',
           limit: 50,

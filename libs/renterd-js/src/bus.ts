@@ -94,9 +94,9 @@ import {
   HostsBlocklistUpdateParams,
   HostsBlocklistUpdatePayload,
   HostsBlocklistUpdateResponse,
-  HostsSearchParams,
-  HostsSearchPayload,
-  HostsSearchResponse,
+  HostsParams,
+  HostsPayload,
+  HostsResponse,
   MultipartUploadAbortParams,
   MultipartUploadAbortPayload,
   MultipartUploadAbortResponse,
@@ -247,7 +247,7 @@ import {
   busObjectsKeyRoute,
   busObjectsListRoute,
   busObjectsRenameRoute,
-  busSearchHostsRoute,
+  busHostsRoute,
   busSearchObjectsRoute,
   busSettingKeyRoute,
   busSettingsRoute,
@@ -271,6 +271,10 @@ import {
   busWalletSendRoute,
   busWalletSignRoute,
   busWalletTransactionsRoute,
+  busAutopilotsRoute,
+  AutopilotsParams,
+  AutopilotsPayload,
+  AutopilotsResponse,
 } from '@siafoundation/renterd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 import { AxiosRequestConfig } from 'axios'
@@ -284,6 +288,11 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       BusStatePayload,
       BusStateResponse
     >(axios, 'get', busStateRoute),
+    autopilots: buildRequestHandler<
+      AutopilotsParams,
+      AutopilotsPayload,
+      AutopilotsResponse
+    >(axios, 'get', busAutopilotsRoute),
     consensusState: buildRequestHandler<
       ConsensusStateParams,
       ConsensusStatePayload,
@@ -384,11 +393,11 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       WalletPendingPayload,
       WalletPendingResponse
     >(axios, 'get', busWalletPendingRoute),
-    hostsSearch: buildRequestHandler<
-      HostsSearchParams,
-      HostsSearchPayload,
-      HostsSearchResponse
-    >(axios, 'post', busSearchHostsRoute),
+    hosts: buildRequestHandler<HostsParams, HostsPayload, HostsResponse>(
+      axios,
+      'post',
+      busHostsRoute
+    ),
     host: buildRequestHandler<HostParams, HostPayload, HostResponse>(
       axios,
       'get',

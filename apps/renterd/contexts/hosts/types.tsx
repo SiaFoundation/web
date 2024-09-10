@@ -1,4 +1,4 @@
-import { AutopilotHost } from '@siafoundation/renterd-types'
+import { HostPriceTable, HostSettings } from '@siafoundation/renterd-types'
 import BigNumber from 'bignumber.js'
 import { ContractData } from '../contracts/types'
 
@@ -22,7 +22,6 @@ export type HostData = {
   totalInteractions: BigNumber
   totalScans: BigNumber
   // autopilot
-  score: BigNumber
   scoreBreakdown: {
     age: BigNumber
     collateral: BigNumber
@@ -32,17 +31,29 @@ export type HostData = {
     uptime: BigNumber
     version: BigNumber
   }
-  unusableReasons: string[]
   gougingBreakdown: {
     contractErr?: string
     downloadErr?: string
     gougingErr?: string
     uploadErr?: string
+    pruneErr?: string
   }
-  priceTable?: AutopilotHost['host']['priceTable']
-  settings?: AutopilotHost['host']['settings']
-  gouging: boolean
-  usable: boolean
+  usabilityBreakdown: {
+    blocked: boolean
+    gouging: boolean
+    lowScore: boolean
+    notAcceptingContracts: boolean
+    notAnnounced: boolean
+    notCompletingScan: boolean
+    offline: boolean
+    redundantIP: boolean
+  }
+  score: BigNumber
+  isGouging: boolean
+  isUsable: boolean
+  priceTable?: HostPriceTable
+  unusableReasons?: string[]
+  settings?: HostSettings
   activeContractsCount: BigNumber
   activeContracts: ContractData[]
   // merged in from sia central API

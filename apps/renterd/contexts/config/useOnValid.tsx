@@ -14,7 +14,7 @@ import { transformUp } from './transformUp'
 import { delay, useMutate } from '@siafoundation/react-core'
 import { Resources } from './resources'
 import { useSyncContractSet } from './useSyncContractSet'
-import { autopilotHostsRoute } from '@siafoundation/renterd-types'
+import { busHostsRoute } from '@siafoundation/renterd-types'
 
 export function useOnValid({
   resources,
@@ -133,9 +133,9 @@ export function useOnValid({
         if (firstTimeSettingConfig) {
           const refreshHostsAfterDelay = async () => {
             await delay(5_000)
-            mutate((key) => key.startsWith(autopilotHostsRoute))
+            mutate((key) => key.startsWith(busHostsRoute))
             await delay(5_000)
-            mutate((key) => key.startsWith(autopilotHostsRoute))
+            mutate((key) => key.startsWith(busHostsRoute))
           }
           refreshHostsAfterDelay()
         }
