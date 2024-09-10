@@ -16,7 +16,7 @@ import {
   Host,
   HostSettings,
   Obj,
-  PartialSlab,
+  ObjectMetadata,
   SlabSlice,
 } from './types'
 
@@ -60,9 +60,9 @@ export const busBucketsRoute = '/bus/buckets'
 export const busBucketNameRoute = '/bus/bucket/:name'
 export const busBucketNamePolicyRoute = '/bus/bucket/:name/policy'
 export const busObjectsRoute = '/bus/objects'
+export const busListObjectsRoute = '/bus/listobjects'
+export const busListObjectsPrefixRoute = '/bus/listobjects/:prefix'
 export const busObjectsKeyRoute = '/bus/objects/:key'
-export const busObjectsListRoute = '/bus/objects/list'
-export const busSearchObjectsRoute = '/bus/search/objects'
 export const busObjectsRenameRoute = '/bus/objects/rename'
 export const busStatsObjectsRoute = '/bus/stats/objects'
 export const busSettingRoute = '/bus/setting'
@@ -389,37 +389,21 @@ export type BucketDeleteParams = { name: string }
 export type BucketDeletePayload = void
 export type BucketDeleteResponse = void
 
-export type ObjEntry = {
-  name: string
-  size: number
-  health: number
-}
-
-export type ObjectDirectoryParams = {
-  key: string
-  bucket: string
-  limit?: number
+export type ObjectListParams = {
   prefix?: string
-  offset?: number
-  sortBy?: 'name' | 'health' | 'size'
-  sortDir?: 'asc' | 'desc'
-}
-export type ObjectDirectoryPayload = void
-export type ObjectDirectoryResponse = { hasMore: boolean; entries: ObjEntry[] }
-
-export type ObjectListParams = void
-export type ObjectListPayload = {
   bucket: string
+  delimiter?: string
   limit?: number
-  prefix?: string
   marker?: string
   sortBy?: 'name' | 'health' | 'size'
   sortDir?: 'asc' | 'desc'
+  substring?: string
 }
+export type ObjectListPayload = void
 export type ObjectListResponse = {
   hasMore: boolean
   nextMarker: string
-  objects: ObjEntry[]
+  objects?: ObjectMetadata[]
 }
 
 export type ObjectParams = { key: string; bucket: string }
@@ -433,7 +417,7 @@ export type ObjectSearchParams = {
   limit: number
 }
 export type ObjectSearchPayload = void
-export type ObjectSearchResponse = ObjEntry[]
+export type ObjectSearchResponse = ObjectMetadata[]
 
 export type ObjectAddParams = { key: string; bucket: string }
 export type ObjectAddPayload = {
@@ -522,7 +506,7 @@ export type AlertsDismissResponse = void
 
 export type SlabObjectsParams = { key: string }
 export type SlabObjectsPayload = void
-export type SlabObjectsResponse = ObjEntry[]
+export type SlabObjectsResponse = ObjectMetadata[]
 
 // metrics
 
@@ -610,10 +594,11 @@ export type WalletMetricsResponse = WalletMetric[]
 
 export type MultipartUploadCreateParams = void
 export type MultipartUploadCreatePayload = {
-  path: string
+  key: string
   bucket: string
-  generateKey: boolean
-  key?: string
+  mimeType?: string
+  metadata?: Record<string, string>
+  disableClientSideEncryption?: boolean
 }
 export type MultipartUploadCreateResponse = {
   uploadID: string
@@ -626,7 +611,7 @@ export type MultipartUploadCompletePart = {
 
 export type MultipartUploadCompleteParams = void
 export type MultipartUploadCompletePayload = {
-  path: string
+  key: string
   bucket: string
   uploadID: string
   parts: MultipartUploadCompletePart[]
@@ -635,7 +620,7 @@ export type MultipartUploadCompleteResponse = void
 
 export type MultipartUploadAbortParams = void
 export type MultipartUploadAbortPayload = {
-  path: string
+  key: string
   bucket: string
   uploadID: string
 }
@@ -644,7 +629,7 @@ export type MultipartUploadAbortResponse = void
 export type MultipartUploadListPartsParams = void
 export type MultipartUploadListPartsPayload = {
   bucket: string
-  path: string
+  key: string
   uploadID: string
   partNumberMarker?: number
   limit?: number
@@ -664,30 +649,33 @@ export type MultipartUploadListUploadsParams = void
 export type MultipartUploadListUploadsPayload = {
   bucket: string
   prefix?: string
-  pathMarker?: string
+  keyMarker?: string
   uploadIDMarker?: string
   limit?: number
+}
+export type MultipartUploadListItem = {
+  bucket: string
+  key: string
+  encryptionKey: string
+  uploadID: string
+  createdAt: string
 }
 export type MultipartUploadListUploadsResponse = {
   hasMore: boolean
   nextMarker: string
   nextUploadIDMarker: string
-  uploads?: {
-    path: string
-    uploadID: string
-    createdAt: string
-  }[]
+  uploads?: MultipartUploadListItem[]
 }
 
 export type MultipartUploadAddPartParams = void
 export type MultipartUploadAddPartPayload = {
-  path: string
+  key: string
   bucket: string
   uploadID: string
   eTag: string
   partNumber: number
   contractSet?: string
-  partialSlabs?: PartialSlab[]
+  partialSlabs?: SlabSlice[]
   slices?: SlabSlice[]
   usedContracts?: Contract[]
 }

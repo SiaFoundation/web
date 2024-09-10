@@ -62,7 +62,7 @@ describe('MultipartUpload', () => {
           { eTag: 'etag-9', partNumber: 9 },
           { eTag: 'etag-10', partNumber: 10 },
         ],
-        path: 'test-path',
+        key: 'test-path',
         uploadID: '12345',
       },
     })
@@ -126,7 +126,7 @@ describe('MultipartUpload', () => {
           { eTag: 'etag-9', partNumber: 9 },
           { eTag: 'etag-10', partNumber: 10 },
         ],
-        path: 'test-path',
+        key: 'test-path',
         uploadID: '12345',
       },
     })
@@ -184,7 +184,7 @@ describe('MultipartUpload', () => {
           { eTag: 'etag-2', partNumber: 2 },
           { eTag: 'etag-3', partNumber: 3 },
         ],
-        path: 'test-path',
+        key: 'test-path',
         uploadID: '12345',
       },
     })
@@ -260,7 +260,7 @@ describe('MultipartUpload', () => {
     await delay(10)
     await multipartUpload.abort()
     expect(params.api.busUploadAbort.post).toHaveBeenCalledWith({
-      payload: { bucket: 'test-bucket', path: 'test-path', uploadID: '12345' },
+      payload: { bucket: 'test-bucket', key: 'test-path', uploadID: '12345' },
     })
     expect(params.onComplete).not.toHaveBeenCalled()
     expect(params.onError).not.toHaveBeenCalled()
@@ -281,7 +281,7 @@ function getMockedParams(params?: Partial<Record<keyof MultipartParams, any>>) {
   const partSize = paramsPartSize || 1
   return {
     bucket: 'test-bucket',
-    path: 'test-path',
+    key: 'test-path',
     partSize,
     maxConcurrentParts: 1,
     file,

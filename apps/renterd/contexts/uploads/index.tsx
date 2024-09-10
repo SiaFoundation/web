@@ -46,7 +46,7 @@ function useUploadsMain() {
           await apiBusUploadAbort.post({
             payload: {
               bucket: activeBucket?.name,
-              path: upload.path,
+              key: upload.key,
               uploadID: upload.uploadID,
             },
           })
@@ -59,8 +59,8 @@ function useUploadsMain() {
     return (
       response.data?.uploads?.map((upload) => {
         const id = upload.uploadID
-        const name = getFilename(upload.path)
-        const fullPath = join(activeBucket?.name, upload.path)
+        const name = getFilename(upload.key)
+        const fullPath = join(activeBucket?.name, upload.key)
         const localUpload = uploadsMap[id]
         if (localUpload) {
           {
@@ -83,7 +83,7 @@ function useUploadsMain() {
             await apiBusUploadAbort.post({
               payload: {
                 bucket: activeBucket?.name,
-                path: upload.path,
+                key: upload.key,
                 uploadID: upload.uploadID,
               },
             })

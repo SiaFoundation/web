@@ -88,15 +88,9 @@ export type Sector = {
   root: string
 }
 
-export type PartialSlab = {
-  key: EncryptionKey
-  offset: number
-  length: number
-}
-
 export type Slab = {
   health: number
-  key: EncryptionKey
+  encryptionKey: EncryptionKey
   minShards: number
   // if no shards, then its a partial slab
   shards?: Sector[]
@@ -108,16 +102,26 @@ export type SlabSlice = {
   length: number
 }
 
-export type Obj = {
-  name: string
-  size: number
-  health: number
-  key: EncryptionKey
-  eTag: string
-  mimeType: string
-  modTime: string
+export type ObjectObject = {
+  encryptionKey: EncryptionKey
   slabs?: SlabSlice[]
 }
+
+export type ObjectMetadata = {
+  key: string
+  size: number
+  health: number
+  eTag?: string
+  modTime: string
+  mimeType?: string
+}
+
+export type ObjectUserMetadata = Record<string, string>
+
+export type Obj = ObjectMetadata &
+  ObjectObject & {
+    metadata: ObjectUserMetadata
+  }
 
 export type ContractSetSettings = {
   default: string

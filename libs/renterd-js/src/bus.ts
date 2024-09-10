@@ -121,9 +121,6 @@ import {
   ObjectDeleteParams,
   ObjectDeletePayload,
   ObjectDeleteResponse,
-  ObjectDirectoryParams,
-  ObjectDirectoryPayload,
-  ObjectDirectoryResponse,
   ObjectListParams,
   ObjectListPayload,
   ObjectListResponse,
@@ -133,9 +130,6 @@ import {
   ObjectRenamePayload,
   ObjectRenameResponse,
   ObjectResponse,
-  ObjectSearchParams,
-  ObjectSearchPayload,
-  ObjectSearchResponse,
   ObjectsStatsParams,
   ObjectsStatsPayload,
   ObjectsStatsResponse,
@@ -230,10 +224,8 @@ import {
   busMultipartListuploadsRoute,
   busMultipartPartRoute,
   busObjectsKeyRoute,
-  busObjectsListRoute,
   busObjectsRenameRoute,
   busHostsRoute,
-  busSearchObjectsRoute,
   busSettingKeyRoute,
   busSettingsRoute,
   busSlabKeyObjectsRoute,
@@ -255,6 +247,7 @@ import {
   AutopilotsPayload,
   AutopilotsResponse,
   busWalletEventsRoute,
+  busListObjectsPrefixRoute,
 } from '@siafoundation/renterd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
 import { AxiosRequestConfig } from 'axios'
@@ -468,26 +461,16 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       BucketDeletePayload,
       BucketDeleteResponse
     >(axios, 'delete', busBucketNameRoute),
-    objectDirectory: buildRequestHandler<
-      ObjectDirectoryParams,
-      ObjectDirectoryPayload,
-      ObjectDirectoryResponse
-    >(axios, 'get', busObjectsKeyRoute),
     objectList: buildRequestHandler<
       ObjectListParams,
       ObjectListPayload,
       ObjectListResponse
-    >(axios, 'post', busObjectsListRoute),
+    >(axios, 'get', busListObjectsPrefixRoute),
     object: buildRequestHandler<ObjectParams, ObjectPayload, ObjectResponse>(
       axios,
       'get',
       busObjectsKeyRoute
     ),
-    objectSearch: buildRequestHandler<
-      ObjectSearchParams,
-      ObjectSearchPayload,
-      ObjectSearchResponse
-    >(axios, 'get', busSearchObjectsRoute),
     objectAdd: buildRequestHandler<
       ObjectAddParams,
       ObjectAddPayload,

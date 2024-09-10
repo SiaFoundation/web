@@ -1,4 +1,4 @@
-import { ObjEntry } from '@siafoundation/renterd-types'
+import { ObjectMetadata } from '@siafoundation/renterd-types'
 import { sortBy, toPairs } from '@technically/lodash'
 import useSWR from 'swr'
 import { useContracts } from '../contracts'
@@ -16,7 +16,7 @@ type Props = {
   id: string
   objects: {
     isValidating: boolean
-    data?: ObjEntry[]
+    data?: ObjectMetadata[]
   }
 }
 
@@ -57,7 +57,7 @@ export function useDataset({ id, objects }: Props) {
           }
         })
       } else if (objects.data || uploadsList.length) {
-        objects.data?.forEach(({ name: key, size, health }) => {
+        objects.data?.forEach(({ key, size, health }) => {
           const path = join(activeBucketName, key)
           const name = getFilename(key)
           dataMap[path] = {

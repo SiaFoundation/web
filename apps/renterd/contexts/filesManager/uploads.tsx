@@ -1,5 +1,5 @@
 import { triggerErrorToast } from '@siafoundation/design-system'
-import { Bucket } from '@siafoundation/renterd-types'
+import { Bucket, busListObjectsRoute } from '@siafoundation/renterd-types'
 import {
   useBuckets,
   useMultipartUploadAbort,
@@ -106,7 +106,7 @@ export function useUploads({ activeDirectoryPath }: Props) {
       const key = getKeyFromPath(path)
       const multipartUpload = new MultipartUpload({
         file: uploadFile,
-        path: key,
+        key,
         bucket: bucket.name,
         api: ref.current,
         partSize: getMultipartUploadPartSize(
@@ -133,7 +133,7 @@ export function useUploads({ activeDirectoryPath }: Props) {
         }, 1000)
       )
       multipartUpload.setOnComplete(async () => {
-        await ref.current.mutate((key) => key.startsWith('/bus/objects'))
+        await ref.current.mutate((key) => key.startsWith(busListObjectsRoute))
         ref.current.removeUpload(uploadId)
         setTimeout(() => {
           ref.current.checkAndStartUploads()

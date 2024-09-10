@@ -14,7 +14,7 @@ type ApiBusUploadAbort = ReturnType<typeof useMultipartUploadAbort>
 
 export type MultipartParams = {
   bucket: string
-  path: string
+  key: string
   file: File
   api: {
     workerUploadPart: ApiWorkerUploadPart
@@ -41,7 +41,7 @@ type UploadedPart = {
 export class MultipartUpload {
   // params
   #bucket: string
-  #path: string
+  #key: string
   #file: File
   #partSize: number
   #maxConcurrentParts: number
@@ -75,7 +75,7 @@ export class MultipartUpload {
   constructor(options: MultipartParams) {
     // params
     this.#bucket = options.bucket
-    this.#path = options.path
+    this.#key = options.key
     this.#partSize = options.partSize || 1024 * 1024 * 5
     this.#maxConcurrentParts = Math.min(options.maxConcurrentParts || 5, 15)
     this.#file = options.file
@@ -96,8 +96,7 @@ export class MultipartUpload {
   public async create() {
     const createPayload = {
       bucket: this.#bucket,
-      generateKey: true,
-      path: this.#path,
+      key: this.#key,
     }
     const response = await this.#api.busUploadCreate.post({
       payload: createPayload,
@@ -133,7 +132,7 @@ export class MultipartUpload {
       await this.#api.busUploadAbort.post({
         payload: {
           bucket: this.#bucket,
-          path: this.#path,
+          key: this.#key,
           uploadID: this.#uploadId,
         },
       })
@@ -235,7 +234,7 @@ export class MultipartUpload {
     try {
       const payload = {
         bucket: this.#bucket,
-        path: this.#path,
+        key: this.#key,
         uploadID: this.#uploadId,
         parts: this.#uploadedParts.sort((a, b) => a.partNumber - b.partNumber),
       }
@@ -280,7 +279,7 @@ export class MultipartUpload {
     try {
       const response = await this.#api.workerUploadPart.put({
         params: {
-          key: this.#path.slice(1),
+          key: this.#key.slice(1),
           bucket: this.#bucket,
           uploadid: this.#uploadId,
           offset: partOffset,
