@@ -56,6 +56,14 @@ import {
   MetricsByIDParams,
   MetricsByIDPayload,
   MetricsByIDResponse,
+  OutputSiacoinParams,
+  OutputSiacoinPayload,
+  OutputSiacoinResponse,
+  outputSiacoinRoute,
+  OutputSiafundeParams,
+  OutputSiafundePayload,
+  OutputSiafundeResponse,
+  outputSiafundeRoute,
   searchResultTypeRoute,
   SearchResultTypeParams,
   SearchResultTypePayload,
@@ -92,14 +100,10 @@ import {
   TxpoolTransactionsParams,
   TxpoolTransactionsPayload,
   TxpoolTransactionsResponse,
-  OutputSiacoineParams,
-  OutputSiacoinePayload,
-  OutputSiacoineResponse,
-  outputSiacoineRoute,
-  OutputSiafundeParams,
-  OutputSiafundePayload,
-  OutputSiafundeResponse,
-  outputSiafundeRoute,
+  transactionChainIndicesRoute,
+  TransactionChainIndicesParams,
+  TransactionChainIndicesPayload,
+  TransactionChainIndicesResponse,
 } from '@siafoundation/explored-types'
 
 export function Explored({
@@ -182,6 +186,11 @@ export function Explored({
       TransactionsByIDsPayload,
       TransactionsByIDsResponse
     >(axios, 'post', transactionsByIDsRoute),
+    transactionChainIndices: buildRequestHandler<
+      TransactionChainIndicesParams,
+      TransactionChainIndicesPayload,
+      TransactionChainIndicesResponse
+    >(axios, 'post', transactionChainIndicesRoute),
     // Address
     addressSiacoinUTXOs: buildRequestHandler<
       AddressSiacoinUTXOsParams,
@@ -205,10 +214,10 @@ export function Explored({
     >(axios, 'get', addressBalanceRoute),
     //Output
     outputSiacoin: buildRequestHandler<
-      OutputSiacoineParams,
-      OutputSiacoinePayload,
-      OutputSiacoineResponse
-    >(axios, 'get', outputSiacoineRoute),
+      OutputSiacoinParams,
+      OutputSiacoinPayload,
+      OutputSiacoinResponse
+    >(axios, 'get', outputSiacoinRoute),
     outputSiafund: buildRequestHandler<
       OutputSiafundeParams,
       OutputSiafundePayload,

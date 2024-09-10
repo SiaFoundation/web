@@ -114,6 +114,15 @@ export type TransactionsByIDsParams = void
 export type TransactionsByIDsPayload = { ids: TransactionID[] }
 export type TransactionsByIDsResponse = ExplorerTransaction[]
 
+export const transactionChainIndicesRoute = '/transactions/:id/indices'
+export type TransactionChainIndicesParams = {
+  id: TransactionID
+  offset?: number
+  limit?: number
+}
+export type TransactionChainIndicesPayload = void
+export type TransactionChainIndicesResponse = ChainIndex[]
+
 // Address
 
 // Returns the specified address' unspent siacoin outputs.
@@ -154,10 +163,10 @@ export type AddressBalanceResponse = AddressBalance
 
 // Output
 // Returns the specified siacoin output.
-export const outputSiacoineRoute = '/outputs/siacoin/:siacoinoutputid'
-export type OutputSiacoineParams = { siacoinOutputID: SiacoinOutputID }
-export type OutputSiacoinePayload = void
-export type OutputSiacoineResponse = ExplorerSiacoinOutput
+export const outputSiacoinRoute = '/outputs/siacoin/:siacoinoutputid'
+export type OutputSiacoinParams = { siacoinOutputID: SiacoinOutputID }
+export type OutputSiacoinPayload = void
+export type OutputSiacoinResponse = ExplorerSiacoinOutput
 
 // Returns the specified address' events.
 export const outputSiafundeRoute = '/outputs/siafund/:siafundoutputid'

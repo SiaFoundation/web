@@ -33,9 +33,9 @@ import {
   MetricsParams,
   MetricsResponse,
   metricsRoute,
-  OutputSiacoineParams,
-  OutputSiacoineResponse,
-  outputSiacoineRoute,
+  OutputSiacoinParams,
+  OutputSiacoinResponse,
+  outputSiacoinRoute,
   OutputSiafundeParams,
   OutputSiafundeResponse,
   outputSiafundeRoute,
@@ -56,6 +56,9 @@ import {
   TransactionByIDParams,
   TransactionByIDResponse,
   transactionByIDRoute,
+  TransactionChainIndicesParams,
+  TransactionChainIndicesResponse,
+  transactionChainIndicesRoute,
   TransactionsByIDsParams,
   TransactionsByIDsPayload,
   TransactionsByIDsResponse,
@@ -213,6 +216,18 @@ export function useTransactionsByIDs(
   })
 }
 
+export function useTransactionChainIndices(
+  args: HookArgsSwr<
+    TransactionChainIndicesParams,
+    TransactionChainIndicesResponse
+  >
+) {
+  return useGetSwr({
+    ...args,
+    route: transactionChainIndicesRoute,
+  })
+}
+
 // Address
 
 export function useAddressSiacoinUTXOs(
@@ -245,11 +260,11 @@ export function useAddressBalance(
 // Output
 
 export function useOutputSiacoin(
-  args: HookArgsSwr<OutputSiacoineParams, OutputSiacoineResponse>
+  args: HookArgsSwr<OutputSiacoinParams, OutputSiacoinResponse>
 ) {
   return useGetSwr({
     ...args,
-    route: outputSiacoineRoute,
+    route: outputSiacoinRoute,
   })
 }
 
