@@ -241,6 +241,42 @@ export type Host = {
   scanned: boolean
   priceTable?: HostPriceTable
   settings?: HostSettings
+  blocked: boolean
+  storedData: number
+  resolvedAddresses?: string[]
+  subnets?: string[]
+  checks?: Record<string, HostAutopilotChecks>
+}
+
+export type HostAutopilotChecks = {
+  score: number
+  usable: boolean
+  scoreBreakdown: {
+    age: number
+    collateral: number
+    interactions: number
+    storageRemaining: number
+    prices: number
+    uptime: number
+    version: number
+  }
+  gougingBreakdown: {
+    contractErr?: string
+    downloadErr?: string
+    gougingErr?: string
+    uploadErr?: string
+    pruneErr?: string
+  }
+  usabilityBreakdown: {
+    blocked: boolean
+    gouging: boolean
+    lowScore: boolean
+    notAcceptingContracts: boolean
+    notAnnounced: boolean
+    notCompletingScan: boolean
+    offline: boolean
+    redundantIP: boolean
+  }
 }
 
 export type SiacoinElement = {
@@ -273,6 +309,12 @@ export type AutopilotContractsConfig = {
 export type AutopilotConfig = {
   hosts: AutopilotHostsConfig
   contracts: AutopilotContractsConfig
+}
+
+export type Autopilot = {
+  id: string
+  config: AutopilotConfig
+  currentPeriod: number
 }
 
 export type WalletTransaction = {

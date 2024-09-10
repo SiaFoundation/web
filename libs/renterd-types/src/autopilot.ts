@@ -1,17 +1,12 @@
-import {
-  AutopilotConfig,
-  GougingSettings,
-  Host,
-  RedundancySettings,
-} from './types'
-import { HostsSearchPayload, BusStateResponse } from './bus'
+import { AutopilotConfig, GougingSettings, RedundancySettings } from './types'
+import { BusStateResponse } from './bus'
 
 export const autopilotStateRoute = '/autopilot/state'
 export const autopilotConfigRoute = '/autopilot/config'
-export const autopilotHostsRoute = '/autopilot/hosts'
 export const autopilotTriggerRoute = '/autopilot/trigger'
 
 type AutopilotStatus = {
+  id: string
   configured: boolean
   migrating: boolean
   migratingLastStart: string
@@ -62,35 +57,6 @@ export type AutopilotConfigEvaluateResponse = {
   }
   recommendation?: ConfigRecommendation
 }
-
-export type AutopilotHost = {
-  host: Host
-  checks?: {
-    score: number
-    scoreBreakdown: {
-      age: number
-      collateral: number
-      interactions: number
-      storageRemaining: number
-      prices: number
-      uptime: number
-      version: number
-    }
-    unusableReasons: string[]
-    gougingBreakdown: {
-      contractErr?: string
-      downloadErr?: string
-      gougingErr?: string
-      uploadErr?: string
-    }
-    gouging: boolean
-    usable: boolean
-  }
-}
-
-export type AutopilotHostsSearchParams = void
-export type AutopilotHostsSearchPayload = HostsSearchPayload
-export type AutopilotHostsSearchResponse = AutopilotHost[]
 
 export type AutopilotTriggerParams = void
 export type AutopilotTriggerPayload = { forceScan: boolean }

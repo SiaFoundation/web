@@ -17,16 +17,12 @@ import {
   AutopilotConfigEvaluateParams,
   AutopilotConfigEvaluatePayload,
   AutopilotConfigEvaluateResponse,
-  AutopilotHostsSearchParams,
-  AutopilotHostsSearchPayload,
-  AutopilotHostsSearchResponse,
   AutopilotStateParams,
   AutopilotStateResponse,
   AutopilotTriggerParams,
   AutopilotTriggerPayload,
   AutopilotTriggerResponse,
   autopilotConfigRoute,
-  autopilotHostsRoute,
   autopilotStateRoute,
   autopilotTriggerRoute,
 } from '@siafoundation/renterd-types'
@@ -79,19 +75,6 @@ export function useAutopilotConfigEvaluate(
   >
 ) {
   return usePostSwr({ ...args, route: autopilotConfigRoute })
-}
-
-export function useAutopilotHostsSearch(
-  args?: HookArgsWithPayloadSwr<
-    AutopilotHostsSearchParams,
-    AutopilotHostsSearchPayload,
-    AutopilotHostsSearchResponse
-  >
-) {
-  return usePostSwr({
-    ...args,
-    route: autopilotHostsRoute,
-  })
 }
 
 export function useAutopilotTrigger(

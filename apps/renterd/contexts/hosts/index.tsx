@@ -1,20 +1,23 @@
 import {
-  useTableState,
-  useDatasetEmptyState,
-  useServerFilters,
   triggerErrorToast,
   truncate,
+  useDatasetEmptyState,
+  useServerFilters,
+  useTableState,
 } from '@siafoundation/design-system'
+import { useAppSettings } from '@siafoundation/react-core'
 import {
-  HostsSearchFilterMode,
-  HostsUsabilityMode,
-} from '@siafoundation/renterd-types'
-import {
-  useAutopilotHostsSearch,
   useHostsAllowlist,
   useHostsBlocklist,
-  useHostsSearch,
+  useHosts as useHostsSearch,
 } from '@siafoundation/renterd-react'
+import {
+  HostsFilterMode,
+  HostsPayload,
+  HostsUsabilityMode,
+} from '@siafoundation/renterd-types'
+import { useSiaCentralHosts } from '@siafoundation/sia-central-react'
+import { useRouter } from 'next/router'
 import {
   createContext,
   useCallback,
@@ -24,22 +27,19 @@ import {
   useRef,
   useState,
 } from 'react'
-import {
-  TableColumnId,
-  columnsDefaultVisible,
-  ViewMode,
-  HostDataWithLocation,
-} from './types'
-import { useRouter } from 'next/router'
-import { columns } from './columns'
-import { useContracts } from '../contracts'
-import { useDataset } from './dataset'
-import { useApp } from '../app'
-import { useAppSettings } from '@siafoundation/react-core'
 import { Commands, emptyCommands } from '../../components/Hosts/HostMap/Globe'
-import { useSiaCentralHosts } from '@siafoundation/sia-central-react'
-import { useSiascanUrl } from '../../hooks/useSiascanUrl'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { useSiascanUrl } from '../../hooks/useSiascanUrl'
+import { useApp } from '../app'
+import { useContracts } from '../contracts'
+import { columns } from './columns'
+import { useDataset } from './dataset'
+import {
+  HostDataWithLocation,
+  TableColumnId,
+  ViewMode,
+  columnsDefaultVisible,
+} from './types'
 
 const defaultLimit = 50
 
@@ -66,43 +66,25 @@ function useHostsMain() {
     return keyIn.length ? keyIn : undefined
   }, [filters, allContracts])
 
-  const autopilotResponse = useAutopilotHostsSearch({
-    disabled:
-      // prevents an extra fetch when allContracts is null
-      (filters.find((f) => f.id === 'hasActiveContracts') && !allContracts) ||
-      autopilot.status !== 'on',
-    payload: {
+  const payload = useMemo(() => {
+    const p: HostsPayload = {
       limit,
       offset,
       usabilityMode: (filters.find((f) => f.id === 'usabilityMode')?.value ||
         'all') as HostsUsabilityMode,
       filterMode: (filters.find((f) => f.id === 'filterMode')?.value ||
-        'all') as HostsSearchFilterMode,
+        'all') as HostsFilterMode,
       addressContains: filters.find((f) => f.id === 'addressContains')?.value,
       keyIn,
-    },
-    config: {
-      swr: {
-        // before autopilot is configured this will repeatedly 500
-        errorRetryInterval: 20_000,
-        refreshInterval: defaultDatasetRefreshInterval,
-      },
-    },
-  })
+    }
+    if (autopilot.state.data?.id) {
+      p.autopilotID = autopilot.state.data.id
+    }
+    return p
+  }, [autopilot.state.data?.id, filters, keyIn, limit, offset])
 
-  const regularResponse = useHostsSearch({
-    disabled: autopilot.status !== 'off',
-    payload: {
-      limit,
-      offset,
-      filterMode: (filters.find((f) => f.id === 'filterMode')?.value ||
-        'all') as HostsSearchFilterMode,
-      addressContains: filters.find((f) => f.id === 'addressContains')?.value,
-      keyIn:
-        filters.find((f) => f.id === 'hasActiveContracts') && allContracts
-          ? allContracts.map((c) => c.hostKey)
-          : undefined,
-    },
+  const response = useHostsSearch({
+    payload,
     config: {
       swr: {
         refreshInterval: defaultDatasetRefreshInterval,
@@ -197,10 +179,9 @@ function useHostsMain() {
   )
 
   const dataset = useDataset({
-    autopilotStatus: autopilot.status,
-    autopilotResponse,
-    regularResponse,
+    response,
     allContracts,
+    autopilotID: autopilot.state.data?.id,
     allowlist,
     blocklist,
     isAllowlistActive,
@@ -236,12 +217,8 @@ function useHostsMain() {
     [enabledColumns]
   )
 
-  const isValidating =
-    autopilot.status === 'on'
-      ? autopilotResponse.isValidating
-      : regularResponse.isValidating
-  const error =
-    autopilot.status === 'on' ? autopilotResponse.error : regularResponse.error
+  const isValidating = response.isValidating
+  const error = response.error
   const dataState = useDatasetEmptyState(dataset, isValidating, error, filters)
 
   const siascanUrl = useSiascanUrl()

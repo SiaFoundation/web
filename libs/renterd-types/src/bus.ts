@@ -10,6 +10,7 @@ import {
   TransactionID,
 } from '@siafoundation/types'
 import {
+  Autopilot,
   ConsensusState,
   Contract,
   ContractRevision,
@@ -23,6 +24,7 @@ import {
 } from './types'
 
 export const busStateRoute = '/bus/state'
+export const busAutopilotsRoute = '/bus/autopilots'
 export const busConsensusStateRoute = '/bus/consensus/state'
 export const busConsensusAcceptblockRoute = '/bus/consensus/acceptblock'
 export const busSyncerPeersRoute = '/bus/syncer/peers'
@@ -43,7 +45,7 @@ export const busWalletDiscardRoute = '/bus/wallet/discard'
 export const busWalletPrepareFormRoute = '/bus/wallet/prepare/form'
 export const busWalletPrepareRenewRoute = '/bus/wallet/prepare/renew'
 export const busWalletPendingRoute = '/bus/wallet/pending'
-export const busSearchHostsRoute = '/bus/search/hosts'
+export const busHostsRoute = '/bus/hosts'
 export const busHostHostKeyRoute = '/bus/host/:hostKey'
 export const busHostsHostKeyRoute = '/bus/hosts/:hostKey'
 export const busHostsBlocklistRoute = '/bus/hosts/blocklist'
@@ -104,6 +106,12 @@ export type BusStatePayload = void
 export type BusStateResponse = BuildState & {
   startTime: number
 }
+
+// autopilots
+
+export type AutopilotsParams = void
+export type AutopilotsPayload = void
+export type AutopilotsResponse = Autopilot[]
 
 // consensus
 
@@ -242,18 +250,20 @@ export type WalletPendingResponse = Transaction[]
 
 // hosts
 
-export type HostsSearchParams = void
-export type HostsSearchFilterMode = 'all' | 'allowed' | 'blocked'
+export type HostsParams = void
+export type HostsFilterMode = 'all' | 'allowed' | 'blocked'
 export type HostsUsabilityMode = 'all' | 'usable' | 'unusable'
-export type HostsSearchPayload = {
-  filterMode: HostsSearchFilterMode
+export type HostsPayload = {
+  autopilotID?: string
+  filterMode: HostsFilterMode
   usabilityMode?: HostsUsabilityMode
   addressContains?: string
   keyIn?: string[]
   offset?: number
   limit?: number
+  maxLastScan?: string
 }
-export type HostsSearchResponse = Host[]
+export type HostsResponse = Host[]
 
 export type HostParams = { hostKey: string }
 export type HostPayload = Host

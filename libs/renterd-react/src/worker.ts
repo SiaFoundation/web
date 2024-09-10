@@ -11,8 +11,6 @@ import {
   AccountResetDriftParams,
   AccountResetDriftPayload,
   AccountResetDriftResponse,
-  AutopilotHost,
-  Host,
   MultipartUploadPartParams,
   MultipartUploadPartPayload,
   MultipartUploadPartResponse,
@@ -27,9 +25,8 @@ import {
   RhpScanResponse,
   WorkerStateParams,
   WorkerStateResponse,
-  autopilotHostsRoute,
   busObjectsRoute,
-  busSearchHostsRoute,
+  busHostsRoute,
   workerAccountIdResetdriftRoute,
   workerMultipartKeyRoute,
   workerObjectsKeyRoute,
@@ -121,52 +118,31 @@ export function useRhpScan(
       // is debounced so if the user rescans multiple hosts in quick
       // succession the list is optimistically updated n times followed
       // by a single network revalidate.
-      mutate<AutopilotHost[]>(
-        (key) => key.startsWith(autopilotHostsRoute),
+      mutate<Host[]>(
+        (key) => key.startsWith(busHostsRoute),
         (data) =>
-          data?.map((aph) => {
-            if (aph.host.publicKey === hostKey) {
+          data?.map((h) => {
+            if (h.publicKey === hostKey) {
               return {
-                ...aph,
+                ...h,
                 host: {
-                  ...aph.host,
+                  ...h,
                   interactions: {
-                    ...aph.host.interactions,
-                    LastScan: new Date().toISOString(),
-                    LastScanSuccess: !response.data.scanError,
+                    ...h.interactions,
+                    lastScan: new Date().toISOString(),
+                    lastScanSuccess: !response.data.scanError,
                   },
                   settings: response.data.settings,
                 },
               }
             }
-            return aph
-          }),
-        false
-      )
-      mutate<Host[]>(
-        (key) => key.startsWith(busSearchHostsRoute),
-        (data) =>
-          data?.map((host) => {
-            if (host.publicKey === hostKey) {
-              return {
-                ...host,
-                interactions: {
-                  ...host.interactions,
-                  LastScan: new Date().toISOString(),
-                  LastScanSuccess: !response.data.scanError,
-                },
-                settings: response.data.settings,
-              }
-            }
-            return host
+            return h
           }),
         false
       )
       debouncedListRevalidate(() => {
         mutate(
-          (key) =>
-            key.startsWith(autopilotHostsRoute) ||
-            key.startsWith(busSearchHostsRoute),
+          (key) => key.startsWith(busHostsRoute),
           (d) => d,
           true
         )

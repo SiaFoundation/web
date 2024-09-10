@@ -8,9 +8,6 @@ import {
   AutopilotConfigUpdateParams,
   AutopilotConfigUpdatePayload,
   AutopilotConfigUpdateResponse,
-  AutopilotHostsSearchParams,
-  AutopilotHostsSearchPayload,
-  AutopilotHostsSearchResponse,
   AutopilotStateParams,
   AutopilotStatePayload,
   AutopilotStateResponse,
@@ -18,7 +15,6 @@ import {
   AutopilotTriggerPayload,
   AutopilotTriggerResponse,
   autopilotConfigRoute,
-  autopilotHostsRoute,
   autopilotStateRoute,
   autopilotTriggerRoute,
 } from '@siafoundation/renterd-types'
@@ -54,11 +50,6 @@ export function Autopilot({
       AutopilotConfigEvaluatePayload,
       AutopilotConfigEvaluateResponse
     >(axios, 'post', autopilotConfigRoute),
-    hostsSearch: buildRequestHandler<
-      AutopilotHostsSearchParams,
-      AutopilotHostsSearchPayload,
-      AutopilotHostsSearchResponse
-    >(axios, 'post', autopilotHostsRoute),
     trigger: buildRequestHandler<
       AutopilotTriggerParams,
       AutopilotTriggerPayload,

@@ -1,31 +1,28 @@
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import { HostData } from './types'
-import { Host } from '@siafoundation/renterd-types'
+import { Host, HostAutopilotChecks } from '@siafoundation/renterd-types'
 import {
-  useAutopilotHostsSearch,
   useHostsAllowlist,
   useHostsBlocklist,
-  useHostsSearch,
+  useHosts,
 } from '@siafoundation/renterd-react'
 import { ContractData } from '../contracts/types'
-import { useApp } from '../app'
 import { SiaCentralHost } from '@siafoundation/sia-central-types'
+import { objectEntries } from '@siafoundation/design-system'
 
 export function useDataset({
-  autopilotStatus,
-  regularResponse,
-  autopilotResponse,
+  response,
   allContracts,
+  autopilotID,
   allowlist,
   blocklist,
   isAllowlistActive,
   geoHosts,
   onHostSelect,
 }: {
-  autopilotStatus: ReturnType<typeof useApp>['autopilot']['status']
-  regularResponse: ReturnType<typeof useHostsSearch>
-  autopilotResponse: ReturnType<typeof useAutopilotHostsSearch>
+  response: ReturnType<typeof useHosts>
+  autopilotID: string
   allContracts: ContractData[]
   allowlist: ReturnType<typeof useHostsAllowlist>
   blocklist: ReturnType<typeof useHostsBlocklist>
@@ -34,51 +31,28 @@ export function useDataset({
   onHostSelect: (publicKey: string, location?: [number, number]) => void
 }) {
   return useMemo<HostData[] | null>(() => {
-    if (autopilotStatus === 'off') {
-      return (
-        regularResponse.data?.map((host) => {
-          const sch = geoHosts.find((gh) => gh.public_key === host.publicKey)
-          return {
-            onClick: () => onHostSelect(host.publicKey, sch?.location),
-            ...getHostFields(host, allContracts),
-            ...getAllowedFields({
-              host,
-              allowlist: allowlist.data,
-              blocklist: blocklist.data,
-              isAllowlistActive,
-            }),
-            ...getAutopilotFields(),
-            location: sch?.location,
-            countryCode: sch?.country_code,
-          }
-        }) || null
-      )
-    } else if (autopilotStatus === 'on') {
-      return (
-        autopilotResponse.data?.map((ah) => {
-          const sch = geoHosts.find((gh) => gh.public_key === ah.host.publicKey)
-          return {
-            onClick: () => onHostSelect(ah.host.publicKey, sch?.location),
-            ...getHostFields(ah.host, allContracts),
-            ...getAllowedFields({
-              host: ah.host,
-              allowlist: allowlist.data,
-              blocklist: blocklist.data,
-              isAllowlistActive,
-            }),
-            ...getAutopilotFields(ah.checks),
-            location: sch?.location,
-            countryCode: sch?.country_code,
-          }
-        }) || null
-      )
-    }
-    return null
+    return (
+      response.data?.map((host) => {
+        const sch = geoHosts.find((gh) => gh.public_key === host.publicKey)
+        return {
+          onClick: () => onHostSelect(host.publicKey, sch?.location),
+          ...getHostFields(host, allContracts),
+          ...getAllowedFields({
+            host,
+            allowlist: allowlist.data,
+            blocklist: blocklist.data,
+            isAllowlistActive,
+          }),
+          ...getAutopilotFields(host.checks?.[autopilotID]),
+          location: sch?.location,
+          countryCode: sch?.country_code,
+        }
+      }) || null
+    )
   }, [
     onHostSelect,
-    autopilotStatus,
-    regularResponse.data,
-    autopilotResponse.data,
+    autopilotID,
+    response.data,
     allContracts,
     allowlist.data,
     blocklist.data,
@@ -160,25 +134,65 @@ function getAllowedFields({
 
 function getAutopilotFields(ahc?: {
   score: number
+  usable: boolean
+  scoreBreakdown: {
+    age: number
+    collateral: number
+    interactions: number
+    storageRemaining: number
+    prices: number
+    uptime: number
+    version: number
+  }
   gougingBreakdown: {
     contractErr?: string
     downloadErr?: string
     gougingErr?: string
     uploadErr?: string
+    pruneErr?: string
   }
-  gouging: boolean
+  usabilityBreakdown: {
+    blocked: boolean
+    gouging: boolean
+    lowScore: boolean
+    notAcceptingContracts: boolean
+    notAnnounced: boolean
+    notCompletingScan: boolean
+    offline: boolean
+    redundantIP: boolean
+  }
+}): {
+  score: BigNumber
   scoreBreakdown: {
-    age: number
-    collateral: number
-    interactions: number
-    prices: number
-    storageRemaining: number
-    uptime: number
-    version: number
+    age: BigNumber
+    collateral: BigNumber
+    interactions: BigNumber
+    prices: BigNumber
+    storageRemaining: BigNumber
+    uptime: BigNumber
+    version: BigNumber
+  }
+  isGouging: boolean
+  isUsable: boolean
+  gougingBreakdown: {
+    contractErr?: string
+    downloadErr?: string
+    gougingErr?: string
+    uploadErr?: string
+    pruneErr?: string
+  }
+  usabilityBreakdown: {
+    blocked: boolean
+    gouging: boolean
+    lowScore: boolean
+    notAcceptingContracts: boolean
+    notAnnounced: boolean
+    notCompletingScan: boolean
+    offline: boolean
+    redundantIP: boolean
   }
   unusableReasons: string[]
-  usable: boolean
-}) {
+} {
   return {
     score: new BigNumber(ahc?.score || 0),
     scoreBreakdown: {
@@ -192,9 +206,51 @@ function getAutopilotFields(ahc?: {
       uptime: new BigNumber(ahc?.scoreBreakdown.uptime || 0),
       version: new BigNumber(ahc?.scoreBreakdown.version || 0),
     },
+    isGouging: Object.values(ahc?.gougingBreakdown || {}).some((v) => v),
+    isUsable: !!ahc?.usable,
     gougingBreakdown: ahc?.gougingBreakdown || {},
-    gouging: ahc?.gouging,
-    unusableReasons: ahc?.unusableReasons || [],
-    usable: ahc?.usable,
+    usabilityBreakdown: ahc?.usabilityBreakdown || {
+      blocked: false,
+      gouging: false,
+      lowScore: false,
+      notAcceptingContracts: false,
+      notAnnounced: false,
+      notCompletingScan: false,
+      offline: false,
+      redundantIP: false,
+    },
+    unusableReasons: ahc
+      ? objectEntries(ahc.usabilityBreakdown).reduce((acc, [key, value]) => {
+          if (value) {
+            return acc.concat(getUnusableReasonLabel(key))
+          }
+          return acc
+        }, [])
+      : [],
+  }
+}
+
+function getUnusableReasonLabel(
+  key: keyof HostAutopilotChecks['usabilityBreakdown']
+): string {
+  switch (key) {
+    case 'blocked':
+      return 'Host is blocked'
+    case 'gouging':
+      return 'Host is gouging'
+    case 'lowScore':
+      return 'Host has low score'
+    case 'notAcceptingContracts':
+      return 'Host is not accepting contracts'
+    case 'notAnnounced':
+      return 'Host is not announced'
+    case 'notCompletingScan':
+      return 'Host is not completing scan'
+    case 'offline':
+      return 'Host is offline'
+    case 'redundantIP':
+      return 'Host has redundant IP'
+    default:
+      return 'Unknown'
   }
 }
