@@ -3,6 +3,7 @@ import {
   ScrollArea,
   Separator,
   Text,
+  truncate,
 } from '@siafoundation/design-system'
 import { useObject } from '@siafoundation/renterd-react'
 import { cx } from 'class-variance-authority'
@@ -62,7 +63,7 @@ export function FilesHealthColumnContents({
       // multipart uploads might reference the same slab over and over but at
       // different offsets and lengths. So we should not assume that they are
       // always unique.
-      id: `${s.offset}${s.length}${s.slab.key}`,
+      id: `${s.offset}${s.length}${s.slab.encryptionKey}`,
       isPartialSlab: !!s.slab.shards,
       contractSetShards: s.slab.shards?.length
         ? computeSlabContractSetShards({
@@ -91,7 +92,7 @@ export function FilesHealthColumnContents({
             className="flex items-center"
             font="mono"
           >
-            Slab {slab.key.replace('key:', '').slice(0, 4)}:
+            Slab {truncate(slab.encryptionKey, 4, false)}:
           </Text>
           <Text size="12" className="flex items-center">
             {slab.isPartialSlab

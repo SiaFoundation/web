@@ -1,4 +1,3 @@
-import { ObjectListPayload } from '@siafoundation/renterd-types'
 import { useObjectList } from '@siafoundation/renterd-react'
 import { SortField } from '../filesManager/types'
 import { useDataset as useDatasetGeneric } from '../filesManager/dataset'
@@ -6,6 +5,7 @@ import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { useFilesManager } from '../filesManager'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { ObjectListParams } from '@siafoundation/renterd-types'
 
 type Props = {
   sortDirection: 'asc' | 'desc'
@@ -21,22 +21,27 @@ export function useDataset({ sortDirection, sortField }: Props) {
   const marker = router.query.marker as string
 
   const params = useMemo(() => {
-    const p: ObjectListPayload = {
+    let prefix = ''
+    if (fileNamePrefixFilter) {
+      prefix += fileNamePrefixFilter.startsWith('/')
+        ? fileNamePrefixFilter.slice(1)
+        : fileNamePrefixFilter
+    }
+    const p: ObjectListParams = {
+      prefix,
       bucket: activeBucketName,
       sortBy: sortField,
       sortDir: sortDirection,
-      marker,
       limit,
+      delimiter: '',
     }
-    if (fileNamePrefixFilter) {
-      p.prefix = fileNamePrefixFilter.startsWith('/')
-        ? fileNamePrefixFilter
-        : '/' + fileNamePrefixFilter
+    if (marker) {
+      p.marker = marker
     }
     return p
   }, [
-    activeBucketName,
     fileNamePrefixFilter,
+    activeBucketName,
     sortField,
     sortDirection,
     marker,
@@ -45,7 +50,7 @@ export function useDataset({ sortDirection, sortField }: Props) {
 
   const response = useObjectList({
     disabled: !activeBucketName,
-    payload: params,
+    params,
     config: {
       swr: {
         refreshInterval: defaultDatasetRefreshInterval,

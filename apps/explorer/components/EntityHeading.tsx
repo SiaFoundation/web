@@ -3,7 +3,7 @@
 import {
   copyToClipboard,
   Heading,
-  humanId,
+  truncate,
   Button,
   Link,
 } from '@siafoundation/design-system'
@@ -25,7 +25,7 @@ export function EntityHeading({ label, type, value, href }: Props) {
         {upperFirst(label)}{' '}
         <Link href={href} underline="hover">
           {type === 'block' && Number(value).toLocaleString()}
-          {type !== 'block' && humanId(value, 15)}
+          {type !== 'block' && truncate(value, 15)}
         </Link>
       </Heading>
       <Button

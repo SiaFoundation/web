@@ -16,7 +16,7 @@ function useFilesDirectoryMain() {
     enabledColumns,
   } = useFilesManager()
 
-  const { limit, offset, response, refresh, dataset } = useDataset()
+  const { limit, marker, isMore, response, refresh, dataset } = useDataset()
 
   const {
     onDragEnd,
@@ -104,7 +104,8 @@ function useFilesDirectoryMain() {
     columns: filteredTableColumns,
     refresh,
     limit,
-    offset,
+    marker,
+    isMore,
     datasetPage,
     pageCount: dataset?.length || 0,
     onDragStart,

@@ -1,9 +1,9 @@
-export function truncate(id: string, limit?: number) {
+export function truncate(id: string, limit: number, ellipsis = true) {
   if (!id) {
     return ''
   }
   if (limit && id.length > limit) {
-    return `${id.slice(0, limit)}...`
+    return `${id.slice(0, limit)}${ellipsis ? '...' : ''}`
   }
   return `${id.slice(0, limit)}`
 }
@@ -20,13 +20,9 @@ export function stripPrefix(hash: string) {
     .replace(/^bid:/, '')
 }
 
-export function getTitleId(title: string, id: string, limit?: number) {
+export function getTitleId(title: string, id: string, limit: number) {
   if (id) {
-    return `${title} ${humanId(id, limit)}`
+    return `${title} ${truncate(id, limit)}`
   }
   return `${title}`
-}
-
-export function humanId(id: string, limit?: number) {
-  return truncate(id, limit)
 }

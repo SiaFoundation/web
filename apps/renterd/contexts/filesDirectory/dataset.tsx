@@ -1,11 +1,11 @@
-import { ObjectDirectoryParams } from '@siafoundation/renterd-types'
-import { useObjectDirectory } from '@siafoundation/renterd-react'
+import { useObjectList } from '@siafoundation/renterd-react'
 import { useDataset as useDatasetGeneric } from '../filesManager/dataset'
 import { bucketAndKeyParamsFromPath } from '../../lib/paths'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { useFilesManager } from '../filesManager'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
+import { ObjectListParams } from '@siafoundation/renterd-types'
 
 const defaultLimit = 50
 
@@ -19,32 +19,39 @@ export function useDataset() {
   } = useFilesManager()
   const router = useRouter()
   const limit = Number(router.query.limit || defaultLimit)
-  const offset = Number(router.query.offset || 0)
+  const marker = router.query.marker as string
+
+  const pathParams = bucketAndKeyParamsFromPath(activeDirectoryPath)
 
   const params = useMemo(() => {
-    const p: ObjectDirectoryParams = {
-      ...bucketAndKeyParamsFromPath(activeDirectoryPath),
-      sortBy: sortField,
-      sortDir: sortDirection,
-      offset,
-      limit,
-    }
+    let prefix = pathParams.key
     if (fileNamePrefixFilter) {
-      p.prefix = fileNamePrefixFilter.startsWith('/')
+      prefix += fileNamePrefixFilter.startsWith('/')
         ? fileNamePrefixFilter.slice(1)
         : fileNamePrefixFilter
     }
+    const p: ObjectListParams = {
+      prefix,
+      bucket: pathParams.bucket,
+      sortBy: sortField,
+      sortDir: sortDirection,
+      limit,
+      delimiter: '/',
+    }
+    if (marker) {
+      p.marker = marker
+    }
     return p
   }, [
-    activeDirectoryPath,
     fileNamePrefixFilter,
+    pathParams,
     sortField,
     sortDirection,
-    offset,
+    marker,
     limit,
   ])
 
-  const response = useObjectDirectory({
+  const response = useObjectList({
     disabled: !activeBucketName,
     params,
     config: {
@@ -57,9 +64,9 @@ export function useDataset() {
   const objects = useMemo(
     () => ({
       isValidating: response.isValidating,
-      data: response.data?.entries,
+      data: response.data?.objects,
     }),
-    [response.isValidating, response.data?.entries]
+    [response.isValidating, response.data?.objects]
   )
 
   const d = useDatasetGeneric({
@@ -69,7 +76,8 @@ export function useDataset() {
 
   return {
     limit,
-    offset,
+    marker,
+    isMore: response.data?.hasMore,
     response,
     dataset: d.data,
     refresh: response.mutate,

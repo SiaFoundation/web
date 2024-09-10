@@ -115,18 +115,13 @@ import {
   ObjectDeleteParams,
   ObjectDeletePayload,
   ObjectDeleteResponse,
-  ObjectDirectoryParams,
-  ObjectDirectoryResponse,
   ObjectListParams,
-  ObjectListPayload,
   ObjectListResponse,
   ObjectParams,
   ObjectRenameParams,
   ObjectRenamePayload,
   ObjectRenameResponse,
   ObjectResponse,
-  ObjectSearchParams,
-  ObjectSearchResponse,
   ObjectsStatsParams,
   ObjectsStatsResponse,
   SettingParams,
@@ -189,10 +184,8 @@ import {
   busHostsHostKeyRoute,
   busObjectsRoute,
   busObjectsKeyRoute,
-  busObjectsListRoute,
   busObjectsRenameRoute,
   busHostsRoute,
-  busSearchObjectsRoute,
   busSettingKeyRoute,
   busSettingsRoute,
   busStateRoute,
@@ -244,6 +237,8 @@ import {
   WalletEventsParams,
   WalletEventsResponse,
   busWalletEventsRoute,
+  busListObjectsPrefixRoute,
+  busListObjectsRoute,
 } from '@siafoundation/renterd-types'
 
 // state
@@ -699,30 +694,14 @@ export function useBucketDelete(
   )
 }
 
-export function useObjectDirectory(
-  args: HookArgsSwr<ObjectDirectoryParams, ObjectDirectoryResponse>
-) {
-  return useGetSwr({ ...args, route: busObjectsKeyRoute })
-}
-
 export function useObjectList(
-  args: HookArgsWithPayloadSwr<
-    ObjectListParams,
-    ObjectListPayload,
-    ObjectListResponse
-  >
+  args: HookArgsSwr<ObjectListParams, ObjectListResponse>
 ) {
-  return usePostSwr({ ...args, route: busObjectsListRoute })
+  return useGetSwr({ ...args, route: busListObjectsPrefixRoute })
 }
 
 export function useObject(args: HookArgsSwr<ObjectParams, ObjectResponse>) {
   return useGetSwr({ ...args, route: busObjectsKeyRoute })
-}
-
-export function useObjectSearch(
-  args: HookArgsSwr<ObjectSearchParams, ObjectSearchResponse>
-) {
-  return useGetSwr({ ...args, route: busSearchObjectsRoute })
 }
 
 export function useObjectAdd(
@@ -751,7 +730,10 @@ export function useObjectDelete(
   return useDeleteFunc(
     { ...args, route: busObjectsKeyRoute },
     async (mutate) => {
-      mutate((key) => key.startsWith(busObjectsRoute))
+      mutate(
+        (key) =>
+          key.startsWith(busObjectsRoute) || key.startsWith(busListObjectsRoute)
+      )
     }
   )
 }

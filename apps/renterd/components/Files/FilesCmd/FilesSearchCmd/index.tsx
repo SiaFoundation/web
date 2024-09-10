@@ -1,6 +1,6 @@
 import { CommandGroup, CommandItemSearch } from '../../../CmdRoot/Item'
 import { Page } from '../../../CmdRoot/types'
-import { useObjectSearch } from '@siafoundation/renterd-react'
+import { useObjectList } from '@siafoundation/renterd-react'
 import { isDirectory } from '../../../../lib/paths'
 import { Text } from '@siafoundation/design-system'
 import { Document16, FolderIcon } from '@siafoundation/react-icons'
@@ -31,13 +31,13 @@ export function FilesSearchCmd({
     useFilesManager()
   const onSearchPage = currentPage?.namespace === filesSearchPage.namespace
   const searchBucket = activeBucket || 'default'
-  const results = useObjectSearch({
+  const results = useObjectList({
     disabled: !onSearchPage,
     params: {
       bucket: searchBucket,
-      key: debouncedSearch,
-      offset: 0,
+      prefix: debouncedSearch,
       limit: 10,
+      delimiter: '',
     },
     config: {
       swr: {
@@ -46,34 +46,34 @@ export function FilesSearchCmd({
     },
   })
 
-  if (!onSearchPage || !results.data) {
+  if (!onSearchPage || !results.data?.objects) {
     return null
   }
 
   return (
     <CommandGroup currentPage={currentPage} commandPage={filesSearchPage}>
-      {results.data.map(({ name: path }) => {
-        const compressedPath = compressPath(path, search, 55)
+      {results.data?.objects.map(({ key }) => {
+        const compressedPath = compressPath(key, search, 55)
         const { startIndex, endIndex } = findLastMatch(compressedPath, search)
 
         return (
           <CommandItemSearch
             commandPage={filesSearchPage}
             currentPage={currentPage}
-            key={path}
+            key={key}
             onSelect={() => {
               beforeSelect()
-              navigateToModeSpecificFiltering(searchBucket + path)
+              navigateToModeSpecificFiltering(searchBucket + key)
               afterSelect()
             }}
-            value={path}
+            value={key}
           >
             <div className="flex items-center gap-2 overflow-hidden">
               <Text
                 color="verySubtle"
                 className="group-data-[selected=true]:text-gray-1000 dark:group-data-[selected=true]:text-graydark-1000"
               >
-                {isDirectory(path) ? <FolderIcon size={16} /> : <Document16 />}
+                {isDirectory(key) ? <FolderIcon size={16} /> : <Document16 />}
               </Text>
               <Text className="flex items-center">
                 <Text color="verySubtle" ellipsis>
