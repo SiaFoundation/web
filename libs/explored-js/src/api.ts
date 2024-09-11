@@ -190,7 +190,7 @@ export function Explored({
       TransactionChainIndicesParams,
       TransactionChainIndicesPayload,
       TransactionChainIndicesResponse
-    >(axios, 'post', transactionChainIndicesRoute),
+    >(axios, 'get', transactionChainIndicesRoute),
     // Address
     addressSiacoinUTXOs: buildRequestHandler<
       AddressSiacoinUTXOsParams,
