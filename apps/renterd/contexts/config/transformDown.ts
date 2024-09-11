@@ -20,6 +20,7 @@ import {
   weeksToBlocks,
   nanosecondsInDays,
   nanosecondsInMinutes,
+  valuePerByteToPerTB,
 } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
 import {
@@ -148,10 +149,13 @@ export function transformDownGouging({
       scDecimalPlaces
     ), // TB/month
     maxUploadPriceTB: toSiacoins(
-      new BigNumber(gouging.maxUploadPrice),
+      valuePerByteToPerTB(new BigNumber(gouging.maxUploadPrice)),
       scDecimalPlaces
     ),
-    maxDownloadPriceTB: toSiacoins(gouging.maxDownloadPrice, scDecimalPlaces),
+    maxDownloadPriceTB: toSiacoins(
+      valuePerByteToPerTB(new BigNumber(gouging.maxDownloadPrice)),
+      scDecimalPlaces
+    ),
     maxContractPrice: toSiacoins(gouging.maxContractPrice, scDecimalPlaces),
     maxRPCPriceMillion: toSiacoins(
       valuePerOneToPerMillion(new BigNumber(gouging.maxRPCPrice)),

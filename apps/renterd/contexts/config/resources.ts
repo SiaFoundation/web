@@ -118,11 +118,9 @@ export function firstTimeGougingData({
   return {
     ...gouging,
     maxStoragePrice: averages.settings.storage_price,
-    maxDownloadPrice: new BigNumber(averages.settings.download_price)
-      .times(TBToBytes(1))
-      .toString(),
-    maxUploadPrice: new BigNumber(averages.settings.upload_price)
-      .times(TBToBytes(1))
-      .toString(),
+    maxDownloadPrice: new BigNumber(
+      averages.settings.download_price
+    ).toString(),
+    maxUploadPrice: new BigNumber(averages.settings.upload_price).toString(),
   }
 }

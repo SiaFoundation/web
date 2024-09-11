@@ -15,6 +15,7 @@ import {
   valuePerMillionToPerOne,
   daysInNanoseconds,
   minutesInNanoseconds,
+  valuePerTBToPerByte,
 } from '@siafoundation/units'
 import {
   AutopilotData,
@@ -118,8 +119,12 @@ export function transformUpGouging(
     maxStoragePrice: toHastings(
       valuePerTBPerMonthToPerBytePerBlock(values.maxStoragePriceTBMonth)
     ).toString(),
-    maxUploadPrice: toHastings(values.maxUploadPriceTB).toString(),
-    maxDownloadPrice: toHastings(values.maxDownloadPriceTB).toString(),
+    maxUploadPrice: toHastings(
+      valuePerTBToPerByte(values.maxUploadPriceTB)
+    ).toString(),
+    maxDownloadPrice: toHastings(
+      valuePerTBToPerByte(values.maxDownloadPriceTB)
+    ).toString(),
     maxContractPrice: toHastings(values.maxContractPrice).toString(),
     hostBlockHeightLeeway: Math.round(
       values.hostBlockHeightLeeway?.toNumber() || 0
