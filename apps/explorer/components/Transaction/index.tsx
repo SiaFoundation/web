@@ -2,15 +2,20 @@
 
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
-import { SiaCentralTransaction } from '@siafoundation/sia-central-types'
-import { EntityList, EntityListItemProps } from '@siafoundation/design-system'
+import {
+  EntityList,
+  EntityListItemProps,
+  stripPrefix,
+} from '@siafoundation/design-system'
 import { routes } from '../../config/routes'
 import { ContentLayout } from '../ContentLayout'
-import { TransactionHeader } from './TransactionHeader'
+import { TransactionHeader, TransactionHeaderData } from './TransactionHeader'
 import { OutputListItem } from './OutputListItem'
+import { ExplorerTransaction } from '@siafoundation/explored-types'
 
 type Props = {
-  transaction: SiaCentralTransaction
+  transactionHeaderData: TransactionHeaderData
+  transaction: ExplorerTransaction
   title?: string
 }
 
@@ -23,31 +28,32 @@ type OutputItem = {
   outputId: string
 }
 
-export function Transaction({ title, transaction }: Props) {
+export function Transaction({
+  title,
+  transaction,
+  transactionHeaderData,
+}: Props) {
   const inputs = useMemo(() => {
     if (!transaction) {
       return []
     }
     const list: OutputItem[] = []
-    transaction.siacoin_inputs?.forEach((o) => {
+    transaction.siacoinInputs?.forEach((o) => {
       list.push({
-        label:
-          o.source === 'transaction'
-            ? 'siacoin output'
-            : o.source.replace(/_/g, ' '),
-        addressHref: routes.address.view.replace(':id', o.unlock_hash),
-        address: o.unlock_hash,
+        label: 'siacoin output',
+        addressHref: routes.address.view.replace(':id', o.address),
+        address: o.address,
         sc: new BigNumber(o.value),
-        outputId: o.output_id,
+        outputId: o.parentID,
       })
     })
-    transaction.siafund_inputs?.forEach((o) => {
+    transaction.siafundInputs?.forEach((o) => {
       list.push({
         label: 'siafund output',
-        addressHref: routes.address.view.replace(':id', o.unlock_hash),
-        address: o.unlock_hash,
+        addressHref: routes.address.view.replace(':id', o.address),
+        address: o.address,
         sc: new BigNumber(o.value),
-        outputId: o.output_id,
+        outputId: o.parentID,
       })
     })
     return list
@@ -58,25 +64,31 @@ export function Transaction({ title, transaction }: Props) {
       return []
     }
     const list: OutputItem[] = []
-    transaction.siacoin_outputs?.forEach((o) => {
+    transaction.siacoinOutputs?.forEach((o) => {
       list.push({
         label:
           o.source === 'transaction'
             ? 'siacoin output'
             : o.source.replace(/_/g, ' '),
-        addressHref: routes.address.view.replace(':id', o.unlock_hash),
-        address: o.unlock_hash,
-        sc: new BigNumber(o.value),
-        outputId: o.output_id,
+        addressHref: routes.address.view.replace(
+          ':id',
+          o.siacoinOutput.address
+        ),
+        address: o.siacoinOutput.address,
+        sc: new BigNumber(o.siacoinOutput.value),
+        outputId: o.id,
       })
     })
-    transaction.siafund_outputs?.forEach((o) => {
+    transaction.siafundOutputs?.forEach((o) => {
       list.push({
         label: 'siafund output',
-        addressHref: routes.address.view.replace(':id', o.unlock_hash),
-        address: o.unlock_hash,
-        sf: Number(o.value),
-        outputId: o.output_id,
+        addressHref: routes.address.view.replace(
+          ':id',
+          o.siafundOutput.address
+        ),
+        address: o.siafundOutput.address,
+        sf: Number(o.siafundOutput.value),
+        outputId: o.id,
       })
     })
     return list
@@ -87,33 +99,33 @@ export function Transaction({ title, transaction }: Props) {
       return []
     }
     const operations: EntityListItemProps[] = []
-    transaction.storage_contracts?.forEach((contract) => {
+    transaction.fileContracts?.forEach((contract) => {
       operations.push({
         label: 'contract formation',
         type: 'contract',
-        href: routes.contract.view.replace(':id', contract.id),
+        href: routes.contract.view.replace(':id', stripPrefix(contract.id)),
         hash: contract.id,
       })
     })
-    transaction.contract_revisions?.forEach((contract) => {
+    transaction.fileContractRevisions?.forEach((contract) => {
       operations.push({
         label: 'contract revision',
         type: 'contract',
-        href: routes.contract.view.replace(':id', contract.id),
+        href: routes.contract.view.replace(':id', stripPrefix(contract.id)),
         hash: contract.id,
       })
     })
-    transaction.host_announcements?.forEach((host) => {
-      operations.push({
-        label: 'host announcement',
-        // type: 'host',
-        hash: host.net_address,
-      })
-    })
-    transaction.storage_proofs?.forEach((proof) => {
+    // transaction.host_announcements??.forEach((host) => {
+    //   operations.push({
+    //     label: 'host announcement',
+    //     // type: 'host',
+    //     hash: host.net_address,
+    //   })
+    // })
+    transaction.storageProofs?.forEach((proof) => {
       operations.push({
         label: 'storage proof',
-        hash: proof.transaction_id,
+        hash: proof.parentID,
       })
     })
     return operations
@@ -123,7 +135,10 @@ export function Transaction({ title, transaction }: Props) {
     <ContentLayout
       panel={
         <div className="flex flex-col gap-16">
-          <TransactionHeader title={title} transaction={transaction} />
+          <TransactionHeader
+            title={title}
+            transactionHeaderData={transactionHeaderData}
+          />
         </div>
       }
     >
