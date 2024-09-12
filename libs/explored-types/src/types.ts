@@ -103,7 +103,8 @@ export type TxpoolTransactions = {
 }
 
 // Novel Explored Types - There are three main differences that inform what's below:
-//   1. New keys SiacoinOutput and SiafundOutput, which cascades into Transaction and Block.
+//   1. New keys ExplorerSiacoinInput/Output and ExplorerSiafundInput/Output, which cascades
+//      into Transaction and Block.
 //   2. The Resolved and Valid keys with a FileContract.
 //   3. Payout included with FileContractRevision, where the core type removes payout
 //      because a revision cannot change this field. This is still true here but included
@@ -116,12 +117,28 @@ export type TxpoolTransactions = {
 type Source = string
 
 /**
+ * An `ExplorerSiacoinInput` is a core type SiacoinInput with added `address` and `value` keys.
+ */
+export type ExplorerSiacoinInput = SiacoinInput & {
+  address: string
+  value: string
+}
+
+/**
  * An `ExplorerSiacoinOutput` is a core type `SiacoinElement` with added `source` and
  * `spentIndex` keys.
  */
 export type ExplorerSiacoinOutput = SiacoinElement & {
   source: Source
   spentIndex: ChainIndex
+}
+
+/**
+ * An `ExplorerSiafundInput` is a core type SiacoinInput with added `address` and `value` keys.
+ */
+export type ExplorerSiafundInput = SiafundInput & {
+  address: string
+  value: string
 }
 
 /**
@@ -154,9 +171,9 @@ export type ExplorerFileContractRevision = ExplorerFileContract & {
  */
 export type ExplorerTransaction = {
   id: string
-  siacoinInputs: SiacoinInput[]
+  siacoinInputs: ExplorerSiacoinInput[]
   siacoinOutputs: ExplorerSiacoinOutput[]
-  siafundInputs: SiafundInput[]
+  siafundInputs: ExplorerSiafundInput[]
   siafundOutputs: ExplorerSiafundOutput[]
   fileContracts: ExplorerFileContract[]
   fileContractRevisions: ExplorerFileContractRevision[]
