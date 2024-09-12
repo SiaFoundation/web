@@ -2,10 +2,10 @@ import { Metadata } from 'next'
 import { routes } from '../../../config/routes'
 import { Transaction } from '../../../components/Transaction'
 import { buildMetadata } from '../../../lib/utils'
-import { siaCentral } from '../../../config/siaCentral'
 import { notFound } from 'next/navigation'
-import { truncate } from '@siafoundation/design-system'
+import { stripPrefix, truncate } from '@siafoundation/design-system'
 import { to } from '@siafoundation/request'
+import { explored } from '../../../config/explored'
 
 export function generateMetadata({ params }): Metadata {
   const id = decodeURIComponent((params?.id as string) || '')
@@ -23,21 +23,40 @@ export const revalidate = 0
 
 export default async function Page({ params }) {
   const id = params?.id as string
-  const [transaction, error] = await to(
-    siaCentral.transaction({
-      params: {
-        id,
-      },
-    })
+
+  // Make all non-dependent requests together.
+  const [
+    [transaction, transactionError],
+    [transactionChainIndices, transactionChainIndicesError],
+    [currentTip, currentTipError],
+  ] = await Promise.all([
+    to(explored.transactionByID({ params: { id } })),
+    to(explored.transactionChainIndices({ params: { id } })),
+    to(explored.consensusTip()),
+  ])
+
+  if (transactionError) throw transactionError
+  if (transactionChainIndicesError) throw transactionChainIndicesError
+  if (currentTipError) throw currentTipError
+  if (!transaction || !transactionChainIndices || !currentTip) return notFound()
+
+  // Use the first chainIndex from the above call to get our parent block.
+  const [parentBlock, parentBlockError] = await to(
+    explored.blockByID({ params: { id: transactionChainIndices[0].id } })
   )
 
-  if (error) {
-    throw error
-  }
+  if (parentBlockError) throw parentBlockError
+  if (!parentBlock) return notFound()
 
-  if (!transaction?.transaction) {
-    return notFound()
-  }
-
-  return <Transaction transaction={transaction.transaction} />
+  return (
+    <Transaction
+      transaction={transaction}
+      transactionHeaderData={{
+        id: stripPrefix(transaction.id),
+        blockHeight: transactionChainIndices[0].height,
+        confirmations: currentTip.height - transactionChainIndices[0].height,
+        timestamp: parentBlock.timestamp,
+      }}
+    />
+  )
 }

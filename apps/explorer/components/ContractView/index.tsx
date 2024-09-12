@@ -3,16 +3,18 @@ import { Transaction } from '../Transaction'
 import {
   SiaCentralContract,
   SiaCentralExchangeRates,
-  SiaCentralTransaction,
 } from '@siafoundation/sia-central-types'
 import { Contract } from '../Contract'
+import { ExplorerTransaction } from '@siafoundation/explored-types'
+import { TransactionHeaderData } from '../Transaction/TransactionHeader'
 
 type Props = {
   contract: SiaCentralContract
   rates?: SiaCentralExchangeRates
   renewedTo?: SiaCentralContract
   renewedFrom?: SiaCentralContract
-  formationTransaction?: SiaCentralTransaction
+  formationTransaction?: ExplorerTransaction
+  formationTransactionHeaderData?: TransactionHeaderData
 }
 
 export function ContractView({
@@ -21,6 +23,7 @@ export function ContractView({
   renewedFrom,
   renewedTo,
   formationTransaction,
+  formationTransactionHeaderData,
 }: Props) {
   return (
     <>
@@ -33,8 +36,12 @@ export function ContractView({
       <Container>
         <Separator className="w-full my-3" color="verySubtle" />
       </Container>
-      {formationTransaction ? (
-        <Transaction title="Formation" transaction={formationTransaction} />
+      {formationTransaction && formationTransactionHeaderData ? (
+        <Transaction
+          title="Formation"
+          transaction={formationTransaction}
+          transactionHeaderData={formationTransactionHeaderData}
+        />
       ) : null}
     </>
   )

@@ -1,16 +1,22 @@
 import { Badge, Text, Tooltip } from '@siafoundation/design-system'
-import { SiaCentralTransaction } from '@siafoundation/sia-central-types'
 import { humanDate } from '@siafoundation/units'
 import { routes } from '../../config/routes'
 import { EntityHeading } from '../EntityHeading'
 
-type Props = {
-  title?: string
-  transaction: SiaCentralTransaction
+export type TransactionHeaderData = {
+  id: string
+  blockHeight: number
+  confirmations: number
+  timestamp: string
 }
 
-export function TransactionHeader({ title, transaction }: Props) {
-  const { id, timestamp, block_height, confirmations } = transaction
+type Props = {
+  title?: string
+  transactionHeaderData: TransactionHeaderData
+}
+
+export function TransactionHeader({ title, transactionHeaderData }: Props) {
+  const { id, timestamp, blockHeight, confirmations } = transactionHeaderData
   return (
     <div className="flex flex-wrap gap-y-4 items-center justify-between">
       <EntityHeading
@@ -30,11 +36,11 @@ export function TransactionHeader({ title, transaction }: Props) {
             </Text>
           </Tooltip>
         )}
-        {!!block_height && (
+        {!!blockHeight && (
           <Badge variant="accent">
             <div className="flex gap-2">
               <Tooltip content="Block height">
-                <div className="">{block_height.toLocaleString()}</div>
+                <div className="">{blockHeight.toLocaleString()}</div>
               </Tooltip>
               <div className="">|</div>
               <div className="">

@@ -1,8 +1,8 @@
 import { humanDate } from '@siafoundation/units'
 import { getOGImage } from '../../../components/OGImageEntity'
-import { siaCentral } from '../../../config/siaCentral'
-import { truncate } from '@siafoundation/design-system'
+import { stripPrefix, truncate } from '@siafoundation/design-system'
 import { to } from '@siafoundation/request'
+import { explored } from '../../../config/explored'
 
 export const revalidate = 0
 
@@ -17,15 +17,36 @@ export const contentType = 'image/png'
 export default async function Image({ params }) {
   const id = params?.id as string
 
-  const [t] = await to(
-    siaCentral.transaction({
-      params: {
-        id,
-      },
-    })
-  )
+  const [
+    [transaction, transactionError],
+    [transactionChainIndices, transactionChainIndicesError],
+    [currentTip, currentTipError],
+  ] = await Promise.all([
+    to(
+      explored.transactionByID({
+        params: {
+          id,
+        },
+      })
+    ),
+    to(
+      explored.transactionChainIndices({
+        params: {
+          id,
+        },
+      })
+    ),
+    to(explored.consensusTip()),
+  ])
 
-  if (!t || !t.transaction) {
+  if (
+    !transaction ||
+    !transactionChainIndices ||
+    !currentTip ||
+    transactionError ||
+    transactionChainIndicesError ||
+    currentTipError
+  ) {
     return getOGImage(
       {
         id,
@@ -37,14 +58,33 @@ export default async function Image({ params }) {
     )
   }
 
+  // Get the related block
+  const [relatedBlock, relatedBlockError] = await to(
+    explored.blockByID({ params: { id: transactionChainIndices[0].id } })
+  )
+
+  if (!relatedBlock || relatedBlockError) {
+    return getOGImage(
+      {
+        id,
+        title: truncate(id, 30),
+        subtitle: 'transaction',
+        initials: 'T',
+      },
+      size
+    )
+  }
+
+  const confirmations = currentTip.height - transactionChainIndices[0].height
+
   const values = [
     {
       label: 'block height',
-      value: t.transaction.block_height.toLocaleString(),
+      value: currentTip.height.toLocaleString(),
     },
     {
       label: 'time',
-      value: humanDate(t.transaction.timestamp, {
+      value: humanDate(relatedBlock.timestamp, {
         dateStyle: 'medium',
         timeStyle: 'short',
       }),
@@ -54,13 +94,13 @@ export default async function Image({ params }) {
   return getOGImage(
     {
       id,
-      title: truncate(t.transaction.id, 30),
+      title: truncate(stripPrefix(transaction.id), 30),
       subtitle: 'transaction',
       status:
-        t.transaction.confirmations >= 72
+        confirmations >= 72
           ? '72+ confirmations'
-          : `${t.transaction.confirmations} confirmations`,
-      statusColor: t.transaction.confirmations >= 6 ? 'green' : 'amber',
+          : `${confirmations} confirmations`,
+      statusColor: confirmations >= 6 ? 'green' : 'amber',
       initials: 'T',
       values,
     },
