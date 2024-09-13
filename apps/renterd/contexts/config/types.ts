@@ -34,14 +34,6 @@ export const defaultAutopilot = {
   minProtocolVersion: '',
 }
 
-export const defaultContractSet = {
-  defaultContractSet: '',
-}
-
-export const defaultUploadPacking = {
-  uploadPackingEnabled: true,
-}
-
 export const defaultGouging = {
   maxRPCPriceMillion: undefined as BigNumber | undefined,
   maxStoragePriceTBMonth: undefined as BigNumber | undefined,
@@ -55,10 +47,8 @@ export const defaultGouging = {
   migrationSurchargeMultiplier: undefined as BigNumber | undefined,
 }
 
-export const defaultPricePinning = {
-  pinningEnabled: false,
+export const defaultPinned = {
   pinnedCurrency: '' as CurrencyId | '',
-  forexEndpointURL: '',
   pinnedThreshold: undefined as BigNumber | undefined,
   shouldPinMaxStoragePrice: false,
   maxStoragePriceTBMonthPinned: undefined as BigNumber | undefined,
@@ -70,33 +60,34 @@ export const defaultPricePinning = {
   allowanceMonthPinned: undefined as BigNumber | undefined,
 }
 
-export const defaultRedundancy = {
+export const defaultUpload = {
+  // default contract set
+  defaultContractSet: '',
+  // packing
+  uploadPackingEnabled: true,
+  // redundancy
   minShards: undefined as BigNumber | undefined,
   totalShards: undefined as BigNumber | undefined,
 }
 
+export const defaultRedundancy = {}
+
 export const defaultValues = {
   // autopilot
   ...defaultAutopilot,
-  // contract set
-  ...defaultContractSet,
-  // upload packing
-  ...defaultUploadPacking,
   // gouging
   ...defaultGouging,
-  // redundancy
-  ...defaultRedundancy,
-  // price pinning
-  ...defaultPricePinning,
+  // pinning
+  ...defaultPinned,
+  // upload
+  ...defaultUpload,
 }
 
 export type AutopilotData = typeof defaultAutopilot
-export type ContractSetData = typeof defaultContractSet
-export type UploadPackingData = typeof defaultUploadPacking
 export type GougingData = typeof defaultGouging
-export type RedundancyData = typeof defaultRedundancy
+export type PinningData = typeof defaultPinned
+export type UploadData = typeof defaultUpload
 export type SettingsData = typeof defaultValues
-export type PricePinData = typeof defaultPricePinning
 
 // advanced defaults
 export function getAdvancedDefaultAutopilot(
@@ -136,35 +127,32 @@ export function getAdvancedDefaultAutopilot(
   }
 }
 
-export const advancedDefaultContractSet: ContractSetData = {
-  ...defaultContractSet,
-  defaultContractSet: 'autopilot',
-}
-
-export const advancedDefaultUploadPacking: UploadPackingData = {
-  ...defaultUploadPacking,
-}
-
 export const advancedDefaultGouging: GougingData = {
   ...defaultGouging,
 }
 
-export const advancedDefaultPricePinning: PricePinData = {
-  ...defaultPricePinning,
+export const advancedDefaultPinned: PinningData = {
+  ...defaultPinned,
 }
 
-export function getAdvancedDefaultRedundancy(
+export function getAdvancedDefaultUpload(
   network: 'mainnet' | 'zen' | 'anagami'
-): RedundancyData {
-  return network === 'mainnet'
-    ? {
-        minShards: new BigNumber(10),
-        totalShards: new BigNumber(30),
-      }
-    : {
-        minShards: new BigNumber(2),
-        totalShards: new BigNumber(6),
-      }
+): UploadData {
+  const advancedDefaultRedundancy =
+    network === 'mainnet'
+      ? {
+          minShards: new BigNumber(10),
+          totalShards: new BigNumber(30),
+        }
+      : {
+          minShards: new BigNumber(2),
+          totalShards: new BigNumber(6),
+        }
+  return {
+    ...defaultUpload,
+    defaultContractSet: 'autopilot',
+    ...advancedDefaultRedundancy,
+  }
 }
 
 export function getAdvancedDefaults(
@@ -172,11 +160,9 @@ export function getAdvancedDefaults(
 ): SettingsData {
   return {
     ...getAdvancedDefaultAutopilot(network),
-    ...advancedDefaultContractSet,
-    ...advancedDefaultUploadPacking,
     ...advancedDefaultGouging,
-    ...getAdvancedDefaultRedundancy(network),
-    ...advancedDefaultPricePinning,
+    ...advancedDefaultPinned,
+    ...getAdvancedDefaultUpload(network),
   }
 }
 

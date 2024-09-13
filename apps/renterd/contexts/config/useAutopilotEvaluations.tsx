@@ -1,29 +1,33 @@
+import { objectEntries } from '@siafoundation/design-system'
+import { currencyOptions } from '@siafoundation/react-core'
 import {
   useAutopilotConfigEvaluate,
   useBusState,
 } from '@siafoundation/renterd-react'
-import { transformUp } from './transformUp'
-import { Resources, checkIfAllResourcesLoaded } from './resources'
+import { humanNumber, humanSiacoin, toHastings } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
+import { useCallback, useMemo } from 'react'
+import { UseFormReturn } from 'react-hook-form'
+import { Fields, getFields } from './fields'
+import {
+  ResourcesMaybeLoaded,
+  ResourcesRequiredLoaded,
+  checkIfAllResourcesLoaded,
+} from './resources'
+import { transformDownGouging } from './transformDown'
+import { transformUp } from './transformUp'
 import {
   GougingData,
   RecommendationItem,
   SettingsData,
   getAdvancedDefaults,
 } from './types'
-import { UseFormReturn } from 'react-hook-form'
-import { useCallback, useMemo } from 'react'
-import { transformDownGouging } from './transformDown'
-import { Fields, getFields } from './fields'
-import { humanNumber, humanSiacoin, toHastings } from '@siafoundation/units'
 import {
   pricesToPinnedPrices,
   useEnabledAllowanceInSiacoin,
   useEnabledPricingValuesInSiacoin,
-  useForexExchangeRate,
 } from './useAllowanceDerivedPricing'
-import { objectEntries } from '@siafoundation/design-system'
-import { currencyOptions } from '@siafoundation/react-core'
+import { useFormExchangeRate } from './useFormExchangeRate'
 
 export function useAutopilotEvaluations({
   form,
@@ -31,7 +35,7 @@ export function useAutopilotEvaluations({
   isAutopilotEnabled,
 }: {
   form: UseFormReturn<SettingsData>
-  resources: Resources
+  resources: ResourcesMaybeLoaded
   isAutopilotEnabled: boolean
 }) {
   const values = form.watch()
@@ -93,7 +97,7 @@ export function useAutopilotEvaluations({
     }
 
     const { payloads } = transformUp({
-      resources,
+      resources: resources as ResourcesRequiredLoaded,
       renterdState: renterdState.data,
       isAutopilotEnabled,
       values: currentValuesWithPinnedOverridesAndDefaults,
@@ -122,7 +126,7 @@ export function useAutopilotEvaluations({
     disabled: !eval0Enabled,
     payload: {
       gougingSettings: payloads?.gouging,
-      redundancySettings: payloads?.redundancy,
+      redundancySettings: payloads?.upload.redundancy,
       autopilotConfig: payloads?.autopilot,
     },
     config: {
@@ -143,7 +147,7 @@ export function useAutopilotEvaluations({
     disabled: !eval50Enabled,
     payload: {
       gougingSettings: payloads?.gouging,
-      redundancySettings: payloads?.redundancy,
+      redundancySettings: payloads?.upload.redundancy,
       autopilotConfig: {
         ...payloads?.autopilot,
         contracts: {
@@ -168,7 +172,7 @@ export function useAutopilotEvaluations({
     disabled: !eval10Enabled,
     payload: {
       gougingSettings: payloads?.gouging,
-      redundancySettings: payloads?.redundancy,
+      redundancySettings: payloads?.upload.redundancy,
       autopilotConfig: {
         ...payloads?.autopilot,
         contracts: {
@@ -205,7 +209,7 @@ export function useAutopilotEvaluations({
     disabled: !usableAfterRecsEvalEnabled,
     payload: {
       gougingSettings: recommendedGougingSettings,
-      redundancySettings: payloads?.redundancy,
+      redundancySettings: payloads?.upload.redundancy,
       autopilotConfig: payloads?.autopilot,
     },
     config: {
@@ -242,10 +246,7 @@ export function useAutopilotEvaluations({
     ]
   )
 
-  const pinnedCurrency = form.watch('pinnedCurrency')
-  const exchangeRate = useForexExchangeRate({
-    form,
-  })
+  const { pinnedCurrency, rate } = useFormExchangeRate(form)
 
   const recommendations = useMemo(() => {
     if (!payloads || !recommendedGougingSettings) {
@@ -265,7 +266,7 @@ export function useAutopilotEvaluations({
       hasBeenConfigured: true,
     })
     const recommendedPinned = pricesToPinnedPrices({
-      exchangeRate,
+      exchangeRate: rate,
       maxStoragePriceTBMonth: recommended.maxStoragePriceTBMonth,
       maxDownloadPriceTB: recommended.maxDownloadPriceTB,
       maxUploadPriceTB: recommended.maxUploadPriceTB,
@@ -313,7 +314,7 @@ export function useAutopilotEvaluations({
     pinnedCurrency,
     usableHostsCurrent,
     usableHostsAfterRecommendation,
-    exchangeRate,
+    rate,
   ])
 
   const foundRecommendation = !!recommendations.length
@@ -387,7 +388,6 @@ const fields = getFields({
   validationContext: {
     isAutopilotEnabled: true,
     configViewMode: 'basic',
-    pinningEnabled: false,
   },
   isAutopilotEnabled: true,
   configViewMode: 'basic',
@@ -475,8 +475,6 @@ export const valuesZeroDefaults: SettingsData = {
   migrationSurchargeMultiplier: new BigNumber(0),
   minShards: new BigNumber(0),
   totalShards: new BigNumber(0),
-  pinningEnabled: false,
-  forexEndpointURL: '',
   pinnedCurrency: 'usd',
   pinnedThreshold: new BigNumber(0),
 }

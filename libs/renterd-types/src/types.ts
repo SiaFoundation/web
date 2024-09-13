@@ -123,11 +123,9 @@ export type Obj = ObjectMetadata &
     metadata: ObjectUserMetadata
   }
 
-export type ContractSetSettings = {
-  default: string
-}
+// Settings
 
-export type GougingSettings = {
+export type SettingsGouging = {
   maxStoragePrice: string
   maxDownloadPrice: string
   maxUploadPrice: string
@@ -140,25 +138,30 @@ export type GougingSettings = {
   migrationSurchargeMultiplier: number
 }
 
-export type UploadPackingSettings = {
+export type SettingsUploadPacking = {
   enabled: boolean
+  slabBufferMaxSizeSoft: number
 }
 
-export type RedundancySettings = {
+export type SettingsRedundancy = {
   minShards: number
   totalShards: number
 }
 
-export type ContractSpending = {
-  uploads: Currency
-  downloads: Currency
-  fundAccount: Currency
+export type SettingsUpload = {
+  defaultContractSet: string
+  packing: SettingsUploadPacking
+  redundancy: SettingsRedundancy
 }
 
-export type S3AuthenticationSettings = {
+export type SettingsS3Authentication = {
   v4Keypairs: {
     [key: string]: string
   }
+}
+
+export type SettingsS3 = {
+  authentication: SettingsS3Authentication
 }
 
 export type Pin = {
@@ -176,21 +179,12 @@ export type AutopilotPins = {
   allowance: Pin
 }
 
-// PricePinSettings holds the configuration for pinning certain settings to
+// SettingsPinned holds the configuration for pinning certain settings to
 // a specific currency (e.g., USD). It uses a Forex API to fetch the current
 // exchange rate, allowing users to set prices in USD instead of SC.
-export type PricePinSettings = {
-  // Enabled can be used to either enable or temporarily disable price
-  // pinning. If enabled, both the currency and the Forex endpoint URL
-  // must be valid.
-  enabled: boolean
-
+export type SettingsPinned = {
   // Currency is the external three-letter currency code.
   currency: CurrencyId | ''
-
-  // ForexEndpointURL is the endpoint that returns the exchange rate for
-  // Siacoin against the underlying currency.
-  forexEndpointURL: string
 
   // Threshold is a percentage between 0 and 1 that determines when the
   // pinned settings are updated based on the exchange rate at the time.
@@ -202,6 +196,15 @@ export type PricePinSettings = {
   // GougingSettingsPins contains the pinned settings for the gouging
   // settings.
   gougingSettingsPins: GougingSettingsPins
+}
+
+// Contracts
+
+export type ContractSpending = {
+  deletions: Currency
+  fundAccount: Currency
+  sectorRoots: Currency
+  uploads: Currency
 }
 
 export type ContractState = 'pending' | 'active' | 'complete' | 'failed'

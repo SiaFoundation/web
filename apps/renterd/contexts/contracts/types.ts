@@ -42,7 +42,8 @@ export type ContractDataWithoutPrunable = {
   revisionHeight: number
   totalCost: BigNumber
   spendingUploads: BigNumber
-  spendingDownloads: BigNumber
+  spendingDeletions: BigNumber
+  spendingSectorRoots: BigNumber
   spendingFundAccount: BigNumber
   size: BigNumber
 }
@@ -68,8 +69,9 @@ export type TableColumnId =
   | 'prunableSize'
   | 'totalCost'
   | 'spendingUploads'
-  | 'spendingDownloads'
+  | 'spendingDeletions'
   | 'spendingFundAccount'
+  | 'spendingSectorRoots'
 
 export const columnsDefaultVisible: TableColumnId[] = [
   'contractId',
@@ -82,8 +84,9 @@ export const columnsDefaultVisible: TableColumnId[] = [
   'prunableSize',
   'totalCost',
   'spendingUploads',
-  'spendingDownloads',
+  'spendingDeletions',
   'spendingFundAccount',
+  'spendingSectorRoots',
 ]
 
 export type SortField =
@@ -98,8 +101,9 @@ export type SortField =
   | 'prunableSize'
   | 'totalCost'
   | 'spendingUploads'
-  | 'spendingDownloads'
+  | 'spendingDeletions'
   | 'spendingFundAccount'
+  | 'spendingSectorRoots'
 
 export const defaultSortField: SortField = 'startTime'
 
@@ -164,13 +168,18 @@ export const sortOptions: {
     category: 'financial',
   },
   {
-    id: 'spendingDownloads',
-    label: 'downloads spending',
+    id: 'spendingDeletions',
+    label: 'deletions spending',
     category: 'financial',
   },
   {
     id: 'spendingFundAccount',
     label: 'fund account spending',
+    category: 'financial',
+  },
+  {
+    id: 'spendingSectorRoots',
+    label: 'sector roots spending',
     category: 'financial',
   },
 ]

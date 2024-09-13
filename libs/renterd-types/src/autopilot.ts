@@ -1,4 +1,4 @@
-import { AutopilotConfig, GougingSettings, RedundancySettings } from './types'
+import { AutopilotConfig, SettingsGouging, SettingsRedundancy } from './types'
 import { BusStateResponse } from './bus'
 
 export const autopilotStateRoute = '/autopilot/state'
@@ -31,14 +31,14 @@ export type AutopilotConfigUpdatePayload = AutopilotConfig
 export type AutopilotConfigUpdateResponse = void
 
 export type ConfigRecommendation = {
-  gougingSettings: GougingSettings
+  gougingSettings: SettingsGouging
 }
 
 export type AutopilotConfigEvaluateParams = void
 export type AutopilotConfigEvaluatePayload = {
   autopilotConfig: AutopilotConfig
-  gougingSettings: GougingSettings
-  redundancySettings: RedundancySettings
+  gougingSettings: SettingsGouging
+  redundancySettings: SettingsRedundancy
 }
 export type AutopilotConfigEvaluateResponse = {
   hosts: number

@@ -87,7 +87,7 @@ export function useDaemonExplorerExchangeRate({
     params: {
       currency,
     },
-    disabled: !enabled || disabled,
+    disabled: !enabled || disabled || !currency,
     api,
     route: '/exchange-rate/siacoin/:currency',
     config: {

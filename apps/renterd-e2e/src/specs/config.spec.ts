@@ -9,6 +9,7 @@ import {
 import { afterTest, beforeTest } from '../fixtures/beforeTest'
 import { setCurrencyDisplay } from '../fixtures/preferences'
 import { configResetAllSettings } from '../fixtures/configResetAllSettings'
+import { fillSelectInputByName } from '../fixtures/selectInput'
 
 test.beforeEach(async ({ page }) => {
   await beforeTest(page)
@@ -147,17 +148,17 @@ test('should show warning if pinning is not fully configured', async ({
 
   await setSwitchByLabel(page, 'shouldPinAllowance', true)
   await setSwitchByLabel(page, 'shouldPinMaxStoragePrice', true)
-  await fillTextInputByName(page, 'forexEndpointURL', '')
+  await fillSelectInputByName(page, 'pinnedCurrency', '')
 
   await expect(
     page
       .getByTestId('allowanceMonthGroup')
-      .getByText('Enter a forex endpoint URL')
+      .getByText('Select a pinned currency')
   ).toBeVisible()
   await expect(
     page
       .getByTestId('maxStoragePriceTBMonthGroup')
-      .getByText('Enter a forex endpoint URL')
+      .getByText('Select a pinned currency')
   ).toBeVisible()
 })
 

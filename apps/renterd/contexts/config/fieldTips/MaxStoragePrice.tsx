@@ -3,14 +3,11 @@ import {
   TipNumber,
   formSetField,
 } from '@siafoundation/design-system'
-import React from 'react'
-import { Categories, RecommendationItem, SettingsData } from '../types'
 import { fiatToSiacoin, toHastings } from '@siafoundation/units'
 import { UseFormReturn } from 'react-hook-form'
-import {
-  useAllowanceDerivedPricingForEnabledFields,
-  useForexExchangeRate,
-} from '../useAllowanceDerivedPricing'
+import { Categories, RecommendationItem, SettingsData } from '../types'
+import { useAllowanceDerivedPricingForEnabledFields } from '../useAllowanceDerivedPricing'
+import { useFormExchangeRate } from '../useFormExchangeRate'
 import {
   PriceWithRedundancyTip,
   fitPriceToCurrentAllowanceTipContent,
@@ -92,25 +89,23 @@ export function MaxStoragePricePinnedTips({
   const derived = useAllowanceDerivedPricingForEnabledFields({
     form,
   })
-  const exchangeRate = useForexExchangeRate({
-    form,
-  })
+  const { rate } = useFormExchangeRate(form)
   const maxStoragePriceTBMonthPinned = form.watch(
     'maxStoragePriceTBMonthPinned'
   )
   const currentPriceInSiacoin =
-    maxStoragePriceTBMonthPinned && exchangeRate
-      ? fiatToSiacoin(maxStoragePriceTBMonthPinned, exchangeRate)
+    maxStoragePriceTBMonthPinned && rate
+      ? fiatToSiacoin(maxStoragePriceTBMonthPinned, rate)
       : null
   const derivedPriceInSiacoin =
-    derived?.maxStoragePriceTBMonthPinned && exchangeRate
-      ? fiatToSiacoin(derived.maxStoragePriceTBMonthPinned, exchangeRate)
+    derived?.maxStoragePriceTBMonthPinned && rate
+      ? fiatToSiacoin(derived.maxStoragePriceTBMonthPinned, rate)
       : null
   const recommendationInFiat =
     recommendations?.maxStoragePriceTBMonthPinned?.targetValue
   const recommendationInSiacoin =
-    recommendationInFiat && exchangeRate
-      ? fiatToSiacoin(recommendationInFiat, exchangeRate)
+    recommendationInFiat && rate
+      ? fiatToSiacoin(recommendationInFiat, rate)
       : null
 
   return (

@@ -1,16 +1,14 @@
+import { useAppSettings } from '@siafoundation/react-core'
 import {
   useAutopilotConfig,
-  useSettingContractSet,
-  useSettingGouging,
-  useSettingPricePinning,
-  useSettingRedundancy,
-  useSettingUploadPacking,
+  useSettingsGouging,
+  useSettingsPinned,
+  useSettingsUpload,
 } from '@siafoundation/renterd-react'
-import { useSyncContractSet } from './useSyncContractSet'
-import { useAppSettings } from '@siafoundation/react-core'
 import { useSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-react'
-import { useApp } from '../app'
 import { minutesInMilliseconds } from '@siafoundation/units'
+import { useApp } from '../app'
+import { useSyncContractSet } from './useSyncContractSet'
 
 export function useResources() {
   const app = useApp()
@@ -23,37 +21,22 @@ export function useResources() {
       },
     },
   })
-  const contractSet = useSettingContractSet({
-    config: {
-      swr: {
-        errorRetryCount: 0,
-        refreshInterval: minutesInMilliseconds(1),
-      },
-    },
-  })
   // settings with initial defaults
-  const gouging = useSettingGouging({
+  const gouging = useSettingsGouging({
     config: {
       swr: {
         refreshInterval: minutesInMilliseconds(1),
       },
     },
   })
-  const redundancy = useSettingRedundancy({
+  const pinned = useSettingsPinned({
     config: {
       swr: {
         refreshInterval: minutesInMilliseconds(1),
       },
     },
   })
-  const uploadPacking = useSettingUploadPacking({
-    config: {
-      swr: {
-        refreshInterval: minutesInMilliseconds(1),
-      },
-    },
-  })
-  const pricePinning = useSettingPricePinning({
+  const upload = useSettingsUpload({
     config: {
       swr: {
         refreshInterval: minutesInMilliseconds(1),
@@ -78,11 +61,9 @@ export function useResources() {
   return {
     autopilotState: app.autopilot.state,
     autopilot,
-    contractSet,
     gouging,
-    redundancy,
-    uploadPacking,
-    pricePinning,
+    pinned,
+    upload,
     averages,
     shouldSyncDefaultContractSet,
     setShouldSyncDefaultContractSet,

@@ -453,19 +453,19 @@ export const columns: ContractsTableColumn[] = [
     ),
   },
   {
-    id: 'spendingDownloads',
-    label: 'downloads spending',
+    id: 'spendingDeletions',
+    label: 'deletions spending',
     category: 'financial',
     contentClassName: 'w-[120px] justify-end',
-    render: ({ data: { spendingDownloads } }) => (
-      <ValueScFiat displayBoth size="12" value={spendingDownloads.negated()} />
+    render: ({ data: { spendingDeletions } }) => (
+      <ValueScFiat displayBoth size="12" value={spendingDeletions.negated()} />
     ),
     summary: ({ context: { filteredStats } }) => (
       <ValueScFiat
         displayBoth
         size="12"
-        value={filteredStats.spendingDownloadsTotal.negated()}
-        tooltip="Downloads spending across the filtered set of active contracts"
+        value={filteredStats.spendingDeletionsTotal.negated()}
+        tooltip="Deletions spending across the filtered set of active contracts"
       />
     ),
   },
@@ -487,6 +487,27 @@ export const columns: ContractsTableColumn[] = [
         size="12"
         value={filteredStats.spendingFundAccountTotal.negated()}
         tooltip="Fund account spending across the filtered set of active contracts"
+      />
+    ),
+  },
+  {
+    id: 'spendingSectorRoots',
+    label: 'sector roots spending',
+    category: 'financial',
+    contentClassName: 'w-[120px] justify-end',
+    render: ({ data: { spendingSectorRoots } }) => (
+      <ValueScFiat
+        displayBoth
+        size="12"
+        value={spendingSectorRoots.negated()}
+      />
+    ),
+    summary: ({ context: { filteredStats } }) => (
+      <ValueScFiat
+        displayBoth
+        size="12"
+        value={filteredStats.spendingSectorRootsTotal.negated()}
+        tooltip="Sector roots spending across the filtered set of active contracts"
       />
     ),
   },

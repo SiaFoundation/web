@@ -58,12 +58,12 @@ export function useFilteredStats({
     }, new BigNumber(0))
   }, [datasetFiltered])
 
-  const spendingDownloadsTotal = useMemo(() => {
+  const spendingDeletionsTotal = useMemo(() => {
     if (!datasetFiltered) {
       return undefined
     }
     return datasetFiltered.reduce((acc, datum) => {
-      return acc.plus(datum.spendingDownloads)
+      return acc.plus(datum.spendingDeletions)
     }, new BigNumber(0))
   }, [datasetFiltered])
 
@@ -76,6 +76,15 @@ export function useFilteredStats({
     }, new BigNumber(0))
   }, [datasetFiltered])
 
+  const spendingSectorRootsTotal = useMemo(() => {
+    if (!datasetFiltered) {
+      return undefined
+    }
+    return datasetFiltered.reduce((acc, datum) => {
+      return acc.plus(datum.spendingSectorRoots)
+    }, new BigNumber(0))
+  }, [datasetFiltered])
+
   return useMemo(() => {
     return {
       sizeTotal,
@@ -83,8 +92,9 @@ export function useFilteredStats({
       expiringSizeTotal,
       totalCostTotal,
       spendingUploadsTotal,
-      spendingDownloadsTotal,
+      spendingDeletionsTotal,
       spendingFundAccountTotal,
+      spendingSectorRootsTotal,
     }
   }, [
     sizeTotal,
@@ -92,7 +102,8 @@ export function useFilteredStats({
     expiringSizeTotal,
     totalCostTotal,
     spendingUploadsTotal,
-    spendingDownloadsTotal,
+    spendingDeletionsTotal,
     spendingFundAccountTotal,
+    spendingSectorRootsTotal,
   ])
 }

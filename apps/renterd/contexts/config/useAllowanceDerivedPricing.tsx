@@ -1,53 +1,21 @@
-import { useMemo } from 'react'
-import { SettingsData } from './types'
-import { UseFormReturn } from 'react-hook-form'
+import { fiatToSiacoin, siacoinToFiat } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
-import useSWR from 'swr'
-import axios from 'axios'
+import { useMemo } from 'react'
+import { UseFormReturn } from 'react-hook-form'
+import { useApp } from '../app'
 import {
   calculateIdealAllowance,
   derivePricingFromAllowance,
 } from './deriveAllowance'
-import { useApp } from '../app'
-import { useRedundancyMultiplier } from './useRedundancyMultiplier'
 import {
   allowanceFactor,
   downloadWeight,
   storageWeight,
   uploadWeight,
 } from './deriveAllowanceConfig'
-import {
-  fiatToSiacoin,
-  siacoinToFiat,
-  minutesInMilliseconds,
-} from '@siafoundation/units'
-
-export function useForexExchangeRate({
-  form,
-}: {
-  form: UseFormReturn<SettingsData>
-}) {
-  const pinnedCurrency = form.watch('pinnedCurrency')
-  const forexEndpointURL = form.watch('forexEndpointURL')
-  const forex = useSWR(
-    forexEndpointURL && pinnedCurrency
-      ? ['pricePinningExchangeRate', forexEndpointURL, pinnedCurrency]
-      : null,
-    async () => {
-      const response = await axios.get(`${forexEndpointURL}/${pinnedCurrency}`)
-      return response.data
-    },
-    {
-      refreshInterval: minutesInMilliseconds(5),
-      dedupingInterval: 10_000,
-    }
-  )
-  const rate = forex.data
-  return useMemo(
-    () => (rate && typeof rate === 'number' ? new BigNumber(rate) : undefined),
-    [rate]
-  )
-}
+import { SettingsData } from './types'
+import { useFormExchangeRate } from './useFormExchangeRate'
+import { useRedundancyMultiplier } from './useRedundancyMultiplier'
 
 // Convert the allowance to pricing values. This method returns values for
 // pinned or non-pinned values depending on which is enabled on a per-field basis.
@@ -74,9 +42,7 @@ export function useAllowanceDerivedPricingForEnabledFields({
     minShards: form.watch('minShards'),
     totalShards: form.watch('totalShards'),
   })
-  const exchangeRate = useForexExchangeRate({
-    form,
-  })
+  const { rate } = useFormExchangeRate(form)
 
   const values = useMemo(() => {
     if (isAutopilotEnabled) {
@@ -95,14 +61,14 @@ export function useAllowanceDerivedPricingForEnabledFields({
         return null
       }
       // Convert derived siacoin prices to pinned fiat prices.
-      const pinnedPricing = exchangeRate
+      const pinnedPricing = rate
         ? {
             maxStoragePriceTBMonthPinned:
-              derivedPricing?.maxStoragePriceTBMonth.times(exchangeRate),
+              derivedPricing?.maxStoragePriceTBMonth.times(rate),
             maxDownloadPriceTBPinned:
-              derivedPricing?.maxDownloadPriceTB.times(exchangeRate),
+              derivedPricing?.maxDownloadPriceTB.times(rate),
             maxUploadPriceTBPinned:
-              derivedPricing?.maxUploadPriceTB.times(exchangeRate),
+              derivedPricing?.maxUploadPriceTB.times(rate),
           }
         : {}
       return {
@@ -118,7 +84,7 @@ export function useAllowanceDerivedPricingForEnabledFields({
     downloadTBMonth,
     uploadTBMonth,
     redundancyMultiplier,
-    exchangeRate,
+    rate,
   ])
 
   const shouldPinMaxStoragePrice = form.watch('shouldPinMaxStoragePrice')
@@ -170,16 +136,14 @@ export function useEnabledPricingValuesInSiacoin({
   const maxDownloadPriceTBPinned = form.watch('maxDownloadPriceTBPinned')
   const maxUploadPriceTB = form.watch('maxUploadPriceTB')
   const maxUploadPriceTBPinned = form.watch('maxUploadPriceTBPinned')
-  const exchangeRate = useForexExchangeRate({
-    form,
-  })
+  const { rate } = useFormExchangeRate(form)
 
   const needsExchangeRate =
     shouldPinMaxStoragePrice ||
     shouldPinMaxDownloadPrice ||
     shouldPinMaxUploadPrice
 
-  if (needsExchangeRate && !exchangeRate) {
+  if (needsExchangeRate && !rate) {
     return null
   }
 
@@ -197,13 +161,13 @@ export function useEnabledPricingValuesInSiacoin({
 
   return {
     maxStoragePriceTBMonth: shouldPinMaxStoragePrice
-      ? fiatToSiacoin(maxStoragePriceTBMonthPinned, exchangeRate)
+      ? fiatToSiacoin(maxStoragePriceTBMonthPinned, rate)
       : maxStoragePriceTBMonth,
     maxDownloadPriceTB: shouldPinMaxDownloadPrice
-      ? fiatToSiacoin(maxDownloadPriceTBPinned, exchangeRate)
+      ? fiatToSiacoin(maxDownloadPriceTBPinned, rate)
       : maxDownloadPriceTB,
     maxUploadPriceTB: shouldPinMaxUploadPrice
-      ? fiatToSiacoin(maxUploadPriceTBPinned, exchangeRate)
+      ? fiatToSiacoin(maxUploadPriceTBPinned, rate)
       : maxUploadPriceTB,
   }
 }
@@ -231,9 +195,7 @@ export function useEnabledAllowanceFromEnabledPricingValues({
   const prices = useEnabledPricingValuesInSiacoin({
     form,
   })
-  const exchangeRate = useForexExchangeRate({
-    form,
-  })
+  const { rate } = useFormExchangeRate(form)
 
   if (!prices) {
     return null
@@ -258,10 +220,10 @@ export function useEnabledAllowanceFromEnabledPricingValues({
   }
 
   if (shouldPinAllowance) {
-    if (!exchangeRate) {
+    if (!rate) {
       return null
     }
-    results.allowanceMonthPinned = allowance.times(exchangeRate)
+    results.allowanceMonthPinned = allowance.times(rate)
   } else {
     results.allowanceMonth = allowance
   }
@@ -278,17 +240,13 @@ export function useEnabledAllowanceInSiacoin({
   const shouldPinAllowance = form.watch('shouldPinAllowance')
   const allowanceMonth = form.watch('allowanceMonth')
   const allowanceMonthPinned = form.watch('allowanceMonthPinned')
-  const exchangeRate = useForexExchangeRate({
-    form,
-  })
+  const { rate } = useFormExchangeRate(form)
   const needsExchangeRate = shouldPinAllowance
-  if (needsExchangeRate && !exchangeRate) {
+  if (needsExchangeRate && !rate) {
     return null
   }
 
-  return shouldPinAllowance
-    ? allowanceMonthPinned?.div(exchangeRate)
-    : allowanceMonth
+  return shouldPinAllowance ? allowanceMonthPinned?.div(rate) : allowanceMonth
 }
 
 export function pricesToPinnedPrices({

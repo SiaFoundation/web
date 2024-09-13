@@ -69,7 +69,8 @@ export function useDataset({
           renewedFrom: c.renewedFrom,
           totalCost: new BigNumber(c.totalCost),
           spendingUploads: new BigNumber(c.spending.uploads),
-          spendingDownloads: new BigNumber(c.spending.downloads),
+          spendingDeletions: new BigNumber(c.spending.deletions),
+          spendingSectorRoots: new BigNumber(c.spending.sectorRoots),
           spendingFundAccount: new BigNumber(c.spending.fundAccount),
           size: new BigNumber(c.size),
         }

@@ -1,9 +1,9 @@
-import { useSettingContractSet } from '@siafoundation/renterd-react'
+import { useSettingsUpload } from '@siafoundation/renterd-react'
 
 export function useDefaultContractSetNotSet() {
-  const css = useSettingContractSet()
+  const su = useSettingsUpload()
 
   return {
-    active: css.data && !css.data?.default,
+    active: su.data && !su.data?.defaultContractSet,
   }
 }

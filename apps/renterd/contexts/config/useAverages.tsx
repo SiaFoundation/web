@@ -7,9 +7,9 @@ import {
   valuePerOneToPerMillion,
 } from '@siafoundation/units'
 import { useSiaCentralHostsNetworkAverages } from '@siafoundation/sia-central-react'
-import { useForexExchangeRate } from './useAllowanceDerivedPricing'
 import { UseFormReturn } from 'react-hook-form'
 import { SettingsData } from './types'
+import { useFormExchangeRate } from './useFormExchangeRate'
 
 export function useAverages({ form }: { form: UseFormReturn<SettingsData> }) {
   const averages = useSiaCentralHostsNetworkAverages({
@@ -73,9 +73,7 @@ export function useAverages({ form }: { form: UseFormReturn<SettingsData> }) {
     [averages.data]
   )
 
-  const exchangeRate = useForexExchangeRate({
-    form,
-  })
+  const { rate } = useFormExchangeRate(form)
   const averagesSc = useMemo(() => {
     if (!averages.data) {
       return null
@@ -97,19 +95,19 @@ export function useAverages({ form }: { form: UseFormReturn<SettingsData> }) {
   ])
 
   const averagesFiat = useMemo(() => {
-    if (!averages.data || !exchangeRate) {
+    if (!averages.data || !rate) {
       return null
     }
     return {
-      storageAverage: storageAverage.times(exchangeRate),
-      uploadAverage: uploadAverage.times(exchangeRate),
-      downloadAverage: downloadAverage.times(exchangeRate),
-      contractAverage: contractAverage.times(exchangeRate),
-      rpcAverage: rpcAverage.times(exchangeRate),
+      storageAverage: storageAverage.times(rate),
+      uploadAverage: uploadAverage.times(rate),
+      downloadAverage: downloadAverage.times(rate),
+      contractAverage: contractAverage.times(rate),
+      rpcAverage: rpcAverage.times(rate),
     }
   }, [
     averages.data,
-    exchangeRate,
+    rate,
     storageAverage,
     uploadAverage,
     downloadAverage,

@@ -12,8 +12,8 @@ import {
 } from '@siafoundation/design-system'
 import { CaretDown16, Delete16 } from '@siafoundation/react-icons'
 import {
-  useSettingS3Authentication,
-  useSettingUpdate,
+  useSettingsS3,
+  useSettingsS3Update,
 } from '@siafoundation/renterd-react'
 import { useCallback } from 'react'
 import { omit } from '@technically/lodash'
@@ -27,16 +27,21 @@ type Props = {
 
 export function KeyContextMenu({ s3Key, contentProps, buttonProps }: Props) {
   const { openConfirmDialog } = useDialog()
-  const s3AuthenticationSettings = useSettingS3Authentication()
-  const update = useSettingUpdate()
+  const settingsS3 = useSettingsS3()
+  const settingsS3Update = useSettingsS3Update()
   const deleteKey = useCallback(async () => {
-    const newKeys = omit(s3AuthenticationSettings.data?.v4Keypairs, s3Key)
-    const response = await update.put({
-      params: {
-        key: 's3authentication',
-      },
+    if (!settingsS3.data) {
+      triggerErrorToast({ title: 'Error deleting key' })
+      return
+    }
+    const newKeys = omit(settingsS3.data?.authentication.v4Keypairs, s3Key)
+    const response = await settingsS3Update.put({
       payload: {
-        v4Keypairs: newKeys,
+        ...settingsS3.data,
+        authentication: {
+          ...settingsS3.data.authentication,
+          v4Keypairs: newKeys,
+        },
       },
     })
     if (response.error) {
@@ -44,7 +49,7 @@ export function KeyContextMenu({ s3Key, contentProps, buttonProps }: Props) {
     } else {
       triggerSuccessToast({ title: `Key ${s3Key} removed` })
     }
-  }, [s3AuthenticationSettings.data, s3Key, update])
+  }, [settingsS3.data, s3Key, settingsS3Update])
 
   return (
     <DropdownMenu

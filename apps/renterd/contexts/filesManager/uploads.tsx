@@ -1,25 +1,25 @@
 import { triggerErrorToast } from '@siafoundation/design-system'
-import { Bucket, busListObjectsRoute } from '@siafoundation/renterd-types'
+import { useMutate } from '@siafoundation/react-core'
 import {
   useBuckets,
   useMultipartUploadAbort,
-  useMultipartUploadPart,
   useMultipartUploadComplete,
   useMultipartUploadCreate,
-  useSettingRedundancy,
+  useMultipartUploadPart,
+  useSettingsUpload,
 } from '@siafoundation/renterd-react'
+import { Bucket, busListObjectsRoute } from '@siafoundation/renterd-types'
+import { MiBToBytes, minutesInMilliseconds } from '@siafoundation/units'
 import { throttle } from '@technically/lodash'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { ObjectUploadData, UploadsMap } from './types'
+import { MultipartUpload } from '../../lib/multipartUpload'
 import {
   FullPath,
   getBucketFromPath,
   getKeyFromPath,
   join,
 } from '../../lib/paths'
-import { MultipartUpload } from '../../lib/multipartUpload'
-import { MiBToBytes, minutesInMilliseconds } from '@siafoundation/units'
-import { useMutate } from '@siafoundation/react-core'
+import { ObjectUploadData, UploadsMap } from './types'
 import { useWarnActiveUploadsOnClose } from './useWarnActiveUploadsOnClose'
 
 const maxConcurrentUploads = 5
@@ -39,7 +39,7 @@ export function useUploads({ activeDirectoryPath }: Props) {
   const busUploadCreate = useMultipartUploadCreate()
   const busUploadAbort = useMultipartUploadAbort()
   const [uploadsMap, setUploadsMap] = useState<UploadsMap>({})
-  const redundancy = useSettingRedundancy({
+  const uploadSettings = useSettingsUpload({
     config: {
       swr: {
         refreshInterval: minutesInMilliseconds(1),
@@ -110,7 +110,7 @@ export function useUploads({ activeDirectoryPath }: Props) {
         bucket: bucket.name,
         api: ref.current,
         partSize: getMultipartUploadPartSize(
-          redundancy.data?.minShards || 1
+          uploadSettings.data?.redundancy.minShards || 1
         ).toNumber(),
         maxConcurrentParts: maxConcurrentPartsPerUpload,
       })
@@ -144,7 +144,7 @@ export function useUploads({ activeDirectoryPath }: Props) {
         multipartUpload,
       }
     },
-    [redundancy.data]
+    [uploadSettings.data]
   )
 
   const addUploadToQueue = useCallback(

@@ -1,6 +1,6 @@
 import {
   useAutopilotConfig,
-  useSettingContractSet,
+  useSettingsUpload,
 } from '@siafoundation/renterd-react'
 import { useApp } from '../contexts/app'
 
@@ -10,10 +10,10 @@ export function useIsApcsEqDcs() {
   const apc = useAutopilotConfig({
     disabled: autopilot.status !== 'on',
   })
-  const css = useSettingContractSet()
+  const su = useSettingsUpload()
 
   return {
-    isValidating: apc.isValidating || css.isValidating,
-    data: apc.data?.contracts.set === css.data?.default,
+    isValidating: apc.isValidating || su.isValidating,
+    data: apc.data?.contracts.set === su.data?.defaultContractSet,
   }
 }

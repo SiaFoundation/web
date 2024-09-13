@@ -10,7 +10,7 @@ import {
   useAutopilotConfig,
   useContracts as useContractsData,
   useContractSets,
-  useSettingContractSet,
+  useSettingsUpload,
 } from '@siafoundation/renterd-react'
 import {
   createContext,
@@ -80,8 +80,8 @@ function useContractsMain() {
     disabled: !isAutopilotEnabled,
   })
   const autopilotContractSet = apConfig.data?.contracts.set
-  const contractSetSettings = useSettingContractSet()
-  const defaultContractSet = contractSetSettings.data?.default
+  const settingsUpload = useSettingsUpload()
+  const defaultContractSet = settingsUpload.data?.defaultContractSet
 
   const {
     dataset,

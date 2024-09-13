@@ -2,8 +2,6 @@
 import {
   Code,
   ConfigFields,
-  Link,
-  Text,
   toFixedMaxString,
 } from '@siafoundation/design-system'
 import { hoursInDays, secondsInMinutes } from '@siafoundation/units'
@@ -60,7 +58,6 @@ type GetFields = {
   validationContext: {
     isAutopilotEnabled: boolean
     configViewMode: ConfigViewMode
-    pinningEnabled: boolean
   }
 }
 
@@ -156,22 +153,14 @@ export function getFields({
       category: 'storage',
       validation: {
         validate: {
-          required: requiredIfPinningEnabled(
-            validationContext,
-            (value: BigNumber, values) => {
-              if (!values.shouldPinAllowance) {
-                return true
-              }
-              return !!value || 'required'
-            }
-          ),
+          required: requiredIfPinningEnabled('shouldPinAllowance'),
           currency: requiredIfPinningEnabled(
-            validationContext,
+            'shouldPinAllowance',
             (_, values) =>
               !!values.pinnedCurrency || 'must select a pinned currency'
           ),
           range: requiredIfPinningEnabled(
-            validationContext,
+            'shouldPinAllowance',
             (value: BigNumber, values) =>
               !values.shouldPinAllowance ||
               value?.gt(0) ||
@@ -467,7 +456,7 @@ export function getFields({
       validation: {
         validate: {
           required: requiredIfPinningEnabled(
-            validationContext,
+            'shouldPinMaxStoragePrice',
             (value: BigNumber, values) => {
               if (!values.shouldPinMaxStoragePrice) {
                 return true
@@ -475,18 +464,13 @@ export function getFields({
               return !!value || 'required'
             }
           ),
-          disabled: (value: BigNumber, values) => {
-            if (!values.pinningEnabled && values.shouldPinMaxStoragePrice) {
-              return 'please enable pinning and select a currency'
-            }
-          },
           currency: requiredIfPinningEnabled(
-            validationContext,
+            'shouldPinMaxStoragePrice',
             (_, values) =>
               !!values.pinnedCurrency || 'must select a pinned currency'
           ),
           range: requiredIfPinningEnabled(
-            validationContext,
+            'shouldPinMaxStoragePrice',
             (value: BigNumber, values) =>
               !values.shouldPinMaxStoragePrice ||
               value?.gt(0) ||
@@ -546,7 +530,7 @@ export function getFields({
       validation: {
         validate: {
           required: requiredIfPinningEnabled(
-            validationContext,
+            'shouldPinMaxUploadPrice',
             (value: BigNumber, values) => {
               if (!values.shouldPinMaxUploadPrice) {
                 return true
@@ -555,12 +539,12 @@ export function getFields({
             }
           ),
           currency: requiredIfPinningEnabled(
-            validationContext,
+            'shouldPinMaxUploadPrice',
             (_, values) =>
               !!values.pinnedCurrency || 'must select a pinned currency'
           ),
           range: requiredIfPinningEnabled(
-            validationContext,
+            'shouldPinMaxUploadPrice',
             (value: BigNumber, values) =>
               !values.shouldPinMaxUploadPrice ||
               value?.gt(0) ||
@@ -620,7 +604,7 @@ export function getFields({
       validation: {
         validate: {
           required: requiredIfPinningEnabled(
-            validationContext,
+            'shouldPinMaxDownloadPrice',
             (value: BigNumber, values) => {
               if (!values.shouldPinMaxDownloadPrice) {
                 return true
@@ -629,12 +613,12 @@ export function getFields({
             }
           ),
           currency: requiredIfPinningEnabled(
-            validationContext,
+            'shouldPinMaxDownloadPrice',
             (_, values) =>
               !!values.pinnedCurrency || 'must select a pinned currency'
           ),
           range: requiredIfPinningEnabled(
-            validationContext,
+            'shouldPinMaxDownloadPrice',
             (value: BigNumber, values) =>
               !values.shouldPinMaxDownloadPrice ||
               value?.gt(0) ||
@@ -900,14 +884,6 @@ export function getFields({
     },
 
     // pinning
-    pinningEnabled: {
-      category: 'pinning',
-      type: 'boolean',
-      title: 'Pinning',
-      description:
-        'Pinning allows you to set a fixed fiat price for each supported field. Pinning is available for allowance and maximum price fields.',
-      validation: {},
-    },
     pinnedCurrency: {
       category: 'pinning',
       title: 'Pinned currency',
@@ -924,9 +900,7 @@ export function getFields({
         value: string
       }[],
       validation: {
-        validate: {
-          required: requiredIfPinningEnabled(validationContext),
-        },
+        required: 'required',
       },
     },
     pinnedThreshold: {
@@ -944,61 +918,14 @@ export function getFields({
           changing prices too often.
         </>
       ),
-      // hidden: configViewMode === 'basic',
       validation: {
+        required: 'required',
         validate: {
-          required: requiredIfPinningEnabled(validationContext),
-          max: requiredIfPinningEnabled(
-            validationContext,
-            (value) =>
-              new BigNumber(value as BigNumber).lte(100) ||
-              `must be at most 100%`
-          ),
-          min: requiredIfPinningEnabled(
-            validationContext,
-            (value) =>
-              new BigNumber(value as BigNumber).gte(0) || `must be at least 0%`
-          ),
-        },
-      },
-    },
-    forexEndpointURL: {
-      category: 'pinning',
-      type: 'text',
-      title: 'Forex endpoint URL',
-      placeholder: 'https://api.siascan.com/exchange-rate/siacoin',
-      suggestion: 'https://api.siascan.com/exchange-rate/siacoin',
-      suggestionTip: 'SiaScan provides an exchange rate endpoint.',
-      description: (
-        <Text className="flex flex-col gap-2">
-          <Text color="subtle" size="14">
-            Endpoint for fetching exchange rates. The endpoint URL should allow
-            appending a currency code to the URL and the endpoint response
-            should be a single number representing the exchange rate. For
-            example, the SiaScan exchange rate endpoint:
-          </Text>
-          <Text color="contrast">
-            https://api.siascan.com/exchange-rate/siacoin
-          </Text>
-          <Link
-            color="subtle"
-            target="_blank"
-            href={'https://api.siascan.com/exchange-rate/siacoin/usd'}
-          >
-            https://api.siascan.com/exchange-rate/siacoin/usd
-          </Link>
-          <Link
-            color="subtle"
-            target="_blank"
-            href={'https://api.siascan.com/exchange-rate/siacoin/jpy'}
-          >
-            https://api.siascan.com/exchange-rate/siacoin/jpy
-          </Link>
-        </Text>
-      ),
-      validation: {
-        validate: {
-          required: requiredIfPinningEnabled(validationContext),
+          max: (value) =>
+            new BigNumber(value as BigNumber).lte(100) ||
+            `must be at most 100%`,
+          min: (value) =>
+            new BigNumber(value as BigNumber).gte(0) || `must be at least 0%`,
         },
       },
     },
@@ -1054,13 +981,15 @@ function requiredIfAutopilotAndAdvanced<Values>(
 }
 
 function requiredIfPinningEnabled<Values>(
-  context: {
-    pinningEnabled: boolean
-  },
+  field:
+    | 'shouldPinAllowance'
+    | 'shouldPinMaxStoragePrice'
+    | 'shouldPinMaxUploadPrice'
+    | 'shouldPinMaxDownloadPrice',
   method?: (value: unknown, values: Values) => string | boolean
 ) {
   return (value: unknown, values: Values) => {
-    if (context.pinningEnabled) {
+    if (values[field]) {
       if (method) {
         return method(value, values)
       }
