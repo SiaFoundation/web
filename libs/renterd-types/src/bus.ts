@@ -17,6 +17,10 @@ import {
   HostSettings,
   Obj,
   ObjectMetadata,
+  SettingsGouging,
+  SettingsPinned,
+  SettingsS3,
+  SettingsUpload,
   SlabSlice,
 } from './types'
 
@@ -66,8 +70,10 @@ export const busObjectsKeyRoute = '/bus/objects/:key'
 export const busObjectsRenameRoute = '/bus/objects/rename'
 export const busStatsObjectsRoute = '/bus/stats/objects'
 export const busSettingRoute = '/bus/setting'
-export const busSettingsRoute = '/bus/settings'
-export const busSettingKeyRoute = '/bus/setting/:key'
+export const busSettingsGougingRoute = '/bus/settings/gouging'
+export const busSettingsPinnedRoute = '/bus/settings/pinned'
+export const busSettingsS3Route = '/bus/settings/s3'
+export const busSettingsUploadRoute = '/bus/settings/upload'
 export const busAlertsRoute = '/bus/alerts'
 export const busAlertsDismissRoute = '/bus/alerts/dismiss'
 export const busSlabKeyObjectsRoute = '/bus/slab/:key/objects'
@@ -91,6 +97,10 @@ type BuildState = {
   commit: string
   OS: string
   buildTime: number
+  explorer: {
+    enabled: boolean
+    url: string
+  }
 }
 
 export type BusStateParams = void
@@ -456,20 +466,6 @@ export type ObjectsStatsResponse = {
   totalUploadedSize: number // uploaded size of all objects including redundant sectors
 }
 
-export type Setting = Record<string, unknown> | string
-
-export type SettingsParams = void
-export type SettingsPayload = void
-export type SettingsResponse = string[]
-
-export type SettingParams = { key: string }
-export type SettingPayload = void
-export type SettingResponse<T extends Setting> = T
-
-export type SettingUpdateParams = { key: string }
-export type SettingUpdatePayload = Setting
-export type SettingUpdateResponse = void
-
 // alerts
 
 export type AlertSeverity = 'info' | 'warning' | 'error' | 'critical'
@@ -680,3 +676,37 @@ export type MultipartUploadAddPartPayload = {
   usedContracts?: Contract[]
 }
 export type MultipartUploadAddPartResponse = void
+
+// Settings
+
+export type SettingsGougingParams = void
+export type SettingsGougingPayload = void
+export type SettingsGougingResponse = SettingsGouging
+
+export type SettingsPinnedParams = void
+export type SettingsPinnedPayload = void
+export type SettingsPinnedResponse = SettingsPinned
+
+export type SettingsS3Params = void
+export type SettingsS3Payload = void
+export type SettingsS3Response = SettingsS3
+
+export type SettingsUploadParams = void
+export type SettingsUploadPayload = void
+export type SettingsUploadResponse = SettingsUpload
+
+export type SettingsGougingUpdateParams = void
+export type SettingsGougingUpdatePayload = SettingsGouging
+export type SettingsGougingUpdateResponse = void
+
+export type SettingsPinnedUpdateParams = void
+export type SettingsPinnedUpdatePayload = SettingsPinned
+export type SettingsPinnedUpdateResponse = void
+
+export type SettingsS3UpdateParams = void
+export type SettingsS3UpdatePayload = SettingsS3
+export type SettingsS3UpdateResponse = void
+
+export type SettingsUploadUpdateParams = void
+export type SettingsUploadUpdatePayload = SettingsUpload
+export type SettingsUploadUpdateResponse = void

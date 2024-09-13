@@ -16,7 +16,7 @@ export const clusterd = {
   nodes: [] as Node[],
 }
 
-const maxTimeWaitingForAllNodesToStartup = 30_000
+const maxTimeWaitingForAllNodesToStartup = 60_000
 const maxTimeWaitingForContractsToForm = 60_000
 
 export async function setupCluster({

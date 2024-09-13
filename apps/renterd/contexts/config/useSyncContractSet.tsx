@@ -5,46 +5,46 @@ import {
 } from '@siafoundation/design-system'
 import { useCallback } from 'react'
 import {
-  useSettingContractSet,
-  useSettingUpdate,
+  useSettingsUpload,
+  useSettingsUploadUpdate,
 } from '@siafoundation/renterd-react'
 import useLocalStorageState from 'use-local-storage-state'
-import { transformUpContractSet } from '../../contexts/config/transformUp'
+import { transformUpUpload } from './transformUp'
 
 export function useSyncContractSet() {
   const [shouldSyncDefaultContractSet, setShouldSyncDefaultContractSet] =
     useLocalStorageState<boolean>('v0/autopilot/syncDefaultContractSet', {
       defaultValue: true,
     })
-  const contractSet = useSettingContractSet({
+  const uploadSettings = useSettingsUpload({
     config: {
       swr: {
         errorRetryCount: 0,
       },
     },
   })
-  const settingUpdate = useSettingUpdate()
+  const settingsUploadUpdate = useSettingsUploadUpdate()
 
   const maybeSyncDefaultContractSet = useCallback(
     async (autopilotContractSet: string) => {
-      const csd = contractSet.data || { default: '' }
+      if (!uploadSettings.data) {
+        return
+      }
+      const csd = uploadSettings.data || { defaultContractSet: '' }
       try {
         if (
           shouldSyncDefaultContractSet &&
-          autopilotContractSet !== csd.default
+          autopilotContractSet !== csd.defaultContractSet
         ) {
-          await settingUpdate.put({
-            params: {
-              key: 'contractset',
-            },
-            payload: transformUpContractSet(
+          await settingsUploadUpdate.put({
+            payload: transformUpUpload(
               {
                 defaultContractSet: autopilotContractSet,
               },
-              contractSet.data
+              uploadSettings.data
             ),
           })
-          contractSet.mutate()
+          uploadSettings.mutate()
           triggerSuccessToast({
             title: 'Default contract set updated',
             body: (
@@ -64,7 +64,7 @@ export function useSyncContractSet() {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [contractSet.data, settingUpdate, shouldSyncDefaultContractSet]
+    [uploadSettings.data, settingsUploadUpdate, shouldSyncDefaultContractSet]
   )
 
   return {

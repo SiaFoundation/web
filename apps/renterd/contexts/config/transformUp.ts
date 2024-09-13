@@ -1,10 +1,8 @@
 import {
   AutopilotConfig,
-  ContractSetSettings,
-  GougingSettings,
-  PricePinSettings,
-  RedundancySettings,
-  UploadPackingSettings,
+  SettingsGouging,
+  SettingsPinned,
+  SettingsUpload,
 } from '@siafoundation/renterd-types'
 import {
   toHastings,
@@ -21,13 +19,10 @@ import {
   AutopilotData,
   SettingsData,
   getAdvancedDefaultAutopilot,
-  ContractSetData,
-  RedundancyData,
-  UploadPackingData,
-  advancedDefaultContractSet,
-  PricePinData,
+  PinningData,
+  getAdvancedDefaultUpload,
 } from './types'
-import { Resources } from './resources'
+import { ResourcesRequiredLoaded } from './resources'
 import BigNumber from 'bignumber.js'
 import { pickBy } from '@technically/lodash'
 import { Dictionary } from 'lodash'
@@ -83,34 +78,10 @@ export function transformUpAutopilot(
   }
 }
 
-export function transformUpContractSet(
-  values: ContractSetData,
-  existingValues: ContractSetSettings | undefined
-): ContractSetSettings {
-  const _default =
-    values.defaultContractSet ||
-    (existingValues?.default as string) ||
-    advancedDefaultContractSet.defaultContractSet
-  return {
-    ...existingValues,
-    default: _default,
-  }
-}
-
-export function transformUpUploadPacking(
-  values: UploadPackingData,
-  existingValues: UploadPackingSettings
-): UploadPackingSettings {
-  return {
-    ...existingValues,
-    enabled: values.uploadPackingEnabled,
-  }
-}
-
 export function transformUpGouging(
   values: SettingsData,
-  existingValues: GougingSettings
-): GougingSettings {
+  existingValues: SettingsGouging
+): SettingsGouging {
   return {
     ...existingValues,
     maxRPCPrice: toHastings(
@@ -143,30 +114,17 @@ export function transformUpGouging(
   }
 }
 
-export function transformUpRedundancy(
-  values: RedundancyData,
-  existingValues: RedundancySettings
-): RedundancySettings {
+export function transformUpPinned(
+  values: PinningData & { periodWeeks: BigNumber },
+  existingValues: SettingsPinned,
+  autopilotID: string
+): SettingsPinned {
   return {
     ...existingValues,
-    minShards: values.minShards.toNumber(),
-    totalShards: values.totalShards.toNumber(),
-  }
-}
-
-export function transformUpPricePinning(
-  values: PricePinData & { periodWeeks: BigNumber },
-  existingValues: PricePinSettings
-): PricePinSettings {
-  return {
-    ...existingValues,
-    enabled: values.pinningEnabled,
     currency: values.pinnedCurrency,
-    forexEndpointURL: values.forexEndpointURL,
     threshold: values.pinnedThreshold.div(100).toNumber(),
     autopilots: {
-      // Update the default autopilot named 'autopilot'.
-      autopilot: {
+      [autopilotID]: {
         allowance: {
           pinned: values.shouldPinAllowance,
           value: valuePerMonthToPerPeriod(
@@ -195,13 +153,36 @@ export function transformUpPricePinning(
   }
 }
 
+export function transformUpUpload(
+  values: Partial<SettingsData>,
+  existingValues: SettingsUpload
+): SettingsUpload {
+  const defaultContractSet =
+    values.defaultContractSet ||
+    existingValues.defaultContractSet ||
+    getAdvancedDefaultUpload('mainnet').defaultContractSet
+  return {
+    ...existingValues,
+    defaultContractSet,
+    packing: {
+      ...existingValues.packing,
+      enabled: values.uploadPackingEnabled,
+    },
+    redundancy: {
+      ...existingValues.redundancy,
+      minShards: values.minShards.toNumber(),
+      totalShards: values.totalShards.toNumber(),
+    },
+  }
+}
+
 export function transformUp({
   resources,
   renterdState,
   isAutopilotEnabled,
   values,
 }: {
-  resources: Resources
+  resources: ResourcesRequiredLoaded
   renterdState: { network: 'mainnet' | 'zen' | 'anagami' }
   isAutopilotEnabled: boolean
   values: SettingsData
@@ -214,26 +195,20 @@ export function transformUp({
       )
     : undefined
 
-  const contractSet = transformUpContractSet(values, resources.contractSet.data)
-  const uploadPacking = transformUpUploadPacking(
-    values,
-    resources.uploadPacking.data
-  )
   const gouging = transformUpGouging(values, resources.gouging.data)
-  const redundancy = transformUpRedundancy(values, resources.redundancy.data)
-  const pricePinning = transformUpPricePinning(
+  const pinned = transformUpPinned(
     values,
-    resources.pricePinning.data
+    resources.pinned.data,
+    resources.autopilotState.data.id
   )
+  const upload = transformUpUpload(values, resources.upload.data)
 
   return {
     payloads: {
       autopilot,
-      contractSet,
-      uploadPacking,
       gouging,
-      redundancy,
-      pricePinning,
+      pinned,
+      upload,
     },
   }
 }

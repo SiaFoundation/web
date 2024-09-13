@@ -124,13 +124,6 @@ import {
   ObjectResponse,
   ObjectsStatsParams,
   ObjectsStatsResponse,
-  SettingParams,
-  SettingResponse,
-  SettingUpdateParams,
-  SettingUpdatePayload,
-  SettingUpdateResponse,
-  SettingsParams,
-  SettingsResponse,
   SlabObjectsParams,
   SlabObjectsResponse,
   SyncerAddressParams,
@@ -186,8 +179,6 @@ import {
   busObjectsKeyRoute,
   busObjectsRenameRoute,
   busHostsRoute,
-  busSettingKeyRoute,
-  busSettingsRoute,
   busStateRoute,
   busStatsObjectsRoute,
   busSyncerAddrRoute,
@@ -215,18 +206,12 @@ import {
   busMultipartListpartsRoute,
   busMultipartListuploadsRoute,
   busMultipartPartRoute,
-  GougingSettings,
-  ContractSetSettings,
-  RedundancySettings,
-  S3AuthenticationSettings,
-  UploadPackingSettings,
   ContractsPrunableParams,
   ContractsPrunableResponse,
   busContractsPrunableRoute,
   ContractSizeParams,
   ContractSizeResponse,
   busContractIdSize,
-  PricePinSettings,
   WalletSendParams,
   WalletSendPayload,
   WalletSendResponse,
@@ -239,6 +224,30 @@ import {
   busWalletEventsRoute,
   busListObjectsPrefixRoute,
   busListObjectsRoute,
+  busSettingsGougingRoute,
+  busSettingsPinnedRoute,
+  busSettingsS3Route,
+  busSettingsUploadRoute,
+  SettingsGougingParams,
+  SettingsGougingResponse,
+  SettingsPinnedParams,
+  SettingsS3Response,
+  SettingsS3Params,
+  SettingsUploadResponse,
+  SettingsUploadParams,
+  SettingsGougingUpdateResponse,
+  SettingsGougingUpdatePayload,
+  SettingsGougingUpdateParams,
+  SettingsPinnedUpdateParams,
+  SettingsPinnedUpdatePayload,
+  SettingsPinnedUpdateResponse,
+  SettingsS3UpdateParams,
+  SettingsS3UpdatePayload,
+  SettingsS3UpdateResponse,
+  SettingsUploadUpdateParams,
+  SettingsUploadUpdatePayload,
+  SettingsUploadUpdateResponse,
+  SettingsPinnedResponse,
 } from '@siafoundation/renterd-types'
 
 // state
@@ -744,88 +753,98 @@ export function useObjectStats(
   return useGetSwr({ ...args, route: busStatsObjectsRoute })
 }
 
-type Setting = Record<string, unknown> | string
-
-export function useSettings(
-  args?: HookArgsSwr<SettingsParams, SettingsResponse>
+export function useSettingsGouging(
+  args?: HookArgsSwr<SettingsGougingParams, SettingsGougingResponse>
 ) {
-  return useGetSwr({ ...args, route: busSettingsRoute })
+  return useGetSwr({ ...args, route: busSettingsGougingRoute })
 }
 
-export function useSetting<T extends Setting>(
-  args: HookArgsSwr<SettingParams, SettingResponse<T>>
+export function useSettingsPinned(
+  args?: HookArgsSwr<SettingsPinnedParams, SettingsPinnedResponse>
 ) {
-  return useGetSwr({ ...args, route: busSettingKeyRoute })
+  return useGetSwr({ ...args, route: busSettingsPinnedRoute })
 }
 
-export function useSettingGouging(args?: HookArgsSwr<void, GougingSettings>) {
-  return useSetting<GougingSettings>({
-    ...args,
-    params: { key: 'gouging' },
-  })
-}
-
-export function useSettingContractSet(
-  args?: HookArgsSwr<void, ContractSetSettings>
+export function useSettingsS3(
+  args?: HookArgsSwr<SettingsS3Params, SettingsS3Response>
 ) {
-  return useSetting<ContractSetSettings>({
-    ...args,
-    params: { key: 'contractset' },
-  })
+  return useGetSwr({ ...args, route: busSettingsS3Route })
 }
 
-export function useSettingRedundancy(
-  args?: HookArgsSwr<void, RedundancySettings>
+export function useSettingsUpload(
+  args?: HookArgsSwr<SettingsUploadParams, SettingsUploadResponse>
 ) {
-  return useSetting<RedundancySettings>({
-    ...args,
-    params: { key: 'redundancy' },
-  })
+  return useGetSwr({ ...args, route: busSettingsUploadRoute })
 }
 
-export function useSettingS3Authentication(
-  args?: HookArgsSwr<void, S3AuthenticationSettings>
-) {
-  return useSetting<S3AuthenticationSettings>({
-    ...args,
-    params: { key: 's3authentication' },
-  })
-}
-
-export function useSettingUploadPacking(
-  args?: HookArgsSwr<void, UploadPackingSettings>
-) {
-  return useSetting<UploadPackingSettings>({
-    ...args,
-    params: { key: 'uploadpacking' },
-  })
-}
-
-export function useSettingPricePinning(
-  args?: HookArgsSwr<void, PricePinSettings>
-) {
-  return useSetting<PricePinSettings>({
-    ...args,
-    params: { key: 'pricepinning' },
-  })
-}
-
-export function useSettingUpdate(
+export function useSettingsGougingUpdate(
   args?: HookArgsCallback<
-    SettingUpdateParams,
-    SettingUpdatePayload,
-    SettingUpdateResponse
+    SettingsGougingUpdateParams,
+    SettingsGougingUpdatePayload,
+    SettingsGougingUpdateResponse
   >
 ) {
   return usePutFunc(
     {
       ...args,
-      route: busSettingKeyRoute,
+      route: busSettingsGougingRoute,
     },
-    async (mutate, args) => {
-      mutate((key) =>
-        key.startsWith(busSettingKeyRoute.replace(':key', args.params.key))
-      )
+    async (mutate) => {
+      mutate((key) => key.startsWith(busSettingsGougingRoute))
+    }
+  )
+}
+
+export function useSettingsPinnedUpdate(
+  args?: HookArgsCallback<
+    SettingsPinnedUpdateParams,
+    SettingsPinnedUpdatePayload,
+    SettingsPinnedUpdateResponse
+  >
+) {
+  return usePutFunc(
+    {
+      ...args,
+      route: busSettingsPinnedRoute,
+    },
+    async (mutate) => {
+      mutate((key) => key.startsWith(busSettingsPinnedRoute))
+    }
+  )
+}
+
+export function useSettingsS3Update(
+  args?: HookArgsCallback<
+    SettingsS3UpdateParams,
+    SettingsS3UpdatePayload,
+    SettingsS3UpdateResponse
+  >
+) {
+  return usePutFunc(
+    {
+      ...args,
+      route: busSettingsS3Route,
+    },
+    async (mutate) => {
+      mutate((key) => key.startsWith(busSettingsS3Route))
+    }
+  )
+}
+
+export function useSettingsUploadUpdate(
+  args?: HookArgsCallback<
+    SettingsUploadUpdateParams,
+    SettingsUploadUpdatePayload,
+    SettingsUploadUpdateResponse
+  >
+) {
+  return usePutFunc(
+    {
+      ...args,
+      route: busSettingsUploadRoute,
+    },
+    async (mutate) => {
+      mutate((key) => key.startsWith(busSettingsUploadRoute))
     }
   )
 }

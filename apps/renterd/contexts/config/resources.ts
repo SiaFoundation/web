@@ -2,17 +2,14 @@ import { SWRError } from '@siafoundation/react-core'
 import {
   AutopilotConfig,
   AutopilotState,
-  ContractSetSettings,
-  GougingSettings,
-  PricePinSettings,
-  RedundancySettings,
-  UploadPackingSettings,
+  SettingsGouging,
+  SettingsPinned,
+  SettingsUpload,
 } from '@siafoundation/renterd-types'
 import { SiaCentralHostsNetworkAveragesResponse } from '@siafoundation/sia-central-types'
 import BigNumber from 'bignumber.js'
-import { TBToBytes } from '@siafoundation/units'
 
-export type Resources = {
+export type ResourcesMaybeLoaded = {
   autopilotState: {
     data?: AutopilotState
     error?: SWRError
@@ -21,25 +18,49 @@ export type Resources = {
     data?: AutopilotConfig
     error?: SWRError
   }
-  contractSet: {
-    data?: ContractSetSettings
+  gouging: {
+    data?: SettingsGouging
     error?: SWRError
   }
-  uploadPacking: {
-    data?: UploadPackingSettings
+  pinned: {
+    data?: SettingsPinned
+    error?: SWRError
+  }
+  upload: {
+    data?: SettingsUpload
+    error?: SWRError
+  }
+  averages: {
+    data?: SiaCentralHostsNetworkAveragesResponse
+    error?: SWRError
+  }
+  appSettings: {
+    settings: {
+      siaCentral: boolean
+    }
+  }
+}
+
+export type ResourcesRequiredLoaded = {
+  autopilotState: {
+    data: AutopilotState
+    error?: undefined
+  }
+  autopilot: {
+    data?: AutopilotConfig
     error?: SWRError
   }
   gouging: {
-    data?: GougingSettings
-    error?: SWRError
+    data: SettingsGouging
+    error?: undefined
   }
-  redundancy: {
-    data?: RedundancySettings
-    error?: SWRError
+  pinned: {
+    data: SettingsPinned
+    error?: undefined
   }
-  pricePinning: {
-    data?: PricePinSettings
-    error?: SWRError
+  upload: {
+    data: SettingsUpload
+    error?: undefined
   }
   averages: {
     data?: SiaCentralHostsNetworkAveragesResponse
@@ -55,26 +76,26 @@ export type Resources = {
 export function checkIfAllResourcesLoaded({
   autopilotState,
   autopilot,
-  contractSet,
-  uploadPacking,
   gouging,
-  redundancy,
-  pricePinning,
+  pinned,
+  upload,
   averages,
   appSettings,
-}: Resources) {
+}: ResourcesMaybeLoaded) {
   return !!(
     // these settings have initial daemon values
     (
       autopilotState.data &&
-      redundancy.data &&
-      uploadPacking.data &&
+      !autopilotState.error &&
       gouging.data &&
-      pricePinning.data &&
+      !gouging.error &&
+      pinned.data &&
+      !pinned.error &&
+      upload.data &&
+      !upload.error &&
       // these settings are undefined and will error
       // until the user sets them
       (autopilot.data || autopilot.error) &&
-      (contractSet.data || contractSet.error) &&
       // other data dependencies
       (!appSettings.settings.siaCentral || averages.data)
     )
@@ -82,13 +103,13 @@ export function checkIfAllResourcesLoaded({
 }
 
 export function checkIfAnyResourcesErrored({
-  uploadPacking,
   gouging,
-  redundancy,
-}: Resources) {
+  pinned,
+  upload,
+}: ResourcesMaybeLoaded) {
   return !!(
     // these settings have initial daemon values
-    (redundancy.error || uploadPacking.error || gouging.error)
+    (gouging.error || pinned.error || upload.error)
   )
 }
 
@@ -97,7 +118,7 @@ export function firstTimeGougingData({
   averages,
   hasBeenConfigured,
 }: {
-  gouging: GougingSettings
+  gouging: SettingsGouging
   averages?: {
     settings: {
       download_price: string
@@ -106,7 +127,7 @@ export function firstTimeGougingData({
     }
   }
   hasBeenConfigured: boolean
-}): GougingSettings {
+}): SettingsGouging {
   // already configured, the user has changed the defaults
   if (hasBeenConfigured) {
     return gouging

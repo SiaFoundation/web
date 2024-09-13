@@ -13,8 +13,8 @@ import { useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDialog } from '../../contexts/dialog'
 import {
-  useSettingS3Authentication,
-  useSettingUpdate,
+  useSettingsS3,
+  useSettingsS3Update,
 } from '@siafoundation/renterd-react'
 import { Reset16 } from '@siafoundation/react-icons'
 
@@ -100,8 +100,8 @@ function getFields({
 
 export function KeysCreateDialog({ trigger, open, onOpenChange }: Props) {
   const { closeDialog } = useDialog()
-  const s3AuthenticationSettings = useSettingS3Authentication()
-  const update = useSettingUpdate()
+  const settingsS3 = useSettingsS3()
+  const settingsS3Update = useSettingsS3Update()
 
   const form = useForm({
     mode: 'all',
@@ -111,15 +111,16 @@ export function KeysCreateDialog({ trigger, open, onOpenChange }: Props) {
   const onSubmit = useCallback(
     async (values: Values) => {
       const v4Keypairs = {
-        ...s3AuthenticationSettings.data?.v4Keypairs,
+        ...settingsS3.data?.authentication.v4Keypairs,
         [values.name]: values.secret,
       }
-      const response = await update.put({
-        params: {
-          key: 's3authentication',
-        },
+      const response = await settingsS3Update.put({
         payload: {
-          v4Keypairs,
+          ...settingsS3.data,
+          authentication: {
+            ...settingsS3.data.authentication,
+            v4Keypairs,
+          },
         },
       })
       if (response.error) {
@@ -130,7 +131,7 @@ export function KeysCreateDialog({ trigger, open, onOpenChange }: Props) {
         closeDialog()
       }
     },
-    [form, closeDialog, update, s3AuthenticationSettings.data]
+    [form, closeDialog, settingsS3Update, settingsS3.data]
   )
 
   const fields = useMemo(
@@ -143,10 +144,10 @@ export function KeysCreateDialog({ trigger, open, onOpenChange }: Props) {
           form.setValue('secret', generateSecretAccessKey())
         },
         existingKeys: Object.keys(
-          s3AuthenticationSettings.data?.v4Keypairs || {}
+          settingsS3.data?.authentication.v4Keypairs || {}
         ),
       }),
-    [s3AuthenticationSettings.data, form]
+    [settingsS3.data, form]
   )
 
   const onInvalid = useOnInvalid(fields)

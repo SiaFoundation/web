@@ -7,10 +7,10 @@ import { getFields } from './fields'
 import { useApp } from '../app'
 import useLocalStorageState from 'use-local-storage-state'
 import { useAutopilotEvaluations } from './useAutopilotEvaluations'
-import { Resources } from './resources'
+import { ResourcesMaybeLoaded } from './resources'
 import { getRedundancyMultiplier } from '@siafoundation/units'
 
-export function useForm({ resources }: { resources: Resources }) {
+export function useForm({ resources }: { resources: ResourcesMaybeLoaded }) {
   const form = useHookForm({
     mode: 'all',
     defaultValues,
@@ -23,7 +23,6 @@ export function useForm({ resources }: { resources: Resources }) {
   const uploadTBMonth = form.watch('uploadTBMonth')
   const minShards = form.watch('minShards')
   const totalShards = form.watch('totalShards')
-  const pinningEnabled = form.watch('pinningEnabled')
   const redundancyMultiplier = useMemo(
     () => getRedundancyMultiplier(minShards, totalShards),
     [minShards, totalShards]
@@ -57,13 +56,11 @@ export function useForm({ resources }: { resources: Resources }) {
   const validationContext = useRef({
     isAutopilotEnabled,
     configViewMode,
-    pinningEnabled,
   })
   useEffect(() => {
     validationContext.current.isAutopilotEnabled = isAutopilotEnabled
     validationContext.current.configViewMode = configViewMode
-    validationContext.current.pinningEnabled = pinningEnabled
-  }, [isAutopilotEnabled, configViewMode, pinningEnabled])
+  }, [isAutopilotEnabled, configViewMode])
 
   const fields = useMemo(() => {
     const advancedDefaults = renterdState.data

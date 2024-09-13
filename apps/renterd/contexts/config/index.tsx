@@ -23,11 +23,9 @@ export function useConfigMain() {
   const {
     autopilotState,
     autopilot,
-    contractSet,
     gouging,
-    redundancy,
-    uploadPacking,
-    pricePinning,
+    pinned,
+    upload,
     averages,
     shouldSyncDefaultContractSet,
     setShouldSyncDefaultContractSet,
@@ -45,25 +43,17 @@ export function useConfigMain() {
         data: autopilot.data,
         error: autopilot.error,
       },
-      contractSet: {
-        data: contractSet.data,
-        error: contractSet.error,
-      },
-      uploadPacking: {
-        data: uploadPacking.data,
-        error: uploadPacking.error,
-      },
       gouging: {
         data: gouging.data,
         error: gouging.error,
       },
-      redundancy: {
-        data: redundancy.data,
-        error: redundancy.error,
+      pinned: {
+        data: pinned.data,
+        error: pinned.error,
       },
-      pricePinning: {
-        data: pricePinning.data,
-        error: pricePinning.error,
+      upload: {
+        data: upload.data,
+        error: upload.error,
       },
       averages: {
         data: averages.data,
@@ -80,16 +70,12 @@ export function useConfigMain() {
       autopilotState.error,
       autopilot.data,
       autopilot.error,
-      contractSet.data,
-      contractSet.error,
-      uploadPacking.data,
-      uploadPacking.error,
       gouging.data,
       gouging.error,
-      redundancy.data,
-      redundancy.error,
-      pricePinning.data,
-      pricePinning.error,
+      pinned.data,
+      pinned.error,
+      upload.data,
+      upload.error,
       averages.data,
       averages.error,
       appSettings.settings.siaCentral,
@@ -111,14 +97,13 @@ export function useConfigMain() {
       return null
     }
     return transformDown({
+      autopilotID: resources.autopilotState.data?.id,
       hasBeenConfigured: resources.autopilotState.data?.configured,
       autopilot: resources.autopilot.data,
-      contractSet: resources.contractSet.data,
-      uploadPacking: resources.uploadPacking.data,
       gouging: resources.gouging.data,
+      pinned: resources.pinned.data,
+      upload: resources.upload.data,
       averages: resources.averages.data,
-      redundancy: resources.redundancy.data,
-      pricePinning: resources.pricePinning.data,
     })
   }, [resources])
 
@@ -132,25 +117,22 @@ export function useConfigMain() {
     // these do not seem to throw on errors, just return undefined
     const _autopilotState = await autopilotState.mutate()
     const _autopilot = isAutopilotEnabled ? await autopilot.mutate() : undefined
-    const _contractSet = await contractSet.mutate()
     const _gouging = await gouging.mutate()
-    const _redundancy = await redundancy.mutate()
-    const _uploadPacking = await uploadPacking.mutate()
-    const _pricePinning = await pricePinning.mutate()
-    if (!gouging || !redundancy) {
+    const _pinned = await pinned.mutate()
+    const _upload = await upload.mutate()
+    if (!_autopilotState || !_gouging || !_upload || !_pinned) {
       triggerErrorToast({ title: 'Error fetching settings' })
       return null
     }
     form.reset(
       transformDown({
+        autopilotID: _autopilotState.id,
         hasBeenConfigured: _autopilotState.configured,
         autopilot: _autopilot,
-        contractSet: _contractSet,
-        uploadPacking: _uploadPacking,
         gouging: _gouging,
+        pinned: _pinned,
+        upload: _upload,
         averages: averages.data,
-        redundancy: _redundancy,
-        pricePinning: _pricePinning,
       })
     )
   }, [
@@ -158,11 +140,9 @@ export function useConfigMain() {
     autopilotState,
     isAutopilotEnabled,
     autopilot,
-    contractSet,
     gouging,
-    uploadPacking,
-    redundancy,
-    pricePinning,
+    pinned,
+    upload,
     averages.data,
   ])
 

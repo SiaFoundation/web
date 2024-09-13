@@ -12,14 +12,8 @@ export async function configResetAllSettings({ page }: { page: Page }) {
   await setViewMode({ page, state: 'advanced' })
 
   // pinning
-  await setSwitchByLabel(page, 'pinningEnabled', true)
   await fillSelectInputByName(page, 'pinnedCurrency', 'usd')
   await fillTextInputByName(page, 'pinnedThreshold', '2')
-  await fillTextInputByName(
-    page,
-    'forexEndpointURL',
-    'https://api.siascan.com/exchange-rate/siacoin'
-  )
 
   // storage
   await fillTextInputByName(page, 'storageTB', '1')

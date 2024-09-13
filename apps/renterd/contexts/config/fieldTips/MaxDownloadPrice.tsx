@@ -3,14 +3,11 @@ import {
   TipNumber,
   formSetField,
 } from '@siafoundation/design-system'
-import React from 'react'
-import { Categories, RecommendationItem, SettingsData } from '../types'
-import { toHastings, fiatToSiacoin } from '@siafoundation/units'
+import { fiatToSiacoin, toHastings } from '@siafoundation/units'
 import { UseFormReturn } from 'react-hook-form'
-import {
-  useAllowanceDerivedPricingForEnabledFields,
-  useForexExchangeRate,
-} from '../useAllowanceDerivedPricing'
+import { Categories, RecommendationItem, SettingsData } from '../types'
+import { useAllowanceDerivedPricingForEnabledFields } from '../useAllowanceDerivedPricing'
+import { useFormExchangeRate } from '../useFormExchangeRate'
 import {
   fitPriceToCurrentAllowanceTipContent,
   recommendationTipContent,
@@ -84,18 +81,16 @@ export function MaxDownloadPricePinnedTips({
   const derived = useAllowanceDerivedPricingForEnabledFields({
     form,
   })
-  const exchangeRate = useForexExchangeRate({
-    form,
-  })
+  const { rate } = useFormExchangeRate(form)
   const derivedPriceInSiacoin =
-    derived?.maxDownloadPriceTBPinned && exchangeRate
-      ? fiatToSiacoin(derived.maxDownloadPriceTBPinned, exchangeRate)
+    derived?.maxDownloadPriceTBPinned && rate
+      ? fiatToSiacoin(derived.maxDownloadPriceTBPinned, rate)
       : null
   const recommendationInFiat =
     recommendations?.maxDownloadPriceTBPinned?.targetValue
   const recommendationInSiacoin =
-    recommendationInFiat && exchangeRate
-      ? fiatToSiacoin(recommendationInFiat, exchangeRate)
+    recommendationInFiat && rate
+      ? fiatToSiacoin(recommendationInFiat, rate)
       : null
   return (
     <>

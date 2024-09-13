@@ -18,20 +18,22 @@ import { StateConnError } from './StateConnError'
 import { Recommendations } from './Recommendations'
 import { ShouldPinSwitch } from './ShouldPinSwitch'
 import { PinnedCurrencyWarning } from './PinnedCurrencyWarning'
+import { useExchangeRate } from '@siafoundation/react-core'
 
 export function Config() {
   const { openDialog } = useDialog()
   const { form, fields, remoteError, configRef } = useConfig()
 
-  const pinningEnabled = form.watch('pinningEnabled')
   const pinnedCurrency = form.watch('pinnedCurrency')
-  const forexEndpointURL = form.watch('forexEndpointURL')
   const shouldPinAllowance = form.watch('shouldPinAllowance')
   const shouldPinMaxStoragePrice = form.watch('shouldPinMaxStoragePrice')
   const shouldPinMaxUploadPrice = form.watch('shouldPinMaxUploadPrice')
   const shouldPinMaxDownloadPrice = form.watch('shouldPinMaxDownloadPrice')
 
-  const canShowPinned = pinningEnabled && pinnedCurrency && forexEndpointURL
+  const { rate } = useExchangeRate({
+    currency: pinnedCurrency || undefined,
+  })
+  const canUseExchangeRates = !!rate
 
   return (
     <RenterdAuthedLayout
@@ -80,7 +82,7 @@ export function Config() {
                     fields={fields}
                   />
                   {shouldPinAllowance ? (
-                    canShowPinned ? (
+                    canUseExchangeRates ? (
                       <ConfigurationFiat
                         name="allowanceMonthPinned"
                         form={form}
@@ -89,9 +91,8 @@ export function Config() {
                       />
                     ) : (
                       <PinnedCurrencyWarning
-                        pinningEnabled={pinningEnabled}
+                        canUseExchangeRates={canUseExchangeRates}
                         pinnedCurrency={pinnedCurrency}
-                        forexEndpointURL={forexEndpointURL}
                       />
                     )
                   ) : (
@@ -148,7 +149,7 @@ export function Config() {
                     fields={fields}
                   />
                   {shouldPinMaxStoragePrice ? (
-                    canShowPinned ? (
+                    canUseExchangeRates ? (
                       <ConfigurationFiat
                         name="maxStoragePriceTBMonthPinned"
                         form={form}
@@ -157,9 +158,8 @@ export function Config() {
                       />
                     ) : (
                       <PinnedCurrencyWarning
-                        pinningEnabled={pinningEnabled}
+                        canUseExchangeRates={canUseExchangeRates}
                         pinnedCurrency={pinnedCurrency}
-                        forexEndpointURL={forexEndpointURL}
                       />
                     )
                   ) : (
@@ -184,7 +184,7 @@ export function Config() {
                     fields={fields}
                   />
                   {shouldPinMaxUploadPrice ? (
-                    canShowPinned ? (
+                    canUseExchangeRates ? (
                       <ConfigurationFiat
                         name="maxUploadPriceTBPinned"
                         form={form}
@@ -193,9 +193,8 @@ export function Config() {
                       />
                     ) : (
                       <PinnedCurrencyWarning
-                        pinningEnabled={pinningEnabled}
+                        canUseExchangeRates={canUseExchangeRates}
                         pinnedCurrency={pinnedCurrency}
-                        forexEndpointURL={forexEndpointURL}
                       />
                     )
                   ) : (
@@ -220,7 +219,7 @@ export function Config() {
                     fields={fields}
                   />
                   {shouldPinMaxDownloadPrice ? (
-                    canShowPinned ? (
+                    canUseExchangeRates ? (
                       <ConfigurationFiat
                         name="maxDownloadPriceTBPinned"
                         form={form}
@@ -229,9 +228,8 @@ export function Config() {
                       />
                     ) : (
                       <PinnedCurrencyWarning
-                        pinningEnabled={pinningEnabled}
+                        canUseExchangeRates={canUseExchangeRates}
                         pinnedCurrency={pinnedCurrency}
-                        forexEndpointURL={forexEndpointURL}
                       />
                     )
                   ) : (

@@ -2,13 +2,11 @@ import { Link, Panel, Text } from '@siafoundation/design-system'
 import { routes } from '../../config/routes'
 
 export function PinnedCurrencyWarning({
-  pinningEnabled,
+  canUseExchangeRates,
   pinnedCurrency,
-  forexEndpointURL,
 }: {
-  pinningEnabled: boolean
+  canUseExchangeRates: boolean
   pinnedCurrency: string
-  forexEndpointURL: string
 }) {
   return (
     <Panel className="px-2 pt-1 pb-2">
@@ -16,19 +14,14 @@ export function PinnedCurrencyWarning({
         To pin this field:
       </Text>
       <div className="flex flex-col">
-        {!pinningEnabled && (
+        {!canUseExchangeRates && !!pinnedCurrency && (
           <Link size="12" href={routes.config.pinning} underline="hover">
-            - Enable the pinning feature
+            - Enable an exchange rate API
           </Link>
         )}
         {!pinnedCurrency && (
           <Link size="12" href={routes.config.pinning} underline="hover">
             - Select a pinned currency
-          </Link>
-        )}
-        {!forexEndpointURL && (
-          <Link size="12" href={routes.config.pinning} underline="hover">
-            - Enter a forex endpoint URL
           </Link>
         )}
       </div>

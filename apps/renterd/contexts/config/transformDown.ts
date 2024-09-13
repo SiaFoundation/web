@@ -2,41 +2,36 @@ import {
   toFixedMaxBigNumber,
   toFixedMaxString,
 } from '@siafoundation/design-system'
+import { currencyOptions } from '@siafoundation/react-core'
 import {
   AutopilotConfig,
-  ContractSetSettings,
-  GougingSettings,
-  PricePinSettings,
-  RedundancySettings,
-  UploadPackingSettings,
+  SettingsGouging,
+  SettingsPinned,
+  SettingsUpload,
 } from '@siafoundation/renterd-types'
 import {
-  toSiacoins,
   blocksToWeeks,
   bytesToTB,
-  valuePerBytePerBlockToPerTBPerMonth,
-  valuePerPeriodToPerMonth,
-  valuePerOneToPerMillion,
-  weeksToBlocks,
   nanosecondsInDays,
   nanosecondsInMinutes,
+  toSiacoins,
+  valuePerBytePerBlockToPerTBPerMonth,
   valuePerByteToPerTB,
+  valuePerOneToPerMillion,
+  valuePerPeriodToPerMonth,
+  weeksToBlocks,
 } from '@siafoundation/units'
 import BigNumber from 'bignumber.js'
+import { firstTimeGougingData } from './resources'
 import {
   AutopilotData,
-  scDecimalPlaces,
-  SettingsData,
-  ContractSetData,
-  defaultContractSet,
   GougingData,
-  RedundancyData,
-  UploadPackingData,
+  PinningData,
+  SettingsData,
+  UploadData,
   defaultAutopilot,
-  PricePinData,
+  scDecimalPlaces,
 } from './types'
-import { firstTimeGougingData } from './resources'
-import { currencyOptions } from '@siafoundation/react-core'
 
 // down
 export function transformDownAutopilot(
@@ -101,31 +96,12 @@ export function transformDownAutopilot(
   }
 }
 
-export function transformDownContractSet(
-  c?: ContractSetSettings
-): ContractSetData {
-  if (!c) {
-    return defaultContractSet
-  }
-  return {
-    defaultContractSet: c.default,
-  }
-}
-
-export function transformDownUploadPacking(
-  u: UploadPackingSettings
-): UploadPackingData {
-  return {
-    uploadPackingEnabled: u.enabled,
-  }
-}
-
 export function transformDownGouging({
   gouging: _gouging,
   averages,
   hasBeenConfigured,
 }: {
-  gouging: GougingSettings
+  gouging: SettingsGouging
   averages?: {
     settings: {
       download_price: string
@@ -178,21 +154,19 @@ export function transformDownGouging({
   }
 }
 
-export function transformDownPricePinning(
-  p: PricePinSettings,
+export function transformDownPinned(
+  p: SettingsPinned,
+  autopilotID: string,
   periodBlocks?: number
-): PricePinData {
+): PinningData {
   const fixedFiat = currencyOptions.find((c) => c.id === p.currency)?.fixed || 6
   return {
-    pinningEnabled: p.enabled,
     pinnedCurrency: p.currency,
-    forexEndpointURL: p.forexEndpointURL,
     pinnedThreshold: new BigNumber(p.threshold).times(100),
-    // Assume the default autopilot named 'autopilot'.
-    shouldPinAllowance: p.autopilots['autopilot']?.allowance.pinned || false,
+    shouldPinAllowance: p.autopilots?.[autopilotID]?.allowance.pinned || false,
     allowanceMonthPinned: toFixedMaxBigNumber(
       valuePerPeriodToPerMonth(
-        new BigNumber(p.autopilots['autopilot']?.allowance.value || 0),
+        new BigNumber(p.autopilots?.[autopilotID]?.allowance.value || 0),
         // If pinned allowance is non zero, the period value will be defined.
         periodBlocks || weeksToBlocks(6)
       ),
@@ -213,21 +187,22 @@ export function transformDownPricePinning(
   }
 }
 
-export function transformDownRedundancy(r: RedundancySettings): RedundancyData {
+export function transformDownUpload(u?: SettingsUpload): UploadData {
   return {
-    minShards: new BigNumber(r.minShards),
-    totalShards: new BigNumber(r.totalShards),
+    defaultContractSet: u.defaultContractSet ? u.defaultContractSet : '',
+    uploadPackingEnabled: u.packing.enabled,
+    minShards: new BigNumber(u.redundancy.minShards),
+    totalShards: new BigNumber(u.redundancy.totalShards),
   }
 }
 
 export type RemoteData = {
   hasBeenConfigured: boolean
+  autopilotID: string
   autopilot: AutopilotConfig | undefined
-  contractSet: ContractSetSettings | undefined
-  uploadPacking: UploadPackingSettings
-  gouging: GougingSettings
-  redundancy: RedundancySettings
-  pricePinning: PricePinSettings
+  gouging: SettingsGouging
+  pinned: SettingsPinned
+  upload: SettingsUpload
   averages?: {
     settings: {
       download_price: string
@@ -239,30 +214,25 @@ export type RemoteData = {
 
 export function transformDown({
   hasBeenConfigured,
+  autopilotID,
   autopilot,
-  contractSet,
-  uploadPacking,
   gouging,
-  redundancy,
-  pricePinning,
+  pinned,
+  upload,
   averages,
 }: RemoteData): SettingsData {
   return {
     // autopilot
     ...transformDownAutopilot(autopilot),
-    // contractset
-    ...transformDownContractSet(contractSet),
-    // uploadpacking
-    ...transformDownUploadPacking(uploadPacking),
     // gouging
     ...transformDownGouging({
       gouging,
       averages,
       hasBeenConfigured,
     }),
-    // price pinning
-    ...transformDownPricePinning(pricePinning, autopilot?.contracts.period),
-    // redundancy
-    ...transformDownRedundancy(redundancy),
+    // pinning
+    ...transformDownPinned(pinned, autopilotID, autopilot?.contracts.period),
+    // upload
+    ...transformDownUpload(upload),
   }
 }

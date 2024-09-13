@@ -4,6 +4,7 @@ import { AppProps } from 'next/app'
 import { Providers } from '../config/providers'
 import { routes } from '../config/routes'
 import { rootFontClasses } from '@siafoundation/fonts'
+import { busStateRoute } from '@siafoundation/renterd-types'
 
 export default function App({
   Component,
@@ -15,6 +16,7 @@ export default function App({
     <NextAppCsr
       className={rootFontClasses}
       fallback={pageProps.fallback}
+      daemonExplorerInfoRoute={busStateRoute}
       passwordProtectRequestHooks
       lockRoutes={routes}
     >

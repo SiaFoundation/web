@@ -5,7 +5,7 @@ import { FilesManagerProvider, useFilesManager, FilesManagerState } from '.'
 import { useEffect } from 'react'
 import {
   mockApiBusBuckets,
-  mockApiBusSettingRedundancy,
+  mockApiBusSettingsUpload,
   mockMatchMedia,
 } from '../../mock/mock'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -28,7 +28,7 @@ const server = setupServer()
 beforeAll(() => {
   mockMatchMedia()
   mockApiBusBuckets(server)
-  mockApiBusSettingRedundancy(server)
+  mockApiBusSettingsUpload(server)
   server.listen()
 })
 beforeEach(() => {

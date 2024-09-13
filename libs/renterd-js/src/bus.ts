@@ -50,7 +50,6 @@ import {
   ContractSetMetricsParams,
   ContractSetMetricsPayload,
   ContractSetMetricsResponse,
-  ContractSetSettings,
   ContractSetUpdateParams,
   ContractSetUpdatePayload,
   ContractSetUpdateResponse,
@@ -72,7 +71,6 @@ import {
   ContractsReleasePayload,
   ContractsReleaseResponse,
   ContractsResponse,
-  GougingSettings,
   HostInteractionParams,
   HostInteractionPayload,
   HostInteractionResponse,
@@ -133,18 +131,6 @@ import {
   ObjectsStatsParams,
   ObjectsStatsPayload,
   ObjectsStatsResponse,
-  PricePinSettings,
-  RedundancySettings,
-  S3AuthenticationSettings,
-  SettingParams,
-  SettingPayload,
-  SettingResponse,
-  SettingUpdateParams,
-  SettingUpdatePayload,
-  SettingUpdateResponse,
-  SettingsParams,
-  SettingsPayload,
-  SettingsResponse,
   SlabObjectsParams,
   SlabObjectsPayload,
   SlabObjectsResponse,
@@ -166,7 +152,6 @@ import {
   TxPoolTransactionsParams,
   TxPoolTransactionsPayload,
   TxPoolTransactionsResponse,
-  UploadPackingSettings,
   WalletMetricsParams,
   WalletMetricsPayload,
   WalletMetricsResponse,
@@ -226,8 +211,6 @@ import {
   busObjectsKeyRoute,
   busObjectsRenameRoute,
   busHostsRoute,
-  busSettingKeyRoute,
-  busSettingsRoute,
   busSlabKeyObjectsRoute,
   busStateRoute,
   busStatsObjectsRoute,
@@ -248,9 +231,36 @@ import {
   AutopilotsResponse,
   busWalletEventsRoute,
   busListObjectsPrefixRoute,
+  SettingsGougingParams,
+  SettingsGougingPayload,
+  SettingsGougingResponse,
+  SettingsGougingUpdateParams,
+  SettingsGougingUpdatePayload,
+  SettingsGougingUpdateResponse,
+  SettingsPinnedParams,
+  SettingsPinnedPayload,
+  SettingsPinnedResponse,
+  SettingsPinnedUpdateParams,
+  SettingsPinnedUpdatePayload,
+  SettingsPinnedUpdateResponse,
+  SettingsS3Params,
+  SettingsS3Payload,
+  SettingsS3Response,
+  SettingsS3UpdateParams,
+  SettingsS3UpdatePayload,
+  SettingsS3UpdateResponse,
+  SettingsUploadParams,
+  SettingsUploadPayload,
+  SettingsUploadResponse,
+  SettingsUploadUpdateParams,
+  SettingsUploadUpdatePayload,
+  SettingsUploadUpdateResponse,
+  busSettingsGougingRoute,
+  busSettingsPinnedRoute,
+  busSettingsS3Route,
+  busSettingsUploadRoute,
 } from '@siafoundation/renterd-types'
 import { buildRequestHandler, initAxios } from '@siafoundation/request'
-import { AxiosRequestConfig } from 'axios'
 
 export function Bus({ api, password }: { api: string; password?: string }) {
   const axios = initAxios(api, password)
@@ -491,133 +501,46 @@ export function Bus({ api, password }: { api: string; password?: string }) {
       ObjectsStatsPayload,
       ObjectsStatsResponse
     >(axios, 'get', busStatsObjectsRoute),
-    settings: buildRequestHandler<
-      SettingsParams,
-      SettingsPayload,
-      SettingsResponse
-    >(axios, 'get', busSettingsRoute),
-    setting: function setting<Data extends Record<string, unknown>>({
-      params,
-      config,
-    }: {
-      params: SettingParams
-      config?: AxiosRequestConfig<SettingPayload>
-    }) {
-      return buildRequestHandler<
-        SettingParams,
-        SettingPayload,
-        SettingResponse<Data>
-      >(
-        axios,
-        'get',
-        busSettingKeyRoute
-      )({ params, config })
-    },
-    settingGouging: ({ config }: { config?: AxiosRequestConfig } = {}) => {
-      return buildRequestHandler<
-        SettingParams,
-        SettingPayload,
-        SettingResponse<GougingSettings>
-      >(
-        axios,
-        'get',
-        busSettingKeyRoute
-      )({
-        params: {
-          key: 'gouging',
-        },
-        config,
-      })
-    },
-    settingRedundancy: ({ config }: { config?: AxiosRequestConfig } = {}) => {
-      return buildRequestHandler<
-        SettingParams,
-        SettingPayload,
-        SettingResponse<RedundancySettings>
-      >(
-        axios,
-        'get',
-        busSettingKeyRoute
-      )({
-        params: {
-          key: 'redundancy',
-        },
-        config,
-      })
-    },
-    settingContractSet: ({ config }: { config?: AxiosRequestConfig } = {}) => {
-      return buildRequestHandler<
-        SettingParams,
-        SettingPayload,
-        SettingResponse<ContractSetSettings>
-      >(
-        axios,
-        'get',
-        busSettingKeyRoute
-      )({
-        params: {
-          key: 'contractset',
-        },
-        config,
-      })
-    },
-    settingUploadPacking: ({
-      config,
-    }: { config?: AxiosRequestConfig } = {}) => {
-      return buildRequestHandler<
-        SettingParams,
-        SettingPayload,
-        SettingResponse<UploadPackingSettings>
-      >(
-        axios,
-        'get',
-        busSettingKeyRoute
-      )({
-        params: {
-          key: 'uploadpacking',
-        },
-        config,
-      })
-    },
-    settingS3Authentication: ({
-      config,
-    }: { config?: AxiosRequestConfig } = {}) => {
-      return buildRequestHandler<
-        SettingParams,
-        SettingPayload,
-        SettingResponse<S3AuthenticationSettings>
-      >(
-        axios,
-        'get',
-        busSettingKeyRoute
-      )({
-        params: {
-          key: 's3authentication',
-        },
-        config,
-      })
-    },
-    settingPricePinning: ({ config }: { config?: AxiosRequestConfig } = {}) => {
-      return buildRequestHandler<
-        SettingParams,
-        SettingPayload,
-        SettingResponse<PricePinSettings>
-      >(
-        axios,
-        'get',
-        busSettingKeyRoute
-      )({
-        params: {
-          key: 'pricepinning',
-        },
-        config,
-      })
-    },
-    settingUpdate: buildRequestHandler<
-      SettingUpdateParams,
-      SettingUpdatePayload,
-      SettingUpdateResponse
-    >(axios, 'put', busSettingKeyRoute),
+    settingsGouging: buildRequestHandler<
+      SettingsGougingParams,
+      SettingsGougingPayload,
+      SettingsGougingResponse
+    >(axios, 'get', busSettingsGougingRoute),
+    settingsPinned: buildRequestHandler<
+      SettingsPinnedParams,
+      SettingsPinnedPayload,
+      SettingsPinnedResponse
+    >(axios, 'get', busSettingsPinnedRoute),
+    settingsS3: buildRequestHandler<
+      SettingsS3Params,
+      SettingsS3Payload,
+      SettingsS3Response
+    >(axios, 'get', busSettingsS3Route),
+    settingsUpload: buildRequestHandler<
+      SettingsUploadParams,
+      SettingsUploadPayload,
+      SettingsUploadResponse
+    >(axios, 'get', busSettingsUploadRoute),
+    settingsGougingUpdate: buildRequestHandler<
+      SettingsGougingUpdateParams,
+      SettingsGougingUpdatePayload,
+      SettingsGougingUpdateResponse
+    >(axios, 'put', busSettingsGougingRoute),
+    settingsPinnedUpdate: buildRequestHandler<
+      SettingsPinnedUpdateParams,
+      SettingsPinnedUpdatePayload,
+      SettingsPinnedUpdateResponse
+    >(axios, 'put', busSettingsPinnedRoute),
+    settingsS3Update: buildRequestHandler<
+      SettingsS3UpdateParams,
+      SettingsS3UpdatePayload,
+      SettingsS3UpdateResponse
+    >(axios, 'put', busSettingsS3Route),
+    settingsUploadUpdate: buildRequestHandler<
+      SettingsUploadUpdateParams,
+      SettingsUploadUpdatePayload,
+      SettingsUploadUpdateResponse
+    >(axios, 'put', busSettingsUploadRoute),
     alerts: buildRequestHandler<AlertsParams, AlertsPayload, AlertsResponse>(
       axios,
       'get',

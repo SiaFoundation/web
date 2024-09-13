@@ -1,6 +1,6 @@
 import { SetupServer } from 'msw/node'
 import { HttpResponse, http } from 'msw'
-import { Bucket, RedundancySettings } from '@siafoundation/renterd-types'
+import { Bucket, SettingsUpload } from '@siafoundation/renterd-types'
 
 export function mockApiBusBuckets(server: SetupServer) {
   server.use(
@@ -17,13 +17,20 @@ export function mockApiBusBuckets(server: SetupServer) {
   )
 }
 
-export function mockApiBusSettingRedundancy(server: SetupServer) {
+export function mockApiBusSettingsUpload(server: SetupServer) {
   server.use(
-    http.get('/api/bus/setting/redundancy', () => {
+    http.get('/api/bus/settings/upload', () => {
       return HttpResponse.json({
-        minShards: 10,
-        totalShards: 30,
-      } as RedundancySettings)
+        defaultContractSet: 'myset',
+        packing: {
+          enabled: true,
+          slabBufferMaxSizeSoft: 1,
+        },
+        redundancy: {
+          minShards: 10,
+          totalShards: 30,
+        },
+      } as SettingsUpload)
     })
   )
 }

@@ -14,7 +14,7 @@ import {
 } from './types'
 import { columns } from './columns'
 import { defaultDatasetRefreshInterval } from '../../config/swr'
-import { useSettingS3Authentication } from '@siafoundation/renterd-react'
+import { useSettingsS3 } from '@siafoundation/renterd-react'
 
 const defaultLimit = 50
 
@@ -22,7 +22,7 @@ function useKeysMain() {
   const router = useRouter()
   const limit = Number(router.query.limit || defaultLimit)
   const offset = Number(router.query.offset || 0)
-  const response = useSettingS3Authentication({
+  const response = useSettingsS3({
     config: {
       swr: {
         refreshInterval: defaultDatasetRefreshInterval,
@@ -35,13 +35,15 @@ function useKeysMain() {
       return null
     }
     const data: KeyData[] =
-      Object.entries(response.data?.v4Keypairs || {}).map(([key, secret]) => {
-        return {
-          id: key,
-          key,
-          secret,
+      Object.entries(response.data?.authentication.v4Keypairs || {}).map(
+        ([key, secret]) => {
+          return {
+            id: key,
+            key,
+            secret,
+          }
         }
-      }) || []
+      ) || []
     return data
   }, [response.data])
 
