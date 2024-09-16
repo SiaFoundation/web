@@ -108,6 +108,7 @@ export type ObjectObject = {
 }
 
 export type ObjectMetadata = {
+  bucket: string
   key: string
   size: number
   health: number
