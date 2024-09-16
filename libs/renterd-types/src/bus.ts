@@ -400,14 +400,15 @@ export type BucketDeletePayload = void
 export type BucketDeleteResponse = void
 
 export type ObjectListParams = {
+  bucket?: string
   prefix?: string
-  bucket: string
   delimiter?: string
   limit?: number
   marker?: string
   sortBy?: 'name' | 'health' | 'size'
   sortDir?: 'asc' | 'desc'
   substring?: string
+  slabEncryptionKey?: string
 }
 export type ObjectListPayload = void
 export type ObjectListResponse = {
