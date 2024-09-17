@@ -1,5 +1,24 @@
 # renterd
 
+## 0.62.0
+
+### Minor Changes
+
+- 64d82fc3: The transactions list now includes more details such as specific transaction types and maturity height for locked siacoin.
+- 32363a16: The files directory and global mode explorers now use the new list objects API.
+- 978b70aa: The hosts explorer now uses the new combined hosts API.
+- ac703a94: The configuration feature now internally uses the new strong settings APIs.
+- ac703a94: The configuration feature no longer includes the enable pinning or forex endpoint options under price pinning.
+- ac703a94: Contracts can now be filtered and sorted by deletions and sector roots spending.
+- ac703a94: The app now uses the daemon configured explorer for exchange rates.
+- ac703a94: The keys feature now internally uses the new S3 settings API format.
+- feca9f36: The configuration now internally uses the updated gouging base units.
+
+### Patch Changes
+
+- 978b70aa: Fixed a bug optimistically updating last scan information when initiating a host scan.
+- 1c94a604: Fixed an issue where the fit allowance suggestions were showing as NaN because all required fields were not filled.
+
 ## 0.61.0
 
 ### Minor Changes

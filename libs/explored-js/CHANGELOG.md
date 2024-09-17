@@ -1,5 +1,18 @@
 # @siafoundation/explored-js
 
+## 0.2.0
+
+### Minor Changes
+
+- ff5dc113: Added the TransactionChainIndices API.
+- be553c04: Corrected transactionChainIndices method from POST to GET.
+
+### Patch Changes
+
+- Updated dependencies [ff5dc113]
+- Updated dependencies [79470441]
+  - @siafoundation/explored-types@0.4.0
+
 ## 0.1.2
 
 ### Patch Changes

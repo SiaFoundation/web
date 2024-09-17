@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.9.0
+
+### Minor Changes
+
+- 64d82fc3: Authed layout, wallet balance, and wallet layout actions now require immature balance value.
+- 29580b85: A wrapping ClientSideOnly component has been created that forces its children to render only on the client side.
+- 32363a16: Added ellipsis boolean to truncate, deprecated humanId.
+
 ## 4.8.0
 
 ### Minor Changes

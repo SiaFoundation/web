@@ -1,5 +1,13 @@
 # explorer
 
+## 0.19.0
+
+### Minor Changes
+
+- 20f99f51: The Latest Blocks fetch on the home page now uses explored.
+- 028d08f6: The transaction route now uses explored.
+- 29580b85: The light and dark ThemeRadio footer component now renders only on the client side.
+
 ## 0.18.0
 
 ### Minor Changes

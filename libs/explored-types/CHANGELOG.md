@@ -1,5 +1,12 @@
 # @siafoundation/explored-types
 
+## 0.4.0
+
+### Minor Changes
+
+- ff5dc113: Added the TransactionChainIndices API.
+- 79470441: Added the ExplorerSiacoinInput and ExplorerSiafundInput types.
+
 ## 0.3.0
 
 ### Minor Changes
