@@ -1,5 +1,23 @@
 # @siafoundation/renterd-types
 
+## 0.8.0
+
+### Minor Changes
+
+- 32363a16: Removed deprecated object search and object directory APIs.
+- 64d82fc3: Removed deprecated wallet transactions and pending transactions APIs.
+- 32363a16: Updated the multipart upload APIs with the new payloads.
+- 978b70aa: Added the bus list autopilots API.
+- ac703a94: Removed deprecated setting APIs.
+- ac703a94: Added new strong settings APIs.
+- 978b70aa: Added new combined hosts API.
+- 0721586a: The list objects API now includes a slabEncryptionKey parameter.
+- 64d82fc3: Added wallet events and pending events APIs.
+- 64d82fc3: Removed deprecated wallet discard, fund, sign, and outputs APIs.
+- ac703a94: The bus state API now includes daemon configured explorer.
+- 0721586a: The list objects API bucket parameter is now optional, and bucket is returned in in the object metadata.
+- 978b70aa: Removed deprecated search hosts and autopilot hosts APIs.
+
 ## 0.7.0
 
 ### Minor Changes
