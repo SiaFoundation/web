@@ -2,6 +2,10 @@ export function minutesInMilliseconds(minutes: number) {
   return 1000 * 60 * minutes
 }
 
+export function hoursInSeconds(hours: number) {
+  return 60 * 60 * hours
+}
+
 export function hoursInMilliseconds(hours: number) {
   return 1000 * 60 * 60 * hours
 }

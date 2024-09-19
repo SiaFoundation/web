@@ -65,6 +65,10 @@ export const menuSections = [
         title: 'Whitepaper',
         newTab: true,
       },
+      {
+        link: routes.micaIndicators.index,
+        title: 'MiCA Indicators',
+      },
     ],
   },
   {

@@ -78,4 +78,8 @@ export const routes = {
   letter: {
     index: '/letter',
   },
+  micaIndicators: {
+    index: '/mica-indicators',
+    methodology: '/mica-indicators/methodology',
+  },
 }
