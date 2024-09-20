@@ -99,6 +99,9 @@ export function HostContextMenuContent({
       <DropdownMenuItem
         disabled={!address}
         onSelect={() => {
+          if (!address) {
+            return
+          }
           resetHostsFilters()
           setHostsFilter({
             id: 'addressContains',
@@ -128,6 +131,9 @@ export function HostContextMenuContent({
       <DropdownMenuItem
         disabled={!address}
         onSelect={() => {
+          if (!address) {
+            return
+          }
           resetContractsFilters()
           setContractsFilter(addressContainsFilter(address))
           router.push(routes.contracts.index)
@@ -154,6 +160,9 @@ export function HostContextMenuContent({
       <DropdownMenuItem
         disabled={!address}
         onSelect={() => {
+          if (!address) {
+            return
+          }
           rescan.post({
             payload: {
               hostKey: publicKey,
@@ -181,7 +190,12 @@ export function HostContextMenuContent({
       ) : (
         <DropdownMenuItem
           disabled={!address}
-          onSelect={() => blocklistUpdate([address], [])}
+          onSelect={() => {
+            if (!address) {
+              return
+            }
+            blocklistUpdate([address], [])
+          }}
         >
           <DropdownMenuLeftSlot>
             <ListChecked16 />
@@ -230,6 +244,9 @@ export function HostContextMenuContent({
       <DropdownMenuItem
         disabled={!address}
         onSelect={() => {
+          if (!address) {
+            return
+          }
           copyToClipboard(address, 'host address')
         }}
       >

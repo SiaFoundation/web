@@ -14,6 +14,7 @@ import { columns } from './columns'
 import { join, getFilename } from '../../lib/paths'
 import { useFilesManager } from '../filesManager'
 import { ObjectUploadData } from '../filesManager/types'
+import { MultipartUploadListUploadsPayload } from '@siafoundation/renterd-types'
 
 const defaultLimit = 50
 
@@ -27,25 +28,33 @@ function useUploadsMain() {
     useServerFilters()
 
   const apiBusUploadAbort = useMultipartUploadAbort()
-  const response = useMultipartUploadListUploads({
-    disabled: !activeBucket,
-    payload: {
+
+  const payload = useMemo(() => {
+    return {
       bucket: activeBucket?.name,
       uploadIDMarker: marker,
       limit,
-    },
+    }
+  }, [activeBucket, marker, limit])
+
+  const response = useMultipartUploadListUploads({
+    disabled: !activeBucket,
+    payload: payload as MultipartUploadListUploadsPayload,
   })
 
   const abortAll = useCallback(async () => {
+    if (!response.data?.uploads || !activeBucket?.name) {
+      return
+    }
     return Promise.all(
-      response.data?.uploads?.map(async (upload) => {
+      response.data.uploads.map(async (upload) => {
         const localUpload = uploadsMap[upload.uploadID]
         if (localUpload) {
           localUpload.uploadAbort?.()
         } else {
           await apiBusUploadAbort.post({
             payload: {
-              bucket: activeBucket?.name,
+              bucket: activeBucket.name,
               key: upload.key,
               uploadID: upload.uploadID,
             },
@@ -55,42 +64,41 @@ function useUploadsMain() {
     )
   }, [response.data, apiBusUploadAbort, activeBucket, uploadsMap])
 
-  const dataset: ObjectUploadData[] = useMemo(() => {
-    return (
-      response.data?.uploads?.map((upload) => {
-        const id = upload.uploadID
-        const name = getFilename(upload.key)
-        const fullPath = join(activeBucket?.name, upload.key)
-        const localUpload = uploadsMap[id]
-        if (localUpload) {
-          {
-            return localUpload
-          }
-        }
-        return {
-          id,
-          path: fullPath,
-          bucket: activeBucket,
-          name,
-          size: 1,
-          loaded: 1,
-          isUploading: true,
-          uploadStatus: 'uploading',
-          createdAt: upload.createdAt,
-          remote: true,
-          type: 'file',
-          uploadAbort: async () => {
-            await apiBusUploadAbort.post({
-              payload: {
-                bucket: activeBucket?.name,
-                key: upload.key,
-                uploadID: upload.uploadID,
-              },
-            })
-          },
-        }
-      }) || []
-    )
+  const dataset: ObjectUploadData[] | undefined = useMemo(() => {
+    if (!response.data?.uploads || !activeBucket?.name) {
+      return undefined
+    }
+    return response.data.uploads.map((upload) => {
+      const id = upload.uploadID
+      const name = getFilename(upload.key)
+      const fullPath = join(activeBucket.name, upload.key)
+      const localUpload = uploadsMap[id]
+      if (localUpload) {
+        return localUpload
+      }
+      return {
+        id,
+        path: fullPath,
+        bucket: activeBucket,
+        name,
+        size: 1,
+        loaded: 1,
+        isUploading: true,
+        uploadStatus: 'uploading',
+        createdAt: upload.createdAt,
+        remote: true,
+        type: 'file',
+        uploadAbort: async () => {
+          await apiBusUploadAbort.post({
+            payload: {
+              bucket: activeBucket?.name,
+              key: upload.key,
+              uploadID: upload.uploadID,
+            },
+          })
+        },
+      }
+    })
   }, [uploadsMap, activeBucket, response.data, apiBusUploadAbort])
 
   const {
@@ -133,7 +141,7 @@ function useUploadsMain() {
     dataState,
     limit,
     nextMarker: response.data?.nextUploadIDMarker,
-    hasMore: response.data?.hasMore,
+    hasMore: !!response.data?.hasMore,
     isLoading: response.isLoading,
     error: response.error,
     pageCount: dataset?.length || 0,

@@ -25,7 +25,7 @@ export function getEventContractId(e: WalletEvent) {
   return undefined
 }
 
-export function getEventTxType(e: WalletEvent): TxType | undefined {
+export function getEventTxType(e: WalletEvent): TxType {
   const eventType = e.type
   if (eventType === 'v1Transaction') {
     return getTransactionType(e.data.transaction)

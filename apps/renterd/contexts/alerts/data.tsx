@@ -19,6 +19,8 @@ import { AccountContextMenu } from '../../components/AccountContextMenu'
 import { FileContextMenu } from '../../components/Files/FileContextMenu'
 import { CaretDown16 } from '@siafoundation/react-icons'
 
+type Render = (props: { value: unknown }) => JSX.Element
+
 export const dataFields: Record<
   string,
   { render: (props: { value: unknown }) => JSX.Element }
@@ -35,7 +37,7 @@ export const dataFields: Record<
           </Text>
         </div>
       )
-    },
+    } as Render,
   },
   contractID: {
     render: function ContractField({ value }: { value: string }) {
@@ -61,7 +63,7 @@ export const dataFields: Record<
           />
         </div>
       )
-    },
+    } as Render,
   },
   accountID: {
     render: function AccountField({ value }: { value: string }) {
@@ -88,7 +90,7 @@ export const dataFields: Record<
           />
         </div>
       )
-    },
+    } as Render,
   },
   hostKey: {
     render: function HostField({ value }: { value: string }) {
@@ -119,7 +121,7 @@ export const dataFields: Record<
           />
         </div>
       )
-    },
+    } as Render,
   },
   slabKey: {
     render: function SlabField({ value }: { value: string }) {
@@ -131,7 +133,7 @@ export const dataFields: Record<
           <ValueCopyable size="12" value={value} label="slab key" />
         </div>
       )
-    },
+    } as Render,
   },
   health: {
     render: function OriginField({ value }: { value: string }) {
@@ -145,7 +147,7 @@ export const dataFields: Record<
           </Text>
         </div>
       )
-    },
+    } as Render,
   },
   objectIDs: {
     render: function ObjectIdsField({
@@ -213,112 +215,128 @@ export const dataFields: Record<
           </div>
         </div>
       )
-    },
+    } as Render,
   },
   added: {
-    render: ({ value }: { value: number }) => (
-      <div className="flex justify-between w-full gap-2">
-        <Text size="12" color="subtle" ellipsis>
-          added
-        </Text>
-        <Text size="12" color="contrast" ellipsis>
-          {value}
-        </Text>
-      </div>
-    ),
+    render: function Component({ value }: { value: number }) {
+      return (
+        <div className="flex justify-between w-full gap-2">
+          <Text size="12" color="subtle" ellipsis>
+            added
+          </Text>
+          <Text size="12" color="contrast" ellipsis>
+            {value}
+          </Text>
+        </div>
+      )
+    } as Render,
   },
   removed: {
-    render: ({ value }: { value: number }) => (
-      <div className="flex justify-between w-full gap-2">
-        <Text size="12" color="subtle" ellipsis>
-          removed
-        </Text>
-        <Text size="12" color="contrast" ellipsis>
-          {value}
-        </Text>
-      </div>
-    ),
+    render: function Component({ value }: { value: number }) {
+      return (
+        <div className="flex justify-between w-full gap-2">
+          <Text size="12" color="subtle" ellipsis>
+            removed
+          </Text>
+          <Text size="12" color="contrast" ellipsis>
+            {value}
+          </Text>
+        </div>
+      )
+    } as Render,
   },
   migrationsInterrupted: {
-    render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full gap-2">
-        <Text size="12" color="subtle" ellipsis>
-          migrations interrupted
-        </Text>
-        <Text size="12" weight="medium" ellipsis>
-          {value ? 'yes' : 'no'}
-        </Text>
-      </div>
-    ),
+    render: function Component({ value }: { value: string }) {
+      return (
+        <div className="flex justify-between w-full gap-2">
+          <Text size="12" color="subtle" ellipsis>
+            migrations interrupted
+          </Text>
+          <Text size="12" weight="medium" ellipsis>
+            {value ? 'yes' : 'no'}
+          </Text>
+        </div>
+      )
+    } as Render,
   },
   allowance: {
-    render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full gap-2">
-        <Text size="12" color="subtle" ellipsis>
-          allowance
-        </Text>
-        <ValueSc size="12" variant="value" value={new BigNumber(value)} />
-      </div>
-    ),
+    render: function Component({ value }: { value: string }) {
+      return (
+        <div className="flex justify-between w-full gap-2">
+          <Text size="12" color="subtle" ellipsis>
+            allowance
+          </Text>
+          <ValueSc size="12" variant="value" value={new BigNumber(value)} />
+        </div>
+      )
+    } as Render,
   },
   balance: {
-    render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full gap-2">
-        <Text size="12" color="subtle" ellipsis>
-          balance
-        </Text>
-        <ValueSc size="12" variant="value" value={new BigNumber(value)} />
-      </div>
-    ),
+    render: function Component({ value }: { value: string }) {
+      return (
+        <div className="flex justify-between w-full gap-2">
+          <Text size="12" color="subtle" ellipsis>
+            balance
+          </Text>
+          <ValueSc size="12" variant="value" value={new BigNumber(value)} />
+        </div>
+      )
+    } as Render,
   },
   address: {
-    render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full gap-2">
-        <Text size="12" color="subtle" ellipsis>
-          address
-        </Text>
-        <ValueCopyable size="12" value={value} type="address" />
-      </div>
-    ),
+    render: function Component({ value }: { value: string }) {
+      return (
+        <div className="flex justify-between w-full gap-2">
+          <Text size="12" color="subtle" ellipsis>
+            address
+          </Text>
+          <ValueCopyable size="12" value={value} type="address" />
+        </div>
+      )
+    } as Render,
   },
   account: {
-    render: ({ value }: { value: string }) => (
-      <div className="flex justify-between w-full gap-2">
-        <Text size="12" color="subtle" ellipsis>
-          account
-        </Text>
-        <ValueCopyable
-          size="12"
-          value={value}
-          label="account"
-          contextMenu={
-            <AccountContextMenu
-              id={value}
-              contentProps={{
-                align: 'end',
-              }}
-              buttonProps={{
-                size: 'none',
-              }}
-            />
-          }
-        />
-      </div>
-    ),
+    render: function Component({ value }: { value: string }) {
+      return (
+        <div className="flex justify-between w-full gap-2">
+          <Text size="12" color="subtle" ellipsis>
+            account
+          </Text>
+          <ValueCopyable
+            size="12"
+            value={value}
+            label="account"
+            contextMenu={
+              <AccountContextMenu
+                id={value}
+                contentProps={{
+                  align: 'end',
+                }}
+                buttonProps={{
+                  size: 'none',
+                }}
+              />
+            }
+          />
+        </div>
+      )
+    } as Render,
   },
   lostSectors: {
-    render: ({ value }: { value: number }) => (
-      <div className="flex justify-between w-full gap-2">
-        <Text size="12" color="subtle" ellipsis>
-          lost sectors
-        </Text>
-        <ValueNum
-          size="12"
-          variant="value"
-          value={new BigNumber(value)}
-          format={(value) => value.toString()}
-        />
-      </div>
-    ),
+    render: function Component({ value }: { value: number }) {
+      return (
+        <div className="flex justify-between w-full gap-2">
+          <Text size="12" color="subtle" ellipsis>
+            lost sectors
+          </Text>
+          <ValueNum
+            size="12"
+            variant="value"
+            value={new BigNumber(value)}
+            format={(value) => value.toString()}
+          />
+        </div>
+      )
+    } as Render,
   },
 }

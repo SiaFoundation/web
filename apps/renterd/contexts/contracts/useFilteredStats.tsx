@@ -5,7 +5,7 @@ import { ContractData } from './types'
 export function useFilteredStats({
   datasetFiltered,
 }: {
-  datasetFiltered: ContractData[] | null
+  datasetFiltered: ContractData[] | undefined
 }) {
   const sizeTotal = useMemo(() => {
     if (!datasetFiltered) {
@@ -21,7 +21,7 @@ export function useFilteredStats({
       return undefined
     }
     return datasetFiltered.reduce((acc, datum) => {
-      if (!datum.inAutopilotSet) {
+      if (!datum.inAutopilotSet || !datum.prunableSize) {
         return acc
       }
       return acc.plus(datum.prunableSize)
@@ -33,7 +33,7 @@ export function useFilteredStats({
       return undefined
     }
     return datasetFiltered.reduce((acc, datum) => {
-      if (datum.inAutopilotSet) {
+      if (datum.inAutopilotSet || !datum.prunableSize) {
         return acc
       }
       return acc.plus(datum.size).minus(datum.prunableSize)

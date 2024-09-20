@@ -35,7 +35,7 @@ type Data = {
 
 export type Row<Data, Context> = {
   data: Data
-  context?: Context
+  context: Context
 }
 
 export type TableColumn<Columns, Data, Context> = {
@@ -49,7 +49,7 @@ export type TableColumn<Columns, Data, Context> = {
   rowCellClassName?: string
   rowContentClassName?: string
   render: React.FC<Row<Data, Context>>
-  summary?: React.FC<{ context?: Context }>
+  summary?: React.FC<{ context: Context }>
 }
 
 type Props<
@@ -88,7 +88,7 @@ export function Table<
 >({
   columns,
   data,
-  context,
+  context = {} as Context,
   sortField,
   sortDirection,
   sortableColumns,

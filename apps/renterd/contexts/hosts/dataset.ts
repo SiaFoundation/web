@@ -22,7 +22,7 @@ export function useDataset({
   onHostSelect,
 }: {
   response: ReturnType<typeof useHosts>
-  autopilotID: string
+  autopilotID?: string
   allContracts: ContractData[]
   allowlist: ReturnType<typeof useHostsAllowlist>
   blocklist: ReturnType<typeof useHostsBlocklist>
@@ -30,25 +30,30 @@ export function useDataset({
   geoHosts: SiaCentralHost[]
   onHostSelect: (publicKey: string, location?: [number, number]) => void
 }) {
-  return useMemo<HostData[] | null>(() => {
-    return (
-      response.data?.map((host) => {
-        const sch = geoHosts.find((gh) => gh.public_key === host.publicKey)
-        return {
-          onClick: () => onHostSelect(host.publicKey, sch?.location),
-          ...getHostFields(host, allContracts),
-          ...getAllowedFields({
-            host,
-            allowlist: allowlist.data,
-            blocklist: blocklist.data,
-            isAllowlistActive,
-          }),
-          ...getAutopilotFields(host.checks?.[autopilotID]),
-          location: sch?.location,
-          countryCode: sch?.country_code,
-        }
-      }) || null
-    )
+  return useMemo<HostData[] | undefined>(() => {
+    const allow = allowlist.data
+    const block = blocklist.data
+    if (!response.data || !allow || !block) {
+      return undefined
+    }
+    return response.data.map((host) => {
+      const sch = geoHosts.find((gh) => gh.public_key === host.publicKey)
+      return {
+        onClick: () => onHostSelect(host.publicKey, sch?.location),
+        ...getHostFields(host, allContracts),
+        ...getAllowedFields({
+          host,
+          allowlist: allow,
+          blocklist: block,
+          isAllowlistActive,
+        }),
+        ...getAutopilotFields(
+          autopilotID ? host.checks?.[autopilotID] : undefined
+        ),
+        location: sch?.location,
+        countryCode: sch?.country_code,
+      }
+    })
   }, [
     onHostSelect,
     autopilotID,
@@ -69,13 +74,13 @@ function getHostFields(host: Host, allContracts: ContractData[]) {
     lastScanSuccess: host.interactions.lastScanSuccess,
     lastScan:
       host.interactions.lastScan === '0001-01-01T00:00:00Z'
-        ? null
+        ? undefined
         : host.interactions.lastScan,
     knownSince:
-      host.knownSince === '0001-01-01T00:00:00Z' ? null : host.knownSince,
+      host.knownSince === '0001-01-01T00:00:00Z' ? undefined : host.knownSince,
     lastAnnouncement:
       host.lastAnnouncement === '0001-01-01T00:00:00Z'
-        ? null
+        ? undefined
         : host.lastAnnouncement,
     uptime: new BigNumber(host.interactions.uptime || 0),
     downtime: new BigNumber(host.interactions.downtime || 0),
@@ -225,7 +230,7 @@ function getAutopilotFields(ahc?: {
             return acc.concat(getUnusableReasonLabel(key))
           }
           return acc
-        }, [])
+        }, [] as string[])
       : [],
   }
 }

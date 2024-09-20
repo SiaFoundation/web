@@ -1,7 +1,11 @@
 import { FieldValues } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
 import { Option, Select } from '../core/Select'
-import { FieldProps, useRegisterForm } from './configurationFields'
+import {
+  FieldProps,
+  getFormStateFieldBoolean,
+  useRegisterForm,
+} from './configurationFields'
 
 type Option = {
   value: string
@@ -37,7 +41,7 @@ export function FieldSelect<
       state={
         error
           ? 'invalid'
-          : form.formState.dirtyFields[name]
+          : getFormStateFieldBoolean(form.formState.dirtyFields, name)
           ? 'valid'
           : 'default'
       }

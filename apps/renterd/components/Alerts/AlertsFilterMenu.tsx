@@ -56,7 +56,12 @@ export function AlertsFilterMenu() {
       {!dataState && !!pageCount && (
         <Button
           tip={severityFilter ? `dismiss ${pageCount}` : 'dismiss all'}
-          onClick={() => dismissMany(datasetPage.map((a) => a.id))}
+          onClick={() => {
+            if (!datasetPage) {
+              return
+            }
+            dismissMany(datasetPage.map((a) => a.id))
+          }}
         >
           <Checkmark16 />
           Dismiss ({pageCount})

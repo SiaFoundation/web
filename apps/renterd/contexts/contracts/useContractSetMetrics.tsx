@@ -13,6 +13,7 @@ import { useMemo } from 'react'
 import { ChartContractSetCategory, ChartContractSetKey } from './types'
 import { getTimeClampedToNearest5min } from './utils'
 import { daysInMilliseconds } from '@siafoundation/units'
+import { ContractSetMetricsParams } from '@siafoundation/renterd-types'
 
 export function useContractSetMetrics() {
   // don't use exact times, round to 5 minutes so that swr can cache
@@ -36,7 +37,7 @@ export function useContractSetMetrics() {
       start: new Date(start).toISOString(),
       interval,
       n: periods,
-    },
+    } as ContractSetMetricsParams,
   })
 
   const contractSetMetrics = useMemo<

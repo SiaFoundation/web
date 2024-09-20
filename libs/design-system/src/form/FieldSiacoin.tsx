@@ -1,7 +1,11 @@
 import { SiacoinField } from '../core/SiacoinField'
 import { FieldValues, Path, PathValue } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
-import { FieldProps, useRegisterForm } from './configurationFields'
+import {
+  FieldProps,
+  getFormStateFieldBoolean,
+  useRegisterForm,
+} from './configurationFields'
 import BigNumber from 'bignumber.js'
 import { useMemo } from 'react'
 
@@ -55,7 +59,7 @@ export function FieldSiacoin<
       decimalsLimitFiat={decimalsLimitFiat}
       readOnly={field.readOnly}
       error={error}
-      changed={form.formState.dirtyFields[name]}
+      changed={getFormStateFieldBoolean(form.formState.dirtyFields, name)}
       placeholder={placeholder}
       onChange={(val) => {
         setValue(val as PathValue<Values, Path<Values>>, true)

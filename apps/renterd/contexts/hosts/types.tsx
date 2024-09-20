@@ -12,9 +12,9 @@ export type HostData = {
   netAddress: string
   publicKey: string
   lastScanSuccess: boolean
-  lastScan: string
-  lastAnnouncement: string | null
-  knownSince: string | null
+  lastScan?: string
+  lastAnnouncement?: string
+  knownSince?: string
   uptime: BigNumber
   downtime: BigNumber
   successfulInteractions: BigNumber
@@ -52,7 +52,7 @@ export type HostData = {
   isGouging: boolean
   isUsable: boolean
   priceTable?: HostPriceTable
-  unusableReasons?: string[]
+  unusableReasons: string[]
   settings?: HostSettings
   activeContractsCount: BigNumber
   activeContracts: ContractData[]

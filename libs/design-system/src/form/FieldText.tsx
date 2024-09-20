@@ -1,7 +1,11 @@
 import { FieldValues } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
 import { TextField } from '../core/TextField'
-import { FieldProps, useRegisterForm } from './configurationFields'
+import {
+  FieldProps,
+  getFormStateFieldBoolean,
+  useRegisterForm,
+} from './configurationFields'
 
 export function FieldText<
   Values extends FieldValues,
@@ -48,7 +52,7 @@ export function FieldText<
         state
           ? error
             ? 'invalid'
-            : form.formState.dirtyFields[name]
+            : getFormStateFieldBoolean(form.formState.dirtyFields, name)
             ? 'valid'
             : 'default'
           : 'default'

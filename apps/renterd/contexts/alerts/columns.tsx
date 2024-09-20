@@ -14,14 +14,14 @@ import { Checkmark16 } from '@siafoundation/react-icons'
 import { formatRelative } from 'date-fns'
 import { Fragment, useMemo } from 'react'
 
-type Context = never
+type Context = Record<string, unknown>
 
-type KeysTableColumn = TableColumn<TableColumnId, AlertData, Context> & {
+type AlertsTableColumn = TableColumn<TableColumnId, AlertData, Context> & {
   fixed?: boolean
   category?: string
 }
 
-export const columns: KeysTableColumn[] = [
+export const columns: AlertsTableColumn[] = [
   {
     id: 'actions',
     label: '',
@@ -63,16 +63,16 @@ export const columns: KeysTableColumn[] = [
               {message}
             </Text>
           </div>
-          {data['hint'] && (
+          {data['hint'] ? (
             <Text size="12" color="subtle">
               {data['hint'] as string}
             </Text>
-          )}
-          {data['error'] && (
+          ) : null}
+          {data['error'] ? (
             <Text size="12" color="subtle">
               {data['error'] as string}
             </Text>
-          )}
+          ) : null}
         </div>
       )
     },
@@ -95,11 +95,11 @@ export const columns: KeysTableColumn[] = [
                 value === null ||
                 (typeof value === 'object' && !Object.keys(value).length)
               ) {
-                return null
+                return false
               }
               return { key, value }
             })
-            .filter(Boolean),
+            .filter(Boolean) as { key: string; value: unknown }[],
         [data]
       )
       // Collect set changes for the custom SetChangeField component

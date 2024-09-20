@@ -18,8 +18,9 @@ export type TxType =
   | 'siafundClaim'
   | 'foundationSubsidy'
   | 'hostAnnouncement'
+  | 'unknown'
 
-export function getTransactionType(txn: Transaction): TxType | undefined {
+export function getTransactionType(txn: Transaction): TxType {
   if (txn.storageProofs && txn.storageProofs.length > 0) {
     return 'storageProof'
   }
@@ -51,10 +52,10 @@ export function getTransactionType(txn: Transaction): TxType | undefined {
     return 'siacoin'
   }
 
-  return undefined
+  return 'unknown'
 }
 
-export function getV2TransactionType(txn: V2Transaction): TxType | undefined {
+export function getV2TransactionType(txn: V2Transaction): TxType {
   if (txn.fileContractResolutions && txn.fileContractResolutions.length > 0) {
     const mapping: Record<V2FileContractResolutionType['type'], TxType> = {
       expiration: 'contractExpiration',
@@ -81,7 +82,7 @@ export function getV2TransactionType(txn: V2Transaction): TxType | undefined {
     return 'siacoin'
   }
 
-  return undefined
+  return 'unknown'
 }
 
 const txTypeMap: Record<TxType, string> = {
@@ -98,6 +99,7 @@ const txTypeMap: Record<TxType, string> = {
   siafundClaim: 'siafund claim',
   foundationSubsidy: 'foundation subsidy',
   hostAnnouncement: 'host announcement',
+  unknown: 'unknown transaction type',
 }
 export function getTxTypeLabel(type?: TxType): string | undefined {
   return type ? txTypeMap[type] : undefined

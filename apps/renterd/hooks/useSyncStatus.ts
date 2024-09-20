@@ -22,7 +22,7 @@ export function useSyncStatus() {
     config: {
       swr: {
         refreshInterval: (data) =>
-          data?.scanHeight >= nodeBlockHeight
+          data?.scanHeight && data.scanHeight >= nodeBlockHeight
             ? secondsInMilliseconds(60)
             : secondsInMilliseconds(10),
       },
@@ -56,9 +56,12 @@ export function useSyncStatus() {
       : false
 
   return {
-    isSynced: state.data?.synced,
-    isWalletSynced:
-      state.data?.synced && wallet.data?.scanHeight >= nodeBlockHeight - 1,
+    isSynced: !!state.data?.synced,
+    isWalletSynced: !!(
+      state.data?.synced &&
+      wallet.data?.scanHeight &&
+      wallet.data.scanHeight >= nodeBlockHeight - 1
+    ),
     nodeBlockHeight,
     estimatedBlockHeight,
     syncPercent,

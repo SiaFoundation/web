@@ -60,7 +60,7 @@ function useFilesDirectoryMain() {
   // Add drag and drop properties to the dataset
   const datasetPage = useMemo(() => {
     if (!_datasetPage) {
-      return null
+      return undefined
     }
     return _datasetPage.map((d) => {
       if (

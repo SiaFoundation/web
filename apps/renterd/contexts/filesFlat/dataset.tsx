@@ -75,6 +75,7 @@ export function useDataset({ sortDirection, sortField }: Props) {
     limit,
     marker,
     response,
+    isMore: !!response.data?.hasMore,
     dataset: d.data,
     refresh: response.mutate,
   }

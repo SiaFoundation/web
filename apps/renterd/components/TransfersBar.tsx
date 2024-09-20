@@ -69,7 +69,7 @@ export function TransfersBar() {
                   <TransfersBarItem
                     key={download.id}
                     path={download.path}
-                    loaded={download.loaded}
+                    loaded={download.loaded || 0}
                     size={download.size}
                     status={
                       download.loaded === download.size

@@ -2,7 +2,11 @@ import { NumberField } from '../core/NumberField'
 import BigNumber from 'bignumber.js'
 import { FieldValues, Path, PathValue } from 'react-hook-form'
 import { FieldGroup } from '../components/Form'
-import { FieldProps, useRegisterForm } from './configurationFields'
+import {
+  FieldProps,
+  getFormStateFieldBoolean,
+  useRegisterForm,
+} from './configurationFields'
 import { useMemo } from 'react'
 
 export function FieldNumber<
@@ -60,7 +64,7 @@ export function FieldNumber<
       state={
         error
           ? 'invalid'
-          : form.formState.dirtyFields[name]
+          : getFormStateFieldBoolean(form.formState.dirtyFields, name)
           ? 'valid'
           : 'default'
       }

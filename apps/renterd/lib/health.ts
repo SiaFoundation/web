@@ -9,11 +9,11 @@ export function getObjectHealth(
   slabs: SlabHealthStats[]
   health: number
 } {
-  const slabHealths = []
+  const slabHealths: SlabHealthStats[] = []
   obj.slabs?.forEach((sl, index) => {
     slabHealths.push(getSlabHealthStats(sl, contracts, String(index)))
   })
-  const health = min(slabHealths.map((s) => s.health))
+  const health = min(slabHealths.map((s) => s.health)) as number
   return {
     health,
     slabs: slabHealths,

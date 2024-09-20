@@ -30,19 +30,7 @@ export type TableColumnId =
   | 'size'
   | 'health'
 
-export type FilesTableContext = {
-  currentHeight: number
-  contractsTimeRange: {
-    startHeight: number
-    endHeight: number
-  }
-}
-
-export type FilesTableColumn = TableColumn<
-  TableColumnId,
-  ObjectData,
-  FilesTableContext
-> & {
+export type FilesTableColumn = TableColumn<TableColumnId, ObjectData, never> & {
   fixed?: boolean
   category?: string
 }

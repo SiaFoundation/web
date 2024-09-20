@@ -30,9 +30,9 @@ function useKeysMain() {
     },
   })
 
-  const dataset = useMemo<KeyData[] | null>(() => {
+  const dataset = useMemo<KeyData[] | undefined>(() => {
     if (!response.data) {
-      return null
+      return undefined
     }
     const data: KeyData[] =
       Object.entries(response.data?.authentication.v4Keypairs || {}).map(
@@ -77,9 +77,9 @@ function useKeysMain() {
     sortDirection,
   })
 
-  const datasetPage = useMemo<KeyData[] | null>(() => {
+  const datasetPage = useMemo<KeyData[] | undefined>(() => {
     if (!datasetFiltered) {
-      return null
+      return undefined
     }
     return datasetFiltered.slice(offset, offset + limit)
   }, [datasetFiltered, offset, limit])
@@ -99,8 +99,6 @@ function useKeysMain() {
     filters
   )
 
-  const cellContext = useMemo(() => ({}), [])
-
   return {
     dataState,
     limit,
@@ -112,7 +110,6 @@ function useKeysMain() {
     datasetFilteredCount: datasetFiltered?.length || 0,
     columns: filteredTableColumns,
     dataset,
-    cellContext,
     datasetPage,
     configurableColumns,
     enabledColumns,

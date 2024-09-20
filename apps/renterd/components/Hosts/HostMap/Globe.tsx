@@ -18,7 +18,8 @@ export type Commands = {
 }
 
 export const emptyCommands: Commands = {
-  moveToLocation: (location: [number, number], altitude?: number) => null,
+  moveToLocation: (location: [number, number] | undefined, altitude?: number) =>
+    null,
 }
 
 type Props = {
@@ -77,7 +78,9 @@ export function Globe({
 
     const directionalLight = globeEl.current
       ?.scene()
-      .children.find((obj3d) => obj3d.type === 'DirectionalLight')
+      .children.find(
+        (obj3d: { type: string }) => obj3d.type === 'DirectionalLight'
+      )
     if (directionalLight) {
       // directionalLight.position.set(1, 1, 1)
       directionalLight.intensity = 10
@@ -93,7 +96,7 @@ export function Globe({
   }, [])
 
   // const routes = useDecRoutes({ hosts, activeHost })
-  const routes = []
+  const routes: never[] = []
 
   const [containerRef, { height, width }] = useElementSize()
 
@@ -103,6 +106,8 @@ export function Globe({
     <div ref={containerRef} className="w-full h-full">
       <GlobeDyn
         ref={globeEl}
+        // @ts-expect-error: This prop is required but the typing is lost in the wrapping.
+        // Revisit if we ever update this feature.
         width={width}
         height={height}
         backgroundColor="rgba(0,0,0,0)"
@@ -173,7 +178,7 @@ export function Globe({
               .div(1e12)
               .toNumber()
           }
-          radius = h.settings.remainingstorage / 1e13 / 3
+          radius = (h.settings?.remainingstorage || 0) / 1e13 / 3
 
           return Math.max(radius, 0.1)
         }}

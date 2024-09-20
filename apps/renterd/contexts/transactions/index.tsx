@@ -30,7 +30,7 @@ import {
 import BigNumber from 'bignumber.js'
 
 const defaultPageSize = 50
-const filters = []
+const filters = [] as string[]
 
 function useTransactionsMain() {
   const router = useRouter()
@@ -56,9 +56,9 @@ function useTransactionsMain() {
   })
 
   const syncStatus = useSyncStatus()
-  const dataset = useMemo<EventData[] | null>(() => {
+  const dataset = useMemo<EventData[] | undefined>(() => {
     if (!events.data || !pending.data) {
-      return null
+      return undefined
     }
     const dataPending: EventData[] = pending.data.map((e) => {
       const amountSc = calculateScValue(e)

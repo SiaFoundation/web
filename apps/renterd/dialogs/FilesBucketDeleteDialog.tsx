@@ -21,7 +21,7 @@ const defaultValues = {
 
 type Values = typeof defaultValues
 
-function getFields(name: string): ConfigFields<Values, never> {
+function getFields(name?: string): ConfigFields<Values, never> {
   return {
     name: {
       type: 'text',

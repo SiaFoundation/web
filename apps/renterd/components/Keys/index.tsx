@@ -20,7 +20,6 @@ export function Keys() {
     toggleSort,
     limit,
     dataState,
-    cellContext,
   } = useKeys()
 
   return (
@@ -33,7 +32,6 @@ export function Keys() {
     >
       <div className="p-6 min-w-fit">
         <Table
-          context={cellContext}
           isLoading={dataState === 'loading'}
           emptyState={
             dataState === 'noneMatchingFilters' ? (

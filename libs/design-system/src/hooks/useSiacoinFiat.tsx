@@ -7,23 +7,25 @@ import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 
 type Props = {
-  sc: BigNumber
+  sc?: BigNumber
 }
 
-export function useSiacoinFiat({ sc }: Props): {
-  fiat?: BigNumber
-  currency?: CurrencyOption
-} {
+export function useSiacoinFiat({ sc }: Props):
+  | {
+      fiat: BigNumber
+      currency: CurrencyOption
+    }
+  | Record<string, never> {
   const { settings } = useAppSettings()
   const exchangeRate = useExchangeRate({
     currency: settings.currency.id,
   })
   const fiat = useMemo(
-    () => new BigNumber(sc).times(exchangeRate.rate || 1),
+    () => new BigNumber(sc || 0).times(exchangeRate.rate || 1),
     [sc, exchangeRate]
   )
 
-  if (!exchangeRate.rate || exchangeRate.rate.isZero()) {
+  if (!sc || !exchangeRate.rate || exchangeRate.rate.isZero()) {
     return {}
   }
 

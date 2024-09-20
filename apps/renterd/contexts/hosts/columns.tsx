@@ -218,11 +218,13 @@ export const columns: HostsTableColumn[] = (
       category: 'general',
       render: function LastScan({ data }) {
         const { workflows } = useWorkflows()
-        const isPending = workflows.find(
-          (wf: { path?: string; payload?: RhpScanPayload }) =>
-            wf.path.startsWith(workerRhpScanRoute) &&
-            wf.payload?.hostKey === data.publicKey
-        )
+        const isPending = workflows.find((w) => {
+          const rhpw = w as { path?: string; payload?: RhpScanPayload }
+          return (
+            rhpw.path?.startsWith(workerRhpScanRoute) &&
+            rhpw.payload?.hostKey === data.publicKey
+          )
+        })
         if (isPending) {
           return <LoadingDots />
         }
@@ -1090,7 +1092,8 @@ function makeRenderSc(section: 'priceTable' | 'settings', name: Key) {
       <ValueScFiat
         displayBoth
         size="12"
-        value={new BigNumber(data[section][name] || 0)}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        value={new BigNumber((data as any)[section][name] || 0)}
         fixedFiat={4}
         variant="value"
       />
@@ -1110,7 +1113,8 @@ function makeRenderNumber(
     return (
       <ValueNum
         size="12"
-        value={new BigNumber(data[section][name] || 0)}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        value={new BigNumber((data as any)[section][name] || 0)}
         variant="value"
         format={(v) =>
           humanNumber(v, {
@@ -1127,7 +1131,8 @@ function makeRenderString(section: 'priceTable' | 'settings', name: Key) {
     if (!data[section]) {
       return null
     }
-    return <ValueCopyable value={data[section][name]} size="12" />
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return <ValueCopyable value={(data as any)[section][name]} size="12" />
   }
 }
 
@@ -1136,9 +1141,11 @@ function makeRenderBytes(section: 'priceTable' | 'settings', name: Key) {
     if (!data[section]) {
       return null
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const val = (data as any)[section][name]
     return (
       <Text size="12" weight="semibold" ellipsis>
-        {humanBytes(data[section][name])}
+        {humanBytes(val)}
       </Text>
     )
   }
@@ -1149,14 +1156,12 @@ function makeRenderBool(section: 'priceTable' | 'settings', name: Key) {
     if (!data[section]) {
       return null
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const val = (data as any)[section][name]
     return (
       <div className="mt-[5px]">
-        <Text color={data[section][name] ? 'green' : 'red'}>
-          {data[section][name] ? (
-            <CheckboxCheckedFilled16 />
-          ) : (
-            <WarningSquareFilled16 />
-          )}
+        <Text color={val ? 'green' : 'red'}>
+          {val ? <CheckboxCheckedFilled16 /> : <WarningSquareFilled16 />}
         </Text>
       </div>
     )
